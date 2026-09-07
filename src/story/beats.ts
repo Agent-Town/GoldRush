@@ -819,7 +819,7 @@ export const E5_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // lore/STORYBOOK.md:294
     id: 'e5-rebuild-long-table',
     trigger: 'contract-unlocked',
-    speaker: 'tavernkeeper',
+    speaker: 'tavernkeeper-e5',
     oncePerProfile: true,
     presentation: 'card',
     when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e5-deepwater-claim',
@@ -839,7 +839,7 @@ export const E5_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // lore/STORYBOOK.md:255,293; Gazette mystery-law headline in the E3 shape at lines 506-515.
     id: 'e5-gazette-monument-carry',
     trigger: 'contract-unlocked',
-    speaker: 'newsie',
+    speaker: 'newsie-e5',
     oncePerProfile: true,
     presentation: 'card',
     when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e5-deepwater-claim',
@@ -859,7 +859,7 @@ export const E5_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // lore/STORYBOOK.md:282
     id: 'e5-regatta-storm-course',
     trigger: 'contract-unlocked',
-    speaker: 'clerk',
+    speaker: 'clerk-e5',
     oncePerProfile: true,
     presentation: 'card',
     artKey: 'plate-contract-e5-regatta', // assets/raw/plate-contract-e5-regatta.png
@@ -881,7 +881,7 @@ export const E5_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // lore/STORYBOOK.md:284
     id: 'e5-flotilla-formation',
     trigger: 'contract-unlocked',
-    speaker: 'preacher',
+    speaker: 'preacher-e5',
     oncePerProfile: true,
     presentation: 'card',
     artKey: 'plate-contract-e5-flotilla', // assets/raw/plate-contract-e5-flotilla.png
@@ -913,7 +913,7 @@ export const E5_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // fires nothing.
     id: 'e5-tavern-locomotive-argument',
     trigger: 'run-return-town',
-    speaker: 'tavernkeeper',
+    speaker: 'tavernkeeper-e5',
     oncePerProfile: true,
     presentation: 'card',
     when: (signal) => signal.type === 'run-return-town' && signal.result === 'secured' && signal.contractId === 'e5-deepwater-claim',
@@ -923,7 +923,7 @@ export const E5_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // lore/STORYBOOK.md:296; the reveal states the sighting and withholds the explanation.
     id: 'e5-mystery-hull-w5',
     trigger: 'run-return-town',
-    speaker: 'schoolteacher',
+    speaker: 'schoolteacher-e5',
     oncePerProfile: true,
     presentation: 'card',
     // F-SS06-2: was `hasStoryBeatSeen('e5-first-dive-w1')`, an arrival-card proxy for this map.
@@ -934,7 +934,7 @@ export const E5_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // lore/STORYBOOK.md:270,290; the reveal keeps the Gazette mystery law by printing the notice and no name.
     id: 'e5-gazette-crossed-pickaxes',
     trigger: 'run-return-town',
-    speaker: 'newsie',
+    speaker: 'newsie-e5',
     oncePerProfile: true,
     presentation: 'card',
     // F-SS06-2: was `hasStoryBeatSeen('e5-dredge-queen-flag')`. That proxy carried a real narrative
@@ -1043,7 +1043,7 @@ export const E6_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // lore/STORYBOOK.md:342,375,331
     id: 'e6-pen-first-tenant',
     trigger: 'contract-unlocked',
-    speaker: 'tavernkeeper',
+    speaker: 'tavernkeeper-e6',
     oncePerProfile: true,
     presentation: 'card',
     artKey: 'plate-e6-enemy-lawn-shepherd', // assets/raw/plate-e6-enemy-lawn-shepherd.png
@@ -1064,7 +1064,7 @@ export const E6_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // lore/STORYBOOK.md:374,328,333; Gazette mystery law - the paper prints only what it can prove.
     id: 'e6-gazette-free-trial',
     trigger: 'contract-unlocked',
-    speaker: 'newsie',
+    speaker: 'newsie-e6',
     oncePerProfile: true,
     presentation: 'card',
     when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e6-glow-mesa',
@@ -1085,7 +1085,7 @@ export const E6_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // lore/STORYBOOK.md:371; cure-arms lexicon (lore/canon-rules.md:13) - the grip breaks, the machine is kept.
     id: 'e6-homemaker-kept',
     trigger: 'boss-defeat',
-    speaker: 'preacher',
+    speaker: 'preacher-e6',
     oncePerProfile: true,
     presentation: 'card',
     when: (signal) => signal.type === 'boss-defeat' && signal.contractId === 'e6-glow-mesa',
@@ -1095,7 +1095,7 @@ export const E6_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // lore/STORYBOOK.md:345,376
     id: 'e6-second-opinion',
     trigger: 'run-return-town',
-    speaker: 'clerk',
+    speaker: 'clerk-e6',
     oncePerProfile: true,
     presentation: 'card',
     when: (signal) => signal.type === 'run-return-town' && signal.result === 'secured' && hasStoryBeatSeen('e6-homemaker-kept'),
@@ -1105,7 +1105,7 @@ export const E6_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // lore/STORYBOOK.md:329,375
     id: 'e6-vaccine-written-down',
     trigger: 'run-return-town',
-    speaker: 'schoolteacher',
+    speaker: 'schoolteacher-e6',
     oncePerProfile: true,
     presentation: 'card',
     when: (signal) => signal.type === 'run-return-town' && signal.result === 'secured' && hasStoryBeatSeen('e6-pen-first-tenant'),
@@ -1115,7 +1115,7 @@ export const E6_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // lore/STORYBOOK.md:378,331; tavern-tale shape mirrors e3-tavern-twins-defect at lines 558-567.
     id: 'e6-tavern-wrangler-drinks-free',
     trigger: 'run-return-town',
-    speaker: 'tavernkeeper',
+    speaker: 'tavernkeeper-e6',
     oncePerProfile: true,
     presentation: 'card',
     when: (signal) => signal.type === 'run-return-town' && signal.result === 'secured' && hasStoryBeatSeen('e6-homemaker-kept'),
@@ -1125,7 +1125,7 @@ export const E6_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // lore/STORYBOOK.md:348,350,377,333; the headline publishes only once the archive proves it.
     id: 'e6-gazette-the-printing',
     trigger: 'run-return-town',
-    speaker: 'newsie',
+    speaker: 'newsie-e6',
     oncePerProfile: true,
     presentation: 'card',
     when: (signal) => signal.type === 'run-return-town' && signal.result === 'secured' && hasStoryBeatSeen('e6-second-opinion'),
@@ -1184,7 +1184,7 @@ export const E7_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // lore/STORYBOOK.md:449,408
     id: 'e7-exchange-wrong-number',
     trigger: 'contract-unlocked',
-    speaker: 'tavernkeeper',
+    speaker: 'tavernkeeper-e7',
     oncePerProfile: true,
     presentation: 'card',
     when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e7-relay-valley',
@@ -1204,7 +1204,7 @@ export const E7_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // lore/STORYBOOK.md:451,422
     id: 'e7-playbook-library-tape-001',
     trigger: 'contract-unlocked',
-    speaker: 'schoolteacher',
+    speaker: 'schoolteacher-e7',
     oncePerProfile: true,
     presentation: 'card',
     artKey: 'plate-e7-bld-playbook-library', // assets/raw/plate-e7-bld-playbook-library.png
@@ -1215,7 +1215,7 @@ export const E7_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // lore/STORYBOOK.md:406,451; the Gazette prints the trade and never the question nobody asks.
     id: 'e7-gazette-new-hands',
     trigger: 'contract-unlocked',
-    speaker: 'newsie',
+    speaker: 'newsie-e7',
     oncePerProfile: true,
     presentation: 'card',
     when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e7-relay-valley',
@@ -1257,7 +1257,7 @@ export const E7_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // lore/STORYBOOK.md:440; the front is described and never explained (mystery law).
     id: 'e7-relay-rush-front',
     trigger: 'contract-unlocked',
-    speaker: 'clerk',
+    speaker: 'clerk-e7',
     oncePerProfile: true,
     presentation: 'card',
     artKey: 'plate-contract-e7-relay-rush', // assets/raw/plate-contract-e7-relay-rush.png
@@ -1279,7 +1279,7 @@ export const E7_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // lore/STORYBOOK.md:445,446; the kept-machine lineage (cure-arms lexicon, lore/canon-rules.md:13) - the pattern is starved, the machine is kept.
     id: 'e7-echo-kept-in-a-jar',
     trigger: 'boss-defeat',
-    speaker: 'preacher',
+    speaker: 'preacher-e7',
     oncePerProfile: true,
     presentation: 'card',
     when: (signal) => signal.type === 'boss-defeat' && signal.contractId === 'e7-relay-valley',
@@ -1289,7 +1289,7 @@ export const E7_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // lore/STORYBOOK.md:407,452; tavern-tale shape mirrors e3-tavern-twins-defect at lines 558-567.
     id: 'e7-tavern-does-not-hang-up',
     trigger: 'run-return-town',
-    speaker: 'tavernkeeper',
+    speaker: 'tavernkeeper-e7',
     oncePerProfile: true,
     presentation: 'card',
     when: (signal) => signal.type === 'run-return-town' && signal.result === 'secured' && hasStoryBeatSeen('e7-exchange-wrong-number'),
@@ -1299,7 +1299,7 @@ export const E7_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // lore/STORYBOOK.md:417,418
     id: 'e7-recall-come-home',
     trigger: 'run-return-town',
-    speaker: 'preacher',
+    speaker: 'preacher-e7',
     oncePerProfile: true,
     presentation: 'card',
     when: (signal) => signal.type === 'run-return-town' && signal.result === 'secured' && hasStoryBeatSeen('e7-mission-sent-column'),
@@ -1309,7 +1309,7 @@ export const E7_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // lore/STORYBOOK.md:425; the paper can prove the scrip and cannot name the client, so it prints only the scrip.
     id: 'e7-gazette-mispronounced',
     trigger: 'run-return-town',
-    speaker: 'newsie',
+    speaker: 'newsie-e7',
     oncePerProfile: true,
     presentation: 'card',
     when: (signal) => signal.type === 'run-return-town' && signal.result === 'secured' && hasStoryBeatSeen('e7-echo-arrival'),
@@ -1390,7 +1390,7 @@ export const E8_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // lore/STORYBOOK.md:487,511
     id: 'e8-monument-first-water',
     trigger: 'contract-unlocked',
-    speaker: 'tavernkeeper',
+    speaker: 'tavernkeeper-e8',
     oncePerProfile: true,
     presentation: 'card',
     when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e8-mare-claim',
@@ -1410,7 +1410,7 @@ export const E8_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // lore/STORYBOOK.md:505,482; Gazette mystery law - the paper prints only what it can prove.
     id: 'e8-gazette-claw-tags',
     trigger: 'contract-unlocked',
-    speaker: 'newsie',
+    speaker: 'newsie-e8',
     oncePerProfile: true,
     presentation: 'card',
     when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e8-mare-claim',
@@ -1420,7 +1420,7 @@ export const E8_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // lore/STORYBOOK.md:500
     id: 'e8-far-side-probe',
     trigger: 'contract-unlocked',
-    speaker: 'clerk',
+    speaker: 'clerk-e8',
     oncePerProfile: true,
     presentation: 'card',
     artKey: 'plate-contract-e8-far-side', // assets/raw/plate-contract-e8-far-side.png
@@ -1431,7 +1431,7 @@ export const E8_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // lore/STORYBOOK.md:501,508
     id: 'e8-low-orbit-yard',
     trigger: 'contract-unlocked',
-    speaker: 'clerk',
+    speaker: 'clerk-e8',
     oncePerProfile: true,
     presentation: 'card',
     artKey: 'plate-contract-e8-low-orbit', // assets/raw/plate-contract-e8-low-orbit.png
@@ -1442,7 +1442,7 @@ export const E8_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // lore/STORYBOOK.md:502
     id: 'e8-eclipse-reserves',
     trigger: 'contract-unlocked',
-    speaker: 'preacher',
+    speaker: 'preacher-e8',
     oncePerProfile: true,
     presentation: 'card',
     artKey: 'plate-contract-e8-eclipse', // assets/raw/plate-contract-e8-eclipse.png
@@ -1474,7 +1474,7 @@ export const E8_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // lore/STORYBOOK.md:508,514; cure-arms lexicon (lore/canon-rules.md:13-14) - the grip breaks and the crew walks.
     id: 'e8-claw-crew-walks',
     trigger: 'boss-defeat',
-    speaker: 'preacher',
+    speaker: 'preacher-e8',
     oncePerProfile: true,
     presentation: 'card',
     when: (signal) => signal.type === 'boss-defeat' && signal.contractId === 'e8-mare-claim',
@@ -1484,7 +1484,7 @@ export const E8_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // lore/STORYBOOK.md:512,486
     id: 'e8-mass-driver-waybill',
     trigger: 'run-return-town',
-    speaker: 'clerk',
+    speaker: 'clerk-e8',
     oncePerProfile: true,
     presentation: 'card',
     when: (signal) => signal.type === 'run-return-town' && signal.result === 'secured' && hasStoryBeatSeen('e8-mare-claim-arrival'),
@@ -1494,7 +1494,7 @@ export const E8_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // lore/STORYBOOK.md:485,513; tavern-tale shape mirrors e3-tavern-twins-defect at lines 558-567.
     id: 'e8-tavern-river-question',
     trigger: 'run-return-town',
-    speaker: 'tavernkeeper',
+    speaker: 'tavernkeeper-e8',
     oncePerProfile: true,
     presentation: 'card',
     when: (signal) => signal.type === 'run-return-town' && signal.result === 'secured' && hasStoryBeatSeen('e8-breach-drill'),
@@ -1504,7 +1504,7 @@ export const E8_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // lore/STORYBOOK.md:481; the era's turn, stated once, in the shape of e6-vaccine-written-down at lines 1104-1113.
     id: 'e8-out-of-reach',
     trigger: 'run-return-town',
-    speaker: 'schoolteacher',
+    speaker: 'schoolteacher-e8',
     oncePerProfile: true,
     presentation: 'card',
     when: (signal) => signal.type === 'run-return-town' && signal.result === 'secured' && hasStoryBeatSeen('e8-claw-crew-walks'),
@@ -1514,7 +1514,7 @@ export const E8_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // lore/STORYBOOK.md:478; the mystery law holds - the paper prints the window seat and declines the green.
     id: 'e8-gazette-green-through-the-glass',
     trigger: 'run-return-town',
-    speaker: 'newsie',
+    speaker: 'newsie-e8',
     oncePerProfile: true,
     presentation: 'card',
     when: (signal) => signal.type === 'run-return-town' && signal.result === 'secured' && hasStoryBeatSeen('e8-out-of-reach'),
@@ -1545,7 +1545,7 @@ export const E8_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // the era's dread is PAPERWORK. The watchtowers scan for gold seams and find none.
     id: 'e8-claw-paperwork',
     trigger: 'boss-act',
-    speaker: 'clerk',
+    speaker: 'clerk-e8',
     oncePerProfile: true,
     presentation: 'card',
     when: (signal) => signal.type === 'boss-act' && signal.contractId === 'e8-mare-claim' && signal.act === 'paperwork',
@@ -1579,7 +1579,7 @@ export const E8_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // inverts. The repossessor is the fixed asset and the town is the storm.
     id: 'e8-claw-anchor-feet',
     trigger: 'boss-act',
-    speaker: 'tavernkeeper',
+    speaker: 'tavernkeeper-e8',
     oncePerProfile: true,
     presentation: 'card',
     when: (signal) => signal.type === 'boss-act' && signal.contractId === 'e8-mare-claim' && signal.act === 'anchor-feet',
@@ -1698,7 +1698,7 @@ export const E9_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // lore/STORYBOOK.md:537; ruling #17 - the number is canon, the owner of it never is.
     id: 'e9-gazette-yearly-number',
     trigger: 'contract-unlocked',
-    speaker: 'newsie',
+    speaker: 'newsie-e9',
     oncePerProfile: true,
     presentation: 'card',
     when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e9-dome-basin',
@@ -1708,7 +1708,7 @@ export const E9_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // lore/STORYBOOK.md:556
     id: 'e9-seed-run-planting',
     trigger: 'contract-unlocked',
-    speaker: 'schoolteacher',
+    speaker: 'schoolteacher-e9',
     oncePerProfile: true,
     presentation: 'card',
     artKey: 'plate-contract-e9-seed-run', // assets/raw/plate-contract-e9-seed-run.png
@@ -1719,7 +1719,7 @@ export const E9_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // lore/STORYBOOK.md:557; the era's mandated comedy beat, kept comic and never grim.
     id: 'e9-devils-alley-wind',
     trigger: 'contract-unlocked',
-    speaker: 'tavernkeeper',
+    speaker: 'tavernkeeper-e9',
     oncePerProfile: true,
     presentation: 'card',
     artKey: 'plate-contract-e9-devils-alley', // assets/raw/plate-contract-e9-devils-alley.png
@@ -1730,7 +1730,7 @@ export const E9_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // lore/STORYBOOK.md:558
     id: 'e9-old-canal-verdicts',
     trigger: 'contract-unlocked',
-    speaker: 'clerk',
+    speaker: 'clerk-e9',
     oncePerProfile: true,
     presentation: 'card',
     artKey: 'plate-contract-e9-old-canal', // assets/raw/plate-contract-e9-old-canal.png
@@ -1762,7 +1762,7 @@ export const E9_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // lore/STORYBOOK.md:544; the tavern tale, in the shape of e3-tavern-twins-defect at lines 558-567.
     id: 'e9-tavern-obedient-joke',
     trigger: 'run-return-town',
-    speaker: 'tavernkeeper',
+    speaker: 'tavernkeeper-e9',
     oncePerProfile: true,
     presentation: 'card',
     when: (signal) => signal.type === 'run-return-town' && signal.result === 'secured' && hasStoryBeatSeen('e9-digger-correction'),
@@ -1772,7 +1772,7 @@ export const E9_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // lore/STORYBOOK.md:564; cure-arms lexicon (lore/canon-rules.md:13) - the fight is a reprogramming, and the machine is kept.
     id: 'e9-digger-kept',
     trigger: 'boss-defeat',
-    speaker: 'preacher',
+    speaker: 'preacher-e9',
     oncePerProfile: true,
     presentation: 'card',
     when: (signal) => signal.type === 'boss-defeat' && signal.contractId === 'e9-dome-basin',
@@ -1782,7 +1782,7 @@ export const E9_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // lore/STORYBOOK.md:544,537; the Gazette prints what the archive can date and declines the name.
     id: 'e9-gazette-crossed-pickaxes',
     trigger: 'run-return-town',
-    speaker: 'newsie',
+    speaker: 'newsie-e9',
     oncePerProfile: true,
     presentation: 'card',
     when: (signal) => signal.type === 'run-return-town' && signal.result === 'secured' && hasStoryBeatSeen('e9-digger-kept'),
@@ -1959,7 +1959,7 @@ export const E10_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // lore/STORYBOOK.md:584
     id: 'e10-welcome-from',
     trigger: 'contract-unlocked',
-    speaker: 'tavernkeeper',
+    speaker: 'tavernkeeper-e10',
     oncePerProfile: true,
     presentation: 'card',
     when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e10-ember-shore',
@@ -2001,7 +2001,7 @@ export const E10_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // lore/STORYBOOK.md:618,603,589; mystery law holds, in the E3 Gazette shape at lines 506-515.
     id: 'e10-gazette-new-verb',
     trigger: 'contract-unlocked',
-    speaker: 'newsie',
+    speaker: 'newsie-e10',
     oncePerProfile: true,
     presentation: 'card',
     when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e10-ember-shore',
@@ -2012,7 +2012,7 @@ export const E10_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // archive-world-consumers (assets/contracts/epoch-10-deepsky/contracts.json).
     id: 'e10-archive-world-shelf',
     trigger: 'contract-unlocked',
-    speaker: 'schoolteacher',
+    speaker: 'schoolteacher-e10',
     oncePerProfile: true,
     presentation: 'card',
     artKey: 'plate-contract-e10-archive-world', // assets/raw/plate-contract-e10-archive-world.png
@@ -2047,7 +2047,7 @@ export const E10_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // lore/STORYBOOK.md:618; the manifest keeper is the House's first made citizen (ADR-003).
     id: 'e10-chalk-manifest',
     trigger: 'run-return-town',
-    speaker: 'clerk',
+    speaker: 'clerk-e10',
     oncePerProfile: true,
     presentation: 'card',
     when: (signal) => signal.type === 'run-return-town' && signal.result === 'secured' && hasStoryBeatSeen('e10-ember-shore-arrival'),
@@ -2057,7 +2057,7 @@ export const E10_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // lore/STORYBOOK.md:589,592; the era's turn and the ruled final strain, each stated once.
     id: 'e10-what-you-hand-on',
     trigger: 'run-return-town',
-    speaker: 'schoolteacher',
+    speaker: 'schoolteacher-e10',
     oncePerProfile: true,
     presentation: 'card',
     when: (signal) => signal.type === 'run-return-town' && signal.result === 'secured' && hasStoryBeatSeen('e10-ember-shore-arrival'),
@@ -2067,7 +2067,7 @@ export const E10_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // lore/STORYBOOK.md:610,619; Stillwater (E5) is the plant this beat pays.
     id: 'e10-portrait-fades',
     trigger: 'run-return-town',
-    speaker: 'tavernkeeper',
+    speaker: 'tavernkeeper-e10',
     oncePerProfile: true,
     presentation: 'card',
     artKey: 'plate-e10-boss-the-quiet', // assets/raw/plate-e10-boss-the-quiet.png
@@ -2078,7 +2078,7 @@ export const E10_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // lore/STORYBOOK.md:611; cure-arms LEXICON (lore/canon-rules.md:13-14) holds to the last era.
     id: 'e10-unraveled-board',
     trigger: 'run-return-town',
-    speaker: 'preacher',
+    speaker: 'preacher-e10',
     oncePerProfile: true,
     presentation: 'card',
     when: (signal) => signal.type === 'run-return-town' && signal.result === 'secured' && hasStoryBeatSeen('e10-portrait-fades'),
@@ -2098,7 +2098,7 @@ export const E10_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // lore/STORYBOOK.md:596; tavern-tale shape mirrors e8-tavern-river-question at lines 1493-1502.
     id: 'e10-tavern-starlight-pan',
     trigger: 'run-return-town',
-    speaker: 'tavernkeeper',
+    speaker: 'tavernkeeper-e10',
     oncePerProfile: true,
     presentation: 'card',
     artKey: 'plate-e10-starlight-pan', // assets/raw/plate-e10-starlight-pan.png
@@ -2109,7 +2109,7 @@ export const E10_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // lore/STORYBOOK.md:620,613; the mystery law holds, so the paper prints the jar and not the mote.
     id: 'e10-gazette-mote-in-the-jar',
     trigger: 'run-return-town',
-    speaker: 'newsie',
+    speaker: 'newsie-e10',
     oncePerProfile: true,
     presentation: 'card',
     when: (signal) => signal.type === 'run-return-town' && signal.result === 'secured' && hasStoryBeatSeen('e10-three-preserves'),
@@ -2250,3 +2250,31 @@ export const STORY_RUNTIME_BEATS: readonly RuntimeStoryBeat[] = RELEASE_E1
 // (380-427), because the E2 append lands below all of them; the four RECORD paragraphs in the E10
 // header, which say what values WERE and point at nothing; and every lore/STORYBOOK.md citation in
 // the file, because that file's line count did not change (its one edit replaced a line in place).
+// THE LATER-ERA RE-KEY (portraits-era-aging-2-batch, 2026-09-07; owner ruling, verbatim: "(A4) use
+// them, please, they will expire soon"), AND IT IS AT THE FILE'S END FOR THE REASON THE TWO NOTES
+// ABOVE GIVE: every in-file coordinate in this module rots the moment a line is inserted above it
+// (F-GEN-1), so a record goes below every coordinate it describes. This slice changed 50 lines IN
+// PLACE and added none - 50 insertions against 50 deletions, the file length unmoved, the diff
+// touching nothing but `speaker:` values - so nothing above this line moved and no citation rots.
+// WHAT IT DID: the row-74 note above closed E2-E4 and reported, as an art gap, that "the un-suffixed
+// E1 ids still speak throughout E5-E10". Thirty new plates close it, and 50 beats now carry the aged
+// id of their own era: E5 seven, E6 seven, E7 eight, E8 twelve, E9 seven, E10 nine. Every trade goes
+// to the face of its own chapter (`tavernkeeper` -> `tavernkeeper-e7`, and so on for `newsie`,
+// `clerk`, `schoolteacher`, `preacher`).
+// COPY: unchanged, byte for byte, in all 50, and again that is a MEASURED outcome rather than an
+// omission. A re-key here moves a speaker to the SAME PERSON IN THE SAME TRADE one era on, so no
+// pronoun, name or tense can come loose; and every one of the 50 lines was already written about its
+// subject's world or as that trade's own report. Triggers, `when`, `seenKey`, `oncePerProfile`,
+// `presentation`, `artKey`, `ceremonyStep`, sizes and every STORYBOOK citation are untouched.
+// WHO STAYS: the 18 `prospector` beats in E5-E10 stay, for row 74's reason - the agent does not age
+// (lore/characters.md:12, "agents age in dignity, not decay") and no era plate exists for it. The 14
+// `elder` beats in E5-E10 also stay, UNTOUCHED AND DELIBERATELY SO: they are F-AGE-4, an open owner
+// call, and this slice was scoped not to answer it. Nothing else in these six tables was an
+// un-suffixed E1 id.
+// CORRECTING THE E6 HEADER NOTE ABOVE, from down here so that nothing moves: it says "NO E6 BEAT WAS
+// RE-KEYED ANYWAY", which was true of that batch and is no longer true of this file. Seven E6 beats
+// are re-keyed here. Its REASONING still stands exactly as written and is untouched by this slice:
+// that note is about the E6 CHAPTER cast (the reactor steward, the kitchen chemist, the appliance
+// wrangler, the diner carhop, the Combine defector, the depot clerk), whose lines are third-person
+// REPORTS and so would need a copy revision to re-attribute. This slice re-keyed the town's own five
+// trades, which is a different act and needs no copy at all.
