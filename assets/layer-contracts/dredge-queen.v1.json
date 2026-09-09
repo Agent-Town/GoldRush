@@ -1,0 +1,97 @@
+{
+  "$schema": "gold-rush layer contract v1",
+  "batch": "boss-fidelity-e5-dredge-queen-2026-09-08",
+  "status": "adopted-focused-runtime-verified-broad-regression-pending",
+  "asset": "assets/pilots/dredge-queen-3d/dredge-queen-detail-opus5.glb",
+  "assetSha256": "f66ba8b7e03fd8997d4c94c18abc6630c9848c0a6d857c38c5ef0f6a594d7c42",
+  "assetContract": "assets/pilots/dredge-queen-3d/renders-fidelity-e5/contract.json",
+  "provenance": "artifacts/boss-fidelity/e5-dredge-queen/candidate-material/provenance.json",
+  "source": {
+    "file": "assets/raw/dredge-queen-atlas-fidelity-e5.png",
+    "generator": "native image_gen",
+    "size": [
+      1254,
+      1254
+    ],
+    "sha256": "3ad7f96f94b84f80f34a2909231ac2a4aca3b98758ebb5c6082752acb5270622"
+  },
+  "shapeReference": "assets/raw/boss-dredge-queen.png",
+  "damageReference": "assets/raw/boss-dredge-queen-damage.png",
+  "bindings": [
+    {
+      "node": "claw",
+      "mesh": "clawMesh",
+      "targets": [
+        "Damage_SlackClaw"
+      ],
+      "defaultWeights": [
+        0
+      ]
+    },
+    {
+      "node": "paddle_port",
+      "mesh": "paddle_portMesh",
+      "targets": [
+        "Damage_BrokenPortPaddle"
+      ],
+      "defaultWeights": [
+        0
+      ]
+    },
+    {
+      "node": "paddle_starboard",
+      "mesh": "paddle_starboardMesh",
+      "targets": [
+        "Damage_BrokenStarboardPaddle"
+      ],
+      "defaultWeights": [
+        0
+      ]
+    },
+    {
+      "node": "hold",
+      "mesh": "holdMesh",
+      "targets": [
+        "Damage_CrackedLootHold"
+      ],
+      "defaultWeights": [
+        0
+      ]
+    }
+  ],
+  "maps": [
+    {
+      "embeddedImage": 0,
+      "size": [
+        1024,
+        1024
+      ],
+      "role": "baseColor",
+      "colorSpace": "sRGB",
+      "derivation": "Native source resized and embedded by the builder; runtime also uses the shared map for calibrated emission."
+    }
+  ],
+  "evidenceRoot": "artifacts/boss-fidelity/e5-dredge-queen",
+  "limits": [
+    "Compact proportions and simplified machinery remain; runtime wheels are strongly foreshortened.",
+    "Dark and teal materials have weak separation in game lighting.",
+    "Whole mobile ship framing uses existing maximum zoom-out.",
+    "Full encounter suspend equivalence is not established; persistent wreck reload is separately checked.",
+    "Broad regression remains pending. The 32 unchanged tests preceded the one-line reset query guard; final guard has passing reset, nine-case loader and movement checks."
+  ],
+  "runtimeEvidence": {
+    "rawStates": "artifacts/boss-fidelity/e5-dredge-queen/runtime-final-2/report.json",
+    "optimizedStates": "artifacts/boss-fidelity/e5-dredge-queen/runtime-optimized-guarded/report.json",
+    "resetPositiveControl": "artifacts/boss-fidelity/e5-dredge-queen/reset-before/report.json",
+    "resetFixed": "artifacts/boss-fidelity/e5-dredge-queen/reset-after/report.json",
+    "loaderLifecycle": "artifacts/boss-fidelity/e5-dredge-queen/runtime-lifecycle-guarded/report.json",
+    "movementInterpolation": "artifacts/boss-fidelity/e5-dredge-queen/runtime-motion-guarded/report.json",
+    "unchangedChecks": "artifacts/boss-fidelity/e5-dredge-queen/focused-gates/unchanged-e5/summary.json",
+    "visualReview": "artifacts/boss-fidelity/e5-dredge-queen/runtime-visual-review.md"
+  },
+  "optimized": {
+    "bytes": 1480976,
+    "sha256": "87f68ec561156ba935fbf044c658c29c18fe5a475d9cd66a76adf7799227ea67",
+    "scope": "Built GLB through actual development loader, not production JavaScript bundle."
+  }
+}

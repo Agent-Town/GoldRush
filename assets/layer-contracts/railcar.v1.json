@@ -1,0 +1,112 @@
+{
+  "$schema": "gold-rush layer contract v1",
+  "batch": "boss-fidelity-e2-railcar-2026-09-08",
+  "status": "export-and-runtime-verified",
+  "asset": "assets/pilots/railcar-3d/railcar.glb",
+  "assetContract": "assets/pilots/railcar-3d/renders/wave4-asset-contract.json",
+  "provenance": "artifacts/boss-fidelity/e2-railcar/native-atlas-provenance.json",
+  "source": {
+    "file": "assets/raw/railcar-atlas-fidelity-e2.png",
+    "generator": "native image_gen",
+    "size": [
+      1254,
+      1254
+    ],
+    "sha256": "448ae3819f1d611d2b1edcefe3a353cf075b90a556dc3080b419cb175b479532"
+  },
+  "shapeReference": "assets/raw/plate-e2-boss-component.png",
+  "maps": [
+    {
+      "embeddedImage": 0,
+      "role": "baseColor",
+      "size": [
+        1024,
+        1024
+      ],
+      "colorSpace": "sRGB",
+      "derivation": "Native source resized by build_railcar.py and embedded directly in the GLB",
+      "sha256": "f9dd92b671651ce66e006dd1d46f45db88a10f9e6a17baafa243315f388b7d82"
+    }
+  ],
+  "uvRegions": {
+    "dark": [
+      0.02,
+      0.515,
+      0.24,
+      0.98
+    ],
+    "brass": [
+      0.265,
+      0.515,
+      0.49,
+      0.98
+    ],
+    "teal": [
+      0.515,
+      0.515,
+      0.74,
+      0.98
+    ],
+    "soot": [
+      0.765,
+      0.515,
+      0.98,
+      0.98
+    ],
+    "iron": [
+      0.02,
+      0.02,
+      0.24,
+      0.49
+    ],
+    "edge": [
+      0.265,
+      0.02,
+      0.49,
+      0.49
+    ],
+    "glass": [
+      0.515,
+      0.02,
+      0.74,
+      0.49
+    ],
+    "damage": [
+      0.765,
+      0.02,
+      0.98,
+      0.49
+    ]
+  },
+  "geometry": {
+    "sourceLadder": "derive",
+    "triangleCeiling": 12000,
+    "length": 3.3,
+    "railGauge": 0.78,
+    "materialCount": 1,
+    "embeddedImageCount": 1,
+    "morphs": {
+      "Railcar_Wheels": "Damage_BentWheels",
+      "Railcar_Boiler": "Damage_VentingBoiler",
+      "Railcar_Cabin": "Damage_CrackedCabin"
+    },
+    "triangles": 11936,
+    "boundsSize": [
+      3.3,
+      1.242,
+      1.248279
+    ],
+    "boundsAxes": [
+      "length",
+      "height",
+      "width"
+    ],
+    "byteIdenticalReexport": true
+  },
+  "consumers": [
+    "src/entities/pools.ts"
+  ],
+  "notes": "Three component meshes retain one damage morph each. The GLB embeds its atlas and is loaded directly; no sprite extraction or generated sprite slot is required. Exported counts, hash, bounds and byte-identical re-export are verified; Desktop/mobile runtime QA passed: 6 focused route/material checks and 14 unchanged encounter/lifecycle tests, with final screenshots and exact crops. See reviews/sol-boss-fidelity-e2-railcar.md.",
+  "sha256": "206a539a40c57791fc249c31912d98b00709d47ff808d6409cc1c89c0e99da21",
+  "bytes": 2922104
+}

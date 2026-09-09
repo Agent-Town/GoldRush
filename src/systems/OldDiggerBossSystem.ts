@@ -5,6 +5,7 @@ import { performanceTierDiagnostics } from '../game/PerformanceTier';
 import type { BossStoryEmitter } from '../story/signals';
 import type { OldDiggerGentlePayload } from '../game/TileStateStore';
 import { disposeObject3D } from '../utils/dispose';
+import * as Terrain from '../world/Terrain';
 
 const VARIANT = 'old_digger';
 const HULL_ID = 'hull';
@@ -12,7 +13,7 @@ const DRONE_VARIANT = 'maintenance_drone';
 const DRONE_LABEL = 'Maintenance Drone';
 const HAZARD_SOURCE_ID = -7;
 const OLD_DIGGER_3D_URL = new URL('../../assets/pilots/old-digger-3d/old-digger.glb', import.meta.url).href;
-const OLD_DIGGER_3D_TRIANGLES = 7_192;
+const OLD_DIGGER_3D_TRIANGLES = 16_104;
 // E9 §BOSS state law (asset contract): working machine → intact gentle reprogramming.
 // No damage or kill morph EXISTS — the model itself refuses the wrong verb.
 const OLD_DIGGER_3D_COMPONENTS = {
@@ -118,6 +119,12 @@ export class OldDiggerBossSystem {
   private persistentGentle = false;
   private readonly restPosition = new THREE.Vector3();
   private lastAt = 0;
+  private machineYaw = 0;
+  private readonly modelSupports: [THREE.Vector3[], THREE.Vector3[]] = [[], []];
+  private readonly groundPoint = new THREE.Vector3();
+  private readonly groundNormal = new THREE.Vector3();
+  private readonly groundUp = new THREE.Vector3(0, 1, 0);
+  private readonly groundTilt = new THREE.Quaternion();
   private oldDigger3dState: OldDigger3dState;
   private oldDigger3dLoadSerial = 0;
   private oldDigger3dModel?: THREE.Object3D;
@@ -390,6 +397,7 @@ export class OldDiggerBossSystem {
     this.gentle = false;
     this.persistentGentle = false;
     this.lastAt = 0;
+    this.machineYaw = 0;
     if (this.enabled) this.restorePersistentGentle();
     this.syncPresentation();
   }
@@ -535,16 +543,39 @@ export class OldDiggerBossSystem {
     if (visible) this.ensureOldDigger3d();
     const center = this.machinePosition();
     const modelMounted = this.oldDigger3dState === 'ready' && this.oldDigger3dModel?.visible === true;
-    this.machine.position.set(center.x, 0, center.z);
+    this.machine.position.set(center.x, Terrain.visualY(center.x, center.z, 0), center.z);
     this.machine.visible = visible;
     this.machinePrimitive.visible = !modelMounted;
     const target = this.surveyPath[this.surveyIndex];
-    if (!this.gentle && target) this.machine.rotation.y = Math.atan2(target.x - center.x, target.z - center.z);
+    if (!this.gentle && target) this.machineYaw = Math.atan2(target.x - center.x, target.z - center.z);
+    this.machine.rotation.set(0, this.machineYaw, 0);
     (this.primitiveTapeDeck.material as THREE.MeshStandardMaterial).color.set(this.gentle ? '#62d7cd' : '#6a4b35');
     this.surveyMarker.position.set(center.x, 0.08, center.z);
     this.surveyMarker.visible = this.started && this.act === 1 && !this.gentle;
     this.updateOldDigger3d();
+    if (this.oldDigger3dState === 'ready') this.groundModel();
     this.publishOldDigger3d();
+  }
+
+  private groundModel(): void {
+    const supports = this.modelSupports[this.gentle ? 1 : 0];
+    if (!supports.length) return;
+    let halfX = .1, halfZ = .1;
+    for (const p of supports) { halfX = Math.max(halfX, Math.abs(p.x)); halfZ = Math.max(halfZ, Math.abs(p.z)); }
+    const cos = Math.cos(this.machineYaw), sin = Math.sin(this.machineYaw), origin = this.machine.position;
+    const height = (x: number, z: number) => Terrain.visualY(origin.x + cos * x + sin * z, origin.z - sin * x + cos * z, 0);
+    const h00 = height(-halfX, -halfZ), h10 = height(halfX, -halfZ), h01 = height(-halfX, halfZ), h11 = height(halfX, halfZ);
+    this.groundNormal.set(-(h10 + h11 - h00 - h01) / (4 * halfX), 1, -(h01 + h11 - h00 - h10) / (4 * halfZ)).normalize();
+    this.groundTilt.setFromUnitVectors(this.groundUp, this.groundNormal);
+    this.machine.quaternion.multiply(this.groundTilt);
+    origin.y = 0;
+    this.machine.updateWorldMatrix(true, true);
+    let lift = -Infinity;
+    for (const p of supports) {
+      this.groundPoint.copy(p).applyMatrix4(this.machine.matrixWorld);
+      lift = Math.max(lift, Terrain.visualY(this.groundPoint.x, this.groundPoint.z, 0) - this.groundPoint.y);
+    }
+    origin.y = lift + .025;
   }
 
   private ensureOldDigger3d(): void {
@@ -605,9 +636,44 @@ export class OldDiggerBossSystem {
       mesh.receiveShadow = true;
     });
     if (meshCount !== 3 || meshes.size !== 3 || materials.size !== 1 || triangles !== OLD_DIGGER_3D_TRIANGLES) return null;
+    model.updateWorldMatrix(true, true);
+    const inverse = model.matrixWorld.clone().invert(), transform = new THREE.Matrix4(), point = new THREE.Vector3();
+    const supports: [THREE.Vector3[], THREE.Vector3[]] = [[], []];
+    for (const state of [0, 1] as const) {
+      const cells = new Map<string, THREE.Vector3>();
+      for (const [name, mesh] of meshes) {
+        if (name === 'gantry') continue;
+        transform.multiplyMatrices(inverse, mesh.matrixWorld);
+        mesh.morphTargetInfluences![0] = state;
+        for (let i = 0; i < mesh.geometry.getAttribute('position').count; i++) {
+          mesh.getVertexPosition(i, point).applyMatrix4(transform);
+          if (![point.x, point.y, point.z].every(Number.isFinite)) return null;
+          if (point.y > .8) continue;
+          // Keep the lowest contact in each small cell, avoiding per-frame mesh scans.
+          const key = `${Math.round(point.x * 4)}:${Math.round(point.z * 4)}`;
+          const previous = cells.get(key);
+          if (!previous || point.y < previous.y) cells.set(key, point.clone());
+        }
+        mesh.morphTargetInfluences![0] = 0;
+      }
+      supports[state] = [...cells.values()];
+      if (!supports[state].length) return null;
+    }
+    this.modelSupports[0] = supports[0];
+    this.modelSupports[1] = supports[1];
     for (const mesh of meshes.values()) {
       const material = (mesh.material as THREE.MeshStandardMaterial).clone();
       material.emissiveMap = material.map;
+      material.onBeforeCompile = (shader) => {
+        shader.fragmentShader = shader.fragmentShader.replace('#include <emissivemap_fragment>', `
+          #include <emissivemap_fragment>
+          #ifdef USE_EMISSIVEMAP
+            float glass = step(.37, vEmissiveMapUv.x) * step(.37, vEmissiveMapUv.y) * step(vEmissiveMapUv.y, .63);
+            totalEmissiveRadiance *= mix(.12, 1.8, glass);
+          #endif
+        `);
+      };
+      material.customProgramCacheKey = () => 'old-digger-glass-v1';
       mesh.material = material;
     }
     for (const material of materials) material.dispose();
@@ -620,8 +686,8 @@ export class OldDiggerBossSystem {
     for (const mesh of this.oldDigger3dMeshes.values()) {
       if (mesh.morphTargetInfluences) mesh.morphTargetInfluences[0] = this.gentle ? 1 : 0;
       const material = mesh.material as THREE.MeshStandardMaterial;
-      material.emissive.set(this.gentle ? '#62d7cd' : '#fff8e8');
-      material.emissiveIntensity = this.gentle ? 2.4 : 2;
+      material.emissive.set('#ffffff');
+      material.emissiveIntensity = 1;
     }
   }
 
@@ -633,6 +699,7 @@ export class OldDiggerBossSystem {
       this.oldDigger3dModel = undefined;
     }
     this.oldDigger3dMeshes.clear();
+    this.modelSupports[0].length = this.modelSupports[1].length = 0;
     this.oldDigger3dState = nextState;
     this.publishOldDigger3d();
   }

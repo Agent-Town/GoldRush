@@ -1,7 +1,9 @@
 import * as THREE from 'three';
+import { ConvexHull } from 'three/examples/jsm/math/ConvexHull.js';
 import type { ClaimJumperEnemy } from '../entities/Enemy';
 import { Balance } from '../game/Balance';
 import { performanceTierDiagnostics } from '../game/PerformanceTier';
+import { activeContract } from '../meta/ContractFamilies';
 import { disposeObject3D } from '../utils/dispose';
 import * as Terrain from '../world/Terrain';
 import type { PowerGraphCommand, PowerNodeSnapshot } from './PowerGraph';
@@ -10,7 +12,11 @@ const CRAWLER_VARIANT = 'dynamo_crawler';
 const COMPONENT_IDS = ['drain_mast', 'tracks', 'capacitor_bank'] as const;
 type CrawlerComponentId = typeof COMPONENT_IDS[number];
 const CRAWLER_3D_URL = new URL('../../assets/pilots/crawler-3d/crawler.glb', import.meta.url).href;
-const CRAWLER_3D_TRIANGLES = 11_980;
+const CRAWLER_3D_TRIANGLES = 11_760;
+const CRAWLER_3D_SCALE = 3.1;
+const CRAWLER_3D_LONGITUDINAL_SHIFT = -0.45;
+const CRAWLER_3D_TILT_PIVOT_Y = 1.1;
+const CRAWLER_3D_FILL = new THREE.Color('#ffffff');
 const CRAWLER_DAMAGE_THRESHOLD = 0.5;
 const CRAWLER_3D_COMPONENTS = {
   drain_mast: { mesh: 'drain_mast', morph: 'Damage_ToppledDrainMast', damageColor: '#62d7cd' },
@@ -64,7 +70,7 @@ export class CrawlerBossSystem {
   private readonly beamTeal = new THREE.Mesh(new THREE.CylinderGeometry(0.11, 0.11, 1, 8), new THREE.MeshBasicMaterial({ color: '#62d7cd' }));
   private readonly beamAmber = new THREE.Mesh(new THREE.CylinderGeometry(0.14, 0.14, 1, 8), new THREE.MeshBasicMaterial({ color: '#f2a43b' }));
   private readonly dial = new THREE.Group();
-  private readonly dialPointer = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.1, 0.72), new THREE.MeshBasicMaterial({ color: '#fff8e8' }));
+  private readonly dialPointer = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.1, 0.72), new THREE.MeshBasicMaterial({ color: '#fff8e8', transparent: true }));
   private seenBoss = false;
   private act: 0 | 1 | 2 | 3 = 0;
   private flickerEvents = 0;
@@ -87,6 +93,20 @@ export class CrawlerBossSystem {
   private readonly crawler3dMeshes = new Map<CrawlerComponentId, THREE.Mesh>();
   private readonly crawler3dOffsets = new Map<CrawlerComponentId, THREE.Vector3>();
   private readonly crawler3dCenter = new THREE.Vector3();
+  private readonly crawler3dCollectorAnchor = new THREE.Vector3();
+  private readonly crawler3dDamagedCollectorAnchor = new THREE.Vector3();
+  private readonly crawler3dLocalBounds = new Map<CrawlerComponentId, readonly [THREE.Box3, THREE.Box3]>();
+  private readonly crawler3dHullPoints = new Map<CrawlerComponentId, readonly [THREE.Vector3[], THREE.Vector3[]]>();
+  private readonly crawler3dBarPoints: THREE.Vector3[] = [];
+  private readonly crawler3dComponentBounds = new Map<CrawlerComponentId, THREE.Box3>();
+  private readonly crawler3dBounds = new THREE.Box3();
+  private readonly crawler3dPoint = new THREE.Vector3();
+  private readonly crawler3dSupportPoints: THREE.Vector3[] = [];
+  private readonly crawler3dSupportHalfSize = new THREE.Vector2();
+  private readonly crawler3dUp = new THREE.Vector3(0, 1, 0);
+  private readonly crawler3dNormal = new THREE.Vector3();
+  private readonly crawler3dTilt = new THREE.Quaternion();
+  private crawler3dYaw = 0;
 
   constructor(
     private readonly enemies: () => readonly ClaimJumperEnemy[],
@@ -117,7 +137,7 @@ export class CrawlerBossSystem {
     this.wreck.name = 'CrawlerWreck.Roost';
     this.beam.name = 'CrawlerDrainBeam.TealToAmber';
     this.beam.add(this.beamTeal, this.beamAmber);
-    const dialRing = new THREE.Mesh(new THREE.TorusGeometry(0.82, 0.12, 8, 32), new THREE.MeshBasicMaterial({ color: '#ffd95a', depthWrite: false }));
+    const dialRing = new THREE.Mesh(new THREE.TorusGeometry(0.82, 0.12, 8, 32), new THREE.MeshBasicMaterial({ color: '#ffd95a', transparent: true, depthWrite: false }));
     dialRing.rotation.x = Math.PI / 2;
     this.dialPointer.position.y = 0.05;
     this.dial.add(dialRing, this.dialPointer);
@@ -185,6 +205,11 @@ export class CrawlerBossSystem {
     if (mast && target) {
       const start = new THREE.Vector3(target.x, Terrain.visualY(target.x, target.z, 1.8), target.z);
       const end = new THREE.Vector3(mast.position.x, Terrain.visualY(mast.position.x, mast.position.z, 3.2), mast.position.z);
+      const mastMesh = this.crawler3dMeshes.get('drain_mast');
+      if (modelMounted && mastMesh) {
+        end.copy(this.crawler3dCollectorAnchor).lerp(this.crawler3dDamagedCollectorAnchor, mastMesh.morphTargetInfluences?.[0] ?? 0);
+        end.applyMatrix4(this.crawler3dModel!.matrixWorld);
+      }
       const middle = start.clone().lerp(end, 0.5);
       this.placeBeamSegment(this.beamTeal, start, middle);
       this.placeBeamSegment(this.beamAmber, middle, end);
@@ -194,6 +219,11 @@ export class CrawlerBossSystem {
     this.dial.visible = dialVisible;
     if (capacitor) {
       this.dial.position.set(capacitor.position.x, Terrain.visualY(capacitor.position.x, capacitor.position.z, 2.2), capacitor.position.z);
+      const bounds = modelMounted && dialVisible ? this.crawler3dComponentBounds.get('capacitor_bank') : null;
+      if (bounds) {
+        bounds.getCenter(this.dial.position);
+        this.dial.position.y = bounds.max.y + 0.3;
+      }
       const progress = THREE.MathUtils.clamp(1 - (this.nextBurstAt - at) / Balance.crawler.burstDialSeconds, 0, 1);
       this.dial.scale.setScalar(0.75 + progress * 0.5);
       this.dialPointer.rotation.y = -Math.PI * 0.75 + progress * Math.PI * 1.5;
@@ -220,6 +250,12 @@ export class CrawlerBossSystem {
 
   get overchargeActive(): boolean {
     return this.lastAt < this.overchargeUntil;
+  }
+
+  modelBounds(groupId: string): { bounds: THREE.Box3; points: readonly THREE.Vector3[] } | null {
+    return this.crawler3dState === 'ready' && this.crawler3dGroupId === groupId && this.crawler3dModel?.visible
+      ? { bounds: this.crawler3dBounds, points: this.crawler3dBarPoints }
+      : null;
   }
 
   restoreWreck(position: THREE.Vector3): void {
@@ -449,6 +485,56 @@ export class CrawlerBossSystem {
       mesh.receiveShadow = true;
     });
     if (meshCount !== 3 || meshes.size !== 3 || materials.size !== 1 || triangles !== CRAWLER_3D_TRIANGLES) return null;
+    const collectorAnchor = meshes.get('drain_mast')!.userData.collectorAnchor as { intact?: unknown; damaged?: unknown } | undefined;
+    const isPoint = (value: unknown): value is [number, number, number] => Array.isArray(value)
+      && value.length === 3 && value.every((coordinate) => typeof coordinate === 'number' && Number.isFinite(coordinate));
+    if (!collectorAnchor || !isPoint(collectorAnchor.intact) || !isPoint(collectorAnchor.damaged)) return null;
+    this.crawler3dCollectorAnchor.fromArray(collectorAnchor.intact);
+    this.crawler3dDamagedCollectorAnchor.fromArray(collectorAnchor.damaged);
+    // Authored anchors and all geometry caches use asset-root coordinates.
+    // Production quantization can rebase individual mesh vertices/transforms.
+    model.updateWorldMatrix(true, true);
+    const worldToAsset = model.matrixWorld.clone().invert();
+    const meshToAsset = new THREE.Matrix4();
+    const supportPoints = new Map<string, THREE.Vector3>();
+    const tracks = meshes.get('tracks')!;
+    const trackPositions = tracks.geometry.getAttribute('position');
+    meshToAsset.multiplyMatrices(worldToAsset, tracks.matrixWorld);
+    this.crawler3dSupportHalfSize.set(0, 0);
+    for (let vertex = 0; vertex < trackPositions.count; vertex += 1) {
+      this.crawler3dPoint.fromBufferAttribute(trackPositions, vertex).applyMatrix4(meshToAsset);
+      if (![this.crawler3dPoint.x, this.crawler3dPoint.y, this.crawler3dPoint.z].every(Number.isFinite)) return null;
+      if (this.crawler3dPoint.y >= 0.06) continue;
+      const key = `${this.crawler3dPoint.x.toFixed(4)}:${this.crawler3dPoint.z.toFixed(4)}`;
+      const previous = supportPoints.get(key);
+      if (!previous || previous.y > this.crawler3dPoint.y) supportPoints.set(key, this.crawler3dPoint.clone());
+      this.crawler3dSupportHalfSize.x = Math.max(this.crawler3dSupportHalfSize.x, Math.abs(this.crawler3dPoint.x));
+      this.crawler3dSupportHalfSize.y = Math.max(this.crawler3dSupportHalfSize.y, Math.abs(this.crawler3dPoint.z));
+    }
+    if (supportPoints.size === 0 || this.crawler3dSupportHalfSize.x <= 0 || this.crawler3dSupportHalfSize.y <= 0) return null;
+    this.crawler3dSupportPoints.splice(0, this.crawler3dSupportPoints.length, ...supportPoints.values());
+    for (const [id, mesh] of meshes) {
+      meshToAsset.multiplyMatrices(worldToAsset, mesh.matrixWorld);
+      const bounds = [new THREE.Box3(), new THREE.Box3()] as const;
+      const hullPoints: [THREE.Vector3[], THREE.Vector3[]] = [[], []];
+      for (const damaged of [0, 1] as const) {
+        const points: THREE.Vector3[] = [];
+        mesh.morphTargetInfluences![0] = damaged;
+        for (let vertex = 0; vertex < mesh.geometry.getAttribute('position').count; vertex += 1) {
+          mesh.getVertexPosition(vertex, this.crawler3dPoint).applyMatrix4(meshToAsset);
+          bounds[damaged].expandByPoint(this.crawler3dPoint);
+          if (![this.crawler3dPoint.x, this.crawler3dPoint.y, this.crawler3dPoint.z].every(Number.isFinite)) return null;
+          points.push(this.crawler3dPoint.clone());
+        }
+        if (bounds[damaged].min.x >= bounds[damaged].max.x || bounds[damaged].min.y >= bounds[damaged].max.y || bounds[damaged].min.z >= bounds[damaged].max.z) return null;
+        const hull = new ConvexHull().setFromPoints(points);
+        hullPoints[damaged] = [...new Set(hull.faces.flatMap((face) => [0, 1, 2].map((edge) => face.getEdge(edge).vertex.point)))];
+      }
+      mesh.morphTargetInfluences![0] = 0;
+      this.crawler3dLocalBounds.set(id, bounds);
+      this.crawler3dHullPoints.set(id, hullPoints);
+      this.crawler3dComponentBounds.set(id, new THREE.Box3());
+    }
     for (const mesh of meshes.values()) {
       const material = (mesh.material as THREE.MeshStandardMaterial).clone();
       material.emissiveMap = material.map;
@@ -463,32 +549,96 @@ export class CrawlerBossSystem {
     const anchor = components.values().next().value as ClaimJumperEnemy | undefined;
     if (!anchor?.bossGroupId) return;
     if (this.crawler3dGroupId !== anchor.bossGroupId) {
+      const contract = activeContract();
+      const baron = contract.twist.baron;
+      const route = contract.tileParams.rails?.[baron?.railRouteIndex ?? 0];
+      const start = route?.points[0], end = route?.points.at(-1);
+      if (baron?.variantId !== CRAWLER_VARIANT || !start || !end) return;
+      const length = Math.hypot(end.x - start.x, end.z - start.z);
+      if (length < 0.001) return;
+      const alongX = (end.x - start.x) / length, alongZ = (end.z - start.z) / length;
+      this.crawler3dYaw = Math.atan2(-alongZ, alongX);
       this.crawler3dGroupId = anchor.bossGroupId;
       this.crawler3dOffsets.clear();
-      this.crawler3dCenter.set(0, 0, 0);
-      for (const enemy of components.values()) this.crawler3dCenter.add(enemy.position);
-      this.crawler3dCenter.multiplyScalar(1 / components.size);
-      for (const [id, enemy] of components) this.crawler3dOffsets.set(id, enemy.position.clone().sub(this.crawler3dCenter));
+      // The complete authored formation survives late loading, reversal and any
+      // component loss. Dead positions become stale while surviving routes move.
+      const authored = baron.components ?? [];
+      const meanAlong = authored.reduce((sum, part, index) => sum + (part.xOffset ?? index * 1.1), 0) / authored.length;
+      const meanSide = authored.reduce((sum, part) => sum + (part.zOffset ?? 0), 0) / authored.length;
+      for (const [index, part] of authored.entries()) {
+        if (!COMPONENT_IDS.includes(part.id as CrawlerComponentId)) continue;
+        const along = (part.xOffset ?? index * 1.1) - meanAlong, side = (part.zOffset ?? 0) - meanSide;
+        this.crawler3dOffsets.set(part.id as CrawlerComponentId, new THREE.Vector3(alongX * along - alongZ * side, 0, alongZ * along + alongX * side));
+      }
     }
-    const anchorId = anchor.bossComponentId as CrawlerComponentId;
-    this.crawler3dCenter.copy(anchor.position);
-    const anchorOffset = this.crawler3dOffsets.get(anchorId);
-    if (anchorOffset) this.crawler3dCenter.sub(anchorOffset);
+    this.crawler3dCenter.set(0, 0, 0);
+    for (const [id, enemy] of components) {
+      this.crawler3dCenter.add(enemy.position);
+      const offset = this.crawler3dOffsets.get(id);
+      if (offset) this.crawler3dCenter.sub(offset);
+    }
+    this.crawler3dCenter.multiplyScalar(1 / components.size);
+    this.crawler3dCenter.x += Math.cos(this.crawler3dYaw) * CRAWLER_3D_LONGITUDINAL_SHIFT;
+    this.crawler3dCenter.z -= Math.sin(this.crawler3dYaw) * CRAWLER_3D_LONGITUDINAL_SHIFT;
     this.crawler3dModel.position.set(
       this.crawler3dCenter.x,
-      Terrain.visualY(this.crawler3dCenter.x, this.crawler3dCenter.z, 0),
+      0,
       this.crawler3dCenter.z,
     );
-    this.crawler3dModel.rotation.y = Math.PI / 2 - anchor.group.rotation.y;
+    this.crawler3dModel.rotation.set(0, this.crawler3dYaw, 0);
+    this.crawler3dModel.scale.setScalar(CRAWLER_3D_SCALE);
+    this.groundCrawler3d();
     this.crawler3dModel.visible = true;
     for (const [id, mesh] of this.crawler3dMeshes) {
       const enemy = components.get(id);
       const damaged = this.destroyed.has(id) || Boolean(enemy && enemy.currentHp / Math.max(1, enemy.maxHp) <= CRAWLER_DAMAGE_THRESHOLD);
       if (mesh.morphTargetInfluences) mesh.morphTargetInfluences[0] = damaged ? 1 : 0;
       const material = mesh.material as THREE.MeshStandardMaterial;
-      material.emissive.set(damaged ? CRAWLER_3D_COMPONENTS[id].damageColor : '#fff8e8');
-      material.emissiveIntensity = damaged ? 3 : 2;
+      material.emissive.copy(CRAWLER_3D_FILL);
+      if (damaged) material.emissive.set(CRAWLER_3D_COMPONENTS[id].damageColor).lerp(CRAWLER_3D_FILL, 0.8);
+      material.emissiveIntensity = damaged ? 2.2 : 2;
     }
+    this.crawler3dModel.updateWorldMatrix(true, true);
+    this.crawler3dBounds.makeEmpty();
+    let barPointCount = 0;
+    for (const [id, mesh] of this.crawler3dMeshes) {
+      const bounds = this.crawler3dComponentBounds.get(id)!;
+      const damaged = mesh.morphTargetInfluences?.[0] === 1 ? 1 : 0;
+      bounds.copy(this.crawler3dLocalBounds.get(id)![damaged]).applyMatrix4(this.crawler3dModel.matrixWorld);
+      this.crawler3dBounds.union(bounds);
+      for (const point of this.crawler3dHullPoints.get(id)![damaged]) {
+        const worldPoint = this.crawler3dBarPoints[barPointCount] ?? (this.crawler3dBarPoints[barPointCount] = new THREE.Vector3());
+        worldPoint.copy(point).applyMatrix4(this.crawler3dModel.matrixWorld);
+        barPointCount += 1;
+      }
+    }
+    this.crawler3dBarPoints.length = barPointCount;
+  }
+
+  private groundCrawler3d(): void {
+    const model = this.crawler3dModel!;
+    const halfX = this.crawler3dSupportHalfSize.x * CRAWLER_3D_SCALE, halfZ = this.crawler3dSupportHalfSize.y * CRAWLER_3D_SCALE;
+    const cos = Math.cos(this.crawler3dYaw), sin = Math.sin(this.crawler3dYaw);
+    const height = (x: number, z: number) => Terrain.visualY(model.position.x + cos * x + sin * z, model.position.z - sin * x + cos * z, 0);
+    const h00 = height(-halfX, -halfZ), h10 = height(halfX, -halfZ), h01 = height(-halfX, halfZ), h11 = height(halfX, halfZ);
+    const slopeX = (h10 + h11 - h00 - h01) / (4 * halfX), slopeZ = (h01 + h11 - h00 - h10) / (4 * halfZ);
+    this.crawler3dNormal.set(-slopeX, 1, -slopeZ).normalize();
+    this.crawler3dTilt.setFromUnitVectors(this.crawler3dUp, this.crawler3dNormal);
+    model.quaternion.multiply(this.crawler3dTilt);
+    // Pivot at lower boiler height to keep the mast over its fixed hit zone on
+    // slopes. Re-ground the translated footprint; no suspension or mesh stretch.
+    this.crawler3dPoint.copy(this.crawler3dUp).applyQuaternion(model.quaternion);
+    model.position.x -= this.crawler3dPoint.x * CRAWLER_3D_SCALE * CRAWLER_3D_TILT_PIVOT_Y;
+    model.position.z -= this.crawler3dPoint.z * CRAWLER_3D_SCALE * CRAWLER_3D_TILT_PIVOT_Y;
+    model.position.y = 0;
+    model.updateWorldMatrix(true, true);
+    let lift = Number.NEGATIVE_INFINITY;
+    // Cache the intact support vertices once; damage debris must not lift the chassis.
+    for (const point of this.crawler3dSupportPoints) {
+      this.crawler3dPoint.copy(point).applyMatrix4(model.matrixWorld);
+      lift = Math.max(lift, Terrain.visualY(this.crawler3dPoint.x, this.crawler3dPoint.z, 0) - this.crawler3dPoint.y);
+    }
+    model.position.y = lift + 0.025;
   }
 
   private disposeCrawler3d(nextState: Crawler3dState): void {
@@ -500,6 +650,12 @@ export class CrawlerBossSystem {
     }
     this.crawler3dMeshes.clear();
     this.crawler3dOffsets.clear();
+    this.crawler3dLocalBounds.clear();
+    this.crawler3dHullPoints.clear();
+    this.crawler3dBarPoints.length = 0;
+    this.crawler3dComponentBounds.clear();
+    this.crawler3dBounds.makeEmpty();
+    this.crawler3dSupportPoints.length = 0;
     this.crawler3dGroupId = null;
     this.crawler3dState = nextState;
     this.publishCrawler3d();

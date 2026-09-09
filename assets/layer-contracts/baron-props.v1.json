@@ -1,0 +1,55 @@
+{
+  "$schema": "gold-rush layer contract v1",
+  "batch": "boss-fidelity-e1-baron-2026-09-08",
+  "asset": "assets/pilots/baron-props-3d/baron-props.glb",
+  "assetContract": "assets/pilots/baron-props-3d/baron-props-asset-contract.json",
+  "provenance": "artifacts/boss-fidelity/e1-baron/native-atlas-provenance.json",
+  "source": {
+    "file": "assets/raw/baron-props-atlas-fidelity-e1.png",
+    "generator": "native image_gen",
+    "size": [1254, 1254],
+    "sha256": "ad5b3f8796270420497aadf6c1b837350ad51ddc83e29003ac6b9f6a8939c23c"
+  },
+  "maps": [
+    {
+      "file": "assets/pilots/baron-props-3d/baron-props-atlas.png",
+      "role": "baseColor",
+      "size": [512, 512],
+      "colorSpace": "sRGB",
+      "derivation": "Native source resized by build_baron_props.py",
+      "sha256": "ea1adb5b031f16b55e2df5064c16f6cd4b32619cbb5a2e4d64f5bd248ffe7df6"
+    },
+    {
+      "file": "assets/pilots/baron-props-3d/baron-props-surface.png",
+      "role": "metallicRoughness",
+      "size": [512, 512],
+      "colorSpace": "Non-Color",
+      "channels": { "G": "roughness", "B": "metallic" },
+      "derivation": "Deterministic material values with a 4-pixel gutter beyond each UV region to prevent linear sampling seams",
+      "sha256": "238cdc48de68f52b4067bb4175f7815547fd1f0b918e9d6b6a46878202551520"
+    },
+    {
+      "file": "assets/pilots/baron-props-3d/baron-props-emission.png",
+      "role": "emissive",
+      "size": [512, 512],
+      "colorSpace": "sRGB",
+      "derivation": "Full base-color emission in teal and ember regions, with edge-clamped 4-pixel gutters; 12% base-color fill elsewhere for illustrated shadow legibility",
+      "sha256": "58fbc1ad34d64439d2193ef8226e98097e200651a23a336cde2557fa48321c55"
+    }
+  ],
+  "uvRegions": {
+    "timber": [0.022, 0.022, 0.250, 0.978],
+    "brass": [0.279, 0.022, 0.499, 0.978],
+    "iron": [0.526, 0.022, 0.723, 0.978],
+    "teal": [0.751, 0.022, 0.858, 0.978],
+    "ember": [0.885, 0.022, 0.980, 0.978]
+  },
+  "geometry": {
+    "sourceLadder": "derive",
+    "triangles": { "launcher": 2020, "rocket": 876, "powder_keg": 704 },
+    "materialCount": 1,
+    "embeddedImageCount": 3
+  },
+  "consumers": ["src/game/Game.ts", "src/systems/BaronVolleyVfx.ts"],
+  "notes": "The rack rockets' front bands use the teal UV region for its front-facing warning cue; geometry and triangle counts are unchanged. The GLB embeds all maps and is loaded directly. No sprite extraction or generated sprite slot is required. The approved Baron body and banner art are unchanged."
+}

@@ -87,27 +87,81 @@ export class E10StaticBossSystem {
     private readonly story: BossStoryEmitter,
   ) {
     this.group.name = 'TheQuiet.Static';
+    // An un-inked absence: no lit surface, volume, or physical boss body.
     this.heart = new THREE.Mesh(
-      new THREE.SphereGeometry(Balance.e10Static.heartRadius, 24, 16),
-      new THREE.MeshBasicMaterial({
-        color: Balance.e10Static.heartColor,
+      new THREE.PlaneGeometry(Balance.e10Static.heartRadius * 5, Balance.e10Static.heartRadius * 5),
+      new THREE.ShaderMaterial({
         transparent: true,
-        opacity: 0.72,
         depthWrite: false,
+        uniforms: { strength: { value: 0 }, paper: { value: new THREE.Color(Balance.e10Static.heartColor) } },
+        vertexShader: `varying vec2 vUv;
+          void main() { vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
+        fragmentShader: `varying vec2 vUv;
+          uniform float strength;
+          uniform vec3 paper;
+          float noise(vec2 p) {
+            vec2 cell = floor(p), f = fract(p);
+            f = f * f * (3.0 - 2.0 * f);
+            vec4 h = fract(sin(vec4(dot(cell, vec2(127.1, 311.7)),
+              dot(cell + vec2(1, 0), vec2(127.1, 311.7)),
+              dot(cell + vec2(0, 1), vec2(127.1, 311.7)),
+              dot(cell + vec2(1, 1), vec2(127.1, 311.7)))) * 43758.5453);
+            return mix(mix(h.x, h.y, f.x), mix(h.z, h.w, f.x), f.y);
+          }
+          void main() {
+            vec2 p = (vUv - .5) * 2.2;
+            p.y += .5;
+            p.x = abs(p.x);
+            float d;
+            if (p.x + p.y > 1.0) {
+              d = length(p - vec2(.25, .75)) - .353553;
+            } else {
+              vec2 a = p - vec2(0.0, 1.0);
+              vec2 b = p - .5 * max(p.x + p.y, 0.0);
+              d = sqrt(min(dot(a, a), dot(b, b))) * sign(p.x - p.y);
+            }
+            float grain = noise(vUv * 260.0) - .5;
+            d += (noise(vUv * 47.0) - .5) * .045 + grain * .014;
+            float core = 1.0 - smoothstep(-.08, .045, d);
+            float veil = (1.0 - smoothstep(.0, .4, d)) * .24;
+            float rings = pow(.5 + .5 * cos(d * 95.0 + noise(vUv * 36.0) * 3.0), 5.0)
+              * smoothstep(.01, .035, d) * (1.0 - smoothstep(.06, .38, d)) * .28;
+            float alpha = max(core * (.83 + noise(vUv * 31.0) * .1), veil + rings) * (.35 + strength * .65);
+            if (alpha < .003) discard;
+            gl_FragColor = vec4(paper * (1.0 - grain * .06), alpha);
+            #include <tonemapping_fragment>
+            #include <colorspace_fragment>
+          }`,
       }),
     );
+    this.heart.onBeforeRender = (_renderer, _scene, camera) => {
+      this.heart.quaternion.copy(camera.quaternion);
+      this.heart.updateWorldMatrix(false, false);
+    };
     this.auraRing = new THREE.Mesh(
-      new THREE.RingGeometry(
-        Balance.e10Static.auraRadius - Balance.e10Static.auraRingWidth,
-        Balance.e10Static.auraRadius,
-        48,
-      ),
-      new THREE.MeshBasicMaterial({
-        color: Balance.e10Static.auraColor,
+      new THREE.PlaneGeometry(Balance.e10Static.auraRadius * 2, Balance.e10Static.auraRadius * 2),
+      new THREE.ShaderMaterial({
         transparent: true,
-        opacity: 0.32,
         side: THREE.DoubleSide,
         depthWrite: false,
+        uniforms: { strength: { value: 0 }, paper: { value: new THREE.Color(Balance.e10Static.auraColor) } },
+        vertexShader: `varying vec2 vUv;
+          void main() { vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
+        fragmentShader: `varying vec2 vUv;
+          uniform float strength;
+          uniform vec3 paper;
+          void main() {
+            vec2 p = (vUv - .5) * 2.0;
+            float angle = atan(p.y, p.x);
+            float r = length(p) + sin(angle * 23.0) * .004 + sin(angle * 61.0) * .002;
+            float rings = pow(.5 + .5 * cos(r * 62.0), 8.0);
+            float fade = 1.0 - smoothstep(.65, .99, r);
+            float alpha = (.1 + rings * .22) * fade * strength;
+            if (alpha < .003) discard;
+            gl_FragColor = vec4(paper, alpha);
+            #include <tonemapping_fragment>
+            #include <colorspace_fragment>
+          }`,
       }),
     );
     this.mote = new THREE.Mesh(
@@ -287,11 +341,12 @@ export class E10StaticBossSystem {
     this.heart.visible = visible && this.act < 3;
     this.auraRing.visible = visible && this.act < 3;
     this.mote.visible = this.enabled && this.act === 3;
-    this.heart.position.set(0, this.visualY(0, 52, Balance.e10Static.heartHeight), 52);
+    this.heart.position.set(0, this.visualY(0, 52, Balance.e10Static.heartHeight + Balance.e10Static.heartRadius * 2), 52);
     this.auraRing.position.set(0, this.visualY(0, 52, 0.05), 52);
     this.auraRing.scale.setScalar(0.4 + strength * 0.6);
     this.heart.scale.setScalar(0.65 + strength * 0.35);
-    (this.heart.material as THREE.MeshBasicMaterial).opacity = 0.3 + strength * 0.42;
+    (this.heart.material as THREE.ShaderMaterial).uniforms.strength.value = strength;
+    (this.auraRing.material as THREE.ShaderMaterial).uniforms.strength.value = strength;
     this.mote.position.set(0, this.visualY(0, 52, Balance.e10Static.moteHeight), 52);
     for (const state of this.states) {
       state.marker.position.set(

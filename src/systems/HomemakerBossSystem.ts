@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { ConvexHull } from 'three/examples/jsm/math/ConvexHull.js';
 import type { GoldPickupPool } from '../entities/GoldPickup';
 import type { ClaimJumperEnemy, EnemySpawnParams } from '../entities/Enemy';
 import type { EnemyPool } from '../entities/pools';
@@ -26,7 +27,7 @@ import * as Terrain from '../world/Terrain';
 
 const VARIANT = 'homemaker_9000';
 const HOMEMAKER_3D_URL = new URL('../../assets/pilots/homemaker-9000-3d/homemaker-9000.glb', import.meta.url).href;
-const HOMEMAKER_3D_TRIANGLES = 7_644;
+const HOMEMAKER_3D_TRIANGLES = 11_960;
 const HOMEMAKER_DAMAGE_THRESHOLD = 0.5;
 const RACK_SOURCE_ID = -9;
 const HOMEMAKER_3D_COMPONENTS = {
@@ -134,6 +135,7 @@ export function createHomemakerBossSystem(host: HomemakerBossHost): HomemakerBos
         return host.tileStateStore.commitAtRunEnd();
       },
     },
+    (enemy) => host.enemies.renderPositionOf(enemy),
   );
 }
 
@@ -150,7 +152,7 @@ export class HomemakerBossSystem {
   private readonly pictogram = pictogramSprite();
   private readonly tidied = [tidyMarker(-2.2), tidyMarker(2.2)];
   private readonly partsStacks = Array.from({ length: Balance.homemaker.partsStackCap }, () => partsStack());
-  private readonly anchor = new THREE.Vector3(0, 0, -8);
+  private readonly anchor = new THREE.Vector3(8, 0, 4);
   private readonly destroyed = new Set<ComponentId>();
   private readonly curated = new Set<string>();
   private readonly partsPickupIds: string[] = [];
@@ -176,6 +178,11 @@ export class HomemakerBossSystem {
   private homemaker3dLoadSerial = 0;
   private homemaker3dModel?: THREE.Object3D;
   private readonly homemaker3dMeshes = new Map<ComponentId, THREE.Mesh>();
+  private readonly modelHulls = new Map<ComponentId, readonly [THREE.Vector3[], THREE.Vector3[]]>();
+  private readonly modelSupports = new Map<ComponentId, readonly [THREE.Vector3[], THREE.Vector3[]]>();
+  private readonly modelBoundsBox = new THREE.Box3();
+  private readonly modelBarPoints: THREE.Vector3[] = [];
+  private readonly modelPoint = new THREE.Vector3();
 
   constructor(
     private readonly enemies: () => readonly ClaimJumperEnemy[],
@@ -189,6 +196,7 @@ export class HomemakerBossSystem {
     private readonly enabled: boolean,
     private readonly suppressBossSpawn: () => void,
     private readonly persistence: HomemakerPersistence,
+    private readonly renderPosition: (enemy: ClaimJumperEnemy) => Readonly<THREE.Vector3> = (enemy) => enemy.position,
   ) {
     this.homemaker3dState = performanceTierDiagnostics().tier === 'lite' ? 'lite' : 'off';
     this.group.name = 'Homemaker9000.Placeholder';
@@ -376,7 +384,8 @@ export class HomemakerBossSystem {
     this.seenBoss = true;
     this.act = 1;
     this.tidiedMarkers = 2;
-    this.anchor.set(0, 0, -8);
+    // The old arrival point overlaps the control pylon and a four-metre terrace edge.
+    this.anchor.set(8, 0, 4);
     for (const enemy of components) {
       const offset = componentOffset(enemy.bossComponentId as ComponentId);
       enemy.scriptMoveTo(this.anchor.x + offset.x, this.anchor.z + offset.z, Balance.homemaker.arrivalSpeed, { ignoreTerrain: true });
@@ -532,15 +541,46 @@ export class HomemakerBossSystem {
     this.syncPresentation();
   }
 
-  private syncPresentation(): void {
+  modelBounds(groupId: string): { bounds: THREE.Box3; points: readonly THREE.Vector3[] } | null {
+    if (this.homemaker3dState !== 'ready' || !this.homemaker3dModel?.visible) return null;
+    if (!this.liveComponents().some(enemy => enemy.bossGroupId === groupId)) return null;
+    this.syncRenderPresentation();
+    const model = this.homemaker3dModel;
+    if (!model?.visible) return null;
+    model.updateWorldMatrix(true, true);
+    this.modelBoundsBox.makeEmpty();
+    let pointIndex = 0;
+    for (const [id, mesh] of this.homemaker3dMeshes) {
+      const points = this.modelHulls.get(id)![mesh.morphTargetInfluences![0]! >= 0.5 ? 1 : 0];
+      for (const local of points) {
+        const point = this.modelBarPoints[pointIndex++] ??= new THREE.Vector3();
+        point.copy(local).applyMatrix4(model.matrixWorld);
+        this.modelBoundsBox.expandByPoint(point);
+      }
+    }
+    this.modelBarPoints.length = pointIndex;
+    return { bounds: this.modelBoundsBox, points: this.modelBarPoints };
+  }
+
+  syncRenderPresentation(): void {
+    if (this.seenBoss || this.chairPlaced) this.syncPresentation(true);
+  }
+
+  private syncPresentation(interpolated = false): void {
     const visible = this.seenBoss || this.chairPlaced;
     if (visible) this.ensureHomemaker3d();
     const components = this.liveComponents();
-    const center = this.act >= 2 || this.chairPlaced
-      ? this.anchor
-      : components.length > 0
-      ? components.reduce((sum, enemy) => sum.add(enemy.position), new THREE.Vector3()).multiplyScalar(1 / components.length)
-      : this.anchor;
+    const center = this.anchor.clone();
+    if (this.act < 2 && components.length > 0) {
+      center.set(0, 0, 0);
+      for (const enemy of components) {
+        const position = interpolated ? this.renderPosition(enemy) : enemy.position;
+        const offset = componentOffset(enemy.bossComponentId as ComponentId);
+        center.x += position.x - offset.x;
+        center.z += position.z - offset.z;
+      }
+      center.multiplyScalar(1 / components.length);
+    }
     this.machine.position.set(center.x, Terrain.visualY(center.x, center.z, 0, 2), center.z);
     this.machine.visible = visible;
     const modelMounted = this.homemaker3dState === 'ready' && this.homemaker3dModel?.visible === true;
@@ -553,7 +593,7 @@ export class HomemakerBossSystem {
       this.rackTarget.z,
     );
     this.pictogram.visible = visible;
-    this.pictogram.position.set(center.x, Terrain.visualY(center.x, center.z, 5.6, 2), center.z);
+    this.pictogram.position.set(center.x, this.machine.position.y + 5.6, center.z);
     renderPictogram(this.pictogram, this.poweredDown ? 'DONE' : this.act === 2 ? '🧹' : '✨');
     for (let index = 0; index < this.tidied.length; index += 1) {
       const marker = this.tidied[index]!;
@@ -572,6 +612,14 @@ export class HomemakerBossSystem {
       );
     }
     this.updateHomemaker3d();
+    if (modelMounted) {
+      this.groundModel();
+      let top = 0;
+      for (const [id, mesh] of this.homemaker3dMeshes) {
+        for (const point of this.modelHulls.get(id)![mesh.morphTargetInfluences![0]! >= .5 ? 1 : 0]) top = Math.max(top, point.y);
+      }
+      this.pictogram.position.y = this.machine.position.y + top + 2.8;
+    }
     this.publishHomemaker3d();
   }
 
@@ -629,7 +677,28 @@ export class HomemakerBossSystem {
       mesh.receiveShadow = true;
     });
     if (meshCount !== 3 || meshes.size !== 3 || materials.size !== 1 || triangles !== HOMEMAKER_3D_TRIANGLES) return null;
-    for (const mesh of meshes.values()) {
+    // Meshopt may move scale/translation into node transforms. Keep caches in model space.
+    model.updateWorldMatrix(true, true);
+    const inverse = model.matrixWorld.clone().invert(), transform = new THREE.Matrix4();
+    for (const [id, mesh] of meshes) {
+      transform.multiplyMatrices(inverse, mesh.matrixWorld);
+      // Reuse the Land Yacht hull pattern: camera extrema without per-frame vertex scans.
+      const states: [THREE.Vector3[], THREE.Vector3[]] = [[], []];
+      for (const state of [0, 1] as const) {
+        mesh.morphTargetInfluences![0] = state;
+        const points: THREE.Vector3[] = [];
+        for (let vertex = 0; vertex < mesh.geometry.getAttribute('position').count; vertex += 1) {
+          points.push(mesh.getVertexPosition(vertex, new THREE.Vector3()).applyMatrix4(transform));
+        }
+        const hull = new ConvexHull().setFromPoints(points);
+        states[state] = [...new Set(hull.faces.flatMap(face => [0, 1, 2].map(edge => face.getEdge(edge).vertex.point)))];
+      }
+      // Floor-facing geometry only: a roof rack is not a standing support.
+      const supports: [THREE.Vector3[], THREE.Vector3[]] = [[], []];
+      for (const state of [0, 1] as const) supports[state] = states[state].filter(point => point.y <= .4);
+      this.modelSupports.set(id, supports);
+      mesh.morphTargetInfluences![0] = 0;
+      this.modelHulls.set(id, states);
       const material = (mesh.material as THREE.MeshStandardMaterial).clone();
       material.emissiveMap = material.map;
       mesh.material = material;
@@ -646,9 +715,22 @@ export class HomemakerBossSystem {
       const damaged = this.chairPlaced || this.destroyed.has(id) || Boolean(enemy && enemy.currentHp / Math.max(1, enemy.maxHp) <= HOMEMAKER_DAMAGE_THRESHOLD);
       if (mesh.morphTargetInfluences) mesh.morphTargetInfluences[0] = damaged ? 1 : 0;
       const material = mesh.material as THREE.MeshStandardMaterial;
-      material.emissive.set(damaged ? HOMEMAKER_3D_COMPONENTS[id].damageColor : '#fff8e8');
-      material.emissiveIntensity = damaged ? 2.6 : 1.8;
+      material.emissive.set(damaged && !this.poweredDown ? HOMEMAKER_3D_COMPONENTS[id].damageColor : '#ffffff');
+      material.emissiveIntensity = this.poweredDown ? .25 : damaged ? .85 : .65;
     }
+  }
+
+  private groundModel(): void {
+    this.machine.position.y = 0;
+    this.machine.updateWorldMatrix(true, true);
+    let lift = -Infinity;
+    for (const [id, mesh] of this.homemaker3dMeshes) {
+      for (const point of this.modelSupports.get(id)![mesh.morphTargetInfluences![0]! >= .5 ? 1 : 0]) {
+        this.modelPoint.copy(point).applyMatrix4(this.homemaker3dModel!.matrixWorld);
+        lift = Math.max(lift, Terrain.visualY(this.modelPoint.x, this.modelPoint.z, 0) - this.modelPoint.y);
+      }
+    }
+    this.machine.position.y = Number.isFinite(lift) ? lift + .025 : Terrain.visualY(this.machine.position.x, this.machine.position.z, 0, 2);
   }
 
   private disposeHomemaker3d(nextState: Homemaker3dState): void {
@@ -659,6 +741,10 @@ export class HomemakerBossSystem {
       this.homemaker3dModel = undefined;
     }
     this.homemaker3dMeshes.clear();
+    this.modelHulls.clear();
+    this.modelSupports.clear();
+    this.modelBarPoints.length = 0;
+    this.modelBoundsBox.makeEmpty();
     this.homemaker3dState = nextState;
     this.publishHomemaker3d();
   }
@@ -741,7 +827,7 @@ function pictogramSprite(): THREE.Sprite {
   const texture = new THREE.CanvasTexture(canvas);
   texture.colorSpace = THREE.SRGBColorSpace;
   const sprite = new THREE.Sprite(new THREE.SpriteMaterial({ map: texture, transparent: true, depthTest: false }));
-  sprite.scale.set(4.8, 1.6, 1);
+  sprite.scale.set(3.12, 1.04, 1);
   sprite.renderOrder = 20;
   sprite.userData.canvas = canvas;
   return sprite;

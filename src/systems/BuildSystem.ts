@@ -1,3 +1,4 @@
+import { buildingShapeSnapshot } from '../utils/buildingShapeSnapshot';
 import * as THREE from 'three';
 import type { ClaimJumperEnemy } from '../entities/Enemy';
 import { createBuildingSignFromUrlLoader, disposeBuildingSign } from '../entities/BuildingSign';
@@ -1098,6 +1099,20 @@ export class BuildSystem {
       this.syncGhostShape();
       this.setBuildMode(previous.mode);
     }
+  }
+
+  snapshotShape(id: string, index: number, origin: { x: number; z: number }, material: THREE.Material): THREE.Group | undefined {
+    const pools: Record<string, THREE.Object3D> = {
+      turret: this.turrets.group, palisade: this.palisades.group, sentry_beacon: this.beacons.group,
+      sluice: this.sluices.group, stockpile: this.stockpiles.group, boiler_house: this.boilerHouses.group,
+      lantern_post: this.lanternPosts.group, decoy_shed: this.decoySheds.group,
+      capacitor_bank: this.capacitorBanks.group, assay_office: this.assayOffice,
+    };
+    const source = pools[id];
+    return source ? buildingShapeSnapshot(source, origin, material, index, {
+      PalisadePosts: 2, PalisadeRails: 2, TurretTripodLegs: 3, SentryBeaconLegs: 3,
+      SluiceTimberRails: 2, SluiceTimberLegs: 4,
+    }) : undefined;
   }
 
   placeFree(id: BuildableId, position: { x: number; z: number }, rotationSteps = 0, options: FreePlacementOptions = {}): boolean {

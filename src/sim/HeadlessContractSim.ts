@@ -661,6 +661,7 @@ export class HeadlessContractSim {
   private readonly lightField: LightField | null;
   private readonly mothSwarm: MothSwarm | null;
   private readonly crawler: CrawlerBossSystem | null;
+  private crawlerNightSpeed: { groupId: string; multiplier: number } | null = null;
   private readonly crowdFlocks: CrowdFlockSystem | null;
   private readonly ferrisWheel: FerrisWheel | null;
   private readonly dredgeQueen: DredgeQueenBossSystem | null;
@@ -1992,6 +1993,17 @@ export class HeadlessContractSim {
     const actorTargets = [this.hero.group.position];
     const picnicStructures = this.targeting.allBuildings.filter(({ active, hp }) => active && hp > 0);
     const picnicHero = { position: this.hero.group.position };
+    // Match the browser's one-body light sample before any component moves.
+    this.crawlerNightSpeed = null;
+    if (this.manifest.twist.baron?.variantId === 'dynamo_crawler') {
+      const crawlerParts = this.enemies.all.filter((enemy) => enemy.isAlive && enemy.variantId === 'dynamo_crawler');
+      const crawlerBody = crawlerParts.find((enemy) => enemy.bossComponentId === 'tracks')
+        ?? crawlerParts.find((enemy) => enemy.bossComponentId === 'drain_mast')
+        ?? crawlerParts.find((enemy) => enemy.bossComponentId === 'capacitor_bank');
+      if (crawlerBody?.bossGroupId) {
+        this.crawlerNightSpeed = { groupId: crawlerBody.bossGroupId, multiplier: this.nightSpeedMultiplier(crawlerBody) };
+      }
+    }
     this.enemies.update(STEP_SECONDS, this.picnicHold.active
       ? (enemy) => {
           const stake = this.picnicHold.pressureTarget(enemy, picnicStructures, picnicHero, this.timeAlive);
@@ -2819,7 +2831,10 @@ export class HeadlessContractSim {
     return Boolean(this.manifest.twist.lightRamp || this.manifest.twist.dayNightCycle);
   }
 
-  private nightSpeedMultiplier(enemy: { variantId?: string | null; isWrecker: boolean; position: { x: number; z: number } }): number {
+  private nightSpeedMultiplier(enemy: { variantId?: string | null; bossGroupId?: string | null; isWrecker: boolean; position: { x: number; z: number } }): number {
+    if (enemy.variantId === 'dynamo_crawler' && this.crawlerNightSpeed && this.crawlerNightSpeed.groupId === enemy.bossGroupId) {
+      return this.crawlerNightSpeed.multiplier;
+    }
     const config = this.manifest.twist.mothSeason;
     if (enemy.variantId === 'moth_swarm') return 1;
     if (!config && (!this.isNightShiftContract() || !enemy.isWrecker)) return 1;
