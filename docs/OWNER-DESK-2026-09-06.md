@@ -88,6 +88,9 @@ Arrival needs the Hauler to rest exactly on (190, 0), which is unwalkable ground
 ### A16. Moth Season's choice (F-RPG-11, added 2026-09-07 evening)
 Under the grammar the map secures at wave 12 OR mends its corridor beacon, not both (24 wu of corridor against a 10 wu sweep; twelve configurations measured). A human faces the identical choice, so this is a design fact, not a defect: say whether it stands. Recommendation: it stands; the guard pins the secure and says so.
 
+### A18. Astra's evidence trees and its open app (added 2026-09-12)
+Astra's sprite campaign left 43,242 evidence files (23 GB) under `artifacts/sol/`; I committed them with the work for retention, in local git only (GitHub takes neither a 23 GB push nor blobs over 100 MB). Its map campaign left 96 GB under `artifacts/map-art-repairs-20260908` in `~/.codex/worktrees/5b60`, uncommitted, on disk only. Options: (a) keep both local until the archive repository takes evidence (the shrink plan's monthly duty), (b) mirror them into `GoldRush-archive` now in chunks, (c) prune the raw frames and keep the reviews and contact sheets. Recommendation: (a). Also: the Codex app is still open with a dev server on port 5319 from Astra's sprite worktree, idle since its 11:56 handoff; closing it is safe once you are done with Astra.
+
 ## B. Ten minutes of the owner's hands (nobody else can)
 
 ### B1. The device verdict rows
