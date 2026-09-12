@@ -6,6 +6,8 @@
 
 ## VERDICT: HOLD — the branch stays whole on `sol/map-art-inventory-20260908`; its contract-and-door layer goes to the OWNER'S DESK (A20)
 
+**Owner ruling 2026-09-13 (supersedes the HOLD), verbatim: "ah, that is all no problem. we don't have players yet so we can just keep going" / "we then have to make another run in the future but not immediately"** → land as county era 6, retire the board, re-ride later. Execution master: `tasks/maps-campaign-land-era6.md` (not yet run: the owner is short of tokens; the factory is stopped).
+
 The campaign is one inseparable change: 66 `src/` files (`Game.ts`, `HeadlessContractSim.ts`, `Balance.ts`, `Enemy.ts`, `Hero.ts`, the E7/E8/E10 systems, a new `E10ArchiveSystem`, `FlotillaView`, `ClaimBoatView`, the encyclopedia archive, UI), 17 contracts re-parameterised, 24 new guards, 95 terrain GLBs under `assets/pilots/map-rebuild-spike` (inside `ENGINE_SOURCE_INPUTS`), 74 plaza props, 12 flotilla GLBs, 16 raw plates, 15 layer contracts. The replay attribution says landing it retires 13 of the 15 replayable verified county rows. That is an era decision, not a drain's.
 
 ## 1. THE REPLAY ATTRIBUTION (ADR-004)
