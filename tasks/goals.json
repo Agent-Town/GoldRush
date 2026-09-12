@@ -5048,7 +5048,7 @@
               "title": "Owner D2 (\"re-ride it yes\"): heat 13, the whole board re-ridden under the 1:1 grammar by Opus riders from a detached arena at the deployed build, the retired heat-12 rows replaced",
               "status": "merged",
               "taskFile": "gauntlet-heat13-parity.md",
-              "mergeHash": "b89f70c70",
+              "mergeHash": "b89f70c70df0c1866196844eb8e97972bdcf7677",
               "mergedAt": "2026-09-12",
               "note": "27 of 36 boards ridden before the Opus weekly limit; 19 secured, 9 first-ever secures; nine boards remain for a second block"
             },
@@ -5087,8 +5087,20 @@
             {
               "id": "drain-review-sprites-roster",
               "title": "Astra's sprite roster branch (92f6cc115) gated on a merged tree: cells, contracts, payload, halo, guards, e2e classified, eyes-on per sheet family; verdict",
-              "status": "building",
-              "taskFile": "drain-review-sprites-roster.md"
+              "status": "shipped",
+              "taskFile": "drain-review-sprites-roster.md",
+              "review": "reviews/drain-review-sprites-roster.md",
+              "drainedBy": "attended 2026-09-12",
+              "note": "verdict SPLIT — Astra branch held on sol/code-review-20260908; owner desk A19"
+            },
+            {
+              "id": "drain-review-maps-campaign",
+              "title": "Astra's map art and playability campaign (883a3521e) gated on a merged tree per layer: docs, guards, art, contract data per map with the retirements named, src, deploy.sh; the 17 live rows' replays and the null floors attributed against main",
+              "status": "shipped",
+              "taskFile": "drain-review-maps-campaign.md",
+              "review": "reviews/drain-review-maps-campaign.md",
+              "drainedBy": "attended 2026-09-12",
+              "note": "verdict HOLD — Astra branch held on sol/map-art-inventory-20260908; owner desk A20"
             }
           ]
         }
