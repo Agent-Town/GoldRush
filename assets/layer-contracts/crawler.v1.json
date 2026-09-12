@@ -1,0 +1,113 @@
+{
+  "$schema": "gold-rush layer contract v1",
+  "batch": "boss-fidelity-e3-crawler-2026-09-08",
+  "status": "export-and-focused-runtime-verified-regression-exceptions",
+  "asset": "assets/pilots/crawler-3d/crawler.glb",
+  "assetContract": "assets/pilots/crawler-3d/renders/crawler-asset-contract.json",
+  "provenance": "artifacts/boss-fidelity/e3-crawler/native-atlas-provenance.json",
+  "source": {
+    "file": "assets/raw/crawler-atlas-fidelity-e3.png",
+    "generator": "native image_gen",
+    "size": [
+      1254,
+      1254
+    ],
+    "sha256": "206e7d4bc7a5e9fa331e486ad4eb83b70571e50cfe5eb95ef591c88f5c5351d1"
+  },
+  "shapeReference": "assets/raw/plate-e3-boss-dynamo-crawler.png",
+  "maps": [
+    {
+      "embeddedImage": 0,
+      "role": "baseColor",
+      "size": [
+        1024,
+        1024
+      ],
+      "colorSpace": "sRGB",
+      "derivation": "Native source resized by build_crawler.py and embedded directly in the GLB",
+      "sha256": "443c233393e52f9cb9ade5939b8ecd3876fd2ccdc3e8d4b10f4146107c15fc93"
+    }
+  ],
+  "uvRegions": {
+    "soot": [
+      0.02,
+      0.515,
+      0.24,
+      0.98
+    ],
+    "iron": [
+      0.265,
+      0.515,
+      0.49,
+      0.98
+    ],
+    "brass": [
+      0.515,
+      0.515,
+      0.74,
+      0.98
+    ],
+    "copper": [
+      0.765,
+      0.515,
+      0.98,
+      0.98
+    ],
+    "plate": [
+      0.02,
+      0.02,
+      0.24,
+      0.49
+    ],
+    "teal": [
+      0.265,
+      0.02,
+      0.49,
+      0.49
+    ],
+    "ceramic": [
+      0.515,
+      0.02,
+      0.74,
+      0.49
+    ],
+    "damage": [
+      0.765,
+      0.02,
+      0.98,
+      0.49
+    ]
+  },
+  "geometry": {
+    "sourceLadder": "derive",
+    "triangleCeiling": 12000,
+    "materialCount": 1,
+    "embeddedImageCount": 1,
+    "morphs": {
+      "drain_mast": "Damage_ToppledDrainMast",
+      "tracks": "Damage_ShatteredTracks",
+      "capacitor_bank": "Damage_RupturedCapacitorBank"
+    },
+    "triangles": 11760,
+    "length": 3.2,
+    "boundsSize": [
+      3.2,
+      2.6775,
+      1.34
+    ],
+    "boundsAxes": [
+      "length",
+      "height",
+      "width"
+    ],
+    "byteIdenticalReexport": true,
+    "sourceDeterminism": "artifacts/boss-fidelity/e3-crawler/source-determinism.json",
+    "collectorAnchors": "drain_mast node extras.collectorAnchor: intact and damaged authored asset-root Y-up positions; independent of production mesh-local quantization transforms"
+  },
+  "consumers": [
+    "src/systems/CrawlerBossSystem.ts"
+  ],
+  "notes": "Export and focused runtime verification complete. Full regression/recovery remains non-green; exceptions and evidence are in reviews/sol-boss-fidelity-e3-crawler.md. Three component meshes retain one damage morph each. Atlas tiles are soot, iron, brass, copper, armor plate, teal glass, ceramic and damage oxide. The GLB embeds its atlas; no sprite extraction or generated sprite slot is required.",
+  "sha256": "26112eaa095aa891d57c209e224e81a3a9fc89bc6f56614eb98ee6d5d5016eb6",
+  "bytes": 3205932
+}

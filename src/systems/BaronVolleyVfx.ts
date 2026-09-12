@@ -191,12 +191,13 @@ export class BaronVolleyVfx {
   }
 
   /** One lobbed rocket left the cart. Oldest slot is recycled — never grows. */
-  tracer(origin: THREE.Vector3, target: THREE.Vector3, life = 1.1): void {
+  tracer(origin: THREE.Vector3, target: THREE.Vector3, life = 1.1, visualOrigin?: THREE.Vector3): void {
     const index = this.oldest(this.tracerAge);
     this.tracersSpawned += 1;
     this.tracerAge[index] = 0;
     this.tracerLife[index] = Math.max(MIN_TRACER_LIFE, life);
-    this.tracerFrom[index]?.set(origin.x, Terrain.visualAnchorY(origin, 1.35), origin.z);
+    if (visualOrigin) this.tracerFrom[index]?.copy(visualOrigin);
+    else this.tracerFrom[index]?.set(origin.x, Terrain.visualAnchorY(origin, 1.35), origin.z);
     this.tracerTo[index]?.set(target.x, Terrain.visualAnchorY(target, 0.18), target.z);
   }
 

@@ -12,6 +12,7 @@ import type { MegaprojectProjectState } from '../meta/Megaproject';
 import type { HarvestFutureState } from '../systems/HarvestSystem';
 import type { CombatSuspendSnapshot } from '../systems/CombatSystem';
 import type { CrawlerBossSuspendSnapshot } from '../systems/CrawlerBossSystem';
+import type { LandYachtBossSuspendSnapshot } from '../systems/LandYachtBossSystem';
 import type { WrangleSuspendSnapshot } from '../systems/WrangleSystem';
 import { depenetrateToWalkable } from '../world/depenetrate';
 import {
@@ -90,6 +91,7 @@ export type RunSuspendEnvelope = {
   harvest: HarvestSuspend | null;
   baron: BaronSuspend;
   crawlerBoss: CrawlerBossSuspendSnapshot | null;
+  landYachtBoss?: LandYachtBossSuspendSnapshot | null;
   wrangle?: WrangleSuspendSnapshot | null;
   homemakerBoss: HomemakerBossSuspendSnapshot | null;
   megaproject: MegaprojectSuspend | null;
@@ -441,6 +443,7 @@ export function runSuspendFutureState(snapshot: RunSuspendEnvelope): unknown {
       rocket: snapshot.baron.rocket,
     },
     crawlerBoss: snapshot.crawlerBoss,
+    ...(snapshot.landYachtBoss ? { landYachtBoss: snapshot.landYachtBoss } : {}),
     wrangle: snapshot.wrangle ?? null,
     homemakerBoss: snapshot.homemakerBoss,
     megaproject: snapshot.megaproject,
@@ -595,6 +598,7 @@ function captureSnapshot(
       : null,
     baron: captureBaron(game, at),
     crawlerBoss: game.crawlerBoss?.captureSuspend?.(at) ?? null,
+    landYachtBoss: game.landYachtBoss?.captureSuspend?.(at) ?? null,
     wrangle: game.wrangle?.captureSuspend?.() ?? null,
     homemakerBoss: game.homemakerBoss?.captureSuspend?.(at) ?? null,
     megaproject: captureMegaproject(game),
@@ -784,6 +788,7 @@ function restoreSnapshot(game: AnyGame, snapshot: RunSuspendEnvelope, persistPro
   game.progression?.reset?.();
   game.agentConsent?.reset?.();
   game.crawlerBoss?.reset?.();
+  game.landYachtBoss?.reset?.();
   game.homemakerBoss?.reset?.();
 
   if (snapshot.harvest === null) game.harvestSystem?.resetFromSeed?.(snapshot.seed);
@@ -805,6 +810,7 @@ function restoreSnapshot(game: AnyGame, snapshot: RunSuspendEnvelope, persistPro
   if (!restoreEnemyPool(game, snapshot.enemies)) return restoreFailed('enemies');
   if (game.wrangle?.restoreSuspend?.(deepClone(snapshot.wrangle ?? null)) === false) return restoreFailed('wrangle');
   game.crawlerBoss?.restoreSuspend?.(deepClone(snapshot.crawlerBoss), snapshot.timeAlive);
+  game.landYachtBoss?.restoreSuspend?.(deepClone(snapshot.landYachtBoss ?? null), snapshot.timeAlive);
   if (game.homemakerBoss?.restoreSuspend?.(deepClone(snapshot.homemakerBoss), snapshot.timeAlive) === false) {
     return restoreFailed('homemaker-boss');
   }
@@ -1196,6 +1202,7 @@ function decodeRunSuspendEnvelope(value: unknown): RunSuspendDecodeResult {
   const harvest = isV2 ? decodeHarvest(value.harvest, reasons) : null;
   const baron = isV2 ? decodeBaron(value.baron, reasons) : emptyBaron();
   const crawlerBoss = isV2 ? decodeCrawlerBoss(value.crawlerBoss, reasons) : null;
+  const landYachtBoss = isV2 ? decodeLandYachtBoss(value.landYachtBoss, reasons) : null;
   const wrangle = isV2 ? decodeWrangle(value.wrangle, reasons) : null;
   const homemakerBoss = isV2 ? decodeHomemakerBossSuspend(value.homemakerBoss) : null;
   if (homemakerBoss === false) reasons.push('homemakerBoss is invalid');
@@ -1256,6 +1263,7 @@ function decodeRunSuspendEnvelope(value: unknown): RunSuspendDecodeResult {
     harvest === undefined ||
     baron === null ||
     crawlerBoss === undefined ||
+    landYachtBoss === undefined ||
     wrangle === undefined ||
     homemakerBoss === false ||
     megaproject === undefined ||
@@ -1298,6 +1306,7 @@ function decodeRunSuspendEnvelope(value: unknown): RunSuspendDecodeResult {
     harvest,
     baron,
     crawlerBoss,
+    landYachtBoss,
     wrangle: deepClone(wrangle),
     homemakerBoss,
     megaproject,
@@ -2452,6 +2461,48 @@ function decodeWrangle(value: unknown, reasons: string[]): WrangleSuspendSnapsho
   }
   if (reasons.length !== reasonCount || incomeElapsed === null || incomeGranted === null || grantSerial === null) return undefined;
   return { incomeElapsed, incomeGranted, grantSerial, active };
+}
+
+function decodeLandYachtBoss(value: unknown, reasons: string[]): LandYachtBossSuspendSnapshot | null | undefined {
+  if (value === undefined || value === null) return null;
+  const before = reasons.length;
+  const record = requiredRecord(value, 'landYachtBoss', reasons);
+  if (!record) return undefined;
+  const numbers = {
+    act: requiredInteger(record.act, 0, 3, 'landYachtBoss.act', reasons),
+    dreadEvents: requiredInteger(record.dreadEvents, 0, 1, 'landYachtBoss.dreadEvents', reasons),
+    dreadRemaining: requiredNumber(record.dreadRemaining, 0, MAX_TIME, 'landYachtBoss.dreadRemaining', reasons),
+    orbitDistance: requiredNumber(record.orbitDistance, 0, MAX_TIME, 'landYachtBoss.orbitDistance', reasons),
+    stolenHeads: requiredInteger(record.stolenHeads, 0, 4, 'landYachtBoss.stolenHeads', reasons),
+    escortsFunded: requiredInteger(record.escortsFunded, 0, 4, 'landYachtBoss.escortsFunded', reasons),
+    turretsGrabbed: requiredInteger(record.turretsGrabbed, 0, MAX_COUNT, 'landYachtBoss.turretsGrabbed', reasons),
+  };
+  const nextLootIn = record.nextLootIn === null ? null : requiredNumber(record.nextLootIn, 0, MAX_TIME, 'landYachtBoss.nextLootIn', reasons);
+  const nextCraneGrabIn = record.nextCraneGrabIn === null ? null : requiredNumber(record.nextCraneGrabIn, 0, MAX_TIME, 'landYachtBoss.nextCraneGrabIn', reasons);
+  const flagKeys = ['seenBoss', 'hasCenter', 'orbitRouteInstalled', 'formationAligned', 'beached', 'bellTaken', 'gangDeparted', 'salvageReady', 'wreckRemains'] as const;
+  for (const key of flagKeys) if (typeof record[key] !== 'boolean') reasons.push(`landYachtBoss.${key} must be boolean`);
+  const flags = Object.fromEntries(flagKeys.map((key) => [key, record[key]]));
+  const lastCenter = decodeVector3(record.lastCenter, 'landYachtBoss.lastCenter', reasons);
+  const wreckPosition = decodeVector3(record.wreckPosition, 'landYachtBoss.wreckPosition', reasons);
+  const destroyed: LandYachtBossSuspendSnapshot['destroyed'] = [];
+  if (!Array.isArray(record.destroyed) || record.destroyed.length > 3) reasons.push('landYachtBoss.destroyed must contain at most three components');
+  else {
+    const seen = new Set<string>();
+    for (const [index, item] of record.destroyed.entries()) {
+      const label = `landYachtBoss.destroyed[${index}]`;
+      const entry = requiredRecord(item, label, reasons);
+      if (!entry) continue;
+      if (entry.id !== 'wheels' && entry.id !== 'crane' && entry.id !== 'wheelhouse') { reasons.push(`${label}.id is invalid`); continue; }
+      if (seen.has(entry.id)) reasons.push(`${label}.id is duplicated`);
+      seen.add(entry.id);
+      const position = entry.position === null ? null : decodeVector3(entry.position, `${label}.position`, reasons);
+      destroyed.push({ id: entry.id, position });
+    }
+  }
+  if (numbers.stolenHeads !== numbers.escortsFunded) reasons.push('landYachtBoss stolen heads and funded escorts must agree');
+  if (reasons.length !== before || Object.values(numbers).some((value) => value === null) || !lastCenter || !wreckPosition) return undefined;
+  // Every returned field was validated above; omit unknown input properties.
+  return { ...numbers, ...flags, nextLootIn, nextCraneGrabIn, lastCenter, wreckPosition, destroyed } as LandYachtBossSuspendSnapshot;
 }
 
 function decodeCrawlerBoss(value: unknown, reasons: string[]): CrawlerBossSuspendSnapshot | null | undefined {

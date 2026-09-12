@@ -1,3 +1,4 @@
+import type { Run3dPilot } from './Run3dPilot';
 import * as THREE from 'three';
 import benchSeeds from '../../assets/contracts/bench-seeds.json' with { type: 'json' };
 import { applyGeneratedMap, disposeGeneratedAssets, generatedAssetRenderCounts, generatedAssetStatuses } from '../assets/generated';
@@ -543,6 +544,9 @@ export class Game {
   private baronProps3dState: BaronProps3dState = 'off';
   private baronProps3dLoadSerial = 0;
   private baronProps3dModel?: THREE.Group;
+  private baronShoulderLauncher?: THREE.Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>;
+  private baronLauncherEmission = 1;
+  private readonly baronRocketMuzzle = new THREE.Vector3();
   private readonly baronRocketCartBodyGeometry = new THREE.BoxGeometry(0.92, 0.3, 0.58);
   private readonly baronRocketCartWheelGeometry = new THREE.CylinderGeometry(0.16, 0.16, 0.08, 14);
   private readonly baronRocketCartRailGeometry = new THREE.BoxGeometry(1.12, 0.08, 0.08);
@@ -601,9 +605,11 @@ export class Game {
     (position, value) => this.vfx.floatText(position, `+${value}`, '#83ded7'),
     (position, freedOrdinal) => this.onEnemyKilled(position, freedOrdinal),
     (at, origin, target, ownerId) => {
-      this.lightRig?.triggerMuzzleFlash(at, origin, target);
-      if (ownerId.startsWith(BARON_ROCKET_OWNER_PREFIX)) {
-        this.baronVolleyVfx.tracer(origin, target, this.baronRocketConfig()?.airTime);
+      const baronRocket = ownerId.startsWith(BARON_ROCKET_OWNER_PREFIX);
+      const muzzle = baronRocket ? this.baronRocketMuzzlePosition() : undefined;
+      this.lightRig?.triggerMuzzleFlash(at, muzzle ?? origin, target);
+      if (baronRocket) {
+        this.baronVolleyVfx.tracer(origin, target, this.baronRocketConfig()?.airTime, muzzle);
       }
       const actor = this.nearestActorTo(origin);
       if (this.weaponForActor(actor) === 'rig' && actor.group.position.distanceToSquared(origin) < 0.0001) actor.playAttackPose(target);
@@ -1079,6 +1085,7 @@ export class Game {
     (command) => this.powerGraph?.queueCommand(command) === true,
     (origin, target, damage, radius) => this.combat.launchLob(origin, target, 0.05, damage, radius, 'baron_rocket:-3'),
   );
+  private crawlerNightSpeed: { groupId: string; multiplier: number } | null = null;
   private readonly landYachtBoss = new LandYachtBossSystem(
     () => this.enemies.all,
     () => (this.activeContract.tileParams as typeof this.activeContract.tileParams & {
@@ -1099,6 +1106,7 @@ export class Game {
       return target.hp < hp;
     },
     (position, text) => this.vfx.floatText(position, text, '#c4883a'),
+    (enemy) => this.enemies.renderPositionOf(enemy),
   );
   private readonly dredgeQueenBoss = new DredgeQueenBossSystem(
     () => this.enemies.all,
@@ -1113,6 +1121,7 @@ export class Game {
       readAtBirth: () => this.readWreckAtBirth(),
       writeAtCeremony: (wreck) => this.writeWreckAtCeremony(wreck),
     },
+    (enemy) => this.enemies.renderPositionOf(enemy),
   );
   private readonly salvageClawBoss = new SalvageClawBossSystem(
     () => this.enemies.all,
@@ -1164,7 +1173,7 @@ export class Game {
   private readonly echoBoss = new EchoBossSystem(
     () => this.buildSystem.diagnostics.hp
       .filter((building) => !building.wrecked && building.hp > 0)
-      .map((building) => ({ id: building.id, x: building.position.x, z: building.position.z })),
+      .map((building) => ({ id: building.id, index: building.index, x: building.position.x, z: building.position.z })),
     () => this.echoPlaybooks(),
     (amount, sourceId) => this.combat.damageActor(amount, sourceId),
     (text, title) => this.uiBridge.announce(text, this.timeAlive, null, 6, 'wave', title),
@@ -1180,6 +1189,8 @@ export class Game {
         return this.tileStateStore.commitAtRunEnd();
       },
     },
+    (piece, material) => this.run3dPilot?.snapshot(piece.id, piece.index ?? 0, piece, material)
+      ?? this.buildSystem.snapshotShape(piece.id, piece.index ?? 0, piece, material),
   );
   private readonly oldDiggerBoss = new OldDiggerBossSystem(
     () => this.enemies.all,
@@ -1526,7 +1537,7 @@ export class Game {
   private lastHarvestChanneling = false;
   private lastUpgradeOfferAudioKey = '';
   private disposeRunTelemetry: () => void = () => undefined;
-  private run3dPilot?: { update: () => void; dispose: () => void };
+  private run3dPilot?: Run3dPilot;
   private terrain3dPilotDispose?: () => void;
   private terrain3dPilotCancelled = false;
   private resizeFrame = 0;
@@ -2818,6 +2829,7 @@ export class Game {
     this.baronProps3dState = 'disposed';
     if (this.baronProps3dModel) disposeObject3D(this.baronProps3dModel);
     this.baronProps3dModel = undefined;
+    this.baronShoulderLauncher = undefined;
     this.baronRocketCartGroup.clear();
     this.baronRocketCartBodyGeometry.dispose();
     this.baronRocketCartWheelGeometry.dispose();
@@ -3078,6 +3090,18 @@ export class Game {
       const actorTargets = this.visibleActorPositions();
       const picnicStructures = this.goldTargeting.allBuildings.filter(({ active, hp }) => active && hp > 0);
       const picnicHero = { position: this.primaryActor.group.position };
+      // One rigid Crawler crosses the light field. Sample before any component moves;
+      // tracks-first kills still move the mast until the encounter pins the survivors.
+      this.crawlerNightSpeed = null;
+      if (this.activeContract.twist.baron?.variantId === 'dynamo_crawler') {
+        const crawlerParts = this.enemies.all.filter((enemy) => enemy.isAlive && enemy.variantId === 'dynamo_crawler');
+        const crawlerBody = crawlerParts.find((enemy) => enemy.bossComponentId === 'tracks')
+          ?? crawlerParts.find((enemy) => enemy.bossComponentId === 'drain_mast')
+          ?? crawlerParts.find((enemy) => enemy.bossComponentId === 'capacitor_bank');
+        if (crawlerBody?.bossGroupId) {
+          this.crawlerNightSpeed = { groupId: crawlerBody.bossGroupId, multiplier: this.nightSpeedMultiplier(crawlerBody) };
+        }
+      }
       this.enemies.update(
         simDelta,
         this.picnicHold.active
@@ -3244,6 +3268,9 @@ export class Game {
       actor.applyRenderInterpolation(alpha, this.heroVisualYAt);
     }
     this.enemies.applyRenderInterpolation(alpha);
+    this.dredgeQueenBoss.syncRenderPresentation();
+    this.homemakerBoss.syncRenderPresentation();
+    this.landYachtBoss.syncWreckPresentation();
     this.combat.applyRenderInterpolation(alpha);
     this.goldPickups.applyRenderInterpolation(alpha);
   }
@@ -4304,6 +4331,7 @@ export class Game {
     if (mpActors && mpActors.length > this.actors.length) this.syncMultiplayerActors();
     const restored = restoreRunSuspendSnapshot(this, normalized, { persistProfile: false });
     if (!restored) return false;
+    this.crawlerNightSpeed = null;
     if (!this.restoreMultiplayerActorSnapshots(mpActors)) return false;
     return this.restoreAgentRiderSnapshots(snapshot);
   }
@@ -4316,6 +4344,7 @@ export class Game {
     const mpActors = multiplayerActorsForRestore(snapshot, normalized, roster.length);
     if (!mpActors) return false;
     if (!restoreRunSuspendSnapshot(this, normalized, { persistProfile: false })) return false;
+    this.crawlerNightSpeed = null;
     this.mpActorMeta.clear();
     this.syncMultiplayerActors();
     if (!this.restoreMultiplayerActorSnapshots(mpActors)) return false;
@@ -4984,6 +5013,7 @@ export class Game {
     this.scene.add(this.vfx.group);
     this.scene.add(this.enemies.group);
     this.scene.add(this.crawlerBoss.group);
+    this.enemies.setBossModelBounds((groupId) => this.crawlerBoss.modelBounds(groupId) ?? this.landYachtBoss.modelBounds(groupId) ?? this.dredgeQueenBoss.modelBounds(groupId) ?? this.homemakerBoss.modelBounds(groupId));
     this.scene.add(this.landYachtBoss.group);
     this.scene.add(this.dredgeQueenBoss.group);
     this.scene.add(this.salvageClawBoss.group);
@@ -5169,12 +5199,12 @@ export class Game {
         };
         const sourceMaterial = [...materials][0] as THREE.MeshStandardMaterial;
         const material = sourceMaterial.clone();
-        material.emissiveMap = material.map;
-        material.emissive.set('#fff3de');
-        material.emissiveIntensity = 0.72;
-        const launcher = new THREE.Mesh(baked('launcher'), material);
+        const launcher = new THREE.Mesh(baked('launcher'), material.clone());
+        this.baronShoulderLauncher = launcher;
+        this.baronLauncherEmission = material.emissiveIntensity;
         launcher.name = 'BaronShoulderLauncher';
-        launcher.position.set(0.48, 0.88, 0.08);
+        launcher.position.set(0.82, 0.68, 0.08);
+        launcher.rotation.y = Math.PI;
         launcher.rotation.z = -0.42;
         launcher.scale.setScalar(0.8);
         const powderKeg = new THREE.Mesh(baked('powder_keg'), material);
@@ -6463,6 +6493,9 @@ export class Game {
   }
 
   private nightSpeedMultiplier(enemy: ClaimJumperEnemy): number {
+    if (enemy.variantId === 'dynamo_crawler' && this.crawlerNightSpeed && this.crawlerNightSpeed.groupId === enemy.bossGroupId) {
+      return this.crawlerNightSpeed.multiplier;
+    }
     const config = this.activeContract.twist.mothSeason;
     if (enemy.variantId === 'moth_swarm') return 1;
     if (!config && (!this.isNightShiftContract() || !enemy.isWrecker)) return 1;
@@ -6733,10 +6766,21 @@ export class Game {
     const active = this.baronRocketTelegraphStartedAt >= 0;
     const pulse = active ? 0.5 + Math.sin(this.elapsed * 18) * 0.5 : 0;
     this.baronRocketCartTealMaterial.emissiveIntensity = active ? 0.55 + pulse * 0.55 : 0.3;
+    if (this.baronShoulderLauncher) {
+      this.baronShoulderLauncher.material.emissiveIntensity = this.baronLauncherEmission * (active ? 1.6 + pulse : 1);
+    }
     this.baronRocketCartGroup.visible = true;
-    this.baronRocketCartGroup.position.set(x, position.y + baron.visualScale * 0.42, z);
+    this.baronRocketCartGroup.position.set(x, position.y + baron.visualScale * 0.42 + this.enemies.baronSpriteBobOffset, z);
     this.baronRocketCartGroup.rotation.set(active ? -0.08 - pulse * 0.05 : 0, yaw, active ? 0.08 : 0);
     this.baronRocketCartGroup.scale.setScalar(scale);
+  }
+
+  private baronRocketMuzzlePosition(): THREE.Vector3 | undefined {
+    if (!this.baronShoulderLauncher) return undefined;
+    this.syncBaronRocketCart();
+    this.baronShoulderLauncher.updateWorldMatrix(true, false);
+    // The baked GLB's three rocket noses point along +Z; the middle nose is the volley outlet.
+    return this.baronShoulderLauncher.localToWorld(this.baronRocketMuzzle.set(0, 0.1, 0.55));
   }
 
   private baronRocketDiagnostics() {
@@ -8629,6 +8673,7 @@ export class Game {
     this.canyonConnectCompletedByDeadline = false;
     this.canyonConnectFailed = false;
     this.crawlerBoss.reset();
+    this.crawlerNightSpeed = null;
     this.landYachtBoss.reset();
     this.dredgeQueenBoss.reset();
     this.salvageClawBoss.reset();

@@ -171,8 +171,9 @@ function releaseE1ContentPlugin(enabled: boolean): Plugin {
       for (const laterModel of [
         '../../assets/pilots/railcar-3d/railcar.glb',
         '../../assets/pilots/crawler-3d/crawler.glb',
+        '../../assets/pilots/land-yacht-3d/land-yacht.glb',
         '../../assets/pilots/salvage-claw-3d/salvage-claw.glb',
-        '../../assets/pilots/dredge-queen-3d/dredge-queen.glb',
+        '../../assets/pilots/dredge-queen-3d/dredge-queen-detail-opus5.glb',
         '../../assets/pilots/old-digger-3d/old-digger.glb',
         '../../assets/pilots/homemaker-9000-3d/homemaker-9000.glb',
         '../../assets/pilots/ark-plaza-e10-3d/ark-plaza-e10.glb',

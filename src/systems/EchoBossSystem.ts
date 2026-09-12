@@ -8,6 +8,7 @@ const ECHO_SOURCE_ID = -11;
 
 export type EchoBasePiece = Readonly<{
   id: string;
+  index?: number;
   x: number;
   z: number;
 }>;
@@ -52,7 +53,7 @@ type EchoPersistence = Readonly<{
 }>;
 
 type EchoCopy = {
-  mesh: THREE.Mesh;
+  mesh: THREE.Object3D;
   start: THREE.Vector3;
   end: THREE.Vector3;
 };
@@ -70,6 +71,7 @@ export class EchoBossSystem {
   private copiesGroup?: THREE.Group;
   private copyGeometry?: THREE.BoxGeometry;
   private copyMaterial?: THREE.MeshStandardMaterial;
+  private outlineMaterial?: THREE.LineBasicMaterial;
   private perimeter?: THREE.Mesh;
   private jar?: THREE.Group;
   private jarGlass?: THREE.Mesh;
@@ -109,6 +111,7 @@ export class EchoBossSystem {
     private readonly visualY: (x: number, z: number, base: number) => number,
     private readonly enabled: boolean,
     private readonly persistence: EchoPersistence,
+    private readonly shapeSnapshot?: (piece: EchoBasePiece, material: THREE.Material) => THREE.Group | undefined,
   ) {
     this.group.name = 'TheEcho.Placeholder';
     if (!this.enabled) return;
@@ -254,12 +257,17 @@ export class EchoBossSystem {
     this.clearCopies();
     this.copyGeometry?.dispose();
     this.copyMaterial?.dispose();
+    this.outlineMaterial?.dispose();
     this.perimeter?.geometry.dispose();
     if (this.perimeter) (this.perimeter.material as THREE.Material).dispose();
-    this.jarGlass?.geometry.dispose();
-    if (this.jarGlass) (this.jarGlass.material as THREE.Material).dispose();
-    this.mote?.geometry.dispose();
-    if (this.mote) (this.mote.material as THREE.Material).dispose();
+    const jarMaterials = new Set<THREE.Material>();
+    this.jar?.traverse(node => {
+      const mesh = node as THREE.Mesh;
+      if (!mesh.isMesh) return;
+      mesh.geometry.dispose();
+      for (const material of Array.isArray(mesh.material) ? mesh.material : [mesh.material]) jarMaterials.add(material);
+    });
+    for (const material of jarMaterials) material.dispose();
     this.group.clear();
   }
 
@@ -282,6 +290,11 @@ export class EchoBossSystem {
     this.loadRecordedPatterns();
     this.replaySequence = [...this.recordedPatterns];
     for (const piece of pieces) this.addCopy(piece);
+    // Advance the settlement as a formation; scaling its spacing crushes full-size buildings together.
+    const center = new THREE.Vector3();
+    for (const copy of this.copies) center.add(copy.start);
+    if (this.copies.length) center.multiplyScalar((Balance.e7Boss.mirrorApproachScale - 1) / this.copies.length);
+    for (const copy of this.copies) copy.end.copy(copy.start).add(center);
     this.announce('Your base answers from across the valley. Its perimeter is advancing.', 'THE MIRROR');
   }
 
@@ -304,7 +317,20 @@ export class EchoBossSystem {
     if (!this.copyGeometry || !this.copyMaterial || !this.copiesGroup) return;
     const start = new THREE.Vector3(-piece.x, 0, Balance.e7Boss.mirrorOffsetZ - piece.z);
     const end = start.clone().multiplyScalar(Balance.e7Boss.mirrorApproachScale);
-    const mesh = new THREE.Mesh(this.copyGeometry, this.copyMaterial);
+    const shape = this.shapeSnapshot?.(piece, this.copyMaterial);
+    const mesh = shape?.children.length ? shape : new THREE.Mesh(this.copyGeometry, this.copyMaterial);
+    if (shape?.children.length && this.outlineMaterial) {
+      for (const child of [...shape.children]) {
+        const source = child as THREE.Mesh;
+        source.renderOrder = 1;
+        const outline = new THREE.LineSegments(new THREE.EdgesGeometry(source.geometry, 28), this.outlineMaterial);
+        outline.renderOrder = 2;
+        outline.name = `${source.name}.SignalOutline`;
+        shape.add(outline);
+      }
+    }
+    mesh.rotation.y = Math.PI;
+    mesh.userData.shapeSnapshot = Boolean(shape?.children.length);
     mesh.name = `TheEcho.Copy.${piece.id}`;
     mesh.userData.original = { id: piece.id, x: piece.x, z: piece.z };
     this.copiesGroup.add(mesh);
@@ -339,24 +365,30 @@ export class EchoBossSystem {
     this.perimeter.visible = this.copiesGroup.visible;
     for (const copy of this.copies) {
       copy.mesh.position.lerpVectors(copy.start, copy.end, progress);
-      copy.mesh.position.y = this.visualY(copy.mesh.position.x, copy.mesh.position.z, Balance.e7Boss.copyHeight / 2);
+      copy.mesh.position.y = this.visualY(copy.mesh.position.x, copy.mesh.position.z, copy.mesh.userData.shapeSnapshot ? 0.025 : Balance.e7Boss.copyHeight / 2);
     }
     const radius = THREE.MathUtils.lerp(Balance.e7Boss.perimeterStartRadius, Balance.e7Boss.perimeterEndRadius, progress);
     this.perimeter.scale.setScalar(radius);
     this.perimeter.position.y = this.visualY(0, 0, Balance.e7Boss.perimeterLift);
     this.perimeter.rotation.z = at * Balance.e7Boss.perimeterSpin;
-    this.copyMaterial.opacity = Balance.e7Boss.copyOpacity * (0.82 + Math.sin(at * 6) * 0.18);
+    this.copyMaterial.opacity = Balance.e7Boss.copyOpacity * 0.38 * (0.82 + Math.sin(at * 6) * 0.18);
     this.jar.visible = this.captured;
     this.jar.position.set(
       Balance.e7Boss.jarX,
-      this.visualY(Balance.e7Boss.jarX, Balance.e7Boss.jarZ, Balance.e7Boss.jarHeight / 2),
+      this.visualY(Balance.e7Boss.jarX, Balance.e7Boss.jarZ, Balance.e7Boss.jarHeight * this.jar.scale.y / 2),
       Balance.e7Boss.jarZ,
     );
     this.mote.position.y = Math.sin(at * Balance.e7Boss.jarMoteBobSpeed) * Balance.e7Boss.jarMoteBobHeight;
   }
 
   private clearCopies(): void {
-    for (const copy of this.copies) this.copiesGroup?.remove(copy.mesh);
+    for (const copy of this.copies) {
+      this.copiesGroup?.remove(copy.mesh);
+      if (copy.mesh.userData.shapeSnapshot) copy.mesh.traverse(node => {
+        const mesh = node as THREE.Mesh;
+        if (mesh.isMesh || (node as THREE.LineSegments).isLineSegments) mesh.geometry.dispose();
+      });
+    }
     this.copies.length = 0;
   }
 
@@ -369,10 +401,14 @@ export class EchoBossSystem {
       emissiveIntensity: 0.7,
       transparent: true,
       opacity: Balance.e7Boss.copyOpacity,
-      depthWrite: false,
+      depthWrite: true,
+      polygonOffset: true,
+      polygonOffsetFactor: 1,
+      polygonOffsetUnits: 1,
     });
+    this.outlineMaterial = new THREE.LineBasicMaterial({ color: 0x71cdb9, transparent: true, opacity: 0.6, depthWrite: false });
     this.perimeter = new THREE.Mesh(
-      new THREE.RingGeometry(0.97, 1, 48),
+      new THREE.RingGeometry(0.995, 1, 96),
       new THREE.MeshBasicMaterial({
         color: Balance.e7Boss.copyEmissive,
         transparent: true,
@@ -381,11 +417,26 @@ export class EchoBossSystem {
         depthWrite: false,
       }),
     );
+    for (const scale of [0.94, 1.06]) {
+      const contour = new THREE.Mesh(this.perimeter.geometry, this.perimeter.material);
+      contour.scale.setScalar(scale);
+      this.perimeter.add(contour);
+    }
     this.jar = new THREE.Group();
+    this.jar.scale.setScalar(1.35);
     this.jarGlass = new THREE.Mesh(
-      new THREE.CylinderGeometry(0.42, 0.5, Balance.e7Boss.jarHeight, 16, 1, true),
-      new THREE.MeshBasicMaterial({
+      new THREE.LatheGeometry([
+        new THREE.Vector2(0, -Balance.e7Boss.jarHeight / 2),
+        new THREE.Vector2(0.38, -Balance.e7Boss.jarHeight / 2),
+        new THREE.Vector2(0.48, -Balance.e7Boss.jarHeight * 0.36),
+        new THREE.Vector2(0.48, Balance.e7Boss.jarHeight * 0.2),
+        new THREE.Vector2(0.32, Balance.e7Boss.jarHeight * 0.36),
+        new THREE.Vector2(0.32, Balance.e7Boss.jarHeight * 0.48),
+      ], 32),
+      new THREE.MeshPhysicalMaterial({
         color: Balance.e7Boss.jarGlassColor,
+        roughness: 0.14,
+        clearcoat: 1,
         transparent: true,
         opacity: 0.28,
         side: THREE.DoubleSide,
@@ -405,6 +456,30 @@ export class EchoBossSystem {
     this.perimeter.rotation.x = -Math.PI / 2;
     this.jar.name = 'TheEcho.Jar';
     this.jar.add(this.jarGlass, this.mote);
+    const brass = new THREE.MeshStandardMaterial({ color: 0xd2a96a, emissive: 0x47301a, emissiveIntensity: 0.3, metalness: 0.1, roughness: 0.55 });
+    for (const [radius, height, y] of [[0.37, 0.12, Balance.e7Boss.jarHeight * 0.48], [0.44, 0.08, -Balance.e7Boss.jarHeight / 2 + 0.04]]) {
+      const rim = new THREE.Mesh(new THREE.CylinderGeometry(radius, radius, height, 24), brass);
+      rim.position.y = y;
+      this.jar.add(rim);
+    }
+    const halo = new THREE.Mesh(new THREE.PlaneGeometry(1.3, 1.3), new THREE.ShaderMaterial({
+      transparent: true, blending: THREE.AdditiveBlending, depthWrite: false,
+      vertexShader: 'varying vec2 uvGlow; void main() { uvGlow = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
+      fragmentShader: `varying vec2 uvGlow;
+        void main() {
+          vec2 d = uvGlow - 0.5;
+          float r = dot(d, d);
+          float a = 0.28 * exp(-18.0 * r) * (1.0 - smoothstep(0.12, 0.25, r));
+          gl_FragColor = vec4(0.54, 1.0, 0.82, a);
+          #include <tonemapping_fragment>
+          #include <colorspace_fragment>
+        }`,
+    }));
+    halo.onBeforeRender = (_renderer, _scene, camera) => {
+      halo.quaternion.copy(camera.quaternion);
+      halo.updateWorldMatrix(false, false);
+    };
+    this.mote.add(halo);
     this.group.add(this.copiesGroup, this.perimeter, this.jar);
   }
 }

@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { ConvexHull } from 'three/examples/jsm/math/ConvexHull.js';
 import type { ClaimJumperEnemy, EnemySpawnParams } from '../entities/Enemy';
 import { Balance } from '../game/Balance';
 import { performanceTierDiagnostics } from '../game/PerformanceTier';
@@ -15,7 +16,7 @@ type Act1ComponentId = typeof ACT1_IDS[number];
 type ComponentId = Act1ComponentId | 'hold';
 const COMPONENT_IDS = [...ACT1_IDS, 'hold'] as const;
 const DREDGE_QUEEN_3D_URL = new URL('../../assets/pilots/dredge-queen-3d/dredge-queen-detail-opus5.glb', import.meta.url).href;
-const DREDGE_QUEEN_3D_TRIANGLES = 33_124;
+const DREDGE_QUEEN_3D_TRIANGLES = 44_920;
 const DREDGE_QUEEN_DAMAGE_THRESHOLD = 0.5;
 const DREDGE_QUEEN_3D_COMPONENTS = {
   claw: { mesh: 'claw', morph: 'Damage_SlackClaw', damageColor: '#5b8a8a' },
@@ -77,7 +78,7 @@ export class DredgeQueenBossSystem {
   private readonly lootCounter = counterSprite();
   private readonly clawLabel = labelSprite('CLAW', '#73b6ad', 3.1);
   private readonly portLabel = labelSprite('PORT PADDLE', '#f3c66d', 4.2);
-  private readonly starboardLabel = labelSprite('STARBOARD PADDLE', '#f3c66d', 4.8);
+  private readonly starboardLabel = labelSprite('STARBOARD PADDLE', '#f3c66d', 4.2);
   private readonly hulk = new THREE.Group();
   private readonly quittingSkiffs: THREE.Group[] = [];
   private act: 0 | 1 | 2 | 3 = 0;
@@ -112,6 +113,9 @@ export class DredgeQueenBossSystem {
   private dredgeQueen3dModel?: THREE.Object3D;
   private readonly dredgeQueen3dMeshes = new Map<ComponentId, THREE.Mesh>();
   private readonly dredgeQueen3dCenter = new THREE.Vector3();
+  private readonly dredgeQueen3dBounds = new THREE.Box3();
+  private readonly dredgeQueen3dBarPoints: THREE.Vector3[] = [];
+  private readonly dredgeQueen3dShapeHulls = new Map<ComponentId, readonly [THREE.Vector3[], THREE.Vector3[]]>();
 
   constructor(
     private readonly enemies: () => readonly ClaimJumperEnemy[],
@@ -123,6 +127,7 @@ export class DredgeQueenBossSystem {
     private readonly spawnPickup: (position: THREE.Vector3, amount: number) => boolean,
     private readonly enabled: boolean,
     private readonly persistence: DredgeQueenWreckPersistence,
+    private readonly renderPosition: (enemy: ClaimJumperEnemy) => THREE.Vector3 = (enemy) => enemy.position,
   ) {
     this.dredgeQueen3dState = performanceTierDiagnostics().tier === 'lite' ? 'lite' : 'off';
     this.group.name = 'DredgeQueen.Placeholder';
@@ -236,10 +241,10 @@ export class DredgeQueenBossSystem {
     this.stormFrontWave = event.wave;
     this.eastExitX = event.toX;
     this.approachEndsAt = event.scheduledAt + Balance.dredgeQueen.approachSeconds;
-    for (const [index, id] of ACT1_IDS.entries()) {
-      const enemy = this.spawnComponent(id, new THREE.Vector3(event.fromX + 2, 0, this.anchor.z + componentOffset(id).z), false);
-      enemy?.scriptMoveTo(this.anchor.x + componentOffset(id).x, this.anchor.z + componentOffset(id).z, (event.toX - event.fromX) / Balance.dredgeQueen.approachSeconds, { ignoreTerrain: true });
-      if (enemy) enemy.group.position.z += index * 0.01;
+    for (const id of ACT1_IDS) {
+      const offset = componentOffset(id);
+      const enemy = this.spawnComponent(id, new THREE.Vector3(event.fromX + 2 + offset.x, 0, this.anchor.z + offset.z), false);
+      enemy?.scriptMoveTo(this.anchor.x + offset.x, this.anchor.z + offset.z, (event.toX - event.fromX) / Balance.dredgeQueen.approachSeconds, { ignoreTerrain: true });
     }
   }
 
@@ -289,7 +294,9 @@ export class DredgeQueenBossSystem {
     this.nextSwatAt = at + Balance.dredgeQueen.swatIntervalSeconds;
     const claw = this.component('claw');
     if (claw) this.recycleEnemy(claw);
-    this.spawnComponent('hold', this.anchor.clone(), true)?.scriptMoveTo(this.anchor.x, this.anchor.z, 0, { ignoreTerrain: true });
+    const holdOffset = componentOffset('hold');
+    const holdPosition = this.anchor.clone().add(new THREE.Vector3(holdOffset.x, 0, holdOffset.z));
+    this.spawnComponent('hold', holdPosition, true)?.scriptMoveTo(holdPosition.x, holdPosition.z, 0, { ignoreTerrain: true });
     this.spawnAct2Reinforcements();
     // Act-2 dive pressure attaches here once the era's dive verb exists.
   }
@@ -309,7 +316,7 @@ export class DredgeQueenBossSystem {
 
   private finishFight(position: THREE.Vector3): void {
     this.act = 3;
-    this.anchor.set(position.x, 0, position.z);
+    // The hold is offset within the hull; its death must not move the wreck.
     this.crewQuit = true;
     this.hulkPresent = true;
     this.escortsExiting = true;
@@ -467,10 +474,11 @@ export class DredgeQueenBossSystem {
       clawJaws,
     );
     this.barge.add(this.bargePrimitive, ...this.lootMarkers, this.lootCounter, this.clawLabel, this.portLabel, this.starboardLabel);
-    this.lootCounter.position.set(0.7, 4.4, 0);
-    this.clawLabel.position.set(-4.5, 3.15, 0);
-    this.portLabel.position.set(-0.1, 2.35, -4.25);
-    this.starboardLabel.position.set(-0.1, 2.35, 4.25);
+    this.lootCounter.position.set(1, 9.5, 1.8);
+    this.lootCounter.scale.multiplyScalar(0.75);
+    this.clawLabel.position.set(-5.8, 3.15, 0);
+    this.portLabel.position.set(-4.5, 3.15, -4.25);
+    this.starboardLabel.position.set(-0.5, 1.1, 4.7);
     this.wreckMarker.rotation.x = -Math.PI / 2;
     this.wreckMarker.position.y = 0.08;
     this.cyclePointer.position.set(-3.4, 3.4, 0);
@@ -493,12 +501,45 @@ export class DredgeQueenBossSystem {
     this.syncPresentation();
   }
 
-  private syncPresentation(): void {
+  modelBounds(groupId: string): { bounds: THREE.Box3; points: readonly THREE.Vector3[] } | null {
+    if (this.dredgeQueen3dState !== 'ready' || !this.dredgeQueen3dModel?.visible) return null;
+    if (!this.liveComponents().some(enemy => enemy.bossGroupId === groupId)) return null;
+    this.syncRenderPresentation();
+    const model = this.dredgeQueen3dModel;
+    if (!model?.visible) return null;
+    model.updateWorldMatrix(true, true);
+    this.dredgeQueen3dBounds.makeEmpty();
+    let pointIndex = 0;
+    for (const [id, mesh] of this.dredgeQueen3dMeshes) {
+      const points = this.dredgeQueen3dShapeHulls.get(id)![mesh.morphTargetInfluences![0]! >= 0.5 ? 1 : 0];
+      for (const local of points) {
+        const point = this.dredgeQueen3dBarPoints[pointIndex++] ??= new THREE.Vector3();
+        point.copy(local).applyMatrix4(mesh.matrixWorld);
+        this.dredgeQueen3dBounds.expandByPoint(point);
+      }
+    }
+    this.dredgeQueen3dBarPoints.length = pointIndex;
+    return { bounds: this.dredgeQueen3dBounds, points: this.dredgeQueen3dBarPoints };
+  }
+
+  syncRenderPresentation(): void {
+    if (this.started || this.hulkPresent) this.syncPresentation(true);
+  }
+
+  private syncPresentation(interpolated = false): void {
     const components = this.liveComponents();
     if (this.started || this.hulkPresent) this.ensureDredgeQueen3d();
-    const center = components.length > 0
-      ? components.reduce((sum, enemy) => sum.add(enemy.position), new THREE.Vector3()).multiplyScalar(1 / components.length)
-      : this.anchor;
+    const center = this.anchor.clone();
+    if (this.act < 2 && components.length > 0) {
+      center.set(0, 0, 0);
+      for (const enemy of components) {
+        const offset = componentOffset(enemy.bossComponentId as ComponentId);
+        const position = interpolated ? this.renderPosition(enemy) : enemy.position;
+        center.x += position.x - offset.x;
+        center.z += position.z - offset.z;
+      }
+      center.multiplyScalar(1 / components.length);
+    }
     this.updateDredgeQueen3d(components, center);
     const modelMounted = this.dredgeQueen3dState === 'ready' && this.dredgeQueen3dModel?.visible === true;
     this.barge.position.set(center.x, 0, center.z);
@@ -584,7 +625,20 @@ export class DredgeQueenBossSystem {
       mesh.receiveShadow = true;
     });
     if (meshCount !== 4 || meshes.size !== 4 || materials.size !== 1 || triangles !== DREDGE_QUEEN_3D_TRIANGLES) return null;
-    for (const mesh of meshes.values()) {
+    for (const [id, mesh] of meshes) {
+      // Reuse the Crawler/Land Yacht hull pattern: camera extrema without per-frame vertex scans.
+      const states: [THREE.Vector3[], THREE.Vector3[]] = [[], []];
+      for (const state of [0, 1] as const) {
+        mesh.morphTargetInfluences![0] = state;
+        const points: THREE.Vector3[] = [];
+        for (let vertex = 0; vertex < mesh.geometry.getAttribute('position').count; vertex += 1) {
+          points.push(mesh.getVertexPosition(vertex, new THREE.Vector3()));
+        }
+        const hull = new ConvexHull().setFromPoints(points);
+        states[state] = [...new Set(hull.faces.flatMap(face => [0, 1, 2].map(edge => face.getEdge(edge).vertex.point)))];
+      }
+      mesh.morphTargetInfluences![0] = 0;
+      this.dredgeQueen3dShapeHulls.set(id, states);
       const material = (mesh.material as THREE.MeshStandardMaterial).clone();
       material.emissiveMap = material.map;
       mesh.material = material;
@@ -593,20 +647,9 @@ export class DredgeQueenBossSystem {
     return meshes;
   }
 
-  private updateDredgeQueen3d(components: readonly ClaimJumperEnemy[], fallbackCenter: THREE.Vector3): void {
+  private updateDredgeQueen3d(components: readonly ClaimJumperEnemy[], center: THREE.Vector3): void {
     if (!this.dredgeQueen3dModel || this.dredgeQueen3dState !== 'ready') return;
-    this.dredgeQueen3dCenter.copy(this.act >= 2 || this.hulkPresent ? this.anchor : fallbackCenter);
-    if (this.act === 1 && components.length > 0) {
-      let offsetX = 0;
-      let offsetZ = 0;
-      for (const enemy of components) {
-        const offset = componentOffset(enemy.bossComponentId as ComponentId);
-        offsetX += offset.x;
-        offsetZ += offset.z;
-      }
-      this.dredgeQueen3dCenter.x -= offsetX / components.length;
-      this.dredgeQueen3dCenter.z -= offsetZ / components.length;
-    }
+    this.dredgeQueen3dCenter.copy(center);
     this.dredgeQueen3dModel.position.set(this.dredgeQueen3dCenter.x, 0, this.dredgeQueen3dCenter.z);
     this.dredgeQueen3dModel.visible = this.started || this.hulkPresent;
     for (const [id, mesh] of this.dredgeQueen3dMeshes) {
@@ -614,8 +657,8 @@ export class DredgeQueenBossSystem {
       const damaged = this.hulkPresent || this.destroyed.has(id) || Boolean(enemy && enemy.currentHp / Math.max(1, enemy.maxHp) <= DREDGE_QUEEN_DAMAGE_THRESHOLD);
       if (mesh.morphTargetInfluences) mesh.morphTargetInfluences[0] = damaged ? 1 : 0;
       const material = mesh.material as THREE.MeshStandardMaterial;
-      material.emissive.set(damaged ? DREDGE_QUEEN_3D_COMPONENTS[id].damageColor : '#fff8e8');
-      material.emissiveIntensity = damaged ? 3 : 2;
+      material.emissive.set(damaged ? DREDGE_QUEEN_3D_COMPONENTS[id].damageColor : '#ffffff');
+      material.emissiveIntensity = damaged ? 1 : 0.8;
     }
   }
 
@@ -627,6 +670,7 @@ export class DredgeQueenBossSystem {
       this.dredgeQueen3dModel = undefined;
     }
     this.dredgeQueen3dMeshes.clear();
+    this.dredgeQueen3dShapeHulls.clear();
     this.dredgeQueen3dState = nextState;
     this.publishDredgeQueen3d();
   }
@@ -752,7 +796,7 @@ function labelSprite(text: string, accent: string, width: number): THREE.Sprite 
   context.font = 'bold 34px Georgia, serif';
   context.textAlign = 'center';
   context.textBaseline = 'middle';
-  context.fillText(text, canvas.width / 2, canvas.height / 2 + 1);
+  context.fillText(text, canvas.width / 2, canvas.height / 2 + 1, canvas.width - 32);
   const texture = new THREE.CanvasTexture(canvas);
   texture.colorSpace = THREE.SRGBColorSpace;
   const sprite = new THREE.Sprite(new THREE.SpriteMaterial({ map: texture, transparent: true, depthTest: false }));

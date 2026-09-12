@@ -1,0 +1,105 @@
+{
+  "$schema": "gold-rush layer contract v1",
+  "batch": "boss-fidelity-e4-landyacht-2026-09-08",
+  "status": "fidelity-verified-broad-regression-completed-with-exceptions",
+  "asset": "assets/pilots/land-yacht-3d/land-yacht.glb",
+  "assetContract": "assets/pilots/land-yacht-3d/renders/land-yacht-asset-contract.json",
+  "provenance": "artifacts/boss-fidelity/e4-landyacht/candidate-material/provenance.json",
+  "source": {
+    "file": "assets/raw/land-yacht-atlas-fidelity-e4.png",
+    "generator": "native image_gen",
+    "size": [
+      1254,
+      1254
+    ],
+    "sha256": "f8b7756908ac9d4511a2c635ffde24f000ce70fb544918f34a9e774ee12eb15e"
+  },
+  "shapeReference": "assets/raw/plate-e4-boss-land-yacht.png",
+  "damageReference": "assets/raw/boss-land-yacht-damage.png",
+  "maps": [
+    {
+      "embeddedImage": 0,
+      "role": "baseColor",
+      "size": [
+        1024,
+        1024
+      ],
+      "colorSpace": "sRGB",
+      "derivation": "Native source resized by build_land_yacht.py and embedded directly in GLB",
+      "sha256": "58d95077367f3627990756c6ed9fc2df3eda8093a1ba0d2a6abe8cd4ed87d653"
+    }
+  ],
+  "uvRegions": {
+    "plate": [
+      0.015,
+      0.69,
+      0.235,
+      0.83
+    ],
+    "brass": [
+      0.27,
+      0.62,
+      0.48,
+      0.83
+    ],
+    "iron": [
+      0.52,
+      0.62,
+      0.73,
+      0.83
+    ],
+    "teal": [
+      0.77,
+      0.62,
+      0.98,
+      0.83
+    ],
+    "deck": [
+      0.008,
+      0.008,
+      0.242,
+      0.492
+    ],
+    "rope": [
+      0.258,
+      0.008,
+      0.492,
+      0.492
+    ],
+    "trim": [
+      0.52,
+      0.12,
+      0.73,
+      0.33
+    ],
+    "damage": [
+      0.77,
+      0.12,
+      0.98,
+      0.33
+    ],
+    "soot": [
+      0.52,
+      0.62,
+      0.73,
+      0.83
+    ]
+  },
+  "geometry": {
+    "sourceLadder": "derive",
+    "triangleCeiling": 12000,
+    "triangles": 9613,
+    "materialCount": 1,
+    "embeddedImageCount": 1,
+    "length": 9.4,
+    "morphs": {
+      "wheels": "Damage_BeachedWheels",
+      "crane": "Damage_SlackCrane",
+      "wheelhouse": "Damage_CrackedWheelhouse"
+    }
+  },
+  "sha256": "1a7c743b7df30d18d5d8709fa2e9919cc681fec30dcc6a83630e03722fd7592f",
+  "runtimeStatus": "Integrated; focused mechanics, lifecycle, resume and raw/optimized visuals verified. Broad regression completed with explicit unresolved exceptions; see review and full-regression/REPORT.md.",
+  "finalAssetSha256": "1a7c743b7df30d18d5d8709fa2e9919cc681fec30dcc6a83630e03722fd7592f",
+  "review": "reviews/sol-boss-fidelity-e4-landyacht.md"
+}

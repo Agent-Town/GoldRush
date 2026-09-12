@@ -40,7 +40,7 @@ const BOSS_HP_STYLE = {
 } as const;
 const RAILCAR_DAMAGE_THRESHOLD = 0.5;
 const RAILCAR_RAIL_HEAD_Y = 0.125;
-const RAILCAR_3D_HEIGHT = 1.202;
+const RAILCAR_3D_HEIGHT = 1.242;
 const BOSS_BAR_HEAD_ANCHORS = {
   baron: { scale: 1.5, clearance: 0.35 },
   baron_railcar: { scale: 1.5, clearance: 0.95, mountedClearance: 0.35 },
@@ -51,11 +51,12 @@ const BOSS_BAR_HEAD_ANCHORS = {
 } as const;
 const DEFAULT_BOSS_BAR_HEAD_ANCHOR = { scale: 1.5, clearance: 0.95 } as const;
 const RAILCAR_3D_URL = new URL('../../assets/pilots/railcar-3d/railcar.glb', import.meta.url).href;
-const RAILCAR_3D_TRIANGLES = 10_948;
+const RAILCAR_3D_TRIANGLES = 11_936;
+const RAILCAR_3D_FILL_COLOR = new THREE.Color('#ffffff');
 const RAILCAR_3D_COMPONENTS = {
-  wheels: { mesh: 'Railcar_Wheels', morph: 'Damage_BentWheels', damageColor: '#d95f32', damageGlow: 2.4 },
-  boiler: { mesh: 'Railcar_Boiler', morph: 'Damage_VentingBoiler', damageColor: '#5b8a8a', damageGlow: 0.9 },
-  cabin: { mesh: 'Railcar_Cabin', morph: 'Damage_CrackedCabin', damageColor: '#c4883a', damageGlow: 0.9 },
+  wheels: { mesh: 'Railcar_Wheels', morph: 'Damage_BentWheels', damageColor: '#d95f32', damageGlow: 1 },
+  boiler: { mesh: 'Railcar_Boiler', morph: 'Damage_VentingBoiler', damageColor: '#5b8a8a', damageGlow: 1 },
+  cabin: { mesh: 'Railcar_Cabin', morph: 'Damage_CrackedCabin', damageColor: '#c4883a', damageGlow: 1 },
 } as const;
 type RailcarComponentId = keyof typeof RAILCAR_3D_COMPONENTS;
 type Railcar3dState = 'off' | 'loading' | 'ready' | 'lite' | 'failed' | 'disposed';
@@ -385,12 +386,15 @@ export class EnemyPool {
   private readonly bannerPoleMesh: THREE.InstancedMesh = new THREE.InstancedMesh(this.bannerPoleGeometry, this.bannerPoleMaterial, Balance.enemy.poolSize);
   private readonly bannerClothMesh: THREE.InstancedMesh = new THREE.InstancedMesh(this.bannerClothGeometry, this.bannerClothMaterial, Balance.enemy.poolSize);
   private readonly bossHpGroup = new THREE.Group();
+  private bossModelBounds?: (groupId: string) => { bounds: THREE.Box3; points: readonly THREE.Vector3[] } | null;
+  private readonly bossBarBoundsPoint = new THREE.Vector3();
   private readonly bossHpBackGeometry = new THREE.BoxGeometry(BOSS_HP_WIDTH, 0.16, 0.05);
   private readonly bossHpFillGeometry = new THREE.BoxGeometry(BOSS_HP_FILL_WIDTH, 0.08, 0.06);
   private readonly bossHpSegmentGeometry = new THREE.BoxGeometry(0.018, 0.18, 0.07);
-  private readonly bossHpBackMaterial = new THREE.MeshBasicMaterial({ color: BOSS_HP_STYLE.health.depleted, depthTest: false, toneMapped: false, fog: false });
-  private readonly bossHpFillMaterial = new THREE.MeshBasicMaterial({ color: BOSS_HP_STYLE.health.remaining, depthTest: false, toneMapped: false, fog: false });
-  private readonly bossHpSegmentMaterial = new THREE.MeshBasicMaterial({ color: BOSS_HP_STYLE.edge, transparent: true, opacity: 0.85, depthTest: false, toneMapped: false, fog: false });
+  // Draw the whole overlay after transparent world content, including its fill.
+  private readonly bossHpBackMaterial = new THREE.MeshBasicMaterial({ color: BOSS_HP_STYLE.health.depleted, transparent: true, opacity: 1, depthTest: false, depthWrite: false, toneMapped: false, fog: false });
+  private readonly bossHpFillMaterial = new THREE.MeshBasicMaterial({ color: BOSS_HP_STYLE.health.remaining, transparent: true, opacity: 1, depthTest: false, depthWrite: false, toneMapped: false, fog: false });
+  private readonly bossHpSegmentMaterial = new THREE.MeshBasicMaterial({ color: BOSS_HP_STYLE.edge, transparent: true, opacity: 0.85, depthTest: false, depthWrite: false, toneMapped: false, fog: false });
   private readonly bossHpBack = new THREE.Mesh(this.bossHpBackGeometry, this.bossHpBackMaterial);
   private readonly bossHpFill = new THREE.Mesh(this.bossHpFillGeometry, this.bossHpFillMaterial);
   private readonly bossHpSegments = new THREE.Group();
@@ -592,6 +596,10 @@ export class EnemyPool {
     return this.renderRotations[enemy.id] ?? enemy.group.rotation.y;
   }
 
+  get baronSpriteBobOffset(): number {
+    return this.baronSpriteAnimator?.motion.bobOffset ?? 0;
+  }
+
   railcarPresentation(enemy: ClaimJumperEnemy): { mesh: boolean; visible: boolean; railY: number; railRotation: number; textureKey: string; damaged: boolean; damageThreshold: number; wreckerMarker: boolean; markerColor: string; source: 'glb' | 'billboard'; mounted: boolean; morphInfluence: number; bossBarY: number; bossBarScale: number } {
     const damaged = enemy.currentHp / Math.max(1, enemy.maxHp) <= RAILCAR_DAMAGE_THRESHOLD;
     const component = enemy.bossComponentId as RailcarComponentId | null;
@@ -637,6 +645,10 @@ export class EnemyPool {
       destroyedComponents: state?.destroyedComponents ?? 0,
       components: state?.components ?? [],
     };
+  }
+
+  setBossModelBounds(provider: (groupId: string) => { bounds: THREE.Box3; points: readonly THREE.Vector3[] } | null): void {
+    this.bossModelBounds = provider;
   }
 
   get dimmingDiagnostics(): EnemyDimmingDiagnostics {
@@ -1414,7 +1426,22 @@ export class EnemyPool {
     this.bossHpBackMaterial.color.set(style.depleted);
     this.bossHpFillMaterial.color.set(style.remaining);
     const railcarMounted = this.railcar3dState === 'ready' && this.railcar3dGroupId === state.groupId;
-    this.bossHpGroup.position.set(
+    const modelPresentation = state.groupId ? this.bossModelBounds?.(state.groupId) : null;
+    const modelBounds = modelPresentation?.bounds;
+    if (modelBounds && !modelBounds.isEmpty()) {
+      modelBounds.getCenter(this.bossHpGroup.position);
+      this.bossHpGroup.position.y = modelBounds.max.y + 0.35;
+      if (this.camera) {
+        let screenTop = Number.NEGATIVE_INFINITY;
+        for (const point of modelPresentation!.points) {
+          this.bossBarBoundsPoint.copy(point).project(this.camera);
+          screenTop = Math.max(screenTop, this.bossBarBoundsPoint.y);
+        }
+        this.bossHpGroup.position.project(this.camera);
+        this.bossHpGroup.position.y = Math.max(this.bossHpGroup.position.y, screenTop + 0.035);
+        this.bossHpGroup.position.unproject(this.camera);
+      }
+    } else this.bossHpGroup.position.set(
       railcarMounted ? this.railcar3dCenter.x : state.x,
       railcarMounted
         ? this.railcar3dModel!.position.y + RAILCAR_3D_HEIGHT + BOSS_BAR_HEAD_ANCHORS.baron_railcar.mountedClearance
@@ -1425,7 +1452,7 @@ export class EnemyPool {
     // Boss readability overrides orientation only: follow the head position, but never inherit body sway/rotation.
     if (this.camera) this.bossHpGroup.quaternion.copy(this.camera.quaternion);
     else this.bossHpGroup.quaternion.identity();
-    this.bossHpGroup.scale.setScalar(railcarMounted ? 1 : state.scale);
+    this.bossHpGroup.scale.setScalar(modelBounds || railcarMounted ? 1 : state.scale);
     this.bossHpFill.scale.x = state.ratio;
     this.bossHpFill.position.x = -BOSS_HP_FILL_WIDTH * (1 - state.ratio) * 0.5;
     for (let i = 0; i < this.bossHpSegments.children.length; i += 1) {
@@ -1592,7 +1619,13 @@ export class EnemyPool {
       mesh.receiveShadow = true;
     });
     if (meshCount !== 3 || meshes.size !== 3 || materials.size !== 1 || triangles !== RAILCAR_3D_TRIANGLES) return null;
-    for (const mesh of meshes.values()) mesh.material = (mesh.material as THREE.MeshStandardMaterial).clone();
+    for (const mesh of meshes.values()) {
+      const material = (mesh.material as THREE.MeshStandardMaterial).clone();
+      // Reuse the authored plate texture for a restrained illustrated shadow fill.
+      // A flat emissive color erased the metal panels when a component broke.
+      material.emissiveMap = material.map;
+      mesh.material = material;
+    }
     for (const material of materials) material.dispose();
     return meshes;
   }
@@ -1629,14 +1662,24 @@ export class EnemyPool {
       Terrain.visualY(this.railcar3dCenter.x, this.railcar3dCenter.z, 0) + RAILCAR_RAIL_HEAD_Y,
       this.railcar3dCenter.z,
     );
-    this.railcar3dModel.rotation.y = Math.PI / 2 - this.renderRotationOf(anchor);
+    const inwardX = anchor.ownEdge === 'west' ? 1 : anchor.ownEdge === 'east' ? -1 : 0;
+    const inwardZ = anchor.ownEdge === 'south' ? 1 : anchor.ownEdge === 'north' ? -1 : 0;
+    let railYaw = Math.hypot(anchor.velocityX, anchor.velocityZ) > 0.001
+      ? Math.atan2(-anchor.velocityZ, anchor.velocityX)
+      : Math.atan2(-inwardZ, inwardX);
+    // The component routes retain their offsets on reversal. Back the stock along
+    // the rail without turning its cabin away from the cabin's damage proxy. Use
+    // velocity so enemy yaw interpolation cannot swing the chassis across the rail.
+    if (Math.cos(railYaw) * inwardX - Math.sin(railYaw) * inwardZ < 0) railYaw += Math.PI;
+    this.railcar3dModel.rotation.y = railYaw;
     this.railcar3dModel.visible = railcars.some((enemy) => this.railcarVisible(enemy));
     for (const [id, mesh] of this.railcar3dMeshes) {
       const damaged = this.railcar3dDamaged.has(id);
       if (mesh.morphTargetInfluences) mesh.morphTargetInfluences[0] = damaged ? 1 : 0;
       const material = mesh.material as THREE.MeshStandardMaterial;
-      material.emissive.set(damaged ? RAILCAR_3D_COMPONENTS[id].damageColor : '#000000');
-      material.emissiveIntensity = damaged ? RAILCAR_3D_COMPONENTS[id].damageGlow : 0;
+      material.emissive.copy(RAILCAR_3D_FILL_COLOR);
+      if (damaged) material.emissive.set(RAILCAR_3D_COMPONENTS[id].damageColor).lerp(RAILCAR_3D_FILL_COLOR, 0.8);
+      material.emissiveIntensity = damaged ? RAILCAR_3D_COMPONENTS[id].damageGlow : 0.9;
     }
     this.publishRailcar3d();
   }

@@ -1,0 +1,92 @@
+{
+  "$schema": "gold-rush layer contract v1",
+  "batch": "boss-fidelity-e6-homemaker-2026-09-09",
+  "status": "adopted-focused-verification-passed-broad-regression-pending",
+  "asset": "assets/pilots/homemaker-9000-3d/homemaker-9000.glb",
+  "assetSha256": "ff2fe72dcc72bb9415de5afefacdf2794f0b81d02a16a051b3527ae53dbf5400",
+  "shapeReference": "assets/raw/plate-e6-boss-homemaker-9000.png",
+  "provenance": [
+    "artifacts/boss-fidelity/e6-homemaker/candidate-material/provenance.json",
+    "artifacts/boss-fidelity/e6-homemaker/candidate-material/amber-edit-provenance.json",
+    "artifacts/boss-fidelity/e6-homemaker/candidate-material/silver-edit-provenance.json"
+  ],
+  "source": {
+    "file": "assets/raw/homemaker-atlas-fidelity-e6.png",
+    "generator": "native image_gen",
+    "size": [
+      1254,
+      1254
+    ],
+    "sha256": "7085631a2c905f821ac2573e1805fc453f0f344fa99fb340ecb2b3034899631c"
+  },
+  "bindings": [
+    {
+      "node": "vac",
+      "mesh": "vacMesh",
+      "targets": [
+        "Damage_DroppedVac"
+      ],
+      "defaultWeights": [
+        0
+      ]
+    },
+    {
+      "node": "rack",
+      "mesh": "rackMesh",
+      "targets": [
+        "Damage_SpentRack"
+      ],
+      "defaultWeights": [
+        0
+      ]
+    },
+    {
+      "node": "core",
+      "mesh": "coreMesh",
+      "targets": [
+        "Damage_ChairPose"
+      ],
+      "defaultWeights": [
+        0
+      ]
+    }
+  ],
+  "maps": [
+    {
+      "embeddedImage": 0,
+      "size": [
+        1024,
+        1024
+      ],
+      "role": "baseColor",
+      "colorSpace": "sRGB",
+      "derivation": "Native silver atlas resized and embedded; runtime reuses the map for reduced calibrated emission."
+    }
+  ],
+  "triangles": 11960,
+  "evidenceRoot": "artifacts/boss-fidelity/e6-homemaker",
+  "assetContract": "artifacts/boss-fidelity/e6-homemaker/production-adoption/homemaker-9000-asset-contract.json",
+  "contractMetadataNote": "Adopted-path saved Blend re-export verification; neutral damage metric references the geometrically identical V12 bank. Embedded image name is the only GLB JSON difference.",
+  "runtimeEvidence": {
+    "isolatedRaw": "artifacts/boss-fidelity/e6-homemaker/runtime-v12-raw/report.json",
+    "isolatedOptimized": "artifacts/boss-fidelity/e6-homemaker/runtime-v12-optimized/report.json",
+    "fullBundle": "artifacts/boss-fidelity/e6-homemaker/production-adoption/runtime-bundle/report.json",
+    "unchangedEncounter": "artifacts/boss-fidelity/e6-homemaker/production-adoption/focused-results.json",
+    "loaderLifecycle": "artifacts/boss-fidelity/e6-homemaker/production-adoption/runtime-lifecycle/report.json",
+    "serializedEncounterAndMotion": "artifacts/boss-fidelity/e6-homemaker/production-adoption/runtime-motion-suspend/report.json",
+    "keptReload": "artifacts/boss-fidelity/e6-homemaker/production-adoption/runtime-persistence/report.json",
+    "visualReview": "artifacts/boss-fidelity/e6-homemaker/bundle-preview-v12/visual-review/findings.md",
+    "adoptedOptimized": "artifacts/boss-fidelity/e6-homemaker/production-adoption/runtime-optimized/report.json"
+  },
+  "optimized": {
+    "bytes": 497148,
+    "sha256": "85379230e24492721ae22dc3fb738541210db56b1013cd63e5b26a2865528567",
+    "scope": "Actual main-worktree production build and browser downloads; exact hash also matches isolated V12 build."
+  },
+  "limits": [
+    "Rough material appearance, simplified articulated tools and eye depth remain.",
+    "Legacy kept coordinates remain unchanged and may retain original pylon overlap.",
+    "Main-worktree build, focused tests and runtime checks passed; broad regression pending.",
+    "Surrounding full-bundle HUD portrait/debug-overlay defects are recorded separately; no whole-UI green claim."
+  ]
+}
