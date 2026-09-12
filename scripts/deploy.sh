@@ -382,6 +382,10 @@ for ((ATTEMPT = 1; ATTEMPT <= VERIFY_ATTEMPTS; ATTEMPT++)); do
         "--include=/assets/pilots/old-digger-3d/old-digger.glb"
         "--include=/assets/pilots/homemaker-9000-3d/homemaker-9000.glb"
         "--include=/assets/pilots/crawler-3d/crawler.glb"
+        # F-DRB-3 (drain 2026-09-12): the boss-fidelity branch WIRED this GLB for the first time
+        # (`LandYachtBossSystem.ts:15`); until then nothing imported it, so it was never on the
+        # mirror. `deploy-mirror-allowlist.test.mjs:97` measured it missing from the runtime closure.
+        "--include=/assets/pilots/land-yacht-3d/land-yacht.glb"
         "--include=/assets/pilots/salvage-claw-3d/salvage-claw-detail-opus5.glb"
         "--include=/assets/pilots/tavern-3d/town-v3-tavern.glb"
         "--include=/assets/pilots/general-store-3d/general-store.glb"
