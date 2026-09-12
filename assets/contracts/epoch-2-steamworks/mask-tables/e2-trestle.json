@@ -6,44 +6,120 @@
     "river": true,
     "ford": true,
     "fords": [
-      { "id": "trestle", "x": 0, "halfWidth": 3 }
+      {
+        "id": "trestle",
+        "x": 0,
+        "halfWidth": 3
+      }
     ],
     "buildZones": [
-      { "id": "south-approach", "bank": "south", "minX": -30, "maxX": 30, "minZ": -30, "maxZ": -7 },
-      { "id": "north-approach", "bank": "north", "minX": -30, "maxX": 30, "minZ": 7, "maxZ": 30 }
+      {
+        "id": "south-approach",
+        "bank": "south",
+        "minX": -30,
+        "maxX": 30,
+        "minZ": -30,
+        "maxZ": -7
+      },
+      {
+        "id": "north-approach",
+        "bank": "north",
+        "minX": -30,
+        "maxX": 30,
+        "minZ": 7,
+        "maxZ": 30
+      }
     ],
     "stakeMarkers": [
-      { "id": "south-boiler-site", "x": 12, "z": -12, "heroStart": true },
-      { "id": "north-boiler-site", "x": -12, "z": 12, "heroStart": false }
+      {
+        "id": "south-boiler-site",
+        "x": 12,
+        "z": -12,
+        "heroStart": false
+      },
+      {
+        "id": "north-boiler-site",
+        "x": -12,
+        "z": 12,
+        "heroStart": false
+      },
+      {
+        "id": "trestle-entry",
+        "x": 12,
+        "z": -18,
+        "heroStart": true
+      }
     ],
     "rails": [
       {
         "style": "steamworks",
         "points": [
-          { "x": 0, "z": -46 },
-          { "x": 0, "z": -22 },
-          { "x": 0, "z": -7 },
-          { "x": 0, "z": 7 },
-          { "x": 0, "z": 22 },
-          { "x": 0, "z": 46 }
+          {
+            "x": 0,
+            "z": -46
+          },
+          {
+            "x": 0,
+            "z": -22
+          },
+          {
+            "x": 0,
+            "z": -7
+          },
+          {
+            "x": 0,
+            "z": 7
+          },
+          {
+            "x": 0,
+            "z": 22
+          },
+          {
+            "x": 0,
+            "z": 46
+          }
         ]
       },
       {
         "style": "mine-spur",
         "points": [
-          { "x": -30, "z": -18 },
-          { "x": -14, "z": -18 },
-          { "x": 0, "z": -22 },
-          { "x": 18, "z": -26 }
+          {
+            "x": -30,
+            "z": -18
+          },
+          {
+            "x": -14,
+            "z": -18
+          },
+          {
+            "x": 0,
+            "z": -22
+          },
+          {
+            "x": 18,
+            "z": -26
+          }
         ]
       }
     ],
     "waterSources": [],
     "harvestAnchors": [
-      { "x": -24, "z": -20 },
-      { "x": 24, "z": -20 },
-      { "x": -24, "z": 20 },
-      { "x": 24, "z": 20 }
+      {
+        "x": -24,
+        "z": -20
+      },
+      {
+        "x": 24,
+        "z": -20
+      },
+      {
+        "x": -24,
+        "z": 20
+      },
+      {
+        "x": 24,
+        "z": 20
+      }
     ],
     "elevation": {
       "cellSize": 2,
@@ -62,33 +138,73 @@
     "heightfield": {
       "id": "trestle-gorge-banks",
       "mode": "visual",
-      "bankRelief": { "amount": 0.45, "width": 9 }
+      "bankRelief": {
+        "amount": 0.45,
+        "width": 9
+      }
     },
     "water": {
       "id": "trestle-gorge-river",
       "visualHalfWidth": 10,
-      "depths": { "river": 1.25, "ford": 0.3, "shallows": 0.25 },
-      "speedMul": { "river": 0.45, "ford": 0.8, "shallows": 0.72 }
+      "depths": {
+        "river": 1.25,
+        "ford": 0.3,
+        "shallows": 0.25
+      },
+      "speedMul": {
+        "river": 0.45,
+        "ford": 0.8,
+        "shallows": 0.72
+      }
     },
     "lanes": {
-      "spawnEdges": ["south", "north", "east", "west"],
+      "spawnEdges": [
+        "south",
+        "north",
+        "east",
+        "west"
+      ],
       "territoryRingBiasWaves": 0,
       "territoryRingLaneBias": 0
     },
     "spawnGates": [],
     "coalSeams": [],
-    "trestleDeck": { "id": "trestle-deck", "minX": -3, "maxX": 3, "minZ": -7, "maxZ": 7 }
+    "trestleDeck": {
+      "id": "trestle-deck",
+      "minX": -3,
+      "maxX": 3,
+      "minZ": -7,
+      "maxZ": 7
+    }
   },
   "waterAgreement": {
-    "deepBand": { "minZ": -5, "maxZ": 5 },
-    "shallowsEnd": { "minZ": -6.25, "maxZ": 6.25 },
+    "deepBand": {
+      "minZ": -5,
+      "maxZ": 5
+    },
+    "shallowsEnd": {
+      "minZ": -6.25,
+      "maxZ": 6.25
+    },
     "placeableBankStartsBeyondAbsZ": 6.25,
     "factoryVisualHalfWidth": 10,
     "sluiceSamples": [
-      { "x": -24, "z": -7 },
-      { "x": 24, "z": -7 },
-      { "x": -24, "z": 7 },
-      { "x": 24, "z": 7 }
+      {
+        "x": -24,
+        "z": -7
+      },
+      {
+        "x": 24,
+        "z": -7
+      },
+      {
+        "x": -24,
+        "z": 7
+      },
+      {
+        "x": 24,
+        "z": 7
+      }
     ]
   }
 }

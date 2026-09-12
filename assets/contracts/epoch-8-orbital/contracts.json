@@ -141,7 +141,7 @@
           "outsideDomes": "suit-timer"
         },
         "engineDependencies": [
-          { "dep": "atmosphere-wall-consumer", "status": "missing", "description": "The headless door composes the atmosphere wall and, since 2026-09-07, the HUMAN suit: the hero drains outside a breathing dome, refills only inside one, and loses five hit points a second once it empties, through CombatSystem. The BROWSER still composes no atmosphere consumer at all, so a player there meets neither the suit nor the harm, and this dependency stays missing until Game.ts composes it." }
+          {"dep": "atmosphere-wall-consumer", "status": "landed", "landedBy": "map-art-repairs F48/F49", "description": "Browser and headless engines compose the atmosphere and suit consumer: outside air drains the suit, breathing domes refill it, empty suits take damage through CombatSystem, and four distinct mining grounds across four air windows gate securing. Native desktop09 and mobile07 complete mining, wave20 secure, banking and reload; evidence is recorded in reviews/sol-map-art-repairs-20260908.md. This records the landed gameplay consumer, not full concept-art acceptance or release admission."}
         ],
         "lanes": {
           "spawnEdges": [
@@ -187,6 +187,7 @@
           "regolithWindowWaves": 4,
           "suitSeconds": 60,
           "harmPerSecond": 5,
+          "pressurisedZoneShape": "ellipse",
           "pressurisedZoneIds": [
             "dome-cluster-pad-west",
             "dome-cluster-pad-center",
@@ -780,6 +781,7 @@
           "regolithWindowWaves": 4,
           "suitSeconds": 60,
           "harmPerSecond": 5,
+          "pressurisedZoneShape": "ellipse",
           "pressurisedZoneIds": [
             "dome-cluster-pad-west",
             "dome-cluster-pad-center",

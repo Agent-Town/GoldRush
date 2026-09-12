@@ -1,0 +1,30 @@
+{
+  "$schema": "gold-rush layer contract v1",
+  "batch": "map-art-repairs-20260908-baron-banner-42",
+  "notes": "Complete crossed mining picks on seven cloth components; shared roof/rocket accents remain plain. Geometry unchanged. Full map composition and native completion remain open.",
+  "slots": [
+    {
+      "file": "baron-landmarks-atlas.png",
+      "slot": "baron.landmark-material-atlas.v2",
+      "raw": "assets/raw/baron-landmark-material-atlas-v2.png",
+      "rawSize": [
+        1254,
+        1254
+      ],
+      "size": [
+        1024,
+        1024
+      ],
+      "sha256": "93a9c91fd02ff7cb022d07b20e9d92baa0c4a6386d7b2a5e46bbc0adc1af1321",
+      "rawSha256": "87af439acd3b58652371c8c84a377cf5e8b4df27ebc7b71a457297aa7162b9bd",
+      "reference": [
+        "assets/raw/plate-contract-baron.png",
+        "assets/raw/baron-landmark-material-atlas-v1.png"
+      ],
+      "generation": "native image_gen exec-3c88de87-9c9b-47cd-84ab-72685d7ea8d0",
+      "recipe": "assets/pilots/map-rebuild-spike/retexture_baron_landmarks.py",
+      "evidence": "artifacts/map-art-repairs-20260908/baron-banner-emblem-36/prompt.txt",
+      "runtime": "assets/pilots/map-rebuild-spike/landmarks/baron"
+    }
+  ]
+}

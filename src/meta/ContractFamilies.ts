@@ -755,7 +755,7 @@ export type ContractManifest = {
     persistentPlanting?: { description: string };
     scheduledRelocation?: { description: string };
     persistentCanalChoices?: { description: string };
-  } & { picnicHold?: boolean; motorFrontier?: ContractMotorFrontier; harvestFreeObjective?: { description: string }; economy?: { bankCap: number; beaconLadder?: number[] }; hero?: { maxHpBonus: number }; atmosphere?: { regolithRequired?: number; regolithWindowWaves?: number; crossingRequired?: number; crossingWindowWaves?: number; suitSeconds?: number; harmPerSecond?: number; pressurisedZoneIds?: readonly string[] } }; // E4 and E10's harvest-free declaration, E3's per-contract purse and beacon ladder, E7's claim grit and E8's regolith+crossing air gates plus the 2026-09-07 human-suit numbers ride the trailing intersection so no cited line below moves
+  } & { picnicHold?: boolean; motorFrontier?: ContractMotorFrontier; harvestFreeObjective?: { description: string }; economy?: { bankCap: number; beaconLadder?: number[] }; hero?: { maxHpBonus: number }; atmosphere?: { regolithRequired?: number; regolithWindowWaves?: number; crossingRequired?: number; crossingWindowWaves?: number; suitSeconds?: number; harmPerSecond?: number; pressurisedZoneIds?: readonly string[]; pressurisedZoneShape?: 'rect' | 'ellipse' } }; // E4 and E10's harvest-free declaration, E3's per-contract purse and beacon ladder, E7's claim grit and E8's regolith+crossing air gates plus the 2026-09-07 human-suit numbers ride the trailing intersection so no cited line below moves
   modes?: ContractEscortMode[];
   practice?: ContractPracticeMode;
   boardRow: {
@@ -1013,6 +1013,12 @@ export function pendingEpochContracts(epoch: EpochBundle, contracts: readonly Pi
   return epoch.upcoming.filter((entry) => !contractIds.has(entry.id));
 }
 
+export function contractEpochId(contractId: string): string {
+  const epoch = orderedManifests.find((manifest) => loadContracts(manifest).contracts.some(({ id }) => id === contractId));
+  if (!epoch) throw new Error(`Unknown contract: ${contractId}`);
+  return epoch.id;
+}
+
 export function loadContract(id: string, epochId?: string): ContractManifest {
   const contract = (epochId ? listContracts(epochId) : listBoardContracts()).find((entry) => entry.id === id);
   if (!contract) throw new Error(`Unknown contract: ${id}`);
@@ -1112,25 +1118,31 @@ export function activeEpochId(): string {
   const params = readSearchParams();
   const requestedId = params.get('epoch');
   const debug = !RELEASE_E1 && (params.has('debug') || params.has('editor') || params.get('bench') === 'fullbase');
-  if (requestedId && debug && manifestsById.has(requestedId)) return requestedId;
-  const flagshipEpochId = LIVE_SAGA_FLAGSHIPS[params.get('contract') ?? ''];
-  if (!RELEASE_E1 && flagshipEpochId) return flagshipEpochId;
+  if (replayContractId === null && requestedId && debug && manifestsById.has(requestedId)) return requestedId;
+  if (replayContractId !== null || params.has('contract')) {
+    return contractEpochId(activeContract().id);
+  }
+  return campaignEpochId();
+}
+
+/** Saved campaign progress is independent of a selected, previewed or replayed map. */
+export function campaignEpochId(storage?: Pick<Storage, 'getItem'>): string {
   try {
-    const persisted = globalThis.localStorage?.getItem(ACTIVE_EPOCH_KEY);
+    const persisted = (storage ?? globalThis.localStorage)?.getItem(ACTIVE_EPOCH_KEY);
     if (persisted && manifestsById.has(persisted)) return persisted;
   } catch {}
   return DEFAULT_EPOCH_ID;
 }
 
 export function epochIsActive(id: string): boolean {
-  const active = manifestsById.get(activeEpochId());
+  const active = manifestsById.get(campaignEpochId());
   const requested = manifestsById.get(id);
   return !!active && !!requested && active.order >= requested.order;
 }
 
 export function activateEpoch(id: string): boolean {
   if (!manifestsById.has(id)) return false;
-  const active = loadEpoch(activeEpochId());
+  const active = loadEpoch(campaignEpochId());
   const successor = active.id === 'epoch-7-signal' ? 'epoch-8-orbital' : active.successor;
   if (successor !== id || !epochMegaprojectComplete(active)) return false;
   if (active.id === 'epoch-7-signal' && id === 'epoch-8-orbital' && !e7SignalExitBeatReady()) return false;
@@ -1596,7 +1608,7 @@ const AUTHORED_TWIST_KEYS = [
   'picnicHold', 'pressureEnabled', 'coalSeams', 'seamYieldMult', 'secureWave', 'clockTicks', 'preserve', 'waveCadenceMult', 'lightRamp', 'dayNightCycle',
   'weather', 'mothSeason', 'fairground', 'powerGrid', 'enemyLanternClasses', 'enemyRoster', 'showroom', 'baron', 'broadcastMirror',
   'signalSuppression', 'interferenceFront', 'probePlayback', 'zeroGravity', 'eclipseEvent', 'persistentPlanting',
-  'scheduledRelocation', 'persistentCanalChoices', 'emberShore', 'motorFrontier', 'harvestFreeObjective', 'economy', 'hero', 'atmosphere',
+  'scheduledRelocation', 'persistentCanalChoices', 'emberShore', 'archiveWorld', 'motorFrontier', 'harvestFreeObjective', 'economy', 'hero', 'atmosphere',
 ] as const;
 const AUTHORED_PRACTICE_KEYS = [
   'scheduledWaves', 'scores', 'metaProgress', 'runHistory', 'standings', 'tapes', 'goldGrant', 'bellWaveSize',
@@ -1636,7 +1648,6 @@ const DECLARED_INERT_PATHS = [
   'tileParams.description',
   'tileParams.objectives',
   'tileParams.teachingIntent',
-  'twist.fairground.crowdFlocks',
   'tileParams.objectiveMetadata',
   'tileParams.echoCanyonBands',
   'tileParams.broadcastMirrorZones',
@@ -1715,6 +1726,7 @@ function validateAuthoredContractShape(value: unknown, reasons: ContractDescript
   if (!tileParams || !twist) return null;
   addUnknownFieldReasons(tileParams, AUTHORED_TILE_KEYS, 'tileParams', reasons);
   addUnknownFieldReasons(twist, AUTHORED_TWIST_KEYS, 'twist', reasons); validateContractEconomy(twist.economy, reasons); validateContractHero(twist.hero, reasons); validateContractTwistAtmosphere(twist.atmosphere, tileParams, reasons); // the purse, claim-grit and regolith-gate validators ride this line; see their notes at the file's end
+  validateArchiveWorld(twist, tileParams, reasons);
   if (twist.clockTicks !== undefined && (typeof twist.clockTicks !== 'number' || !Number.isInteger(twist.clockTicks) || twist.clockTicks <= 0)) {
     addDescriptorReason(reasons, reason('field_number', 'clockTicks must be a positive integer.', 'twist.clockTicks'));
   }
@@ -1877,6 +1889,7 @@ function sameDescriptorShape(
   reasons: ContractDescriptorReason[],
   allowEmptySpawnEdges = false,
 ): boolean {
+  if (path === 'twist.atmosphere.pressurisedZoneShape') return validatePressureZoneShape(value, reasons);
   const variableArray = variableDescriptorArrayShape(value, path, reasons, allowEmptySpawnEdges);
   if (variableArray !== null) return variableArray;
   if (typeof template === 'number') {
@@ -1979,6 +1992,7 @@ function normalizeContractDescriptor(
   else delete normalized.tileParams.authoredTerrain;
   const semanticStart = reasons.length;
   validateContractMap(normalized, reasons);
+  validatePressureZoneShape(normalized.twist.atmosphere?.pressurisedZoneShape, reasons);
   if (reasons.length > semanticStart) return null;
   return normalized;
 }
@@ -2020,7 +2034,7 @@ function withoutAuthoredTerrain(value: Record<string, unknown>): Record<string, 
 }
 
 function optionalDescriptorPath(path: string): boolean {
-  return path === 'tileParams.buildZones';
+  return path === 'tileParams.buildZones' || path === 'twist.atmosphere.pressurisedZoneShape';
 }
 
 function variableDescriptorArrayShape(
@@ -2770,6 +2784,14 @@ export function contractHeroMaxHpBonus(contract: ContractManifest): number {
  * A block with `regolithRequired` and no window is LAWFUL: that is the count raised on its own,
  * with grounds still creditable in any order at any time.
  */
+function validatePressureZoneShape(value: unknown, reasons: ContractDescriptorReason[]): boolean {
+  if (value !== undefined && value !== 'rect' && value !== 'ellipse') {
+    addDescriptorReason(reasons, reason('field_section', 'A pressure zone shape must be rect or ellipse.', 'twist.atmosphere.pressurisedZoneShape'));
+    return false;
+  }
+  return true;
+}
+
 function validateContractTwistAtmosphere(
   value: unknown,
   tileParams: Record<string, unknown>,
@@ -2788,11 +2810,12 @@ function validateContractTwistAtmosphere(
       // terms. `suitSeconds` and `harmPerSecond` are the dial and the cost of emptying it;
       // `pressurisedZoneIds` names the rectangles that hold air, which is the half that makes the
       // geography true — a crossing that is also a shelter is not a crossing (F-EAWA-2).
-      'suitSeconds', 'harmPerSecond', 'pressurisedZoneIds',
+      'suitSeconds', 'harmPerSecond', 'pressurisedZoneIds', 'pressurisedZoneShape',
     ],
     'twist.atmosphere',
     reasons,
   );
+  validatePressureZoneShape(value.pressurisedZoneShape, reasons);
   const atmosphere = isRecord(tileParams.atmosphere) ? tileParams.atmosphere : null;
   const required = value.regolithRequired;
   const crossingRequired = value.crossingRequired;
@@ -2948,4 +2971,44 @@ function validateAirWindow(
   if (gate === undefined) {
     addDescriptorReason(reasons, reason('field_number', `A ${kind} window paces a ${kind} gate: author ${kind}Required beside it.`, field));
   }
+}
+
+/** Reject incomplete restoration declarations before constructing either engine. */
+function validateArchiveWorld(twist: Record<string, unknown>, tile: Record<string, unknown>, reasons: ContractDescriptorReason[]): void {
+  const archive = twist.archiveWorld;
+  if (archive === undefined) return;
+  const reject = (message: string) => addDescriptorReason(reasons, reason('field_section', message, 'twist.archiveWorld'));
+  if (!exactRecord(archive, ['lightHold', 'squall']) || twist.emberShore !== undefined
+    || !Array.isArray(archive.lightHold) || archive.lightHold.length === 0
+    || !isRecord(archive.squall) || Array.isArray(archive.squall)) {
+    reject('Archive restoration needs light bindings and its own squall clock.');
+    return;
+  }
+  addUnknownFieldReasons(archive.squall, ['calmSeconds', 'telegraphSeconds', 'squallSeconds', 'recoverSeconds'], 'twist.archiveWorld.squall', reasons);
+  for (const duration of Object.values(archive.squall)) {
+    if (typeof duration !== 'number' || !Number.isFinite(duration) || duration <= 0) {
+      reject('Archive squall durations must be positive finite seconds.');
+      return;
+    }
+  }
+  const wings = Array.isArray(tile.archiveWingZones) ? tile.archiveWingZones : [];
+  const sites = Array.isArray(tile.lightHoldSites) ? tile.lightHoldSites : [];
+  const wingIds = new Set(), siteIds = new Set(), orders = new Set();
+  for (const binding of archive.lightHold) {
+    if (!exactRecord(binding, ['wingId', 'siteId']) || !shortText(binding.wingId) || !shortText(binding.siteId)) {
+      reject('Each Archive hold must name one wing and one light site.');
+      return;
+    }
+    const wing = wings.find(value => isRecord(value) && value.id === binding.wingId);
+    const site = sites.find(value => isRecord(value) && value.id === binding.siteId);
+    if (!isRecord(wing) || !isRecord(site) || typeof wing.order !== 'number' || !Number.isInteger(wing.order) || wing.order < 1
+      || ![site.x, site.z, site.radius].every(value => typeof value === 'number' && Number.isFinite(value))
+      || typeof site.radius !== 'number' || site.radius <= 0
+      || wingIds.has(binding.wingId) || siteIds.has(binding.siteId) || orders.has(wing.order)) {
+      reject('Archive holds need distinct ordered wings and distinct finite light sites.');
+      return;
+    }
+    wingIds.add(binding.wingId); siteIds.add(binding.siteId); orders.add(wing.order);
+  }
+  if (wingIds.size !== wings.length || siteIds.size !== sites.length) reject('Every Archive wing and light site needs exactly one binding.');
 }

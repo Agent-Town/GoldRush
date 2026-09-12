@@ -8,6 +8,7 @@ import {
 import {
   ACTIVE_EPOCH_KEY,
   activeEpochId,
+  campaignEpochId,
   DEFAULT_EPOCH_ID,
   listEpochs,
   loadEpoch,
@@ -71,6 +72,7 @@ export type ResearchUnlockFlags = {
 
 type ResearchRegistry = {
   version: 1;
+  campaignPending?: true;
   steps: number;
   metaScienceCursor?: number;
   taken: string[];
@@ -160,7 +162,9 @@ export function loadResearchState(
       ? storedSteps
       : storedSteps + Math.max(0, progress.tracks.science - cursor);
   const next = { ...migrateResearchState(raw, progressForEpoch(progress, epochId, steps), epochId, progress.tracks.science), unlocks };
-  if (saved === null || steps !== storedSteps) writeStorage(registryStorage, key, JSON.stringify(toRegistry(next)));
+  if (saved === null || steps !== storedSteps || (isRecord(raw) && raw.campaignPending === true && loadEpoch(campaignEpochId(registryStorage)).order >= loadEpoch(epochId).order)) {
+    writeResearchRegistry(registryStorage, epochId, toRegistry(next));
+  }
   inheritedByState.set(next, inherited);
   return next;
 }
@@ -188,8 +192,7 @@ export function saveResearchRegistryState(
       : state.metaScienceCursor ?? (progressStorage ? loadMetaProgress(progressStorage).tracks.science : 0);
   const next = migrateResearchState(toRegistry(state), state.progress, epochId, cursor);
   if (state.unlocks !== undefined) next.unlocks = state.unlocks;
-  const serialized = JSON.stringify(toRegistry(next));
-  writeStorage(registryStorage, researchStateKey(epochId), serialized);
+  const serialized = writeResearchRegistry(registryStorage, epochId, toRegistry(next));
   if (epochId === DEFAULT_EPOCH_ID) writeStorage(registryStorage, RESEARCH_STATE_KEY, serialized);
   inheritedByState.set(next, cacheInheritedTaken(registryStorage, epochId));
   return next;
@@ -331,17 +334,17 @@ export function savedStampMillBuildStarted(): boolean {
   return savedEpochMegaprojectBuildStarted(DEFAULT_EPOCH_ID);
 }
 
-// A profile that ever held an era ACTIVE owns that era's research registry; the
-// active-epoch pointer can lag it when a write landed under another profile's
-// storage scope (stale tab / profile switch). Research evidence never exists
-// for an unpressed era door, so healing forward can't skip a ceremony.
+// Legacy registries can repair a lost campaign pointer. New research created
+// while previewing a later map is marked pending and cannot stand in for a ceremony.
 export function reconcileActiveEpoch(storage: MetaProgressStorage | undefined = browserResearchStorage()): void {
   if (!storage) return;
   try {
     const persisted = storage.getItem(ACTIVE_EPOCH_KEY);
     let latest = listEpochs().some((epoch) => epoch.id === persisted) ? loadEpoch(persisted!) : loadEpoch(DEFAULT_EPOCH_ID);
     for (const epoch of listEpochs()) {
-      if (epoch.order > latest.order && storage.getItem(researchStateKey(epoch.id)) !== null) latest = loadEpoch(epoch.id);
+      const saved = storage.getItem(researchStateKey(epoch.id));
+      const registry = parseRegistry(saved);
+      if (epoch.order > latest.order && saved !== null && !(isRecord(registry) && registry.campaignPending === true)) latest = loadEpoch(epoch.id);
     }
     if (latest.id !== persisted) storage.setItem(ACTIVE_EPOCH_KEY, latest.id);
   } catch {}
@@ -392,6 +395,17 @@ function toRegistry(state: ResearchState): ResearchRegistry {
     registry.metaScienceCursor = Math.max(0, Math.floor(state.metaScienceCursor ?? 0));
   }
   return registry;
+}
+
+function writeResearchRegistry(storage: MetaProgressStorage | undefined, epochId: string, registry: ResearchRegistry): string {
+  const key = researchStateKey(epochId);
+  const previous = parseRegistry(readStorage(storage, key));
+  if (loadEpoch(epochId).order > loadEpoch(campaignEpochId(storage)).order && (!isRecord(previous) || previous.campaignPending === true)) {
+    registry.campaignPending = true;
+  }
+  const serialized = JSON.stringify(registry);
+  writeStorage(storage, key, serialized);
+  return serialized;
 }
 
 function stateEpochId(state: ResearchState): string {

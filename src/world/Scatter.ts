@@ -120,7 +120,7 @@ const CONTACT_SHADOW_CLASSES: Partial<Record<DetailClassId, { radius: number; sq
 const CONTACT_SHADOW_OPACITY = 0.19;
 const CONTACT_SHADOW_LIFT = 0.016;
 const BUILD_PAD_PROBE = { x: 0, z: 9 };
-const FORD_PROBE = { x: 0, z: 0 };
+const FORD_PROBE = { x: 0, z: (Terrain.RIVER_MIN_Z + Terrain.RIVER_MAX_Z) / 2 };
 const ROUTING_PROBE = { x: 0, z: -14 };
 const SCATTER_DESCRIPTOR = activeContract().tileParams.scatter;
 
@@ -194,7 +194,7 @@ export class DetailScatter {
       },
       probes: {
         buildPad: probeClear(this.seededInstances, BUILD_PAD_PROBE.x, BUILD_PAD_PROBE.z, Balance.world.detailBuildPadClearRadius),
-        ford: probeClear(this.seededInstances, FORD_PROBE.x, FORD_PROBE.z, Terrain.RIVER_MAX_Z + Terrain.SHALLOWS_WIDTH),
+        ford: probeClear(this.seededInstances, FORD_PROBE.x, FORD_PROBE.z, (Terrain.RIVER_MAX_Z - Terrain.RIVER_MIN_Z) / 2 + Terrain.SHALLOWS_WIDTH),
         routingLane: probeClear(this.seededInstances, ROUTING_PROBE.x, ROUTING_PROBE.z, Balance.world.detailRoutingLaneClearRadius),
         building: this.buildingClearings[0]
           ? probeClear(
@@ -419,7 +419,7 @@ function detailAcceptance(profile: DetailProfile, x: number, z: number): number 
 }
 
 function nearWaterMask(x: number, z: number): number {
-  let mask = Terrain.hasRiverWater() ? 1 - smoothstep(0.8, 6.5, Math.max(0, Math.abs(z) - Terrain.RIVER_MAX_Z)) : 0;
+  let mask = Terrain.hasRiverWater() ? 1 - smoothstep(0.8, 6.5, Math.max(0, Math.abs(z - ((Terrain.RIVER_MIN_Z + Terrain.RIVER_MAX_Z) / 2)) - ((Terrain.RIVER_MAX_Z - Terrain.RIVER_MIN_Z) / 2))) : 0;
   for (const source of Terrain.waterSources()) {
     mask = Math.max(mask, 1 - smoothstep(source.radius + 0.35, source.radius + 5.5, Math.hypot(x - source.x, z - source.z)));
   }

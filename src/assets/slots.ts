@@ -29,6 +29,7 @@ export const assetSlots = {
   charTownYoungsterB: 'char.town.youngster_b',
   terrainBank: 'terrain.bank',
   terrainRiver: 'terrain.river',
+  terrainOpenSea: 'terrain.e5.open_sea',
   terrainFord: 'terrain.ford',
   nodeGoldSeam: 'node.gold_seam',
   propRock: 'prop.rock',

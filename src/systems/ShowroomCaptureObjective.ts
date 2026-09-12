@@ -26,6 +26,11 @@ export class ShowroomCaptureObjective {
     this.captures = 0;
   }
 
+  /** RunSuspend validates the count before restoring any simulation state. */
+  restoreSuspend(captures: number): void {
+    this.captures = this.quota === null ? 0 : captures;
+  }
+
   get objectiveAllowsSecure(): boolean {
     return this.quota === null || this.captures >= this.quota;
   }

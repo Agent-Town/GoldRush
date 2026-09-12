@@ -77,7 +77,7 @@ export class HarvestSystem {
     private readonly economy: Economy,
     private readonly anchors: readonly Vec2[],
     rng: Rng = createRng(getDebugSeed()),
-    private readonly onGoldTick?: (amount: number) => void,
+    private readonly onGoldTick?: (amount: number, anchorIndex: number, actorId: string) => void,
     private readonly onGoldBlocked?: (position: THREE.Vector3) => void,
   ) {
     this.rng = rng;
@@ -238,7 +238,7 @@ export class HarvestSystem {
         if (target.node !== state.node) state.panCapBlocked = false;
         state.node = target.node;
         state.progress = Math.min(1, state.progress + delta / (Balance.goldSeam.tickSeconds * this.panTickMult));
-        this.collectReadyTicks(at, state, target.node, target.collector.position);
+        this.collectReadyTicks(at, state, target.node, target.collector);
       } else {
         state.channeling = false;
         state.progress = Math.max(
@@ -344,7 +344,7 @@ export class HarvestSystem {
     node.place(this.anchors[anchorIndex], anchorIndex);
   }
 
-  private collectReadyTicks(at: number, state: ChannelState, node: GoldNode, collectorPosition: THREE.Vector3): void {
+  private collectReadyTicks(at: number, state: ChannelState, node: GoldNode, collector: HarvestTarget): void {
     while (state.progress >= 1 && node.isActive) {
       const gained = Math.min(Balance.goldSeam.tickGold * this.panYieldMult, node.remainingGold);
       if (gained <= 0) break;
@@ -369,8 +369,8 @@ export class HarvestSystem {
         node.takeGold(gained);
         state.panCapBlocked = false;
         this.lastGoldGain += gained;
-        this.lastGoldPosition = collectorPosition.clone();
-        this.onGoldTick?.(gained);
+        this.lastGoldPosition = collector.position.clone();
+        this.onGoldTick?.(gained, node.currentAnchorIndex, collector.actorId ?? '0');
       } else {
         break;
       }

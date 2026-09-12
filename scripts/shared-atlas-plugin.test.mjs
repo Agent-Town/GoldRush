@@ -102,6 +102,7 @@ test('late town retries cannot replace or dispose the active run tracker', async
   const image = decoded();
   function plugin(loader) {
     return loader.pluginCallbacks.at(-1)({
+      textureLoader: new THREE.TextureLoader(),
       json: { textures: [{ source: 0 }], images: [{ bufferView: 0, mimeType: 'image/png' }] },
       getDependency: async () => bytes.buffer,
       loadImageSource: async () => image.texture,
@@ -118,4 +119,40 @@ test('late town retries cannot replace or dispose the active run tracker', async
   assert.equal(canvas.dataset.assetLoadingLabel, 'the claim');
   assert.equal(image.closed(), 0);
   live.dispose(); assert.equal(image.closed(), 1);
+});
+
+test('embedded ImageBitmap atlases decode resident bytes once without a blob URL fetch', async () => {
+  const oldDecode = globalThis.createImageBitmap;
+  const cache = new SharedAtlasCache();
+  const image = decoded();
+  const calls = [];
+  globalThis.createImageBitmap = async (blob, options) => {
+    calls.push({ bytes: new Uint8Array(await blob.arrayBuffer()), type: blob.type, options });
+    return image.texture.image;
+  };
+  try {
+    const parser = {
+      json: { textures: [{ source: 0 }, { source: 0 }], images: [{ bufferView: 0, mimeType: 'image/png' }] },
+      getDependency: async () => bytes.buffer,
+      loadImageSource: async () => { throw new Error('resident bytes must not fetch a blob URL'); },
+      loadTextureImage: async () => null,
+      assignTexture: async () => null,
+      associations: new Map(),
+    };
+    const plugin = new SharedAtlasPlugin(parser, cache);
+    const loader = { isImageBitmapLoader: true, options: { premultiplyAlpha: 'none', imageOrientation: 'flipY' } };
+    const [a, b] = await Promise.all([plugin.loadTexture(0, 0, loader), plugin.loadTexture(1, 0, loader)]);
+    assert.deepEqual(calls, [{ bytes, type: 'image/png', options: { premultiplyAlpha: 'none', imageOrientation: 'flipY', colorSpaceConversion: 'none' } }]);
+    assert.equal(a.source, b.source);
+    assert.equal(a.flipY, false);
+    assert.ok(a.version > 0, 'decoded bitmap must be marked for upload');
+    a.dispose(); assert.equal(image.closed(), 0);
+    b.dispose(); assert.equal(image.closed(), 1);
+    globalThis.createImageBitmap = async () => { throw new Error('invalid embedded image'); };
+    await assert.rejects(plugin.loadTexture(0, 0, loader), /invalid embedded image/);
+    assert.equal(cache.size, 0, 'a corrupt atlas must not be accepted or retained');
+  } finally {
+    cache.clear();
+    if (oldDecode === undefined) delete globalThis.createImageBitmap; else globalThis.createImageBitmap = oldDecode;
+  }
 });

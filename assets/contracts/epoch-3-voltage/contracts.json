@@ -244,9 +244,6 @@
         "palette": { "id": "canyon-works-copper-night", "tint": [0.62, 0.58, 0.52], "dampTint": [0.2, 0.31, 0.34], "dampAmount": 0.28, "splat": { "rockAmount": 0.9, "dampBand": 2.6, "scrubAmount": 0.08, "macroWarmth": 0.5, "antiTile": 0.78 } },
         "scatter": { "id": "canyon-works-scree", "density": 0.72, "classCounts": { "rocks": 112, "dry_grass": 28, "wagon_ruts": 20, "claim_posts": 12 } },
         "water": { "id": "canyon-dam-channel", "visualHalfWidth": 6.25, "depths": { "river": 1.5, "ford": 0.3, "shallows": 0.25 }, "speedMul": { "river": 0.4, "ford": 0.82, "shallows": 0.7 } },
-        "engineDependencies": [
-          { "dep": "elevation-advisory-fields", "status": "missing", "description": "Needs registered consumers for the declared slopeMax and waterline advisory fields." }
-        ],
         "lanes": { "spawnEdges": ["west", "east", "south"], "territoryRingBiasWaves": 0, "territoryRingLaneBias": 0 }
       },
       "twist": {
@@ -386,9 +383,6 @@
         "heightfield": { "id": "fairground-bowl", "mode": "visual" },
         "palette": { "id": "fairground-lamp-gold", "tint": [0.68, 0.58, 0.48], "dampAmount": 0.04, "splat": { "rockAmount": 0.24, "scrubAmount": 0.16, "macroWarmth": 0.72, "antiTile": 0.68 } },
         "scatter": { "id": "fairground-midway", "density": 0.34, "classCounts": { "rocks": 20, "dry_grass": 24, "wagon_ruts": 24, "claim_posts": 12 } },
-        "engineDependencies": [
-          { "dep": "fairground-crowd-flock-consumer", "status": "missing", "description": "Needs the crowd-flock escort objective consumer advertised by the fairground declaration." }
-        ],
         "lanes": { "spawnEdges": ["west", "east", "north"], "territoryRingBiasWaves": 0, "territoryRingLaneBias": 0 }
       },
       "twist": {

@@ -1,0 +1,27 @@
+{
+  "$schema": "gold-rush layer contract v1",
+  "batch": "map-art-repairs-20260908-flotilla",
+  "notes": "Candidate material and three hulls; runtime and visual acceptance pending. Original Claim Boat master remains unchanged. Native edit may alter pixels outside the canvas swatch, so this is a separate master.",
+  "slots": [
+    {
+      "file": "flotilla-material-atlas.png",
+      "slot": "flotilla-3d.material-atlas",
+      "raw": "assets/raw/flotilla-material-atlas.png",
+      "rawSize": [
+        1254,
+        1254
+      ],
+      "size": [
+        512,
+        512
+      ],
+      "sha256": "afd2ab9388d8877a81d3128e5dd5633b2982cbf40c8bf28dbd7ef309a747d5e1",
+      "reference": "assets/raw/claim-boat-material-atlas.png",
+      "referenceSha256": "9e6647bbee0e93e818b4b1e8d07e67a043ee5880c6c31822252a00c25402341b",
+      "generation": "native image_gen exec-6d8228f3-033f-490f-830c-4024658f823f",
+      "usage": "Embedded 4x4 atlas for three distinct Flotilla hull models",
+      "recipe": "Blender image.scale(512,512) through existing E5 material helper; original and edited raw masters retained",
+      "evidence": "artifacts/map-art-repairs-20260908/flotilla-body-02/atlas-prompt.txt"
+    }
+  ]
+}

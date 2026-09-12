@@ -138,7 +138,7 @@ export class Hero {
     const slopeSpeed = terrainSpeedMultiplier(this.group.position.x, this.group.position.z, moveX, moveY);
     this.targetVelocity
       .set(moveX, 0, moveY)
-      .multiplyScalar(Balance.hero.speed * this.moveSpeedMult * currentSample.speedMul * slopeSpeed);
+      .multiplyScalar(this.movementSpeed * currentSample.speedMul * slopeSpeed);
 
     const rate = this.targetVelocity.lengthSq() > this.velocity.lengthSq() ? Balance.hero.accel : Balance.hero.decel;
     this.velocity.lerp(this.targetVelocity, 1 - Math.exp(-rate * dt));
@@ -259,6 +259,10 @@ export class Hero {
     this.hp = Math.max(0, this.hp - amount);
     this.iframeRemaining = Balance.hero.iframes;
     return { applied: true, died: this.hp <= 0 };
+  }
+
+  get movementSpeed(): number {
+    return Balance.hero.speed * this.moveSpeedMult;
   }
 
   applyStats(maxHpBonus: number, moveSpeedMult: number): void {

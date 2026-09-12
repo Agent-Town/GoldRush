@@ -1,0 +1,849 @@
+# Gold Rush map artwork and playability — current status
+
+## Checkpoint279–281 — full Canyon playability confirmed, art remains open
+
+Canyon full desktop271 and mobile275 secure20 waves/600 seconds, demonstrate the actual mirror objective, earn and bank95, reload the exact score and return to Town. These proofs use isolated mount267. The earlier mobile failures came from a completed replay actor dying; native Stop after completion resolves that run path without engine edits.
+
+Array279 restores both teal arcs, the crossbar/upper connection and opposite east orientation, and passes six-file factory/Blend/GLB proof, independent code review and bounded native280 on desktop/mobile. Fresh visual review still rejects its simplified frame, solid pedestal, orange material hierarchy and unlit lamp. Do not count source or playability gates as concept acceptance. Native eastern281 also passes desktop/mobile access and Town return; desktop verifies opposite array orientation, while the eastern mobile observation point still clips the object and must be improved for visual review. Evidence: artifacts/map-art-repairs-20260908/echo-canyon-array-279/.
+
+Regression244 remains running with failures; all14 integrated target hashes still match. Interim comparison279 found279 repeated failures and13 newly observed identities versus the completed200 run, with244 incomplete; this is not causal attribution or a release pass. Production source remains static.
+
+
+Current checkpoint271–275 (2026-09-11 local):42 maps/42 concept plates,202 production landmark bodies and422 guarded GLBs. Integrated Relay Valley passes full desktop253/mobile256. Isolated canyon mount267 passes bounded desktop/mobile access273 and full desktop271; mobile275 now also passes the full route with the existing Stop control. Archive layout263 passes scoped gates. Metadata274 corrects three stale Signal consumer declarations; all42 descriptors/mechanic snapshots, build and independent review pass. Full artwork acceptance and production244 regression remain open.
+
+This supersedes the counts and unresolved-state descriptions in the September 8 baseline audit. All 42 maps remain in scope. Factory verification, first entry, full objectives and visual acceptance are separate claims.
+
+| Inventory | Current amount |
+|---|---:|
+| Map contracts and corresponding concept plates | 42 / 42 |
+| Runtime sculpt routes / unique terrain GLBs | 39 / 32 |
+| Terrain contracts / panorama GLBs | 37 / 32 |
+| Landmark packs / body GLBs | 37 / 202 |
+| Selected pack bodies / dormant bodies | 177 / 25 |
+| Distinct referenced mount files (including four external Deepwater buildings) | 181 |
+| Production GLBs in guard | 422 |
+
+The historical full source gate covered37 packs/197 bodies; the new Showroom source gate verifies all10 current Showroom bodies, increasing the inventory to202; subsequent E1 offset and Night Shift terrace changes pass their scoped saved-source gates, including byte-identical and semantic-identical re-export. The production audit has zero live or stale violations; seven recorded exceptions remain. The fresh inventory has zero reconciliation issues. Counts distinguish unique bodies from repeated placements: one new dome body now supplies three mounts each on Mare and Eclipse. Far Side keeps its original five landmarks.
+
+Current source: [inventory246](../artifacts/map-art-repairs-20260908/current-inventory-246/inventory.json), [factory proof](../artifacts/map-art-repairs-20260908/mare-dome-factory-02/all-source-verification/asset-contract.json), and [readiness ledger](../artifacts/map-art-repairs-20260908/readiness.json). No full-game release or all-map visual acceptance is claimed. Earlier entry and objective receipts retain their recorded source boundaries; the complete integrated regression remains open.
+
+## Per-map readiness
+
+Objective descriptions below preserve the evidence limits in the readiness ledger. A passing bounded route is not a general claim that every mechanic or difficulty has been verified.
+
+| Map | Objective evidence and remaining work | Visual status |
+|---|---|---|
+| The Claim (the-claim) | PASS: native desktop/mobile wave 10, bank, board return and secured score retained after actual reload (desktop-05/mobile-06). | Cooler river palette improved and verified source/compressed desktop/mobile; full fidelity still open: shoreline, ripple detail, gravel, timber/contact. |
+| The Drill Yard (e1-drill-yard) | pass: full practice loop, one cleared bell wave, return to board, persistent progress unchanged and clean re-entry on desktop/trusted-touch mobile | Unaccepted: river-divided layout differs from fenced concept; log support stands are now implemented and checked, but timber detail and station surroundings remain incomplete. |
+| The Dry Gulch (e1-dry-gulch) | PASS mobile native wave20 survival, banking and exact reload persistence(native16). Desktop same-strategy native17 is running; no desktop full objective pass yet. | Brown cover and oversized ring removed; independent review confirms improvement. Flat water, coarse shoreline, sparse vegetation and local contact detail remain; final art acceptance open. |
+| Night Shift (e1-night-shift) | PARTIAL: native desktop13 completed wave25 dawn, 8g relight, ford crossings, bank, reload score equality and board return with zero errors. Mobile08 failed before secure; full desktop/mobile acceptance remains open. | pending corrections and concept verdict |
+| Twin Banks (e1-twin-banks) | OPEN: boundary desktop/mobile died wave14; maintenance desktop reached wave15; later wide desktop02 died wave13. No current wave20/bank/reload acceptance. | pending corrections and concept verdict |
+| The Claim-Jumper Baron (e1-baron) | pending authored terminal and persistence proof | pending corrections and concept verdict |
+| The Hill Mine (e2-hill-mine) | PARTIAL: integrated native desktop/mobile escort passed. Full production desktop01 hit driver panning/travel deadline at wave7 with60HP and15gold after turret/all coal; pressure, railcar secure, bank/reload remain open. | Creek bed, gallery mount, overlapping sump and offset water glints repaired through existing factory. Production grounding/access checks and integration review passed; creek/shore/entrance and full concept fidelity remain unaccepted. |
+| The Trestle (e2-trestle) | Current99 seed02 secured before entry100; seed01 lost. After entry100 current102 seed01 dies wave12. Full current native objective and persistence remain unverified. | pending corrections and concept verdict |
+| The Pressure Garden (e2-pressure-garden) | pending authored terminal and persistence proof | pending corrections and concept verdict |
+| The Incline (e2-incline) | pending authored terminal and persistence proof | pending corrections and concept verdict |
+| Blackout Ridge (e3-blackout-ridge) | pending authored terminal and persistence proof | UNACCEPTED: current five-landmark review identifies pale terrain boundaries, dark machinery, large receiver halo and HUD overlap. Opaque terrain edge and halo removal are integrated, verification running; seams, lighting/contact and full concept fidelity remain open. |
+| Moth Season (e3-moth-season) | PASS desktop/mobile native corridor connection, wave12 survival, banking and reload; visual fidelity remains separately open | Ground atlas now removes baked vertical scenery and oversized stones; actor/night-phase repair retained. Full warm mining-yard composition, night palette, object contact and boundary fidelity remain open. |
+| The Canyon Works (e3-canyon-works) | pending authored terminal and persistence proof | pending corrections and concept verdict |
+| The Fairground (e3-fairground) | pending authored terminal and persistence proof | OPEN: procedural wheel present through normal native entry; mobile HUD/haze obscure upper wheel, desktop/mobile shapes remain unaccepted against concept. |
+| The Dust Flats (e4-dust-flats) | pending authored terminal and persistence proof | pending corrections and concept verdict |
+| The Long Road (e4-long-road) | OPEN: desktop/mobile native convoy errand passes; desktop survival attempts died waves5 and4. Secure-wave, banking and reload unverified. | pending corrections and concept verdict |
+| Gusher County (e4-gusher-county) | pending authored terminal and persistence proof | pending corrections and concept verdict |
+| The Boneyard (e4-boneyard) | pending authored terminal and persistence proof | pending corrections and concept verdict |
+| The Deepwater Claim (e5-deepwater-claim) | PASS: native desktop/mobile deck builds, reanchor, fresh Dredge-Queen defeat, wave 12, bank/reload and persistent wreck on re-entry; Trail preview scope. | Unaccepted: bright repeated sea pattern obscures submerged reef and settlement; surface/depth/contact and mobile wreck-message occlusion remain open. F42 apron sampling corrected and source reproduced; texture-density seam remains open. F43 clearer shared water improves submerged landmark readability; full depth/contact acceptance remains open. |
+| The Regatta (e5-regatta) | pass: genuine wave-12 secure, bank, direct town return and score/history/meta/research persistence after reload, desktop/mobile; Trail preview entry | open: boat candidate present; crane/material identity, water contact, submerged landmarks, framing and player silhouette remain unaccepted F42 apron sampling corrected and source reproduced; texture-density seam remains open. F43 clearer shared water improves submerged landmark readability; full depth/contact acceptance remains open. |
+| Stillwater (e5-stillwater) | Bounded composite proof: native desktop/mobile wave-12 secure, noise-trail shedding, bank/reload; separate all-five-location traversal, silent 5g hand-pan and full 30g single-seam depletion pass. No native all-five depletion in one run. | open: boat candidate present; crane/material identity, water contact, submerged landmarks, framing and player silhouette remain unaccepted F42 apron sampling corrected and source reproduced; texture-density seam remains open. |
+| The Flotilla (e5-flotilla) | pass: genuine wave-12 secure, bank, direct town return and score/history/meta/research persistence after reload, desktop/mobile; Trail preview entry | open: wave repetition, missing boat/actor contact, submerged landmarks, mobile HUD and concept correspondence F42 apron sampling corrected and source reproduced; texture-density seam remains open. F43 clearer shared water improves submerged landmark readability; full depth/contact acceptance remains open. |
+| The Glow Mesa (e6-glow-mesa) | PASS public124 two seeds and exact replay; native131 desktop/mobile Homemaker shutdown at wave8, correct wave8 saved score, bank/reload and board return, zero errors. Early boss banking fix130 verified; visual fidelity separate. | pending corrections and concept verdict |
+| The Showroom (e6-showroom) | PASS integrated desktop204/mobile206:20 waves/600s,211/207 real captures,10 earned works each,bank200 each,exact score reload and Town board return,zero errors. Failed drivers201/202/205 remain recorded. Public admission remains under the existing owner ruling. | Integrated200:5 furnished cutaway homes plus5 peripheral bodies,10 GLBs/14548 triangles. Fresh review accepts clearer roof courses, dark supports/framing and stair risers as improvements. Full fidelity open: strong floor/tread grain and hero contrast, furniture density, local contact/interior warmth, peripheral silhouettes and village cohesion. |
+| Half-Life Hollow (e6-half-life-hollow) | Native desktop152 and portrait mobile168 PASS: ordered central crossing, wave20/600s, zero radiation, ten works, bank/reload exact saved scores and board return, zero errors. Desktop HP142.6/mobile HP149. Public134 two seeds secure and replay exactly. Mobile uses existing pinch zoom1.6 and ordinary capture income under cover; no gameplay grants or balance changes. | pending corrections and concept verdict |
+| The Picnic (e6-picnic) | PASS native desktop115 and mobile120: wave20/600s with surviving stakes, bank, exact saved-score reload and board return; zero page/console errors. Public113 two seeds secure and replay exactly. Fresh Trail preview profile; no gameplay grants. Visual fidelity remains separate. | pending corrections and concept verdict |
+| The Relay Valley (e7-relay-valley) | PASS native desktop253/mobile256: all4 original relay sites, earned5-beacon connected chain, completed recorded patrol, actual Echo capture,20waves/600s,7works,bank95,exact score+jar after reload and Town return;0errors. Trail Preview route from unchanged earned Archive95 profile. Other difficulties/multiplayer not covered. | UNACCEPTED: Town/Tape controls repaired244; dark engraved terrain, landmark separation/contact and full-map concept correspondence remain open. Compact relay258 passes factory/renderer/native gates but fresh259 review rejects tower scale and architectural readability. |
+| Echo Canyon (e7-echo-canyon) | Isolated267 native desktop271/mobile275 PASS: actual mirrored playbook use,20waves/600s,10earned works,bank95,exact score reload and Town return;0errors. Mobile275 uses native Stop after the completed demonstration and mirror;272 remains a recorded replay-actor death. Trail Preview route from unchanged earned Archive95 profile. Production recheck and artwork remain open. | UNACCEPTED273: clear hero/array separation; near-black dishes and base lose detail, dense terrain texture competes with geometry, hard rectangular base lacks convincing contact shading, and portrait camera clips the array. Full-map concept correspondence remains open. |
+| The Dead Band (e7-dead-band) | PARTIAL207: native desktop/mobile entry,5 mounted bodies,movement,tape controls and board return pass; actual suppressed Record discharges refusal latch. Full survival/banking/reload remain open. | pending corrections and concept verdict |
+| Relay Rush (e7-relay-rush) | PARTIAL207/209: native desktop/mobile entry,5 loaded bodies,movement and board return pass; tape record/save/replay works from the unchanged earned permission2 profile. Three-site deadline and muted tape attempt, secure/bank/reload still open. | pending corrections and concept verdict |
+| The Mare Claim (e8-mare-claim) | PASS: desktop09 and mobile07 complete native four-window mining, wave20 secure, banking, score equality after reload and board return. Desktop used preceding dome; mobile used current candidate17 factory asset. Full visual fidelity remains open. | Three independent factory dome mounts now present. Final concept fidelity remains open: inhabited drum detail, glass richness, player contrast and map dressing. |
+| The Far Side (e8-far-side) | pending authored terminal and persistence proof | pending corrections and concept verdict |
+| Low Orbit (e8-low-orbit) | pending authored terminal and persistence proof | pending corrections and concept verdict |
+| The Eclipse (e8-eclipse) | pending authored terminal and persistence proof | Three independent factory dome mounts now present. Final concept fidelity remains open: inhabited drum detail, glass richness, player contrast and map dressing. |
+| The Dome Basin (e9-dome-basin) | pending authored terminal and persistence proof | pending corrections and concept verdict |
+| The Seed Run (e9-seed-run) | pending authored terminal and persistence proof | pending corrections and concept verdict |
+| Devil's Alley (e9-devils-alley) | pending authored terminal and persistence proof | pending corrections and concept verdict |
+| The Old Canal (e9-old-canal) | pending authored terminal and persistence proof | pending corrections and concept verdict |
+| The Ember Shore (e10-ember-shore) | Native desktop140 and mobile147 PASS on production139 art: wave12/360s, 3 squalls, 7 stokes each, bank/reload and board return, zero errors. Desktop HP143/mobile HP119. Public-command108 two seeds secure and replay exactly. Full terrain/titan fidelity remains open. | Four fixtures139 accepted/integrated;169 ground coverage and material-scale continuity integrated with build/review/desktop/mobile corner proof. Full terrain/titan fidelity remains open:153/157 rejected, thin texture joins and rectangular painted patches remain. |
+| The Archive World (e10-archive-world) | Desktop95 and mobile87 each pass same-profile west/east/warning/reaffirm, earned light holds, wave12 secure, banking/reload and 1/2/3/3 lore pages. Desktop95 uses integrated objects91 and floor94; mobile87 predates those art changes. | Objects91 and ground94 integrated. Dedicated engraved paving removes false architecture underfoot; restored hero contrast corrected93. Whole scene terraces/depth, local lighting, repetitive field and mobile occlusion remain incomplete. |
+| The Last Claim (e10-last-claim) | pending authored terminal and persistence proof | pending corrections and concept verdict |
+| The River (e10-river) | pending authored terminal and persistence proof | incomplete: raw painted fallback versus finale the-claim GLB, ordinary combat/build HUD; evidence river-entry-visual-28 |
+
+Mare’s desktop09 and mobile07 full native routes pass. The shared Spring Heels drift repair passes 26 focused checks and code review. The broader regression still has recorded engine-identity, replay-fixture and teardown failures; it is not green. Historical failed attempts remain in the readiness ledger.
+
+Animation work remains with the separate task. Outstanding scope includes concept fidelity, remaining full native objective routes, secure/banking/reload where applicable, current integrated regression, and the recorded owner-dependent Last Claim layout decision.
+
+### Latest bounded checks — Night Shift mobile08 and Drill texture06
+
+Mobile08 ended in combat defeat at wave17,538.3s, with zero page errors and no captured stalled-clock events. The16px aim gesture did not establish dawn completion. Drill texture06 uses a native generated vertical wood grain; isolated desktop/mobile checks pass, but fresh visual review keeps support silhouette, attachment/end-face detail, plaque occlusion and contact shadows open. Candidate remains unintegrated. See respective evidence folders and readiness.json.
+
+### Drill Yard training-label occlusion repaired
+
+Training tag now belongs to the existing Drill Yard exit panel instead of the center-screen Hud overlay. Build and all8 original Drill Yard tests pass across desktop/mobile; independent code review found no introduced regression. Evidence: `artifacts/map-art-repairs-20260908/drill-training-label-01/receipt.json`. Candidate07 log remains unaccepted for support/joint clarity and grounding; no new log model or generated texture is promoted.
+
+### Five obsolete elevation dependency warnings retired
+
+All4 E2 contracts and Canyon Works no longer declare missing consumers for absent slopeMax/waterline advisory fields. Actual bundle validation, unchanged-data assertions, build and independent review pass. Relevant regression:18 passed,2 skipped,2 Hill Mine visual-height failures. The exact4.3cm creek height discrepancy reproduces with both saved before metadata and current metadata, so it is tracked separately rather than hidden by changing test expectations. Evidence: `artifacts/map-art-repairs-20260908/elevation-dependency-retirement-01/integration.json`. Native Hill Mine attempt01 reached the terrace at full health but failed due to a driver-only seam filter; corrected attempt02 is underway.
+
+Hill Mine desktop02 terminal update: native panning earned70g across actual active seams, then combat defeat at69.93s during the return to the boiler site. No building placed and no objective completion. Next attempt must address early defense/aiming and long unprotected resource travel; repeating the same route is not justified.
+
+### Current inventory16 and terrain-pointer defect
+
+Fresh inventory16 reconciles42 maps/42 plates and417 production GLBs, zero live/stale violations,7 exceptions. Hill Mine desktop03 placed one turret and defeated24 enemies but died at70.3s on the next gold trip. Controlled native pointer measurement confirms a separate input defect: pointing at terrain(-10,29) at height3.012m resolves to(-10.015,27.385), a1.615m miss. Both Blast aiming and BuildSystem placement currently intersect planeY0. Evidence: `artifacts/map-art-repairs-20260908/terrain-pointer-height-01/check.json`; root input repair remains open.
+
+### Terrain pointer mismatch repaired and checked
+
+Shared active ground/water intersection replaces planeY0 for Blast and building placement. Native desktop/mobile elevated aim and snapped placement, sculpt/fallback and lifecycle checks pass; build and independent review pass.16 existing tests pass;2 storage-access tests fail before pointer handling in Game.startRunTape, so integrated regression is not green. Actual live-handler timing is in terrain-pointer-height-02/check-02.log; the earlier module-only timing is superseded. Hill Mine native desktop04 is running with corrected pointer projection and a nearby first defense.
+
+### Run startup with inaccessible storage repaired
+
+Five Game tape call sites now use the existing safe storage accessor. Build, blocked/available start-end lifecycle and independent review pass; both prior blocked-storage regression failures are cured. Latest related suite17 passed/1 failed: the zero-height fixture searches x0,z0..12 but reads0.326921m at its selected point; isolated retry also fails. Full regression remains open. Hill Mine desktop04 placed one turret and defeated22 enemies, then died66.17s while panning; no full objective proof.
+
+### Hill Mine attempt 05 and regression proposal refresh
+
+Hill Mine desktop attempt 05 ended at 89.27 seconds with 100 HP, 41 kills, one turret and two upgrades. This was a driver navigation failure, not a combat death or completed objective. The next driver revision suppresses optional XP detours during targeted travel while retaining combat evasion. Evidence: `artifacts/map-art-repairs-20260908/player-entry-focused-hill-mine-native-desktop-05/checks.json`.
+
+The copied blast relief suite passed all four desktop/mobile cases after waiting for sculpt readiness and finding a bracketed zero-height crossing. The protected original is unchanged; integration patch and rationale are in `tasks/PROPOSED-map-art-regression-refresh.md`. Drill log candidate 08 remains unaccepted after fresh visual review; grounding and scale pass, bearing construction and timber detail do not yet match the concept.
+
+### Ore-cart waypoint stall repaired
+
+Shared OreCart used rendered Y in waypoint distance and could never reach an intermediate zero-height waypoint. The working-tree fix uses planar distance for rail movement and repair reach. Seven focused checks, build, and independent review pass. Browser arrival/payout and destruction pass on desktop/mobile; repair at a deep-water point fails before and after because the hero is displaced to shallows. Native full-objective and wider simulation checks remain open. Evidence: `artifacts/map-art-repairs-20260908/ore-cart-planar-route-01/receipt.json`.
+
+### Pressure fuel and progression verification
+
+The working-tree fuel-duration change from12 to36 seconds passes the controlled three-boiler/pressure-consumption window and ten existing pressure/economy checks. The copied E2 census also needs its retired elevation-warning expectation updated; revision02 and the full Node suite are running. Native pressure remains unverified. Boiler Lance is research-gated; future native attempts must account for that precondition. The driver now completes bank/reload before evaluating failed secondary goals, preserving genuinely earned progression without accepting a failed escort or pressure objective as a full pass.
+
+### Full regression after ore-cart and coal-duration repairs
+
+First Node batch:750 passed,4 failed,2 skipped. Two failures are the live/registered engine hash mismatch; fixture-teardown fails because it reruns the same hash assertion. The secure-choice file-loading failure does not reproduce alone (2 tests pass). Remaining stages1–5 and7 pass. Second Node batch:131 passed,7 failed; all seven failure names match the earlier upgraded-drift baseline exactly. This does not make the integration green: replay/era and related baseline failures remain unresolved. Raw logs, comparison and scope are in `artifacts/map-art-repairs-20260908/pressure-fuel-budget-01/verification.json`.
+
+### Hill Mine integrated factory repair and pressure precision candidate
+
+Hill Mine now uses the rebuilt creek bed at z=-10, relocated flooded-gallery mount, gallery without the overlapping sump box, and centered water glints. The existing factory recipes, saved Blender sources, exports and contracts were reconciled together. Build, source/package checks, sampled ford/rail access, independent review and native desktop/mobile escort delivery pass. Full pressure/railcar/bank/reload and final visual acceptance remain open. Evidence: `../artifacts/map-art-repairs-20260908/hill-mine-combined-01/`.
+
+Integrated node regression: first batch 757 tests, 752 pass, 3 engine-identity failures, 2 skipped. Remaining stage 6: 138 tests, 131 pass, 7 fail; all other stages pass. The seven failure names, error/assertion messages and reported actual/expected values match the prior pressure-fuel regression exactly after excluding timing, process IDs and stacks (`regression-comparison.json`). This establishes unchanged observed failure signatures, not a green regression. Current engine hash is not registered in era 5; no registry pin was changed.
+
+A separate one-line pressure cooldown candidate removes floating-point residue from the cooling-state decision. Production retains about 5.7e-15 seconds after three nominal seconds and can falsely fail the two-hot-boilers objective. All 28 controlled startup/rate checks and independent review pass. The reviewed correction is now integrated after the native run ended; build and all28 production checks pass, full node regression is running; see `../artifacts/map-art-repairs-20260908/pressure-cooldown-roundoff-01/`.
+
+
+### Horizon baseline comparison and Hill Mine native run 04
+
+The opaque terrain edge repair is not established as the cause of the four failing horizon probes. Night Shift, Relay Valley, Dome Basin and Ember Shore fail the existing >8 contrast threshold on both desktop and mobile using both the previous and current terrain source. Absolute differences are at most 0.046. The browser baseline preserves current Vite import/glob resolution and serves the saved previous Terrain3dClaimPilot source without reverting production files. The unrelated current Blackout glow change is absent from these four maps. Evidence: `artifacts/map-art-repairs-20260908/blackout-render-repair-01/horizon-baseline-comparison.json`; runnable copy: `baseline.proposed.spec.ts`; completed run: `registry-baseline05.log`. Both test projects remain failed; no threshold was weakened. These are preexisting relative to this specific repair, not proof that horizons are acceptable.
+
+Hill Mine native production run 04 failed at 141.6 seconds, wave 4, HP 0, gold 10, after three coal harvests, one turret and one boiler. Its reported `Unreachable gather gold-seam-2` masked death because the driver handled evasion before checking HP. Driver 05 checks HP before that continuation and passes Node syntax validation; no new full run has been launched. Resource strategy and full desktop/mobile objective, banking and reload proof remain open. Evidence: `player-entry-focused-hill-mine-full-production-desktop-04/checks.json` under the same repair artifact root. No gameplay balance changes are justified solely by this automated strategy failure.
+
+
+### Registry horizon coverage correction
+
+Sixteen desktop/mobile surface-colour and panorama-only captures confirm the failing horizon region samples 84.23–100% terrain at these four spawn poses and zero panorama pixels. Evidence: `artifacts/map-art-repairs-20260908/horizon-surface-census-01/README.md`. This invalidates the test’s panorama-readability inference, not the remaining visual findings. A coverage correction is recorded in the regression-refresh proposal; protected e2e remains unchanged.
+
+
+### Hill Mine run05 and Dry Gulch shore candidate
+
+Hill Mine desktop05 terminated at112.333s,wave3,HP60,gold20 because its fixed upper-seam filter excluded both nodes after respawn relocated them to authored lower anchors. This is a driver failure; escort,three coal harvests and one turret precede it. No boiler or full-objective proof. Do not repeat the unchanged filter.
+
+Dry Gulch shore candidate01 softens the runtime damp-disc edge in an isolated browser comparison, with zero errors. The factory still creates18 evenly spaced rocks and the broad brown base still reads artificially. Candidate is unintegrated and unaccepted; evidence in `artifacts/map-art-repairs-20260908/dry-gulch-shore-candidate-01/README.md`.
+
+
+### Dry Gulch spring factory02
+
+Factory-backed12-stone candidate exported at364triangles; saved blend re-export and embedded atlas byte comparisons pass. Independent visual review confirms smaller irregular groups improve the spring but leaves recessed bank,blurred soil halo,rounded water and triangular reeds open. Water03 reduces the broad pale collar in an isolated zero-error desktop capture; primary inspection only. Both remain unintegrated. Evidence: `artifacts/map-art-repairs-20260908/dry-gulch-spring-factory-02/README.md`.
+
+
+### Dry Gulch bank06 and Hill Mine run06
+
+Bank06 exports492triangles and re-exports byte-identically from saved Blender source. Four desktop/mobile comparison captures are error-free. Independent visual review still rejects full fidelity: geometric rim,weak recess,blurred soil halo and faint vegetation. Candidate remains unintegrated. Evidence: `artifacts/map-art-repairs-20260908/dry-gulch-spring-bank-06/README.md`.
+
+Hill Mine native desktop06 is running with current-position fallback when the protected seam relocates. No completion proof yet; use the process and latest receipt rather than treating this note as evidence of a live run.
+
+
+### Hill Mine progression boundary and spring height diagnosis
+
+Native fresh-profile06 failed at133.8s,wave4,HP0. Declared-profile07 now follows the factory’s existing5-node-plus-medal declaration, with real resource earning and native controls; it is a separate campaign-profile check, not a relabelled fresh success. Evidence: `artifacts/map-art-repairs-20260908/hill-mine-declared-profile-01/README.md`.
+
+The spring06 height census confirms the inner bank lies below water at all8sampled1.38m points. Candidate09 raises the irregular lip and corrects downward face winding with a runnable normal assertion; desktop/mobile captures are underway. Still unintegrated and visually unaccepted.
+
+
+### Spring terrain11 and Hill Mine declared07/08
+
+Removing the obsolete spring water cap and covering disc improves terrain continuity; candidate11 is240triangles and saved-source re-export is byte-identical. Four desktop/mobile captures are error-free. Fresh review still rejects full fidelity because of the circular inserted-water appearance and weak vegetation. Evidence: `artifacts/map-art-repairs-20260908/dry-gulch-spring-terrain-11/README.md`.
+
+Hill Mine declared07 and08 both failed before testing sustained pressure arsenal combat.07boiler was destroyed before consuming coal;08died while collecting coal before any building. Full native objective/persistence proof remains open.
+
+### 2026-09-10 — Dry Gulch local sculpt 12
+
+Candidate evidence: `artifacts/map-art-repairs-20260908/dry-gulch-spring-sculpt-12/`. Lowered 35 terrain vertices around the spring; saved Blender source reexports byte-identically. Desktop/mobile before/candidate captures terminal PASS with zero console/page errors. Candidate contract bounds were updated in the isolated browser interception, with ordinary runtime validation retained. At radius 1.5, terrain sits above water at all 16 radial samples; original terrain was below water even at radius 2. Gameplay water radius remains 1.4.
+
+Not integrated or visually accepted. Fresh independent review confirms the near-circular green disc, abrupt visual contact, sparse necklace of stones, unreadable vegetation and noisy ground. Geometric intersection is not sufficient fidelity evidence. Next change should make the visible shoreline irregular through the bed geometry and embedded stone/plant dressing, while preserving the simulation radius; do not add another flat coloured ring. No new native objective proof, and all 42 maps remain within the goal.
+
+### 2026-09-10 — Dry Gulch dressing 13
+
+Factory-derived shoreline body (620 triangles, 31 varied low stones) plus larger reeds captured on desktop/mobile with no console/page errors; saved-source GLB reexport is byte-identical. Uses candidate 12 terrain and measured contract bounds. Independent review: water readable, no obvious floating/layering failure, but continuous orange rock ring, faint vegetation and flat water remain. Candidate remains unintegrated. Do not mistake density alone for the concept's irregular mixed shoreline. Evidence: `artifacts/map-art-repairs-20260908/dry-gulch-spring-dressing-13/visual-review.md`.
+
+### 2026-09-10 — Hill Mine defense-first native 09 and fuel timing
+
+Declared-profile native desktop attempt 09 ended at 201.2 s, HP 0, after building two turrets (56.8 s and 140.1 s), with no boiler established. This is a failed full objective attempt, though it outlasted previous boiler/coal-first openings. Mobile is running in the same process (handle 60048); do not restart without checking its terminal state. Evidence directory contains both viewport rows despite its historical `desktop-09` suffix.
+
+The production pressure timing probe (`hill-mine-pressure-timing-01`) identifies a scheduling constraint: with three operational boilers and all coal harvested at the start, 15-second pre-wave-8 arming passes both no-consumption and immediate-full-drain bounds. Thirty seconds passes without drain but fails with full drain; 90/120-second leads fail both. This is a controlled subsystem test without combat, not an actual arsenal model or map playability claim.
+
+Factory coverage distinction: `artifacts/e2-railcar-arsenal/prover.mjs` gates only `outcome.secured`; its default turret ladder has one boiler. Production `PressureSystem.updateObjective` requires at least two hot boilers continuously through waves 8–12. Preserve separate native evidence for escort, pressure, railcar, bank and reload.
+
+### 2026-09-10 — Hill Mine native 09 terminal and Dry Gulch texture integration
+
+Hill Mine mobile 09 also failed, at 200.1 seconds/wave 6 with HP 0, two turrets and no boilers; desktop failed at 201.2 seconds. Process 60048 is terminal. Neither run establishes map unwinnability; both establish failure of this native defense-first strategy.
+
+Dry Gulch texture-only repair 15 is integrated. Native atlas replaced the noisy bank composite while preserving production terrain geometry, normals, topology, UVs, water and spring body. Saved-source GLB and factory atlas output reproduce byte-for-byte. Full scene regeneration is not claimed. Build, GLB guard and production desktop/mobile captures pass; independent code review finds no actionable defects. Visual review confirms a scoped improvement while keeping texture scale, terrain boundaries and all spring/prop issues open. Evidence: `artifacts/map-art-repairs-20260908/dry-gulch-atlas-integration-15/`.
+
+Inventory 18: 42 maps/plates, 39 routes, 37 terrain contracts, 32 terrain GLBs/panoramas, 37 packs/197 bodies, 172 selected bodies/176 distinct mount files. Reconciliation issues 0; production GLBs 417, existing exceptions 7, live/stale 0. The new raw texture is a derivative, not a new map/landmark.
+
+### 2026-09-10 — Dry Gulch spring integration 16
+
+Removed the oversized brown cover and obsolete baked water cap. Low shoreline stones, a local sculpted bed and terrain-grounded reeds are integrated while gameplay water radius remains 1.4. The spring body is 620 triangles (formerly740); four sibling records/hashes remain unchanged. Terrain/spring saved sources and spring factory recipe reproduce byte-identically; terrain recipe height discrepancy is below1e-6. Build and GLB guard pass, and current production desktop/mobile captures pass radius/cover/bank/root checks.
+
+Independent code review caught a floating reed root; fixed by supplying the existing terrain height sampler. Follow-up independently raycast-confirms all six roots within1e-6 and finds no new defects. Two copied shoreline/sluice tests pass. The protected original `e2e/shore-truth.spec.ts` still asserts the deleted cover diagnostic; its update is proposed, not declared green. Full native objectives and final visual acceptance remain open. New grounded image paths and evidence: `artifacts/map-art-repairs-20260908/dry-gulch-spring-integration-16/README.md`. Inventory19 retains42 maps/197 bodies/417 production GLBs, seven existing exceptions, zero live/stale or source reconciliation issues.
+
+## Dry Gulch native 08 and Moth Season current census
+
+Dry Gulch desktop08 died gathering at wave4 / 140.833s. Mobile08 remained alive at wave12 / 361.733s / HP111 with two turret repairs, but the test used the wrong weapon-toggle locator and stopped. Corrected mobile09 is running; no full completion claim. See `readiness.json` → `dryGulchNative08` for exact evidence and limits.
+
+Moth Season's current desktop/mobile captures loaded all five mounted bodies without page/console errors. The ground is nearly black while boundary bodies remain brightly self-lit. The fallback night rig skips the ambient floor already used by custom palettes. Isolated candidate under `moth-season-night-floor-01/`; no lighting source change integrated yet. Full visual fidelity and CONNECT/survival/persistence remain open.
+
+## Moth Season night fallback and factory replay restored
+
+The shared default night rig now honors darkness during dawn and applies its existing ambient/sprite readability floor. Build and12fixed-time desktop/mobile captures pass; independent code review found no actionable defects. The visual review accepts only clearer actors and sustained night: ground, warm lamp hierarchy, object contact, boundaries and full concept correspondence remain open. Source and proof: `moth-season-night-fallback-03/`.
+
+Eight original gameplay regression cases passed. The two replay cases failed before simulation on a malformed stored tape. The existing factory orders were re-recorded with current code, preserving the old tape; the generated epoch3 tape now replays at the same hash/ticks in Node and browser on desktop/mobile. Original replay tests now pass2/2. Evidence: `moth-season-factory-current-01/`. Native Moth Season desktop/mobile journey01 is running on the isolated HMR-disabled5270server. Factory replay is not native Game.ts completion.
+
+Dry Gulch native09 was invalidated by a source-edit live reload at wave11/HP118; it is not a gameplay result. Native10 on the isolated server verified the mobile weapon toggle and reached wave13 before dying at411.433s/490kills with zero page/console errors. Its mobile Blast aim is not steered, so full native survival remains open without any unwinnability claim.
+
+Moth Season native journey01 desktop PASS: ordinary board entry, earned corridor beacon and decoy/defensive beacons, wave12 CONNECT and survival, banking and unchanged score after reload. No debug launch or gameplay grants; zero page/console errors. Mobile remains running. Exact terminal evidence: `player-entry-focused-moth-season-native-01/checks.json` and `desktop-summary.json`.
+
+Moth Season native journey01 now PASS on BOTH desktop and mobile: wave12 CONNECT, survival, banking and score reload persistence, zero browser errors. Desktop167HP/454kills/15repairs; mobile87HP/455kills/13repairs. `player-entry-focused-moth-season-native-01/summary.json` records exact scope. Atlas06 and brightness candidates remain isolated and visually unaccepted.
+
+### Moth Season atlas refinement 07 and Dry Gulch native 11
+
+- Atlas 06 mid-light captures completed. Direct review confirms improved ground continuity but coarse stones, cyan light pooling and detached boundary structures remain; recorded in `artifacts/map-art-repairs-20260908/moth-season-atlas-06/visual-review.md`.
+- Atlas 07 uses native image generation to refine the engraved detail. An isolated Blender export preserves vertices, topology and UVs; provenance and separate asset receipt are retained. Runtime capture is pending review; no production promotion.
+- Dry Gulch native 11 corrects a proven harness omission: run 10 aimed Blast only on desktop. Game.ts receives native canvas pointer movement for manual aim; the new run reuses the existing Night Shift native touch-aim routine and records aim update counts and arsenal diagnostics. A mobile run is in progress on the dedicated no-HMR server at 5270; no gameplay verdict yet. Driver: `artifacts/map-art-repairs-20260908/dry-gulch-native-11.mjs`.
+
+Atlas 07 follow-up: all four captures completed with zero errors. Direct gameplay-scale inspection rejects the candidate for promotion: it strengthens engraved outlines but does not sufficiently reduce stone scale. See `moth-season-atlas-07/visual-verdict.json`. Dry Gulch native 11 remains live, gathering earned repair funds after five placements; no terminal result.
+
+### Moth Season ground atlas integrated — repair 09
+
+Candidate08 replaces the terrain albedo through its native raw source and existing factory. Independent visual review confirms finer ground scale and improved separation from the hero; fixed-time production-light comparisons confirm removal of baked vertical scenery. Build and 417-production-GLB guard pass (7 existing exceptions, 0 live); four production captures have zero runtime errors. Saved-source GLB and factory atlas reproduce byte-for-byte, with vertices/topology/UVs unchanged. Independent code review reports no actionable defects. Source hashes and summary: `artifacts/map-art-repairs-20260908/moth-season-atlas-integration-09/`. Full warm mining-yard, night-palette and landmark fidelity remain open. Native Moth Season objective proof predates this texture revision and is not relabeled current.
+
+Dry Gulch native11 ended at wave14, time430.767, HP0, 562kills. It recorded173 native touch aim updates and50 Blast kills, ruling out missing aiming as the sole failure. Native12 keeps accumulated Spark upgrades active, changing only the survival weapon choice; mobile run ongoing.
+
+Current inventory20 reconciles42maps/42plates,37packs/197landmark bodies,172selected bodies and176distinct mount files. Zero reconciliation issues. GLB audit retains417production models,7existing exceptions,0live violations.
+
+Dry Gulch native12 ended at wave18/time560.933, HP0,817kills,7repairs, zero runtime errors; all defenses were wrecked. This is improved survival but remains short of wave20. Native13 now tests a late wave18 switch to the Blast Rig after earning fuse/damage/radius upgrades, retaining native touch aiming. Driver and log are under `artifacts/map-art-repairs-20260908/`; no verdict yet.
+
+Moth Season native02 is rerunning the existing full desktop/mobile route against current integrated atlas09 on5269. Do not modify runtime source or restart5269 while this proof is active, to avoid HMR invalidating the run. Dry Gulch native13 uses no-HMR5270. Both runs are live at this checkpoint; do not restart solely on an observation timeout.
+
+### Moth Season isolated lighting comparison10
+
+Sixteen fixed-time desktop/mobile captures isolate the fallback rig, terrain cool-emissive tint and landmark emission dial. No production source edits. All captures have zero errors and matching power/night state across arms. The cyan disc is caused by the ground shader retaining a cyan tint despite the carried point light using steel blue. Independent visual review favors the rig + steel-blue ground tint + reduced landmark emission for bounded lighting coherence. Full concept scenery and contact remain open. Evidence: `artifacts/map-art-repairs-20260908/moth-season-light-coherence-10/`. Native02 and Dry Gulch native13 remain live; no new playable verdict at this checkpoint.
+
+Moth Season native02 desktop PASS on production atlas09: wave12/time360, HP143,457kills, CONNECT complete, banking and reload persistence verified with zero errors. Mobile remains running. Dry Gulch native13 ended in a harness failure atwave5/HP52 because an upgrade overlay intercepted Build; native14 now resolves that visible overlay and retries only the Build tap. No native13 survival verdict.
+
+Moth Season native02 now PASS BOTH on atlas09/fallback03: desktop143HP/457kills, mobile135HP/458kills, wave12 CONNECT, banking and exact reload persistence, zero errors. Evidence: `player-entry-focused-moth-season-native-02/summary.json`. This does not cover lighting10 or landmark11 candidates. Landmark11 exported all5unchanged-geometry objects and completed20error-free captures, but direct review rejects its coarse swatch marks;1254px also exceeds the1024px production cap. Remains unpromoted.
+
+Dry Gulch native14 failed at596.133seconds/wave19/HP0/914kills, four seconds short of the secure horizon; no banking/reload proof. Native15 changes only the late-switch threshold fromwave18 towave16 to precede the observed damage spike. Mobile run live on no-HMR5270; driver/log under `artifacts/map-art-repairs-20260908/`. Moth native02 is terminal PASS BOTH, and landmark11 capture is terminal. No remaining5269native journey at this checkpoint.
+
+### Moth Season lighting integration12 — checks in progress
+
+Production changes are limited to Moth-specific fallback ambient colors/floor multiplier and a shared steel-blue carried-pool terrain tint. No gameplay light coverage changes. Build, independent code review, and14before/14after cases across6maps pass; other ambient palettes and power state match. Full scene fidelity remains open. Original regression still runs and is not green; protected Night Shift expectations include pre-existing fog/sampling mismatches. The existing proposed Night Shift suite passed17checks; its accelerated-save race was stabilized only in the artifact copy, with focused rerun pending. Evidence: `moth-season-light-integration-12/`. Dry Gulch native16 is live on5270 with the fourth turret slot filled by earned gold; no verdict yet.
+
+Lighting12 proposed Night Shift regression now has passing evidence for all18unique cases across17initial passes plus2focused passes after fixture stabilization. The fixture atomically freezes the observed saved wave(at least1) and verifies restoration of that exact wave, preserving all lantern-state/cost assertions. Original protected regression still runs and is non-green; do not describe it as passing. Live processes at checkpoint: original regression session18687 and Dry Gulch native16 session39393. Build/capture/code-review processes are terminal PASS; focused rerun session71199 terminal0.
+
+Dry Gulch native16 MOBILE PASS: wave20/time600,44HP,921kills,9repairs,6earned builds including4turrets. Banked and exact scores survived reload; zero errors/no standings submission. Desktop native17 is running the identical driver with native keyboard/mouse controls on5270.
+
+Lighting12 original regression terminal:13passed/15failed in15.8minutes. All10E3day-night/Moth checks pass; original Night Shift contributes3passes/15failures. The proposed suite has all18unique cases covered by passing evidence across17+2runs. No blanket original-suite-green claim. Inventory21 counts terrain art26 and object material atlases3; fresh417GLB audit and reconciliation have zero live/stale issues.
+
+### Dry Gulch desktop route and Moth edge investigation
+
+Desktop native17 ended alive at wave7: its direct westward seam route hit the central ruin footprint. The recorded movement-pin confirms input intent without displacement; pause/build/upgrade states were inactive. Native18 now walks around the ruin using normal keys and retains the full secure/bank/reload checks. Mobile16 remains the completed mobile evidence.
+
+Moth edge13 shader-only candidate is not accepted: the inspected west-refuge view retains its dark boundary. Runtime geometry proves the continuation exists but maps square terrain half-width40 to outer radius41, folding inward at corners. The next visual investigation must address the continuation geometry and panorama ground relationship rather than assume absent lighting is the entire cause. No production edge change has been made.
+
+Desktop18 terminated in combat at wave4/time141.77 while waiting beside depleted seams. It did not prove the ruin bypass. Desktop19 now returns to earned turret defenses during seam respawn waits; this run is pending.
+
+Moth continuation15 completed20 isolated captures without console/page errors. Direct and independent unprimed review favor it: the black boundary is filled and light continues. Mirrored ground patterning, landmark contact and HUD obstruction remain. It is not integrated; see its visual-review.md for the production verification still required.
+
+### Moth continuation integration16
+
+Promoted the reviewed Moth-only continuation geometry, planar UV and night-pool changes. Build,10 production captures, clone-disposal assertions and14 state regression cases passed. Independent source review is pending. Native03 now runs both viewports on lighting12 plus continuation16; older native02 proves the earlier presentation only. Mirrored terrain patterning and landmark material/contact fidelity remain open.
+
+### Dry Gulch desktop19 full pass
+
+Native desktop19 passed wave20 secure, bank, board return and exact score persistence after reload with zero console/page errors. 100HP, 917kills, 6repairs and6earned buildings. Together with mobile16 this closes the full desktop/mobile native objective proof; art-fidelity acceptance remains separate. See player-entry-focused-dry-gulch-native-desktop-19/summary.json.
+
+### Moth native03 passes updated production presentation
+
+Both desktop and mobile passed the complete native connection, wave12 secure, bank, board return and reload checks on ground09, lighting12 and continuation16. {"desktop": {"status": "pass", "hp": 159, "kills": 454, "wave": 12, "time": 360.00000000007077, "repairs": 15, "returnedToBoard": true, "scoreSurvivesReload": true, "errors": [], "evidence": "artifacts/map-art-repairs-20260908/player-entry-focused-moth-season-native-03/checks.json"}, "mobile": {"status": "pass", "hp": 127, "kills": 452, "wave": 12, "time": 360.00000000007077, "repairs": 14, "returnedToBoard": true, "scoreSurvivesReload": true, "errors": [], "evidence": "artifacts/map-art-repairs-20260908/player-entry-focused-moth-season-native-03/checks.json"}}. Isolated landmark atlas17/18 candidates are excluded from this evidence; full art fidelity stays open.
+
+### Moth landmark atlas18 candidate
+
+Native atlas17 removed scenery motifs but incorrectly textured the bell as wood. Saved-source UV/component inspection identified the amber brass cell separately from brown timber. Native atlas18 corrects that cell, packs to1024px and exports all5 objects with geometry/UVs unchanged. Twenty comparisons have zero runtime errors. Independent review prefers it but retains weak volume/contact, saturated red and stretched wood findings. Candidate is unpromoted; comparisons use common0.6 emission, not the production exemption. Factory/layer/provenance reconciliation and production-lighting checks remain before integration.
+
+### Moth material/light21 visual gate
+
+Candidate atlas18 at normal0.45 emission passes Moth census but fresh visual review identifies a high-confidence north-gate readability regression at full gameplay scale. It is not promoted. Candidate22 reuses the existing lighter zinc atlas cell for north frame faces; geometry remains unchanged and whole-body emission stays at the normal comparison value. Its captures are pending. This demonstrates why the17px census median cannot replace whole-object inspection.
+
+### Moth landmark integration23 and census height24
+
+Integrated native atlas18 plus north-gate frame UV remap22 through the saved-source factory. Normal calibrated emission replaces the old Moth exemption. Build,417-GLB guard(7 existing exceptions,0 live),10 production captures, geometry/mount preservation and byte-identical factory/source exports passed. Independent review retry is pending after the first service-capacity failure. Native03 is preceding-material gameplay evidence; new geometry and collision are unchanged and new material loading is separately checked.
+
+Fresh inventory22 retains42 maps/197 landmarks and adds the fourth raw object-material atlas; no reconciliation issues. Copied census height24 resolves11 invalid flat-plane preview checks while preserving8 remaining nonpassing map rows, including boat interaction-surface and Low Orbit checks. Protected test source remains unchanged.
+
+### Placement diagnostics25 and Baron native01
+
+Focused Low Orbit preview matches computed/renderedY0.24; prior transient zero did not reproduce. Regatta/Flotilla failures are target projection mismatches: test aims beneath visible water, ray hits water and snaps one cell away; actual preview heights equal BuildSystem computation. No runtime fix is justified by this evidence alone.
+
+Started full native desktop Baron01 with earned four-turret defense, ford/siege-line routing and an explicit actual Rocket Cart defeat assertion before banking. Outcome pending.
+
+## Latest terminal checks — 2026-09-10
+
+Baron native desktop 01 failed at wave 17: the prospector died during a repair perimeter approach. Six earned buildings and three repairs preceded the failure; boss defeat, secure, bank and reload are unproved. Evidence: `artifacts/map-art-repairs-20260908/player-entry-focused-baron-native-desktop-01/checks.json`. This is a failed playthrough, not yet a diagnosed runtime defect.
+
+Visible-surface census 26 completed all 47 runner cases. Every available map contract passed preview position and height, including Regatta/Flotilla; Low Orbit mobile passed. Projecting the pointer at the actual top interaction surface resolves the earlier relief/water targeting mismatch without changing runtime or protected assertions. The table still contains brightness/material, framing and load-time failures; archive-world and river are unavailable. No blanket green or full-playability claim. Evidence: `artifacts/map-art-repairs-20260908/census-visible-surface-26/table.md` and `summary.json`.
+
+## Harvest-free census correction — 2026-09-10
+
+The prior census's “contract unavailable” labels for Archive World and The River were stale test assumptions, not current launch failures. Its `isAvailable` checked only the empty seam array, while `src/meta/ContractFamilies.ts:1364` also permits the authored `harvestFreeObjective` declaration. A copied diagnostic test now mirrors that predicate; the protected test is unchanged.
+
+Focused census 27 ran three cases: Archive World passes all recorded desktop cells. The River boots and passes render, preview position/height and depenetration on desktop/mobile; its band expectation fails on both. These direct debug-launch fixtures do not prove the intended finale lever, archive light-hold/lore persistence, or full player objectives. Evidence: `artifacts/map-art-repairs-20260908/census-harvest-free-27/table.md`, `summary.json`.
+
+Current source still declares archiveWingZones/lightHoldSites but the `src/` search finds no light-hold consumer; the build-authorized restoration spec remains the next implementation authority. River's intended finale path is `E10FinaleSystem.launchRiver` → post-credits charter → staged `the-claim` lineage, distinct from direct e10-river debug entry. Keep these paths separate in completion evidence.
+
+Baron native desktop02 is running with repair routes outside the headframe and travel telemetry. Driver/evidence: `artifacts/map-art-repairs-20260908/baron-native-02.mjs` and `player-entry-focused-baron-native-desktop-02/`. No production gameplay changes in these diagnostic corrections.
+
+## River entry and concept comparison — 2026-09-10
+
+Four focused cases completed without console/page errors: raw E10 River and the debug-staged finale's real lever click, each desktop/mobile. Raw River reports `failed/painted` because it has no terrain-pilot contract; the finale charter returns to `the-claim` and reports `ready/glb`, consistent with its authored lineage. Neither proves full campaign completion or the panning/credits ending.
+
+Viewed the concept plate and desktop raw/finale plus mobile finale captures. The concept's quiet river, forested banks, dawn reflection and single pan are not established by the current initial views. The finale inherits The Claim's buildings and both paths retain ordinary combat/build HUD. This remains visual work; passing the launch tests is not acceptance. The authored briefing promises names as gold flecks; a current source search found the promise but no dedicated credits consumer, so panning/credits behavior remains unverified.
+
+Evidence: `artifacts/map-art-repairs-20260908/river-entry-visual-28/summary.json`, four PNGs and JSON snapshots. Protected e2e tests and production code unchanged. Keep the staged-finale fixture distinct from an earned finale playthrough.
+
+## Baron survival and material candidate — 2026-09-10
+
+Native desktop02 cleared the revised headframe repair approach but died at wave21/time560.967 with 918 kills and six repairs. A late repair called `fund`, taking the player from the defense perimeter to the east seam; HP fell from71 during gathering to31 on the return. Full Rocket Cart defeat/secure/bank remains unproved. Desktop03 now repairs only with gold already on hand; session26591, no production gameplay changes.
+
+Material candidate29 replaces baked scenic atlas imagery with sixteen native-generated material swatches at the accepted historical E1 UV locations. The current generic landmark factory uses a different twelve-cell layout, so its palette was not substituted. Authoritative per-body blends were used, preserving geometry/UVs/metadata; all five candidate GLBs reexport byte-identically from saved sources and the packed texture is1024square. First packing attempt failed due to Blender image-data invalidation; the successful recipe follows existing image save/colorspace ordering. Candidate stays in artifacts pending visual comparison and texture/asset gates. Capture session32732 compares all five mounts on desktop/mobile at the same noon lighting and production emission. Evidence: `artifacts/map-art-repairs-20260908/baron-landmark-atlas-29/`.
+
+## Baron headframe candidate30 and native03 terminal — 2026-09-10
+
+Candidate30 remaps 104 leg faces to existing medium wood. Twenty captures completed without errors; five GLBs pass unchanged family asset policies and all saved-source reexports are byte-identical. A fresh screenshot reviewer prefers the candidate at normal desktop size: timber construction and brace separation improve, with no obvious scale/depth/blur regression. Mobile benefit is constrained by HUD obstruction. Remaining: black mine-opening block, weak foot contact, possible hanging-line attachment ambiguity, concealed upper machinery. No production promotion yet; the beauty brief's mid-volley performance and relevant regression gates remain required.
+
+Native03 failed at wave20/time535.433, 854kills, four repairs, all defenses destroyed. The revised no-funding-detour strategy did not prove boss completion. Inspect activeBaronEnemy targeting and volley exposure next; current driver aims at nearest living enemy, which does not intentionally prioritize the boss. Preserve this as failed native evidence, not a runtime defect diagnosis.
+
+## Baron candidate mid-volley performance31 — 2026-09-10
+
+Four copied factory mid-volley cases passed. Median-of-three-window p95: desktop current9.8ms/candidate9.7ms, mobile9.8ms/9.8ms; both within the +15% brief limit. Draw calls match:102 desktop,77 mobile. Mobile frame triangle totals differ by254; saved-source geometry equality is separately proved and these frame totals include dynamic VFX. This is staged local performance evidence, with native04 concurrently active, not a native gameplay proof. Candidate30 remains unpromoted pending remaining regression/integration evidence. Native04 now records boss/volley state and uses earlier Blast plus nearby-boss aim priority.
+
+Evidence: `artifacts/map-art-repairs-20260908/baron-material-volley-31/summary.json` and raw per-arm metrics/screenshots.
+
+## Baron material integration34 — 2026-09-10
+
+All22 candidate regression cases passed. Material factory33 is idempotent and its GLBs match candidate30 byte-for-byte. Integrated raw native atlas, layer contract, five per-body saved sources/exports, pack metadata, recipe and ledger. Production build passes. Canonical rebuild now applies the documented material recipe after pinned historical geometry generation. Its first run exposed missing scratch pack metadata (historical builder predates contracts); current source-filename metadata is now copied and hashed as an explicit input. Corrected25-body reproduction session66153, full guard64133, independent review48955, production capture86942 remain running. Backups are under integration34/before-pack and the saved pre-edit rebuild script.
+
+Native04 ended at wave21/time552.9,894kills. Boss health stayed53346.893 throughout recorded wave20–21 samples; the south-bank route never damaged him. The previous commentary suggesting damage was incorrect and was corrected after full telemetry inspection. Next native attempt needs an actual engagement route to the far-bank boss; no combat balance change is justified by this evidence alone.
+
+## Current factory and inventory closeout — 2026-09-10
+
+Reproduction03 passes25/25 current E1 GLBs byte-identically. Eighteen use pinned historical geometry, five additionally receive the native Baron material update, and two use their later authoritative saved sources (Dry Gulch isolated spring; Night Shift lantern terraces). All supplemental source paths/hashes are recorded in proof.json. This intentionally reproduces the current asset set rather than claiming every body is still the historical accepted version.
+
+Baron integration review passed; ten production captures are ready GLB with zero errors. Full guard:417models,7grandfathered,0live/stale. Current inventory35:42maps/42plates,37packs/197landmark objects,172selected/25dormant,176distinct mounted files,5object material atlases,zero reconciliation issues. Full concept fidelity remains open; material integration is a bounded improvement. Final saved-source rebuild review session49088 remains active.
+
+Native next step: Blast's production range is10m (`Balance.ts`), while the prior south-bank strategy stayed more than20m from the boss on the far bank. Boss telemetry confirmed zero health loss, so the next proof needs a north-bank engagement route, not more identical south-bank attempts or an unsupported balance change.
+
+## Banner emblem work — 2026-09-10
+Native candidate36 adds the concept pictogram but in-game smart-project UV islands show only a handle fragment, so it is not accepted. Candidate37 remaps seven cloth components planarly with no geometry change. Source inspection also found four fort roofs and three rocket components sharing the accent cell; these need plain-color sampling before promotion. Captures/proofs remain in artifacts, production unchanged. Native05 runs a distinct north-bank engagement route, session33931.
+
+
+## Baron emblem mobile evidence and factory repeat proof (2026-09-10)
+
+Candidate38 now has unobscured mobile comparison evidence in `artifacts/map-art-repairs-20260908/baron-banner-mobile-40/`: two captures, ready GLB terrain, zero page/console errors. Waiting for the normal opening recap to expire exposed the complete crossed-pick emblem; no HUD hiding was used. Fresh unprimed review accepted its full-size readability, attachment, lighting and clipping. The earlier mobile39 capture remained obscured and is explicitly not acceptance evidence.
+
+The staged recipe in `baron-banner-factory-41/retexture_baron_landmarks.py` reproduces all five reviewed candidate38 GLBs byte-for-byte from current production sources. A second pass produces the same five hashes (`repeat-proof.json`). It maps seven cloth components to the complete emblem and preserves four roof/three rocket components as plain oxblood. The latter remap recognizes its already-remapped UV bounds to prevent progressive compression on repeated runs. No geometry changes.
+
+Production still uses material integration34. Next: integrate this reviewed atlas/recipe through ledger and layer/pack provenance, run the canonical 25-model reproducer and production guards/build, and capture the integrated output. This bounded visual pass does not prove Baron native boss completion: attempt05 failed at wave20 after about 4.08% boss damage. The 42-map goal remains open.
+
+
+## Baron banner integrated and verified (integration42)
+
+The reviewed crossed-pick banner now ships in the local production asset pack through native raw atlas v2, its layer contract, the pack contract and the existing retexture recipe. V1 is retained as historical input. Seven cloth components use the full emblem; four roof and three rocket components remain plain oxblood. All five production GLBs are byte-identical to candidate38, reviewed on desktop and unobscured mobile40. Geometry, mounts and gameplay source are unchanged.
+
+Verification in `artifacts/map-art-repairs-20260908/baron-banner-integration-42/`: canonical reproduction 25/25 byte-identical; production build PASS; GLB guard 417 models, seven grandfathered violations, zero live; ten production desktop/mobile captures with zero page/console errors. Independent Codex review found no actionable defects, including read-only Blender verification of exact UV remapping, unchanged geometry and ten-repeat stability. `candidate-equivalence.json`, `reproduction/proof.json`, `receipt.json` and `review.log` preserve those boundaries.
+
+Refreshed inventory43: 42 maps/42 plates, 37 packs/197 landmark records, 172 selected and 25 dormant pack bodies, 176 referenced mount files, six retained object-material atlas sources; zero source/hash/mount reconciliation issues. The first inventory invocation omitted its required GLB census input; the subsequent successful run used a freshly generated audit and is retained as `inventory-02.log`.
+
+This closes the bounded Baron emblem repair. It does not close the map's full concept fidelity or native completion; native05 died during wave20 after only about4.08% boss damage. Continue map playability and remaining concept-composition work under the full42-map goal.
+
+
+## Baron native06: correct driver corner stalling before judging balance
+
+Native05 telemetry contains a 2.57-second position plateau near (25.45,-29.72), during which player HP fell86.4→54.4. The driver clamped its orbit target to the map edge and, on reaching it, skipped movement while advancing an unrelated circuit index. Aiming did reach the boss (2178 total damage), so this evidence does not establish an engine targeting defect or justify a boss health reduction. See `artifacts/map-art-repairs-20260908/baron-native-diagnosis-44/diagnosis.json`.
+
+Native06 uses continuous tangential/radial kiting with inward boundary steering and retains the earned Spark upgrades rather than switching to Blast. Production gameplay/balance is unchanged. Driver: `baron-native-06.mjs`; live session76319; log `baron-native-desktop-06.log`; evidence `player-entry-focused-baron-native-desktop-06/`. The actual native boss defeat, secure bank and exact reload checks remain required and have not passed yet.
+
+
+## Archive World objective gate confirmed missing (probe45)
+
+Read-only desktop/mobile browser diagnostics confirm `secureWaveForRun() = autoSecureWaveForRun() = 20`, `squall.declared = false`, with all three authored wings and light sites present. Evidence: `artifacts/map-art-repairs-20260908/archive-objective-gap-45/receipt.json` and both screenshots. This is stronger than the earlier source search: the actual loaded Archive World runtime currently permits the generic wave20 gate without restoration. It is not proof that a real player has secured that run. The authorized spec instead requires wave12 and at least one wing re-inked through a complete uninterrupted telegraph/squall.
+
+The shared `E10SquallScheduler` and A8/A10 TileStateStore seams now exist, so their earlier sequencing prerequisites are present. The scheduler currently reads only `twist.emberShore.squall`. Archive has no restoration consumer in either engine, no archive twist configuration, and no restoration latch in the browser/headless secure predicates. The spec explicitly excludes procgen v3 as a requirement for this authored tile; the contract's descriptive dependency remains stale on that point.
+
+Admission remains a separate factory boundary: do not reintroduce anchors/seeds/floor rows alone. The later launch ruling intentionally keeps seams empty until the authored public-verb completion earns them. Implementation must deliver the light-hold consumer, ordered wing states, loss-safe run-end persistence, ledger lore and completion evidence, not claim the existing generic gate as success.
+
+
+## Archive restoration hold consumer begun (46; not wired)
+
+`src/systems/E10ArchiveSystem.ts` implements ordered full telegraph+squall holds, outage invalidation, next-cycle retry, restored-prefix loading and newly restored IDs for the run-end caller. It writes no economy, damage or persistence. `scripts/e10-archive-hold.test.mjs` passes focused order/interruption/retry/saved-progress/configuration checks; production build passes. Scoped independent review is running, session5305, at `archive-objective-gap-45/hold-review.log`.
+
+Replay decision: once all wings were restored in earlier secured runs, a successful new hold at the first wing satisfies this run's objective without creating another lore entry. Otherwise the spec's combination of permanent restoration and a new-wing requirement would make the fourth visit impossible to finish. This retains the active light-hold requirement and rejects idle completion.
+
+This is intermediate implementation, not a shipped restoration loop: neither engine constructs this consumer yet. Contract configuration/validation, live powered-beacon input, scheduler selection, secure gate, presentation, loss-safe persistence/lore and native earned-gold proofs still need integration. No existing protected e2e or factory queue/status files changed.
+
+Independent review46 found one real boundary defect: light lost on the first recovery tick canceled an otherwise complete hold. Fixed by limiting light-outage invalidation to telegraph/squall; added a real-scheduler 1/30s regression with light off in recovery. Focused tests pass (`hold-test-02.log`); repeated build session70364 pending. Integration remains incomplete.
+
+Repeat build46 passes. Baron native06 terminated unsuccessfully (session76319 exit1); last telemetry: {"time": 577.5333333334654, "wave": 22, "lastSampleHp": 6.400000000000006, "bossDamage": 524.4000000000669, "bossHpRemaining": 52822.49295292777}. Continuous movement extended survival, but retaining Spark did not produce meaningful boss damage. Full Baron completion remains unproved; inspect terminal log before changing strategy again.
+
+
+## Archive both-engine wiring (47; declaration inactive)
+
+Both engines construct the optional archive consumer, tick it after the shared squall scheduler, and consult its completion predicate. The browser resets it with the run; both publish diagnostics only when declared. `BuildSystem.hasPoweredBeaconWithin` checks the active beacon pool, authored radius, suspension and the same power callback used by its shooter. The scheduler can read `twist.archiveWorld.squall` as well as Ember's existing declaration. The archive parser binds explicit wing/site IDs to authored coordinates and rejects missing/duplicate bindings.
+
+Build and focused hold tests pass; 30 existing squall/preserve tests pass. `scripts/e10-archive-wiring.test.mjs` runs the real headless fixed-step loop with an in-memory declaration and a beacon placed in the real pool: no-light refuses, full hold restores west wing, and radius/suspension/power/deactivation checks pass. Fixture staging is explicitly not earned gold or native play. Evidence: `archive-objective-gap-45/wiring-live-test-02.log`, `wiring-regression.log`, `wiring-build.log`. Independent review session53550 remains running in `wiring-review.log`.
+
+Production Archive data is intentionally not enabled yet: contract schema validation/configuration, browser fixture proof, saved lore/TileState integration, re-ink presentation and coherent admission/native completion remain required. Existing Archive runtime still has the gap measured in probe45 until the declaration and complete loop land.
+
+
+## Archive wreck interruption and saved restoration (48; data inactive)
+
+Wiring review47 found that destroyed beacons leave their render slots active. The previous deactivation test missed the actual wreck path. `hasPoweredBeaconWithin` now requires positive HP and a non-wrecked building, in addition to active pool/radius/power/suspension. The revised headless fixture places a legal beacon within the authored west light site using `BuildSystem.placeFree`, then uses `resolveBuildingDamage` to leave a real wreck; rubble supplies no light. `wiring-live-test-03.log` passes.
+
+Archive restoration now stages only at a secured run end, through the existing TileStateStore; lost runs stage nothing. Browser birth/reset loads only a validated contiguous prefix of matching archive-wing entries. Tape replay is excluded from staging. The headless path uses NO_PROFILE_STORAGE to preserve fresh benchmark runs. The real store test proves no mid-run writes, no lost-run writes, staging-before-commit separation, committed next-run restoration and no idle secure from a saved wing. Focused test, build and 30 existing squall/preserve regressions pass; build preceded the final replay exclusion. Scoped persistence review session40692 is running in `persistence-review.log`.
+
+The declaration remains inactive: browser runtime proof, validated configuration, lore pages/ledger, visual re-inking and native admission/play proofs remain required. No full Archive completion claim.
+
+Persistence48 final build including the replay exclusion passes (`persistence-build-02.log`, session37237 exit0). Independent review40692 remains live.
+
+
+## Archive ledger integration and review corrections (49–52; incomplete)
+
+Registered three hidden archive pages, deriving discovery from committed contiguous wing entries in the active profile's TileStateStore. A committed page opens its Deep Sky ledger chapter. The browser fixture stages entries and reloads; six cards across desktop/mobile render with zero runtime errors. This is persistence/UI evidence, not native earned restoration. Visual review led to full-width prose cards and an opaque sticky header; capture51's prose/layout passes, but the navigation row can be offscreen beneath the sticky header when scrolled.
+
+Code review49 caught three real problems: static raw Markdown imports broke Node-based test collection; an unconditional E10 image reference leaked into E1 builds; and newly authored parallel drafts ignored the existing RATIFIED `lore/archive-world-pages.md`. Removed only the three drafts created by this task. The browser reader now loads the ratified source and strips authoring citations/notes; the shared registry is Node-loadable. The E1 release plugin substitutes empty archive lore, and cards reuse the existing title-emblem reference (hidden for prose cards). `e10-archive-ledger.test.mjs` passes, and the three previously uncollectable suites now collect all32 tests. Capture51 predates this canonical-text correction and is not acceptance of the final prose.
+
+Copied existing ledger tests to regression52 without changing their assertions or protected originals. Four cases pass; desktop/mobile EN01 fail at the existing in-run pause assertion (line152), before their later checks. Attribution is still required. No green blanket ledger claim. E1 release build session52275 recorded in capture51/release-build.log.
+
+Persistence review48 finished with no further findings: focused checks, adjacent E10 suites, TypeScript and GR-SIM regression22 pass/2skip. Browser runtime birth/reset remains untested by that review. Full Archive gameplay and the full42-map goal stay open.
+
+## Archive ledger verification 53–54 — 2026-09-10
+
+The two EN-01 failures in regression52 opened the ledger while the contract briefing still awaited Begin. An isolated copy in `artifacts/map-art-repairs-20260908/archive-ledger-regression-53/` adds only the actual Begin click before the in-run checks; all six desktop/mobile tests pass, including pause/resume. Existing protected e2e sources and assertions are unchanged. This identifies the failed startup precondition; it does not rewrite the original failed run as passing.
+
+Canonical-text desktop/mobile captures are in `archive-ledger-browser-54/` under the same artifact root. Both arms have zero page/console errors and no horizontal overflow. The fresh visual reviewer inspected both full views, six cards and six 2x crops: all card titles/prose are complete and readable. Follow-up: navigation partly disappears under the sticky header after deep-link scrolling; mobile active era is offscreen. Small text and banner spacing were secondary comfort concerns. These fixture captures prove committed saved-page display after reload, not earned restoration.
+
+Scoped independent code review54 found no concrete defects and independently checked exact ratified prose minus annotations, Node-compatible collection, E1 exclusion, failed-commit refusal and profile isolation. The E1 release build51 is terminal PASS: 1,096 files, 96,083,552 bytes, zero later-epoch manifest/plate/GLB leakage across 263 checked stems. Archive production objective activation, re-ink presentation and native earned-gold secure/bank/reload remain incomplete.
+
+## Archive squall pressure and real actor contact — 2026-09-10, evidence55
+
+All three authored light discs accept legal powered beacons at west (-30,-9), east (26,-9), warning (-3,38). Three actual headless clock cycles restore the wings in order. `E10ArchiveSystem` now selects lit sites for Static Motes during squalls; machines retain actor pursuit. Headless Archive sampling moved after enemy damage, matching the browser; both pressure consumers use the previous completed sample.
+
+Independent review found remote hero damage: enemy movement targets also drove contact detection. Fixed at the shared Enemy/EnemyPool contact seam with optional real actor positions, passed only by Archive callers; CombatSystem remains the damage writer. No animation logic changed. New headless and desktop/mobile real Game fixtures verify distant hero HP stays 100, actual touching reduces HP to 92, beacon destruction preserves the current sampled target during enemy update then clears the next sample. The fixture and build pass. Production Archive remains dormant and no native earned-restoration claim is made.
+
+Evidence: `artifacts/map-art-repairs-20260908/archive-all-sites-55/`. First broad regression passed 52 with 2 skipped before the final contact fix. Follow-up review session51648 (`review-02.log`) and post-fix regression session6654 (`regression-02.log`) are running; poll these same handles, do not restart merely on timeout. Remaining: review closure, squall-exit integration coverage, Archive production data/admission, re-ink/shelf presentation, earned beacon defense and secure/bank/reload.
+
+## Archive pressure review closed; declaration validation56 — 2026-09-10
+
+Pressure/contact review55-02 is terminal PASS. Its fresh isolated headless and desktop/mobile probes covered calm, telegraph, squall, recover, real actor contact, destruction sampling and non-Archive fallback. An exploratory reviewer probe failed from a stale starting sample; the fresh isolated checks passed, as retained in the review log. Final post-contact-change regression55-02: 52 passed, 2 skipped, zero failures, terminal exit0. This closes bounded pressure/contact verification, not Archive native completion.
+
+Added `archiveWorld` authored contract validation in `src/meta/ContractFamilies.ts`, using existing descriptor validation helpers. Complete distinct wing/site bindings, positive finite site radii and cadence, unknown fields and conflicting Ember clock are checked before either engine loads. New `scripts/e10-archive-contract.test.mjs` passes valid/default declarations and rejects twelve malformed cases; full build passes. No production map JSON changed. Evidence `artifacts/map-art-repairs-20260908/archive-contract-56/`; independent review is live on session83891, poll same handle.
+
+Next presentation seam inspected: Terrain3dClaimPilot installs `Terrain3dClaimPilot` and `Terrain3dLandmarks`; the five Archive mounts include `ours-unless-marker` at (0,46), within the authored emptyShelfZone. Add restoration paint through a read-only state callback, preserving authored geometry and factory sources; native earned-gold activation remains subsequent work.
+
+## Archive restoration paint58 — 2026-09-10
+
+Added material-only zone desaturation through `src/world/ArchiveRestoration.ts` and a read-only Game → Terrain3dClaimPilot callback. It applies to authored terrain and landmark meshes, not panorama, actors or collision. Restored zones return authored paint; ordered wing3 also restores the marker frame inside its zone. No source atlas/GLB geometry was changed. Production Archive remains dormant until its complete data/door work lands.
+
+Build PASS. Review58 PASS: uniform updates/reset, shader cache stability, geometry/material-color preservation and dormant no-op verified. Captures58: 16 full desktop/mobile shots plus 16 2x crops, zero browser errors. Fresh unprimed visual review compared all pairs and the concept: the grey-to-ochre/brass/teal state distinction works. This does NOT close concept fidelity: bodies remain almost black, marker support disappears, ground repeats noisy rectangular imagery, and sampled props do not convey the concept's terraced library, lanterns, pillars, rubble and central passage. Debug tuning/Tape Reel overlays also overlap mobile HUD in these debug fixtures; ordinary-play HUD needs its own evidence. Rectangular grey/brown zone boundaries remain a presentation rough edge.
+
+Contract review56 found unbound or duplicate authored light sites could pass. Added site-count coverage beside wing coverage in both schema and runtime creation, with surplus/duplicate-site tests. `test-02.log` and `hold-02.log` pass; review58 accepts that correction.
+
+All processes through evidence58 are terminal. Next: coherent Archive production data/admission and earned-gold beacon route, automatic runtime birth/reset/bank/reload proof, and substantive map/object fidelity repairs using the existing factory. The 42-map goal remains active.
+
+## Archive earned route65–69 and headless bank67 — 2026-09-10
+
+Candidate data uses four entry-hall anchors (-30,-50), (-18,-42), (18,-42), (30,-50), a true entry start (0,-52), authored 60/8/25/8 squalls, Static Motes plus Unraveled Memory, and secureWave12. Production JSON is unchanged. Missing entry spawn is a real current-data gap: all three light markers are heroStart:false, so actual default is (0,12), not the entry hall.
+
+Earned public-verb route: harvest three active seams (90gold); turret at (-24,-16), beacon at (-30,-9), total spend75; wide movement circle around west defenses (radius18, angular speed0.27); choose only live offered upgrades; public bank choice. Candidate65 seed01 secures wave12 at360000ms, gold15,388kills, hash `fnv1a32:b9285655`. Candidate66 seed02 secures wave12 at360000ms, gold15,387kills, hash `fnv1a32:277e9147`. Neither defaults upgrades or secure choice. These are headless candidate-data proofs using admissionProbe, not native browser completion/admission.
+
+Retained attempts59–64 show why earlier plans failed: BUILD schema initially omitted required `when`; four pans funded only20 against an excessive40 threshold; six pans fund a25 beacon and earn wing1 but stationary defense dies wave4; narrow movement reaches6; inefficient entry tours/narrow circles die3–4. Route65's wide circle and complete entry-funded defense solve this candidate crossing without changing balance.
+
+Candidate66 exposed a real save bug: headless bank does not emit run_ended, so the prior Archive save listener never executed. Moved staging/commit to the actual bank action in HeadlessContractSim. NO_PROFILE_STORAGE remains; this is the committed in-memory snapshot, not new disk persistence. Rerun68 seed02 repeats the SAME hash and now contains exactly `archive-wing:west-stacks-wing`. Review67 verifies bank, timeout, rush, loss, unavailable choice and off-Archive behavior. Focused `test-05.log` passes after relocating the synthetic public-bank assertion before another sim replaces the shared standing-orders executor. Earlier short-fixture failures are retained, not hidden.
+
+Live handles at handoff: seed01 post-fix saved-wing rerun69 session59316, broad regression67 session23263. Poll the same handles. Remaining production work: data/mask/bench-seed/admission integration with unchanged other-map pins, ordinary desktop/mobile earned gameplay and bank/reload, automatic restoration at birth, and the significant Archive concept/asset deficiencies recorded in58.
+
+## Archive production activation70 and CLI route72 — 2026-09-10
+
+Archive bank67 regression is terminal: 52 passed, 0 failed, 2 skipped. Candidate69 seed01 bank saved the west wing with the same hash as65; seed02 already repeated in68. Production Archive now uses those four entry anchors, entry spawn, roster, three ordered light bindings and wave12 secure. Its mask, bench seeds, idle floors, admission baseline, unclaimed receipt and generated skill block are updated. Public mechanics describe restoration and no longer advertise Ember vent pressure on Archive. Other contract object bytes and other floor entries were preserved.
+
+Production70 build, contract validation, admission and skillmd guard pass. Idle01 fails wave2 (fnv1a32:cb3e3f9d); idle02 fails wave3 (fnv1a32:c9bb2822). Independent review found a stale inactive-production assertion; it is corrected to assert active production and test an explicitly undeclared copy, with focused rerun pending. Same-game audit is a Markdown report despite its .json filename; it is not a gameplay certification.
+
+CLI72 seed02 secures wave12 at360000ms, gold15, kills410, explicit bank, hash fnv1a32:979bbf5b; tape replay pending. Seed01 loses wave10 at310700ms, hash fnv1a32:38d7387b. CLI73 adds movement immediately after building so the Prospector does not stand at the last harvested seam waiting for the next turn; seed01 running. Earlier70 discarded an active build when selecting an upgrade;71 exceeded the32-order limit and was stopped. These are test-driver failures, preserved separately. Native desktop/mobile secured bank/reload and full Archive concept fidelity remain open.
+
+Production70 review correction is now verified by hold/wiring/ledger PASS. CLI73 seed01 still fails wave10 at326000ms (fnv1a32:b1ec98ab). Seed02 full replay uses AgentTapeReplay rather than gr-sim --resume: the latter defaults to durationTicks-1 and therefore resumes before the recorded final bank. Full tape verification session31660 and production74 continuous public-verb seed01 session60726 are running. Production74 removes both the in-memory contract override and admissionProbe from the previously successful route69.
+
+Native usability gap confirmed in source: Game publishes Archive diagnostics but Hud has no next-wing/hold status panel (Ember vent and orbital suit already use contract-scoped resource panels). Add the Archive feedback through that existing pattern before claiming normal desktop/mobile playability.
+
+### Terminal evidence74
+
+Both pending processes passed. Full AgentTapeReplay of CLI72 seed02 exactly matches its tape hash fnv1a32:440c0990 and secured wave12/360s/gold15. Production74 seed01 secures wave12 at360000ms, gold15,kills388, defaults0, hash fnv1a32:b9285655, with committed west-wing entry. Production74 uses actual production data and ordinary admission (no overrides/probe). This closes the production-versus-candidate wiring check; it does not turn CLI73 seed01 into a pass or substitute for native human input. All processes from70–74 are terminal. Next: Archive next-wing/hold HUD using existing panels, then native earned desktop/mobile beacon/squall/secure/bank/reload; art-fidelity gaps remain.
+
+## Archive HUD75–79 and native81 — 2026-09-10
+
+Archive HUD now publishes next light, restored count, ready/warning and held-light countdowns, plus missed-hold retry. It uses existing resource panels. Review caught premature bank text and bank text suppressing later holds; the duplicate bank instruction was removed and normal secure UI remains responsible. Compact320×568 gets a one-column Archive panel and100px resource offset; Tape Reel is moved away from resource feedback in mobile portrait.
+
+Build79 and scoped correction review PASS. Controlled79 fixtures use normal tavern/board entry with preview-unlock then controlled holds: waiting, ready, holding, interrupted, restored and hidden, desktop1280×800/mobile390×844/compact320×568. Fifteen screenshots plus3×crops, no Archive/weapon/Reel overlap, no internal overflow, zero browser errors. Fresh review confirms the Archive panel fits and stays stable; native-size text remains small. Adjacent global HUD defects still visible: desktop Tape Reel covers weapon heading; compact weapon name clips and gold value touches edge. These are recorded, not accepted away.
+
+Native80 stopped because its driver assumed three initial seams; this random seed starts two (HarvestSystem legitimately randomizes2–3). At33.2s HP100 and60earnedgold, next respawn2s; no game defect inferred. Native81 waits normal respawn and gathers only75gold, then uses keyboard/touch and normal build controls. Desktop38571 and mobile56585 live on no-HMR5270; their eventual terminal results must be read before claiming native acceptance. All75–80 processes are terminal.
+
+## Archive factory83 and native82/84 — 2026-09-10
+
+Factory83 repairs an activation follow-up: the terrain contract snapshot still had empty harvest anchors and only three stakes. It now matches the authored mask; a focused assertion checks exact equality. GLB/blend/atlas bytes and hashes are unchanged. The legacy Archive verifier required all mounts empty, a pre-pack assumption; it now accepts that stage but resolves and parses selected assets under landmarks. Blender5.1.2 full verification PASS: terrain and panorama byte-identical reexports, all hashes, mask agreement, flatness, selected landmarks and evidence. Independent review PASS, including missing/out-of-root path rejection. This is factory coherence, not visual acceptance.
+
+Native81 desktop and mobile both reached west ruin with earned turret but targeted a standing position inside its collider; both terminal. Native82 uses southern approach and pointer aiming. Mobile82 restored west wing atsecond squall, latestwave11/331.5s/HP150; final banking pending. Desktop82 beacon landed at(-31,-10), distance5 from westlight radius4, and was stopped once the incorrect placement was confirmed; continuing cannot satisfy the hold. Desktop84 waits camera settling and asserts exact ghost coordinate before keyboard confirm. Live handles: mobile82=66310, desktop84=54676. Do not restart live runs because a sampling turn ended.
+
+### Native Archive mobile82 terminal PASS
+
+Authoritative checks.json is PASS: normal tavern/board preview entry, touch controls,75earnedgold, turret and beacon, west-wing full hold, wave12 at360s,408kills, bank/return/reload. Saved secured score matches after reload and TileState contains archive-wing:west-stacks-wing. Zero console/page errors and zero standings requests. mobile-secured.png inspected. No gameplay grants or debug boot. This proves the first-wing native loop; east/warning/full-restored replay and art fidelity remain open.
+
+Desktop84 exact placement check passed with beacon(-30,-9); still defending on live handle54676. All earlier native/factory handles are terminal.
+
+## Archive native84/87 and material88 — 2026-09-10
+
+Desktop84 terminal PASS: earned turret/beacon placed exactly, full west hold, wave12/360s secure, bank/return/reload, committed west-wing state and zero errors. Together with mobile82 this proves first-wing native play on both viewports. Mobile sequence85 passed west then its driver toggled preview unlock off on the next board. Corrected87 only unlocks when chapter9 is absent, saves earned profile checkpoints after each bank, and is now playing east after west bank/reload and one lore page PASS. Session72044 remains live; warning and fully-restored reaffirm pending.
+
+Material86 fresh visual review accepted improved visibility but found stretched platform bands and rejected full library concept fidelity. Candidate88 uses dominant-face planar UVs with one isotropic scale per object, preserving material cells and geometry. Independent Blender review confirms all3678 faces retain cells, no collapsed nondegenerate UVs, unchanged geometry, and idempotent projection. Five candidate88 GLBs reproduce byte-identically. Thirty-two full screenshots with crops cover desktop/mobile, west/east/shelf/marker and restored/unrestored states. Fresh visual88 review pending. Production Archive landmark GLBs, atlas and master remain unchanged. Recipe now requires explicit --out; missing destination rejects without changing production hashes.
+
+Evidence: archive-materials-86/; archive-materials-88/; player-entry-focused-archive-native-desktop-84/; player-entry-focused-archive-native-restoration-mobile-87/. A saved-run rejection string in native87 storage names controls.paused ceremony/secure consistency; secured score and TileState reload passed, but the rejection needs separate source triage before claiming general in-progress snapshot resume.
+
+### Material88 fresh visual review terminal
+
+Accept targeted removal of platform texture stretching only. Repeated diagonal scratches, indistinct stone surfaces, blank west panel, miniature fixture geometry, flattened architectural ground imagery, weak local lighting and mobile HUD obstruction remain open. Full review: artifacts/map-art-repairs-20260908/archive-materials-88/visual-review.md. Candidate integration waits until the active native sequence finishes, preserving its production asset baseline.
+
+## Archive geometry89/90 and native87 three-wing progress
+
+Native87 west, east and warning all PASS, each with earned full hold, wave12 secure, bank/reload and ordered one/two/three lore pages. Three earned storage checkpoints retained. Fully-restored reaffirm remains live session72044. Production art unchanged for this sequence.
+
+Geometry89 replaces blank west/east panels with book rows, broken columns and layered masonry; warning gets an empty shelving recess. Existing ground bounds, footprints and mounts preserved; west1076/east1100/warning264 triangles. Five GLBs repeat byte-identically; scoped code review confirms metadata, export hashes/bounds and unrelated source isolation. Fresh visual review confirms west improvement but warning reads as a wooden wall. Correction90 reduces shelf depth1.55 to.65, thickness.2 to.14 and adds two vertical divisions. Capture90 running. Whole-scene terrace depth, flat terrain architecture, lighting and mobile HUD obstruction remain open. No production integration yet.
+
+### Geometry90 terminal render and rebuild evidence
+
+Desktop/mobile restored/unrestored warning captures pass with zero errors. Fresh90 visual review accepts the visible empty-shelf improvement over89; shallow grille-like depth, coarse textures and mobile obstruction remain. Five GLBs reproduce byte-identically both from the saved source and from a complete repeat of geometry construction. Full-rebuild.json and visual-review.md record this. Narrow correction code review4860 remains live. Native87 reaffirm remains live72044; at201.5s it has completed the required fresh hold with restoredThisRun empty and objectiveAllowsSecure true, but bank/reload terminal proof pending. Production integration has not occurred.
+
+Next: read these exact live handles to completion. Preserve existing production baseline through native87. Then integrate the reviewed candidate with explicit output, preserve old pack backup, refresh pack/source ledger/layer provenance and production verification. The full architectural scene, terrain treatment, lighting and mobile visibility still need work beyond these improved fixtures.
+
+## Archive integration91 and native87 terminal PASS
+
+Native87 four-stage sequence is terminal PASS: west/east/warning/reaffirm each earned hold, wave12, secure/bank/board/reload, no browser errors, lore counts1/2/3/3 with exactly three saved wing entries. This used the pre91 art baseline. Desktop84 first wing also passed.
+
+Integration91 installs reviewed90 geometry and native atlas through explicit destination. Original pack backed up. New durable build_archive_landmarks.py reuses entry/marker and rebuilds three concept-derived bodies, then delegates UV/material export. Generic Archive build is blocked to preserve this factory route. Review91 independently caught mesh-name alternation; correction removes orphaned replaced meshes. Only mesh-name JSON changed from reviewed candidate; all other JSON and binary bytes are identical. A rebuild from the promoted production master now matches all five GLBs byte-for-byte (canonical-reproduction.json). Correction review90712 and terrain verifier85675 live.
+
+Production build PASS,417-model audit0 live/0 stale,16 renderer captures0 errors. Inventory91:42 maps42 plates39 routes37 terrain contracts32 terrain GLBs32 panoramas37 packs197 records/GLBs172 selected bodies176 distinct mounted files;105 derive80 reuse12 build-new,0 source/hash/mount issues.25 dormant variant bodies remain explicit. Whole scene depth, flat architectural terrain imagery, local lighting, mobile occlusion and remaining42-map objective work are still incomplete.
+
+### Integration91 terminal closeout
+
+Full terrain verifier85675 PASS; reports copied into integration91. Mesh-name correction review90712 PASS, including actual Blender cleanup checks that preserve shared meshes/materials. All handles87/89/90/91 are terminal. Production pack has five canonical byte-identical rebuilds,16 renderer screenshots, green build/417-model guard and zero inventory issues. Next substantive Archive art work is whole-scene depth/terrain treatment/local lighting; complete mobile HUD visibility and the remaining map objectives remain open. The42-map goal is active and incomplete.
+
+## Archive ground92 candidate
+
+Root cause: make_atlas repeatedly mixed the era kit and world scene plate into the ground, then applied scene-based ink grading. These flattened architecture underfoot. Native image_gen exec-b523898b-09e9-4ff4-ad2a-4051716adb57 generated assets/raw/archive-world-floor-material-v1.png, declared by its layer contract and prompt.txt before generation. New material recipe samples the dedicated paving plus existing dirt only; authored wing/cut/empty-shelf/scar/edge masks remain.
+
+retexture_archive_terrain.py requires --out, repacks only the image into saved terrain and retains current mask/mount/landmark-pack contract. Positions, normals, UVs, indices and nodes match production; scoped review PASS. GLB and atlas repeat byte-identically.32 baseline/candidate desktop/mobile state captures show paving replacing false architectural depth, zero errors. Fresh visual review pending. Production unchanged. Whole-scene spatial depth, local illumination and mobile obstruction remain open.
+
+Ground92 fresh visual review accepts coherent paving replacing flattened architecture, with plausible scale and no hard seam, but finds weaker hero contrast. Candidate93 lowers final floor linear color to78%. Export PASS; render48157 and repeat pending. Production terrain remains unchanged. Repetition, exposed straight restoration border, weak shelf grounding and missing terraced architecture/local lighting remain open.
+
+## Archive floor integration94; desktop95 active
+
+Fresh93 review accepts improved hero/object separation with paving and restoration colors preserved. Integration94 installs four terrain files from that candidate, backing up old source. GLB and atlas reproduce byte-identically from promoted production. Build,417-model guard0 live/stale,full terrain verifier and8 production renderer screenshots0 errors PASS. Inventory94 refresh completed. Code92 review already verified unchanged positions/normals/UVs/indices/masks/mounts;93 changes only final color gain0.78.
+
+Desktop95 launched full same-earned-profile west/east/warning/reaffirm sequence on current object91/floor94 art. Exact live handle81451, log archive-native-restoration-desktop-95.log, evidence player-entry-focused-archive-native-restoration-desktop-95/. Do not restart while live. All92–94 handles terminal. Repetitive field, straight restoration edge, weak architectural scene depth/local lighting and mobile obstruction remain open; the42-map goal is incomplete.
+
+
+## Trestle entry repair 100 and current public-verb results 99
+
+Current99 terminated: seed01 lost at wave13 / 576700ms / hash60e67f92; seed02 secured wave14 / 600633ms / hash65b82b32. Both use the explicit factory progression declaration and ordinary admission, without run-resource grants. This is one successful headless route, not reliable native playability. Seed01 needs terminal-event instrumentation; the last preterminal HP row is not a death diagnosis.
+
+Entry100 separates the player start from south-boiler-site: new trestle-entry (12,-18), old boiler retained at (12,-12). Gameplay contract, mask table and terrain embedded mask agree. Actual Terrain.sample and the shared landmark collision consumer accept the new entry. All42 audit now has five other overlaps requiring mode-specific review. No landmark geometry, mounts, art, enemy balance or progression changed. Build/E2 verifier/independent review running; evidence in artifacts/map-art-repairs-20260908/trestle-entry-100. Native entry and objective replay still required.
+
+Entry100 gates: production build PASS; Trestle factory terrain verifier PASS including byte-identical saved-blend GLB export; independent review found no actionable defects and verified all six landmark mounts unchanged. Full E2 family verifier FAILS at Hill Mine maskTruth comparison before reaching Trestle; reconcile separately. Native desktop/mobile entry probe is live session25144. Archive95 west/east/warning native runs PASS; reaffirm still live81451.
+
+Terminal evidence: native entry100 exited0, desktop and390px mobile both PASS with walkable trestle-entry, native movement and zero errors. Archive95 exited0, all four west/east/warning/reaffirm runs PASS with bank/reload/board return, ledger pages1/2/3/3 and zero errors on object91+floor94. Supersedes running status above. Full Trestle objective after entry repair remains open.
+
+
+## Hill Mine canonical source and E2 verifier reconciliation 101
+
+The embedded mask source pointed to hill-mine-factory-reconcile-01/reproduction/contracts.json; every gameplay mask field already matched canonical contracts.json. Corrected only that provenance path. The E2 verifier also expected an exact simulation-prose suffix and a river centered at zero, despite the existing Hill Mine creek at centerZ=-10. It now checks renderOnly=true and compares the complete current authored waterAgreement, retaining mask equality, mesh/texture/hash/byte-reexport, geometry probes, mount and panorama checks. Full E2 family verifier PASS. Independent review and production build still running; no gameplay or geometry changed in101.
+
+101 terminal gates: build PASS, full E2 Blender verifier PASS, independent read-only review PASS. Current102 Trestle seed01 replay after entry100 is active69156; terminal evidence is instrumented to diagnose a loss without relying on preterminal HP.
+
+Current102 terminated with a confirmed hero death (HP0), wave12,530367ms,15gold,hashc2205873. The hero ended near the rail at (-0.32,-18.16), with REPAIR_UNDER rejected and HARVEST active. Entry100 is verified; this full-objective route still loses. Next trace repair movement and late-wave route choices before attributing a balance defect.
+
+
+## Repair-order trace and remaining entry overlaps 103
+
+StandingOrders REPAIR_UNDER searches within spark-rig range of the Prospector and moves that actor to repair radius; it does not move the hero. Headless repairBuilding passes prospector.position to the shared BuildSystem. The executor serializes orders and MOVE_HERO steering clears each tick, so an earlier repair or harvest can keep the hero stationary. Current102 ended with every building wrecked and15gold; insufficient gold is a valid repair rejection, not evidence of a collision defect. Do not infer the exact rejected cost without a receipt/target capture. Next full-route changes should prioritize hero survival rather than assume repairs steer the hero.
+
+Native entry103 checks Hill Mine, Long Road, Gusher County, Regatta and Ember Shore, both viewports, after static98 found start/landmark overlaps. Session39789 running. These checks distinguish actual movement from static Terrain walkability; boats and convoy overrides may legitimately differ. Per-map Archive and Trestle ledger rows now cite current95/100/102 evidence instead of stale generic summaries.
+
+103 terminal: all ten native entry checks PASS (five maps × desktop/mobile), zero console/page errors. Each authored marker samples unwalkable, but actual native movement succeeds; these overlaps are not established softlocks. The bounded >0.3 cardinal-motion test does not establish all-direction clearance, visual spawn quality or objective completion. Current inventory103:42 maps,197 landmark records,172 selected,25 dormant,176 mount files;105 derive/80 reuse/12 build-new; 0 inventory issues; 417 production GLBs, 0 live violations, 0 stale baseline entries.
+
+
+## Ember briefing105 and Trestle continuous route106
+
+Ember Shore still described itself as waiting for consumers and omitted the live warmth objective. Updated description/goals/rules to explain the existing vent:4 warmth/sec during squalls,15gold for40warmth inside radius4,zero warmth loses,one full squall and wave12/alight secure requirement. No gameplay numbers or engine dependencies changed. BuildPASS,17 E10 consumer testsPASS, native desktop/mobile text+entryPASS. Local mobile screenshot fits all rules and Begin action; fresh visual review pending.
+
+Trestle104 both lost; terminal orders show MOVE_HERO done at the first waypoint, then waiting until the next decision. This is a route-driver limitation, not failed traversability (260 actual Terrain samples passed). Route106 supplies30 public MOVE_HERO waypoints per turn through the same rectangle to maintain movement across the decision interval. Two separate sim processes active50052/40185. No production simulation/balance edits.
+
+106 both terminal losses: seed01 wave12/549067ms/hash9492754c; seed02 wave13/591300ms/hash3420b9e3. Both heroHP0 despite continued late-wave movement. No reliable objective proof and no balance change. Pause blind route tweaks; native tactics/earlier economy and boss reach need a separate measured route.
+
+105 fresh visual review: desktop fits; mobile Tape Reel overlaps title but body/Begin fit. 107 raises briefing z-index from8 to37, above sibling Tape Reel36. Native title hit-testing/screenshots and build active73316/45906.
+
+107 terminal gates: buildPASS; desktop/mobile native entry and title hit-testingPASS. Fresh visual review confirms mobile title obstruction resolved, desktop still fits and Begin unobstructed. Faint background HUD bleed persists without obscuring content. Ember objective text105 and briefing layer107 verified; full Ember objective and Trestle objective remain open.
+
+
+## Ember current public-command objective108
+
+Factory E10S-4 route adapted to retired-verb replacements (MOVE_TO/HOLD→MOVE_HERO), current hero-based stoke reach and new evidence directory. Existing route policy otherwise retained; one run per seed. Both seeds secure wave12/360000ms/125gold with zero defaulted secure, 12 defaulted upgrade choices each. Seed01 hash92ea64c7/kills414; seed02 hash6d637d36/kills413. Both survive three full squalls and end with100warmth. No resource grants, declared profile injection or admissionProbe. Both tape replays now running. This is public-command headless proof, not native objective or save/reload proof.
+
+108 terminal replay evidence: both full agent tapes replay to their exact recorded event hashes and secured outcomes. Public-command objective proof is current. Native desktop/mobile full objective and bank/reload remain open. Ten other descriptions still claim missing consumers; the read-only remaining-consumer-descriptions.json records them without assuming metadata equals runtime truth.
+
+
+## Ember native full-objective attempt109
+
+Current108 established two public-command secures and exact agent-tape replays. Native109 reuses the existing Archive board/input/panning/build/bank/reload harness with Ember vent upkeep through the real confirm control. Fresh Trail profile, preview board entry, no gameplay grants; prospective defence preserves45gold for stoking. Desktop90662 and mobile92021 are running in separate processes on no-HMR5270. Progress files record earned harvests, travel, stokes, placement and final score persistence. Do not claim native completion until terminal checks.json is inspected.
+
+
+## E9 dependency labels still contradict live consumers (110)
+
+Verified current source: SeedCaravanSystem.create is wired in Game:1732 and HeadlessContractSim:1069; ScheduledRelocationSystem.create in Game:837 and HeadlessContractSim:1092; CanalChoiceSystem.create in Game:827 and HeadlessContractSim:1075. The owning A8/A9/A10 reviews explicitly record that their `missing` labels were false after implementation. ContractFamilies:1824 now accepts `landed` with landedBy, so the old schema limitation no longer applies.
+
+The three E9 contract descriptions and dependency rows still claim these consumers are absent. er01-e9-census.spec.ts:91 explicitly pins status missing; its opening comment still claims the schema has no other status. This is metadata/test debt, not proof of completed map gameplay.
+
+Proposed bounded factory slice: update only those three dependency rows to landed with their owning A8/A9/A10 slices; replace their obsolete descriptions with the authored gameplay intent; update the census expectation/comment to require the accurate status without removing objective assertions. Retain the nonempty dependency declarations while their twist paths remain in DECLARED_INERT_PATHS. Verify both consumer instantiation and census, then continue separate native objectives/persistence. Existing e2e edits are reserved by this task's AGENTS contract, so no census edit or contradictory partial status edit was made here.
+
+109 desktop terminal FAIL was the harness gathering deadline, at317.967s/wave10 with HP134, vent80.133, three full squalls/objectiveMet and seven successful native stokes. No death or native secure claim. Mobile109 remains live92021. Desktop111 now live7857 with no optional gathering after the third squall and a larger wall-clock gathering envelope that includes stoking detours. Normal gameplay/balance unchanged.
+
+112 correction: Mobile109 screenshot explicitly shows Claim Secured with12 waves and HP87. Driver failed before banking because it kept walking after the secure pause. Native objective reached, save persistence not yet proven. Mobile112 live53941 now stops travel/gather/place at visible secure overlay. Desktop111 remains live7857. Current-map-readiness.md presents all42 objective/visual rows from the detailed ledger without equating structural integrity to fidelity.
+
+
+## Picnic current route113
+
+Reused the owning factory Picnic prover with current MOVE_HERO staging and hero-position arrival check, no gameplay/balance changes. Both public-CLI seeds secure wave20/600000ms/200gold: seed01 kills713/hash2eaf0559 (22 defaulted picks); seed02 kills741/hash77e04c35 (23 defaulted picks). Explicit bank choices, no resource grants or admissionProbe. Tape replays running. Native full objective and persistence remain open.
+
+Terminal update: desktop111 native PASS wave12/360s/HP159/80.133warmth,3 squalls,7 real stokes,2 turrets,zero errors; bank/reload/board return verified. Mobile112 still live53941. Picnic113 both full tapes replay to exact recorded event hashes and secured wave20 outcomes. Native Picnic objective/persistence remain open.
+
+Ember112 mobile terminal PASS: wave12/360s/HP103/80.133warmth,three full squalls,seven native stokes,zero errors,bank/reload/board return. Both native viewports now have full objective+persistence proof. Picnic114 desktop native attempt active16473; no objective claim until its terminal evidence.
+
+Picnic114 explicitly stopped (exit130) after detecting a read-only capture helper using nonexistent Game.hero; its result is not a gameplay failure. Corrected to Game.primaryActor in115, now live5964. Preserve114 evidence. Ember112 mobile full bank/reload PASS is now reflected in the42-map table alongside desktop111.
+
+### Picnic native115 desktop completion and mobile117 correction
+
+Desktop115 passed native wave20/600s with HP133.6, two stakes held, banking, exact saved-score reload, board return and zero page/console errors. Mobile115 stopped at wave7/231.57s because the driver recomputed a turret index against a shrinking live-stake list and selected already occupied (2,26); the game correctly marked its ghost invalid. Candidate117 picks an empty cardinal pad around a surviving stake. Mobile117 session91910 launched; completion remains unverified. Evidence: `artifacts/map-art-repairs-20260908/player-entry-focused-picnic-native-desktop-115/checks.json`, corresponding mobile115 checks, and `picnic-native-117.mjs`. No gameplay/balance change.
+
+### Ember visual116 and titan candidates118–119; Picnic120
+
+Fresh current-production Ember captures116 (five mounts, zero page errors) and independent review confirm the titan remains a small rack rather than the concept giant; vent construction and dark terrain also differ. Candidate118 uses existing Blender factory primitives and the existing native Archive material atlas. It exports 1,416 triangles and loads via a browser-only GLB override. Review confirms a recognizable humanoid improvement but rejects the suspended upright pose, bright gold/red and stone-like materials. Candidate119 lowers body/hands, adds joint drums/collars and torso rubble, and uses more iron; its capture still shows stone-like surfaces and insufficient mechanical construction. Neither candidate is promoted. Both retain scripts, GLB, blend, bounds, screenshots and receipts. Expanded footprint/collision and eastern build-area playability remain unverified. Current production gameplay evidence is unchanged.
+
+Picnic117 mobile reached wave10/305.1s, HP79, with three turrets and a surviving center stake. Its fourth placement was interrupted by the native invention overlay, confirmed by the failure screenshot; this is a driver timing error, not a proven game failure. Driver120 handles the upgrade and recalculates the pointer target, retrying only known upgrade interruptions. Mobile120 session76524 is running. Desktop115 remains a full native pass.
+
+### Picnic mobile120 full pass; Ember material121–125 candidates
+
+Picnic mobile120 passed wave20/600s, HP141.2, one surviving center stake, bank/reload with exact saved scores and board return, zero page/console errors. Desktop115 also passes; public113 two seeds and exact tapes pass. This closes this map's bounded native objective/persistence proof, not its visual fidelity.
+
+Native Ember material source121 recorded in assets/LEDGER.md and a matching layer contract. Titan122 uses component-local dominant-plane UVs instead of small fragments of a whole-mesh projection; 1,740 triangles. Terrain123 restores a textured substrate where the existing Ember factory explicitly substitutes near-black constant RGB. Geometry/UVs preserved; current-production mask metadata differs from canonical stake heroStart/lossCondition and harvestAnchors, recorded in ember-ground-123/mask-metadata-drift.json. Do not silently call those metadata equal. Independent candidate123 review: recognizable giant and visible rifts improve correspondence; repetitive gold speckles, wrong vent construction, insufficient mechanical/buried titan remain. Ground125 compresses contrast and blends two texture scales/orientations; no production integration yet.
+
+Glow Mesa124 public-command prover launched two seeds in sessions10497/20805, adapted from the existing factory prover to current MOVE_HERO and hero stage position. Tapes requested; outcomes not yet read.
+
+### Glow124 exact replay and native126 launch
+
+Both Glow124 public-command runs secure with Homemaker powered down at wave8: seed01 263633ms/gold103/kills161; seed02 262067ms/gold85/kills176. Both recorded tapes replay to their exact eventLogHash, bank explicitly with zero defaulted secure decisions, and use six defaulted upgrade picks. Native126 desktop session83439 launched. Its acceptance is Homemaker shutdown plus banking/reload (the authored boss can secure before nominal wave12), not merely wave survival. Ground125 renders five captures with unchanged terrain geometry/UVs; review remains incomplete, no art promoted.
+
+### Glow127 discovers early-secure score inflation; shared fix130
+
+Both native Glow127 runs shut down the Homemaker at wave8 (desktop253.03s HP67.6, mobile249.87s HP99.4), then banked. Saved waves/deepestWave were12 while secureWave was8. Root cause RunManager.endSecuredRun passed configured target12 into endRun, whose max(actual,fallback) inflated the result. One-line fix passes actual host wave or securedAtWave. Three runnable focused tests cover early boss, later banking and missing live wave; all pass. Build60238, independent review87025, adjacent component-boss tests61914 started. Fresh native131 both viewports launched; completion not yet observed. Baseline source and evidence in early-secure-score-130.
+
+Ember vent128/129 replaces exposed rings with an enclosed brass cylinder and local opaque amber window; independent review accepts fixture correspondence at play scale. Candidates remain unintegrated; terrain fissure/ground and titan refinement still open.
+
+Fix130 review correction: first independent review found that Deepwater generic wave remains0 while storm counter secures at12. Revised fallback is `Math.max(this.host.wave() ?? 0, this.securedAtWave)`; four focused tests now cover that case and pass. Revised build95683 and review76612 running. Native131 sessions49548/59952 loaded the first fix; Glow behavior is identical for wave8/secure8, but this does not stand in for testing Deepwater.
+
+### Glow131 native completion; Ember pack132 and metadata133
+
+Glow131 desktop/mobile pass boss shutdown at wave8, banking with actual saved wave8, exact reload and board return, zero errors. Desktop HP74.4; mobile HP93. Final fix130 review/build pass and zero-counter Deepwater regression case is covered. Native131 loaded the initial fix; revised secure-wave floor has identical behavior for actual8/secured8. Do not claim a new Deepwater native run.
+
+Canonical build_ember_landmarks.py now produces candidate132 with concept vent and four unchanged bodies/UVs using native121 shared atlas. All five GLBs plus atlas reproduce byte-identically. Five captures show the vent correction; other older bodies still need concept construction changes and are not accepted simply because texture is visible. No GLBs promoted or runtime lamp code integrated.
+
+Production Ember terrain metadata133 now matches canonical stakeMarkers/harvestAnchors. Verifier initially failed obsolete no-mount and lossCondition assertions; replaced with mounted-pack equality/unique/asset checks and canonical gameplay stake comparison. Targeted Ember Blender verifier passes semantic and byte-identical re-export, surface/mask checks. First invocation put --ember-shore outside Blender's -- separator and returned1 after passing; final corrected invocation exits0. Build86545/review25642 pending.
+
+Metadata133 final: build and independent review pass. Review confirms canonical mask/gameplay match, unchanged geometry hashes and mounted checks without weakened mask/geometry coverage; targeted Blender verification is separately recorded.
+
+
+### Half-Life Hollow134–138 and Ember integration139
+
+Hollow134 public-command seeds both secure wave20/600000ms after the ordered crossing. Seed01 gold107/kills820/hash9075deb5; seed02 gold149/kills801/hash9463a78e; both zero defaulted picks and secure choices, no resource grants/admission probe. Both tapes replay exactly. Native136 desktop placement met the nearby-building context panel. Native138 northern approach still fails: desktop pointer moved off target before confirmation at (9,15); mobile prospector fell while gathering. Neither native attempt passes; retain logs and screenshots.
+
+Independent fixture137 review accepts the west cabinet/teal slit, central raised handwheel station and six-cylinder rack/hanging apparatus at play scale; minor wheel contrast and simplified ornament remain. Vent129 was separately accepted. Integration139 copies these four bodies and the native shared atlas through the existing pack contract/Blender factory; unchanged old titan geometry receives the shared material. Added only the two local opaque render-only amber/teal window meshes. Mounts and footprints unchanged, all four new bounds within previous bounds. Build exits0. Production captures, final-source reproduction, GLB/terrain guards and independent code review pending. Terrain and titan fidelity remain open; earlier full native Ember proof predates this integration.
+
+Integration139 gate update: production five-mount capture exits0 with no asset/runtime overrides; GLB guard and Ember terrain verifier exit0. Rebuilding from the promoted source reproduces all five GLBs and atlas byte-for-byte. Independent code review and post-integration native interaction rechecks remain pending.
+
+
+### Integration139 review, native140/141, inventory142
+
+Independent139 review passes: actual mount transforms, before/after bound containment including both windows, cleanup disposal and in-memory factory geometry/UV reproduction checked. No findings. Native140 desktop active80626; mobile terminated on a one-second HUD build tap timeout after the action began, HP44/time161s; no secure claim. Native141 corrects Hollow half-unit beacon target to native one-unit grid, captures exhausted machines while gathering/traveling, and uses the central causeway to reduce glow-bridge exposure. Desktop terminated on a one-second HUD click navigation-wait timeout after the click completed (HP90/time93s,9 captures); mobile89317 remains active. These action timeouts require a larger test action envelope, not a gameplay fix.
+
+Inventory142:42 maps/plates,39 renderer routes,37 terrain contracts,32 terrain GLBs/panoramas,37 landmark packs,197 records/files,172 selected pack bodies,25 dormant,176 distinct referenced mount files including external Deepwater. Source tiers108 derive/77 reuse/12 build-new. Zero file/hash/mount disagreements. This proves reconciliation only; full scene fidelity and all-map native objectives remain incomplete.
+
+
+Ember140 desktop terminal PASS on production139 pack/runtime: wave12/360s, HP143, warmth80.133, three squalls, seven stokes, two turrets, bank/reload exact score and board return, zero errors. Mobile147 active26880 uses a five-second HUD action envelope. Hollow141 mobile terminates after the crossing completes: wave9/275.4s/HP0, radiation10, five builds, many captures; no full native objective or bank proof. Desktop146 active28257 now also uses the factory public prover economy-upgrade priority list, rather than the generic combat-first list. Gameplay and balance unchanged.
+
+Titan144 candidate retains the native material and adds mechanical edges, bearing spokes, helmet ribs and grounded rubble using existing factory helpers. Independent review rejects the fixture: limbs still read as slabs, chest as a flat box, torso contact unconvincing. Keep unpromoted. Next refinement must change the dominant construction, not merely add small bolts. Production139 still contains the old titan.
+
+Hollow146 desktop terminal: death during gathering at131.57s/wave4, after2 works. Economy-first upgrade preference alone did not establish native survival. Next verify native prospector dispatch: the successful public HARVEST path uses the prospector while the native driver moves the player to seams. Titan148 exports2,668 triangles within the3,000 budget; candidate only, capture20383 pending.
+
+
+149 native desktop21719 now exercises the existing Prospector dispatch UI: Alt-click visible seams, same travel/queued pan path as public HARVEST; player guards near works while the Prospector collects. The script approaches only to bring the target onto the actual canvas; no synthetic sim commands or resource grants. Ember147 mobile26880 remains live, last observed293.5s/HP94/two turrets. Titan148 capture passes but independent fixture review rejects repeated cuff/slat construction, upright torso and skull face. No candidate titan or ground has been promoted.
+
+
+Ember147 mobile terminal PASS on production139 art/runtime: wave12/360s/HP119, three squalls, seven stokes, bank/reload exact saved result, board return, zero errors. Together with desktop140 this closes native post-integration gates for the four accepted fixtures. Titan/terrain remain open. Hollow149 desktop currently has HP100 at88s with two works: ordinary Alt-click dispatch queues and earned gold are recorded. This is promising early evidence, not a full native completion. Mobile150 launched using the same149 script and hold/confirm controls.
+
+Live continuation handles: Hollow desktop149=21719; mobile150=20823. Native149 script performs ordinary desktop Alt-click / touch hold-and-confirm dispatch, then guards while the Prospector earns gold. No current Ember processes remain.
+
+
+### Build focus151 root repair and Hollow152
+
+Hollow149 desktop stopped because a later Space activated the focused Build trigger. Native reproduction151 proves pointer click open/close leaves hud-build focused and Space reopens placement. Two-line BuildButton repair blurs only pointer-origin clicks (detail>0), preserving keyboard activation focus. Before probe fails; after probe passes. Independent review checks mouse/touch, Space non-reactivation, keyboard Enter/Space and Tab traversal; no findings. Build passes. Native desktop152 live64468 loaded the repaired source; last observed185.23s/HP93.2/five works. Mobile150 terminal death227.37s/wave7 after ordered crossing, zero radiation, no native secure/bank proof. This mobile failure is separate from the desktop focus defect.
+
+
+Hollow152 desktop terminal PASS: ordered central crossing, wave20/600s, HP142.6, zero radiation, ten placed works, real Prospector dispatch/earned income/captures, exact saved score reload and board return, zero errors. Native mobile156 active92202 places the cheaper beacon before its first turret to provide earlier cover; unchanged balance/simulation, no grants.
+
+Native ground154 is recorded in LEDGER and layer contract. Candidate builder replaces the near-black constant substrate with a dedicated overhead material at10 repeats; geometry/UV snapshot unchanged and mask equality asserted. Build exits0. Ground154 production-fixture captures93804 pending; scene155 will combine titan153 and ground154 for separate concept review. Titan153 first exceeded the3k guard (3320); lower-resolution hidden/small rounded parts bring it within the unchanged budget. No titan or terrain candidate promoted.
+
+
+Ground154 and combined scene155 complete five captures each with zero page errors. Native material at10 repeats still reads as fine speckles; candidate157 reduces repeats to3 through the same factory with geometry/UV/mask preservation, five captures pass. Independent scene157 review pending for ground and titan separately. Titan153 is2,992 triangles under the unchanged3k guard, with large bearings, pistons, low wedge torso and pressure-face fittings. Still unpromoted; larger collider/mount acceptance and terrain contact remain unverified.
+
+Mobile156 early beacon attempt dies164.27s/wave5 during crossing, after four works. Native158 active44406 attempts the ordered crossing just after its first beacon, before later-wave traffic. No simulation or balance change. Last observed95.97s/HP61.6/one work. Desktop152 full native pass stands.
+
+Scene157 independent review rejects both titan and ground. Full evidence in ember-ground-157/review.md: recognizable robot/scale/joints and volcanic channels, but unresolved buried pose/deep machinery, gritty floor, faint red stripe rifts, rounded banks and a visible straight edge cutoff. Next work must address these geometry/composition defects; neither candidate is integrated.
+
+
+Hollow158 portrait mobile terminal: completed the ordered central crossing at75.17s with HP100 and zero radiation, then died at190.23s/wave6 while returning from a seam dispatch, after four placed works and26 recorded capture attempts. No console/page errors; no secure or bank/reload proof. The early crossing succeeded, but subsequent resource trips lost health outside the defensive cluster. This is an unsuccessful native strategy, not proof that the map is impossible. Desktop152 full completion stands. All listed152/156/158 native processes are terminal.
+
+
+### Hollow159 pinch framing and Ember panorama160–162
+
+Previous turn made progress by closing158 terminal evidence rather than leaving a dead process marked live. Native159 uses the already shipped pinch zoom control (target distance1.6) with ordinary portrait touch input; no gameplay grants, balance edits or camera limit changes. First four works were placed at HP100; at392.5s/wave13 all ten works are present, the ordered crossing is complete, HP79.8 and radiation0. Session29274 remains live; this is not yet a full pass.
+
+Ember edge160 identifies the right-side strip as panorama-owned ground (inner boundary64.01, terrain boundary64); no separate continuation mesh is expected. Regenerating panorama paint against ground157 using the existing factory (candidate161) preserves geometry/UVs and renders without errors, but does not remove the sharp smooth-band appearance. The factory blurs boundary samples into a one-dimensional strip and heavily browns the second apron row. Candidate162 projects the existing terrain atlas through actual polar apron positions and delays tint into the distance. It preserves panorama geometry/UVs and is not production. Full ground/titan concept correspondence remains open.
+
+
+Hollow159 terminal driver interruption at492.53s/wave16/HP79.8: an invention overlay appeared between the read-only capture check and touch confirmation. It correctly intercepted the touch; the driver timed out instead of handling the overlay. Crossing complete, radiation0, ten works. Driver164 reuses one capture helper for both travel and holding; it handles only confirmed invention interruptions and retargets on the next iteration. No gameplay change.
+
+Panorama162 first build failed because its color attribute is POINT-domain; corrected indexing to the vertex. Final build/captures pass, geometry/UVs preserved, but local visual inspection rejects the result: the 2D polar atlas makes the outside texture too coarse and bright. No panorama or terrain promoted.
+
+
+Inventory163 refresh is complete:42 maps/plates,197 landmark records/files,417 production GLBs;0 source/hash/mount disagreements,7 grandfathered violations,0 live violations or stale waivers. Two dedicated ground/floor sources are now separately counted. `lastFullInventory` previously pointed to43 despite newer142 evidence; it now points to163.
+
+Independent165 ground-join review accepts the visible rack view with matching material scale and no sharp seam. Maximum-zoom production-asset corner scan166 caught the outer continuation ending in frame;167 extends it to the near-ridge radius and matches terrain fog/shadow handling. Eight corner captures pass runtime assertions; extended visual review pending. No source/asset integration yet. All atlas/panorama trials161/162 remain unpromoted.
+
+Hollow164 portrait terminates at215.67s/wave7/HP0 after crossing and five works, zero radiation.159's later driver interruption and164's earlier gameplay death are distinct retained outcomes.168 now avoids distant seam trips after two works, waiting under cover for ordinary capture/combat income or nearby seams; same gameplay rules and pinch control. Native168 session85470 launched.
+
+
+### Ember169 production coverage integration
+
+Applied only the reviewed continuation correction in Terrain3dClaimPilot.createContinuation. Ember now carries its own world-projected terrain material to radius160, before the panorama near-ridge foot161.5, with matching fog and shadow reception. Existing non-Ember branches retain their behavior. All production Ember GLB/blend hashes are unchanged; no candidate terrain/titan/panorama promoted.
+
+Production before/after169 ten captures each cover all four corners and the shore rack at maximum zoom on desktop and mobile. No asset/runtime substitutions; Game read-only hook and explicit diagnostic positions only. Final build exits0. Added one draw call,5,120 triangles,one geometry andone texture. Observed p95 change ranges−7.0% to+7.53% across the ten pairs; concurrent local work makes this telemetry, not an isolated GPU benchmark. Independent review77999 is still running. Source, hashes and comparison numbers live in ember-edge-integration-169/{source,verification}.json. Remaining thin texture joins/painted rectangles and full Ember art fidelity stay open.
+
+
+Ember169 final code review exits0 with no findings: four perimeter interpolation deltas are0; texture ownership/disposal, backdrop layering and maximum-zoom coverage pass; other maps, gameplay and pointer surfaces remain unchanged. Build and ten production captures pass. This closes the bounded continuation repair. Full scene/art acceptance remains open and no candidate GLBs are promoted.
+
+
+Hollow168 portrait mobile terminal PASS:20 waves/600s, HP149,kills833,gold260,ordered central crossing complete,radiation0,ten works. Native bank and exact saved-score reload verified; returned to Town board; zero console/page errors. Existing pinch framing1.6 and avoiding exposed distant seam trips after the first two works allowed ordinary capture/combat income to fund the remaining defence. No gameplay/resource grants, balance edits or objective reductions. Desktop152 full pass and public134 exact two-seed replay remain complementary evidence. This closes bounded Hollow native objective/persistence proof, not concept fidelity. All native168/169 capture/build/review processes are terminal.
+
+### Showroom171 capture persistence and missing display interiors
+
+The current-run capture count was absent from RunSuspend and its multiplayer future-state projection. The pen is persisted across runs and cannot reconstruct it. Source171 adds the optional validated `showroomCaptures` field to the existing v2 envelope, carries it through restore/hash, rejects malformed or wrong-owner restores, and defaults old snapshots without this historical data to zero. No pen, save key, version, admission or difficulty changes. The compatibility contract is in `docs/proposals/showroom-capture-persistence.md`.
+
+Focused desktop/mobile save checks pass: five captures remain incomplete, six remain complete, exact counter survives reload, new run resets, eight malformed counts reject without changing the objective, wrong owner rejects before mutation, and a legacy snapshot does not borrow its six persistent pen captures. Build exits0 and independent review14162 exits0 with no actionable findings. Protected suspend/quota copies are running; keep their result separate until terminal. Evidence: `artifacts/map-art-repairs-20260908/showroom-persistence-171/`. The first check failed on an incorrect test import name (`RunSuspend` vs `RunSuspendController`); preserved first-* evidence records that driver defect.
+
+Art gap confirmed from source and concept: five furnished display houses and six catalog-goods positions exist only as discarded factory RenderHelper geometry. The runtime terrain contract explicitly records their absence. Its five peripheral landmark bodies do not supply the houses. `showroom-persistence-171/missing-art.json` preserves the five IDs, rectangles, goods positions and source owner. Current source GLB counts remain unchanged; these missing expected objects are not added to the197 existing-body inventory. Showroom full concept fidelity remains open.
+
+Showroom170 native desktop terminal PASS:20 waves/600s,89 real captures against quota6,HP161.4,836kills,gold260,ten earned works. Bank, exact score persistence across reload and Town board return pass with zero runtime errors. The run loaded before171; separate171 checks prove repaired counter restore. Mobile full survival/secure remains open. The normal preview-board pass does not change the held public admission or prove the absent house-waking system.
+
+Showroom171 final verification: original protected copies13/16 pass; legacy no-controls reload fails on both viewports and wave-boundary reload fails on mobile. The exact before171 source is served with a Vite load override on5271 (no working-tree revert); diagnostic copies reproduce both test failures on BOTH viewports,4/4 red. The helper writes an unscoped `gr.run.v1` after navigating to the menu while the saved profile has its own authoritative key. Changing only the copied writer to `profileDataKey('robin', RUN_SUSPEND_KEY)` passes all four cases with every assertion retained. Original protected e2e files remain unchanged. The before171 Showroom negative control fails with `snapshot lost captures`, while repaired171 passes desktop/mobile. Thus the three broader failures were not introduced by171. The separate `controls.paused must cover ceremony and secured-claim stops` rejection is visible in baseline diagnostics and remains open; fixture recovery does not prove that later-snapshot issue fixed. All native/build/review/regression sessions are terminal and the temporary baseline server is stopped.
+
+READY-FOR-GATES for the bounded Showroom capture-counter repair171, with the protected test-helper correction proposed separately. This is not acceptance of Showroom artwork, full mobile play or the42-map goal. Exact source hashes and verification are in `showroom-persistence-171/{source,verification}.json`.
+
+### Showroom full mobile objective172
+
+Native Trail preview-board entry and trusted touch complete20 waves/600s,69 real captures against quota6,ten earned works,HP168.2,856kills and gold260. Banking,actual reload of the exact20/20/deepest20 score and board return pass with zero runtime errors. This run includes source171 counter persistence and the existing five peripheral landmark mounts. It does not prove the artifact-only furnished houses or change public admission. Evidence: `artifacts/map-art-repairs-20260908/player-entry-focused-showroom-native-mobile-172/checks.json`.
+
+### Showroom candidate visual and access findings176/177
+
+Five furnished bodies exist as candidates, with kitchen/bedroom identities readable, but fresh visual review rejects complete house correspondence: roof volume/material scale and living-room hierarchy remain weak. Existing entrance, starbursts, office and gantry also differ substantially from their concept silhouettes; retinting them alone does not close those gaps. Full findings: `artifacts/map-art-repairs-20260908/showroom-houses-176/visual-review.md`. Candidate175 passes saved-source reproduction for10 GLBs and diagnostic access177 reaches all6 anchors while51 furniture/wall centers block movement and construction on both viewports. No candidate is production-promoted or fully playtested; current production inventory163 counts remain unchanged.
+
+### Showroom player guidance180 and candidate factory182
+
+Only Showroom briefing goals/rules changed: the actual6-capture/20-wave objective is now first, with the existing kite/wind-down capture rule explained. Every other contract field compares identical to the recorded before-source. Native preview-board entry, visible/dismissible briefing and movement pass on desktop/mobile with zero errors; build passes. Evidence: `artifacts/map-art-repairs-20260908/showroom-guidance-180/receipt.json`. Earlier full runs170/172 retain their before180 text boundary.
+
+Fresh review179 recognizes all three room types and the improved hipped roof, but withholds complete house acceptance for weak enclosure/foundation, sparse furnishings, material scale and interior light. Diagnostic access181 passes52 solid centers and6 reachable anchors on both viewports through existing flat rectangles. Candidate factory182 fixes duplicate houses/mounts when rerun from its own saved result; all10 GLBs and shared atlas reproduce byte-identically, preserving178 geometry/UV/texture bytes. No house assets, collision records or factory ledgers are production-promoted. Full report: `artifacts/map-art-repairs-20260908/showroom-houses-179/visual-review.md`.
+
+Independent factory182 code review found a metadata-verification gap, now fixed: complete pack/terrain contracts and unique mount IDs are checked, with three deliberately broken JSON variants rejected. Exact model/atlas repeatability still passes. `showroom-house-factory-182/review-resolution.md` records the finding and correction. READY-FOR-GATES applies to the bounded briefing180 change and candidate factory evidence only; all42-map goal work remains open.
+
+
+### Showroom raised-house candidate190 and access192
+
+The187 floor seams exposed a2cm lower foundation; continuous planks now match20 actual GLB floor/step raycasts and pointer hits. Both viewports walk all5 entrances with the existing0.06 hero lift and preserve all6 harvest routes across66 authored solid parts. Invalid surface metadata disposes all10 pending model geometries with an explicit failed state and no unhandled error. Factory190 repairs stale pack mounts, provenance and terrainConformed metadata; the existing full verifier rejects187 and passes190. Independent review findings are resolved with shear, invalid-input, disposal and full-placement-parity checks.
+
+Fresh187 visual review leaves foundation/stair depth, table support and period material/detail/contact work open.191 depth-on/off comparisons show zero changed actor pixels; that sampled pose is not clipped by the floor.189/194 full runs failed routes through the new walls.193/196 use a checked open-ground defense plan and, on mobile196, routes through the authored walkable spaces. Neither pending run is recorded as passed.
+
+
+Full-house desktop193 terminal PASS:20waves/600s,209 real captures,10 earned works,HP175,541kills,bank260,exact20-wave saved-score reload and Town board return,zero errors. Candidate190/192 remains unpromoted while mobile196 and full visual fidelity remain open. Receipt: `artifacts/map-art-repairs-20260908/showroom-factory-190/native-desktop-193-receipt.json`.
+
+
+Mobile196 terminal PARTIAL:20waves/600s,217captures,10works,HP142.6,542kills,zero errors. The Claim Secured overlay appeared during a capture tap, and the driver threw before banking/reload.198 handles that explicit terminal transition and is running fresh; no saved progress was fabricated. Collision generator192 also now regenerates70 unique records byte-identically from its own output, preserving all other maps.
+
+### Showroom full mobile house proof198
+
+Mobile198 is terminal PASS:20waves/600s,226 actual captures,10 earned works,HP155.4,529kills,bank200,exact score reload and Town board return,zero errors. Together with desktop193 this proves the190 house layout through native preview entry and the full objective on both viewports. The later199 art candidate preserves the complete190 terrain/mount and collisionParts data but still needs its own geometry, visual and access gates. No house production promotion yet. Receipt: `artifacts/map-art-repairs-20260908/showroom-factory-190/native-mobile-198-receipt.json`.
+
+### Showroom integration200 and inventory203
+
+Five furnished homes are integrated with the existing five Showroom landmarks.10 bodies,14548 triangles,one1024 atlas;20 floors/steps use the existing Terrain visual owner,66 solids use the existing flat collision registry. Production source gates, final recipe repetition and project build pass. Independent review found no code defects and checked8820 floor/step points; fresh visual review supports the improvement while keeping material scale, furnishing/contact/light and peripheral art work open.
+
+Full candidate-layout desktop193 and mobile198 pass banking and exact score reload. First integrated201/202 runs fail before secure (desktop framing route stalled, mobile confirm stability wait timed out);204/205 retry with real controls and no asset/runtime overrides. Production traversal resampling uses fixed sim increments to prevent a loaded wall-clock sampler skipping stair levels. Full3348-test regression remains running. Do not count these pending runs as passed.
+
+Inventory203:42 maps/42 concept plates,39 routes,37 terrain contracts,32 terrainGLBs,32 panoramas,37 packs,202 landmark records/GLBs,177 selected/25 dormant,181 referenced mount files,422 guarded GLBs,zero live/stale/source/hash/mount issues,7 grandfathered exceptions. Art groups include10 object-material atlases. These counts do not establish visual acceptance or complete objective coverage.
+
+Production traversal200 terminal PASS:actual integrated assets/runtime,all5 homes entered with keyboard/trusted touch sampled at fixed sim increments,20 matching floor/pointer surfaces,66 blocked solid centers,6 reachable anchors,clean double disposal,both viewports zero errors. Evidence: `artifacts/map-art-repairs-20260908/showroom-integration-200/production-access-fixedstep/capture.json`.
+
+Mobile205 terminal FAIL after4 earned works:the next build confirmation did not create a structure. Zero runtime errors; placement diagnosis remains open. Desktop204 and the full3348-test regression are still running. Evidence: `artifacts/map-art-repairs-20260908/player-entry-focused-showroom-integrated-native-mobile-205/checks.json`.
+
+Mobile206 retries on the actual production files with native input held until the game samples frames, and placement completion observed through the existing structure count.205 had checked100ms after tapping and failed with the old ghost position still visible; no runtime defect is claimed resolved by this driver change. Desktop204 has10 earned works and continues; regression remains active.
+
+Integrated Showroom desktop204 terminal PASS:20waves/600s,211captures,10works,HP168.2,532kills,bank200,exact score reload and Town board return,zero errors. Actual production runtime/assets; no asset/collision/floor overrides. Mobile206 and full regression remain running.
+
+## Signal controls checkpoint223
+
+The current five-file correction is isolated from production. Native221 passes all four Signal maps on desktop/portrait; small portrait and rotated landscape222 pass two representative maps each. Popup223 passes five focused UI-only reproductions. These are control proofs, not complete map objectives. Current gates, retained failures and the separate landscape Town-entry defect are recorded in [the current Signal report](../artifacts/map-art-repairs-20260908/e7-hud-223/report.md).

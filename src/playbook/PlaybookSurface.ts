@@ -29,6 +29,8 @@ export class PlaybookSurface {
   private tapes: PlaybookShelfEntry[] = [];
   private shelfDirty = true;
   private shelfRenderKey = '';
+  private readonly controls: HTMLElement;
+  private readonly controlsResize = new ResizeObserver(() => this.positionPanel());
 
   constructor(mount: HTMLElement, private readonly options: PlaybookSurfaceOptions) {
     this.element.className = 'playbook-surface';
@@ -66,6 +68,14 @@ export class PlaybookSurface {
     this.panel.addEventListener('keydown', this.onPanelKeyDown);
     this.panel.addEventListener('keyup', this.stopGameHotkeys);
     window.addEventListener('gr:profile-data-changed', this.onProfileDataChanged);
+    const controls = mount.querySelector<HTMLElement>('.hud-panel--weapon');
+    if (!controls) throw new Error('Tape controls require the HUD equipment panel');
+    this.controls = controls;
+    controls.append(this.toggle);
+    controls.addEventListener('scroll', this.positionPanel);
+    controls.addEventListener('toggle', this.onDisclosureToggle, true);
+    this.controlsResize.observe(controls);
+    window.addEventListener('resize', this.positionPanel);
     mount.append(this.element);
     this.update();
   }
@@ -93,6 +103,11 @@ export class PlaybookSurface {
     this.panel.removeEventListener('keydown', this.onPanelKeyDown);
     this.panel.removeEventListener('keyup', this.stopGameHotkeys);
     window.removeEventListener('gr:profile-data-changed', this.onProfileDataChanged);
+    this.controlsResize.disconnect();
+    this.controls.removeEventListener('scroll', this.positionPanel);
+    this.controls.removeEventListener('toggle', this.onDisclosureToggle, true);
+    window.removeEventListener('resize', this.positionPanel);
+    this.toggle.remove();
     this.element.remove();
   }
 
@@ -101,10 +116,28 @@ export class PlaybookSurface {
     this.panel.hidden = !open;
     this.toggle.setAttribute('aria-expanded', String(open));
     if (open) {
+      const exchange = this.controls.querySelector<HTMLDetailsElement>('.e7-jack-board');
+      if (exchange) exchange.open = false;
       this.refreshShelf();
       this.update();
+      this.positionPanel();
       this.nameInput.focus();
     }
+  };
+
+  private readonly onDisclosureToggle = (event: Event) => {
+    const disclosure = event.target;
+    if (disclosure instanceof HTMLDetailsElement && disclosure.matches('.e7-jack-board') && disclosure.open) {
+      this.closePanel(false);
+    }
+  };
+
+  private readonly positionPanel = () => {
+    if (this.panel.hidden) return;
+    // Keep the drawer tall enough for its form when the toggle sits near the viewport bottom.
+    const top = Math.max(12, Math.min(Math.ceil(this.toggle.getBoundingClientRect().bottom + 8), window.innerHeight - 256));
+    this.panel.style.top = `${top}px`;
+    this.panel.style.maxHeight = `min(32rem, max(0px, calc(100dvh - ${top + 16}px)))`;
   };
 
   private readonly onPanelKeyDown = (event: KeyboardEvent) => {
@@ -216,10 +249,10 @@ export class PlaybookSurface {
     this.shelfRenderKey = '';
   }
 
-  private closePanel(): void {
+  private closePanel(restoreFocus = true): void {
     this.panel.hidden = true;
     this.toggle.setAttribute('aria-expanded', 'false');
-    this.toggle.focus();
+    if (restoreFocus) this.toggle.focus();
   }
 
   private get<T extends HTMLElement>(selector: string): T {

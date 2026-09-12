@@ -9,6 +9,7 @@ import { DEFAULT_CONTRACT_ID, epochIsActive, listContracts, listEpochs, loadCont
 import { TOWN_ACTORS, townActorBark, type TownActorDefinition, type TownActorId } from '../town/townsfolk';
 import { LEDGER_DISCOVERED_STORAGE_KEY } from './storage';
 import { worldOutsideLedgerEntries, type WorldOutsideLedgerEntryId } from './worldOutside';
+import { archiveLedgerEntries, type ArchivePageId } from './archive';
 
 const heroUrl = new URL('../../assets/processed/char-hero-sheet-front-r0c0.png', import.meta.url).href;
 const prospectorUrl = new URL('../../assets/processed/char-prospector-portrait.png', import.meta.url).href;
@@ -90,7 +91,8 @@ export type LedgerEntryId =
   | BuildableLedgerEntryId
   | ContractLedgerEntryId
   | EpochLedgerEntryId
-  | WorldOutsideLedgerEntryId;
+  | WorldOutsideLedgerEntryId
+  | ArchivePageId;
 export type LedgerDiscoveryId = LedgerEntryId | EnemyStatsDiscoveryId;
 
 export type LedgerEntry = {
@@ -244,6 +246,7 @@ export const ledgerEntries: readonly LedgerEntry[] = [
     .map((contract) => contractEntry(contract.id)),
   ...listEpochs().map((epoch) => epochEntry(epoch.id)),
   ...worldOutsideLedgerEntries,
+  ...archiveLedgerEntries,
 ] as const;
 
 export const ledgerEntryById: Record<LedgerEntryId, LedgerEntry> = Object.fromEntries(

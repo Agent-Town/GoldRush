@@ -76,6 +76,7 @@ import {
   InterferenceFrontSystem,
   type InterferenceFrontDiagnostics,
 } from '../systems/InterferenceFrontSystem';
+import { E10ArchiveSystem } from '../systems/E10ArchiveSystem';
 import { E10SquallScheduler, type SquallDiagnostics } from '../systems/E10SquallScheduler';
 import { E10PreserveSystem, PRESERVE_STOKE_SINK, type E10PreserveDiagnostics } from '../systems/E10PreserveSystem';
 import { E7PlaybookLatch, type E7PlaybookObjective } from '../systems/E7PlaybookLatch';
@@ -431,6 +432,7 @@ export type HeadlessAgentView = AgentView & {
      * `twist.emberShore.preserve`, so a rider that can read the twist can find the row.
      */
     emberShore?: { preserve: E10PreserveDiagnostics };
+    archive?: E10ArchiveSystem['diagnostics'];
     /**
      * A9. Present only where the contract declares `twist.scheduledRelocation` WITH authored
      * patrol routes. This one is NOT an objective — nothing here opens or shuts the secure — it
@@ -627,7 +629,7 @@ export class HeadlessContractSim {
     id: 'hero',
     resumeKey: 'hero:0:rig',
     enabled: () => !this.dead && this.weapon === 'rig',
-    getPos: () => this.deepwater ? this.prospector.position : this.hero.group.position,
+    getPos: () => this.hero.group.position,
     range: Balance.sparkRig.range,
     cooldown: 1 / Balance.sparkRig.fireRate,
     damage: Balance.sparkRig.damage,
@@ -860,7 +862,7 @@ export class HeadlessContractSim {
           speedScale: this.lowOrbit.speedScale(position.x, position.z),
         }
       : undefined;
-    const move = this.e8Physics.filterMovement(0, intents.move, STEP_SECONDS, this.hero.velocity, terrain);
+    const move = this.e8Physics.filterMovement(0, intents.move, STEP_SECONDS, this.hero.velocity, terrain, this.hero.movementSpeed);
     return move === intents.move ? intents : { ...intents, move };
   }
   /**
@@ -905,6 +907,8 @@ export class HeadlessContractSim {
    * that only one engine ran would put the two on different weather from wave one.
    */
   private readonly squall: E10SquallScheduler;
+  private readonly archive: E10ArchiveSystem | null;
+  private readonly archiveStore = new TileStateStore(NO_PROFILE_STORAGE);
   /**
    * E10S-3 — the vent the squall above is the antagonist of, and it runs IDENTICALLY in both
    * engines for the strongest reason on this list: it can END A RUN. Warmth decays only while the
@@ -1027,6 +1031,7 @@ export class HeadlessContractSim {
       this.economy,
       this.manifest.tileParams.harvestAnchors ?? Terrain.nodeAnchors,
       createRng(`${this.seed}:harvest`),
+      (_amount, anchorIndex) => this.noteRegolithPan(anchorIndex),
     );
     this.harvest.applyStats(1, 0, 0, this.manifest.twist.seamYieldMult ?? 1);
     this.harvestSnapshot = this.harvest.snapshot;
@@ -1075,6 +1080,7 @@ export class HeadlessContractSim {
     // `twist.emberShore.squall`, never the epoch, so a contract that declares no squall holds an
     // inert scheduler that answers "calm" forever and no other map's view or hash grows a field.
     this.squall = E10SquallScheduler.create(this.manifest);
+    this.archive = E10ArchiveSystem.create(this.manifest);
     // E10S-3: the same read the browser performs at `Game.ts` — the CONTRACT's own
     // `twist.emberShore.preserve` against its own `stakeMarkers`, never the epoch. A contract that
     // declares no preserve (or names a stake its tile does not carry) holds an inert consumer that
@@ -1317,7 +1323,7 @@ export class HeadlessContractSim {
       this.manifest,
       this.enemies,
       this.combat,
-      () => this.manifest.tileParams.raceCourse || this.manifest.tileParams.flotilla ? this.prospector.position : this.hero.group.position,
+      () => this.hero.group.position,
       (wave, at) => this.events.emit({ type: 'wave_started', at, wave }),
       this.dredgeQueen
         ? (wave) => this.dredgeQueen!.onStormWave(wave, this.manifest.twist.baron!.wave)
@@ -1511,6 +1517,7 @@ export class HeadlessContractSim {
           // cold, or that has not ridden one whole Static squall with it still burning, cannot
           // secure at any wave. True on every contract that declares no preserve consumer, so no
           // admitted contract's terminal moves.
+          || (this.archive !== null && !this.archive.objectiveAllowsSecure)
           || !this.preserveVent.objectiveAllowsSecure
           || (this.preserve !== null && !this.preserve.active)
           ? Number.MAX_SAFE_INTEGER
@@ -1889,7 +1896,12 @@ export class HeadlessContractSim {
     this.applyLowOrbitDebris();
     this.hero.update(STEP_SECONDS, this.e8PhysicsIntents(this.heroOrderIntents()), {
       bounds: Terrain.bounds,
-      sample: Terrain.sample,
+      sample: (x, z) => {
+        const sample = Terrain.sample(x, z);
+        return this.manifest.tileParams.raceCourse
+          ? { ...sample, speedMul: sample.speedMul * this.deepwater!.movementMultiplier({ x, z }) }
+          : sample;
+      },
       depenetrate: (point, maxDistance) => depenetrateFromBlockers(
         point,
         Terrain.landmarkBlockers(),
@@ -1897,6 +1909,7 @@ export class HeadlessContractSim {
         maxDistance,
       ),
     });
+    this.deepwater?.advanceRace(this.timeAlive, this.currentRunWave());
     this.atomic?.updateTileConsumers(STEP_SECONDS, this.timeAlive, this.harvestTargets());
     this.deepwater?.updateArsenal(this.timeAlive);
     this.combat.setTime(this.timeAlive);
@@ -2008,6 +2021,11 @@ export class HeadlessContractSim {
             const vent = this.preserveVent.pressureTarget(enemy);
             return vent ? new THREE.Vector3(vent.x, Balance.enemy.groundY, vent.z) : actorTargets;
           }
+        : this.archive
+          ? (enemy) => {
+              const site = this.archive!.pressureTarget(enemy);
+              return site ? new THREE.Vector3(site.x, Balance.enemy.groundY, site.z) : actorTargets;
+            }
         : this.deepwater?.targetPosition(this.hero.group.position) ?? actorTargets, (enemy) => {
       if (!this.picnicHold.pressureTarget(enemy, picnicStructures, picnicHero, this.timeAlive) && !this.deepwater?.diagnostics.flotilla && this.atomic?.isHostile(enemy) !== false) this.combat.handleEnemyContact(enemy);
       return this.dead;
@@ -2027,7 +2045,10 @@ export class HeadlessContractSim {
     // E4: the storm slows every outlaw, as `731373d4d`'s `Game.ts:1749` composed it
     // (`dustFlats.enemyMovementMultiplier`); 1 on every contract without the motor twist.
     }, (enemy) => this.nightSpeedMultiplier(enemy) * (this.atomic?.movementMultiplier(enemy) ?? 1)
-      * (this.motor?.enemyMovementMultiplier(this.timeAlive) ?? 1));
+      * (this.motor?.enemyMovementMultiplier(this.timeAlive) ?? 1), this.archive ? actorTargets : undefined);
+    // Sample after enemy building damage, matching Game; pressure reads the prior tick in both engines.
+    if (this.archive) this.archive.update(this.squall.diagnostics, this.archive.wings
+      .filter(wing => this.build.hasPoweredBeaconWithin(wing.x, wing.z, wing.radius)).map(wing => wing.siteId));
     this.picnicHold.update(
       STEP_SECONDS,
       this.timeAlive,
@@ -2044,9 +2065,8 @@ export class HeadlessContractSim {
     this.progression.consumeXpTotal(this.combat.xpCount);
     // AP-16-0 audit anchor, retired by AP-16-2: while (this.progression.offer?.[0])
     this.syncUpgradeOfferClock();
-    const { moving, drifting } = this.prospector.snapshot;
     this.prospector.updateSimulation(
-      STEP_SECONDS * (moving || drifting ? this.deepwater?.movementMultiplier(this.prospector.position) ?? 1 : 1),
+      STEP_SECONDS,
       this.timeAlive,
       this.hero.group.position,
     );
@@ -2144,6 +2164,7 @@ export class HeadlessContractSim {
     // E10S-3: only where DECLARED, same rule — but unlike the clock above, this one GATES. A rider
     // that cannot read `warmth` cannot know when to spend 15 gold, and one that cannot read
     // `objectiveMet` cannot tell whether the squall it just rode out earned the claim.
+    if (this.archive) view.now.archive = this.archive.diagnostics;
     if (this.preserveVent.isDeclared) view.now.emberShore = { preserve: this.preserveVent.diagnostics };
     // A9: only where DECLARED. This one MOVES every turn and — unlike the caravan and the wall —
     // it gates NOTHING, so it is published for planning rather than for scoring: where the next
@@ -2886,28 +2907,19 @@ export class HeadlessContractSim {
     }, this.timeAlive);
     this.harvestSnapshot = this.harvest.update(0, this.timeAlive, this.harvestTargets());
     const landed = (pannedTarget?.remaining ?? before) < before;
-    // E8: a tick that landed on a regolith ground counts toward the run only on suit air. Absent
-    // an air wall `notePan` is a no-op, so no other contract's pan changes.
-    if (landed && this.atmosphere.isDeclared) {
-      const credited = this.atmosphere.notePan(seam.anchorIndex);
-      const worked = this.atmosphere.diagnostics.regolith.worked;
-      if (credited && worked.length !== this.regolithGroundsLogged) {
-        this.regolithGroundsLogged = worked.length;
-        this.replayEvents.push({ type: 'regolith_ground_worked', at: round(this.timeAlive), ground: seam.anchorIndex, worked: worked.length });
-      }
-    }
-    // E8: the same rule on the three siblings, through their own consumer. Same event type,
-    // because it is the same fact: a ground worked on suit air. Absent an air wall `notePan` is a
-    // no-op, so no other contract's pan changes.
-    if (landed && this.suitAir.isDeclared) {
-      const credited = this.suitAir.notePan(seam.anchorIndex);
-      const worked = this.suitAir.diagnostics.regolith.worked;
-      if (credited && worked.length !== this.regolithGroundsLogged) {
-        this.regolithGroundsLogged = worked.length;
-        this.replayEvents.push({ type: 'regolith_ground_worked', at: round(this.timeAlive), ground: seam.anchorIndex, worked: worked.length });
-      }
-    }
     return landed;
+  }
+
+  private noteRegolithPan(anchorIndex: number): void {
+    for (const consumer of [this.atmosphere, this.suitAir]) {
+      if (!consumer.isDeclared) continue;
+      const credited = consumer.notePan(anchorIndex);
+      const worked = consumer.diagnostics.regolith.worked.length;
+      if (credited && worked !== this.regolithGroundsLogged) {
+        this.regolithGroundsLogged = worked;
+        this.replayEvents.push({ type: 'regolith_ground_worked', at: round(this.timeAlive), ground: anchorIndex, worked });
+      }
+    }
   }
 
   private harvestTargets(): HarvestTarget[] {
@@ -2984,6 +2996,10 @@ export class HeadlessContractSim {
     if (this.secureChoice !== 'pending') return { ok: false, reason: 'INVALID_WINDOW: no secure choice is pending.' };
     this.secureChoice = choice;
     if (choice === 'rush') this.runManager.stayForRush();
+    if (choice === 'bank' && this.archive) {
+      this.archive.stageAtRunEnd(this.archiveStore, this.contractId, true);
+      this.archiveStore.commitAtRunEnd();
+    }
     return { ok: true };
   }
 

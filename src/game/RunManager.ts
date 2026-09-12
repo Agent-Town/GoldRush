@@ -221,7 +221,7 @@ export class RunManager {
     this.awardSecuredClaim();
     this.hideSecureOverlay();
     this.host.setPaused?.(false);
-    this.endRun('secured', this.host.at() ?? 0, this.host.secureWave?.() ?? Balance.run.secureWave);
+    this.endRun('secured', this.host.at() ?? 0, Math.max(this.host.wave() ?? 0, this.securedAtWave));
     this.host.resetRun?.();
     this.host.setPaused?.(true);
     return true;
@@ -480,7 +480,11 @@ export class RunManager {
     chip.dataset.testid = 'claim-secured-chip';
     chip.setAttribute('role', 'status');
     chip.innerHTML = '<strong>CLAIM SECURED &#10003;</strong><span>The win is banked.</span>';
-    parent.append(chip);
+    const equipment = parent.querySelector('.hud-panel--weapon');
+    if (equipment?.querySelector('.playbook-surface__toggle')) {
+      equipment.prepend(chip);
+      equipment.scrollTop = 0;
+    } else parent.append(chip);
     this.securedChip = chip;
   }
 

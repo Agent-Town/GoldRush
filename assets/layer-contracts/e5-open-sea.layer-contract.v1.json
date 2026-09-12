@@ -1,0 +1,29 @@
+{
+  "$schema": "gold-rush layer contract v1",
+  "batch": "map-art-repairs-20260908-open-sea",
+  "notes": "Native image_gen sea surface derived from the approved Regatta sea style. Render-only; runtime DeepwaterClaimTile still owns water/boat simulation. Surface style recognized but gameplay-scale repetition remains open; overall E5 map fidelity is not accepted.",
+  "slots": [
+    {
+      "file": "terrain-e5-open-sea-tile.png",
+      "slot": "terrain.e5.open_sea",
+      "size": [
+        448,
+        448
+      ],
+      "rawSize": [
+        1254,
+        1254
+      ],
+      "usage": "Repeating engraved sea albedo on the existing runtime-owned sea quad for all four E5 maps",
+      "fullBleed": true,
+      "raw": "assets/raw/terrain-e5-open-sea-tile.png",
+      "processedFull": "assets/processed-full/terrain-e5-open-sea-tile.png",
+      "processed": "assets/processed/terrain-e5-open-sea-tile.png",
+      "sha256": "26f5019891796b80b2ea987f895a3b8db3a89104d8ede01ee88088424b4d242d",
+      "reference": "assets/raw/plate-contract-e5-regatta.png",
+      "generation": "native image_gen exec-3db385d6-e33f-4e9b-8033-017af7945e4d",
+      "recipe": "scripts/optimize-assets.mjs terrain tile rule: 448x448 bilinear RGB PNG; run in isolated staging directory containing this asset only",
+      "evidence": "artifacts/map-art-repairs-20260908/sea-texture-native"
+    }
+  ]
+}

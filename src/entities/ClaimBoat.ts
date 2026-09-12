@@ -1,4 +1,6 @@
 export type ClaimBoatAnchor = Readonly<{ id: string; x: number; z: number }>;
+export const CLAIM_BOAT_DECK_BOUNDS = Object.freeze({ minX: -4.4, maxX: 4.4, minZ: -14.25, maxZ: 14.25 });
+export type BoatRiderPosition = { x: number; z: number };
 export type ClaimBoatPad = Readonly<{ id: string; x: number; z: number }>;
 export type ClaimBoatPlacement = Readonly<{
   buildingId: string;
@@ -46,9 +48,20 @@ export class ClaimBoat {
     return true;
   }
 
-  reanchor(anchorId: string): boolean {
+  contains(x: number, z: number): boolean {
+    const b = CLAIM_BOAT_DECK_BOUNDS;
+    return x >= this.anchor.x + b.minX && x <= this.anchor.x + b.maxX
+      && z >= this.anchor.z + b.minZ && z <= this.anchor.z + b.maxZ;
+  }
+
+  reanchor(anchorId: string, riders: readonly BoatRiderPosition[] = []): boolean {
     const next = this.config.anchors.find((anchor) => anchor.id === anchorId);
     if (!next || next.id === this.anchor.id) return false;
+    for (const rider of riders) {
+      if (!this.contains(rider.x, rider.z)) continue;
+      rider.x += next.x - this.anchor.x;
+      rider.z += next.z - this.anchor.z;
+    }
     this.anchor = next;
     return true;
   }

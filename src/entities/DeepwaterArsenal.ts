@@ -107,6 +107,12 @@ export class DeepwaterArsenal {
     );
   }
 
+  /** Move visible equipment with the rendered deck/rider without changing shooter origins. */
+  updatePresentation(heightAt: (x: number, z: number) => number, heroRenderPosition: THREE.Vector3): void {
+    for (const mesh of [this.harpoon, this.rack]) mesh.position.y = heightAt(mesh.position.x, mesh.position.z);
+    this.lobber.position.copy(heroRenderPosition);
+  }
+
   update(at: number): void {
     const active = this.active();
     this.group.visible = active;

@@ -1,3 +1,5 @@
+import archiveLoreSource from '../../lore/archive-world-pages.md?raw';
+import { loadArchiveLore } from './archive';
 import './reader.css';
 import { gameApiUrl } from '../app/GameApi';
 import type { DifficultyPresetId } from '../game/Balance';
@@ -185,6 +187,7 @@ let currentSeasonId: string | null = null;
 let currentWatchTape: ((tape: RunTape) => void) | undefined;
 
 export function openClaimLedger(options: OpenClaimLedgerOptions = {}): void {
+  loadArchiveLore(archiveLoreSource);
   backfillReachedWorldOutsideEntries();
   closeClaimLedger(false);
   currentRestoreFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;

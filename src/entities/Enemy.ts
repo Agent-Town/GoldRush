@@ -664,6 +664,7 @@ export class ClaimJumperEnemy {
     thiefContext?: ThiefUpdateContext,
     wreckerContext?: WreckerUpdateContext,
     movementSpeedMultiplier = 1,
+    contactPositions?: readonly THREE.Vector3[],
   ): boolean {
     if (!this.alive) return false;
 
@@ -731,6 +732,11 @@ export class ClaimJumperEnemy {
           formationSeparationZ * Balance.enemy.formationSeparationStrength,
       );
     }
+    if (Terrain.waterMask()) {
+      const ahead = { x: this.group.position.x + this.velocity.x * 0.6, z: this.group.position.z + this.velocity.z * 0.6 };
+      // Preserve clearance for the whole route: spread can otherwise flip a grazing ford shortcut every frame.
+      if (!Terrain.sample(ahead.x, ahead.z).walkable || terrainBlocksSegment(ahead, moveTarget)) this.velocity.copy(this.heading);
+    }
     if (this.velocity.lengthSq() > 1) this.velocity.normalize();
 
     if (this.thiefState === 'grabbing' || this.wreckerState === 'swinging' || this.gnawing) {
@@ -757,9 +763,13 @@ export class ClaimJumperEnemy {
     }
 
     const touchRadius = Balance.hero.radius + this.hitRadius;
-    const dx = heroPosition.x - this.group.position.x;
-    const dz = heroPosition.z - this.group.position.z;
-    if (this.contactCooldown <= 0 && dx * dx + dz * dz <= touchRadius * touchRadius) {
+    // Objective steering can point at a building; contact still belongs to actual actors.
+    const touchesActor = (contactPositions ?? [heroPosition]).some(position => {
+      const dx = position.x - this.group.position.x;
+      const dz = position.z - this.group.position.z;
+      return dx * dx + dz * dz <= touchRadius * touchRadius;
+    });
+    if (this.contactCooldown <= 0 && touchesActor) {
       this.contactCooldown = Balance.enemy.contactCooldown;
       return true;
     }
@@ -1129,13 +1139,18 @@ export class ClaimJumperEnemy {
   }
 
   private routedTarget(target: THREE.Vector3): THREE.Vector3 {
-    if (!Balance.pathing.riverBlocksEnemies || Terrain.waterMask()) return target;
+    if (!Balance.pathing.riverBlocksEnemies) return target;
 
     const current = this.group.position;
     const currentSample = Terrain.sample(current.x, current.z);
     const currentZone = currentSample.zone;
     const targetSide = riverSide(target.z);
     const crossing = goalSideCrossing(target.x, current.x);
+    const mask = Terrain.waterMask();
+    if (mask) {
+      const waypoint = maskedRouteWaypoint(current, target);
+      return waypoint ? this.routeTarget.set(waypoint.x, Balance.enemy.groundY, waypoint.z) : target;
+    }
     if (currentZone === 'ford') {
       if (targetSide === 'north' && current.z < Terrain.RIVER_MAX_Z - 0.1) {
         return this.routeTarget.set(crossing.centerX, Balance.enemy.groundY, Terrain.RIVER_MAX_Z);
@@ -1401,6 +1416,126 @@ export class ClaimJumperEnemy {
   private syncVisualY(): void {
     this.group.position.y = Terrain.visualY(this.group.position.x, this.group.position.z, Balance.enemy.groundY);
   }
+}
+
+type MaskRoutePoint = { x: number; z: number };
+let maskRouteGraph: {
+  pad: number;
+  points: MaskRoutePoint[];
+  edges: number[][];
+  targetX: number;
+  targetZ: number;
+  costs: number[];
+} | undefined;
+
+function terrainBlocksSegment(from: MaskRoutePoint, to: MaskRoutePoint): boolean {
+  const dx = to.x - from.x, dz = to.z - from.z;
+  const lengthSq = dx * dx + dz * dz;
+  if (lengthSq === 0) return !Terrain.sample(to.x, to.z).walkable;
+  const cuts = [0, 1];
+  const add = (t: number) => { if (t > 0 && t < 1) cuts.push(t); };
+  const rect = (minX: number, maxX: number, minZ: number, maxZ: number) => {
+    if (dx !== 0) { add((minX - from.x) / dx); add((maxX - from.x) / dx); }
+    if (dz !== 0) { add((minZ - from.z) / dz); add((maxZ - from.z) / dz); }
+  };
+  const circle = (point: MaskRoutePoint, radius: number) => {
+    const x = from.x - point.x, z = from.z - point.z;
+    const projection = x * dx + z * dz;
+    const discriminant = projection * projection - lengthSq * (x * x + z * z - radius * radius);
+    if (discriminant < 0) return;
+    const root = Math.sqrt(discriminant);
+    add((-projection - root) / lengthSq); add((-projection + root) / lengthSq);
+  };
+  const bounds = Terrain.bounds;
+  rect(bounds.minX, bounds.maxX, bounds.minZ, bounds.maxZ);
+  const pad = Balance.hero.radius + 0.08;
+  for (const blocker of Terrain.landmarkBlockers()) {
+    rect(blocker.x - blocker.halfX - pad, blocker.x + blocker.halfX + pad,
+      blocker.z - blocker.halfZ - pad, blocker.z + blocker.halfZ + pad);
+  }
+  for (const region of Terrain.waterMask()?.regions ?? []) {
+    if (region.kind === 'rect') {
+      rect(region.minX, region.maxX, region.minZ, region.maxZ);
+      continue;
+    }
+    // A polyline band is the union of segment strips and circular end caps.
+    for (const point of region.points) circle(point, region.halfWidth);
+    for (let index = 1; index < region.points.length; index += 1) {
+      const a = region.points[index - 1]!, b = region.points[index]!;
+      const vx = b.x - a.x, vz = b.z - a.z;
+      const denominator = vx * dz - vz * dx;
+      if (denominator === 0) continue;
+      const offset = vx * (from.z - a.z) - vz * (from.x - a.x);
+      const width = region.halfWidth * Math.hypot(vx, vz);
+      add((width - offset) / denominator); add((-width - offset) / denominator);
+    }
+  }
+  cuts.sort((a, b) => a - b);
+  const blocked = (t: number) => !Terrain.sample(from.x + dx * t, from.z + dz * t).walkable;
+  for (let index = 1; index < cuts.length; index += 1) {
+    // Classification is constant between authored boundaries; sample both the boundary and its interval.
+    if (blocked(cuts[index]!) || blocked((cuts[index - 1]! + cuts[index]!) / 2)) return true;
+  }
+  return false;
+}
+
+function maskedRouteWaypoint(current: MaskRoutePoint, target: MaskRoutePoint): MaskRoutePoint | null {
+  const fords = Terrain.waterMask()?.regions.filter(region => region.zone === 'ford' && region.kind === 'rect');
+  if (!fords?.length || !terrainBlocksSegment(current, target)) return null;
+  const pad = Balance.hero.radius + 0.08 + 0.9;
+  if (!maskRouteGraph || maskRouteGraph.pad !== pad) {
+    // ponytail: this graph covers authored static solids; constructed defenses keep their existing local resolver.
+    const points: MaskRoutePoint[] = Terrain.landmarkBlockers().flatMap(blocker => [-1, 1].flatMap(x => [-1, 1].map(z => ({
+      x: blocker.x + x * (blocker.halfX + pad), z: blocker.z + z * (blocker.halfZ + pad),
+    }))));
+    for (const ford of fords) {
+      if (ford.kind !== 'rect') continue;
+      for (const z of [ford.minZ - 0.75, (ford.minZ + ford.maxZ) / 2, ford.maxZ + 0.75]) {
+        points.push({ x: (ford.minX + ford.maxX) / 2, z });
+      }
+    }
+    if (fords.length > 1) {
+      // The dry land between crossings can narrow halfway across the braid.
+      const centers = fords.filter(ford => ford.kind === 'rect').map(ford => ({ x: (ford.minX + ford.maxX) / 2, z: (ford.minZ + ford.maxZ) / 2 }));
+      points.push({ x: centers.reduce((sum, point) => sum + point.x, 0) / centers.length,
+        z: centers.reduce((sum, point) => sum + point.z, 0) / centers.length });
+    }
+    const walkable = points.filter(point => Terrain.sample(point.x, point.z).walkable);
+    const edges = walkable.map(from => walkable.map(to => terrainBlocksSegment(from, to)
+      ? Infinity : Math.hypot(to.x - from.x, to.z - from.z)));
+    maskRouteGraph = { pad, points: walkable, edges, targetX: NaN, targetZ: NaN, costs: [] };
+  }
+  const graph = maskRouteGraph;
+  if (graph.targetX !== target.x || graph.targetZ !== target.z) {
+    graph.targetX = target.x;
+    graph.targetZ = target.z;
+    graph.costs = graph.points.map(point => terrainBlocksSegment(point, target)
+      ? Infinity : Math.hypot(target.x - point.x, target.z - point.z));
+    const visited = new Set<number>();
+    for (let step = 0; step < graph.points.length; step += 1) {
+      let closest = -1;
+      for (let index = 0; index < graph.points.length; index += 1) {
+        if (!visited.has(index) && Number.isFinite(graph.costs[index])
+          && (closest < 0 || graph.costs[index]! < graph.costs[closest]!)) closest = index;
+      }
+      if (closest < 0) break;
+      visited.add(closest);
+      for (let index = 0; index < graph.points.length; index += 1) {
+        graph.costs[index] = Math.min(graph.costs[index]!, graph.costs[closest]! + graph.edges[closest]![index]!);
+      }
+    }
+  }
+  let best: MaskRoutePoint | null = null;
+  let bestCost = Infinity;
+  for (let index = 0; index < graph.points.length; index += 1) {
+    const point = graph.points[index]!;
+    const distance = Math.hypot(point.x - current.x, point.z - current.z);
+    const cost = distance + graph.costs[index]!;
+    if (distance < 0.25 || cost >= bestCost || terrainBlocksSegment(current, point)) continue;
+    best = point;
+    bestCost = cost;
+  }
+  return best;
 }
 
 function riverSide(z: number): 'north' | 'south' | null {

@@ -11,7 +11,10 @@ import {
   authoredHarmPerSecond,
   authoredPressurisedZoneIds,
   authoredSuitSeconds,
+  pressureZoneContains,
   type E8AtmosphereDiagnostics,
+  type E8AirActor,
+  type E8HumanSuitDiagnostics,
 } from './E8PhysicsSystem';
 
 // ═══════════════════════════════════════════════════════════════════════════════════════════
@@ -205,6 +208,9 @@ export class E8SuitAirSystem {
    * number the briefing prints and the number the engine enforces must be the same object.
    */
   private readonly suit: E8HumanSuit;
+  private readonly extraSuits = new Map<number, E8HumanSuit>();
+  private readonly extraCrossings = new Map<number, Set<string>>();
+  private readonly damageByActor = new Map<number, number>();
   private runsOnAir = 0;
   private runsOnAirAfterEclipse = 0;
   private breathlessPans = 0;
@@ -237,6 +243,7 @@ export class E8SuitAirSystem {
     private readonly eclipse: EclipseConfig | null,
     /** `twist.atmosphere`, already read; `NO_AUTHORED_AIR` where the contract authors nothing. */
     private readonly authored: AuthoredAir = NO_AUTHORED_AIR,
+    private readonly pressureShape: 'rect' | 'ellipse' = 'rect',
   ) {
     this.suit = new E8HumanSuit(authored.suitSeconds, authored.harmPerSecond);
     this.shelters = shelters.map((zone) => ({ zone, air: 1, breached: false, breaches: 0, siegers: 0, offline: false }));
@@ -336,12 +343,102 @@ export class E8SuitAirSystem {
       tile.harvestAnchors?.length ?? 0,
       eclipse,
       authored,
+      authoredAir?.pressurisedZoneShape ?? 'rect',
     );
   }
 
   /** The undeclared case, reified so every caller holds a consumer rather than a null. */
   static none(): E8SuitAirSystem {
     return new E8SuitAirSystem(false, null, [], false, [], 0, null);
+  }
+
+  private suitForActor(actorId: number): E8HumanSuit {
+    if (actorId === 0) return this.suit;
+    let suit = this.extraSuits.get(actorId);
+    if (!suit) { suit = new E8HumanSuit(this.suit.capacity, this.suit.harmPerSecond); this.extraSuits.set(actorId, suit); }
+    return suit;
+  }
+
+  suitDiagnostics(actorId = 0): E8HumanSuitDiagnostics {
+    return (actorId === 0 ? this.suit : this.extraSuits.get(actorId) ?? this.suit).diagnostics;
+  }
+
+  private crossingEntries(actorId: number): Set<string> {
+    if (actorId === 0) return this.insideCrossing;
+    let entries = this.extraCrossings.get(actorId);
+    if (!entries) { entries = new Set(); this.extraCrossings.set(actorId, entries); }
+    return entries;
+  }
+
+  captureSuspend() {
+    return {
+      declared: this.declared, pressureShape: this.pressureShape, suit: this.suit.captureSuspend(),
+      extraSuits: [...this.extraSuits].sort(([a], [b]) => a - b).map(([id, suit]) => ({ id, state: suit.captureSuspend(), insideCrossing: [...(this.extraCrossings.get(id) ?? [])] })),
+      regolithClock: this.regolithClock.captureSuspend(), crossingClock: this.crossingClock.captureSuspend(),
+      worked: [...this.worked], reached: [...this.reached], insideCrossing: [...this.insideCrossing],
+      runsOnAir: this.runsOnAir, runsOnAirAfterEclipse: this.runsOnAirAfterEclipse,
+      breathlessPans: this.breathlessPans, breathlessEntries: this.breathlessEntries,
+      windowHeldPans: this.windowHeldPans, windowHeldEntries: this.windowHeldEntries,
+      creditedCrossings: this.creditedCrossings, eclipseArrivedAtWave: this.eclipseArrivedAtWave,
+      shelters: this.shelters.map(({ zone, ...state }) => ({ id: zone.id, ...state })),
+    };
+  }
+
+  restoreSuspend(value: unknown): boolean {
+    if (value === null || typeof value !== 'object') return false;
+    const state = value as ReturnType<E8SuitAirSystem['captureSuspend']>;
+    const crossingIds = new Set(this.crossings.map((zone) => zone.id));
+    const extraSuits = state.extraSuits ?? [];
+    if (state.declared !== this.declared
+      || (state.pressureShape === undefined ? 'rect' : state.pressureShape) !== this.pressureShape
+      || !Array.isArray(extraSuits) || extraSuits.length > 64
+      || new Set(extraSuits.map((entry) => entry?.id)).size !== extraSuits.length
+      || !extraSuits.every((entry) => entry && Number.isSafeInteger(entry.id) && entry.id > 0
+        && new E8HumanSuit(this.suit.capacity, this.suit.harmPerSecond).restoreSuspend(entry.state)
+        && Array.isArray(entry.insideCrossing) && entry.insideCrossing.length <= crossingIds.size
+        && new Set(entry.insideCrossing).size === entry.insideCrossing.length
+        && entry.insideCrossing.every((id) => crossingIds.has(id)))
+      || ![state.runsOnAir, state.runsOnAirAfterEclipse, state.breathlessPans, state.breathlessEntries,
+        state.windowHeldPans, state.windowHeldEntries, state.creditedCrossings].every((n) => Number.isSafeInteger(n) && n >= 0)
+      || !(state.eclipseArrivedAtWave === null || (this.eclipse !== null && Number.isSafeInteger(state.eclipseArrivedAtWave) && state.eclipseArrivedAtWave >= 0))
+      || !Array.isArray(state.worked) || state.worked.length > this.grounds
+      || new Set(state.worked).size !== state.worked.length
+      || !state.worked.every((n) => Number.isInteger(n) && n >= 0 && n < this.grounds)
+      || ![state.reached, state.insideCrossing].every((ids) => Array.isArray(ids)
+        && ids.length <= crossingIds.size && new Set(ids).size === ids.length && ids.every((id) => crossingIds.has(id)))
+      || !Array.isArray(state.shelters) || state.shelters.length !== this.shelters.length
+      || !state.shelters.every((d, i) => d && d.id === this.shelters[i].zone.id
+        && Number.isFinite(d.air) && d.air >= 0 && d.air <= 1 && typeof d.breached === 'boolean'
+        && typeof d.offline === 'boolean' && Number.isSafeInteger(d.breaches) && d.breaches >= 0
+        && Number.isSafeInteger(d.siegers) && d.siegers >= 0)
+      || !new E8HumanSuit(this.suit.capacity, this.suit.harmPerSecond).restoreSuspend(state.suit)
+      || !new E8AirWindow(windowSeconds(this.authored.regolithWindowWaves, this.authored.waveSeconds)).restoreSuspend(state.regolithClock)
+      || !new E8AirWindow(windowSeconds(this.authored.crossingWindowWaves, this.authored.waveSeconds)).restoreSuspend(state.crossingClock)) return false;
+    this.suit.restoreSuspend(state.suit);
+    this.extraSuits.clear(); this.extraCrossings.clear();
+    for (const entry of extraSuits) {
+      this.suitForActor(entry.id).restoreSuspend(entry.state);
+      this.extraCrossings.set(entry.id, new Set(entry.insideCrossing));
+    }
+    this.regolithClock.restoreSuspend(state.regolithClock);
+    this.crossingClock.restoreSuspend(state.crossingClock);
+    this.worked.clear(); for (const ground of state.worked) this.worked.add(ground);
+    this.reached.clear(); for (const id of state.reached) this.reached.add(id);
+    this.insideCrossing.clear(); for (const id of state.insideCrossing) this.insideCrossing.add(id);
+    this.runsOnAir = state.runsOnAir;
+    this.runsOnAirAfterEclipse = state.runsOnAirAfterEclipse;
+    this.breathlessPans = state.breathlessPans;
+    this.breathlessEntries = state.breathlessEntries;
+    this.windowHeldPans = state.windowHeldPans;
+    this.windowHeldEntries = state.windowHeldEntries;
+    this.creditedCrossings = state.creditedCrossings;
+    this.eclipseArrivedAtWave = state.eclipseArrivedAtWave;
+    state.shelters.forEach((d, i) => {
+      const shelter = this.shelters[i];
+      shelter.air = d.air; shelter.breached = d.breached; shelter.breaches = d.breaches;
+      shelter.siegers = d.siegers; shelter.offline = d.offline;
+    });
+    return true;
   }
 
   get isDeclared(): boolean {
@@ -412,7 +509,12 @@ export class E8SuitAirSystem {
    * `E8HumanSuit`). RETURNS the hp the caller owes `CombatSystem` this step.
    */
   update(delta: number, human: Point, siegers: readonly Sieger[], wave: number): number {
-    if (!this.declared || delta <= 0) return 0;
+    return this.updateActors(delta, [{ id: 0, position: human }], siegers, wave).get(0) ?? 0;
+  }
+
+  updateActors(delta: number, humans: readonly E8AirActor[], siegers: readonly Sieger[], wave: number): ReadonlyMap<number, number> {
+    this.damageByActor.clear();
+    if (!this.declared || delta <= 0) return this.damageByActor;
     // The run clock first, so the dials, the suit, the crossing and both windows read one tick —
     // the order `E8AtmosphereSystem.update` fixed for the Mare Claim, for the same reason.
     this.regolithClock.advance(delta);
@@ -424,7 +526,7 @@ export class E8SuitAirSystem {
     for (const shelter of this.shelters) {
       let count = 0;
       if (this.breachable) {
-        for (const sieger of siegers) if (sieger.isAlive && inside(shelter.zone, sieger.position)) count += 1;
+        for (const sieger of siegers) if (sieger.isAlive && pressureZoneContains(shelter.zone, sieger.position, this.pressureShape)) count += 1;
       }
       const breached = count > 0;
       if (breached && !shelter.breached) shelter.breaches += 1;
@@ -436,10 +538,12 @@ export class E8SuitAirSystem {
         ? Math.max(0, shelter.air - delta / DOME_AIR_DRAIN_SECONDS)
         : Math.min(1, shelter.air + delta / DOME_AIR_REFILL_SECONDS);
     }
-    const breathing = this.shelters.find((shelter) => shelter.air > 0 && inside(shelter.zone, human)) ?? null;
-    const harm = this.suit.update(delta, breathing?.zone.id ?? null);
-    this.noteCrossings(human);
-    return harm;
+    for (const human of [...humans].sort((a, b) => a.id - b.id)) {
+      const breathing = this.shelters.find((shelter) => shelter.air > 0 && pressureZoneContains(shelter.zone, human.position, this.pressureShape)) ?? null;
+      this.damageByActor.set(human.id, this.suitForActor(human.id).update(delta, breathing?.zone.id ?? null));
+      this.noteCrossings(human.position, human.id);
+    }
+    return this.damageByActor;
   }
 
   /**
@@ -457,16 +561,17 @@ export class E8SuitAirSystem {
    * Re-entering the SAME zone in a later window credits again, which is what makes a four-credit
    * gate reachable on the Far Side, whose contract authors exactly one crossing rectangle.
    */
-  private noteCrossings(human: Point): void {
+  private noteCrossings(human: Point, actorId = 0): void {
+    const entries = this.crossingEntries(actorId);
     for (const zone of this.crossings) {
       const within = inside(zone, human);
       if (!within) {
-        this.insideCrossing.delete(zone.id);
+        entries.delete(zone.id);
         continue;
       }
-      if (this.insideCrossing.has(zone.id)) continue;
-      this.insideCrossing.add(zone.id);
-      if (this.suit.empty) {
+      if (entries.has(zone.id)) continue;
+      entries.add(zone.id);
+      if (this.suitForActor(actorId).empty) {
         this.breathlessEntries += 1;
         continue;
       }
@@ -488,9 +593,9 @@ export class E8SuitAirSystem {
    * window, because the eclipse's own after-gate asks for WORK on the reserve rather than for a
    * fresh ground — the rule the Eclipse has carried since `tasks/e8-remaining-maps.md`, unmoved.
    */
-  notePan(anchorIndex: number): boolean {
+  notePan(anchorIndex: number, actorId = 0): boolean {
     if (!this.declared || !Number.isInteger(anchorIndex) || anchorIndex < 0) return false;
-    if (this.suit.empty) {
+    if (this.suitForActor(actorId).empty) {
       this.breathlessPans += 1;
       return false;
     }

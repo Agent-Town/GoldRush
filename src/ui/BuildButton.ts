@@ -118,7 +118,8 @@ export class BuildButton {
     document.removeEventListener('pointerdown', this.onDocumentPointerDown);
   }
 
-  private readonly onClick = (): void => {
+  private readonly onClick = (event: MouseEvent): void => {
+    if (event.detail > 0) this.trigger.blur();
     this.onIntent({ type: 'toggle_build_menu' });
   };
 

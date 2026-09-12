@@ -162,12 +162,6 @@
       "fingerprint": "45ece849f818",
       "excerpt": "const run = spawnSync(process.execPath, ['--test', '--test-reporter=spec', file], {"
     },
-    "scripts/fire.md -> src/game/Game.ts:2641": {
-      "target": "src/game/Game.ts",
-      "line": 2641,
-      "fingerprint": "77e4a4aa40b3",
-      "excerpt": "placeBuilding: (id, position, rotation = 0) => this.placeAgentBuilding(id, position, rotation, this."
-    },
     "scripts/fire.md -> blocker-panel-closed-guard.mjs:115": {
       "target": "scripts/blocker-panel-closed-guard.mjs",
       "line": 115,
@@ -341,6 +335,12 @@
       "line": 99,
       "fingerprint": "18ae39970869",
       "excerpt": "await page.screenshot({ path: path.join(ARTIFACT_DIR, `${testInfo.project.name}-${name}.png`), fullP"
+    },
+    "scripts/fire.md -> src/game/Game.ts:2639": {
+      "target": "src/game/Game.ts",
+      "line": 2639,
+      "fingerprint": "77e4a4aa40b3",
+      "excerpt": "placeBuilding: (id, position, rotation = 0) => this.placeAgentBuilding(id, position, rotation, this."
     }
   },
   "_why": "Fingerprints of the lines cited by the law surfaces. Re-base ONLY after re-reading the cited line and confirming it still supports the claim. See scripts/law-pointer-guard.mjs."

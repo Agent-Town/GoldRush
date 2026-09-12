@@ -1,0 +1,31 @@
+{
+  "$schema": "gold-rush layer contract v1",
+  "batch": "map-art-repairs-20260908-moth-landmarks-23",
+  "notes": "Native atlas18 plus north gate frame remap22. Geometry and mounts unchanged. Full concept fidelity and contact shading remain open.",
+  "slots": [
+    {
+      "file": "moth-season-landmarks-atlas.png",
+      "slot": "moth-season.landmark-material-atlas.v1",
+      "raw": "assets/raw/moth-season-landmark-material-atlas-v1.png",
+      "rawSize": [
+        1254,
+        1254
+      ],
+      "size": [
+        1024,
+        1024
+      ],
+      "sha256": "1875cfcfacc69ea7ebc872225861f04a0ef754cfd412d94ee445d06b89e146c3",
+      "rawSha256": "16f91896aa57adbb97c49201165c417e86d5ecc2cdd2f2ad547f2df00fc59fc9",
+      "reference": [
+        "assets/raw/plate-contract-e3-moth-season.png",
+        "artifacts/map-art-repairs-20260908/moth-season-landmark-atlas-17/atlas-raw.png"
+      ],
+      "generation": "native image_gen exec-d7c2ff47-d280-4c4a-9113-b498f9bde447 (refines native exec-ab9d68a8-e7cc-4d34-bbc6-0fa7acfa1ce4)",
+      "usage": "Shared albedo; distinct brass and timber cells, finer material scale without scenery motifs.",
+      "recipe": "assets/pilots/map-rebuild-spike/retexture_moth_landmarks.py",
+      "evidence": "artifacts/map-art-repairs-20260908/moth-season-landmark-atlas-18/prompt.txt",
+      "runtime": "assets/pilots/map-rebuild-spike/landmarks/moth-season/"
+    }
+  ]
+}

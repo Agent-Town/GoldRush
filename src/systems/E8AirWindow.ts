@@ -71,6 +71,22 @@ export class E8AirWindow {
     return this.credited;
   }
 
+  captureSuspend(): { elapsedSeconds: number; credited: number } {
+    return { elapsedSeconds: this.elapsedSeconds, credited: this.credited };
+  }
+
+  restoreSuspend(value: unknown): boolean {
+    if (value === null || typeof value !== 'object') return false;
+    const state = value as ReturnType<E8AirWindow['captureSuspend']>;
+    if (!Number.isFinite(state.elapsedSeconds) || state.elapsedSeconds < 0
+      || !Number.isSafeInteger(state.credited) || state.credited < 0
+      || (this.windowSeconds !== null && state.credited > 1)) return false;
+    this.elapsedSeconds = state.elapsedSeconds;
+    this.index = this.windowSeconds === null ? 0 : Math.floor(state.elapsedSeconds / this.windowSeconds);
+    this.credited = state.credited;
+    return true;
+  }
+
   private sync(): void {
     const seconds = this.windowSeconds;
     const next = seconds === null ? 0 : Math.floor(this.elapsedSeconds / seconds);

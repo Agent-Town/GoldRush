@@ -42,6 +42,8 @@ type WaterUniforms = {
 
 type WaterMaterialConfig = {
   ford: boolean;
+  /** Open sea has no river crossing band and uses wind-aligned surface crests. */
+  openSea?: boolean;
   riverHalfWidth: number;
   visualHalfWidth: number;
   lengthHalf: number;
@@ -71,7 +73,7 @@ type WaterMaterialConfig = {
   /** Light-independent chroma for water under the warm Ledger key light. */
   emissive?: string;
   emissiveIntensity?: number;
-  /** Blend weight for the procedural canvas map. Narrow ribbons set this to zero: its six fixed
+  /** Blend weight for the surface map. Narrow ribbons set this to zero: its six fixed
    * horizontal strokes become metre-wide bands when squeezed across a three-metre channel. */
   textureBlend?: number;
   /** Multiplies the sine-ripple contribution without changing flow speed. */
@@ -126,6 +128,7 @@ export function createLivingWaterMaterial(config: WaterMaterialConfig): THREE.Me
   // silently renders with the first one's constants.
   material.customProgramCacheKey = () => [
     'living-water',
+    config.openSea ? 'sea' : 'channel',
     config.ford ? 'ford' : 'river',
     config.visualHalfWidth.toFixed(3),
     config.riverHalfWidth.toFixed(3),
@@ -217,11 +220,12 @@ float waterNoise(vec2 p) {
     mix(0.012, 0.038, crossNoise) *
     waterQuality;
   flowUv.y += slowWarp + (crossNoise - 0.5) * 0.045 * waterQuality;
+${config.openSea ? '  flowUv = vWaterWorld / 20.0 + vec2(waterTime * waterFlowSpeed * 0.08, waterTime * waterFlowSpeed * 0.03);' : ''}
   vec4 baseTexel = texture2D(map, flowUv);
   float riverAcross = mix((vWaterUv.y - 0.5) * ${(config.visualHalfWidth * 2).toFixed(3)}, vWaterWorld.y, waterFord);
   float visualEdgeDist = max(0.0, ${config.visualHalfWidth.toFixed(3)} - abs(riverAcross));
   float riverDist = max(0.0, ${config.riverHalfWidth.toFixed(3)} - abs(riverAcross));
-  float fordBand = max(waterFord, ${fordBandExpression(config.fordCenters ?? [0], config.fordHalfWidth)});
+  float fordBand = max(waterFord, ${config.openSea ? '0.0' : fordBandExpression(config.fordCenters ?? [0], config.fordHalfWidth)});
   float channelDepth = mix(waterWadeDepth * 0.5, waterRiverDepth, smoothstep(0.05, ${config.riverHalfWidth.toFixed(3)}, riverDist));
   float declaredDepth = mix(channelDepth, waterFordDepth, fordBand);
   float depth = smoothstep(max(0.001, waterWadeDepth), max(waterWadeDepth + 0.001, waterDeepDepth), declaredDepth);
@@ -233,7 +237,9 @@ ${config.bedDepth ? `  float bedMetres = texture2D(waterBedMap, vWaterUv).r * wa
   bedShore = max(smoothstep(0.0, waterBedShore, bedMetres), fordBand);` : ''}
   float rippleFreq = mix(1.05, 2.45, lengthNoise);
   float rippleAmp = mix(0.06, 0.17, crossNoise) * ${(config.rippleStrength ?? 1).toFixed(2)};
-  float ripple = sin(vWaterWorld.x * rippleFreq + vWaterWorld.y * mix(-0.46, 0.72, crossNoise) + phaseWarp * 4.0 - waterTime * mix(2.1, 4.4, lengthNoise)) * 0.5 + 0.5;
+  float ripple = ${config.openSea
+    ? '(sin(vWaterWorld.x * 2.4 + vWaterWorld.y * 0.9 + sin(vWaterWorld.y * 0.32 - waterTime * 0.6) * 0.8 - waterTime * 2.0) * 0.72 + sin(vWaterWorld.x * 4.1 - vWaterWorld.y * 1.3 + phaseWarp - waterTime * 3.1) * 0.28)'
+    : 'sin(vWaterWorld.x * rippleFreq + vWaterWorld.y * mix(-0.46, 0.72, crossNoise) + phaseWarp * 4.0 - waterTime * mix(2.1, 4.4, lengthNoise))'} * 0.5 + 0.5;
   float fineRipple = 0.0;
   if (waterQuality > 0.7) {
     fineRipple = sin(vWaterWorld.x * mix(3.7, 6.2, crossNoise) + vWaterWorld.y * mix(0.8, 2.4, lengthNoise) - waterTime * mix(3.8, 6.7, crossNoise) + phaseWarp * 2.0) * 0.5 + 0.5;
@@ -275,7 +281,20 @@ ${config.bedDepth ? '  alpha = max(alpha, shoreFoam * 0.5 * smoothstep(0.0, 0.05
   diffuseColor *= sampledDiffuseColor;
 #endif`);
   };
-  if (!config.ford) void loadGeneratedTexture(assetSlots.terrainRiver);
+  if (config.openSea) {
+    let disposed = false;
+    material.addEventListener('dispose', () => { disposed = true; });
+    void loadGeneratedTexture(assetSlots.terrainOpenSea).then((source) => {
+      if (!source || disposed) return;
+      // Each water surface owns its sampler/disposal; the asset cache owns the source.
+      const map = source.clone();
+      configureWaterMap(map);
+      map.needsUpdate = true;
+      material.map?.dispose();
+      material.map = map;
+      material.needsUpdate = true;
+    });
+  } else if (!config.ford) void loadGeneratedTexture(assetSlots.terrainRiver);
   return material;
 }
 
@@ -312,12 +331,14 @@ function bakeBedDepth(
   centerZ: number,
   visualHalfWidth: number,
   deepMeters: number,
+  openSea = false,
 ): { texture: THREE.DataTexture; deepest: number } {
-  const data = new Uint8Array(BED_MAP_WIDTH * BED_MAP_HEIGHT);
+  const mapHeight = openSea ? BED_MAP_WIDTH : BED_MAP_HEIGHT;
+  const data = new Uint8Array(BED_MAP_WIDTH * mapHeight);
   let deepest = 0;
-  for (let row = 0; row < BED_MAP_HEIGHT; row += 1) {
+  for (let row = 0; row < mapHeight; row += 1) {
     // Plane geometry rotated -90 deg about X: world z decreases as uv.y grows.
-    const z = centerZ - (((row + 0.5) / BED_MAP_HEIGHT) - 0.5) * visualHalfWidth * 2;
+    const z = centerZ - (((row + 0.5) / mapHeight) - 0.5) * visualHalfWidth * 2;
     for (let column = 0; column < BED_MAP_WIDTH; column += 1) {
       const x = (((column + 0.5) / BED_MAP_WIDTH) - 0.5) * halfLength * 2;
       const depth = Math.max(0, surfaceY - heightAt(x, z));
@@ -325,7 +346,7 @@ function bakeBedDepth(
       data[row * BED_MAP_WIDTH + column] = Math.round(THREE.MathUtils.clamp(depth / deepMeters, 0, 1) * 255);
     }
   }
-  const texture = new THREE.DataTexture(data, BED_MAP_WIDTH, BED_MAP_HEIGHT, THREE.RedFormat, THREE.UnsignedByteType);
+  const texture = new THREE.DataTexture(data, BED_MAP_WIDTH, mapHeight, THREE.RedFormat, THREE.UnsignedByteType);
   texture.name = 'SculptWaterBedDepth';
   texture.magFilter = THREE.LinearFilter;
   texture.minFilter = THREE.LinearFilter;
@@ -362,6 +383,7 @@ export function createSculptWater(config: SculptWaterConfig & {
     config.centerZ,
     config.visualHalfWidth,
     config.deepMeters,
+    config.openSea,
   );
   const material = createLivingWaterMaterial({
     ...config,
@@ -614,7 +636,6 @@ float waterNoise(vec2 p) {
 export type SpringPondSurface = {
   group: THREE.Group;
   waterRadius: number;
-  dampGroundRadius: number;
   dispose: () => void;
 };
 
@@ -624,19 +645,10 @@ type SpringPondConfig = {
   z: number;
   /** Water-line radius in metres — identical to the sim's spring radius. */
   radius: number;
-  /** Measured atlas cap radius; only the ground dressing may cover it. */
-  dampBaseRadius?: number;
-  /** World height of the water plane itself — measured off the pool the atlas already paints. */
+  /** World height of the water plane; the sculpt owns the bank and reed roots. */
   surfaceY: number;
+  heightAt: (x: number, z: number) => number;
 };
-
-
-/**
- * How far past the atlas cap the damp ground reads, as a multiple of the measured cap radius. Kept tight:
- * the margin has to stay inside the landmark's own stone ring, and wet stone at a waterline is
- * right where dark ground drawn over dry sand would be a smear.
- */
-const POND_MARGIN_SCALE = 1.42;
 
 
 const POND_SURFACE_LIFT = 0.02;
@@ -645,8 +657,7 @@ const POND_SURFACE_LIFT = 0.02;
 /**
  * ONE LIVE POOL IN A BONE-DRY MAP (brief U1).
  *
- * Render-only: a disc of moving water at a spring the sim already declares, plus a separate damp
- * ground margin and a few reed tufts. Nothing here is read by the
+ * Render-only: a disc of moving water at a spring the sim already declares, and a few reed tufts; the sculpted terrain owns its bank. Nothing here is read by the
  * simulation — the spring's position, radius and zone stay exactly where `tileParams.waterSources`
  * put them, and this surface only draws what that declaration already means.
  *
@@ -662,7 +673,6 @@ export function createSpringPondSurface(config: SpringPondConfig): SpringPondSur
 
   const time = { value: 0 };
   const quality = { value: waterQuality() };
-  const outerRadius = Math.max(config.radius, config.dampBaseRadius ?? config.radius) * POND_MARGIN_SCALE;
   const material = new THREE.MeshStandardMaterial({
     color: '#ffffff',
     transparent: true,
@@ -694,7 +704,7 @@ ${WATER_FIELD_GLSL}`)
   float pondR = pondDist / ${config.radius.toFixed(3)};
   // Deep across most of the pool and thinning only at the very lip: a spring is a hole with water
   // in it, not a saucer, and a soft radial ramp is what made the baked version read as a decal.
-  float pondDepth = 1.0 - smoothstep(0.58, 1.0, pondR);
+  float pondDepth = 1.0 - smoothstep(0.88, 1.0, pondR);
   // Wind chop: two noise fields drifting across each other. This carries the motion; the ring
   // wavelets below only punctuate it, because concentric rings alone read as a target.
   float pondChop = waterNoise(vPondLocal * 1.15 + vec2(pondTime * 0.09, -pondTime * 0.05));
@@ -713,10 +723,6 @@ ${WATER_FIELD_GLSL}`)
   vec3 pondShallow = vec3(0.40, 0.47, 0.27);
   vec3 pondDeepColor = vec3(0.040, 0.150, 0.125);
   vec3 pondColor = mix(pondShallow, pondDeepColor, pondDepth);
-  // The lit shallow ring. A pool photographs as a dark eye inside a bright collar, and that collar
-  // is what makes it read as WATER at run-camera distance rather than as a hole in the ground.
-  float pondCollar = smoothstep(0.72, 0.94, pondR) * (1.0 - smoothstep(0.94, 1.0, pondR));
-  pondColor = mix(pondColor, vec3(0.62, 0.68, 0.40), pondCollar * 0.55);
   pondColor += vec3(0.11, 0.16, 0.10) * pondSurface * (0.5 + pondQuality * 0.5);
   pondColor += vec3(0.07, 0.10, 0.06) * pondRings * 0.16;
   pondColor += vec3(0.06, 0.08, 0.05) * pondFine * pondQuality * 0.20;
@@ -733,9 +739,8 @@ ${WATER_FIELD_GLSL}`)
     waterGlint(pondGlintUv, vec2(-0.3, -2.9), pondTime * 1.15 + 2.4);
   pondColor += vec3(1.0, 0.94, 0.72) * pondGlint * pondQuality * 1.5;
   pondColor = mix(pondColor, pondTexel.rgb * 0.6, 0.10);
-  // Nearly opaque on purpose. The landmark bakes a bright cyan pool bed into a single-material
-  // body that cannot be hidden separately, so anything translucent here just tints that cyan.
-  float pondAlpha = mix(0.88, 0.985, pondDepth);
+  // Keep depth readable while softening only the water silhouette.
+  float pondAlpha = mix(0.88, 0.985, pondDepth) * (1.0 - smoothstep(0.96, 1.0, pondR));
   vec4 sampledDiffuseColor = vec4(pondColor, pondAlpha);
   diffuseColor *= sampledDiffuseColor;
 #endif`);
@@ -750,19 +755,6 @@ ${WATER_FIELD_GLSL}`)
   water.castShadow = false;
   water.frustumCulled = false;
   group.add(water);
-
-  const dampGround = new THREE.Mesh(
-    new THREE.RingGeometry(config.radius, outerRadius, 56),
-    new THREE.MeshStandardMaterial({ color: '#7a5133', roughness: 1, metalness: 0, side: THREE.DoubleSide }),
-  );
-  dampGround.name = 'SpringPondDampGround';
-  dampGround.rotation.x = -Math.PI / 2;
-  dampGround.position.set(config.x, config.surfaceY + POND_SURFACE_LIFT - 0.002, config.z);
-  dampGround.renderOrder = RenderLayers.groundDecals;
-  dampGround.receiveShadow = true;
-  dampGround.castShadow = false;
-  dampGround.frustumCulled = false;
-  group.add(dampGround);
 
   // The 3D pilot has no per-frame pump and giving it one would mean editing Game.ts, which this
   // surface has no business touching. Three already calls onBeforeRender once per mesh per render;
@@ -784,13 +776,10 @@ ${WATER_FIELD_GLSL}`)
   return {
     group,
     waterRadius: config.radius,
-    dampGroundRadius: outerRadius,
     dispose: () => {
       material.map?.dispose();
       material.dispose();
       water.geometry.dispose();
-      (dampGround.material as THREE.Material).dispose();
-      dampGround.geometry.dispose();
       (reeds.material as THREE.Material).dispose();
       reeds.geometry.dispose();
     },
@@ -813,7 +802,7 @@ function createPondReedTufts(config: SpringPondConfig): THREE.InstancedMesh {
   ];
   const mesh = new THREE.InstancedMesh(
     reedTuftGeometry(),
-    new THREE.MeshStandardMaterial({ color: '#43512f', roughness: 1, metalness: 0, side: THREE.DoubleSide }),
+    new THREE.MeshStandardMaterial({ color: '#8d8250', roughness: 1, metalness: 0, side: THREE.DoubleSide }),
     blades.length,
   );
   mesh.name = 'SpringPondLiveReeds';
@@ -824,9 +813,10 @@ function createPondReedTufts(config: SpringPondConfig): THREE.InstancedMesh {
   blades.forEach(({ angle, distance, scale }, index) => {
     anchor.position.set(
       config.x + Math.cos(angle) * config.radius * distance,
-      config.surfaceY + POND_SURFACE_LIFT,
+      0,
       config.z + Math.sin(angle) * config.radius * distance,
     );
+    anchor.position.y = config.heightAt(anchor.position.x, anchor.position.z);
     anchor.rotation.set(0, angle, 0);
     anchor.scale.setScalar(scale);
     anchor.updateMatrix();
@@ -838,13 +828,18 @@ function createPondReedTufts(config: SpringPondConfig): THREE.InstancedMesh {
 
 
 function reedTuftGeometry(): THREE.BufferGeometry {
-  const width = 0.16;
-  const height = 0.82;
-  const positions = [
-    -width, 0, 0, width, 0, 0, -width * 0.6, height, 0, width * 0.5, height * 0.78, 0,
-    0, 0, -width, 0, 0, width, 0, height * 0.9, -width * 0.5, 0, height * 0.66, width * 0.6,
-  ];
-  const indices = [0, 1, 2, 2, 1, 3, 4, 5, 6, 6, 5, 7];
+  const positions: number[] = [], indices: number[] = [];
+  for (let i = 0; i < 6; i++) {
+    const angle = i * 2.4, c = Math.cos(angle), s = Math.sin(angle);
+    const height = 0.68 + (i % 3) * 0.12, width = 0.05;
+    const x = c * 0.065, z = s * 0.065, lean = 0.15 + (i % 2) * 0.08;
+    const base = positions.length / 3;
+    positions.push(x-width*c,0,z-width*s,x+width*c,0,z+width*s,
+      x+lean*c-width*0.6*c,height*0.65,z+lean*s-width*0.6*s,
+      x+lean*c+width*0.6*c,height*0.65,z+lean*s+width*0.6*s,
+      x+lean*1.8*c,height,z+lean*1.8*s);
+    indices.push(base,base+1,base+2,base+2,base+1,base+3,base+2,base+3,base+4);
+  }
   const geometry = new THREE.BufferGeometry();
   geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
   geometry.setIndex(indices);

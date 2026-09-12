@@ -59,6 +59,7 @@ export type LightRigNightShiftState = {
  */
 export type LightRigDayPalette = {
   background: string;
+  fog?: string;
   sun: string;
   /** Applied to the shared 2.35 golden-hour sun. */
   sunIntensityMult: number;
@@ -95,6 +96,15 @@ const HEAT_PROFILES: ReadonlyMap<string, LightRigHeatProfile> = new Map([
 ]);
 
 const DAY_PALETTES: ReadonlyMap<string, LightRigDayPalette> = new Map([
+  ['e5-stillwater', {
+    background: '#c8bea0',
+    fog: '#c6bea4',
+    sun: '#e6dfc3',
+    sunIntensityMult: 0.72,
+    sunHeight: 25,
+    fogNearMult: 0.72,
+    fogFarMult: 0.7,
+  }],
   // "Noon, dry, merciless": a hotter whiter sun raised toward overhead, and dry air that sees
   // further than the golden-hour haze does.
   ['e1-dry-gulch', {
@@ -253,14 +263,25 @@ export class LightRig {
   private readonly selectedSources: LightSource[] = [];
   private nightShift: LightRigNightShiftState = { enabled: false, phase: 'full', darkness: 0 };
 
+  private readonly fogFocus = new THREE.Vector3();
+  private readonly spriteTint = new THREE.Color();
   private readonly dayPalette: LightRigDayPalette | undefined;
+  private readonly nightAmbientFloorMultiplier: number;
 
   constructor(
     private readonly scene: THREE.Scene,
     private readonly renderer: THREE.WebGLRenderer,
     contractId?: string,
+    private readonly camera?: THREE.Camera,
   ) {
     this.dayPalette = contractId === undefined ? undefined : DAY_PALETTES.get(contractId);
+    this.nightAmbientFloorMultiplier = contractId === 'e3-moth-season' ? 1.12 / 0.22 : 1;
+    if (contractId === 'e3-moth-season') {
+      this.darkBackground.set('#07121f');
+      this.darkFog.set('#0b1726');
+      this.darkFill.set('#8b9eb5');
+      this.darkGround.set('#27364a');
+    }
     const heat = contractId === undefined ? undefined : HEAT_PROFILES.get(contractId);
     // FULL tier only: the shimmer costs a framebuffer copy per frame, which is exactly the kind of
     // cost a machine already on the LITE path cannot absorb.
@@ -305,7 +326,7 @@ export class LightRig {
     if (this.dustDevils) this.scene.add(this.dustDevils.group);
   }
 
-  update(at = 0, focus?: THREE.Vector3): void {
+  update(at = 0, focus?: THREE.Vector3, cameraFocus = focus): void {
     const quality = effectiveShadowQuality(this.stressFallback);
     const darkness = this.nightShift.enabled ? THREE.MathUtils.clamp(this.nightShift.darkness, 0, 1) : 0;
     const baseFogNear = this.nightShift.enabled
@@ -314,8 +335,15 @@ export class LightRig {
     const baseFogFar = this.nightShift.enabled
       ? 72
       : Balance.world.fogFar * (this.dayPalette?.fogFarMult ?? 1);
-    const fogNear = THREE.MathUtils.lerp(baseFogNear, 18, darkness);
-    const fogFar = Math.max(fogNear + 8, THREE.MathUtils.lerp(baseFogFar, 42, darkness));
+    // Fog must begin beyond the tracked foreground, including the wider map-preview camera.
+    let fogOffset = 0;
+    if (this.nightShift.enabled && cameraFocus && this.camera) {
+      this.camera.updateMatrixWorld();
+      const depth = -this.fogFocus.copy(cameraFocus).applyMatrix4(this.camera.matrixWorldInverse).z;
+      fogOffset = Math.max(0, depth + 2 - baseFogNear);
+    }
+    const fogNear = baseFogNear + fogOffset;
+    const fogFar = Math.max(fogNear + 8, THREE.MathUtils.lerp(baseFogFar, 58, darkness) + fogOffset);
     this.applyNightShiftPalette(darkness);
     this.updateMuzzleFlashes(at);
     this.scene.background = this.background;
@@ -479,7 +507,7 @@ export class LightRig {
     if (!this.nightShift.enabled) {
       const day = this.dayPalette;
       this.background.copy(day ? dayPaletteColor(day.background) : this.dayBackground);
-      this.fog.color.copy(this.dayFog);
+      this.fog.color.copy(day?.fog ? dayPaletteColor(day.fog) : this.dayFog);
       this.sun.color.copy(day ? dayPaletteColor(day.sun) : this.daySun);
       this.sun.intensity = 2.35 * (day?.sunIntensityMult ?? 1);
       this.fill.color.copy(this.dayFill);
@@ -501,22 +529,24 @@ export class LightRig {
       this.fill.groundColor.copy(palette.ground);
       this.fill.intensity = Math.max(
         palette.fillIntensity,
-        Balance.contracts.nightShift.nightAmbientFloorIntensity * darkness,
+        Balance.contracts.nightShift.nightAmbientFloorIntensity * this.nightAmbientFloorMultiplier * darkness,
       );
-      setWorldSpriteTint(palette.spriteTint);
+      // Sprites do not receive point lights; preserve readable color under their carried lights.
+      const spriteFill = darkness * 0.55;
+      setWorldSpriteTint(this.spriteTint.copy(palette.spriteTint).multiplyScalar(1 - spriteFill).addScalar(spriteFill));
       return;
     }
 
     if (this.nightShift.phase === 'dawn') {
-      this.background.copy(this.dawnBackground);
-      this.fog.color.copy(this.dawnFog);
-      this.sun.color.copy(this.dawnSun);
-      this.sun.intensity = 2.05;
-      this.fill.color.copy(this.dawnFill);
-      this.fill.groundColor.copy(this.dawnGround);
-      this.fill.intensity = 1.2;
+      this.background.copy(this.dawnBackground).lerp(this.darkBackground, darkness);
+      this.fog.color.copy(this.dawnFog).lerp(this.darkFog, darkness);
+      this.sun.color.copy(this.dawnSun).lerp(this.darkSun, darkness);
+      this.sun.intensity = THREE.MathUtils.lerp(2.05, 0, darkness);
+      this.fill.color.copy(this.dawnFill).lerp(this.darkFill, darkness);
+      this.fill.groundColor.copy(this.dawnGround).lerp(this.darkGround, darkness);
+      this.fill.intensity = Math.max(THREE.MathUtils.lerp(1.2, 0, darkness), Balance.contracts.nightShift.nightAmbientFloorIntensity * this.nightAmbientFloorMultiplier * darkness);
       this.sun.position.y = 18;
-      setWorldSpriteTint('#ffffff');
+      setWorldSpriteTint(this.spriteTint.set('#ffffff').lerp(this.darkFill, darkness * 0.45));
       return;
     }
 
@@ -528,8 +558,9 @@ export class LightRig {
     this.sun.intensity = THREE.MathUtils.lerp(2.35, 0, darkness);
     this.fill.color.copy(this.dayFill).lerp(this.darkFill, darkness);
     this.fill.groundColor.copy(this.dayGround).lerp(this.darkGround, darkness);
-    this.fill.intensity = THREE.MathUtils.lerp(1.12, 0, darkness);
-    setWorldSpriteTint(this.fill.color);
+    this.fill.intensity = Math.max(THREE.MathUtils.lerp(1.12, 0, darkness), Balance.contracts.nightShift.nightAmbientFloorIntensity * this.nightAmbientFloorMultiplier * darkness);
+    // Match the readability lift of authored palettes; sprites cannot receive carried point lights.
+    setWorldSpriteTint(this.spriteTint.copy(this.fill.color).multiplyScalar(1 - darkness * 0.55).addScalar(darkness * 0.55));
   }
 
   private syncNightPools(sources: readonly LightSource[]): void {

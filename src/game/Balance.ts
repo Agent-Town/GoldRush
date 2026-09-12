@@ -584,7 +584,7 @@ export const Balance = {
     coalPerSeam: 4,
     coalHarvestRange: 1.35,
     coalHarvestSeconds: 0.8,
-    coalSeconds: 12,
+    coalSeconds: 36,
     tickSeconds: 1,
     pressurePerTick: 4,
     safeMin: 25,

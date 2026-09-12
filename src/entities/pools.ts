@@ -880,6 +880,7 @@ export class EnemyPool {
     thiefContext?: ThiefUpdateContext,
     wreckerContext?: WreckerUpdateContext,
     movementSpeedMultiplier: (enemy: ClaimJumperEnemy) => number = () => 1,
+    contactPositions?: readonly THREE.Vector3[],
   ): void {
     this.feverPulse += delta * Balance.legibility.feveredPulseSpeed;
     this.rebuildSpatialHash();
@@ -952,6 +953,7 @@ export class EnemyPool {
         thiefContext,
         wreckerContext,
         movementSpeedMultiplier(enemy),
+        contactPositions,
       );
       if (contacted && onContact(enemy)) break;
     }

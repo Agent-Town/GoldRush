@@ -1,0 +1,33 @@
+{
+  "$schema": "gold-rush layer contract v1",
+  "batch": "map-art-repairs-20260908-archive-materials-86",
+  "notes": "Integrated91: native material atlas and isotropic planar UVs; west/east bookcase and warning empty-shelf geometry derive from contract plate. Targeted visual improvement accepted; full scene fidelity remains incomplete.",
+  "slots": [
+    {
+      "file": "archive-world-landmarks-atlas.png",
+      "slot": "archive-world.landmark-material-atlas.v1",
+      "raw": "assets/raw/archive-world-landmark-material-atlas-v1.png",
+      "rawSize": [
+        1254,
+        1254
+      ],
+      "size": [
+        1024,
+        1024
+      ],
+      "sha256": "3ebb2607b09b3af5e8b64ecb803616b172bec8866ac4b0fbd8250731cc94b8ad",
+      "rawSha256": "5b241d274b1e6b22db817b5ca64d5b636b95e726fc351122ca91513e172b6874",
+      "reference": [
+        "assets/raw/plate-contract-e10-archive-world.png",
+        "assets/pilots/map-rebuild-spike/landmarks/archive-world/archive-world-landmarks-atlas.png"
+      ],
+      "generation": "native image_gen exec-f97aba14-a99f-4b7c-a2a8-f8267f34461e",
+      "recipe": "assets/pilots/map-rebuild-spike/retexture_archive_landmarks.py",
+      "evidence": "artifacts/map-art-repairs-20260908/archive-materials-86/prompt.txt",
+      "runtime": "assets/pilots/map-rebuild-spike/landmarks/archive-world/archive-world-landmarks-atlas.png",
+      "candidateEvidence": "artifacts/map-art-repairs-20260908/archive-materials-88",
+      "integrationEvidence": "artifacts/map-art-repairs-20260908/archive-integration-91",
+      "referenceSnapshot": "artifacts/map-art-repairs-20260908/archive-integration-91/production-before/archive-world-landmarks-atlas.png"
+    }
+  ]
+}

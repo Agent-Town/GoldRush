@@ -26,22 +26,26 @@ const generatedAssetUrls: Partial<Record<AssetSlotId, string>> = {
 };
 
 export const heroPoseFrameFiles = characterRuntimeFrames.heroPoseFrameFiles;
+// Resolve URL strings at build time: a delayed ?url import can lose its default
+// export when the image is shared with the eager entry table. Texture requests
+// still start through loadGeneratedTexture's existing startup gate.
 const generatedAssetUrlLoaders: Partial<Record<AssetSlotId, () => Promise<string>>> = {
-  [assetSlots.charBaron]: () => import('../../assets/processed/char-baron-sheet-walk8-r0c0.png?url').then((module) => module.default),
-  [assetSlots.charTownTavernkeeper]: () => import('../../assets/processed/townsfolk-tavernkeeper.png?url').then((module) => module.default),
-  [assetSlots.charTownStorekeeper]: () => import('../../assets/processed/townsfolk-storekeeper.png?url').then((module) => module.default),
-  [assetSlots.charTownElder]: () => import('../../assets/processed/townsfolk-elder.png?url').then((module) => module.default),
-  [assetSlots.charTownPreacher]: () => import('../../assets/processed/townsfolk-preacher.png?url').then((module) => module.default),
-  [assetSlots.charTownSchoolteacher]: () => import('../../assets/processed/townsfolk-schoolteacher.png?url').then((module) => module.default),
-  [assetSlots.charTownAssayClerk]: () => import('../../assets/processed/townsfolk-assay-clerk.png?url').then((module) => module.default),
-  [assetSlots.charTownYoungsterA]: () => import('../../assets/processed/townsfolk-youngster-a.png?url').then((module) => module.default),
-  [assetSlots.charTownYoungsterB]: () => import('../../assets/processed/townsfolk-youngster-b.png?url').then((module) => module.default),
-  [assetSlots.propBaronBanner]: () => import('../../assets/processed/prop-baron-banner.png?url').then((module) => module.default),
-  [assetSlots.bldSentryBeacon]: () => import('../../assets/processed/bld-sentry-beacon.png?url').then((module) => module.default),
-  [assetSlots.bldPortraitPalisade]: () => import('../../assets/processed/bld-palisade.png?url').then((module) => module.default),
-  [assetSlots.bldPortraitSluice]: () => import('../../assets/processed/bld-sluice-works.png?url').then((module) => module.default),
-  [assetSlots.bldPortraitStockpile]: () => import('../../assets/processed/bld-stockpile-yard.png?url').then((module) => module.default),
-  [assetSlots.bldPortraitTurret]: () => import('../../assets/processed/bld-signal-turret.png?url').then((module) => module.default),
+  [assetSlots.terrainOpenSea]: async () => new URL('../../assets/processed/terrain-e5-open-sea-tile.png', import.meta.url).href,
+  [assetSlots.charBaron]: async () => new URL('../../assets/processed/char-baron-sheet-walk8-r0c0.png', import.meta.url).href,
+  [assetSlots.charTownTavernkeeper]: async () => new URL('../../assets/processed/townsfolk-tavernkeeper.png', import.meta.url).href,
+  [assetSlots.charTownStorekeeper]: async () => new URL('../../assets/processed/townsfolk-storekeeper.png', import.meta.url).href,
+  [assetSlots.charTownElder]: async () => new URL('../../assets/processed/townsfolk-elder.png', import.meta.url).href,
+  [assetSlots.charTownPreacher]: async () => new URL('../../assets/processed/townsfolk-preacher.png', import.meta.url).href,
+  [assetSlots.charTownSchoolteacher]: async () => new URL('../../assets/processed/townsfolk-schoolteacher.png', import.meta.url).href,
+  [assetSlots.charTownAssayClerk]: async () => new URL('../../assets/processed/townsfolk-assay-clerk.png', import.meta.url).href,
+  [assetSlots.charTownYoungsterA]: async () => new URL('../../assets/processed/townsfolk-youngster-a.png', import.meta.url).href,
+  [assetSlots.charTownYoungsterB]: async () => new URL('../../assets/processed/townsfolk-youngster-b.png', import.meta.url).href,
+  [assetSlots.propBaronBanner]: async () => new URL('../../assets/processed/prop-baron-banner.png', import.meta.url).href,
+  [assetSlots.bldSentryBeacon]: async () => new URL('../../assets/processed/bld-sentry-beacon.png', import.meta.url).href,
+  [assetSlots.bldPortraitPalisade]: async () => new URL('../../assets/processed/bld-palisade.png', import.meta.url).href,
+  [assetSlots.bldPortraitSluice]: async () => new URL('../../assets/processed/bld-sluice-works.png', import.meta.url).href,
+  [assetSlots.bldPortraitStockpile]: async () => new URL('../../assets/processed/bld-stockpile-yard.png', import.meta.url).href,
+  [assetSlots.bldPortraitTurret]: async () => new URL('../../assets/processed/bld-signal-turret.png', import.meta.url).href,
 };
 // Eager for the same reason as src/assets/SpriteAnimator.ts (see the law comment there): a lazy
 // `?url` glob costs one JS module and one round trip PER CELL, and the town's own actors go

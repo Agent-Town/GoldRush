@@ -129,7 +129,18 @@ export class SharedAtlasPlugin implements GLTFLoaderPlugin {
     // Leave external images and GPU-compressed formats to their native loaders.
     if (image?.bufferView === undefined || !/^image\/(png|jpeg|webp|avif)$/.test(image.mimeType)) return null;
     return parser.getDependency('bufferView', image.bufferView).then(async (buffer: ArrayBuffer) => {
-      const texture = await cache.acquire(new Uint8Array(buffer), () => parser.loadImageSource(sourceIndex, loader));
+      const texture = await cache.acquire(new Uint8Array(buffer), async () => {
+        const bitmapLoader = loader as THREE.ImageBitmapLoader;
+        if (!bitmapLoader.isImageBitmapLoader) return parser.loadImageSource(sourceIndex, loader);
+        // Embedded bytes are already resident. A second fetch of a blob URL can be
+        // cancelled during navigation before the atlas has even reached the decoder.
+        const bitmap = await createImageBitmap(new Blob([buffer], { type: image.mimeType }), {
+          ...bitmapLoader.options, colorSpaceConversion: 'none',
+        });
+        const decoded = new THREE.Texture(bitmap);
+        decoded.needsUpdate = true;
+        return decoded;
+      });
       const definition = parser.json.textures[index];
       const sampler = parser.json.samplers?.[definition.sampler] ?? {};
       texture.magFilter = FILTERS[sampler.magFilter as keyof typeof FILTERS] as THREE.MagnificationTextureFilter ?? THREE.LinearFilter;

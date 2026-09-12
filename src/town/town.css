@@ -1551,3 +1551,28 @@ figure:has(> .town-ui__contract-art-image--interim)::after {
     padding-inline: 11px;
   }
 }
+
+@media (orientation: landscape) and (max-height: 500px) and (pointer: coarse), (orientation: landscape) and (max-height: 500px) and (max-width: 760px) {
+  .town-ui__prompt-stack {
+    top: calc(max(12px, env(safe-area-inset-top)) + 56px);
+    bottom: auto;
+    left: 172px;
+    right: max(12px, env(safe-area-inset-right));
+    width: auto;
+    max-height: calc(100dvh - 80px);
+    transform: none;
+    overflow-y: auto;
+    pointer-events: auto;
+    overscroll-behavior: contain;
+    touch-action: pan-y;
+  }
+  .town-ui__prompt-stack > * { flex-shrink: 0; }
+  .town-ui__prompt-button { min-height: 44px; }
+  .town-ui__board-shell { display: block; overflow-y: auto; overscroll-behavior: contain; }
+  .town-ui__contracts { overflow: visible; }
+}
+
+@media (max-width: 760px) {
+  .town-ui__contract { grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(120px, 18vh) auto; }
+  .town-ui__contract-art { min-height: 120px; }
+}

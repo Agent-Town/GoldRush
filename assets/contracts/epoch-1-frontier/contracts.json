@@ -103,6 +103,14 @@
         "river": false,
         "ford": false,
         "waterSources": [{ "kind": "spring_pond", "x": -18, "z": -18, "radius": 1.4 }],
+        "harvestAnchors": [
+          { "x": -22, "z": -6.8 },
+          { "x": -9, "z": 6.7 },
+          { "x": -5.5, "z": -6.4 },
+          { "x": 7.5, "z": 6.5 },
+          { "x": 18, "z": -7 },
+          { "x": 25, "z": 6.9 }
+        ],
         "heightfield": {
           "id": "dry-gulch-mesa-washes",
           "mode": "visual",
@@ -137,9 +145,6 @@
             "cactus": 24
           }
         },
-        "engineDependencies": [
-          { "dep": "dry-gulch-inert-fields", "status": "missing", "description": "Needs consumers for sluice water-source gating; the declared dry-gulch seam yield is tracked separately until that field is single-sourced." }
-        ],
         "lanes": {
           "spawnEdges": ["north", "south", "east", "west"],
           "territoryRingBiasWaves": 0,
@@ -265,6 +270,94 @@
           { "id": "south-claim-stake", "x": 0, "z": -12, "heroStart": true },
           { "id": "north-expansion-marker", "x": 0, "z": 12, "heroStart": false }
         ],
+        "waterMask": {
+          "id": "twin-banks-true-braid-dev",
+          "regions": [
+            {
+              "id": "west-ford",
+              "kind": "rect",
+              "zone": "ford",
+              "minX": -19,
+              "maxX": -13,
+              "minZ": -5.5,
+              "maxZ": 5.5
+            },
+            {
+              "id": "east-ford",
+              "kind": "rect",
+              "zone": "ford",
+              "minX": 13,
+              "maxX": 19,
+              "minZ": -5.5,
+              "maxZ": 5.5
+            },
+            {
+              "id": "west-source-box",
+              "kind": "rect",
+              "zone": "river",
+              "minX": -30,
+              "maxX": -26,
+              "minZ": -2,
+              "maxZ": 2
+            },
+            {
+              "id": "north-channel",
+              "kind": "polyline_band",
+              "zone": "river",
+              "halfWidth": 1.5,
+              "points": [
+                {
+                  "x": -28,
+                  "z": 0
+                },
+                {
+                  "x": -14,
+                  "z": 4
+                },
+                {
+                  "x": 0,
+                  "z": 2
+                },
+                {
+                  "x": 14,
+                  "z": 4
+                },
+                {
+                  "x": 28,
+                  "z": 0
+                }
+              ]
+            },
+            {
+              "id": "south-channel",
+              "kind": "polyline_band",
+              "zone": "river",
+              "halfWidth": 1.5,
+              "points": [
+                {
+                  "x": -28,
+                  "z": 0
+                },
+                {
+                  "x": -14,
+                  "z": -4
+                },
+                {
+                  "x": 0,
+                  "z": -2
+                },
+                {
+                  "x": 14,
+                  "z": -4
+                },
+                {
+                  "x": 28,
+                  "z": 0
+                }
+              ]
+            }
+          ]
+        },
         "waterSources": [],
         "heightfield": {
           "id": "twin-banks-subtle-relief",

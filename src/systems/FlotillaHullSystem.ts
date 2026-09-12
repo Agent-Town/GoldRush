@@ -1,4 +1,5 @@
 import type { ClaimJumperEnemy } from '../entities/Enemy';
+import type { BoatRiderPosition } from '../entities/ClaimBoat';
 import type { ContractManifest } from '../meta/ContractFamilies';
 
 type Point = Readonly<{ x: number; z: number }>;
@@ -54,7 +55,7 @@ export class FlotillaHullSystem {
     return this.hulls.every(({ lost }) => lost);
   }
 
-  reanchor(hullId: string): boolean {
+  reanchor(hullId: string, riders: readonly BoatRiderPosition[] = []): boolean {
     const hull = this.hulls.find(({ id }) => id === hullId);
     if (!hull || hull.lost || this.currentAt < this.nextReshapeAt) return false;
     const centroid = this.centroid();
@@ -62,7 +63,24 @@ export class FlotillaHullSystem {
     const dz = centroid.z - hull.z;
     const distance = Math.hypot(dx, dz);
     if (distance <= 0.01) return false;
-    const step = Math.min(FLOTILLA_HULL_RULES.reshapeDistance, distance);
+    let step = Math.min(FLOTILLA_HULL_RULES.reshapeDistance, distance);
+    const ux = dx / distance, uz = dz / distance;
+    for (const other of this.hulls) {
+      if (other === hull || other.lost) continue;
+      const ox = hull.x - other.x, oz = hull.z - other.z;
+      const approach = -(ox * ux + oz * uz);
+      const radius = hull.radius + other.radius;
+      const discriminant = approach * approach - (ox * ox + oz * oz - radius * radius);
+      if (approach > 0 && discriminant > 0) {
+        step = Math.min(step, Math.max(0, approach - Math.sqrt(discriminant)));
+      }
+    }
+    if (step <= 0.01) return false;
+    for (const rider of riders) {
+      if (Math.hypot(rider.x - hull.x, rider.z - hull.z) > hull.radius) continue;
+      rider.x += dx / distance * step;
+      rider.z += dz / distance * step;
+    }
     hull.x += dx / distance * step;
     hull.z += dz / distance * step;
     this.nextReshapeAt = this.currentAt + FLOTILLA_HULL_RULES.reshapeCooldownSeconds;
@@ -71,6 +89,16 @@ export class FlotillaHullSystem {
 
   targetPosition(fallback: Point): Point {
     return this.straggler() ?? fallback;
+  }
+
+  /** Move the surviving formation between authored anchorages, retaining its current shape. */
+  moveAnchorage(dx: number, dz: number, riders: readonly BoatRiderPosition[]): void {
+    const alive = this.hulls.filter(({ lost }) => !lost);
+    for (const rider of riders) {
+      if (!alive.some(hull => Math.hypot(rider.x - hull.x, rider.z - hull.z) <= hull.radius)) continue;
+      rider.x += dx; rider.z += dz;
+    }
+    for (const hull of alive) { hull.x += dx; hull.z += dz; }
   }
 
   reset(): void {

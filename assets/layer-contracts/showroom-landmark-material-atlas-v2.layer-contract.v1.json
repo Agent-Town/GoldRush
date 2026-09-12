@@ -1,0 +1,31 @@
+{
+  "$schema": "gold-rush layer contract v1",
+  "batch": "map-art-repairs-20260908-showroom-craft199",
+  "notes": "Native atlas used by the integrated furnished Showroom; full concept fidelity remains open.",
+  "slots": [
+    {
+      "file": "showroom-landmark-material-atlas-v2.png",
+      "slot": "showroom.landmark-material-atlas.v2",
+      "raw": "assets/raw/showroom-landmark-material-atlas-v2.png",
+      "rawSize": [
+        1254,
+        1254
+      ],
+      "size": [
+        1024,
+        1024
+      ],
+      "rawSha256": "8645e419714b0ffb39edaf2949079d8feea34da8d22e937300738c698b2c9b24",
+      "reference": [
+        "assets/raw/showroom-landmark-material-atlas-v1.png",
+        "assets/raw/plate-contract-e6-showroom.png"
+      ],
+      "generation": "native image_gen exec-e6b5e614-0cef-4b74-8269-d0bce6c0a0c8",
+      "referenceUse": "Image1 is the atlas edit target; Image2 the supplied concept style reference. Both inspected and passed as local image inputs.",
+      "prompt": "artifacts/map-art-repairs-20260908/showroom-craft-199/prompt.txt",
+      "recipe": "artifacts/map-art-repairs-20260908/showroom-craft-199/build.py",
+      "candidateEvidence": "artifacts/map-art-repairs-20260908/showroom-craft-199",
+      "productionRecipe": "assets/pilots/map-rebuild-spike/build_showroom_landmarks.py"
+    }
+  ]
+}
