@@ -5098,6 +5098,24 @@
               "note": "verdict SPLIT — Astra branch held on sol/code-review-20260908; owner desk A19"
             },
             {
+              "id": "sprites-split-land",
+              "title": "A19 stage 1 (owner 2026-09-13 \"that is ok\"): land the sprite-roster branch's tooling, prose and non-payload enemy/bandit/Baron families by selective checkout, halo guard kept strict, never merging the 24.6 GB branch",
+              "status": "planned",
+              "taskFile": "sprites-split-land.md",
+              "lane": "lane-c",
+              "registeredBy": "attended 2026-09-13",
+              "blockedBy": "factory stopped (fires and Codex) — queue when it wakes"
+            },
+            {
+              "id": "town-cast-walk8-hard-alpha-recut",
+              "title": "A19 stage 2: re-cut the ten town-cast walk8 families with a hard alpha edge so the first town fits 35,000,000 B with 800 KB headroom, plus the 3.3 MB lossless re-encode; gates on sprites-split-land",
+              "status": "planned",
+              "taskFile": "town-cast-walk8-hard-alpha-recut.md",
+              "lane": "lane-c",
+              "registeredBy": "attended 2026-09-13",
+              "dependsOn": "sprites-split-land"
+            },
+            {
               "id": "drain-review-maps-campaign",
               "title": "Astra's map art and playability campaign (883a3521e) gated on a merged tree per layer: docs, guards, art, contract data per map with the retirements named, src, deploy.sh; the 17 live rows' replays and the null floors attributed against main",
               "status": "shipped",

@@ -5,6 +5,7 @@
 **Control**: detached worktree `wt-sprites-control` at **`27227acdc`** — main exactly as this branch saw it, so the only difference between the two trees is Astra's content.
 **Reviewer**: Claude Opus 5, native, 2026-09-12. Every number below comes from a command run on one of those two trees; transcripts in `artifacts/drain-review-sprites-roster/transcripts/`.
 **Finalised attended** (Fable 5.1, 2026-09-12) after the owner asked for a lean review and the reviewer was stopped: §4 was filled from its transcripts; every other number is the reviewer's; the verdict is unchanged.
+**Owner ruling 2026-09-13, verbatim: "A19 - that is ok"** → option (b) of §5 F-SPRDR-2. Follow-on masters: `tasks/sprites-split-land.md` (stage 1) and `tasks/town-cast-walk8-hard-alpha-recut.md` (stage 2).
 
 ## VERDICT: **SPLIT** — land the tooling and the fringe cure, hold the cells
 
