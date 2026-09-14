@@ -616,6 +616,68 @@ function cure(r) {
   return 0
 }
 
+// s2561 — F-2561-1. `--all` is prescribed by scripts/fire.md §2F as THE answer to "a lane
+// branch can hold unabsorbed content with no done-move at all", and the law described its
+// output as "the COMPLETE worktree set ... the rest are attended-owned worktree-agent-* /
+// sol/* / gr-task-* trees". Measured s2561: the registry holds 119 worktrees and fleet()
+// reports 30 (26 agent-* + 4 lane-*) — ZERO sol/*, ZERO gr-task-*, i.e. the two populations
+// the law named as INCLUDED are precisely the two it excludes. fleet() has two filters and
+// each drops a different population: it requires a `branch ` line (so every DETACHED
+// worktree is dropped) and a path ending in /worktrees/<name> (so every off-convention path
+// is dropped). 89 trees were unreported, 13 of them AHEAD of main.
+//
+// DECLARED, NOT WIDENED, and the restraint is measured rather than stylistic: resolve()
+// matches by BRANCH as well as slot, and cure() runs `git reset --hard main` in the matched
+// worktree (:605). Widening fleet() would therefore make `sol/town-blender-v3` and the
+// gr-task-* trees curable BY NAME — the Reset Massacre (Mistake #2) aimed at attended work.
+// The reader needs to know the denominator, not to be handed a lever over someone else's tree.
+//
+// The AHEAD count is computed rather than merely the coverage ratio, because a bare "89
+// unreported" is an alarm with no remedy (F-2449-1) — the actionable fact is whether any of
+// them holds something main has not absorbed. Cost measured s2561: 1.1 s for all 89 against
+// a ~20 s `--all`, so it is paid for. Every AHEAD tree today is attended-owned and NOT a
+// fire's to drain; the declaration says so, so the number cannot be misread as a missed drain.
+export function fleetCoverage() {
+  const r = tryGit(['worktree', 'list', '--porcelain'])
+  if (!r.ok) return { source: 'unverifiable', registered: 0, unreported: [] }
+  const trees = []
+  let cur = null
+  for (const line of r.out.split('\n')) {
+    if (line.startsWith('worktree ')) {
+      cur = { path: line.slice(9).trim(), branch: null, head: null }
+      trees.push(cur)
+    } else if (!cur) continue
+    else if (line.startsWith('branch ')) cur.branch = line.slice(7).trim().replace(/^refs\/heads\//, '')
+    else if (line.startsWith('HEAD ')) cur.head = line.slice(5).trim()
+  }
+  const unreported = []
+  for (const t of trees) {
+    const slotted = /\/worktrees\/([^/]+)$/.test(t.path)
+    if (t.branch && slotted) continue // fleet() reports this one
+    t.why = !t.branch ? 'detached (no branch line)' : 'path (not /worktrees/<name>)'
+    // The drain question, asked in a form that reports BY VALUE for both shapes.
+    // DELIBERATELY NOT `merge-base --is-ancestor`: it uses exit 1 as a legitimate verdict
+    // ("not an ancestor"), and this file's tryGit collapses a failure to
+    // `String(err.stderr || err.message)` — which is NON-EMPTY for exit 1, because node
+    // supplies "Command failed: ..." when stderr is bare. So the stderr-is-empty
+    // discriminator (F-2212-1) is unavailable HERE even though it is correct in general,
+    // and a real "not an ancestor" would have been misfiled as could-not-answer.
+    // `rev-list --count main..<rev>` answers the same question with a NUMBER and no
+    // overloaded exit code, so a failure is unambiguously a failure (F-2485-1: an error is
+    // could-not-answer, never "nothing here").
+    const rev = t.branch || t.head
+    if (!rev) t.state = 'could-not-answer'
+    else {
+      const c = tryGit(['rev-list', '--count', `main..${rev}`])
+      const n = c.ok ? Number(c.out.trim()) : NaN
+      if (!Number.isFinite(n)) t.state = 'could-not-answer'
+      else t.state = n > 0 ? `ahead ${n}` : 'absorbed'
+    }
+    unreported.push(t)
+  }
+  return { source: 'read', registered: trees.length, unreported }
+}
+
 // Importing this module must not run the CLI — the guard exists so classifyDirt
 // can be tested without a repo, and it is keyed on the entry script's NAME so a
 // test importing it (process.argv[1] = the test file) never trips it (s1416).
@@ -638,7 +700,49 @@ const target = argv.find((a) => !a.startsWith('--'))
 }
 
 if (argv.includes('--all')) {
-  for (const lane of fleet()) report(inspect(lane))
+  const reported = fleet()
+  for (const lane of reported) report(inspect(lane))
+  // s2561 — F-2561-1. Printed on EVERY --all including the happy path (F-2208-1): the
+  // failure state here is a SILENT NARROWING (fleet() reports 30 of 119 registered trees)
+  // and a declaration that appears only when something is ahead re-creates the ambiguity
+  // it removes. This is the denominator, not a verdict — --all is an audit and still
+  // exits 0 in every state (see the header), because an attended worktree ahead of main
+  // is a LAWFUL routine state and a red here would be excused into uselessness (F-1460-1).
+  const cov = fleetCoverage()
+  if (cov.source !== 'read') {
+    console.log('')
+    console.log('⚠️  worktree coverage: COULD NOT ANSWER — `git worktree list` failed, so the')
+    console.log('    rows above are of an UNKNOWN denominator. Do not read them as the fleet.')
+  } else {
+    const ahead = cov.unreported.filter((t) => t.state.startsWith('ahead'))
+    const unk = cov.unreported.filter((t) => t.state === 'could-not-answer')
+    console.log('')
+    console.log(`worktree coverage: reported ${reported.length} of ${cov.registered} registered — ` +
+      `${cov.unreported.length} NOT reported (${ahead.length} ahead of main, ${unk.length} could-not-answer).`)
+    if (cov.unreported.length) {
+      console.log('    fleet() selects on a `branch` line AND a path ending /worktrees/<name>, so detached')
+      console.log('    worktrees and off-convention paths (sol/*, gr-task-*, /tmp arenas) are NOT above.')
+      console.log('    Those are ATTENDED-OWNED and NOT yours to drain — an `ahead` count here is a thing')
+      console.log('    to REPORT, never to touch. List them: node scripts/lane-usable.mjs --unreported')
+    }
+  }
+  process.exit(0)
+}
+if (argv.includes('--unreported')) {
+  // Read-only BY DESIGN: it deliberately offers no --cure path, because every tree it
+  // names belongs to someone else (see the fleetCoverage comment on the Reset Massacre).
+  const cov = fleetCoverage()
+  if (cov.source !== 'read') {
+    console.error('⛔ CANNOT VERIFY — `git worktree list` failed; the unreported set is unknown.')
+    process.exit(2)
+  }
+  console.log(`worktrees the --all fleet does not report: ${cov.unreported.length} of ${cov.registered} registered`)
+  for (const t of cov.unreported.sort((a, b) => a.state.localeCompare(b.state))) {
+    console.log(`  ${t.state.padEnd(22)} ${(t.branch || `(detached ${String(t.head).slice(0, 8)})`).padEnd(38)} ${t.path}`)
+  }
+  console.log('')
+  console.log('ATTENDED-OWNED. Report an `ahead` row in the handoff; do NOT drain, reset or prune it')
+  console.log('(F-2485-1: a stale registration is the only thing keeping a tree in any subject set).')
   process.exit(0)
 }
 if (!target) {
