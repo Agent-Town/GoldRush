@@ -41,6 +41,7 @@ QUOTE: town_assay_clerk: Gold in, proof out. That's the bargain.
 QUOTE: town_preacher: The bell is for courage, not judgment.
 QUOTE: town_storekeeper: If you can count it, I can stock it.
 QUOTE: town_schoolteacher: A good question is a lantern.
+CANON (owner 2026-09-14, verbatim "They are Pip and Juniper as I know them?"): the youngsters are Pip and Juniper on every surface, story cards included; "Youngster A/B" on a card is a placeholder to retire (tasks/town-cast-rulings-a13-a17.md).
 QUOTE: town_youngster_a: I found a shiny rock. It is probably science.
 QUOTE: town_youngster_b: If the Baron comes, he has to do sums first.
 
