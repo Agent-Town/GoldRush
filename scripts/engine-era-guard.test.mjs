@@ -67,7 +67,9 @@ test('the landed registry names the live engine and stays outside its hash corpu
     assert.ok(path.relative(input, REGISTRY).startsWith('..'), `${REGISTRY} must stay outside ${input}`);
   }
   const registry = await assertCurrentEra(ROOT);
-  assert.equal(registry.era, 5);
+  // era 6 "the Re-surveyed Claims" opened 2026-09-14 by maps-campaign-land-era6 (owner 2026-09-13: "we don't have players yet so we
+  // can just keep going"; name ratified 2026-09-14). Era 5 "the Replayed Board" is the last history entry.
+  assert.equal(registry.era, 6);
 
   const [grSim, replay, worker, game, lanternController] = await Promise.all([
     readFile(path.join(ROOT, 'scripts/gr-sim.mjs'), 'utf8'),
@@ -94,8 +96,15 @@ test('the landed registry names the live engine and stays outside its hash corpu
   ]) {
     const tape = JSON.parse(await readFile(path.join(ROOT, file), 'utf8'));
     assert.ok(tape.id.startsWith(id), `${id} fixture must stay the intended stored reel`);
-    assert.equal(tape.meta.era, registry.era);
-    assert.ok(engineEraIncludes(registry, tape.meta.engineHash), `${id} must stay playable in era ${registry.era}`);
+    // maps-campaign-land-era6 (attended 2026-09-14): these three Claude-debut reels rode era 5 and stand RETIRED under
+    // era 6 — the county reads them "This reel rode era 5; the county accepts era 6" (ADR-004), and they are
+    // NOT re-stamped: on the era-6 engine they do not even install (the strict door reads their pre-ADR-005
+    // orders as a malformed tape). A stored reel keeps the papers it rode with; the guard now checks those
+    // papers against era 5's record in `history`, which carries the full era-5 lineage for exactly this.
+    const era5 = registry.history.find((entry) => entry.era === 5);
+    assert.ok(era5 && Array.isArray(era5.pins), 'era 5 must stay in history with its pins');
+    assert.equal(tape.meta.era, 5, `${id} is an era-5 stored reel and keeps its papers`);
+    assert.ok(engineEraIncludes(era5, tape.meta.engineHash), `${id} must remain attributable to era 5's lineage`);
   }
 });
 

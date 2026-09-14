@@ -690,7 +690,9 @@ async function checkDoorEnvelopes(onRequest, validateTape, validateRunTape, subm
     explicit: clockSources.filter(({ explicit }) => explicit).length,
     missing: clockSources.filter(({ derived, explicit }) => !derived && !explicit).length,
   };
-  equal(clockCensus, { total: 42, derived: 24, explicit: 18, missing: 0 }, 'contract clock census is pinned');
+  // maps-campaign-land-era6 (attended 2026-09-14): Astra's map campaign 883a3521e moved one contract's clock from an explicit
+  // clockTicks to a derived secureWave (see reviews/maps-campaign-land-era6.md F-MAPL-5); the census follows the data it measures.
+  equal(clockCensus, { total: 42, derived: 25, explicit: 17, missing: 0 }, 'contract clock census is pinned');
   console.log(`contract clock census ${clockCensus.total}/${clockCensus.derived}/${clockCensus.explicit}/${clockCensus.missing}`);
   equal([
     'the-claim',

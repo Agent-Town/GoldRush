@@ -446,7 +446,10 @@ test('same-game audit runs over every contract and keeps its row schema', () => 
   // and the verb alone moves nothing here — which is the finding: `doorVerbs` is derived from the
   // union, so the verb entered this script for free, and the audit still could not see the
   // asymmetry because it had never asked the question.
-  assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 533, equal: 1229, 'not-offered': 0 });
+  // maps-campaign-land-era6 (2026-09-14): Astra's map campaign moved 22 rows from agent-lacks to equal (the door now
+  // admits the Archive World's restoration, the flotilla and the E8 air work on both sides) and added one row:
+  // 533 -> 511 agent-lacks, 1229 -> 1252 equal; docs/bench/same-game-audit.md regenerated on the landed tree.
+  assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 511, equal: 1252, 'not-offered': 0 });
 
   assert.ok(audit.admission.measurements.every((entry) => entry.booted && entry.firstView && entry.terminal && !entry.error));
 });

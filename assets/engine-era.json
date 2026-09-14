@@ -1,9 +1,9 @@
 {
-  "era": 5,
-  "name": "the Replayed Board",
-  "engineHash": "86e60c92f65b8b3f7c42dc285c619c1e73b9d931899c72035bf9236f13b13509",
-  "declaredAt": "2026-08-31",
-  "note": "Owner ruling 2026-08-31: \"we don't need stuff in the leaderboards that does not get replayed\". The era marks a board-law change: only current-lineage reels rank; simulation behaviour did not change.",
+  "era": 6,
+  "name": "the Re-surveyed Claims",
+  "engineHash": "0e9bb11725d9375c78085ab187fab3c7b13bf09fba25ab97c5d7e43181e0481d",
+  "declaredAt": "2026-09-14",
+  "note": "Era 6 opens with Astra's map campaign (sol/map-art-inventory-20260908 883a3521e) landed by maps-campaign-land-era6 on 2026-09-14: 17 contracts re-parameterised (tileParams on 13, twists on 3, briefings on 5), the door tightened to the contract's own research epoch, 66 src files, the map-rebuild-spike terrain, plaza props and flotilla models. Owner ruling 2026-09-13, verbatim: \"ah, that is all no problem. we don't have players yet so we can just keep going\" and \"we then have to make another run in the future but not immediately\"; the name ratified 2026-09-14 (\"the Re-surveye Claims\" is good for me). Every era-5 reel reads \"This reel rode era 5; the county accepts era 6\" and stands retired, counted. Heat 14 re-rides the boards on this era when the owner says so.",
   "viewSchema": {
     "version": 2,
     "fields": [
@@ -86,527 +86,9 @@
   },
   "pins": [
     {
-      "engineHash": "c0a015aed8285ebf05228ff1165395b86b9496d66af45e7c5b9c41d6bffc237b",
-      "aliases": [
-        "895ca0fe4bf718327d2bef695a5eb21602f3392521c83cc4e2ed745a8267bbdf"
-      ],
-      "pinnedAt": "2026-08-31T13:37:49+07:00",
-      "cause": "Era 5 declaration: replayability became a board and submission law; the Lantern Show gained dismissible refusal cleanup and live gold/health copy. Simulation behaviour did not change."
-    },
-    {
-      "engineHash": "417ac150318346d52acf9658a6578bc1cc9d54d484c922e80fb6cb8965c3c864",
-      "aliases": [
-        "a0b6b3b0782065a003911b961b4d8a3946e6b65ac67efbdcae7c42cb3e9dbef2"
-      ],
-      "pinnedAt": "2026-09-01",
-      "cause": "door-dawn-fencepost merge b80253bff moved src/playbook/PlaybookFormat.ts (the inclusive-endpoint cure); the s2411 drain owed this append and missed it - heat 9 stopped on the gap"
-    },
-    {
-      "engineHash": "25040ad58451125adfa7d1d6c19c70f40ce17cd8cc6d377134e0a545922ca2ca",
-      "aliases": [
-        "a0b6b3b0782065a003911b961b4d8a3946e6b65ac67efbdcae7c42cb3e9dbef2"
-      ],
-      "pinnedAt": "2026-09-01",
-      "cause": "fires guard-hygiene package.json edits (95b495e2b test-timeout, 19c19469a guard config) - package.json sits in ENGINE_SOURCE_INPUTS so factory tooling tweaks rotate the engine identity; behaviour unchanged"
-    },
-    {
-      "engineHash": "d47f32f68edb5001dfa40687b5767872bf2045280cfb16d9434b2d2c0d8e2f0b",
-      "aliases": [
-        "a0b6b3b0782065a003911b961b4d8a3946e6b65ac67efbdcae7c42cb3e9dbef2"
-      ],
-      "pinnedAt": "2026-09-02",
-      "cause": "fires guard-hygiene package.json edits after c13b4c24 (8dbb5122a F-2424-1, b116a45be F-2433-1, 3d9484a61 F-2435-1) - tooling files inside ENGINE_SOURCE_INPUTS; behaviour unchanged. The surface narrowing (engine-surface-narrowing) ends this class."
-    },
-    {
-      "engineHash": "eaadcc383d5d16f20a0534c9d4824bee87cae916b94f6491bb8fe9055a39c78a",
-      "aliases": [],
-      "pinnedAt": "2026-09-02",
-      "cause": "engine identity narrowed to replay-bearing source and data; old-basis pins retain their new-basis aliases, and show/worker membership now accepts either basis"
-    },
-    {
-      "engineHash": "93c80710c048c5e1c77acab19fd0de575bff15ca8beb8d0ab80bcbebd702b2c1",
-      "pinnedAt": "2026-09-02",
-      "cause": "content re-hash, no behaviour change: lantern-true-terrain drain (c1084e547) + the lantern_post reel mapping (4c4b0a9a2) moved src/ui only; same era per F-1441-3",
-      "aliases": []
-    },
-    {
-      "engineHash": "91c43545642dde32a7ecafb3c6716acbf6c46e234a70e97a72f41e6a78aaa443",
-      "pinnedAt": "2026-09-02",
-      "cause": "content re-hash, no behaviour change: same-laws-harvest-parity drain (9e5d0636d) added the player Prospector dispatch input + tape input kind in src/game, src/ui, src/mp, src/story; sim untouched; same era per F-1441-3",
-      "aliases": []
-    },
-    {
-      "engineHash": "30ae0a3ce5912646b2caf68c34115ad32395ad5197897f7cb68dc8e6944fa926",
-      "aliases": [],
-      "pinnedAt": "2026-09-02T22:12:00+07:00",
-      "cause": "winnability-receipts drain b5850417a (runner commit 280d95d7f) added assets/contracts/winnability-receipts.json, a 207-line receipts ledger nothing imports; assets/contracts is inside ENGINE_SOURCE_INPUTS so the content re-hashed. Simulation behaviour did not change. The s2457 drain owed this append and missed it; s2458 measured main already outside era 5 and repaired the gap rather than pinning only its own state."
-    },
-    {
-      "engineHash": "4082ebe41a9c70652edcb84946417c879a16be404087891a2961e86c009a4cbf",
-      "aliases": [],
-      "pinnedAt": "2026-09-02T23:10:00+07:00",
-      "cause": "view-schema-versioning merge: the rider view and tape meta gained a numeric viewVersion (src/agent/View.ts, src/game/Game.ts, src/game/RunTape.ts, src/replay/AgentTapeReplay.ts, src/ui/LanternShow.ts). Observation surface only - no sim, systems, entities or Balance touched, and legacy tapes without the field stay accepted. Simulation behaviour did not change."
-    },
-    {
-      "engineHash": "a6e9fc02fe56d689ca36eeec20d16df763f13deb7c1697e38584fabc358df925",
-      "aliases": [],
-      "pinnedAt": "2026-09-02T23:54:00+07:00",
-      "cause": "e10-preserve-objective merge: the Last Claim gained a preserve twist. Corpus-touching files, measured not assumed: assets/contracts/epoch-10-deepsky/contracts.json (the twist block and enemy roster for e10-last-claim only) and src (HeadlessContractSim secure decision, Game browser secure decision, View additive fields, ContractFamilies). Both are inside ENGINE_SOURCE_INPUTS, so the content re-hashes. This is a REAL behaviour change for e10-last-claim and for that contract only: secured now requires the warm vent alive at secureWave and its fall ends the ride with reason preserve_fell. Every other contract decides exactly as before. Same era: no view field was removed or renamed and no tape shape changed."
-    },
-    {
-      "engineHash": "10c1fa66d73ba5ab527adb0991aa625cb768e24d0c6b518944e975a418871594",
-      "aliases": [],
-      "pinnedAt": "2026-09-03T01:40:00+07:00",
-      "cause": "ss-04-e3-beats merge (s2460): src/story/beats.ts gained E3_STORY_BEATS and src/story/StoryRuntime.ts loads them only when activeEpochId() is epoch-3-voltage. Content re-hash, no simulation behaviour change: story beats are presentational cards the sim never reads, and the merged tree ran test:node-guards 563 pass / 0 sim failures. Same era: the board law is unchanged."
-    },
-    {
-      "engineHash": "cb321d83cc39b86c3cc80633e5d7ca9331b24188b88a6983cd1cbeb69729437b",
-      "aliases": [],
-      "pinnedAt": "2026-09-03T03:10:00+07:00",
-      "cause": "human-tape-true-reel-stamp merge (s2461): src/game/RunTape.ts gained engineHash/era on RunTapeMeta plus runTapeRecordingMeta (resume retains the original stamp), and src/game/Game.ts now stamps fresh human tapes through it. Both are inside ENGINE_SOURCE_INPUTS, so the content re-hashes. Content re-hash only, no simulation behaviour change: the stamp is tape METADATA the sim never reads, and the merged tree ran test:node-guards 562 pass with zero sim failures. The merge also unions main viewVersion with the lane engineHash/era on the same validator, so all three fields now validate together. Same era: no view field was removed or renamed and no tape shape was invalidated (unstamped legacy tapes still validate)."
-    },
-    {
-      "engineHash": "ac138d0f393a3f0630cd59fc5e3035e8b507db07c8275a5d13ba0bb8f8332a34",
-      "aliases": [],
-      "pinnedAt": "2026-09-03T04:35:00+07:00",
-      "cause": "e10-preserve-ranking merge (s2462): src/game/Game.ts adds preserveDiagnostics() to runTapeEventLog() and two additive score fields (preserveWavesAlive, preserveHpFraction) at the county-standings submission site. src/ is inside ENGINE_SOURCE_INPUTS, so the content re-hashes. Content re-hash only, no simulation behaviour change: preserveDiagnostics() is a read, the event-log field is spread CONDITIONALLY so non-preserve contracts produce a byte-identical event log, and the one reorder (hoisting runTapeEventLog() above the snapshot call) has only pure reads between the old and new call sites. Measured on the merged tree: tape-01 + tape-02 + c7-standing-order-replay 14/14 and same-laws-harvest-parity 4/4 (eventLogHash fnv1a32:a6c04f80 unchanged), test:node-guards 564 pass. Same era: no view field was removed or renamed, no tape shape was invalidated, and the ranking change itself lives in functions/, which is outside the hash corpus."
-    },
-    {
-      "engineHash": "8ccbfe165813b81a468e23676903a807b2c91f89a0e4fae813cfdc6a3293969f",
-      "aliases": [],
-      "pinnedAt": "2026-09-03T11:25:00+07:00",
-      "cause": "harness-receipts merge (s2469): src/agent/DeclaredStack.ts gains two optional stack fields (harnessDigest, harnessRef), computeHarnessDigest() and assembleSelfDeclaredStack(). src/ is inside ENGINE_SOURCE_INPUTS, so the content re-hashes. Content re-hash only, no simulation behaviour change: the digest is rider-side ATTRIBUTION the sim never reads, both fields are optional and validated shape-only, SCORE_KEYS and compareScores are untouched, and rows without the fields stay valid and rank unchanged. The door and board changes live in functions/ and site/, which are outside the hash corpus. Same era: no view field was removed or renamed and no tape shape was invalidated."
-    },
-    {
-      "engineHash": "2a06eb514e3037efc403fc59f4540bbca31ef8947ee1e58cd56cf157a5aecd47",
-      "aliases": [],
-      "pinnedAt": "2026-09-03T13:45:00+07:00",
-      "cause": "tape-resume merge (s2471): src/replay/AgentTapeReplay.ts gains resumeAt(targetTick), an additive entry point on the shared replay session that advances an existing tape to a tick and hands back the same headless sim. No existing code path changed - the replay of an untouched tape hashes identically (straight = resumed = assay). Content re-hash, no behaviour change."
-    },
-    {
-      "engineHash": "a607a81f44e10dc2b2262682c1e116c15917edffeeaa0c5909f383ccea5d8e04",
-      "pinnedAt": "2026-09-03",
-      "cause": "content re-hash, no behaviour change: the half-stamped-reel-refusal drain (01506cbde, src/game watch-path routing) moved the corpus after the previous pin; same era per F-1441-3",
-      "aliases": []
-    },
-    {
-      "engineHash": "5d2fc15616271e8c900824450ce803eb5145c1136dae0d9655c393724794b11b",
-      "pinnedAt": "2026-09-03",
-      "cause": "content re-hash, no behaviour change for existing tapes: e8-mare-claim-physics drain (a121c7f14) composes E8PhysicsSystem headless for contracts declaring gravity/atmosphere; E1-E7 and the other E8 maps replay byte-identical (null floors measured); same era per F-1441-3",
-      "aliases": []
-    },
-    {
-      "engineHash": "49c34f8bba3d61e003d1f421398e3835e3107945f396800fa124f946b2e4b2f9",
-      "pinnedAt": "2026-09-03",
-      "cause": "content re-hash, no behaviour change for existing tapes: e4-roads-and-convoys drain (48ef7df8d) composes MotorSocket headless for contracts declaring twist.motorFrontier; E1-E3 and E5+ replay byte-identical (the Claim control and the null floors re-derived); same era per F-1441-3",
-      "aliases": []
-    },
-    {
-      "engineHash": "5442360305b6c293272fb3ae40ef851018aee7e854bc5eab70c90781df2d91be",
-      "pinnedAt": "2026-09-04",
-      "cause": "content re-hash, no behaviour change for existing tapes: reel-contract-routing-hazard drain (s2493) makes the browser module worker stage the tape's own contract before importing the replay graph, so a reel routes by its tape and not by page location; replay behaviour for correctly-routed tapes is unchanged and the Hill Mine crown now agrees claimed/node/browser at fnv1a32:0cdd3e78; same era per F-1441-3. HASH COMPUTED ON THE MERGED TREE, NOT INHERITED: the runner truthfully reported 024d2587 for its own lane tree (486 engine files, 135 commits behind main); the shipping tree has 488 and hashes to this value (F-2493-2).",
-      "aliases": []
-    },
-    {
-      "engineHash": "41583818b1b62dcec49f241f0b9a3c7e168776a76be5d54e359e48dacc73e5be",
-      "aliases": [],
-      "pinnedAt": "2026-09-04",
-      "cause": "content re-hash, no behaviour change for existing tapes: e4-vehicles-plain-boot drain (98cc0fc2f) composes Vehicle/FuelSystem for every twist.motorFrontier contract in a plain boot and adds motorActions to RunTape. Measured on the merged tree: all four Motor reels replay claimed=node=browser to their recorded hashes."
-    },
-    {
-      "engineHash": "737a979abc8e1e4a799cb56acc31b556dbc4400e8878d6c0f3c078dcb55b6ef9",
-      "pinnedAt": "2026-09-04",
-      "cause": "content re-hash, no behaviour change for existing tapes: the four overnight drains (reel-contract-routing-hazard 22b9538e5 in src/meta+src/replay, e4-vehicles-plain-boot 98cc0fc2f in src/game, sim-terrain-read-canonicalization 7d23e345e harness only, f-e4-1 doc) left the corpus unpinned; appended attended before the deploy that carries them; same era per F-1441-3",
-      "aliases": []
-    },
-    {
-      "engineHash": "f9f634280279cacf4eb944ec92fc9022eaffdfb8841086fdd863c302097dbea0",
-      "pinnedAt": "2026-09-04",
-      "cause": "content re-hash, no behaviour change: assets/contracts/winnability-receipts.json regenerated after heat 11 (27 claimed); the receipts ledger sits inside the whole-directory corpus entry and rotates the hash on every regeneration (corrective receipts-outside-engine-corpus queued); same era per F-1441-3",
-      "aliases": []
-    },
-    {
-      "engineHash": "e6f25014d9a6729bd93192d3f9fa14bb8735263b1c147a09fa3dfd22292382b9",
-      "pinnedAt": "2026-09-04T14:28Z",
-      "cause": "content re-hash, no behaviour change: receipts-outside-engine-corpus removes the operational winnability ledger from ENGINE_SOURCE_INPUTS and repoints every executable reader; regenerating the ledger now leaves this hash byte-identical; same era per F-1441-3",
-      "aliases": []
-    },
-    {
-      "engineHash": "e931ff6f682bfad77ae746d92488c259c7ee41440d803db5f8f79032282f0434",
-      "pinnedAt": "2026-09-04T16:52Z",
-      "cause": "content re-hash, no simulation behaviour change for existing tapes: standing-formula-explained captures the already-emitted run_secured snapshot for the verified county row and carries it through replay, suspend and UI reporting; public claimed snapshots remain refused and the standings worker rewrites pending values from the verified replay result; same era per F-1441-3",
-      "aliases": []
-    },
-    {
-      "engineHash": "3d0f567dd4cab4f9a643d88d293e2fa00db2e666e3cea3a3d646eb9a0baadb58",
-      "pinnedAt": "2026-09-04T19:08Z",
-      "cause": "content re-hash, no simulation behaviour change for existing tapes: contract-clock-explicit gives each of the 18 flat-ceiling contracts an authored 18000-tick clock while the other 24 continue to derive their clocks from secureWave; all 42 admission envelopes remain byte-for-byte numerically unchanged; same era per F-1441-3",
-      "aliases": []
-    },
-    {
-      "engineHash": "ea60c9b7694dd6e8a8ec3131d80349c5c15b9a19b125730dafb10c4e375ceca8",
-      "pinnedAt": "2026-09-05T00:00Z",
-      "cause": "content re-hash: e8-remaining-maps composes E8SuitAirSystem into the headless door for e8-far-side, e8-low-orbit and e8-eclipse and refreshes those three contracts engineDependencies prose. Existing tapes for every other contract are numerically unchanged (the consumer answers none() off those three ids and its diagnostics are spread-if-declared into the terminal hash); the three siblings idle floors move by design, measured 3fe83eca->5c30efd5, d7423597->6e1931c2, fac5d558->466507ac, with waves/timeMs/kills identical. The Mare Claim control is byte-identical on both seeds. Same era per F-1441-3",
-      "aliases": []
-    },
-    {
-      "engineHash": "82ea9af6de1788cf309340b9eace9d147f5723c041be89f2064490efb331a2e9",
-      "pinnedAt": "2026-09-05",
-      "cause": "content re-hash: e7-playbook-rows drain (b38d60295) adds PLAYBOOK_USE and the signal-system composition on the four Signal Era maps; every other contract replays byte-identical (eight E7 idle null floors and the E1/E8 controls measured); same era per F-1441-3",
-      "aliases": []
-    },
-    {
-      "engineHash": "324bb3cd0e32f2b71c37f86d74593340ee782e2718f8173274a7e7d15a0d2e8f",
-      "pinnedAt": "2026-09-05",
-      "cause": "content re-hash: e3-moth-season drain (de21da4f5) rewrites the Moth Season contract row (assets/contracts/epoch-3-voltage/contracts.json) — the sabotageable light circuit as contract data, zero src/ edits; every other contract replays byte-identical (the lane's both-engine tables + the E7/E8 pins measured); same era per F-1441-3",
-      "aliases": []
-    },
-    {
-      "engineHash": "b061540c8e645fbe0e2c1ccd24784f5aece9d4f9e47817a8990d21d8c0337628",
-      "pinnedAt": "2026-09-05",
-      "cause": "src re-hash: e5-storm-predicate-split drain — deepwaterStormCarriesCorsairs split from deepwaterStormDisablesScheduledWaves in Game.ts/HeadlessContractSim.ts/DeepwaterSocket.ts; an empty front emits no wave_started; every shipped E5 pin byte-identical (Stillwater/Regatta/Flotilla played+idle tables in artifacts/e5-storm-predicate-split/report.md); same era per F-1441-3",
-      "aliases": []
-    },
-    {
-      "engineHash": "1ecca4779fd90f484b6302ece778c90fa87da11ed515c02830c0c2f86f74bc90",
-      "pinnedAt": "2026-09-05",
-      "cause": "src re-hash: e7-player-playbook-parity drain — E7PlaybookLatch.ts is the one four-rule secure decision for Game.ts and HeadlessContractSim.ts; human PLAYBOOK_USE is recorded in the tape (RunTape.playbookUses) and replayed; the four E7 hashes and every other contract replay byte-identical (lane tables); same era per F-1441-3",
-      "aliases": []
-    },
-    {
-      "engineHash": "ea7fd35e445e83fd19028bfb2587608883a9cb2dcb307f4086a89510b854f795",
-      "pinnedAt": "2026-09-05",
-      "cause": "content re-hash: e5-stillwater-front-crew-2 crews Stillwater's 32-second storm with one existing corsair skiff; played riders still secure at wave 12 and 360000 ms, idle riders lose by wave 3, and other E5 pins remain byte-identical; same era per F-1441-3",
-      "aliases": []
-    },
-    {
-      "engineHash": "8afae55feda2730606dbf46d869baf14bc66f733028547f1f1ba3d0b5a6a3a16",
-      "pinnedAt": "2026-09-05",
-      "cause": "src re-hash: prefetch-bounded-warming drain (065252649) — AdvanceStream.ts warms priorities 1-2 under a session byte allowance and StartMenu.ts gains the 'Warm every map' opt-in; render/asset plumbing only, no sim or contract change; every contract replays byte-identical; same era per F-1441-3",
-      "aliases": []
-    },
-    {
-      "engineHash": "9254f19e3c6e126d2b37fe789055fb5ca2ccd6862090bc6e5b71984ed11d3325",
-      "pinnedAt": "2026-09-05",
-      "cause": "src re-hash: shared-atlas-texture-dedupe drain (3a47f1800) — src/assets/SharedAtlasPlugin.ts + AssetLoading.ts registration: one GPU texture per atlas-content hash across GLBs; render/asset plumbing only, no sim or contract change; every contract replays byte-identical; same era per F-1441-3",
-      "aliases": []
-    },
-    {
-      "engineHash": "b395ee1f9e2fa226489c749f2468778d023ad900b682aadc3f8fd15a481612b1",
-      "pinnedAt": "2026-09-05",
-      "cause": "src re-hash: lantern-true-world-reel-2 drain (e8319998d) — LanternController extracted from Game.ts, LanternBoot + LanternWorldStage added, main.ts replay route; the replay worker, AgentTapeReplay, RunTape and the sim untouched; every contract replays byte-identical (tape-02 + true-reel-harness green); same era per F-1441-3",
-      "aliases": []
-    },
-    {
-      "engineHash": "c552efe029369e05180c3df68e3c91003be7430164519d298e9898d9d07bdb28",
-      "pinnedAt": "2026-09-05",
-      "cause": "src re-hash: asset-diet-explicit-manifest v1+v2 drain (9b7d3eef6) — nine bare GLTFLoader sites routed through the shared meshopt factory (AssetLoading.createGltfLoader), the tracked loader keeps the SharedAtlasPlugin; asset/loader plumbing only, no sim or contract change; every contract replays byte-identical; same era per F-1441-3",
-      "aliases": []
-    },
-    {
-      "engineHash": "3c38c993fda488a95045297e012476484cbce9a62567a6ffbf0d9a524b7b4885",
-      "pinnedAt": "2026-09-05",
-      "cause": "corpus re-hash without a sim change: glb-export-contract-and-validator drain — 32 terrain *.export.json Blender sidecars under assets/pilots/map-rebuild-spike enter ENGINE_SOURCE_INPUTS via the directory rule (assay-replay-agent.mjs:42/:76); the game never loads them; no src/ or contract change; every contract replays byte-identical; same era per F-1441-3 (F-GLB-1)",
-      "aliases": []
-    },
-    {
-      "engineHash": "95c5a753be5c312889680a71c248ae8e1913c7402ef1f4a6bef58fcda1156a1f",
-      "pinnedAt": "2026-09-05",
-      "cause": "src re-hash: terrain-height-triangle-sampler drain — Terrain3dClaimPilot.bakeHeightGrid samples the drawn triangles (render-side visualY only; the planar sim untouched, fingerprint spec green); every contract replays byte-identical; same era per F-1441-3",
-      "aliases": []
-    },
-    {
-      "engineHash": "a44df406ac339b817ee5c13dfcdcfb9a869ebd0cf41d91efc74043fd69967024",
-      "pinnedAt": "2026-09-05",
-      "cause": "src re-hash: homemaker-kept-state-init-order drain — HomemakerBossSystem.restoreKeptState() is called by Game after WaveSystem exists (the constructor no longer restores); E6 null floors and a played tape byte-identical (fnv1a32:0ae65b8e / 004ae8d7 / fdce1d04); same era per F-1441-3",
-      "aliases": []
-    },
-    {
-      "engineHash": "ea4dcc6e4977754cba6d0d5f0921c4dc909a6cc5b0a3318b7c6696056e72765b",
-      "pinnedAt": "2026-09-05",
-      "cause": "src re-hash: bounded-prefetch-town-halls drain — AdvanceStream.ts state machine typed/documented, terminal 'allowance' state, complete-plan-at-allowance publishes ready (F-BPTH-1); asset plumbing only, no sim or contract change; every contract replays byte-identical; same era per F-1441-3",
-      "aliases": []
-    },
-    {
-      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
-      "pinnedAt": "2026-09-05",
-      "cause": "src re-hash: landmark-lighting-calibration drain — Terrain3dClaimPilot paint/material functions (emissive 3 → 0.45 default as a relative grade, closed meshes FrontSide) and LightRig constants; render-side only, the planar sim untouched; every contract replays byte-identical; same era per F-1441-3",
-      "aliases": []
-    },
-    {
-      "engineHash": "ff52a6e3ae298fd0da174dbd228e650698502ff32ec225e8f1a55655c5d0b434",
-      "pinnedAt": "2026-09-05",
-      "cause": "src re-hash: ss-05-e4-beats + ss-07-e6-beats drains — E4_STORY_BEATS and E6_STORY_BEATS data plus the StoryRuntime epoch switches (story presentation only; the sim, contracts and every replay byte-identical); same era per F-1441-3",
-      "aliases": []
-    },
-    {
-      "engineHash": "97add8282c1f1702589e291126d035f343303e50ebde57d8c23fd203bbef9bc6",
-      "pinnedAt": "2026-09-05",
-      "cause": "src re-hash: ss-06-e5-beats drain on top of E4/E6 — E5_STORY_BEATS data plus the StoryRuntime switch (story presentation only; the sim, contracts and every replay byte-identical); same era per F-1441-3",
-      "aliases": []
-    },
-    {
-      "engineHash": "1052ba1ab016c53d1b6cceff3db4d0859b38ade38f7e07a95a51112ba3c51b81",
-      "pinnedAt": "2026-09-05",
-      "cause": "src re-hash: ss-09-e8-beats drain — E8_STORY_BEATS data plus the StoryRuntime switch (story presentation only; the sim, contracts and every replay byte-identical); same era per F-1441-3",
-      "aliases": []
-    },
-    {
-      "engineHash": "583c7743fb8967291eeecd830f049a3768b0563b6356cf9cb7d21fb0b905f2d3",
-      "pinnedAt": "2026-09-06",
-      "cause": "src re-hash: ss-08-e7-beats + ss-10-e9-beats drains — E7_STORY_BEATS and E9_STORY_BEATS data plus their StoryRuntime switch lines, unioned in era order beside E8 (story presentation only; the sim, contracts and every replay byte-identical); same era per F-1441-3",
-      "aliases": []
-    },
-    {
-      "engineHash": "226820026a822a9a4335be8aa7aa69ebfebf751313426d2b26d444d5023a7857",
-      "pinnedAt": "2026-09-06",
-      "cause": "src re-hash: e10-empty-harvest-anchors-unlaunchable drain — the three Deep Sky maps declare twist.harvestFreeObjective and the browser door refuses only an undeclared seamless map (contract declaration + door path; harvestAnchors stay empty, null floors, receipts and mask tables byte-identical, every replay unchanged); same era per F-1441-3",
-      "aliases": []
-    },
-    {
-      "engineHash": "32d89821dc8d566aa04cb735add6fbe5a75d76613fdd47d7453e02d0a3e627cc",
-      "pinnedAt": "2026-09-06",
-      "cause": "src re-hash: the testing-build board unlock control drain (ContractUnlock wrapper + TownScene chapter curtain behind a per-profile flag; unlock predicates byte-identical; statically dead in the E1 release bundle; the sim and every replay unchanged); same era per F-1441-3",
-      "aliases": []
-    },
-    {
-      "engineHash": "e5c6080917f508cce5dc910af92b8a50b1b2e302a35235283aa35f2daac0cb9a",
-      "pinnedAt": "2026-09-06",
-      "cause": "src re-hash: e6-picnic-thirty-second-death drain — the Picnic briefing block gains the loss condition and the hold rules from the published three_stake_hold rule (assets/contracts text only; both idle floors and the receipt-class prover hash byte-identical, every replay unchanged); same era per F-1441-3",
-      "aliases": []
-    },
-    {
-      "engineHash": "9b2b30d80676a442594b1911c750dc0753ba90fcc43b2fa11d0f02d95228c742",
-      "pinnedAt": "2026-09-06",
-      "cause": "src re-hash: story-signal-emitters drain — the four story signals nobody emitted (wave-complete, rung-promotion, science-threshold, first-boot) now publish from Game.ts/main.ts as presentation signals; the E1 null floors 21/21 and the played tapes replay byte-identical; same era per F-1441-3",
-      "aliases": []
-    },
-    {
-      "engineHash": "e40023d41bceb6b93e140d6f60ca6e83724dec1fc56c1cc1984e88b627fa294e",
-      "pinnedAt": "2026-09-06",
-      "cause": "src re-hash: ss-11-e10-beats drain — E10_STORY_BEATS data plus its StoryRuntime switch line, unioned after E9 (story presentation only; the sim, contracts and every replay byte-identical); same era per F-1441-3",
-      "aliases": []
-    },
-    {
-      "engineHash": "e0b419808ff47a948926093c0f6bcbbb18dbf9dde0a194a215965ceaaf97f39e",
-      "pinnedAt": "2026-09-06",
-      "cause": "county null floors re-recorded under the current engine (owner ruling 2026-09-06 (1) 're-record it'): the ten stale eventLogHash rows of e3-moth-season and the four E8 maps regenerated by scripts/null-floor-anchors.mjs, every other row byte-identical; a data re-derivation, no sim change; same era per F-1441-3",
-      "aliases": []
-    },
-    {
-      "engineHash": "8822c2f07c963f37dd79ea423682de8cbc8c259c97c4dedc1355b8e5497273fb",
-      "pinnedAt": "2026-09-06",
-      "cause": "src re-hash: canyon-works-bank-cap-override drain — a per-contract bank cap read by Economy through its cap-source seam in both engines, set to 360 on e3-canyon-works only (owner ruling 2026-09-06 (2)); every other map's purse and every null floor byte-identical; same era per F-1441-3",
-      "aliases": []
-    },
-    {
-      "engineHash": "351b869099f6015b5ab4202e87ec6de1f721a9883147d67a1b9997056db1ae93",
-      "pinnedAt": "2026-09-06",
-      "cause": "src re-hash: canyon-works-second-lever drain — connect.byWave 6 → 8 and a per-contract beacon ladder (twist.economy.beaconLadder, priced at the one buildableCostAt seam in both engines) on e3-canyon-works only, per the owner's 'hard levels can be won' ruling; the two canyon idle-floor rows re-pointed (the widened deadline moves them), every other floor byte-identical; same era per F-1441-3",
-      "aliases": []
-    },
-    {
-      "engineHash": "5d5e9d5e100b38186a12475cd85ab2a3bdd3f8890c2203318ea2a518f7ee1830",
-      "pinnedAt": "2026-09-06",
-      "cause": "src re-hash: e10s-2-squall-scheduler drain — the Ember Shore's Static squall phase machine in both engines (calm 60 s / telegraph 8 s / squall 25 s / recover 8 s, event-logged transitions) with a render-side stub and an ambience duck that is exactly 1 on every other map; no floor row exists for the E10 maps and every other floor is byte-identical; same era per F-1441-3",
-      "aliases": []
-    },
-    {
-      "engineHash": "a231d5ff989b9f21ec5a9f98c698c5a83f6cb7a8ab0a89739a9b089a035e87b1",
-      "pinnedAt": "2026-09-06",
-      "cause": "src re-hash: portraits-e5-e10-batch drain — 21 speaker ids registered in src/story/speakers.ts and one E9 beat re-keyed to the canal reeve (story presentation only; the sim, contracts and every replay byte-identical); same era per F-1441-3",
-      "aliases": []
-    },
-    {
-      "engineHash": "1b0485ceba550cbb8256d1ef5af20a6e6b7272561d4c75cb95a3531a759ee684",
-      "pinnedAt": "2026-09-06",
-      "cause": "src re-hash: board-tape-gold drain — the headless secure snapshot reports the purse HELD at the secure tick (was lifetime panning), hash-neutral: all four heat-12 fixture reels reproduce their own eventLogHash; same era per F-1441-3",
-      "aliases": []
-    },
-    {
-      "engineHash": "4125dc8c6bdd91205c3a1c3067f928534ea22b30c1326c2312bf95a361809fad",
-      "pinnedAt": "2026-09-06",
-      "cause": "src re-hash: story-signal-gaps drain — boss-act/arrival/defeat signals emitted from inside the Salvage Claw, Old Digger and Quiet boss systems, run-return-town carries its contract id, a first-boot beat row, the first-boot key swept with the profile, one Hud per root (presentation signals only; the E1 null floors 21/21 and the played tapes byte-identical); same era per F-1441-3",
-      "aliases": []
-    },
-    {
-      "engineHash": "a703f20274408a88dc778c07c5da4a8590181c2851f3f6731329616c68df91a9",
-      "pinnedAt": "2026-09-06",
-      "cause": "src re-hash: relay-valley-winnable drain — a per-contract hero grit (twist.hero.maxHpBonus, one reader in both engines, the progression clamp made grit-aware) set to 300 on e7-relay-valley only, per the owner's 'hard levels can be won' ruling; the two relay-valley idle-floor rows re-pointed and still losing, every other floor byte-identical; same era per F-1441-3",
-      "aliases": []
-    },
-    {
-      "engineHash": "1e73faf916a5826e5e1dc6057217d82b824842421f82d1c9e12e2f029f552522",
-      "pinnedAt": "2026-09-06",
-      "cause": "src re-hash: dome-basin-winnable drain — the reel envelope's byte axis priced honestly for order-array play (an additive per-tick surcharge in src/playbook/PlaybookFormat.ts; maxTicks and maxEntries unchanged, nothing that fitted stops fitting); no sim change, every floor byte-identical; same era per F-1441-3",
-      "aliases": []
-    },
-    {
-      "engineHash": "338b656d5e6ceef6439b43e6ff5e87daa3fbe2cffed3cbb7fb611c5fdec8a2ca",
-      "pinnedAt": "2026-09-06",
-      "cause": "src re-hash: e10s-3-preserve-consumer drain — the Ember Shore's vent (warmth, stoke, the vent_guttered loss, the secure latch) in both engines, the doubled mote pressure applied during the squall, STOKE as a targetless CONTEXT_ACTION, the landed dependency status; no floor row exists for the E10 maps and every other floor is byte-identical; same era per F-1441-3",
-      "aliases": []
-    },
-    {
-      "engineHash": "84b28f47849628e8d2cf4c8975f89d5e87f2315847ef4e90dc19f3749464b122",
-      "pinnedAt": "2026-09-06",
-      "cause": "src re-hash: browser-door-held-gold drain — the browser door submits and verifies the purse HELD at the secure tick (five submit sites, RunManager's snapshot, the browser instrument); hash-neutral by construction (the event log's gold was always the held purse) and by measurement; same era per F-1441-3",
-      "aliases": []
-    },
-    {
-      "engineHash": "ce555f66a0ad92cf103adce14d18544bf70c1d338c95b75793fd92ed7924d219",
-      "pinnedAt": "2026-09-06",
-      "cause": "content re-hash: e10s-4-ember-shore-door drain — the Ember Shore's four cooling-vein harvest anchors, bench seeds e10-ember-shore-01/-02 and their losing idle floors, the mask table, admission earned by the public-verb prover (both seeds secured twice); harvestFreeObjective retired with the anchors per the launchable guard's own remedy; no src change; same era per F-1441-3",
-      "aliases": []
-    },
-    {
-      "engineHash": "7984269ea5ef422a21635c6c429104fca5945ca29a529b93847930098e080b93",
-      "pinnedAt": "2026-09-06",
-      "cause": "src re-hash: the copy revision — eight chapter beats re-keyed to their own cast's voice and portraits (story presentation only; the sim and every replay byte-identical); same era per F-1441-3",
-      "aliases": []
-    },
-    {
-      "engineHash": "465ada3a7009ffcfb92ec7550f33ba133da7704fd44d04955368dcfaec2f9130",
-      "pinnedAt": "2026-09-06",
-      "cause": "src re-hash: hero-move-verb drain — the MOVE_HERO standing order (riders steer the hero through the same intents path a human's keys take, in both engines; refused HERO_NOT_YOURS where a human holds the hero; additive, every floor byte-identical, tapes replay); same era per F-1441-3",
-      "aliases": []
-    },
-    {
-      "engineHash": "91dbc88a42a40eb89b4cdb715db4621672152fc0fe121de6c785e4c3b3b544e1",
-      "pinnedAt": "2026-09-06",
-      "cause": "portraits-e5-e10-generated: the ten generated E5/E8/E10 plates registered as speakers, four beats re-keyed and three rewritten in first person (story presentation only; no sim change), stacked on hero-move-verb 465ada3a",
-      "aliases": []
-    },
-    {
-      "engineHash": "70c31bbbb782ee669ee254bafb04715ad2583727e04fdf34a39881d3c065d7be",
-      "pinnedAt": "2026-09-06",
-      "cause": "mare-claim-air-prevalent: the Mare Claim's air wall rules the whole ride, authored per contract (regolithRequired 4, regolithWindowWaves 4; E8PhysicsSystem consumer, now.air.regolith view fields), stacked on portraits 91dbc88a",
-      "aliases": []
-    },
-    {
-      "engineHash": "60415d3f1be740e2cdb3236736adbe18bb9bf508f1c472ed17167725b590bae2",
-      "pinnedAt": "2026-09-06",
-      "cause": "secure-choice-refusal-both-cures: while the secure window is open a submission that is not a single SECURE_CHOICE is refused visibly (SECURE_CHOICE_ONLY on the order channel + one gr-sim stderr line) and each refusal spends one fixed step of the pending clock, so the choice defaults through the existing expiry path and no policy can hang a heat (F-MCAP-1, owner: both); stacked on air-wall 70c31bbb",
-      "aliases": []
-    },
-    {
-      "engineHash": "6dfdde6fb2b081ff62a832814d5faf64f0d62eb83a2fe7a6d953d97e3825cd21",
-      "pinnedAt": "2026-09-06",
-      "cause": "first-town-transfer-bisect: the advance stream holds a contract prefetch until the current scene's loader reads ready (F-BUDGET-3: the Claim's terrain + panorama, 1.05 MB, no longer race the town's own load); the bisect found no merge grew the transfer, the gate measures host speed (F-BUDGET-4); stacked on secure-choice 60415d3f",
-      "aliases": []
-    },
-    {
-      "engineHash": "f28903f44c0fa2f9d59c527fb80eac5a3de380ad6a5f60c9b7e04c35c47e3bbb",
-      "pinnedAt": "2026-09-06",
-      "cause": "e8-air-wall-all-maps: the same air wall on every Orbital contract (owner: same air for all space contracts): the Eclipse carries regolithRequired 4 / regolithWindowWaves 4, the Far Side and Low Orbit crossingRequired 4 / crossingWindowWaves 4 (a credited entry per window plus every zone stood in on air), one shared E8AirWindow, now.air.crossing published; stacked on first-town-transfer-bisect 6dfdde6f",
-      "aliases": []
-    },
-    {
-      "engineHash": "9351c22729cf2478362a8890b7af5077b6bf4b56afeed63fc062778fc4123db7",
-      "pinnedAt": "2026-09-06",
-      "cause": "sprite-cell-manifests: the two char-*.png ?url globs are eager, so the hashed cell URLs are inlined at build time and the first town no longer spends one round trip per sprite cell (JS requests in the window 205 to 32; 921 to 135 chunks); no sim change; stacked on e8-air-wall-all-maps f28903f4",
-      "aliases": []
-    },
-    {
-      "engineHash": "e35f9423bf516f1a8ed45332a685f44969098e6f6356521376587797b5ac45c6",
-      "pinnedAt": "2026-09-06",
-      "cause": "first-town-audio-deferred: the music group is held until the scene the player stands in reads off loading and past the gesture's own tick (3.0 MB of mp3 leave the first-town window; the title theme is no longer fetched and thrown away on the enter-town path); no sim change; stacked on sprite-cell-manifests 9351c227",
-      "aliases": []
-    },
-    {
-      "engineHash": "3f86a89c6f2eb1df83007465cbe43e39a41971593e6ee8b7ddee45637cc67d0f",
-      "pinnedAt": "2026-09-06",
-      "cause": "portraits-era-aging-batch: eighteen aged plates registered as speakers (the E1 cast across E2-E4, the Boilerwright, Wei the pressman, Lan the typesetter), thirty-three E2-E4 beats re-keyed with the copy byte-identical, the Elder's E3/E4 lines to the keeper of her chart (story presentation only; no sim change); stacked on first-town-audio-deferred e35f9423",
-      "aliases": []
-    },
-    {
-      "engineHash": "d2f03881011e54afa074efa2667a3e34cd463ee9fb494e274f0f55ebf57b1895",
-      "pinnedAt": "2026-09-06",
-      "cause": "perf-correctives-batch: the pools presence-probe globs go eager and Terrain's dead rail-cell entry is narrowed out (79 per-cell modules to 0 in the dev build), the tape worker's build pass inherits the diet naming and the release narrowing (1,231 un-dieted PNGs / 96 MB out of dist), the audio loop clock publishes through a getter; no sim change; stacked on portraits-era-aging 3f86a89c",
-      "aliases": []
-    },
-    {
-      "engineHash": "08d5ee5f2ae70640952e9fa6ad6f608c28d7ff72c753f8c2b691c1e41004905a",
-      "pinnedAt": "2026-09-06",
-      "cause": "engine-correctives-batch: twist.emberShore leaves DECLARED_INERT_PATHS, the diagnostics literal loses its blanket cast (picnicHold, preserve, movePin, playbookUse declared), the three post-run E5 beats gate on run-return-town's contract id, the profile-key sweep guard; no sim change; stacked on perf-correctives d2f03881",
-      "aliases": []
-    },
-    {
-      "engineHash": "54263985848aadd03e4c7164af2ac3f21ee48f685f529d51aa81f90a2cb8cc1f",
-      "pinnedAt": "2026-09-06",
-      "cause": "story-correctives-batch: eighteen new beats (the Claw's, the Digger's and the Quiet's acts answered; eleven silent portraits given their cited lines), Chalk canon on the storybook; story presentation only; stacked on engine-correctives 08d5ee5f",
-      "aliases": []
-    },
-    {
-      "engineHash": "ee2b884b76d96b6f8598874b398c8e6714835beef74c9c48ec2a5790f4d86f93",
-      "pinnedAt": "2026-09-06",
-      "cause": "hero-slot-clip-split: the hero's clips carry groups in the character contract; the town loads only the default group (walk/idle) and declares town, the claim declares claim, other groups warm when the advance stream's plan drains (work8 + attack8, 4.3 MB / 35 requests, leave the first town; first swing 0 ms stall); plus F-RPA-4, the T debug spawn key guarded by isDebugEnabled; no sim change; stacked on story-correctives 54263985",
-      "aliases": []
-    },
-    {
-      "engineHash": "e6c5b7a19156b08453dd331948174cb96efccc5d668421b328667b1d1a4d5c0f",
-      "pinnedAt": "2026-09-06",
-      "cause": "e8-air-logical: humans in space need air (owner directive 2026-09-07): the hero's suit drains outside pressurised ground, refills only inside, and an empty suit harms per whole second through CombatSystem on all four Orbital maps (suitSeconds 60, harmPerSecond 5, authored per contract); Low Orbit's crossings become vacuum (pressurisedZoneIds names the cabin); the HUD dial; the authored latches unchanged; stacked on hero-slot-clip-split ee2b884b",
-      "aliases": []
-    },
-    {
-      "engineHash": "1926c803891774bc890ce1285a6f1561918efae823a9d57da2fa8f4bb0f7c74d",
-      "pinnedAt": "2026-09-06",
-      "cause": "first-town-payload-gate: the deploy's first-town verdict judges the declared payload computed from the build (assets/first-town-payload.json read by the advance stream too), the browser probe stays a tripwire under a 30 MB ceiling; no sim change; stacked on e8-air-logical e6c5b7a1",
-      "aliases": []
-    },
-    {
-      "engineHash": "03a4789deb6f64a4cacaa8ed9b68cccd710828412a1828a902a3424e52e76cd0",
-      "pinnedAt": "2026-09-07",
-      "cause": "portraits-era-aging-2-batch: the five trades across E5-E10 and the Salvage King get their own faces (31 speakers registered, 50 beats re-keyed, copy byte-identical) on the merged tree that also carries the first-town payload gate's AdvanceStream (src/story/speakers.ts, src/story/beats.ts); owner A4 2026-09-07: use the credits, they expire soon",
-      "aliases": []
-    },
-    {
-      "engineHash": "32c940079ba3dd1921ca2be10a4a0d5a1de36f49c9199e1f99ecc02230f9f33d",
-      "pinnedAt": "2026-09-07",
-      "cause": "F-FTP-5 (attended review fix 2026-09-07): src/assets/AdvanceStream.ts imports assets/first-town-payload.json as a DEFAULT import (Node's JSON modules have no named exports; the named form broke every Node loader of the module, caught by whole-suite-collection on main); the browser bundle is byte-equivalent and no sim path changes",
-      "aliases": []
-    },
-    {
-      "engineHash": "8e3fe217a6814032313b8a4fd4cfbd186c0ceafaefe213eb6fba2394cf12e8b3",
-      "pinnedAt": "2026-09-07",
-      "cause": "canon-calls-a8-batch (owner A8 rulings 2026-09-07): the Elder becomes a woman in both her portraits (batch 3 plates over the shipped man plates), the Old Digger's portrait is the machine plate with an old-digger speaker (88 speakers), no beat re-keyed; src/story/speakers.ts alone moves the hash (story presentation, no sim)",
-      "aliases": []
-    },
-    {
-      "engineHash": "1a825ba08e31f838e52b489f78cd06e6c7a4dd323281bb5d73bcb9084fbf8331",
-      "aliases": [],
-      "pinnedAt": "2026-09-07T07:15:56.618Z",
-      "cause": "s2535 main-beat-citation-refresh: nine comment-only live citation ranges; TypeScript tokens and line count unchanged, on the attended A8 speaker/art tree."
-    },
-    {
-      "engineHash": "6857177d9353184e27943dd49e32d192fe71527a4a88a52335279a6bc2cca60d",
-      "pinnedAt": "2026-09-07",
-      "cause": "elder-walk8-regeneration (owner A8 F-AGE-1, the sprite half): the Elder's walk8 sheet regenerated as the woman through the Higgsfield production script (turnaround, four stills, twelve Seedance takes, four selected by eye), extracted under the identical stem, and src/town/TownScene.ts registers her walk frames so her feet anchor (F-A8-5); the only src change is that registration",
-      "aliases": []
-    },
-    {
-      "engineHash": "df7eef8385c7fcf7050962d4fd775bc114a194cc75e619b5a500b318b47dfe1e",
-      "pinnedAt": "2026-09-07",
-      "cause": "youngsters-rechain-batch (owner A12 option b, 2026-09-07): the two youngsters re-chained from the shipped E1 children through E2, E4 and A's E8 (five plates, five speakers, 93 total); src/story/speakers.ts alone moves the hash (story presentation, no sim)",
-      "aliases": []
-    },
-    {
-      "engineHash": "0663b7e1d9ab5ef59d7c8b31e4e1b83163829b65cd824b19c208489a9e703774",
-      "pinnedAt": "2026-09-07",
-      "cause": "rider-parity-grammar, all stages (ADR-005; owner A2 + D1 'fairness is crucial' + D2 're-ride it yes', 2026-09-07): the nine ACTION reach tests read the hero, REPAIR_UNDER bounded to the human radius, the E5 deck a plain-boot human control, MOVE_TO/HOLD/FALLBACK_IF removed with 57 tapes / 22 scored heat-12 rows retired in the ledger, CONTEXT_ACTION's four human-only targets given to the rider, syncProgramSuspension and the E8 crossing chip re-based to the hero; the controls table reads 15 equal / 0 agent-only / 0 human-richer",
-      "aliases": []
-    },
-    {
-      "engineHash": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4",
-      "pinnedAt": "2026-09-07",
-      "cause": "the 2026-09-07 evening chain landed together (elder-walk8-regeneration, youngsters-rechain-batch, rider-parity-grammar all stages, low-orbit-second-build-line measurement): the union of the three pinned slices' inputs on one tree (TownScene.ts, speakers.ts, the grammar's src); each slice's own pin stands beside this one",
-      "aliases": []
-    },
-    {
-      "engineHash": "86e60c92f65b8b3f7c42dc285c619c1e73b9d931899c72035bf9236f13b13509",
-      "pinnedAt": "2026-09-12",
-      "cause": "boss-fidelity (Astra, sol/boss-art-fidelity-review 72fb062e8) landed on drain/boss-fidelity: eight new assets/layer-contracts/*.v1.json (in ENGINE_SOURCE_INPUTS) plus src changes in ten boss systems, Game.ts, HeadlessContractSim.ts (the dynamo_crawler shared night-speed light sample, F-DRB-2), Run3dPilot.ts, RunSuspend.ts, pools.ts and the new utils/buildingShapeSnapshot.ts; all 17 verified county rows replay to their board hashes on this tree (reviews/drain-review-boss-fidelity.md §3), so this is a same-era pin",
+      "engineHash": "0e9bb11725d9375c78085ab187fab3c7b13bf09fba25ab97c5d7e43181e0481d",
+      "pinnedAt": "2026-09-14",
+      "cause": "era 6 opened by maps-campaign-land-era6: the merged tree of main 9382083d3 + Astra's map campaign 883a3521e with the drain's cures (E1/E2/E3 engineDependencies declarations restored from main, F-MAPL-2; census pins re-pointed; null floors re-recorded)",
       "aliases": []
     }
   ],
@@ -634,6 +116,540 @@
       "name": "the Embodied Hand",
       "declaredAt": "2026-08-30",
       "note": "Agent BUILD orders travel, confirm from the ordering body, and fail unreachable terrain honestly."
+    },
+    {
+      "era": 5,
+      "name": "the Replayed Board",
+      "declaredAt": "2026-08-31",
+      "engineHash": "86e60c92f65b8b3f7c42dc285c619c1e73b9d931899c72035bf9236f13b13509",
+      "pins": [
+        {
+          "engineHash": "c0a015aed8285ebf05228ff1165395b86b9496d66af45e7c5b9c41d6bffc237b",
+          "aliases": [
+            "895ca0fe4bf718327d2bef695a5eb21602f3392521c83cc4e2ed745a8267bbdf"
+          ],
+          "pinnedAt": "2026-08-31T13:37:49+07:00",
+          "cause": "Era 5 declaration: replayability became a board and submission law; the Lantern Show gained dismissible refusal cleanup and live gold/health copy. Simulation behaviour did not change."
+        },
+        {
+          "engineHash": "417ac150318346d52acf9658a6578bc1cc9d54d484c922e80fb6cb8965c3c864",
+          "aliases": [
+            "a0b6b3b0782065a003911b961b4d8a3946e6b65ac67efbdcae7c42cb3e9dbef2"
+          ],
+          "pinnedAt": "2026-09-01",
+          "cause": "door-dawn-fencepost merge b80253bff moved src/playbook/PlaybookFormat.ts (the inclusive-endpoint cure); the s2411 drain owed this append and missed it - heat 9 stopped on the gap"
+        },
+        {
+          "engineHash": "25040ad58451125adfa7d1d6c19c70f40ce17cd8cc6d377134e0a545922ca2ca",
+          "aliases": [
+            "a0b6b3b0782065a003911b961b4d8a3946e6b65ac67efbdcae7c42cb3e9dbef2"
+          ],
+          "pinnedAt": "2026-09-01",
+          "cause": "fires guard-hygiene package.json edits (95b495e2b test-timeout, 19c19469a guard config) - package.json sits in ENGINE_SOURCE_INPUTS so factory tooling tweaks rotate the engine identity; behaviour unchanged"
+        },
+        {
+          "engineHash": "d47f32f68edb5001dfa40687b5767872bf2045280cfb16d9434b2d2c0d8e2f0b",
+          "aliases": [
+            "a0b6b3b0782065a003911b961b4d8a3946e6b65ac67efbdcae7c42cb3e9dbef2"
+          ],
+          "pinnedAt": "2026-09-02",
+          "cause": "fires guard-hygiene package.json edits after c13b4c24 (8dbb5122a F-2424-1, b116a45be F-2433-1, 3d9484a61 F-2435-1) - tooling files inside ENGINE_SOURCE_INPUTS; behaviour unchanged. The surface narrowing (engine-surface-narrowing) ends this class."
+        },
+        {
+          "engineHash": "eaadcc383d5d16f20a0534c9d4824bee87cae916b94f6491bb8fe9055a39c78a",
+          "aliases": [],
+          "pinnedAt": "2026-09-02",
+          "cause": "engine identity narrowed to replay-bearing source and data; old-basis pins retain their new-basis aliases, and show/worker membership now accepts either basis"
+        },
+        {
+          "engineHash": "93c80710c048c5e1c77acab19fd0de575bff15ca8beb8d0ab80bcbebd702b2c1",
+          "pinnedAt": "2026-09-02",
+          "cause": "content re-hash, no behaviour change: lantern-true-terrain drain (c1084e547) + the lantern_post reel mapping (4c4b0a9a2) moved src/ui only; same era per F-1441-3",
+          "aliases": []
+        },
+        {
+          "engineHash": "91c43545642dde32a7ecafb3c6716acbf6c46e234a70e97a72f41e6a78aaa443",
+          "pinnedAt": "2026-09-02",
+          "cause": "content re-hash, no behaviour change: same-laws-harvest-parity drain (9e5d0636d) added the player Prospector dispatch input + tape input kind in src/game, src/ui, src/mp, src/story; sim untouched; same era per F-1441-3",
+          "aliases": []
+        },
+        {
+          "engineHash": "30ae0a3ce5912646b2caf68c34115ad32395ad5197897f7cb68dc8e6944fa926",
+          "aliases": [],
+          "pinnedAt": "2026-09-02T22:12:00+07:00",
+          "cause": "winnability-receipts drain b5850417a (runner commit 280d95d7f) added assets/contracts/winnability-receipts.json, a 207-line receipts ledger nothing imports; assets/contracts is inside ENGINE_SOURCE_INPUTS so the content re-hashed. Simulation behaviour did not change. The s2457 drain owed this append and missed it; s2458 measured main already outside era 5 and repaired the gap rather than pinning only its own state."
+        },
+        {
+          "engineHash": "4082ebe41a9c70652edcb84946417c879a16be404087891a2961e86c009a4cbf",
+          "aliases": [],
+          "pinnedAt": "2026-09-02T23:10:00+07:00",
+          "cause": "view-schema-versioning merge: the rider view and tape meta gained a numeric viewVersion (src/agent/View.ts, src/game/Game.ts, src/game/RunTape.ts, src/replay/AgentTapeReplay.ts, src/ui/LanternShow.ts). Observation surface only - no sim, systems, entities or Balance touched, and legacy tapes without the field stay accepted. Simulation behaviour did not change."
+        },
+        {
+          "engineHash": "a6e9fc02fe56d689ca36eeec20d16df763f13deb7c1697e38584fabc358df925",
+          "aliases": [],
+          "pinnedAt": "2026-09-02T23:54:00+07:00",
+          "cause": "e10-preserve-objective merge: the Last Claim gained a preserve twist. Corpus-touching files, measured not assumed: assets/contracts/epoch-10-deepsky/contracts.json (the twist block and enemy roster for e10-last-claim only) and src (HeadlessContractSim secure decision, Game browser secure decision, View additive fields, ContractFamilies). Both are inside ENGINE_SOURCE_INPUTS, so the content re-hashes. This is a REAL behaviour change for e10-last-claim and for that contract only: secured now requires the warm vent alive at secureWave and its fall ends the ride with reason preserve_fell. Every other contract decides exactly as before. Same era: no view field was removed or renamed and no tape shape changed."
+        },
+        {
+          "engineHash": "10c1fa66d73ba5ab527adb0991aa625cb768e24d0c6b518944e975a418871594",
+          "aliases": [],
+          "pinnedAt": "2026-09-03T01:40:00+07:00",
+          "cause": "ss-04-e3-beats merge (s2460): src/story/beats.ts gained E3_STORY_BEATS and src/story/StoryRuntime.ts loads them only when activeEpochId() is epoch-3-voltage. Content re-hash, no simulation behaviour change: story beats are presentational cards the sim never reads, and the merged tree ran test:node-guards 563 pass / 0 sim failures. Same era: the board law is unchanged."
+        },
+        {
+          "engineHash": "cb321d83cc39b86c3cc80633e5d7ca9331b24188b88a6983cd1cbeb69729437b",
+          "aliases": [],
+          "pinnedAt": "2026-09-03T03:10:00+07:00",
+          "cause": "human-tape-true-reel-stamp merge (s2461): src/game/RunTape.ts gained engineHash/era on RunTapeMeta plus runTapeRecordingMeta (resume retains the original stamp), and src/game/Game.ts now stamps fresh human tapes through it. Both are inside ENGINE_SOURCE_INPUTS, so the content re-hashes. Content re-hash only, no simulation behaviour change: the stamp is tape METADATA the sim never reads, and the merged tree ran test:node-guards 562 pass with zero sim failures. The merge also unions main viewVersion with the lane engineHash/era on the same validator, so all three fields now validate together. Same era: no view field was removed or renamed and no tape shape was invalidated (unstamped legacy tapes still validate)."
+        },
+        {
+          "engineHash": "ac138d0f393a3f0630cd59fc5e3035e8b507db07c8275a5d13ba0bb8f8332a34",
+          "aliases": [],
+          "pinnedAt": "2026-09-03T04:35:00+07:00",
+          "cause": "e10-preserve-ranking merge (s2462): src/game/Game.ts adds preserveDiagnostics() to runTapeEventLog() and two additive score fields (preserveWavesAlive, preserveHpFraction) at the county-standings submission site. src/ is inside ENGINE_SOURCE_INPUTS, so the content re-hashes. Content re-hash only, no simulation behaviour change: preserveDiagnostics() is a read, the event-log field is spread CONDITIONALLY so non-preserve contracts produce a byte-identical event log, and the one reorder (hoisting runTapeEventLog() above the snapshot call) has only pure reads between the old and new call sites. Measured on the merged tree: tape-01 + tape-02 + c7-standing-order-replay 14/14 and same-laws-harvest-parity 4/4 (eventLogHash fnv1a32:a6c04f80 unchanged), test:node-guards 564 pass. Same era: no view field was removed or renamed, no tape shape was invalidated, and the ranking change itself lives in functions/, which is outside the hash corpus."
+        },
+        {
+          "engineHash": "8ccbfe165813b81a468e23676903a807b2c91f89a0e4fae813cfdc6a3293969f",
+          "aliases": [],
+          "pinnedAt": "2026-09-03T11:25:00+07:00",
+          "cause": "harness-receipts merge (s2469): src/agent/DeclaredStack.ts gains two optional stack fields (harnessDigest, harnessRef), computeHarnessDigest() and assembleSelfDeclaredStack(). src/ is inside ENGINE_SOURCE_INPUTS, so the content re-hashes. Content re-hash only, no simulation behaviour change: the digest is rider-side ATTRIBUTION the sim never reads, both fields are optional and validated shape-only, SCORE_KEYS and compareScores are untouched, and rows without the fields stay valid and rank unchanged. The door and board changes live in functions/ and site/, which are outside the hash corpus. Same era: no view field was removed or renamed and no tape shape was invalidated."
+        },
+        {
+          "engineHash": "2a06eb514e3037efc403fc59f4540bbca31ef8947ee1e58cd56cf157a5aecd47",
+          "aliases": [],
+          "pinnedAt": "2026-09-03T13:45:00+07:00",
+          "cause": "tape-resume merge (s2471): src/replay/AgentTapeReplay.ts gains resumeAt(targetTick), an additive entry point on the shared replay session that advances an existing tape to a tick and hands back the same headless sim. No existing code path changed - the replay of an untouched tape hashes identically (straight = resumed = assay). Content re-hash, no behaviour change."
+        },
+        {
+          "engineHash": "a607a81f44e10dc2b2262682c1e116c15917edffeeaa0c5909f383ccea5d8e04",
+          "pinnedAt": "2026-09-03",
+          "cause": "content re-hash, no behaviour change: the half-stamped-reel-refusal drain (01506cbde, src/game watch-path routing) moved the corpus after the previous pin; same era per F-1441-3",
+          "aliases": []
+        },
+        {
+          "engineHash": "5d2fc15616271e8c900824450ce803eb5145c1136dae0d9655c393724794b11b",
+          "pinnedAt": "2026-09-03",
+          "cause": "content re-hash, no behaviour change for existing tapes: e8-mare-claim-physics drain (a121c7f14) composes E8PhysicsSystem headless for contracts declaring gravity/atmosphere; E1-E7 and the other E8 maps replay byte-identical (null floors measured); same era per F-1441-3",
+          "aliases": []
+        },
+        {
+          "engineHash": "49c34f8bba3d61e003d1f421398e3835e3107945f396800fa124f946b2e4b2f9",
+          "pinnedAt": "2026-09-03",
+          "cause": "content re-hash, no behaviour change for existing tapes: e4-roads-and-convoys drain (48ef7df8d) composes MotorSocket headless for contracts declaring twist.motorFrontier; E1-E3 and E5+ replay byte-identical (the Claim control and the null floors re-derived); same era per F-1441-3",
+          "aliases": []
+        },
+        {
+          "engineHash": "5442360305b6c293272fb3ae40ef851018aee7e854bc5eab70c90781df2d91be",
+          "pinnedAt": "2026-09-04",
+          "cause": "content re-hash, no behaviour change for existing tapes: reel-contract-routing-hazard drain (s2493) makes the browser module worker stage the tape's own contract before importing the replay graph, so a reel routes by its tape and not by page location; replay behaviour for correctly-routed tapes is unchanged and the Hill Mine crown now agrees claimed/node/browser at fnv1a32:0cdd3e78; same era per F-1441-3. HASH COMPUTED ON THE MERGED TREE, NOT INHERITED: the runner truthfully reported 024d2587 for its own lane tree (486 engine files, 135 commits behind main); the shipping tree has 488 and hashes to this value (F-2493-2).",
+          "aliases": []
+        },
+        {
+          "engineHash": "41583818b1b62dcec49f241f0b9a3c7e168776a76be5d54e359e48dacc73e5be",
+          "aliases": [],
+          "pinnedAt": "2026-09-04",
+          "cause": "content re-hash, no behaviour change for existing tapes: e4-vehicles-plain-boot drain (98cc0fc2f) composes Vehicle/FuelSystem for every twist.motorFrontier contract in a plain boot and adds motorActions to RunTape. Measured on the merged tree: all four Motor reels replay claimed=node=browser to their recorded hashes."
+        },
+        {
+          "engineHash": "737a979abc8e1e4a799cb56acc31b556dbc4400e8878d6c0f3c078dcb55b6ef9",
+          "pinnedAt": "2026-09-04",
+          "cause": "content re-hash, no behaviour change for existing tapes: the four overnight drains (reel-contract-routing-hazard 22b9538e5 in src/meta+src/replay, e4-vehicles-plain-boot 98cc0fc2f in src/game, sim-terrain-read-canonicalization 7d23e345e harness only, f-e4-1 doc) left the corpus unpinned; appended attended before the deploy that carries them; same era per F-1441-3",
+          "aliases": []
+        },
+        {
+          "engineHash": "f9f634280279cacf4eb944ec92fc9022eaffdfb8841086fdd863c302097dbea0",
+          "pinnedAt": "2026-09-04",
+          "cause": "content re-hash, no behaviour change: assets/contracts/winnability-receipts.json regenerated after heat 11 (27 claimed); the receipts ledger sits inside the whole-directory corpus entry and rotates the hash on every regeneration (corrective receipts-outside-engine-corpus queued); same era per F-1441-3",
+          "aliases": []
+        },
+        {
+          "engineHash": "e6f25014d9a6729bd93192d3f9fa14bb8735263b1c147a09fa3dfd22292382b9",
+          "pinnedAt": "2026-09-04T14:28Z",
+          "cause": "content re-hash, no behaviour change: receipts-outside-engine-corpus removes the operational winnability ledger from ENGINE_SOURCE_INPUTS and repoints every executable reader; regenerating the ledger now leaves this hash byte-identical; same era per F-1441-3",
+          "aliases": []
+        },
+        {
+          "engineHash": "e931ff6f682bfad77ae746d92488c259c7ee41440d803db5f8f79032282f0434",
+          "pinnedAt": "2026-09-04T16:52Z",
+          "cause": "content re-hash, no simulation behaviour change for existing tapes: standing-formula-explained captures the already-emitted run_secured snapshot for the verified county row and carries it through replay, suspend and UI reporting; public claimed snapshots remain refused and the standings worker rewrites pending values from the verified replay result; same era per F-1441-3",
+          "aliases": []
+        },
+        {
+          "engineHash": "3d0f567dd4cab4f9a643d88d293e2fa00db2e666e3cea3a3d646eb9a0baadb58",
+          "pinnedAt": "2026-09-04T19:08Z",
+          "cause": "content re-hash, no simulation behaviour change for existing tapes: contract-clock-explicit gives each of the 18 flat-ceiling contracts an authored 18000-tick clock while the other 24 continue to derive their clocks from secureWave; all 42 admission envelopes remain byte-for-byte numerically unchanged; same era per F-1441-3",
+          "aliases": []
+        },
+        {
+          "engineHash": "ea60c9b7694dd6e8a8ec3131d80349c5c15b9a19b125730dafb10c4e375ceca8",
+          "pinnedAt": "2026-09-05T00:00Z",
+          "cause": "content re-hash: e8-remaining-maps composes E8SuitAirSystem into the headless door for e8-far-side, e8-low-orbit and e8-eclipse and refreshes those three contracts engineDependencies prose. Existing tapes for every other contract are numerically unchanged (the consumer answers none() off those three ids and its diagnostics are spread-if-declared into the terminal hash); the three siblings idle floors move by design, measured 3fe83eca->5c30efd5, d7423597->6e1931c2, fac5d558->466507ac, with waves/timeMs/kills identical. The Mare Claim control is byte-identical on both seeds. Same era per F-1441-3",
+          "aliases": []
+        },
+        {
+          "engineHash": "82ea9af6de1788cf309340b9eace9d147f5723c041be89f2064490efb331a2e9",
+          "pinnedAt": "2026-09-05",
+          "cause": "content re-hash: e7-playbook-rows drain (b38d60295) adds PLAYBOOK_USE and the signal-system composition on the four Signal Era maps; every other contract replays byte-identical (eight E7 idle null floors and the E1/E8 controls measured); same era per F-1441-3",
+          "aliases": []
+        },
+        {
+          "engineHash": "324bb3cd0e32f2b71c37f86d74593340ee782e2718f8173274a7e7d15a0d2e8f",
+          "pinnedAt": "2026-09-05",
+          "cause": "content re-hash: e3-moth-season drain (de21da4f5) rewrites the Moth Season contract row (assets/contracts/epoch-3-voltage/contracts.json) — the sabotageable light circuit as contract data, zero src/ edits; every other contract replays byte-identical (the lane's both-engine tables + the E7/E8 pins measured); same era per F-1441-3",
+          "aliases": []
+        },
+        {
+          "engineHash": "b061540c8e645fbe0e2c1ccd24784f5aece9d4f9e47817a8990d21d8c0337628",
+          "pinnedAt": "2026-09-05",
+          "cause": "src re-hash: e5-storm-predicate-split drain — deepwaterStormCarriesCorsairs split from deepwaterStormDisablesScheduledWaves in Game.ts/HeadlessContractSim.ts/DeepwaterSocket.ts; an empty front emits no wave_started; every shipped E5 pin byte-identical (Stillwater/Regatta/Flotilla played+idle tables in artifacts/e5-storm-predicate-split/report.md); same era per F-1441-3",
+          "aliases": []
+        },
+        {
+          "engineHash": "1ecca4779fd90f484b6302ece778c90fa87da11ed515c02830c0c2f86f74bc90",
+          "pinnedAt": "2026-09-05",
+          "cause": "src re-hash: e7-player-playbook-parity drain — E7PlaybookLatch.ts is the one four-rule secure decision for Game.ts and HeadlessContractSim.ts; human PLAYBOOK_USE is recorded in the tape (RunTape.playbookUses) and replayed; the four E7 hashes and every other contract replay byte-identical (lane tables); same era per F-1441-3",
+          "aliases": []
+        },
+        {
+          "engineHash": "ea7fd35e445e83fd19028bfb2587608883a9cb2dcb307f4086a89510b854f795",
+          "pinnedAt": "2026-09-05",
+          "cause": "content re-hash: e5-stillwater-front-crew-2 crews Stillwater's 32-second storm with one existing corsair skiff; played riders still secure at wave 12 and 360000 ms, idle riders lose by wave 3, and other E5 pins remain byte-identical; same era per F-1441-3",
+          "aliases": []
+        },
+        {
+          "engineHash": "8afae55feda2730606dbf46d869baf14bc66f733028547f1f1ba3d0b5a6a3a16",
+          "pinnedAt": "2026-09-05",
+          "cause": "src re-hash: prefetch-bounded-warming drain (065252649) — AdvanceStream.ts warms priorities 1-2 under a session byte allowance and StartMenu.ts gains the 'Warm every map' opt-in; render/asset plumbing only, no sim or contract change; every contract replays byte-identical; same era per F-1441-3",
+          "aliases": []
+        },
+        {
+          "engineHash": "9254f19e3c6e126d2b37fe789055fb5ca2ccd6862090bc6e5b71984ed11d3325",
+          "pinnedAt": "2026-09-05",
+          "cause": "src re-hash: shared-atlas-texture-dedupe drain (3a47f1800) — src/assets/SharedAtlasPlugin.ts + AssetLoading.ts registration: one GPU texture per atlas-content hash across GLBs; render/asset plumbing only, no sim or contract change; every contract replays byte-identical; same era per F-1441-3",
+          "aliases": []
+        },
+        {
+          "engineHash": "b395ee1f9e2fa226489c749f2468778d023ad900b682aadc3f8fd15a481612b1",
+          "pinnedAt": "2026-09-05",
+          "cause": "src re-hash: lantern-true-world-reel-2 drain (e8319998d) — LanternController extracted from Game.ts, LanternBoot + LanternWorldStage added, main.ts replay route; the replay worker, AgentTapeReplay, RunTape and the sim untouched; every contract replays byte-identical (tape-02 + true-reel-harness green); same era per F-1441-3",
+          "aliases": []
+        },
+        {
+          "engineHash": "c552efe029369e05180c3df68e3c91003be7430164519d298e9898d9d07bdb28",
+          "pinnedAt": "2026-09-05",
+          "cause": "src re-hash: asset-diet-explicit-manifest v1+v2 drain (9b7d3eef6) — nine bare GLTFLoader sites routed through the shared meshopt factory (AssetLoading.createGltfLoader), the tracked loader keeps the SharedAtlasPlugin; asset/loader plumbing only, no sim or contract change; every contract replays byte-identical; same era per F-1441-3",
+          "aliases": []
+        },
+        {
+          "engineHash": "3c38c993fda488a95045297e012476484cbce9a62567a6ffbf0d9a524b7b4885",
+          "pinnedAt": "2026-09-05",
+          "cause": "corpus re-hash without a sim change: glb-export-contract-and-validator drain — 32 terrain *.export.json Blender sidecars under assets/pilots/map-rebuild-spike enter ENGINE_SOURCE_INPUTS via the directory rule (assay-replay-agent.mjs:42/:76); the game never loads them; no src/ or contract change; every contract replays byte-identical; same era per F-1441-3 (F-GLB-1)",
+          "aliases": []
+        },
+        {
+          "engineHash": "95c5a753be5c312889680a71c248ae8e1913c7402ef1f4a6bef58fcda1156a1f",
+          "pinnedAt": "2026-09-05",
+          "cause": "src re-hash: terrain-height-triangle-sampler drain — Terrain3dClaimPilot.bakeHeightGrid samples the drawn triangles (render-side visualY only; the planar sim untouched, fingerprint spec green); every contract replays byte-identical; same era per F-1441-3",
+          "aliases": []
+        },
+        {
+          "engineHash": "a44df406ac339b817ee5c13dfcdcfb9a869ebd0cf41d91efc74043fd69967024",
+          "pinnedAt": "2026-09-05",
+          "cause": "src re-hash: homemaker-kept-state-init-order drain — HomemakerBossSystem.restoreKeptState() is called by Game after WaveSystem exists (the constructor no longer restores); E6 null floors and a played tape byte-identical (fnv1a32:0ae65b8e / 004ae8d7 / fdce1d04); same era per F-1441-3",
+          "aliases": []
+        },
+        {
+          "engineHash": "ea4dcc6e4977754cba6d0d5f0921c4dc909a6cc5b0a3318b7c6696056e72765b",
+          "pinnedAt": "2026-09-05",
+          "cause": "src re-hash: bounded-prefetch-town-halls drain — AdvanceStream.ts state machine typed/documented, terminal 'allowance' state, complete-plan-at-allowance publishes ready (F-BPTH-1); asset plumbing only, no sim or contract change; every contract replays byte-identical; same era per F-1441-3",
+          "aliases": []
+        },
+        {
+          "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+          "pinnedAt": "2026-09-05",
+          "cause": "src re-hash: landmark-lighting-calibration drain — Terrain3dClaimPilot paint/material functions (emissive 3 → 0.45 default as a relative grade, closed meshes FrontSide) and LightRig constants; render-side only, the planar sim untouched; every contract replays byte-identical; same era per F-1441-3",
+          "aliases": []
+        },
+        {
+          "engineHash": "ff52a6e3ae298fd0da174dbd228e650698502ff32ec225e8f1a55655c5d0b434",
+          "pinnedAt": "2026-09-05",
+          "cause": "src re-hash: ss-05-e4-beats + ss-07-e6-beats drains — E4_STORY_BEATS and E6_STORY_BEATS data plus the StoryRuntime epoch switches (story presentation only; the sim, contracts and every replay byte-identical); same era per F-1441-3",
+          "aliases": []
+        },
+        {
+          "engineHash": "97add8282c1f1702589e291126d035f343303e50ebde57d8c23fd203bbef9bc6",
+          "pinnedAt": "2026-09-05",
+          "cause": "src re-hash: ss-06-e5-beats drain on top of E4/E6 — E5_STORY_BEATS data plus the StoryRuntime switch (story presentation only; the sim, contracts and every replay byte-identical); same era per F-1441-3",
+          "aliases": []
+        },
+        {
+          "engineHash": "1052ba1ab016c53d1b6cceff3db4d0859b38ade38f7e07a95a51112ba3c51b81",
+          "pinnedAt": "2026-09-05",
+          "cause": "src re-hash: ss-09-e8-beats drain — E8_STORY_BEATS data plus the StoryRuntime switch (story presentation only; the sim, contracts and every replay byte-identical); same era per F-1441-3",
+          "aliases": []
+        },
+        {
+          "engineHash": "583c7743fb8967291eeecd830f049a3768b0563b6356cf9cb7d21fb0b905f2d3",
+          "pinnedAt": "2026-09-06",
+          "cause": "src re-hash: ss-08-e7-beats + ss-10-e9-beats drains — E7_STORY_BEATS and E9_STORY_BEATS data plus their StoryRuntime switch lines, unioned in era order beside E8 (story presentation only; the sim, contracts and every replay byte-identical); same era per F-1441-3",
+          "aliases": []
+        },
+        {
+          "engineHash": "226820026a822a9a4335be8aa7aa69ebfebf751313426d2b26d444d5023a7857",
+          "pinnedAt": "2026-09-06",
+          "cause": "src re-hash: e10-empty-harvest-anchors-unlaunchable drain — the three Deep Sky maps declare twist.harvestFreeObjective and the browser door refuses only an undeclared seamless map (contract declaration + door path; harvestAnchors stay empty, null floors, receipts and mask tables byte-identical, every replay unchanged); same era per F-1441-3",
+          "aliases": []
+        },
+        {
+          "engineHash": "32d89821dc8d566aa04cb735add6fbe5a75d76613fdd47d7453e02d0a3e627cc",
+          "pinnedAt": "2026-09-06",
+          "cause": "src re-hash: the testing-build board unlock control drain (ContractUnlock wrapper + TownScene chapter curtain behind a per-profile flag; unlock predicates byte-identical; statically dead in the E1 release bundle; the sim and every replay unchanged); same era per F-1441-3",
+          "aliases": []
+        },
+        {
+          "engineHash": "e5c6080917f508cce5dc910af92b8a50b1b2e302a35235283aa35f2daac0cb9a",
+          "pinnedAt": "2026-09-06",
+          "cause": "src re-hash: e6-picnic-thirty-second-death drain — the Picnic briefing block gains the loss condition and the hold rules from the published three_stake_hold rule (assets/contracts text only; both idle floors and the receipt-class prover hash byte-identical, every replay unchanged); same era per F-1441-3",
+          "aliases": []
+        },
+        {
+          "engineHash": "9b2b30d80676a442594b1911c750dc0753ba90fcc43b2fa11d0f02d95228c742",
+          "pinnedAt": "2026-09-06",
+          "cause": "src re-hash: story-signal-emitters drain — the four story signals nobody emitted (wave-complete, rung-promotion, science-threshold, first-boot) now publish from Game.ts/main.ts as presentation signals; the E1 null floors 21/21 and the played tapes replay byte-identical; same era per F-1441-3",
+          "aliases": []
+        },
+        {
+          "engineHash": "e40023d41bceb6b93e140d6f60ca6e83724dec1fc56c1cc1984e88b627fa294e",
+          "pinnedAt": "2026-09-06",
+          "cause": "src re-hash: ss-11-e10-beats drain — E10_STORY_BEATS data plus its StoryRuntime switch line, unioned after E9 (story presentation only; the sim, contracts and every replay byte-identical); same era per F-1441-3",
+          "aliases": []
+        },
+        {
+          "engineHash": "e0b419808ff47a948926093c0f6bcbbb18dbf9dde0a194a215965ceaaf97f39e",
+          "pinnedAt": "2026-09-06",
+          "cause": "county null floors re-recorded under the current engine (owner ruling 2026-09-06 (1) 're-record it'): the ten stale eventLogHash rows of e3-moth-season and the four E8 maps regenerated by scripts/null-floor-anchors.mjs, every other row byte-identical; a data re-derivation, no sim change; same era per F-1441-3",
+          "aliases": []
+        },
+        {
+          "engineHash": "8822c2f07c963f37dd79ea423682de8cbc8c259c97c4dedc1355b8e5497273fb",
+          "pinnedAt": "2026-09-06",
+          "cause": "src re-hash: canyon-works-bank-cap-override drain — a per-contract bank cap read by Economy through its cap-source seam in both engines, set to 360 on e3-canyon-works only (owner ruling 2026-09-06 (2)); every other map's purse and every null floor byte-identical; same era per F-1441-3",
+          "aliases": []
+        },
+        {
+          "engineHash": "351b869099f6015b5ab4202e87ec6de1f721a9883147d67a1b9997056db1ae93",
+          "pinnedAt": "2026-09-06",
+          "cause": "src re-hash: canyon-works-second-lever drain — connect.byWave 6 → 8 and a per-contract beacon ladder (twist.economy.beaconLadder, priced at the one buildableCostAt seam in both engines) on e3-canyon-works only, per the owner's 'hard levels can be won' ruling; the two canyon idle-floor rows re-pointed (the widened deadline moves them), every other floor byte-identical; same era per F-1441-3",
+          "aliases": []
+        },
+        {
+          "engineHash": "5d5e9d5e100b38186a12475cd85ab2a3bdd3f8890c2203318ea2a518f7ee1830",
+          "pinnedAt": "2026-09-06",
+          "cause": "src re-hash: e10s-2-squall-scheduler drain — the Ember Shore's Static squall phase machine in both engines (calm 60 s / telegraph 8 s / squall 25 s / recover 8 s, event-logged transitions) with a render-side stub and an ambience duck that is exactly 1 on every other map; no floor row exists for the E10 maps and every other floor is byte-identical; same era per F-1441-3",
+          "aliases": []
+        },
+        {
+          "engineHash": "a231d5ff989b9f21ec5a9f98c698c5a83f6cb7a8ab0a89739a9b089a035e87b1",
+          "pinnedAt": "2026-09-06",
+          "cause": "src re-hash: portraits-e5-e10-batch drain — 21 speaker ids registered in src/story/speakers.ts and one E9 beat re-keyed to the canal reeve (story presentation only; the sim, contracts and every replay byte-identical); same era per F-1441-3",
+          "aliases": []
+        },
+        {
+          "engineHash": "1b0485ceba550cbb8256d1ef5af20a6e6b7272561d4c75cb95a3531a759ee684",
+          "pinnedAt": "2026-09-06",
+          "cause": "src re-hash: board-tape-gold drain — the headless secure snapshot reports the purse HELD at the secure tick (was lifetime panning), hash-neutral: all four heat-12 fixture reels reproduce their own eventLogHash; same era per F-1441-3",
+          "aliases": []
+        },
+        {
+          "engineHash": "4125dc8c6bdd91205c3a1c3067f928534ea22b30c1326c2312bf95a361809fad",
+          "pinnedAt": "2026-09-06",
+          "cause": "src re-hash: story-signal-gaps drain — boss-act/arrival/defeat signals emitted from inside the Salvage Claw, Old Digger and Quiet boss systems, run-return-town carries its contract id, a first-boot beat row, the first-boot key swept with the profile, one Hud per root (presentation signals only; the E1 null floors 21/21 and the played tapes byte-identical); same era per F-1441-3",
+          "aliases": []
+        },
+        {
+          "engineHash": "a703f20274408a88dc778c07c5da4a8590181c2851f3f6731329616c68df91a9",
+          "pinnedAt": "2026-09-06",
+          "cause": "src re-hash: relay-valley-winnable drain — a per-contract hero grit (twist.hero.maxHpBonus, one reader in both engines, the progression clamp made grit-aware) set to 300 on e7-relay-valley only, per the owner's 'hard levels can be won' ruling; the two relay-valley idle-floor rows re-pointed and still losing, every other floor byte-identical; same era per F-1441-3",
+          "aliases": []
+        },
+        {
+          "engineHash": "1e73faf916a5826e5e1dc6057217d82b824842421f82d1c9e12e2f029f552522",
+          "pinnedAt": "2026-09-06",
+          "cause": "src re-hash: dome-basin-winnable drain — the reel envelope's byte axis priced honestly for order-array play (an additive per-tick surcharge in src/playbook/PlaybookFormat.ts; maxTicks and maxEntries unchanged, nothing that fitted stops fitting); no sim change, every floor byte-identical; same era per F-1441-3",
+          "aliases": []
+        },
+        {
+          "engineHash": "338b656d5e6ceef6439b43e6ff5e87daa3fbe2cffed3cbb7fb611c5fdec8a2ca",
+          "pinnedAt": "2026-09-06",
+          "cause": "src re-hash: e10s-3-preserve-consumer drain — the Ember Shore's vent (warmth, stoke, the vent_guttered loss, the secure latch) in both engines, the doubled mote pressure applied during the squall, STOKE as a targetless CONTEXT_ACTION, the landed dependency status; no floor row exists for the E10 maps and every other floor is byte-identical; same era per F-1441-3",
+          "aliases": []
+        },
+        {
+          "engineHash": "84b28f47849628e8d2cf4c8975f89d5e87f2315847ef4e90dc19f3749464b122",
+          "pinnedAt": "2026-09-06",
+          "cause": "src re-hash: browser-door-held-gold drain — the browser door submits and verifies the purse HELD at the secure tick (five submit sites, RunManager's snapshot, the browser instrument); hash-neutral by construction (the event log's gold was always the held purse) and by measurement; same era per F-1441-3",
+          "aliases": []
+        },
+        {
+          "engineHash": "ce555f66a0ad92cf103adce14d18544bf70c1d338c95b75793fd92ed7924d219",
+          "pinnedAt": "2026-09-06",
+          "cause": "content re-hash: e10s-4-ember-shore-door drain — the Ember Shore's four cooling-vein harvest anchors, bench seeds e10-ember-shore-01/-02 and their losing idle floors, the mask table, admission earned by the public-verb prover (both seeds secured twice); harvestFreeObjective retired with the anchors per the launchable guard's own remedy; no src change; same era per F-1441-3",
+          "aliases": []
+        },
+        {
+          "engineHash": "7984269ea5ef422a21635c6c429104fca5945ca29a529b93847930098e080b93",
+          "pinnedAt": "2026-09-06",
+          "cause": "src re-hash: the copy revision — eight chapter beats re-keyed to their own cast's voice and portraits (story presentation only; the sim and every replay byte-identical); same era per F-1441-3",
+          "aliases": []
+        },
+        {
+          "engineHash": "465ada3a7009ffcfb92ec7550f33ba133da7704fd44d04955368dcfaec2f9130",
+          "pinnedAt": "2026-09-06",
+          "cause": "src re-hash: hero-move-verb drain — the MOVE_HERO standing order (riders steer the hero through the same intents path a human's keys take, in both engines; refused HERO_NOT_YOURS where a human holds the hero; additive, every floor byte-identical, tapes replay); same era per F-1441-3",
+          "aliases": []
+        },
+        {
+          "engineHash": "91dbc88a42a40eb89b4cdb715db4621672152fc0fe121de6c785e4c3b3b544e1",
+          "pinnedAt": "2026-09-06",
+          "cause": "portraits-e5-e10-generated: the ten generated E5/E8/E10 plates registered as speakers, four beats re-keyed and three rewritten in first person (story presentation only; no sim change), stacked on hero-move-verb 465ada3a",
+          "aliases": []
+        },
+        {
+          "engineHash": "70c31bbbb782ee669ee254bafb04715ad2583727e04fdf34a39881d3c065d7be",
+          "pinnedAt": "2026-09-06",
+          "cause": "mare-claim-air-prevalent: the Mare Claim's air wall rules the whole ride, authored per contract (regolithRequired 4, regolithWindowWaves 4; E8PhysicsSystem consumer, now.air.regolith view fields), stacked on portraits 91dbc88a",
+          "aliases": []
+        },
+        {
+          "engineHash": "60415d3f1be740e2cdb3236736adbe18bb9bf508f1c472ed17167725b590bae2",
+          "pinnedAt": "2026-09-06",
+          "cause": "secure-choice-refusal-both-cures: while the secure window is open a submission that is not a single SECURE_CHOICE is refused visibly (SECURE_CHOICE_ONLY on the order channel + one gr-sim stderr line) and each refusal spends one fixed step of the pending clock, so the choice defaults through the existing expiry path and no policy can hang a heat (F-MCAP-1, owner: both); stacked on air-wall 70c31bbb",
+          "aliases": []
+        },
+        {
+          "engineHash": "6dfdde6fb2b081ff62a832814d5faf64f0d62eb83a2fe7a6d953d97e3825cd21",
+          "pinnedAt": "2026-09-06",
+          "cause": "first-town-transfer-bisect: the advance stream holds a contract prefetch until the current scene's loader reads ready (F-BUDGET-3: the Claim's terrain + panorama, 1.05 MB, no longer race the town's own load); the bisect found no merge grew the transfer, the gate measures host speed (F-BUDGET-4); stacked on secure-choice 60415d3f",
+          "aliases": []
+        },
+        {
+          "engineHash": "f28903f44c0fa2f9d59c527fb80eac5a3de380ad6a5f60c9b7e04c35c47e3bbb",
+          "pinnedAt": "2026-09-06",
+          "cause": "e8-air-wall-all-maps: the same air wall on every Orbital contract (owner: same air for all space contracts): the Eclipse carries regolithRequired 4 / regolithWindowWaves 4, the Far Side and Low Orbit crossingRequired 4 / crossingWindowWaves 4 (a credited entry per window plus every zone stood in on air), one shared E8AirWindow, now.air.crossing published; stacked on first-town-transfer-bisect 6dfdde6f",
+          "aliases": []
+        },
+        {
+          "engineHash": "9351c22729cf2478362a8890b7af5077b6bf4b56afeed63fc062778fc4123db7",
+          "pinnedAt": "2026-09-06",
+          "cause": "sprite-cell-manifests: the two char-*.png ?url globs are eager, so the hashed cell URLs are inlined at build time and the first town no longer spends one round trip per sprite cell (JS requests in the window 205 to 32; 921 to 135 chunks); no sim change; stacked on e8-air-wall-all-maps f28903f4",
+          "aliases": []
+        },
+        {
+          "engineHash": "e35f9423bf516f1a8ed45332a685f44969098e6f6356521376587797b5ac45c6",
+          "pinnedAt": "2026-09-06",
+          "cause": "first-town-audio-deferred: the music group is held until the scene the player stands in reads off loading and past the gesture's own tick (3.0 MB of mp3 leave the first-town window; the title theme is no longer fetched and thrown away on the enter-town path); no sim change; stacked on sprite-cell-manifests 9351c227",
+          "aliases": []
+        },
+        {
+          "engineHash": "3f86a89c6f2eb1df83007465cbe43e39a41971593e6ee8b7ddee45637cc67d0f",
+          "pinnedAt": "2026-09-06",
+          "cause": "portraits-era-aging-batch: eighteen aged plates registered as speakers (the E1 cast across E2-E4, the Boilerwright, Wei the pressman, Lan the typesetter), thirty-three E2-E4 beats re-keyed with the copy byte-identical, the Elder's E3/E4 lines to the keeper of her chart (story presentation only; no sim change); stacked on first-town-audio-deferred e35f9423",
+          "aliases": []
+        },
+        {
+          "engineHash": "d2f03881011e54afa074efa2667a3e34cd463ee9fb494e274f0f55ebf57b1895",
+          "pinnedAt": "2026-09-06",
+          "cause": "perf-correctives-batch: the pools presence-probe globs go eager and Terrain's dead rail-cell entry is narrowed out (79 per-cell modules to 0 in the dev build), the tape worker's build pass inherits the diet naming and the release narrowing (1,231 un-dieted PNGs / 96 MB out of dist), the audio loop clock publishes through a getter; no sim change; stacked on portraits-era-aging 3f86a89c",
+          "aliases": []
+        },
+        {
+          "engineHash": "08d5ee5f2ae70640952e9fa6ad6f608c28d7ff72c753f8c2b691c1e41004905a",
+          "pinnedAt": "2026-09-06",
+          "cause": "engine-correctives-batch: twist.emberShore leaves DECLARED_INERT_PATHS, the diagnostics literal loses its blanket cast (picnicHold, preserve, movePin, playbookUse declared), the three post-run E5 beats gate on run-return-town's contract id, the profile-key sweep guard; no sim change; stacked on perf-correctives d2f03881",
+          "aliases": []
+        },
+        {
+          "engineHash": "54263985848aadd03e4c7164af2ac3f21ee48f685f529d51aa81f90a2cb8cc1f",
+          "pinnedAt": "2026-09-06",
+          "cause": "story-correctives-batch: eighteen new beats (the Claw's, the Digger's and the Quiet's acts answered; eleven silent portraits given their cited lines), Chalk canon on the storybook; story presentation only; stacked on engine-correctives 08d5ee5f",
+          "aliases": []
+        },
+        {
+          "engineHash": "ee2b884b76d96b6f8598874b398c8e6714835beef74c9c48ec2a5790f4d86f93",
+          "pinnedAt": "2026-09-06",
+          "cause": "hero-slot-clip-split: the hero's clips carry groups in the character contract; the town loads only the default group (walk/idle) and declares town, the claim declares claim, other groups warm when the advance stream's plan drains (work8 + attack8, 4.3 MB / 35 requests, leave the first town; first swing 0 ms stall); plus F-RPA-4, the T debug spawn key guarded by isDebugEnabled; no sim change; stacked on story-correctives 54263985",
+          "aliases": []
+        },
+        {
+          "engineHash": "e6c5b7a19156b08453dd331948174cb96efccc5d668421b328667b1d1a4d5c0f",
+          "pinnedAt": "2026-09-06",
+          "cause": "e8-air-logical: humans in space need air (owner directive 2026-09-07): the hero's suit drains outside pressurised ground, refills only inside, and an empty suit harms per whole second through CombatSystem on all four Orbital maps (suitSeconds 60, harmPerSecond 5, authored per contract); Low Orbit's crossings become vacuum (pressurisedZoneIds names the cabin); the HUD dial; the authored latches unchanged; stacked on hero-slot-clip-split ee2b884b",
+          "aliases": []
+        },
+        {
+          "engineHash": "1926c803891774bc890ce1285a6f1561918efae823a9d57da2fa8f4bb0f7c74d",
+          "pinnedAt": "2026-09-06",
+          "cause": "first-town-payload-gate: the deploy's first-town verdict judges the declared payload computed from the build (assets/first-town-payload.json read by the advance stream too), the browser probe stays a tripwire under a 30 MB ceiling; no sim change; stacked on e8-air-logical e6c5b7a1",
+          "aliases": []
+        },
+        {
+          "engineHash": "03a4789deb6f64a4cacaa8ed9b68cccd710828412a1828a902a3424e52e76cd0",
+          "pinnedAt": "2026-09-07",
+          "cause": "portraits-era-aging-2-batch: the five trades across E5-E10 and the Salvage King get their own faces (31 speakers registered, 50 beats re-keyed, copy byte-identical) on the merged tree that also carries the first-town payload gate's AdvanceStream (src/story/speakers.ts, src/story/beats.ts); owner A4 2026-09-07: use the credits, they expire soon",
+          "aliases": []
+        },
+        {
+          "engineHash": "32c940079ba3dd1921ca2be10a4a0d5a1de36f49c9199e1f99ecc02230f9f33d",
+          "pinnedAt": "2026-09-07",
+          "cause": "F-FTP-5 (attended review fix 2026-09-07): src/assets/AdvanceStream.ts imports assets/first-town-payload.json as a DEFAULT import (Node's JSON modules have no named exports; the named form broke every Node loader of the module, caught by whole-suite-collection on main); the browser bundle is byte-equivalent and no sim path changes",
+          "aliases": []
+        },
+        {
+          "engineHash": "8e3fe217a6814032313b8a4fd4cfbd186c0ceafaefe213eb6fba2394cf12e8b3",
+          "pinnedAt": "2026-09-07",
+          "cause": "canon-calls-a8-batch (owner A8 rulings 2026-09-07): the Elder becomes a woman in both her portraits (batch 3 plates over the shipped man plates), the Old Digger's portrait is the machine plate with an old-digger speaker (88 speakers), no beat re-keyed; src/story/speakers.ts alone moves the hash (story presentation, no sim)",
+          "aliases": []
+        },
+        {
+          "engineHash": "1a825ba08e31f838e52b489f78cd06e6c7a4dd323281bb5d73bcb9084fbf8331",
+          "aliases": [],
+          "pinnedAt": "2026-09-07T07:15:56.618Z",
+          "cause": "s2535 main-beat-citation-refresh: nine comment-only live citation ranges; TypeScript tokens and line count unchanged, on the attended A8 speaker/art tree."
+        },
+        {
+          "engineHash": "6857177d9353184e27943dd49e32d192fe71527a4a88a52335279a6bc2cca60d",
+          "pinnedAt": "2026-09-07",
+          "cause": "elder-walk8-regeneration (owner A8 F-AGE-1, the sprite half): the Elder's walk8 sheet regenerated as the woman through the Higgsfield production script (turnaround, four stills, twelve Seedance takes, four selected by eye), extracted under the identical stem, and src/town/TownScene.ts registers her walk frames so her feet anchor (F-A8-5); the only src change is that registration",
+          "aliases": []
+        },
+        {
+          "engineHash": "df7eef8385c7fcf7050962d4fd775bc114a194cc75e619b5a500b318b47dfe1e",
+          "pinnedAt": "2026-09-07",
+          "cause": "youngsters-rechain-batch (owner A12 option b, 2026-09-07): the two youngsters re-chained from the shipped E1 children through E2, E4 and A's E8 (five plates, five speakers, 93 total); src/story/speakers.ts alone moves the hash (story presentation, no sim)",
+          "aliases": []
+        },
+        {
+          "engineHash": "0663b7e1d9ab5ef59d7c8b31e4e1b83163829b65cd824b19c208489a9e703774",
+          "pinnedAt": "2026-09-07",
+          "cause": "rider-parity-grammar, all stages (ADR-005; owner A2 + D1 'fairness is crucial' + D2 're-ride it yes', 2026-09-07): the nine ACTION reach tests read the hero, REPAIR_UNDER bounded to the human radius, the E5 deck a plain-boot human control, MOVE_TO/HOLD/FALLBACK_IF removed with 57 tapes / 22 scored heat-12 rows retired in the ledger, CONTEXT_ACTION's four human-only targets given to the rider, syncProgramSuspension and the E8 crossing chip re-based to the hero; the controls table reads 15 equal / 0 agent-only / 0 human-richer",
+          "aliases": []
+        },
+        {
+          "engineHash": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4",
+          "pinnedAt": "2026-09-07",
+          "cause": "the 2026-09-07 evening chain landed together (elder-walk8-regeneration, youngsters-rechain-batch, rider-parity-grammar all stages, low-orbit-second-build-line measurement): the union of the three pinned slices' inputs on one tree (TownScene.ts, speakers.ts, the grammar's src); each slice's own pin stands beside this one",
+          "aliases": []
+        },
+        {
+          "engineHash": "86e60c92f65b8b3f7c42dc285c619c1e73b9d931899c72035bf9236f13b13509",
+          "pinnedAt": "2026-09-12",
+          "cause": "boss-fidelity (Astra, sol/boss-art-fidelity-review 72fb062e8) landed on drain/boss-fidelity: eight new assets/layer-contracts/*.v1.json (in ENGINE_SOURCE_INPUTS) plus src changes in ten boss systems, Game.ts, HeadlessContractSim.ts (the dynamo_crawler shared night-speed light sample, F-DRB-2), Run3dPilot.ts, RunSuspend.ts, pools.ts and the new utils/buildingShapeSnapshot.ts; all 17 verified county rows replay to their board hashes on this tree (reviews/drain-review-boss-fidelity.md §3), so this is a same-era pin",
+          "aliases": []
+        }
+      ],
+      "note": "Owner ruling 2026-08-31: \"we don't need stuff in the leaderboards that does not get replayed\". The era marks a board-law change: only current-lineage reels rank; simulation behaviour did not change. — closed 2026-09-14 by maps-campaign-land-era6: Astra's map campaign re-surveyed 17 contracts and tightened the door, so no era-5 reel installs on the era-6 engine; the 17 verified rows of the Replayed Board retire counted (owner 2026-09-13: \"we don't have players yet so we can just keep going\").",
+      "pinCount": 86
     }
   ]
 }

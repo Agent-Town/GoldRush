@@ -9,74 +9,354 @@
         "tileId": "e3-blackout-ridge",
         "biome": "voltage-blackout-ridge",
         "size": 96,
-        "dimensions": { "width": 80, "height": 96 },
-        "render": { "terrainMesh": "required" },
+        "dimensions": {
+          "width": 80,
+          "height": 96
+        },
+        "render": {
+          "terrainMesh": "required"
+        },
         "river": false,
         "ford": false,
         "buildZones": [
-          { "id": "trunk-yard", "bank": "south", "minX": -32, "maxX": 8, "minZ": -38, "maxZ": -8 },
-          { "id": "breath-yard", "bank": "north", "minX": -8, "maxX": 24, "minZ": -6, "maxZ": 18 },
-          { "id": "ridge-line", "bank": "north", "minX": 8, "maxX": 34, "minZ": 20, "maxZ": 40 }
+          {
+            "id": "trunk-yard",
+            "bank": "south",
+            "minX": -32,
+            "maxX": 8,
+            "minZ": -38,
+            "maxZ": -8
+          },
+          {
+            "id": "breath-yard",
+            "bank": "north",
+            "minX": -8,
+            "maxX": 24,
+            "minZ": -6,
+            "maxZ": 18
+          },
+          {
+            "id": "ridge-line",
+            "bank": "north",
+            "minX": 8,
+            "maxX": 34,
+            "minZ": 20,
+            "maxZ": 40
+          }
         ],
-        "stakeMarkers": [{ "id": "ridge-switch-house", "x": 24, "z": 30, "heroStart": true }],
+        "stakeMarkers": [
+          {
+            "id": "ridge-switch-house",
+            "x": 24,
+            "z": 30,
+            "heroStart": true
+          }
+        ],
         "pylonSites": [
-          { "id": "trunk-west", "nodeId": "trunk-west", "wireFrom": "off-map-current", "x": -30, "z": -30, "radius": 2.5 },
-          { "id": "trunk-middle", "nodeId": "trunk-middle", "wireFrom": "trunk-west", "x": -18, "z": -18, "radius": 2.5 },
-          { "id": "trunk-ridge", "nodeId": "trunk-ridge", "wireFrom": "trunk-middle", "x": -6, "z": -6, "radius": 2.5 }
+          {
+            "id": "trunk-west",
+            "nodeId": "trunk-west",
+            "wireFrom": "off-map-current",
+            "x": -30,
+            "z": -30,
+            "radius": 2.5
+          },
+          {
+            "id": "trunk-middle",
+            "nodeId": "trunk-middle",
+            "wireFrom": "trunk-west",
+            "x": -18,
+            "z": -18,
+            "radius": 2.5
+          },
+          {
+            "id": "trunk-ridge",
+            "nodeId": "trunk-ridge",
+            "wireFrom": "trunk-middle",
+            "x": -6,
+            "z": -6,
+            "radius": 2.5
+          }
         ],
         "capacitorSites": [
-          { "id": "breath-bank-west", "nodeId": "capacitor-west", "x": 6, "z": 4, "radius": 2.5 },
-          { "id": "breath-bank-east", "nodeId": "capacitor-east", "x": 16, "z": 4, "radius": 2.5 }
+          {
+            "id": "breath-bank-west",
+            "nodeId": "capacitor-west",
+            "x": 6,
+            "z": 4,
+            "radius": 2.5
+          },
+          {
+            "id": "breath-bank-east",
+            "nodeId": "capacitor-east",
+            "x": 16,
+            "z": 4,
+            "radius": 2.5
+          }
         ],
         "prePlacedBuildables": [
-          { "id": "sentry_beacon", "x": -30, "z": -30 },
-          { "id": "sentry_beacon", "x": -18, "z": -18 },
-          { "id": "sentry_beacon", "x": -6, "z": -6 },
-          { "id": "lantern_post", "x": 12, "z": 20 },
-          { "id": "lantern_post", "x": 24, "z": 30 }
+          {
+            "id": "sentry_beacon",
+            "x": -30,
+            "z": -30
+          },
+          {
+            "id": "sentry_beacon",
+            "x": -18,
+            "z": -18
+          },
+          {
+            "id": "sentry_beacon",
+            "x": -6,
+            "z": -6
+          },
+          {
+            "id": "lantern_post",
+            "x": 12,
+            "z": 20
+          },
+          {
+            "id": "lantern_post",
+            "x": 24,
+            "z": 30
+          }
         ],
-        "ridgeGlow": { "x": -38, "z": -44, "color": "#79c8bd", "intensity": 1.35 },
+        "ridgeGlow": {
+          "x": -38,
+          "z": -44,
+          "color": "#79c8bd",
+          "intensity": 1.35
+        },
         "waterSources": [],
-        "harvestAnchors": [{ "x": 8, "z": 30 }, { "x": 18, "z": 34 }, { "x": 30, "z": 26 }],
-        "heightfield": { "id": "blackout-ridge-shelf", "mode": "visual" },
-        "palette": { "id": "blackout-ridge-blue-brass", "tint": [0.48, 0.52, 0.58], "dampTint": [0.16, 0.24, 0.3], "dampAmount": 0.06, "splat": { "rockAmount": 0.82, "scrubAmount": 0.1, "macroWarmth": 0.32, "antiTile": 0.76 } },
-        "scatter": { "id": "blackout-ridge-scree", "density": 0.62, "classCounts": { "rocks": 82, "dry_grass": 20, "wagon_ruts": 12, "claim_posts": 8 } },
-        "lanes": { "spawnEdges": ["west", "east", "north"], "territoryRingBiasWaves": 0, "territoryRingLaneBias": 0 }
+        "harvestAnchors": [
+          {
+            "x": 8,
+            "z": 30
+          },
+          {
+            "x": 18,
+            "z": 34
+          },
+          {
+            "x": 30,
+            "z": 26
+          }
+        ],
+        "heightfield": {
+          "id": "blackout-ridge-shelf",
+          "mode": "visual"
+        },
+        "palette": {
+          "id": "blackout-ridge-blue-brass",
+          "tint": [
+            0.48,
+            0.52,
+            0.58
+          ],
+          "dampTint": [
+            0.16,
+            0.24,
+            0.3
+          ],
+          "dampAmount": 0.06,
+          "splat": {
+            "rockAmount": 0.82,
+            "scrubAmount": 0.1,
+            "macroWarmth": 0.32,
+            "antiTile": 0.76
+          }
+        },
+        "scatter": {
+          "id": "blackout-ridge-scree",
+          "density": 0.62,
+          "classCounts": {
+            "rocks": 82,
+            "dry_grass": 20,
+            "wagon_ruts": 12,
+            "claim_posts": 8
+          }
+        },
+        "lanes": {
+          "spawnEdges": [
+            "west",
+            "east",
+            "north"
+          ],
+          "territoryRingBiasWaves": 0,
+          "territoryRingLaneBias": 0
+        }
       },
       "twist": {
         "secureWave": 12,
-        "dayNightCycle": { "periodSeconds": 24, "duskRampSeconds": 2, "dawnRampSeconds": 2, "nightDepth": 0.86, "nightLocked": true },
+        "dayNightCycle": {
+          "periodSeconds": 24,
+          "duskRampSeconds": 2,
+          "dawnRampSeconds": 2,
+          "nightDepth": 0.86,
+          "nightLocked": true
+        },
         "powerGrid": {
           "maxSpanLength": 30,
           "nodes": [
-            { "id": "off-map-current", "label": "Current Beyond the Ridge", "kind": "producer", "x": -38, "z": -40, "outputWatts": 36 },
-            { "id": "trunk-west", "label": "West Trunk Frame", "kind": "relay", "x": -30, "z": -30 },
-            { "id": "trunk-middle", "label": "Middle Trunk Frame", "kind": "relay", "x": -18, "z": -18 },
-            { "id": "trunk-ridge", "label": "Ridge Trunk Frame", "kind": "relay", "x": -6, "z": -6 },
-            { "id": "capacitor-west", "label": "West Capacitor Bank", "kind": "storage", "x": 6, "z": 4, "capacityWh": 0.05, "chargeWatts": 18, "dischargeWatts": 12 },
-            { "id": "capacitor-east", "label": "East Capacitor Bank", "kind": "storage", "x": 16, "z": 4, "capacityWh": 0.05, "chargeWatts": 18, "dischargeWatts": 12 },
-            { "id": "lamp-yard", "label": "Breath Yard Lamps", "kind": "consumer", "role": "lamp", "x": 12, "z": 20, "drawWatts": 6, "priority": 10 },
-            { "id": "lamp-ridge", "label": "Ridge Switch Lamps", "kind": "consumer", "role": "lamp", "x": 24, "z": 30, "drawWatts": 6, "priority": 10 }
+            {
+              "id": "off-map-current",
+              "label": "Current Beyond the Ridge",
+              "kind": "producer",
+              "x": -38,
+              "z": -40,
+              "outputWatts": 36
+            },
+            {
+              "id": "trunk-west",
+              "label": "West Trunk Frame",
+              "kind": "relay",
+              "x": -30,
+              "z": -30
+            },
+            {
+              "id": "trunk-middle",
+              "label": "Middle Trunk Frame",
+              "kind": "relay",
+              "x": -18,
+              "z": -18
+            },
+            {
+              "id": "trunk-ridge",
+              "label": "Ridge Trunk Frame",
+              "kind": "relay",
+              "x": -6,
+              "z": -6
+            },
+            {
+              "id": "capacitor-west",
+              "label": "West Capacitor Bank",
+              "kind": "storage",
+              "x": 6,
+              "z": 4,
+              "capacityWh": 0.05,
+              "chargeWatts": 18,
+              "dischargeWatts": 12
+            },
+            {
+              "id": "capacitor-east",
+              "label": "East Capacitor Bank",
+              "kind": "storage",
+              "x": 16,
+              "z": 4,
+              "capacityWh": 0.05,
+              "chargeWatts": 18,
+              "dischargeWatts": 12
+            },
+            {
+              "id": "lamp-yard",
+              "label": "Breath Yard Lamps",
+              "kind": "consumer",
+              "role": "lamp",
+              "x": 12,
+              "z": 20,
+              "drawWatts": 6,
+              "priority": 10
+            },
+            {
+              "id": "lamp-ridge",
+              "label": "Ridge Switch Lamps",
+              "kind": "consumer",
+              "role": "lamp",
+              "x": 24,
+              "z": 30,
+              "drawWatts": 6,
+              "priority": 10
+            }
           ],
           "wires": [
-            { "a": "off-map-current", "b": "trunk-west" },
-            { "a": "trunk-west", "b": "trunk-middle" },
-            { "a": "trunk-middle", "b": "trunk-ridge" },
-            { "a": "trunk-ridge", "b": "capacitor-west" },
-            { "a": "capacitor-west", "b": "capacitor-east" },
-            { "a": "capacitor-west", "b": "lamp-yard" },
-            { "a": "capacitor-east", "b": "lamp-ridge" }
+            {
+              "a": "off-map-current",
+              "b": "trunk-west"
+            },
+            {
+              "a": "trunk-west",
+              "b": "trunk-middle"
+            },
+            {
+              "a": "trunk-middle",
+              "b": "trunk-ridge"
+            },
+            {
+              "a": "trunk-ridge",
+              "b": "capacitor-west"
+            },
+            {
+              "a": "capacitor-west",
+              "b": "capacitor-east"
+            },
+            {
+              "a": "capacitor-west",
+              "b": "lamp-yard"
+            },
+            {
+              "a": "capacitor-east",
+              "b": "lamp-ridge"
+            }
           ]
         },
         "enemyRoster": [
-          { "id": "fevered_saboteur", "label": "Trunk Saboteur", "waveMin": 1, "hpScale": 1.1, "speedMult": 1.12, "visualScale": 0.95, "tint": "#6f806c", "wrecker": true, "buildingDamageScale": 1.35, "spawnEdges": ["west", "east"], "spawnGates": [{ "edge": "west", "x": -39, "z": -18 }, { "edge": "east", "x": 39, "z": -18 }] },
-          { "id": "night_runner", "label": "Fevered Runner", "waveMin": 1, "hpScale": 0.9, "speedMult": 1.05, "visualScale": 0.95, "tint": "#6d624d" }
+          {
+            "id": "fevered_saboteur",
+            "label": "Trunk Saboteur",
+            "waveMin": 1,
+            "hpScale": 1.1,
+            "speedMult": 1.12,
+            "visualScale": 0.95,
+            "tint": "#6f806c",
+            "wrecker": true,
+            "buildingDamageScale": 1.35,
+            "spawnEdges": [
+              "west",
+              "east"
+            ],
+            "spawnGates": [
+              {
+                "edge": "west",
+                "x": -39,
+                "z": -18
+              },
+              {
+                "edge": "east",
+                "x": 39,
+                "z": -18
+              }
+            ]
+          },
+          {
+            "id": "night_runner",
+            "label": "Fevered Runner",
+            "waveMin": 1,
+            "hpScale": 0.9,
+            "speedMult": 1.05,
+            "visualScale": 0.95,
+            "tint": "#6d624d"
+          }
         ]
       },
-      "boardRow": { "name": "Blackout Ridge", "ledgerBlurb": "The current comes from beyond the ridge. Bank a breath before the Fever cuts the trunk.", "tags": ["voltage", "storage", "night"], "unlock": "secured:e3-canyon-works" },
+      "boardRow": {
+        "name": "Blackout Ridge",
+        "ledgerBlurb": "The current comes from beyond the ridge. Bank a breath before the Fever cuts the trunk.",
+        "tags": [
+          "voltage",
+          "storage",
+          "night"
+        ],
+        "unlock": "secured:e3-canyon-works"
+      },
       "briefing": {
-        "goals": ["Bank current at the capacitor sites and survive through wave 12."],
-        "rules": ["The off-map trunk brings 36 W; each bank stores 0.05 Wh from surplus current.", "A charged bank returns up to 12 W while a cut separates the ridge from its unseen source.", "Trunk Saboteurs attack the three pre-authored frames; repair a frame to restore current and recharge."],
+        "goals": [
+          "Bank current at the capacitor sites and survive through wave 12."
+        ],
+        "rules": [
+          "The off-map trunk brings 36 W; each bank stores 0.05 Wh from surplus current.",
+          "A charged bank returns up to 12 W while a cut separates the ridge from its unseen source.",
+          "Trunk Saboteurs attack the three pre-authored frames; repair a frame to restore current and recharge."
+        ],
         "geographyLine": "An 80 by 96 ridge: the trunk enters from the southwest glow and climbs to the switch house in the northeast."
       }
     },
@@ -90,34 +370,97 @@
         "river": false,
         "ford": false,
         "buildZones": [
-          { "id": "west-lit-yard", "bank": "north", "minX": -32, "maxX": -8, "minZ": -24, "maxZ": 24 },
-          { "id": "dark-corridor", "bank": "north", "minX": -6, "maxX": 6, "minZ": -34, "maxZ": 34 },
-          { "id": "east-tithe-yard", "bank": "north", "minX": 8, "maxX": 32, "minZ": -24, "maxZ": 24 }
+          {
+            "id": "west-lit-yard",
+            "bank": "north",
+            "minX": -32,
+            "maxX": -8,
+            "minZ": -24,
+            "maxZ": 24
+          },
+          {
+            "id": "dark-corridor",
+            "bank": "north",
+            "minX": -6,
+            "maxX": 6,
+            "minZ": -34,
+            "maxZ": 34
+          },
+          {
+            "id": "east-tithe-yard",
+            "bank": "north",
+            "minX": 8,
+            "maxX": 32,
+            "minZ": -24,
+            "maxZ": 24
+          }
         ],
         "pylonSites": [
-          { "id": "corridor-pylon", "nodeId": "corridor-pylon", "wireFrom": "corridor-dynamo", "x": 0, "z": -14, "radius": 2.5 }
+          {
+            "id": "corridor-pylon",
+            "nodeId": "corridor-pylon",
+            "wireFrom": "corridor-dynamo",
+            "x": 0,
+            "z": -14,
+            "radius": 2.5
+          }
         ],
         "prePlacedBuildables": [
-          { "id": "lantern_post", "x": 0, "z": 6 }
+          {
+            "id": "lantern_post",
+            "x": 0,
+            "z": 6
+          }
         ],
         "waterSources": [],
         "palette": {
           "id": "moth-season-ink-blue",
-          "tint": [0.48, 0.55, 0.7],
-          "dampTint": [0.2, 0.25, 0.36],
+          "tint": [
+            0.48,
+            0.55,
+            0.7
+          ],
+          "dampTint": [
+            0.2,
+            0.25,
+            0.36
+          ],
           "dampAmount": 0.08,
-          "splat": { "rockAmount": 0.48, "scrubAmount": 0.12, "macroWarmth": 0.32, "antiTile": 0.7 }
+          "splat": {
+            "rockAmount": 0.48,
+            "scrubAmount": 0.12,
+            "macroWarmth": 0.32,
+            "antiTile": 0.7
+          }
         },
         "scatter": {
           "id": "moth-season-corridor",
           "density": 0.55,
-          "classCounts": { "rocks": 48, "dry_grass": 34, "wagon_ruts": 18, "claim_posts": 6 }
+          "classCounts": {
+            "rocks": 48,
+            "dry_grass": 34,
+            "wagon_ruts": 18,
+            "claim_posts": 6
+          }
         },
-        "lanes": { "spawnEdges": ["north", "south"], "territoryRingBiasWaves": 0, "territoryRingLaneBias": 0 }
+        "lanes": {
+          "spawnEdges": [
+            "north",
+            "south"
+          ],
+          "territoryRingBiasWaves": 0,
+          "territoryRingLaneBias": 0
+        }
       },
       "twist": {
         "secureWave": 12,
-        "dayNightCycle": { "periodSeconds": 24, "duskRampSeconds": 2, "dawnRampSeconds": 2, "nightDepth": 1, "nightLocked": true },
+        "dayNightCycle": {
+          "periodSeconds": 24,
+          "duskRampSeconds": 2,
+          "dawnRampSeconds": 2,
+          "nightDepth": 1,
+          "nightLocked": true
+        },
         "mothSeason": {
           "radiusWeight": 1,
           "decoyWeight": 2,
@@ -130,30 +473,128 @@
         "powerGrid": {
           "maxSpanLength": 30,
           "nodes": [
-            { "id": "corridor-dynamo", "label": "Corridor Dynamo", "kind": "producer", "x": 0, "z": -32, "outputWatts": 20 },
-            { "id": "corridor-pylon", "label": "Corridor Pylon", "kind": "relay", "x": 0, "z": -14 },
-            { "id": "corridor-gallery", "label": "Corridor Gallery", "kind": "consumer", "role": "gallery", "x": 0, "z": 2, "drawWatts": 6, "priority": 10 },
-            { "id": "corridor-lamp", "label": "Corridor Lamp", "kind": "consumer", "role": "lamp", "x": 0, "z": 6, "drawWatts": 2, "priority": 30 }
+            {
+              "id": "corridor-dynamo",
+              "label": "Corridor Dynamo",
+              "kind": "producer",
+              "x": 0,
+              "z": -32,
+              "outputWatts": 20
+            },
+            {
+              "id": "corridor-pylon",
+              "label": "Corridor Pylon",
+              "kind": "relay",
+              "x": 0,
+              "z": -14
+            },
+            {
+              "id": "corridor-gallery",
+              "label": "Corridor Gallery",
+              "kind": "consumer",
+              "role": "gallery",
+              "x": 0,
+              "z": 2,
+              "drawWatts": 6,
+              "priority": 10
+            },
+            {
+              "id": "corridor-lamp",
+              "label": "Corridor Lamp",
+              "kind": "consumer",
+              "role": "lamp",
+              "x": 0,
+              "z": 6,
+              "drawWatts": 2,
+              "priority": 30
+            }
           ],
           "wires": [
-            { "a": "corridor-dynamo", "b": "corridor-pylon" },
-            { "a": "corridor-pylon", "b": "corridor-gallery" },
-            { "a": "corridor-gallery", "b": "corridor-lamp" }
+            {
+              "a": "corridor-dynamo",
+              "b": "corridor-pylon"
+            },
+            {
+              "a": "corridor-pylon",
+              "b": "corridor-gallery"
+            },
+            {
+              "a": "corridor-gallery",
+              "b": "corridor-lamp"
+            }
           ],
-          "connect": { "required": 1, "byWave": 12 }
+          "connect": {
+            "required": 1,
+            "byWave": 12
+          }
         },
         "enemyRoster": [
-          { "id": "moth_swarm", "label": "Fever Moths", "hpScale": 0.3, "speedMult": 1.6, "visualScale": 0.6, "contactDamageScale": 0, "buildingDamageScale": 0, "supportBuildingDamageScale": 0, "tint": "#e8d8b0" },
-          { "id": "moth_swarm", "label": "Fever Moths", "hpScale": 0.3, "speedMult": 1.6, "visualScale": 0.6, "contactDamageScale": 0, "buildingDamageScale": 0, "supportBuildingDamageScale": 0, "tint": "#e8d8b0" },
-          { "id": "moth_swarm", "label": "Fever Moths", "waveMin": 4, "hpScale": 0.3, "speedMult": 1.6, "visualScale": 0.6, "contactDamageScale": 0, "buildingDamageScale": 0, "supportBuildingDamageScale": 0, "tint": "#e8d8b0" },
-          { "id": "night_runner", "label": "Fevered Runner", "hpScale": 1.75, "speedMult": 1.05, "visualScale": 0.95, "tint": "#6d624d" },
-          { "id": "fevered_saboteur", "label": "Corridor Saboteur", "waveMin": 4, "hpScale": 1.1, "speedMult": 1.12, "visualScale": 0.95, "tint": "#6f806c", "wrecker": true, "buildingDamageScale": 1.25, "spawnEdges": ["north", "south"] }
+          {
+            "id": "moth_swarm",
+            "label": "Fever Moths",
+            "hpScale": 0.3,
+            "speedMult": 1.6,
+            "visualScale": 0.6,
+            "contactDamageScale": 0,
+            "buildingDamageScale": 0,
+            "supportBuildingDamageScale": 0,
+            "tint": "#e8d8b0"
+          },
+          {
+            "id": "moth_swarm",
+            "label": "Fever Moths",
+            "hpScale": 0.3,
+            "speedMult": 1.6,
+            "visualScale": 0.6,
+            "contactDamageScale": 0,
+            "buildingDamageScale": 0,
+            "supportBuildingDamageScale": 0,
+            "tint": "#e8d8b0"
+          },
+          {
+            "id": "moth_swarm",
+            "label": "Fever Moths",
+            "waveMin": 4,
+            "hpScale": 0.3,
+            "speedMult": 1.6,
+            "visualScale": 0.6,
+            "contactDamageScale": 0,
+            "buildingDamageScale": 0,
+            "supportBuildingDamageScale": 0,
+            "tint": "#e8d8b0"
+          },
+          {
+            "id": "night_runner",
+            "label": "Fevered Runner",
+            "hpScale": 1.75,
+            "speedMult": 1.05,
+            "visualScale": 0.95,
+            "tint": "#6d624d"
+          },
+          {
+            "id": "fevered_saboteur",
+            "label": "Corridor Saboteur",
+            "waveMin": 4,
+            "hpScale": 1.1,
+            "speedMult": 1.12,
+            "visualScale": 0.95,
+            "tint": "#6f806c",
+            "wrecker": true,
+            "buildingDamageScale": 1.25,
+            "spawnEdges": [
+              "north",
+              "south"
+            ]
+          }
         ]
       },
       "boardRow": {
         "name": "Moth Season",
         "ledgerBlurb": "Migration week: every lamp is bait, and one shed pays the nightly tithe.",
-        "tags": ["voltage", "night"],
+        "tags": [
+          "voltage",
+          "night"
+        ],
         "unlock": "secured:e3-blackout-ridge"
       },
       "briefing": {
@@ -178,38 +619,218 @@
         "tileId": "e3-canyon-works",
         "biome": "voltage-canyon-works",
         "size": 112,
-        "dimensions": { "width": 96, "height": 112 },
-        "render": { "terrainMesh": "required" },
+        "dimensions": {
+          "width": 96,
+          "height": 112
+        },
+        "render": {
+          "terrainMesh": "required"
+        },
         "river": true,
         "ford": true,
-        "fords": [{ "id": "works-bridge", "x": 0, "halfWidth": 4 }],
-        "buildZones": [
-          { "id": "sub-hall-yard", "bank": "south", "minX": -36, "maxX": 36, "minZ": -52, "maxZ": -28 },
-          { "id": "west-switchback", "bank": "south", "minX": -30, "maxX": -8, "minZ": -26, "maxZ": -12 },
-          { "id": "east-switchback", "bank": "south", "minX": 8, "maxX": 30, "minZ": -26, "maxZ": -12 },
-          { "id": "west-gallery", "bank": "north", "minX": -42, "maxX": -16, "minZ": 7, "maxZ": 40 },
-          { "id": "east-gallery", "bank": "north", "minX": 16, "maxX": 42, "minZ": 7, "maxZ": 40 }
+        "fords": [
+          {
+            "id": "works-bridge",
+            "x": 0,
+            "halfWidth": 4
+          }
         ],
-        "stakeMarkers": [{ "id": "dynamo-sub-hall", "x": 0, "z": -44, "heroStart": true }],
+        "buildZones": [
+          {
+            "id": "sub-hall-yard",
+            "bank": "south",
+            "minX": -36,
+            "maxX": 36,
+            "minZ": -52,
+            "maxZ": -28
+          },
+          {
+            "id": "west-switchback",
+            "bank": "south",
+            "minX": -30,
+            "maxX": -8,
+            "minZ": -26,
+            "maxZ": -12
+          },
+          {
+            "id": "east-switchback",
+            "bank": "south",
+            "minX": 8,
+            "maxX": 30,
+            "minZ": -26,
+            "maxZ": -12
+          },
+          {
+            "id": "west-gallery",
+            "bank": "north",
+            "minX": -42,
+            "maxX": -16,
+            "minZ": 7,
+            "maxZ": 40
+          },
+          {
+            "id": "east-gallery",
+            "bank": "north",
+            "minX": 16,
+            "maxX": 42,
+            "minZ": 7,
+            "maxZ": 40
+          }
+        ],
+        "stakeMarkers": [
+          {
+            "id": "dynamo-sub-hall",
+            "x": 0,
+            "z": -44,
+            "heroStart": true
+          }
+        ],
         "pylonSites": [
-          { "id": "pylon-west-base", "nodeId": "pylon-west-base", "wireFrom": "sub-hall", "x": -12, "z": -36, "radius": 2.5 },
-          { "id": "pylon-west-switch", "nodeId": "pylon-west-switch", "wireFrom": "pylon-west-base", "x": -24, "z": -20, "radius": 2.5 },
-          { "id": "pylon-west-rim", "nodeId": "pylon-west-rim", "wireFrom": "pylon-west-switch", "x": -28, "z": 8, "radius": 2.5 },
-          { "id": "pylon-east-base", "nodeId": "pylon-east-base", "wireFrom": "sub-hall", "x": 12, "z": -36, "radius": 2.5 },
-          { "id": "pylon-east-switch", "nodeId": "pylon-east-switch", "wireFrom": "pylon-east-base", "x": 24, "z": -20, "radius": 2.5 },
-          { "id": "pylon-east-rim", "nodeId": "pylon-east-rim", "wireFrom": "pylon-east-switch", "x": 28, "z": 8, "radius": 2.5 }
+          {
+            "id": "pylon-west-base",
+            "nodeId": "pylon-west-base",
+            "wireFrom": "sub-hall",
+            "x": -12,
+            "z": -36,
+            "radius": 2.5
+          },
+          {
+            "id": "pylon-west-switch",
+            "nodeId": "pylon-west-switch",
+            "wireFrom": "pylon-west-base",
+            "x": -24,
+            "z": -20,
+            "radius": 2.5
+          },
+          {
+            "id": "pylon-west-rim",
+            "nodeId": "pylon-west-rim",
+            "wireFrom": "pylon-west-switch",
+            "x": -28,
+            "z": 8,
+            "radius": 2.5
+          },
+          {
+            "id": "pylon-east-base",
+            "nodeId": "pylon-east-base",
+            "wireFrom": "sub-hall",
+            "x": 12,
+            "z": -36,
+            "radius": 2.5
+          },
+          {
+            "id": "pylon-east-switch",
+            "nodeId": "pylon-east-switch",
+            "wireFrom": "pylon-east-base",
+            "x": 24,
+            "z": -20,
+            "radius": 2.5
+          },
+          {
+            "id": "pylon-east-rim",
+            "nodeId": "pylon-east-rim",
+            "wireFrom": "pylon-east-switch",
+            "x": 28,
+            "z": 8,
+            "radius": 2.5
+          }
         ],
         "rails": [
-          { "style": "steamworks", "points": [{ "x": -42, "z": -30 }, { "x": -18, "z": -34 }, { "x": 18, "z": -34 }, { "x": 42, "z": -30 }, { "x": 18, "z": -34 }, { "x": -18, "z": -34 }] },
-          { "style": "steamworks", "points": [{ "x": -46, "z": 44 }, { "x": -36, "z": 32 }, { "x": -28, "z": 8 }, { "x": -24, "z": -20 }, { "x": -12, "z": -36 }] }
+          {
+            "style": "steamworks",
+            "points": [
+              {
+                "x": -42,
+                "z": -30
+              },
+              {
+                "x": -18,
+                "z": -34
+              },
+              {
+                "x": 18,
+                "z": -34
+              },
+              {
+                "x": 42,
+                "z": -30
+              },
+              {
+                "x": 18,
+                "z": -34
+              },
+              {
+                "x": -18,
+                "z": -34
+              }
+            ]
+          },
+          {
+            "style": "steamworks",
+            "points": [
+              {
+                "x": -46,
+                "z": 44
+              },
+              {
+                "x": -36,
+                "z": 32
+              },
+              {
+                "x": -28,
+                "z": 8
+              },
+              {
+                "x": -24,
+                "z": -20
+              },
+              {
+                "x": -12,
+                "z": -36
+              }
+            ]
+          }
         ],
         "waterSources": [],
-        "harvestAnchors": [{ "x": -34, "z": 30 }, { "x": -22, "z": 34 }, { "x": 22, "z": 34 }, { "x": 34, "z": 30 }],
+        "harvestAnchors": [
+          {
+            "x": -34,
+            "z": 30
+          },
+          {
+            "x": -22,
+            "z": 34
+          },
+          {
+            "x": 22,
+            "z": 34
+          },
+          {
+            "x": 34,
+            "z": 30
+          }
+        ],
         "prePlacedBuildables": [
-          { "id": "lantern_post", "x": -32, "z": 32 },
-          { "id": "lantern_post", "x": 32, "z": 32 },
-          { "id": "turret", "x": -18, "z": 22 },
-          { "id": "turret", "x": 18, "z": 22 }
+          {
+            "id": "lantern_post",
+            "x": -32,
+            "z": 32
+          },
+          {
+            "id": "lantern_post",
+            "x": 32,
+            "z": 32
+          },
+          {
+            "id": "turret",
+            "x": -18,
+            "z": 22
+          },
+          {
+            "id": "turret",
+            "x": 18,
+            "z": 22
+          }
         ],
         "elevation": {
           "cellSize": 2,
@@ -240,66 +861,432 @@
             "mineMouthCrown": 0
           }
         },
-        "heightfield": { "id": "canyon-switchback-terraces", "mode": "visual" },
-        "palette": { "id": "canyon-works-copper-night", "tint": [0.62, 0.58, 0.52], "dampTint": [0.2, 0.31, 0.34], "dampAmount": 0.28, "splat": { "rockAmount": 0.9, "dampBand": 2.6, "scrubAmount": 0.08, "macroWarmth": 0.5, "antiTile": 0.78 } },
-        "scatter": { "id": "canyon-works-scree", "density": 0.72, "classCounts": { "rocks": 112, "dry_grass": 28, "wagon_ruts": 20, "claim_posts": 12 } },
-        "water": { "id": "canyon-dam-channel", "visualHalfWidth": 6.25, "depths": { "river": 1.5, "ford": 0.3, "shallows": 0.25 }, "speedMul": { "river": 0.4, "ford": 0.82, "shallows": 0.7 } },
-        "lanes": { "spawnEdges": ["west", "east", "south"], "territoryRingBiasWaves": 0, "territoryRingLaneBias": 0 }
+        "heightfield": {
+          "id": "canyon-switchback-terraces",
+          "mode": "visual"
+        },
+        "palette": {
+          "id": "canyon-works-copper-night",
+          "tint": [
+            0.62,
+            0.58,
+            0.52
+          ],
+          "dampTint": [
+            0.2,
+            0.31,
+            0.34
+          ],
+          "dampAmount": 0.28,
+          "splat": {
+            "rockAmount": 0.9,
+            "dampBand": 2.6,
+            "scrubAmount": 0.08,
+            "macroWarmth": 0.5,
+            "antiTile": 0.78
+          }
+        },
+        "scatter": {
+          "id": "canyon-works-scree",
+          "density": 0.72,
+          "classCounts": {
+            "rocks": 112,
+            "dry_grass": 28,
+            "wagon_ruts": 20,
+            "claim_posts": 12
+          }
+        },
+        "water": {
+          "id": "canyon-dam-channel",
+          "visualHalfWidth": 6.25,
+          "depths": {
+            "river": 1.5,
+            "ford": 0.3,
+            "shallows": 0.25
+          },
+          "speedMul": {
+            "river": 0.4,
+            "ford": 0.82,
+            "shallows": 0.7
+          }
+        },
+        "lanes": {
+          "spawnEdges": [
+            "west",
+            "east",
+            "south"
+          ],
+          "territoryRingBiasWaves": 0,
+          "territoryRingLaneBias": 0
+        },
+        "engineDependencies": [
+          {
+            "dep": "elevation-advisory-fields",
+            "status": "missing",
+            "description": "Needs registered consumers for the declared slopeMax and waterline advisory fields."
+          }
+        ]
       },
       "twist": {
         "secureWave": 12,
-        "economy": { "bankCap": 360, "beaconLadder": [25, 30, 35, 45, 50, 55] },
-        "dayNightCycle": { "periodSeconds": 120, "duskRampSeconds": 30, "dawnRampSeconds": 20, "nightDepth": 1, "waveSchedule": { "duskWave": 4, "darkWave": 8 } },
+        "economy": {
+          "bankCap": 360,
+          "beaconLadder": [
+            25,
+            30,
+            35,
+            45,
+            50,
+            55
+          ]
+        },
+        "dayNightCycle": {
+          "periodSeconds": 120,
+          "duskRampSeconds": 30,
+          "dawnRampSeconds": 20,
+          "nightDepth": 1,
+          "waveSchedule": {
+            "duskWave": 4,
+            "darkWave": 8
+          }
+        },
         "lightRamp": {
           "duskWave": 4,
           "darkWave": 8,
           "dawnWave": 12,
           "keyframes": [
-            { "wave": 4, "phase": "full", "darkness": 0, "background": "#d6aa6f", "fog": "#c9ae86", "sun": "#ffd28a", "sunIntensity": 2.2, "fill": "#f1d6aa", "ground": "#72583d", "fillIntensity": 1, "sunHeight": 16, "spriteTint": "#ffffff" },
-            { "wave": 5.5, "phase": "golden", "darkness": 0.28, "background": "#8b684f", "fog": "#806b61", "sun": "#ef9a5c", "sunIntensity": 1.55, "fill": "#c18c69", "ground": "#493a35", "fillIntensity": 0.72, "sunHeight": 10, "spriteTint": "#e2b58b" },
-            { "wave": 7, "phase": "dusk", "darkness": 0.72, "background": "#243349", "fog": "#26364b", "sun": "#6682a1", "sunIntensity": 0.42, "fill": "#38506c", "ground": "#1c2837", "fillIntensity": 0.3, "sunHeight": 5, "spriteTint": "#92a7bc" },
-            { "wave": 8, "phase": "dark", "darkness": 1, "background": "#07121f", "fog": "#0b1726", "sun": "#486787", "sunIntensity": 0.08, "fill": "#213852", "ground": "#101923", "fillIntensity": 0.16, "sunHeight": 3, "spriteTint": "#7d91a7" }
+            {
+              "wave": 4,
+              "phase": "full",
+              "darkness": 0,
+              "background": "#d6aa6f",
+              "fog": "#c9ae86",
+              "sun": "#ffd28a",
+              "sunIntensity": 2.2,
+              "fill": "#f1d6aa",
+              "ground": "#72583d",
+              "fillIntensity": 1,
+              "sunHeight": 16,
+              "spriteTint": "#ffffff"
+            },
+            {
+              "wave": 5.5,
+              "phase": "golden",
+              "darkness": 0.28,
+              "background": "#8b684f",
+              "fog": "#806b61",
+              "sun": "#ef9a5c",
+              "sunIntensity": 1.55,
+              "fill": "#c18c69",
+              "ground": "#493a35",
+              "fillIntensity": 0.72,
+              "sunHeight": 10,
+              "spriteTint": "#e2b58b"
+            },
+            {
+              "wave": 7,
+              "phase": "dusk",
+              "darkness": 0.72,
+              "background": "#243349",
+              "fog": "#26364b",
+              "sun": "#6682a1",
+              "sunIntensity": 0.42,
+              "fill": "#38506c",
+              "ground": "#1c2837",
+              "fillIntensity": 0.3,
+              "sunHeight": 5,
+              "spriteTint": "#92a7bc"
+            },
+            {
+              "wave": 8,
+              "phase": "dark",
+              "darkness": 1,
+              "background": "#07121f",
+              "fog": "#0b1726",
+              "sun": "#486787",
+              "sunIntensity": 0.08,
+              "fill": "#213852",
+              "ground": "#101923",
+              "fillIntensity": 0.16,
+              "sunHeight": 3,
+              "spriteTint": "#7d91a7"
+            }
           ]
         },
-        "mothSeason": { "radiusWeight": 1, "decoyWeight": 1, "mothsPerLightPerWave": 1, "nightSpeedOutsideLight": 1.08, "litThreshold": 0.35, "attachDamagePerSecond": 0 },
+        "mothSeason": {
+          "radiusWeight": 1,
+          "decoyWeight": 1,
+          "mothsPerLightPerWave": 1,
+          "nightSpeedOutsideLight": 1.08,
+          "litThreshold": 0.35,
+          "attachDamagePerSecond": 0
+        },
         "powerGrid": {
           "maxSpanLength": 30,
           "nodes": [
-            { "id": "sub-hall", "label": "Dynamo Sub-Hall", "kind": "producer", "x": 0, "z": -44, "outputWatts": 26 },
-            { "id": "pylon-west-base", "label": "West Base Pylon", "kind": "relay", "x": -12, "z": -36 },
-            { "id": "pylon-west-switch", "label": "West Switchback Pylon", "kind": "relay", "x": -24, "z": -20 },
-            { "id": "pylon-west-rim", "label": "West Rim Pylon", "kind": "relay", "x": -28, "z": 8 },
-            { "id": "pylon-east-base", "label": "East Base Pylon", "kind": "relay", "x": 12, "z": -36 },
-            { "id": "pylon-east-switch", "label": "East Switchback Pylon", "kind": "relay", "x": 24, "z": -20 },
-            { "id": "pylon-east-rim", "label": "East Rim Pylon", "kind": "relay", "x": 28, "z": 8 },
-            { "id": "gallery-west", "label": "West Gallery", "kind": "consumer", "role": "gallery", "x": -28, "z": 28, "drawWatts": 6, "priority": 10 },
-            { "id": "gallery-east", "label": "East Gallery", "kind": "consumer", "role": "gallery", "x": 28, "z": 28, "drawWatts": 6, "priority": 10 },
-            { "id": "tram-motor", "label": "Works Tram", "kind": "consumer", "role": "tram", "x": -28, "z": 8, "drawWatts": 4, "priority": 15 },
-            { "id": "turret-west", "label": "West Arc Turret", "kind": "consumer", "role": "turret", "x": -18, "z": 22, "drawWatts": 4, "priority": 20 },
-            { "id": "turret-east", "label": "East Arc Turret", "kind": "consumer", "role": "turret", "x": 18, "z": 22, "drawWatts": 4, "priority": 20 },
-            { "id": "lamp-west", "label": "West Gallery Lamps", "kind": "consumer", "role": "lamp", "x": -32, "z": 32, "drawWatts": 2, "priority": 30 },
-            { "id": "lamp-east", "label": "East Gallery Lamps", "kind": "consumer", "role": "lamp", "x": 32, "z": 32, "drawWatts": 2, "priority": 30 },
-            { "id": "crawler-drain-west-base", "label": "Crawler Drain at West Base", "kind": "consumer", "role": "crawler-drain", "x": -12, "z": -36, "drawWatts": 18, "priority": 0 },
-            { "id": "crawler-drain-west-switch", "label": "Crawler Drain at West Switchback", "kind": "consumer", "role": "crawler-drain", "x": -24, "z": -20, "drawWatts": 18, "priority": 0 },
-            { "id": "crawler-drain-west-rim", "label": "Crawler Drain at West Rim", "kind": "consumer", "role": "crawler-drain", "x": -28, "z": 8, "drawWatts": 18, "priority": 0 },
-            { "id": "crawler-drain-east-base", "label": "Crawler Drain at East Base", "kind": "consumer", "role": "crawler-drain", "x": 12, "z": -36, "drawWatts": 18, "priority": 0 },
-            { "id": "crawler-drain-east-switch", "label": "Crawler Drain at East Switchback", "kind": "consumer", "role": "crawler-drain", "x": 24, "z": -20, "drawWatts": 18, "priority": 0 },
-            { "id": "crawler-drain-east-rim", "label": "Crawler Drain at East Rim", "kind": "consumer", "role": "crawler-drain", "x": 28, "z": 8, "drawWatts": 18, "priority": 0 }
+            {
+              "id": "sub-hall",
+              "label": "Dynamo Sub-Hall",
+              "kind": "producer",
+              "x": 0,
+              "z": -44,
+              "outputWatts": 26
+            },
+            {
+              "id": "pylon-west-base",
+              "label": "West Base Pylon",
+              "kind": "relay",
+              "x": -12,
+              "z": -36
+            },
+            {
+              "id": "pylon-west-switch",
+              "label": "West Switchback Pylon",
+              "kind": "relay",
+              "x": -24,
+              "z": -20
+            },
+            {
+              "id": "pylon-west-rim",
+              "label": "West Rim Pylon",
+              "kind": "relay",
+              "x": -28,
+              "z": 8
+            },
+            {
+              "id": "pylon-east-base",
+              "label": "East Base Pylon",
+              "kind": "relay",
+              "x": 12,
+              "z": -36
+            },
+            {
+              "id": "pylon-east-switch",
+              "label": "East Switchback Pylon",
+              "kind": "relay",
+              "x": 24,
+              "z": -20
+            },
+            {
+              "id": "pylon-east-rim",
+              "label": "East Rim Pylon",
+              "kind": "relay",
+              "x": 28,
+              "z": 8
+            },
+            {
+              "id": "gallery-west",
+              "label": "West Gallery",
+              "kind": "consumer",
+              "role": "gallery",
+              "x": -28,
+              "z": 28,
+              "drawWatts": 6,
+              "priority": 10
+            },
+            {
+              "id": "gallery-east",
+              "label": "East Gallery",
+              "kind": "consumer",
+              "role": "gallery",
+              "x": 28,
+              "z": 28,
+              "drawWatts": 6,
+              "priority": 10
+            },
+            {
+              "id": "tram-motor",
+              "label": "Works Tram",
+              "kind": "consumer",
+              "role": "tram",
+              "x": -28,
+              "z": 8,
+              "drawWatts": 4,
+              "priority": 15
+            },
+            {
+              "id": "turret-west",
+              "label": "West Arc Turret",
+              "kind": "consumer",
+              "role": "turret",
+              "x": -18,
+              "z": 22,
+              "drawWatts": 4,
+              "priority": 20
+            },
+            {
+              "id": "turret-east",
+              "label": "East Arc Turret",
+              "kind": "consumer",
+              "role": "turret",
+              "x": 18,
+              "z": 22,
+              "drawWatts": 4,
+              "priority": 20
+            },
+            {
+              "id": "lamp-west",
+              "label": "West Gallery Lamps",
+              "kind": "consumer",
+              "role": "lamp",
+              "x": -32,
+              "z": 32,
+              "drawWatts": 2,
+              "priority": 30
+            },
+            {
+              "id": "lamp-east",
+              "label": "East Gallery Lamps",
+              "kind": "consumer",
+              "role": "lamp",
+              "x": 32,
+              "z": 32,
+              "drawWatts": 2,
+              "priority": 30
+            },
+            {
+              "id": "crawler-drain-west-base",
+              "label": "Crawler Drain at West Base",
+              "kind": "consumer",
+              "role": "crawler-drain",
+              "x": -12,
+              "z": -36,
+              "drawWatts": 18,
+              "priority": 0
+            },
+            {
+              "id": "crawler-drain-west-switch",
+              "label": "Crawler Drain at West Switchback",
+              "kind": "consumer",
+              "role": "crawler-drain",
+              "x": -24,
+              "z": -20,
+              "drawWatts": 18,
+              "priority": 0
+            },
+            {
+              "id": "crawler-drain-west-rim",
+              "label": "Crawler Drain at West Rim",
+              "kind": "consumer",
+              "role": "crawler-drain",
+              "x": -28,
+              "z": 8,
+              "drawWatts": 18,
+              "priority": 0
+            },
+            {
+              "id": "crawler-drain-east-base",
+              "label": "Crawler Drain at East Base",
+              "kind": "consumer",
+              "role": "crawler-drain",
+              "x": 12,
+              "z": -36,
+              "drawWatts": 18,
+              "priority": 0
+            },
+            {
+              "id": "crawler-drain-east-switch",
+              "label": "Crawler Drain at East Switchback",
+              "kind": "consumer",
+              "role": "crawler-drain",
+              "x": 24,
+              "z": -20,
+              "drawWatts": 18,
+              "priority": 0
+            },
+            {
+              "id": "crawler-drain-east-rim",
+              "label": "Crawler Drain at East Rim",
+              "kind": "consumer",
+              "role": "crawler-drain",
+              "x": 28,
+              "z": 8,
+              "drawWatts": 18,
+              "priority": 0
+            }
           ],
           "wires": [
-            { "a": "sub-hall", "b": "pylon-west-base" }, { "a": "pylon-west-base", "b": "pylon-west-switch" }, { "a": "pylon-west-switch", "b": "pylon-west-rim" },
-            { "a": "sub-hall", "b": "pylon-east-base" }, { "a": "pylon-east-base", "b": "pylon-east-switch" }, { "a": "pylon-east-switch", "b": "pylon-east-rim" },
-            { "a": "pylon-west-rim", "b": "gallery-west" }, { "a": "gallery-west", "b": "turret-west" }, { "a": "gallery-west", "b": "lamp-west" },
-            { "a": "pylon-east-rim", "b": "gallery-east" }, { "a": "gallery-east", "b": "turret-east" }, { "a": "gallery-east", "b": "lamp-east" },
-            { "a": "pylon-west-rim", "b": "tram-motor" },
-            { "a": "pylon-west-base", "b": "crawler-drain-west-base" },
-            { "a": "pylon-west-switch", "b": "crawler-drain-west-switch" },
-            { "a": "pylon-west-rim", "b": "crawler-drain-west-rim" },
-            { "a": "pylon-east-base", "b": "crawler-drain-east-base" },
-            { "a": "pylon-east-switch", "b": "crawler-drain-east-switch" },
-            { "a": "pylon-east-rim", "b": "crawler-drain-east-rim" }
+            {
+              "a": "sub-hall",
+              "b": "pylon-west-base"
+            },
+            {
+              "a": "pylon-west-base",
+              "b": "pylon-west-switch"
+            },
+            {
+              "a": "pylon-west-switch",
+              "b": "pylon-west-rim"
+            },
+            {
+              "a": "sub-hall",
+              "b": "pylon-east-base"
+            },
+            {
+              "a": "pylon-east-base",
+              "b": "pylon-east-switch"
+            },
+            {
+              "a": "pylon-east-switch",
+              "b": "pylon-east-rim"
+            },
+            {
+              "a": "pylon-west-rim",
+              "b": "gallery-west"
+            },
+            {
+              "a": "gallery-west",
+              "b": "turret-west"
+            },
+            {
+              "a": "gallery-west",
+              "b": "lamp-west"
+            },
+            {
+              "a": "pylon-east-rim",
+              "b": "gallery-east"
+            },
+            {
+              "a": "gallery-east",
+              "b": "turret-east"
+            },
+            {
+              "a": "gallery-east",
+              "b": "lamp-east"
+            },
+            {
+              "a": "pylon-west-rim",
+              "b": "tram-motor"
+            },
+            {
+              "a": "pylon-west-base",
+              "b": "crawler-drain-west-base"
+            },
+            {
+              "a": "pylon-west-switch",
+              "b": "crawler-drain-west-switch"
+            },
+            {
+              "a": "pylon-west-rim",
+              "b": "crawler-drain-west-rim"
+            },
+            {
+              "a": "pylon-east-base",
+              "b": "crawler-drain-east-base"
+            },
+            {
+              "a": "pylon-east-switch",
+              "b": "crawler-drain-east-switch"
+            },
+            {
+              "a": "pylon-east-rim",
+              "b": "crawler-drain-east-rim"
+            }
           ],
-          "connect": { "required": 2, "byWave": 8 }
+          "connect": {
+            "required": 2,
+            "byWave": 8
+          }
         },
         "baron": {
           "wave": 14,
@@ -329,14 +1316,69 @@
           "railSpeed": 1.8,
           "componentDegradeSpeedMult": 1,
           "components": [
-            { "id": "drain_mast", "label": "DRAIN-MAST", "hpScale": 2, "xOffset": 0, "zOffset": 0, "tint": "#5b8a8a" },
-            { "id": "tracks", "label": "TRACKS", "hpScale": 3, "xOffset": 4, "zOffset": 0, "tint": "#8b7d3c" },
-            { "id": "capacitor_bank", "label": "CAPACITOR BANK", "hpScale": 2.5, "xOffset": 8, "zOffset": 0, "tint": "#c4883a" }
+            {
+              "id": "drain_mast",
+              "label": "DRAIN-MAST",
+              "hpScale": 2,
+              "xOffset": 0,
+              "zOffset": 0,
+              "tint": "#5b8a8a"
+            },
+            {
+              "id": "tracks",
+              "label": "TRACKS",
+              "hpScale": 3,
+              "xOffset": 4,
+              "zOffset": 0,
+              "tint": "#8b7d3c"
+            },
+            {
+              "id": "capacitor_bank",
+              "label": "CAPACITOR BANK",
+              "hpScale": 2.5,
+              "xOffset": 8,
+              "zOffset": 0,
+              "tint": "#c4883a"
+            }
           ]
         },
         "enemyRoster": [
-          { "id": "fevered_saboteur", "label": "Fevered Saboteur", "waveMin": 4, "hpScale": 1.1, "speedMult": 1.12, "visualScale": 0.95, "tint": "#6f806c", "wrecker": true, "buildingDamageScale": 1.25, "spawnEdges": ["west", "east"], "spawnGates": [{ "edge": "west", "x": -46, "z": 38 }, { "edge": "east", "x": 46, "z": 38 }] },
-          { "id": "night_runner", "label": "Fevered Runner", "waveMin": 1, "hpScale": 0.9, "speedMult": 1.05, "visualScale": 0.95, "tint": "#6d624d" }
+          {
+            "id": "fevered_saboteur",
+            "label": "Fevered Saboteur",
+            "waveMin": 4,
+            "hpScale": 1.1,
+            "speedMult": 1.12,
+            "visualScale": 0.95,
+            "tint": "#6f806c",
+            "wrecker": true,
+            "buildingDamageScale": 1.25,
+            "spawnEdges": [
+              "west",
+              "east"
+            ],
+            "spawnGates": [
+              {
+                "edge": "west",
+                "x": -46,
+                "z": 38
+              },
+              {
+                "edge": "east",
+                "x": 46,
+                "z": 38
+              }
+            ]
+          },
+          {
+            "id": "night_runner",
+            "label": "Fevered Runner",
+            "waveMin": 1,
+            "hpScale": 0.9,
+            "speedMult": 1.05,
+            "visualScale": 0.95,
+            "tint": "#6d624d"
+          }
         ]
       },
       "modes": [
@@ -351,10 +1393,27 @@
           "railRouteIndex": 1
         }
       ],
-      "boardRow": { "name": "The Canyon Works", "ledgerBlurb": "String the gorge with current; the Fever comes to every light we raise.", "tags": ["voltage", "network", "night"], "unlock": "default" },
+      "boardRow": {
+        "name": "The Canyon Works",
+        "ledgerBlurb": "String the gorge with current; the Fever comes to every light we raise.",
+        "tags": [
+          "voltage",
+          "network",
+          "night"
+        ],
+        "unlock": "default"
+      },
       "briefing": {
-        "goals": ["Survive through wave 12 from the Dynamo Sub-Hall yard.", "CONNECT both cliff galleries by wave 8."],
-        "rules": ["Sentry Beacons raised on marked PYLON SITES carry current up the switchbacks.", "The Works keeps a strongbox and sells its beacons cheap: the purse holds 360 gold, not the usual 200, and the six beacons cost 25+30+35+45+50+55 = 240 gold, so the whole chain is affordable well before the galleries must be lit by wave 8.", "Every gallery, lamp, turret, and tram draws watts; the ledger sheds higher-priority numbers first.", "Fevered saboteurs are drawn to the grid and cut a span when they wreck a pylon."],
+        "goals": [
+          "Survive through wave 12 from the Dynamo Sub-Hall yard.",
+          "CONNECT both cliff galleries by wave 8."
+        ],
+        "rules": [
+          "Sentry Beacons raised on marked PYLON SITES carry current up the switchbacks.",
+          "The Works keeps a strongbox and sells its beacons cheap: the purse holds 360 gold, not the usual 200, and the six beacons cost 25+30+35+45+50+55 = 240 gold, so the whole chain is affordable well before the galleries must be lit by wave 8.",
+          "Every gallery, lamp, turret, and tram draws watts; the ledger sheds higher-priority numbers first.",
+          "Fevered saboteurs are drawn to the grid and cut a span when they wreck a pylon."
+        ],
         "geographyLine": "A 96 by 112 gorge: sub-hall south, one dam channel, split switchbacks, and paired galleries above."
       }
     },
@@ -365,58 +1424,250 @@
         "tileId": "e3-fairground",
         "biome": "voltage-canyon-fairground",
         "size": 88,
-        "dimensions": { "width": 88, "height": 88 },
+        "dimensions": {
+          "width": 88,
+          "height": 88
+        },
         "river": false,
         "ford": false,
         "buildZones": [
-          { "id": "south-midway", "bank": "south", "minX": -36, "maxX": 36, "minZ": -38, "maxZ": -12 },
-          { "id": "west-pavilion", "bank": "north", "minX": -38, "maxX": -10, "minZ": -8, "maxZ": 30 },
-          { "id": "east-pavilion", "bank": "north", "minX": 10, "maxX": 38, "minZ": -8, "maxZ": 30 }
+          {
+            "id": "south-midway",
+            "bank": "south",
+            "minX": -36,
+            "maxX": 36,
+            "minZ": -38,
+            "maxZ": -12
+          },
+          {
+            "id": "west-pavilion",
+            "bank": "north",
+            "minX": -38,
+            "maxX": -10,
+            "minZ": -8,
+            "maxZ": 30
+          },
+          {
+            "id": "east-pavilion",
+            "bank": "north",
+            "minX": 10,
+            "maxX": 38,
+            "minZ": -8,
+            "maxZ": 30
+          }
         ],
-        "stakeMarkers": [{ "id": "fair-gate", "x": 0, "z": -30, "heroStart": true }],
+        "stakeMarkers": [
+          {
+            "id": "fair-gate",
+            "x": 0,
+            "z": -30,
+            "heroStart": true
+          }
+        ],
         "waterSources": [],
         "harvestAnchors": [
-          { "x": -10, "z": -16 }, { "x": 10, "z": -16 },
-          { "x": -18, "z": -38 }, { "x": 18, "z": -38 },
-          { "x": -24, "z": -34 }, { "x": 24, "z": -34 }
+          {
+            "x": -10,
+            "z": -16
+          },
+          {
+            "x": 10,
+            "z": -16
+          },
+          {
+            "x": -18,
+            "z": -38
+          },
+          {
+            "x": 18,
+            "z": -38
+          },
+          {
+            "x": -24,
+            "z": -34
+          },
+          {
+            "x": 24,
+            "z": -34
+          }
         ],
-        "heightfield": { "id": "fairground-bowl", "mode": "visual" },
-        "palette": { "id": "fairground-lamp-gold", "tint": [0.68, 0.58, 0.48], "dampAmount": 0.04, "splat": { "rockAmount": 0.24, "scrubAmount": 0.16, "macroWarmth": 0.72, "antiTile": 0.68 } },
-        "scatter": { "id": "fairground-midway", "density": 0.34, "classCounts": { "rocks": 20, "dry_grass": 24, "wagon_ruts": 24, "claim_posts": 12 } },
-        "lanes": { "spawnEdges": ["west", "east", "north"], "territoryRingBiasWaves": 0, "territoryRingLaneBias": 0 }
+        "heightfield": {
+          "id": "fairground-bowl",
+          "mode": "visual"
+        },
+        "palette": {
+          "id": "fairground-lamp-gold",
+          "tint": [
+            0.68,
+            0.58,
+            0.48
+          ],
+          "dampAmount": 0.04,
+          "splat": {
+            "rockAmount": 0.24,
+            "scrubAmount": 0.16,
+            "macroWarmth": 0.72,
+            "antiTile": 0.68
+          }
+        },
+        "scatter": {
+          "id": "fairground-midway",
+          "density": 0.34,
+          "classCounts": {
+            "rocks": 20,
+            "dry_grass": 24,
+            "wagon_ruts": 24,
+            "claim_posts": 12
+          }
+        },
+        "lanes": {
+          "spawnEdges": [
+            "west",
+            "east",
+            "north"
+          ],
+          "territoryRingBiasWaves": 0,
+          "territoryRingLaneBias": 0
+        }
       },
       "twist": {
         "secureWave": 12,
-        "dayNightCycle": { "periodSeconds": 24, "duskRampSeconds": 3, "dawnRampSeconds": 3, "nightDepth": 0.9 },
+        "dayNightCycle": {
+          "periodSeconds": 24,
+          "duskRampSeconds": 3,
+          "dawnRampSeconds": 3,
+          "nightDepth": 0.9
+        },
         "fairground": {
-          "wheel": { "nodeId": "ferris-wheel", "x": 0, "z": 8, "outputWatts": 24, "maxHp": 240, "spinRate": 0.35, "viewRadius": 18 },
+          "wheel": {
+            "nodeId": "ferris-wheel",
+            "x": 0,
+            "z": 8,
+            "outputWatts": 24,
+            "maxHp": 240,
+            "spinRate": 0.35,
+            "viewRadius": 18
+          },
           "pavilions": [
-            { "id": "copper-pavilion", "nodeId": "copper-pavilion-lights", "x": -20, "z": 10, "baseRadius": 8, "radiusPerNight": 3 },
-            { "id": "silver-pavilion", "nodeId": "silver-pavilion-lights", "x": 20, "z": 10, "baseRadius": 8, "radiusPerNight": 3 }
+            {
+              "id": "copper-pavilion",
+              "nodeId": "copper-pavilion-lights",
+              "x": -20,
+              "z": 10,
+              "baseRadius": 8,
+              "radiusPerNight": 3
+            },
+            {
+              "id": "silver-pavilion",
+              "nodeId": "silver-pavilion-lights",
+              "x": 20,
+              "z": 10,
+              "baseRadius": 8,
+              "radiusPerNight": 3
+            }
           ],
-          "crowdFlocks": { "count": 3, "escortRadius": 7 }
+          "crowdFlocks": {
+            "count": 3,
+            "escortRadius": 7
+          }
         },
         "powerGrid": {
           "maxSpanLength": 24,
           "nodes": [
-            { "id": "ferris-wheel", "label": "Fair Wheel Dynamo", "kind": "producer", "x": 0, "z": 8, "outputWatts": 24 },
-            { "id": "copper-pavilion-lights", "label": "Copper Pavilion Lamps", "kind": "consumer", "role": "lamp", "x": -20, "z": 10, "drawWatts": 6, "priority": 20 },
-            { "id": "silver-pavilion-lights", "label": "Silver Pavilion Lamps", "kind": "consumer", "role": "lamp", "x": 20, "z": 10, "drawWatts": 6, "priority": 20 }
+            {
+              "id": "ferris-wheel",
+              "label": "Fair Wheel Dynamo",
+              "kind": "producer",
+              "x": 0,
+              "z": 8,
+              "outputWatts": 24
+            },
+            {
+              "id": "copper-pavilion-lights",
+              "label": "Copper Pavilion Lamps",
+              "kind": "consumer",
+              "role": "lamp",
+              "x": -20,
+              "z": 10,
+              "drawWatts": 6,
+              "priority": 20
+            },
+            {
+              "id": "silver-pavilion-lights",
+              "label": "Silver Pavilion Lamps",
+              "kind": "consumer",
+              "role": "lamp",
+              "x": 20,
+              "z": 10,
+              "drawWatts": 6,
+              "priority": 20
+            }
           ],
           "wires": [
-            { "a": "ferris-wheel", "b": "copper-pavilion-lights" },
-            { "a": "ferris-wheel", "b": "silver-pavilion-lights" }
+            {
+              "a": "ferris-wheel",
+              "b": "copper-pavilion-lights"
+            },
+            {
+              "a": "ferris-wheel",
+              "b": "silver-pavilion-lights"
+            }
           ]
         },
         "enemyRoster": [
-          { "id": "fevered_saboteur", "label": "Midway Saboteur", "waveMin": 1, "hpScale": 1.05, "speedMult": 1.1, "visualScale": 0.95, "tint": "#735c48", "wrecker": true, "buildingDamageScale": 1.2, "spawnEdges": ["west", "east"] },
-          { "id": "night_runner", "label": "Fevered Runner", "waveMin": 1, "hpScale": 0.9, "speedMult": 1.05, "visualScale": 0.95, "tint": "#6d624d", "spawnGates": [{ "edge": "north", "x": -12, "z": -4 }] }
+          {
+            "id": "fevered_saboteur",
+            "label": "Midway Saboteur",
+            "waveMin": 1,
+            "hpScale": 1.05,
+            "speedMult": 1.1,
+            "visualScale": 0.95,
+            "tint": "#735c48",
+            "wrecker": true,
+            "buildingDamageScale": 1.2,
+            "spawnEdges": [
+              "west",
+              "east"
+            ]
+          },
+          {
+            "id": "night_runner",
+            "label": "Fevered Runner",
+            "waveMin": 1,
+            "hpScale": 0.9,
+            "speedMult": 1.05,
+            "visualScale": 0.95,
+            "tint": "#6d624d",
+            "spawnGates": [
+              {
+                "edge": "north",
+                "x": -12,
+                "z": -4
+              }
+            ]
+          }
         ]
       },
-      "boardRow": { "name": "The Fairground", "ledgerBlurb": "Keep the wheel turning while the rival pavilions brighten the midway.", "tags": ["voltage", "defend", "escort"], "unlock": "secured:e3-moth-season" },
+      "boardRow": {
+        "name": "The Fairground",
+        "ledgerBlurb": "Keep the wheel turning while the rival pavilions brighten the midway.",
+        "tags": [
+          "voltage",
+          "defend",
+          "escort"
+        ],
+        "unlock": "secured:e3-moth-season"
+      },
       "briefing": {
-        "goals": ["DEFEND the Fair Wheel through wave 12.", "Keep three festival flocks inside the escort ring as they cross the midway."],
-        "rules": ["The wheel makes 24 W only while it spins; any damage stops the dynamo.", "The wheel cabins lift the watch radius to 18 units.", "Copper and Silver pavilion lamps widen by 3 units each night."],
+        "goals": [
+          "DEFEND the Fair Wheel through wave 12.",
+          "Keep three festival flocks inside the escort ring as they cross the midway."
+        ],
+        "rules": [
+          "The wheel makes 24 W only while it spins; any damage stops the dynamo.",
+          "The wheel cabins lift the watch radius to 18 units.",
+          "Copper and Silver pavilion lamps widen by 3 units each night."
+        ],
         "geographyLine": "An 88 by 88 fairground bowl: wheel north of the gate, rival pavilions west and east, open midway south."
       }
     }

@@ -353,6 +353,10 @@ Public bench seeds are not sealed evaluation seeds. “Sealed” means the opera
   "e10-ember-shore": [
     "e10-ember-shore-01",
     "e10-ember-shore-02"
+  ],
+  "e10-archive-world": [
+    "e10-archive-world-01",
+    "e10-archive-world-02"
   ]
 }
 ```

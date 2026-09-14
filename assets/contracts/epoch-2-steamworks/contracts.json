@@ -253,7 +253,14 @@
           ],
           "territoryRingBiasWaves": 0,
           "territoryRingLaneBias": 0
-        }
+        },
+        "engineDependencies": [
+          {
+            "dep": "elevation-advisory-fields",
+            "status": "missing",
+            "description": "Needs registered consumers for the declared slopeMax and waterline advisory fields."
+          }
+        ]
       },
       "twist": {
         "pressureEnabled": true,
@@ -630,7 +637,14 @@
           ],
           "territoryRingBiasWaves": 0,
           "territoryRingLaneBias": 0
-        }
+        },
+        "engineDependencies": [
+          {
+            "dep": "elevation-advisory-fields",
+            "status": "missing",
+            "description": "Needs registered consumers for the declared slopeMax and waterline advisory fields."
+          }
+        ]
       },
       "twist": {
         "waveCadenceMult": 0.7,
@@ -975,7 +989,14 @@
           ],
           "territoryRingBiasWaves": 0,
           "territoryRingLaneBias": 0
-        }
+        },
+        "engineDependencies": [
+          {
+            "dep": "elevation-advisory-fields",
+            "status": "missing",
+            "description": "Needs registered consumers for the declared slopeMax and waterline advisory fields."
+          }
+        ]
       },
       "twist": {
         "pressureEnabled": true,
@@ -1314,7 +1335,14 @@
           ],
           "territoryRingBiasWaves": 0,
           "territoryRingLaneBias": 0
-        }
+        },
+        "engineDependencies": [
+          {
+            "dep": "elevation-advisory-fields",
+            "status": "missing",
+            "description": "Needs registered consumers for the declared slopeMax and waterline advisory fields."
+          }
+        ]
       },
       "twist": {
         "waveCadenceMult": 0.75,

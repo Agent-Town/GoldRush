@@ -1,0 +1,4 @@
+THE WALL IS UP — owner 2026-09-14, verbatim: "You can use the fires for that but don't use the ChatGPT subscription, only the Anthropic subscription."
+Fires (scripts/fire.md §2.0 CODEX-WALL MODE): NO refills into any lane queue (§2E suspended), NO Codex dispatch of any kind, NO re-queues of wall-class failures. Drains, gates, backups, health and deploys PROCEED on the Claude engine (scripts/fire-runner.sh FIRE_ENGINE defaults to claude since 2026-09-14; primary config ~/.claude-fires, wall bounce ~/.claude-alt — both the owner's Anthropic account).
+Implementation while the wall stands: Opus implementer agents launched by the attended session in scratch worktrees (memory: opus-implementer-wave), drained attended. The Codex lane-runner may stay alive and idle; it must find every tasks/queue/<slot>/ empty.
+Lifted only by an owner word naming the ChatGPT subscription again.

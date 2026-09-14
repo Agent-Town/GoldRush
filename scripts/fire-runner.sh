@@ -97,7 +97,12 @@ FIRE_MODEL=${FIRE_MODEL:-claude-opus-5}
 # launchd, so the fire-shell playwright serialization (F-1270-1) holds for either engine.
 # REVERT SATURDAY: set FIRE_ENGINE=claude here or in the plist (the claude path below is intact).
 # SWITCHED AGAIN 2026-09-04 (owner, verbatim: "Switch fires to Codex, we are going out of subscription very quickly."): default is codex until the owner says otherwise.
-FIRE_ENGINE=${FIRE_ENGINE:-codex}
+# SWITCHED BACK 2026-09-14 (owner, verbatim: "You can use the fires for that but don't use the ChatGPT
+# subscription, only the Anthropic subscription."): default is claude — the primary fire config is
+# ~/.claude-fires (launchd), the weekly-wall bounce is ~/.claude-alt; both are the owner's Anthropic
+# account. The codex path below stays intact for a future owner word; tasks/CODEX-WALL (same date)
+# keeps every lane queue empty so the idle Codex lane-runner has nothing to pick up.
+FIRE_ENGINE=${FIRE_ENGINE:-claude}
 if [ "$FIRE_ENGINE" = "codex" ]; then
   # Resolution PROBES, never trusts paths (F-1635-3 dual-install met again 2026-08-12, twice in
   # one hour): launchd's PATH finds an orphaned homebrew 0.133; nvm-v24's wrapper is half-installed

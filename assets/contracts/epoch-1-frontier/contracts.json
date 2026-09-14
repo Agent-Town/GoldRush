@@ -11,33 +11,76 @@
         "size": 64,
         "river": true,
         "ford": true,
-        "fords": [{ "id": "center-ford", "x": 0, "halfWidth": 3 }],
+        "fords": [
+          {
+            "id": "center-ford",
+            "x": 0,
+            "halfWidth": 3
+          }
+        ],
         "waterSources": [],
         "harvestAnchors": [
-          { "x": -22, "z": -6.8 },
-          { "x": -9, "z": 6.7 },
-          { "x": -1.5, "z": -6.4 },
-          { "x": 7.5, "z": 6.5 },
-          { "x": 18, "z": -7 },
-          { "x": 25, "z": 6.9 }
+          {
+            "x": -22,
+            "z": -6.8
+          },
+          {
+            "x": -9,
+            "z": 6.7
+          },
+          {
+            "x": -1.5,
+            "z": -6.4
+          },
+          {
+            "x": 7.5,
+            "z": 6.5
+          },
+          {
+            "x": 18,
+            "z": -7
+          },
+          {
+            "x": 25,
+            "z": 6.9
+          }
         ],
-        "water": { "id": "frontier-river-depth", "centerZ": 0, "halfWidth": 5, "visualHalfWidth": 6.25 },
+        "water": {
+          "id": "frontier-river-depth",
+          "centerZ": 0,
+          "halfWidth": 5,
+          "visualHalfWidth": 6.25
+        },
         "lanes": {
-          "spawnEdges": ["north", "south", "east", "west"],
+          "spawnEdges": [
+            "north",
+            "south",
+            "east",
+            "west"
+          ],
           "territoryRingBiasWaves": 3,
           "territoryRingLaneBias": 0.75
         }
       },
-      "twist": { "secureWave": 10 },
+      "twist": {
+        "secureWave": 10
+      },
       "boardRow": {
         "name": "The Claim",
         "ledgerBlurb": "The classic river claim.",
-        "tags": ["trail"],
+        "tags": [
+          "trail"
+        ],
         "unlock": "default"
       },
       "briefing": {
-        "goals": ["Survive through wave 10."],
-        "rules": ["The river splits the claim around one center ford.", "Pressure comes from all four edges until wave 10 seals the claim; stay for the Rush if you want to press your luck."],
+        "goals": [
+          "Survive through wave 10."
+        ],
+        "rules": [
+          "The river splits the claim around one center ford.",
+          "Pressure comes from all four edges until wave 10 seals the claim; stay for the Rush if you want to press your luck."
+        ],
         "geographyLine": "The classic river claim."
       }
     },
@@ -52,12 +95,20 @@
         "ford": true,
         "waterSources": [],
         "lanes": {
-          "spawnEdges": ["north", "south", "east", "west"],
+          "spawnEdges": [
+            "north",
+            "south",
+            "east",
+            "west"
+          ],
           "territoryRingBiasWaves": 0,
           "territoryRingLaneBias": 0
         }
       },
-      "twist": { "secureWave": 0, "clockTicks": 18000 },
+      "twist": {
+        "secureWave": 0,
+        "clockTicks": 18000
+      },
       "practice": {
         "scheduledWaves": false,
         "scores": false,
@@ -68,28 +119,75 @@
         "goldGrant": 100,
         "bellWaveSize": 8,
         "dummyRespawnSeconds": 1.5,
-        "buildables": ["sentry_beacon", "palisade", "sluice", "stockpile", "turret", "assay_office", "lantern_post"],
+        "buildables": [
+          "sentry_beacon",
+          "palisade",
+          "sluice",
+          "stockpile",
+          "turret",
+          "assay_office",
+          "lantern_post"
+        ],
         "stations": [
-          { "id": "assay_tent_faucet", "op": "top_up", "x": -8, "z": 12 },
-          { "id": "drill_bell", "op": "ring", "x": 8, "z": 12 }
+          {
+            "id": "assay_tent_faucet",
+            "op": "top_up",
+            "x": -8,
+            "z": 12
+          },
+          {
+            "id": "drill_bell",
+            "op": "ring",
+            "x": 8,
+            "z": 12
+          }
         ],
         "targets": [
-          { "kind": "straw-man", "x": -9, "z": -9 },
-          { "kind": "rolling-log", "x": -4.5, "z": -10 },
-          { "kind": "straw-man", "x": 0, "z": -9 },
-          { "kind": "rolling-log", "x": 4.5, "z": -10 },
-          { "kind": "straw-man", "x": 9, "z": -9 }
+          {
+            "kind": "straw-man",
+            "x": -9,
+            "z": -9
+          },
+          {
+            "kind": "rolling-log",
+            "x": -4.5,
+            "z": -10
+          },
+          {
+            "kind": "straw-man",
+            "x": 0,
+            "z": -9
+          },
+          {
+            "kind": "rolling-log",
+            "x": 4.5,
+            "z": -10
+          },
+          {
+            "kind": "straw-man",
+            "x": 9,
+            "z": -9
+          }
         ]
       },
       "boardRow": {
         "name": "The Drill Yard",
         "ledgerBlurb": "Practice ground: no stakes, no claim. The county lends the gold; the straw men lend their patience.",
-        "tags": ["trail"],
+        "tags": [
+          "trail"
+        ],
         "unlock": "default"
       },
       "briefing": {
-        "goals": ["Try every Frontier building.", "Practice on the straw men and rolling logs."],
-        "rules": ["Pull the assay-tent lever to top up practice gold.", "Ring the Drill Bell for one small wave.", "Nothing in the yard enters the county ledger."],
+        "goals": [
+          "Try every Frontier building.",
+          "Practice on the straw men and rolling logs."
+        ],
+        "rules": [
+          "Pull the assay-tent lever to top up practice gold.",
+          "Ring the Drill Bell for one small wave.",
+          "Nothing in the yard enters the county ledger."
+        ],
         "geographyLine": "A borrowed corner of the river claim at the edge of town."
       }
     },
@@ -99,31 +197,87 @@
       "tileParams": {
         "tileId": "e1-dry-gulch",
         "biome": "dry-gulch",
-        "render": { "terrainMesh": "required" },
+        "render": {
+          "terrainMesh": "required"
+        },
         "river": false,
         "ford": false,
-        "waterSources": [{ "kind": "spring_pond", "x": -18, "z": -18, "radius": 1.4 }],
+        "waterSources": [
+          {
+            "kind": "spring_pond",
+            "x": -18,
+            "z": -18,
+            "radius": 1.4
+          }
+        ],
         "harvestAnchors": [
-          { "x": -22, "z": -6.8 },
-          { "x": -9, "z": 6.7 },
-          { "x": -5.5, "z": -6.4 },
-          { "x": 7.5, "z": 6.5 },
-          { "x": 18, "z": -7 },
-          { "x": 25, "z": 6.9 }
+          {
+            "x": -22,
+            "z": -6.8
+          },
+          {
+            "x": -9,
+            "z": 6.7
+          },
+          {
+            "x": -5.5,
+            "z": -6.4
+          },
+          {
+            "x": 7.5,
+            "z": 6.5
+          },
+          {
+            "x": 18,
+            "z": -7
+          },
+          {
+            "x": 25,
+            "z": 6.9
+          }
         ],
         "heightfield": {
           "id": "dry-gulch-mesa-washes",
           "mode": "visual",
-          "springBasin": { "x": -18, "z": -18, "radius": 7.5, "depth": 0.68 },
+          "springBasin": {
+            "x": -18,
+            "z": -18,
+            "radius": 7.5,
+            "depth": 0.68
+          },
           "washChannels": [
-            { "id": "southwest-arroyo", "x": -12, "z": -14, "length": 38, "width": 4.2, "depth": 0.2, "angle": -0.55 },
-            { "id": "east-mesa-wash", "x": 14, "z": 10, "length": 42, "width": 3.6, "depth": 0.16, "angle": 0.34 }
+            {
+              "id": "southwest-arroyo",
+              "x": -12,
+              "z": -14,
+              "length": 38,
+              "width": 4.2,
+              "depth": 0.2,
+              "angle": -0.55
+            },
+            {
+              "id": "east-mesa-wash",
+              "x": 14,
+              "z": 10,
+              "length": 42,
+              "width": 3.6,
+              "depth": 0.16,
+              "angle": 0.34
+            }
           ]
         },
         "palette": {
           "id": "dry-gulch-ochre-red",
-          "tint": [1.1, 0.9, 0.72],
-          "dampTint": [0.78, 0.58, 0.42],
+          "tint": [
+            1.1,
+            0.9,
+            0.72
+          ],
+          "dampTint": [
+            0.78,
+            0.58,
+            0.42
+          ],
           "dampAmount": 0.2,
           "splat": {
             "rockAmount": 0.72,
@@ -146,10 +300,22 @@
           }
         },
         "lanes": {
-          "spawnEdges": ["north", "south", "east", "west"],
+          "spawnEdges": [
+            "north",
+            "south",
+            "east",
+            "west"
+          ],
           "territoryRingBiasWaves": 0,
           "territoryRingLaneBias": 0
-        }
+        },
+        "engineDependencies": [
+          {
+            "dep": "dry-gulch-inert-fields",
+            "status": "missing",
+            "description": "Needs consumers for sluice water-source gating; the declared dry-gulch seam yield is tracked separately until that field is single-sourced."
+          }
+        ]
       },
       "twist": {
         "secureWave": 20,
@@ -158,11 +324,16 @@
       "boardRow": {
         "name": "The Dry Gulch",
         "ledgerBlurb": "Mesa country; dry washes fall toward one sunken spring.",
-        "tags": ["trail"],
+        "tags": [
+          "trail"
+        ],
         "unlock": "wave10OnClaim"
       },
       "briefing": {
-        "goals": ["Survive through wave 20.", "Work the dry washes around the lone spring."],
+        "goals": [
+          "Survive through wave 20.",
+          "Work the dry washes around the lone spring."
+        ],
         "rules": [
           "Sluices work only beside the spring.",
           "The river is gone; enemies can press from every edge.",
@@ -180,21 +351,58 @@
         "size": 64,
         "river": true,
         "ford": true,
-        "fords": [{ "id": "center-ford", "x": 0, "halfWidth": 3 }],
+        "fords": [
+          {
+            "id": "center-ford",
+            "x": 0,
+            "halfWidth": 3
+          }
+        ],
         "waterSources": [],
         "harvestAnchors": [
-          { "x": -22, "z": -6.8 },
-          { "x": -9, "z": 6.7 },
-          { "x": -1.5, "z": -6.4 },
-          { "x": 7.5, "z": 6.5 },
-          { "x": 18, "z": -7 },
-          { "x": 25, "z": 6.9 }
+          {
+            "x": -22,
+            "z": -6.8
+          },
+          {
+            "x": -9,
+            "z": 6.7
+          },
+          {
+            "x": -1.5,
+            "z": -6.4
+          },
+          {
+            "x": 7.5,
+            "z": 6.5
+          },
+          {
+            "x": 18,
+            "z": -7
+          },
+          {
+            "x": 25,
+            "z": 6.9
+          }
         ],
-        "water": { "id": "frontier-river-depth", "centerZ": 0, "halfWidth": 5, "visualHalfWidth": 6.25 },
+        "water": {
+          "id": "frontier-river-depth",
+          "centerZ": 0,
+          "halfWidth": 5,
+          "visualHalfWidth": 6.25
+        },
         "palette": {
           "id": "night-shift-dusk",
-          "tint": [0.74, 0.78, 0.86],
-          "dampTint": [0.34, 0.4, 0.44],
+          "tint": [
+            0.74,
+            0.78,
+            0.86
+          ],
+          "dampTint": [
+            0.34,
+            0.4,
+            0.44
+          ],
           "dampAmount": 0.12,
           "splat": {
             "rockAmount": 0.2,
@@ -205,16 +413,70 @@
           }
         },
         "prePlacedBuildables": [
-          { "id": "lantern_post", "x": 0, "z": 16, "rotationSteps": 0, "wrecked": true, "relightCost": 8 },
-          { "id": "lantern_post", "x": -16, "z": 18, "rotationSteps": 1, "wrecked": true, "relightCost": 8 },
-          { "id": "lantern_post", "x": 16, "z": 18, "rotationSteps": 3, "wrecked": true, "relightCost": 8 },
-          { "id": "lantern_post", "x": -22, "z": -12, "rotationSteps": 1, "wrecked": true, "relightCost": 8 },
-          { "id": "lantern_post", "x": 22, "z": -12, "rotationSteps": 3, "wrecked": true, "relightCost": 8 },
-          { "id": "lantern_post", "x": -10, "z": -24, "rotationSteps": 2, "wrecked": true, "relightCost": 8 },
-          { "id": "lantern_post", "x": 10, "z": -24, "rotationSteps": 2, "wrecked": true, "relightCost": 8 }
+          {
+            "id": "lantern_post",
+            "x": 0,
+            "z": 16,
+            "rotationSteps": 0,
+            "wrecked": true,
+            "relightCost": 8
+          },
+          {
+            "id": "lantern_post",
+            "x": -16,
+            "z": 18,
+            "rotationSteps": 1,
+            "wrecked": true,
+            "relightCost": 8
+          },
+          {
+            "id": "lantern_post",
+            "x": 16,
+            "z": 18,
+            "rotationSteps": 3,
+            "wrecked": true,
+            "relightCost": 8
+          },
+          {
+            "id": "lantern_post",
+            "x": -22,
+            "z": -12,
+            "rotationSteps": 1,
+            "wrecked": true,
+            "relightCost": 8
+          },
+          {
+            "id": "lantern_post",
+            "x": 22,
+            "z": -12,
+            "rotationSteps": 3,
+            "wrecked": true,
+            "relightCost": 8
+          },
+          {
+            "id": "lantern_post",
+            "x": -10,
+            "z": -24,
+            "rotationSteps": 2,
+            "wrecked": true,
+            "relightCost": 8
+          },
+          {
+            "id": "lantern_post",
+            "x": 10,
+            "z": -24,
+            "rotationSteps": 2,
+            "wrecked": true,
+            "relightCost": 8
+          }
         ],
         "lanes": {
-          "spawnEdges": ["north", "south", "east", "west"],
+          "spawnEdges": [
+            "north",
+            "south",
+            "east",
+            "west"
+          ],
           "territoryRingBiasWaves": 3,
           "territoryRingLaneBias": 0.75
         }
@@ -226,22 +488,81 @@
           "darkWave": 10,
           "dawnWave": 25,
           "keyframes": [
-            { "wave": 5, "phase": "full", "darkness": 0, "background": "#f1c887", "fog": "#ead2a3", "sun": "#ffd28a", "sunIntensity": 2.35, "fill": "#fff2cc", "ground": "#8b6c3f", "fillIntensity": 1.12, "sunHeight": 18, "spriteTint": "#ffffff" },
-            { "wave": 6.5, "phase": "golden", "darkness": 0.18, "background": "#d4794a", "fog": "#cf8259", "sun": "#ff8a3d", "sunIntensity": 2.05, "fill": "#ffb072", "ground": "#7d4230", "fillIntensity": 0.92, "sunHeight": 10, "spriteTint": "#ffc79c" },
-            { "wave": 8, "phase": "dusk", "darkness": 0.62, "background": "#5a3a44", "fog": "#6d3f3a", "sun": "#b4523f", "sunIntensity": 0.7, "fill": "#5c4152", "ground": "#2a1d24", "fillIntensity": 0.42, "sunHeight": 5, "spriteTint": "#a87a72" },
-            { "wave": 10, "phase": "dark", "darkness": 1, "background": "#080a0f", "fog": "#14141a", "sun": "#40516f", "sunIntensity": 0, "fill": "#384862", "ground": "#17120f", "fillIntensity": 0, "sunHeight": 3, "spriteTint": "#44516b" }
+            {
+              "wave": 5,
+              "phase": "full",
+              "darkness": 0,
+              "background": "#f1c887",
+              "fog": "#ead2a3",
+              "sun": "#ffd28a",
+              "sunIntensity": 2.35,
+              "fill": "#fff2cc",
+              "ground": "#8b6c3f",
+              "fillIntensity": 1.12,
+              "sunHeight": 18,
+              "spriteTint": "#ffffff"
+            },
+            {
+              "wave": 6.5,
+              "phase": "golden",
+              "darkness": 0.18,
+              "background": "#d4794a",
+              "fog": "#cf8259",
+              "sun": "#ff8a3d",
+              "sunIntensity": 2.05,
+              "fill": "#ffb072",
+              "ground": "#7d4230",
+              "fillIntensity": 0.92,
+              "sunHeight": 10,
+              "spriteTint": "#ffc79c"
+            },
+            {
+              "wave": 8,
+              "phase": "dusk",
+              "darkness": 0.62,
+              "background": "#5a3a44",
+              "fog": "#6d3f3a",
+              "sun": "#b4523f",
+              "sunIntensity": 0.7,
+              "fill": "#5c4152",
+              "ground": "#2a1d24",
+              "fillIntensity": 0.42,
+              "sunHeight": 5,
+              "spriteTint": "#a87a72"
+            },
+            {
+              "wave": 10,
+              "phase": "dark",
+              "darkness": 1,
+              "background": "#080a0f",
+              "fog": "#14141a",
+              "sun": "#40516f",
+              "sunIntensity": 0,
+              "fill": "#384862",
+              "ground": "#17120f",
+              "fillIntensity": 0,
+              "sunHeight": 3,
+              "spriteTint": "#44516b"
+            }
           ]
         },
-        "enemyLanternClasses": ["rusher", "thief"]
+        "enemyLanternClasses": [
+          "rusher",
+          "thief"
+        ]
       },
       "boardRow": {
         "name": "Night Shift",
         "ledgerBlurb": "The claim, gone dark, dotted with cold lanterns.",
-        "tags": ["vein-hunter"],
+        "tags": [
+          "vein-hunter"
+        ],
         "unlock": "science≥3"
       },
       "briefing": {
-        "goals": ["Survive to DAWN at wave 25."],
+        "goals": [
+          "Survive to DAWN at wave 25."
+        ],
         "rules": [
           "Beyond your light, the night owns the claim.",
           "Relight cold lanterns or build new posts to see threats.",
@@ -259,16 +580,48 @@
         "river": true,
         "ford": true,
         "fords": [
-          { "id": "west-ford", "x": -16, "halfWidth": 3 },
-          { "id": "east-ford", "x": 16, "halfWidth": 3 }
+          {
+            "id": "west-ford",
+            "x": -16,
+            "halfWidth": 3
+          },
+          {
+            "id": "east-ford",
+            "x": 16,
+            "halfWidth": 3
+          }
         ],
         "buildZones": [
-          { "id": "south-bank", "bank": "south", "minX": -28, "maxX": 28, "minZ": -30, "maxZ": -7 },
-          { "id": "north-bank", "bank": "north", "minX": -28, "maxX": 28, "minZ": 7, "maxZ": 30 }
+          {
+            "id": "south-bank",
+            "bank": "south",
+            "minX": -28,
+            "maxX": 28,
+            "minZ": -30,
+            "maxZ": -7
+          },
+          {
+            "id": "north-bank",
+            "bank": "north",
+            "minX": -28,
+            "maxX": 28,
+            "minZ": 7,
+            "maxZ": 30
+          }
         ],
         "stakeMarkers": [
-          { "id": "south-claim-stake", "x": 0, "z": -12, "heroStart": true },
-          { "id": "north-expansion-marker", "x": 0, "z": 12, "heroStart": false }
+          {
+            "id": "south-claim-stake",
+            "x": 0,
+            "z": -12,
+            "heroStart": true
+          },
+          {
+            "id": "north-expansion-marker",
+            "x": 0,
+            "z": 12,
+            "heroStart": false
+          }
         ],
         "waterMask": {
           "id": "twin-banks-true-braid-dev",
@@ -362,12 +715,23 @@
         "heightfield": {
           "id": "twin-banks-subtle-relief",
           "mode": "visual",
-          "bankRelief": { "amount": 0.13, "width": 9 }
+          "bankRelief": {
+            "amount": 0.13,
+            "width": 9
+          }
         },
         "palette": {
           "id": "twin-banks-damp",
-          "tint": [0.92, 0.96, 0.88],
-          "dampTint": [0.45, 0.53, 0.4],
+          "tint": [
+            0.92,
+            0.96,
+            0.88
+          ],
+          "dampTint": [
+            0.45,
+            0.53,
+            0.4
+          ],
           "dampAmount": 0.28,
           "splat": {
             "rockAmount": 0.18,
@@ -390,25 +754,51 @@
           "id": "twin-banks-braided-river",
           "visualHalfWidth": 7.8,
           "gravelBars": [
-            { "id": "west-mid-channel-bar", "x": -7.5, "z": 0.2, "length": 5.4, "width": 1.35, "rotation": -0.12 },
-            { "id": "east-mid-channel-bar", "x": 7.4, "z": -0.25, "length": 4.8, "width": 1.2, "rotation": 0.16 }
+            {
+              "id": "west-mid-channel-bar",
+              "x": -7.5,
+              "z": 0.2,
+              "length": 5.4,
+              "width": 1.35,
+              "rotation": -0.12
+            },
+            {
+              "id": "east-mid-channel-bar",
+              "x": 7.4,
+              "z": -0.25,
+              "length": 4.8,
+              "width": 1.2,
+              "rotation": 0.16
+            }
           ]
         },
         "lanes": {
-          "spawnEdges": ["north", "south", "east", "west"],
+          "spawnEdges": [
+            "north",
+            "south",
+            "east",
+            "west"
+          ],
           "territoryRingBiasWaves": 0,
           "territoryRingLaneBias": 0
         }
       },
-      "twist": { "secureWave": 20 },
+      "twist": {
+        "secureWave": 20
+      },
       "boardRow": {
         "name": "Twin Banks",
         "ledgerBlurb": "A braided river claim with twin fords, gravel bars, and damp reeds.",
-        "tags": ["vein-hunter"],
+        "tags": [
+          "vein-hunter"
+        ],
         "unlock": "firstSecuredClaim"
       },
       "briefing": {
-        "goals": ["Survive through wave 20.", "Build on either bank and watch both fords."],
+        "goals": [
+          "Survive through wave 20.",
+          "Build on either bank and watch both fords."
+        ],
         "rules": [
           "Both banks can hold buildings.",
           "Two fords carry pressure across the river.",
@@ -426,20 +816,54 @@
         "size": 64,
         "river": true,
         "ford": true,
-        "fords": [{ "id": "center-ford", "x": 0, "halfWidth": 3 }],
+        "fords": [
+          {
+            "id": "center-ford",
+            "x": 0,
+            "halfWidth": 3
+          }
+        ],
         "waterSources": [],
         "harvestAnchors": [
-          { "x": -22, "z": -6.8 },
-          { "x": -9, "z": 6.7 },
-          { "x": -1.5, "z": -6.4 },
-          { "x": 7.5, "z": 6.5 },
-          { "x": 18, "z": -7 },
-          { "x": 25, "z": 6.9 }
+          {
+            "x": -22,
+            "z": -6.8
+          },
+          {
+            "x": -9,
+            "z": 6.7
+          },
+          {
+            "x": -1.5,
+            "z": -6.4
+          },
+          {
+            "x": 7.5,
+            "z": 6.5
+          },
+          {
+            "x": 18,
+            "z": -7
+          },
+          {
+            "x": 25,
+            "z": 6.9
+          }
         ],
-        "water": { "id": "frontier-river-depth", "centerZ": 0, "halfWidth": 5, "visualHalfWidth": 6.25 },
+        "water": {
+          "id": "frontier-river-depth",
+          "centerZ": 0,
+          "halfWidth": 5,
+          "visualHalfWidth": 6.25
+        },
         "prebuiltPalisades": false,
         "lanes": {
-          "spawnEdges": ["north", "south", "east", "west"],
+          "spawnEdges": [
+            "north",
+            "south",
+            "east",
+            "west"
+          ],
           "territoryRingBiasWaves": 3,
           "territoryRingLaneBias": 0.75
         }
@@ -457,7 +881,11 @@
           "supportBuildingDamageScale": 12,
           "pursuitRange": 18,
           "escortCount": 8,
-          "tauntWaves": [5, 12, 18],
+          "tauntWaves": [
+            5,
+            12,
+            18
+          ],
           "taunt": "The Baron sends his regards. The claim won't hold.",
           "defeatBeat": "Dragged off by his own men, swearing revenge.",
           "medalBlurb": "The Rocket Cart, captured. He'll be back with machines.",
@@ -476,11 +904,15 @@
       "boardRow": {
         "name": "The Claim-Jumper Baron",
         "ledgerBlurb": "An oxblood banner marks the outfit that keeps buying trouble.",
-        "tags": ["vein-hunter"],
+        "tags": [
+          "vein-hunter"
+        ],
         "unlock": "science-complete+2-secured"
       },
       "briefing": {
-        "goals": ["The Baron rides at wave 20. Break his Rocket Cart."],
+        "goals": [
+          "The Baron rides at wave 20. Break his Rocket Cart."
+        ],
         "rules": [
           "His outfit rides hot: waves come 15% faster.",
           "Taunts warn you before his banner appears.",

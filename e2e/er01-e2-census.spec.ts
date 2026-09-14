@@ -111,7 +111,10 @@ for (const contract of steamworks.contracts) {
             {
               id: 'pressure_generation',
               source: 'PressureSystem.update',
-              data: { buildable: 'boiler_house', input: 'coal', coalSeconds: 12, tickSeconds: 1, pressurePerTick: 4 },
+              // maps-campaign-land-era6 (attended 2026-09-14, owner A20 "we can just keep going"): Astra's map campaign 883a3521e
+              // raised Balance.boilerHouse.coalSeconds 12 -> 36 (src/game/Balance.ts) as part of its playability pass; the
+              // census pins the value the sim actually advertises. Reversible with one owner word (F-MAPL-1).
+              data: { buildable: 'boiler_house', input: 'coal', coalSeconds: 36, tickSeconds: 1, pressurePerTick: 4 },
             },
             {
               id: 'pressure_powers',

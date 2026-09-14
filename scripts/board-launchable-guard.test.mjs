@@ -55,8 +55,11 @@ const HARVEST_FREE_BOARD_CONTRACTS = {
   // (`artifacts/e10s-4-door/door-both-declared.json`): the BROWSER door does not refuse the
   // anchored map either way — `activeId: 'e10-ember-shore'`, `fallbackReason: null` — so the map
   // stays openable on its seams alone, which is the first test in this file.
-  'e10-archive-world':
-    'specs/agent-play/e10-archive-world-restoration.md:24, verbatim: "the wings themselves yield nothing - you are not here to extract." Its seams wait on the same door-slice evidence.',
+  // ⓘ `e10-archive-world` HELD A ROW HERE UNTIL THE ERA-6 LAND (2026-09-14) AND NO LONGER DOES — Astra's map
+  // campaign (sol/map-art-inventory-20260908 883a3521e, landed by maps-campaign-land-era6) authored four
+  // harvestAnchors for it and replaced `twist.harvestFreeObjective` with the `archiveWorld` restoration
+  // objective (src/systems/E10ArchiveSystem.ts), so per `:98` the declaration had to go with the anchors
+  // that replaced it. The retired reason, kept legible: 'specs/agent-play/e10-archive-world-restoration.md:24, verbatim: "the wings themselves yield nothing - you are not here to extract." Its seams wait on the same door-slice evidence.',
   'e10-river':
     'specs/agent-play/door-completion-sheet.md:36 (RATIFIED 2026-08-20), verbatim: "RECORDED as permanently door-exempt-by-design (it is the ending, not a contract)"; specs/enemy-rosters-e6-e10.md:195: "empty enemyRoster, no boss, no waves. This contract remains one pan and the river."',
 };

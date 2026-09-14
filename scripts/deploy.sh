@@ -351,6 +351,10 @@ for ((ATTEMPT = 1; ATTEMPT <= VERIFY_ATTEMPTS; ATTEMPT++)); do
         "--include=/scripts/asset-diet.manifest.json"
         "--include=/news/herald.json"
         "--include=/lore/world-dispatches.md"
+        # maps-campaign-land-era6 (2026-09-14): the encyclopedia's Archive World pages are imported ?raw by
+        # src/encyclopedia (Astra's campaign), so the file joined the runtime closure the mirror is measured
+        # against; deploy-mirror-allowlist.test.mjs:97 measured it missing.
+        "--include=/lore/archive-world-pages.md"
         "--include=/functions/***"
         "--include=/server/***"
         "--include=/ops/***"

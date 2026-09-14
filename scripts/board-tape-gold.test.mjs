@@ -75,8 +75,10 @@ const fixtureManifest = JSON.parse(readFileSync(path.join(currentGrammarDir, 'ma
  */
 const FIXTURES = fixtureManifest.fixtures;
 
-for (const { ride, tape: tapeFile, declared, pannedAtSecure } of FIXTURES) {
-  test(`${ride}: the standing's gold is the purse held at the secure tick`, { timeout: 240_000 }, () => {
+for (const { ride, tape: tapeFile, declared, pannedAtSecure, retiredInEra, retiredReason } of FIXTURES) {
+  // maps-campaign-land-era6 (2026-09-14): a fixture the manifest marks `retiredInEra` rode an earlier era and
+  // cannot install on the current engine; it is SKIPPED with its reason, never re-stamped (F-MAPL-4).
+  test(`${ride}: the standing's gold is the purse held at the secure tick`, { timeout: 240_000, skip: retiredInEra ? `retired in era ${retiredInEra}: ${retiredReason}` : false }, () => {
     const tape = JSON.parse(readFileSync(path.join(currentGrammarDir, tapeFile), 'utf8'));
     const replay = seam(tape);
 
