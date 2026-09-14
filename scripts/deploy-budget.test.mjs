@@ -335,7 +335,10 @@ test('the cross-check bites: a cast member dropped from the declaration is named
 
 test('the cross-check bites: re-declaring a deferred hero clip group is refused', () => {
   const { declaredKindByFamily, excluded } = readDeclaration();
-  const reEagerised = new Map(declaredKindByFamily).set('char-hero-sheet-work8.png', 'hero');
+  const frames = JSON.parse(readFileSync(join(ROOT, 'src/assets/character-runtime-frames.json'), 'utf8'));
+  const panFamily = requestFamily(frames.heroPoseFrameFiles.pan.e[0]);
+  assert.ok(panFamily);
+  const reEagerised = new Map(declaredKindByFamily).set(panFamily, 'hero');
   const problems = crossCheckDeclaration(reEagerised, excluded);
   assert.ok(problems.some((problem) => /char\.hero\.pan is in a deferred clip group/.test(problem)), problems.join('\n'));
 });

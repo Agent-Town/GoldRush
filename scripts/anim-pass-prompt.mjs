@@ -71,7 +71,7 @@ const cycle = hover
   ? `${frames} frames of one complete hover-bob cycle — the body rises and sinks smoothly over the cycle while the arms drift, and the jet plume beneath pulses. Frame order left to right, top row first then bottom row: low, rising, high, falling, repeated once with slightly different arm drift so no two frames are identical.`
   : `${frames} frames of one complete walk cycle. Frame order left to right, top row first then bottom row: ${frames >= 8
       ? 'contact (left foot forward), down, passing, up, contact (right foot forward), down, passing, up'
-      : 'contact (left foot forward), down, passing, up'}.`;
+      : 'contact (left foot forward), passing (left foot planted, right foot swinging forward), contact (right foot forward), passing (right foot planted, left foot swinging forward)'}.`;
 
 const orient = hover
   ? `THE DIRECTION — every one of the ${frames} frames shows this machine travelling ${WIND.travel}, over a flat ground plane seen from a slightly raised camera. This is a ${WIND.view} view: ${WIND.see}, turned 45 degrees away from a straight-on view so that the machine's ${WIND.near} side is the side nearer the viewer, and the porthole eye, the lamp and both arms all face toward the ${WIND.point} of the frame. Not a pure side view. Not a straight-on view. The travel direction is diagonal in all ${frames} frames, and the body never touches the ground.`

@@ -148,7 +148,7 @@ function inferGrid(png, m) {
 /** Boundary probe: does content cross the cut, and how wide is the clean gutter? */
 function probeBoundaries(png, m, cols, rows) {
   const { width: w, height: h } = png;
-  const cw = w / cols, chh = h / rows;
+  const cw = Math.floor(w / cols), chh = Math.floor(h / rows);
   const vertical = [], horizontal = [];
   const colClean = (x) => { let n = 0; for (let y = 0; y < h; y++) if (!m[w * y + x]) n++; return n; };
   const rowClean = (y) => { let n = 0; for (let x = 0; x < w; x++) if (!m[w * y + x]) n++; return n; };
@@ -304,9 +304,9 @@ function analyse(stem) {
   // does not contain as many figures as the extractor is slicing out of it.
   out.gridAgrees = out.trueGrid.cols >= cols && out.trueGrid.rows >= rows;
   out.gridMerged = out.trueGrid.cols < cols || out.trueGrid.rows < rows;
-  out.divisible = { w: png.width % cols === 0, h: png.height % rows === 0, cellW: png.width / cols, cellH: png.height / rows };
+  const cw = Math.floor(png.width / cols), ch = Math.floor(png.height / rows);
+  out.divisible = { w: png.width % cols === 0, h: png.height % rows === 0, cellW: cw, cellH: ch, unusedRight: png.width % cols, unusedBottom: png.height % rows };
   out.boundaries = probeBoundaries(png, m, cols, rows);
-  const cw = png.width / cols, ch = png.height / rows;
   const cells = [];
   for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) cells.push(cellStats(png, m, r, c, cw, ch));
   // pairwise duplicate / mirror

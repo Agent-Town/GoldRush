@@ -35,6 +35,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import os from 'node:os';
 import { execFileSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
 import { PNG } from 'pngjs';
 
 const PROC = 'assets/processed';
@@ -98,7 +99,7 @@ function convention(stem) {
   const shipped = readPng(path.join(PROC, occupied[0].file));
   const masters = occupied.filter((c) => fs.existsSync(path.join(FULL, c.file))).length;
   return {
-    stem, grid: fj.grid, declCell: fj.cell, scale: fj.scale,
+    stem, grid: fj.grid, declCell: fj.cell, scale: fj.scale, origin: fj.origin, centres: fj.centres, deshadow: fj.deshadow === true,
     displayCell: shipped.width, hasMaster: masters === occupied.length, masters, cells: fj.cells.length, occupied: occupied.length,
   };
 }
@@ -116,6 +117,12 @@ if (OPTS.has('--verify-downscale')) {
     if (!fs.existsSync(path.join(PROC, entry.file)) || !fs.existsSync(path.join(FULL, entry.file))) {
       console.log(`  MISSING EXCLUSION FILE ${entry.file}`);
       invalid++;
+    } else if (entry.repair) {
+      const digest = (dir) => createHash('sha256').update(fs.readFileSync(path.join(dir, entry.file))).digest('hex');
+      if (digest(PROC) !== entry.repair.processedSha256 || digest(FULL) !== entry.repair.masterSha256) {
+        console.log(`  REPAIR BYTES MOVED ${entry.file}`);
+        invalid++;
+      }
     }
   }
   let ok = 0, unexplained = 0, expected = 0, stale = 0, skipped = 0;
@@ -145,6 +152,8 @@ for (const stem of STEMS) {
   if (conv.error === 'no frames.json — sheet is not extracted; nothing ships' && LIKE) {
     const base = convention(LIKE);
     if (base.error) { console.log(`\n${stem}: --like ${LIKE} failed: ${base.error} — SKIPPED`); continue; }
+    if (base.centres !== undefined) throw new Error('--like cannot reuse source-specific centres; extract the new sheet with its own measurements');
+    if (base.deshadow) throw new Error('--like cannot reuse source-specific shadow removal; inspect and extract the new sheet explicitly');
     conv = { ...base, stem };
   }
   if (conv.error) { console.log(`\n${stem}: ${conv.error} — SKIPPED (raw mend still stands)`); continue; }
@@ -161,7 +170,7 @@ for (const stem of STEMS) {
 
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'anim-reextract-'));
   execFileSync('node', ['scripts/extract-alpha.mjs', '--key', KEY, '--grid', `${conv.grid.cols}x${conv.grid.rows}`,
-    '--cell', String(conv.declCell), '--scale', String(conv.scale), '--out', tmp, rawFile], { stdio: 'pipe' });
+    '--cell', String(conv.declCell), '--scale', String(conv.scale), ...(conv.origin === 'grid' ? ['--grid-origin'] : []), ...(conv.centres !== undefined ? ['--grid-centres', JSON.stringify(conv.centres)] : []), ...(conv.deshadow ? ['--deshadow'] : []), '--out', tmp, rawFile], { stdio: 'pipe' });
 
   const produced = fs.readdirSync(tmp).filter((f) => f.endsWith('.png')).sort();
   let toMaster = 0, downscaled = 0, direct = 0;
@@ -176,5 +185,5 @@ for (const stem of STEMS) {
   }
   fs.copyFileSync(path.join(tmp, `${stem}.frames.json`), path.join(PROC, `${stem}.frames.json`));
   fs.rmSync(tmp, { recursive: true, force: true });
-  console.log(`  wrote ${produced.length - 1} cells: ${toMaster ? `${toMaster} masters refreshed + ${downscaled} downscaled to ${conv.displayCell}px` : `${direct} written direct at ${conv.declCell}px (no master, as today)`} + frames.json`);
+  console.log(`  wrote ${produced.length} cells: ${toMaster ? `${toMaster} masters refreshed + ${downscaled} downscaled to ${conv.displayCell}px` : `${direct} written direct at ${conv.declCell}px (no master, as today)`} + frames.json`);
 }
