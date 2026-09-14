@@ -312,6 +312,18 @@
       "fingerprint": "d7293afa016e",
       "excerpt": "- merge: `e7bb88cf` (upgrade-clock, the pick clock) · shots: `reviews/shots-upgrade-clock/{desktop,m"
     },
+    "scripts/fire.md -> runner-processes.sh:31": {
+      "target": "scripts/runner-processes.sh",
+      "line": 31,
+      "fingerprint": "9b2e21326bdb",
+      "excerpt": "git -C \"$root\" log --format=%h --since=\"@$start_epoch\" -- \"$script\" 2>/dev/null | wc -l | tr -d ' '"
+    },
+    "scripts/fire.md -> start-lane-runner.sh:108": {
+      "target": "scripts/start-lane-runner.sh",
+      "line": 108,
+      "fingerprint": "72ea46966bc9",
+      "excerpt": "git -C \"$ROOT\" log --format=' %h %cI %s' --since=\"@$start_epoch\" -n 10 -- \"$RUNNER_SCRIPT\" 2>/dev/nu"
+    },
     "scripts/fire.md -> ops/droplet/ledger-backup.mjs:6": {
       "target": "ops/droplet/ledger-backup.mjs",
       "line": 6,
