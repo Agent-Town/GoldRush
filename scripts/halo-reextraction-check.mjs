@@ -88,6 +88,40 @@ const REGENERATED_SHEETS = new Set([
   'char-railtough-sheet-walk4-a',
   'char-railtough-sheet-walkdiag4-a',
   'char-steamwrecker-sheet-walk4-a',
+  // RE-CUT WITH A HARD ALPHA EDGE (task town-cast-walk8-hard-alpha-recut, 2026-09-14; owner ruling
+  // A19, verbatim "A19 - that is ok", 2026-09-13 = option (b) of reviews/drain-review-sprites-roster.md
+  // F-SPRDR-2: re-cut the heavy town-cast sheets rather than raise the 35,000,000 B budget). Stage 2
+  // of that ruling. Each stem below ships the branch's DESPILLED opaque RGB under a BINARISED alpha
+  // (threshold 128, zero partial-alpha pixels, so the per-sheet partial count is 0 against main's
+  // 12,394-21,962) and a single flat colour under every alpha=0 pixel. Main shipped #ff00ff in the
+  // 1-px ring immediately outside the figure - MEASURED 1,207 px on char-youngster-m-sheet-walk8-r0c0,
+  // 1,381 on char-storekeeper-sheet-walk8-r0c0, 704 on char-hero-sheet-walk8-r0c0 - which is the halo
+  // this ruling is about; the branch's own answer was a full bleedEdges field whose 6,363 distinct
+  // colours cost +26 kB per cell and blew the budget by 15,726,438 B.
+  //
+  // MEASURED on this tree before landing (artifacts/town-cast-walk8-hard-alpha-recut/report.md,
+  // census-main-vs-branch.json, _census*.json), main -> re-cut, nine stems:
+  //   * visible violet-key px (alpha >= 16, R-G >= 40, B-G >= 40): 88,438 -> 0.
+  //   * key-coloured px under fully transparent px: 10,158,666 -> 0.
+  //   * partial-alpha px: 161,618 -> 0. The edge is HARD, which is the whole of the ruling.
+  //   * dist bytes: 16,031,224 -> 10,996,656 (-31.4 %); every family is BELOW main, none needed the
+  //     +5 % the master allowed.
+  //   * figure height (alpha >= 128), per-row mean, main -> re-cut: within +-2.9 px on seven stems;
+  //     char-storekeeper-sheet-walk8 row 2 -11.8 px and row 3 +9.1 px is a re-extraction SCALE shift
+  //     of the same art (eyes-on: artifacts/town-cast-walk8-hard-alpha-recut/contact-char-storekeeper-sheet-walk8.png),
+  //     recorded as F-RECUT-3 for the owner's eye, not a recolour or a replacement.
+  // char-schoolteacher-sheet-walk8-a is DELIBERATELY ABSENT: its row 2 on the branch is a different
+  // generation of the character (a plain skirt where its own rows 0/1/3 and main's whole sheet wear a
+  // tiered one), F-SPRDR-10's class, so it is HELD with main's cells and stays in `cured` - which is
+  // why `cured` reads 395 and not 379 below.
+  'char-youngster-m-sheet-walk8',
+  'char-youngster-f-sheet-walk8',
+  'char-storekeeper-sheet-walk8',
+  'char-tavernkeeper-sheet-walk8',
+  'char-newsie-mei-sheet-walk8',
+  'char-assay-clerk-sheet-walk8-a',
+  'char-preacher-sheet-walk8-a',
+  'char-hero-sheet-walk8',
 ]);
 
 const gitShow = (file) => execFileSync('git', ['show', `${BASE}:${file}`], { maxBuffer: 20 * 1024 * 1024 });
@@ -112,11 +146,21 @@ assert.equal(baseline.suspects.length, 1075);
 // that sprites-split-land landed on 2026-09-14) = 160. What is left is exactly the five town-cast
 // walk8 sheets stage 2 owns: char-hero, char-newsie-mei, char-storekeeper, char-youngster-f,
 // char-youngster-m. Measured, not derived: 232 - 32 - 32 - 8 = 160 and the sum below still closes.
-assert.equal(expectedResidual.length, 160);
-// 32 Elder + 424 cells across the 23 stems sprites-split-land declared above. Was 32.
-assert.equal(regenerated.length, 456);
-// 811 - 352, the cells of the 21 declared stems that were never HELD. Was 811.
-assert.equal(cured.length, 459);
+// RE-PINNED 2026-09-14 by town-cast-walk8-hard-alpha-recut: the five stems this number stood for
+// (char-hero, char-newsie-mei, char-storekeeper, char-youngster-f, char-youngster-m walk8, 160 cells)
+// are all declared above now, so NOTHING is held back from the invariant any more. 160 - 160 = 0,
+// measured on this tree; the deepEqual below therefore asserts the sweep finds ZERO halo suspects in
+// assets/processed, which is the strongest form this guard has ever taken. If a cell comes back
+// haloed it is absent from a set that is empty and the deepEqual reds.
+assert.equal(expectedResidual.length, 0);
+// 456 + 224: the 160 cells just released from expectedResidual plus the 64 cells of the three stems
+// re-cut here that were never HELD (32 char-tavernkeeper + 16 char-assay-clerk + 16 char-preacher).
+// Was 456. Measured: artifacts/town-cast-walk8-hard-alpha-recut/_partition.mjs prints 0/680/395.
+assert.equal(regenerated.length, 680);
+// 459 - 64, the three never-HELD stems above leaving `cured` for `regenerated`. The 16
+// char-schoolteacher-sheet-walk8-a cells STAY here: that family was held, its cells are main's, and
+// the byte-for-byte invariant below still runs over them. Was 459.
+assert.equal(cured.length, 395);
 // The three partitions are disjoint and exhaust the BASE suspect roster; this closes the arithmetic
 // above so a future re-pin cannot quietly drop a cell out of all three sets.
 assert.equal(expectedResidual.length + regenerated.length + cured.length, baseline.suspects.length);

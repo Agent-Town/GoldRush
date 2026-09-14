@@ -66,14 +66,27 @@ test('every Elder cell differs from the bearded sheet it replaces', () => {
   // "298-321" is the shipped sheet measured as bbox[3] - bbox[1], WITHOUT the +1; in true pixel
   // heights the shipped man reads 299-322 and this sheet reads 296-328. Both numbers here are true
   // pixel heights, on both sides of the comparison.
+  //
+  // RE-MEASURED AND RE-PINNED 2026-09-14 by task town-cast-walk8-hard-alpha-recut (stage 2 of owner
+  // ruling A19, verbatim "A19 - that is ok", 2026-09-13): 296-328 -> **298-326**. The Elder's 32
+  // cells were re-cut with a hard alpha edge from the same source plates, and this sheet's
+  // .frames.json travelled with them — the sidecar's bbox is what these three assertions read, and
+  // MEASURED on main it tracks the shipped cell's own figure height to within 1 px (mean |Δ| 0.28),
+  // so leaving it behind would have made the footline src/town/TownScene.ts:3386 computes drift by a
+  // mean of 1.53 px and a max of 5. The re-base translates each box by the measured per-cell delta
+  // between main's cell and the re-cut's, so no coordinate is invented.
+  // F-SPRDR-12 predicted this pin would move and read 297 on Astra's own branch; on the hard-alpha
+  // re-cut it reads 298, the excursion count holds at five, and the five cells are now r0c2 323,
+  // r0c4 326, r0c5 323, r0c6 324, r0c7 326 — largest excursion 5 px, DOWN from 7. The tolerance
+  // assertions below (288-331) did not move and are still the hard rule.
   const heights = frames.cells.map((cell) => cell.bbox[3]! - cell.bbox[1]! + 1);
   for (const cell of frames.cells) {
     const height = cell.bbox[3]! - cell.bbox[1]! + 1;
     expect(height, `r${cell.row}c${cell.col} figure height, 298-321 +/- the master's 10 px`).toBeGreaterThanOrEqual(288);
     expect(height, `r${cell.row}c${cell.col} figure height, 298-321 +/- the master's 10 px`).toBeLessThanOrEqual(331);
   }
-  expect(Math.min(...heights), 'measured minimum figure height').toBe(296);
-  expect(Math.max(...heights), 'measured maximum figure height').toBe(328);
+  expect(Math.min(...heights), 'measured minimum figure height').toBe(298);
+  expect(Math.max(...heights), 'measured maximum figure height').toBe(326);
   expect(heights.filter((height) => height < 298 || height > 321), 'cells outside the nominal band').toHaveLength(5);
 });
 
