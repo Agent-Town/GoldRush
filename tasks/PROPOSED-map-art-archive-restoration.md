@@ -1,3 +1,5 @@
+> ⛔ PROPOSAL, NOT A MASTER — DO NOT QUEUE. A design note from Astra's map campaign (sol/map-art-inventory-20260908 883a3521e, landed as era 6 on 2026-09-14); it has no role line, no pre-flight, no goal leaf, and never ran. A fire authors a real master from it only on an owner word (bannered attended 2026-09-14 so task-guard-audit reads it for what it is).
+
 # Archive World must complete restoration rather than generic survival
 
 Authority: `specs/agent-play/e10-archive-world-restoration.md` (build-authorized), with later launch/admission behavior in `tasks/e10-empty-harvest-anchors-unlaunchable.md`. Evidence: `artifacts/map-art-repairs-20260908/archive-objective-gap-45/`. This proposal does not enqueue work or change factory ownership.

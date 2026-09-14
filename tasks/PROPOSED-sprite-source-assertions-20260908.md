@@ -1,3 +1,5 @@
+> ⛔ PROPOSAL, NOT A MASTER — DO NOT QUEUE. A design note from Astra's sprite-roster campaign (sol/code-review-20260908, landed by sprites-split-land 2026-09-14); it has no role line, no pre-flight, no goal leaf, and never ran. A fire authors a real master from it only on an owner word (bannered attended 2026-09-14 so task-guard-audit reads it for what it is).
+
 # Replace obsolete source-text assertions in roster tests
 
 Proposal only; not queued. The existing e2e specs are an orchestrator-owned surface under AGENTS.md. This interactive sprite repair leaves them unchanged.
