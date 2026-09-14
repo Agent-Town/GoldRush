@@ -28,7 +28,7 @@ Revision02 census verification completed: **8 passed (3.3m)** across desktop/mob
 
 ## Opaque sculpt edge metadata
 
-Blackout review confirms the old night alpha rim reveals the scene background because painted ground is hidden. The shared night terrain repair retains pool lighting but removes that transparency gap; the published `data-terrain3d-pilot-skirt-blend` now reads `opaque-sculpt-edge`. The protected `e2e/terrain3d-registry.spec.ts:281` still expects `painted-underlay-alpha-rim`. Refresh this expected presentation value and verify all registered maps still load, with night rim screenshots showing no exposed background band. Existing e2e file has not been edited. Evidence: `artifacts/map-art-repairs-20260908/blackout-render-repair-01/`.
+Blackout review confirms the old night alpha rim reveals the scene background because painted ground is hidden. The shared night terrain repair retains pool lighting but removes that transparency gap; the published `data-terrain3d-pilot-skirt-blend` now reads `opaque-sculpt-edge`. The protected `e2e/terrain3d-registry.spec.ts:281` ("rim and horizon probes keep the terrain meeting gradual and every panorama readable") still expects `painted-underlay-alpha-rim`. Refresh this expected presentation value and verify all registered maps still load, with night rim screenshots showing no exposed background band. Existing e2e file has not been edited. Evidence: `artifacts/map-art-repairs-20260908/blackout-render-repair-01/`.
 
 
 ## Correct the registry panorama coverage claim
@@ -45,7 +45,7 @@ Reproduce: `PATH=/opt/homebrew/bin:$PATH node artifacts/map-art-repairs-20260908
 
 ## Dry Gulch spring repair 16 — obsolete damp-cover gate
 
-`e2e/shore-truth.spec.ts:31,44` reads `terrain3dPilotSpringPondDampGroundRadii` and requires a radius larger than the gameplay pool. Repair 16 removes the obsolete brown cover and its diagnostics entirely. Do not restore a fake radius to satisfy the old test. Replace the cover assertion with absence of the retired cover diagnostic, retaining visual/simulation radius equality, inside/outside zone classification, shore adjacency and actual sluice placement.
+`e2e/shore-truth.spec.ts:31,44` ("live water shores match sim truth and the first dry shore cell accepts a sluice") reads `terrain3dPilotSpringPondDampGroundRadii` and requires a radius larger than the gameplay pool. Repair 16 removes the obsolete brown cover and its diagnostics entirely. Do not restore a fake radius to satisfy the old test. Replace the cover assertion with absence of the retired cover diagnostic, retaining visual/simulation radius equality, inside/outside zone classification, shore adjacency and actual sluice placement.
 
 Runnable scoped copy: `artifacts/map-art-repairs-20260908/dry-gulch-spring-integration-16/shore.spec.ts`; desktop/mobile PASS (2 tests). Its config and output are adjacent. Runtime `capture-grounded.mjs` additionally checks the actual scene has no `SpringPondDampGround`, radius is 1.4, the bank rises above water at 16 samples, and six reed roots coincide with the visual height sampler. The protected original has not been edited and remains incompatible until the orchestrator applies this update; sibling-map portions must be retained when updating the original. These controlled fixtures do not prove native full objective completion.
 
