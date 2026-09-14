@@ -384,6 +384,19 @@ Mint the registry deterministically with `node scripts/rotation-mint.mjs --week 
         "e2-hill-mine": "e2-hill-mine-r2026w37-96665bd39eee",
         "e1-baron": "e1-baron-r2026w37-49de99c8e4bc"
       }
+    },
+    {
+      "id": "r2026w38",
+      "opensAt": "2026-09-14T00:00:00.000Z",
+      "closesAt": "2026-09-21T00:00:00.000Z",
+      "seeds": {
+        "the-claim": "e1-the-claim-r2026w38-f94c101b7c67",
+        "e1-dry-gulch": "e1-dry-gulch-r2026w38-3af7ef7d769d",
+        "e1-twin-banks": "e1-twin-banks-r2026w38-cab524d634c4",
+        "e1-night-shift": "e1-night-shift-r2026w38-bd19fa27d1fc",
+        "e2-hill-mine": "e2-hill-mine-r2026w38-0eddff7ae6fa",
+        "e1-baron": "e1-baron-r2026w38-2acaf2d170fd"
+      }
     }
   ]
 }

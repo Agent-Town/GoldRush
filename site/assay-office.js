@@ -1,5 +1,5 @@
 const STATS_ENDPOINT = 'https://agenttown.app/goldrush/api/stats';
-const CURRENT_ROTATION_ID = 'r2026w37';
+const CURRENT_ROTATION_ID = 'r2026w38';
 
 const DURATION_LABELS = {
   lt1m: 'under a minute',
