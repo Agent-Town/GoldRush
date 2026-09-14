@@ -102,9 +102,9 @@
       "fingerprint": "9c5e3050955d",
       "excerpt": "` tracked-dirt=${r.dirt.tracked.length} untracked=${r.dirt.untracked.length}${r.busy ? ' BUSY' : ''}"
     },
-    "scripts/fire.md -> lane-usable.mjs:622": {
+    "scripts/fire.md -> lane-usable.mjs:684": {
       "target": "scripts/lane-usable.mjs",
-      "line": 622,
+      "line": 684,
       "fingerprint": "3767a56cf6a6",
       "excerpt": "const isMain = /(^|\\/)lane-usable\\.mjs$/.test(process.argv[1] || '')"
     },
@@ -173,6 +173,18 @@
       "line": 2661,
       "fingerprint": "ed3d70ba84ca",
       "excerpt": "collectGold: () => this.collectProspectorGold(),"
+    },
+    "scripts/fire.md -> lane-usable.mjs:86": {
+      "target": "scripts/lane-usable.mjs",
+      "line": 86,
+      "fingerprint": "91dd472116a1",
+      "excerpt": "else if (line.startsWith('branch ') && wt) {"
+    },
+    "scripts/fire.md -> lane-usable.mjs:605": {
+      "target": "scripts/lane-usable.mjs",
+      "line": 605,
+      "fingerprint": "2627e3020e5c",
+      "excerpt": "const rs = tryGit(['reset', '--hard', 'main'], { cwd: r.worktree })"
     },
     "scripts/fire.md -> blocker-panel-closed-guard.mjs:115": {
       "target": "scripts/blocker-panel-closed-guard.mjs",
