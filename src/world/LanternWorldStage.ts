@@ -74,7 +74,7 @@ export class LanternWorldStage {
     this.canvas.dataset.contract = contract.id;
     this.canvas.dataset.tile = activeTileDescriptor().id;
     this.renderer = createRenderer(this.canvas);
-    this.lights = new LightRig(this.scene, this.renderer, contract.id);
+    this.lights = new LightRig(this.scene, this.renderer, contract.id, this.camera);
     this.ground = Terrain.createBankPlaceholder();
     this.scene.add(this.ground, this.pickups.group, this.floats.group);
     if (Terrain.hasRiverWater()) {

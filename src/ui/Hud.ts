@@ -10,8 +10,8 @@ import { ProspectorPanel } from './ProspectorPanel';
 import { accountSync } from '../game/AccountSync';
 import { afterStartupFrame } from '../assets/generated';
 
-const prospectorPortraitUrlLoader = () => import('../../assets/processed/char-prospector-portrait.png?url').then((module) => module.default);
-const baronPortraitUrlLoader = () => import('../../assets/processed/char-baron-sheet-walk4-a-r0c0.png?url').then((module) => module.default);
+const prospectorPortraitUrlLoader = async () => new URL('../../assets/processed/char-prospector-portrait.png', import.meta.url).href;
+const baronPortraitUrlLoader = async () => new URL('../../assets/processed/char-baron-sheet-walk4-a-r0c0.png', import.meta.url).href;
 const PAUSE_AUDIO_SETTINGS_IDS = {
   volume: 'pause-volume',
   volumeValue: 'pause-volume-value',
@@ -91,7 +91,6 @@ export type SuitAirState = {
 
 type HudElements = {
   root: HTMLElement;
-  trainingTag: HTMLElement;
   contractBriefing: HTMLElement;
   metaRecap: HTMLElement;
   pauseMeta: HTMLElement;
@@ -109,6 +108,10 @@ type HudElements = {
   warmthText: HTMLElement;
   warmthFill: HTMLElement;
   warmthStoke: HTMLElement;
+  archivePanel: HTMLElement;
+  archiveProgress: HTMLElement;
+  archiveTarget: HTMLElement;
+  archiveInstruction: HTMLElement;
   suitPanel: HTMLElement;
   suitText: HTMLElement;
   suitFill: HTMLElement;
@@ -171,8 +174,6 @@ export class Hud {
     mountedHuds.get(root)?.dispose();
     mountedHuds.set(root, this);
     root.innerHTML = `
-      <p class="hud-training-tag" data-testid="drill-yard-training-tag" hidden>DRILL YARD: training</p>
-
       <section class="contract-briefing" data-testid="contract-briefing" aria-live="polite" role="status" hidden></section>
 
       <div class="hud-meta-recap" data-testid="run-meta-recap" aria-live="polite" hidden></div>
@@ -241,6 +242,12 @@ export class Hud {
         <span class="hud-pressure-track" aria-hidden="true"><span class="hud-pressure-fill" data-hud-warmth-fill></span></span>
       </section>
 
+      <section class="hud-panel hud-panel--resource hud-panel--archive" data-testid="hud-archive" aria-label="Archive restoration" hidden>
+        <span class="hud-label" data-hud-archive-progress></span>
+        <strong class="hud-value" data-hud-archive-target></strong>
+        <span class="hud-pressure-uses" data-hud-archive-instruction></span>
+      </section>
+
       <!--
         E8: THE HUMAN'S SUIT, on the HUD a plain boot already draws. It rides the same
         resource-panel grid the pressure gauge, the power ledger and the vent meter share, and it
@@ -296,7 +303,6 @@ export class Hud {
 
     this.elements = {
       root,
-      trainingTag: this.get(root, '[data-testid="drill-yard-training-tag"]'),
       contractBriefing: this.get(root, '[data-testid="contract-briefing"]'),
       metaRecap: this.get(root, '[data-testid="run-meta-recap"]'),
       pauseMeta: this.get(root, '[data-testid="pause-meta-panel"]'),
@@ -314,6 +320,10 @@ export class Hud {
       warmthText: this.get(root, '[data-hud-warmth]'),
       warmthFill: this.get(root, '[data-hud-warmth-fill]'),
       warmthStoke: this.get(root, '[data-hud-warmth-stoke]'),
+      archivePanel: this.get(root, '[data-testid="hud-archive"]'),
+      archiveProgress: this.get(root, '[data-hud-archive-progress]'),
+      archiveTarget: this.get(root, '[data-hud-archive-target]'),
+      archiveInstruction: this.get(root, '[data-hud-archive-instruction]'),
       suitPanel: this.get(root, '[data-testid="hud-suit-air"]'),
       suitText: this.get(root, '[data-hud-suit-air]'),
       suitFill: this.get(root, '[data-hud-suit-air-fill]'),
@@ -356,7 +366,6 @@ export class Hud {
   }
 
   update(snapshot: UiSnapshot, meta: PauseMetaSnapshot, showPauseMeta = snapshot.paused): void {
-    this.elements.trainingTag.hidden = !meta.training;
     this.elements.hpText.textContent = `${Math.ceil(snapshot.hp)} / ${Math.round(snapshot.maxHp)}`;
     this.elements.hpFill.style.width = `${this.percent(snapshot.hp, snapshot.maxHp)}%`;
     this.elements.goldText.textContent = this.goldText(snapshot);
@@ -453,6 +462,16 @@ export class Hud {
     );
   }
 
+  setArchiveStatus(status: { progress: string; target: string; instruction: string } | null): void {
+    this.elements.archivePanel.hidden = !status;
+    if (!status) return;
+    this.elements.archiveProgress.textContent = status.progress;
+    this.elements.archiveTarget.textContent = status.target;
+    this.elements.archiveInstruction.textContent = status.instruction;
+    this.elements.archivePanel.setAttribute('aria-label', `Archive: ${status.progress}. ${status.target}. ${status.instruction}`);
+  }
+
+
   /**
    * E8 — the suit dial, pushed on the same seam `setVentWarmth` above uses and for the same
    * reason: `UiBridge.build` already takes two dozen positional arguments and one era's meter is
@@ -463,6 +482,7 @@ export class Hud {
    * pressurised ground (the dial is filling), DRAINING in vacuum with air left, and EMPTY, which
    * on a contract that authors harm is the state that is actively killing her.
    */
+
   setSuitAir(suit: SuitAirState | null): void {
     this.elements.suitPanel.hidden = !suit;
     if (!suit) return;

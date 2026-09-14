@@ -1,0 +1,30 @@
+{
+  "$schema": "gold-rush layer contract v1",
+  "batch": "map-art-repairs-20260908-dry-gulch-atlas-14",
+  "notes": "Atlas promoted as texture-only repair 15 on original terrain geometry. Spring candidates and full art acceptance remain open.",
+  "slots": [
+    {
+      "file": "terrain-atlas.png",
+      "slot": "dry-gulch.terrain-atlas.candidate14",
+      "raw": "assets/raw/dry-gulch-terrain-atlas-v2.png",
+      "rawSize": [
+        1254,
+        1254
+      ],
+      "size": [
+        1254,
+        1254
+      ],
+      "sha256": "437b75a82d75729836916a54da09abd899e21ffe1423a45bcfda2fb42cb11cbd",
+      "reference": [
+        "assets/pilots/map-rebuild-spike/dry-gulch-terrain-atlas.png",
+        "assets/raw/plate-contract-dry-gulch.png"
+      ],
+      "generation": "native image_gen exec-91f8c89f-a495-4888-b8dc-a1712966d1c6",
+      "usage": "Flat terrain albedo candidate; existing sculpt geometry and UVs retained.",
+      "recipe": "assets/pilots/map-rebuild-spike/build_dry_gulch_terrain.py::make_atlas",
+      "evidence": "artifacts/map-art-repairs-20260908/dry-gulch-atlas-14/prompt.txt",
+      "runtime": "assets/pilots/map-rebuild-spike/dry-gulch-terrain.glb"
+    }
+  ]
+}

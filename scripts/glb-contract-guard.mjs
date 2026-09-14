@@ -23,6 +23,7 @@
 // can regenerate its own baseline is a guard that reports whatever is true today.
 
 import { readdir, readFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
 import { dirname, extname, join, matchesGlob, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -90,7 +91,7 @@ export function parseGlb(buffer) {
     offset += 8 + length;
   }
   if (!json) throw new Error('GLB has no JSON chunk');
-  return { json, bin };
+  return { json, bin, sha256: createHash('sha256').update(buffer).digest('hex') };
 }
 
 function accessorData(json, bin, index) {
@@ -313,7 +314,7 @@ function gridProbe({ json, bin }, instances, bounds) {
 }
 
 /** Everything the guard asserts on, in one record per asset. */
-export function inspect({ json, bin }) {
+export function inspect({ json, bin, sha256 }) {
   const metrics = metricsFromGltf({ json, bin });
   const textures = (json.images ?? []).map((image, index) => {
     if (image.uri !== undefined) return { index, name: image.name, external: image.uri, width: undefined, height: undefined };
@@ -326,6 +327,7 @@ export function inspect({ json, bin }) {
   for (const node of json.nodes ?? []) Object.assign(extras, node.extras ?? {});
   Object.assign(extras, json.scenes?.[json.scene ?? 0]?.extras ?? {});
   return {
+    sha256,
     metrics,
     textures,
     extras,
@@ -367,6 +369,20 @@ export async function productionAssets(root = REPO_ROOT) {
 
 /** The sibling *-contract.json Terrain3dClaimPilot.ts reads, when the asset has one. */
 export async function contractFor(assetPath, root = REPO_ROOT) {
+  const landmark = assetPath.match(/^(.*\/landmarks\/([^/]+))\/([^/]+)\.glb$/);
+  if (landmark) {
+    const path = `${landmark[1]}/${landmark[2]}-landmark-pack-contract.json`;
+    const pack = JSON.parse(await readFile(resolve(root, path), 'utf8'));
+    const body = pack.assets[landmark[3]];
+    if (!body) throw new Error(`${path}: missing body ${landmark[3]}`);
+    const { min, max } = body.bounds;
+    // Pack bounds are Blender XYZ: Blender Y points opposite game Z.
+    return { path: `${path}#${landmark[3]}`, contract: {
+      triangles: body.triangles, sha256: body.sha256,
+      meshCount: body.meshCount ?? 1, materialCount: body.materialCount ?? 1,
+      boundsMeters: { min: [min[0], -max[1], min[2]], max: [max[0], -min[1], max[2]] },
+    } };
+  }
   const base = assetPath.replace(/\.glb$/, '');
   for (const candidate of [`${base}-contract.json`, `${base.replace(/-terrain$/, '')}-terrain-contract.json`]) {
     try {
@@ -430,6 +446,7 @@ export function auditAsset({ path, family, record, contract }) {
 
   if (contract) {
     const c = contract.contract;
+    if (c.sha256 && record.sha256 !== c.sha256) add('contract-hash', `sha256 ${record.sha256} != ${c.sha256} (${contract.path})`);
     // Water metadata is required by the asset's OWN declared truth, not by family. dry-gulch's
     // waterTruth is a spring pond with no crossing, so demanding a ford_mask there would be noise.
     if (c.waterTruth) {

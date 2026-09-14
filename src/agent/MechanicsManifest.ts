@@ -9,6 +9,7 @@ import { E8SuitAirSystem } from '../systems/E8SuitAirSystem';
 import { INTERFERENCE_MUTED_REASON, InterferenceFrontSystem, POWERED_RELAY_KINDS } from '../systems/InterferenceFrontSystem';
 import { E10SquallScheduler, SQUALL_PHASE_ORDER } from '../systems/E10SquallScheduler';
 import { E10PreserveSystem } from '../systems/E10PreserveSystem';
+import { E10ArchiveSystem } from '../systems/E10ArchiveSystem';
 import {
   DEVIL_COLUMN_RADIUS,
   DEVIL_SWEEP_SECONDS,
@@ -509,7 +510,7 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
     rules.push(rule('deepwater_claim_boat', 'ClaimBoat.placeBuilding+reanchor', {
       boatId: deepwater.claimBoat.id,
       pads: deepwater.claimBoat.pads.map(({ id }) => id).sort(),
-      anchors: deepwater.claimBoat.anchors.map(({ id }) => id).sort(),
+      anchors: [...deepwater.claimBoat.anchors, ...(tile.flotilla?.hulls ?? [])].map(({ id }) => id).sort(),
       initialAnchor: deepwater.claimBoat.initialAnchorId,
       padsAcceptOneBuildingEach: true,
       buildingsRideTheAnchor: 'world position = anchor + pad offset',
@@ -874,6 +875,15 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
   // admits a mechanic only when it is BOTH declared and consumed; the phase IS consumed (published
   // in both engines, painted in one), the pressure is not, and `applies` says so in one word.
   const squall = E10SquallScheduler.create(contract);
+  const archive = E10ArchiveSystem.create(contract);
+  if (archive) rules.push(rule('archive_restoration', 'E10ArchiveSystem.update', {
+    wings: archive.wings.map(wing => ({ ...wing })),
+    hold: 'Keep a living, powered sentry beacon within the next light site radius throughout telegraph and squall. An interruption retries next cycle; one wing completes per cycle in order.',
+    secure: 'Survive the posted secure wave and complete a light hold this run. A fully restored archive requires a fresh hold at the first wing.',
+    persistence: 'Bank a secured run to keep earned wings and unlock their ledger pages. Losing keeps no new restoration.',
+    pressure: 'During squalls Static Motes steer toward lit sites; Unraveled Memories pursue the Prospector.',
+    view: 'now.archive',
+  }));
   if (squall.isDeclared) {
     const cadence = squall.diagnostics;
     rules.push(rule('static_squall', 'E10SquallScheduler.update', {
@@ -886,10 +896,12 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
       // E10S-3 WIRED IT: the number below is now applied to the share of the field that walks at
       // the vent while the squall blows (`E10PreserveSystem.pressureTarget`), so `applies` says
       // `phase-and-pressure` and the consequence no longer promises weather that is not there.
-      motePressureMultiplier: cadence.motePressureMultiplier,
+      ...(!archive ? { motePressureMultiplier: cadence.motePressureMultiplier } : {}),
       applies: 'phase-and-pressure',
       view: 'now.squall',
-      consequence: 'a Static squall crosses the whole shore on a fixed cycle: 60s calm, an 8s telegraph as the edges pale, 25s of squall, an 8s recover. The browser desaturates and ducks the mix while it blows. The squall is the only time the vent loses warmth, and while it blows twice the usual share of the field walks at the vent instead of at you.',
+      consequence: archive
+        ? 'Keep the next archive light powered through telegraph and squall to restore its wing. Static Motes approach lit sites during squalls.'
+        : 'a Static squall crosses the whole shore on a fixed cycle: 60s calm, an 8s telegraph as the edges pale, 25s of squall, an 8s recover. The browser desaturates and ducks the mix while it blows. The squall is the only time the vent loses warmth, and while it blows twice the usual share of the field walks at the vent instead of at you.',
       gatesSecure: false,
       damages: false,
     }));

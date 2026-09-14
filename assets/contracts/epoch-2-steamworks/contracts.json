@@ -9,55 +9,159 @@
         "tileId": "e2-hill-mine",
         "biome": "steamworks-hill-mine",
         "size": 96,
-        "render": { "terrainMesh": "required" },
+        "render": {
+          "terrainMesh": "required"
+        },
         "river": true,
         "ford": true,
-        "fords": [{ "id": "trestle", "x": 0, "halfWidth": 4 }],
-        "buildZones": [
-          { "id": "base-t1", "bank": "north", "minX": -30, "maxX": 30, "minZ": 8, "maxZ": 16 },
-          { "id": "t2-west", "bank": "north", "minX": -38, "maxX": -20, "minZ": 21, "maxZ": 29 },
-          { "id": "t2-east", "bank": "north", "minX": 20, "maxX": 38, "minZ": 21, "maxZ": 29 },
-          { "id": "t3-west", "bank": "north", "minX": -36, "maxX": -22, "minZ": 37, "maxZ": 44 },
-          { "id": "t3-east", "bank": "north", "minX": 22, "maxX": 36, "minZ": 37, "maxZ": 44 }
+        "fords": [
+          {
+            "id": "trestle",
+            "x": 0,
+            "halfWidth": 4
+          }
         ],
-        "stakeMarkers": [{ "id": "boiler-house-site", "x": 0, "z": 12, "heroStart": true }],
+        "buildZones": [
+          {
+            "id": "base-t1",
+            "bank": "north",
+            "minX": -30,
+            "maxX": 30,
+            "minZ": 8,
+            "maxZ": 16
+          },
+          {
+            "id": "t2-west",
+            "bank": "north",
+            "minX": -38,
+            "maxX": -20,
+            "minZ": 21,
+            "maxZ": 29
+          },
+          {
+            "id": "t2-east",
+            "bank": "north",
+            "minX": 20,
+            "maxX": 38,
+            "minZ": 21,
+            "maxZ": 29
+          },
+          {
+            "id": "t3-west",
+            "bank": "north",
+            "minX": -36,
+            "maxX": -22,
+            "minZ": 37,
+            "maxZ": 44
+          },
+          {
+            "id": "t3-east",
+            "bank": "north",
+            "minX": 22,
+            "maxX": 36,
+            "minZ": 37,
+            "maxZ": 44
+          }
+        ],
+        "stakeMarkers": [
+          {
+            "id": "boiler-house-site",
+            "x": 0,
+            "z": 12,
+            "heroStart": true
+          }
+        ],
         "rails": [
           {
             "style": "steamworks",
             "points": [
-              { "x": -46, "z": -2 },
-              { "x": -24, "z": -1 },
-              { "x": 0, "z": 0 },
-              { "x": 24, "z": -1 },
-              { "x": 46, "z": -2 }
+              {
+                "x": -46,
+                "z": -2
+              },
+              {
+                "x": -24,
+                "z": -1
+              },
+              {
+                "x": 0,
+                "z": 0
+              },
+              {
+                "x": 24,
+                "z": -1
+              },
+              {
+                "x": 46,
+                "z": -2
+              }
             ]
           },
           {
             "style": "mine-spur",
             "points": [
-              { "x": -34, "z": 12 },
-              { "x": -22, "z": 16 },
-              { "x": -10, "z": 24 },
-              { "x": 10, "z": 24 },
-              { "x": 24, "z": 34 }
+              {
+                "x": -34,
+                "z": 12
+              },
+              {
+                "x": -22,
+                "z": 16
+              },
+              {
+                "x": -10,
+                "z": 24
+              },
+              {
+                "x": 10,
+                "z": 24
+              },
+              {
+                "x": 24,
+                "z": 34
+              }
             ]
           },
           {
             "style": "mine-spur",
             "points": [
-              { "x": 30, "z": 38 },
-              { "x": 12, "z": 42 },
-              { "x": -6, "z": 41 }
+              {
+                "x": 30,
+                "z": 38
+              },
+              {
+                "x": 12,
+                "z": 42
+              },
+              {
+                "x": -6,
+                "z": 41
+              }
             ]
           }
         ],
         "waterSources": [],
         "harvestAnchors": [
-          { "x": -30, "z": 25 },
-          { "x": -10, "z": 29 },
-          { "x": 18, "z": 25 },
-          { "x": -25, "z": 39 },
-          { "x": 26, "z": 39 }
+          {
+            "x": -30,
+            "z": 25
+          },
+          {
+            "x": -10,
+            "z": 29
+          },
+          {
+            "x": 18,
+            "z": 25
+          },
+          {
+            "x": -25,
+            "z": 39
+          },
+          {
+            "x": 26,
+            "z": 39
+          }
         ],
         "elevation": {
           "cellSize": 2,
@@ -94,8 +198,16 @@
         },
         "palette": {
           "id": "hill-mine-scree-road",
-          "tint": [0.86, 0.82, 0.74],
-          "dampTint": [0.35, 0.43, 0.42],
+          "tint": [
+            0.86,
+            0.82,
+            0.74
+          ],
+          "dampTint": [
+            0.35,
+            0.43,
+            0.42
+          ],
           "dampAmount": 0.36,
           "splat": {
             "rockAmount": 0.84,
@@ -118,14 +230,27 @@
         "water": {
           "id": "hill-mine-flooded-gallery",
           "visualHalfWidth": 10,
-          "depths": { "river": 1.25, "ford": 0.35, "shallows": 0.25, "springPond": 0.2 },
-          "speedMul": { "river": 0.45, "ford": 0.8, "shallows": 0.72, "springPond": 0.8 }
+          "depths": {
+            "river": 1.25,
+            "ford": 0.35,
+            "shallows": 0.25,
+            "springPond": 0.2
+          },
+          "speedMul": {
+            "river": 0.45,
+            "ford": 0.8,
+            "shallows": 0.72,
+            "springPond": 0.8
+          },
+          "centerZ": -10,
+          "halfWidth": 5
         },
-        "engineDependencies": [
-          { "dep": "elevation-advisory-fields", "status": "missing", "description": "Needs registered consumers for the declared slopeMax and waterline advisory fields." }
-        ],
         "lanes": {
-          "spawnEdges": ["west", "east", "north"],
+          "spawnEdges": [
+            "west",
+            "east",
+            "north"
+          ],
           "territoryRingBiasWaves": 0,
           "territoryRingLaneBias": 0
         }
@@ -143,10 +268,21 @@
             "visualScale": 1.16,
             "tint": "#46576b",
             "boltDamageMult": 0.65,
-            "spawnEdges": ["west", "east"],
+            "spawnEdges": [
+              "west",
+              "east"
+            ],
             "spawnGates": [
-              { "edge": "west", "x": -46, "z": 6.25 },
-              { "edge": "east", "x": 46, "z": 6.25 }
+              {
+                "edge": "west",
+                "x": -46,
+                "z": 6.25
+              },
+              {
+                "edge": "east",
+                "x": 46,
+                "z": 6.25
+              }
             ]
           },
           {
@@ -159,8 +295,16 @@
             "tint": "#8b7d3c",
             "wrecker": true,
             "buildingDamageScale": 2.5,
-            "spawnEdges": ["north"],
-            "spawnGates": [{ "edge": "north", "x": 0, "z": 46 }]
+            "spawnEdges": [
+              "north"
+            ],
+            "spawnGates": [
+              {
+                "edge": "north",
+                "x": 0,
+                "z": 46
+              }
+            ]
           },
           {
             "id": "coal_thief",
@@ -172,8 +316,16 @@
             "tint": "#3e332b",
             "thief": true,
             "contactDamageScale": 0.65,
-            "spawnEdges": ["east"],
-            "spawnGates": [{ "edge": "east", "x": 46, "z": 24 }]
+            "spawnEdges": [
+              "east"
+            ],
+            "spawnGates": [
+              {
+                "edge": "east",
+                "x": 46,
+                "z": 24
+              }
+            ]
           }
         ],
         "baron": {
@@ -187,7 +339,10 @@
           "supportBuildingDamageScale": 5,
           "pursuitRange": 0,
           "escortCount": 6,
-          "tauntWaves": [4, 8],
+          "tauntWaves": [
+            4,
+            8
+          ],
           "taunt": "The Baron's railcar is on the spur. Keep the cut open.",
           "arrivalTitle": "THE ARMORED RAILCAR",
           "tauntTitle": "The Rail Spurs",
@@ -250,7 +405,9 @@
       "boardRow": {
         "name": "The Hill Mine",
         "ledgerBlurb": "Terraced steamworks ground above a rail cut and flooded gallery.",
-        "tags": ["steamworks"],
+        "tags": [
+          "steamworks"
+        ],
         "unlock": "epoch-2-steamworks"
       },
       "briefing": {
@@ -262,7 +419,7 @@
           "T2 and T3 pads out-range the valley, but cliff faces block bolts.",
           "Claim-jumpers must climb the switchbacks; cliff bands are impassable.",
           "The flooded gallery is deep except at the trestle and wet edge.",
-        "Coal seams lie at the mine mouth on the top terrace, north of the boiler-house site."
+          "Coal seams lie at the mine mouth on the top terrace, north of the boiler-house site."
         ],
         "geographyLine": "A terraced hillside mine above a flooded rail cut."
       }
@@ -274,46 +431,126 @@
         "tileId": "e2-trestle",
         "biome": "steamworks-trestle-gorge",
         "size": 96,
-        "render": { "terrainMesh": "required" },
+        "render": {
+          "terrainMesh": "required"
+        },
         "river": true,
         "ford": true,
-        "fords": [{ "id": "trestle", "x": 0, "halfWidth": 3 }],
+        "fords": [
+          {
+            "id": "trestle",
+            "x": 0,
+            "halfWidth": 3
+          }
+        ],
         "buildZones": [
-          { "id": "south-approach", "bank": "south", "minX": -30, "maxX": 30, "minZ": -30, "maxZ": -7 },
-          { "id": "north-approach", "bank": "north", "minX": -30, "maxX": 30, "minZ": 7, "maxZ": 30 }
+          {
+            "id": "south-approach",
+            "bank": "south",
+            "minX": -30,
+            "maxX": 30,
+            "minZ": -30,
+            "maxZ": -7
+          },
+          {
+            "id": "north-approach",
+            "bank": "north",
+            "minX": -30,
+            "maxX": 30,
+            "minZ": 7,
+            "maxZ": 30
+          }
         ],
         "stakeMarkers": [
-          { "id": "south-boiler-site", "x": 12, "z": -12, "heroStart": true },
-          { "id": "north-boiler-site", "x": -12, "z": 12, "heroStart": false }
+          {
+            "id": "south-boiler-site",
+            "x": 12,
+            "z": -12,
+            "heroStart": false
+          },
+          {
+            "id": "north-boiler-site",
+            "x": -12,
+            "z": 12,
+            "heroStart": false
+          },
+          {
+            "id": "trestle-entry",
+            "x": 12,
+            "z": -18,
+            "heroStart": true
+          }
         ],
         "rails": [
           {
             "style": "steamworks",
             "points": [
-              { "x": 0, "z": -46 },
-              { "x": 0, "z": -22 },
-              { "x": 0, "z": -7 },
-              { "x": 0, "z": 7 },
-              { "x": 0, "z": 22 },
-              { "x": 0, "z": 46 }
+              {
+                "x": 0,
+                "z": -46
+              },
+              {
+                "x": 0,
+                "z": -22
+              },
+              {
+                "x": 0,
+                "z": -7
+              },
+              {
+                "x": 0,
+                "z": 7
+              },
+              {
+                "x": 0,
+                "z": 22
+              },
+              {
+                "x": 0,
+                "z": 46
+              }
             ]
           },
           {
             "style": "mine-spur",
             "points": [
-              { "x": -30, "z": -18 },
-              { "x": -14, "z": -18 },
-              { "x": 0, "z": -22 },
-              { "x": 18, "z": -26 }
+              {
+                "x": -30,
+                "z": -18
+              },
+              {
+                "x": -14,
+                "z": -18
+              },
+              {
+                "x": 0,
+                "z": -22
+              },
+              {
+                "x": 18,
+                "z": -26
+              }
             ]
           }
         ],
         "waterSources": [],
         "harvestAnchors": [
-          { "x": -24, "z": -20 },
-          { "x": 24, "z": -20 },
-          { "x": -24, "z": 20 },
-          { "x": 24, "z": 20 }
+          {
+            "x": -24,
+            "z": -20
+          },
+          {
+            "x": 24,
+            "z": -20
+          },
+          {
+            "x": -24,
+            "z": 20
+          },
+          {
+            "x": 24,
+            "z": 20
+          }
         ],
         "elevation": {
           "cellSize": 2,
@@ -332,12 +569,23 @@
         "heightfield": {
           "id": "trestle-gorge-banks",
           "mode": "visual",
-          "bankRelief": { "amount": 0.45, "width": 9 }
+          "bankRelief": {
+            "amount": 0.45,
+            "width": 9
+          }
         },
         "palette": {
           "id": "trestle-rust-river",
-          "tint": [0.78, 0.72, 0.61],
-          "dampTint": [0.31, 0.42, 0.42],
+          "tint": [
+            0.78,
+            0.72,
+            0.61
+          ],
+          "dampTint": [
+            0.31,
+            0.42,
+            0.42
+          ],
           "dampAmount": 0.42,
           "splat": {
             "rockAmount": 0.72,
@@ -362,14 +610,24 @@
         "water": {
           "id": "trestle-gorge-river",
           "visualHalfWidth": 10,
-          "depths": { "river": 1.25, "ford": 0.3, "shallows": 0.25 },
-          "speedMul": { "river": 0.45, "ford": 0.8, "shallows": 0.72 }
+          "depths": {
+            "river": 1.25,
+            "ford": 0.3,
+            "shallows": 0.25
+          },
+          "speedMul": {
+            "river": 0.45,
+            "ford": 0.8,
+            "shallows": 0.72
+          }
         },
-        "engineDependencies": [
-          { "dep": "elevation-advisory-fields", "status": "missing", "description": "Needs registered consumers for the declared slopeMax and waterline advisory fields." }
-        ],
         "lanes": {
-          "spawnEdges": ["south", "north", "east", "west"],
+          "spawnEdges": [
+            "south",
+            "north",
+            "east",
+            "west"
+          ],
           "territoryRingBiasWaves": 0,
           "territoryRingLaneBias": 0
         }
@@ -378,9 +636,18 @@
         "waveCadenceMult": 0.7,
         "pressureEnabled": true,
         "coalSeams": [
-          { "x": -16, "z": -20 },
-          { "x": -20, "z": -16 },
-          { "x": -12, "z": -24 }
+          {
+            "x": -16,
+            "z": -20
+          },
+          {
+            "x": -20,
+            "z": -16
+          },
+          {
+            "x": -12,
+            "z": -24
+          }
         ],
         "secureWave": 12,
         "enemyRoster": [
@@ -393,7 +660,10 @@
             "visualScale": 1.16,
             "tint": "#46576b",
             "boltDamageMult": 0.65,
-            "spawnEdges": ["south", "north"]
+            "spawnEdges": [
+              "south",
+              "north"
+            ]
           },
           {
             "id": "steam_wrecker",
@@ -405,7 +675,10 @@
             "tint": "#8b7d3c",
             "wrecker": true,
             "buildingDamageScale": 2.5,
-            "spawnEdges": ["east", "west"]
+            "spawnEdges": [
+              "east",
+              "west"
+            ]
           },
           {
             "id": "coal_thief",
@@ -417,7 +690,9 @@
             "tint": "#3e332b",
             "thief": true,
             "contactDamageScale": 0.65,
-            "spawnEdges": ["north"]
+            "spawnEdges": [
+              "north"
+            ]
           }
         ],
         "baron": {
@@ -431,7 +706,10 @@
           "supportBuildingDamageScale": 5,
           "pursuitRange": 0,
           "escortCount": 6,
-          "tauntWaves": [4, 8],
+          "tauntWaves": [
+            4,
+            8
+          ],
           "taunt": "The Baron's railcar is bearing down on the trestle.",
           "arrivalTitle": "THE TRESTLE RAILCAR",
           "tauntTitle": "Hold the Crossing",
@@ -447,9 +725,37 @@
           "railSpeed": 1.9,
           "componentDegradeSpeedMult": 0.82,
           "components": [
-            { "id": "wheels", "label": "Wheel Trucks", "hpScale": 0.9, "visualScale": 0.9, "xOffset": 0, "zOffset": -0.55, "tint": "#2f2a22", "boltDamageMult": 0.8 },
-            { "id": "boiler", "label": "Boiler", "hpScale": 1.25, "visualScale": 1.08, "xOffset": 1.15, "zOffset": 0, "tint": "#8b7d3c", "boltDamageMult": 0.7, "buildingDamageScale": 1.15 },
-            { "id": "cabin", "label": "Cabin", "hpScale": 0.85, "visualScale": 0.96, "xOffset": 2.3, "zOffset": 0.55, "tint": "#46576b", "boltDamageMult": 0.85 }
+            {
+              "id": "wheels",
+              "label": "Wheel Trucks",
+              "hpScale": 0.9,
+              "visualScale": 0.9,
+              "xOffset": 0,
+              "zOffset": -0.55,
+              "tint": "#2f2a22",
+              "boltDamageMult": 0.8
+            },
+            {
+              "id": "boiler",
+              "label": "Boiler",
+              "hpScale": 1.25,
+              "visualScale": 1.08,
+              "xOffset": 1.15,
+              "zOffset": 0,
+              "tint": "#8b7d3c",
+              "boltDamageMult": 0.7,
+              "buildingDamageScale": 1.15
+            },
+            {
+              "id": "cabin",
+              "label": "Cabin",
+              "hpScale": 0.85,
+              "visualScale": 0.96,
+              "xOffset": 2.3,
+              "zOffset": 0.55,
+              "tint": "#46576b",
+              "boltDamageMult": 0.85
+            }
           ]
         }
       },
@@ -466,7 +772,9 @@
       "boardRow": {
         "name": "The Trestle",
         "ledgerBlurb": "A rail crossing over the gorge: hold both approaches while the ore carts run.",
-        "tags": ["steamworks"],
+        "tags": [
+          "steamworks"
+        ],
         "unlock": "secured:e2-hill-mine"
       },
       "briefing": {
@@ -478,7 +786,7 @@
           "The trestle is the only easy crossing over deep water.",
           "Rail Toughs and Steam Wreckers press both approaches.",
           "The south bank beside the base remains open for sluice work.",
-        "Coal seams lie along the mine spur on the south approach, west of the boiler site."
+          "Coal seams lie along the mine spur on the south approach, west of the boiler site."
         ],
         "geographyLine": "One long rail line crosses a deep river gorge between defended approaches."
       }
@@ -490,30 +798,99 @@
         "tileId": "e2-pressure-garden",
         "biome": "steamworks-pressure-garden",
         "size": 96,
-        "render": { "terrainMesh": "required" },
+        "render": {
+          "terrainMesh": "required"
+        },
         "river": true,
         "ford": true,
-        "fords": [{ "id": "garden-crossing", "x": 0, "halfWidth": 6 }],
+        "fords": [
+          {
+            "id": "garden-crossing",
+            "x": 0,
+            "halfWidth": 6
+          }
+        ],
         "buildZones": [
-          { "id": "boiler-terrace", "bank": "north", "minX": -36, "maxX": 36, "minZ": 7, "maxZ": 16 },
-          { "id": "west-growing-terrace", "bank": "north", "minX": -38, "maxX": -12, "minZ": 20, "maxZ": 29 },
-          { "id": "east-growing-terrace", "bank": "north", "minX": 12, "maxX": 38, "minZ": 20, "maxZ": 29 },
-          { "id": "coal-bed-terrace", "bank": "north", "minX": -28, "maxX": 28, "minZ": 36, "maxZ": 44 }
+          {
+            "id": "boiler-terrace",
+            "bank": "north",
+            "minX": -36,
+            "maxX": 36,
+            "minZ": 7,
+            "maxZ": 16
+          },
+          {
+            "id": "west-growing-terrace",
+            "bank": "north",
+            "minX": -38,
+            "maxX": -12,
+            "minZ": 20,
+            "maxZ": 29
+          },
+          {
+            "id": "east-growing-terrace",
+            "bank": "north",
+            "minX": 12,
+            "maxX": 38,
+            "minZ": 20,
+            "maxZ": 29
+          },
+          {
+            "id": "coal-bed-terrace",
+            "bank": "north",
+            "minX": -28,
+            "maxX": 28,
+            "minZ": 36,
+            "maxZ": 44
+          }
         ],
         "stakeMarkers": [
-          { "id": "west-boiler-bed", "x": -12, "z": 12, "heroStart": true },
-          { "id": "center-boiler-bed", "x": 0, "z": 12, "heroStart": false },
-          { "id": "east-boiler-bed", "x": 12, "z": 12, "heroStart": false }
+          {
+            "id": "west-boiler-bed",
+            "x": -12,
+            "z": 12,
+            "heroStart": true
+          },
+          {
+            "id": "center-boiler-bed",
+            "x": 0,
+            "z": 12,
+            "heroStart": false
+          },
+          {
+            "id": "east-boiler-bed",
+            "x": 12,
+            "z": 12,
+            "heroStart": false
+          }
         ],
         "rails": [],
         "waterSources": [],
         "harvestAnchors": [
-          { "x": -30, "z": 24 },
-          { "x": -18, "z": 27 },
-          { "x": 18, "z": 27 },
-          { "x": 30, "z": 24 },
-          { "x": -24, "z": 40 },
-          { "x": 24, "z": 40 }
+          {
+            "x": -30,
+            "z": 24
+          },
+          {
+            "x": -18,
+            "z": 27
+          },
+          {
+            "x": 18,
+            "z": 27
+          },
+          {
+            "x": 30,
+            "z": 24
+          },
+          {
+            "x": -24,
+            "z": 40
+          },
+          {
+            "x": 24,
+            "z": 40
+          }
         ],
         "elevation": {
           "cellSize": 2,
@@ -537,12 +914,23 @@
         "heightfield": {
           "id": "pressure-garden-terraces",
           "mode": "visual",
-          "bankRelief": { "amount": 0.3, "width": 8 }
+          "bankRelief": {
+            "amount": 0.3,
+            "width": 8
+          }
         },
         "palette": {
           "id": "pressure-garden-coal-beds",
-          "tint": [0.66, 0.61, 0.5],
-          "dampTint": [0.25, 0.34, 0.33],
+          "tint": [
+            0.66,
+            0.61,
+            0.5
+          ],
+          "dampTint": [
+            0.25,
+            0.34,
+            0.33
+          ],
           "dampAmount": 0.38,
           "splat": {
             "rockAmount": 0.86,
@@ -567,14 +955,24 @@
         "water": {
           "id": "pressure-garden-water-band",
           "visualHalfWidth": 8,
-          "depths": { "river": 1.1, "ford": 0.3, "shallows": 0.22 },
-          "speedMul": { "river": 0.5, "ford": 0.82, "shallows": 0.75 }
+          "depths": {
+            "river": 1.1,
+            "ford": 0.3,
+            "shallows": 0.22
+          },
+          "speedMul": {
+            "river": 0.5,
+            "ford": 0.82,
+            "shallows": 0.75
+          }
         },
-        "engineDependencies": [
-          { "dep": "elevation-advisory-fields", "status": "missing", "description": "Needs registered consumers for the declared slopeMax and waterline advisory fields." }
-        ],
         "lanes": {
-          "spawnEdges": ["south", "east", "west", "north"],
+          "spawnEdges": [
+            "south",
+            "east",
+            "west",
+            "north"
+          ],
           "territoryRingBiasWaves": 0,
           "territoryRingLaneBias": 0
         }
@@ -592,8 +990,16 @@
             "visualScale": 1.16,
             "tint": "#46576b",
             "boltDamageMult": 0.65,
-            "spawnEdges": ["south"],
-            "spawnGates": [{ "edge": "south", "x": 0, "z": -46 }]
+            "spawnEdges": [
+              "south"
+            ],
+            "spawnGates": [
+              {
+                "edge": "south",
+                "x": 0,
+                "z": -46
+              }
+            ]
           },
           {
             "id": "steam_wrecker",
@@ -605,10 +1011,21 @@
             "tint": "#8b7d3c",
             "wrecker": true,
             "buildingDamageScale": 2.5,
-            "spawnEdges": ["east", "west"],
+            "spawnEdges": [
+              "east",
+              "west"
+            ],
             "spawnGates": [
-              { "edge": "east", "x": 46, "z": 20 },
-              { "edge": "west", "x": -46, "z": 20 }
+              {
+                "edge": "east",
+                "x": 46,
+                "z": 20
+              },
+              {
+                "edge": "west",
+                "x": -46,
+                "z": 20
+              }
             ]
           },
           {
@@ -621,15 +1038,25 @@
             "tint": "#3e332b",
             "thief": true,
             "contactDamageScale": 0.65,
-            "spawnEdges": ["north"],
-            "spawnGates": [{ "edge": "north", "x": 0, "z": 46 }]
+            "spawnEdges": [
+              "north"
+            ],
+            "spawnGates": [
+              {
+                "edge": "north",
+                "x": 0,
+                "z": 46
+              }
+            ]
           }
         ]
       },
       "boardRow": {
         "name": "The Pressure Garden",
         "ledgerBlurb": "A geothermal terrace garden where coal tends the boilers and pressure is the crop.",
-        "tags": ["steamworks"],
+        "tags": [
+          "steamworks"
+        ],
         "unlock": "secured:e2-trestle"
       },
       "briefing": {
@@ -652,55 +1079,157 @@
         "tileId": "e2-incline",
         "biome": "steamworks-funicular-incline",
         "size": 96,
-        "render": { "terrainMesh": "required" },
+        "render": {
+          "terrainMesh": "required"
+        },
         "river": true,
         "ford": true,
         "fords": [
-          { "id": "lower-line-crossing", "x": -12, "halfWidth": 3 },
-          { "id": "upper-line-crossing", "x": 12, "halfWidth": 3 }
+          {
+            "id": "lower-line-crossing",
+            "x": -12,
+            "halfWidth": 3
+          },
+          {
+            "id": "upper-line-crossing",
+            "x": 12,
+            "halfWidth": 3
+          }
         ],
         "buildZones": [
-          { "id": "lower-yard", "bank": "south", "minX": -36, "maxX": 36, "minZ": -30, "maxZ": -7 },
-          { "id": "landing-yard", "bank": "north", "minX": -36, "maxX": 36, "minZ": 7, "maxZ": 18 },
-          { "id": "west-incline-bench", "bank": "north", "minX": -38, "maxX": -4, "minZ": 22, "maxZ": 32 },
-          { "id": "upper-ore-yard", "bank": "north", "minX": -28, "maxX": 28, "minZ": 36, "maxZ": 44 }
+          {
+            "id": "lower-yard",
+            "bank": "south",
+            "minX": -36,
+            "maxX": 36,
+            "minZ": -30,
+            "maxZ": -7
+          },
+          {
+            "id": "landing-yard",
+            "bank": "north",
+            "minX": -36,
+            "maxX": 36,
+            "minZ": 7,
+            "maxZ": 18
+          },
+          {
+            "id": "west-incline-bench",
+            "bank": "north",
+            "minX": -38,
+            "maxX": -4,
+            "minZ": 22,
+            "maxZ": 32
+          },
+          {
+            "id": "upper-ore-yard",
+            "bank": "north",
+            "minX": -28,
+            "maxX": 28,
+            "minZ": 36,
+            "maxZ": 44
+          }
         ],
         "stakeMarkers": [
-          { "id": "lower-engine-house", "x": -24, "z": -18, "heroStart": true },
-          { "id": "upper-winch-house", "x": 0, "z": 40, "heroStart": false }
+          {
+            "id": "lower-engine-house",
+            "x": -24,
+            "z": -18,
+            "heroStart": true
+          },
+          {
+            "id": "upper-winch-house",
+            "x": 0,
+            "z": 40,
+            "heroStart": false
+          }
         ],
         "rails": [
           {
             "style": "steamworks",
             "points": [
-              { "x": -12, "z": -46 },
-              { "x": -12, "z": -24 },
-              { "x": -12, "z": -7 },
-              { "x": -12, "z": 7 },
-              { "x": -12, "z": 28 },
-              { "x": -12, "z": 46 }
+              {
+                "x": -12,
+                "z": -46
+              },
+              {
+                "x": -12,
+                "z": -24
+              },
+              {
+                "x": -12,
+                "z": -7
+              },
+              {
+                "x": -12,
+                "z": 7
+              },
+              {
+                "x": -12,
+                "z": 28
+              },
+              {
+                "x": -12,
+                "z": 46
+              }
             ]
           },
           {
             "style": "mine-spur",
             "points": [
-              { "x": 12, "z": -46 },
-              { "x": 12, "z": -24 },
-              { "x": 12, "z": -7 },
-              { "x": 12, "z": 7 },
-              { "x": 12, "z": 28 },
-              { "x": 12, "z": 46 }
+              {
+                "x": 12,
+                "z": -46
+              },
+              {
+                "x": 12,
+                "z": -24
+              },
+              {
+                "x": 12,
+                "z": -7
+              },
+              {
+                "x": 12,
+                "z": 7
+              },
+              {
+                "x": 12,
+                "z": 28
+              },
+              {
+                "x": 12,
+                "z": 46
+              }
             ]
           }
         ],
         "waterSources": [],
         "harvestAnchors": [
-          { "x": -30, "z": -20 },
-          { "x": 30, "z": -20 },
-          { "x": -30, "z": 26 },
-          { "x": 30, "z": 26 },
-          { "x": -22, "z": 40 },
-          { "x": 22, "z": 40 }
+          {
+            "x": -30,
+            "z": -20
+          },
+          {
+            "x": 30,
+            "z": -20
+          },
+          {
+            "x": -30,
+            "z": 26
+          },
+          {
+            "x": 30,
+            "z": 26
+          },
+          {
+            "x": -22,
+            "z": 40
+          },
+          {
+            "x": 22,
+            "z": 40
+          }
         ],
         "elevation": {
           "cellSize": 2,
@@ -724,12 +1253,23 @@
         "heightfield": {
           "id": "incline-cut-benches",
           "mode": "visual",
-          "bankRelief": { "amount": 0.38, "width": 9 }
+          "bankRelief": {
+            "amount": 0.38,
+            "width": 9
+          }
         },
         "palette": {
           "id": "incline-rust-cut",
-          "tint": [0.72, 0.66, 0.55],
-          "dampTint": [0.29, 0.38, 0.36],
+          "tint": [
+            0.72,
+            0.66,
+            0.55
+          ],
+          "dampTint": [
+            0.29,
+            0.38,
+            0.36
+          ],
           "dampAmount": 0.34,
           "splat": {
             "rockAmount": 0.8,
@@ -754,14 +1294,24 @@
         "water": {
           "id": "incline-base-water-band",
           "visualHalfWidth": 8,
-          "depths": { "river": 1.15, "ford": 0.3, "shallows": 0.22 },
-          "speedMul": { "river": 0.48, "ford": 0.82, "shallows": 0.74 }
+          "depths": {
+            "river": 1.15,
+            "ford": 0.3,
+            "shallows": 0.22
+          },
+          "speedMul": {
+            "river": 0.48,
+            "ford": 0.82,
+            "shallows": 0.74
+          }
         },
-        "engineDependencies": [
-          { "dep": "elevation-advisory-fields", "status": "missing", "description": "Needs registered consumers for the declared slopeMax and waterline advisory fields." }
-        ],
         "lanes": {
-          "spawnEdges": ["south", "north", "east", "west"],
+          "spawnEdges": [
+            "south",
+            "north",
+            "east",
+            "west"
+          ],
           "territoryRingBiasWaves": 0,
           "territoryRingLaneBias": 0
         }
@@ -770,9 +1320,18 @@
         "waveCadenceMult": 0.75,
         "pressureEnabled": true,
         "coalSeams": [
-          { "x": 0, "z": -28 },
-          { "x": 4, "z": -26 },
-          { "x": 7, "z": -22 }
+          {
+            "x": 0,
+            "z": -28
+          },
+          {
+            "x": 4,
+            "z": -26
+          },
+          {
+            "x": 7,
+            "z": -22
+          }
         ],
         "secureWave": 12,
         "enemyRoster": [
@@ -785,10 +1344,21 @@
             "visualScale": 1.16,
             "tint": "#46576b",
             "boltDamageMult": 0.65,
-            "spawnEdges": ["south", "north"],
+            "spawnEdges": [
+              "south",
+              "north"
+            ],
             "spawnGates": [
-              { "edge": "south", "x": 12, "z": -46 },
-              { "edge": "north", "x": 12, "z": 46 }
+              {
+                "edge": "south",
+                "x": 12,
+                "z": -46
+              },
+              {
+                "edge": "north",
+                "x": 12,
+                "z": 46
+              }
             ]
           },
           {
@@ -801,10 +1371,21 @@
             "tint": "#8b7d3c",
             "wrecker": true,
             "buildingDamageScale": 2.5,
-            "spawnEdges": ["east", "west"],
+            "spawnEdges": [
+              "east",
+              "west"
+            ],
             "spawnGates": [
-              { "edge": "east", "x": 46, "z": 24 },
-              { "edge": "west", "x": -46, "z": 24 }
+              {
+                "edge": "east",
+                "x": 46,
+                "z": 24
+              },
+              {
+                "edge": "west",
+                "x": -46,
+                "z": 24
+              }
             ]
           },
           {
@@ -817,7 +1398,9 @@
             "tint": "#3e332b",
             "thief": true,
             "contactDamageScale": 0.65,
-            "spawnEdges": ["north"]
+            "spawnEdges": [
+              "north"
+            ]
           }
         ],
         "baron": {
@@ -831,7 +1414,10 @@
           "supportBuildingDamageScale": 5,
           "pursuitRange": 0,
           "escortCount": 6,
-          "tauntWaves": [4, 8],
+          "tauntWaves": [
+            4,
+            8
+          ],
           "taunt": "The Baron's railcar has taken the lower line.",
           "arrivalTitle": "THE INCLINE RAILCAR",
           "tauntTitle": "Hold Both Haul Lines",
@@ -847,9 +1433,37 @@
           "railSpeed": 1.9,
           "componentDegradeSpeedMult": 0.82,
           "components": [
-            { "id": "wheels", "label": "Wheel Trucks", "hpScale": 0.9, "visualScale": 0.9, "xOffset": 0, "zOffset": -0.55, "tint": "#2f2a22", "boltDamageMult": 0.8 },
-            { "id": "boiler", "label": "Boiler", "hpScale": 1.25, "visualScale": 1.08, "xOffset": 1.15, "zOffset": 0, "tint": "#8b7d3c", "boltDamageMult": 0.7, "buildingDamageScale": 1.15 },
-            { "id": "cabin", "label": "Cabin", "hpScale": 0.85, "visualScale": 0.96, "xOffset": 2.3, "zOffset": 0.55, "tint": "#46576b", "boltDamageMult": 0.85 }
+            {
+              "id": "wheels",
+              "label": "Wheel Trucks",
+              "hpScale": 0.9,
+              "visualScale": 0.9,
+              "xOffset": 0,
+              "zOffset": -0.55,
+              "tint": "#2f2a22",
+              "boltDamageMult": 0.8
+            },
+            {
+              "id": "boiler",
+              "label": "Boiler",
+              "hpScale": 1.25,
+              "visualScale": 1.08,
+              "xOffset": 1.15,
+              "zOffset": 0,
+              "tint": "#8b7d3c",
+              "boltDamageMult": 0.7,
+              "buildingDamageScale": 1.15
+            },
+            {
+              "id": "cabin",
+              "label": "Cabin",
+              "hpScale": 0.85,
+              "visualScale": 0.96,
+              "xOffset": 2.3,
+              "zOffset": 0.55,
+              "tint": "#46576b",
+              "boltDamageMult": 0.85
+            }
           ]
         }
       },
@@ -866,7 +1480,9 @@
       "boardRow": {
         "name": "The Incline",
         "ledgerBlurb": "Twin funicular lines climb the cut: escort the upper haul while defending the lower engine house.",
-        "tags": ["steamworks"],
+        "tags": [
+          "steamworks"
+        ],
         "unlock": "secured:e2-pressure-garden"
       },
       "briefing": {
@@ -878,7 +1494,7 @@
           "Two funicular routes cross the water band and climb separate benches.",
           "The lower rail carries the wave-12 railcar; the upper rail carries the escorted ore cart.",
           "The broad banks beside both crossings remain open for sluice work.",
-        "Coal seams lie in the lower yard between the haul lines, east of the engine house."
+          "Coal seams lie in the lower yard between the haul lines, east of the engine house."
         ],
         "geographyLine": "Twin haul lines climb from one wet lower yard to the ore benches above."
       }

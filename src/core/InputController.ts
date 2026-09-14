@@ -188,7 +188,8 @@ export class InputController {
     private readonly canConfirmAtIssue: () => boolean = () => true,
   ) {
     window.addEventListener('keydown', this.onKeyDown);
-    window.addEventListener('keyup', this.onKeyUp);
+    // Key releases must clear held input even when a focused panel stops bubbling.
+    window.addEventListener('keyup', this.onKeyUp, true);
     this.stick.addEventListener('pointerdown', this.onStickDown);
     this.stick.addEventListener('pointermove', this.onStickMove);
     this.stick.addEventListener('pointerup', this.onStickUp);
@@ -199,7 +200,7 @@ export class InputController {
     this.confirmButton.addEventListener('pointerleave', this.onConfirmUp);
     this.rotateButton.id = 'rotate-button';
     this.rotateButton.type = 'button';
-    this.rotateButton.textContent = 'R';
+    this.rotateButton.textContent = 'Rotate';
     this.rotateButton.setAttribute('aria-label', 'Rotate build ghost');
     this.rotateButton.addEventListener('pointerdown', this.onRotateDown);
     this.rotateButton.addEventListener('pointerup', this.onRotateUp);
@@ -207,7 +208,7 @@ export class InputController {
     this.rotateButton.addEventListener('pointerleave', this.onRotateUp);
     this.weaponButton.id = 'weapon-toggle-button';
     this.weaponButton.type = 'button';
-    this.weaponButton.textContent = 'Q';
+    this.weaponButton.textContent = 'Weapon';
     this.weaponButton.setAttribute('aria-label', 'Toggle weapon');
     this.weaponButton.addEventListener('pointerdown', this.onWeaponDown);
     this.weaponButton.addEventListener('pointerup', this.onWeaponUp);
@@ -272,7 +273,7 @@ export class InputController {
 
   dispose(): void {
     window.removeEventListener('keydown', this.onKeyDown);
-    window.removeEventListener('keyup', this.onKeyUp);
+    window.removeEventListener('keyup', this.onKeyUp, true);
     this.stick.removeEventListener('pointerdown', this.onStickDown);
     this.stick.removeEventListener('pointermove', this.onStickMove);
     this.stick.removeEventListener('pointerup', this.onStickUp);

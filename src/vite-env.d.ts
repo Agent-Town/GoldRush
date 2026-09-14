@@ -544,6 +544,8 @@ interface ThreeGameDiagnostics {
   e7Arsenal: import('./systems/E7ArsenalSystem').E7ArsenalDiagnostics;
   e8Arsenal: import('./systems/E8ArsenalSystem').E8ArsenalDiagnostics;
   e8Physics: import('./systems/E8PhysicsSystem').E8PhysicsDiagnostics;
+  e8Atmosphere: import('./systems/E8PhysicsSystem').E8AtmosphereDiagnostics | null;
+  e8SuitAir: import('./systems/E8SuitAirSystem').E8SuitAirDiagnostics | null;
   probeRecovery: import('./systems/ProbeRecovery').ProbeRecoveryDiagnostics;
   /** A3: present only where the contract declares `twist.broadcastMirror`; null everywhere else. */
   broadcastMirror: import('./systems/BroadcastMirror').BroadcastMirrorDiagnostics | null;

@@ -1,4 +1,5 @@
-import { activeEpoch, activateEpoch, listEpochs, loadEpoch } from './ContractFamilies';
+import { seedDebugE7SignalExit } from '../systems/E7SignalSystem';
+import { activeEpoch, activateEpoch, campaignEpochId, listEpochs, loadEpoch } from './ContractFamilies';
 import { MEGAPROJECT_STATE_KEY } from './Megaproject';
 import { loadResearchState, reconcileActiveEpoch, researchNodes, saveResearchState } from './ResearchTree';
 
@@ -9,7 +10,7 @@ export function seedDebugEraFromSearch(canvas: HTMLCanvasElement, search = windo
   if (!params.has('debug') || !Number.isInteger(era) || era < 1 || era > 10) return null;
 
   const target = listEpochs().find((epoch) => epoch.order === era);
-  const current = activeEpoch();
+  const current = loadEpoch(campaignEpochId());
   if (!target || !seedActivationReceipts(current.order, target.order)) return null;
 
   for (const epoch of listEpochs().filter((entry) => entry.order > current.order && entry.order <= target.order)) {
@@ -54,6 +55,7 @@ function seedActivationReceipts(fromOrder: number, toOrder: number): boolean {
       projects[id] = previous && typeof previous === 'object' ? { ...previous, complete: true } : { complete: true };
     }
     localStorage.setItem(MEGAPROJECT_STATE_KEY, JSON.stringify({ version: 1, projects }));
+    if (fromOrder <= 7 && toOrder > 7) seedDebugE7SignalExit(localStorage);
     return true;
   } catch {
     return false;

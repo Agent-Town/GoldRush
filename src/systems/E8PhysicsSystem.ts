@@ -77,6 +77,7 @@ export class E8PhysicsSystem {
     fixedDelta: number,
     velocity?: THREE.Vector3,
     terrain?: { controlScale: number; speedScale: number },
+    movementSpeed: number = Balance.hero.speed,
   ): THREE.Vector2 {
     if (!this.profile.active || this.profile.movement === 'normal') return input;
     let filtered = this.filteredMovement.get(slot);
@@ -86,7 +87,8 @@ export class E8PhysicsSystem {
     }
     // Actor velocity is already part of run/reconnect snapshots, so live drift
     // has no hidden state that can diverge after a restore.
-    if (velocity) filtered.set(velocity.x / Balance.hero.speed, velocity.z / Balance.hero.speed).clampLength(0, 1);
+    // Normalize against the actor's upgraded speed; using base speed feeds the perk back into drift.
+    if (velocity) filtered.set(velocity.x / movementSpeed, velocity.z / movementSpeed).clampLength(0, 1);
     const moving = input.lengthSq() > 0.0001;
     const freeFall = this.profile.movement === 'free-fall';
     const control = terrain ? terrain.controlScale : 1;
@@ -329,6 +331,34 @@ export class E8HumanSuit {
     return harm;
   }
 
+  captureSuspend() {
+    return {
+      capacity: this.capacity, harmPerSecond: this.harmPerSecond,
+      seconds: this.seconds, ground: this.ground, drainedTotal: this.drainedTotal,
+      emptySeconds: this.emptySeconds, harmDealt: this.harmDealt,
+      harmTicks: this.harmTicks, harmCarry: this.harmCarry,
+    };
+  }
+
+  restoreSuspend(value: unknown): boolean {
+    if (value === null || typeof value !== 'object') return false;
+    const state = value as ReturnType<E8HumanSuit['captureSuspend']>;
+    if (state.capacity !== this.capacity || state.harmPerSecond !== this.harmPerSecond
+      || ![state.seconds, state.drainedTotal, state.emptySeconds, state.harmDealt, state.harmCarry]
+        .every((number) => Number.isFinite(number) && number >= 0)
+      || state.seconds > this.capacity || state.harmCarry >= SUIT_HARM_TICK_SECONDS
+      || !Number.isSafeInteger(state.harmTicks) || state.harmTicks < 0
+      || !(state.ground === null || (typeof state.ground === 'string' && state.ground.length <= 200))) return false;
+    this.seconds = state.seconds;
+    this.ground = state.ground;
+    this.drainedTotal = state.drainedTotal;
+    this.emptySeconds = state.emptySeconds;
+    this.harmDealt = state.harmDealt;
+    this.harmTicks = state.harmTicks;
+    this.harmCarry = state.harmCarry;
+    return true;
+  }
+
   get empty(): boolean {
     return this.seconds <= 0;
   }
@@ -487,6 +517,8 @@ export type E8AtmosphereDiagnostics = Readonly<{
 
 type DomeState = { readonly zone: Rect; air: number; breached: boolean; breaches: number; siegers: number };
 
+export type E8AirActor = Readonly<{ id: number; position: Point }>;
+
 export class E8AtmosphereSystem {
   /**
    * THE HUMAN'S SUIT, since 2026-09-07 (`E8HumanSuit`, and the owner directive quoted there). It
@@ -495,6 +527,8 @@ export class E8AtmosphereSystem {
    * apart from `body`, `harmPerSecond`, `harmDealt` and `harmTicks`; the BODY behind it is the hero.
    */
   private readonly suit: E8HumanSuit;
+  private readonly extraSuits = new Map<number, E8HumanSuit>();
+  private readonly damageByActor = new Map<number, number>();
   private runsOnAir = 0;
   private breathlessPans = 0;
   private windowHeldPans = 0;
@@ -524,6 +558,7 @@ export class E8AtmosphereSystem {
     suitSeconds: number = SUIT_AIR_SECONDS,
     /** `twist.atmosphere.harmPerSecond`, or null where the contract authors no harm. */
     harmPerSecond: number | null = null,
+    private readonly pressureShape: 'rect' | 'ellipse' = 'rect',
   ) {
     this.suit = new E8HumanSuit(suitSeconds, harmPerSecond);
     this.domes = domes.map((zone) => ({ zone, air: 1, breached: false, breaches: 0, siegers: 0 }));
@@ -567,11 +602,69 @@ export class E8AtmosphereSystem {
       waveSeconds,
       authoredSuitSeconds(contract),
       authoredHarmPerSecond(contract),
+      authored?.pressurisedZoneShape ?? 'rect',
     );
   }
 
   static none(): E8AtmosphereSystem {
     return new E8AtmosphereSystem(false, null, [], 0);
+  }
+
+  private suitForActor(actorId: number): E8HumanSuit {
+    if (actorId === 0) return this.suit;
+    let suit = this.extraSuits.get(actorId);
+    if (!suit) { suit = new E8HumanSuit(this.suit.capacity, this.suit.harmPerSecond); this.extraSuits.set(actorId, suit); }
+    return suit;
+  }
+
+  suitDiagnostics(actorId = 0): E8HumanSuitDiagnostics {
+    return (actorId === 0 ? this.suit : this.extraSuits.get(actorId) ?? this.suit).diagnostics;
+  }
+
+  captureSuspend() {
+    return {
+      declared: this.declared, pressureShape: this.pressureShape, suit: this.suit.captureSuspend(),
+      extraSuits: [...this.extraSuits].sort(([a], [b]) => a - b).map(([id, suit]) => ({ id, state: suit.captureSuspend() })), clock: this.clock.captureSuspend(),
+      worked: [...this.worked], runsOnAir: this.runsOnAir, breathlessPans: this.breathlessPans,
+      windowHeldPans: this.windowHeldPans,
+      domes: this.domes.map(({ zone, ...state }) => ({ id: zone.id, ...state })),
+    };
+  }
+
+  restoreSuspend(value: unknown): boolean {
+    if (value === null || typeof value !== 'object') return false;
+    const state = value as ReturnType<E8AtmosphereSystem['captureSuspend']>;
+    const extraSuits = state.extraSuits ?? [];
+    if (state.declared !== this.declared
+      || (state.pressureShape === undefined ? 'rect' : state.pressureShape) !== this.pressureShape
+      || !Array.isArray(extraSuits) || extraSuits.length > 64
+      || new Set(extraSuits.map((entry) => entry?.id)).size !== extraSuits.length
+      || !extraSuits.every((entry) => entry && Number.isSafeInteger(entry.id) && entry.id > 0
+        && new E8HumanSuit(this.suit.capacity, this.suit.harmPerSecond).restoreSuspend(entry.state))
+      || ![state.runsOnAir, state.breathlessPans, state.windowHeldPans].every((n) => Number.isSafeInteger(n) && n >= 0)
+      || !Array.isArray(state.worked) || state.worked.length > this.grounds
+      || new Set(state.worked).size !== state.worked.length
+      || !state.worked.every((n) => Number.isInteger(n) && n >= 0 && n < this.grounds)
+      || !Array.isArray(state.domes) || state.domes.length !== this.domes.length
+      || !state.domes.every((d, i) => d && d.id === this.domes[i].zone.id
+        && Number.isFinite(d.air) && d.air >= 0 && d.air <= 1 && typeof d.breached === 'boolean'
+        && Number.isSafeInteger(d.breaches) && d.breaches >= 0 && Number.isSafeInteger(d.siegers) && d.siegers >= 0)
+      || !new E8HumanSuit(this.suit.capacity, this.suit.harmPerSecond).restoreSuspend(state.suit)
+      || !new E8AirWindow(this.windowSeconds).restoreSuspend(state.clock)) return false;
+    this.suit.restoreSuspend(state.suit);
+    this.extraSuits.clear();
+    for (const entry of extraSuits) this.suitForActor(entry.id).restoreSuspend(entry.state);
+    this.clock.restoreSuspend(state.clock);
+    this.worked.clear();
+    for (const ground of state.worked) this.worked.add(ground);
+    this.runsOnAir = state.runsOnAir;
+    this.breathlessPans = state.breathlessPans;
+    this.windowHeldPans = state.windowHeldPans;
+    state.domes.forEach((d, i) => {
+      const dome = this.domes[i];
+      dome.air = d.air; dome.breached = d.breached; dome.breaches = d.breaches; dome.siegers = d.siegers;
+    });
+    return true;
   }
 
   get isDeclared(): boolean {
@@ -607,12 +700,17 @@ export class E8AtmosphereSystem {
    * measurement class that returns harm rather than applying it can be read without reading combat.
    */
   update(delta: number, human: Point, siegers: readonly Sieger[]): number {
-    if (!this.declared || delta <= 0) return 0;
+    return this.updateActors(delta, [{ id: 0, position: human }], siegers).get(0) ?? 0;
+  }
+
+  updateActors(delta: number, humans: readonly E8AirActor[], siegers: readonly Sieger[]): ReadonlyMap<number, number> {
+    this.damageByActor.clear();
+    if (!this.declared || delta <= 0) return this.damageByActor;
     // The run clock first, so the dials, the suit and the window all read one tick.
     this.clock.advance(delta);
     for (const dome of this.domes) {
       let count = 0;
-      for (const sieger of siegers) if (sieger.isAlive && inside(dome.zone, sieger.position)) count += 1;
+      for (const sieger of siegers) if (sieger.isAlive && pressureZoneContains(dome.zone, sieger.position, this.pressureShape)) count += 1;
       const breached = count > 0;
       if (breached && !dome.breached) dome.breaches += 1;
       dome.breached = breached;
@@ -621,8 +719,11 @@ export class E8AtmosphereSystem {
         ? Math.max(0, dome.air - delta / DOME_AIR_DRAIN_SECONDS)
         : Math.min(1, dome.air + delta / DOME_AIR_REFILL_SECONDS);
     }
-    const breathing = this.domes.find((dome) => dome.air > 0 && inside(dome.zone, human)) ?? null;
-    return this.suit.update(delta, breathing?.zone.id ?? null);
+    for (const human of [...humans].sort((a, b) => a.id - b.id)) {
+      const breathing = this.domes.find((dome) => dome.air > 0 && pressureZoneContains(dome.zone, human.position, this.pressureShape)) ?? null;
+      this.damageByActor.set(human.id, this.suitForActor(human.id).update(delta, breathing?.zone.id ?? null));
+    }
+    return this.damageByActor;
   }
 
   /**
@@ -635,9 +736,9 @@ export class E8AtmosphereSystem {
    * machine working over a suffocating surveyor, so a ground worked while her dial reads zero banks
    * nothing. That is the same sentence the briefing prints, now about the body that can die of it.
    */
-  notePan(anchorIndex: number): boolean {
+  notePan(anchorIndex: number, actorId = 0): boolean {
     if (!this.declared || !Number.isInteger(anchorIndex) || anchorIndex < 0) return false;
-    if (this.suit.empty) {
+    if (this.suitForActor(actorId).empty) {
       this.breathlessPans += 1;
       return false;
     }
@@ -689,6 +790,14 @@ export class E8AtmosphereSystem {
   }
 }
 
-function inside(zone: Rect, point: Point): boolean {
+/** Pressure footprint within an authored zone; placement and crossing masks remain rectangular. */
+export function pressureZoneContains(zone: Rect, point: Point, shape: 'rect' | 'ellipse' = 'rect'): boolean {
+  if (shape === 'ellipse') {
+    const radiusX = (zone.maxX - zone.minX) / 2, radiusZ = (zone.maxZ - zone.minZ) / 2;
+    if (radiusX <= 0 || radiusZ <= 0) return false;
+    const x = (point.x - (zone.minX + radiusX)) / radiusX;
+    const z = (point.z - (zone.minZ + radiusZ)) / radiusZ;
+    return x * x + z * z <= 1;
+  }
   return point.x >= zone.minX && point.x <= zone.maxX && point.z >= zone.minZ && point.z <= zone.maxZ;
 }

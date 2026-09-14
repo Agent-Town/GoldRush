@@ -1,0 +1,29 @@
+{
+  "$schema": "gold-rush layer contract v1",
+  "batch": "map-art-repairs-20260908-showroom-material183",
+  "notes": "Candidate only. Native flat materials replace the burnt/noisy reused palette in furnished Showroom candidates. No production promotion.",
+  "slots": [
+    {
+      "file": "showroom-landmark-material-atlas-v1.png",
+      "slot": "showroom.landmark-material-atlas.v1",
+      "raw": "assets/raw/showroom-landmark-material-atlas-v1.png",
+      "rawSize": [
+        1254,
+        1254
+      ],
+      "size": [
+        1024,
+        1024
+      ],
+      "rawSha256": "7b9702140148d4b9c11a24283d47fd5007e41da08b3681fe31c6723ab1ed472f",
+      "reference": [
+        "assets/raw/plate-contract-e6-showroom.png"
+      ],
+      "generation": "native image_gen exec-1315a530-8c83-458c-866b-51799536caac",
+      "referenceUse": "Concept observed by author; generation uses saved text prompt, no image input.",
+      "prompt": "artifacts/map-art-repairs-20260908/showroom-material-183/prompt.txt",
+      "recipe": "artifacts/map-art-repairs-20260908/showroom-houses-184/build.py",
+      "candidateEvidence": "artifacts/map-art-repairs-20260908/showroom-material-183"
+    }
+  ]
+}

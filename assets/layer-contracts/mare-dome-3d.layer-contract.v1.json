@@ -1,0 +1,27 @@
+{
+  "$schema": "gold-rush layer contract v1",
+  "batch": "map-art-repairs-20260908-mare-dome",
+  "notes": "Native material integrated through the mare-dome landmark package on Mare/Eclipse. Final concept fidelity and full objective proof remain open.",
+  "slots": [
+    {
+      "file": "mare-dome-material-atlas-v1.png",
+      "slot": "mare-dome-3d.material-atlas",
+      "raw": "assets/raw/mare-dome-material-atlas-v1.png",
+      "rawSize": [
+        1254,
+        1254
+      ],
+      "size": [
+        1024,
+        1024
+      ],
+      "sha256": "eacada7c117b16cf4b15d851db84739b2e9c034d7ed450fef4aecfbeaa52f75a",
+      "reference": "assets/raw/plate-contract-e8-mare-claim.png",
+      "generation": "native image_gen exec-55fadf63-12e1-4599-97b7-09abb175ff5d",
+      "usage": "Four material strips: brass, bronze panel, glass colour, timber. One embedded atlas shared by opaque and glass primitives.",
+      "recipe": "Blender image.scale(1024,1024), packed; raw preserved",
+      "evidence": "artifacts/map-art-repairs-20260908/mare-dome-material-prompt.md",
+      "runtime": "assets/pilots/map-rebuild-spike/landmarks/mare-dome/air-pad-dome.glb"
+    }
+  ]
+}

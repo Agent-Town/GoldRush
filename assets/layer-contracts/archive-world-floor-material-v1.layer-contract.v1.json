@@ -1,0 +1,28 @@
+{
+  "$schema": "gold-rush layer contract v1",
+  "batch": "map-art-repairs-20260908-archive-ground-92",
+  "notes": "Integrated94 after paired visual93 review improved hero contrast. Native overhead paving replaces flattened scene imagery; original terrain geometry/UVs and masks/mounts preserved. Full architectural scene fidelity remains incomplete.",
+  "slots": [
+    {
+      "slot": "archive-world.floor-material.v1",
+      "raw": "assets/raw/archive-world-floor-material-v1.png",
+      "reference": "assets/raw/plate-contract-e10-archive-world.png",
+      "prompt": "artifacts/map-art-repairs-20260908/archive-ground-92/prompt.txt",
+      "runtime": "assets/pilots/map-rebuild-spike/archive-world-terrain-atlas.png",
+      "generation": "native image_gen exec-b523898b-09e9-4ff4-ad2a-4051716adb57",
+      "rawSha256": "621a457ee276de08c7563686a0d9e76371413fe1dd03ffa174a9747a8a07d101",
+      "rawSize": [
+        1254,
+        1254
+      ],
+      "recipe": "assets/pilots/map-rebuild-spike/build_e10_archive_terrain.py",
+      "size": [
+        2048,
+        2048
+      ],
+      "sha256": "4435d87de73760f077b26d8357367159f46c77650619adaa045e08f4b4819604",
+      "materialRecipe": "assets/pilots/map-rebuild-spike/retexture_archive_terrain.py",
+      "integrationEvidence": "artifacts/map-art-repairs-20260908/archive-ground-integration-94"
+    }
+  ]
+}

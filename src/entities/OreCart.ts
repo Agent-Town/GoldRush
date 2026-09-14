@@ -111,7 +111,7 @@ export class OreCart {
     if (this.stateValue === 'destroyed' || this.stateValue === 'arrived') return this.stateValue;
     if (this.hp <= this.maxHp * this.stopHpRatio) {
       this.stateValue = 'stopped';
-      const near = repairers.some((position) => position.distanceToSquared(this.group.position) <= this.repairRadius * this.repairRadius);
+      const near = repairers.some((position) => Math.hypot(position.x - this.group.position.x, position.z - this.group.position.z) <= this.repairRadius);
       this.repairProgress = near ? Math.min(1, this.repairProgress + delta / this.repairSeconds) : 0;
       if (this.repairProgress >= 1) {
         this.hp = this.maxHp;
@@ -126,7 +126,8 @@ export class OreCart {
     let remaining = Math.max(0, delta * this.speed);
     while (remaining > 0 && this.segment < this.path.length) {
       const next = this.path[this.segment]!;
-      const distance = this.group.position.distanceTo(next);
+      // Rendered terrain height must not change planar rail travel.
+      const distance = Math.hypot(this.group.position.x - next.x, this.group.position.z - next.z);
       if (distance <= remaining + 0.0001) {
         this.travelled += distance;
         remaining -= distance;

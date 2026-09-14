@@ -50,6 +50,14 @@
             "maxX": 50,
             "minZ": 36,
             "maxZ": 46
+          },
+          {
+            "id": "ridge-bridge-ground",
+            "bank": "north",
+            "minX": -2,
+            "maxX": 2,
+            "minZ": 39,
+            "maxZ": 43
           }
         ],
         "stakeMarkers": [],
@@ -127,6 +135,7 @@
         ],
         "rules": [
           "Relays connect only when they can see one another.",
+          "The small ground in the dead gap can hold a relay that joins the two ridge chains.",
           "Recorded patrols stop when they enter a dead zone.",
           "Four relay sites span the two exposed ridges.",
           "The valley claim keeps a field hospital: you stand up with 400 hit points, not the usual 100, because no relay site on either ridge comes within 31wu of the claim."

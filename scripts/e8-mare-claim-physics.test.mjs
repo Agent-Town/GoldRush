@@ -140,8 +140,8 @@ test('one contract, one gravity profile, and the three seams the browser reads i
   assert.match(game, /scaleLobAirTime\(Balance\.blast\.airTime\)/);
   assert.match(sim, /scaleLobAirTime\(Balance\.blast\.airTime\)/);
   // 2. MOVEMENT: one filter seam per engine, with low orbit's terrain answer where declared.
-  assert.match(game, /this\.e8PhysicsSystem\.filterMovement\(slot, intents\.move, fixedDelta, actor\.velocity, terrain\)/);
-  assert.match(sim, /this\.e8Physics\.filterMovement\(0, intents\.move, STEP_SECONDS, this\.hero\.velocity, terrain\)/);
+  assert.match(game, /this\.e8PhysicsSystem\.filterMovement\(slot, intents\.move, fixedDelta, actor\.velocity, terrain, actor\.movementSpeed\)/);
+  assert.match(sim, /this\.e8Physics\.filterMovement\(0, intents\.move, STEP_SECONDS, this\.hero\.velocity, terrain, this\.hero\.movementSpeed\)/);
   // 3. The profile is published under the same diagnostics key in both engines.
   assert.match(game, /e8Physics: this\.e8PhysicsSystem\.diagnostics/);
   assert.match(sim, /e8Physics: this\.e8Physics\.diagnostics/);

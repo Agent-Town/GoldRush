@@ -1,3 +1,4 @@
+import { installArchiveRestoration, type ArchiveRestorationState } from './ArchiveRestoration';
 import * as THREE from 'three';
 import baronContractText from '../../assets/pilots/map-rebuild-spike/baron-terrain-contract.json?raw';
 import baronPanoramaContractText from '../../assets/pilots/map-rebuild-spike/baron-panorama-contract.json?raw';
@@ -79,6 +80,7 @@ import { createSunMotes, type SunMotes } from './SunMotes';
 import { createSteamPlume, type SteamPlume } from './SteamPlume';
 import { createHaulSteam, type HaulSteam, type HaulVent } from './HaulSteam';
 import { installVisualHeightSource, waterSources } from './Terrain';
+import { createLandmarkWalkSurfaces, type LandmarkWalkSurface } from './LandmarkWalkSurfaces';
 import { createSpringPondSurface, type SpringPondSurface } from './Water';
 import { createFordSheet, createWaterConfluence, createWaterRibbon, updateWaterMaterial } from './Water';
 
@@ -93,6 +95,7 @@ type Contract = {
   landmarkMounts?: LandmarkMount[];
   maskTruth?: { waterMask?: { id: string; regions: MaskRegion[] } };
   maskAgreement?: { waterPlaneY?: number };
+  waterSurface?: { owner: string; includedInTerrainGLB: boolean };
 };
 type MaskRegion = {
   id: string;
@@ -105,7 +108,7 @@ type MaskRegion = {
   minZ?: number;
   maxZ?: number;
 };
-type PanoramaContract = Pick<Contract, 'vertices' | 'triangles' | 'meshCount' | 'materialCount'> & { renderOnly: boolean };
+type PanoramaContract = Pick<Contract, 'vertices' | 'triangles' | 'meshCount' | 'materialCount'> & { renderOnly: boolean; projection?: { skyRingRadiusMeters?: number } };
 type Mount = {
   id: string;
   position: [number, number, number];
@@ -113,7 +116,7 @@ type Mount = {
   scale: [number, number, number];
   renderOnly: boolean;
 };
-type LandmarkMount = Omit<Mount, 'renderOnly'> & { asset?: string };
+type LandmarkMount = Omit<Mount, 'renderOnly'> & { asset?: string; contractIds?: string[]; walkSurfaces?: LandmarkWalkSurface[] };
 type Entry = { terrainUrl: string; panoramaUrl: string; contract: Contract; panoramaContract: PanoramaContract };
 type Host = {
   scene: THREE.Scene;
@@ -135,6 +138,7 @@ type Host = {
   detailBudget?: () => number;
   /** Read-only escorted-cart view for render-side haul steam. */
   haulCart?: () => { x: number; z: number; moving: boolean } | undefined;
+  archiveRestoration?: () => ArchiveRestorationState | null;
   onVisualHeightSourceInstalled?: () => void;
 };
 type Metrics = { meshes: number; triangles: number; materials: number; vertices: number; bounds: THREE.Box3 };
@@ -193,14 +197,26 @@ const REGISTRY: Record<string, Entry> = {
   'e10-archive-world': entry(new URL('../../assets/pilots/map-rebuild-spike/archive-world-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/archive-world-panorama.glb', import.meta.url).href, archiveWorldContractText, archiveWorldPanoramaContractText),
   }),
 };
-const LANDMARK_ASSETS = import.meta.glob('../../assets/pilots/map-rebuild-spike/landmarks/**/*.glb', { query: '?url', import: 'default' }) as Record<string, () => Promise<string>>;
+const LANDMARK_ASSETS = import.meta.glob([
+  '../../assets/pilots/map-rebuild-spike/landmarks/**/*.glb',
+  // Share the town variant pattern so the E1 release plugin narrows both consumers.
+  '../../assets/pilots/*-3d/*.e*.glb',
+], { query: '?url', import: 'default' }) as Record<string, () => Promise<string>>;
+
+function landmarkAssetKey(asset: string): string {
+  return asset.startsWith('assets/') ? `../../${asset}` : `../../assets/pilots/map-rebuild-spike/${asset}`;
+}
+
+function landmarkMountsFor(contract: Contract, contractId: string): LandmarkMount[] {
+  return (contract.landmarkMounts ?? []).filter(mount => mount.asset && (!mount.contractIds || mount.contractIds.includes(contractId)));
+}
 
 export async function contractPrefetchUrls(contractId: string): Promise<string[]> {
   const selected = REGISTRY[contractId];
   if (!selected) return [];
   const landmarks = await Promise.all(
-    (selected.contract.landmarkMounts ?? [])
-      .flatMap(({ asset }) => asset ? [LANDMARK_ASSETS[`../../assets/pilots/map-rebuild-spike/${asset}`]] : [])
+    landmarkMountsFor(selected.contract, contractId)
+      .flatMap(({ asset }) => asset ? [LANDMARK_ASSETS[landmarkAssetKey(asset)]] : [])
       .filter((resolveUrl): resolveUrl is () => Promise<string> => !!resolveUrl)
       .map((resolveUrl) => resolveUrl().catch(() => '')),
   );
@@ -302,7 +318,6 @@ const LAMP_COLOUR = '#ff9c38';
 const BOUNDS_EPSILON = 0.03;
 const CONTINUATION_SAMPLE_DEPTH = 8;
 const LEGACY_GROUND_SLOTS = new Set(['terrain.bank', 'terrain.river', 'terrain.ford']);
-const SKIRT_INSET = 2.5;
 const NIGHT_POOL_SHADER_CAP = 32;
 
 // U1, the-claim beauty shift (docs/beauty/the-claim-brief.md): the sculpt carves a
@@ -318,7 +333,8 @@ const NIGHT_POOL_SHADER_CAP = 32;
 type SculptWaterDressing = {
   surface:
     | { kind: 'channel-fill'; fill: number }
-    | { kind: 'below-gorge-floor'; quantile: number; drop: number };
+    | { kind: 'below-gorge-floor'; quantile: number; drop: number }
+    | { kind: 'sea-level'; y: number };
   /**
    * Multiplies the shader's water palette (shallow/mid/deep/ford, foam and glints alike). White
    * keeps the shipped mint. The claim pulls it warm sepia; the hill mine pulls it toward wet slate
@@ -340,7 +356,7 @@ type SculptWaterDressing = {
   visualHalfWidth?: number;
   /**
    * Where the sun catches the surface. `harvest` puts one on each harvest anchor's near bank (the
-   * claim's sluice line); an explicit list is for maps whose anchors are nowhere near the water.
+   * claim's sluice line); explicit lists use world X and Z offsets from the river center.
    */
   glints: 'harvest' | Array<{ x: number; z: number }>;
   rippleStrength?: number;
@@ -357,14 +373,13 @@ type SculptWaterDressing = {
   collars?: ReadonlyArray<{ mount: string; radius: number }>;
 };
 const SCULPT_WATER_DRESSING: Record<string, SculptWaterDressing> = {
-  // Shipped values, unchanged: this map's water is signed off and must render byte for byte.
-  // Style anchor: "the river writes the only dark line". The shipped shader is tuned over pale
-  // painted sand and reads as mint over this sculpt's umber bed, so the palette is multiplied warm
-  // and the surface let through enough for the bed's own darkness to carry the channel.
+  // Keep the measured dark channel and ford shelf; cool water separates from the warm banks.
+  // The Claim concept comparison is recorded in artifacts/map-art-repairs-20260908/claim-water-01/.
   'the-claim': {
     surface: { kind: 'channel-fill', fill: 0.42 },
-    color: '#c9b892',
-    opacity: 0.7,
+    color: '#99bec7',
+    emissive: '#10272c',
+    opacity: 0.8,
     // The carved channel runs ~0.45m below the water line at its deepest; the last
     // ~15cm of depth is the damp margin where the surface fades into wet ground.
     fordSkim: 0.11,
@@ -389,6 +404,13 @@ const SCULPT_WATER_DRESSING: Record<string, SculptWaterDressing> = {
   'e2-trestle': { surface: { kind: 'below-gorge-floor', quantile: 0.8, drop: 0.006 }, color: '#7e8480', opacity: 0.86, fordSkim: 0.11, deepMeters: 0.42, shoreMeters: 0.16, glints: [{ x: -15.5, z: -4.3 }, { x: -4.5, z: -4.5 }], rippleStrength: 0.4, textureBlend: 0.05, },
   'e2-pressure-garden': { surface: { kind: 'channel-fill', fill: 0.11 }, color: '#d6f0ee', opacity: 0.8, fordSkim: 0.11, deepMeters: 0.5, shoreMeters: 0.15, bed: false, visualHalfWidth: 6.25, glints: [{ x: -30, z: 4.45 }, { x: -12, z: 4.45 }, { x: 12, z: 4.45 }, { x: 30, z: 4.45 }], rippleStrength: 0.75, textureBlend: 0.04, fordTint: 0.44, shoreFadeMeters: 2.2, surfaceLift: true, overhangMeters: 10, emissive: '#0d2a33', collars: [{ mount: 'garden-pressure-manifold', radius: 2.9 }, { mount: 'water-band-pump-station', radius: 2.6 }], },
   'e2-incline': { surface: { kind: 'channel-fill', fill: 0.42 }, color: '#bb9366', opacity: 0.62, fordSkim: 0.125, deepMeters: 0.145, shoreMeters: 0.07, visualHalfWidth: 6.25, glints: [{ x: -30, z: 4.45 }, { x: 30, z: -4.45 }], rippleStrength: 0.6, textureBlend: 0.2, },
+};
+/** The E5 contracts reserve their sea for runtime; the sculpt supplies the visible bed. */
+const DEEPWATER_SEA_DRESSING: SculptWaterDressing = {
+  surface: { kind: 'sea-level', y: 0 }, color: '#99bec7', opacity: 0.72,
+  fordSkim: 0, deepMeters: 8, shoreMeters: 0.5, glints: [],
+  rippleStrength: 0.15, textureBlend: 0.35, fordTint: 0, shoreFadeMeters: 4, surfaceLift: false,
+  emissive: '#0a2a33',
 };
 /** Water fades out over the last stretch before the tile edge instead of cutting. */
 const SCULPT_WATER_EDGE_FADE = 7;
@@ -740,9 +762,9 @@ const LANDMARK_EMISSIVE_WHOLE_BODY_MIN = 0.12;
  * F-ASTRA-1's value separation reaches their atlas. Membership is a MEASUREMENT, not a taste: a map
  * leaves this list the moment a full census run clears the floor without it.
  */
+// Moth material atlas and frame remap pass the normal-emission census and visual gate (material-light21/gate22).
 const LANDMARK_EMISSIVE_READABILITY_EXEMPT = new Set([
   'e2-pressure-garden',
-  'e3-moth-season',
   'e6-glow-mesa',
   'e6-picnic',
 ]);
@@ -887,6 +909,20 @@ function cullVerifiedClosedMeshes(model: THREE.Object3D, mountId: string): Closu
 }
 
 function dressLandmark(model: THREE.Object3D, contractId: string, mountId: string): void {
+  if (contractId === 'e10-ember-shore' && mountId === 'last-warm-vent-altar') {
+    const lamp = new THREE.Mesh(new THREE.CylinderGeometry(0.684, 0.684, 0.96, 16), new THREE.MeshBasicMaterial({ color: 0xffb438 }));
+    lamp.name = 'last-warm-vent-altar.AmberWindow';
+    lamp.position.y = 1.99;
+    lamp.userData.renderOnly = true;
+    model.add(lamp);
+  }
+  if (contractId === 'e10-ember-shore' && mountId === 'west-vein-cooling-marker') {
+    const slit = new THREE.Mesh(new THREE.PlaneGeometry(1.86, 0.20), new THREE.MeshBasicMaterial({ color: 0x58a9a0 }));
+    slit.name = 'west-vein-cooling-marker.GlassSlit';
+    slit.position.set(0, 1.21, 0.886);
+    slit.userData.renderOnly = true;
+    model.add(slit);
+  }
   const dressing = CONTRACT_LANDMARK_DRESSING[contractId]?.[mountId];
   if (!dressing) return;
   model.traverse((node) => {
@@ -1160,31 +1196,42 @@ function mountSpanShadow(
  * the baked height grid; nothing is written back.
  */
 function mountSculptWater(host: Host, heightAt: (x: number, z: number) => number, bounds: THREE.Box3): SculptWater | undefined {
-  const dressing = SCULPT_WATER_DRESSING[host.contractId];
-  if (isMapBeautyDisabled() || !dressing || !Terrain.hasRiverWater()) return undefined;
-  const river = Terrain.riverGeometry();
+  const contract = REGISTRY[host.contractId]?.contract;
+  const sea = contract?.waterSurface?.owner === 'runtime DeepwaterClaimTile'
+    && contract.waterSurface.includedInTerrainGLB === false;
+  const stillwater = host.contractId === 'e5-stillwater';
+  const dressing = sea ? DEEPWATER_SEA_DRESSING : SCULPT_WATER_DRESSING[host.contractId];
+  if (isMapBeautyDisabled() || !dressing || (!sea && !Terrain.hasRiverWater())) return undefined;
+  const river = sea ? { minZ: bounds.min.z, maxZ: bounds.max.z } : Terrain.riverGeometry();
   const centerZ = (river.minZ + river.maxZ) / 2;
   const riverHalfWidth = (river.maxZ - river.minZ) / 2;
-  const fords = Terrain.fordRanges();
+  const fords = sea ? [] : Terrain.fordRanges();
   const fordHalfWidth = fords.length ? Math.max(...fords.map((range) => range.halfWidth)) : 3;
   const fordCenters = fords.length ? fords.map((range) => range.centerX) : [0];
   const halfX = Math.min(Math.abs(bounds.min.x), Math.abs(bounds.max.x));
-  const surfaceY = dressing.surface.kind === 'channel-fill'
-    ? sculptWaterSurfaceY(heightAt, halfX, centerZ, fords, dressing.surface.fill, dressing.fordSkim)
-    : sculptWaterFloorY(heightAt, halfX, centerZ, dressing.surface.quantile, dressing.surface.drop);
-  const visualHalfWidth = dressing.visualHalfWidth ?? Terrain.visualWaterHalfWidth();
-  const overhang = Math.max(0, dressing.overhangMeters ?? 0);
+  const surfaceY = dressing.surface.kind === 'sea-level' ? dressing.surface.y
+    : dressing.surface.kind === 'channel-fill'
+      ? sculptWaterSurfaceY(heightAt, halfX, centerZ, fords, dressing.surface.fill, dressing.fordSkim)
+      : sculptWaterFloorY(heightAt, halfX, centerZ, dressing.surface.quantile, dressing.surface.drop);
+  const seaRadius = REGISTRY[host.contractId]?.panoramaContract.projection?.skyRingRadiusMeters ?? halfX;
+  const visualHalfWidth = sea ? seaRadius : dressing.visualHalfWidth ?? Terrain.visualWaterHalfWidth();
+  const overhang = sea ? Math.max(0, seaRadius - halfX) : Math.max(0, dressing.overhangMeters ?? 0);
   const water = createSculptWater({
     ford: false,
     depthTest: true,
-    heightAt,
+    openSea: sea,
+    heightAt: sea ? (x, z) => {
+      // The panorama's submerged apron is scenery, not an extension of the playable bed.
+      const outside = Math.max(0, Math.abs(x) - halfX, Math.abs(z - centerZ) - riverHalfWidth);
+      return THREE.MathUtils.lerp(heightAt(x, z), bounds.min.y, THREE.MathUtils.smoothstep(outside, 0, halfX));
+    } : heightAt,
     bed: dressing.bed,
     deepMeters: dressing.deepMeters,
     shoreMeters: dressing.shoreMeters,
-    color: dressing.color,
-    opacity: dressing.opacity,
-    rippleStrength: dressing.rippleStrength,
-    textureBlend: dressing.textureBlend,
+    color: stillwater ? '#a5c5d0' : dressing.color,
+    opacity: stillwater ? 0.78 : dressing.opacity,
+    rippleStrength: stillwater ? 0.04 : dressing.rippleStrength,
+    textureBlend: stillwater ? 0.25 : dressing.textureBlend,
     fordTint: dressing.fordTint,
     shoreFadeMeters: dressing.shoreFadeMeters,
     surfaceLift: dressing.surfaceLift,
@@ -1192,10 +1239,10 @@ function mountSculptWater(host: Host, heightAt: (x: number, z: number) => number
     centerZ,
     surfaceY,
     halfLength: halfX + overhang,
-    riverHalfWidth,
+    riverHalfWidth: sea ? seaRadius : riverHalfWidth,
     visualHalfWidth,
     lengthHalf: halfX + overhang,
-    fadeStart: overhang > 0 ? halfX : Math.max(1, halfX - SCULPT_WATER_EDGE_FADE),
+    fadeStart: sea ? seaRadius - SCULPT_WATER_EDGE_FADE : overhang > 0 ? halfX : Math.max(1, halfX - SCULPT_WATER_EDGE_FADE),
     fordHalfWidth,
     fordCenters,
     riverDepth: Terrain.waterDepth('river'),
@@ -1209,7 +1256,7 @@ function mountSculptWater(host: Host, heightAt: (x: number, z: number) => number
         x: anchor.x,
         z: anchor.z < centerZ ? river.minZ + 0.55 : river.maxZ - 0.55,
       }))
-      : dressing.glints,
+      : dressing.glints.map(({ x, z }) => ({ x, z: centerZ + z })),
   });
   let lastFrame = -1;
   let lastAt = 0;
@@ -1223,11 +1270,11 @@ function mountSculptWater(host: Host, heightAt: (x: number, z: number) => number
     water.advance(delta);
   };
   host.scene.add(water.mesh);
-  host.canvas.dataset.terrain3dPilotSculptWater = 'living-water-quad';
+  host.canvas.dataset.terrain3dPilotSculptWater = sea ? 'living-sea-quad' : 'living-water-quad';
   // The MOUNTED half width, not the tile's declaration — a map that narrows its quad has to say so,
   // and e2e/shore-truth.spec.ts's law is "never wider than the sim declares", which narrowing keeps.
   host.canvas.dataset.terrain3dPilotSculptWaterHalfWidth = visualHalfWidth.toFixed(3);
-  host.canvas.dataset.terrain3dPilotSculptWaterSimHalfWidth = Terrain.visualWaterHalfWidth().toFixed(3);
+  host.canvas.dataset.terrain3dPilotSculptWaterSimHalfWidth = (sea ? riverHalfWidth : Terrain.visualWaterHalfWidth()).toFixed(3);
   host.canvas.dataset.terrain3dPilotSculptWaterY = surfaceY.toFixed(4);
   host.canvas.dataset.terrain3dPilotSculptWaterGlints = String(water.mesh.material instanceof THREE.Material
     ? (water.mesh.material.userData.waterGlints ?? 0)
@@ -1657,21 +1704,10 @@ function mountRushEmbers(
  */
 const DRY_GULCH_SPRING_EMISSIVE = 2.1;
 
-/**
- * Where the live water goes, measured off the landmark body rather than guessed.
- * `isolated_spring.glb` draws its pool as a flat cap at local y 0.0875 (14 coplanar triangles,
- * vertices out to r 2.80) with the stone ring covering everything past r~2.0. So the live surface
- * sits a hair above 0.0875 and its water line is 2.35, with the damp margin reaching past 2.80 —
- * the whole baked cap has to be covered or its cyan rim survives as a halo around the new water.
- *
- * MEASURE, NEVER ASSUME: `build_landmark_packs.py -- dry-gulch` produces a DIFFERENT spring body
- * than the one shipped (cap at 0.13, r 2.67), so these numbers are pinned to the committed GLB.
- * Re-run the script above after any landmark rebuild — see reviews/beauty-dry-gulch.md, U4.
- * Re-measure with `scripts/beauty-spring-pool.mjs` if that body is ever replaced.
- */
-type LiveSpringPool = { surfaceY: number; dampBaseRadius: number };
+/** Water sits within the sculpted spring bed; its radius remains simulation-owned. */
+type LiveSpringPool = { surfaceY: number };
 const LIVE_SPRING_POND_CONTRACTS = new Map<string, LiveSpringPool>([
-  ['e1-dry-gulch', { surfaceY: 0.0875, dampBaseRadius: 2.35 }],
+  ['e1-dry-gulch', { surfaceY: 0.19 }],
 ]);
 
 /**
@@ -1711,7 +1747,8 @@ if (terrain3dGradeAmount > 0.001) {
 `;
 
 function hidePaintedGround(host: Host): HiddenRelief[] { return hidePaintedRelief(host); }
-function featherTerrainEdge(model: THREE.Object3D, bounds: THREE.Box3, host: Host): void {
+function applyNightTerrainPools(model: THREE.Object3D, host: Host): void {
+  // Carried pools use the rig's steel-blue family at the prior ground tint's luminance.
   const materials = new Set<THREE.Material>();
   model.traverse((node) => {
     const mesh = node as THREE.Mesh;
@@ -1719,8 +1756,6 @@ function featherTerrainEdge(model: THREE.Object3D, bounds: THREE.Box3, host: Hos
     mesh.renderOrder = 0.1;
     for (const material of Array.isArray(mesh.material) ? mesh.material : [mesh.material]) materials.add(material);
   });
-  const halfX = Math.max(Math.abs(bounds.min.x), Math.abs(bounds.max.x));
-  const halfZ = Math.max(Math.abs(bounds.min.z), Math.abs(bounds.max.z));
   const poolSources = Array.from({ length: NIGHT_POOL_SHADER_CAP }, () => new THREE.Vector4());
   const poolCount = { value: 0 };
   const poolDarkness = { value: 0 };
@@ -1778,12 +1813,9 @@ function featherTerrainEdge(model: THREE.Object3D, bounds: THREE.Box3, host: Hos
         )
         .replace(
           '#include <emissivemap_fragment>',
-          `#include <emissivemap_fragment>\nvec3 terrain3dPoolLight = vec3(0.0);\nfor (int terrain3dPoolIndex = 0; terrain3dPoolIndex < ${NIGHT_POOL_SHADER_CAP}; terrain3dPoolIndex++) {\n  if (float(terrain3dPoolIndex) >= uTerrain3dNightPoolCount) break;\n  vec4 terrain3dPool = uTerrain3dNightPools[terrain3dPoolIndex];\n  float terrain3dPoolDistance = distance(vTerrain3dWorld, terrain3dPool.xy);\n  float terrain3dPoolFalloffT = clamp((terrain3dPoolDistance - terrain3dPool.z) / uTerrain3dNightPoolFalloff, 0.0, 1.0);\n  float terrain3dPoolFalloff = pow(1.0 - terrain3dPoolFalloffT, 1.5);\n  float terrain3dPoolCore = 1.0 - smoothstep(0.0, 0.5, terrain3dPoolDistance / max(terrain3dPool.z, 0.0001));\n  vec3 terrain3dPoolWarm = mix(vec3(1.00, 0.485, 0.10), vec3(1.00, 0.62, 0.20), terrain3dPoolCore);\n  vec3 terrain3dPoolTint = mix(vec3(0.10, 0.54, 0.60), terrain3dPoolWarm, step(0.5, terrain3dPool.w));\n  terrain3dPoolLight = max(terrain3dPoolLight, terrain3dPoolTint * terrain3dPoolFalloff);\n}\ntotalEmissiveRadiance += terrain3dPoolLight * uTerrain3dNightPoolDarkness * uTerrain3dNightPoolIntensity;`,
-        )
-        .replace(
-          '#include <color_fragment>',
-          `#include <color_fragment>\nfloat terrain3dEdge = max(abs(vTerrain3dWorld.x) / ${halfX.toFixed(3)}, abs(vTerrain3dWorld.y) / ${halfZ.toFixed(3)});\ndiffuseColor.a *= 1.0 - smoothstep(${((halfX - SKIRT_INSET) / halfX).toFixed(4)}, 1.0, terrain3dEdge);`,
+          `#include <emissivemap_fragment>\nvec3 terrain3dPoolLight = vec3(0.0);\nfor (int terrain3dPoolIndex = 0; terrain3dPoolIndex < ${NIGHT_POOL_SHADER_CAP}; terrain3dPoolIndex++) {\n  if (float(terrain3dPoolIndex) >= uTerrain3dNightPoolCount) break;\n  vec4 terrain3dPool = uTerrain3dNightPools[terrain3dPoolIndex];\n  float terrain3dPoolDistance = distance(vTerrain3dWorld, terrain3dPool.xy);\n  float terrain3dPoolFalloffT = clamp((terrain3dPoolDistance - terrain3dPool.z) / uTerrain3dNightPoolFalloff, 0.0, 1.0);\n  float terrain3dPoolFalloff = pow(1.0 - terrain3dPoolFalloffT, 1.5);\n  float terrain3dPoolCore = 1.0 - smoothstep(0.0, 0.5, terrain3dPoolDistance / max(terrain3dPool.z, 0.0001));\n  vec3 terrain3dPoolWarm = mix(vec3(1.00, 0.485, 0.10), vec3(1.00, 0.62, 0.20), terrain3dPoolCore);\n  vec3 terrain3dPoolTint = mix(vec3(0.329, 0.473, 0.596), terrain3dPoolWarm, step(0.5, terrain3dPool.w));\n  terrain3dPoolLight = max(terrain3dPoolLight, terrain3dPoolTint * terrain3dPoolFalloff);\n}\ntotalEmissiveRadiance += diffuseColor.rgb * terrain3dPoolLight * uTerrain3dNightPoolDarkness * uTerrain3dNightPoolIntensity;`,
         );
+
       if (poolGradeEnabled) {
         // Second-stage rewrites over the block above: track the strongest warm pool's coverage
         // and per-fragment warm tint through the existing loop, then grade outgoingLight right
@@ -1840,8 +1872,8 @@ function createLiveSpringPonds(host: Host, heightAt: (x: number, z: number) => n
       x: source.x,
       z: source.z,
       radius: source.radius,
-      dampBaseRadius: pool.dampBaseRadius,
       surfaceY: heightAt(source.x, source.z) + pool.surfaceY,
+      heightAt,
     }));
 }
 
@@ -1966,7 +1998,12 @@ function createContinuation(
   });
   const halfX = Math.max(Math.abs(bounds.min.x), Math.abs(bounds.max.x));
   const halfZ = Math.max(Math.abs(bounds.min.z), Math.abs(bounds.max.z));
-  if (!Number.isFinite(outerRadius) || innerChebyshev <= Math.max(halfX, halfZ) + 0.5) return undefined;
+  if (!Number.isFinite(outerRadius) || (contractId !== 'e10-ember-shore' && innerChebyshev <= Math.max(halfX, halfZ) + 0.5)) return undefined;
+  // The panorama's near ridge starts at radius 161.5; cover the intervening ground.
+  if (contractId === 'e10-ember-shore') outerRadius = 160;
+
+  // Keep the night ground beyond every square corner and the perimeter landmarks.
+  if (contractId === 'e3-moth-season') outerRadius = Math.max(outerRadius, Math.hypot(halfX, halfZ) + 12);
 
   const edgeSegments = 32;
   const edge: Array<[number, number]> = [];
@@ -1993,7 +2030,9 @@ function createContinuation(
       const sampleX = innerX - innerX / innerRadius * sampleDepth;
       const sampleZ = innerZ - innerZ / innerRadius * sampleDepth;
       positions.push(x, THREE.MathUtils.lerp(heightAt(innerX, innerZ), outerHeight, eased), z);
-      uvs.push((sampleX - bounds.min.x) / (bounds.max.x - bounds.min.x), (bounds.max.z - sampleZ) / (bounds.max.z - bounds.min.z));
+      const uvX = (contractId === 'e3-moth-season' || contractId === 'e10-ember-shore') ? x : sampleX;
+      const uvZ = (contractId === 'e3-moth-season' || contractId === 'e10-ember-shore') ? z : sampleZ;
+      uvs.push((uvX - bounds.min.x) / (bounds.max.x - bounds.min.x), (bounds.max.z - uvZ) / (bounds.max.z - bounds.min.z));
     }
   }
   for (let ring = 0; ring < rings; ring += 1) {
@@ -2014,8 +2053,16 @@ function createContinuation(
   geometry.computeVertexNormals();
   geometry.computeBoundingSphere();
   const material = source.material.clone();
+  if (contractId === 'e3-moth-season' || contractId === 'e10-ember-shore') {
+    const mapped = material as THREE.MeshStandardMaterial;
+    if (mapped.map) {
+      mapped.map = mapped.map.clone();
+      mapped.map.wrapS = mapped.map.wrapT = THREE.MirroredRepeatWrapping;
+      mapped.map.needsUpdate = true;
+    }
+  }
   material.side = THREE.DoubleSide;
-  (material as THREE.Material & { fog?: boolean }).fog = false;
+  (material as THREE.Material & { fog?: boolean }).fog = contractId === 'e10-ember-shore';
   material.depthWrite = false;
   material.onBeforeCompile = (shader) => {
     shader.vertexShader = shader.vertexShader.replace(
@@ -2029,6 +2076,7 @@ function createContinuation(
   const apron = horizonApronProfile(contractId);
   if (apron) paintHorizonApron(material, apron);
   const continuation = new THREE.Mesh(geometry, material);
+  continuation.receiveShadow = contractId === 'e10-ember-shore';
   continuation.userData.horizonApron = apron ? 'painted' : 'plain';
   continuation.frustumCulled = false;
   continuation.renderOrder = -50;
@@ -2073,6 +2121,7 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
   let loadedPanorama: THREE.Object3D | undefined;
   let loadFailed = false;
   let uninstallHeightSource: (() => void) | undefined;
+  let landmarkWalkSurfaces: ReturnType<typeof createLandmarkWalkSurfaces> = null;
   const onContextLost = () => reportRenderDemotion(host.canvas, 'webgl-context-lost');
   host.canvas.addEventListener('webglcontextlost', onContextLost);
   host.canvas.dataset.terrain3dPilotTerrainLoadState = 'pending';
@@ -2115,7 +2164,8 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       if (disposed) throw new Error('terrain pilot disposed');
       nextPonds = createLiveSpringPonds(host, heightAt);
       nextTerrain.name = 'Terrain3dClaimPilot';
-      if (host.nightMode) featherTerrainEdge(nextTerrain, terrainMetrics.bounds, host);
+      if (host.archiveRestoration) installArchiveRestoration(nextTerrain, host.archiveRestoration);
+      if (host.nightMode) applyNightTerrainPools(nextTerrain, host);
       else {
         host.canvas.dataset.terrain3dPilotNightPools = 'off';
         host.canvas.dataset.terrain3dPilotNightPoolSources = '0';
@@ -2127,6 +2177,14 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       nextPanorama.scale.fromArray(mount.scale);
       preparePanorama(nextPanorama);
       const nextSkirt = createContinuation(nextTerrain, nextPanorama, heightAt, terrainMetrics.bounds, host.contractId);
+      if (host.contractId === 'e3-moth-season' && host.nightMode && nextSkirt) {
+        const material = nextSkirt.material as THREE.Material;
+        const programKey = material.customProgramCacheKey();
+        const renderOrder = nextSkirt.renderOrder;
+        applyNightTerrainPools(nextSkirt, host);
+        nextSkirt.renderOrder = renderOrder;
+        material.customProgramCacheKey = () => `${programKey}|night-terrain-pools`;
+      }
       const nextChannelWater = createChannelWater(host.contractId, selected.contract, heightAt);
       terrain = nextTerrain;
       panorama = nextPanorama;
@@ -2134,7 +2192,9 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       channelWater = nextChannelWater;
       loadedTerrain = undefined;
       loadedPanorama = undefined;
-      uninstallHeightSource = installVisualHeightSource(heightAt);
+      const pointerSurfaces: THREE.Object3D[] = [nextTerrain, ...nextPonds.map(pond => pond.group)];
+      if (nextChannelWater) pointerSurfaces.push(nextChannelWater);
+      uninstallHeightSource = installVisualHeightSource(heightAt, pointerSurfaces);
       host.onVisualHeightSourceInstalled?.();
       host.scene.add(nextTerrain, nextPanorama);
       if (nextSkirt) host.scene.add(nextSkirt);
@@ -2143,7 +2203,6 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       for (const pond of ponds) host.scene.add(pond.group);
       host.canvas.dataset.terrain3dPilotSpringPonds = String(ponds.length);
       host.canvas.dataset.terrain3dPilotSpringPondWaterRadii = JSON.stringify(ponds.map((pond) => pond.waterRadius));
-      host.canvas.dataset.terrain3dPilotSpringPondDampGroundRadii = JSON.stringify(ponds.map((pond) => pond.dampGroundRadius));
       if (nextChannelWater) host.scene.add(nextChannelWater);
       host.canvas.dataset.terrain3dPilotChannelWater = String(
         nextChannelWater?.children.filter((child) => child.name.includes('-channel')).length ?? 0,
@@ -2161,6 +2220,7 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       // build, the terrain stays mounted and the failure is published, not silent.
       try {
         sculptWater = mountSculptWater(host, heightAt, terrainMetrics.bounds);
+        if (sculptWater) pointerSurfaces.push(sculptWater.mesh);
       } catch (error) {
         const message = error instanceof Error ? error.message : 'unknown';
         host.canvas.dataset.terrain3dPilotSculptWater = `failed:${message}`;
@@ -2210,12 +2270,11 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       }
       host.canvas.dataset.terrain3dPilotPanoramaFraming = 'world-projected-horizon';
       // Keep the original probe values until the registry contract is migrated.
-      host.canvas.dataset.terrain3dPilotSkirtBlend = 'painted-underlay-alpha-rim';
+      host.canvas.dataset.terrain3dPilotSkirtBlend = 'opaque-sculpt-edge';
       host.canvas.dataset.terrain3dPilotPanoramaFog = 'excluded';
       host.canvas.dataset.terrain3dPilotPanoramaDepth = 'screen-horizon-backdrop';
-      const mounts = (selected.contract.landmarkMounts ?? []).filter((mount) => mount.asset);
+      const mounts = landmarkMountsFor(selected.contract, host.contractId);
       host.canvas.dataset.terrain3dPilotLandmarkExpected = String(mounts.length);
-      const assets = new Map<string, Promise<THREE.Object3D | undefined>>();
       const closureCensus = new Map<string, ClosureCensus>();
       const diagnostics: string[] = [];
       const nextLandmarks = new THREE.Group();
@@ -2223,23 +2282,14 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       nextLandmarks.userData.renderOnly = true;
       const loadMount = async (mount: LandmarkMount): Promise<THREE.Object3D | undefined> => {
         try {
-          const key = `../../assets/pilots/map-rebuild-spike/${mount.asset}`;
+          const key = landmarkAssetKey(mount.asset!);
           const resolveUrl = LANDMARK_ASSETS[key];
           if (!resolveUrl) {
             diagnostics.push(`${mount.id}: asset unavailable`);
             return undefined;
           }
-          let asset = assets.get(key);
-          if (!asset) {
-            asset = resolveUrl().then((url) => loader.loadAsync(url).then((gltf) => gltf.scene, () => undefined), () => undefined);
-            assets.set(key, asset);
-          }
-          const source = await asset;
-          if (!source) {
-            diagnostics.push(`${mount.id}: asset invalid`);
-            return undefined;
-          }
-          const model = source;
+          // Each placement owns its scene and paint; cached Object3Ds reparent earlier mounts.
+          const model = (await loader.loadAsync(await resolveUrl())).scene;
           model.name = mount.id;
           model.userData.landmarkAsset = key;
           model.userData.renderOnly = true;
@@ -2263,6 +2313,7 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
             installBannerSway(model, BARON_SWAY_AMPLITUDE[mount.id]!);
           }
           dressLandmark(model, host.contractId, mount.id);
+          if (host.archiveRestoration) installArchiveRestoration(model, host.archiveRestoration);
           return model;
         } catch {
           diagnostics.push(`${mount.id}: asset invalid`);
@@ -2276,6 +2327,23 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
           host.canvas.dataset.terrain3dPilotLandmarkLoadState = 'disposed';
           return;
         }
+        try {
+          landmarkWalkSurfaces = createLandmarkWalkSurfaces(heightAt,
+            nextLandmarks.children.map(model => ({ model, mount: mounts.find(mount => mount.id === model.name)! })));
+        } catch (error) {
+          disposeObject3D(nextLandmarks);
+          host.canvas.dataset.terrain3dPilotLandmarkLoadState = 'failed';
+          host.canvas.dataset.terrain3dPilotLandmarkDiagnostics = `invalid landmark walk surface: ${String(error)}`;
+          publish(host.canvas, 'failed', 'painted', terrainMetrics, undefined, panoramaMetrics, 'landmark-walk-surfaces-invalid');
+          return;
+        }
+        if (landmarkWalkSurfaces) {
+          uninstallHeightSource?.();
+          uninstallHeightSource = installVisualHeightSource(landmarkWalkSurfaces.heightAt,
+            [...pointerSurfaces, ...landmarkWalkSurfaces.pointers]);
+          host.onVisualHeightSourceInstalled?.();
+        }
+        host.canvas.dataset.terrain3dPilotWalkSurfaces = String(landmarkWalkSurfaces?.pointers.length ?? 0);
         landmarks = nextLandmarks;
         host.scene.add(nextLandmarks);
         try {
@@ -2431,6 +2499,9 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
     disposeLoaded();
     uninstallHeightSource?.();
     uninstallHeightSource = undefined;
+    landmarkWalkSurfaces?.dispose();
+    landmarkWalkSurfaces = null;
+    delete host.canvas.dataset.terrain3dPilotWalkSurfaces;
     for (const { object, visible } of hiddenRelief) object.visible = visible;
     hiddenRelief = [];
     if (skirt) {
@@ -2512,7 +2583,6 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
     }
     ponds = [];
     delete host.canvas.dataset.terrain3dPilotSpringPondWaterRadii;
-    delete host.canvas.dataset.terrain3dPilotSpringPondDampGroundRadii;
     for (const pond of nextPonds) pond.dispose();
     nextPonds = [];
     for (const model of [terrain, panorama, landmarks, channelWater]) {

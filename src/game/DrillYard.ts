@@ -215,7 +215,7 @@ export class DrillYard {
     if (!target) return false;
     if (!died) return true;
     target.falls += 1;
-    target.visual.rotation.z = target.kind === 'straw-man' ? -Math.PI * 0.45 : Math.PI * 0.3;
+    (target.visual.getObjectByName('DrillLogRotor') ?? target.visual).rotation.z = target.kind === 'straw-man' ? -Math.PI * 0.45 : Math.PI * 0.3;
     target.enemy = null;
     target.respawnAt = at + this.config.dummyRespawnSeconds;
     this.enemies.recycle(enemy);
@@ -231,7 +231,7 @@ export class DrillYard {
       target.respawnAt = 0;
       target.falls = 0;
       target.respawns = 0;
-      target.visual.rotation.z = 0;
+      (target.visual.getObjectByName('DrillLogRotor') ?? target.visual).rotation.z = 0;
       this.spawnTarget(target);
     }
     this.grants = 0;
@@ -250,7 +250,7 @@ export class DrillYard {
   }
 
   private spawnTarget(target: TargetState): void {
-    target.visual.rotation.z = 0;
+    (target.visual.getObjectByName('DrillLogRotor') ?? target.visual).rotation.z = 0;
     target.enemy = this.enemies.spawn(target.position, {
       speedScale: 0,
       hpScale: 1,
@@ -278,7 +278,11 @@ export class DrillYard {
     this.exitButton.dataset.testid = 'drill-yard-exit';
     this.exitButton.textContent = 'Return to Town';
     this.exitButton.addEventListener('click', this.onExit);
-    this.prompt.append(icon, this.promptTitle, this.actionButton, this.exitButton);
+    const trainingTag = document.createElement('p');
+    trainingTag.className = 'hud-training-tag';
+    trainingTag.dataset.testid = 'drill-yard-training-tag';
+    trainingTag.textContent = 'DRILL YARD: training';
+    this.prompt.append(trainingTag, icon, this.promptTitle, this.actionButton, this.exitButton);
     parent.append(this.prompt);
   }
 
@@ -349,7 +353,19 @@ export class DrillYard {
     const axle = this.mesh(new THREE.CylinderGeometry(0.08, 0.08, 2.1, 8), brass);
     axle.position.y = 0.8;
     axle.rotation.z = Math.PI * 0.5;
-    group.add(log, axle);
+    const rotor = new THREE.Group();
+    rotor.name = 'DrillLogRotor';
+    rotor.add(log, axle);
+    group.add(rotor);
+    const footGeometry = new THREE.BoxGeometry(0.3, 0.14, 0.9);
+    const uprightGeometry = new THREE.BoxGeometry(0.22, 0.9, 0.22);
+    for (const x of [-0.97, 0.97]) {
+      const foot = this.mesh(footGeometry, wood);
+      foot.position.set(x, 0.07, 0);
+      const upright = this.mesh(uprightGeometry, wood);
+      upright.position.set(x, 0.52, 0);
+      group.add(foot, upright);
+    }
     return group;
   }
 

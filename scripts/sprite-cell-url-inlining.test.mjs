@@ -31,9 +31,9 @@
 import assert from 'node:assert/strict';
 import { mkdirSync, mkdtempSync, readFileSync, readdirSync, realpathSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
-import { dirname, join, resolve } from 'node:path';
+import { basename, dirname, join, resolve } from 'node:path';
 import test from 'node:test';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -79,17 +79,18 @@ export const cellCount = Object.keys(cellUrls).length;
     removeCell(name) {
       rmSync(join(root, 'assets/processed', `${name}.png`));
     },
-    async build() {
+    async build(options = {}, base) {
       const { build } = await import('vite');
       rmSync(join(root, 'dist'), { recursive: true, force: true });
       await build({
         root,
+        base,
         logLevel: 'silent',
         configFile: false,
         // assetsInlineLimit 0: the real cells are tens of kilobytes and always emitted as
         // files; without this the fixture's 1-pixel PNGs would be inlined as data URIs and the
         // URL assertions below would pass on a build that emitted no asset at all.
-        build: { outDir: 'dist', emptyOutDir: true, sourcemap: false, assetsInlineLimit: 0 },
+        build: { outDir: 'dist', emptyOutDir: true, sourcemap: false, assetsInlineLimit: 0, ...options },
       });
       const assets = join(root, 'dist/assets');
       const files = readdirSync(assets);
@@ -162,5 +163,46 @@ test('the inlined table is the file set: a cell added appears, a cell removed di
   assert.equal(shrunk.emittedCellAssets.length, CELLS.length);
   for (const url of shrunk.tableUrls) {
     assert.ok(shrunk.files.includes(url), `the inlined table points at ${url}, which the build did not emit`);
+  }
+});
+
+// A delayed consumer may share its image with the eager entry table. Execute the
+// real loader expressions after splitting them into a second chunk: checking the
+// emitted filenames alone misses a namespace/default-export mismatch.
+test('delayed HUD, building and generated-art loaders resolve images shared with the entry chunk', async (t) => {
+  const sources = ['src/ui/Hud.ts', 'src/assets/generated.ts', 'src/systems/BuildSystem.ts'];
+  const loaders = sources.flatMap((source) => readFileSync(join(ROOT, source), 'utf8').split('\n')
+    .filter((line) => /UrlLoader =|^\s+\[assetSlots\./.test(line) && line.includes('=>') && line.includes('assets/processed/'))
+    .map((line) => {
+      const expression = line.match(/(?:=|:)\s*((?:async )?\(\) => .+)[,;]$/)?.[1];
+      assert.ok(expression, `${source}: unrecognized image loader`);
+      const asset = expression.match(/'([^']+\.png)(?:\?url)?'/)?.[1];
+      assert.ok(asset, `${source}: missing image path`);
+      assert.ok(readFileSync(resolve(ROOT, 'src/assets', asset)).length, `${source}: missing source image`);
+      return { source, name: basename(asset), expression: expression.replaceAll('../../assets/processed/', './') };
+    }));
+  assert.equal(loaders.length, 19, 'update this census when the delayed loader estate changes');
+  const f = fixture(t, { eager: true });
+  writeFileSync(join(f.root, 'package.json'), '{"type":"module"}');
+  for (const { name } of loaders) writeFileSync(join(f.root, 'assets/processed', name), cellPng(name));
+  writeFileSync(join(f.root, 'assets/processed/late.js'), `export const loaders=[${loaders.map(({ expression }) => expression).join(',\n')}];`);
+  writeFileSync(join(f.root, 'src/assets/cells.ts'), `
+const urls=import.meta.glob('../../assets/processed/*.png',{eager:true,query:'?url',import:'default'});
+globalThis.__sharedArtUrls=urls;
+globalThis.__openArtLoaders=()=>import('../../assets/processed/late.js');
+`);
+  t.after(() => { delete globalThis.__sharedArtUrls; delete globalThis.__openArtLoaders; });
+  // No DOM is needed to resolve URLs; dependency preloading is exercised by the
+  // production browser check. The real Vite chunk/export transform still runs.
+  for (const base of ['./', '/goldrush/']) {
+    const built = await f.build({ modulePreload: { polyfill: false, resolveDependencies: () => [] } }, base);
+    const entry = built.files.find((name) => /^index-.*\.js$/.test(name));
+    assert.ok(entry);
+    await import(pathToFileURL(join(f.root, 'dist/assets', entry)).href);
+    const late = await globalThis.__openArtLoaders();
+    for (const [index, { source, name }] of loaders.entries()) {
+      const expected = new URL(globalThis.__sharedArtUrls[`../../assets/processed/${name}`], pathToFileURL(join(f.root, 'dist/assets', entry))).href;
+      assert.equal(await late.loaders[index](), expected, `${source}: ${name} at ${base}`);
+    }
   }
 });

@@ -446,3 +446,160 @@ The Deep Sky research chart reuses existing processed icons until `icons-e10.png
 ### E9 Old Digger fidelity — 2026-09-09
 
 **V6 ADOPTED; scoped build, re-export, eight unchanged encounter tests, production/reload, contact and lifecycle checks passed.** Native atlas `assets/raw/old-digger-atlas-fidelity-e9.png` supplies one embedded 1024-square material map. Candidate has 16,104 triangles, open deep buckets, taller industrial hall, extended booms, rounded tracks, a ribbed dome, lantern towers and clear deployable access. Original three intact redemption morphs remain. Contract: `assets/layer-contracts/old-digger.v1.json`; evidence: `artifacts/boss-fidelity/e9-old-digger/`. No paid generation or publication.
+## E5 open sea — map repair, 2026-09-08
+
+| Slot | Source and reference | Processing | Integration and acceptance |
+|---|---|---|---|
+| `terrain.e5.open_sea` | Native `image_gen` job `exec-3db385d6-e33f-4e9b-8033-017af7945e4d`; approved `plate-contract-e5-regatta.png`; exact prompt/provenance in `assets/raw/art-run-e5-open-sea-20260908.md` | Raw/full 1254² retained; existing optimizer terrain rule 448² RGB, 524877 bytes; `assets/layer-contracts/e5-open-sea.layer-contract.v1.json` | Lazy-loaded through `generated.ts`; owned sampler clone on the E5 sea quad; E1 release URL aliases to the existing river tile. Surface style recognized; gameplay-scale repetition, boat, actor contact, submerged landmarks, mobile UI and played objectives remain open. |
+
+
+### Map repair 2026-09-08 — Claim Boat candidate (visual acceptance OPEN)
+
+One native material-atlas raw and one new static factory body, reused E5 helpers: [run](../codex-art-run-map-repairs-claim-boat.md), [recipe](pilots/claim-boat-3d/RECIPE.md), [layer contract](layer-contracts/claim-boat-3d.layer-contract.v1.json). Candidate 13 has 21,508 triangles, one mesh/material, embedded 512px atlas; both source rebuild modes are byte identical and 196 sampled rider/pad clearances pass. Runtime mounts on Deepwater/Regatta/Stillwater; Flotilla requires separate hulls. Current art remains unaccepted for crane silhouette, materials, water contact and mobile framing. This is incremental inventory, not new accepted coverage, and does not release the older sprite continuity hold.
+
+
+### Panorama factory metadata repair — 2026-09-09
+
+Low Orbit's saved source and builder now retain the required panorama flag. Geometry and embedded texture bytes are unchanged; the one matching factory baseline exception is removed. Explicit static export profiles preserve metadata for every panorama through the existing helper. Saved-source reproduction succeeds for all 32; full builder regeneration is a separate claim. Evidence: `artifacts/map-art-repairs-20260908/panorama-factory-checkpoint.json`. No image generation or concept-art acceptance is asserted by this repair.
+
+
+### Early landmark factory metadata repair — 2026-09-09
+
+The five early packs retain their accepted art and mount placement. Their 25 per-body sources now preserve required landmark identity/render-only metadata through explicit static export profiles. All saved sources, factory-helper exports and full pinned-recipe regenerations reproduce the current GLBs byte-identically; the original recipe input hashes and explicit metadata patch are recorded separately. Geometry and embedded texture bytes are unchanged. Evidence: `artifacts/map-art-repairs-20260908/e1-landmark-factory-checkpoint.json`. This removes 25 metadata exceptions; 43 texture-cap exceptions remain. No image generation or new visual acceptance is claimed.
+
+
+### Prop atlas derivatives — 2026-09-09
+
+Thirty-five E2/E3/E4/E5/E8/E9/E10 props retain their original geometry and seven authored 1024px master atlases, while their saved sources and the shared material loader embed 512px derivatives. Both original/master and derived/embedded hashes remain verifiable. All 35 factory exports reproduce; all installed external source paths resolve; the three E8/E9/E10 verifiers pass their 17 bodies after retaining both provenance stages. Full recipe regeneration is not claimed. Two independent visual comparisons find no resize/compression regression at the supplied sizes; common construction/visibility defects remain open. Evidence: `artifacts/map-art-repairs-20260908/prop-texture-checkpoint.json`. Eight texture exceptions remain, including four legacy prop variants without saved sources in this checkout. No new concept artwork or visual acceptance of the complete prop library is claimed.
+
+
+### Flotilla three-hull candidates — 2026-09-09
+
+Three distinct hull sources are in `assets/pilots/flotilla-3d/`: kitchen scow, turret raft and still-room barge, matching the existing three gameplay identities. Native image_gen produced a separate material-atlas derivative with a canvas swatch; the original Claim Boat master is preserved. [Layer provenance](layer-contracts/flotilla-3d.layer-contract.v1.json), [exact prompt](../artifacts/map-art-repairs-20260908/flotilla-body-02/atlas-prompt.txt). Existing E5 helpers produce one static mesh per hull with two materials sharing one 512px embedded derivative; separate burnished metal and rough timber/canvas avoid making the machinery read as wood. Radius and central-pad checks are built into the recipe. Candidate source rendering, runtime integration and complete visual/factory acceptance remain pending; these are inventory additions, not accepted coverage.
+
+### Ark Plaza export derivative — 2026-09-09
+
+The original raw art and 2048px atlas recipe remain; the static source embeds a 1024px derivative within the finale cap. Geometry/UV/normal/index bytes are unchanged, recipe and saved-source export match, and visual preservation passes. No new artwork slot or asset count. Evidence: `artifacts/map-art-repairs-20260908/ark-texture-01/checkpoint.json`. Its one matching factory exception is removed; seven others remain. Scene integration and full Last Claim acceptance remain open.
+
+
+### 2026-09-09 — Sea panorama apron repair (F42)
+
+Regatta and Deepwater panorama atlases now retain the factory terrain-edge blend and sample the adjacent north/south terrain edge correctly. Existing art, mesh/material counts, gameplay ownership and mounts remain. Saved Blender re-export and isolated recipe repetition match production bytes; final desktop/phone checks cover Deepwater, Regatta, Flotilla and Stillwater. This is an incremental correspondence repair; texture-density seam and water depth/contact remain open. Evidence: `artifacts/map-art-repairs-20260908/deepwater-visibility-01/checkpoint.json`. No new image generation.
+
+
+### 2026-09-09 — Shared sea material readability (F43)
+
+Existing sea art now blends at 0.35 with a cooler multiplier and 0.72 opacity on Deepwater/Regatta/Flotilla; Stillwater overrides are preserved. No new imagery or assets. Source/compiled comparisons and native desktop/phone entry pass; full underwater depth/contact and texture seam remain open. Evidence: `artifacts/map-art-repairs-20260908/sea-water-01/checkpoint.json`.
+
+### 2026-09-09 — Mare dome native material candidate
+
+Native image_gen produced `assets/raw/mare-dome-material-atlas-v1.png` (1254 square); source prompt and tool provenance are in `artifacts/map-art-repairs-20260908/mare-dome-material-prompt.md` and `assets/layer-contracts/mare-dome-3d.layer-contract.v1.json`. Candidate11 maps the brass, bronze, glass and timber strips onto faces instead of sampling flat palette pixels. Target atlas1024, two materials sharing one image; no production mount or visual acceptance claimed.
+
+### 2026-09-09 — Mare dome factory mounts
+
+Candidate15 is packaged at `assets/pilots/map-rebuild-spike/landmarks/mare-dome/` with its own shared 1024 atlas, saved source and reproducible export. Three independent mounts target Mare/Eclipse; Far Side remains unchanged. 2,980 triangles, two runtime meshes/materials. Final concept fidelity and full objective proof remain open. Evidence: `artifacts/map-art-repairs-20260908/mare-dome-factory-01/verification.md`.
+
+### Mare dome wall update — 2026-09-09
+
+Candidate17 replaces the coarse lower band with framed vertical wall panels, retaining the clear airlock and original glass doorway boundary. The production factory rebuild has 2,968 triangles and preserves the shared 1024 atlas, two materials and Mare/Eclipse mount ownership. Saved-source verification passes; runtime checks and independent builder review are in `artifacts/map-art-repairs-20260908/mare-dome-factory-02`. Full foundation/glass/contact/contrast acceptance remains open. Previous native objective receipts retain their earlier asset boundary.
+
+### Night Shift duplicate static lamps — 2026-09-09
+
+Removed seven static lamp assemblies from the accepted terrain terrace body so gameplay owns lit/wrecked fixtures. Terraces, rocks, tooling, footing and atlas remain; 2884 to1540 triangles. Saved source, per-body contract and source ledger updated with derive provenance. Night Shift factory reexport, production build, controlled cold-to-relit runtime and full GLB guard pass. No new image or replacement runtime lantern promoted; visual acceptance remains open. Evidence: artifacts/map-art-repairs-20260908/night-terraces-candidate-01/integration.json.
+
+### 2026-09-09 — Drill Yard timber texture candidate (unintegrated)
+
+Native image_gen produced `artifacts/map-art-repairs-20260908/drill-log-detail-06/wood-grain.png`; exact prompt and SHA-256 provenance accompany it. Standard cylinder UVs replace failed lantern-atlas crop mappings in this isolated candidate. Desktop/mobile route-override checks passed with zero page/console errors; this is not production integration or native objective proof. Visual review, processed texture budget and layer-contract registration remain prerequisites to promotion. Existing production Drill Yard supports remain unchanged.
+
+### 2026-09-10 — Hill Mine creek and gallery repair
+
+Integrated the shifted creek/carved bed and gallery relocation with reproducible E2 terrain source, atlas, GLB and water metadata. The gallery now omits the duplicate sump water box (1132 to1120 triangles), with a matching five-body .blend and pack contract; four sibling meshes/UVs/transforms are unchanged and the shared 1024 atlas is reused. Explicit water glints follow the river center. Source/export/input hashes and mount agreement passed; build and desktop/mobile production access/grounding/glint checks passed. Full node regression and integration review are running. Full-map objectives, persistence and final visual acceptance remain open. Evidence: `artifacts/map-art-repairs-20260908/hill-mine-combined-01/`.
+
+### 2026-09-10 — Dry Gulch native terrain atlas candidate 14 (unintegrated)
+
+Native image_gen edited the existing terrain atlas with the original concept as style reference. The 1254-square raw output is retained in `artifacts/map-art-repairs-20260908/dry-gulch-atlas-14/terrain-atlas.png`; exact prompt, hashes and saved-source export receipt accompany it. Layer provenance: `layer-contracts/dry-gulch-terrain-candidate14.layer-contract.v1.json`. Candidate terrain geometry/UVs remain unchanged from sculpt 12. Desktop/mobile captures pass without page/console errors; visual review and production factory integration are pending. This is a candidate derivative, not another map or accepted production asset.
+
+### 2026-09-10 — Dry Gulch terrain texture repair 15
+
+Candidate 14's native atlas is promoted through `assets/raw/dry-gulch-terrain-atlas-v2.png`, the original production terrain saved source, and `build_dry_gulch_terrain.py::make_atlas`. Geometry, normals, topology, UVs, spring body/water and gameplay remain unchanged. The factory atlas and saved-source GLB reproduce byte-for-byte; full factory scene regeneration is not claimed. Build, full GLB guard and production desktop/mobile captures pass; independent code review finds no actionable defects. Visual comparison confirms more readable illustrated terrain but leaves texture scale, terrain boundaries, spring and prop correspondence open. Evidence: `artifacts/map-art-repairs-20260908/dry-gulch-atlas-integration-15/`. No new map or landmark count.
+
+### 2026-09-10 — Dry Gulch spring bed and shoreline repair 16
+
+Removed the obsolete baked spring cap and runtime brown cover. The factory spring body now has 620 triangles and low shoreline stones around its authored origin. A 35-vertex local terrain depression and +0.28 spring mount offset preserve body grounding; live water retains the simulation radius 1.4. Reed roots sample the actual sculpt height. Native atlas v2 from repair15 is retained. Terrain/spring saved-source exports and the spring factory recipe reproduce byte-for-byte; terrain recipe heights agree within 1e-6. Four sibling records/hashes remain unchanged.
+
+Production desktop/mobile render and geometric checks pass, as do two copied shoreline/sluice fixture tests. The protected original `e2e/shore-truth.spec.ts` still requires the deleted cover diagnostic; its replacement is proposed in `tasks/PROPOSED-map-art-regression-refresh.md`, not silently declared green. Independent visual review confirms a scoped improvement but leaves full fidelity open. Evidence: `artifacts/map-art-repairs-20260908/dry-gulch-spring-integration-16/`. No new map, art slot or landmark count.
+
+### Moth Season ground albedo — repair 09
+
+Native image generation candidate08 is integrated via `assets/raw/moth-season-terrain-atlas-v1.png`, `assets/layer-contracts/moth-season-terrain-atlas-v1.layer-contract.v1.json`, and `build_e3_contract_terrains.py::make_atlas`. It removes baked vertical scenery and reduces oversized ground marks. Saved-source GLB and factory atlas reproduce byte-for-byte; vertices, topology and UVs remain unchanged. Evidence: `artifacts/map-art-repairs-20260908/moth-season-atlas-integration-09/`. Lighting, mounted-body paint, mining-yard composition and full art acceptance remain open. No new map or landmark count.
+
+### Moth Season landmark material atlas v1 — map-art integration23
+
+Native image_gen raw `assets/raw/moth-season-landmark-material-atlas-v1.png` is packed to1024px by `assets/pilots/map-rebuild-spike/retexture_moth_landmarks.py` into the existing five-object saved Blender pack. North gate frame UVs use the existing lighter zinc cell; topology, geometry, mounts and original geometry-source tiers are preserved. Layer contract: `assets/layer-contracts/moth-season-landmark-material-atlas-v1.layer-contract.v1.json`. Material/census evidence: `artifacts/map-art-repairs-20260908/moth-landmark-integration-23/`. Whole-body Moth emission now follows the normal calibrated path; grounding, volume and complete concept correspondence remain open.
+
+### Baron landmark materials v1 — 2026-09-10
+Native image_gen exec-9dd50bdf-e331-442e-8e35-fbe02bb265af; raw `assets/raw/baron-landmark-material-atlas-v1.png`, layer contract of the same stem. Factory `retexture_baron_landmarks.py` repacks to1024, retains five accepted bodies, remaps104 headframe leg faces, and is repeatable without additional remapping. Candidate visual review30, mid-volley performance31 and all22 regression cases32 passed. Integration34 production checks remain pending; full concept/playability not accepted.
+
+### Baron landmark materials v2 — banner emblem integration42
+
+Native image_gen exec-3c88de87-9c9b-47cd-84ab-72685d7ea8d0; raw `assets/raw/baron-landmark-material-atlas-v2.png`, layer contract of the same stem. Seven cloth components now show complete crossed mining picks, four roof and three rocket components sample plain oxblood. Geometry and mounts unchanged. Desktop38 and mobile40 independent visual reviews passed; staged factory41 matches all five reviewed GLBs and repeats byte-identically. Integration42 production GLBs match that reviewed candidate; final production gates are recorded in its evidence directory. V1 remains as historical source. Full concept correspondence and native Baron completion remain open.
+
+Integration42 verification: production build, 417-model guard (zero live violations), canonical 25-model byte reproduction, ten desktop/mobile captures (zero runtime errors), and independent scoped code review all pass. Evidence: `artifacts/map-art-repairs-20260908/baron-banner-integration-42/`.
+
+### Archive landmark materials v1 — candidate86
+
+Native image_gen exec-f97aba14-a99f-4b7c-a2a8-f8267f34461e; raw assets/raw/archive-world-landmark-material-atlas-v1.png, layer contract of the same stem. Existing material cells retained; scene fragments replaced by readable warm stone/metal/timber and subdued teal. retexture_archive_landmarks.py exports five unchanged bodies and UVs to candidate86. Production remains unchanged pending paired in-game visual review. Full library composition and native later-wing acceptance remain open.
+
+Candidate88 follows86 with dominant-plane, isotropic UV mapping inside the same material cells. It addresses stretched platform grain found in independent review; geometry remains unchanged. Recipe86 and both render sets are retained. Production is still unchanged pending88 review.
+
+Archive geometry candidates89/90 use the exact contract plate to derive book-filled west/east ruins and empty warning shelves. Source tiers for these recipes are derive. Candidate-only evidence: artifacts/map-art-repairs-20260908/archive-architecture-89/ and90/. Existing production pack remains authoritative until integration and gates; full concept fidelity remains open.
+
+### Archive landmark integration91 — 2026-09-10
+
+Native atlas v1, planar UVs and reviewed geometry90 are now in the production pack. Canonical builder: assets/pilots/map-rebuild-spike/build_archive_landmarks.py --out <destination>; it reuses the existing entry/marker, derives three library bodies from the contract plate, and calls the material recipe. Legacy generic Archive rebuild refuses to prevent reverting the reviewed material/UV path. Mesh data is removed when replacing an unshared object so internal mesh names stay deterministic. Production5/5 GLBs reproduce byte-identically. Metadata and source ledger now reflect105 derive/80 reuse/12 build-new records across37 packs. Original pack retained in integration91/production-before.
+
+Build,417-model guard (zero live/stale),16 desktop/mobile restoration-state captures (zero errors), and inventory reconciliation pass. Full terrain verifier and mesh-name correction review pending in integration91. Native87 completed all three wings and a fully restored replay with1/2/3/3 persisted pages before this art integration. Full concept fidelity remains incomplete.
+
+Integration91 terminal: full Archive terrain verifier and independent mesh-name correction review PASS. All91 gates complete for this bounded library-object/material repair; full scene fidelity remains open.
+
+### Archive floor material v1 — candidate92
+
+Native image_gen exec-b523898b-09e9-4ff4-ad2a-4051716adb57; raw assets/raw/archive-world-floor-material-v1.png, declared layer contract of the same stem,1254px square. Dedicated overhead paving replaces scene imagery in make_atlas; regional tint and mask composition stays factory-authored. Explicit-output retexture_archive_terrain.py preserves saved terrain geometry, UVs and mounted pack. Candidate32 renderer captures and code/reproduction checks pass; fresh visual review pending, production unchanged.
+
+Archive floor integration94 installs reviewed93 paving at78% linear brightness to preserve hero contrast. Dedicated material replaces flattened scene imagery. GLB/atlas byte reproduction, production build,417-model guard, terrain verifier and8 production renderer captures PASS. Layer contract records current2048 atlas hash. Full scene fidelity remains open.
+
+### Ember material source121 — candidate only
+
+Native image_gen exec-0e533dbb-e4fe-4bd9-8c8c-33ae126d75fc; raw `assets/raw/ember-shore-landmark-material-atlas-v1.png` and matching layer contract. Flat 4x4 engraved metal/stone/timber/glass cells preserve factory role indices. Titan candidate122 tests per-component planar UV coverage after whole-object coverage made small parts sample indistinct texture fragments. Not production integrated or scene accepted.
+
+Ember candidate132 now has canonical `build_ember_landmarks.py`: five GLBs and shared atlas reproduce byte-identically. Concept vent accepted in targeted visual review; four remaining bodies and production integration are still open. The atlas layer contract points to this recipe.
+
+
+### Ember fixture integration139
+
+Native121 shared atlas and four reviewed concept-derived fixtures are in the production pack: enclosed vent, cooling cabinet with teal slit, raised handwheel station, six-cylinder rack with hanging apparatus. Existing titan body/UVs retained and receives the shared material. Canonical build_ember_landmarks.py rebuilds all five GLBs and atlas byte-for-byte from promoted source. All bounds remain inside prior bounds, mount/footprint records unchanged. Build, GLB guard, Ember terrain verifier, five production captures, independent bounds/disposal/recipe review pass. Full native140 recheck ongoing; overall terrain/titan fidelity remains open. Inventory142 reconciles108 derive/77 reuse/12 build-new records across37 packs with zero file/hash/mount issues.
+
+Ember139 native terminal update: desktop140 and mobile147 both complete the vent objective at12 waves/360s with3 squalls/7 stokes, bank/reload and board return with zero errors. All bounded four-fixture integration gates pass. Titan and terrain concept correspondence remains unaccepted.
+
+
+### Ember dedicated basalt material154 — candidate only
+
+Native image_gen exec-05df8164-d4cc-4526-948f-cff6fdae49d9 derives a flat overhead engraved basalt material from the Ember contract plate. Raw assets/raw/ember-shore-ground-material-v1.png and matching layer contract. Candidate154 substitutes only the original near-black constant substrate in build_e3_contract_terrains.make_atlas, preserving current geometry/UVs and canonical mask equality after133. No production terrain integration or full-scene acceptance.
+
+### Showroom material183 — candidate only
+
+Native image_gen exec-1315a530-8c83-458c-866b-51799536caac. Raw `assets/raw/showroom-landmark-material-atlas-v1.png`, matching layer contract, saved prompt in `artifacts/map-art-repairs-20260908/showroom-material-183/`. Flat4x4 material slots preserve factory ordering: quiet honey timber,cream enamel,pewter,dusty upholstery and small roof shingles. Intended for five furnished homes and the shared Showroom pack; body/collision/visual acceptance remains open. No production atlas or GLB replaced.
+
+### Showroom material199 — engraved timber and wallpaper candidate
+
+Native image_gen edited the183 atlas using the Showroom concept as its style reference. Raw `assets/raw/showroom-landmark-material-atlas-v2.png` SHA256 `8645e419714b0ffb39edaf2949079d8feea34da8d22e937300738c698b2c9b24`; layer contract `assets/layer-contracts/showroom-landmark-material-atlas-v2.layer-contract.v1.json`. Recipe and exact prompt under `artifacts/map-art-repairs-20260908/showroom-craft-199/`. Cell15 is newly authored dark walnut; existing0–14 role positions remain. Candidate only, full source/render/access gates pending; no production promotion.
+
+### Showroom furnished homes200 — integrated improvement
+
+Five walkable display homes join the five peripheral landmarks. Recipe `assets/pilots/map-rebuild-spike/build_showroom_landmarks.py` derives kitchen/living/bedroom interiors from the Showroom plate and native material-v2.10 bodies,one1024 atlas,14548 triangles total; each body below3000. The old generic builder now refuses Showroom so it cannot erase these bodies. Source/repeat/access, malformed-data and independent code/visual checks: `artifacts/map-art-repairs-20260908/showroom-integration-200/`. CollisionParts flatten into the existing registry;20 walk surfaces extend the existing terrain visual owner. Full concept fidelity remains open for furniture density, local contact/interior light and material scale. Full native193/198 prove the identical layout before this integration; production proof follows separately.
+
+### Relay Valley bridge244 — integrated correction, final verification open
+
+The gameplay contract and canonical mask now include one small ground in the dead gap, retaining four ridge relay sites and existing link/fog rules. The existing terrain generator derives its flat valley-floor footing and scuffed atlas patch; the existing mount sweep preserves all five landmark records. Terrain GLB remains16641 raw vertices/32768 triangles and re-exports byte-identically from its saved blend. The shared generator now keeps smooth normals so Glow Mesa, Relay Valley and Echo Canyon regenerate valid welded grids; all three negative/positive geometry checks are recorded.
+
+Evidence: `artifacts/map-art-repairs-20260908/relay-bridge-factory-240/verification.json`, `reexport.json`, `grid-check.json` and `relay-bridge-integration-244/manifest.json`. Candidate native desktop241/mobile242 each earn five towers and complete a connected patrol; alias243 desktop/mobile checks retain their own build permissions. Source/asset integration is applied; integrated native/build checks follow. No new generated artwork, landmark body or paid generation. Full survival/boss/banking and visual fidelity remain open, including the generic beacon body’s weak correspondence with the relay concept.

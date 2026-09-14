@@ -103,7 +103,8 @@ export class PressureSystem {
         continue;
       }
       state.cooldown = Math.max(0, state.cooldown - delta);
-      state.cooling = state.cooldown > 0;
+      // A completed fixed-step cooldown can retain a few femtoseconds of roundoff.
+      state.cooling = state.cooldown > 1e-9;
       if (state.cooling) {
         state.hot = false;
         continue;

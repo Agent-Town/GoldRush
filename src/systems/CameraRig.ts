@@ -19,6 +19,8 @@ export class CameraRig {
     this.camera.updateProjectionMatrix();
   }
 
+  get focus(): THREE.Vector3 { return this.trackedTarget; }
+
   setDistanceScale(scale: number): void {
     this.distanceScale = scale;
   }

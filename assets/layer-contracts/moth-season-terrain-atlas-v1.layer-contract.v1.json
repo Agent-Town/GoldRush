@@ -1,0 +1,30 @@
+{
+  "$schema": "gold-rush layer contract v1",
+  "batch": "map-art-repairs-20260908-moth-season-atlas-09",
+  "notes": "Candidate08 integrated as ground albedo only. Full map concept correspondence, night palette and mounted-object fidelity remain open.",
+  "slots": [
+    {
+      "file": "moth-season-terrain-atlas.png",
+      "slot": "moth-season.terrain-atlas.v1",
+      "raw": "assets/raw/moth-season-terrain-atlas-v1.png",
+      "rawSize": [
+        1254,
+        1254
+      ],
+      "size": [
+        1254,
+        1254
+      ],
+      "sha256": "b30231295feab21eb28401c92e55c9497f52e840cccbc879d7c99611d9152db9",
+      "reference": [
+        "artifacts/map-art-repairs-20260908/moth-season-atlas-07/terrain-atlas.png",
+        "assets/raw/plate-contract-e3-moth-season.png"
+      ],
+      "generation": "native image_gen exec-7c8be300-c8ef-4850-a968-cd88371c7ca1",
+      "usage": "Ground albedo without baked scenery; existing sculpt geometry and UVs retained.",
+      "recipe": "assets/pilots/map-rebuild-spike/build_e3_contract_terrains.py::make_atlas",
+      "evidence": "artifacts/map-art-repairs-20260908/moth-season-atlas-08/prompt.txt",
+      "runtime": "assets/pilots/map-rebuild-spike/moth-season-terrain.glb"
+    }
+  ]
+}

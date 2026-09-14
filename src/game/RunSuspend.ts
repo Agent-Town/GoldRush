@@ -19,6 +19,9 @@ import {
   decodeHomemakerBossSuspend,
   type HomemakerBossSuspendSnapshot,
 } from '../systems/homemakerBossSuspend';
+import { listBoardContracts } from '../meta/ContractFamilies';
+import { E8AtmosphereSystem } from '../systems/E8PhysicsSystem';
+import { E8SuitAirSystem } from '../systems/E8SuitAirSystem';
 import { Balance } from './Balance';
 import { buildableDefs, type BuildableId } from './buildables';
 import { effectiveStats } from './StatSheet';
@@ -43,6 +46,8 @@ export const RUN_SUSPEND_REJECTION_KEY = `${RUN_SUSPEND_KEY}.rejected`;
 // need to add confusion"). A rejected snapshot simply isn't offered; durable state survives.
 export const RUN_SUSPEND_REJECTION_LINE = 'Saved claim set aside. This snapshot is from an older build.';
 let lastRestoreFailure: string | null = null;
+
+type E8AirSuspend = { atmosphere: ReturnType<E8AtmosphereSystem['captureSuspend']>; suitAir: ReturnType<E8SuitAirSystem['captureSuspend']> };
 
 export type RunSuspendEnvelope = {
   v: 2;
@@ -93,7 +98,9 @@ export type RunSuspendEnvelope = {
   crawlerBoss: CrawlerBossSuspendSnapshot | null;
   landYachtBoss?: LandYachtBossSuspendSnapshot | null;
   wrangle?: WrangleSuspendSnapshot | null;
+  showroomCaptures?: number;
   homemakerBoss: HomemakerBossSuspendSnapshot | null;
+  e8Air?: E8AirSuspend | null;
   megaproject: MegaprojectSuspend | null;
   runManager: RunManagerSuspendState;
   agent: AgentSuspend | null;
@@ -445,7 +452,9 @@ export function runSuspendFutureState(snapshot: RunSuspendEnvelope): unknown {
     crawlerBoss: snapshot.crawlerBoss,
     ...(snapshot.landYachtBoss ? { landYachtBoss: snapshot.landYachtBoss } : {}),
     wrangle: snapshot.wrangle ?? null,
+    ...(snapshot.showroomCaptures !== undefined ? { showroomCaptures: snapshot.showroomCaptures } : {}),
     homemakerBoss: snapshot.homemakerBoss,
+    ...(snapshot.e8Air ? { e8Air: snapshot.e8Air } : {}),
     megaproject: snapshot.megaproject,
     runManager,
     agent: snapshot.agent,
@@ -600,7 +609,12 @@ function captureSnapshot(
     crawlerBoss: game.crawlerBoss?.captureSuspend?.(at) ?? null,
     landYachtBoss: game.landYachtBoss?.captureSuspend?.(at) ?? null,
     wrangle: game.wrangle?.captureSuspend?.() ?? null,
+    ...(game.showroomCaptureObjective?.diagnostics.declared
+      ? { showroomCaptures: game.showroomCaptureObjective.diagnostics.captures } : {}),
     homemakerBoss: game.homemakerBoss?.captureSuspend?.(at) ?? null,
+    ...((game.e8Atmosphere?.isDeclared || game.e8SuitAir?.isDeclared) ? { e8Air: {
+      atmosphere: game.e8Atmosphere.captureSuspend(), suitAir: game.e8SuitAir.captureSuspend(),
+    } } : {}),
     megaproject: captureMegaproject(game),
     runManager: runManager ?? {
       secured: false,
@@ -779,6 +793,8 @@ function captureControls(game: AnyGame): ControlsSuspend {
 function restoreSnapshot(game: AnyGame, snapshot: RunSuspendEnvelope, persistProfile = true): boolean {
   lastRestoreFailure = null;
   if (!canRestoreSnapshot(game, snapshot)) return restoreFailed('context-preflight');
+  if (snapshot.e8Air && (!game.e8Atmosphere.restoreSuspend(snapshot.e8Air.atmosphere)
+    || !game.e8SuitAir.restoreSuspend(snapshot.e8Air.suitAir))) return restoreFailed('e8-air');
   game.enemies?.recycleAll?.();
   game.goldPickups?.recycleAll?.();
   game.xpMotes?.recycleAll?.();
@@ -859,6 +875,7 @@ function restoreSnapshot(game: AnyGame, snapshot: RunSuspendEnvelope, persistPro
     materializeMeta: false,
     persistMeta: persistProfile,
   });
+  game.showroomCaptureObjective?.restoreSuspend(snapshot.showroomCaptures ?? 0);
   if (persistProfile) game.researchState = saveResearchRegistryState(game.researchStorage, game.researchState);
   game.runManager?.finalizeSuspendRestore?.();
   game.uiBridge?.announce?.(snapshot.copy, snapshot.timeAlive, null, 4.8);
@@ -875,6 +892,10 @@ function restoreFailed(stage: string): false {
 }
 
 function canRestoreSnapshot(game: AnyGame, snapshot: RunSuspendEnvelope): boolean {
+  if (snapshot.showroomCaptures !== undefined && !game.showroomCaptureObjective?.diagnostics.declared) return false;
+  if ((game.e8Atmosphere?.isDeclared || game.e8SuitAir?.isDeclared) && !snapshot.e8Air) return false;
+  if (snapshot.e8Air && (!game.e8Atmosphere || !game.e8SuitAir
+    || decodeE8Air(snapshot.e8Air, game.activeContract?.id) === false)) return false;
   if (snapshot.megaproject && snapshot.megaproject.id !== game.megaprojectManifest?.id) return false;
   if (snapshot.harvest) {
     const current = game.harvestSystem?.captureFutureState?.(snapshot.timeAlive) as HarvestFutureState | undefined;
@@ -1166,6 +1187,17 @@ const MAX_BUILDINGS = 512;
 const MAX_ENEMIES = 512;
 const MAX_RNG_SEED = 0xffffffff;
 
+function decodeE8Air(value: unknown, contractId: unknown): E8AirSuspend | null | false {
+  if (value === undefined || value === null) return null;
+  if (!isRecord(value) || typeof contractId !== 'string') return false;
+  const contract = listBoardContracts().find((entry) => entry.id === contractId);
+  if (!contract) return false;
+  const atmosphere = E8AtmosphereSystem.create(contract);
+  const suitAir = E8SuitAirSystem.create(contract);
+  if (!atmosphere.restoreSuspend(value.atmosphere) || !suitAir.restoreSuspend(value.suitAir)) return false;
+  return { atmosphere: atmosphere.captureSuspend(), suitAir: suitAir.captureSuspend() };
+}
+
 function decodeRunSuspendEnvelope(value: unknown): RunSuspendDecodeResult {
   const reasons: string[] = [];
   if (!isRecord(value)) return rejected(['snapshot is not an object'], 0);
@@ -1204,8 +1236,12 @@ function decodeRunSuspendEnvelope(value: unknown): RunSuspendDecodeResult {
   const crawlerBoss = isV2 ? decodeCrawlerBoss(value.crawlerBoss, reasons) : null;
   const landYachtBoss = isV2 ? decodeLandYachtBoss(value.landYachtBoss, reasons) : null;
   const wrangle = isV2 ? decodeWrangle(value.wrangle, reasons) : null;
+  const showroomCaptures = value.showroomCaptures === undefined ? undefined
+    : requiredInteger(value.showroomCaptures, 0, Number.MAX_SAFE_INTEGER, 'showroomCaptures', reasons);
   const homemakerBoss = isV2 ? decodeHomemakerBossSuspend(value.homemakerBoss) : null;
   if (homemakerBoss === false) reasons.push('homemakerBoss is invalid');
+  const e8Air = decodeE8Air(value.e8Air, contractId);
+  if (e8Air === false) reasons.push('e8Air is invalid');
   const megaproject = isV2 ? decodeMegaproject(value.megaproject, reasons) : null;
   const runManager = isV2
     ? decodeRunManager(value.runManager, reasons)
@@ -1265,7 +1301,7 @@ function decodeRunSuspendEnvelope(value: unknown): RunSuspendDecodeResult {
     crawlerBoss === undefined ||
     landYachtBoss === undefined ||
     wrangle === undefined ||
-    homemakerBoss === false ||
+    homemakerBoss === false || e8Air === false ||
     megaproject === undefined ||
     runManager === null
     || agent === undefined || controls === undefined
@@ -1308,7 +1344,9 @@ function decodeRunSuspendEnvelope(value: unknown): RunSuspendDecodeResult {
     crawlerBoss,
     landYachtBoss,
     wrangle: deepClone(wrangle),
+    ...(typeof showroomCaptures === 'number' ? { showroomCaptures } : {}),
     homemakerBoss,
+    ...(e8Air ? { e8Air } : {}),
     megaproject,
     runManager: deepClone(runManager),
     agent: deepClone(agent),

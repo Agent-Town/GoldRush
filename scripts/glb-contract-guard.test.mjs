@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
-import { readFile, readdir } from 'node:fs/promises';
+import { readFile, readdir, mkdtemp, mkdir, writeFile, rm } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
 import { dirname, resolve } from 'node:path';
 import { test } from 'node:test';
 import { fileURLToPath } from 'node:url';
@@ -223,6 +224,18 @@ test('THE CORPUS: every production GLB is clean or explicitly grandfathered', as
   console.log(`\n${formatCensus(result.rows)}\n${result.rows.length} production GLBs · ${result.violations.length} violations · ${result.grandfathered} grandfathered · ${result.live.length} live`);
 }, { timeout: 120_000 });
 
+test('landmark pack records bind the actual bytes, triangles and Blender-coordinate bounds', async () => {
+  const path = 'assets/pilots/map-rebuild-spike/landmarks/the-claim/active_headframe.glb';
+  const contract = await contractFor(path, ROOT);
+  const record = inspect(parseGlb(await readFile(resolve(ROOT, path))));
+  assert.ok(contract.path.endsWith('#active_headframe'));
+  assert.deepEqual(auditAsset({ path, family: 'landmarks', record, contract }).filter(v => v.rule.startsWith('contract-')), []);
+  const changed = { ...record, sha256: 'changed', metrics: { ...record.metrics, triangles: record.metrics.triangles + 1 } };
+  const violations = auditAsset({ path, family: 'landmarks', record: changed, contract });
+  assert.ok(violations.some(v => v.rule === 'contract-hash'));
+  assert.ok(violations.some(v => v.rule === 'contract-count'));
+});
+
 test('the census totals every family in the manifest and every family has a policy', async () => {
   const assets = await productionAssets(ROOT);
   const families = new Set(assets.map(({ family }) => family));
@@ -290,3 +303,35 @@ test('census rows sum to the asset count', async () => {
   const { rows } = await auditCorpus();
   assert.equal(census(rows).reduce((sum, entry) => sum + entry.assets, 0), rows.length);
 }, { timeout: 120_000 });
+
+test('the shared landmark source ledger covers every shipped pack and current source declaration', async () => {
+  const base = 'assets/pilots/map-rebuild-spike/landmarks';
+  const ledger = JSON.parse(await readFile(resolve(ROOT, base, 'landmark-source-ledger.json'), 'utf8'));
+  const assets = (await productionAssets(ROOT)).filter(({ family }) => family === 'landmarks');
+  const packs = [...new Set(assets.map(({ path }) => path.split('/').at(-2)))].sort();
+  assert.deepEqual(Object.keys(ledger.packs).sort(), packs, 'packs from other builders must remain in the shared ledger');
+  for (const pack of packs) {
+    const contract = JSON.parse(await readFile(resolve(ROOT, base, pack, `${pack}-landmark-pack-contract.json`), 'utf8'));
+    const expected = Object.fromEntries(Object.entries(contract.assets).map(([id, record]) => [id, {
+      sourceTier: record.sourceTier, sources: record.sources, asset: record.asset,
+    }]));
+    assert.deepEqual(ledger.packs[pack], expected, `${pack}: source declaration drift`);
+  }
+});
+
+
+test('landmark contracts honor declared material counts and retain legacy defaults', async () => {
+  const root = await mkdtemp(resolve(tmpdir(), 'landmark-material-contract-'));
+  const dir = 'assets/pilots/map-rebuild-spike/landmarks/dome';
+  const body = { triangles: 12, bounds: { min: [-1, -2, 0], max: [1, 2, 3] } };
+  try {
+    await mkdir(resolve(root, dir), { recursive: true });
+    const path = resolve(root, dir, 'dome-landmark-pack-contract.json');
+    for (const declared of [false, true]) {
+      await writeFile(path, JSON.stringify({ assets: { shell: { ...body, ...(declared ? { meshCount: 1, materialCount: 2 } : {}) } } }));
+      const result = await contractFor(`${dir}/shell.glb`, root);
+      assert.equal(result.contract.meshCount, 1);
+      assert.equal(result.contract.materialCount, declared ? 2 : 1);
+    }
+  } finally { await rm(root, { recursive: true, force: true }); }
+});

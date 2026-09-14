@@ -15,6 +15,7 @@ const TOUCH_CLICK_WINDOW_MS = 700;
  */
 export class ProspectorDispatchInput {
   private holdTimer = 0;
+  private confirmPressed = false;
   private holdTarget: ProspectorDispatchTarget | null = null;
   private holdX = 0;
   private holdY = 0;
@@ -31,6 +32,7 @@ export class ProspectorDispatchInput {
     this.prompt.dataset.testid = 'prospector-dispatch-confirm';
     this.prompt.className = 'prospector-dispatch-prompt';
     this.prompt.hidden = true;
+    this.prompt.addEventListener('pointerdown', this.onPromptPointerDown);
     this.prompt.addEventListener('click', this.onPromptClick);
     document.body.append(this.prompt);
     canvas.addEventListener('click', this.onClick);
@@ -47,6 +49,7 @@ export class ProspectorDispatchInput {
     this.canvas.removeEventListener('pointerup', this.cancelHold);
     this.canvas.removeEventListener('pointercancel', this.cancelHold);
     this.canvas.removeEventListener('pointermove', this.onPointerMove);
+    this.prompt.removeEventListener('pointerdown', this.onPromptPointerDown);
     this.prompt.removeEventListener('click', this.onPromptClick);
     this.prompt.remove();
   }
@@ -85,12 +88,20 @@ export class ProspectorDispatchInput {
     this.holdTimer = 0;
   };
 
-  private readonly onPromptClick = (): void => {
+  private readonly onPromptPointerDown = (): void => {
+    this.confirmPressed = true;
+  };
+
+  private readonly onPromptClick = (event: MouseEvent): void => {
+    // A held finger can release over the newly appeared button. Require a fresh press,
+    // while retaining keyboard and assistive activation (detail === 0).
+    if (event.detail !== 0 && !this.confirmPressed) return;
     if (this.holdTarget) this.dispatch(this.holdTarget.id);
     this.hidePrompt();
   };
 
   private hidePrompt(): void {
+    this.confirmPressed = false;
     this.prompt.hidden = true;
     this.holdTarget = null;
   }

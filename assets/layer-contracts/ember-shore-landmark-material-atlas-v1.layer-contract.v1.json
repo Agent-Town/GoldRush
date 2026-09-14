@@ -1,0 +1,30 @@
+{
+  "$schema": "gold-rush layer contract v1",
+  "batch": "map-art-repairs-20260908-ember-materials-121",
+  "notes": "Native flat 4x4 material source integrated in Ember production139. Four concept fixtures accepted; full terrain/titan fidelity remains open.",
+  "slots": [
+    {
+      "file": "ember-shore-landmark-material-atlas-v1.png",
+      "slot": "ember-shore.landmark-material-atlas.v1",
+      "raw": "assets/raw/ember-shore-landmark-material-atlas-v1.png",
+      "rawSize": [
+        1254,
+        1254
+      ],
+      "size": [
+        1024,
+        1024
+      ],
+      "rawSha256": "cd226f2d9e223f772a1e86abf51f93a99a9b4ae5a228902e1ca4a0b15e8c3188",
+      "reference": [
+        "assets/raw/plate-contract-e10-ember-shore.png"
+      ],
+      "generation": "native image_gen exec-0e533dbb-e4fe-4bd9-8c8c-33ae126d75fc",
+      "recipe": "assets/pilots/map-rebuild-spike/build_ember_landmarks.py",
+      "candidateEvidence": "artifacts/map-art-repairs-20260908/ember-pack-137",
+      "runtime": "assets/pilots/map-rebuild-spike/landmarks/ember-shore/ember-shore-landmarks-atlas.png",
+      "runtimeSha256": "f810d60954703fe33f871cbcffa9c31b9554764e50c1be2bb455e9544fde214f",
+      "integrationEvidence": "artifacts/map-art-repairs-20260908/ember-integration-139"
+    }
+  ]
+}

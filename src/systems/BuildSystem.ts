@@ -288,7 +288,7 @@ const blockedRepairColor = new THREE.Color('#a0522d');
 const hpBarWidth = 1.46;
 const hpBarHeight = 0.12;
 const hpBarDepth = 0.28;
-const assayOfficeSignUrlLoader = () => import('../../assets/processed/bld-claim-office.png?url').then((module) => module.default);
+const assayOfficeSignUrlLoader = async () => new URL('../../assets/processed/bld-claim-office.png', import.meta.url).href;
 
 type BuildingFamilyStore<T> = Record<BuildableId, T[]>;
 type UpgradeableBuildableId = (typeof upgradeableBuildableIds)[number];
@@ -342,7 +342,6 @@ export class BuildSystem {
   });
   private readonly raycaster = new THREE.Raycaster();
   private readonly pointerNdc = new THREE.Vector2();
-  private readonly groundPlane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
   private readonly rayHit = new THREE.Vector3();
   private readonly ghostPos = new THREE.Vector3();
   private nightDarkness = 0;
@@ -1670,7 +1669,7 @@ export class BuildSystem {
         -(((this.pointerClientY - rect.top) / Math.max(1, rect.height)) * 2 - 1),
       );
       this.raycaster.setFromCamera(this.pointerNdc, this.camera);
-      if (this.raycaster.ray.intersectPlane(this.groundPlane, this.rayHit)) {
+      if (Terrain.intersectVisualGround(this.raycaster, this.rayHit)) {
         this.ghostPos.copy(this.rayHit);
       }
     } else {
@@ -2230,6 +2229,18 @@ export class BuildSystem {
     return id satisfies never;
   }
 
+  hasPoweredBeaconWithin(x: number, z: number, radius: number): boolean {
+    return this.beacons.allPositions.some((position, index) => this.beacons.isActive(index)
+      && !this.wrecked.sentry_beacon[index] && (this.hp.sentry_beacon[index] ?? 0) > 0
+      && (position.x - x) ** 2 + (position.z - z) ** 2 <= radius ** 2
+      && this.beaconOutputEnabled(index));
+  }
+
+  private beaconOutputEnabled(index: number): boolean {
+    return !this.suspendedBuildings.has(`sentry_beacon:${index}`)
+      && this.isShooterPowered('sentry_beacon', index, this.beacons.allPositions[index] ?? this.ghostPos);
+  }
+
   private registerBeaconShooter(placed: number): void {
     const handle: ShooterHandle = {
       id: 'beacons',
@@ -2241,8 +2252,7 @@ export class BuildSystem {
       // `id !== 'turret' || powerConsumerAt(...)`, i.e. TRUE for every beacon (`Game.ts:1401`).
       // What it buys is one seam for "this building's output is off right now" that both the
       // power grid and the interference front can stand behind.
-      enabled: () => !this.suspendedBuildings.has(`sentry_beacon:${placed}`)
-        && this.isShooterPowered('sentry_beacon', placed, this.beacons.allPositions[placed] ?? this.ghostPos),
+      enabled: () => this.beaconOutputEnabled(placed),
       getPos: () => this.shooterPos.copy(this.beacons.allPositions[placed] ?? this.ghostPos),
       range: Balance.beacon.range,
       cooldown: 1 / (Balance.beacon.fireRate * this.beaconFireRateMult),

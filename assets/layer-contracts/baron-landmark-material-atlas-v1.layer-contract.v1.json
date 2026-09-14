@@ -1,0 +1,29 @@
+{
+  "$schema": "gold-rush layer contract v1",
+  "batch": "map-art-repairs-20260908-baron-materials-34",
+  "notes": "Material-only update with 104 leg faces remapped. Full concept fidelity, banner emblem, HUD obstruction and contact shading remain open.",
+  "slots": [
+    {
+      "file": "baron-landmarks-atlas.png",
+      "slot": "baron.landmark-material-atlas.v1",
+      "raw": "assets/raw/baron-landmark-material-atlas-v1.png",
+      "rawSize": [
+        1254,
+        1254
+      ],
+      "size": [
+        1024,
+        1024
+      ],
+      "sha256": "80e36edcf19c8b553a7c856ca46a4a9ccdb6d444d44144c0494f5a4dff9d6919",
+      "rawSha256": "51188c1632a4e0d0ee25a56569c67f4e5bef87984762189dd33359d35a32c707",
+      "reference": [
+        "assets/raw/plate-contract-baron.png"
+      ],
+      "generation": "native image_gen exec-9dd50bdf-e331-442e-8e35-fbe02bb265af",
+      "recipe": "assets/pilots/map-rebuild-spike/retexture_baron_landmarks.py",
+      "evidence": "artifacts/map-art-repairs-20260908/baron-landmark-atlas-29/prompt.txt",
+      "runtime": "assets/pilots/map-rebuild-spike/landmarks/baron"
+    }
+  ]
+}

@@ -324,8 +324,9 @@ export class E10SquallScheduler {
  * contract shape the validator does not enforce. This reads what is there and refuses what is not.
  */
 function squallBlock(contract: SquallContract): Record<string, unknown> | null {
-  const emberShore = record((contract.twist as unknown as Record<string, unknown>).emberShore);
-  const squall = emberShore ? record(emberShore.squall) : null;
+  const twist = contract.twist as unknown as Record<string, unknown>;
+  const weather = record(twist.emberShore) ?? record(twist.archiveWorld);
+  const squall = weather ? record(weather.squall) : null;
   if (!squall) return null;
   // Refuse-to-arm: a cadence with a non-positive duration is not a cycle. An OMITTED duration is
   // different and is allowed — it falls back to the ratified default above — because the spec's

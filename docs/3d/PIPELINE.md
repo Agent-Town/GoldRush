@@ -31,13 +31,41 @@ without touching a shipped binary.
 recipe it did not (`d5e4ead7…`), because all ten extras were dropped.
 
 **Check 2 — regenerate the `.blend` from its builder and inputs.** `assets/pilots/map-rebuild-spike/build_*.py`
-under Blender. Expensive, and *not* guaranteed: `Terrain3dClaimPilot.ts:281-:285` records that the Twin
-Banks landmark pack stopped regenerating faithfully, which is why that map is dressed at runtime.
-A saved `.blend` can also have drifted from the GLB beside it — see the finding in §6.
+under Blender. Pin the inputs as well as the builder: current concept plates and terrain helpers can
+change the result. A saved `.blend` can also have drifted from the GLB beside it — see §6.
+
+**E1 landmark source correction, 2026-09-08.** The owner-approved replacement (`d8603c908`, from
+`7c01afa5`) imported 25 per-body `.blend`/GLB pairs but left pre-verdict aggregate blends and body
+metadata. Each pack now identifies the authoritative source as `assets[id].blend`; its root `blend`
+is explicitly historical. All 25 saved sources re-export byte-identically. Full regeneration also
+reproduces all 25 bytes with the original concept plates, terrain contracts and helper code,
+plus the explicit metadata/export patch recorded in the reproduction proof:
+
+```
+python3 scripts/rebuild-accepted-e1-landmarks.py artifacts/e1-reproduction-new
+```
+
+The destination must be new; generation stays in scratch. The script writes the exact source
+revision, input hashes and 25 comparison results to `proof.json`. Use the existing per-body blend
+with `scripts/reexport-pilot.sh` for authoring. The generic `build_landmark_packs.py` now refuses its
+superseded E1 recipes before writing any E1 files. Current-input regeneration is an intentional
+visual update, not reproduction. Commission source-ladder assessments remain in each record;
+the pack's provenance identifies the actual replacement-generation inputs.
+
+Required landmark metadata is also present in the saved sources and retained by their export
+profiles. The archived recipe is patched only to add these properties and enable extras export;
+`proof.json` separates original input hashes from the patched builder hash. The metadata repair
+preserves geometry and embedded texture bytes. Its source and full-regeneration proofs live in
+`artifacts/map-art-repairs-20260908/e1-landmark-extras-01/` and the adjacent reproduction folder.
 
 **Check 3 — validate the compressed runtime derivative.** `npm run build` runs
 `scripts/asset-diet.mjs` (meshopt + WebP per `scripts/asset-diet.manifest.json`), and
-`npm run test:asset-diet` exercises the bundled result. The panoramas family opts out of position
+`npm run test:asset-diet` exercises the bundled result. Delayed image consumers resolve their URL strings with
+`new URL(..., import.meta.url)` while retaining the existing texture-load gates. A delayed `?url`
+module shared with an eager entry table can lose its default export in the current split build;
+`node --test scripts/sprite-cell-url-inlining.test.mjs` executes the actual loaders across that
+boundary and deployment bases. Image probes must check decoded dimensions, since `/undefined`
+can receive HTML fallback without a request or console error. The panoramas family opts out of position
 quantization because the terrain loader validates exact authored unique-vertex counts.
 
 ## 3. Export profiles — `<blend-stem>.export.json`
@@ -70,7 +98,12 @@ Cameras and lights are never exported, on any profile.
   `applyTransforms: false`, and an explicit two-object `selection`. `hero-3d.blend` also contains a
   turntable floor and four reference planes; `"all"` swept them in (measured: 2 meshes, bounds ±40
   instead of ±0.57), so the rigged profile names `HeroMesh` and `HeroRig`.
-- **static** — the default recipe, for a building or prop with no extras and no rig.
+- **static** — for an unrigged building, prop or panorama. Panorama profiles under
+  `assets/pilots/map-rebuild-spike/*-panorama.export.json` explicitly keep extras: their
+  render-only identity and panorama-law fields are part of the validated contract. A static
+  mesh does not imply that its custom properties are disposable. Saved-source profile proofs
+  live in `artifacts/map-art-repairs-20260908/panorama-profiles-01/`; these are distinct from
+  full builder regeneration.
 
 ### The proof (headless, 2026-09-05, both profiles)
 
@@ -114,7 +147,14 @@ external-resource policy (buffers and images must be embedded) · **terrain grid
 (`validTerrain:512`, `validPanorama:521`). The guard reads **the same JSON files** and reproduces
 those metric definitions exactly — including the `BOUNDS_EPSILON = 0.03` from
 `Terrain3dClaimPilot.ts:302` and the float32 weld the runtime does when it counts unique vertices.
-All 64 contracted assets agree to the last integer.
+All 64 contracted terrain/panorama assets agree to the last integer. The guard also resolves all
+196 bodies through their landmark pack records and checks SHA-256, triangle count and bounds.
+Pack bounds use Blender XYZ (Blender Y is negative game Z); this conversion is separate from the
+terrain contract's axis order. A silently replaced body now fails the existing guard.
+
+The same test command checks the shared `landmark-source-ledger.json` against every shipped
+pack's source declarations. Scoped landmark builds refresh this ledger from all pack contracts,
+including packs authored by other builders; a builder's recipe list is not the estate inventory.
 
 **Terrain grid topology.** `bakeHeightGrid` (`Terrain3dClaimPilot.ts:527`) infers
 `segments = round(sqrt(POSITION.count)) - 1` and throws if any lattice cell is empty or occupied
@@ -128,10 +168,17 @@ required extra — only one terrain carries it, and the topology itself is the s
 69 violations existed when the guard landed. They are grandfathered by exact
 `path::rule::detail` key so the guard can red on *new* breakage today.
 
-| Class | Count | What paying it down means |
-| --- | ---: | --- |
-| `texture-over-cap` | 43 | 41 plaza props at 1024² against the 512² props cap, plus `town-plate.glb` and `salvage-claw-detail-opus5.glb` at 2048². Re-bake the atlas; do not raise the cap. |
-| `missing-extra` | 26 | The 25 landmark GLBs of the five earliest packs (baron, dry-gulch, night-shift, the-claim, twin-banks) predate the extras convention the other 171 follow; `low-orbit-panorama.glb` is missing only the `panorama` flag. Re-export with the sidecar. |
+Read the current exact exceptions from the baseline file and the guard output. The dated
+map-repair inventory records progress separately from the original 69-exception snapshot;
+passing with a baseline is not acceptance of those remaining assets.
+
+For prop atlases, retain the authored 1024px master and embed the existing 512px prop tier.
+The shared `build_era_props_e2.py` material loader performs that reduction before packing.
+The E8/E9/E10 verifiers record both the master hash and the derived embedded-image hash,
+then require each body's image to match the derivative. Geometry, placement, material and
+saved-source export checks still apply. The map-repair receipt under
+`artifacts/map-art-repairs-20260908/prop-textures-01/` separates saved-source export,
+master-to-embedded derivation and compressed runtime checks; it does not claim full recipe regeneration.
 
 **PAY DOWN BY DELETING ENTRIES, NEVER BY REGENERATING.** There is deliberately no
 `--write-baseline` flag, and the guard writes no files at all — its test asserts both. The guard
@@ -145,9 +192,9 @@ today, which is not a guard.
 | --- | ---: | --- | --- |
 | terrain | 32 | `assets/pilots/map-rebuild-spike/build_*_terrain*.py` | `*-terrain-contract.json` |
 | panoramas | 32 | `build_*_panorama*.py`, `build_contract_panoramas.py` | `*-panorama-contract.json` |
-| landmarks | 196 | `build_landmark_packs.py` | `landmarks/<map>/*-landmark-pack-contract.json` |
+| landmarks | 196 | per-body `.blend` + pinned E1 recipe for 25 accepted E1 bodies; `build_landmark_packs.py` for later packs | `landmarks/<map>/*-landmark-pack-contract.json` |
 | town-buildings / era variants | 82 | `assets/pilots/schoolhouse-3d/build_schoolhouse.py`, `assets/pilots/build_town_e9_wardrobe.py` | — |
-| props / rail-element | 62 | per-pilot builders under `assets/pilots/*/` | — |
+| props / rail-element | 63 | per-pilot builders under `assets/pilots/*/` | — |
 | bosses / finale | 8 | per-pilot builders under `assets/pilots/*/` | — |
 
 Per-family Blender verifiers (`verify_*.py`, 60 of them under `assets/pilots/`) still exist and still
@@ -160,7 +207,12 @@ need Blender; the node guard is the one that runs in CI.
   shipped GLB has one mesh at 1,734 welded vertices / 3,288 triangles. The `rigged` profile
   reproduces the shipped geometry exactly, but the shipped GLB carries no extras while a re-export
   now adds 17. Re-exporting the hero is therefore a deliberate act with a visible diff, not a no-op.
-- Twin Banks landmarks no longer regenerate faithfully (`Terrain3dClaimPilot.ts:285`: "the landmark
-  pack no longer regenerates faithfully"), pre-existing.
+- The generic Twin Banks landmark recipe predates the owner-approved replacements. The pinned
+  recipe above resolves reproduction; substituting today's plates/helpers does not reproduce
+  accepted bytes. `verify_landmark_packs.py` now follows the current source ledger and each
+  replacement body's declared scene/profile, preserving approved origins and metadata. It checks
+  exact saved-source exports across all declared packs; this does not replace the pinned full-recipe
+  proof or current visual review. Use `-- --output <fresh-directory>` after Blender's script argument.
+  Add `--historical-boards` only when explicitly checking the original screenshot inventory.
 - All 412 production GLBs are double-sided (F-ASTRA-9). The guard censuses this; it does not yet
   enforce backface culling, which needs the per-mesh closed-surface verdict Astra asks for.

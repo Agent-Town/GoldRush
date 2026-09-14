@@ -1,0 +1,26 @@
+{
+  "$schema": "gold-rush layer contract v1",
+  "batch": "map-art-repairs-20260908-claim-boat",
+  "notes": "Candidate material atlas and body. Source and load checks pass; visual and complete gameplay acceptance remain open. This does not release the older eight-direction sprite continuity hold.",
+  "slots": [
+    {
+      "file": "claim-boat-material-atlas.png",
+      "slot": "claim-boat-3d.material-atlas",
+      "raw": "assets/raw/claim-boat-material-atlas.png",
+      "rawSize": [
+        1254,
+        1254
+      ],
+      "size": [
+        512,
+        512
+      ],
+      "sha256": "9e6647bbee0e93e818b4b1e8d07e67a043ee5880c6c31822252a00c25402341b",
+      "reference": "assets/raw/plate-e5-bld-claimboat.png",
+      "generation": "native image_gen exec-be2d7e35-0d17-4a27-946d-e2d16fef19a2",
+      "usage": "Embedded 4x4 material atlas in the single-mesh Claim Boat body; no sprite-registry alias",
+      "recipe": "Blender image.scale(512,512), embedded with existing E5 material helper; source raw unchanged",
+      "evidence": "artifacts/map-art-repairs-20260908/claim-boat-atlas-native/prompt.txt"
+    }
+  ]
+}

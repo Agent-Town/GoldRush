@@ -308,32 +308,20 @@ test('the door refuses a regolith gate that is not a reachable whole number of g
   });
 });
 
-test('one reader, and the browser composes the SURVIVAL half through the same resolver', () => {
+test('one reader, and the browser composes survival and objectives through the same resolver', () => {
   const game = readFileSync(new URL('../src/game/Game.ts', import.meta.url), 'utf8');
   const headless = readFileSync(new URL('../src/sim/HeadlessContractSim.ts', import.meta.url), 'utf8');
   const consumer = readFileSync(new URL('../src/systems/E8PhysicsSystem.ts', import.meta.url), 'utf8');
-  // RE-POINTED 2026-09-07 (`tasks/e8-air-logical.md`, owner directive: "I want space experiences
-  // of humans to need them having air"). This line used to assert the browser composed NO
-  // atmosphere consumer, and that was right while the rule moved no hit points: composing it there
-  // would have bought nothing. It now KILLS a hero who runs out of air, and a rule that killed a
-  // rider at the door but not a human at the keys would put the two engines on different boards
-  // for the same orders (the Same Laws law) while answering a directive about human experience in
-  // the one engine no human plays. So the browser composes it — ONCE, like the sim — and the
-  // assertion becomes the thing that actually matters: the harm goes through `damageActor`, which
-  // is `CombatSystem`, which is the sole damage resolver.
-  assert.equal([...game.matchAll(/E8AtmosphereSystem\.create\(/g)].length, 1, 'exactly one composition, in the browser');
+  // A new run must discard the previous run's suit and objective state.
+  assert.equal([...game.matchAll(/E8AtmosphereSystem\.create\(/g)].length, 2, 'initial composition and new-run reset');
   assert.equal([...headless.matchAll(/E8AtmosphereSystem\.create\(/g)].length, 1, 'exactly one composition, in the sim');
-  assert.match(game, /applyE8SuitAir/, 'the browser must tick the suit on its own fixed step');
-  assert.match(
-    game,
-    /const chip = this\.e8Atmosphere\.update\([\s\S]{0,200}?this\.combat\.damageActor\(chip, -1, this\.localActor\);/,
-    'the browser must route the suit chip through CombatSystem and nothing else',
-  );
-  // AND THE OBJECTIVE HALF STAYS WHERE IT WAS. The latches that gate the secure are the door's;
-  // the contracts' own `engineDependencies` rows have declared that bound since the wall shipped.
-  // The browser reads OTHER consumers' latches at Game.ts:6150 and below, so this asks the narrow
-  // question rather than the broad one: neither AIR consumer's latch is among them.
-  assert.equal(/e8Atmosphere\.objectiveAllowsSecure|e8SuitAir\.objectiveAllowsSecure/.test(game), false, 'the browser composes no air latch');
+  const airStep = game.slice(game.indexOf('private applyE8SuitAir('), game.indexOf('private suitAirState('));
+  assert.match(airStep, /this\.e8Atmosphere\.updateActors\(fixedDelta, humans,/);
+  assert.match(airStep, /this\.e8SuitAir\.updateActors\(fixedDelta, humans,/);
+  assert.match(airStep, /this\.combat\.damageActor\(chip, -1, this\.actors\[human\.id\]\)/, 'each suit routes harm through CombatSystem');
+  assert.doesNotMatch(airStep, /this\.localActor/, 'shared air simulation cannot depend on the viewing peer');
+  assert.match(game, /!this\.e8Atmosphere\.objectiveAllowsSecure/, 'atmosphere objectives gate browser secure');
+  assert.match(game, /!this\.e8SuitAir\.objectiveAllowsSecure/, 'sibling air objectives gate browser secure');
   // The authored numbers are read in ONE FILE, so the gate cannot drift between two modules.
   // RE-POINTED 2026-09-07 (`tasks/e8-air-logical.md`, owner directive 2026-09-07) from 1 to 4: the human-suit half added three more authored
   // fields (`suitSeconds`, `harmPerSecond`, `pressurisedZoneIds`) and each has its own named

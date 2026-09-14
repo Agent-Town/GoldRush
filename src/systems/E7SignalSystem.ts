@@ -103,7 +103,7 @@ const FOG_POCKETS = relayValleyMask.maskTruth.fogPockets;
 const EMPTY_GRAPH_HASH = stableHash({ nodes: [], links: [] });
 
 export class E7SignalSystem {
-  private readonly root = document.createElement('section');
+  private readonly root = document.createElement('details');
   private handled: E7SignalMilestone[];
   private nodes: E7RelayNode[] = [];
   private links: E7RelayLink[] = [];
@@ -125,11 +125,30 @@ export class E7SignalSystem {
     this.root.dataset.testid = 'e7-jack-board';
     this.root.setAttribute('aria-label', 'Exchange rescue jack-board');
     this.root.setAttribute('aria-live', 'polite');
-    this.root.style.cssText = 'position:absolute;right:12px;top:72px;z-index:22;width:min(310px,calc(100vw - 24px));padding:10px 12px;border:1px solid rgba(218,174,84,.65);border-radius:8px;background:rgba(38,28,24,.9);color:#f0ddb1;pointer-events:none;font:13px/1.35 Georgia,serif;';
+    this.root.className = 'e7-jack-board';
+    this.root.innerHTML = '<summary>The Exchange<small data-e7-board-state></small></summary><div data-e7-board-content><div class="e7-board-heading"><strong style="letter-spacing:.08em">THE EXCHANGE · RESCUE BOARD</strong><button type="button" data-e7-board-close data-testid="e7-board-close" aria-label="Close the Exchange">Close</button></div><div data-e7-board-body></div></div>';
+    this.root.addEventListener('keydown', (event) => {
+      if (event.code === 'Escape' && this.root.open) {
+        event.preventDefault();
+        event.stopPropagation();
+        this.root.open = false;
+        this.root.querySelector('summary')?.focus();
+        return;
+      }
+      if (this.root.open || ['Space', 'Enter'].includes(event.code)) event.stopPropagation();
+    });
+    this.root.addEventListener('keyup', (event) => event.stopPropagation());
+    this.root.addEventListener('click', (event) => {
+      if (!(event.target instanceof Element) || !event.target.closest('[data-e7-board-close]')) return;
+      this.root.open = false;
+      this.root.querySelector('summary')?.focus();
+    });
   }
 
   mount(parent: HTMLElement): void {
-    parent.append(this.root);
+    const controls = parent.querySelector('.hud-panel--weapon');
+    if (!controls) throw new Error('Signal board requires the HUD equipment panel');
+    controls.append(this.root);
     this.render(true);
   }
 
@@ -229,7 +248,9 @@ export class E7SignalSystem {
     this.lastRenderKey = key;
     this.root.hidden = !this.active();
     if (this.root.hidden) return;
-    this.root.innerHTML = `<strong style="letter-spacing:.08em">THE EXCHANGE · RESCUE BOARD</strong>
+    this.root.querySelector('[data-e7-board-state]')!.textContent = this.suppression.suppresses('relayChains')
+      ? 'No relay, drone or tape' : this.links.length > 0 ? 'Signal linked' : 'Searching';
+    this.root.querySelector('[data-e7-board-body]')!.innerHTML = `
       <p data-testid="e7-signal-status" style="margin:4px 0 7px">${this.suppression.suppresses('relayChains')
         // A4, Mistake #10 (where does the PLAYER see this in a plain boot?): the Dead Band is
         // not SEARCHING, it is dead. The board says so instead of implying a link is coming.
@@ -242,6 +263,12 @@ export class E7SignalSystem {
 
 export function e7SignalExitBeatReady(storage: Pick<Storage, 'getItem'> = localStorage): boolean {
   return projectBoard(readMilestones(storage)).lastBeatFired;
+}
+
+/** Used only by the explicitly requested debug-era tour, alongside its build/research receipts. */
+export function seedDebugE7SignalExit(storage: Pick<Storage, 'getItem' | 'setItem'>): void {
+  const milestones = projectBoard([...readMilestones(storage), ...KNOWN_MILESTONES]).applied;
+  storage.setItem(E7_SIGNAL_STATE_KEY, JSON.stringify({ version: 1, milestones }));
 }
 
 function buildRelayGraph(

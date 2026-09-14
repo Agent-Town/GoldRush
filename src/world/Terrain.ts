@@ -105,6 +105,10 @@ let editorPreviewTerrain: ContractAuthoredTerrainLayer | undefined;
 let editorPreviewContract: ContractManifest | null = null;
 let refreshEditorPreview: ((contract: ContractManifest) => void) | null = null;
 let runtimeVisualHeightSource: ((x: number, z: number) => number) | null = null;
+let runtimePointerSurfaces: THREE.Object3D[] | null = null;
+let fallbackPointerSurfaces: THREE.Object3D[] = [];
+const pointerHits: THREE.Intersection[] = [];
+const pointerFallbackPlane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
 const WATER_MASK = ACTIVE_TILE.waterMask?.regions.length ? ACTIVE_TILE.waterMask : undefined;
 const SPRING_PONDS = ACTIVE_CONTRACT.tileParams.waterSources.filter((source) => source.kind === 'spring_pond');
 const FORD_RANGES = resolveFordRanges();
@@ -375,10 +379,23 @@ export function previewEditorContract(contract: ContractManifest): void {
   refreshEditorPreview?.(contract);
 }
 
-export function installVisualHeightSource(source: (x: number, z: number) => number): () => void {
+export function intersectVisualGround(raycaster: THREE.Raycaster, out: THREE.Vector3): boolean {
+  pointerHits.length = 0;
+  raycaster.intersectObjects(runtimePointerSurfaces ?? fallbackPointerSurfaces, true, pointerHits);
+  const hit = pointerHits[0];
+  if (hit) out.copy(hit.point);
+  pointerHits.length = 0;
+  return hit !== undefined || raycaster.ray.intersectPlane(pointerFallbackPlane, out) !== null;
+}
+
+export function installVisualHeightSource(source: (x: number, z: number) => number, surfaces: THREE.Object3D[]): () => void {
   runtimeVisualHeightSource = source;
+  runtimePointerSurfaces = surfaces;
   return () => {
-    if (runtimeVisualHeightSource === source) runtimeVisualHeightSource = null;
+    if (runtimeVisualHeightSource === source) {
+      runtimeVisualHeightSource = null;
+      runtimePointerSurfaces = null;
+    }
   };
 }
 
@@ -643,7 +660,7 @@ const BANK_VARIANT_FILES = terrainBankVariantFiles();
 // because a replacement whose search string no longer exists reads like a narrowing that is not
 // happening. If a rail-element consumer is ever wired, add its OWN pattern here.
 const processedTextureUrls = import.meta.glob<string>(
-  ['../../assets/processed/terrain-*.png', '../../assets/processed/prop-spring-pond.png'],
+  ['../../assets/processed/terrain-bank-*.png', '../../assets/processed/prop-spring-pond.png'],
   {
     query: '?url',
     import: 'default',
@@ -724,6 +741,11 @@ export function createTerrainView(): TerrainView {
   }
 
   group.add(springPonds, props);
+  const pointerSurfaces = [bank, springPonds, ...(river ? [river, ...fords] : [])];
+  fallbackPointerSurfaces = pointerSurfaces;
+  bank.geometry.addEventListener('dispose', () => {
+    if (fallbackPointerSurfaces === pointerSurfaces) fallbackPointerSurfaces = [];
+  });
   refreshEditorPreview = (contract) => {
     refreshGroundGeometry(bank);
     disposeObject3D(springPonds);
@@ -994,11 +1016,11 @@ float terrainVistaRiverCenterZ(float worldX) {
   float outside = max(0.0, abs(worldX) - ${CLAIM_HALF.toFixed(3)});
   float dx = worldX - side * ${CLAIM_HALF.toFixed(3)};
   float ramp = smoothstep(0.0, 18.0, outside);
-  return ramp * (sin(dx * 0.065) * 2.6 + sin(dx * 0.137) * 0.8);
+  return ${((RIVER_MIN_Z + RIVER_MAX_Z) / 2).toFixed(3)} + ramp * (sin(dx * 0.065) * 2.6 + sin(dx * 0.137) * 0.8);
 }
 
 float terrainShoreDistance(vec2 worldPos) {
-  return max(0.0, abs(worldPos.y - terrainVistaRiverCenterZ(worldPos.x)) - ${RIVER_MAX_Z.toFixed(3)});
+  return max(0.0, abs(worldPos.y - terrainVistaRiverCenterZ(worldPos.x)) - ${((RIVER_MAX_Z - RIVER_MIN_Z) / 2).toFixed(3)});
 }
 
 vec2 terrainOrientUv(vec2 tileUv, vec2 cell) {
@@ -1466,7 +1488,7 @@ function vistaVertexCount(): number {
 function vistaRiverDiagnostics(): VistaDiagnostics['river'] {
   const axis = vistaAxes().fullAxis;
   const centers = axis.map((x) => vistaRiverCenterZ(x));
-  const meanderAmplitude = centers.reduce((max, center) => Math.max(max, Math.abs(center)), 0);
+  const meanderAmplitude = centers.reduce((max, center) => Math.max(max, Math.abs(center - ((RIVER_MIN_Z + RIVER_MAX_Z) / 2))), 0);
   return {
     present: ACTIVE_CONTRACT.tileParams.river,
     drawCalls: ACTIVE_CONTRACT.tileParams.river ? 1 : 0,
@@ -1491,7 +1513,7 @@ function vistaRiverCenterZ(x: number): number {
   const outside = Math.max(0, Math.abs(x) - CLAIM_HALF);
   const dx = x - side * CLAIM_HALF;
   const ramp = smoothstep(0, 18, outside);
-  return ramp * (Math.sin(dx * 0.065) * 2.6 + Math.sin(dx * 0.137) * 0.8);
+  return (RIVER_MIN_Z + RIVER_MAX_Z) / 2 + ramp * (Math.sin(dx * 0.065) * 2.6 + Math.sin(dx * 0.137) * 0.8);
 }
 
 function riverFadeStart(): number {

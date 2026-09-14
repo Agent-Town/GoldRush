@@ -19,6 +19,9 @@ import type { BuildableId } from '../game/buildables';
 import type { TownActorId } from '../town/townsfolk';
 import { epochIsActive } from '../meta/ContractFamilies';
 import { worldOutsideLedgerEntryByEpoch } from './worldOutside';
+import { archivePageByWing } from './archive';
+import { TileStateStore } from '../game/TileStateStore';
+import { E10ArchiveSystem } from '../systems/E10ArchiveSystem';
 
 const validEntryIds = new Set<LedgerEntryId>(ledgerEntries.map((entry) => entry.id));
 const validDiscoveryIds = new Set<LedgerDiscoveryId>([...validEntryIds, ...enemyStatsDiscoveryIds]);
@@ -34,7 +37,16 @@ export type LedgerEnemySource = {
 };
 
 export function readLedgerDiscovered(storage = browserStorage()): Set<LedgerDiscoveryId> {
-  return new Set([...alwaysDiscoveredEntryIds, ...readStoredDiscovered(storage)]);
+  const discovered = new Set<LedgerDiscoveryId>([...alwaysDiscoveredEntryIds, ...readStoredDiscovered(storage)]);
+  if (storage) {
+    const entries = new TileStateStore(storage).readSnapshot('e10-archive-world').entries;
+    const restored = new Set(E10ArchiveSystem.restoredWingIds(entries));
+    for (const [wingId, pageId] of Object.entries(archivePageByWing)) {
+      if (!restored.has(wingId)) break;
+      discovered.add(pageId); discovered.add('era_deepsky');
+    }
+  }
+  return discovered;
 }
 
 export function discoverLedgerEntry(id: LedgerDiscoveryId, storage = browserStorage()): boolean {

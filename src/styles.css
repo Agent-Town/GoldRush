@@ -1017,7 +1017,7 @@ body {
 }
 
 .hud-agent-chip strong {
-  color: #f5ba49;
+  color: #315f61;
 }
 
 .hud-agent-chip [data-hud-agent-label] {
@@ -1449,6 +1449,14 @@ body {
   transform: translateX(-50%);
 }
 
+@media (min-width: 761px) and (pointer: fine) {
+  .prompt-stack:has(.building-context-prompt[data-kind="deck"]:not([hidden])) {
+    left: max(16px, env(safe-area-inset-left));
+    width: min(300px, calc(50vw - 48px));
+    transform: none;
+  }
+}
+
 #hud[data-paused="true"] .prompt-stack {
   display: none;
 }
@@ -1479,10 +1487,7 @@ body:has(.gr-profile-title) #touch-controls {
 }
 
 .building-context-prompt {
-  display: grid;
-  grid-template-columns: 28px minmax(150px, 1fr) minmax(132px, auto) minmax(132px, auto);
-  align-items: center;
-  gap: 8px;
+  display: block;
   width: 100%;
   padding: 8px 10px 8px 12px;
   border: 2px solid #2e1b0e;
@@ -1499,9 +1504,19 @@ body:has(.gr-profile-title) #touch-controls {
   pointer-events: auto;
 }
 
+.building-context-prompt > summary {
+  min-height: 44px;
+  padding: 8px 0;
+  cursor: pointer;
+  list-style-position: inside;
+}
+.building-context-prompt__body { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+.building-context-prompt__body > button { flex: 1 1 120px; }
+.building-context-prompt__body > .building-context-prompt__loss,
+.building-context-prompt__body > .building-context-prompt__anchors { flex-basis: 100%; }
+
 .world-info-note {
-  display: grid;
-  gap: 4px;
+  display: block;
   width: min(460px, 100%);
   padding: 8px 12px;
   border: 2px solid #2e1b0e;
@@ -1515,10 +1530,12 @@ body:has(.gr-profile-title) #touch-controls {
     0 4px 0 rgba(46, 27, 14, 0.55),
     0 12px 20px rgba(46, 27, 14, 0.18);
   font: 800 0.82rem/1.2 Wellfleet, Georgia, serif;
-  pointer-events: none;
+  pointer-events: auto;
 }
 
 .world-info-note__title {
+  cursor: pointer;
+  list-style-position: inside;
   color: #2e1b0e;
   font-size: 0.88rem;
   line-height: 1.05;
@@ -1527,7 +1544,7 @@ body:has(.gr-profile-title) #touch-controls {
 
 .world-info-note__body,
 .world-info-note__hint {
-  margin: 0;
+  margin: 6px 0 0;
   color: rgba(46, 27, 14, 0.82);
   overflow-wrap: anywhere;
 }
@@ -1585,6 +1602,16 @@ body:has(.gr-profile-title) #touch-controls {
   font: inherit;
 }
 
+.building-context-prompt__anchors {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.building-context-prompt__anchors[hidden] { display: none; }
+.building-context-prompt kbd { font: inherit; opacity: .8; }
+
 .building-context-prompt__button--upgrade {
   background: #5b8a8a;
 }
@@ -1617,7 +1644,7 @@ body:has(.gr-profile-title) #touch-controls {
 
 @media (pointer: coarse), (max-width: 760px) {
   .prompt-stack {
-    bottom: calc(max(18px, env(safe-area-inset-bottom)) + 190px);
+    bottom: calc(max(18px, env(safe-area-inset-bottom)) + 156px);
   }
 }
 
@@ -1635,7 +1662,7 @@ body:has(.gr-profile-title) #touch-controls {
     width: 100%;
   }
 
-  .building-context-prompt__button,
+  .building-context-prompt > .building-context-prompt__button,
   .building-context-prompt__loss {
     grid-column: 1 / -1;
   }
@@ -1707,15 +1734,65 @@ body:has(.gr-profile-title) #touch-controls {
 
   .prompt-stack {
     left: max(14px, env(safe-area-inset-left));
-    right: calc(max(14px, env(safe-area-inset-right)) + 88px);
-    width: auto;
+    right: auto;
+    width: min(162px, calc(50vw - 32px));
+    max-height: max(144px, calc(100dvh - max(18px, env(safe-area-inset-bottom)) - 432px - var(--hud-resource-offset, 0px)));
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: #a0522d #f5e6c8;
+    pointer-events: auto;
+    touch-action: pan-y;
     align-items: stretch;
     transform: none;
   }
 
+  #hud .prompt-stack:has(> :not([hidden])) {
+    padding: 8px;
+    border: 2px solid #2e1b0e;
+    border-radius: 8px;
+    color: #2e1b0e;
+    background: #f5e6c8;
+    scrollbar-width: auto;
+    scrollbar-color: #2e1b0e #e6d2ad;
+  }
+  #hud .prompt-stack > .building-context-prompt,
+  #hud .prompt-stack > .world-info-note {
+    flex-shrink: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
+  }
+  #hud .prompt-stack > .world-info-note:not(:first-child) { padding-top: 8px; border-top: 1px solid #8b7d3c; }
+
+  .world-info-note__title { min-height: 44px; padding-block: 8px; }
+  .world-info-note[open] > summary::after { content: 'Swipe to scroll'; display: block; padding-top: 4px; color: #315f61; font-size: .65rem; }
+  .building-context-prompt kbd { display: none; }
+  .building-context-prompt[open] > summary::after {
+    content: 'Swipe to scroll';
+    display: block;
+    padding-top: 4px;
+    color: #315f61;
+    font-size: .65rem;
+  }
+
+  .building-context-prompt[data-kind="deck"] {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 6px;
+    padding: 8px;
+    font-size: .78rem;
+  }
+
+  .building-context-prompt[data-kind="deck"] .building-context-prompt__icon { display: none; }
+  .building-context-prompt[data-kind="deck"] .building-context-prompt__loss { grid-column: 1; }
+  .building-context-prompt__button { min-height: 44px; }
+  .building-context-prompt__anchors { display: grid; grid-template-columns: minmax(0, 1fr); gap: 6px; }
+
   .hud-panel.hud-panel--build {
     right: max(18px, env(safe-area-inset-right));
-    bottom: calc(max(18px, env(safe-area-inset-bottom)) + 232px);
+    bottom: calc(max(18px, env(safe-area-inset-bottom)) + 156px);
     left: auto;
     width: 76px;
     padding: 0;
@@ -1814,6 +1891,7 @@ body:has(.gr-profile-title) #touch-controls {
     right: 50px;
     bottom: 78px;
     width: 58px;
+    font-size: .72rem;
   }
 
   .hud-panel--weapon {
@@ -1828,6 +1906,13 @@ body:has(.gr-profile-title) #touch-controls {
     grid-template-columns: 30px minmax(0, 1fr);
     max-width: 20ch;
   }
+
+  .hud-agent-chip__main { display: contents; }
+  .hud-agent-chip__main [data-hud-agent-name] { grid-column: 1 / -1; grid-row: 1; white-space: normal; overflow: visible; }
+  .hud-agent-chip strong { grid-column: 2; grid-row: 2; color: #315f61; font-size: .62rem; }
+  .hud-agent-chip [data-hud-agent-label] { grid-column: 2; grid-row: 3; font-size: .62rem; white-space: nowrap; overflow: visible; }
+  .hud-agent-chip .hud-agent-chip__portrait { grid-row: 2 / span 2; }
+
 
   .hud-agent-chip__portrait {
     width: 30px;

@@ -16,6 +16,8 @@ export type WorldInfoObjectClass =
   | 'assay_office'
   | 'claim_stake'
   | 'spring_pond'
+  | 'water_source'
+  | 'open_water'
   | 'ford'
   | 'territory_ring_gap'
   | 'baron_standard'
@@ -103,6 +105,16 @@ export const WORLD_INFO_NOTES: readonly WorldInfoNote[] = [
     lines: ['Dry Gulch water. Sluices work here because the river is gone.'],
   },
   {
+    objectClass: 'water_source',
+    title: 'Water',
+    lines: ['Sluice Works need water nearby. Their placement preview shows where they can stand.'],
+  },
+  {
+    objectClass: 'open_water',
+    title: 'Open Water',
+    lines: ['Workshops stand on the Claim-Boat’s numbered deck anchors.'],
+  },
+  {
     objectClass: 'ford',
     title: 'Ford',
     lines: ['The only crossing bandits know.'],
@@ -166,19 +178,23 @@ const NOTE_HINT_PREFIX = 'world-info:';
 const FULL_APPROACHES = 2;
 
 export class WorldInfoNotePrompt {
-  private readonly root = document.createElement('div');
-  private readonly title = document.createElement('strong');
+  private readonly root = document.createElement('details');
+  private readonly title = document.createElement('summary');
   private readonly body = document.createElement('p');
   private readonly hint = document.createElement('span');
   private activeClass: WorldInfoObjectClass | null = null;
-  private visibleFull = false;
+  private countedApproach = false;
+  private readonly compactScreen = matchMedia('(pointer: coarse) and (max-height: 600px), (max-width: 760px) and (max-height: 600px)');
 
   constructor(parent: HTMLElement, private readonly storage: ProfileStorage | undefined = browserStorage()) {
     this.root.className = 'world-info-note';
     this.root.dataset.testid = 'world-info-note';
-    this.root.setAttribute('role', 'status');
     this.root.setAttribute('aria-live', 'polite');
     this.root.hidden = true;
+    this.root.addEventListener('toggle', () => this.syncDisclosure());
+    this.title.addEventListener('keydown', (event) => {
+      if (event.code === 'Enter' || event.code === 'Space') event.stopPropagation();
+    });
     this.title.className = 'world-info-note__title';
     this.title.dataset.testid = 'world-info-note-title';
     this.body.className = 'world-info-note__body';
@@ -194,23 +210,33 @@ export class WorldInfoNotePrompt {
     this.root.hidden = !note;
     if (!note) {
       this.activeClass = null;
+      this.root.name = '';
       return;
     }
 
     if (this.activeClass !== note.objectClass) {
       this.activeClass = note.objectClass;
-      this.visibleFull = note.persistent === false || seenCount(note.objectClass, this.storage) < FULL_APPROACHES;
-      if (this.visibleFull && note.persistent !== false) markApproach(note.objectClass, this.storage);
+      this.countedApproach = false;
+      this.root.open = !this.compactScreen.matches && (note.persistent === false || seenCount(note.objectClass, this.storage) < FULL_APPROACHES);
     }
 
+    const groupName = this.compactScreen.matches ? 'map-context' : '';
+    if (this.root.name !== groupName) this.root.name = groupName;
     this.root.dataset.objectClass = note.objectClass;
-    this.root.dataset.compact = String(!this.visibleFull);
-    this.root.classList.toggle('world-info-note--compact', !this.visibleFull);
+    this.syncDisclosure();
     this.title.textContent = note.title;
     this.body.textContent = note.lines.slice(0, 2).join(' ');
     this.hint.textContent = note.actionHint ?? '';
-    this.body.hidden = !this.visibleFull;
-    this.hint.hidden = !this.visibleFull || !note.actionHint;
+    this.hint.hidden = !note.actionHint;
+  }
+
+  private syncDisclosure(): void {
+    this.root.dataset.compact = String(!this.root.open);
+    this.root.classList.toggle('world-info-note--compact', !this.root.open);
+    if (this.root.open && this.activeClass && !this.countedApproach) {
+      if (noteByClass.get(this.activeClass)?.persistent !== false) markApproach(this.activeClass, this.storage);
+      this.countedApproach = true;
+    }
   }
 
   dispose(): void {

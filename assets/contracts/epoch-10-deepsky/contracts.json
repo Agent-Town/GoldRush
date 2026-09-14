@@ -5,7 +5,7 @@
     {
       "id": "e10-ember-shore",
       "name": "The Ember Shore",
-      "description": "Board-launch-only until its preserve-contract Static squall consumer lands.",
+      "description": "Keep the last warm vent alight through the Static squalls and secure the shore.",
       "tileParams": {
         "tileId": "e10-ember-shore",
         "biome": "deepsky-ember-shore",
@@ -66,7 +66,12 @@
           }
         ],
         "engineDependencies": [
-          { "dep": "ember-shore-preserve-consumers", "status": "landed", "landedBy": "E10S-3", "description": "BOTH CONSUMERS LANDED AND THE CLAIM IS EARNED: the squall phase machine in both engines (E10S-2, src/systems/E10SquallScheduler.ts, now.squall) and the warmth meter, STOKE action, gutter terminal, doubled mote pressure and secure latch in both engines (E10S-3, src/systems/E10PreserveSystem.ts, now.emberShore.preserve); E10S-4 added the harvestAnchors, the bench seeds, two losing null-floor rows and the public-verb prover, so the map is admitted. F-E10S4-2 CURED 2026-09-07: twist.emberShore is OUT of DECLARED_INERT_PATHS and the validator now ACCEPTS removing this row, measured rather than assumed (artifacts/engine-correctives-batch/probe-inert-retire.mjs run with the row deleted: 42 contracts load and parseContractDescriptor returns ok=true with no reasons). THE ROW SURVIVES FOR A NEW, SMALLER REASON: scripts/e10-preserve-consumer.test.mjs:455 pins it as a landed row naming its slice, and that guard sat outside the curing task's firewall. Retiring it is now one ledger line plus that guard's own retirement." }
+          {
+            "dep": "ember-shore-preserve-consumers",
+            "status": "landed",
+            "landedBy": "E10S-3",
+            "description": "BOTH CONSUMERS LANDED AND THE CLAIM IS EARNED: the squall phase machine in both engines (E10S-2, src/systems/E10SquallScheduler.ts, now.squall) and the warmth meter, STOKE action, gutter terminal, doubled mote pressure and secure latch in both engines (E10S-3, src/systems/E10PreserveSystem.ts, now.emberShore.preserve); E10S-4 added the harvestAnchors, the bench seeds, two losing null-floor rows and the public-verb prover, so the map is admitted. F-E10S4-2 CURED 2026-09-07: twist.emberShore is OUT of DECLARED_INERT_PATHS and the validator now ACCEPTS removing this row, measured rather than assumed (artifacts/engine-correctives-batch/probe-inert-retire.mjs run with the row deleted: 42 contracts load and parseContractDescriptor returns ok=true with no reasons). THE ROW SURVIVES FOR A NEW, SMALLER REASON: scripts/e10-preserve-consumer.test.mjs:455 pins it as a landed row naming its slice, and that guard sat outside the curing task's firewall. Retiring it is now one ledger line plus that guard's own retirement."
+          }
         ],
         "heightfield": {
           "id": "ember-shore-cooling-veins",
@@ -139,14 +144,14 @@
       },
       "briefing": {
         "goals": [
-          "Build around the last warm vent.",
-          "Cross the safe approaches beneath the cooled titan machine.",
-          "Watch the north, west, and east edges of the dry shore."
+          "Keep the last warm vent alight through at least one full squall.",
+          "Survive through wave 12 with warmth remaining to secure the shore.",
+          "Pan gold and return to the vent to stoke it before its warmth runs out."
         ],
         "rules": [
-          "Cooling lava veins mark the shore's hazard bands.",
-          "The cooled titan machine stands beside the eastern build ground.",
-          "The Ember Shore has no river, ford, or water source."
+          "During a squall, the vent loses 4 warmth each second. If it reaches zero, the claim is lost.",
+          "Within 4 paces of the vent, Stoke spends 15 gold to restore 40 warmth.",
+          "The shore has no river or water source; gather gold from the seams along the western approach."
         ],
         "geographyLine": "Cooling lava-vein bands divide the dry shore between the last warm vent and a cooled titan machine older than the Combine."
       }
@@ -154,7 +159,7 @@
     {
       "id": "e10-archive-world",
       "name": "The Archive World",
-      "description": "Board-launch-only until procgen worlds v3, re-ink light-hold squalls, and persistent lore-unlock consumers land. Teaching intent: show what losing to the Static means by restoring a prior civilization one wing at a time.",
+      "description": "Hold beacon light through Static squalls to restore the archive one wing at a time. Bank a secured run to keep its restored wings and rescued pages.",
       "tileParams": {
         "tileId": "e10-archive-world",
         "biome": "deepsky-archive-world",
@@ -220,11 +225,34 @@
             "x": 0,
             "z": 40,
             "heroStart": false
+          },
+          {
+            "id": "archive-entry",
+            "x": 0,
+            "z": -52,
+            "heroStart": true
           }
         ],
         "rails": [],
         "waterSources": [],
-        "harvestAnchors": [],
+        "harvestAnchors": [
+          {
+            "x": -30,
+            "z": -50
+          },
+          {
+            "x": -18,
+            "z": -42
+          },
+          {
+            "x": 18,
+            "z": -42
+          },
+          {
+            "x": 30,
+            "z": -50
+          }
+        ],
         "heightfield": {
           "id": "archive-world-uninked-ruins",
           "mode": "visual"
@@ -288,7 +316,12 @@
           }
         ],
         "engineDependencies": [
-          { "dep": "archive-world-consumers", "status": "missing", "description": "Needs the declared archive-wing, light-hold, empty-shelf, objective, procgen, and lore-unlock consumers." }
+          {
+            "dep": "archive-world-consumers",
+            "status": "landed",
+            "landedBy": "sol-map-art-archive-restoration",
+            "description": "Ordered beacon holds, secure gating, banked wing persistence and ratified ledger pages are implemented in this branch. Native play and final art acceptance remain in the map readiness ledger."
+          }
         ],
         "lanes": {
           "spawnEdges": [
@@ -301,9 +334,43 @@
         }
       },
       "twist": {
-        "clockTicks": 18000,
-        "harvestFreeObjective": {
-          "description": "Preserve, not extract: light is held through Static squalls to re-ink one archive wing at a time, and the wings themselves yield nothing. Seams stay unauthored until the archive door slice earns them on measured evidence."
+        "secureWave": 12,
+        "enemyRoster": [
+          {
+            "id": "static_mote",
+            "label": "Static Mote",
+            "waveMin": 1,
+            "visualScale": 0.25,
+            "art": "placeholder"
+          },
+          {
+            "id": "unraveled_machine",
+            "label": "Unraveled Memory",
+            "waveMin": 4,
+            "art": "char.e6.feral_toaster"
+          }
+        ],
+        "archiveWorld": {
+          "squall": {
+            "calmSeconds": 60,
+            "telegraphSeconds": 8,
+            "squallSeconds": 25,
+            "recoverSeconds": 8
+          },
+          "lightHold": [
+            {
+              "wingId": "west-stacks-wing",
+              "siteId": "west-wing-light"
+            },
+            {
+              "wingId": "east-stacks-wing",
+              "siteId": "east-wing-light"
+            },
+            {
+              "wingId": "warning-shelf-wing",
+              "siteId": "warning-shelf-light"
+            }
+          ]
         }
       },
       "boardRow": {
@@ -318,14 +385,14 @@
       },
       "briefing": {
         "goals": [
-          "Cross from the archive entry through both ruined stack wings.",
-          "Build at the west stacks, east stacks, and warning shelf.",
-          "Reach the empty shelf at the deep end of the archive."
+          "Pan the entry hall seams and build a beacon at the west light stake.",
+          "Keep the next wing beacon powered through a whole warning and Static squall.",
+          "Restore a wing, survive twelve waves, then bank to keep the rescued pages."
         ],
         "rules": [
-          "Three light stakes mark the two wings and warning shelf.",
-          "Four surveyed build grounds span the archive.",
-          "Waves enter from the north, west, and east."
+          "Wings restore in order: west stacks, east stacks, then the warning shelf.",
+          "An interrupted light hold must begin again with the next warning.",
+          "Lost runs keep no new restoration. Fully restored archives still require a fresh light hold."
         ],
         "geographyLine": "Two ruined stack wings lead from the archive entry to a deep warning shelf left empty for us, unless."
       }
@@ -380,10 +447,22 @@
         "rails": [],
         "waterSources": [],
         "harvestAnchors": [
-          { "x": -12, "z": -36 },
-          { "x": 12, "z": -12 },
-          { "x": -12, "z": 12 },
-          { "x": 12, "z": 36 }
+          {
+            "x": -12,
+            "z": -36
+          },
+          {
+            "x": 12,
+            "z": -12
+          },
+          {
+            "x": -12,
+            "z": 12
+          },
+          {
+            "x": 12,
+            "z": 36
+          }
         ],
         "heightfield": {
           "id": "ark-plaza-e10",
@@ -499,7 +578,11 @@
           }
         ],
         "engineDependencies": [
-          { "dep": "last-claim-finale-metadata-consumer", "status": "missing", "description": "The warm vent objective is live; the remaining finale objective metadata still needs its broader consumer." }
+          {
+            "dep": "last-claim-finale-metadata-consumer",
+            "status": "missing",
+            "description": "The warm vent objective is live; the remaining finale objective metadata still needs its broader consumer."
+          }
         ],
         "lanes": {
           "spawnEdges": [
@@ -515,12 +598,31 @@
         "preserve": {
           "work": "warm_vent",
           "hp": 360,
-          "position": { "x": 0, "z": 50 }
+          "position": {
+            "x": 0,
+            "z": 50
+          }
         },
         "secureWave": 8,
         "enemyRoster": [
-          { "id": "static_mote", "label": "Static Mote", "waveMin": 1, "visualScale": 0.25, "contactDamageScale": 0.35, "art": "placeholder" },
-          { "id": "unraveled_machine", "label": "Unraveled Machine", "waveMin": 2, "hpScale": 0.8, "wrecker": true, "contactDamageScale": 0.35, "buildingDamageScale": 0.45, "art": "placeholder" }
+          {
+            "id": "static_mote",
+            "label": "Static Mote",
+            "waveMin": 1,
+            "visualScale": 0.25,
+            "contactDamageScale": 0.35,
+            "art": "placeholder"
+          },
+          {
+            "id": "unraveled_machine",
+            "label": "Unraveled Machine",
+            "waveMin": 2,
+            "hpScale": 0.8,
+            "wrecker": true,
+            "contactDamageScale": 0.35,
+            "buildingDamageScale": 0.45,
+            "art": "placeholder"
+          }
         ]
       },
       "boardRow": {
@@ -615,7 +717,11 @@
           "maxZ": 5
         },
         "engineDependencies": [
-          { "dep": "credits-river-consumer", "status": "missing", "description": "Needs the declared credits-river band, gold-fleck zone, and objective consumers." }
+          {
+            "dep": "credits-river-consumer",
+            "status": "missing",
+            "description": "Needs the declared credits-river band, gold-fleck zone, and objective consumers."
+          }
         ],
         "lanes": {
           "spawnEdges": [],

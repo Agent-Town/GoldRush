@@ -44,7 +44,7 @@ export type CanalDecisionCandidate = {
  */
 export type DeckContextCandidate = {
   /** The pad the hero is standing at, so a spec can assert WHICH pad is being offered. */
-  padId: string;
+  padId: string | null;
   /** What the confirm key will place there — the player's own current build selection. */
   buildingId: BuildableId;
   buildingName: string;
@@ -56,7 +56,10 @@ export type DeckContextCandidate = {
 
 export class BuildingContextPrompt {
   private contentKey = '';
-  private readonly root = document.createElement('div');
+  private readonly compactScreen = matchMedia('(pointer: coarse) and (max-height: 600px), (max-width: 760px) and (max-height: 600px)');
+  private readonly root = document.createElement('details');
+  private readonly summary = document.createElement('summary');
+  private readonly body = document.createElement('div');
   private readonly icon = document.createElement('span');
   private readonly title = document.createElement('span');
   private readonly loss = document.createElement('span');
@@ -85,6 +88,12 @@ export class BuildingContextPrompt {
     this.root.setAttribute('role', 'status');
     this.root.setAttribute('aria-live', 'polite');
     this.root.hidden = true;
+    this.root.open = true;
+    this.summary.dataset.testid = 'building-context-toggle';
+    this.summary.addEventListener('keydown', (event) => {
+      if (event.code === 'Enter' || event.code === 'Space') event.stopPropagation();
+    });
+    this.body.className = 'building-context-prompt__body';
     this.icon.className = 'building-context-prompt__icon';
     this.icon.setAttribute('aria-hidden', 'true');
     this.title.className = 'building-context-prompt__title';
@@ -135,17 +144,10 @@ export class BuildingContextPrompt {
     this.deckAnchorRow.className = 'building-context-prompt__anchors';
     this.deckAnchorRow.dataset.testid = 'deck-anchors';
     this.deckAnchorRow.hidden = true;
-    // Laid out here rather than in `src/styles.css`, which is outside this slice's firewall. The
-    // prompt is a four-column grid; an anchor LIST is one variable-length cell, so it spans the row
-    // and flows its own buttons. Everything else inherits `building-context-prompt__button`.
-    this.deckAnchorRow.style.gridColumn = '1 / -1';
-    this.deckAnchorRow.style.display = 'flex';
-    this.deckAnchorRow.style.flexWrap = 'wrap';
-    this.deckAnchorRow.style.gap = '8px';
     this.onReanchor = onReanchor;
-    this.root.append(
-      this.icon,
-      this.title,
+    this.summary.append(this.icon, this.title);
+    this.root.append(this.summary, this.body);
+    this.body.append(
       this.upgradeButton,
       this.fundButton,
       this.demolishButton,
@@ -175,9 +177,17 @@ export class BuildingContextPrompt {
       : demolish
         ? `building:${demolish.id}:${demolish.index}:${demolish.invested}:${demolish.refund}:${upgrade?.tier ?? 0}:${upgrade?.cost ?? 0}:${upgrade?.canUpgrade ?? false}:${upgrade?.reason ?? 'none'}:${enterEnabled}`
         : 'hidden';
-    if (contentKey === this.contentKey) return;
+    if (contentKey === this.contentKey) { this.syncGroup(); return; }
     this.contentKey = contentKey;
     this.root.hidden = demolish === null && fund === null && canal === null && deck === null;
+    if (this.root.hidden) {
+      this.root.name = '';
+      return;
+    }
+    const kind = deck ? 'deck' : 'building';
+    if (kind !== this.root.dataset.kind) this.root.open = !deck;
+    this.root.dataset.kind = kind;
+    this.syncGroup();
     // ADR-005 stage 4. THE DECK OUTRANKS EVERY OTHER CANDIDATE for the same reason A10 does: a
     // Claim-Boat pad is a place on a hull, and no work can stand on it for the branches below to
     // describe (`Game.confirmAction` refuses an ordinary build outright while a deepwater claim is
@@ -192,8 +202,8 @@ export class BuildingContextPrompt {
       this.fundButton.hidden = true;
       this.canalRedigButton.hidden = true;
       this.canalDemolishButton.hidden = true;
-      this.deckBuildButton.hidden = false;
-      this.deckBuildButton.textContent = `Build ${deck.buildingName} on the ${deck.padId} pad${enterEnabled ? ' Enter' : ''}`;
+      this.deckBuildButton.hidden = deck.padId === null;
+      setButtonLabel(this.deckBuildButton, `Build ${deck.buildingName} · ${deck.padId}`, enterEnabled ? 'Enter' : undefined);
       this.renderAnchors(deck.anchors);
       return;
     }
@@ -211,8 +221,8 @@ export class BuildingContextPrompt {
       this.fundButton.hidden = true;
       this.canalRedigButton.hidden = false;
       this.canalDemolishButton.hidden = false;
-      this.canalRedigButton.textContent = `Re-dig: the water comes back${enterEnabled ? ' Enter' : ''}`;
-      this.canalDemolishButton.textContent = 'Demolish: the ground opens U';
+      setButtonLabel(this.canalRedigButton, 'Re-dig: the water comes back', enterEnabled ? 'Enter' : undefined);
+      setButtonLabel(this.canalDemolishButton, 'Demolish: the ground opens', 'U');
       return;
     }
     this.canalRedigButton.hidden = true;
@@ -225,7 +235,7 @@ export class BuildingContextPrompt {
       this.demolishButton.hidden = true;
       this.fundButton.hidden = false;
       this.fundButton.disabled = false;
-      this.fundButton.textContent = `Fund stage ${fund.stage}: ${fund.cost}g${enterEnabled ? ' Enter' : ''}`;
+      setButtonLabel(this.fundButton, `Fund stage ${fund.stage}: ${fund.cost}g`, enterEnabled ? 'Enter' : undefined);
       return;
     }
     this.fundButton.hidden = true;
@@ -236,8 +246,8 @@ export class BuildingContextPrompt {
     this.title.textContent = `${demolish.displayName}${upgrade ? ` · Tier ${upgrade.tier}` : ''}`;
     this.loss.textContent = `invested ${demolish.invested}g → returns ${demolish.refund}g. The timber comes back, the labor doesn't.`;
     this.upgradeButton.disabled = !upgrade?.canUpgrade;
-    this.upgradeButton.textContent = upgradeLabel(upgrade);
-    this.demolishButton.textContent = `Tear down (+${demolish.refund}g)${enterEnabled ? ' Enter' : ''}`;
+    setButtonLabel(this.upgradeButton, upgradeLabel(upgrade), upgrade?.canUpgrade ? 'U' : undefined);
+    setButtonLabel(this.demolishButton, `Tear down (+${demolish.refund}g)`, enterEnabled ? 'Enter' : undefined);
   }
 
   /**
@@ -249,13 +259,12 @@ export class BuildingContextPrompt {
   private renderAnchors(anchors: readonly { id: string; label: string }[]): void {
     this.deckAnchorRow.replaceChildren();
     this.deckAnchorRow.hidden = anchors.length === 0;
-    this.deckAnchorRow.style.display = anchors.length === 0 ? 'none' : 'flex';
     anchors.forEach((anchor, index) => {
       const button = document.createElement('button');
       button.className = 'building-context-prompt__button building-context-prompt__button--deck-anchor';
       button.type = 'button';
       button.dataset.testid = `deck-anchor-${anchor.id}`;
-      button.textContent = `Weigh anchor: ${anchor.label}${index === 0 ? ' U' : ''}`;
+      setButtonLabel(button, `Anchor: ${anchor.label.replaceAll('-', ' ')}`, index === 0 ? 'U' : undefined);
       button.addEventListener('click', () => {
         this.onReanchor(anchor.id);
         button.blur();
@@ -264,9 +273,24 @@ export class BuildingContextPrompt {
     });
   }
 
+  private syncGroup(): void {
+    const groupName = !this.root.hidden && this.compactScreen.matches ? 'map-context' : '';
+    if (this.root.name !== groupName) this.root.name = groupName;
+  }
+
   dispose(): void {
     this.root.remove();
   }
+}
+
+function setButtonLabel(button: HTMLButtonElement, label: string, key?: string): void {
+  button.textContent = label;
+  if (!key) { button.removeAttribute('aria-keyshortcuts'); return; }
+  button.setAttribute('aria-keyshortcuts', key);
+  const hint = document.createElement('kbd');
+  hint.textContent = ` ${key}`;
+  hint.setAttribute('aria-hidden', 'true');
+  button.append(hint);
 }
 
 function upgradeLabel(candidate: UpgradeCandidate | null): string {
@@ -274,7 +298,7 @@ function upgradeLabel(candidate: UpgradeCandidate | null): string {
   if (candidate.reason === 'max') return `Tier ${candidate.maxTier} max`;
   if (candidate.reason === 'gated') return `needs science`;
   if (candidate.reason === 'insufficient_gold') return `need ${candidate.cost}g`;
-  return `Upgrade to T${candidate.nextTier} (${candidate.cost}g) U`;
+  return `Upgrade to T${candidate.nextTier} (${candidate.cost}g)`;
 }
 
 function buildingGlyph(id: BuildableId): string {

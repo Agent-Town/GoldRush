@@ -3,7 +3,7 @@ import { getDebugSeed } from '../core/DebugParams';
 import { readDifficultyPreset } from '../game/Balance';
 import { freshMetaProgress, loadMetaProgress } from '../game/MetaProgress';
 import { hasRocketCartCaptured } from '../game/Medals';
-import { DEFAULT_CONTRACT_ID } from '../meta/ContractFamilies';
+import { contractEpochId, DEFAULT_CONTRACT_ID } from '../meta/ContractFamilies';
 import { browserResearchStorage, loadResearchState } from '../meta/ResearchTree';
 import type { LockstepClientOptions, MultiplayerSetup } from './LockstepClient';
 
@@ -190,7 +190,7 @@ export async function inspectRideRoom(relayBase: string, code: string): Promise<
 export function currentMultiplayerSetup(contractId = DEFAULT_CONTRACT_ID): MultiplayerSetup {
   const storage = browserResearchStorage();
   const meta = storage ? loadMetaProgress(storage) : freshMetaProgress();
-  const research = loadResearchState(storage, storage, { rocketCartCaptured: hasRocketCartCaptured() });
+  const research = loadResearchState(storage, storage, { rocketCartCaptured: hasRocketCartCaptured() }, contractEpochId(contractId));
   return {
     contractId,
     seed: getDebugSeed() ?? 'gold-rush',

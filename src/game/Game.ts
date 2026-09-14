@@ -100,7 +100,6 @@ import { bindStandingOrderHero, bindStandingUpgradePicker, snapshotStandingOrder
 import { isMultiplayerStandingSubmitter, multiplayerStandingParty, resetMultiplayerStandingRoster } from '../agent/DeclaredStack';
 import { ProspectorEmbodiment, type ProspectorPoint } from '../agent/Embodiment';
 import { RegattaRaceSystem } from '../systems/RegattaRaceSystem';
-import { FlotillaHullSystem } from '../systems/FlotillaHullSystem';
 import { NoiseHuntSystem } from '../systems/NoiseHuntSystem';
 import { AgentRiderBody, type AgentRiderBodyFutureState } from '../mp/AgentRiderBody';
 import { CrowdFlock } from '../entities/CrowdFlock';
@@ -194,6 +193,7 @@ import { E7PlaybookLatch } from '../systems/E7PlaybookLatch';
 import { SIGNAL_SUPPRESSION_REASON, SIGNAL_SUPPRESSION_VOICE, SignalSuppression } from '../systems/SignalSuppression';
 import { BroadcastMirror } from '../systems/BroadcastMirror';
 import { FRONT_HALF_WIDTH, INTERFERENCE_MUTED_REASON, INTERFERENCE_MUTED_VOICE, InterferenceFrontSystem } from '../systems/InterferenceFrontSystem';
+import { E10ArchiveSystem } from '../systems/E10ArchiveSystem';
 import { E10SquallScheduler } from '../systems/E10SquallScheduler';
 import { E10SquallPresentation } from '../systems/E10SquallPresentation';
 import { E10PreserveSystem, PRESERVE_STOKE_SINK } from '../systems/E10PreserveSystem';
@@ -293,6 +293,8 @@ import {
 } from '../world/LightRig';
 import { DetailScatter, type DetailScatterClearPoint } from '../world/Scatter';
 import { createDeepwaterClaimTile, deepwaterFrontCarriesWave, deepwaterStormDisablesScheduledWaves, type CorsairSkiffWave } from '../world/DeepwaterClaimTile';
+import { ClaimBoatView } from '../world/ClaimBoatView';
+import { FlotillaView } from '../world/FlotillaView';
 import { readTownName } from '../town/TownNaming';
 import { gameApiUrl } from '../app/GameApi';
 import { installRunTelemetry, reportRenderDemotion } from '../telemetry/runBeacon';
@@ -585,8 +587,13 @@ export class Game {
     active: false,
     amount: 0,
   }));
-  private readonly harvestSystem = new HarvestSystem(this.economy, Terrain.nodeAnchors, undefined, () => {
+  private readonly harvestSystem = new HarvestSystem(this.economy, Terrain.nodeAnchors, undefined, (_amount, anchorIndex, actorId) => {
     if (Balance.charm.coinTick > 0) this.audio.playCoin();
+    const slot = actorId === 'prospector' ? 0 : Number(actorId);
+    if (Number.isSafeInteger(slot) && slot >= 0) {
+      this.e8Atmosphere.notePan(anchorIndex, slot);
+      this.e8SuitAir.notePan(anchorIndex, slot);
+    }
   }, (position) => this.vfx.floatText(position, 'Vault full!', '#a0522d'));
   private readonly vfx = new Vfx();
   private deathPending = false;
@@ -794,6 +801,7 @@ export class Game {
    * other map: an undeclared scheduler answers "calm" forever and publishes nothing.
    */
   private readonly squall = E10SquallScheduler.create(this.activeContract);
+  private archive = E10ArchiveSystem.create(this.activeContract, E10ArchiveSystem.restoredWingIds(this.tileStateStore.readSnapshot(this.activeContract.id).entries));
   /**
    * E10S-3 (`specs/agent-play/e10-ember-shore-preserve.md` §3 "The vent", §4) — the vent the
    * squall above is the antagonist of, read off the CONTRACT exactly as `HeadlessContractSim`
@@ -865,13 +873,11 @@ export class Game {
    * specs/epoch-saga/CAPABILITY-LADDER.md L7) — and, worse, would answer a directive about human
    * experience in the one engine no human plays.
    *
-   * WHAT IS COMPOSED HERE IS THE SURVIVAL HALF AND ONLY IT: the suit drains, refills and charges,
-   * and the dial is on the HUD. The OBJECTIVE half — the regolith and crossing latches that gate
-   * the secure — stays where it was, which is the pre-existing bound these contracts' own
-   * `engineDependencies` rows have declared since the wall shipped.
+   * Successful harvest ticks credit the same air objectives as the headless door. The secure
+   * gate reads those consumers, and restarting creates fresh run-local air and objective state.
    */
-  private readonly e8Atmosphere = E8AtmosphereSystem.create(this.activeContract);
-  private readonly e8SuitAir = E8SuitAirSystem.create(this.activeContract);
+  private e8Atmosphere = E8AtmosphereSystem.create(this.activeContract);
+  private e8SuitAir = E8SuitAirSystem.create(this.activeContract);
   // A7 (door-completion-sheet §A7, RATIFIED 2026-08-20). The low-orbit geography consumer:
   // handhold spine, scaffold decks, debris bands, and the orbital-return flag that
   // `E8PhysicsSystem:133` has computed since E8 landed while nothing read it. Built off the
@@ -880,9 +886,7 @@ export class Game {
   private readonly hollowCrossing = HollowCrossingSystem.create(this.activeContract);
   private readonly hollowCrossingVisuals = new THREE.Group();
   private readonly contractEpoch = listEpochs().find((epoch) => loadEpoch(epoch.id).contracts.some((contract) => contract.id === this.activeContract.id));
-  private readonly activeEpoch = new URLSearchParams(window.location.search).has('replay') && this.contractEpoch
-    ? loadEpoch(this.contractEpoch.id)
-    : selectActiveEpoch();
+  private readonly activeEpoch = selectActiveEpoch();
   private readonly e6TileConsumers = new E6TileConsumerSystem(
     this.contractEpoch?.id === 'epoch-6-atomic' && this.activeContract.id === 'e6-glow-mesa',
     this.activeContract.id,
@@ -916,7 +920,7 @@ export class Game {
   );
   private readonly deepwaterClaim = createDeepwaterClaimTile(this.activeContract);
   private readonly regattaRace = RegattaRaceSystem.create(this.activeContract);
-  private readonly flotillaHulls = FlotillaHullSystem.create(this.activeContract, (id) => this.deepwaterClaim?.loseHull(id));
+  private readonly flotillaHulls = this.deepwaterClaim?.flotilla ?? null;
   /**
    * A2 — the noise-hunt, seated on the SAME readings GR-SIM seats (`DeepwaterSocket`): the boat
    * anchor and deck from the tile, the ballista's shot counter from the deck arsenal, the pan
@@ -960,7 +964,9 @@ export class Game {
   private runSuspendSaveLine = runSuspendPauseLine(this.activeContract.id);
   private manualSaveMessage = '';
   private readonly heroStart = contractHeroStart(this.activeContract);
-  private readonly heroVisualYAt = (x: number, z: number): number => Terrain.visualY(x, z, this.heroStart.y);
+  private readonly heroVisualYAt = (x: number, z: number): number => this.claimBoatView?.deckYAt(x, z) ?? this.flotillaView?.deckYAt(x, z) ?? Terrain.visualY(x, z, this.heroStart.y);
+  private claimBoatView?: ClaimBoatView;
+  private flotillaView?: FlotillaView;
   private readonly debugSpawnPosition = new THREE.Vector3();
   private terrainView?: TerrainView;
   private railPath?: RailPathView;
@@ -1961,6 +1967,7 @@ export class Game {
     });
     // Write-at-end law: staged tile-state entries land when the run ends, whatever ended it.
     this.events.on('run_ended', (event) => {
+      this.archive?.stageAtRunEnd(this.tileStateStore, this.activeContract.id, event.reason === 'secured' && !this.runTapeReplay);
       this.agentRiderTerminal = {
         reason: this.preserveFell ? 'preserve_fell' : this.ventGuttered ? 'vent_guttered' : event.reason,
         wave: event.summary.deepestWave ?? event.summary.wavesSurvived,
@@ -2169,6 +2176,10 @@ export class Game {
         nightLighting: () => this.lightField.snapshot(),
         rushActive: () => this.runManager?.diagnostics.rush === true,
         hotBoilers: () => this.pressureSystem.diagnostics.objective.hotBoilers,
+        archiveRestoration: () => this.archive ? {
+          zones: this.activeContract.tileParams.archiveWingZones ?? [],
+          restoredWingIds: this.archive.diagnostics.restoredWingIds,
+        } : null,
         detailBudget: () => this.runtimePerformanceVerdict,
         haulCart: () => {
           const cart = this.waveSystem.escortDiagnostics;
@@ -2418,13 +2429,7 @@ export class Game {
           return placed;
         },
         reanchorClaimBoat: (anchorId: string) => {
-          const moved = this.flotillaHulls?.diagnostics.hulls.some(({ id }) => id === anchorId)
-            ? this.flotillaHulls.reanchor(anchorId)
-            : this.deepwaterClaim?.reanchor(anchorId) ?? false;
-          // A2: only a boat that actually got under way makes engine noise.
-          if (moved) this.noiseHunt?.onReanchor(this.timeAlive);
-          this.publishDiagnostics();
-          return moved;
+          return this.tryReanchor(anchorId);
         },
         placeFree: (id: BuildableId, x: number, z: number, rotationSteps = 0) => {
           const placed = !this.deepwaterClaim && this.buildSystem.placeFree(id, { x, z }, rotationSteps);
@@ -2549,7 +2554,7 @@ export class Game {
           remove: (name: string) => removePlaybook(localStorage, name),
         },
         runTape: {
-          list: () => readRunTapes(localStorage),
+          list: () => readRunTapes(safeLocalStorage()),
           replayEventLogHash: () => runTapeEventLogHash(this.playbookOutcome()),
         },
         placeBeacon: () => {
@@ -2778,6 +2783,8 @@ export class Game {
     this.pressureSystem.dispose();
     this.pressureArsenalSystem.dispose();
     this.deepwaterArsenal.dispose();
+    this.claimBoatView?.dispose();
+    this.flotillaView?.dispose();
     this.e6ArsenalSystem.dispose();
     this.e6TileConsumers.dispose();
     this.e9ArsenalSystem.dispose();
@@ -3120,6 +3127,11 @@ export class Game {
                 const vent = this.preserveVent.pressureTarget(enemy);
                 return vent ? new THREE.Vector3(vent.x, Balance.enemy.groundY, vent.z) : actorTargets;
               }
+          : this.archive
+            ? (enemy) => {
+                const site = this.archive!.pressureTarget(enemy);
+                return site ? new THREE.Vector3(site.x, Balance.enemy.groundY, site.z) : actorTargets;
+              }
           : this.flotillaHulls
             ? [this.flotillaTargetPosition()]
             : actorTargets,
@@ -3136,6 +3148,7 @@ export class Game {
           this.wrangle.movementMultiplier(enemy) *
           this.e6ArsenalSystem.movementMultiplier(enemy) *
           this.e9ArsenalSystem.movementMultiplier(enemy),
+        this.archive ? actorTargets : undefined,
       );
       this.picnicHold.update(
         simDelta,
@@ -3167,6 +3180,8 @@ export class Game {
       // phase transitions with the same tick. The clock reads nothing and changes no board state;
       // the line after it is pure presentation, reading the numbers the line before published.
       this.squall.update(simDelta);
+      if (this.archive) this.archive.update(this.squall.diagnostics, this.archive.wings
+        .filter(wing => this.buildSystem.hasPoweredBeaconWithin(wing.x, wing.z, wing.radius)).map(wing => wing.siteId));
       // E10S-3: the vent immediately after the clock that drains it, at the matching point in
       // `HeadlessContractSim`'s own order, so both engines lose the same warmth on the same tick.
       // A guttered vent ends the run through `deathPending`, the same seam `damagePreserve` uses
@@ -3247,7 +3262,10 @@ export class Game {
     if (this.state.simActive && (!this.manualSimForTest || this.manualAdvanceForTest)) {
       this.terrainView?.update(frame.presentationDeltaSeconds * this.simTimeScale);
     }
+    this.claimBoatView?.update();
+    this.flotillaView?.update();
     this.applyRenderInterpolation(frame.alpha);
+    if (this.claimBoatView || this.flotillaView) this.deepwaterArsenal.updatePresentation(this.heroVisualYAt, this.primaryActor.renderPosition);
     this.prospector.updatePresentation(this.state.isPaused ? 0 : frame.presentationDeltaSeconds, frame.alpha);
     if (this.powerGraph && this.powerWireView) this.powerWireView.update(this.powerGraph.snapshot());
     this.updatePresentation(frame.presentationDeltaSeconds);
@@ -3382,7 +3400,7 @@ export class Game {
           speedScale: this.lowOrbit.speedScale(actor.group.position.x, actor.group.position.z),
         }
       : undefined;
-    const move = this.e8PhysicsSystem.filterMovement(slot, intents.move, fixedDelta, actor.velocity, terrain);
+    const move = this.e8PhysicsSystem.filterMovement(slot, intents.move, fixedDelta, actor.velocity, terrain, actor.movementSpeed);
     return move === intents.move ? intents : { ...intents, move };
   }
 
@@ -3405,24 +3423,27 @@ export class Game {
    * measures and RETURNS whole hit points, and `CombatSystem` — the sole damage resolver — is what
    * applies them. Inert on every contract that declares no atmosphere.
    *
-   * ONE BODY, ON PURPOSE. The era models ONE suit, so this walks the LOCAL actor rather than every
-   * actor the way the debris chip does: a multiplayer room would need one dial per seat, which is
-   * a second consumer and a different slice. The debris chip can walk them all because it is
-   * positional and stateless; a suit is neither.
+   * All peers step every visible actor in slot order. Suits are per actor; shelter clocks and
+   * objective credits are shared, so choosing a different local seat cannot change the result.
    */
   private applyE8SuitAir(fixedDelta: number): void {
     if (!this.e8Atmosphere.isDeclared && !this.e8SuitAir.isDeclared) return;
-    const body = this.localActor.group.position;
-    const chip = this.e8Atmosphere.update(fixedDelta, body, this.enemies.all)
-      + this.e8SuitAir.update(fixedDelta, body, this.enemies.all, this.waveSystem.diagnostics.wave);
-    if (chip > 0) this.combat.damageActor(chip, -1, this.localActor);
+    const humans = this.actors.map((actor, id) => ({ actor, id }))
+      .filter(({ actor }) => actor.group.visible)
+      .map(({ actor, id }) => ({ id, position: actor.group.position }));
+    const atmosphereDamage = this.e8Atmosphere.updateActors(fixedDelta, humans, this.enemies.all);
+    const suitDamage = this.e8SuitAir.updateActors(fixedDelta, humans, this.enemies.all, this.waveSystem.diagnostics.wave);
+    for (const human of humans) {
+      const chip = (atmosphereDamage.get(human.id) ?? 0) + (suitDamage.get(human.id) ?? 0);
+      if (chip > 0) this.combat.damageActor(chip, -1, this.actors[human.id]);
+    }
   }
 
   /** E8: the consumer's own numbers, narrowed to what the dial draws. Null where undeclared. */
   private suitAirState(): SuitAirState | null {
     const consumer = this.e8Atmosphere.isDeclared ? this.e8Atmosphere : this.e8SuitAir.isDeclared ? this.e8SuitAir : null;
     if (!consumer) return null;
-    const { suit } = consumer.diagnostics;
+    const suit = consumer.suitDiagnostics(this.actors.indexOf(this.localActor));
     return {
       seconds: suit.seconds,
       capacity: suit.capacity,
@@ -3493,7 +3514,7 @@ export class Game {
       this.runtimePerformanceVerdict >= 2 ? Balance.render.night.degradedDynamicLights : null,
     );
     this.syncNightShiftLighting();
-    this.lightRig?.update(this.timeAlive, this.localActor.renderPosition);
+    this.lightRig?.update(this.timeAlive, this.localActor.renderPosition, this.cameraRig.focus);
     this.damageVignette.style.opacity = (this.damageFlashRemaining / Balance.hero.iframes).toFixed(3);
     this.syncUpgradeOverlay();
     this.syncUi();
@@ -4838,10 +4859,18 @@ export class Game {
   }
 
   private createScene(): void {
-    this.lightRig = new LightRig(this.scene, this.renderer, this.activeContract.id);
+    this.lightRig = new LightRig(this.scene, this.renderer, this.activeContract.id, this.camera);
 
     this.terrainView = Terrain.createTerrainView();
     this.scene.add(this.terrainView.group);
+    if (this.deepwaterClaim && !this.flotillaHulls) {
+      this.claimBoatView = new ClaimBoatView(this.canvas, () => this.deepwaterClaim!.boat);
+      this.scene.add(this.claimBoatView.group);
+    }
+    if (this.flotillaHulls) {
+      this.flotillaView = new FlotillaView(this.canvas, this.flotillaHulls);
+      this.scene.add(this.flotillaView.group);
+    }
     if (this.preserveVisual) this.scene.add(this.preserveVisual);
     this.createHollowCrossingVisuals();
     this.damSurge = new DamSurgeEvent(
@@ -5047,7 +5076,7 @@ export class Game {
 
   private dressScene(): void {
     this.syncNightShiftLighting();
-    this.lightRig?.update(this.timeAlive, this.localActor.renderPosition);
+    this.lightRig?.update(this.timeAlive, this.localActor.renderPosition, this.cameraRig.focus);
   }
 
   private createMegaprojectVisuals(): void {
@@ -5800,6 +5829,7 @@ export class Game {
       // pair is what `e2e/e10-ember-shore-squall.spec.ts` reads to prove the browser runs the same
       // clock the headless engine does AND that a PLAYER can see it in a plain boot (Mistake #10).
       squall: this.squall.isDeclared ? this.squall.diagnostics : null,
+      ...(this.archive ? { archive: this.archive.diagnostics } : {}),
       // E10S-3: null on every contract that declares no vent. This is the row `View.readEmberShore`
       // turns into the rider's `now.emberShore.preserve` and the row the browser e2e reads.
       preserveVent: this.preserveVent.isDeclared ? this.preserveVent.diagnostics : null,
@@ -5816,6 +5846,8 @@ export class Game {
       e7Arsenal: this.e7ArsenalSystem.diagnostics,
       e8Arsenal: this.e8ArsenalSystem.diagnostics,
       e8Physics: this.e8PhysicsSystem.diagnostics,
+      e8Atmosphere: this.e8Atmosphere.isDeclared ? this.e8Atmosphere.diagnostics : null,
+      e8SuitAir: this.e8SuitAir.isDeclared ? this.e8SuitAir.diagnostics : null,
       probeRecovery: this.probeRecovery.diagnostics,
       broadcastMirror: this.broadcastMirror.isDeclared ? this.broadcastMirror.diagnostics : null,
       playbookUse: this.playbookLatch.objective === null ? null : {
@@ -6246,10 +6278,13 @@ export class Game {
       || !this.playbookObjectiveAllowsSecure
       || !this.showroomCaptureObjective.objectiveAllowsSecure
       || (this.motorSocket !== null && !this.motorSocket.objectiveAllowsSecure)
+      || !this.e8Atmosphere.objectiveAllowsSecure
+      || !this.e8SuitAir.objectiveAllowsSecure
       // E10S-3: mirrors `HeadlessContractSim.autoSecureWaveForRun` clause for clause. The Ember
       // Shore is not won by outliving it: a vent gone cold, or one that has not ridden a whole
       // Static squall still burning, leaves the run unsecurable at any wave. True on every
       // contract that declares no preserve consumer, so nothing else moves.
+      || (this.archive !== null && !this.archive.objectiveAllowsSecure)
       || !this.preserveVent.objectiveAllowsSecure
       || (this.preserveTarget !== null && !this.preserveTarget.active)
       ? Number.MAX_SAFE_INTEGER
@@ -7253,6 +7288,17 @@ export class Game {
   }
 
   private syncUi(): void {
+    const buildables = this.buildSystem.buildableSnapshots;
+    const boat = this.deepwaterClaim?.snapshot().boat;
+    if (boat) {
+      for (const item of buildables) {
+        item.cost = 0;
+        item.count = boat.buildings.filter(({ buildingId }) => buildingId === item.id).length;
+        item.maxCount = boat.pads.length;
+        item.canAfford = boat.pads.some(({ occupied }) => !occupied);
+        item.kitCredits = undefined;
+      }
+    }
     this.uiSnapshot = this.uiBridge.build(
       this.state,
       this.timeAlive,
@@ -7271,7 +7317,7 @@ export class Game {
       this.buildSystem.isBuildMode,
       this.buildMenuOpen,
       this.buildSystem.selectedBuildable,
-      this.buildSystem.buildableSnapshots,
+      buildables,
       this.buildSystem.buildableCounts.find((entry) => entry.id === 'stockpile')?.count ?? 0,
       this.buildSystem.beaconCount,
       Balance.beacon.maxCount,
@@ -7289,11 +7335,31 @@ export class Game {
     // Shore. `inReach` is measured off the body the confirm key acts from, so the price only
     // appears where pressing the key would actually buy warmth.
     this.hud.setVentWarmth(this.ventWarmthState());
+    this.hud.setArchiveStatus(this.archiveHudState());
     // E8: the human's suit, contract-scoped exactly as the vent meter above is — null (and so
     // hidden) on every map that declares no atmosphere, which is everything outside the Orbital
     // bundle. A rule that can kill her has to be a thing she can watch.
     this.hud.setSuitAir(this.suitAirState());
     this.playbookSurface?.update();
+  }
+
+  private archiveHudState() {
+    if (!this.archive) return null;
+    const state = this.archive.diagnostics;
+    const next = this.archive.wings.find(wing => !state.restoredWingIds.includes(wing.id)) ?? this.archive.wings[0];
+    const weather = this.squall.diagnostics;
+    const holding = state.holdingWingId !== null;
+    const lightReady = this.buildSystem.hasPoweredBeaconWithin(next.x, next.z, next.radius);
+    const seconds = Math.ceil(weather.secondsToNextPhase + (weather.phase === 'telegraph' && holding ? weather.squallSeconds : 0));
+    const instruction = holding ? `Keep light on: ${seconds}s`
+      : weather.phase === 'telegraph' || weather.phase === 'squall' ? 'Hold missed: retry next warning'
+      : lightReady ? `Light ready: ${Math.ceil(weather.secondsToNextPhase)}s to ${weather.phase === 'calm' ? 'warning' : 'calm'}`
+      : 'Build beacon at the stake';
+    return {
+      progress: `${state.restoredWingIds.length}/${this.archive.wings.length} restored`,
+      target: ['West light', 'East light', 'Warning shelf'][this.archive.wings.indexOf(next)] ?? 'Archive light',
+      instruction,
+    };
   }
 
   /** E10S-3: the consumer's own numbers, narrowed to what the meter draws. Null where undeclared. */
@@ -7777,7 +7843,7 @@ export class Game {
       seed: this.runSeed,
       difficulty: this.difficultyPreset,
       meta: runTapeRecordingMeta(
-        localStorage,
+        safeLocalStorage(),
         this.activeContract.id,
         {
           buildId: __APP_BUILD__,
@@ -7801,7 +7867,7 @@ export class Game {
     const recorder = this.runTapeRecorder;
     if (!recorder) return;
     const tape = recorder.finish(this.runTapeOutcome(reason, at, summary), this.runTapeEventLog());
-    appendRunTape(localStorage, tape);
+    appendRunTape(safeLocalStorage(), tape);
     this.lastRunTape = tape;
   }
 
@@ -7839,8 +7905,8 @@ export class Game {
     return {
       tapeKept: this.lastRunTape?.kept === true,
       onKeepTape: () => {
-        const tape = this.lastRunTape ?? readRunTapes(localStorage)[0] ?? null;
-        if (!tape || !keepRunTape(localStorage, tape.id)) return false;
+        const tape = this.lastRunTape ?? readRunTapes(safeLocalStorage())[0] ?? null;
+        if (!tape || !keepRunTape(safeLocalStorage(), tape.id)) return false;
         this.lastRunTape = tape;
         tape.kept = true;
         return true;
@@ -8091,16 +8157,22 @@ export class Game {
       -(((clientY - rect.top) / Math.max(1, rect.height)) * 2 - 1),
     );
     this.aimRaycaster.setFromCamera(this.aimPointerNdc, this.camera);
-    if (!this.aimRaycaster.ray.intersectPlane(this.aimGroundPlane, this.pointerAimPoint)) return null;
+    const targetPlane = this.aimGroundPlane.clone();
+    const targetPoint = new THREE.Vector3();
     const targets = [
       ...this.harvestSnapshot.activeNodes
         .filter((entry) => entry.active)
-        .map((entry) => ({ id: entry.id, label: 'seam', position: entry.position })),
+        .map((entry) => ({ id: entry.id, label: 'seam', position: entry.position, y: Terrain.visualY(entry.position.x, entry.position.z, 0.05) })),
       ...this.buildSystem.diagnostics.sluicePositions
-        .map((position, index) => ({ id: `sluice-${index + 1}`, label: 'sluice', position })),
+        .map((position, index) => ({ id: `sluice-${index + 1}`, label: 'sluice', position, y: Terrain.visualY(position.x, position.z, 0.2, 0.9) })),
     ];
     return targets
-      .map((target) => ({ ...target, distance: distanceSq2(this.pointerAimPoint.x, this.pointerAimPoint.z, target.position.x, target.position.z) }))
+      .map((target) => {
+        // Match each visual's terrain height without changing the shared blast-aim plane.
+        targetPlane.constant = -target.y;
+        const hit = this.aimRaycaster.ray.intersectPlane(targetPlane, targetPoint);
+        return { ...target, distance: hit ? distanceSq2(hit.x, hit.z, target.position.x, target.position.z) : Infinity };
+      })
       .filter((target) => target.distance <= 2.2 ** 2)
       .sort((a, b) => a.distance - b.distance)[0] ?? null;
   }
@@ -8358,23 +8430,24 @@ export class Game {
     if (!claim) return null;
     const boat = claim.snapshot().boat;
     let best: { id: string; distanceSq: number } | null = null;
+    let nearPad = false;
     for (const pad of boat.pads) {
-      if (pad.occupied) continue;
       const distanceSq = distanceSq2(position.x, position.z, boat.anchor.x + pad.x, boat.anchor.z + pad.z);
       if (distanceSq > CANAL_DECISION_REACH * CANAL_DECISION_REACH) continue;
+      nearPad = true;
+      if (pad.occupied) continue;
       if (!best || distanceSq < best.distanceSq) best = { id: pad.id, distanceSq };
     }
     const anchors = this.deckAnchorChoices(boat.anchor.id);
-    if (!best && anchors.length === 0) return null;
+    if (!nearPad || (!best && anchors.length === 0)) return null;
     const buildingId = this.buildSystem.diagnostics.selectedBuildable;
-    if (!best) return null;
     return {
-      padId: best.id,
+      padId: best?.id ?? null,
       buildingId,
       buildingName: getBuildableDef(buildingId)?.displayName ?? buildingId,
       anchors,
-      title: 'The deck, and the water under it',
-      line: 'A pad takes one work and holds it while the boat moves. Weighing anchor carries the whole claim, deck and all.',
+      title: this.deepwaterClaim.flotilla ? 'Flotilla' : 'Claim Boat',
+      line: 'One workshop per pad. Anchoring carries riders and workshops aboard.',
     };
   }
 
@@ -8384,12 +8457,7 @@ export class Game {
    * `__GR_TEST__.reanchorClaimBoat` routes them.
    */
   private deckAnchorChoices(currentAnchorId: string): { id: string; label: string }[] {
-    const hulls = this.flotillaHulls?.diagnostics.hulls ?? [];
-    if (hulls.length > 0) {
-      return hulls.filter(({ id }) => id !== currentAnchorId).map(({ id }) => ({ id, label: id }));
-    }
-    const claimBoat = this.activeContract.tileParams.deepwater?.claimBoat;
-    return (claimBoat?.anchors ?? [])
+    return (this.deepwaterClaim?.reanchorTargets() ?? [])
       .filter((anchor) => anchor.id !== currentAnchorId)
       .map((anchor) => ({ id: anchor.id, label: anchor.id }));
   }
@@ -8401,7 +8469,7 @@ export class Game {
    */
   private tryDeckBuild(): boolean {
     const candidate = this.deckContextCandidate;
-    if (!candidate || !this.deepwaterClaim) return false;
+    if (!candidate?.padId || !this.deepwaterClaim) return false;
     const placed = this.deepwaterClaim.placeBoatBuilding(candidate.padId, candidate.buildingId);
     if (!placed) return false;
     this.recordLedgerBuildable(candidate.buildingId);
@@ -8415,10 +8483,11 @@ export class Game {
    * used, including the A2 noise beat — only a boat that actually got under way makes engine noise.
    */
   private tryReanchor(anchorId: string): boolean {
-    const moved = this.flotillaHulls?.diagnostics.hulls.some(({ id }) => id === anchorId)
-      ? this.flotillaHulls.reanchor(anchorId)
-      : this.deepwaterClaim?.reanchor(anchorId) ?? false;
+    const moved = this.deepwaterClaim?.reanchor(anchorId, this.actors.filter(({ group }) => group.visible).map(({ group }) => group.position)) ?? false;
     if (!moved) return false;
+    for (const actor of this.actors) actor.snapRenderState();
+    this.claimBoatView?.update();
+    this.flotillaView?.update();
     this.noiseHunt?.onReanchor(this.timeAlive);
     this.updateBuildingContextCandidates();
     this.publishDiagnostics();
@@ -8433,7 +8502,8 @@ export class Game {
       this.buildSystem.isBuildMode ||
       document.querySelector('[data-testid="assay-bench"]:not([hidden])') !== null ||
       document.querySelector('[data-testid="contract-briefing"]:not([hidden])') !== null;
-    this.worldInfoNotePrompt.update(blocked ? null : this.nearestWorldInfoTarget(this.localActor.group.position));
+    const target = blocked ? null : this.nearestWorldInfoTarget(this.localActor.group.position);
+    this.worldInfoNotePrompt.update(target);
   }
 
   private nearestWorldInfoTarget(position: THREE.Vector3): WorldInfoNoteTarget | null {
@@ -8458,10 +8528,11 @@ export class Game {
     const stake = Terrain.lossStakeMarker() ?? this.heroStart;
     add('claim_stake', stake.x, stake.z, 2.4, 1);
     for (const source of Terrain.waterSources()) {
-      add('spring_pond', source.x, source.z, source.radius + 1.4);
+      const objectClass = this.deepwaterClaim ? 'open_water' : this.activeContract.id === 'e1-dry-gulch' ? 'spring_pond' : 'water_source';
+      add(objectClass, source.x, source.z, source.radius + 1.4);
     }
     for (const ford of Terrain.fordRanges()) {
-      add('ford', ford.centerX, 0, ford.halfWidth + 1.35);
+      add('ford', ford.centerX, (Terrain.RIVER_MIN_Z + Terrain.RIVER_MAX_Z) / 2, ford.halfWidth + 1.35);
     }
     if (this.baronStandardPlanted) add('baron_standard', this.baronStandardPosition.x, this.baronStandardPosition.z, 2.5, 4);
     if (this.territoryRingPresent) {
@@ -8700,7 +8771,6 @@ export class Game {
     this.drillYard?.reset();
     this.deepwaterClaim?.reset();
     this.regattaRace?.reset();
-    this.flotillaHulls?.reset();
     // A2: alongside its siblings, and NOT optional. `deepwaterClaim.reset()` above restores the
     // pads a strike knocked out, so a hunt that kept its integrity map would re-lose a restored
     // pad on the first strike of the new run; it would also carry the old run's trail, strike
@@ -8718,7 +8788,8 @@ export class Game {
     this.deepwaterArsenal.reset();
     this.e8ArsenalSystem.reset();
     this.e8PhysicsSystem.reset();
-    this.lowOrbit.reset();
+    this.e8Atmosphere = E8AtmosphereSystem.create(this.activeContract);
+    this.e8SuitAir = E8SuitAirSystem.create(this.activeContract);    this.lowOrbit.reset();
     // A3: the shadow belongs to the run that cast it — a restart starts with no habits recorded.
     this.broadcastMirror.reset();
     this.hollowCrossing.reset();
@@ -8751,6 +8822,7 @@ export class Game {
     // E10S-2: the cadence restarts with the run — a new run opens calm with its first squall 68s
     // away, never the leftover phase of the last one, and the wash goes back to clear with it.
     this.squall.reset();
+    this.archive = E10ArchiveSystem.create(this.activeContract, E10ArchiveSystem.restoredWingIds(this.tileStateStore.readSnapshot(this.activeContract.id).entries));
     this.squallPresentation?.reset();
     // E10S-3: the vent relights with the run — full warmth, no stokes, no squalls survived and no
     // gutter, so a lost claim never carries its cold vent into the next attempt.
@@ -9302,7 +9374,7 @@ export class Game {
       -(((event.clientY - rect.top) / Math.max(1, rect.height)) * 2 - 1),
     );
     this.aimRaycaster.setFromCamera(this.aimPointerNdc, this.camera);
-    if (!this.aimRaycaster.ray.intersectPlane(this.aimGroundPlane, this.pointerAimPoint)) return;
+    if (!Terrain.intersectVisualGround(this.aimRaycaster, this.pointerAimPoint)) return;
     this.pointerAimReady = true;
   };
 
@@ -10433,13 +10505,9 @@ function createRidgeGlow(contract: ContractManifest): THREE.Group | null {
   if (!glow) return null;
   const group = new THREE.Group();
   group.name = 'BlackoutRidgeOffMapGlow';
-  const material = new THREE.MeshBasicMaterial({ color: glow.color, transparent: true, opacity: 0.32, depthWrite: false });
-  const halo = new THREE.Mesh(new THREE.SphereGeometry(4.5, 18, 12), material);
-  halo.position.set(glow.x, Terrain.visualY(glow.x, glow.z, 4), glow.z);
-  halo.renderOrder = RenderLayers.worldUi - 1;
   const light = new THREE.PointLight(glow.color, glow.intensity, 26, 2);
-  light.position.copy(halo.position);
-  group.add(halo, light);
+  light.position.set(glow.x, Terrain.visualY(glow.x, glow.z, 4), glow.z);
+  group.add(light);
   return group;
 }
 

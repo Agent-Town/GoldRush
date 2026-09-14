@@ -76,7 +76,7 @@ export class DeepwaterSocket {
     noisePorts: DeepwaterNoisePorts,
   ) {
     this.race = RegattaRaceSystem.create(contract);
-    this.flotilla = FlotillaHullSystem.create(contract, (id) => this.tile.loseHull(id));
+    this.flotilla = this.tile.flotilla;
     // A2 — the noise-hunt reads the boat and the deck from this socket's own tile, the ballista
     // from its own arsenal, and the pan channel from the host. A knocked-out deck leaves through
     // the SAME `loseHull` seam the Flotilla already uses.
@@ -127,7 +127,6 @@ export class DeepwaterSocket {
     // tick. The leviathan is the roster's depth traveller, named from the contract rather than
     // hardcoded, exactly as the corsair archetype is looked up below.
     this.noise?.advance(at, this.enemies.all, this.leviathanVariantId);
-    this.race?.advance(at, snapshot.corsairWaves.length, [this.heroPosition(), snapshot.boat.anchor]);
     const pending = snapshot.corsairWaves.slice(this.corsairWavesSpawned);
     this.corsairWavesSpawned = snapshot.corsairWaves.length;
     const baron = this.contract.twist.baron;
@@ -142,6 +141,11 @@ export class DeepwaterSocket {
   /** Game.update: deepwaterArsenal.update, after the claim sync and before the wave system. */
   updateArsenal(at: number): void {
     this.arsenal.update(at);
+  }
+
+  /** Game.update measures racers after their movement, before the arsenal and wave updates. */
+  advanceRace(at: number, wave: number): void {
+    this.race?.advance(at, wave, [this.heroPosition(), this.tile.snapshot().boat.anchor]);
   }
 
   /** Game.recycleDeepwaterCorsairsAtExit: skiffs that reached the far edge leave the board. */
@@ -182,9 +186,7 @@ export class DeepwaterSocket {
 
   /** Real lever — Game's `reanchor` action. Rejects unknown anchors and the current one. */
   reanchor(anchorId: string, at = 0): boolean {
-    const moved = this.flotilla?.diagnostics.hulls.some(({ id }) => id === anchorId)
-      ? this.flotilla.reanchor(anchorId)
-      : this.tile.reanchor(anchorId);
+    const moved = this.tile.reanchor(anchorId, [this.heroPosition()]);
     // A2: the boat only makes engine noise when it actually gets under way, so a REFUSED
     // reanchor is silent. Free on every contract without a noise-hunt (`this.noise` is null).
     if (moved) this.noise?.onReanchor(at);
@@ -209,7 +211,7 @@ export class DeepwaterSocket {
       tileId: snapshot.tileId,
       size: snapshot.size,
       anchor: { ...snapshot.boat.anchor },
-      anchors: this.contract.tileParams.deepwater!.claimBoat.anchors.map((anchor) => ({ ...anchor })),
+      anchors: this.tile.reanchorTargets().map((anchor) => ({ ...anchor })),
       pads: snapshot.boat.pads.map(({ id, occupied }) => ({ id, occupied })),
       boatBuildings: snapshot.boat.buildings.map((building) => ({ ...building })),
       storm: snapshot.storm,

@@ -924,9 +924,9 @@ test('Twin Banks consumes its declared crossings and build zones before securing
   assert.deepEqual(transcript[0].stablePrefix.mechanics.posting.waves, [
     { event: 'secure', wave: 20, source: 'twist.secureWave' },
   ]);
-  // AP-16-2: idle e1-twin-banks-01 dies with its first offer still live instead of taking
-  // an immediate upgrade, so its terminal hash re-pins without a default.
-  assert.equal(transcript.at(-1).eventLogHash, 'fnv1a32:01e5173c');
+  // F44: the authored braid mask and obstacle-aware ford routes change combat timing.
+  // Pin the repeated idle run separately from the high-health secure-wave check below.
+  assert.equal(transcript.at(-1).eventLogHash, 'fnv1a32:6730d992');
 
   const previousLocation = globalThis.location;
   const previousWindow = globalThis.window;
@@ -955,7 +955,7 @@ test('Twin Banks consumes its declared crossings and build zones before securing
         halfWidth,
       })),
     );
-    assert.equal(Terrain.sample(0, 0).zone, 'river');
+    assert.equal(Terrain.sample(0, 0).zone, 'bank');
     for (const ford of fords) assert.equal(Terrain.sample(ford.x, 0).zone, 'ford');
     for (const bar of water.gravelBars) assert.equal(Terrain.isCrossingStructure(bar.x, bar.z), true);
 
@@ -979,18 +979,18 @@ test('Twin Banks consumes its declared crossings and build zones before securing
     const first = run();
     const second = run();
     assert.deepEqual(second, first);
-    // AP-16-2: the high-HP e1-twin-banks-01 arm reaches twenty-five stable trail
-    // deadlines; queued XP cannot refresh them, moving combat timing, kills, and the hash.
+    // F44: corrected braid routing preserves wave-20 timing and offer deadlines;
+    // kills and the event digest reflect the newly reachable paths.
     assert.deepEqual(first.outcome, {
       secured: true,
       waves: 20,
       timeMs: 600000,
       gold: 0,
-      kills: 771,
+      kills: 787,
       calls: 0,
       defaultedPicks: 25,
       defaultedSecure: 1,
-      eventLogHash: 'fnv1a32:ecec1077',
+      eventLogHash: 'fnv1a32:6c36401c',
     });
     assert.equal(first.terminalLog.outcome, 'secured');
   } finally {

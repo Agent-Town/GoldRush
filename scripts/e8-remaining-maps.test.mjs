@@ -390,7 +390,7 @@ test('low orbit crosses its two outboard decks, and the returning-lob seam is un
   // drift/debris scaling still reaches `filterMovement` through the sim's own movement seam, and
   // `LowOrbitSystem` carries no import of this consumer.
   const sim = read('src/sim/HeadlessContractSim.ts');
-  assert.match(sim, /this\.e8Physics\.filterMovement\(0, intents\.move, STEP_SECONDS, this\.hero\.velocity, terrain\)/);
+  assert.match(sim, /this\.e8Physics\.filterMovement\(0, intents\.move, STEP_SECONDS, this\.hero\.velocity, terrain, this\.hero\.movementSpeed\)/);
   assert.match(sim, /controlScale: this\.lowOrbit\.controlScale\(position\.x, position\.z\)/);
   assert.match(sim, /speedScale: this\.lowOrbit\.speedScale\(position\.x, position\.z\)/);
   assert.doesNotMatch(read('src/systems/LowOrbitSystem.ts'), /E8SuitAirSystem/);

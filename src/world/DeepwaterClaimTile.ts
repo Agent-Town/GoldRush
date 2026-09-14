@@ -1,4 +1,5 @@
-import { ClaimBoat, type ClaimBoatConfig } from '../entities/ClaimBoat';
+import { ClaimBoat, type ClaimBoatConfig, type BoatRiderPosition } from '../entities/ClaimBoat';
+import { FlotillaHullSystem } from '../systems/FlotillaHullSystem';
 import type { ContractManifest, ContractWeather } from '../meta/ContractFamilies';
 import { StormWaveScheduler, type StormWaveEvent } from '../systems/StormWaveScheduler';
 import { WaterRegionTile, type WaterTileParams, type WaterTravelClass } from './WaterRegion';
@@ -61,6 +62,7 @@ const DEEPWATER_CONTRACTS = new Set(['e5-deepwater-claim', 'e5-regatta', 'e5-sti
 export class DeepwaterClaimTile {
   readonly water: WaterRegionTile;
   boat: ClaimBoat;
+  readonly flotilla: FlotillaHullSystem | null;
   private readonly scheduler: StormWaveScheduler;
   private readonly corsairWaves: CorsairSkiffWave[] = [];
   private readonly lostHullPads = new Set<string>();
@@ -82,6 +84,7 @@ export class DeepwaterClaimTile {
     if (this.deepwater.corsairWaveSize > 0 && !this.corsair) throw new Error('The Deepwater Claim data is incomplete.');
     this.water = new WaterRegionTile(this.deepwater.waterTile);
     this.boat = new ClaimBoat(this.deepwater.claimBoat);
+    this.flotilla = FlotillaHullSystem.create(contract, (id) => this.loseHull(id));
     this.scheduler = new StormWaveScheduler(
       {
         weather: { era: 5, contractId: contract.id, ...authored.twist.weather },
@@ -109,8 +112,20 @@ export class DeepwaterClaimTile {
     } as const;
   }
 
-  reanchor(anchorId: string): boolean {
-    return this.boat.reanchor(anchorId);
+  reanchor(anchorId: string, riders: readonly BoatRiderPosition[] = []): boolean {
+    if (this.flotilla?.diagnostics.hulls.some(({ id }) => id === anchorId)) return this.flotilla.reanchor(anchorId, riders);
+    const before = this.boat.snapshot().anchor;
+    if (!this.boat.reanchor(anchorId, this.flotilla ? [] : riders)) return false;
+    const after = this.boat.snapshot().anchor;
+    this.flotilla?.moveAnchorage(after.x - before.x, after.z - before.z, riders);
+    return true;
+  }
+
+  reanchorTargets() {
+    return [
+      ...this.deepwater.claimBoat.anchors,
+      ...(this.flotilla?.diagnostics.hulls ?? []).filter(({ lost }) => !lost).map(({ id, x, z }) => ({ id, x, z })),
+    ];
   }
 
   sample(x: number, z: number, travelClass: WaterTravelClass) {
@@ -124,6 +139,7 @@ export class DeepwaterClaimTile {
 
   reset(): ReturnType<DeepwaterClaimTile['snapshot']> {
     this.boat = new ClaimBoat(this.deepwater.claimBoat);
+    this.flotilla?.reset();
     this.scheduler.reset();
     this.corsairWaves.length = 0;
     this.lostHullPads.clear();
@@ -132,11 +148,21 @@ export class DeepwaterClaimTile {
 
   snapshot() {
     const boat = this.boat.snapshot();
+    const hulls = this.flotilla?.diagnostics.hulls;
+    const pads = hulls ? boat.pads.flatMap((pad) => {
+      if (this.lostHullPads.has(pad.id)) return [];
+      const hull = hulls.find(({ id, lost }) => id === pad.id && !lost);
+      return hull ? [{ ...pad, x: hull.x - boat.anchor.x, z: hull.z - boat.anchor.z }] : [];
+    }) : boat.pads.filter(({ id }) => !this.lostHullPads.has(id));
+    const buildings = boat.buildings.flatMap((building) => {
+      const pad = pads.find(({ id }) => id === building.padId);
+      return pad ? [{ ...building, x: boat.anchor.x + pad.x, z: boat.anchor.z + pad.z }] : [];
+    });
     return {
       contractId: this.contract.id,
       tileId: this.deepwater.waterTile.id,
       size: this.deepwater.waterTile.size,
-      boat: { ...boat, buildings: boat.buildings.filter(({ padId }) => !this.lostHullPads.has(padId)) },
+      boat: { ...boat, pads, buildings },
       storm: this.scheduler.snapshot(),
       corsairWaves: this.corsairWaves.map((wave) => ({ ...wave, enemies: [...wave.enemies] })),
       wrecks: [...this.deepwater.wrecks],

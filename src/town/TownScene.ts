@@ -2225,6 +2225,7 @@ export class TownScene {
   }
 
   private renderBoard(): void {
+    const scrollTop = this.board.querySelector<HTMLElement>('.town-ui__board-shell')?.scrollTop ?? 0;
     const activeEpoch = loadEpoch(activeEpochId());
     const debug = !__GR_RELEASE_E1__ && new URLSearchParams(window.location.search).has('debug');
     // "Open every claim" has to reach the CHAPTERS too, or the 26 gated contracts stay off the book
@@ -2307,6 +2308,8 @@ export class TownScene {
         ${this.renderRideTogetherCard()}
       </div>
     `;
+    const shell = this.board.querySelector<HTMLElement>('.town-ui__board-shell');
+    if (shell) shell.scrollTop = scrollTop;
     this.loadSurfaceEraBackdrop(this.board, boardEpochId);
   }
 
@@ -2345,7 +2348,9 @@ export class TownScene {
     this.boardPageIndex = index;
     this.renderBoard();
     this.board.querySelector<HTMLElement>('.town-ui__chapter-tab[aria-current="page"]')?.scrollIntoView({ block: 'nearest', inline: 'nearest' });
-    this.board.querySelector<HTMLElement>('.town-ui__book-chapter')?.focus({ preventScroll: true });
+    const chapter = this.board.querySelector<HTMLElement>('.town-ui__book-chapter');
+    chapter?.focus({ preventScroll: true });
+    chapter?.scrollIntoView({ block: 'start', inline: 'nearest' });
   }
 
   private renderContractCard(contract: ContractManifest, scores: readonly ScoreRecord[], pageIndex: number, pageCount: number): string {

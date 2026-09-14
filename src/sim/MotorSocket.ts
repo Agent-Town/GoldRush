@@ -342,7 +342,8 @@ export class MotorSocket {
       convoy.bestRemaining = Math.min(convoy.bestRemaining, remaining);
       if (gained > 0) convoy.behavior.update(gained / Balance.e4Fuel.vehicleSpeed);
       const leader = convoy.behavior.diagnostics().leaderDistance;
-      if (!convoy.arrived && leader >= convoy.total - 1e-6) {
+      // The railhead itself is solid terrain; settle at its reachable edge like the other errands.
+      if (!convoy.arrived && after.state === 'arrived' && this.nearStop(after)) {
         convoy.arrived = true;
         convoy.arrivedAt = time;
         this.record(emit, { type: 'motor_convoy_arrived', at: time, routeId: convoy.routeId, distance: round3(leader) });

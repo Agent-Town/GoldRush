@@ -9,6 +9,11 @@ import { motorFloorOrders, motorSteps } from './e4-motor-floor.mjs';
 // all four Motor Frontier maps, one errand each, exactly the audit's own "smallest slices"
 // (`docs/audits/2026-09-02-era-mechanic-audit.md`), with SECURE waiting on that errand.
 //
+// Map-art anchor repair: Gusher/Boneyard gold seams now sit beside their solid objects.
+// Repeated floor measurements preserve idle pins, errand waves, distance and fuel;
+// Gusher floor digest and Boneyard arrival/digest reflect the reachable harvest locations.
+// Evidence: artifacts/map-art-repairs-20260908/harvest-anchor-census-01/motor-measurements.jsonl
+//
 // F-1406-2: the terminal pins below are CHANGE DETECTORS. A red means the sim's behaviour moved;
 // establish why before re-deriving, never paste over it. Every number here was measured on
 // 2026-09-04 by three instruments that agree: this in-process door, `scripts/e4-motor-ride.mjs`
@@ -24,18 +29,10 @@ import { motorFloorOrders, motorSteps } from './e4-motor-floor.mjs';
 // the four errand stops are ground NO HERO CAN STAND ON, so a plan aims beside them.
 // EVERY IDLE ROW IS UNCHANGED — no orders, no grammar, no movement.
 //
-// F-RPG-10 (finding, for the drain; NOT a regression this task introduced): the Long Road's convoy
-// errand cannot be landed by any body a human positions. Its town gains ground only as the lead
-// Hauler's straight-line distance to `(190, 0)` falls, and it arrives when the cumulative gain
-// reaches `convoy.total` — which `MotorSocket.ts` seeds as that same opening distance, so the
-// Hauler must come to rest EXACTLY on the stop (`:341-345`). `HAUL` brings the Hauler to the hero,
-// and `Terrain.sample(190, 0).walkable` is false: the far railhead is an impassable rectangle
-// about x 186..190 by z -5..5, with standable ground only east of it at x >= 190.75, reachable
-// only around the block. Every rung of the aim ladder therefore refuses (measured: two
-// UNREACHABLE_TERRAIN, three UNREACHABLE_APPROACH), and the row below pins that honestly rather
-// than pretending. The cure is the socket's or the contract's — give the convoy the same
-// `MOTOR_STOP_REACH` the other three errands use, or move the stop onto standable ground — and
-// both are outside this task's firewall. The other three errands land exactly as before.
+// F-RPG-10: Long Road previously required the Hauler at the solid railhead center. The shared
+// socket now settles a stopped Hauler within MOTOR_STOP_REACH, like the other motor errands.
+// The focused socket check covers outside/inside reach; the floor policy's failed approach
+// remains separately pinned until an actual reachable route is verified.
 
 const root = fileURLToPath(new URL('..', import.meta.url));
 const DUST_FLATS = 'e4-dust-flats';
@@ -87,7 +84,7 @@ const MAPS = [
     stop: { x: -50, z: -40 },
     rules: ['motor_closures', 'motor_fuel', 'motor_haul_objective', 'motor_hauler', 'motor_roads', 'motor_weather'],
     idle: { waves: 5, kills: 90, eventLogHash: 'fnv1a32:b9638b36' },
-    floor: { waves: 6, kills: 131, eventLogHash: 'fnv1a32:a8ce35f4', objWave: 4, securableAtWave: 12, residual: [] },
+    floor: { waves: 6, kills: 131, eventLogHash: 'fnv1a32:32cc6154', objWave: 4, securableAtWave: 12, residual: [] },
     motor: {
       graded: ['camp-to-east-lease', 'camp-to-north-lease', 'camp-to-west-lease'], hauled: true,
       arrivedAt: 133.7, roadDistance: 216.804, distanceTravelled: 265.314, fuelDrawn: 32.626,
@@ -103,9 +100,9 @@ const MAPS = [
     stop: { x: -18, z: -8 },
     rules: ['motor_fuel', 'motor_haul_objective', 'motor_hauler', 'motor_roads', 'motor_weather'],
     idle: { waves: 4, kills: 35, eventLogHash: 'fnv1a32:5c7f6600' },
-    floor: { waves: 4, kills: 40, eventLogHash: 'fnv1a32:5329f56d', objWave: 1, securableAtWave: 12, residual: [] },
+    floor: { waves: 4, kills: 40, eventLogHash: 'fnv1a32:e19df24a', objWave: 1, securableAtWave: 12, residual: [] },
     motor: {
-      graded: ['gate-to-west-rows'], hauled: true, arrivedAt: 53.933, roadDistance: 10.633,
+      graded: ['gate-to-west-rows'], hauled: true, arrivedAt: 51.233, roadDistance: 10.633,
       distanceTravelled: 69.078, fuelDrawn: 20.844, tarHarvested: 9, convoyArrived: null,
       kind: 'tow', towed: true,
     },
@@ -355,15 +352,22 @@ test("the Long Road's town gains only the ground its lead Hauler gains, and latc
     assert.equal(read().convoy.leaderDistance, 0, 'the town did not follow it backwards');
     assert.equal(read().objective.arrived, false);
 
-    // Then east, the whole road. The town tracks the Hauler's gain and latches at the far stop.
-    assert.equal(socket.haulTo({ x: 190, z: 0 }, time, emit).ok, true);
+    // Resting outside the stop's reach must not complete the errand.
+    assert.equal(socket.haulTo({ x: 187, z: 0 }, time, emit).ok, true);
+    for (let waited = 0; waited < 400 && read().vehicle.state !== 'arrived'; waited += 1) step(0.5);
+    assert.equal(read().vehicle.state, 'arrived');
+    assert.equal(socket.objectiveAllowsSecure, false);
+
+    // The railhead center is solid: a hero can call the Hauler onto its reachable east edge.
+    assert.equal(socket.haulTo({ x: 190.75, z: 0.5 }, time, emit).ok, true);
     for (let waited = 0; waited < 400 && !socket.objectiveAllowsSecure; waited += 1) step(0.5);
     const arrived = read();
     assert.equal(socket.objectiveAllowsSecure, true);
     assert.equal(arrived.objective.arrived, true);
     assert.equal(arrived.objective.securableAtWave, 12);
     assert.equal(arrived.convoy.arrived, true);
-    assert.equal(arrived.convoy.leaderDistance, 370);
+    assert.ok(arrived.convoy.leaderDistance >= 370 - door.MotorSocket.MOTOR_STOP_REACH);
+    assert.ok(arrived.convoy.leaderDistance < 370, 'arrival does not require the solid railhead center');
     assert.ok(arrived.convoy.members.slice(1).every((member) => member.gap > 0), 'followers ride behind the leader');
     assert.ok(arrived.vehicle.roadDistance > 360, `the whole trip rode the grade: ${arrived.vehicle.roadDistance}`);
     assert.ok(events.some(({ type }) => type === 'motor_convoy_arrived'));

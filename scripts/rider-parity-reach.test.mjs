@@ -158,13 +158,12 @@ test('the Prospector reads that remain are exactly the ones that are meant to re
     // epitaph and this slice's own F-RPG-2 note, and both should survive a re-word.
     .filter(([, line]) => line.includes('this.prospector.position') && !line.startsWith('//') && !line.startsWith('*'))
     .map(([number, line]) => `${number}: ${line}`);
-  assert.equal(remaining.length, 10,
-    `${SIM} carries ${remaining.length} \`this.prospector.position\` code reads, not 10. `
-    + 'Stage 3 leaves exactly ten: three deliberate reach tests (pan, repair, harvestTargets), '
-    + "seven passive wirings (the deepwater shooter, BuildSystem's construction anchor, the "
-    + "deepwater actor pick, build.update, the pressure and motor body lists, the Prospector's own "
-    + 'movement multiplier). The E8 hollow crossing and interference-front suspension moved to '
-    + 'the hero in stage 3. Adding an unexpected code read on the Prospector is the thing this '
+  assert.equal(remaining.length, 7,
+    `${SIM} carries ${remaining.length} \`this.prospector.position\` code reads, not 7. `
+    + 'Seven remain: pan, repair, harvestTargets, the construction anchor, build.update, '
+    + 'and the pressure and motor body lists. Deepwater now reads the hero for its shooter '
+    + 'and socket, and Regatta fast water changes the hero speed rather than the Prospector clock. '
+    + 'Adding an unexpected code read on the Prospector is the thing this '
     + `test exists to catch:\n${remaining.join('\n')}`);
 });
 
@@ -209,5 +208,5 @@ test('the reach guard BITES an unexpected Prospector code read', {
 }, () => {
   const child = runSimMutation((source) => `${source}\nthis.prospector.position;\n`);
   assert.notEqual(child.status, 0, 'an unexpected Prospector code read did NOT red the census');
-  assert.match(`${child.stdout}${child.stderr}`, /carries 11 `this\.prospector\.position` code reads, not 10/);
+  assert.match(`${child.stdout}${child.stderr}`, /carries 8 `this\.prospector\.position` code reads, not 7/);
 });

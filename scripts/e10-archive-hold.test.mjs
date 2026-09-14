@@ -1,0 +1,100 @@
+import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+import { createServer } from 'vite';
+
+const server = await createServer({ server: { middlewareMode: true }, appType: 'custom' });
+try {
+  const { E10ArchiveSystem } = await server.ssrLoadModule('/src/systems/E10ArchiveSystem.ts');
+  const wings = [1, 2, 3].map(order => ({ id: `wing-${order}`, siteId: `light-${order}`, order, x: order * 10, z: 0, radius: 4 }));
+  const weather = (phase, cycle = 0) => ({ declared: true, phase, cycle });
+  const cycle = (system, lights, number = 0) => {
+    for (const phase of ['calm', 'telegraph', 'squall', 'recover']) system.update(weather(phase, number), lights);
+  };
+  const ordered = new E10ArchiveSystem(wings);
+  cycle(ordered, ['light-2', 'light-3']);
+  assert.equal(ordered.objectiveAllowsSecure, false, 'later wings cannot skip the west wing');
+  cycle(ordered, ['light-1', 'light-2', 'light-3'], 1);
+  assert.deepEqual(ordered.restoredThisRun, ['wing-1'], 'at most one wing per squall');
+  cycle(ordered, ['light-1', 'light-2', 'light-3'], 2);
+  assert.deepEqual(ordered.restoredThisRun, ['wing-1', 'wing-2']);
+
+  for (const interruption of ['telegraph', 'squall']) {
+    const system = new E10ArchiveSystem(wings);
+    system.update(weather('telegraph'), ['light-1']);
+    system.update(weather(interruption), []);
+    system.update(weather('squall'), ['light-1']);
+    system.update(weather('recover'), ['light-1']);
+    assert.equal(system.objectiveAllowsSecure, false, `${interruption} outage invalidates the whole hold`);
+    cycle(system, ['light-1'], 1);
+    assert.equal(system.objectiveAllowsSecure, true, 'next full squall can retry');
+  }
+  const pressure = new E10ArchiveSystem(wings);
+  const mote = { id: 2, variantId: 'static_mote' };
+  pressure.update(weather('calm'), ['light-1']);
+  assert.equal(pressure.pressureTarget(mote), null, 'calm leaves motes chasing the hero');
+  pressure.update(weather('squall'), ['light-1', 'light-3']);
+  assert.equal(pressure.pressureTarget(mote).siteId, 'light-1');
+  assert.equal(pressure.pressureTarget({ ...mote, id: 3 }).siteId, 'light-3');
+  assert.equal(pressure.pressureTarget({ ...mote, variantId: 'unraveled_machine' }), null);
+  pressure.update(weather('squall'), []);
+  assert.equal(pressure.pressureTarget(mote), null, 'dark sites attract no pressure');
+  pressure.update(weather('recover'), ['light-1']);
+  assert.equal(pressure.pressureTarget(mote), null, 'recovery releases light pressure');
+  const late = new E10ArchiveSystem(wings);
+  late.update(weather('squall'), ['light-1']);
+  late.update(weather('recover'), ['light-1']);
+  assert.equal(late.objectiveAllowsSecure, false, 'lighting only during squall is insufficient');
+  const saved = new E10ArchiveSystem(wings, ['wing-1']);
+  cycle(saved, ['light-2']);
+  assert.deepEqual(saved.restoredThisRun, ['wing-2']);
+  const complete = new E10ArchiveSystem(wings, wings.map(wing => wing.id));
+  assert.equal(complete.objectiveAllowsSecure, false, 'saved completion does not secure idle replay');
+  cycle(complete, ['light-1']);
+  assert.equal(complete.objectiveAllowsSecure, true, 'completed archive remains playable');
+  assert.deepEqual(complete.restoredThisRun, [], 'reaffirming a wing does not create new lore entries');
+  const { E10SquallScheduler } = await server.ssrLoadModule('/src/systems/E10SquallScheduler.ts');
+  const contract = JSON.parse(readFileSync('assets/contracts/epoch-10-deepsky/contracts.json', 'utf8')).contracts.find(c => c.id === 'e10-archive-world');
+  assert.equal(E10ArchiveSystem.create(contract).wings.length, 3, 'production Archive declares all three holds');
+  const inactive = structuredClone(contract);
+  delete inactive.twist.archiveWorld;
+  assert.equal(E10ArchiveSystem.create(inactive), null, 'undeclared contracts remain inactive');
+  contract.twist.archiveWorld = { squall: {}, lightHold: contract.tileParams.archiveWingZones.map((wing, index) => ({ wingId: wing.id, siteId: contract.tileParams.lightHoldSites[index].id })) };
+  const authored = E10ArchiveSystem.create(contract);
+  assert.equal(authored.wings.length, 3);
+  assert.equal(E10SquallScheduler.create(contract).isDeclared, true, 'archive uses the shared scheduler');
+  const broken = structuredClone(contract);
+  broken.twist.archiveWorld.lightHold[0].siteId = 'missing';
+  assert.throws(() => E10ArchiveSystem.create(broken), /authored wing and light site/);
+  const duplicateSite = structuredClone(contract);
+  duplicateSite.tileParams.lightHoldSites.push({ ...duplicateSite.tileParams.lightHoldSites[0], x: 8 });
+  assert.throws(() => E10ArchiveSystem.create(duplicateSite), /exactly one binding/);
+  const scheduler = E10SquallScheduler.create({ twist: { emberShore: { squall: {} } } });
+  const boundary = new E10ArchiveSystem(wings);
+  for (let tick = 0; tick < 2800; tick += 1) {
+    scheduler.update(1 / 30);
+    const weather = scheduler.diagnostics;
+    boundary.update(weather, ['telegraph', 'squall'].includes(weather.phase) ? ['light-1'] : []);
+  }
+  assert.deepEqual(boundary.restoredThisRun, ['wing-1'], 'power loss after squall completion must not cancel a completed hold');
+  assert.deepEqual(new E10ArchiveSystem(wings, ['wing-3']).diagnostics.restoredWingIds, []);
+  assert.throws(() => new E10ArchiveSystem([...wings, wings[0]]), /Invalid/);
+  assert.throws(() => new E10ArchiveSystem([{ ...wings[0], radius: NaN }]), /Invalid/);
+  const { TileStateStore } = await server.ssrLoadModule('/src/game/TileStateStore.ts');
+  const bytes = new Map();
+  const storage = { getItem: key => bytes.get(key) ?? null, setItem: (key, value) => bytes.set(key, value), removeItem: key => bytes.delete(key) };
+  const store = new TileStateStore(storage);
+  const first = new E10ArchiveSystem(wings);
+  cycle(first, ['light-1']);
+  assert.deepEqual(store.readSnapshot('archive-test').entries, [], 'no mid-run persistence');
+  first.stageAtRunEnd(store, 'archive-test', false);
+  store.commitAtRunEnd();
+  assert.deepEqual(new TileStateStore(storage).readSnapshot('archive-test').entries, [], 'lost run writes no restoration');
+  first.stageAtRunEnd(store, 'archive-test', true);
+  assert.deepEqual(new TileStateStore(storage).readSnapshot('archive-test').entries, [], 'staging alone is not a commit');
+  assert.equal(store.commitAtRunEnd(), true);
+  const entries = new TileStateStore(storage).readSnapshot('archive-test').entries;
+  const second = new E10ArchiveSystem(wings, E10ArchiveSystem.restoredWingIds(entries));
+  assert.deepEqual(second.diagnostics.restoredWingIds, ['wing-1'], 'new run loads committed restoration');
+  assert.equal(second.objectiveAllowsSecure, false, 'saved wing does not grant current-run completion');
+  console.log('PASS: ordered full holds, interruptions, retry, saved progress, replay and configuration checks');
+} finally { await server.close(); }

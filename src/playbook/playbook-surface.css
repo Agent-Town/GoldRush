@@ -11,9 +11,11 @@
 .playbook-surface__panel { pointer-events: auto; }
 
 .playbook-surface__toggle {
-  position: absolute;
-  top: 5.2rem;
-  right: 1rem;
+  position: static;
+  grid-column: 1 / -1;
+  width: 100%;
+  min-height: 44px;
+  pointer-events: auto;
   padding: .55rem .8rem;
   border: 1px solid #d8a45a;
   border-radius: .35rem;
@@ -95,13 +97,122 @@
 .playbook-surface__empty { color: #765033; font-style: italic; }
 
 @media (max-width: 600px) {
-  .playbook-surface__toggle { top: 4.35rem; right: .5rem; }
   .playbook-surface__panel {
-    top: auto;
     right: .5rem;
-    bottom: 5rem;
+    bottom: auto;
     width: calc(100vw - 1rem);
     max-height: 58vh;
     box-sizing: border-box;
   }
+}
+
+.e7-jack-board {
+  contain: inline-size;
+  grid-column: 1 / -1;
+  min-width: 0;
+  border: 1px solid #8a6847;
+  border-radius: .35rem;
+  color: #3d2619;
+  background: #f2dfba;
+  pointer-events: auto;
+  font: 12px/1.35 Georgia, serif;
+}
+
+.e7-jack-board summary {
+  min-height: 44px;
+  padding: .75rem .5rem;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.e7-jack-board summary:focus-visible { outline: 2px solid #2f7f78; }
+.e7-jack-board [data-e7-board-content] {
+  padding: 0 .5rem .6rem;
+  max-height: min(15rem, calc(100dvh - 8rem));
+  overflow: auto;
+}
+
+@media (pointer: coarse), (max-width: 760px) {
+  #hud:has(.playbook-surface__toggle) .hud__wave {
+    right: auto;
+    width: min(162px, calc((100vw - 36px) / 2));
+  }
+}
+
+@media (orientation: portrait) and (max-height: 700px) {
+  #hud:has(.playbook-surface__toggle) .hud-panel--vitals .hud-row:first-child .hud-value {
+    min-width: 0;
+    white-space: nowrap;
+    font-size: .8rem;
+  }
+}
+
+@media (pointer: coarse), (max-width: 760px), (max-height: 700px) {
+  .e7-jack-board[open] [data-e7-board-content] {
+    position: fixed;
+    left: 50%;
+    bottom: max(12px, env(safe-area-inset-bottom));
+    width: min(360px, calc(100vw - 24px));
+    max-height: min(15rem, calc(100dvh - 128px));
+    transform: translateX(-50%);
+    z-index: 30;
+    padding: 12px;
+    border: 2px solid #8a6847;
+    border-radius: .35rem;
+    background: #f2dfba;
+    box-shadow: 0 0 0 100vmax #111312a6;
+  }
+}
+
+.e7-jack-board summary small {
+  display: block;
+  padding-top: .2rem;
+  font-size: .7rem;
+  font-weight: 400;
+}
+
+.hud-panel--weapon > .hud-claim-secured {
+  width: 100%;
+  position: static;
+  grid-column: 1 / -1;
+  min-width: 0;
+  margin: 0 0 .3rem;
+}
+
+.hud-panel--weapon:has(.playbook-surface__toggle) .hud-value { min-width: 0; }
+
+@media (orientation: portrait) and (max-height: 700px) {
+  #hud:has(.playbook-surface__toggle) :is(.hud-panel--vitals, .hud-panel--gold, .hud-panel--xp, .hud-panel--weapon) { width: min(162px, calc((100vw - 80px) / 2)); }
+  /* Leave the bottom Build control and its safe-area margin clear. */
+  #hud:has(.playbook-surface__toggle) .hud-panel--weapon {
+    width: min(162px, calc((100vw - 36px) / 2));
+    padding-block: 2px;
+    max-height: calc(100dvh - max(12px, env(safe-area-inset-top)) - 52px - var(--hud-resource-offset) - max(18px, env(safe-area-inset-bottom)) - 240px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    touch-action: pan-y;
+  }
+  #hud:has(.playbook-surface__toggle) .hud-agent-chip { margin-top: 0; }
+  #hud:has(.playbook-surface__toggle) .hud-panel--weapon > .hud-claim-secured { margin-bottom: 0; }
+  #hud:has(.playbook-surface__toggle) .hud-panel--weapon > .hud-claim-secured strong { letter-spacing: 0; }
+  #hud:has(.playbook-surface__toggle):not([data-paused="true"]) .hud-pause { left: calc(50% - 22px); right: auto; top: max(12px, env(safe-area-inset-top)); bottom: auto; width: 44px; height: 44px; padding: 0; font-size: 0; }
+  #hud:has(.playbook-surface__toggle):not([data-paused="true"]) .hud-pause::after { content: 'Ⅱ'; font: 900 1.15rem/1 sans-serif; }
+}
+
+@media (orientation: portrait) and (max-height: 700px) {
+  #hud:has(.playbook-surface__toggle) .hud-panel--gold { grid-template-columns: 16px minmax(0, 1fr); }
+  #hud:has(.playbook-surface__toggle) .hud-panel--gold .hud-label { display: none; }
+  #hud:has(.playbook-surface__toggle) .hud-panel--gold .hud-value { min-width: 0; }
+}
+
+@media (orientation: portrait) and (max-height: 700px) {
+  .hud-panel--weapon > .hud-claim-secured { padding: 4px; font-size: .64rem; }
+  .hud-panel--weapon > .hud-claim-secured span { display: none; }
+}
+
+.e7-board-heading { position: sticky; top: 0; display: flex; align-items: start; gap: 8px; justify-content: space-between; padding-bottom: 4px; background: #f2dfba; }
+.e7-board-heading button { flex: 0 0 auto; min-width: 44px; min-height: 44px; border: 1px solid #8a6847; border-radius: .3rem; color: #3d2619; background: #fff8e8; font: 700 12px Georgia, serif; cursor: pointer; }
+
+@media (orientation: portrait) and (max-height: 600px) {
+  #hud:has(.playbook-surface__toggle) .hud-agent-chip__main [data-hud-agent-level] { grid-column: 2; grid-row: 1; }
 }
