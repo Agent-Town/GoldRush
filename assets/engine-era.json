@@ -1,7 +1,7 @@
 {
   "era": 6,
   "name": "the Re-surveyed Claims",
-  "engineHash": "0e9bb11725d9375c78085ab187fab3c7b13bf09fba25ab97c5d7e43181e0481d",
+  "engineHash": "f3a347a9ba697c04f7393fd30d03703bc3bb5d806abaab77fda6ee9773adec3e",
   "declaredAt": "2026-09-14",
   "note": "Era 6 opens with Astra's map campaign (sol/map-art-inventory-20260908 883a3521e) landed by maps-campaign-land-era6 on 2026-09-14: 17 contracts re-parameterised (tileParams on 13, twists on 3, briefings on 5), the door tightened to the contract's own research epoch, 66 src files, the map-rebuild-spike terrain, plaza props and flotilla models. Owner ruling 2026-09-13, verbatim: \"ah, that is all no problem. we don't have players yet so we can just keep going\" and \"we then have to make another run in the future but not immediately\"; the name ratified 2026-09-14 (\"the Re-surveye Claims\" is good for me). Every era-5 reel reads \"This reel rode era 5; the county accepts era 6\" and stands retired, counted. Heat 14 re-rides the boards on this era when the owner says so.",
   "viewSchema": {
@@ -89,6 +89,12 @@
       "engineHash": "0e9bb11725d9375c78085ab187fab3c7b13bf09fba25ab97c5d7e43181e0481d",
       "pinnedAt": "2026-09-14",
       "cause": "era 6 opened by maps-campaign-land-era6: the merged tree of main 9382083d3 + Astra's map campaign 883a3521e with the drain's cures (E1/E2/E3 engineDependencies declarations restored from main, F-MAPL-2; census pins re-pointed; null floors re-recorded)",
+      "aliases": []
+    },
+    {
+      "engineHash": "f3a347a9ba697c04f7393fd30d03703bc3bb5d806abaab77fda6ee9773adec3e",
+      "pinnedAt": "2026-09-14",
+      "cause": "same era, second pin: after era 6 was declared with the first pin, the same drain regenerated assets/pilots/map-rebuild-spike/landmarks/landmark-source-ledger.json from the pack contracts (glb-contract-guard.test.mjs:307) — that path is in ENGINE_SOURCE_INPUTS, so the hash moved without any sim, contract or floor change; measured on the final chain with sprites-split-land merged (which touched no corpus file)",
       "aliases": []
     }
   ],
