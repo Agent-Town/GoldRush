@@ -47,6 +47,14 @@ export const classifyCitation = (full, outbox) => {
   ) ? 'dismissed' : 'reported'
 }
 
+// ⚠️ DO NOT "simplify" this away — it is load-bearing and its reason was undocumented until s2562.
+// git's approxidate fills a BARE `YYYY-MM-DD` with the CURRENT TIME-OF-DAY, so `--since=2026-09-11`
+// means 2026-09-11 at whatever o'clock it happens to be. A bare-date window therefore SLIDES through
+// the day and reports a DIFFERENT day's commits depending on when you run it. Measured s2562 by
+// prediction, 5/5 subjects: at 16:03 local, `--since=D --until=D+1` returned exactly the commits in
+// [D@16:03, D+1@16:03) — so a probe for 2026-09-11 (truly 0 commits) returned September 12's 8.
+// Pinning the time kills the slide. F-2391-1 cures the JS side of this trap (build bounds by integer
+// y/m/d arithmetic, never Date parsing); this is the OTHER half — what you hand to git.
 export const normalizeSince = (since) => /^\d{4}-\d{2}-\d{2}$/.test(since) ? `${since}T00:00:00` : since
 
 // Player paths: a change the PLAYER could see. Excludes tests, scripts, tasks, docs,
