@@ -165,7 +165,9 @@ try {
 // assets/processed and the denominator cannot move. The branch's own re-pin to 2082 (F-SPRDR-3, the
 // +682 PNGs it adds) is NOT taken here and must not be: those 682 files are not on this tree. If this
 // ever reads 2082 on main, a payload/new-family land leaked past item 4 of that master.
-assert.equal(current.scanned, 1400, 'processed PNG denominator moved');
+// maps-campaign-land-era6 + sprites-split-land drained together (attended 2026-09-14): the map campaign adds 1 processed
+// PNG (assets/processed/terrain-e5-open-sea-tile.png), so the denominator the sprite drain re-measured at 1400 reads 1401 on the combined tree.
+assert.equal(current.scanned, 1401, 'processed PNG denominator moved');
 assert.deepEqual(
   current.suspects.map(({ file }) => file).sort(),
   expectedResidual.map(({ file }) => file).sort(),
