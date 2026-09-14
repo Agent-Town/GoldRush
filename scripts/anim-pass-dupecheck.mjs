@@ -34,7 +34,8 @@ for (const stem of stems) {
   const png = PNG.sync.read(fs.readFileSync(path.join('assets/raw', `${stem}.png`)));
   const key = d.keyRGB;
   const [cols, rows] = d.grid;
-  const cw = png.width / cols, ch = png.height / rows;
+  // Cached bbox coordinates belong to the grid used by their inspector run.
+  const cw = d.divisible?.cellW ?? png.width / cols, ch = d.divisible?.cellH ?? png.height / rows;
   const cellOf = (id) => {
     const m = /^r(\d+)c(\d+)$/.exec(id);
     return d.cells.find((c) => c.row === Number(m[1]) && c.col === Number(m[2]));

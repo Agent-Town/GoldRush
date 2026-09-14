@@ -55,7 +55,8 @@ specs.forEach((s, n) => {
   const [r, c] = s.cell.split(',').map(Number);
   const cell = data.cells.find((k) => k.row === r && k.col === c);
   if (!cell || cell.empty) { legend.push(`${n}: ${s.stem} r${r}c${c} EMPTY`); return; }
-  const cw = png.width / gc, ch = png.height / gr;
+  // Historical reports used proportional cells; do not shift their saved bboxes.
+  const cw = data.divisible?.cellW ?? png.width / gc, ch = data.divisible?.cellH ?? png.height / gr;
   const ax = Math.round(c * cw), ay = Math.round(r * ch);
   const [bx0, by0, bx1, by1] = cell.bbox;
   const bh = Math.max(1, Math.round((by1 - by0 + 1) * band)), bw = bx1 - bx0 + 1;

@@ -11,6 +11,7 @@
  *        <stem>:<CxR>:<r,c> <stem>:<CxR>:<r,c> ...
  *
  * A spec may name a raw stem (assets/raw/<stem>.png) or a path ending in .png.
+ * --gap 0 packs equal-sized opaque source cells into an extraction-ready grid.
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -22,6 +23,9 @@ const arg = (k, d = null) => { const i = A.indexOf(k); return i < 0 ? d : A[i + 
 const outName = arg('--out', 'montage.png');
 const targetH = Number(arg('--h', '380'));
 const perRow = Number(arg('--cols', '6'));
+const rawGap = arg('--gap', '6');
+const GAP = Number(rawGap);
+if (!rawGap?.trim() || !Number.isSafeInteger(GAP) || GAP < 0) throw new Error('Invalid --gap; expected a non-negative integer.');
 const specs = A.filter((a, i) => !a.startsWith('--') && !(i > 0 && A[i - 1].startsWith('--')));
 
 const cache = new Map();
@@ -51,7 +55,6 @@ for (const spec of specs) {
   tiles.push({ tile, label: `${path.basename(file, '.png')} r${r}c${c}` });
 }
 
-const GAP = 6;
 const rowsN = Math.ceil(tiles.length / perRow);
 const colW = Math.max(...tiles.map((t) => t.tile.width));
 const outW = perRow * colW + (perRow + 1) * GAP;

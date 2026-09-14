@@ -23,6 +23,11 @@
  *   --feather N     extra distance band ramped from alpha 0 -> 255 (default 14)
  *   --size N        output square size, bilinear resample (default 1024; 0 = keep native)
  *   --full-bleed    no alpha keying (terrain tiles); resize only
+ *   --despill-only repair saturated-key colour in an existing RGBA cutout's
+ *                  3px edge band and hidden RGB; retain dimensions and every alpha.
+ *                  Does not re-key, resize, slice, or change interior colours by default.
+ *   --despill-all  with --despill-only, also remove key chroma from interiors.
+ *                  Opt in only for inspected palettes without authored key-hue colours.
  *   --out DIR       output directory (default assets/processed)
  *   --key HEX       background key color (default 8a8a8a; ff00ff for sprite sheets).
  *                   Saturated keys (channel spread > 60) trigger hue-targeted despill:
@@ -31,6 +36,8 @@
  *                   fringe on anti-aliased edges; sepia/rust/teal art colors are untouched).
  *   --pocket-mean N max mean key-distance for keying an enclosed background pocket
  *                   (default 12; raise for pockets with painted gradients, e.g. 24)
+ *   --deshadow      remove border-connected neutral gray or saturated-key-hue shadows;
+ *                   opt in only after inspecting the plate for matching authored colors.
  *   --grid CxR      sprite-sheet mode: key the whole sheet, slice into C cols x R rows,
  *                   bbox-center each cell's content, normalize with ONE shared scale
  *                   (largest bbox -> 86% of cell, never upscaled) so frames don't
@@ -41,10 +48,31 @@
  *                   capped at 1 = never upscale). Use to match figure heights across
  *                   sheets whose grids have different native cell sizes (s37 law:
  *                   cross-sheet direction neighbors must not size-pop).
+ *   --grid-origin   preserve each source cell's centre instead of recentering its
+ *                   figure; use for authored hops or other within-cell motion.
+ *   --grid-centres JSON  row-major [x,y] source-cell centres measured from a fixed
+ *                   body reference; retain articulation without bbox-centre drift.
  */
 import fs from 'node:fs';
 import path from 'node:path';
 import { PNG } from 'pngjs';
+
+// The alpha-weighted filter proven by anim-pass-fringe.mjs. PNG stores straight
+// RGB: filter premultiplied colours, then unpremultiply before writing the PNG.
+function sampleRgba(data, indices, weights, output, offset) {
+  let alpha = 0;
+  for (let k = 0; k < 4; k++) alpha += data[indices[k] + 3] * weights[k];
+  output[offset + 3] = Math.round(alpha);
+  for (let channel = 0; channel < 3; channel++) {
+    let colour = 0;
+    for (let k = 0; k < 4; k++) {
+      colour += data[indices[k] + channel] * weights[k]
+        * (alpha > 0 ? data[indices[k] + 3] : 1);
+    }
+    // Keep the extractor's RGB edge extension underneath fully transparent pixels.
+    output[offset + channel] = Math.round(alpha > 0 ? colour / alpha : colour);
+  }
+}
 
 let KEY = [0x8a, 0x8a, 0x8a];
 
@@ -60,8 +88,12 @@ function parseArgs(argv) {
     else if (a === '--interior-key') opts.interiorKey = Number(argv[++i]);
     else if (a === '--key') opts.key = argv[++i];
     else if (a === '--grid') opts.grid = argv[++i];
+    else if (a === '--grid-origin') opts.gridOrigin = true;
+    else if (a === '--grid-centres') opts.gridCentres = JSON.parse(argv[++i]);
     else if (a === '--scale') opts.scaleOverride = Number(argv[++i]);
     else if (a === '--full-bleed') opts.fullBleed = true;
+    else if (a === '--despill-only') opts.despillOnly = true;
+    else if (a === '--despill-all') opts.despillAll = true;
     else if (a === '--deshadow') opts.deshadow = true;
     else if (a === '--out') opts.out = argv[++i];
     else opts.inputs.push(a);
@@ -99,15 +131,10 @@ function resize(png, size) {
       const x0 = Math.max(Math.floor(fx), 0), x1 = Math.min(x0 + 1, png.width - 1);
       const wx = fx - x0;
       const o = (size * y + x) << 2;
-      for (let c = 0; c < 4; c++) {
-        const p00 = png.data[((png.width * y0 + x0) << 2) + c];
-        const p10 = png.data[((png.width * y0 + x1) << 2) + c];
-        const p01 = png.data[((png.width * y1 + x0) << 2) + c];
-        const p11 = png.data[((png.width * y1 + x1) << 2) + c];
-        out.data[o + c] = Math.round(
-          p00 * (1 - wx) * (1 - wy) + p10 * wx * (1 - wy) + p01 * (1 - wx) * wy + p11 * wx * wy
-        );
-      }
+      sampleRgba(png.data, [
+        (png.width * y0 + x0) << 2, (png.width * y0 + x1) << 2,
+        (png.width * y1 + x0) << 2, (png.width * y1 + x1) << 2,
+      ], [(1 - wx) * (1 - wy), wx * (1 - wy), (1 - wx) * wy, wx * wy], out.data, o);
     }
   }
   return out;
@@ -146,10 +173,24 @@ function extractAlpha(png, tol, feather, deshadow = false, pocketMean = 12) {
   if (deshadow) {
     const q = [];
     for (let i = 0; i < w * h; i++) if (visited[i]) q.push(i);
+    const saturatedKey = keySaturation() > 60;
+    const splitKey = KEY.some(value => value >= 128) && KEY.some(value => value < 128);
     const isShadow = (idx) => {
       const r = data[idx], g = data[idx + 1], b = data[idx + 2];
       const hi = Math.max(r, g, b), lo = Math.min(r, g, b);
-      return hi - lo <= 26 && hi >= 88 && hi <= 142;
+      const neutralShadow = !saturatedKey && hi - lo <= 26 && hi >= 88 && hi <= 142;
+      // A shaded saturated key keeps its hue while falling outside keyDist's
+      // brightness tolerance. Require the key's dominant channels and near-zero
+      // recessive channels so
+      // black outlines, brown boots and blue/teal clothing remain foreground.
+      let keyHigh = 255, keyLow = 0;
+      for (let channel = 0; channel < 3; channel++) {
+        if (KEY[channel] >= 128) keyHigh = Math.min(keyHigh, data[idx + channel]);
+        else keyLow = Math.max(keyLow, data[idx + channel]);
+      }
+      const keyShadow = saturatedKey && splitKey && keyLow <= 12
+        && keyHigh - keyLow > 26 && hi - keyHigh <= 32;
+      return neutralShadow || keyShadow;
     };
     for (let head = 0; head < q.length; head++) {
       const i = q[head];
@@ -222,7 +263,7 @@ const keySaturation = () => Math.max(...KEY) - Math.min(...KEY);
  * never reached; the margin rule already protects every legit palette color, so
  * band-limiting was caution, not necessity. Pass all=false for the legacy band.
  */
-function despillSaturatedKey(png, all = true) {
+function despillSaturatedKey(png, all = true, includeTransparent = false, margin = 16) {
   const { width: w, height: h, data } = png;
   const hi = [], lo = [];
   for (let c = 0; c < 3; c++) (KEY[c] >= 128 ? hi : lo).push(c);
@@ -231,14 +272,20 @@ function despillSaturatedKey(png, all = true) {
   if (all) {
     band.fill(1);
   } else {
-    for (let i = 0; i < w * h; i++) if (data[(i << 2) + 3] < 255) band[i] = 1;
+    for (let i = 0; i < w * h; i++) {
+      // Existing cutouts can contain translucent interiors; only the empty
+      // background defines their silhouette, not every partially opaque pixel.
+      if (includeTransparent ? data[(i << 2) + 3] === 0 : data[(i << 2) + 3] < 255) band[i] = 1;
+    }
     for (let it = 0; it < 3; it++) {
       const next = band.slice();
       for (let y = 0; y < h; y++) {
         for (let x = 0; x < w; x++) {
           const i = w * y + x;
           if (band[i]) continue;
-          if ((x > 0 && band[i - 1]) || (x < w - 1 && band[i + 1]) || (y > 0 && band[i - w]) || (y < h - 1 && band[i + w])) next[i] = 1;
+          if ((x > 0 && band[i - 1]) || (x < w - 1 && band[i + 1]) || (y > 0 && band[i - w]) || (y < h - 1 && band[i + w])
+            || (includeTransparent && ((x > 0 && y > 0 && band[i - w - 1]) || (x < w - 1 && y > 0 && band[i - w + 1])
+              || (x > 0 && y < h - 1 && band[i + w - 1]) || (x < w - 1 && y < h - 1 && band[i + w + 1])))) next[i] = 1;
         }
       }
       band = next;
@@ -248,12 +295,12 @@ function despillSaturatedKey(png, all = true) {
   for (let i = 0; i < w * h; i++) {
     if (!band[i]) continue;
     const idx = i << 2;
-    if (!data[idx + 3]) continue;
+    if (!data[idx + 3] && !includeTransparent) continue;
     let ref = 0;
     for (const c of lo) ref = Math.max(ref, data[idx + c]);
     let m = 255;
     for (const c of hi) m = Math.min(m, data[idx + c] - ref);
-    m -= 16;
+    m -= margin;
     if (m <= 0) continue;
     for (const c of hi) data[idx + c] -= m;
     fixed++;
@@ -353,8 +400,13 @@ function interiorKeyClear(png, thr, feather) {
  * bbox dimension -> 86% of cellSize, capped at 1 = never upscale) so animation
  * frames keep relative proportions instead of pulsing per-frame.
  */
-function sliceGrid(png, cols, rows, cellSize, base, outDir, scaleOverride = null) {
+function sliceGrid(png, cols, rows, cellSize, base, outDir, scaleOverride = null, gridOrigin = false, centres = undefined, deshadow = false) {
   const cw = Math.floor(png.width / cols), ch = Math.floor(png.height / rows);
+  if (centres !== undefined && (!Array.isArray(centres) || centres.length !== cols * rows ||
+      centres.some(p => !Array.isArray(p) || p.length !== 2 || !p.every(Number.isFinite) ||
+        p[0] < 0 || p[0] >= cw || p[1] < 0 || p[1] >= ch))) {
+    throw new Error('--grid-centres needs one finite in-cell [x,y] pair per cell');
+  }
   const cells = [];
   for (let r = 0; r < rows; r++) {
     for (let c = 0; c < cols; c++) {
@@ -372,8 +424,12 @@ function sliceGrid(png, cols, rows, cellSize, base, outDir, scaleOverride = null
     }
   }
   const occupied = cells.filter((k) => !k.empty);
-  const maxDim = Math.max(1, ...occupied.map((k) => Math.max(k.x1 - k.x0 + 1, k.y1 - k.y0 + 1)));
+  const maxDim = centres ? Math.max(1, ...occupied.map(k => {
+    const [x, y] = centres[k.r * cols + k.c];
+    return 2 * Math.max(Math.abs(k.x0 - x), Math.abs(k.x1 + 1 - x), Math.abs(k.y0 - y), Math.abs(k.y1 + 1 - y));
+  })) : gridOrigin ? Math.max(cw, ch) : Math.max(1, ...occupied.map((k) => Math.max(k.x1 - k.x0 + 1, k.y1 - k.y0 + 1)));
   const scale = Math.min(1, scaleOverride ?? (cellSize * 0.86) / maxDim);
+  if (centres && (!Number.isFinite(scale) || scale <= 0)) throw new Error('Invalid measured-centre scale');
   if (maxDim * scale > cellSize) {
     console.error(`--scale ${scaleOverride}: largest content ${maxDim}px would exceed the ${cellSize}px cell`);
     process.exit(1);
@@ -382,8 +438,9 @@ function sliceGrid(png, cols, rows, cellSize, base, outDir, scaleOverride = null
   for (const cell of cells) {
     const out = new PNG({ width: cellSize, height: cellSize });
     if (!cell.empty) {
-      const cx = cell.c * cw + (cell.x0 + cell.x1 + 1) / 2;
-      const cy = cell.r * ch + (cell.y0 + cell.y1 + 1) / 2;
+      const centre = centres?.[cell.r * cols + cell.c];
+      const cx = cell.c * cw + (centre ? centre[0] : gridOrigin ? cw / 2 : (cell.x0 + cell.x1 + 1) / 2);
+      const cy = cell.r * ch + (centre ? centre[1] : gridOrigin ? ch / 2 : (cell.y0 + cell.y1 + 1) / 2);
       for (let oy = 0; oy < cellSize; oy++) {
         const fy = cy + (oy + 0.5 - cellSize / 2) / scale - 0.5;
         if (fy < cell.r * ch || fy > (cell.r + 1) * ch - 1) continue;
@@ -393,36 +450,50 @@ function sliceGrid(png, cols, rows, cellSize, base, outDir, scaleOverride = null
           if (fx < cell.c * cw || fx > (cell.c + 1) * cw - 1) continue;
           const x0i = Math.max(Math.floor(fx), 0), x1i = Math.min(x0i + 1, png.width - 1), wx = fx - x0i;
           const o = (cellSize * oy + ox) << 2;
-          for (let ch4 = 0; ch4 < 4; ch4++) {
-            const p00 = png.data[((png.width * y0i + x0i) << 2) + ch4];
-            const p10 = png.data[((png.width * y0i + x1i) << 2) + ch4];
-            const p01 = png.data[((png.width * y1i + x0i) << 2) + ch4];
-            const p11 = png.data[((png.width * y1i + x1i) << 2) + ch4];
-            out.data[o + ch4] = Math.round(p00 * (1 - wx) * (1 - wy) + p10 * wx * (1 - wy) + p01 * (1 - wx) * wy + p11 * wx * wy);
-          }
+          sampleRgba(png.data, [
+            (png.width * y0i + x0i) << 2, (png.width * y0i + x1i) << 2,
+            (png.width * y1i + x0i) << 2, (png.width * y1i + x1i) << 2,
+          ], [(1 - wx) * (1 - wy), wx * (1 - wy), (1 - wx) * wy, wx * wy], out.data, o);
         }
       }
     }
     const file = `${base}-r${cell.r}c${cell.c}.png`;
+    if (keySaturation() > 60) despillSaturatedKey(out, false, true, 0);
     fs.writeFileSync(path.join(outDir, file), PNG.sync.write(out));
     emitted.push({ row: cell.r, col: cell.c, file, empty: cell.empty, bbox: cell.empty ? null : [cell.x0, cell.y0, cell.x1, cell.y1] });
   }
   fs.writeFileSync(
     path.join(outDir, `${base}.frames.json`),
-    JSON.stringify({ source: `${base}.png`, grid: { cols, rows }, cell: cellSize, scale: Number(scale.toFixed(4)), cells: emitted }, null, 2) + '\n',
+    JSON.stringify({ source: `${base}.png`, grid: { cols, rows }, cell: cellSize, scale: Number(scale.toFixed(4)), ...(gridOrigin ? { origin: 'grid' } : {}), ...(centres ? { centres } : {}), ...(deshadow ? { deshadow: true } : {}), cells: emitted }, null, 2) + '\n',
   );
   return emitted;
 }
 
 const opts = parseArgs(process.argv);
 KEY = parseKeyHex(opts.key);
+if (opts.despillAll && !opts.despillOnly) {
+  throw new Error('--despill-all requires --despill-only');
+}
+if (opts.despillOnly && (opts.grid || opts.fullBleed || keySaturation() <= 60)) {
+  throw new Error('--despill-only needs a saturated --key and cannot combine with --grid or --full-bleed');
+}
+if (opts.gridOrigin && (!opts.grid || opts.fullBleed || opts.despillOnly)) {
+  throw new Error('--grid-origin requires keyed --grid extraction');
+}
+if (opts.gridCentres !== undefined && (!opts.grid || opts.gridOrigin || opts.fullBleed || opts.despillOnly)) {
+  throw new Error('--grid-centres requires keyed --grid and cannot combine with --grid-origin');
+}
 fs.mkdirSync(opts.out, { recursive: true });
 
 for (const input of opts.inputs) {
   let png = readPNG(input);
   const native = `${png.width}x${png.height}`;
   const base = path.basename(input, '.png');
-  if (opts.grid) {
+  if (opts.despillOnly) {
+    const fixed = despillSaturatedKey(png, opts.despillAll === true, true, 0);
+    fs.writeFileSync(path.join(opts.out, path.basename(input)), PNG.sync.write(png));
+    console.log(`${path.basename(input)}: ${native}, despilled ${fixed} ${opts.despillAll ? 'all-palette' : 'edge/hidden'} pixels; alpha unchanged${opts.despillAll ? '' : ', interior unchanged'}`);
+  } else if (opts.grid) {
     const gm = /^(\d+)x(\d+)$/.exec(opts.grid.toLowerCase());
     if (!gm) { console.error(`bad --grid ${opts.grid} (want CxR, e.g. 2x2)`); process.exit(1); }
     const cols = Number(gm[1]), rows = Number(gm[2]);
@@ -431,7 +502,7 @@ for (const input of opts.inputs) {
     const cleared = saturated ? interiorKeyClear(png, opts.interiorKey, opts.feather) : 0;
     const despilled = saturated ? despillSaturatedKey(png) : 0;
     const bled = bleedEdges(png);
-    const emitted = sliceGrid(png, cols, rows, opts.cell, base, opts.out, opts.scaleOverride);
+    const emitted = sliceGrid(png, cols, rows, opts.cell, base, opts.out, opts.scaleOverride, opts.gridOrigin, opts.gridCentres, opts.deshadow);
     console.log(
       `${path.basename(input)}: ${native}, keyed ${((keyed / total) * 100).toFixed(1)}%, spill-cleared ${cleared} px, despilled ${despilled} px, bled ${bled} px -> ` +
       `${emitted.filter((e) => !e.empty).length}/${emitted.length} cells @${opts.cell}px + ${base}.frames.json`,
@@ -445,6 +516,7 @@ for (const input of opts.inputs) {
       const cleared = saturated ? interiorKeyClear(png, opts.interiorKey, opts.feather) : 0;
       const despilled = saturated ? despillSaturatedKey(png) : 0;
       const bled = bleedEdges(png);
+      if (saturated) despillSaturatedKey(png, false, true, 0);
       stat = `keyed ${keyed}/${total} px (${((keyed / total) * 100).toFixed(1)}%)${cleared ? `, spill-cleared ${cleared} px` : ''}${despilled ? `, despilled ${despilled} px` : ''}${bled ? `, bled ${bled} px` : ''}`;
     }
     const outFile = path.join(opts.out, path.basename(input));

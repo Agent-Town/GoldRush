@@ -1,8 +1,9 @@
 import { spawn } from 'node:child_process';
-import { mkdir, rm, writeFile } from 'node:fs/promises';
+import { mkdir, mkdtemp, rm, writeFile } from 'node:fs/promises';
 import net from 'node:net';
+import { tmpdir } from 'node:os';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import { assertWranglerVersion } from './wrangler-binary.mjs';
 import { createLedgerServer } from '../server/ledger/serve.mjs';
 import { SqliteStorage } from '../server/ledger/storage.mjs';
@@ -14,7 +15,32 @@ const STATE_ROOT = path.join(ROOT, 'test-results/accounts-worker-state');
 const SQLITE_ROOT = path.join(STATE_ROOT, 'sqlite');
 const checks = [];
 
-await main();
+if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {
+  if (process.argv[2] === '--serve') await serve(process.argv[3]);
+  else await main();
+}
+
+async function serve(value) {
+  const port = Number(value);
+  if (!/^\d+$/.test(value ?? '') || !Number.isSafeInteger(port) || port < 1 || port > 65_535) throw new Error('--serve requires a port from 1 to 65535');
+  assertWranglerVersion('accounts browser fixture');
+  const stateRoot = await mkdtemp(path.join(tmpdir(), 'gold-rush-accounts-browser-'));
+  let finish;
+  const stopped = new Promise((resolve) => { finish = resolve; });
+  process.once('SIGINT', finish);
+  process.once('SIGTERM', finish);
+  let server;
+  try {
+    server = await startWrangler('browser', true, { port, stateRoot });
+    console.log(`accounts browser fixture ready at ${server.url}`);
+    await stopped;
+  } finally {
+    await server?.stop();
+    process.removeListener('SIGINT', finish);
+    process.removeListener('SIGTERM', finish);
+    await rm(stateRoot, { recursive: true, force: true });
+  }
+}
 
 async function main() {
   assertWranglerVersion('test:accounts');
@@ -189,9 +215,10 @@ async function pushSave(baseUrl, token, envelope, baseSavedAt = null) {
   return post(baseUrl, '/api/save/push', { profileId: 'robin', envelope, baseSavedAt }, token);
 }
 
-async function startWrangler(name, devAuth) {
-  const port = await freePort();
-  const persistPath = path.join(STATE_ROOT, name);
+async function startWrangler(name, devAuth, { port: requestedPort, stateRoot = STATE_ROOT } = {}) {
+  const registry = devAuth ? await startAccountRegistry(path.join(stateRoot, `registry-${name}`)) : null;
+  const port = requestedPort ?? await freePort();
+  const persistPath = path.join(stateRoot, name);
   const args = [
     'pages',
     'dev',
@@ -209,6 +236,7 @@ async function startWrangler(name, devAuth) {
     '--show-interactive-dev-session=false',
   ];
   if (devAuth) args.push('--binding', 'DEV_AUTH=1');
+  if (registry) args.push('--do', `ACCOUNT_REGISTRY=AccountRegistry@${registry.name}`, '--binding', `ACCOUNT_REGISTRY_SCOPE=${registry.scope}`);
 
   const child = spawn('wrangler', args, {
     cwd: ROOT,
@@ -223,10 +251,17 @@ async function startWrangler(name, devAuth) {
     output += chunk;
   });
   const url = `http://127.0.0.1:${port}`;
-  await waitForServer(url, child, () => output);
+  try {
+    await waitForServer(url, child, () => output);
+  } catch (error) {
+    child.kill('SIGTERM');
+    await registry?.stop();
+    throw error;
+  }
   return {
     url,
     async stop() {
+      await registry?.stop();
       if (child.exitCode !== null) return;
       child.kill('SIGTERM');
       await new Promise((resolve) => {
@@ -239,6 +274,53 @@ async function startWrangler(name, devAuth) {
       if (child.exitCode === null) child.kill('SIGKILL');
     },
   };
+}
+
+// Real workerd SQLite Durable Object; the local-only bridge exposes internal operations to focused tests.
+export async function startAccountRegistry(directory, { internal = false, bootstrap = true } = {}) {
+  await mkdir(directory, { recursive: true });
+  const name = `gr-account-test-${process.pid}-${Date.now()}-${Math.random().toString(16).slice(2, 8)}`;
+  const port = await freePort();
+  const scope = 'local-account-test';
+  const mainPath = path.join(ROOT, 'functions/api/_account-registry.ts');
+  const bridgePath = path.join(directory, 'registry-bridge.ts');
+  if (internal) await writeFile(bridgePath, `export { AccountRegistry } from ${JSON.stringify(mainPath)};\nimport worker from ${JSON.stringify(mainPath)};\nexport default { fetch(request, env) { const url = new URL(request.url); if (url.pathname.startsWith('/public/')) { url.pathname = url.pathname.slice(7); return worker.fetch(new Request(url, request), env); } const scope = request.headers.get('x-account-registry-scope') || ${JSON.stringify(scope)}; return env.ACCOUNT_REGISTRY.get(env.ACCOUNT_REGISTRY.idFromName('accounts-v1:' + scope)).fetch(request); } };\n`);
+  const configPath = path.join(directory, 'wrangler.json');
+  await writeFile(configPath, JSON.stringify({
+    name, main: internal ? bridgePath : mainPath, compatibility_date: '2026-07-08',
+    vars: { ACCOUNT_REGISTRY_MIGRATION_SECRET: 'local-account-registry-test-only' },
+    durable_objects: { bindings: [{ name: 'ACCOUNT_REGISTRY', class_name: 'AccountRegistry' }] },
+    migrations: [{ tag: 'accounts-01', new_sqlite_classes: ['AccountRegistry'] }],
+  }));
+  const child = spawn('wrangler', ['dev', '--config', configPath, '--port', String(port), '--ip', '127.0.0.1', '--persist-to', path.join(directory, 'state'), '--log-level', 'error', '--show-interactive-dev-session=false'], { cwd: ROOT, env: cleanEnv(), stdio: ['ignore', 'pipe', 'pipe'] });
+  let output = '';
+  child.stdout.on('data', (chunk) => { output += chunk; });
+  child.stderr.on('data', (chunk) => { output += chunk; });
+  const url = `http://127.0.0.1:${port}`;
+  const headers = { authorization: 'Bearer local-account-registry-test-only', 'content-type': 'application/json', 'x-account-registry-scope': scope };
+  const stop = async () => {
+    if (child.exitCode !== null) return;
+    child.kill('SIGTERM');
+    await new Promise((resolve) => { const timer = setTimeout(resolve, 2_000); child.once('exit', () => { clearTimeout(timer); resolve(); }); });
+    if (child.exitCode === null) child.kill('SIGKILL');
+  };
+  try {
+    const started = Date.now();
+    while (true) {
+      if (child.exitCode !== null || Date.now() - started > 20_000) throw new Error(`account registry did not start: ${output}`);
+      try { if ((await fetch(`${url}/status`, { headers })).ok) break; } catch { /* worker starts asynchronously */ }
+      await sleep(100);
+    }
+    if (bootstrap) {
+      const digest = Buffer.from(await crypto.subtle.digest('SHA-256', new TextEncoder().encode('[]'))).toString('hex');
+      const response = await fetch(`${url}/bootstrap`, { method: 'POST', headers, body: JSON.stringify({ accounts: [], expectedCount: 0, sourceQuiesced: true, allowEmpty: true, digest }) });
+      if (!response.ok) throw new Error(`account registry bootstrap failed (${response.status})`);
+    }
+    return { name, url, headers, scope, stop };
+  } catch (error) {
+    await stop();
+    throw error;
+  }
 }
 
 async function startLedger(name, devAuth) {

@@ -10,9 +10,8 @@
  *   node scripts/anim-pass-gen.mjs --prompt <file.txt> --ref <sheet.png> \
  *        --out reviews/.../gen/<name>.png [--model gpt-5.6-sol] [--timeout 900]
  *
- * The generated PNG is claimed by MTIME from ~/.codex/generated_images, which is
- * the only place the arm writes. A pre-run snapshot of that tree is taken so a
- * concurrent run can never be claimed by the wrong caller.
+ * Images are claimed only from the successful CLI call's exact session directory
+ * under ~/.codex/generated_images. Missing provenance fails without copying art.
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -30,24 +29,6 @@ if (!promptFile || !out) { console.error('need --prompt and --out'); process.exi
 
 const GEN_DIR = path.join(os.homedir(), '.codex', 'generated_images');
 
-function snapshot() {
-  const seen = new Map();
-  const walk = (dir) => {
-    let ents = [];
-    try { ents = fs.readdirSync(dir, { withFileTypes: true }); } catch { return; }
-    for (const e of ents) {
-      const p = path.join(dir, e.name);
-      if (e.isDirectory()) walk(p);
-      else if (/\.(png|jpg|jpeg|webp)$/i.test(e.name)) {
-        try { seen.set(p, fs.statSync(p).mtimeMs); } catch { /* raced */ }
-      }
-    }
-  };
-  walk(GEN_DIR);
-  return seen;
-}
-
-const before = snapshot();
 const prompt = fs.readFileSync(promptFile, 'utf8');
 // `-i/--image` is VARIADIC in codex-cli 0.145: a positional prompt after it is
 // swallowed as another image path ("No prompt provided via stdin"). The prompt
@@ -75,12 +56,14 @@ child.on('close', (code) => {
   // once — an mtime window claims the neighbours' art as well as its own, which
   // is exactly what it did on the first town batch (F-EW-2). The session id is
   // printed in the CLI banner and is unique per call.
-  const session = /session id:\s*([0-9a-f-]{36})/i.exec(log)?.[1] ?? null;
-  const mine = session ? [...snapshot().keys()].filter((p) => p.includes(session)).sort() : [];
-  const fallback = !session
-    ? [...snapshot().entries()].filter(([p, m]) => !before.has(p) || before.get(p) !== m).sort((a, b) => b[1] - a[1]).map(([p]) => p)
+  const sessions = [...log.matchAll(/^session id:\s*([0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12})\s*$/gim)];
+  const session = sessions.length === 1 ? sessions[0][1] : null;
+  const sessionDir = session ? path.join(GEN_DIR, session) : null;
+  const claimed = code === 0 && sessionDir && fs.existsSync(sessionDir)
+    ? fs.readdirSync(sessionDir, { withFileTypes: true })
+      .filter((e) => e.isFile() && /\.(png|jpg|jpeg|webp)$/i.test(e.name))
+      .map((e) => path.join(sessionDir, e.name)).sort()
     : [];
-  const claimed = mine.length ? mine : fallback;
   if (!claimed.length) {
     console.error(`[gen] NO IMAGE produced (rc=${code}, ${secs}s, session ${session ?? 'unknown'}). Codex log → ${logPath}`);
     console.error(log.slice(-2500));
@@ -91,5 +74,5 @@ child.on('close', (code) => {
     fs.copyFileSync(p, dst);
     console.log(`[gen] OK rc=${code} ${secs}s → ${dst}  (source ${p})`);
   });
-  fs.appendFileSync(logPath, `\n\n--- claimed (session ${session ?? 'unknown, mtime fallback'}) ---\n${claimed.join('\n')}\n`);
+  fs.appendFileSync(logPath, `\n\n--- claimed (session ${session}) ---\n${claimed.join('\n')}\n`);
 });

@@ -2,7 +2,7 @@
 /**
  * anim-pass-graft.mjs — THE ANIMATION PASS (2026-07-25), mend arm.
  *
- * Grafts generated frames into ONE row of an existing raw sheet without moving a
+ * Grafts generated frames into ONE row (or --col cell) of a raw sheet without moving a
  * single cell boundary — the task's rule is "keep cell geometry EXACT". The sheet
  * keeps its filename, dimensions and grid; only the pixels of the named row change.
  *
@@ -13,7 +13,9 @@
  * so the mended row cannot size-pop or bob against the rows around it (s37 law).
  *
  *   node scripts/anim-pass-graft.mjs --sheet <stem> --grid CxR --row N \
- *        --src <generated.png> --src-grid CxR [--match-row M] [--out <path>] [--dry]
+ *        --src <generated.png> --src-grid CxR [--col C] [--match-row M] [--tol N] [--out <path>] [--dry]
+ * --col is zero-based and requires exactly one non-empty source cell.
+ * --tol is the maximum channel distance treated as key background (default 26).
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -25,12 +27,20 @@ const has = (k) => A.includes(k);
 const stem = arg('--sheet');
 const [cols, rows] = arg('--grid').split('x').map(Number);
 const row = Number(arg('--row'));
+const rawCol = has('--col') ? arg('--col') : null;
+const col = rawCol === null ? null : Number(rawCol);
+if (col !== null && (!rawCol?.trim() || !Number.isInteger(col) || col < 0 || col >= cols)) throw new Error('Invalid --col; target unchanged.');
+const targetCount = col === null ? cols : 1;
 const srcFile = arg('--src');
 const [scols, srows] = arg('--src-grid').split('x').map(Number);
 const matchRow = Number(arg('--match-row', String(row === 1 ? 2 : 1)));
+if (![cols, rows, scols, srows].every((n) => Number.isInteger(n) && n > 0)) throw new Error('Invalid grid; target unchanged.');
+if (![row, matchRow].every((n) => Number.isInteger(n) && n >= 0 && n < rows)) throw new Error('Invalid target/reference row; target unchanged.');
 const sheetPath = path.join('assets/raw', `${stem}.png`);
 const outPath = arg('--out', sheetPath);
-const TOL = 26;
+const rawTol = arg('--tol', '26');
+const TOL = Number(rawTol);
+if (!rawTol?.trim() || !Number.isInteger(TOL) || TOL < 0 || TOL > 255) throw new Error('Invalid --tol; target unchanged.');
 
 const dist = (d, i, k) => Math.max(Math.abs(d[i] - k[0]), Math.abs(d[i + 1] - k[1]), Math.abs(d[i + 2] - k[2]));
 function detectKey(png) {
@@ -102,7 +112,7 @@ for (let r = 0; r < srows; r++) for (let c = 0; c < scols; c++) {
 const got = frames.filter(Boolean);
 console.log(`source ${path.basename(srcFile)} ${src.width}x${src.height} @${scols}x${srows}, key #${srcKey.map((v) => v.toString(16).padStart(2, '0')).join('')}`);
 got.forEach((f, i) => console.log(`  frame ${i} r${f.r}c${f.c}: bbox ${f.w}x${f.h} at (${f.x0},${f.y0}) · figure height ${f.figH} (foot line y=${f.foot}${f.foot < f.y1 ? `, ${f.y1 - f.foot}px of prop hangs below` : ''})`));
-if (got.length !== cols) console.log(`NOTE: ${got.length} source figures for ${cols} target columns`);
+if (frames.length !== targetCount || got.length !== targetCount) throw new Error(`Expected exactly ${targetCount} non-empty source cells; got ${frames.length} cells with ${got.length} figures. Target unchanged.`);
 const srcH = median(got.map((f) => f.figH));
 const scale = refH / srcH;
 console.log(`\ntarget row ${row}: reference row ${matchRow} median FIGURE height ${refH}px, foot line y=${refFoot}, centre x=${refCentre}`);
@@ -112,9 +122,9 @@ if (has('--dry')) { console.log('\n--dry: nothing written'); process.exit(0); }
 // --- graft -------------------------------------------------------------------
 const out = new PNG({ width: sheet.width, height: sheet.height });
 sheet.data.copy(out.data);
-// wipe the row to pure key first, so no fragment of the old art survives
+// Wipe only the requested row/cell; every neighboring pixel stays unchanged.
 for (let y = row * ch; y < (row + 1) * ch; y++) {
-  for (let x = 0; x < sheet.width; x++) {
+  for (let x = col === null ? 0 : col * cw; x < (col === null ? sheet.width : (col + 1) * cw); x++) {
     const i = ((sheet.width * y + x) << 2);
     out.data[i] = sheetKey[0]; out.data[i + 1] = sheetKey[1]; out.data[i + 2] = sheetKey[2]; out.data[i + 3] = 255;
   }
@@ -131,8 +141,9 @@ const sample = (png, fx, fy) => { // bilinear
   return o;
 };
 let placed = 0, lost = 0;
-for (let c = 0; c < cols && c < got.length; c++) {
-  const f = got[c];
+for (let index = 0; index < targetCount; index++) {
+  const c = col === null ? index : col;
+  const f = got[index];
   const dw = Math.round(f.w * scale), dh = Math.round(f.h * scale);
   const dx0 = Math.round(c * cw + refCentre - dw / 2);
   // FEET on the reference foot line — anything hanging below (a wrench, a coat
@@ -155,7 +166,7 @@ for (let c = 0; c < cols && c < got.length; c++) {
   }
   placed++;
   const localY = dy0 - row * ch;
-  console.log(`  col ${c} ← source frame ${c}: ${dw}x${dh} at cell-local (${dx0 - c * cw},${localY})${localY < 0 ? '  ⚠ ABOVE CELL TOP' : ''}`);
+  console.log(`  col ${c} ← source frame ${index}: ${dw}x${dh} at cell-local (${dx0 - c * cw},${localY})${localY < 0 ? '  ⚠ ABOVE CELL TOP' : ''}`);
 }
 if (lost) console.log(`⚠ ${lost} scanlines fell outside the cell band and were dropped`);
 fs.writeFileSync(outPath, PNG.sync.write(out));
