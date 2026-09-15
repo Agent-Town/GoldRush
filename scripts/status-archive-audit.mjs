@@ -279,7 +279,13 @@ for (const sha of commits) {
   // `s<N> handoff \(line-1 archive`, which silently assumed every line-1 worth archiving is a
   // HANDOFF line. It is not: a fire that DIES mid-work leaves a LOCK line as its last line-1, and
   // its successor must archive THAT. This script already knows the difference -- it records
-  // `kind` at :178 and prints "destroyed s<N>'s lock line" at :235 -- so the old predicate
+  // `kind` at :221 and prints "destroyed s<N>'s lock line" at :322 -- so the old predicate
+  // (was :178 and :235 until s2577, when the F-2577-1 supersession arm landed above both. BOTH
+  // members were re-based by RE-GREPPING, and they moved by DIFFERENT amounts -- +43 and +87 --
+  // because a second insertion sat between them. `source-pointer-guard` flagged only the FIRST:
+  // a range is two pointers and only one of them is guarded, so re-grep both, every time. And
+  // writing THIS NOTE moved the second member again each time, 316 -> 320 -> 321 -> 322, since
+  // the note sits above it: re-grep AFTER your own edit, and eye-check the line you land on.)
   // contradicted the script's own output, demanding a "handoff" bullet for a fire that never
   // wrote one. Measured s1690: s1689 reached FIRE END rc=0 mid-drain, s1690 archived its lock
   // line honestly as `- **s1689 lock line (line-1 archive -- ...)`, and this guard reported it
