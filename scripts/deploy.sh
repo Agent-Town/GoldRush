@@ -30,7 +30,12 @@ PUBLISHED_BUILD=""
 # upper bound, 16.1 MB, joins the 15.6 MB the first town already declared), and the budget rises from
 # 25,000,000 to 35,000,000 B so the whole declared payload (about 31.7 MB) sits inside it with room
 # for a plate or two, not for a new map. Nothing is dieted on this ruling.
-BUDGET_LIMIT=35000000
+# RAISED AGAIN (owner 2026-09-15, verbatim: "I care mostly about the quality of the animations and I had the
+# impression that Astra really understood and nailed that. If it needs a bit more download, then ok. It is a
+# once download, then use it local action."): Astra's original town-cast walk cells come back in place of the
+# 2026-09-14 hard-alpha re-cut (tasks/town-cast-original-cells-restore.md), about +20 MB on the first town;
+# the limit rises from 35,000,000 to 52,000,000 B so the whole declared payload sits inside it with room.
+BUDGET_LIMIT=52000000
 # THE TRIPWIRE CEILING (owner desk answer A7, 2026-09-07). The browser cue-window number is host
 # speed, not payload — F-BUDGET-4 measured 21,589,212 / 10,540,927 / 21,638,025 bytes on ONE fixed
 # build, a 2.05x swing, and 6,411,798 on the same build at an emulated 8 Mbps. It no longer decides

@@ -85,9 +85,9 @@ test('every Elder cell differs from the bearded sheet it replaces', () => {
     expect(height, `r${cell.row}c${cell.col} figure height, 298-321 +/- the master's 10 px`).toBeGreaterThanOrEqual(288);
     expect(height, `r${cell.row}c${cell.col} figure height, 298-321 +/- the master's 10 px`).toBeLessThanOrEqual(331);
   }
-  expect(Math.min(...heights), 'measured minimum figure height').toBe(298);
+  expect(Math.min(...heights), 'measured minimum figure height').toBe(297);
   expect(Math.max(...heights), 'measured maximum figure height').toBe(326);
-  expect(heights.filter((height) => height < 298 || height > 321), 'cells outside the nominal band').toHaveLength(5);
+  expect(heights.filter((height) => height < 298 || height > 321), 'cells outside the nominal band').toHaveLength(6); // Astra's cells: [323, 326, 324, 324, 326, 297] — one more below the band than the re-cut
 });
 
 test('a plain town boot walks the Elder on anchored feet at the schoolhouse', async ({ page }, testInfo) => {
