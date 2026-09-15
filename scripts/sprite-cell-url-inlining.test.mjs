@@ -181,7 +181,10 @@ test('delayed HUD, building and generated-art loaders resolve images shared with
       assert.ok(readFileSync(resolve(ROOT, 'src/assets', asset)).length, `${source}: missing source image`);
       return { source, name: basename(asset), expression: expression.replaceAll('../../assets/processed/', './') };
     }));
-  assert.equal(loaders.length, 19, 'update this census when the delayed loader estate changes');
+  // 19 -> 20 on 2026-09-15 (sprite-animator-runtime-land): the town cast gained the newsie, so
+  // src/assets/generated.ts carries one more delayed loader (assetSlots.charTownNewsie). The estate
+  // changed by exactly the one row; the guard's own message asks for this census to follow it.
+  assert.equal(loaders.length, 20, 'update this census when the delayed loader estate changes');
   const f = fixture(t, { eager: true });
   writeFileSync(join(f.root, 'package.json'), '{"type":"module"}');
   for (const { name } of loaders) writeFileSync(join(f.root, 'assets/processed', name), cellPng(name));
