@@ -1,7 +1,7 @@
 {
   "era": 6,
   "name": "the Re-surveyed Claims",
-  "engineHash": "f3a347a9ba697c04f7393fd30d03703bc3bb5d806abaab77fda6ee9773adec3e",
+  "engineHash": "19dee7d35039db4895af94b24e642f96e9b353a7a0f334d30da5ad44de4d58da",
   "declaredAt": "2026-09-14",
   "note": "Era 6 opens with Astra's map campaign (sol/map-art-inventory-20260908 883a3521e) landed by maps-campaign-land-era6 on 2026-09-14: 17 contracts re-parameterised (tileParams on 13, twists on 3, briefings on 5), the door tightened to the contract's own research epoch, 66 src files, the map-rebuild-spike terrain, plaza props and flotilla models. Owner ruling 2026-09-13, verbatim: \"ah, that is all no problem. we don't have players yet so we can just keep going\" and \"we then have to make another run in the future but not immediately\"; the name ratified 2026-09-14 (\"the Re-surveye Claims\" is good for me). Every era-5 reel reads \"This reel rode era 5; the county accepts era 6\" and stands retired, counted. Heat 14 re-rides the boards on this era when the owner says so.",
   "viewSchema": {
@@ -95,6 +95,12 @@
       "engineHash": "f3a347a9ba697c04f7393fd30d03703bc3bb5d806abaab77fda6ee9773adec3e",
       "pinnedAt": "2026-09-14",
       "cause": "same era, second pin: after era 6 was declared with the first pin, the same drain regenerated assets/pilots/map-rebuild-spike/landmarks/landmark-source-ledger.json from the pack contracts (glb-contract-guard.test.mjs:307) — that path is in ENGINE_SOURCE_INPUTS, so the hash moved without any sim, contract or floor change; measured on the final chain with sprites-split-land merged (which touched no corpus file)",
+      "aliases": []
+    },
+    {
+      "engineHash": "19dee7d35039db4895af94b24e642f96e9b353a7a0f334d30da5ad44de4d58da",
+      "pinnedAt": "2026-09-15",
+      "cause": "same era, third pin: task sprite-animator-runtime-land merged sol/sprite-animator-src-slim (Astra's sprite-animation runtime) onto main's boss-fidelity + era-6 tree. src/ moved — per-body animation cursors and immutable UV frame views (F-SPR-05), OrientationResolver idle passthrough, the hero pose library's per-direction sheets and ground-contact table, the town cast's idle clips and billboard foot anchor, the Old Digger wheel cycle and rider deck height, the Dredge Queen fallback claw cycle, the Homemaker contact shadow, and the four F-CR0908 source fixes (wrecked turret weapon origins, party-size retention partitioning, save-slot default name, mixed-room hash quorum). Presentation and one sim-visible fix (turretPosition now refuses ruins); the sixteen heat-13 tapes replay to unchanged hashes on this tree, measured",
       "aliases": []
     }
   ],

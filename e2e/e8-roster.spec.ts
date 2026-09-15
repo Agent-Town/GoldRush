@@ -105,7 +105,13 @@ test('E8 contract rows are era-gated while E1 keeps its untagged outlaws', async
   ]));
   expect(poolsSource).toContain('createEnemySpritePresentation(variantId, binding.slot, e8EnemySpriteBinding(variantId)?.placeholder === true)');
   expect(poolsSource.match(/renderOrder: RenderLayers\.gameplay(?:Fade)?, lazy: true/g)).toHaveLength(2);
-  expect(poolsSource).toContain('if (!animation.active && !presentation.sprites.isLoaded) continue;');
+  // Re-pointed 2026-09-15 (task sprite-animator-runtime-land; F-SPR-05 / F-SPR-21, tasks/PROPOSED-sprite-source-assertions-20260908.md):
+  // the shared-animation loading guard this line used to pin is GONE. Astra's repair gave every occupied pool slot
+  // its own cursor and its own cloned primary/fade material, released on recycle. Assert that ownership instead:
+  // the lazy gate that replaced the guard, the per-body material clone, and the per-id animator registration.
+  expect(poolsSource).toContain('if (!sprites.isLoaded) return null;');
+  expect(poolsSource).toContain('sprite.material = sprites.cloneMaterial();');
+  expect(poolsSource).toContain('this.spriteAnimations.set(enemy.id, { slotId, sprites, fades, sprite, fade, animator });');
   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.renderer.calls)).toBeLessThanOrEqual(200);
   expect(errors).toEqual({ console: [], page: [] });
 });

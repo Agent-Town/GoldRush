@@ -134,7 +134,12 @@ test('a plain town boot walks the Elder on anchored feet at the schoolhouse', as
   // later is a deliberate change that has to come past this line.
   expect(elder.loop, 'the Elder has no patrol loop today').toBe(false);
   expect(elder.moving).toBe(false);
-  expect(elder.frameKey).toBe(`${SHEET}-r0c0.png`);
+  // Re-pointed 2026-09-15 (task sprite-animator-runtime-land): Astra's animation runtime gives the
+  // standing cast an IDLE clip of its own, so a motionless Elder no longer freezes on the walk
+  // sheet's first cell — she plays `char-elder-idle-r0c0.png`. The contract this line defends is
+  // unchanged (ONE cell, deliberately, and granting her a loop still has to come past here); only
+  // which sheet supplies that cell moved. Measured on the merged tree, both projects.
+  expect(elder.frameKey).toBe('char-elder-idle-r0c0.png');
 
   // The footline itself: the cell's own alpha bottom, projected through the billboard, has to land
   // on the ground plane. Before the F-A8-5 registration this drifted with every cell's headroom.
