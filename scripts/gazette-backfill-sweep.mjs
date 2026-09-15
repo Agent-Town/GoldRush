@@ -151,8 +151,28 @@ export const weeklyItemCensus = (queueText, dateOf, week) => {
     if (!/^##\s/.test(para.trimStart())) continue
     const m = para.match(/merge:?\s*`?([0-9a-f]{7,40})/)
     // Two different holes, reported apart because they owe different acts: an item this
-    // parser found no merge token in (the pre-2026-08 house format) versus one citing a hash
-    // no ref carries. Collapsing them into one "undated" number describes neither.
+    // parser found no merge token in, versus one citing a hash no ref carries. Collapsing
+    // them into one "undated" number describes neither.
+    //
+    // ⚠️ THE `uncited` BUCKET IS NOT "the pre-2026-08 house format" — that was this comment's
+    // claim until s2578 and it is MEASURABLY FALSE: of the 117 uncited items, 27 were filed
+    // in 2026-07 and **89 on or after 2026-08-01** (1 undatable). But DO NOT build the
+    // obvious fallback, because it was measured and it changes NOTHING and its naive form
+    // is WORSE (F-2578-1):
+    //   · An item's FILING date (the queue commit that first adds its `## ` line) is a sound
+    //     substitute — it agrees with merge-week on 214 of 216 datable items (99.1%), and the
+    //     2 divergences are backfills, both already ROUNDUP-batched, so they spend no slot
+    //     either way. Fires file their GZ-01 item at drain time, so the two weeks coincide
+    //     BY CONSTRUCTION, and the ≤3/week batching rule itself catches the exception.
+    //   · Adding that fallback flips the over/under-budget verdict for **0 of 11 weeks**.
+    //     W28–W36 are already over by 4–13× (13–40 standalone against a budget of 3); W37
+    //     and W38 sit at exactly 3 and contain NO uncited items at all.
+    //   · The naive fallback is actively harmful: 29 of the uncited paragraphs are DISMISSALS
+    //     (`## SWEEP NOTE …` / `NOT PLAYER-VISIBLE`), which `isBatchedItem` does not match, so
+    //     dating them would score all 29 as STANDALONE headlines — +10 phantom in W33 and +15
+    //     in W34 — pushing fires to batch news that needed no batching.
+    // The hole is also currently EMPTY: zero uncited items have been filed since 2026-09-01,
+    // because every fire now cites its merge. Report the number (it is printed); do not cure it.
     if (!m) { uncited++; continue }
     const date = dateOf(m[1])
     if (!date) { unresolved++; continue }
