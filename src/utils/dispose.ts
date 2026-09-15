@@ -3,6 +3,8 @@ import * as THREE from 'three';
 export function disposeObject3D(root: THREE.Object3D): void {
   root.traverse((object: THREE.Object3D) => {
     const mesh = object as THREE.Mesh;
+    const skinnedMesh = object as THREE.SkinnedMesh;
+    if (skinnedMesh.isSkinnedMesh) skinnedMesh.skeleton?.dispose();
     if (mesh.geometry) {
       mesh.geometry.dispose();
     }

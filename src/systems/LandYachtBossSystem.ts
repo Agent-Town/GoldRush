@@ -1,6 +1,8 @@
 import * as THREE from 'three';
 import type { ClaimJumperEnemy } from '../entities/Enemy';
 import { Balance } from '../game/Balance';
+import { performanceTierDiagnostics } from '../game/PerformanceTier';
+import { disposeObject3D } from '../utils/dispose';
 import type { BuildingTarget } from './TargetingSystem';
 import * as Terrain from '../world/Terrain';
 
@@ -8,16 +10,16 @@ const VARIANT = 'land_yacht';
 const COMPONENT_IDS = ['wheels', 'crane', 'wheelhouse'] as const;
 type LandYachtComponentId = typeof COMPONENT_IDS[number];
 
-const intactUrl = new URL('../../assets/raw/boss-land-yacht.png', import.meta.url).href;
-const damagedUrl = new URL('../../assets/raw/boss-land-yacht-damage.png', import.meta.url).href;
-const PLATE = { width: 1672, height: 941 } as const;
-const CROPS: Record<LandYachtComponentId, { x: number; y: number; width: number; height: number; scale: [number, number] }> = {
-  wheels: { x: 430, y: 500, width: 970, height: 390, scale: [7.2, 2.9] },
-  crane: { x: 360, y: 70, width: 500, height: 470, scale: [4.1, 3.8] },
-  wheelhouse: { x: 760, y: 90, width: 560, height: 470, scale: [4.4, 3.7] },
-};
+const MODEL_URL = new URL('../../assets/pilots/land-yacht-3d/land-yacht.glb', import.meta.url).href;
+const DAMAGE_MORPHS = {
+  wheels: 'Damage_BeachedWheels', crane: 'Damage_SlackCrane', wheelhouse: 'Damage_CrackedWheelhouse',
+} as const;
+type ModelState = 'off' | 'loading' | 'ready' | 'lite' | 'failed' | 'disposed';
 
 export type LandYachtBossDiagnostics = Readonly<{
+  modelState: ModelState;
+  modelMounted: boolean;
+  damageStates: Record<LandYachtComponentId, boolean>;
   active: boolean;
   act: 0 | 1 | 2 | 3;
   dreadEvents: number;
@@ -35,15 +37,21 @@ export type LandYachtBossDiagnostics = Readonly<{
   wreckRemains: boolean;
 }>;
 
-type ComponentSprites = { healthy: THREE.Sprite; damaged: THREE.Sprite };
 type OrbitRoute = Readonly<{ center: Readonly<{ x: number; z: number }>; radius: number; angularSpeed: number }>;
 
 export class LandYachtBossSystem {
   readonly group = new THREE.Group();
-  private readonly componentSprites = new Map<LandYachtComponentId, ComponentSprites>();
+  private readonly body = new THREE.Group();
+  private readonly components = new Map<LandYachtComponentId, THREE.Group>();
+  private modelState: ModelState = performanceTierDiagnostics().tier === 'lite' ? 'lite' : 'off';
+  private modelSerial = 0;
+  private model?: THREE.Object3D;
+  private readonly modelMeshes = new Map<LandYachtComponentId, THREE.Mesh>();
+  private readonly bodyOffsets = new Map<LandYachtComponentId, THREE.Vector3>();
+  private readonly damageStates = { wheels: false, crane: false, wheelhouse: false };
   private readonly dustColumn = new THREE.Group();
   private readonly derricks: THREE.Group[] = [];
-  private readonly wreck = sprite(damagedUrl, { x: 330, y: 120, width: 1100, height: 760 }, [9.4, 6.5]);
+  private readonly wreckPosition = new THREE.Vector3();
   private readonly destroyed = new Set<LandYachtComponentId>();
   private readonly destroyedPositions = new Map<LandYachtComponentId, THREE.Vector3>();
   private readonly lastCenter = new THREE.Vector3();
@@ -74,16 +82,14 @@ export class LandYachtBossSystem {
     private readonly damageBuilding: (target: BuildingTarget, amount: number) => boolean,
     private readonly callout: (position: THREE.Vector3, text: string) => void,
   ) {
-    this.group.name = 'LandYacht.PlaceholderPlateCrops';
+    this.group.name = 'LandYacht';
+    this.body.name = 'LandYacht.Body';
     for (const id of COMPONENT_IDS) {
-      const crop = CROPS[id];
-      const healthy = sprite(intactUrl, crop, crop.scale);
-      const damaged = sprite(damagedUrl, crop, crop.scale);
-      healthy.name = `LandYacht.${id}.Intact`;
-      damaged.name = `LandYacht.${id}.Damaged`;
-      this.componentSprites.set(id, { healthy, damaged });
-      this.group.add(healthy, damaged);
+      const component = fallbackComponent(id);
+      this.components.set(id, component);
+      this.body.add(component);
     }
+    this.group.add(this.body);
 
     for (let index = 0; index < 4; index += 1) {
       const angle = index * Math.PI * 0.5 + Math.PI * 0.25;
@@ -109,8 +115,7 @@ export class LandYachtBossSystem {
     }
     this.dustColumn.name = 'LandYacht.DreadDustColumn';
     this.dustColumn.position.set(-Balance.landYacht.derrickRadius, 0, 0);
-    this.wreck.name = 'LandYacht.WreckSalvage';
-    this.group.add(this.dustColumn, this.wreck);
+    this.group.add(this.dustColumn);
     this.hidePresentation();
   }
 
@@ -166,6 +171,9 @@ export class LandYachtBossSystem {
 
   diagnostics(): LandYachtBossDiagnostics {
     return {
+      modelState: this.modelState,
+      modelMounted: this.modelState === 'ready' && this.body.visible,
+      damageStates: { ...this.damageStates },
       active: this.seenBoss,
       act: this.act,
       dreadEvents: this.dreadEvents,
@@ -205,19 +213,16 @@ export class LandYachtBossSystem {
     this.wreckRemains = false;
     this.destroyed.clear();
     this.destroyedPositions.clear();
+    for (const id of COMPONENT_IDS) this.damageStates[id] = false;
+    this.releaseModel(performanceTierDiagnostics().tier === 'lite' ? 'lite' : 'off');
+    this.bodyOffsets.clear();
+    this.body.rotation.set(0, 0, 0);
     this.hidePresentation();
   }
 
   dispose(): void {
-    this.group.traverse((child) => {
-      if (child instanceof THREE.Sprite) {
-        child.material.map?.dispose();
-        child.material.dispose();
-      } else if (child instanceof THREE.Mesh) {
-        child.geometry.dispose();
-        for (const material of Array.isArray(child.material) ? child.material : [child.material]) material.dispose();
-      }
-    });
+    this.releaseModel('disposed');
+    disposeObject3D(this.group);
   }
 
   private liveComponents(): Map<LandYachtComponentId, ClaimJumperEnemy> {
@@ -307,50 +312,125 @@ export class LandYachtBossSystem {
 
   private syncPresentation(components: ReadonlyMap<LandYachtComponentId, ClaimJumperEnemy>): void {
     this.dustColumn.visible = false;
-    for (const [id, pair] of this.componentSprites) {
-      const enemy = components.get(id);
-      const damaged = Boolean(enemy && enemy.currentHp / Math.max(1, enemy.maxHp) <= 0.5);
-      pair.healthy.visible = Boolean(enemy) && !damaged;
-      pair.damaged.visible = Boolean(enemy) && damaged;
-      if (!enemy) continue;
-      for (const visual of [pair.healthy, pair.damaged]) {
-        visual.position.set(enemy.position.x, Terrain.visualY(enemy.position.x, enemy.position.z, CROPS[id].scale[1] * 0.48), enemy.position.z);
+    this.body.visible = components.size > 0 || this.wreckRemains;
+    if (this.body.visible) this.ensureModel();
+    const anchor = components.values().next().value as ClaimJumperEnemy | undefined;
+    if (this.wreckRemains) {
+      // The persistence API supplies this position, but no heading. Use the same
+      // authored wreck pose on defeat and restore rather than inventing saved state.
+      this.body.position.copy(this.wreckPosition);
+      this.body.rotation.y = 0;
+    } else if (anchor) {
+      // The authored prow points along -X. Retain local component offsets so an
+      // early crane/house death cannot drag the moving hull toward its old grave.
+      this.body.rotation.y = -Math.PI / 2 - anchor.group.rotation.y;
+      const axis = new THREE.Vector3(0, 1, 0);
+      if (this.bodyOffsets.size === 0) {
+        const center = new THREE.Vector3();
+        for (const enemy of components.values()) center.add(enemy.position);
+        center.multiplyScalar(1 / components.size);
+        for (const [id, enemy] of components) this.bodyOffsets.set(id, enemy.position.clone().sub(center).applyAxisAngle(axis, -this.body.rotation.y));
       }
+      this.body.position.set(0, 0, 0);
+      for (const [id, enemy] of components) {
+        const offset = this.bodyOffsets.get(id)?.clone().applyAxisAngle(axis, this.body.rotation.y) ?? new THREE.Vector3();
+        this.body.position.add(enemy.position).sub(offset);
+      }
+      this.body.position.multiplyScalar(1 / components.size);
+    }
+    this.body.position.y = Terrain.visualY(this.body.position.x, this.body.position.z, 0);
+    for (const id of COMPONENT_IDS) {
+      const enemy = components.get(id);
+      const damaged = this.wreckRemains || this.destroyed.has(id) || Boolean(enemy && enemy.currentHp / Math.max(1, enemy.maxHp) <= 0.5);
+      this.damageStates[id] = damaged;
+      const fallback = this.components.get(id)!;
+      fallback.visible = this.modelState !== 'ready';
+      fallback.scale.y = damaged && id === 'wheels' ? 0.7 : 1;
+      fallback.rotation.z = damaged && id !== 'wheels' ? -0.18 : 0;
+      const mesh = this.modelMeshes.get(id);
+      if (mesh?.morphTargetInfluences) mesh.morphTargetInfluences[0] = damaged ? 1 : 0;
     }
     for (let index = 0; index < this.derricks.length; index += 1) {
       const marker = this.derricks[index]!;
       marker.visible = this.act === 1 && index >= this.stolenHeads;
       marker.position.y = Terrain.visualY(marker.position.x, marker.position.z, 0);
     }
-    this.wreck.visible = this.wreckRemains;
   }
 
   private placeWreck(position: THREE.Vector3): void {
-    this.wreck.position.set(position.x, Terrain.visualY(position.x, position.z, 3.1), position.z);
-    this.wreck.visible = true;
+    this.wreckPosition.copy(position);
+    this.syncPresentation(this.liveComponents());
   }
 
   private hidePresentation(): void {
-    for (const pair of this.componentSprites.values()) pair.healthy.visible = pair.damaged.visible = false;
+    this.body.visible = false;
     for (const derrick of this.derricks) derrick.visible = false;
     this.dustColumn.visible = false;
-    this.wreck.visible = false;
+  }
+
+  private ensureModel(): void {
+    if (performanceTierDiagnostics().tier === 'lite' && this.modelState !== 'lite') this.releaseModel('lite');
+    if (this.modelState !== 'off') return;
+    const serial = ++this.modelSerial;
+    this.modelState = 'loading';
+    void import('../assets/AssetLoading').then(({ createGltfLoader }) => {
+      if (serial !== this.modelSerial) return;
+      if (performanceTierDiagnostics().tier === 'lite') { this.releaseModel('lite'); return; }
+      createGltfLoader().load(MODEL_URL, ({ scene }) => {
+        if (serial !== this.modelSerial) { disposeObject3D(scene); return; }
+        if (performanceTierDiagnostics().tier === 'lite') {
+          disposeObject3D(scene); this.releaseModel('lite'); this.syncPresentation(this.liveComponents()); return;
+        }
+        const meshes = new Map<LandYachtComponentId, THREE.Mesh>();
+        scene.traverse(node => {
+          const mesh = node as THREE.Mesh;
+          if (!mesh.isMesh) return;
+          for (const id of COMPONENT_IDS) if (mesh.name === id && mesh.morphTargetDictionary?.[DAMAGE_MORPHS[id]] === 0 && mesh.morphTargetInfluences?.length === 1) meshes.set(id, mesh);
+          mesh.castShadow = mesh.receiveShadow = true;
+        });
+        if (meshes.size !== COMPONENT_IDS.length) {
+          disposeObject3D(scene); this.modelState = 'failed'; return;
+        }
+        this.model = scene;
+        for (const [id, mesh] of meshes) this.modelMeshes.set(id, mesh);
+        this.body.add(scene);
+        this.modelState = 'ready';
+        this.syncPresentation(this.liveComponents());
+      }, undefined, () => { if (serial === this.modelSerial) this.modelState = 'failed'; });
+    }, () => { if (serial === this.modelSerial) this.modelState = 'failed'; });
+  }
+
+  private releaseModel(state: ModelState): void {
+    this.modelSerial++;
+    if (this.model) { this.body.remove(this.model); disposeObject3D(this.model); this.model = undefined; }
+    this.modelMeshes.clear();
+    this.modelState = state;
   }
 }
 
-function sprite(
-  url: string,
-  crop: { x: number; y: number; width: number; height: number },
-  scale: readonly [number, number],
-): THREE.Sprite {
-  const texture = new THREE.TextureLoader().load(url);
-  texture.colorSpace = THREE.SRGBColorSpace;
-  texture.repeat.set(crop.width / PLATE.width, crop.height / PLATE.height);
-  texture.offset.set(crop.x / PLATE.width, 1 - (crop.y + crop.height) / PLATE.height);
-  const result = new THREE.Sprite(new THREE.SpriteMaterial({ map: texture, depthWrite: false }));
-  result.scale.set(scale[0], scale[1], 1);
-  result.renderOrder = 4;
-  return result;
+// Small geometry fallback for loading, failed assets and LITE; concept-sheet paper never enters the world.
+function fallbackComponent(id: LandYachtComponentId): THREE.Group {
+  const group = new THREE.Group();
+  group.name = `LandYacht.${id}.Fallback`;
+  const brass = new THREE.MeshStandardMaterial({ color: '#a47b3c', roughness: 0.9 });
+  const add = (geometry: THREE.BufferGeometry, x: number, y: number, z: number): THREE.Mesh => {
+    const mesh = new THREE.Mesh(geometry, brass);
+    mesh.position.set(-x, y, z); mesh.castShadow = mesh.receiveShadow = true; group.add(mesh); return mesh;
+  };
+  if (id === 'wheels') {
+    add(new THREE.BoxGeometry(8, 1, 3.3), 0, 1.7, 0);
+    for (const x of [-2.8, 0, 2.8]) for (const z of [-1.8, 1.8]) add(new THREE.CylinderGeometry(1, 1, 0.45, 12), x, 1, z).rotation.x = Math.PI / 2;
+  } else if (id === 'crane') {
+    add(new THREE.BoxGeometry(0.5, 3.5, 0.6), 1, 3.6, 0).rotation.z = 0.35;
+    add(new THREE.BoxGeometry(3, 0.35, 0.5), 2, 5, 0).rotation.z = 0.35;
+    add(new THREE.CylinderGeometry(0.12, 0.12, 2, 6), 3.3, 3.5, 0);
+    add(new THREE.BoxGeometry(1, 0.45, 0.8), 3.3, 2.5, 0);
+  } else {
+    brass.color.set('#4e8582');
+    add(new THREE.CylinderGeometry(1.2, 1.2, 2.8, 12), -2, 3.6, 0);
+    add(new THREE.ConeGeometry(1.4, 0.6, 12), -2, 5.3, 0);
+  }
+  return group;
 }
 
 function derrickMarker(): THREE.Group {

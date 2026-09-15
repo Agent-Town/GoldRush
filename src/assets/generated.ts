@@ -26,6 +26,7 @@ const generatedAssetUrls: Partial<Record<AssetSlotId, string>> = {
 };
 
 export const heroPoseFrameFiles = characterRuntimeFrames.heroPoseFrameFiles;
+export const heroGroundContactY: Readonly<Record<string, number>> = characterRuntimeFrames.heroGroundContactY;
 const generatedAssetUrlLoaders: Partial<Record<AssetSlotId, () => Promise<string>>> = {
   [assetSlots.charBaron]: () => import('../../assets/processed/char-baron-sheet-walk8-r0c0.png?url').then((module) => module.default),
   [assetSlots.charTownTavernkeeper]: () => import('../../assets/processed/townsfolk-tavernkeeper.png?url').then((module) => module.default),
@@ -36,6 +37,7 @@ const generatedAssetUrlLoaders: Partial<Record<AssetSlotId, () => Promise<string
   [assetSlots.charTownAssayClerk]: () => import('../../assets/processed/townsfolk-assay-clerk.png?url').then((module) => module.default),
   [assetSlots.charTownYoungsterA]: () => import('../../assets/processed/townsfolk-youngster-a.png?url').then((module) => module.default),
   [assetSlots.charTownYoungsterB]: () => import('../../assets/processed/townsfolk-youngster-b.png?url').then((module) => module.default),
+  [assetSlots.charTownNewsie]: () => import('../../assets/processed/townsfolk-newsie-e1.png?url').then((module) => module.default),
   [assetSlots.propBaronBanner]: () => import('../../assets/processed/prop-baron-banner.png?url').then((module) => module.default),
   [assetSlots.bldSentryBeacon]: () => import('../../assets/processed/bld-sentry-beacon.png?url').then((module) => module.default),
   [assetSlots.bldPortraitPalisade]: () => import('../../assets/processed/bld-palisade.png?url').then((module) => module.default),
@@ -68,6 +70,7 @@ const nonCriticalGeneratedAssetSlots: readonly AssetSlotId[] = [
   assetSlots.charTownAssayClerk,
   assetSlots.charTownYoungsterA,
   assetSlots.charTownYoungsterB,
+  assetSlots.charTownNewsie,
 ];
 
 export type GeneratedAssetStatus = 'missing' | 'pending' | 'loaded' | 'error';
@@ -98,6 +101,10 @@ export function generatedAssetRenderCounts(): Partial<Record<AssetSlotId, number
 
 export function setWorldSpriteTint(color: THREE.ColorRepresentation): void {
   worldSpriteTint.set(color);
+}
+
+export function copyWorldSpriteTint(target: THREE.Color): THREE.Color {
+  return target.copy(worldSpriteTint);
 }
 
 export function bindWorldSpriteTint(
@@ -511,6 +518,14 @@ export class GeneratedSpriteBatch {
 
   get isLoaded(): boolean {
     return this.loaded;
+  }
+
+  cloneMaterial(): THREE.SpriteMaterial {
+    const clone = this.material.clone();
+    // onBeforeRender temporarily tints the shared fallback. A new body needs its
+    // untinted base, or the first draw multiplies yesterday's light/tint again.
+    clone.color.copy(spriteTintState.get(this.material)?.base ?? this.material.color);
+    return clone;
   }
 
   set(index: number, position: THREE.Vector3, visible: boolean): void {

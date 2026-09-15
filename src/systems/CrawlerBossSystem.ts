@@ -100,7 +100,7 @@ export class CrawlerBossSystem {
     mast.add(box(2.2, 0.6, 1.8, '#3f706e', 0, 0.3, 0), cylinder(0.38, 3.8, '#62d7cd', 0, 2.2, 0), box(2.7, 0.22, 0.28, '#d29a48', 0, 3.5, 0));
     const tracks = new THREE.Group();
     tracks.add(box(3.8, 0.75, 2.35, '#51452f', 0, 0.8, 0));
-    for (const x of [-1.35, -0.45, 0.45, 1.35]) tracks.add(cylinder(0.38, 0.5, '#b08743', x, 0.35, -0.92), cylinder(0.38, 0.5, '#b08743', x, 0.35, 0.92));
+    for (const x of [-1.35, -0.45, 0.45, 1.35]) tracks.add(cylinder(0.38, 0.5, '#b08743', x, 0.38, -0.92).rotateX(Math.PI / 2), cylinder(0.38, 0.5, '#b08743', x, 0.38, 0.92).rotateX(Math.PI / 2));
     const capacitor = new THREE.Group();
     capacitor.add(box(3.2, 0.55, 2.1, '#694b2f', 0, 0.45, 0));
     for (const x of [-1, 0, 1]) capacitor.add(cylinder(0.42, 2.25, '#d89a3d', x, 1.45, 0));
@@ -110,7 +110,7 @@ export class CrawlerBossSystem {
       this.group.add(component);
     }
     this.wreck.add(box(5.8, 0.8, 2.7, '#6b4a32', 0, 0.5, 0));
-    for (const x of [-1.8, -0.6, 0.6, 1.8]) this.wreck.add(cylinder(0.42, 0.45, '#352d24', x, 0.28, -1), cylinder(0.42, 0.45, '#352d24', x, 0.28, 1));
+    for (const x of [-1.8, -0.6, 0.6, 1.8]) this.wreck.add(cylinder(0.42, 0.45, '#352d24', x, 0.42, -1).rotateX(Math.PI / 2), cylinder(0.42, 0.45, '#352d24', x, 0.42, 1).rotateX(Math.PI / 2));
     const roost = cylinder(0.38, 2.8, '#5fa9a4', -1.4, 1.7, 0);
     roost.rotation.z = -0.55;
     this.wreck.add(roost, cylinder(0.45, 1.55, '#b56f36', 0.9, 1.15, 0), cylinder(0.45, 1.25, '#b56f36', 1.85, 1, 0));
@@ -202,7 +202,7 @@ export class CrawlerBossSystem {
       const position = this.destroyedPositions.get('capacitor_bank');
       if (position) {
         this.wreck.position.copy(position);
-        this.wreck.position.y = Terrain.visualY(position.x, position.z, 0.8);
+        this.wreck.position.y = Terrain.visualY(position.x, position.z, 0);
       }
     }
     this.wreck.visible = this.wreckRemains;
@@ -233,7 +233,7 @@ export class CrawlerBossSystem {
     this.wreckRemains = true;
     for (const id of COMPONENT_IDS) this.destroyed.add(id);
     this.wreck.position.copy(position);
-    this.wreck.position.y = Terrain.visualY(position.x, position.z, 0.8);
+    this.wreck.position.y = Terrain.visualY(position.x, position.z, 0);
     this.wreck.visible = true;
   }
 

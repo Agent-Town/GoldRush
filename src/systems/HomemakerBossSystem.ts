@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { RenderLayers } from '../core/RenderLayers';
 import type { GoldPickupPool } from '../entities/GoldPickup';
 import type { ClaimJumperEnemy, EnemySpawnParams } from '../entities/Enemy';
 import type { EnemyPool } from '../entities/pools';
@@ -142,6 +143,11 @@ export class HomemakerBossSystem {
   readonly group = new THREE.Group();
   private readonly machine = new THREE.Group();
   private readonly machinePrimitive = new THREE.Group();
+  private readonly contactShadow = new THREE.Mesh(
+    new THREE.CircleGeometry(1, 28),
+    new THREE.MeshBasicMaterial({ color: '#2e1b0e', transparent: true, opacity: 0.2,
+      depthWrite: false, polygonOffset: true, polygonOffsetFactor: -1, polygonOffsetUnits: -1 }),
+  );
   private readonly chairPrimitive = chair();
   private readonly rackRing = new THREE.Mesh(
     new THREE.RingGeometry(Balance.homemaker.rackRadius - 0.18, Balance.homemaker.rackRadius, 32),
@@ -150,7 +156,7 @@ export class HomemakerBossSystem {
   private readonly pictogram = pictogramSprite();
   private readonly tidied = [tidyMarker(-2.2), tidyMarker(2.2)];
   private readonly partsStacks = Array.from({ length: Balance.homemaker.partsStackCap }, () => partsStack());
-  private readonly anchor = new THREE.Vector3(0, 0, -8);
+  private readonly anchor = new THREE.Vector3(-12, 0, -18);
   private readonly destroyed = new Set<ComponentId>();
   private readonly curated = new Set<string>();
   private readonly partsPickupIds: string[] = [];
@@ -376,7 +382,8 @@ export class HomemakerBossSystem {
     this.seenBoss = true;
     this.act = 1;
     this.tidiedMarkers = 2;
-    this.anchor.set(0, 0, -8);
+    // Keep the machine clear of the control pylon at (0, -7) and its raised terrain.
+    this.anchor.set(-12, 0, -18);
     for (const enemy of components) {
       const offset = componentOffset(enemy.bossComponentId as ComponentId);
       enemy.scriptMoveTo(this.anchor.x + offset.x, this.anchor.z + offset.z, Balance.homemaker.arrivalSpeed, { ignoreTerrain: true });
@@ -522,10 +529,15 @@ export class HomemakerBossSystem {
       box(2.1, 2.1, 1.1, '#c4883a', 2.5, 1.7, 0),
       cylinder(0.75, 2.4, '#83ded7', 0, 3, 0),
     );
-    this.machine.add(this.machinePrimitive, this.chairPrimitive);
+    // Match the landmark contact recipe even when mobile shadow maps are disabled.
+    this.contactShadow.name = 'Homemaker9000.ContactShadow';
+    this.contactShadow.rotation.x = -Math.PI / 2;
+    this.contactShadow.position.y = 0.018;
+    this.contactShadow.renderOrder = RenderLayers.groundShadows;
+    this.machine.add(this.machinePrimitive, this.chairPrimitive, this.contactShadow);
     this.rackRing.rotation.x = -Math.PI / 2;
     this.rackRing.position.y = 0.08;
-    this.pictogram.position.set(0, 5.6, 0);
+    this.pictogram.position.set(-2.4, 7.3, 0);
     for (const marker of this.tidied) this.group.add(marker);
     for (const stack of this.partsStacks) this.group.add(stack);
     this.group.add(this.machine, this.rackRing, this.pictogram);
@@ -546,6 +558,7 @@ export class HomemakerBossSystem {
     const modelMounted = this.homemaker3dState === 'ready' && this.homemaker3dModel?.visible === true;
     this.machinePrimitive.visible = visible && !modelMounted && !this.chairPlaced;
     this.chairPrimitive.visible = this.chairPlaced && !modelMounted;
+    this.contactShadow.scale.set(this.chairPrimitive.visible ? 1.5 : 3.6, this.chairPrimitive.visible ? 1.2 : 2, 1);
     this.rackRing.visible = this.rackTarget !== null;
     if (this.rackTarget) this.rackRing.position.set(
       this.rackTarget.x,
@@ -553,7 +566,7 @@ export class HomemakerBossSystem {
       this.rackTarget.z,
     );
     this.pictogram.visible = visible;
-    this.pictogram.position.set(center.x, Terrain.visualY(center.x, center.z, 5.6, 2), center.z);
+    this.pictogram.position.set(center.x - 2.4, Terrain.visualY(center.x, center.z, 7.3, 2), center.z);
     renderPictogram(this.pictogram, this.poweredDown ? 'DONE' : this.act === 2 ? '🧹' : '✨');
     for (let index = 0; index < this.tidied.length; index += 1) {
       const marker = this.tidied[index]!;
@@ -723,7 +736,7 @@ function chair(): THREE.Group {
   result.name = 'Homemaker9000.Chair';
   result.add(
     box(2.4, 0.32, 2.2, '#d8e1d2', 0, 1.7, 0),
-    box(2.4, 2.8, 0.32, '#5b8a8a', 0, 3, 0.95),
+    box(2.4, 2.8, 0.32, '#5b8a8a', 0, 3, -0.95),
     box(0.3, 1.7, 0.3, '#c4883a', -0.9, 0.85, -0.72),
     box(0.3, 1.7, 0.3, '#c4883a', 0.9, 0.85, -0.72),
     box(0.3, 1.7, 0.3, '#c4883a', -0.9, 0.85, 0.72),
@@ -741,7 +754,7 @@ function pictogramSprite(): THREE.Sprite {
   const texture = new THREE.CanvasTexture(canvas);
   texture.colorSpace = THREE.SRGBColorSpace;
   const sprite = new THREE.Sprite(new THREE.SpriteMaterial({ map: texture, transparent: true, depthTest: false }));
-  sprite.scale.set(4.8, 1.6, 1);
+  sprite.scale.set(2.4, 0.8, 1);
   sprite.renderOrder = 20;
   sprite.userData.canvas = canvas;
   return sprite;

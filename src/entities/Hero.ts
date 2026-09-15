@@ -113,6 +113,8 @@ export class Hero {
       assetSlots.charHero,
       this.generatedSprite.sprite.material as THREE.SpriteMaterial,
       this.generatedSprite.sprite,
+      undefined,
+      0, // Anchor the selected frame and its fade at the Hero ground plane.
     );
     tagPlaceholder(this.group, assetSlots.charHero);
     this.snapRenderState();

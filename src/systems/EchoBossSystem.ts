@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { Balance } from '../game/Balance';
+import { disposeObject3D } from '../utils/dispose';
 import type { PlaybookRecording } from '../playbook/PlaybookFormat';
 
 export const ECHO_JAR_ENTRY_ID = 'the-echo-jar';
@@ -8,6 +9,7 @@ const ECHO_SOURCE_ID = -11;
 
 export type EchoBasePiece = Readonly<{
   id: string;
+  index?: number;
   x: number;
   z: number;
 }>;
@@ -52,7 +54,8 @@ type EchoPersistence = Readonly<{
 }>;
 
 type EchoCopy = {
-  mesh: THREE.Mesh;
+  mesh: THREE.Object3D;
+  ownsGeometry: boolean;
   start: THREE.Vector3;
   end: THREE.Vector3;
 };
@@ -109,6 +112,7 @@ export class EchoBossSystem {
     private readonly visualY: (x: number, z: number, base: number) => number,
     private readonly enabled: boolean,
     private readonly persistence: EchoPersistence,
+    private readonly copyBuilding?: (piece: EchoBasePiece, material: THREE.Material) => THREE.Object3D | null,
   ) {
     this.group.name = 'TheEcho.Placeholder';
     if (!this.enabled) return;
@@ -256,10 +260,7 @@ export class EchoBossSystem {
     this.copyMaterial?.dispose();
     this.perimeter?.geometry.dispose();
     if (this.perimeter) (this.perimeter.material as THREE.Material).dispose();
-    this.jarGlass?.geometry.dispose();
-    if (this.jarGlass) (this.jarGlass.material as THREE.Material).dispose();
-    this.mote?.geometry.dispose();
-    if (this.mote) (this.mote.material as THREE.Material).dispose();
+    if (this.jar) disposeObject3D(this.jar);
     this.group.clear();
   }
 
@@ -304,11 +305,12 @@ export class EchoBossSystem {
     if (!this.copyGeometry || !this.copyMaterial || !this.copiesGroup) return;
     const start = new THREE.Vector3(-piece.x, 0, Balance.e7Boss.mirrorOffsetZ - piece.z);
     const end = start.clone().multiplyScalar(Balance.e7Boss.mirrorApproachScale);
-    const mesh = new THREE.Mesh(this.copyGeometry, this.copyMaterial);
+    const model = this.copyBuilding?.(piece, this.copyMaterial);
+    const mesh = model ?? new THREE.Mesh(this.copyGeometry, this.copyMaterial);
     mesh.name = `TheEcho.Copy.${piece.id}`;
     mesh.userData.original = { id: piece.id, x: piece.x, z: piece.z };
     this.copiesGroup.add(mesh);
-    this.copies.push({ mesh, start, end });
+    this.copies.push({ mesh, start, end, ownsGeometry: Boolean(model) });
   }
 
   private capture(at: number): void {
@@ -339,13 +341,13 @@ export class EchoBossSystem {
     this.perimeter.visible = this.copiesGroup.visible;
     for (const copy of this.copies) {
       copy.mesh.position.lerpVectors(copy.start, copy.end, progress);
-      copy.mesh.position.y = this.visualY(copy.mesh.position.x, copy.mesh.position.z, Balance.e7Boss.copyHeight / 2);
+      copy.mesh.position.y = this.visualY(copy.mesh.position.x, copy.mesh.position.z, copy.ownsGeometry ? 0 : Balance.e7Boss.copyHeight / 2);
     }
     const radius = THREE.MathUtils.lerp(Balance.e7Boss.perimeterStartRadius, Balance.e7Boss.perimeterEndRadius, progress);
     this.perimeter.scale.setScalar(radius);
     this.perimeter.position.y = this.visualY(0, 0, Balance.e7Boss.perimeterLift);
     this.perimeter.rotation.z = at * Balance.e7Boss.perimeterSpin;
-    this.copyMaterial.opacity = Balance.e7Boss.copyOpacity * (0.82 + Math.sin(at * 6) * 0.18);
+    this.copyMaterial.opacity = Balance.e7Boss.copyOpacity * (0.9 + Math.sin(at * 6) * 0.1);
     this.jar.visible = this.captured;
     this.jar.position.set(
       Balance.e7Boss.jarX,
@@ -356,7 +358,13 @@ export class EchoBossSystem {
   }
 
   private clearCopies(): void {
-    for (const copy of this.copies) this.copiesGroup?.remove(copy.mesh);
+    for (const copy of this.copies) {
+      this.copiesGroup?.remove(copy.mesh);
+      if (copy.ownsGeometry) copy.mesh.traverse((node) => {
+        const mesh = node as THREE.Mesh;
+        if (mesh.isMesh) mesh.geometry.dispose();
+      });
+    }
     this.copies.length = 0;
   }
 
@@ -366,7 +374,7 @@ export class EchoBossSystem {
     this.copyMaterial = new THREE.MeshStandardMaterial({
       color: Balance.e7Boss.copyColor,
       emissive: Balance.e7Boss.copyEmissive,
-      emissiveIntensity: 0.7,
+      emissiveIntensity: 0.25,
       transparent: true,
       opacity: Balance.e7Boss.copyOpacity,
       depthWrite: false,
@@ -383,7 +391,7 @@ export class EchoBossSystem {
     );
     this.jar = new THREE.Group();
     this.jarGlass = new THREE.Mesh(
-      new THREE.CylinderGeometry(0.42, 0.5, Balance.e7Boss.jarHeight, 16, 1, true),
+      new THREE.CylinderGeometry(0.42, 0.5, Balance.e7Boss.jarHeight - 0.04, 16, 1, false),
       new THREE.MeshBasicMaterial({
         color: Balance.e7Boss.jarGlassColor,
         transparent: true,
@@ -393,18 +401,30 @@ export class EchoBossSystem {
       }),
     );
     this.mote = new THREE.Mesh(
-      new THREE.SphereGeometry(0.14, 12, 8),
+      new THREE.SphereGeometry(0.196, 12, 8),
       new THREE.MeshStandardMaterial({
         color: Balance.e7Boss.jarMoteColor,
         emissive: Balance.e7Boss.jarMoteColor,
         emissiveIntensity: 1.6,
+        toneMapped: false,
       }),
     );
     this.copiesGroup.name = 'TheEcho.MirroredBase';
     this.perimeter.name = 'TheEcho.Perimeter';
     this.perimeter.rotation.x = -Math.PI / 2;
     this.jar.name = 'TheEcho.Jar';
-    this.jar.add(this.jarGlass, this.mote);
+    // Keep the glass floor above terrain while the lower rim makes contact.
+    this.jarGlass.position.y = 0.02;
+    const rimMaterial = new THREE.MeshStandardMaterial({ color: '#b48a46', roughness: 0.7, metalness: 0.15 });
+    const lid = new THREE.Mesh(new THREE.TorusGeometry(0.43, 0.035, 6, 24), rimMaterial);
+    lid.name = 'TheEcho.JarLid';
+    lid.rotation.x = Math.PI / 2;
+    lid.position.y = Balance.e7Boss.jarHeight / 2;
+    const base = new THREE.Mesh(new THREE.TorusGeometry(0.47, 0.03, 6, 24), rimMaterial.clone());
+    base.name = 'TheEcho.JarBase';
+    base.rotation.x = Math.PI / 2;
+    base.position.y = -Balance.e7Boss.jarHeight / 2 + 0.03;
+    this.jar.add(this.jarGlass, this.mote, lid, base);
     this.group.add(this.copiesGroup, this.perimeter, this.jar);
   }
 }

@@ -18,11 +18,11 @@ export default defineConfig({
   },
   webServer: [
     {
-      command:
-        `rm -rf test-results/accounts-sync-worker && wrangler pages dev public --kv ACCOUNTS --binding DEV_AUTH=1 --port ${accountsPort} --ip 127.0.0.1 --persist-to test-results/accounts-sync-worker --log-level error --show-interactive-dev-session=false`,
+      command: `node scripts/test-accounts.mjs --serve ${accountsPort}`,
       url: `${accountsURL}/favicon-16.png`,
       reuseExistingServer: false,
       timeout: 30_000,
+      gracefulShutdown: { signal: 'SIGTERM', timeout: 10_000 },
     },
     {
       command: `VITE_ACCOUNTS_API_URL=${accountsURL} npm run dev -- --port ${gamePort} --strictPort`,

@@ -2,10 +2,9 @@ import * as THREE from 'three';
 import characterContractText from '../../assets/layer-contracts/characters.v2.json?raw';
 import { Balance } from '../game/Balance';
 import { activeEpoch } from '../meta/ContractFamilies';
-import { afterStartupFrame, bindWorldSpriteTint, heroPoseFrameFiles, isCriticalStartupAssetSlot, loadGeneratedTexture } from './generated';
+import { afterStartupFrame, bindWorldSpriteTint, heroGroundContactY, heroPoseFrameFiles, isCriticalStartupAssetSlot, loadGeneratedTexture } from './generated';
 import {
   coarseOrientationForDirection,
-  idleDirectionFor,
   isMirroredRotationDirection,
   isRotationDirection,
   type RotationDirection,
@@ -28,7 +27,7 @@ type Contract = {
 type ContractSlot = {
   slot?: string;
   clipGroups?: ClipGroupSource;
-  fallback?: { file?: string };
+  fallback?: { file?: string; groundContactY?: number };
   frames?: FrameSource;
   clips?: Record<string, ClipSource>;
   orientations?: Record<string, OrientationSource>;
@@ -86,6 +85,8 @@ type WalkSheetDirectionSource = OrientationSource & {
 type HeroAge = 'young' | 'midlife' | 'silver' | 'elder';
 
 type FrameSource = {
+  /** Authored wheel/foot support, normalized from the top of the source cell. */
+  groundContactY?: number;
   files?: string[];
   diagnosticKeys?: string[];
   grid?: {
@@ -100,9 +101,11 @@ type ClipSource = {
   frames?: number[];
   fps?: number;
   cadenceReferenceFrames?: number;
+  frameBlendMs?: number;
 };
 
 type RuntimeFrame = {
+  groundContactY?: number;
   texture: THREE.Texture;
   mirroredFrame?: RuntimeFrame;
   independentTexture?: THREE.Texture;
@@ -118,6 +121,7 @@ type RuntimeClip = {
   frames: RuntimeFrame[];
   fps: number;
   cadenceReferenceFrames?: number;
+  frameBlendMs?: number;
 };
 
 type RuntimeOrientation = {
@@ -398,12 +402,19 @@ export class SpriteAnimator {
   private walkCadenceSpeed: number | undefined;
   private walkGroundSpeed: number | undefined;
 
+  private readonly unanchoredSpriteY: number;
+
+  get groundContactY(): number | undefined { return this.currentFrame?.groundContactY; }
+  get fadeGroundContactY(): number | undefined { return this.overlayFrame?.groundContactY; }
+
   constructor(
     private readonly slotId: AssetSlotId,
     private readonly material: THREE.SpriteMaterial,
     private readonly sprite?: THREE.Sprite,
     fadeMaterial?: THREE.SpriteMaterial,
+    private readonly groundY?: number,
   ) {
+    this.unanchoredSpriteY = sprite?.position.y ?? 0;
     if (sprite) bindWorldSpriteTint(sprite);
     animationDiagnostics[slotId] = {
       clip: 'idle',
@@ -431,7 +442,8 @@ export class SpriteAnimator {
       this.fadeSprite.visible = false;
       this.fadeSprite.position.copy(sprite.position);
       this.fadeSprite.scale.copy(sprite.scale);
-      this.fadeSprite.renderOrder = sprite.renderOrder + 0.01;
+      // Keep depth sorting with the body; its earlier object id draws first at equal depth.
+      this.fadeSprite.renderOrder = sprite.renderOrder;
       bindWorldSpriteTint(this.fadeSprite);
       sprite.parent.add(this.fadeSprite);
     }
@@ -570,7 +582,7 @@ export class SpriteAnimator {
 
     const direction = rotationDirectionFor(runtime, orientation);
     if (direction) {
-      const clipDirection = requestedClip === 'idle' ? idleDirectionFor(direction) : direction;
+      const clipDirection = direction;
       const hasExplicitDirection = runtime.orientations.has(clipDirection);
       const sourceDirection = hasExplicitDirection ? clipDirection : runtime.rotationMirrors.get(clipDirection) ?? clipDirection;
       const clips = runtime.orientations.get(sourceDirection)?.clips;
@@ -608,14 +620,19 @@ export class SpriteAnimator {
     activeAnimators += 1;
     const resolved = this.currentMirrored ? mirroredRuntimeFrame(frame) : frame;
     const resolvedKey = this.currentMirrored ? `${frame.key}#m` : frame.key;
-    const textureUserData = resolved.texture.userData as { spriteFrameKey?: string };
-    if (this.lastFrameKey !== resolvedKey || this.material.map !== resolved.texture || textureUserData.spriteFrameKey !== resolvedKey) {
+    const texture = independentTextureFor(resolved);
+    const textureUserData = texture.userData as { spriteFrameKey?: string };
+    if (this.lastFrameKey !== resolvedKey || this.material.map !== texture || textureUserData.spriteFrameKey !== resolvedKey) {
       applyRuntimeFrame(this.material, frame, this.currentMirrored);
       textureUserData.spriteFrameKey = resolvedKey;
       this.lastFrameKey = resolvedKey;
       textureSwapsPerFrame += 1;
     }
     this.currentFrame = frame;
+    if (this.groundY !== undefined) {
+      this.anchorSprite(this.sprite, frame);
+      this.anchorSprite(this.fadeSprite, this.overlayFrame);
+    }
     const dominantFrame = this.dominantFrame(frame, this.frameIndex);
     const motion = this.currentMotion();
     if (this.fadeMaterial) this.fadeMaterial.rotation = motion.leanRad;
@@ -653,6 +670,13 @@ export class SpriteAnimator {
     this.rememberWalkCursor();
   }
 
+  private anchorSprite(sprite: THREE.Sprite | null | undefined, frame: RuntimeFrame | null): void {
+    if (!sprite) return;
+    const contact = frame?.groundContactY;
+    sprite.center.y = contact === undefined ? 0.5 : 1 - contact;
+    sprite.position.y = contact === undefined ? this.unanchoredSpriteY : this.groundY!;
+  }
+
   private setSpriteScalePositive(): void {
     if (!this.sprite) return;
     // THREE.Sprite billboarding derives scale from vector length, so scale.x's sign
@@ -668,7 +692,8 @@ export class SpriteAnimator {
   private startFrameBlend(previousFrame: RuntimeFrame | null, nextFrame: RuntimeFrame | null, previousFrameIndex: number): void {
     if (this.overlayKind === 'orientation') return;
     if (this.frameBlendHoldoff > 0) return;
-    if (!this.startOverlay('frame', previousFrame, nextFrame, this.currentMirrored, Balance.anim.frameBlendMs, previousFrameIndex)) return;
+    const durationMs = this.currentClip?.frameBlendMs ?? Balance.anim.frameBlendMs;
+    if (!this.startOverlay('frame', previousFrame, nextFrame, this.currentMirrored, durationMs, previousFrameIndex)) return;
     this.frameBlendWindow += 1;
   }
 
@@ -681,7 +706,7 @@ export class SpriteAnimator {
     previousFrameIndex: number,
   ): boolean {
     if (!previousFrame || !nextFrame || !this.fadeMaterial || durationMs <= 0) return false;
-    applyRuntimeFrame(this.fadeMaterial, previousFrame, previousMirrored, true);
+    applyRuntimeFrame(this.fadeMaterial, previousFrame, previousMirrored);
     if (this.fadeSprite) {
       this.fadeSprite.position.copy(this.sprite?.position ?? this.fadeSprite.position);
       this.fadeSprite.scale.copy(this.sprite?.scale ?? this.fadeSprite.scale);
@@ -828,13 +853,11 @@ export class SpriteAnimator {
   }
 }
 
-function applyRuntimeFrame(material: THREE.SpriteMaterial, frame: RuntimeFrame, mirrored = false, independent = false): void {
+function applyRuntimeFrame(material: THREE.SpriteMaterial, frame: RuntimeFrame, mirrored = false): void {
   const nextFrame = mirrored ? mirroredRuntimeFrame(frame) : frame;
-  const texture = independent ? independentTextureFor(nextFrame) : nextFrame.texture;
-  if (!independent) {
-    texture.repeat.set(nextFrame.repeatX, nextFrame.repeatY);
-    texture.offset.set(nextFrame.offsetX, nextFrame.offsetY);
-  }
+  // Frame views share the atlas source/GPU allocation but own immutable UV transforms.
+  // Mutating the atlas texture here makes the last updated body choose every body's frame.
+  const texture = independentTextureFor(nextFrame);
   if (material.map !== texture) {
     material.map = texture;
     material.needsUpdate = true;
@@ -897,7 +920,7 @@ function mirroredRuntimeFrame(frame: RuntimeFrame): RuntimeFrame {
   return frame.mirroredFrame;
 }
 
-function loadRuntimeSlot(slotId: AssetSlotId): Promise<RuntimeSlot | null> {
+export function loadRuntimeSlot(slotId: AssetSlotId): Promise<RuntimeSlot | null> {
   const cacheKey = slotId === assetSlots.charHero
     ? `${slotId}:${activeHeroAge()}:${readHeroSkin()}`
     : slotId === assetSlots.charProspectorAgent
@@ -999,7 +1022,7 @@ async function createRuntimeSlot(slotId: AssetSlotId, groups: ReadonlySet<string
   const fallbackTexture = await loadGeneratedTexture(slotId);
   const fallbackClip = fallbackTexture
     ? {
-        frames: [singleFrame(fallbackTexture, slot?.fallback?.file ?? slotId)],
+        frames: [singleFrame(fallbackTexture, slot?.fallback?.file ?? slotId, slot?.fallback?.groundContactY)],
         fps: 1,
       }
     : null;
@@ -1042,8 +1065,11 @@ async function createRuntimeSlot(slotId: AssetSlotId, groups: ReadonlySet<string
       if (!isRotationDirection(direction)) continue;
       const mirrorSource = slot?.rotations?.mirrors?.[direction]?.toLowerCase();
       const rotationSource = slot?.rotations?.directions?.[direction] ?? (mirrorSource ? slot?.rotations?.directions?.[mirrorSource] : undefined);
-      const merged = mergeWalkSheetWithRotationIdle(source, rotationSource);
-      const orientation = await createRuntimeOrientation(merged.frames, merged.clips ?? {}, fallbackClip, accept);
+      const merged = withWalkSheetIdle(source, rotationSource);
+      const priorWalk = orientations.get(direction)?.clips.get('walk')
+        ?? orientations.get(coarseOrientationForDirection(direction))?.clips.get('walk')
+        ?? orientations.get('side')?.clips.get('walk') ?? fallbackClip;
+      const orientation = await createRuntimeOrientation(merged.frames, merged.clips ?? {}, priorWalk, accept);
       if (orientation) {
         orientations.set(direction, orientation);
         rotationDirections.add(direction);
@@ -1202,7 +1228,7 @@ async function addHeroPoseClips(orientations: Map<string, RuntimeOrientation>, a
       if (!orientation || orientation.clips.has(clipName)) continue;
       const clip = await createRuntimeOrientation(
         { files: [...files] },
-        { [clipName]: { frames: files.map((_, index) => index), fps: clipName === 'attack' ? 12 : 8 } },
+        { [clipName]: { frames: files.map((_, index) => index), fps: clipName === 'attack' ? 12 : 8, frameBlendMs: 0 } },
         null,
         accept,
       );
@@ -1298,23 +1324,22 @@ function withWalkSheetCadence(source: OrientationSource, sheet: WalkSheetSource)
   };
 }
 
-function mergeWalkSheetWithRotationIdle(walkSheet: OrientationSource, rotation: OrientationSource | undefined): OrientationSource {
+function withWalkSheetIdle(walkSheet: OrientationSource, rotation: OrientationSource | undefined): OrientationSource {
   const walkFiles = resolveFrameFiles(walkSheet.frames);
   const rotationFiles = resolveFrameFiles(rotation?.frames);
   const rotationWalkFrames = rotation?.clips?.walk?.frames ?? [];
-  const idleIndex = rotation?.clips?.idle?.frames?.[0];
-  const idleFile = idleIndex === undefined ? undefined : rotationFiles[idleIndex];
   if (walkFiles.length === 0) return walkSheet;
   const diagnosticKeys = walkFiles.map((file, index) => {
     const rotationIndex = rotationWalkFrames[index % Math.max(1, rotationWalkFrames.length)];
     return rotationIndex === undefined ? file : rotationFiles[rotationIndex] ?? file;
   });
-  if (!idleFile) return { ...walkSheet, frames: diagnosticKeys ? { files: walkFiles, diagnosticKeys } : { files: walkFiles } };
   return {
-    frames: { files: [...walkFiles, idleFile], diagnosticKeys: [...diagnosticKeys, idleFile] },
+    frames: { ...walkSheet.frames, files: walkFiles, diagnosticKeys },
     clips: {
       ...walkSheet.clips,
-      idle: { frames: [walkFiles.length], fps: rotation?.clips?.idle?.fps ?? 1 },
+      // Hold this direction's own pose, including its resolved age/skin. The old
+      // rotation idle can have another identity, scale, or even facing direction.
+      idle: walkSheet.clips?.idle ?? { frames: [walkSheet.clips?.walk?.frames?.[0] ?? 0], fps: 1 },
     },
   };
 }
@@ -1349,20 +1374,29 @@ async function createRuntimeOrientation(
     texture ? { texture, key: frameFiles[index] ?? `frame-${index}`, diagnosticKey: frames?.diagnosticKeys?.[index] } : null,
   );
   if (loadedFrames.every((frame) => frame === null)) {
-    return fallbackClip ? { clips: new Map([['idle', fallbackClip], ['walk', fallbackClip]]) } : null;
+    return fallbackClip ? { clips: new Map([
+      ['idle', { frames: fallbackClip.frames.slice(0, 1), fps: 1 }], ['walk', fallbackClip],
+    ]) } : null;
   }
 
   const atlasFrames = createAtlasFrameMap(loadedFrames);
+  if (validGroundContact(frames?.groundContactY)) {
+    for (const frame of atlasFrames) if (frame) frame.groundContactY = frames.groundContactY;
+  }
   const clips = new Map<string, RuntimeClip>();
   for (const [name, source] of Object.entries(clipSources)) {
     if (!accept(name)) continue;
     const clip = clipFromAtlas(atlasFrames, source);
     if (clip) clips.set(name, clip);
   }
-  // s15 + task 016: an orientation must always resolve idle without replacing a real walk
-  // pair. Walk-only direction blocks keep cycling; idle falls back to the billboard.
-  if (fallbackClip && !clips.has('idle')) clips.set('idle', fallbackClip);
-  if (clips.size === 0 && atlasFrames[0]) clips.set('idle', { frames: [atlasFrames[0]], fps: 1 });
+  // A present manifest entry can still fail to fetch/decode. Keep the older
+  // locomotion loop instead of turning an incomplete new walk into a still.
+  if (accept('walk') && clipSources.walk && !clips.has('walk') && fallbackClip) clips.set('walk', fallbackClip);
+  if (!clips.has('idle')) {
+    const frame = clips.get('walk')?.frames[0] ?? atlasFrames.find((frame) => !!frame);
+    if (frame) clips.set('idle', { frames: [frame], fps: 1 });
+    else if (fallbackClip) clips.set('idle', fallbackClip);
+  }
   return clips.size > 0 ? { clips, frames: atlasFrames } : null;
 }
 
@@ -1371,7 +1405,7 @@ function clipFromAtlas(atlasFrames: Array<RuntimeFrame | null>, source: ClipSour
   const indexes = source.frames ?? [0];
   const clipFrames = indexes.map((index) => atlasFrames[index]);
   if (!clipFrames.every((frame): frame is RuntimeFrame => !!frame)) return null;
-  return { frames: clipFrames, fps: source.fps ?? 1, cadenceReferenceFrames: source.cadenceReferenceFrames };
+  return { frames: clipFrames, fps: source.fps ?? 1, cadenceReferenceFrames: source.cadenceReferenceFrames, frameBlendMs: source.frameBlendMs };
 }
 
 function resolveFrameFiles(frames: FrameSource | undefined): string[] {
@@ -1434,6 +1468,7 @@ function createAtlasFrames(frames: Array<{ texture: THREE.Texture; key: string; 
     texture: atlas,
     key: frame.key,
     diagnosticKey: frame.diagnosticKey,
+    groundContactY: heroGroundContactY[frame.key],
     offsetX: 0,
     offsetY: (frames.length - 1 - row) / frames.length,
     repeatX: 1,
@@ -1499,11 +1534,16 @@ async function createTestClipUncached(frameKeys: string[], fps: number): Promise
   };
 }
 
-function singleFrame(texture: THREE.Texture, key: string): RuntimeFrame {
+function validGroundContact(value: unknown): value is number {
+  return typeof value === 'number' && Number.isFinite(value) && value >= 0 && value <= 1;
+}
+
+function singleFrame(texture: THREE.Texture, key: string, groundContactY?: number): RuntimeFrame {
   configureTexture(texture);
   return {
     texture,
     key,
+    groundContactY: validGroundContact(groundContactY) ? groundContactY : undefined,
     offsetX: 0,
     offsetY: 0,
     repeatX: 1,

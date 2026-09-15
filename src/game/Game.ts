@@ -1,3 +1,4 @@
+import type { Run3dPilot } from './Run3dPilot';
 import * as THREE from 'three';
 import benchSeeds from '../../assets/contracts/bench-seeds.json' with { type: 'json' };
 import { applyGeneratedMap, disposeGeneratedAssets, generatedAssetRenderCounts, generatedAssetStatuses } from '../assets/generated';
@@ -955,6 +956,10 @@ export class Game {
   private manualSaveMessage = '';
   private readonly heroStart = contractHeroStart(this.activeContract);
   private readonly heroVisualYAt = (x: number, z: number): number => Terrain.visualY(x, z, this.heroStart.y);
+  private readonly primaryHeroVisualYAt = (x: number, z: number): number => {
+    const deckY = this.oldDiggerBoss.riderVisualHeight;
+    return deckY === undefined ? this.heroVisualYAt(x, z) : deckY + this.heroStart.y;
+  };
   private readonly debugSpawnPosition = new THREE.Vector3();
   private terrainView?: TerrainView;
   private railPath?: RailPathView;
@@ -1164,7 +1169,7 @@ export class Game {
   private readonly echoBoss = new EchoBossSystem(
     () => this.buildSystem.diagnostics.hp
       .filter((building) => !building.wrecked && building.hp > 0)
-      .map((building) => ({ id: building.id, x: building.position.x, z: building.position.z })),
+      .map((building) => ({ id: building.id, index: building.index, x: building.position.x, z: building.position.z })),
     () => this.echoPlaybooks(),
     (amount, sourceId) => this.combat.damageActor(amount, sourceId),
     (text, title) => this.uiBridge.announce(text, this.timeAlive, null, 6, 'wave', title),
@@ -1180,6 +1185,7 @@ export class Game {
         return this.tileStateStore.commitAtRunEnd();
       },
     },
+    (piece, material) => piece.index === undefined ? null : this.run3dPilot?.copyBuilding(piece.id, piece.index, material) ?? this.buildSystem.copyBuilding(piece.id, piece.index, material),
   );
   private readonly oldDiggerBoss = new OldDiggerBossSystem(
     () => this.enemies.all,
@@ -1203,6 +1209,7 @@ export class Game {
     },
     // F-SS10-1: `e9-dome-basin` declares no `twist.baron` either.
     bossStoryEmitter('old-digger', () => this.activeContract),
+    (x, z) => Terrain.visualY(x, z),
   );
   private readonly loop = new Loop(
     (delta) => this.update(delta),
@@ -1526,7 +1533,7 @@ export class Game {
   private lastHarvestChanneling = false;
   private lastUpgradeOfferAudioKey = '';
   private disposeRunTelemetry: () => void = () => undefined;
-  private run3dPilot?: { update: () => void; dispose: () => void };
+  private run3dPilot?: Run3dPilot;
   private terrain3dPilotDispose?: () => void;
   private terrain3dPilotCancelled = false;
   private resizeFrame = 0;
@@ -1739,7 +1746,10 @@ export class Game {
         const build = this.buildSystem.diagnostics;
         return [
           ...build.beaconPositions.map((position, index) => ({ id: `beacon-${index}`, ...position })),
-          ...build.turretPositions.map((position, index) => ({ id: `turret-${index}`, ...position })),
+          ...Array.from({ length: Balance.turret.maxCount }, (_, index) => {
+            const position = this.buildSystem.turretPosition(index);
+            return position ? [{ id: `turret-${index}`, x: position.x, z: position.z }] : [];
+          }).flat(),
         ];
       },
       terrainLineOfSight,
@@ -1752,7 +1762,7 @@ export class Game {
       this.events,
       () => this.primaryActor.group.position,
       () => this.playbookReplay?.active ? this.actors[this.playbookReplaySlot]?.group.position ?? null : null,
-      () => this.buildSystem.diagnostics.turretPositions,
+      (index) => this.buildSystem.turretPosition(index),
       () => this.activeEpoch.order >= 7 && !this.multiplayerActive(),
       (id) => this.e7SignalSystem.diagnostics.enabled ? this.e7SignalSystem.relayLinked(id) : undefined,
       () => this.e7SignalSystem.diagnostics.enabled ? this.e7SignalSystem.diagnostics.links.length : undefined,
@@ -1954,6 +1964,7 @@ export class Game {
         reason: this.preserveFell ? 'preserve_fell' : this.ventGuttered ? 'vent_guttered' : event.reason,
         wave: event.summary.deepestWave ?? event.summary.wavesSurvived,
       };
+      for (const view of this.agentRiderViewState.values()) view.terminal = false;
       this.tileStateStore.commitAtRunEnd();
     });
     this.events.on('run_ended', (event) => {
@@ -3241,7 +3252,7 @@ export class Game {
 
   private applyRenderInterpolation(alpha: number): void {
     for (const actor of this.actors) {
-      actor.applyRenderInterpolation(alpha, this.heroVisualYAt);
+      actor.applyRenderInterpolation(alpha, actor === this.primaryActor ? this.primaryHeroVisualYAt : this.heroVisualYAt);
     }
     this.enemies.applyRenderInterpolation(alpha);
     this.combat.applyRenderInterpolation(alpha);
@@ -3760,7 +3771,6 @@ export class Game {
     if (!state?.connected || host?.client !== 'browser' || host.playerId !== state.playerId) return;
     const pendingSecure = this.secureClaimChoicePending();
     const terminal = this.state.current === 'dead' || this.agentRiderTerminal !== null;
-    let sentTerminal = false;
     for (const player of state.roster) {
       if (player.client !== 'headless') continue;
       const rider = this.agentRiderBodies.get(player.playerId);
@@ -3773,7 +3783,7 @@ export class Game {
         || pendingSecure !== previous.pendingSecure
         || (terminal && !previous.terminal);
       const now = performance.now();
-      if (!due || (previous && !terminal && now - previous.sentAt < 2_000)) continue;
+      if (!due || (terminal && previous?.terminal) || (previous && now - previous.sentAt < 2_000)) continue;
       const view = buildView(this.agentRiderViewSource(player.playerId));
       const terminalReceipt = this.agentRiderTerminal;
       const terminalOutcome = terminalReceipt?.reason === 'secured' ? 'secured' : 'rider-down';
@@ -3795,7 +3805,6 @@ export class Game {
         advisory: true,
         now: { ...view.now, orders: orders.orders, needsRider: orders.needsRider },
       });
-      sentTerminal ||= terminalReceipt !== null;
       this.agentRiderViewState.set(player.playerId, {
         wave: view.now.wave,
         needsRider: orders.needsRider,
@@ -3804,7 +3813,8 @@ export class Game {
         sentAt: now,
       });
     }
-    if (sentTerminal) this.agentRiderTerminal = null;
+    if (state.roster.every((player) => player.client !== 'headless'
+      || this.agentRiderViewState.get(player.playerId)?.terminal)) this.agentRiderTerminal = null;
   }
 
   private agentRiderViewSource(playerId: string): AgentViewSource {
@@ -8732,7 +8742,11 @@ export class Game {
     this.progression.reset();
     this.agentConsent.reset();
     this.agentRiderBodies.clear();
-    this.agentRiderViewState.clear();
+    // The relay's per-seat clock survives a run reset, including endSecuredRun's immediate reset.
+    for (const view of this.agentRiderViewState.values()) {
+      view.wave = -1;
+      if (!this.agentRiderTerminal) view.terminal = false;
+    }
     this.agentRiderViewSources.clear();
     const roster = (this.mpClient?.state().roster ?? []).slice(0, 4);
     resetMultiplayerStandingRoster(this.multiplayerStandingRoster, roster);
@@ -9059,7 +9073,7 @@ export class Game {
     this.tileStateStore.stageWrite(this.activeContract.id, {
       kind: 'render',
       id: OLD_DIGGER_GENTLE_ENTRY_ID,
-      payload: { x: payload.x, z: payload.z },
+      payload: { ...payload },
       schemaVersion: TILE_STATE_SCHEMA_VERSION,
     });
     // The swap is a named write moment (W6 precedent): the kept machine must

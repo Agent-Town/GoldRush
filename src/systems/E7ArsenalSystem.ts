@@ -49,7 +49,7 @@ export class E7ArsenalSystem {
   private readonly seenOwnerKills: Record<string, number> = {};
   private readonly unsubscribes: Array<() => void> = [];
   private readonly jammerPosition = new THREE.Vector3();
-  private activeTurrets: readonly { x: number; z: number }[] = [];
+  private activeTurrets: readonly (THREE.Vector3 | null)[] = [];
   private jammerDeployed = false;
 
   constructor(
@@ -57,7 +57,7 @@ export class E7ArsenalSystem {
     events: EventBus,
     private readonly heroPosition: () => THREE.Vector3,
     private readonly playbookActorPosition: () => THREE.Vector3 | null,
-    private readonly turretPositions: () => readonly { x: number; z: number }[],
+    private readonly turretPosition: (index: number) => THREE.Vector3 | null,
     private readonly enabled: () => boolean,
     private readonly signalRelayLinked?: (id: string) => boolean | undefined,
     private readonly signalRelayCount?: () => number | undefined,
@@ -109,8 +109,8 @@ export class E7ArsenalSystem {
       );
       this.jammerDeployed = true;
     }
-    this.activeTurrets = active ? this.turretPositions() : [];
-    this.view.update(active, at, this.activeTurrets, active && this.jammerDeployed ? this.jammerPosition : null);
+    this.activeTurrets = active ? Array.from({ length: Balance.turret.maxCount }, (_, index) => this.turretPosition(index)) : [];
+    this.view.update(active, at, this.activeTurrets.filter((position) => position !== null), active && this.jammerDeployed ? this.jammerPosition : null);
   }
 
   get diagnostics(): E7ArsenalDiagnostics {
@@ -121,7 +121,7 @@ export class E7ArsenalSystem {
       items: active ? ITEMS : [],
       fires: { ...this.fires },
       relayLinks: this.signalRelayCount?.() ?? relayLinks(turrets),
-      activeRelayTurrets: turrets.length,
+      activeRelayTurrets: turrets.filter((position) => position !== null).length,
       jammerDeployed: active && this.jammerDeployed,
       playbookSlaved: active && this.playbookActorPosition() !== null,
       turretSilhouetteHeight: Balance.e7Arsenal.beamRelay.silhouetteHeight,
@@ -149,9 +149,10 @@ export class E7ArsenalSystem {
     this.registerShooter('beamRelay', {
       resumeKey: `e7:beam-relay:${index}`,
       id: 'e7_beam_relay',
-      enabled: () => this.enabled() && (this.signalRelayLinked?.(`turret-${index}`) ?? relayTarget(this.activeTurrets, index) !== null),
+      enabled: () => this.enabled() && this.turretPosition(index) !== null
+        && (this.signalRelayLinked?.(`turret-${index}`) ?? relayTarget(this.activeTurrets, index) !== null),
       getPos: () => {
-        const source = this.activeTurrets[index];
+        const source = this.turretPosition(index);
         return source ? position.set(source.x, 0, source.z) : position;
       },
       range: Balance.e7Arsenal.beamRelay.range,
@@ -194,13 +195,13 @@ function cureTarget(enemy: { eliteKind: unknown; bossGroupId: unknown }): boolea
   return !enemy.eliteKind && !enemy.bossGroupId;
 }
 
-function relayTarget(positions: readonly { x: number; z: number }[], index: number): { x: number; z: number } | null {
+function relayTarget(positions: readonly ({ x: number; z: number } | null)[], index: number): { x: number; z: number } | null {
   const source = positions[index];
   if (!source) return null;
-  return positions.find((target, targetIndex) => targetIndex !== index && terrainLineOfSight(source, target)) ?? null;
+  return positions.find((target, targetIndex) => target !== null && targetIndex !== index && terrainLineOfSight(source, target)) ?? null;
 }
 
-function relayLinks(positions: readonly { x: number; z: number }[]): number {
+function relayLinks(positions: readonly ({ x: number; z: number } | null)[]): number {
   let links = 0;
   for (let index = 0; index < positions.length; index += 1) if (relayTarget(positions, index)) links += 1;
   return Math.floor(links / 2);

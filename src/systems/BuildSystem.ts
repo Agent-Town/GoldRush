@@ -773,7 +773,10 @@ export class BuildSystem {
   }
 
   turretPosition(index: number): THREE.Vector3 | null {
-    return this.turrets.isActive(index) ? (this.turrets.allPositions[index] ?? null) : null;
+    // Pool occupancy also reserves ruins; only standing, grounded turrets supply weapon origins.
+    return this.turrets.isActive(index) && (this.hp.turret[index] ?? 0) > 0
+      && !this.wrecked.turret[index] && !this.suspendedBuildings.has(`turret:${index}`)
+      ? (this.turrets.allPositions[index] ?? null) : null;
   }
 
   get nextCost(): number {
@@ -1098,6 +1101,49 @@ export class BuildSystem {
       this.syncGhostShape();
       this.setBuildMode(previous.mode);
     }
+  }
+
+  /** Snapshot physical pool parts; caller owns geometry and supplies the shared material. */
+  copyBuilding(id: string, index: number, material: THREE.Material): THREE.Object3D | null {
+    if (!isBuildableId(id) || !Number.isInteger(index) || index < 0
+      || !(this.hp[id][index]! > 0) || this.wrecked[id][index]) return null;
+    const pools = {
+      sentry_beacon: this.beacons, palisade: this.palisades, sluice: this.sluices,
+      stockpile: this.stockpiles, boiler_house: this.boilerHouses, turret: this.turrets,
+      lantern_post: this.lanternPosts, decoy_shed: this.decoySheds, capacitor_bank: this.capacitorBanks,
+    };
+    const pool = id === 'assay_office' ? null : pools[id];
+    const source = pool?.group ?? this.assayOffice;
+    const capacity = pool?.capacity ?? 1;
+    if (index >= capacity) return null;
+    source.updateWorldMatrix(true, true);
+    const snapshot = new THREE.Group();
+    const matrix = new THREE.Matrix4();
+    const position = this.positionFor(id, index)!;
+    const offset = new THREE.Matrix4().makeTranslation(-position.x, 0, -position.z);
+    source.traverse((node) => {
+      const mesh = node as THREE.Mesh;
+      // Portrait billboards have no physical silhouette when their texture is removed.
+      if (!mesh.isMesh || !mesh.visible || mesh.geometry.type === 'PlaneGeometry') return;
+      const instanced = mesh as THREE.InstancedMesh;
+      const parts = instanced.isInstancedMesh ? instanced.instanceMatrix.count / capacity : 1;
+      if (!Number.isInteger(parts)) return;
+      for (let part = 0; part < parts; part += 1) {
+        if (instanced.isInstancedMesh) {
+          instanced.getMatrixAt(index * parts + part, matrix);
+          if (Math.abs(matrix.determinant()) < 1e-12) continue;
+          matrix.premultiply(mesh.matrixWorld);
+        } else matrix.copy(mesh.matrixWorld);
+        const geometry = mesh.geometry.clone().applyMatrix4(matrix.premultiply(offset));
+        const copy = new THREE.Mesh(geometry, material);
+        copy.name = mesh.name;
+        snapshot.add(copy);
+      }
+    });
+    if (snapshot.children.length === 0) return null;
+    const baseY = new THREE.Box3().setFromObject(snapshot).min.y;
+    for (const child of snapshot.children) (child as THREE.Mesh).geometry.translate(0, -baseY, 0);
+    return snapshot;
   }
 
   placeFree(id: BuildableId, position: { x: number; z: number }, rotationSteps = 0, options: FreePlacementOptions = {}): boolean {

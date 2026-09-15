@@ -7,6 +7,12 @@ name = "MULTIPLAYER_ROOMS"
 class_name = "MultiplayerRoom"
 script_name = "gold-rush-mp-room"
 
+# Deploy and bootstrap this registry before enabling account routes (docs/ops/account-registry.md).
+[[durable_objects.bindings]]
+name = "ACCOUNT_REGISTRY"
+class_name = "AccountRegistry"
+script_name = "gold-rush-account-registry"
+
 # F-LBKV-1 (2026-08-04): standings/bugs/stats read `env.TELEMETRY ?? env.ACCOUNTS`; no KV
 # was ever bound, so every write fail-softed to `stored:false` since LB-01 shipped. This
 # top-level block binds BOTH environments (Pages toml semantics) on every deploy.

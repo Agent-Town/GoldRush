@@ -60,6 +60,7 @@ const schoolteacherPortraitUrl = new URL('../../assets/processed/townsfolk-schoo
 const assayClerkPortraitUrl = new URL('../../assets/processed/townsfolk-assay-clerk.png', import.meta.url).href;
 const youngsterAPortraitUrl = new URL('../../assets/processed/townsfolk-youngster-a.png', import.meta.url).href;
 const youngsterBPortraitUrl = new URL('../../assets/processed/townsfolk-youngster-b.png', import.meta.url).href;
+const newsiePortraitUrl = new URL('../../assets/processed/townsfolk-newsie-e1.png', import.meta.url).href;
 const prospectorPortraitUrl = new URL('../../assets/processed/char-prospector-portrait.png', import.meta.url).href;
 
 export const TOWN_ACTORS: readonly TownActorDefinition[] = [
@@ -162,7 +163,7 @@ export const TOWN_ACTORS: readonly TownActorDefinition[] = [
     facing: 's',
     scale: TOWN_CAST_METROLOGY.child,
     barkRadius: 2.45,
-    fullBody: { sheet: townActorSheets.youngster_a, animated: true },
+    fullBody: { sheet: townActorSheets.youngster_a, animated: true, fps: 26 },
     e1Barks: ['Race you from the trough to the office!', 'I found a shiny rock. It is probably science.', 'The Prospector hummed at me. I hummed back.'],
     loop: {
       trailId: 'ring-road',
@@ -182,7 +183,7 @@ export const TOWN_ACTORS: readonly TownActorDefinition[] = [
     facing: 'sw',
     scale: TOWN_CAST_METROLOGY.child,
     barkRadius: 2.45,
-    fullBody: { sheet: townActorSheets.youngster_b, animated: true },
+    fullBody: { sheet: townActorSheets.youngster_b, animated: true, fps: 24 },
     e1Barks: ['We drew the store before it was real.', 'If the Baron comes here, he has to do sums first.', 'I can see the whole square from the rail.'],
     loop: {
       trailId: 'ring-road',
@@ -195,8 +196,8 @@ export const TOWN_ACTORS: readonly TownActorDefinition[] = [
     id: 'newsie',
     name: 'Chen Mei',
     post: 'Newsie',
-    assetSlot: assetSlots.charTownYoungsterA,
-    portraitUrl: youngsterAPortraitUrl,
+    assetSlot: assetSlots.charTownNewsie,
+    portraitUrl: newsiePortraitUrl,
     anchor: 'tavern',
     position: { x: -4.35, z: -4.25 },
     facing: 's',
@@ -206,8 +207,9 @@ export const TOWN_ACTORS: readonly TownActorDefinition[] = [
     e1Barks: ['EXTRA! Fresh ink by the tavern!', 'Paper is warm. Read it before the wind does.'],
     loop: {
       trailId: 'tavern',
-      points: [...reverseTrail('tavern'), ...townTrail('tavern').points.slice(1)],
-      seconds: 19,
+      // Turn before the monument; keep the original walking pace on the shorter trail.
+      points: [...reverseTrail('tavern').slice(0, -1), ...townTrail('tavern').points.slice(2, -1)],
+      seconds: 16,
       phase: 0.16,
       pauses: { 0: 4 },
     },

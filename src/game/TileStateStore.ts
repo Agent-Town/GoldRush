@@ -18,7 +18,7 @@ export const HOMEMAKER_KEPT_ENTRY_ID = 'homemaker-9000-kept';
 export const CANAL_CHOICE_ENTRY_ID = 'canal-choice';
 
 export type DredgeQueenWreckPayload = { x: number; z: number };
-export type OldDiggerGentlePayload = { x: number; z: number };
+export type OldDiggerGentlePayload = { x: number; z: number; yaw?: number };
 export type SalvageClawCarcassPayload = { x: number; z: number };
 export type HomemakerKeptPayload = { x: number; z: number };
 export type GreenWaypointPayload = { x: number; z: number; r: number };
@@ -255,9 +255,10 @@ export function parseDredgeQueenWreckPayload(payload: unknown): DredgeQueenWreck
 
 export function parseOldDiggerGentlePayload(payload: unknown): OldDiggerGentlePayload | null {
   if (!isRecord(payload)) return null;
-  const { x, z } = payload;
+  const { x, z, yaw } = payload;
   if (typeof x !== 'number' || typeof z !== 'number' || !Number.isFinite(x) || !Number.isFinite(z)) return null;
-  return { x, z };
+  if (yaw !== undefined && (typeof yaw !== 'number' || !Number.isFinite(yaw))) return null;
+  return yaw === undefined ? { x, z } : { x, z, yaw };
 }
 
 export function parseSalvageClawCarcassPayload(payload: unknown): SalvageClawCarcassPayload | null {

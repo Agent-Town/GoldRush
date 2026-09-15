@@ -477,7 +477,7 @@ export const Balance = {
     copyDepth: 0.9,
     copyColor: '#74d8d0',
     copyEmissive: '#2a8f8a',
-    copyOpacity: 0.58,
+    copyOpacity: 0.88,
     jarX: 0,
     jarZ: -4,
     jarHeight: 1.1,

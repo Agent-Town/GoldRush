@@ -62,6 +62,7 @@ export class DredgeQueenBossSystem {
   readonly group = new THREE.Group();
   private readonly barge = new THREE.Group();
   private readonly bargePrimitive = new THREE.Group();
+  private readonly fallbackClawJaws = new THREE.Group();
   private readonly wreckMarker = new THREE.Mesh(
     new THREE.RingGeometry(3.5, 4, 32),
     new THREE.MeshBasicMaterial({ color: '#62d7cd', transparent: true, opacity: 0.38, side: THREE.DoubleSide, depthWrite: false }),
@@ -111,7 +112,7 @@ export class DredgeQueenBossSystem {
   private dredgeQueen3dLoadSerial = 0;
   private dredgeQueen3dModel?: THREE.Object3D;
   private readonly dredgeQueen3dMeshes = new Map<ComponentId, THREE.Mesh>();
-  private readonly dredgeQueen3dCenter = new THREE.Vector3();
+  private readonly presentationCenter = new THREE.Vector3();
 
   constructor(
     private readonly enemies: () => readonly ClaimJumperEnemy[],
@@ -446,12 +447,27 @@ export class DredgeQueenBossSystem {
   }
 
   private buildPresentation(): void {
-    const clawJaws = new THREE.Group();
+    const clawJaws = this.fallbackClawJaws;
+    clawJaws.name = 'DredgeQueen.FallbackJaws';
     const leftJaw = box(1.35, 0.24, 0.24, '#73b6ad', -4.25, 0.72, -0.42);
     const rightJaw = box(1.35, 0.24, 0.24, '#73b6ad', -4.25, 0.72, 0.42);
     leftJaw.rotation.y = -0.48;
     rightJaw.rotation.y = 0.48;
-    clawJaws.add(leftJaw, rightJaw);
+    // Move each jaw pivot to its inner end without changing the closed pose.
+    const hingeX = -4.25 + Math.cos(0.48) * 0.675;
+    const hingeZ = 0.42 - Math.sin(0.48) * 0.675;
+    for (const [jaw, sign] of [[leftJaw, -1], [rightJaw, 1]] as const) {
+      jaw.geometry.translate(-0.675, 0, 0);
+      jaw.position.set(hingeX, 0.72, sign * hingeZ);
+    }
+    const boomTip = new THREE.Vector3(-3.4 - Math.sin(0.55) * 2.3, 2 + Math.cos(0.55) * 2.3, 0);
+    const hinge = new THREE.Vector3(hingeX, 0.72, 0);
+    const cableDirection = boomTip.clone().sub(hinge);
+    const cableCenter = boomTip.clone().add(hinge).multiplyScalar(0.5);
+    const cable = cylinder(0.055, cableDirection.length(), '#514b3d', cableCenter.x, cableCenter.y, 0, Math.atan2(-cableDirection.x, cableDirection.y));
+    const pin = cylinder(0.22, 0.5, '#73b6ad', hingeX, 0.72, 0);
+    pin.rotation.x = Math.PI / 2;
+    clawJaws.add(leftJaw, rightJaw, pin, cable);
     this.bargePrimitive.add(
       box(7.5, 0.9, 3.8, '#51372a', 0, 0.65, 0),
       box(2.2, 1.6, 2.5, '#6a4b35', 2, 1.65, 0),
@@ -496,10 +512,23 @@ export class DredgeQueenBossSystem {
   private syncPresentation(): void {
     const components = this.liveComponents();
     if (this.started || this.hulkPresent) this.ensureDredgeQueen3d();
-    const center = components.length > 0
+    const fallbackCenter = components.length > 0
       ? components.reduce((sum, enemy) => sum.add(enemy.position), new THREE.Vector3()).multiplyScalar(1 / components.length)
       : this.anchor;
-    this.updateDredgeQueen3d(components, center);
+    this.presentationCenter.copy(this.act >= 2 || this.hulkPresent ? this.anchor : fallbackCenter);
+    if (this.act === 1 && components.length > 0) {
+      let offsetX = 0;
+      let offsetZ = 0;
+      for (const enemy of components) {
+        const offset = componentOffset(enemy.bossComponentId as ComponentId);
+        offsetX += offset.x;
+        offsetZ += offset.z;
+      }
+      this.presentationCenter.x -= offsetX / components.length;
+      this.presentationCenter.z -= offsetZ / components.length;
+    }
+    const center = this.presentationCenter;
+    this.updateDredgeQueen3d(components);
     const modelMounted = this.dredgeQueen3dState === 'ready' && this.dredgeQueen3dModel?.visible === true;
     this.barge.position.set(center.x, 0, center.z);
     this.barge.visible = this.started && this.act < 3;
@@ -509,6 +538,11 @@ export class DredgeQueenBossSystem {
     this.cyclePointer.visible = this.act === 1;
     this.cyclePointer.position.set(center.x - 3.4, 3.4, center.z);
     this.cyclePointer.rotation.y = -Math.PI * 2 * this.clawCycleProgress;
+    const claw = components.find((enemy) => enemy.bossComponentId === 'claw');
+    const clawDamaged = this.hulkPresent || this.destroyed.has('claw') || Boolean(claw && claw.currentHp / Math.max(1, claw.maxHp) <= DREDGE_QUEEN_DAMAGE_THRESHOLD);
+    const jawOpen = this.act === 1 && !clawDamaged ? Math.sin(Math.PI * this.clawCycleProgress) ** 2 : 0;
+    this.fallbackClawJaws.children[0]!.rotation.y = -0.48 - 0.35 * jawOpen;
+    this.fallbackClawJaws.children[1]!.rotation.y = 0.48 + 0.35 * jawOpen;
     this.swatRing.position.set(this.anchor.x, 0.1, this.anchor.z);
     this.swatRing.visible = this.swatTelegraphed;
     for (let index = 0; index < this.lootMarkers.length; index += 1) this.lootMarkers[index]!.visible = index < this.holdLoot;
@@ -578,7 +612,8 @@ export class DredgeQueenBossSystem {
       for (const material of Array.isArray(mesh.material) ? mesh.material : [mesh.material]) materials.add(material);
       for (const id of COMPONENT_IDS) {
         const contract = DREDGE_QUEEN_3D_COMPONENTS[id];
-        if (mesh.name === contract.mesh && mesh.morphTargetDictionary?.[contract.morph] === 0 && mesh.morphTargetInfluences?.length === 1) meshes.set(id, mesh);
+        if (mesh.name === contract.mesh && mesh.morphTargetDictionary?.[contract.morph] === 0 && mesh.morphTargetInfluences?.length === (id === 'claw' ? 2 : 1)
+          && (id !== 'claw' || mesh.morphTargetDictionary?.Cycle_OpenGrab === 1)) meshes.set(id, mesh);
       }
       mesh.castShadow = true;
       mesh.receiveShadow = true;
@@ -593,26 +628,18 @@ export class DredgeQueenBossSystem {
     return meshes;
   }
 
-  private updateDredgeQueen3d(components: readonly ClaimJumperEnemy[], fallbackCenter: THREE.Vector3): void {
+  private updateDredgeQueen3d(components: readonly ClaimJumperEnemy[]): void {
     if (!this.dredgeQueen3dModel || this.dredgeQueen3dState !== 'ready') return;
-    this.dredgeQueen3dCenter.copy(this.act >= 2 || this.hulkPresent ? this.anchor : fallbackCenter);
-    if (this.act === 1 && components.length > 0) {
-      let offsetX = 0;
-      let offsetZ = 0;
-      for (const enemy of components) {
-        const offset = componentOffset(enemy.bossComponentId as ComponentId);
-        offsetX += offset.x;
-        offsetZ += offset.z;
-      }
-      this.dredgeQueen3dCenter.x -= offsetX / components.length;
-      this.dredgeQueen3dCenter.z -= offsetZ / components.length;
-    }
-    this.dredgeQueen3dModel.position.set(this.dredgeQueen3dCenter.x, 0, this.dredgeQueen3dCenter.z);
+    this.dredgeQueen3dModel.position.set(this.presentationCenter.x, 0, this.presentationCenter.z);
     this.dredgeQueen3dModel.visible = this.started || this.hulkPresent;
     for (const [id, mesh] of this.dredgeQueen3dMeshes) {
       const enemy = components.find((candidate) => candidate.bossComponentId === id);
       const damaged = this.hulkPresent || this.destroyed.has(id) || Boolean(enemy && enemy.currentHp / Math.max(1, enemy.maxHp) <= DREDGE_QUEEN_DAMAGE_THRESHOLD);
-      if (mesh.morphTargetInfluences) mesh.morphTargetInfluences[0] = damaged ? 1 : 0;
+      if (mesh.morphTargetInfluences) {
+        mesh.morphTargetInfluences[0] = damaged ? 1 : 0;
+        if (id === 'claw') mesh.morphTargetInfluences[1] = this.act === 1 && !damaged
+          ? Math.sin(Math.PI * this.clawCycleProgress) ** 2 : 0;
+      }
       const material = mesh.material as THREE.MeshStandardMaterial;
       material.emissive.set(damaged ? DREDGE_QUEEN_3D_COMPONENTS[id].damageColor : '#fff8e8');
       material.emissiveIntensity = damaged ? 3 : 2;
@@ -752,7 +779,7 @@ function labelSprite(text: string, accent: string, width: number): THREE.Sprite 
   context.font = 'bold 34px Georgia, serif';
   context.textAlign = 'center';
   context.textBaseline = 'middle';
-  context.fillText(text, canvas.width / 2, canvas.height / 2 + 1);
+  context.fillText(text, canvas.width / 2, canvas.height / 2 + 1, canvas.width - 32);
   const texture = new THREE.CanvasTexture(canvas);
   texture.colorSpace = THREE.SRGBColorSpace;
   const sprite = new THREE.Sprite(new THREE.SpriteMaterial({ map: texture, transparent: true, depthTest: false }));

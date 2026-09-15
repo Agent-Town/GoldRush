@@ -174,7 +174,7 @@ export class LockstepClient {
   private readonly bundles = new Map<number, LockstepTick>();
   private readonly consumedBundles = new Map<number, LockstepTick>();
   private readonly sendTimes = new Map<number, number>();
-  private readonly localHashes = new Map<number, string>();
+  private readonly localHashes = new Map<number, { hash: string; peers: string[] }>();
   private readonly remoteHashes = new Map<number, Map<string, string>>();
   private readonly authoritySnapshots = new Map<number, unknown>();
   private readonly hashLog: Array<{ tick: number; hash: string }> = [];
@@ -332,6 +332,12 @@ export class LockstepClient {
   afterSimTick(tick: number, hash: string, snapshot: unknown | null): void {
     if (!this.connected || !this.shouldExchangeHash(tick)) return;
     const sentHash = tick === this.desyncAtTick ? `${hash}:injected` : hash;
+    // Thin seats do not simulate in browser rooms. Capture this tick's quorum before
+    // asynchronous snapshot encoding or a later tick can change the roster.
+    const browserRoom = this.roster.some((player) => player.client === 'browser');
+    const peers = this.roster
+      .filter((player) => player.playerId !== this.playerId && (!browserRoom || player.client === 'browser'))
+      .map((player) => player.playerId);
     if (snapshot && this.playerId === this.roster[0]?.playerId) {
       const prepared = prepareLockstepSnapshotTransport(snapshot);
       if (prepared instanceof Promise) {
@@ -349,7 +355,7 @@ export class LockstepClient {
           if (!result.ok) return this.failSession('snapshot_encode_failed');
           this.rememberAuthoritySnapshot(tick, result.wireSnapshot);
           this.send({ v: VERSION, type: 'snapshot-push', tick, snapshot: result.wireSnapshot });
-          this.recordHash(tick, sentHash);
+          this.recordHash(tick, sentHash, peers);
         }).catch(() => {
           if (sourceEpoch === this.snapshotSendEpoch && this.isCurrentSocket(sourceSocket, sourceGeneration)) {
             this.failSession('snapshot_encode_failed');
@@ -360,15 +366,15 @@ export class LockstepClient {
       this.rememberAuthoritySnapshot(tick, prepared);
       this.send({ v: VERSION, type: 'snapshot-push', tick, snapshot: prepared });
     }
-    this.recordHash(tick, sentHash);
+    this.recordHash(tick, sentHash, peers);
   }
 
   sendView(to: string, seq: number, body: unknown): void {
     this.send({ v: VERSION, type: 'view', to, seq, body });
   }
 
-  private recordHash(tick: number, sentHash: string): void {
-    this.localHashes.set(tick, sentHash);
+  private recordHash(tick: number, sentHash: string, peers: string[]): void {
+    this.localHashes.set(tick, { hash: sentHash, peers });
     this.hashLog.push({ tick, hash: sentHash });
     if (this.hashLog.length > MAX_HASH_HISTORY) this.hashLog.splice(0, this.hashLog.length - MAX_HASH_HISTORY);
     this.send({ v: VERSION, type: 'hash', tick, hash: sentHash });
@@ -678,10 +684,10 @@ export class LockstepClient {
   private compareHashes(tick: number): void {
     const local = this.localHashes.get(tick);
     const remotes = this.remoteHashes.get(tick);
-    if (!local || !remotes || remotes.size < Math.max(1, this.roster.length - 1)) return;
+    if (!local || !remotes || local.peers.some((playerId) => !remotes.has(playerId))) return;
     this.localHashes.delete(tick);
     this.remoteHashes.delete(tick);
-    if ([...remotes.values()].some((remote) => remote !== local)) this.desync(tick);
+    if (local.peers.some((playerId) => remotes.get(playerId) !== local.hash)) this.desync(tick);
   }
 
   private async restoreSnapshot(snapshot: unknown, tick: number, from: string | null, sourceSocket?: WebSocket): Promise<void> {

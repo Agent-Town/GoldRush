@@ -16,7 +16,8 @@ const OLD_DIGGER_3D_TRIANGLES = 7_192;
 // E9 §BOSS state law (asset contract): working machine → intact gentle reprogramming.
 // No damage or kill morph EXISTS — the model itself refuses the wrong verb.
 const OLD_DIGGER_3D_COMPONENTS = {
-  bucket_wheels: 'Redemption_GentleBuckets',
+  bucket_wheel_port: 'Redemption_GentleBuckets',
+  bucket_wheel_starboard: 'Redemption_GentleBuckets',
   gantry: 'Redemption_SafeGantry',
   tape_deck: 'Redemption_TealTapeDeck',
 } as const;
@@ -118,6 +119,9 @@ export class OldDiggerBossSystem {
   private persistentGentle = false;
   private readonly restPosition = new THREE.Vector3();
   private lastAt = 0;
+  private wheelPhase = 0;
+  private wheelSpeed = 0;
+  private readonly primitiveWheels: THREE.Mesh[] = [];
   private oldDigger3dState: OldDigger3dState;
   private oldDigger3dLoadSerial = 0;
   private oldDigger3dModel?: THREE.Object3D;
@@ -144,6 +148,7 @@ export class OldDiggerBossSystem {
      * rehydration of a finished fight and deliberately emits nothing.
      */
     private readonly story: BossStoryEmitter,
+    private readonly visualY: (x: number, z: number) => number = () => 0,
   ) {
     this.oldDigger3dState = performanceTierDiagnostics().tier === 'lite' ? 'lite' : 'off';
     this.group.name = 'OldDigger.Placeholder';
@@ -171,6 +176,13 @@ export class OldDiggerBossSystem {
 
   update(at: number): void {
     const delta = Math.max(0, at - this.lastAt);
+    // Wheel phase is presentation-only; a new run starts at the authored pose.
+    const targetSpeed = this.enabled && (this.started || this.gentle)
+      ? this.swapPhase === 'reading' ? 0 : this.gentle ? 0.2 : 0.7
+      : 0;
+    const decay = Math.exp(-delta / 0.4);
+    this.wheelPhase += targetSpeed * delta + (this.wheelSpeed - targetSpeed) * 0.4 * (1 - decay);
+    this.wheelSpeed = targetSpeed + (this.wheelSpeed - targetSpeed) * decay;
     this.lastAt = at;
     if (!this.enabled) return this.syncPresentation();
     if (this.persistentGentle) {
@@ -248,7 +260,7 @@ export class OldDiggerBossSystem {
     this.recycleEnemy(hull);
     for (const drone of this.liveDrones()) this.recycleEnemy(drone);
     this.archivedTape = this.tape;
-    this.persistence.writeAtCeremony({ x: this.restPosition.x, z: this.restPosition.z });
+    this.persistence.writeAtCeremony({ x: this.restPosition.x, z: this.restPosition.z, yaw: this.machine.rotation.y });
     this.announce('The old tape goes to the archive. It re-digs to the reeve’s charts now, gently, forever.', 'IT JOINS THE FLEET');
     // The end of the fight, no-kill law intact: it TURNED. Kept machine #5. lore/STORYBOOK.md:564
     this.story.defeat();
@@ -390,6 +402,8 @@ export class OldDiggerBossSystem {
     this.gentle = false;
     this.persistentGentle = false;
     this.lastAt = 0;
+    this.wheelPhase = 0;
+    this.wheelSpeed = 0;
     if (this.enabled) this.restorePersistentGentle();
     this.syncPresentation();
   }
@@ -506,18 +520,26 @@ export class OldDiggerBossSystem {
     const saved = this.persistence.readAtBirth();
     if (!saved) return;
     this.restPosition.set(saved.x, 0, saved.z);
+    if (saved.yaw !== undefined) this.machine.rotation.y = saved.yaw;
     this.persistentGentle = true;
     this.gentle = true;
     this.act = 3;
   }
 
+  /** Render-only support at the center of the worked deck; gameplay remains planar. */
+  get riderVisualHeight(): number | undefined {
+    if (!this.boarded) return undefined;
+    // Factory Worked upper deck top after normalization; primitive chassis top otherwise.
+    return this.machine.position.y + (this.oldDigger3dState === 'ready' ? 2.754774 : 1.45);
+  }
+
   private buildPresentation(): void {
     const wheelColor = '#a5793f';
+    for (const z of [-1.15, 1.15]) this.primitiveWheels.push(cylinder(1.5, 0.5, wheelColor, -2.4, 1.5, z, 0, Math.PI / 2));
     this.machinePrimitive.add(
       box(6.4, 1.2, 2.8, '#5c4a33', 0.6, 0.85, 0),
       box(2.6, 1.4, 2.2, '#6f5233', 2, 1.9, 0),
-      cylinder(1.5, 0.5, wheelColor, -2.4, 1.5, -1.15, Math.PI / 2),
-      cylinder(1.5, 0.5, wheelColor, -2.4, 1.5, 1.15, Math.PI / 2),
+      ...this.primitiveWheels,
       cylinder(0.16, 4.6, '#8a7a5c', 0.4, 3, -1.1, 0.5),
       cylinder(0.16, 4.6, '#8a7a5c', 0.4, 3, 1.1, -0.5),
       box(3.6, 0.24, 0.5, '#8a7a5c', -0.4, 4, 0),
@@ -534,14 +556,17 @@ export class OldDiggerBossSystem {
     const visible = this.started || this.gentle;
     if (visible) this.ensureOldDigger3d();
     const center = this.machinePosition();
-    const modelMounted = this.oldDigger3dState === 'ready' && this.oldDigger3dModel?.visible === true;
-    this.machine.position.set(center.x, 0, center.z);
+    const modelMounted = this.oldDigger3dState === 'ready' && this.oldDigger3dModel !== undefined;
+    const groundY = this.visualY(center.x, center.z);
+    this.machine.position.set(center.x, groundY, center.z);
     this.machine.visible = visible;
     this.machinePrimitive.visible = !modelMounted;
-    const target = this.surveyPath[this.surveyIndex];
-    if (!this.gentle && target) this.machine.rotation.y = Math.atan2(target.x - center.x, target.z - center.z);
+    for (const wheel of this.primitiveWheels) wheel.rotation.y = -this.wheelPhase;
+    const target = this.swapPhase === 'redig' ? this.redigTarget : this.surveyPath[this.surveyIndex];
+    // The factory machine runs along local X, with its large digging wheel at -X.
+    if (!this.gentle && target) this.machine.rotation.y = Math.atan2(target.x - center.x, target.z - center.z) + Math.PI / 2;
     (this.primitiveTapeDeck.material as THREE.MeshStandardMaterial).color.set(this.gentle ? '#62d7cd' : '#6a4b35');
-    this.surveyMarker.position.set(center.x, 0.08, center.z);
+    this.surveyMarker.position.set(center.x, groundY + 0.08, center.z);
     this.surveyMarker.visible = this.started && this.act === 1 && !this.gentle;
     this.updateOldDigger3d();
     this.publishOldDigger3d();
@@ -604,7 +629,7 @@ export class OldDiggerBossSystem {
       mesh.castShadow = true;
       mesh.receiveShadow = true;
     });
-    if (meshCount !== 3 || meshes.size !== 3 || materials.size !== 1 || triangles !== OLD_DIGGER_3D_TRIANGLES) return null;
+    if (meshCount !== 4 || meshes.size !== 4 || materials.size !== 1 || triangles !== OLD_DIGGER_3D_TRIANGLES) return null;
     for (const mesh of meshes.values()) {
       const material = (mesh.material as THREE.MeshStandardMaterial).clone();
       material.emissiveMap = material.map;
@@ -617,6 +642,10 @@ export class OldDiggerBossSystem {
   private updateOldDigger3d(): void {
     if (!this.oldDigger3dModel || this.oldDigger3dState !== 'ready') return;
     this.oldDigger3dModel.visible = this.started || this.gentle;
+    for (const id of ['bucket_wheel_port', 'bucket_wheel_starboard'] as const) {
+      const wheel = this.oldDigger3dMeshes.get(id);
+      if (wheel) wheel.rotation.z = -this.wheelPhase;
+    }
     for (const mesh of this.oldDigger3dMeshes.values()) {
       if (mesh.morphTargetInfluences) mesh.morphTargetInfluences[0] = this.gentle ? 1 : 0;
       const material = mesh.material as THREE.MeshStandardMaterial;
@@ -653,10 +682,10 @@ function box(width: number, height: number, depth: number, color: string, x = 0,
   return mesh;
 }
 
-function cylinder(radius: number, height: number, color: string, x: number, y: number, z: number, rotateZ = 0): THREE.Mesh {
+function cylinder(radius: number, height: number, color: string, x: number, y: number, z: number, rotateZ = 0, rotateX = 0): THREE.Mesh {
   const mesh = new THREE.Mesh(new THREE.CylinderGeometry(radius, radius, height, 12), new THREE.MeshStandardMaterial({ color, roughness: 0.72, metalness: 0.14 }));
   mesh.position.set(x, y, z);
-  mesh.rotation.z = rotateZ;
+  mesh.rotation.set(rotateX, 0, rotateZ);
   return mesh;
 }
 

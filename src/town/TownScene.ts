@@ -100,8 +100,21 @@ import { deriveMechanicsManifest, mechanicsManifestLine } from '../agent/Mechani
 import { SoundSystem } from '../audio/SoundSystem';
 import { bindAudioSettingsControls, renderAudioSettingsControls } from '../audio/AudioSettingsControl';
 import tavernkeeperWalkFrames from '../../assets/processed/char-tavernkeeper-sheet-walk8.frames.json' with { type: 'json' };
+import tavernkeeperIdleFrames from '../../assets/processed/char-tavernkeeper-idle.frames.json' with { type: 'json' };
+import storekeeperIdleFrames from '../../assets/processed/char-storekeeper-idle.frames.json' with { type: 'json' };
 import storekeeperWalkFrames from '../../assets/processed/char-storekeeper-sheet-walk8.frames.json' with { type: 'json' };
 import elderWalkFrames from '../../assets/processed/char-elder-sheet-walk8.frames.json' with { type: 'json' };
+import elderIdleFrames from '../../assets/processed/char-elder-idle.frames.json' with { type: 'json' };
+import preacherWalkFrames from '../../assets/processed/char-preacher-sheet-walk8-a.frames.json' with { type: 'json' };
+import preacherIdleFrames from '../../assets/processed/char-preacher-idle.frames.json' with { type: 'json' };
+import schoolteacherWalkFrames from '../../assets/processed/char-schoolteacher-sheet-walk8-a.frames.json' with { type: 'json' };
+import schoolteacherIdleFrames from '../../assets/processed/char-schoolteacher-idle.frames.json' with { type: 'json' };
+import newsieIdleFrames from '../../assets/processed/char-newsie-mei-idle.frames.json' with { type: 'json' };
+import assayClerkWalkFrames from '../../assets/processed/char-assay-clerk-sheet-walk8-a.frames.json' with { type: 'json' };
+import assayClerkIdleFrames from '../../assets/processed/char-assay-clerk-idle.frames.json' with { type: 'json' };
+import youngsterAWalkFrames from '../../assets/processed/char-youngster-m-sheet-walk8.frames.json' with { type: 'json' };
+import youngsterBWalkFrames from '../../assets/processed/char-youngster-f-sheet-walk8.frames.json' with { type: 'json' };
+import newsieWalkFrames from '../../assets/processed/char-newsie-mei-sheet-walk8.frames.json' with { type: 'json' };
 
 // THE TOWN DECLARES ITS CLIP GROUPS (task hero-slot-clip-split, 2026-09-07; owner, verbatim: "now
 // it loads veerrry slowly"). This module is reached only through `await import('./town/TownScene')`
@@ -126,21 +139,26 @@ const boardCardUrls = import.meta.glob<string>('../../assets/processed/board-car
 });
 
 type ProcessedWalkFrames = {
+  source: string;
+  idle?: ProcessedWalkFrames;
+  grid: { cols: number; rows: number };
   cell: number;
   scale: number;
   cells: Array<{ row: number; col: number; bbox: number[] }>;
 };
 
-// F-A8-5 (review `reviews/canon-calls-a8-batch.md`, 2026-09-07): this map held only the
-// tavernkeeper and the storekeeper, so the Elder rendered with no footline anchoring — her
-// billboard sat by the cell's centre instead of by her feet, and the taller cells of her sheet
-// floated. `assets/LEDGER.md:48` carried that as PENDING-INTEGRATION from 2026-07-11. Her sheet
-// is regenerated under the same stem by task elder-walk8-regeneration, so registering it here is
-// the whole of the wiring; every other actor still falls back to the centred default.
+// Every walking actor uses its extraction metadata for foot contact and frame count.
+// The hovering Prospector uses SpriteAnimator and intentionally has no foot anchor.
 const townCastWalkFrames: Partial<Record<TownActorId, ProcessedWalkFrames>> = {
-  tavernkeeper: tavernkeeperWalkFrames,
-  storekeeper: storekeeperWalkFrames,
-  elder: elderWalkFrames,
+  tavernkeeper: { ...tavernkeeperWalkFrames, idle: tavernkeeperIdleFrames },
+  storekeeper: { ...storekeeperWalkFrames, idle: storekeeperIdleFrames },
+  elder: { ...elderWalkFrames, idle: elderIdleFrames },
+  preacher: { ...preacherWalkFrames, idle: preacherIdleFrames },
+  schoolteacher: { ...schoolteacherWalkFrames, idle: schoolteacherIdleFrames },
+  assay_clerk: { ...assayClerkWalkFrames, idle: assayClerkIdleFrames },
+  youngster_a: youngsterAWalkFrames,
+  youngster_b: youngsterBWalkFrames,
+  newsie: { ...newsieWalkFrames, idle: newsieIdleFrames },
 };
 const tailorSignUrls = import.meta.glob<string>('../../assets/processed/prop-tailor-sign.png', {
   eager: true,
@@ -335,6 +353,7 @@ export type TownDiagnostics = {
     spriteAspect: number;
     spriteHeight: number;
     spriteY: number;
+    spriteCenterY: number;
     footY: number | null;
     frameKey: string;
     presentation: 'full_body' | 'portrait_post';
@@ -2763,6 +2782,7 @@ export class TownScene {
           spriteAspect: runtime?.spriteAspect ?? 0,
           spriteHeight: runtime?.spriteHeight ?? 0,
           spriteY: runtime?.spriteY ?? 0,
+          spriteCenterY: runtime?.spriteCenterY ?? 0.5,
           footY: runtime?.footY ?? null,
           frameKey: runtime?.frameKey ?? '',
           presentation: actor.fullBody ? 'full_body' : 'portrait_post',
@@ -3168,13 +3188,21 @@ class TownBlobShadows {
     const material = new THREE.MeshBasicMaterial({
       color: '#2e1b0e',
       transparent: true,
-      opacity: night ? 0.28 : 0.18,
+      opacity: night ? 0.84 : 0.54,
+      vertexColors: true,
       depthWrite: false,
       polygonOffset: true,
       polygonOffsetFactor: -1,
       polygonOffsetUnits: -1,
     });
-    this.mesh = new THREE.InstancedMesh(new THREE.CircleGeometry(1, 24), material, Math.max(1, capacity));
+    const geometry = new THREE.CircleGeometry(1, 24);
+    // Vertex alpha keeps the contact center dark and fades the perimeter without a texture.
+    const colors = new Float32Array(geometry.attributes.position.count * 4);
+    for (let index = 0; index < geometry.attributes.position.count; index++) {
+      colors.set([1, 1, 1, index === 0 ? 1 : 0], index * 4);
+    }
+    geometry.setAttribute('color', new THREE.BufferAttribute(colors, 4));
+    this.mesh = new THREE.InstancedMesh(geometry, material, Math.max(1, capacity));
     this.mesh.name = 'TownCastBlobShadows';
     this.mesh.frustumCulled = false;
     this.mesh.renderOrder = RenderLayers.groundShadows;
@@ -3209,6 +3237,7 @@ class TownActorRuntime {
   private readonly sprite = new THREE.Sprite(this.material);
   private readonly animator: SpriteAnimator | null;
   private frameElapsed = 0;
+  private resting = true;
   private stillElapsed = 0;
   private frame = 0;
   private requestedFrameKey = '';
@@ -3242,13 +3271,15 @@ class TownActorRuntime {
       this.sprite.scale.set(worldHeight * 0.42, worldHeight, 1);
       this.sprite.position.y = worldHeight / 2 + FEET_CONTACT_Y;
     }
-    this.sprite.renderOrder = RenderLayers.companion;
+    this.sprite.renderOrder = definition.fullBody && definition.id !== 'prospector'
+      ? RenderLayers.gameplay
+      : RenderLayers.companion;
     this.sprite.visible = true;
     this.group.add(this.sprite);
     this.currentDirection = definition.facing;
     this.orientationResolver.reset(definition.facing);
     this.animator = definition.id === 'prospector' ? new SpriteAnimator(definition.assetSlot, this.material, this.sprite) : null;
-    if (definition.fullBody) this.applyFullBodyFrame(0);
+    if (definition.fullBody) this.applyFullBodyFrame(0, true);
     else this.loadPortrait();
     tagPlaceholder(this.group, definition.assetSlot);
   }
@@ -3271,6 +3302,10 @@ class TownActorRuntime {
 
   get spriteY(): number {
     return this.sprite.position.y;
+  }
+
+  get spriteCenterY(): number {
+    return this.sprite.center.y;
   }
 
   get footY(): number | null {
@@ -3333,24 +3368,27 @@ class TownActorRuntime {
     const phase = actorPhase(this.definition);
     const breathe = Math.sin((elapsed * 0.58 + phase) * Math.PI * 2);
     const sway = Math.sin((elapsed * 0.31 + phase) * Math.PI * 2);
-    this.group.position.y = this.definition.fullBody ? breathe * 0.035 : 0;
-    this.material.rotation = this.definition.fullBody ? THREE.MathUtils.degToRad(sway * 1.7) : 0;
+    // Only the hovering companion floats and rocks; walkers keep their footline.
+    this.group.position.y = this.definition.id === 'prospector' ? breathe * 0.035 : 0;
+    this.material.rotation = this.definition.id === 'prospector' ? THREE.MathUtils.degToRad(sway * 1.7) : 0;
     if (this.definition.id === 'prospector') {
       if (wasMoving && !this.movedThisTick) this.animator?.reset('walk');
       this.animator?.update(this.movedThisTick ? delta : 0, 'walk', this.currentDirection);
     } else if (this.definition.fullBody?.animated && this.movedThisTick) {
       this.stillElapsed = 0;
-      if (this.currentDirection !== previousDirection) this.applyFullBodyFrame(this.frame);
+      if (this.resting || this.currentDirection !== previousDirection) this.applyFullBodyFrame(this.frame);
+      this.resting = false;
       this.frameElapsed += delta;
       const frameDuration = 1 / (this.definition.fullBody.fps ?? 8);
       if (this.frameElapsed >= frameDuration) {
+        const steps = Math.floor(this.frameElapsed / frameDuration);
         this.frameElapsed %= frameDuration;
-        this.frame = (this.frame + 1) % (this.definition.fullBody.frameMap?.length ?? 8);
+        this.frame = (this.frame + steps) % (this.definition.fullBody.frameMap?.length ?? townCastWalkFrames[this.definition.id]?.grid.cols ?? 8);
         this.applyFullBodyFrame(this.frame);
       }
     } else if (
       this.definition.fullBody?.animated
-      && (this.frame !== 0 || ((this.definition.id === 'tavernkeeper' || this.definition.id === 'storekeeper') && this.currentDirection !== this.definition.facing))
+      && (!this.resting || this.frame !== 0 || ((this.definition.id === 'tavernkeeper' || this.definition.id === 'storekeeper') && this.currentDirection !== this.definition.facing))
     ) {
       // Loop points can be float-identical on alternate frames; only snap to the
       // standing frame after a real stop, or the walk thrashes back to column 0.
@@ -3361,7 +3399,8 @@ class TownActorRuntime {
         if (this.definition.id === 'tavernkeeper' || this.definition.id === 'storekeeper') {
           this.currentDirection = this.definition.facing;
         }
-        this.applyFullBodyFrame(0);
+        this.resting = true;
+        this.applyFullBodyFrame(0, true);
       }
     }
   }
@@ -3372,13 +3411,16 @@ class TownActorRuntime {
     this.material.dispose();
   }
 
-  private applyFullBodyFrame(frame: number): void {
+  private applyFullBodyFrame(frame: number, resting = false): void {
     const fullBody = this.definition.fullBody;
     if (this.definition.id === 'prospector' || !fullBody) return;
-    const row = directionRow(this.currentDirection);
-    const sourceFrame = fullBody.frameMap?.[frame] ?? frame;
-    const key = `${fullBody.sheet}-r${row}c${fullBody.animated ? sourceFrame : 0}.png`;
-    const metadata = townCastWalkFrames[this.definition.id];
+    const walkMetadata = townCastWalkFrames[this.definition.id];
+    const idleMetadata = resting ? walkMetadata?.idle : undefined;
+    const metadata = idleMetadata ?? walkMetadata;
+    const row = idleMetadata?.grid.rows === 1 ? 0 : directionRow(this.currentDirection);
+    const sourceFrame = idleMetadata ? 0 : fullBody.frameMap?.[frame] ?? frame;
+    const sheet = idleMetadata ? idleMetadata.source.replace(/\.png$/i, '') : fullBody.sheet;
+    const key = `${sheet}-r${row}c${fullBody.animated ? sourceFrame : 0}.png`;
     const cell = metadata?.cells.find((candidate) => candidate.row === row && candidate.col === sourceFrame);
     const footline = cell && metadata ? {
       y: metadata.cell / 2 + ((cell.bbox[3] - cell.bbox[1] + 1) * metadata.scale) / 2,
@@ -3386,12 +3428,15 @@ class TownActorRuntime {
     } : undefined;
     this.requestedFrameKey = key;
     void loadProcessedCharacterTexture(key).then((texture) => {
-      if (texture && !this.disposed && this.requestedFrameKey === key) {
-        this.currentFrameKey = key;
-        this.material.map = texture;
-        this.material.needsUpdate = true;
-        this.fitSpriteToTexture(texture, footline);
+      if (this.disposed || this.requestedFrameKey !== key) return;
+      if (!texture) {
+        if (idleMetadata) this.applyFullBodyFrame(0);
+        return;
       }
+      this.currentFrameKey = key;
+      this.material.map = texture;
+      this.material.needsUpdate = true;
+      this.fitSpriteToTexture(texture, footline);
     });
   }
 
@@ -3415,12 +3460,10 @@ class TownActorRuntime {
     this.fitted = true;
     const targetHeight = this.definition.scale * TOWN_CAST_METROLOGY.worldUnitsPerHero;
     this.sprite.scale.set(targetHeight * (width / height), targetHeight, 1);
-    this.sprite.position.y = footline
-      ? FEET_CONTACT_Y + targetHeight * (footline.y / footline.cell - 0.5)
-      : targetHeight / 2 + FEET_CONTACT_Y;
-    this.anchoredFootY = footline
-      ? this.sprite.position.y - targetHeight / 2 + targetHeight * (1 - footline.y / footline.cell)
-      : null;
+    // Anchor the drawn foot in the camera-facing quad, not along world Y.
+    this.sprite.center.set(0.5, footline ? 1 - footline.y / footline.cell : 0);
+    this.sprite.position.y = FEET_CONTACT_Y;
+    this.anchoredFootY = footline ? this.sprite.position.y : null;
   }
 }
 
@@ -5087,7 +5130,7 @@ function createSurveyPlot(building: TownBuilding): THREE.Group {
 
 function townActorPlazaPlacement(actor: TownActorDefinition): TownActorDefinition {
   if (actor.loop) return actor;
-  const offset = actor.portraitPost?.offset ?? townPlazaLayout.actorOffsets[actor.id as keyof typeof townPlazaLayout.actorOffsets];
+  const offset = (actor.fullBody ? undefined : actor.portraitPost?.offset) ?? townPlazaLayout.actorOffsets[actor.id as keyof typeof townPlazaLayout.actorOffsets];
   if (!offset) return actor;
   const anchor = townBuildings.find((building) => building.id === actor.anchor);
   if (!anchor) return actor;

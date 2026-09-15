@@ -23,7 +23,12 @@ type Run3dId = keyof typeof registry;
 type Host = { scene: THREE.Scene; canvas: HTMLCanvasElement; diagnostics: () => BuildDiagnostics };
 type RailTie = { x: number; y: number; z: number; yaw: number };
 
-export type Run3dPilot = { update: () => void; dispose: () => void };
+export type Run3dPilot = {
+  update: () => void;
+  dispose: () => void;
+  /** Caller owns snapshot geometries; the supplied material stays caller-owned. */
+  copyBuilding: (id: string, index: number, material: THREE.Material) => THREE.Object3D | null;
+};
 
 function publish(canvas: HTMLCanvasElement, state: 'loading' | 'ready' | 'lite' | 'failed', meshes = 0, triangles = 0): void {
   canvas.dataset.run3dPilotState = state;
@@ -41,7 +46,7 @@ export function installRun3dPilot(host: Host): Run3dPilot {
   const selection = params.get('run3dPilot') ?? 'all';
   if (performanceTierDiagnostics().tier === 'lite') {
     publish(host.canvas, 'lite');
-    return { update: () => undefined, dispose: () => publish(host.canvas, 'lite') };
+    return { update: () => undefined, dispose: () => publish(host.canvas, 'lite'), copyBuilding: () => null };
   }
   const ids = (selection === 'all' ? Object.keys(registry).filter((id) => id !== 'gold_seam' && id !== 'rail_element') : [selection]).filter(
     (id): id is Run3dId => typeof id === 'string' && id in registry,
@@ -219,6 +224,21 @@ export function installRun3dPilot(host: Host): Run3dPilot {
 
   return {
     update,
+    copyBuilding: (id, index, material) => {
+      if (disposed) return null;
+      update();
+      const source = instances.get(`${id}:${index}`);
+      if (!source) return null;
+      const snapshot = source.clone(true);
+      snapshot.position.set(0, 0, 0);
+      snapshot.traverse((node) => {
+        const mesh = node as THREE.Mesh;
+        if (!mesh.isMesh) return;
+        mesh.geometry = mesh.geometry.clone();
+        mesh.material = material;
+      });
+      return snapshot;
+    },
     dispose: () => {
       disposed = true;
       for (const id of ids) {
