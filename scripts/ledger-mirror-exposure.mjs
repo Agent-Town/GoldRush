@@ -106,6 +106,27 @@ const SAFE_PREFIXES = ['standings:', 'assay-', 'assay:'];
 // account-prefix classifier as `key` values. Anything else is declared SKIPPED.
 const TABLE_IDENTITY_COLUMNS = { refusals: ['anon_id', 'profile_name'] };
 
+// A KEY/VALUE namespace encodes its class IN THE VALUE (`session:abc`), so a
+// prefix classifier reaches a verdict on every key. A RELATIONAL COLUMN does
+// not: `refusals.profile_name` is rider-chosen free text and `refusals.anon_id`
+// is a 32-hex digest, so neither can EVER carry a prefix and both sat in
+// UNRECOGNISED forever — and that bucket short-circuits the ✅ CLEAN verdict the
+// LB-01 duty sends a fire to read before committing a mirror. Measured s2573
+// (F-2573-1): 250 unrecognised rows, 250 of them these two columns and ZERO
+// from `kv`, growing by 2x(table rows) with every daily mirror, burying the one
+// line this channel exists to surface.
+//
+// The class of a COLUMN is a property of the SCHEMA, decided once — where the
+// class of a key is a property of each value. TABLE_IDENTITY_COLUMNS already
+// recorded the schema judgement "harvest these"; this records the one that had
+// nowhere to live: "and these are county-standings class".
+//
+// APPLIED ONLY AFTER THE ACCOUNT DENYLIST, DELIBERATELY: an account identity
+// written into one of these columns must still be caught, which is exactly what
+// the guard's `session:exposed-rider` arm asserts. Marking a column safe BEFORE
+// the denylist is the over-general cure, and that arm is its reverse control.
+const SAFE_TABLE_COLUMNS = { refusals: ['anon_id', 'profile_name'] };
+
 const DEFAULT_DIR = fileURLToPath(new URL('../artifacts/ledger-backups/', import.meta.url));
 
 function parseArgs(argv) {
@@ -117,10 +138,18 @@ function parseArgs(argv) {
   return { strict, json, dir };
 }
 
-export function classifyKey(key) {
+export function classifyKey(key, site) {
+  // The denylist wins, always and first — see SAFE_TABLE_COLUMNS.
   if (ACCOUNT_PREFIXES.some(p => key.startsWith(p))) return 'account';
   if (SAFE_PREFIXES.some(p => key.startsWith(p))) return 'safe';
+  // `site` is optional so the old one-argument contract still answers; a caller
+  // that supplies no site simply cannot reach the column-level verdict.
+  if (site && (SAFE_TABLE_COLUMNS[site.table] ?? []).includes(site.column)) return 'safe';
   return 'unrecognised';
+}
+
+export function safeTableColumns() {
+  return JSON.parse(JSON.stringify(SAFE_TABLE_COLUMNS));
 }
 
 export function accountPrefixes() {
@@ -200,8 +229,8 @@ async function main(argv) {
   const unreadable = result.mirrors.filter(m => m.state === 'unreadable');
   const allKeys = readable.flatMap(m => m.keys.map(k => ({ file: path.basename(m.file), ...k })));
   const tableInspections = readable.flatMap(m => m.tables.map(t => ({ file: path.basename(m.file), ...t })));
-  const account = allKeys.filter(k => classifyKey(k.key) === 'account');
-  const unrecognised = allKeys.filter(k => classifyKey(k.key) === 'unrecognised');
+  const account = allKeys.filter(k => classifyKey(k.key, k) === 'account');
+  const unrecognised = allKeys.filter(k => classifyKey(k.key, k) === 'unrecognised');
 
   if (args.json) {
     console.log(JSON.stringify({
@@ -227,6 +256,13 @@ async function main(argv) {
     console.log(`  tables inspected        : ${tableInspections.map(t =>
       `${t.file}:${t.table}[${t.columns.length ? t.columns.join(',') : 'SKIPPED: no declared columns'}]`).join('; ') || 'none'}`);
     console.log(`  keys inspected          : ${allKeys.length}`);
+    // Declared ALWAYS, including the happy path (F-2208-1). A column-level
+    // verdict SUPPRESSES rows from UNRECOGNISED, so it must be visible in the
+    // same breath as the counts it moves — a suppression nobody is shown is a
+    // suppression nobody can re-judge (F-2573-1).
+    console.log(`  column-class verdicts   : ${Object.entries(SAFE_TABLE_COLUMNS)
+      .flatMap(([t, cols]) => cols.map(c => `${t}.${c}`)).join(', ') || 'none'}` +
+      ` = county-standings by SCHEMA (account denylist still checked first)`);
     console.log(`  account-class rows      : ${account.length}`);
     console.log(`  unrecognised rows       : ${unrecognised.length}`);
     if (result.detail) console.log(`  detail                  : ${result.detail}`);
