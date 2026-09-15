@@ -52,7 +52,7 @@ test('plain town boot shows the tavernkeeper and storekeeper walking on anchored
         if (png.data[(y * png.width + x) * 4 + 3] > 8) bottom = y + 1;
       }
     }
-    const renderedFootY = actor.spriteY - actor.spriteHeight / 2 + actor.spriteHeight * (1 - bottom / png.height);
+    const renderedFootY = actor.spriteY + actor.spriteHeight * (1 - bottom / png.height - actor.spriteCenterY);
     expect(renderedFootY, `${actor.id} rendered foot contact`).toBeCloseTo(0.02, 2);
   }
   expect(tavernkeeper.spriteHeight).toBeCloseTo(TOWN_CAST_METROLOGY.worldUnitsPerHero * TOWN_CAST_METROLOGY.tallAdult, 3);

@@ -145,7 +145,7 @@ test('a plain town boot walks the Elder on anchored feet at the schoolhouse', as
       if (png.data[(y * png.width + x) * 4 + 3]! > 8) bottom = y + 1;
     }
   }
-  const renderedFootY = elder.spriteY - elder.spriteHeight / 2 + elder.spriteHeight * (1 - bottom / png.height);
+  const renderedFootY = elder.spriteY + elder.spriteHeight * (1 - bottom / png.height - elder.spriteCenterY);
   expect(renderedFootY, 'elder rendered foot contact').toBeCloseTo(0.02, 2);
 
   expect(errors).toEqual([]);

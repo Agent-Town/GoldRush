@@ -173,7 +173,7 @@ export function restoreSaveSlotToAuto(
 }
 
 export function defaultSaveSlotName(snapshot: RunSuspendEnvelope, townName: string | null): string {
-  const suffix = `, wave ${snapshot.wave}`;
+  const suffix = ` - wave ${snapshot.wave}`;
   const source = (townName ?? 'The Claim').trim() || 'The Claim';
   const maxBase = Math.max(2, 24 - suffix.length);
   const base = source.length > maxBase ? source.slice(0, maxBase).trim() : source;

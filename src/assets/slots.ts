@@ -27,6 +27,7 @@ export const assetSlots = {
   charTownAssayClerk: 'char.town.assay_clerk',
   charTownYoungsterA: 'char.town.youngster_a',
   charTownYoungsterB: 'char.town.youngster_b',
+  charTownNewsie: 'char.town.newsie',
   terrainBank: 'terrain.bank',
   terrainRiver: 'terrain.river',
   terrainOpenSea: 'terrain.e5.open_sea',

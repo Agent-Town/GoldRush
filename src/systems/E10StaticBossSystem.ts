@@ -349,9 +349,10 @@ export class E10StaticBossSystem {
     (this.auraRing.material as THREE.ShaderMaterial).uniforms.strength.value = strength;
     this.mote.position.set(0, this.visualY(0, 52, Balance.e10Static.moteHeight), 52);
     for (const state of this.states) {
+      state.marker.scale.y = Math.max(0.18, state.meaning);
       state.marker.position.set(
         state.site.x,
-        this.visualY(state.site.x, state.site.z, Balance.e10Static.siteMarkerHeight / 2),
+        this.visualY(state.site.x, state.site.z, Balance.e10Static.siteMarkerHeight * state.marker.scale.y / 2),
         state.site.z,
       );
       const material = state.marker.material as THREE.MeshStandardMaterial;
@@ -359,7 +360,6 @@ export class E10StaticBossSystem {
       material.color.set(held ? Balance.e10Static.siteHeldColor : Balance.e10Static.sitePressedColor);
       material.emissive.set(held ? Balance.e10Static.siteHeldColor : '#000000');
       material.emissiveIntensity = held ? 0.65 : 0;
-      state.marker.scale.y = Math.max(0.18, state.meaning);
     }
     if (this.act > 0 && this.act < 3) this.canvas.style.filter = `grayscale(${round3(strength * Balance.e10Static.maxGrayscale)})`;
   }

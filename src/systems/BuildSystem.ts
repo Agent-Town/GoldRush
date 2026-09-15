@@ -773,7 +773,10 @@ export class BuildSystem {
   }
 
   turretPosition(index: number): THREE.Vector3 | null {
-    return this.turrets.isActive(index) ? (this.turrets.allPositions[index] ?? null) : null;
+    // Pool occupancy also reserves ruins; only standing, grounded turrets supply weapon origins.
+    return this.turrets.isActive(index) && (this.hp.turret[index] ?? 0) > 0
+      && !this.wrecked.turret[index] && !this.suspendedBuildings.has(`turret:${index}`)
+      ? (this.turrets.allPositions[index] ?? null) : null;
   }
 
   get nextCost(): number {

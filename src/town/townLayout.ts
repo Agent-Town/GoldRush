@@ -100,12 +100,12 @@ export const townPlazaLayout = {
     { id: 'stamp-mill', position: { x: 4.8, z: 9 }, approach: { x: 3.45, z: 6.5 } },
   ],
   actorOffsets: {
-    tavernkeeper: { x: 0.6, z: 2.25 },
-    storekeeper: { x: 1.15, z: 2 },
-    elder: { x: 1.55, z: 1.95 },
-    preacher: { x: -1.05, z: 1.75 },
-    schoolteacher: { x: -2, z: 1.45 },
-    assay_clerk: { x: -1.05, z: 2.1 },
+    tavernkeeper: { x: 1.6, z: 2.6 },
+    storekeeper: { x: 1.15, z: 2.7 },
+    elder: { x: 2.9, z: 1.85 },
+    preacher: { x: -1.05, z: 3 },
+    schoolteacher: { x: 1.1, z: 3.6 },
+    assay_clerk: { x: -1.05, z: 3.4 },
     prospector: { x: 1.25, z: 2.05 },
   },
 } as const;

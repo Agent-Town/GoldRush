@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { ConvexHull } from 'three/examples/jsm/math/ConvexHull.js';
+import { RenderLayers } from '../core/RenderLayers';
 import type { GoldPickupPool } from '../entities/GoldPickup';
 import type { ClaimJumperEnemy, EnemySpawnParams } from '../entities/Enemy';
 import type { EnemyPool } from '../entities/pools';
@@ -144,6 +145,11 @@ export class HomemakerBossSystem {
   readonly group = new THREE.Group();
   private readonly machine = new THREE.Group();
   private readonly machinePrimitive = new THREE.Group();
+  private readonly contactShadow = new THREE.Mesh(
+    new THREE.CircleGeometry(1, 28),
+    new THREE.MeshBasicMaterial({ color: '#2e1b0e', transparent: true, opacity: 0.2,
+      depthWrite: false, polygonOffset: true, polygonOffsetFactor: -1, polygonOffsetUnits: -1 }),
+  );
   private readonly chairPrimitive = chair();
   private readonly rackRing = new THREE.Mesh(
     new THREE.RingGeometry(Balance.homemaker.rackRadius - 0.18, Balance.homemaker.rackRadius, 32),
@@ -531,7 +537,12 @@ export class HomemakerBossSystem {
       box(2.1, 2.1, 1.1, '#c4883a', 2.5, 1.7, 0),
       cylinder(0.75, 2.4, '#83ded7', 0, 3, 0),
     );
-    this.machine.add(this.machinePrimitive, this.chairPrimitive);
+    // Match the landmark contact recipe even when mobile shadow maps are disabled.
+    this.contactShadow.name = 'Homemaker9000.ContactShadow';
+    this.contactShadow.rotation.x = -Math.PI / 2;
+    this.contactShadow.position.y = 0.018;
+    this.contactShadow.renderOrder = RenderLayers.groundShadows;
+    this.machine.add(this.machinePrimitive, this.chairPrimitive, this.contactShadow);
     this.rackRing.rotation.x = -Math.PI / 2;
     this.rackRing.position.y = 0.08;
     this.pictogram.position.set(0, 5.6, 0);
@@ -586,6 +597,7 @@ export class HomemakerBossSystem {
     const modelMounted = this.homemaker3dState === 'ready' && this.homemaker3dModel?.visible === true;
     this.machinePrimitive.visible = visible && !modelMounted && !this.chairPlaced;
     this.chairPrimitive.visible = this.chairPlaced && !modelMounted;
+    this.contactShadow.scale.set(this.chairPrimitive.visible ? 1.5 : 3.6, this.chairPrimitive.visible ? 1.2 : 2, 1);
     this.rackRing.visible = this.rackTarget !== null;
     if (this.rackTarget) this.rackRing.position.set(
       this.rackTarget.x,
@@ -809,7 +821,7 @@ function chair(): THREE.Group {
   result.name = 'Homemaker9000.Chair';
   result.add(
     box(2.4, 0.32, 2.2, '#d8e1d2', 0, 1.7, 0),
-    box(2.4, 2.8, 0.32, '#5b8a8a', 0, 3, 0.95),
+    box(2.4, 2.8, 0.32, '#5b8a8a', 0, 3, -0.95),
     box(0.3, 1.7, 0.3, '#c4883a', -0.9, 0.85, -0.72),
     box(0.3, 1.7, 0.3, '#c4883a', 0.9, 0.85, -0.72),
     box(0.3, 1.7, 0.3, '#c4883a', -0.9, 0.85, 0.72),

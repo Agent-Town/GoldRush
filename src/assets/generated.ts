@@ -26,6 +26,7 @@ const generatedAssetUrls: Partial<Record<AssetSlotId, string>> = {
 };
 
 export const heroPoseFrameFiles = characterRuntimeFrames.heroPoseFrameFiles;
+export const heroGroundContactY: Readonly<Record<string, number>> = characterRuntimeFrames.heroGroundContactY;
 // Resolve URL strings at build time: a delayed ?url import can lose its default
 // export when the image is shared with the eager entry table. Texture requests
 // still start through loadGeneratedTexture's existing startup gate.
@@ -40,6 +41,7 @@ const generatedAssetUrlLoaders: Partial<Record<AssetSlotId, () => Promise<string
   [assetSlots.charTownAssayClerk]: async () => new URL('../../assets/processed/townsfolk-assay-clerk.png', import.meta.url).href,
   [assetSlots.charTownYoungsterA]: async () => new URL('../../assets/processed/townsfolk-youngster-a.png', import.meta.url).href,
   [assetSlots.charTownYoungsterB]: async () => new URL('../../assets/processed/townsfolk-youngster-b.png', import.meta.url).href,
+  [assetSlots.charTownNewsie]: async () => new URL('../../assets/processed/townsfolk-newsie-e1.png', import.meta.url).href,
   [assetSlots.propBaronBanner]: async () => new URL('../../assets/processed/prop-baron-banner.png', import.meta.url).href,
   [assetSlots.bldSentryBeacon]: async () => new URL('../../assets/processed/bld-sentry-beacon.png', import.meta.url).href,
   [assetSlots.bldPortraitPalisade]: async () => new URL('../../assets/processed/bld-palisade.png', import.meta.url).href,
@@ -72,6 +74,7 @@ const nonCriticalGeneratedAssetSlots: readonly AssetSlotId[] = [
   assetSlots.charTownAssayClerk,
   assetSlots.charTownYoungsterA,
   assetSlots.charTownYoungsterB,
+  assetSlots.charTownNewsie,
 ];
 
 export type GeneratedAssetStatus = 'missing' | 'pending' | 'loaded' | 'error';
@@ -102,6 +105,10 @@ export function generatedAssetRenderCounts(): Partial<Record<AssetSlotId, number
 
 export function setWorldSpriteTint(color: THREE.ColorRepresentation): void {
   worldSpriteTint.set(color);
+}
+
+export function copyWorldSpriteTint(target: THREE.Color): THREE.Color {
+  return target.copy(worldSpriteTint);
 }
 
 export function bindWorldSpriteTint(
@@ -515,6 +522,14 @@ export class GeneratedSpriteBatch {
 
   get isLoaded(): boolean {
     return this.loaded;
+  }
+
+  cloneMaterial(): THREE.SpriteMaterial {
+    const clone = this.material.clone();
+    // onBeforeRender temporarily tints the shared fallback. A new body needs its
+    // untinted base, or the first draw multiplies yesterday's light/tint again.
+    clone.color.copy(spriteTintState.get(this.material)?.base ?? this.material.color);
+    return clone;
   }
 
   set(index: number, position: THREE.Vector3, visible: boolean): void {

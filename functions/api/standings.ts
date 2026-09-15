@@ -1166,7 +1166,7 @@ function tapeGrammarRefusal(tape: JsonRecord): string | null {
 function retainUnranked(rows: StoredRow[], contractId: string): StoredRow[] {
   const partitions = new Map<string, StoredRow[]>();
   for (const row of rows) {
-    const key = row.rotationId ?? 'public';
+    const key = `${row.rotationId ?? 'public'}\n${row.party?.riderCount ?? 1}`;
     partitions.set(key, [...(partitions.get(key) ?? []), row]);
   }
   return [...partitions.values()].flatMap((partition) => retainPartition(partition, contractId));

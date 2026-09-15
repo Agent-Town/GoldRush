@@ -1,6 +1,6 @@
 import * as THREE from 'three';
-import { GeneratedSpriteBatch } from '../assets/generated';
-import { SpriteAnimator, type CharacterSpriteClip, type SpriteMotionSnapshot } from '../assets/SpriteAnimator';
+import { GeneratedSpriteBatch, copyWorldSpriteTint } from '../assets/generated';
+import { SpriteAnimator, loadRuntimeSlot, type CharacterSpriteClip, type SpriteMotionSnapshot } from '../assets/SpriteAnimator';
 import { assetSlots, tagPlaceholder, type AssetSlotId } from '../assets/slots';
 import { RenderLayers } from '../core/RenderLayers';
 import { Balance } from '../game/Balance';
@@ -30,6 +30,8 @@ import railcarWheelsDamagedUrl from '../../assets/processed/boss-railcar-wheels-
 import { isMothSwarmEnemy } from '../systems/MothSwarm';
 
 const ENEMY_SPRITE_Y = 0.72;
+const BARON_BANNER_Y = 1.85;
+const BARON_BANNER_SIZE = 0.86;
 const BOSS_HP_MAX_SEGMENTS = 8;
 const BOSS_HP_WIDTH = 1.9;
 const BOSS_HP_FILL_WIDTH = 1.72;
@@ -47,7 +49,8 @@ const BOSS_BAR_HEAD_ANCHORS = {
   dredge_queen: { scale: 1.5, clearance: 0.95 },
   homemaker_9000: { scale: 1.5, clearance: 0.95 },
   salvage_claw: { scale: 1.5, clearance: 0.95 },
-  old_digger: { scale: 1.5, clearance: 0.95 },
+  // Old Digger has a fixed-size machine presentation, independent of its planar hull scale.
+  old_digger: { scale: 0, clearance: 7.8 },
 } as const;
 const DEFAULT_BOSS_BAR_HEAD_ANCHOR = { scale: 1.5, clearance: 0.95 } as const;
 const RAILCAR_3D_URL = new URL('../../assets/pilots/railcar-3d/railcar.glb', import.meta.url).href;
@@ -61,6 +64,7 @@ const RAILCAR_3D_COMPONENTS = {
 type RailcarComponentId = keyof typeof RAILCAR_3D_COMPONENTS;
 type Railcar3dState = 'off' | 'loading' | 'ready' | 'lite' | 'failed' | 'disposed';
 const FEVER_GOLD = new THREE.Color(Balance.legibility.feveredColor);
+const FEVER_MACHINES = ['steam_wrecker', 'feral_toaster', 'lawn_shepherd', 'rogue_automaton'];
 // Night Shift ignition (render-side; §4.6). At full dark a visible enemy used to snap straight to
 // the lit tint at full boost, so attackers POPPED into being instead of walking into the light.
 // These are the unlit end of that ramp: a cold ember the figure carries at the outer edge of the
@@ -79,7 +83,7 @@ type EnemySpritePresentation = {
   variantId: string;
   sprites: GeneratedSpriteBatch;
   fades: GeneratedSpriteBatch;
-  animator: SpriteAnimator;
+  slotId: AssetSlotId;
   tintFromVariant: boolean;
 };
 
@@ -164,6 +168,8 @@ const processedE9SpriteCells = import.meta.glob<string>('../../assets/processed/
 const e9SpriteBindings = {
   feral_terraformer: { slot: assetSlots.charE9FeralTerraformer, sheet: 'char-e9-feral_terraformer-sheet-walk8.png' },
   claim_jump_prospect_drone: { slot: assetSlots.charE9ClaimJumpProspectDrone, sheet: 'char-e9-claim_jump_prospect_drone-sheet-walk8.png' },
+  // Old Digger's service crew shares the existing E9 mechanical drone art.
+  maintenance_drone: { slot: assetSlots.charE9ClaimJumpProspectDrone, sheet: 'char-e9-claim_jump_prospect_drone-sheet-walk8.png' },
 } as const;
 
 export function e9EnemySpriteBinding(variantId: string) {
@@ -181,7 +187,7 @@ export type FeverAccentDiagnostics = {
   kind: 'human' | 'machine' | 'none';
   strength: number;
   surged: boolean;
-  channel: 'watch-paint-instanced' | 'none';
+  channel: 'watch-paint-instanced' | 'sprite-tint' | 'none';
 };
 
 export function feverAccentState(
@@ -192,31 +198,38 @@ export function feverAccentState(
     stealState?: string;
     wreckState?: string;
     visible?: boolean;
+    spriteLoaded?: boolean;
   },
   pulse = 0,
 ): FeverAccentDiagnostics {
-  if (!enemy.alive || enemy.visible === false || enemy.eliteKind === 'baron' || enemy.eliteKind === 'railcar') {
+  // E8 weather/company crews and E9 clean-world machinery are explicitly unfevered.
+  const unfeveredRoster = enemy.variantId != null && (
+    Object.prototype.hasOwnProperty.call(Balance.e8Roster.variants, enemy.variantId)
+    || Object.prototype.hasOwnProperty.call(Balance.e9Roster.variants, enemy.variantId)
+    || enemy.variantId === 'maintenance_drone'
+  );
+  if (!enemy.alive || enemy.visible === false || enemy.eliteKind === 'baron' || enemy.eliteKind === 'railcar' || unfeveredRoster) {
     return { active: false, kind: 'none', strength: 0, surged: false, channel: 'none' };
   }
   const surged = enemy.stealState === 'grabbing' || enemy.wreckState === 'swinging';
   const base = surged ? Balance.legibility.feveredSurgeStrength : Balance.legibility.feveredRestStrength;
   return {
     active: true,
-    kind: enemy.variantId === 'steam_wrecker' ? 'machine' : 'human',
+    kind: FEVER_MACHINES.includes(enemy.variantId ?? '') ? 'machine' : 'human',
     strength: round3(base + Math.sin(pulse) * Balance.legibility.feveredPulseStrength),
     surged,
-    channel: 'watch-paint-instanced',
+    channel: enemy.spriteLoaded ? 'sprite-tint' : 'watch-paint-instanced',
   };
 }
 
 function createEnemySpritePresentation(variantId: string, slotId: AssetSlotId, tintFromVariant = false): EnemySpritePresentation {
   const sprites = new GeneratedSpriteBatch(slotId, Balance.enemy.poolSize, {
-    name: `${variantId}Sprites`, y: ENEMY_SPRITE_Y, scale: [1.28, 1.55], renderOrder: RenderLayers.gameplay, lazy: true, instanced: true,
+    name: `${variantId}Sprites`, y: ENEMY_SPRITE_Y, scale: [1.28, 1.55], renderOrder: RenderLayers.gameplay, lazy: true,
   });
   const fades = new GeneratedSpriteBatch(slotId, Balance.enemy.poolSize, {
-    name: `${variantId}SpriteFades`, y: ENEMY_SPRITE_Y, scale: [1.28, 1.55], renderOrder: RenderLayers.gameplayFade, lazy: true, instanced: true,
+    name: `${variantId}SpriteFades`, y: ENEMY_SPRITE_Y, scale: [1.28, 1.55], renderOrder: RenderLayers.gameplayFade, lazy: true,
   });
-  return { variantId, sprites, fades, animator: new SpriteAnimator(slotId, sprites.material, undefined, fades.material), tintFromVariant };
+  return { variantId, slotId, sprites, fades, tintFromVariant };
 }
 
 export type EnemyLightSource = { x: number; z: number; radius: number; kind?: 'light' | 'watch' };
@@ -299,7 +312,6 @@ type BossBarState = {
 type ActiveAnimation = {
   clip: CharacterSpriteClip;
   orientation: RotationDirection;
-  active: boolean;
   speed: number;
   groundSpeed: number;
 };
@@ -316,7 +328,6 @@ function regularAnimation(enemy: ClaimJumperEnemy, requestedClip = enemy.animati
   return {
     clip: stoppedGait ? 'idle' : requestedClip,
     orientation: enemy.animationOrientation,
-    active: true,
     speed: animationSpeed(enemy),
     groundSpeed,
   };
@@ -401,7 +412,6 @@ export class EnemyPool {
   private bossHpCanvas?: HTMLCanvasElement | null;
   private readonly generatedSprites = new GeneratedSpriteBatch(assetSlots.charBanditBase, Balance.enemy.poolSize, {
     name: 'GeneratedClaimJumperSprites',
-    instanced: true,
     y: ENEMY_SPRITE_Y,
     scale: [1.28, 1.55],
     renderOrder: RenderLayers.gameplay,
@@ -409,37 +419,22 @@ export class EnemyPool {
   });
   private readonly generatedSpriteFades = new GeneratedSpriteBatch(assetSlots.charBanditBase, Balance.enemy.poolSize, {
     name: 'GeneratedClaimJumperSpriteFades',
-    instanced: true,
     y: ENEMY_SPRITE_Y,
     scale: [1.28, 1.55],
     renderOrder: RenderLayers.gameplayFade,
   });
-  private readonly spriteAnimator = new SpriteAnimator(
-    assetSlots.charBanditBase,
-    this.generatedSprites.material,
-    undefined,
-    this.generatedSpriteFades.material,
-  );
   private readonly thiefSprites = new GeneratedSpriteBatch(assetSlots.charBanditThief, Balance.enemy.poolSize, {
     name: 'GeneratedClaimJumperThiefSprites',
-    instanced: true,
     y: ENEMY_SPRITE_Y,
     scale: [1.28, 1.55],
     renderOrder: RenderLayers.gameplay,
   });
   private readonly thiefSpriteFades = new GeneratedSpriteBatch(assetSlots.charBanditThief, Balance.enemy.poolSize, {
     name: 'GeneratedClaimJumperThiefSpriteFades',
-    instanced: true,
     y: ENEMY_SPRITE_Y,
     scale: [1.28, 1.55],
     renderOrder: RenderLayers.gameplayFade,
   });
-  private readonly thiefSpriteAnimator = new SpriteAnimator(
-    assetSlots.charBanditThief,
-    this.thiefSprites.material,
-    undefined,
-    this.thiefSpriteFades.material,
-  );
   private readonly variantSpritePresentations = [
     createEnemySpritePresentation('rail_tough', assetSlots.charE2RailTough),
     createEnemySpritePresentation('steam_wrecker', assetSlots.charE2SteamWrecker),
@@ -478,6 +473,7 @@ export class EnemyPool {
   private readonly cells: ClaimJumperEnemy[][] = [];
   private readonly touchedCells: number[] = [];
   private readonly baseMatrix = new THREE.Matrix4();
+  private readonly groundShadowMatrix = new THREE.Matrix4();
   private readonly instanceMatrix = new THREE.Matrix4();
   private readonly watchPaintBaseMatrix = new THREE.Matrix4();
   private readonly watchPaintScaleMatrix = new THREE.Matrix4().makeScale(
@@ -504,6 +500,7 @@ export class EnemyPool {
   private readonly bannerClothColor = new THREE.Color('#7f2633');
   private readonly dimmedColor = new THREE.Color();
   private readonly feverAccentColor = new THREE.Color();
+  private readonly feverSpriteTint = new THREE.Color();
   private readonly nightIgnitionColor = new THREE.Color();
   private readonly nightLitTint = new THREE.Color(Balance.contracts.nightShift.nightSpriteTint);
   private readonly herdBias = new THREE.Vector2();
@@ -529,10 +526,23 @@ export class EnemyPool {
   private readonly spawnOrder = new Array<number>(Balance.enemy.poolSize).fill(0);
   private enemyFogEnabled = true;
   private nightBasicActive = false;
-  private baronSpriteAnimator: SpriteAnimator | null = null;
+  // One cursor/material pair per occupied pool slot; all cursors reuse the runtime's atlases.
+  // The prototype instanced path cannot vary atlas frames per instance, so animated enemies
+  // keep the existing per-Sprite path even when ?spriteinstancing is requested.
+  private readonly spriteAnimations = new Map<number, {
+    slotId: AssetSlotId;
+    sprites: GeneratedSpriteBatch;
+    fades: GeneratedSpriteBatch;
+    sprite: THREE.Sprite;
+    fade: THREE.Sprite;
+    animator: SpriteAnimator;
+  }>();
   private feverPulse = 0;
 
   constructor(private readonly camera?: THREE.Camera) {
+    // Warm the common sheets as before; animation cursors belong only to occupied pool slots.
+    void loadRuntimeSlot(assetSlots.charBanditBase);
+    void loadRuntimeSlot(assetSlots.charBanditThief);
     this.group.name = 'EnemyPool';
     this.railcar3dState = performanceTierDiagnostics().tier === 'lite' ? 'lite' : 'off';
     this.publishRailcar3d();
@@ -596,8 +606,11 @@ export class EnemyPool {
     return this.renderRotations[enemy.id] ?? enemy.group.rotation.y;
   }
 
+  // main's getter (boss-fidelity, the rocket cart rides the Baron's bob) re-expressed on the
+  // per-body animator F-SPR-05 introduced: there is no single shared baron animator any more.
   get baronSpriteBobOffset(): number {
-    return this.baronSpriteAnimator?.motion.bobOffset ?? 0;
+    const baron = this.activeBaron();
+    return baron ? this.spriteAnimations.get(baron.id)?.animator.motion.bobOffset ?? 0 : 0;
   }
 
   railcarPresentation(enemy: ClaimJumperEnemy): { mesh: boolean; visible: boolean; railY: number; railRotation: number; textureKey: string; damaged: boolean; damageThreshold: number; wreckerMarker: boolean; markerColor: string; source: 'glb' | 'billboard'; mounted: boolean; morphInfluence: number; bossBarY: number; bossBarScale: number } {
@@ -672,7 +685,10 @@ export class EnemyPool {
   }
 
   prefetchBaronPresentation(): void {
-    this.ensureBaronPresentation();
+    this.baronSprites.ensureLoaded();
+    this.baronSpriteFades.ensureLoaded();
+    this.baronBannerSprites.ensureLoaded();
+    void loadRuntimeSlot(assetSlots.charBaron);
   }
 
   setLightDimming(config: EnemyLightDimmingConfig): void {
@@ -723,6 +739,7 @@ export class EnemyPool {
         stealState: enemy.stealState,
         wreckState: enemy.wreckState,
         visible: this.renderLightFactor(physicalLight) > 0,
+        spriteLoaded: this.spriteAnimations.has(enemy.id),
       },
       this.feverPulse + enemy.id * 0.73,
     );
@@ -780,6 +797,7 @@ export class EnemyPool {
           ? this.enemies[preferredSlot]
           : undefined;
     if (!enemy || enemy.isAlive) return null;
+    this.releaseSpriteAnimation(enemy.id);
     enemy.spawn(position, { ...params, formationSeed: this.spawnSerial });
     if (enemy.eliteKind === 'railcar' && enemy.variantId === 'baron_railcar') this.ensureRailcar3d();
     this.previousActive[enemy.id] = false;
@@ -972,32 +990,18 @@ export class EnemyPool {
     this.syncEnemyFog();
     this.syncRenderInstances();
     this.syncHitFlashes();
-    const normalAnimation = this.activeAnimation(false);
-    const thiefAnimation = this.activeAnimation(true);
-    const baronAnimation = this.activeBaronAnimation();
-    const updateNormalSprites = () =>
-      this.spriteAnimator.update(delta, normalAnimation.clip, normalAnimation.active ? normalAnimation.orientation : 'side', false, normalAnimation.speed, normalAnimation.groundSpeed);
-    const updateThiefSprites = () =>
-      this.thiefSpriteAnimator.update(delta, thiefAnimation.clip, thiefAnimation.active ? thiefAnimation.orientation : 'side', false, thiefAnimation.speed, thiefAnimation.groundSpeed);
-    const updateBaronSprites = () =>
-      this.baronSpriteAnimator?.update(delta, baronAnimation.clip, baronAnimation.active ? baronAnimation.orientation : 'side', false, baronAnimation.speed, baronAnimation.groundSpeed);
-    if (normalAnimation.active || !thiefAnimation.active) {
-      updateThiefSprites();
-      updateNormalSprites();
-    } else {
-      updateNormalSprites();
-      updateThiefSprites();
-    }
-    if (baronAnimation.active || this.baronSpriteAnimator) updateBaronSprites();
-    for (const presentation of this.variantSpritePresentations) {
-      const animation = this.activeVariantAnimation(presentation.variantId);
-      // Mirror the baron lazy-load pattern: leave variant sheets/animators untouched until
-      // this variant is actually on the field, so non-E2 contracts upload no E2 textures
-      // (was a persistent +1 renderer-texture regression in vp-02:382 at wire time).
-      if (!animation.active && !presentation.sprites.isLoaded) continue;
-      presentation.sprites.ensureLoaded();
-      presentation.fades.ensureLoaded();
-      presentation.animator.update(delta, animation.clip, animation.active ? animation.orientation : 'side', false, animation.speed, animation.groundSpeed);
+    for (const enemy of this.enemies) {
+      if (!enemy.isAlive) {
+        this.releaseSpriteAnimation(enemy.id);
+        continue;
+      }
+      const animator = this.ensureSpriteAnimation(enemy);
+      if (!animator) continue;
+      const animation = regularAnimation(enemy);
+      // The Baron's authored cadence uses raw ground speed; regular cast cadence accounts for
+      // visual scale. Keep that existing convention while giving each body its own cursor.
+      animator.update(delta, animation.clip, animation.orientation, false,
+        enemy.eliteKind === 'baron' ? animation.groundSpeed : animation.speed, animation.groundSpeed);
     }
   }
 
@@ -1062,6 +1066,7 @@ export class EnemyPool {
     if (!enemy.isAlive) return;
     this.markRailcar3dDestroyed(enemy);
     enemy.recycle();
+    this.releaseSpriteAnimation(enemy.id);
     this.active = Math.max(0, this.active - 1);
     this.syncEnemyInstance(enemy);
     this.syncEnemySprite(enemy);
@@ -1073,6 +1078,7 @@ export class EnemyPool {
     if (this.railcar3dState !== 'off' && this.railcar3dState !== 'lite') this.disposeRailcar3d();
     for (const enemy of this.enemies) {
       enemy.recycle();
+      this.releaseSpriteAnimation(enemy.id);
       this.previousActive[enemy.id] = false;
       this.spawnOrder[enemy.id] = 0;
     }
@@ -1085,23 +1091,20 @@ export class EnemyPool {
 
   dispose(): void {
     this.disposeRailcar3d();
+    for (const id of this.spriteAnimations.keys()) this.releaseSpriteAnimation(id);
     for (const enemy of this.enemies) {
       enemy.dispose();
     }
     this.generatedSprites.dispose();
     this.generatedSpriteFades.dispose();
-    this.spriteAnimator.dispose();
     this.thiefSprites.dispose();
     this.thiefSpriteFades.dispose();
-    this.thiefSpriteAnimator.dispose();
-    for (const { sprites, fades, animator } of this.variantSpritePresentations) {
+    for (const { sprites, fades } of this.variantSpritePresentations) {
       sprites.dispose();
       fades.dispose();
-      animator.dispose();
     }
     this.baronSprites.dispose();
     this.baronSpriteFades.dispose();
-    this.baronSpriteAnimator?.dispose();
     this.baronBannerSprites.dispose();
     this.bossHpBackGeometry.dispose();
     this.bossHpFillGeometry.dispose();
@@ -1125,64 +1128,39 @@ export class EnemyPool {
     disposeClaimJumperAssets(this.assets);
   }
 
-  private activeAnimation(thieves: boolean): ActiveAnimation {
-    if (thieves) {
-      for (const enemy of this.enemies) {
-        if (enemy.isAlive && enemy.isThief && enemy.animationClip === 'grab') {
-          return regularAnimation(enemy, 'grab');
-        }
-      }
-      for (const enemy of this.enemies) {
-        if (enemy.isAlive && enemy.isThief && enemy.animationClip === 'flee') {
-          return regularAnimation(enemy, 'flee');
-        }
-      }
-    }
-    for (const enemy of this.enemies) {
-      if (enemy.isAlive && enemy.isThief === thieves && (!this.baronSprites.isLoaded || enemy.eliteKind !== 'baron')) {
-        return regularAnimation(enemy);
-      }
-    }
-    return { clip: 'idle', orientation: 's', active: false, speed: 0, groundSpeed: 0 };
+  private ensureSpriteAnimation(enemy: ClaimJumperEnemy): SpriteAnimator | null {
+    if (enemy.eliteKind === 'railcar' || isMothSwarmEnemy(enemy) || enemy.variantId?.startsWith('drill_')) return null;
+    const variant = this.variantSpritePresentations.find(({ variantId }) => variantId === enemy.variantId);
+    if (enemy.eliteKind === 'baron') this.prefetchBaronPresentation();
+    variant?.sprites.ensureLoaded();
+    variant?.fades.ensureLoaded();
+    const baron = enemy.eliteKind === 'baron' && this.baronSprites.isLoaded;
+    const slotId = variant?.slotId ?? (baron ? assetSlots.charBaron : enemy.isThief ? assetSlots.charBanditThief : assetSlots.charBanditBase);
+    const sprites = variant?.sprites ?? (baron ? this.baronSprites : enemy.isThief ? this.thiefSprites : this.generatedSprites);
+    const fades = variant?.fades ?? (baron ? this.baronSpriteFades : enemy.isThief ? this.thiefSpriteFades : this.generatedSpriteFades);
+    if (!sprites.isLoaded) return null;
+    const current = this.spriteAnimations.get(enemy.id);
+    if (current?.slotId === slotId) return current.animator;
+    this.releaseSpriteAnimation(enemy.id);
+    const sprite = sprites.group.children[enemy.id] as THREE.Sprite;
+    const fade = fades.group.children[enemy.id] as THREE.Sprite;
+    sprite.material = sprites.cloneMaterial();
+    fade.material = fades.cloneMaterial();
+    const animator = new SpriteAnimator(slotId, sprite.material, undefined, fade.material);
+    this.spriteAnimations.set(enemy.id, { slotId, sprites, fades, sprite, fade, animator });
+    return animator;
   }
 
-  private activeVariantAnimation(variantId: string): ActiveAnimation {
-    for (const enemy of this.enemies) {
-      if (enemy.isAlive && enemy.variantId === variantId) {
-        return regularAnimation(enemy);
-      }
-    }
-    return { clip: 'idle', orientation: 's', active: false, speed: 0, groundSpeed: 0 };
-  }
-
-  private activeBaronAnimation(): ActiveAnimation {
-    for (const enemy of this.enemies) {
-      if (enemy.isAlive && enemy.eliteKind === 'baron') {
-        this.ensureBaronPresentation();
-        const groundSpeed = Math.hypot(enemy.velocityX, enemy.velocityZ);
-        return {
-          clip: enemy.animationClip,
-          orientation: enemy.animationOrientation,
-          active: true,
-          speed: groundSpeed,
-          groundSpeed,
-        };
-      }
-    }
-    return { clip: 'idle', orientation: 's', active: false, speed: 0, groundSpeed: 0 };
-  }
-
-  private ensureBaronPresentation(): SpriteAnimator {
-    this.baronSprites.ensureLoaded();
-    this.baronSpriteFades.ensureLoaded();
-    this.baronBannerSprites.ensureLoaded();
-    this.baronSpriteAnimator ??= new SpriteAnimator(
-      assetSlots.charBaron,
-      this.baronSprites.material,
-      undefined,
-      this.baronSpriteFades.material,
-    );
-    return this.baronSpriteAnimator;
+  private releaseSpriteAnimation(id: number): void {
+    const state = this.spriteAnimations.get(id);
+    if (!state) return;
+    state.animator.dispose(); // owns the cloned fade material
+    state.sprite.material.dispose();
+    state.sprite.material = state.sprites.material;
+    state.fade.material = state.fades.material;
+    state.sprite.center.set(0.5, 0.5);
+    state.fade.center.set(0.5, 0.5);
+    this.spriteAnimations.delete(id);
   }
 
   private activeBaron(): ClaimJumperEnemy | null {
@@ -1455,6 +1433,12 @@ export class EnemyPool {
     if (this.camera) this.bossHpGroup.quaternion.copy(this.camera.quaternion);
     else this.bossHpGroup.quaternion.identity();
     this.bossHpGroup.scale.setScalar(modelBounds || railcarMounted ? 1 : state.scale);
+    const baron = state.groupId === null ? this.activeBaron() : null;
+    if (baron?.hasBanner && this.baronBannerSprites.isLoaded) {
+      this.bossHpGroup.position.set(baron.position.x, baron.position.y + BARON_BANNER_Y * baron.visualScale, baron.position.z);
+      // Keep the bar above the billboard at any camera pitch; leave room for banner bob.
+      this.bossHpGroup.translateY(BARON_BANNER_SIZE * baron.visualScale * 0.5 + 0.09 * state.scale + 0.15);
+    }
     this.bossHpFill.scale.x = state.ratio;
     this.bossHpFill.position.x = -BOSS_HP_FILL_WIDTH * (1 - state.ratio) * 0.5;
     for (let i = 0; i < this.bossHpSegments.children.length; i += 1) {
@@ -1491,13 +1475,17 @@ export class EnemyPool {
     this.renderedLightFactors[enemy.id] = physicalLight;
     const lightFactor = this.renderLightFactor(physicalLight);
     const watchPainted = this.isWatchPainted(enemy);
-    const baronMotion = this.baronSpriteAnimator?.motion ?? IDLE_SPRITE_MOTION;
-    const motion =
-      enemy.eliteKind === 'baron' && this.baronSprites.isLoaded
-        ? baronMotion
-        : enemy.isThief
-          ? this.thiefSpriteAnimator.motion
-          : this.spriteAnimator.motion;
+    const motion = this.spriteAnimations.get(enemy.id)?.animator.motion ?? IDLE_SPRITE_MOTION;
+    this.syncObject.position.copy(enemy.group.position);
+    this.syncObject.position.y = Terrain.visualY(enemy.group.position.x, enemy.group.position.z, Balance.enemy.groundY);
+    this.syncObject.rotation.set(0, 0, 0);
+    this.syncObject.scale.setScalar(this.renderScale(enemy));
+    this.syncObject.updateMatrix();
+    this.groundShadowMatrix.copy(
+      enemy.isAlive && lightFactor > 0 && enemy.eliteKind !== 'railcar' && !isMothSwarmEnemy(enemy) && !enemy.variantId?.startsWith('drill_')
+        ? this.syncObject.matrix
+        : this.hiddenMatrix,
+    );
     this.syncObject.position.copy(enemy.group.position);
     this.syncObject.position.y += motion.bobOffset;
     this.syncObject.rotation.set(0, enemy.group.rotation.y, 0);
@@ -1514,7 +1502,7 @@ export class EnemyPool {
       const part = this.renderParts[i];
       const localMatrix = this.localMatrices[i];
       if (!part || !localMatrix) continue;
-      this.instanceMatrix.multiplyMatrices(this.baseMatrix, localMatrix);
+      this.instanceMatrix.multiplyMatrices(i === 0 ? this.groundShadowMatrix : this.baseMatrix, localMatrix);
       part.setMatrixAt(enemy.id, this.instanceMatrix);
       if (i === 1) {
         this.setInstanceColor(
@@ -1541,8 +1529,10 @@ export class EnemyPool {
       part.instanceMatrix.needsUpdate = true;
     }
     const railcar3dMounted = this.railcar3dState === 'ready' && this.railcar3dGroupId === enemy.bossGroupId;
-    const carryMarkerVisible = enemy.isAlive && enemy.eliteKind !== 'baron' && (enemy.carriedAmount > 0 || enemy.isWrecker)
-      && (enemy.eliteKind !== 'railcar' || (this.railcarVisible(enemy) && !railcar3dMounted));
+    const authoredVariant = this.variantSpritePresentations.find(({ variantId }) => variantId === enemy.variantId);
+    const illustratedEquipment = authoredVariant?.sprites.isLoaded && !authoredVariant.tintFromVariant;
+    const carryMarkerVisible = enemy.isAlive && enemy.eliteKind !== 'baron' && enemy.eliteKind !== 'railcar'
+      && (enemy.carriedAmount > 0 || (enemy.isWrecker && !illustratedEquipment));
     this.instanceMatrix.multiplyMatrices(carryMarkerVisible ? this.syncObject.matrix : this.hiddenMatrix, this.sackLocalMatrix);
     this.sackMesh.setMatrixAt(enemy.id, this.instanceMatrix);
     this.setInstanceColor(this.sackMesh, enemy.id, enemy.isWrecker ? this.wreckerMarkerColor : this.sackColor, lightFactor);
@@ -1746,13 +1736,14 @@ export class EnemyPool {
 
   private syncWatchPaint(enemy: ClaimJumperEnemy, visible: boolean, physicalLight: number): void {
     const fever = this.feverAccentFor(enemy, physicalLight);
-    this.watchPaintBaseMatrix.multiplyMatrices(visible || fever.active ? this.baseMatrix : this.hiddenMatrix, this.watchPaintScaleMatrix);
+    const proceduralFever = fever.active && fever.channel === 'watch-paint-instanced';
+    this.watchPaintBaseMatrix.multiplyMatrices(visible || proceduralFever ? this.baseMatrix : this.hiddenMatrix, this.watchPaintScaleMatrix);
     for (let index = 0; index < this.watchPaintMeshes.length; index += 1) {
       const mesh = this.watchPaintMeshes[index];
       const localMatrix = this.localMatrices[index + 1];
       if (!mesh || !localMatrix) continue;
       const feverPartVisible = fever.kind === 'machine' ? index > 0 : index === 1;
-      this.instanceMatrix.multiplyMatrices(visible || (fever.active && feverPartVisible) ? this.watchPaintBaseMatrix : this.hiddenMatrix, localMatrix);
+      this.instanceMatrix.multiplyMatrices(visible || (proceduralFever && feverPartVisible) ? this.watchPaintBaseMatrix : this.hiddenMatrix, localMatrix);
       mesh.setMatrixAt(enemy.id, this.instanceMatrix);
       this.feverAccentColor.copy(FEVER_GOLD).multiplyScalar(visible ? 1 : fever.strength);
       mesh.setColorAt(enemy.id, this.feverAccentColor);
@@ -1762,19 +1753,6 @@ export class EnemyPool {
   }
 
   private syncSpriteVisuals(): void {
-    const normalMotion = this.spriteAnimator.motion;
-    const thiefMotion = this.thiefSpriteAnimator.motion;
-    const baronMotion = this.baronSpriteAnimator?.motion ?? IDLE_SPRITE_MOTION;
-    this.generatedSprites.material.rotation = normalMotion.leanRad;
-    this.generatedSpriteFades.material.rotation = normalMotion.leanRad;
-    this.thiefSprites.material.rotation = thiefMotion.leanRad;
-    this.thiefSpriteFades.material.rotation = thiefMotion.leanRad;
-    this.baronSprites.material.rotation = baronMotion.leanRad;
-    this.baronSpriteFades.material.rotation = baronMotion.leanRad;
-    for (const { sprites, fades, animator } of this.variantSpritePresentations) {
-      sprites.material.rotation = animator.motion.leanRad;
-      fades.material.rotation = animator.motion.leanRad;
-    }
     for (const enemy of this.enemies) this.syncEnemySprite(enemy);
   }
 
@@ -1787,23 +1765,36 @@ export class EnemyPool {
     const fullDark = this.fullDarkRenderCutoffActive();
     const kindled = fullDark && lightFactor > 0;
     const ignition = kindled ? this.nightIgnition(physicalLight) : 0;
-    const spriteLightFactor = kindled
+    let spriteLightFactor = kindled
       ? THREE.MathUtils.lerp(NIGHT_EMBER_BOOST, Balance.contracts.nightShift.nightSpriteLightBoost, ignition)
       : lightFactor;
-    const spriteTint = kindled ? this.nightIgnitionTint(ignition) : undefined;
+    let spriteTint = kindled ? this.nightIgnitionTint(ignition) : undefined;
     const nightScale = fullDark ? Balance.contracts.nightShift.nightSpriteScale : 1;
     const renderScale = this.renderScale(enemy) * nightScale;
     const litVisible = lightFactor > 0;
     const baronVisible = enemy.isAlive && litVisible && enemy.eliteKind === 'baron' && this.baronSprites.isLoaded;
     const variantPresentation = this.variantSpritePresentations.find(({ variantId }) => variantId === enemy.variantId);
+    const fever = this.feverAccentFor(enemy, physicalLight);
+    if (fever.channel === 'sprite-tint') {
+      // Keep the shimmer on the illustrated silhouette, not the old procedural head.
+      const baseTint = spriteTint ?? (variantPresentation?.tintFromVariant ? enemy.variantTintColor : undefined);
+      if (baseTint) this.feverSpriteTint.copy(baseTint);
+      else copyWorldSpriteTint(this.feverSpriteTint);
+      this.feverSpriteTint.multiply(this.feverAccentColor.setRGB(1, 1, 1).lerp(FEVER_GOLD, fever.strength * 0.22));
+      spriteTint = this.feverSpriteTint;
+      spriteLightFactor *= 1 + fever.strength * 0.18;
+    }
     const normalVisible = enemy.isAlive && litVisible && enemy.eliteKind !== 'railcar' && !enemy.isThief && !baronVisible && !variantPresentation && !isMothSwarmEnemy(enemy) && !enemy.variantId?.startsWith('drill_');
     const thiefVisible = enemy.isAlive && litVisible && enemy.isThief && !variantPresentation;
     // ponytail: batch fades draw every live enemy twice; skip them for mid/large packs unless sprites get instanced.
     const showFade = this.active <= 32 && !fullDark;
-    const normalMotion = this.spriteAnimator.motion;
-    const thiefMotion = this.thiefSpriteAnimator.motion;
-    const baronMotion = this.baronSpriteAnimator?.motion ?? IDLE_SPRITE_MOTION;
-    const baronOverlayActive = this.baronSpriteAnimator?.overlayActive === true;
+    const state = this.spriteAnimations.get(enemy.id);
+    const motion = state?.animator.motion ?? IDLE_SPRITE_MOTION;
+    const overlayActive = state?.animator.overlayActive === true;
+    if (state) {
+      state.sprite.material.rotation = motion.leanRad;
+      state.fade.material.rotation = motion.leanRad;
+    }
     this.generatedSprites.setTintScalar(enemy.id, spriteLightFactor);
     this.generatedSprites.setTintColor(enemy.id, spriteTint);
     this.generatedSpriteFades.setTintScalar(enemy.id, spriteLightFactor);
@@ -1825,28 +1816,39 @@ export class EnemyPool {
       presentation.fades.setTintScalar(enemy.id, spriteLightFactor);
       presentation.fades.setTintColor(enemy.id, spriteTint ?? (presentation.tintFromVariant ? enemy.variantTintColor ?? undefined : undefined));
       presentation.sprites.set(enemy.id, enemy.group.position, visible);
-      presentation.fades.set(enemy.id, enemy.group.position, visible && showFade && presentation.animator.overlayActive);
-      this.applySpriteBob(presentation.sprites.group.children[enemy.id], enemy.position.y, presentation.animator.motion.bobOffset, renderScale);
-      this.applySpriteBob(presentation.fades.group.children[enemy.id], enemy.position.y, presentation.animator.motion.bobOffset, renderScale);
+      presentation.fades.set(enemy.id, enemy.group.position, visible && showFade && overlayActive);
+      this.applySpriteBob(presentation.sprites.group.children[enemy.id], enemy.position.y, motion.bobOffset, renderScale);
+      this.applySpriteBob(presentation.fades.group.children[enemy.id], enemy.position.y, motion.bobOffset, renderScale);
     }
     this.generatedSprites.set(enemy.id, enemy.group.position, normalVisible);
-    this.generatedSpriteFades.set(enemy.id, enemy.group.position, showFade && normalVisible && this.spriteAnimator.overlayActive);
+    this.generatedSpriteFades.set(enemy.id, enemy.group.position, showFade && normalVisible && overlayActive);
     this.thiefSprites.set(enemy.id, enemy.group.position, thiefVisible);
-    this.thiefSpriteFades.set(enemy.id, enemy.group.position, showFade && thiefVisible && this.thiefSpriteAnimator.overlayActive);
+    this.thiefSpriteFades.set(enemy.id, enemy.group.position, showFade && thiefVisible && overlayActive);
     this.baronSprites.set(enemy.id, enemy.group.position, baronVisible);
-    this.baronSpriteFades.set(enemy.id, enemy.group.position, showFade && baronVisible && baronOverlayActive);
+    this.baronSpriteFades.set(enemy.id, enemy.group.position, showFade && baronVisible && overlayActive);
     this.baronBannerSprites.set(
       enemy.id,
       enemy.group.position,
       enemy.isAlive && litVisible && enemy.hasBanner && this.baronBannerSprites.isLoaded,
     );
-    this.applySpriteBob(this.generatedSprites.group.children[enemy.id], enemy.position.y, normalMotion.bobOffset, renderScale);
-    this.applySpriteBob(this.generatedSpriteFades.group.children[enemy.id], enemy.position.y, normalMotion.bobOffset, renderScale);
-    this.applySpriteBob(this.thiefSprites.group.children[enemy.id], enemy.position.y, thiefMotion.bobOffset, renderScale);
-    this.applySpriteBob(this.thiefSpriteFades.group.children[enemy.id], enemy.position.y, thiefMotion.bobOffset, renderScale);
-    this.applySpriteBob(this.baronSprites.group.children[enemy.id], enemy.position.y, baronMotion.bobOffset, enemy.visualScale * nightScale);
-    this.applySpriteBob(this.baronSpriteFades.group.children[enemy.id], enemy.position.y, baronMotion.bobOffset, enemy.visualScale * nightScale);
-    this.applyBannerSprite(enemy, this.baronBannerSprites.group.children[enemy.id], baronMotion.bobOffset);
+    this.applySpriteBob(this.generatedSprites.group.children[enemy.id], enemy.position.y, motion.bobOffset, renderScale);
+    this.applySpriteBob(this.generatedSpriteFades.group.children[enemy.id], enemy.position.y, motion.bobOffset, renderScale);
+    this.applySpriteBob(this.thiefSprites.group.children[enemy.id], enemy.position.y, motion.bobOffset, renderScale);
+    this.applySpriteBob(this.thiefSpriteFades.group.children[enemy.id], enemy.position.y, motion.bobOffset, renderScale);
+    this.applySpriteBob(this.baronSprites.group.children[enemy.id], enemy.position.y, motion.bobOffset, enemy.visualScale * nightScale);
+    this.applySpriteBob(this.baronSpriteFades.group.children[enemy.id], enemy.position.y, motion.bobOffset, enemy.visualScale * nightScale);
+    this.applyBannerSprite(enemy, this.baronBannerSprites.group.children[enemy.id], motion.bobOffset);
+    if (state) {
+      this.applyGroundContact(state.sprite, enemy.position.y, state.animator.groundContactY);
+      this.applyGroundContact(state.fade, enemy.position.y, state.animator.fadeGroundContactY);
+    }
+  }
+
+  private applyGroundContact(sprite: THREE.Sprite, baseY: number, contact: number | undefined): void {
+    sprite.center.set(0.5, contact === undefined ? 0.5 : 1 - contact);
+    if (contact === undefined) return;
+    sprite.position.y = baseY;
+    sprite.material.rotation = 0;
   }
 
   private syncHitFlashes(): void {
@@ -1894,18 +1896,20 @@ export class EnemyPool {
   }
 
   private renderScale(enemy: ClaimJumperEnemy): number {
+    // OldDiggerBossSystem owns both the model and its primitive fallback.
+    if (enemy.variantId === 'old_digger') return 0;
     return enemy.visualScale * (enemy.eliteKind ? 1 : RUN_CAST_SCALE);
   }
 
   private applyBannerSprite(enemy: ClaimJumperEnemy, sprite: THREE.Object3D | undefined, bobOffset: number): void {
     if (!sprite) return;
     const scale = enemy.visualScale;
-    sprite.position.y = enemy.position.y + 1.85 * scale + bobOffset;
-    sprite.scale.set(0.86 * scale, 0.86 * scale, 1);
+    sprite.position.y = enemy.position.y + BARON_BANNER_Y * scale + bobOffset;
+    sprite.scale.set(BARON_BANNER_SIZE * scale, BARON_BANNER_SIZE * scale, 1);
   }
 
   private setProceduralVisible(visible: boolean): void {
-    for (const part of this.renderParts) part.visible = visible;
+    this.renderParts.forEach((part, index) => { part.visible = index === 0 || visible; });
   }
 
   private syncEnemyFog(): void {
