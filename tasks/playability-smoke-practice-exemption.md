@@ -1,6 +1,14 @@
 # Task playability-smoke-practice-exemption: the census must read the exemption the CONTRACT already declares (FIRE-AUTHORED s2579, attended review welcome; commit prefix "fix:")
 
-**ROLE + WORKDIR.** An Opus implementer in a scratch worktree at main, launched by the attended session per `tasks/CODEX-WALL` ("Implementation while the wall stands: Opus implementer agents launched by the attended session in scratch worktrees, drained attended"). **BANKED, NOT QUEUED — while the wall stands there is NO Codex dispatch and §2E refills are suspended, so this master must NOT be `cp`'d into `tasks/queue/<slot>/`.** If the wall lifts, it is lane-dispatchable unchanged with the standard safe-dupe lane pre-flight.
+**ROLE + WORKDIR.** An Opus implementer in a scratch worktree at main, launched by the attended session per `tasks/CODEX-WALL` ("Implementation while the wall stands: Opus implementer agents launched by the attended session in scratch worktrees, drained attended"). **BANKED, NOT QUEUED — while the wall stands there is NO Codex dispatch and §2E refills are suspended, so this master must NOT be `cp`'d into `tasks/queue/<slot>/`.**
+
+## Pre-flight (MAIN slot / scratch worktree at main — copy verbatim)
+> Pre-flight: `git status --short` must show no staged/modified TRACKED file OUTSIDE the two factory-churn classes below — if any exist, STOP and report (a live drain or another task owns the tree). Untracked `??` host debris (art raws, .claude/) is EXPECTED — list briefly, proceed.
+> **FACTORY-CHURN EXCEPTION — these two tracked classes are ALWAYS EXPECTED on the main slot and are NEVER a STOP; list them and proceed (F-1407-1, s1407):** (a) `logs/**` — the fire/runner accounting (`factory-usage.json`, `usage-history.jsonl`, `task-stats.jsonl`, `dashboard.html`, `.goal-tree.html`, `.blocked-seen`), rewritten every cycle by the factory itself; (b) `artifacts/**`, `reviews/shots-*` and any `.png` — regenerated evidence. What still STOPs, unchanged and load-bearing: modified tracked `src/**`, `scripts/**`, `e2e/**`, `tasks/**`, `specs/**`, `reviews/*.md` — i.e. anything a live drain or a concurrent task could actually own.
+
+⚠️ **This slice REGENERATES SCREENSHOTS by construction** — its own self-check runs the smoke four times, which writes `artifacts/playability-smoke/dev/*.png`. Expect that dirt in your own tree at the end; it is class (b) above, it is yours, and it is not a finding.
+
+**If the wall lifts and this is dispatched to a lane instead**, replace the block above with the LANE safe-dupe template from `.claude/skills/author-task/SKILL.md` §3 verbatim — including its own FACTORY-CHURN EXCEPTION line (F-1407-1) and the F-1266-1 evidence-artifact exception. Do not paraphrase either.
 
 ## READ FIRST (paths, in this order)
 - `docs/bench/playability-census-2026-09-15.md` — the census this cures a row of.
@@ -61,5 +69,8 @@ Reporting an adjacent problem is good and expected; fixing one out of scope is a
 
 ## Firewall note on the census itself
 **DO NOT re-run the full `npm run test:playability` in this task.** It is ~60 min, it is a STANDING DUTY with its own once-per-day cadence and dry-board condition, and running it beside these gates violates "never beside another battery". The targeted 4-run check above is the evidence for this slice; the next census run is what confirms the row flips.
+
+## No-op guard
+If you find yourself about to exit without changes, **WRITE WHY into your report first** — a silent no-op wastes a queue slot and a gate (Mistake #1). In particular: if you conclude the exemption should NOT be read from `practice.scheduledWaves`, say so with the evidence that changed your mind rather than exiting quiet; that would be a larger finding than the one you were sent for, and it belongs in the report.
 
 READY-FOR-GATES — report: the derived exemption set and its size; the 4/4 targeted matrix with both projects named; the `rows.jsonl` exemption line verbatim; the guard's arm count and what its reverse control asserts; tsc/build results; any adjacent suite that moved (with the diff), and anything you found out of scope and did NOT fix.
