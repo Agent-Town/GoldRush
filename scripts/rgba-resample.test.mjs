@@ -1,4 +1,6 @@
 import assert from 'node:assert/strict';
+import { join } from 'node:path';
+import { tmpdir } from 'node:os';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -20,7 +22,13 @@ assert.deepEqual(sample([[200, 0, 0, 192], [0, 0, 200, 64], key, key]), [150, 0,
 assert.deepEqual(sample([gold, gold, gold, gold]), gold, 'opaque art must stay unchanged');
 assert.deepEqual(sample([[12, 24, 36, 0], [12, 24, 36, 0], [12, 24, 36, 0], [12, 24, 36, 0]]), [12, 24, 36, 0], 'keep hidden RGB edge extension');
 // Factory controls relocate the extractor. Exercise that actual CLI path too.
-const directory = fs.mkdtempSync(fileURLToPath(new URL('./.rgba-control-', import.meta.url)));
+// F-TCR-5 (attended 2026-09-15): the control directory lives under tmpdir() in the one form the fixture sweep
+// (scripts/fixture-teardown.test.mjs) can read, mkdtemp(join(tmpdir(), '…')); it used to be created inside scripts/
+// itself, invisible to the sweep and a stray `.rgba-control-*` directory in the repo whenever a run died early.
+const directory = fs.mkdtempSync(join(tmpdir(), 'rgba-control-'));
+// The control copy of extract-alpha.mjs imports pngjs; under tmpdir() nothing resolves it, so the directory gets a
+// link to the repo's node_modules (removed with the directory by the rmSync below).
+fs.symlinkSync(path.resolve('node_modules'), path.join(directory, 'node_modules'), 'dir');
 try {
   const script = path.join(directory, 'extract-control.mjs');
   fs.writeFileSync(script, source);
