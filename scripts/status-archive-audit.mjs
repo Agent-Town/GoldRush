@@ -128,6 +128,48 @@ const sessionOf = (line) => {
   return best ? best.n : null;
 };
 
+// F-2577-1 — the SUPERSESSION predicate for an attended self-update. Mechanical and set-based, so
+// it states a fact rather than a resemblance. `before` is superseded by `after` when every
+// load-bearing token survives: finding ids, commit hashes, and the desk's finding ids.
+const FINDING_ID = /\bF-[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*\b/g;
+const HASH = /\b[0-9a-f]{8,40}\b/g;
+const DESK = /OWNER.{0,2}S? DESK/i;
+
+// Hashes are cited at mixed widths in this repo (8, 9, full 40 -- F-1633-1), so membership must be
+// PREFIX-tolerant in both directions or a 9-char citation never matches its own 8-char twin.
+const hashCovered = (needle, hay) => hay.some((h) => h.startsWith(needle) || needle.startsWith(h));
+
+const deskOf = (line) => {
+  const all = [...line.matchAll(new RegExp(DESK.source, "gi"))];
+  return all.length ? line.slice(all[all.length - 1].index) : null;
+};
+
+const supersedes = (before, after) => {
+  const beforeIds = [...new Set(before.match(FINDING_ID) ?? [])];
+  const beforeHashes = [...new Set(before.match(HASH) ?? [])];
+  // POSITIVE EVIDENCE REQUIRED (F-2217-1): with nothing to test, the set-tests below are vacuously
+  // true. A line offering no ids and no hashes is not thereby proven superseded.
+  if (beforeIds.length === 0 && beforeHashes.length === 0) return false;
+
+  const afterIds = new Set(after.match(FINDING_ID) ?? []);
+  if (!beforeIds.every((id) => afterIds.has(id))) return false;
+
+  const afterHashes = [...new Set(after.match(HASH) ?? [])];
+  if (!beforeHashes.every((h) => hashCovered(h, afterHashes))) return false;
+
+  // The desk is the OWNER'S decision queue and is the one thing whose loss is never cosmetic
+  // (F-2576-1 watched a merge take it down). If the older line carried a desk, the newer must carry
+  // one too, and must still name every finding the older desk named.
+  const beforeDesk = deskOf(before);
+  if (beforeDesk !== null) {
+    const afterDesk = deskOf(after);
+    if (afterDesk === null) return false;
+    const deskIds = new Set(afterDesk.match(FINDING_ID) ?? []);
+    if (!(beforeDesk.match(FINDING_ID) ?? []).every((id) => deskIds.has(id))) return false;
+  }
+  return true;
+};
+
 // Permanence is judged against the LIVE BOARD (working tree), not HEAD: the next fire reads the
 // file on disk, and a restore that is staged-but-uncommitted is already legible to it. Reading HEAD
 // here would also make the instrument untestable, since manufacturing the defect to prove the
@@ -144,6 +186,7 @@ const drops = [];
 const transient = [];
 const abridged = [];
 const excluded = [];
+const superseded = [];
 let replacements = 0;
 let examined = 0;
 
@@ -184,6 +227,40 @@ for (const sha of commits) {
     continue;
   }
 
+  // F-2577-1 (s2577) — THE EXCLUSION ABOVE IS KEYED ON AN `sNNNN` TOKEN, AND AN ATTENDED LINE
+  // CARRIES NONE, SO IT HAS TWO POPULATIONS AND CAN ONLY EVER FIRE FOR ONE OF THEM. Both sides of
+  // an attended self-update parse to `null`, the `!== null` guards drop the pair through, and the
+  // run reports `snull destroyed snull's handoff line` -- an exclusion looking straight at two
+  // equal session ids and not firing. Diagnosed F-2576-2 (s2576), re-derived s2577.
+  //
+  // 🚫 THE OBVIOUS CURE IS THE DANGEROUS ONE AND IS DELIBERATELY NOT TAKEN: dropping the two
+  // `!== null` guards so that `null === null` excludes would also suppress a genuine destruction of
+  // one attended session's handoff by a DIFFERENT attended session on a different day. That is the
+  // permissive direction -- it would blind the instrument to a whole population to silence a false
+  // alarm in it -- and attended sessions now carry the drain load (F-1546-1), so that population is
+  // the BUSY one. This arm therefore DECLARES AND DOES NOT CLEAR (the F-2366-1 restraint): the
+  // event is still reported, on its own line, under its own name, so a reader can re-judge it.
+  //
+  // The predicate is MECHANICAL, not a similarity threshold: the newer line SUPERSEDES the older
+  // when it preserves every load-bearing token the older carried -- every finding id, every commit
+  // hash, and every finding id named in the older line's OWNER'S DESK segment. That is exactly the
+  // check s2576 and s2577 each ran BY HAND before clearing the live instance, and on that instance
+  // the two lines differ by four tokens: the stamp, and the words "deploy this handoff" which the
+  // newer replaces with the deploy's actual outcome.
+  //
+  // ⚠️ IT REQUIRES POSITIVE EVIDENCE AND REFUSES TO PASS VACUOUSLY (F-2217-1): a line carrying no
+  // ids and no hashes at all offers nothing to test, so the three set-tests would be vacuously true
+  // over an empty subject set. Such a pair stays a DROP.
+  //
+  // ⓘ ORDERED DELIBERATELY LAST, AND THE ORDER WAS CHOSEN BY MEASUREMENT RATHER THAN BY TASTE.
+  // Placed before the ABRIDGED test it reclassified `869f6cbc`, a pre-existing ABRIDGED entry;
+  // placed before the permanence split it reclassified `0180b013`, a pre-existing TRANSIENT. Both
+  // of those classes are already correct and already benign, and both say something STRICTLY MORE
+  // specific than "superseded" -- ABRIDGED says the older line is on the board in truncated form,
+  // TRANSIENT says it was dropped at lock time and restored by the fire's own handoff commit.
+  // Answering a narrower question with a broader label loses information. This arm therefore sits
+  // below both, and touches ONLY the pairs that would otherwise be reported PERMANENTLY LOST --
+  // which is exactly the defect and nothing else.
   if (childBlob.includes(before.slice(0, PROBE_CHARS))) {
     abridged.push(rec);
     continue;
@@ -227,6 +304,10 @@ for (const sha of commits) {
     rec.lostSession === null
       ? !headBlob.includes(rec.lost)
       : !new RegExp(`s${rec.lostSession} [^(]*\\(line-1 archive`).test(headBlob);
+  if (rec.permanent && lostSession === null && newSession === null && supersedes(before, after)) {
+    superseded.push(rec);
+    continue;
+  }
   (rec.permanent ? drops : transient).push(rec);
 }
 
@@ -241,6 +322,16 @@ for (const d of drops) {
 if (!quiet) {
   for (const a of abridged) {
     console.log(`ABRIDGED ${a.sha}  s${a.newSession} kept only a prefix of s${a.lostSession}'s ${a.kind} line`);
+  }
+  // F-2577-1: reported, never silent. An attended self-update is a real event that this run has
+  // judged rather than suppressed, and naming it is what lets a reader overturn the judgement.
+  for (const s of superseded) {
+    console.log(
+      `SUPERSEDED ${s.sha}  an attended session replaced its own ${s.kind} line ` +
+        `(${s.lostChars} chars); the newer line preserves every finding id, commit hash and desk ` +
+        `item the older carried -- not a destruction`,
+    );
+    console.log(`  commit: ${s.subject}`);
   }
   if (showAll) {
     for (const e of excluded) console.log(`ok-excluded ${e.sha}  ${e.why}  [${e.subject.slice(0, 70)}]`);
@@ -307,7 +398,8 @@ console.log(
   `${verdict}: ${drops.length} handoff line-1s PERMANENTLY absent at HEAD ` +
     `(${transient.length} more were dropped at lock time but restored by the fire's own handoff ` +
     `commit -- normal, not a defect), ${abridged.length} abridged, ` +
-    `${excluded.length} same-session rewrites excluded, of ${replacements} replacements ` +
+    `${excluded.length} same-session rewrites excluded, ` +
+    `${superseded.length} attended self-updates superseded, of ${replacements} replacements ` +
     `across ${examined} STATUS.md commits`,
 );
 process.exit(drops.length === 0 ? 0 : 1);
