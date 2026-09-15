@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFile, readdir, mkdtemp, mkdir, writeFile, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
-import { dirname, resolve } from 'node:path';
+import { dirname, resolve, join } from 'node:path';
 import { test } from 'node:test';
 import { fileURLToPath } from 'node:url';
 
@@ -321,7 +321,11 @@ test('the shared landmark source ledger covers every shipped pack and current so
 
 
 test('landmark contracts honor declared material counts and retain legacy defaults', async () => {
-  const root = await mkdtemp(resolve(tmpdir(), 'landmark-material-contract-'));
+  // F-TCR-3 (attended 2026-09-15): `join`, not `resolve` — scripts/fixture-teardown.test.mjs extracts the literal prefix
+  // with a regex that reads only `mkdtemp(join(tmpdir(), '…'))`, so `resolve` made the sweep red on main for every
+  // tree since the map campaign landed this test (883a3521e), hidden in linked worktrees by the desk guard's refusal
+  // sorting first. Same directory, same prefix, now visible to the sweep.
+  const root = await mkdtemp(join(tmpdir(), 'landmark-material-contract-'));
   const dir = 'assets/pilots/map-rebuild-spike/landmarks/dome';
   const body = { triangles: 12, bounds: { min: [-1, -2, 0], max: [1, 2, 3] } };
   try {
