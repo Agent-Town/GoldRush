@@ -336,6 +336,18 @@
       "fingerprint": "72ea46966bc9",
       "excerpt": "git -C \"$ROOT\" log --format=' %h %cI %s' --since=\"@$start_epoch\" -n 10 -- \"$RUNNER_SCRIPT\" 2>/dev/nu"
     },
+    "scripts/fire.md -> scripts/skillmd-guard.test.mjs:102": {
+      "target": "scripts/skillmd-guard.test.mjs",
+      "line": 102,
+      "fingerprint": "6abed180ebaa",
+      "excerpt": "assert.deepEqual(jsonBlock('rotations'), rotations);"
+    },
+    "scripts/fire.md -> skillmd-guard.test.mjs:102": {
+      "target": "scripts/skillmd-guard.test.mjs",
+      "line": 102,
+      "fingerprint": "6abed180ebaa",
+      "excerpt": "assert.deepEqual(jsonBlock('rotations'), rotations);"
+    },
     "scripts/fire.md -> scripts/skillmd-guard.test.mjs:103": {
       "target": "scripts/skillmd-guard.test.mjs",
       "line": 103,
