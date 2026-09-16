@@ -677,6 +677,18 @@
             "spawnEdges": [
               "south",
               "north"
+            ],
+            "spawnGates": [
+              {
+                "edge": "south",
+                "x": 0,
+                "z": -46
+              },
+              {
+                "edge": "north",
+                "x": 0,
+                "z": 46
+              }
             ]
           },
           {
@@ -692,6 +704,18 @@
             "spawnEdges": [
               "east",
               "west"
+            ],
+            "spawnGates": [
+              {
+                "edge": "east",
+                "x": 46,
+                "z": 20
+              },
+              {
+                "edge": "west",
+                "x": -46,
+                "z": -20
+              }
             ]
           },
           {
@@ -706,6 +730,13 @@
             "contactDamageScale": 0.65,
             "spawnEdges": [
               "north"
+            ],
+            "spawnGates": [
+              {
+                "edge": "north",
+                "x": 0,
+                "z": 46
+              }
             ]
           }
         ],
@@ -1328,7 +1359,6 @@
         },
         "lanes": {
           "spawnEdges": [
-            "south",
             "north",
             "east",
             "west"
@@ -1428,6 +1458,13 @@
             "contactDamageScale": 0.65,
             "spawnEdges": [
               "north"
+            ],
+            "spawnGates": [
+              {
+                "edge": "north",
+                "x": -12,
+                "z": 46
+              }
             ]
           }
         ],
