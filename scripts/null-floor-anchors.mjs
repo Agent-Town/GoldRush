@@ -5,15 +5,32 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createServer } from 'vite';
+import { OUTCOME_FIELDS, classifyNullFloors, exitCodeFor, reportNullFloors } from './null-floor-compare.mjs';
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const DEFAULT_ARTIFACT = path.join(ROOT, 'assets/contracts/null-floors.json');
-const OUTCOME_FIELDS = ['secured', 'waves', 'timeMs', 'gold', 'kills', 'eventLogHash'];
 const args = process.argv.slice(2);
 const check = args[0] === '--check';
+const compare = args[0] === '--compare';
 
-if ((!check && args.length > 0) || (check && args.length > 2)) {
-  throw new Error('Usage: node scripts/null-floor-anchors.mjs [--check [artifact-path]]');
+if ((!check && !compare && args.length > 0) || (check && args.length > 2) || (compare && args.length !== 3)) {
+  throw new Error('Usage: node scripts/null-floor-anchors.mjs [--check [artifact-path]] | --compare <pinned> <derived>');
+}
+
+// --compare judges two artifacts that already exist. Same classifier, same exit codes, same
+// channels as --check, and NO sim and NO git — so the decision this CLI makes is exercisable
+// for pennies. Extracting a decision creates a new untested seam at the CALL SITE (F-2209-1);
+// this mode is how that seam gets tested from where the caller stands.
+if (compare) {
+  const pinned = JSON.parse(readFileSync(path.resolve(args[1]), 'utf8'));
+  const derivedArtifact = JSON.parse(readFileSync(path.resolve(args[2]), 'utf8'));
+  const result = classifyNullFloors(pinned, derivedArtifact);
+  reportNullFloors(result, {
+    label: path.relative(ROOT, path.resolve(args[1])),
+    out: (t) => process.stdout.write(t),
+    err: (t) => process.stderr.write(t),
+  });
+  process.exit(exitCodeFor(result));
 }
 
 const artifactPath = check && args[1] ? path.resolve(args[1]) : DEFAULT_ARTIFACT;
@@ -59,42 +76,12 @@ if (!check) {
   process.stdout.write(`Wrote ${pairCount} null floors to ${path.relative(ROOT, DEFAULT_ARTIFACT)} in ${seconds}s.\n`);
 } else {
   const pinned = JSON.parse(readFileSync(artifactPath, 'utf8'));
-  const drift = diff(pinned, derived);
-  if (drift === 0) {
-    process.stdout.write(`${pairCount} null floors match ${path.relative(ROOT, artifactPath)} (${seconds}s).\n`);
-  } else {
-    process.stderr.write(`${drift} null-floor difference${drift === 1 ? '' : 's'} found (${seconds}s).\n`);
-    process.exitCode = 1;
-  }
-}
-
-function diff(pinned, derived) {
-  let count = 0;
-  for (const field of ['schema', 'eraStamp', 'policy']) {
-    if (pinned[field] === derived[field]) continue;
-    process.stderr.write(`${field}: pinned=${JSON.stringify(pinned[field])} derived=${JSON.stringify(derived[field])}\n`);
-    count += 1;
-  }
-  const contracts = new Set([...Object.keys(pinned.floors ?? {}), ...Object.keys(derived.floors)]);
-  for (const contract of [...contracts].sort()) {
-    const seeds = new Set([
-      ...Object.keys(pinned.floors?.[contract] ?? {}),
-      ...Object.keys(derived.floors[contract] ?? {}),
-    ]);
-    for (const seed of [...seeds].sort()) {
-      const before = pinned.floors?.[contract]?.[seed];
-      const after = derived.floors[contract]?.[seed];
-      if (before === undefined || after === undefined) {
-        process.stderr.write(`${contract}/${seed}: pinned=${before === undefined ? '<missing>' : JSON.stringify(before)} derived=${after === undefined ? '<missing>' : JSON.stringify(after)}\n`);
-        count += 1;
-        continue;
-      }
-      for (const field of OUTCOME_FIELDS) {
-        if (before[field] === after[field]) continue;
-        process.stderr.write(`${contract}/${seed} ${field}: pinned=${JSON.stringify(before[field])} derived=${JSON.stringify(after[field])}\n`);
-        count += 1;
-      }
-    }
-  }
-  return count;
+  const result = classifyNullFloors(pinned, derived);
+  reportNullFloors(result, {
+    label: path.relative(ROOT, artifactPath),
+    seconds,
+    out: (t) => process.stdout.write(t),
+    err: (t) => process.stderr.write(t),
+  });
+  process.exitCode = exitCodeFor(result);
 }
