@@ -9,8 +9,26 @@
  *   briefing  the run card is on screen and names THIS contract, with its own goals and rules
  *   HUD       gold, wave, and the contract's own objective line are readable
  *   moves     WASD moves the hero (real key events, read back off the read-only diagnostics)
- *   wave 2    the run reaches wave 2 under its own steam
+ *   wave 2    the run reaches wave 2 under its own steam — UNLESS the contract has no waves to
+ *             reach, in which case it is asked about its OWN objective instead (see below)
  *   clean     zero console errors and zero page errors across the whole boot
+ *
+ * THE PRACTICE EXEMPTION, IN THIS SPEC'S OWN WORDS (F-PLAY-E1-1, declared 2026-09-16).
+ * A contract that declares `practice` (`ContractPracticeMode`, src/meta/ContractFamilies.ts:618)
+ * is a PRACTICE GROUND, not a wave board: its `scheduledWaves` field is typed `false`, the wave
+ * system only spawns when the player rings the yard's own bell, and so "reaches wave 2" is a
+ * question the map can never answer however well it plays. The 2026-09-15 census measured exactly
+ * that and called it a census defect rather than a map defect: `e1-drill-yard` "reached wave 0
+ * after 374 s sim (runState `playing`, HUD wave 0) — the Drill Yard has no waves to reach, a
+ * by-design exemption the smoke does not declare"
+ * (docs/bench/playability-census-2026-09-15.md). It is declared here now.
+ *
+ * The exemption is not a skip. Such a contract is asked ITS OWN question over the SAME window an
+ * ordinary contract gets to reach wave 2 (two default wave intervals, 60 sim-seconds): is the
+ * practice objective still reachable at the end of it? — the yard is live and says itself that it
+ * schedules no waves; every station and target it declared is on the board; every target is
+ * standing and undamaged, so there is still something to practise on; and the run is still
+ * `playing`, so the player is alive to walk over and do it.
  *
  * WHY NO `?debug` (Mistake #10). The owner's Saturday is a plain boot on the deployed preview. A
  * smoke that needs the debug seam proves nothing about that morning. Everything this spec uses is
@@ -212,6 +230,82 @@ async function heroPos(page: Page): Promise<{ x: number; z: number } | null> {
   });
 }
 
+/**
+ * Two default wave intervals (`Balance.waves.waveInterval` is 30) — the sim-seconds an ordinary
+ * contract is given to reach wave 2. A practice ground is asked its own question over the same
+ * window, so the exemption costs the map the same patience, not less.
+ */
+const PRACTICE_WINDOW_SIM_SECONDS = 60;
+
+/**
+ * The practice ground's own question, asked in place of "reaches wave 2" (see the header). It is
+ * answered off the SAME read-only diagnostics every other cell uses — `drillYard` is published on
+ * every contract and is null where no practice mode is declared (src/vite-env.d.ts:189) — so this
+ * stays a plain boot with no debug seam.
+ */
+async function practiceObjective(
+  page: Page,
+  practice: NonNullable<ContractManifest['practice']>,
+  row: { notes: string[] },
+): Promise<Cell> {
+  const started = Date.now();
+  const deadline = started + WAVE_TIMEOUT_MS;
+  let snapshot: {
+    sim: number;
+    runState: string;
+    active: boolean;
+    scheduledWaves: boolean;
+    stations: string[];
+    targets: Array<{ kind: string; x: number; z: number; state: string; hp: number; maxHp: number }>;
+  } | null = null;
+  while (Date.now() < deadline) {
+    snapshot = await page
+      .evaluate(() => {
+        const diagnostics = window.__THREE_GAME_DIAGNOSTICS__;
+        const yard = diagnostics?.drillYard ?? null;
+        return {
+          sim: diagnostics?.timeAlive ?? 0,
+          runState: String(diagnostics?.runState ?? ''),
+          active: yard?.active === true,
+          scheduledWaves: yard?.persistence.scheduledWaves !== false,
+          stations: yard ? [yard.faucet, yard.bell].map((station) => `${station.x},${station.z}`) : [],
+          targets: yard ? yard.targets.map(({ kind, x, z, state, hp, maxHp }) => ({ kind, x, z, state, hp, maxHp })) : [],
+        };
+      })
+      .catch(() => null);
+    if (!snapshot) break;
+    if (snapshot.runState === 'dead' || snapshot.runState === 'won') break;
+    if (snapshot.sim >= PRACTICE_WINDOW_SIM_SECONDS) break;
+    await page.waitForTimeout(500);
+  }
+  const elapsed = (Date.now() - started) / 1_000;
+  if (!snapshot) return fail(`practice ground stopped answering after ${elapsed.toFixed(1)}s`);
+  row.notes.push(
+    `practice ground: runState=${snapshot.runState} sim=${snapshot.sim.toFixed(1)}s standing=${snapshot.targets.filter(({ state }) => state === 'standing').length}/${snapshot.targets.length} scheduledWaves=${snapshot.scheduledWaves}`,
+  );
+  const declaredStations = practice.stations.map(({ x, z }) => `${x},${z}`);
+  const standing = snapshot.targets.filter(({ state, hp, maxHp }) => state === 'standing' && hp >= maxHp);
+  const reasons: string[] = [];
+  if (!snapshot.active) reasons.push('the yard never reported itself active');
+  if (snapshot.scheduledWaves) reasons.push('the yard claims scheduled waves, so it is not a practice ground');
+  if (snapshot.sim < PRACTICE_WINDOW_SIM_SECONDS) reasons.push(`only ${snapshot.sim.toFixed(1)}s of sim in ${elapsed.toFixed(1)}s wall`);
+  if (snapshot.runState !== 'playing') reasons.push(`runState=${snapshot.runState || 'unknown'}`);
+  for (const station of declaredStations) {
+    if (!snapshot.stations.includes(station)) reasons.push(`station (${station}) is not on the board`);
+  }
+  if (snapshot.targets.length !== practice.targets.length) {
+    reasons.push(`${snapshot.targets.length} targets on the board, ${practice.targets.length} declared`);
+  }
+  if (standing.length !== practice.targets.length) {
+    reasons.push(`${standing.length} of ${practice.targets.length} practice targets are standing and whole`);
+  }
+  return reasons.length === 0
+    ? pass(
+        `practice objective reachable after ${snapshot.sim.toFixed(1)}s sim: ${standing.length} targets standing, ${declaredStations.length} stations placed, no scheduled waves to reach`,
+      )
+    : fail(`practice objective not reachable: ${reasons.join('; ')}`);
+}
+
 test.describe('playability smoke: every board contract, plain boot', () => {
   for (const contract of SMOKE_CONTRACTS) {
     test(`${contract.id} boots plain, briefs, moves and reaches wave 2`, { tag: '@slow' }, async ({ page }, testInfo) => {
@@ -332,8 +426,10 @@ test.describe('playability smoke: every board contract, plain boot', () => {
           row.moves = fail('skipped: boot failed');
         }
 
-        // --- wave 2 ------------------------------------------------------------------------
-        if (row.boots.ok) {
+        // --- wave 2, or the practice objective for a contract that has no waves --------------
+        if (row.boots.ok && contract.practice) {
+          row.wave2 = await practiceObjective(page, contract.practice, row);
+        } else if (row.boots.ok) {
           const started = Date.now();
           const deadline = started + WAVE_TIMEOUT_MS;
           let reached = 0;
