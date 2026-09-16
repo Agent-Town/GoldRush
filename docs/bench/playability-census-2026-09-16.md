@@ -1,5 +1,24 @@
 # Playability census — 2026-09-16 (standing duty, s2583 fire)
 
+> ⏱️ **SUPERSEDED ON THREE OF ITS FOUR ROWS, SEVEN HOURS AFTER IT WAS WRITTEN — READ THIS BEFORE THE RESULT
+> LINE (F-2588-1, appended s2588; the census below is UNCHANGED and was honest when written).** This file is
+> named for the DAY and measures an INSTANT: its subject is main `e55c1aee1` at 01:26, and at **08:09** the
+> attended session merged `2d053781c` (`reviews/playability-first-wave-e2-e6.md`), which cures three of the
+> exact four rows below. **Applying THIS DOCUMENT'S OWN staleness predicate** — the `src/ assets/ public/
+> functions/ site/ index.html e2e/` diff it uses further down to argue nothing observable had moved —
+> `e55c1aee1..HEAD` is **NOT empty: 6 files, +386/−61**, including both failing contracts' data *and the
+> census harness itself* (`e2e/playability-smoke.spec.ts` +102, which declares the Drill Yard exemption).
+> 📊 **MEASURED, not inferred — the drain re-ran this same smoke over these same four contracts on the merged
+> tree, both projects: `6 passed / 2 failed`.** e2-trestle wave 2 at 86.3–87.1 s (3/3 × 2) · e2-incline wave 2
+> at 80.8–81.7 s (3/3 × 2) · e1-drill-yard PASS under its declared practice exemption (3/3 × 2) · **e6-picnic
+> unchanged red (37.5 / 37.7 s) — F-PLAY-E6-1 is the sole survivor and is on the OWNER'S DESK as A21.**
+> ⚠️ **SO DO NOT READ THE RESULT LINE AS TODAY'S STATE.** "None of yesterday's recovered" is true of 01:26 and
+> false of HEAD, and it makes a 1-of-4 residue look like a 4-of-4 failure — which misprices the one decision
+> this census actually put on the owner's desk. The `82 of 84` that a full re-run would presumably now report
+> is an **INFERENCE and is labelled one**: only the four-contract subset was re-measured, not all 42.
+> 🚫 **NOT RE-RUN, BY LAW:** the standing duty is *"on a dry board, at most once per day and never beside
+> another battery"*, so the correction is this note and not a fresh census. The next census is tomorrow's.
+
 **Method:** `npm run test:playability` (`e2e/playability-smoke.spec.ts`: every board contract booted the way a
 human boots it — no `?debug`, no test seam — and asked six questions: boots, briefing, HUD, moves, reaches
 wave 2, no console/page errors) on a **detached worktree** (`gate-census-s2583`) at main `e55c1aee1`, both
