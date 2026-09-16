@@ -167,7 +167,33 @@
       "territoryRingBiasWaves": 0,
       "territoryRingLaneBias": 0
     },
-    "spawnGates": [],
+    "spawnGates": [
+      {
+        "edge": "south",
+        "x": 0,
+        "z": -46
+      },
+      {
+        "edge": "north",
+        "x": 0,
+        "z": 46
+      },
+      {
+        "edge": "east",
+        "x": 46,
+        "z": 20
+      },
+      {
+        "edge": "west",
+        "x": -46,
+        "z": -20
+      },
+      {
+        "edge": "north",
+        "x": 0,
+        "z": 46
+      }
+    ],
     "coalSeams": [],
     "trestleDeck": {
       "id": "trestle-deck",
