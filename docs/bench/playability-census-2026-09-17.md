@@ -83,7 +83,9 @@ on the VERDICT — which of the six questions failed, and the run state — neve
 - **F-PLAY-E6-1** — e6-picnic: an unassisted plain-boot hero dies before wave 2. Unchanged and now the **sole
   survivor** of the four. Verbatim, both projects:
   `wave 2: reached wave 1 after 5.6s wall / 37.9s sim at timescale 4 (runState=dead, HUD wave reads "1",
-  simTick=296)` (mobile: `simTick=299`), failing at `e2e/playability-smoke.spec.ts:522` in the test at `:311`.
+  simTick=296)` (mobile: `simTick=299`), failing at `e2e/playability-smoke.spec.ts:522`
+  ("`${contract.id}` boots plain, briefs, moves and reaches wave 2" — the `wave 2:` assertion inside the
+  describe "playability smoke: every board contract, plain boot", whose `test(` is at `:311`).
   It is on the **OWNER'S DESK as A21** and waits on his word; no fire rules it.
 - **F-PLAY-E1-1 / F-PLAY-E2-1 / F-PLAY-E2-2** — green this census; gate evidence above; not closed here.
 
