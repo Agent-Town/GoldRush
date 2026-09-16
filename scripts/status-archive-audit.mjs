@@ -261,7 +261,35 @@ for (const sha of commits) {
   // Answering a narrower question with a broader label loses information. This arm therefore sits
   // below both, and touches ONLY the pairs that would otherwise be reported PERMANENTLY LOST --
   // which is exactly the defect and nothing else.
+  // F-2587-1 (s2587) — ABRIDGED IS A PREFIX TEST, AND A PREFIX SURVIVES AN *EXTENSION* EXACTLY AS
+  // IT SURVIVES A TRUNCATION. The predicate below fires whenever the first PROBE_CHARS of the older
+  // line are still on the board and the FULL line is not -- which is true of a real abridgement, and
+  // equally true of a line that was EDITED IN PLACE AND GREW. The label cannot tell those apart, and
+  // it asserts the first: its own text says "kept only a prefix", and :259 glosses ABRIDGED as "the
+  // older line is on the board in truncated form".
+  //
+  // MEASURED s2587 on the live board, ground truth = the only ABRIDGED entry in a --limit 40 walk,
+  // `347e7359`: the older line is 904 chars, the newer 4646 (+3742), ZERO load-bearing tokens lost
+  // and SIX gained (F-2569-2, F-2568-2, F-2563-2, F-2585-1, F-2584-1, F-2365-1). Nothing was
+  // truncated; the line was EXTENDED -- and it was extended by the F-2586-2 desk RECOVERY the law
+  // demanded, so the instrument reports the correct act as a defect.
+  //
+  // 🚫 NOT RECLASSIFIED AND NOT REORDERED, and the restraint is INHERITED rather than re-argued:
+  // :255-263 records that s2577 chose this arm's position BY MEASUREMENT, and that ABRIDGED says
+  // something STRICTLY MORE SPECIFIC than "superseded". Both still hold. What was missing is not a
+  // different label, it is the FACT a reader needs to judge the one they are given -- so this arm
+  // DECLARES and does not clear (the F-2366-1 restraint this file already takes twice).
+  //
+  // ⚠️ WHY IT IS WORTH CURING RATHER THAN NOTING: the remedy an unqualified "kept only a prefix"
+  // implies is to restore the older line's missing tail -- and here that tail does not exist, so a
+  // fire acting on it would have to ROLL BACK the desk recovery, taking three OPEN owner items off
+  // the board to satisfy a string test. That is this file's own twice-named trap: "a guard whose
+  // remedy is to corrupt a correct file is the guard that is wrong" (:294, and F-2088-2 at :303).
+  //
+  // The verdict reuses `supersedes()` unchanged -- the file's own mechanical token test, ~120 lines
+  // up -- rather than a second implementation of the same question (F-1261-1).
   if (childBlob.includes(before.slice(0, PROBE_CHARS))) {
+    rec.tokensPreserved = supersedes(before, after);
     abridged.push(rec);
     continue;
   }
@@ -326,8 +354,20 @@ for (const d of drops) {
 // ADVISORY listings — the only thing --quiet suppresses. The DROPPED blocks above and the verdict
 // line below always print, however quiet the caller asked for (F-2278-1).
 if (!quiet) {
+  // F-2587-1: the verdict prints on EVERY abridged entry, both states, never only on the bad one --
+  // a declaration that appears only on failure re-creates the ambiguity it removes (F-2208-1). The
+  // two states name DIFFERENT owed acts, which is the whole reason to separate them: one is "go
+  // look for the lost tail", the other is "nothing was lost, do not try to restore anything".
   for (const a of abridged) {
     console.log(`ABRIDGED ${a.sha}  s${a.newSession} kept only a prefix of s${a.lostSession}'s ${a.kind} line`);
+    console.log(
+      a.tokensPreserved
+        ? `  but NOTHING WAS LOST: the newer line preserves every finding id, commit hash and desk ` +
+            `item the older carried -- an in-place EDIT, not a truncation. Do not "restore" a tail ` +
+            `that does not exist.`
+        : `  and content IS missing: the newer line drops at least one finding id, commit hash or ` +
+            `desk item the older carried -- read ${a.sha}^ before acting.`,
+    );
   }
   // F-2577-1: reported, never silent. An attended self-update is a real event that this run has
   // judged rather than suppressed, and naming it is what lets a reader overturn the judgement.
