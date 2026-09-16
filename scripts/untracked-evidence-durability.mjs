@@ -27,10 +27,29 @@
 //                modified-tracked rows of the same tree, because §2E's sweep reads both and
 //                F-2569-1 showed `--others` is blind to work. NO PATHSPEC (F-2389-1): a path
 //                built from an undefined variable lands outside every prefix by construction.
-//   trees      : the MAIN tree by default — that is the §2E duty. `--all-trees` sweeps EVERY
-//                registered worktree (F-2488-1 / F-2489-1); the discriminator is
-//                REGISTRATION, never location. A tree that cannot answer is
-//                `could-not-answer`, NEVER `nothing-here` (F-2485-1).
+//   trees      : the MAIN tree by DEFAULT. `--all-trees` sweeps EVERY registered worktree
+//                (F-2488-1 / F-2489-1); the discriminator is REGISTRATION, never location.
+//                A tree that cannot answer is `could-not-answer`, NEVER `nothing-here`
+//                (F-2485-1).
+//                ⚠️  THIS LINE READ "the MAIN tree by default — that is the §2E duty" until
+//                s2592, and that clause was FALSE (F-2592-1): §2E's F-2489-1 is written
+//                BINDING — "take the untracked read in **EVERY** registered tree, inside the
+//                root as well as outside" — so the DUTY is the registry and main-only is this
+//                tool's DEFAULT. Two different things in one sentence, and a fire reading the
+//                block could conclude the default discharges the duty.
+//                ⛔ DO NOT "FIX" THIS BY MAKING `--all-trees` THE DEFAULT — the default is
+//                DELIBERATE and correct for routine work: F-2591-1 measured the registry-wide
+//                read at `604.3 s` for an answer of ZERO (127 trees, 99,165 subjects), so
+//                paying it on every dry board would burn a fire's budget to re-derive a
+//                banked negative. Re-take `--all-trees` only on its NAMED TRIGGER — after an
+//                attended heat or arena has been riding (F-2495-1's clock test: a detached
+//                arena writes evidence the default cannot see), or after a long attended
+//                burst. The routine coverage is an OVERLAP of two tools' scopes, not a
+//                property either guarantees: this tool covers UNTRACKED/main, and
+//                `modified-tracked-evidence-census.mjs` covers MODIFIED-TRACKED across the
+//                whole registry (verified s2592: its corpus reads 127 of 127 registered).
+//                If that sibling's registry-wide scope ever narrows, the banked negative
+//                expires with it and this default stops being enough.
 //   paths      : the four declared evidence prefixes, IMPORTED from the sibling rather than
 //                re-typed — four independent copies of one predicate is HOW they drift
 //                (F-2227-1).
