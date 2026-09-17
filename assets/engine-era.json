@@ -1,7 +1,7 @@
 {
   "era": 6,
   "name": "the Re-surveyed Claims",
-  "engineHash": "72f1e2f45a85c375998be632c44f26235c4b3123485ac16be3177a573aa03a41",
+  "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
   "declaredAt": "2026-09-14",
   "note": "Era 6 opens with Astra's map campaign (sol/map-art-inventory-20260908 883a3521e) landed by maps-campaign-land-era6 on 2026-09-14: 17 contracts re-parameterised (tileParams on 13, twists on 3, briefings on 5), the door tightened to the contract's own research epoch, 66 src files, the map-rebuild-spike terrain, plaza props and flotilla models. Owner ruling 2026-09-13, verbatim: \"ah, that is all no problem. we don't have players yet so we can just keep going\" and \"we then have to make another run in the future but not immediately\"; the name ratified 2026-09-14 (\"the Re-surveye Claims\" is good for me). Every era-5 reel reads \"This reel rode era 5; the county accepts era 6\" and stands retired, counted. Heat 14 re-rides the boards on this era when the owner says so.",
   "viewSchema": {
@@ -125,6 +125,12 @@
       "engineHash": "72f1e2f45a85c375998be632c44f26235c4b3123485ac16be3177a573aa03a41",
       "pinnedAt": "2026-09-17",
       "cause": "same era, pin #7: sprite-roster-remainder (owner 2026-09-17 \"Lets do them all.\") chained onto the boss-models batch — direction registrations in assets/layer-contracts/characters.v2.json and src/assets (nine E6–E9 slots 1/8 → 8/8 facings, the Baron/thief/rail-tough/coal-thief/steam-wrecker reconciliations); render-side, no reel changes verdict",
+      "aliases": []
+    },
+    {
+      "engineHash": "540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068",
+      "pinnedAt": "2026-09-18",
+      "cause": "same era, pin #8: town-cast-rulings-a13-a17 + picnic-claim-standdown (owner A13/A17 2026-09-14, A21 via \"Lets do them all.\" 2026-09-17) — the Elder's patrol loop in TownScene.ts, the youngsters' card names, and the Picnic's 20-second claim stand-down in PicnicHoldSystem.ts (sim: the Picnic's two null floors move from 73.0/47.3 s to 98.0/98.5 s, both still lose; every other floor byte-identical); measured after the floors were re-recorded on the merged tree",
       "aliases": []
     }
   ],
