@@ -168,6 +168,25 @@ function releaseE1ContentPlugin(enabled: boolean): Plugin {
         '../../assets/processed/bld-boiler-house.png',
         '../../assets/processed/bld-palisade.png',
       );
+      // F-MAPDR-2 (measured 2026-09-18, `tasks/hygiene-battery-lossless-triangles.md` item 6).
+      // `src/story/speakers.ts` names every later-era townsfolk portrait with a static
+      // `new URL(..., import.meta.url)`, so the bundler emitted all 85 of them into the E1 release
+      // — 27.36 MB of portraits for speakers whose ids are `*-e2`..`*-e10` and whose beats cannot
+      // fire in an E1 build — and `assert-release-build` held the release door shut on clean main.
+      // They redirect to an E1 portrait that ships anyway, exactly as the `char-e2..e10` sheets
+      // redirect to a bandit frame above. `townsfolk-newsie-e1.png` is E1 content and is
+      // deliberately NOT matched: the tail is `-e2`..`-e10` only.
+      transformed = transformed.replace(
+        /\.\.\/\.\.\/assets\/processed\/townsfolk-[a-z0-9-]*-e(?:[2-9]|10)\.png/g,
+        '../../assets/processed/townsfolk-elder.png',
+      );
+      // Same finding, the one non-portrait leak: the open-sea tile reaches the E1 closure through
+      // the generated slot table (`src/assets/generated.ts`, `assetSlots.terrainOpenSea`). The E5
+      // Deepwater is not playable in an E1 release, so it stands in with the E1 river tile.
+      transformed = transformed.replaceAll(
+        '../../assets/processed/terrain-e5-open-sea-tile.png',
+        '../../assets/processed/terrain-river-tile.png',
+      );
       for (const laterModel of [
         '../../assets/pilots/railcar-3d/railcar.glb',
         '../../assets/pilots/crawler-3d/crawler.glb',
