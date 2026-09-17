@@ -4,6 +4,20 @@ export const PICNIC_HOLD_RADIUS = 3;
 export const PICNIC_HOLD_SECONDS = 6;
 export const PICNIC_STAKE_PRESS_WEIGHT = 0.25;
 export const PICNIC_ACTIVE_DEFENSE_SECONDS = 5;
+/**
+ * OWNER RULING A21 (2026-09-17), verbatim: "Lets do them all." - asked to choose among the week's
+ * work with this listed under recommendation (a), and taken as (a): the stand-down, not the spawn
+ * gates. It keeps the map, the stake positions and the loss rule exactly as Astra and the run card
+ * describe them, and only gives a newcomer time to read.
+ *
+ * A sandwich that has just been taken does not hand the next one over for free: the pressure rule
+ * stands the machines down for one stake-clock afterwards, so the three fall in sequence rather
+ * than together. Without it an unassisted first-time player loses all three at 14.5 s / 25.8 s /
+ * 37.0 s and never sees wave 2 (docs/bench/playability-census-2026-09-15.md, F-PLAY-E6-1;
+ * artifacts/playability-first-wave-e2-e6/report.md carries the two rejected dials and this hunk's
+ * own measurement).
+ */
+export const PICNIC_CLAIM_STANDDOWN_SECONDS = 20;
 
 type Positioned = { position: { x: number; z: number } };
 
@@ -25,6 +39,7 @@ export class PicnicHoldSystem {
     timer: number;
   }>;
   private lost = false;
+  private lastClaimAt = Number.NEGATIVE_INFINITY;
   private lastHeroDamageAt = Number.NEGATIVE_INFINITY;
 
   constructor(
@@ -71,7 +86,8 @@ export class PicnicHoldSystem {
     hero: Positioned,
     at: number,
   ): { x: number; z: number } | null {
-    if (!this.enabled || enemy.id % Math.round(1 / PICNIC_STAKE_PRESS_WEIGHT) !== 0) return null;
+    if (!this.enabled || at - this.lastClaimAt < PICNIC_CLAIM_STANDDOWN_SECONDS) return null;
+    if (enemy.id % Math.round(1 / PICNIC_STAKE_PRESS_WEIGHT) !== 0) return null;
     const undefended = this.stakes.filter((stake) => !stake.claimed && !this.contested(stake, structures, hero, at));
     if (undefended.length === 0) return null;
     return { ...undefended.reduce((nearest, stake) => (
@@ -89,7 +105,10 @@ export class PicnicHoldSystem {
       stake.timer = enemyPresent && !defenderPresent
         ? Math.min(PICNIC_HOLD_SECONDS, stake.timer + delta)
         : 0;
-      if (stake.timer >= PICNIC_HOLD_SECONDS) stake.claimed = true;
+      if (stake.timer >= PICNIC_HOLD_SECONDS) {
+        stake.claimed = true;
+        this.lastClaimAt = at;
+      }
     }
     if (this.stakes.length > 0 && this.stakes.every(({ claimed }) => claimed)) {
       this.lost = true;
@@ -99,6 +118,7 @@ export class PicnicHoldSystem {
 
   reset(): void {
     this.lost = false;
+    this.lastClaimAt = Number.NEGATIVE_INFINITY;
     this.lastHeroDamageAt = Number.NEGATIVE_INFINITY;
     for (const stake of this.stakes) Object.assign(stake, { claimed: false, contested: false, timer: 0 });
   }
