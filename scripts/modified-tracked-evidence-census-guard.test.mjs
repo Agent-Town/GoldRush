@@ -215,6 +215,36 @@ test('arm 9: isFactorySide does not classify by path SUFFIX (the s2582 mislabel)
   assert.equal(isFactorySide(root, root), true);
 });
 
+test('arm 9b: a fire GATE worktree is factory-side in every shape it is created in (F-2603-1)', async () => {
+  const { isFactorySide } = await import(SUBJECT);
+  const root = '/Users/x/Projects/Gold Rush';
+  // The one readable gate tree on the live board, and the one F-2569-1 salvaged BY NAME.
+  assert.equal(isFactorySide(join(root, 'gate-s2501'), root), true,
+    'an in-root detached gate worktree is the FIRE\'s own — F-2569-1 salvaged its 6 files as factory-side');
+  // The shape the standing fire memory PRESCRIBES (`/tmp` is unusable: playwright/vite need a cwd).
+  assert.equal(isFactorySide(join(root, 'worktrees/gate-s2603'), root), true,
+    'the prescribed worktrees/gate-s<N> shape must be factory-side');
+  // Both out-of-root shapes fires actually create.
+  assert.equal(isFactorySide('/private/tmp/gr-gate-s2536', root), true);
+  assert.equal(isFactorySide('/private/tmp/gr-s2533-citation-gate', root), true);
+
+  // REVERSE CONTROLS — the destructive direction is a false FACTORY, which would invite a
+  // fire to write in an attended tree (Mistake #2). Unrecognised MUST stay attended.
+  assert.equal(isFactorySide(join(root, '.claude/worktrees/agent-abc'), root), false,
+    'a Cowork agent worktree is attended-owned');
+  assert.equal(isFactorySide('/Users/x/Claude/Projects/gr-task-digger', root), false,
+    'a gr-task-* tree is attended-owned even though it sits beside the repo');
+  assert.equal(isFactorySide('/private/tmp/heat11-5e7a7c0b', root), false,
+    'an attended heat arena is NOT a gate worktree');
+  assert.equal(isFactorySide('/private/tmp/claude-501/x/scratchpad/wt-boss', root), false,
+    'an attended scratchpad worktree is not a gate');
+  // "gate" without a fire session token is not a fire gate — the token is what excludes attended trees.
+  assert.equal(isFactorySide(join(root, 'gate-review'), root), false,
+    'the s<NNN> session token is load-bearing: a bare `gate-*` name must NOT be claimed');
+  assert.equal(isFactorySide('/private/tmp/gr-gate-attended', root), false,
+    'an out-of-root gate without a session number must NOT be claimed');
+});
+
 test('arm 10: bucketOf maps the three non-SAFE states distinctly', async () => {
   const { bucketOf } = await import(SUBJECT);
   assert.equal(bucketOf(false, false, false), 'AT RISK');

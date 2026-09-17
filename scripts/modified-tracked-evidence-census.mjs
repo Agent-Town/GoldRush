@@ -70,11 +70,28 @@ export const isEvidence = (p) => EVIDENCE_PREFIXES.some((e) => p.startsWith(e));
 // attended-owned and is a thing to REPORT, never to touch (F-2561-1). Keyed on the
 // repo-root-relative lane/gate convention, NOT on a path suffix: `~/.codex/worktrees/<h>/Gold Rush`
 // ends in the repo's own basename, which mislabelled the two largest contributors once (s2582).
+// §3.0b MANDATES gating undecided content in a DETACHED worktree, and §4.1 mandates
+// screenshots into `reviews/shots-*/` — an evidence prefix — so the ordinary outcome of
+// every drain is a fire-owned gate worktree holding evidence-prefixed files. Those trees
+// are the FACTORY's: F-2569-1 salvaged `gate-s2501`'s 6 by hand and named it factory-side.
+// Until s2603 the only out-of-root rule was `/tmp/gr-gate-`, which matched 5 trees — ALL
+// FIVE prunable corpses holding ZERO regular files — and missed all four readable shapes,
+// including the one in-root tree the standing fire memory PRESCRIBES (`worktrees/gate-s<N>`;
+// `/tmp` is recorded unusable for gating, since playwright and vite both need a cwd the
+// sandbox refuses outside the repo). F-2603-1.
+//
+// The gate token is `s<NNN>` + `gate`: a fire session number, which no attended tree carries
+// (measured s2603 over all 127 registered worktrees — 0 attended trees match). Anything
+// unrecognised stays ATTENDED, because that is the FAIL-SAFE direction: a false "attended"
+// costs a report, a false "factory" invites a fire to write in someone else's tree (Mistake #2).
+const FIRE_GATE_IN_ROOT = /^(worktrees\/)?gate-s\d+$/;
+const FIRE_GATE_OUT_OF_ROOT = /^\/(private\/)?tmp\/gr-(gate-s\d+|s\d+-[a-z-]*gate)/;
+
 export function isFactorySide(treePath, root = ROOT) {
   const rel = treePath === root ? '' : treePath.startsWith(root + '/') ? treePath.slice(root.length + 1) : null;
-  if (rel === null) return /^\/(private\/)?tmp\/gr-gate-/.test(treePath);
+  if (rel === null) return FIRE_GATE_OUT_OF_ROOT.test(treePath);
   if (rel === '') return true;
-  return /^worktrees\/lane-[a-d]$/.test(rel);
+  return /^worktrees\/lane-[a-d]$/.test(rel) || FIRE_GATE_IN_ROOT.test(rel);
 }
 
 export function bucketOf(present, onRemote, onAnyRef) {
