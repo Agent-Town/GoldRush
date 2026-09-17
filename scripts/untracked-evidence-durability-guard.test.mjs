@@ -224,6 +224,42 @@ test('an UNREFERENCED subject is reported, and its prunable-fuse reading is disc
   } finally { f.cleanup(); }
 });
 
+test('the non-SAFE alarm carries a forward pointer to the verdict that can clear it (F-2606-1)', () => {
+  const f = fixture();
+  try {
+    evidenceFile(f.work, 'artifacts/probe/orphan.bin', 'orphan-bytes\n');
+    const r = run(f.work);
+    assert.equal(r.rc, 0, r.out + r.err);
+
+    const lines = r.out.split('\n');
+    const alarm = lines.findIndex((l) => /UNREFERENCED\s+\d+ file/.test(l));
+    const pointer = lines.findIndex((l) => /RETENTION VERDICT that decides it prints at the END/.test(l));
+    const verdict = lines.findIndex((l) => /RETENTION VERDICT:/.test(l));
+    assert.ok(alarm !== -1, 'control: the fixture must actually RAISE a non-SAFE alarm');
+    assert.ok(verdict !== -1, 'control: the fixture must actually reach a retention verdict');
+
+    // The whole point is POSITION: a pointer below the verdict is cut by the same
+    // truncation it exists to survive.
+    assert.ok(pointer !== -1, 'the non-SAFE alarm must carry a forward pointer');
+    assert.ok(pointer > alarm, 'the pointer must follow the alarm it qualifies');
+    assert.ok(pointer < verdict, 'the pointer must precede the verdict, or it survives nothing');
+  } finally { f.cleanup(); }
+});
+
+test('an all-SAFE board does NOT print the forward pointer — it points at no section', () => {
+  // REVERSE CONTROL for the arm above: the over-general cure is an always-on pointer,
+  // which would name a RETENTION VERDICT block that is never emitted when nothing is
+  // non-SAFE. A declaration naming an absent section is worse than none.
+  const f = fixture();
+  try {
+    const r = run(f.work);
+    assert.equal(r.rc, 0, r.out + r.err);
+    assert.match(r.out, /ALL FOUR BUCKETS/, 'control: the tool must have produced its bucket block');
+    assert.doesNotMatch(r.out, /RETENTION VERDICT:/, 'control: an all-SAFE board emits no verdict block');
+    assert.doesNotMatch(r.out, /prints at the END of this output/);
+  } finally { f.cleanup(); }
+});
+
 test('a non-SAFE subject preserved by a retention transform reads PRESERVED end-to-end', () => {
   const f = fixture();
   try {

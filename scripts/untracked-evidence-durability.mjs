@@ -303,6 +303,22 @@ function main() {
   for (const k of ['AT RISK', 'UNREFERENCED', 'LOCAL-REF-ONLY', 'SAFE']) {
     say(`    ${k.padEnd(15)} ${String(buckets[k].length).padStart(6)} file(s)  ${mb(bytesOf(buckets[k])).padStart(11)}  ${treesOf(buckets[k])} tree(s)`);
   }
+  // F-2606-1: the ALARM (a non-SAFE count) prints here, and the ALL-CLEAR (the retention
+  // verdict) prints ~34 lines below it — so every `| head -N` with 13 <= N < 47 hands a
+  // reader the alarm and cuts the all-clear, silently, at rc=0 (a pipe also replaces this
+  // tool's own exit code with the pager's). The forward pointer lives in the part that
+  // SURVIVES a truncation, which is the only place it can do any good. Gated on
+  // nonSafe.length because it points at a section that only exists then — that is a
+  // correct condition, not an F-2208-1 suppression.
+  if (nonSafe.length) {
+    say('');
+    say('    ⚠️  A non-SAFE count above is NOT a durability hole by itself — a retention');
+    say('        transform may already hold those bytes in another SHAPE (F-2570-1/F-2571-1),');
+    say('        and the RETENTION VERDICT that decides it prints at the END of this output.');
+    say('        Read it before you push, salvage or file anything: truncating here delivers');
+    say('        the ALARM and cuts the ALL-CLEAR (F-2606-1).');
+  }
+
   // The AT RISK bucket spans TWO populations and only one of them is the desk figure.
   // Printing the split is the whole cure: an undivided count is a figure with two readings
   // (F-2585-1), and this one is read onto an OWNER decision row.
