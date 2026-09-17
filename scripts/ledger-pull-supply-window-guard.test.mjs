@@ -115,3 +115,28 @@ test('the site records how the supply window was measured', () => {
   assert.match(src, /goldrush-ledger-backup\.timer/, 'the timer is the mechanism — name it at the site');
   assert.match(src, /measured s2600/, 'a window with no provenance is a constant waiting to rot');
 });
+
+/**
+ * F-2601-1. The window is NOT a threshold: the unit carries `RandomizedDelaySec=1h`,
+ * so the trigger is drawn uniformly from [02:00, 03:00) UTC and RE-ROLLED DAILY.
+ * s2600 banked `systemctl list-timers`' NEXT column (02:08:48 UTC) as a "not before"
+ * time, and that field is THAT DAY'S DICE ROLL -- measured across 15 real writes the
+ * span is 02:07-02:58 UTC, so the threshold was wrong in BOTH directions (it forbade
+ * a pull that would have worked on the 02:07 day, and promised one that could not on
+ * the 02:58 day). Without this arm, restoring a single threshold is silent in every
+ * other channel -- F-1667-1, "an un-annotated cure can undo itself", which is the
+ * same reason the provenance arm above exists.
+ */
+test('the site names the RANDOMIZED mechanism, so no fixed threshold can creep back', () => {
+  const src = readFileSync(script, 'utf8');
+  assert.match(src, /F-2601-1/, 'the re-measurement must stay attributable');
+  assert.match(src, /RandomizedDelaySec/, 'the randomization IS the reason a threshold cannot work');
+  assert.match(src, /re-rolled every day/i, 'a daily re-roll is what makes yesterday\'s NEXT a sample');
+
+  const r = runPull({ remoteNewest: yesterdayName, seed: [yesterdayName] });
+  assert.match(
+    r.stdout,
+    /\[02:00, 03:00\)/,
+    'state the window as a RANGE; a single "not before" time is a sample wearing a schedule\'s clothes',
+  );
+});

@@ -56,15 +56,30 @@ if (existsSync(localFile)) {
   //
   // WHY IT HAPPENS, measured s2600 on the box rather than inferred: the droplet names
   // its file in UTC (ops/droplet/ledger-backup.mjs) and writes it on a systemd timer,
-  // `goldrush-ledger-backup.timer` -- next fire 02:08:48 UTC, last five real writes
-  // 02:26-02:57 UTC. Our `todayName` is UTC too. So between 00:00 UTC and ~02:10 UTC
-  // today's mirror DOES NOT EXIST YET and every pull in that window is a guaranteed
-  // no-op. That is a SUPPLY window, not a fetch failure -- nothing is wrong, and
-  // nothing is owed except patience.
+  // `goldrush-ledger-backup.timer`. Our `todayName` is UTC too, so at 00:00 UTC the
+  // mirror is instantly OWED while the supply is still hours away. That is a SUPPLY
+  // window, not a fetch failure -- nothing is wrong, and nothing is owed but patience.
+  //
+  // F-2601-1, re-measured s2601 by reading the UNIT rather than its next firing:
+  // `OnCalendar=*-*-* 02:00:00 UTC` with `RandomizedDelaySec=1h`, so the trigger is
+  // drawn UNIFORMLY FROM [02:00, 03:00) UTC AND RE-ROLLED EVERY DAY. s2600 read the
+  // `NEXT` column of `systemctl list-timers` (02:08:48 UTC) and banked it as a
+  // threshold -- but NEXT is that day's DICE ROLL, not a schedule, so no fixed
+  // "not before" time can be right. Measured over all 15 backups the box still
+  // holds, the writes land 02:07:02 - 02:57:58 UTC (mean 34.5 min past 02:00):
+  // the earliest is BEFORE s2600's 02:10 threshold and the latest is 48 min after it,
+  // i.e. the single threshold was wrong in BOTH directions. `Persistent=true` widens
+  // it further -- a box that was down at the trigger runs the job at next boot.
+  //
+  // THEREFORE THERE IS NO THRESHOLD TO GET RIGHT, and this exit is the cure: the pull
+  // is idempotent and bounded (3.0s measured s2601), so after 02:00 UTC simply RUN IT
+  // and read the verdict below rather than computing whether it is worth trying.
   console.log(`⏳ NOT DISCHARGED for today — ${todayName} does not exist on the box yet.`);
-  console.log(`   The droplet writes it on goldrush-ledger-backup.timer, ~02:10–03:00 UTC`);
-  console.log(`   (measured s2600: timer next 02:08:48 UTC; last five writes 02:26–02:57 UTC).`);
-  console.log(`   A pull before that window CANNOT succeed. Re-run after it; nothing is wrong.`);
+  console.log(`   The droplet writes it on goldrush-ledger-backup.timer: OnCalendar 02:00 UTC`);
+  console.log(`   + RandomizedDelaySec=1h, so the trigger is UNIFORM IN [02:00, 03:00) UTC and`);
+  console.log(`   RE-ROLLED DAILY (measured s2600; re-measured s2601 from the unit — 15 writes`);
+  console.log(`   span 02:07–02:58 UTC, so no fixed "not before" time is right).`);
+  console.log(`   Nothing is wrong. Re-run any time after 02:00 UTC; this pull costs ~3s.`);
   process.exit(0);
 }
 
