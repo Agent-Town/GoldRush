@@ -13,11 +13,14 @@ const DRONE_VARIANT = 'maintenance_drone';
 const DRONE_LABEL = 'Maintenance Drone';
 const HAZARD_SOURCE_ID = -7;
 const OLD_DIGGER_3D_URL = new URL('../../assets/pilots/old-digger-3d/old-digger.glb', import.meta.url).href;
-const OLD_DIGGER_3D_TRIANGLES = 16_104;
+// Measured on assets/pilots/old-digger-3d/old-digger.glb as landed from 92f6cc115 (Astra's
+// split-wheel rebuild): 7,192 triangles, 4 meshes, 1 material, one 1024² atlas. F-SAR-4(b).
+const OLD_DIGGER_3D_TRIANGLES = 7_192;
 // E9 §BOSS state law (asset contract): working machine → intact gentle reprogramming.
 // No damage or kill morph EXISTS — the model itself refuses the wrong verb.
 const OLD_DIGGER_3D_COMPONENTS = {
-  bucket_wheels: 'Redemption_GentleBuckets',
+  bucket_wheel_port: 'Redemption_GentleBuckets',
+  bucket_wheel_starboard: 'Redemption_GentleBuckets',
   gantry: 'Redemption_SafeGantry',
   tape_deck: 'Redemption_TealTapeDeck',
 } as const;
@@ -659,7 +662,7 @@ export class OldDiggerBossSystem {
       mesh.castShadow = true;
       mesh.receiveShadow = true;
     });
-    if (meshCount !== 3 || meshes.size !== 3 || materials.size !== 1 || triangles !== OLD_DIGGER_3D_TRIANGLES) return null;
+    if (meshCount !== 4 || meshes.size !== 4 || materials.size !== 1 || triangles !== OLD_DIGGER_3D_TRIANGLES) return null;
     model.updateWorldMatrix(true, true);
     const inverse = model.matrixWorld.clone().invert(), transform = new THREE.Matrix4(), point = new THREE.Vector3();
     const supports: [THREE.Vector3[], THREE.Vector3[]] = [[], []];
@@ -707,9 +710,14 @@ export class OldDiggerBossSystem {
   private updateOldDigger3d(): void {
     if (!this.oldDigger3dModel || this.oldDigger3dState !== 'ready') return;
     this.oldDigger3dModel.visible = this.started || this.gentle;
-    // F-SAR-3: the branch spun two split bucket-wheel nodes. main's old-digger.glb (16,104 tri)
-    // exposes ONE 'bucket_wheels' node whose pivot is unmeasured, so the GLB spin is held; the
-    // primitive chassis wheels still turn (syncPresentation).
+    // F-SAR-4(b) re-applied with the model that carries the contract: the rebuilt GLB splits the
+    // wheel into two nodes whose pivots sit at their own centres (port t=(-3.973, 2.206, -0.019),
+    // r=2.227; starboard t=(4.652, 1.629, -0.019), r=1.548 — measured), so a z-spin turns each
+    // wheel in place instead of swinging the assembly through the ground.
+    for (const id of ['bucket_wheel_port', 'bucket_wheel_starboard'] as const) {
+      const wheel = this.oldDigger3dMeshes.get(id);
+      if (wheel) wheel.rotation.z = -this.wheelPhase;
+    }
     for (const mesh of this.oldDigger3dMeshes.values()) {
       if (mesh.morphTargetInfluences) mesh.morphTargetInfluences[0] = this.gentle ? 1 : 0;
       const material = mesh.material as THREE.MeshStandardMaterial;

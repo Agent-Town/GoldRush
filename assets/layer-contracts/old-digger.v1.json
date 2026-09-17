@@ -1,24 +1,51 @@
 {
   "status": "ADOPTED_SCOPED_VERIFIED",
   "generator": "native image_gen",
-  "raw": "assets/raw/old-digger-atlas-fidelity-e9.png",
-  "rawSha256": "771f97ac9a2439a0575b64acfdb419b71a02ce67c147c24673eebe50f5a692cc",
+  "raw": "generated at build time by assets/pilots/old-digger-3d/build_old_digger.py (create_atlas from the two plates); no standalone atlas file",
+  "rawSha256": null,
   "reference": "assets/raw/boss-old-digger.png",
   "gentleReference": "assets/raw/boss-old-digger-gentle.png",
   "glb": "assets/pilots/old-digger-3d/old-digger.glb",
-  "candidateSha256": "86b3df8a8bc27321957e038a8261303f003ca0b5cae4a658534d9b6c1b5c58b3",
-  "triangles": 16104,
+  "candidateSha256": "f5efdc4e8871c3f99f5eae440f7663b498cac6d214a06dc4a1f71abec75405ec",
+  "triangles": 7192,
   "atlasSize": 1024,
   "modelLength": 12.4,
   "components": {
-    "bucket_wheels": "Redemption_GentleBuckets",
+    "bucket_wheel_port": "Redemption_GentleBuckets",
+    "bucket_wheel_starboard": "Redemption_GentleBuckets",
     "gantry": "Redemption_SafeGantry",
     "tape_deck": "Redemption_TealTapeDeck"
   },
   "stateLaw": "Intact gentle reprogramming; no kill/damage morph; no baked people",
-  "runtimeChanges": "Terrain contact support cache and slope fit; emission restricted primarily to middle-row glass cells; simulation positions unchanged",
+  "runtimeChanges": "Terrain contact support cache and slope fit; emission restricted primarily to middle-row glass cells; simulation positions unchanged. NEW 2026-09-17: the two split wheel nodes spin about their own z (OldDiggerBossSystem.updateOldDigger3d) on the same wheelPhase that already turned the primitive wheels.",
   "evidence": "artifacts/boss-fidelity/e9-old-digger/",
-  "glbSha256": "86b3df8a8bc27321957e038a8261303f003ca0b5cae4a658534d9b6c1b5c58b3",
+  "glbSha256": "f5efdc4e8871c3f99f5eae440f7663b498cac6d214a06dc4a1f71abec75405ec",
   "review": "reviews/sol-boss-fidelity-e9-old-digger.md",
-  "optimizedSha256": "fea3759f563816a3a4d6ea843171947fa9346c7c3f82371732a06353bdb1824b"
+  "optimizedSha256": "35554bb17690cae8a80c6a1c2730113d48574f9bc6cae52859bfd08106fb0ab6",
+  "supersedes": {
+    "date": "2026-09-17",
+    "task": "boss-models-batch",
+    "note": "SUPERSEDED 2026-09-17 by task boss-models-batch (owner: 'Lets do them all'): the 2026-09-12 boss-fidelity bake is replaced by Astra's rebuild on 92f6cc115, the only model that carries the contract the held runtime hunk needs (F-SAR-4). Every number below was MEASURED on the landed GLB.",
+    "previous": {
+      "glbSha256": "86b3df8a8bc27321957e038a8261303f003ca0b5cae4a658534d9b6c1b5c58b3",
+      "triangles": 16104,
+      "components": {
+        "bucket_wheels": "Redemption_GentleBuckets",
+        "gantry": "Redemption_SafeGantry",
+        "tape_deck": "Redemption_TealTapeDeck"
+      },
+      "raw": "assets/raw/old-digger-atlas-fidelity-e9.png",
+      "rawSha256": "771f97ac9a2439a0575b64acfdb419b71a02ce67c147c24673eebe50f5a692cc",
+      "optimizedSha256": "fea3759f563816a3a4d6ea843171947fa9346c7c3f82371732a06353bdb1824b",
+      "source": "boss-fidelity land 72fb062e8, 2026-09-09"
+    }
+  },
+  "boundsMeters": [
+    12.4,
+    6.6036,
+    3.1632
+  ],
+  "assetContract": "assets/pilots/old-digger-3d/old-digger-asset-contract.json",
+  "optimizedBytes": 267216,
+  "evidenceAdded": "artifacts/boss-models-batch/"
 }

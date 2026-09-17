@@ -1,19 +1,19 @@
 {
   "$schema": "gold-rush layer contract v1",
-  "batch": "boss-fidelity-e5-dredge-queen-2026-09-08",
+  "batch": "boss-models-batch-2026-09-17",
   "status": "adopted-focused-runtime-verified-broad-regression-pending",
   "asset": "assets/pilots/dredge-queen-3d/dredge-queen-detail-opus5.glb",
-  "assetSha256": "f66ba8b7e03fd8997d4c94c18abc6630c9848c0a6d857c38c5ef0f6a594d7c42",
-  "assetContract": "assets/pilots/dredge-queen-3d/renders-fidelity-e5/contract.json",
+  "assetSha256": "b79157255a2737a1f73ebd53f4d86428fecdf3209ce039f65fa76186c7ae12d3",
+  "assetContract": "assets/pilots/dredge-queen-3d/dredge-queen-detail-opus5-asset-contract.json",
   "provenance": "artifacts/boss-fidelity/e5-dredge-queen/candidate-material/provenance.json",
   "source": {
-    "file": "assets/raw/dredge-queen-atlas-fidelity-e5.png",
+    "file": "generated at build time by assets/pilots/dredge-queen-3d/build_dredge_queen_detail_opus5.py (create_atlas from the two plates)",
     "generator": "native image_gen",
     "size": [
-      1254,
-      1254
+      2048,
+      2048
     ],
-    "sha256": "3ad7f96f94b84f80f34a2909231ac2a4aca3b98758ebb5c6082752acb5270622"
+    "sha256": null
   },
   "shapeReference": "assets/raw/boss-dredge-queen.png",
   "damageReference": "assets/raw/boss-dredge-queen-damage.png",
@@ -22,11 +22,14 @@
       "node": "claw",
       "mesh": "clawMesh",
       "targets": [
-        "Damage_SlackClaw"
+        "Damage_SlackClaw",
+        "Cycle_OpenGrab"
       ],
       "defaultWeights": [
+        0,
         0
-      ]
+      ],
+      "note": "Cycle_OpenGrab is influence 1 and is driven by the claw cycle; the loader refuses a claw mesh that does not carry it (DredgeQueenBossSystem.inspectDredgeQueen3d). F-SAR-4(a)."
     },
     {
       "node": "paddle_port",
@@ -63,12 +66,12 @@
     {
       "embeddedImage": 0,
       "size": [
-        1024,
-        1024
+        2048,
+        2048
       ],
       "role": "baseColor",
       "colorSpace": "sRGB",
-      "derivation": "Native source resized and embedded by the builder; runtime also uses the shared map for calibrated emission."
+      "derivation": "Native plate atlas built by build_dredge_queen_detail_opus5.py and embedded by the builder; runtime also uses the shared map for calibrated emission. OVER the bosses 1024² cap — grandfathered with its cause in scripts/glb-contract-guard.baseline.json on 2026-09-17."
     }
   ],
   "evidenceRoot": "artifacts/boss-fidelity/e5-dredge-queen",
@@ -90,8 +93,35 @@
     "visualReview": "artifacts/boss-fidelity/e5-dredge-queen/runtime-visual-review.md"
   },
   "optimized": {
-    "bytes": 1480976,
-    "sha256": "87f68ec561156ba935fbf044c658c29c18fe5a475d9cd66a76adf7799227ea67",
-    "scope": "Built GLB through actual development loader, not production JavaScript bundle."
-  }
+    "bytes": 1217764,
+    "sha256": "e69859a2f334a15a11bad0e17fb6c4e8663ff9213f1727c31afd34e1c8163cea",
+    "scope": "Measured on dist/assets after npm run build on this branch (asset-diet WebP + Meshopt)."
+  },
+  "supersedes": {
+    "date": "2026-09-17",
+    "task": "boss-models-batch",
+    "note": "SUPERSEDED 2026-09-17 by task boss-models-batch (owner: 'Lets do them all'): the 2026-09-12 boss-fidelity bake is replaced by Astra's rebuild on 92f6cc115, the only model that carries the contract the held runtime hunk needs (F-SAR-4). Every number below was MEASURED on the landed GLB.",
+    "previous": {
+      "assetSha256": "f66ba8b7e03fd8997d4c94c18abc6630c9848c0a6d857c38c5ef0f6a594d7c42",
+      "assetContract": "assets/pilots/dredge-queen-3d/renders-fidelity-e5/contract.json",
+      "triangles": 44920,
+      "atlas": [
+        1024,
+        1024
+      ],
+      "optimized": {
+        "bytes": 1480976,
+        "sha256": "87f68ec561156ba935fbf044c658c29c18fe5a475d9cd66a76adf7799227ea67",
+        "scope": "Built GLB through actual development loader, not production JavaScript bundle."
+      },
+      "source": "boss-fidelity land 72fb062e8, 2026-09-09"
+    }
+  },
+  "triangles": 33124,
+  "boundsMeters": [
+    8.0,
+    5.3305,
+    4.5248
+  ],
+  "evidenceAdded": "artifacts/boss-models-batch/"
 }
