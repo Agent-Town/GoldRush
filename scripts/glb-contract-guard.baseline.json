@@ -2,6 +2,7 @@
   "why": "Violations that already existed when scripts/glb-contract-guard.mjs landed (2026-09-05, task glb-export-contract-and-validator, Astra F-ASTRA-8). Grandfathered so the guard can turn the board red on NEW breakage today instead of waiting for a 69-asset art pass.",
   "law": "PAY DOWN BY DELETING ENTRIES, NEVER BY REGENERATING. Fix the asset, delete its line, and the guard stays green. There is deliberately no --write-baseline flag. The guard also fails on a STALE entry (one whose violation no longer occurs), so a fix cannot be landed without deleting its line.",
   "classes": {
+    "texture-over-cap-2026-09-17": "assets/pilots/dredge-queen-3d/dredge-queen-detail-opus5.glb, added by task boss-models-batch when the model that carries the `Cycle_OpenGrab` claw cycle (92f6cc115, F-SAR-4(a)) replaced the 2026-09-12 fidelity bake. MEASURED, both ways: the atlas goes 1024\u00b2 -> 2048\u00b2, which is 4x the GPU texture memory and is why this line exists; the geometry goes 44,920 -> 33,124 triangles and the SHIPPED bytes go DOWN, 1,480,976 -> 1,217,764 optimized (-263,212), because asset-diet re-encodes to WebP without resizing. PAY IT DOWN by re-baking the atlas at 1024\u00b2 in assets/pilots/dredge-queen-3d/build_dredge_queen_detail_opus5.py (landed in the same commit) and deleting this line; nothing else in the pipeline resizes it (scripts/asset-diet.mjs:119 textureCompress, no resize).",
     "texture-over-cap": "43 assets: 41 plaza props at 1024² against the props 512² cap (F-ASTRA-8: 'keep tiny props at 256²-512²'), plus town-plate.glb and salvage-claw-detail-opus5.glb at 2048² against the 1024² building/boss cap. Paying these down means re-baking the atlas, not raising the cap.",
     "missing-extra": "26 assets: the 25 landmark GLBs of the five earliest packs (baron, dry-gulch, night-shift, the-claim, twin-banks) predate the landmark extras convention that the other 171 carry; low-orbit-panorama.glb is missing only the `panorama` flag that the other 31 panoramas set. Paying these down means a re-export with export_extras=True once the sidecars exist."
   },
@@ -10,6 +11,7 @@
     "assets/pilots/plaza-props-3d/covered_wagon.e7.glb::texture-over-cap::image 0 1024x1024 > 512",
     "assets/pilots/plaza-props-3d/water_trough.e6.glb::texture-over-cap::image 0 1024x1024 > 512",
     "assets/pilots/plaza-props-3d/water_trough.e7.glb::texture-over-cap::image 0 1024x1024 > 512",
-    "assets/pilots/town-plate-3d/town-plate.glb::texture-over-cap::image 0 2048x2048 > 1024"
+    "assets/pilots/town-plate-3d/town-plate.glb::texture-over-cap::image 0 2048x2048 > 1024",
+    "assets/pilots/dredge-queen-3d/dredge-queen-detail-opus5.glb::texture-over-cap::image 0 2048x2048 > 1024"
   ]
 }
