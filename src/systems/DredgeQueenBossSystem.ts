@@ -16,7 +16,9 @@ type Act1ComponentId = typeof ACT1_IDS[number];
 type ComponentId = Act1ComponentId | 'hold';
 const COMPONENT_IDS = [...ACT1_IDS, 'hold'] as const;
 const DREDGE_QUEEN_3D_URL = new URL('../../assets/pilots/dredge-queen-3d/dredge-queen-detail-opus5.glb', import.meta.url).href;
-const DREDGE_QUEEN_3D_TRIANGLES = 44_920;
+// Measured on assets/pilots/dredge-queen-3d/dredge-queen-detail-opus5.glb as landed from
+// 92f6cc115 (Astra's claw-cycle rebuild): 33,124 triangles, 4 meshes, 1 material, one 2048² atlas.
+const DREDGE_QUEEN_3D_TRIANGLES = 33_124;
 const DREDGE_QUEEN_DAMAGE_THRESHOLD = 0.5;
 const DREDGE_QUEEN_3D_COMPONENTS = {
   claw: { mesh: 'claw', morph: 'Damage_SlackClaw', damageColor: '#5b8a8a' },
@@ -640,7 +642,12 @@ export class DredgeQueenBossSystem {
       for (const material of Array.isArray(mesh.material) ? mesh.material : [mesh.material]) materials.add(material);
       for (const id of COMPONENT_IDS) {
         const contract = DREDGE_QUEEN_3D_COMPONENTS[id];
-        if (mesh.name === contract.mesh && mesh.morphTargetDictionary?.[contract.morph] === 0 && mesh.morphTargetInfluences?.length === 1) meshes.set(id, mesh);
+        // F-SAR-4(a) re-applied with the model that carries the contract: the rebuilt GLB gives the
+        // claw TWO influences — Damage_SlackClaw at 0, Cycle_OpenGrab at 1 — while the other three
+        // components keep their single damage morph. Measured on the landed GLB, not assumed.
+        if (mesh.name === contract.mesh && mesh.morphTargetDictionary?.[contract.morph] === 0
+          && mesh.morphTargetInfluences?.length === (id === 'claw' ? 2 : 1)
+          && (id !== 'claw' || mesh.morphTargetDictionary?.Cycle_OpenGrab === 1)) meshes.set(id, mesh);
       }
       mesh.castShadow = true;
       mesh.receiveShadow = true;
@@ -676,10 +683,14 @@ export class DredgeQueenBossSystem {
     for (const [id, mesh] of this.dredgeQueen3dMeshes) {
       const enemy = components.find((candidate) => candidate.bossComponentId === id);
       const damaged = this.hulkPresent || this.destroyed.has(id) || Boolean(enemy && enemy.currentHp / Math.max(1, enemy.maxHp) <= DREDGE_QUEEN_DAMAGE_THRESHOLD);
-      // F-SAR-1: the branch also drove a second `Cycle_OpenGrab` influence here. No dredge-queen
-      // GLB on main carries that morph, so the gate above would have dropped the claw mesh entirely
-      // and lost its damage morph. The fallback primitive's jaw cycle (syncPresentation) still runs.
-      if (mesh.morphTargetInfluences) mesh.morphTargetInfluences[0] = damaged ? 1 : 0;
+      // F-SAR-4(a): influence 0 is the damage morph; influence 1 is the claw's own grab cycle,
+      // driven on the same curve as the fallback primitive's jaws (syncPresentation) so the GLB and
+      // the placeholder open together. A damaged claw stops cycling.
+      if (mesh.morphTargetInfluences) {
+        mesh.morphTargetInfluences[0] = damaged ? 1 : 0;
+        if (id === 'claw') mesh.morphTargetInfluences[1] = this.act === 1 && !damaged
+          ? Math.sin(Math.PI * this.clawCycleProgress) ** 2 : 0;
+      }
       const material = mesh.material as THREE.MeshStandardMaterial;
       material.emissive.set(damaged ? DREDGE_QUEEN_3D_COMPONENTS[id].damageColor : '#ffffff');
       material.emissiveIntensity = damaged ? 1 : 0.8;
