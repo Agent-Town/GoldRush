@@ -312,9 +312,9 @@
       "fingerprint": "5df9337b3bb3",
       "excerpt": "🔺 **ONE OWNER CHOICE in this digest, and it is a good-news one.** The county's first standing means"
     },
-    "scripts/fire.md -> marketing/outbox/gazette-queue.md:1922": {
+    "scripts/fire.md -> marketing/outbox/gazette-queue.md:1924": {
       "target": "marketing/outbox/gazette-queue.md",
-      "line": 1922,
+      "line": 1924,
       "fingerprint": "d7293afa016e",
       "excerpt": "- merge: `e7bb88cf` (upgrade-clock, the pick clock) · shots: `reviews/shots-upgrade-clock/{desktop,m"
     },
@@ -401,6 +401,18 @@
       "line": 1188,
       "fingerprint": "e8725d260828",
       "excerpt": "function currentOrLatestRotation(now: number): Rotation | null {"
+    },
+    "scripts/fire.md -> ledger-backup-pull.mjs:10": {
+      "target": "scripts/ledger-backup-pull.mjs",
+      "line": 10,
+      "fingerprint": "af781b2217af",
+      "excerpt": "const todayName = `ledger-${new Date().toISOString().slice(0, 10)}.db`;"
+    },
+    "scripts/fire.md -> ops/droplet/ledger-backup.mjs:43": {
+      "target": "ops/droplet/ledger-backup.mjs",
+      "line": 43,
+      "fingerprint": "ccaa6a1742ba",
+      "excerpt": "const target = path.join(BACKUP_DIR, `ledger-${today.toISOString().slice(0, 10)}.db`);"
     },
     "scripts/fire.md -> ops/droplet/ledger-backup.mjs:6": {
       "target": "ops/droplet/ledger-backup.mjs",
