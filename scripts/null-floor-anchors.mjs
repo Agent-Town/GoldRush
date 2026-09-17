@@ -35,6 +35,19 @@ if (compare) {
 
 const artifactPath = check && args[1] ? path.resolve(args[1]) : DEFAULT_ARTIFACT;
 const startedAt = performance.now();
+// F-PFW-3 (`reviews/playability-first-wave-e2-e6.md:35`): "`null-floor-anchors.mjs --check` will
+// always report an `eraStamp` difference on main because the stamp is `git merge-base HEAD main`,
+// which moves with every commit". THE STAMP STILL MOVES — it is a WHEN, and on main `merge-base` is
+// HEAD, so a commit cannot contain the hash of the pin it lands (the F-1384-1 shape). What was
+// wrong was the REPORT, and that half is cured: since F-2589-1 the stamp is classified as
+// PROVENANCE, not as a floor difference (`null-floor-compare.mjs`, `PROVENANCE_FIELDS`), printed on
+// every verdict including the happy path and counted in none of them. `--check` therefore exits 0
+// on a stamp-only difference and 1 only when a FLOOR moved. Verified 2026-09-18 under
+// `tasks/hygiene-battery-lossless-triangles.md` item 4; the evidence is
+// `artifacts/hygiene-battery-lossless-triangles/null-floor-check.log`. Do not "fix" the stamp by
+// deriving it from the pin's own recorded base: that would make the field agree with itself by
+// construction and delete the one thing it says — WHEN the floors were minted, which is real news
+// on a lane, where `merge-base` is a stable branch point.
 const base = execFileSync('git', ['merge-base', 'HEAD', 'main'], { cwd: ROOT, encoding: 'utf8' }).trim();
 const eraStamp = execFileSync('git', ['rev-parse', '--short', base], { cwd: ROOT, encoding: 'utf8' }).trim();
 const benchSeeds = JSON.parse(readFileSync(path.join(ROOT, 'assets/contracts/bench-seeds.json'), 'utf8'));
