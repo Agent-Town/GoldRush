@@ -122,6 +122,34 @@ const REGENERATED_SHEETS = new Set([
   'char-assay-clerk-sheet-walk8-a',
   'char-preacher-sheet-walk8-a',
   'char-hero-sheet-walk8',
+  // NEW FAMILIES, NEVER AT BASE (task sprite-roster-remainder, 2026-09-17; owner 2026-09-17, verbatim:
+  // "Lets do them all." / "All on the Anthropic subscription"). The sixty stems below are the direction
+  // art Astra cut on `sol/code-review-20260908` and left referenced by nothing (F-SPRDR-4b); this task
+  // registers them in assets/layer-contracts/characters.v2.json, so they arrive with their wiring.
+  // They are DECLARED here for provenance, not for arithmetic: none of them exists at BASE
+  // (89bfc10cda7e), so none appears in `baseline.suspects`, and the three partition pins below
+  // (0 / 680 / 395) DO NOT MOVE — verified on this tree. What does move is the denominator; see the
+  // re-pin note at the `current.scanned` assertion.
+  // MEASURED on this tree over all 612 new cells: 0 visible violet-key px, 0 key px under fully
+  // transparent px, and `artifacts/f1450-4/halo-class-sweep.mjs` finds 0 suspects in the whole of
+  // assets/processed — so the deepEqual below still asserts an EMPTY residue with these cells in it,
+  // which is the claim: the new art came in clean.
+  // F-SPR-07 reconciliations (36 cells):
+  'char-baron-ne-clean-v2',
+  'char-baron-w-clean-v2',
+  'char-coalthief-north4-v2',
+  'char-railtough-north4-v2',
+  'char-steamwrecker-north4-v2',
+  'char-thief-se-finish-v2',
+  // F-SPR-06 per-direction walk8 art for the nine E6-E9 slots (576 cells):
+  'char-e6-feral_toaster-sheet-walk8-a',
+  'char-e6-feral_toaster-sheet-walk8-b',
+  'char-e6-lawn_shepherd-sheet-walk8-a',
+  'char-e6-lawn_shepherd-sheet-walk8-b',
+  'char-e7-rogue_automaton-sheet-walk8-a',
+  'char-e7-rogue_automaton-sheet-walk8-b',
+  ...['e6-glowjack', 'e7-data_rustler', 'e8-scrap_corsair', 'e8-sun_glare_shambler', 'e9-feral_terraformer', 'e9-claim_jump_prospect_drone']
+    .flatMap((slot) => ['s', 'sw', 'w', 'nw', 'n', 'ne', 'e', 'se'].map((d) => `char-${slot}-sheet-walk8-${d}`)),
 ]);
 
 const gitShow = (file) => execFileSync('git', ['show', `${BASE}:${file}`], { maxBuffer: 20 * 1024 * 1024 });
@@ -211,7 +239,20 @@ try {
 // ever reads 2082 on main, a payload/new-family land leaked past item 4 of that master.
 // maps-campaign-land-era6 + sprites-split-land drained together (attended 2026-09-14): the map campaign adds 1 processed
 // PNG (assets/processed/terrain-e5-open-sea-tile.png), so the denominator the sprite drain re-measured at 1400 reads 1401 on the combined tree.
-assert.equal(current.scanned, 1401, 'processed PNG denominator moved');
+// RE-PINNED 2026-09-17 by tasks/sprite-roster-remainder.md: 1401 -> 2059, and the arithmetic has TWO
+// terms, only one of which is this task's.
+//   * THIS TASK adds 612 PNGs to assets/processed — the 576 per-direction E6-E9 walk8 cells that cure
+//     F-SPR-06 and the 36 cells that cure F-SPR-07 (Baron NE/W, the three E2 norths, the thief's SE),
+//     all declared in REGENERATED_SHEETS above and all referenced by characters.v2.json in the same
+//     commit. 1447 + 612 = 2059, measured with `find assets/processed -name '*.png' | wc -l`.
+//   * THE OTHER 46 ARE NOT MINE, AND THE PIN WAS ALREADY WRONG WITHOUT THEM. main at f431b878c holds
+//     1447 PNGs under assets/processed (`git ls-tree -r --name-only HEAD -- assets/processed | grep -c
+//     '\.png$'`) against a pin of 1401, so this guard was RED on clean main before this task touched it
+//     — 46 PNGs landed since the 2026-09-14 re-pin without moving the denominator with them. Recorded
+//     as F-SRR-3 in artifacts/sprite-roster-remainder/report.md, because a re-pin that quietly absorbs
+//     someone else's red is how a guard stops being a guard. Re-pinning here cures the stale number;
+//     it does not excuse whatever landed those 46 without their line.
+assert.equal(current.scanned, 2059, 'processed PNG denominator moved');
 assert.deepEqual(
   current.suspects.map(({ file }) => file).sort(),
   expectedResidual.map(({ file }) => file).sort(),
