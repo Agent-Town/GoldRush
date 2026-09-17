@@ -195,6 +195,31 @@ function main() {
     for (const [t, n] of Object.entries(factory.reduce((m, r) => ((m[r.tree] = (m[r.tree] || 0) + 1), m), {})))
       say(`        ${String(n).padStart(5)} file(s)  ${t}`);
   }
+
+  // F-2602-1: the line above attributes the AT RISK bucket ALONE, and this tool prints
+  // all four buckets "so the predicate is visible" (F-2560-1). A reader who sees
+  // LOCAL-REF-ONLY at 3x the desk figure has no way to learn whose it is — and ownership
+  // is the field that decides whether a fire may TOUCH it at all (F-2561-1). So every
+  // non-SAFE bucket now carries its own ownership, printed ALWAYS including the all-clear
+  // (F-2208-1: a line that appears only on failure re-creates the ambiguity it removes).
+  // Measured s2602 on the live board: FACTORY-SIDE is 0 in all three, so this fires on
+  // nothing today — which is exactly why it is a declaration and not an alarm.
+  say('');
+  say('  ownership BY BUCKET — which of these are a fire\'s own to touch (F-2602-1):');
+  for (const k of ['AT RISK', 'UNREFERENCED', 'LOCAL-REF-ONLY']) {
+    const rows = buckets[k];
+    const f = rows.filter((r) => isFactorySide(r.tree));
+    const a = rows.filter((r) => !isFactorySide(r.tree));
+    say(`    ${k.padEnd(15)} FACTORY-SIDE ${String(f.length).padStart(5)} file(s) ${mb(bytesOf(f)).padStart(10)}` +
+        ` · attended ${String(a.length).padStart(5)} file(s) ${mb(bytesOf(a)).padStart(10)}`);
+    for (const [t, e] of Object.entries(f.reduce((m, r) => {
+      const x = (m[r.tree] = m[r.tree] || { n: 0, b: 0 }); x.n++; x.b += r.size; return m;
+    }, {})).sort((x, y) => y[1].b - x[1].b))
+      say(`        ⚠️  FACTORY ${String(e.n).padStart(5)} file(s) ${mb(e.b).padStart(10)}  ${t}`);
+  }
+  say('    ⓘ  A non-SAFE verdict is not by itself an owed act: a retention transform may');
+  say('       already hold the content in another SHAPE, which blob identity cannot see');
+  say('       (F-2570-1/F-2571-1). Ask the save/* manifests before you salvage or push.');
   if (atRisk.length) {
     const byTree = atRisk.reduce((m, r) => {
       const e = (m[r.tree] = m[r.tree] || { n: 0, b: 0 });
@@ -224,6 +249,15 @@ function main() {
       buckets: Object.fromEntries(Object.entries(buckets).map(([k, v]) => [k, { files: v.length, bytes: bytesOf(v), trees: treesOf(v) }])),
       factorySideAtRisk: factory.length,
       attendedAtRisk: attended.length,
+      // F-2602-1: ownership for EVERY non-SAFE bucket, not the desk figure alone.
+      ownershipByBucket: Object.fromEntries(['AT RISK', 'UNREFERENCED', 'LOCAL-REF-ONLY'].map((k) => {
+        const f = buckets[k].filter((r) => isFactorySide(r.tree));
+        const a = buckets[k].filter((r) => !isFactorySide(r.tree));
+        return [k, {
+          factorySide: { files: f.length, bytes: bytesOf(f), trees: treesOf(f) },
+          attended: { files: a.length, bytes: bytesOf(a), trees: treesOf(a) },
+        }];
+      })),
     }, null, 2) + '\n');
   } else {
     process.stdout.write(out.join('\n') + '\n');
