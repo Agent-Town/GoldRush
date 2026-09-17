@@ -235,9 +235,16 @@ const main = () => {
   // Printed ALWAYS, including the happy path — a scan space named only when something goes
   // wrong leaves "0 candidates" indistinguishable from "0 candidates I was allowed to see".
   console.log(`scan space: ${PLAYER_PREFIXES.join(' ')}`)
-  console.log(`  (a merge touching NONE of these is never examined — widen the list, not the verdict)`)
-  console.log(`examined ${log.length} first-parent merge(s) in the window`)
-  console.log(`player-path-touching first-parent merges: ${rows.length}`)
+  console.log(`  (a commit touching NONE of these is never examined — widen the list, not the verdict)`)
+  // F-2613-1: the corpus is `git log --first-parent` with NO `--merges` (see the call above), so it is
+  // the WHOLE first-parent chain. Measured s2613 over the live window: 5853 commits, of which only 411
+  // are merges (7%) and 5442 are single-parent. The old label read "first-parent merge(s)" and
+  // under-described the corpus 13x. It was never a coverage defect — the sweep is WIDER than its label —
+  // but a fire reasoning from the label concludes direct commits are invisible to GZ-01 and spends a
+  // budget hunting a blind spot that does not exist. This fire's own candidate `71aff6e19` (era pin #8)
+  // is single-parent and WAS examined, which is the live counter-example.
+  console.log(`examined ${log.length} first-parent commit(s) in the window — merges AND single-parent alike; this walks the WHOLE first-parent chain (F-2613-1)`)
+  console.log(`player-path-touching first-parent commit(s): ${rows.length}`)
   const viaContained = rows.filter((r) => r.state !== 'candidate' && r.via !== 'merge hash')
   console.log(`  already cited in marketing/outbox/ (either sink): ${reported.length + dismissed.length}`)
   console.log(`    ...of which cited only via a CONTAINED commit:  ${viaContained.length}`)
