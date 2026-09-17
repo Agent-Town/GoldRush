@@ -61,7 +61,20 @@ test('the plaza cast stands, walks, and faces truthfully without borrowed sheets
   expect(height('prospector')).toBeCloseTo(TOWN_CAST_METROLOGY.prospector, 2);
   expect(height('preacher')).toBeCloseTo(TOWN_CAST_METROLOGY.tallAdult, 2);
   for (const id of ['schoolteacher', 'assay_clerk'] as const) expect(height(id)).toBeCloseTo(TOWN_CAST_METROLOGY.adult, 2);
-  expect(before.find((actor) => actor.id === 'assay_clerk')?.position).toEqual({ x: 7, z: 3.4 });
+  // RE-POINTED 2026-09-18 (F-TCRL-2 / F-HYG-8, `tasks/hygiene-battery-lossless-triangles.md` item
+  // 8). This pinned (7, 3.4) — the ASSAY OFFICE anchor (9.4, 3.4) plus her `portraitPost` offset
+  // (-2.4, 0) from `3987c8f7b` (owner playtest 2026-08-03, "move the Elder and Assay Clerk posts
+  // clear of their buildings visual footprints"). That offset was tuned for a PORTRAIT sprite. When
+  // she gained a full body, `townActorPlazaPlacement` began ignoring portrait-only offsets for
+  // full-body actors (`src/town/TownScene.ts`, the `actor.fullBody ? undefined :` clause) and she
+  // moved to the plaza offset (-1.05, 3.4) -> (8.35, 6.8). That is F-SPR-13 REPAIRED, not broken:
+  // `reviews/sol-findings-sprite-roster-fixes-20260908.md:233` records the move as clearing the
+  // Assay Office roof, :241 measures the OLD post at ~4% of her silhouette visible in lite mobile,
+  // :258 names (8.35, 6.8) as her final post, and :268 measures 24 standing-post captures at
+  // >=99.862% visible. The owner's 2026-08-03 intent is SERVED by the new post, so this is a
+  // re-point with cause, not a relaxation: the assertion is still exact, on the post the evidence
+  // named. If she ever returns to (7, 3.4) the roof takes her again and this reds.
+  expect(before.find((actor) => actor.id === 'assay_clerk')?.position).toEqual({ x: 8.35, z: 6.8 });
   await page.waitForFunction(() => document.querySelector('canvas')?.dataset.town3dPilotLoadedIds?.split(',').includes('assay_office'));
   await focusAssayOffice(page);
   await setEvidenceUi(page, true);
@@ -94,9 +107,21 @@ test('the plaza cast stands, walks, and faces truthfully without borrowed sheets
     expect(after.find((actor) => actor.id === id)?.frameKey).toBe(before.find((actor) => actor.id === id)?.frameKey);
     expect(after.find((actor) => actor.id === id)?.frameKey).toMatch(/c0\.png$/);
   }
+  // RE-POINTED 2026-09-18 (F-TCRL-2 / F-HYG-8, item 8). This asked these three for a
+  // `-sheet-walk8-a-rNcM` cell while they STAND, which is the defect F-SPR-32/F-SPR-45 cured, not
+  // the contract: a fixed post used to hold walk-east frame 0 forever — "the pre-fix normal-town
+  // captures show an extended boot held indefinitely"
+  // (`reviews/sol-findings-sprite-roster-fixes-20260908.md:879`, :948 for the Elder) — and the cure
+  // wired each of them a separate PLANTED IDLE clip through the generic town loader
+  // (`src/town/TownScene.ts`'s `townCastWalkFrames`, `idle:` per actor; the art landed in
+  // `92137d813`, 2026-09-15). None of these three carries a patrol cycle, so standing is their
+  // whole day and the idle is what a player sees. The pin is therefore made EXACT rather than
+  // widened: each must show ITS OWN planted idle — which is also the "no borrowed sheets" claim in
+  // this test's title, since the cell name carries the actor's id. Their walking cells are still
+  // pinned, by the moving-actor poll below and by `e2e/town-t5-townsfolk.spec.ts`.
   for (const id of ['preacher', 'schoolteacher', 'assay_clerk'] as const) {
     expect(after.find((actor) => actor.id === id)?.presentation).toBe('full_body');
-    expect(after.find((actor) => actor.id === id)?.frameKey).toMatch(new RegExp(`char-${id.replace('_', '-')}-sheet-walk8-a-r\\d+c\\d+\\.png$`));
+    expect(after.find((actor) => actor.id === id)?.frameKey).toBe(`char-${id.replace('_', '-')}-idle-r0c0.png`);
   }
 
   await expect.poll(async () => {

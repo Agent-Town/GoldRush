@@ -19,14 +19,27 @@ import { createServer } from 'vite';
 // when it rode), so its run can no longer secure at any wave. That is ADR-004 rule 2 working, not
 // a regression: an INTENDED composition change, retiring a row recorded on the old composition.
 //
-// This guard pins BOTH halves as fixtures, because either one moving alone would be a lie:
-//   - the retired reel still fails, and still for THAT reason (wave 20 reached, 200 gold banked,
-//     `refusals.playbooks` still 0, run still alive at the end of its own tape);
-//   - heat 12's reel — recorded AFTER the merge, with one `PLAYBOOK_USE` in it — still replays to
-//     its declared score and its declared event-log hash, so the map is still winnable and the
-//     county still has a Relay Rush reel that verifies.
-// A change that breaks the second, or that quietly makes the first pass again, has moved this
-// map's composition and owes the board a re-assay either way.
+// This guard pinned BOTH halves as LIVE REPLAYS until 2026-09-18: the retired reel still failing
+// for THAT reason (wave 20 reached, 200 gold banked, `refusals.playbooks` still 0, run alive at the
+// end of its own tape), and heat 12's reel — recorded AFTER the merge, with one `PLAYBOOK_USE` in
+// it — still replaying to its declared score and event-log hash.
+//
+// ⚠️ NEITHER REPLAY RUNS TODAY, AND NEITHER MAY (F-DRB-11 item 1, re-pointed 2026-09-18). ADR-005
+// stage 3 (owner 2026-09-07) removed `MOVE_TO`, `HOLD` and `FALLBACK_IF` from the door grammar, and
+// heat 12's plans carry `HOLD` — the strict validator now reads that reel as malformed, and the
+// heat-11 reel is refused one step earlier still, on a `runStart.research.epochId` the door no longer
+// installs. ADR-005 consequence 3 and amendment clause 6: "Existing tapes that use removed verbs no
+// longer replay and retire under ADR-004 … retired rows are never repaired." So both tests below
+// now pin the REFUSAL and its measured cause instead of the replay. The alarm is unchanged in
+// direction: a change that let either reel replay again would have put the retired grammar — or an
+// installable historical epoch pointer — back into the door, and owes the board a re-assay.
+//
+// 💰 COST — THE TWO EXPENSIVE HALVES ARE GONE WITH THE REPLAYS THEY PAID FOR (2026-09-18). The
+// 40.4 s and 31.0 s rows below were the price of RUNNING the two reels; the door refuses both at
+// construction now, so what is left is a boot and a throw. The reasoning underneath is kept
+// verbatim because it is still the right reasoning — it is why nothing here was "trimmed as
+// derivable" while the replays were possible, and why a future re-ride must pay the full price
+// again rather than assert its way out.
 //
 // 💰 COST, RE-MEASURED 2026-09-07 AND DELIBERATELY KEPT (`spec-hygiene-batch` scope 6, which asked
 // whether the retired-reel replay could be trimmed as derivable from the other tests; it CANNOT).
@@ -34,8 +47,8 @@ import { createServer } from 'vite';
 //     the E7 latch                                    0.38 s
 //     the two reels differ by exactly the verb        0.004 s   (static read of both tapes)
 //     the reel envelope admits the retired tape        0.16 s   (static length check)
-//     heat 12 still replays to its declared score     40.4 s
-//     the retired reel reaches wave 20 …              31.0 s
+//     heat 12 still replays to its declared score     40.4 s   (RETIRED 2026-09-18, see above)
+//     the retired reel reaches wave 20 …              31.0 s   (RETIRED 2026-09-18, see above)
 // ⚠️ THE THREE CHEAP TESTS ARE ALL STATIC, AND THAT IS EXACTLY WHY THEY CANNOT STAND IN. Together
 // they cost 0.54 s and prove things about the FILES: which verbs each reel carries, how long they
 // are. The 31 s test proves something about the ENGINE — that replaying the retired reel TODAY still
@@ -55,14 +68,22 @@ const RETIRED = 'artifacts/gauntlet-heat11-20260903/rides/e7-relay-rush/opus/wor
 /** The ride that secures under the current composition: heat 12, `agent-e8c4f218…`. */
 const CURRENT = 'artifacts/gauntlet-heat12-20260905/rides/e7-relay-rush/submission.json';
 
-/** One vite server for the whole file: the two replays below cost ~20 s each, the boot ~10 s. */
+/**
+ * The ADR-005 retirement ledger, computed before the grammar removal landed and pinned against the
+ * landed door by `rider-parity-retirement.test.mjs`. Read here for this reel's own row.
+ */
+const LEDGER = read('artifacts/rider-parity-grammar/retirement-ledger.json');
+
+/** One vite server per test: the boot is ~10 s and the seam is read three ways off it. */
 async function loadSeam(tape) {
   const location = new URL(`http://relay-rush-reel.test/?debug&contract=${tape.contract}&seed=${tape.seed}`);
   globalThis.location = location;
   globalThis.window = { location };
   const vite = await createServer({ root, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true, watch: null } });
   const { AgentTapeReplaySession } = await vite.ssrLoadModule('/src/replay/AgentTapeReplay.ts');
-  return { AgentTapeReplaySession, close: () => vite.close() };
+  const { validateRunTape } = await vite.ssrLoadModule('/src/game/RunTape.ts');
+  const { HeadlessContractSim } = await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts');
+  return { AgentTapeReplaySession, validateRunTape, HeadlessContractSim, close: () => vite.close() };
 }
 
 /** Every order the tape ever submits, flattened; the tape's whole vocabulary in one list. */
@@ -148,49 +169,72 @@ test('the reel envelope admits the retired tape: its length was never the reason
   }
 });
 
-test('heat 12 still replays to its declared score through the assayer own seam', async () => {
+test('heat 12 is retired too, at the door, for the HOLD its plans carry', async () => {
+  // RE-POINTED 2026-09-18 (F-DRB-11 item 1, `tasks/hygiene-battery-lossless-triangles.md`). This
+  // test was "heat 12 still replays to its declared score through the assayer own seam", and it
+  // replayed the reel for 18,600 steps to its declared `fnv1a32:d381ebe2`. It cannot any more, and
+  // the reason is a RULING, not a regression: ADR-005 stage 3 (owner 2026-09-07, "Humans cannot
+  // control the positioning of the Prospector, just the rider") removed `MOVE_TO`, `HOLD` and
+  // `FALLBACK_IF` from the door grammar, and this reel's plans carry `HOLD`. The strict validator
+  // therefore reads the tape as malformed and the session refuses to boot. ADR-005 consequence 3
+  // and amendment clause 6 are explicit about what happens next: "Existing tapes that use removed
+  // verbs no longer replay and retire under ADR-004 … retired rows are never repaired." So the
+  // fact this guard can still hold is the REFUSAL and its named cause — which is exactly the
+  // "quietly passes again" alarm the file was built for, pointed the other way: if a future change
+  // let this reel replay, the retired grammar would be back in the door.
   const tape = read(CURRENT).tape;
-  const { AgentTapeReplaySession, close } = await loadSeam(tape);
+  assert.ok(verbsOf(tape).includes('HOLD'), 'the heat-12 reel is the one that carries the retired verb');
+
+  // THE RETIREMENT LEDGER'S OWN ROW for this exact tape (`submission.json` and
+  // `work/attempt-1-tape.json` are the same reel, `agent-e8c4f218…`), computed before the removal
+  // landed and pinned by `rider-parity-retirement.test.mjs` against the landed door.
+  const row = LEDGER.rows.find((entry) => entry.ride === 'e7-relay-rush' && entry.tape === 'attempt-1-tape.json');
+  assert.ok(row, 'the ADR-005 retirement ledger no longer names this ride');
+  assert.deepEqual(row.removedVerbs, ['HOLD']);
+  assert.equal(row.afterGrammar, 'REFUSED_AT_SUBMISSION');
+  assert.equal(row.firstRefusal.message, 'orders[30].verb "HOLD" is unknown.');
+
+  // The score it DID reach, kept as history rather than re-proven: the row's own declaration.
+  assert.deepEqual(tape.outcome, { reason: 'secured', secured: true, waves: 20, timeAlive: 600, gold: 200 });
+  assert.equal(tape.eventLogHash, 'fnv1a32:d381ebe2');
+
+  const { AgentTapeReplaySession, validateRunTape, close } = await loadSeam(tape);
   try {
-    const session = new AgentTapeReplaySession(tape);
-    const ceiling = session.durationTicks + 18_000;
-    let steps = 0;
-    while (!session.complete && steps < ceiling) { session.advanceOneTick(); steps += 1; }
-    const result = session.result();
-    assert.equal(result.eventLogHash, tape.eventLogHash);
-    assert.equal(result.eventLogHash, 'fnv1a32:d381ebe2');
-    assert.deepEqual(result.outcome, { secured: true, waves: 20, gold: 200, timeAlive: 600 });
-    // The county compares the reel's DECLARED score against this snapshot; on a run that banks at
-    // the secure tick they are the same object (`HeadlessContractSim.ts:2205-2213`).
-    assert.deepEqual(result.securedSnapshot, { waves: 20, gold: 200, timeAlive: 600 });
-    assert.equal(steps, 18_600);
+    assert.equal(validateRunTape(tape), null, 'the strict validator still admits a HOLD-carrying reel');
+    assert.throws(() => new AgentTapeReplaySession(tape), /malformed tape/,
+      'the assayer seam booted a reel written in the retired grammar');
+    // THE CONTROL, so this cannot pass by refusing everything: the heat-11 reel below carries no
+    // removed verb and the same validator admits it.
+    assert.notEqual(validateRunTape(read(RETIRED)), null, 'the validator refuses every tape, so the refusal above proves nothing');
   } finally {
     await close();
   }
 });
 
-test('the retired reel reaches wave 20 with its purse and still cannot secure', async () => {
+test('the retired reel is now refused one step earlier: its declared runStart is not installable', async () => {
+  // RE-POINTED 2026-09-18 (F-DRB-11 item 1). This test was "the retired reel reaches wave 20 with
+  // its purse and still cannot secure" and it replayed 18,101 steps to read `refusals.playbooks`
+  // off the engine. The reel is a heat-11 ride, already retired under ADR-004 on 2026-09-06 for a
+  // DIFFERENT cause (the e7-playbook-rows composition change, `b38d60295`, the file header above).
+  // A second, later refusal now stands in front of that one, measured here rather than assumed:
+  // the tape declares `runStart.research.epochId: "epoch-1-frontier"` while the door reconstructs
+  // `epoch-7-signal` for this contract — both on a virgin sim and after installing the tape's own
+  // declared meta+research — so `bootDeclaredRun` (`src/replay/AgentTapeReplay.ts:224-237`) cannot install
+  // the declared start and the run never begins. ADR-005 amendment clause 6: "retired rows are
+  // never repaired". So the honest pin is the refusal and its cause; the wave-20 purse claim stays
+  // in this file's header as the history it is, and `rider-parity-retirement.test.mjs` holds the
+  // door's own grammar half.
   const tape = read(RETIRED);
-  const { AgentTapeReplaySession, close } = await loadSeam(tape);
+  assert.equal(tape.runStart.research.epochId, 'epoch-1-frontier', 'the heat-11 reel declared the E1 epoch pointer');
+  const { AgentTapeReplaySession, HeadlessContractSim, validateRunTape, close } = await loadSeam(tape);
   try {
-    const session = new AgentTapeReplaySession(tape);
-    // Stepped to just past the end of its OWN tape rather than to the seam's 36001-step ceiling:
-    // the fact under test is that the run is alive when its declared duration runs out, and paying
-    // for another 18,000 dead steps would only restate it at three times the cost.
-    let steps = 0;
-    while (!session.complete && steps < tape.inputLog.durationTicks + 100) { session.advanceOneTick(); steps += 1; }
-    assert.equal(session.complete, false, 'the run is still alive when its own tape runs out');
-    const snapshot = session.snapshot();
-    assert.equal(snapshot.wave, 20, 'it did reach the secure wave');
-    assert.equal(Math.round(snapshot.gold), 200, 'with the purse its row declared');
-    assert.ok(snapshot.hero.alive, 'and the rider never lost the hero');
-    // THE NAMED CAUSE, read off the engine rather than asserted: no playbook was ever muted, so the
-    // era's errand is undischarged and `autoSecureWaveForRun` refuses the secure at every wave.
-    const front = session.sim.interferenceFront.diagnostics;
-    assert.equal(front.refusals.playbooks, 0);
-    assert.equal(front.objectiveMet, true, 'the RELAY deadline it was riding for was met (3 of 4 lit)');
-    assert.equal(session.sim.currentTurn().view.now.playbookUse.objectiveMet, false);
-    assert.throws(() => session.result(), /still alive/);
+    // Its GRAMMAR is clean — this reel rode before ADR-005's verbs existed on this map, so the
+    // refusal below is the runStart's, not the door vocabulary's.
+    assert.notEqual(validateRunTape(tape), null);
+    assert.throws(() => new AgentTapeReplaySession(tape), /declared runStart is not installable by this door/);
+    const virgin = new HeadlessContractSim({ contractId: tape.contract, seed: tape.seed });
+    assert.equal(virgin.runStart.research.epochId, 'epoch-7-signal',
+      'the door no longer derives the active epoch from the contract; re-read this refusal if so');
   } finally {
     await close();
   }

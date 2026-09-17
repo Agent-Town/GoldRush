@@ -105,8 +105,24 @@ function variantOf(find, replace) {
   return v;
 }
 
-test('CONTROL: the subject measures the FIXTURE, not the live board', () => {
-  const { work } = fixture();
+/**
+ * F-HYG-7 (2026-09-18, `tasks/hygiene-battery-lossless-triangles.md` item 7). Every fixture root
+ * is removed in a `finally` — the form `scripts/fixture-teardown.test.mjs` uses for its own
+ * scratch. Before this, the eleven fixture-owning tests below left eleven `mtec-*` trees in TMPDIR
+ * on every run, so the sweep that runs each guard as a child and counts survivors was red on main
+ * from `ba1cac4e0` (2026-09-17) on. The wrapper, rather than a `finally` typed out eleven times,
+ * keeps each test body byte-identical: the fires iterate on this file.
+ */
+function withFixture(make, run) {
+  const made = make();
+  try {
+    return run(made);
+  } finally {
+    rmSync(made.root, { recursive: true, force: true });
+  }
+}
+
+test('CONTROL: the subject measures the FIXTURE, not the live board', () => withFixture(fixture, ({ work }) => {
   const j = JSON.parse(runIn(work, SUBJECT, ['--json']));
   // F-2215-1: assert the control is aimed at the right subject before believing any arm.
   // The live repo has 100+ registered worktrees; seeing those here means `--root` was
@@ -115,10 +131,9 @@ test('CONTROL: the subject measures the FIXTURE, not the live board', () => {
   assert.equal(j.treesAnswered, 1);
   assert.equal(j.subjects, 2, 'exactly the two manufactured modified evidence files');
   assert.equal(j.treesRegistered, j.treesAnswered + j.treesCouldNotAnswer);
-});
+}));
 
-test('arm 1: the desk figure is the AT RISK bucket, NOT the wider non-SAFE union', () => {
-  const { work } = fixture();
+test('arm 1: the desk figure is the AT RISK bucket, NOT the wider non-SAFE union', () => withFixture(fixture, ({ work }) => {
   const j = JSON.parse(runIn(work, SUBJECT, ['--json']));
   // The fixture is built so the two readings DIFFER (1 vs 2). If they ever coincide this
   // arm proves nothing, so assert the gap itself first.
@@ -126,49 +141,43 @@ test('arm 1: the desk figure is the AT RISK bucket, NOT the wider non-SAFE union
   assert.equal(j.nonSafe.files, 2, 'ground truth: the non-SAFE union also holds the UNREFERENCED file');
   assert.notEqual(j.deskFigure.files, j.nonSafe.files, 'the two readings must be distinguishable here');
   assert.equal(j.deskFigure.files, 1, 'the desk figure must track AT RISK');
-});
+}));
 
-test('arm 2: an UNCOMMITTED-but-hashed blob is UNREFERENCED, never AT RISK', () => {
-  const { work } = fixture();
+test('arm 2: an UNCOMMITTED-but-hashed blob is UNREFERENCED, never AT RISK', () => withFixture(fixture, ({ work }) => {
   const j = JSON.parse(runIn(work, SUBJECT, ['--json']));
   assert.equal(j.buckets.UNREFERENCED.files, 1, 'in the odb but held by no ref');
   assert.equal(j.buckets['AT RISK'].files, 1, 'and it must NOT be counted among the at-risk');
-});
+}));
 
-test('arm 3: UNTRACKED files are excluded — this census is the modified-tracked half', () => {
-  const { work } = fixture();
+test('arm 3: UNTRACKED files are excluded — this census is the modified-tracked half', () => withFixture(fixture, ({ work }) => {
   writeFileSync(join(work, 'artifacts', 'probe', 'stray-untracked.log'), 'untracked evidence\n');
   const j = JSON.parse(runIn(work, SUBJECT, ['--json']));
   assert.equal(j.subjects, 2, 'the untracked file must not enter the subject set');
   assert.equal(j.deskFigure.files, 1);
-});
+}));
 
-test('arm 4: non-evidence paths are excluded', () => {
-  const { work } = fixture();
+test('arm 4: non-evidence paths are excluded', () => withFixture(fixture, ({ work }) => {
   writeFileSync(join(work, 'README.md'), 'modified but not evidence\n');
   const j = JSON.parse(runIn(work, SUBJECT, ['--json']));
   assert.equal(j.subjects, 2, 'a modified non-evidence path must not become a subject');
   assert.ok(!JSON.stringify(j).includes('README'), 'and must not appear anywhere in the report');
-});
+}));
 
-test('arm 5: the human report PRINTS all four buckets, so the predicate is visible', () => {
-  const { work } = fixture();
+test('arm 5: the human report PRINTS all four buckets, so the predicate is visible', () => withFixture(fixture, ({ work }) => {
   const out = runIn(work);
   for (const k of ['AT RISK', 'UNREFERENCED', 'LOCAL-REF-ONLY', 'SAFE']) {
     assert.match(out, new RegExp(k.replace(' ', '\\s')), `bucket ${k} must be printed`);
   }
   assert.match(out, /NOT the desk figure/, 'the wider reading must be named AND disclaimed');
-});
+}));
 
-test('arm 6: the corpus declaration prints on the HAPPY path too (F-2208-1)', () => {
-  const { work } = fixture();
+test('arm 6: the corpus declaration prints on the HAPPY path too (F-2208-1)', () => withFixture(fixture, ({ work }) => {
   const out = runIn(work);
   assert.match(out, /registered worktree\(s\)/);
   assert.match(out, /controls\s+:/, 'controls must be declared even when nothing is wrong');
-});
+}));
 
-test('arm 7: --strict reds on FACTORY-SIDE at-risk bytes; the advisory default stays 0', () => {
-  const { work } = fixture();
+test('arm 7: --strict reds on FACTORY-SIDE at-risk bytes; the advisory default stays 0', () => withFixture(fixture, ({ work }) => {
   // The fixture root IS its own main worktree, so its at-risk file is factory-side.
   assert.throws(() => runIn(work, SUBJECT, ['--strict']), (e) => e.status === 1,
     'factory-side at-risk bytes must exit 1 under --strict');
@@ -176,10 +185,9 @@ test('arm 7: --strict reds on FACTORY-SIDE at-risk bytes; the advisory default s
   // uselessness inside a week (F-1460-1).
   const r = runIn(work);
   assert.ok(r.length > 0, 'the advisory run must still produce a report at rc=0');
-});
+}));
 
-test('arm 7b: --strict does NOT red when the at-risk bytes are ATTENDED-owned (the restraint)', () => {
-  const { work, agent } = attendedOnlyFixture();
+test('arm 7b: --strict does NOT red when the at-risk bytes are ATTENDED-owned (the restraint)', () => withFixture(attendedOnlyFixture, ({ work, agent }) => {
   const j = JSON.parse(runIn(work, SUBJECT, ['--json']));
   // Assert the fixture really put at-risk bytes somewhere before believing the silence —
   // a fixture with nothing at risk would pass this arm for the wrong reason.
@@ -190,19 +198,22 @@ test('arm 7b: --strict does NOT red when the at-risk bytes are ATTENDED-owned (t
   // THE RESTRAINT: attended-owned bytes are an OWNER call (F-2561-1), so --strict stays 0.
   const out = runIn(work, SUBJECT, ['--strict']);
   assert.ok(out.length > 0, '--strict must exit 0 and still report');
-});
+}));
 
 test('arm 8: a non-repo root REFUSES with 2, never a clean zero', () => {
   const empty = mkdtempSync(join(tmpdir(), 'mtec-norepo-'));
-  let status = 0, stdout = '';
   try {
-    execFileSync(process.execPath, [SUBJECT, '--root', empty], {
-      cwd: empty, encoding: 'utf8', stdio: ['pipe', 'pipe', 'ignore'], ...BOUND,
-    });
-  } catch (e) { status = e.status; stdout = String(e.stdout || ''); }
-  assert.equal(status, 2, 'could-not-answer must be 2, distinct from an answered 0');
-  assert.match(stdout, /CANNOT VERIFY/, 'the refusal must reach STDOUT (F-2211-1)');
-  rmSync(empty, { recursive: true, force: true });
+    let status = 0, stdout = '';
+    try {
+      execFileSync(process.execPath, [SUBJECT, '--root', empty], {
+        cwd: empty, encoding: 'utf8', stdio: ['pipe', 'pipe', 'ignore'], ...BOUND,
+      });
+    } catch (e) { status = e.status; stdout = String(e.stdout || ''); }
+    assert.equal(status, 2, 'could-not-answer must be 2, distinct from an answered 0');
+    assert.match(stdout, /CANNOT VERIFY/, 'the refusal must reach STDOUT (F-2211-1)');
+  } finally {
+    rmSync(empty, { recursive: true, force: true });
+  }
 });
 
 test('arm 9: isFactorySide does not classify by path SUFFIX (the s2582 mislabel)', async () => {
@@ -254,8 +265,7 @@ test('arm 10: bucketOf maps the three non-SAFE states distinctly', async () => {
 });
 
 // ---- TEETH: each manufactured defect must red at least one arm above ----------------
-test('TEETH: swapping the desk figure to the non-SAFE union reds arm 1', () => {
-  const { work } = fixture();
+test('TEETH: swapping the desk figure to the non-SAFE union reds arm 1', () => withFixture(fixture, ({ work }) => {
   execFileSync('git', ['hash-object', '-w', 'artifacts/probe/evidence.log'], { cwd: work, stdio: 'ignore' });
   const v = variantOf(
     'deskFigure: { files: atRisk.length, bytes: bytesOf(atRisk), trees: treesOf(atRisk) }',
@@ -267,17 +277,16 @@ test('TEETH: swapping the desk figure to the non-SAFE union reds arm 1', () => {
     assert.notEqual(j.deskFigure.files, j.buckets['AT RISK'].files,
       'the manufactured swap must make deskFigure disagree with AT RISK');
   } finally { rmSync(v, { force: true }); }
-});
+}));
 
-test('TEETH: including untracked files reds arm 3', () => {
-  const { work } = fixture();
+test('TEETH: including untracked files reds arm 3', () => withFixture(fixture, ({ work }) => {
   writeFileSync(join(work, 'artifacts', 'probe', 'stray-untracked.log'), 'untracked\n');
   const v = variantOf("'--porcelain', '-uno'", "'--porcelain', '-uall'");
   try {
     const j = JSON.parse(runIn(work, v, ['--json']));
     assert.ok(j.subjects > 1, 'the manufactured widening must pull the untracked file in');
   } finally { rmSync(v, { force: true }); }
-});
+}));
 
 test('TEETH: a per-tree read that fails OPEN reds the corpus accounting', () => {
   // Removing the per-tree tracked-file control lets a tree with zero tracked files be

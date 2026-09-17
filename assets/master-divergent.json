@@ -1,134 +1,208 @@
 {
+  "method": "Rows are exclusions for shipped assets/processed cells that do NOT reproduce from their assets/processed-full master by scripts/anim-pass-reextract.mjs --verify-downscale. Re-measure with that flag before editing: a row whose cell now reproduces byte-identically is reported STALE EXCLUSION and belongs under retired, never deleted (CLAUDE.md 4.10b).",
+  "remeasured": "2026-09-18 (F-RECUT-5, tasks/hygiene-battery-lossless-triangles.md item 5) — 479 masters: 226 byte-identical, 227 unexplained, 9 master-divergent by design, 17 stale. See artifacts/hygiene-battery-lossless-triangles/report.md for the unexplained class, which these rows do not cover.",
   "cells": [
+    {
+      "file": "char-hero-sheet-walk8-r0c4.png",
+      "commit": "9a66f743a",
+      "reason": "Shipped cell re-sourced after master extraction: Astra original walk cell restored 2026-09-15 (9a66f743a), over the 2026-09-14 hard-alpha re-cut (cbc73e7fe); the 512px master is still the 2026-07-10 extraction (f99da84b0). Re-measured and re-recorded 2026-09-18; the previous cause on this row (21dc87394 cutout-pocket alpha mend, 2026-07-13) was superseded by those two lands.",
+      "supersedes": {
+        "commit": "21dc8739",
+        "reason": "Cutout-pocket alpha mend was applied to the 256px shipped cell after master extraction."
+      }
+    },
+    {
+      "file": "char-hero-sheet-walk8-r0c6.png",
+      "commit": "9a66f743a",
+      "reason": "Shipped cell re-sourced after master extraction: Astra original walk cell restored 2026-09-15 (9a66f743a), over the 2026-09-14 hard-alpha re-cut (cbc73e7fe); the 512px master is still the 2026-07-10 extraction (f99da84b0). Re-measured and re-recorded 2026-09-18; the previous cause on this row (21dc87394 cutout-pocket alpha mend, 2026-07-13) was superseded by those two lands.",
+      "supersedes": {
+        "commit": "21dc8739",
+        "reason": "Cutout-pocket alpha mend was applied to the 256px shipped cell after master extraction."
+      }
+    },
+    {
+      "file": "char-hero-sheet-walk8-r1c1.png",
+      "commit": "9a66f743a",
+      "reason": "Shipped cell re-sourced after master extraction: Astra original walk cell restored 2026-09-15 (9a66f743a), over the 2026-09-14 hard-alpha re-cut (cbc73e7fe); the 512px master is still the 2026-07-10 extraction (f99da84b0). Re-measured and re-recorded 2026-09-18; the previous cause on this row (21dc87394 cutout-pocket alpha mend, 2026-07-13) was superseded by those two lands.",
+      "supersedes": {
+        "commit": "21dc8739",
+        "reason": "Cutout-pocket alpha mend was applied to the 256px shipped cell after master extraction."
+      }
+    },
+    {
+      "file": "char-hero-sheet-walk8-r1c3.png",
+      "commit": "9a66f743a",
+      "reason": "Shipped cell re-sourced after master extraction: Astra original walk cell restored 2026-09-15 (9a66f743a), over the 2026-09-14 hard-alpha re-cut (cbc73e7fe); the 512px master is still the 2026-07-10 extraction (f99da84b0). Re-measured and re-recorded 2026-09-18; the previous cause on this row (21dc87394 cutout-pocket alpha mend, 2026-07-13) was superseded by those two lands.",
+      "supersedes": {
+        "commit": "21dc8739",
+        "reason": "Cutout-pocket alpha mend was applied to the 256px shipped cell after master extraction."
+      }
+    },
+    {
+      "file": "char-hero-sheet-walk8-r2c0.png",
+      "commit": "9a66f743a",
+      "reason": "Shipped cell re-sourced after master extraction: Astra original walk cell restored 2026-09-15 (9a66f743a), over the 2026-09-14 hard-alpha re-cut (cbc73e7fe); the 512px master is still the 2026-07-10 extraction (f99da84b0). Re-measured and re-recorded 2026-09-18; the previous cause on this row (21dc87394 cutout-pocket alpha mend, 2026-07-13) was superseded by those two lands.",
+      "supersedes": {
+        "commit": "04732223",
+        "reason": "White-foot metrology alpha mend was applied to the 256px shipped cell after master extraction."
+      }
+    },
+    {
+      "file": "char-hero-sheet-walk8-r2c3.png",
+      "commit": "9a66f743a",
+      "reason": "Shipped cell re-sourced after master extraction: Astra original walk cell restored 2026-09-15 (9a66f743a), over the 2026-09-14 hard-alpha re-cut (cbc73e7fe); the 512px master is still the 2026-07-10 extraction (f99da84b0). Re-measured and re-recorded 2026-09-18; the previous cause on this row (21dc87394 cutout-pocket alpha mend, 2026-07-13) was superseded by those two lands.",
+      "supersedes": {
+        "commit": "04732223",
+        "reason": "White-foot metrology alpha mend was applied to the 256px shipped cell after master extraction."
+      }
+    },
+    {
+      "file": "char-hero-sheet-walk8-r3c1.png",
+      "commit": "9a66f743a",
+      "reason": "Shipped cell re-sourced after master extraction: Astra original walk cell restored 2026-09-15 (9a66f743a), over the 2026-09-14 hard-alpha re-cut (cbc73e7fe); the 512px master is still the 2026-07-10 extraction (f99da84b0). Re-measured and re-recorded 2026-09-18; the previous cause on this row (21dc87394 cutout-pocket alpha mend, 2026-07-13) was superseded by those two lands.",
+      "supersedes": {
+        "commit": "21dc8739",
+        "reason": "Cutout-pocket alpha mend was applied to the 256px shipped cell after master extraction."
+      }
+    },
+    {
+      "file": "char-hero-sheet-walk8-r3c4.png",
+      "commit": "9a66f743a",
+      "reason": "Shipped cell re-sourced after master extraction: Astra original walk cell restored 2026-09-15 (9a66f743a), over the 2026-09-14 hard-alpha re-cut (cbc73e7fe); the 512px master is still the 2026-07-10 extraction (f99da84b0). Re-measured and re-recorded 2026-09-18; the previous cause on this row (21dc87394 cutout-pocket alpha mend, 2026-07-13) was superseded by those two lands.",
+      "supersedes": {
+        "commit": "21dc8739",
+        "reason": "Cutout-pocket alpha mend was applied to the 256px shipped cell after master extraction."
+      }
+    },
+    {
+      "file": "char-hero-sheet-walk8-r3c5.png",
+      "commit": "9a66f743a",
+      "reason": "Shipped cell re-sourced after master extraction: Astra original walk cell restored 2026-09-15 (9a66f743a), over the 2026-09-14 hard-alpha re-cut (cbc73e7fe); the 512px master is still the 2026-07-10 extraction (f99da84b0). Re-measured and re-recorded 2026-09-18; the previous cause on this row (21dc87394 cutout-pocket alpha mend, 2026-07-13) was superseded by those two lands.",
+      "supersedes": {
+        "commit": "21dc8739",
+        "reason": "Cutout-pocket alpha mend was applied to the 256px shipped cell after master extraction."
+      }
+    }
+  ],
+  "retired": [
     {
       "file": "char-baron-sheet-walk8-r0c0.png",
       "commit": "21dc8739",
-      "reason": "Cutout-pocket alpha mend was applied to the 256px shipped cell after master extraction."
+      "reason": "Cutout-pocket alpha mend was applied to the 256px shipped cell after master extraction.",
+      "retired": "2026-09-18",
+      "retiredCause": "No longer divergent: 1954bfa09 (2026-09-14, sprites-split-land item 4) rewrote the shipped cell AND its processed-full master together, so the downscale reproduces byte-identically and --verify-downscale reports this row as a STALE EXCLUSION. Kept here rather than deleted (CLAUDE.md 4.10b)."
     },
     {
       "file": "char-baron-sheet-walk8-r0c1.png",
       "commit": "21dc8739",
-      "reason": "Cutout-pocket alpha mend was applied to the 256px shipped cell after master extraction."
+      "reason": "Cutout-pocket alpha mend was applied to the 256px shipped cell after master extraction.",
+      "retired": "2026-09-18",
+      "retiredCause": "No longer divergent: 1954bfa09 (2026-09-14, sprites-split-land item 4) rewrote the shipped cell AND its processed-full master together, so the downscale reproduces byte-identically and --verify-downscale reports this row as a STALE EXCLUSION. Kept here rather than deleted (CLAUDE.md 4.10b)."
     },
     {
       "file": "char-baron-sheet-walk8-r0c2.png",
       "commit": "21dc8739",
-      "reason": "Cutout-pocket alpha mend was applied to the 256px shipped cell after master extraction."
+      "reason": "Cutout-pocket alpha mend was applied to the 256px shipped cell after master extraction.",
+      "retired": "2026-09-18",
+      "retiredCause": "No longer divergent: 1954bfa09 (2026-09-14, sprites-split-land item 4) rewrote the shipped cell AND its processed-full master together, so the downscale reproduces byte-identically and --verify-downscale reports this row as a STALE EXCLUSION. Kept here rather than deleted (CLAUDE.md 4.10b)."
     },
     {
       "file": "char-baron-sheet-walk8-r0c3.png",
       "commit": "21dc8739",
-      "reason": "Cutout-pocket alpha mend was applied to the 256px shipped cell after master extraction."
+      "reason": "Cutout-pocket alpha mend was applied to the 256px shipped cell after master extraction.",
+      "retired": "2026-09-18",
+      "retiredCause": "No longer divergent: 1954bfa09 (2026-09-14, sprites-split-land item 4) rewrote the shipped cell AND its processed-full master together, so the downscale reproduces byte-identically and --verify-downscale reports this row as a STALE EXCLUSION. Kept here rather than deleted (CLAUDE.md 4.10b)."
     },
     {
       "file": "char-baron-sheet-walk8-r0c6.png",
       "commit": "21dc8739",
-      "reason": "Cutout-pocket alpha mend was applied to the 256px shipped cell after master extraction."
+      "reason": "Cutout-pocket alpha mend was applied to the 256px shipped cell after master extraction.",
+      "retired": "2026-09-18",
+      "retiredCause": "No longer divergent: 1954bfa09 (2026-09-14, sprites-split-land item 4) rewrote the shipped cell AND its processed-full master together, so the downscale reproduces byte-identically and --verify-downscale reports this row as a STALE EXCLUSION. Kept here rather than deleted (CLAUDE.md 4.10b)."
     },
     {
       "file": "char-baron-sheet-walk8-r0c7.png",
       "commit": "21dc8739",
-      "reason": "Cutout-pocket alpha mend was applied to the 256px shipped cell after master extraction."
+      "reason": "Cutout-pocket alpha mend was applied to the 256px shipped cell after master extraction.",
+      "retired": "2026-09-18",
+      "retiredCause": "No longer divergent: 1954bfa09 (2026-09-14, sprites-split-land item 4) rewrote the shipped cell AND its processed-full master together, so the downscale reproduces byte-identically and --verify-downscale reports this row as a STALE EXCLUSION. Kept here rather than deleted (CLAUDE.md 4.10b)."
     },
     {
       "file": "char-baron-sheet-walk8-r1c0.png",
       "commit": "21dc8739",
-      "reason": "Cutout-pocket alpha mend was applied to the 256px shipped cell after master extraction."
+      "reason": "Cutout-pocket alpha mend was applied to the 256px shipped cell after master extraction.",
+      "retired": "2026-09-18",
+      "retiredCause": "No longer divergent: 1954bfa09 (2026-09-14, sprites-split-land item 4) rewrote the shipped cell AND its processed-full master together, so the downscale reproduces byte-identically and --verify-downscale reports this row as a STALE EXCLUSION. Kept here rather than deleted (CLAUDE.md 4.10b)."
     },
     {
       "file": "char-baron-sheet-walk8-r1c1.png",
       "commit": "21dc8739",
-      "reason": "Cutout-pocket alpha mend was applied to the 256px shipped cell after master extraction."
+      "reason": "Cutout-pocket alpha mend was applied to the 256px shipped cell after master extraction.",
+      "retired": "2026-09-18",
+      "retiredCause": "No longer divergent: 1954bfa09 (2026-09-14, sprites-split-land item 4) rewrote the shipped cell AND its processed-full master together, so the downscale reproduces byte-identically and --verify-downscale reports this row as a STALE EXCLUSION. Kept here rather than deleted (CLAUDE.md 4.10b)."
     },
     {
       "file": "char-baron-sheet-walk8-r1c2.png",
       "commit": "21dc8739",
-      "reason": "Cutout-pocket alpha mend was applied to the 256px shipped cell after master extraction."
+      "reason": "Cutout-pocket alpha mend was applied to the 256px shipped cell after master extraction.",
+      "retired": "2026-09-18",
+      "retiredCause": "No longer divergent: 1954bfa09 (2026-09-14, sprites-split-land item 4) rewrote the shipped cell AND its processed-full master together, so the downscale reproduces byte-identically and --verify-downscale reports this row as a STALE EXCLUSION. Kept here rather than deleted (CLAUDE.md 4.10b)."
     },
     {
       "file": "char-baron-sheet-walk8-r1c3.png",
       "commit": "21dc8739",
-      "reason": "Cutout-pocket alpha mend was applied to the 256px shipped cell after master extraction."
+      "reason": "Cutout-pocket alpha mend was applied to the 256px shipped cell after master extraction.",
+      "retired": "2026-09-18",
+      "retiredCause": "No longer divergent: 1954bfa09 (2026-09-14, sprites-split-land item 4) rewrote the shipped cell AND its processed-full master together, so the downscale reproduces byte-identically and --verify-downscale reports this row as a STALE EXCLUSION. Kept here rather than deleted (CLAUDE.md 4.10b)."
     },
     {
       "file": "char-baron-sheet-walk8-r1c4.png",
       "commit": "21dc8739",
-      "reason": "Cutout-pocket alpha mend was applied to the 256px shipped cell after master extraction."
+      "reason": "Cutout-pocket alpha mend was applied to the 256px shipped cell after master extraction.",
+      "retired": "2026-09-18",
+      "retiredCause": "No longer divergent: 1954bfa09 (2026-09-14, sprites-split-land item 4) rewrote the shipped cell AND its processed-full master together, so the downscale reproduces byte-identically and --verify-downscale reports this row as a STALE EXCLUSION. Kept here rather than deleted (CLAUDE.md 4.10b)."
     },
     {
       "file": "char-baron-sheet-walk8-r1c5.png",
       "commit": "21dc8739",
-      "reason": "Cutout-pocket alpha mend was applied to the 256px shipped cell after master extraction."
+      "reason": "Cutout-pocket alpha mend was applied to the 256px shipped cell after master extraction.",
+      "retired": "2026-09-18",
+      "retiredCause": "No longer divergent: 1954bfa09 (2026-09-14, sprites-split-land item 4) rewrote the shipped cell AND its processed-full master together, so the downscale reproduces byte-identically and --verify-downscale reports this row as a STALE EXCLUSION. Kept here rather than deleted (CLAUDE.md 4.10b)."
     },
     {
       "file": "char-baron-sheet-walk8-r1c6.png",
       "commit": "21dc8739",
-      "reason": "Cutout-pocket alpha mend was applied to the 256px shipped cell after master extraction."
+      "reason": "Cutout-pocket alpha mend was applied to the 256px shipped cell after master extraction.",
+      "retired": "2026-09-18",
+      "retiredCause": "No longer divergent: 1954bfa09 (2026-09-14, sprites-split-land item 4) rewrote the shipped cell AND its processed-full master together, so the downscale reproduces byte-identically and --verify-downscale reports this row as a STALE EXCLUSION. Kept here rather than deleted (CLAUDE.md 4.10b)."
     },
     {
       "file": "char-baron-sheet-walk8-r1c7.png",
       "commit": "21dc8739",
-      "reason": "Cutout-pocket alpha mend was applied to the 256px shipped cell after master extraction."
+      "reason": "Cutout-pocket alpha mend was applied to the 256px shipped cell after master extraction.",
+      "retired": "2026-09-18",
+      "retiredCause": "No longer divergent: 1954bfa09 (2026-09-14, sprites-split-land item 4) rewrote the shipped cell AND its processed-full master together, so the downscale reproduces byte-identically and --verify-downscale reports this row as a STALE EXCLUSION. Kept here rather than deleted (CLAUDE.md 4.10b)."
     },
     {
       "file": "char-baron-sheet-walk8-r2c0.png",
       "commit": "21dc8739",
-      "reason": "Cutout-pocket alpha mend was applied to the 256px shipped cell after master extraction."
+      "reason": "Cutout-pocket alpha mend was applied to the 256px shipped cell after master extraction.",
+      "retired": "2026-09-18",
+      "retiredCause": "No longer divergent: 1954bfa09 (2026-09-14, sprites-split-land item 4) rewrote the shipped cell AND its processed-full master together, so the downscale reproduces byte-identically and --verify-downscale reports this row as a STALE EXCLUSION. Kept here rather than deleted (CLAUDE.md 4.10b)."
     },
     {
       "file": "char-baron-sheet-walk8-r2c2.png",
       "commit": "21dc8739",
-      "reason": "Cutout-pocket alpha mend was applied to the 256px shipped cell after master extraction."
+      "reason": "Cutout-pocket alpha mend was applied to the 256px shipped cell after master extraction.",
+      "retired": "2026-09-18",
+      "retiredCause": "No longer divergent: 1954bfa09 (2026-09-14, sprites-split-land item 4) rewrote the shipped cell AND its processed-full master together, so the downscale reproduces byte-identically and --verify-downscale reports this row as a STALE EXCLUSION. Kept here rather than deleted (CLAUDE.md 4.10b)."
     },
     {
       "file": "char-baron-sheet-walk8-r2c7.png",
       "commit": "21dc8739",
-      "reason": "Cutout-pocket alpha mend was applied to the 256px shipped cell after master extraction."
-    },
-    {
-      "file": "char-hero-sheet-walk8-r0c4.png",
-      "commit": "21dc8739",
-      "reason": "Cutout-pocket alpha mend was applied to the 256px shipped cell after master extraction."
-    },
-    {
-      "file": "char-hero-sheet-walk8-r0c6.png",
-      "commit": "21dc8739",
-      "reason": "Cutout-pocket alpha mend was applied to the 256px shipped cell after master extraction."
-    },
-    {
-      "file": "char-hero-sheet-walk8-r1c1.png",
-      "commit": "21dc8739",
-      "reason": "Cutout-pocket alpha mend was applied to the 256px shipped cell after master extraction."
-    },
-    {
-      "file": "char-hero-sheet-walk8-r1c3.png",
-      "commit": "21dc8739",
-      "reason": "Cutout-pocket alpha mend was applied to the 256px shipped cell after master extraction."
-    },
-    {
-      "file": "char-hero-sheet-walk8-r2c0.png",
-      "commit": "04732223",
-      "reason": "White-foot metrology alpha mend was applied to the 256px shipped cell after master extraction."
-    },
-    {
-      "file": "char-hero-sheet-walk8-r2c3.png",
-      "commit": "04732223",
-      "reason": "White-foot metrology alpha mend was applied to the 256px shipped cell after master extraction."
-    },
-    {
-      "file": "char-hero-sheet-walk8-r3c1.png",
-      "commit": "21dc8739",
-      "reason": "Cutout-pocket alpha mend was applied to the 256px shipped cell after master extraction."
-    },
-    {
-      "file": "char-hero-sheet-walk8-r3c4.png",
-      "commit": "21dc8739",
-      "reason": "Cutout-pocket alpha mend was applied to the 256px shipped cell after master extraction."
-    },
-    {
-      "file": "char-hero-sheet-walk8-r3c5.png",
-      "commit": "21dc8739",
-      "reason": "Cutout-pocket alpha mend was applied to the 256px shipped cell after master extraction."
+      "reason": "Cutout-pocket alpha mend was applied to the 256px shipped cell after master extraction.",
+      "retired": "2026-09-18",
+      "retiredCause": "No longer divergent: 1954bfa09 (2026-09-14, sprites-split-land item 4) rewrote the shipped cell AND its processed-full master together, so the downscale reproduces byte-identically and --verify-downscale reports this row as a STALE EXCLUSION. Kept here rather than deleted (CLAUDE.md 4.10b)."
     }
   ]
 }

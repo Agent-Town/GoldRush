@@ -85,15 +85,27 @@ test('no reel that fitted the single-class budget can stop fitting', async () =>
   });
 });
 
-test('both blocker fixtures are admitted, and they were always measured on the wrong artifact', async () => {
+test('neither blocker fixture was ever refused for its SIZE, and they were always measured on the wrong artifact', async () => {
+  // RE-POINTED 2026-09-18 (F-DRB-11 item 1, `tasks/hygiene-battery-lossless-triangles.md`). The
+  // title was "both blocker fixtures are admitted", and both were, when this was written. One of
+  // the two is not admitted any more: ADR-005 stage 3 (owner 2026-09-07) removed `HOLD` from the
+  // door grammar and the Dome Basin reel's plans carry it, so the county door and the strict
+  // validator both refuse it — `artifacts/rider-parity-grammar/retirement-ledger.json` carries its
+  // row (`e9-dome-basin.attempt-1` / `tune-3-tape.json`, first refusal `orders[18].verb "HOLD" is
+  // unknown.`), and ADR-005 amendment clause 6 says retired rows are never repaired.
+  //
+  // That refusal does not touch what this test is FOR. The two blockers claimed these reels broke
+  // the byte ceiling; the measurement below says they never did, on any axis, and still says it.
+  // The admission half is therefore split rather than dropped: each reel's door verdict is asserted
+  // as the verdict it actually has, WITH the reason, so a silent flip in either direction reds.
   await withVite(async (vite) => {
     const { runTapeEnvelopeForContract } = await vite.ssrLoadModule('/src/playbook/PlaybookFormat.ts');
     const { validateTape } = await vite.ssrLoadModule('/functions/api/standings.ts');
     const { validateRunTape, submittedRunTape } = await vite.ssrLoadModule('/src/game/RunTape.ts');
 
-    for (const [label, relative, entries] of [
-      ['Dome Basin w16 (heat 12)', DOME_BASIN_W16, 265],
-      ['Relay Valley tune-1 (heat 11)', RELAY_VALLEY_TUNE1, 415],
+    for (const [label, relative, entries, doorVerdict] of [
+      ['Dome Basin w16 (heat 12)', DOME_BASIN_W16, 265, 'refused-adr005'],
+      ['Relay Valley tune-1 (heat 11)', RELAY_VALLEY_TUNE1, 415, 'admitted'],
     ]) {
       const { fileBytes, tape } = readTape(relative);
       const envelope = runTapeEnvelopeForContract(tape.contract);
@@ -102,8 +114,19 @@ test('both blocker fixtures are admitted, and they were always measured on the w
       assert.ok(compact <= envelope.maxTapeBytes, `${label}: ${compact} B must fit the ${envelope.maxTapeBytes} B ceiling`);
       assert.ok(tape.inputLog.entries.length <= envelope.maxEntries, `${label}: inside the entry axis`);
       assert.ok(tape.inputLog.durationTicks <= envelope.maxTicks, `${label}: inside the tick axis`);
-      assert.notEqual(validateTape(tape, tape.contract, tape.seed, tape.difficulty), null, `${label}: the county door admits it`);
-      assert.notEqual(validateRunTape(tape), null, `${label}: the local validator admits it`);
+
+      const verbs = tape.inputLog.entries.flatMap(({ a }) => a.flatMap(({ orders }) => (orders ?? []).map(({ verb }) => verb)));
+      if (doorVerdict === 'refused-adr005') {
+        assert.ok(verbs.includes('HOLD'), `${label}: the reel that ADR-005 retired is the one carrying HOLD`);
+        assert.equal(validateTape(tape, tape.contract, tape.seed, tape.difficulty), null, `${label}: the county door still admits a HOLD-carrying reel`);
+        assert.equal(validateRunTape(tape), null, `${label}: the local validator still admits a HOLD-carrying reel`);
+      } else {
+        assert.ok(!verbs.some((verb) => ['MOVE_TO', 'HOLD', 'FALLBACK_IF'].includes(verb)), `${label}: the control reel carries no retired verb`);
+        assert.notEqual(validateTape(tape, tape.contract, tape.seed, tape.difficulty), null, `${label}: the county door admits it`);
+        assert.notEqual(validateRunTape(tape), null, `${label}: the local validator admits it`);
+      }
+      // The submission gate reads the envelope, not the grammar, so it admits BOTH — which is the
+      // cleanest statement left of "the size was never the reason".
       assert.notEqual(submittedRunTape(tape), undefined, `${label}: the submission gate admits it`);
       // THE PREMISE THAT WAS NEVER TRUE. Both blockers compared the file on disk against the
       // ceiling; the door re-serialises compactly. Keep the gap visible.
