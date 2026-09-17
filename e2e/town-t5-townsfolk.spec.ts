@@ -3,6 +3,7 @@ import path from 'node:path';
 import { expect, test, type Page, type TestInfo } from '@playwright/test';
 import { META_PROGRESS_KEY } from '../src/game/MetaProgress';
 import { PROFILE_KEY, TOWN_NAME_KEY, profileDataKey, type ProfileState } from '../src/game/ProfileStorage';
+import { STORY_SPEAKERS } from '../src/story/speakers';
 import { TOWN_ACTORS, townActorBark, type TownActorId } from '../src/town/townsfolk';
 
 /**
@@ -15,6 +16,14 @@ import { TOWN_ACTORS, townActorBark, type TownActorId } from '../src/town/townsf
  */
 const ARTIFACT_DIR = path.resolve(
   process.env.GR_REFRESH_EVIDENCE === '1' ? 'artifacts/town-t5' : 'test-results/evidence/town-t5',
+);
+// The A13/A17 evidence sink follows the same F-HMV-2 rule as ARTIFACT_DIR above: the default is the
+// gitignored evidence tree, and GR_REFRESH_EVIDENCE=1 is the explicit ask that writes the committed
+// plates under artifacts/town-cast-rulings-a13-a17/.
+const RULING_ARTIFACT_DIR = path.resolve(
+  process.env.GR_REFRESH_EVIDENCE === '1'
+    ? 'artifacts/town-cast-rulings-a13-a17'
+    : 'test-results/evidence/town-cast-rulings-a13-a17',
 );
 const CONCEPT_PATH = path.resolve('assets/raw/concept-town-square.png');
 const PROFILE_ID = 'robin';
@@ -306,6 +315,86 @@ test('mobile bark card is readable above the stick zone and captures concept com
   const squarePath = await shot(page, testInfo, 'mobile-390-peopled-square', { fullPage: true });
   await renderConceptComparison(page, testInfo, squarePath);
   assertNoErrors(errors);
+});
+
+/**
+ * A13, owner 2026-09-14, verbatim: "A13 - sounds good". Her 32-cell walk sheet shipped and no loop
+ * reached it, so a player never saw her move. THE PLAYER-SEES-IT TEST (CLAUDE.md mistake #10): a
+ * PLAIN boot, no `?debug`, both projects, and the proof is her position moving off her own post
+ * rather than a source constant. Her cycle is the tavernkeeper's: 3 s at the post, ~4 s of walking
+ * to the schoolhouse approach, 30 s there, ~4 s back - so she is off her post by about 7 s and the
+ * 40 s budget is the ruling's own cycle plus margin.
+ */
+test('a plain boot walks the Elder off her schoolhouse post (A13)', async ({ page }, testInfo) => {
+  test.setTimeout(90_000);
+  const errors = collectErrors(page);
+  await seedStorage(page, { territory: 3, townName: 'Quartz Hill', hintsSeen: GROWTH_BEATS_SEEN });
+  const diagnostics = await openTown(page);
+  expect(await page.evaluate(() => window.__GR_TEST__), 'no debug seam on this boot').toBeUndefined();
+
+  const elder = actor(diagnostics, 'elder');
+  expect(elder.visible).toBe(true);
+  expect(elder.loop, 'the Elder is granted a patrol loop (A13)').toBe(true);
+  expect(elder.trailId, 'her route is her own building s cast trail').toBe('schoolhouse-cast');
+  const post = { ...elder.position };
+
+  const reading = { seconds: 0, distance: 0, frameKey: '' };
+  await expect
+    .poll(
+      async () => {
+        const now = await page.evaluate(() => {
+          const scene = window.__GR_TOWN_DIAGNOSTICS__!;
+          const entry = scene.actors.find(({ id }) => id === 'elder')!;
+          return { elapsed: scene.elapsed, position: entry.position, frameKey: entry.frameKey };
+        });
+        const distance = Math.hypot(now.position.x - post.x, now.position.z - post.z);
+        if (distance > reading.distance) {
+          reading.seconds = now.elapsed;
+          reading.distance = distance;
+          reading.frameKey = now.frameKey;
+        }
+        return distance;
+      },
+      { timeout: 40_000, message: 'the Elder leaves her post within 40 s of a plain boot' },
+    )
+    .toBeGreaterThan(1);
+  expect(reading.frameKey, 'she is on her own sheet while she walks').toMatch(/^char-elder-/);
+
+  await mkdir(RULING_ARTIFACT_DIR, { recursive: true });
+  await page.locator('#game-canvas').screenshot({
+    path: path.join(RULING_ARTIFACT_DIR, `${testInfo.project.name}-elder-patrol.png`),
+  });
+  testInfo.annotations.push({
+    type: 'A13',
+    description: `elder left her post by ${reading.distance.toFixed(2)} u at town elapsed ${reading.seconds.toFixed(2)} s, cell ${reading.frameKey}`,
+  });
+  assertNoErrors(errors);
+});
+
+/**
+ * A17, owner 2026-09-14, verbatim: "A17 - not sure what placeholder names? They are Pip and Juniper
+ * as I know them?" - the town's names are the canon on every surface and the cards' "Youngster A" /
+ * "Youngster B" were the placeholders. The IDS keep the shipped slot letters; only the displayed
+ * name moved, and this test asserts both halves so a later rename of either cannot pass quietly.
+ */
+test('the youngsters wear their town names on their story cards (A17)', () => {
+  const pip = TOWN_ACTORS.find(({ id }) => id === 'youngster_a')!;
+  const juniper = TOWN_ACTORS.find(({ id }) => id === 'youngster_b')!;
+  expect(pip.name).toBe('Pip');
+  expect(juniper.name).toBe('Juniper');
+
+  for (const id of ['youngster-a-e2', 'youngster-a-e4', 'youngster-a-e8'] as const) {
+    expect(STORY_SPEAKERS[id].name, `${id} card name`).toBe(pip.name);
+    expect(STORY_SPEAKERS[id].id, `${id} keeps its shipped id`).toBe(id);
+  }
+  for (const id of ['youngster-b-e2', 'youngster-b-e4'] as const) {
+    expect(STORY_SPEAKERS[id].name, `${id} card name`).toBe(juniper.name);
+    expect(STORY_SPEAKERS[id].id, `${id} keeps its shipped id`).toBe(id);
+  }
+  expect(
+    Object.values(STORY_SPEAKERS).filter((speaker) => /^Youngster [AB]$/.test(speaker.name)).map((speaker) => speaker.id),
+    'no story card still carries a youngster placeholder name',
+  ).toEqual([]);
 });
 
 function boxesOverlap(a: Box, b: Box): boolean {
