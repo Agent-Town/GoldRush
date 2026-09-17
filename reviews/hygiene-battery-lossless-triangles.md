@@ -1,0 +1,32 @@
+# Drain review — `hygiene-battery-lossless-triangles`: eight correctives the week's lands left on the ledger, plus two the drain found under them (attended drain, 2026-09-18)
+
+**Slice/branch/tip:** `fix/hygiene-battery-lossless-triangles` @ `9f5e4238c` — nine commits by a Claude Opus 5 implementer on the owner's Anthropic subscription in a scratch worktree cut from the phase-B merge `62e585bf5`; master `tasks/hygiene-battery-lossless-triangles.md`; the implementer's report: `artifacts/hygiene-battery-lossless-triangles/report.md`. **Merged as** `c267705ec` onto main `4422a1f73` (`git merge --no-ff`, zero conflicts); two drain cures on top (F-HYG-11, F-HYG-12); the engine hash on the merged tree is main's own pin #8 `540b49af…` (nothing here is in the corpus); landed by fast-forward at the hash the ledger row names.
+**Owner words, verbatim:** 2026-09-17 "Lets do them all." · "All on the Anthropic subscription" (hygiene was the sixth of six).
+
+## VERDICT: LANDED — seven of eight items done, one partial with a ruling owed; the E1 release loses 27 MB of leaked later-era art
+
+## 1. The items
+| # | item | outcome |
+|---|---|---|
+| 1 | F-DRB-11 + F-MAPL-4, the battery's swallowed twenty | DONE — the twenty run (124 tests / 121 pass / 0 fail / 3 skipped, was 116 / 5); three era-6 reds re-pointed with dated causes (the squall census now "the two contracts that declare a squall", the two relay-rush replays pin the ADR-005 refusal, the envelope test asserts each reel's door verdict); `rider-parity-retirement` had no assertion red — a rolldown/napi SIGBUS at teardown (F-HYG-9). The drain folded the twenty into stage 1 (F-HYG-11): the implementer had placed them in their own runner stage after `test:desk-declaration`, which refuses in any linked worktree, so no worktree battery could reach them. |
+| 2 | F-RECUT-7, repo-wide lossless re-encode | DONE — 1,816 encoded, 1,505 shrank, **211,149,764 → 159,700,493 B (−51,449,271 B, −24.4 %)**, every output verified identical on all four channels; 243 master-derived byte-identical cells excluded on purpose (F-1464-1); halo PASS 395/0/680/2059 "alpha and opaque RGB unchanged". |
+| 3 | F-SAR-7, the +1,922 cold triangles | DONE — **legitimate, not a leak**: `src/entities/pools.ts setProceduralVisible()` (the runtime land) keeps the enemy pool's ground-shadow instanced mesh visible when sprites hide the procedural bodies (96 × 20 tri = 1,920, renderOrder 0.5); the draw-call census moves on that one row only (10 → 11 calls). Both renderer-count artifacts re-recorded with a full provenance block; zero mismatches in 16 isolated runs. |
+| 4 | F-PFW-3, the moving `eraStamp` | DONE — the report half was already cured by a fire (F-2589-1); the mint-site comment now names the finding; `--check` "PROVENANCE ONLY", 83 of 83 floors match. |
+| 5 | F-RECUT-5, `master-divergent.json` | PARTIAL — all 26 rows re-measured: the nine hero rows re-recorded against `9a66f743a`, the 17 Baron rows stale (`1954bfa09` rewrote cell and master) and moved to `retired`; **the guard is not green: 227 cells in 19 families do not reproduce from their masters at all (F-HYG-10)** — refresh the masters or record them by design, a ruling owed (not the owner's; a factory decision). |
+| 6 | F-MAPDR-2, `build:release` red on main | DONE — the real leak was **86 files / 27,355,070 B** (85 later-era townsfolk portraits + the E5 sea tile) pulled into the E1 closure by static `new URL()` in `src/story/speakers.ts`; two redirect rows in the release plugin's own pattern. `build:release` rc=0 ("E1-only: 1,109 files, 124,020,394 B"); the release payload **34,509,068 B of 52,000,000** (−14,459,031 B, −29.5 %, back under even the old 35 MB rule). |
+| 7 | F-HYG-7, the census guard's temp trees | DONE — a `withFixture()` wrapper removes each root in a `finally` (test bodies byte-identical); 16 pass, 0 survivors; the whole-corpus census over 147 subjects: 0 leaking files. |
+| 8 | F-HYG-8 / F-TCRL-2, `cast-motion-wiring` | DONE — both pins stale, re-pointed with cause: the clerk's (8.35, 6.8) post is F-SPR-13 repaired (the old post was ~4 % visible in lite mobile), and the three standing actors pin their own planted idle; 2 + 2 passed. |
+
+**Found under them at the drain — F-HYG-12:** the battery's first stage had listed the runner itself as a test subject since the 2026-09-14 sprite drain's union (`node scripts/run-node-guards.mjs scripts/run-node-guards.mjs …`), so `node --test` executed `run-node-guards.mjs` as a test, and that child (empty argv) ran a nested full discovery with no file list inside one test — every battery from 2026-09-14 to 2026-09-18 carried that hidden nested run (the 15-minute durations, the contention guard's phantom second battery). The duplicate dropped; stage 1 now names 153 distinct files and the runner once. Rule recorded in memory.
+
+## 2. Gate table (merged tree)
+| gate | result |
+|---|---|
+| tsc / `npm run build` / `GR_RELEASE=e1 npm run build:release` | rc=0 / rc=0 / rc=0 (drain, merged tree) |
+| first-town payload (release flavour) | **34,509,068 B of 52,000,000** on the release build (headroom 17,490,932 B; the E1 release no longer carries 86 later-era files) |
+| engine era | main's pin #8 `540b49af…` (the branch touches no corpus path), guards 9/9 |
+| halo guard | PASS 395/0/680/2059 |
+| full `test:node-guards`, Node 26, with the twenty folded in and the runner token single | **the first fully green battery in a linked worktree this week: 920 tests, 915 pass, 0 fail, 5 skipped (890 s), every later stage green in the same chain (ticker stats, findings-state, blocker-panel, ruling-propagation, desk-declaration, nul-audit CLEAN, review-fixes 24/24), rc=0, no contention** — with the twenty folded into stage 1 (F-HYG-11), the runner token single (F-HYG-12), the census guard\'s temp trees removed (F-HYG-7) and the fixture sweep therefore green (`attended-battery-node26.log`) |
+
+## 3. What was touched
+`package.json` (the chain; F-HYG-11/-12 at the drain), the five guard files of item 1, `assets/processed/**` (1,505 files, lossless), `artifacts/wire-crawler-3d/renderer-counts-*.json` (provenance), `scripts/null-floor-anchors.mjs` (comment), `assets/master-divergent.json`, `vite.config.ts` (two redirect rows), `scripts/modified-tracked-evidence-census-guard.test.mjs` (teardown), `e2e/cast-motion-wiring.spec.ts` (two re-points), `artifacts/hygiene-battery-lossless-triangles/**`; at the drain this review, `tasks/goals.json`, `tasks/BACKLOG.md`.
