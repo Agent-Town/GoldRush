@@ -127,19 +127,23 @@ test('a plain town boot walks the Elder on anchored feet at the schoolhouse', as
   expect(elder.fullBodyStandIn).toBe(false);
   expect(elder.spriteHeight).toBeCloseTo(TOWN_CAST_METROLOGY.worldUnitsPerHero * TOWN_CAST_METROLOGY.elder, 3);
 
-  // SHE STANDS; SHE DOES NOT PATROL, and the cell the player sees is r0c0. Only the tavernkeeper
-  // and the storekeeper are granted a walk loop (TownScene.ts townActorPlazaPlacement), so the
-  // other 31 cells of her sheet are unreachable in today's town and the demand-paged cast group
-  // fetches exactly this one for her. Asserted rather than assumed, so that granting her a loop
-  // later is a deliberate change that has to come past this line.
-  expect(elder.loop, 'the Elder has no patrol loop today').toBe(false);
-  expect(elder.moving).toBe(false);
-  // Re-pointed 2026-09-15 (task sprite-animator-runtime-land): Astra's animation runtime gives the
-  // standing cast an IDLE clip of its own, so a motionless Elder no longer freezes on the walk
-  // sheet's first cell — she plays `char-elder-idle-r0c0.png`. The contract this line defends is
-  // unchanged (ONE cell, deliberately, and granting her a loop still has to come past here); only
-  // which sheet supplies that cell moved. Measured on the merged tree, both projects.
-  expect(elder.frameKey).toBe('char-elder-idle-r0c0.png');
+  // SHE PATROLS — RE-POINTED 2026-09-17, and this is the deliberate change the line below was
+  // written to intercept. Owner ruling A13 (2026-09-14, verbatim: "A13 - sounds good";
+  // `docs/OWNER-DESK-2026-09-06.md` A13, `tasks/town-cast-rulings-a13-a17.md`) grants the Elder the
+  // tavernkeeper's cycle in TownScene's patrol-loop map, so the 31 cells of her sheet that this
+  // spec called unreachable are reachable now and the demand-paged cast group fetches them as she
+  // walks. What the standing version asserted is KEPT, not dropped: her cell is still one of her
+  // OWN sheets, and everything below about feet, height and footline is untouched and still bites.
+  // The motion proof itself moved to `e2e/town-t5-townsfolk.spec.ts` ("a plain boot walks the Elder
+  // off her schoolhouse post"), which measures it against her post rather than against a constant.
+  expect(elder.loop, 'the Elder patrols her schoolhouse post (A13)').toBe(true);
+  // Her cycle is 3 s at the post, ~4 s walking, 30 s at the approach, ~4 s back, so this spec can
+  // sample her either resting or mid-stride: the walk sheet's cell when she moves, the idle clip's
+  // when she does not. Both are hers, and the PNG read below works from whichever it is. (The idle
+  // clip itself arrived 2026-09-15, task sprite-animator-runtime-land: a motionless Elder plays
+  // `char-elder-idle-r0c0.png` rather than freezing on the walk sheet's first cell.)
+  expect(elder.frameKey).toMatch(/^char-elder-(idle|sheet-walk8)-r\d+c\d+\.png$/);
+  if (!elder.moving) expect(elder.frameKey).toBe('char-elder-idle-r0c0.png');
 
   // The footline itself: the cell's own alpha bottom, projected through the billboard, has to land
   // on the ground plane. Before the F-A8-5 registration this drifted with every cell's headroom.

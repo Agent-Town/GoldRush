@@ -83,7 +83,14 @@ test('the plaza cast stands, walks, and faces truthfully without borrowed sheets
 
   await page.waitForTimeout(500);
   const after = await page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__!.actors.filter((actor) => actor.visible));
-  for (const id of ['tavernkeeper', 'elder'] as const) {
+  // THE ELDER LEFT THIS PAIR 2026-09-17, owner ruling A13 ("A13 - sounds good", 2026-09-14;
+  // tasks/town-cast-rulings-a13-a17.md): she is granted the tavernkeeper's patrol cycle, so her cell
+  // is no longer stable between two samples taken ~40 s apart — she is walking for 8 of every 41
+  // seconds and the sheet advances while she does. Her standing contract moved to
+  // e2e/elder-walk8-woman.spec.ts (one of HER sheets, feet anchored) and her motion contract to
+  // e2e/town-t5-townsfolk.spec.ts ("a plain boot walks the Elder off her schoolhouse post").
+  // The tavernkeeper stays: this pair's subject is a cast member whose cell the scene holds steady.
+  for (const id of ['tavernkeeper'] as const) {
     expect(after.find((actor) => actor.id === id)?.frameKey).toBe(before.find((actor) => actor.id === id)?.frameKey);
     expect(after.find((actor) => actor.id === id)?.frameKey).toMatch(/c0\.png$/);
   }

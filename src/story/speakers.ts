@@ -315,12 +315,17 @@ const oldDiggerPortraitUrl = new URL('../../assets/processed/townsfolk-old-digge
 // rock. It is probably science.") and B carries the book, chalk and sums (:45, "If the Baron comes,
 // he has to do sums first."). The plates were read at 384 px, at the true 74x90 card crop and at
 // 120 px against the shipped E1 children before any of this was written.
-// NAMES follow this file's own convention rather than the town cast's: the story card uses the ROLE
-// where src/town/townsfolk.ts uses a personal name (`clerk` is "Assay Clerk" here and "Ada Pike" at
-// townsfolk.ts:141). Stated because it is easy to read as an omission: these two DO have town-cast
-// names - Pip at townsfolk.ts:156 and Juniper at :176 - but both carry the post "Youngster", and the
-// A/B letters are the shipped slot names (src/assets/slots.ts:28-29), so the card says "Youngster A"
-// and "Youngster B". A future owner word naming them on the card reaches these two entries only.
+// NAMES: THE OWNER WORD THIS PARAGRAPH INVITED ARRIVED, AND THESE TWO ARE NOW THE EXCEPTION TO THIS
+// FILE'S ROLE CONVENTION. Ruling A17, 2026-09-14, verbatim: "A17 - not sure what placeholder names?
+// They are Pip and Juniper as I know them?" - so the town's names are the canon on every surface and
+// "Youngster A"/"Youngster B" were the placeholders (docs/OWNER-DESK-2026-09-06.md A17;
+// lore/characters.md:44; tasks/town-cast-rulings-a13-a17.md). The five entries below now read Pip
+// (townsfolk.ts:157) and Juniper (:177). The ids did NOT move: `youngster-a-*` and `youngster-b-*`
+// still carry the shipped slot letters (src/assets/slots.ts:28-29) and the portrait chain with them,
+// so nothing that keys a speaker has to know about this.
+// The convention itself is UNCHANGED for everyone else: the story card still uses the ROLE where
+// src/town/townsfolk.ts uses a personal name (`clerk` is "Assay Clerk" here and "Ada Pike" at
+// townsfolk.ts:142). These two are named because the owner names them, not because the rule moved.
 // REGISTERED WITH NO BEAT, on row 74's precedent and stated so it is not read as an oversight: no
 // beat in src/story/beats.ts keys any youngster id today. THE CLERK LINE is the future consumer of
 // A's face - lore/STORYBOOK.md:90 makes the schoolhouse's first graduate the Depot clerk "(the
@@ -982,31 +987,31 @@ export const STORY_SPEAKERS: Record<StorySpeakerId, StorySpeaker> = {
   // B is the girl with the book and the sums: E2 and E4. There is no B E8 plate and none is claimed.
   'youngster-a-e2': {
     id: 'youngster-a-e2',
-    name: 'Youngster A',
+    name: 'Pip',
     portraitUrl: youngsterAE2PortraitUrl,
     objectPosition: ERA_CAST_OBJECT_POSITION,
   },
   'youngster-a-e4': {
     id: 'youngster-a-e4',
-    name: 'Youngster A',
+    name: 'Pip',
     portraitUrl: youngsterAE4PortraitUrl,
     objectPosition: ERA_CAST_OBJECT_POSITION,
   },
   'youngster-a-e8': {
     id: 'youngster-a-e8',
-    name: 'Youngster A',
+    name: 'Pip',
     portraitUrl: youngsterAE8PortraitUrl,
     objectPosition: ERA_CAST_OBJECT_POSITION,
   },
   'youngster-b-e2': {
     id: 'youngster-b-e2',
-    name: 'Youngster B',
+    name: 'Juniper',
     portraitUrl: youngsterBE2PortraitUrl,
     objectPosition: ERA_CAST_OBJECT_POSITION,
   },
   'youngster-b-e4': {
     id: 'youngster-b-e4',
-    name: 'Youngster B',
+    name: 'Juniper',
     portraitUrl: youngsterBE4PortraitUrl,
     objectPosition: ERA_CAST_OBJECT_POSITION,
   },

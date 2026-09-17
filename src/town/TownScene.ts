@@ -3393,7 +3393,7 @@ class TownActorRuntime {
       }
     } else if (
       this.definition.fullBody?.animated
-      && (!this.resting || this.frame !== 0 || ((this.definition.id === 'tavernkeeper' || this.definition.id === 'storekeeper') && this.currentDirection !== this.definition.facing))
+      && (!this.resting || this.frame !== 0 || (isPlazaPatrolActor(this.definition.id) && this.currentDirection !== this.definition.facing))
     ) {
       // Loop points can be float-identical on alternate frames; only snap to the
       // standing frame after a real stop, or the walk thrashes back to column 0.
@@ -3401,7 +3401,7 @@ class TownActorRuntime {
       if (this.stillElapsed >= 0.15) {
         this.frameElapsed = 0;
         this.frame = 0;
-        if (this.definition.id === 'tavernkeeper' || this.definition.id === 'storekeeper') {
+        if (isPlazaPatrolActor(this.definition.id)) {
           this.currentDirection = this.definition.facing;
         }
         this.resting = true;
@@ -5133,7 +5133,24 @@ function createSurveyPlot(building: TownBuilding): THREE.Group {
   return group;
 }
 
-function townActorPlazaPlacement(actor: TownActorDefinition): TownActorDefinition {
+/**
+ * THE PATROL-LOOP MAP for the plaza cast: who walks between their post and their building's
+ * approach, and on what cycle. Everyone else stands. The route is derived from the PLACED post, so
+ * an actor's loop moves with their building — `scripts/town-patrol-monument.test.mjs` reads it
+ * through `townActorPlazaPlacement` (below) and holds every segment clear of the pan monument.
+ *
+ * THE ELDER JOINS IT 2026-09-17 on owner ruling A13 (2026-09-14, verbatim: "A13 - sounds good"),
+ * with the tavernkeeper's cycle exactly — 8 s of walking, a 3 s pause at her schoolhouse post and a
+ * 30 s pause at the approach. Her 32-cell walk sheet shipped in `374b0154f` and no loop reached it,
+ * so a player never saw her move (`docs/OWNER-DESK-2026-09-06.md` §A13).
+ */
+const TOWN_PLAZA_PATROL_CYCLES: Partial<Record<TownActorId, Omit<NonNullable<TownActorDefinition['loop']>, 'trailId' | 'points'>>> = {
+  tavernkeeper: { seconds: 8, phase: 0, pauses: { 0: 3, 1: 30 } },
+  storekeeper: { seconds: 7, phase: 0.5, pauses: { 0: 3, 1: 2 } },
+  elder: { seconds: 8, phase: 0, pauses: { 0: 3, 1: 30 } },
+};
+
+export function townActorPlazaPlacement(actor: TownActorDefinition): TownActorDefinition {
   if (actor.loop) return actor;
   const offset = (actor.fullBody ? undefined : actor.portraitPost?.offset) ?? townPlazaLayout.actorOffsets[actor.id as keyof typeof townPlazaLayout.actorOffsets];
   if (!offset) return actor;
@@ -5143,17 +5160,20 @@ function townActorPlazaPlacement(actor: TownActorDefinition): TownActorDefinitio
     ...actor,
     position: { x: anchor.position.x + offset.x, z: anchor.position.z + offset.z },
   };
-  if (actor.id !== 'tavernkeeper' && actor.id !== 'storekeeper') return placement;
+  const cycle = TOWN_PLAZA_PATROL_CYCLES[actor.id];
+  if (!cycle) return placement;
   return {
     ...placement,
     loop: {
       trailId: `${actor.anchor}-cast`,
       points: [placement.position, townPlazaSlot(actor.anchor).approach],
-      seconds: actor.id === 'tavernkeeper' ? 8 : 7,
-      phase: actor.id === 'tavernkeeper' ? 0 : 0.5,
-      pauses: actor.id === 'tavernkeeper' ? { 0: 3, 1: 30 } : { 0: 3, 1: 2 },
+      ...cycle,
     },
   };
+}
+
+function isPlazaPatrolActor(id: TownActorId): boolean {
+  return id in TOWN_PLAZA_PATROL_CYCLES;
 }
 
 function roundRect(ctx: CanvasRenderingContext2D, x: number, y: number, width: number, height: number, radius: number): void {
