@@ -17,7 +17,9 @@
  *   4. BOTH ENGINES — `HeadlessContractSim` is proven LIVE here; the browser half is proven by
  *      source, in `board-launchable-guard`'s manner, because `Game.ts` cannot boot under node. The
  *      live browser proof is `e2e/e10-ember-shore-squall.spec.ts`, which reads the same numbers.
- *   5. NO SPILLOVER — no other board contract grows a `now.squall` row.
+ *   5. NO SPILLOVER — only a contract that DECLARES the clock grows a `now.squall` row. Two do
+ *      today (Ember Shore, Archive World); an undeclared third would be the spill. Re-pointed
+ *      2026-09-18 from "no other board contract" — see `ARCHIVE_CONTRACT` below for the cause.
  *   6. NO RENDER REACH (F-A8-7) — the scheduler both engines construct must not drag `three` or
  *      the DOM into the headless graph; the last module that did collapsed `playwright --list` to
  *      "Total: 0 tests in 0 files".
@@ -30,6 +32,18 @@ import { createServer } from 'vite';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
 const CONTRACT = 'e10-ember-shore';
+/**
+ * The second declaring contract, added 2026-09-18 (F-DRB-11 / `hygiene-battery-lossless-triangles`
+ * item 1). The Archive World reuses THIS scheduler family by design, not by spillover:
+ * `specs/agent-play/e10-archive-world-restoration.md:20` verbatim — "Squalls: identical scheduler
+ * family to Ember Shore (`specs/agent-play/e10-ember-shore-preserve.md` §3) — calm 60s /
+ * telegraph 8s / squall 25s" — and `src/meta/ContractFamilies.ts:2984` REFUSES an archive-world
+ * twist that omits the clock ("Archive restoration needs light bindings and its own squall clock").
+ * The data landed in `assets/contracts/epoch-10-deepsky/contracts.json` (`883a3521e`, 2026-09-12),
+ * one slice after E10S-2 wrote the clause below, so the single-contract expectation was stale from
+ * that commit on — and invisible until the battery stopped swallowing this file.
+ */
+const ARCHIVE_CONTRACT = 'e10-archive-world';
 const STEP_SECONDS = 1 / 30;
 
 /**
@@ -193,11 +207,16 @@ test('the headless engine publishes the squall on the view, and only there', asy
   console.log(JSON.stringify({ engine: 'HeadlessContractSim', tick: squall.tick, phase: squall.phase, transitions: squall.transitions }));
 });
 
-test('no other board contract grows a squall', () => {
+test('only the two contracts that declare a squall grow one', () => {
   const armed = listBoardContracts()
     .filter((contract) => E10SquallScheduler.create(contract).isDeclared)
     .map((contract) => contract.id);
-  assert.deepEqual(armed, [CONTRACT], 'a second contract armed the squall scheduler; every other view and hash must be untouched');
+  // RE-POINTED 2026-09-18 (F-DRB-11, item 1): the clause was "no other board contract grows a
+  // squall", written at E10S-2 when the Ember Shore was the only map with the clock. The Archive
+  // World declares the same scheduler family BY DESIGN (see ARCHIVE_CONTRACT above), so the
+  // invariant is now "exactly the two DECLARED contracts, and nothing else" — which is the fact
+  // that was always load-bearing: a THIRD map growing a squall silently would still be caught.
+  assert.deepEqual(armed, [CONTRACT, ARCHIVE_CONTRACT], 'an undeclared contract armed the squall scheduler; every other view and hash must be untouched');
 });
 
 test('the browser engine ticks the same scheduler at the same point in its order', () => {
