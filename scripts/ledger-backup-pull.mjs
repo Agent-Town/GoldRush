@@ -47,6 +47,24 @@ if (!remoteFile) throw new Error(`no ledger backups found on ${HOST}`);
 const localFile = path.join(destination, path.basename(remoteFile));
 if (existsSync(localFile)) {
   console.log(`newest ledger backup already present: ${localFile}`);
+  // F-2600-1: this exit and the `already present for today` exit above BOTH read as
+  // "nothing to do", and only ONE of them is a discharge. Worse, this one is NEVER a
+  // discharge -- provably, not usually: reaching here means today's mirror is absent
+  // locally (the :33 guard above) while the box's NEWEST is present locally, so the
+  // box's newest CANNOT be today's. So say the outstanding day out loud, at the site,
+  // rather than leaving a handoff to infer a discharge from the word "present".
+  //
+  // WHY IT HAPPENS, measured s2600 on the box rather than inferred: the droplet names
+  // its file in UTC (ops/droplet/ledger-backup.mjs) and writes it on a systemd timer,
+  // `goldrush-ledger-backup.timer` -- next fire 02:08:48 UTC, last five real writes
+  // 02:26-02:57 UTC. Our `todayName` is UTC too. So between 00:00 UTC and ~02:10 UTC
+  // today's mirror DOES NOT EXIST YET and every pull in that window is a guaranteed
+  // no-op. That is a SUPPLY window, not a fetch failure -- nothing is wrong, and
+  // nothing is owed except patience.
+  console.log(`⏳ NOT DISCHARGED for today — ${todayName} does not exist on the box yet.`);
+  console.log(`   The droplet writes it on goldrush-ledger-backup.timer, ~02:10–03:00 UTC`);
+  console.log(`   (measured s2600: timer next 02:08:48 UTC; last five writes 02:26–02:57 UTC).`);
+  console.log(`   A pull before that window CANNOT succeed. Re-run after it; nothing is wrong.`);
   process.exit(0);
 }
 
