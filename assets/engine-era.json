@@ -1,7 +1,7 @@
 {
   "era": 6,
   "name": "the Re-surveyed Claims",
-  "engineHash": "df1784d4ae13590b676dbe7482f44c314c6f34946ab8efdff1dd5a953f373890",
+  "engineHash": "95972a35a5172a35bfc743de7f91951f61a97c46e9f71e6d68096335dc21df46",
   "declaredAt": "2026-09-14",
   "note": "Era 6 opens with Astra's map campaign (sol/map-art-inventory-20260908 883a3521e) landed by maps-campaign-land-era6 on 2026-09-14: 17 contracts re-parameterised (tileParams on 13, twists on 3, briefings on 5), the door tightened to the contract's own research epoch, 66 src files, the map-rebuild-spike terrain, plaza props and flotilla models. Owner ruling 2026-09-13, verbatim: \"ah, that is all no problem. we don't have players yet so we can just keep going\" and \"we then have to make another run in the future but not immediately\"; the name ratified 2026-09-14 (\"the Re-surveye Claims\" is good for me). Every era-5 reel reads \"This reel rode era 5; the county accepts era 6\" and stands retired, counted. Heat 14 re-rides the boards on this era when the owner says so.",
   "viewSchema": {
@@ -113,6 +113,12 @@
       "engineHash": "df1784d4ae13590b676dbe7482f44c314c6f34946ab8efdff1dd5a953f373890",
       "pinnedAt": "2026-09-16",
       "cause": "same era, pin #5: the playability-first-wave-e2-e6 drain re-published the Trestle's and the Incline's mask tables (assets/contracts/epoch-2-steamworks/mask-tables, F-PFW-4) AFTER pin #4 was measured; mask tables are published mirrors of contract data the sim already read, so no reel changes verdict. Caught by the post-fast-forward era guard on main; the production deploy at ae68b3c3 carried this tree without the pin for the minutes between, so it is re-deployed with it (F-HEAT6-SKEW class)",
+      "aliases": []
+    },
+    {
+      "engineHash": "95972a35a5172a35bfc743de7f91951f61a97c46e9f71e6d68096335dc21df46",
+      "pinnedAt": "2026-09-17",
+      "cause": "same era, pin #6: boss-models-batch (owner 2026-09-17 \"Lets do them all.\") — Astra's rebuilt Dredge Queen and Old Digger models with the F-SAR-4 morph-contract hunks (the claw's Cycle_OpenGrab, the split bucket wheels) in DredgeQueenBossSystem.ts and OldDiggerBossSystem.ts; render-side only, the sim is untouched, no reel changes verdict",
       "aliases": []
     }
   ],
