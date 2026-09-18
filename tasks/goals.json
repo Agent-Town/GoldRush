@@ -5304,10 +5304,13 @@
             {
               "id": "art-needs-cells-codex-strips",
               "title": "Owner 2026-09-18 \"Yes, please use Codex to generate these strips.\": the seven sprite strips the roster still lacks (Steam Wrecker south-east; Claim Jumper south, east and four diagonals) generated with Codex image_gen in the ART slot — generation only, processing and wiring fire-side after the quota reset",
-              "status": "queued",
+              "status": "blocked",
               "taskFile": "art-needs-cells-codex-strips.md",
               "registeredBy": "attended 2026-09-18",
-              "lane": "art (Codex image_gen on the owner's ChatGPT subscription — a NARROW owner exception to tasks/CODEX-WALL for this one generation task)"
+              "lane": "art (Codex image_gen on the owner's ChatGPT subscription — a NARROW owner exception to tasks/CODEX-WALL for this one generation task)",
+              "blockClass": "gate-side",
+              "blockedReason": "GENERATED 2026-09-18 14:18Z (Codex image_gen, 24 min, seven 1024x1024 sheets); the runner's self-QA PARKED all seven on bars the pipeline handles (exact #ff00ff purity, one foot line across BOTH rows, a 12-px spread) — eyes-on attended: usable rows (the Steam Wrecker's lamp lit 137/141/115/129 px in all four). Lift by PROCESSING: extract with the standard key tolerance (--tol 26 + feather) at each family's cell size and per-row scale to the band, halo guard, wire, LEDGER — a pipeline-v2 art drain after the weekly quota reset (evidence mirrored in artifacts/needs-cells-codex-strips/).",
+              "generatedAt": "2026-09-18"
             }
           ]
         }
