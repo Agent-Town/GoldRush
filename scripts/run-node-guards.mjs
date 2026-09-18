@@ -1,4 +1,7 @@
 import { spawnSync } from 'node:child_process';
+import { mkdtempSync, readFileSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join, resolve } from 'node:path';
 
 import {
   FIRE_SHELL_NODE_GUARDS_REASON,
@@ -76,12 +79,69 @@ if (concurrency !== undefined) {
   args.push(`--test-concurrency=${concurrency}`);
 }
 
-args.push(...process.argv.slice(2));
+const files = process.argv.slice(2);
+
+// WHY A SIGNAL DEATH IS RE-RUN ONCE (F-NCB-10, measured 2026-09-18 attended). A node:test child
+// that dies by a SIGNAL never reached a verdict: node reports the whole FILE as one failure whose
+// only text is 'test failed', and the spec reporter shows nothing else. On this host the measured
+// cause is vite's rolldown native binding (`rolldown-binding.darwin-arm64.node` 1.0.1 under vite
+// 8.0.13) crashing at server teardown — SIGBUS in `ReferenceWithFinalizer::New` from
+// `ThreadSafeFunction::AsyncCb`, SIGSEGV in `EnqueueFinalizer` during GC — under Node 26.4.0 AND
+// Node 24.19.0 alike, 2 of 3 direct runs while an implementer's playwright shares the box, and on
+// plain main. 71 guard files open an in-process vite server, so any of them can die this way, and a
+// fire reading the red as a code verdict inherits a mystery it cannot attribute (the F-BATT class).
+// The arm below re-runs ONLY files whose TAP record carries a `signal:`, ONLY when every failure
+// in the run was such a death, ONCE, alone, and says so on stderr. An assertion failure anywhere
+// disables it; a file that dies again stays red. A non-zero EXIT CODE is still propagated exactly.
+function signalDeaths(tapPath) {
+  let tap = '';
+  try { tap = readFileSync(tapPath, 'utf8'); } catch { return { only: false, files: [] }; }
+  const failMatch = /^# fail (\d+)$/m.exec(tap);
+  const failCount = failMatch ? Number(failMatch[1]) : Number.NaN;
+  const found = [];
+  const block = /^not ok \d+ - (.+)\n([\s\S]*?)^  \.\.\.$/gm;
+  let m;
+  while ((m = block.exec(tap))) {
+    const sig = /^\s+signal: '([A-Z0-9]+)'/m.exec(m[2]);
+    if (!sig) continue;
+    const name = m[1].trim();
+    const arg = files.find((f) => f === name || resolve(f) === resolve(name));
+    if (arg) found.push({ arg, file: name, signal: sig[1] });
+  }
+  return { only: found.length > 0 && failCount === found.length, files: found };
+}
 
 const contention = contentionStamp();
 if (contention) console.error(contention);
 
-const child = spawnSync(process.execPath, args, { stdio: 'inherit' });
-if (child.error) throw child.error;
+const tapDir = mkdtempSync(join(tmpdir(), 'node-guards-tap-'));
+const tapPath = join(tapDir, 'battery.tap');
+const reporters = [
+  '--test-reporter=spec', '--test-reporter-destination=stdout',
+  '--test-reporter=tap', `--test-reporter-destination=${tapPath}`,
+];
+let status;
+try {
+  const child = spawnSync(process.execPath, [...args, ...reporters, ...files], { stdio: 'inherit' });
+  if (child.error) throw child.error;
+  status = child.status ?? 1;
+  if (status !== 0) {
+    const deaths = signalDeaths(tapPath);
+    if (deaths.only) {
+      const named = deaths.files.map(({ file, signal }) => `${file} died by ${signal}`).join(', ');
+      console.error(`⚠️ SIGNAL-DEATH RETRY (F-NCB-10): ${named} — a signal death of the node child is not a test verdict (measured cause on this host: vite's rolldown native binding crashing at server teardown). Re-running ${deaths.files.length} file(s) alone, once.`);
+      const retry = spawnSync(process.execPath, [...args, ...deaths.files.map(({ arg }) => arg)], { stdio: 'inherit' });
+      if (retry.error) throw retry.error;
+      if (retry.status === 0) {
+        console.error(`✅ SIGNAL-DEATH RETRY: passed alone — ${deaths.files.map(({ file }) => file).join(', ')}. The battery is green; the crash is recorded above, not hidden.`);
+        status = 0;
+      } else {
+        console.error(`❌ SIGNAL-DEATH RETRY: failed again (rc=${retry.status ?? 'signal ' + retry.signal}) — a real red, or a crash that survives isolation.`);
+      }
+    }
+  }
+} finally {
+  rmSync(tapDir, { recursive: true, force: true });
+}
 if (contention) console.error(contention);
-process.exit(child.status ?? 1);
+process.exit(status);
