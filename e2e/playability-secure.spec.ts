@@ -132,23 +132,32 @@ function epochOf(contractId: string): string {
   return listEpochs().find((entry) => entry.id.startsWith(`epoch-${ordinal}-`))?.id ?? 'unknown';
 }
 
-/** Identical to the smoke's seed: a player who has earned the whole board, no test-only channel. */
-function seedEntries(): Array<[string, string]> {
+/**
+ * The smoke's seed — a player who has earned the whole board, no test-only channel — WITH ONE
+ * DIFFERENCE, and the difference is the whole `banks` question.
+ *
+ * `Scoreboard.trimScores` (src/game/Scoreboard.ts:30) keeps the global top five PLUS each
+ * contract's own best. The smoke seeds every contract at `waves: 30, gold: 400`, so a genuine
+ * wave-20 secure on the Dry Gulch is WORSE than the row already sitting there and is trimmed away
+ * the instant it is written: measured, AFTER run 1 — the Claim Secured overlay appeared at wave 20
+ * / 600.1 s, "Return to Town" was clicked, and the click wrote ZERO new rows. Nothing is wrong with
+ * the game; the seed was standing on the answer.
+ *
+ * So the contract UNDER TEST is seeded at the worst standing that still counts as secured
+ * (`waves: 1`, empty purse). Every other contract keeps the smoke's row, so every unlock the board
+ * needs is untouched — including this contract's, which reads `secured`, not `waves`.
+ */
+function seedEntries(underTest: string): Array<[string, string]> {
   const profile: ProfileState = {
     version: 2,
     activeId: PROFILE_ID,
     profiles: [{ id: PROFILE_ID, name: 'Robin', createdAt: 1, updatedAt: 1, difficultyPreset: 'trail', hintsSeen: [] }],
   };
-  const scores = BOARD_CONTRACTS.map((entry, index) => ({
-    kills: 40,
-    gold: 400,
-    timeAlive: 600,
-    at: index + 1,
-    waves: 30,
-    secured: true,
-    contractId: entry.id,
-    profileName: 'Robin',
-  }));
+  const scores = BOARD_CONTRACTS.map((entry, index) =>
+    entry.id === underTest
+      ? { kills: 0, gold: 0, timeAlive: 1, at: index + 1, waves: 1, secured: true, contractId: entry.id, profileName: 'Robin' }
+      : { kills: 40, gold: 400, timeAlive: 600, at: index + 1, waves: 30, secured: true, contractId: entry.id, profileName: 'Robin' },
+  );
   const meta = JSON.stringify({ version: 1, tracks: { territory: 40, science: 999, hero: 40, agent: 40 } });
   const research = JSON.stringify({ version: 1, steps: 999, taken: [], proposalSalt: 0, pinnedTarget: null, metaScienceCursor: 999 });
   const logical: Array<[string, string]> = [
@@ -193,7 +202,7 @@ async function seed(page: Page, contractId: string): Promise<void> {
         sessionStorage.setItem(guardKey, '1');
       } catch {}
     },
-    { entries: seedEntries(), launchKey: 'gr.contract.launch.v1', launchValue: contractId, guardKey: 'gr.secure.seeded.v1' },
+    { entries: seedEntries(contractId), launchKey: 'gr.contract.launch.v1', launchValue: contractId, guardKey: 'gr.secure.seeded.v1' },
   );
 }
 
