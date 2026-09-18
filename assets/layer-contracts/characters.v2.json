@@ -3953,7 +3953,7 @@
       "walk4": {
         "version": 1,
         "status": "ACTIVE",
-        "notes": "s64 art-run-004: 4-phase gait walk cycles for the claim jumper, 8-way, all directions EXPLICIT (no mirrors, 32 cells). Columns = contact/down/passing/up; sheet-a rows s/se/e/ne, sheet-b rows n/nw/w/sw. Extracted @scale=1; output heights 277-349px (a avg 329, b avg 293) sit in the jumper-rotation walking band (298-332, back rows shorter) so no size-pop vs the active rotation. This block ALSO resolves the jumper SCALE DEBT flagged in the rotations note (rotation figures 296-331 vs side-sheet 409-439): walk4 heights match the rotation band. ACTIVE: SpriteAnimator folds these cells into rotation directions for the walk clip, preferring the explicit sw/nw cells over rotation mirrors. No weapons in any cell (canon brief §9). Contract fps stays 8; Balance.anim.walkFps is the runtime stride knob.",
+        "notes": "s64 art-run-004: 4-phase gait walk cycles for the claim jumper, 8-way, all directions EXPLICIT (no mirrors, 32 cells). Columns = contact/down/passing/up; sheet-a rows s/se/e/ne, sheet-b rows n/nw/w/sw. Extracted @scale=1; output heights 277-349px (a avg 329, b avg 293) sit in the jumper-rotation walking band (298-332, back rows shorter) so no size-pop vs the active rotation. This block ALSO resolves the jumper SCALE DEBT flagged in the rotations note (rotation figures 296-331 vs side-sheet 409-439): walk4 heights match the rotation band. ACTIVE: SpriteAnimator folds these cells into rotation directions for the walk clip, preferring the explicit sw/nw cells over rotation mirrors. No weapons in any cell (canon brief §9). Contract fps stays 8; Balance.anim.walkFps is the runtime stride knob. needs-cells-art-batch, 2026-09-18 (owner, verbatim: 'yes! lets go for the cells'): the two cardinals the roster land listed as needs-cells (F-SRR-2, 'the Claim Jumper's four cardinal cells are four takes at one scale; only new cells fix it') are new art — `n` runs char-jumper-north4-v1 and `w` runs char-jumper-west4-v1, 4 cells each at 256, generated on the owner's Higgsfield credits from the sheet-b rows they replace. MEASURED, sheet-b -> new: n 146-156 px (57.03-60.94% of cell) -> 160-170 px (62.50-66.41%), w 146-156 px (57.03-60.94%) -> 158-172 px (61.72-67.19%), against the sheet-a cardinals s 166-170 (64.84-66.41%) and e 156-164 (60.94-64.06%). All four cardinals now sit in one band; the sheet-b DIAGONALS nw and sw stay at 139-150 px and are OUT of this task's firewall — recorded, not touched.",
         "mirrors": {},
         "directions": {
           "s": {
@@ -4043,10 +4043,10 @@
           "n": {
             "frames": {
               "files": [
-                "char-jumper-sheet-walk4-b-r0c0.png",
-                "char-jumper-sheet-walk4-b-r0c1.png",
-                "char-jumper-sheet-walk4-b-r0c2.png",
-                "char-jumper-sheet-walk4-b-r0c3.png"
+                "char-jumper-north4-v1-r0c0.png",
+                "char-jumper-north4-v1-r0c1.png",
+                "char-jumper-north4-v1-r1c0.png",
+                "char-jumper-north4-v1-r1c1.png"
               ]
             },
             "clips": {
@@ -4085,10 +4085,10 @@
           "w": {
             "frames": {
               "files": [
-                "char-jumper-sheet-walk4-b-r2c0.png",
-                "char-jumper-sheet-walk4-b-r2c1.png",
-                "char-jumper-sheet-walk4-b-r2c2.png",
-                "char-jumper-sheet-walk4-b-r2c3.png"
+                "char-jumper-west4-v1-r0c0.png",
+                "char-jumper-west4-v1-r0c1.png",
+                "char-jumper-west4-v1-r1c0.png",
+                "char-jumper-west4-v1-r1c1.png"
               ]
             },
             "clips": {
