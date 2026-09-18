@@ -5304,13 +5304,13 @@
             {
               "id": "art-needs-cells-codex-strips",
               "title": "Owner 2026-09-18 \"Yes, please use Codex to generate these strips.\": the seven sprite strips the roster still lacks (Steam Wrecker south-east; Claim Jumper south, east and four diagonals) generated with Codex image_gen in the ART slot — generation only, processing and wiring fire-side after the quota reset",
-              "status": "blocked",
+              "status": "merged",
               "taskFile": "art-needs-cells-codex-strips.md",
               "registeredBy": "attended 2026-09-18",
               "lane": "art (Codex image_gen on the owner's ChatGPT subscription — a NARROW owner exception to tasks/CODEX-WALL for this one generation task)",
-              "blockClass": "gate-side",
-              "blockedReason": "GENERATED 2026-09-18 14:18Z (Codex image_gen, 24 min, seven 1024x1024 sheets); the runner's self-QA PARKED all seven on bars the pipeline handles (exact #ff00ff purity, one foot line across BOTH rows, a 12-px spread) — eyes-on attended: usable rows (the Steam Wrecker's lamp lit 137/141/115/129 px in all four). Lift by PROCESSING: extract with the standard key tolerance (--tol 26 + feather) at each family's cell size and per-row scale to the band, halo guard, wire, LEDGER — a pipeline-v2 art drain after the weekly quota reset (evidence mirrored in artifacts/needs-cells-codex-strips/).",
-              "generatedAt": "2026-09-18"
+              "generatedAt": "2026-09-18",
+              "mergeHash": "498a64a8f010881e9cda87a3dd0a6ab12599a167",
+              "drainNotes": "DRAINED s2627 2026-09-18: the gate-side hold is lifted by PROCESSING, which is what it named as its lift condition. 5 of 7 facings LANDED (20 cells): char-jumper-{s4,e4,sw4,ne4,nw4}-codex-v1 at 146-158 px in a 256 cell against the landed references’ 146-156, cross-facing means 150.8-151.5 (no size-pop), foot scatter 23-55 px raw -> 1-6 px, halo residue 0 of 1,151,824 sub-opaque px. PARKED: jumper se on intra-sheet spread 16 px (F-2627-2, needs a retake, not a transform) and steamwrecker se on SCALE (F-2627-1 — the lamp now PASSES at 137/141/115/129 px; it needs a ×1.079 upscale the extractor caps and the contract refuses, so regenerate at a larger native cell). NOT WIRED by design (F-2627-3): the slot is runtime-dormant and the master says wire it when it wakes. reviews/needs-cells-codex-strips.md"
             }
           ]
         }
