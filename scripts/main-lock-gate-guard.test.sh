@@ -78,6 +78,38 @@ else
   exit 1
 fi
 
+# s2632 / F-2632-4 — STATUS line-1 is an INPUT to fire-runner.sh's dry-board guard, not only a
+# report. While the divergence above stands, that guard greps line-1 for a bare literal — so a fire
+# that QUOTES that literal in its own handoff prose makes the predicate MATCH, forcing dry=0 on
+# every tick, disabling the skip guard, and booting a full metered Opus fire per tick on a dry
+# board. That is exactly the waste the owner prompted the guard to stop. s2632 did it to itself
+# while writing F-2632-1 up and measured the match before any tick could act on it.
+# The needle is DERIVED from fire-runner.sh, never transcribed, so changing the literal changes
+# what this arm asks about in the same commit (the F-2365-1 pattern). Self-retires: once the
+# predicate is cured to the house form there is no bare needle to collide with.
+# The result is DECLARED either way (F-2208-1) — a check that reports only on failure cannot be
+# told from a check that silently never ran, which is how a fixture-rooted harness skips it.
+if printf '%s' "$fline" | grep -q '\*ACTIVE\*'; then
+  echo "note: fire-runner line-1 board check not applicable — predicate is the house form"
+elif [ ! -r "$ROOT/STATUS.md" ]; then
+  echo "note: fire-runner line-1 board check SKIPPED — no readable $ROOT/STATUS.md"
+else
+  needle=$(printf '%s' "$fline" | sed -n 's/.*grep -q "\([^"]*\)".*/\1/p')
+  if [ -z "$needle" ]; then
+    echo "MISUSE: could not extract fire-runner.sh's dry-board needle from its line-1 read"
+    exit 2
+  fi
+  if head -1 "$ROOT/STATUS.md" 2>/dev/null | grep -qF "$needle"; then
+    echo "FAIL(board): STATUS line-1 contains fire-runner.sh's own dry-board needle ('$needle')."
+    echo "      That forces dry=0 on every tick, disabling the dry-board skip guard and booting a"
+    echo "      metered Opus fire per tick on a dry board — F-2632-4. Rewrite line-1 so the"
+    echo "      needle's words are not adjacent. Archive bullets are harmless: the predicate"
+    echo "      reads head -1 only."
+    exit 1
+  fi
+  echo "note: fire-runner line-1 board check PASS — line-1 does not trip the needle ('$needle')"
+fi
+
 cond=$(grep -o '\[\[ "\$l1" == .*\]\]' "$RUNNER" | head -1)
 [ -n "$cond" ] || { echo "MISUSE: could not extract the gate condition from $RUNNER"; exit 2; }
 hcond=$(grep -o '\[\[ "\$l1" == .*\]\]' "$HEALTH" | head -1)
