@@ -64,7 +64,10 @@ const MAPS = [
     idle: { waves: 4, kills: 44, eventLogHash: 'fnv1a32:a7ffb1c9' },
     // F-RPG-10: the ONLY errand of the four the 1:1 grammar cannot land. See the note above MAPS.
     floor: {
-      waves: 4, kills: 25, eventLogHash: 'fnv1a32:bf0c9c2c', objWave: null, securableAtWave: null,
+      // open-maps-acceptance-e1-e4 (attended drain 2026-09-18): the Long Road gained two harvest anchors per
+      // way-station ground, so the floor policy's run moves under the same waves/kills; the CHANGE DETECTOR
+      // is re-pointed to the measured hash ('fnv1a32:bf0c9c2c' before). The idle row did not move.
+      waves: 4, kills: 25, eventLogHash: 'fnv1a32:a9b8b881', objWave: null, securableAtWave: null,
       residual: [
         { verb: 'MOVE_HERO', pos: { x: 190, z: 0 } }, { verb: 'MOVE_HERO', pos: { x: 191, z: 0 } },
         { verb: 'MOVE_HERO', pos: { x: 189, z: 0 } }, { verb: 'MOVE_HERO', pos: { x: 192, z: 0 } },
