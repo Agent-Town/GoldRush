@@ -80,35 +80,20 @@ else
   dry=0
 fi
 [ -n "$(find tasks/done -type f -mmin -60 2>/dev/null | head -1)" ] && dry=0
-# F-2632-1 (s2632): the literal in the next line is DEAD under the current §1.2 lock convention,
-# and leaving it dead is DELIBERATE. Do NOT "repair" it without the ruling on desk F-2632-2.
-# MEASURED s2632: a §1.2 lock line reads `ACTIVE <stamp> (sNNNN fire) — <intent>` and carries no
-# "lock ACTIVE" anywhere, so this grep matches 18 of 500 archived lock line-1s (3.6%), and 33 of
-# 1017 on the wider ACTIVE-and-not-"lock CLEARED" population (3.2%) — it MISSES ~96.5% on two
-# independent denominators. All 18 are ONE abandoned convention (`sNNNN fire, lock ACTIVE at
-# <stamp>`: s908 plus s1436..s1458, newest 2026-08-05). The house predicate is
-# `[[ "$l1" == *ACTIVE* && "$l1" != *"lock CLEARED"* ]]` — lane-runner-v3.sh cured it at F-1402-1,
-# health-watch.sh at F-1659-2. This is the THIRD member of that class and was never brought along;
-# main-lock-gate-guard.test.sh extracts only the other two, so it stays green while this line
-# carries the pre-F-1402-1 shape (F-2358-1: a guard enumerating N members of a class certifies the
-# uncovered ones as clean).
-# WHY NOT SIMPLY FIX IT — the direction INVERTS, which is the whole finding. The single-instance
-# LOCKDIR at :18 makes a tick exit silently while a fire is live, so this line is reachable in
-# only TWO states, both on a DRY board:
-#   (a) a STRANDED line-1 (the fire died): a working predicate would boot a takeover fire at the
-#       next tick instead of within the 11-skip / ~55 min heartbeat. The cost of that delay is
-#       bookkeeping only — the board is dry by construction here, so nothing is starved.
-#   (b) a LIVE fire that has outrun the 50-min stale-lock reap at :19: a working predicate boots a
-#       SECOND fire alongside it. MEASURED over 67 fire logs / 5383 paired runs, 207 (3.8%)
-#       outran that window and 156 of those were rc=0 — and on a dry board (97 consecutive fires
-#       at s2632) case (b) is the COMMON one. Two fires writing STATUS/BACKLOG at once is the
-#       §7.6 / Mistake #12 serialisation hazard, held off only by §1.1 compliance.
-# So the dead literal PREVENTS (b) and merely DELAYS (a): repairing it trades a bounded, benign
-# delay for a concurrency hazard. The SURGICAL answer, if prompt takeover is wanted, is to force
-# dry=0 only for a genuinely stranded lock — the house predicate AND `! fire_proc` (the
-# `pgrep -f "claude -p # Gold Rush FIRE"` test health-watch.sh:52 already uses). That is a
-# boot-policy change on the owner's metered Opus budget, and THIS dry-board guard is
-# owner-prompted for exactly that reason (see :55), so it is his call. Annotated, not repaired.
+# F-2632-1 (s2632): the literal in the next line is DEAD, and leaving it dead is DELIBERATE.
+# DO NOT "repair" it without the ruling on desk F-2632-2 — the naive fix is the destructive act.
+# A §1.2 lock line reads `ACTIVE <stamp> (sNNNN fire) — <intent>` and carries no "lock ACTIVE",
+# so this grep misses ~96.5% of real lock line-1s on two independent denominators (18/500 and
+# 33/1017 matched). It is the THIRD member of the class lane-runner-v3.sh cured at F-1402-1 and
+# health-watch.sh at F-1659-2, and it was never brought along.
+# WHY NOT FIX IT: the single-instance LOCKDIR above makes a tick exit silently while a fire is
+# live, so this line is reachable only on a DRY board, in two states — a STRANDED line-1 (where a
+# working predicate buys prompt takeover; the delay costs bookkeeping only, nothing is starved) and
+# a LIVE fire past the 50-min stale-lock reap (where a working predicate boots a SECOND fire
+# alongside it: measured 207 of 5383 runs, 3.8%, outran that window). So the dead literal PREVENTS
+# the concurrency hazard and merely DELAYS the takeover. The surgical answer is the house predicate
+# AND `! fire_proc` (health-watch.sh:52), but that is boot policy on the owner's metered budget and
+# this guard is owner-prompted for that very reason — his call. Full derivation: F-2632-1.
 head -1 STATUS.md 2>/dev/null | grep -q "lock ACTIVE" && dry=0
 if [ "$dry" = "1" ] && [ "$skips" -lt 11 ]; then
   echo $((skips+1)) > "$SKIPCOUNT_F"
