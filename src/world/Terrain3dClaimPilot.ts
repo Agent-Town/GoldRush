@@ -672,7 +672,19 @@ function preparePanorama(model: THREE.Object3D): void {
  * and the emissive only keeps the paint off the floor.
  */
 const LANDMARK_EMISSIVE_DEFAULT = 3;
-const LANDMARK_EMISSIVE: Record<string, number> = { 'the-claim': 1.45, 'e2-hill-mine': 1.45, 'e2-trestle': 1.5, 'e2-pressure-garden': 1.45, 'e2-incline': 1.45 };
+/**
+ * `e3-blackout-ridge` is graded ABOVE the legacy default — the only row that is — because it is a
+ * night-LOCKED map whose ground gives its bodies nothing, and F-OMB-4 left it at the calibrated
+ * default after the atlas rebuild cured most of Astra's "dark machinery". Measured on the reference
+ * rig (`landmark-brightness.spec.ts`, desktop, focus `ridge-switch-house`, 2026-09-18), landmark
+ * median luminance against its own era sibling — `e3-fairground`, the other E3 night map, whose
+ * atlas already carries the lifted V2 palette: fairground 0.1057, blackout ridge 0.0882 at the
+ * default (-16.6 %). The `lmemissive` sweep on this map reads 0.12 -> 0.0529, 0.20 -> 0.0642,
+ * 0.30 -> 0.0732, 0.45 -> 0.0882, 0.60 -> 0.1018, so the sibling's level wants ~0.62 and the hard
+ * cap is 0.6: 4 grades to exactly the ceiling and lands the pair within 3.7 %. The cap, not this
+ * number, is what stops the body becoming its own light source.
+ */
+const LANDMARK_EMISSIVE: Record<string, number> = { 'the-claim': 1.45, 'e2-hill-mine': 1.45, 'e2-trestle': 1.5, 'e2-pressure-garden': 1.45, 'e2-incline': 1.45, 'e3-blackout-ridge': 4 };
 
 /**
  * F-ASTRA-9, THE CALIBRATION (2026-09-05, owner: "Ok, then lets have it fix these findings.").
