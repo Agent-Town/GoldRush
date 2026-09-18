@@ -150,6 +150,36 @@ const REGENERATED_SHEETS = new Set([
   'char-e7-rogue_automaton-sheet-walk8-b',
   ...['e6-glowjack', 'e7-data_rustler', 'e8-scrap_corsair', 'e8-sun_glare_shambler', 'e9-feral_terraformer', 'e9-claim_jump_prospect_drone']
     .flatMap((slot) => ['s', 'sw', 'w', 'nw', 'n', 'ne', 'e', 'se'].map((d) => `char-${slot}-sheet-walk8-${d}`)),
+  // THE NEEDS-CELLS BATCH (task tasks/needs-cells-art-batch.md, 2026-09-18; owner, verbatim: "yes!
+  // lets go for the cells"). Ten NEW stems, 44 cells, generated on the owner's Higgsfield credits and
+  // extracted here by scripts/extract-alpha.mjs --key ff00ff, so they arrive with extract-alpha's own
+  // bleedEdges field under the alpha - the halo cure itself - and every one of them is new: none
+  // exists at BASE (89bfc10cda7e), so none appears in `baseline.suspects` and the three partition
+  // pins below DO NOT MOVE for them. What they move is the denominator, 2059 -> 2103; see the re-pin
+  // note at the `current.scanned` assertion.
+  // MEASURED on this tree over all 44 new cells: 0 visible violet-key px (alpha >= 16, R-G >= 40,
+  // B-G >= 40), 0 key-coloured px under fully transparent px, and the sweep below finds 0 suspects in
+  // the whole of assets/processed with them in it - so the deepEqual still asserts an EMPTY residue.
+  'char-baron-east8-v1',
+  'char-jumper-north4-v1',
+  'char-jumper-west4-v1',
+  'char-steamwrecker-sw4-v1',
+  'char-steamwrecker-ne4-v1',
+  'char-steamwrecker-nw4-v1',
+  'char-coalthief-se4-v1',
+  'char-coalthief-sw4-v1',
+  'char-coalthief-ne4-v1',
+  'char-coalthief-nw4-v1',
+  // char-schoolteacher-sheet-walk8-a is the one EXISTING stem this batch touches, and it is declared
+  // for a narrow, measured reason. Stage 2 of ruling A19 left it OUT on purpose (the note above the
+  // town-cast block: "its row 2 on the branch is a different generation of the character ... so it is
+  // HELD with main's cells and stays in `cured`"), which is why `cured` read 395 and not 379. This
+  // batch replaces exactly the FOUR row-2 cells with new art - F-RECUT-2's cure, height 336 -> 308 px
+  // and the ground remnant gone - so those four can no longer satisfy the byte-for-byte invariant and
+  // the stem has to move. The declaration is stem-wide but the change is not: rows 0, 1 and 3 were
+  // VERIFIED byte-identical to the commit before this batch, 12 of 12, and stay that way. That moves
+  // 16 cells out of `cured` (395 -> 379) and into `regenerated` (680 -> 696); the sum still closes.
+  'char-schoolteacher-sheet-walk8-a',
 ]);
 
 const gitShow = (file) => execFileSync('git', ['show', `${BASE}:${file}`], { maxBuffer: 20 * 1024 * 1024 });
@@ -184,11 +214,11 @@ assert.equal(expectedResidual.length, 0);
 // 456 + 224: the 160 cells just released from expectedResidual plus the 64 cells of the three stems
 // re-cut here that were never HELD (32 char-tavernkeeper + 16 char-assay-clerk + 16 char-preacher).
 // Was 456. Measured: artifacts/town-cast-walk8-hard-alpha-recut/_partition.mjs prints 0/680/395.
-assert.equal(regenerated.length, 680);
+assert.equal(regenerated.length, 696);
 // 459 - 64, the three never-HELD stems above leaving `cured` for `regenerated`. The 16
 // char-schoolteacher-sheet-walk8-a cells STAY here: that family was held, its cells are main's, and
 // the byte-for-byte invariant below still runs over them. Was 459.
-assert.equal(cured.length, 395);
+assert.equal(cured.length, 379);
 // The three partitions are disjoint and exhaust the BASE suspect roster; this closes the arithmetic
 // above so a future re-pin cannot quietly drop a cell out of all three sets.
 assert.equal(expectedResidual.length + regenerated.length + cured.length, baseline.suspects.length);
@@ -252,7 +282,15 @@ try {
 //     as F-SRR-3 in artifacts/sprite-roster-remainder/report.md, because a re-pin that quietly absorbs
 //     someone else's red is how a guard stops being a guard. Re-pinning here cures the stale number;
 //     it does not excuse whatever landed those 46 without their line.
-assert.equal(current.scanned, 2059, 'processed PNG denominator moved');
+// RE-PINNED 2026-09-18 by tasks/needs-cells-art-batch.md: 2059 -> 2103, +44, and all 44 are this
+// batch's. They are the ten new per-direction plates declared above - the Baron's east row (8), the
+// Claim Jumper's north and west (4 + 4), the Steam Wrecker's sw/ne/nw (4 each) and the Coal Thief's
+// se/sw/ne/nw (4 each) - every one of them registered in characters.v2.json in the same commits.
+// Measured `find assets/processed -name '*.png' | wc -l` on this tree: 2103. Nothing else moved: the
+// schoolteacher's four row-2 cells are REPLACEMENTS in the sheet's own filenames, so they change the
+// partitions above and not this number, and the Steam Wrecker's `se` stayed an alias because four
+// takes could not hold its lamp lit across all four cells.
+assert.equal(current.scanned, 2103, 'processed PNG denominator moved');
 assert.deepEqual(
   current.suspects.map(({ file }) => file).sort(),
   expectedResidual.map(({ file }) => file).sort(),
