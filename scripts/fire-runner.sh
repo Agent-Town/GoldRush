@@ -1,7 +1,7 @@
 #!/bin/bash
 # Gold Rush fire runner — invoked by launchd every 5 min (StartInterval 300, com.goldrush.fire.plist).
 # Runs one headless Claude Code fire with the protocol in scripts/fire.md; the model is FIRE_MODEL below (default claude-opus-5 — that default is the truth, not this comment).
-# Single-instance guarded: a tick landing on a live fire exits silently, so a NEW fire begins only once the previous one ends — measured s1358 over 58 gaps: min 5.3 min (one bare tick), median 22.8 min. Logs to logs/fire-YYYYMMDD.log. Manual run: bash scripts/fire-runner.sh
+# Single-instance guarded: a tick landing on a live fire exits silently, so a NEW fire begins only once the previous one ends — and the dry-board guard below suppresses ticks too, so the launchd interval is the FLOOR and not the cadence. RE-MEASURED s2632 over 1404 inter-FIRE-START gaps on the 34 days that guard was active: min 5m01s, median 35m15s, p90 84m51s, 39.6% at or over 50 min (was: measured s1358 over 58 gaps, min 5.3 min, median 22.8 min — RESTATED not deleted, the sequence is the finding). Logs to logs/fire-YYYYMMDD.log. Manual run: bash scripts/fire-runner.sh
 set -u
 REPO="/Users/robin/Claude/Projects/Gold Rush"
 LOCKDIR="$REPO/tasks/.fire.lock"
