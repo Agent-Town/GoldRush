@@ -32,7 +32,7 @@
 // uselessness inside a week (F-1460-1, the `cross-engine` fate).
 
 import { execFileSync } from 'node:child_process';
-import { statSync, lstatSync } from 'node:fs';
+import { statSync, lstatSync, readdirSync, existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { join, dirname, resolve } from 'node:path';
 
@@ -102,6 +102,80 @@ export function bucketOf(present, onRemote, onAnyRef) {
 }
 
 const mb = (b) => (b / 1e6).toFixed(1) + ' MB';
+
+// F-2617-1. Counts the evidence-prefixed FILES surviving in a tree this tool could not
+// read, so `could-not-answer` stops conflating a reaped corpse with a gitless tree that
+// still holds evidence. Deliberately narrow: it walks ONLY the declared prefixes, because
+// the decision-relevant fact is "is there evidence here to lose?", and a whole-tree walk
+// over a 39k-file scratchpad buys nothing for it.
+//
+// Returns `null` — never a zero — when the walk itself fails, so a broken read fails
+// toward NOTICING rather than toward an empty bucket (F-2212-1's polarity; the whole
+// lineage from F-2217-1 onward is instruments whose corpus went silently empty).
+export function evidenceFileCount(tree, cap = 200_000) {
+  let files = 0;
+  let bytes = 0;
+  let walked = false;
+  for (const pre of EVIDENCE_PREFIXES) {
+    const root = join(tree, pre);
+    try {
+      if (!existsSync(root)) continue;
+    } catch {
+      return null;
+    }
+    const stack = [root];
+    while (stack.length) {
+      if (files >= cap) return { files, bytes, capped: true };
+      const d = stack.pop();
+      let entries;
+      try {
+        entries = readdirSync(d, { withFileTypes: true });
+        walked = true;
+      } catch {
+        // A single unreadable subdirectory is not a failed read of the TREE; keep going,
+        // but a tree where nothing at all could be walked returns null below.
+        continue;
+      }
+      for (const e of entries) {
+        const p = join(d, e.name);
+        let st;
+        try {
+          st = lstatSync(p);
+        } catch {
+          continue;
+        }
+        // The load-bearing word here is `lstatSync` above, NOT this line: under lstat a
+        // symlink is neither isFile() nor isDirectory(), so it is already skipped, and a
+        // teeth sweep that deleted this `continue` reddened NOTHING. What the guard's
+        // symlink arm actually defends is the lstat -> stat swap, which FOLLOWS the link
+        // and walks another tree entirely — node_modules in these trees is a symlink INTO
+        // main, so that swap counts MAIN's files as the tree's (F-2607-1 paid for that
+        // one with a reversed headline). The line is kept as belt-and-braces and is
+        // labelled redundant so nobody mistakes it for the protection.
+        if (st.isSymbolicLink()) continue;
+        if (st.isDirectory()) {
+          if (e.name === '.git' || e.name === 'node_modules') continue;
+          stack.push(p);
+        } else if (st.isFile()) {
+          files++;
+          bytes += st.size;
+        }
+      }
+    }
+  }
+  // No prefix directory present at all is a real, readable answer of zero — a tree that
+  // never wrote evidence, or whose evidence directories the reaper took whole.
+  let anyPrefix = false;
+  for (const pre of EVIDENCE_PREFIXES) {
+    try {
+      if (existsSync(join(tree, pre))) anyPrefix = true;
+    } catch {
+      return null;
+    }
+  }
+  if (anyPrefix && !walked) return null;
+  return { files, bytes, capped: false };
+}
 
 function main() {
   const argv = process.argv.slice(2);
@@ -253,6 +327,54 @@ function main() {
     say(`  could-not-answer (${couldNot.length}) — an error is NEVER "nothing here" (F-2485-1):`);
     for (const t of couldNot.slice(0, 4)) say(`    ${t}`);
     if (couldNot.length > 4) say(`    … and ${couldNot.length - 4} more`);
+
+    // F-2617-1: that bucket names TWO populations with opposite consequences, and the
+    // list above cannot tell them apart. A tree loses its `.git` and its FILES at
+    // DIFFERENT times, so `could-not-answer` is not a proxy for "reaped": measured
+    // s2617, 19 of 24 such trees were fileless corpses and 5 still held 1,874
+    // evidence files / 955.3 MB. The path list reads as scratch either way, so a
+    // reader correctly infers "nothing there" — right for the corpses, wrong for the
+    // rest. Declared ALWAYS, including when the split is all-hollow (F-2208-1).
+    //
+    // This tool can never ANSWER about these trees, and that is not a fixable gap:
+    // its population is "modified TRACKED", which needs an index the tree no longer
+    // has. The right question for a gitless tree is the simpler one — are these bytes
+    // in git anywhere? — which needs nothing from the tree at all, because a detached
+    // arena's blobs live in MAIN's object database (F-2485-1's gitless-safe method).
+    const hollow = [];
+    const holding = [];
+    const unverifiable = [];
+    for (const t of couldNot) {
+      const c = evidenceFileCount(t);
+      if (c === null) unverifiable.push({ tree: t, files: 0, bytes: 0 });
+      else if (c.files === 0) hollow.push({ tree: t, ...c });
+      else holding.push({ tree: t, ...c });
+    }
+    holding.sort((a, b) => b.bytes - a.bytes);
+    say('');
+    say('    SPLIT BY WHAT SURVIVED — a tree loses its .git and its FILES at different');
+    say('    times, so unreadable does NOT mean empty (F-2617-1):');
+    say(`      HOLLOW        ${String(hollow.length).padStart(3)} tree(s) — 0 evidence file(s): nothing to lose`);
+    say(`      HOLDING       ${String(holding.length).padStart(3)} tree(s) — still carrying evidence, and NO instrument reads them`);
+    say(`      UNVERIFIABLE  ${String(unverifiable.length).padStart(3)} tree(s) — the walk itself failed; never scored as empty`);
+    for (const h of holding)
+      say(`        ${String(h.files).padStart(6)} file(s) ${mb(h.bytes).padStart(10)}  ${h.tree}`);
+    for (const u of unverifiable) say(`        UNVERIFIABLE  ${u.tree}`);
+    if (holding.length || unverifiable.length) {
+      say('');
+      say('    REMEDY — ask MAIN\'s object database directly; the tree supplies nothing but');
+      say('    its bytes, so its missing .git does not matter (F-2485-1, F-2451-1):');
+      say('      walk the tree, then from the MAIN worktree batch');
+      say('        git hash-object --stdin-paths   then   git cat-file --batch-check');
+      say('      and set-test each blob against `git rev-list --objects --remotes`.');
+      say('      Assert the hash count EQUALS the file count before believing any zero');
+      say('      (F-2215-1), and judge a non-SAFE result by PATH and not by blob: a');
+      say('      control-arm re-render is never byte-identical to the shot a drain');
+      say('      committed, so blob identity is exact about the wrong quantity');
+      say('      (F-2570-1). Measured s2617 on this very population: 41 non-SAFE, and');
+      say('      41 of 41 sat at relative paths git had already held — re-renders, not');
+      say('      a hole. Expect that, and check it rather than assuming it.');
+    }
   }
 
   if (asJson) {
