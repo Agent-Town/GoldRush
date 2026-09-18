@@ -48,6 +48,36 @@ if grep -v '^[[:space:]]*#' "$HEALTH" | grep -q "'\^Last updated\.\*ACTIVE"; the
   exit 1
 fi
 
+# s2632 / F-2632-1 — THE THIRD MEMBER OF THIS CLASS. scripts/fire-runner.sh's dry-board guard
+# also reads STATUS line-1 to decide whether a lock is live, with its own copy, and it still
+# carries the pre-F-1402-1 literal `grep -q "lock ACTIVE"` — measured s2632 to match 18 of 500
+# archived lock line-1s, i.e. missing ~96.5%. The comment block above that line (F-1659-2's own
+# promise was that "a future cure to one cannot silently leave the other behind"; this one was
+# left behind for 1174 fires) is the F-2358-1 lesson landing on this very guard.
+# It is DELIBERATELY NOT added to the behavioural fixtures below, and that restraint is measured:
+# repairing that predicate would boot a SECOND fire alongside a live one past the 50-min LOCKDIR
+# reap (3.8% of 5383 measured runs), so the fix is owner-gated on desk F-2632-2. This guard's job
+# is only to stop the divergence from becoming SILENT — either the line carries the house
+# predicate (someone acted on the ruling) or the file must carry the F-2632-1 marker that says
+# why it does not. Self-retiring in both directions.
+# Comments are stripped first for the same reason as the HEALTH check above: the annotation NAMES
+# the retired literal, and a bare grep would read that disclaimer as the declaration (F-1655-3).
+FIRE="$ROOT/scripts/fire-runner.sh"
+[ -r "$FIRE" ] || { echo "MISUSE: cannot read $FIRE"; exit 2; }
+fline=$(grep -v '^[[:space:]]*#' "$FIRE" | grep 'head -1 STATUS.md' | grep 'dry=0' | head -1)
+[ -n "$fline" ] || { echo "MISUSE: could not find fire-runner.sh's STATUS line-1 read"; exit 2; }
+if printf '%s' "$fline" | grep -q '\*ACTIVE\*'; then
+  : # cured to the house predicate — the ruling was acted on, nothing owed
+elif grep -q 'F-2632-1' "$FIRE"; then
+  : # deliberate, documented divergence — the annotation explains why and names the desk item
+else
+  echo "FAIL(structure): fire-runner.sh reads STATUS line-1 with a predicate that is neither the"
+  echo "      house form nor documented as a deliberate divergence (F-2632-1). Do NOT repair it"
+  echo "      silently — it is owner-gated on desk F-2632-2, and the naive fix boots a second"
+  echo "      fire alongside a live one. See the annotation at that line."
+  exit 1
+fi
+
 cond=$(grep -o '\[\[ "\$l1" == .*\]\]' "$RUNNER" | head -1)
 [ -n "$cond" ] || { echo "MISUSE: could not extract the gate condition from $RUNNER"; exit 2; }
 hcond=$(grep -o '\[\[ "\$l1" == .*\]\]' "$HEALTH" | head -1)
