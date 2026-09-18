@@ -22,14 +22,14 @@
 ## 2. Gate table
 | gate | implementer (branch) | drain (merged tree) |
 |---|---|---|
-| tsc / `npm run build` | rc=0 / rc=0 | <TSC_BUILD> |
+| tsc / `npm run build` | rc=0 / rc=0 | rc=0 / rc=0 (drain, chained tree) |
 | the smoke for the six maps, both projects | 12/12 | — |
 | task-025 + m1-01 + m2-01, both projects | 34/34 | — |
 | `e3-mask-tables` / E2 + E4 censuses / skill.md render + guards | 30/30 / 8/8 / unchanged, 20/20 | mask tables 30/30 |
 | adjacent map suites | 19 passed / 8 failed — all eight pre-existing by measurement twice (`e2-hill-mine.spec.ts:75/184/250`, `e4-roads-and-convoys.spec.ts:69` "malformed tape" `e4-dust-flats-floor.tape.json`) — F-OMA-5, inventory rows | — |
-| null floors | `--check` 83/83, twice | <FLOORS> |
-| engine era | hash reported | <PIN> |
-| full `test:node-guards`, Node 26 | not run (the drainer's) | <BATTERY> |
+| null floors | `--check` 83/83, twice | re-recorded on the merged tree (282.5 s), `--check` 83 of 83; only the Hill Mine\'s two pairs differ from the branch\'s own record |
+| engine era | hash reported | pin #9 `ce272c18…`, measured after the floors, its cause naming both lands; `engine-era-guard` + `bench-seeds` 9/9 |
+| full `test:node-guards`, Node 26 | not run (the drainer's) | 918 tests, 910 pass, 3 fail, 5 skipped (502 s) on the chained tree with four agents and heat-14 riders on the box: `hero-move-verb.test.mjs` (green 6/6 alone — contention), `desk-declaration-guard.test.mjs:163` (this worktree\'s STATUS line 1 is a fire\'s handoff the guard refuses to judge from a linked worktree — re-checked on main after the fast-forward), and the fixture sweep\'s echo of that child; the first run before the F-OMA-6 re-point had read 913/2 with the Long Road detector red (cured) and `secure-choice-refusal` green alone (contention) |
 
 ## 3. Findings
 - **F-OMA-1 (method):** a plain boot's strategy variance dominates on secure-wave maps; acceptance needs a declared strategy per map (the instrument now carries one) and several runs per arm — the same lesson as the host-speed gates.

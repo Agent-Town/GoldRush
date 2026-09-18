@@ -22,7 +22,7 @@
 ## 2. Gate table
 | gate | implementer (branch) | drain (chained tree) |
 |---|---|---|
-| tsc / `npm run build` / `GR_RELEASE=e1` build | rc=0 / rc=0 / rc=0 (zero Blackout or Fairground assets in the E1 bundle) | <TSC_BUILD> |
+| tsc / `npm run build` / `GR_RELEASE=e1` build | rc=0 / rc=0 / rc=0 (zero Blackout or Fairground assets in the E1 bundle) | rc=0 / rc=0 (drain, chained tree) |
 | `glb-contract-guard.mjs` / its test | 423 GLBs · 6 violations · 6 grandfathered · 0 live, no new line / 23/23 | 0 live |
 | deploy-mirror-allowlist + landmark-walk-surfaces + fairground-dependency + shared-atlas | 9/9 | — |
 | Astra's two landmark probes on 5460 | green | — |
@@ -31,7 +31,7 @@
 | plain boots | 0 console/page errors, every capture | — |
 | nine adjacent reds (`terrain3d-registry` :196/:272/:345, `er01-e3-census` canyon-works, `seam-visual` :152) | PRE-EXISTING: reproduced on the pristine tree after reverting the pack (same nine, same lines, same projects); the headline is a terrain triangle count (51,200 vs 32,768) and no terrain GLB was touched | inventory rows (F-OMB-6) |
 | engine era | hash reported | pin #9 (shared with the open-maps land) |
-| full `test:node-guards`, Node 26 (one battery for the chain) | not run (the drainer's) | <BATTERY> |
+| full `test:node-guards`, Node 26 (one battery for the chain) | not run (the drainer's) | 918 tests, 910 pass, 3 fail, 5 skipped (502 s) on the chained tree with four agents and heat-14 riders on the box: `hero-move-verb.test.mjs` (green 6/6 alone — contention), `desk-declaration-guard.test.mjs:163` (this worktree\'s STATUS line 1 is a fire\'s handoff the guard refuses to judge from a linked worktree — re-checked on main after the fast-forward), and the fixture sweep\'s echo of that child; the first run before the F-OMA-6 re-point had read 913/2 with the Long Road detector red (cured) and `secure-choice-refusal` green alone (contention) |
 
 ## 3. Findings
 - **F-OMB-1** the Blackout HUD overlap is a three-file placement change (terrain contract `landmarkMounts` + pack contract + collision contract); receiver scale 0.8 proposed. Fire-authorable.
