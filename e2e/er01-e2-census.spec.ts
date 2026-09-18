@@ -70,14 +70,23 @@ for (const contract of steamworks.contracts) {
       // round trip for fuel; each now authors three seams ~29wu from its own stake, the Hill Mine's
       // own measured standard. Cadence (owner 2026-08-22, "E2 should be finished as well"): laddered
       // per map and shipped one clear rung inside its first all-secure value — 0.7 trestle, 0.75
-      // incline. The Hill Mine and the Pressure Garden author NEITHER and are untouched by both.
+      // incline. The Hill Mine authored NEITHER; the Pressure Garden still authors neither.
+      // RE-POINTED 2026-09-18 (`tasks/open-maps-acceptance-e1-e4.md`, artifacts/open-maps-acceptance-
+      // e1-e4/report.md): the Hill Mine now authors the cadence rung too, at 0.75 — the Incline's
+      // value, its sibling with the same secure wave and the same three-variant roster. Cause, from
+      // the acceptance instrument's own BEFORE row on main: a plain boot dies at WAVE 3, 95.3 s sim,
+      // 30 kills, 50 gold and NOTHING BUILT, because the Hill Mine's seams sit on the T2/T3 terraces
+      // (z 25-39) while its own hero stake is the boiler-house site on the base terrace (0,12) — a
+      // climb up the switchbacks that does not fit inside a 30 s wave. The coal clause is unchanged:
+      // the Hill Mine is the map the other two copied their seams FROM and still authors no
+      // `coalSeams` of its own.
       const twist = contract.twist as { coalSeams?: Array<{ x: number; z: number }>; waveCadenceMult?: number };
       if (contract.id === 'e2-trestle' || contract.id === 'e2-incline') {
         expect(twist.coalSeams).toHaveLength(3);
         expect(twist.waveCadenceMult).toBe(contract.id === 'e2-trestle' ? 0.7 : 0.75);
       } else {
         expect(twist.coalSeams).toBeUndefined();
-        expect(twist.waveCadenceMult).toBeUndefined();
+        expect(twist.waveCadenceMult).toBe(contract.id === 'e2-hill-mine' ? 0.75 : undefined);
       }
       const rig = { ...Balance.sparkRig };
       restoreRig = () => Object.assign(Balance.sparkRig, rig);
