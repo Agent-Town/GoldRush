@@ -128,6 +128,38 @@ async function frameP95(page: Page, frames = 180): Promise<number> {
   }), frames);
 }
 
+/**
+ * F-BMB-3 (2026-09-18). This gate compared ONE p95 from each arm, and three drains in a row had to
+ * re-derive its red by hand, because the host's frame time is not a number — it is a distribution
+ * with modes. The boss-models drain measured the boss arm identical across trees (median 16.65 vs
+ * 16.55 ms) while the non-boss DENOMINATOR flipped between a vsync-locked ~16.6 ms and a free
+ * ~10.3 ms (F-DRB-10), so one sample over one sample was a coin flip on every tree.
+ *
+ * MEASURED HERE, before the change, on an unchanged tree: eight runs of this test (four per
+ * project, same host, `--workers=1`) produced ratios 0.99 / 0.97 / 0.93 / 0.98 on desktop and
+ * 1.16 / 0.92 / 1.03 / 0.99 on mobile — one of the eight red at 1.1628, with nothing changed.
+ *
+ * THE FIX, and why the MINIMUM. Each arm is now sampled `P95_SAMPLES` times back to back and the
+ * arms are compared FLOOR to FLOOR. The floor is the right estimator because the noise is
+ * one-sided: every source of inflation here (a vsync lock, a compositor hiccup, another agent on
+ * the box) makes a sample slower, never faster, so the smallest of N samples is the closest reading
+ * of the frame's own work. The intent is unchanged — a boss arm whose floor is more than 15 % above
+ * the non-boss floor still fails — but the comparison is now between two like readings.
+ *
+ * THE ONE THING IT STILL CANNOT SEE: if BOTH arms sit on the vsync plateau in every sample, the
+ * ratio is ~1.0 no matter what the boss costs. That is a property of the clock, not of this test,
+ * so it is DETECTED and printed rather than silently passed.
+ */
+const P95_SAMPLES = 5;
+/** Above this, a p95 reading is the compositor's vsync plateau rather than the frame's own work. */
+const VSYNC_PLATEAU_MS = 15;
+
+async function frameP95Floor(page: Page, samples = P95_SAMPLES): Promise<{ series: number[]; floor: number }> {
+  const series: number[] = [];
+  for (let index = 0; index < samples; index += 1) series.push(await frameP95(page));
+  return { series, floor: Math.min(...series) };
+}
+
 test('rides the storm, gates Act 2 on both paddles, spills the hold, and persists W6 per profile', async ({ page }, testInfo) => {
   const errors = await open(page);
   await spawnAndAnchor(page);
@@ -235,6 +267,9 @@ test('damages only inside the telegraphed defensive-claw arc', async ({ page }) 
 });
 
 test('keeps the boss-run frame p95 within 15% of the non-boss tile', async ({ page }, testInfo) => {
+  // Two arms x P95_SAMPLES readings of 180 frames each, plus two reloads: this one test needs more
+  // than the file's 90 s.
+  test.setTimeout(300_000);
   const errors = await open(page);
   await page.evaluate(({ key }) => localStorage.setItem(key, JSON.stringify({ e5W6Wreck: true, x: 36, z: -20 })), { key: DREDGE_QUEEN_WRECK_KEY });
   await page.reload();
@@ -243,7 +278,7 @@ test('keeps the boss-run frame p95 within 15% of the non-boss tile', async ({ pa
   await configureBossHarness(page);
   await page.evaluate((bossAt) => window.__GR_TEST__!.advanceSim(bossAt + 3.2), BOSS_STORM_AT);
   await expect.poll(() => dredge(page)).toMatchObject({ persistentWreck: true, active: false });
-  const nonBossP95 = await frameP95(page);
+  const nonBoss = await frameP95Floor(page);
 
   await page.evaluate(({ key }) => localStorage.removeItem(key), { key: DREDGE_QUEEN_WRECK_KEY });
   await page.reload();
@@ -252,10 +287,19 @@ test('keeps the boss-run frame p95 within 15% of the non-boss tile', async ({ pa
   await configureBossHarness(page);
   await page.evaluate((bossAt) => window.__GR_TEST__!.advanceSim(bossAt + 3.2), BOSS_STORM_AT);
   await expect.poll(() => dredge(page)).toMatchObject({ act: 1, anchored: true });
-  const bossP95 = await frameP95(page);
-  const ratio = Number((bossP95 / nonBossP95).toFixed(4));
+  const boss = await frameP95Floor(page);
+  const ratio = Number((boss.floor / nonBoss.floor).toFixed(4));
+  const plateaued = nonBoss.floor >= VSYNC_PLATEAU_MS && boss.floor >= VSYNC_PLATEAU_MS;
 
-  console.log(`Dredge-Queen perf ${testInfo.project.name}: non-boss=${nonBossP95}ms boss=${bossP95}ms ratio=${ratio}`);
-  expect(bossP95).toBeLessThanOrEqual(nonBossP95 * 1.15);
+  const reading = `Dredge-Queen perf ${testInfo.project.name}: `
+    + `non-boss floor=${nonBoss.floor}ms of [${nonBoss.series.join(', ')}] `
+    + `boss floor=${boss.floor}ms of [${boss.series.join(', ')}] ratio=${ratio}`
+    + (plateaued ? ' — BOTH ARMS ON THE VSYNC PLATEAU, this run carries no information about the boss cost' : '');
+  console.log(reading);
+  await testInfo.attach('dredge-queen-frame-p95.json', {
+    body: JSON.stringify({ project: testInfo.project.name, nonBoss, boss, ratio, plateaued }, null, 2),
+    contentType: 'application/json',
+  });
+  expect(boss.floor, reading).toBeLessThanOrEqual(nonBoss.floor * 1.15);
   expect(errors).toEqual([]);
 });
