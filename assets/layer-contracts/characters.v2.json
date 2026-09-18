@@ -1143,7 +1143,7 @@
         "version": 1,
         "status": "ACTIVE",
         "enabled": true,
-        "notes": "wire-e2-enemy-walk4: candidate A selected for consistent machine identity, stable amber eye and wrench-arm silhouette, distinct four-phase gait, and no text, firearms, gore, mirrors, or repeated frames. sprite-roster-remainder, 2026-09-17 (F-SPR-07): row 3 of char-steamwrecker-sheet-walk4-a shows the machine FRONT-on, amber eye to camera — a south view sitting in the north slot (artifacts/sprite-roster-remainder/after/e2-north.png row 5). `n` now runs Astra's char-steamwrecker-north4-v2 (4 cells, staged on sol/code-review-20260908, F-SPRDR-4b): the rear boiler, no eye. Figure height 241.5 -> 229.0 px (47.17% -> 44.73% of a 512 cell); the -12.5 px is the lamp cluster that only the front silhouette carries, not a rescale.",
+        "notes": "wire-e2-enemy-walk4: candidate A selected for consistent machine identity, stable amber eye and wrench-arm silhouette, distinct four-phase gait, and no text, firearms, gore, mirrors, or repeated frames. sprite-roster-remainder, 2026-09-17 (F-SPR-07): row 3 of char-steamwrecker-sheet-walk4-a shows the machine FRONT-on, amber eye to camera — a south view sitting in the north slot (artifacts/sprite-roster-remainder/after/e2-north.png row 5). `n` now runs Astra's char-steamwrecker-north4-v2 (4 cells, staged on sol/code-review-20260908, F-SPRDR-4b): the rear boiler, no eye. Figure height 241.5 -> 229.0 px (47.17% -> 44.73% of a 512 cell); the -12.5 px is the lamp cluster that only the front silhouette carries, not a rescale. needs-cells-art-batch, 2026-09-18 (owner, verbatim: 'yes! lets go for the cells'): three of the four diagonals the roster land listed as needs-cells are REAL registrations now, not aliases — sw, ne and nw run char-steamwrecker-{sw,ne,nw}4-v1 (4 cells each at 512, generated on the owner's Higgsfield credits). Judged on the signal LEDGER row 65 chose for this subject, the amber porthole lamp, measured as the largest connected saturated-orange blob per cell: cardinal s 95-162 px, cardinal n 4-7 px, and the new rows sw 176-209 (lit, a south wind), nw 0 and ne 0-? (dark, north winds) — no take is mixed. Figure heights sw 224-258, ne 226-250, nw 222-240 px against the family's 228-250. **se STAYS ALIASED to e and is PARKED after four takes** (three angles + one referencing the family's own never-wired char-steamwrecker-sheet-walkdiag4-a row 1): every take came back with the lamp lit in only two or three of its four cells. LEDGER row 67 parked this same row after three attempts in 2026-07; it is the hardest row in this family, twice over.",
         "directions": {
           "s": {
             "frames": {
@@ -1228,14 +1228,74 @@
                 "fps": 8
               }
             }
+          },
+          "sw": {
+            "frames": {
+              "files": [
+                "char-steamwrecker-sw4-v1-r0c0.png",
+                "char-steamwrecker-sw4-v1-r0c1.png",
+                "char-steamwrecker-sw4-v1-r1c0.png",
+                "char-steamwrecker-sw4-v1-r1c1.png"
+              ]
+            },
+            "clips": {
+              "walk": {
+                "frames": [
+                  0,
+                  1,
+                  2,
+                  3
+                ],
+                "fps": 8
+              }
+            }
+          },
+          "ne": {
+            "frames": {
+              "files": [
+                "char-steamwrecker-ne4-v1-r0c0.png",
+                "char-steamwrecker-ne4-v1-r0c1.png",
+                "char-steamwrecker-ne4-v1-r1c0.png",
+                "char-steamwrecker-ne4-v1-r1c1.png"
+              ]
+            },
+            "clips": {
+              "walk": {
+                "frames": [
+                  0,
+                  1,
+                  2,
+                  3
+                ],
+                "fps": 8
+              }
+            }
+          },
+          "nw": {
+            "frames": {
+              "files": [
+                "char-steamwrecker-nw4-v1-r0c0.png",
+                "char-steamwrecker-nw4-v1-r0c1.png",
+                "char-steamwrecker-nw4-v1-r1c0.png",
+                "char-steamwrecker-nw4-v1-r1c1.png"
+              ]
+            },
+            "clips": {
+              "walk": {
+                "frames": [
+                  0,
+                  1,
+                  2,
+                  3
+                ],
+                "fps": 8
+              }
+            }
           }
         },
         "mirrors": {},
         "aliases": {
-          "se": "e",
-          "ne": "e",
-          "sw": "w",
-          "nw": "w"
+          "se": "e"
         }
       }
     },
@@ -1248,7 +1308,7 @@
         "version": 1,
         "status": "ACTIVE",
         "enabled": true,
-        "notes": "wire-e2-enemy-walk4: candidate A selected for consistent Coal Thief identity, stable left-shoulder sack and low silhouette, distinct four-phase gait, and no text, firearms, gore, mirrors, or repeated frames. sprite-roster-remainder, 2026-09-17 (F-SPR-07, same class as the Rail Tough): row 3 of char-coalthief-sheet-walk4-a is a three-quarter LEFT-facing walk, not a north one (artifacts/sprite-roster-remainder/after/e2-north.png row 3). `n` now runs Astra's char-coalthief-north4-v2 (4 cells, staged on sol/code-review-20260908, F-SPRDR-4b), a true back view with the sack over the left shoulder. Figure height 261.0 -> 266.8 px (50.98% -> 52.10% of a 512 cell), mean opaque RGB 74.8/56.5/44.3 -> 82.3/59.8/39.0.",
+        "notes": "wire-e2-enemy-walk4: candidate A selected for consistent Coal Thief identity, stable left-shoulder sack and low silhouette, distinct four-phase gait, and no text, firearms, gore, mirrors, or repeated frames. sprite-roster-remainder, 2026-09-17 (F-SPR-07, same class as the Rail Tough): row 3 of char-coalthief-sheet-walk4-a is a three-quarter LEFT-facing walk, not a north one (artifacts/sprite-roster-remainder/after/e2-north.png row 3). `n` now runs Astra's char-coalthief-north4-v2 (4 cells, staged on sol/code-review-20260908, F-SPRDR-4b), a true back view with the sack over the left shoulder. Figure height 261.0 -> 266.8 px (50.98% -> 52.10% of a 512 cell), mean opaque RGB 74.8/56.5/44.3 -> 82.3/59.8/39.0. needs-cells-art-batch, 2026-09-18 (owner, verbatim: 'yes! lets go for the cells'): all four diagonals are REAL registrations now, not aliases — se/sw/ne/nw run char-coalthief-{se,sw,ne,nw}4-v1 (4 cells each at 512, generated on the owner's Higgsfield credits). The prop rule was re-read from the live cardinals at 400 px before a single prompt was written and it is NOT the one this contract's own older note states: the sack rides his BODY-RIGHT shoulder and always trails his direction of travel — screen-LEFT in s and e, screen-RIGHT in w and n — so the new se/ne put it screen-left-to-trailing and sw/nw put it screen-right. Face visible in the two south winds, hidden in the two north ones. Figure heights se 245-276, sw 252-268, ne 254-264, nw 254-262 px against the family's 246-276. ne is honestly UNDER-TURNED: it reads closer to n than to a full 45 degrees, but it is a back view where the alias showed his face walking away, so it lands.",
         "directions": {
           "s": {
             "frames": {
@@ -1333,15 +1393,94 @@
                 "fps": 8
               }
             }
+          },
+          "se": {
+            "frames": {
+              "files": [
+                "char-coalthief-se4-v1-r0c0.png",
+                "char-coalthief-se4-v1-r0c1.png",
+                "char-coalthief-se4-v1-r1c0.png",
+                "char-coalthief-se4-v1-r1c1.png"
+              ]
+            },
+            "clips": {
+              "walk": {
+                "frames": [
+                  0,
+                  1,
+                  2,
+                  3
+                ],
+                "fps": 8
+              }
+            }
+          },
+          "sw": {
+            "frames": {
+              "files": [
+                "char-coalthief-sw4-v1-r0c0.png",
+                "char-coalthief-sw4-v1-r0c1.png",
+                "char-coalthief-sw4-v1-r1c0.png",
+                "char-coalthief-sw4-v1-r1c1.png"
+              ]
+            },
+            "clips": {
+              "walk": {
+                "frames": [
+                  0,
+                  1,
+                  2,
+                  3
+                ],
+                "fps": 8
+              }
+            }
+          },
+          "ne": {
+            "frames": {
+              "files": [
+                "char-coalthief-ne4-v1-r0c0.png",
+                "char-coalthief-ne4-v1-r0c1.png",
+                "char-coalthief-ne4-v1-r1c0.png",
+                "char-coalthief-ne4-v1-r1c1.png"
+              ]
+            },
+            "clips": {
+              "walk": {
+                "frames": [
+                  0,
+                  1,
+                  2,
+                  3
+                ],
+                "fps": 8
+              }
+            }
+          },
+          "nw": {
+            "frames": {
+              "files": [
+                "char-coalthief-nw4-v1-r0c0.png",
+                "char-coalthief-nw4-v1-r0c1.png",
+                "char-coalthief-nw4-v1-r1c0.png",
+                "char-coalthief-nw4-v1-r1c1.png"
+              ]
+            },
+            "clips": {
+              "walk": {
+                "frames": [
+                  0,
+                  1,
+                  2,
+                  3
+                ],
+                "fps": 8
+              }
+            }
           }
         },
         "mirrors": {},
-        "aliases": {
-          "se": "e",
-          "ne": "e",
-          "sw": "w",
-          "nw": "w"
-        }
+        "aliases": {}
       }
     },
     {
