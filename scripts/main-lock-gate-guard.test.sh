@@ -89,25 +89,61 @@ fi
 # predicate is cured to the house form there is no bare needle to collide with.
 # The result is DECLARED either way (F-2208-1) — a check that reports only on failure cannot be
 # told from a check that silently never ran, which is how a fixture-rooted harness skips it.
+#
+# s2646 / F-2646-1 — TWO CURES, both forced by the owner-ruled F-2632-2 repair of that predicate.
+#   (1) THE EXTRACTOR KNEW ONE SHAPE. It read `grep -q "<literal>"` (DOUBLE quotes) and the repair
+#       rewrote the site as `grep -qE '<ERE>'` (SINGLE quotes, ERE), so this arm exited MISUSE — and
+#       a MISUSE is not a red about the board, it is this arm CHECKING NOTHING. Measured: every
+#       `test:ledger-guards` run between that repair and this cure was rc=2 on main, with the
+#       F-2632-4 protection silently off. Both shapes are extracted now, each matched in its own
+#       mode (-F for a literal, -E for an ERE), so a future re-wording changes what is under test
+#       rather than disarming it.
+#   (2) "CONTAINS THE NEEDLE" STOPPED BEING THE QUESTION. Against the dead literal any match was a
+#       defect. Against a WORKING predicate a match is the POINT: an ACTIVE line-1 must force dry=0
+#       so a stranded lock is taken over rather than skipped forever. Keeping the old test would
+#       red on ordinary correct operation — measured, 398 of 483 archived lock line-1s match — i.e.
+#       exactly the F-1460-1 `cross-engine` fate. So the arm now discriminates on line-1's OWN
+#       state: a LIVE LOCK that matches is correct and is reported; only a HANDOFF (it says
+#       "lock CLEARED", so no fire holds the board) that STILL matches is the F-2632-4 hazard.
+#       That key does not fire on ordinary operation either — measured, 18 of 2386 archived
+#       handoff line-1s (0.75%) trip it, and each of those 18 is a real instance of the hazard.
 if printf '%s' "$fline" | grep -q '\*ACTIVE\*'; then
   echo "note: fire-runner line-1 board check not applicable — predicate is the house form"
 elif [ ! -r "$ROOT/STATUS.md" ]; then
   echo "note: fire-runner line-1 board check SKIPPED — no readable $ROOT/STATUS.md"
 else
-  needle=$(printf '%s' "$fline" | sed -n 's/.*grep -q "\([^"]*\)".*/\1/p')
+  needle=$(printf '%s' "$fline" | sed -n "s/.*grep -qE '\([^']*\)'.*/\1/p")
+  nmode=E
+  if [ -z "$needle" ]; then
+    needle=$(printf '%s' "$fline" | sed -n 's/.*grep -q "\([^"]*\)".*/\1/p')
+    nmode=F
+  fi
   if [ -z "$needle" ]; then
     echo "MISUSE: could not extract fire-runner.sh's dry-board needle from its line-1 read"
     exit 2
   fi
-  if head -1 "$ROOT/STATUS.md" 2>/dev/null | grep -qF "$needle"; then
-    echo "FAIL(board): STATUS line-1 contains fire-runner.sh's own dry-board needle ('$needle')."
+  l1=$(head -1 "$ROOT/STATUS.md" 2>/dev/null)
+  if [ "$nmode" = E ]; then
+    printf '%s' "$l1" | grep -qE "$needle" && tripped=1 || tripped=0
+  else
+    printf '%s' "$l1" | grep -qF "$needle" && tripped=1 || tripped=0
+  fi
+  if [ "$tripped" = "0" ]; then
+    echo "note: fire-runner line-1 board check PASS — line-1 does not trip the needle ('$needle')"
+  elif printf '%s' "$l1" | grep -qF 'lock CLEARED'; then
+    echo "FAIL(board): STATUS line-1 is a HANDOFF — it says 'lock CLEARED', so no fire holds the"
+    echo "      board — and it STILL matches fire-runner.sh's own dry-board predicate ('$needle')."
     echo "      That forces dry=0 on every tick, disabling the dry-board skip guard and booting a"
     echo "      metered Opus fire per tick on a dry board — F-2632-4. Rewrite line-1 so the"
-    echo "      needle's words are not adjacent. Archive bullets are harmless: the predicate"
+    echo "      predicate's words are not adjacent. Archive bullets are harmless: the predicate"
     echo "      reads head -1 only."
     exit 1
+  else
+    echo "note: fire-runner line-1 board check PASS — line-1 matches the needle ('$needle') and is a"
+    echo "      LIVE LOCK, which is what that predicate is FOR: an ACTIVE line-1 must force dry=0 so"
+    echo "      a stranded lock is taken over rather than skipped. Only a 'lock CLEARED' line-1 that"
+    echo "      matches is the F-2632-4 hazard."
   fi
-  echo "note: fire-runner line-1 board check PASS — line-1 does not trip the needle ('$needle')"
 fi
 
 cond=$(grep -o '\[\[ "\$l1" == .*\]\]' "$RUNNER" | head -1)
