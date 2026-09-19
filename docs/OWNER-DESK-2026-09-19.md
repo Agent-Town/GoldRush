@@ -85,7 +85,7 @@
 
 ### F-NCS-5 — should the E1 base enemy look like the Claim Jumper again? (added 2026-09-19) — RULED (a)
 **What.** Since `82543f273` (2026-07-12) every E1 map draws its base enemy from the bandit slots; the Claim Jumper's own slot is named everywhere and now has real cells for all eight headings, but nothing draws it.
-**Ruled.** (a) wake it — four sites in `src/entities/pools.ts`, the reel map, and the slot's `walk8` disabled so the animator takes the new `walk4` (F-NCS-6); executing in `rulings-play-2026-09-19`.
+**Ruled.** (a) wake it — four sites in `src/entities/pools.ts`, the reel map, and the slot's `walk8` disabled so the animator takes the new `walk4` (F-NCS-6); EXECUTED 2026-09-19 (F-NCS-5): parked at the drain — the spec re-point did not read green; one more look owed.
 
 ### F-ASTRA-2 — promoting the 3D hero
 **What.** Not yet a decision: Astra is bringing the hero GLB to its own bar as a pilot (lane-a). When it lands, you rule from the comparison board against the sprite heroine.
