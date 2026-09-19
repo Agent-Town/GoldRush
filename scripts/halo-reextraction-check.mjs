@@ -180,6 +180,24 @@ const REGENERATED_SHEETS = new Set([
   // VERIFIED byte-identical to the commit before this batch, 12 of 12, and stay that way. That moves
   // 16 cells out of `cured` (395 -> 379) and into `regenerated` (680 -> 696); the sum still closes.
   'char-schoolteacher-sheet-walk8-a',
+  // THE CODEX STRIPS (task tasks/needs-cells-codex-strips-land.md, 2026-09-19; owner, verbatim: "Yes,
+  // please use Codex to generate these strips."). Six NEW stems, 24 cells, generated on Codex's native
+  // `image_gen` and extracted here by scripts/extract-alpha.mjs --key ff00ff from the NATIVE 1254x1254
+  // renders, so they too arrive with extract-alpha's own bleedEdges field under the alpha. None exists
+  // at BASE (89bfc10cda7e), so none appears in `baseline.suspects` and the three partition pins below
+  // DO NOT MOVE for them. What they move is the denominator; see the re-pin note at `current.scanned`.
+  // MEASURED on this tree over all 24 cells: 1,343,175 px carry alpha < 250 and 0 of them carry
+  // magenta-dominant RGB (r >= 180 && b >= 180 && g <= 90); worst single cell 0 px. The sweep below
+  // finds 0 suspects in the whole of assets/processed with them in it, so the deepEqual still asserts
+  // an EMPTY residue. Twenty of the twenty-four already existed on main at four of these stems and are
+  // REPLACED in place here (re-extracted to the live family band, F-NCS-1); the stems are new either
+  // way, so the partition arithmetic is unaffected and only `se` adds to the count.
+  'char-jumper-s4-codex-v1',
+  'char-jumper-e4-codex-v1',
+  'char-jumper-se4-codex-v1',
+  'char-jumper-sw4-codex-v1',
+  'char-jumper-ne4-codex-v1',
+  'char-jumper-nw4-codex-v1',
 ]);
 
 const gitShow = (file) => execFileSync('git', ['show', `${BASE}:${file}`], { maxBuffer: 20 * 1024 * 1024 });
@@ -290,7 +308,19 @@ try {
 // schoolteacher's four row-2 cells are REPLACEMENTS in the sheet's own filenames, so they change the
 // partitions above and not this number, and the Steam Wrecker's `se` stayed an alias because four
 // takes could not hold its lamp lit across all four cells.
-assert.equal(current.scanned, 2103, 'processed PNG denominator moved');
+// RE-PINNED 2026-09-19 by tasks/needs-cells-codex-strips-land.md: 2103 -> 2127, +24, and the split
+// matters because only 4 of the 24 are mine. THE OTHER 20 WERE ALREADY UNCOUNTED AND THIS GUARD WAS
+// ALREADY RED ON MAIN. Measured with `git ls-tree -r <sha> --name-only assets/processed | grep -c
+// '\.png$'`: 498a64a8f^ = 2103 against a pin of 2103, and 498a64a8f = 2123 against the same pin --
+// the s2627 codex-strips drain landed twenty cells (char-jumper-{s,e,sw,ne,nw}4-codex-v1) on
+// 2026-09-18 without moving the denominator with them, so `npm run test:node-guards` has carried this
+// red on clean main ever since; my own base de7eacd17 measures 2123. This task adds the sixth row,
+// char-jumper-se4-codex-v1 (4 cells), for 2127 -- measured on this tree. Recorded as F-NCS-2 in
+// artifacts/needs-cells-codex-strips/land-report.md, on F-SRR-3's rule: a re-pin that quietly absorbs
+// someone else's red is how a guard stops being a guard, so it is named rather than swallowed.
+// The Steam Wrecker's `se` is STILL an alias and still adds nothing here -- parked a fourth time, now
+// on the heading (both takes turn the machine the wrong way), its lamp and scale blockers both gone.
+assert.equal(current.scanned, 2127, 'processed PNG denominator moved');
 assert.deepEqual(
   current.suspects.map(({ file }) => file).sort(),
   expectedResidual.map(({ file }) => file).sort(),
