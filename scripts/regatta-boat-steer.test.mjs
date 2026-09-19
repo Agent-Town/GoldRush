@@ -216,6 +216,21 @@ test('the boat refuses on the status channel: NOT_ABOARD ashore, UNREACHABLE_WAT
     const { BOAT_ORDER_REFUSALS, HERO_ORDER_REFUSALS } = await vite.ssrLoadModule('/src/agent/StandingOrders.ts');
     assert.deepEqual([...BOAT_ORDER_REFUSALS], ['NOT_ABOARD', 'UNREACHABLE_WATER']);
     assert.deepEqual([...HERO_ORDER_REFUSALS], ['HERO_NOT_YOURS', 'UNREACHABLE_TERRAIN', 'UNREACHABLE_APPROACH', 'HERO_UNAVAILABLE']);
+
+    // ADR-005's own clause, at the source, because a steerable boat is exactly the kind of thing a
+    // rider could quietly take the human's helm with: the browser's singleton door still binds
+    // `riderPiloted: false`, so a rider's MOVE_HERO is refused there and never applied over the
+    // keys. `e2e/e5-regatta-boat.spec.ts` drives the rider's half through the `?debug` test seam
+    // BECAUSE of this line, so the line is asserted rather than assumed.
+    const game = readFileSync(new URL('../src/game/Game.ts', import.meta.url), 'utf8');
+    const bind = game.slice(game.indexOf('bindStandingOrderHero({'));
+    assert.ok(bind.startsWith('bindStandingOrderHero({'), 'Game.ts must bind a hero channel');
+    assert.match(bind.slice(0, 400), /riderPiloted: \(\) => false,/,
+      "the browser singleton must bind riderPiloted false: its hero is the human's");
+    // And the seam that stands in for the rider there is debug-only and adds no verb.
+    assert.match(game, /steerTo: \(x: number, z: number\) => \{ this\.testBoatSteer = \{ x, z \}; \},/);
+    assert.ok(game.indexOf('steerTo: (x: number, z: number)') > game.indexOf("new URLSearchParams(window.location.search).has('debug')"),
+      'the boat test seam must live inside the ?debug harness');
   });
 });
 
