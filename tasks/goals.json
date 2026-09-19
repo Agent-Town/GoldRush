@@ -5357,10 +5357,14 @@
             {
               "id": "battery-robustness-f-poc-8",
               "title": "F-POC-8 / F-NCB-10 / F-NCB-9: a wall-clock watchdog for the node-guards battery, the vite-teardown native crash cured at its root (upgrade or teardown order, measured), watch:null across the 64 vite-opening guards",
-              "status": "building",
+              "status": "merged",
               "taskFile": "battery-robustness-f-poc-8.md",
               "registeredBy": "attended 2026-09-19",
-              "implementer": "Claude Opus 5, scratch wt-battery, branch fix/battery-robustness, port 5307"
+              "mergeHash": "d36c17545e0db37afc7f01d8df8c303c8f970e69",
+              "mergedAt": "2026-09-19",
+              "review": "reviews/battery-robustness-f-poc-8.md",
+              "drainedBy": "attended 2026-09-19",
+              "note": "vite 8.0.13 → 8.3.0 ends the rolldown crash (19/20 → 0/20); TAP-progress watchdog N = 45 min; watch: null across 62 guards; battery −20…27 %"
             },
             {
               "id": "sol-open-findings-astra",
