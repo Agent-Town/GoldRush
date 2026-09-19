@@ -442,3 +442,43 @@ test('the subject is anchored by --root, so a fixture arm cannot measure the REA
     assert.equal(j.treesSwept, 1);
   } finally { f.cleanup(); }
 });
+
+test('the FACTORY-SIDE remedy names F-2483-1\'s fifth test BEFORE the salvage command (F-2648-2)', () => {
+  // The preservation verdict is computed only from retention manifests, so it cannot see the
+  // ordinary shape — the same bytes inside a TRACKED file at another path. A remedy that
+  // reads as the whole instruction sends a fire to mint a ref for content already in git.
+  const f = fixture();
+  try {
+    evidenceFile(f.work, 'artifacts/probe/lost.bin', 'lost\n', { intoOdb: false });
+    const r = run(f.work);
+    assert.match(r.out, /FACTORY-SIDE and unpreserved/, 'control: the remedy block must be reached');
+    assert.match(r.out, /already committed IN ANOTHER FORM/, 'the fifth test must be named at the site');
+    assert.match(r.out, /F-2483-1/, 'name the finding so the reader can look it up');
+    // POSITION is the whole point (F-2634-1): a qualification printed AFTER the imperative is
+    // read second, by a reader who has already typed the command.
+    const qualifier = r.out.indexOf('already committed IN ANOTHER FORM');
+    const command = r.out.indexOf('salvage-art-staging');
+    assert.ok(qualifier > -1 && command > -1, 'both must be present: ' + r.out);
+    assert.ok(qualifier < command, 'the fifth test must print BEFORE the salvage command');
+  } finally { f.cleanup(); }
+});
+
+test('a board with NO factory-side unpreserved subject prints no fifth-test line (reverse control)', () => {
+  // The over-general cure — an always-on qualification — is noise that decays a declaration
+  // into a formality (F-2208-1's boundary). This is the arm that catches it.
+  // ⚠️ METHOD, paid for in this fire: my first draft wrote an ordinary evidence file and
+  // expected a quiet board. Without `intoOdb: false` it lands UNREFERENCED, which is non-SAFE,
+  // so the factory-side block STILL fired and the arm measured a state where the
+  // discriminator was unreachable. A reverse control must actually reach the quiet branch.
+  const f = fixture();
+  try {
+    const attended = join(f.root, 'attended-ish');
+    g(f.work, ['worktree', 'add', '-q', '--detach', attended]);
+    evidenceFile(attended, 'artifacts/probe/theirs.bin', 'theirs\n', { intoOdb: false });
+    const r = run(f.work, ['--all-trees']);
+    assert.match(r.out, /attended-owned \(REPORT, never touch/, 'control: the ownership line was reached');
+    assert.doesNotMatch(r.out, /FACTORY-SIDE and unpreserved/, 'control: no factory-side duty here');
+    assert.doesNotMatch(r.out, /already committed IN ANOTHER FORM/,
+      'the fifth test is scoped to the remedy block it qualifies');
+  } finally { f.cleanup(); }
+});

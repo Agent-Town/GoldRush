@@ -404,6 +404,18 @@ function main() {
   say(`  ownership : ${attendedOwed.length} unpreserved file(s) attended-owned (REPORT, never touch — F-2561-1) · ${factoryOwed.length} FACTORY-SIDE`);
   if (factoryOwed.length) {
     say('  ⚠️  FACTORY-SIDE and unpreserved — these ARE a fire\'s own to salvage:');
+    // F-2648-2: the preservation verdict above is computed ONLY from retention manifests, so
+    // it is blind to the ORDINARY preservation shape — the same bytes inside a TRACKED file at
+    // another path. That is F-2483-1's fifth test, which this repo deliberately does NOT
+    // mechanise (it is a judgement over two files), so the imperative below must name it or it
+    // reads as the whole instruction. Measured live s2648 on a per-run log that is a byte-exact
+    // SUFFIX of its tracked cumulative sibling and still scored `NOT PRESERVED 0/0`.
+    say('      FIRST apply F-2483-1\'s fifth test, which NO bucket above can express: is this');
+    say('      content already committed IN ANOTHER FORM? The verdict reads retention MANIFESTS');
+    say('      only, so it cannot see the ordinary shape — the same bytes inside a TRACKED file');
+    say('      at another path (a per-run tail whose every line is already in a cumulative log).');
+    say('      One `git show HEAD:<sibling>` settles it; if it is covered the alarm is a FALSE');
+    say('      URGENCY, and the right act is to record that judgement, not to mint a ref.');
     say('      node scripts/salvage-art-staging.mjs save/<name> && git push origin save/<name>');
     say('      (a local-only salvage reads as safe and is not — F-1055-1)');
     for (const r of factoryOwed.slice(0, 8)) say(`        ${r.tree} :: ${r.path}`);
