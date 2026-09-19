@@ -325,9 +325,17 @@ test('12. the forward pointer prints ABOVE the split block it names', () => {
   try {
     const r = runCli(f.root);
     const pointer = r.out.indexOf('DO NOT STOP HERE');
-    const split = r.out.indexOf('SPLIT BY WHAT SURVIVED');
+    // F-2635-1: ANCHOR on the block's own emission (leading indent + em dash), never on
+    // the bare name. The pointer must NAME its target, so after the F-2634-1 cure the
+    // string `SPLIT BY WHAT SURVIVED` occurs TWICE on this fixture — the pointer's prose
+    // first — and a bare `indexOf` resolves to the POINTER, turning the comparison below
+    // into pointer-vs-itself and the control beneath it into a tautology. Measured s2635:
+    // with a bare needle, deleting the block's label while leaving the pointer intact left
+    // this arm GREEN (arm 6 alone caught it, on an all-hollow fixture that carries no
+    // pointer to decoy it). The ordering defect reddened this arm either way.
+    const split = r.out.search(/^\s+SPLIT BY WHAT SURVIVED —/m);
     assert.notEqual(pointer, -1, 'a board with a HOLDING tree must carry the forward pointer');
-    assert.notEqual(split, -1, 'control: the split itself must be present, else this proves nothing');
+    assert.notEqual(split, -1, 'control: the split BLOCK itself must be present (anchored, so the pointer\'s own copy cannot satisfy this), else this proves nothing');
     assert.ok(pointer < split, `the pointer must precede the split it names (pointer ${pointer}, split ${split})`);
     // And it must survive the truncation that motivated it: the desk figure and the
     // pointer together, with the split still below.
