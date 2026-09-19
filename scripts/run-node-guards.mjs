@@ -271,6 +271,14 @@ const files = process.argv.slice(2);
 // The arm below re-runs ONLY files whose TAP record carries a `signal:`, ONLY when every failure
 // in the run was such a death, ONCE, alone, and says so on stderr. An assertion failure anywhere
 // disables it; a file that dies again stays red. A non-zero EXIT CODE is still propagated exactly.
+//
+// ROOT CAUSE FOUND AND CURED 2026-09-19 (the "still owed" half of F-NCB-10's ledger row): the
+// crash is a VERSION defect, not a guard-shape one. Measured 20 direct runs per file per arm on
+// this host — vite 8.0.13 / rolldown binding 1.0.1: rider-parity-retirement 19/20 dead (SIGBUS and
+// SIGSEGV; it already sets watch: null and closes after its awaits settle, so no teardown reorder
+// could have reached it), open-sea-water 0/20. On vite 8.3.0 / binding 1.2.9, under a load average
+// of 133-140 rather than 39: 0/20 and 0/20. The arm STAYS — it is cheap, it covers any future
+// native death, and it is the only thing that tells a fire a red was never a verdict.
 function signalDeaths(tapPath) {
   let tap = '';
   try { tap = readFileSync(tapPath, 'utf8'); } catch { return { only: false, files: [] }; }
