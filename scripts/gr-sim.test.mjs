@@ -926,7 +926,22 @@ test('Twin Banks consumes its declared crossings and build zones before securing
   ]);
   // F44: the authored braid mask and obstacle-aware ford routes change combat timing.
   // Pin the repeated idle run separately from the high-health secure-wave check below.
-  assert.equal(transcript.at(-1).eventLogHash, 'fnv1a32:6730d992');
+  // RE-POINTED 2026-09-19 (`tasks/rulings-play-2026-09-19.md`, F-OMA-4; owner ruling of the same
+  // day, verbatim: "I agree with all your recommendations on the decisions - good work" — the desk
+  // register's F-OMA-4 row reads "Yes. Small and reversible; one word.").
+  //
+  // WAS `fnv1a32:6730d992`. The Twin Banks contract's `lanes.spawnEdges` dropped east and west, so
+  // the north half of every wave now has to reach a ford at x = ±16 and cross it instead of closing
+  // on the hero-centred ring from all four quarters, and the IDLE run's event stream changes with
+  // it. The same move is recorded in `assets/contracts/null-floors.json` for all five bench seeds,
+  // re-minted on this tree by `gr-sim --policy=idle` and byte-identical on a repeat run.
+  //
+  // MEASURED here and on 2026-09-18 alike — `artifacts/open-maps-acceptance-e1-e4/report.md` §5c
+  // predicted this exact row when it made the cure, measured it, and reverted it for want of the
+  // firewall to re-point: "waves 3 -> 2 (99,733 -> 81,933 ms, 50 -> 33 kills)". This tree reproduces
+  // all four numbers. The floor gets HARSHER on three of five seeds, which is the right direction:
+  // the map is not kinder to a player who does nothing.
+  assert.equal(transcript.at(-1).eventLogHash, 'fnv1a32:c275d9b5');
 
   const previousLocation = globalThis.location;
   const previousWindow = globalThis.window;
@@ -981,16 +996,25 @@ test('Twin Banks consumes its declared crossings and build zones before securing
     assert.deepEqual(second, first);
     // F44: corrected braid routing preserves wave-20 timing and offer deadlines;
     // kills and the event digest reflect the newly reachable paths.
+    // RE-POINTED 2026-09-19 (`tasks/rulings-play-2026-09-19.md`, F-OMA-4; owner 2026-09-19: "I
+    // agree with all your recommendations on the decisions - good work"). `lanes.spawnEdges` lost
+    // east and west, so the same wave budget arrives over two edges and has to cross a ford: the
+    // high-health run meets MORE bodies on its own ground. Moved: `kills` 787 -> 795 and
+    // `eventLogHash` `fnv1a32:6c36401c` -> `fnv1a32:42c5435d`. UNMOVED, and it is the half of this
+    // assertion F44 was written for: `secured: true`, `waves: 20`, `timeMs: 600000`,
+    // `defaultedPicks: 25`, `defaultedSecure: 1` — wave-20 timing and the offer deadlines are
+    // exactly where they were. `assert.deepEqual(second, first)` above still holds, so the ride is
+    // byte-identical twice on the new data.
     assert.deepEqual(first.outcome, {
       secured: true,
       waves: 20,
       timeMs: 600000,
       gold: 0,
-      kills: 787,
+      kills: 795,
       calls: 0,
       defaultedPicks: 25,
       defaultedSecure: 1,
-      eventLogHash: 'fnv1a32:6c36401c',
+      eventLogHash: 'fnv1a32:42c5435d',
     });
     assert.equal(first.terminalLog.outcome, 'secured');
   } finally {
