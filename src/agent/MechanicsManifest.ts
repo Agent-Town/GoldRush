@@ -196,6 +196,19 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
       spends: ['auto_pan', 'boiler_lance', 'pressure_mortar', 'sky_rocket_battery'],
       bandBoosts: ['boiler_battery'],
     }));
+    // F-HEAT14-3, owner-ruled 2026-09-19 ("I agree with all your recommendations on the decisions
+    // - good work", option (a)): the four rules above described a mechanic no rider could READ.
+    // The heat-14 rider enumerated every `now` key on the Trestle and the Incline and found no
+    // pressure value, no band, no coal count — and priced the boiler as strictly dominated because
+    // of it. This rule names the gauge that now answers, so a rider reading the rules finds it.
+    rules.push(rule('pressure_reading', 'AgentView.now.pressure', {
+      field: 'now.pressure',
+      publishes: ['stored', 'cap', 'band', 'safeBand', 'coal', 'coalSeconds', 'boilers', 'vents', 'objective', 'seams'],
+      // The human's gauge hides the numeric band until `pressure_assay`; the rider's does too.
+      safeBandResearch: 'pressure_assay',
+      // No vent verb on either side: the valve blows itself above `safeMax`.
+      ventVerb: false,
+    }));
   }
   const voltageSocket = contract.id === 'e3-blackout-ridge' && twist.powerGrid
     ? { powerGrid: twist.powerGrid }

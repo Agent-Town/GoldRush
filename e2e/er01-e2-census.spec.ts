@@ -133,7 +133,53 @@ for (const contract of steamworks.contracts) {
                 bandBoosts: ['boiler_battery'],
               },
             },
+            // RE-PINNED 2026-09-19 (`tasks/rulings-play-2026-09-19.md`, F-HEAT14-3; owner ruling of
+            // the same day, verbatim: "I agree with all your recommendations on the decisions - good
+            // work", taking option (a) on the desk register's F-HEAT14-3 row). Cause, measured by the
+            // heat-14 rider rather than argued: on the Trestle and the Incline it read the union of
+            // `now` keys across its whole run and found NO pressure value, no band, no coal count and
+            // no boiler fuel, while `boiler_house` sat on its price list at 70 gold x 3 — so it called
+            // 210 gold of boiler "a strictly dominated purchase" and F-MAPL-1's `coalSeconds` 12 -> 36
+            // "only triples the duration of a process I cannot observe" (`artifacts/gauntlet-heat14-
+            // e3949bfa/heat14-note.md` §5). The FOUR rules above were all published the whole time;
+            // what was missing was a reading. `pressure_reading` names the gauge that answers, and the
+            // assertion below holds the gauge itself to the same numbers the human's HUD draws.
+            {
+              id: 'pressure_reading',
+              source: 'AgentView.now.pressure',
+              data: {
+                field: 'now.pressure',
+                publishes: ['stored', 'cap', 'band', 'safeBand', 'coal', 'coalSeconds', 'boilers', 'vents', 'objective', 'seams'],
+                safeBandResearch: 'pressure_assay',
+                ventVerb: false,
+              },
+            },
           ]));
+        // THE GAUGE ITSELF, on the same probe. `enabled` is the SAME predicate
+        // `Game.activeResourceSnapshots` filters the human's HUD gauge on, so a map that draws the
+        // gauge for the human publishes it for the rider and a map that draws neither publishes
+        // neither — which is the fairness claim F-HEAT14-3 made, asserted rather than assumed.
+        const gauge = probe.currentTurn().view.now.pressure;
+        expect(gauge).toMatchObject({
+          stored: 0,
+          cap: 100,
+          band: 'empty',
+          // NULL, deliberately: the human's own gauge hides the numeric band until `pressure_assay`
+          // is researched (`Game.ts:7422`), and the rider's hides it under the same gate.
+          safeBand: null,
+          coal: 0,
+          coalSeconds: 0,
+          boilers: { built: 0, hot: 0, cooling: 0, max: 3 },
+          vents: 0,
+          objective: { active: false, failed: false, complete: false, hotBoilers: 0, waves: '8-12' },
+        });
+        // The seam row carries this contract's OWN coal, keyed to `stablePrefix.map.coalSeams`.
+        expect(gauge!.seams).toHaveLength(probe.currentTurn().view.stablePrefix.map.coalSeams.length);
+        expect(gauge!.seams.map((seam: { id: string }) => seam.id)).toEqual(probe.currentTurn().view.stablePrefix.map.coalSeams.map((seam: { id: string }) => seam.id));
+      } else {
+        // The other half of contract-scoping, asserted: no boilers, no gauge. This is what keeps
+        // `now.pressure` out of the canonical `viewSchema.fields` set (built from `the-claim`).
+        expect(probe.currentTurn().view.now.pressure).toBeUndefined();
       }
       expect(probe.manifest.tileParams.engineDependencies).toEqual([
         expect.objectContaining({ status: 'missing' }),
