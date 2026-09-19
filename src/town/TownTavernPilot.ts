@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { trackedGltfLoader } from '../assets/AssetLoading';
 import { activeEpoch } from '../meta/ContractFamilies';
 import { disposeObject3D } from '../utils/dispose';
+import { createOpaquePropBatch } from './OpaquePropBatchPilot';
 import { townEraPropsForOrder } from './townEraProps';
 import { TOWN_LEGACY_PAN_NAME, townBuildings, townPlazaSlot, townPropRing } from './townLayout';
 
@@ -602,14 +603,19 @@ export function installTownPlazaPropsPilot({ scene, canvas }: Host): () => void 
       return;
     }
     scene.add(...mounted);
+    const placementCount = mounted.length;
+    scene.updateMatrixWorld(true);
+    const batches = batchRepeatedOpaqueProps(mounted);
+    scene.add(...batches);
+    mounted.push(...batches);
     if (legacyPan) legacyPan.visible = false;
     for (const model of mounted) removeEmitters.push(addAnchorEmitters(scene, canvas, model.name, model, activeEra));
-    canvas.dataset.town3dPilotInstances = String(mounted.length);
+    canvas.dataset.town3dPilotInstances = String(placementCount);
     canvas.dataset.town3dPanMonumentInstances = String(baseProps.some(({ kind }) => kind === 'pan_monument') ? 1 : 0);
     canvas.dataset.town3dPlazaPropsState = 'loaded';
     canvas.dataset.town3dEraPropIds = eraProps.map((prop) => prop.id).join(',');
     publish(canvas, 'loaded', 'glb', {
-      meshes: mounted.length,
+      meshes: placementCount,
       triangles: metrics.reduce((sum, entry) => sum + entry.metrics.triangles * entry.count, 0),
       materials: metrics.length,
     });
@@ -636,4 +642,40 @@ export function installTownPlazaPropsPilot({ scene, canvas }: Host): () => void 
     canvas.dataset.town3dPanMonumentInstances = '0';
     canvas.dataset.town3dPlazaPropsState = 'disposed';
   };
+}
+
+/** Sharing a GLB geometry/material is not batching: each clone still submitted a draw.
+ * Only repeated static opaque leaves with identical render state share a batch. Anchors,
+ * transparent children, alpha testing, and every unique landmark keep their own objects. */
+function batchRepeatedOpaqueProps(models: readonly THREE.Object3D[]): THREE.Mesh[] {
+  const cohorts = new Map<string, THREE.Mesh[]>();
+  for (const model of models) model.traverseVisible(node => {
+    const mesh = node as THREE.Mesh;
+    if (!mesh.isMesh || (mesh as THREE.SkinnedMesh).isSkinnedMesh ||
+        (mesh as THREE.InstancedMesh).isInstancedMesh || Array.isArray(mesh.material) ||
+        mesh.material.transparent || mesh.material.alphaTest > 0 || mesh.matrixWorld.determinant() <= 0 ||
+        Object.keys(mesh.geometry.morphAttributes).length > 0) return;
+    const key = [mesh.geometry.uuid, mesh.material.uuid, mesh.renderOrder,
+      mesh.castShadow, mesh.receiveShadow, mesh.layers.mask].join(':');
+    const cohort = cohorts.get(key) ?? [];
+    cohort.push(mesh);
+    cohorts.set(key, cohort);
+  });
+  const batches: THREE.Mesh[] = [];
+  for (const cohort of cohorts.values()) {
+    if (cohort.length < 2) continue;
+    const source = cohort[0]!;
+    const batch = createOpaquePropBatch(cohort.map(mesh => ({
+      geometry: mesh.geometry, matrix: mesh.matrixWorld.clone(),
+    })), source.material as THREE.Material);
+    batch.name = `TownOpaqueProps:${source.name}`;
+    batch.userData.opaqueSourceIds = cohort.map(mesh => mesh.id);
+    batch.castShadow = source.castShadow;
+    batch.receiveShadow = source.receiveShadow;
+    batch.renderOrder = source.renderOrder;
+    batch.layers.mask = source.layers.mask;
+    cohort.forEach(mesh => { mesh.visible = false; });
+    batches.push(batch);
+  }
+  return batches;
 }
