@@ -311,3 +311,74 @@ test('11. hollow and holding are separated within a single board', () => {
     f.cleanup();
   }
 });
+
+// ---------------------------------------------------------------------------
+// 12. F-2634-1 — THE FORWARD POINTER MUST SIT *ABOVE* THE SPLIT IT NAMES. Arms 6-11
+//     all assert the split's CONTENT and are blind to its POSITION: measured s2634 the
+//     live output is 65 lines with the DESK FIGURE at 16 and the split at 42-64, so a
+//     `head -40` returns a CORRECT desk figure and silently cuts the alarm. This arm is
+//     the only one that fails if the pointer is moved below the block, which is the
+//     defect F-2606-1 cured on this tool's sibling and never reached here.
+// ---------------------------------------------------------------------------
+test('12. the forward pointer prints ABOVE the split block it names', () => {
+  const f = fixture({ trees: { keeper: { gitless: true, evidence: 4 }, live1: {} } });
+  try {
+    const r = runCli(f.root);
+    const pointer = r.out.indexOf('DO NOT STOP HERE');
+    const split = r.out.indexOf('SPLIT BY WHAT SURVIVED');
+    assert.notEqual(pointer, -1, 'a board with a HOLDING tree must carry the forward pointer');
+    assert.notEqual(split, -1, 'control: the split itself must be present, else this proves nothing');
+    assert.ok(pointer < split, `the pointer must precede the split it names (pointer ${pointer}, split ${split})`);
+    // And it must survive the truncation that motivated it: the desk figure and the
+    // pointer together, with the split still below.
+    const desk = r.out.indexOf('THE DESK FIGURE');
+    assert.ok(desk !== -1 && desk < pointer, 'the pointer follows the desk figure a truncating reader came for');
+  } finally {
+    f.cleanup();
+  }
+});
+
+// ---------------------------------------------------------------------------
+// 13. The pointer carries the FIGURES, not a bare "look below". A reader who truncates
+//     is a reader in a hurry; an actionable number is what stops them (F-2449-1 — an
+//     alarm whose remedy the reader cannot act on is a formality).
+// ---------------------------------------------------------------------------
+test('13. the forward pointer names the count and the bytes it is protecting', () => {
+  const f = fixture({ trees: { keeper: { gitless: true, evidence: 7 }, live1: {} } });
+  try {
+    const r = runCli(f.root);
+    const line = r.out.split('\n').find((l) => l.includes('DO NOT STOP HERE')) ?? '';
+    assert.match(line, /1 unreadable tree\(s\)/, 'the pointer states how many trees');
+    const figures = r.out.slice(r.out.indexOf('DO NOT STOP HERE'));
+    assert.match(figures, /7 file\(s\)/, 'and the file count it is protecting');
+    assert.match(figures, /MB/, 'and the bytes');
+  } finally {
+    f.cleanup();
+  }
+});
+
+// ---------------------------------------------------------------------------
+// 14. REVERSE CONTROL — the pointer is GATED ON THE SECTION EXISTING. The tempting
+//     over-general cure is an always-on pointer, which on an all-hollow or fully-readable
+//     board names a `SPLIT BY WHAT SURVIVED` block that is never emitted — sending a
+//     reader to the bottom for nothing, which is how a declaration decays into noise
+//     (F-2208-1's boundary, the same one arm 9 draws for the split itself).
+// ---------------------------------------------------------------------------
+test('14. REVERSE CONTROL: no pointer when there is nothing unreadable, nor when all-hollow', () => {
+  const clean = fixture({ trees: { live1: {}, live2: {} } });
+  try {
+    const r = runCli(clean.root);
+    assert.doesNotMatch(r.out, /DO NOT STOP HERE/, 'a fully readable board must not point anywhere');
+    assert.match(r.out, /THE DESK FIGURE/, 'control: the run really produced its report');
+  } finally {
+    clean.cleanup();
+  }
+  const hollowOnly = fixture({ trees: { hollow1: { gitless: true, emptyEvidenceDir: true }, live1: {} } });
+  try {
+    const r = runCli(hollowOnly.root);
+    assert.match(r.out, /HOLLOW\s+1 tree\(s\)/, 'control: the board really is all-hollow');
+    assert.doesNotMatch(r.out, /DO NOT STOP HERE/, 'nothing is held, so there is nothing to point at');
+  } finally {
+    hollowOnly.cleanup();
+  }
+});

@@ -267,6 +267,27 @@ function main() {
   const treesOf = (rows) => new Set(rows.map((r) => r.tree)).size;
   const bytesOf = (rows) => rows.reduce((a, r) => a + r.size, 0);
 
+  // F-2634-1: the could-not-answer SPLIT is computed HERE, ~90 lines before it is
+  // printed, so a forward pointer to it can be emitted in the region a truncating
+  // reader still sees. F-2606-1 cured exactly this shape on this tool's SIBLING
+  // (`untracked-evidence-durability`) and its reading instruction names that tool BY
+  // NAME — "READ THE UNTRACKED ONE WHOLE" — so it never reached here, though both
+  // tools are introduced in one sentence of §2E. Measured s2634: this output is 65
+  // lines, the DESK FIGURE prints at line 16 and the F-2617-1 HOLDING declaration at
+  // lines 42-64, so `head -40` delivers a CORRECT desk figure and silently cuts the
+  // alarm naming 1,672 file(s) / 926.0 MB in a tree the reaper is actively emptying.
+  // Hoisting costs nothing: the same walk ran anyway, only later.
+  const hollow = [];
+  const holding = [];
+  const unverifiable = [];
+  for (const t of couldNot) {
+    const c = evidenceFileCount(t);
+    if (c === null) unverifiable.push({ tree: t, files: 0, bytes: 0 });
+    else if (c.files === 0) hollow.push({ tree: t, ...c });
+    else holding.push({ tree: t, ...c });
+  }
+  holding.sort((a, b) => b.bytes - a.bytes);
+
   say('');
   say('  ALL FOUR BUCKETS (printed so the predicate is visible, F-2560-1):');
   for (const k of ['AT RISK', 'UNREFERENCED', 'LOCAL-REF-ONLY', 'SAFE']) {
@@ -276,6 +297,18 @@ function main() {
   say(`  ➡️  THE DESK FIGURE is the AT RISK bucket — in NO object database:`);
   say(`      ${atRisk.length} file(s) / ${mb(bytesOf(atRisk))} across ${treesOf(atRisk)} tree(s)`);
   say(`      (the wider non-SAFE reading is ${nonSafe.length} / ${mb(bytesOf(nonSafe))} / ${treesOf(nonSafe)} trees — NOT the desk figure)`);
+
+  // F-2634-1: gated on the section EXISTING, never always-on. An unconditional pointer
+  // would name a `SPLIT BY WHAT SURVIVED` block that an all-hollow board never emits —
+  // the over-general cure, and the reverse control in the guard exists to catch it.
+  if (holding.length || unverifiable.length) {
+    const hb = holding.reduce((a, h) => a + h.bytes, 0);
+    say('');
+    say(`  ⚠️  DO NOT STOP HERE — ${holding.length + unverifiable.length} unreadable tree(s) still hold evidence`);
+    say(`      (${holding.reduce((a, h) => a + h.files, 0)} file(s) / ${mb(hb)}). The SPLIT BY WHAT SURVIVED block and its`);
+    say('      REMEDY print at the END of this output (F-2617-1). The desk figure above is');
+    say('      complete without them; that alarm is not — truncating here cuts it (F-2634-1).');
+  }
 
   const factory = atRisk.filter((r) => isFactorySide(r.tree));
   const attended = atRisk.filter((r) => !isFactorySide(r.tree));
@@ -341,16 +374,9 @@ function main() {
     // has. The right question for a gitless tree is the simpler one — are these bytes
     // in git anywhere? — which needs nothing from the tree at all, because a detached
     // arena's blobs live in MAIN's object database (F-2485-1's gitless-safe method).
-    const hollow = [];
-    const holding = [];
-    const unverifiable = [];
-    for (const t of couldNot) {
-      const c = evidenceFileCount(t);
-      if (c === null) unverifiable.push({ tree: t, files: 0, bytes: 0 });
-      else if (c.files === 0) hollow.push({ tree: t, ...c });
-      else holding.push({ tree: t, ...c });
-    }
-    holding.sort((a, b) => b.bytes - a.bytes);
+    // F-2634-1: hoisted to just above the ALL FOUR BUCKETS block so the forward
+    // pointer can be emitted where a truncating reader still sees it. Same walk,
+    // same values, computed once.
     say('');
     say('    SPLIT BY WHAT SURVIVED — a tree loses its .git and its FILES at different');
     say('    times, so unreadable does NOT mean empty (F-2617-1):');
