@@ -1928,6 +1928,37 @@ if (terrain3dGradeAmount > 0.001) {
 `;
 
 function hidePaintedGround(host: Host): HiddenRelief[] { return hidePaintedRelief(host); }
+/** Quiet the worked bank shelves while retaining the authored wet lips and tile edge. */
+function calmTwinBanksGround(model: THREE.Object3D): void {
+  if (isMapBeautyDisabled()) return;
+  const materials = new Set<THREE.MeshStandardMaterial>();
+  model.traverse(node => {
+    const mesh = node as THREE.Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>;
+    if (mesh.isMesh && !Array.isArray(mesh.material) && mesh.material.isMeshStandardMaterial && mesh.material.map) materials.add(mesh.material);
+  });
+  for (const material of materials) {
+    const compile = material.onBeforeCompile.bind(material);
+    material.onBeforeCompile = (shader, renderer) => {
+      compile(shader, renderer);
+      shader.uniforms.twinBanksDryPigment = { value: new THREE.Color('#ad9c7b') };
+      shader.vertexShader = shader.vertexShader
+        .replace('#include <common>', '#include <common>\nvarying vec2 vTwinBanksWorld;')
+        .replace('#include <begin_vertex>', '#include <begin_vertex>\nvTwinBanksWorld = (modelMatrix * vec4(position, 1.0)).xz;');
+      shader.fragmentShader = shader.fragmentShader
+        .replace('#include <common>', '#include <common>\nvarying vec2 vTwinBanksWorld;\nuniform vec3 twinBanksDryPigment;')
+        .replace('#include <map_fragment>', `#include <map_fragment>
+float twinBanksSouth = 1.0 - smoothstep(0.45, 1.65, length((vTwinBanksWorld - vec2(-13.0, -14.0)) / vec2(13.0, 8.0)));
+float twinBanksNorth = 1.0 - smoothstep(0.45, 1.65, length((vTwinBanksWorld - vec2(13.5, 14.2)) / vec2(13.0, 8.0)));
+float twinBanksDry = smoothstep(6.0, 10.0, abs(vTwinBanksWorld.y));
+float twinBanksEdge = 1.0 - smoothstep(24.0, 31.0, max(abs(vTwinBanksWorld.x), abs(vTwinBanksWorld.y)));
+float twinBanksQuiet = mix(0.20, 0.48, max(twinBanksSouth, twinBanksNorth)) * twinBanksDry * twinBanksEdge;
+diffuseColor.rgb = mix(diffuseColor.rgb, twinBanksDryPigment, twinBanksQuiet);`);
+    };
+    material.customProgramCacheKey = () => 'twin-banks-dry-bank-pigment-v1';
+    material.needsUpdate = true;
+  }
+}
+
 function applyNightTerrainPools(model: THREE.Object3D, host: Host, opaqueLandmark = false): void {
   // Carried pools use the rig's steel-blue family at the prior ground tint's luminance.
   const materials = new Set<THREE.Material>();
@@ -2352,6 +2383,7 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       nextPonds = createLiveSpringPonds(host, heightAt);
       nextTerrain.name = 'Terrain3dClaimPilot';
       if (host.archiveRestoration) installArchiveRestoration(nextTerrain, host.archiveRestoration);
+      if (host.contractId === 'e1-twin-banks') calmTwinBanksGround(nextTerrain);
       if (host.nightMode) applyNightTerrainPools(nextTerrain, host);
       else {
         host.canvas.dataset.terrain3dPilotNightPools = 'off';
