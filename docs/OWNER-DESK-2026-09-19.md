@@ -98,7 +98,7 @@
 ## 3. Ops — actions that need you or your word
 
 ### The account-registry deploy day (later)
-**What.** Astra is landing the registry code behind a closed gate now (lane-b). The deploy is five steps you run in one evening: quiesce the old writers, the verified KV export, deploy the worker with a secret, bootstrap, then the Pages binding. I bring you the checklist when the code lands. *No word today.*
+**What.** Astra is landing the registry code behind a closed gate now (lane-b). The deploy is five steps you run in one evening: quiesce the old writers, the verified KV export, deploy the worker with a secret, bootstrap, then the Pages binding. The checklist is ready: **the code landed 2026-09-19 (`fa185e611`, s2642) and the five steps are `docs/ops/account-registry.md`**, each with its verification and its rollback sentence. Nothing deployed and nothing migrated — the Pages binding ships commented and the scope is unset, so the door behaves exactly as it does today. *No word today; this waits for an evening you pick.*
 
 ### A3 — the repository shrink, the swap
 **What.** Ruled 2026-09-06 ("ok, good plan"). The archive and the art store are complete; the rewrite of the working repo needs one quiet evening: every clone and worktree recut, the fire and the runner re-pointed, a day of fires on the new name before the swap.

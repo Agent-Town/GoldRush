@@ -5327,7 +5327,9 @@
             {
               "id": "sol-account-registry-land",
               "title": "Astra finishes its atomic account registry (P1 F-CR0908-1): the worker, config and ops doc that sit uncommitted in its worktree, landed behind the closed readiness gate; test:accounts green",
-              "status": "queued",
+              "status": "merged",
+      "mergeHash": "fa185e61147e6bdbcce72ccc5facc856faac7eb9",
+      "drainNotes": "s2642 drain: gated on a detached trial merge. tsc rc=0, build rc=0, test:accounts 43 KV + 43 SQLite (structurally RED on main - the worker file is absent there), test:mp 466, test:stats 87+320+320+26, review-account-creation 3/3, closed-gate proof green with BOTH manufactured mutants red (verified by the drain, not inherited). Landed behind a CLOSED gate: the wrangler.toml Pages binding ships commented and ACCOUNT_REGISTRY_SCOPE is unset, so nothing deploys or migrates. Deploy day is owner-only - F-2642-3 on the desk. Review: reviews/sol-account-registry-land.md",
               "taskFile": "sol-account-registry-land.md",
               "registeredBy": "attended 2026-09-19",
               "lane": "lane-b (Codex gpt-6-astra xhigh) — queued 2026-09-19 on the owner word \"And also lets do the account registry.\""
