@@ -855,6 +855,44 @@ export class HeadlessContractSim {
   /** hero-move-verb: the one reused steered-intents object; see `heroOrderIntents` above. */
   private readonly heroOrderedIntents: Intents = { ...IDLE_INTENTS, move: new THREE.Vector2() };
 
+  /**
+   * hero-move-verb: the terrain answer `Hero.update` itself obeys — the walkable sample and the
+   * bounds it clamps into. Extracted from the `bindStandingOrderHero` binding below (byte for byte)
+   * so the E5 helm can ask the SAME question when it decides whether a body may step ashore.
+   */
+  private heroWalkable(x: number, z: number): boolean {
+    return x >= Terrain.bounds.minX + Balance.hero.radius
+      && x <= Terrain.bounds.maxX - Balance.hero.radius
+      && z >= Terrain.bounds.minZ + Balance.hero.radius
+      && z <= Terrain.bounds.maxZ - Balance.hero.radius
+      && Terrain.sample(x, z).walkable;
+  }
+
+  /**
+   * E5 REGATTA, SLICE 1 — one fixed step of the Claim-Boat's helm, `Game.sailClaimBoat`'s twin.
+   *
+   * Returns true when the boat carried the hero this step, which means slot 0's own movement is
+   * SKIPPED: while aboard the racing body is the boat and the hero rides its deck anchor. Returns
+   * false on every contract with no authored boat physics and on every step nobody is aboard, so an
+   * idle run walks exactly the object graph it walked before this slice — which is what the 83 null
+   * floors certify.
+   */
+  private sailClaimBoat(intents: Intents): boolean {
+    const tile = this.deepwater?.tile;
+    if (!tile) return false;
+    const helmed = tile.helm(
+      STEP_SECONDS,
+      this.hero.group.position,
+      intents.move.lengthSq() > 0 ? { x: intents.move.x, y: intents.move.y } : null,
+      standingOrderHeroSteering(),
+      { walkable: (x, z) => this.heroWalkable(x, z) },
+    );
+    // The hero is carried, not walking: drop the momentum `Hero.update` would otherwise coast on
+    // when it steps back ashore.
+    if (helmed) this.hero.velocity.set(0, 0, 0);
+    return helmed;
+  }
+
   private e8PhysicsIntents(intents: Intents): Intents {
     const position = this.hero.group.position;
     const terrain = this.lowOrbit.isDeclared
@@ -1409,11 +1447,13 @@ export class HeadlessContractSim {
     bindStandingOrderHero({
       position: () => this.hero.group.position,
       riderPiloted: () => true,
-      walkable: ({ x, z }) => x >= Terrain.bounds.minX + Balance.hero.radius
-        && x <= Terrain.bounds.maxX - Balance.hero.radius
-        && z >= Terrain.bounds.minZ + Balance.hero.radius
-        && z <= Terrain.bounds.maxZ - Balance.hero.radius
-        && Terrain.sample(x, z).walkable,
+      walkable: ({ x, z }) => this.heroWalkable(x, z),
+      // E5 Regatta slice 1: null on every contract that composes no steerable boat.
+      boatRefusal: ({ x, z }) => this.deepwater?.tile.boatOrderRefusal(
+        this.hero.group.position,
+        { x, z },
+        (px, pz) => this.heroWalkable(px, pz),
+      ) ?? null,
     });
     bindStandingOrderFinalVerbs({
       setWeapon: (weapon) => this.setWeapon(weapon),
@@ -1895,7 +1935,12 @@ export class HeadlessContractSim {
     // actor's intents through the physics filter before it moves.
     this.syncE8LobPhysics();
     this.applyLowOrbitDebris();
-    this.hero.update(STEP_SECONDS, this.e8PhysicsIntents(this.heroOrderIntents()), {
+    // E5 Regatta slice 1: the helm gets the step FIRST and, when the hero is aboard, the boat is
+    // the body that moves. `heroOrderIntents()` still returns the `IDLE_INTENTS` OBJECT ITSELF with
+    // no order steering, and `sailClaimBoat` answers false on every idle step, so the call below is
+    // reached with the same argument it always was.
+    const heroIntents = this.e8PhysicsIntents(this.heroOrderIntents());
+    if (!this.sailClaimBoat(heroIntents)) this.hero.update(STEP_SECONDS, heroIntents, {
       bounds: Terrain.bounds,
       sample: (x, z) => {
         const sample = Terrain.sample(x, z);

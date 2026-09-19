@@ -143,7 +143,17 @@ export class DeepwaterSocket {
     this.arsenal.update(at);
   }
 
-  /** Game.update measures racers after their movement, before the arsenal and wave updates. */
+  /**
+   * Game.update measures racers after their movement, before the arsenal and wave updates.
+   *
+   * ⛔ SLICE 2 CHANGES THIS LINE AND SLICE 1 DELIBERATELY DID NOT. The racer list is still
+   * `[hero, the boat's MOORING]` — `boat.anchor`, which no longer moves when the hull sails (the
+   * hull's live point is `boat.motion`). So today a sailing boat scores through the HERO it
+   * carries, which rides the deck anchor and is therefore the hull's own point: the course reads
+   * the same numbers either way while the hero is aboard. `specs/agent-play/e5-regatta-steerable-boat.md`
+   * slice 3 of the laws ("the race counts the boat") is what replaces `boat.anchor` with
+   * `boat.motion` here and drops the hero from the list; see `artifacts/e5-regatta-boat/report.md`.
+   */
   advanceRace(at: number, wave: number): void {
     this.race?.advance(at, wave, [this.heroPosition(), this.tile.snapshot().boat.anchor]);
   }

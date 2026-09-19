@@ -213,7 +213,14 @@
               { "id": "bow", "x": 0, "z": -3 },
               { "id": "port", "x": -3, "z": 1 },
               { "id": "starboard", "x": 3, "z": 1 }
-            ]
+            ],
+            "physics": {
+              "topSpeed": 1.65,
+              "acceleration": 0.55,
+              "turnRateRadPerSec": 3.14,
+              "drag": 0.8,
+              "fastWaterMultiplier": 1.5
+            }
           },
           "stormTrack": { "regionId": "storm-front-fast-water", "westX": -64, "eastX": 64 },
           "corsairWaveSize": 3,

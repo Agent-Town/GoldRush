@@ -27,14 +27,31 @@ export class ClaimBoatView {
     );
   }
 
+  /**
+   * E5 Regatta slice 1: the hull, not the mooring. `motion` sits exactly on the anchor until
+   * something steers the boat, so every other Deepwater map renders where it always did; the
+   * heading turns the hull so a sailing boat faces the way it is going. `dataset.claimBoat` is the
+   * render-side readout a PLAIN BOOT can assert on (no `?debug`, no `__GR_TEST__`).
+   */
   update(): void {
-    const { anchor } = this.boat().snapshot();
-    this.group.position.set(anchor.x, body.waterlineY, anchor.z);
+    const { motion } = this.boat().snapshot();
+    this.group.position.set(motion.x, body.waterlineY, motion.z);
+    if (motion.steerable) {
+      // Heading 0 points +X and the hull models point +Z, so the yaw is the heading's complement.
+      this.group.rotation.y = Math.PI / 2 - motion.heading;
+      this.canvas.dataset.claimBoat = `${motion.x.toFixed(3)},${motion.z.toFixed(3)},${motion.heading.toFixed(4)},${motion.aboard ?? ''}`;
+    }
   }
 
   deckYAt(x: number, z: number): number | undefined {
     if (!this.ready || this.disposed) return undefined;
     x -= this.group.position.x; z -= this.group.position.z;
+    const yaw = this.group.rotation.y;
+    if (yaw !== 0) {
+      // Into the hull's own frame, so a turned boat's deck is still the deck under the body.
+      const local = { x: x * Math.cos(yaw) - z * Math.sin(yaw), z: x * Math.sin(yaw) + z * Math.cos(yaw) };
+      x = local.x; z = local.z;
+    }
     const bounds = body.deckBounds;
     return x >= bounds.minX && x <= bounds.maxX && z >= bounds.minZ && z <= bounds.maxZ
       ? body.deckY : undefined;
