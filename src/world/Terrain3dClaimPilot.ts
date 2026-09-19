@@ -751,7 +751,8 @@ const LANDMARK_EMISSIVE_DEFAULT = 3;
  * cap is 0.6: 4 grades to exactly the ceiling and lands the pair within 3.7 %. The cap, not this
  * number, is what stops the body becoming its own light source.
  */
-const LANDMARK_EMISSIVE: Record<string, number> = { 'the-claim': 1.45, 'e2-hill-mine': 1.45, 'e2-trestle': 1.5, 'e2-pressure-garden': 1.45, 'e2-incline': 1.45, 'e3-blackout-ridge': 4 };
+// Relay Valley: measured body-pixel lift at the same 0.6 ceiling; its signal siblings keep the default.
+const LANDMARK_EMISSIVE: Record<string, number> = { 'the-claim': 1.45, 'e2-hill-mine': 1.45, 'e2-trestle': 1.5, 'e2-pressure-garden': 1.45, 'e2-incline': 1.45, 'e3-blackout-ridge': 4, 'e7-relay-valley': 4 };
 
 /**
  * F-ASTRA-9, THE CALIBRATION (2026-09-05, owner: "Ok, then lets have it fix these findings.").
