@@ -31,8 +31,14 @@
 // is a judgement, and judgements do not belong in a script).
 
 import { execFileSync } from 'node:child_process'
-import { existsSync, readFileSync } from 'node:fs'
+import { existsSync, lstatSync, readFileSync } from 'node:fs'
 import { residueFor } from './lane-residue.mjs'
+// F-1261-1: one implementation of a word in this repo. The four-bucket durability predicate
+// belongs to the evidence census; re-typing it here would make a THIRD copy, and four copies
+// of one predicate is exactly how the desk-lock test drifted unnoticed for hundreds of fires
+// (F-2227-1). Measured s2639: importing this module costs 15 ms and emits nothing — it runs
+// no `main()` on import, so the `--cure` path inherits no new load-time failure mode.
+import { bucketOf, isFactorySide } from './modified-tracked-evidence-census.mjs'
 
 const ABSENT = Symbol('absent')
 // The runner itself excludes these from every lane commit (lane-runner-v3.sh:121
@@ -499,6 +505,180 @@ export function formatHeldResidue(held, residue) {
   return lines
 }
 
+// s2639 — F-2569-3, the priced cure F-2569-1 named and F-2610-1 re-affirmed as unclaimed.
+//
+// The DIRTY banner answers "WHO owns this?" (contention). A fire reading it on a dry board
+// is asking "WHAT would a refill LOSE?" (durability). Those are two different questions about
+// the same 26 files, and this tool was silent on the second BY CONSTRUCTION — an alarm with
+// no remedy, F-2451-1's shape. The fuse is CODE, not conjecture: `lane-runner-v3.sh` refreshes
+// a lane with `git reset --hard main`, which DESTROYS modified-tracked content.
+//
+// It DECLARES and does NOT clear: the verdict word and the exit code are untouched, exactly
+// as F-2366-1 chose for BUSY. A false NOT-dirty is the Reset Massacre direction (Mistake #2),
+// and F-2610-1's lesson is that conflating the two questions is the defect, not the cure.
+//
+// The object sets are built LAZILY and memoized, so a fleet with no DIRTY lane pays NOTHING.
+// Measured s2639: `rev-list --objects --remotes` 0.91 s + `--all` 1.63 s against a 14.5 s
+// `--all` baseline — ~+17%, and only when a lane is actually dirty (1 of 30 rows today).
+let OBJSETS = null
+function objectSets(runGit = (args, opts) => tryGit(args, { cwd: repoRoot(), ...opts })) {
+  if (OBJSETS) return OBJSETS
+  const read = (args) => {
+    const r = runGit(args, { maxBuffer: 1024 << 20 })
+    if (!r.ok) return null
+    const s = new Set()
+    for (const line of r.out.split('\n')) {
+      const sp = line.indexOf(' ')
+      const id = sp === -1 ? line : line.slice(0, sp)
+      if (id) s.add(id)
+    }
+    return s
+  }
+  const remote = read(['rev-list', '--objects', '--remotes'])
+  const anyRef = read(['rev-list', '--objects', '--all'])
+  return (OBJSETS = { remote, anyRef, ok: remote !== null && anyRef !== null })
+}
+
+// Classifies the WORKTREE bytes of each tracked-dirt path — what a `reset --hard` would
+// discard — by hashing them FROM MAIN (a linked worktree SHARES main's object database, so
+// no copying and no custody question) and asking the SAME four-bucket predicate the evidence
+// census uses. Imported, never re-implemented: four independent copies of one predicate is
+// how the desk-lock predicate drifted for hundreds of fires (F-2227-1), and F-1261-1 is the
+// standing rule that there is one implementation of a word in this repo.
+//
+// Returns `status: 'unverifiable'` — never a zeroed bucket — when it could not answer, so a
+// broken read fails toward NOTICING (F-2212-1's polarity). `skipped` is declared rather than
+// silently dropped: a tracked-dirt path can be DELETED in the worktree (`" D path"`) or a
+// rename pair (`"old -> new"`), neither of which is a file on disk, and a denominator that
+// quietly shrinks is the empty-corpus false green this law has spent twenty fires curing.
+// `runGit` is injectable and is used for EVERY git call this function makes — not merely the
+// object sets. An options bag that ACCEPTS a runner and then reaches past it for two of its
+// three spawns is the vacuous-control trap in its purest form: a guard would inject a stub,
+// watch the real repo answer, and attest to a subject it never measured (F-2215-1, and s2638's
+// own paid-for note that a fixture setting only `cwd` measures the real repo).
+export function dirtDurability(paths, worktree, deps = {}) {
+  const {
+    runGit = (args, opts) => tryGit(args, { cwd: repoRoot(), ...opts }),
+    statFn = lstatSync,
+  } = deps
+  const sets = deps.sets ?? objectSets(runGit)
+  const counts = { 'AT RISK': 0, UNREFERENCED: 0, 'LOCAL-REF-ONLY': 0, SAFE: 0 }
+  const atRisk = []
+  let bytes = 0
+  const readable = []
+  const skipped = []
+  for (const p of paths) {
+    const abs = `${worktree}/${p}`
+    try {
+      const st = statFn(abs)
+      if (!st.isFile()) {
+        skipped.push(p)
+        continue
+      }
+      readable.push({ path: p, abs, size: st.size })
+    } catch {
+      skipped.push(p)
+    }
+  }
+  if (!sets || !sets.ok) {
+    return { status: 'unverifiable', reason: 'the object sets could not be read', counts, skipped, hashed: 0, subjects: paths.length, atRisk, bytes }
+  }
+  if (readable.length === 0) {
+    return { status: 'read', counts, skipped, hashed: 0, subjects: paths.length, atRisk, bytes }
+  }
+  const h = runGit(['hash-object', '--stdin-paths'], {
+    input: readable.map((r) => r.abs).join('\n') + '\n',
+    maxBuffer: 64 << 20,
+  })
+  if (!h.ok) {
+    return { status: 'unverifiable', reason: 'hash-object refused the batch', counts, skipped, hashed: 0, subjects: paths.length, atRisk, bytes }
+  }
+  const ids = h.out.split('\n').filter(Boolean)
+  // F-2215-1: assert the control produced what it claims BEFORE any zero is believed.
+  // A short batch means some path was not hashed, and every unhashed path would otherwise
+  // read as "not at risk" — the exact silence this whole lineage exists to catch.
+  if (ids.length !== readable.length) {
+    return {
+      status: 'unverifiable',
+      reason: `hashed ${ids.length} of ${readable.length} readable file(s)`,
+      counts, skipped, hashed: ids.length, subjects: paths.length, atRisk, bytes,
+    }
+  }
+  // PRESENCE is asked separately and is NOT inferred from reachability. `rev-list --objects`
+  // enumerates only REACHABLE objects, so a blob that is in the odb but held by no ref is
+  // absent from both sets — and collapsing that into AT RISK would conflate two buckets whose
+  // fuses are OPPOSITE: AT RISK dies with the disk, while an UNREFERENCED blob whose file is
+  // still on disk cannot be lost to `git gc` at all (F-2566-1). `--batch-check` is one spawn.
+  const present = new Set()
+  const bc = runGit(['cat-file', '--batch-check=%(objectname) %(objecttype)'], {
+    input: ids.join('\n') + '\n',
+    maxBuffer: 64 << 20,
+  })
+  if (!bc.ok) {
+    return { status: 'unverifiable', reason: 'cat-file could not answer presence', counts, skipped, hashed: ids.length, subjects: paths.length, atRisk, bytes }
+  }
+  for (const line of bc.out.split('\n')) {
+    if (!line || / missing$/.test(line)) continue
+    const [id, type] = line.split(' ')
+    if (type === 'blob') present.add(id)
+  }
+  for (let i = 0; i < ids.length; i++) {
+    const id = ids[i]
+    const bucket = bucketOf(present.has(id), sets.remote.has(id), sets.anyRef.has(id))
+    counts[bucket]++
+    if (bucket !== 'SAFE') {
+      bytes += readable[i].size
+      if (bucket === 'AT RISK') atRisk.push(readable[i].path)
+    }
+  }
+  return { status: 'read', counts, skipped, hashed: ids.length, subjects: paths.length, atRisk, bytes }
+}
+
+// Formatting split from the measurement so the guard can exercise the WORDS a fire reads,
+// not only the arithmetic — F-2210-1: in advisory mode stdout IS the whole interface, and a
+// suite that asserts the numbers while the sentence lies has relocated the blind spot.
+export function formatDirtDurability(d) {
+  const head = `     💾 would a reset LOSE any of it? ${d.subjects} tracked-dirt path(s)`
+  if (d.status === 'unverifiable') {
+    return [
+      `${head} — ⛔ COULD NOT ANSWER (${d.reason}).`,
+      `        Treat as UNKNOWN, never as clean: this says nothing about durability.`,
+    ]
+  }
+  const c = d.counts
+  const lines = [
+    `${head}, ${d.hashed} hashed from main` +
+      (d.skipped.length ? ` (${d.skipped.length} not a file on disk — deleted or a rename pair — and NOT judged)` : '') +
+      `:`,
+    `        SAFE ${c.SAFE} · LOCAL-REF-ONLY ${c['LOCAL-REF-ONLY']} · UNREFERENCED ${c.UNREFERENCED} · AT RISK ${c['AT RISK']}`,
+  ]
+  if (c['AT RISK'] > 0) {
+    lines.push(
+      `        ⚠️  ${c['AT RISK']} file(s) / ${(d.bytes / 1e6).toFixed(1)} MB are in NO object database —`,
+      `        a lane refresh runs \`git reset --hard main\`, which DESTROYS them. Salvage to a`,
+      `        PARENTLESS save/* ref and PUSH it before anyone touches this lane (F-2484-1's method,`,
+      `        F-1055-1: a local-only salvage reads as safe and is not).`,
+    )
+    for (const p of d.atRisk.slice(0, 5)) lines.push(`          AT RISK ${p}`)
+    if (d.atRisk.length > 5) lines.push(`          … and ${d.atRisk.length - 5} more`)
+  } else if (c['LOCAL-REF-ONLY'] > 0 || c.UNREFERENCED > 0) {
+    lines.push(
+      `        ⚠️  nothing is in NO object database, but ${c['LOCAL-REF-ONLY'] + c.UNREFERENCED} file(s) are on no ORIGIN ref —`,
+      `        they die with this disk (Mistake #11). Ask the save/* manifests before you salvage:`,
+      `        a retention transform may already hold the bytes in another SHAPE (F-2571-1).`,
+    )
+  } else if (d.hashed > 0) {
+    lines.push(
+      `        ✅ nothing would be lost — every byte is reachable from an origin ref.`,
+    )
+  }
+  lines.push(
+    `        ⓘ  DIRTY is unchanged and is a CONTENTION verdict: it still says FIND THE OWNER.`,
+    `        This line answers a DIFFERENT question and is never a licence to reset (F-2610-1).`,
+  )
+  return lines
+}
+
 function report(r) {
   console.log(
     `${r.slot}  ${r.branch}  ahead=${r.ahead}  behind=${r.behind ?? '?'}  paths=${r.paths ?? 0}` +
@@ -542,6 +722,36 @@ function report(r) {
       unverifiable: 'holder pid could NOT be established — failing safe to BUSY. Investigate before refilling.',
     }[r.holder]
     if (why) console.log(`     ${why}`)
+  }
+  // F-2569-3 (s2639). Scoped to the DIRTY branch for F-2366-1's measured reason: DIRTY is rare
+  // (1 of 30 rows today), and an always-on durability read across a 30-row fleet listing is both
+  // the noise that decays a declaration into a formality AND ~2.5 s of rev-list nobody asked for.
+  // Within the branch it prints on EVERY outcome, including the all-SAFE one, because a line that
+  // appears only on failure re-creates the ambiguity it removes (F-2208-1) — and here the
+  // all-clear is the common case, so suppressing it would leave the alarm as the only voice.
+  //
+  // AND IT IS GATED ON OWNERSHIP, NOT MERELY ON THE VERDICT — F-2569-3 scoped its own cure to
+  // "four lanes only", and measuring it taught me why. Run across `--all` unscoped it fires on
+  // 15 of 28 rows, 14 of them ATTENDED-OWNED `agent-*` worktrees, and reports 248 AT RISK files
+  // with a remedy — "salvage before anyone touches this lane" — that is NOT a fire's to execute:
+  // F-2561-1 rules those trees a thing to REPORT, never to touch. That is the FALSE URGENCY class
+  // F-2566-1/F-2570-1/F-2571-1 each name on a different bucket, manufactured here at scale by a
+  // cure meant to remove it. The durability question is "what would a REFILL destroy?", and a fire
+  // refills only what it may reset — so the read belongs exactly where `reset --hard` is a fire's
+  // own act. Attended rows get a POINTER to the instrument that owns their version of the question
+  // (it attributes ownership; this tool cannot), never an alarm.
+  if (r.verdict === 'DIRTY') {
+    if (isFactorySide(r.worktree, repoRoot())) {
+      for (const line of formatDirtDurability(dirtDurability(r.dirt.tracked, r.worktree))) {
+        console.log(line)
+      }
+    } else {
+      console.log(
+        `     💾 ATTENDED-OWNED tree — durability is not asked here: a fire never resets it, so\n` +
+          `        nothing a fire does can lose these bytes. For the durability question over the\n` +
+          `        whole registry WITH ownership attribution: node scripts/modified-tracked-evidence-census.mjs`,
+      )
+    }
   }
   // Deliberately attached to USABLE alone. On every other verdict the lane is not being
   // refilled this minute, so a staleness footnote would be noise; on USABLE it is the exact
