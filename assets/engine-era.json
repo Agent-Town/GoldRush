@@ -1,7 +1,7 @@
 {
   "era": 6,
   "name": "the Re-surveyed Claims",
-  "engineHash": "eeaab417e478464bfafc93e0cdd900abd0b87f2a4265a6a2aabe10b077edb507",
+  "engineHash": "9e54f4a3f495a6c69fde76b3698c1297f14f3e3f1d51bd908cddb9d32b4c4418",
   "declaredAt": "2026-09-14",
   "note": "Era 6 opens with Astra's map campaign (sol/map-art-inventory-20260908 883a3521e) landed by maps-campaign-land-era6 on 2026-09-14: 17 contracts re-parameterised (tileParams on 13, twists on 3, briefings on 5), the door tightened to the contract's own research epoch, 66 src files, the map-rebuild-spike terrain, plaza props and flotilla models. Owner ruling 2026-09-13, verbatim: \"ah, that is all no problem. we don't have players yet so we can just keep going\" and \"we then have to make another run in the future but not immediately\"; the name ratified 2026-09-14 (\"the Re-surveye Claims\" is good for me). Every era-5 reel reads \"This reel rode era 5; the county accepts era 6\" and stands retired, counted. Heat 14 re-rides the boards on this era when the owner says so.",
   "viewSchema": {
@@ -161,6 +161,12 @@
       "engineHash": "eeaab417e478464bfafc93e0cdd900abd0b87f2a4265a6a2aabe10b077edb507",
       "pinnedAt": "2026-09-19",
       "cause": "same era, pin #13: sol-open-findings-astra (owner 2026-09-19 \"Also the open findings.\") — F-ASTRA-6 opaque scenery batched with per-prop camera culling (src/town/OpaquePropBatchPilot.ts, Scatter.ts, TownTavernPilot.ts; transparent ordering proved by the 20-case matrix) and F-ASTRA-2 the hero GLB pilot finished under assets/pilots/hero-3d (unreferenced by the runtime). Rendering only; no sim semantics moved; null floors re-recorded on the merged tree. reviews/sol-open-findings-astra.md",
+      "aliases": []
+    },
+    {
+      "engineHash": "9e54f4a3f495a6c69fde76b3698c1297f14f3e3f1d51bd908cddb9d32b4c4418",
+      "pinnedAt": "2026-09-19",
+      "cause": "same era, pin #14: rulings-county-2026-09-19 (owner 2026-09-19 \"I agree with all your recommendations on the decisions - good work\") — src/town/worldDispatches.ts M8-5 re-keyed from a boss trigger to Low Orbit's secure (F-E8LO-3, data only; both kinds resolve to the same predicate); the county door's limiter and the landing page are outside the corpus. No sim semantics moved; null floors re-recorded on the merged tree. reviews/rulings-county-2026-09-19.md",
       "aliases": []
     }
   ],
