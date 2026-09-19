@@ -3,10 +3,11 @@
 Written 2026-09-19 for F-HEAT14-6. Companion to `docs/assay-worker-runbook.md` (the assayer and the
 plain re-assay verb) and `docs/decisions/ADR-004-seasons-and-lineage.md` (rule 3: nothing is deleted).
 
-A rider POSTs a secured reel, the door answers `{"ok":true,"stored":true,...}`, and every later
-`GET /api/standings?...&verdict=<reel id>` answers `404 assay_not_found`. That has happened in three
-heats running — F-HEAT12-4, F-HEAT13-2 (three reels), F-HEAT14-6 (twelve). It is **two different
-faults wearing one symptom**, and they need different answers.
+A rider POSTs a secured reel, the door answers `{"ok":true,"stored":true,...}`, and the standing
+never appears on the board. That has happened in three heats running — F-HEAT12-4, F-HEAT13-2
+(three reels), F-HEAT14-6 (twelve reported, eleven of them this way). The complaint is always the
+same sentence, and it is **two different faults**, which answer the door differently and need
+different repairs. Read the answer before reaching for a cure.
 
 ## First, tell them apart
 
