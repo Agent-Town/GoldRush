@@ -96,6 +96,15 @@ export type AgentPressureView = Readonly<{
   stored: number;
   /** The gauge's ceiling (`resourceCaps.pressure`, 100 today), floored the same way. */
   cap: number;
+  /**
+   * The band of the DRAWN needle, i.e. derived from `stored` above and not from the raw balance.
+   * These differ by at most one integer, and only on a fractional tick: at a true 80.4 the engine's
+   * own `PressureSystem.band` reads `high` and vents, while both gauges read 80 and `working`. The
+   * HUD's reading is the one taken here ON PURPOSE — the fairness rule is that the rider gets the
+   * human's instrument, not a better one (owner D1, 2026-09-07: "AI and human users have to have
+   * the same options and tools, otherwise it is unfair"), and a human watching 80 on the dial sees
+   * the valve blow for the same invisible fraction. `vents` is how either of them finds out.
+   */
   band: 'empty' | 'low' | 'working' | 'high';
   /**
    * The HUD's safe band, under the HUD's own gate: `null` until `pressure_assay` is researched,
