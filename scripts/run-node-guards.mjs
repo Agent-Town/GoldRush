@@ -65,10 +65,16 @@ const NODE_GUARDS_TEST_TIMEOUT_MS = 300_000;
 // and — in the gating fire arrangement, file concurrency 1 — emits NO TAP record for ~16 minutes.
 // A 10-minute bound would SIGKILL that healthy guard on every fire battery. A red board nobody
 // trusts is worse than no bound (F-1460-1).
-// 45 min = 2.8x the largest measured healthy silence, with headroom for its growth (148 -> 149
-// subjects moved it by ~90 s) and for load (this box measured load averages of 39 and 138 within
-// one hour), while bounding the F-POC-8 class at 45 min instead of the 4 h 46 min it replaced —
-// 6.4x tighter. Every battery now PRINTS its own longest TAP silence ("TAP-QUIET MAX"), so the
+// THE INSTRUMENT BELOW THEN MEASURED THE QUANTITY DIRECTLY, which is better evidence than any
+// proxy: a full green-class battery on this tree reported TAP-QUIET MAX 1085.3 s — 18.1 minutes
+// with no TAP record at all — while three other batteries shared the box (2026-09-19,
+// artifacts/battery-robustness/battery-1-before-watchnull.log). The proposed 10 min is 0.55x that.
+// 45 min = 2.5x the largest silence ever measured here, with headroom for fixture-teardown's growth
+// (148 -> 152 subjects moved it from 973 s to 1262 s) and for load (this box measured load averages
+// of 20 and 138 within one hour), while bounding the F-POC-8 class at 45 min instead of the
+// 4 h 46 min it replaced — 6.4x tighter. A false kill is also largely self-healing: the file is
+// re-run ALONE by the arm below, where contention is gone, and a pass there turns the battery green
+// with the kill still named on stderr. Every battery PRINTS its own longest TAP silence, so the
 // margin behind this number stays measured instead of remembered.
 //
 // ⚠️ If this ever fires, it is a HANG. Read the preserved sample, do NOT raise the number:
@@ -145,7 +151,13 @@ async function runWatched(argv, { tapPath, evidenceDir, label }) {
   const tick = () => {
     if (inStall) return;
     const now = Date.now();
-    for (const pid of childPidsOf(child.pid)) if (!firstSeen.has(pid)) firstSeen.set(pid, now);
+    // PID REUSE IS FAST ON THIS BOX — measured 2026-09-19: pid 11025 was two unrelated processes
+    // four minutes apart while four batteries shared the machine. A stale entry would make a
+    // freshly-spawned sibling look old enough to blame for a stall it could not have caused, so
+    // pids that are no longer children are FORGOTTEN and a returning pid is timed from now.
+    const live = new Set(childPidsOf(child.pid));
+    for (const pid of firstSeen.keys()) if (!live.has(pid)) firstSeen.delete(pid);
+    for (const pid of live) if (!firstSeen.has(pid)) firstSeen.set(pid, now);
 
     let size = -1;
     try { size = statSync(tapPath).size; } catch { /* not written yet: that is silence, not an error */ }
