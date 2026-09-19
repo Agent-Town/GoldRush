@@ -4,6 +4,7 @@ import { RenderLayers } from '../core/RenderLayers';
 import { Balance } from '../game/Balance';
 import { activeContract, type ContractDetailClass } from '../meta/ContractFamilies';
 import { disposeObject3D } from '../utils/dispose';
+import { createOpaquePropBatch, type OpaquePropPart } from '../town/OpaquePropBatchPilot';
 import * as Terrain from './Terrain';
 
 export type DetailClassId = ContractDetailClass;
@@ -142,6 +143,7 @@ export class DetailScatter {
     this.classes = createProfiles().map((profile) => this.createClass(profile, density));
     this.contactShadows = createContactShadows(this.seededInstances);
     this.group.add(this.contactShadows);
+    this.batchOpaqueClasses();
     this.syncBuildingClearings([]);
   }
 
@@ -214,6 +216,69 @@ export class DetailScatter {
 
   dispose(): void {
     disposeObject3D(this.group);
+  }
+
+  /** F-ASTRA-6: the census found 68–88% of the solid scatter outside the camera.
+   * Flatten static instances into two compatible opaque draws, preserving each class's
+   * linear tint, roughness, metalness and sidedness. Reeds retain their instanced sway;
+   * ruts and every contact shadow retain their original transparent render-list item. */
+  private batchOpaqueClasses(): void {
+    const cohorts = new Map<string, DetailClass[]>();
+    for (const entry of this.classes) {
+      const material = entry.profile.material;
+      if (!(material instanceof THREE.MeshStandardMaterial) || material.transparent ||
+          material.alphaTest > 0 || material.userData.reedTime || !entry.instances.length) continue;
+      const key = `${material.side}:${material.metalness}`;
+      const cohort = cohorts.get(key) ?? [];
+      cohort.push(entry);
+      cohorts.set(key, cohort);
+    }
+    for (const cohort of cohorts.values()) {
+      const material = (cohort[0]!.profile.material as THREE.MeshStandardMaterial).clone();
+      material.color.setRGB(1, 1, 1);
+      material.vertexColors = true;
+      material.customProgramCacheKey = () => 'opaque-scatter-roughness-v1';
+      material.onBeforeCompile = (shader) => {
+        shader.vertexShader = shader.vertexShader
+          .replace('#include <common>', '#include <common>\nattribute float scatterRoughness;\nvarying float vScatterRoughness;')
+          .replace('#include <begin_vertex>', '#include <begin_vertex>\nvScatterRoughness = scatterRoughness;');
+        shader.fragmentShader = shader.fragmentShader
+          .replace('#include <common>', '#include <common>\nvarying float vScatterRoughness;')
+          .replace('#include <roughnessmap_fragment>', '#include <roughnessmap_fragment>\nroughnessFactor = vScatterRoughness;');
+      };
+      const parts: OpaquePropPart[] = [];
+      const temporary: THREE.BufferGeometry[] = [];
+      for (const entry of cohort) {
+        const source = entry.profile.material as THREE.MeshStandardMaterial;
+        for (const detail of entry.instances) {
+          const geometry = new THREE.BufferGeometry();
+          geometry.setAttribute('position', entry.profile.geometry.getAttribute('position').clone());
+          geometry.setAttribute('normal', entry.profile.geometry.getAttribute('normal').clone());
+          if (entry.profile.geometry.index) geometry.setIndex(entry.profile.geometry.index.clone());
+          const count = geometry.getAttribute('position').count;
+          const color = new THREE.Color();
+          entry.mesh.getColorAt(detail.index, color);
+          color.multiply(source.color);
+          const colors = new Float32Array(count * 3);
+          for (let vertex = 0; vertex < count; vertex++) color.toArray(colors, vertex * 3);
+          geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+          geometry.setAttribute('scatterRoughness', new THREE.BufferAttribute(new Float32Array(count).fill(source.roughness), 1));
+          const matrix = new THREE.Matrix4();
+          entry.mesh.getMatrixAt(detail.index, matrix);
+          parts.push({ geometry, matrix, hidden: () => detail.hidden });
+          temporary.push(geometry);
+        }
+        // Keep the logical class and its seeded placement records for clearing diagnostics.
+        // This source mesh is never submitted; all rendering belongs to its opaque batch.
+        entry.mesh.visible = false;
+      }
+      const batch = createOpaquePropBatch(parts, material);
+      temporary.forEach(geometry => geometry.dispose());
+      batch.name = `DetailScatter.opaque.${cohort.map(entry => entry.profile.id).join('+')}`;
+      batch.userData.opaqueSourceIds = cohort.map(entry => entry.mesh.id);
+      batch.receiveShadow = true;
+      this.group.add(batch);
+    }
   }
 
   private createClass(profile: DetailProfile, density: number): DetailClass {
