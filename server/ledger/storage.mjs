@@ -69,6 +69,19 @@ export class SqliteStorage {
     this.remove.run(key);
   }
 
+  async resolveAccount(candidate) {
+    const key = `account:${candidate.emailHash}`;
+    // The unique key chooses the winner across connections/processes, not a JS mutex.
+    this.db.prepare('INSERT INTO kv (key, value, updated_at, expires_at) VALUES (?, ?, ?, NULL) ON CONFLICT(key) DO NOTHING')
+      .run(key, JSON.stringify(candidate), Date.now());
+    return JSON.parse(this.read.get(key, Date.now())?.value ?? 'null');
+  }
+
+  async retireAccount(emailHash, accountId) {
+    return this.db.prepare("DELETE FROM kv WHERE key = ? AND json_extract(value, '$.accountId') = ?")
+      .run(`account:${emailHash}`, accountId).changes === 1;
+  }
+
   async list({ prefix = '', cursor = '' } = {}) {
     this.removeExpired.run(Date.now());
     const rows = this.listPage.all(prefix.length, prefix, cursor, PAGE_SIZE + 1);

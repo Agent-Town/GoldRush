@@ -1,0 +1,11 @@
+name = "gold-rush-account-registry"
+main = "functions/api/_account-registry.ts"
+compatibility_date = "2026-07-08"
+
+[[durable_objects.bindings]]
+name = "ACCOUNT_REGISTRY"
+class_name = "AccountRegistry"
+
+[[migrations]]
+tag = "accounts-01"
+new_sqlite_classes = ["AccountRegistry"]
