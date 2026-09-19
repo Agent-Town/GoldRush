@@ -132,7 +132,7 @@ test('routes enemies through both west and east fords', async ({ page }, testInf
   expectClean(errors);
 });
 
-test('north marker is not the run loss stake, south overrun still ends the run, and waves use four edges', async ({ page }) => {
+test('north marker is not the run loss stake, south overrun still ends the run, and waves use the two ford-forcing edges', async ({ page }) => {
   const errors = await openGame(
     page,
     '?debug&contract=e1-twin-banks&timescale=20&nolevel&nokill&nopause&nosteal&nowreck&seed=e1-twin-spawns',
@@ -157,7 +157,24 @@ test('north marker is not the run loss stake, south overrun still ends the run, 
   await page.evaluate(() => window.__GR_TEST__?.resetRun());
   await expect.poll(() => page.evaluate(() => window.__GR_TEST__?.enemyPositions().length ?? 0), { timeout: 10_000 }).toBeGreaterThanOrEqual(4);
   const edges = await page.evaluate(() => [...new Set(window.__GR_TEST__?.enemyPositions().map((enemy) => enemy.edge).filter(Boolean))].sort());
-  expect(edges).toEqual(['east', 'north', 'south', 'west']);
+  // RE-POINTED 2026-09-19 (`tasks/rulings-play-2026-09-19.md`, F-OMA-4). Owner ruling of the same
+  // day, verbatim: "I agree with all your recommendations on the decisions - good work" — the desk
+  // register's F-OMA-4 row reads "Yes. Small and reversible; one word."
+  //
+  // WAS `['east', 'north', 'south', 'west']`. The claim's own briefing rule 2 says "Two fords carry
+  // pressure across the river", and the data had never made that sentence true: no E1 contract
+  // authors `spawnGates`, so `WaveSystem.spawnAt` places every body on the HERO-CENTRED ring at
+  // `Balance.waves.spawnRingRadius` = 26 from EACH listed edge, and with all four listed the ring
+  // closed from every quarter at once — nothing ever had to find a ford. With east and west gone,
+  // the north half of every wave has to reach a ford at x = ±16 and cross it
+  // (`Balance.pathing.riverBlocksEnemies`), and the wave BUDGET does not move at all because
+  // `WaveSystem.planWave` sizes a wave from `waveBudget(wave)` rather than from the edge count.
+  //
+  // The cure was made, measured and reverted once already, on 2026-09-18, for exactly this
+  // assertion: `artifacts/open-maps-acceptance-e1-e4/report.md` §5c landed it as `025381a42` and
+  // pulled it as `251014ad0` because re-pointing this line was outside that task's firewall, and
+  // filed the two-edit commit a drainer would need. This is that commit's second edit.
+  expect(edges).toEqual(['north', 'south']);
   expectClean(errors);
 
   const overrunErrors = await openGame(

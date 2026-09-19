@@ -65,6 +65,70 @@ export type AgentAirView = Omit<E8AtmosphereDiagnostics, 'declared' | 'regolith'
 };
 
 /**
+ * E2 — the pressure gauge, published for the rider because the human has had it on the HUD since
+ * the epoch shipped. F-HEAT14-3 (heat-14 rider, its own words): on the Trestle and the Incline it
+ * read the union of `now` keys across its whole run and found *no pressure value, no band, no coal
+ * count, no boiler fuel*, while `boiler_house` sat on its price list at 70 gold × 3 — so 210 gold of
+ * boiler was "a strictly dominated purchase" and F-MAPL-1's `coalSeconds` 12 → 36 "only triples the
+ * duration of a process I cannot observe". Owner ruling 2026-09-19, verbatim: **"I agree with all
+ * your recommendations on the decisions - good work"**, taking option (a) — *publish pressure
+ * (value, band, coal seconds) in the agent view as one additive field, named in the skill fence*.
+ * His D1 of 2026-09-07 is the thread: *"AI and human users have to have the same options and tools,
+ * otherwise it is unfair"*.
+ *
+ * Every row here is a number the HUD already draws for the human, read off the SAME sources the
+ * HUD reads (`Game.activeResourceSnapshots` → `economy.resources.pressure` and
+ * `PressureSystem.diagnostics`), so the two gauges cannot drift apart:
+ * `stored`/`cap` are the needle and its ceiling floored exactly as `activeResourceSnapshots` floors
+ * them; `safeBand` carries the HUD's own `pressure_assay` research gate and is `null` until the
+ * rider buys it, like the human's; `objective` is the `PRESSURIZE n/2 · W8–12` strip. The RULES
+ * behind these numbers are not repeated here — `stablePrefix.mechanics.rules` has published
+ * `pressure_bands`, `pressure_auto_vent`, `pressure_generation` and `pressure_powers` all along,
+ * and `pressure_reading` now names this field so a rider reading the rules finds the gauge.
+ *
+ * NO VENT VERB, and that is parity rather than an omission: the human has no vent key either —
+ * `PressureSystem.update` vents by itself above `safeMax` ("Above the safe band, the valve vents
+ * with a warm puff", `WorldInfoNotes.ts:74`). `vents` counts the puffs so a rider can read the
+ * waste it is paying for.
+ */
+export type AgentPressureView = Readonly<{
+  /** The needle, floored the way the HUD floors it (`Math.floor(balance.amount)`). */
+  stored: number;
+  /** The gauge's ceiling (`resourceCaps.pressure`, 100 today), floored the same way. */
+  cap: number;
+  /**
+   * The band of the DRAWN needle, i.e. derived from `stored` above and not from the raw balance.
+   * These differ by at most one integer, and only on a fractional tick: at a true 80.4 the engine's
+   * own `PressureSystem.band` reads `high` and vents, while both gauges read 80 and `working`. The
+   * HUD's reading is the one taken here ON PURPOSE — the fairness rule is that the rider gets the
+   * human's instrument, not a better one (owner D1, 2026-09-07: "AI and human users have to have
+   * the same options and tools, otherwise it is unfair"), and a human watching 80 on the dial sees
+   * the valve blow for the same invisible fraction. `vents` is how either of them finds out.
+   */
+  band: 'empty' | 'low' | 'working' | 'high';
+  /**
+   * The HUD's safe band, under the HUD's own gate: `null` until `pressure_assay` is researched,
+   * `{ min, max }` after — exactly what `activeResourceSnapshots` spreads onto the human's gauge.
+   * The band NAMES in `band` are published unconditionally because `pressure_bands` always was.
+   */
+  safeBand: Readonly<{ min: number; max: number }> | null;
+  /** Lumps in hand. Each one a boiler swallows buys `Balance.boilerHouse.coalSeconds` of burn. */
+  coal: number;
+  /** The desk's "coal seconds": `coal × coalSeconds`, the burn the lumps in hand actually buy. */
+  coalSeconds: number;
+  boilers: Readonly<{ built: number; hot: number; cooling: number; max: number }>;
+  /** How many times the valve has blown off above the safe band this run. */
+  vents: number;
+  objective: Readonly<{ active: boolean; failed: boolean; complete: boolean; hotBoilers: number; waves: string }>;
+  /**
+   * The coal seams, live. `stablePrefix.map.coalSeams` carries the same ids and anchors as the
+   * authored fact; this row is what has been dug. `marked` is the `coal_survey` ring the human
+   * sees on the ground.
+   */
+  seams: readonly Readonly<{ id: string; x: number; z: number; harvested: boolean; progress: number; marked: boolean }>[];
+}>;
+
+/**
  * E7 — the rider's playbook row. Structural rather than imported so this module keeps its
  * render-free, sim-free import list (it already takes `E8AtmosphereDiagnostics` as a type only);
  * `HeadlessContractSim.PlaybookUseDiagnostics` is the definition and assigns into this shape.
@@ -139,6 +203,15 @@ export type AgentView = {
       readonly digger: { x: number; z: number; boarded: boolean } | null;
     };
     gravity?: AgentGravityView;
+    /**
+     * E2 (additive, contract-scoped — outside the canonical field set, like `preserve`, `gravity`
+     * and `air`, and for the same registry reason: the canonical set is built from `the-claim`,
+     * which declares no pressure). Present only where the contract declares `twist.pressureEnabled`
+     * AND the engine composes its consumer — i.e. exactly where the human's gauge appears, which is
+     * the whole point of F-HEAT14-3. Both engines publish it: the browser off
+     * `Game.diagnostics.pressure`, `gr-sim` off `HeadlessContractSim.diagnostics.pressure`.
+     */
+    pressure?: AgentPressureView;
     /**
      * E8 (additive, contract-scoped): air as the wall — the Prospector's suit timer, each dome
      * pad's air dial and breach state, and the regolith-run latch that opens the secure. Present
@@ -471,6 +544,7 @@ function buildNow(
       }
     : undefined;
   const gravity = readGravity(record(diagnostics.e8Physics));
+  const pressure = readPressure(record(diagnostics.pressure), record(diagnostics.economy));
   const air = readAir(record(diagnostics.e8Atmosphere));
   const emberShore = readEmberShore(record(diagnostics.preserveVent));
   const contextPress = readContextPress(diagnostics);
@@ -482,6 +556,7 @@ function buildNow(
     ...(project ? { megaproject: project } : {}),
     ...(preserveState ? { preserve: preserveState } : {}),
     ...(gravity ? { gravity } : {}),
+    ...(pressure ? { pressure } : {}),
     ...(air ? { air } : {}),
     ...(emberShore ? { emberShore } : {}),
     ...(contextPress ? { contextPress } : {}),
@@ -592,6 +667,64 @@ function readEmberShore(preserve: Record<string, unknown>): { preserve: E10Prese
       },
       objectiveMet: preserve.objectiveMet === true,
     },
+  };
+}
+
+/**
+ * `PressureSystem.diagnostics`, both engines: present on the view only where the contract declares
+ * `twist.pressureEnabled` and the consumer is live — which is exactly where the human's HUD gauge
+ * appears, because `enabled` is the SAME predicate `Game.activeResourceSnapshots` filters the
+ * gauge on (`Game.ts:7412`). F-HEAT14-3, owner-ruled 2026-09-19.
+ *
+ * The needle and its ceiling come from the economy rather than from `PressureDiagnostics`, which
+ * does not carry them, and they are floored here the way the HUD floors them so the rider's number
+ * and the human's number are the same integer. `Balance` supplies only `coalSeconds`, the same
+ * constant `stablePrefix.mechanics.rules.pressure_generation` already publishes.
+ */
+function readPressure(pressure: Record<string, unknown>, economy: Record<string, unknown>): AgentPressureView | undefined {
+  if (pressure.enabled !== true) return undefined;
+  const balance = record(record(economy.resources).pressure);
+  const stored = Math.floor(number(balance.amount));
+  const band = record(pressure.safeBand);
+  const objective = record(pressure.objective);
+  const boilers = records(pressure.boilers);
+  const coal = integer(pressure.coal);
+  return {
+    stored,
+    cap: Math.floor(number(balance.cap)),
+    band:
+      stored <= 0 ? 'empty'
+      : stored < Balance.boilerHouse.safeMin ? 'low'
+      : stored <= Balance.boilerHouse.safeMax ? 'working'
+      : 'high',
+    safeBand:
+      typeof band.min === 'number' && Number.isFinite(band.min) && typeof band.max === 'number' && Number.isFinite(band.max)
+        ? { min: number(band.min), max: number(band.max) }
+        : null,
+    coal,
+    coalSeconds: round(coal * Balance.boilerHouse.coalSeconds),
+    boilers: {
+      built: boilers.filter((boiler) => boiler.active === true).length,
+      hot: boilers.filter((boiler) => boiler.hot === true).length,
+      cooling: boilers.filter((boiler) => boiler.cooling === true).length,
+      max: Balance.boilerHouse.maxCount,
+    },
+    vents: integer(pressure.vents),
+    objective: {
+      active: objective.active === true,
+      failed: objective.failed === true,
+      complete: objective.complete === true,
+      hotBoilers: integer(objective.hotBoilers),
+      waves: text(objective.waves) ?? '',
+    },
+    seams: records(pressure.seams).map((seam, index) => ({
+      id: `coal-seam-${index + 1}`,
+      x: round(number(seam.x)),
+      z: round(number(seam.z)),
+      harvested: seam.harvested === true,
+      progress: round(number(seam.progress)),
+      marked: seam.marked === true,
+    })),
   };
 }
 

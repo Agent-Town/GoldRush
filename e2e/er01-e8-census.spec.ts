@@ -134,6 +134,39 @@ for (const contract of orbital.contracts) {
       // because nothing beyond the flag is declared (reject-don't-stretch).
       expect(physics.vacuum).toBe(true);
 
+      // THE AIR GATE EACH MAP AUTHORS, PINNED PER ID — added 2026-09-19 by
+      // `tasks/rulings-play-2026-09-19.md` for A1. Owner ruling of the same day, verbatim: "I agree
+      // with all your recommendations on the decisions - good work", taking (a) on the desk
+      // register's A1 row: *the Eclipse gets the Mare Claim's numbers through one slice*.
+      //
+      // WHAT THE MEASUREMENT FOUND, and why this is a pin rather than a change: the Eclipse ALREADY
+      // rides `{ regolithRequired: 4, regolithWindowWaves: 4 }`. The engine half landed on
+      // 2026-09-06 as `e0c92bbb9` ("e8-air-wall-all-maps — the same air wall on every Orbital
+      // contract, engine half", owner: "yes, same air for all space contracts"), which authored the
+      // numbers on all four maps, and `E8SuitAirSystem.requiredGrounds` has read the contract's own
+      // number ever since. `scripts/eclipse-winnable.test.mjs` already guards the two values
+      // ("{4, 4} is the owner's number"). What A1 was still owed was this census row: the door's own
+      // per-id table said nothing about the air gate, so a contract could lose its window silently.
+      //
+      // MEASURED on this tree with the current grammar
+      // (`artifacts/rulings-play-2026-09-19/eclipse-ride-01.json`, e8-eclipse-01): the window BITES
+      // and the map still secures — required 4 of 6 grounds, windowWaves 4, the latch closing at
+      // t = 447.6 s in window 3 on grounds [2,3,4,5], 90 window-held pans, 0 breathless, 192 pans on
+      // air, outcome secured at wave 20 / 600 s / 140 gold / 923 kills.
+      const authoredAir = (contract.twist as unknown as { atmosphere?: Record<string, unknown> }).atmosphere;
+      expect(authoredAir).toMatchObject({ suitSeconds: 60, harmPerSecond: 5 });
+      if (contract.id === 'e8-mare-claim' || contract.id === 'e8-eclipse') {
+        // The two REGOLITH maps: the same gate on the same geometry, the Eclipse taking the Mare
+        // Claim's numbers exactly, which is what makes A1 "(a)" and not a second measurement.
+        expect(authoredAir).toMatchObject({ regolithRequired: 4, regolithWindowWaves: 4 });
+        expect(authoredAir).not.toHaveProperty('crossingRequired');
+      } else {
+        // The two CROSSING maps are gated by crossings instead and were NOT touched by A1 — the
+        // owner took (a), not (b), so their own lever and their own measurement stay un-owed here.
+        expect(authoredAir).toMatchObject({ crossingRequired: 4, crossingWindowWaves: 4 });
+        expect(authoredAir).not.toHaveProperty('regolithRequired');
+      }
+
       for (const seed of seeds) {
         if (admitted) expect(() => new HeadlessContractSim({ contractId: contract.id, seed })).not.toThrow();
         else {
