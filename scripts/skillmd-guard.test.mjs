@@ -14,7 +14,6 @@ const read = (relative) => readFileSync(path.resolve(root, relative), 'utf8');
 const skill = readFileSync(process.env.SKILLMD_PATH ?? path.resolve(root, 'public/skill.md'), 'utf8');
 const refusalSource = readFileSync(process.env.REFUSALS_SOURCE ?? path.resolve(root, 'functions/api/refusals.ts'), 'utf8');
 const standingsSource = readFileSync(process.env.STANDINGS_SOURCE ?? path.resolve(root, 'functions/api/standings.ts'), 'utf8');
-const landingSource = read('site/assay-office.js');
 const vite = await createServer({ root, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
 let supportedContracts;
 try {
@@ -98,9 +97,16 @@ test('skill.md bench seeds match the source registry', () => {
   assert.deepEqual(jsonBlock('seeds'), benchSeeds);
 });
 
+// F-2568-2, owner ruling 2026-09-19 (verbatim: "I agree with all your recommendations on the
+// decisions - good work"; the register: "Derive it and abolish the weekly edit"): this test used to
+// carry a SECOND assertion pinning `const CURRENT_ROTATION_ID = '<newest minted id>'` in
+// site/assay-office.js. That pin is what forced the weekly hand-edit, and it was the gate half of
+// F-2568-1's unsatisfiable pair (the duty said OPEN, the gate said NEWEST, and on a Sunday those are
+// different rotations). The landing page now derives the open rotation the way the door does, so the
+// pin has no subject; scripts/landing-rotation-derivation.test.mjs refuses a hand-written id in its
+// place. The fence assertion below -- the whole registry, closed rotations included -- is unchanged.
 test('skill.md rotations match the source registry', () => {
   assert.deepEqual(jsonBlock('rotations'), rotations);
-  assert.match(landingSource, new RegExp(`const CURRENT_ROTATION_ID = '${rotations.rotations.at(-1).id}';`));
 });
 
 // F-DOOR-4 (2026-08-08): bench-seeds advertised e3-fairground + the four e6 contracts while
