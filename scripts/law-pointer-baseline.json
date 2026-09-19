@@ -75,7 +75,7 @@
     "scripts/fire.md -> fire.md:26": {
       "target": "scripts/fire.md",
       "line": 26,
-      "fingerprint": "63ef57864b0c",
+      "fingerprint": "46538fa23212",
       "excerpt": "E. **PIPELINE REFILL (owner directive 2026-07-06: \"4–5 lanes working constantly\")**: after drains, c"
     },
     "scripts/fire.md -> modified-tracked-evidence-census.mjs:104": {
@@ -132,15 +132,15 @@
       "fingerprint": "00e54682a534",
       "excerpt": "for (const line of git('status', '--porcelain', '--untracked-files=all', '--', 'assets/').split('\\n'"
     },
-    "scripts/fire.md -> lane-usable.mjs:505": {
+    "scripts/fire.md -> lane-usable.mjs:685": {
       "target": "scripts/lane-usable.mjs",
-      "line": 505,
+      "line": 685,
       "fingerprint": "9c5e3050955d",
       "excerpt": "` tracked-dirt=${r.dirt.tracked.length} untracked=${r.dirt.untracked.length}${r.busy ? ' BUSY' : ''}"
     },
-    "scripts/fire.md -> lane-usable.mjs:684": {
+    "scripts/fire.md -> lane-usable.mjs:894": {
       "target": "scripts/lane-usable.mjs",
-      "line": 684,
+      "line": 894,
       "fingerprint": "3767a56cf6a6",
       "excerpt": "const isMain = /(^|\\/)lane-usable\\.mjs$/.test(process.argv[1] || '')"
     },
@@ -216,15 +216,15 @@
       "fingerprint": "ed3d70ba84ca",
       "excerpt": "collectGold: () => this.collectProspectorGold(),"
     },
-    "scripts/fire.md -> lane-usable.mjs:86": {
+    "scripts/fire.md -> lane-usable.mjs:92": {
       "target": "scripts/lane-usable.mjs",
-      "line": 86,
+      "line": 92,
       "fingerprint": "91dd472116a1",
       "excerpt": "else if (line.startsWith('branch ') && wt) {"
     },
-    "scripts/fire.md -> lane-usable.mjs:605": {
+    "scripts/fire.md -> lane-usable.mjs:815": {
       "target": "scripts/lane-usable.mjs",
-      "line": 605,
+      "line": 815,
       "fingerprint": "2627e3020e5c",
       "excerpt": "const rs = tryGit(['reset', '--hard', 'main'], { cwd: r.worktree })"
     },
@@ -312,9 +312,9 @@
       "fingerprint": "9efb1fe71821",
       "excerpt": "const backlogPath = path.resolve(value('--backlog', 'tasks/BACKLOG.md'));"
     },
-    "scripts/fire.md -> lane-usable.mjs:559": {
+    "scripts/fire.md -> lane-usable.mjs:769": {
       "target": "scripts/lane-usable.mjs",
-      "line": 559,
+      "line": 769,
       "fingerprint": "9e7150879216",
       "excerpt": "if (drift.length === 0) {"
     },
