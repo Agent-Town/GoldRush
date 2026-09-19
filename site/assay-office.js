@@ -1,5 +1,4 @@
 const STATS_ENDPOINT = 'https://agenttown.app/goldrush/api/stats';
-const CURRENT_ROTATION_ID = 'r2026w38';
 
 const DURATION_LABELS = {
   lt1m: 'under a minute',
@@ -125,9 +124,50 @@ function standingsUrl(board) {
   return `https://agenttown.app/api/standings?epoch=${board.epoch}&contract=${board.contract}`;
 }
 
-function rotationUrl() {
-  return `https://agenttown.app/api/standings?board=transfer&rotation=${CURRENT_ROTATION_ID}`;
+// rotation-derivation:start
+// F-2568-2, owner ruling 2026-09-19 (verbatim: "I agree with all your recommendations on the
+// decisions - good work"; the register reads "Derive it and abolish the weekly edit"). This page used
+// to carry a hand-written `CURRENT_ROTATION_ID` constant that a fire moved by hand every week,
+// while the door already derives the answer from shipped data: `currentOrLatestRotation` in
+// `functions/api/standings.ts` takes the latest rotation whose `opensAt` is in the past. The page now
+// derives the same answer instead of restating it. `scripts/rotation-mint.mjs` mints exactly one
+// rotation per ISO week, id `r<isoYear>w<isoWeek>`, opening that week's Monday 00:00 UTC, so the
+// rotation that has opened is this ISO week's -- and a week that was never minted is answered by
+// walking back one week at a time until the door recognises an id, which is precisely
+// `currentOrLatestRotation`'s "the latest one that has opened".
+// scripts/landing-rotation-derivation.test.mjs evaluates this block against the shipped registry.
+const ROTATION_LOOKBACK_WEEKS = 12;
+
+function isoWeekRotationId(atMs) {
+  const day = new Date(atMs);
+  day.setUTCHours(0, 0, 0, 0);
+  // The ISO year of a week is the calendar year its Thursday falls in, so step to that Thursday.
+  day.setUTCDate(day.getUTCDate() + 3 - ((day.getUTCDay() + 6) % 7));
+  const firstThursday = new Date(Date.UTC(day.getUTCFullYear(), 0, 4));
+  firstThursday.setUTCDate(firstThursday.getUTCDate() + 3 - ((firstThursday.getUTCDay() + 6) % 7));
+  const week = 1 + Math.round((day.getTime() - firstThursday.getTime()) / (7 * 86400000));
+  return `r${day.getUTCFullYear()}w${String(week).padStart(2, '0')}`;
 }
+
+function rotationUrl(rotationId) {
+  return `https://agenttown.app/api/standings?board=transfer&rotation=${rotationId}`;
+}
+
+async function fetchOpenRotation() {
+  for (let weeksBack = 0; weeksBack < ROTATION_LOOKBACK_WEEKS; weeksBack += 1) {
+    const id = isoWeekRotationId(Date.now() - weeksBack * 7 * 86400000);
+    const response = await fetch(rotationUrl(id), { headers: { Accept: 'application/json' } });
+    // 400 is the door saying "no such rotation", i.e. that week was never minted: step back a week.
+    // Any other refusal is about the door and not about the week, so stop rather than storm it.
+    if (response.status === 400) continue;
+    if (!response.ok) throw new Error('rotation unavailable');
+    const payload = await response.json();
+    if (!payload?.rotation?.seeds) throw new Error('rotation shape');
+    return payload;
+  }
+  throw new Error('no open rotation');
+}
+// rotation-derivation:end
 
 document.addEventListener('DOMContentLoaded', () => {
   const standingRule = document.querySelector('[data-standing-rule]');
@@ -300,10 +340,7 @@ document.addEventListener('DOMContentLoaded', () => {
   async function loadRotation() {
     if (!rotationBody) return;
     try {
-      const response = await fetch(rotationUrl(), { headers: { Accept: 'application/json' } });
-      if (!response.ok) throw new Error('rotation unavailable');
-      const payload = await response.json();
-      if (!payload?.rotation?.seeds) throw new Error('rotation shape');
+      const payload = await fetchOpenRotation();
       rotationWindow.textContent = `${payload.rotation.id} closes ${new Date(payload.rotation.closesAt).toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short', timeZone: 'UTC' })} UTC`;
       rotationBody.textContent = '';
       for (const board of COUNTY_BOARDS) {

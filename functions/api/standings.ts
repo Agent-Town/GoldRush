@@ -163,7 +163,14 @@ const ASSAY_INDEX_ENVELOPE_KEYS = new Set(['version', 'sweptAt', 'locators']);
 const ASSAY_INDEX_MAX_AGE_MS = 900_000;
 // Owner ruling 2026-09-06 ("sure, raise it", F-HEAT12-8): a heat rides more than twelve contracts an hour from one
 // rider and one host; 30 per rider and 120 per address leave the assayer's queue, not the door, as the pace.
-const MAX_REQUESTS_PER_ANON = 30;
+// F-HEAT14-7, owner ruling 2026-09-19 ("I agree with all your recommendations on the decisions - good
+// work"; the register: "(b) and (a) together: a real hour and a cap of 60"). Heat 14 rode 37 board
+// contracts from one rider, so 30 locked its tail out — and because the hour re-armed on every
+// accepted write, it was 30 per HEAT, not per hour. The hour is now real (`_ratelimit.ts` stores the
+// window start); 60 leaves room for a rider that plays every board once and then re-posts. The cap is
+// against floods, not against a rider playing the whole book; `anonId` was never the abuse control —
+// the per-address 120 is.
+const MAX_REQUESTS_PER_ANON = 60;
 const MAX_REQUESTS_PER_IP = 120;
 const RATE_TTL_SECONDS = 60 * 60;
 const SHA256 = /^[a-f0-9]{64}$/;
