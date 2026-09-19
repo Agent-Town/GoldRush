@@ -161,7 +161,31 @@ dashboard() {
   # and believed it live. Reported HERE because this is the one command every session runs
   # at start (CLAUDE.md §1.4); a verdict only helps the reader who was going to look anyway.
   echo "runner : $(runner_alive && echo ALIVE || echo DEAD)$(runner_staleness_note)"
-  echo "fire   : $(fire_proc && echo RUNNING || echo between-fires)"
+  # F-2640-1 (s2640): `pgrep` does NOT report the CALLING process's own ancestor chain,
+  # and §2.0c makes `health-watch.sh status` a BINDING triage read on every fire (routed
+  # through node by §2.0d) — so the fire IS an ancestor of the pgrep it spawns, and
+  # fire_proc is STRUCTURALLY INCAPABLE of returning true for the very fire reading this.
+  # MEASURED s2640, control asserting its own validity first: `pgrep -f .` returned 1062
+  # pids and ZERO of the caller's 4 ancestors, while two NON-ancestor controls of the same
+  # comm (/bin/zsh, bash) were visible. Variables separated: a non-ancestor child carrying
+  # a 900,094-byte argv matched at BOTH the start and the very END of it, so neither argv
+  # SIZE nor match POSITION is the cause (the fire's own argv is 973,203 B) — while a
+  # 72-byte ancestor (fire-runner.sh) is invisible, so ancestry ALONE is sufficient.
+  # Before this, the line read "between-fires" on every fire, forever, at the exact moment
+  # one was live — failing toward "no fire is running", the lock-stealing direction §1.1
+  # exists to prevent. It DECLARES and does not refuse; the exit code is untouched.
+  # The launchd `watch` path is UNAFFECTED and its check-3 dead-lock alert stays sound:
+  # a fire is not that agent's ancestor, and it never calls dashboard() (see :191).
+  # CLAUDE_CONFIG_DIR is the house fire-shell discriminator — fire-runner.sh sets it,
+  # lanes and attended sessions never do (§3.1; playwright.config.ts's `isFireShell`,
+  # guarded by scripts/fire-shell-serialisation.test.mjs).
+  if fire_proc; then
+    echo "fire   : RUNNING"
+  elif [ -n "${CLAUDE_CONFIG_DIR:-}" ]; then
+    echo "fire   : RUNNING (you, the caller) — pgrep cannot see its own ancestors, so this probe cannot count the fire reading it (F-2640-1)"
+  else
+    echo "fire   : between-fires"
+  fi
   echo "agents :"
   echo "$agents" | sed 's/^/  /'
   echo "lock   : $(head -c 120 STATUS.md)"
