@@ -38,7 +38,7 @@ async function withVite(run) {
   const location = new URL(`http://e8-regolith-gate.test/?debug&contract=${CONTRACT}&seed=${SEED}`);
   globalThis.location = location;
   globalThis.window = { location };
-  const vite = await createServer({ root: ROOT, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
+  const vite = await createServer({ root: ROOT, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true, watch: null } });
   try {
     return await run(vite);
   } finally {

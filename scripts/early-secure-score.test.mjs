@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import {createServer} from 'vite';
-const vite=await createServer({appType:'custom',logLevel:'silent',server:{middlewareMode:true}});
+const vite=await createServer({appType:'custom',logLevel:'silent',server:{middlewareMode:true,watch:null}});
 let RunManager;
 try {({RunManager}=await vite.ssrLoadModule('/src/game/RunManager.ts'));} finally {await vite.close();}
 for (const [label,wave,securedAt,expected] of [['early boss',8,8,8],['later banking',16,12,16],['missing live wave',undefined,8,8],['storm counter uses secured wave',0,12,12]]) {

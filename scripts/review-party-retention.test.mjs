@@ -7,7 +7,7 @@ import rotationSeeds from '../assets/rotations/rotation-seeds.json' with { type:
 const KEY = 'standings:s2:epoch-1-frontier:the-claim';
 const ARCHIVE_KEY = 'standings:epoch-1-frontier:the-claim';
 const BOARD = '/api/standings?contract=the-claim&epoch=epoch-1-frontier';
-const vite = await createServer({ appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
+const vite = await createServer({ appType: 'custom', logLevel: 'silent', server: { middlewareMode: true, watch: null } });
 const originalNow = Date.now;
 try {
   const { onRequest, validateTape } = await vite.ssrLoadModule('/functions/api/standings.ts');

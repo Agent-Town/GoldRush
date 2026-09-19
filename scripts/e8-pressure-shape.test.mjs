@@ -3,7 +3,7 @@ import test from 'node:test';
 import { createServer } from 'vite';
 
 test('authored dome footprints govern breathing and breaches in both consumers', async () => {
-  const vite = await createServer({ appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
+  const vite = await createServer({ appType: 'custom', logLevel: 'silent', server: { middlewareMode: true, watch: null } });
   try {
     const { loadContract, parseContractDescriptor } = await vite.ssrLoadModule('/src/meta/ContractFamilies.ts');
     const { E8AtmosphereSystem, pressureZoneContains } = await vite.ssrLoadModule('/src/systems/E8PhysicsSystem.ts');

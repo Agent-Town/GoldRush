@@ -17,7 +17,7 @@ test('terrain contract scope report matches a fresh SSR measurement', () => {
 });
 
 test('Terrain still resolves DEFAULT_CONTRACT_ID under SSR', async () => {
-  const vite = await createServer({ root: ROOT, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
+  const vite = await createServer({ root: ROOT, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true, watch: null } });
   try {
     const { activeContract, DEFAULT_CONTRACT_ID } = await vite.ssrLoadModule('/src/meta/ContractFamilies.ts');
     assert.equal(activeContract().id, DEFAULT_CONTRACT_ID,

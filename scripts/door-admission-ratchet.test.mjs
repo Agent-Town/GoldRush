@@ -13,7 +13,7 @@ const remedy = [
 ].join('\n');
 
 test('derived door matches the fixed admission baseline', async () => {
-  const vite = await createServer({ root, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
+  const vite = await createServer({ root, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true, watch: null } });
   try {
     const { supportedContractIds } = await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts');
     assert.deepEqual(supportedContractIds(), baseline, remedy);

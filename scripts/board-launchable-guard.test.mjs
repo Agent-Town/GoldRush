@@ -75,7 +75,7 @@ const declaresHarvestFreeObjective = (contract) => contract.twist.harvestFreeObj
 
 let listBoardContracts;
 let supportedContractIds;
-const vite = await createServer({ root, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
+const vite = await createServer({ root, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true, watch: null } });
 try {
   ({ listBoardContracts } = await vite.ssrLoadModule('/src/meta/ContractFamilies.ts'));
   ({ supportedContractIds } = await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts'));

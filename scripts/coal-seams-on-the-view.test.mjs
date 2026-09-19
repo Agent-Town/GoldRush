@@ -9,7 +9,7 @@ async function coalSeams(contractId, seed, options = { admissionProbe: true }) {
   const location = new URL(`http://coal-seams-on-the-view.test/?debug&contract=${contractId}&seed=${seed}`);
   globalThis.location = location;
   globalThis.window = { location };
-  const vite = await createServer({ root: ROOT, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
+  const vite = await createServer({ root: ROOT, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true, watch: null } });
   try {
     const { HeadlessContractSim } = await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts');
     return new HeadlessContractSim({ contractId, seed, ...options }).currentTurn().view.stablePrefix.map.coalSeams;

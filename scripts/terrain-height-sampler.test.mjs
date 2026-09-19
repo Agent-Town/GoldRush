@@ -18,7 +18,7 @@ import { createServer } from 'vite';
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
 // The project vite config supplies the `__GR_RELEASE_E1__` define the module tree needs; a
 // bare `configFile: false` server cannot load it.
-const vite = await createServer({ root: ROOT, server: { middlewareMode: true }, appType: 'custom', logLevel: 'silent' });
+const vite = await createServer({ root: ROOT, server: { middlewareMode: true, watch: null }, appType: 'custom', logLevel: 'silent' });
 after(() => vite.close());
 const { bakeHeightGrid } = await vite.ssrLoadModule('/src/world/Terrain3dClaimPilot.ts');
 

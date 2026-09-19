@@ -47,7 +47,7 @@ const IDLE_HASH_UNCOMPOSED = 'fnv1a32:ee2f7c14';
 const location = new URL(`http://gr-sim.local/?debug&contract=${CONTRACT}&seed=${SEED}`);
 globalThis.location = location;
 globalThis.window = { location };
-const vite = await createServer({ root: ROOT, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
+const vite = await createServer({ root: ROOT, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true, watch: null } });
 const physics = await vite.ssrLoadModule('/src/systems/E8PhysicsSystem.ts');
 const contracts = await vite.ssrLoadModule('/src/meta/ContractFamilies.ts');
 const { HeadlessContractSim } = await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts');

@@ -11,7 +11,7 @@ async function loadSim() {
   const location = new URL(`http://e10-preserve-objective.test/?debug&contract=e10-last-claim&seed=${seed}`);
   globalThis.location = location;
   globalThis.window = { location };
-  const vite = await createServer({ root, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
+  const vite = await createServer({ root, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true, watch: null } });
   const { HeadlessContractSim } = await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts');
   return { HeadlessContractSim, close: () => vite.close() };
 }

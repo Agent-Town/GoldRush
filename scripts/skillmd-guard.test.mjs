@@ -15,7 +15,7 @@ const skill = readFileSync(process.env.SKILLMD_PATH ?? path.resolve(root, 'publi
 const refusalSource = readFileSync(process.env.REFUSALS_SOURCE ?? path.resolve(root, 'functions/api/refusals.ts'), 'utf8');
 const standingsSource = readFileSync(process.env.STANDINGS_SOURCE ?? path.resolve(root, 'functions/api/standings.ts'), 'utf8');
 const landingSource = read('site/assay-office.js');
-const vite = await createServer({ root, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
+const vite = await createServer({ root, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true, watch: null } });
 let supportedContracts;
 try {
   ({ supportedContractIds: supportedContracts } = await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts'));

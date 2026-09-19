@@ -3,7 +3,7 @@ import test, { after } from 'node:test';
 import { createServer } from 'vite';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-const vite = await createServer({ configFile: false, server: { middlewareMode: true }, appType: 'custom', logLevel: 'silent' });
+const vite = await createServer({ configFile: false, server: { middlewareMode: true, watch: null }, appType: 'custom', logLevel: 'silent' });
 after(() => vite.close());
 const { atlasHash, SharedAtlasCache, SharedAtlasPlugin } = await vite.ssrLoadModule('/src/assets/SharedAtlasPlugin.ts');
 const bytes = new TextEncoder().encode('atlas');

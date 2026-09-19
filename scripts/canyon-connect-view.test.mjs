@@ -9,7 +9,7 @@ test('Canyon Works alone publishes its live connection objective', async () => {
   const location = new URL('http://canyon-connect-view.test/?debug');
   globalThis.location = location;
   globalThis.window = { location };
-  const vite = await createServer({ root: ROOT, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
+  const vite = await createServer({ root: ROOT, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true, watch: null } });
   try {
     const { HeadlessContractSim } = await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts');
     const canyon = new HeadlessContractSim({ contractId: 'e3-canyon-works', seed: 'e3-canyon-works-01', admissionProbe: true });

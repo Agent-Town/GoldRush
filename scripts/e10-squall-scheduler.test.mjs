@@ -70,7 +70,7 @@ const EXPECTED_TRANSITIONS = [
 const EXPECTED_CADENCE = { calmSeconds: 60, telegraphSeconds: 8, squallSeconds: 25, recoverSeconds: 8, cycleSeconds: 101 };
 
 let modules;
-const vite = await createServer({ root, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
+const vite = await createServer({ root, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true, watch: null } });
 try {
   const location = new URL(`http://e10-squall.test/?debug&contract=${CONTRACT}&seed=e10-squall-guard`);
   globalThis.location = location;

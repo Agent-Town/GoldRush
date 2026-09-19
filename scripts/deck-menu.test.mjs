@@ -13,7 +13,7 @@ test('player menu follows free live deck capacity, loss and reset while retainin
   const menu = [{ id: 'turret', cost: 40, count: 0, maxCount: 8, canAfford: false }, { id: 'palisade', cost: 15, count: 1, maxCount: 12, canAfford: true, kitCredits: 2 }];
   const context = { buildSystem: { get buildableSnapshots() { return structuredClone(menu); } }, deepwaterClaim: null };
   assert.deepEqual(project.call(context), menu);
-  const vite = await createServer({ configFile: false, appType: 'custom', logLevel: 'silent', optimizeDeps: { noDiscovery: true, include: [] }, server: { middlewareMode: true } });
+  const vite = await createServer({ configFile: false, appType: 'custom', logLevel: 'silent', optimizeDeps: { noDiscovery: true, include: [] }, server: { middlewareMode: true, watch: null } });
   try {
     const { DeepwaterClaimTile } = await vite.ssrLoadModule('/src/world/DeepwaterClaimTile.ts');
     const { contracts } = JSON.parse(await readFile(new URL('../assets/contracts/epoch-5-deepwater/contracts.json', import.meta.url)));

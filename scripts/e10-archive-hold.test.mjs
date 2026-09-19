@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { createServer } from 'vite';
 
-const server = await createServer({ server: { middlewareMode: true }, appType: 'custom' });
+const server = await createServer({ server: { middlewareMode: true, watch: null }, appType: 'custom' });
 try {
   const { E10ArchiveSystem } = await server.ssrLoadModule('/src/systems/E10ArchiveSystem.ts');
   const wings = [1, 2, 3].map(order => ({ id: `wing-${order}`, siteId: `light-${order}`, order, x: order * 10, z: 0, radius: 4 }));

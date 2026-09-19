@@ -9,7 +9,7 @@ globalThis.document = { createElement: () => ({ getContext: () => new Proxy({}, 
 const vite = await createServer({ configFile: false, plugins: [{ name: 'sea-test-assets', enforce: 'pre',
   resolveId(id, importer) { if (id === '../assets/generated' && importer?.endsWith('/Water.ts')) return '\0sea-test-assets'; },
   load(id) { if (id === '\0sea-test-assets') return 'export const loadGeneratedTexture = slot => globalThis.__seaTestLoad(slot)'; },
-}], server: { middlewareMode: true }, appType: 'custom', logLevel: 'silent' });
+}], server: { middlewareMode: true, watch: null }, appType: 'custom', logLevel: 'silent' });
 after(async () => { await vite.close(); globalThis.document = oldDocument; delete globalThis.__seaTestLoad; });
 const { createSculptWater } = await vite.ssrLoadModule('/src/world/Water.ts');
 const config = { ford: false, openSea: true, riverHalfWidth: 64, visualHalfWidth: 190, lengthHalf: 190, fadeStart: 183,

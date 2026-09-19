@@ -10,7 +10,7 @@ import {createServer} from 'vite';
 // TOWN_ACTORS alone left three of the town's six patrols unmeasured. The census now runs every
 // actor through townActorPlazaPlacement, which is what the scene itself walks.
 test('town patrols stay outside the pan monument', async () => {
-  const vite = await createServer({root: process.cwd(), appType: 'custom', logLevel: 'silent', server: {middlewareMode: true}});
+  const vite = await createServer({root: process.cwd(), appType: 'custom', logLevel: 'silent', server: {middlewareMode: true, watch: null}});
   try {
     const {TOWN_ACTORS} = await vite.ssrLoadModule('/src/town/townsfolk.ts');
     const {townPropRing} = await vite.ssrLoadModule('/src/town/townLayout.ts');

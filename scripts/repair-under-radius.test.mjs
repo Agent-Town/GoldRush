@@ -37,7 +37,7 @@ const read = (relative) => readFileSync(path.resolve(ROOT, relative), 'utf8');
 // Three servers opened and closed inside one `node --test` process is the defect; one is not.
 globalThis.location = new URL('http://repair-under-radius.test/?debug&contract=the-claim');
 globalThis.window = { location: globalThis.location };
-const vite = await createServer({ root: ROOT, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
+const vite = await createServer({ root: ROOT, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true, watch: null } });
 let StandingOrdersExecutor;
 let Balance;
 try {

@@ -11,7 +11,7 @@ const root = fileURLToPath(new URL('..', import.meta.url));
 test('later-era mounts stop on wreck or suspension and return on repair with stable relay IDs', async () => {
   globalThis.location = new URL('http://review-wrecked-turrets.test/?contract=e7-relay-valley');
   globalThis.window = { location: globalThis.location };
-  const vite = await createServer({ root, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true, hmr: false } });
+  const vite = await createServer({ root, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true, hmr: false, watch: null } });
   const arsenals = [];
   try {
     const [{ HeadlessContractSim }, { E6ArsenalSystem }, { E7ArsenalSystem }, { E9ArsenalSystem },

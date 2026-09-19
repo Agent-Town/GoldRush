@@ -34,7 +34,7 @@ async function withVite(run) {
   const location = new URL('http://e8-air-suit.test/?debug&contract=e8-mare-claim&seed=e8-mare-claim-01');
   globalThis.location = location;
   globalThis.window = { location };
-  const vite = await createServer({ root: ROOT, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
+  const vite = await createServer({ root: ROOT, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true, watch: null } });
   try {
     return await run(vite);
   } finally {

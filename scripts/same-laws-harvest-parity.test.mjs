@@ -3,7 +3,7 @@ import test from 'node:test';
 import { createServer } from 'vite';
 
 test('human tape preserves the Prospector dispatch input', async () => {
-  const vite = await createServer({ root: process.cwd(), appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
+  const vite = await createServer({ root: process.cwd(), appType: 'custom', logLevel: 'silent', server: { middlewareMode: true, watch: null } });
   try {
     const { normalizeLockstepAction } = await vite.ssrLoadModule('/src/mp/LockstepClient.ts');
     const { RunTapeRecorder } = await vite.ssrLoadModule('/src/game/RunTape.ts');

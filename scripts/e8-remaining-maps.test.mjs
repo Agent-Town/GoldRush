@@ -79,7 +79,7 @@ const MARE_CLAIM = { seed: 'e8-mare-claim-01', hash: 'fnv1a32:271eabbb', waves: 
 const location = new URL('http://gr-sim.local/?debug&contract=e8-far-side&seed=e8-far-side-01');
 globalThis.location = location;
 globalThis.window = { location };
-const vite = await createServer({ root: ROOT, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
+const vite = await createServer({ root: ROOT, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true, watch: null } });
 const { HeadlessContractSim } = await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts');
 const { E8SuitAirSystem, SUIT_AIR_CONTRACT_IDS } = await vite.ssrLoadModule('/src/systems/E8SuitAirSystem.ts');
 const { SUIT_AIR_SECONDS, REGOLITH_GROUNDS_FOR_SECURE, E8AtmosphereSystem } = await vite.ssrLoadModule('/src/systems/E8PhysicsSystem.ts');

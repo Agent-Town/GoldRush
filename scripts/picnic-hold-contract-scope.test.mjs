@@ -14,7 +14,7 @@ test('Picnic hold is enabled only for e6-picnic across every epoch contract', as
     }
   }
 
-  const vite = await createServer({ root: process.cwd(), appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
+  const vite = await createServer({ root: process.cwd(), appType: 'custom', logLevel: 'silent', server: { middlewareMode: true, watch: null } });
   try {
     const { PicnicHoldSystem } = await vite.ssrLoadModule('/src/systems/PicnicHoldSystem.ts');
     const { validateContractsBundle } = await vite.ssrLoadModule('/src/meta/ContractFamilies.ts');

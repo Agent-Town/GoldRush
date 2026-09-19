@@ -9,7 +9,7 @@ test('Regatta measures the rider, applies fast water to that body, and secures r
   const location = new URL('http://regatta.test/?debug&contract=e5-regatta');
   globalThis.location = location;
   globalThis.window = { location };
-  const vite = await createServer({ appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
+  const vite = await createServer({ appType: 'custom', logLevel: 'silent', server: { middlewareMode: true, watch: null } });
   try {
     const { HeadlessContractSim } = await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts');
     const Terrain = await vite.ssrLoadModule('/src/world/Terrain.ts');

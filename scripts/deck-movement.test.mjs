@@ -4,7 +4,7 @@ import { readFile } from 'node:fs/promises';
 import { createServer } from 'vite';
 
 test('boat and Flotilla movement carries only aboard riders and keeps pad/building ownership through loss and reset', async () => {
-  const vite = await createServer({ configFile: false, appType: 'custom', logLevel: 'silent', optimizeDeps: { noDiscovery: true, include: [] }, server: { middlewareMode: true } });
+  const vite = await createServer({ configFile: false, appType: 'custom', logLevel: 'silent', optimizeDeps: { noDiscovery: true, include: [] }, server: { middlewareMode: true, watch: null } });
   try {
     const { DeepwaterClaimTile } = await vite.ssrLoadModule('/src/world/DeepwaterClaimTile.ts');
     const { contracts } = JSON.parse(await readFile(new URL('../assets/contracts/epoch-5-deepwater/contracts.json', import.meta.url)));
@@ -66,7 +66,7 @@ test('headless public BOAT_BUILD and REANCHOR orders use the same rider and hull
   const oldWindow = globalThis.window, oldLocation = globalThis.location;
   globalThis.location = new URL('http://deck.test/?debug&contract=e5-deepwater-claim');
   globalThis.window = { location: globalThis.location };
-  const vite = await createServer({ appType: 'custom', logLevel: 'silent', optimizeDeps: { noDiscovery: true, include: [] }, server: { middlewareMode: true } });
+  const vite = await createServer({ appType: 'custom', logLevel: 'silent', optimizeDeps: { noDiscovery: true, include: [] }, server: { middlewareMode: true, watch: null } });
   try {
     const { HeadlessContractSim } = await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts');
     for (const contractId of ['e5-deepwater-claim', 'e5-regatta', 'e5-stillwater', 'e5-flotilla']) {
@@ -124,7 +124,7 @@ test('headless public BOAT_BUILD and REANCHOR orders use the same rider and hull
 
 
 test('closing a formation stops at living hull boundaries, including a swept crossing', async () => {
-  const vite = await createServer({configFile:false, appType:'custom', logLevel:'silent', optimizeDeps:{noDiscovery:true,include:[]}, server:{middlewareMode:true}});
+  const vite = await createServer({configFile:false, appType:'custom', logLevel:'silent', optimizeDeps:{noDiscovery:true,include:[]}, server:{middlewareMode:true,watch:null}});
   try {
     const {FlotillaHullSystem} = await vite.ssrLoadModule('/src/systems/FlotillaHullSystem.ts');
     const {contracts} = JSON.parse(await readFile(new URL('../assets/contracts/epoch-5-deepwater/contracts.json', import.meta.url)));

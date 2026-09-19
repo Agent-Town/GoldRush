@@ -8,7 +8,7 @@ const location = new URL('http://review-mixed-hashes.test/');
 globalThis.window = { location };
 globalThis.location = location;
 const vite = await createServer({ root, appType: 'custom', logLevel: 'silent',
-  optimizeDeps: { noDiscovery: true }, server: { middlewareMode: true, hmr: false } });
+  optimizeDeps: { noDiscovery: true }, server: { middlewareMode: true, hmr: false, watch: null } });
 let LockstepClient;
 try {
   ({ LockstepClient } = await vite.ssrLoadModule('/src/mp/LockstepClient.ts'));

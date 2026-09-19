@@ -41,7 +41,7 @@ const LEGACY_FIXED_BYTES = 16 * 1024;
 const LEGACY_BYTES_PER_ENTRY = 160;
 
 async function withVite(run) {
-  const vite = await createServer({ root: ROOT, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
+  const vite = await createServer({ root: ROOT, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true, watch: null } });
   try {
     return await run(vite);
   } finally {

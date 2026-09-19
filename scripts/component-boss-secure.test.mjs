@@ -3,7 +3,7 @@ import { readFile } from 'node:fs/promises';
 import test from 'node:test';
 import { createServer } from 'vite';
 
-const vite = await createServer({ appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
+const vite = await createServer({ appType: 'custom', logLevel: 'silent', server: { middlewareMode: true, watch: null } });
 const { bossKillSecuresRun } = await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts');
 await vite.close();
 

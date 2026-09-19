@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {createServer} from 'vite';
-const server=await createServer({server:{middlewareMode:true},appType:'custom'});
+const server=await createServer({server:{middlewareMode:true,watch:null},appType:'custom'});
 try {
  const {validateContractsBundle}=await server.ssrLoadModule('/src/meta/ContractFamilies.ts');
  const source=JSON.parse(readFileSync('assets/contracts/epoch-10-deepsky/contracts.json','utf8'));

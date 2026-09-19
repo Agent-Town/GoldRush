@@ -30,7 +30,7 @@ test('same-game report exemption prose matches its table', () => {
 });
 
 test('same-game report exemption table matches source', async () => {
-  const vite = await createServer({ root, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
+  const vite = await createServer({ root, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true, watch: null } });
   try {
     const { CONTRACT_ADMISSION_EXEMPTIONS } = await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts');
     assert.deepEqual(tableIds.sort(), Object.keys(CONTRACT_ADMISSION_EXEMPTIONS).sort(),
@@ -50,7 +50,7 @@ test('same-game report exemption table matches source', async () => {
 // (rare, ratcheted), reasons change whenever anyone measures anything (often). The guard was
 // watching the stable half.
 test('same-game report exemption reasons and citations match source', async () => {
-  const vite = await createServer({ root, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
+  const vite = await createServer({ root, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true, watch: null } });
   try {
     const { CONTRACT_ADMISSION_EXEMPTIONS } = await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts');
     assert.equal(tableRows.length, Object.keys(CONTRACT_ADMISSION_EXEMPTIONS).length,

@@ -65,7 +65,7 @@ const FIRST_SQUALL_OPENS_AT_TICK = 2_041;
 const FIRST_SQUALL_CLOSES_AT_TICK = 2_791;
 
 let modules;
-const vite = await createServer({ root, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
+const vite = await createServer({ root, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true, watch: null } });
 try {
   const location = new URL(`http://e10-preserve.test/?debug&contract=${CONTRACT}&seed=e10-preserve-guard`);
   globalThis.location = location;

@@ -17,7 +17,7 @@ const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const NODE_ENGINES = installedNodeEngines();
 
 test('harness digest pins all three rider-side inputs', async () => {
-  const vite = await createServer({ root: ROOT, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
+  const vite = await createServer({ root: ROOT, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true, watch: null } });
   try {
     const { assembleSelfDeclaredStack, computeHarnessDigest, normalizeSelfDeclaredStack } = await vite.ssrLoadModule('/src/agent/DeclaredStack.ts');
     const first = await computeHarnessDigest('charter text', '## generation 7', 'controller-v3');
@@ -192,7 +192,7 @@ test('gr-sim resumes at a recorded mid-ride tick as one byte-identical tape', { 
     const assay = JSON.parse(replay.stdout);
     assert.equal(assay.eventLogHash, tape.eventLogHash);
 
-    const vite = await createServer({ root: ROOT, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
+    const vite = await createServer({ root: ROOT, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true, watch: null } });
     try {
       const { validateTape } = await vite.ssrLoadModule('/functions/api/standings.ts');
       assert.ok(validateTape(resumedTape, tape.contract, tape.seed, tape.difficulty), 'the county door accepts the resumed tape');
@@ -317,7 +317,7 @@ test('a distant HARVEST walks before it pays', async () => {
   const location = new URL('http://gr-sim.local/?debug&contract=e1-dry-gulch&seed=harvest-walk');
   globalThis.location = location;
   globalThis.window = { location };
-  const vite = await createServer({ root: ROOT, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
+  const vite = await createServer({ root: ROOT, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true, watch: null } });
   try {
     const { Balance } = await vite.ssrLoadModule('/src/game/Balance.ts');
     const { HeadlessContractSim } = await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts');
@@ -356,7 +356,7 @@ test('BUILD walks, confirms from the ordering body, and cannot wedge on unreacha
   const location = new URL('http://gr-sim.local/?debug&contract=e1-dry-gulch&seed=embodied-build');
   globalThis.location = location;
   globalThis.window = { location };
-  const vite = await createServer({ root: ROOT, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
+  const vite = await createServer({ root: ROOT, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true, watch: null } });
   try {
     const { StandingOrdersExecutor } = await vite.ssrLoadModule('/src/agent/StandingOrders.ts');
     let placements = 0;
@@ -549,7 +549,7 @@ test('gr-sim hashes a fractional-yield run identically twice', async () => {
   const location = new URL('http://gr-sim.local/?debug&contract=e1-dry-gulch&seed=gold-quantization');
   globalThis.location = location;
   globalThis.window = { location };
-  const vite = await createServer({ root: ROOT, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
+  const vite = await createServer({ root: ROOT, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true, watch: null } });
   let Balance;
   let originalTickGold;
   try {
@@ -792,7 +792,7 @@ test('gr-sim boots escort mode from data instead of URL state', { timeout: 120_0
   const location = new URL('http://gr-sim.local/?debug&contract=e2-hill-mine&seed=e2-escort-headless');
   globalThis.location = location;
   globalThis.window = { location };
-  const vite = await createServer({ root: ROOT, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
+  const vite = await createServer({ root: ROOT, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true, watch: null } });
   try {
     const { HeadlessContractSim } = await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts');
     const sim = new HeadlessContractSim({ contractId: 'e2-hill-mine', seed: 'e2-escort-headless', mode: 'escort' });
@@ -828,7 +828,7 @@ test('the Claim driver consumes declared water and posts RunManager secure at wa
     root: ROOT,
     appType: 'custom',
     logLevel: 'silent',
-    server: { middlewareMode: true },
+    server: { middlewareMode: true, watch: null },
   });
   try {
     const Terrain = await vite.ssrLoadModule('/src/world/Terrain.ts');
@@ -937,7 +937,7 @@ test('Twin Banks consumes its declared crossings and build zones before securing
     root: ROOT,
     appType: 'custom',
     logLevel: 'silent',
-    server: { middlewareMode: true },
+    server: { middlewareMode: true, watch: null },
   });
   try {
     const Terrain = await vite.ssrLoadModule('/src/world/Terrain.ts');
@@ -1050,7 +1050,7 @@ test('Night Shift wreckers outrun lantern light headlessly', async () => {
   const location = new URL('http://gr-sim.local/?debug&contract=e1-night-shift&seed=night-speed');
   globalThis.location = location;
   globalThis.window = { location };
-  const vite = await createServer({ root: ROOT, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
+  const vite = await createServer({ root: ROOT, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true, watch: null } });
   try {
     const { Balance } = await vite.ssrLoadModule('/src/game/Balance.ts');
     const { HeadlessContractSim } = await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts');
@@ -1111,7 +1111,7 @@ test('the Baron driver runs the declared fight and keeps medal writes off headle
     getItem: () => null,
     setItem: (key, value) => storageWrites.push([key, value]),
   };
-  const vite = await createServer({ root: ROOT, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
+  const vite = await createServer({ root: ROOT, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true, watch: null } });
   try {
     const { Balance } = await vite.ssrLoadModule('/src/game/Balance.ts');
     const { HeadlessContractSim } = await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts');
@@ -1241,7 +1241,7 @@ test('the E2 Baron fights keep their pinned outcomes', {
       const location = new URL(`http://gr-sim.local/?debug&contract=${contract.id}&seed=${seed}`);
       globalThis.location = location;
       globalThis.window = { location };
-      const vite = await createServer({ root: ROOT, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
+      const vite = await createServer({ root: ROOT, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true, watch: null } });
       try {
         const { Balance } = await vite.ssrLoadModule('/src/game/Balance.ts');
         const { HeadlessContractSim } = await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts');
@@ -1316,7 +1316,7 @@ test('identical order failures coalesce across submissions without hiding a new 
   const location = new URL('http://gr-sim.local/?debug&contract=the-claim&seed=e1-the-claim-01');
   globalThis.location = location;
   globalThis.window = { location };
-  const vite = await createServer({ root: ROOT, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
+  const vite = await createServer({ root: ROOT, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true, watch: null } });
   try {
     const { HeadlessContractSim } = await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts');
     const sim = new HeadlessContractSim({ contractId: 'the-claim', seed: 'e1-the-claim-01' });

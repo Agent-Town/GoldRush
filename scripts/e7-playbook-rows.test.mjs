@@ -31,7 +31,7 @@ async function loadSim(contract, seed) {
   const location = new URL(`http://e7-playbook-rows.test/?debug&contract=${contract}&seed=${seed}`);
   globalThis.location = location;
   globalThis.window = { location };
-  const vite = await createServer({ root, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
+  const vite = await createServer({ root, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true, watch: null } });
   const { HeadlessContractSim } = await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts');
   return { HeadlessContractSim, close: () => vite.close() };
 }

@@ -3,7 +3,7 @@ import { createServer } from 'vite';
 
 globalThis.location = new URL('http://archive.test/?debug&contract=e10-archive-world');
 globalThis.window = { location: globalThis.location };
-const server = await createServer({ server: { middlewareMode: true }, appType: 'custom' });
+const server = await createServer({ server: { middlewareMode: true, watch: null }, appType: 'custom' });
 try {
   const { loadContract } = await server.ssrLoadModule('/src/meta/ContractFamilies.ts');
   const { HeadlessContractSim } = await server.ssrLoadModule('/src/sim/HeadlessContractSim.ts');

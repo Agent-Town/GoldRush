@@ -13,7 +13,7 @@ test('all selected contracts own run mechanics without replacing campaign or res
   Object.assign(globalThis,{localStorage:local,sessionStorage:session,__GR_RELEASE_E1__:false});
   const navigate = search => { globalThis.location = new URL(`http://epoch.test/${search}`);globalThis.window = { location:globalThis.location }; };
   navigate('');
-  const vite = await createServer({configFile:false,appType:'custom',logLevel:'silent',optimizeDeps:{noDiscovery:true,include:[]},server:{middlewareMode:true}});
+  const vite = await createServer({configFile:false,appType:'custom',logLevel:'silent',optimizeDeps:{noDiscovery:true,include:[]},server:{middlewareMode:true,watch:null}});
   try {
     const registry = await vite.ssrLoadModule('/src/meta/ContractFamilies.ts');
     const research = await vite.ssrLoadModule('/src/meta/ResearchTree.ts');

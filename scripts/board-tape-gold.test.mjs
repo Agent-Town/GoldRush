@@ -135,7 +135,7 @@ test("the browser door submits the purse held at the secure tick, not the run's 
   const vite = await createServer({
     root,
     logLevel: 'silent',
-    server: { host: '127.0.0.1', port: 0 },
+    server: { host: '127.0.0.1', port: 0, watch: null },
   });
   await vite.listen();
   const base = vite.resolvedUrls?.local?.[0]?.replace(/\/$/, '') ?? `http://127.0.0.1:${vite.config.server.port}`;

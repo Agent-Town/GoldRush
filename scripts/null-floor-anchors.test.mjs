@@ -8,7 +8,7 @@ const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const readJson = (relative) => JSON.parse(readFileSync(new URL(`../${relative}`, import.meta.url), 'utf8'));
 const benchSeeds = readJson('assets/contracts/bench-seeds.json');
 const artifact = readJson('assets/contracts/null-floors.json');
-const vite = await createServer({ root: ROOT, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
+const vite = await createServer({ root: ROOT, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true, watch: null } });
 let supported;
 try {
   const { supportedContractIds } = await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts');

@@ -3,7 +3,7 @@ import test from 'node:test';
 import {createServer} from 'vite';
 
 test('E8 save state preserves exact continuation and rejects malformed state atomically', async () => {
-  const vite=await createServer({appType:'custom',logLevel:'silent',server:{middlewareMode:true}});
+  const vite=await createServer({appType:'custom',logLevel:'silent',server:{middlewareMode:true,watch:null}});
   try {
     const {loadContract}=await vite.ssrLoadModule('/src/meta/ContractFamilies.ts');
     const {E8AtmosphereSystem,E8HumanSuit}=await vite.ssrLoadModule('/src/systems/E8PhysicsSystem.ts');

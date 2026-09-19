@@ -13,7 +13,7 @@ const vite = await createServer({ configFile: false, optimizeDeps: { noDiscovery
     if (id === '\0boat-test-loader') return 'export const trackedGltfLoader = () => globalThis.__boatTestLoader';
     if (id === '\0boat-test-turret') return 'export const TURRET_SILHOUETTE_HEIGHT = 1.1';
   },
-}], server: { middlewareMode: true }, appType: 'custom', logLevel: 'silent' });
+}], server: { middlewareMode: true, watch: null }, appType: 'custom', logLevel: 'silent' });
 after(async () => { await vite.close(); delete globalThis.__boatTestLoader; });
 const { ClaimBoatView } = await vite.ssrLoadModule('/src/world/ClaimBoatView.ts');
 const { ClaimBoat, CLAIM_BOAT_DECK_BOUNDS } = await vite.ssrLoadModule('/src/entities/ClaimBoat.ts');

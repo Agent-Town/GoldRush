@@ -11,7 +11,7 @@ const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const PLAYER = 'scripts/gr-sim-campaign.fixture-player.mjs';
 
 test('FakeStorage threads research into the headless sim without moving the cold hash', async () => {
-  const vite = await createServer({ root: ROOT, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
+  const vite = await createServer({ root: ROOT, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true, watch: null } });
   const previous = Object.fromEntries(
     ['location', 'localStorage', 'window'].map((key) => [key, Object.getOwnPropertyDescriptor(globalThis, key)]),
   );

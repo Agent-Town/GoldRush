@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { createServer } from 'vite';
 
-const server = await createServer({ server: { middlewareMode: true }, appType: 'custom' });
+const server = await createServer({ server: { middlewareMode: true, watch: null }, appType: 'custom' });
 try {
   const { readLedgerDiscovered } = await server.ssrLoadModule('/src/encyclopedia/state.ts');
   const { archiveLedgerEntries, archivePageByWing, loadArchiveLore } = await server.ssrLoadModule('/src/encyclopedia/archive.ts');

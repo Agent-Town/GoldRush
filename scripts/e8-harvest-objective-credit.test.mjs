@@ -3,7 +3,7 @@ import test from 'node:test';
 import {createServer} from 'vite';
 
 test('passive and explicit headless harvest credit each paid tick once', async () => {
-  const vite=await createServer({appType:'custom',logLevel:'silent',server:{middlewareMode:true}});
+  const vite=await createServer({appType:'custom',logLevel:'silent',server:{middlewareMode:true,watch:null}});
   try {
     const {HeadlessContractSim}=await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts');
     const THREE=await vite.ssrLoadModule('three');

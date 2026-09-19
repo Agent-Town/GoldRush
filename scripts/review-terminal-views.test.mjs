@@ -36,7 +36,7 @@ class Socket {
 }
 
 test('terminal views wait for every seat relay deadline and survive the secured reset', async () => {
-  const vite = await createServer({ root, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true, hmr: false } });
+  const vite = await createServer({ root, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true, hmr: false, watch: null } });
   const originals = { Response, WebSocketPair: globalThis.WebSocketPair, setTimeout, dateNow: Date.now, performanceNow: performance.now };
   let clock = 10_000;
   let server;

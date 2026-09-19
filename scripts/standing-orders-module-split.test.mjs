@@ -8,7 +8,7 @@ const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const STANDING_ORDERS = '/src/agent/StandingOrders.ts';
 
 test('tape hash keeps the sim-owned standing-orders module across invalidation', async () => {
-  const vite = await createServer({ root: ROOT, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
+  const vite = await createServer({ root: ROOT, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true, watch: null } });
   try {
     const first = await vite.ssrLoadModule(STANDING_ORDERS);
     const { HeadlessContractSim } = await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts');

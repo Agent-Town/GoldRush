@@ -228,7 +228,7 @@ function seam(tapePath) {
 }
 
 async function countyAccepts(tape) {
-  const vite = await createServer({ root: process.cwd(), appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
+  const vite = await createServer({ root: process.cwd(), appType: 'custom', logLevel: 'silent', server: { middlewareMode: true, watch: null } });
   try {
     const { validateTape } = await vite.ssrLoadModule('/functions/api/standings.ts');
     return validateTape(tape, tape.contract, tape.seed, tape.difficulty) !== null;

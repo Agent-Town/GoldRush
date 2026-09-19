@@ -3,7 +3,7 @@ import test, { after } from 'node:test';
 import { createServer } from 'vite';
 const location = new URL('http://gr-sim.local/?debug&contract=e8-mare-claim');
 globalThis.location = location; globalThis.window = { location };
-const vite = await createServer({ appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
+const vite = await createServer({ appType: 'custom', logLevel: 'silent', server: { middlewareMode: true, watch: null } });
 after(() => vite.close());
 const { HeadlessContractSim } = await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts');
 const { Vector2 } = await vite.ssrLoadModule('three');

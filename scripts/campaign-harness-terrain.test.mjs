@@ -7,7 +7,7 @@ const ROOT = fileURLToPath(new URL('..', import.meta.url));
 
 async function terrainDimensions(url) {
   globalThis.location = new URL(url);
-  const vite = await createServer({ root: ROOT, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
+  const vite = await createServer({ root: ROOT, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true, watch: null } });
   try {
     const { CLAIM_WIDTH, CLAIM_HEIGHT } = await vite.ssrLoadModule('/src/world/Terrain.ts');
     return [CLAIM_WIDTH, CLAIM_HEIGHT];

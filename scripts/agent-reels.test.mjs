@@ -12,7 +12,7 @@ import { createServer } from 'vite';
 const park = { verb: 'MOVE_HERO', pos: { x: 0, z: 12 } };
 
 test('agent reel validation reuses the door bounds and CLI tape content stays deterministic under unique ids', async () => {
-  const vite = await createServer({ root: process.cwd(), appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
+  const vite = await createServer({ root: process.cwd(), appType: 'custom', logLevel: 'silent', server: { middlewareMode: true, watch: null } });
   try {
     const { onRequest, validateTape } = await vite.ssrLoadModule('/functions/api/standings.ts');
     const tape = fixture(Array(32).fill(park));

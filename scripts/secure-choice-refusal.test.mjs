@@ -33,7 +33,7 @@ const ROOT = fileURLToPath(new URL('..', import.meta.url));
 
 // The word is READ from the door rather than copied beside it: a guard that carries its own copy
 // of the vocabulary passes the day someone renames the refusal (Mistake #4, verify-don't-inherit).
-const vite = await createServer({ root: ROOT, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
+const vite = await createServer({ root: ROOT, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true, watch: null } });
 let SECURE_WINDOW_REFUSAL;
 let SECURE_WINDOW_REFUSAL_ID;
 let SECURE_WINDOW_REFUSAL_MESSAGE;

@@ -97,7 +97,7 @@ const LITERALS = (() => {
 })();
 
 let profileStorage;
-const vite = await createServer({ root, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
+const vite = await createServer({ root, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true, watch: null } });
 try {
   const location = new URL('http://profile-data-key-sweep.test/');
   globalThis.location = location;
