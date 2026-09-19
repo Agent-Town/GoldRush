@@ -1,7 +1,7 @@
 {
   "era": 6,
   "name": "the Re-surveyed Claims",
-  "engineHash": "cc3fd5d45add762fc0878a42618af1eaec836edeee83b03954c5e75a569b71f5",
+  "engineHash": "e7cbf090c0336bb2940187aba21577c6ea498f728567ea8bf2fbd2e56ec93495",
   "declaredAt": "2026-09-14",
   "note": "Era 6 opens with Astra's map campaign (sol/map-art-inventory-20260908 883a3521e) landed by maps-campaign-land-era6 on 2026-09-14: 17 contracts re-parameterised (tileParams on 13, twists on 3, briefings on 5), the door tightened to the contract's own research epoch, 66 src files, the map-rebuild-spike terrain, plaza props and flotilla models. Owner ruling 2026-09-13, verbatim: \"ah, that is all no problem. we don't have players yet so we can just keep going\" and \"we then have to make another run in the future but not immediately\"; the name ratified 2026-09-14 (\"the Re-surveye Claims\" is good for me). Every era-5 reel reads \"This reel rode era 5; the county accepts era 6\" and stands retired, counted. Heat 14 re-rides the boards on this era when the owner says so.",
   "viewSchema": {
@@ -149,6 +149,12 @@
       "engineHash": "cc3fd5d45add762fc0878a42618af1eaec836edeee83b03954c5e75a569b71f5",
       "pinnedAt": "2026-09-18",
       "cause": "same era, pin #11: post-open-maps-correctives (owner 2026-09-18 \"nono go ahead and start more jobs\") — rendering and contract-copy changes only: the Blackout Ridge receiver mount at scale 0.8 in the terrain, pack and collision contracts (F-OMB-1), an e3-blackout-ridge LANDMARK_EMISSIVE row (F-OMB-4), the Fairground wheel rebuilt render-side in FerrisWheel.ts (F-OMB-2/-3), the Long Road briefing.goals re-voiced to name the convoy errand (F-OMA-3), the Salvage Claw sidecar re-measured (F-BMB-2), the E5 p95 gate made floor-to-floor (F-BMB-3); null floors re-recorded on the merged tree, 83/83 unchanged (eraStamp only). No sim semantics moved. reviews/post-open-maps-correctives.md",
+      "aliases": []
+    },
+    {
+      "engineHash": "e7cbf090c0336bb2940187aba21577c6ea498f728567ea8bf2fbd2e56ec93495",
+      "pinnedAt": "2026-09-19",
+      "cause": "same era, pin #12: needs-cells-codex-strips-land (owner 2026-09-18 \"Yes, please use Codex to generate these strips.\") — the Claim Jumper's six facings registered as real cells in assets/layer-contracts/characters.v2.json (s, e, se, sw, ne, nw at the live 156–176 px band), the Steam Wrecker's se alias kept; null floors re-recorded on the merged tree. No sim semantics moved. reviews/needs-cells-codex-strips-land.md",
       "aliases": []
     }
   ],
