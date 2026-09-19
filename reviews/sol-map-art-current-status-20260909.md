@@ -847,3 +847,7 @@ Integrated Showroom desktop204 terminal PASS:20waves/600s,211captures,10works,HP
 ## Signal controls checkpoint223
 
 The current five-file correction is isolated from production. Native221 passes all four Signal maps on desktop/portrait; small portrait and rotated landscape222 pass two representative maps each. Popup223 passes five focused UI-only reproductions. These are control proofs, not complete map objectives. Current gates, retained failures and the separate landscape Town-entry defect are recorded in [the current Signal report](../artifacts/map-art-repairs-20260908/e7-hud-223/report.md).
+
+### E3 atlas recipe checkpoint — 2026-09-19 campaign 2
+
+The tracked builder's atlas-only path reproduces Blackout Ridge, Canyon Works, Fairground and Moth Season byte-for-byte (pixel delta zero). This closes the F-OMB-5 atlas reproduction gap without regenerating geometry or changing visual verdicts. Moth's native-material provenance declaration disagrees with its actual shipped PNG/GLB texture; that discrepancy remains open. [Recipe evidence](../artifacts/sol/map-art-campaign-2/run-2/e3-recipes/review.md).
