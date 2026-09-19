@@ -5374,10 +5374,12 @@
             {
               "id": "sol-open-findings-astra",
               "title": "Owner 2026-09-19 \"Also the open findings.\": Astra closes the two open findings of its own 3D review — F-ASTRA-6 (batch opaque repetitions, preserve transparent ordering, census first) and F-ASTRA-2 (the hero GLB brought to its own bar as a pilot, not promoted)",
-              "status": "queued",
+              "status": "blocked",
               "taskFile": "sol-open-findings-astra.md",
               "registeredBy": "attended 2026-09-19",
-              "lane": "lane-a (Codex gpt-6-astra xhigh)"
+              "lane": "lane-a (Codex gpt-6-astra xhigh)",
+              "blockClass": "gate-side",
+              "blockedReason": "GATE-SIDE HOLD, NOT AN OWNER GATE (s2644). The trial merge is conflict-free and every gate s2644 ran on the MERGED tree is GREEN — tsc rc=0, build rc=0, gate-caller-audit PASS, nul-audit CLEAN (23,336 subjects), the slice own node guard 4/4, its plain-boot spec 8/8 desktop+mobile with zero console errors, and the adjacent town-tavern spec 6/6 matching main 6/6. Evidence: reviews/gate-s2644-open-findings-astra.md. TWO THINGS REMAIN, both named by the runner itself rather than found by the gate: (1) the broad browser (23) and node (10) reds are undispositioned — the runner attributed 9 to the original modules with baseline-control-hits.jsonl as proof and explicitly refused to declare the rest unrelated; (2) the final merged engine identity is unset. A fire lifts this hold by doing both and merging in the same fire. ⚠️ READ F-2644-3 FIRST: gate-s2644 measured that a two-worktree differential is UNRELIABLE while both trees symlink one node_modules, because they share vite dep cache — the first run after switching trees is contaminated and must be discarded. F-ASTRA-2 hero promotion is a separate OWNER call and is not required to land F-ASTRA-6."
             },
             {
               "id": "sol-map-art-campaign-2b",
