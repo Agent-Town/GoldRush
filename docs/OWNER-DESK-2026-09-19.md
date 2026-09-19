@@ -146,9 +146,8 @@ About 16.7k Codex tokens per drain. Recommendation: split the file, root the two
 ### F-ASSAY-E2E-6 — the browser cannot replay a standing-order tape
 Two measured defects in the browser replay path; the assayer verifies headless and the door is honest. Decide whether browser replay of agent tapes (the Lantern view) is launch scope. Recommendation: later; the assayer is the truth today.
 
-### F-HYG-10 — masters that never ran or no longer reproduce
-The hygiene review counted 227 task masters in `tasks/` that never ran or whose runs no longer reproduce on main. Recommendation: banner them as archive (kept on disk and in git, never queued), never delete.
-
+### F-HYG-10 — corrected 2026-09-19 (F-RUL-1): 227 shipped ART CELLS, not masters
+The register mis-transcribed the finding: at source the 227 are shipped art cells in 19 families whose source PNGs no longer reproduce them (the F-1464-1 class, `master-divergent.json`). The task-guard audit's invisible set is 0 already, so nothing was bannered. The item returns to the factory as an art-hygiene row (re-derive the cells or record them by design); no owner word needed.
 ---
 
 ## 5. Ruled this week — recorded, for the trail
