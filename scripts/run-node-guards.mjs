@@ -1,5 +1,5 @@
-import { spawnSync } from 'node:child_process';
-import { mkdtempSync, readFileSync, rmSync } from 'node:fs';
+import { spawn, spawnSync } from 'node:child_process';
+import { mkdtempSync, readFileSync, rmSync, statSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 
@@ -37,6 +37,172 @@ import {
 // imported it to read the constant would re-launch `node --test` — with no file arguments, which
 // is whole-repo discovery. The guard asserts this value by EXECUTING the harness, not importing it.
 const NODE_GUARDS_TEST_TIMEOUT_MS = 300_000;
+
+// WHY A WALL-CLOCK WATCHDOG EXISTS ON TOP OF THAT BOUND (F-POC-8, measured 2026-09-19).
+// `--test-timeout` is enforced INSIDE the test-file child, by a timer on that child's event loop.
+// A test that blocks the loop synchronously therefore outlives it: `repair-under-radius.test.mjs`
+// ran at 100 % CPU for 4 h 46 min inside a gating battery (its three tests take milliseconds),
+// ignored SIGTERM — a blocked loop never reaches a JS signal handler — and ended by a hand-kill.
+// node's runner never kills a file child by wall clock, so before this the battery had NO bound at
+// all against that class: a fire that hits it burns its whole window looking merely slow.
+//
+// The predicate is TAP PROGRESS, not elapsed time: the harness already writes a TAP transcript to a
+// file, and that file grows as records land. No growth for the budget below = nothing in the whole
+// battery finished. The watchdog then finds the `--test` child's OWN children (a pid tree from
+// `child.pid` via `ps -Ao pid=,ppid=`; NEVER a pattern match — a pattern kill has killed a fire
+// before), keeps only those alive since the stall began, `sample`s each for 3 s into the preserved
+// transcript directory, and SIGKILLs it. That death is exactly what the F-NCB-10 arm below reads:
+// the file is re-run ALONE, once, and a file that hangs again stays red.
+//
+// WHY 45 MINUTES, AND WHY NOT THE 10 THE TASK PROPOSED (measured, not chosen).
+// The task's N = 10 min came with the premise "~30x the slowest healthy file". That premise is
+// FALSE on this battery, and the measurement is what settles it: in the three most recent batteries
+// the slowest HEALTHY unit is `fixture-teardown.test.mjs`'s single test at 880.1 s
+// (artifacts/post-open-maps-correctives/attended-battery-node26.log, 149 subjects) and 973.5 s
+// (artifacts/needs-cells-art-batch/attended-battery-node26.log, 148 subjects). It is slow for the
+// same reason the hang is invisible: it is ONE synchronous test that spawnSync's `node --test` over
+// every fixture-owning guard in turn, so it blocks its own loop, survives the 300 s per-test bound,
+// and — in the gating fire arrangement, file concurrency 1 — emits NO TAP record for ~16 minutes.
+// A 10-minute bound would SIGKILL that healthy guard on every fire battery. A red board nobody
+// trusts is worse than no bound (F-1460-1).
+// 45 min = 2.8x the largest measured healthy silence, with headroom for its growth (148 -> 149
+// subjects moved it by ~90 s) and for load (this box measured load averages of 39 and 138 within
+// one hour), while bounding the F-POC-8 class at 45 min instead of the 4 h 46 min it replaced —
+// 6.4x tighter. Every battery now PRINTS its own longest TAP silence ("TAP-QUIET MAX"), so the
+// margin behind this number stays measured instead of remembered.
+//
+// ⚠️ If this ever fires, it is a HANG. Read the preserved sample, do NOT raise the number:
+// F-1410-2's standing prohibition applies here exactly as it does to the per-test bound above.
+const NODE_GUARDS_TAP_STALL_MS = 45 * 60_000;
+const NODE_GUARDS_SAMPLE_SECONDS = 3;
+
+/**
+ * The effective stall budget. `GR_NODE_GUARDS_STALL_MS` can only LOWER it — the guard needs seconds
+ * where the battery needs minutes, and an env knob that could RAISE a hang bound is F-1410-2's
+ * defect with extra steps. Clamped, never relaxed; the chosen value is printed on every run.
+ */
+function stallBudgetMs(env) {
+  const raw = Number(env.GR_NODE_GUARDS_STALL_MS);
+  if (!Number.isFinite(raw) || raw <= 0) return NODE_GUARDS_TAP_STALL_MS;
+  return Math.min(NODE_GUARDS_TAP_STALL_MS, Math.round(raw));
+}
+
+/** Direct children of `pid`, by pid tree. Never a pattern: `pgrep -f` has killed a fire before. */
+function childPidsOf(pid) {
+  try {
+    const listed = spawnSync('ps', ['-Ao', 'pid=,ppid='], { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
+    if (listed.error || listed.status !== 0) return [];
+    const kids = [];
+    for (const line of listed.stdout.split('\n')) {
+      const row = /^\s*(\d+)\s+(\d+)\s*$/.exec(line);
+      if (row && Number(row[2]) === pid) kids.push(Number(row[1]));
+    }
+    return kids;
+  } catch {
+    return [];
+  }
+}
+
+/** The test file a child is running, for the REPORT only (node puts it last on the command line). */
+function fileOf(pid) {
+  try {
+    const listed = spawnSync('ps', ['-o', 'command=', '-p', String(pid)], { encoding: 'utf8', maxBuffer: 16 * 1024 * 1024 });
+    if (listed.error || listed.status !== 0) return undefined;
+    return listed.stdout.trim().split(/\s+/).reverse().find((arg) => /\.(?:mjs|js|cjs|ts)$/.test(arg));
+  } catch {
+    return undefined;
+  }
+}
+
+function sampleTo(pid, path) {
+  for (const bin of ['sample', '/usr/bin/sample']) {
+    const run = spawnSync(bin, [String(pid), String(NODE_GUARDS_SAMPLE_SECONDS), '-f', path], {
+      encoding: 'utf8', timeout: 60_000, killSignal: 'SIGKILL',
+    });
+    if (!run.error && run.status === 0) return { ok: true };
+    if (run.error?.code !== 'ENOENT') {
+      return { ok: false, why: run.error?.message ?? run.stderr?.trim() ?? `sample exited ${run.status}` };
+    }
+  }
+  return { ok: false, why: 'sample(1) not found on PATH or at /usr/bin/sample (non-macOS host?)' };
+}
+
+/**
+ * Run one `node --test` child, watched. Resolves with its exit status, the longest stretch its TAP
+ * transcript did not grow, and how many stalls were killed. Never rejects on a child that hangs:
+ * that is the whole point.
+ */
+async function runWatched(argv, { tapPath, evidenceDir, label }) {
+  const budget = stallBudgetMs(process.env);
+  const child = spawn(process.execPath, argv, { stdio: 'inherit' });
+  const firstSeen = new Map();
+  let lastSize = -1;
+  let lastProgress = Date.now();
+  let quietMax = 0;
+  let stalls = 0;
+  let inStall = false;
+
+  const tick = () => {
+    if (inStall) return;
+    const now = Date.now();
+    for (const pid of childPidsOf(child.pid)) if (!firstSeen.has(pid)) firstSeen.set(pid, now);
+
+    let size = -1;
+    try { size = statSync(tapPath).size; } catch { /* not written yet: that is silence, not an error */ }
+    if (size !== lastSize) {
+      lastSize = size;
+      lastProgress = now;
+      return;
+    }
+
+    const quiet = now - lastProgress;
+    if (quiet > quietMax) quietMax = quiet;
+    if (quiet < budget) return;
+
+    inStall = true;
+    try {
+      const stallStart = lastProgress;
+      // Only children that were already running when the silence began. A sibling that started
+      // during the stall cannot be the cause of it, and must not be collateral.
+      const suspects = childPidsOf(child.pid).filter((pid) => (firstSeen.get(pid) ?? now) <= stallStart);
+      const targets = suspects.length > 0 ? suspects : [child.pid];
+      const parentIsTarget = suspects.length === 0;
+      for (const pid of targets) {
+        const file = fileOf(pid) ?? 'unknown file';
+        const samplePath = join(evidenceDir, `hang-sample-${pid}.txt`);
+        const sampled = sampleTo(pid, samplePath);
+        try { process.kill(pid, 'SIGKILL'); } catch { /* already gone */ }
+        const where = sampled.ok ? `sample: ${samplePath}` : `sample FAILED (${sampled.why})`;
+        console.error(
+          `⚠️ TAP-STALL WATCHDOG (F-POC-8)${label ? ` [${label}]` : ''}: no TAP record for ` +
+          `${Math.round(quiet / 1000)}s (bound ${Math.round(budget / 1000)}s) — SIGKILLed ` +
+          `${parentIsTarget ? 'the node --test PARENT' : file} (pid ${pid}); ${where}. ` +
+          'A blocked event loop cannot be timed out from inside itself; read the sample, do not raise the bound.',
+        );
+      }
+      stalls += 1;
+      lastProgress = Date.now();
+      lastSize = -1;
+    } finally {
+      inStall = false;
+    }
+  };
+
+  const timer = setInterval(tick, Math.max(250, Math.min(5_000, Math.floor(budget / 4))));
+  try {
+    const ended = await new Promise((settle, fail) => {
+      child.once('error', fail);
+      child.once('exit', (status, signal) => settle({ status, signal }));
+    });
+    return { ...ended, quietMax, stalls, budget };
+  } finally {
+    clearInterval(timer);
+  }
+}
+
+function quietStamp({ quietMax, budget }, label) {
+  return `ℹ TAP-QUIET MAX${label ? ` (${label})` : ''}: ${(quietMax / 1000).toFixed(1)}s of ${Math.round(budget / 1000)}s bound (F-POC-8 watchdog)`;
+}
 
 function contentionStamp() {
   try {
@@ -116,22 +282,35 @@ if (contention) console.error(contention);
 
 const tapDir = mkdtempSync(join(tmpdir(), 'node-guards-tap-'));
 const tapPath = join(tapDir, 'battery.tap');
-const reporters = [
+const retryTapPath = join(tapDir, 'retry.tap');
+const reportersTo = (destination) => [
   '--test-reporter=spec', '--test-reporter-destination=stdout',
-  '--test-reporter=tap', `--test-reporter-destination=${tapPath}`,
+  '--test-reporter=tap', `--test-reporter-destination=${destination}`,
 ];
+const reporters = reportersTo(tapPath);
 let status;
+// A stall leaves EVIDENCE: the partial TAP plus the sample(s). It is never swept — CLAUDE.md
+// §4.10b, and F-1400-4's complaint was precisely "no bound, no diagnostic and no partial report".
+let hung = false;
 try {
-  const child = spawnSync(process.execPath, [...args, ...reporters, ...files], { stdio: 'inherit' });
-  if (child.error) throw child.error;
-  status = child.status ?? 1;
+  const run = await runWatched([...args, ...reporters, ...files], { tapPath, evidenceDir: tapDir });
+  status = run.status ?? 1;
+  hung ||= run.stalls > 0;
+  console.error(quietStamp(run));
   if (status !== 0) {
     const deaths = signalDeaths(tapPath);
     if (deaths.only) {
       const named = deaths.files.map(({ file, signal }) => `${file} died by ${signal}`).join(', ');
       console.error(`⚠️ SIGNAL-DEATH RETRY (F-NCB-10): ${named} — a signal death of the node child is not a test verdict (measured cause on this host: vite's rolldown native binding crashing at server teardown). Re-running ${deaths.files.length} file(s) alone, once.`);
-      const retry = spawnSync(process.execPath, [...args, ...deaths.files.map(({ arg }) => arg)], { stdio: 'inherit' });
-      if (retry.error) throw retry.error;
+      // The retry is WATCHED too, and carries its own TAP transcript to be watched by: a file the
+      // watchdog killed for hanging will hang again, and an unwatched retry would restore exactly
+      // the unbounded wait this guard exists to end.
+      const retry = await runWatched(
+        [...args, ...reportersTo(retryTapPath), ...deaths.files.map(({ arg }) => arg)],
+        { tapPath: retryTapPath, evidenceDir: tapDir, label: 'retry' },
+      );
+      hung ||= retry.stalls > 0;
+      console.error(quietStamp(retry, 'retry'));
       if (retry.status === 0) {
         console.error(`✅ SIGNAL-DEATH RETRY: passed alone — ${deaths.files.map(({ file }) => file).join(', ')}. The battery is green; the crash is recorded above, not hidden.`);
         status = 0;
@@ -141,7 +320,11 @@ try {
     }
   }
 } finally {
-  rmSync(tapDir, { recursive: true, force: true });
+  if (hung) {
+    console.error(`ℹ HANG EVIDENCE KEPT: ${tapDir} (partial TAP + sample). Nothing deletes it; read it before re-running.`);
+  } else {
+    rmSync(tapDir, { recursive: true, force: true });
+  }
 }
 if (contention) console.error(contention);
 process.exit(status);
