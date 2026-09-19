@@ -1,35 +1,25 @@
+/**
+ * The codex shim's PURE arms: the compatibility boundary, the stream shape, the lifecycle and the
+ * origin refusal. Nothing here talks to a subscription, a network or a real model -- every arm
+ * either stubs `completeFn` or points the shim at a throwaway script -- so this file is free to run
+ * on every drain, and it is rooted in `test:ledger-guards` for exactly that reason.
+ *
+ * F-2272-1, owner ruling 2026-09-19 (verbatim: "I agree with all your recommendations on the
+ * decisions - good work"; the register: "split the file, root the two pure arms in the battery,
+ * owner-gate the live arms"). This file and `serve.live.test.mjs` used to be one file whose live
+ * arms spent about 16.7k prompt tokens of the owner's Codex allowance per run, which is why the
+ * whole thing sat unrooted and the pure arms -- including the security arm below, which protects
+ * that very allowance -- were gated by nobody. The split ends that: the cheap arms are in the
+ * battery, the spending arms are behind `GR_CODEX_LIVE=1` and stay at the owner's discretion.
+ */
 import assert from 'node:assert/strict';
-import test, { after } from 'node:test';
+import test from 'node:test';
 import { spawnSync } from 'node:child_process';
 import { chmodSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { connect } from 'node:net';
-import { createCodexShimServer, hasCodexAuth, resolveCodexBinary } from './serve.mjs';
-
-const skip = hasCodexAuth() ? false : 'Codex subscription auth is absent';
-let server;
-let baseUrl;
-
-async function start() {
-  if (server) return;
-  server = createCodexShimServer({ codexBinary: resolveCodexBinary() });
-  await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve));
-  baseUrl = `http://127.0.0.1:${server.address().port}`;
-}
-
-after(() => server && new Promise((resolve) => server.close(resolve)));
-
-async function completion(marker) {
-  const startedAt = Date.now();
-  const response = await fetch(`${baseUrl}/v1/chat/completions`, {
-    method: 'POST',
-    headers: { 'content-type': 'application/json' },
-    body: JSON.stringify({ model: 'gpt-5.6-luna', messages: [{ role: 'user', content: `Reply with exactly: ${marker}` }] }),
-  });
-  assert.equal(response.status, 200);
-  return { body: await response.json(), elapsedMs: Date.now() - startedAt };
-}
+import { createCodexShimServer } from './serve.mjs';
 
 async function streamingCompletion(url, marker) {
   const startedAt = Date.now();
@@ -44,27 +34,6 @@ async function streamingCompletion(url, marker) {
   assert.equal(events.pop(), '[DONE]');
   return { chunks: events.map(JSON.parse), elapsedMs: Date.now() - startedAt };
 }
-
-test('subscription-backed chat completion returns OpenAI-compatible content and usage', { skip, timeout: 120_000 }, async (context) => {
-  await start();
-  const { body, elapsedMs } = await completion('shim-round-trip-ok');
-  assert.equal(body.model, 'gpt-5.6-luna');
-  assert.equal(body.choices[0].message.content.trim(), 'shim-round-trip-ok');
-  assert.equal(body.usage.total_tokens, body.usage.prompt_tokens + body.usage.completion_tokens);
-  assert.ok(body.usage.prompt_tokens > 0);
-  assert.ok(body.usage.completion_tokens > 0);
-  context.diagnostic(`model=${body.model} usage=${JSON.stringify(body.usage)} latency_ms=${elapsedMs}`);
-});
-
-test('three requests complete concurrently without sharing sessions', { skip, timeout: 180_000 }, async (context) => {
-  await start();
-  const markers = ['shim-parallel-a', 'shim-parallel-b', 'shim-parallel-c'];
-  const results = await Promise.all(markers.map(completion));
-  const bodies = results.map(({ body }) => body);
-  assert.deepEqual(bodies.map((body) => body.choices[0].message.content.trim()), markers);
-  assert.equal(new Set(bodies.map((body) => body.id)).size, 3);
-  context.diagnostic(`latencies_ms=${results.map(({ elapsedMs }) => elapsedMs).join(',')}`);
-});
 
 test('streaming completion emits role, content, finish usage, and DONE', async () => {
   const usage = { input_tokens: 100, cached_input_tokens: 25, output_tokens: 10, reasoning_output_tokens: 5 };
@@ -85,15 +54,6 @@ test('streaming completion emits role, content, finish usage, and DONE', async (
   } finally {
     await new Promise((resolve) => localServer.close(resolve));
   }
-});
-
-test('subscription-backed streaming round trip reports content and usage', { skip, timeout: 120_000 }, async (context) => {
-  await start();
-  const { chunks, elapsedMs } = await streamingCompletion(baseUrl, 'shim-live-stream-ok');
-  assert.equal(chunks.map((chunk) => chunk.choices[0].delta.content ?? '').join('').trim(), 'shim-live-stream-ok');
-  assert.ok(chunks.at(-1).usage.prompt_tokens > 0);
-  assert.ok(chunks.at(-1).usage.completion_tokens > 0);
-  context.diagnostic(`chunks=${chunks.length} usage=${JSON.stringify(chunks.at(-1).usage)} latency_ms=${elapsedMs}`);
 });
 
 test('client abort terminates the codex child process', { timeout: 10_000 }, async () => {
