@@ -222,6 +222,11 @@ float waterNoise(vec2 p) {
   flowUv.y += slowWarp + (crossNoise - 0.5) * 0.045 * waterQuality;
 ${config.openSea ? '  flowUv = vWaterWorld / 20.0 + vec2(waterTime * waterFlowSpeed * 0.08, waterTime * waterFlowSpeed * 0.03);' : ''}
   vec4 baseTexel = texture2D(map, flowUv);
+${config.openSea ? `  // Cross-fade two incommensurate world-space samples of the authored sea.
+  // The old single 20 m repeat stamped identical white crests over the wrecks.
+  vec2 seaUv = mat2(0.8, -0.6, 0.6, 0.8) * vWaterWorld / 31.7
+    + vec2(0.37 - waterTime * waterFlowSpeed * 0.025, 0.19);
+  baseTexel = mix(baseTexel, texture2D(map, seaUv), 0.35 + crossNoise * 0.3);` : ''}
   float riverAcross = mix((vWaterUv.y - 0.5) * ${(config.visualHalfWidth * 2).toFixed(3)}, vWaterWorld.y, waterFord);
   float visualEdgeDist = max(0.0, ${config.visualHalfWidth.toFixed(3)} - abs(riverAcross));
   float riverDist = max(0.0, ${config.riverHalfWidth.toFixed(3)} - abs(riverAcross));
@@ -258,6 +263,10 @@ ${config.bedDepth ? `  float bedMetres = texture2D(waterBedMap, vWaterUv).r * wa
   waterColor = mix(waterColor, vec3(0.92, 0.84, 0.62), bankFoam * 0.58);
   waterColor += vec3(1.0, 0.72, 0.20) * waterGoldGlints(vWaterWorld) * 0.42;
   waterColor = mix(waterColor, baseTexel.rgb, ${(config.textureBlend ?? 0.12).toFixed(3)});
+${config.openSea ? `  // Sparse moving crests keep the surface distinct from the static seabed.
+  // Stillwater inherits its lower rippleStrength; channel shaders are unchanged.
+  float seaCrest = smoothstep(0.88, 0.99, ripple) * smoothstep(0.38, 0.78, crossNoise);
+  waterColor += vec3(0.16, 0.20, 0.19) * seaCrest * ${(config.rippleStrength ?? 1).toFixed(2)};` : ''}
 ${config.bedDepth ? `  // Sculpt-only. The declared band's foam line sits where the SIM says the bank is;
   // over a carved channel the real edge is wherever the bed comes up, so foam is
   // driven by measured depth.

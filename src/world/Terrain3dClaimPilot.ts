@@ -407,9 +407,9 @@ const SCULPT_WATER_DRESSING: Record<string, SculptWaterDressing> = {
 };
 /** The E5 contracts reserve their sea for runtime; the sculpt supplies the visible bed. */
 const DEEPWATER_SEA_DRESSING: SculptWaterDressing = {
-  surface: { kind: 'sea-level', y: 0 }, color: '#99bec7', opacity: 0.72,
+  surface: { kind: 'sea-level', y: 0 }, color: '#99bec7', opacity: 0.56,
   fordSkim: 0, deepMeters: 8, shoreMeters: 0.5, glints: [],
-  rippleStrength: 0.15, textureBlend: 0.35, fordTint: 0, shoreFadeMeters: 4, surfaceLift: false,
+  rippleStrength: 0.15, textureBlend: 0.10, fordTint: 0, shoreFadeMeters: 4, surfaceLift: false,
   emissive: '#0a2a33',
 };
 /** Water fades out over the last stretch before the tile edge instead of cutting. */
@@ -637,6 +637,73 @@ export function bakeHeightGrid(model: THREE.Object3D, metrics: Metrics): (x: num
   };
 }
 
+/** The submerged panorama apron uses the bed's world-scale atlas and lighting. */
+function routeSeaApron(terrain: THREE.Object3D, panorama: THREE.Object3D, bounds: THREE.Box3): number {
+  let source: THREE.MeshStandardMaterial | undefined;
+  terrain.traverse(object => {
+    const mesh = object as THREE.Mesh;
+    if (mesh.isMesh && !Array.isArray(mesh.material) && (mesh.material as THREE.MeshStandardMaterial).map) {
+      source = mesh.material as THREE.MeshStandardMaterial;
+    }
+  });
+  if (!source?.map) return 0;
+  let triangles = 0;
+  panorama.traverse(object => {
+    const mesh = object as THREE.Mesh;
+    if (!mesh.isMesh || Array.isArray(mesh.material)) return;
+    const geometry = mesh.geometry;
+    const position = geometry.getAttribute('position'), uv = geometry.getAttribute('uv');
+    if (!geometry.index || !position || !uv) return;
+    const bed: number[] = [], sky: number[] = [], foreground: number[] = [], bedVertices = new Set<number>();
+    for (let i = 0; i < geometry.index.count; i += 3) {
+      const face = [geometry.index.getX(i), geometry.index.getX(i+1), geometry.index.getX(i+2)];
+      // The factory's sea skirt occupies UV rows .84–.972 after the glTF V flip, wholly below sea level.
+      // Sky/ridge faces retain the authored panorama material and UVs.
+      const isBed = face.every(v => position.getY(v) < 0 && uv.getY(v) >= .83999 && uv.getY(v) <= .97201);
+      // The factory appends wreck silhouettes after the contiguous apron faces.
+      // Keep them in a later draw: opaque material sorting would otherwise draw
+      // the new bed material over masts at the panorama's shared far-plane depth.
+      (isBed ? bed : bed.length ? foreground : sky).push(...face);
+      if (isBed) face.forEach(v => bedVertices.add(v));
+    }
+    if (!bed.length) return;
+    const routed = geometry.clone();
+    const routedUv = routed.getAttribute('uv');
+    for (const v of bedVertices) routedUv.setXY(v,
+      (position.getX(v)-bounds.min.x)/(bounds.max.x-bounds.min.x),
+      (bounds.max.z-position.getZ(v))/(bounds.max.z-bounds.min.z));
+    routedUv.needsUpdate = true;
+    routed.setIndex([...sky,...bed]);
+    routed.clearGroups(); routed.addGroup(0,sky.length,0); routed.addGroup(sky.length,bed.length,1);
+    const material = source!.clone();
+    material.map = source!.map!.clone();
+    material.map.wrapS = material.map.wrapT = THREE.MirroredRepeatWrapping;
+    material.map.needsUpdate = true;
+    material.depthWrite = false;
+    material.onBeforeCompile = shader => {
+      shader.vertexShader = shader.vertexShader.replace('#include <project_vertex>',
+        '#include <project_vertex>\ngl_Position.z = gl_Position.w * 0.999999;');
+    };
+    material.customProgramCacheKey = () => 'sea-bed-apron-v1';
+    mesh.material = [mesh.material,material];
+    mesh.geometry = routed;
+    if (foreground.length) {
+      const foregroundGeometry = geometry.clone();
+      foregroundGeometry.setIndex(foreground);
+      foregroundGeometry.clearGroups();
+      const silhouettes = new THREE.Mesh(foregroundGeometry, mesh.material[0]);
+      silhouettes.name = 'SeaPanoramaSilhouettes';
+      silhouettes.userData.seaPanoramaForeground = true;
+      silhouettes.frustumCulled = false;
+      silhouettes.renderOrder = mesh.renderOrder + 0.01;
+      mesh.add(silhouettes);
+    }
+    geometry.dispose();
+    triangles += bed.length/3;
+  });
+  return triangles;
+}
+
 function preparePanorama(model: THREE.Object3D): void {
   const materials = new Set<THREE.Material>();
   model.traverse((node) => {
@@ -684,7 +751,8 @@ const LANDMARK_EMISSIVE_DEFAULT = 3;
  * cap is 0.6: 4 grades to exactly the ceiling and lands the pair within 3.7 %. The cap, not this
  * number, is what stops the body becoming its own light source.
  */
-const LANDMARK_EMISSIVE: Record<string, number> = { 'the-claim': 1.45, 'e2-hill-mine': 1.45, 'e2-trestle': 1.5, 'e2-pressure-garden': 1.45, 'e2-incline': 1.45, 'e3-blackout-ridge': 4 };
+// Measured signal-map body lifts use the same 0.6 ceiling; unlisted signal maps keep the default.
+const LANDMARK_EMISSIVE: Record<string, number> = { 'the-claim': 1.45, 'e2-hill-mine': 1.45, 'e2-trestle': 1.5, 'e2-pressure-garden': 1.45, 'e2-incline': 1.45, 'e3-blackout-ridge': 4, 'e7-relay-valley': 4, 'e7-echo-canyon': 4 };
 
 /**
  * F-ASTRA-9, THE CALIBRATION (2026-09-05, owner: "Ok, then lets have it fix these findings.").
@@ -1207,6 +1275,73 @@ function mountSpanShadow(
  * Sim-silent: every number below is read from the sim's own declarations or from
  * the baked height grid; nothing is written back.
  */
+/** A narrow waterline taken from the visible hull's actual intersection with the sea. */
+function createHullWaterline(root: THREE.Object3D, waterY: number, time: THREE.IUniform<number>): THREE.Mesh | undefined {
+  root.updateWorldMatrix(true, true);
+  const segments: Array<[THREE.Vector3, THREE.Vector3]> = [];
+  const a = new THREE.Vector3(), b = new THREE.Vector3(), c = new THREE.Vector3();
+  root.traverse((object) => {
+    const mesh = object as THREE.Mesh;
+    if (!mesh.isMesh || mesh.userData.renderOnly) return;
+    const geometry = mesh.geometry;
+    const positions = geometry.getAttribute('position');
+    if (!positions) return;
+    const count = geometry.index?.count ?? positions.count;
+    const vertex = (target: THREE.Vector3, slot: number) => target.fromBufferAttribute(
+      positions, geometry.index ? geometry.index.getX(slot) : slot,
+    ).applyMatrix4(mesh.matrixWorld);
+    for (let i = 0; i < count; i += 3) {
+      vertex(a, i); vertex(b, i + 1); vertex(c, i + 2);
+      const cuts: THREE.Vector3[] = [];
+      for (const [from, to] of [[a,b], [b,c], [c,a]]) {
+        if ((from!.y <= waterY) === (to!.y <= waterY)) continue;
+        cuts.push(from!.clone().lerp(to!, (waterY - from!.y) / (to!.y - from!.y)));
+      }
+      if (cuts.length === 2 && cuts[0]!.distanceToSquared(cuts[1]!) > 1e-8) segments.push([cuts[0]!, cuts[1]!]);
+    }
+  });
+  if (!segments.length) return undefined;
+  const bounds = new THREE.Box3();
+  for (const segment of segments) for (const point of segment) bounds.expandByPoint(point);
+  const center = bounds.getCenter(new THREE.Vector3());
+  const positions: number[] = [], uvs: number[] = [];
+  const emit = (point: THREE.Vector3, edge: number) => {
+    const local = root.worldToLocal(point.clone());
+    positions.push(local.x,local.y,local.z); uvs.push(0,edge);
+  };
+  for (const [from,to] of segments) {
+    const outward = new THREE.Vector3(to.z-from.z,0,from.x-to.x).normalize();
+    const mid = from.clone().add(to).multiplyScalar(.5).sub(center);
+    if (outward.dot(mid) < 0) outward.negate();
+    const innerA = from.clone(), innerB = to.clone();
+    innerA.y = innerB.y = waterY + 0.018;
+    const outerA = innerA.clone().addScaledVector(outward,.34);
+    const outerB = innerB.clone().addScaledVector(outward,.34);
+    emit(innerA,0); emit(outerA,1); emit(innerB,0);
+    emit(innerB,0); emit(outerA,1); emit(outerB,1);
+  }
+  const geometry = new THREE.BufferGeometry();
+  geometry.setAttribute('position',new THREE.Float32BufferAttribute(positions,3));
+  geometry.setAttribute('uv',new THREE.Float32BufferAttribute(uvs,2));
+  const material = new THREE.MeshBasicMaterial({color:'#b5c4bb',transparent:true,opacity:.24,depthWrite:false,side:THREE.DoubleSide});
+  material.forceSinglePass = true;
+  material.onBeforeCompile = shader => {
+    shader.uniforms.hullWaterTime = time;
+    shader.vertexShader=shader.vertexShader.replace('#include <common>','#include <common>\nvarying vec3 vWaterline;')
+      .replace('#include <begin_vertex>','#include <begin_vertex>\nvWaterline = vec3(position.x, position.z, uv.y);');
+    shader.fragmentShader=shader.fragmentShader.replace('#include <common>','#include <common>\nvarying vec3 vWaterline;\nuniform float hullWaterTime;')
+      .replace('#include <color_fragment>',`#include <color_fragment>
+        float wash = sin(vWaterline.x * 0.9 + vWaterline.y * 1.4 + hullWaterTime * 0.5)
+          * sin(vWaterline.y * 2.9 - hullWaterTime * 0.3);
+        diffuseColor.a *= (1.0 - smoothstep(0.0, 1.0, vWaterline.z)) * smoothstep(-0.15, 0.65, wash);`);
+  };
+  material.customProgramCacheKey=()=> 'sea-hull-waterline-v1';
+  const mesh=new THREE.Mesh(geometry,material);
+  mesh.name='SeaHullWaterline';mesh.userData.renderOnly=true;
+  mesh.renderOrder=RenderLayers.groundDecals+0.1;
+  return mesh;
+}
+
 function mountSculptWater(host: Host, heightAt: (x: number, z: number) => number, bounds: THREE.Box3): SculptWater | undefined {
   const contract = REGISTRY[host.contractId]?.contract;
   const sea = contract?.waterSurface?.owner === 'runtime DeepwaterClaimTile'
@@ -1241,9 +1376,9 @@ function mountSculptWater(host: Host, heightAt: (x: number, z: number) => number
     deepMeters: dressing.deepMeters,
     shoreMeters: dressing.shoreMeters,
     color: stillwater ? '#a5c5d0' : dressing.color,
-    opacity: stillwater ? 0.78 : dressing.opacity,
+    opacity: stillwater ? 0.62 : dressing.opacity,
     rippleStrength: stillwater ? 0.04 : dressing.rippleStrength,
-    textureBlend: stillwater ? 0.25 : dressing.textureBlend,
+    textureBlend: stillwater ? 0.06 : dressing.textureBlend,
     fordTint: dressing.fordTint,
     shoreFadeMeters: dressing.shoreFadeMeters,
     surfaceLift: dressing.surfaceLift,
@@ -1272,6 +1407,19 @@ function mountSculptWater(host: Host, heightAt: (x: number, z: number) => number
   });
   let lastFrame = -1;
   let lastAt = 0;
+  const hullNames = sea ? (host.contractId === 'e5-flotilla'
+    ? ['kitchen-scow', 'turret-raft', 'still-room-barge'] : ['ClaimBoatView']) : [];
+  const hullContacts: THREE.Mesh[] = [];
+  const disposeWater = water.dispose;
+  water.dispose = () => {
+    for (const contact of hullContacts) {
+      if (!contact.parent) continue; // The owning hull may already have disposed its children.
+      contact.removeFromParent();
+      disposeObject3D(contact);
+    }
+    delete host.canvas.dataset.terrain3dPilotHullWaterlines;
+    disposeWater();
+  };
   water.mesh.onBeforeRender = (renderer) => {
     const frame = renderer.info.render.frame;
     if (frame === lastFrame) return;
@@ -1280,6 +1428,19 @@ function mountSculptWater(host: Host, heightAt: (x: number, z: number) => number
     lastFrame = frame;
     lastAt = now;
     water.advance(delta);
+    // Attach once the asynchronous visual hull arrives. The parent's existing transform and
+    // visibility carry the line through reanchoring/loss; no simulation position is duplicated.
+    for (let i = hullNames.length - 1; i >= 0; i--) {
+      const hull = host.scene.getObjectByName(hullNames[i]!);
+      if (!hull?.children.length) continue;
+      const contact = createHullWaterline(hull, surfaceY,
+        (water.mesh.material as THREE.Material).userData.waterUniforms.time as THREE.IUniform<number>);
+      hullNames.splice(i, 1);
+      if (contact) { hull.add(contact); hullContacts.push(contact); }
+      host.canvas.dataset.terrain3dPilotHullWaterlines = JSON.stringify(hullContacts.map(mesh => ({
+        hull: mesh.parent?.name, triangles: mesh.geometry.getAttribute('position').count / 3,
+      })));
+    }
   };
   host.scene.add(water.mesh);
   host.canvas.dataset.terrain3dPilotSculptWater = sea ? 'living-sea-quad' : 'living-water-quad';
@@ -2188,6 +2349,9 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       nextPanorama.rotation.set(...mount.rotation);
       nextPanorama.scale.fromArray(mount.scale);
       preparePanorama(nextPanorama);
+      if (selected.contract.waterSurface?.owner === 'runtime DeepwaterClaimTile') {
+        host.canvas.dataset.terrain3dPilotSeaApronTriangles = String(routeSeaApron(nextTerrain, nextPanorama, terrainMetrics.bounds));
+      }
       const nextSkirt = createContinuation(nextTerrain, nextPanorama, heightAt, terrainMetrics.bounds, host.contractId);
       if (host.contractId === 'e3-moth-season' && host.nightMode && nextSkirt) {
         const material = nextSkirt.material as THREE.Material;
@@ -2525,6 +2689,7 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       host.scene.remove(sculptWater.mesh);
       sculptWater.dispose();
       sculptWater = undefined;
+      delete host.canvas.dataset.terrain3dPilotSeaApronTriangles;
       delete host.canvas.dataset.terrain3dPilotSculptWater;
       delete host.canvas.dataset.terrain3dPilotSculptWaterHalfWidth;
     }
