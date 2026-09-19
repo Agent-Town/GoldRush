@@ -314,10 +314,54 @@ function main() {
   const attended = atRisk.filter((r) => !isFactorySide(r.tree));
   say('');
   say(`  ownership : ${attended.length} file(s) attended-owned (OWNER call, F-2561-1) · ${factory.length} FACTORY-SIDE`);
+  let factoryInflight = null;
   if (factory.length) {
     say('  ⚠️  FACTORY-SIDE bytes at risk — these ARE a fire\'s own to salvage:');
     for (const [t, n] of Object.entries(factory.reduce((m, r) => ((m[r.tree] = (m[r.tree] || 0) + 1), m), {})))
       say(`        ${String(n).padStart(5)} file(s)  ${t}`);
+
+    // ---- F-2495-1's SIXTH TEST (the CLOCK), on the one branch of this tool that is
+    // ACTIONABLE. The line above says these bytes are "a fire's own to salvage", and a
+    // lane whose runner is STILL WRITING them is the Mistake #2 direction F-2489-1
+    // forbids. The untracked sibling has carried this test since s2495; this tool never
+    // did — and the reason is written at the F-2602-1 comment below in its own words,
+    // "FACTORY-SIDE is 0 in all three, so this fires on nothing today". The prompt was
+    // built and validated in the one state where it could not fire, which is F-2487-1
+    // exactly (a cure validated only on the instance that provoked it).
+    // MEASURED s2653, the FIRST non-zero FACTORY-SIDE reading this streak has recorded:
+    // a LIVE Astra lane-c run, holder pid ALIVE, newest byte 2.15 s old, and the set
+    // grew 23 -> 24 -> 27 files across three runs of this command in one fire.
+    // Epoch-ms on BOTH sides, and the TIMESTAMP is what is carried, never a derived age
+    // — an age is only as good as its author's clock (F-2567-1).
+    let newest = 0, newestPath = null;
+    for (const r of factory) {
+      try { const m = statSync(r.abs).mtimeMs; if (m > newest) { newest = m; newestPath = r.path; } }
+      catch { /* raced: a live writer can unlink between the walk and the stat */ }
+    }
+    const quietMs = newest ? Date.now() - newest : null;
+    factoryInflight = {
+      newestMtimeIso: newest ? new Date(newest).toISOString() : null,
+      quietMinutes: quietMs === null ? null : quietMs / 60000,
+      newestPath,
+      inFlight: quietMs === null ? true : quietMs < 30 * 60000,
+    };
+    if (newest) {
+      // Declared ALWAYS inside this section, quiet or not (F-2208-1): a line that appears
+      // only on the alarming reading re-creates the ambiguity it removes. The section
+      // itself stays GATED on factory.length (F-2634-1) — an always-on clock line on a
+      // board with nothing salvageable is the noise that decays a declaration.
+      say(`        newest FACTORY-SIDE mtime ${factoryInflight.newestMtimeIso}  (${(quietMs / 86400000).toFixed(2)} days quiet)`);
+      say(`        ${newestPath}`);
+    } else {
+      // Fail toward NOTICING (F-2212-1): every stat raced or refused, which is itself
+      // what a tree under active write looks like. Never score it as quiet.
+      say('        ⓘ  newest mtime UNVERIFIABLE — every stat raced or refused.');
+    }
+    if (factoryInflight.inFlight) {
+      say('  ⏱️  IN FLIGHT — something is still WRITING these. REPORT, DO NOT TOUCH; find');
+      say('      the owner (F-2495-1). Reaching into a live tree to "rescue" bytes is the');
+      say('      Mistake #2 direction F-2489-1 forbids. Ask `lane-usable` who holds it.');
+    }
   }
 
   // F-2602-1: the line above attributes the AT RISK bucket ALONE, and this tool prints
@@ -414,6 +458,10 @@ function main() {
       buckets: Object.fromEntries(Object.entries(buckets).map(([k, v]) => [k, { files: v.length, bytes: bytesOf(v), trees: treesOf(v) }])),
       factorySideAtRisk: factory.length,
       attendedAtRisk: attended.length,
+      // F-2653-1: the clock, carried as a TIMESTAMP so a machine reader does its own
+      // subtraction (F-2567-1). `null` when nothing is factory-side and therefore
+      // nothing is a fire's to salvage.
+      factoryInflight,
       // F-2602-1: ownership for EVERY non-SAFE bucket, not the desk figure alone.
       ownershipByBucket: Object.fromEntries(['AT RISK', 'UNREFERENCED', 'LOCAL-REF-ONLY'].map((k) => {
         const f = buckets[k].filter((r) => isFactorySide(r.tree));

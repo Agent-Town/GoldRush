@@ -11,7 +11,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
-import { mkdtempSync, writeFileSync, mkdirSync, rmSync, readFileSync } from 'node:fs';
+import { mkdtempSync, writeFileSync, mkdirSync, rmSync, readFileSync, utimesSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -299,3 +299,129 @@ test('TEETH: a per-tree read that fails OPEN reds the corpus accounting', () => 
     assert.ok(readFileSync(v, 'utf8').includes('/* control removed */'), 'variant must have applied');
   } finally { rmSync(v, { force: true }); }
 });
+
+// ---------------------------------------------------------------------------
+// F-2653-1 — the CLOCK on the FACTORY-SIDE salvage prompt.
+//
+// The prompt says these bytes are "a fire's own to salvage". Until s2653 this tool had
+// ZERO `mtimeMs` anywhere, so it said that about a lane whose runner was writing into it
+// 2.15 s earlier. Its untracked sibling has carried F-2495-1's sixth test since s2495;
+// the pair is introduced in ONE sentence of §2E and only one member had the test — the
+// F-2634-1 shape, and F-2358-1's rule that a class with N members and one cure CERTIFIES
+// the uncovered member as clean.
+//
+// The arms below are all about the SECTION being gated and the CLOCK being honest inside
+// it. They are deliberately NOT about the bucket maths, which arms 1-11 already own.
+// ---------------------------------------------------------------------------
+
+const HALF_HOUR_MS = 30 * 60_000;
+
+/** Backdate every at-risk subject so the tree reads QUIET rather than in flight. */
+function backdate(work, minutes) {
+  const when = new Date(Date.now() - minutes * 60_000);
+  for (const rel of ['artifacts/probe/evidence.log', 'artifacts/probe/second.log']) {
+    utimesSync(join(work, rel), when, when);
+  }
+  return when;
+}
+
+test('F-2653-1 arm A: a FRESH factory-side at-risk set prints IN FLIGHT and says DO NOT TOUCH',
+  () => withFixture(fixture, ({ work }) => {
+    // The fixture writes its modified bytes moments ago, so this is the live-tree case.
+    const out = runIn(work);
+    // CONTROL first (F-2215-1): the arm is meaningless unless the section it tests exists.
+    assert.match(out, /FACTORY-SIDE bytes at risk/,
+      'control: the fixture must actually reach the factory-side salvage prompt');
+    assert.match(out, /IN FLIGHT — something is still WRITING these/,
+      'a factory-side set written seconds ago must be declared IN FLIGHT');
+    assert.match(out, /REPORT, DO NOT TOUCH/, 'the in-flight arm must name the owed act');
+    assert.match(out, /Mistake #2 direction F-2489-1 forbids/,
+      'the in-flight arm must name the destructive direction it is preventing');
+  }));
+
+test('F-2653-1 arm B: a QUIET factory-side set still prints the mtime, and does NOT cry IN FLIGHT',
+  () => withFixture(fixture, ({ work }) => {
+    backdate(work, 120);
+    const out = runIn(work);
+    assert.match(out, /FACTORY-SIDE bytes at risk/, 'control: the section must still exist');
+    // F-2208-1: the declaration prints on the QUIET reading too. A clock that appears only
+    // when it is alarming re-creates the ambiguity it removes.
+    assert.match(out, /newest FACTORY-SIDE mtime \d{4}-\d{2}-\d{2}T/,
+      'the mtime must be declared even when the tree is quiet');
+    assert.doesNotMatch(out, /IN FLIGHT/,
+      'a two-hour-quiet tree must NOT be reported as in flight');
+  }));
+
+test('F-2653-1 arm C: the clock is a TIMESTAMP in --json, not a derived age alone (F-2567-1)',
+  () => withFixture(fixture, ({ work }) => {
+    const quietAt = backdate(work, 120);
+    const j = JSON.parse(runIn(work, SUBJECT, ['--json']));
+    assert.ok(j.factoryInflight, 'control: --json must carry the clock when anything is factory-side');
+    assert.equal(j.factoryInflight.inFlight, false, 'a backdated tree is not in flight');
+    assert.match(j.factoryInflight.newestMtimeIso, /^\d{4}-\d{2}-\d{2}T.*Z$/,
+      'the timestamp must be carried so a reader can do their OWN subtraction');
+    // The carried timestamp must be the one we actually set, not "now" re-rendered.
+    const drift = Math.abs(Date.parse(j.factoryInflight.newestMtimeIso) - quietAt.getTime());
+    assert.ok(drift < 5_000, `carried mtime must be the file's, not the clock's (drift ${drift} ms)`);
+    assert.ok(j.factoryInflight.quietMinutes > 100, 'quietMinutes must reflect the backdate');
+  }));
+
+test('F-2653-1 arm D (REVERSE CONTROL): an ATTENDED-only board prints no clock at all',
+  () => withFixture(attendedOnlyFixture, ({ work }) => {
+    const out = runIn(work);
+    // Gated on factory.length (F-2634-1). Attended rows are REPORT-only — a fire cannot
+    // salvage them — so a clock there is noise, and noise is how a declaration decays.
+    // This arm is the one that catches the over-general "always-on clock" cure.
+    assert.doesNotMatch(out, /newest FACTORY-SIDE mtime/,
+      'nothing is a fire\'s to salvage here, so no clock may print');
+    assert.doesNotMatch(out, /IN FLIGHT/, 'an attended-only board must not raise the live-tree alarm');
+    const j = JSON.parse(runIn(work, SUBJECT, ['--json']));
+    assert.equal(j.factoryInflight, null, '--json must carry null, not a fabricated clock');
+  }));
+
+test('F-2653-1 arm E: an UNSTATTABLE factory-side set fails toward NOTICING, never toward quiet',
+  () => withFixture(fixture, ({ work }) => {
+    // F-2212-1's polarity. Every stat racing is itself what a tree under active write
+    // looks like, so the honest fallback is IN FLIGHT — never a silent "quiet".
+    const v = variantOf('const m = statSync(r.abs).mtimeMs;', "throw new Error('raced');\n      const m = 0;");
+    try {
+      const out = runIn(work, v);
+      assert.match(out, /newest mtime UNVERIFIABLE/, 'an unstattable set must DECLARE that it is unverifiable');
+      assert.match(out, /IN FLIGHT/, 'an unverifiable clock must fail toward NOTICING, not toward quiet');
+    } finally { rmSync(v, { force: true }); }
+  }));
+
+test('F-2653-1 arm F: the clock reports the NEWEST subject, not the oldest (F-2618-1)',
+  () => withFixture(fixture, ({ work }) => {
+    // F-2618-1's lesson, applied before it can bite: the two extrema look identical once
+    // written down, and only the MAXIMUM answers "is anything still writing this?".
+    //
+    // ⚠️ THE FIXTURE IS THE WHOLE ARM, and my first draft got it wrong: the base fixture
+    // has exactly ONE factory-side AT RISK file (second.log is UNREFERENCED, a different
+    // bucket), and on a one-element set min === max, so the manufactured MIN/MAX swap
+    // reddened NOTHING and this arm was decoration wearing a verdict's clothes (F-2639-1).
+    // A second AT RISK subject is what makes the extremum question reachable at all.
+    writeFileSync(join(work, 'artifacts', 'probe', 'third.log'), 'committed contents 3\n');
+    git(['add', 'artifacts/probe/third.log'], work);
+    git(['commit', '-qm', 'third'], work);
+    writeFileSync(join(work, 'artifacts', 'probe', 'third.log'), 'MODIFIED, never hashed either\n');
+
+    const old = new Date(Date.now() - 600 * 60_000);
+    const fresh = new Date(Date.now() - 5 * 60_000);
+    utimesSync(join(work, 'artifacts/probe/third.log'), old, old);
+    utimesSync(join(work, 'artifacts/probe/evidence.log'), fresh, fresh);
+
+    const j = JSON.parse(runIn(work, SUBJECT, ['--json']));
+    assert.ok(j.factoryInflight, 'control: the clock must exist on a factory-side board');
+    // CONTROL (F-2215-1): both files must really be in the AT RISK bucket, or the spread
+    // this arm measures does not exist and the assertion below passes vacuously.
+    assert.ok(j.buckets['AT RISK'].files >= 2,
+      `control: need >=2 at-risk subjects for an extremum to differ, got ${j.buckets['AT RISK'].files}`);
+    const drift = Math.abs(Date.parse(j.factoryInflight.newestMtimeIso) - fresh.getTime());
+    assert.ok(drift < 5_000,
+      `the clock must track the NEWEST subject (drift ${drift} ms — a MINIMUM would read 600 min)`);
+    assert.equal(j.factoryInflight.inFlight, true,
+      'the newest subject is five minutes old, so the board IS in flight');
+    assert.ok(j.factoryInflight.quietMinutes < HALF_HOUR_MS / 60_000,
+      'quietMinutes must be under the threshold that decides the alarm');
+  }));
