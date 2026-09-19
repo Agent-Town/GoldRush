@@ -15,8 +15,10 @@
  *     cannot be verified, so the queue served them.
  *   • the live board blob for e2-incline holds exactly two rows today, neither of them heat 14's.
  *
- * THE REAL MECHANISM, and it is a deliberate line of code: `functions/api/standings.ts` lines
- * 368-375 (landed by `fa8b096f3`, 2026-09-04). When the assayer returns `verified`, the door looks
+ * THE REAL MECHANISM, and it is a deliberate line of code: `functions/api/standings.ts:368-375`
+ * AS IT STOOD BEFORE THIS CURE (landed by `fa8b096f3`, 2026-09-04; on the curing branch the site
+ * is :368-395, and the deleted coordinates are recoverable from that commit, not from today's
+ * file). When the assayer returns `verified`, the door looks
  * for another VERIFIED row with the same `standingOwnerKey` and, if that incumbent wins
  * `compareScores`, writes the board back as `rows.filter((candidate) => candidate !== row)` — the
  * row it has just verified is DELETED from storage. `compareScores` falls through to `submittedAt`,
@@ -24,7 +26,8 @@
  *
  * Two things make that indefensible rather than merely surprising:
  *   1. "one standing per rider" is ALREADY enforced where it is published — `rankedRows` dedupes by
- *      `standingOwnerKey` (standings.ts:1110-1115), landed in the same commit. The write-side
+ *      `standingOwnerKey` (`standings.ts` `rankedRows`, the owner `Set` filter after the sort),
+ *      landed in the same commit. The write-side
  *      deletion buys no board change at all; it only destroys the losing receipt.
  *   2. `compareScores` compares SCORES and knows nothing about rankability. Heat 14's incumbents
  *      were era-5 rows that `isRankedRow` can never rank, so the county threw away the only row on
