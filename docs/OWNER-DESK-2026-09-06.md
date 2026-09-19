@@ -1,4 +1,5 @@
 # The owner's desk, expanded (attended, 2026-09-06 evening)
+> ⓘ 2026-09-19: the LIVE desk is `docs/OWNER-DESK-2026-09-19.md` (every open decision in one register, with recommendations). This file stays as the record of its rulings.
 
 Every item below needs either a word from Robin or ten minutes of his hands. Everything a fire can do alone is in §B so it stays visible without asking for anything. Struck items are in §C so nobody re-asks them.
 
@@ -146,4 +147,4 @@ F-E10S4-2 (`twist.emberShore` still in `DECLARED_INERT_PATHS`, one line), F-E10S
 
 
 ### A22. Astra's account registry — the sign-in word (added 2026-09-19)
-Astra's atomic account registry (the Durable Object worker, its wrangler config and the five-step readiness doc) exists only uncommitted in its worktree; `npm run test:accounts` on main is red waiting for it (P1 F-CR0908-1, "Not before an owner word (it touches sign-in)"). `tasks/sol-account-registry-land.md` is authored for Astra: it lands the code behind the CLOSED gate (no deploy, no migration, no secret — sign-in and saves behave exactly as today, proved by a manufactured test) and writes your deploy-day checklist. **Question:** may Astra land it now? (Recommendation: yes — it is your Astra subscription, the gate stays closed, and the deploy day remains a separate word.)
+Astra's atomic account registry (the Durable Object worker, its wrangler config and the five-step readiness doc) exists only uncommitted in its worktree; `npm run test:accounts` on main is red waiting for it (P1 F-CR0908-1, "Not before an owner word (it touches sign-in)"). `tasks/sol-account-registry-land.md` is authored for Astra: it lands the code behind the CLOSED gate (no deploy, no migration, no secret — sign-in and saves behave exactly as today, proved by a manufactured test) and writes your deploy-day checklist. **RULED 2026-09-19, owner verbatim: "And also lets do the account registry."** → queued to lane-b (Astra) the same minute; the gate stays closed; the deploy day remains a separate word. Also ruled: "Yes, July-era sol branches are obsolete." (the sol/* branches of 2026-07-11..18 are archive, never re-queued) and "Also the open findings." (F-ASTRA-2 and F-ASTRA-6 go to Astra too).

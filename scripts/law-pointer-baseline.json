@@ -360,11 +360,17 @@
       "fingerprint": "5df9337b3bb3",
       "excerpt": "🔺 **ONE OWNER CHOICE in this digest, and it is a good-news one.** The county's first standing means"
     },
-    "scripts/fire.md -> marketing/outbox/gazette-queue.md:2032": {
+    "scripts/fire.md -> marketing/outbox/gazette-queue.md:2036": {
       "target": "marketing/outbox/gazette-queue.md",
-      "line": 2032,
+      "line": 2036,
       "fingerprint": "d7293afa016e",
       "excerpt": "- merge: `e7bb88cf` (upgrade-clock, the pick clock) · shots: `reviews/shots-upgrade-clock/{desktop,m"
+    },
+    "scripts/fire.md -> gazette-backfill-sweep.mjs:89": {
+      "target": "scripts/gazette-backfill-sweep.mjs",
+      "line": 89,
+      "fingerprint": "7995b75a9e4e",
+      "excerpt": "export const PLAYER_PREFIXES = ['src/', 'assets/', 'public/', 'functions/', 'site/', 'index.html']"
     },
     "scripts/fire.md -> public/skill.md:367": {
       "target": "public/skill.md",
@@ -438,15 +444,15 @@
       "fingerprint": "837297d35281",
       "excerpt": ".sort((a, b) => a.opensAt.localeCompare(b.opensAt));"
     },
-    "scripts/fire.md -> functions/api/standings.ts:492": {
+    "scripts/fire.md -> functions/api/standings.ts:534": {
       "target": "functions/api/standings.ts",
-      "line": 492,
+      "line": 534,
       "fingerprint": "c5cea6199b80",
       "excerpt": "const rotation = ROTATIONS.find(({ id }) => id === url.searchParams.get('rotation'));"
     },
-    "scripts/fire.md -> functions/api/standings.ts:1188": {
+    "scripts/fire.md -> functions/api/standings.ts:1230": {
       "target": "functions/api/standings.ts",
-      "line": 1188,
+      "line": 1230,
       "fingerprint": "e8725d260828",
       "excerpt": "function currentOrLatestRotation(now: number): Rotation | null {"
     },
@@ -468,9 +474,9 @@
       "fingerprint": "fb9bf04870e3",
       "excerpt": "const SOURCE = '/opt/goldrush-ledger/ledger.db';"
     },
-    "scripts/fire.md -> functions/api/_accounts.ts:87": {
+    "scripts/fire.md -> functions/api/_accounts.ts:96": {
       "target": "functions/api/_accounts.ts",
-      "line": 87,
+      "line": 96,
       "fingerprint": "9c12aa6bae4b",
       "excerpt": "if (!env.ACCOUNTS) return error(cors, 503, 'sign_in_not_enabled', 'sign-in not yet enabled');"
     },

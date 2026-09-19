@@ -197,7 +197,7 @@ const ASSAY_ROW_ID = /^[a-f0-9]{32}:[1-4]:\d{1,16}:[a-f0-9]{64}$/;
 const ASSAY_VERDICT_KEYS = new Set(['locator', 'verdict', 'replayedHash', 'reason', 'securedSnapshot']);
 const SECURED_SNAPSHOT_KEYS = new Set(['waves', 'timeAlive', 'gold']);
 const ASSAY_LOCATOR_KEYS = new Set(['epochId', 'contractId', 'tapeId', 'rowId']);
-const REASSAY_KEYS = new Set(['epochId', 'contractId', 'reason', 'includeRetired']);
+const REASSAY_KEYS = new Set(['epochId', 'contractId', 'reason', 'includeRetired', 'storedUnassayed']);
 const LINEAGE_KEYS = new Set(['reason', 'requeuedAt']);
 const MAX_LINEAGE_REASON_LENGTH = 256;
 const DRILL_YARD_CONTRACT_ID = 'e1-drill-yard';
@@ -365,15 +365,34 @@ export async function onRequestAssayVerdict(context: StandingsContext): Promise<
     // A row that replays again is current again: the mark is spent, and `submittedAt` — the row's
     // first-secure date — was never touched by this path, so the standing keeps the day it earned.
     if (verdictValue === 'verified') delete row.lineage;
-    const competing = verdictValue === 'verified'
-      ? rows.find((candidate) => candidate !== row && sameStandingOwner(candidate, row) && candidate.assay === 'verified')
-      : undefined;
-    const verifiedRows = competing && compareScores(competing, row, locator.contractId) < 0
-      ? rows.filter((candidate) => candidate !== row)
-      : verdictValue === 'verified'
-        ? rows.filter((candidate) => candidate === row || !sameStandingOwner(candidate, row) || candidate.assay !== 'verified')
-        : rows;
-    const next = retainUnranked(verifiedRows, locator.contractId);
+    // ONE STANDING PER RIDER IS A PUBLISHING RULE, NOT A DELETION (F-HEAT14-6, 2026-09-19).
+    //
+    // This site used to enforce "one standing per rider" by DELETING a row from storage. When a
+    // verdict came back `verified` it looked for another verified row with the same
+    // `standingOwnerKey` and wrote the board back as either `rows.filter((c) => c !== row)` — the
+    // row it had just verified, gone — or the mirror, the incumbent gone. Both arms landed in
+    // `fa8b096f3` (2026-09-04) alongside the owner dedupe in `rankedRows`.
+    //
+    // WHAT IT COST. Heat 14 rode 37 boards, secured 31, and the county kept 18. Twelve accepted
+    // submissions answered `{"ok":true,"stored":true,"rank":1,"decidedBy":"crown"}` and then
+    // `assay_not_found` for ever. The assayer's journal shows it VERIFIED nine of them by name
+    // (e2-incline 2026-09-18T00:56:41Z through e10-last-claim 07:21:11Z), so nothing was lost on
+    // the way in: the door deleted each one in the same request that verified it. The receipts
+    // measure both arms exactly — of the 18 boards that gained a standing 13 lost exactly one
+    // retired reel, and all 12 that dropped held their retired count unchanged.
+    //
+    // WHY DELETION WAS NEVER NEEDED. `rankedRows` (below) already dedupes by `standingOwnerKey`
+    // after sorting, so the published board shows one row per rider whatever is in storage. The
+    // write-side deletion bought no board change at all; it only destroyed the losing receipt.
+    // Worse, `compareScores` weighs SCORES and knows nothing about rankability, so an era-5 row
+    // that `isRankedRow` can never publish still won — which is why e2-incline's board is empty
+    // today while a 200-gold era-5 reel and an 88-gold era-5 reel sit in its blob.
+    //
+    // So the verdict path may re-rank a board and may never shrink it. `retainUnranked` keeps the
+    // ranked survivors plus every other row up to MAX_ROWS, exactly as it does on the POST path,
+    // and the beaten receipt stays readable at `?verdict=<reel id>` — honestly unranked, never
+    // absent. Deleting an honest standing is a retention-law violation, not a tidy-up.
+    const next = retainUnranked(rows, locator.contractId);
     await kv.put(boardKey(locator.epochId, locator.contractId), JSON.stringify(next));
     await syncAssayBoardIndex(kv, locator.epochId, locator.contractId, next);
     // The worker logs the verdict IT reached; this answers with the verdict the county RECORDED,
@@ -398,10 +417,11 @@ export async function onRequestStandingsReassay(context: StandingsContext): Prom
   return assayRequest(context, async (cors) => {
     if (context.request.method !== 'POST') return error(cors, 405, 'method_not_allowed', 'POST only');
     const body = await readJson(context.request);
-    const { epochId, contractId, reason, includeRetired } = body;
+    const { epochId, contractId, reason, includeRetired, storedUnassayed } = body;
     if (!hasOnlyKeys(body, REASSAY_KEYS) || typeof epochId !== 'string' || typeof contractId !== 'string'
       || typeof reason !== 'string' || reason.length === 0 || reason.length > MAX_LINEAGE_REASON_LENGTH
       || (includeRetired !== undefined && typeof includeRetired !== 'boolean')
+      || (storedUnassayed !== undefined && typeof storedUnassayed !== 'boolean')
       || !knownContract(epochId, contractId)) {
       return error(cors, 400, 'bad_reassay', 'Re-assay request not accepted.');
     }
@@ -409,6 +429,28 @@ export async function onRequestStandingsReassay(context: StandingsContext): Prom
     if (!kv) return error(cors, 503, 'board_unavailable', 'The county book is unavailable.');
     const rows = await readBoard(kv, epochId, contractId);
     const requeuedAt = Date.now();
+    // THE STORED-UNASSAYED SWEEP (F-HEAT14-6, 2026-09-19). The other way a standing goes quiet:
+    // the row is stored and `pending`, but `assay-queue-index` has no entry for it, so the assayer
+    // is never told it exists. That is a real, measured condition — the index is ONE KV key that
+    // every accepted submission read-modify-writes, and an eventually-consistent store loses
+    // entries when two POSTs land inside one propagation window (reproduced deterministically in
+    // `scripts/test-standings.mjs` `checkAssayIndexRace`). `onRequestAssayQueue` heals it on its
+    // own when the envelope ages past ASSAY_INDEX_MAX_AGE_MS; this is the same repair on demand,
+    // for an operator who has just watched a heat and does not want to wait for a sweep.
+    //
+    // It is deliberately the SMALLEST possible act: it writes the index and NOTHING else. No row
+    // is rewritten, so `submittedAt` — the row's first-secure date — is untouched by construction;
+    // no lineage mark is invented, because a row that was always pending was never re-queued by a
+    // composition change; and `requeued` counts only the locators that were actually missing, so a
+    // second call answers 0 rather than claiming the same repair twice.
+    if (storedUnassayed === true) {
+      const pending = rows.filter((row) => row.assay === 'pending' && row.tape !== undefined);
+      const index = parseAssayIndex(await kv.get(ASSAY_QUEUE_INDEX_KEY));
+      const indexed = new Set((index?.locators ?? []).map(locatorId));
+      const missing = pending.filter((row) => !indexed.has(locatorId(assayLocator(epochId, contractId, row))));
+      if (missing.length > 0) await syncAssayBoardIndex(kv, epochId, contractId, rows);
+      return json(cors, { ok: true, epochId, contractId, requeued: missing.length, requeuedAt });
+    }
     const requeued = rows.filter((row) => (row.assay === 'verified' || (includeRetired === true && row.assay === 'retired')) && row.tape !== undefined);
     for (const row of requeued) {
       // `submittedAt` (the first-secure date) is left exactly as it is. The SCORE is restored to the
