@@ -5328,8 +5328,8 @@
               "id": "sol-account-registry-land",
               "title": "Astra finishes its atomic account registry (P1 F-CR0908-1): the worker, config and ops doc that sit uncommitted in its worktree, landed behind the closed readiness gate; test:accounts green",
               "status": "merged",
-      "mergeHash": "fa185e61147e6bdbcce72ccc5facc856faac7eb9",
-      "drainNotes": "s2642 drain: gated on a detached trial merge. tsc rc=0, build rc=0, test:accounts 43 KV + 43 SQLite (structurally RED on main - the worker file is absent there), test:mp 466, test:stats 87+320+320+26, review-account-creation 3/3, closed-gate proof green with BOTH manufactured mutants red (verified by the drain, not inherited). Landed behind a CLOSED gate: the wrangler.toml Pages binding ships commented and ACCOUNT_REGISTRY_SCOPE is unset, so nothing deploys or migrates. Deploy day is owner-only - F-2642-3 on the desk. Review: reviews/sol-account-registry-land.md",
+              "mergeHash": "fa185e61147e6bdbcce72ccc5facc856faac7eb9",
+              "drainNotes": "s2642 drain: gated on a detached trial merge. tsc rc=0, build rc=0, test:accounts 43 KV + 43 SQLite (structurally RED on main - the worker file is absent there), test:mp 466, test:stats 87+320+320+26, review-account-creation 3/3, closed-gate proof green with BOTH manufactured mutants red (verified by the drain, not inherited). Landed behind a CLOSED gate: the wrangler.toml Pages binding ships commented and ACCOUNT_REGISTRY_SCOPE is unset, so nothing deploys or migrates. Deploy day is owner-only - F-2642-3 on the desk. Review: reviews/sol-account-registry-land.md",
               "taskFile": "sol-account-registry-land.md",
               "registeredBy": "attended 2026-09-19",
               "lane": "lane-b (Codex gpt-6-astra xhigh) — queued 2026-09-19 on the owner word \"And also lets do the account registry.\""
@@ -5345,10 +5345,14 @@
             {
               "id": "assay-index-drop-f-heat14-6",
               "title": "F-HEAT14-6 (P1): 12 of 31 accepted heat-14 submissions vanished from the assay index — mechanism, cure, a recovery verb for stored-unassayed rows; F-HEAT14-7 options reported, not changed",
-              "status": "building",
+              "status": "merged",
               "taskFile": "assay-index-drop-f-heat14-6.md",
               "registeredBy": "attended 2026-09-19",
-              "implementer": "Claude Opus 5, scratch wt-assay, branch fix/assay-index-drop, port 5306; droplet READ-ONLY"
+              "mergeHash": "846f3491436cac4621405b6b863a2bc2943b3b37",
+              "mergedAt": "2026-09-19",
+              "review": "reviews/assay-index-drop-f-heat14-6.md",
+              "drainedBy": "attended 2026-09-19",
+              "note": "F-HEAT14-6 cured: the verdict path deleted a rider's other verified row (rankability ignored); guard 1/6 → 6/6; eleven reels re-delivered after deploy; F-HEAT14-7 reported as three options"
             },
             {
               "id": "battery-robustness-f-poc-8",
