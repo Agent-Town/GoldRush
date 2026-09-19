@@ -19,7 +19,7 @@ for (const map of ['the-claim', 'town', 'e1-dry-gulch', 'e1-twin-banks']) {
       localStorage.setItem(story, '1');
       localStorage.setItem(town, 'Quartz Hill');
       if (map !== 'town') sessionStorage.setItem('gr.contract.launch.v1', map);
-    }, { map, profile: PROFILE_KEY, scores: SCOREBOARD_KEY, guide: profileDataKey('robin', FIRST_CLAIM_DONE_KEY), story: profileDataKey('robin', STORY_FIRST_BOOT_KEY), town: profileDataKey('robin', TOWN_NAME_KEY) });
+    }, { map, profile: PROFILE_KEY, scores: profileDataKey('robin', SCOREBOARD_KEY), guide: profileDataKey('robin', FIRST_CLAIM_DONE_KEY), story: profileDataKey('robin', STORY_FIRST_BOOT_KEY), town: profileDataKey('robin', TOWN_NAME_KEY) });
     await page.goto(map === 'town' ? '/' : `/?contract=${map}`);
     if (map === 'town') {
       await page.getByTestId('start-menu-enter-town').click();
