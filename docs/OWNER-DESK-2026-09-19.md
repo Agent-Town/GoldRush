@@ -26,7 +26,7 @@
 ### A14 — the Regatta boat spec: four questions
 **What.** `specs/agent-play/e5-regatta-steerable-boat.md` (DRAFT): the boat is the racing body, both species steer it with the same move intent, the beacons become buoys. Astra is refreshing the boat's look in lane-c right now (art only); the steering is sim work that waits on this.
 **Questions and recommendations.** Q1 feel: turns in about 2 s, crosses the course in about 60 s, fast water ×1.5 (recommended) — or slower and heavier. Q2 leaving the boat mid-race forfeits the race (recommended) — or the hero may walk the shore. Q3 the buoys stay at Astra's five beacons (recommended) — or hug the fast-water zone. Q4 the name stays "the Claim-Boat" (recommended) — or a Regatta name.
-**One "A14 ok" ratifies all four; then slice 1 (the steerable body, sim + browser, parity-guarded) is authorable.** *Source: the spec's foot.*
+**RULED 2026-09-20, verbatim: "A14 - do it"** (the four recommendations ratified 2026-09-19). Slice 1 launched as `e5-regatta-boat-01` (Opus, scratch worktree, port 5321). *Source: the spec's foot.*
 
 ### A1 — the Orbital air wall on the Eclipse
 **What.** The Mare Claim's cure (a regolith count in a window) is measured to fit the Eclipse (`regolithRequired: 4, regolithWindowWaves: 4`); the Far Side and Low Orbit are gated by crossings instead and would need their own lever and prover.
@@ -88,7 +88,8 @@
 **Ruled.** (a) wake it — four sites in `src/entities/pools.ts`, the reel map, and the slot's `walk8` disabled so the animator takes the new `walk4` (F-NCS-6); EXECUTED 2026-09-19 (F-NCS-5): parked at the drain — the spec re-point did not read green; one more look owed.
 
 ### F-ASTRA-2 — promoting the 3D hero
-**What.** Not yet a decision: Astra is bringing the hero GLB to its own bar as a pilot (lane-a). When it lands, you rule from the comparison board against the sprite heroine.
+**What.** Astra brought the hero GLB to its own bar (`assets/pilots/hero-3d/**`, 42.67 → 5.33 MiB); the board is `artifacts/sol/open-findings/hero-eight-heading-board.png`.
+**RULED 2026-09-20, verbatim: "no, keep it in sprites, the 3D is not good enough for me archive the pilot".** The sprite heroine stays; the pilot is archived (`archive/hero-3d-pilot`), its files left in place until the A3 art-store split (a guard reads its export sidecar). Closed.
 
 ### B2 — the lighting veto
 **What.** Sun-lit landmarks (instead of self-lit) have stood since 2026-09-05; `?lighting=legacy` on any landmark map shows the old look for comparison.
@@ -108,6 +109,7 @@
 ### A3 — the repository shrink, the swap
 **What.** Ruled 2026-09-06 ("ok, good plan"). The archive and the art store are complete; the rewrite of the working repo needs one quiet evening: every clone and worktree recut, the fire and the runner re-pointed, a day of fires on the new name before the swap.
 **Recommendation — RULED 2026-09-19.** After this week's jobs drain. Name an evening.
+**RULED 2026-09-20, verbatim: "ok, rewrite it".** The non-disruptive phases (archive catch-up, art-store refresh, the filtered repo pushed to a new name) run now; the swap waits for a quiet factory window — the corrections campaign holds lane-c until its list is empty.
 
 ### F-2355-2 — the droplet still runs its old edge-watch
 **What.** The cure is committed but the box executes its own checkout; until it pulls, it mails DARK for a slow-but-200 landing page every five minutes.
@@ -128,7 +130,7 @@
 
 ### B1 — the device verdict rows (your phone)
 **What.** No `docs/release/verdict-<build>.md` exists yet, so every deploy prints "device verdict WARN". The rows: iPhone first usable frame, sustained play to wave 8, Android under combat to wave 10+, the Lantern reel on the phone, one line each.
-**Recommendation — RULED 2026-09-19.** Ten minutes when you next play; the template is `docs/release/RELEASE-VERDICT.md`.
+**Recommendation — RULED 2026-09-19.** Ten minutes when you next play; the template is `docs/release/RELEASE-VERDICT.md`. *Owner 2026-09-20: "B1 - not done yet" — still his.*
 
 ---
 
