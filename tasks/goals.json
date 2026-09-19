@@ -5327,12 +5327,42 @@
             {
               "id": "sol-account-registry-land",
               "title": "Astra finishes its atomic account registry (P1 F-CR0908-1): the worker, config and ops doc that sit uncommitted in its worktree, landed behind the closed readiness gate; test:accounts green",
-              "status": "blocked",
-              "blockClass": "owner-fork",
-              "blockedReason": "HELD FOR AN OWNER WORD: it touches sign-in (BACKLOG P1 F-CR0908-1 \"Not before an owner word\"). Authored attended 2026-09-19 so the word can queue it the same minute; landing the code deploys nothing — the deploy day is a separate owner-run checklist the task writes.",
+              "status": "queued",
               "taskFile": "sol-account-registry-land.md",
               "registeredBy": "attended 2026-09-19",
-              "lane": "lane-b (Codex gpt-6-astra xhigh), when the word comes"
+              "lane": "lane-b (Codex gpt-6-astra xhigh) — queued 2026-09-19 on the owner word \"And also lets do the account registry.\""
+            },
+            {
+              "id": "needs-cells-codex-strips-land",
+              "title": "Owner 2026-09-19 \"Anthropic was reset already\": process and wire the seven Codex strips (the Steam Wrecker south-east, the Claim Jumper six facings) through pipeline v2; find what wakes the dormant jumper slot (F-NCB-3)",
+              "status": "building",
+              "taskFile": "needs-cells-codex-strips-land.md",
+              "registeredBy": "attended 2026-09-19",
+              "implementer": "Claude Opus 5, scratch wt-strips, branch art/needs-cells-codex-strips-land, port 5305"
+            },
+            {
+              "id": "assay-index-drop-f-heat14-6",
+              "title": "F-HEAT14-6 (P1): 12 of 31 accepted heat-14 submissions vanished from the assay index — mechanism, cure, a recovery verb for stored-unassayed rows; F-HEAT14-7 options reported, not changed",
+              "status": "building",
+              "taskFile": "assay-index-drop-f-heat14-6.md",
+              "registeredBy": "attended 2026-09-19",
+              "implementer": "Claude Opus 5, scratch wt-assay, branch fix/assay-index-drop, port 5306; droplet READ-ONLY"
+            },
+            {
+              "id": "battery-robustness-f-poc-8",
+              "title": "F-POC-8 / F-NCB-10 / F-NCB-9: a wall-clock watchdog for the node-guards battery, the vite-teardown native crash cured at its root (upgrade or teardown order, measured), watch:null across the 64 vite-opening guards",
+              "status": "building",
+              "taskFile": "battery-robustness-f-poc-8.md",
+              "registeredBy": "attended 2026-09-19",
+              "implementer": "Claude Opus 5, scratch wt-battery, branch fix/battery-robustness, port 5307"
+            },
+            {
+              "id": "sol-open-findings-astra",
+              "title": "Owner 2026-09-19 \"Also the open findings.\": Astra closes the two open findings of its own 3D review — F-ASTRA-6 (batch opaque repetitions, preserve transparent ordering, census first) and F-ASTRA-2 (the hero GLB brought to its own bar as a pilot, not promoted)",
+              "status": "queued",
+              "taskFile": "sol-open-findings-astra.md",
+              "registeredBy": "attended 2026-09-19",
+              "lane": "lane-a (Codex gpt-6-astra xhigh)"
             }
           ]
         }
