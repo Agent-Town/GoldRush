@@ -387,6 +387,14 @@ const SCULPT_WATER_DRESSING: Record<string, SculptWaterDressing> = {
     shoreMeters: 0.15,
     glints: 'harvest',
   },
+  // Night Shift's channel used only its dark bed paint. Keep the sculpt and the
+  // declared ford; a restrained, sun-lit surface supplies moving water detail.
+  // No emission: the unlit river must still become dark during the night phase.
+  'e1-night-shift': {
+    surface: { kind: 'channel-fill', fill: 0.42 }, color: '#899b9b', opacity: 0.64,
+    fordSkim: 0.08, deepMeters: 0.5, shoreMeters: 0.15,
+    glints: [], rippleStrength: 0.32, textureBlend: 0.06, fordTint: 0.3,
+  },
   // THE FLOODED GALLERY. Measured, not guessed (logs/session-scratch/e2-hill-mine-band-scan.mjs):
   // the atlas paints the bed near-black across EXACTLY the sim's declared river band — luma 16-26
   // for z in [-5.5, 5.5] against 49-77 on the ochre either side — over a floor that is dead flat at
@@ -1920,13 +1928,13 @@ if (terrain3dGradeAmount > 0.001) {
 `;
 
 function hidePaintedGround(host: Host): HiddenRelief[] { return hidePaintedRelief(host); }
-function applyNightTerrainPools(model: THREE.Object3D, host: Host): void {
+function applyNightTerrainPools(model: THREE.Object3D, host: Host, opaqueLandmark = false): void {
   // Carried pools use the rig's steel-blue family at the prior ground tint's luminance.
   const materials = new Set<THREE.Material>();
   model.traverse((node) => {
     const mesh = node as THREE.Mesh;
     if (!mesh.isMesh) return;
-    mesh.renderOrder = 0.1;
+    if (!opaqueLandmark) mesh.renderOrder = 0.1;
     for (const material of Array.isArray(mesh.material) ? mesh.material : [mesh.material]) materials.add(material);
   });
   const poolSources = Array.from({ length: NIGHT_POOL_SHADER_CAP }, () => new THREE.Vector4());
@@ -1959,13 +1967,17 @@ function applyNightTerrainPools(model: THREE.Object3D, host: Host): void {
       const source = index < poolCount.value ? poolCandidates[index] : undefined;
       poolSources[index]!.set(source?.x ?? 0, source?.z ?? 0, source?.radius ?? 0, isWarmPool(source) ? 1 : 0);
     }
-    host.canvas.dataset.terrain3dPilotNightPoolSources = String(poolCount.value);
+    if (!opaqueLandmark) host.canvas.dataset.terrain3dPilotNightPoolSources = String(poolCount.value);
   };
   for (const material of materials) {
     if (!(material as THREE.MeshStandardMaterial).isMeshStandardMaterial) continue;
     const compile = material.onBeforeCompile.bind(material);
-    material.transparent = true;
-    material.depthWrite = false;
+    // The same physical pools can illuminate a yard standing in them, without
+    // inheriting terrain's transparent compositing or disabling its depth.
+    if (!opaqueLandmark) {
+      material.transparent = true;
+      material.depthWrite = false;
+    }
     material.onBeforeCompile = (shader, renderer) => {
       compile(shader, renderer);
       shader.uniforms.uTerrain3dNightPoolCount = poolCount;
@@ -2015,8 +2027,10 @@ function applyNightTerrainPools(model: THREE.Object3D, host: Host): void {
     const mesh = node as THREE.Mesh;
     if (mesh.isMesh) mesh.onBeforeRender = updateNightPools;
   });
-  host.canvas.dataset.terrain3dPilotNightPools = 'world-shader';
-  host.canvas.dataset.terrain3dPilotNightPoolSources = '0';
+  if (!opaqueLandmark) {
+    host.canvas.dataset.terrain3dPilotNightPools = 'world-shader';
+    host.canvas.dataset.terrain3dPilotNightPoolSources = '0';
+  }
 }
 
 function nightPoolPriority(source: LightSource): number {
@@ -2484,6 +2498,16 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
               : (LANDMARK_PAINT[host.contractId]?.[mount.id]
                 ?? (contractIntensity !== undefined ? { intensity: contractIntensity, tint: DEFAULT_LANDMARK_PAINT.tint } : DEFAULT_LANDMARK_PAINT));
             keepLandmarkPaintReadable(model, paint, host.contractId);
+          } else if (mount.id === 'lampworks_yard') {
+            // Light-reactive paint, not whole-body emission. The cold seven
+            // gameplay lanterns retain their real wrecked/relit states.
+            model.traverse((node) => {
+              const mesh = node as THREE.Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>;
+              if (mesh.isMesh && !Array.isArray(mesh.material) && mesh.material.isMeshStandardMaterial) {
+                mesh.material.color.multiplyScalar(1.65);
+              }
+            });
+            applyNightTerrainPools(model, host, true);
           }
           if (host.contractId === 'e1-baron' && BARON_SWAY_AMPLITUDE[mount.id] !== undefined) {
             installBannerSway(model, BARON_SWAY_AMPLITUDE[mount.id]!);
