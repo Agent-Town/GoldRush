@@ -116,3 +116,10 @@ Nothing to decide. No map moved, so `reviews/sol-map-art-current-status-20260909
 and correct, and the 23 pending verdict rows are untouched. The E5 water complaints from playtest
 are **not fixed** — a candidate that improves four of them exists and is preserved, and it is blocked
 on baseline gate failures that predate it.
+
+
+## Attended addendum (2026-09-19, after the s2643 drain)
+- The three candidate files Astra preserved under the untracked `_raw/` were copied into tracked evidence at `artifacts/sol/map-art-campaign-2/candidate-e5-20260919/` (`7bd4b250b`, in this merge): `src/world/Water.ts`, the render edit of `src/world/Terrain3dClaimPilot.ts`, `e2e/e5-sea-contact.spec.ts`.
+- **F-MAC2-1 (inventory):** the seven E5 fixture assertions that reproduce on the exact base (Astra's own attribution table) are recorded in `logs/suite-red-inventory.md`; era-6 pin rot in `e5-flotilla-hulls`, `e5-regatta-race`, `e5-stillwater-noise`; re-point with cause owed, fire-authorable.
+- **F-MAC2-2 (master defect, cured):** the first master's stop rule plus "the map's own spec(s) green" made a stale pin a wall. The second run `tasks/sol-map-art-campaign-2b.md` (queued lane-c) states the known-red law, makes the full node-guard battery the drain's, hydrates the two raw atlases the lane worktree lacked (**F-MAC2-3**), and orders the preserved candidate re-applied and committed on the bar it already met (the new spec 8/8, ordinary water 4/4, plain boots 0/0, tsc/build/full).
+- **F-MAC2-4 (box):** load 156 with 127 of 128 GB used during the run, four batteries at once — the day's parallelism has a ceiling here.
