@@ -33,12 +33,47 @@
 import { execFileSync } from 'node:child_process'
 import { existsSync, lstatSync, readFileSync } from 'node:fs'
 import { residueFor } from './lane-residue.mjs'
-// F-1261-1: one implementation of a word in this repo. The four-bucket durability predicate
-// belongs to the evidence census; re-typing it here would make a THIRD copy, and four copies
-// of one predicate is exactly how the desk-lock test drifted unnoticed for hundreds of fires
-// (F-2227-1). Measured s2639: importing this module costs 15 ms and emits nothing — it runs
-// no `main()` on import, so the `--cure` path inherits no new load-time failure mode.
-import { bucketOf, isFactorySide } from './modified-tracked-evidence-census.mjs'
+
+// s2639 — F-2639-1. The two predicates below are DELIBERATE LOCAL COPIES of ones the evidence
+// census exports, and the duplication is measured rather than lazy. F-1261-1 says there is one
+// implementation of a word in this repo, so the first draft of this cure IMPORTED them — and
+// that import is the wrong trade HERE, for a reason specific to this file:
+//
+//   `lane-runner-v3.sh:294` runs `node scripts/lane-usable.mjs <slot>` as its LANE-SAFETY
+//   PROBE, and when that probe returns no verdict the runner DISPATCHES ANYWAY —
+//   "LANE-SAFETY PROBE INDETERMINATE ... DISPATCHING master.md FAIL-OPEN, guard NOT enforced"
+//   (F-2089-2). A module-load failure is exactly a no-verdict. So every relative import added
+//   here widens the surface on which a resetting master gets dispatched over undrained work:
+//   the Reset Massacre direction (Mistake #2), reached by a load error rather than a bug.
+//
+// It is LATENT today and that is stated honestly — the runner `cd`s to the MAIN root, where
+// both files exist, so nothing was ever broken. What made the trade clear is the blast radius
+// the import actually had: FIVE separate guards construct scratch copies of this file, and
+// adding one import reddened four of them plus a bash guard, every one by producing EMPTY
+// output. And all four lane branches are 746-1022 commits behind and DO NOT CONTAIN the census
+// file at all (measured), so any future caller running this script from a lane checkout would
+// hit the same load failure — in the runner's case, fail-open.
+//
+// F-1261-1's PURPOSE is silent drift, and that is served WITHOUT the import: arms 17-18 of
+// `lane-usable-dirt-durability-guard.test.mjs` import the census and assert both copies agree,
+// which is the same shape `desk-carryforward-guard` uses for `subjectLedClosure` and the cure
+// F-2227-1 prescribes after four copies of one predicate drifted for hundreds of fires. A test
+// file is never copied into a fixture, so it may import freely.
+export function bucketOf(present, onRemote, onAnyRef) {
+  if (!present) return 'AT RISK'
+  if (onRemote) return 'SAFE'
+  if (onAnyRef) return 'LOCAL-REF-ONLY'
+  return 'UNREFERENCED'
+}
+
+const FIRE_GATE_IN_ROOT = /^(worktrees\/)?gate-s\d+$/
+const FIRE_GATE_OUT_OF_ROOT = /^\/(private\/)?tmp\/gr-(gate-s\d+|s\d+-[a-z-]*gate)/
+export function isFactorySide(treePath, root) {
+  const rel = treePath === root ? '' : treePath.startsWith(root + '/') ? treePath.slice(root.length + 1) : null
+  if (rel === null) return FIRE_GATE_OUT_OF_ROOT.test(treePath)
+  if (rel === '') return true
+  return /^worktrees\/lane-[a-d]$/.test(rel) || FIRE_GATE_IN_ROOT.test(rel)
+}
 
 const ABSENT = Symbol('absent')
 // The runner itself excludes these from every lane commit (lane-runner-v3.sh:121

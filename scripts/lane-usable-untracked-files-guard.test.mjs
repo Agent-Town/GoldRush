@@ -95,9 +95,16 @@ const untrackedOf = (stdout) => {
 // reported nothing. Measured s2490: my first draft did exactly that and the TEETH arm
 // read `null`, which its sanity assertion caught. This is F-2215-1's silent-control
 // trap wearing a new costume: there the silencer was a /tmp symlink, here it is a
-// filename. So the variant goes in its own temp DIRECTORY, named correctly, with the
-// one relative import (`./lane-residue.mjs`) copied beside it — which also keeps
-// one-shot scratch out of `scripts/` (F-1665-1).
+// filename. So the variant goes in its own temp DIRECTORY, named correctly, with EVERY
+// relative import copied beside it — which also keeps one-shot scratch out of `scripts/`
+// (F-1665-1).
+//
+// That sibling list is DERIVED from the variant's own import statements, never transcribed.
+// It named `./lane-residue.mjs` alone until s2639, when the subject gained a second relative
+// import and this arm went red on `ERR_MODULE_NOT_FOUND`. The arm was RIGHT to red and its
+// own `variant must exit 0` assertion is what caught it — a variant that cannot load produces
+// EMPTY output, which is indistinguishable from a subject that reported nothing. Deriving the
+// list means the NEXT sibling travels without anyone remembering to.
 //
 // `variantOf` ASSERTS ITS EDIT MATCHED — a variant that changed nothing is a
 // construction refusal, not evidence about the defect (F-2477-1's method note).
@@ -119,7 +126,14 @@ function variantOf(replacementArgs) {
   const dir = mkdtempSync(join(tmpdir(), 'lane-usable-variant-'))
   CREATED.push(dir)
   writeFileSync(join(dir, 'lane-usable.mjs'), patched)
-  copyFileSync(join(HERE, 'lane-residue.mjs'), join(dir, 'lane-residue.mjs'))
+  const copied = new Set()
+  for (const im of patched.matchAll(/from\s+'(\.\/[^']+)'/g)) {
+    const name = im[1].slice(2)
+    if (copied.has(name)) continue
+    copied.add(name)
+    copyFileSync(join(HERE, name), join(dir, name))
+  }
+  assert.ok(copied.size > 0, 'variant precondition: the subject has relative imports, so some must have travelled')
   return join(dir, 'lane-usable.mjs')
 }
 

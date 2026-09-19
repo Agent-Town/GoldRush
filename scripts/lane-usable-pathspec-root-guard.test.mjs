@@ -64,7 +64,6 @@ import { fileURLToPath } from 'node:url';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const SUBJECT = path.join(HERE, 'lane-usable.mjs');
-const RESIDUE = path.join(HERE, 'lane-residue.mjs');
 
 const GREEN = /NONE of it is run-surface/;
 const DRIFT = /run-surface drift:/;
@@ -125,17 +124,36 @@ function fixture(t, { dirtyLane = false, ledgerOnly = false } = {}) {
 }
 
 /**
- * A runnable copy of the subject with `edit` applied to its source. lane-residue.mjs
- * travels with it because the subject imports it relatively; both land OUTSIDE the
- * repo under test, so no arm can leave scratch on a run surface (F-1665-1).
+ * A runnable copy of the subject with `edit` applied to its source. Every sibling the
+ * subject imports RELATIVELY travels with it; all of them land OUTSIDE the repo under
+ * test, so no arm can leave scratch on a run surface (F-1665-1).
+ *
+ * The sibling list is DERIVED from the variant's own import statements, never transcribed.
+ * It was a hardcoded `lane-residue.mjs` until s2639, when the subject gained a second
+ * relative import and four arms of this guard went red — correctly, and loudly, because a
+ * variant that cannot load produces EMPTY stdout, which is indistinguishable from a subject
+ * that reported nothing. Deriving it means the NEXT sibling is copied without anyone
+ * remembering to: fix the CLASS, not the instance (this guard's own arm 4).
  */
+function copyLocalImports(source, dir) {
+  const seen = new Set();
+  for (const m of source.matchAll(/from\s+'(\.\/[^']+)'/g)) {
+    const name = m[1].slice(2);
+    if (seen.has(name)) continue;
+    seen.add(name);
+    fs.copyFileSync(path.join(HERE, name), path.join(dir, name));
+  }
+  return seen;
+}
+
 function variantOf(t, edit) {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'f2221-v-'));
   t.after(() => fs.rmSync(dir, { recursive: true, force: true }));
-  fs.copyFileSync(RESIDUE, path.join(dir, 'lane-residue.mjs'));
   const src = fs.readFileSync(SUBJECT, 'utf8');
   const out = edit(src);
   assert.notEqual(out, src, 'variant edit matched nothing — the arm would silently test the cured file');
+  const copied = copyLocalImports(out, dir);
+  assert.ok(copied.size > 0, 'variant precondition: the subject has relative imports, so some must have travelled');
   const p = path.join(dir, 'lane-usable.mjs');
   fs.writeFileSync(p, out);
   return p;

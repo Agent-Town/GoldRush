@@ -20,14 +20,14 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
-import { mkdtempSync, mkdirSync, writeFileSync, rmSync, copyFileSync } from 'node:fs';
+import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, rmSync, copyFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const SUBJECT = join(HERE, 'lane-usable.mjs');
-const { dirtDurability, formatDirtDurability } = await import(SUBJECT);
+const { dirtDurability, formatDirtDurability, bucketOf: localBucketOf, isFactorySide: localIsFactorySide } = await import(SUBJECT);
 
 // A stat stub: every named path is a regular file of the given size, everything else throws
 // (which is what lstat does for a path that is not there — a deleted tracked file, or the
@@ -225,10 +225,16 @@ function fixture() {
   rsh(['worktree', 'add', '-q', join(repo, '.claude', 'worktrees', 'agent-x'), 'attended/x']);
   // Ship the subject and its siblings into the fixture so relative imports resolve and the
   // module-main NAME predicate is satisfied (a differently-named copy exits rc=0 with 0 B).
+  // The sibling list is DERIVED from the subject's own imports, never transcribed: hardcoding
+  // it is exactly what broke three sibling guards when this cure added its second relative
+  // import, and a guard that documents that trap must not be standing in it.
   mkdirSync(join(repo, 'scripts'), { recursive: true });
-  for (const f of ['lane-usable.mjs', 'lane-residue.mjs', 'modified-tracked-evidence-census.mjs']) {
-    copyFileSync(join(HERE, f), join(repo, 'scripts', f));
-  }
+  const src = readFileSync(SUBJECT, 'utf8');
+  copyFileSync(SUBJECT, join(repo, 'scripts', 'lane-usable.mjs'));
+  const siblings = new Set();
+  for (const m of src.matchAll(/from\s+'(\.\/[^']+)'/g)) siblings.add(m[1].slice(2));
+  if (siblings.size === 0) throw new Error('fixture precondition: the subject should have relative imports');
+  for (const f of siblings) copyFileSync(join(HERE, f), join(repo, 'scripts', f));
   writeFileSync(join(repo, 'STATUS.md'), 'Last updated: fixture\n');
   return { dir, repo, rsh, sh };
 }
@@ -301,6 +307,56 @@ test('16. end to end: an ALL-SAFE dirty lane is STILL DIRTY — declaring never 
     assert.equal(r.rc, 2, 'nor the exit code — the cure DECLARES, it never CLEARS');
     assert.doesNotMatch(r.out, /refill freely/, 'and it must never read as permission to reset');
   } finally { rmSync(f.dir, { recursive: true, force: true }); }
+});
+
+// ------------------------------------------------- the duplication these two arms pay for
+//
+// `lane-usable.mjs` keeps LOCAL copies of `bucketOf` and `isFactorySide` instead of importing
+// the census's, because `lane-runner-v3.sh:294` uses that script as its lane-safety probe and
+// DISPATCHES FAIL-OPEN when the probe returns no verdict — so a module-load failure there ends
+// in a resetting master running over undrained work (F-2089-2, Mistake #2). Five guards build
+// scratch copies of the subject and the import reddened four of them plus a bash guard, every
+// one by producing EMPTY output; all four lane branches lack the census file outright.
+//
+// The duplication is therefore deliberate, and these arms are its price. F-1261-1's concern is
+// SILENT DRIFT, not the existence of a second copy: F-2227-1 records four copies of one
+// predicate drifting unnoticed for hundreds of fires, and its cure was a guard asserting they
+// AGREE. A test file is never copied into a fixture, so it may import the census freely.
+const census = await import(join(HERE, 'modified-tracked-evidence-census.mjs'));
+
+test('17. the local bucketOf AGREES with the census over every input (F-1261-1 without the import)', async () => {
+  const local = localBucketOf;
+  assert.equal(typeof census.bucketOf, 'function', 'control: the census really exports bucketOf');
+  let compared = 0;
+  for (const present of [true, false]) {
+    for (const onRemote of [true, false]) {
+      for (const onAnyRef of [true, false]) {
+        assert.equal(local(present, onRemote, onAnyRef), census.bucketOf(present, onRemote, onAnyRef),
+          `drift at (${present}, ${onRemote}, ${onAnyRef})`);
+        compared++;
+      }
+    }
+  }
+  assert.equal(compared, 8, 'control: the whole truth table was compared, not an empty loop (F-2217-1)');
+});
+
+test('18. the local isFactorySide AGREES with the census over every shape that matters', async () => {
+  const local = localIsFactorySide;
+  const root = '/repo';
+  const CASES = [
+    '/repo', '/repo/worktrees/lane-a', '/repo/worktrees/lane-d', '/repo/worktrees/lane-e',
+    '/repo/worktrees/gate-s2639', '/repo/gate-s2639', '/repo/.claude/worktrees/agent-x',
+    '/repo/worktrees/lane-a-salvage', '/tmp/gr-gate-s2639', '/private/tmp/gr-gate-s2639',
+    '/private/tmp/gr-s2639-drain-gate', '/tmp/heat14-abc', '/Users/robin/Claude/Projects/gr-task-x',
+  ];
+  let sawBoth = { t: 0, f: 0 };
+  for (const c of CASES) {
+    const mine = local(c, root);
+    assert.equal(mine, census.isFactorySide(c, root), `drift at ${c}`);
+    mine ? sawBoth.t++ : sawBoth.f++;
+  }
+  // A comparison where every case lands the same way proves nothing about the predicate.
+  assert.ok(sawBoth.t > 0 && sawBoth.f > 0, `control: the case list must exercise BOTH verdicts (got ${JSON.stringify(sawBoth)})`);
 });
 
 // REVERSE CONTROL for an always-on read: a lane with no tracked dirt is not DIRTY, and must
