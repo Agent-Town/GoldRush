@@ -11,10 +11,19 @@ export type LedgerStorage = {
   put(key: string, value: string, options?: { expirationTtl?: number }): Promise<void>;
   delete(key: string): Promise<void>;
   list(options?: { prefix?: string; cursor?: string }): Promise<LedgerListResult>;
+  resolveAccount?(candidate: AccountRecord): Promise<AccountRecord>;
+  retireAccount?(emailHash: string, accountId: string): Promise<boolean>;
+};
+
+export type AccountRegistryNamespace = {
+  idFromName(name: string): unknown;
+  get(id: unknown): { fetch(request: Request): Promise<Response> };
 };
 
 type AccountsEnv = {
   ACCOUNTS?: LedgerStorage;
+  ACCOUNT_REGISTRY?: AccountRegistryNamespace;
+  ACCOUNT_REGISTRY_SCOPE?: string;
   DEV_AUTH?: string;
   RESEND_API_KEY?: string;
   AUTH_CODE_PEPPER?: string;
@@ -26,7 +35,7 @@ type AccountsContext = {
   env: AccountsEnv;
 };
 
-type AccountRecord = {
+export type AccountRecord = {
   version: 1;
   accountId: string;
   email: string;
@@ -148,7 +157,7 @@ export async function verifyCode(context: AccountsContext): Promise<Response> {
         : error(cors, 401, 'invalid_code', 'Code not accepted.');
     }
 
-    const account = await loadOrCreateAccount(kv, email, emailHash);
+    const account = await loadOrCreateAccount(env, kv, email, emailHash);
     if (expected.revokeSessions) await deleteSessionsForAccount(kv, account.accountId);
     const token = randomHex(32);
     const createdAt = nowIso();
@@ -298,10 +307,24 @@ export async function deleteAccount(context: AccountsContext): Promise<Response>
     const session = await requireSession(request, kv, cors);
     if (session instanceof Response) return session;
 
+    if (!kv.retireAccount) {
+      const status = await registryRequest(env, 'status');
+      if (!isRecord(status) || status.ready !== true) {
+        return error(cors, 503, 'account_registry_unavailable', 'The ledger office could not finish that request.');
+      }
+    }
+    // Cleanup precedes retirement so a failed save deletion cannot strand the only identity.
     await deletePrefix(kv, `save:${session.record.accountId}:`);
+    // Retire only this generation. An old session must never delete its replacement.
+    const retired = kv.retireAccount
+      ? await kv.retireAccount(session.record.emailHash, session.record.accountId)
+      : await registryRequest(env, 'retire', { emailHash: session.record.emailHash, accountId: session.record.accountId });
+    if (retired !== true) return error(cors, 401, 'unauthorized', 'Session not accepted.');
+    // Preserve retry authorization if the registry fails after the readiness check.
     await deleteSessionsForAccount(kv, session.record.accountId);
     await Promise.all([
-      kv.delete(`account:${session.record.emailHash}`),
+      // Legacy KV copies are immutable after registry cutover; SQLite already retired its row atomically.
+      ...(!kv.retireAccount ? [kv.delete(`account:${session.record.emailHash}`)] : []),
       kv.delete(`code:${session.record.emailHash}`),
       kv.delete(`attempts:${session.record.emailHash}`),
       kv.delete(`ratelimit:email:${session.record.emailHash}`),
@@ -456,19 +479,39 @@ async function sessionToken(request: Request): Promise<string | null> {
   }
 }
 
-async function loadOrCreateAccount(kv: LedgerStorage, email: string, emailHash: string): Promise<AccountRecord> {
-  const raw = await kv.get(`account:${emailHash}`);
-  const existing = parseAccount(raw);
-  if (existing) return existing;
-  const account: AccountRecord = {
+async function loadOrCreateAccount(env: AccountsEnv, kv: LedgerStorage, email: string, emailHash: string): Promise<AccountRecord> {
+  const candidate: AccountRecord = {
     version: 1,
     accountId: randomHex(16),
     email,
     emailHash,
     createdAt: nowIso(),
   };
-  await kv.put(`account:${emailHash}`, JSON.stringify(account));
+  // KV has no atomic create: its registry is authoritative after an explicit legacy import.
+  // Never fall back to a cached KV absence or derive a lifetime ID from the email.
+  const resolved = kv.resolveAccount
+    ? await kv.resolveAccount(candidate)
+    : await registryRequest(env, 'resolve', candidate);
+  const account = parseAccount(JSON.stringify(resolved));
+  if (!account || account.email !== email || account.emailHash !== emailHash) {
+    throw new HttpError(503, 'account_registry_unavailable', 'The ledger office could not finish that request.');
+  }
   return account;
+}
+
+async function registryRequest(env: AccountsEnv, operation: string, body?: unknown): Promise<unknown> {
+  if (env.ACCOUNT_REGISTRY && /^[a-zA-Z0-9_-]{1,80}$/.test(env.ACCOUNT_REGISTRY_SCOPE ?? '')) {
+    try {
+      const registry = env.ACCOUNT_REGISTRY.get(env.ACCOUNT_REGISTRY.idFromName(`accounts-v1:${env.ACCOUNT_REGISTRY_SCOPE}`));
+      const response = await registry.fetch(new Request(`https://account-registry.internal/${operation}`, {
+        method: body === undefined ? 'GET' : 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body),
+      }));
+      if (response.ok) return await response.json();
+    } catch {
+      // Do not mint an identity when the atomic owner is unavailable.
+    }
+  }
+  throw new HttpError(503, 'account_registry_unavailable', 'The ledger office could not finish that request.');
 }
 
 function parseAccount(raw: string | null): AccountRecord | null {
