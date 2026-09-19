@@ -53,7 +53,15 @@ const MILESTONE_TRIGGERS: Readonly<Record<string, DispatchTrigger>> = {
   'M8-2': { kind: 'contract', id: 'e8-mare-claim' },
   'M8-3': { kind: 'contract', id: 'e8-mare-claim' },
   'M8-4': { kind: 'contract', id: 'e8-far-side' },
-  'M8-5': { kind: 'boss', id: 'e8-low-orbit' },
+  // F-E8LO-3, owner ruling 2026-09-19 (verbatim: "I agree with all your recommendations on the
+  // decisions - good work"; the register took option (b): "re-key M8-5 to a secure or wave trigger.
+  // Low Orbit's fiction is a return home, not a boss. Data only, no engine work."). This row read
+  // `{ kind: 'boss', id: 'e8-low-orbit' }` while Low Orbit declares no boss at all: `bossKind` is
+  // declared by exactly seven contracts in the shipped registry and e8-low-orbit is not one of them.
+  // The two kinds already resolve to the same predicate for a non-Baron id, so this changes no
+  // behaviour; it stops the table claiming a boss that the map does not have, which is what a later
+  // reader would have built on. scripts/world-dispatch-boss-trigger-guard.test.mjs holds the line.
+  'M8-5': { kind: 'contract', id: 'e8-low-orbit' },
   'M9-2': { kind: 'contract', id: 'e9-dome-basin' },
   'M9-3': { kind: 'contract', id: 'e9-old-canal' },
   'M9-4': { kind: 'contract', id: 'e9-old-canal' },
