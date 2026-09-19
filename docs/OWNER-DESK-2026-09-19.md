@@ -79,10 +79,13 @@
 **Options.** take · hold · discard.
 **Recommendation — RULED 2026-09-19.** Look once; if it reads as the same person, take.
 
-### F-2627-1 — the Steam Wrecker's south-east row, parked a third time
-**What.** The lamp is finally lit in all four cells (137/141/115/129 px, over the 90-px bar that parked it twice), but the Codex figures measure 216–230 px against the family's 246–248, and the house law never upscales (the extractor caps it by construction).
-**Options.** (a) accept the row 6–8 % under band — the strips job running now is measuring how it reads in play beside the landed diagonals · (b) regenerate with a larger-figure prompt (Codex, on your ChatGPT subscription) · (c) a bounded-upscale exception to the law (×1.08, once).
-**Recommendation — RULED 2026-09-19.** (a) if the in-play capture reads fine, else (b). The Claim Jumper's six rows are unaffected either way.
+### F-2627-1 — the Steam Wrecker's south-east row, parked a fourth time — REWRITTEN 2026-09-19, RULED (a)
+**What.** The scale question is gone: the native 1,254² Codex render extracts in band at 0.888, and the lamp holds in all four cells (162/168/147/153 px). The row parks because both Codex takes FACE SOUTH-WEST: the family's lamp-offset instrument reads −6.7 % and −9.3 % where a true south-east reads about +9 %, and eyes-on agrees.
+**Ruled.** (a) one heading-pinned regeneration off the native render — queued to the ART slot as `art-steamwrecker-se-heading-regen`.
+
+### F-NCS-5 — should the E1 base enemy look like the Claim Jumper again? (added 2026-09-19) — RULED (a)
+**What.** Since `82543f273` (2026-07-12) every E1 map draws its base enemy from the bandit slots; the Claim Jumper's own slot is named everywhere and now has real cells for all eight headings, but nothing draws it.
+**Ruled.** (a) wake it — four sites in `src/entities/pools.ts`, the reel map, and the slot's `walk8` disabled so the animator takes the new `walk4` (F-NCS-6); executing in `rulings-play-2026-09-19`.
 
 ### F-ASTRA-2 — promoting the 3D hero
 **What.** Not yet a decision: Astra is bringing the hero GLB to its own bar as a pilot (lane-a). When it lands, you rule from the comparison board against the sprite heroine.
