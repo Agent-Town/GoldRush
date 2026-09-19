@@ -320,7 +320,7 @@ try {
 // someone else's red is how a guard stops being a guard, so it is named rather than swallowed.
 // The Steam Wrecker's `se` is STILL an alias and still adds nothing here -- parked a fourth time, now
 // on the heading (both takes turn the machine the wrong way), its lamp and scale blockers both gone.
-assert.equal(current.scanned, 2127, 'processed PNG denominator moved');
+assert.equal(current.scanned, 2127, 'processed PNG denominator moved'); // re-pinned 2026-09-19 at the play-rulings drain on the merged tree (the strips land 2,127 + the two prospector coats' cells)
 assert.deepEqual(
   current.suspects.map(({ file }) => file).sort(),
   expectedResidual.map(({ file }) => file).sort(),
