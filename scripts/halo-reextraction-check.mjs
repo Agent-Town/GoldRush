@@ -180,6 +180,37 @@ const REGENERATED_SHEETS = new Set([
   // VERIFIED byte-identical to the commit before this batch, 12 of 12, and stay that way. That moves
   // 16 cells out of `cured` (395 -> 379) and into `regenerated` (680 -> 696); the sum still closes.
   'char-schoolteacher-sheet-walk8-a',
+  // TAKEN ON THE OWNER'S EYE (task rulings-play-2026-09-19, F-SSL-3; owner ruling 2026-09-19,
+  // verbatim: "I agree with all your recommendations on the decisions - good work", on a desk row
+  // whose recommendation reads "Look once; if it reads as the same person, take."). These are the
+  // two prospector coats `reviews/sprites-split-land.md` HELD on 2026-09-14 because they are
+  // REGENERATIONS, not despills: sprites-split-land's own edge-confinement census refused them
+  // ("244,213 and 243,189 alpha-differing px at max 255, 365,716 / 362,612 changed opaque px, and
+  // the figure grows 220 -> 226 px and 220 -> 224 px with the top and bottom edges both moving"),
+  // which is exactly why the byte-for-byte invariant below cannot apply to them and why they are
+  // DECLARED here rather than left in `cured`. Taken from the same source that branch was landing
+  // from, `sol/code-review-20260908` @ 92f6cc115, by `git checkout <ref> -- <path>` only.
+  //
+  // RE-MEASURED on the branch before landing (artifacts/rulings-play-2026-09-19/
+  // prospector-silhouette-census.json, opaque bbox at alpha >= 16, 512 px cells, 32 cells each):
+  //   * complainant, per-cell figure height main -> taken: max 220 -> 226 px, mean delta +2.44 px
+  //   * gilded,      per-cell figure height main -> taken: max 220 -> 224 px, mean delta +2.06 px
+  // which reproduces the review's held number (+4-6 px at the tallest cell) rather than inheriting
+  // it. Both `.frames.json` sidecars move with their sheets (the sheet's own trim box, 19/77/260/279
+  // -> 45/70/234/255), so the cells and the frames stay one artefact.
+  //
+  // ARITHMETIC: 64 cells (32 + 32) leave `cured` for `regenerated` - see the two pins below. The
+  // denominator does not move: every file is a REPLACEMENT under its own name (2127 on this tree,
+  // pinned at `current.scanned`).
+  //
+  // LANDED TWICE (F-ATT-4, attended 2026-09-20): the play-rulings drain (73f150c69) resolved this
+  // file's merge conflict by taking main's side and re-measured only the denominator, so the
+  // declaration the branch carried (935211219) was dropped and main's battery carried this guard
+  // RED from 2c2fc9538 until this commit - the review's halo row quoted the branch's numbers for a
+  // verdict the merged tree never gave. A shared-baseline conflict is re-measured in EVERY
+  // partition, not only the denominator.
+  'char-prospector-complainant-sheet-hover8',
+  'char-prospector-gilded-sheet-hover8',
   // THE CODEX STRIPS (task tasks/needs-cells-codex-strips-land.md, 2026-09-19; owner, verbatim: "Yes,
   // please use Codex to generate these strips."). Six NEW stems, 24 cells, generated on Codex's native
   // `image_gen` and extracted here by scripts/extract-alpha.mjs --key ff00ff from the NATIVE 1254x1254
@@ -232,11 +263,21 @@ assert.equal(expectedResidual.length, 0);
 // 456 + 224: the 160 cells just released from expectedResidual plus the 64 cells of the three stems
 // re-cut here that were never HELD (32 char-tavernkeeper + 16 char-assay-clerk + 16 char-preacher).
 // Was 456. Measured: artifacts/town-cast-walk8-hard-alpha-recut/_partition.mjs prints 0/680/395.
-assert.equal(regenerated.length, 696);
+// RE-PINNED 2026-09-19 by tasks/rulings-play-2026-09-19.md (F-SSL-3, owner "I agree with all your
+// recommendations on the decisions - good work"): 696 + 64 = 760, the 32 + 32 cells of the two
+// prospector coats declared above. Every one of those 64 is a BASE suspect (96 prospector cells are
+// suspects at 89bfc10cda7e, across three stems; the third, `char-prospector-sheet-hover8`, is NOT
+// taken here and stays in `cured` with main's bytes), so they move from `cured` to `regenerated`
+// and the three-way sum below is unchanged at 1075.
+assert.equal(regenerated.length, 760);
 // 459 - 64, the three never-HELD stems above leaving `cured` for `regenerated`. The 16
 // char-schoolteacher-sheet-walk8-a cells STAY here: that family was held, its cells are main's, and
 // the byte-for-byte invariant below still runs over them. Was 459.
-assert.equal(cured.length, 379);
+// RE-PINNED 2026-09-19 (same task, same ruling): 379 - 64 = 315, the two prospector coats leaving
+// for `regenerated`. `char-prospector-sheet-hover8`'s own 32 cells STAY here and are still measured
+// byte-for-byte against BASE - the stock agent is untouched by this ruling, and F-SSL-3's sibling
+// finding (`hover4-{a,b}` landed while `hover8` is held for the payload) is unchanged.
+assert.equal(cured.length, 315);
 // The three partitions are disjoint and exhaust the BASE suspect roster; this closes the arithmetic
 // above so a future re-pin cannot quietly drop a cell out of all three sets.
 assert.equal(expectedResidual.length + regenerated.length + cured.length, baseline.suspects.length);
@@ -320,7 +361,7 @@ try {
 // someone else's red is how a guard stops being a guard, so it is named rather than swallowed.
 // The Steam Wrecker's `se` is STILL an alias and still adds nothing here -- parked a fourth time, now
 // on the heading (both takes turn the machine the wrong way), its lamp and scale blockers both gone.
-assert.equal(current.scanned, 2127, 'processed PNG denominator moved'); // re-pinned 2026-09-19 at the play-rulings drain on the merged tree (the strips land 2,127 + the two prospector coats' cells)
+assert.equal(current.scanned, 2127, 'processed PNG denominator moved'); // re-pinned 2026-09-19 at the play-rulings drain on the merged tree: the strips land's 2,127; the two prospector coats are replacements under their own names and add none
 assert.deepEqual(
   current.suspects.map(({ file }) => file).sort(),
   expectedResidual.map(({ file }) => file).sort(),
