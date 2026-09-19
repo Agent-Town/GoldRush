@@ -94,7 +94,7 @@ fi
 # the concurrency hazard and merely DELAYS the takeover. The surgical answer is the house predicate
 # AND `! fire_proc` (health-watch.sh:52), but that is boot policy on the owner's metered budget and
 # this guard is owner-prompted for that very reason — his call. Full derivation: F-2632-1.
-head -1 STATUS.md 2>/dev/null | grep -q "lock ACTIVE" && dry=0
+head -1 STATUS.md 2>/dev/null | grep -qE '^ACTIVE|lock ACTIVE| ACTIVE \(s[0-9]+ fire\)' && dry=0   # F-2632-2 (owner 2026-09-19 "housekeeping ok"): all three lock line-1 shapes, not the literal that matched 3.6% of real locks since 2026-08-05
 if [ "$dry" = "1" ] && [ "$skips" -lt 11 ]; then
   echo $((skips+1)) > "$SKIPCOUNT_F"
   echo "[fire-runner] $(date +%H:%M:%S) DRY BOARD — skip $((skips+1))/11, no model call" >> "$LOG"
