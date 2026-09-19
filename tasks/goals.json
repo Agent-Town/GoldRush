@@ -5313,8 +5313,12 @@
               "registeredBy": "attended 2026-09-18",
               "lane": "art (Codex image_gen on the owner's ChatGPT subscription — a NARROW owner exception to tasks/CODEX-WALL for this one generation task)",
               "generatedAt": "2026-09-18",
-              "mergeHash": "498a64a8f010881e9cda87a3dd0a6ab12599a167",
-              "drainNotes": "DRAINED s2627 2026-09-18: the gate-side hold is lifted by PROCESSING, which is what it named as its lift condition. 5 of 7 facings LANDED (20 cells): char-jumper-{s4,e4,sw4,ne4,nw4}-codex-v1 at 146-158 px in a 256 cell against the landed references’ 146-156, cross-facing means 150.8-151.5 (no size-pop), foot scatter 23-55 px raw -> 1-6 px, halo residue 0 of 1,151,824 sub-opaque px. PARKED: jumper se on intra-sheet spread 16 px (F-2627-2, needs a retake, not a transform) and steamwrecker se on SCALE (F-2627-1 — the lamp now PASSES at 137/141/115/129 px; it needs a ×1.079 upscale the extractor caps and the contract refuses, so regenerate at a larger native cell). NOT WIRED by design (F-2627-3): the slot is runtime-dormant and the master says wire it when it wakes. reviews/needs-cells-codex-strips.md"
+              "mergeHash": "899826209fc5d3432eb13959d80d6fbf6187d034",
+              "drainNotes": "DRAINED s2627 2026-09-18: the gate-side hold is lifted by PROCESSING, which is what it named as its lift condition. 5 of 7 facings LANDED (20 cells): char-jumper-{s4,e4,sw4,ne4,nw4}-codex-v1 at 146-158 px in a 256 cell against the landed references’ 146-156, cross-facing means 150.8-151.5 (no size-pop), foot scatter 23-55 px raw -> 1-6 px, halo residue 0 of 1,151,824 sub-opaque px. PARKED: jumper se on intra-sheet spread 16 px (F-2627-2, needs a retake, not a transform) and steamwrecker se on SCALE (F-2627-1 — the lamp now PASSES at 137/141/115/129 px; it needs a ×1.079 upscale the extractor caps and the contract refuses, so regenerate at a larger native cell). NOT WIRED by design (F-2627-3): the slot is runtime-dormant and the master says wire it when it wakes. reviews/needs-cells-codex-strips.md",
+              "mergedAt": "2026-09-19",
+              "review": "reviews/needs-cells-codex-strips-land.md",
+              "drainedBy": "attended 2026-09-19 (processed by needs-cells-codex-strips-land)",
+              "note": "generated 2026-09-18 on Codex image_gen; the native 1,254² renders extracted in band; six of seven rows landed"
             },
             {
               "id": "sol-map-art-campaign-2",
@@ -5346,10 +5350,14 @@
             {
               "id": "needs-cells-codex-strips-land",
               "title": "Owner 2026-09-19 \"Anthropic was reset already\": process and wire the seven Codex strips (the Steam Wrecker south-east, the Claim Jumper six facings) through pipeline v2; find what wakes the dormant jumper slot (F-NCB-3)",
-              "status": "building",
+              "status": "merged",
               "taskFile": "needs-cells-codex-strips-land.md",
               "registeredBy": "attended 2026-09-19",
-              "implementer": "Claude Opus 5, scratch wt-strips, branch art/needs-cells-codex-strips-land, port 5305"
+              "mergeHash": "899826209fc5d3432eb13959d80d6fbf6187d034",
+              "mergedAt": "2026-09-19",
+              "review": "reviews/needs-cells-codex-strips-land.md",
+              "drainedBy": "attended 2026-09-19",
+              "note": "six Claim Jumper facings landed at the live band; the Steam Wrecker se parked for heading (F-NCS-4); halo guard re-pinned 2,127 (F-NCS-2); the jumper wake is an owner word (F-NCS-5/6); pin #12"
             },
             {
               "id": "assay-index-drop-f-heat14-6",
