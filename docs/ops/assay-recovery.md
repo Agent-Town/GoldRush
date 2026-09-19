@@ -10,19 +10,28 @@ faults wearing one symptom**, and they need different answers.
 
 ## First, tell them apart
 
-`assay_not_found` is returned when the board has no row with that reel id **or** the row carries no
-assay mark (`functions/api/standings.ts`, the `?verdict=` branch). A taped row always reads back as at
-least `pending`, so in practice the 404 means *the row is not on the board*. Ask the board itself:
+The two faults answer the slip endpoint differently, and the difference is the whole triage. Ask it:
 
 ```
-# is the reel still in the county's hands at all?
-curl -s 'https://agenttown.app/api/standings?epoch=<epochId>&contract=<contractId>&season=2&reel=<reel id>'
+curl -s 'https://agenttown.app/api/standings?epoch=<epochId>&contract=<contractId>&season=2&verdict=<reel id>'
 ```
 
-| Answer | Fault | Go to |
+| Answer | What it means | Go to |
 | --- | --- | --- |
-| `200` with the reel | the row is stored; only the **assay index** lost it | [The stored-unassayed sweep](#the-stored-unassayed-sweep) |
-| `404 reel_not_found` | the row was **deleted from the board** | [A deleted standing](#a-deleted-standing) |
+| `200` `"assay":"verified"` | nothing is wrong; the standing is on the board with a slip | — |
+| `200` `"assay":"pending"`, and it is still pending well past a queue cycle (the assayer polls continuously, and a lost index entry is rebuilt within `ASSAY_INDEX_MAX_AGE_MS`, 15 minutes) | the row is stored and the **assay index** lost its locator | [The stored-unassayed sweep](#the-stored-unassayed-sweep) |
+| `404 assay_not_found` | the board has **no row** with that reel id | below |
+
+`assay_not_found` is `!row || !row.assay` (`functions/api/standings.ts`, the `?verdict=` branch), and
+`validateStoredRow` reads a taped row with no assay mark back as `pending`, so the second clause
+cannot fire for a reel: **a 404 here means the row is not on the board at all.** Confirm with the
+reel endpoint (`?reel=<reel id>` -> `reel_not_found`) and then read the ride's own
+`post-response.json`: `{"ok":true,"stored":true,...}` means the county took the row and later lost
+it ([A deleted standing](#a-deleted-standing)); anything else — an nginx error page, `rate_limited` —
+means it was never accepted, and the fix is a first delivery, not a recovery.
+
+`artifacts/assay-index-drop/recovery-dry-run.mjs` does exactly this triage across a whole heat,
+read-only, and prints the class and the prescribed action per reel.
 
 ## The stored-unassayed sweep
 
