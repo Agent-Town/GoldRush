@@ -367,3 +367,11 @@ Execution began 2026-09-20 local; the run-4 date label follows the dispatch. Cap
 Four actual-source timing runs per arm: p95 9.20→9.25 ms desktop / 9.05→9.05 phone; draws unchanged 90/58. TypeScript/default/full builds, own spec, focused census and shared render checks pass. Shoreline and atlas-census failures reproduce on exact base. The named changed-since command expands to the forbidden full battery; its scope conflict is recorded for the drain, with 34 render and three named guards green.
 
 Engine `c8229bd4e2e1bd7d351255ba1460f640c8a67bc9f01c4c335ca17c27517d50a3` → `6df23d2f3b41389eb2fa89d042c96a4f593a21c7482f8c0343026f2c82137d9b`. Store `9fa06cc8e2e0f38ea8502b594f0c5aa6e1679157` pushed. Gameplay, camera, HUD, footprints and all geometry/atlas bytes are unchanged.
+
+### Incline correction — 2026-09-21 run 4
+
+**IMPROVED / HELD.** Rail-bed and yard RMS falls 37.86% desktop / 33.85% phone. Two return cables and eight wheels complete existing service-bin details within original bounds (+392 triangles); primary body median +56.2% / +50.4%, emission 0.375. The 5 m station fits the phone with 0.27% persistent HUD versus 38.70% at 14 m. All five individual stations are below 0.34%; the full composition can still overlap adjacent bodies. Cliff/lift/cart entry vista and absent phone rail remain contract/layout/camera holds. [Every clause, boards, independent review and proof](run-4/e2-incline/review.md).
+
+Four runs per arm: p95 9.00→8.85 ms desktop / 9.15→9.15 phone, draws unchanged 76/58. Builds, 10 own/census checks, shared brightness/collision (16 pass, four skips), loading/repeat, 34 render guards and three named guards pass. Atlas, terrain, panorama, mounts/collision and original body geometry/UVs stay unchanged; all five saved bodies re-export exactly. Changed-since/full-battery conflict remains drain-owned.
+
+Engine `6df23d2f3b41389eb2fa89d042c96a4f593a21c7482f8c0343026f2c82137d9b` → `adead14c0ca88daba465162c0156d527159596f6b9b4ccb85e1732ba14c182bf`. Store `213e6776f85bc729d39fc09e120b12a781b1d697` pushed.

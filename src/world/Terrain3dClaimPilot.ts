@@ -2080,6 +2080,40 @@ diffuseColor.rgb = mix(diffuseColor.rgb, gardenRowPigment, gardenCrest * gardenW
   }
 }
 
+/** Worked yards and pale ballast follow the two published funicular lines and terrace tops. */
+function clarifyInclineYards(model: THREE.Object3D): void {
+  if (isMapBeautyDisabled()) return;
+  const materials = new Set<THREE.MeshStandardMaterial>();
+  model.traverse(node => {
+    const mesh = node as THREE.Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>;
+    if (mesh.isMesh && !Array.isArray(mesh.material) && mesh.material.isMeshStandardMaterial && mesh.material.map) materials.add(mesh.material);
+  });
+  for (const material of materials) {
+    const compile = material.onBeforeCompile.bind(material);
+    material.onBeforeCompile = (shader, renderer) => {
+      compile(shader, renderer);
+      shader.uniforms.inclineEarth = { value: new THREE.Color('#92795c') };
+      shader.uniforms.inclineBallast = { value: new THREE.Color('#aaa088') };
+      shader.vertexShader = shader.vertexShader
+        .replace('#include <common>', '#include <common>\nvarying vec2 vInclineGround;')
+        .replace('#include <begin_vertex>', '#include <begin_vertex>\nvInclineGround = (modelMatrix * vec4(position, 1.0)).xz;');
+      shader.fragmentShader = shader.fragmentShader
+        .replace('#include <common>', '#include <common>\nvarying vec2 vInclineGround;\nuniform vec3 inclineEarth;\nuniform vec3 inclineBallast;')
+        .replace('#include <map_fragment>', `#include <map_fragment>
+float inclineX = abs(vInclineGround.x), inclineZ = vInclineGround.y;
+float inclineDry = smoothstep(6.25, 9.0, abs(inclineZ));
+float inclineInterior = 1.0 - smoothstep(38.0, 47.0, max(inclineX, abs(inclineZ)));
+float inclineRail = 1.0 - smoothstep(0.75, 1.75, abs(inclineX - 12.0));
+diffuseColor.rgb = mix(diffuseColor.rgb, inclineEarth, 0.28 * inclineDry * inclineInterior);
+diffuseColor.rgb = mix(diffuseColor.rgb, inclineBallast, 0.42 * inclineRail * inclineDry * inclineInterior);
+float inclineCrest = max(1.0 - smoothstep(0.2, 0.9, abs(inclineZ - 13.0)), max(1.0 - smoothstep(0.2, 0.9, abs(inclineZ - 28.0)), 1.0 - smoothstep(0.2, 0.9, abs(inclineZ - 42.0))));
+diffuseColor.rgb = mix(diffuseColor.rgb, inclineBallast, 0.22 * inclineCrest * inclineInterior);`);
+    };
+    material.customProgramCacheKey = () => 'incline-worked-yards-v1';
+    material.needsUpdate = true;
+  }
+}
+
 function applyNightTerrainPools(model: THREE.Object3D, host: Host, opaqueLandmark = false): void {
   // Carried pools use the rig's steel-blue family at the prior ground tint's luminance.
   const materials = new Set<THREE.Material>();
@@ -2508,6 +2542,7 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       if (host.contractId === 'e1-baron') separateBaronGroundScars(nextTerrain);
       if (host.contractId === 'e2-trestle') calmTrestleApproaches(nextTerrain);
       if (host.contractId === 'e2-pressure-garden') clarifyPressureGardenTerraces(nextTerrain);
+      if (host.contractId === 'e2-incline') clarifyInclineYards(nextTerrain);
       if (host.nightMode) applyNightTerrainPools(nextTerrain, host);
       else {
         host.canvas.dataset.terrain3dPilotNightPools = 'off';
@@ -2977,7 +3012,7 @@ type LandmarkPaint = { intensity: number; tint: string };
 const LANDMARK_PAINT: Record<string, Record<string, LandmarkPaint>> = {
   'e2-trestle': { 'trestle-crossing': { intensity: 2.6, tint: '#ffffff' }, 'south-boiler-site': { intensity: 2.5, tint: '#e4e5e7' }, 'north-boiler-site': { intensity: 2.5, tint: '#e4e5e7' }, 'mine-spur-kit': { intensity: 2.2, tint: '#efe2cc' }, 'south-approach-kit': { intensity: 2.2, tint: '#ffffff' }, 'north-approach-kit': { intensity: 2.2, tint: '#ffffff' }, },
   'e2-pressure-garden': { 'garden-pressure-manifold': { intensity: 3, tint: '#e4e5e7' }, 'water-band-pump-station': { intensity: 3, tint: '#e4e5e7' }, 'west-terrace-pipe-header': { intensity: 3, tint: '#e4e5e7' }, 'east-terrace-pipe-header': { intensity: 3, tint: '#e4e5e7' }, 'coal-seam-service-winch': { intensity: 3, tint: '#e4e5e7' }, },
-  'e2-incline': { 'upper-ore-cable-house': { intensity: 1.5, tint: '#c2a48c' }, 'west-line-brake-tower': { intensity: 1.28, tint: '#b3a693' }, 'east-line-brake-tower': { intensity: 1.28, tint: '#b3a693' }, },
+  'e2-incline': { 'upper-ore-cable-house': { intensity: 2.5, tint: '#e0e3df' }, 'west-line-brake-tower': { intensity: 2.5, tint: '#e0e3df' }, 'east-line-brake-tower': { intensity: 2.5, tint: '#e0e3df' }, },
   'e1-baron': {
     fortified_far_bank: { intensity: 2.5, tint: '#aab5bb' },
     siege_line: { intensity: 2.2, tint: '#a8b0b4' },

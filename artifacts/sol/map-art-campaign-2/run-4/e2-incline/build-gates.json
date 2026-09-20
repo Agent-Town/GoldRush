@@ -1,0 +1,40 @@
+[
+  {
+    "label": "tsc",
+    "command": [
+      "npx",
+      "tsc",
+      "--noEmit"
+    ],
+    "environment": {},
+    "exit": 0,
+    "seconds": 6.93,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-4/e2-incline-tsc.log"
+  },
+  {
+    "label": "default-build",
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "environment": {},
+    "exit": 0,
+    "seconds": 21.17,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-4/e2-incline-default-build.log"
+  },
+  {
+    "label": "full-build",
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "environment": {
+      "GR_RELEASE": "full"
+    },
+    "exit": 0,
+    "seconds": 25.67,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-4/e2-incline-full-build.log"
+  }
+]
