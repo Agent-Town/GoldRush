@@ -901,6 +901,16 @@ test('Twin Banks consumes its declared crossings and build zones before securing
   const transcript = firstCli.stdout.trim().split('\n').map(JSON.parse);
   // hero-move-verb (owner ruling 2026-09-06): the manifest's first unconditional row, published on
   // every contract because the verb's contract belongs to the engine rather than to a map.
+  //
+  // RE-POINTED 2026-09-20 — "e5-regatta-boat-03: the boat's refusals published". The `refusals`
+  // list gained `NOT_ABOARD` and `UNREACHABLE_WATER`, the two the steerable Claim-Boat raises
+  // (`specs/agent-play/e5-regatta-steerable-boat.md` law 5; owner 2026-09-20 "A14 - do it"). Slice
+  // 1 raised them on the status channel and deliberately kept them OUT of the published vocabulary
+  // so that publishing them would be one censused act; this is it, and the same commit moves
+  // `e2e/agent-view.spec.ts`'s copy of this list, the view bump, the skill.md fence, the manifest
+  // rows and the E5 census pin. They are APPENDED, so every index a rider may have depended on is
+  // unchanged. The list is unconditional by design: a rider on a boatless map reads a word its
+  // engine has no consumer for, exactly as `CAPTURE`/`GRADE`/`HAUL` already are.
   assert.deepEqual(transcript[0].stablePrefix.mechanics.rules, [
     { id: 'build_zones', source: 'tileParams.buildZones', data: { count: 2, banks: ['north', 'south'] } },
     {
@@ -910,7 +920,7 @@ test('Twin Banks consumes its declared crossings and build zones before securing
         verb: 'MOVE_HERO',
         body: 'hero',
         arriveRadius: 0.5,
-        refusals: ['HERO_NOT_YOURS', 'UNREACHABLE_TERRAIN', 'UNREACHABLE_APPROACH', 'HERO_UNAVAILABLE'],
+        refusals: ['HERO_NOT_YOURS', 'UNREACHABLE_TERRAIN', 'UNREACHABLE_APPROACH', 'HERO_UNAVAILABLE', 'NOT_ABOARD', 'UNREACHABLE_WATER'],
         pilots: {
           headless: "the rider pilots the run's only hero",
           roomSeat: 'a headless roster seat pilots its own hero',

@@ -262,11 +262,23 @@ test('the boat refuses on the status channel: NOT_ABOARD ashore, UNREACHABLE_WAT
     assert.equal(refusedAfloat.status, 'failed');
     assert.match(refusedAfloat.reason, /^UNREACHABLE_WATER: /);
 
-    // And the two live OUTSIDE the published `HERO_ORDER_REFUSALS` vocabulary on purpose: slice 3
-    // publishes them with the view bump, the fence and the census pin, all in one censused act.
+    // SLICE 3 PUBLISHED THEM. Slice 1 kept these two OUT of `HERO_ORDER_REFUSALS` on purpose, so
+    // that publishing them would be ONE censused act — the view bump, the skill.md fence, the
+    // manifest rows and the E5 census pin all moving in the same commit. This assertion is that
+    // act's own pin, re-pointed 2026-09-20 with the cause "e5-regatta-boat-03: the boat's refusals
+    // published": APPENDED to the four that were always there, so every index in the published
+    // list keeps its meaning, and the boat's own pair stays separately declared because only
+    // `DeepwaterClaimTile.boatOrderRefusal` can raise it.
     const { BOAT_ORDER_REFUSALS, HERO_ORDER_REFUSALS } = await vite.ssrLoadModule('/src/agent/StandingOrders.ts');
     assert.deepEqual([...BOAT_ORDER_REFUSALS], ['NOT_ABOARD', 'UNREACHABLE_WATER']);
-    assert.deepEqual([...HERO_ORDER_REFUSALS], ['HERO_NOT_YOURS', 'UNREACHABLE_TERRAIN', 'UNREACHABLE_APPROACH', 'HERO_UNAVAILABLE']);
+    assert.deepEqual([...HERO_ORDER_REFUSALS], [
+      'HERO_NOT_YOURS', 'UNREACHABLE_TERRAIN', 'UNREACHABLE_APPROACH', 'HERO_UNAVAILABLE',
+      'NOT_ABOARD', 'UNREACHABLE_WATER',
+    ]);
+    // The published list must CONTAIN the boat's pair rather than merely resemble it: a later hand
+    // edit that retypes the six literals here and drops the spread in the source would pass the
+    // line above and quietly un-publish the pair on a map that raises it.
+    for (const refusal of BOAT_ORDER_REFUSALS) assert.ok(HERO_ORDER_REFUSALS.includes(refusal), `${refusal} left the published vocabulary`);
 
     // ADR-005's own clause, at the source, because a steerable boat is exactly the kind of thing a
     // rider could quietly take the human's helm with: the browser's singleton door still binds

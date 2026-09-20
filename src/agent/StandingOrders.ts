@@ -215,31 +215,44 @@ export type HeroChannel = {
  */
 export const HERO_ARRIVE_RADIUS = Balance.hero.radius;
 
-/** hero-move-verb: the reasons a MOVE_HERO can refuse, published in the mechanics manifest. */
+/**
+ * E5 REGATTA — the two refusals the steerable Claim-Boat adds, on the same
+ * `{ status: 'failed', reason }` status channel every other refusal uses.
+ *
+ *   NOT_ABOARD        — ashore, where the hull cannot float, ordered out into navigable water past
+ *                       the gangway. The order only makes sense from the deck.
+ *   UNREACHABLE_WATER — aboard, ordered to a point the hull cannot reach that is not a step ashore.
+ *
+ * SLICE 3 PUBLISHES THEM (`specs/agent-play/e5-regatta-steerable-boat.md` law 5, "Refusals are the
+ * standing-order status channel: `NOT_ABOARD`, `UNREACHABLE_WATER`, the existing `UNREACHABLE_*`").
+ * Slice 1 deliberately held them OUT of `HERO_ORDER_REFUSALS` below, with this note: that list is
+ * the PUBLISHED refusal vocabulary, `MechanicsManifest` puts it on every contract's `hero_orders`
+ * rule, and it is pinned verbatim by `scripts/gr-sim.test.mjs` and `e2e/agent-view.spec.ts` — so
+ * publishing them was a CENSUSED act to be done once, with the view bump, the fence, the manifest
+ * and the E5 census pin all moving in the same commit. This is that commit; both pins are
+ * re-pointed in it with the cause "e5-regatta-boat-03: the boat's refusals published".
+ *
+ * They are still declared SEPARATELY rather than typed straight into the list above, because the
+ * separation carries a fact: these two answer only where a contract composes a steerable boat, and
+ * `DeepwaterClaimTile.boatOrderRefusal` is the only thing that can raise them. A rider on any other
+ * map reads them in its vocabulary and will never see one, which is the same honest shape
+ * `CAPTURE`/`GRADE`/`HAUL` already have — a published word an engine may have no consumer for.
+ */
+export const BOAT_ORDER_REFUSALS = ['NOT_ABOARD', 'UNREACHABLE_WATER'] as const;
+
+/**
+ * hero-move-verb: the reasons a MOVE_HERO can refuse, published in the mechanics manifest.
+ *
+ * The four that were always here, then the boat's two, APPENDED rather than interleaved so every
+ * existing index in the published list keeps its meaning for a rider that indexed it.
+ */
 export const HERO_ORDER_REFUSALS = [
   'HERO_NOT_YOURS',
   'UNREACHABLE_TERRAIN',
   'UNREACHABLE_APPROACH',
   'HERO_UNAVAILABLE',
+  ...BOAT_ORDER_REFUSALS,
 ] as const;
-
-/**
- * E5 REGATTA, SLICE 1 — the two refusals the steerable Claim-Boat adds, on the STATUS CHANNEL ONLY
- * (`record.reason`, the same `{ status: 'failed', reason }` shape every other refusal uses). No
- * view field, no verb, no `skill.md` fence.
- *
- * DELIBERATELY NOT APPENDED TO `HERO_ORDER_REFUSALS` ABOVE. That list is the PUBLISHED refusal
- * vocabulary — `MechanicsManifest.ts:117` puts it on every contract's `hero_orders` rule, and it is
- * pinned verbatim by `scripts/gr-sim.test.mjs:913` and `e2e/agent-view.spec.ts:149-151`. Publishing
- * these two is slice 3's own, censused act (the view bump, the fence, the manifest and the E5
- * census pin move together there); doing it here would move a published surface under an
- * unrelated guard and break two pins this slice has no business touching.
- *
- *   NOT_ABOARD        — ashore, where the hull cannot float, ordered out into navigable water past
- *                       the gangway. The order only makes sense from the deck.
- *   UNREACHABLE_WATER — aboard, ordered to a point the hull cannot reach that is not a step ashore.
- */
-export const BOAT_ORDER_REFUSALS = ['NOT_ABOARD', 'UNREACHABLE_WATER'] as const;
 
 /**
  * F-MCAP-1 (`reviews/mare-claim-air-prevalent.md:34`; owner ruling 2026-09-06, verbatim: "(5)
