@@ -1,0 +1,25 @@
+store on 'astra/corrections-2', dirty 0
+store: astra/corrections-2 fast-forwarded onto main (068c0db)
+store main pushed: 068c0db
+base main 24dbd98f8 branch 319d3c917 08:34Z
+merged 4be40ccb2
+single-line law: nothing to flatten
+engine hash merged (store on main 068c0db): 8544c803bfa47d4fd29da04b33ac01ed7f37d2fd6af2ba70c5738abc8d32ab35
+tsc/build/e1: 0 / 0 / 0
+first-town payload: 34250832 bytes
+halo: rc=0 halo re-extraction PASS: 315 cured, 0 held, 760 regenerated-and-cured, 2127 scanned; alpha and opaque RGB unchanged
+null floors: rc=0 83 of 83 null floors match assets/contracts/null-floors.json (295.5s).
+law-pointer: rc=0 law-pointer-guard — do the law surfaces still point at what they claim?
+guards: ℹ pass 95 ℹ fail 0 
+e2e start 08:43Z: e2e/e2-incline.spec.ts e2e/e2-pressure-garden.spec.ts e2e/e3-canyon-works.spec.ts  e2e/landmark-brightness.spec.ts e2e/landmark-collision.spec.ts e2e/fort-landmark-collision.spec.ts e2e/task-025-bandits-dont-swim.spec.ts e2e/m2-01-build-menu.spec.ts
+e2e: rc=0   4 skipped   48 passed (5.2m)  08:48Z
+battery start 08:48Z
+battery: rc=1 ℹ tests 938 ℹ pass 930 ℹ fail 3 ℹ skipped 5  08:56Z
+✖ all 152 scripts/*.test.mjs fixture owners remove their temp directories (216233.490792ms)
+✖ failing tests:
+✖ rotation registry stays outside the engine identity corpus (371.997334ms)
+✖ the landed registry names the live engine and stays outside its hash corpus (270.412334ms)
+dirt after battery: 0
+CORR2-PREP-DONE
+pin #20
+era: ℹ pass 9 ℹ fail 0 
