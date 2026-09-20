@@ -232,7 +232,12 @@ const REGENERATED_SHEETS = new Set([
 ]);
 
 const gitShow = (file) => execFileSync('git', ['show', `${BASE}:${file}`], { maxBuffer: 20 * 1024 * 1024 });
-const baseline = JSON.parse(gitShow(SWEEP));
+// F-A3-3 (the public repo, 2026-09-20): artifacts/** was filtered OUT of the public history, so `git show BASE:artifacts/…`
+// cannot read the banked sweep any more. The tracked copy at HEAD IS the banked sweep — this guard writes the
+// sweep's output over it only inside the try/finally below and restores the saved bytes every run — and the two
+// pins right after it (scanned 1314, suspects 1075) red the moment that copy stops being the baseline. The per-cell
+// byte comparison still reads BASE (assets/processed/** survived the filter; BASE was re-pointed to its surviving id).
+const baseline = JSON.parse(fs.readFileSync(SWEEP, 'utf8'));
 const stem = (file) => path.basename(file).replace(/-r\d+c\d+\.png$/, '').replace(/\.png$/, '');
 const expectedResidual = baseline.suspects.filter(({ file }) => HELD_SHEETS.has(stem(file)) && !REGENERATED_SHEETS.has(stem(file)));
 // A declared stem leaves `cured` whether or not it was ever HELD. Until sprites-split-land every

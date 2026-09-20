@@ -1,0 +1,27 @@
+{
+  "renderGuards": {
+    "exit": 0,
+    "passed": 34,
+    "command": "node --test scripts/glb-contract-guard.test.mjs scripts/terrain-height-sampler.test.mjs scripts/landmark-walk-surfaces.test.mjs scripts/open-sea-water.test.mjs scripts/shared-atlas-plugin.test.mjs",
+    "log": "_raw/run-4/pressure-render-guards.log"
+  },
+  "namedGuards": {
+    "exit": 0,
+    "passed": 3,
+    "command": "GR_GUARD_NO_ARTIFACT=1 node scripts/run-guards.mjs --only test:task-guards,test:citations,test:gate-callers",
+    "log": "_raw/run-4/pressure-named-guards.log"
+  },
+  "changedSince": {
+    "status": "stopped at scope conflict",
+    "command": "GR_GUARD_NO_ARTIFACT=1 node scripts/run-guards.mjs --changed-since 45607635ac06140e69b4388d7b7f83d5f4e3197d",
+    "reason": "Selector unconditionally launches test:node-guards, reserved for the drain by the task. Stopped this owned process tree; the named subset is not a claimed changed-since pass. Same conflict was recorded in run 3 node-gates.json.",
+    "log": "_raw/run-4/pressure-guards.log"
+  },
+  "knownBaseAtlas": {
+    "exit": 1,
+    "passed": 6,
+    "failed": 2,
+    "fingerprint": "shared-atlas-dedupe.spec.ts:94 current production filenames do not match saved census",
+    "log": "_raw/run-4/base-atlas.log"
+  }
+}
