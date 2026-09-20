@@ -1,0 +1,197 @@
+{
+  "key": "idle-e5-flotilla",
+  "tapePath": "tapes/idle-e5-flotilla.json",
+  "contract": "e5-flotilla",
+  "kind": "null-floor",
+  "node": "v26.4.0",
+  "before": {
+    "at": "2026-09-05T16:10:39.990Z",
+    "load": [
+      11.423828125,
+      23.19091796875,
+      21.34326171875
+    ],
+    "freeMemory": 7777665024
+  },
+  "after": {
+    "at": "2026-09-05T16:10:41.723Z",
+    "load": [
+      11.1494140625,
+      22.9384765625,
+      21.2646484375
+    ],
+    "freeMemory": 7211352064
+  },
+  "declaredDurationTicks": 1404,
+  "simulatedSeconds": 46.8,
+  "bootMs": 33.91537500000004,
+  "replayMs": 360.71425,
+  "ticksPerSecond": 3892.277613096793,
+  "realtimeMultiple": 129.74258710322644,
+  "estimateTenMinuteSeconds": 4.6245416666666666,
+  "estimateFormula": "600 seconds / measured realtimeMultiple; extrapolation, not an actual 10-minute tape when duration differs",
+  "tickMs": {
+    "n": 1404,
+    "min": 0.17579200000000128,
+    "p50": 0.20800000000008367,
+    "p95": 0.43591700000001765,
+    "p99": 0.7068329999999605,
+    "max": 8.370457999999871
+  },
+  "tickPath": "sim/idle-e5-flotilla-ticks.json",
+  "result": {
+    "eventLogHash": "fnv1a32:a45ba9ac",
+    "outcome": {
+      "secured": false,
+      "waves": 2,
+      "gold": 0,
+      "timeAlive": 46.8
+    },
+    "ticks": 1404,
+    "engine": "headless-contract-sim"
+  },
+  "expectedHash": "fnv1a32:a45ba9ac",
+  "hashMatches": true,
+  "top20": [
+    {
+      "name": "dispatch",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 124.551
+    },
+    {
+      "name": "multiplyMatrices",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 10385,
+      "column": 18,
+      "selfMs": 27.512
+    },
+    {
+      "name": "get diagnostics",
+      "url": "",
+      "line": 484,
+      "column": 17,
+      "selfMs": 17.537
+    },
+    {
+      "name": "activePositions",
+      "url": "",
+      "line": 1533,
+      "column": 17,
+      "selfMs": 13.212
+    },
+    {
+      "name": "hpBarDiagnostics",
+      "url": "",
+      "line": 1663,
+      "column": 18,
+      "selfMs": 13.183
+    },
+    {
+      "name": "toArray",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 11099,
+      "column": 9,
+      "selfMs": 13.09
+    },
+    {
+      "name": "currentTrickleInterval",
+      "url": "",
+      "line": 641,
+      "column": 24,
+      "selfMs": 12.536
+    },
+    {
+      "name": "(program)",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 10.505
+    },
+    {
+      "name": "step",
+      "url": "",
+      "line": 1318,
+      "column": 6,
+      "selfMs": 10.232
+    },
+    {
+      "name": "terrainSeed",
+      "url": "",
+      "line": 1469,
+      "column": 21,
+      "selfMs": 9.972000000000001
+    },
+    {
+      "name": "setInstanceColor",
+      "url": "",
+      "line": 1743,
+      "column": 18,
+      "selfMs": 8.737
+    },
+    {
+      "name": "update",
+      "url": "",
+      "line": 809,
+      "column": 8,
+      "selfMs": 8.506
+    },
+    {
+      "name": "maxHpForPlacement",
+      "url": "",
+      "line": 1622,
+      "column": 19,
+      "selfMs": 7.978000000000001
+    },
+    {
+      "name": "(anonymous)",
+      "url": "",
+      "line": 3,
+      "column": 49,
+      "selfMs": 7.5169999999999995
+    },
+    {
+      "name": "diagnostics",
+      "url": "",
+      "line": 1795,
+      "column": 13,
+      "selfMs": 6.727
+    },
+    {
+      "name": "update",
+      "url": "",
+      "line": 485,
+      "column": 8,
+      "selfMs": 6.138
+    },
+    {
+      "name": "maxHpForInstance",
+      "url": "",
+      "line": 1619,
+      "column": 18,
+      "selfMs": 6.025
+    },
+    {
+      "name": "terrainFeatures",
+      "url": "",
+      "line": 1193,
+      "column": 25,
+      "selfMs": 5.986000000000001
+    },
+    {
+      "name": "bossBarState",
+      "url": "",
+      "line": 1081,
+      "column": 14,
+      "selfMs": 5.884
+    },
+    {
+      "name": "copy",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 14285,
+      "column": 6,
+      "selfMs": 5.696
+    }
+  ]
+}

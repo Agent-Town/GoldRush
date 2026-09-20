@@ -1,0 +1,269 @@
+{
+  "blender": "5.1.2",
+  "freshReferenceBaseSha": "545f8c499095f68cd2c105d0bc298d3303df4262",
+  "maskTable": "assets/contracts/epoch-8-orbital/mask-tables/e8-low-orbit.json",
+  "terrain": {
+    "sha256": "ea13f1ef199b62987ac650dc60ea028b67a7f3f02692c3210cf4a35a45300ad9",
+    "bytes": 6400560,
+    "meshes": 1,
+    "primitives": 1,
+    "triangles": 32768,
+    "materials": 1,
+    "images": 1,
+    "embeddedImages": 1,
+    "cameras": 0,
+    "lights": 0,
+    "animations": 0,
+    "bounds": {
+      "min": [
+        -64,
+        -5.869689,
+        -64
+      ],
+      "max": [
+        64,
+        1.08,
+        64
+      ],
+      "size": [
+        128,
+        6.949689,
+        128
+      ],
+      "center": [
+        0.0,
+        -2.394844,
+        0.0
+      ]
+    },
+    "materialContract": [
+      {
+        "metallicFactor": 0,
+        "roughnessFactor": 0.8999999761581421,
+        "hasBaseColorTexture": true,
+        "hasEmissiveTexture": false,
+        "emissiveFactor": [
+          0,
+          0,
+          0
+        ]
+      }
+    ]
+  },
+  "panorama": {
+    "sha256": "3b6f952ce511a80797f87c3108208efd43cdbec0acbb15072d7544eafdd2401c",
+    "bytes": 1153624,
+    "meshes": 1,
+    "primitives": 1,
+    "triangles": 2688,
+    "materials": 1,
+    "images": 1,
+    "embeddedImages": 1,
+    "cameras": 0,
+    "lights": 0,
+    "animations": 0,
+    "bounds": {
+      "min": [
+        -190,
+        -5.810005,
+        -190
+      ],
+      "max": [
+        190,
+        132,
+        190
+      ],
+      "size": [
+        380,
+        137.810005,
+        380
+      ],
+      "center": [
+        0.0,
+        63.094998,
+        0.0
+      ]
+    },
+    "materialContract": [
+      {
+        "metallicFactor": 0,
+        "roughnessFactor": 1,
+        "hasBaseColorTexture": true,
+        "hasEmissiveTexture": true,
+        "emissiveFactor": [
+          1,
+          1,
+          1
+        ]
+      }
+    ]
+  },
+  "independentBuildZoneSurfaceFlatness": [
+    {
+      "id": "claw-carcass-yard",
+      "sampledSurfacePoints": 2145,
+      "maxDeviationMeters": 0.0
+    },
+    {
+      "id": "west-scaffold-deck",
+      "sampledSurfacePoints": 2145,
+      "maxDeviationMeters": 0.0
+    },
+    {
+      "id": "east-scaffold-deck",
+      "sampledSurfacePoints": 2145,
+      "maxDeviationMeters": 0.0
+    }
+  ],
+  "geometryProbes": {
+    "westDeck": 0.72,
+    "clawYard": 0.24,
+    "eastDeck": 1.08,
+    "northVoid": -5.4972,
+    "southVoid": -5.3996
+  },
+  "boards": {
+    "e8-extra-mood-ab.png": {
+      "size": [
+        1920,
+        684
+      ],
+      "bytes": 1776913,
+      "sha256": "76924e6663e6343a2a908aa62036f29dac3d888dfbe0a05ff0d1a50fa5f1536b"
+    },
+    "e8-extra-flat-vs-sculpted-ab.png": {
+      "size": [
+        1920,
+        684
+      ],
+      "bytes": 627312,
+      "sha256": "782549bde4fa601ddb95f7a9de9c9ae9533fa0263d5e3f8a41289623e071729d"
+    },
+    "e8-extra-owner-verdict.png": {
+      "size": [
+        1920,
+        504
+      ],
+      "bytes": 683454,
+      "sha256": "586b5dc347311d8670d777fbd7855c519df2297eaeed1bdd7338963f9e66fb41"
+    },
+    "e8-extra-panorama-mood-ab.png": {
+      "size": [
+        1920,
+        504
+      ],
+      "bytes": 416326,
+      "sha256": "8bf3ecaaec1674e534dc769465ebf7cd255bc000289df1ef1dc5bbbe13315896"
+    },
+    "e8-extra-panorama-distance-gate.png": {
+      "size": [
+        1920,
+        684
+      ],
+      "bytes": 745508,
+      "sha256": "d4531a7369dfe9d69c4f9fbf8fbdfebeabb164de11743c6d1989b777459d3ede"
+    },
+    "e8-extra-mask-agreement-board.png": {
+      "size": [
+        1280,
+        1260
+      ],
+      "bytes": 603242,
+      "sha256": "1fd9016b5ad3467a84e69a49904380959e4ebd9091836cde9f6e7eb6660decf0"
+    }
+  },
+  "variantReuse": {
+    "decision": {
+      "e8-far-side": "reuses tileId e8-mare-claim; no new sculpt",
+      "e8-eclipse": "reuses tileId e8-mare-claim; no new sculpt"
+    },
+    "sharedTerrainBuildZoneAudit": {
+      "e8-far-side": {
+        "tileId": "e8-mare-claim",
+        "sharedTerrain": "e8-mare-claim",
+        "allBuildZonesRenderFlat": false,
+        "zones": [
+          {
+            "id": "far-side-landing-yard",
+            "sampledSurfacePoints": 2145,
+            "minHeightMeters": 0.0,
+            "maxHeightMeters": 6.0,
+            "maxDeviationMeters": 6.0,
+            "renderFlat": false
+          },
+          {
+            "id": "listening-probe-recovery",
+            "sampledSurfacePoints": 2145,
+            "minHeightMeters": 0.0,
+            "maxHeightMeters": 6.0,
+            "maxDeviationMeters": 6.0,
+            "renderFlat": false
+          }
+        ]
+      },
+      "e8-eclipse": {
+        "tileId": "e8-mare-claim",
+        "sharedTerrain": "e8-mare-claim",
+        "allBuildZonesRenderFlat": true,
+        "zones": [
+          {
+            "id": "rim-premium-pad-west",
+            "sampledSurfacePoints": 2145,
+            "minHeightMeters": 6.0,
+            "maxHeightMeters": 6.0,
+            "maxDeviationMeters": 0.0,
+            "renderFlat": true
+          },
+          {
+            "id": "rim-premium-pad-east",
+            "sampledSurfacePoints": 2145,
+            "minHeightMeters": 6.0,
+            "maxHeightMeters": 6.0,
+            "maxDeviationMeters": 0.0,
+            "renderFlat": true
+          },
+          {
+            "id": "dome-cluster-pad-west",
+            "sampledSurfacePoints": 2145,
+            "minHeightMeters": 0.0,
+            "maxHeightMeters": 0.0,
+            "maxDeviationMeters": 0.0,
+            "renderFlat": true
+          },
+          {
+            "id": "dome-cluster-pad-center",
+            "sampledSurfacePoints": 2145,
+            "minHeightMeters": 0.0,
+            "maxHeightMeters": 0.0,
+            "maxDeviationMeters": 0.0,
+            "renderFlat": true
+          },
+          {
+            "id": "dome-cluster-pad-east",
+            "sampledSurfacePoints": 2145,
+            "minHeightMeters": 0.0,
+            "maxHeightMeters": 0.0,
+            "maxDeviationMeters": 0.0,
+            "renderFlat": true
+          },
+          {
+            "id": "launch-pad",
+            "sampledSurfacePoints": 2145,
+            "minHeightMeters": 0.0,
+            "maxHeightMeters": 0.0,
+            "maxDeviationMeters": 0.0,
+            "renderFlat": true
+          },
+          {
+            "id": "mass-driver-rail-footing",
+            "sampledSurfacePoints": 2145,
+            "minHeightMeters": 0.0,
+            "maxHeightMeters": 0.0,
+            "maxDeviationMeters": 0.0,
+            "renderFlat": true
+          }
+        ]
+      }
+    }
+  }
+}

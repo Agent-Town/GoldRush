@@ -1,0 +1,6 @@
+nul-audit: corpus 18053 text subject(s) — 17828 read, 225 empty.
+nul-audit: excluded 12311 known-binary, 99 UNCLASSIFIED of 30463 tracked file(s).
+  ⓘ  UNCLASSIFIED (not audited, not known-binary): .cpuprofile×29 (no extension)×11 .bak×11 .exit×6 .summary×5 .viewlog×4 .stale×4 .req×4 .hold×3 .sha256×3 .db-shm×2 .db-wal×2 .stderr×2 .timer×2 .stranded-1e057810×1 .lock×1 .attested×1 .disabled×1 .blocked-seen×1 .salvaged×1 .sha×1 .probe×1 .pid×1 .cured×1 .mts×1
+     Add each to TEXT_EXT or BINARY_EXT — this list is how a new suffix
+     announces itself instead of silently leaving the corpus.
+nul-audit: CLEAN — no raw NUL bytes in tracked text sources.

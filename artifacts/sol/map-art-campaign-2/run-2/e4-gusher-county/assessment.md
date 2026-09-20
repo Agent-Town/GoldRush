@@ -1,0 +1,3 @@
+UNACCEPTED: foreground roof partly hides the player at entry; saturated red block forms and coarse dark ground dominate; the plate's derrick, pipe and oil-channel network is not communicated, with severe portrait crowding.
+
+Both entry viewports put the player behind the camp roof. Desktop includes a second small block and a vehicle, while portrait is largely roof, ground and UI; neither communicates the plate's dense but structured oil field. The obvious correspondence gaps concern silhouette, material identity, context and actor visibility. Correcting them safely needs landmark/entry design and actor-occlusion ownership, rather than moving mounts or changing their gameplay footprints in an art verdict. No production change was made.

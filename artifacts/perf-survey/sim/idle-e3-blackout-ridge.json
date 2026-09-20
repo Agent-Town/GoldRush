@@ -1,0 +1,197 @@
+{
+  "key": "idle-e3-blackout-ridge",
+  "tapePath": "tapes/idle-e3-blackout-ridge.json",
+  "contract": "e3-blackout-ridge",
+  "kind": "null-floor",
+  "node": "v26.4.0",
+  "before": {
+    "at": "2026-09-05T16:02:44.576Z",
+    "load": [
+      31.484375,
+      12.02490234375,
+      13.091796875
+    ],
+    "freeMemory": 4967104512
+  },
+  "after": {
+    "at": "2026-09-05T16:02:48.273Z",
+    "load": [
+      36.490234375,
+      13.3857421875,
+      13.5654296875
+    ],
+    "freeMemory": 4857102336
+  },
+  "declaredDurationTicks": 4694,
+  "simulatedSeconds": 156.46666666666667,
+  "bootMs": 35.37087500000007,
+  "replayMs": 2462.872542,
+  "ticksPerSecond": 1905.9045565501294,
+  "realtimeMultiple": 63.530151885004315,
+  "estimateTenMinuteSeconds": 9.444334417554325,
+  "estimateFormula": "600 seconds / measured realtimeMultiple; extrapolation, not an actual 10-minute tape when duration differs",
+  "tickMs": {
+    "n": 4694,
+    "min": 0.23841700000002675,
+    "p50": 0.48766599999999016,
+    "p95": 0.892917000000125,
+    "p99": 1.01037499999984,
+    "max": 6.914999999999964
+  },
+  "tickPath": "sim/idle-e3-blackout-ridge-ticks.json",
+  "result": {
+    "eventLogHash": "fnv1a32:a45ba9ac",
+    "outcome": {
+      "secured": false,
+      "waves": 5,
+      "gold": 0,
+      "timeAlive": 156.467
+    },
+    "ticks": 4694,
+    "engine": "headless-contract-sim"
+  },
+  "expectedHash": "fnv1a32:a45ba9ac",
+  "hashMatches": true,
+  "top20": [
+    {
+      "name": "terrainSeed",
+      "url": "",
+      "line": 1469,
+      "column": 21,
+      "selfMs": 471.85299999999995
+    },
+    {
+      "name": "terrainHash",
+      "url": "",
+      "line": 1486,
+      "column": 21,
+      "selfMs": 289.8740000000001
+    },
+    {
+      "name": "stableProbeMask",
+      "url": "",
+      "line": 1266,
+      "column": 25,
+      "selfMs": 128.763
+    },
+    {
+      "name": "dispatch",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 113.882
+    },
+    {
+      "name": "get diagnostics",
+      "url": "",
+      "line": 484,
+      "column": 17,
+      "selfMs": 108.98500000000001
+    },
+    {
+      "name": "terrainFeatures",
+      "url": "",
+      "line": 1193,
+      "column": 25,
+      "selfMs": 80.335
+    },
+    {
+      "name": "channelMask",
+      "url": "",
+      "line": 1247,
+      "column": 21,
+      "selfMs": 63.17500000000001
+    },
+    {
+      "name": "multiplyMatrices",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 10385,
+      "column": 18,
+      "selfMs": 58.529
+    },
+    {
+      "name": "maxHpForInstance",
+      "url": "",
+      "line": 1619,
+      "column": 18,
+      "selfMs": 45.166000000000004
+    },
+    {
+      "name": "#getSearchFromContext",
+      "url": "node:internal/url",
+      "line": 889,
+      "column": 24,
+      "selfMs": 44.74000000000001
+    },
+    {
+      "name": "currentTrickleInterval",
+      "url": "",
+      "line": 641,
+      "column": 24,
+      "selfMs": 39.291000000000004
+    },
+    {
+      "name": "activePositions",
+      "url": "",
+      "line": 1533,
+      "column": 17,
+      "selfMs": 37.73
+    },
+    {
+      "name": "(garbage collector)",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 37.394
+    },
+    {
+      "name": "hpDiagnostics",
+      "url": "",
+      "line": 1631,
+      "column": 15,
+      "selfMs": 37.300000000000004
+    },
+    {
+      "name": "(program)",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 34.887
+    },
+    {
+      "name": "maxHpForPlacement",
+      "url": "",
+      "line": 1622,
+      "column": 19,
+      "selfMs": 34.244
+    },
+    {
+      "name": "valueNoise",
+      "url": "",
+      "line": 1475,
+      "column": 20,
+      "selfMs": 33.331
+    },
+    {
+      "name": "solveDefinition",
+      "url": "",
+      "line": 396,
+      "column": 25,
+      "selfMs": 31.127
+    },
+    {
+      "name": "sampleHeightFamily",
+      "url": "",
+      "line": 422,
+      "column": 28,
+      "selfMs": 29.741
+    },
+    {
+      "name": "toArray",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 11099,
+      "column": 9,
+      "selfMs": 29.475
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+=== BEFORE tree (8b7371a4e, pre-prototype) ===
+ src/entities/pools.ts        | 65 +-------------------------------------------
+ src/systems/WrangleSystem.ts | 32 ++--------------------
+ 2 files changed, 3 insertions(+), 94 deletions(-)
+
+-- glow-mesa idle-01 (BEFORE) --
+{"contract":"e6-glow-mesa","seed":"e6-glow-mesa-01","policy":"idle","secured":false,"waves":18,"kills":108,"gold":0,"timeMs":540000,"eventLogHash":"fnv1a32:35d13711","endReason":"wave-ceiling","poolCapacity":96,"aliveEnd":96,"alivePeak":96,"exhaustedEnd":91,"exhaustedPeak":91,"poolSaturatedFromWave":7,"poolSaturatedTurns":12,"turns":24}
+-- glow-mesa PROVER seed 01 (BEFORE) --
+{"secured":true,"waves":10,"timeMs":322633,"gold":86,"kills":211,"calls":27,"defaultedPicks":9,"defaultedSecure":0,"eventLogHash":"fnv1a32:05c8ab36"}
+-- glow-mesa PROVER seed 02 (BEFORE) --
+{"secured":true,"waves":10,"timeMs":320667,"gold":57,"kills":234,"calls":27,"defaultedPicks":9,"defaultedSecure":0,"eventLogHash":"fnv1a32:a94b5780"}
+
+=== restoring, then AFTER tree (HEAD) ===
+-- glow-mesa PROVER seed 02 (AFTER) --
+{"secured":true,"waves":10,"timeMs":318867,"gold":57,"kills":235,"calls":25,"defaultedPicks":9,"defaultedSecure":0,"eventLogHash":"fnv1a32:c01c1975"}
+done.

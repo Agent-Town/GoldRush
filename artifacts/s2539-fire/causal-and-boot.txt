@@ -1,0 +1,74 @@
+gate battery transcript (append-only — see scripts/gate-battery.mjs)
+
+
+######## BATTERY 2026-09-07T11:47:56.723Z — s2539 retained causal arrangement and corrected boot launch ########
+cwd=/private/tmp/gr-gate-s2539
+env+ PATH=/Users/robin/.nvm/versions/node/v26.4.0/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin GR_CAPTURE_EXTERNAL_SERVER=1 GR_CAPTURE_BASE_URL=http://127.0.0.1:5329 PROBE_BASE=http://127.0.0.1:5329
+
+===== controlled input collision both projects =====
+$ npx playwright test e2e/m2-01-build-menu.spec.ts --grep palisade footprint rejects overlap --project=desktop-chrome --project=mobile-chrome --workers=1 --trace=off --reporter=line --output=artifacts/s2539-gate/controlled
+rc=1 11.2s
+
+Running 2 tests using 1 worker
+
+
+
+[1/2] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining
+  1) [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 2
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      214 |     return samples;
+      215 |   });
+    > 216 |   await expect.poll(() => buildableCount(page, 'palisade')).toBe(1);
+          |                                                             ^
+      217 |   expect(await gold(page)).toBe(40);
+      218 |   fs.mkdirSync(path.resolve('artifacts/m2-palisade-placement-diagnosis'), { recursive: true });
+      219 |   fs.writeFileSync(
+        at /private/tmp/gr-gate-s2539/e2e/m2-01-build-menu.spec.ts:216:61
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/s2539-gate/controlled/m2-01-build-menu-palisade--49d2a-llowing-edge-touch-chaining-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/s2539-gate/controlled/m2-01-build-menu-palisade--49d2a-llowing-edge-touch-chaining-desktop-chrome/error-context.md
+
+
+
+
+[2/2] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining
+  1 failed
+    [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining 
+  1 passed (10.8s)
+(node:24786) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:24862) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+===== plain desktop and 390px boot =====
+$ node scripts/probe-plain-boot-console.mjs
+rc=0 11.3s
+--- desktop (1280x800) ---
+  frames ok · console types: debug, info
+  errors: 0 []
+  warnings: 0 []
+  pageErrors: 0 []
+  >>> new guard's "Tile state read failed" warns: 0 (MUST be 0)
+--- mobile-390 (390x844) ---
+  frames ok · console types: debug, info
+  errors: 0 []
+  warnings: 0 []
+  pageErrors: 0 []
+  >>> new guard's "Tile state read failed" warns: 0 (MUST be 0)
+PROBE CLEAN
+
+
+SUMMARY {"controlled input collision both projects":1,"plain desktop and 390px boot":0}
+OVERALL rc=1

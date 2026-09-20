@@ -1,0 +1,2419 @@
+{
+  "source": "artifacts/gauntlet-heat12-20260905/rides",
+  "generatedFrom": "artifacts/rider-parity-grammar/tape-inventory.mjs",
+  "tapes": 89,
+  "scoredTapes": 24,
+  "ridesWithTapes": 25,
+  "ridesWithScoredTape": 24,
+  "summary": {
+    "removed": {
+      "tapes": 57,
+      "scored": 22
+    },
+    "rebased": {
+      "tapes": 37,
+      "scored": 15
+    },
+    "repair": {
+      "tapes": 14,
+      "scored": 5
+    },
+    "survivingScored": [
+      "e3-canyon-works.attempt-1/attempt-1-tape.json",
+      "e9-dome-basin/tune-1-tape.json"
+    ]
+  },
+  "rows": [
+    {
+      "ride": "e1-baron",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e1-baron/work/tune-1.json",
+      "name": "tune-1.json",
+      "scored": true,
+      "tapeId": "agent-454a4585-356542d5-cc71-4209-9bd9-279bf6858e42",
+      "contract": "e1-baron",
+      "seed": "e1-baron-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": "fnv1a32:41f0518d",
+      "durationTicks": 16086,
+      "submissions": 137,
+      "verbs": {
+        "HARVEST": 3068,
+        "HOLD": 137,
+        "BUILD": 118,
+        "BLAST_AT": 89,
+        "MOVE_TO": 40,
+        "CONTEXT_ACTION": 40,
+        "REPAIR_UNDER": 31,
+        "PICK_UPGRADE": 27
+      },
+      "carriesRemoved": [
+        "HOLD",
+        "MOVE_TO"
+      ],
+      "carriesRebased": [
+        "CONTEXT_ACTION"
+      ],
+      "carriesRepair": [
+        "REPAIR_UNDER"
+      ]
+    },
+    {
+      "ride": "e1-baron",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e1-baron/work/tune-2.json",
+      "name": "tune-2.json",
+      "scored": false,
+      "tapeId": "agent-ee3fa6fe-a1f17921-598e-4116-bd84-10d3548690fb",
+      "contract": "e1-baron",
+      "seed": "e1-baron-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": null,
+      "durationTicks": 16226,
+      "submissions": 145,
+      "verbs": {
+        "HARVEST": 3536,
+        "HOLD": 145,
+        "BUILD": 118,
+        "BLAST_AT": 85,
+        "MOVE_TO": 74,
+        "CONTEXT_ACTION": 74,
+        "REPAIR_UNDER": 48,
+        "PICK_UPGRADE": 27
+      },
+      "carriesRemoved": [
+        "HOLD",
+        "MOVE_TO"
+      ],
+      "carriesRebased": [
+        "CONTEXT_ACTION"
+      ],
+      "carriesRepair": [
+        "REPAIR_UNDER"
+      ]
+    },
+    {
+      "ride": "e1-drill-yard",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e1-drill-yard/work/attempt-1-tape.json",
+      "name": "attempt-1-tape.json",
+      "scored": true,
+      "tapeId": "agent-c91b6e59-2514e50c-1b43-4f42-abae-6be06ccbb88d",
+      "contract": "e1-drill-yard",
+      "seed": "gold-rush",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": "fnv1a32:ff497859",
+      "durationTicks": 1801,
+      "submissions": 6,
+      "verbs": {
+        "HARVEST": 93,
+        "HOLD": 3,
+        "PICK_UPGRADE": 1
+      },
+      "carriesRemoved": [
+        "HOLD"
+      ],
+      "carriesRebased": [],
+      "carriesRepair": []
+    },
+    {
+      "ride": "e1-drill-yard",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e1-drill-yard/work/probe-idle-tape.json",
+      "name": "probe-idle-tape.json",
+      "scored": false,
+      "tapeId": "agent-1af6ec3a-ff9fabb9-dda4-41ed-8b55-96b26ac64204",
+      "contract": "e1-drill-yard",
+      "seed": "gold-rush",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": null,
+      "durationTicks": 1801,
+      "submissions": 0,
+      "verbs": {},
+      "carriesRemoved": [],
+      "carriesRebased": [],
+      "carriesRepair": []
+    },
+    {
+      "ride": "e1-drill-yard",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e1-drill-yard/work/tune-1-tape.json",
+      "name": "tune-1-tape.json",
+      "scored": false,
+      "tapeId": "agent-c91b6e59-b672bd42-8f1f-41e7-972c-917587ac71c3",
+      "contract": "e1-drill-yard",
+      "seed": "gold-rush",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": null,
+      "durationTicks": 1801,
+      "submissions": 6,
+      "verbs": {
+        "HARVEST": 93,
+        "HOLD": 3,
+        "PICK_UPGRADE": 1
+      },
+      "carriesRemoved": [
+        "HOLD"
+      ],
+      "carriesRebased": [],
+      "carriesRepair": []
+    },
+    {
+      "ride": "e1-drill-yard",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e1-drill-yard/work/tune-2-tape.json",
+      "name": "tune-2-tape.json",
+      "scored": false,
+      "tapeId": "agent-626c997d-5b9c09f8-e8ee-4498-a96c-974411180493",
+      "contract": "e1-drill-yard",
+      "seed": "gold-rush",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": null,
+      "durationTicks": 1801,
+      "submissions": 12,
+      "verbs": {
+        "HARVEST": 371,
+        "HOLD": 12,
+        "PICK_UPGRADE": 1
+      },
+      "carriesRemoved": [
+        "HOLD"
+      ],
+      "carriesRebased": [],
+      "carriesRepair": []
+    },
+    {
+      "ride": "e1-night-shift",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e1-night-shift/work/attempt-1-tape.json",
+      "name": "attempt-1-tape.json",
+      "scored": true,
+      "tapeId": "agent-f255bbbc-022dd78b-1973-4fd6-b333-e77f3a434bb2",
+      "contract": "e1-night-shift",
+      "seed": "e1-night-shift-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": "fnv1a32:94ab6114",
+      "durationTicks": 18462,
+      "submissions": 123,
+      "verbs": {
+        "HARVEST": 3189,
+        "HOLD": 123,
+        "BLAST_AT": 91,
+        "REPAIR_UNDER": 50,
+        "PICK_UPGRADE": 29,
+        "BUILD": 16
+      },
+      "carriesRemoved": [
+        "HOLD"
+      ],
+      "carriesRebased": [],
+      "carriesRepair": [
+        "REPAIR_UNDER"
+      ]
+    },
+    {
+      "ride": "e1-night-shift",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e1-night-shift/work/probe-idle.json",
+      "name": "probe-idle.json",
+      "scored": false,
+      "tapeId": "agent-af877028-35d0477f-4cbe-4416-bc30-cfd0465137a0",
+      "contract": "e1-night-shift",
+      "seed": "e1-night-shift-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": null,
+      "durationTicks": 4438,
+      "submissions": 0,
+      "verbs": {},
+      "carriesRemoved": [],
+      "carriesRebased": [],
+      "carriesRepair": []
+    },
+    {
+      "ride": "e1-night-shift",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e1-night-shift/work/tune-1-tape.json",
+      "name": "tune-1-tape.json",
+      "scored": false,
+      "tapeId": "agent-3f0121bc-ebf23fa4-d7f1-4114-99d0-e8b346758776",
+      "contract": "e1-night-shift",
+      "seed": "e1-night-shift-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": null,
+      "durationTicks": 18430,
+      "submissions": 117,
+      "verbs": {
+        "HARVEST": 2972,
+        "HOLD": 117,
+        "BLAST_AT": 88,
+        "REPAIR_UNDER": 55,
+        "PICK_UPGRADE": 28,
+        "BUILD": 15
+      },
+      "carriesRemoved": [
+        "HOLD"
+      ],
+      "carriesRebased": [],
+      "carriesRepair": [
+        "REPAIR_UNDER"
+      ]
+    },
+    {
+      "ride": "e2-hill-mine",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e2-hill-mine/work/attempt-1-tape.json",
+      "name": "attempt-1-tape.json",
+      "scored": true,
+      "tapeId": "agent-79d13893-f57ad81f-41e7-452e-94ba-087d1bbffabb",
+      "contract": "e2-hill-mine",
+      "seed": "e2-hill-mine-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": "fnv1a32:d00d8e69",
+      "durationTicks": 14117,
+      "submissions": 142,
+      "verbs": {
+        "HARVEST": 2722,
+        "HOLD": 142,
+        "BLAST_AT": 74,
+        "REPAIR_UNDER": 55,
+        "PICK_UPGRADE": 22,
+        "BUILD": 12
+      },
+      "carriesRemoved": [
+        "HOLD"
+      ],
+      "carriesRebased": [],
+      "carriesRepair": [
+        "REPAIR_UNDER"
+      ]
+    },
+    {
+      "ride": "e2-hill-mine",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e2-hill-mine/work/tune-1-tape.json",
+      "name": "tune-1-tape.json",
+      "scored": false,
+      "tapeId": "agent-50a10e91-b6d8732c-e713-4bb0-8745-edd7caae59ff",
+      "contract": "e2-hill-mine",
+      "seed": "e2-hill-mine-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": null,
+      "durationTicks": 12501,
+      "submissions": 119,
+      "verbs": {
+        "HARVEST": 2514,
+        "HOLD": 119,
+        "BLAST_AT": 63,
+        "REPAIR_UNDER": 49,
+        "PICK_UPGRADE": 19,
+        "BUILD": 11
+      },
+      "carriesRemoved": [
+        "HOLD"
+      ],
+      "carriesRebased": [],
+      "carriesRepair": [
+        "REPAIR_UNDER"
+      ]
+    },
+    {
+      "ride": "e2-hill-mine",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e2-hill-mine/work/tune-2-tape.json",
+      "name": "tune-2-tape.json",
+      "scored": false,
+      "tapeId": "agent-04567062-b5c2eb1e-9f47-48fa-8773-e584d8b3dd35",
+      "contract": "e2-hill-mine",
+      "seed": "e2-hill-mine-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": null,
+      "durationTicks": 11163,
+      "submissions": 177,
+      "verbs": {
+        "HARVEST": 4311,
+        "HOLD": 177,
+        "REPAIR_UNDER": 100,
+        "BLAST_AT": 63,
+        "BUILD": 41,
+        "PICK_UPGRADE": 17
+      },
+      "carriesRemoved": [
+        "HOLD"
+      ],
+      "carriesRebased": [],
+      "carriesRepair": [
+        "REPAIR_UNDER"
+      ]
+    },
+    {
+      "ride": "e3-canyon-works",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e3-canyon-works/work/attempt-1-tape.json",
+      "name": "attempt-1-tape.json",
+      "scored": true,
+      "tapeId": "agent-d5f94574-bea24874-619b-41e4-93a3-54f3718ab9eb",
+      "contract": "e3-canyon-works",
+      "seed": "e3-canyon-works-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": "fnv1a32:d5528e07",
+      "durationTicks": 18000,
+      "submissions": 43,
+      "verbs": {
+        "HARVEST": 959,
+        "BUILD": 72,
+        "HOLD": 43,
+        "BLAST_AT": 33,
+        "PICK_UPGRADE": 5
+      },
+      "carriesRemoved": [
+        "HOLD"
+      ],
+      "carriesRebased": [],
+      "carriesRepair": []
+    },
+    {
+      "ride": "e3-canyon-works",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e3-canyon-works/work/probe-idle.json",
+      "name": "probe-idle.json",
+      "scored": false,
+      "tapeId": "agent-c4357fba-27b84c14-30ae-4d6c-b808-9fbff920552a",
+      "contract": "e3-canyon-works",
+      "seed": "e3-canyon-works-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": null,
+      "durationTicks": 2948,
+      "submissions": 0,
+      "verbs": {},
+      "carriesRemoved": [],
+      "carriesRebased": [],
+      "carriesRepair": []
+    },
+    {
+      "ride": "e3-canyon-works",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e3-canyon-works/work/probe-panonly.json",
+      "name": "probe-panonly.json",
+      "scored": false,
+      "tapeId": "agent-c39748e0-a858a559-cd58-46b4-a474-d2047322ebe3",
+      "contract": "e3-canyon-works",
+      "seed": "e3-canyon-works-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": null,
+      "durationTicks": 3048,
+      "submissions": 8,
+      "verbs": {
+        "HARVEST": 89,
+        "BLAST_AT": 8,
+        "HOLD": 8,
+        "PICK_UPGRADE": 2
+      },
+      "carriesRemoved": [
+        "HOLD"
+      ],
+      "carriesRebased": [],
+      "carriesRepair": []
+    },
+    {
+      "ride": "e3-canyon-works",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e3-canyon-works/work/tune-1-tape.json",
+      "name": "tune-1-tape.json",
+      "scored": false,
+      "tapeId": "agent-d5f94574-bea24874-619b-41e4-93a3-54f3718ab9eb",
+      "contract": "e3-canyon-works",
+      "seed": "e3-canyon-works-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": null,
+      "durationTicks": 18000,
+      "submissions": 43,
+      "verbs": {
+        "HARVEST": 959,
+        "BUILD": 72,
+        "HOLD": 43,
+        "BLAST_AT": 33,
+        "PICK_UPGRADE": 5
+      },
+      "carriesRemoved": [
+        "HOLD"
+      ],
+      "carriesRebased": [],
+      "carriesRepair": []
+    },
+    {
+      "ride": "e3-canyon-works.attempt-1",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e3-canyon-works.attempt-1/work/attempt-1-tape.json",
+      "name": "attempt-1-tape.json",
+      "scored": true,
+      "tapeId": "agent-9284f916-48c7172d-7762-4e69-a80a-b6ed50c2c1cd",
+      "contract": "e3-canyon-works",
+      "seed": "e3-canyon-works-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": "fnv1a32:8e30df40",
+      "durationTicks": 3195,
+      "submissions": 12,
+      "verbs": {
+        "HARVEST": 382,
+        "PICK_UPGRADE": 2
+      },
+      "carriesRemoved": [],
+      "carriesRebased": [],
+      "carriesRepair": []
+    },
+    {
+      "ride": "e3-canyon-works.attempt-1",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e3-canyon-works.attempt-1/work/probe-idle.json",
+      "name": "probe-idle.json",
+      "scored": false,
+      "tapeId": "agent-c4357fba-d4a2e29d-6b8a-4c60-9541-eeef2f278b9b",
+      "contract": "e3-canyon-works",
+      "seed": "e3-canyon-works-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": null,
+      "durationTicks": 2948,
+      "submissions": 0,
+      "verbs": {},
+      "carriesRemoved": [],
+      "carriesRebased": [],
+      "carriesRepair": []
+    },
+    {
+      "ride": "e3-canyon-works.attempt-1",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e3-canyon-works.attempt-1/work/tune-1-tape.json",
+      "name": "tune-1-tape.json",
+      "scored": false,
+      "tapeId": "agent-22b90adc-e90c229c-46c3-46fa-95af-f85875edc127",
+      "contract": "e3-canyon-works",
+      "seed": "e3-canyon-works-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": null,
+      "durationTicks": 3195,
+      "submissions": 7,
+      "verbs": {
+        "HARVEST": 148,
+        "PICK_UPGRADE": 2
+      },
+      "carriesRemoved": [],
+      "carriesRebased": [],
+      "carriesRepair": []
+    },
+    {
+      "ride": "e3-canyon-works.attempt-1",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e3-canyon-works.attempt-1/work/tune-2-tape.json",
+      "name": "tune-2-tape.json",
+      "scored": false,
+      "tapeId": "agent-971468f4-293fa300-bbe7-4d15-a86f-72952d65a7a4",
+      "contract": "e3-canyon-works",
+      "seed": "e3-canyon-works-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": null,
+      "durationTicks": 3195,
+      "submissions": 8,
+      "verbs": {
+        "HARVEST": 118,
+        "PICK_UPGRADE": 2
+      },
+      "carriesRemoved": [],
+      "carriesRebased": [],
+      "carriesRepair": []
+    },
+    {
+      "ride": "e3-canyon-works.attempt-1",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e3-canyon-works.attempt-1/work/tune-3-tape.json",
+      "name": "tune-3-tape.json",
+      "scored": false,
+      "tapeId": "agent-9284f916-48c7172d-7762-4e69-a80a-b6ed50c2c1cd",
+      "contract": "e3-canyon-works",
+      "seed": "e3-canyon-works-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": null,
+      "durationTicks": 3195,
+      "submissions": 12,
+      "verbs": {
+        "HARVEST": 382,
+        "PICK_UPGRADE": 2
+      },
+      "carriesRemoved": [],
+      "carriesRebased": [],
+      "carriesRepair": []
+    },
+    {
+      "ride": "e3-canyon-works.attempt-1",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e3-canyon-works.attempt-1/work/tune-4-tape.json",
+      "name": "tune-4-tape.json",
+      "scored": false,
+      "tapeId": "agent-189b4906-37defb22-451e-4cd4-9036-f8d6f41bdaa0",
+      "contract": "e3-canyon-works",
+      "seed": "e3-canyon-works-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": null,
+      "durationTicks": 3195,
+      "submissions": 11,
+      "verbs": {
+        "HARVEST": 338,
+        "BUILD": 12,
+        "PICK_UPGRADE": 2
+      },
+      "carriesRemoved": [],
+      "carriesRebased": [],
+      "carriesRepair": []
+    },
+    {
+      "ride": "e3-moth-season",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e3-moth-season/work/attempt-1-tape.json",
+      "name": "attempt-1-tape.json",
+      "scored": true,
+      "tapeId": "agent-7739d978-82ca7118-bd78-4b36-ae7c-9051ac88d5e7",
+      "contract": "e3-moth-season",
+      "seed": "e3-moth-season-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": "fnv1a32:b98efd5e",
+      "durationTicks": 10801,
+      "submissions": 54,
+      "verbs": {
+        "HARVEST": 1080,
+        "BLAST_AT": 36,
+        "PICK_UPGRADE": 15,
+        "BUILD": 6,
+        "HOLD": 3,
+        "SECURE_CHOICE": 1
+      },
+      "carriesRemoved": [
+        "HOLD"
+      ],
+      "carriesRebased": [],
+      "carriesRepair": []
+    },
+    {
+      "ride": "e3-moth-season",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e3-moth-season/work/probe-idle-tape.json",
+      "name": "probe-idle-tape.json",
+      "scored": false,
+      "tapeId": "agent-2eab273a-f3cc25e2-2024-4819-81d2-c43f6b6d3be6",
+      "contract": "e3-moth-season",
+      "seed": "e3-moth-season-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": null,
+      "durationTicks": 3675,
+      "submissions": 0,
+      "verbs": {},
+      "carriesRemoved": [],
+      "carriesRebased": [],
+      "carriesRepair": []
+    },
+    {
+      "ride": "e3-moth-season",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e3-moth-season/work/tune-1-tape.json",
+      "name": "tune-1-tape.json",
+      "scored": false,
+      "tapeId": "agent-4a9196df-a3a4ef53-64b2-4a68-930f-1619a0889a02",
+      "contract": "e3-moth-season",
+      "seed": "e3-moth-season-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": null,
+      "durationTicks": 7432,
+      "submissions": 121,
+      "verbs": {
+        "HARVEST": 3734,
+        "REPAIR_UNDER": 107,
+        "BUILD": 20,
+        "PICK_UPGRADE": 11
+      },
+      "carriesRemoved": [],
+      "carriesRebased": [],
+      "carriesRepair": [
+        "REPAIR_UNDER"
+      ]
+    },
+    {
+      "ride": "e3-moth-season",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e3-moth-season/work/tune-2-tape.json",
+      "name": "tune-2-tape.json",
+      "scored": false,
+      "tapeId": "agent-bb5bd22d-05d4afb3-678b-49b5-9bbd-a110654667b3",
+      "contract": "e3-moth-season",
+      "seed": "e3-moth-season-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": null,
+      "durationTicks": 6936,
+      "submissions": 31,
+      "verbs": {
+        "HARVEST": 52,
+        "BLAST_AT": 20,
+        "PICK_UPGRADE": 9,
+        "BUILD": 2
+      },
+      "carriesRemoved": [],
+      "carriesRebased": [],
+      "carriesRepair": []
+    },
+    {
+      "ride": "e3-moth-season",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e3-moth-season/work/tune-3-tape.json",
+      "name": "tune-3-tape.json",
+      "scored": false,
+      "tapeId": "agent-7739d978-82ca7118-bd78-4b36-ae7c-9051ac88d5e7",
+      "contract": "e3-moth-season",
+      "seed": "e3-moth-season-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": null,
+      "durationTicks": 10801,
+      "submissions": 54,
+      "verbs": {
+        "HARVEST": 1080,
+        "BLAST_AT": 36,
+        "PICK_UPGRADE": 15,
+        "BUILD": 6,
+        "HOLD": 3,
+        "SECURE_CHOICE": 1
+      },
+      "carriesRemoved": [
+        "HOLD"
+      ],
+      "carriesRebased": [],
+      "carriesRepair": []
+    },
+    {
+      "ride": "e3-moth-season.DNF-operator-halt",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e3-moth-season.DNF-operator-halt/work/probe-idle-tape.json",
+      "name": "probe-idle-tape.json",
+      "scored": false,
+      "tapeId": "agent-2eab273a-b3729b39-af51-48d1-a43c-d2f6dd1205bf",
+      "contract": "e3-moth-season",
+      "seed": "e3-moth-season-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": null,
+      "durationTicks": 3675,
+      "submissions": 0,
+      "verbs": {},
+      "carriesRemoved": [],
+      "carriesRebased": [],
+      "carriesRepair": []
+    },
+    {
+      "ride": "e4-boneyard",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e4-boneyard/work/attempt-1-tape.json",
+      "name": "attempt-1-tape.json",
+      "scored": true,
+      "tapeId": "agent-3af455e5-52d1fd7c-5ddf-475e-84f1-1081e5f2caf0",
+      "contract": "e4-boneyard",
+      "seed": "e4-boneyard-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": "fnv1a32:76da210d",
+      "durationTicks": 10800,
+      "submissions": 45,
+      "verbs": {
+        "HARVEST": 1115,
+        "HOLD": 46,
+        "BLAST_AT": 39,
+        "BUILD": 29,
+        "MOVE_TO": 19,
+        "PICK_UPGRADE": 15,
+        "HAUL": 2
+      },
+      "carriesRemoved": [
+        "HOLD",
+        "MOVE_TO"
+      ],
+      "carriesRebased": [
+        "HAUL"
+      ],
+      "carriesRepair": []
+    },
+    {
+      "ride": "e4-boneyard",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e4-boneyard/work/probe-idle-tape.json",
+      "name": "probe-idle-tape.json",
+      "scored": false,
+      "tapeId": "agent-271b5f72-e9f1cf72-3ff8-4f41-8024-bbfd9a10bd32",
+      "contract": "e4-boneyard",
+      "seed": "e4-boneyard-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": null,
+      "durationTicks": 3746,
+      "submissions": 0,
+      "verbs": {},
+      "carriesRemoved": [],
+      "carriesRebased": [],
+      "carriesRepair": []
+    },
+    {
+      "ride": "e4-boneyard",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e4-boneyard/work/tune-1-tape.json",
+      "name": "tune-1-tape.json",
+      "scored": false,
+      "tapeId": "agent-3af455e5-52d1fd7c-5ddf-475e-84f1-1081e5f2caf0",
+      "contract": "e4-boneyard",
+      "seed": "e4-boneyard-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": null,
+      "durationTicks": 10800,
+      "submissions": 45,
+      "verbs": {
+        "HARVEST": 1115,
+        "HOLD": 46,
+        "BLAST_AT": 39,
+        "BUILD": 29,
+        "MOVE_TO": 19,
+        "PICK_UPGRADE": 15,
+        "HAUL": 2
+      },
+      "carriesRemoved": [
+        "HOLD",
+        "MOVE_TO"
+      ],
+      "carriesRebased": [
+        "HAUL"
+      ],
+      "carriesRepair": []
+    },
+    {
+      "ride": "e4-dust-flats",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e4-dust-flats/work/attempt-2-tape.json",
+      "name": "attempt-2-tape.json",
+      "scored": true,
+      "tapeId": "agent-a2abb3af-a22234cd-28a3-4b2c-b9c6-2f2baa797847",
+      "contract": "e4-dust-flats",
+      "seed": "e4-dust-flats-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": "fnv1a32:aa5cf98e",
+      "durationTicks": 12785,
+      "submissions": 52,
+      "verbs": {
+        "HARVEST": 1328,
+        "BUILD": 126,
+        "HOLD": 51,
+        "BLAST_AT": 38,
+        "PICK_UPGRADE": 21,
+        "MOVE_TO": 13,
+        "HAUL": 3,
+        "GRADE": 1,
+        "SECURE_CHOICE": 1
+      },
+      "carriesRemoved": [
+        "HOLD",
+        "MOVE_TO"
+      ],
+      "carriesRebased": [
+        "GRADE",
+        "HAUL"
+      ],
+      "carriesRepair": []
+    },
+    {
+      "ride": "e4-dust-flats",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e4-dust-flats/work/probe-idle-tape.json",
+      "name": "probe-idle-tape.json",
+      "scored": false,
+      "tapeId": "agent-53a5d7fe-bdf5bf2d-1c57-4f65-ab9e-93d08ae6ffde",
+      "contract": "e4-dust-flats",
+      "seed": "e4-dust-flats-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": null,
+      "durationTicks": 2371,
+      "submissions": 0,
+      "verbs": {},
+      "carriesRemoved": [],
+      "carriesRebased": [],
+      "carriesRepair": []
+    },
+    {
+      "ride": "e4-dust-flats",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e4-dust-flats/work/tune-1-tape.json",
+      "name": "tune-1-tape.json",
+      "scored": false,
+      "tapeId": "agent-17cd5d6d-388f5056-98c0-421d-8fbb-37fcb965d5d8",
+      "contract": "e4-dust-flats",
+      "seed": "e4-dust-flats-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": null,
+      "durationTicks": 9213,
+      "submissions": 53,
+      "verbs": {
+        "HARVEST": 1494,
+        "BUILD": 87,
+        "HOLD": 53,
+        "BLAST_AT": 31,
+        "PICK_UPGRADE": 14,
+        "MOVE_TO": 13,
+        "HAUL": 3,
+        "GRADE": 1
+      },
+      "carriesRemoved": [
+        "HOLD",
+        "MOVE_TO"
+      ],
+      "carriesRebased": [
+        "GRADE",
+        "HAUL"
+      ],
+      "carriesRepair": []
+    },
+    {
+      "ride": "e4-dust-flats",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e4-dust-flats/work/tune-2-tape.json",
+      "name": "tune-2-tape.json",
+      "scored": false,
+      "tapeId": "agent-7f02ff7c-5c8f3332-f702-449a-8b40-4f30f31c7e2e",
+      "contract": "e4-dust-flats",
+      "seed": "e4-dust-flats-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": null,
+      "durationTicks": 3883,
+      "submissions": 8,
+      "verbs": {
+        "HARVEST": 38,
+        "BUILD": 24,
+        "MOVE_TO": 13,
+        "HOLD": 8,
+        "BLAST_AT": 6,
+        "HAUL": 3,
+        "PICK_UPGRADE": 2,
+        "GRADE": 1
+      },
+      "carriesRemoved": [
+        "HOLD",
+        "MOVE_TO"
+      ],
+      "carriesRebased": [
+        "GRADE",
+        "HAUL"
+      ],
+      "carriesRepair": []
+    },
+    {
+      "ride": "e4-dust-flats",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e4-dust-flats/work/tune-3-tape.json",
+      "name": "tune-3-tape.json",
+      "scored": false,
+      "tapeId": "agent-aa106a88-d6722e48-247c-4e83-8bab-05fe7bdd8600",
+      "contract": "e4-dust-flats",
+      "seed": "e4-dust-flats-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": null,
+      "durationTicks": 11915,
+      "submissions": 40,
+      "verbs": {
+        "HARVEST": 1093,
+        "BUILD": 78,
+        "HOLD": 40,
+        "BLAST_AT": 33,
+        "PICK_UPGRADE": 19,
+        "MOVE_TO": 13,
+        "HAUL": 3,
+        "GRADE": 1
+      },
+      "carriesRemoved": [
+        "HOLD",
+        "MOVE_TO"
+      ],
+      "carriesRebased": [
+        "GRADE",
+        "HAUL"
+      ],
+      "carriesRepair": []
+    },
+    {
+      "ride": "e4-gusher-county",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e4-gusher-county/work/attempt-1-tape.json",
+      "name": "attempt-1-tape.json",
+      "scored": true,
+      "tapeId": "agent-30665e9d-03c08c59-94c6-4b86-b1fd-16259206a52d",
+      "contract": "e4-gusher-county",
+      "seed": "e4-gusher-county-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": "fnv1a32:b61647e9",
+      "durationTicks": 10800,
+      "submissions": 39,
+      "verbs": {
+        "HARVEST": 757,
+        "HOLD": 39,
+        "MOVE_TO": 35,
+        "BLAST_AT": 32,
+        "HAUL": 18,
+        "PICK_UPGRADE": 17,
+        "BUILD": 8,
+        "GRADE": 3
+      },
+      "carriesRemoved": [
+        "HOLD",
+        "MOVE_TO"
+      ],
+      "carriesRebased": [
+        "GRADE",
+        "HAUL"
+      ],
+      "carriesRepair": []
+    },
+    {
+      "ride": "e4-gusher-county",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e4-gusher-county/work/probe-idle-tape.json",
+      "name": "probe-idle-tape.json",
+      "scored": false,
+      "tapeId": "agent-ae933a5e-c89cc6d6-f382-41ec-b1a5-807f1d02dfb1",
+      "contract": "e4-gusher-county",
+      "seed": "e4-gusher-county-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": null,
+      "durationTicks": 4672,
+      "submissions": 0,
+      "verbs": {},
+      "carriesRemoved": [],
+      "carriesRebased": [],
+      "carriesRepair": []
+    },
+    {
+      "ride": "e4-gusher-county",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e4-gusher-county/work/tune-1-tape.json",
+      "name": "tune-1-tape.json",
+      "scored": false,
+      "tapeId": "agent-30665e9d-03c08c59-94c6-4b86-b1fd-16259206a52d",
+      "contract": "e4-gusher-county",
+      "seed": "e4-gusher-county-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": null,
+      "durationTicks": 10800,
+      "submissions": 39,
+      "verbs": {
+        "HARVEST": 757,
+        "HOLD": 39,
+        "MOVE_TO": 35,
+        "BLAST_AT": 32,
+        "HAUL": 18,
+        "PICK_UPGRADE": 17,
+        "BUILD": 8,
+        "GRADE": 3
+      },
+      "carriesRemoved": [
+        "HOLD",
+        "MOVE_TO"
+      ],
+      "carriesRebased": [
+        "GRADE",
+        "HAUL"
+      ],
+      "carriesRepair": []
+    },
+    {
+      "ride": "e4-long-road",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e4-long-road/work/probe-idle-tape.json",
+      "name": "probe-idle-tape.json",
+      "scored": false,
+      "tapeId": "agent-061d390e-715eb804-8426-4f7f-8f8c-2703520f1594",
+      "contract": "e4-long-road",
+      "seed": "e4-long-road-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": null,
+      "durationTicks": 4033,
+      "submissions": 0,
+      "verbs": {},
+      "carriesRemoved": [],
+      "carriesRebased": [],
+      "carriesRepair": []
+    },
+    {
+      "ride": "e4-long-road",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e4-long-road/work/tune-1-tape.json",
+      "name": "tune-1-tape.json",
+      "scored": false,
+      "tapeId": "agent-c1364250-8196e37f-7c63-456a-a3b5-72142c25371d",
+      "contract": "e4-long-road",
+      "seed": "e4-long-road-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": null,
+      "durationTicks": 4728,
+      "submissions": 14,
+      "verbs": {
+        "HARVEST": 189,
+        "MOVE_TO": 33,
+        "HOLD": 14,
+        "BUILD": 12,
+        "BLAST_AT": 10,
+        "PICK_UPGRADE": 3,
+        "GRADE": 1
+      },
+      "carriesRemoved": [
+        "HOLD",
+        "MOVE_TO"
+      ],
+      "carriesRebased": [
+        "GRADE"
+      ],
+      "carriesRepair": []
+    },
+    {
+      "ride": "e4-long-road",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e4-long-road/work/tune-2-tape.json",
+      "name": "tune-2-tape.json",
+      "scored": true,
+      "tapeId": "agent-47a8043f-91631d7e-f091-4c5e-a1ce-97dbebf22a1a",
+      "contract": "e4-long-road",
+      "seed": "e4-long-road-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": "fnv1a32:e024dea1",
+      "durationTicks": 4728,
+      "submissions": 15,
+      "verbs": {
+        "HARVEST": 210,
+        "BUILD": 15,
+        "HOLD": 15,
+        "BLAST_AT": 12,
+        "PICK_UPGRADE": 3,
+        "MOVE_TO": 1,
+        "GRADE": 1
+      },
+      "carriesRemoved": [
+        "HOLD",
+        "MOVE_TO"
+      ],
+      "carriesRebased": [
+        "GRADE"
+      ],
+      "carriesRepair": []
+    },
+    {
+      "ride": "e5-stillwater",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e5-stillwater/work/attempt-1-tape.json",
+      "name": "attempt-1-tape.json",
+      "scored": true,
+      "tapeId": "agent-82a5f5e0-59609077-337d-490f-90ca-7b9abc2ccf79",
+      "contract": "e5-stillwater",
+      "seed": "e5-stillwater-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": "fnv1a32:3e887b17",
+      "durationTicks": 10800,
+      "submissions": 11,
+      "verbs": {
+        "HARVEST": 150,
+        "HOLD": 11,
+        "BOAT_BUILD": 8,
+        "REANCHOR": 1
+      },
+      "carriesRemoved": [
+        "HOLD"
+      ],
+      "carriesRebased": [
+        "BOAT_BUILD",
+        "REANCHOR"
+      ],
+      "carriesRepair": []
+    },
+    {
+      "ride": "e5-stillwater",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e5-stillwater/work/probe-idle-tape.json",
+      "name": "probe-idle-tape.json",
+      "scored": false,
+      "tapeId": "agent-ecf6624e-68fc45e2-d424-4ca2-88d4-e20716d23693",
+      "contract": "e5-stillwater",
+      "seed": "e5-stillwater-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": null,
+      "durationTicks": 3133,
+      "submissions": 0,
+      "verbs": {},
+      "carriesRemoved": [],
+      "carriesRebased": [],
+      "carriesRepair": []
+    },
+    {
+      "ride": "e5-stillwater",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e5-stillwater/work/tune-1-tape.json",
+      "name": "tune-1-tape.json",
+      "scored": false,
+      "tapeId": "agent-82a5f5e0-59609077-337d-490f-90ca-7b9abc2ccf79",
+      "contract": "e5-stillwater",
+      "seed": "e5-stillwater-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": null,
+      "durationTicks": 10800,
+      "submissions": 11,
+      "verbs": {
+        "HARVEST": 150,
+        "HOLD": 11,
+        "BOAT_BUILD": 8,
+        "REANCHOR": 1
+      },
+      "carriesRemoved": [
+        "HOLD"
+      ],
+      "carriesRebased": [
+        "BOAT_BUILD",
+        "REANCHOR"
+      ],
+      "carriesRepair": []
+    },
+    {
+      "ride": "e7-dead-band",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e7-dead-band/work/attempt-1-tape.json",
+      "name": "attempt-1-tape.json",
+      "scored": true,
+      "tapeId": "agent-c4c98518-9e45c5db-09d9-4386-b7bb-d2cd624ba982",
+      "contract": "e7-dead-band",
+      "seed": "e7-dead-band-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": "fnv1a32:297c535f",
+      "durationTicks": 18000,
+      "submissions": 83,
+      "verbs": {
+        "HARVEST": 2417,
+        "HOLD": 83,
+        "BLAST_AT": 70,
+        "PICK_UPGRADE": 28,
+        "BUILD": 13,
+        "MOVE_TO": 7,
+        "CONTEXT_ACTION": 7,
+        "PLAYBOOK_USE": 1
+      },
+      "carriesRemoved": [
+        "HOLD",
+        "MOVE_TO"
+      ],
+      "carriesRebased": [
+        "CONTEXT_ACTION",
+        "PLAYBOOK_USE"
+      ],
+      "carriesRepair": []
+    },
+    {
+      "ride": "e7-dead-band",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e7-dead-band/work/probe-idle-tape.json",
+      "name": "probe-idle-tape.json",
+      "scored": false,
+      "tapeId": "agent-a5489e0e-901683fc-3823-48f0-b490-c0e38efff08e",
+      "contract": "e7-dead-band",
+      "seed": "e7-dead-band-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": null,
+      "durationTicks": 3843,
+      "submissions": 0,
+      "verbs": {},
+      "carriesRemoved": [],
+      "carriesRebased": [],
+      "carriesRepair": []
+    },
+    {
+      "ride": "e7-dead-band",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e7-dead-band/work/tune-1-tape.json",
+      "name": "tune-1-tape.json",
+      "scored": false,
+      "tapeId": "agent-6563049e-24d547b9-3c64-4995-acd5-0f257cd656b9",
+      "contract": "e7-dead-band",
+      "seed": "e7-dead-band-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": null,
+      "durationTicks": 16779,
+      "submissions": 69,
+      "verbs": {
+        "HARVEST": 2009,
+        "HOLD": 69,
+        "BLAST_AT": 60,
+        "PICK_UPGRADE": 26,
+        "BUILD": 13,
+        "PLAYBOOK_USE": 1
+      },
+      "carriesRemoved": [
+        "HOLD"
+      ],
+      "carriesRebased": [
+        "PLAYBOOK_USE"
+      ],
+      "carriesRepair": []
+    },
+    {
+      "ride": "e7-echo-canyon",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e7-echo-canyon/work/attempt-1-tape.json",
+      "name": "attempt-1-tape.json",
+      "scored": false,
+      "tapeId": "agent-d47dfbaa-7f9bcd5a-824a-42be-a3c1-fc18fd4ca4af",
+      "contract": "e7-echo-canyon",
+      "seed": "e7-echo-canyon-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": null,
+      "durationTicks": 18000,
+      "submissions": 65,
+      "verbs": {
+        "HARVEST": 1859,
+        "BUILD": 95,
+        "HOLD": 65,
+        "PICK_UPGRADE": 26,
+        "PLAYBOOK_USE": 1
+      },
+      "carriesRemoved": [
+        "HOLD"
+      ],
+      "carriesRebased": [
+        "PLAYBOOK_USE"
+      ],
+      "carriesRepair": []
+    },
+    {
+      "ride": "e7-echo-canyon",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e7-echo-canyon/work/probe-idle-tape.json",
+      "name": "probe-idle-tape.json",
+      "scored": false,
+      "tapeId": "agent-c631cf5e-1120f951-9dca-40bb-86da-baf7868cc3c3",
+      "contract": "e7-echo-canyon",
+      "seed": "e7-echo-canyon-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": null,
+      "durationTicks": 4063,
+      "submissions": 0,
+      "verbs": {},
+      "carriesRemoved": [],
+      "carriesRebased": [],
+      "carriesRepair": []
+    },
+    {
+      "ride": "e7-echo-canyon",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e7-echo-canyon/work/tune-1-tape.json",
+      "name": "tune-1-tape.json",
+      "scored": true,
+      "tapeId": "agent-d47dfbaa-7f9bcd5a-824a-42be-a3c1-fc18fd4ca4af",
+      "contract": "e7-echo-canyon",
+      "seed": "e7-echo-canyon-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": "fnv1a32:19817b46",
+      "durationTicks": 18000,
+      "submissions": 65,
+      "verbs": {
+        "HARVEST": 1859,
+        "BUILD": 95,
+        "HOLD": 65,
+        "PICK_UPGRADE": 26,
+        "PLAYBOOK_USE": 1
+      },
+      "carriesRemoved": [
+        "HOLD"
+      ],
+      "carriesRebased": [
+        "PLAYBOOK_USE"
+      ],
+      "carriesRepair": []
+    },
+    {
+      "ride": "e7-relay-rush",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e7-relay-rush/work/attempt-1-tape.json",
+      "name": "attempt-1-tape.json",
+      "scored": true,
+      "tapeId": "agent-e8c4f218-4307b4e1-08a4-457f-92ae-70f84329c564",
+      "contract": "e7-relay-rush",
+      "seed": "e7-relay-rush-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": "fnv1a32:ed5dc794",
+      "durationTicks": 18000,
+      "submissions": 68,
+      "verbs": {
+        "HARVEST": 1889,
+        "HOLD": 68,
+        "BLAST_AT": 52,
+        "PICK_UPGRADE": 23,
+        "BUILD": 18,
+        "PLAYBOOK_USE": 1
+      },
+      "carriesRemoved": [
+        "HOLD"
+      ],
+      "carriesRebased": [
+        "PLAYBOOK_USE"
+      ],
+      "carriesRepair": []
+    },
+    {
+      "ride": "e7-relay-rush",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e7-relay-rush/work/probe-idle.json",
+      "name": "probe-idle.json",
+      "scored": false,
+      "tapeId": "agent-65ae7ac6-af5b3543-6cbc-498d-b9fc-dc9150bf131f",
+      "contract": "e7-relay-rush",
+      "seed": "e7-relay-rush-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": null,
+      "durationTicks": 2440,
+      "submissions": 0,
+      "verbs": {},
+      "carriesRemoved": [],
+      "carriesRebased": [],
+      "carriesRepair": []
+    },
+    {
+      "ride": "e7-relay-rush",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e7-relay-rush/work/tune-1-tape.json",
+      "name": "tune-1-tape.json",
+      "scored": false,
+      "tapeId": "agent-31cee0a4-a7e4d31a-14a2-496e-85cb-51d9a41bc0cf",
+      "contract": "e7-relay-rush",
+      "seed": "e7-relay-rush-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": null,
+      "durationTicks": 5824,
+      "submissions": 7,
+      "verbs": {
+        "HARVEST": 90,
+        "HOLD": 7,
+        "BLAST_AT": 6,
+        "BUILD": 4,
+        "PLAYBOOK_USE": 1
+      },
+      "carriesRemoved": [
+        "HOLD"
+      ],
+      "carriesRebased": [
+        "PLAYBOOK_USE"
+      ],
+      "carriesRepair": []
+    },
+    {
+      "ride": "e7-relay-rush",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e7-relay-rush/work/tune-2-tape.json",
+      "name": "tune-2-tape.json",
+      "scored": false,
+      "tapeId": "agent-9f0c9542-7911c443-d439-4abc-afda-a82c2ee7147a",
+      "contract": "e7-relay-rush",
+      "seed": "e7-relay-rush-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": null,
+      "durationTicks": 11944,
+      "submissions": 33,
+      "verbs": {
+        "HARVEST": 936,
+        "HOLD": 33,
+        "BLAST_AT": 29,
+        "PICK_UPGRADE": 19,
+        "BUILD": 5,
+        "PLAYBOOK_USE": 1
+      },
+      "carriesRemoved": [
+        "HOLD"
+      ],
+      "carriesRebased": [
+        "PLAYBOOK_USE"
+      ],
+      "carriesRepair": []
+    },
+    {
+      "ride": "e7-relay-valley",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e7-relay-valley/work/attempt-1-tape.json",
+      "name": "attempt-1-tape.json",
+      "scored": true,
+      "tapeId": "agent-807d85f3-a7f9ed28-db67-492a-9bd0-df4c2c0b3454",
+      "contract": "e7-relay-valley",
+      "seed": "e7-relay-valley-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": "fnv1a32:56777ed0",
+      "durationTicks": 9236,
+      "submissions": 259,
+      "verbs": {
+        "HARVEST": 7696,
+        "BLAST_AT": 258,
+        "HOLD": 258,
+        "BUILD": 31,
+        "PICK_UPGRADE": 12,
+        "PLAYBOOK_USE": 1
+      },
+      "carriesRemoved": [
+        "HOLD"
+      ],
+      "carriesRebased": [
+        "PLAYBOOK_USE"
+      ],
+      "carriesRepair": []
+    },
+    {
+      "ride": "e7-relay-valley",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e7-relay-valley/work/tune-1-tape.json",
+      "name": "tune-1-tape.json",
+      "scored": false,
+      "tapeId": "agent-d1f93214-05e9c763-6daa-453c-9025-85440e1ea9fc",
+      "contract": "e7-relay-valley",
+      "seed": "e7-relay-valley-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": null,
+      "durationTicks": 6073,
+      "submissions": 15,
+      "verbs": {
+        "HARVEST": 21,
+        "PLAYBOOK_USE": 11,
+        "PICK_UPGRADE": 8,
+        "BLAST_AT": 4,
+        "HOLD": 4,
+        "BUILD": 2
+      },
+      "carriesRemoved": [
+        "HOLD"
+      ],
+      "carriesRebased": [
+        "PLAYBOOK_USE"
+      ],
+      "carriesRepair": []
+    },
+    {
+      "ride": "e7-relay-valley.attempt-1",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e7-relay-valley.attempt-1/work/probe-idle-tape.json",
+      "name": "probe-idle-tape.json",
+      "scored": false,
+      "tapeId": "agent-684efa26-e2e898d7-8a4b-4884-bb2b-9858450735f4",
+      "contract": "e7-relay-valley",
+      "seed": "e7-relay-valley-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": null,
+      "durationTicks": 2379,
+      "submissions": 0,
+      "verbs": {},
+      "carriesRemoved": [],
+      "carriesRebased": [],
+      "carriesRepair": []
+    },
+    {
+      "ride": "e7-relay-valley.attempt-1",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e7-relay-valley.attempt-1/work/tune-1-tape.json",
+      "name": "tune-1-tape.json",
+      "scored": false,
+      "tapeId": "agent-f01945c5-65b82efd-0dc9-4c06-b6db-1413ed5438aa",
+      "contract": "e7-relay-valley",
+      "seed": "e7-relay-valley-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": null,
+      "durationTicks": 11956,
+      "submissions": 42,
+      "verbs": {
+        "HARVEST": 296,
+        "BLAST_AT": 35,
+        "PICK_UPGRADE": 19,
+        "HOLD": 5,
+        "BUILD": 3,
+        "PLAYBOOK_USE": 1
+      },
+      "carriesRemoved": [
+        "HOLD"
+      ],
+      "carriesRebased": [
+        "PLAYBOOK_USE"
+      ],
+      "carriesRepair": []
+    },
+    {
+      "ride": "e7-relay-valley.attempt-1",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e7-relay-valley.attempt-1/work/tune-2-tape.json",
+      "name": "tune-2-tape.json",
+      "scored": false,
+      "tapeId": "agent-5c8ff928-1433566c-69d7-4c8b-af4a-e14166a5bc05",
+      "contract": "e7-relay-valley",
+      "seed": "e7-relay-valley-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": null,
+      "durationTicks": 12898,
+      "submissions": 39,
+      "verbs": {
+        "HARVEST": 923,
+        "BUILD": 52,
+        "BLAST_AT": 37,
+        "PICK_UPGRADE": 19,
+        "HOLD": 5,
+        "PLAYBOOK_USE": 1
+      },
+      "carriesRemoved": [
+        "HOLD"
+      ],
+      "carriesRebased": [
+        "PLAYBOOK_USE"
+      ],
+      "carriesRepair": []
+    },
+    {
+      "ride": "e7-relay-valley.attempt-1",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e7-relay-valley.attempt-1/work/tune-3-tape.json",
+      "name": "tune-3-tape.json",
+      "scored": true,
+      "tapeId": "agent-211bb7c1-655ec773-5a6b-4afd-8665-5871fa07cff4",
+      "contract": "e7-relay-valley",
+      "seed": "e7-relay-valley-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": "fnv1a32:f9866fc8",
+      "durationTicks": 13810,
+      "submissions": 62,
+      "verbs": {
+        "HARVEST": 1266,
+        "HOLD": 62,
+        "BLAST_AT": 50,
+        "PICK_UPGRADE": 20,
+        "BUILD": 10,
+        "PLAYBOOK_USE": 1
+      },
+      "carriesRemoved": [
+        "HOLD"
+      ],
+      "carriesRebased": [
+        "PLAYBOOK_USE"
+      ],
+      "carriesRepair": []
+    },
+    {
+      "ride": "e8-eclipse",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e8-eclipse/work/attempt-1-tape.json",
+      "name": "attempt-1-tape.json",
+      "scored": true,
+      "tapeId": "agent-65c5a680-9ccd6077-0a9f-4a8c-b36e-f459397b7149",
+      "contract": "e8-eclipse",
+      "seed": "e8-eclipse-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": "fnv1a32:a0a58077",
+      "durationTicks": 17556,
+      "submissions": 89,
+      "verbs": {
+        "HARVEST": 1769,
+        "HOLD": 89,
+        "BLAST_AT": 75,
+        "PICK_UPGRADE": 27,
+        "BUILD": 23,
+        "MOVE_TO": 4,
+        "CONTEXT_ACTION": 4
+      },
+      "carriesRemoved": [
+        "HOLD",
+        "MOVE_TO"
+      ],
+      "carriesRebased": [
+        "CONTEXT_ACTION"
+      ],
+      "carriesRepair": []
+    },
+    {
+      "ride": "e8-eclipse",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e8-eclipse/work/probe-idle.json",
+      "name": "probe-idle.json",
+      "scored": false,
+      "tapeId": "agent-de24e29e-67623726-b509-472b-a2b7-ce461d95e8e7",
+      "contract": "e8-eclipse",
+      "seed": "e8-eclipse-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": null,
+      "durationTicks": 2454,
+      "submissions": 0,
+      "verbs": {},
+      "carriesRemoved": [],
+      "carriesRebased": [],
+      "carriesRepair": []
+    },
+    {
+      "ride": "e8-eclipse",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e8-eclipse/work/tune-1-tape.json",
+      "name": "tune-1-tape.json",
+      "scored": false,
+      "tapeId": "agent-31c78490-e07da8a7-d2f5-4e56-a618-764b2d275f93",
+      "contract": "e8-eclipse",
+      "seed": "e8-eclipse-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": null,
+      "durationTicks": 17318,
+      "submissions": 74,
+      "verbs": {
+        "HARVEST": 510,
+        "HOLD": 74,
+        "BLAST_AT": 66,
+        "PICK_UPGRADE": 27,
+        "BUILD": 23,
+        "MOVE_TO": 3,
+        "CONTEXT_ACTION": 3
+      },
+      "carriesRemoved": [
+        "HOLD",
+        "MOVE_TO"
+      ],
+      "carriesRebased": [
+        "CONTEXT_ACTION"
+      ],
+      "carriesRepair": []
+    },
+    {
+      "ride": "e8-eclipse",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e8-eclipse/work/tune-2-tape.json",
+      "name": "tune-2-tape.json",
+      "scored": false,
+      "tapeId": "agent-65c5a680-276848fd-1132-4006-bbe7-72b058376409",
+      "contract": "e8-eclipse",
+      "seed": "e8-eclipse-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": null,
+      "durationTicks": 17556,
+      "submissions": 89,
+      "verbs": {
+        "HARVEST": 1769,
+        "HOLD": 89,
+        "BLAST_AT": 75,
+        "PICK_UPGRADE": 27,
+        "BUILD": 23,
+        "MOVE_TO": 4,
+        "CONTEXT_ACTION": 4
+      },
+      "carriesRemoved": [
+        "HOLD",
+        "MOVE_TO"
+      ],
+      "carriesRebased": [
+        "CONTEXT_ACTION"
+      ],
+      "carriesRepair": []
+    },
+    {
+      "ride": "e8-far-side",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e8-far-side/work/attempt-1-tape.json",
+      "name": "attempt-1-tape.json",
+      "scored": true,
+      "tapeId": "agent-03784526-96166760-5341-4b3e-bd9f-7338d954441f",
+      "contract": "e8-far-side",
+      "seed": "e8-far-side-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": "fnv1a32:f540c405",
+      "durationTicks": 18000,
+      "submissions": 83,
+      "verbs": {
+        "HARVEST": 1669,
+        "BUILD": 107,
+        "HOLD": 83,
+        "BLAST_AT": 71,
+        "PICK_UPGRADE": 28,
+        "MOVE_TO": 10,
+        "CONTEXT_ACTION": 7
+      },
+      "carriesRemoved": [
+        "HOLD",
+        "MOVE_TO"
+      ],
+      "carriesRebased": [
+        "CONTEXT_ACTION"
+      ],
+      "carriesRepair": []
+    },
+    {
+      "ride": "e8-far-side",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e8-far-side/work/probe-idle-tape.json",
+      "name": "probe-idle-tape.json",
+      "scored": false,
+      "tapeId": "agent-38b64882-e5ce3e98-8738-424b-97d4-34da1b2539a8",
+      "contract": "e8-far-side",
+      "seed": "e8-far-side-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": null,
+      "durationTicks": 2382,
+      "submissions": 0,
+      "verbs": {},
+      "carriesRemoved": [],
+      "carriesRebased": [],
+      "carriesRepair": []
+    },
+    {
+      "ride": "e8-far-side",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e8-far-side/work/tune-1-tape.json",
+      "name": "tune-1-tape.json",
+      "scored": false,
+      "tapeId": "agent-886dcd02-2991a08f-bf5a-4a86-bcab-66b44f0e8f23",
+      "contract": "e8-far-side",
+      "seed": "e8-far-side-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": null,
+      "durationTicks": 15634,
+      "submissions": 53,
+      "verbs": {
+        "HARVEST": 1132,
+        "BUILD": 121,
+        "HOLD": 53,
+        "BLAST_AT": 47,
+        "PICK_UPGRADE": 25,
+        "MOVE_TO": 6,
+        "CONTEXT_ACTION": 3
+      },
+      "carriesRemoved": [
+        "HOLD",
+        "MOVE_TO"
+      ],
+      "carriesRebased": [
+        "CONTEXT_ACTION"
+      ],
+      "carriesRepair": []
+    },
+    {
+      "ride": "e8-far-side",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e8-far-side/work/tune-2-tape.json",
+      "name": "tune-2-tape.json",
+      "scored": false,
+      "tapeId": "agent-03784526-96166760-5341-4b3e-bd9f-7338d954441f",
+      "contract": "e8-far-side",
+      "seed": "e8-far-side-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": null,
+      "durationTicks": 18000,
+      "submissions": 83,
+      "verbs": {
+        "HARVEST": 1669,
+        "BUILD": 107,
+        "HOLD": 83,
+        "BLAST_AT": 71,
+        "PICK_UPGRADE": 28,
+        "MOVE_TO": 10,
+        "CONTEXT_ACTION": 7
+      },
+      "carriesRemoved": [
+        "HOLD",
+        "MOVE_TO"
+      ],
+      "carriesRebased": [
+        "CONTEXT_ACTION"
+      ],
+      "carriesRepair": []
+    },
+    {
+      "ride": "e8-low-orbit",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e8-low-orbit/work/attempt-1-tape.json",
+      "name": "attempt-1-tape.json",
+      "scored": true,
+      "tapeId": "agent-6d2f797a-909e53e2-3dd6-4aa9-8160-2be17e6a78f7",
+      "contract": "e8-low-orbit",
+      "seed": "e8-low-orbit-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": "fnv1a32:8629a98e",
+      "durationTicks": 18000,
+      "submissions": 95,
+      "verbs": {
+        "HARVEST": 1013,
+        "HOLD": 95,
+        "BLAST_AT": 55,
+        "PICK_UPGRADE": 28,
+        "BUILD": 12,
+        "MOVE_TO": 6,
+        "CONTEXT_ACTION": 6
+      },
+      "carriesRemoved": [
+        "HOLD",
+        "MOVE_TO"
+      ],
+      "carriesRebased": [
+        "CONTEXT_ACTION"
+      ],
+      "carriesRepair": []
+    },
+    {
+      "ride": "e8-low-orbit",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e8-low-orbit/work/probe-idle-tape.json",
+      "name": "probe-idle-tape.json",
+      "scored": false,
+      "tapeId": "agent-a84b8aa6-a9ebf5c8-f4a5-4d01-a696-18877114c2c5",
+      "contract": "e8-low-orbit",
+      "seed": "e8-low-orbit-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": null,
+      "durationTicks": 2350,
+      "submissions": 0,
+      "verbs": {},
+      "carriesRemoved": [],
+      "carriesRebased": [],
+      "carriesRepair": []
+    },
+    {
+      "ride": "e8-low-orbit",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e8-low-orbit/work/tune-1-tape.json",
+      "name": "tune-1-tape.json",
+      "scored": false,
+      "tapeId": "agent-6d2f797a-909e53e2-3dd6-4aa9-8160-2be17e6a78f7",
+      "contract": "e8-low-orbit",
+      "seed": "e8-low-orbit-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": null,
+      "durationTicks": 18000,
+      "submissions": 95,
+      "verbs": {
+        "HARVEST": 1013,
+        "HOLD": 95,
+        "BLAST_AT": 55,
+        "PICK_UPGRADE": 28,
+        "BUILD": 12,
+        "MOVE_TO": 6,
+        "CONTEXT_ACTION": 6
+      },
+      "carriesRemoved": [
+        "HOLD",
+        "MOVE_TO"
+      ],
+      "carriesRebased": [
+        "CONTEXT_ACTION"
+      ],
+      "carriesRepair": []
+    },
+    {
+      "ride": "e8-mare-claim",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e8-mare-claim/work/attempt-1-tape.json",
+      "name": "attempt-1-tape.json",
+      "scored": true,
+      "tapeId": "agent-4036192d-b1ebab0e-a2e1-42ba-b7dd-c2edf9f3d797",
+      "contract": "e8-mare-claim",
+      "seed": "e8-mare-claim-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": "fnv1a32:e06bda53",
+      "durationTicks": 18000,
+      "submissions": 77,
+      "verbs": {
+        "HARVEST": 1559,
+        "BUILD": 75,
+        "BLAST_AT": 66,
+        "PICK_UPGRADE": 28,
+        "HOLD": 24,
+        "MOVE_TO": 3,
+        "CONTEXT_ACTION": 3
+      },
+      "carriesRemoved": [
+        "HOLD",
+        "MOVE_TO"
+      ],
+      "carriesRebased": [
+        "CONTEXT_ACTION"
+      ],
+      "carriesRepair": []
+    },
+    {
+      "ride": "e8-mare-claim",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e8-mare-claim/work/probe-idle-tape.json",
+      "name": "probe-idle-tape.json",
+      "scored": false,
+      "tapeId": "agent-8aadbf92-aea67fed-74f0-43cb-87bf-989d698f0be7",
+      "contract": "e8-mare-claim",
+      "seed": "e8-mare-claim-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": null,
+      "durationTicks": 2437,
+      "submissions": 0,
+      "verbs": {},
+      "carriesRemoved": [],
+      "carriesRebased": [],
+      "carriesRepair": []
+    },
+    {
+      "ride": "e8-mare-claim",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e8-mare-claim/work/tune-1-tape.json",
+      "name": "tune-1-tape.json",
+      "scored": false,
+      "tapeId": "agent-109c12fa-ae723ba9-a456-4d41-9a54-67795e9e565e",
+      "contract": "e8-mare-claim",
+      "seed": "e8-mare-claim-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": null,
+      "durationTicks": 17522,
+      "submissions": 72,
+      "verbs": {
+        "HARVEST": 1176,
+        "BUILD": 98,
+        "BLAST_AT": 61,
+        "PICK_UPGRADE": 27,
+        "HOLD": 23
+      },
+      "carriesRemoved": [
+        "HOLD"
+      ],
+      "carriesRebased": [],
+      "carriesRepair": []
+    },
+    {
+      "ride": "e8-mare-claim",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e8-mare-claim/work/tune-2-tape.json",
+      "name": "tune-2-tape.json",
+      "scored": false,
+      "tapeId": "agent-edea6b1f-9d96787e-7d8b-4ab4-b34f-339572613de8",
+      "contract": "e8-mare-claim",
+      "seed": "e8-mare-claim-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": null,
+      "durationTicks": 14044,
+      "submissions": 60,
+      "verbs": {
+        "HARVEST": 1348,
+        "BUILD": 64,
+        "BLAST_AT": 50,
+        "PICK_UPGRADE": 23,
+        "HOLD": 14,
+        "MOVE_TO": 2,
+        "CONTEXT_ACTION": 2
+      },
+      "carriesRemoved": [
+        "HOLD",
+        "MOVE_TO"
+      ],
+      "carriesRebased": [
+        "CONTEXT_ACTION"
+      ],
+      "carriesRepair": []
+    },
+    {
+      "ride": "e8-mare-claim",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e8-mare-claim/work/tune-3-tape.json",
+      "name": "tune-3-tape.json",
+      "scored": false,
+      "tapeId": "agent-4036192d-b1ebab0e-a2e1-42ba-b7dd-c2edf9f3d797",
+      "contract": "e8-mare-claim",
+      "seed": "e8-mare-claim-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": null,
+      "durationTicks": 18000,
+      "submissions": 77,
+      "verbs": {
+        "HARVEST": 1559,
+        "BUILD": 75,
+        "BLAST_AT": 66,
+        "PICK_UPGRADE": 28,
+        "HOLD": 24,
+        "MOVE_TO": 3,
+        "CONTEXT_ACTION": 3
+      },
+      "carriesRemoved": [
+        "HOLD",
+        "MOVE_TO"
+      ],
+      "carriesRebased": [
+        "CONTEXT_ACTION"
+      ],
+      "carriesRepair": []
+    },
+    {
+      "ride": "e9-dome-basin",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e9-dome-basin/work/attempt-1-tape.json",
+      "name": "attempt-1-tape.json",
+      "scored": false,
+      "tapeId": "agent-b5c95c01-f1f1dac0-418e-47dc-a535-8d9f69fec32a",
+      "contract": "e9-dome-basin",
+      "seed": "e9-dome-basin-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": null,
+      "durationTicks": 12581,
+      "submissions": 66,
+      "verbs": {
+        "HARVEST": 1323,
+        "BLAST_AT": 57,
+        "BUILD": 30,
+        "REPAIR_UNDER": 22,
+        "PICK_UPGRADE": 20
+      },
+      "carriesRemoved": [],
+      "carriesRebased": [],
+      "carriesRepair": [
+        "REPAIR_UNDER"
+      ]
+    },
+    {
+      "ride": "e9-dome-basin",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e9-dome-basin/work/probe-idle-tape.json",
+      "name": "probe-idle-tape.json",
+      "scored": false,
+      "tapeId": "agent-8f747406-578fe9ce-bec5-42d0-a8df-3be3c95d6d31",
+      "contract": "e9-dome-basin",
+      "seed": "e9-dome-basin-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": null,
+      "durationTicks": 2478,
+      "submissions": 0,
+      "verbs": {},
+      "carriesRemoved": [],
+      "carriesRebased": [],
+      "carriesRepair": []
+    },
+    {
+      "ride": "e9-dome-basin",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e9-dome-basin/work/tune-1-tape.json",
+      "name": "tune-1-tape.json",
+      "scored": true,
+      "tapeId": "agent-8e51d98b-58f6f224-e330-4e62-b071-e3d3d8d93ac2",
+      "contract": "e9-dome-basin",
+      "seed": "e9-dome-basin-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": "fnv1a32:17e14213",
+      "durationTicks": 13187,
+      "submissions": 151,
+      "verbs": {
+        "HARVEST": 4090,
+        "REPAIR_UNDER": 208,
+        "BUILD": 151,
+        "BLAST_AT": 61,
+        "PICK_UPGRADE": 20
+      },
+      "carriesRemoved": [],
+      "carriesRebased": [],
+      "carriesRepair": [
+        "REPAIR_UNDER"
+      ]
+    },
+    {
+      "ride": "e9-dome-basin",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e9-dome-basin/work/tune-2-tape.json",
+      "name": "tune-2-tape.json",
+      "scored": false,
+      "tapeId": "agent-283a437a-c3d2c77e-9751-47a6-b38e-3f66b484a758",
+      "contract": "e9-dome-basin",
+      "seed": "e9-dome-basin-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": null,
+      "durationTicks": 12068,
+      "submissions": 68,
+      "verbs": {
+        "HARVEST": 1372,
+        "BLAST_AT": 54,
+        "BUILD": 51,
+        "PICK_UPGRADE": 19
+      },
+      "carriesRemoved": [],
+      "carriesRebased": [],
+      "carriesRepair": []
+    },
+    {
+      "ride": "e9-dome-basin.attempt-1",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e9-dome-basin.attempt-1/work/probe-idle-tape.json",
+      "name": "probe-idle-tape.json",
+      "scored": false,
+      "tapeId": "agent-8f747406-b888199f-3090-4e2e-bf5f-ba19c8faadb0",
+      "contract": "e9-dome-basin",
+      "seed": "e9-dome-basin-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": null,
+      "durationTicks": 2478,
+      "submissions": 0,
+      "verbs": {},
+      "carriesRemoved": [],
+      "carriesRebased": [],
+      "carriesRepair": []
+    },
+    {
+      "ride": "e9-dome-basin.attempt-1",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e9-dome-basin.attempt-1/work/tune-1-tape.json",
+      "name": "tune-1-tape.json",
+      "scored": false,
+      "tapeId": "agent-2322ff4b-f193226b-7e76-40b3-bcf0-9be5a917cd01",
+      "contract": "e9-dome-basin",
+      "seed": "e9-dome-basin-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": null,
+      "durationTicks": 12829,
+      "submissions": 291,
+      "verbs": {
+        "HARVEST": 7890,
+        "REPAIR_UNDER": 291,
+        "HOLD": 291,
+        "BLAST_AT": 84,
+        "PICK_UPGRADE": 18,
+        "BUILD": 12
+      },
+      "carriesRemoved": [
+        "HOLD"
+      ],
+      "carriesRebased": [],
+      "carriesRepair": [
+        "REPAIR_UNDER"
+      ]
+    },
+    {
+      "ride": "e9-dome-basin.attempt-1",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e9-dome-basin.attempt-1/work/tune-2-tape.json",
+      "name": "tune-2-tape.json",
+      "scored": false,
+      "tapeId": "agent-85fee5e8-3705b842-6d4f-44aa-bb45-48d1fc671888",
+      "contract": "e9-dome-basin",
+      "seed": "e9-dome-basin-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": null,
+      "durationTicks": 13550,
+      "submissions": 101,
+      "verbs": {
+        "HARVEST": 1177,
+        "REPAIR_UNDER": 101,
+        "HOLD": 101,
+        "BLAST_AT": 74,
+        "BUILD": 41,
+        "PICK_UPGRADE": 21
+      },
+      "carriesRemoved": [
+        "HOLD"
+      ],
+      "carriesRebased": [],
+      "carriesRepair": [
+        "REPAIR_UNDER"
+      ]
+    },
+    {
+      "ride": "e9-dome-basin.attempt-1",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e9-dome-basin.attempt-1/work/tune-3-tape.json",
+      "name": "tune-3-tape.json",
+      "scored": true,
+      "tapeId": "agent-8fb761f3-6515dfc7-e4d0-4c2e-a91e-eb18b8ba22d5",
+      "contract": "e9-dome-basin",
+      "seed": "e9-dome-basin-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": "fnv1a32:2b4a09b5",
+      "durationTicks": 14976,
+      "submissions": 265,
+      "verbs": {
+        "HARVEST": 3547,
+        "REPAIR_UNDER": 748,
+        "HOLD": 265,
+        "BUILD": 217,
+        "BLAST_AT": 84,
+        "PICK_UPGRADE": 22
+      },
+      "carriesRemoved": [
+        "HOLD"
+      ],
+      "carriesRebased": [],
+      "carriesRepair": [
+        "REPAIR_UNDER"
+      ]
+    },
+    {
+      "ride": "e9-dome-basin.attempt-1",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e9-dome-basin.attempt-1/work/tune-4-tape.json",
+      "name": "tune-4-tape.json",
+      "scored": false,
+      "tapeId": "agent-e2446598-3c00412a-d6a4-4f6a-8ec1-bb81b6f4b941",
+      "contract": "e9-dome-basin",
+      "seed": "e9-dome-basin-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": null,
+      "durationTicks": 12647,
+      "submissions": 250,
+      "verbs": {
+        "HARVEST": 2866,
+        "REPAIR_UNDER": 696,
+        "HOLD": 250,
+        "BUILD": 170,
+        "BLAST_AT": 68,
+        "PICK_UPGRADE": 18
+      },
+      "carriesRemoved": [
+        "HOLD"
+      ],
+      "carriesRebased": [],
+      "carriesRepair": [
+        "REPAIR_UNDER"
+      ]
+    },
+    {
+      "ride": "the-claim",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/the-claim/work/attempt-1-tape.json",
+      "name": "attempt-1-tape.json",
+      "scored": true,
+      "tapeId": "agent-2d257d8b-91bfcbf4-53e5-4c23-b5ae-d195fe447e9d",
+      "contract": "the-claim",
+      "seed": "e1-the-claim-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": "fnv1a32:23da1694",
+      "durationTicks": 9000,
+      "submissions": 67,
+      "verbs": {
+        "HARVEST": 1896,
+        "BUILD": 90,
+        "HOLD": 67,
+        "PICK_UPGRADE": 14
+      },
+      "carriesRemoved": [
+        "HOLD"
+      ],
+      "carriesRebased": [],
+      "carriesRepair": []
+    },
+    {
+      "ride": "the-claim",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/the-claim/work/probe-idle.json",
+      "name": "probe-idle.json",
+      "scored": false,
+      "tapeId": "agent-9b31f3bd-e1bf1ea5-ca3a-421b-bb3d-8c70ec3aa3bd",
+      "contract": "the-claim",
+      "seed": "e1-the-claim-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": null,
+      "durationTicks": 2453,
+      "submissions": 0,
+      "verbs": {},
+      "carriesRemoved": [],
+      "carriesRebased": [],
+      "carriesRepair": []
+    },
+    {
+      "ride": "the-claim",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/the-claim/work/tune-1.json",
+      "name": "tune-1.json",
+      "scored": false,
+      "tapeId": "agent-2d257d8b-91bfcbf4-53e5-4c23-b5ae-d195fe447e9d",
+      "contract": "the-claim",
+      "seed": "e1-the-claim-01",
+      "difficulty": "trail",
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "era": 5,
+      "recordedEventLogHash": null,
+      "durationTicks": 9000,
+      "submissions": 67,
+      "verbs": {
+        "HARVEST": 1896,
+        "BUILD": 90,
+        "HOLD": 67,
+        "PICK_UPGRADE": 14
+      },
+      "carriesRemoved": [
+        "HOLD"
+      ],
+      "carriesRebased": [],
+      "carriesRepair": []
+    }
+  ]
+}

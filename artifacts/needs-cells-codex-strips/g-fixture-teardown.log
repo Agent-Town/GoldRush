@@ -1,0 +1,64 @@
+✖ all 151 scripts/*.test.mjs fixture owners remove their temp directories (105268.732125ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 105322.80075
+
+✖ failing tests:
+
+test at scripts/fixture-teardown.test.mjs:32:1
+✖ all 151 scripts/*.test.mjs fixture owners remove their temp directories (105268.732125ms)
+  AssertionError [ERR_ASSERTION]: scripts/bench-seeds.test.mjs child failed:
+  ✖ rotation registry stays outside the engine identity corpus (65.970375ms)
+  ✔ contract ids are globally unique across the ten epoch bundles (0.330416ms)
+  ✔ bench seed sets cover Frontier and contain only valid known-contract seeds (0.162667ms)
+  ✔ rotation mint is deterministic, week-sensitive, and requires a salt (128.394334ms)
+  ℹ tests 4
+  ℹ suites 0
+  ℹ pass 3
+  ℹ fail 1
+  ℹ cancelled 0
+  ℹ skipped 0
+  ℹ todo 0
+  ℹ duration_ms 290.355708
+  
+  ✖ failing tests:
+  
+  test at scripts/bench-seeds.test.mjs:47:1
+  ✖ rotation registry stays outside the engine identity corpus (65.970375ms)
+    AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+    + actual - expected
+    
+    + '674fdceadb56aa013b95e4bd76b22887c7e04f87ee74f5ed4ff28e541ddc39d2'
+    - 'cc3fd5d45add762fc0878a42618af1eaec836edeee83b03954c5e75a569b71f5'
+    
+        at TestContext.<anonymous> (file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-strips/scripts/bench-seeds.test.mjs:55:10)
+        at async Test.run (node:internal/test_runner/test:1389:7)
+        at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+      generatedMessage: true,
+      code: 'ERR_ASSERTION',
+      actual: '674fdceadb56aa013b95e4bd76b22887c7e04f87ee74f5ed4ff28e541ddc39d2',
+      expected: 'cc3fd5d45add762fc0878a42618af1eaec836edeee83b03954c5e75a569b71f5',
+      operator: 'strictEqual',
+      diff: 'simple'
+    }
+  
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-strips/scripts/fixture-teardown.test.mjs:48:14)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

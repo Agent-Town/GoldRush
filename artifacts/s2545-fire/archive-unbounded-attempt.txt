@@ -1,0 +1,4 @@
+Command: node scripts/status-archive-audit.mjs (default Node v23.11.1, no --limit)
+Exit: 134
+Observed: FATAL ERROR: Reached heap limit Allocation failed - JavaScript heap out of memory
+No archive verdict was produced. This was an unnecessary unbounded historical walk; the tool documents --limit N, and the required ledger battery uses --limit 40 --quiet. That bounded leg still must pass. The exact predecessor/desk checks are in archive-check.txt. No tool code was changed.

@@ -1,0 +1,202 @@
+{
+  "key": "county-e2-incline",
+  "tapePath": "tapes/county-e2-incline.json",
+  "contract": "e2-incline",
+  "kind": "county-played",
+  "node": "v26.4.0",
+  "before": {
+    "at": "2026-09-05T16:01:35.412Z",
+    "load": [
+      3.63916015625,
+      6.4130859375,
+      11.50439453125
+    ],
+    "freeMemory": 6619758592
+  },
+  "after": {
+    "at": "2026-09-05T16:02:07.749Z",
+    "load": [
+      4.30517578125,
+      6.23291015625,
+      11.22998046875
+    ],
+    "freeMemory": 5322358784
+  },
+  "declaredDurationTicks": 17782,
+  "simulatedSeconds": 592.7333333333333,
+  "bootMs": 29.86304199999995,
+  "replayMs": 31140.702583,
+  "ticksPerSecond": 571.021156398294,
+  "realtimeMultiple": 19.0340385466098,
+  "estimateTenMinuteSeconds": 31.522474777527837,
+  "estimateFormula": "600 seconds / measured realtimeMultiple; extrapolation, not an actual 10-minute tape when duration differs",
+  "tickMs": {
+    "n": 17782,
+    "min": 0.2621249999999691,
+    "p50": 1.6303329999991547,
+    "p95": 3.347125000000233,
+    "p99": 3.6887080000014976,
+    "max": 18.22741699999824
+  },
+  "tickPath": "sim/county-e2-incline-ticks.json",
+  "result": {
+    "eventLogHash": "fnv1a32:a4cc1b99",
+    "outcome": {
+      "secured": true,
+      "waves": 14,
+      "gold": 197,
+      "timeAlive": 592.7
+    },
+    "securedSnapshot": {
+      "waves": 12,
+      "gold": 705,
+      "timeAlive": 592.7000000001183
+    },
+    "ticks": 17782,
+    "engine": "headless-contract-sim"
+  },
+  "expectedHash": "fnv1a32:a4cc1b99",
+  "hashMatches": true,
+  "top20": [
+    {
+      "name": "structuredClone",
+      "url": "node:internal/worker/js_transferable",
+      "line": 113,
+      "column": 25,
+      "selfMs": 14138.640000000001
+    },
+    {
+      "name": "structuredClone",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 4950.963
+    },
+    {
+      "name": "clone",
+      "url": "",
+      "line": 320,
+      "column": 15,
+      "selfMs": 824.7470000000001
+    },
+    {
+      "name": "terrainLineOfSight",
+      "url": "",
+      "line": 115,
+      "column": 28,
+      "selfMs": 768.848
+    },
+    {
+      "name": "hillMineHeight",
+      "url": "",
+      "line": 385,
+      "column": 24,
+      "selfMs": 619.0579999999999
+    },
+    {
+      "name": "(anonymous)",
+      "url": "",
+      "line": 193,
+      "column": 26,
+      "selfMs": 593.124
+    },
+    {
+      "name": "snapshot",
+      "url": "",
+      "line": 189,
+      "column": 10,
+      "selfMs": 567.465
+    },
+    {
+      "name": "(anonymous)",
+      "url": "",
+      "line": 194,
+      "column": 49,
+      "selfMs": 474.2130000000001
+    },
+    {
+      "name": "snapshotStandingOrders",
+      "url": "",
+      "line": 425,
+      "column": 32,
+      "selfMs": 356.05899999999997
+    },
+    {
+      "name": "cacheLos",
+      "url": "",
+      "line": 373,
+      "column": 18,
+      "selfMs": 332.119
+    },
+    {
+      "name": "(anonymous)",
+      "url": "",
+      "line": 3,
+      "column": 57,
+      "selfMs": 329.99799999999993
+    },
+    {
+      "name": "(garbage collector)",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 315.721
+    },
+    {
+      "name": "(anonymous)",
+      "url": "node:internal/webidl",
+      "line": 712,
+      "column": 18,
+      "selfMs": 311.63800000000003
+    },
+    {
+      "name": "sample",
+      "url": "",
+      "line": 181,
+      "column": 16,
+      "selfMs": 298.82000000000005
+    },
+    {
+      "name": "get diagnostics",
+      "url": "",
+      "line": 484,
+      "column": 17,
+      "selfMs": 295.985
+    },
+    {
+      "name": "(program)",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 278.127
+    },
+    {
+      "name": "resolved.x",
+      "url": "",
+      "line": 1027,
+      "column": 131,
+      "selfMs": 236.02100000000002
+    },
+    {
+      "name": "(anonymous)",
+      "url": "",
+      "line": 805,
+      "column": 21,
+      "selfMs": 232.397
+    },
+    {
+      "name": "multiplyMatrices",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 10385,
+      "column": 18,
+      "selfMs": 214.76999999999998
+    },
+    {
+      "name": "diagnostics",
+      "url": "",
+      "line": 1795,
+      "column": 13,
+      "selfMs": 199.791
+    }
+  ]
+}

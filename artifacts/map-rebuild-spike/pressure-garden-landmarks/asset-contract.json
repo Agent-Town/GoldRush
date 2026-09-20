@@ -1,0 +1,105 @@
+{
+  "law": "reuse > derive > build-new; era-stamped; grit-dressed",
+  "packs": {
+    "pressure-garden": {
+      "era": 2,
+      "atlasSha256": "9e38e72df3833391b0886204c86e1c7423a71e14cc772b68fda0b80f4cb36b18",
+      "assets": {
+        "garden-pressure-manifold": {
+          "sourceTier": "reuse",
+          "triangles": 2564,
+          "sha256": "879ebc6a32c59269ebd5621b09f9ec3030bc704bbb457d3eeaab272a2f83b81c",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "west-terrace-pipe-header": {
+          "sourceTier": "reuse",
+          "triangles": 1672,
+          "sha256": "9399290248b8bef740436b349b33098e4c767a075f42c23e41409d9d051b23c1",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "east-terrace-pipe-header": {
+          "sourceTier": "reuse",
+          "triangles": 1616,
+          "sha256": "dcf13b45962743b9a31b6328794f28b16b4a6290b1b53d355981794f4f351c78",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "coal-seam-service-winch": {
+          "sourceTier": "reuse",
+          "triangles": 1480,
+          "sha256": "013460e0ea735d60da0a3670c9e9f385326f89e553b2b01cd1f1ac26caf2fd3a",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "water-band-pump-station": {
+          "sourceTier": "reuse",
+          "triangles": 2432,
+          "sha256": "59f769a9aa726923013403467b9cf71087e165651f1c59f6c37729876099be98",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        }
+      }
+    }
+  },
+  "totals": {
+    "packs": 1,
+    "assets": 5,
+    "sourceTiers": {
+      "reuse": 5,
+      "derive": 0,
+      "build-new": 0
+    }
+  },
+  "boards": {
+    "pressure-garden-landmarks-turntable.png": {
+      "size": [
+        1920,
+        1160
+      ],
+      "sha256": "3c991a63bf25dc30935fda7325e3c6e6a16c47608bfc78adb221aa20a6ec38cb"
+    },
+    "pressure-garden-landmarks-verdict.png": {
+      "size": [
+        1920,
+        1008
+      ],
+      "sha256": "93cb37cd5c2cd2bcc8c68a7f35ea07adf0611a8ed72ccf962313712d4a9b7297"
+    },
+    "pressure-garden-landmarks-pack.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "b3692975b5b24ed44c62957ed1a15dac9ff105eeb4eb76da933bd508834c86cc"
+    },
+    "pressure-garden-landmarks-proposed.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "abeee4137719471293a1725a624097aeb6706585611c883b576f7dea9c179757"
+    },
+    "pressure-garden-landmarks-proposed-overview.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "3d13b17de32e9fedbf2d381c20863e6215e7604d3c0ca82c74a62cef5ace4a4e"
+    },
+    "pressure-garden-landmarks-clearance-overlay.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "32ae67e7416c41d7661961d3a30f5f09ce920681125071808a4dcce5b454e852"
+    }
+  },
+  "simulation": "unchanged; every landmark is a separate render-only GLB mounted by contract"
+}

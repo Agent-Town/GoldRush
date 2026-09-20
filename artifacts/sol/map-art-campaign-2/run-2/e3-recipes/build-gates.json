@@ -1,0 +1,35 @@
+[
+  {
+    "name": "tsc",
+    "command": [
+      "npx",
+      "tsc",
+      "--noEmit"
+    ],
+    "exit": 0,
+    "seconds": 6.119662046432495,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-2/e3-recipes-tsc.log"
+  },
+  {
+    "name": "build",
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "exit": 0,
+    "seconds": 31.900123834609985,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-2/e3-recipes-build.log"
+  },
+  {
+    "name": "full-build",
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "exit": 0,
+    "seconds": 35.60830616950989,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-2/e3-recipes-full-build.log"
+  }
+]

@@ -1,0 +1,18 @@
+{
+  "exit": 0,
+  "command": [
+    "npx",
+    "playwright",
+    "test",
+    "--workers=1",
+    "--project=desktop-chrome",
+    "--project=mobile-chrome",
+    "--trace=off",
+    "--reporter=line",
+    "--output=artifacts/sol/map-art-campaign-2/_raw/run-2/river-own",
+    "e2e/e10-river-boot-guard.spec.ts",
+    "e2e/e10-finale-staging.spec.ts"
+  ],
+  "log": "artifacts/sol/map-art-campaign-2/_raw/run-2/river-own.log",
+  "seconds": 21.85799288749695
+}

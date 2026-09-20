@@ -1,0 +1,13 @@
+null floors: 83 of 83 null floors match assets/contracts/null-floors.json
+pin #14
+era: ℹ pass 9 ℹ fail 0 
+tsc/build: 0 / 0
+test:accounts rc=0
+test:mp rc=0
+test:stats rc=0
+guards: ℹ pass 98 ℹ fail 0 
+battery: ℹ tests 929 ℹ pass 921 ℹ fail 3 ℹ skipped 5 
+✖ all 152 scripts/*.test.mjs fixture owners remove their temp directories (338551.840125ms)
+✖ failing tests:
+✖ gr-sim replays the same contract, seed, and orders byte-for-byte (16877.182834ms)
+✖ the live board is green under this guard (baseline is honest) (223.977459ms)

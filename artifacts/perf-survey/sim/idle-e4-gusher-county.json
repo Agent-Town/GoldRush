@@ -1,0 +1,197 @@
+{
+  "key": "idle-e4-gusher-county",
+  "tapePath": "tapes/idle-e4-gusher-county.json",
+  "contract": "e4-gusher-county",
+  "kind": "null-floor",
+  "node": "v26.4.0",
+  "before": {
+    "at": "2026-09-05T15:18:41.957Z",
+    "load": [
+      19.24365234375,
+      25.7734375,
+      27.373046875
+    ],
+    "freeMemory": 10961780736
+  },
+  "after": {
+    "at": "2026-09-05T15:18:44.926Z",
+    "load": [
+      19.24365234375,
+      25.7734375,
+      27.373046875
+    ],
+    "freeMemory": 10490560512
+  },
+  "declaredDurationTicks": 4279,
+  "simulatedSeconds": 142.63333333333333,
+  "bootMs": 37.243541999999934,
+  "replayMs": 1394.5285000000001,
+  "ticksPerSecond": 3068.4206167174066,
+  "realtimeMultiple": 102.28068722391355,
+  "estimateTenMinuteSeconds": 5.86621009581678,
+  "estimateFormula": "600 seconds / measured realtimeMultiple; extrapolation, not an actual 10-minute tape when duration differs",
+  "tickMs": {
+    "n": 4279,
+    "min": 0.21012500000006185,
+    "p50": 0.2891669999999067,
+    "p95": 0.5037499999998545,
+    "p99": 0.8820420000001832,
+    "max": 10.167666999999938
+  },
+  "tickPath": "sim/idle-e4-gusher-county-ticks.json",
+  "result": {
+    "eventLogHash": "fnv1a32:a45ba9ac",
+    "outcome": {
+      "secured": false,
+      "waves": 4,
+      "gold": 0,
+      "timeAlive": 142.633
+    },
+    "ticks": 4279,
+    "engine": "headless-contract-sim"
+  },
+  "expectedHash": "fnv1a32:a45ba9ac",
+  "hashMatches": true,
+  "top20": [
+    {
+      "name": "dispatch",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 148.678
+    },
+    {
+      "name": "terrainSeed",
+      "url": "",
+      "line": 1469,
+      "column": 21,
+      "selfMs": 135.647
+    },
+    {
+      "name": "terrainHash",
+      "url": "",
+      "line": 1486,
+      "column": 21,
+      "selfMs": 75.85700000000001
+    },
+    {
+      "name": "get diagnostics",
+      "url": "",
+      "line": 484,
+      "column": 17,
+      "selfMs": 74.897
+    },
+    {
+      "name": "multiplyMatrices",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 10385,
+      "column": 18,
+      "selfMs": 69.816
+    },
+    {
+      "name": "currentTrickleInterval",
+      "url": "",
+      "line": 641,
+      "column": 24,
+      "selfMs": 55.37
+    },
+    {
+      "name": "maxHpForPlacement",
+      "url": "",
+      "line": 1622,
+      "column": 19,
+      "selfMs": 51.8
+    },
+    {
+      "name": "maxHpForInstance",
+      "url": "",
+      "line": 1619,
+      "column": 18,
+      "selfMs": 40.546
+    },
+    {
+      "name": "diagnostics",
+      "url": "",
+      "line": 1795,
+      "column": 13,
+      "selfMs": 38.983999999999995
+    },
+    {
+      "name": "stableProbeMask",
+      "url": "",
+      "line": 1266,
+      "column": 25,
+      "selfMs": 35.11
+    },
+    {
+      "name": "syncEnemyInstance",
+      "url": "",
+      "line": 1343,
+      "column": 19,
+      "selfMs": 33.593
+    },
+    {
+      "name": "hpBarDiagnostics",
+      "url": "",
+      "line": 1663,
+      "column": 18,
+      "selfMs": 33.305
+    },
+    {
+      "name": "toArray",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 11099,
+      "column": 9,
+      "selfMs": 31.067
+    },
+    {
+      "name": "activePositions",
+      "url": "",
+      "line": 1533,
+      "column": 17,
+      "selfMs": 29.457
+    },
+    {
+      "name": "(anonymous)",
+      "url": "",
+      "line": 1534,
+      "column": 32,
+      "selfMs": 22.073999999999998
+    },
+    {
+      "name": "(program)",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 21.933
+    },
+    {
+      "name": "step",
+      "url": "",
+      "line": 1318,
+      "column": 6,
+      "selfMs": 18.292
+    },
+    {
+      "name": "setFromEuler",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 4167,
+      "column": 14,
+      "selfMs": 18.005
+    },
+    {
+      "name": "(anonymous)",
+      "url": "",
+      "line": 3,
+      "column": 57,
+      "selfMs": 17.838
+    },
+    {
+      "name": "(garbage collector)",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 17.807
+    }
+  ]
+}

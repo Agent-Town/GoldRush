@@ -1,0 +1,123 @@
+
+> gold-rush@0.1.0 test:ledger-guards
+> node --test scripts/goal-tracker.test.mjs scripts/goal-closure-reason.test.mjs scripts/ruling-propagation-guard.test.mjs scripts/law-pointer-guard.test.mjs scripts/gate-caller-audit.test.mjs scripts/block-class-guard.test.mjs scripts/banked-master-preflight-guard.test.mjs scripts/stale-hold-verdict-guard.test.mjs scripts/claimed-spec-harness-guard.test.mjs scripts/stale-ready-for-gates-guard.test.mjs && npm run test:findings-state && npm run test:blocker-panel && npm run test:ruling-propagation && npm run test:citations && npm run test:desk-declaration && node scripts/status-archive-audit.mjs --limit 40 --quiet && node scripts/attended-owed-audit.mjs && bash scripts/main-lock-gate-guard.test.sh && bash scripts/janitor-request-rejection.test.sh && node scripts/nul-audit.mjs
+
+✔ every banked (queued) master carries the current main-slot pre-flight exception (3.800042ms)
+✔ every blocked leaf declares a valid blockClass (3.868916ms)
+✔ disputed leaves are surfaced, not silently accumulated (1.996541ms)
+✔ drain-block-check prints class-specific verdicts, and gate-side is not called owner debt (1.912417ms)
+✔ the claimed-spec -> owning-config map is DERIVED, not tabulated (1.8225ms)
+✔ derivation REFUSES rather than silently measuring nothing if the array is renamed (0.850416ms)
+✔ MANUFACTURED: a bare playwright command naming a claimed spec FAILS the guard (32.328709ms)
+✔ MANUFACTURED: a CHECKLIST-form adjacent-suite line FAILS the guard (why arm (b), not (a)) (30.731458ms)
+✔ MANUFACTURED: a mention inside the SELF-CHECK region FAILS the guard (32.149459ms)
+✔ a DESCRIPTIVE mention outside any gate region is NOT an offender (why not arm (c)) (30.093208ms)
+✔ naming the owning CONFIG clears the master (31.212667ms)
+✔ naming the npm ALIAS clears the master (30.148084ms)
+✔ the guard actually RUNS when invoked as a script (entrypoint is not a silent no-op) (83.948625ms)
+✔ the live board has no LIVE offender (83.218459ms)
+✔ every grandfathered file is still a real offender (no stale excuses) (81.503625ms)
+✔ a gate nothing calls is reported as a NEW orphan and exits 1 (106.560291ms)
+✔ grandfathering that orphan with a reason turns the gate green (98.967791ms)
+✔ a gate whose only caller is a *.config.ts webServer command counts as REACHED (101.276584ms)
+✔ a guard named only in a COMMENT is not reached — prose is not a caller (99.605292ms)
+✔ putting it in the GUARDS array clears it — the control for the arm above (102.864625ms)
+✔ a non-gate script (dev, preview, census) is never ratcheted on (98.7405ms)
+✔ an orphan that GAINED a caller is reported so the baseline can tighten (94.600583ms)
+✔ --report never gates, even with a fresh orphan present (101.037041ms)
+✔ REFUSES (rc=2) when package.json has no scripts block (97.126083ms)
+✔ REFUSES (rc=2) when no scripts/*.mjs is tracked (90.113ms)
+✔ REFUSES (rc=2) when the resolver cannot reach its own anchors (91.907083ms)
+✔ REFUSES (rc=2) when the baseline file is missing — not read as {} (95.862791ms)
+✔ REFUSES (rc=2) when the baseline is unreadable (93.916083ms)
+✔ REFUSES (rc=2) when no subject matches the gate patterns (192.036083ms)
+✔ an owner escalation whose cited F-ID has no ledger row exits 1 (99.167292ms)
+✔ the SAME escalation goes green once the F-ID has a ledger row -- the control (99.414583ms)
+✔ escalating with NO F-ID cited at all exits 1 -- it can never be found (101.415625ms)
+✔ all four desk spellings are matched, so the check cannot be dodged by an apostrophe (389.933791ms)
+✔ POSITIVE CONTROL: the real repo passes, with a non-empty measured subject (55.425791ms)
+✔ every terminal-closed goal leaf can state why it closed (1.286291ms)
+✔ the mirrored resolver vocabulary still matches drain-block-check.mjs (0.629541ms)
+✔ goal tree schema is valid (2.008792ms)
+✔ ten sampled merged leaves have a done receipt and ancestral merge (13750.687125ms)
+✔ a correctly-pointed law passes once baselined (71.450083ms)
+✔ CODE-SIDE ROT: the cited line moves under a fixed coordinate -> POINTER DRIFT (the fire.md :315 shape) (64.587666ms)
+✔ LAW-SIDE ROT: the law is edited to a stale coordinate -> red until re-verified (the F-1276-2 shape) (63.58375ms)
+✔ a pointer past EOF is caught as OUT OF RANGE, not silently skipped (34.732875ms)
+✔ a pointer to a file that does not exist fails rather than being ignored (35.283458ms)
+✔ prose that is not a file:line is not mistaken for a pointer (32.144209ms)
+✔ a MISSING law surface is itself a red — the law cannot be checked if it is gone (33.314083ms)
+✔ THE REAL TREE: every law-surface pointer in this repo currently holds (39.547667ms)
+✔ MARKDOWN TARGET: a law surface citing another .md by coordinate is checked, not skipped (F-1278-2) (97.151833ms)
+✔ GOAL LEDGER ROT: a live non-terminal blockedReason pointer moves -> red names the leaf (97.407208ms)
+✔ BACKLOG COORDINATE BAN: live leaves red, --update cannot bury it, terminal history stays out (161.392583ms)
+✔ a blocked leaf citing a RULED finding is stale (1.338375ms)
+✔ a blocked leaf citing an UNRULED finding is not stale (0.082791ms)
+✔ "RULING REQUIRED" prose does not count as a ruling — only "<id> RULED" does (0.049542ms)
+✔ terminal-closed statuses refuse work too, so their reasons are checked (0.063208ms)
+✔ a merged leaf is not a refusal, however its reason reads (0.06325ms)
+✔ a leaf is any node carrying taskFile — NOT a childless node (0.060375ms)
+✔ denominator agrees with drain-block-check on the live tree (3.19875ms)
+✔ the live tree carries no stale refusal (7.867042ms)
+  ⓘ 4 refusal verdict(s) have no goal leaf, so this guard cannot judge them (F-1448-6 leaf debt): ap-view.md, fix-enemy-pathing-wrecker-read.md, lane-m4-claim-geometry-and-headless.md, trail-guide-plain-boot-observed-beats.md
+✔ the sweep still sees the corpus it judges (25.390458ms)
+✔ a MERGE verdict whose prose discusses holding is not a refusal (0.110917ms)
+✔ a genuine refusal is still caught in every form the corpus uses (0.072208ms)
+✔ a supersede banner retires the verdict, but only inside the verdict block (0.055083ms)
+✖ no shipped slice is left carrying a live refusal verdict (16.926209ms)
+✔ unmappable reviews are surfaced as leaf debt, not treated as clearance (17.190333ms)
+✔ reds on the s1461 incident row that motivated the finding (0.624625ms)
+✔ reds on the live e3-moth-socket ghost line (0.132792ms)
+✔ stays silent on a leaf mentioned in the body as an aside (0.055ms)
+✔ does not red on an open 🟡 finding whose slice merged (arm (a) is rejected) (0.057708ms)
+✔ treats a backticked mention as a quotation, not a claim (0.06575ms)
+✔ stays silent on a row already marked closed (0.039417ms)
+✔ stays silent while the leaf has not landed (0.047792ms)
+✔ reports a claim it cannot resolve rather than guessing (0.057583ms)
+✔ rows without the claim are not classified at all (0.055875ms)
+✔ resolves a leaf by taskFile as well as by id (0.095ms)
+✔ headline is the leading bold span, and falls back when there is none (0.074375ms)
+✔ the guard RUNS when invoked as a script (entrypoint is not a silent no-op) (40.532166ms)
+✔ the live ledger carries no stale READY-FOR-GATES claim (38.983833ms)
+✔ a shipped leaf counts as landed, not only a merged one (0.147584ms)
+ℹ tests 77
+ℹ suites 0
+ℹ pass 76
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 13800.129583
+
+✖ failing tests:
+
+test at scripts/stale-hold-verdict-guard.test.mjs:186:1
+✖ no shipped slice is left carrying a live refusal verdict (16.926209ms)
+  AssertionError [ERR_ASSERTION]: Reviews whose VERDICT still refuses the merge while their goal leaf says the slice shipped.
+  A fire reading only that line concludes the slice is unmerged and owed work — Mistake #8.
+  CURE: add a supersede banner naming the discharging commit, verified BY ANCESTRY
+  (git merge-base --is-ancestor <hash> main), directly under the VERDICT line. KEEP the
+  original verdict verbatim — retention law: supersede, never delete.
+  Offenders:
+    f-seed-1-front-door-parity.md — verdict "HOLD" but leaf f-seed-1-front-door-parity is "merged"
+  + actual - expected
+  
+  + [
+  +   'f-seed-1-front-door-parity.md — verdict "HOLD" but leaf f-seed-1-front-door-parity is "merged"'
+  + ]
+  - []
+  
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/scripts/stale-hold-verdict-guard.test.mjs:188:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [ 'f-seed-1-front-door-parity.md — verdict "HOLD" but leaf f-seed-1-front-door-parity is "merged"' ],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

@@ -1,0 +1,56 @@
+s2059 drain control — f2058-1-restart-guard-capability-probe
+============================================================
+Question: does the capability probe restore the two custody arms on a CHARDEV
+stdin (the common fire shell) WITHOUT restoring the F-2057-2 socket red?
+
+Method: one node harness, two trees, three stdin shapes. Only fd 0 varies.
+  tty      python3 pty.spawn
+  chardev  fs.openSync('/dev/null','r') passed as stdio[0]
+  socket   stdio:['pipe',...]  (libuv implements this as a socketpair on macOS)
+Counts are literal line counts of '  ok   — ' / '  SKIP' / '  FAIL' from the
+guard's own output, plus its RESULT line and the process exit code.
+
+  main(pre-cure)   tty      rc=0  ok=19  SKIP=0  FAIL=0  | RESULT: 0 failure(s)
+  main(pre-cure)   chardev  rc=0  ok=17  SKIP=2  FAIL=0  | RESULT: 0 failure(s)
+  main(pre-cure)   socket   rc=0  ok=17  SKIP=2  FAIL=0  | RESULT: 0 failure(s)
+  gate(cured)      tty      rc=0  ok=19  SKIP=0  FAIL=0  | RESULT: 0 failure(s)
+  gate(cured)      chardev  rc=0  ok=19  SKIP=0  FAIL=0  | RESULT: 0 failure(s)
+  gate(cured)      socket   rc=0  ok=17  SKIP=2  FAIL=0  | RESULT: 0 failure(s)
+
+"main(pre-cure)" = main at 35a83577e, which ALREADY carries the f2057-2 tty
+predicate; "pre-cure" here means pre-capability-probe, not pre-f2057-2.
+
+READ THE THREE DIRECTIONS:
+  chardev 17 ok/2 SKIP -> 19 ok/0 SKIP   the coverage restored (the deliverable)
+  socket  17 ok/2 SKIP -> 17 ok/2 SKIP   the F-2057-2 red still held (no regression)
+  tty     19 ok/0 SKIP -> 19 ok/0 SKIP   unchanged, as firewalled
+
+This fire's own stdin shape, measured before anything else:
+  fd0 isCharDev true  isSocket false  isFIFO false  isatty false
+i.e. exactly the row that was losing coverage.
+
+SKIP text on the socket arm now names the real reason and carries the probe's
+own stderr, so an environment limit cannot be mistaken for a broken helper:
+  SKIP — real helper custody not run: /usr/bin/script is unusable in this shell
+         (rc=1): script: tcgetattr/ioctl: Operation not supported on socket
+  SKIP — substitute-runner custody not run: /usr/bin/script is unusable in this
+         shell (rc=1): script: tcgetattr/ioctl: Operation not supported on socket
+
+GATES on the MERGED tree (scratch worktree /tmp/gr-s2059-gate, detached, main
++ lane/lane-d merged there before any content reached main's working tree):
+  npx tsc --noEmit            rc=0   4.7s
+  npm run build               rc=0  17.0s
+  npm run test:ledger-guards  rc=0  62.8s
+Full transcript: /tmp/s2059-gate-transcript.txt (untracked scratch; the numbers
+above and the guard output below are the retained record).
+
+NOTE WORTH KEEPING: that test:ledger-guards run was itself spawned with stdio
+'ignore' on fd 0 — a character device — so the two restored arms EXECUTED
+inside the very battery F-1300-4 makes every fire's last act:
+  ok   — real helper launched its recorded PID at PPID 1 with no controlling terminal
+  ok   — helper rejects a substitute runner instead of verifying the wrong PID
+Before this merge those two lines read SKIP in that same battery.
+
+test:node-guards NOT triggered: the diff touches no src/sim, src/systems or
+src/entities path (F-1460-1's predicate). No Playwright: the slice is one
+test-only bash script that no product code imports.

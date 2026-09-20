@@ -1,0 +1,12 @@
+import fs from 'node:fs';
+const P = 'STATUS.md';
+const lines = fs.readFileSync(P, 'utf8').split('\n');
+const prev = lines[0];
+if (!prev.startsWith('Last updated:')) throw new Error('line 1 is not a handoff line: ' + prev.slice(0, 80));
+if (!prev.includes('s1652 handoff')) throw new Error('line 1 is not s1652 handoff: ' + prev.slice(0, 80));
+const newL1 = fs.readFileSync('artifacts/s1653-line1.txt', 'utf8').replace(/\n+$/, '');
+const archive = '- **s1652 handoff (line-1 archive):** ' + prev;
+lines[0] = newL1;
+lines.splice(1, 0, archive);
+fs.writeFileSync(P, lines.join('\n'));
+console.log('OK  new line1 len=' + newL1.length + '  archived s1652 handoff at line 2');

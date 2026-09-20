@@ -1,0 +1,197 @@
+{
+  "key": "idle-e7-dead-band",
+  "tapePath": "tapes/idle-e7-dead-band.json",
+  "contract": "e7-dead-band",
+  "kind": "null-floor",
+  "node": "v26.4.0",
+  "before": {
+    "at": "2026-09-05T16:15:30.268Z",
+    "load": [
+      22.14697265625,
+      22.9169921875,
+      21.54931640625
+    ],
+    "freeMemory": 6139084800
+  },
+  "after": {
+    "at": "2026-09-05T16:15:33.563Z",
+    "load": [
+      21.173828125,
+      22.7021484375,
+      21.4814453125
+    ],
+    "freeMemory": 6890258432
+  },
+  "declaredDurationTicks": 3060,
+  "simulatedSeconds": 102,
+  "bootMs": 49.71100000000001,
+  "replayMs": 1394.954875,
+  "ticksPerSecond": 2193.619345572021,
+  "realtimeMultiple": 73.1206448524007,
+  "estimateTenMinuteSeconds": 8.205616911764706,
+  "estimateFormula": "600 seconds / measured realtimeMultiple; extrapolation, not an actual 10-minute tape when duration differs",
+  "tickMs": {
+    "n": 3060,
+    "min": 0.22691699999995762,
+    "p50": 0.33304199999975026,
+    "p95": 1.0210830000000897,
+    "p99": 2.2297090000001845,
+    "max": 12.726083000000017
+  },
+  "tickPath": "sim/idle-e7-dead-band-ticks.json",
+  "result": {
+    "eventLogHash": "fnv1a32:a45ba9ac",
+    "outcome": {
+      "secured": false,
+      "waves": 3,
+      "gold": 0,
+      "timeAlive": 102
+    },
+    "ticks": 3060,
+    "engine": "headless-contract-sim"
+  },
+  "expectedHash": "fnv1a32:a45ba9ac",
+  "hashMatches": true,
+  "top20": [
+    {
+      "name": "dispatch",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 192.484
+    },
+    {
+      "name": "terrainSeed",
+      "url": "",
+      "line": 1469,
+      "column": 21,
+      "selfMs": 82.77000000000001
+    },
+    {
+      "name": "get diagnostics",
+      "url": "",
+      "line": 484,
+      "column": 17,
+      "selfMs": 55.06
+    },
+    {
+      "name": "terrainHash",
+      "url": "",
+      "line": 1486,
+      "column": 21,
+      "selfMs": 54.935
+    },
+    {
+      "name": "maxHpForInstance",
+      "url": "",
+      "line": 1619,
+      "column": 18,
+      "selfMs": 50.225
+    },
+    {
+      "name": "diagnostics",
+      "url": "",
+      "line": 1795,
+      "column": 13,
+      "selfMs": 44.988
+    },
+    {
+      "name": "hpBarDiagnostics",
+      "url": "",
+      "line": 1663,
+      "column": 18,
+      "selfMs": 41.312
+    },
+    {
+      "name": "maxHpForPlacement",
+      "url": "",
+      "line": 1622,
+      "column": 19,
+      "selfMs": 39.16
+    },
+    {
+      "name": "toArray",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 11099,
+      "column": 9,
+      "selfMs": 35.217999999999996
+    },
+    {
+      "name": "syncEnemyInstance",
+      "url": "",
+      "line": 1343,
+      "column": 19,
+      "selfMs": 34.806999999999995
+    },
+    {
+      "name": "step",
+      "url": "",
+      "line": 1318,
+      "column": 6,
+      "selfMs": 33.715
+    },
+    {
+      "name": "currentTrickleInterval",
+      "url": "",
+      "line": 641,
+      "column": 24,
+      "selfMs": 31.194
+    },
+    {
+      "name": "multiplyMatrices",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 10385,
+      "column": 18,
+      "selfMs": 30.215000000000003
+    },
+    {
+      "name": "update",
+      "url": "",
+      "line": 809,
+      "column": 8,
+      "selfMs": 29.545
+    },
+    {
+      "name": "activePositions",
+      "url": "",
+      "line": 1533,
+      "column": 17,
+      "selfMs": 23.468
+    },
+    {
+      "name": "stableProbeMask",
+      "url": "",
+      "line": 1266,
+      "column": 25,
+      "selfMs": 21.683999999999997
+    },
+    {
+      "name": "(anonymous)",
+      "url": "",
+      "line": 1534,
+      "column": 32,
+      "selfMs": 18.667
+    },
+    {
+      "name": "update",
+      "url": "",
+      "line": 594,
+      "column": 8,
+      "selfMs": 18.633
+    },
+    {
+      "name": "(program)",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 18.372
+    },
+    {
+      "name": "terrainFeatures",
+      "url": "",
+      "line": 1193,
+      "column": 25,
+      "selfMs": 17.815
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+
+===== 531bd923a => RED (rc=1)
+531bd923adc97d9c288310f7f94f549e994c3f29 2026-08-04T00:48:58+07:00 drain(s1445): lane-night-stuck-census MERGED — F-BW-10, enemies slide toward their goal, not their sign
+  2) [mobile-chrome] › e2e/landmark-collision.spec.ts:68:1 › enemy blocker routing is deterministic and goes around a county landmark 
+    Error: expect(received).toBe(expected) // Object.is equality
+    test-results/landmark-collision-enemy-b-120dc-es-around-a-county-landmark-mobile-chrome/test-failed-1.png
+  2 failed
+    [desktop-chrome] › e2e/landmark-collision.spec.ts:68:1 › enemy blocker routing is deterministic and goes around a county landmark 
+    [mobile-chrome] › e2e/landmark-collision.spec.ts:68:1 › enemy blocker routing is deterministic and goes around a county landmark 
+
+===== 7bb054510f30154c37f30e7646c281bf5e322880 => GREEN (rc=0)
+7bb054510f30154c37f30e7646c281bf5e322880 2026-08-04T00:20:40+07:00 s1445: lock ACTIVE — draining lane-b a0412139 night-stuck-census (per-commit patch)
+[1/2] [desktop-chrome] › e2e/landmark-collision.spec.ts:68:1 › enemy blocker routing is deterministic and goes around a county landmark
+[2/2] [mobile-chrome] › e2e/landmark-collision.spec.ts:68:1 › enemy blocker routing is deterministic and goes around a county landmark
+  2 passed (6.0s)

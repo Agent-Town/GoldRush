@@ -1,0 +1,280 @@
+{
+  "blender": "5.1.2",
+  "baseSha": "8d974f11911187136469fbd017c9598e5b2faf28",
+  "checked": {
+    "sha256": "067c8c652134258379315a41200caf423ff3e9cb70a1b9d8f2607ee691aafdc3",
+    "bytes": 7516300,
+    "nodes": [
+      "MesaTownPlate"
+    ],
+    "meshes": 1,
+    "primitives": 1,
+    "triangles": 17280,
+    "materials": 1,
+    "textures": 1,
+    "images": 1,
+    "embeddedImages": 1,
+    "imageDimensions": [
+      [
+        2048,
+        2048
+      ]
+    ],
+    "cameras": 0,
+    "lights": 0,
+    "animations": 0,
+    "bounds": {
+      "min": [
+        -28.05711,
+        -3.5,
+        -26.958794
+      ],
+      "max": [
+        28.443432,
+        2.068964,
+        29.041477
+      ],
+      "size": [
+        56.500542,
+        5.568963,
+        56.000271
+      ],
+      "center": [
+        0.193161,
+        -0.715518,
+        1.041342
+      ]
+    },
+    "materialContract": [
+      {
+        "metallicFactor": 0,
+        "roughnessFactor": 0.9200000166893005,
+        "hasBaseColorTexture": true,
+        "hasEmissiveTexture": false,
+        "emissiveFactor": [
+          0,
+          0,
+          0
+        ]
+      }
+    ]
+  },
+  "reexported": {
+    "sha256": "067c8c652134258379315a41200caf423ff3e9cb70a1b9d8f2607ee691aafdc3",
+    "bytes": 7516300,
+    "nodes": [
+      "MesaTownPlate"
+    ],
+    "meshes": 1,
+    "primitives": 1,
+    "triangles": 17280,
+    "materials": 1,
+    "textures": 1,
+    "images": 1,
+    "embeddedImages": 1,
+    "imageDimensions": [
+      [
+        2048,
+        2048
+      ]
+    ],
+    "cameras": 0,
+    "lights": 0,
+    "animations": 0,
+    "bounds": {
+      "min": [
+        -28.05711,
+        -3.5,
+        -26.958794
+      ],
+      "max": [
+        28.443432,
+        2.068964,
+        29.041477
+      ],
+      "size": [
+        56.500542,
+        5.568963,
+        56.000271
+      ],
+      "center": [
+        0.193161,
+        -0.715518,
+        1.041342
+      ]
+    },
+    "materialContract": [
+      {
+        "metallicFactor": 0,
+        "roughnessFactor": 0.9200000166893005,
+        "hasBaseColorTexture": true,
+        "hasEmissiveTexture": false,
+        "emissiveFactor": [
+          0,
+          0,
+          0
+        ]
+      }
+    ]
+  },
+  "byteIdentical": true,
+  "semanticIdentical": {
+    "nodes": true,
+    "meshes": true,
+    "primitives": true,
+    "triangles": true,
+    "materials": true,
+    "textures": true,
+    "images": true,
+    "embeddedImages": true,
+    "imageDimensions": true,
+    "cameras": true,
+    "lights": true,
+    "animations": true,
+    "bounds": true,
+    "materialContract": true
+  },
+  "realizedSurface": {
+    "surface": "saved mesa-town-plate.blend mesh ray-cast",
+    "routeSamples": 1061,
+    "routeMaxAbs": 0.01200103759765625,
+    "plazaSamples": 749,
+    "plazaMaxAbs": 0.01200103759765625,
+    "routes": {
+      "ring-road": {
+        "samples": 385,
+        "min": -0.012000083923339844,
+        "max": -0.011371612548828125,
+        "maxAbs": 0.012000083923339844
+      },
+      "tavern": {
+        "samples": 73,
+        "min": -0.01200103759765625,
+        "max": -0.0118865966796875,
+        "maxAbs": 0.01200103759765625
+      },
+      "claim_office": {
+        "samples": 73,
+        "min": -0.01200103759765625,
+        "max": -0.011882781982421875,
+        "maxAbs": 0.01200103759765625
+      },
+      "general_store": {
+        "samples": 79,
+        "min": -0.01200103759765625,
+        "max": -0.011871337890625,
+        "maxAbs": 0.01200103759765625
+      },
+      "schoolhouse": {
+        "samples": 73,
+        "min": -0.01200103759765625,
+        "max": -0.011766433715820312,
+        "maxAbs": 0.01200103759765625
+      },
+      "assay_office": {
+        "samples": 73,
+        "min": -0.01200103759765625,
+        "max": -0.011851310729980469,
+        "maxAbs": 0.01200103759765625
+      },
+      "chapel": {
+        "samples": 75,
+        "min": -0.01200103759765625,
+        "max": -0.011907577514648438,
+        "maxAbs": 0.01200103759765625
+      },
+      "stamp-mill": {
+        "samples": 79,
+        "min": -0.01200103759765625,
+        "max": -0.011836051940917969,
+        "maxAbs": 0.01200103759765625
+      },
+      "gate": {
+        "samples": 151,
+        "min": -0.012000083923339844,
+        "max": -0.011213302612304688,
+        "maxAbs": 0.012000083923339844
+      }
+    },
+    "canonicalPads": {
+      "tavern": {
+        "samples": 99,
+        "min": -0.0007419586181640625,
+        "max": 0.0003867149353027344,
+        "maxAbs": 0.0007419586181640625
+      },
+      "claim_office": {
+        "samples": 99,
+        "min": 0.0,
+        "max": 0.00012731552124023438,
+        "maxAbs": 0.00012731552124023438
+      },
+      "general_store": {
+        "samples": 99,
+        "min": -0.0010995864868164062,
+        "max": 4.76837158203125e-07,
+        "maxAbs": 0.0010995864868164062
+      },
+      "schoolhouse": {
+        "samples": 99,
+        "min": -0.0004444122314453125,
+        "max": 0.00012969970703125,
+        "maxAbs": 0.0004444122314453125
+      },
+      "assay_office": {
+        "samples": 99,
+        "min": -0.0018768310546875,
+        "max": 7.200241088867188e-05,
+        "maxAbs": 0.0018768310546875
+      },
+      "chapel": {
+        "samples": 99,
+        "min": -0.001255035400390625,
+        "max": 4.76837158203125e-07,
+        "maxAbs": 0.001255035400390625
+      },
+      "stamp-mill": {
+        "samples": 99,
+        "min": -2.86102294921875e-06,
+        "max": 0.0003199577331542969,
+        "maxAbs": 0.0003199577331542969
+      },
+      "dynamo-hall": {
+        "samples": 99,
+        "min": -0.017546653747558594,
+        "max": 4.76837158203125e-07,
+        "maxAbs": 0.017546653747558594
+      }
+    },
+    "premiumSiteCandidates": {
+      "reactor-dome-candidate": {
+        "samples": 197,
+        "targetHeight": 1.18,
+        "min": 1.179959774017334,
+        "max": 1.1913566589355469,
+        "maxDeviation": 0.011356658935546937
+      },
+      "catalog-warehouse-candidate": {
+        "samples": 289,
+        "targetHeight": 1.18,
+        "min": 1.1798129081726074,
+        "max": 1.1927690505981445,
+        "maxDeviation": 0.012769050598144593
+      }
+    },
+    "mesaAccessPaths": {
+      "reactor-herd-ramp": {
+        "samples": 83,
+        "startHeight": 0.0019211769104003906,
+        "endHeight": 1.1787528991699219,
+        "maxGrade": 0.17029433604453015
+      },
+      "warehouse-herd-ramp": {
+        "samples": 83,
+        "startHeight": 0.00823831558227539,
+        "endHeight": 1.178523063659668,
+        "maxGrade": 0.149166369027607
+      }
+    }
+  }
+}

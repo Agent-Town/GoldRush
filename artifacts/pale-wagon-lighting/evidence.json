@@ -1,0 +1,32 @@
+{
+  "wave": "F-3DC-05 pale-wagon lighting fix",
+  "branch": "sol/pale-wagon-lighting-fix",
+  "baseSha": "4180433c298ff1a7105c9875f68121a5837a359d",
+  "target": "Keep the wagon canvas warm while preserving its ribs and timber silhouette at the gameplay camera without changing any model, material, night light, or era state.",
+  "change": {
+    "surface": "src/town/TownScene.ts daytime TownSun intensity",
+    "before": 2.2,
+    "after": 1.85,
+    "nightIntensity": 0.82,
+    "nightChanged": false
+  },
+  "telemetry": {
+    "method": "mean BT.709 luminance over decoded sRGB bytes",
+    "e1FullFrameLuminance": { "before": 155.582, "after": 151.988, "delta": -3.594 },
+    "e1WagonCrop": { "bounds": { "x": 535, "y": 205, "width": 90, "height": 70 }, "before": 139.778, "after": 135.868, "delta": -3.91 }
+  },
+  "evidence": [
+    "current-references/4180433c-main/town-e1-before.png",
+    "current-references/4180433c-main/town-e4-before.png",
+    "town-e1-after.png",
+    "town-e4-after.png",
+    "town-e1-full-ab.png",
+    "town-e4-full-ab.png",
+    "wagon-crop-ab.png"
+  ],
+  "gates": {
+    "npmRunBuild": "pass",
+    "townEraSwitchAndFreshSceneRenderState": "16/16 pass across desktop-chrome and mobile-chrome",
+    "consoleAndPageErrorsDuringEvidenceCapture": 0
+  }
+}

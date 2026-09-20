@@ -1,0 +1,65 @@
+ART STAGING AUDIT — 7 areas scanned, 1027 files
+  main-tree · staging/(root) · staging/(worktree-root) · staging/contact-sheets · staging/motion-pilot · staging/raw · staging/requests
+main tracks 6802 files under assets/
+
+NOT AUDITED — 4 tree(s) under worktrees/ that no git worktree owns and this audit does not scan:
+  worktrees/lane-a-salvage  383 files  —  ⚠️  SHARES the gitdir of worktrees/lane-a
+  worktrees/lane-b-salvage  387 files  —  ⚠️  SHARES the gitdir of worktrees/lane-b
+  worktrees/lane-c-salvage  407 files  —  ⚠️  SHARES the gitdir of worktrees/lane-c
+  worktrees/lane-d-salvage  379 files  —  ⚠️  SHARES the gitdir of worktrees/lane-d
+  These are outside the scan root BY DESIGN (walking them would drown AT RISK in build output).
+  They are named so a new one is visible on the next run, not after 48 days — F-2196-1.
+  ⚠️  A tree marked SHARES has its OWN working tree but BORROWS that lane's HEAD,
+      index and branch refs. Reading there is safe; a WRITE is not — `git add`
+      dirties the live lane's index, and `reset`/`checkout`/`commit` move the live
+      lane's HEAD and branch ref without rewriting its disk, silently dropping
+      commits out of `main..<lane>` (Mistake #2, the Reset Massacre). These trees
+      are ABSENT from `git worktree list`, so `lane-usable` cannot see them.
+      Never run a writing git command inside one — F-2406-1.
+
+AT RISK (in NO object database — dies with this disk): 3 files, 7.16 MB
+  by area: main-tree — 3 files, 7.16 MB
+  UNTRACKED (name not on main): 3 files, 7.16 MB
+    assets/raw/tf-dredge-queen-machine-e5.png  2.43 MB
+    assets/raw/tf-old-digger-machine-e9.png  2.47 MB
+    assets/raw/tf-salvage-claw-machine-e5.png  2.25 MB
+  EXPOSED (name IS on main, but these bytes are not): 0 files, 0 KB
+  ➡️  REMEDY — ends the exposure WITHOUT touching main or its working tree:
+        node scripts/salvage-art-staging.mjs save/art-staging-s<N>
+      then push it, or these bytes merely move to LOCAL-ONLY (F-1055-1):
+        git push origin save/art-staging-s<N>
+
+LOCAL-ONLY (in git HERE, but on no origin ref — one push from safe): 0 files, 0 KB
+  committed-but-unpushed source: ran (this bucket was asked)
+
+SALVAGED (not on main, but the bytes ARE in git — parked): 797 files, 600.08 MB
+  worktrees/art/assets/contact-sheets/_gilded-r3c0-debug.png  55 KB
+  worktrees/art/assets/contact-sheets/char-hero-ages-sheets-25pct.png  658 KB
+  worktrees/art/assets/contact-sheets/char-hero-claimday-detail-crops-2x.png  1.76 MB
+  worktrees/art/assets/contact-sheets/char-hero-claimday-sheets-25pct.png  246 KB
+  worktrees/art/assets/contact-sheets/char-hero-four-ages-lineup.png  306 KB
+  worktrees/art/assets/contact-sheets/char-prospector-skins-detail-crops-2x.png  3.03 MB
+  worktrees/art/assets/contact-sheets/char-prospector-skins-sheets-25pct.png  1.64 MB
+  worktrees/art/assets/contact-sheets/char-prospector-three-coat-lineup.png  242 KB
+  worktrees/art/assets/contact-sheets/char-tailor-release-lineup.png  291 KB
+  worktrees/art/assets/contact-sheets/e2-icons-preview.png  122 KB
+  worktrees/art/assets/contact-sheets/e2-rail-elements-preview.png  137 KB
+  worktrees/art/assets/contact-sheets/stream-overlay-pack-preview.png  1.07 MB
+  … and 785 more (use --json for the full list)
+
+DIVERGED (regenerated over shipped art, bytes ARE in git): 22 files
+  worktrees/art/assets/LEDGER.md  staging 62 KB vs main 289 KB
+  worktrees/art/assets/raw/bld-canal-works.png  staging 2.95 MB vs main 3.05 MB
+  worktrees/art/assets/raw/bld-dome-commons.png  staging 2.82 MB vs main 3.37 MB
+  worktrees/art/assets/raw/bld-ice-quarry-rig.png  staging 2.77 MB vs main 3.28 MB
+  worktrees/art/assets/raw/bld-seed-vault.png  staging 2.79 MB vs main 3.21 MB
+  worktrees/art/assets/raw/bld-weather-spire.png  staging 2.40 MB vs main 2.86 MB
+  worktrees/art/assets/raw/char-coalthief-sheet-walk4-a.png  staging 1.26 MB vs main 1.30 MB
+  worktrees/art/assets/raw/char-e9-feral_terraformer-sheet-walk8.png  staging 1.35 MB vs main 1.52 MB
+  worktrees/art/assets/raw/char-hero-midlife-sheet-walk4-b.png  staging 1.11 MB vs main 1.26 MB
+  worktrees/art/assets/raw/char-hero-silver-sheet-walk4-b.png  staging 1.13 MB vs main 1.29 MB
+  worktrees/art/assets/raw/char-railtough-sheet-walk4-a.png  staging 1.11 MB vs main 1.08 MB
+  worktrees/art/assets/raw/char-railtough-sheet-walk4-b.png  staging 1.16 MB vs main 1.23 MB
+  … and 10 more (use --json for the full list)
+
+SHIPPED (blob-identical to main): 205 files

@@ -1,0 +1,20 @@
+{
+  "exit": 1,
+  "command": [
+    "npx",
+    "playwright",
+    "test",
+    "--workers=1",
+    "--project=desktop-chrome",
+    "--project=mobile-chrome",
+    "--trace=off",
+    "--reporter=line",
+    "--output=artifacts/sol/map-art-campaign-2/_raw/run-2/e7-exact-base-narrow",
+    "e2e/e7-echo-canyon-mirror.spec.ts",
+    "e2e/landmark-brightness.spec.ts",
+    "--grep",
+    "casts no shadow|a playbook used|The Claim keeps|Night Shift keeps"
+  ],
+  "log": "artifacts/sol/map-art-campaign-2/_raw/run-2/e7-exact-base-narrow.log",
+  "seconds": 161.0444610118866
+}

@@ -1,0 +1,16 @@
+
+> gold-rush@0.1.0 test:task-guards
+> node scripts/task-guard-audit.mjs
+
+task-guard-audit: 1337 masters, 3 invisible (baseline 0).
+
+  ❌ 3 NEW invisible master(s) -- never ran, no status header, no goal leaf:
+     tasks/PROPOSED-map-art-archive-restoration.md
+     tasks/PROPOSED-map-art-regression-refresh.md
+     tasks/PROPOSED-sprite-source-assertions-20260908.md
+
+  Each reads as live unqueued work to every fire that lists tasks/ (Mistake #8).
+  Fix by giving it its true disposition -- content-probe main at a datum the master
+  names, then prepend one line: "> ⛔ SHIPPED — DO NOT QUEUE (…proof…)" or ⚠️ / ⏸️.
+  If it is genuinely live work, add its goal leaf instead (Goal Registration Law).
+rc=1

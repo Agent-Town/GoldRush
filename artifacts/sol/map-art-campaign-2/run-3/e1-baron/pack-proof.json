@@ -1,0 +1,72 @@
+{
+  "law": "reuse > derive > build-new; era-stamped; grit-dressed",
+  "packs": {
+    "baron": {
+      "era": 1,
+      "atlasSha256": "93a9c91fd02ff7cb022d07b20e9d92baa0c4a6386d7b2a5e46bbc0adc1af1321",
+      "assets": {
+        "fortified_far_bank": {
+          "sourceTier": "reuse",
+          "triangles": 1508,
+          "sha256": "cbd79bf7144f69ec477278213d55e19fbdeb2cec8eb6eb2730090154d917585e",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "declaredBoundsMatch": true,
+          "source": "landmarks/baron/fortified_far_bank.blend",
+          "sourceKind": "per-body"
+        },
+        "seized_headframe": {
+          "sourceTier": "build-new",
+          "triangles": 868,
+          "sha256": "32adff1ce769df130c4d16674905e84b793243d86a51bd3b386b1d4e7b82e79f",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "declaredBoundsMatch": true,
+          "source": "landmarks/baron/seized_headframe.blend",
+          "sourceKind": "per-body"
+        },
+        "rocket_cart": {
+          "sourceTier": "reuse",
+          "triangles": 1232,
+          "sha256": "84bd216cca4e0e495ef41ded2d4269ad98b65b322fc6b515289355c0a9f0b555",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "declaredBoundsMatch": true,
+          "source": "landmarks/baron/rocket_cart.blend",
+          "sourceKind": "per-body"
+        },
+        "siege_line": {
+          "sourceTier": "reuse",
+          "triangles": 880,
+          "sha256": "c330f0a0fc67f925beb5a759813275585966411633d12387d0fc7fbbe4cdaa69",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "declaredBoundsMatch": true,
+          "source": "landmarks/baron/siege_line.blend",
+          "sourceKind": "per-body"
+        },
+        "oxblood_banners": {
+          "sourceTier": "derive",
+          "triangles": 2400,
+          "sha256": "f298e6b77761b1d8b43197e047549ef1d9d2ec93f1d75c96d6f7a5f345669453",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "declaredBoundsMatch": true,
+          "source": "landmarks/baron/oxblood_banners.blend",
+          "sourceKind": "per-body"
+        }
+      }
+    }
+  },
+  "totals": {
+    "packs": 1,
+    "assets": 5,
+    "sourceTiers": {
+      "reuse": 3,
+      "derive": 1,
+      "build-new": 1
+    }
+  },
+  "boards": {},
+  "simulation": "unchanged; every landmark is a separate render-only GLB mounted by contract"
+}

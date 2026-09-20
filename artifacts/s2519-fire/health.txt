@@ -1,0 +1,21 @@
+=== Gold Rush factory — 2026-09-05 11:32:46 ===
+edge   : landing=200 game=200 api=200   (200 = up; 2xx-slow = answered but missed the budget; anything else is dark — F-OUT-0829)
+runner : ALIVE
+fire   : between-fires
+agents :
+  com.goldrush.dashboard:LOADED
+  com.goldrush.health:LOADED
+  com.goldrush.fire:LOADED
+lock   : ACTIVE 2026-09-05T11:26Z (s2519 fire) — triage deploy corrective and queued Astra lane drains
+- **s2518 handoff (line-
+queued : 0 task(s)   in-flight: 1   pending-orders: 0
+lanes ahead of main (commit count — may be squash-merged dupes, verify by content):
+  lane/a: 1 commit(s) ahead
+  lane/b: 1 commit(s) ahead
+  lane/c: 1 commit(s) ahead
+  lane/d: 1 commit(s) ahead
+art staged, in NO commit: 0 file(s)  (detail: node scripts/art-staging-audit.mjs)
+failed tail: superseded-s239-bt-00-demolish.md
+last fire log line: PY" in /Users/robin/Claude/Projects/Gold Rush
+
+EXIT 0

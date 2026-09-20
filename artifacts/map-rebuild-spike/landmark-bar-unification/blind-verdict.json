@@ -1,0 +1,31 @@
+{
+  "question": "Which side reaches the ratified E1 painted-wrap landmark bar while preserving the real run-camera read?",
+  "method": "Two neutral boards were judged before opening blind-side-key.json. Each board holds the same pulled-main terrain, camera, mount ids, mount transforms, and asset paths; only the landmark bodies and shared pack atlas differ.",
+  "verdicts": {
+    "hill-mine": {
+      "winner": "sideA",
+      "confidence": 0.98,
+      "fightOrHoliday": "fight",
+      "reasons": [
+        "The ruined headframe reads as a four-legged mine structure with a mouth, pulley, rope, repairs, and fallen timber instead of a flat sign frame.",
+        "The boiler site and flooded gallery separate into recognizable work systems at the run camera instead of dark boxes.",
+        "Paint-derived scratches, ink pockets, soot, rust, and sun-bleached battens remain legible without breaking the E2 county palette."
+      ]
+    },
+    "trestle": {
+      "winner": "sideB",
+      "confidence": 0.97,
+      "fightOrHoliday": "fight",
+      "reasons": [
+        "The crossing gains deck beams, repeated bents, X bracing, a repair plate, and a fallen brace while the rail spine stays readable.",
+        "North and south boiler/approach sets now read as distinct battered worksites rather than repeated generic blocks.",
+        "The mine spur, tar scars, rubble, drums, ore bins, and broken gate create a fought-over industrial approach without adding gameplay authority."
+      ]
+    }
+  },
+  "result": "ACCEPT CANDIDATE",
+  "nonBlockingDebt": [
+    "The shared evidence lighting still compresses dark faces at the real camera; runtime lighting should be checked after the file replacement is mounted.",
+    "The pack-lineup camera overlaps distributed assets and is not a scale comparison; the mounted run-camera row remains the promotion gate."
+  ]
+}

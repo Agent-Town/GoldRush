@@ -1,0 +1,34 @@
+[
+  {
+    "command": [
+      "npx",
+      "tsc",
+      "--noEmit"
+    ],
+    "exitCode": 0,
+    "seconds": 474.62885570526123,
+    "log": "_raw/final-e5-tsc.log"
+  },
+  {
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "exitCode": 0,
+    "seconds": 64.60371565818787,
+    "log": "_raw/final-e5-build.log"
+  },
+  {
+    "command": [
+      "env",
+      "GR_RELEASE=full",
+      "npm",
+      "run",
+      "build"
+    ],
+    "exitCode": 0,
+    "seconds": 68.30227708816528,
+    "log": "_raw/final-e5-full-build.log"
+  }
+]

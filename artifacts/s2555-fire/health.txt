@@ -1,0 +1,15 @@
+=== Gold Rush factory — 2026-09-08 06:26:42 ===
+edge   : landing=200 game=200 api=200   (200 = up; 2xx-slow = answered but missed the budget; anything else is dark — F-OUT-0829)
+runner : ALIVE
+fire   : between-fires
+agents :
+  com.goldrush.dashboard:LOADED
+  com.goldrush.health:LOADED
+  com.goldrush.fire:LOADED
+lock   : ACTIVE 2026-09-08T06:19Z (s2555 fire) — triage, daily ticker, and standing retention duties
+- **s2554 handoff (line-1 
+queued : 0 task(s)   in-flight: 0   pending-orders: 0
+lanes ahead of main (commit count — may be squash-merged dupes, verify by content):
+art staged, in NO commit: 0 file(s)  (detail: node scripts/art-staging-audit.mjs)
+failed tail: superseded-s239-bt-00-demolish.md
+last fire log line:  succeeded in 3895ms:

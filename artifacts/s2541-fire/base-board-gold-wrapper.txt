@@ -1,0 +1,31 @@
+
+===== board gold headless base — rc=1 4.1s =====
+test at scripts/board-tape-gold.test.mjs:96:3
+✖ e7-relay-rush: the standing's gold is the purse held at the secure tick (1277.196875ms)
+  AssertionError [ERR_ASSERTION]: (node:26001) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+  (Use `node --trace-warnings ...` to show where the warning was created)
+  assay replay failed: malformed tape
+  
+  
+  1 !== 0
+  
+      at seam (file:///private/tmp/gr-gate-s2541/scripts/board-tape-gold.test.mjs:330:12)
+      at TestContext.<anonymous> (file:///private/tmp/gr-gate-s2541/scripts/board-tape-gold.test.mjs:105:20)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+
+SUMMARY {"board gold headless base":1}
+OVERALL rc=1
+transcript -> artifacts/s2541-fire/base-board-gold.txt

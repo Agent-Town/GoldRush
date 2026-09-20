@@ -1,0 +1,3907 @@
+{
+  "probe": "secure-choice-refusal",
+  "finding": "F-MCAP-1",
+  "contract": "the-claim",
+  "seed": "e1-the-claim-01",
+  "submission": "[SECURE_CHOICE, ...the rider plan] — the concatenation the air-wall prover made",
+  "mode": "sample-50",
+  "status": 0,
+  "timedOut": false,
+  "secureWindowTurns": 51,
+  "expiresInMsFirst": 20000,
+  "expiresInMsLast": 20000,
+  "clockMoved": false,
+  "identicalSecureViews": true,
+  "refusalVisibleInOrders": false,
+  "refusalLineCount": 50,
+  "refusalLineFirst": "gr-sim rejected orders: While the secure window is open, the only accepted submission is a single SECURE_CHOICE.",
+  "outcome": {
+    "secured": true,
+    "waves": 10,
+    "timeMs": 300000,
+    "gold": 20,
+    "kills": 298,
+    "calls": 87,
+    "defaultedPicks": 9,
+    "defaultedSecure": 0,
+    "eventLogHash": "fnv1a32:528befb8"
+  },
+  "samples": [
+    {
+      "secureTurn": 1,
+      "runSeconds": 300,
+      "wave": 10,
+      "expiresInMs": 20000,
+      "identicalToPreviousSecureView": null,
+      "orders": [
+        {
+          "id": "orders-36-1",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-2",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-3",
+          "verb": "HARVEST",
+          "status": "active",
+          "reason": null
+        },
+        {
+          "id": "orders-36-4",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-5",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-6",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-7",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-8",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-9",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-10",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-11",
+          "verb": "HOLD",
+          "status": "pending",
+          "reason": null
+        }
+      ],
+      "needsRider": false
+    },
+    {
+      "secureTurn": 2,
+      "runSeconds": 300,
+      "wave": 10,
+      "expiresInMs": 20000,
+      "identicalToPreviousSecureView": true,
+      "orders": [
+        {
+          "id": "orders-36-1",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-2",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-3",
+          "verb": "HARVEST",
+          "status": "active",
+          "reason": null
+        },
+        {
+          "id": "orders-36-4",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-5",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-6",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-7",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-8",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-9",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-10",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-11",
+          "verb": "HOLD",
+          "status": "pending",
+          "reason": null
+        }
+      ],
+      "needsRider": false
+    },
+    {
+      "secureTurn": 3,
+      "runSeconds": 300,
+      "wave": 10,
+      "expiresInMs": 20000,
+      "identicalToPreviousSecureView": true,
+      "orders": [
+        {
+          "id": "orders-36-1",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-2",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-3",
+          "verb": "HARVEST",
+          "status": "active",
+          "reason": null
+        },
+        {
+          "id": "orders-36-4",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-5",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-6",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-7",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-8",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-9",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-10",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-11",
+          "verb": "HOLD",
+          "status": "pending",
+          "reason": null
+        }
+      ],
+      "needsRider": false
+    },
+    {
+      "secureTurn": 4,
+      "runSeconds": 300,
+      "wave": 10,
+      "expiresInMs": 20000,
+      "identicalToPreviousSecureView": true,
+      "orders": [
+        {
+          "id": "orders-36-1",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-2",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-3",
+          "verb": "HARVEST",
+          "status": "active",
+          "reason": null
+        },
+        {
+          "id": "orders-36-4",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-5",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-6",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-7",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-8",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-9",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-10",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-11",
+          "verb": "HOLD",
+          "status": "pending",
+          "reason": null
+        }
+      ],
+      "needsRider": false
+    },
+    {
+      "secureTurn": 5,
+      "runSeconds": 300,
+      "wave": 10,
+      "expiresInMs": 20000,
+      "identicalToPreviousSecureView": true,
+      "orders": [
+        {
+          "id": "orders-36-1",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-2",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-3",
+          "verb": "HARVEST",
+          "status": "active",
+          "reason": null
+        },
+        {
+          "id": "orders-36-4",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-5",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-6",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-7",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-8",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-9",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-10",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-11",
+          "verb": "HOLD",
+          "status": "pending",
+          "reason": null
+        }
+      ],
+      "needsRider": false
+    },
+    {
+      "secureTurn": 6,
+      "runSeconds": 300,
+      "wave": 10,
+      "expiresInMs": 20000,
+      "identicalToPreviousSecureView": true,
+      "orders": [
+        {
+          "id": "orders-36-1",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-2",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-3",
+          "verb": "HARVEST",
+          "status": "active",
+          "reason": null
+        },
+        {
+          "id": "orders-36-4",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-5",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-6",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-7",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-8",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-9",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-10",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-11",
+          "verb": "HOLD",
+          "status": "pending",
+          "reason": null
+        }
+      ],
+      "needsRider": false
+    },
+    {
+      "secureTurn": 7,
+      "runSeconds": 300,
+      "wave": 10,
+      "expiresInMs": 20000,
+      "identicalToPreviousSecureView": true,
+      "orders": [
+        {
+          "id": "orders-36-1",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-2",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-3",
+          "verb": "HARVEST",
+          "status": "active",
+          "reason": null
+        },
+        {
+          "id": "orders-36-4",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-5",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-6",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-7",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-8",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-9",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-10",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-11",
+          "verb": "HOLD",
+          "status": "pending",
+          "reason": null
+        }
+      ],
+      "needsRider": false
+    },
+    {
+      "secureTurn": 8,
+      "runSeconds": 300,
+      "wave": 10,
+      "expiresInMs": 20000,
+      "identicalToPreviousSecureView": true,
+      "orders": [
+        {
+          "id": "orders-36-1",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-2",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-3",
+          "verb": "HARVEST",
+          "status": "active",
+          "reason": null
+        },
+        {
+          "id": "orders-36-4",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-5",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-6",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-7",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-8",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-9",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-10",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-11",
+          "verb": "HOLD",
+          "status": "pending",
+          "reason": null
+        }
+      ],
+      "needsRider": false
+    },
+    {
+      "secureTurn": 9,
+      "runSeconds": 300,
+      "wave": 10,
+      "expiresInMs": 20000,
+      "identicalToPreviousSecureView": true,
+      "orders": [
+        {
+          "id": "orders-36-1",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-2",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-3",
+          "verb": "HARVEST",
+          "status": "active",
+          "reason": null
+        },
+        {
+          "id": "orders-36-4",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-5",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-6",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-7",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-8",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-9",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-10",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-11",
+          "verb": "HOLD",
+          "status": "pending",
+          "reason": null
+        }
+      ],
+      "needsRider": false
+    },
+    {
+      "secureTurn": 10,
+      "runSeconds": 300,
+      "wave": 10,
+      "expiresInMs": 20000,
+      "identicalToPreviousSecureView": true,
+      "orders": [
+        {
+          "id": "orders-36-1",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-2",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-3",
+          "verb": "HARVEST",
+          "status": "active",
+          "reason": null
+        },
+        {
+          "id": "orders-36-4",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-5",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-6",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-7",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-8",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-9",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-10",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-11",
+          "verb": "HOLD",
+          "status": "pending",
+          "reason": null
+        }
+      ],
+      "needsRider": false
+    },
+    {
+      "secureTurn": 11,
+      "runSeconds": 300,
+      "wave": 10,
+      "expiresInMs": 20000,
+      "identicalToPreviousSecureView": true,
+      "orders": [
+        {
+          "id": "orders-36-1",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-2",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-3",
+          "verb": "HARVEST",
+          "status": "active",
+          "reason": null
+        },
+        {
+          "id": "orders-36-4",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-5",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-6",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-7",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-8",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-9",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-10",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-11",
+          "verb": "HOLD",
+          "status": "pending",
+          "reason": null
+        }
+      ],
+      "needsRider": false
+    },
+    {
+      "secureTurn": 12,
+      "runSeconds": 300,
+      "wave": 10,
+      "expiresInMs": 20000,
+      "identicalToPreviousSecureView": true,
+      "orders": [
+        {
+          "id": "orders-36-1",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-2",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-3",
+          "verb": "HARVEST",
+          "status": "active",
+          "reason": null
+        },
+        {
+          "id": "orders-36-4",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-5",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-6",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-7",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-8",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-9",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-10",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-11",
+          "verb": "HOLD",
+          "status": "pending",
+          "reason": null
+        }
+      ],
+      "needsRider": false
+    },
+    {
+      "secureTurn": 13,
+      "runSeconds": 300,
+      "wave": 10,
+      "expiresInMs": 20000,
+      "identicalToPreviousSecureView": true,
+      "orders": [
+        {
+          "id": "orders-36-1",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-2",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-3",
+          "verb": "HARVEST",
+          "status": "active",
+          "reason": null
+        },
+        {
+          "id": "orders-36-4",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-5",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-6",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-7",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-8",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-9",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-10",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-11",
+          "verb": "HOLD",
+          "status": "pending",
+          "reason": null
+        }
+      ],
+      "needsRider": false
+    },
+    {
+      "secureTurn": 14,
+      "runSeconds": 300,
+      "wave": 10,
+      "expiresInMs": 20000,
+      "identicalToPreviousSecureView": true,
+      "orders": [
+        {
+          "id": "orders-36-1",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-2",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-3",
+          "verb": "HARVEST",
+          "status": "active",
+          "reason": null
+        },
+        {
+          "id": "orders-36-4",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-5",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-6",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-7",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-8",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-9",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-10",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-11",
+          "verb": "HOLD",
+          "status": "pending",
+          "reason": null
+        }
+      ],
+      "needsRider": false
+    },
+    {
+      "secureTurn": 15,
+      "runSeconds": 300,
+      "wave": 10,
+      "expiresInMs": 20000,
+      "identicalToPreviousSecureView": true,
+      "orders": [
+        {
+          "id": "orders-36-1",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-2",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-3",
+          "verb": "HARVEST",
+          "status": "active",
+          "reason": null
+        },
+        {
+          "id": "orders-36-4",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-5",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-6",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-7",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-8",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-9",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-10",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-11",
+          "verb": "HOLD",
+          "status": "pending",
+          "reason": null
+        }
+      ],
+      "needsRider": false
+    },
+    {
+      "secureTurn": 16,
+      "runSeconds": 300,
+      "wave": 10,
+      "expiresInMs": 20000,
+      "identicalToPreviousSecureView": true,
+      "orders": [
+        {
+          "id": "orders-36-1",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-2",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-3",
+          "verb": "HARVEST",
+          "status": "active",
+          "reason": null
+        },
+        {
+          "id": "orders-36-4",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-5",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-6",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-7",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-8",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-9",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-10",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-11",
+          "verb": "HOLD",
+          "status": "pending",
+          "reason": null
+        }
+      ],
+      "needsRider": false
+    },
+    {
+      "secureTurn": 17,
+      "runSeconds": 300,
+      "wave": 10,
+      "expiresInMs": 20000,
+      "identicalToPreviousSecureView": true,
+      "orders": [
+        {
+          "id": "orders-36-1",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-2",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-3",
+          "verb": "HARVEST",
+          "status": "active",
+          "reason": null
+        },
+        {
+          "id": "orders-36-4",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-5",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-6",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-7",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-8",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-9",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-10",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-11",
+          "verb": "HOLD",
+          "status": "pending",
+          "reason": null
+        }
+      ],
+      "needsRider": false
+    },
+    {
+      "secureTurn": 18,
+      "runSeconds": 300,
+      "wave": 10,
+      "expiresInMs": 20000,
+      "identicalToPreviousSecureView": true,
+      "orders": [
+        {
+          "id": "orders-36-1",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-2",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-3",
+          "verb": "HARVEST",
+          "status": "active",
+          "reason": null
+        },
+        {
+          "id": "orders-36-4",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-5",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-6",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-7",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-8",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-9",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-10",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-11",
+          "verb": "HOLD",
+          "status": "pending",
+          "reason": null
+        }
+      ],
+      "needsRider": false
+    },
+    {
+      "secureTurn": 19,
+      "runSeconds": 300,
+      "wave": 10,
+      "expiresInMs": 20000,
+      "identicalToPreviousSecureView": true,
+      "orders": [
+        {
+          "id": "orders-36-1",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-2",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-3",
+          "verb": "HARVEST",
+          "status": "active",
+          "reason": null
+        },
+        {
+          "id": "orders-36-4",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-5",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-6",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-7",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-8",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-9",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-10",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-11",
+          "verb": "HOLD",
+          "status": "pending",
+          "reason": null
+        }
+      ],
+      "needsRider": false
+    },
+    {
+      "secureTurn": 20,
+      "runSeconds": 300,
+      "wave": 10,
+      "expiresInMs": 20000,
+      "identicalToPreviousSecureView": true,
+      "orders": [
+        {
+          "id": "orders-36-1",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-2",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-3",
+          "verb": "HARVEST",
+          "status": "active",
+          "reason": null
+        },
+        {
+          "id": "orders-36-4",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-5",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-6",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-7",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-8",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-9",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-10",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-11",
+          "verb": "HOLD",
+          "status": "pending",
+          "reason": null
+        }
+      ],
+      "needsRider": false
+    },
+    {
+      "secureTurn": 21,
+      "runSeconds": 300,
+      "wave": 10,
+      "expiresInMs": 20000,
+      "identicalToPreviousSecureView": true,
+      "orders": [
+        {
+          "id": "orders-36-1",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-2",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-3",
+          "verb": "HARVEST",
+          "status": "active",
+          "reason": null
+        },
+        {
+          "id": "orders-36-4",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-5",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-6",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-7",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-8",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-9",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-10",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-11",
+          "verb": "HOLD",
+          "status": "pending",
+          "reason": null
+        }
+      ],
+      "needsRider": false
+    },
+    {
+      "secureTurn": 22,
+      "runSeconds": 300,
+      "wave": 10,
+      "expiresInMs": 20000,
+      "identicalToPreviousSecureView": true,
+      "orders": [
+        {
+          "id": "orders-36-1",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-2",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-3",
+          "verb": "HARVEST",
+          "status": "active",
+          "reason": null
+        },
+        {
+          "id": "orders-36-4",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-5",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-6",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-7",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-8",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-9",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-10",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-11",
+          "verb": "HOLD",
+          "status": "pending",
+          "reason": null
+        }
+      ],
+      "needsRider": false
+    },
+    {
+      "secureTurn": 23,
+      "runSeconds": 300,
+      "wave": 10,
+      "expiresInMs": 20000,
+      "identicalToPreviousSecureView": true,
+      "orders": [
+        {
+          "id": "orders-36-1",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-2",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-3",
+          "verb": "HARVEST",
+          "status": "active",
+          "reason": null
+        },
+        {
+          "id": "orders-36-4",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-5",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-6",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-7",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-8",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-9",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-10",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-11",
+          "verb": "HOLD",
+          "status": "pending",
+          "reason": null
+        }
+      ],
+      "needsRider": false
+    },
+    {
+      "secureTurn": 24,
+      "runSeconds": 300,
+      "wave": 10,
+      "expiresInMs": 20000,
+      "identicalToPreviousSecureView": true,
+      "orders": [
+        {
+          "id": "orders-36-1",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-2",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-3",
+          "verb": "HARVEST",
+          "status": "active",
+          "reason": null
+        },
+        {
+          "id": "orders-36-4",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-5",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-6",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-7",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-8",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-9",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-10",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-11",
+          "verb": "HOLD",
+          "status": "pending",
+          "reason": null
+        }
+      ],
+      "needsRider": false
+    },
+    {
+      "secureTurn": 25,
+      "runSeconds": 300,
+      "wave": 10,
+      "expiresInMs": 20000,
+      "identicalToPreviousSecureView": true,
+      "orders": [
+        {
+          "id": "orders-36-1",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-2",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-3",
+          "verb": "HARVEST",
+          "status": "active",
+          "reason": null
+        },
+        {
+          "id": "orders-36-4",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-5",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-6",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-7",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-8",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-9",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-10",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-11",
+          "verb": "HOLD",
+          "status": "pending",
+          "reason": null
+        }
+      ],
+      "needsRider": false
+    },
+    {
+      "secureTurn": 26,
+      "runSeconds": 300,
+      "wave": 10,
+      "expiresInMs": 20000,
+      "identicalToPreviousSecureView": true,
+      "orders": [
+        {
+          "id": "orders-36-1",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-2",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-3",
+          "verb": "HARVEST",
+          "status": "active",
+          "reason": null
+        },
+        {
+          "id": "orders-36-4",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-5",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-6",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-7",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-8",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-9",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-10",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-11",
+          "verb": "HOLD",
+          "status": "pending",
+          "reason": null
+        }
+      ],
+      "needsRider": false
+    },
+    {
+      "secureTurn": 27,
+      "runSeconds": 300,
+      "wave": 10,
+      "expiresInMs": 20000,
+      "identicalToPreviousSecureView": true,
+      "orders": [
+        {
+          "id": "orders-36-1",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-2",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-3",
+          "verb": "HARVEST",
+          "status": "active",
+          "reason": null
+        },
+        {
+          "id": "orders-36-4",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-5",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-6",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-7",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-8",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-9",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-10",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-11",
+          "verb": "HOLD",
+          "status": "pending",
+          "reason": null
+        }
+      ],
+      "needsRider": false
+    },
+    {
+      "secureTurn": 28,
+      "runSeconds": 300,
+      "wave": 10,
+      "expiresInMs": 20000,
+      "identicalToPreviousSecureView": true,
+      "orders": [
+        {
+          "id": "orders-36-1",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-2",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-3",
+          "verb": "HARVEST",
+          "status": "active",
+          "reason": null
+        },
+        {
+          "id": "orders-36-4",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-5",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-6",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-7",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-8",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-9",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-10",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-11",
+          "verb": "HOLD",
+          "status": "pending",
+          "reason": null
+        }
+      ],
+      "needsRider": false
+    },
+    {
+      "secureTurn": 29,
+      "runSeconds": 300,
+      "wave": 10,
+      "expiresInMs": 20000,
+      "identicalToPreviousSecureView": true,
+      "orders": [
+        {
+          "id": "orders-36-1",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-2",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-3",
+          "verb": "HARVEST",
+          "status": "active",
+          "reason": null
+        },
+        {
+          "id": "orders-36-4",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-5",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-6",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-7",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-8",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-9",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-10",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-11",
+          "verb": "HOLD",
+          "status": "pending",
+          "reason": null
+        }
+      ],
+      "needsRider": false
+    },
+    {
+      "secureTurn": 30,
+      "runSeconds": 300,
+      "wave": 10,
+      "expiresInMs": 20000,
+      "identicalToPreviousSecureView": true,
+      "orders": [
+        {
+          "id": "orders-36-1",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-2",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-3",
+          "verb": "HARVEST",
+          "status": "active",
+          "reason": null
+        },
+        {
+          "id": "orders-36-4",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-5",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-6",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-7",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-8",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-9",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-10",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-11",
+          "verb": "HOLD",
+          "status": "pending",
+          "reason": null
+        }
+      ],
+      "needsRider": false
+    },
+    {
+      "secureTurn": 31,
+      "runSeconds": 300,
+      "wave": 10,
+      "expiresInMs": 20000,
+      "identicalToPreviousSecureView": true,
+      "orders": [
+        {
+          "id": "orders-36-1",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-2",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-3",
+          "verb": "HARVEST",
+          "status": "active",
+          "reason": null
+        },
+        {
+          "id": "orders-36-4",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-5",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-6",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-7",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-8",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-9",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-10",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-11",
+          "verb": "HOLD",
+          "status": "pending",
+          "reason": null
+        }
+      ],
+      "needsRider": false
+    },
+    {
+      "secureTurn": 32,
+      "runSeconds": 300,
+      "wave": 10,
+      "expiresInMs": 20000,
+      "identicalToPreviousSecureView": true,
+      "orders": [
+        {
+          "id": "orders-36-1",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-2",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-3",
+          "verb": "HARVEST",
+          "status": "active",
+          "reason": null
+        },
+        {
+          "id": "orders-36-4",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-5",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-6",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-7",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-8",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-9",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-10",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-11",
+          "verb": "HOLD",
+          "status": "pending",
+          "reason": null
+        }
+      ],
+      "needsRider": false
+    },
+    {
+      "secureTurn": 33,
+      "runSeconds": 300,
+      "wave": 10,
+      "expiresInMs": 20000,
+      "identicalToPreviousSecureView": true,
+      "orders": [
+        {
+          "id": "orders-36-1",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-2",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-3",
+          "verb": "HARVEST",
+          "status": "active",
+          "reason": null
+        },
+        {
+          "id": "orders-36-4",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-5",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-6",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-7",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-8",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-9",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-10",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-11",
+          "verb": "HOLD",
+          "status": "pending",
+          "reason": null
+        }
+      ],
+      "needsRider": false
+    },
+    {
+      "secureTurn": 34,
+      "runSeconds": 300,
+      "wave": 10,
+      "expiresInMs": 20000,
+      "identicalToPreviousSecureView": true,
+      "orders": [
+        {
+          "id": "orders-36-1",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-2",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-3",
+          "verb": "HARVEST",
+          "status": "active",
+          "reason": null
+        },
+        {
+          "id": "orders-36-4",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-5",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-6",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-7",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-8",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-9",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-10",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-11",
+          "verb": "HOLD",
+          "status": "pending",
+          "reason": null
+        }
+      ],
+      "needsRider": false
+    },
+    {
+      "secureTurn": 35,
+      "runSeconds": 300,
+      "wave": 10,
+      "expiresInMs": 20000,
+      "identicalToPreviousSecureView": true,
+      "orders": [
+        {
+          "id": "orders-36-1",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-2",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-3",
+          "verb": "HARVEST",
+          "status": "active",
+          "reason": null
+        },
+        {
+          "id": "orders-36-4",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-5",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-6",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-7",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-8",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-9",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-10",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-11",
+          "verb": "HOLD",
+          "status": "pending",
+          "reason": null
+        }
+      ],
+      "needsRider": false
+    },
+    {
+      "secureTurn": 36,
+      "runSeconds": 300,
+      "wave": 10,
+      "expiresInMs": 20000,
+      "identicalToPreviousSecureView": true,
+      "orders": [
+        {
+          "id": "orders-36-1",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-2",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-3",
+          "verb": "HARVEST",
+          "status": "active",
+          "reason": null
+        },
+        {
+          "id": "orders-36-4",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-5",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-6",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-7",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-8",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-9",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-10",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-11",
+          "verb": "HOLD",
+          "status": "pending",
+          "reason": null
+        }
+      ],
+      "needsRider": false
+    },
+    {
+      "secureTurn": 37,
+      "runSeconds": 300,
+      "wave": 10,
+      "expiresInMs": 20000,
+      "identicalToPreviousSecureView": true,
+      "orders": [
+        {
+          "id": "orders-36-1",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-2",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-3",
+          "verb": "HARVEST",
+          "status": "active",
+          "reason": null
+        },
+        {
+          "id": "orders-36-4",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-5",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-6",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-7",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-8",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-9",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-10",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-11",
+          "verb": "HOLD",
+          "status": "pending",
+          "reason": null
+        }
+      ],
+      "needsRider": false
+    },
+    {
+      "secureTurn": 38,
+      "runSeconds": 300,
+      "wave": 10,
+      "expiresInMs": 20000,
+      "identicalToPreviousSecureView": true,
+      "orders": [
+        {
+          "id": "orders-36-1",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-2",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-3",
+          "verb": "HARVEST",
+          "status": "active",
+          "reason": null
+        },
+        {
+          "id": "orders-36-4",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-5",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-6",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-7",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-8",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-9",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-10",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-11",
+          "verb": "HOLD",
+          "status": "pending",
+          "reason": null
+        }
+      ],
+      "needsRider": false
+    },
+    {
+      "secureTurn": 39,
+      "runSeconds": 300,
+      "wave": 10,
+      "expiresInMs": 20000,
+      "identicalToPreviousSecureView": true,
+      "orders": [
+        {
+          "id": "orders-36-1",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-2",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-3",
+          "verb": "HARVEST",
+          "status": "active",
+          "reason": null
+        },
+        {
+          "id": "orders-36-4",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-5",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-6",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-7",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-8",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-9",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-10",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-11",
+          "verb": "HOLD",
+          "status": "pending",
+          "reason": null
+        }
+      ],
+      "needsRider": false
+    },
+    {
+      "secureTurn": 40,
+      "runSeconds": 300,
+      "wave": 10,
+      "expiresInMs": 20000,
+      "identicalToPreviousSecureView": true,
+      "orders": [
+        {
+          "id": "orders-36-1",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-2",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-3",
+          "verb": "HARVEST",
+          "status": "active",
+          "reason": null
+        },
+        {
+          "id": "orders-36-4",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-5",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-6",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-7",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-8",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-9",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-10",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-11",
+          "verb": "HOLD",
+          "status": "pending",
+          "reason": null
+        }
+      ],
+      "needsRider": false
+    },
+    {
+      "secureTurn": 41,
+      "runSeconds": 300,
+      "wave": 10,
+      "expiresInMs": 20000,
+      "identicalToPreviousSecureView": true,
+      "orders": [
+        {
+          "id": "orders-36-1",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-2",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-3",
+          "verb": "HARVEST",
+          "status": "active",
+          "reason": null
+        },
+        {
+          "id": "orders-36-4",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-5",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-6",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-7",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-8",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-9",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-10",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-11",
+          "verb": "HOLD",
+          "status": "pending",
+          "reason": null
+        }
+      ],
+      "needsRider": false
+    },
+    {
+      "secureTurn": 42,
+      "runSeconds": 300,
+      "wave": 10,
+      "expiresInMs": 20000,
+      "identicalToPreviousSecureView": true,
+      "orders": [
+        {
+          "id": "orders-36-1",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-2",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-3",
+          "verb": "HARVEST",
+          "status": "active",
+          "reason": null
+        },
+        {
+          "id": "orders-36-4",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-5",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-6",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-7",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-8",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-9",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-10",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-11",
+          "verb": "HOLD",
+          "status": "pending",
+          "reason": null
+        }
+      ],
+      "needsRider": false
+    },
+    {
+      "secureTurn": 43,
+      "runSeconds": 300,
+      "wave": 10,
+      "expiresInMs": 20000,
+      "identicalToPreviousSecureView": true,
+      "orders": [
+        {
+          "id": "orders-36-1",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-2",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-3",
+          "verb": "HARVEST",
+          "status": "active",
+          "reason": null
+        },
+        {
+          "id": "orders-36-4",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-5",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-6",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-7",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-8",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-9",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-10",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-11",
+          "verb": "HOLD",
+          "status": "pending",
+          "reason": null
+        }
+      ],
+      "needsRider": false
+    },
+    {
+      "secureTurn": 44,
+      "runSeconds": 300,
+      "wave": 10,
+      "expiresInMs": 20000,
+      "identicalToPreviousSecureView": true,
+      "orders": [
+        {
+          "id": "orders-36-1",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-2",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-3",
+          "verb": "HARVEST",
+          "status": "active",
+          "reason": null
+        },
+        {
+          "id": "orders-36-4",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-5",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-6",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-7",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-8",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-9",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-10",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-11",
+          "verb": "HOLD",
+          "status": "pending",
+          "reason": null
+        }
+      ],
+      "needsRider": false
+    },
+    {
+      "secureTurn": 45,
+      "runSeconds": 300,
+      "wave": 10,
+      "expiresInMs": 20000,
+      "identicalToPreviousSecureView": true,
+      "orders": [
+        {
+          "id": "orders-36-1",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-2",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-3",
+          "verb": "HARVEST",
+          "status": "active",
+          "reason": null
+        },
+        {
+          "id": "orders-36-4",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-5",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-6",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-7",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-8",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-9",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-10",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-11",
+          "verb": "HOLD",
+          "status": "pending",
+          "reason": null
+        }
+      ],
+      "needsRider": false
+    },
+    {
+      "secureTurn": 46,
+      "runSeconds": 300,
+      "wave": 10,
+      "expiresInMs": 20000,
+      "identicalToPreviousSecureView": true,
+      "orders": [
+        {
+          "id": "orders-36-1",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-2",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-3",
+          "verb": "HARVEST",
+          "status": "active",
+          "reason": null
+        },
+        {
+          "id": "orders-36-4",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-5",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-6",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-7",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-8",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-9",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-10",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-11",
+          "verb": "HOLD",
+          "status": "pending",
+          "reason": null
+        }
+      ],
+      "needsRider": false
+    },
+    {
+      "secureTurn": 47,
+      "runSeconds": 300,
+      "wave": 10,
+      "expiresInMs": 20000,
+      "identicalToPreviousSecureView": true,
+      "orders": [
+        {
+          "id": "orders-36-1",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-2",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-3",
+          "verb": "HARVEST",
+          "status": "active",
+          "reason": null
+        },
+        {
+          "id": "orders-36-4",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-5",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-6",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-7",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-8",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-9",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-10",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-11",
+          "verb": "HOLD",
+          "status": "pending",
+          "reason": null
+        }
+      ],
+      "needsRider": false
+    },
+    {
+      "secureTurn": 48,
+      "runSeconds": 300,
+      "wave": 10,
+      "expiresInMs": 20000,
+      "identicalToPreviousSecureView": true,
+      "orders": [
+        {
+          "id": "orders-36-1",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-2",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-3",
+          "verb": "HARVEST",
+          "status": "active",
+          "reason": null
+        },
+        {
+          "id": "orders-36-4",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-5",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-6",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-7",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-8",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-9",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-10",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-11",
+          "verb": "HOLD",
+          "status": "pending",
+          "reason": null
+        }
+      ],
+      "needsRider": false
+    },
+    {
+      "secureTurn": 49,
+      "runSeconds": 300,
+      "wave": 10,
+      "expiresInMs": 20000,
+      "identicalToPreviousSecureView": true,
+      "orders": [
+        {
+          "id": "orders-36-1",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-2",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-3",
+          "verb": "HARVEST",
+          "status": "active",
+          "reason": null
+        },
+        {
+          "id": "orders-36-4",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-5",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-6",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-7",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-8",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-9",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-10",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-11",
+          "verb": "HOLD",
+          "status": "pending",
+          "reason": null
+        }
+      ],
+      "needsRider": false
+    },
+    {
+      "secureTurn": 50,
+      "runSeconds": 300,
+      "wave": 10,
+      "expiresInMs": 20000,
+      "identicalToPreviousSecureView": true,
+      "orders": [
+        {
+          "id": "orders-36-1",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-2",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-3",
+          "verb": "HARVEST",
+          "status": "active",
+          "reason": null
+        },
+        {
+          "id": "orders-36-4",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-5",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-6",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-7",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-8",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-9",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-10",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-11",
+          "verb": "HOLD",
+          "status": "pending",
+          "reason": null
+        }
+      ],
+      "needsRider": false
+    },
+    {
+      "secureTurn": 51,
+      "runSeconds": 300,
+      "wave": 10,
+      "expiresInMs": 20000,
+      "identicalToPreviousSecureView": true,
+      "orders": [
+        {
+          "id": "orders-36-1",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-2",
+          "verb": "BUILD",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-3",
+          "verb": "HARVEST",
+          "status": "active",
+          "reason": null
+        },
+        {
+          "id": "orders-36-4",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-5",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-6",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-7",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-8",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-9",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-10",
+          "verb": "HARVEST",
+          "status": "pending",
+          "reason": null
+        },
+        {
+          "id": "orders-36-11",
+          "verb": "HOLD",
+          "status": "pending",
+          "reason": null
+        }
+      ],
+      "needsRider": false
+    }
+  ]
+}

@@ -1,0 +1,235 @@
+{
+  "viewport": {
+    "width": 1280,
+    "height": 800
+  },
+  "mp": {
+    "active": true,
+    "connected": true,
+    "partySize": 2,
+    "started": true,
+    "code": "76B825DE8076D6AA5B716A9C",
+    "playerId": "p2",
+    "roster": [
+      {
+        "playerId": "p1",
+        "name": "Ada",
+        "town": "Calculating House",
+        "client": "headless"
+      },
+      {
+        "playerId": "p2",
+        "name": "Bob",
+        "town": "River Bend",
+        "client": "browser"
+      }
+    ],
+    "tick": 82,
+    "buffered": 0,
+    "latencyMs": 63,
+    "tickRate": 13,
+    "hashes": [
+      {
+        "tick": 0,
+        "hash": "fnv1a32:5270351c"
+      },
+      {
+        "tick": 30,
+        "hash": "fnv1a32:5c64236a"
+      },
+      {
+        "tick": 60,
+        "hash": "fnv1a32:11b1d65e"
+      }
+    ],
+    "desyncs": 0,
+    "resyncs": 0,
+    "lastResyncTick": null,
+    "reconnecting": false,
+    "reconnects": 0,
+    "lastReconnectTick": null,
+    "lastReconnectReplayTicks": null,
+    "heldPlayerIds": [],
+    "paused": false,
+    "error": null,
+    "setup": {
+      "contractId": "the-claim",
+      "seed": "seam-anim-mp",
+      "difficultyPreset": "trail",
+      "meta": {
+        "version": 1,
+        "tracks": {
+          "territory": 0,
+          "science": 0,
+          "hero": 0,
+          "agent": 0
+        }
+      },
+      "research": {
+        "version": 1,
+        "epochId": "epoch-1-frontier",
+        "metaScienceCursor": 0,
+        "progress": {
+          "version": 1,
+          "tracks": {
+            "territory": 0,
+            "science": 0,
+            "hero": 0,
+            "agent": 0
+          }
+        },
+        "taken": [],
+        "proposalSalt": 0,
+        "pinnedTarget": null,
+        "unlocks": {
+          "rocketCartCaptured": false
+        }
+      }
+    }
+  },
+  "actors": [
+    {
+      "slot": 0,
+      "playerId": "p1",
+      "name": "Ada",
+      "town": "Calculating House",
+      "local": false,
+      "hp": 100,
+      "maxHp": 100,
+      "weapon": "rig",
+      "position": {
+        "x": 7.347880794884119e-17,
+        "y": 0.3940336620807648,
+        "z": 10.8
+      },
+      "speed": 0,
+      "visible": true
+    },
+    {
+      "slot": 1,
+      "playerId": "p2",
+      "name": "Bob",
+      "town": "River Bend",
+      "local": true,
+      "hp": 100,
+      "maxHp": 100,
+      "weapon": "rig",
+      "position": {
+        "x": -1.5,
+        "y": 0.45848392009735095,
+        "z": -6.4
+      },
+      "speed": 0,
+      "visible": true
+    }
+  ],
+  "harvest": {
+    "activeNodes": [
+      {
+        "id": "gold-seam-1",
+        "active": true,
+        "anchorIndex": 2,
+        "position": {
+          "x": -1.5,
+          "z": -6.4
+        },
+        "remaining": 30,
+        "respawnScheduled": false,
+        "respawnIn": 0
+      },
+      {
+        "id": "gold-seam-2",
+        "active": true,
+        "anchorIndex": 3,
+        "position": {
+          "x": 7.5,
+          "z": 6.5
+        },
+        "remaining": 30,
+        "respawnScheduled": false,
+        "respawnIn": 0
+      },
+      {
+        "id": "gold-seam-3",
+        "active": true,
+        "anchorIndex": 4,
+        "position": {
+          "x": 18,
+          "z": -7
+        },
+        "remaining": 30,
+        "respawnScheduled": false,
+        "respawnIn": 0
+      },
+      {
+        "id": "gold-seam-4",
+        "active": false,
+        "anchorIndex": -1,
+        "position": {
+          "x": 0,
+          "z": 0
+        },
+        "remaining": 30,
+        "respawnScheduled": false,
+        "respawnIn": 0
+      },
+      {
+        "id": "gold-seam-5",
+        "active": false,
+        "anchorIndex": -1,
+        "position": {
+          "x": 0,
+          "z": 0
+        },
+        "remaining": 30,
+        "respawnScheduled": false,
+        "respawnIn": 0
+      },
+      {
+        "id": "gold-seam-6",
+        "active": false,
+        "anchorIndex": -1,
+        "position": {
+          "x": 0,
+          "z": 0
+        },
+        "remaining": 30,
+        "respawnScheduled": false,
+        "respawnIn": 0
+      }
+    ],
+    "channeling": true,
+    "channelNodeId": null,
+    "progress": 0,
+    "channels": [
+      {
+        "actorId": "0",
+        "channelNodeId": null,
+        "progress": 0,
+        "channeling": false
+      },
+      {
+        "actorId": "1",
+        "channelNodeId": "gold-seam-1",
+        "progress": 0.7555555555555556,
+        "channeling": true
+      }
+    ],
+    "lastGoldGain": 0,
+    "lastGoldPosition": null
+  },
+  "heroAnimation": {
+    "clip": "idle",
+    "frame": 0,
+    "frameKey": "pending",
+    "frameCount": 0,
+    "fps": 0,
+    "loaded": false
+  },
+  "frameMs": {
+    "last": 92.70000000000073,
+    "avg": 55.19444444444444,
+    "p95": 381.5,
+    "sampleCount": 18
+  }
+}

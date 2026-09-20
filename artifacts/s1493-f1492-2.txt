@@ -1,0 +1,161 @@
+gate battery transcript (append-only — see scripts/gate-battery.mjs)
+
+
+######## BATTERY 2026-08-06T11:20:46.066Z — s1493 F-1492-2 characterisation ########
+cwd=/Users/robin/Claude/Projects/Gold Rush/gate-s1493
+
+===== census hill-mine =====
+$ npx playwright test e2e/er01-e2-census.spec.ts -g e2-hill-mine --reporter=list --workers=1
+rc=1 20.5s
+
+Running 2 tests using 1 worker
+
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+  ✘  1 [desktop-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-hill-mine census support is explicit and deterministic (9.5s)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+  ✘  2 [mobile-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-hill-mine census support is explicit and deterministic (9.5s)
+
+
+  1) [desktop-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-hill-mine census support is explicit and deterministic 
+
+    Error: expect(received).toMatchObject(expected)
+
+    - Expected  - 1
+    + Received  + 1
+
+      Object {
+        "calls": 0,
+        "secured": true,
+    -   "waves": 12,
+    +   "waves": 14,
+      }
+
+      107 |         const first = run(seed);
+      108 |         const second = run(seed);
+    > 109 |         expect(first).toMatchObject({ secured: true, waves: contract.twist.secureWave, calls: 0 });
+          |                       ^
+      110 |         if (contract.twist.pressureEnabled) expect(first.pressure.vents).toBeGreaterThan(0);
+      111 |         expect(second.eventLogHash).toBe(first.eventLogHash);
+      112 |       }
+        at /Users/robin/Claude/Projects/Gold Rush/gate-s1493/e2e/er01-e2-census.spec.ts:109:23
+
+    Error Context: test-results/er01-e2-census-e2-hill-min-5a34b--explicit-and-deterministic-desktop-chrome/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/er01-e2-census-e2-hill-min-5a34b--explicit-and-deterministic-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/er01-e2-census-e2-hill-min-5a34b--explicit-and-deterministic-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [mobile-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-hill-mine census support is explicit and deterministic 
+
+    Error: expect(received).toMatchObject(expected)
+
+    - Expected  - 1
+    + Received  + 1
+
+      Object {
+        "calls": 0,
+        "secured": true,
+    -   "waves": 12,
+    +   "waves": 14,
+      }
+
+      107 |         const first = run(seed);
+      108 |         const second = run(seed);
+    > 109 |         expect(first).toMatchObject({ secured: true, waves: contract.twist.secureWave, calls: 0 });
+          |                       ^
+      110 |         if (contract.twist.pressureEnabled) expect(first.pressure.vents).toBeGreaterThan(0);
+      111 |         expect(second.eventLogHash).toBe(first.eventLogHash);
+      112 |       }
+        at /Users/robin/Claude/Projects/Gold Rush/gate-s1493/e2e/er01-e2-census.spec.ts:109:23
+
+    Error Context: test-results/er01-e2-census-e2-hill-min-5a34b--explicit-and-deterministic-mobile-chrome/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/er01-e2-census-e2-hill-min-5a34b--explicit-and-deterministic-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/er01-e2-census-e2-hill-min-5a34b--explicit-and-deterministic-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [desktop-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-hill-mine census support is explicit and deterministic 
+    [mobile-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-hill-mine census support is explicit and deterministic 
+
+
+SUMMARY {"census hill-mine":1}
+OVERALL rc=1

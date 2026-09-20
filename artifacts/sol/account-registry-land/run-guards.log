@@ -1,0 +1,88 @@
+run-guards: 35 file(s) changed since 821bff7e915bef5c774193e2611b4726317b45ca
+  base gate: test:node-guards, test:power-budget, test:task-guards, test:citations, test:gate-callers
+  + test:stats, test:accounts, test:mp <- 2 file(s) in functions/** (Cloudflare Pages Functions -- type-checked since s1235; these gate BEHAVIOUR)
+
+FAIL  rc=signal:SIGTERM  900s  test:node-guards
+FAIL  rc=1  28s  test:power-budget  p95=154.215ms
+FAIL  rc=1  94s  test:stats
+FAIL  rc=1  54s  test:accounts
+PASS  rc=0  70s  test:mp
+PASS  rc=0  1s  test:task-guards
+PASS  rc=0  23s  test:citations
+PASS  rc=0  2s  test:gate-callers
+
+--- test:node-guards (rc=signal:SIGTERM) last 20 lines ---
+✔ three Flotilla bodies follow movement, loss and reset without changing the hull owner (628.224083ms)
+✔ the claimed-spec -> owning-config map is DERIVED, not tabulated (17.623583ms)
+✔ derivation REFUSES rather than silently measuring nothing if the array is renamed (4.171292ms)
+✔ MANUFACTURED: a claimed spec whose owning config has NO npm caller is named (4.941708ms)
+✔ a runnerless harness WARNS and never changes the exit code (283.7835ms)
+✔ NO package.json is not the same as no caller — a synthetic root must stay silent (211.891458ms)
+✔ MANUFACTURED: a bare playwright command naming a claimed spec FAILS the guard (272.834792ms)
+✔ MANUFACTURED: a CHECKLIST-form adjacent-suite line FAILS the guard (why arm (b), not (a)) (283.289958ms)
+✔ MANUFACTURED: a mention inside the SELF-CHECK region FAILS the guard (320.677666ms)
+✔ a DESCRIPTIVE mention outside any gate region is NOT an offender (why not arm (c)) (125.462875ms)
+✔ naming the owning CONFIG clears the master (742.266708ms)
+✔ naming the npm ALIAS clears the master (2783.174709ms)
+✔ the guard actually RUNS when invoked as a script (entrypoint is not a silent no-op) (2413.646625ms)
+✔ the live board has no LIVE offender (3273.38975ms)
+✔ every grandfathered file is still a real offender (no stale excuses) (975.410917ms)
+✔ the guard sets process.exitCode and never force-exits (F-2098-1) (8.893916ms)
+(node:99873) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+FIRE SHELL — test:node-guards ran with reduced file concurrency 1 (F-1409-1/F-1410-1); this is the conservative default pending fire-side measurement.
+CONTENDED — 2 concurrent batteries
+
+--- test:power-budget (rc=1) last 20 lines ---
+power-graph-budget: p95=154.215ms cap=0.500ms samples=160 verdict=FAIL
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: power graph fixed-step p95 154.215ms exceeded 0.500ms
+    at file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/scripts/check-power-graph-budget.mjs:44:8
+    at ModuleJob.run (node:internal/modules/esm/module_job:447:25)
+    at async node:internal/modules/esm/loader:646:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v26.4.0
+
+--- test:stats (rc=1) last 20 lines ---
+file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/scripts/test-stats.mjs:268
+  throw new Error(`${child.label} did not become ready:\n${child.logs()}`);
+        ^
+
+Error: pages empty did not become ready:
+
+    at waitForServer (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/scripts/test-stats.mjs:268:9)
+    at async startPages (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/scripts/test-stats.mjs:193:3)
+    at async checkEmptyState (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/scripts/test-stats.mjs:37:18)
+    at async main (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/scripts/test-stats.mjs:24:5)
+    at async file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/scripts/test-stats.mjs:16:1
+
+Node.js v26.4.0
+
+--- test:accounts (rc=1) last 20 lines ---
+file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/scripts/test-accounts.mjs:362
+  throw new Error(`wrangler did not become ready:\n${logs()}`);
+        ^
+
+Error: wrangler did not become ready:
+
+    at waitForServer (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/scripts/test-accounts.mjs:362:9)
+    at async startWrangler (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/scripts/test-accounts.mjs:255:5)
+    at async checkUnconfigured503 (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/scripts/test-accounts.mjs:66:18)
+    at async main (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/scripts/test-accounts.mjs:54:7)
+    at async file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/scripts/test-accounts.mjs:20:8
+
+Node.js v26.4.0
+
+guards: 4/8 passed -- RED: test:node-guards, test:power-budget, test:stats, test:accounts
+guard-stats: appended 8 record(s) to /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/artifacts/sol/account-registry-land/guard-stats-serial.jsonl

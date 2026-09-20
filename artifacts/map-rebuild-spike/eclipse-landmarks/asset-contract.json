@@ -1,0 +1,105 @@
+{
+  "law": "reuse > derive > build-new; era-stamped; grit-dressed",
+  "packs": {
+    "eclipse": {
+      "era": 8,
+      "atlasSha256": "239c6c7d9dd89ab9e48f99aec69a1ee627c8cb386143711706727b769393a7e3",
+      "assets": {
+        "eclipse-shadow-dial": {
+          "sourceTier": "derive",
+          "triangles": 440,
+          "sha256": "9d406593591d24a17938f26ab8292599d325189c3d156098c7d67a60436b4b56",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "west-rim-solar-witness": {
+          "sourceTier": "derive",
+          "triangles": 328,
+          "sha256": "214d5dbbbf2da7620fe5e42dd2ee66989afb70ff593580c2af2cca3e54f24aae",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "east-rim-solar-witness": {
+          "sourceTier": "derive",
+          "triangles": 328,
+          "sha256": "bc88cb4f675f7916bdd47d5ca60372c05b39a79624d139e1a924e6c9bd0bf0a9",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "launch-shadow-gate": {
+          "sourceTier": "derive",
+          "triangles": 180,
+          "sha256": "f0484e3ccfd0aceeb8ac656f7de02df8a8d0ee29a9e70457e02bd23106562d00",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "mass-driver-eclipse-marker": {
+          "sourceTier": "derive",
+          "triangles": 228,
+          "sha256": "7d0286c8f1e107edcc82ad66b65eefafba1aa325d3c25934d8d293f543f0a8f5",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        }
+      }
+    }
+  },
+  "totals": {
+    "packs": 1,
+    "assets": 5,
+    "sourceTiers": {
+      "reuse": 0,
+      "derive": 5,
+      "build-new": 0
+    }
+  },
+  "boards": {
+    "eclipse-landmarks-turntable.png": {
+      "size": [
+        1920,
+        1160
+      ],
+      "sha256": "9906fccfd4cede3ce38de50f3023a0146436acd4ddaef5a75e31dedab2b1793c"
+    },
+    "eclipse-landmarks-verdict.png": {
+      "size": [
+        1920,
+        1008
+      ],
+      "sha256": "043671059c65fd216768729326693e9767876f8c71326a87cf89823edf3c879a"
+    },
+    "eclipse-landmarks-pack.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "b99b1c6a8f03f0870630d4a033e77d531ca145cce734a67e6e67e67647dfdedd"
+    },
+    "eclipse-landmarks-mounted.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "eec71d00453b6d8b86dfc632532083398bea7d82523376874eaff54772309592"
+    },
+    "eclipse-landmarks-mounted-overview.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "eb38de043e0709d7523cc693ff2ec11d23a059ec7d504eb8847086cac9d31b3a"
+    },
+    "eclipse-landmarks-clearance-overlay.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "b2f8a5bc1c5581d872f8641e75f36a3c09f55b5150ddc9a2e5a927363593a35d"
+    }
+  },
+  "simulation": "unchanged; every landmark is a separate render-only GLB mounted by contract"
+}

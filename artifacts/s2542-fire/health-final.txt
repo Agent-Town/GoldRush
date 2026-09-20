@@ -1,0 +1,18 @@
+=== Gold Rush factory — 2026-09-07 20:41:25 ===
+edge   : landing=200 game=200 api=200-slow   (200 = up; 2xx-slow = answered but missed the budget; anything else is dark — F-OUT-0829)
+runner : ALIVE
+fire   : between-fires
+agents :
+  com.goldrush.dashboard:LOADED
+  com.goldrush.health:LOADED
+  com.goldrush.fire:LOADED
+lock   : ACTIVE 2026-09-07T20:39Z (s2542 fire) — M1 corrective merged fa135c9bc; closing evidence and ledger gates
+- **s2540 ha
+queued : 0 task(s)   in-flight: 1   pending-orders: 0
+lanes ahead of main (commit count — may be squash-merged dupes, verify by content):
+  feat/hero-move-verb: 1 commit(s) ahead
+art staged, in NO commit: 0 file(s)  (detail: node scripts/art-staging-audit.mjs)
+failed tail: superseded-s239-bt-00-demolish.md
+last fire log line: PY" in /Users/robin/Claude/Projects/Gold Rush
+
+EXIT 0

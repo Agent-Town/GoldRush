@@ -1,0 +1,31 @@
+# s2551 — current-grammar gold and stage-3 reach gates
+
+Status: two drains PASS. Reach merged as `85a159e2e5ef428b85d55a4c244faf24ae027f48`; gold source committed as `526dc5c8b280ba937823c5a7215cf33e9c26dc2b`. Closing ledger passed after the handoff. Both done-moves are renamed drained-s2551; both goal leaves carry their actual source commit hashes.
+
+The detached candidate `b8c94406dde131168217e59a190ec7f953013aa0` combines the finished reach corrective `7f6d4065926d8f3055db265ca114d5b602882a46` with the preserved gold source from `ffac3a697ee37c01e24fe16a36b70b2a1fc145c6`, on main base `6f6675de6830ad5d0742bf1c9580b86f426da2d0`. The explicit disjoint-pair exception applies: two separate test files, no runtime edits, neither edits the other's exercised source. The full direct Node command completed with rc 0 in 1464.9 seconds under Node 26.4.0 with FIRE file concurrency 1. Its first group reported 742 tests: 737 pass, zero fail/cancelled, five explicit skips (two owner-ruled Baron tests and three fire-shell cross-engine tests). The fixture-cleanup sweep passed all 128 owners in 713.7 seconds, including both changed test files, and the complete npm tail reached the final clean NUL audit. The desk tail correctly skipped under the ACTIVE lock; the closing ledger must evaluate it after handoff. The existing gate-battery driver avoided the 900-second wrapper cutoff without changing any test deadline. Typecheck rc 0 in 5.3 s, build rc 0 in 20.4 s, and four selected guards pass in 2.0 s; power p95 0.371 ms. See `artifacts/s2551-fire/full-node.txt`, `artifacts/s2551-fire/full-node-result.json`, and `artifacts/s2551-fire/remaining-gates.txt`.
+
+The read-only independent Codex review found no actionable issue: the reach guard follows stage-3 hero ownership and preserves mutation controls; the gold guard retains real replay and held-versus-panned assertions. Six historical tape/slip hashes and the browser/helper tail match unchanged main. See `artifacts/s2551-fire/classification.json`, `artifacts/s2551-fire/source.diff`, `artifacts/s2551-fire/codex-review.txt`, and `artifacts/s2551-fire/historical-fixtures.json`.
+
+## Triage and standing duties
+
+Runner ALIVE; landing/game/API all 200; no pending crafting order, no CODEX-WALL, no new failed task. Three real drains and zero unknown receipts: reach, gold, and the separately held chapter writer. Ten planned leaves are priced, with no unpriced fire-authorable refill. The inherited owner desk contains 55 entries, none closed or unrecorded. No foreign source, lane refs or queues were edited; runner-owned telemetry was left to its writers.
+
+LB-01 is whole and current: 15/15 coverage days through September 7; the UTC-day pull is a no-op. Exposure audit found zero account rows; its 54 unrecognised refusal-table values remain declared. RT-01 r2026w37 is open, and site id plus skill seed block align. September 6 ticker exists; September 7 is due after local 06:00. GZ-01 has 249 reported, 112 dismissed, zero candidates; W37 has three standalone and two batched headlines. No ART trigger: this board has real drains and ART was untouched.
+
+## Retention
+
+All 106 registered trees were visited: 105 answered and the one gitless arena was recorded as could-not-answer. The gitless-safe fallback hashed 6,775/6,775 evidence files, 7,107,705,597 bytes, all remote-safe. The quiet-file pass hashed 1,478/1,478 files: 1,470 raw blobs remote-safe, seven local-only and one absent. Six local-only raw traces match the already offsite chunk manifests and current origin tips; no duplicate salvage is owed. The other two are unchanged prior exceptions: the 274,833,116-byte heat12 full-view stream and the redundant 2,203-byte rehearsal index. Fourteen in-progress evidence paths were deferred. The withheld audit read 377 run logs and found zero newly recoverable on-disk paths; its 55 historical missing paths remain recorded. Nothing foreign was touched.
+
+Browser adjacency passed 34/34 in 163.2 s; plain desktop/390px boots passed in 8.4 s with zero warnings, console errors or page errors. Three screenshots were retained in this fire's evidence directory.
+
+## Next increment
+
+The chapter writer remains the one real drain. Resume `save/chapter-evidence-s2541` at `44fd2661f345f25c9d9099359ff405eabd6b641e`, classify against current main, preserve the 138-row Moth recording, and complete its own chapter/adjacency/boot and full Node gates. No re-dispatch of either accepted corrective. The current increment used its time on the required 24.4-minute Node gate and serial browser checks; no third drain was started. Both accepted changes are test-only, so no public deploy or gazette headline is owed.
+
+The consumed gold save ref was renamed to `archive/board-gold-current-grammar-s2547`, pushed, and only then its old remote save alias was removed. Its commit remains `ffac3a697ee37c01e24fe16a36b70b2a1fc145c6`. The accepted run surface matches the gate candidate exactly. The owned detached worktree and Vite listener were removed after retaining its three generated screenshots and guard stats; main tracked dirt was unchanged by cleanup.
+
+## Closing receipts
+
+Handoff `6fd13f9d3` cleared the lock and was pushed to origin. The closing ledger command then passed in 113.3 seconds: 1,050 Node tests passed, zero failures/cancellations/skips in that group; the chained foundry test-init group passed 83 checks. All three actual desk gates—declaration, birth and carryforward—reported PASS, not SKIP. Two separate runner-restart custody arms explicitly skipped because `/usr/bin/script` cannot use a terminal in this captured shell; no coverage is claimed for them. See `artifacts/s2551-fire/closing-ledger.txt` and `artifacts/s2551-fire/closing-ledger.json`.
+
+Final desk audit retains all 55 inherited items byte-identically: zero closed/unrecorded, two OPEN and 53 OPEN-DESK-ONLY. Runner ALIVE, queues/in-flight/crafting zero. Lane-a is USABLE; the dry-board probe names exactly one real drain, the chapter writer, and zero unknown receipts. Both reviews cite 40 tracked evidence paths with zero absent or on-disk-untracked paths. GZ-01 still has zero candidates. Only closing evidence is committed after this handoff; no source or ledger change follows the closing gate.

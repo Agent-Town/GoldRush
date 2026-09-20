@@ -1,0 +1,21 @@
+CMD: node --test scripts/node-guards-timeout.test.mjs
+CWD: /Users/robin/Claude/Projects/Gold Rush
+NODE: v26.4.0
+START: 2026-08-19T23:34:57.717Z
+---
+✔ the harness gives the battery a finite default per-test timeout (114.435459ms)
+✔ a per-test timeout still overrides the default, so declared budgets are untouched (4087.83075ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4239.318333
+
+---
+EXIT_CODE: 0
+SIGNAL: null
+WALL_SECONDS: 4.3
+END: 2026-08-19T23:35:01.985Z

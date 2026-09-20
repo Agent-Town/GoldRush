@@ -1,0 +1,743 @@
+{
+  "generatedAt": "2026-09-07T03:57:05.525Z",
+  "tapes": 24,
+  "results": [
+    {
+      "ride": "e1-baron",
+      "name": "tune-1.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e1-baron/work/tune-1.json",
+      "scored": true,
+      "tapeId": "agent-454a4585-356542d5-cc71-4209-9bd9-279bf6858e42",
+      "contract": "e1-baron",
+      "seed": "e1-baron-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEventLogHash": "fnv1a32:41f0518d",
+      "carriesRemoved": [
+        "HOLD",
+        "MOVE_TO"
+      ],
+      "carriesRebased": [
+        "CONTEXT_ACTION"
+      ],
+      "carriesRepair": [
+        "REPAIR_UNDER"
+      ],
+      "eventLogHash": "fnv1a32:fe24406d",
+      "outcome": {
+        "secured": false,
+        "waves": 20,
+        "gold": 200,
+        "timeAlive": 536.2
+      },
+      "ticks": 16086,
+      "engine": "headless-contract-sim",
+      "wallMs": 109603,
+      "wallSeconds": 110
+    },
+    {
+      "ride": "e1-drill-yard",
+      "name": "attempt-1-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e1-drill-yard/work/attempt-1-tape.json",
+      "scored": true,
+      "tapeId": "agent-c91b6e59-2514e50c-1b43-4f42-abae-6be06ccbb88d",
+      "contract": "e1-drill-yard",
+      "seed": "gold-rush",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEventLogHash": "fnv1a32:ff497859",
+      "carriesRemoved": [
+        "HOLD"
+      ],
+      "carriesRebased": [],
+      "carriesRepair": [],
+      "eventLogHash": "fnv1a32:a874c4fb",
+      "outcome": {
+        "secured": false,
+        "waves": 3,
+        "gold": 180,
+        "timeAlive": 98.7
+      },
+      "ticks": 2961,
+      "engine": "headless-contract-sim",
+      "wallMs": 7630,
+      "wallSeconds": 8
+    },
+    {
+      "ride": "e1-night-shift",
+      "name": "attempt-1-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e1-night-shift/work/attempt-1-tape.json",
+      "scored": true,
+      "tapeId": "agent-f255bbbc-022dd78b-1973-4fd6-b333-e77f3a434bb2",
+      "contract": "e1-night-shift",
+      "seed": "e1-night-shift-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEventLogHash": "fnv1a32:94ab6114",
+      "carriesRemoved": [
+        "HOLD"
+      ],
+      "carriesRebased": [],
+      "carriesRepair": [
+        "REPAIR_UNDER"
+      ],
+      "eventLogHash": "fnv1a32:9eede9cf",
+      "outcome": {
+        "secured": false,
+        "waves": 20,
+        "gold": 32,
+        "timeAlive": 615.4
+      },
+      "ticks": 18462,
+      "engine": "headless-contract-sim",
+      "wallMs": 193083,
+      "wallSeconds": 193
+    },
+    {
+      "ride": "e2-hill-mine",
+      "name": "attempt-1-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e2-hill-mine/work/attempt-1-tape.json",
+      "scored": true,
+      "tapeId": "agent-79d13893-f57ad81f-41e7-452e-94ba-087d1bbffabb",
+      "contract": "e2-hill-mine",
+      "seed": "e2-hill-mine-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEventLogHash": "fnv1a32:d00d8e69",
+      "carriesRemoved": [
+        "HOLD"
+      ],
+      "carriesRebased": [],
+      "carriesRepair": [
+        "REPAIR_UNDER"
+      ],
+      "eventLogHash": "fnv1a32:a8525220",
+      "outcome": {
+        "secured": false,
+        "waves": 15,
+        "gold": 48,
+        "timeAlive": 470.567
+      },
+      "ticks": 14117,
+      "engine": "headless-contract-sim",
+      "wallMs": 58967,
+      "wallSeconds": 59
+    },
+    {
+      "ride": "e3-canyon-works.attempt-1",
+      "name": "attempt-1-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e3-canyon-works.attempt-1/work/attempt-1-tape.json",
+      "scored": true,
+      "tapeId": "agent-9284f916-48c7172d-7762-4e69-a80a-b6ed50c2c1cd",
+      "contract": "e3-canyon-works",
+      "seed": "e3-canyon-works-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEventLogHash": "fnv1a32:8e30df40",
+      "carriesRemoved": [],
+      "carriesRebased": [],
+      "carriesRepair": [],
+      "eventLogHash": "fnv1a32:46bc4a77",
+      "outcome": {
+        "secured": false,
+        "waves": 3,
+        "gold": 120,
+        "timeAlive": 106.5
+      },
+      "ticks": 3195,
+      "engine": "headless-contract-sim",
+      "wallMs": 10977,
+      "wallSeconds": 12
+    },
+    {
+      "ride": "e3-canyon-works",
+      "name": "attempt-1-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e3-canyon-works/work/attempt-1-tape.json",
+      "scored": true,
+      "tapeId": "agent-d5f94574-bea24874-619b-41e4-93a3-54f3718ab9eb",
+      "contract": "e3-canyon-works",
+      "seed": "e3-canyon-works-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEventLogHash": "fnv1a32:d5528e07",
+      "carriesRemoved": [
+        "HOLD"
+      ],
+      "carriesRebased": [],
+      "carriesRepair": [],
+      "error": "(node:76031) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\nassay replay failed: tape ran out after 36000 steps with the run still alive\n"
+    },
+    {
+      "ride": "e3-moth-season",
+      "name": "attempt-1-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e3-moth-season/work/attempt-1-tape.json",
+      "scored": true,
+      "tapeId": "agent-7739d978-82ca7118-bd78-4b36-ae7c-9051ac88d5e7",
+      "contract": "e3-moth-season",
+      "seed": "e3-moth-season-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEventLogHash": "fnv1a32:b98efd5e",
+      "carriesRemoved": [
+        "HOLD"
+      ],
+      "carriesRebased": [],
+      "carriesRepair": [],
+      "eventLogHash": "fnv1a32:ed3974ff",
+      "outcome": {
+        "secured": true,
+        "waves": 12,
+        "gold": 200,
+        "timeAlive": 360
+      },
+      "securedSnapshot": {
+        "waves": 12,
+        "gold": 200,
+        "timeAlive": 360
+      },
+      "ticks": 10801,
+      "engine": "headless-contract-sim",
+      "wallMs": 48947,
+      "wallSeconds": 50
+    },
+    {
+      "ride": "e4-boneyard",
+      "name": "attempt-1-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e4-boneyard/work/attempt-1-tape.json",
+      "scored": true,
+      "tapeId": "agent-3af455e5-52d1fd7c-5ddf-475e-84f1-1081e5f2caf0",
+      "contract": "e4-boneyard",
+      "seed": "e4-boneyard-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEventLogHash": "fnv1a32:76da210d",
+      "carriesRemoved": [
+        "HOLD",
+        "MOVE_TO"
+      ],
+      "carriesRebased": [
+        "HAUL"
+      ],
+      "carriesRepair": [],
+      "eventLogHash": "fnv1a32:49e829d4",
+      "outcome": {
+        "secured": true,
+        "waves": 12,
+        "gold": 200,
+        "timeAlive": 360
+      },
+      "securedSnapshot": {
+        "waves": 12,
+        "gold": 200,
+        "timeAlive": 360
+      },
+      "ticks": 11400,
+      "engine": "headless-contract-sim",
+      "wallMs": 44582,
+      "wallSeconds": 45
+    },
+    {
+      "ride": "e4-dust-flats",
+      "name": "attempt-2-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e4-dust-flats/work/attempt-2-tape.json",
+      "scored": true,
+      "tapeId": "agent-a2abb3af-a22234cd-28a3-4b2c-b9c6-2f2baa797847",
+      "contract": "e4-dust-flats",
+      "seed": "e4-dust-flats-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEventLogHash": "fnv1a32:aa5cf98e",
+      "carriesRemoved": [
+        "HOLD",
+        "MOVE_TO"
+      ],
+      "carriesRebased": [
+        "GRADE",
+        "HAUL"
+      ],
+      "carriesRepair": [],
+      "eventLogHash": "fnv1a32:46686d78",
+      "outcome": {
+        "secured": true,
+        "waves": 14,
+        "gold": 55,
+        "timeAlive": 426.133
+      },
+      "securedSnapshot": {
+        "waves": 12,
+        "gold": 55,
+        "timeAlive": 426.133
+      },
+      "ticks": 12785,
+      "engine": "headless-contract-sim",
+      "wallMs": 56840,
+      "wallSeconds": 57
+    },
+    {
+      "ride": "e4-gusher-county",
+      "name": "attempt-1-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e4-gusher-county/work/attempt-1-tape.json",
+      "scored": true,
+      "tapeId": "agent-30665e9d-03c08c59-94c6-4b86-b1fd-16259206a52d",
+      "contract": "e4-gusher-county",
+      "seed": "e4-gusher-county-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEventLogHash": "fnv1a32:b61647e9",
+      "carriesRemoved": [
+        "HOLD",
+        "MOVE_TO"
+      ],
+      "carriesRebased": [
+        "GRADE",
+        "HAUL"
+      ],
+      "carriesRepair": [],
+      "eventLogHash": "fnv1a32:abfd532f",
+      "outcome": {
+        "secured": true,
+        "waves": 12,
+        "gold": 5,
+        "timeAlive": 360
+      },
+      "securedSnapshot": {
+        "waves": 12,
+        "gold": 5,
+        "timeAlive": 360
+      },
+      "ticks": 11400,
+      "engine": "headless-contract-sim",
+      "wallMs": 39388,
+      "wallSeconds": 40
+    },
+    {
+      "ride": "e4-long-road",
+      "name": "tune-2-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e4-long-road/work/tune-2-tape.json",
+      "scored": true,
+      "tapeId": "agent-47a8043f-91631d7e-f091-4c5e-a1ce-97dbebf22a1a",
+      "contract": "e4-long-road",
+      "seed": "e4-long-road-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEventLogHash": "fnv1a32:e024dea1",
+      "carriesRemoved": [
+        "HOLD",
+        "MOVE_TO"
+      ],
+      "carriesRebased": [
+        "GRADE"
+      ],
+      "carriesRepair": [],
+      "eventLogHash": "fnv1a32:ce8e0383",
+      "outcome": {
+        "secured": false,
+        "waves": 5,
+        "gold": 35,
+        "timeAlive": 157.6
+      },
+      "ticks": 4728,
+      "engine": "headless-contract-sim",
+      "wallMs": 13249,
+      "wallSeconds": 14
+    },
+    {
+      "ride": "e5-stillwater",
+      "name": "attempt-1-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e5-stillwater/work/attempt-1-tape.json",
+      "scored": true,
+      "tapeId": "agent-82a5f5e0-59609077-337d-490f-90ca-7b9abc2ccf79",
+      "contract": "e5-stillwater",
+      "seed": "e5-stillwater-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEventLogHash": "fnv1a32:3e887b17",
+      "carriesRemoved": [
+        "HOLD"
+      ],
+      "carriesRebased": [
+        "BOAT_BUILD",
+        "REANCHOR"
+      ],
+      "carriesRepair": [],
+      "eventLogHash": "fnv1a32:338d5c80",
+      "outcome": {
+        "secured": true,
+        "waves": 12,
+        "gold": 200,
+        "timeAlive": 360
+      },
+      "securedSnapshot": {
+        "waves": 12,
+        "gold": 200,
+        "timeAlive": 360
+      },
+      "ticks": 11400,
+      "engine": "headless-contract-sim",
+      "wallMs": 40277,
+      "wallSeconds": 41
+    },
+    {
+      "ride": "e7-dead-band",
+      "name": "attempt-1-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e7-dead-band/work/attempt-1-tape.json",
+      "scored": true,
+      "tapeId": "agent-c4c98518-9e45c5db-09d9-4386-b7bb-d2cd624ba982",
+      "contract": "e7-dead-band",
+      "seed": "e7-dead-band-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEventLogHash": "fnv1a32:297c535f",
+      "carriesRemoved": [
+        "HOLD",
+        "MOVE_TO"
+      ],
+      "carriesRebased": [
+        "CONTEXT_ACTION",
+        "PLAYBOOK_USE"
+      ],
+      "carriesRepair": [],
+      "eventLogHash": "fnv1a32:e181301c",
+      "outcome": {
+        "secured": true,
+        "waves": 20,
+        "gold": 200,
+        "timeAlive": 600
+      },
+      "securedSnapshot": {
+        "waves": 20,
+        "gold": 200,
+        "timeAlive": 600
+      },
+      "ticks": 18600,
+      "engine": "headless-contract-sim",
+      "wallMs": 246613,
+      "wallSeconds": 247
+    },
+    {
+      "ride": "e7-echo-canyon",
+      "name": "tune-1-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e7-echo-canyon/work/tune-1-tape.json",
+      "scored": true,
+      "tapeId": "agent-d47dfbaa-7f9bcd5a-824a-42be-a3c1-fc18fd4ca4af",
+      "contract": "e7-echo-canyon",
+      "seed": "e7-echo-canyon-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEventLogHash": "fnv1a32:19817b46",
+      "carriesRemoved": [
+        "HOLD"
+      ],
+      "carriesRebased": [
+        "PLAYBOOK_USE"
+      ],
+      "carriesRepair": [],
+      "eventLogHash": "fnv1a32:8007b47d",
+      "outcome": {
+        "secured": true,
+        "waves": 20,
+        "gold": 200,
+        "timeAlive": 600
+      },
+      "securedSnapshot": {
+        "waves": 20,
+        "gold": 200,
+        "timeAlive": 600
+      },
+      "ticks": 18600,
+      "engine": "headless-contract-sim",
+      "wallMs": 212857,
+      "wallSeconds": 215
+    },
+    {
+      "ride": "e7-relay-rush",
+      "name": "attempt-1-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e7-relay-rush/work/attempt-1-tape.json",
+      "scored": true,
+      "tapeId": "agent-e8c4f218-4307b4e1-08a4-457f-92ae-70f84329c564",
+      "contract": "e7-relay-rush",
+      "seed": "e7-relay-rush-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEventLogHash": "fnv1a32:ed5dc794",
+      "carriesRemoved": [
+        "HOLD"
+      ],
+      "carriesRebased": [
+        "PLAYBOOK_USE"
+      ],
+      "carriesRepair": [],
+      "eventLogHash": "fnv1a32:d381ebe2",
+      "outcome": {
+        "secured": true,
+        "waves": 20,
+        "gold": 200,
+        "timeAlive": 600
+      },
+      "securedSnapshot": {
+        "waves": 20,
+        "gold": 200,
+        "timeAlive": 600
+      },
+      "ticks": 18600,
+      "engine": "headless-contract-sim",
+      "wallMs": 209163,
+      "wallSeconds": 211
+    },
+    {
+      "ride": "e7-relay-valley.attempt-1",
+      "name": "tune-3-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e7-relay-valley.attempt-1/work/tune-3-tape.json",
+      "scored": true,
+      "tapeId": "agent-211bb7c1-655ec773-5a6b-4afd-8665-5871fa07cff4",
+      "contract": "e7-relay-valley",
+      "seed": "e7-relay-valley-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEventLogHash": "fnv1a32:f9866fc8",
+      "carriesRemoved": [
+        "HOLD"
+      ],
+      "carriesRebased": [
+        "PLAYBOOK_USE"
+      ],
+      "carriesRepair": [],
+      "eventLogHash": "fnv1a32:6ab1633a",
+      "outcome": {
+        "secured": false,
+        "waves": 16,
+        "gold": 0,
+        "timeAlive": 508.067
+      },
+      "ticks": 15242,
+      "engine": "headless-contract-sim",
+      "wallMs": 61697,
+      "wallSeconds": 63
+    },
+    {
+      "ride": "e7-relay-valley",
+      "name": "attempt-1-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e7-relay-valley/work/attempt-1-tape.json",
+      "scored": true,
+      "tapeId": "agent-807d85f3-a7f9ed28-db67-492a-9bd0-df4c2c0b3454",
+      "contract": "e7-relay-valley",
+      "seed": "e7-relay-valley-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEventLogHash": "fnv1a32:56777ed0",
+      "carriesRemoved": [
+        "HOLD"
+      ],
+      "carriesRebased": [
+        "PLAYBOOK_USE"
+      ],
+      "carriesRepair": [],
+      "eventLogHash": "fnv1a32:291833ef",
+      "outcome": {
+        "secured": false,
+        "waves": 11,
+        "gold": 0,
+        "timeAlive": 354.567
+      },
+      "ticks": 10637,
+      "engine": "headless-contract-sim",
+      "wallMs": 232052,
+      "wallSeconds": 233
+    },
+    {
+      "ride": "e8-eclipse",
+      "name": "attempt-1-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e8-eclipse/work/attempt-1-tape.json",
+      "scored": true,
+      "tapeId": "agent-65c5a680-9ccd6077-0a9f-4a8c-b36e-f459397b7149",
+      "contract": "e8-eclipse",
+      "seed": "e8-eclipse-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEventLogHash": "fnv1a32:a0a58077",
+      "carriesRemoved": [
+        "HOLD",
+        "MOVE_TO"
+      ],
+      "carriesRebased": [
+        "CONTEXT_ACTION"
+      ],
+      "carriesRepair": [],
+      "error": "(node:82975) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\nassay replay failed: the run ended before tick 2701 of the order stream\n"
+    },
+    {
+      "ride": "e8-far-side",
+      "name": "attempt-1-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e8-far-side/work/attempt-1-tape.json",
+      "scored": true,
+      "tapeId": "agent-03784526-96166760-5341-4b3e-bd9f-7338d954441f",
+      "contract": "e8-far-side",
+      "seed": "e8-far-side-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEventLogHash": "fnv1a32:f540c405",
+      "carriesRemoved": [
+        "HOLD",
+        "MOVE_TO"
+      ],
+      "carriesRebased": [
+        "CONTEXT_ACTION"
+      ],
+      "carriesRepair": [],
+      "eventLogHash": "fnv1a32:a9448c78",
+      "outcome": {
+        "secured": false,
+        "waves": 22,
+        "gold": 200,
+        "timeAlive": 672.333
+      },
+      "ticks": 20170,
+      "engine": "headless-contract-sim",
+      "wallMs": 75175,
+      "wallSeconds": 76
+    },
+    {
+      "ride": "e8-low-orbit",
+      "name": "attempt-1-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e8-low-orbit/work/attempt-1-tape.json",
+      "scored": true,
+      "tapeId": "agent-6d2f797a-909e53e2-3dd6-4aa9-8160-2be17e6a78f7",
+      "contract": "e8-low-orbit",
+      "seed": "e8-low-orbit-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEventLogHash": "fnv1a32:8629a98e",
+      "carriesRemoved": [
+        "HOLD",
+        "MOVE_TO"
+      ],
+      "carriesRebased": [
+        "CONTEXT_ACTION"
+      ],
+      "carriesRepair": [],
+      "eventLogHash": "fnv1a32:c69324de",
+      "outcome": {
+        "secured": false,
+        "waves": 22,
+        "gold": 200,
+        "timeAlive": 667.4
+      },
+      "ticks": 20022,
+      "engine": "headless-contract-sim",
+      "wallMs": 53308,
+      "wallSeconds": 54
+    },
+    {
+      "ride": "e8-mare-claim",
+      "name": "attempt-1-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e8-mare-claim/work/attempt-1-tape.json",
+      "scored": true,
+      "tapeId": "agent-4036192d-b1ebab0e-a2e1-42ba-b7dd-c2edf9f3d797",
+      "contract": "e8-mare-claim",
+      "seed": "e8-mare-claim-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEventLogHash": "fnv1a32:e06bda53",
+      "carriesRemoved": [
+        "HOLD",
+        "MOVE_TO"
+      ],
+      "carriesRebased": [
+        "CONTEXT_ACTION"
+      ],
+      "carriesRepair": [],
+      "error": "(node:83253) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\nassay replay failed: the run ended before tick 2701 of the order stream\n"
+    },
+    {
+      "ride": "e9-dome-basin.attempt-1",
+      "name": "tune-3-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e9-dome-basin.attempt-1/work/tune-3-tape.json",
+      "scored": true,
+      "tapeId": "agent-8fb761f3-6515dfc7-e4d0-4c2e-a91e-eb18b8ba22d5",
+      "contract": "e9-dome-basin",
+      "seed": "e9-dome-basin-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEventLogHash": "fnv1a32:2b4a09b5",
+      "carriesRemoved": [
+        "HOLD"
+      ],
+      "carriesRebased": [],
+      "carriesRepair": [
+        "REPAIR_UNDER"
+      ],
+      "eventLogHash": "fnv1a32:a0581a78",
+      "outcome": {
+        "secured": false,
+        "waves": 16,
+        "gold": 80,
+        "timeAlive": 499.2
+      },
+      "ticks": 14976,
+      "engine": "headless-contract-sim",
+      "wallMs": 71405,
+      "wallSeconds": 72
+    },
+    {
+      "ride": "e9-dome-basin",
+      "name": "tune-1-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e9-dome-basin/work/tune-1-tape.json",
+      "scored": true,
+      "tapeId": "agent-8e51d98b-58f6f224-e330-4e62-b071-e3d3d8d93ac2",
+      "contract": "e9-dome-basin",
+      "seed": "e9-dome-basin-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEventLogHash": "fnv1a32:17e14213",
+      "carriesRemoved": [],
+      "carriesRebased": [],
+      "carriesRepair": [
+        "REPAIR_UNDER"
+      ],
+      "eventLogHash": "fnv1a32:0673e86b",
+      "outcome": {
+        "secured": false,
+        "waves": 14,
+        "gold": 96,
+        "timeAlive": 439.567
+      },
+      "ticks": 13187,
+      "engine": "headless-contract-sim",
+      "wallMs": 80961,
+      "wallSeconds": 81
+    },
+    {
+      "ride": "the-claim",
+      "name": "attempt-1-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/the-claim/work/attempt-1-tape.json",
+      "scored": true,
+      "tapeId": "agent-2d257d8b-91bfcbf4-53e5-4c23-b5ae-d195fe447e9d",
+      "contract": "the-claim",
+      "seed": "e1-the-claim-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEventLogHash": "fnv1a32:23da1694",
+      "carriesRemoved": [
+        "HOLD"
+      ],
+      "carriesRebased": [],
+      "carriesRepair": [],
+      "eventLogHash": "fnv1a32:0e4ff630",
+      "outcome": {
+        "secured": true,
+        "waves": 10,
+        "gold": 76,
+        "timeAlive": 300
+      },
+      "securedSnapshot": {
+        "waves": 10,
+        "gold": 76,
+        "timeAlive": 300
+      },
+      "ticks": 9600,
+      "engine": "headless-contract-sim",
+      "wallMs": 22419,
+      "wallSeconds": 23
+    }
+  ]
+}

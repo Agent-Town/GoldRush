@@ -1,0 +1,51 @@
+(node:13068) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+
+(node:13148) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:13148) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[1/1] [desktop-chrome] › e2e/mp-02-lockstep.spec.ts:67:1 › hash mismatch pauses, shows the wire card, and restores from relay snapshot
+  1) [desktop-chrome] › e2e/mp-02-lockstep.spec.ts:67:1 › hash mismatch pauses, shows the wire card, and restores from relay snapshot
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: false
+    Received: true
+
+      90 |     await writeReport(testInfo, 'desync-resync', { alice: aliceState, bob: bobState });
+      91 |
+    > 92 |     expect(aliceState.paused).toBe(false);
+         |                               ^
+      93 |     expect(bobState.paused).toBe(false);
+      94 |     expect(aliceState.resyncs).toBeGreaterThanOrEqual(1);
+      95 |     expect(bobState.resyncs).toBeGreaterThanOrEqual(1);
+        at /Users/robin/.codex/worktrees/fixed-step-baseline/Gold Rush/e2e/mp-02-lockstep.spec.ts:92:31
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/mp-02-lockstep-hash-mismat-855a7-estores-from-relay-snapshot-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #3: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/mp-02-lockstep-hash-mismat-855a7-estores-from-relay-snapshot-desktop-chrome/test-failed-2.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/mp-02-lockstep-hash-mismat-855a7-estores-from-relay-snapshot-desktop-chrome/error-context.md
+
+    Error Context: test-results/mp-02-lockstep-hash-mismat-855a7-estores-from-relay-snapshot-desktop-chrome/error-context.md
+
+    attachment #6: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/mp-02-lockstep-hash-mismat-855a7-estores-from-relay-snapshot-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/mp-02-lockstep-hash-mismat-855a7-estores-from-relay-snapshot-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  1 failed
+    [desktop-chrome] › e2e/mp-02-lockstep.spec.ts:67:1 › hash mismatch pauses, shows the wire card, and restores from relay snapshot

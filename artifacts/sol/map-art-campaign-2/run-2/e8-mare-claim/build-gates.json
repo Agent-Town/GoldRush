@@ -1,0 +1,35 @@
+[
+  {
+    "name": "tsc",
+    "command": [
+      "npx",
+      "tsc",
+      "--noEmit"
+    ],
+    "exit": 0,
+    "seconds": 6.054343938827515,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-2/e8-mare-claim-tsc.log"
+  },
+  {
+    "name": "build",
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "exit": 0,
+    "seconds": 19.97498106956482,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-2/e8-mare-claim-build.log"
+  },
+  {
+    "name": "full-build",
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "exit": 0,
+    "seconds": 22.83944606781006,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-2/e8-mare-claim-full-build.log"
+  }
+]

@@ -1,0 +1,26 @@
+gate battery transcript (append-only — see scripts/gate-battery.mjs)
+
+
+######## BATTERY 2026-09-07T09:07:33.224Z — s2536 browser failure inventory read ########
+cwd=/Users/robin/Claude/Projects/Gold Rush
+
+===== M1 inventory =====
+$ node scripts/red-inventory-lookup.mjs e2e/m1-01-claim-jumpers-death.spec.ts
+rc=0 0.2s
+INVENTORY logs/suite-red-inventory.md — rows parsed 756 (546 failure, 210 blast-radius) — Total tests run 2796 — Total failed 546
+CLEAN-IN-INVENTORY — e2e/m1-01-claim-jumpers-death.spec.ts — snapshot date 2026-08-11
+! STALE SNAPSHOT — 27 days old, threshold 7; 363 commit(s) have touched e2e/ or src/ since
+  CLEAN means green ON THE SNAPSHOT DATE. It may have rotted RED since (F-1589-2), so a red you see now is NOT proven yours — take a control run before concluding your merge caused it.
+
+
+===== SS10 inventory =====
+$ node scripts/red-inventory-lookup.mjs e2e/ss-10-e9-beats.spec.ts
+rc=1 0.2s
+INVENTORY logs/suite-red-inventory.md — rows parsed 756 (546 failure, 210 blast-radius) — Total tests run 2796 — Total failed 546
+NOT-IN-INVENTORY — e2e/ss-10-e9-beats.spec.ts — snapshot date 2026-08-11
+! STALE SNAPSHOT — 27 days old, threshold 7; 363 commit(s) have touched e2e/ or src/ since
+  The snapshot may simply predate this spec; absence here is not evidence either way.
+
+
+SUMMARY {"M1 inventory":0,"SS10 inventory":1}
+OVERALL rc=1

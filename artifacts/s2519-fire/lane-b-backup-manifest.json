@@ -1,0 +1,664 @@
+{
+  "sourceCommit": "b7ba55fb01808f2e11360255c715201d8d2e757c",
+  "baseCommit": "49402d6bfabde67ad7cf898d3ec34a012b5f0ed7",
+  "sourceTree": "87af650f9bf74e7724bfb7ea7e1ecc9c86814866",
+  "purpose": "Lossless delta backup; not a merge candidate. Original lane ref unchanged.",
+  "files": [
+    {
+      "path": "artifacts/prefetch-bounded-warming/adjacent-reports/advance-stream-cache-reuse-desktop-chrome.md",
+      "mode": "100644",
+      "gitBlob": "e894b77fd7547823adb6043ff75b3434d81512f3",
+      "bytes": 2876,
+      "sha256": "d453d15f781bd8c1df5d2970a5dbc1401e2de92b5a19e3dfde7145ec452872b3",
+      "storedAs": "artifacts/prefetch-bounded-warming/adjacent-reports/advance-stream-cache-reuse-desktop-chrome.md"
+    },
+    {
+      "path": "artifacts/prefetch-bounded-warming/adjacent-reports/advance-stream-cache-reuse-headers-desktop-chrome.md",
+      "mode": "100644",
+      "gitBlob": "ddb75eae78991f587665ddcfba10f633392a360d",
+      "bytes": 7312,
+      "sha256": "2080deff26519a1f30f8f92667aa743aad6a8b34d9d799b493341456653adaf1",
+      "storedAs": "artifacts/prefetch-bounded-warming/adjacent-reports/advance-stream-cache-reuse-headers-desktop-chrome.md"
+    },
+    {
+      "path": "artifacts/prefetch-bounded-warming/adjacent-reports/advance-stream-cache-reuse-headers-mobile-chrome.md",
+      "mode": "100644",
+      "gitBlob": "21c105904132df645b9c4b6f54be2e8e31ac370d",
+      "bytes": 6946,
+      "sha256": "02248d94ae80a392b0ddb59f4cd4d5f7c9ed1a2f03f0cfaacd7bb5d2c9af7b6c",
+      "storedAs": "artifacts/prefetch-bounded-warming/adjacent-reports/advance-stream-cache-reuse-headers-mobile-chrome.md"
+    },
+    {
+      "path": "artifacts/prefetch-bounded-warming/adjacent-reports/advance-stream-cache-reuse-mobile-chrome.md",
+      "mode": "100644",
+      "gitBlob": "6019cac4267dcfe8e5ba37c4a98af0beeaaf14de",
+      "bytes": 2460,
+      "sha256": "bcafbe90cf1b19691b272adb088ba0f94bbc2adb0761b0ba4bcb306e6222fd2c",
+      "storedAs": "artifacts/prefetch-bounded-warming/adjacent-reports/advance-stream-cache-reuse-mobile-chrome.md"
+    },
+    {
+      "path": "artifacts/prefetch-bounded-warming/adjacent-reports/advance-stream-walkthrough-desktop-chrome.md",
+      "mode": "100644",
+      "gitBlob": "8645d950db8e1fd300f98f7a2140f397ed59db2d",
+      "bytes": 1040,
+      "sha256": "2df1db852cc658c115366703e10bbea89e0b19714aed16f4f858f473ac311dc1",
+      "storedAs": "artifacts/prefetch-bounded-warming/adjacent-reports/advance-stream-walkthrough-desktop-chrome.md"
+    },
+    {
+      "path": "artifacts/prefetch-bounded-warming/adjacent-reports/advance-stream-walkthrough-mobile-chrome.md",
+      "mode": "100644",
+      "gitBlob": "085417c6733375360d85590ac952e717ca39d44c",
+      "bytes": 1076,
+      "sha256": "755168d0acb100d93ca9a027989b81b406392d5c0215f808960dbae7a7ec76fd",
+      "storedAs": "artifacts/prefetch-bounded-warming/adjacent-reports/advance-stream-walkthrough-mobile-chrome.md"
+    },
+    {
+      "path": "artifacts/prefetch-bounded-warming/advance-stream-tests.log",
+      "mode": "100644",
+      "gitBlob": "f7e6170165e6abbdc877f88678fff5d8165835de",
+      "bytes": 8736,
+      "sha256": "b4aa9fd81ba0a6b03f7e7ee0754685ec8d0437265dfb84f2e341de1e35814656",
+      "storedAs": "artifacts/prefetch-bounded-warming/advance-stream-tests.log"
+    },
+    {
+      "path": "artifacts/prefetch-bounded-warming/asset-diet-desktop-retry.log",
+      "mode": "100644",
+      "gitBlob": "28fdf0626e36b85e63777f0317508f7f174325a6",
+      "bytes": 1599,
+      "sha256": "7bf806e53b6cc91ce2280dfcf17c1a4925f1c6e88bd0291b9526fd110bb1eb23",
+      "storedAs": "artifacts/prefetch-bounded-warming/asset-diet-desktop-retry.log"
+    },
+    {
+      "path": "artifacts/prefetch-bounded-warming/asset-diet-final/desktop-chrome-claim-throttled.png",
+      "mode": "100644",
+      "gitBlob": "b2ad949e46367117b6d2bed5cc918153b1502bae",
+      "bytes": 744378,
+      "sha256": "a90e87b49c62ae1862fee159a80f711256b8a921bfcea025598b52a8eea9a844",
+      "storedAs": "artifacts/prefetch-bounded-warming/asset-diet-final/desktop-chrome-claim-throttled.png"
+    },
+    {
+      "path": "artifacts/prefetch-bounded-warming/asset-diet-final/desktop-chrome-town-throttled.png",
+      "mode": "100644",
+      "gitBlob": "e1587223ef281f5367ff52feca84f2fcad4c3a4d",
+      "bytes": 679047,
+      "sha256": "8d73f8da975231a372cbfdce12e1798d633dbd32e3ab2fc142514c75dc55c024",
+      "storedAs": "artifacts/prefetch-bounded-warming/asset-diet-final/desktop-chrome-town-throttled.png"
+    },
+    {
+      "path": "artifacts/prefetch-bounded-warming/asset-diet-final/mobile-chrome-claim-throttled.png",
+      "mode": "100644",
+      "gitBlob": "6db834eed111a36d82bc262d8903bc8244f63cd8",
+      "bytes": 1039952,
+      "sha256": "97752b87f3967e870077dddcf71675b6d08c4628186d64c8685c7e400509f11f",
+      "storedAs": "artifacts/prefetch-bounded-warming/asset-diet-final/mobile-chrome-claim-throttled.png"
+    },
+    {
+      "path": "artifacts/prefetch-bounded-warming/asset-diet-final/mobile-chrome-town-throttled.png",
+      "mode": "100644",
+      "gitBlob": "e6f9fbad809cab7e95c9a61e27b423bcf7326d40",
+      "bytes": 1225591,
+      "sha256": "99bc42dee17fc1a563c38e099f7aad019a5ef88ca3d4da4a48bb388b8511f431",
+      "storedAs": "artifacts/prefetch-bounded-warming/asset-diet-final/mobile-chrome-town-throttled.png"
+    },
+    {
+      "path": "artifacts/prefetch-bounded-warming/asset-diet-final/town-budget-desktop-chrome.md",
+      "mode": "100644",
+      "gitBlob": "730ad283bda21342b15183fc7d4b21ceb2e5accc",
+      "bytes": 25896,
+      "sha256": "47792b57679f6e8c0201b2593efbc3aefa10d8efaf79f3cf4494e707ddba2c7d",
+      "storedAs": "artifacts/prefetch-bounded-warming/asset-diet-final/town-budget-desktop-chrome.md"
+    },
+    {
+      "path": "artifacts/prefetch-bounded-warming/asset-diet-final/town-budget-mobile-chrome.md",
+      "mode": "100644",
+      "gitBlob": "12483f6813a04613a2578809ba2a36f6d0bd629f",
+      "bytes": 25897,
+      "sha256": "c6a1b18f694177c0d031c29cc2211ab1aa49211380e120782258da28e22fc137",
+      "storedAs": "artifacts/prefetch-bounded-warming/asset-diet-final/town-budget-mobile-chrome.md"
+    },
+    {
+      "path": "artifacts/prefetch-bounded-warming/asset-diet-final/town-transfer-desktop-chrome.json",
+      "mode": "100644",
+      "gitBlob": "ee952b1912ab3cb6f8ee646729bdeee1717ec641",
+      "bytes": 87717,
+      "sha256": "672003b08eb459d7c9a9eeff56d2e4dde1c8350b3ddc40ae425b084f6b280a72",
+      "storedAs": "artifacts/prefetch-bounded-warming/asset-diet-final/town-transfer-desktop-chrome.json"
+    },
+    {
+      "path": "artifacts/prefetch-bounded-warming/asset-diet-final/town-transfer-mobile-chrome.json",
+      "mode": "100644",
+      "gitBlob": "d549327316cf8c483453366a37a67330174b0333",
+      "bytes": 88293,
+      "sha256": "7a3965cc18c891ddc7184591bc30b0147ac333cc3c6ab85a3023042ae1759874",
+      "storedAs": "artifacts/prefetch-bounded-warming/asset-diet-final/town-transfer-mobile-chrome.json"
+    },
+    {
+      "path": "artifacts/prefetch-bounded-warming/asset-diet-first-run/desktop-chrome-claim-throttled.png",
+      "mode": "100644",
+      "gitBlob": "d068e9a70fda56aa56507210d033b3867f71faf1",
+      "bytes": 743814,
+      "sha256": "e6e462f3d2f1702459521dc7775256a6d5824b76966c99e505900d3c23f0e869",
+      "storedAs": "artifacts/prefetch-bounded-warming/asset-diet-first-run/desktop-chrome-claim-throttled.png"
+    },
+    {
+      "path": "artifacts/prefetch-bounded-warming/asset-diet-first-run/desktop-chrome-town-throttled.png",
+      "mode": "100644",
+      "gitBlob": "6064b0ee6290ce98e5120b0218a1e970ee5d947d",
+      "bytes": 678672,
+      "sha256": "fb5660e82a1b5283d2137220a871827b64c69bfbbfd94950014755aa08291020",
+      "storedAs": "artifacts/prefetch-bounded-warming/asset-diet-first-run/desktop-chrome-town-throttled.png"
+    },
+    {
+      "path": "artifacts/prefetch-bounded-warming/asset-diet-first-run/mobile-chrome-claim-throttled.png",
+      "mode": "100644",
+      "gitBlob": "6db834eed111a36d82bc262d8903bc8244f63cd8",
+      "bytes": 1039952,
+      "sha256": "97752b87f3967e870077dddcf71675b6d08c4628186d64c8685c7e400509f11f",
+      "storedAs": "artifacts/prefetch-bounded-warming/asset-diet-first-run/mobile-chrome-claim-throttled.png"
+    },
+    {
+      "path": "artifacts/prefetch-bounded-warming/asset-diet-first-run/mobile-chrome-town-throttled.png",
+      "mode": "100644",
+      "gitBlob": "e6f9fbad809cab7e95c9a61e27b423bcf7326d40",
+      "bytes": 1225591,
+      "sha256": "99bc42dee17fc1a563c38e099f7aad019a5ef88ca3d4da4a48bb388b8511f431",
+      "storedAs": "artifacts/prefetch-bounded-warming/asset-diet-first-run/mobile-chrome-town-throttled.png"
+    },
+    {
+      "path": "artifacts/prefetch-bounded-warming/asset-diet-first-run/town-budget-desktop-chrome.md",
+      "mode": "100644",
+      "gitBlob": "67cf6961a79a43bceada6ecf71ceb7bf17bd3fca",
+      "bytes": 25897,
+      "sha256": "dd168ad7ee12a19e7786571a7958ab13cac520c504e3385592c6eb6bd9885618",
+      "storedAs": "artifacts/prefetch-bounded-warming/asset-diet-first-run/town-budget-desktop-chrome.md"
+    },
+    {
+      "path": "artifacts/prefetch-bounded-warming/asset-diet-first-run/town-budget-mobile-chrome.md",
+      "mode": "100644",
+      "gitBlob": "12483f6813a04613a2578809ba2a36f6d0bd629f",
+      "bytes": 25897,
+      "sha256": "c6a1b18f694177c0d031c29cc2211ab1aa49211380e120782258da28e22fc137",
+      "storedAs": "artifacts/prefetch-bounded-warming/asset-diet-first-run/town-budget-mobile-chrome.md"
+    },
+    {
+      "path": "artifacts/prefetch-bounded-warming/asset-diet-first-run/town-transfer-desktop-chrome.json",
+      "mode": "100644",
+      "gitBlob": "20a6457d86270c4c04757880e1c6d73882129680",
+      "bytes": 87358,
+      "sha256": "1d8b934f7088fb648c4e2f67cc63c9d4e210eef627909a9a7bafebe31b9c2faf",
+      "storedAs": "artifacts/prefetch-bounded-warming/asset-diet-first-run/town-transfer-desktop-chrome.json"
+    },
+    {
+      "path": "artifacts/prefetch-bounded-warming/asset-diet-first-run/town-transfer-mobile-chrome.json",
+      "mode": "100644",
+      "gitBlob": "d549327316cf8c483453366a37a67330174b0333",
+      "bytes": 88293,
+      "sha256": "7a3965cc18c891ddc7184591bc30b0147ac333cc3c6ab85a3023042ae1759874",
+      "storedAs": "artifacts/prefetch-bounded-warming/asset-diet-first-run/town-transfer-mobile-chrome.json"
+    },
+    {
+      "path": "artifacts/prefetch-bounded-warming/asset-diet-results/.last-run.json",
+      "mode": "100644",
+      "gitBlob": "cf2157c58118382176b35042c4f6d5ab6a18e0de",
+      "bytes": 96,
+      "sha256": "d8a916e16613c91dff6b65ea60295327cf45d9c40f537fafbbcd62036651c7dc",
+      "storedAs": "artifacts/prefetch-bounded-warming/asset-diet-results/.last-run.json"
+    },
+    {
+      "path": "artifacts/prefetch-bounded-warming/asset-diet-results/asset-diet-town-byte-budge-360a8-al-and-saveData-arms-by-URL-desktop-chrome/error-context.md",
+      "mode": "100644",
+      "gitBlob": "20ab34086eeda03794b2e43ef08166a95ab694b9",
+      "bytes": 8081,
+      "sha256": "72897c5b50b3ed670cb73209954c57d6a36f43614dc99b93bff6190cdf4d774e",
+      "storedAs": "artifacts/prefetch-bounded-warming/asset-diet-results/asset-diet-town-byte-budge-360a8-al-and-saveData-arms-by-URL-desktop-chrome/error-context.md"
+    },
+    {
+      "path": "artifacts/prefetch-bounded-warming/asset-diet-results/asset-diet-town-byte-budge-360a8-al-and-saveData-arms-by-URL-desktop-chrome/test-failed-1.png",
+      "mode": "100644",
+      "gitBlob": "43013bc272f13b1bcaa17eac491c9b8899c51d07",
+      "bytes": 4714,
+      "sha256": "3eab349ebf404dae5a2a20d041325042a032d46aeab4b9730d8f8962686fb9b0",
+      "storedAs": "artifacts/prefetch-bounded-warming/asset-diet-results/asset-diet-town-byte-budge-360a8-al-and-saveData-arms-by-URL-desktop-chrome/test-failed-1.png"
+    },
+    {
+      "path": "artifacts/prefetch-bounded-warming/asset-diet-results/asset-diet-town-byte-budge-360a8-al-and-saveData-arms-by-URL-desktop-chrome/test-failed-2.png",
+      "mode": "100644",
+      "gitBlob": "d619cd0127fbdc91df955cd8a970725bc19c4b9c",
+      "bytes": 1501890,
+      "sha256": "4417cff871de13c29d0fd30074e58925ef917bd3aac90d02e322d042bb215e39",
+      "storedAs": "artifacts/prefetch-bounded-warming/asset-diet-results/asset-diet-town-byte-budge-360a8-al-and-saveData-arms-by-URL-desktop-chrome/test-failed-2.png"
+    },
+    {
+      "path": "artifacts/prefetch-bounded-warming/asset-diet-results/asset-diet-town-byte-budge-360a8-al-and-saveData-arms-by-URL-desktop-chrome/test-failed-3.png",
+      "mode": "100644",
+      "gitBlob": "64c9bd17f8a22be10a39e230236d25abf3100035",
+      "bytes": 1500729,
+      "sha256": "1d8aa4ea84b8cb13dd996a85ec9a5fdbef3c66e8880efa33f71509dc0b255cf6",
+      "storedAs": "artifacts/prefetch-bounded-warming/asset-diet-results/asset-diet-town-byte-budge-360a8-al-and-saveData-arms-by-URL-desktop-chrome/test-failed-3.png"
+    },
+    {
+      "path": "artifacts/prefetch-bounded-warming/asset-diet-results/asset-diet-town-byte-budge-360a8-al-and-saveData-arms-by-URL-desktop-chrome/test-failed-4.png",
+      "mode": "100644",
+      "gitBlob": "9ab96ba394f84e4b77d5b9b461d3059b43ce48a0",
+      "bytes": 1501410,
+      "sha256": "4237085f8ebf316061225b9e9b4574979f03d1727ac2cfb7c39785095268ae48",
+      "storedAs": "artifacts/prefetch-bounded-warming/asset-diet-results/asset-diet-town-byte-budge-360a8-al-and-saveData-arms-by-URL-desktop-chrome/test-failed-4.png"
+    },
+    {
+      "path": "artifacts/prefetch-bounded-warming/asset-diet-results/asset-diet-town-byte-budge-360a8-al-and-saveData-arms-by-URL-desktop-chrome/test-failed-5.png",
+      "mode": "100644",
+      "gitBlob": "c87c23dd0f8bba056db485cd93cfec0b1ba59794",
+      "bytes": 1500313,
+      "sha256": "2f90cc5708e412955693b44a20caab0d4cf2627af720153a805ac820d5b8a097",
+      "storedAs": "artifacts/prefetch-bounded-warming/asset-diet-results/asset-diet-town-byte-budge-360a8-al-and-saveData-arms-by-URL-desktop-chrome/test-failed-5.png"
+    },
+    {
+      "path": "artifacts/prefetch-bounded-warming/asset-diet-results/asset-diet-town-byte-budge-360a8-al-and-saveData-arms-by-URL-desktop-chrome/test-failed-6.png",
+      "mode": "100644",
+      "gitBlob": "3805bc756e26fcc7e1a9df8f04846fd3902a4f86",
+      "bytes": 1502168,
+      "sha256": "4d28d153e27d720751be2ef1d92e1758fee5bb96cf8e576258422b7593c15399",
+      "storedAs": "artifacts/prefetch-bounded-warming/asset-diet-results/asset-diet-town-byte-budge-360a8-al-and-saveData-arms-by-URL-desktop-chrome/test-failed-6.png"
+    },
+    {
+      "path": "artifacts/prefetch-bounded-warming/asset-diet-results/asset-diet-town-byte-budge-360a8-al-and-saveData-arms-by-URL-desktop-chrome/test-failed-7.png",
+      "mode": "100644",
+      "gitBlob": "3407e9cf312fb9022f1b244729d487652b6090e8",
+      "bytes": 1501055,
+      "sha256": "d96c5709a6eee5281b9636170ab8ed82d574c887d6297fa35da80d1311b15e01",
+      "storedAs": "artifacts/prefetch-bounded-warming/asset-diet-results/asset-diet-town-byte-budge-360a8-al-and-saveData-arms-by-URL-desktop-chrome/test-failed-7.png"
+    },
+    {
+      "path": "artifacts/prefetch-bounded-warming/asset-diet-results/asset-diet-town-byte-budge-360a8-al-and-saveData-arms-by-URL-desktop-chrome/trace.zip",
+      "mode": "100644",
+      "gitBlob": "ee9614b7dea6bcd1620d274a2009682585dfa1a2",
+      "bytes": 195659243,
+      "sha256": "36999456998eaf3f8aa4e1409ef3bfd0b15a689cf6a7a24ed832c0bc6990ec9e",
+      "parts": [
+        {
+          "path": "artifacts/prefetch-bounded-warming/asset-diet-results/asset-diet-town-byte-budge-360a8-al-and-saveData-arms-by-URL-desktop-chrome/trace.zip.parts/part-000",
+          "bytes": 41943040,
+          "sha256": "a6d073bf71a4dcae97851060893a31769b41b865fdc373aff8a3e7ae613a8a59"
+        },
+        {
+          "path": "artifacts/prefetch-bounded-warming/asset-diet-results/asset-diet-town-byte-budge-360a8-al-and-saveData-arms-by-URL-desktop-chrome/trace.zip.parts/part-001",
+          "bytes": 41943040,
+          "sha256": "745bf9355c1032e2de91c25c9f25d9b4fffc43d5ce40e2bae75e925efa1212f8"
+        },
+        {
+          "path": "artifacts/prefetch-bounded-warming/asset-diet-results/asset-diet-town-byte-budge-360a8-al-and-saveData-arms-by-URL-desktop-chrome/trace.zip.parts/part-002",
+          "bytes": 41943040,
+          "sha256": "0886dbb9277c5bd96cdff5568e013014a57d2b8904903961ce09ba11cd62f39e"
+        },
+        {
+          "path": "artifacts/prefetch-bounded-warming/asset-diet-results/asset-diet-town-byte-budge-360a8-al-and-saveData-arms-by-URL-desktop-chrome/trace.zip.parts/part-003",
+          "bytes": 41943040,
+          "sha256": "d90f875ba7fbe2919fdb8a68e251be3714634c8f4097d31fa004547a3bc7c399"
+        },
+        {
+          "path": "artifacts/prefetch-bounded-warming/asset-diet-results/asset-diet-town-byte-budge-360a8-al-and-saveData-arms-by-URL-desktop-chrome/trace.zip.parts/part-004",
+          "bytes": 27887083,
+          "sha256": "3a5a57bd2f9477f8a83f48fb03e75354d8f0256269c0326d94747fb85e448878"
+        }
+      ]
+    },
+    {
+      "path": "artifacts/prefetch-bounded-warming/asset-diet-retry-results/.last-run.json",
+      "mode": "100644",
+      "gitBlob": "cbcc1fbac11a74b608b2b3edc3a2ffd6ab639cb2",
+      "bytes": 45,
+      "sha256": "91d1c43004802cd49950d78eb11c8fa7d05da8ffffe219a8b13b2f561bc00903",
+      "storedAs": "artifacts/prefetch-bounded-warming/asset-diet-retry-results/.last-run.json"
+    },
+    {
+      "path": "artifacts/prefetch-bounded-warming/asset-diet-tests.log",
+      "mode": "100644",
+      "gitBlob": "9775cc44bff5a86df4f9ede87f761263b448d2b3",
+      "bytes": 9590,
+      "sha256": "05288e2b20b2ff674c21b4adaaea05390961d12132c5b5547a649e4dfe6ff22b",
+      "storedAs": "artifacts/prefetch-bounded-warming/asset-diet-tests.log"
+    },
+    {
+      "path": "artifacts/prefetch-bounded-warming/bounded-test-results/.last-run.json",
+      "mode": "100644",
+      "gitBlob": "cbcc1fbac11a74b608b2b3edc3a2ffd6ab639cb2",
+      "bytes": 45,
+      "sha256": "91d1c43004802cd49950d78eb11c8fa7d05da8ffffe219a8b13b2f561bc00903",
+      "storedAs": "artifacts/prefetch-bounded-warming/bounded-test-results/.last-run.json"
+    },
+    {
+      "path": "artifacts/prefetch-bounded-warming/bounded-tests.log",
+      "mode": "100644",
+      "gitBlob": "fa8659ba61de789fcaef07452b039bb499eacef4",
+      "bytes": 1016,
+      "sha256": "5cb6871a0204ae52cda93eeea275bbb876ce91ca69ea9059ec09a42072788de2",
+      "storedAs": "artifacts/prefetch-bounded-warming/bounded-tests.log"
+    },
+    {
+      "path": "artifacts/prefetch-bounded-warming/build.log",
+      "mode": "100644",
+      "gitBlob": "7b9e664fb39fd9290117d1e9caf9d4fd44caa8d0",
+      "bytes": 516999,
+      "sha256": "6c0d056f512f07d33e433de2f1f55f59676f264c1332cf0cd7e90999849f9578",
+      "storedAs": "artifacts/prefetch-bounded-warming/build.log"
+    },
+    {
+      "path": "artifacts/prefetch-bounded-warming/byte-table.md",
+      "mode": "100644",
+      "gitBlob": "c896146c664c392067710b9968c1ab4bbb7fb6fe",
+      "bytes": 1876,
+      "sha256": "79aad4d626491b4b796d79b9e195fcc5845056b1a9591ad2694f2f9dce84cb1c",
+      "storedAs": "artifacts/prefetch-bounded-warming/byte-table.md"
+    },
+    {
+      "path": "artifacts/prefetch-bounded-warming/cache-desktop-retry-results/.last-run.json",
+      "mode": "100644",
+      "gitBlob": "cbcc1fbac11a74b608b2b3edc3a2ffd6ab639cb2",
+      "bytes": 45,
+      "sha256": "91d1c43004802cd49950d78eb11c8fa7d05da8ffffe219a8b13b2f561bc00903",
+      "storedAs": "artifacts/prefetch-bounded-warming/cache-desktop-retry-results/.last-run.json"
+    },
+    {
+      "path": "artifacts/prefetch-bounded-warming/cache-desktop-retry.log",
+      "mode": "100644",
+      "gitBlob": "5fa5c7c295bd2c615317b2bed040610d2e0ab1e5",
+      "bytes": 10809,
+      "sha256": "658753b7e0983d1f0d084a28e09b64f72a31946b404c00377285ebd58b7c7dc6",
+      "storedAs": "artifacts/prefetch-bounded-warming/cache-desktop-retry.log"
+    },
+    {
+      "path": "artifacts/prefetch-bounded-warming/codex-review.log",
+      "mode": "100644",
+      "gitBlob": "1cfcba8cdda8b3564f0d6262fa764e27bc677c53",
+      "bytes": 223011,
+      "sha256": "ba4f46bc61dc4ba734c63abca17b19f35c3faa5c9af531136decfe3e9ef03162",
+      "storedAs": "artifacts/prefetch-bounded-warming/codex-review.log"
+    },
+    {
+      "path": "artifacts/prefetch-bounded-warming/dev-gate-results/.last-run.json",
+      "mode": "100644",
+      "gitBlob": "6fcd7adf3c216e37cebe58526df0674f7a8d74b6",
+      "bytes": 145,
+      "sha256": "8a85982f94eb96bdb77f33a595aa353b039e4f6cf95da16bbc7f2b1ebf8c7468",
+      "storedAs": "artifacts/prefetch-bounded-warming/dev-gate-results/.last-run.json"
+    },
+    {
+      "path": "artifacts/prefetch-bounded-warming/dev-gate-results/advance-stream-cache-reuse-6f92f--without-route-interception-desktop-chrome/error-context.md",
+      "mode": "100644",
+      "gitBlob": "4504810342f514e031c26950816bffb4a9e2e01c",
+      "bytes": 8823,
+      "sha256": "f48acadb6b24939759ecb24126ee575eb68312cc6a7b7492c307663ced1a5889",
+      "storedAs": "artifacts/prefetch-bounded-warming/dev-gate-results/advance-stream-cache-reuse-6f92f--without-route-interception-desktop-chrome/error-context.md"
+    },
+    {
+      "path": "artifacts/prefetch-bounded-warming/dev-gate-results/advance-stream-cache-reuse-6f92f--without-route-interception-desktop-chrome/test-failed-1.png",
+      "mode": "100644",
+      "gitBlob": "8e82a41a63f209896a98a8fc5382e4c0afb19450",
+      "bytes": 1495525,
+      "sha256": "05a45afa1da0f2be47b266c2757bbfef3d84d0b59bd058c0e790be33ea2459fa",
+      "storedAs": "artifacts/prefetch-bounded-warming/dev-gate-results/advance-stream-cache-reuse-6f92f--without-route-interception-desktop-chrome/test-failed-1.png"
+    },
+    {
+      "path": "artifacts/prefetch-bounded-warming/dev-gate-results/advance-stream-cache-reuse-6f92f--without-route-interception-desktop-chrome/trace.zip",
+      "mode": "100644",
+      "gitBlob": "38128d76761841c0e2e308d852903e1dd67e2d49",
+      "bytes": 54071028,
+      "sha256": "6e3fe23dba84fc8a7530e58ae153f71c3aaf9705a7d2a6c0876dd9e1e32cea5e",
+      "parts": [
+        {
+          "path": "artifacts/prefetch-bounded-warming/dev-gate-results/advance-stream-cache-reuse-6f92f--without-route-interception-desktop-chrome/trace.zip.parts/part-000",
+          "bytes": 41943040,
+          "sha256": "7ae32419d21fee8cbb338096a5fed4b923158b8b0a50814cbc9fd0d70a0cff08"
+        },
+        {
+          "path": "artifacts/prefetch-bounded-warming/dev-gate-results/advance-stream-cache-reuse-6f92f--without-route-interception-desktop-chrome/trace.zip.parts/part-001",
+          "bytes": 12127988,
+          "sha256": "9a47cbe1fbb431070a0084ac040f5f30b54cbd8897932c6b4da347a88ef79124"
+        }
+      ]
+    },
+    {
+      "path": "artifacts/prefetch-bounded-warming/dev-gate-results/advance-stream-cache-reuse-c5d46-se-under-production-headers-desktop-chrome/error-context.md",
+      "mode": "100644",
+      "gitBlob": "6a60da5c1efb4786588796637097f3f7eacb06b5",
+      "bytes": 14589,
+      "sha256": "8a6f219929ddec3f5fd0e1851b77cb93c51bbb080db4187aa35cd7a92f5c9b4c",
+      "storedAs": "artifacts/prefetch-bounded-warming/dev-gate-results/advance-stream-cache-reuse-c5d46-se-under-production-headers-desktop-chrome/error-context.md"
+    },
+    {
+      "path": "artifacts/prefetch-bounded-warming/dev-gate-results/advance-stream-cache-reuse-c5d46-se-under-production-headers-desktop-chrome/test-failed-1.png",
+      "mode": "100644",
+      "gitBlob": "3f9adcbd3206ebab4b33352867464056268fed90",
+      "bytes": 1200864,
+      "sha256": "6a2f866c37eeb5e2d526552f8c039d30f4da06358b2e33a6b0ec5f74cda19bfe",
+      "storedAs": "artifacts/prefetch-bounded-warming/dev-gate-results/advance-stream-cache-reuse-c5d46-se-under-production-headers-desktop-chrome/test-failed-1.png"
+    },
+    {
+      "path": "artifacts/prefetch-bounded-warming/dev-gate-results/advance-stream-cache-reuse-c5d46-se-under-production-headers-desktop-chrome/trace.zip",
+      "mode": "100644",
+      "gitBlob": "1f67b3792a8fdddd76ffa0b874e47ac85601f780",
+      "bytes": 90495099,
+      "sha256": "e0c4968701034cfe72954b2bcaa6db7329329b227949f088bac43149eb813802",
+      "parts": [
+        {
+          "path": "artifacts/prefetch-bounded-warming/dev-gate-results/advance-stream-cache-reuse-c5d46-se-under-production-headers-desktop-chrome/trace.zip.parts/part-000",
+          "bytes": 41943040,
+          "sha256": "69ce47692da2dd26bd71b448fa973e3b1a1e32762ccdc669c1a872f7dcfdbac7"
+        },
+        {
+          "path": "artifacts/prefetch-bounded-warming/dev-gate-results/advance-stream-cache-reuse-c5d46-se-under-production-headers-desktop-chrome/trace.zip.parts/part-001",
+          "bytes": 41943040,
+          "sha256": "34fad933123d0647efa37684a757daa0a4c482ed4d5bb13f5174927607786300"
+        },
+        {
+          "path": "artifacts/prefetch-bounded-warming/dev-gate-results/advance-stream-cache-reuse-c5d46-se-under-production-headers-desktop-chrome/trace.zip.parts/part-002",
+          "bytes": 6609019,
+          "sha256": "9e79f330fc37a3f34c2162e628aece87beb20bbffaeae8a595fb45acdf4de346"
+        }
+      ]
+    },
+    {
+      "path": "artifacts/prefetch-bounded-warming/dev-gates.log",
+      "mode": "100644",
+      "gitBlob": "e9ea084caa034d65c7a8045064927e63f9731496",
+      "bytes": 21157,
+      "sha256": "cca584208d9c86c7abd9418c23c0e266645fe045d53f0f8934919e0165084873",
+      "storedAs": "artifacts/prefetch-bounded-warming/dev-gates.log"
+    },
+    {
+      "path": "artifacts/prefetch-bounded-warming/final-changed-tests.log",
+      "mode": "100644",
+      "gitBlob": "119bacd3355c5636dab79cb0b83b12bec9099f6c",
+      "bytes": 4705,
+      "sha256": "da96c57a0c0c32b23cad64b32098333366554d5fa551e55e2c114bf45dfc43e0",
+      "storedAs": "artifacts/prefetch-bounded-warming/final-changed-tests.log"
+    },
+    {
+      "path": "artifacts/prefetch-bounded-warming/final-test-results/.last-run.json",
+      "mode": "100644",
+      "gitBlob": "5313f4f4b41ec03273c6890c317824d0694b1d38",
+      "bytes": 96,
+      "sha256": "2bc8aab6fe018cca79137e25d3bd4f6de3d55e58de8de1fbfdbb988d4aad2498",
+      "storedAs": "artifacts/prefetch-bounded-warming/final-test-results/.last-run.json"
+    },
+    {
+      "path": "artifacts/prefetch-bounded-warming/final-test-results/advance-stream-launch-abor-c3f36-he-run-requests-its-own-map-desktop-chrome/error-context.md",
+      "mode": "100644",
+      "gitBlob": "e9830689f62193f900708ccf6204c0ac30c5504b",
+      "bytes": 7463,
+      "sha256": "736511c484dbf51875a25f8aef9727ac014d146fdae893c97011a1f6532fc987",
+      "storedAs": "artifacts/prefetch-bounded-warming/final-test-results/advance-stream-launch-abor-c3f36-he-run-requests-its-own-map-desktop-chrome/error-context.md"
+    },
+    {
+      "path": "artifacts/prefetch-bounded-warming/final-test-results/advance-stream-launch-abor-c3f36-he-run-requests-its-own-map-desktop-chrome/test-failed-1.png",
+      "mode": "100644",
+      "gitBlob": "58072d268aafffbe0331792afdffe98c52394c28",
+      "bytes": 1495167,
+      "sha256": "60a32c77070ff6774d97ac883ec637d0867fa3fc19af9c3a2558d1ecb451271c",
+      "storedAs": "artifacts/prefetch-bounded-warming/final-test-results/advance-stream-launch-abor-c3f36-he-run-requests-its-own-map-desktop-chrome/test-failed-1.png"
+    },
+    {
+      "path": "artifacts/prefetch-bounded-warming/final-test-results/advance-stream-launch-abor-c3f36-he-run-requests-its-own-map-desktop-chrome/trace.zip",
+      "mode": "100644",
+      "gitBlob": "a752e6b168eb9bd50d4a746c75445e6e4d262803",
+      "bytes": 49867085,
+      "sha256": "8ea139eb00ee5d9d0084472652496bf68a76551f7c1998fc336c7bbf80c55e6c",
+      "parts": [
+        {
+          "path": "artifacts/prefetch-bounded-warming/final-test-results/advance-stream-launch-abor-c3f36-he-run-requests-its-own-map-desktop-chrome/trace.zip.parts/part-000",
+          "bytes": 41943040,
+          "sha256": "8a058066741fe50ac3ab600b0e02cca60ffdd69b97865d500fc2171ea4532e2d"
+        },
+        {
+          "path": "artifacts/prefetch-bounded-warming/final-test-results/advance-stream-launch-abor-c3f36-he-run-requests-its-own-map-desktop-chrome/trace.zip.parts/part-001",
+          "bytes": 7924045,
+          "sha256": "9ca76b16db92d9f0de8e78ad9487ea3eef074b1f9d9eabc5314fdcb84814ddb3"
+        }
+      ]
+    },
+    {
+      "path": "artifacts/prefetch-bounded-warming/measure-sizes.mjs",
+      "mode": "100644",
+      "gitBlob": "1cb87cf39a34052ce143ff4ea24b161cc422d2ab",
+      "bytes": 1862,
+      "sha256": "3688cd3f00a2351d2f7b28203850dd7ed9af0b22f13f6ec365bcee809d8adc89",
+      "storedAs": "artifacts/prefetch-bounded-warming/measure-sizes.mjs"
+    },
+    {
+      "path": "artifacts/prefetch-bounded-warming/measured-sizes.json",
+      "mode": "100644",
+      "gitBlob": "7c7053cc9d04d2dbde7f58970c29e48ed2f5d2f4",
+      "bytes": 95942,
+      "sha256": "6a23407d9ba31c7900b9b02230785d39e428e09538c6349a05564199f2ae2ba4",
+      "storedAs": "artifacts/prefetch-bounded-warming/measured-sizes.json"
+    },
+    {
+      "path": "artifacts/prefetch-bounded-warming/menu-test-results/.last-run.json",
+      "mode": "100644",
+      "gitBlob": "56bcfd1c9992a821d79ebe13f15f0bfaea87bf2a",
+      "bytes": 96,
+      "sha256": "8424f5a7ff69156b1565dbe07550c366046ba10aa487a988d2762d8afd5673a5",
+      "storedAs": "artifacts/prefetch-bounded-warming/menu-test-results/.last-run.json"
+    },
+    {
+      "path": "artifacts/prefetch-bounded-warming/menu-test-results/advance-stream-launch-abor-c3f36-he-run-requests-its-own-map-mobile-chrome/error-context.md",
+      "mode": "100644",
+      "gitBlob": "1943a654ea0fc8fe46d38290d7d891765b48c745",
+      "bytes": 7421,
+      "sha256": "0789e52f5a638d6b58335c25e6e84538d6af2be7f9a996f2422eb6883e988c97",
+      "storedAs": "artifacts/prefetch-bounded-warming/menu-test-results/advance-stream-launch-abor-c3f36-he-run-requests-its-own-map-mobile-chrome/error-context.md"
+    },
+    {
+      "path": "artifacts/prefetch-bounded-warming/menu-test-results/advance-stream-launch-abor-c3f36-he-run-requests-its-own-map-mobile-chrome/trace.zip",
+      "mode": "100644",
+      "gitBlob": "d3f56e3662dbbb1b87228c12a57230dbe5cfc256",
+      "bytes": 36896986,
+      "sha256": "ab0ad9c51b42376e84231ff1ce00e975eb68d97e943ba8f068f8c96d2b3be839",
+      "storedAs": "artifacts/prefetch-bounded-warming/menu-test-results/advance-stream-launch-abor-c3f36-he-run-requests-its-own-map-mobile-chrome/trace.zip"
+    },
+    {
+      "path": "artifacts/prefetch-bounded-warming/menu-tests.log",
+      "mode": "100644",
+      "gitBlob": "5144fbd0d24e78ba395c034ffb5ac6679f9121b5",
+      "bytes": 3931,
+      "sha256": "3dd6f14228f7073bba122cbe401e8eaa00eeb9b0ca4d094399ce1338145204a6",
+      "storedAs": "artifacts/prefetch-bounded-warming/menu-tests.log"
+    },
+    {
+      "path": "artifacts/prefetch-bounded-warming/preflight-build.log",
+      "mode": "100644",
+      "gitBlob": "4190def4ecfb36664539595958e651cec6c0ceb1",
+      "bytes": 516956,
+      "sha256": "19fd1b4a22f710532a820b9bb2c80479871320f667a1a8f7e2472047cfd6128e",
+      "storedAs": "artifacts/prefetch-bounded-warming/preflight-build.log"
+    },
+    {
+      "path": "artifacts/prefetch-bounded-warming/report.md",
+      "mode": "100644",
+      "gitBlob": "612ddc8a68d6766042bccd25bf4df35d5d0c20be",
+      "bytes": 13899,
+      "sha256": "7c6215b2ee1553b624261634213b77d29c4c6f0525c5c1d0580033474efffeb1",
+      "storedAs": "artifacts/prefetch-bounded-warming/report.md"
+    },
+    {
+      "path": "artifacts/prefetch-bounded-warming/resolved-urls.json",
+      "mode": "100644",
+      "gitBlob": "9a9eea78d27b1e23a1802b3bb5c959c1ab08fcd2",
+      "bytes": 27265,
+      "sha256": "12bda85f2e0652f211ebe6822f0aa851c1fd7b52b2970fb56c1ed7fa46f15060",
+      "storedAs": "artifacts/prefetch-bounded-warming/resolved-urls.json"
+    },
+    {
+      "path": "artifacts/prefetch-bounded-warming/settings-desktop-chrome.png",
+      "mode": "100644",
+      "gitBlob": "f1dd6d679c9338d0cb59103785f07d736f36f0ba",
+      "bytes": 1694361,
+      "sha256": "2a9db8b8243a8b7b2397c12b84b9d823168c9d57cff18ddbf1c0d5df70abfb15",
+      "storedAs": "artifacts/prefetch-bounded-warming/settings-desktop-chrome.png"
+    },
+    {
+      "path": "artifacts/prefetch-bounded-warming/settings-mobile-chrome.png",
+      "mode": "100644",
+      "gitBlob": "8f713db677907fdbb182abdb9d79fa73c8be21d9",
+      "bytes": 1623175,
+      "sha256": "b3745c285d36ba0f5e3ced3a19cc74a60d29640e198baa6acabfa124a5661b3b",
+      "storedAs": "artifacts/prefetch-bounded-warming/settings-mobile-chrome.png"
+    },
+    {
+      "path": "artifacts/prefetch-bounded-warming/tsc-final-navigation.log",
+      "mode": "100644",
+      "gitBlob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedAs": "artifacts/prefetch-bounded-warming/tsc-final-navigation.log"
+    },
+    {
+      "path": "artifacts/prefetch-bounded-warming/tsc-final.log",
+      "mode": "100644",
+      "gitBlob": "649c0c6e4bee3fc2efbfa20627052941222f8e34",
+      "bytes": 910,
+      "sha256": "f94ab2a35df17b7700c694a37b805f1fb45e685e15288265a70bc2275c595865",
+      "storedAs": "artifacts/prefetch-bounded-warming/tsc-final.log"
+    },
+    {
+      "path": "artifacts/prefetch-bounded-warming/tsc.log",
+      "mode": "100644",
+      "gitBlob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedAs": "artifacts/prefetch-bounded-warming/tsc.log"
+    },
+    {
+      "path": "e2e/advance-stream-bounded.spec.ts",
+      "mode": "100644",
+      "gitBlob": "0accbcc7af6b756efae59799e64c3427193dc98f",
+      "bytes": 6429,
+      "sha256": "ac1cb0f050985cecba0b62d259957518ce4d68042b1e256e26cbd2481ecee03d",
+      "storedAs": "e2e/advance-stream-bounded.spec.ts"
+    },
+    {
+      "path": "e2e/advance-stream.spec.ts",
+      "mode": "100644",
+      "gitBlob": "b7aa7dcd496476e5e892cf70d6b18e8bbda63bd1",
+      "bytes": 9710,
+      "sha256": "0275ac6bb796491c66ca234bc440e0c320e283a44c845e7e6cf08149416a5369",
+      "storedAs": "e2e/advance-stream.spec.ts"
+    },
+    {
+      "path": "src/assets/AdvanceStream.ts",
+      "mode": "100644",
+      "gitBlob": "ed0aa762fd563b8d18b55f3a0a9006002d910ca8",
+      "bytes": 10489,
+      "sha256": "be74029b7230b2f2a6b11c77c7c1846ac13d0892b1cd6dcd45deac87f116f9c6",
+      "storedAs": "src/assets/AdvanceStream.ts"
+    },
+    {
+      "path": "src/ui/menu/StartMenu.ts",
+      "mode": "100644",
+      "gitBlob": "ca2cb8c033f4f15d8ecd59cb1d935c54115f9ba3",
+      "bytes": 21235,
+      "sha256": "2dfd5157f073872a3116f540075df86ba805a387064db96bc77c6ad78578b086",
+      "storedAs": "src/ui/menu/StartMenu.ts"
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+CMD: /Users/robin/.nvm/versions/node/v23.11.1/bin/node --test scripts/node-guards-timeout.test.mjs
+CWD: /Users/robin/Claude/Projects/Gold Rush
+NODE: v26.4.0
+START: 2026-08-19T23:34:53.154Z
+---
+✔ the harness gives the battery a finite default per-test timeout (86.381542ms)
+✖ a per-test timeout still overrides the default, so declared budgets are untouched (1042.994292ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 1
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1167.837834
+
+✖ failing tests:
+
+test at scripts/node-guards-timeout.test.mjs:94:1
+✖ a per-test timeout still overrides the default, so declared budgets are untouched (1042.994292ms)
+  AssertionError [ERR_ASSERTION]: the declared budget should have won:
+  ✖ /var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/s1479-node-guards-timeout-xfSVGH/override.test.mjs (1004.52275ms)
+  ℹ tests 1
+  ℹ suites 0
+  ℹ pass 0
+  ℹ fail 0
+  ℹ cancelled 1
+  ℹ skipped 0
+  ℹ todo 0
+  ℹ duration_ms 1010.121625
+  
+  ✖ failing tests:
+  
+  test at ../../../../../var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/s1479-node-guards-timeout-xfSVGH/override.test.mjs:1:1
+  ✖ /var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/s1479-node-guards-timeout-xfSVGH/override.test.mjs (1004.52275ms)
+    'test timed out after 1000ms'
+  
+  
+  DIAGNOSIS: this node (v23.11.1) bounds --test-timeout at FILE granularity, so the fixture was cancelled whole and no per-test budget was consulted. This is NOT a timing flake and must NOT be cured by loosening the assertion — on such a node the battery's declared budgets (the escort test's 120 s, protected by F-1410-2) are not honoured per-test at all. Cure the NODE, not the test: .nvmrc pins 26.4.0. See F-1507-1.
+      at file:///Users/robin/Claude/Projects/Gold%20Rush/scripts/node-guards-timeout.test.mjs:132:12
+      at withFixture (file:///Users/robin/Claude/Projects/Gold%20Rush/scripts/node-guards-timeout.test.mjs:43:12)
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/scripts/node-guards-timeout.test.mjs:105:3)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1047:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+      at Test.postRun (node:internal/test_runner/test:1173:19)
+      at Test.run (node:internal/test_runner/test:1101:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:297:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: "✖ /var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/s1479-node-guards-timeout-xfSVGH/override.test.mjs (1004.52275ms)\nℹ tests 1\nℹ suites 0\nℹ pass 0\nℹ fail 0\nℹ cancelled 1\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 1010.121625\n\n✖ failing tests:\n\ntest at ../../../../../var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/s1479-node-guards-timeout-xfSVGH/override.test.mjs:1:1\n✖ /var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/s1479-node-guards-timeout-xfSVGH/override.test.mjs (1004.52275ms)\n  'test timed out after 1000ms'\n",
+    expected: /✔ explicitly bounded sibling/,
+    operator: 'match'
+  }
+
+---
+EXIT_CODE: 1
+SIGNAL: null
+WALL_SECONDS: 1.2
+END: 2026-08-19T23:34:54.347Z

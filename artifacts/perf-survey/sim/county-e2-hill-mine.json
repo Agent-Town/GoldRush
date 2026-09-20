@@ -1,0 +1,202 @@
+{
+  "key": "county-e2-hill-mine",
+  "tapePath": "tapes/county-e2-hill-mine.json",
+  "contract": "e2-hill-mine",
+  "kind": "county-played",
+  "node": "v26.4.0",
+  "before": {
+    "at": "2026-09-05T15:59:44.085Z",
+    "load": [
+      5.5458984375,
+      7.67626953125,
+      12.59423828125
+    ],
+    "freeMemory": 3919134720
+  },
+  "after": {
+    "at": "2026-09-05T15:59:59.884Z",
+    "load": [
+      5.6962890625,
+      7.60888671875,
+      12.48388671875
+    ],
+    "freeMemory": 3076423680
+  },
+  "declaredDurationTicks": 13627,
+  "simulatedSeconds": 454.23333333333335,
+  "bootMs": 32.88504200000011,
+  "replayMs": 14465.9295,
+  "ticksPerSecond": 942.0065264385535,
+  "realtimeMultiple": 31.400217547951783,
+  "estimateTenMinuteSeconds": 19.10814786820283,
+  "estimateFormula": "600 seconds / measured realtimeMultiple; extrapolation, not an actual 10-minute tape when duration differs",
+  "tickMs": {
+    "n": 13627,
+    "min": 0.21550000000002,
+    "p50": 1.0360000000000582,
+    "p95": 2.0464589999992313,
+    "p99": 2.345666999999594,
+    "max": 15.815958000000137
+  },
+  "tickPath": "sim/county-e2-hill-mine-ticks.json",
+  "result": {
+    "eventLogHash": "fnv1a32:0cdd3e78",
+    "outcome": {
+      "secured": true,
+      "waves": 15,
+      "gold": 168,
+      "timeAlive": 454.2
+    },
+    "securedSnapshot": {
+      "waves": 12,
+      "gold": 605,
+      "timeAlive": 454.20000000014574
+    },
+    "ticks": 13627,
+    "engine": "headless-contract-sim"
+  },
+  "expectedHash": "fnv1a32:0cdd3e78",
+  "hashMatches": true,
+  "top20": [
+    {
+      "name": "structuredClone",
+      "url": "node:internal/worker/js_transferable",
+      "line": 113,
+      "column": 25,
+      "selfMs": 5527.900000000001
+    },
+    {
+      "name": "structuredClone",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 1840.059
+    },
+    {
+      "name": "terrainLineOfSight",
+      "url": "",
+      "line": 115,
+      "column": 28,
+      "selfMs": 633.6120000000001
+    },
+    {
+      "name": "clone",
+      "url": "",
+      "line": 320,
+      "column": 15,
+      "selfMs": 390.882
+    },
+    {
+      "name": "hillMineHeight",
+      "url": "",
+      "line": 385,
+      "column": 24,
+      "selfMs": 385.32099999999997
+    },
+    {
+      "name": "snapshot",
+      "url": "",
+      "line": 189,
+      "column": 10,
+      "selfMs": 302.491
+    },
+    {
+      "name": "(anonymous)",
+      "url": "",
+      "line": 193,
+      "column": 26,
+      "selfMs": 275.994
+    },
+    {
+      "name": "get diagnostics",
+      "url": "",
+      "line": 484,
+      "column": 17,
+      "selfMs": 236.877
+    },
+    {
+      "name": "cacheLos",
+      "url": "",
+      "line": 373,
+      "column": 18,
+      "selfMs": 228.89
+    },
+    {
+      "name": "(garbage collector)",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 224.431
+    },
+    {
+      "name": "update",
+      "url": "",
+      "line": 809,
+      "column": 8,
+      "selfMs": 191.292
+    },
+    {
+      "name": "multiplyMatrices",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 10385,
+      "column": 18,
+      "selfMs": 189.87699999999998
+    },
+    {
+      "name": "diagnostics",
+      "url": "",
+      "line": 1795,
+      "column": 13,
+      "selfMs": 172.231
+    },
+    {
+      "name": "dispatch",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 125.458
+    },
+    {
+      "name": "(anonymous)",
+      "url": "node:internal/webidl",
+      "line": 712,
+      "column": 18,
+      "selfMs": 120.612
+    },
+    {
+      "name": "(program)",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 111.366
+    },
+    {
+      "name": "syncEnemyInstance",
+      "url": "",
+      "line": 1343,
+      "column": 19,
+      "selfMs": 103.297
+    },
+    {
+      "name": "toArray",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 11099,
+      "column": 9,
+      "selfMs": 101.274
+    },
+    {
+      "name": "currentTrickleInterval",
+      "url": "",
+      "line": 641,
+      "column": 24,
+      "selfMs": 96.768
+    },
+    {
+      "name": "snapshotStandingOrders",
+      "url": "",
+      "line": 425,
+      "column": 32,
+      "selfMs": 89.757
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+--- a/e2e/m2-01-build-menu.spec.ts
++++ b/e2e/m2-01-build-menu.spec.ts
+@@ -184,16 +184,42 @@
+   await teleport(page, 0, 12);
+   await page.evaluate(() => window.__GR_TEST__?.selectBuildable('palisade'));
+   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.ghostValid ?? true)).toBe(false);
+-  const tick = await page.evaluate(() => {
+-    const before = window.__THREE_GAME_DIAGNOSTICS__?.simulation.tick ?? 0;
++  const trace = await page.evaluate(async () => {
++    const sample = (label: string) => ({
++      label,
++      frame: window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0,
++      tick: window.__THREE_GAME_DIAGNOSTICS__?.simulation.tick ?? 0,
++      build: window.__THREE_GAME_DIAGNOSTICS__?.build,
++      confirm: window.__GR_TEST__?.confirmBuildDiagnostics(),
++      gold: window.__THREE_GAME_DIAGNOSTICS__?.economy.gold ?? 0,
++    });
++    const waitPast = (tick: number) => new Promise<void>((resolve) => {
++      const poll = () => {
++        if ((window.__THREE_GAME_DIAGNOSTICS__?.simulation.tick ?? 0) > tick) resolve();
++        else requestAnimationFrame(poll);
++      };
++      requestAnimationFrame(poll);
++    });
++    const rejectedAt = window.__THREE_GAME_DIAGNOSTICS__?.simulation.tick ?? 0;
+     window.dispatchEvent(new KeyboardEvent('keydown', { code: 'Enter' }));
+     window.dispatchEvent(new KeyboardEvent('keyup', { code: 'Enter' }));
+     window.__GR_TEST__?.teleport(0, 14);
+-    return before;
+-  });
+-  await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.simulation.tick ?? 0)).toBeGreaterThan(tick + 1);
++    await waitPast(rejectedAt);
++    const samples = [sample('rejected-consumed-no-release-sample')];
++    window.dispatchEvent(new KeyboardEvent('keydown', { code: 'Enter' }));
++    window.dispatchEvent(new KeyboardEvent('keyup', { code: 'Enter' }));
++    const ignoredAt = window.__THREE_GAME_DIAGNOSTICS__?.simulation.tick ?? 0;
++    await waitPast(ignoredAt + 1);
++    samples.push(sample('consecutive-sample-enter-ignored'));
++    return samples;
++  });
+   await expect.poll(() => buildableCount(page, 'palisade')).toBe(1);
+   expect(await gold(page)).toBe(40);
++  fs.mkdirSync(path.resolve('artifacts/m2-palisade-placement-diagnosis'), { recursive: true });
++  fs.writeFileSync(
++    path.resolve(`artifacts/m2-palisade-placement-diagnosis/controlled-${test.info().project.name}.json`),
++    `${JSON.stringify(trace, null, 2)}\n`,
++  );
+ 
+   await placeSelected(page, 'palisade');
+   expect(await buildableCount(page, 'palisade')).toBe(2);

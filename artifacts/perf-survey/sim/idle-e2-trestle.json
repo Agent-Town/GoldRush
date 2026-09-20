@@ -1,0 +1,197 @@
+{
+  "key": "idle-e2-trestle",
+  "tapePath": "tapes/idle-e2-trestle.json",
+  "contract": "e2-trestle",
+  "kind": "null-floor",
+  "node": "v26.4.0",
+  "before": {
+    "at": "2026-09-05T16:00:17.047Z",
+    "load": [
+      5.1845703125,
+      7.373046875,
+      12.28564453125
+    ],
+    "freeMemory": 3477258240
+  },
+  "after": {
+    "at": "2026-09-05T16:00:18.746Z",
+    "load": [
+      5.1845703125,
+      7.373046875,
+      12.28564453125
+    ],
+    "freeMemory": 5469028352
+  },
+  "declaredDurationTicks": 1905,
+  "simulatedSeconds": 63.5,
+  "bootMs": 28.54820800000016,
+  "replayMs": 384.386209,
+  "ticksPerSecond": 4955.953037326581,
+  "realtimeMultiple": 165.1984345775527,
+  "estimateTenMinuteSeconds": 3.6319956755905514,
+  "estimateFormula": "600 seconds / measured realtimeMultiple; extrapolation, not an actual 10-minute tape when duration differs",
+  "tickMs": {
+    "n": 1905,
+    "min": 0.13799999999991996,
+    "p50": 0.17333299999995688,
+    "p95": 0.32112500000016553,
+    "p99": 0.6156250000001364,
+    "max": 6.710624999999936
+  },
+  "tickPath": "sim/idle-e2-trestle-ticks.json",
+  "result": {
+    "eventLogHash": "fnv1a32:a45ba9ac",
+    "outcome": {
+      "secured": false,
+      "waves": 1,
+      "gold": 0,
+      "timeAlive": 63.5
+    },
+    "ticks": 1905,
+    "engine": "headless-contract-sim"
+  },
+  "expectedHash": "fnv1a32:a45ba9ac",
+  "hashMatches": true,
+  "top20": [
+    {
+      "name": "dispatch",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 124.521
+    },
+    {
+      "name": "multiplyMatrices",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 10385,
+      "column": 18,
+      "selfMs": 26.060000000000002
+    },
+    {
+      "name": "get diagnostics",
+      "url": "",
+      "line": 484,
+      "column": 17,
+      "selfMs": 24.273000000000003
+    },
+    {
+      "name": "maxHpForPlacement",
+      "url": "",
+      "line": 1622,
+      "column": 19,
+      "selfMs": 18.813
+    },
+    {
+      "name": "currentTrickleInterval",
+      "url": "",
+      "line": 641,
+      "column": 24,
+      "selfMs": 16.031
+    },
+    {
+      "name": "diagnostics",
+      "url": "",
+      "line": 1795,
+      "column": 13,
+      "selfMs": 15.894000000000002
+    },
+    {
+      "name": "hpBarDiagnostics",
+      "url": "",
+      "line": 1663,
+      "column": 18,
+      "selfMs": 12.354999999999999
+    },
+    {
+      "name": "update",
+      "url": "",
+      "line": 809,
+      "column": 8,
+      "selfMs": 11.408
+    },
+    {
+      "name": "toArray",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 11099,
+      "column": 9,
+      "selfMs": 9.852
+    },
+    {
+      "name": "activeVariantAnimation",
+      "url": "",
+      "line": 1032,
+      "column": 24,
+      "selfMs": 8.813
+    },
+    {
+      "name": "(anonymous)",
+      "url": "",
+      "line": 1534,
+      "column": 32,
+      "selfMs": 8.751999999999999
+    },
+    {
+      "name": "simHeight",
+      "url": "",
+      "line": 61,
+      "column": 19,
+      "selfMs": 8.529
+    },
+    {
+      "name": "update",
+      "url": "",
+      "line": 594,
+      "column": 8,
+      "selfMs": 7.65
+    },
+    {
+      "name": "syncEnemyInstance",
+      "url": "",
+      "line": 1343,
+      "column": 19,
+      "selfMs": 7.526
+    },
+    {
+      "name": "activePositions",
+      "url": "",
+      "line": 1533,
+      "column": 17,
+      "selfMs": 6.795
+    },
+    {
+      "name": "syncWatchPaint",
+      "url": "",
+      "line": 1545,
+      "column": 16,
+      "selfMs": 6.74
+    },
+    {
+      "name": "resolveBoltHits",
+      "url": "",
+      "line": 665,
+      "column": 17,
+      "selfMs": 6.458
+    },
+    {
+      "name": "hpDiagnostics",
+      "url": "",
+      "line": 1631,
+      "column": 15,
+      "selfMs": 6.414
+    },
+    {
+      "name": "(anonymous)",
+      "url": "",
+      "line": 3,
+      "column": 49,
+      "selfMs": 5.689
+    },
+    {
+      "name": "(anonymous)",
+      "url": "",
+      "line": 237,
+      "column": 43,
+      "selfMs": 5.279
+    }
+  ]
+}

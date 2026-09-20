@@ -1,0 +1,69 @@
+[
+  {
+    "project": "desktop-chrome",
+    "test": "e2e/e5-flotilla-hulls.spec.ts:6:1 \u203a the Flotilla keeps three losable hulls and secures both bench seeds deterministically",
+    "details": [
+      "Error: expect(received).toMatchObject(expected)",
+      "-   \"eventLogHash\": \"fnv1a32:a9f33e48\",",
+      "+   \"eventLogHash\": \"fnv1a32:c01dd739\","
+    ]
+  },
+  {
+    "project": "desktop-chrome",
+    "test": "e2e/e5-flotilla-hulls.spec.ts:118:1 \u203a idle Flotilla runs lose all hulls",
+    "details": [
+      "Error: expect(received).toMatchObject(expected)",
+      "-   \"eventLogHash\": \"fnv1a32:68d87963\",",
+      "+   \"eventLogHash\": \"fnv1a32:815739a6\","
+    ]
+  },
+  {
+    "project": "desktop-chrome",
+    "test": "e2e/e5-regatta-race.spec.ts:35:1 \u203a the Regatta runs its authored course and secures both bench seeds deterministically",
+    "details": [
+      "Error: expect(received).toBe(expected) // Object.is equality",
+      "Expected: true",
+      "Received: false"
+    ]
+  },
+  {
+    "project": "desktop-chrome",
+    "test": "e2e/e5-regatta-race.spec.ts:141:1 \u203a idle Regatta runs lose because the course remains unfinished",
+    "details": [
+      "Error: (node:55471) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.",
+      "Expected: 0",
+      "Received: 1"
+    ]
+  },
+  {
+    "project": "desktop-chrome",
+    "test": "e2e/e5-stillwater-noise.spec.ts:181:1 \u203a Stillwater SECURES both bench seeds twice through the PLAIN door",
+    "details": [
+      "Error: expect(received).toMatchObject(expected)",
+      "-   \"eventLogHash\": \"fnv1a32:7661ca43\",",
+      "-   \"kills\": 103,",
+      "+   \"eventLogHash\": \"fnv1a32:e5c6d612\",",
+      "+   \"kills\": 391,"
+    ]
+  },
+  {
+    "project": "desktop-chrome",
+    "test": "e2e/e5-stillwater-noise.spec.ts:208:1 \u203a the same play through the in-process door agrees, and the decks survive with margin",
+    "details": [
+      "Error: expect(received).toMatchObject(expected)",
+      "-   \"eventLogHash\": \"fnv1a32:4e99e655\",",
+      "+   \"eventLogHash\": \"fnv1a32:e5c6d612\",",
+      "-     \"strikes\": 77,",
+      "+     \"strikes\": 64,"
+    ]
+  },
+  {
+    "project": "desktop-chrome",
+    "test": "e2e/e5-stillwater-noise.spec.ts:251:1 \u203a idle Stillwater runs stay silent and still lose",
+    "details": [
+      "Error: (node:31955) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.",
+      "Expected: 0",
+      "Received: null"
+    ]
+  }
+]

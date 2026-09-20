@@ -1,0 +1,1439 @@
+{
+  "blender": "5.1.2",
+  "availability": {
+    "source": "assets/contracts/epoch-2-steamworks/contracts.json",
+    "authored": [
+      "e2-hill-mine",
+      "e2-trestle",
+      "e2-pressure-garden",
+      "e2-incline"
+    ],
+    "notAuthored": [],
+    "policy": "no terrain is authored before its factory mask table exists"
+  },
+  "terrains": {
+    "hill-mine": {
+      "asset": "hill-mine-terrain.glb",
+      "checked": {
+        "sha256": "480582c961ed962832b5aa15d85c533570ad6f7061a74af4e7227a1b3ee23a05",
+        "bytes": 7765912,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 32768,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -48,
+            -0.68,
+            -48
+          ],
+          "max": [
+            48,
+            4.744289,
+            48
+          ],
+          "size": [
+            96,
+            5.424289,
+            96
+          ],
+          "center": [
+            0.0,
+            2.032145,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.8999999761581421,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "reexported": {
+        "sha256": "480582c961ed962832b5aa15d85c533570ad6f7061a74af4e7227a1b3ee23a05",
+        "bytes": 7765912,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 32768,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -48,
+            -0.68,
+            -48
+          ],
+          "max": [
+            48,
+            4.744289,
+            48
+          ],
+          "size": [
+            96,
+            5.424289,
+            96
+          ],
+          "center": [
+            0.0,
+            2.032145,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.8999999761581421,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "byteIdenticalReexport": true,
+      "semanticIdenticalReexport": true,
+      "embeddedTexture": {
+        "bytes": 7034902,
+        "sha256": "1d8ab2ce5b94509b1a7b6e2f7693d605807fe8151530962724086f7998717f88",
+        "width": 2048,
+        "height": 2048
+      },
+      "extras": {
+        "render_only": true,
+        "sim_authority": "factory contract tables and TileHeight; unchanged",
+        "height_socket": "Terrain.visualY",
+        "contract_id": "e2-hill-mine",
+        "tile_id": "e2-hill-mine",
+        "water_mask": "{\"deepBand\": {\"maxZ\": -5, \"minZ\": -15}, \"factoryVisualHalfWidth\": 10, \"placeableBankOutsideZ\": {\"maxZ\": -3.75, \"minZ\": -16.25}, \"shallowsEnd\": {\"maxZ\": -3.75, \"minZ\": -16.25}}",
+        "landmark_ownership": "mounted separately; preview proxies excluded from GLB"
+      },
+      "geometryProbes": [
+        {
+          "requested": [
+            0,
+            12
+          ],
+          "sampled": [
+            0.0,
+            12.0
+          ],
+          "height": 1.3179
+        },
+        {
+          "requested": [
+            -30,
+            25
+          ],
+          "sampled": [
+            -30.0,
+            24.75
+          ],
+          "height": 2.9003
+        },
+        {
+          "requested": [
+            30,
+            25
+          ],
+          "sampled": [
+            30.0,
+            24.75
+          ],
+          "height": 2.8963
+        },
+        {
+          "requested": [
+            -30,
+            42
+          ],
+          "sampled": [
+            -30.0,
+            42.0
+          ],
+          "height": 4.4951
+        },
+        {
+          "requested": [
+            30,
+            42
+          ],
+          "sampled": [
+            30.0,
+            42.0
+          ],
+          "height": 4.5016
+        },
+        {
+          "requested": [
+            0,
+            20
+          ],
+          "sampled": [
+            0.0,
+            20.25
+          ],
+          "height": 3.9434
+        },
+        {
+          "requested": [
+            0,
+            0
+          ],
+          "sampled": [
+            0.0,
+            0.0
+          ],
+          "height": 0.0
+        }
+      ],
+      "maskSource": "assets/contracts/epoch-2-steamworks/contracts.json",
+      "landmarkMountIds": [
+        "mine-mouth-and-ruined-headframe",
+        "boiler-house-site",
+        "flooded-gallery",
+        "switchback-rail-kit",
+        "tailings-and-scree-pack"
+      ]
+    },
+    "trestle": {
+      "asset": "trestle-terrain.glb",
+      "checked": {
+        "sha256": "c0c381d8de5f344779b6c81d21b93dc644dd9e3163dc69c6e936aab1c8ecec06",
+        "bytes": 8091320,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 32768,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -48,
+            -0.876469,
+            -48
+          ],
+          "max": [
+            48,
+            1.205371,
+            48
+          ],
+          "size": [
+            96,
+            2.081839,
+            96
+          ],
+          "center": [
+            0.0,
+            0.164451,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.8999999761581421,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "reexported": {
+        "sha256": "c0c381d8de5f344779b6c81d21b93dc644dd9e3163dc69c6e936aab1c8ecec06",
+        "bytes": 8091320,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 32768,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -48,
+            -0.876469,
+            -48
+          ],
+          "max": [
+            48,
+            1.205371,
+            48
+          ],
+          "size": [
+            96,
+            2.081839,
+            96
+          ],
+          "center": [
+            0.0,
+            0.164451,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.8999999761581421,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "byteIdenticalReexport": true,
+      "semanticIdenticalReexport": true,
+      "embeddedTexture": {
+        "bytes": 7360439,
+        "sha256": "865747ed3d5cb1ab16a42f6f324d1c00c08a1020e15fb861a356d65eb766bd18",
+        "width": 2048,
+        "height": 2048
+      },
+      "extras": {
+        "render_only": true,
+        "sim_authority": "factory contract tables and TileHeight; unchanged",
+        "height_socket": "Terrain.visualY",
+        "contract_id": "e2-trestle",
+        "tile_id": "e2-trestle",
+        "water_mask": "deep z=-5..5; shallows to +/-6.25; banks remain visible/placeable beyond",
+        "landmark_ownership": "mounted separately; preview proxies excluded from GLB"
+      },
+      "geometryProbes": [
+        {
+          "requested": [
+            0,
+            -18
+          ],
+          "sampled": [
+            0.0,
+            -18.0
+          ],
+          "height": 0.3759
+        },
+        {
+          "requested": [
+            0,
+            18
+          ],
+          "sampled": [
+            0.0,
+            18.0
+          ],
+          "height": 0.3274
+        },
+        {
+          "requested": [
+            -24,
+            -20
+          ],
+          "sampled": [
+            -24.0,
+            -20.25
+          ],
+          "height": 0.3272
+        },
+        {
+          "requested": [
+            24,
+            20
+          ],
+          "sampled": [
+            24.0,
+            20.25
+          ],
+          "height": 1.0983
+        },
+        {
+          "requested": [
+            0,
+            0
+          ],
+          "sampled": [
+            0.0,
+            0.0
+          ],
+          "height": -0.8014
+        },
+        {
+          "requested": [
+            30,
+            0
+          ],
+          "sampled": [
+            30.0,
+            0.0
+          ],
+          "height": -0.32
+        }
+      ],
+      "maskSource": "assets/contracts/epoch-2-steamworks/contracts.json",
+      "landmarkMountIds": [
+        "trestle-crossing",
+        "south-boiler-site",
+        "north-boiler-site",
+        "south-approach-kit",
+        "north-approach-kit",
+        "mine-spur-kit"
+      ]
+    },
+    "pressure-garden": {
+      "asset": "pressure-garden-terrain.glb",
+      "checked": {
+        "sha256": "da54c5ceb70e07778e91ae26ace6b562a217fa039af6dfa9493e8f482f424f0b",
+        "bytes": 7839344,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 32768,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -48,
+            -0.291012,
+            -48
+          ],
+          "max": [
+            48,
+            2.512427,
+            48
+          ],
+          "size": [
+            96,
+            2.803439,
+            96
+          ],
+          "center": [
+            0.0,
+            1.110708,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.8999999761581421,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "reexported": {
+        "sha256": "da54c5ceb70e07778e91ae26ace6b562a217fa039af6dfa9493e8f482f424f0b",
+        "bytes": 7839344,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 32768,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -48,
+            -0.291012,
+            -48
+          ],
+          "max": [
+            48,
+            2.512427,
+            48
+          ],
+          "size": [
+            96,
+            2.803439,
+            96
+          ],
+          "center": [
+            0.0,
+            1.110708,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.8999999761581421,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "byteIdenticalReexport": true,
+      "semanticIdenticalReexport": true,
+      "embeddedTexture": {
+        "bytes": 7108421,
+        "sha256": "38b5da07037ea6fbbfce2607fac5c418c99e14f2b29f4841ad9fb8d23cf37f58",
+        "width": 2048,
+        "height": 2048
+      },
+      "extras": {
+        "render_only": true,
+        "sim_authority": "factory contract tables and TileHeight; unchanged",
+        "height_socket": "Terrain.visualY",
+        "contract_id": "e2-pressure-garden",
+        "tile_id": "e2-pressure-garden",
+        "water_mask": "deep z=-5..5; shallows to +/-6.25; banks remain visible/placeable beyond",
+        "landmark_ownership": "mounted separately; preview proxies excluded from GLB"
+      },
+      "geometryProbes": [
+        {
+          "requested": [
+            -12,
+            12
+          ],
+          "sampled": [
+            -12.0,
+            12.0
+          ],
+          "height": 0.7964
+        },
+        {
+          "requested": [
+            0,
+            12
+          ],
+          "sampled": [
+            0.0,
+            12.0
+          ],
+          "height": 0.8035
+        },
+        {
+          "requested": [
+            12,
+            12
+          ],
+          "sampled": [
+            12.0,
+            12.0
+          ],
+          "height": 0.8027
+        },
+        {
+          "requested": [
+            -30,
+            24
+          ],
+          "sampled": [
+            -30.0,
+            24.0
+          ],
+          "height": 1.6015
+        },
+        {
+          "requested": [
+            30,
+            24
+          ],
+          "sampled": [
+            30.0,
+            24.0
+          ],
+          "height": 1.6021
+        },
+        {
+          "requested": [
+            -12,
+            39
+          ],
+          "sampled": [
+            -12.0,
+            39.0
+          ],
+          "height": 2.3992
+        },
+        {
+          "requested": [
+            3,
+            39
+          ],
+          "sampled": [
+            3.0,
+            39.0
+          ],
+          "height": 2.4016
+        },
+        {
+          "requested": [
+            0,
+            0
+          ],
+          "sampled": [
+            0.0,
+            0.0
+          ],
+          "height": -0.18
+        }
+      ],
+      "maskSource": "assets/contracts/epoch-2-steamworks/contracts.json",
+      "landmarkMountIds": [
+        "garden-pressure-manifold",
+        "west-terrace-pipe-header",
+        "east-terrace-pipe-header",
+        "coal-seam-service-winch",
+        "water-band-pump-station"
+      ]
+    },
+    "incline": {
+      "asset": "incline-terrain.glb",
+      "checked": {
+        "sha256": "d9581d57c6ccde8ca983a82dc86aba2ea2b873620191ec7139f041a033d40025",
+        "bytes": 7778576,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 32768,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -48,
+            -0.400145,
+            -48
+          ],
+          "max": [
+            48,
+            3.929785,
+            48
+          ],
+          "size": [
+            96,
+            4.32993,
+            96
+          ],
+          "center": [
+            0.0,
+            1.76482,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.8999999761581421,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "reexported": {
+        "sha256": "d9581d57c6ccde8ca983a82dc86aba2ea2b873620191ec7139f041a033d40025",
+        "bytes": 7778576,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 32768,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -48,
+            -0.400145,
+            -48
+          ],
+          "max": [
+            48,
+            3.929785,
+            48
+          ],
+          "size": [
+            96,
+            4.32993,
+            96
+          ],
+          "center": [
+            0.0,
+            1.76482,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.8999999761581421,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "byteIdenticalReexport": true,
+      "semanticIdenticalReexport": true,
+      "embeddedTexture": {
+        "bytes": 7047693,
+        "sha256": "0c79ece2e2dca5d6f6490d5c17534d4878b7728a0b9c80e9d31268af89249c54",
+        "width": 2048,
+        "height": 2048
+      },
+      "extras": {
+        "render_only": true,
+        "sim_authority": "factory contract tables and TileHeight; unchanged",
+        "height_socket": "Terrain.visualY",
+        "contract_id": "e2-incline",
+        "tile_id": "e2-incline",
+        "water_mask": "deep z=-5..5; shallows to +/-6.25; banks remain visible/placeable beyond",
+        "landmark_ownership": "mounted separately; preview proxies excluded from GLB"
+      },
+      "geometryProbes": [
+        {
+          "requested": [
+            -24,
+            -18
+          ],
+          "sampled": [
+            -24.0,
+            -18.0
+          ],
+          "height": -0.3527
+        },
+        {
+          "requested": [
+            0,
+            40
+          ],
+          "sampled": [
+            0.0,
+            39.75
+          ],
+          "height": 3.5555
+        },
+        {
+          "requested": [
+            -30,
+            -20
+          ],
+          "sampled": [
+            -30.0,
+            -20.25
+          ],
+          "height": -0.3536
+        },
+        {
+          "requested": [
+            -30,
+            26
+          ],
+          "sampled": [
+            -30.0,
+            26.25
+          ],
+          "height": 2.0547
+        },
+        {
+          "requested": [
+            -22,
+            40
+          ],
+          "sampled": [
+            -21.75,
+            39.75
+          ],
+          "height": 3.5491
+        },
+        {
+          "requested": [
+            -12,
+            0
+          ],
+          "sampled": [
+            -12.0,
+            0.0
+          ],
+          "height": -0.18
+        },
+        {
+          "requested": [
+            12,
+            0
+          ],
+          "sampled": [
+            12.0,
+            0.0
+          ],
+          "height": -0.18
+        }
+      ],
+      "maskSource": "assets/contracts/epoch-2-steamworks/contracts.json",
+      "landmarkMountIds": [
+        "lower-yard-engine-crane",
+        "west-line-brake-tower",
+        "east-line-brake-tower",
+        "upper-ore-cable-house",
+        "ford-service-pump"
+      ]
+    }
+  },
+  "panoramas": {
+    "hill-mine": {
+      "asset": "hill-mine-panorama.glb",
+      "checked": {
+        "sha256": "1d53018afbefd96e05d1d0f026a7aef419917ea0ffad148134025135a7f1c1fe",
+        "bytes": 481404,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 1920,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -193,
+            -10,
+            -193
+          ],
+          "max": [
+            193,
+            130,
+            193
+          ],
+          "size": [
+            386,
+            140,
+            386
+          ],
+          "center": [
+            0.0,
+            60.0,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.9,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "reexported": {
+        "sha256": "1d53018afbefd96e05d1d0f026a7aef419917ea0ffad148134025135a7f1c1fe",
+        "bytes": 481404,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 1920,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -193,
+            -10,
+            -193
+          ],
+          "max": [
+            193,
+            130,
+            193
+          ],
+          "size": [
+            386,
+            140,
+            386
+          ],
+          "center": [
+            0.0,
+            60.0,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.9,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "byteIdenticalReexport": true,
+      "semanticIdenticalReexport": true,
+      "embeddedTexture": {
+        "bytes": 331265,
+        "sha256": "a6c70905ca2e35c613bd673b6a54ea989170ec3ed97430b186be9ba3940b66e2",
+        "width": 2048,
+        "height": 2048
+      },
+      "extras": {
+        "render_only": true,
+        "panorama": true,
+        "affects_playfield": false,
+        "affects_masks": false,
+        "affects_spawn_edges": false,
+        "affects_fog_gating": false,
+        "mount_space": "game X/Y/Z at county origin",
+        "panorama_law": "v2"
+      },
+      "mount": {
+        "id": "hill-mine-panorama",
+        "asset": "hill-mine-panorama.glb",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "renderOnly": true,
+        "ownership": "separate mounted scenery; never terrain or gameplay bounds"
+      }
+    },
+    "trestle": {
+      "asset": "trestle-panorama.glb",
+      "checked": {
+        "sha256": "d481fdce9a897df3aa8d54d99c69bf9e2812c0a9c07c6c55e5e324ec3276b74b",
+        "bytes": 484676,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 1920,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -193,
+            -10,
+            -193
+          ],
+          "max": [
+            193,
+            130,
+            193
+          ],
+          "size": [
+            386,
+            140,
+            386
+          ],
+          "center": [
+            0.0,
+            60.0,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.9,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "reexported": {
+        "sha256": "d481fdce9a897df3aa8d54d99c69bf9e2812c0a9c07c6c55e5e324ec3276b74b",
+        "bytes": 484676,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 1920,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -193,
+            -10,
+            -193
+          ],
+          "max": [
+            193,
+            130,
+            193
+          ],
+          "size": [
+            386,
+            140,
+            386
+          ],
+          "center": [
+            0.0,
+            60.0,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.9,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "byteIdenticalReexport": true,
+      "semanticIdenticalReexport": true,
+      "embeddedTexture": {
+        "bytes": 334545,
+        "sha256": "4e433fb181349eb7ab3472a39170cb989758e5dd29642d12d8877fc64fa32d79",
+        "width": 2048,
+        "height": 2048
+      },
+      "extras": {
+        "render_only": true,
+        "panorama": true,
+        "affects_playfield": false,
+        "affects_masks": false,
+        "affects_spawn_edges": false,
+        "affects_fog_gating": false,
+        "mount_space": "game X/Y/Z at county origin",
+        "panorama_law": "v2"
+      },
+      "mount": {
+        "id": "trestle-panorama",
+        "asset": "trestle-panorama.glb",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "renderOnly": true,
+        "ownership": "separate mounted scenery; never terrain or gameplay bounds"
+      }
+    },
+    "pressure-garden": {
+      "asset": "pressure-garden-panorama.glb",
+      "checked": {
+        "sha256": "424fad6a426387ccded6a8819251b362c8340b53bd0e6762704e0a18d6b691ca",
+        "bytes": 659532,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 2112,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -193,
+            -10,
+            -193
+          ],
+          "max": [
+            193,
+            130,
+            193
+          ],
+          "size": [
+            386,
+            140,
+            386
+          ],
+          "center": [
+            0.0,
+            60.0,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 1,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": true,
+            "emissiveFactor": [
+              1,
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "reexported": {
+        "sha256": "424fad6a426387ccded6a8819251b362c8340b53bd0e6762704e0a18d6b691ca",
+        "bytes": 659532,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 2112,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -193,
+            -10,
+            -193
+          ],
+          "max": [
+            193,
+            130,
+            193
+          ],
+          "size": [
+            386,
+            140,
+            386
+          ],
+          "center": [
+            0.0,
+            60.0,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 1,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": true,
+            "emissiveFactor": [
+              1,
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "byteIdenticalReexport": true,
+      "semanticIdenticalReexport": true,
+      "embeddedTexture": {
+        "bytes": 439842,
+        "sha256": "fa2f5c58b8ab77ddcc6f92c9c241060a4b2b760dbec4f2f8be23043f37ffcf30",
+        "width": 2048,
+        "height": 2048
+      },
+      "extras": {
+        "render_only": true,
+        "panorama": true,
+        "affects_playfield": false,
+        "affects_masks": false,
+        "affects_spawn_edges": false,
+        "affects_fog_gating": false,
+        "mount_space": "game X/Y/Z at county origin",
+        "panorama_law": "v2"
+      },
+      "mount": {
+        "id": "pressure-garden-panorama",
+        "asset": "pressure-garden-panorama.glb",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "renderOnly": true,
+        "ownership": "separate mounted scenery; never terrain or gameplay bounds"
+      }
+    },
+    "incline": {
+      "asset": "incline-panorama.glb",
+      "checked": {
+        "sha256": "9c06e4dd401a71231aae7aa0268b41d695113142bfef1536c114ae3e1f783f7b",
+        "bytes": 662016,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 2112,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -193,
+            -10,
+            -193
+          ],
+          "max": [
+            193,
+            130,
+            193
+          ],
+          "size": [
+            386,
+            140,
+            386
+          ],
+          "center": [
+            0.0,
+            60.0,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 1,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": true,
+            "emissiveFactor": [
+              1,
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "reexported": {
+        "sha256": "9c06e4dd401a71231aae7aa0268b41d695113142bfef1536c114ae3e1f783f7b",
+        "bytes": 662016,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 2112,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -193,
+            -10,
+            -193
+          ],
+          "max": [
+            193,
+            130,
+            193
+          ],
+          "size": [
+            386,
+            140,
+            386
+          ],
+          "center": [
+            0.0,
+            60.0,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 1,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": true,
+            "emissiveFactor": [
+              1,
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "byteIdenticalReexport": true,
+      "semanticIdenticalReexport": true,
+      "embeddedTexture": {
+        "bytes": 442355,
+        "sha256": "295363ab10395a9f34ba794c1f4db0ffd0958b59d30a973c59647b9df8ab55ef",
+        "width": 2048,
+        "height": 2048
+      },
+      "extras": {
+        "render_only": true,
+        "panorama": true,
+        "affects_playfield": false,
+        "affects_masks": false,
+        "affects_spawn_edges": false,
+        "affects_fog_gating": false,
+        "mount_space": "game X/Y/Z at county origin",
+        "panorama_law": "v2"
+      },
+      "mount": {
+        "id": "incline-panorama",
+        "asset": "incline-panorama.glb",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "renderOnly": true,
+        "ownership": "separate mounted scenery; never terrain or gameplay bounds"
+      }
+    }
+  },
+  "boards": {
+    "e2-mood-ab.png": {
+      "size": [
+        1920,
+        2412
+      ],
+      "bytes": 5689512,
+      "sha256": "f8e8ee86937aa319fb2d5589f1ebbe3bb987d7d29b11fa355b89ec3c21473be0"
+    },
+    "e2-flat-vs-sculpted-ab.png": {
+      "size": [
+        1920,
+        2412
+      ],
+      "bytes": 4069280,
+      "sha256": "736589bd0232089cc9cc7e2fbe415824bc60f6de637119cbd619045f28576645"
+    },
+    "e2-owner-verdict.png": {
+      "size": [
+        1920,
+        1692
+      ],
+      "bytes": 2990253,
+      "sha256": "f9bfdceb7a89636f72e8f232cbd5ffc2aabca85b15c99d426ee350a473de5fd5"
+    },
+    "e2-panorama-mood-ab.png": {
+      "size": [
+        1920,
+        1692
+      ],
+      "bytes": 1667323,
+      "sha256": "ce6169dd53338db6e79bab8ebe5dc9f1971119e27c0ab540c390def91258c9f1"
+    },
+    "e2-panorama-distance-gate.png": {
+      "size": [
+        1920,
+        2412
+      ],
+      "bytes": 3546746,
+      "sha256": "01e04e755650c1561bf86e8b6c4f0ed884be034100ada5023686aba22a860f70"
+    },
+    "e2-mask-agreement-board.png": {
+      "size": [
+        1920,
+        2412
+      ],
+      "bytes": 3313530,
+      "sha256": "5ce6fe47246bb883a727af17882d2d3a47c37b64114cfecadfc084bc96b01ea0"
+    }
+  },
+  "verdict": {
+    "grit": "fight",
+    "panorama": "distance",
+    "masks": "factory-authored and unchanged",
+    "landmarks": "mounted separately"
+  }
+}

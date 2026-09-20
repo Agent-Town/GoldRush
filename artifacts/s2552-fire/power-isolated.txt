@@ -1,0 +1,19 @@
+gate battery transcript (append-only — see scripts/gate-battery.mjs)
+
+
+######## BATTERY 2026-09-07T19:38:03.730Z — s2552 power isolated follow-up ########
+cwd=/private/tmp/gr-gate-s2552
+env+ PATH=/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin CLAUDE_CONFIG_DIR=/Users/robin/.claude-fires
+
+===== power isolated =====
+$ npm run test:power-budget
+rc=0 0.2s
+
+> gold-rush@0.1.0 test:power-budget
+> node --experimental-strip-types scripts/check-power-graph-budget.mjs
+
+power-graph-budget: p95=0.322ms cap=0.500ms samples=160 verdict=PASS
+
+
+SUMMARY {"power isolated":0}
+OVERALL rc=0

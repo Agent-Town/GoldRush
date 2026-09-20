@@ -1,0 +1,111 @@
+{
+  "observedAt": "2026-09-05T22:20:35+0700",
+  "main": "1ccef4e299cb5528d5adea1c4f237565fd29acef",
+  "goalLeaves": [
+    {
+      "id": "perf-optimization-survey",
+      "title": "Owner 2026-09-05: a gpt-6-astra xhigh SURVEY measuring frame, sim, delivery and memory per map (36 contracts + town), ranking the wins and proposing the fix ladder; no game code changes",
+      "taskFile": "perf-optimization-survey.md",
+      "status": "building",
+      "lane": "lane-b",
+      "authoredBy": "attended 2026-09-02 (release pass)",
+      "authoredAt": "2026-09-05",
+      "queuedAt": "2026-09-05",
+      "note": "Fourth dispatch (codex xhigh, 21:20) died at 41 min / 236k tokens on \"Selected model is at capacity\"; the WIP (instruments + raw evidence + working report) is salvage-committed on lane/b; continued by a Claude Opus 5 agent (owner: Opus for implementation) with load-aware sampling."
+    },
+    {
+      "id": "ss-05-e4-beats",
+      "title": "E4 story chapter as data: beats, tavern tales, Gazette headlines (The Motor Frontier); L4 human path",
+      "taskFile": "ss-05-e4-beats.md",
+      "status": "planned",
+      "lane": "lane-a",
+      "authoredBy": "attended 2026-09-02 (release pass)",
+      "authoredAt": "2026-09-05",
+      "note": "Overnight Opus story wave (owner 2026-09-05: \"push hard while I sleep\"); dispatched to a Claude Opus agent when its lane is free; the lane pre-flight paragraph is for the Codex runner."
+    },
+    {
+      "id": "ss-06-e5-beats",
+      "title": "E5 story chapter as data: beats, tavern tales, Gazette headlines (The Deepwater Claim); L4 human path",
+      "taskFile": "ss-06-e5-beats.md",
+      "status": "planned",
+      "lane": "lane-c",
+      "authoredBy": "attended 2026-09-02 (release pass)",
+      "authoredAt": "2026-09-05",
+      "note": "Overnight Opus story wave (owner 2026-09-05: \"push hard while I sleep\"); dispatched to a Claude Opus agent when its lane is free; the lane pre-flight paragraph is for the Codex runner."
+    },
+    {
+      "id": "ss-07-e6-beats",
+      "title": "E6 story chapter as data: beats, tavern tales, Gazette headlines (The Atomic Homestead); L4 human path",
+      "taskFile": "ss-07-e6-beats.md",
+      "status": "planned",
+      "lane": "lane-d",
+      "authoredBy": "attended 2026-09-02 (release pass)",
+      "authoredAt": "2026-09-05",
+      "note": "Overnight Opus story wave (owner 2026-09-05: \"push hard while I sleep\"); dispatched to a Claude Opus agent when its lane is free; the lane pre-flight paragraph is for the Codex runner."
+    },
+    {
+      "id": "gauntlet-heat12-opus-sweep",
+      "title": "Heat 12: Opus rides the five never-claimed and the thirteen mechanic-changed contracts on the live era; receipts or named blockers (operator task, detached arena)",
+      "taskFile": "gauntlet-heat12-opus-sweep.md",
+      "status": "planned",
+      "lane": "arena",
+      "authoredBy": "attended 2026-09-02 (release pass)",
+      "authoredAt": "2026-09-05",
+      "note": "Overnight Opus wave (owner 2026-09-05: \"push hard while I sleep\"); dispatched by the attended session when the survey frees the board."
+    },
+    {
+      "id": "playability-smoke-36",
+      "title": "A 36-contract plain-boot playability matrix on main and on the full-board preview (briefing, HUD, keyboard movement, wave 2, zero errors) before the owner tests by hand",
+      "taskFile": "playability-smoke-36.md",
+      "status": "planned",
+      "lane": "lane-b",
+      "authoredBy": "attended 2026-09-02 (release pass)",
+      "authoredAt": "2026-09-05",
+      "note": "Overnight Opus wave (owner 2026-09-05: \"push hard while I sleep\"); dispatched by the attended session when the survey frees the board."
+    },
+    {
+      "id": "story-signal-emitters",
+      "title": "F-SS05-1: emit the four story signals (wave-complete, science-threshold, rung-promotion, first-boot) so six E1 beats fire in play; determinism proven by hash",
+      "taskFile": "story-signal-emitters.md",
+      "status": "planned",
+      "lane": "lane-a",
+      "authoredBy": "attended 2026-09-02 (release pass)",
+      "authoredAt": "2026-09-05",
+      "note": "Overnight Opus wave; dispatch to lane-a after the E4 chapter drains."
+    }
+  ],
+  "lanes": {
+    "lane/a": {
+      "tip": "60510114dca4ad568c62cadd8ef9bdadd5eb2e2a",
+      "commits": [
+        "60510114d feat: ss-05 BACKLOG row \u2014 E4 chapter READY-FOR-GATES, engine pin owed, F-SS05-1 reported",
+        "ff9ed4217 feat: ss-05 \u2014 the Motor Frontier gets its story (E4 beats, tavern tales, Gazette headlines as data)"
+      ]
+    },
+    "lane/b": {
+      "tip": "b50676bd8ef4a74cda1a44d56266980811a9bec4",
+      "commits": [
+        "b50676bd8 salvage(lane-b): perf-optimization-survey work in progress \u2014 instruments (scripts/perf-survey), raw evidence and the working report, committed attended after the codex run died on 'Selected model is at capacity' at 236k tokens"
+      ]
+    },
+    "lane/c": {
+      "tip": "39a1fb8e682526e5c734babf7e44070407d2a6fb",
+      "commits": [
+        "39a1fb8e6 feat: ss-06 \u2014 add STORYBOOK spine beat 2, THE REBUILD (lore/STORYBOOK.md:294)",
+        "ff0d4a6bc feat: ss-06 evidence \u2014 E5 beat screenshots (desktop + 390px) and the BACKLOG row",
+        "9ffe85129 feat: ss-06 E5 beats \u2014 the Deepwater Claim gets its chapter as data"
+      ]
+    },
+    "lane/d": {
+      "tip": "8adb69d4948b58495df44e18630b89ab72ada176",
+      "commits": [
+        "8adb69d49 feat: ss-07 \u2014 gate evidence for the E6 chapter (spec gap-window fix, screenshots, BACKLOG row)",
+        "a0d2bc9db feat: ss-07 \u2014 the Atomic Homestead gets its story (E6 beats, tavern tales, Gazette headlines as data)"
+      ]
+    }
+  },
+  "codexWall": false,
+  "queue": [],
+  "running": [],
+  "pendingOrders": []
+}

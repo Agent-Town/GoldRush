@@ -1,0 +1,12 @@
+
+Running 2 tests using 1 worker
+
+
+(node:14085) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[1/2] [desktop-chrome] › e2e/perf-04-determinism.spec.ts:58:1 › ?debug without determinism leaves the harness dormant
+[2/2] [desktop-chrome] › e2e/perf-04-determinism.spec.ts:68:1 › same seed produces identical economy hash and entity timeline
+  Slow test file: [desktop-chrome] › e2e/perf-04-determinism.spec.ts (9.7m)
+  Consider running tests from slow files in parallel. See: https://playwright.dev/docs/test-parallel
+  2 passed (9.7m)

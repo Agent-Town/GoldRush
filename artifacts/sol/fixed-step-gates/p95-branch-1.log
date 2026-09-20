@@ -1,0 +1,45 @@
+
+Running 1 test using 1 worker
+
+
+(node:25942) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[1/1] [desktop-webkit] › e2e/058-device-tiers.spec.ts:148:1 › desktop WebKit records FULL baseline and LITE wave-20 stress envelope
+  1) [desktop-webkit] › e2e/058-device-tiers.spec.ts:148:1 › desktop WebKit records FULL baseline and LITE wave-20 stress envelope
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 25
+    Received:    27
+
+      165 |     expect(lite.canvas.dpr).toBeLessThanOrEqual(full.canvas.dpr);
+      166 |     expect(lite.lighting?.shadowsQuality).toBe('blob');
+    > 167 |     expect(lite.p95).toBeLessThanOrEqual(25);
+          |                      ^
+      168 |     expect(full.errors.consoleErrors).toEqual([]);
+      169 |     expect(full.errors.pageErrors).toEqual([]);
+      170 |     expect(lite.errors.consoleErrors).toEqual([]);
+        at /Users/robin/.codex/worktrees/fixed-step-unification/Gold Rush/e2e/058-device-tiers.spec.ts:167:22
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/058-device-tiers-desktop-W-08ec3-ITE-wave-20-stress-envelope-desktop-webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #3: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/058-device-tiers-desktop-W-08ec3-ITE-wave-20-stress-envelope-desktop-webkit/test-failed-2.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/058-device-tiers-desktop-W-08ec3-ITE-wave-20-stress-envelope-desktop-webkit/error-context.md
+
+    attachment #5: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/058-device-tiers-desktop-W-08ec3-ITE-wave-20-stress-envelope-desktop-webkit/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/058-device-tiers-desktop-W-08ec3-ITE-wave-20-stress-envelope-desktop-webkit/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  1 failed
+    [desktop-webkit] › e2e/058-device-tiers.spec.ts:148:1 › desktop WebKit records FULL baseline and LITE wave-20 stress envelope

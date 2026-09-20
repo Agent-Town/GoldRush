@@ -1,0 +1,64 @@
+{
+  "kind": "manufactured process-list capture; no real process census or battery launched",
+  "node": "/Users/robin/.nvm/versions/node/v26.4.0/bin/node",
+  "bytesOfLongArgument": 1200000,
+  "results": [
+    {
+      "mode": "wait",
+      "large": false,
+      "fixed": false,
+      "status": 0,
+      "stdout": "QUIET"
+    },
+    {
+      "mode": "wait",
+      "large": false,
+      "fixed": true,
+      "status": 0,
+      "stdout": "QUIET"
+    },
+    {
+      "mode": "wait",
+      "large": true,
+      "fixed": false,
+      "status": 1,
+      "stdout": "could not inspect node-guards contention: spawnSync ps ENOBUFS"
+    },
+    {
+      "mode": "wait",
+      "large": true,
+      "fixed": true,
+      "status": 0,
+      "stdout": "QUIET"
+    },
+    {
+      "mode": "stamp",
+      "large": false,
+      "fixed": false,
+      "status": 0,
+      "stdout": "CONTENDED — 2 concurrent batteries"
+    },
+    {
+      "mode": "stamp",
+      "large": false,
+      "fixed": true,
+      "status": 0,
+      "stdout": "CONTENDED — 2 concurrent batteries"
+    },
+    {
+      "mode": "stamp",
+      "large": true,
+      "fixed": false,
+      "status": 0,
+      "stdout": "NO_STAMP"
+    },
+    {
+      "mode": "stamp",
+      "large": true,
+      "fixed": true,
+      "status": 0,
+      "stdout": "CONTENDED — 2 concurrent batteries"
+    }
+  ],
+  "note": "The wait arm fixes classification to false to isolate capture; it is not evidence about quiet-board classification. The stamp arm uses the repository classifier and a true sibling row."
+}

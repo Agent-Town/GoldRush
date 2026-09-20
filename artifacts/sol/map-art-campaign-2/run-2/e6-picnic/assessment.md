@@ -1,0 +1,3 @@
+UNACCEPTED: picnic canopies, blankets, props and gathering are not communicated at plain entry; reused mesa ground and a pylon dominate, with heavy dark forms and portrait HUD occlusion.
+
+`Terrain3dClaimPilot.ts:184` deliberately aliases Picnic to Glow Mesa terrain and panorama, so the budget inventory names the actual Glow Mesa assets. The plate describes a social picnic among frontier-tech appliances, while both entry views show mostly mottled earth and a distant pale pylon; no comparable grouping of canopy or picnic props is communicated. A unique environmental dressing pass is needed, and character/sprite additions are explicitly outside this campaign. Existing native completion remains unchanged. No production change was made.

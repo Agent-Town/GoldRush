@@ -1,0 +1,3 @@
+UNACCEPTED: stepped cliff, cable lift and carts are not communicated at plain entry; dark mottled field and a peripheral rail dominate; portrait excludes the rail and principal machinery.
+
+The concept ties an upper winding house and lower boiler to a conspicuous lift across three cliff terraces. Neither plain entry viewport explains that vertical relationship: desktop mostly shows ground and a straight rail, while portrait shows only the field and small actors behind the normal HUD. This does not establish that the lift is absent elsewhere. A coordinated terrain, landmark and entry-composition pass is needed; tinting the ground would not create the cliff hierarchy. No production change was made.

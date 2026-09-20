@@ -1,0 +1,105 @@
+{
+  "law": "reuse > derive > build-new; era-stamped; grit-dressed",
+  "packs": {
+    "moth-season": {
+      "era": 3,
+      "atlasSha256": "1875cfcfacc69ea7ebc872225861f04a0ef754cfd412d94ee445d06b89e146c3",
+      "assets": {
+        "north-migration-watch-gate": {
+          "sourceTier": "reuse",
+          "triangles": 1576,
+          "sha256": "53de51853da1bd772e8509c6ec28acdd9f908ebc49610299568bdab0cec4c023",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "south-quiet-road-gate": {
+          "sourceTier": "reuse",
+          "triangles": 1480,
+          "sha256": "17fcefb809a7f69f8edd06fb12961354394faa3e0dc1e1b50dd4b5f7b4870425",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "west-lamplighter-refuge": {
+          "sourceTier": "reuse",
+          "triangles": 1088,
+          "sha256": "ffeefafa5930e99120f65d5fb13b9f4573d9e67f9858905863d92042b2e44fa9",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "east-tithe-bell-house": {
+          "sourceTier": "derive",
+          "triangles": 1076,
+          "sha256": "40cfdf4ebe8deb819276a21b0880a9552fb8cd6eb51d98ce625a43344eedb37f",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "mothglass-counting-cage": {
+          "sourceTier": "derive",
+          "triangles": 2096,
+          "sha256": "179f474e711635aca9ce3f4eaa0da5653abdf07c8d7a4e2de95ee2f7f8ff73a4",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        }
+      }
+    }
+  },
+  "totals": {
+    "packs": 1,
+    "assets": 5,
+    "sourceTiers": {
+      "reuse": 3,
+      "derive": 2,
+      "build-new": 0
+    }
+  },
+  "boards": {
+    "moth-season-landmarks-turntable.png": {
+      "size": [
+        1920,
+        1160
+      ],
+      "sha256": "4317215b63619631d1fdc3e57cb952d3e19680e684a8a1b70a1bb807b2deb8df"
+    },
+    "moth-season-landmarks-verdict.png": {
+      "size": [
+        1920,
+        1008
+      ],
+      "sha256": "c988254d29738d3922e402ac882d97ec2390e7a5967117e602e17976f6024a90"
+    },
+    "moth-season-landmarks-pack.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "40eab54842a8a0ee396a872fa8aadcf002a3c7584b3b6909f501637aed1020ae"
+    },
+    "moth-season-landmarks-proposed.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "0009715ce87d1596d3a5692567a66ca97d4f558a03bc8b413bd799b2c5a6ae8f"
+    },
+    "moth-season-landmarks-proposed-overview.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "90485ddda418de632ab11fb52d2139c71870fb4fab455ff67a03bd26f1ff1aec"
+    },
+    "moth-season-landmarks-clearance-overlay.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "d793148035f83aee332aff9762b9b91c0d25a83d71eee2fd033b509b7de8926c"
+    }
+  },
+  "simulation": "unchanged; every landmark is a separate render-only GLB mounted by contract"
+}

@@ -1,0 +1,6543 @@
+{
+  "firstFrameMs": 822,
+  "renderer": {
+    "calls": 57,
+    "triangles": 75538,
+    "geometries": 57,
+    "textures": 19,
+    "programs": 37
+  },
+  "camera": {
+    "position": [
+      12,
+      26.569631611446667,
+      3.4000000000000137
+    ],
+    "fov": 42,
+    "near": 0.1,
+    "far": 100,
+    "zoom": 1,
+    "projection": [
+      5.637679924619406,
+      0,
+      0,
+      0,
+      0,
+      2.6050890646938014,
+      0,
+      0,
+      0,
+      0,
+      -1.002002002002002,
+      -1,
+      0,
+      0,
+      -0.20020020020020018,
+      0
+    ],
+    "world": [
+      1,
+      0,
+      0,
+      0,
+      0,
+      0.643540574402391,
+      -0.765411999577901,
+      0,
+      0,
+      0.765411999577901,
+      0.643540574402391,
+      0,
+      12,
+      26.569631611446667,
+      3.4000000000000137,
+      1
+    ]
+  },
+  "canvas": {
+    "width": 390,
+    "height": 844,
+    "cssWidth": 390,
+    "cssHeight": 844,
+    "dpr": 1,
+    "dataset": {
+      "assetPrefetchScene": "run",
+      "assetPrefetchState": "ready",
+      "assetPrefetchReady": "0",
+      "assetPrefetchTotal": "0",
+      "assetPrefetchProgress": "0/0",
+      "assetPrefetchFailed": "0",
+      "assetPrefetchPriority": "0",
+      "assetPrefetchTarget": "",
+      "assetPrefetchSaveData": "false",
+      "assetPrefetchEnabled": "false",
+      "assetPrefetchAllowance": "12000000",
+      "assetPrefetchBytes": "0",
+      "assetPrefetchTownState": "ready",
+      "railcar3dState": "lite",
+      "railcar3dSource": "billboard",
+      "railcar3dMounted": "false",
+      "railcar3dDamageStates": "{\"wheels\":\"intact\",\"boiler\":\"intact\",\"cabin\":\"intact\"}",
+      "bossBarVisible": "false",
+      "bossBarSemantic": "none",
+      "bossBarRemaining": "0",
+      "bossBarDepleted": "0",
+      "bossBarRemainingColor": "#6bb36b",
+      "bossBarDepletedColor": "#a0522d",
+      "bossBarComponent": "shared",
+      "bossBarAnchor": "none",
+      "bossBarOrientation": "none",
+      "bossBarPosition": "none",
+      "crawler3dState": "lite",
+      "crawler3dSource": "placeholder",
+      "crawler3dMounted": "false",
+      "crawler3dDamageStates": "{\"drain_mast\":\"intact\",\"tracks\":\"intact\",\"capacitor_bank\":\"intact\"}",
+      "dredgeQueen3dState": "lite",
+      "dredgeQueen3dSource": "placeholder",
+      "dredgeQueen3dMounted": "false",
+      "dredgeQueen3dPresentation": "hidden",
+      "dredgeQueen3dDamageStates": "{\"claw\":\"intact\",\"paddle_port\":\"intact\",\"paddle_starboard\":\"intact\",\"hold\":\"intact\"}",
+      "salvageClaw3dState": "lite",
+      "salvageClaw3dSource": "placeholder",
+      "salvageClaw3dMounted": "false",
+      "salvageClaw3dPresentation": "hidden",
+      "homemaker3dState": "lite",
+      "homemaker3dSource": "placeholder",
+      "homemaker3dMounted": "false",
+      "homemaker3dPresentation": "hidden",
+      "homemaker3dDamageStates": "{\"vac\":\"intact\",\"rack\":\"intact\",\"core\":\"intact\"}",
+      "oldDigger3dState": "lite",
+      "oldDigger3dSource": "placeholder",
+      "oldDigger3dMounted": "false",
+      "oldDigger3dPresentation": "hidden",
+      "assetLoadingLabel": "the claim",
+      "assetLoadingReady": "0",
+      "assetLoadingTotal": "0",
+      "assetLoadingProgress": "0/0",
+      "assetLoadingState": "ready",
+      "engine": "three.js r184",
+      "terrain3dPilotState": "lite",
+      "terrain3dPilotRenderSource": "painted",
+      "run3dPilotState": "lite",
+      "nightPoolSurfaceSources": "0",
+      "nightPoolSurfaceMaxRadius": "0",
+      "cameraAspect": "0.46208530805687204",
+      "cssAspect": "0.46208530805687204",
+      "prospectorSkin": "stock",
+      "prospectorSheet": "stock",
+      "run3dPilotMeshes": "0",
+      "run3dPilotTriangles": "0",
+      "terrain3dPilotContract": "e2-trestle",
+      "terrain3dPilotLandmarkLoadState": "lite",
+      "terrain3dPilotHeightSource": "painted",
+      "terrain3dPilotMeshes": "0",
+      "terrain3dPilotTriangles": "0",
+      "terrain3dPilotMaterials": "0",
+      "terrain3dPilotVertices": "0",
+      "terrain3dPilotPanorama": "off",
+      "terrain3dPilotPanoramaMeshes": "0",
+      "terrain3dPilotPanoramaTriangles": "0",
+      "terrain3dPilotPanoramaMaterials": "0",
+      "terrain3dPilotPanoramaVertices": "0",
+      "heroSheet": "young",
+      "heroSkin": "stock",
+      "heroSkinSheet": "stock"
+    }
+  },
+  "heap": 37188759,
+  "gpuEstimate": {
+    "textureRgba8MipBytes": 86280351.99999999,
+    "geometryBufferBytes": 1103716,
+    "formula": "reachable scene textures: width * height * 4 * (generateMipmaps ? 4/3 : 1), deduped by source + sampler; unique geometry ArrayBuffers. Excludes cached/unreachable textures, render targets, driver overhead and depth buffers."
+  },
+  "textures": [
+    {
+      "name": "LandYacht.wheels.Intact",
+      "slot": "map",
+      "width": 1672,
+      "height": 941,
+      "mipmaps": true,
+      "estimateBytes": 8391210.666666666,
+      "source": "http://127.0.0.1:5313/assets/boss-land-yacht-Dcavh7kM-diet-1408f6b4.webp"
+    },
+    {
+      "name": "LandYacht.wheels.Damaged",
+      "slot": "map",
+      "width": 1672,
+      "height": 941,
+      "mipmaps": true,
+      "estimateBytes": 8391210.666666666,
+      "source": "http://127.0.0.1:5313/assets/boss-land-yacht-damage-BFgGAINy-diet-1408f6b4.webp"
+    },
+    {
+      "name": "LandYacht.crane.Intact",
+      "slot": "map",
+      "width": 1672,
+      "height": 941,
+      "mipmaps": true,
+      "estimateBytes": 8391210.666666666,
+      "source": "http://127.0.0.1:5313/assets/boss-land-yacht-Dcavh7kM-diet-1408f6b4.webp"
+    },
+    {
+      "name": "LandYacht.crane.Damaged",
+      "slot": "map",
+      "width": 1672,
+      "height": 941,
+      "mipmaps": true,
+      "estimateBytes": 8391210.666666666,
+      "source": "http://127.0.0.1:5313/assets/boss-land-yacht-damage-BFgGAINy-diet-1408f6b4.webp"
+    },
+    {
+      "name": "LandYacht.wheelhouse.Intact",
+      "slot": "map",
+      "width": 1672,
+      "height": 941,
+      "mipmaps": true,
+      "estimateBytes": 8391210.666666666,
+      "source": "http://127.0.0.1:5313/assets/boss-land-yacht-Dcavh7kM-diet-1408f6b4.webp"
+    },
+    {
+      "name": "LandYacht.wheelhouse.Damaged",
+      "slot": "map",
+      "width": 1672,
+      "height": 941,
+      "mipmaps": true,
+      "estimateBytes": 8391210.666666666,
+      "source": "http://127.0.0.1:5313/assets/boss-land-yacht-damage-BFgGAINy-diet-1408f6b4.webp"
+    },
+    {
+      "name": "LandYacht.WreckSalvage",
+      "slot": "map",
+      "width": 1672,
+      "height": 941,
+      "mipmaps": true,
+      "estimateBytes": 8391210.666666666,
+      "source": "http://127.0.0.1:5313/assets/boss-land-yacht-damage-BFgGAINy-diet-1408f6b4.webp"
+    },
+    {
+      "name": "TerrainVistaRing",
+      "slot": "map",
+      "width": 448,
+      "height": 1792,
+      "mipmaps": true,
+      "estimateBytes": 4281685.333333333,
+      "source": null
+    },
+    {
+      "name": "GeneratedHeroHomesteader",
+      "slot": "map",
+      "width": 256,
+      "height": 2304,
+      "mipmaps": true,
+      "estimateBytes": 3145728,
+      "source": null
+    },
+    {
+      "name": "ProspectorSprite",
+      "slot": "map",
+      "width": 256,
+      "height": 2048,
+      "mipmaps": true,
+      "estimateBytes": 2796202.6666666665,
+      "source": null
+    },
+    {
+      "name": "EnemyPool",
+      "slot": "map",
+      "width": 880,
+      "height": 460,
+      "mipmaps": true,
+      "estimateBytes": 2158933.333333333,
+      "source": "http://127.0.0.1:5313/assets/boss-railcar-boiler-BNTrSQi1-diet-1408f6b4.png"
+    },
+    {
+      "name": "EnemyPool",
+      "slot": "map",
+      "width": 620,
+      "height": 470,
+      "mipmaps": true,
+      "estimateBytes": 1554133.3333333333,
+      "source": "http://127.0.0.1:5313/assets/boss-railcar-cabin-BRZQgD2N-diet-1408f6b4.png"
+    },
+    {
+      "name": "GeneratedClaimJumperSprites",
+      "slot": "map",
+      "width": 512,
+      "height": 512,
+      "mipmaps": true,
+      "estimateBytes": 1398101.3333333333,
+      "source": "http://127.0.0.1:5313/assets/char-bandit-base-sheet-walk8-r0c0-DSwoRvTv-diet-1408f6b4.png"
+    },
+    {
+      "name": "GeneratedClaimJumperThiefSprites",
+      "slot": "map",
+      "width": 512,
+      "height": 512,
+      "mipmaps": true,
+      "estimateBytes": 1398101.3333333333,
+      "source": "http://127.0.0.1:5313/assets/char-bandit-thief-sheet-walk8-r0c0-CNb7qmc0-diet-1408f6b4.png"
+    },
+    {
+      "name": "EnemyPool",
+      "slot": "map",
+      "width": 540,
+      "height": 340,
+      "mipmaps": true,
+      "estimateBytes": 979200,
+      "source": "http://127.0.0.1:5313/assets/boss-railcar-wheels-damaged-B6UYjAE1-diet-1408f6b4.png"
+    },
+    {
+      "name": "EnemyPool",
+      "slot": "map",
+      "width": 510,
+      "height": 355,
+      "mipmaps": true,
+      "estimateBytes": 965600,
+      "source": "http://127.0.0.1:5313/assets/boss-railcar-boiler-damaged-DdJEokAk-diet-1408f6b4.png"
+    },
+    {
+      "name": "EnemyPool",
+      "slot": "map",
+      "width": 510,
+      "height": 350,
+      "mipmaps": true,
+      "estimateBytes": 952000,
+      "source": "http://127.0.0.1:5313/assets/boss-railcar-cabin-damaged-GEtUhozX-diet-1408f6b4.png"
+    },
+    {
+      "name": "GeneratedGoldSeamSprites",
+      "slot": "map",
+      "width": 384,
+      "height": 384,
+      "mipmaps": true,
+      "estimateBytes": 786432,
+      "source": "http://127.0.0.1:5313/assets/node-gold-seam-CnWo61Jp-diet-1408f6b4.png"
+    },
+    {
+      "name": "PalisadePortraitSigns",
+      "slot": "map",
+      "width": 384,
+      "height": 384,
+      "mipmaps": true,
+      "estimateBytes": 786432,
+      "source": "http://127.0.0.1:5313/assets/bld-palisade-CqelEfI1-diet-1408f6b4.png"
+    },
+    {
+      "name": "SluicePortraitSigns",
+      "slot": "map",
+      "width": 384,
+      "height": 384,
+      "mipmaps": true,
+      "estimateBytes": 786432,
+      "source": "http://127.0.0.1:5313/assets/bld-sluice-works-CFTm3u73-diet-1408f6b4.png"
+    },
+    {
+      "name": "StockpilePortraitSigns",
+      "slot": "map",
+      "width": 384,
+      "height": 384,
+      "mipmaps": true,
+      "estimateBytes": 786432,
+      "source": "http://127.0.0.1:5313/assets/bld-stockpile-yard-DZqfsp0_-diet-1408f6b4.png"
+    },
+    {
+      "name": "TurretPortraitSigns",
+      "slot": "map",
+      "width": 384,
+      "height": 384,
+      "mipmaps": true,
+      "estimateBytes": 786432,
+      "source": "http://127.0.0.1:5313/assets/bld-signal-turret-D1uYrKuR-diet-1408f6b4.png"
+    },
+    {
+      "name": "AssayOfficePortraitSign",
+      "slot": "map",
+      "width": 384,
+      "height": 384,
+      "mipmaps": true,
+      "estimateBytes": 786432,
+      "source": "http://127.0.0.1:5313/assets/bld-claim-office-CyCDgQ6J-diet-1408f6b4.png"
+    },
+    {
+      "name": "EnemyPool",
+      "slot": "map",
+      "width": 600,
+      "height": 230,
+      "mipmaps": true,
+      "estimateBytes": 736000,
+      "source": "http://127.0.0.1:5313/assets/boss-railcar-wheels-Dt5ePw37-diet-1408f6b4.png"
+    },
+    {
+      "name": "Vfx",
+      "slot": "map",
+      "width": 768,
+      "height": 96,
+      "mipmaps": true,
+      "estimateBytes": 393216,
+      "source": null
+    },
+    {
+      "name": "Homemaker9000.Placeholder",
+      "slot": "map",
+      "width": 384,
+      "height": 128,
+      "mipmaps": true,
+      "estimateBytes": 262144,
+      "source": null
+    },
+    {
+      "name": "Vfx",
+      "slot": "map",
+      "width": 384,
+      "height": 96,
+      "mipmaps": true,
+      "estimateBytes": 196608,
+      "source": null
+    },
+    {
+      "name": "Sprite",
+      "slot": "map",
+      "width": 384,
+      "height": 96,
+      "mipmaps": true,
+      "estimateBytes": 196608,
+      "source": null
+    },
+    {
+      "name": "Sprite",
+      "slot": "map",
+      "width": 384,
+      "height": 96,
+      "mipmaps": true,
+      "estimateBytes": 196608,
+      "source": null
+    },
+    {
+      "name": "Sprite",
+      "slot": "map",
+      "width": 384,
+      "height": 96,
+      "mipmaps": true,
+      "estimateBytes": 196608,
+      "source": null
+    },
+    {
+      "name": "Sprite",
+      "slot": "map",
+      "width": 320,
+      "height": 96,
+      "mipmaps": true,
+      "estimateBytes": 163840,
+      "source": null
+    },
+    {
+      "name": "Vfx",
+      "slot": "map",
+      "width": 192,
+      "height": 96,
+      "mipmaps": true,
+      "estimateBytes": 98304,
+      "source": null
+    },
+    {
+      "name": "Vfx",
+      "slot": "map",
+      "width": 192,
+      "height": 96,
+      "mipmaps": true,
+      "estimateBytes": 98304,
+      "source": null
+    },
+    {
+      "name": "Vfx",
+      "slot": "map",
+      "width": 192,
+      "height": 96,
+      "mipmaps": true,
+      "estimateBytes": 98304,
+      "source": null
+    },
+    {
+      "name": "Vfx",
+      "slot": "map",
+      "width": 192,
+      "height": 96,
+      "mipmaps": true,
+      "estimateBytes": 98304,
+      "source": null
+    },
+    {
+      "name": "Vfx",
+      "slot": "map",
+      "width": 192,
+      "height": 96,
+      "mipmaps": true,
+      "estimateBytes": 98304,
+      "source": null
+    },
+    {
+      "name": "Vfx",
+      "slot": "map",
+      "width": 192,
+      "height": 96,
+      "mipmaps": true,
+      "estimateBytes": 98304,
+      "source": null
+    },
+    {
+      "name": "Mesh",
+      "slot": "map",
+      "width": 128,
+      "height": 128,
+      "mipmaps": true,
+      "estimateBytes": 87381.33333333333,
+      "source": null
+    },
+    {
+      "name": "Mesh",
+      "slot": "map",
+      "width": 128,
+      "height": 128,
+      "mipmaps": true,
+      "estimateBytes": 87381.33333333333,
+      "source": null
+    },
+    {
+      "name": "DetailScatter.wagon_ruts",
+      "slot": "map",
+      "width": 256,
+      "height": 64,
+      "mipmaps": true,
+      "estimateBytes": 87381.33333333333,
+      "source": null
+    }
+  ],
+  "objects": [
+    {
+      "name": "BeamRelayTurretTransforms",
+      "parent": "E7Arsenal",
+      "kind": "instanced",
+      "visible": false,
+      "frustumCulled": false,
+      "instances": 4,
+      "capacity": 4,
+      "triangles": 48,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "SignalJammerDeployable",
+      "parent": "E7Arsenal",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 40,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "EnemyHandLanternBulbs",
+      "parent": "GoldenHourLightRig",
+      "kind": "instanced",
+      "visible": true,
+      "frustumCulled": false,
+      "instances": 0,
+      "capacity": 32,
+      "triangles": 80,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "EnemyHandLanternCones",
+      "parent": "GoldenHourLightRig",
+      "kind": "instanced",
+      "visible": true,
+      "frustumCulled": false,
+      "instances": 0,
+      "capacity": 32,
+      "triangles": 12,
+      "transparent": true,
+      "renderOrder": 2.01,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "GeneratedSpriteBlobShadows.3828677f-1326-4698-9d02-99aa5382dfbb",
+      "parent": "GeneratedSpriteBlobShadows",
+      "kind": "instanced",
+      "visible": true,
+      "frustumCulled": false,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 28,
+      "transparent": true,
+      "renderOrder": 0.5,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "GeneratedSpriteBlobShadows.200303a1-9d66-4c14-9a2e-4bc6ccc00c18",
+      "parent": "GeneratedSpriteBlobShadows",
+      "kind": "instanced",
+      "visible": true,
+      "frustumCulled": false,
+      "instances": 0,
+      "capacity": 96,
+      "triangles": 28,
+      "transparent": true,
+      "renderOrder": 0.5,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "GeneratedSpriteBlobShadows.810d2611-8447-473c-835f-21492ad64e86",
+      "parent": "GeneratedSpriteBlobShadows",
+      "kind": "instanced",
+      "visible": true,
+      "frustumCulled": false,
+      "instances": 0,
+      "capacity": 6,
+      "triangles": 28,
+      "transparent": true,
+      "renderOrder": 0.5,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "GeneratedSpriteBlobShadows.ee24f3d4-fa7c-49cc-a320-bc6108d12449",
+      "parent": "GeneratedSpriteBlobShadows",
+      "kind": "instanced",
+      "visible": true,
+      "frustumCulled": false,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 28,
+      "transparent": true,
+      "renderOrder": 0.5,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "TerrainVistaRing",
+      "parent": "",
+      "kind": "Mesh",
+      "visible": true,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 896,
+      "transparent": false,
+      "renderOrder": -1,
+      "trianglesIntersectingFrustum": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "TerrainContinuousGroundMesh",
+      "parent": "",
+      "kind": "Mesh",
+      "visible": true,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 4608,
+      "transparent": false,
+      "renderOrder": 0,
+      "trianglesIntersectingFrustum": 326,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "Mesh",
+      "parent": "",
+      "kind": "Mesh",
+      "visible": true,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 256,
+      "transparent": true,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "Mesh",
+      "parent": "",
+      "kind": "Mesh",
+      "visible": true,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 2,
+      "transparent": true,
+      "renderOrder": 1,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "FordSteppingStones",
+      "parent": "",
+      "kind": "instanced",
+      "visible": true,
+      "frustumCulled": true,
+      "instances": 7,
+      "capacity": 7,
+      "triangles": 36,
+      "transparent": false,
+      "renderOrder": 2,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "Mesh",
+      "parent": "",
+      "kind": "Mesh",
+      "visible": true,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 36,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 5,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "Mesh",
+      "parent": "",
+      "kind": "Mesh",
+      "visible": true,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 28,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 8,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "Mesh",
+      "parent": "",
+      "kind": "Mesh",
+      "visible": true,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 12,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 4,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "Mesh",
+      "parent": "",
+      "kind": "Mesh",
+      "visible": true,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 8,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 2,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "Mesh",
+      "parent": "",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 48,
+      "transparent": true,
+      "renderOrder": 1,
+      "objects": 12,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "DamSurgeEvent",
+      "parent": "DamSurgeEvent",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 12,
+      "transparent": true,
+      "renderOrder": 2,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "Line",
+      "parent": "",
+      "kind": "Line",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 4.333333333333333,
+      "transparent": true,
+      "renderOrder": 0,
+      "objects": 3,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "Mesh",
+      "parent": "",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 12,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 38,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "RailPath.Rails",
+      "parent": "RailPath",
+      "kind": "instanced",
+      "visible": true,
+      "frustumCulled": false,
+      "instances": 320,
+      "capacity": 320,
+      "triangles": 12,
+      "transparent": false,
+      "renderOrder": 1,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "RailPath.Sleepers",
+      "parent": "RailPath",
+      "kind": "instanced",
+      "visible": true,
+      "frustumCulled": false,
+      "instances": 160,
+      "capacity": 160,
+      "triangles": 12,
+      "transparent": false,
+      "renderOrder": 1,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "DetailScatter.rocks",
+      "parent": "DetailScatter",
+      "kind": "instanced",
+      "visible": false,
+      "frustumCulled": false,
+      "instances": 0,
+      "capacity": 1,
+      "triangles": 36,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "DetailScatter.stumps",
+      "parent": "DetailScatter",
+      "kind": "instanced",
+      "visible": false,
+      "frustumCulled": false,
+      "instances": 0,
+      "capacity": 1,
+      "triangles": 28,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "DetailScatter.dry_grass",
+      "parent": "DetailScatter",
+      "kind": "instanced",
+      "visible": false,
+      "frustumCulled": false,
+      "instances": 0,
+      "capacity": 1,
+      "triangles": 4,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "DetailScatter.wagon_ruts",
+      "parent": "DetailScatter",
+      "kind": "instanced",
+      "visible": false,
+      "frustumCulled": false,
+      "instances": 0,
+      "capacity": 1,
+      "triangles": 2,
+      "transparent": true,
+      "renderOrder": 1,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "DetailScatter.claim_posts",
+      "parent": "DetailScatter",
+      "kind": "instanced",
+      "visible": false,
+      "frustumCulled": false,
+      "instances": 0,
+      "capacity": 1,
+      "triangles": 12,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "DetailScatter.cactus",
+      "parent": "DetailScatter",
+      "kind": "instanced",
+      "visible": false,
+      "frustumCulled": false,
+      "instances": 0,
+      "capacity": 1,
+      "triangles": 28,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "DetailScatter.reeds",
+      "parent": "DetailScatter",
+      "kind": "instanced",
+      "visible": false,
+      "frustumCulled": false,
+      "instances": 0,
+      "capacity": 1,
+      "triangles": 6,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "DetailScatter.contactShadows",
+      "parent": "DetailScatter",
+      "kind": "instanced",
+      "visible": false,
+      "frustumCulled": false,
+      "instances": 0,
+      "capacity": 1,
+      "triangles": 14,
+      "transparent": true,
+      "renderOrder": 0.5,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "GoldSeamNuggetInstances",
+      "parent": "GoldSeamVisualBatch",
+      "kind": "instanced",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 4,
+      "capacity": 4,
+      "triangles": 180,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "GoldSeamGlintInstances",
+      "parent": "GoldSeamVisualBatch",
+      "kind": "instanced",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 4,
+      "capacity": 4,
+      "triangles": 8,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "GeneratedGoldSeamSprites",
+      "parent": "GeneratedGoldSeamSprites",
+      "kind": "Sprite",
+      "visible": true,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 2,
+      "transparent": true,
+      "renderOrder": 2,
+      "objects": 3,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "GeneratedGoldSeamSprites",
+      "parent": "GeneratedGoldSeamSprites",
+      "kind": "Sprite",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 2,
+      "transparent": true,
+      "renderOrder": 2,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "GoldPanProgressRing",
+      "parent": "GoldPanProgressRing",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 96,
+      "transparent": true,
+      "renderOrder": 1,
+      "objects": 2,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "SentryBeaconLegs",
+      "parent": "SentryBeaconPool",
+      "kind": "instanced",
+      "visible": true,
+      "frustumCulled": false,
+      "instances": 18,
+      "capacity": 18,
+      "triangles": 24,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "SentryBeaconPool",
+      "parent": "SentryBeaconPool",
+      "kind": "instanced",
+      "visible": true,
+      "frustumCulled": false,
+      "instances": 6,
+      "capacity": 6,
+      "triangles": 48,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "SentryBeaconPool",
+      "parent": "SentryBeaconPool",
+      "kind": "instanced",
+      "visible": true,
+      "frustumCulled": false,
+      "instances": 6,
+      "capacity": 6,
+      "triangles": 48,
+      "transparent": true,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "SentryBeaconPool",
+      "parent": "SentryBeaconPool",
+      "kind": "instanced",
+      "visible": true,
+      "frustumCulled": false,
+      "instances": 6,
+      "capacity": 6,
+      "triangles": 168,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "PalisadePosts",
+      "parent": "PalisadePool",
+      "kind": "instanced",
+      "visible": true,
+      "frustumCulled": false,
+      "instances": 96,
+      "capacity": 96,
+      "triangles": 12,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "PalisadeRails",
+      "parent": "PalisadePool",
+      "kind": "instanced",
+      "visible": true,
+      "frustumCulled": false,
+      "instances": 96,
+      "capacity": 96,
+      "triangles": 12,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "PalisadeBraces",
+      "parent": "PalisadePool",
+      "kind": "instanced",
+      "visible": true,
+      "frustumCulled": false,
+      "instances": 48,
+      "capacity": 48,
+      "triangles": 12,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "PalisadePortraitSigns",
+      "parent": "PalisadePool",
+      "kind": "instanced",
+      "visible": true,
+      "frustumCulled": false,
+      "instances": 48,
+      "capacity": 48,
+      "triangles": 2,
+      "transparent": true,
+      "renderOrder": 2.01,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "SluiceTroughs",
+      "parent": "SluicePool",
+      "kind": "instanced",
+      "visible": false,
+      "frustumCulled": false,
+      "instances": 3,
+      "capacity": 3,
+      "triangles": 12,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "SluiceWaterChannels",
+      "parent": "SluicePool",
+      "kind": "instanced",
+      "visible": false,
+      "frustumCulled": false,
+      "instances": 3,
+      "capacity": 3,
+      "triangles": 12,
+      "transparent": true,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "SluiceTimberRails",
+      "parent": "SluicePool",
+      "kind": "instanced",
+      "visible": false,
+      "frustumCulled": false,
+      "instances": 6,
+      "capacity": 6,
+      "triangles": 12,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "SluiceTimberLegs",
+      "parent": "SluicePool",
+      "kind": "instanced",
+      "visible": false,
+      "frustumCulled": false,
+      "instances": 12,
+      "capacity": 12,
+      "triangles": 12,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "SluiceWheelRims",
+      "parent": "SluicePool",
+      "kind": "instanced",
+      "visible": false,
+      "frustumCulled": false,
+      "instances": 3,
+      "capacity": 3,
+      "triangles": 192,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "SluiceWheelSpokesA",
+      "parent": "SluicePool",
+      "kind": "instanced",
+      "visible": false,
+      "frustumCulled": false,
+      "instances": 3,
+      "capacity": 3,
+      "triangles": 12,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "SluiceWheelSpokesB",
+      "parent": "SluicePool",
+      "kind": "instanced",
+      "visible": false,
+      "frustumCulled": false,
+      "instances": 3,
+      "capacity": 3,
+      "triangles": 12,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "SluicePortraitSigns",
+      "parent": "SluicePool",
+      "kind": "instanced",
+      "visible": false,
+      "frustumCulled": false,
+      "instances": 3,
+      "capacity": 3,
+      "triangles": 2,
+      "transparent": true,
+      "renderOrder": 2.01,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "StockpileTimberCribs",
+      "parent": "StockpilePool",
+      "kind": "instanced",
+      "visible": false,
+      "frustumCulled": false,
+      "instances": 2,
+      "capacity": 2,
+      "triangles": 12,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "StockpileStrongboxes",
+      "parent": "StockpilePool",
+      "kind": "instanced",
+      "visible": false,
+      "frustumCulled": false,
+      "instances": 2,
+      "capacity": 2,
+      "triangles": 12,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "StockpileGoldNuggets",
+      "parent": "StockpilePool",
+      "kind": "instanced",
+      "visible": false,
+      "frustumCulled": false,
+      "instances": 2,
+      "capacity": 2,
+      "triangles": 180,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "StockpilePortraitSigns",
+      "parent": "StockpilePool",
+      "kind": "instanced",
+      "visible": false,
+      "frustumCulled": false,
+      "instances": 2,
+      "capacity": 2,
+      "triangles": 2,
+      "transparent": true,
+      "renderOrder": 2.01,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "BoilerHousePlaceholder",
+      "parent": "BoilerHousePool",
+      "kind": "instanced",
+      "visible": false,
+      "frustumCulled": false,
+      "instances": 3,
+      "capacity": 3,
+      "triangles": 12,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "BoilerHouseBrassDrum",
+      "parent": "BoilerHousePool",
+      "kind": "instanced",
+      "visible": false,
+      "frustumCulled": false,
+      "instances": 3,
+      "capacity": 3,
+      "triangles": 56,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "BoilerHouseStack",
+      "parent": "BoilerHousePool",
+      "kind": "instanced",
+      "visible": false,
+      "frustumCulled": false,
+      "instances": 3,
+      "capacity": 3,
+      "triangles": 40,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "BoilerHouseSign",
+      "parent": "BoilerHousePool",
+      "kind": "instanced",
+      "visible": false,
+      "frustumCulled": false,
+      "instances": 3,
+      "capacity": 3,
+      "triangles": 12,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "BoilerHouseSteamPlume",
+      "parent": "BoilerHousePool",
+      "kind": "instanced",
+      "visible": false,
+      "frustumCulled": false,
+      "instances": 3,
+      "capacity": 3,
+      "triangles": 140,
+      "transparent": true,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "TurretTimberBases",
+      "parent": "TurretPool",
+      "kind": "instanced",
+      "visible": false,
+      "frustumCulled": false,
+      "instances": 4,
+      "capacity": 4,
+      "triangles": 12,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "TurretTripodLegs",
+      "parent": "TurretPool",
+      "kind": "instanced",
+      "visible": false,
+      "frustumCulled": false,
+      "instances": 12,
+      "capacity": 12,
+      "triangles": 24,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "TurretSignalMasts",
+      "parent": "TurretPool",
+      "kind": "instanced",
+      "visible": false,
+      "frustumCulled": false,
+      "instances": 4,
+      "capacity": 4,
+      "triangles": 100,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "TurretPortraitSigns",
+      "parent": "TurretPool",
+      "kind": "instanced",
+      "visible": false,
+      "frustumCulled": false,
+      "instances": 4,
+      "capacity": 4,
+      "triangles": 2,
+      "transparent": true,
+      "renderOrder": 2.01,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "LanternPostPool",
+      "parent": "LanternPostPool",
+      "kind": "instanced",
+      "visible": true,
+      "frustumCulled": false,
+      "instances": 16,
+      "capacity": 16,
+      "triangles": 24,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "LanternPostPool",
+      "parent": "LanternPostPool",
+      "kind": "instanced",
+      "visible": true,
+      "frustumCulled": false,
+      "instances": 16,
+      "capacity": 16,
+      "triangles": 12,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 2,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "LanternPostPool",
+      "parent": "LanternPostPool",
+      "kind": "instanced",
+      "visible": false,
+      "frustumCulled": false,
+      "instances": 16,
+      "capacity": 16,
+      "triangles": 168,
+      "transparent": true,
+      "renderOrder": 2,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "DecoyShedPool",
+      "parent": "DecoyShedPool",
+      "kind": "instanced",
+      "visible": true,
+      "frustumCulled": false,
+      "instances": 16,
+      "capacity": 16,
+      "triangles": 24,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "DecoyShedPool",
+      "parent": "DecoyShedPool",
+      "kind": "instanced",
+      "visible": true,
+      "frustumCulled": false,
+      "instances": 16,
+      "capacity": 16,
+      "triangles": 12,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 2,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "DecoyShedPool",
+      "parent": "DecoyShedPool",
+      "kind": "instanced",
+      "visible": false,
+      "frustumCulled": false,
+      "instances": 16,
+      "capacity": 16,
+      "triangles": 168,
+      "transparent": true,
+      "renderOrder": 2,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "DecoyShedPool",
+      "parent": "DecoyShedPool",
+      "kind": "instanced",
+      "visible": true,
+      "frustumCulled": true,
+      "instances": 16,
+      "capacity": 16,
+      "triangles": 12,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 2,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "CapacitorBankPool",
+      "parent": "CapacitorBankPool",
+      "kind": "instanced",
+      "visible": true,
+      "frustumCulled": false,
+      "instances": 16,
+      "capacity": 16,
+      "triangles": 24,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "CapacitorBankPool",
+      "parent": "CapacitorBankPool",
+      "kind": "instanced",
+      "visible": true,
+      "frustumCulled": false,
+      "instances": 16,
+      "capacity": 16,
+      "triangles": 12,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 2,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "CapacitorBankPool",
+      "parent": "CapacitorBankPool",
+      "kind": "instanced",
+      "visible": false,
+      "frustumCulled": false,
+      "instances": 16,
+      "capacity": 16,
+      "triangles": 168,
+      "transparent": true,
+      "renderOrder": 2,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "CapacitorBankPool",
+      "parent": "CapacitorBankPool",
+      "kind": "instanced",
+      "visible": true,
+      "frustumCulled": true,
+      "instances": 16,
+      "capacity": 16,
+      "triangles": 12,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 2,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "AssayOfficeTimberShell",
+      "parent": "",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 12,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "AssayOfficeBrassRoof",
+      "parent": "",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 12,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "AssayOfficePlaqueFrame",
+      "parent": "",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 12,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "AssayOfficeTimberLintel",
+      "parent": "",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 12,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "AssayOfficePortraitSign",
+      "parent": "",
+      "kind": "instanced",
+      "visible": false,
+      "frustumCulled": false,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 2,
+      "transparent": true,
+      "renderOrder": 2.01,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "BuildSystem",
+      "parent": "BuildSystem",
+      "kind": "instanced",
+      "visible": false,
+      "frustumCulled": false,
+      "instances": 82,
+      "capacity": 82,
+      "triangles": 24,
+      "transparent": false,
+      "renderOrder": 1,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "BuildSystem",
+      "parent": "BuildSystem",
+      "kind": "instanced",
+      "visible": false,
+      "frustumCulled": false,
+      "instances": 164,
+      "capacity": 164,
+      "triangles": 12,
+      "transparent": true,
+      "renderOrder": 4,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "BuildSystem",
+      "parent": "BuildSystem",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 96,
+      "transparent": true,
+      "renderOrder": 1,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "Mesh",
+      "parent": "",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 24,
+      "transparent": true,
+      "renderOrder": 2,
+      "objects": 4,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "Mesh",
+      "parent": "",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 48,
+      "transparent": true,
+      "renderOrder": 2,
+      "objects": 5,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "Mesh",
+      "parent": "",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 168,
+      "transparent": true,
+      "renderOrder": 2,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "Mesh",
+      "parent": "",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 12,
+      "transparent": true,
+      "renderOrder": 2,
+      "objects": 16,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "Mesh",
+      "parent": "",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 36,
+      "transparent": true,
+      "renderOrder": 2,
+      "objects": 4,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "Mesh",
+      "parent": "",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 56,
+      "transparent": true,
+      "renderOrder": 2,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "Mesh",
+      "parent": "",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 40,
+      "transparent": true,
+      "renderOrder": 2,
+      "objects": 3,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "CoalSeams",
+      "parent": "PressureSystem",
+      "kind": "instanced",
+      "visible": true,
+      "frustumCulled": true,
+      "instances": 3,
+      "capacity": 3,
+      "triangles": 36,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "CoalSurveyMarks",
+      "parent": "PressureSystem",
+      "kind": "instanced",
+      "visible": true,
+      "frustumCulled": true,
+      "instances": 3,
+      "capacity": 3,
+      "triangles": 36,
+      "transparent": true,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "HarpoonBallista",
+      "parent": "HarpoonBallista",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 40,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "HarpoonBallista",
+      "parent": "HarpoonBallista",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 32,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "HarpoonBallista",
+      "parent": "HarpoonBallista",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 12,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "DepthChargeRack",
+      "parent": "DepthChargeRack",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 12,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "DepthChargeLobber",
+      "parent": "DepthChargeLobber",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 32,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "HalfLifeCaltropsField0",
+      "parent": "HalfLifeCaltropsField0",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 8,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 8,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "HalfLifeDecayDial",
+      "parent": "HalfLifeCaltropsField0",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 56,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "HalfLifeCaltropsField1",
+      "parent": "HalfLifeCaltropsField1",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 8,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 8,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "HalfLifeDecayDial",
+      "parent": "HalfLifeCaltropsField1",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 56,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "HalfLifeCaltropsField2",
+      "parent": "HalfLifeCaltropsField2",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 8,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 8,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "HalfLifeDecayDial",
+      "parent": "HalfLifeCaltropsField2",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 56,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "SunlineBeamFocusedLight",
+      "parent": "E6ArsenalPresentation",
+      "kind": "Line",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 0.6666666666666666,
+      "transparent": true,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "SunlineMountTrackingMirrorHeads",
+      "parent": "E6ArsenalPresentation",
+      "kind": "instanced",
+      "visible": false,
+      "frustumCulled": false,
+      "instances": 4,
+      "capacity": 4,
+      "triangles": 72,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "TongsThrownUnderhandPresentation",
+      "parent": "TongsThrownUnderhandPresentation",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 12,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 2,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "decay-field-east",
+      "parent": "E6TileConsumerSystem",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 12,
+      "transparent": true,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "decay-field-southeast",
+      "parent": "E6TileConsumerSystem",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 12,
+      "transparent": true,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "night-vein-1",
+      "parent": "E6TileConsumerSystem",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 8,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "night-vein-2",
+      "parent": "E6TileConsumerSystem",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 8,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "night-vein-3",
+      "parent": "E6TileConsumerSystem",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 8,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "night-vein-4",
+      "parent": "E6TileConsumerSystem",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 8,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "StormFenceField0",
+      "parent": "StormFenceField0",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 384,
+      "transparent": true,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "StormFenceField0",
+      "parent": "StormFenceField0",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 24,
+      "transparent": true,
+      "renderOrder": 0,
+      "objects": 8,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "StormFenceField1",
+      "parent": "StormFenceField1",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 384,
+      "transparent": true,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "StormFenceField1",
+      "parent": "StormFenceField1",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 24,
+      "transparent": true,
+      "renderOrder": 0,
+      "objects": 8,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "StormFenceField2",
+      "parent": "StormFenceField2",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 384,
+      "transparent": true,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "StormFenceField2",
+      "parent": "StormFenceField2",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 24,
+      "transparent": true,
+      "renderOrder": 0,
+      "objects": 8,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "StormDrawWeatherBeam",
+      "parent": "E9ArsenalPresentation",
+      "kind": "Line",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 0.6666666666666666,
+      "transparent": true,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "StormLanceWeatherLenses",
+      "parent": "E9ArsenalPresentation",
+      "kind": "instanced",
+      "visible": false,
+      "frustumCulled": false,
+      "instances": 4,
+      "capacity": 4,
+      "triangles": 32,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "TerraformCannonEarthClod",
+      "parent": "E9ArsenalPresentation",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 36,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "canal-stage-c1",
+      "parent": "canal-stage-c1",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 12,
+      "transparent": true,
+      "renderOrder": 0,
+      "objects": 3,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "canal-stage-c2",
+      "parent": "canal-stage-c2",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 12,
+      "transparent": true,
+      "renderOrder": 0,
+      "objects": 3,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "canal-stage-c3",
+      "parent": "canal-stage-c3",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 12,
+      "transparent": true,
+      "renderOrder": 0,
+      "objects": 3,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "IcePack-1",
+      "parent": "E9CanalSystem",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 12,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "IcePack-2",
+      "parent": "E9CanalSystem",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 12,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "IcePack-3",
+      "parent": "E9CanalSystem",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 12,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "IcePack-4",
+      "parent": "E9CanalSystem",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 12,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "CanalWetSegment-1",
+      "parent": "C3CanalWaterRenderOnly",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 12,
+      "transparent": true,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "CanalWetSegment-2",
+      "parent": "C3CanalWaterRenderOnly",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 12,
+      "transparent": true,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "CanalWetSegment-3",
+      "parent": "C3CanalWaterRenderOnly",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 12,
+      "transparent": true,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "CanalWetSegment-4",
+      "parent": "C3CanalWaterRenderOnly",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 12,
+      "transparent": true,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "CanalWetSegment-5",
+      "parent": "C3CanalWaterRenderOnly",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 12,
+      "transparent": true,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "DustDevilTelegraph",
+      "parent": "E9CanalSystem",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 64,
+      "transparent": true,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "DustDevilWanderColumn",
+      "parent": "DustDevilWanderColumn",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 12,
+      "transparent": true,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "DustDevilWanderColumn",
+      "parent": "DustDevilWanderColumn",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 240,
+      "transparent": true,
+      "renderOrder": 0,
+      "objects": 3,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "MegaprojectSiteBase",
+      "parent": "MegaprojectSite",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 12,
+      "transparent": true,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "MegaprojectStage-1",
+      "parent": "MegaprojectSite",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 12,
+      "transparent": true,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "MegaprojectStage-2",
+      "parent": "MegaprojectSite",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 12,
+      "transparent": true,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "MegaprojectStage-3",
+      "parent": "MegaprojectSite",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 12,
+      "transparent": true,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "BaronStandardPole",
+      "parent": "BaronStandard",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 32,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "BaronStandardCloth",
+      "parent": "BaronStandard",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 2,
+      "transparent": true,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "BaronRocketCartRailLeft",
+      "parent": "BaronRocketCart",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 12,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "BaronRocketCartRailRight",
+      "parent": "BaronRocketCart",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 12,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "BaronRocketCartRocket",
+      "parent": "BaronRocketCart",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 40,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 3,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "BaronRocketCartFuse",
+      "parent": "BaronRocketCart",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 80,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 3,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "SparkRigBoltPool",
+      "parent": "SparkRigBoltPool",
+      "kind": "instanced",
+      "visible": true,
+      "frustumCulled": false,
+      "instances": 128,
+      "capacity": 128,
+      "triangles": 12,
+      "transparent": true,
+      "renderOrder": 3,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "SparkRigBoltPool",
+      "parent": "SparkRigBoltPool",
+      "kind": "instanced",
+      "visible": true,
+      "frustumCulled": false,
+      "instances": 128,
+      "capacity": 128,
+      "triangles": 100,
+      "transparent": false,
+      "renderOrder": 3,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "BlastChargePool",
+      "parent": "BlastChargePool",
+      "kind": "LineSegments",
+      "visible": false,
+      "frustumCulled": false,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 181.33333333333334,
+      "transparent": true,
+      "renderOrder": 3,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "BlastChargePool",
+      "parent": "BlastChargePool",
+      "kind": "instanced",
+      "visible": false,
+      "frustumCulled": false,
+      "instances": 8,
+      "capacity": 8,
+      "triangles": 36,
+      "transparent": false,
+      "renderOrder": 3,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "BlastAimReticle",
+      "parent": "",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 80,
+      "transparent": true,
+      "renderOrder": 1,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "XpMotePool",
+      "parent": "XpMotePool",
+      "kind": "instanced",
+      "visible": true,
+      "frustumCulled": false,
+      "instances": 64,
+      "capacity": 64,
+      "triangles": 4,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "GoldPickupPool",
+      "parent": "GoldPickupPool",
+      "kind": "instanced",
+      "visible": true,
+      "frustumCulled": false,
+      "instances": 24,
+      "capacity": 24,
+      "triangles": 36,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "CombatVfx",
+      "parent": "CombatVfx",
+      "kind": "instanced",
+      "visible": true,
+      "frustumCulled": false,
+      "instances": 16,
+      "capacity": 16,
+      "triangles": 18,
+      "transparent": true,
+      "renderOrder": 3,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "CombatVfx",
+      "parent": "CombatVfx",
+      "kind": "instanced",
+      "visible": true,
+      "frustumCulled": false,
+      "instances": 20,
+      "capacity": 20,
+      "triangles": 12,
+      "transparent": true,
+      "renderOrder": 3,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "CombatVfx",
+      "parent": "CombatVfx",
+      "kind": "instanced",
+      "visible": false,
+      "frustumCulled": false,
+      "instances": 4,
+      "capacity": 4,
+      "triangles": 56,
+      "transparent": true,
+      "renderOrder": 3,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "FreedWalker-base",
+      "parent": "FreedWalker-base",
+      "kind": "Sprite",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 2,
+      "transparent": true,
+      "renderOrder": 2,
+      "objects": 10,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "FreedWalker-thief",
+      "parent": "FreedWalker-thief",
+      "kind": "Sprite",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 2,
+      "transparent": true,
+      "renderOrder": 2,
+      "objects": 10,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "FreedWalker-rail_tough",
+      "parent": "FreedWalker-rail_tough",
+      "kind": "Sprite",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 2,
+      "transparent": true,
+      "renderOrder": 2,
+      "objects": 10,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "FreedWalker-steam_wrecker",
+      "parent": "FreedWalker-steam_wrecker",
+      "kind": "Sprite",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 2,
+      "transparent": true,
+      "renderOrder": 2,
+      "objects": 10,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "FreedWalker-coal_thief",
+      "parent": "FreedWalker-coal_thief",
+      "kind": "Sprite",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 2,
+      "transparent": true,
+      "renderOrder": 2,
+      "objects": 10,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "FreedWalkerVfx",
+      "parent": "FreedWalkerVfx",
+      "kind": "instanced",
+      "visible": false,
+      "frustumCulled": false,
+      "instances": 30,
+      "capacity": 30,
+      "triangles": 4,
+      "transparent": true,
+      "renderOrder": 2,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "FreedWalkerVfx",
+      "parent": "FreedWalkerVfx",
+      "kind": "instanced",
+      "visible": false,
+      "frustumCulled": false,
+      "instances": 20,
+      "capacity": 20,
+      "triangles": 8,
+      "transparent": true,
+      "renderOrder": 2,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "FreedWalkerVfx",
+      "parent": "FreedWalkerVfx",
+      "kind": "instanced",
+      "visible": false,
+      "frustumCulled": false,
+      "instances": 20,
+      "capacity": 20,
+      "triangles": 36,
+      "transparent": true,
+      "renderOrder": 2,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "FreedWalkerVfx",
+      "parent": "FreedWalkerVfx",
+      "kind": "instanced",
+      "visible": false,
+      "frustumCulled": false,
+      "instances": 20,
+      "capacity": 20,
+      "triangles": 12,
+      "transparent": false,
+      "renderOrder": 2.02,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "BaronVolleyVfx",
+      "parent": "BaronVolleyVfx",
+      "kind": "instanced",
+      "visible": false,
+      "frustumCulled": false,
+      "instances": 32,
+      "capacity": 32,
+      "triangles": 36,
+      "transparent": true,
+      "renderOrder": 3,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "BaronVolleyVfx",
+      "parent": "BaronVolleyVfx",
+      "kind": "instanced",
+      "visible": false,
+      "frustumCulled": false,
+      "instances": 16,
+      "capacity": 16,
+      "triangles": 32,
+      "transparent": false,
+      "renderOrder": 3,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "BaronVolleyVfx",
+      "parent": "BaronVolleyVfx",
+      "kind": "instanced",
+      "visible": false,
+      "frustumCulled": false,
+      "instances": 8,
+      "capacity": 8,
+      "triangles": 60,
+      "transparent": true,
+      "renderOrder": 3,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "BaronVolleyVfx",
+      "parent": "BaronVolleyVfx",
+      "kind": "instanced",
+      "visible": false,
+      "frustumCulled": false,
+      "instances": 8,
+      "capacity": 8,
+      "triangles": 16,
+      "transparent": true,
+      "renderOrder": 3,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "ProspectorSprite",
+      "parent": "ProspectorInterpolation",
+      "kind": "Sprite",
+      "visible": true,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 2,
+      "transparent": true,
+      "renderOrder": 2.5,
+      "objects": 1,
+      "spriteCoverage": 0.04260767825045435
+    },
+    {
+      "name": "ProspectorSpriteFade",
+      "parent": "ProspectorInterpolation",
+      "kind": "Sprite",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 2,
+      "transparent": true,
+      "renderOrder": 2.51,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "Vfx",
+      "parent": "Vfx",
+      "kind": "Sprite",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 2,
+      "transparent": true,
+      "renderOrder": 3,
+      "objects": 8,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "EnemyPool",
+      "parent": "EnemyPool",
+      "kind": "instanced",
+      "visible": false,
+      "frustumCulled": false,
+      "instances": 96,
+      "capacity": 96,
+      "triangles": 20,
+      "transparent": true,
+      "renderOrder": 0.5,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "EnemyPool",
+      "parent": "EnemyPool",
+      "kind": "instanced",
+      "visible": false,
+      "frustumCulled": false,
+      "instances": 96,
+      "capacity": 96,
+      "triangles": 14,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "EnemyPool",
+      "parent": "EnemyPool",
+      "kind": "instanced",
+      "visible": false,
+      "frustumCulled": false,
+      "instances": 96,
+      "capacity": 96,
+      "triangles": 168,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "EnemyPool",
+      "parent": "EnemyPool",
+      "kind": "instanced",
+      "visible": false,
+      "frustumCulled": false,
+      "instances": 96,
+      "capacity": 96,
+      "triangles": 72,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "EnemyPool",
+      "parent": "EnemyPool",
+      "kind": "instanced",
+      "visible": false,
+      "frustumCulled": false,
+      "instances": 96,
+      "capacity": 96,
+      "triangles": 64,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "EnemyPool",
+      "parent": "EnemyPool",
+      "kind": "instanced",
+      "visible": true,
+      "frustumCulled": false,
+      "instances": 96,
+      "capacity": 96,
+      "triangles": 14,
+      "transparent": true,
+      "renderOrder": 2.01,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "EnemyPool",
+      "parent": "EnemyPool",
+      "kind": "instanced",
+      "visible": true,
+      "frustumCulled": false,
+      "instances": 96,
+      "capacity": 96,
+      "triangles": 168,
+      "transparent": true,
+      "renderOrder": 2.01,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "EnemyPool",
+      "parent": "EnemyPool",
+      "kind": "instanced",
+      "visible": true,
+      "frustumCulled": false,
+      "instances": 96,
+      "capacity": 96,
+      "triangles": 72,
+      "transparent": true,
+      "renderOrder": 2.01,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "EnemyPool",
+      "parent": "EnemyPool",
+      "kind": "instanced",
+      "visible": true,
+      "frustumCulled": false,
+      "instances": 96,
+      "capacity": 96,
+      "triangles": 64,
+      "transparent": true,
+      "renderOrder": 2.01,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "EnemyPool",
+      "parent": "EnemyPool",
+      "kind": "instanced",
+      "visible": true,
+      "frustumCulled": false,
+      "instances": 96,
+      "capacity": 96,
+      "triangles": 2,
+      "transparent": true,
+      "renderOrder": 2,
+      "objects": 6,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "EnemyPool",
+      "parent": "EnemyPool",
+      "kind": "instanced",
+      "visible": true,
+      "frustumCulled": false,
+      "instances": 96,
+      "capacity": 96,
+      "triangles": 36,
+      "transparent": false,
+      "renderOrder": 2,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "EnemyPool",
+      "parent": "EnemyPool",
+      "kind": "instanced",
+      "visible": false,
+      "frustumCulled": false,
+      "instances": 96,
+      "capacity": 96,
+      "triangles": 12,
+      "transparent": true,
+      "renderOrder": 3,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "EnemyPool",
+      "parent": "EnemyPool",
+      "kind": "instanced",
+      "visible": true,
+      "frustumCulled": false,
+      "instances": 96,
+      "capacity": 96,
+      "triangles": 32,
+      "transparent": false,
+      "renderOrder": 2,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "EnemyPool",
+      "parent": "EnemyPool",
+      "kind": "instanced",
+      "visible": true,
+      "frustumCulled": false,
+      "instances": 96,
+      "capacity": 96,
+      "triangles": 12,
+      "transparent": false,
+      "renderOrder": 2,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "GeneratedClaimJumperSprites",
+      "parent": "GeneratedClaimJumperSprites",
+      "kind": "Sprite",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 2,
+      "transparent": true,
+      "renderOrder": 2,
+      "objects": 96,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "GeneratedClaimJumperSpriteFades",
+      "parent": "GeneratedClaimJumperSpriteFades",
+      "kind": "Sprite",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 2,
+      "transparent": true,
+      "renderOrder": 2.01,
+      "objects": 96,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "GeneratedClaimJumperThiefSprites",
+      "parent": "GeneratedClaimJumperThiefSprites",
+      "kind": "Sprite",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 2,
+      "transparent": true,
+      "renderOrder": 2,
+      "objects": 96,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "GeneratedClaimJumperThiefSpriteFades",
+      "parent": "GeneratedClaimJumperThiefSpriteFades",
+      "kind": "Sprite",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 2,
+      "transparent": true,
+      "renderOrder": 2.01,
+      "objects": 96,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "rail_toughSprites",
+      "parent": "rail_toughSprites",
+      "kind": "Sprite",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 2,
+      "transparent": true,
+      "renderOrder": 2,
+      "objects": 96,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "rail_toughSpriteFades",
+      "parent": "rail_toughSpriteFades",
+      "kind": "Sprite",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 2,
+      "transparent": true,
+      "renderOrder": 2.01,
+      "objects": 96,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "steam_wreckerSprites",
+      "parent": "steam_wreckerSprites",
+      "kind": "Sprite",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 2,
+      "transparent": true,
+      "renderOrder": 2,
+      "objects": 96,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "steam_wreckerSpriteFades",
+      "parent": "steam_wreckerSpriteFades",
+      "kind": "Sprite",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 2,
+      "transparent": true,
+      "renderOrder": 2.01,
+      "objects": 96,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "coal_thiefSprites",
+      "parent": "coal_thiefSprites",
+      "kind": "Sprite",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 2,
+      "transparent": true,
+      "renderOrder": 2,
+      "objects": 96,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "coal_thiefSpriteFades",
+      "parent": "coal_thiefSpriteFades",
+      "kind": "Sprite",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 2,
+      "transparent": true,
+      "renderOrder": 2.01,
+      "objects": 96,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "feral_toasterSprites",
+      "parent": "feral_toasterSprites",
+      "kind": "Sprite",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 2,
+      "transparent": true,
+      "renderOrder": 2,
+      "objects": 96,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "feral_toasterSpriteFades",
+      "parent": "feral_toasterSpriteFades",
+      "kind": "Sprite",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 2,
+      "transparent": true,
+      "renderOrder": 2.01,
+      "objects": 96,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "lawn_shepherdSprites",
+      "parent": "lawn_shepherdSprites",
+      "kind": "Sprite",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 2,
+      "transparent": true,
+      "renderOrder": 2,
+      "objects": 96,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "lawn_shepherdSpriteFades",
+      "parent": "lawn_shepherdSpriteFades",
+      "kind": "Sprite",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 2,
+      "transparent": true,
+      "renderOrder": 2.01,
+      "objects": 96,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "glowjackSprites",
+      "parent": "glowjackSprites",
+      "kind": "Sprite",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 2,
+      "transparent": true,
+      "renderOrder": 2,
+      "objects": 96,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "glowjackSpriteFades",
+      "parent": "glowjackSpriteFades",
+      "kind": "Sprite",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 2,
+      "transparent": true,
+      "renderOrder": 2.01,
+      "objects": 96,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "rogue_automatonSprites",
+      "parent": "rogue_automatonSprites",
+      "kind": "Sprite",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 2,
+      "transparent": true,
+      "renderOrder": 2,
+      "objects": 96,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "rogue_automatonSpriteFades",
+      "parent": "rogue_automatonSpriteFades",
+      "kind": "Sprite",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 2,
+      "transparent": true,
+      "renderOrder": 2.01,
+      "objects": 96,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "data_rustlerSprites",
+      "parent": "data_rustlerSprites",
+      "kind": "Sprite",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 2,
+      "transparent": true,
+      "renderOrder": 2,
+      "objects": 96,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "data_rustlerSpriteFades",
+      "parent": "data_rustlerSpriteFades",
+      "kind": "Sprite",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 2,
+      "transparent": true,
+      "renderOrder": 2.01,
+      "objects": 96,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "scrap_corsairSprites",
+      "parent": "scrap_corsairSprites",
+      "kind": "Sprite",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 2,
+      "transparent": true,
+      "renderOrder": 2,
+      "objects": 96,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "scrap_corsairSpriteFades",
+      "parent": "scrap_corsairSpriteFades",
+      "kind": "Sprite",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 2,
+      "transparent": true,
+      "renderOrder": 2.01,
+      "objects": 96,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "sun_glare_shamblerSprites",
+      "parent": "sun_glare_shamblerSprites",
+      "kind": "Sprite",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 2,
+      "transparent": true,
+      "renderOrder": 2,
+      "objects": 96,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "sun_glare_shamblerSpriteFades",
+      "parent": "sun_glare_shamblerSpriteFades",
+      "kind": "Sprite",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 2,
+      "transparent": true,
+      "renderOrder": 2.01,
+      "objects": 96,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "feral_terraformerSprites",
+      "parent": "feral_terraformerSprites",
+      "kind": "Sprite",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 2,
+      "transparent": true,
+      "renderOrder": 2,
+      "objects": 96,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "feral_terraformerSpriteFades",
+      "parent": "feral_terraformerSpriteFades",
+      "kind": "Sprite",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 2,
+      "transparent": true,
+      "renderOrder": 2.01,
+      "objects": 96,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "claim_jump_prospect_droneSprites",
+      "parent": "claim_jump_prospect_droneSprites",
+      "kind": "Sprite",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 2,
+      "transparent": true,
+      "renderOrder": 2,
+      "objects": 96,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "claim_jump_prospect_droneSpriteFades",
+      "parent": "claim_jump_prospect_droneSpriteFades",
+      "kind": "Sprite",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 2,
+      "transparent": true,
+      "renderOrder": 2.01,
+      "objects": 96,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "GeneratedBaronSprites",
+      "parent": "GeneratedBaronSprites",
+      "kind": "Sprite",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 2,
+      "transparent": true,
+      "renderOrder": 2,
+      "objects": 96,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "GeneratedBaronSpriteFades",
+      "parent": "GeneratedBaronSpriteFades",
+      "kind": "Sprite",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 2,
+      "transparent": true,
+      "renderOrder": 2.01,
+      "objects": 96,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "GeneratedBaronBannerSprites",
+      "parent": "GeneratedBaronBannerSprites",
+      "kind": "Sprite",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 2,
+      "transparent": true,
+      "renderOrder": 2.01,
+      "objects": 96,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "BossHpBar",
+      "parent": "BossHpBar",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": false,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 12,
+      "transparent": false,
+      "renderOrder": 4.02,
+      "objects": 2,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "Mesh",
+      "parent": "",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": false,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 12,
+      "transparent": true,
+      "renderOrder": 4.03,
+      "objects": 7,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "Crawler.drain_mast",
+      "parent": "Crawler.drain_mast",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 12,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 2,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "Crawler.drain_mast",
+      "parent": "Crawler.drain_mast",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 48,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "Crawler.tracks",
+      "parent": "Crawler.tracks",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 12,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "Crawler.tracks",
+      "parent": "Crawler.tracks",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 48,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 8,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "Crawler.capacitor_bank",
+      "parent": "Crawler.capacitor_bank",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 12,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "Crawler.capacitor_bank",
+      "parent": "Crawler.capacitor_bank",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 48,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 3,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "CrawlerDrainBeam.TealToAmber",
+      "parent": "CrawlerDrainBeam.TealToAmber",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 32,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 2,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "Mesh",
+      "parent": "",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 512,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "CrawlerWreck.Roost",
+      "parent": "CrawlerWreck.Roost",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 12,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "CrawlerWreck.Roost",
+      "parent": "CrawlerWreck.Roost",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 48,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 11,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "LandYacht.wheels.Intact",
+      "parent": "LandYacht.PlaceholderPlateCrops",
+      "kind": "Sprite",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 2,
+      "transparent": true,
+      "renderOrder": 4,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "LandYacht.wheels.Damaged",
+      "parent": "LandYacht.PlaceholderPlateCrops",
+      "kind": "Sprite",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 2,
+      "transparent": true,
+      "renderOrder": 4,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "LandYacht.crane.Intact",
+      "parent": "LandYacht.PlaceholderPlateCrops",
+      "kind": "Sprite",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 2,
+      "transparent": true,
+      "renderOrder": 4,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "LandYacht.crane.Damaged",
+      "parent": "LandYacht.PlaceholderPlateCrops",
+      "kind": "Sprite",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 2,
+      "transparent": true,
+      "renderOrder": 4,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "LandYacht.wheelhouse.Intact",
+      "parent": "LandYacht.PlaceholderPlateCrops",
+      "kind": "Sprite",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 2,
+      "transparent": true,
+      "renderOrder": 4,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "LandYacht.wheelhouse.Damaged",
+      "parent": "LandYacht.PlaceholderPlateCrops",
+      "kind": "Sprite",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 2,
+      "transparent": true,
+      "renderOrder": 4,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "LandYacht.DerrickHead.1",
+      "parent": "LandYacht.DerrickHead.1",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 32,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "LandYacht.DerrickHead.1",
+      "parent": "LandYacht.DerrickHead.1",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 12,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "LandYacht.DerrickHead.2",
+      "parent": "LandYacht.DerrickHead.2",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 32,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "LandYacht.DerrickHead.2",
+      "parent": "LandYacht.DerrickHead.2",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 12,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "LandYacht.DerrickHead.3",
+      "parent": "LandYacht.DerrickHead.3",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 32,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "LandYacht.DerrickHead.3",
+      "parent": "LandYacht.DerrickHead.3",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 12,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "LandYacht.DerrickHead.4",
+      "parent": "LandYacht.DerrickHead.4",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 32,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "LandYacht.DerrickHead.4",
+      "parent": "LandYacht.DerrickHead.4",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 12,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "LandYacht.DreadDustColumn",
+      "parent": "LandYacht.DreadDustColumn",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 120,
+      "transparent": true,
+      "renderOrder": 0,
+      "objects": 4,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "LandYacht.WreckSalvage",
+      "parent": "LandYacht.PlaceholderPlateCrops",
+      "kind": "Sprite",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 2,
+      "transparent": true,
+      "renderOrder": 4,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "DredgeQueen.Placeholder",
+      "parent": "DredgeQueen.Placeholder",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 64,
+      "transparent": true,
+      "renderOrder": 0,
+      "objects": 2,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "Mesh",
+      "parent": "",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 48,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 13,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "Sprite",
+      "parent": "",
+      "kind": "Sprite",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 2,
+      "transparent": true,
+      "renderOrder": 20,
+      "objects": 4,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "DredgeQueen.Placeholder",
+      "parent": "DredgeQueen.Placeholder",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 12,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "Mesh",
+      "parent": "",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 64,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 2,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "SalvageClaw.Placeholder",
+      "parent": "SalvageClaw.Placeholder",
+      "kind": "Line",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 0,
+      "transparent": true,
+      "renderOrder": 0,
+      "objects": 2,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "SalvageClaw.Placeholder",
+      "parent": "SalvageClaw.Placeholder",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 56,
+      "transparent": true,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "SalvageClaw.Placeholder",
+      "parent": "SalvageClaw.Placeholder",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 12,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 4,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "SalvageClaw.Placeholder",
+      "parent": "SalvageClaw.Placeholder",
+      "kind": "Line",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 0.6666666666666666,
+      "transparent": true,
+      "renderOrder": 0,
+      "objects": 2,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "SalvageClaw.ClawStampTag",
+      "parent": "SalvageClaw.ClawStampTag",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 12,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 8,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "SalvageClaw.ClawStampTag",
+      "parent": "SalvageClaw.ClawStampTag",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 144,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 8,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "Homemaker9000.OffscreenTidiedMarker",
+      "parent": "Homemaker9000.OffscreenTidiedMarker",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 12,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 6,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "Homemaker9000.PartsStackPickup",
+      "parent": "Homemaker9000.PartsStackPickup",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 12,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 36,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "Homemaker9000.Chair",
+      "parent": "Homemaker9000.Chair",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 12,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 6,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "Homemaker9000.Placeholder",
+      "parent": "Homemaker9000.Placeholder",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 64,
+      "transparent": true,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "Homemaker9000.Placeholder",
+      "parent": "Homemaker9000.Placeholder",
+      "kind": "Sprite",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 2,
+      "transparent": true,
+      "renderOrder": 20,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "OldDigger.Placeholder",
+      "parent": "OldDigger.Placeholder",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 64,
+      "transparent": true,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "MothSwarmPool",
+      "parent": "MothSwarmPool",
+      "kind": "instanced",
+      "visible": false,
+      "frustumCulled": false,
+      "instances": 288,
+      "capacity": 288,
+      "triangles": 4,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "HomesteaderHeroPlaceholder",
+      "parent": "HomesteaderHeroPlaceholder",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 544,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "HomesteaderHeroPlaceholder",
+      "parent": "HomesteaderHeroPlaceholder",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 12,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "HomesteaderHeroPlaceholder",
+      "parent": "HomesteaderHeroPlaceholder",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 96,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "HomesteaderHeroPlaceholder",
+      "parent": "HomesteaderHeroPlaceholder",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 36,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "HomesteaderHeroPlaceholder",
+      "parent": "HomesteaderHeroPlaceholder",
+      "kind": "Mesh",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 168,
+      "transparent": false,
+      "renderOrder": 0,
+      "objects": 1,
+      "spriteCoverage": 0
+    },
+    {
+      "name": "GeneratedHeroHomesteader",
+      "parent": "HomesteaderHeroVisuals",
+      "kind": "Sprite",
+      "visible": true,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 2,
+      "transparent": true,
+      "renderOrder": 2,
+      "objects": 1,
+      "spriteCoverage": 0.029810154856645062
+    },
+    {
+      "name": "GeneratedHeroHomesteaderFade",
+      "parent": "HomesteaderHeroVisuals",
+      "kind": "Sprite",
+      "visible": false,
+      "frustumCulled": true,
+      "instances": 1,
+      "capacity": 1,
+      "triangles": 2,
+      "transparent": true,
+      "renderOrder": 2.01,
+      "objects": 1,
+      "spriteCoverage": 0
+    }
+  ],
+  "diagnostics": {
+    "frame": 1522,
+    "elapsed": 13.025799999999961,
+    "timeAlive": 13.26666666666663,
+    "wave": 1,
+    "state": "playing",
+    "enemiesAlive": 0,
+    "enemyPoolSize": 96,
+    "boltsAlive": 0,
+    "xpMotesAlive": 0,
+    "stressCount": 0,
+    "simulation": {
+      "tick": 398,
+      "fixed": true,
+      "stepSeconds": 0.03333333333333333,
+      "alpha": 0.5460000000000386,
+      "stepsLastFrame": 0,
+      "totalSteps": 398,
+      "droppedSeconds": 0.43333333333333335,
+      "droppedTicks": 13
+    },
+    "performance": {
+      "tier": "lite",
+      "override": "lite",
+      "source": "override",
+      "reason": "settings override",
+      "gpuRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Max, Unspecified Version)",
+      "deviceMemory": 32,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.0.0 Safari/537.36",
+      "config": {
+        "maxDpr": 1,
+        "shadowsQuality": "blob",
+        "shadowMapSize": 0,
+        "fogNear": 50,
+        "fogFar": 76,
+        "postEnabled": false,
+        "postPaperGrainOpacity": 0,
+        "detailDensity": 0.18,
+        "detailMobileDensity": 0,
+        "terrainSegments": 40,
+        "terrainMobileSegments": 24,
+        "vistaSegments": 7,
+        "vistaMobileSegments": 4,
+        "waterQuality": 0.48,
+        "waterMobileQuality": 0.3,
+        "terrainMesh": false,
+        "terrainSplat": false,
+        "terrainMeshVertexStep": 2,
+        "floatTextPool": 8,
+        "combatVfxPuffs": 16,
+        "combatVfxTicks": 20,
+        "combatVfxRings": 4,
+        "freedWalkerCap": 6,
+        "enemyBarCap": 16
+      },
+      "runtimeVerdict": 0
+    },
+    "renderer": {
+      "calls": 57,
+      "triangles": 75538,
+      "geometries": 57,
+      "textures": 19
+    },
+    "vfx": {
+      "activeFloatTexts": 0,
+      "floatTextPool": 8,
+      "lastFloatText": {
+        "text": "ledger",
+        "x": 10.025715768310674,
+        "z": -16.313039396394114,
+        "y": 4.374624413474135,
+        "terrainY": 0.25462441347413445,
+        "renderedText": "ledger",
+        "renderedWidthPx": 207.84375,
+        "canvasWidthPx": 384,
+        "fontPx": 64
+      },
+      "combat": {
+        "puffs": {
+          "active": 0,
+          "capacity": 16
+        },
+        "ticks": {
+          "active": 0,
+          "capacity": 20
+        },
+        "rings": {
+          "active": 0,
+          "capacity": 4
+        }
+      },
+      "baronVolley": {
+        "tracers": {
+          "active": 0,
+          "capacity": 16,
+          "spawned": 0
+        },
+        "rockets": {
+          "active": 0,
+          "capacity": 16,
+          "modelReady": false
+        },
+        "rings": {
+          "active": 0,
+          "capacity": 8,
+          "spawned": 0
+        },
+        "wisps": {
+          "active": 0,
+          "capacity": 8,
+          "spawned": 0
+        },
+        "detail": true
+      }
+    },
+    "harvest": {
+      "activeNodes": [
+        {
+          "id": "gold-seam-1",
+          "active": true,
+          "anchorIndex": 0,
+          "position": {
+            "x": -24,
+            "z": -20
+          },
+          "remaining": 30,
+          "respawnScheduled": false,
+          "respawnIn": 0
+        },
+        {
+          "id": "gold-seam-2",
+          "active": true,
+          "anchorIndex": 2,
+          "position": {
+            "x": -24,
+            "z": 20
+          },
+          "remaining": 30,
+          "respawnScheduled": false,
+          "respawnIn": 0
+        },
+        {
+          "id": "gold-seam-3",
+          "active": true,
+          "anchorIndex": 3,
+          "position": {
+            "x": 24,
+            "z": 20
+          },
+          "remaining": 30,
+          "respawnScheduled": false,
+          "respawnIn": 0
+        },
+        {
+          "id": "gold-seam-4",
+          "active": false,
+          "anchorIndex": -1,
+          "position": {
+            "x": 0,
+            "z": 0
+          },
+          "remaining": 30,
+          "respawnScheduled": false,
+          "respawnIn": 0
+        }
+      ],
+      "channeling": false,
+      "channelNodeId": null,
+      "progress": 0,
+      "channels": [
+        {
+          "actorId": "0",
+          "channelNodeId": null,
+          "progress": 0,
+          "channeling": false
+        }
+      ],
+      "lastGoldGain": 0,
+      "lastGoldPosition": null
+    },
+    "harvestVisuals": {
+      "seams": [
+        {
+          "id": "gold-seam-1",
+          "x": -24,
+          "z": -20,
+          "visualY": 0.037383176008093606,
+          "groundY": -0.012616823991906397,
+          "spriteVisible": true
+        },
+        {
+          "id": "gold-seam-2",
+          "x": -24,
+          "z": 20,
+          "visualY": 0.037383176008093606,
+          "groundY": -0.012616823991906397,
+          "spriteVisible": true
+        },
+        {
+          "id": "gold-seam-3",
+          "x": 24,
+          "z": 20,
+          "visualY": 0.7232078374702364,
+          "groundY": 0.6732078374702364,
+          "spriteVisible": true
+        }
+      ]
+    },
+    "build": {
+      "mode": false,
+      "selectedBuildable": "sentry_beacon",
+      "ghostValid": false,
+      "ghostLight": 1,
+      "ghostPos": {
+        "x": 0,
+        "z": 0
+      },
+      "ghostY": 0,
+      "ghostVisible": false,
+      "ghostRotationSteps": 0,
+      "ghostFootprint": {
+        "w": 1,
+        "d": 1
+      },
+      "beacons": 0,
+      "palisades": 0,
+      "palisadeKitCredits": 0,
+      "sluices": 0,
+      "stockpiles": 0,
+      "boilerHouses": 0,
+      "turrets": 0,
+      "assayOffices": 0,
+      "lanternPosts": 0,
+      "capacitorBanks": 0,
+      "beaconPositions": [],
+      "palisadePositions": [],
+      "sluicePositions": [],
+      "stockpilePositions": [],
+      "boilerHousePositions": [],
+      "turretPositions": [],
+      "assayOfficePositions": [],
+      "lanternPostPositions": [],
+      "capacitorBankPositions": [],
+      "lanternPostRotations": [],
+      "reservedFootprints": [],
+      "buildables": [
+        {
+          "id": "sentry_beacon",
+          "count": 0
+        },
+        {
+          "id": "palisade",
+          "count": 0
+        },
+        {
+          "id": "sluice",
+          "count": 0
+        },
+        {
+          "id": "stockpile",
+          "count": 0
+        },
+        {
+          "id": "boiler_house",
+          "count": 0
+        },
+        {
+          "id": "turret",
+          "count": 0
+        },
+        {
+          "id": "lantern_post",
+          "count": 0
+        },
+        {
+          "id": "decoy_shed",
+          "count": 0
+        },
+        {
+          "id": "capacitor_bank",
+          "count": 0
+        },
+        {
+          "id": "assay_office",
+          "count": 0
+        }
+      ],
+      "sluicesState": [],
+      "stockpilesState": [],
+      "pileStep": 0,
+      "nextCost": 25,
+      "hp": [],
+      "ruins": 0,
+      "ruinDetails": [],
+      "hpBars": 0,
+      "hpBarsVisible": false,
+      "hpBarDetails": [],
+      "repair": {
+        "active": false,
+        "id": null,
+        "index": -1,
+        "progress": 0,
+        "blocked": false
+      },
+      "shooterRegistrations": 0,
+      "turretPulses": 0,
+      "activeTurretPulses": 0,
+      "breachSeals": 0,
+      "lensTurrets": 0,
+      "tierUpgrades": 0,
+      "repairs": 0,
+      "repairGold": 0,
+      "shells": {
+        "palisade": {
+          "active": 0,
+          "signs": 0,
+          "meshes": [
+            "PalisadePosts",
+            "PalisadeRails",
+            "PalisadeBraces",
+            "PalisadePortraitSigns"
+          ],
+          "lit": true
+        },
+        "sluice": {
+          "active": 0,
+          "signs": 0,
+          "meshes": [
+            "SluiceTroughs",
+            "SluiceWaterChannels",
+            "SluiceTimberRails",
+            "SluiceTimberLegs",
+            "SluiceWheelRims",
+            "SluiceWheelSpokesA",
+            "SluiceWheelSpokesB",
+            "SluicePortraitSigns"
+          ],
+          "lit": true,
+          "wheelPhase": 0
+        },
+        "stockpile": {
+          "active": 0,
+          "signs": 0,
+          "meshes": [
+            "StockpileTimberCribs",
+            "StockpileStrongboxes",
+            "StockpileGoldNuggets",
+            "StockpilePortraitSigns"
+          ],
+          "lit": true
+        },
+        "boiler_house": {
+          "active": 0,
+          "signs": 0,
+          "meshes": [
+            "BoilerHousePlaceholder",
+            "BoilerHouseBrassDrum",
+            "BoilerHouseStack",
+            "BoilerHouseSign"
+          ],
+          "lit": true
+        },
+        "turret": {
+          "active": 0,
+          "signs": 0,
+          "meshes": [
+            "TurretTimberBases",
+            "TurretTripodLegs",
+            "TurretSignalMasts",
+            "TurretPortraitSigns"
+          ],
+          "lit": true,
+          "variant": "signal",
+          "silhouetteHeight": 1.1
+        },
+        "assay_office": {
+          "active": 0,
+          "signs": 0,
+          "meshes": [
+            "AssayOfficeTimberShell",
+            "AssayOfficeBrassRoof",
+            "AssayOfficePlaqueFrame",
+            "AssayOfficeTimberLintel",
+            "AssayOfficePortraitSign"
+          ],
+          "lit": true
+        }
+      },
+      "killsByOwner": {},
+      "damageByOwner": {}
+    },
+    "budget": 0,
+    "terrain": {
+      "playerZone": "bank",
+      "ground": {
+        "enabled": true,
+        "mode": "continuous-mesh",
+        "drawCalls": 1,
+        "segments": 48,
+        "vertexStep": 2,
+        "vertices": 2401,
+        "triangles": 4608,
+        "heightSource": "visual",
+        "textureSource": "bank-atlas",
+        "textureSeams": "texture seams remain until TR-02"
+      },
+      "sim": {
+        "flat": false,
+        "tile": "e2-trestle",
+        "balance": {
+          "uphillMin": 0.6,
+          "downhillMax": 1.1,
+          "slopeMax": 0.35,
+          "wadeDepth": 0.35,
+          "deepDepth": 1
+        },
+        "gt": {
+          "highGroundRangeBonus": 1.5
+        },
+        "lastLos": {
+          "flat": false,
+          "clear": true,
+          "samples": 0,
+          "from": {
+            "x": 0,
+            "z": 0,
+            "h": -0.461
+          },
+          "to": {
+            "x": 0,
+            "z": 0,
+            "h": -0.461
+          },
+          "blockedAt": null
+        },
+        "probes": {
+          "heroStart": {
+            "height": -0.19552637771002637,
+            "slope": {
+              "dx": 0.01979254225013735,
+              "dz": 0.0338024629712976
+            },
+            "traversable": true
+          },
+          "ford": {
+            "height": -0.4614127230548627,
+            "slope": {
+              "dx": 0.02061711465263627,
+              "dz": 0
+            },
+            "traversable": true
+          },
+          "farBank": {
+            "height": 0.3537853691144329,
+            "slope": {
+              "dx": 0.03575067599694598,
+              "dz": -0.012209798380819814
+            },
+            "traversable": true
+          }
+        }
+      },
+      "water": {
+        "material": "LivingWaterShader",
+        "riverPresent": true,
+        "fordPresent": true,
+        "riverTime": 13.026,
+        "fordTime": 13.026,
+        "quality": 0.3,
+        "mobile": true,
+        "foam": true,
+        "glints": 4,
+        "fordStones": 7,
+        "gravelBars": 0,
+        "visualHalfWidth": 10,
+        "springPonds": 0,
+        "waterPhaseVariance": 0.129,
+        "depth": {
+          "river": 1.25,
+          "ford": 0.3,
+          "wade": 0.35,
+          "deep": 1
+        }
+      },
+      "rails": {
+        "active": true,
+        "paths": 2,
+        "points": 10,
+        "style": "steamworks",
+        "renderLayer": 1,
+        "renderSlot": "groundDecals",
+        "railInstances": 320,
+        "tieInstances": 160,
+        "drawCalls": 2,
+        "asset": "procedural-placeholder",
+        "samples": [
+          {
+            "x": 0,
+            "y": 0.21051810279437821,
+            "z": -46,
+            "kind": "point"
+          },
+          {
+            "x": 0,
+            "y": 0.239283031113095,
+            "z": -34,
+            "kind": "midpoint"
+          },
+          {
+            "x": 0,
+            "y": 0.1576125258169503,
+            "z": -22,
+            "kind": "point"
+          },
+          {
+            "x": 0,
+            "y": -0.03254045159124504,
+            "z": -14.5,
+            "kind": "midpoint"
+          },
+          {
+            "x": 0,
+            "y": -0.27518688385711804,
+            "z": -7,
+            "kind": "point"
+          },
+          {
+            "x": 0,
+            "y": -0.3814127230548627,
+            "z": 0,
+            "kind": "midpoint"
+          },
+          {
+            "x": 0,
+            "y": -0.27518688385711804,
+            "z": 7,
+            "kind": "point"
+          },
+          {
+            "x": 0,
+            "y": -0.03254045159124504,
+            "z": 14.5,
+            "kind": "midpoint"
+          },
+          {
+            "x": 0,
+            "y": 0.1576125258169503,
+            "z": 22,
+            "kind": "point"
+          },
+          {
+            "x": 0,
+            "y": 0.239283031113095,
+            "z": 34,
+            "kind": "midpoint"
+          },
+          {
+            "x": 0,
+            "y": 0.21051810279437821,
+            "z": 46,
+            "kind": "point"
+          },
+          {
+            "x": -30,
+            "y": 0.07407598639321515,
+            "z": -18,
+            "kind": "point"
+          },
+          {
+            "x": -22,
+            "y": 0.05307468018343939,
+            "z": -18,
+            "kind": "midpoint"
+          },
+          {
+            "x": -14,
+            "y": 0.01290071947614517,
+            "z": -18,
+            "kind": "point"
+          },
+          {
+            "x": -7,
+            "y": 0.040618096299624595,
+            "z": -20,
+            "kind": "midpoint"
+          },
+          {
+            "x": 9,
+            "y": 0.3977505585182982,
+            "z": -24,
+            "kind": "midpoint"
+          },
+          {
+            "x": 18,
+            "y": 0.6243154946102161,
+            "z": -26,
+            "kind": "point"
+          }
+        ],
+        "ties": [
+          {
+            "x": 0,
+            "y": 0.16696897125326524,
+            "z": -45.55555555555556,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": 0.16984833797564544,
+            "z": -44.666666666666664,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": 0.17268704960435102,
+            "z": -43.77777777777778,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": 0.17546999151468204,
+            "z": -42.88888888888889,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": 0.17817925470184687,
+            "z": -42,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": 0.18079368608445587,
+            "z": -41.11111111111111,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": 0.18328840148105927,
+            "z": -40.22222222222223,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": 0.185634268394251,
+            "z": -39.333333333333336,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": 0.18779736916487172,
+            "z": -38.44444444444444,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": 0.1897384589608569,
+            "z": -37.55555555555556,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": 0.19141243736019956,
+            "z": -36.66666666666667,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": 0.19276785684696568,
+            "z": -35.77777777777778,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": 0.19374649618312215,
+            "z": -34.888888888888886,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": 0.19428303111309503,
+            "z": -34,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": 0.1943048389160731,
+            "z": -33.111111111111114,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": 0.19373197660997146,
+            "z": -32.22222222222222,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": 0.1924773747613105,
+            "z": -31.333333333333332,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": 0.19044728947723072,
+            "z": -30.444444444444446,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": 0.18754205386025713,
+            "z": -29.555555555555554,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": 0.1836571666306751,
+            "z": -28.666666666666668,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": 0.17868474945953625,
+            "z": -27.77777777777778,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": 0.17251539559068285,
+            "z": -26.88888888888889,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": 0.1650404204684953,
+            "z": -26,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": 0.15615451038889738,
+            "z": -25.111111111111114,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": 0.14575874789458187,
+            "z": -24.22222222222222,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": 0.13376397318113437,
+            "z": -23.333333333333336,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": 0.12009441981654308,
+            "z": -22.444444444444443,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": 0.10475139700471339,
+            "z": -21.558823529411764,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": 0.08771706703027632,
+            "z": -20.676470588235293,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": 0.06892567309600939,
+            "z": -19.794117647058826,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": 0.048392714801340914,
+            "z": -18.911764705882355,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": 0.026164772375527556,
+            "z": -18.029411764705884,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": 0.002322285068744434,
+            "z": -17.147058823529413,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": -0.02301829401751601,
+            "z": -16.264705882352942,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": -0.04970311456305185,
+            "z": -15.382352941176471,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": -0.07754045159124504,
+            "z": -14.5,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": -0.1063012473765915,
+            "z": -13.617647058823529,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": -0.13572075767695263,
+            "z": -12.735294117647058,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": -0.16550135212067915,
+            "z": -11.852941176470587,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": -0.19531647783336276,
+            "z": -10.970588235294116,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": -0.22481575058509887,
+            "z": -10.088235294117649,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": -0.25363109077904766,
+            "z": -9.205882352941178,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": -0.281383774667436,
+            "z": -8.323529411764707,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": -0.3076922266221227,
+            "z": -7.4411764705882355,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": -0.3320825876337935,
+            "z": -6.5625,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": -0.3542221334027814,
+            "z": -5.6875,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": -0.3738857459693029,
+            "z": -4.8125,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": -0.39077213531374844,
+            "z": -3.9375,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": -0.4046173790571199,
+            "z": -3.0625,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": -0.41520160922305904,
+            "z": -2.1875,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": -0.42235467785390846,
+            "z": -1.3125,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": -0.42596059792833796,
+            "z": -0.4375,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": -0.42596059792833796,
+            "z": 0.4375,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": -0.42235467785390846,
+            "z": 1.3125,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": -0.41520160922305904,
+            "z": 2.1875,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": -0.4046173790571199,
+            "z": 3.0625,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": -0.39077213531374844,
+            "z": 3.9375,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": -0.3738857459693029,
+            "z": 4.8125,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": -0.3542221334027814,
+            "z": 5.6875,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": -0.3320825876337935,
+            "z": 6.5625,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": -0.3076922266221227,
+            "z": 7.4411764705882355,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": -0.281383774667436,
+            "z": 8.323529411764707,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": -0.25363109077904766,
+            "z": 9.205882352941178,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": -0.22481575058509887,
+            "z": 10.088235294117649,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": -0.19531647783336276,
+            "z": 10.970588235294118,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": -0.16550135212067899,
+            "z": 11.852941176470589,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": -0.13572075767695263,
+            "z": 12.735294117647058,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": -0.1063012473765915,
+            "z": 13.617647058823529,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": -0.07754045159124504,
+            "z": 14.5,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": -0.04970311456305185,
+            "z": 15.382352941176471,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": -0.02301829401751601,
+            "z": 16.264705882352942,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": 0.002322285068744434,
+            "z": 17.147058823529413,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": 0.026164772375527556,
+            "z": 18.029411764705884,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": 0.0483927148013408,
+            "z": 18.91176470588235,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": 0.06892567309600939,
+            "z": 19.794117647058826,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": 0.08771706703027632,
+            "z": 20.676470588235293,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": 0.10475139700471339,
+            "z": 21.558823529411764,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": 0.12009441981654308,
+            "z": 22.444444444444443,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": 0.13376397318113437,
+            "z": 23.333333333333336,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": 0.14575874789458187,
+            "z": 24.22222222222222,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": 0.1561545103888974,
+            "z": 25.11111111111111,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": 0.1650404204684953,
+            "z": 26,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": 0.17251539559068285,
+            "z": 26.88888888888889,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": 0.17868474945953625,
+            "z": 27.77777777777778,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": 0.1836571666306751,
+            "z": 28.666666666666668,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": 0.18754205386025716,
+            "z": 29.555555555555557,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": 0.19044728947723072,
+            "z": 30.444444444444446,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": 0.1924773747613105,
+            "z": 31.333333333333336,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": 0.19373197660997146,
+            "z": 32.22222222222222,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": 0.1943048389160731,
+            "z": 33.111111111111114,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": 0.19428303111309503,
+            "z": 34,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": 0.19374649618312215,
+            "z": 34.888888888888886,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": 0.19276785684696568,
+            "z": 35.77777777777778,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": 0.19141243736019956,
+            "z": 36.66666666666667,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": 0.1897384589608569,
+            "z": 37.55555555555556,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": 0.18779736916487172,
+            "z": 38.44444444444444,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": 0.185634268394251,
+            "z": 39.333333333333336,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": 0.18328840148105927,
+            "z": 40.22222222222223,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": 0.18079368608445587,
+            "z": 41.11111111111111,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": 0.17817925470184687,
+            "z": 42,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": 0.17546999151468204,
+            "z": 42.88888888888889,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": 0.17268704960435102,
+            "z": 43.77777777777778,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": 0.16984833797564544,
+            "z": 44.666666666666664,
+            "yaw": 0
+          },
+          {
+            "x": 0,
+            "y": 0.16696897125326524,
+            "z": 45.55555555555556,
+            "yaw": 0
+          },
+          {
+            "x": -29.555555555555557,
+            "y": 0.028449762012982535,
+            "z": -18,
+            "yaw": 1.5707963267948966
+          },
+          {
+            "x": -28.666666666666668,
+            "y": 0.02704060349245816,
+            "z": -18,
+            "yaw": 1.5707963267948966
+          },
+          {
+            "x": -27.77777777777778,
+            "y": 0.025404891040159097,
+            "z": -18,
+            "yaw": 1.5707963267948966
+          },
+          {
+            "x": -26.88888888888889,
+            "y": 0.023522234481177816,
+            "z": -18,
+            "yaw": 1.5707963267948966
+          },
+          {
+            "x": -26,
+            "y": 0.021373810969657847,
+            "z": -18,
+            "yaw": 1.5707963267948966
+          },
+          {
+            "x": -25.11111111111111,
+            "y": 0.018943279847501056,
+            "z": -18,
+            "yaw": 1.5707963267948966
+          },
+          {
+            "x": -24.22222222222222,
+            "y": 0.016217810700869313,
+            "z": -18,
+            "yaw": 1.5707963267948966
+          },
+          {
+            "x": -23.33333333333333,
+            "y": 0.013189209178508368,
+            "z": -18,
+            "yaw": 1.5707963267948966
+          },
+          {
+            "x": -22.444444444444443,
+            "y": 0.00985511818416674,
+            "z": -18,
+            "yaw": 1.5707963267948966
+          },
+          {
+            "x": -21.555555555555557,
+            "y": 0.0062202649162043065,
+            "z": -18,
+            "yaw": 1.5707963267948966
+          },
+          {
+            "x": -20.666666666666664,
+            "y": 0.0022977172437472215,
+            "z": -18,
+            "yaw": 1.5707963267948966
+          },
+          {
+            "x": -19.77777777777778,
+            "y": -0.0018898935286688345,
+            "z": -18,
+            "yaw": 1.5707963267948966
+          },
+          {
+            "x": -18.88888888888889,
+            "y": -0.006309231925431237,
+            "z": -18,
+            "yaw": 1.5707963267948966
+          },
+          {
+            "x": -18,
+            "y": -0.01091525208160811,
+            "z": -18,
+            "yaw": 1.5707963267948966
+          },
+          {
+            "x": -17.11111111111111,
+            "y": -0.015650380790037603,
+            "z": -18,
+            "yaw": 1.5707963267948966
+          },
+          {
+            "x": -16.22222222222222,
+            "y": -0.020443944642369996,
+            "z": -18,
+            "yaw": 1.5707963267948966
+          },
+          {
+            "x": -15.333333333333332,
+            "y": -0.025211893702744764,
+            "z": -18,
+            "yaw": 1.5707963267948966
+          },
+          {
+            "x": -14.444444444444445,
+            "y": -0.029856869103650263,
+            "z": -18,
+            "yaw": 1.5707963267948966
+          },
+          {
+            "x": -13.588235294117647,
+            "y": -0.032419808524405874,
+            "z": -18.11764705882353,
+            "yaw": 1.849095985800008
+          },
+          {
+            "x": -12.76470588235294,
+            "y": -0.032479282092900186,
+            "z": -18.352941176470587,
+            "yaw": 1.849095985800008
+          },
+          {
+            "x": -11.941176470588236,
+            "y": -0.03168474521097292,
+            "z": -18.588235294117645,
+            "yaw": 1.849095985800008
+          },
+          {
+            "x": -11.11764705882353,
+            "y": -0.029945345733596113,
+            "z": -18.823529411764707,
+            "yaw": 1.849095985800008
+          },
+          {
+            "x": -10.294117647058824,
+            "y": -0.027175793788214858,
+            "z": -19.058823529411764,
+            "yaw": 1.849095985800008
+          },
+          {
+            "x": -9.470588235294118,
+            "y": -0.0232981465074001,
+            "z": -19.294117647058826,
+            "yaw": 1.849095985800008
+          },
+          {
+            "x": -8.647058823529413,
+            "y": -0.01824349998691481,
+            "z": -19.52941176470588,
+            "yaw": 1.849095985800008
+          },
+          {
+            "x": -7.8235294117647065,
+            "y": -0.011953539613160938,
+            "z": -19.764705882352942,
+            "yaw": 1.849095985800008
+          },
+          {
+            "x": -7,
+            "y": -0.004381903700375403,
+            "z": -20,
+            "yaw": 1.849095985800008
+          },
+          {
+            "x": -6.1764705882352935,
+            "y": 0.004504678981595386,
+            "z": -20.235294117647058,
+            "yaw": 1.849095985800008
+          },
+          {
+            "x": -5.352941176470588,
+            "y": 0.014725509951441368,
+            "z": -20.47058823529412,
+            "yaw": 1.849095985800008
+          },
+          {
+            "x": -4.529411764705882,
+            "y": 0.02628532363578398,
+            "z": -20.705882352941174,
+            "yaw": 1.849095985800008
+          },
+          {
+            "x": -3.7058823529411757,
+            "y": 0.03917398598856628,
+            "z": -20.94117647058824,
+            "yaw": 1.849095985800008
+          },
+          {
+            "x": -2.882352941176471,
+            "y": 0.05336649326881959,
+            "z": -21.176470588235293,
+            "yaw": 1.849095985800008
+          },
+          {
+            "x": -2.0588235294117654,
+            "y": 0.0688232651372222,
+            "z": -21.411764705882355,
+            "yaw": 1.849095985800008
+          },
+          {
+            "x": -1.235294117647059,
+            "y": 0.08549071665735086,
+            "z": -21.647058823529413,
+            "yaw": 1.849095985800008
+          },
+          {
+            "x": -0.41176470588235303,
+            "y": 0.10330208506506666,
+            "z": -21.88235294117647,
+            "yaw": 1.849095985800008
+          },
+          {
+            "x": 0.42857142857142855,
+            "y": 0.12211229106138102,
+            "z": -22.095238095238095,
+            "yaw": 1.7894652726688387
+          },
+          {
+            "x": 1.2857142857142856,
+            "y": 0.14195317010491432,
+            "z": -22.28571428571429,
+            "yaw": 1.7894652726688387
+          },
+          {
+            "x": 2.142857142857143,
+            "y": 0.1628343208213882,
+            "z": -22.476190476190474,
+            "yaw": 1.7894652726688387
+          },
+          {
+            "x": 3,
+            "y": 0.1846479625275315,
+            "z": -22.666666666666668,
+            "yaw": 1.7894652726688387
+          },
+          {
+            "x": 3.8571428571428568,
+            "y": 0.20727639936110168,
+            "z": -22.857142857142854,
+            "yaw": 1.7894652726688387
+          },
+          {
+            "x": 4.714285714285714,
+            "y": 0.23059372193928468,
+            "z": -23.04761904761905,
+            "yaw": 1.7894652726688387
+          },
+          {
+            "x": 5.571428571428571,
+            "y": 0.2544675554497935,
+            "z": -23.238095238095237,
+            "yaw": 1.7894652726688387
+          },
+          {
+            "x": 6.428571428571429,
+            "y": 0.2787608070097073,
+            "z": -23.42857142857143,
+            "yaw": 1.7894652726688387
+          },
+          {
+            "x": 7.285714285714286,
+            "y": 0.3033333695278281,
+            "z": -23.61904761904762,
+            "yaw": 1.7894652726688387
+          },
+          {
+            "x": 8.142857142857142,
+            "y": 0.32804374517628665,
+            "z": -23.80952380952381,
+            "yaw": 1.7894652726688387
+          },
+          {
+            "x": 9,
+            "y": 0.3527505585182982,
+            "z": -24,
+            "yaw": 1.7894652726688387
+          },
+          {
+            "x": 9.857142857142858,
+            "y": 0.3773139369212304,
+            "z": -24.19047619047619,
+            "yaw": 1.7894652726688387
+          },
+          {
+            "x": 10.714285714285714,
+            "y": 0.40159674367238907,
+            "z": -24.38095238095238,
+            "yaw": 1.7894652726688387
+          },
+          {
+            "x": 11.571428571428573,
+            "y": 0.42546565679505643,
+            "z": -24.57142857142857,
+            "yaw": 1.7894652726688387
+          },
+          {
+            "x": 12.428571428571429,
+            "y": 0.44879209356412886,
+            "z": -24.761904761904763,
+            "yaw": 1.7894652726688387
+          },
+          {
+            "x": 13.285714285714286,
+            "y": 0.47145298683631776,
+            "z": -24.95238095238095,
+            "yaw": 1.7894652726688387
+          },
+          {
+            "x": 14.142857142857142,
+            "y": 0.4933314243069985,
+            "z": -25.142857142857142,
+            "yaw": 1.7894652726688387
+          },
+          {
+            "x": 15,
+            "y": 0.5143171655350783,
+            "z": -25.333333333333336,
+            "yaw": 1.7894652726688387
+          },
+          {
+            "x": 15.857142857142858,
+            "y": 0.5343070539739839,
+            "z": -25.523809523809526,
+            "yaw": 1.7894652726688387
+          },
+          {
+            "x": 16.714285714285715,
+            "y": 0.5532053423271377,
+            "z": -25.71428571428571,
+            "yaw": 1.7894652726688387
+          },
+          {
+            "x": 17.57142857142857,
+            "y": 0.5709239493985748,
+            "z": -25.904761904761905,
+            "yaw": 1.7894652726688387
+          }
+        ]
+      },
+      "vista": {
+        "present": true,
+        "segments": 4,
+        "radius": 90,
+        "vertices": 580,
+        "seamMaxDelta": 0,
+        "seam": [
+          {
+            "x": -48,
+            "z": -24,
+            "clamped": 0.0000596452767762665,
+            "unclamped": 0.0000596452767762665,
+            "delta": 0
+          },
+          {
+            "x": 48,
+            "z": -12,
+            "clamped": 0.41412488575637846,
+            "unclamped": 0.41412488575637846,
+            "delta": 0
+          },
+          {
+            "x": -18,
+            "z": -48,
+            "clamped": 0.015820572974790854,
+            "unclamped": 0.015820572974790854,
+            "delta": 0
+          },
+          {
+            "x": 0,
+            "z": 48,
+            "clamped": 0.12393795332056469,
+            "unclamped": 0.12393795332056469,
+            "delta": 0
+          },
+          {
+            "x": 18,
+            "z": 48,
+            "clamped": 0.35674307255058657,
+            "unclamped": 0.35674307255058657,
+            "delta": 0
+          },
+          {
+            "x": 48,
+            "z": 4,
+            "clamped": 0.4293512689336475,
+            "unclamped": 0.4293512689336475,
+            "delta": 0
+          }
+        ],
+        "river": {
+          "present": true,
+          "drawCalls": 1,
+          "radius": 90,
+          "vertices": 165,
+          "visualHalfWidth": 10,
+          "fadeStart": 78,
+          "westEdgeCenterZ": 0,
+          "eastEdgeCenterZ": 0,
+          "westFarCenterZ": -0.636,
+          "eastFarCenterZ": 0.636,
+          "meanderAmplitude": 0.835
+        }
+      },
+      "detailScatter": {
+        "instanceClasses": 0,
+        "contactShadows": 0,
+        "totalInstances": 0,
+        "seededInstances": 0,
+        "densityTier": "off",
+        "seed": 4074183009,
+        "classes": [
+          {
+            "id": "rocks",
+            "instances": 0,
+            "visibleInstances": 0,
+            "drawCalls": 1
+          },
+          {
+            "id": "stumps",
+            "instances": 0,
+            "visibleInstances": 0,
+            "drawCalls": 1
+          },
+          {
+            "id": "dry_grass",
+            "instances": 0,
+            "visibleInstances": 0,
+            "drawCalls": 1
+          },
+          {
+            "id": "wagon_ruts",
+            "instances": 0,
+            "visibleInstances": 0,
+            "drawCalls": 1
+          },
+          {
+            "id": "claim_posts",
+            "instances": 0,
+            "visibleInstances": 0,
+            "drawCalls": 1
+          },
+          {
+            "id": "cactus",
+            "instances": 0,
+            "visibleInstances": 0,
+            "drawCalls": 1
+          },
+          {
+            "id": "reeds",
+            "instances": 0,
+            "visibleInstances": 0,
+            "drawCalls": 1
+          }
+        ],
+        "exclusions": {
+          "buildPadRadius": 4.8,
+          "routingLaneRadius": 4.2,
+          "harvestAnchorRadius": 2.4,
+          "buildingClearRadius": 2.4
+        },
+        "probes": {
+          "buildPad": {
+            "x": 0,
+            "z": 9,
+            "clearRadius": 4.8,
+            "nearest": null,
+            "clear": true
+          },
+          "ford": {
+            "x": 0,
+            "z": 0,
+            "clearRadius": 6.25,
+            "nearest": null,
+            "clear": true
+          },
+          "routingLane": {
+            "x": 0,
+            "z": -14,
+            "clearRadius": 4.2,
+            "nearest": null,
+            "clear": true
+          },
+          "building": {
+            "x": 0,
+            "z": 9,
+            "clearRadius": 2.4,
+            "nearest": null,
+            "clear": true
+          }
+        },
+        "signature": ""
+      },
+      "height": {
+        "min": -0.4974322310873768,
+        "max": 0.7604929335026915,
+        "segments": 24,
+        "waterY": 0.025,
+        "probes": {
+          "heroStart": -0.19552637771002637,
+          "river": -0.3568450709008194,
+          "ford": -0.4614127230548627,
+          "nearBank": 0.16225693250147577,
+          "farBank": 0.3537853691144329
+        },
+        "natural": {
+          "range": 1.2579251645900684,
+          "fordApproachDelta": 0.08146875158135852,
+          "routingLaneDelta": 0.4712537844846039,
+          "routingFeatureMax": 0,
+          "probes": {
+            "gully": 0.3797816216443459,
+            "shelf": 0.6594091188238564,
+            "bluff": 0.62731581831873,
+            "pocket": -0.01743529393867789
+          },
+          "features": {
+            "gully": {
+              "gully": 1.0203415481393605,
+              "shelf": 0,
+              "bluff": 0,
+              "pocket": 0,
+              "routeMask": 1,
+              "calmMask": 1,
+              "heightOffset": -0.18978352795392106
+            },
+            "shelf": {
+              "gully": 0,
+              "shelf": 1.0458303593818272,
+              "bluff": 0,
+              "pocket": 0,
+              "routeMask": 1,
+              "calmMask": 1,
+              "heightOffset": 0.2723342255830278
+            },
+            "bluff": {
+              "gully": 0.4425116544147099,
+              "shelf": 0,
+              "bluff": 0,
+              "pocket": 0,
+              "routeMask": 1,
+              "calmMask": 1,
+              "heightOffset": -0.08230716772113604
+            },
+            "pocket": {
+              "gully": 0.03893052403177903,
+              "shelf": 0,
+              "bluff": 0,
+              "pocket": 1.0079091409562073,
+              "routeMask": 1,
+              "calmMask": 1,
+              "heightOffset": -0.1447198842963376
+            }
+          }
+        },
+        "heroGround": 0.3096316114466827,
+        "heroVisualY": 0.3696316114466827
+      },
+      "probes": {
+        "bank": {
+          "walkable": true,
+          "speedMul": 1,
+          "zone": "bank"
+        },
+        "shallows": {
+          "walkable": true,
+          "speedMul": 0.72,
+          "zone": "shallows",
+          "waterSource": "river",
+          "waterDepth": 0.25,
+          "waterClass": "wade"
+        },
+        "river": {
+          "walkable": false,
+          "speedMul": 0,
+          "zone": "river",
+          "waterSource": "river",
+          "waterDepth": 1.25,
+          "waterClass": "deep"
+        },
+        "ford": {
+          "walkable": true,
+          "speedMul": 0.8,
+          "zone": "ford",
+          "waterSource": "river",
+          "waterDepth": 0.3,
+          "waterClass": "wade"
+        },
+        "northBank": {
+          "walkable": true,
+          "speedMul": 1,
+          "zone": "bank"
+        },
+        "out": {
+          "walkable": false,
+          "speedMul": 0,
+          "zone": "river",
+          "waterSource": "river",
+          "waterDepth": 1.25,
+          "waterClass": "deep"
+        }
+      }
+    },
+    "lighting": {
+      "sunPresent": true,
+      "shadowsQuality": "blob",
+      "fogNear": 50,
+      "fogFar": 76,
+      "postEnabled": false,
+      "paperGrainOpacity": 0,
+      "shadowMapSize": 0,
+      "shadowMapTargetSize": 0,
+      "blobShadows": 2,
+      "heatShimmer": false,
+      "dustDevilQuads": 0,
+      "palette": {
+        "background": "#f1c887",
+        "fog": "#ead2a3",
+        "sun": "#ffd28a",
+        "sunIntensity": 2.35,
+        "fill": "#fff2cc",
+        "fillIntensity": 1.12
+      },
+      "nightShift": {
+        "enabled": false,
+        "phase": "full",
+        "darkness": 0,
+        "lampIntensityMult": 1
+      },
+      "nightPools": 0,
+      "nightPoolCap": 8,
+      "nightPoolSources": 0,
+      "enemyLanterns": 0,
+      "enemyLanternCones": 0,
+      "prospectorLights": 0,
+      "muzzleFlashes": 0,
+      "muzzleFlashCount": 0,
+      "billboardLights": 0,
+      "dayNight": null,
+      "coverage": {
+        "darkness": 0,
+        "minLight": 0.045,
+        "falloff": 1.25,
+        "litThreshold": 0.35,
+        "sources": 0,
+        "lanterns": 0,
+        "poweredLamps": 0
+      }
+    },
+    "spriteStats": {
+      "activeAnimators": 1,
+      "textureSwapsPerFrame": 0,
+      "fadeOverlaysActive": 0
+    },
+    "camera": {
+      "scene": "run",
+      "distanceScale": 1,
+      "targetDistanceScale": 1,
+      "minDistanceScale": 0.7,
+      "maxDistanceScale": 1.6,
+      "baseDistance": 31.958254019892887,
+      "targetDistance": 31.958254019892887,
+      "actualDistance": 31.95825401989288,
+      "glanceActive": false
+    },
+    "contract": {
+      "activeId": "e2-trestle",
+      "requestedId": "e2-trestle",
+      "fallbackReason": null,
+      "stagedLaunchClear": null,
+      "warningSuppressed": false,
+      "epochId": "epoch-2-steamworks",
+      "epochResources": [
+        {
+          "id": "pressure",
+          "name": "Pressure",
+          "iconSlot": "ui.resource.pressure",
+          "capDefault": 100,
+          "ledgerBlurb": "the boilers breathe it"
+        }
+      ],
+      "claimOffice": {
+        "exchange": [
+          {
+            "id": "gold-to-pressure",
+            "from": "gold",
+            "to": "pressure",
+            "fromAmount": 20,
+            "toAmount": 1,
+            "ledgerBlurb": "Feed the boiler bond."
+          },
+          {
+            "id": "pressure-to-gold",
+            "from": "pressure",
+            "to": "gold",
+            "fromAmount": 1,
+            "toAmount": 12,
+            "ledgerBlurb": "Vent surplus into the assay market."
+          }
+        ],
+        "metaCurrencySlot": {
+          "reserved": true,
+          "note": "Future overall-currency exchange rows fit this table; not implemented in E2."
+        }
+      },
+      "name": "The Trestle",
+      "tileParams": {
+        "tileId": "e2-trestle",
+        "biome": "steamworks-trestle-gorge",
+        "size": 96,
+        "render": {
+          "terrainMesh": "required"
+        },
+        "river": true,
+        "ford": true,
+        "fords": [
+          {
+            "id": "trestle",
+            "x": 0,
+            "halfWidth": 3
+          }
+        ],
+        "buildZones": [
+          {
+            "id": "south-approach",
+            "bank": "south",
+            "minX": -30,
+            "maxX": 30,
+            "minZ": -30,
+            "maxZ": -7
+          },
+          {
+            "id": "north-approach",
+            "bank": "north",
+            "minX": -30,
+            "maxX": 30,
+            "minZ": 7,
+            "maxZ": 30
+          }
+        ],
+        "stakeMarkers": [
+          {
+            "id": "south-boiler-site",
+            "x": 12,
+            "z": -12,
+            "heroStart": true
+          },
+          {
+            "id": "north-boiler-site",
+            "x": -12,
+            "z": 12,
+            "heroStart": false
+          }
+        ],
+        "rails": [
+          {
+            "style": "steamworks",
+            "points": [
+              {
+                "x": 0,
+                "z": -46
+              },
+              {
+                "x": 0,
+                "z": -22
+              },
+              {
+                "x": 0,
+                "z": -7
+              },
+              {
+                "x": 0,
+                "z": 7
+              },
+              {
+                "x": 0,
+                "z": 22
+              },
+              {
+                "x": 0,
+                "z": 46
+              }
+            ]
+          },
+          {
+            "style": "mine-spur",
+            "points": [
+              {
+                "x": -30,
+                "z": -18
+              },
+              {
+                "x": -14,
+                "z": -18
+              },
+              {
+                "x": 0,
+                "z": -22
+              },
+              {
+                "x": 18,
+                "z": -26
+              }
+            ]
+          }
+        ],
+        "waterSources": [],
+        "harvestAnchors": [
+          {
+            "x": -24,
+            "z": -20
+          },
+          {
+            "x": 24,
+            "z": -20
+          },
+          {
+            "x": -24,
+            "z": 20
+          },
+          {
+            "x": 24,
+            "z": 20
+          }
+        ],
+        "elevation": {
+          "cellSize": 2,
+          "analytic": {
+            "bowlDepth": 0.7,
+            "bowlRadius": 12,
+            "bowlCenterX": 0,
+            "bowlCenterZ": 0,
+            "ridgeAmp": 0.8,
+            "ridgeWidth": 18,
+            "ridgeLength": 42,
+            "ridgeX": 28,
+            "ridgeZ": 0
+          }
+        },
+        "heightfield": {
+          "id": "trestle-gorge-banks",
+          "mode": "visual",
+          "bankRelief": {
+            "amount": 0.45,
+            "width": 9
+          }
+        },
+        "palette": {
+          "id": "trestle-rust-river",
+          "tint": [
+            0.78,
+            0.72,
+            0.61
+          ],
+          "dampTint": [
+            0.31,
+            0.42,
+            0.42
+          ],
+          "dampAmount": 0.42,
+          "splat": {
+            "rockAmount": 0.72,
+            "dampBand": 3,
+            "scrubAmount": 0.14,
+            "macroWarmth": 0.7,
+            "antiTile": 0.72
+          }
+        },
+        "scatter": {
+          "id": "trestle-gorge-scrub",
+          "density": 0.7,
+          "classCounts": {
+            "rocks": 76,
+            "dry_grass": 34,
+            "wagon_ruts": 18,
+            "claim_posts": 8,
+            "reeds": 24
+          },
+          "nearWaterBias": 0.35
+        },
+        "water": {
+          "id": "trestle-gorge-river",
+          "visualHalfWidth": 10,
+          "depths": {
+            "river": 1.25,
+            "ford": 0.3,
+            "shallows": 0.25
+          },
+          "speedMul": {
+            "river": 0.45,
+            "ford": 0.8,
+            "shallows": 0.72
+          }
+        },
+        "engineDependencies": [
+          {
+            "dep": "elevation-advisory-fields",
+            "status": "missing",
+            "description": "Needs registered consumers for the declared slopeMax and waterline advisory fields."
+          }
+        ],
+        "lanes": {
+          "spawnEdges": [
+            "south",
+            "north",
+            "east",
+            "west"
+          ],
+          "territoryRingBiasWaves": 0,
+          "territoryRingLaneBias": 0
+        }
+      },
+      "boardRow": {
+        "name": "The Trestle",
+        "ledgerBlurb": "A rail crossing over the gorge: hold both approaches while the ore carts run.",
+        "tags": [
+          "steamworks"
+        ],
+        "unlock": "secured:e2-hill-mine"
+      },
+      "briefing": {
+        "goals": [
+          "Build on both approaches and survive through wave 12.",
+          "Trestle Crossing: see the ore cart safely over the gorge."
+        ],
+        "rules": [
+          "The trestle is the only easy crossing over deep water.",
+          "Rail Toughs and Steam Wreckers press both approaches.",
+          "The south bank beside the base remains open for sluice work.",
+          "Coal seams lie along the mine spur on the south approach, west of the boiler site."
+        ],
+        "geographyLine": "One long rail line crosses a deep river gorge between defended approaches."
+      },
+      "seamYieldMult": 1,
+      "secureWave": 12,
+      "waveCadenceMult": 0.7,
+      "lightRamp": null,
+      "dayNightCycle": null,
+      "baron": {
+        "wave": 12,
+        "bossKind": "railcar",
+        "hpScale": 12.5,
+        "speedScale": 0.68,
+        "scale": 3.2,
+        "contactDamageScale": 2.5,
+        "buildingDamageScale": 7,
+        "supportBuildingDamageScale": 5,
+        "pursuitRange": 0,
+        "escortCount": 6,
+        "tauntWaves": [
+          4,
+          8
+        ],
+        "taunt": "The Baron's railcar is bearing down on the trestle.",
+        "arrivalTitle": "THE TRESTLE RAILCAR",
+        "tauntTitle": "Hold the Crossing",
+        "defeatTitle": "THE TRESTLE HOLDS",
+        "defeatLine": "The Railcar is DEFEATED.",
+        "ledgerLabel": "THE TRESTLE RAILCAR",
+        "secureCallout": "+Trestle line held",
+        "awardMedal": false,
+        "defeatBeat": "The last ore cart clears the gorge under its own steam.",
+        "medalBlurb": "Trestle railcar disabled.",
+        "sciencePayoutMult": 3,
+        "railRouteIndex": 0,
+        "railSpeed": 1.9,
+        "componentDegradeSpeedMult": 0.82,
+        "components": [
+          {
+            "id": "wheels",
+            "label": "Wheel Trucks",
+            "hpScale": 0.9,
+            "visualScale": 0.9,
+            "xOffset": 0,
+            "zOffset": -0.55,
+            "tint": "#2f2a22",
+            "boltDamageMult": 0.8
+          },
+          {
+            "id": "boiler",
+            "label": "Boiler",
+            "hpScale": 1.25,
+            "visualScale": 1.08,
+            "xOffset": 1.15,
+            "zOffset": 0,
+            "tint": "#8b7d3c",
+            "boltDamageMult": 0.7,
+            "buildingDamageScale": 1.15
+          },
+          {
+            "id": "cabin",
+            "label": "Cabin",
+            "hpScale": 0.85,
+            "visualScale": 0.96,
+            "xOffset": 2.3,
+            "zOffset": 0.55,
+            "tint": "#46576b",
+            "boltDamageMult": 0.85
+          }
+        ]
+      },
+      "medals": {
+        "version": 1,
+        "baronBeaten": false,
+        "rocketCartCaptured": false
+      }
+    }
+  }
+}

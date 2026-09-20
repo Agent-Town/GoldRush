@@ -1,0 +1,39 @@
+first-town payload — declared families summed from dist/
+
+| group | gated | families | files | bytes |
+| --- | --- | ---: | ---: | ---: |
+| hero | yes | 8 | 106 | 4590285 |
+| cast | no (demand-paged) | 10 | 272 | 16111577 |
+| plates | yes | 19 | 19 | 4754493 |
+| models | yes | 16 | 16 | 3918764 |
+| audio | yes | 1 | 1 | 8821 |
+| code | yes | 33 | 33 | 2301823 |
+| document | yes | 1 | 1 | 1087 |
+| GATED TOTAL | yes | 78 | 176 | 15575273 |
+| DECLARED TOTAL (gated + demand-paged) | — | — | — | 31686850 |
+
+largest gated families
+    1375134  hero  char-hero-sheet-walkdiag8.png
+    1138813  code  index.js
+     878812  models  town-plate.glb
+     687147  hero  char-hero-sheet-rotation-f.png
+     547067  hero  char-hero-sheet-walk8.png
+     513856  plates  kit-era-1.png
+     456261  hero  char-hero-sheet-front-f.png
+     443016  hero  char-hero-sheet-back-f.png
+
+Save Data arm (advance stream drops dynamo-hall, stamp-mill): 15392113 bytes (-183160)
+excluded by declaration: 7 families, 7164282 bytes in this build
+     758822  char-hero-sheet-attack8.png
+    3552007  char-hero-sheet-work8.png
+        110  era-e1-frontier-loop.js
+    1800881  era-e1-frontier-loop.mp3
+      86344  the-claim-panorama.glb
+     966064  the-claim-terrain.glb
+         54  version.json
+
+cue-window corpus cross-check: 2 files, 82 families observed, 0 undeclared
+
+first-town payload demand-paged: 16111577 bytes
+first-town payload declared: 31686850 bytes
+first-town payload: 15575273 bytes

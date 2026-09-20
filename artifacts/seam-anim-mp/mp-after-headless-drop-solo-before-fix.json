@@ -1,0 +1,154 @@
+{
+  "viewport": {
+    "width": 1280,
+    "height": 800
+  },
+  "mp": null,
+  "actors": [
+    {
+      "slot": 0,
+      "playerId": "local",
+      "name": "Rider",
+      "town": null,
+      "local": true,
+      "hp": 100,
+      "maxHp": 100,
+      "weapon": "rig",
+      "position": {
+        "x": -1.5,
+        "y": 0.45848392009735095,
+        "z": -6.4
+      },
+      "speed": 0,
+      "visible": true
+    },
+    {
+      "slot": 1,
+      "playerId": "actor-1",
+      "name": "Rider 2",
+      "town": null,
+      "local": false,
+      "hp": 100,
+      "maxHp": 100,
+      "weapon": "rig",
+      "position": {
+        "x": -1.5,
+        "y": 0.45848392009735095,
+        "z": -6.4
+      },
+      "speed": 0,
+      "visible": false
+    }
+  ],
+  "harvest": {
+    "activeNodes": [
+      {
+        "id": "gold-seam-1",
+        "active": true,
+        "anchorIndex": 2,
+        "position": {
+          "x": -1.5,
+          "z": -6.4
+        },
+        "remaining": 30,
+        "respawnScheduled": false,
+        "respawnIn": 0
+      },
+      {
+        "id": "gold-seam-2",
+        "active": true,
+        "anchorIndex": 3,
+        "position": {
+          "x": 7.5,
+          "z": 6.5
+        },
+        "remaining": 30,
+        "respawnScheduled": false,
+        "respawnIn": 0
+      },
+      {
+        "id": "gold-seam-3",
+        "active": true,
+        "anchorIndex": 4,
+        "position": {
+          "x": 18,
+          "z": -7
+        },
+        "remaining": 30,
+        "respawnScheduled": false,
+        "respawnIn": 0
+      },
+      {
+        "id": "gold-seam-4",
+        "active": false,
+        "anchorIndex": -1,
+        "position": {
+          "x": 0,
+          "z": 0
+        },
+        "remaining": 30,
+        "respawnScheduled": false,
+        "respawnIn": 0
+      },
+      {
+        "id": "gold-seam-5",
+        "active": false,
+        "anchorIndex": -1,
+        "position": {
+          "x": 0,
+          "z": 0
+        },
+        "remaining": 30,
+        "respawnScheduled": false,
+        "respawnIn": 0
+      },
+      {
+        "id": "gold-seam-6",
+        "active": false,
+        "anchorIndex": -1,
+        "position": {
+          "x": 0,
+          "z": 0
+        },
+        "remaining": 30,
+        "respawnScheduled": false,
+        "respawnIn": 0
+      }
+    ],
+    "channeling": true,
+    "channelNodeId": "gold-seam-1",
+    "progress": 0.33333333333333326,
+    "channels": [
+      {
+        "actorId": "0",
+        "channelNodeId": "gold-seam-1",
+        "progress": 0.33333333333333326,
+        "channeling": true
+      }
+    ],
+    "lastGoldGain": 0,
+    "lastGoldPosition": null
+  },
+  "heroAnimation": {
+    "clip": "pan",
+    "frame": 5,
+    "frameKey": "char-hero-sheet-work8-r0c5.png",
+    "frameCount": 8,
+    "fps": 8,
+    "loaded": true,
+    "fadeActive": true,
+    "fadeMsRemaining": 80,
+    "fadeWindow": 0,
+    "frameBlendActive": true,
+    "frameBlendMsRemaining": 80,
+    "frameBlendWindow": 2,
+    "direction": "s",
+    "mirrored": false
+  },
+  "frameMs": {
+    "last": 233.09999999999127,
+    "avg": 17.362777777777712,
+    "p95": 44.89999999999418,
+    "sampleCount": 180
+  }
+}

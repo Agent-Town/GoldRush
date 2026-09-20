@@ -1,0 +1,38 @@
+gate battery transcript (append-only — see scripts/gate-battery.mjs)
+
+
+######## BATTERY 2026-09-07T09:13:07.905Z — s2536 focused node failure controls ########
+cwd=/private/tmp/gr-gate-s2536
+env+ PATH=/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin CLAUDE_CONFIG_DIR=/Users/robin/.claude-fires GR_GUARD_NO_ARTIFACT=1
+
+===== secure-choice child =====
+$ node --test --test-timeout=300000 scripts/secure-choice-refusal.test.mjs
+rc=0 28.2s
+✔ a concatenated plan is refused with the word, told on both wires, and the clock runs it out (10952.282333ms)
+✔ a lone SECURE_CHOICE still secures, and no refusal reaches the tape (17045.046459ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 28169.594792
+
+
+===== landmark starts =====
+$ node --test --test-timeout=300000 --test-name-pattern=headless landmark starts release before enemies can stall at the perimeter scripts/gr-sim.test.mjs
+rc=0 18.2s
+✔ headless landmark starts release before enemies can stall at the perimeter (18040.471792ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 18131.813791
+
+
+SUMMARY {"secure-choice child":0,"landmark starts":0}
+OVERALL rc=0

@@ -1,0 +1,37 @@
+{
+  "kind": "same-camera landmark-addition telemetry",
+  "target": "The candidate should add exactly five grounded, readable E3 landmark bodies and their local light response while preserving camera, terrain, water, panorama, and simulation masks.",
+  "comparability": "same 1280x720 camera, light rig, terrain, panorama, and render state; only the five body meshes are hidden in the reference",
+  "reference": "artifacts/map-rebuild-spike/canyon-works-landmarks-bare-reference.png",
+  "candidate": "artifacts/map-rebuild-spike/canyon-works-landmarks-proposed.png",
+  "dimensions": {
+    "width": 1280,
+    "height": 720
+  },
+  "grayscale": {
+    "mae": 7.084182,
+    "rmse": 18.322063,
+    "diffRatio16": 0.116927,
+    "diffRatio32": 0.062619,
+    "diffRatio64": 0.023566,
+    "pixelMismatchRatio20": 0.098678
+  },
+  "contentProxies": {
+    "blackRatioReference": 0.35898,
+    "blackRatioCandidate": 0.445503,
+    "avgLuminanceReference": 39.874722,
+    "avgLuminanceCandidate": 33.280972,
+    "avgLuminanceDelta": -6.59375,
+    "edgeEnergyReference": 2.278248,
+    "edgeEnergyCandidate": 2.107655,
+    "edgeEnergyRatio": 0.925121,
+    "edgeDiffRatio32": 0.001466
+  },
+  "differenceBoundsOver16": {
+    "minX": 11,
+    "minY": 117,
+    "maxX": 1264,
+    "maxY": 719
+  },
+  "verdictUse": "Metrics locate the five additions and light pools; acceptance remains a visual judgment, not a distance score."
+}

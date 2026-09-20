@@ -1,0 +1,40 @@
+# s2376 gate evidence - reel-era-projection (EH-3b)
+
+## 1. Mirror suite scripts/agent-reels.test.mjs
+
+MERGED TREE rc=1
+
+
+test at scripts/agent-reels.test.mjs:11:1
+✖ agent reel validation reuses the door bounds and CLI tape content stays deterministic under unique ids (444.031334ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+      buildId: 'abcdef12',
+  +   engineHash: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+  +   era: 3
+    }
+  
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/gate-s2376/scripts/agent-reels.test.mjs:52:12)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { buildId: 'abcdef12', engineHash: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', era: 3 },
+    expected: { buildId: 'abcdef12
+
+CONTROL, pristine main rc=0
+ℹ tests 1 | ℹ pass 1 | ℹ fail 0
+
+## 2. Half-stamped projection round-trip (merged tree)
+
+MODE direct
+fully-stamped                        wire.meta={"buildId":"abcdef12","engineHash":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","era":4} -> PLAYABLE meta={"buildId":"abcdef12","engineHash":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","era":4}
+half-stamped (engineHash, NO era)    wire.meta={"buildId":"abcdef12","engineHash":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"} -> REFUSED (null) => reason:unavailable
+bare buildId                         wire.meta={"buildId":"abcdef12"} -> PLAYABLE meta={"buildId":"abcdef12"}
+
+## 3. Otherwise-green arms (merged tree)
+
+tsc --noEmit rc=0
+scripts/test-standings.mjs rc=0 (kv 173 / sqlite 173)

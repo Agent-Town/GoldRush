@@ -1,0 +1,30 @@
+runner-restart-recipe guard (F-1652-1 / F-1653-1)
+  ok   — start-lane-runner.sh parses
+  ok   — health-watch.sh parses
+  ok   — runner-processes.sh parses
+  ok   — old broad pgrep goes red on the prompt carrier
+  ok   — shared discriminator rejects protocol prose
+  ok   — shared discriminator finds one absolute-path runner
+  ok   — runner self-exclusion leaves zero fixture runners
+  ok   — shared discriminator accepts a relative runner path
+  ok   — real helper launched its recorded PID at PPID 1 with no controlling terminal
+  ok   — helper rejects a substitute runner instead of verifying the wrong PID
+  ok   — rejected-runner cleanup waits for exit and has bounded KILL escalation
+/private/var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/runner-processes.7qVgAm/stop-rejected-runner.sh: line 1: 23479 Killed: 9               IGNORE_TERM=1 bash "$isolated/lane-runner-v3.sh"
+  ok   — rejected-runner cleanup returns only after the runner is gone
+  ok   — health-watch.sh has no bare nohup restart of lane-runner-v3.sh
+  ok   — health-watch.sh routes its restart through start-lane-runner.sh
+  ok   — helper unsets CLAUDE_CONFIG_DIR and CLAUDECODE
+  ok   — helper prepends the resolved client's bin dir to PATH (carries node/npm/npx)
+  ok   — helper refuses when a runner is already alive
+  ok   — helper never rmdir's the runner lock
+  ok   — CODEX_FLOOR agrees: helper 0.144.1 == runner 0.144.1
+  ok   — staleness computation lives in the shared runner-processes.sh (one implementation)
+  ok   — health-watch's runner line calls runner_staleness_note (wired, not merely defined)
+  ok   — health-watch runner line goes STALE when the process predates the script
+  ok   — health-watch runner line is silent when the runner is current (no noise)
+  ok   — stale runner (process older than the newest runner-script commit) is REPORTED
+  ok   — fresh runner is reported as current (no false STALE alarm)
+  ok   — staleness report is WARN-only (rc 0 both arms) — never blocks a restart
+  ok   — staleness report is bounded (<=20 lines)
+RESULT: 0 failure(s)

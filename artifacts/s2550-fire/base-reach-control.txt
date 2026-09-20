@@ -1,0 +1,59 @@
+gate battery transcript (append-only — see scripts/gate-battery.mjs)
+
+
+######## BATTERY 2026-09-07T18:22:37.998Z — s2550 unchanged main reach control ########
+cwd=/Users/robin/Claude/Projects/Gold Rush
+
+===== unchanged main reach guard =====
+$ node --test --test-reporter=spec scripts/rider-parity-reach.test.mjs
+rc=1 0.1s
+✔ every GR-SIM action reach test reads the hero (ADR-005 stage 1) (2.746958ms)
+✔ the browser still acts from the acting hero, which is the shape stage 1 copied (2.245083ms)
+✔ harvest and repair stay Prospector chores on both sides (they were already 1:1) (0.423625ms)
+✖ the Prospector reads that remain are exactly the ones that are meant to remain (1.360875ms)
+✔ the reach guard BITES a read moved back to the Prospector (manufactured defect) (71.140792ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 4
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 116.506042
+
+✖ failing tests:
+
+test at scripts/rider-parity-reach.test.mjs:120:1
+✖ the Prospector reads that remain are exactly the ones that are meant to remain (1.360875ms)
+  AssertionError [ERR_ASSERTION]: src/sim/HeadlessContractSim.ts carries 10 `this.prospector.position` code reads, not 12. Stage 1 left exactly twelve: three deliberate reach tests (pan, repair, harvestTargets), seven passive wirings (the deepwater shooter, BuildSystem's construction anchor, the deepwater actor pick, build.update, the pressure and motor body lists, the Prospector's own movement multiplier), the E8 hollow crossing, and the interference-front suspension. Adding a tenth ACTION reach on this body is the thing this test exists to catch:
+  630: getPos: () => this.deepwater ? this.prospector.position : this.hero.group.position,
+  1127: this.prospector.position,
+  1320: () => this.manifest.tileParams.raceCourse || this.manifest.tileParams.flotilla ? this.prospector.position : this.hero.group.position,
+  1917: this.prospector.position,
+  1928: [this.hero.group.position, this.prospector.position],
+  1937: [this.hero.group.position, this.prospector.position],
+  2049: STEP_SECONDS * (moving || drifting ? this.deepwater?.movementMultiplier(this.prospector.position) ?? 1 : 1),
+  2847: return this.build.repairBuilding(ref.id, index, this.timeAlive, this.prospector.position);
+  2856: if (Math.hypot(this.prospector.position.x - position.x, this.prospector.position.z - position.z) > Balance.goldSeam.channelRange) {
+  2917: position: this.prospector.position,
+  
+  10 !== 12
+  
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/scripts/rider-parity-reach.test.mjs:128:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 10,
+    expected: 12,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+
+SUMMARY {"unchanged main reach guard":1}
+OVERALL rc=1

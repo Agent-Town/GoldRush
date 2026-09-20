@@ -1,0 +1,202 @@
+{
+  "key": "county-e3-blackout-ridge",
+  "tapePath": "tapes/county-e3-blackout-ridge.json",
+  "contract": "e3-blackout-ridge",
+  "kind": "county-played",
+  "node": "v26.4.0",
+  "before": {
+    "at": "2026-09-05T16:02:52.079Z",
+    "load": [
+      42.21630859375,
+      14.9560546875,
+      14.11865234375
+    ],
+    "freeMemory": 4923555840
+  },
+  "after": {
+    "at": "2026-09-05T16:03:03.837Z",
+    "load": [
+      44.287109375,
+      16.2919921875,
+      14.6015625
+    ],
+    "freeMemory": 2790244352
+  },
+  "declaredDurationTicks": 10801,
+  "simulatedSeconds": 360.03333333333336,
+  "bootMs": 33.995082999999795,
+  "replayMs": 10528.808708,
+  "ticksPerSecond": 1025.8520502697693,
+  "realtimeMultiple": 34.19506834232565,
+  "estimateTenMinuteSeconds": 17.5463898476067,
+  "estimateFormula": "600 seconds / measured realtimeMultiple; extrapolation, not an actual 10-minute tape when duration differs",
+  "tickMs": {
+    "n": 10801,
+    "min": 0.2728750000001128,
+    "p50": 1.0651669999997466,
+    "p95": 1.3251250000002983,
+    "p99": 1.5131669999991573,
+    "max": 14.297583999999915
+  },
+  "tickPath": "sim/county-e3-blackout-ridge-ticks.json",
+  "result": {
+    "eventLogHash": "fnv1a32:7c844f3e",
+    "outcome": {
+      "secured": true,
+      "waves": 12,
+      "gold": 200,
+      "timeAlive": 360
+    },
+    "securedSnapshot": {
+      "waves": 12,
+      "gold": 445,
+      "timeAlive": 360.00000000007077
+    },
+    "ticks": 10801,
+    "engine": "headless-contract-sim"
+  },
+  "expectedHash": "fnv1a32:7c844f3e",
+  "hashMatches": true,
+  "top20": [
+    {
+      "name": "terrainSeed",
+      "url": "",
+      "line": 1469,
+      "column": 21,
+      "selfMs": 1834.2379999999998
+    },
+    {
+      "name": "structuredClone",
+      "url": "node:internal/worker/js_transferable",
+      "line": 113,
+      "column": 25,
+      "selfMs": 1771.5569999999998
+    },
+    {
+      "name": "terrainHash",
+      "url": "",
+      "line": 1486,
+      "column": 21,
+      "selfMs": 990.6630000000002
+    },
+    {
+      "name": "stableProbeMask",
+      "url": "",
+      "line": 1266,
+      "column": 25,
+      "selfMs": 482.5919999999999
+    },
+    {
+      "name": "structuredClone",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 395.059
+    },
+    {
+      "name": "get diagnostics",
+      "url": "",
+      "line": 484,
+      "column": 17,
+      "selfMs": 248.17399999999998
+    },
+    {
+      "name": "clone",
+      "url": "",
+      "line": 320,
+      "column": 15,
+      "selfMs": 226.095
+    },
+    {
+      "name": "(anonymous)",
+      "url": "",
+      "line": 193,
+      "column": 26,
+      "selfMs": 223.022
+    },
+    {
+      "name": "terrainFeatures",
+      "url": "",
+      "line": 1193,
+      "column": 25,
+      "selfMs": 222.64799999999994
+    },
+    {
+      "name": "channelMask",
+      "url": "",
+      "line": 1247,
+      "column": 21,
+      "selfMs": 194.53999999999996
+    },
+    {
+      "name": "update",
+      "url": "",
+      "line": 809,
+      "column": 8,
+      "selfMs": 167.185
+    },
+    {
+      "name": "(program)",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 159.783
+    },
+    {
+      "name": "#getSearchFromContext",
+      "url": "node:internal/url",
+      "line": 889,
+      "column": 24,
+      "selfMs": 156.834
+    },
+    {
+      "name": "multiplyMatrices",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 10385,
+      "column": 18,
+      "selfMs": 132.487
+    },
+    {
+      "name": "dispatch",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 119.153
+    },
+    {
+      "name": "diagnostics",
+      "url": "",
+      "line": 1795,
+      "column": 13,
+      "selfMs": 118.18299999999999
+    },
+    {
+      "name": "sampleHeightFamily",
+      "url": "",
+      "line": 422,
+      "column": 28,
+      "selfMs": 112.189
+    },
+    {
+      "name": "(garbage collector)",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 100.161
+    },
+    {
+      "name": "maxHpForInstance",
+      "url": "",
+      "line": 1619,
+      "column": 18,
+      "selfMs": 95.593
+    },
+    {
+      "name": "valueNoise",
+      "url": "",
+      "line": 1475,
+      "column": 20,
+      "selfMs": 95.334
+    }
+  ]
+}

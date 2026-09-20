@@ -1,0 +1,105 @@
+{
+  "law": "reuse > derive > build-new; era-stamped; grit-dressed",
+  "packs": {
+    "mare-claim": {
+      "era": 8,
+      "atlasSha256": "239c6c7d9dd89ab9e48f99aec69a1ee627c8cb386143711706727b769393a7e3",
+      "assets": {
+        "earthrise-listening-array": {
+          "sourceTier": "derive",
+          "triangles": 1132,
+          "sha256": "889fe36e0f899db4894561d96ceb7ac9ee668bc5a521980839fa7dee0230c75f",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "lava-tube-survey-gantry": {
+          "sourceTier": "derive",
+          "triangles": 600,
+          "sha256": "797f3dd903c4909953dd8ee88e73b51312175ad5d77102efdcc0b9fecd6a4915",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "regolith-core-yard": {
+          "sourceTier": "reuse",
+          "triangles": 836,
+          "sha256": "652bc232b2e210924ee8cbc6f3fd8b9e73335b53da96c3918af7781f827521c2",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "west-rim-debris-catcher": {
+          "sourceTier": "reuse",
+          "triangles": 1164,
+          "sha256": "f634d4908cca47d50956c7b789d29aa6435d1c663339cf146d73d64057d1e2ae",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "east-rim-debris-catcher": {
+          "sourceTier": "reuse",
+          "triangles": 1164,
+          "sha256": "c37d9ff275eeb8c80ac912b6865b4f9c609259ed2c296d3df1c1f6ec4e234a0c",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        }
+      }
+    }
+  },
+  "totals": {
+    "packs": 1,
+    "assets": 5,
+    "sourceTiers": {
+      "reuse": 3,
+      "derive": 2,
+      "build-new": 0
+    }
+  },
+  "boards": {
+    "mare-claim-landmarks-turntable.png": {
+      "size": [
+        1920,
+        1160
+      ],
+      "sha256": "c3eb42457906f0d143a5621443e4abf32d8c7f5e6d5b103e347dc64a36073b78"
+    },
+    "mare-claim-landmarks-verdict.png": {
+      "size": [
+        1920,
+        1008
+      ],
+      "sha256": "a97332dc0ee1505da9f901ef16dc573bb68e158e2a8ff1acd42bedb1a61a9300"
+    },
+    "mare-claim-landmarks-pack.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "dc3e2d441c47db01571f17327ee782725a64882d1bd0376a0bc60c87cd2abe29"
+    },
+    "mare-claim-landmarks-proposed.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "79d8ac5f9c15b2fd8301de0204255393f7771b33d6b7cf02358630775231c252"
+    },
+    "mare-claim-landmarks-proposed-overview.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "f3f8328ef95272112c445343624ec29f59bf58b985cc1d1517500d665020cf20"
+    },
+    "mare-claim-landmarks-clearance-overlay.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "4fb46c3a6b365308c567ea2b06a83df87c85d1a5b769e0068474688d8a351662"
+    }
+  },
+  "simulation": "unchanged; every landmark is a separate render-only GLB mounted by contract"
+}

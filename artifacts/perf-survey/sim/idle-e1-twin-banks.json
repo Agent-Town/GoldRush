@@ -1,0 +1,197 @@
+{
+  "key": "idle-e1-twin-banks",
+  "tapePath": "tapes/idle-e1-twin-banks.json",
+  "contract": "e1-twin-banks",
+  "kind": "null-floor",
+  "node": "v26.4.0",
+  "before": {
+    "at": "2026-09-05T15:58:05.638Z",
+    "load": [
+      5.18994140625,
+      8.4970703125,
+      13.46630859375
+    ],
+    "freeMemory": 3527262208
+  },
+  "after": {
+    "at": "2026-09-05T15:58:07.673Z",
+    "load": [
+      5.65478515625,
+      8.53857421875,
+      13.45166015625
+    ],
+    "freeMemory": 3527360512
+  },
+  "declaredDurationTicks": 3146,
+  "simulatedSeconds": 104.86666666666666,
+  "bootMs": 30.963915999999926,
+  "replayMs": 774.0389160000002,
+  "ticksPerSecond": 4064.39512919787,
+  "realtimeMultiple": 135.479837639929,
+  "estimateTenMinuteSeconds": 4.4287032701843625,
+  "estimateFormula": "600 seconds / measured realtimeMultiple; extrapolation, not an actual 10-minute tape when duration differs",
+  "tickMs": {
+    "n": 3146,
+    "min": 0.15741700000012315,
+    "p50": 0.22612499999991087,
+    "p95": 0.3653750000000855,
+    "p99": 0.5875410000001011,
+    "max": 7.05337499999996
+  },
+  "tickPath": "sim/idle-e1-twin-banks-ticks.json",
+  "result": {
+    "eventLogHash": "fnv1a32:a45ba9ac",
+    "outcome": {
+      "secured": false,
+      "waves": 3,
+      "gold": 0,
+      "timeAlive": 104.867
+    },
+    "ticks": 3146,
+    "engine": "headless-contract-sim"
+  },
+  "expectedHash": "fnv1a32:a45ba9ac",
+  "hashMatches": true,
+  "top20": [
+    {
+      "name": "dispatch",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 121.414
+    },
+    {
+      "name": "terrainSeed",
+      "url": "",
+      "line": 1469,
+      "column": 21,
+      "selfMs": 54.77800000000001
+    },
+    {
+      "name": "terrainHash",
+      "url": "",
+      "line": 1486,
+      "column": 21,
+      "selfMs": 42.854
+    },
+    {
+      "name": "multiplyMatrices",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 10385,
+      "column": 18,
+      "selfMs": 40.644000000000005
+    },
+    {
+      "name": "toArray",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 11099,
+      "column": 9,
+      "selfMs": 33.416
+    },
+    {
+      "name": "currentTrickleInterval",
+      "url": "",
+      "line": 641,
+      "column": 24,
+      "selfMs": 28.999000000000002
+    },
+    {
+      "name": "get diagnostics",
+      "url": "",
+      "line": 484,
+      "column": 17,
+      "selfMs": 27.151
+    },
+    {
+      "name": "maxHpForInstance",
+      "url": "",
+      "line": 1619,
+      "column": 18,
+      "selfMs": 23.926
+    },
+    {
+      "name": "diagnostics",
+      "url": "",
+      "line": 1795,
+      "column": 13,
+      "selfMs": 22.855
+    },
+    {
+      "name": "update",
+      "url": "",
+      "line": 809,
+      "column": 8,
+      "selfMs": 21.177
+    },
+    {
+      "name": "maxHpForPlacement",
+      "url": "",
+      "line": 1622,
+      "column": 19,
+      "selfMs": 16.656
+    },
+    {
+      "name": "(anonymous)",
+      "url": "",
+      "line": 1534,
+      "column": 32,
+      "selfMs": 16.523999999999997
+    },
+    {
+      "name": "syncEnemyInstance",
+      "url": "",
+      "line": 1343,
+      "column": 19,
+      "selfMs": 15.834
+    },
+    {
+      "name": "rubbleDiagnostics",
+      "url": "",
+      "line": 2052,
+      "column": 19,
+      "selfMs": 15.73
+    },
+    {
+      "name": "setFromEuler",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 4167,
+      "column": 14,
+      "selfMs": 15.036
+    },
+    {
+      "name": "activePositions",
+      "url": "",
+      "line": 1533,
+      "column": 17,
+      "selfMs": 14.465999999999998
+    },
+    {
+      "name": "(anonymous)",
+      "url": "",
+      "line": 3,
+      "column": 49,
+      "selfMs": 13.606
+    },
+    {
+      "name": "hpBarDiagnostics",
+      "url": "",
+      "line": 1663,
+      "column": 18,
+      "selfMs": 13.488
+    },
+    {
+      "name": "setInstanceColor",
+      "url": "",
+      "line": 1743,
+      "column": 18,
+      "selfMs": 13.238
+    },
+    {
+      "name": "terrainFeatures",
+      "url": "",
+      "line": 1193,
+      "column": 25,
+      "selfMs": 13.234
+    }
+  ]
+}

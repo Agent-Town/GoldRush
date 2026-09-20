@@ -1,0 +1,95 @@
+diff --git a/e2e/ss-06-e5-beats.spec.ts b/e2e/ss-06-e5-beats.spec.ts
+index b2254fdc3..b352252f6 100644
+--- a/e2e/ss-06-e5-beats.spec.ts
++++ b/e2e/ss-06-e5-beats.spec.ts
+@@ -10,7 +10,7 @@ import { expectNoConsoleErrors, watchErrors } from './support/console-watch';
+ const E1 = 'epoch-1-frontier';
+ const E2 = 'epoch-2-steamworks';
+ const E5 = 'epoch-5-deepwater';
+-const SHOTS = 'reviews/shots-ss-06-e5-beats';
++const SHOTS = process.env.GR_REFRESH_EVIDENCE === '1' ? 'reviews/shots-ss-06-e5-beats' : 'test-results/evidence/shots-ss-06-e5-beats';
+ const IDS = [
+   'e5-deepwater-claim-arrival',
+   'e5-harbormaster-manifest',
+diff --git a/e2e/ss-07-e6-beats.spec.ts b/e2e/ss-07-e6-beats.spec.ts
+index aadd77699..23aa78d1a 100644
+--- a/e2e/ss-07-e6-beats.spec.ts
++++ b/e2e/ss-07-e6-beats.spec.ts
+@@ -10,7 +10,7 @@ import { expectNoConsoleErrors, watchErrors } from './support/console-watch';
+ const E1 = 'epoch-1-frontier';
+ const E3 = 'epoch-3-voltage';
+ const E6 = 'epoch-6-atomic';
+-const SHOTS = 'reviews/shots-ss-07-e6-beats';
++const SHOTS = process.env.GR_REFRESH_EVIDENCE === '1' ? 'reviews/shots-ss-07-e6-beats' : 'test-results/evidence/shots-ss-07-e6-beats';
+ const IDS = [
+   'e6-glow-mesa-arrival',
+   'e6-steward-doorless-dome',
+diff --git a/e2e/ss-08-e7-beats.spec.ts b/e2e/ss-08-e7-beats.spec.ts
+index 3418416a2..e975cb879 100644
+--- a/e2e/ss-08-e7-beats.spec.ts
++++ b/e2e/ss-08-e7-beats.spec.ts
+@@ -10,7 +10,7 @@ import { expectNoConsoleErrors, watchErrors } from './support/console-watch';
+ const E1 = 'epoch-1-frontier';
+ const E3 = 'epoch-3-voltage';
+ const E7 = 'epoch-7-signal';
+-const SHOTS = 'reviews/shots-ss-08-e7-beats';
++const SHOTS = process.env.GR_REFRESH_EVIDENCE === '1' ? 'reviews/shots-ss-08-e7-beats' : 'test-results/evidence/shots-ss-08-e7-beats';
+ const IDS = [
+   'e7-relay-valley-arrival',
+   'e7-exchange-wrong-number',
+diff --git a/e2e/ss-09-e8-beats.spec.ts b/e2e/ss-09-e8-beats.spec.ts
+index f27f8eddc..27aacc7bb 100644
+--- a/e2e/ss-09-e8-beats.spec.ts
++++ b/e2e/ss-09-e8-beats.spec.ts
+@@ -10,7 +10,7 @@ import { expectNoConsoleErrors, watchErrors } from './support/console-watch';
+ const E1 = 'epoch-1-frontier';
+ const E3 = 'epoch-3-voltage';
+ const E8 = 'epoch-8-orbital';
+-const SHOTS = 'reviews/shots-ss-09-e8-beats';
++const SHOTS = process.env.GR_REFRESH_EVIDENCE === '1' ? 'reviews/shots-ss-09-e8-beats' : 'test-results/evidence/shots-ss-09-e8-beats';
+ // The Mare Claim is the only default-unlocked E8 contract
+ // (assets/contracts/epoch-8-orbital/contracts.json, boardRow.unlock), so opening the board in an
+ // Orbital town queues exactly the six arrival beats and nothing from the other three maps.
+diff --git a/e2e/ss-10-e9-beats.spec.ts b/e2e/ss-10-e9-beats.spec.ts
+index 933cdd4e9..a8471690d 100644
+--- a/e2e/ss-10-e9-beats.spec.ts
++++ b/e2e/ss-10-e9-beats.spec.ts
+@@ -23,7 +23,7 @@ import { expectNoConsoleErrors, watchErrors } from './support/console-watch';
+ const E1 = 'epoch-1-frontier';
+ const E2 = 'epoch-2-steamworks';
+ const E9 = 'epoch-9-redfields';
+-const SHOTS = 'reviews/shots-ss-10-e9-beats';
++const SHOTS = process.env.GR_REFRESH_EVIDENCE === '1' ? 'reviews/shots-ss-10-e9-beats' : 'test-results/evidence/shots-ss-10-e9-beats';
+ const IDS = [
+   'e9-dome-basin-arrival',
+   'e9-water-ledger-opened',
+diff --git a/e2e/ss-11-e10-beats.spec.ts b/e2e/ss-11-e10-beats.spec.ts
+index 3952c4472..7d119133b 100644
+--- a/e2e/ss-11-e10-beats.spec.ts
++++ b/e2e/ss-11-e10-beats.spec.ts
+@@ -11,7 +11,7 @@ import { expectNoConsoleErrors, watchErrors } from './support/console-watch';
+ const E1 = 'epoch-1-frontier';
+ const E3 = 'epoch-3-voltage';
+ const E10 = 'epoch-10-deepsky';
+-const SHOTS = 'reviews/shots-ss-11-e10-beats';
++const SHOTS = process.env.GR_REFRESH_EVIDENCE === '1' ? 'reviews/shots-ss-11-e10-beats' : 'test-results/evidence/shots-ss-11-e10-beats';
+ // The Ember Shore is the only default-unlocked Deep Sky contract
+ // (assets/contracts/epoch-10-deepsky/contracts.json, boardRow.unlock), so opening the board in a
+ // fresh Deep Sky town queues exactly the seven boarding beats and nothing from the other three maps.
+diff --git a/scripts/moth-season-pressure.test.mjs b/scripts/moth-season-pressure.test.mjs
+index b4368cad0..0919209f6 100644
+--- a/scripts/moth-season-pressure.test.mjs
++++ b/scripts/moth-season-pressure.test.mjs
+@@ -137,9 +137,10 @@ test('the corridor circuit is cut, dark, repaired and lit across the floor ride'
+   const terminalLamp = trace.at(-1).lamp;
+   assert.ok(terminalLamp === 'powered' || terminalLamp === 'dark', 'the terminal corridor state must be readable');
+ 
+-  mkdirSync(path.join(ROOT, 'artifacts/e3-moth-season'), { recursive: true });
++  const evidenceDir = path.join(ROOT, process.env.GR_REFRESH_EVIDENCE === '1' ? 'artifacts/e3-moth-season' : 'test-results/evidence/e3-moth-season');
++  mkdirSync(evidenceDir, { recursive: true });
+   writeFileSync(
+-    path.join(ROOT, `artifacts/e3-moth-season/ride-${SEED}.json`),
++    path.join(evidenceDir, `ride-${SEED}.json`),
+     `${JSON.stringify({ seed: SEED, outcome, beats: { dark: trace[0].turn, lit: lit.turn, cut: cut.turn, relit: null }, terminalLamp, trace }, null, 2)}\n`,
+   );
+   console.log(`moth-season circuit beats dark@${trace[0].turn} lit@${lit.turn} cut@${cut.turn} relit=none terminal=${terminalLamp} hash=${outcome.eventLogHash}`);

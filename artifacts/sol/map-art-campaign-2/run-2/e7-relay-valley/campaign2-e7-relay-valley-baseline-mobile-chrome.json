@@ -1,0 +1,522 @@
+[
+  {
+    "scene": "e7-relay-valley",
+    "contract": "e7-relay-valley",
+    "project": "mobile-chrome",
+    "phase": "campaign2-e7-relay-valley-baseline",
+    "query": "&epoch=epoch-7-signal",
+    "focusMount": "west-ridge-dish-cluster",
+    "standoff": [
+      0,
+      9
+    ],
+    "frameMedianLuminance": 0.1538,
+    "terrainMedianLuminance": 0.1922,
+    "landmarkMedianLuminance": 0.1893,
+    "landmarkAllMountsMedian": 0.1893,
+    "heroLuminance": 0.3262,
+    "landmarkOverTerrain": 0.985,
+    "emissiveIntensity": [
+      {
+        "id": "west-ridge-dish-cluster",
+        "range": [
+          0.45,
+          0.45
+        ]
+      },
+      {
+        "id": "east-ridge-dish-cluster",
+        "range": [
+          0.45,
+          0.45
+        ]
+      },
+      {
+        "id": "dead-gap-charting-station",
+        "range": [
+          0.45,
+          0.45
+        ]
+      },
+      {
+        "id": "valley-cable-drum-yard",
+        "range": [
+          0.45,
+          0.45
+        ]
+      },
+      {
+        "id": "drone-recovery-beacon",
+        "range": [
+          0.45,
+          0.45
+        ]
+      }
+    ],
+    "sideCensus": "{\"total\":{\"meshes\":5,\"closed\":5,\"open\":0,\"culled\":5,\"doubleSided\":0},\"mounts\":[{\"id\":\"west-ridge-dish-cluster\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5.299,\"topY\":12.919},{\"id\":\"east-ridge-dish-cluster\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":4.995,\"topY\":12.615},{\"id\":\"dead-gap-charting-station\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":-0.01,\"topY\":7.69},{\"id\":\"valley-cable-drum-yard\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":-0.027,\"topY\":2.403},{\"id\":\"drone-recovery-beacon\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.045,\"topY\":6.363}]}",
+    "p95Ms": 42.1,
+    "screenshot": "artifacts/landmark-lighting-calibration/campaign2-e7-relay-valley-baseline-e7-relay-valley-mobile-chrome.png",
+    "probes": [
+      {
+        "id": "west-ridge-dish-cluster@0.30h",
+        "family": "landmark",
+        "x": 538.3,
+        "y": 649.9,
+        "inView": true,
+        "luminance": 0.1351
+      },
+      {
+        "id": "west-ridge-dish-cluster@0.42h",
+        "family": "landmark",
+        "x": 538.3,
+        "y": 588.2,
+        "inView": true,
+        "luminance": 0.1893
+      },
+      {
+        "id": "west-ridge-dish-cluster@0.55h",
+        "family": "landmark",
+        "x": 538.4,
+        "y": 518.5,
+        "inView": true,
+        "luminance": 0.1564
+      },
+      {
+        "id": "west-ridge-dish-cluster@0.68h",
+        "family": "landmark",
+        "x": 538.4,
+        "y": 445.6,
+        "inView": true,
+        "luminance": 0.2145
+      },
+      {
+        "id": "east-ridge-dish-cluster@0.30h",
+        "family": "landmark",
+        "x": 10143.5,
+        "y": 693.2,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "east-ridge-dish-cluster@0.42h",
+        "family": "landmark",
+        "x": 10338.2,
+        "y": 632.3,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "east-ridge-dish-cluster@0.55h",
+        "family": "landmark",
+        "x": 10558.1,
+        "y": 563.5,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "east-ridge-dish-cluster@0.68h",
+        "family": "landmark",
+        "x": 10788.2,
+        "y": 491.6,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "dead-gap-charting-station@0.30h",
+        "family": "landmark",
+        "x": 4149.8,
+        "y": 413.5,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "dead-gap-charting-station@0.42h",
+        "family": "landmark",
+        "x": 4205.1,
+        "y": 363.2,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "dead-gap-charting-station@0.55h",
+        "family": "landmark",
+        "x": 4267,
+        "y": 306.9,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "dead-gap-charting-station@0.68h",
+        "family": "landmark",
+        "x": 4331,
+        "y": 248.7,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "valley-cable-drum-yard@0.30h",
+        "family": "landmark",
+        "x": 1019.6,
+        "y": -592.7,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "valley-cable-drum-yard@0.42h",
+        "family": "landmark",
+        "x": 1021,
+        "y": -605.3,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "valley-cable-drum-yard@0.55h",
+        "family": "landmark",
+        "x": 1022.5,
+        "y": -618.9,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "valley-cable-drum-yard@0.68h",
+        "family": "landmark",
+        "x": 1024.1,
+        "y": -632.7,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "drone-recovery-beacon@0.30h",
+        "family": "landmark",
+        "x": 4557.4,
+        "y": -641.6,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "drone-recovery-beacon@0.42h",
+        "family": "landmark",
+        "x": 4588.6,
+        "y": -675.3,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "drone-recovery-beacon@0.55h",
+        "family": "landmark",
+        "x": 4623,
+        "y": -712.4,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "drone-recovery-beacon@0.68h",
+        "family": "landmark",
+        "x": 4657.9,
+        "y": -750.1,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "ground5_5",
+        "family": "terrain",
+        "x": 983.8,
+        "y": 1102.6,
+        "inView": true,
+        "luminance": 0.1922
+      },
+      {
+        "id": "ground-5_5",
+        "family": "terrain",
+        "x": 89.9,
+        "y": 1100.1,
+        "inView": true,
+        "luminance": 0.1323
+      },
+      {
+        "id": "ground0_6",
+        "family": "terrain",
+        "x": 536.4,
+        "y": 1170,
+        "inView": true,
+        "luminance": 0.1494
+      },
+      {
+        "id": "ground5_-5",
+        "family": "terrain",
+        "x": 915.1,
+        "y": 536.6,
+        "inView": true,
+        "luminance": 0.8799
+      },
+      {
+        "id": "hero",
+        "family": "hero",
+        "x": 535.3,
+        "y": 1381.7,
+        "inView": true,
+        "luminance": 0.3262
+      }
+    ]
+  },
+  {
+    "scene": "e7-relay-rush",
+    "contract": "e7-relay-rush",
+    "project": "mobile-chrome",
+    "phase": "campaign2-e7-relay-valley-baseline",
+    "query": "&epoch=epoch-7-signal",
+    "focusMount": "west-ridge-dish-cluster",
+    "standoff": [
+      0,
+      9
+    ],
+    "frameMedianLuminance": 0.1388,
+    "terrainMedianLuminance": 0.1998,
+    "landmarkMedianLuminance": 0.1907,
+    "landmarkAllMountsMedian": 0.1907,
+    "heroLuminance": 0.3245,
+    "landmarkOverTerrain": 0.954,
+    "emissiveIntensity": [
+      {
+        "id": "west-ridge-dish-cluster",
+        "range": [
+          0.45,
+          0.45
+        ]
+      },
+      {
+        "id": "east-ridge-dish-cluster",
+        "range": [
+          0.45,
+          0.45
+        ]
+      },
+      {
+        "id": "dead-gap-charting-station",
+        "range": [
+          0.45,
+          0.45
+        ]
+      },
+      {
+        "id": "valley-cable-drum-yard",
+        "range": [
+          0.45,
+          0.45
+        ]
+      },
+      {
+        "id": "drone-recovery-beacon",
+        "range": [
+          0.45,
+          0.45
+        ]
+      }
+    ],
+    "sideCensus": "{\"total\":{\"meshes\":5,\"closed\":5,\"open\":0,\"culled\":5,\"doubleSided\":0},\"mounts\":[{\"id\":\"west-ridge-dish-cluster\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5.299,\"topY\":12.919},{\"id\":\"east-ridge-dish-cluster\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":4.995,\"topY\":12.615},{\"id\":\"dead-gap-charting-station\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":-0.01,\"topY\":7.69},{\"id\":\"valley-cable-drum-yard\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":-0.027,\"topY\":2.403},{\"id\":\"drone-recovery-beacon\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.045,\"topY\":6.363}]}",
+    "p95Ms": 35,
+    "screenshot": "artifacts/landmark-lighting-calibration/campaign2-e7-relay-valley-baseline-e7-relay-rush-mobile-chrome.png",
+    "probes": [
+      {
+        "id": "west-ridge-dish-cluster@0.30h",
+        "family": "landmark",
+        "x": 537.9,
+        "y": 650.6,
+        "inView": true,
+        "luminance": 0.1348
+      },
+      {
+        "id": "west-ridge-dish-cluster@0.42h",
+        "family": "landmark",
+        "x": 537.9,
+        "y": 588.9,
+        "inView": true,
+        "luminance": 0.1907
+      },
+      {
+        "id": "west-ridge-dish-cluster@0.55h",
+        "family": "landmark",
+        "x": 537.9,
+        "y": 519.2,
+        "inView": true,
+        "luminance": 0.1552
+      },
+      {
+        "id": "west-ridge-dish-cluster@0.68h",
+        "family": "landmark",
+        "x": 538,
+        "y": 446.4,
+        "inView": true,
+        "luminance": 0.2145
+      },
+      {
+        "id": "east-ridge-dish-cluster@0.30h",
+        "family": "landmark",
+        "x": 10116.9,
+        "y": 688.5,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "east-ridge-dish-cluster@0.42h",
+        "family": "landmark",
+        "x": 10310.3,
+        "y": 627.7,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "east-ridge-dish-cluster@0.55h",
+        "family": "landmark",
+        "x": 10528.9,
+        "y": 558.9,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "east-ridge-dish-cluster@0.68h",
+        "family": "landmark",
+        "x": 10757.4,
+        "y": 487,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "dead-gap-charting-station@0.30h",
+        "family": "landmark",
+        "x": 4143.3,
+        "y": 413,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "dead-gap-charting-station@0.42h",
+        "family": "landmark",
+        "x": 4198.4,
+        "y": 362.8,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "dead-gap-charting-station@0.55h",
+        "family": "landmark",
+        "x": 4260.1,
+        "y": 306.6,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "dead-gap-charting-station@0.68h",
+        "family": "landmark",
+        "x": 4323.8,
+        "y": 248.4,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "valley-cable-drum-yard@0.30h",
+        "family": "landmark",
+        "x": 1017.1,
+        "y": -589.9,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "valley-cable-drum-yard@0.42h",
+        "family": "landmark",
+        "x": 1018.5,
+        "y": -602.4,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "valley-cable-drum-yard@0.55h",
+        "family": "landmark",
+        "x": 1020,
+        "y": -616.1,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "valley-cable-drum-yard@0.68h",
+        "family": "landmark",
+        "x": 1021.6,
+        "y": -629.8,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "drone-recovery-beacon@0.30h",
+        "family": "landmark",
+        "x": 4548.8,
+        "y": -639.8,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "drone-recovery-beacon@0.42h",
+        "family": "landmark",
+        "x": 4579.9,
+        "y": -673.5,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "drone-recovery-beacon@0.55h",
+        "family": "landmark",
+        "x": 4614.1,
+        "y": -710.5,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "drone-recovery-beacon@0.68h",
+        "family": "landmark",
+        "x": 4648.9,
+        "y": -748.1,
+        "inView": false,
+        "luminance": null
+      },
+      {
+        "id": "ground5_5",
+        "family": "terrain",
+        "x": 983.3,
+        "y": 1102.4,
+        "inView": true,
+        "luminance": 0.1998
+      },
+      {
+        "id": "ground-5_5",
+        "family": "terrain",
+        "x": 90.3,
+        "y": 1100.5,
+        "inView": true,
+        "luminance": 0.1323
+      },
+      {
+        "id": "ground0_6",
+        "family": "terrain",
+        "x": 536.4,
+        "y": 1169.9,
+        "inView": true,
+        "luminance": 0.1494
+      },
+      {
+        "id": "ground5_-5",
+        "family": "terrain",
+        "x": 914.1,
+        "y": 537.5,
+        "inView": true,
+        "luminance": 0.8799
+      },
+      {
+        "id": "hero",
+        "family": "hero",
+        "x": 535.6,
+        "y": 1381.3,
+        "inView": true,
+        "luminance": 0.3245
+      }
+    ]
+  }
+]

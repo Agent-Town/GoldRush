@@ -1,0 +1,30 @@
+gate battery transcript (append-only — see scripts/gate-battery.mjs)
+
+
+######## BATTERY 2026-09-07T11:50:39.556Z — s2539 input-sample controlled and reverse arms ########
+cwd=/private/tmp/gr-gate-s2539
+env+ PATH=/Users/robin/.nvm/versions/node/v26.4.0/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin GR_CAPTURE_EXTERNAL_SERVER=1 GR_CAPTURE_BASE_URL=http://127.0.0.1:5329
+
+===== input samples 2 versus 3 both projects =====
+$ npx playwright test e2e/m2-01-build-menu.spec.ts --grep controlled palisade input sample --project=desktop-chrome --project=mobile-chrome --workers=1 --trace=off --reporter=line --output=artifacts/s2539-gate/input-sample-results
+rc=0 11.1s
+
+Running 4 tests using 1 worker
+
+
+
+[1/4] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:178:36 › controlled palisade input sample 2
+[2/4] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:178:36 › controlled palisade input sample 3
+
+
+[3/4] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:178:36 › controlled palisade input sample 2
+[4/4] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:178:36 › controlled palisade input sample 3
+  4 passed (10.7s)
+(node:29655) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:29695) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+SUMMARY {"input samples 2 versus 3 both projects":0}
+OVERALL rc=0

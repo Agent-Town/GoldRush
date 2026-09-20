@@ -1,0 +1,197 @@
+{
+  "key": "idle-e9-devils-alley",
+  "tapePath": "tapes/idle-e9-devils-alley.json",
+  "contract": "e9-devils-alley",
+  "kind": "null-floor",
+  "node": "v26.4.0",
+  "before": {
+    "at": "2026-09-05T15:20:48.100Z",
+    "load": [
+      16.89404296875,
+      22.25732421875,
+      25.7236328125
+    ],
+    "freeMemory": 13843136512
+  },
+  "after": {
+    "at": "2026-09-05T15:20:52.162Z",
+    "load": [
+      16.7421875,
+      22.13671875,
+      25.66064453125
+    ],
+    "freeMemory": 12800000000
+  },
+  "declaredDurationTicks": 3250,
+  "simulatedSeconds": 108.33333333333333,
+  "bootMs": 54.78883300000007,
+  "replayMs": 1599.4281249999995,
+  "ticksPerSecond": 2031.9762727693694,
+  "realtimeMultiple": 67.73254242564565,
+  "estimateTenMinuteSeconds": 8.85837115384615,
+  "estimateFormula": "600 seconds / measured realtimeMultiple; extrapolation, not an actual 10-minute tape when duration differs",
+  "tickMs": {
+    "n": 3250,
+    "min": 0.22991700000011406,
+    "p50": 0.39695800000026793,
+    "p95": 0.9990419999999176,
+    "p99": 1.721042000000125,
+    "max": 12.9396670000001
+  },
+  "tickPath": "sim/idle-e9-devils-alley-ticks.json",
+  "result": {
+    "eventLogHash": "fnv1a32:a45ba9ac",
+    "outcome": {
+      "secured": false,
+      "waves": 3,
+      "gold": 0,
+      "timeAlive": 108.333
+    },
+    "ticks": 3250,
+    "engine": "headless-contract-sim"
+  },
+  "expectedHash": "fnv1a32:a45ba9ac",
+  "hashMatches": true,
+  "top20": [
+    {
+      "name": "dispatch",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 182.229
+    },
+    {
+      "name": "multiplyMatrices",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 10385,
+      "column": 18,
+      "selfMs": 95.422
+    },
+    {
+      "name": "terrainSeed",
+      "url": "",
+      "line": 1469,
+      "column": 21,
+      "selfMs": 83.478
+    },
+    {
+      "name": "get diagnostics",
+      "url": "",
+      "line": 484,
+      "column": 17,
+      "selfMs": 64.494
+    },
+    {
+      "name": "terrainHash",
+      "url": "",
+      "line": 1486,
+      "column": 21,
+      "selfMs": 63.102
+    },
+    {
+      "name": "maxHpForInstance",
+      "url": "",
+      "line": 1619,
+      "column": 18,
+      "selfMs": 51.138
+    },
+    {
+      "name": "diagnostics",
+      "url": "",
+      "line": 1795,
+      "column": 13,
+      "selfMs": 48.562
+    },
+    {
+      "name": "hpBarDiagnostics",
+      "url": "",
+      "line": 1663,
+      "column": 18,
+      "selfMs": 48.519999999999996
+    },
+    {
+      "name": "stableProbeMask",
+      "url": "",
+      "line": 1266,
+      "column": 25,
+      "selfMs": 43.623
+    },
+    {
+      "name": "setFromEuler",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 4167,
+      "column": 14,
+      "selfMs": 41.535
+    },
+    {
+      "name": "maxHpForPlacement",
+      "url": "",
+      "line": 1622,
+      "column": 19,
+      "selfMs": 36.567
+    },
+    {
+      "name": "currentTrickleInterval",
+      "url": "",
+      "line": 641,
+      "column": 24,
+      "selfMs": 33.814
+    },
+    {
+      "name": "toArray",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 11099,
+      "column": 9,
+      "selfMs": 31.755000000000003
+    },
+    {
+      "name": "syncEnemyInstance",
+      "url": "",
+      "line": 1343,
+      "column": 19,
+      "selfMs": 31.105
+    },
+    {
+      "name": "activePositions",
+      "url": "",
+      "line": 1533,
+      "column": 17,
+      "selfMs": 28.137
+    },
+    {
+      "name": "update",
+      "url": "",
+      "line": 809,
+      "column": 8,
+      "selfMs": 25.879
+    },
+    {
+      "name": "step",
+      "url": "",
+      "line": 1318,
+      "column": 6,
+      "selfMs": 24.638
+    },
+    {
+      "name": "(anonymous)",
+      "url": "",
+      "line": 1534,
+      "column": 32,
+      "selfMs": 21.518
+    },
+    {
+      "name": "(program)",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 19.804
+    },
+    {
+      "name": "terrainFeatures",
+      "url": "",
+      "line": 1193,
+      "column": 25,
+      "selfMs": 17.891000000000002
+    }
+  ]
+}

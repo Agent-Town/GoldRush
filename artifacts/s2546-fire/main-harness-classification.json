@@ -1,0 +1,26 @@
+{
+  "observedAt": "2026-09-07T15:36:01.339Z",
+  "rows": [
+    {
+      "pid": 49242,
+      "ppid": 49213,
+      "bytes": 4941,
+      "runsBattery": true,
+      "commandPrefix": "sh -c node scripts/run-node-guards.mjs scripts/e5-stillwater-front-crew.test.mjs scripts/kit-guard.test.mjs scripts/e10-"
+    },
+    {
+      "pid": 49243,
+      "ppid": 49242,
+      "bytes": 3959,
+      "runsBattery": true,
+      "commandPrefix": "node scripts/run-node-guards.mjs scripts/e5-stillwater-front-crew.test.mjs scripts/kit-guard.test.mjs scripts/e10-preser"
+    },
+    {
+      "pid": 49272,
+      "ppid": 49243,
+      "bytes": 4025,
+      "runsBattery": false,
+      "commandPrefix": "/Users/robin/.nvm/versions/node/v26.4.0/bin/node --test --test-timeout=300000 --test-concurrency=1 scripts/e5-stillwater"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+# s2540 retention judgment
+
+All 106 registered trees answered and passed the non-empty tracked-file control. The quiet set contained 1,311 files and exactly 1,311 hashes. Of these, 1,308 were reachable from a remote ref, two were absent from the object database, and one was local-only. The 291 live or own exclusions are not certified as backed up.
+
+The newly quiet s2539 mobile input-control diagnostic (10,522 bytes) was preserved verbatim on the parentless `save/s2539-gate-evidence-s2540` ref and pushed. Its data records the runner's original frame-scheduled arrangement, whose desktop trigger was unreliable; it does not replace the subsequently retained input-sample diagnostic. The source arena and main status were byte-identical before and after creating the ref. See `retention-save.json` and `retention-push.txt`.
+
+The other exceptions retain the measured dispositions from s2539: the 274,833,116-byte heat-12 view transcript exceeds the blob ceiling and was explicitly omitted by its landed review; the 2,203-byte rehearsal segment ledger contains old local video-production timing and filenames alongside retained rehearsal evidence. Neither is claimed as offsite. No foreign worktree, live artifact, registry entry or raw archive was modified.
+
+ART was not touched and this fire has a drain; no ART-slot audit is owed under the touch-or-dry rule. No current zero is inferred from s2539's art audit. LB-01 is discharged: fifteen readable mirrors cover every day August 24 through September 7, 238 keys and zero account-class rows; 54 unrecognised rows remain advisory. TK-01's September 6 digest already exists. RT-01 is discharged: r2026w37 exists, opened September 7 at 00:00 UTC, appears in the public skill block, and is selected by CURRENT_ROTATION_ID.
+
+The withheld-path audit read 374 logs: five withholding runs, 112 rows / 58 distinct paths, three tracked, zero recoverable on disk and 55 LOST. This exactly matches the already documented F-2477-1 loss: the heat-10-r2 PI Claim and Night Shift substantiation, charters and probe set were withheld; the tracked note retains the conclusions. The remaining `base-b` name is in the old runner diagnostic. No new loss or reconstruction claim is made. The raw list is retained in `withheld-list.txt`.

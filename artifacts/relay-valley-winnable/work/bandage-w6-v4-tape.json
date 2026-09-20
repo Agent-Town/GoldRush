@@ -1,0 +1,7416 @@
+{
+  "version": 2,
+  "id": "agent-ac448add-c16ba69c-64cc-480b-9843-1ec5c13fb70c",
+  "createdAt": 0,
+  "kept": true,
+  "contract": "e7-relay-valley",
+  "seed": "e7-relay-valley-01",
+  "difficulty": "trail",
+  "simVersion": 1,
+  "meta": {
+    "buildId": "41b1e63cf",
+    "engineHash": "3c062bec920429649d52a5fd5aff664827a20a608bd639459e56b96ed216822f",
+    "era": 5,
+    "viewVersion": 2
+  },
+  "runStart": {
+    "meta": {
+      "version": 1,
+      "tracks": {
+        "territory": 0,
+        "science": 0,
+        "hero": 0,
+        "agent": 0
+      }
+    },
+    "research": {
+      "version": 1,
+      "epochId": "epoch-7-signal",
+      "metaScienceCursor": 0,
+      "progress": {
+        "version": 1,
+        "tracks": {
+          "territory": 0,
+          "science": 0,
+          "hero": 0,
+          "agent": 0
+        }
+      },
+      "taken": [],
+      "proposalSalt": 0,
+      "pinnedTarget": null,
+      "unlocks": {}
+    }
+  },
+  "inputLog": {
+    "version": 1,
+    "name": "agent-ac448add",
+    "contractId": "e7-relay-valley",
+    "seed": "e7-relay-valley-01",
+    "difficultyPreset": "trail",
+    "stepSeconds": 0.03333333333333333,
+    "start": {
+      "x": 0,
+      "z": 12
+    },
+    "durationTicks": 15858,
+    "entries": [
+      {
+        "t": 0,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 24,
+                  "z": 40
+                },
+                "when": {
+                  "goldGte": 50
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "stockpile",
+                "where": {
+                  "x": 45,
+                  "z": 41
+                },
+                "when": {
+                  "goldGte": 60
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 12,
+                  "z": 18
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 105,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 24,
+                  "z": 40
+                },
+                "when": {
+                  "goldGte": 50
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "stockpile",
+                "where": {
+                  "x": 45,
+                  "z": 41
+                },
+                "when": {
+                  "goldGte": 60
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 36,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 900,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "PLAYBOOK_USE",
+                "name": "relay"
+              },
+              {
+                "verb": "BUILD",
+                "what": "stockpile",
+                "where": {
+                  "x": 45,
+                  "z": 41
+                },
+                "when": {
+                  "goldGte": 60
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -36,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 903,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BUILD",
+                "what": "stockpile",
+                "where": {
+                  "x": 45,
+                  "z": 41
+                },
+                "when": {
+                  "goldGte": 60
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -36,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 1361,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "stockpile",
+                "where": {
+                  "x": 45,
+                  "z": 41
+                },
+                "when": {
+                  "goldGte": 60
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 36,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 1801,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "stockpile",
+                "where": {
+                  "x": 45,
+                  "z": 41
+                },
+                "when": {
+                  "goldGte": 60
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 36,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 1816,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BUILD",
+                "what": "stockpile",
+                "where": {
+                  "x": 45,
+                  "z": 41
+                },
+                "when": {
+                  "goldGte": 60
+                }
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 12,
+                  "z": 18
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 2133,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "split_spark"
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "stockpile",
+                "where": {
+                  "x": 45,
+                  "z": 41
+                },
+                "when": {
+                  "goldGte": 60
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -12,
+                  "z": 18
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 2701,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -12,
+                  "z": 18
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 2987,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -36,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 3276,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 12,
+                  "z": 18
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 3601,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 12,
+                  "z": 18
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 3667,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 12,
+                  "z": 18
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 3809,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "heavy_spark"
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 12,
+                  "z": 18
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 4016,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "split_spark"
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 36,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 4307,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -12,
+                  "z": 18
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 4397,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "tinkers_plating"
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -12,
+                  "z": 18
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 4501,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -12,
+                  "z": 18
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 4698,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 12,
+                  "z": 18
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 4763,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "tinkers_plating"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 12,
+                  "z": 18
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 5156,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "double_tap_coil"
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -12,
+                  "z": 18
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 5314,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 36,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 5401,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 36,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 5644,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "tinkers_plating"
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 36,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 5705,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 12,
+                  "z": 18
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 6071,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "heavy_spark"
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -36,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 6301,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -36,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 6462,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -12,
+                  "z": 18
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 6741,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "double_tap_coil"
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -12,
+                  "z": 18
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 6751,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 12,
+                  "z": 18
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 7200,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "wide_ring"
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 36,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 7201,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 36,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 7491,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -36,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 7733,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "quick_fuse"
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -36,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 7950,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 12,
+                  "z": 18
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 8101,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 12,
+                  "z": 18
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 8341,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 12,
+                  "z": 18
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 8380,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "double_tap_coil"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 12,
+                  "z": 18
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 8907,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "field_dressing"
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -12,
+                  "z": 18
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 9000,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -12,
+                  "z": 18
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 9065,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 36,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 9456,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 12,
+                  "z": 18
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 9458,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "heavy_spark"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 12,
+                  "z": 18
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 9900,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -36,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 10032,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "powder_charge"
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -36,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 10291,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 12,
+                  "z": 18
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 10490,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "field_dressing"
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 12,
+                  "z": 18
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 10682,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 12,
+                  "z": 18
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 10800,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 12,
+                  "z": 18
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 11148,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "long_resonator"
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 36,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 11438,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -36,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 11687,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "long_resonator"
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -36,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 11700,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -36,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 11897,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 12,
+                  "z": 18
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 12341,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "prospectors_luck"
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 12,
+                  "z": 18
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 12353,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 12,
+                  "z": 18
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 12600,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 12,
+                  "z": 18
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 12609,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 12,
+                  "z": 18
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 13014,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "field_dressing"
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -36,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 13407,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 36,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 13500,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 36,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 13776,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "field_dressing"
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 36,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 13868,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 12,
+                  "z": 18
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 14159,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 12,
+                  "z": 18
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 14400,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 12,
+                  "z": 18
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 14409,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 12,
+                  "z": 18
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 14645,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "field_dressing"
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 36,
+                  "z": -20
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 14937,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -12,
+                  "z": 18
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 15300,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": -12,
+                  "z": 18
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 15330,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 12,
+                  "z": 18
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 15365,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "PICK_UPGRADE",
+                "id": "field_dressing"
+              },
+              {
+                "verb": "BLAST_AT",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 12,
+                  "z": 18
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "truncated": null,
+    "primarySlot": 0,
+    "streams": []
+  },
+  "eventLogHash": "fnv1a32:18f6d345",
+  "outcome": {
+    "reason": "death",
+    "secured": false,
+    "waves": 17,
+    "timeAlive": 528.6,
+    "gold": 0
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "quiet-water": {
+    "box": [
+      250,
+      180,
+      450,
+      280
+    ],
+    "method": "grayscale RMS against Gaussian blur radius 3; same-page frozen simulation, diagnostic station, native pixels",
+    "before": {
+      "meanLuma": 47.48405,
+      "textureRms": 1.8271152125687093
+    },
+    "after": {
+      "meanLuma": 44.23995,
+      "textureRms": 0.7039531234393381
+    },
+    "rmsChangePercent": -61.47188099596288,
+    "sourceFiles": [
+      "before-measured-station-1280.png",
+      "after-measured-station-1280.png"
+    ]
+  },
+  "submerged-roof": {
+    "box": [
+      620,
+      304,
+      683,
+      332
+    ],
+    "method": "grayscale RMS against Gaussian blur radius 3; same-page frozen simulation, diagnostic station, native pixels",
+    "before": {
+      "meanLuma": 47.4812925170068,
+      "textureRms": 2.7800104406074846
+    },
+    "after": {
+      "meanLuma": 47.992063492063494,
+      "textureRms": 3.434023442960563
+    },
+    "rmsChangePercent": 23.52555921373318,
+    "sourceFiles": [
+      "before-measured-station-1280.png",
+      "after-measured-station-1280.png"
+    ]
+  }
+}

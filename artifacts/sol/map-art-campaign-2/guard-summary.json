@@ -1,0 +1,53 @@
+{
+  "candidateEngineHash": "90545c412b35bd683729e22b1ebfe7ffb531822496a71b6a9a59821e2a313ad5",
+  "guards": [
+    {
+      "guard": "test:node-guards",
+      "verdict": "FAIL",
+      "rc": "signal:SIGTERM",
+      "seconds": 900
+    },
+    {
+      "guard": "test:power-budget",
+      "verdict": "FAIL",
+      "rc": "1",
+      "seconds": 10
+    },
+    {
+      "guard": "test:task-guards",
+      "verdict": "PASS",
+      "rc": "0",
+      "seconds": 4
+    },
+    {
+      "guard": "test:citations",
+      "verdict": "PASS",
+      "rc": "0",
+      "seconds": 76
+    },
+    {
+      "guard": "test:gate-callers",
+      "verdict": "PASS",
+      "rc": "0",
+      "seconds": 11
+    }
+  ],
+  "passed": 3,
+  "total": 5,
+  "nodeGuardExecution": "Serial file mode through existing CLAUDE_CONFIG_DIR switch; outer runner terminated npm at its unchanged 900 second ceiling. Owned orphan descendants were then stopped.",
+  "nodeGuardConcurrentBatteries": 4,
+  "nodeGuardCompletedTopLevelCases": 126,
+  "nodeGuardFailuresBeforeTimeout": [
+    "rotation registry stays outside the engine identity corpus",
+    "Claim Boat candidate preserves its pinned source, export and clear authored pad contract",
+    "Flotilla exports match three authored hull identities with compliant textures and clear pads"
+  ],
+  "nativeSignalCrashObserved": false,
+  "powerGraphP95Ms": 54.082,
+  "powerGraphCapMs": 0.5,
+  "missingTrackedSparseCheckoutInputs": [
+    "assets/raw/claim-boat-material-atlas.png",
+    "assets/raw/flotilla-material-atlas.png"
+  ],
+  "missingInputFilesNotModified": true
+}

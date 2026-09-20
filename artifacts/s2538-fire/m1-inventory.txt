@@ -1,0 +1,4 @@
+INVENTORY logs/suite-red-inventory.md — rows parsed 756 (546 failure, 210 blast-radius) — Total tests run 2796 — Total failed 546
+CLEAN-IN-INVENTORY — e2e/m1-01-claim-jumpers-death.spec.ts — snapshot date 2026-08-11
+! STALE SNAPSHOT — 27 days old, threshold 7; 370 commit(s) have touched e2e/ or src/ since
+  CLEAN means green ON THE SNAPSHOT DATE. It may have rotted RED since (F-1589-2), so a red you see now is NOT proven yours — take a control run before concluding your merge caused it.

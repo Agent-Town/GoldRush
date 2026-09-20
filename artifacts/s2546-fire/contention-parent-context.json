@@ -1,0 +1,39 @@
+{
+  "node": "/Users/robin/.nvm/versions/node/v26.4.0/bin/node",
+  "observedAt": "2026-09-07T15:44:59.309Z",
+  "before": [],
+  "directStatus": 0,
+  "parentPid": 5501,
+  "during": [
+    {
+      "pid": 5501,
+      "ppid": 5152,
+      "runsBattery": true,
+      "bytes": 116
+    },
+    {
+      "pid": 5713,
+      "ppid": 5522,
+      "runsBattery": true,
+      "bytes": 232
+    },
+    {
+      "pid": 5714,
+      "ppid": 5713,
+      "runsBattery": true,
+      "bytes": 208
+    },
+    {
+      "pid": 5736,
+      "ppid": 5522,
+      "runsBattery": true,
+      "bytes": 211
+    }
+  ],
+  "end": {
+    "code": 1,
+    "signal": null
+  },
+  "after": [],
+  "proof": "same unmodified test direct versus under its own battery launcher"
+}

@@ -1,0 +1,36 @@
+{
+  "source": "exported GLB vertices (not the generator's height function)",
+  "vertices": 25921,
+  "waterPlaneY": 0.025,
+  "transitionBandMetres": 0.45,
+  "outsideBand": {
+    "dryGroundInsideMask": 0,
+    "waterOutsideMask": 0
+  },
+  "insideBandAudit": {
+    "note": "excluded from the pass/fail count by design; reported so the exclusion is auditable",
+    "samples": 1179,
+    "worstDryRiseInsideMaskMetres": 0.0318,
+    "worstBankDropBelowWaterMetres": 0.0001
+  },
+  "zoneHeights": {
+    "river": {
+      "samples": 1674,
+      "minY": -0.4604,
+      "meanY": -0.2238,
+      "maxY": 0.0568
+    },
+    "ford": {
+      "samples": 810,
+      "minY": -0.2114,
+      "meanY": -0.0406,
+      "maxY": 0.0154
+    },
+    "bank": {
+      "samples": 23437,
+      "minY": 0.0249,
+      "meanY": 0.8377,
+      "maxY": 1.9615
+    }
+  }
+}

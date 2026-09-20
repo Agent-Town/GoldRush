@@ -1,0 +1,105 @@
+{
+  "law": "reuse > derive > build-new; era-stamped; grit-dressed",
+  "packs": {
+    "far-side": {
+      "era": 8,
+      "atlasSha256": "239c6c7d9dd89ab9e48f99aec69a1ee627c8cb386143711706727b769393a7e3",
+      "assets": {
+        "far-side-landing-frame": {
+          "sourceTier": "derive",
+          "triangles": 600,
+          "sha256": "49e6ec198595087895aeb35ee9603a5b7d133ac6b4a7c438cacef52ae658d807",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "probe-recovery-cradle": {
+          "sourceTier": "derive",
+          "triangles": 360,
+          "sha256": "13848b6e6b4ea80e2b00f92c2ae427b855384ac80a5bc0282855b3459864e2b0",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "west-comms-shadow-marker": {
+          "sourceTier": "derive",
+          "triangles": 180,
+          "sha256": "1239d01afbe096faf0755e8f18c77ac20cf37337bec378fd34099a5ea362da5a",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "east-suit-cache-rack": {
+          "sourceTier": "derive",
+          "triangles": 528,
+          "sha256": "e57e1d8b6e9a77ed139289b1533248f6a846f5421f6cb9bd743bac8714f8bbfd",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "far-horizon-listening-post": {
+          "sourceTier": "derive",
+          "triangles": 328,
+          "sha256": "e6a1934ae2c2dc5515c4d165ddd2d04026d9f835e3024c82c452264369d80710",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        }
+      }
+    }
+  },
+  "totals": {
+    "packs": 1,
+    "assets": 5,
+    "sourceTiers": {
+      "reuse": 0,
+      "derive": 5,
+      "build-new": 0
+    }
+  },
+  "boards": {
+    "far-side-landmarks-turntable.png": {
+      "size": [
+        1920,
+        1160
+      ],
+      "sha256": "8bc302224610972dc9670edeada72422dfd5d427aad91adc5cc70a5762aa460a"
+    },
+    "far-side-landmarks-verdict.png": {
+      "size": [
+        1920,
+        1008
+      ],
+      "sha256": "499b55c48058bc333eb22c8facefc9be3380530653f35e74b1d9c51567d7ee31"
+    },
+    "far-side-landmarks-pack.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "63387530c0888d0060df8278706c2faa636b9417a1b531ddb88fc4c67144d201"
+    },
+    "far-side-landmarks-mounted.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "d2c3db06688d20deb5dfc54e25fe9b29b4f53e12ecac2879cc1eaad838b06003"
+    },
+    "far-side-landmarks-mounted-overview.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "ceb90a14a1e4dbce0a1719f8514f0177a0b722716c0aa485b47165571aeabdeb"
+    },
+    "far-side-landmarks-clearance-overlay.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "eae66881a751a74c7dde92492faf9f0984bd93a77f57894fbd8be73c4b6c7308"
+    }
+  },
+  "simulation": "unchanged; every landmark is a separate render-only GLB mounted by contract"
+}

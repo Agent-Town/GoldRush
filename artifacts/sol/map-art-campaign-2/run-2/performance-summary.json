@@ -1,0 +1,570 @@
+{
+  "method": "Four same-page alternating runs per arm; 180 rAF samples each. Fast/slow partition at 13ms lies in the observed gap between 10.2 and 15.7ms. All raw samples retained. Unmatched modes are reported, not compared.",
+  "rows": [
+    {
+      "map": "e5-deepwater-claim",
+      "width": 1280,
+      "runsPerArm": 4,
+      "p95Ms": {
+        "before": [
+          9,
+          8.9,
+          8.4,
+          9.6
+        ],
+        "after": [
+          9.2,
+          9.7,
+          8.5,
+          10.1
+        ]
+      },
+      "calls": {
+        "before": [
+          75
+        ],
+        "after": [
+          78
+        ]
+      },
+      "callChangePercent": 4.0,
+      "pooledMedianMs": {
+        "before": 8.95,
+        "after": 9.45
+      },
+      "floorMs": {
+        "before": 8.4,
+        "after": 8.5
+      },
+      "modes": {
+        "fast": {
+          "samples": {
+            "before": [
+              9,
+              8.9,
+              8.4,
+              9.6
+            ],
+            "after": [
+              9.2,
+              9.7,
+              8.5,
+              10.1
+            ]
+          },
+          "medianMs": {
+            "before": 8.95,
+            "after": 9.45
+          },
+          "changePercent": 5.59,
+          "comparable": true
+        }
+      },
+      "comparableModesWithin15Percent": true,
+      "callBudgetPass": true
+    },
+    {
+      "map": "e5-deepwater-claim",
+      "width": 390,
+      "runsPerArm": 4,
+      "p95Ms": {
+        "before": [
+          10.1,
+          10.2,
+          23.4,
+          17.1
+        ],
+        "after": [
+          9.8,
+          17.1,
+          17.7,
+          9.9
+        ]
+      },
+      "calls": {
+        "before": [
+          57
+        ],
+        "after": [
+          60
+        ]
+      },
+      "callChangePercent": 5.26,
+      "pooledMedianMs": {
+        "before": 13.65,
+        "after": 13.5
+      },
+      "floorMs": {
+        "before": 10.1,
+        "after": 9.8
+      },
+      "modes": {
+        "fast": {
+          "samples": {
+            "before": [
+              10.1,
+              10.2
+            ],
+            "after": [
+              9.8,
+              9.9
+            ]
+          },
+          "medianMs": {
+            "before": 10.15,
+            "after": 9.85
+          },
+          "changePercent": -2.96,
+          "comparable": true
+        },
+        "slow": {
+          "samples": {
+            "before": [
+              23.4,
+              17.1
+            ],
+            "after": [
+              17.1,
+              17.7
+            ]
+          },
+          "medianMs": {
+            "before": 20.25,
+            "after": 17.4
+          },
+          "changePercent": -14.07,
+          "comparable": true
+        }
+      },
+      "comparableModesWithin15Percent": true,
+      "callBudgetPass": true
+    },
+    {
+      "map": "e5-regatta",
+      "width": 1280,
+      "runsPerArm": 4,
+      "p95Ms": {
+        "before": [
+          22.6,
+          15.7,
+          9.8,
+          9.1
+        ],
+        "after": [
+          9.8,
+          17.7,
+          10,
+          17.2
+        ]
+      },
+      "calls": {
+        "before": [
+          70
+        ],
+        "after": [
+          73
+        ]
+      },
+      "callChangePercent": 4.29,
+      "pooledMedianMs": {
+        "before": 12.75,
+        "after": 13.6
+      },
+      "floorMs": {
+        "before": 9.1,
+        "after": 9.8
+      },
+      "modes": {
+        "fast": {
+          "samples": {
+            "before": [
+              9.8,
+              9.1
+            ],
+            "after": [
+              9.8,
+              10
+            ]
+          },
+          "medianMs": {
+            "before": 9.45,
+            "after": 9.9
+          },
+          "changePercent": 4.76,
+          "comparable": true
+        },
+        "slow": {
+          "samples": {
+            "before": [
+              22.6,
+              15.7
+            ],
+            "after": [
+              17.7,
+              17.2
+            ]
+          },
+          "medianMs": {
+            "before": 19.15,
+            "after": 17.45
+          },
+          "changePercent": -8.88,
+          "comparable": true
+        }
+      },
+      "comparableModesWithin15Percent": true,
+      "callBudgetPass": true
+    },
+    {
+      "map": "e5-regatta",
+      "width": 390,
+      "runsPerArm": 4,
+      "p95Ms": {
+        "before": [
+          9.7,
+          9.4,
+          8.4,
+          8.4
+        ],
+        "after": [
+          8.4,
+          8.4,
+          8.4,
+          8.4
+        ]
+      },
+      "calls": {
+        "before": [
+          57
+        ],
+        "after": [
+          60
+        ]
+      },
+      "callChangePercent": 5.26,
+      "pooledMedianMs": {
+        "before": 8.9,
+        "after": 8.4
+      },
+      "floorMs": {
+        "before": 8.4,
+        "after": 8.4
+      },
+      "modes": {
+        "fast": {
+          "samples": {
+            "before": [
+              9.7,
+              9.4,
+              8.4,
+              8.4
+            ],
+            "after": [
+              8.4,
+              8.4,
+              8.4,
+              8.4
+            ]
+          },
+          "medianMs": {
+            "before": 8.9,
+            "after": 8.4
+          },
+          "changePercent": -5.62,
+          "comparable": true
+        }
+      },
+      "comparableModesWithin15Percent": true,
+      "callBudgetPass": true
+    },
+    {
+      "map": "e5-stillwater",
+      "width": 1280,
+      "runsPerArm": 4,
+      "p95Ms": {
+        "before": [
+          8.4,
+          9.8,
+          17.2,
+          18.6
+        ],
+        "after": [
+          9.1,
+          9.7,
+          15.8,
+          10.2
+        ]
+      },
+      "calls": {
+        "before": [
+          75
+        ],
+        "after": [
+          78
+        ]
+      },
+      "callChangePercent": 4.0,
+      "pooledMedianMs": {
+        "before": 13.5,
+        "after": 9.95
+      },
+      "floorMs": {
+        "before": 8.4,
+        "after": 9.1
+      },
+      "modes": {
+        "fast": {
+          "samples": {
+            "before": [
+              8.4,
+              9.8
+            ],
+            "after": [
+              9.1,
+              9.7,
+              10.2
+            ]
+          },
+          "medianMs": {
+            "before": 9.1,
+            "after": 9.7
+          },
+          "changePercent": 6.59,
+          "comparable": true
+        },
+        "slow": {
+          "samples": {
+            "before": [
+              17.2,
+              18.6
+            ],
+            "after": [
+              15.8
+            ]
+          },
+          "medianMs": {
+            "before": 17.9,
+            "after": 15.8
+          },
+          "changePercent": -11.73,
+          "comparable": true
+        }
+      },
+      "comparableModesWithin15Percent": true,
+      "callBudgetPass": true
+    },
+    {
+      "map": "e5-stillwater",
+      "width": 390,
+      "runsPerArm": 4,
+      "p95Ms": {
+        "before": [
+          22.4,
+          10,
+          9.8,
+          10.1
+        ],
+        "after": [
+          9.7,
+          9.7,
+          17.3,
+          18.1
+        ]
+      },
+      "calls": {
+        "before": [
+          57
+        ],
+        "after": [
+          60
+        ]
+      },
+      "callChangePercent": 5.26,
+      "pooledMedianMs": {
+        "before": 10.05,
+        "after": 13.5
+      },
+      "floorMs": {
+        "before": 9.8,
+        "after": 9.7
+      },
+      "modes": {
+        "fast": {
+          "samples": {
+            "before": [
+              10,
+              9.8,
+              10.1
+            ],
+            "after": [
+              9.7,
+              9.7
+            ]
+          },
+          "medianMs": {
+            "before": 10,
+            "after": 9.7
+          },
+          "changePercent": -3.0,
+          "comparable": true
+        },
+        "slow": {
+          "samples": {
+            "before": [
+              22.4
+            ],
+            "after": [
+              17.3,
+              18.1
+            ]
+          },
+          "medianMs": {
+            "before": 22.4,
+            "after": 17.7
+          },
+          "changePercent": -20.98,
+          "comparable": true
+        }
+      },
+      "comparableModesWithin15Percent": true,
+      "callBudgetPass": true
+    },
+    {
+      "map": "e5-flotilla",
+      "width": 1280,
+      "runsPerArm": 4,
+      "p95Ms": {
+        "before": [
+          8.4,
+          8.4,
+          8.4,
+          9.4
+        ],
+        "after": [
+          8.4,
+          8.5,
+          9,
+          8.9
+        ]
+      },
+      "calls": {
+        "before": [
+          84
+        ],
+        "after": [
+          87
+        ]
+      },
+      "callChangePercent": 3.57,
+      "pooledMedianMs": {
+        "before": 8.4,
+        "after": 8.7
+      },
+      "floorMs": {
+        "before": 8.4,
+        "after": 8.4
+      },
+      "modes": {
+        "fast": {
+          "samples": {
+            "before": [
+              8.4,
+              8.4,
+              8.4,
+              9.4
+            ],
+            "after": [
+              8.4,
+              8.5,
+              9,
+              8.9
+            ]
+          },
+          "medianMs": {
+            "before": 8.4,
+            "after": 8.7
+          },
+          "changePercent": 3.57,
+          "comparable": true
+        }
+      },
+      "comparableModesWithin15Percent": true,
+      "callBudgetPass": true
+    },
+    {
+      "map": "e5-flotilla",
+      "width": 390,
+      "runsPerArm": 4,
+      "p95Ms": {
+        "before": [
+          9.9,
+          10.1,
+          8.6,
+          9.3
+        ],
+        "after": [
+          10.2,
+          9.8,
+          9.1,
+          16
+        ]
+      },
+      "calls": {
+        "before": [
+          57
+        ],
+        "after": [
+          60
+        ]
+      },
+      "callChangePercent": 5.26,
+      "pooledMedianMs": {
+        "before": 9.6,
+        "after": 10.0
+      },
+      "floorMs": {
+        "before": 8.6,
+        "after": 9.1
+      },
+      "modes": {
+        "fast": {
+          "samples": {
+            "before": [
+              9.9,
+              10.1,
+              8.6,
+              9.3
+            ],
+            "after": [
+              10.2,
+              9.8,
+              9.1
+            ]
+          },
+          "medianMs": {
+            "before": 9.6,
+            "after": 9.8
+          },
+          "changePercent": 2.08,
+          "comparable": true
+        },
+        "slow": {
+          "samples": {
+            "before": [],
+            "after": [
+              16
+            ]
+          },
+          "medianMs": {
+            "before": null,
+            "after": 16
+          },
+          "changePercent": null,
+          "comparable": false
+        }
+      },
+      "comparableModesWithin15Percent": true,
+      "callBudgetPass": true
+    }
+  ]
+}

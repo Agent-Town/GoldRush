@@ -1,0 +1,70 @@
+{
+  "version": 2,
+  "id": "agent-f9061a26-04417119-e9c8-4e52-82f8-670a5a7f8e71",
+  "createdAt": 0,
+  "kept": true,
+  "contract": "e8-far-side",
+  "seed": "perf-survey-20260905",
+  "difficulty": "trail",
+  "simVersion": 1,
+  "meta": {
+    "buildId": "a3ba9af82",
+    "engineHash": "17943318aff7d1081a502fc2d31b0223139c0e8188ad48c1cafee31b87482761",
+    "era": 5,
+    "viewVersion": 2
+  },
+  "runStart": {
+    "meta": {
+      "version": 1,
+      "tracks": {
+        "territory": 0,
+        "science": 0,
+        "hero": 0,
+        "agent": 0
+      }
+    },
+    "research": {
+      "version": 1,
+      "epochId": "epoch-1-frontier",
+      "metaScienceCursor": 0,
+      "progress": {
+        "version": 1,
+        "tracks": {
+          "territory": 0,
+          "science": 0,
+          "hero": 0,
+          "agent": 0
+        }
+      },
+      "taken": [],
+      "proposalSalt": 0,
+      "pinnedTarget": null,
+      "unlocks": {}
+    }
+  },
+  "inputLog": {
+    "version": 1,
+    "name": "agent-f9061a26",
+    "contractId": "e8-far-side",
+    "seed": "perf-survey-20260905",
+    "difficultyPreset": "trail",
+    "stepSeconds": 0.03333333333333333,
+    "start": {
+      "x": 0,
+      "z": -36
+    },
+    "durationTicks": 2387,
+    "entries": [],
+    "truncated": null,
+    "primarySlot": 0,
+    "streams": []
+  },
+  "eventLogHash": "fnv1a32:a45ba9ac",
+  "outcome": {
+    "reason": "death",
+    "secured": false,
+    "waves": 2,
+    "timeAlive": 79.567,
+    "gold": 0
+  }
+}

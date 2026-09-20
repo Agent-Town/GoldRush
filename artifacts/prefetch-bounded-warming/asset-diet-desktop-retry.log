@@ -1,0 +1,22 @@
+[WebServer] (node:23397) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:23451) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+(node:23470) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[asset-diet] desktop-chrome townResponses: 11338053 bytes
+[asset-diet] desktop-chrome settledTownResponses: 27071274 bytes settleCapHit: false
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+  ✓  1 [desktop-chrome] › e2e/asset-diet.spec.ts:227:1 › honest town and claim cues appear while GLBs are throttled and leave at ready (22.8s)
+normal prefetchWait=false cacheDisabled=false watchErrors suppressed 0 known GLTFLoader blob error(s)
+normal prefetchWait=false cacheDisabled=true watchErrors suppressed 0 known GLTFLoader blob error(s)
+normal prefetchWait=true cacheDisabled=false watchErrors suppressed 0 known GLTFLoader blob error(s)
+normal prefetchWait=true cacheDisabled=true watchErrors suppressed 0 known GLTFLoader blob error(s)
+normal watchErrors suppressed 0 known GLTFLoader blob error(s)
+saveData watchErrors suppressed 0 known GLTFLoader blob error(s)
+  ✓  2 [desktop-chrome] › e2e/asset-diet.spec.ts:277:1 › town byte budget reports normal and saveData arms by URL (2.0m)
+
+  2 passed (2.4m)

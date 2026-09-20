@@ -1,0 +1,105 @@
+{
+  "law": "reuse > derive > build-new; era-stamped; grit-dressed",
+  "packs": {
+    "showroom": {
+      "era": 6,
+      "atlasSha256": "33eedce85195a172f8cd27a172c1b32ebb6034333a077568231de88c5970596f",
+      "assets": {
+        "showroom-entrance-arch": {
+          "sourceTier": "derive",
+          "triangles": 348,
+          "sha256": "9758dc9a43cbd28bc8264ca2307cf312574e9cb07afd25089f5b7af2212c5e9b",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "west-starburst-billboard": {
+          "sourceTier": "derive",
+          "triangles": 300,
+          "sha256": "2a7d310aa0efd2ec058b6561d62ef2158fe29a555f9fcada42c0fba68327ca3b",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "east-starburst-billboard": {
+          "sourceTier": "derive",
+          "triangles": 300,
+          "sha256": "f4d54fb69a14dcd86519a150878c389c0d1928252b75b996bead3c2c6c096082",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "abandoned-catalog-office": {
+          "sourceTier": "derive",
+          "triangles": 292,
+          "sha256": "dbf4a85524d3b7943030855dfdd798739685d7fcf57853e3f238fb1ee676e0d4",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "catalog-sorting-gantry": {
+          "sourceTier": "reuse",
+          "triangles": 1128,
+          "sha256": "411babea312da394c2569bacb13ce3d51d68e84b9afb391a847f6b43e38c8be3",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        }
+      }
+    }
+  },
+  "totals": {
+    "packs": 1,
+    "assets": 5,
+    "sourceTiers": {
+      "reuse": 1,
+      "derive": 4,
+      "build-new": 0
+    }
+  },
+  "boards": {
+    "showroom-landmarks-turntable.png": {
+      "size": [
+        1920,
+        1160
+      ],
+      "sha256": "81ead5d8a96a39f0ddff9051e581f3aa9e5e4a77242500269e09559ff827e2a9"
+    },
+    "showroom-landmarks-verdict.png": {
+      "size": [
+        1920,
+        1008
+      ],
+      "sha256": "77e8dc5ccce3125c717e6b7d0230c28732b1ece5dde394c34ab027d26b825f72"
+    },
+    "showroom-landmarks-pack.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "6daa87a4d680cab6ad12087b6f622360c052753e2784ce62e531ac64e5d53172"
+    },
+    "showroom-landmarks-mounted.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "185e0d4522445ab83d2d4ffb1dbe843b9840c365693312102e00e9400d2b65d4"
+    },
+    "showroom-landmarks-mounted-overview.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "333b6a8df5464f2145b3de388cafa9a456ea0693b409e40b155553aaa678054a"
+    },
+    "showroom-landmarks-clearance-overlay.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "18196f8e8b56a76d77a51efcdd6c24f8c042352cbab2f54d9c4143f48caa742b"
+    }
+  },
+  "simulation": "unchanged; every landmark is a separate render-only GLB mounted by contract"
+}

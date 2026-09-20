@@ -1,0 +1,50 @@
+{
+  "kind": "screenshot-parity-diff",
+  "generatedAt": "2026-07-18T07:43:34.673Z",
+  "note": "Lower parityDistance means the candidate is closer to the reference for this fixed pair. This is a distance metric, not an acceptance gate.",
+  "pairCount": 1,
+  "worstPair": "dust-flats",
+  "results": [
+    {
+      "id": "dust-flats",
+      "current": "artifacts/map-rebuild-spike/dust-flats-landmarks/comparison/reference/dust-flats.png",
+      "candidate": "artifacts/map-rebuild-spike/dust-flats-landmarks/comparison/candidate/dust-flats.png",
+      "dimensions": {
+        "width": 1600,
+        "height": 900
+      },
+      "parityDistance": 0.0024,
+      "grayscale": {
+        "mae": 0.22554,
+        "rmse": 2.50885,
+        "diffRatio16": 0.00474,
+        "diffRatio32": 0.00211,
+        "diffRatio64": 0.00008,
+        "pixelmatchRatio": 0.00354
+      },
+      "contentProxies": {
+        "blackRatioCurrent": 0.51867,
+        "blackRatioCandidate": 0.52314,
+        "terrainLikeRatioCurrent": 0.0717,
+        "terrainLikeRatioCandidate": 0.07158,
+        "avgLuminanceCurrent": 32.46056,
+        "avgLuminanceCandidate": 32.26584,
+        "avgLuminanceDelta": -0.19472,
+        "edgeEnergyCurrent": 0.11031,
+        "edgeEnergyCandidate": 0.11015,
+        "edgeEnergyRatio": 0.99858,
+        "edgeDiffRatio32": 0.00186
+      },
+      "artifacts": {
+        "sideBySide": "report/dust-flats-side-by-side.png",
+        "currentGray": "report/dust-flats-current-gray.png",
+        "candidateGray": "report/dust-flats-candidate-gray.png",
+        "absDiff": "report/dust-flats-absdiff.png",
+        "pixelmatch": "report/dust-flats-pixelmatch.png",
+        "currentEdges": "report/dust-flats-current-edges.png",
+        "candidateEdges": "report/dust-flats-candidate-edges.png",
+        "edgeDiff": "report/dust-flats-edge-diff.png"
+      }
+    }
+  ]
+}

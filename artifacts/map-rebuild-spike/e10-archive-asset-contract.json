@@ -1,0 +1,187 @@
+{
+  "blender": "5.1.2",
+  "freshReferenceBaseSha": "e6c0656183d7355a357ee57abeb9b2e0b661ed47",
+  "archiveWorld": {
+    "maskTable": "assets/contracts/epoch-10-deepsky/mask-tables/e10-archive-world.json",
+    "terrain": {
+      "sha256": "54a06a42e367d9fc7338af97a8463655279e8f18928a7abb1700ac6881fa04a6",
+      "bytes": 10393180,
+      "meshes": 1,
+      "primitives": 1,
+      "triangles": 32768,
+      "materials": 1,
+      "images": 1,
+      "embeddedImages": 1,
+      "cameras": 0,
+      "lights": 0,
+      "animations": 0,
+      "bounds": {
+        "min": [
+          -64,
+          -0.999504,
+          -64
+        ],
+        "max": [
+          64,
+          3.435022,
+          64
+        ],
+        "size": [
+          128,
+          4.434526,
+          128
+        ],
+        "center": [
+          0.0,
+          1.217759,
+          0.0
+        ]
+      },
+      "materialContract": [
+        {
+          "metallicFactor": 0,
+          "roughnessFactor": 0.8999999761581421,
+          "hasBaseColorTexture": true,
+          "hasEmissiveTexture": false,
+          "emissiveFactor": [
+            0,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    "panorama": {
+      "sha256": "904174f07352da63ce1012b331c8ba8d67d0601a86c6f864efcd13f532a69dd0",
+      "bytes": 832408,
+      "meshes": 1,
+      "primitives": 1,
+      "triangles": 3072,
+      "materials": 1,
+      "images": 1,
+      "embeddedImages": 1,
+      "cameras": 0,
+      "lights": 0,
+      "animations": 0,
+      "bounds": {
+        "min": [
+          -193,
+          -10,
+          -193
+        ],
+        "max": [
+          193,
+          130,
+          193
+        ],
+        "size": [
+          386,
+          140,
+          386
+        ],
+        "center": [
+          0.0,
+          60.0,
+          0.0
+        ]
+      },
+      "materialContract": [
+        {
+          "metallicFactor": 0,
+          "roughnessFactor": 1,
+          "hasBaseColorTexture": true,
+          "hasEmissiveTexture": true,
+          "emissiveFactor": [
+            1,
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    "independentBuildZoneSurfaceFlatness": [
+      {
+        "id": "archive-entry",
+        "sampledSurfacePoints": 2145,
+        "maxDeviationMeters": 0.0
+      },
+      {
+        "id": "west-stacks-wing",
+        "sampledSurfacePoints": 2145,
+        "maxDeviationMeters": 0.0
+      },
+      {
+        "id": "east-stacks-wing",
+        "sampledSurfacePoints": 2145,
+        "maxDeviationMeters": 0.0
+      },
+      {
+        "id": "warning-shelf-wing",
+        "sampledSurfacePoints": 2145,
+        "maxDeviationMeters": 0.0
+      }
+    ]
+  },
+  "variantDecisions": {
+    "e10-last-claim": {
+      "tileId": "ark-plaza-e10",
+      "terrainMesh": "off",
+      "decision": "no new sculpt"
+    },
+    "e10-river": {
+      "tileId": "frontier-river-claim",
+      "terrainMesh": "off",
+      "decision": "no new sculpt"
+    }
+  },
+  "boards": {
+    "e10-archive-mood-ab.png": {
+      "size": [
+        1920,
+        684
+      ],
+      "bytes": 1780184,
+      "sha256": "298932be6fb1ae733850b48005592bf67c7f552ef7301c23147afac2ca1b97ab"
+    },
+    "e10-archive-flat-vs-sculpted-ab.png": {
+      "size": [
+        1920,
+        684
+      ],
+      "bytes": 925830,
+      "sha256": "0f14bf4aab4fc365e487278829b5dc35ef2f0fc1ac47339835f8c743b37b7972"
+    },
+    "e10-archive-owner-verdict.png": {
+      "size": [
+        1920,
+        504
+      ],
+      "bytes": 678279,
+      "sha256": "1e6e80e4ee5f6ff56728b858ac41591cfaebe0270f9b9eed651b6566a62fbc34"
+    },
+    "e10-archive-panorama-mood-ab.png": {
+      "size": [
+        1920,
+        504
+      ],
+      "bytes": 508636,
+      "sha256": "0dcd750f66ae6c474381fa35cce2dd9033e975c030e73d41a8dc60d4ce265c66"
+    },
+    "e10-archive-panorama-distance-gate.png": {
+      "size": [
+        1920,
+        684
+      ],
+      "bytes": 966451,
+      "sha256": "dd2daa7392daf4e6311abf88b6ac97cbba4bcb3b1d22c45182d0df605b597df9"
+    },
+    "e10-archive-mask-agreement-board.png": {
+      "size": [
+        1280,
+        828
+      ],
+      "bytes": 691517,
+      "sha256": "35584bfb75f143e385cb3ff7f500022fc4940c38553c8786f7d297ac03bbe968"
+    }
+  }
+}

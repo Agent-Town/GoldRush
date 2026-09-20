@@ -1,0 +1,105 @@
+{
+  "law": "reuse > derive > build-new; era-stamped; grit-dressed",
+  "packs": {
+    "dome-basin": {
+      "era": 9,
+      "atlasSha256": "f92189af7b358669928803da9af4c26c2f509f1f301a40ee1f326d4360a5f643",
+      "assets": {
+        "canal-gate-works": {
+          "sourceTier": "reuse",
+          "triangles": 452,
+          "sha256": "89491e54759464f92d1be9e7ba730304b3f91ec1b84dfa9206698ac11efcdee0",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "ice-quarry-hoist": {
+          "sourceTier": "reuse",
+          "triangles": 644,
+          "sha256": "f5910999b56799da81ec56776b96b1e60d8b96e1b1f46ed99131615bc97b4044",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "seed-row-weather-station": {
+          "sourceTier": "reuse",
+          "triangles": 468,
+          "sha256": "6766077a07488fd810f094659943e9a25ffb450b1486913d6e34d387ae9596ed",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "ark-yard-scaffold": {
+          "sourceTier": "reuse",
+          "triangles": 592,
+          "sha256": "1199c1032244ce75cc2a9643e5b86b8e5b060a87939908df4929bd7fbb939e60",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "dust-devil-warning-mast": {
+          "sourceTier": "derive",
+          "triangles": 528,
+          "sha256": "dc96dd834bacfe161fb360acc685598f2262d1c34a1bd91408880727cf97e4f5",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        }
+      }
+    }
+  },
+  "totals": {
+    "packs": 1,
+    "assets": 5,
+    "sourceTiers": {
+      "reuse": 4,
+      "derive": 1,
+      "build-new": 0
+    }
+  },
+  "boards": {
+    "dome-basin-landmarks-turntable.png": {
+      "size": [
+        1920,
+        1160
+      ],
+      "sha256": "8d444bde30301a1a97d22f418a77657d2ee3f67b038a93a51104fecc4c786274"
+    },
+    "dome-basin-landmarks-verdict.png": {
+      "size": [
+        1920,
+        1008
+      ],
+      "sha256": "93d73e67507de7dba0b329dac9a546629a10fa60d5f76137708194bf13a76ea8"
+    },
+    "dome-basin-landmarks-pack.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "48bf8d011d21bdbc7729c545f0f85c8da99fc0ce168afdeac819f750b062faa5"
+    },
+    "dome-basin-landmarks-proposed.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "aaacbd324d2544e4d5c2745fa0c277c5d714474bb4925130f29b3fbaf813a8a2"
+    },
+    "dome-basin-landmarks-proposed-overview.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "ca6d1b894c6db221700874fd1adff88431d8b5ff5ed7cbb138c00bcf5ecb8f2b"
+    },
+    "dome-basin-landmarks-clearance-overlay.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "9cc84d949a143a5c87f11d19f1b7c51742bb8130f448e0284d4acf23e60790f8"
+    }
+  },
+  "simulation": "unchanged; every landmark is a separate render-only GLB mounted by contract"
+}

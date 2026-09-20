@@ -1,0 +1,116 @@
+gate battery transcript (append-only — see scripts/gate-battery.mjs)
+
+
+######## BATTERY 2026-08-18T14:13:43.161Z — s2057 runner-restart-recipe alone, main root, MERGED ########
+cwd=/Users/robin/Claude/Projects/Gold Rush
+
+===== restart-recipe merged =====
+$ bash scripts/runner-restart-recipe.test.sh
+rc=1 24.8s
+runner-restart-recipe guard (F-1652-1 / F-1653-1)
+  ok   — start-lane-runner.sh parses
+  ok   — health-watch.sh parses
+  ok   — runner-processes.sh parses
+  ok   — old broad pgrep goes red on the prompt carrier
+  ok   — shared discriminator rejects protocol prose
+  ok   — shared discriminator finds one absolute-path runner
+  ok   — runner self-exclusion leaves zero fixture runners
+  ok   — shared discriminator accepts a relative runner path
+  FAIL — real helper custody failed: pid=none PPID=gone TTY=gone
+  FAIL — helper accepted a substitute runner after its recorded PID exited
+  ok   — rejected-runner cleanup waits for exit and has bounded KILL escalation
+  ok   — rejected-runner cleanup returns only after the runner is gone
+  ok   — health-watch.sh has no bare nohup restart of lane-runner-v3.sh
+  ok   — health-watch.sh routes its restart through start-lane-runner.sh
+  ok   — helper unsets CLAUDE_CONFIG_DIR and CLAUDECODE
+  ok   — helper prepends the resolved client's bin dir to PATH (carries node/npm/npx)
+  ok   — helper refuses when a runner is already alive
+  ok   — helper never rmdir's the runner lock
+  ok   — CODEX_FLOOR agrees: helper 0.144.1 == runner 0.144.1
+RESULT: 2 failure(s)
+ps: Invalid process id: h+�o\001
+ps: Invalid process id: h��o\001
+cat: /private/var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/runner-processes.bZZ9pD/replacement.pid: No such file or directory
+/private/var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/runner-processes.bZZ9pD/stop-rejected-runner.sh: line 1: 89424 Killed: 9               IGNORE_TERM=1 bash "$isolated/lane-runner-v3.sh"
+
+
+SUMMARY {"restart-recipe merged":1}
+OVERALL rc=1
+
+
+######## BATTERY 2026-08-18T14:14:25.325Z — s2057 CONTROL — restart-recipe, slice ABSENT, same root ########
+cwd=/Users/robin/Claude/Projects/Gold Rush/gate-s2057
+
+===== restart-recipe control =====
+$ bash scripts/runner-restart-recipe.test.sh
+rc=1 24.8s
+runner-restart-recipe guard (F-1652-1 / F-1653-1)
+  ok   — start-lane-runner.sh parses
+  ok   — health-watch.sh parses
+  ok   — runner-processes.sh parses
+  ok   — old broad pgrep goes red on the prompt carrier
+  ok   — shared discriminator rejects protocol prose
+  ok   — shared discriminator finds one absolute-path runner
+  ok   — runner self-exclusion leaves zero fixture runners
+  ok   — shared discriminator accepts a relative runner path
+  FAIL — real helper custody failed: pid=none PPID=gone TTY=gone
+  FAIL — helper accepted a substitute runner after its recorded PID exited
+  ok   — rejected-runner cleanup waits for exit and has bounded KILL escalation
+  ok   — rejected-runner cleanup returns only after the runner is gone
+  ok   — health-watch.sh has no bare nohup restart of lane-runner-v3.sh
+  ok   — health-watch.sh routes its restart through start-lane-runner.sh
+  ok   — helper unsets CLAUDE_CONFIG_DIR and CLAUDECODE
+  ok   — helper prepends the resolved client's bin dir to PATH (carries node/npm/npx)
+  ok   — helper refuses when a runner is already alive
+  ok   — helper never rmdir's the runner lock
+  ok   — CODEX_FLOOR agrees: helper 0.144.1 == runner 0.144.1
+RESULT: 2 failure(s)
+ps: Invalid process id: X+�k\001
+ps: Invalid process id: Xk\017m\001
+cat: /private/var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/runner-processes.d3UCgx/replacement.pid: No such file or directory
+/private/var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/runner-processes.d3UCgx/stop-rejected-runner.sh: line 1: 91161 Killed: 9               IGNORE_TERM=1 bash "$isolated/lane-runner-v3.sh"
+
+
+SUMMARY {"restart-recipe control":1}
+OVERALL rc=1
+
+
+######## BATTERY 2026-08-18T14:15:28.149Z — s2057 helper --check ########
+cwd=/Users/robin/Claude/Projects/Gold Rush
+
+===== start-lane-runner --check =====
+$ bash scripts/start-lane-runner.sh --check
+rc=0 1.0s
+[start-lane-runner] REFUSING — a lane runner is already alive:
+[start-lane-runner]     451 bash /Users/robin/Claude/Projects/Gold Rush/scripts/lane-runner-v3.sh
+[start-lane-runner] Do NOT rmdir tasks/.runner.lock — the runner self-heals a real corpse
+[start-lane-runner] (lane-runner-v3.sh:120-129); a held lock means a LIVE instance.
+[start-lane-runner] To replace it: kill -TERM <pid>  (its trap at :135 releases the lock),
+[start-lane-runner] wait for the lock to clear, then re-run me.
+[start-lane-runner] --check: continuing to report the environment anyway.
+[start-lane-runner] codex 0.147.0 at /Users/robin/.nvm/versions/node/v23.11.1/bin/codex
+[start-lane-runner] child node: /Users/robin/.nvm/versions/node/v23.11.1/bin/node (v23.11.1)
+[start-lane-runner] CLAUDE_CONFIG_DIR/CLAUDECODE scrubbed (playwright lane parallelism preserved)
+[start-lane-runner] --check: environment is READY; started nothing.
+
+
+SUMMARY {"start-lane-runner --check":0}
+OVERALL rc=0
+
+
+######## BATTERY 2026-08-18T14:16:20.349Z — s2057 custody probe ########
+cwd=/Users/robin/Claude/Projects/Gold Rush
+
+===== custody probe =====
+$ bash /tmp/s2057-custody-probe.sh
+rc=0 0.0s
+=== helper exit: 1 ===
+=== control.out ===
+script: tcgetattr/ioctl: Operation not supported on socket
+=== control.log (runner log) ===
+=== extracted control_pid: [EMPTY] ===
+scratch: /tmp/s2057-custody.AXmRNp
+
+
+SUMMARY {"custody probe":0}
+OVERALL rc=0

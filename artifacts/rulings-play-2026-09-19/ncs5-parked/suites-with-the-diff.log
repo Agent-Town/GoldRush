@@ -1,0 +1,286 @@
+
+Running 16 tests using 1 worker
+
+[1/16] [desktop-chrome] › e2e/e2-enemies.spec.ts:77:1 › E2 enemy roster is manifest-gated and leaves E1 default spawns untagged
+[2/16] [desktop-chrome] › e2e/e2-enemies.spec.ts:113:1 › wave pulses spawn Rail Toughs, Steam Wreckers, and Coal Thieves from E2 data
+  1) [desktop-chrome] › e2e/e2-enemies.spec.ts:113:1 › wave pulses spawn Rail Toughs, Steam Wreckers, and Coal Thieves from E2 data 
+
+    Error: expect(received).toBeCloseTo(expected, precision)
+
+    Expected: 37.9323
+    Received: 34.02
+
+    Expected precision:    4
+    Expected difference: < 0.00005
+    Received difference:   3.912299999999995
+
+      123 |   );
+      124 |   expect(railTough).toMatchObject({ variantLabel: 'Rail Tough', boltDamageMult: 0.65, scale: 1.16 });
+    > 125 |   expect(railTough.maxHp).toBeCloseTo(Balance.enemy.hp * waveHp * 1.35, 4);
+          |                           ^
+      126 |   expect(steamWrecker).toMatchObject({ variantLabel: 'Steam Wrecker', wrecker: true, scale: 1.28 });
+      127 |   expect(steamWrecker.maxHp).toBeCloseTo(Balance.enemy.hp * waveHp * 1.65, 4);
+      128 |   expect(steamWrecker.buildingDamage).toBeCloseTo(Balance.wreck.damage * 1.35, 4);
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-rul-play/e2e/e2-enemies.spec.ts:125:27
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e2-enemies-wave-pulses-spa-7d374-d-Coal-Thieves-from-E2-data-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e2-enemies-wave-pulses-spa-7d374-d-Coal-Thieves-from-E2-data-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e2-enemies-wave-pulses-spa-7d374-d-Coal-Thieves-from-E2-data-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e2-enemies-wave-pulses-spa-7d374-d-Coal-Thieves-from-E2-data-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[3/16] [desktop-chrome] › e2e/e2-enemies.spec.ts:135:1 › armored railcar arrives as three rail-bound boss components and degrades as parts fail
+[4/16] [desktop-chrome] › e2e/e2-enemies.spec.ts:243:1 › Coal Thief and Steam Wrecker behavior runs through E2 roster variants
+[5/16] [desktop-chrome] › e2e/e2-enemies.spec.ts:314:1 › same seed keeps the E2 roster wave deterministic
+  2) [desktop-chrome] › e2e/e2-enemies.spec.ts:314:1 › same seed keeps the E2 roster wave deterministic 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "e8008b6a186c001e2ae3d61db4e8500cf05e51116afbdbbdf5b5b46297232bf7"
+    Received: "2b8a9ebbfbbe1eb1ba4ad9646ececb7074db28ad67f5e5b576837587bb7aafe9"
+
+      315 |   const first = await e2WaveHash(browser, 'e2-enemies-deterministic');
+      316 |   const second = await e2WaveHash(browser, 'e2-enemies-deterministic');
+    > 317 |   expect(second.hash).toBe(first.hash);
+          |                       ^
+      318 |   expect(second.count).toBe(first.count);
+      319 | });
+      320 |
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-rul-play/e2e/e2-enemies.spec.ts:317:23
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e2-enemies-same-seed-keeps-the-E2-roster-wave-deterministic-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e2-enemies-same-seed-keeps-the-E2-roster-wave-deterministic-desktop-chrome/test-failed-2.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e2-enemies-same-seed-keeps-the-E2-roster-wave-deterministic-desktop-chrome/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e2-enemies-same-seed-keeps-the-E2-roster-wave-deterministic-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e2-enemies-same-seed-keeps-the-E2-roster-wave-deterministic-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[6/16] [desktop-chrome] › e2e/e2-enemies.spec.ts:321:1 › E2 enemies survive the 200-stress draw-call envelope
+[7/16] [desktop-chrome] › e2e/eight-winds-enemies.spec.ts:19:1 › plain boot sends an outlaw runner southwest on walkdiag row 0
+  3) [desktop-chrome] › e2e/eight-winds-enemies.spec.ts:19:1 › plain boot sends an outlaw runner southwest on walkdiag row 0 
+
+    TimeoutError: page.waitForFunction: Timeout 45000ms exceeded.
+
+      25 |   await page.keyboard.down('KeyS');
+      26 |   await page.keyboard.down('KeyA');
+    > 27 |   await page.waitForFunction(() => {
+         |              ^
+      28 |     const sprite = window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations['char.bandit_base'];
+      29 |     const key = sprite?.sourceFrameKey ?? sprite?.frameKey ?? '';
+      30 |     return sprite?.clip === 'walk' && sprite.direction === 'sw'
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-rul-play/e2e/eight-winds-enemies.spec.ts:27:14
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/eight-winds-enemies-plain--8ef3b-southwest-on-walkdiag-row-0-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/eight-winds-enemies-plain--8ef3b-southwest-on-walkdiag-row-0-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/eight-winds-enemies-plain--8ef3b-southwest-on-walkdiag-row-0-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/eight-winds-enemies-plain--8ef3b-southwest-on-walkdiag-row-0-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[8/16] [desktop-chrome] › e2e/eight-winds-enemies.spec.ts:39:1 › diagnostics drive thief northeast and Baron southwest on their correct rows
+  4) [desktop-chrome] › e2e/eight-winds-enemies.spec.ts:39:1 › diagnostics drive thief northeast and Baron southwest on their correct rows 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: page.waitForFunction: Test timeout of 60000ms exceeded.
+
+      62 |     if (enemy) window.__GR_TEST__?.teleport(enemy.x - 8, enemy.z + 8);
+      63 |   });
+    > 64 |   await page.waitForFunction(() => {
+         |              ^
+      65 |     const sprite = window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations['char.baron'];
+      66 |     const key = sprite?.sourceFrameKey ?? sprite?.frameKey ?? '';
+      67 |     return sprite?.clip === 'walk' && sprite.direction === 'sw'
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-rul-play/e2e/eight-winds-enemies.spec.ts:64:14
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/eight-winds-enemies-diagno-a12fd-hwest-on-their-correct-rows-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/eight-winds-enemies-diagno-a12fd-hwest-on-their-correct-rows-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/eight-winds-enemies-diagno-a12fd-hwest-on-their-correct-rows-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/eight-winds-enemies-diagno-a12fd-hwest-on-their-correct-rows-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[9/16] [mobile-chrome] › e2e/e2-enemies.spec.ts:77:1 › E2 enemy roster is manifest-gated and leaves E1 default spawns untagged
+[10/16] [mobile-chrome] › e2e/e2-enemies.spec.ts:113:1 › wave pulses spawn Rail Toughs, Steam Wreckers, and Coal Thieves from E2 data
+  5) [mobile-chrome] › e2e/e2-enemies.spec.ts:113:1 › wave pulses spawn Rail Toughs, Steam Wreckers, and Coal Thieves from E2 data 
+
+    Error: expect(received).toBeCloseTo(expected, precision)
+
+    Expected: 37.9323
+    Received: 34.02
+
+    Expected precision:    4
+    Expected difference: < 0.00005
+    Received difference:   3.912299999999995
+
+      123 |   );
+      124 |   expect(railTough).toMatchObject({ variantLabel: 'Rail Tough', boltDamageMult: 0.65, scale: 1.16 });
+    > 125 |   expect(railTough.maxHp).toBeCloseTo(Balance.enemy.hp * waveHp * 1.35, 4);
+          |                           ^
+      126 |   expect(steamWrecker).toMatchObject({ variantLabel: 'Steam Wrecker', wrecker: true, scale: 1.28 });
+      127 |   expect(steamWrecker.maxHp).toBeCloseTo(Balance.enemy.hp * waveHp * 1.65, 4);
+      128 |   expect(steamWrecker.buildingDamage).toBeCloseTo(Balance.wreck.damage * 1.35, 4);
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-rul-play/e2e/e2-enemies.spec.ts:125:27
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e2-enemies-wave-pulses-spa-7d374-d-Coal-Thieves-from-E2-data-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e2-enemies-wave-pulses-spa-7d374-d-Coal-Thieves-from-E2-data-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e2-enemies-wave-pulses-spa-7d374-d-Coal-Thieves-from-E2-data-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e2-enemies-wave-pulses-spa-7d374-d-Coal-Thieves-from-E2-data-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[11/16] [mobile-chrome] › e2e/e2-enemies.spec.ts:135:1 › armored railcar arrives as three rail-bound boss components and degrades as parts fail
+[12/16] [mobile-chrome] › e2e/e2-enemies.spec.ts:243:1 › Coal Thief and Steam Wrecker behavior runs through E2 roster variants
+[13/16] [mobile-chrome] › e2e/e2-enemies.spec.ts:314:1 › same seed keeps the E2 roster wave deterministic
+  6) [mobile-chrome] › e2e/e2-enemies.spec.ts:314:1 › same seed keeps the E2 roster wave deterministic 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "8e057daf8d6f746dee4cf4854eb180d7aa414bdd490306ffa6af902d50eac168"
+    Received: "e303a859e9eb9611ce3f1c4c3f13fedb029daa3a00d423b43c4947f25e722cd7"
+
+      315 |   const first = await e2WaveHash(browser, 'e2-enemies-deterministic');
+      316 |   const second = await e2WaveHash(browser, 'e2-enemies-deterministic');
+    > 317 |   expect(second.hash).toBe(first.hash);
+          |                       ^
+      318 |   expect(second.count).toBe(first.count);
+      319 | });
+      320 |
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-rul-play/e2e/e2-enemies.spec.ts:317:23
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e2-enemies-same-seed-keeps-the-E2-roster-wave-deterministic-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e2-enemies-same-seed-keeps-the-E2-roster-wave-deterministic-mobile-chrome/test-failed-2.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e2-enemies-same-seed-keeps-the-E2-roster-wave-deterministic-mobile-chrome/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e2-enemies-same-seed-keeps-the-E2-roster-wave-deterministic-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e2-enemies-same-seed-keeps-the-E2-roster-wave-deterministic-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[14/16] [mobile-chrome] › e2e/e2-enemies.spec.ts:321:1 › E2 enemies survive the 200-stress draw-call envelope
+[15/16] [mobile-chrome] › e2e/eight-winds-enemies.spec.ts:19:1 › plain boot sends an outlaw runner southwest on walkdiag row 0
+  7) [mobile-chrome] › e2e/eight-winds-enemies.spec.ts:19:1 › plain boot sends an outlaw runner southwest on walkdiag row 0 
+
+    TimeoutError: page.waitForFunction: Timeout 45000ms exceeded.
+
+      25 |   await page.keyboard.down('KeyS');
+      26 |   await page.keyboard.down('KeyA');
+    > 27 |   await page.waitForFunction(() => {
+         |              ^
+      28 |     const sprite = window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations['char.bandit_base'];
+      29 |     const key = sprite?.sourceFrameKey ?? sprite?.frameKey ?? '';
+      30 |     return sprite?.clip === 'walk' && sprite.direction === 'sw'
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-rul-play/e2e/eight-winds-enemies.spec.ts:27:14
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/eight-winds-enemies-plain--8ef3b-southwest-on-walkdiag-row-0-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/eight-winds-enemies-plain--8ef3b-southwest-on-walkdiag-row-0-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/eight-winds-enemies-plain--8ef3b-southwest-on-walkdiag-row-0-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/eight-winds-enemies-plain--8ef3b-southwest-on-walkdiag-row-0-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[16/16] [mobile-chrome] › e2e/eight-winds-enemies.spec.ts:39:1 › diagnostics drive thief northeast and Baron southwest on their correct rows
+  8) [mobile-chrome] › e2e/eight-winds-enemies.spec.ts:39:1 › diagnostics drive thief northeast and Baron southwest on their correct rows 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: page.waitForFunction: Test timeout of 60000ms exceeded.
+
+      62 |     if (enemy) window.__GR_TEST__?.teleport(enemy.x - 8, enemy.z + 8);
+      63 |   });
+    > 64 |   await page.waitForFunction(() => {
+         |              ^
+      65 |     const sprite = window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations['char.baron'];
+      66 |     const key = sprite?.sourceFrameKey ?? sprite?.frameKey ?? '';
+      67 |     return sprite?.clip === 'walk' && sprite.direction === 'sw'
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-rul-play/e2e/eight-winds-enemies.spec.ts:64:14
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/eight-winds-enemies-diagno-a12fd-hwest-on-their-correct-rows-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/eight-winds-enemies-diagno-a12fd-hwest-on-their-correct-rows-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/eight-winds-enemies-diagno-a12fd-hwest-on-their-correct-rows-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/eight-winds-enemies-diagno-a12fd-hwest-on-their-correct-rows-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  8 failed
+    [desktop-chrome] › e2e/e2-enemies.spec.ts:113:1 › wave pulses spawn Rail Toughs, Steam Wreckers, and Coal Thieves from E2 data 
+    [desktop-chrome] › e2e/e2-enemies.spec.ts:314:1 › same seed keeps the E2 roster wave deterministic 
+    [desktop-chrome] › e2e/eight-winds-enemies.spec.ts:19:1 › plain boot sends an outlaw runner southwest on walkdiag row 0 
+    [desktop-chrome] › e2e/eight-winds-enemies.spec.ts:39:1 › diagnostics drive thief northeast and Baron southwest on their correct rows 
+    [mobile-chrome] › e2e/e2-enemies.spec.ts:113:1 › wave pulses spawn Rail Toughs, Steam Wreckers, and Coal Thieves from E2 data 
+    [mobile-chrome] › e2e/e2-enemies.spec.ts:314:1 › same seed keeps the E2 roster wave deterministic 
+    [mobile-chrome] › e2e/eight-winds-enemies.spec.ts:19:1 › plain boot sends an outlaw runner southwest on walkdiag row 0 
+    [mobile-chrome] › e2e/eight-winds-enemies.spec.ts:39:1 › diagnostics drive thief northeast and Baron southwest on their correct rows 
+  1 skipped
+  7 passed (5.2m)

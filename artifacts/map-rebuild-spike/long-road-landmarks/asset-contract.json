@@ -1,0 +1,154 @@
+{
+  "law": "reuse > derive > build-new; era-stamped; grit-dressed",
+  "packs": {
+    "long-road": {
+      "era": 4,
+      "atlasSha256": "4d61cf9ad1ecec9e3791eedd25d6ca968da2b4d4e1e903c6e4bfae0b272e694c",
+      "assets": {
+        "west-way-station": {
+          "sourceTier": "reuse",
+          "triangles": 2248,
+          "sha256": "7d5df54632a942687237ff8f7cfdaf30c88039ac59f6667139b5aca6e9964e38",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "middle-way-station": {
+          "sourceTier": "reuse",
+          "triangles": 860,
+          "sha256": "49485ad49d66b1e5a23fcacdbc34cd8c61635ef3aed6b21152512a7539b7545c",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "east-way-station": {
+          "sourceTier": "reuse",
+          "triangles": 796,
+          "sha256": "ed8fd83c98b6b567640f9e8e0a0bb912ad3ad4fae2b1ad87f9ff550164b79ca2",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "convoy-lead-hauler-start": {
+          "sourceTier": "derive",
+          "triangles": 2504,
+          "sha256": "8731d8e982d701fcf27cf8e9491f369cc25c12f9156c476fa7b5c02c7faa93ec",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "east-railhead": {
+          "sourceTier": "reuse",
+          "triangles": 2592,
+          "sha256": "c632f5a6372185d2a91a81c63af48134d26fc477a46621b794f6241d4a6398bc",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        }
+      }
+    }
+  },
+  "totals": {
+    "packs": 1,
+    "assets": 5,
+    "sourceTiers": {
+      "reuse": 4,
+      "derive": 1,
+      "build-new": 0
+    }
+  },
+  "boards": {
+    "long-road-landmarks-turntable.png": {
+      "size": [
+        1920,
+        1160
+      ],
+      "sha256": "798885124257f4a88a2ee98e386088b9cb393435ce676597dfb0c6d97d1fe60d"
+    },
+    "long-road-landmarks-verdict.png": {
+      "size": [
+        1920,
+        1008
+      ],
+      "sha256": "61f4719822454aa230591837a95b1ab6f87c3141c1eb1082db3c798b4887801d"
+    },
+    "long-road-landmarks-pack.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "72285e5a427543f5a9553c17ddc7b677cd327479bb29da7a1b0d67b1f2c5ea86"
+    },
+    "long-road-landmarks-mounted.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "8becdd44c2d2ecaaa86327af0751df249431ec6c0afbdc9a90f37c555c4d700a"
+    },
+    "long-road-landmarks-mounted-overview.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "9ebaf09490c27d71835d004014908d216439b677b5627f85aa73d82043bd6568"
+    },
+    "long-road-landmarks-clearance-map.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "b543c3f354e80a659bb1df8050540fe54352b3fbb84fce316ecdce02779b7fab"
+    },
+    "long-road-landmarks-clearance-overlay.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "f1ea0496c74101dd19b7e9cde2fb2111252d6d50b02c162058890448a617dcb8"
+    },
+    "long-road-landmarks-route-1.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "a505793dc87a47a55cd64f41bde94e7c27655f60302402c75cc607e6141995e0"
+    },
+    "long-road-landmarks-route-2.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "1b6b40c690cdc5f6abee8916d53734595613eb16ad01f9623c574b4d3c3b58bb"
+    },
+    "long-road-landmarks-route-3.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "bd9b0767803a24e89ccaed0057f73451d0247437e91acc1696e301eb6f0e60ed"
+    },
+    "long-road-landmarks-route-4.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "3550786cf51c5b80b7093691c46bc4ca3e02e3d029124edec2870de2b8845473"
+    },
+    "long-road-landmarks-route-5.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "f5dfd4baee7c744be2613eae56b955b86678047f22b5f587064be7c1dc9da911"
+    },
+    "long-road-landmarks-route-tour.png": {
+      "size": [
+        1920,
+        1008
+      ],
+      "sha256": "bb94cbb84823d5353d6dc44b565e655adfbfe5ecb9d84ec63fb4175c6a5a1537"
+    }
+  },
+  "simulation": "unchanged; every landmark is a separate render-only GLB mounted by contract"
+}

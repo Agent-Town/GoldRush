@@ -1,0 +1,499 @@
+{
+  "version": 1,
+  "epochId": "epoch-4-motor",
+  "contracts": [
+    {
+      "id": "e4-dust-flats",
+      "name": "The Dust Flats",
+      "tileParams": {
+        "tileId": "e4-dust-flats",
+        "biome": "motor-dust-flats",
+        "size": 160,
+        "dimensions": { "width": 160, "height": 160 },
+        "render": { "terrainMesh": "preferred" },
+        "river": false,
+        "ford": false,
+        "buildZones": [
+          { "id": "motor-camp", "bank": "south", "minX": -30, "maxX": 30, "minZ": -26, "maxZ": 24 },
+          { "id": "north-field", "bank": "north", "minX": -62, "maxX": 62, "minZ": 26, "maxZ": 68 },
+          { "id": "southwest-field", "bank": "south", "minX": -68, "maxX": -32, "minZ": -62, "maxZ": -28 },
+          { "id": "southeast-field", "bank": "south", "minX": 32, "maxX": 68, "minZ": -62, "maxZ": -28 }
+        ],
+        "stakeMarkers": [{ "id": "motor-camp", "x": 0, "z": 8, "heroStart": true }],
+        "waterSources": [],
+        "harvestAnchors": [
+          { "x": -48, "z": 48 }, { "x": -34, "z": 56 }, { "x": -18, "z": 46 },
+          { "x": 18, "z": 46 }, { "x": 34, "z": 56 }, { "x": 48, "z": 48 },
+          { "x": -56, "z": -44 }, { "x": -44, "z": -56 }, { "x": -34, "z": -38 },
+          { "x": 34, "z": -38 }, { "x": 44, "z": -56 }, { "x": 56, "z": -44 }
+        ],
+        "tarSeams": [
+          { "id": "tar-west", "x": -14, "z": 4, "radius": 3.5 },
+          { "id": "tar-north", "x": 8, "z": 18, "radius": 3 },
+          { "id": "tar-east", "x": 18, "z": -6, "radius": 4 },
+          { "id": "tar-wash", "x": 8, "z": -18, "radius": 3.5 }
+        ],
+        "roadCorridors": [
+          { "id": "camp-to-railhead", "start": { "x": 0, "z": 12 }, "end": { "x": 0, "z": 72 } },
+          { "id": "camp-to-west-field", "start": { "x": -8, "z": 4 }, "end": { "x": -58, "z": -46 } },
+          { "id": "camp-to-east-field", "start": { "x": 8, "z": 4 }, "end": { "x": 58, "z": -46 } },
+          { "id": "west-boss-road", "start": { "x": -78, "z": -12 }, "end": { "x": -18, "z": -4 } }
+        ],
+        "orbitSpawn": {
+          "center": { "x": 0, "z": 0 },
+          "radius": 24,
+          "angularSpeed": 0.5235987756,
+          "lapsBeforePeel": 0.25,
+          "peelSpeed": 10,
+          "telegraphSeconds": 2,
+          "peelPoints": [
+            { "id": "north-cut", "angle": 1.5707963268 },
+            { "id": "east-cut", "angle": 0 },
+            { "id": "west-cut", "angle": 3.1415926536 }
+          ]
+        },
+        "dryWash": { "x": 30, "z": -38, "length": 88, "width": 10, "angle": -0.55 },
+        "palette": {
+          "id": "dust-flats-ochre-haze",
+          "tint": [0.78, 0.64, 0.44],
+          "dampTint": [0.25, 0.2, 0.16],
+          "dampAmount": 0.08,
+          "splat": { "rockAmount": 0.22, "scrubAmount": 0.08, "macroWarmth": 0.72, "antiTile": 0.8 }
+        },
+        "scatter": {
+          "id": "dust-flats-sparse-scrub",
+          "density": 0.28,
+          "classCounts": { "rocks": 48, "dry_grass": 24, "wagon_ruts": 32, "claim_posts": 16, "cactus": 12 }
+        },
+        "engineDependencies": [
+          { "dep": "dust-flats-tile-consumer", "status": "missing", "description": "Needs the booted DustFlatsTile consumer for the declared tar seams, roads, ORBIT spawn, and dry wash." }
+        ],
+        "lanes": { "spawnEdges": ["north", "east", "south", "west"], "territoryRingBiasWaves": 0, "territoryRingLaneBias": 0 }
+      },
+      "twist": {
+        "secureWave": 12,
+        "motorFrontier": {
+          "description": "The Dust Flats ride: fuel the Hauler at the camp's three tar nodes, grade the surveyed corridors from their stakes, and haul to the railhead through the storms. The claim cannot be secured until the Hauler rests at the railhead, and on this map that has to happen before the Land-Yacht falls.",
+          "vehicle": { "start": { "x": -20, "z": -8 } },
+          "haul": { "corridorId": "camp-to-railhead", "label": "the railhead" }
+        },
+        "weather": {
+          "cycleSeconds": 30,
+          "clearSeconds": 6,
+          "telegraphSeconds": 4,
+          "stormSeconds": 12,
+          "stormMovementMultiplier": 0.7,
+          "stormVisibilityMultiplier": 0.55,
+          "hazeColor": "#c99052",
+          "hazeStrength": 0.2
+        },
+        "baron": {
+          "wave": 14,
+          "bossKind": "railcar",
+          "variantId": "land_yacht",
+          "variantLabel": "The Land-Yacht",
+          "hpScale": 1,
+          "speedScale": 1,
+          "scale": 1.5,
+          "contactDamageScale": 1.2,
+          "buildingDamageScale": 1.1,
+          "supportBuildingDamageScale": 1.2,
+          "pursuitRange": 0,
+          "escortCount": 0,
+          "tauntWaves": [],
+          "taunt": "A dust column runs against the weather.",
+          "arrivalTitle": "THE LAND-YACHT",
+          "defeatTitle": "THE GANG WALKS",
+          "defeatLine": "Her sister went looking for the sea.",
+          "ledgerLabel": "The Land-Yacht",
+          "secureCallout": "THE HULK IS SALVAGE",
+          "awardMedal": false,
+          "defeatBeat": "The gang takes the bell and leaves the rolling hulk to the town.",
+          "medalBlurb": "Beached the Land-Yacht and out-ranged its crane.",
+          "sciencePayoutMult": 1,
+          "railSpeed": 6,
+          "componentDegradeSpeedMult": 1,
+          "components": [
+            { "id": "wheels", "label": "WHEELS ×2", "hpScale": 3, "xOffset": 0, "zOffset": 0, "tint": "#8b7d3c" },
+            { "id": "crane", "label": "CRANE", "hpScale": 2, "xOffset": 3.5, "zOffset": 0, "tint": "#c4883a" },
+            { "id": "wheelhouse", "label": "WHEELHOUSE", "hpScale": 2.5, "xOffset": 7, "zOffset": 0, "tint": "#5b8a8a" }
+          ]
+        },
+        "enemyRoster": [
+          { "id": "motor_gang", "label": "Motor Gang", "waveMin": 1, "hpScale": 1, "speedMult": 1.18, "visualScale": 0.95, "tint": "#a65f38" }
+        ]
+      },
+      "boardRow": {
+        "name": "The Dust Flats",
+        "ledgerBlurb": "A wide motor field ringed by road, derricks, tar seams, and one dry wash.",
+        "tags": ["motor", "convoy", "storm"],
+        "unlock": "default"
+      },
+      "briefing": {
+        "goals": ["Build from the Motor Camp into three surveyed fields.", "Watch all four horizons across the dry wash."],
+        "rules": [
+          "The ORBIT road circles the outer field.",
+          "Twelve derrick claims stand beyond the Motor Camp.",
+          "Four tar seams flank one angled dry wash."
+        ],
+        "geographyLine": "A 160 by 160 drive-scale flat: twelve derrick claims, four tar seams, one dry wash, and the horizon road."
+      }
+    },
+    {
+      "id": "e4-long-road",
+      "name": "The Long Road",
+      "tileParams": {
+        "tileId": "e4-long-road",
+        "biome": "motor-long-road",
+        "size": 400,
+        "dimensions": { "width": 400, "height": 96 },
+        "render": { "terrainMesh": "preferred" },
+        "river": false,
+        "ford": false,
+        "buildZones": [
+          { "id": "west-way-station", "bank": "south", "minX": -148, "maxX": -124, "minZ": -22, "maxZ": -6 },
+          { "id": "middle-way-station", "bank": "north", "minX": -12, "maxX": 12, "minZ": 6, "maxZ": 22 },
+          { "id": "east-way-station", "bank": "south", "minX": 124, "maxX": 148, "minZ": -22, "maxZ": -6 }
+        ],
+        "stakeMarkers": [{ "id": "convoy-lead-hauler", "x": -180, "z": 0, "heroStart": true }],
+        "waterSources": [],
+        "harvestAnchors": [
+          { "x": -140, "z": -10 }, { "x": -130, "z": -16 },
+          { "x": -6, "z": 10 }, { "x": 6, "z": 16 },
+          { "x": 130, "z": -10 }, { "x": 140, "z": -16 }
+        ],
+        "roadCorridors": [
+          { "id": "the-long-road", "start": { "x": -190, "z": 0 }, "end": { "x": 190, "z": 0 } },
+          { "id": "west-way-station-spur", "start": { "x": -136, "z": 0 }, "end": { "x": -136, "z": -14 } },
+          { "id": "middle-way-station-spur", "start": { "x": 0, "z": 0 }, "end": { "x": 0, "z": 14 } },
+          { "id": "east-way-station-spur", "start": { "x": 136, "z": 0 }, "end": { "x": 136, "z": -14 } }
+        ],
+        "convoyRoute": [
+          { "x": -180, "z": 0 }, { "x": -136, "z": 0 }, { "x": 0, "z": 0 }, { "x": 136, "z": 0 }, { "x": 190, "z": 0 }
+        ],
+        "restStops": [
+          { "id": "west-way-station", "minX": -148, "maxX": -124, "minZ": -22, "maxZ": -6, "anchorageSeconds": 45 },
+          { "id": "middle-way-station", "minX": -12, "maxX": 12, "minZ": 6, "maxZ": 22, "anchorageSeconds": 45 },
+          { "id": "east-way-station", "minX": 124, "maxX": 148, "minZ": -22, "maxZ": -6, "anchorageSeconds": 45 }
+        ],
+        "description": "Linear, 400 units: the map IS a road, a scrolling claim with no fixed pads at all; Haulers only, the town moves or dies. The convoy is the base is the town. Rest stops offer brief anchorage; leaving each one behind is a small goodbye the map makes you practice. Engine dependency: the moving-claim consumer (Hauler-only basing, convoy advance, rest-stop anchorage windows, lead-Hauler loss) does not exist yet.",
+        "objectives": [
+          { "id": "reach-the-railhead", "description": "Bring the convoy the full length of the road to the far railhead." },
+          { "id": "keep-the-lead-hauler", "description": "The town rides with the lead Hauler; losing it ends the run." }
+        ],
+        "teachingIntent": {
+          "description": "Teaches total mobility; attachment travels. The town that learned to BE a convoy will one day be a ship."
+        },
+        "engineDependencies": [
+          { "dep": "convoy-claim-consumer", "status": "missing", "description": "Needs a moving-claim consumer: Hauler-only basing with no fixed pads, convoy advance along the road, brief rest-stop anchorage windows, and loss tied to the lead Hauler rather than a fixed stake." }
+        ],
+        "palette": {
+          "id": "long-road-graded-ochre",
+          "tint": [0.76, 0.62, 0.44],
+          "dampTint": [0.24, 0.2, 0.16],
+          "dampAmount": 0.08,
+          "splat": { "rockAmount": 0.2, "scrubAmount": 0.1, "macroWarmth": 0.7, "antiTile": 0.8 }
+        },
+        "scatter": {
+          "id": "long-road-verge-scrub",
+          "density": 0.26,
+          "classCounts": { "rocks": 40, "dry_grass": 28, "wagon_ruts": 44, "claim_posts": 10, "cactus": 10 }
+        },
+        "lanes": { "spawnEdges": ["north", "south", "west"], "territoryRingBiasWaves": 0, "territoryRingLaneBias": 0 }
+      },
+      "twist": {
+        "secureWave": 12,
+        "motorFrontier": {
+          "description": "The Long Road ride: the town IS the convoy. Grade the long road from its west stake, fuel the lead Hauler at the tar nodes by the middle way-station, then walk east ahead of it. The town gains exactly the ground the lead Hauler gains toward the far railhead and never the ground it gives back, and 380 units of ungraded road costs far more fuel than the county owns.",
+          "vehicle": { "start": { "x": -180, "z": 0 } },
+          "convoy": { "members": 3, "label": "the far railhead", "corridorId": "the-long-road" }
+        },
+        "weather": {
+          "cycleSeconds": 30,
+          "clearSeconds": 6,
+          "telegraphSeconds": 4,
+          "stormSeconds": 12,
+          "stormMovementMultiplier": 0.7,
+          "stormVisibilityMultiplier": 0.55,
+          "hazeColor": "#c99052",
+          "hazeStrength": 0.2
+        },
+        "enemyRoster": [
+          {
+            "id": "motor_gang",
+            "label": "Motor Gang",
+            "waveMin": 1,
+            "hpScale": 1,
+            "speedMult": 1.18,
+            "visualScale": 0.95,
+            "tint": "#a65f38",
+            "spawnEdges": ["north", "south"],
+            "spawnGates": [
+              { "edge": "north", "x": 0, "z": 46 },
+              { "edge": "south", "x": 0, "z": -46 }
+            ]
+          }
+        ]
+      },
+      "boardRow": {
+        "name": "The Long Road",
+        "ledgerBlurb": "One long graded road passes three old way-stations on its way east.",
+        "tags": ["motor", "convoy", "mobile-base"],
+        "unlock": "secured:e4-dust-flats"
+      },
+      "briefing": {
+        "goals": ["Bring the town's convoy east down the long road to the far railhead.", "Hold the three way-station grounds and watch every verge it must pass."],
+        "rules": [
+          "The graded road runs four hundred units from west to east.",
+          "Three surveyed station grounds divide the route.",
+          "Waves enter from the north, south, and west."
+        ],
+        "geographyLine": "A four-hundred-unit graded road runs west to east past three old way-stations."
+      }
+    },
+    {
+      "id": "e4-gusher-county",
+      "name": "Gusher County",
+      "tileParams": {
+        "tileId": "e4-gusher-county",
+        "biome": "motor-gusher-county",
+        "size": 160,
+        "dimensions": { "width": 160, "height": 160 },
+        "render": { "terrainMesh": "preferred" },
+        "river": false,
+        "ford": false,
+        "buildZones": [
+          { "id": "county-camp", "bank": "south", "minX": -24, "maxX": 24, "minZ": -24, "maxZ": 16 },
+          { "id": "west-lease", "bank": "south", "minX": -70, "maxX": -30, "minZ": -60, "maxZ": -20 },
+          { "id": "east-lease", "bank": "south", "minX": 32, "maxX": 70, "minZ": -60, "maxZ": -20 },
+          { "id": "north-lease", "bank": "north", "minX": -60, "maxX": 60, "minZ": 28, "maxZ": 64 }
+        ],
+        "stakeMarkers": [{ "id": "county-camp", "x": 0, "z": -4, "heroStart": true }],
+        "waterSources": [],
+        "harvestAnchors": [
+          {"x": -52.1, "z": -33.8},
+          {"x": -37, "z": -44.7},
+          {"x": 36.8, "z": -40.8},
+          {"x": 52, "z": -30},
+          {"x": -41, "z": 40.7},
+          {"x": -14.8, "z": 47.7},
+          {"x": 18.4, "z": 43.8},
+          {"x": 44.7, "z": 37}
+        ],
+        "tarSeams": [
+          { "id": "tar-camp-edge", "x": -18, "z": -18, "radius": 3 },
+          { "id": "tar-west-lease", "x": -48, "z": -28, "radius": 3.5 },
+          { "id": "tar-east-lease", "x": 46, "z": -50, "radius": 3.5 },
+          { "id": "tar-north-lease", "x": 2, "z": 42, "radius": 4 },
+          { "id": "tar-northeast", "x": 34, "z": 54, "radius": 3 }
+        ],
+        "roadCorridors": [
+          { "id": "camp-to-west-lease", "start": { "x": -12, "z": -8 }, "end": { "x": -50, "z": -40 } },
+          { "id": "camp-to-east-lease", "start": { "x": 12, "z": -8 }, "end": { "x": 48, "z": -38 } },
+          { "id": "camp-to-north-lease", "start": { "x": 0, "z": 8 }, "end": { "x": 0, "z": 46 } }
+        ],
+        "wildDerricks": [
+          { "id": "derrick-01", "x": -56, "z": -36, "radius": 3, "eruptionCycleSeconds": 36, "eruptionOffsetSeconds": 0 },
+          { "id": "derrick-02", "x": -40, "z": -48, "radius": 3, "eruptionCycleSeconds": 44, "eruptionOffsetSeconds": 9 },
+          { "id": "derrick-03", "x": 40, "z": -44, "radius": 3, "eruptionCycleSeconds": 40, "eruptionOffsetSeconds": 17 },
+          { "id": "derrick-04", "x": 56, "z": -32, "radius": 3, "eruptionCycleSeconds": 52, "eruptionOffsetSeconds": 4 },
+          { "id": "derrick-05", "x": -44, "z": 44, "radius": 3, "eruptionCycleSeconds": 38, "eruptionOffsetSeconds": 22 },
+          { "id": "derrick-06", "x": -16, "z": 52, "radius": 3, "eruptionCycleSeconds": 48, "eruptionOffsetSeconds": 13 },
+          { "id": "derrick-07", "x": 20, "z": 48, "radius": 3, "eruptionCycleSeconds": 42, "eruptionOffsetSeconds": 29 },
+          { "id": "derrick-08", "x": 48, "z": 40, "radius": 3, "eruptionCycleSeconds": 56, "eruptionOffsetSeconds": 7 }
+        ],
+        "outhouseGeyser": { "id": "outhouse-geyser", "x": 14, "z": -10, "radius": 1.5, "oncePerRun": true },
+        "description": "A field of pre-built WILD derricks, uncapped, erupting on their own schedules. Cap to claim; every cap triggers a blowout wave; tar sprites everywhere; the map is a boiling economy you tame well-by-well. The outhouse gag from E2's Pressure Garden returns as a crude geyser, once per run, guaranteed. Engine dependency: wild-derrick eruption schedules, cap-to-claim conversion, blowout waves, and seam-spawned tar sprites have no consumer yet.",
+        "objectives": [
+          { "id": "cap-the-county", "description": "Cap and claim the wild derricks well by well." },
+          { "id": "hold-county-camp", "description": "Hold the County Camp through wave 12 while the wells erupt." }
+        ],
+        "teachingIntent": {
+          "description": "Teaches risk sequencing: which geyser do you ride first? The county is a boiling economy tamed well by well."
+        },
+        "engineDependencies": [
+          { "dep": "wild-derrick-consumer", "status": "missing", "description": "Needs wild-derrick eruption scheduling, cap-to-claim conversion, the blowout wave each cap triggers, and tar sprites spawning from seams instead of edges." }
+        ],
+        "palette": {
+          "id": "gusher-county-crude-ochre",
+          "tint": [0.74, 0.6, 0.42],
+          "dampTint": [0.2, 0.17, 0.14],
+          "dampAmount": 0.12,
+          "splat": { "rockAmount": 0.24, "scrubAmount": 0.1, "macroWarmth": 0.68, "antiTile": 0.8 }
+        },
+        "scatter": {
+          "id": "gusher-county-derrick-litter",
+          "density": 0.3,
+          "classCounts": { "rocks": 44, "dry_grass": 26, "wagon_ruts": 30, "claim_posts": 18, "cactus": 10 }
+        },
+        "lanes": { "spawnEdges": ["north", "east", "south", "west"], "territoryRingBiasWaves": 0, "territoryRingLaneBias": 0 }
+      },
+      "twist": {
+        "secureWave": 12,
+        "motorFrontier": {
+          "description": "The Gusher County ride: three lease roads run out of the County Camp and the Hauler has to reach the head of every one. Each storm washes out one lease by the county's own weather clock, carrying no road bonus and taking no delivery while it blows, so ride the open leases first and come back for the closed one when it reopens.",
+          "vehicle": { "start": { "x": -12, "z": -10 } },
+          "deliveries": {
+            "corridorIds": ["camp-to-west-lease", "camp-to-east-lease", "camp-to-north-lease"],
+            "label": "the three lease heads",
+            "closures": true
+          }
+        },
+        "weather": {
+          "cycleSeconds": 30,
+          "clearSeconds": 6,
+          "telegraphSeconds": 4,
+          "stormSeconds": 12,
+          "stormMovementMultiplier": 0.7,
+          "stormVisibilityMultiplier": 0.55,
+          "hazeColor": "#c99052",
+          "hazeStrength": 0.2
+        },
+        "enemyRoster": [
+          { "id": "motor_gang", "label": "Motor Gang", "waveMin": 1, "hpScale": 1, "speedMult": 1.18, "visualScale": 0.95, "tint": "#a65f38" },
+          { "id": "tar_sprite", "label": "Tar Sprite", "waveMin": 1, "hpScale": 0.4, "speedMult": 1.4, "visualScale": 0.6, "tint": "#3a3026", "contactDamageScale": 0.4, "buildingDamageScale": 0.5 }
+        ]
+      },
+      "boardRow": {
+        "name": "Gusher County",
+        "ledgerBlurb": "Eight wild derricks stand across three leases around the County Camp.",
+        "tags": ["motor", "economy", "risk"],
+        "unlock": "secured:e4-long-road"
+      },
+      "briefing": {
+        "goals": ["Build from the County Camp across the three leases.", "Watch all four edges around the eight derricks."],
+        "rules": [
+          "Eight derricks mark the county's harvest grounds.",
+          "Tar seams and surveyed roads divide the leases.",
+          "One outhouse geyser marks the eastern field."
+        ],
+        "geographyLine": "A 160 by 160 derrick county: eight wild gushers on three leases around one camp."
+      }
+    },
+    {
+      "id": "e4-boneyard",
+      "name": "The Boneyard",
+      "tileParams": {
+        "tileId": "e4-boneyard",
+        "biome": "motor-boneyard",
+        "size": 128,
+        "dimensions": { "width": 128, "height": 128 },
+        "render": { "terrainMesh": "preferred" },
+        "river": false,
+        "ford": false,
+        "buildZones": [
+          { "id": "gate-camp", "bank": "south", "minX": -22, "maxX": 22, "minZ": -56, "maxZ": -34 },
+          { "id": "west-rows", "bank": "north", "minX": -56, "maxX": -12, "minZ": -20, "maxZ": 24 },
+          { "id": "east-rows", "bank": "north", "minX": 12, "maxX": 56, "minZ": -20, "maxZ": 24 }
+        ],
+        "stakeMarkers": [{ "id": "gate-camp", "x": 0, "z": -44, "heroStart": true }],
+        "waterSources": [],
+        "harvestAnchors": [
+          {"x": -44.3, "z": -14.5},
+          {"x": -33.3, "z": 0.4},
+          {"x": -22.4, "z": 13.8},
+          {"x": -16, "z": -12},
+          {"x": 16, "z": -12},
+          {"x": 22.4, "z": 13.8},
+          {"x": 33.3, "z": 0.4},
+          {"x": 44.3, "z": -14.5},
+          {"x": -7.5, "z": 29.5},
+          {"x": 7.5, "z": 29.5}
+        ],
+        "roadCorridors": [
+          { "id": "gate-to-west-rows", "start": { "x": -8, "z": -38 }, "end": { "x": -34, "z": -4 } },
+          { "id": "gate-to-east-rows", "start": { "x": 8, "z": -38 }, "end": { "x": 34, "z": -4 } }
+        ],
+        "salvageHulks": [
+          { "id": "flivver-row-west-a", "kind": "flivver", "x": -48, "z": -12 },
+          { "id": "flivver-row-west-b", "kind": "flivver", "x": -36, "z": 4 },
+          { "id": "flivver-row-west-c", "kind": "flivver", "x": -24, "z": 18 },
+          { "id": "spent-boiler-west", "kind": "boiler", "x": -18, "z": -8 },
+          { "id": "spent-boiler-east", "kind": "boiler", "x": 18, "z": -8 },
+          { "id": "flivver-row-east-a", "kind": "flivver", "x": 24, "z": 18 },
+          { "id": "flivver-row-east-b", "kind": "flivver", "x": 36, "z": 4 },
+          { "id": "flivver-row-east-c", "kind": "flivver", "x": 48, "z": -12 },
+          { "id": "hauler-bed-north-a", "kind": "hauler", "x": -8, "z": 34 },
+          { "id": "hauler-bed-north-b", "kind": "hauler", "x": 8, "z": 34 }
+        ],
+        "sleeper": { "id": "half-buried-sleeper", "x": 34, "z": 36, "radius": 6, "wakes": "only-if-disturbed" },
+        "unmarkedWagon": { "id": "unmarked-wagon", "x": -38, "z": 30 },
+        "description": "Where machines go: a valley of dead Flivvers, spent boilers, one half-buried thing nobody names. Salvage economy: strip parts under pressure while pipeline rustlers strip the SAME yard, a race in slow motion over bones. Nothing in the boneyard attacks unless woken, and the map rewards leaving the sleeper asleep; no tooltip ever says so. Engine dependency: the salvage-race consumer (strip-under-pressure economy, rival rustler crews, sleeper wake trigger) does not exist yet.",
+        "objectives": [
+          { "id": "strip-the-yard", "description": "Strip more of the yard than the pipeline rustlers do." },
+          { "id": "hold-gate-camp", "description": "Hold the Gate Camp through wave 12." }
+        ],
+        "teachingIntent": {
+          "description": "Teaches the economy of the dead and respect for old machines; the yard rewards those who leave the sleeper asleep, and no tooltip ever says so."
+        },
+        "engineDependencies": [
+          { "dep": "salvage-race-consumer", "status": "missing", "description": "Needs a strip-under-pressure salvage economy, rival rustler crews working the same hulks, and the sleeper's wake trigger with its untold reward for leaving it asleep." }
+        ],
+        "palette": {
+          "id": "boneyard-rust-dusk",
+          "tint": [0.66, 0.56, 0.44],
+          "dampTint": [0.22, 0.19, 0.16],
+          "dampAmount": 0.1,
+          "splat": { "rockAmount": 0.34, "scrubAmount": 0.12, "macroWarmth": 0.6, "antiTile": 0.78 }
+        },
+        "scatter": {
+          "id": "boneyard-quiet-rows",
+          "density": 0.34,
+          "classCounts": { "rocks": 52, "dry_grass": 30, "wagon_ruts": 24, "claim_posts": 14, "cactus": 8 }
+        },
+        "lanes": { "spawnEdges": ["west", "east"], "territoryRingBiasWaves": 0, "territoryRingLaneBias": 0 }
+      },
+      "twist": {
+        "secureWave": 12,
+        "motorFrontier": {
+          "description": "The Boneyard ride: one spent boiler comes down to the Gate Camp on the Hauler's hook. Grade the west gate road, fuel at the tar nodes between the rows, hitch the boiler where it lies, and bring it back. A storm does not stop the tow; it makes the same distance cost more fuel, because the Hauler burns by the second and a storm stretches every second out.",
+          "vehicle": { "start": { "x": 0, "z": -40 } },
+          "tow": { "hulkId": "spent-boiler-west", "corridorId": "gate-to-west-rows", "label": "the Gate Camp" }
+        },
+        "weather": {
+          "cycleSeconds": 40,
+          "clearSeconds": 10,
+          "telegraphSeconds": 4,
+          "stormSeconds": 12,
+          "stormMovementMultiplier": 0.75,
+          "stormVisibilityMultiplier": 0.6,
+          "hazeColor": "#b9895a",
+          "hazeStrength": 0.16
+        },
+        "enemyRoster": [
+          {
+            "id": "pipeline_rustler",
+            "label": "Pipeline Rustler",
+            "waveMin": 1,
+            "hpScale": 0.9,
+            "speedMult": 1.25,
+            "visualScale": 0.9,
+            "tint": "#5c4a35",
+            "thief": true,
+            "contactDamageScale": 0.6,
+            "spawnEdges": ["west", "east"],
+            "spawnGates": [
+              { "edge": "west", "x": -62, "z": 8 },
+              { "edge": "east", "x": 62, "z": 8 }
+            ]
+          }
+        ]
+      },
+      "boardRow": {
+        "name": "The Boneyard",
+        "ledgerBlurb": "Dead Flivvers and spent boilers fill two quiet rows beyond the Gate Camp.",
+        "tags": ["motor", "salvage", "mystery"],
+        "unlock": "secured:e4-gusher-county"
+      },
+      "briefing": {
+        "goals": ["Build from the Gate Camp into the dead-machine rows.", "Watch both valley ends while crossing the yard."],
+        "rules": [
+          "Dead Flivvers and spent boilers fill the west and east rows.",
+          "Ten harvest grounds lie among the old machines.",
+          "Waves enter from the west and east."
+        ],
+        "geographyLine": "A 128 by 128 valley of dead Flivvers and spent boilers in quiet rows."
+      }
+    }
+  ]
+}

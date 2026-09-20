@@ -1,0 +1,236 @@
+{
+  "contract": "e7-relay-rush",
+  "policy": {
+    "verbs": [
+      "PLAYBOOK_USE",
+      "BLAST_AT",
+      "BUILD",
+      "HARVEST",
+      "HOLD",
+      "SECURE_CHOICE"
+    ],
+    "hold": {
+      "x": -25,
+      "z": 35
+    },
+    "blast": {
+      "x": -25,
+      "z": 41
+    },
+    "pansPerTurn": 28,
+    "playbookAtSeconds": 55
+  },
+  "identical": true,
+  "runs": [
+    {
+      "seed": "e7-relay-rush-01",
+      "exitCode": 0,
+      "turns": 671,
+      "secureChoices": 1,
+      "outcome": {
+        "secured": true,
+        "waves": 20,
+        "timeMs": 600000,
+        "gold": 200,
+        "kills": 650,
+        "calls": 669,
+        "defaultedPicks": 0,
+        "defaultedSecure": 0,
+        "eventLogHash": "fnv1a32:847b22a1"
+      },
+      "state": {
+        "playbookUses": 1,
+        "wheelLeftAlone": 1
+      },
+      "stderr": [
+        "(node:7584) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.",
+        "(Use `node --trace-warnings ...` to show where the warning was created)",
+        "gr-sim speed: 0.04 waves/s"
+      ],
+      "final": {
+        "wave": 20,
+        "runSeconds": 600,
+        "gold": 200,
+        "heroHp": 175,
+        "litCount": 4,
+        "litAtDeadline": 4,
+        "deadlineMet": true,
+        "mutedPlaybooks": 1,
+        "objectiveMet": true,
+        "programSuspensions": 1
+      },
+      "run": 1,
+      "tape": "artifacts/relay-rush-replays-again/prover-01.tape.json",
+      "trace": [
+        {
+          "wave": 18,
+          "runSeconds": 540,
+          "gold": 200,
+          "heroHp": 175,
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "litCount": 4,
+          "frontsArrived": 6,
+          "deadline": true,
+          "mutedPlaybooks": 1,
+          "runningProgram": null,
+          "objectiveMet": true,
+          "threats": 60,
+          "build": null,
+          "pick": null,
+          "heroMaxHp": 175,
+          "pans": 28
+        },
+        {
+          "wave": 19,
+          "runSeconds": 570,
+          "gold": 200,
+          "heroHp": 175,
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "litCount": 4,
+          "frontsArrived": 6,
+          "deadline": true,
+          "mutedPlaybooks": 1,
+          "runningProgram": null,
+          "objectiveMet": true,
+          "threats": 60,
+          "build": null,
+          "pick": null,
+          "heroMaxHp": 175,
+          "pans": 28
+        },
+        {
+          "wave": 20,
+          "runSeconds": 600,
+          "gold": 200,
+          "heroHp": 175,
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "litCount": 4,
+          "frontsArrived": 6,
+          "deadline": true,
+          "mutedPlaybooks": 1,
+          "runningProgram": null,
+          "objectiveMet": true,
+          "threats": 60,
+          "build": null,
+          "pick": null,
+          "heroMaxHp": 175,
+          "pans": 28
+        }
+      ]
+    },
+    {
+      "seed": "e7-relay-rush-01",
+      "exitCode": 0,
+      "turns": 671,
+      "secureChoices": 1,
+      "outcome": {
+        "secured": true,
+        "waves": 20,
+        "timeMs": 600000,
+        "gold": 200,
+        "kills": 650,
+        "calls": 669,
+        "defaultedPicks": 0,
+        "defaultedSecure": 0,
+        "eventLogHash": "fnv1a32:847b22a1"
+      },
+      "state": {
+        "playbookUses": 1,
+        "wheelLeftAlone": 1
+      },
+      "stderr": [
+        "(node:34043) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.",
+        "(Use `node --trace-warnings ...` to show where the warning was created)",
+        "gr-sim speed: 0.04 waves/s"
+      ],
+      "final": {
+        "wave": 20,
+        "runSeconds": 600,
+        "gold": 200,
+        "heroHp": 175,
+        "litCount": 4,
+        "litAtDeadline": 4,
+        "deadlineMet": true,
+        "mutedPlaybooks": 1,
+        "objectiveMet": true,
+        "programSuspensions": 1
+      },
+      "run": 2,
+      "tape": null,
+      "trace": [
+        {
+          "wave": 18,
+          "runSeconds": 540,
+          "gold": 200,
+          "heroHp": 175,
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "litCount": 4,
+          "frontsArrived": 6,
+          "deadline": true,
+          "mutedPlaybooks": 1,
+          "runningProgram": null,
+          "objectiveMet": true,
+          "threats": 60,
+          "build": null,
+          "pick": null,
+          "heroMaxHp": 175,
+          "pans": 28
+        },
+        {
+          "wave": 19,
+          "runSeconds": 570,
+          "gold": 200,
+          "heroHp": 175,
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "litCount": 4,
+          "frontsArrived": 6,
+          "deadline": true,
+          "mutedPlaybooks": 1,
+          "runningProgram": null,
+          "objectiveMet": true,
+          "threats": 60,
+          "build": null,
+          "pick": null,
+          "heroMaxHp": 175,
+          "pans": 28
+        },
+        {
+          "wave": 20,
+          "runSeconds": 600,
+          "gold": 200,
+          "heroHp": 175,
+          "works": {
+            "sentry_beacon": 6,
+            "turret": 4
+          },
+          "litCount": 4,
+          "frontsArrived": 6,
+          "deadline": true,
+          "mutedPlaybooks": 1,
+          "runningProgram": null,
+          "objectiveMet": true,
+          "threats": 60,
+          "build": null,
+          "pick": null,
+          "heroMaxHp": 175,
+          "pans": 28
+        }
+      ]
+    }
+  ]
+}

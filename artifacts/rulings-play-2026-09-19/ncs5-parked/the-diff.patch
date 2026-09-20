@@ -1,0 +1,74 @@
+diff --git src/entities/pools.ts private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/ncs5-patched-pools.ts
+index c137ff74c..eb1bad3de 100644
+--- src/entities/pools.ts
++++ private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/ncs5-patched-pools.ts
+@@ -410,14 +410,14 @@ export class EnemyPool {
+   private readonly bossHpFill = new THREE.Mesh(this.bossHpFillGeometry, this.bossHpFillMaterial);
+   private readonly bossHpSegments = new THREE.Group();
+   private bossHpCanvas?: HTMLCanvasElement | null;
+-  private readonly generatedSprites = new GeneratedSpriteBatch(assetSlots.charBanditBase, Balance.enemy.poolSize, {
++  private readonly generatedSprites = new GeneratedSpriteBatch(assetSlots.charClaimJumper, Balance.enemy.poolSize, {
+     name: 'GeneratedClaimJumperSprites',
+     y: ENEMY_SPRITE_Y,
+     scale: [1.28, 1.55],
+     renderOrder: RenderLayers.gameplay,
+     onLoaded: () => this.setProceduralVisible(false),
+   });
+-  private readonly generatedSpriteFades = new GeneratedSpriteBatch(assetSlots.charBanditBase, Balance.enemy.poolSize, {
++  private readonly generatedSpriteFades = new GeneratedSpriteBatch(assetSlots.charClaimJumper, Balance.enemy.poolSize, {
+     name: 'GeneratedClaimJumperSpriteFades',
+     y: ENEMY_SPRITE_Y,
+     scale: [1.28, 1.55],
+@@ -541,7 +541,7 @@ export class EnemyPool {
+ 
+   constructor(private readonly camera?: THREE.Camera) {
+     // Warm the common sheets as before; animation cursors belong only to occupied pool slots.
+-    void loadRuntimeSlot(assetSlots.charBanditBase);
++    void loadRuntimeSlot(assetSlots.charClaimJumper);
+     void loadRuntimeSlot(assetSlots.charBanditThief);
+     this.group.name = 'EnemyPool';
+     this.railcar3dState = performanceTierDiagnostics().tier === 'lite' ? 'lite' : 'off';
+@@ -1135,7 +1135,7 @@ export class EnemyPool {
+     variant?.sprites.ensureLoaded();
+     variant?.fades.ensureLoaded();
+     const baron = enemy.eliteKind === 'baron' && this.baronSprites.isLoaded;
+-    const slotId = variant?.slotId ?? (baron ? assetSlots.charBaron : enemy.isThief ? assetSlots.charBanditThief : assetSlots.charBanditBase);
++    const slotId = variant?.slotId ?? (baron ? assetSlots.charBaron : enemy.isThief ? assetSlots.charBanditThief : assetSlots.charClaimJumper);
+     const sprites = variant?.sprites ?? (baron ? this.baronSprites : enemy.isThief ? this.thiefSprites : this.generatedSprites);
+     const fades = variant?.fades ?? (baron ? this.baronSpriteFades : enemy.isThief ? this.thiefSpriteFades : this.generatedSpriteFades);
+     if (!sprites.isLoaded) return null;
+diff --git src/world/LanternWorldStage.ts private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/ncs5-patched-Lantern.ts
+index 02895f10b..cf32f1210 100644
+--- src/world/LanternWorldStage.ts
++++ private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/ncs5-patched-Lantern.ts
+@@ -22,7 +22,7 @@ export const lanternHeightAt = Terrain.sampleHeight;
+ const contract = activeContract();
+ const riderUrl = new URL('../../assets/processed/char-prospector-sheet-hover8-r0c0.png', import.meta.url).href;
+ const enemySlots: Record<string, AssetSlotId> = {
+-  claim_jumper: assetSlots.charBanditBase, thief: assetSlots.charBanditThief, wrecker: assetSlots.charE2SteamWrecker,
++  claim_jumper: assetSlots.charClaimJumper, thief: assetSlots.charBanditThief, wrecker: assetSlots.charE2SteamWrecker,
+   steam_wrecker: assetSlots.charE2SteamWrecker, rail_tough: assetSlots.charE2RailTough, coal_thief: assetSlots.charE2CoalThief,
+   baron: assetSlots.charBaron, feral_toaster: assetSlots.charE6FeralToaster, lawn_shepherd: assetSlots.charE6LawnShepherd,
+   glowjack: assetSlots.charE6Glowjack, rogue_automaton: assetSlots.charE7RogueAutomaton, data_rustler: assetSlots.charE7DataRustler,
+diff --git assets/layer-contracts/characters.v2.json private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/ncs5-patched-characters.json
+index 347ef5e91..1a20e43aa 100644
+--- assets/layer-contracts/characters.v2.json
++++ private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/ncs5-patched-characters.json
+@@ -4268,7 +4268,7 @@
+       "walk8": {
+         "version": 1,
+         "status": "ACTIVE",
+-        "enabled": true,
++        "enabled": false,
+         "frameCount": 8,
+         "fps": 16,
+         "cadenceReferenceFrames": 4,
+@@ -4289,7 +4289,7 @@
+           "sw": "w",
+           "nw": "w"
+         },
+-        "notes": "066 walk8 engine: video-source Claim Jumper sheet selected when all processed walk8 cells exist, otherwise walk4 remains the fallback. Rows are down/left/right/up; diagonals alias to side rows because this production sheet is 4-direction. 8 frames run over the same cycle duration as walk4 via cadenceReferenceFrames=4."
++        "notes": "DISABLED 2026-09-19 (F-NCS-6, tasks/rulings-play-2026-09-19.md; owner ruling of the same day, verbatim: \"I agree with all your recommendations on the decisions - good work\", taking (a) on F-NCS-5: wake the Claim Jumper). `SpriteAnimator.selectWalkSheet` prefers walk8 over walk4 whenever walk8 is enabled and all its processed cells exist, so this ACTIVE 4-direction production sheet SHADOWED the 8-direction walk4 block below it: repointing the base enemy body at this slot without this flag would draw the aliased side rows, not the per-heading plates. The sheet and its 32 cells are KEPT and unchanged - `enabled: false` says \"good art, not the one that draws\", which is the clause `selectWalkSheet` reads. ORIGINAL NOTE: 066 walk8 engine: video-source Claim Jumper sheet selected when all processed walk8 cells exist, otherwise walk4 remains the fallback. Rows are down/left/right/up; diagonals alias to side rows because this production sheet is 4-direction. 8 frames run over the same cycle duration as walk4 via cadenceReferenceFrames=4."
+       },
+       "orientations": {
+         "side": {

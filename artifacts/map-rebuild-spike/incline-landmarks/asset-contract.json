@@ -1,0 +1,105 @@
+{
+  "law": "reuse > derive > build-new; era-stamped; grit-dressed",
+  "packs": {
+    "incline": {
+      "era": 2,
+      "atlasSha256": "185f7420a26ec753c2f25042e94f875fff003b27e84419ff1aac863625e1c91b",
+      "assets": {
+        "lower-yard-engine-crane": {
+          "sourceTier": "reuse",
+          "triangles": 2728,
+          "sha256": "0de1b5381a817da9402d0dece2c0ac14ea845ac0825468676526e8f22742f013",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "west-line-brake-tower": {
+          "sourceTier": "reuse",
+          "triangles": 964,
+          "sha256": "f5c5c604c852c41db9aa929f2bc8537ec1c49c64adc3b3d85546218e5d60510f",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "east-line-brake-tower": {
+          "sourceTier": "reuse",
+          "triangles": 976,
+          "sha256": "2dbb7711db8d2997e44f439ae6f0edfd08a5f3c307ac4c7dccd6ae595120946c",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "upper-ore-cable-house": {
+          "sourceTier": "reuse",
+          "triangles": 1636,
+          "sha256": "974111f2c0508fc323145276105a63398047e8ab3709408b1b81d442bf10f1fd",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "ford-service-pump": {
+          "sourceTier": "reuse",
+          "triangles": 2496,
+          "sha256": "9efe77e3ddeeebe59c5d8ca55da515d425a6ca3bc39465048547c29788bad510",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        }
+      }
+    }
+  },
+  "totals": {
+    "packs": 1,
+    "assets": 5,
+    "sourceTiers": {
+      "reuse": 5,
+      "derive": 0,
+      "build-new": 0
+    }
+  },
+  "boards": {
+    "incline-landmarks-turntable.png": {
+      "size": [
+        1920,
+        1160
+      ],
+      "sha256": "4673245b253ff438f327f57d5cc980169e66fc4bebaf2075497541615dcadc88"
+    },
+    "incline-landmarks-verdict.png": {
+      "size": [
+        1920,
+        1008
+      ],
+      "sha256": "0921b2280f93ddca7fd5ce2eba4bbc3fbff454f6deadd68f8ff8d429b5fc5f9b"
+    },
+    "incline-landmarks-pack.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "5f8c4cfd15a3ba2b8c50da25bb66e380d394885cdd8a65374f0fb5978e6cf95c"
+    },
+    "incline-landmarks-proposed.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "892f567b8c0c4d3ab32f29eefcacac1010ebcae155ad63072a244cd01f8d70c8"
+    },
+    "incline-landmarks-proposed-overview.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "b8843c6e87139a1d7918eb49e6ccb1a79d3877fd879d3260f3f71581bb4a66a0"
+    },
+    "incline-landmarks-clearance-overlay.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "bc7d6275aa33691637a4e102cfd9ecda9aa0031e6ba6d5a86f9aef3b20ae6a4a"
+    }
+  },
+  "simulation": "unchanged; every landmark is a separate render-only GLB mounted by contract"
+}

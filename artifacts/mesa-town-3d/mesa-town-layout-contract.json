@@ -1,0 +1,231 @@
+{
+  "baseSha": "8d974f11911187136469fbd017c9598e5b2faf28",
+  "siteChain": "E6-E7 glow mesa",
+  "status": "plate pilot; premium sites proposed for attended verdict before E6 building production",
+  "sources": {
+    "layout": "src/town/townLayout.ts",
+    "layoutSha256": "6d000feac3c0e2e14051f287205e5450b3b701bec4c44e513613a34ea39017d0",
+    "stampFootprint": "src/town/TownScene.ts",
+    "dynamoFootprint": "assets/contracts/epoch-2-steamworks/manifest.json",
+    "mesaTexture": "assets/raw/ter-mesa-seamless.png",
+    "mesaTextureSha256": "af6427437a548f8d36887f22ddb78eba8f7bbf1bf2dd5b49af24365c91d50e3c",
+    "e6Bundle": "specs/epoch-saga/e6-atomic-bundle.md",
+    "e6BundleSha256": "daacccdf9ca0e5d9acdb2c1fa158d1e1e362270a2e98b428fbdc6dcfcd7801c2"
+  },
+  "production": {
+    "blend": "assets/pilots/mesa-town-3d/mesa-town-plate.blend",
+    "glb": "assets/pilots/mesa-town-3d/mesa-town-plate.glb",
+    "glbSha256": "067c8c652134258379315a41200caf423ff3e9cb70a1b9d8f2607ee691aafdc3",
+    "triangles": 17280,
+    "triangleBudget": 20000,
+    "atlas": [
+      2048,
+      2048
+    ],
+    "materialCount": 1
+  },
+  "canonicalSlots": [
+    {
+      "id": "tavern",
+      "position": [
+        -7.1,
+        -7.1
+      ],
+      "approach": [
+        -4.9,
+        -4.9
+      ],
+      "footprint": [
+        5.2,
+        3.4
+      ],
+      "targetHeight": 0.0
+    },
+    {
+      "id": "claim_office",
+      "position": [
+        7.1,
+        -7.1
+      ],
+      "approach": [
+        4.9,
+        -4.9
+      ],
+      "footprint": [
+        4.4,
+        3.2
+      ],
+      "targetHeight": 0.0
+    },
+    {
+      "id": "general_store",
+      "position": [
+        0.0,
+        -10.2
+      ],
+      "approach": [
+        0.0,
+        -7.2
+      ],
+      "footprint": [
+        4.8,
+        3.3
+      ],
+      "targetHeight": 0.0
+    },
+    {
+      "id": "schoolhouse",
+      "position": [
+        -9.4,
+        3.4
+      ],
+      "approach": [
+        -6.6,
+        2.4
+      ],
+      "footprint": [
+        4.4,
+        3.4
+      ],
+      "targetHeight": 0.0
+    },
+    {
+      "id": "assay_office",
+      "position": [
+        9.4,
+        3.4
+      ],
+      "approach": [
+        6.6,
+        2.4
+      ],
+      "footprint": [
+        4.6,
+        3.4
+      ],
+      "targetHeight": 0.0
+    },
+    {
+      "id": "chapel",
+      "position": [
+        -4.8,
+        9.0
+      ],
+      "approach": [
+        -3.35,
+        6.35
+      ],
+      "footprint": [
+        4.2,
+        3.2
+      ],
+      "targetHeight": 0.0
+    },
+    {
+      "id": "stamp-mill",
+      "position": [
+        4.8,
+        9.0
+      ],
+      "approach": [
+        3.45,
+        6.5
+      ],
+      "footprint": [
+        6.2,
+        1.65
+      ],
+      "targetHeight": 0.0
+    },
+    {
+      "id": "dynamo-hall",
+      "position": [
+        10.0,
+        10.0
+      ],
+      "approach": [
+        10.0,
+        7.0
+      ],
+      "footprint": [
+        5.5,
+        3.5
+      ],
+      "targetHeight": 0.0
+    }
+  ],
+  "premiumSiteCandidates": [
+    {
+      "id": "reactor-dome-candidate",
+      "position": [
+        7.0,
+        -16.7
+      ],
+      "shape": "circle",
+      "footprint": [
+        6.2,
+        6.2
+      ],
+      "targetHeight": 1.18,
+      "role": "E6 A1 Reactor Dome premium mesa-top pad"
+    },
+    {
+      "id": "catalog-warehouse-candidate",
+      "position": [
+        -7.4,
+        -16.6
+      ],
+      "shape": "rectangle",
+      "footprint": [
+        5.6,
+        3.8
+      ],
+      "targetHeight": 1.18,
+      "role": "E6 A1 Catalog Warehouse north-origin pad"
+    }
+  ],
+  "mesaAccessPaths": {
+    "reactor-herd-ramp": [
+      [
+        11.0,
+        -6.0
+      ],
+      [
+        13.0,
+        -9.0
+      ],
+      [
+        11.0,
+        -12.0
+      ],
+      [
+        7.0,
+        -13.05
+      ]
+    ],
+    "warehouse-herd-ramp": [
+      [
+        -11.0,
+        -6.0
+      ],
+      [
+        -13.0,
+        -9.0
+      ],
+      [
+        -11.0,
+        -12.0
+      ],
+      [
+        -7.4,
+        -14.15
+      ]
+    ]
+  },
+  "laws": {
+    "canonicalFlatWalk": 0.05,
+    "plazaCenterOpen": 3.1,
+    "panMonument": "heritage asset stays independently mounted at canonical center; not duplicated in plate GLB",
+    "freshSite": "no drowned-square geometry, water surface, E2-E5 street hardware, buildings, or people"
+  }
+}

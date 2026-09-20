@@ -1,0 +1,2000 @@
+{
+  "generatedFrom": "artifacts/rider-parity-grammar/retirement-ledger.mjs",
+  "task": "rider-parity-grammar",
+  "ruling": "2026-09-07",
+  "landedBy": "rider-parity-grammar-stage3",
+  "landedOn": "2026-09-07",
+  "removedVerbs": [
+    "MOVE_TO",
+    "HOLD",
+    "FALLBACK_IF"
+  ],
+  "board": "artifacts/gauntlet-heat12-20260905",
+  "tapesOnBoard": 89,
+  "scoredRowsOnBoard": 24,
+  "retiredTapes": 57,
+  "retiredScoredRows": 22,
+  "retiredRides": [
+    "e1-baron",
+    "e1-drill-yard",
+    "e1-night-shift",
+    "e2-hill-mine",
+    "e3-canyon-works",
+    "e3-moth-season",
+    "e4-boneyard",
+    "e4-dust-flats",
+    "e4-gusher-county",
+    "e4-long-road",
+    "e5-stillwater",
+    "e7-dead-band",
+    "e7-echo-canyon",
+    "e7-relay-rush",
+    "e7-relay-valley",
+    "e7-relay-valley.attempt-1",
+    "e8-eclipse",
+    "e8-far-side",
+    "e8-low-orbit",
+    "e8-mare-claim",
+    "e9-dome-basin.attempt-1",
+    "the-claim"
+  ],
+  "retiredScoredRides": [
+    "e1-baron",
+    "e1-drill-yard",
+    "e1-night-shift",
+    "e2-hill-mine",
+    "e3-canyon-works",
+    "e3-moth-season",
+    "e4-boneyard",
+    "e4-dust-flats",
+    "e4-gusher-county",
+    "e4-long-road",
+    "e5-stillwater",
+    "e7-dead-band",
+    "e7-echo-canyon",
+    "e7-relay-rush",
+    "e7-relay-valley",
+    "e7-relay-valley.attempt-1",
+    "e8-eclipse",
+    "e8-far-side",
+    "e8-low-orbit",
+    "e8-mare-claim",
+    "e9-dome-basin.attempt-1",
+    "the-claim"
+  ],
+  "survivingScoredRows": [
+    "e3-canyon-works.attempt-1/attempt-1-tape.json",
+    "e9-dome-basin/tune-1-tape.json"
+  ],
+  "rows": [
+    {
+      "ride": "e1-baron",
+      "tape": "tune-1.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e1-baron/work/tune-1.json",
+      "scored": true,
+      "tapeId": "agent-454a4585-356542d5-cc71-4209-9bd9-279bf6858e42",
+      "contract": "e1-baron",
+      "seed": "e1-baron-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEra": 5,
+      "recordedEventLogHash": "fnv1a32:41f0518d",
+      "removedVerbs": [
+        "HOLD",
+        "MOVE_TO"
+      ],
+      "removedVerbOrders": {
+        "MOVE_TO": 40,
+        "HOLD": 137
+      },
+      "submissions": 137,
+      "refusedSubmissions": 137,
+      "firstRefusal": {
+        "tick": 0,
+        "orderIndex": 31,
+        "verb": "HOLD",
+        "message": "orders[31].verb \"HOLD\" is unknown.",
+        "submissionLength": 32
+      },
+      "afterGrammar": "REFUSED_AT_SUBMISSION",
+      "retiredBy": "rider-parity-grammar",
+      "retiredUnder": "ADR-004 clause 3 · ADR-005 consequence 3 · owner ruling 2026-09-07 (\"re-ride it yes\")",
+      "retiredAt": "2026-09-07",
+      "disposition": "RETIRED — kept on disk and in git as history; re-ridden on the new grammar, never repaired."
+    },
+    {
+      "ride": "e1-baron",
+      "tape": "tune-2.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e1-baron/work/tune-2.json",
+      "scored": false,
+      "tapeId": "agent-ee3fa6fe-a1f17921-598e-4116-bd84-10d3548690fb",
+      "contract": "e1-baron",
+      "seed": "e1-baron-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEra": 5,
+      "recordedEventLogHash": null,
+      "removedVerbs": [
+        "HOLD",
+        "MOVE_TO"
+      ],
+      "removedVerbOrders": {
+        "MOVE_TO": 74,
+        "HOLD": 145
+      },
+      "submissions": 145,
+      "refusedSubmissions": 145,
+      "firstRefusal": {
+        "tick": 0,
+        "orderIndex": 31,
+        "verb": "HOLD",
+        "message": "orders[31].verb \"HOLD\" is unknown.",
+        "submissionLength": 32
+      },
+      "afterGrammar": "REFUSED_AT_SUBMISSION",
+      "retiredBy": "rider-parity-grammar",
+      "retiredUnder": "ADR-004 clause 3 · ADR-005 consequence 3 · owner ruling 2026-09-07 (\"re-ride it yes\")",
+      "retiredAt": "2026-09-07",
+      "disposition": "RETIRED — kept on disk and in git as history; re-ridden on the new grammar, never repaired."
+    },
+    {
+      "ride": "e1-drill-yard",
+      "tape": "attempt-1-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e1-drill-yard/work/attempt-1-tape.json",
+      "scored": true,
+      "tapeId": "agent-c91b6e59-2514e50c-1b43-4f42-abae-6be06ccbb88d",
+      "contract": "e1-drill-yard",
+      "seed": "gold-rush",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEra": 5,
+      "recordedEventLogHash": "fnv1a32:ff497859",
+      "removedVerbs": [
+        "HOLD"
+      ],
+      "removedVerbOrders": {
+        "HOLD": 3
+      },
+      "submissions": 6,
+      "refusedSubmissions": 3,
+      "firstRefusal": {
+        "tick": 0,
+        "orderIndex": 31,
+        "verb": "HOLD",
+        "message": "orders[31].verb \"HOLD\" is unknown.",
+        "submissionLength": 32
+      },
+      "afterGrammar": "REFUSED_AT_SUBMISSION",
+      "retiredBy": "rider-parity-grammar",
+      "retiredUnder": "ADR-004 clause 3 · ADR-005 consequence 3 · owner ruling 2026-09-07 (\"re-ride it yes\")",
+      "retiredAt": "2026-09-07",
+      "disposition": "RETIRED — kept on disk and in git as history; re-ridden on the new grammar, never repaired."
+    },
+    {
+      "ride": "e1-drill-yard",
+      "tape": "tune-1-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e1-drill-yard/work/tune-1-tape.json",
+      "scored": false,
+      "tapeId": "agent-c91b6e59-b672bd42-8f1f-41e7-972c-917587ac71c3",
+      "contract": "e1-drill-yard",
+      "seed": "gold-rush",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEra": 5,
+      "recordedEventLogHash": null,
+      "removedVerbs": [
+        "HOLD"
+      ],
+      "removedVerbOrders": {
+        "HOLD": 3
+      },
+      "submissions": 6,
+      "refusedSubmissions": 3,
+      "firstRefusal": {
+        "tick": 0,
+        "orderIndex": 31,
+        "verb": "HOLD",
+        "message": "orders[31].verb \"HOLD\" is unknown.",
+        "submissionLength": 32
+      },
+      "afterGrammar": "REFUSED_AT_SUBMISSION",
+      "retiredBy": "rider-parity-grammar",
+      "retiredUnder": "ADR-004 clause 3 · ADR-005 consequence 3 · owner ruling 2026-09-07 (\"re-ride it yes\")",
+      "retiredAt": "2026-09-07",
+      "disposition": "RETIRED — kept on disk and in git as history; re-ridden on the new grammar, never repaired."
+    },
+    {
+      "ride": "e1-drill-yard",
+      "tape": "tune-2-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e1-drill-yard/work/tune-2-tape.json",
+      "scored": false,
+      "tapeId": "agent-626c997d-5b9c09f8-e8ee-4498-a96c-974411180493",
+      "contract": "e1-drill-yard",
+      "seed": "gold-rush",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEra": 5,
+      "recordedEventLogHash": null,
+      "removedVerbs": [
+        "HOLD"
+      ],
+      "removedVerbOrders": {
+        "HOLD": 12
+      },
+      "submissions": 12,
+      "refusedSubmissions": 12,
+      "firstRefusal": {
+        "tick": 0,
+        "orderIndex": 31,
+        "verb": "HOLD",
+        "message": "orders[31].verb \"HOLD\" is unknown.",
+        "submissionLength": 32
+      },
+      "afterGrammar": "REFUSED_AT_SUBMISSION",
+      "retiredBy": "rider-parity-grammar",
+      "retiredUnder": "ADR-004 clause 3 · ADR-005 consequence 3 · owner ruling 2026-09-07 (\"re-ride it yes\")",
+      "retiredAt": "2026-09-07",
+      "disposition": "RETIRED — kept on disk and in git as history; re-ridden on the new grammar, never repaired."
+    },
+    {
+      "ride": "e1-night-shift",
+      "tape": "attempt-1-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e1-night-shift/work/attempt-1-tape.json",
+      "scored": true,
+      "tapeId": "agent-f255bbbc-022dd78b-1973-4fd6-b333-e77f3a434bb2",
+      "contract": "e1-night-shift",
+      "seed": "e1-night-shift-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEra": 5,
+      "recordedEventLogHash": "fnv1a32:94ab6114",
+      "removedVerbs": [
+        "HOLD"
+      ],
+      "removedVerbOrders": {
+        "HOLD": 123
+      },
+      "submissions": 123,
+      "refusedSubmissions": 123,
+      "firstRefusal": {
+        "tick": 0,
+        "orderIndex": 31,
+        "verb": "HOLD",
+        "message": "orders[31].verb \"HOLD\" is unknown.",
+        "submissionLength": 32
+      },
+      "afterGrammar": "REFUSED_AT_SUBMISSION",
+      "retiredBy": "rider-parity-grammar",
+      "retiredUnder": "ADR-004 clause 3 · ADR-005 consequence 3 · owner ruling 2026-09-07 (\"re-ride it yes\")",
+      "retiredAt": "2026-09-07",
+      "disposition": "RETIRED — kept on disk and in git as history; re-ridden on the new grammar, never repaired."
+    },
+    {
+      "ride": "e1-night-shift",
+      "tape": "tune-1-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e1-night-shift/work/tune-1-tape.json",
+      "scored": false,
+      "tapeId": "agent-3f0121bc-ebf23fa4-d7f1-4114-99d0-e8b346758776",
+      "contract": "e1-night-shift",
+      "seed": "e1-night-shift-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEra": 5,
+      "recordedEventLogHash": null,
+      "removedVerbs": [
+        "HOLD"
+      ],
+      "removedVerbOrders": {
+        "HOLD": 117
+      },
+      "submissions": 117,
+      "refusedSubmissions": 117,
+      "firstRefusal": {
+        "tick": 0,
+        "orderIndex": 31,
+        "verb": "HOLD",
+        "message": "orders[31].verb \"HOLD\" is unknown.",
+        "submissionLength": 32
+      },
+      "afterGrammar": "REFUSED_AT_SUBMISSION",
+      "retiredBy": "rider-parity-grammar",
+      "retiredUnder": "ADR-004 clause 3 · ADR-005 consequence 3 · owner ruling 2026-09-07 (\"re-ride it yes\")",
+      "retiredAt": "2026-09-07",
+      "disposition": "RETIRED — kept on disk and in git as history; re-ridden on the new grammar, never repaired."
+    },
+    {
+      "ride": "e2-hill-mine",
+      "tape": "attempt-1-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e2-hill-mine/work/attempt-1-tape.json",
+      "scored": true,
+      "tapeId": "agent-79d13893-f57ad81f-41e7-452e-94ba-087d1bbffabb",
+      "contract": "e2-hill-mine",
+      "seed": "e2-hill-mine-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEra": 5,
+      "recordedEventLogHash": "fnv1a32:d00d8e69",
+      "removedVerbs": [
+        "HOLD"
+      ],
+      "removedVerbOrders": {
+        "HOLD": 142
+      },
+      "submissions": 142,
+      "refusedSubmissions": 142,
+      "firstRefusal": {
+        "tick": 0,
+        "orderIndex": 29,
+        "verb": "HOLD",
+        "message": "orders[29].verb \"HOLD\" is unknown.",
+        "submissionLength": 30
+      },
+      "afterGrammar": "REFUSED_AT_SUBMISSION",
+      "retiredBy": "rider-parity-grammar",
+      "retiredUnder": "ADR-004 clause 3 · ADR-005 consequence 3 · owner ruling 2026-09-07 (\"re-ride it yes\")",
+      "retiredAt": "2026-09-07",
+      "disposition": "RETIRED — kept on disk and in git as history; re-ridden on the new grammar, never repaired."
+    },
+    {
+      "ride": "e2-hill-mine",
+      "tape": "tune-1-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e2-hill-mine/work/tune-1-tape.json",
+      "scored": false,
+      "tapeId": "agent-50a10e91-b6d8732c-e713-4bb0-8745-edd7caae59ff",
+      "contract": "e2-hill-mine",
+      "seed": "e2-hill-mine-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEra": 5,
+      "recordedEventLogHash": null,
+      "removedVerbs": [
+        "HOLD"
+      ],
+      "removedVerbOrders": {
+        "HOLD": 119
+      },
+      "submissions": 119,
+      "refusedSubmissions": 119,
+      "firstRefusal": {
+        "tick": 0,
+        "orderIndex": 29,
+        "verb": "HOLD",
+        "message": "orders[29].verb \"HOLD\" is unknown.",
+        "submissionLength": 30
+      },
+      "afterGrammar": "REFUSED_AT_SUBMISSION",
+      "retiredBy": "rider-parity-grammar",
+      "retiredUnder": "ADR-004 clause 3 · ADR-005 consequence 3 · owner ruling 2026-09-07 (\"re-ride it yes\")",
+      "retiredAt": "2026-09-07",
+      "disposition": "RETIRED — kept on disk and in git as history; re-ridden on the new grammar, never repaired."
+    },
+    {
+      "ride": "e2-hill-mine",
+      "tape": "tune-2-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e2-hill-mine/work/tune-2-tape.json",
+      "scored": false,
+      "tapeId": "agent-04567062-b5c2eb1e-9f47-48fa-8773-e584d8b3dd35",
+      "contract": "e2-hill-mine",
+      "seed": "e2-hill-mine-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEra": 5,
+      "recordedEventLogHash": null,
+      "removedVerbs": [
+        "HOLD"
+      ],
+      "removedVerbOrders": {
+        "HOLD": 177
+      },
+      "submissions": 177,
+      "refusedSubmissions": 177,
+      "firstRefusal": {
+        "tick": 0,
+        "orderIndex": 29,
+        "verb": "HOLD",
+        "message": "orders[29].verb \"HOLD\" is unknown.",
+        "submissionLength": 30
+      },
+      "afterGrammar": "REFUSED_AT_SUBMISSION",
+      "retiredBy": "rider-parity-grammar",
+      "retiredUnder": "ADR-004 clause 3 · ADR-005 consequence 3 · owner ruling 2026-09-07 (\"re-ride it yes\")",
+      "retiredAt": "2026-09-07",
+      "disposition": "RETIRED — kept on disk and in git as history; re-ridden on the new grammar, never repaired."
+    },
+    {
+      "ride": "e3-canyon-works",
+      "tape": "attempt-1-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e3-canyon-works/work/attempt-1-tape.json",
+      "scored": true,
+      "tapeId": "agent-d5f94574-bea24874-619b-41e4-93a3-54f3718ab9eb",
+      "contract": "e3-canyon-works",
+      "seed": "e3-canyon-works-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEra": 5,
+      "recordedEventLogHash": "fnv1a32:d5528e07",
+      "removedVerbs": [
+        "HOLD"
+      ],
+      "removedVerbOrders": {
+        "HOLD": 43
+      },
+      "submissions": 43,
+      "refusedSubmissions": 43,
+      "firstRefusal": {
+        "tick": 0,
+        "orderIndex": 31,
+        "verb": "HOLD",
+        "message": "orders[31].verb \"HOLD\" is unknown.",
+        "submissionLength": 32
+      },
+      "afterGrammar": "REFUSED_AT_SUBMISSION",
+      "retiredBy": "rider-parity-grammar",
+      "retiredUnder": "ADR-004 clause 3 · ADR-005 consequence 3 · owner ruling 2026-09-07 (\"re-ride it yes\")",
+      "retiredAt": "2026-09-07",
+      "disposition": "RETIRED — kept on disk and in git as history; re-ridden on the new grammar, never repaired."
+    },
+    {
+      "ride": "e3-canyon-works",
+      "tape": "probe-panonly.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e3-canyon-works/work/probe-panonly.json",
+      "scored": false,
+      "tapeId": "agent-c39748e0-a858a559-cd58-46b4-a474-d2047322ebe3",
+      "contract": "e3-canyon-works",
+      "seed": "e3-canyon-works-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEra": 5,
+      "recordedEventLogHash": null,
+      "removedVerbs": [
+        "HOLD"
+      ],
+      "removedVerbOrders": {
+        "HOLD": 8
+      },
+      "submissions": 8,
+      "refusedSubmissions": 8,
+      "firstRefusal": {
+        "tick": 0,
+        "orderIndex": 31,
+        "verb": "HOLD",
+        "message": "orders[31].verb \"HOLD\" is unknown.",
+        "submissionLength": 32
+      },
+      "afterGrammar": "REFUSED_AT_SUBMISSION",
+      "retiredBy": "rider-parity-grammar",
+      "retiredUnder": "ADR-004 clause 3 · ADR-005 consequence 3 · owner ruling 2026-09-07 (\"re-ride it yes\")",
+      "retiredAt": "2026-09-07",
+      "disposition": "RETIRED — kept on disk and in git as history; re-ridden on the new grammar, never repaired."
+    },
+    {
+      "ride": "e3-canyon-works",
+      "tape": "tune-1-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e3-canyon-works/work/tune-1-tape.json",
+      "scored": false,
+      "tapeId": "agent-d5f94574-bea24874-619b-41e4-93a3-54f3718ab9eb",
+      "contract": "e3-canyon-works",
+      "seed": "e3-canyon-works-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEra": 5,
+      "recordedEventLogHash": null,
+      "removedVerbs": [
+        "HOLD"
+      ],
+      "removedVerbOrders": {
+        "HOLD": 43
+      },
+      "submissions": 43,
+      "refusedSubmissions": 43,
+      "firstRefusal": {
+        "tick": 0,
+        "orderIndex": 31,
+        "verb": "HOLD",
+        "message": "orders[31].verb \"HOLD\" is unknown.",
+        "submissionLength": 32
+      },
+      "afterGrammar": "REFUSED_AT_SUBMISSION",
+      "retiredBy": "rider-parity-grammar",
+      "retiredUnder": "ADR-004 clause 3 · ADR-005 consequence 3 · owner ruling 2026-09-07 (\"re-ride it yes\")",
+      "retiredAt": "2026-09-07",
+      "disposition": "RETIRED — kept on disk and in git as history; re-ridden on the new grammar, never repaired."
+    },
+    {
+      "ride": "e3-moth-season",
+      "tape": "attempt-1-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e3-moth-season/work/attempt-1-tape.json",
+      "scored": true,
+      "tapeId": "agent-7739d978-82ca7118-bd78-4b36-ae7c-9051ac88d5e7",
+      "contract": "e3-moth-season",
+      "seed": "e3-moth-season-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEra": 5,
+      "recordedEventLogHash": "fnv1a32:b98efd5e",
+      "removedVerbs": [
+        "HOLD"
+      ],
+      "removedVerbOrders": {
+        "HOLD": 3
+      },
+      "submissions": 54,
+      "refusedSubmissions": 3,
+      "firstRefusal": {
+        "tick": 1820,
+        "orderIndex": 0,
+        "verb": "HOLD",
+        "message": "orders[0].verb \"HOLD\" is unknown.",
+        "submissionLength": 1
+      },
+      "afterGrammar": "REFUSED_AT_SUBMISSION",
+      "retiredBy": "rider-parity-grammar",
+      "retiredUnder": "ADR-004 clause 3 · ADR-005 consequence 3 · owner ruling 2026-09-07 (\"re-ride it yes\")",
+      "retiredAt": "2026-09-07",
+      "disposition": "RETIRED — kept on disk and in git as history; re-ridden on the new grammar, never repaired."
+    },
+    {
+      "ride": "e3-moth-season",
+      "tape": "tune-3-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e3-moth-season/work/tune-3-tape.json",
+      "scored": false,
+      "tapeId": "agent-7739d978-82ca7118-bd78-4b36-ae7c-9051ac88d5e7",
+      "contract": "e3-moth-season",
+      "seed": "e3-moth-season-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEra": 5,
+      "recordedEventLogHash": null,
+      "removedVerbs": [
+        "HOLD"
+      ],
+      "removedVerbOrders": {
+        "HOLD": 3
+      },
+      "submissions": 54,
+      "refusedSubmissions": 3,
+      "firstRefusal": {
+        "tick": 1820,
+        "orderIndex": 0,
+        "verb": "HOLD",
+        "message": "orders[0].verb \"HOLD\" is unknown.",
+        "submissionLength": 1
+      },
+      "afterGrammar": "REFUSED_AT_SUBMISSION",
+      "retiredBy": "rider-parity-grammar",
+      "retiredUnder": "ADR-004 clause 3 · ADR-005 consequence 3 · owner ruling 2026-09-07 (\"re-ride it yes\")",
+      "retiredAt": "2026-09-07",
+      "disposition": "RETIRED — kept on disk and in git as history; re-ridden on the new grammar, never repaired."
+    },
+    {
+      "ride": "e4-boneyard",
+      "tape": "attempt-1-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e4-boneyard/work/attempt-1-tape.json",
+      "scored": true,
+      "tapeId": "agent-3af455e5-52d1fd7c-5ddf-475e-84f1-1081e5f2caf0",
+      "contract": "e4-boneyard",
+      "seed": "e4-boneyard-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEra": 5,
+      "recordedEventLogHash": "fnv1a32:76da210d",
+      "removedVerbs": [
+        "HOLD",
+        "MOVE_TO"
+      ],
+      "removedVerbOrders": {
+        "MOVE_TO": 19,
+        "HOLD": 46
+      },
+      "submissions": 45,
+      "refusedSubmissions": 45,
+      "firstRefusal": {
+        "tick": 0,
+        "orderIndex": 1,
+        "verb": "MOVE_TO",
+        "message": "orders[1].verb \"MOVE_TO\" is unknown.",
+        "submissionLength": 29
+      },
+      "afterGrammar": "REFUSED_AT_SUBMISSION",
+      "retiredBy": "rider-parity-grammar",
+      "retiredUnder": "ADR-004 clause 3 · ADR-005 consequence 3 · owner ruling 2026-09-07 (\"re-ride it yes\")",
+      "retiredAt": "2026-09-07",
+      "disposition": "RETIRED — kept on disk and in git as history; re-ridden on the new grammar, never repaired."
+    },
+    {
+      "ride": "e4-boneyard",
+      "tape": "tune-1-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e4-boneyard/work/tune-1-tape.json",
+      "scored": false,
+      "tapeId": "agent-3af455e5-52d1fd7c-5ddf-475e-84f1-1081e5f2caf0",
+      "contract": "e4-boneyard",
+      "seed": "e4-boneyard-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEra": 5,
+      "recordedEventLogHash": null,
+      "removedVerbs": [
+        "HOLD",
+        "MOVE_TO"
+      ],
+      "removedVerbOrders": {
+        "MOVE_TO": 19,
+        "HOLD": 46
+      },
+      "submissions": 45,
+      "refusedSubmissions": 45,
+      "firstRefusal": {
+        "tick": 0,
+        "orderIndex": 1,
+        "verb": "MOVE_TO",
+        "message": "orders[1].verb \"MOVE_TO\" is unknown.",
+        "submissionLength": 29
+      },
+      "afterGrammar": "REFUSED_AT_SUBMISSION",
+      "retiredBy": "rider-parity-grammar",
+      "retiredUnder": "ADR-004 clause 3 · ADR-005 consequence 3 · owner ruling 2026-09-07 (\"re-ride it yes\")",
+      "retiredAt": "2026-09-07",
+      "disposition": "RETIRED — kept on disk and in git as history; re-ridden on the new grammar, never repaired."
+    },
+    {
+      "ride": "e4-dust-flats",
+      "tape": "attempt-2-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e4-dust-flats/work/attempt-2-tape.json",
+      "scored": true,
+      "tapeId": "agent-a2abb3af-a22234cd-28a3-4b2c-b9c6-2f2baa797847",
+      "contract": "e4-dust-flats",
+      "seed": "e4-dust-flats-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEra": 5,
+      "recordedEventLogHash": "fnv1a32:aa5cf98e",
+      "removedVerbs": [
+        "HOLD",
+        "MOVE_TO"
+      ],
+      "removedVerbOrders": {
+        "MOVE_TO": 13,
+        "HOLD": 51
+      },
+      "submissions": 52,
+      "refusedSubmissions": 51,
+      "firstRefusal": {
+        "tick": 0,
+        "orderIndex": 0,
+        "verb": "MOVE_TO",
+        "message": "orders[0].verb \"MOVE_TO\" is unknown.",
+        "submissionLength": 31
+      },
+      "afterGrammar": "REFUSED_AT_SUBMISSION",
+      "retiredBy": "rider-parity-grammar",
+      "retiredUnder": "ADR-004 clause 3 · ADR-005 consequence 3 · owner ruling 2026-09-07 (\"re-ride it yes\")",
+      "retiredAt": "2026-09-07",
+      "disposition": "RETIRED — kept on disk and in git as history; re-ridden on the new grammar, never repaired."
+    },
+    {
+      "ride": "e4-dust-flats",
+      "tape": "tune-1-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e4-dust-flats/work/tune-1-tape.json",
+      "scored": false,
+      "tapeId": "agent-17cd5d6d-388f5056-98c0-421d-8fbb-37fcb965d5d8",
+      "contract": "e4-dust-flats",
+      "seed": "e4-dust-flats-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEra": 5,
+      "recordedEventLogHash": null,
+      "removedVerbs": [
+        "HOLD",
+        "MOVE_TO"
+      ],
+      "removedVerbOrders": {
+        "MOVE_TO": 13,
+        "HOLD": 53
+      },
+      "submissions": 53,
+      "refusedSubmissions": 53,
+      "firstRefusal": {
+        "tick": 0,
+        "orderIndex": 0,
+        "verb": "MOVE_TO",
+        "message": "orders[0].verb \"MOVE_TO\" is unknown.",
+        "submissionLength": 32
+      },
+      "afterGrammar": "REFUSED_AT_SUBMISSION",
+      "retiredBy": "rider-parity-grammar",
+      "retiredUnder": "ADR-004 clause 3 · ADR-005 consequence 3 · owner ruling 2026-09-07 (\"re-ride it yes\")",
+      "retiredAt": "2026-09-07",
+      "disposition": "RETIRED — kept on disk and in git as history; re-ridden on the new grammar, never repaired."
+    },
+    {
+      "ride": "e4-dust-flats",
+      "tape": "tune-2-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e4-dust-flats/work/tune-2-tape.json",
+      "scored": false,
+      "tapeId": "agent-7f02ff7c-5c8f3332-f702-449a-8b40-4f30f31c7e2e",
+      "contract": "e4-dust-flats",
+      "seed": "e4-dust-flats-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEra": 5,
+      "recordedEventLogHash": null,
+      "removedVerbs": [
+        "HOLD",
+        "MOVE_TO"
+      ],
+      "removedVerbOrders": {
+        "MOVE_TO": 13,
+        "HOLD": 8
+      },
+      "submissions": 8,
+      "refusedSubmissions": 8,
+      "firstRefusal": {
+        "tick": 0,
+        "orderIndex": 0,
+        "verb": "MOVE_TO",
+        "message": "orders[0].verb \"MOVE_TO\" is unknown.",
+        "submissionLength": 32
+      },
+      "afterGrammar": "REFUSED_AT_SUBMISSION",
+      "retiredBy": "rider-parity-grammar",
+      "retiredUnder": "ADR-004 clause 3 · ADR-005 consequence 3 · owner ruling 2026-09-07 (\"re-ride it yes\")",
+      "retiredAt": "2026-09-07",
+      "disposition": "RETIRED — kept on disk and in git as history; re-ridden on the new grammar, never repaired."
+    },
+    {
+      "ride": "e4-dust-flats",
+      "tape": "tune-3-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e4-dust-flats/work/tune-3-tape.json",
+      "scored": false,
+      "tapeId": "agent-aa106a88-d6722e48-247c-4e83-8bab-05fe7bdd8600",
+      "contract": "e4-dust-flats",
+      "seed": "e4-dust-flats-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEra": 5,
+      "recordedEventLogHash": null,
+      "removedVerbs": [
+        "HOLD",
+        "MOVE_TO"
+      ],
+      "removedVerbOrders": {
+        "MOVE_TO": 13,
+        "HOLD": 40
+      },
+      "submissions": 40,
+      "refusedSubmissions": 40,
+      "firstRefusal": {
+        "tick": 0,
+        "orderIndex": 0,
+        "verb": "MOVE_TO",
+        "message": "orders[0].verb \"MOVE_TO\" is unknown.",
+        "submissionLength": 32
+      },
+      "afterGrammar": "REFUSED_AT_SUBMISSION",
+      "retiredBy": "rider-parity-grammar",
+      "retiredUnder": "ADR-004 clause 3 · ADR-005 consequence 3 · owner ruling 2026-09-07 (\"re-ride it yes\")",
+      "retiredAt": "2026-09-07",
+      "disposition": "RETIRED — kept on disk and in git as history; re-ridden on the new grammar, never repaired."
+    },
+    {
+      "ride": "e4-gusher-county",
+      "tape": "attempt-1-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e4-gusher-county/work/attempt-1-tape.json",
+      "scored": true,
+      "tapeId": "agent-30665e9d-03c08c59-94c6-4b86-b1fd-16259206a52d",
+      "contract": "e4-gusher-county",
+      "seed": "e4-gusher-county-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEra": 5,
+      "recordedEventLogHash": "fnv1a32:b61647e9",
+      "removedVerbs": [
+        "HOLD",
+        "MOVE_TO"
+      ],
+      "removedVerbOrders": {
+        "MOVE_TO": 35,
+        "HOLD": 39
+      },
+      "submissions": 39,
+      "refusedSubmissions": 39,
+      "firstRefusal": {
+        "tick": 0,
+        "orderIndex": 1,
+        "verb": "MOVE_TO",
+        "message": "orders[1].verb \"MOVE_TO\" is unknown.",
+        "submissionLength": 32
+      },
+      "afterGrammar": "REFUSED_AT_SUBMISSION",
+      "retiredBy": "rider-parity-grammar",
+      "retiredUnder": "ADR-004 clause 3 · ADR-005 consequence 3 · owner ruling 2026-09-07 (\"re-ride it yes\")",
+      "retiredAt": "2026-09-07",
+      "disposition": "RETIRED — kept on disk and in git as history; re-ridden on the new grammar, never repaired."
+    },
+    {
+      "ride": "e4-gusher-county",
+      "tape": "tune-1-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e4-gusher-county/work/tune-1-tape.json",
+      "scored": false,
+      "tapeId": "agent-30665e9d-03c08c59-94c6-4b86-b1fd-16259206a52d",
+      "contract": "e4-gusher-county",
+      "seed": "e4-gusher-county-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEra": 5,
+      "recordedEventLogHash": null,
+      "removedVerbs": [
+        "HOLD",
+        "MOVE_TO"
+      ],
+      "removedVerbOrders": {
+        "MOVE_TO": 35,
+        "HOLD": 39
+      },
+      "submissions": 39,
+      "refusedSubmissions": 39,
+      "firstRefusal": {
+        "tick": 0,
+        "orderIndex": 1,
+        "verb": "MOVE_TO",
+        "message": "orders[1].verb \"MOVE_TO\" is unknown.",
+        "submissionLength": 32
+      },
+      "afterGrammar": "REFUSED_AT_SUBMISSION",
+      "retiredBy": "rider-parity-grammar",
+      "retiredUnder": "ADR-004 clause 3 · ADR-005 consequence 3 · owner ruling 2026-09-07 (\"re-ride it yes\")",
+      "retiredAt": "2026-09-07",
+      "disposition": "RETIRED — kept on disk and in git as history; re-ridden on the new grammar, never repaired."
+    },
+    {
+      "ride": "e4-long-road",
+      "tape": "tune-1-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e4-long-road/work/tune-1-tape.json",
+      "scored": false,
+      "tapeId": "agent-c1364250-8196e37f-7c63-456a-a3b5-72142c25371d",
+      "contract": "e4-long-road",
+      "seed": "e4-long-road-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEra": 5,
+      "recordedEventLogHash": null,
+      "removedVerbs": [
+        "HOLD",
+        "MOVE_TO"
+      ],
+      "removedVerbOrders": {
+        "MOVE_TO": 33,
+        "HOLD": 14
+      },
+      "submissions": 14,
+      "refusedSubmissions": 14,
+      "firstRefusal": {
+        "tick": 0,
+        "orderIndex": 0,
+        "verb": "MOVE_TO",
+        "message": "orders[0].verb \"MOVE_TO\" is unknown.",
+        "submissionLength": 26
+      },
+      "afterGrammar": "REFUSED_AT_SUBMISSION",
+      "retiredBy": "rider-parity-grammar",
+      "retiredUnder": "ADR-004 clause 3 · ADR-005 consequence 3 · owner ruling 2026-09-07 (\"re-ride it yes\")",
+      "retiredAt": "2026-09-07",
+      "disposition": "RETIRED — kept on disk and in git as history; re-ridden on the new grammar, never repaired."
+    },
+    {
+      "ride": "e4-long-road",
+      "tape": "tune-2-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e4-long-road/work/tune-2-tape.json",
+      "scored": true,
+      "tapeId": "agent-47a8043f-91631d7e-f091-4c5e-a1ce-97dbebf22a1a",
+      "contract": "e4-long-road",
+      "seed": "e4-long-road-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEra": 5,
+      "recordedEventLogHash": "fnv1a32:e024dea1",
+      "removedVerbs": [
+        "HOLD",
+        "MOVE_TO"
+      ],
+      "removedVerbOrders": {
+        "MOVE_TO": 1,
+        "HOLD": 15
+      },
+      "submissions": 15,
+      "refusedSubmissions": 15,
+      "firstRefusal": {
+        "tick": 0,
+        "orderIndex": 0,
+        "verb": "MOVE_TO",
+        "message": "orders[0].verb \"MOVE_TO\" is unknown.",
+        "submissionLength": 26
+      },
+      "afterGrammar": "REFUSED_AT_SUBMISSION",
+      "retiredBy": "rider-parity-grammar",
+      "retiredUnder": "ADR-004 clause 3 · ADR-005 consequence 3 · owner ruling 2026-09-07 (\"re-ride it yes\")",
+      "retiredAt": "2026-09-07",
+      "disposition": "RETIRED — kept on disk and in git as history; re-ridden on the new grammar, never repaired."
+    },
+    {
+      "ride": "e5-stillwater",
+      "tape": "attempt-1-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e5-stillwater/work/attempt-1-tape.json",
+      "scored": true,
+      "tapeId": "agent-82a5f5e0-59609077-337d-490f-90ca-7b9abc2ccf79",
+      "contract": "e5-stillwater",
+      "seed": "e5-stillwater-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEra": 5,
+      "recordedEventLogHash": "fnv1a32:3e887b17",
+      "removedVerbs": [
+        "HOLD"
+      ],
+      "removedVerbOrders": {
+        "HOLD": 11
+      },
+      "submissions": 11,
+      "refusedSubmissions": 11,
+      "firstRefusal": {
+        "tick": 0,
+        "orderIndex": 31,
+        "verb": "HOLD",
+        "message": "orders[31].verb \"HOLD\" is unknown.",
+        "submissionLength": 32
+      },
+      "afterGrammar": "REFUSED_AT_SUBMISSION",
+      "retiredBy": "rider-parity-grammar",
+      "retiredUnder": "ADR-004 clause 3 · ADR-005 consequence 3 · owner ruling 2026-09-07 (\"re-ride it yes\")",
+      "retiredAt": "2026-09-07",
+      "disposition": "RETIRED — kept on disk and in git as history; re-ridden on the new grammar, never repaired."
+    },
+    {
+      "ride": "e5-stillwater",
+      "tape": "tune-1-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e5-stillwater/work/tune-1-tape.json",
+      "scored": false,
+      "tapeId": "agent-82a5f5e0-59609077-337d-490f-90ca-7b9abc2ccf79",
+      "contract": "e5-stillwater",
+      "seed": "e5-stillwater-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEra": 5,
+      "recordedEventLogHash": null,
+      "removedVerbs": [
+        "HOLD"
+      ],
+      "removedVerbOrders": {
+        "HOLD": 11
+      },
+      "submissions": 11,
+      "refusedSubmissions": 11,
+      "firstRefusal": {
+        "tick": 0,
+        "orderIndex": 31,
+        "verb": "HOLD",
+        "message": "orders[31].verb \"HOLD\" is unknown.",
+        "submissionLength": 32
+      },
+      "afterGrammar": "REFUSED_AT_SUBMISSION",
+      "retiredBy": "rider-parity-grammar",
+      "retiredUnder": "ADR-004 clause 3 · ADR-005 consequence 3 · owner ruling 2026-09-07 (\"re-ride it yes\")",
+      "retiredAt": "2026-09-07",
+      "disposition": "RETIRED — kept on disk and in git as history; re-ridden on the new grammar, never repaired."
+    },
+    {
+      "ride": "e7-dead-band",
+      "tape": "attempt-1-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e7-dead-band/work/attempt-1-tape.json",
+      "scored": true,
+      "tapeId": "agent-c4c98518-9e45c5db-09d9-4386-b7bb-d2cd624ba982",
+      "contract": "e7-dead-band",
+      "seed": "e7-dead-band-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEra": 5,
+      "recordedEventLogHash": "fnv1a32:297c535f",
+      "removedVerbs": [
+        "HOLD",
+        "MOVE_TO"
+      ],
+      "removedVerbOrders": {
+        "MOVE_TO": 7,
+        "HOLD": 83
+      },
+      "submissions": 83,
+      "refusedSubmissions": 83,
+      "firstRefusal": {
+        "tick": 0,
+        "orderIndex": 31,
+        "verb": "HOLD",
+        "message": "orders[31].verb \"HOLD\" is unknown.",
+        "submissionLength": 32
+      },
+      "afterGrammar": "REFUSED_AT_SUBMISSION",
+      "retiredBy": "rider-parity-grammar",
+      "retiredUnder": "ADR-004 clause 3 · ADR-005 consequence 3 · owner ruling 2026-09-07 (\"re-ride it yes\")",
+      "retiredAt": "2026-09-07",
+      "disposition": "RETIRED — kept on disk and in git as history; re-ridden on the new grammar, never repaired."
+    },
+    {
+      "ride": "e7-dead-band",
+      "tape": "tune-1-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e7-dead-band/work/tune-1-tape.json",
+      "scored": false,
+      "tapeId": "agent-6563049e-24d547b9-3c64-4995-acd5-0f257cd656b9",
+      "contract": "e7-dead-band",
+      "seed": "e7-dead-band-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEra": 5,
+      "recordedEventLogHash": null,
+      "removedVerbs": [
+        "HOLD"
+      ],
+      "removedVerbOrders": {
+        "HOLD": 69
+      },
+      "submissions": 69,
+      "refusedSubmissions": 69,
+      "firstRefusal": {
+        "tick": 0,
+        "orderIndex": 31,
+        "verb": "HOLD",
+        "message": "orders[31].verb \"HOLD\" is unknown.",
+        "submissionLength": 32
+      },
+      "afterGrammar": "REFUSED_AT_SUBMISSION",
+      "retiredBy": "rider-parity-grammar",
+      "retiredUnder": "ADR-004 clause 3 · ADR-005 consequence 3 · owner ruling 2026-09-07 (\"re-ride it yes\")",
+      "retiredAt": "2026-09-07",
+      "disposition": "RETIRED — kept on disk and in git as history; re-ridden on the new grammar, never repaired."
+    },
+    {
+      "ride": "e7-echo-canyon",
+      "tape": "attempt-1-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e7-echo-canyon/work/attempt-1-tape.json",
+      "scored": false,
+      "tapeId": "agent-d47dfbaa-7f9bcd5a-824a-42be-a3c1-fc18fd4ca4af",
+      "contract": "e7-echo-canyon",
+      "seed": "e7-echo-canyon-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEra": 5,
+      "recordedEventLogHash": null,
+      "removedVerbs": [
+        "HOLD"
+      ],
+      "removedVerbOrders": {
+        "HOLD": 65
+      },
+      "submissions": 65,
+      "refusedSubmissions": 65,
+      "firstRefusal": {
+        "tick": 0,
+        "orderIndex": 25,
+        "verb": "HOLD",
+        "message": "orders[25].verb \"HOLD\" is unknown.",
+        "submissionLength": 26
+      },
+      "afterGrammar": "REFUSED_AT_SUBMISSION",
+      "retiredBy": "rider-parity-grammar",
+      "retiredUnder": "ADR-004 clause 3 · ADR-005 consequence 3 · owner ruling 2026-09-07 (\"re-ride it yes\")",
+      "retiredAt": "2026-09-07",
+      "disposition": "RETIRED — kept on disk and in git as history; re-ridden on the new grammar, never repaired."
+    },
+    {
+      "ride": "e7-echo-canyon",
+      "tape": "tune-1-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e7-echo-canyon/work/tune-1-tape.json",
+      "scored": true,
+      "tapeId": "agent-d47dfbaa-7f9bcd5a-824a-42be-a3c1-fc18fd4ca4af",
+      "contract": "e7-echo-canyon",
+      "seed": "e7-echo-canyon-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEra": 5,
+      "recordedEventLogHash": "fnv1a32:19817b46",
+      "removedVerbs": [
+        "HOLD"
+      ],
+      "removedVerbOrders": {
+        "HOLD": 65
+      },
+      "submissions": 65,
+      "refusedSubmissions": 65,
+      "firstRefusal": {
+        "tick": 0,
+        "orderIndex": 25,
+        "verb": "HOLD",
+        "message": "orders[25].verb \"HOLD\" is unknown.",
+        "submissionLength": 26
+      },
+      "afterGrammar": "REFUSED_AT_SUBMISSION",
+      "retiredBy": "rider-parity-grammar",
+      "retiredUnder": "ADR-004 clause 3 · ADR-005 consequence 3 · owner ruling 2026-09-07 (\"re-ride it yes\")",
+      "retiredAt": "2026-09-07",
+      "disposition": "RETIRED — kept on disk and in git as history; re-ridden on the new grammar, never repaired."
+    },
+    {
+      "ride": "e7-relay-rush",
+      "tape": "attempt-1-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e7-relay-rush/work/attempt-1-tape.json",
+      "scored": true,
+      "tapeId": "agent-e8c4f218-4307b4e1-08a4-457f-92ae-70f84329c564",
+      "contract": "e7-relay-rush",
+      "seed": "e7-relay-rush-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEra": 5,
+      "recordedEventLogHash": "fnv1a32:ed5dc794",
+      "removedVerbs": [
+        "HOLD"
+      ],
+      "removedVerbOrders": {
+        "HOLD": 68
+      },
+      "submissions": 68,
+      "refusedSubmissions": 68,
+      "firstRefusal": {
+        "tick": 0,
+        "orderIndex": 30,
+        "verb": "HOLD",
+        "message": "orders[30].verb \"HOLD\" is unknown.",
+        "submissionLength": 31
+      },
+      "afterGrammar": "REFUSED_AT_SUBMISSION",
+      "retiredBy": "rider-parity-grammar",
+      "retiredUnder": "ADR-004 clause 3 · ADR-005 consequence 3 · owner ruling 2026-09-07 (\"re-ride it yes\")",
+      "retiredAt": "2026-09-07",
+      "disposition": "RETIRED — kept on disk and in git as history; re-ridden on the new grammar, never repaired."
+    },
+    {
+      "ride": "e7-relay-rush",
+      "tape": "tune-1-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e7-relay-rush/work/tune-1-tape.json",
+      "scored": false,
+      "tapeId": "agent-31cee0a4-a7e4d31a-14a2-496e-85cb-51d9a41bc0cf",
+      "contract": "e7-relay-rush",
+      "seed": "e7-relay-rush-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEra": 5,
+      "recordedEventLogHash": null,
+      "removedVerbs": [
+        "HOLD"
+      ],
+      "removedVerbOrders": {
+        "HOLD": 7
+      },
+      "submissions": 7,
+      "refusedSubmissions": 7,
+      "firstRefusal": {
+        "tick": 0,
+        "orderIndex": 15,
+        "verb": "HOLD",
+        "message": "orders[15].verb \"HOLD\" is unknown.",
+        "submissionLength": 16
+      },
+      "afterGrammar": "REFUSED_AT_SUBMISSION",
+      "retiredBy": "rider-parity-grammar",
+      "retiredUnder": "ADR-004 clause 3 · ADR-005 consequence 3 · owner ruling 2026-09-07 (\"re-ride it yes\")",
+      "retiredAt": "2026-09-07",
+      "disposition": "RETIRED — kept on disk and in git as history; re-ridden on the new grammar, never repaired."
+    },
+    {
+      "ride": "e7-relay-rush",
+      "tape": "tune-2-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e7-relay-rush/work/tune-2-tape.json",
+      "scored": false,
+      "tapeId": "agent-9f0c9542-7911c443-d439-4abc-afda-a82c2ee7147a",
+      "contract": "e7-relay-rush",
+      "seed": "e7-relay-rush-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEra": 5,
+      "recordedEventLogHash": null,
+      "removedVerbs": [
+        "HOLD"
+      ],
+      "removedVerbOrders": {
+        "HOLD": 33
+      },
+      "submissions": 33,
+      "refusedSubmissions": 33,
+      "firstRefusal": {
+        "tick": 0,
+        "orderIndex": 30,
+        "verb": "HOLD",
+        "message": "orders[30].verb \"HOLD\" is unknown.",
+        "submissionLength": 31
+      },
+      "afterGrammar": "REFUSED_AT_SUBMISSION",
+      "retiredBy": "rider-parity-grammar",
+      "retiredUnder": "ADR-004 clause 3 · ADR-005 consequence 3 · owner ruling 2026-09-07 (\"re-ride it yes\")",
+      "retiredAt": "2026-09-07",
+      "disposition": "RETIRED — kept on disk and in git as history; re-ridden on the new grammar, never repaired."
+    },
+    {
+      "ride": "e7-relay-valley",
+      "tape": "attempt-1-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e7-relay-valley/work/attempt-1-tape.json",
+      "scored": true,
+      "tapeId": "agent-807d85f3-a7f9ed28-db67-492a-9bd0-df4c2c0b3454",
+      "contract": "e7-relay-valley",
+      "seed": "e7-relay-valley-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEra": 5,
+      "recordedEventLogHash": "fnv1a32:56777ed0",
+      "removedVerbs": [
+        "HOLD"
+      ],
+      "removedVerbOrders": {
+        "HOLD": 258
+      },
+      "submissions": 259,
+      "refusedSubmissions": 258,
+      "firstRefusal": {
+        "tick": 0,
+        "orderIndex": 31,
+        "verb": "HOLD",
+        "message": "orders[31].verb \"HOLD\" is unknown.",
+        "submissionLength": 32
+      },
+      "afterGrammar": "REFUSED_AT_SUBMISSION",
+      "retiredBy": "rider-parity-grammar",
+      "retiredUnder": "ADR-004 clause 3 · ADR-005 consequence 3 · owner ruling 2026-09-07 (\"re-ride it yes\")",
+      "retiredAt": "2026-09-07",
+      "disposition": "RETIRED — kept on disk and in git as history; re-ridden on the new grammar, never repaired."
+    },
+    {
+      "ride": "e7-relay-valley",
+      "tape": "tune-1-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e7-relay-valley/work/tune-1-tape.json",
+      "scored": false,
+      "tapeId": "agent-d1f93214-05e9c763-6daa-453c-9025-85440e1ea9fc",
+      "contract": "e7-relay-valley",
+      "seed": "e7-relay-valley-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEra": 5,
+      "recordedEventLogHash": null,
+      "removedVerbs": [
+        "HOLD"
+      ],
+      "removedVerbOrders": {
+        "HOLD": 4
+      },
+      "submissions": 15,
+      "refusedSubmissions": 4,
+      "firstRefusal": {
+        "tick": 0,
+        "orderIndex": 7,
+        "verb": "HOLD",
+        "message": "orders[7].verb \"HOLD\" is unknown.",
+        "submissionLength": 8
+      },
+      "afterGrammar": "REFUSED_AT_SUBMISSION",
+      "retiredBy": "rider-parity-grammar",
+      "retiredUnder": "ADR-004 clause 3 · ADR-005 consequence 3 · owner ruling 2026-09-07 (\"re-ride it yes\")",
+      "retiredAt": "2026-09-07",
+      "disposition": "RETIRED — kept on disk and in git as history; re-ridden on the new grammar, never repaired."
+    },
+    {
+      "ride": "e7-relay-valley.attempt-1",
+      "tape": "tune-1-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e7-relay-valley.attempt-1/work/tune-1-tape.json",
+      "scored": false,
+      "tapeId": "agent-f01945c5-65b82efd-0dc9-4c06-b6db-1413ed5438aa",
+      "contract": "e7-relay-valley",
+      "seed": "e7-relay-valley-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEra": 5,
+      "recordedEventLogHash": null,
+      "removedVerbs": [
+        "HOLD"
+      ],
+      "removedVerbOrders": {
+        "HOLD": 5
+      },
+      "submissions": 42,
+      "refusedSubmissions": 5,
+      "firstRefusal": {
+        "tick": 638,
+        "orderIndex": 1,
+        "verb": "HOLD",
+        "message": "orders[1].verb \"HOLD\" is unknown.",
+        "submissionLength": 2
+      },
+      "afterGrammar": "REFUSED_AT_SUBMISSION",
+      "retiredBy": "rider-parity-grammar",
+      "retiredUnder": "ADR-004 clause 3 · ADR-005 consequence 3 · owner ruling 2026-09-07 (\"re-ride it yes\")",
+      "retiredAt": "2026-09-07",
+      "disposition": "RETIRED — kept on disk and in git as history; re-ridden on the new grammar, never repaired."
+    },
+    {
+      "ride": "e7-relay-valley.attempt-1",
+      "tape": "tune-2-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e7-relay-valley.attempt-1/work/tune-2-tape.json",
+      "scored": false,
+      "tapeId": "agent-5c8ff928-1433566c-69d7-4c8b-af4a-e14166a5bc05",
+      "contract": "e7-relay-valley",
+      "seed": "e7-relay-valley-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEra": 5,
+      "recordedEventLogHash": null,
+      "removedVerbs": [
+        "HOLD"
+      ],
+      "removedVerbOrders": {
+        "HOLD": 5
+      },
+      "submissions": 39,
+      "refusedSubmissions": 5,
+      "firstRefusal": {
+        "tick": 3316,
+        "orderIndex": 3,
+        "verb": "HOLD",
+        "message": "orders[3].verb \"HOLD\" is unknown.",
+        "submissionLength": 4
+      },
+      "afterGrammar": "REFUSED_AT_SUBMISSION",
+      "retiredBy": "rider-parity-grammar",
+      "retiredUnder": "ADR-004 clause 3 · ADR-005 consequence 3 · owner ruling 2026-09-07 (\"re-ride it yes\")",
+      "retiredAt": "2026-09-07",
+      "disposition": "RETIRED — kept on disk and in git as history; re-ridden on the new grammar, never repaired."
+    },
+    {
+      "ride": "e7-relay-valley.attempt-1",
+      "tape": "tune-3-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e7-relay-valley.attempt-1/work/tune-3-tape.json",
+      "scored": true,
+      "tapeId": "agent-211bb7c1-655ec773-5a6b-4afd-8665-5871fa07cff4",
+      "contract": "e7-relay-valley",
+      "seed": "e7-relay-valley-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEra": 5,
+      "recordedEventLogHash": "fnv1a32:f9866fc8",
+      "removedVerbs": [
+        "HOLD"
+      ],
+      "removedVerbOrders": {
+        "HOLD": 62
+      },
+      "submissions": 62,
+      "refusedSubmissions": 62,
+      "firstRefusal": {
+        "tick": 0,
+        "orderIndex": 29,
+        "verb": "HOLD",
+        "message": "orders[29].verb \"HOLD\" is unknown.",
+        "submissionLength": 30
+      },
+      "afterGrammar": "REFUSED_AT_SUBMISSION",
+      "retiredBy": "rider-parity-grammar",
+      "retiredUnder": "ADR-004 clause 3 · ADR-005 consequence 3 · owner ruling 2026-09-07 (\"re-ride it yes\")",
+      "retiredAt": "2026-09-07",
+      "disposition": "RETIRED — kept on disk and in git as history; re-ridden on the new grammar, never repaired."
+    },
+    {
+      "ride": "e8-eclipse",
+      "tape": "attempt-1-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e8-eclipse/work/attempt-1-tape.json",
+      "scored": true,
+      "tapeId": "agent-65c5a680-9ccd6077-0a9f-4a8c-b36e-f459397b7149",
+      "contract": "e8-eclipse",
+      "seed": "e8-eclipse-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEra": 5,
+      "recordedEventLogHash": "fnv1a32:a0a58077",
+      "removedVerbs": [
+        "HOLD",
+        "MOVE_TO"
+      ],
+      "removedVerbOrders": {
+        "MOVE_TO": 4,
+        "HOLD": 89
+      },
+      "submissions": 89,
+      "refusedSubmissions": 89,
+      "firstRefusal": {
+        "tick": 0,
+        "orderIndex": 31,
+        "verb": "HOLD",
+        "message": "orders[31].verb \"HOLD\" is unknown.",
+        "submissionLength": 32
+      },
+      "afterGrammar": "REFUSED_AT_SUBMISSION",
+      "retiredBy": "rider-parity-grammar",
+      "retiredUnder": "ADR-004 clause 3 · ADR-005 consequence 3 · owner ruling 2026-09-07 (\"re-ride it yes\")",
+      "retiredAt": "2026-09-07",
+      "disposition": "RETIRED — kept on disk and in git as history; re-ridden on the new grammar, never repaired."
+    },
+    {
+      "ride": "e8-eclipse",
+      "tape": "tune-1-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e8-eclipse/work/tune-1-tape.json",
+      "scored": false,
+      "tapeId": "agent-31c78490-e07da8a7-d2f5-4e56-a618-764b2d275f93",
+      "contract": "e8-eclipse",
+      "seed": "e8-eclipse-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEra": 5,
+      "recordedEventLogHash": null,
+      "removedVerbs": [
+        "HOLD",
+        "MOVE_TO"
+      ],
+      "removedVerbOrders": {
+        "MOVE_TO": 3,
+        "HOLD": 74
+      },
+      "submissions": 74,
+      "refusedSubmissions": 74,
+      "firstRefusal": {
+        "tick": 0,
+        "orderIndex": 11,
+        "verb": "HOLD",
+        "message": "orders[11].verb \"HOLD\" is unknown.",
+        "submissionLength": 12
+      },
+      "afterGrammar": "REFUSED_AT_SUBMISSION",
+      "retiredBy": "rider-parity-grammar",
+      "retiredUnder": "ADR-004 clause 3 · ADR-005 consequence 3 · owner ruling 2026-09-07 (\"re-ride it yes\")",
+      "retiredAt": "2026-09-07",
+      "disposition": "RETIRED — kept on disk and in git as history; re-ridden on the new grammar, never repaired."
+    },
+    {
+      "ride": "e8-eclipse",
+      "tape": "tune-2-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e8-eclipse/work/tune-2-tape.json",
+      "scored": false,
+      "tapeId": "agent-65c5a680-276848fd-1132-4006-bbe7-72b058376409",
+      "contract": "e8-eclipse",
+      "seed": "e8-eclipse-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEra": 5,
+      "recordedEventLogHash": null,
+      "removedVerbs": [
+        "HOLD",
+        "MOVE_TO"
+      ],
+      "removedVerbOrders": {
+        "MOVE_TO": 4,
+        "HOLD": 89
+      },
+      "submissions": 89,
+      "refusedSubmissions": 89,
+      "firstRefusal": {
+        "tick": 0,
+        "orderIndex": 31,
+        "verb": "HOLD",
+        "message": "orders[31].verb \"HOLD\" is unknown.",
+        "submissionLength": 32
+      },
+      "afterGrammar": "REFUSED_AT_SUBMISSION",
+      "retiredBy": "rider-parity-grammar",
+      "retiredUnder": "ADR-004 clause 3 · ADR-005 consequence 3 · owner ruling 2026-09-07 (\"re-ride it yes\")",
+      "retiredAt": "2026-09-07",
+      "disposition": "RETIRED — kept on disk and in git as history; re-ridden on the new grammar, never repaired."
+    },
+    {
+      "ride": "e8-far-side",
+      "tape": "attempt-1-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e8-far-side/work/attempt-1-tape.json",
+      "scored": true,
+      "tapeId": "agent-03784526-96166760-5341-4b3e-bd9f-7338d954441f",
+      "contract": "e8-far-side",
+      "seed": "e8-far-side-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEra": 5,
+      "recordedEventLogHash": "fnv1a32:f540c405",
+      "removedVerbs": [
+        "HOLD",
+        "MOVE_TO"
+      ],
+      "removedVerbOrders": {
+        "MOVE_TO": 10,
+        "HOLD": 83
+      },
+      "submissions": 83,
+      "refusedSubmissions": 83,
+      "firstRefusal": {
+        "tick": 0,
+        "orderIndex": 31,
+        "verb": "HOLD",
+        "message": "orders[31].verb \"HOLD\" is unknown.",
+        "submissionLength": 32
+      },
+      "afterGrammar": "REFUSED_AT_SUBMISSION",
+      "retiredBy": "rider-parity-grammar",
+      "retiredUnder": "ADR-004 clause 3 · ADR-005 consequence 3 · owner ruling 2026-09-07 (\"re-ride it yes\")",
+      "retiredAt": "2026-09-07",
+      "disposition": "RETIRED — kept on disk and in git as history; re-ridden on the new grammar, never repaired."
+    },
+    {
+      "ride": "e8-far-side",
+      "tape": "tune-1-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e8-far-side/work/tune-1-tape.json",
+      "scored": false,
+      "tapeId": "agent-886dcd02-2991a08f-bf5a-4a86-bcab-66b44f0e8f23",
+      "contract": "e8-far-side",
+      "seed": "e8-far-side-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEra": 5,
+      "recordedEventLogHash": null,
+      "removedVerbs": [
+        "HOLD",
+        "MOVE_TO"
+      ],
+      "removedVerbOrders": {
+        "MOVE_TO": 6,
+        "HOLD": 53
+      },
+      "submissions": 53,
+      "refusedSubmissions": 53,
+      "firstRefusal": {
+        "tick": 0,
+        "orderIndex": 31,
+        "verb": "HOLD",
+        "message": "orders[31].verb \"HOLD\" is unknown.",
+        "submissionLength": 32
+      },
+      "afterGrammar": "REFUSED_AT_SUBMISSION",
+      "retiredBy": "rider-parity-grammar",
+      "retiredUnder": "ADR-004 clause 3 · ADR-005 consequence 3 · owner ruling 2026-09-07 (\"re-ride it yes\")",
+      "retiredAt": "2026-09-07",
+      "disposition": "RETIRED — kept on disk and in git as history; re-ridden on the new grammar, never repaired."
+    },
+    {
+      "ride": "e8-far-side",
+      "tape": "tune-2-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e8-far-side/work/tune-2-tape.json",
+      "scored": false,
+      "tapeId": "agent-03784526-96166760-5341-4b3e-bd9f-7338d954441f",
+      "contract": "e8-far-side",
+      "seed": "e8-far-side-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEra": 5,
+      "recordedEventLogHash": null,
+      "removedVerbs": [
+        "HOLD",
+        "MOVE_TO"
+      ],
+      "removedVerbOrders": {
+        "MOVE_TO": 10,
+        "HOLD": 83
+      },
+      "submissions": 83,
+      "refusedSubmissions": 83,
+      "firstRefusal": {
+        "tick": 0,
+        "orderIndex": 31,
+        "verb": "HOLD",
+        "message": "orders[31].verb \"HOLD\" is unknown.",
+        "submissionLength": 32
+      },
+      "afterGrammar": "REFUSED_AT_SUBMISSION",
+      "retiredBy": "rider-parity-grammar",
+      "retiredUnder": "ADR-004 clause 3 · ADR-005 consequence 3 · owner ruling 2026-09-07 (\"re-ride it yes\")",
+      "retiredAt": "2026-09-07",
+      "disposition": "RETIRED — kept on disk and in git as history; re-ridden on the new grammar, never repaired."
+    },
+    {
+      "ride": "e8-low-orbit",
+      "tape": "attempt-1-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e8-low-orbit/work/attempt-1-tape.json",
+      "scored": true,
+      "tapeId": "agent-6d2f797a-909e53e2-3dd6-4aa9-8160-2be17e6a78f7",
+      "contract": "e8-low-orbit",
+      "seed": "e8-low-orbit-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEra": 5,
+      "recordedEventLogHash": "fnv1a32:8629a98e",
+      "removedVerbs": [
+        "HOLD",
+        "MOVE_TO"
+      ],
+      "removedVerbOrders": {
+        "MOVE_TO": 6,
+        "HOLD": 95
+      },
+      "submissions": 95,
+      "refusedSubmissions": 95,
+      "firstRefusal": {
+        "tick": 0,
+        "orderIndex": 13,
+        "verb": "HOLD",
+        "message": "orders[13].verb \"HOLD\" is unknown.",
+        "submissionLength": 14
+      },
+      "afterGrammar": "REFUSED_AT_SUBMISSION",
+      "retiredBy": "rider-parity-grammar",
+      "retiredUnder": "ADR-004 clause 3 · ADR-005 consequence 3 · owner ruling 2026-09-07 (\"re-ride it yes\")",
+      "retiredAt": "2026-09-07",
+      "disposition": "RETIRED — kept on disk and in git as history; re-ridden on the new grammar, never repaired."
+    },
+    {
+      "ride": "e8-low-orbit",
+      "tape": "tune-1-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e8-low-orbit/work/tune-1-tape.json",
+      "scored": false,
+      "tapeId": "agent-6d2f797a-909e53e2-3dd6-4aa9-8160-2be17e6a78f7",
+      "contract": "e8-low-orbit",
+      "seed": "e8-low-orbit-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEra": 5,
+      "recordedEventLogHash": null,
+      "removedVerbs": [
+        "HOLD",
+        "MOVE_TO"
+      ],
+      "removedVerbOrders": {
+        "MOVE_TO": 6,
+        "HOLD": 95
+      },
+      "submissions": 95,
+      "refusedSubmissions": 95,
+      "firstRefusal": {
+        "tick": 0,
+        "orderIndex": 13,
+        "verb": "HOLD",
+        "message": "orders[13].verb \"HOLD\" is unknown.",
+        "submissionLength": 14
+      },
+      "afterGrammar": "REFUSED_AT_SUBMISSION",
+      "retiredBy": "rider-parity-grammar",
+      "retiredUnder": "ADR-004 clause 3 · ADR-005 consequence 3 · owner ruling 2026-09-07 (\"re-ride it yes\")",
+      "retiredAt": "2026-09-07",
+      "disposition": "RETIRED — kept on disk and in git as history; re-ridden on the new grammar, never repaired."
+    },
+    {
+      "ride": "e8-mare-claim",
+      "tape": "attempt-1-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e8-mare-claim/work/attempt-1-tape.json",
+      "scored": true,
+      "tapeId": "agent-4036192d-b1ebab0e-a2e1-42ba-b7dd-c2edf9f3d797",
+      "contract": "e8-mare-claim",
+      "seed": "e8-mare-claim-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEra": 5,
+      "recordedEventLogHash": "fnv1a32:e06bda53",
+      "removedVerbs": [
+        "HOLD",
+        "MOVE_TO"
+      ],
+      "removedVerbOrders": {
+        "MOVE_TO": 3,
+        "HOLD": 24
+      },
+      "submissions": 77,
+      "refusedSubmissions": 25,
+      "firstRefusal": {
+        "tick": 1381,
+        "orderIndex": 2,
+        "verb": "HOLD",
+        "message": "orders[2].verb \"HOLD\" is unknown.",
+        "submissionLength": 3
+      },
+      "afterGrammar": "REFUSED_AT_SUBMISSION",
+      "retiredBy": "rider-parity-grammar",
+      "retiredUnder": "ADR-004 clause 3 · ADR-005 consequence 3 · owner ruling 2026-09-07 (\"re-ride it yes\")",
+      "retiredAt": "2026-09-07",
+      "disposition": "RETIRED — kept on disk and in git as history; re-ridden on the new grammar, never repaired."
+    },
+    {
+      "ride": "e8-mare-claim",
+      "tape": "tune-1-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e8-mare-claim/work/tune-1-tape.json",
+      "scored": false,
+      "tapeId": "agent-109c12fa-ae723ba9-a456-4d41-9a54-67795e9e565e",
+      "contract": "e8-mare-claim",
+      "seed": "e8-mare-claim-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEra": 5,
+      "recordedEventLogHash": null,
+      "removedVerbs": [
+        "HOLD"
+      ],
+      "removedVerbOrders": {
+        "HOLD": 23
+      },
+      "submissions": 72,
+      "refusedSubmissions": 23,
+      "firstRefusal": {
+        "tick": 799,
+        "orderIndex": 3,
+        "verb": "HOLD",
+        "message": "orders[3].verb \"HOLD\" is unknown.",
+        "submissionLength": 4
+      },
+      "afterGrammar": "REFUSED_AT_SUBMISSION",
+      "retiredBy": "rider-parity-grammar",
+      "retiredUnder": "ADR-004 clause 3 · ADR-005 consequence 3 · owner ruling 2026-09-07 (\"re-ride it yes\")",
+      "retiredAt": "2026-09-07",
+      "disposition": "RETIRED — kept on disk and in git as history; re-ridden on the new grammar, never repaired."
+    },
+    {
+      "ride": "e8-mare-claim",
+      "tape": "tune-2-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e8-mare-claim/work/tune-2-tape.json",
+      "scored": false,
+      "tapeId": "agent-edea6b1f-9d96787e-7d8b-4ab4-b34f-339572613de8",
+      "contract": "e8-mare-claim",
+      "seed": "e8-mare-claim-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEra": 5,
+      "recordedEventLogHash": null,
+      "removedVerbs": [
+        "HOLD",
+        "MOVE_TO"
+      ],
+      "removedVerbOrders": {
+        "MOVE_TO": 2,
+        "HOLD": 14
+      },
+      "submissions": 60,
+      "refusedSubmissions": 15,
+      "firstRefusal": {
+        "tick": 1381,
+        "orderIndex": 2,
+        "verb": "HOLD",
+        "message": "orders[2].verb \"HOLD\" is unknown.",
+        "submissionLength": 3
+      },
+      "afterGrammar": "REFUSED_AT_SUBMISSION",
+      "retiredBy": "rider-parity-grammar",
+      "retiredUnder": "ADR-004 clause 3 · ADR-005 consequence 3 · owner ruling 2026-09-07 (\"re-ride it yes\")",
+      "retiredAt": "2026-09-07",
+      "disposition": "RETIRED — kept on disk and in git as history; re-ridden on the new grammar, never repaired."
+    },
+    {
+      "ride": "e8-mare-claim",
+      "tape": "tune-3-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e8-mare-claim/work/tune-3-tape.json",
+      "scored": false,
+      "tapeId": "agent-4036192d-b1ebab0e-a2e1-42ba-b7dd-c2edf9f3d797",
+      "contract": "e8-mare-claim",
+      "seed": "e8-mare-claim-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEra": 5,
+      "recordedEventLogHash": null,
+      "removedVerbs": [
+        "HOLD",
+        "MOVE_TO"
+      ],
+      "removedVerbOrders": {
+        "MOVE_TO": 3,
+        "HOLD": 24
+      },
+      "submissions": 77,
+      "refusedSubmissions": 25,
+      "firstRefusal": {
+        "tick": 1381,
+        "orderIndex": 2,
+        "verb": "HOLD",
+        "message": "orders[2].verb \"HOLD\" is unknown.",
+        "submissionLength": 3
+      },
+      "afterGrammar": "REFUSED_AT_SUBMISSION",
+      "retiredBy": "rider-parity-grammar",
+      "retiredUnder": "ADR-004 clause 3 · ADR-005 consequence 3 · owner ruling 2026-09-07 (\"re-ride it yes\")",
+      "retiredAt": "2026-09-07",
+      "disposition": "RETIRED — kept on disk and in git as history; re-ridden on the new grammar, never repaired."
+    },
+    {
+      "ride": "e9-dome-basin.attempt-1",
+      "tape": "tune-1-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e9-dome-basin.attempt-1/work/tune-1-tape.json",
+      "scored": false,
+      "tapeId": "agent-2322ff4b-f193226b-7e76-40b3-bcf0-9be5a917cd01",
+      "contract": "e9-dome-basin",
+      "seed": "e9-dome-basin-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEra": 5,
+      "recordedEventLogHash": null,
+      "removedVerbs": [
+        "HOLD"
+      ],
+      "removedVerbOrders": {
+        "HOLD": 291
+      },
+      "submissions": 291,
+      "refusedSubmissions": 291,
+      "firstRefusal": {
+        "tick": 0,
+        "orderIndex": 31,
+        "verb": "HOLD",
+        "message": "orders[31].verb \"HOLD\" is unknown.",
+        "submissionLength": 32
+      },
+      "afterGrammar": "REFUSED_AT_SUBMISSION",
+      "retiredBy": "rider-parity-grammar",
+      "retiredUnder": "ADR-004 clause 3 · ADR-005 consequence 3 · owner ruling 2026-09-07 (\"re-ride it yes\")",
+      "retiredAt": "2026-09-07",
+      "disposition": "RETIRED — kept on disk and in git as history; re-ridden on the new grammar, never repaired."
+    },
+    {
+      "ride": "e9-dome-basin.attempt-1",
+      "tape": "tune-2-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e9-dome-basin.attempt-1/work/tune-2-tape.json",
+      "scored": false,
+      "tapeId": "agent-85fee5e8-3705b842-6d4f-44aa-bb45-48d1fc671888",
+      "contract": "e9-dome-basin",
+      "seed": "e9-dome-basin-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEra": 5,
+      "recordedEventLogHash": null,
+      "removedVerbs": [
+        "HOLD"
+      ],
+      "removedVerbOrders": {
+        "HOLD": 101
+      },
+      "submissions": 101,
+      "refusedSubmissions": 101,
+      "firstRefusal": {
+        "tick": 0,
+        "orderIndex": 15,
+        "verb": "HOLD",
+        "message": "orders[15].verb \"HOLD\" is unknown.",
+        "submissionLength": 16
+      },
+      "afterGrammar": "REFUSED_AT_SUBMISSION",
+      "retiredBy": "rider-parity-grammar",
+      "retiredUnder": "ADR-004 clause 3 · ADR-005 consequence 3 · owner ruling 2026-09-07 (\"re-ride it yes\")",
+      "retiredAt": "2026-09-07",
+      "disposition": "RETIRED — kept on disk and in git as history; re-ridden on the new grammar, never repaired."
+    },
+    {
+      "ride": "e9-dome-basin.attempt-1",
+      "tape": "tune-3-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e9-dome-basin.attempt-1/work/tune-3-tape.json",
+      "scored": true,
+      "tapeId": "agent-8fb761f3-6515dfc7-e4d0-4c2e-a91e-eb18b8ba22d5",
+      "contract": "e9-dome-basin",
+      "seed": "e9-dome-basin-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEra": 5,
+      "recordedEventLogHash": "fnv1a32:2b4a09b5",
+      "removedVerbs": [
+        "HOLD"
+      ],
+      "removedVerbOrders": {
+        "HOLD": 265
+      },
+      "submissions": 265,
+      "refusedSubmissions": 265,
+      "firstRefusal": {
+        "tick": 0,
+        "orderIndex": 18,
+        "verb": "HOLD",
+        "message": "orders[18].verb \"HOLD\" is unknown.",
+        "submissionLength": 19
+      },
+      "afterGrammar": "REFUSED_AT_SUBMISSION",
+      "retiredBy": "rider-parity-grammar",
+      "retiredUnder": "ADR-004 clause 3 · ADR-005 consequence 3 · owner ruling 2026-09-07 (\"re-ride it yes\")",
+      "retiredAt": "2026-09-07",
+      "disposition": "RETIRED — kept on disk and in git as history; re-ridden on the new grammar, never repaired."
+    },
+    {
+      "ride": "e9-dome-basin.attempt-1",
+      "tape": "tune-4-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/e9-dome-basin.attempt-1/work/tune-4-tape.json",
+      "scored": false,
+      "tapeId": "agent-e2446598-3c00412a-d6a4-4f6a-8ec1-bb81b6f4b941",
+      "contract": "e9-dome-basin",
+      "seed": "e9-dome-basin-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEra": 5,
+      "recordedEventLogHash": null,
+      "removedVerbs": [
+        "HOLD"
+      ],
+      "removedVerbOrders": {
+        "HOLD": 250
+      },
+      "submissions": 250,
+      "refusedSubmissions": 250,
+      "firstRefusal": {
+        "tick": 0,
+        "orderIndex": 16,
+        "verb": "HOLD",
+        "message": "orders[16].verb \"HOLD\" is unknown.",
+        "submissionLength": 17
+      },
+      "afterGrammar": "REFUSED_AT_SUBMISSION",
+      "retiredBy": "rider-parity-grammar",
+      "retiredUnder": "ADR-004 clause 3 · ADR-005 consequence 3 · owner ruling 2026-09-07 (\"re-ride it yes\")",
+      "retiredAt": "2026-09-07",
+      "disposition": "RETIRED — kept on disk and in git as history; re-ridden on the new grammar, never repaired."
+    },
+    {
+      "ride": "the-claim",
+      "tape": "attempt-1-tape.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/the-claim/work/attempt-1-tape.json",
+      "scored": true,
+      "tapeId": "agent-2d257d8b-91bfcbf4-53e5-4c23-b5ae-d195fe447e9d",
+      "contract": "the-claim",
+      "seed": "e1-the-claim-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEra": 5,
+      "recordedEventLogHash": "fnv1a32:23da1694",
+      "removedVerbs": [
+        "HOLD"
+      ],
+      "removedVerbOrders": {
+        "HOLD": 67
+      },
+      "submissions": 67,
+      "refusedSubmissions": 67,
+      "firstRefusal": {
+        "tick": 0,
+        "orderIndex": 31,
+        "verb": "HOLD",
+        "message": "orders[31].verb \"HOLD\" is unknown.",
+        "submissionLength": 32
+      },
+      "afterGrammar": "REFUSED_AT_SUBMISSION",
+      "retiredBy": "rider-parity-grammar",
+      "retiredUnder": "ADR-004 clause 3 · ADR-005 consequence 3 · owner ruling 2026-09-07 (\"re-ride it yes\")",
+      "retiredAt": "2026-09-07",
+      "disposition": "RETIRED — kept on disk and in git as history; re-ridden on the new grammar, never repaired."
+    },
+    {
+      "ride": "the-claim",
+      "tape": "tune-1.json",
+      "file": "artifacts/gauntlet-heat12-20260905/rides/the-claim/work/tune-1.json",
+      "scored": false,
+      "tapeId": "agent-2d257d8b-91bfcbf4-53e5-4c23-b5ae-d195fe447e9d",
+      "contract": "the-claim",
+      "seed": "e1-the-claim-01",
+      "difficulty": "trail",
+      "recordedEngineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "recordedEra": 5,
+      "recordedEventLogHash": null,
+      "removedVerbs": [
+        "HOLD"
+      ],
+      "removedVerbOrders": {
+        "HOLD": 67
+      },
+      "submissions": 67,
+      "refusedSubmissions": 67,
+      "firstRefusal": {
+        "tick": 0,
+        "orderIndex": 31,
+        "verb": "HOLD",
+        "message": "orders[31].verb \"HOLD\" is unknown.",
+        "submissionLength": 32
+      },
+      "afterGrammar": "REFUSED_AT_SUBMISSION",
+      "retiredBy": "rider-parity-grammar",
+      "retiredUnder": "ADR-004 clause 3 · ADR-005 consequence 3 · owner ruling 2026-09-07 (\"re-ride it yes\")",
+      "retiredAt": "2026-09-07",
+      "disposition": "RETIRED — kept on disk and in git as history; re-ridden on the new grammar, never repaired."
+    }
+  ]
+}

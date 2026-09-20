@@ -1,0 +1,90 @@
+
+Running 2 tests using 1 worker
+
+  ✘  1 [desktop-chrome] › e2e/mp-07c-3-invitation.spec.ts:10:1 › the tavern invites an agent in one paste without closing the human door (22.4s)
+  ✘  2 [mobile-chrome] › e2e/mp-07c-3-invitation.spec.ts:10:1 › the tavern invites an agent in one paste without closing the human door (16.3s)
+
+
+  1) [desktop-chrome] › e2e/mp-07c-3-invitation.spec.ts:10:1 › the tavern invites an agent in one paste without closing the human door 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 3
+
+    - Array []
+    + Array [
+    +   "Failed to load resource: the server responded with a status of 404 ()",
+    + ]
+
+      57 |   await mkdir(SHOT_DIR, { recursive: true });
+      58 |   await page.screenshot({ path: path.join(SHOT_DIR, `${testInfo.project.name}-invitation.png`) });
+    > 59 |   expect(errors.console).toEqual([]);
+         |                          ^
+      60 |   expect(errors.page).toEqual([]);
+      61 | });
+      62 |
+        at /Users/robin/Claude/Projects/Gold Rush/gate-s2253/e2e/mp-07c-3-invitation.spec.ts:59:26
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/mp-07c-3-invitation-the-ta-12cd7-hout-closing-the-human-door-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/mp-07c-3-invitation-the-ta-12cd7-hout-closing-the-human-door-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/mp-07c-3-invitation-the-ta-12cd7-hout-closing-the-human-door-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/mp-07c-3-invitation-the-ta-12cd7-hout-closing-the-human-door-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [mobile-chrome] › e2e/mp-07c-3-invitation.spec.ts:10:1 › the tavern invites an agent in one paste without closing the human door 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 3
+
+    - Array []
+    + Array [
+    +   "Failed to load resource: the server responded with a status of 404 ()",
+    + ]
+
+      57 |   await mkdir(SHOT_DIR, { recursive: true });
+      58 |   await page.screenshot({ path: path.join(SHOT_DIR, `${testInfo.project.name}-invitation.png`) });
+    > 59 |   expect(errors.console).toEqual([]);
+         |                          ^
+      60 |   expect(errors.page).toEqual([]);
+      61 | });
+      62 |
+        at /Users/robin/Claude/Projects/Gold Rush/gate-s2253/e2e/mp-07c-3-invitation.spec.ts:59:26
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/mp-07c-3-invitation-the-ta-12cd7-hout-closing-the-human-door-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/mp-07c-3-invitation-the-ta-12cd7-hout-closing-the-human-door-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/mp-07c-3-invitation-the-ta-12cd7-hout-closing-the-human-door-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/mp-07c-3-invitation-the-ta-12cd7-hout-closing-the-human-door-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [desktop-chrome] › e2e/mp-07c-3-invitation.spec.ts:10:1 › the tavern invites an agent in one paste without closing the human door 
+    [mobile-chrome] › e2e/mp-07c-3-invitation.spec.ts:10:1 › the tavern invites an agent in one paste without closing the human door 
+
+===STDERR===
+(node:37158) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:37206) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:39280) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+===RC=1===

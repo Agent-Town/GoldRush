@@ -1,0 +1,38 @@
+gate battery transcript (append-only — see scripts/gate-battery.mjs)
+
+
+######## BATTERY 2026-09-07T07:54:47.263Z — s2535 citation remaining selected guards ########
+cwd=/private/tmp/gr-s2535-citation-gate
+env+ PATH=/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin CLAUDE_CONFIG_DIR=/Users/robin/.claude
+
+===== remaining selected guards =====
+$ node scripts/run-guards.mjs --only test:power-budget,test:task-guards,test:citations,test:gate-callers
+rc=1 1.9s
+PASS  rc=0  0s  test:power-budget  p95=0.359ms
+PASS  rc=0  0s  test:task-guards
+FAIL  rc=1  1s  test:citations
+PASS  rc=0  0s  test:gate-callers
+
+--- test:citations (rc=1) last 20 lines ---
+=== citation-title-guard ===
+citations scanned : 693  (in 1566 tracked tasks/**/*.md)
+  CARRIES-TITLE   374
+  NUMBER-ONLY     262
+  CARRIES-LINE    57
+grandfathered keys: 262
+NOT GATED         : 2213 citation(s) in 280 tracked .md outside tasks/ — largest logs/suite-red-inventory.md (1239). Scope ruling: F-1252-1, owner's desk.
+
+FAIL — 1 citation(s) cite a line with no recoverable test title:
+  tasks/BACKLOG.md::e2e/ss-01-beats.spec.ts:88   (found 1, grandfathered 0)
+      tasks/BACKLOG.md:5  …s not drain, F-AGE-6's exact class, failing at `e2e/ss-01-beats.spec.ts:88` before any speaker or portrait assertion. **F-…
+
+Fix: quote the test title beside the citation, e.g.
+  `e2e/foo.spec.ts:123` ("the exact test title, or an … elided form")
+The line number is a convenience that decays; the title is what survives.
+
+guards: 3/4 passed -- RED: test:citations
+guard-stats: appended 4 record(s) to /private/tmp/gr-s2535-citation-gate/logs/guard-stats.jsonl
+
+
+SUMMARY {"remaining selected guards":1}
+OVERALL rc=1

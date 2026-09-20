@@ -1,0 +1,35 @@
+[
+  {
+    "name": "tsc",
+    "command": [
+      "npx",
+      "tsc",
+      "--noEmit"
+    ],
+    "exit": 0,
+    "seconds": 7.021934270858765,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-2/e7-echo-canyon-tsc.log"
+  },
+  {
+    "name": "build",
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "exit": 0,
+    "seconds": 34.24135875701904,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-2/e7-echo-canyon-build.log"
+  },
+  {
+    "name": "full-build",
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "exit": 0,
+    "seconds": 35.01906204223633,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-2/e7-echo-canyon-full-build.log"
+  }
+]

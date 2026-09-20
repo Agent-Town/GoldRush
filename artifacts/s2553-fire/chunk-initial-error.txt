@@ -1,0 +1,1 @@
+Initial verification rc1: the manifest was incorrectly looked up inside refs/remotes/origin/save/deploy-probe-evidence-s2520. git returned rc128: path artifacts/s2520-fire/deploy-probe-backup-manifest.json exists on disk, but not in that ref. The tracked manifest lives on main; only its stored parts live on the save ref. No files or refs were changed by this failed read.

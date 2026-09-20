@@ -1,0 +1,79 @@
+gate battery transcript (append-only — see scripts/gate-battery.mjs)
+
+
+######## BATTERY 2026-09-07T08:33:59.866Z — s2536 bounded archive and inherited desk ########
+cwd=/Users/robin/Claude/Projects/Gold Rush
+env+ PATH=/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin
+
+===== archive 40 =====
+$ node scripts/status-archive-audit.mjs --limit 40 --quiet
+rc=0 10.3s
+CLEAN: 0 handoff line-1s PERMANENTLY absent at HEAD (0 more were dropped at lock time but restored by the fire's own handoff commit -- normal, not a defect), 0 abridged, 25 same-session rewrites excluded, of 40 replacements across 40 STATUS.md commits
+
+
+===== inherited desk =====
+$ node scripts/desk-state-audit.mjs --status /tmp/s2536-inherited-status.md
+rc=0 0.3s
+ITEM	TYPE	VERDICT	EVIDENCE
+F-E8RM-8	finding	OPEN-DESK-ONLY	274
+F-CLI-2	finding	OPEN-DESK-ONLY	258
+F-2498-1	finding	OPEN-DESK-ONLY	299
+F-2473-1	finding	OPEN-DESK-ONLY	221, 351
+F-WIN-1	finding	OPEN-DESK-ONLY	442
+F-2457-4	finding	OPEN-DESK-ONLY	437
+F-2387-1	finding	OPEN-DESK-ONLY	627
+F-2386-1	finding	OPEN-DESK-ONLY	621, 629
+F-2355-2	finding	OPEN-DESK-ONLY	716
+F-2352-3	finding	OPEN-DESK-ONLY	726
+F-2350-3	finding	OPEN-DESK-ONLY	739
+F-2343-2	finding	OPEN-DESK-ONLY	754
+F-2329-1	finding	OPEN-DESK-ONLY	917
+F-2320-1	finding	OPEN-DESK-ONLY	790
+F-2308-1	finding	OPEN-DESK-ONLY	891
+F-2299-2	finding	OPEN-DESK-ONLY	915
+F-2299-1	finding	OPEN-DESK-ONLY	916
+F-2298-1	finding	OPEN-DESK-ONLY	914
+F-2297-1	finding	OPEN-DESK-ONLY	913
+F-2296-1	finding	OPEN-DESK-ONLY	912
+F-2290-1	finding	OPEN-DESK-ONLY	933
+F-2280-2	finding	OPEN-DESK-ONLY	945
+F-2272-1	finding	OPEN	997
+F-2270-3	finding	OPEN-DESK-ONLY	1011
+F-1313-3	finding	OPEN-DESK-ONLY	2866
+F-2261-2	finding	OPEN-DESK-ONLY	1029
+F-2190-2	finding	OPEN-DESK-ONLY	1161
+F-2159-1	finding	OPEN-DESK-ONLY	1296
+F-ASSAY-E2E-6	finding	OPEN-DESK-ONLY	1206, 1246
+F-1637-2	finding	OPEN-DESK-ONLY	1223, 5522
+F-E2S-4	finding	OPEN-DESK-ONLY	1885, 1927
+F-1656-3	finding	OPEN-DESK-ONLY	1737
+F-2080-3	finding	OPEN-DESK-ONLY	1516
+F-2054-1	finding	OPEN-DESK-ONLY	1573
+F-1659-1	finding	OPEN-DESK-ONLY	1751
+F-1657-3	finding	OPEN-DESK-ONLY	1731
+F-1653-2	finding	OPEN-DESK-ONLY	1744
+F-1625-4	finding	OPEN-DESK-ONLY	5491
+F-1601-1	finding	OPEN-DESK-ONLY	1891
+F-1536-2	finding	OPEN-DESK-ONLY	2100
+F-1510-1	finding	OPEN-DESK-ONLY	2146
+F-1507-1	finding	OPEN-DESK-ONLY	2175
+F-1501-3	finding	OPEN-DESK-ONLY	2204
+F-1193-3	finding	OPEN-DESK-ONLY	1879, 1880, 1946, 5134
+F-1182-2	finding	OPEN-DESK-ONLY	5140
+F-E8LO-3	finding	OPEN-DESK-ONLY	1487
+F-DOOR-6	finding	OPEN-DESK-ONLY	1935
+e10-lore-owner-read	slug	OPEN	goals.json; blockClass=owner-fork
+F-1457-4	finding	OPEN-DESK-ONLY	2240
+F-1055-2	finding	OPEN-DESK-ONLY	4370
+F-1103-2	finding	OPEN-DESK-ONLY	4776
+F-PT15-1	finding	OPEN-DESK-ONLY	1171
+F-2397-3	finding	OPEN-DESK-ONLY	598
+F-EAL-3	finding	OPEN-DESK-ONLY	44
+F-FTP-1	finding	OPEN-DESK-ONLY	46
+F-AGE2-1	finding	OPEN-DESK-ONLY	29
+
+CLOSED=0 · OPEN=2 · BOTH=0 · OPEN-DESK-ONLY=54 · UNRECORDED=0
+
+
+SUMMARY {"archive 40":0,"inherited desk":0}
+OVERALL rc=0

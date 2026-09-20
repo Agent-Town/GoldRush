@@ -1,0 +1,50 @@
+{
+  "kind": "screenshot-parity-diff",
+  "generatedAt": "2026-07-18T05:36:45.178Z",
+  "note": "Lower parityDistance means the candidate is closer to the reference for this fixed pair. This is a distance metric, not an acceptance gate.",
+  "pairCount": 1,
+  "worstPair": "run-axis",
+  "results": [
+    {
+      "id": "run-axis",
+      "current": "../../../../../../var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/tmp.d0AThd493l/reference/run-axis.png",
+      "candidate": "../../../../../../var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/tmp.d0AThd493l/candidate/run-axis.png",
+      "dimensions": {
+        "width": 1280,
+        "height": 720
+      },
+      "parityDistance": 0.03903,
+      "grayscale": {
+        "mae": 1.83921,
+        "rmse": 8.09933,
+        "diffRatio16": 0.02466,
+        "diffRatio32": 0.01303,
+        "diffRatio64": 0.0048,
+        "pixelmatchRatio": 0.01822
+      },
+      "contentProxies": {
+        "blackRatioCurrent": 0.6166,
+        "blackRatioCandidate": 0.6368,
+        "terrainLikeRatioCurrent": 0.01987,
+        "terrainLikeRatioCandidate": 0.02139,
+        "avgLuminanceCurrent": 25.74101,
+        "avgLuminanceCandidate": 24.57665,
+        "avgLuminanceDelta": -1.16436,
+        "edgeEnergyCurrent": 0.03078,
+        "edgeEnergyCandidate": 0.03477,
+        "edgeEnergyRatio": 1.12944,
+        "edgeDiffRatio32": 0.0143
+      },
+      "artifacts": {
+        "sideBySide": "comparison/run-axis-side-by-side.png",
+        "currentGray": "comparison/run-axis-current-gray.png",
+        "candidateGray": "comparison/run-axis-candidate-gray.png",
+        "absDiff": "comparison/run-axis-absdiff.png",
+        "pixelmatch": "comparison/run-axis-pixelmatch.png",
+        "currentEdges": "comparison/run-axis-current-edges.png",
+        "candidateEdges": "comparison/run-axis-candidate-edges.png",
+        "edgeDiff": "comparison/run-axis-edge-diff.png"
+      }
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+CMD: node scripts/run-node-guards.mjs --test-name-pattern runtime rush and --overtime use the same CLI ceiling scripts/gr-sim.test.mjs
+CWD: /Users/robin/Claude/Projects/Gold Rush
+NODE: v26.4.0
+START: 2026-08-19T23:30:21.367Z
+---
+FIRE SHELL — test:node-guards ran with reduced file concurrency 1 (F-1409-1/F-1410-1); this is the conservative default pending fire-side measurement.
+✖ runtime rush and --overtime use the same CLI ceiling and terminal stream (90003.543667ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 0
+ℹ cancelled 1
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 100235.932375
+
+✖ failing tests:
+
+test at scripts/gr-sim.test.mjs:340:1
+✖ runtime rush and --overtime use the same CLI ceiling and terminal stream (90003.543667ms)
+  'test timed out after 90000ms'
+
+---
+EXIT_CODE: 1
+SIGNAL: null
+WALL_SECONDS: 100.5
+END: 2026-08-19T23:32:01.840Z

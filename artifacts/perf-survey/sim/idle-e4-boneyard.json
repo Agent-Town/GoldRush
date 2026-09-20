@@ -1,0 +1,197 @@
+{
+  "key": "idle-e4-boneyard",
+  "tapePath": "tapes/idle-e4-boneyard.json",
+  "contract": "e4-boneyard",
+  "kind": "null-floor",
+  "node": "v26.4.0",
+  "before": {
+    "at": "2026-09-05T16:08:33.955Z",
+    "load": [
+      21.37646484375,
+      29.447265625,
+      22.92431640625
+    ],
+    "freeMemory": 9974169600
+  },
+  "after": {
+    "at": "2026-09-05T16:08:37.691Z",
+    "load": [
+      22.86767578125,
+      29.6220703125,
+      23.02392578125
+    ],
+    "freeMemory": 9472212992
+  },
+  "declaredDurationTicks": 3766,
+  "simulatedSeconds": 125.53333333333333,
+  "bootMs": 56.57554200000004,
+  "replayMs": 1701.7114589999996,
+  "ticksPerSecond": 2213.066134145366,
+  "realtimeMultiple": 73.76887113817887,
+  "estimateTenMinuteSeconds": 8.133512018587359,
+  "estimateFormula": "600 seconds / measured realtimeMultiple; extrapolation, not an actual 10-minute tape when duration differs",
+  "tickMs": {
+    "n": 3766,
+    "min": 0.24112500000001091,
+    "p50": 0.3910000000000764,
+    "p95": 0.8043330000000424,
+    "p99": 1.363416000000143,
+    "max": 12.332834000000275
+  },
+  "tickPath": "sim/idle-e4-boneyard-ticks.json",
+  "result": {
+    "eventLogHash": "fnv1a32:a45ba9ac",
+    "outcome": {
+      "secured": false,
+      "waves": 4,
+      "gold": 0,
+      "timeAlive": 125.533
+    },
+    "ticks": 3766,
+    "engine": "headless-contract-sim"
+  },
+  "expectedHash": "fnv1a32:a45ba9ac",
+  "hashMatches": true,
+  "top20": [
+    {
+      "name": "dispatch",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 184.285
+    },
+    {
+      "name": "terrainSeed",
+      "url": "",
+      "line": 1469,
+      "column": 21,
+      "selfMs": 140.118
+    },
+    {
+      "name": "terrainHash",
+      "url": "",
+      "line": 1486,
+      "column": 21,
+      "selfMs": 78.173
+    },
+    {
+      "name": "get diagnostics",
+      "url": "",
+      "line": 484,
+      "column": 17,
+      "selfMs": 75.866
+    },
+    {
+      "name": "multiplyMatrices",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 10385,
+      "column": 18,
+      "selfMs": 65.71699999999998
+    },
+    {
+      "name": "diagnostics",
+      "url": "",
+      "line": 1795,
+      "column": 13,
+      "selfMs": 60.727999999999994
+    },
+    {
+      "name": "maxHpForPlacement",
+      "url": "",
+      "line": 1622,
+      "column": 19,
+      "selfMs": 52.041
+    },
+    {
+      "name": "hpBarDiagnostics",
+      "url": "",
+      "line": 1663,
+      "column": 18,
+      "selfMs": 51.081
+    },
+    {
+      "name": "activePositions",
+      "url": "",
+      "line": 1533,
+      "column": 17,
+      "selfMs": 46.961
+    },
+    {
+      "name": "toArray",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 11099,
+      "column": 9,
+      "selfMs": 45.875
+    },
+    {
+      "name": "(anonymous)",
+      "url": "",
+      "line": 194,
+      "column": 49,
+      "selfMs": 36.583999999999996
+    },
+    {
+      "name": "update",
+      "url": "",
+      "line": 809,
+      "column": 8,
+      "selfMs": 36.567
+    },
+    {
+      "name": "stableProbeMask",
+      "url": "",
+      "line": 1266,
+      "column": 25,
+      "selfMs": 35.455
+    },
+    {
+      "name": "syncEnemyInstance",
+      "url": "",
+      "line": 1343,
+      "column": 19,
+      "selfMs": 32.08
+    },
+    {
+      "name": "(program)",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 30.44
+    },
+    {
+      "name": "update",
+      "url": "",
+      "line": 594,
+      "column": 8,
+      "selfMs": 28.485
+    },
+    {
+      "name": "(anonymous)",
+      "url": "",
+      "line": 1534,
+      "column": 32,
+      "selfMs": 25.208
+    },
+    {
+      "name": "step",
+      "url": "",
+      "line": 1318,
+      "column": 6,
+      "selfMs": 24.68
+    },
+    {
+      "name": "currentTrickleInterval",
+      "url": "",
+      "line": 641,
+      "column": 24,
+      "selfMs": 23.526
+    },
+    {
+      "name": "(anonymous)",
+      "url": "",
+      "line": 3,
+      "column": 49,
+      "selfMs": 22.35
+    }
+  ]
+}

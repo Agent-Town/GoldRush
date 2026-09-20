@@ -1,0 +1,82 @@
+{
+  "observedAt": "2026-09-05T22:04:27+0700",
+  "log": "tasks/runs/20260905-212034-lane-b-perf-optimization-survey.md.log",
+  "tail": [
+    "JS",
+    "node --check scripts/perf-survey/browser.mjs\" in /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b",
+    " succeeded in 1037ms:",
+    "ERROR: Selected model is at capacity. Please try a different model.",
+    "ERROR: Selected model is at capacity. Please try a different model.",
+    "2026-09-05T15:02:06.060799Z ERROR codex_core::session: failed to record rollout items: thread 01a071f1-4bec-76d1-8787-b98794ed24c2 not found",
+    "2026-09-05T15:02:06.061698Z ERROR codex_core::session: failed to record rollout items: thread 01a071f1-4bec-76d1-8787-b98794ed24c2 not found",
+    "tokens used",
+    "235,741"
+  ],
+  "failedReceipt": "tasks/failed/rc1-20260905-212034-perf-optimization-survey.md",
+  "failedReceiptExists": true,
+  "activeMeasurementProcesses": [],
+  "newestArtifacts": [
+    {
+      "path": "worktrees/lane-b/artifacts/perf-survey/census.json",
+      "ageSeconds": 146,
+      "bytes": 2345841
+    },
+    {
+      "path": "worktrees/lane-b/artifacts/perf-survey/census-final-run.log",
+      "ageSeconds": 146,
+      "bytes": 7804
+    },
+    {
+      "path": "worktrees/lane-b/artifacts/perf-survey/scenes/the-claim-full-mobile-wave1.json",
+      "ageSeconds": 146,
+      "bytes": 137534
+    },
+    {
+      "path": "worktrees/lane-b/artifacts/perf-survey/samples/the-claim-full-mobile-wave1.json",
+      "ageSeconds": 146,
+      "bytes": 236115
+    },
+    {
+      "path": "worktrees/lane-b/artifacts/perf-survey/scenes/the-claim-full-desktop-stress.json",
+      "ageSeconds": 163,
+      "bytes": 138215
+    },
+    {
+      "path": "worktrees/lane-b/artifacts/perf-survey/samples/the-claim-full-desktop-stress.json",
+      "ageSeconds": 163,
+      "bytes": 229326
+    },
+    {
+      "path": "worktrees/lane-b/artifacts/perf-survey/calibration-wave0.json",
+      "ageSeconds": 178,
+      "bytes": 198117
+    },
+    {
+      "path": "worktrees/lane-b/artifacts/perf-survey/scenes/the-claim-full-desktop-wave1.json",
+      "ageSeconds": 181,
+      "bytes": 137551
+    },
+    {
+      "path": "worktrees/lane-b/artifacts/perf-survey/samples/the-claim-full-desktop-wave1.json",
+      "ageSeconds": 181,
+      "bytes": 239649
+    },
+    {
+      "path": "worktrees/lane-b/artifacts/perf-survey/scenes/e7-relay-rush-lite-mobile-stress.json",
+      "ageSeconds": 198,
+      "bytes": 125238
+    },
+    {
+      "path": "worktrees/lane-b/artifacts/perf-survey/samples/e7-relay-rush-lite-mobile-stress.json",
+      "ageSeconds": 198,
+      "bytes": 98116
+    },
+    {
+      "path": "worktrees/lane-b/artifacts/perf-survey/scenes/e7-relay-rush-lite-mobile-wave1.json",
+      "ageSeconds": 213,
+      "bytes": 123666
+    }
+  ],
+  "workingReport": "# Gold Rush performance survey \u2014 2026-09-05\n\nMeasurement in progress on `lane/b`, baseline `5f1cc3cea589bcd9b5bf7d95402fef33dd232525`. No game code changed.\n\nThe live board contains 42 contracts, not the task's earlier 36. The fresh all-epoch production build is 377,040,673 bytes in 4,708 files. The survey instruments and raw evidence live under `scripts/perf-survey/` and `artifacts/perf-survey/`.\n\nThe first calibration exposed `nowaves` leaving the wave at zero. Those rows are retained separately in `calibration-wave0.json`; the census wave-1 arm explicitly calls the existing `startWaveForTest(1)` seam. Stress uses the requested `stress=120` harness and records actual enemy counts. Fresh browser contexts isolate stored tier verdicts. Debug disables automatic shedding; the actual tier and verdict are recorded.\n\nTiming limitation: this shared Mac has intermittent host-load spikes. These samples remain evidence of the observed run, but they cannot establish a game regression or an optimization win. Structural draw/triangle counts remain useful. Attribution uses adjacent A/B controls.\n\nThis working report will be replaced with the completed tables, findings and proposed master ladder after measurement.\n",
+  "judgment": "Capacity failure, not a fresh usage-limit refusal. No CODEX-WALL raised; no identical retry. Attended owns recovery and story drains. Unfinished survey measurements must not be reset or cleaned."
+}

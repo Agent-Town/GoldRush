@@ -1,0 +1,2937 @@
+{
+  "at": "2026-09-05T15:16:16.875Z",
+  "method": "One warm cycle then five measured cycles; full tier 390x844 DPR1. CDP forces GC before retained heap readings. Native town->run and contract transitions reload the document; run->town and town->menu->town call application dispose in the same document.",
+  "cycles": [
+    {
+      "cycle": 0,
+      "warmup": true,
+      "map": "the-claim",
+      "before": {
+        "at": "2026-09-05T15:16:17.324Z",
+        "load": [
+          13.01953125,
+          27.73828125,
+          28.16650390625
+        ],
+        "freeMemory": 9038200832
+      },
+      "run": {
+        "label": "run",
+        "documentId": "b197d328-c7ee-4cb3-84b1-0b1a66f5bdf9",
+        "heap": 38264929,
+        "renderer": {
+          "calls": 61,
+          "triangles": 104746,
+          "geometries": 76,
+          "textures": 18,
+          "programs": 48
+        },
+        "gpuEstimate": {
+          "textureRgba8MipBytes": 132483231.99999997,
+          "geometryBufferBytes": 2148848,
+          "formula": "reachable scene textures: width * height * 4 * (generateMipmaps ? 4/3 : 1), deduped by source + sampler; unique geometry ArrayBuffers. Excludes cached/unreachable textures, render targets, driver overhead and depth buffers."
+        },
+        "dataset": {
+          "assetPrefetchScene": "run",
+          "assetPrefetchState": "fetching",
+          "assetPrefetchReady": "8",
+          "assetPrefetchTotal": "12",
+          "assetPrefetchProgress": "8/12",
+          "assetPrefetchFailed": "0",
+          "assetPrefetchPriority": "1",
+          "assetPrefetchTarget": "town",
+          "assetPrefetchSaveData": "false",
+          "assetPrefetchEnabled": "true",
+          "assetPrefetchAllowance": "24000000",
+          "assetPrefetchBytes": "2421416",
+          "assetPrefetchTownState": "partial",
+          "railcar3dState": "off",
+          "railcar3dSource": "billboard",
+          "railcar3dMounted": "false",
+          "railcar3dDamageStates": "{\"wheels\":\"intact\",\"boiler\":\"intact\",\"cabin\":\"intact\"}",
+          "bossBarVisible": "false",
+          "bossBarSemantic": "none",
+          "bossBarRemaining": "0",
+          "bossBarDepleted": "0",
+          "bossBarRemainingColor": "#6bb36b",
+          "bossBarDepletedColor": "#a0522d",
+          "bossBarComponent": "shared",
+          "bossBarAnchor": "none",
+          "bossBarOrientation": "none",
+          "bossBarPosition": "none",
+          "crawler3dState": "off",
+          "crawler3dSource": "placeholder",
+          "crawler3dMounted": "false",
+          "crawler3dDamageStates": "{\"drain_mast\":\"intact\",\"tracks\":\"intact\",\"capacitor_bank\":\"intact\"}",
+          "dredgeQueen3dState": "off",
+          "dredgeQueen3dSource": "placeholder",
+          "dredgeQueen3dMounted": "false",
+          "dredgeQueen3dPresentation": "hidden",
+          "dredgeQueen3dDamageStates": "{\"claw\":\"intact\",\"paddle_port\":\"intact\",\"paddle_starboard\":\"intact\",\"hold\":\"intact\"}",
+          "salvageClaw3dState": "off",
+          "salvageClaw3dSource": "placeholder",
+          "salvageClaw3dMounted": "false",
+          "salvageClaw3dPresentation": "hidden",
+          "homemaker3dState": "off",
+          "homemaker3dSource": "placeholder",
+          "homemaker3dMounted": "false",
+          "homemaker3dPresentation": "hidden",
+          "homemaker3dDamageStates": "{\"vac\":\"intact\",\"rack\":\"intact\",\"core\":\"intact\"}",
+          "oldDigger3dState": "off",
+          "oldDigger3dSource": "placeholder",
+          "oldDigger3dMounted": "false",
+          "oldDigger3dPresentation": "hidden",
+          "assetLoadingLabel": "the claim",
+          "assetLoadingReady": "41",
+          "assetLoadingTotal": "41",
+          "assetLoadingProgress": "41/41",
+          "assetLoadingState": "ready",
+          "engine": "three.js r184",
+          "terrain3dPilotState": "ready",
+          "terrain3dPilotRenderSource": "glb",
+          "run3dPilotState": "ready",
+          "nightPoolSurfaceSources": "0",
+          "nightPoolSurfaceMaxRadius": "0",
+          "cameraAspect": "0.46208530805687204",
+          "cssAspect": "0.46208530805687204",
+          "run3dPilotMeshes": "0",
+          "run3dPilotTriangles": "0",
+          "prospectorSkin": "stock",
+          "prospectorSheet": "stock",
+          "terrain3dPilotContract": "the-claim",
+          "terrain3dPilotTerrainLoadState": "mounted",
+          "terrain3dPilotPanoramaLoadState": "mounted",
+          "terrain3dPilotLandmarkLoadState": "mounted",
+          "terrain3dPilotHeightSource": "baked-grid",
+          "terrain3dPilotMeshes": "1",
+          "terrain3dPilotTriangles": "32768",
+          "terrain3dPilotMaterials": "1",
+          "terrain3dPilotVertices": "16641",
+          "terrain3dPilotPanorama": "the-claim-panorama",
+          "terrain3dPilotPanoramaMeshes": "1",
+          "terrain3dPilotPanoramaTriangles": "1920",
+          "terrain3dPilotPanoramaMaterials": "1",
+          "terrain3dPilotPanoramaVertices": "1351",
+          "terrain3dPilotNightPools": "off",
+          "terrain3dPilotNightPoolSources": "0",
+          "terrain3dPilotSpringPonds": "0",
+          "terrain3dPilotSpringPondWaterRadii": "[]",
+          "terrain3dPilotSpringPondDampGroundRadii": "[]",
+          "terrain3dPilotChannelWater": "0",
+          "terrain3dPilotFordWater": "0",
+          "terrain3dPilotChannelWaterHalfWidths": "[]",
+          "terrain3dPilotSculptWater": "living-water-quad",
+          "terrain3dPilotSculptWaterHalfWidth": "6.250",
+          "terrain3dPilotSculptWaterSimHalfWidth": "6.250",
+          "terrain3dPilotSculptWaterY": "-0.0284",
+          "terrain3dPilotSculptWaterGlints": "6",
+          "terrain3dPilotSculptWaterDeepest": "0.483",
+          "terrain3dPilotSculptWaterFords": "center-ford@0",
+          "terrain3dPilotMotes": "90",
+          "terrain3dPilotHiddenRelief": "6",
+          "terrain3dPilotHiddenGroundLayers": "TerrainVistaRing|TerrainReliefMesh|terrain.river|terrain.ford|FordSteppingStones|SpringPonds",
+          "terrain3dPilotContinuation": "sculpt-edge-continuation",
+          "terrain3dPilotHorizonApron": "painted",
+          "terrain3dPilotFarGroundProbe": "off",
+          "terrain3dPilotPanoramaFraming": "world-projected-horizon",
+          "terrain3dPilotSkirtBlend": "painted-underlay-alpha-rim",
+          "terrain3dPilotPanoramaFog": "excluded",
+          "terrain3dPilotPanoramaDepth": "screen-horizon-backdrop",
+          "terrain3dPilotLandmarkExpected": "5",
+          "terrain3dPilotContactShadows": "4",
+          "terrain3dPilotRushEmbers": "0",
+          "terrain3dPilotLandmarkEmissive": "1.45",
+          "terrain3dPilotLandmarks": "5",
+          "terrain3dPilotLandmarkSkipped": "0",
+          "terrain3dPilotLandmarkDiagnostics": "",
+          "terrain3dPilotLandmarkMounts": "[{\"id\":\"active_headframe\",\"x\":-13,\"y\":0.5766242861747743,\"z\":-8.8},{\"id\":\"maintained_claim_house\",\"x\":10.5,\"y\":0.8797585368156433,\"z\":14.5},{\"id\":\"working_camp\",\"x\":-8.5,\"y\":0.4324933842582703,\"z\":16.5},{\"id\":\"claim_stake\",\"x\":6.5,\"y\":0.5125598311424255,\"z\":10.5},{\"id\":\"riparian_dressing_pack\",\"x\":0,\"y\":-0.14278476550674438,\"z\":0}]",
+          "terrain3dPilotLandmarkMaterials": "[{\"id\":\"active_headframe\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[1.45,1.45]},{\"id\":\"maintained_claim_house\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[1.45,1.45]},{\"id\":\"working_camp\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[1.45,1.45]},{\"id\":\"claim_stake\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[1.45,1.45]},{\"id\":\"riparian_dressing_pack\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[1.45,1.45]}]"
+        },
+        "sceneWalked": true
+      },
+      "menuAfterRun": {
+        "label": "menu-after-run",
+        "documentId": "17cd0146-55a7-41f3-ad17-b70679ed0044",
+        "heap": 9033768,
+        "renderer": null,
+        "gpuEstimate": null,
+        "dataset": null,
+        "sceneWalked": false
+      },
+      "townAfterRun": {
+        "label": "town-after-run",
+        "documentId": "17cd0146-55a7-41f3-ad17-b70679ed0044",
+        "heap": 22354604,
+        "renderer": {
+          "calls": 45,
+          "triangles": 78858,
+          "geometries": 71,
+          "textures": 39,
+          "programs": 35
+        },
+        "gpuEstimate": {
+          "textureRgba8MipBytes": 95662079.99999997,
+          "geometryBufferBytes": 2352012,
+          "formula": "reachable scene textures: width * height * 4 * (generateMipmaps ? 4/3 : 1), deduped by source + sampler; unique geometry ArrayBuffers. Excludes cached/unreachable textures, render targets, driver overhead and depth buffers."
+        },
+        "dataset": {
+          "assetPrefetchScene": "town",
+          "assetPrefetchState": "ready",
+          "assetPrefetchReady": "7",
+          "assetPrefetchTotal": "7",
+          "assetPrefetchProgress": "7/7",
+          "assetPrefetchFailed": "0",
+          "assetPrefetchPriority": "0",
+          "assetPrefetchTarget": "",
+          "assetPrefetchSaveData": "false",
+          "assetPrefetchEnabled": "true",
+          "assetPrefetchAllowance": "24000000",
+          "assetPrefetchBytes": "7737316",
+          "assetPrefetchTownState": "ready",
+          "assetLoadingLabel": "the town",
+          "assetLoadingReady": "28",
+          "assetLoadingTotal": "28",
+          "assetLoadingProgress": "28/28",
+          "assetLoadingState": "ready",
+          "engine": "three.js r184",
+          "townEraAccent": "1",
+          "town3dPilotState": "loaded",
+          "town3dPilotRenderSource": "glb",
+          "town3dSteamAnchors": "0",
+          "town3dSteamPlumes": "0",
+          "town3dPlateState": "loaded",
+          "town3dPlateGround": "glb",
+          "cameraAspect": "0.46208530805687204",
+          "cssAspect": "0.46208530805687204",
+          "prospectorSkin": "stock",
+          "prospectorSheet": "stock",
+          "town3dPilotMeshes": "1",
+          "town3dPilotTriangles": "3340",
+          "town3dPilotMaterials": "1",
+          "town3dPilotBounds": "4.424x4.200x3.320",
+          "town3dPilotBuildingOrientations": "{\"tavern\":{\"width\":4.2295708656311035,\"height\":3.961084052663402,\"depth\":3.349243911573542,\"upY\":1},\"general_store\":{\"width\":4.700000047683716,\"height\":4.440092210945446,\"depth\":3.2597491709237993,\"upY\":1},\"schoolhouse\":{\"width\":3.9598375740939544,\"height\":5.599999904632568,\"depth\":3.3753470905634697,\"upY\":1},\"chapel\":{\"width\":3.4642323068941314,\"height\":6.25,\"depth\":3.1949064607684563,\"upY\":1},\"claim_office\":{\"width\":4.260113512668952,\"height\":5.019999980926514,\"depth\":3.120130607365623,\"upY\":1},\"assay_office\":{\"width\":4.423999786376953,\"height\":4.1998767465690445,\"depth\":3.3201263083833017,\"upY\":1}}",
+          "town3dPlazaPropsState": "loaded",
+          "town3dArcAnchors": "0",
+          "town3dArcFlickers": "0",
+          "town3dExhaustAnchors": "0",
+          "town3dDustPuffs": "0",
+          "town3dPilotEra": "1",
+          "town3dPilotModel": "http://127.0.0.1:5316/assets/assay-office-xAW04uBp-diet-1408f6b4.glb",
+          "town3dPilotLoadedIds": "tavern,general_store,plate,schoolhouse,chapel,claim_office,assay_office",
+          "town3dPilotInstances": "5",
+          "town3dPanMonumentInstances": "1",
+          "town3dEraPropIds": ""
+        },
+        "sceneWalked": true
+      },
+      "townAfterReload": {
+        "label": "town-after-menu-round-trip",
+        "documentId": "17cd0146-55a7-41f3-ad17-b70679ed0044",
+        "heap": 23518497,
+        "renderer": {
+          "calls": 45,
+          "triangles": 78858,
+          "geometries": 66,
+          "textures": 42,
+          "programs": 24
+        },
+        "gpuEstimate": {
+          "textureRgba8MipBytes": 100817578.66666663,
+          "geometryBufferBytes": 2352012,
+          "formula": "reachable scene textures: width * height * 4 * (generateMipmaps ? 4/3 : 1), deduped by source + sampler; unique geometry ArrayBuffers. Excludes cached/unreachable textures, render targets, driver overhead and depth buffers."
+        },
+        "dataset": {
+          "assetPrefetchScene": "town",
+          "assetPrefetchState": "ready",
+          "assetPrefetchReady": "7",
+          "assetPrefetchTotal": "7",
+          "assetPrefetchProgress": "7/7",
+          "assetPrefetchFailed": "0",
+          "assetPrefetchPriority": "0",
+          "assetPrefetchTarget": "",
+          "assetPrefetchSaveData": "false",
+          "assetPrefetchEnabled": "true",
+          "assetPrefetchAllowance": "24000000",
+          "assetPrefetchBytes": "7737316",
+          "assetPrefetchTownState": "ready",
+          "assetLoadingLabel": "the town",
+          "assetLoadingReady": "28",
+          "assetLoadingTotal": "28",
+          "assetLoadingProgress": "28/28",
+          "assetLoadingState": "ready",
+          "engine": "three.js r184",
+          "townEraAccent": "1",
+          "town3dPilotState": "loaded",
+          "town3dPilotRenderSource": "glb",
+          "town3dSteamAnchors": "0",
+          "town3dSteamPlumes": "0",
+          "town3dPlateState": "loaded",
+          "town3dPlateGround": "glb",
+          "cameraAspect": "0.46208530805687204",
+          "cssAspect": "0.46208530805687204",
+          "prospectorSkin": "stock",
+          "prospectorSheet": "stock",
+          "town3dPilotMeshes": "1",
+          "town3dPilotTriangles": "3424",
+          "town3dPilotMaterials": "1",
+          "town3dPilotBounds": "3.464x6.250x3.195",
+          "town3dPilotBuildingOrientations": "{\"tavern\":{\"width\":4.2295708656311035,\"height\":3.961084052663402,\"depth\":3.349243911573542,\"upY\":1},\"general_store\":{\"width\":4.700000047683716,\"height\":4.440092210945446,\"depth\":3.2597491709237993,\"upY\":1},\"claim_office\":{\"width\":4.260113512668952,\"height\":5.019999980926514,\"depth\":3.120130607365623,\"upY\":1},\"schoolhouse\":{\"width\":3.9598375740939544,\"height\":5.599999904632568,\"depth\":3.3753470905634697,\"upY\":1},\"assay_office\":{\"width\":4.423999786376953,\"height\":4.1998767465690445,\"depth\":3.3201263083833017,\"upY\":1},\"chapel\":{\"width\":3.4642323068941314,\"height\":6.25,\"depth\":3.1949064607684563,\"upY\":1}}",
+          "town3dPlazaPropsState": "loaded",
+          "town3dArcAnchors": "0",
+          "town3dArcFlickers": "0",
+          "town3dExhaustAnchors": "0",
+          "town3dDustPuffs": "0",
+          "town3dPilotEra": "1",
+          "town3dPilotModel": "http://127.0.0.1:5316/assets/chapel-DqOSe4LC-diet-1408f6b4.glb",
+          "town3dPilotLoadedIds": "tavern,plate,general_store,claim_office,schoolhouse,assay_office,chapel",
+          "town3dPilotInstances": "5",
+          "town3dPanMonumentInstances": "1",
+          "town3dEraPropIds": "",
+          "heroSheet": "young",
+          "heroSkin": "stock",
+          "heroSkinSheet": "stock"
+        },
+        "sceneWalked": true
+      },
+      "status": "measured",
+      "after": {
+        "at": "2026-09-05T15:16:39.275Z",
+        "load": [
+          17.9267578125,
+          27.939453125,
+          28.23046875
+        ],
+        "freeMemory": 10000236544
+      }
+    },
+    {
+      "cycle": 1,
+      "warmup": false,
+      "map": "e1-dry-gulch",
+      "before": {
+        "at": "2026-09-05T15:16:39.290Z",
+        "load": [
+          17.9267578125,
+          27.939453125,
+          28.23046875
+        ],
+        "freeMemory": 10000236544
+      },
+      "run": {
+        "label": "run",
+        "documentId": "18c9f483-cfac-4b8a-be03-5bacac92f291",
+        "heap": 39901598,
+        "renderer": {
+          "calls": 63,
+          "triangles": 105068,
+          "geometries": 75,
+          "textures": 17,
+          "programs": 46
+        },
+        "gpuEstimate": {
+          "textureRgba8MipBytes": 135104671.99999997,
+          "geometryBufferBytes": 2354320,
+          "formula": "reachable scene textures: width * height * 4 * (generateMipmaps ? 4/3 : 1), deduped by source + sampler; unique geometry ArrayBuffers. Excludes cached/unreachable textures, render targets, driver overhead and depth buffers."
+        },
+        "dataset": {
+          "assetPrefetchScene": "run",
+          "assetPrefetchState": "fetching",
+          "assetPrefetchReady": "19",
+          "assetPrefetchTotal": "19",
+          "assetPrefetchProgress": "19/19",
+          "assetPrefetchFailed": "0",
+          "assetPrefetchPriority": "2",
+          "assetPrefetchTarget": "e1-night-shift",
+          "assetPrefetchSaveData": "false",
+          "assetPrefetchEnabled": "true",
+          "assetPrefetchAllowance": "24000000",
+          "assetPrefetchBytes": "11809768",
+          "assetPrefetchTownState": "ready",
+          "railcar3dState": "off",
+          "railcar3dSource": "billboard",
+          "railcar3dMounted": "false",
+          "railcar3dDamageStates": "{\"wheels\":\"intact\",\"boiler\":\"intact\",\"cabin\":\"intact\"}",
+          "bossBarVisible": "false",
+          "bossBarSemantic": "none",
+          "bossBarRemaining": "0",
+          "bossBarDepleted": "0",
+          "bossBarRemainingColor": "#6bb36b",
+          "bossBarDepletedColor": "#a0522d",
+          "bossBarComponent": "shared",
+          "bossBarAnchor": "none",
+          "bossBarOrientation": "none",
+          "bossBarPosition": "none",
+          "crawler3dState": "off",
+          "crawler3dSource": "placeholder",
+          "crawler3dMounted": "false",
+          "crawler3dDamageStates": "{\"drain_mast\":\"intact\",\"tracks\":\"intact\",\"capacitor_bank\":\"intact\"}",
+          "dredgeQueen3dState": "off",
+          "dredgeQueen3dSource": "placeholder",
+          "dredgeQueen3dMounted": "false",
+          "dredgeQueen3dPresentation": "hidden",
+          "dredgeQueen3dDamageStates": "{\"claw\":\"intact\",\"paddle_port\":\"intact\",\"paddle_starboard\":\"intact\",\"hold\":\"intact\"}",
+          "salvageClaw3dState": "off",
+          "salvageClaw3dSource": "placeholder",
+          "salvageClaw3dMounted": "false",
+          "salvageClaw3dPresentation": "hidden",
+          "homemaker3dState": "off",
+          "homemaker3dSource": "placeholder",
+          "homemaker3dMounted": "false",
+          "homemaker3dPresentation": "hidden",
+          "homemaker3dDamageStates": "{\"vac\":\"intact\",\"rack\":\"intact\",\"core\":\"intact\"}",
+          "oldDigger3dState": "off",
+          "oldDigger3dSource": "placeholder",
+          "oldDigger3dMounted": "false",
+          "oldDigger3dPresentation": "hidden",
+          "assetLoadingLabel": "the claim",
+          "assetLoadingReady": "41",
+          "assetLoadingTotal": "41",
+          "assetLoadingProgress": "41/41",
+          "assetLoadingState": "ready",
+          "engine": "three.js r184",
+          "terrain3dPilotState": "ready",
+          "terrain3dPilotRenderSource": "glb",
+          "run3dPilotState": "ready",
+          "nightPoolSurfaceSources": "0",
+          "nightPoolSurfaceMaxRadius": "0",
+          "cameraAspect": "0.46208530805687204",
+          "cssAspect": "0.46208530805687204",
+          "prospectorSkin": "stock",
+          "prospectorSheet": "stock",
+          "terrain3dPilotContract": "e1-dry-gulch",
+          "terrain3dPilotTerrainLoadState": "mounted",
+          "terrain3dPilotPanoramaLoadState": "mounted",
+          "terrain3dPilotLandmarkLoadState": "mounted",
+          "terrain3dPilotHeightSource": "baked-grid",
+          "terrain3dPilotMeshes": "1",
+          "terrain3dPilotTriangles": "32768",
+          "terrain3dPilotMaterials": "1",
+          "terrain3dPilotVertices": "16641",
+          "terrain3dPilotPanorama": "dry-gulch-panorama",
+          "terrain3dPilotPanoramaMeshes": "1",
+          "terrain3dPilotPanoramaTriangles": "1920",
+          "terrain3dPilotPanoramaMaterials": "1",
+          "terrain3dPilotPanoramaVertices": "1351",
+          "run3dPilotMeshes": "0",
+          "run3dPilotTriangles": "0",
+          "terrain3dPilotNightPools": "off",
+          "terrain3dPilotNightPoolSources": "0",
+          "terrain3dPilotSpringPonds": "1",
+          "terrain3dPilotSpringPondWaterRadii": "[1.4]",
+          "terrain3dPilotSpringPondDampGroundRadii": "[3.3369999999999997]",
+          "terrain3dPilotChannelWater": "0",
+          "terrain3dPilotFordWater": "0",
+          "terrain3dPilotChannelWaterHalfWidths": "[]",
+          "terrain3dPilotHiddenRelief": "3",
+          "terrain3dPilotHiddenGroundLayers": "TerrainVistaRing|TerrainContinuousGroundMesh|SpringPonds",
+          "terrain3dPilotContinuation": "sculpt-edge-continuation",
+          "terrain3dPilotHorizonApron": "painted",
+          "terrain3dPilotFarGroundProbe": "off",
+          "terrain3dPilotPanoramaFraming": "world-projected-horizon",
+          "terrain3dPilotSkirtBlend": "painted-underlay-alpha-rim",
+          "terrain3dPilotPanoramaFog": "excluded",
+          "terrain3dPilotPanoramaDepth": "screen-horizon-backdrop",
+          "terrain3dPilotLandmarkExpected": "5",
+          "terrain3dPilotLandmarkEmissive": "3",
+          "terrain3dPilotLandmarks": "5",
+          "terrain3dPilotLandmarkSkipped": "0",
+          "terrain3dPilotLandmarkDiagnostics": "",
+          "terrain3dPilotLandmarkMounts": "[{\"id\":\"ruined_mining_operation\",\"x\":2,\"y\":0.3022409200668335,\"z\":-5.8},{\"id\":\"abandoned_farmhouse\",\"x\":10.5,\"y\":0.5858433246612549,\"z\":14.5},{\"id\":\"cactus_thicket\",\"x\":18.3,\"y\":0.44877609986114486,\"z\":0},{\"id\":\"bison_skeleton\",\"x\":-8,\"y\":0.2811465263366699,\"z\":12.5},{\"id\":\"isolated_spring\",\"x\":-18,\"y\":-0.3516852855682373,\"z\":-18}]",
+          "terrain3dPilotLandmarkMaterials": "[{\"id\":\"ruined_mining_operation\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[3,3]},{\"id\":\"abandoned_farmhouse\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[3,3]},{\"id\":\"cactus_thicket\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[3,3]},{\"id\":\"bison_skeleton\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[3,3]},{\"id\":\"isolated_spring\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[2.1,2.1]}]"
+        },
+        "sceneWalked": true
+      },
+      "menuAfterRun": {
+        "label": "menu-after-run",
+        "documentId": "cafd98a4-d47d-4f93-b6b6-70132fbbbadf",
+        "heap": 9037863,
+        "renderer": null,
+        "gpuEstimate": null,
+        "dataset": null,
+        "sceneWalked": false
+      },
+      "townAfterRun": {
+        "label": "town-after-run",
+        "documentId": "cafd98a4-d47d-4f93-b6b6-70132fbbbadf",
+        "heap": 22299433,
+        "renderer": {
+          "calls": 44,
+          "triangles": 78856,
+          "geometries": 71,
+          "textures": 38,
+          "programs": 32
+        },
+        "gpuEstimate": {
+          "textureRgba8MipBytes": 95662079.99999999,
+          "geometryBufferBytes": 2352012,
+          "formula": "reachable scene textures: width * height * 4 * (generateMipmaps ? 4/3 : 1), deduped by source + sampler; unique geometry ArrayBuffers. Excludes cached/unreachable textures, render targets, driver overhead and depth buffers."
+        },
+        "dataset": {
+          "assetPrefetchScene": "town",
+          "assetPrefetchState": "ready",
+          "assetPrefetchReady": "7",
+          "assetPrefetchTotal": "7",
+          "assetPrefetchProgress": "7/7",
+          "assetPrefetchFailed": "0",
+          "assetPrefetchPriority": "0",
+          "assetPrefetchTarget": "",
+          "assetPrefetchSaveData": "false",
+          "assetPrefetchEnabled": "true",
+          "assetPrefetchAllowance": "24000000",
+          "assetPrefetchBytes": "16932540",
+          "assetPrefetchTownState": "ready",
+          "assetLoadingLabel": "the town",
+          "assetLoadingReady": "28",
+          "assetLoadingTotal": "28",
+          "assetLoadingProgress": "28/28",
+          "assetLoadingState": "ready",
+          "engine": "three.js r184",
+          "townEraAccent": "1",
+          "town3dPilotState": "loaded",
+          "town3dPilotRenderSource": "glb",
+          "town3dSteamAnchors": "0",
+          "town3dSteamPlumes": "0",
+          "town3dPlateState": "loaded",
+          "town3dPlateGround": "glb",
+          "cameraAspect": "0.46208530805687204",
+          "cssAspect": "0.46208530805687204",
+          "prospectorSkin": "stock",
+          "prospectorSheet": "stock",
+          "town3dPilotMeshes": "5",
+          "town3dPilotTriangles": "3624",
+          "town3dPilotMaterials": "3",
+          "town3dPilotBounds": "0.000x0.000x0.000",
+          "town3dPilotBuildingOrientations": "{\"tavern\":{\"width\":4.2295708656311035,\"height\":3.961084052663402,\"depth\":3.349243911573542,\"upY\":1},\"general_store\":{\"width\":4.700000047683716,\"height\":4.440092210945446,\"depth\":3.2597491709237993,\"upY\":1},\"claim_office\":{\"width\":4.260113512668952,\"height\":5.019999980926514,\"depth\":3.120130607365623,\"upY\":1},\"assay_office\":{\"width\":4.423999786376953,\"height\":4.1998767465690445,\"depth\":3.3201263083833017,\"upY\":1},\"schoolhouse\":{\"width\":3.9598375740939544,\"height\":5.599999904632568,\"depth\":3.3753470905634697,\"upY\":1},\"chapel\":{\"width\":3.4642323068941314,\"height\":6.25,\"depth\":3.1949064607684563,\"upY\":1}}",
+          "town3dPlazaPropsState": "loaded",
+          "town3dArcAnchors": "0",
+          "town3dArcFlickers": "0",
+          "town3dExhaustAnchors": "0",
+          "town3dDustPuffs": "0",
+          "town3dPilotEra": "1",
+          "town3dPilotModel": "http://127.0.0.1:5316/assets/chapel-DqOSe4LC-diet-1408f6b4.glb",
+          "town3dPilotLoadedIds": "tavern,general_store,claim_office,assay_office,plate,schoolhouse,chapel",
+          "town3dPilotInstances": "5",
+          "town3dPanMonumentInstances": "1",
+          "town3dEraPropIds": ""
+        },
+        "sceneWalked": true
+      },
+      "townAfterReload": {
+        "label": "town-after-menu-round-trip",
+        "documentId": "cafd98a4-d47d-4f93-b6b6-70132fbbbadf",
+        "heap": 23766632,
+        "renderer": {
+          "calls": 45,
+          "triangles": 78858,
+          "geometries": 66,
+          "textures": 42,
+          "programs": 24
+        },
+        "gpuEstimate": {
+          "textureRgba8MipBytes": 100817578.66666663,
+          "geometryBufferBytes": 2352012,
+          "formula": "reachable scene textures: width * height * 4 * (generateMipmaps ? 4/3 : 1), deduped by source + sampler; unique geometry ArrayBuffers. Excludes cached/unreachable textures, render targets, driver overhead and depth buffers."
+        },
+        "dataset": {
+          "assetPrefetchScene": "town",
+          "assetPrefetchState": "ready",
+          "assetPrefetchReady": "7",
+          "assetPrefetchTotal": "7",
+          "assetPrefetchProgress": "7/7",
+          "assetPrefetchFailed": "0",
+          "assetPrefetchPriority": "0",
+          "assetPrefetchTarget": "",
+          "assetPrefetchSaveData": "false",
+          "assetPrefetchEnabled": "true",
+          "assetPrefetchAllowance": "24000000",
+          "assetPrefetchBytes": "16932540",
+          "assetPrefetchTownState": "ready",
+          "assetLoadingLabel": "the town",
+          "assetLoadingReady": "28",
+          "assetLoadingTotal": "28",
+          "assetLoadingProgress": "28/28",
+          "assetLoadingState": "ready",
+          "engine": "three.js r184",
+          "townEraAccent": "1",
+          "town3dPilotState": "loaded",
+          "town3dPilotRenderSource": "glb",
+          "town3dSteamAnchors": "0",
+          "town3dSteamPlumes": "0",
+          "town3dPlateState": "loaded",
+          "town3dPlateGround": "glb",
+          "cameraAspect": "0.46208530805687204",
+          "cssAspect": "0.46208530805687204",
+          "prospectorSkin": "stock",
+          "prospectorSheet": "stock",
+          "town3dPilotMeshes": "1",
+          "town3dPilotTriangles": "3340",
+          "town3dPilotMaterials": "1",
+          "town3dPilotBounds": "4.424x4.200x3.320",
+          "town3dPilotBuildingOrientations": "{\"tavern\":{\"width\":4.2295708656311035,\"height\":3.961084052663402,\"depth\":3.349243911573542,\"upY\":1},\"general_store\":{\"width\":4.700000047683716,\"height\":4.440092210945446,\"depth\":3.2597491709237993,\"upY\":1},\"schoolhouse\":{\"width\":3.9598375740939544,\"height\":5.599999904632568,\"depth\":3.3753470905634697,\"upY\":1},\"chapel\":{\"width\":3.4642323068941314,\"height\":6.25,\"depth\":3.1949064607684563,\"upY\":1},\"claim_office\":{\"width\":4.260113512668952,\"height\":5.019999980926514,\"depth\":3.120130607365623,\"upY\":1},\"assay_office\":{\"width\":4.423999786376953,\"height\":4.1998767465690445,\"depth\":3.3201263083833017,\"upY\":1}}",
+          "town3dPlazaPropsState": "loaded",
+          "town3dArcAnchors": "0",
+          "town3dArcFlickers": "0",
+          "town3dExhaustAnchors": "0",
+          "town3dDustPuffs": "0",
+          "town3dPilotEra": "1",
+          "town3dPilotModel": "http://127.0.0.1:5316/assets/assay-office-xAW04uBp-diet-1408f6b4.glb",
+          "town3dPilotLoadedIds": "tavern,plate,general_store,schoolhouse,chapel,claim_office,assay_office",
+          "town3dPilotInstances": "5",
+          "town3dPanMonumentInstances": "1",
+          "town3dEraPropIds": "",
+          "heroSheet": "young",
+          "heroSkin": "stock",
+          "heroSkinSheet": "stock"
+        },
+        "sceneWalked": true
+      },
+      "status": "measured",
+      "after": {
+        "at": "2026-09-05T15:17:02.757Z",
+        "load": [
+          20.41845703125,
+          27.74462890625,
+          28.15283203125
+        ],
+        "freeMemory": 9844703232
+      }
+    },
+    {
+      "cycle": 2,
+      "warmup": false,
+      "map": "e1-twin-banks",
+      "before": {
+        "at": "2026-09-05T15:17:02.758Z",
+        "load": [
+          20.41845703125,
+          27.74462890625,
+          28.15283203125
+        ],
+        "freeMemory": 9847898112
+      },
+      "run": {
+        "label": "run",
+        "documentId": "5eee6cdc-cb7b-4a27-aeba-ed62742b1957",
+        "heap": 39040601,
+        "renderer": {
+          "calls": 58,
+          "triangles": 122408,
+          "geometries": 71,
+          "textures": 22,
+          "programs": 51
+        },
+        "gpuEstimate": {
+          "textureRgba8MipBytes": 132854602.66666663,
+          "geometryBufferBytes": 2534812,
+          "formula": "reachable scene textures: width * height * 4 * (generateMipmaps ? 4/3 : 1), deduped by source + sampler; unique geometry ArrayBuffers. Excludes cached/unreachable textures, render targets, driver overhead and depth buffers."
+        },
+        "dataset": {
+          "assetPrefetchScene": "run",
+          "assetPrefetchState": "ready",
+          "assetPrefetchReady": "19",
+          "assetPrefetchTotal": "19",
+          "assetPrefetchProgress": "19/19",
+          "assetPrefetchFailed": "0",
+          "assetPrefetchPriority": "0",
+          "assetPrefetchTarget": "",
+          "assetPrefetchSaveData": "false",
+          "assetPrefetchEnabled": "true",
+          "assetPrefetchAllowance": "24000000",
+          "assetPrefetchBytes": "21581712",
+          "assetPrefetchTownState": "ready",
+          "railcar3dState": "off",
+          "railcar3dSource": "billboard",
+          "railcar3dMounted": "false",
+          "railcar3dDamageStates": "{\"wheels\":\"intact\",\"boiler\":\"intact\",\"cabin\":\"intact\"}",
+          "bossBarVisible": "false",
+          "bossBarSemantic": "none",
+          "bossBarRemaining": "0",
+          "bossBarDepleted": "0",
+          "bossBarRemainingColor": "#6bb36b",
+          "bossBarDepletedColor": "#a0522d",
+          "bossBarComponent": "shared",
+          "bossBarAnchor": "none",
+          "bossBarOrientation": "none",
+          "bossBarPosition": "none",
+          "crawler3dState": "off",
+          "crawler3dSource": "placeholder",
+          "crawler3dMounted": "false",
+          "crawler3dDamageStates": "{\"drain_mast\":\"intact\",\"tracks\":\"intact\",\"capacitor_bank\":\"intact\"}",
+          "dredgeQueen3dState": "off",
+          "dredgeQueen3dSource": "placeholder",
+          "dredgeQueen3dMounted": "false",
+          "dredgeQueen3dPresentation": "hidden",
+          "dredgeQueen3dDamageStates": "{\"claw\":\"intact\",\"paddle_port\":\"intact\",\"paddle_starboard\":\"intact\",\"hold\":\"intact\"}",
+          "salvageClaw3dState": "off",
+          "salvageClaw3dSource": "placeholder",
+          "salvageClaw3dMounted": "false",
+          "salvageClaw3dPresentation": "hidden",
+          "homemaker3dState": "off",
+          "homemaker3dSource": "placeholder",
+          "homemaker3dMounted": "false",
+          "homemaker3dPresentation": "hidden",
+          "homemaker3dDamageStates": "{\"vac\":\"intact\",\"rack\":\"intact\",\"core\":\"intact\"}",
+          "oldDigger3dState": "off",
+          "oldDigger3dSource": "placeholder",
+          "oldDigger3dMounted": "false",
+          "oldDigger3dPresentation": "hidden",
+          "assetLoadingLabel": "the claim",
+          "assetLoadingReady": "41",
+          "assetLoadingTotal": "41",
+          "assetLoadingProgress": "41/41",
+          "assetLoadingState": "ready",
+          "engine": "three.js r184",
+          "terrain3dPilotState": "ready",
+          "terrain3dPilotRenderSource": "glb",
+          "run3dPilotState": "ready",
+          "nightPoolSurfaceSources": "0",
+          "nightPoolSurfaceMaxRadius": "0",
+          "cameraAspect": "0.46208530805687204",
+          "cssAspect": "0.46208530805687204",
+          "prospectorSkin": "stock",
+          "prospectorSheet": "stock",
+          "terrain3dPilotContract": "e1-twin-banks",
+          "terrain3dPilotTerrainLoadState": "mounted",
+          "terrain3dPilotPanoramaLoadState": "mounted",
+          "terrain3dPilotLandmarkLoadState": "mounted",
+          "terrain3dPilotHeightSource": "baked-grid",
+          "terrain3dPilotMeshes": "1",
+          "terrain3dPilotTriangles": "51200",
+          "terrain3dPilotMaterials": "1",
+          "terrain3dPilotVertices": "25921",
+          "terrain3dPilotPanorama": "twin-banks-panorama",
+          "terrain3dPilotPanoramaMeshes": "1",
+          "terrain3dPilotPanoramaTriangles": "1920",
+          "terrain3dPilotPanoramaMaterials": "1",
+          "terrain3dPilotPanoramaVertices": "1351",
+          "run3dPilotMeshes": "0",
+          "run3dPilotTriangles": "0",
+          "terrain3dPilotNightPools": "off",
+          "terrain3dPilotNightPoolSources": "0",
+          "terrain3dPilotSpringPonds": "0",
+          "terrain3dPilotSpringPondWaterRadii": "[]",
+          "terrain3dPilotSpringPondDampGroundRadii": "[]",
+          "terrain3dPilotChannelWater": "2",
+          "terrain3dPilotFordWater": "1",
+          "terrain3dPilotChannelWaterHalfWidths": "[1.5,1.5]",
+          "terrain3dPilotHiddenRelief": "10",
+          "terrain3dPilotHiddenGroundLayers": "TerrainVistaRing|TerrainReliefMesh|terrain.river|terrain.ford|terrain.ford|FordSteppingStones|FordSteppingStones|RiverGravelBar.west-mid-channel-bar|RiverGravelBar.east-mid-channel-bar|SpringPonds",
+          "terrain3dPilotContinuation": "sculpt-edge-continuation",
+          "terrain3dPilotHorizonApron": "painted",
+          "terrain3dPilotFarGroundProbe": "off",
+          "terrain3dPilotPanoramaFraming": "world-projected-horizon",
+          "terrain3dPilotSkirtBlend": "painted-underlay-alpha-rim",
+          "terrain3dPilotPanoramaFog": "excluded",
+          "terrain3dPilotPanoramaDepth": "screen-horizon-backdrop",
+          "terrain3dPilotLandmarkExpected": "5",
+          "terrain3dPilotLandmarkEmissive": "3",
+          "terrain3dPilotLandmarks": "5",
+          "terrain3dPilotLandmarkSkipped": "0",
+          "terrain3dPilotLandmarkDiagnostics": "",
+          "terrain3dPilotLandmarkMounts": "[{\"id\":\"north_bank_homestead\",\"x\":13.5,\"y\":0.5679033696651459,\"z\":14.2},{\"id\":\"south_bank_homestead\",\"x\":-13,\"y\":0.605990469455719,\"z\":-14},{\"id\":\"north_bank_winch\",\"x\":-16,\"y\":0.2866448163986206,\"z\":10.7},{\"id\":\"south_bank_winch\",\"x\":16,\"y\":0.5073546469211578,\"z\":-10.7},{\"id\":\"floodplain_dressing_pack\",\"x\":0,\"y\":0.35548663963127136,\"z\":0}]",
+          "terrain3dPilotLandmarkMaterials": "[{\"id\":\"north_bank_homestead\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[3,3]},{\"id\":\"south_bank_homestead\",\"total\":2,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[3,3]},{\"id\":\"north_bank_winch\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[3,3]},{\"id\":\"south_bank_winch\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[3,3]},{\"id\":\"floodplain_dressing_pack\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[3,3]}]"
+        },
+        "sceneWalked": true
+      },
+      "menuAfterRun": {
+        "label": "menu-after-run",
+        "documentId": "d60b4874-3d2f-469c-bc81-c824b5ad4e5d",
+        "heap": 7220989,
+        "renderer": null,
+        "gpuEstimate": null,
+        "dataset": null,
+        "sceneWalked": false
+      },
+      "townAfterRun": {
+        "label": "town-after-run",
+        "documentId": "d60b4874-3d2f-469c-bc81-c824b5ad4e5d",
+        "heap": 20791709,
+        "renderer": {
+          "calls": 44,
+          "triangles": 78856,
+          "geometries": 71,
+          "textures": 32,
+          "programs": 32
+        },
+        "gpuEstimate": {
+          "textureRgba8MipBytes": 95662079.99999996,
+          "geometryBufferBytes": 2352012,
+          "formula": "reachable scene textures: width * height * 4 * (generateMipmaps ? 4/3 : 1), deduped by source + sampler; unique geometry ArrayBuffers. Excludes cached/unreachable textures, render targets, driver overhead and depth buffers."
+        },
+        "dataset": {
+          "assetPrefetchScene": "town",
+          "assetPrefetchState": "allowance",
+          "assetPrefetchReady": "0",
+          "assetPrefetchTotal": "0",
+          "assetPrefetchProgress": "0/0",
+          "assetPrefetchFailed": "0",
+          "assetPrefetchPriority": "1",
+          "assetPrefetchTarget": "the-claim",
+          "assetPrefetchSaveData": "false",
+          "assetPrefetchEnabled": "true",
+          "assetPrefetchAllowance": "24000000",
+          "assetPrefetchBytes": "24003128",
+          "assetPrefetchTownState": "partial",
+          "assetLoadingLabel": "the town",
+          "assetLoadingReady": "28",
+          "assetLoadingTotal": "28",
+          "assetLoadingProgress": "28/28",
+          "assetLoadingState": "ready",
+          "engine": "three.js r184",
+          "townEraAccent": "1",
+          "town3dPilotState": "loaded",
+          "town3dPilotRenderSource": "glb",
+          "town3dSteamAnchors": "0",
+          "town3dSteamPlumes": "0",
+          "town3dPlateState": "loaded",
+          "town3dPlateGround": "glb",
+          "cameraAspect": "0.46208530805687204",
+          "cssAspect": "0.46208530805687204",
+          "prospectorSkin": "stock",
+          "prospectorSheet": "stock",
+          "town3dPilotMeshes": "5",
+          "town3dPilotTriangles": "3624",
+          "town3dPilotMaterials": "3",
+          "town3dPilotBounds": "0.000x0.000x0.000",
+          "town3dPilotBuildingOrientations": "{\"tavern\":{\"width\":4.2295708656311035,\"height\":3.961084052663402,\"depth\":3.349243911573542,\"upY\":1},\"general_store\":{\"width\":4.700000047683716,\"height\":4.440092210945446,\"depth\":3.2597491709237993,\"upY\":1},\"claim_office\":{\"width\":4.260113512668952,\"height\":5.019999980926514,\"depth\":3.120130607365623,\"upY\":1},\"assay_office\":{\"width\":4.423999786376953,\"height\":4.1998767465690445,\"depth\":3.3201263083833017,\"upY\":1},\"chapel\":{\"width\":3.4642323068941314,\"height\":6.25,\"depth\":3.1949064607684563,\"upY\":1},\"schoolhouse\":{\"width\":3.9598375740939544,\"height\":5.599999904632568,\"depth\":3.3753470905634697,\"upY\":1}}",
+          "town3dPlazaPropsState": "loaded",
+          "town3dPilotLoadedIds": "plate,tavern,general_store,claim_office,assay_office,chapel,schoolhouse",
+          "town3dArcAnchors": "0",
+          "town3dArcFlickers": "0",
+          "town3dExhaustAnchors": "0",
+          "town3dDustPuffs": "0",
+          "town3dPilotEra": "1",
+          "town3dPilotModel": "http://127.0.0.1:5316/assets/schoolhouse-BR3cnoTX-diet-1408f6b4.glb",
+          "town3dPilotInstances": "5",
+          "town3dPanMonumentInstances": "1",
+          "town3dEraPropIds": ""
+        },
+        "sceneWalked": true
+      },
+      "townAfterReload": {
+        "label": "town-after-menu-round-trip",
+        "documentId": "d60b4874-3d2f-469c-bc81-c824b5ad4e5d",
+        "heap": 22943137,
+        "renderer": {
+          "calls": 45,
+          "triangles": 78858,
+          "geometries": 66,
+          "textures": 41,
+          "programs": 24
+        },
+        "gpuEstimate": {
+          "textureRgba8MipBytes": 98458282.66666664,
+          "geometryBufferBytes": 2352012,
+          "formula": "reachable scene textures: width * height * 4 * (generateMipmaps ? 4/3 : 1), deduped by source + sampler; unique geometry ArrayBuffers. Excludes cached/unreachable textures, render targets, driver overhead and depth buffers."
+        },
+        "dataset": {
+          "assetPrefetchScene": "town",
+          "assetPrefetchState": "allowance",
+          "assetPrefetchReady": "0",
+          "assetPrefetchTotal": "0",
+          "assetPrefetchProgress": "0/0",
+          "assetPrefetchFailed": "0",
+          "assetPrefetchPriority": "1",
+          "assetPrefetchTarget": "the-claim",
+          "assetPrefetchSaveData": "false",
+          "assetPrefetchEnabled": "true",
+          "assetPrefetchAllowance": "24000000",
+          "assetPrefetchBytes": "24003128",
+          "assetPrefetchTownState": "partial",
+          "assetLoadingLabel": "the town",
+          "assetLoadingReady": "28",
+          "assetLoadingTotal": "28",
+          "assetLoadingProgress": "28/28",
+          "assetLoadingState": "ready",
+          "engine": "three.js r184",
+          "townEraAccent": "1",
+          "town3dPilotState": "loaded",
+          "town3dPilotRenderSource": "glb",
+          "town3dSteamAnchors": "0",
+          "town3dSteamPlumes": "0",
+          "town3dPlateState": "loaded",
+          "town3dPlateGround": "glb",
+          "cameraAspect": "0.46208530805687204",
+          "cssAspect": "0.46208530805687204",
+          "prospectorSkin": "stock",
+          "prospectorSheet": "stock",
+          "town3dPilotMeshes": "1",
+          "town3dPilotTriangles": "5520",
+          "town3dPilotMaterials": "1",
+          "town3dPilotBounds": "3.960x5.600x3.375",
+          "town3dPilotBuildingOrientations": "{\"tavern\":{\"width\":4.2295708656311035,\"height\":3.961084052663402,\"depth\":3.349243911573542,\"upY\":1},\"general_store\":{\"width\":4.700000047683716,\"height\":4.440092210945446,\"depth\":3.2597491709237993,\"upY\":1},\"claim_office\":{\"width\":4.260113512668952,\"height\":5.019999980926514,\"depth\":3.120130607365623,\"upY\":1},\"chapel\":{\"width\":3.4642323068941314,\"height\":6.25,\"depth\":3.1949064607684563,\"upY\":1},\"assay_office\":{\"width\":4.423999786376953,\"height\":4.1998767465690445,\"depth\":3.3201263083833017,\"upY\":1},\"schoolhouse\":{\"width\":3.9598375740939544,\"height\":5.599999904632568,\"depth\":3.3753470905634697,\"upY\":1}}",
+          "town3dPlazaPropsState": "loaded",
+          "town3dPilotLoadedIds": "tavern,general_store,claim_office,plate,chapel,assay_office,schoolhouse",
+          "town3dArcAnchors": "0",
+          "town3dArcFlickers": "0",
+          "town3dExhaustAnchors": "0",
+          "town3dDustPuffs": "0",
+          "town3dPilotEra": "1",
+          "town3dPilotModel": "http://127.0.0.1:5316/assets/schoolhouse-BR3cnoTX-diet-1408f6b4.glb",
+          "town3dPilotInstances": "5",
+          "town3dPanMonumentInstances": "1",
+          "town3dEraPropIds": "",
+          "heroSheet": "young",
+          "heroSkin": "stock",
+          "heroSkinSheet": "stock"
+        },
+        "sceneWalked": true
+      },
+      "status": "measured",
+      "after": {
+        "at": "2026-09-05T15:17:24.163Z",
+        "load": [
+          23.76611328125,
+          28.0615234375,
+          28.2578125
+        ],
+        "freeMemory": 9141780480
+      }
+    },
+    {
+      "cycle": 3,
+      "warmup": false,
+      "map": "e1-night-shift",
+      "before": {
+        "at": "2026-09-05T15:17:24.268Z",
+        "load": [
+          23.76611328125,
+          28.0615234375,
+          28.2578125
+        ],
+        "freeMemory": 9077325824
+      },
+      "run": {
+        "label": "run",
+        "documentId": "b0011c34-b4c6-4dfe-adf0-97dfbc65a991",
+        "heap": 36308216,
+        "renderer": {
+          "calls": 62,
+          "triangles": 152662,
+          "geometries": 76,
+          "textures": 17,
+          "programs": 48
+        },
+        "gpuEstimate": {
+          "textureRgba8MipBytes": 135192053.3333333,
+          "geometryBufferBytes": 2366260,
+          "formula": "reachable scene textures: width * height * 4 * (generateMipmaps ? 4/3 : 1), deduped by source + sampler; unique geometry ArrayBuffers. Excludes cached/unreachable textures, render targets, driver overhead and depth buffers."
+        },
+        "dataset": {
+          "assetPrefetchScene": "run",
+          "assetPrefetchState": "allowance",
+          "assetPrefetchReady": "0",
+          "assetPrefetchTotal": "0",
+          "assetPrefetchProgress": "0/0",
+          "assetPrefetchFailed": "0",
+          "assetPrefetchPriority": "1",
+          "assetPrefetchTarget": "town",
+          "assetPrefetchSaveData": "false",
+          "assetPrefetchEnabled": "true",
+          "assetPrefetchAllowance": "24000000",
+          "assetPrefetchBytes": "24003128",
+          "assetPrefetchTownState": "partial",
+          "railcar3dState": "off",
+          "railcar3dSource": "billboard",
+          "railcar3dMounted": "false",
+          "railcar3dDamageStates": "{\"wheels\":\"intact\",\"boiler\":\"intact\",\"cabin\":\"intact\"}",
+          "bossBarVisible": "false",
+          "bossBarSemantic": "none",
+          "bossBarRemaining": "0",
+          "bossBarDepleted": "0",
+          "bossBarRemainingColor": "#6bb36b",
+          "bossBarDepletedColor": "#a0522d",
+          "bossBarComponent": "shared",
+          "bossBarAnchor": "none",
+          "bossBarOrientation": "none",
+          "bossBarPosition": "none",
+          "crawler3dState": "off",
+          "crawler3dSource": "placeholder",
+          "crawler3dMounted": "false",
+          "crawler3dDamageStates": "{\"drain_mast\":\"intact\",\"tracks\":\"intact\",\"capacitor_bank\":\"intact\"}",
+          "dredgeQueen3dState": "off",
+          "dredgeQueen3dSource": "placeholder",
+          "dredgeQueen3dMounted": "false",
+          "dredgeQueen3dPresentation": "hidden",
+          "dredgeQueen3dDamageStates": "{\"claw\":\"intact\",\"paddle_port\":\"intact\",\"paddle_starboard\":\"intact\",\"hold\":\"intact\"}",
+          "salvageClaw3dState": "off",
+          "salvageClaw3dSource": "placeholder",
+          "salvageClaw3dMounted": "false",
+          "salvageClaw3dPresentation": "hidden",
+          "homemaker3dState": "off",
+          "homemaker3dSource": "placeholder",
+          "homemaker3dMounted": "false",
+          "homemaker3dPresentation": "hidden",
+          "homemaker3dDamageStates": "{\"vac\":\"intact\",\"rack\":\"intact\",\"core\":\"intact\"}",
+          "oldDigger3dState": "off",
+          "oldDigger3dSource": "placeholder",
+          "oldDigger3dMounted": "false",
+          "oldDigger3dPresentation": "hidden",
+          "assetLoadingLabel": "the claim",
+          "assetLoadingReady": "41",
+          "assetLoadingTotal": "41",
+          "assetLoadingProgress": "41/41",
+          "assetLoadingState": "ready",
+          "engine": "three.js r184",
+          "terrain3dPilotState": "ready",
+          "terrain3dPilotRenderSource": "glb",
+          "run3dPilotState": "ready",
+          "nightPoolSurfaceSources": "0",
+          "nightPoolSurfaceMaxRadius": "0",
+          "cameraAspect": "0.46208530805687204",
+          "cssAspect": "0.46208530805687204",
+          "prospectorSkin": "stock",
+          "prospectorSheet": "stock",
+          "run3dPilotMeshes": "0",
+          "run3dPilotTriangles": "0",
+          "terrain3dPilotContract": "e1-night-shift",
+          "terrain3dPilotTerrainLoadState": "mounted",
+          "terrain3dPilotPanoramaLoadState": "mounted",
+          "terrain3dPilotLandmarkLoadState": "mounted",
+          "terrain3dPilotHeightSource": "baked-grid",
+          "terrain3dPilotMeshes": "1",
+          "terrain3dPilotTriangles": "32768",
+          "terrain3dPilotMaterials": "1",
+          "terrain3dPilotVertices": "16641",
+          "terrain3dPilotPanorama": "night-shift-panorama",
+          "terrain3dPilotPanoramaMeshes": "1",
+          "terrain3dPilotPanoramaTriangles": "1920",
+          "terrain3dPilotPanoramaMaterials": "1",
+          "terrain3dPilotPanoramaVertices": "1351",
+          "terrain3dPilotNightPools": "world-shader",
+          "terrain3dPilotNightPoolSources": "0",
+          "terrain3dPilotSpringPonds": "0",
+          "terrain3dPilotSpringPondWaterRadii": "[]",
+          "terrain3dPilotSpringPondDampGroundRadii": "[]",
+          "terrain3dPilotChannelWater": "0",
+          "terrain3dPilotFordWater": "0",
+          "terrain3dPilotChannelWaterHalfWidths": "[]",
+          "terrain3dPilotHiddenRelief": "6",
+          "terrain3dPilotHiddenGroundLayers": "TerrainVistaRing|TerrainReliefMesh|terrain.river|terrain.ford|FordSteppingStones|SpringPonds",
+          "terrain3dPilotContinuation": "sculpt-edge-continuation",
+          "terrain3dPilotHorizonApron": "plain",
+          "terrain3dPilotFarGroundProbe": "off",
+          "terrain3dPilotPanoramaFraming": "world-projected-horizon",
+          "terrain3dPilotSkirtBlend": "painted-underlay-alpha-rim",
+          "terrain3dPilotPanoramaFog": "excluded",
+          "terrain3dPilotPanoramaDepth": "screen-horizon-backdrop",
+          "terrain3dPilotLandmarkExpected": "5",
+          "terrain3dPilotLandmarkEmissive": "3",
+          "terrain3dPilotLandmarks": "5",
+          "terrain3dPilotLandmarkSkipped": "0",
+          "terrain3dPilotLandmarkDiagnostics": "",
+          "terrain3dPilotLandmarkMounts": "[{\"id\":\"seven_lantern_terraces\",\"x\":0,\"y\":0.533254318909645,\"z\":0},{\"id\":\"lampworks_yard\",\"x\":8,\"y\":0.6557599306106567,\"z\":18},{\"id\":\"dark_rock_shoulders\",\"x\":0,\"y\":-1.4970736810903549,\"z\":0},{\"id\":\"central_ford\",\"x\":0,\"y\":-0.10207568109035492,\"z\":0},{\"id\":\"night_work_road\",\"x\":0,\"y\":-0.10329668109035492,\"z\":0}]",
+          "terrain3dPilotLandmarkMaterials": "[{\"id\":\"seven_lantern_terraces\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[1,1]},{\"id\":\"lampworks_yard\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[1,1]},{\"id\":\"dark_rock_shoulders\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[1,1]},{\"id\":\"central_ford\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[1,1]},{\"id\":\"night_work_road\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[1,1]}]"
+        },
+        "sceneWalked": true
+      },
+      "menuAfterRun": {
+        "label": "menu-after-run",
+        "documentId": "c201ed0b-c221-407c-b978-bc63f43a490d",
+        "heap": 7203053,
+        "renderer": null,
+        "gpuEstimate": null,
+        "dataset": null,
+        "sceneWalked": false
+      },
+      "townAfterRun": {
+        "label": "town-after-run",
+        "documentId": "c201ed0b-c221-407c-b978-bc63f43a490d",
+        "heap": 20907427,
+        "renderer": {
+          "calls": 44,
+          "triangles": 78856,
+          "geometries": 71,
+          "textures": 38,
+          "programs": 33
+        },
+        "gpuEstimate": {
+          "textureRgba8MipBytes": 95662079.99999999,
+          "geometryBufferBytes": 2352012,
+          "formula": "reachable scene textures: width * height * 4 * (generateMipmaps ? 4/3 : 1), deduped by source + sampler; unique geometry ArrayBuffers. Excludes cached/unreachable textures, render targets, driver overhead and depth buffers."
+        },
+        "dataset": {
+          "assetPrefetchScene": "town",
+          "assetPrefetchState": "allowance",
+          "assetPrefetchReady": "0",
+          "assetPrefetchTotal": "0",
+          "assetPrefetchProgress": "0/0",
+          "assetPrefetchFailed": "0",
+          "assetPrefetchPriority": "1",
+          "assetPrefetchTarget": "the-claim",
+          "assetPrefetchSaveData": "false",
+          "assetPrefetchEnabled": "true",
+          "assetPrefetchAllowance": "24000000",
+          "assetPrefetchBytes": "24003128",
+          "assetPrefetchTownState": "partial",
+          "assetLoadingLabel": "the town",
+          "assetLoadingReady": "28",
+          "assetLoadingTotal": "28",
+          "assetLoadingProgress": "28/28",
+          "assetLoadingState": "ready",
+          "engine": "three.js r184",
+          "townEraAccent": "1",
+          "town3dPilotState": "loaded",
+          "town3dPilotRenderSource": "glb",
+          "town3dSteamAnchors": "0",
+          "town3dSteamPlumes": "0",
+          "town3dPlateState": "loaded",
+          "town3dPlateGround": "glb",
+          "cameraAspect": "0.46208530805687204",
+          "cssAspect": "0.46208530805687204",
+          "prospectorSkin": "stock",
+          "prospectorSheet": "stock",
+          "town3dPilotMeshes": "1",
+          "town3dPilotTriangles": "17596",
+          "town3dPilotMaterials": "1",
+          "town3dPilotBounds": "44.000x3.330x44.000",
+          "town3dPilotBuildingOrientations": "{\"tavern\":{\"width\":4.2295708656311035,\"height\":3.961084052663402,\"depth\":3.349243911573542,\"upY\":1},\"general_store\":{\"width\":4.700000047683716,\"height\":4.440092210945446,\"depth\":3.2597491709237993,\"upY\":1},\"chapel\":{\"width\":3.4642323068941314,\"height\":6.25,\"depth\":3.1949064607684563,\"upY\":1},\"claim_office\":{\"width\":4.260113512668952,\"height\":5.019999980926514,\"depth\":3.120130607365623,\"upY\":1},\"assay_office\":{\"width\":4.423999786376953,\"height\":4.1998767465690445,\"depth\":3.3201263083833017,\"upY\":1},\"schoolhouse\":{\"width\":3.9598375740939544,\"height\":5.599999904632568,\"depth\":3.3753470905634697,\"upY\":1}}",
+          "town3dPlazaPropsState": "loaded",
+          "town3dArcAnchors": "0",
+          "town3dArcFlickers": "0",
+          "town3dExhaustAnchors": "0",
+          "town3dDustPuffs": "0",
+          "town3dPilotEra": "1",
+          "town3dPilotModel": "http://127.0.0.1:5316/assets/schoolhouse-BR3cnoTX-diet-1408f6b4.glb",
+          "town3dPilotLoadedIds": "tavern,general_store,chapel,claim_office,assay_office,schoolhouse,plate",
+          "town3dPilotInstances": "5",
+          "town3dPanMonumentInstances": "1",
+          "town3dEraPropIds": ""
+        },
+        "sceneWalked": true
+      },
+      "townAfterReload": {
+        "label": "town-after-menu-round-trip",
+        "documentId": "c201ed0b-c221-407c-b978-bc63f43a490d",
+        "heap": 21866574,
+        "renderer": {
+          "calls": 45,
+          "triangles": 78858,
+          "geometries": 66,
+          "textures": 42,
+          "programs": 24
+        },
+        "gpuEstimate": {
+          "textureRgba8MipBytes": 100817578.66666663,
+          "geometryBufferBytes": 2352012,
+          "formula": "reachable scene textures: width * height * 4 * (generateMipmaps ? 4/3 : 1), deduped by source + sampler; unique geometry ArrayBuffers. Excludes cached/unreachable textures, render targets, driver overhead and depth buffers."
+        },
+        "dataset": {
+          "assetPrefetchScene": "town",
+          "assetPrefetchState": "allowance",
+          "assetPrefetchReady": "0",
+          "assetPrefetchTotal": "0",
+          "assetPrefetchProgress": "0/0",
+          "assetPrefetchFailed": "0",
+          "assetPrefetchPriority": "1",
+          "assetPrefetchTarget": "the-claim",
+          "assetPrefetchSaveData": "false",
+          "assetPrefetchEnabled": "true",
+          "assetPrefetchAllowance": "24000000",
+          "assetPrefetchBytes": "24003128",
+          "assetPrefetchTownState": "partial",
+          "assetLoadingLabel": "the town",
+          "assetLoadingReady": "28",
+          "assetLoadingTotal": "28",
+          "assetLoadingProgress": "28/28",
+          "assetLoadingState": "ready",
+          "engine": "three.js r184",
+          "townEraAccent": "1",
+          "town3dPilotState": "loaded",
+          "town3dPilotRenderSource": "glb",
+          "town3dSteamAnchors": "0",
+          "town3dSteamPlumes": "0",
+          "town3dPlateState": "loaded",
+          "town3dPlateGround": "glb",
+          "cameraAspect": "0.46208530805687204",
+          "cssAspect": "0.46208530805687204",
+          "prospectorSkin": "stock",
+          "prospectorSheet": "stock",
+          "town3dPilotMeshes": "5",
+          "town3dPilotTriangles": "3624",
+          "town3dPilotMaterials": "3",
+          "town3dPilotBounds": "0.000x0.000x0.000",
+          "town3dPilotBuildingOrientations": "{\"tavern\":{\"width\":4.2295708656311035,\"height\":3.961084052663402,\"depth\":3.349243911573542,\"upY\":1},\"claim_office\":{\"width\":4.260113512668952,\"height\":5.019999980926514,\"depth\":3.120130607365623,\"upY\":1},\"general_store\":{\"width\":4.700000047683716,\"height\":4.440092210945446,\"depth\":3.2597491709237993,\"upY\":1},\"assay_office\":{\"width\":4.423999786376953,\"height\":4.1998767465690445,\"depth\":3.3201263083833017,\"upY\":1},\"chapel\":{\"width\":3.4642323068941314,\"height\":6.25,\"depth\":3.1949064607684563,\"upY\":1},\"schoolhouse\":{\"width\":3.9598375740939544,\"height\":5.599999904632568,\"depth\":3.3753470905634697,\"upY\":1}}",
+          "town3dPlazaPropsState": "loaded",
+          "town3dArcAnchors": "0",
+          "town3dArcFlickers": "0",
+          "town3dExhaustAnchors": "0",
+          "town3dDustPuffs": "0",
+          "town3dPilotEra": "1",
+          "town3dPilotModel": "http://127.0.0.1:5316/assets/schoolhouse-BR3cnoTX-diet-1408f6b4.glb",
+          "town3dPilotLoadedIds": "tavern,plate,claim_office,general_store,assay_office,chapel,schoolhouse",
+          "town3dPilotInstances": "5",
+          "town3dPanMonumentInstances": "1",
+          "town3dEraPropIds": "",
+          "heroSheet": "young",
+          "heroSkin": "stock",
+          "heroSkinSheet": "stock"
+        },
+        "sceneWalked": true
+      },
+      "status": "measured",
+      "after": {
+        "at": "2026-09-05T15:17:46.757Z",
+        "load": [
+          22.1337890625,
+          27.33203125,
+          27.98876953125
+        ],
+        "freeMemory": 9042624512
+      }
+    },
+    {
+      "cycle": 4,
+      "warmup": false,
+      "map": "the-claim",
+      "before": {
+        "at": "2026-09-05T15:17:46.759Z",
+        "load": [
+          22.1337890625,
+          27.33203125,
+          27.98876953125
+        ],
+        "freeMemory": 9038512128
+      },
+      "run": {
+        "label": "run",
+        "documentId": "2aed569e-9441-46d5-a353-c2540c53e4e6",
+        "heap": 37634614,
+        "renderer": {
+          "calls": 61,
+          "triangles": 104746,
+          "geometries": 76,
+          "textures": 18,
+          "programs": 48
+        },
+        "gpuEstimate": {
+          "textureRgba8MipBytes": 132483231.99999997,
+          "geometryBufferBytes": 2148848,
+          "formula": "reachable scene textures: width * height * 4 * (generateMipmaps ? 4/3 : 1), deduped by source + sampler; unique geometry ArrayBuffers. Excludes cached/unreachable textures, render targets, driver overhead and depth buffers."
+        },
+        "dataset": {
+          "assetPrefetchScene": "run",
+          "assetPrefetchState": "allowance",
+          "assetPrefetchReady": "0",
+          "assetPrefetchTotal": "0",
+          "assetPrefetchProgress": "0/0",
+          "assetPrefetchFailed": "0",
+          "assetPrefetchPriority": "1",
+          "assetPrefetchTarget": "town",
+          "assetPrefetchSaveData": "false",
+          "assetPrefetchEnabled": "true",
+          "assetPrefetchAllowance": "24000000",
+          "assetPrefetchBytes": "24003128",
+          "assetPrefetchTownState": "partial",
+          "railcar3dState": "off",
+          "railcar3dSource": "billboard",
+          "railcar3dMounted": "false",
+          "railcar3dDamageStates": "{\"wheels\":\"intact\",\"boiler\":\"intact\",\"cabin\":\"intact\"}",
+          "bossBarVisible": "false",
+          "bossBarSemantic": "none",
+          "bossBarRemaining": "0",
+          "bossBarDepleted": "0",
+          "bossBarRemainingColor": "#6bb36b",
+          "bossBarDepletedColor": "#a0522d",
+          "bossBarComponent": "shared",
+          "bossBarAnchor": "none",
+          "bossBarOrientation": "none",
+          "bossBarPosition": "none",
+          "crawler3dState": "off",
+          "crawler3dSource": "placeholder",
+          "crawler3dMounted": "false",
+          "crawler3dDamageStates": "{\"drain_mast\":\"intact\",\"tracks\":\"intact\",\"capacitor_bank\":\"intact\"}",
+          "dredgeQueen3dState": "off",
+          "dredgeQueen3dSource": "placeholder",
+          "dredgeQueen3dMounted": "false",
+          "dredgeQueen3dPresentation": "hidden",
+          "dredgeQueen3dDamageStates": "{\"claw\":\"intact\",\"paddle_port\":\"intact\",\"paddle_starboard\":\"intact\",\"hold\":\"intact\"}",
+          "salvageClaw3dState": "off",
+          "salvageClaw3dSource": "placeholder",
+          "salvageClaw3dMounted": "false",
+          "salvageClaw3dPresentation": "hidden",
+          "homemaker3dState": "off",
+          "homemaker3dSource": "placeholder",
+          "homemaker3dMounted": "false",
+          "homemaker3dPresentation": "hidden",
+          "homemaker3dDamageStates": "{\"vac\":\"intact\",\"rack\":\"intact\",\"core\":\"intact\"}",
+          "oldDigger3dState": "off",
+          "oldDigger3dSource": "placeholder",
+          "oldDigger3dMounted": "false",
+          "oldDigger3dPresentation": "hidden",
+          "assetLoadingLabel": "the claim",
+          "assetLoadingReady": "41",
+          "assetLoadingTotal": "41",
+          "assetLoadingProgress": "41/41",
+          "assetLoadingState": "ready",
+          "engine": "three.js r184",
+          "terrain3dPilotState": "ready",
+          "terrain3dPilotRenderSource": "glb",
+          "run3dPilotState": "ready",
+          "nightPoolSurfaceSources": "0",
+          "nightPoolSurfaceMaxRadius": "0",
+          "cameraAspect": "0.46208530805687204",
+          "cssAspect": "0.46208530805687204",
+          "prospectorSkin": "stock",
+          "prospectorSheet": "stock",
+          "run3dPilotMeshes": "0",
+          "run3dPilotTriangles": "0",
+          "terrain3dPilotContract": "the-claim",
+          "terrain3dPilotTerrainLoadState": "mounted",
+          "terrain3dPilotPanoramaLoadState": "mounted",
+          "terrain3dPilotLandmarkLoadState": "mounted",
+          "terrain3dPilotHeightSource": "baked-grid",
+          "terrain3dPilotMeshes": "1",
+          "terrain3dPilotTriangles": "32768",
+          "terrain3dPilotMaterials": "1",
+          "terrain3dPilotVertices": "16641",
+          "terrain3dPilotPanorama": "the-claim-panorama",
+          "terrain3dPilotPanoramaMeshes": "1",
+          "terrain3dPilotPanoramaTriangles": "1920",
+          "terrain3dPilotPanoramaMaterials": "1",
+          "terrain3dPilotPanoramaVertices": "1351",
+          "terrain3dPilotNightPools": "off",
+          "terrain3dPilotNightPoolSources": "0",
+          "terrain3dPilotSpringPonds": "0",
+          "terrain3dPilotSpringPondWaterRadii": "[]",
+          "terrain3dPilotSpringPondDampGroundRadii": "[]",
+          "terrain3dPilotChannelWater": "0",
+          "terrain3dPilotFordWater": "0",
+          "terrain3dPilotChannelWaterHalfWidths": "[]",
+          "terrain3dPilotSculptWater": "living-water-quad",
+          "terrain3dPilotSculptWaterHalfWidth": "6.250",
+          "terrain3dPilotSculptWaterSimHalfWidth": "6.250",
+          "terrain3dPilotSculptWaterY": "-0.0284",
+          "terrain3dPilotSculptWaterGlints": "6",
+          "terrain3dPilotSculptWaterDeepest": "0.483",
+          "terrain3dPilotSculptWaterFords": "center-ford@0",
+          "terrain3dPilotMotes": "90",
+          "terrain3dPilotHiddenRelief": "6",
+          "terrain3dPilotHiddenGroundLayers": "TerrainVistaRing|TerrainReliefMesh|terrain.river|terrain.ford|FordSteppingStones|SpringPonds",
+          "terrain3dPilotContinuation": "sculpt-edge-continuation",
+          "terrain3dPilotHorizonApron": "painted",
+          "terrain3dPilotFarGroundProbe": "off",
+          "terrain3dPilotPanoramaFraming": "world-projected-horizon",
+          "terrain3dPilotSkirtBlend": "painted-underlay-alpha-rim",
+          "terrain3dPilotPanoramaFog": "excluded",
+          "terrain3dPilotPanoramaDepth": "screen-horizon-backdrop",
+          "terrain3dPilotLandmarkExpected": "5",
+          "terrain3dPilotContactShadows": "4",
+          "terrain3dPilotRushEmbers": "0",
+          "terrain3dPilotLandmarkEmissive": "1.45",
+          "terrain3dPilotLandmarks": "5",
+          "terrain3dPilotLandmarkSkipped": "0",
+          "terrain3dPilotLandmarkDiagnostics": "",
+          "terrain3dPilotLandmarkMounts": "[{\"id\":\"active_headframe\",\"x\":-13,\"y\":0.5766242861747743,\"z\":-8.8},{\"id\":\"maintained_claim_house\",\"x\":10.5,\"y\":0.8797585368156433,\"z\":14.5},{\"id\":\"working_camp\",\"x\":-8.5,\"y\":0.4324933842582703,\"z\":16.5},{\"id\":\"claim_stake\",\"x\":6.5,\"y\":0.5125598311424255,\"z\":10.5},{\"id\":\"riparian_dressing_pack\",\"x\":0,\"y\":-0.14278476550674438,\"z\":0}]",
+          "terrain3dPilotLandmarkMaterials": "[{\"id\":\"active_headframe\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[1.45,1.45]},{\"id\":\"maintained_claim_house\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[1.45,1.45]},{\"id\":\"working_camp\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[1.45,1.45]},{\"id\":\"claim_stake\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[1.45,1.45]},{\"id\":\"riparian_dressing_pack\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[1.45,1.45]}]"
+        },
+        "sceneWalked": true
+      },
+      "menuAfterRun": {
+        "label": "menu-after-run",
+        "documentId": "5d17f3cd-ca01-4f8b-88bb-baac3661f367",
+        "heap": 7206057,
+        "renderer": null,
+        "gpuEstimate": null,
+        "dataset": null,
+        "sceneWalked": false
+      },
+      "townAfterRun": {
+        "label": "town-after-run",
+        "documentId": "5d17f3cd-ca01-4f8b-88bb-baac3661f367",
+        "heap": 21977983,
+        "renderer": {
+          "calls": 44,
+          "triangles": 78856,
+          "geometries": 71,
+          "textures": 39,
+          "programs": 32
+        },
+        "gpuEstimate": {
+          "textureRgba8MipBytes": 95662079.99999997,
+          "geometryBufferBytes": 2352012,
+          "formula": "reachable scene textures: width * height * 4 * (generateMipmaps ? 4/3 : 1), deduped by source + sampler; unique geometry ArrayBuffers. Excludes cached/unreachable textures, render targets, driver overhead and depth buffers."
+        },
+        "dataset": {
+          "assetPrefetchScene": "town",
+          "assetPrefetchState": "allowance",
+          "assetPrefetchReady": "0",
+          "assetPrefetchTotal": "0",
+          "assetPrefetchProgress": "0/0",
+          "assetPrefetchFailed": "0",
+          "assetPrefetchPriority": "1",
+          "assetPrefetchTarget": "the-claim",
+          "assetPrefetchSaveData": "false",
+          "assetPrefetchEnabled": "true",
+          "assetPrefetchAllowance": "24000000",
+          "assetPrefetchBytes": "24003128",
+          "assetPrefetchTownState": "partial",
+          "assetLoadingLabel": "the town",
+          "assetLoadingReady": "28",
+          "assetLoadingTotal": "28",
+          "assetLoadingProgress": "28/28",
+          "assetLoadingState": "ready",
+          "engine": "three.js r184",
+          "townEraAccent": "1",
+          "town3dPilotState": "loaded",
+          "town3dPilotRenderSource": "glb",
+          "town3dSteamAnchors": "0",
+          "town3dSteamPlumes": "0",
+          "town3dPlateState": "loaded",
+          "town3dPlateGround": "glb",
+          "cameraAspect": "0.46208530805687204",
+          "cssAspect": "0.46208530805687204",
+          "prospectorSkin": "stock",
+          "prospectorSheet": "stock",
+          "town3dPilotMeshes": "1",
+          "town3dPilotTriangles": "3424",
+          "town3dPilotMaterials": "1",
+          "town3dPilotBounds": "3.464x6.250x3.195",
+          "town3dPilotBuildingOrientations": "{\"tavern\":{\"width\":4.2295708656311035,\"height\":3.961084052663402,\"depth\":3.349243911573542,\"upY\":1},\"general_store\":{\"width\":4.700000047683716,\"height\":4.440092210945446,\"depth\":3.2597491709237993,\"upY\":1},\"claim_office\":{\"width\":4.260113512668952,\"height\":5.019999980926514,\"depth\":3.120130607365623,\"upY\":1},\"assay_office\":{\"width\":4.423999786376953,\"height\":4.1998767465690445,\"depth\":3.3201263083833017,\"upY\":1},\"schoolhouse\":{\"width\":3.9598375740939544,\"height\":5.599999904632568,\"depth\":3.3753470905634697,\"upY\":1},\"chapel\":{\"width\":3.4642323068941314,\"height\":6.25,\"depth\":3.1949064607684563,\"upY\":1}}",
+          "town3dPlazaPropsState": "loaded",
+          "town3dArcAnchors": "0",
+          "town3dArcFlickers": "0",
+          "town3dExhaustAnchors": "0",
+          "town3dDustPuffs": "0",
+          "town3dPilotEra": "1",
+          "town3dPilotModel": "http://127.0.0.1:5316/assets/chapel-DqOSe4LC-diet-1408f6b4.glb",
+          "town3dPilotLoadedIds": "tavern,general_store,claim_office,plate,assay_office,schoolhouse,chapel",
+          "town3dPilotInstances": "5",
+          "town3dPanMonumentInstances": "1",
+          "town3dEraPropIds": "",
+          "heroSheet": "young",
+          "heroSkin": "stock",
+          "heroSkinSheet": "stock"
+        },
+        "sceneWalked": true
+      },
+      "townAfterReload": {
+        "label": "town-after-menu-round-trip",
+        "documentId": "5d17f3cd-ca01-4f8b-88bb-baac3661f367",
+        "heap": 21690428,
+        "renderer": {
+          "calls": 45,
+          "triangles": 78858,
+          "geometries": 66,
+          "textures": 42,
+          "programs": 24
+        },
+        "gpuEstimate": {
+          "textureRgba8MipBytes": 100817578.66666663,
+          "geometryBufferBytes": 2352012,
+          "formula": "reachable scene textures: width * height * 4 * (generateMipmaps ? 4/3 : 1), deduped by source + sampler; unique geometry ArrayBuffers. Excludes cached/unreachable textures, render targets, driver overhead and depth buffers."
+        },
+        "dataset": {
+          "assetPrefetchScene": "town",
+          "assetPrefetchState": "allowance",
+          "assetPrefetchReady": "0",
+          "assetPrefetchTotal": "0",
+          "assetPrefetchProgress": "0/0",
+          "assetPrefetchFailed": "0",
+          "assetPrefetchPriority": "1",
+          "assetPrefetchTarget": "the-claim",
+          "assetPrefetchSaveData": "false",
+          "assetPrefetchEnabled": "true",
+          "assetPrefetchAllowance": "24000000",
+          "assetPrefetchBytes": "24003128",
+          "assetPrefetchTownState": "partial",
+          "assetLoadingLabel": "the town",
+          "assetLoadingReady": "28",
+          "assetLoadingTotal": "28",
+          "assetLoadingProgress": "28/28",
+          "assetLoadingState": "ready",
+          "engine": "three.js r184",
+          "townEraAccent": "1",
+          "town3dPilotState": "loaded",
+          "town3dPilotRenderSource": "glb",
+          "town3dSteamAnchors": "0",
+          "town3dSteamPlumes": "0",
+          "town3dPlateState": "loaded",
+          "town3dPlateGround": "glb",
+          "cameraAspect": "0.46208530805687204",
+          "cssAspect": "0.46208530805687204",
+          "prospectorSkin": "stock",
+          "prospectorSheet": "stock",
+          "town3dPilotMeshes": "1",
+          "town3dPilotTriangles": "3340",
+          "town3dPilotMaterials": "1",
+          "town3dPilotBounds": "4.424x4.200x3.320",
+          "town3dPilotBuildingOrientations": "{\"tavern\":{\"width\":4.2295708656311035,\"height\":3.961084052663402,\"depth\":3.349243911573542,\"upY\":1},\"general_store\":{\"width\":4.700000047683716,\"height\":4.440092210945446,\"depth\":3.2597491709237993,\"upY\":1},\"claim_office\":{\"width\":4.260113512668952,\"height\":5.019999980926514,\"depth\":3.120130607365623,\"upY\":1},\"chapel\":{\"width\":3.4642323068941314,\"height\":6.25,\"depth\":3.1949064607684563,\"upY\":1},\"schoolhouse\":{\"width\":3.9598375740939544,\"height\":5.599999904632568,\"depth\":3.3753470905634697,\"upY\":1},\"assay_office\":{\"width\":4.423999786376953,\"height\":4.1998767465690445,\"depth\":3.3201263083833017,\"upY\":1}}",
+          "town3dPlazaPropsState": "loaded",
+          "town3dArcAnchors": "0",
+          "town3dArcFlickers": "0",
+          "town3dExhaustAnchors": "0",
+          "town3dDustPuffs": "0",
+          "town3dPilotEra": "1",
+          "town3dPilotModel": "http://127.0.0.1:5316/assets/assay-office-xAW04uBp-diet-1408f6b4.glb",
+          "town3dPilotLoadedIds": "tavern,plate,general_store,claim_office,chapel,schoolhouse,assay_office",
+          "town3dPilotInstances": "5",
+          "town3dPanMonumentInstances": "1",
+          "town3dEraPropIds": "",
+          "heroSheet": "young",
+          "heroSkin": "stock",
+          "heroSkinSheet": "stock"
+        },
+        "sceneWalked": true
+      },
+      "status": "measured",
+      "after": {
+        "at": "2026-09-05T15:18:06.389Z",
+        "load": [
+          22.375,
+          27.05029296875,
+          27.8720703125
+        ],
+        "freeMemory": 8511700992
+      }
+    },
+    {
+      "cycle": 5,
+      "warmup": false,
+      "map": "e1-dry-gulch",
+      "before": {
+        "at": "2026-09-05T15:18:06.392Z",
+        "load": [
+          22.375,
+          27.05029296875,
+          27.8720703125
+        ],
+        "freeMemory": 8507752448
+      },
+      "run": {
+        "label": "run",
+        "documentId": "680e32b4-48dd-4565-9130-8a38e257fa33",
+        "heap": 40236701,
+        "renderer": {
+          "calls": 63,
+          "triangles": 105068,
+          "geometries": 75,
+          "textures": 16,
+          "programs": 45
+        },
+        "gpuEstimate": {
+          "textureRgba8MipBytes": 135006367.99999997,
+          "geometryBufferBytes": 2354320,
+          "formula": "reachable scene textures: width * height * 4 * (generateMipmaps ? 4/3 : 1), deduped by source + sampler; unique geometry ArrayBuffers. Excludes cached/unreachable textures, render targets, driver overhead and depth buffers."
+        },
+        "dataset": {
+          "assetPrefetchScene": "run",
+          "assetPrefetchState": "allowance",
+          "assetPrefetchReady": "0",
+          "assetPrefetchTotal": "0",
+          "assetPrefetchProgress": "0/0",
+          "assetPrefetchFailed": "0",
+          "assetPrefetchPriority": "1",
+          "assetPrefetchTarget": "town",
+          "assetPrefetchSaveData": "false",
+          "assetPrefetchEnabled": "true",
+          "assetPrefetchAllowance": "24000000",
+          "assetPrefetchBytes": "24003128",
+          "assetPrefetchTownState": "partial",
+          "railcar3dState": "off",
+          "railcar3dSource": "billboard",
+          "railcar3dMounted": "false",
+          "railcar3dDamageStates": "{\"wheels\":\"intact\",\"boiler\":\"intact\",\"cabin\":\"intact\"}",
+          "bossBarVisible": "false",
+          "bossBarSemantic": "none",
+          "bossBarRemaining": "0",
+          "bossBarDepleted": "0",
+          "bossBarRemainingColor": "#6bb36b",
+          "bossBarDepletedColor": "#a0522d",
+          "bossBarComponent": "shared",
+          "bossBarAnchor": "none",
+          "bossBarOrientation": "none",
+          "bossBarPosition": "none",
+          "crawler3dState": "off",
+          "crawler3dSource": "placeholder",
+          "crawler3dMounted": "false",
+          "crawler3dDamageStates": "{\"drain_mast\":\"intact\",\"tracks\":\"intact\",\"capacitor_bank\":\"intact\"}",
+          "dredgeQueen3dState": "off",
+          "dredgeQueen3dSource": "placeholder",
+          "dredgeQueen3dMounted": "false",
+          "dredgeQueen3dPresentation": "hidden",
+          "dredgeQueen3dDamageStates": "{\"claw\":\"intact\",\"paddle_port\":\"intact\",\"paddle_starboard\":\"intact\",\"hold\":\"intact\"}",
+          "salvageClaw3dState": "off",
+          "salvageClaw3dSource": "placeholder",
+          "salvageClaw3dMounted": "false",
+          "salvageClaw3dPresentation": "hidden",
+          "homemaker3dState": "off",
+          "homemaker3dSource": "placeholder",
+          "homemaker3dMounted": "false",
+          "homemaker3dPresentation": "hidden",
+          "homemaker3dDamageStates": "{\"vac\":\"intact\",\"rack\":\"intact\",\"core\":\"intact\"}",
+          "oldDigger3dState": "off",
+          "oldDigger3dSource": "placeholder",
+          "oldDigger3dMounted": "false",
+          "oldDigger3dPresentation": "hidden",
+          "assetLoadingLabel": "the claim",
+          "assetLoadingReady": "41",
+          "assetLoadingTotal": "41",
+          "assetLoadingProgress": "41/41",
+          "assetLoadingState": "ready",
+          "engine": "three.js r184",
+          "terrain3dPilotState": "ready",
+          "terrain3dPilotRenderSource": "glb",
+          "run3dPilotState": "ready",
+          "nightPoolSurfaceSources": "0",
+          "nightPoolSurfaceMaxRadius": "0",
+          "cameraAspect": "0.46208530805687204",
+          "cssAspect": "0.46208530805687204",
+          "prospectorSkin": "stock",
+          "prospectorSheet": "stock",
+          "run3dPilotMeshes": "0",
+          "run3dPilotTriangles": "0",
+          "terrain3dPilotContract": "e1-dry-gulch",
+          "terrain3dPilotTerrainLoadState": "mounted",
+          "terrain3dPilotPanoramaLoadState": "mounted",
+          "terrain3dPilotLandmarkLoadState": "mounted",
+          "terrain3dPilotHeightSource": "baked-grid",
+          "terrain3dPilotMeshes": "1",
+          "terrain3dPilotTriangles": "32768",
+          "terrain3dPilotMaterials": "1",
+          "terrain3dPilotVertices": "16641",
+          "terrain3dPilotPanorama": "dry-gulch-panorama",
+          "terrain3dPilotPanoramaMeshes": "1",
+          "terrain3dPilotPanoramaTriangles": "1920",
+          "terrain3dPilotPanoramaMaterials": "1",
+          "terrain3dPilotPanoramaVertices": "1351",
+          "terrain3dPilotNightPools": "off",
+          "terrain3dPilotNightPoolSources": "0",
+          "terrain3dPilotSpringPonds": "1",
+          "terrain3dPilotSpringPondWaterRadii": "[1.4]",
+          "terrain3dPilotSpringPondDampGroundRadii": "[3.3369999999999997]",
+          "terrain3dPilotChannelWater": "0",
+          "terrain3dPilotFordWater": "0",
+          "terrain3dPilotChannelWaterHalfWidths": "[]",
+          "terrain3dPilotHiddenRelief": "3",
+          "terrain3dPilotHiddenGroundLayers": "TerrainVistaRing|TerrainContinuousGroundMesh|SpringPonds",
+          "terrain3dPilotContinuation": "sculpt-edge-continuation",
+          "terrain3dPilotHorizonApron": "painted",
+          "terrain3dPilotFarGroundProbe": "off",
+          "terrain3dPilotPanoramaFraming": "world-projected-horizon",
+          "terrain3dPilotSkirtBlend": "painted-underlay-alpha-rim",
+          "terrain3dPilotPanoramaFog": "excluded",
+          "terrain3dPilotPanoramaDepth": "screen-horizon-backdrop",
+          "terrain3dPilotLandmarkExpected": "5",
+          "terrain3dPilotLandmarkEmissive": "3",
+          "terrain3dPilotLandmarks": "5",
+          "terrain3dPilotLandmarkSkipped": "0",
+          "terrain3dPilotLandmarkDiagnostics": "",
+          "terrain3dPilotLandmarkMounts": "[{\"id\":\"ruined_mining_operation\",\"x\":2,\"y\":0.3022409200668335,\"z\":-5.8},{\"id\":\"abandoned_farmhouse\",\"x\":10.5,\"y\":0.5858433246612549,\"z\":14.5},{\"id\":\"cactus_thicket\",\"x\":18.3,\"y\":0.44877609986114486,\"z\":0},{\"id\":\"bison_skeleton\",\"x\":-8,\"y\":0.2811465263366699,\"z\":12.5},{\"id\":\"isolated_spring\",\"x\":-18,\"y\":-0.3516852855682373,\"z\":-18}]",
+          "terrain3dPilotLandmarkMaterials": "[{\"id\":\"ruined_mining_operation\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[3,3]},{\"id\":\"abandoned_farmhouse\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[3,3]},{\"id\":\"cactus_thicket\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[3,3]},{\"id\":\"bison_skeleton\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[3,3]},{\"id\":\"isolated_spring\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[2.1,2.1]}]"
+        },
+        "sceneWalked": true
+      },
+      "menuAfterRun": {
+        "label": "menu-after-run",
+        "documentId": "81f343bf-feff-40f4-9d30-a473f85c9cbe",
+        "heap": 7209483,
+        "renderer": null,
+        "gpuEstimate": null,
+        "dataset": null,
+        "sceneWalked": false
+      },
+      "townAfterRun": {
+        "label": "town-after-run",
+        "documentId": "81f343bf-feff-40f4-9d30-a473f85c9cbe",
+        "heap": 20743642,
+        "renderer": {
+          "calls": 44,
+          "triangles": 78856,
+          "geometries": 71,
+          "textures": 39,
+          "programs": 33
+        },
+        "gpuEstimate": {
+          "textureRgba8MipBytes": 95662079.99999999,
+          "geometryBufferBytes": 2352012,
+          "formula": "reachable scene textures: width * height * 4 * (generateMipmaps ? 4/3 : 1), deduped by source + sampler; unique geometry ArrayBuffers. Excludes cached/unreachable textures, render targets, driver overhead and depth buffers."
+        },
+        "dataset": {
+          "assetPrefetchScene": "town",
+          "assetPrefetchState": "allowance",
+          "assetPrefetchReady": "0",
+          "assetPrefetchTotal": "0",
+          "assetPrefetchProgress": "0/0",
+          "assetPrefetchFailed": "0",
+          "assetPrefetchPriority": "1",
+          "assetPrefetchTarget": "the-claim",
+          "assetPrefetchSaveData": "false",
+          "assetPrefetchEnabled": "true",
+          "assetPrefetchAllowance": "24000000",
+          "assetPrefetchBytes": "24003128",
+          "assetPrefetchTownState": "partial",
+          "assetLoadingLabel": "the town",
+          "assetLoadingReady": "28",
+          "assetLoadingTotal": "28",
+          "assetLoadingProgress": "28/28",
+          "assetLoadingState": "ready",
+          "engine": "three.js r184",
+          "townEraAccent": "1",
+          "town3dPilotState": "loaded",
+          "town3dPilotRenderSource": "glb",
+          "town3dSteamAnchors": "0",
+          "town3dSteamPlumes": "0",
+          "town3dPlateState": "loaded",
+          "town3dPlateGround": "glb",
+          "cameraAspect": "0.46208530805687204",
+          "cssAspect": "0.46208530805687204",
+          "prospectorSkin": "stock",
+          "prospectorSheet": "stock",
+          "town3dPilotMeshes": "1",
+          "town3dPilotTriangles": "17596",
+          "town3dPilotMaterials": "1",
+          "town3dPilotBounds": "44.000x3.330x44.000",
+          "town3dPilotBuildingOrientations": "{\"tavern\":{\"width\":4.2295708656311035,\"height\":3.961084052663402,\"depth\":3.349243911573542,\"upY\":1},\"chapel\":{\"width\":3.4642323068941314,\"height\":6.25,\"depth\":3.1949064607684563,\"upY\":1},\"general_store\":{\"width\":4.700000047683716,\"height\":4.440092210945446,\"depth\":3.2597491709237993,\"upY\":1},\"claim_office\":{\"width\":4.260113512668952,\"height\":5.019999980926514,\"depth\":3.120130607365623,\"upY\":1},\"assay_office\":{\"width\":4.423999786376953,\"height\":4.1998767465690445,\"depth\":3.3201263083833017,\"upY\":1},\"schoolhouse\":{\"width\":3.9598375740939544,\"height\":5.599999904632568,\"depth\":3.3753470905634697,\"upY\":1}}",
+          "town3dPlazaPropsState": "loaded",
+          "town3dArcAnchors": "0",
+          "town3dArcFlickers": "0",
+          "town3dExhaustAnchors": "0",
+          "town3dDustPuffs": "0",
+          "town3dPilotEra": "1",
+          "town3dPilotModel": "http://127.0.0.1:5316/assets/schoolhouse-BR3cnoTX-diet-1408f6b4.glb",
+          "town3dPilotLoadedIds": "tavern,chapel,general_store,claim_office,assay_office,schoolhouse,plate",
+          "town3dPilotInstances": "5",
+          "town3dPanMonumentInstances": "1",
+          "town3dEraPropIds": "",
+          "heroSheet": "young",
+          "heroSkin": "stock",
+          "heroSkinSheet": "stock"
+        },
+        "sceneWalked": true
+      },
+      "townAfterReload": {
+        "label": "town-after-menu-round-trip",
+        "documentId": "81f343bf-feff-40f4-9d30-a473f85c9cbe",
+        "heap": 21659438,
+        "renderer": {
+          "calls": 45,
+          "triangles": 78858,
+          "geometries": 66,
+          "textures": 42,
+          "programs": 24
+        },
+        "gpuEstimate": {
+          "textureRgba8MipBytes": 100817578.66666664,
+          "geometryBufferBytes": 2352012,
+          "formula": "reachable scene textures: width * height * 4 * (generateMipmaps ? 4/3 : 1), deduped by source + sampler; unique geometry ArrayBuffers. Excludes cached/unreachable textures, render targets, driver overhead and depth buffers."
+        },
+        "dataset": {
+          "assetPrefetchScene": "town",
+          "assetPrefetchState": "allowance",
+          "assetPrefetchReady": "0",
+          "assetPrefetchTotal": "0",
+          "assetPrefetchProgress": "0/0",
+          "assetPrefetchFailed": "0",
+          "assetPrefetchPriority": "1",
+          "assetPrefetchTarget": "the-claim",
+          "assetPrefetchSaveData": "false",
+          "assetPrefetchEnabled": "true",
+          "assetPrefetchAllowance": "24000000",
+          "assetPrefetchBytes": "24003128",
+          "assetPrefetchTownState": "partial",
+          "assetLoadingLabel": "the town",
+          "assetLoadingReady": "28",
+          "assetLoadingTotal": "28",
+          "assetLoadingProgress": "28/28",
+          "assetLoadingState": "ready",
+          "engine": "three.js r184",
+          "townEraAccent": "1",
+          "town3dPilotState": "loaded",
+          "town3dPilotRenderSource": "glb",
+          "town3dSteamAnchors": "0",
+          "town3dSteamPlumes": "0",
+          "town3dPlateState": "loaded",
+          "town3dPlateGround": "glb",
+          "cameraAspect": "0.46208530805687204",
+          "cssAspect": "0.46208530805687204",
+          "prospectorSkin": "stock",
+          "prospectorSheet": "stock",
+          "town3dPilotMeshes": "1",
+          "town3dPilotTriangles": "3340",
+          "town3dPilotMaterials": "1",
+          "town3dPilotBounds": "4.424x4.200x3.320",
+          "town3dPilotBuildingOrientations": "{\"tavern\":{\"width\":4.2295708656311035,\"height\":3.961084052663402,\"depth\":3.349243911573542,\"upY\":1},\"general_store\":{\"width\":4.700000047683716,\"height\":4.440092210945446,\"depth\":3.2597491709237993,\"upY\":1},\"claim_office\":{\"width\":4.260113512668952,\"height\":5.019999980926514,\"depth\":3.120130607365623,\"upY\":1},\"schoolhouse\":{\"width\":3.9598375740939544,\"height\":5.599999904632568,\"depth\":3.3753470905634697,\"upY\":1},\"chapel\":{\"width\":3.4642323068941314,\"height\":6.25,\"depth\":3.1949064607684563,\"upY\":1},\"assay_office\":{\"width\":4.423999786376953,\"height\":4.1998767465690445,\"depth\":3.3201263083833017,\"upY\":1}}",
+          "town3dPlazaPropsState": "loaded",
+          "town3dArcAnchors": "0",
+          "town3dArcFlickers": "0",
+          "town3dExhaustAnchors": "0",
+          "town3dDustPuffs": "0",
+          "town3dPilotEra": "1",
+          "town3dPilotModel": "http://127.0.0.1:5316/assets/assay-office-xAW04uBp-diet-1408f6b4.glb",
+          "town3dPilotLoadedIds": "tavern,general_store,claim_office,plate,schoolhouse,chapel,assay_office",
+          "town3dPilotInstances": "5",
+          "town3dPanMonumentInstances": "1",
+          "town3dEraPropIds": "",
+          "heroSheet": "young",
+          "heroSkin": "stock",
+          "heroSkinSheet": "stock"
+        },
+        "sceneWalked": true
+      },
+      "status": "measured",
+      "after": {
+        "at": "2026-09-05T15:18:23.877Z",
+        "load": [
+          20.9697265625,
+          26.52197265625,
+          27.6689453125
+        ],
+        "freeMemory": 8061222912
+      }
+    }
+  ],
+  "errors": {
+    "console": [],
+    "page": [],
+    "network": [
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-thief-sheet-walkdiag8-r0c2-D2i-swVd-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-baron-sheet-walk8-r3c6-BrPnBWSA-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-baron-sheet-walk8-r3c4-BVYU5n41-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-hero-sheet-rotation-f-r0c3-IC5wZbtG-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-railtough-sheet-walk4-a-r3c2-BIikmRD7-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-steamwrecker-sheet-walk4-a-r3c1-DeLVqlVA-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-thief-sheet-walkdiag8-r0c4-Cjw1txZ1-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-coalthief-sheet-walk4-a-r3c0-d91dFYTa-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-base-sheet-walkdiag8-r0c4-COy3piLx-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-thief-sheet-walkdiag8-r0c3-DFK7_3Xe-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-hero-sheet-rotation-f-r0c2-DgGCeWfo-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-baron-sheet-walk8-r3c7-2Eqqdjll-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-coalthief-sheet-walk4-a-r3c1-Cc06E1WK-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-steamwrecker-sheet-walk4-a-r3c2-C5I2U4gX-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-baron-sheet-walk8-r3c2-CGet-Ojt-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-steamwrecker-sheet-walk4-a-r3c0-Cq6F--Nu-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-steamwrecker-sheet-walk4-a-r3c3-C2ci6wlC-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-base-sheet-walkdiag8-r0c2-uJDYY-Im-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-coalthief-sheet-walk4-a-r3c2-DNRqebwA-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-thief-sheet-walkdiag8-r0c0-C1Ze9c6k-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-baron-sheet-walk8-r3c1-DkGZLtAb-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-coalthief-sheet-walk4-a-r3c3-DkX6o9rZ-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-base-sheet-walkdiag8-r0c1-CfdHI1Cb-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-railtough-sheet-walk4-a-r3c3-elNciyOJ-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-baron-sheet-walk8-r3c3-B1PH_hSp-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-baron-sheet-walk8-r3c5-DXjW85sW-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-baron-sheet-walk8-r3c0-BxTBjZ80-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-base-sheet-walkdiag8-r0c5-BH88xtNR-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-thief-sheet-walkdiag8-r0c5-CPc2AXOX-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-base-sheet-walkdiag8-r0c3-DXEbfAXY-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-thief-sheet-walkdiag8-r0c1-M9qnz8wJ-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-base-sheet-walkdiag8-r0c7-uTk2BbPV-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-base-sheet-walkdiag8-r0c6-BveE9Xw9-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-base-sheet-walkdiag8-r0c0-BxD8anwk-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-hero-sheet-rotation-f-r2c3-CYZ9aVpF-diet-1408f6b4.js",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-hero-sheet-rotation-f-r2c1-hUIRM0IB-diet-1408f6b4.js",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-hero-sheet-rotation-f-r2c0-BaSbW47L-diet-1408f6b4.js",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-railtough-sheet-walkdiag4-a-r2c0-CehT3oc8-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-base-sheet-walkdiag8-r2c7-DACWpUvF-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-base-sheet-walkdiag8-r2c6-BZMVOhkk-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-thief-sheet-walkdiag8-r2c5-Cg0YFE2E-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-base-sheet-walkdiag8-r2c0-BjGeyfzk-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-baron-sheet-walkdiag8-r1c6-_HkKL6Yo-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-railtough-sheet-walkdiag4-a-r2c2-CHuhO2X0-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-base-sheet-walkdiag8-r2c5-AN8SbE9n-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-thief-sheet-walkdiag8-r2c0-DvKkwD0x-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-thief-sheet-walkdiag8-r2c6-CTQrc2ad-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-thief-sheet-walkdiag8-r2c4-B1JXfIl3-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-thief-sheet-walkdiag8-r2c7-BmKAFFe--diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-baron-sheet-walkdiag8-r1c7-BY4S83c--diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-base-sheet-walkdiag8-r2c3-DFzQHp3T-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-base-sheet-walkdiag8-r2c4-D03Vrq-3-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-baron-sheet-walkdiag8-r1c2-DnaBrCFv-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-baron-sheet-walkdiag8-r1c3-CLArOSU6-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-base-sheet-walkdiag8-r2c1-DNl4rw01-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-baron-sheet-walkdiag8-r1c5-YzXbnsm2-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-thief-sheet-walkdiag8-r2c1-CrtS2JuF-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-thief-sheet-walkdiag8-r2c3-0YJzwj7z-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-base-sheet-walkdiag8-r2c2-pN5de_bg-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-railtough-sheet-walkdiag4-a-r2c1-Dc8gMvyE-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-railtough-sheet-walkdiag4-a-r2c3-Dd9JVF5W-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-baron-sheet-walkdiag8-r1c4-C1F9GQ-D-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-thief-sheet-walkdiag8-r2c2-Dwodev_L-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-hero-sheet-rotation-f-r1c3-Cu6mCA2L-diet-1408f6b4.js",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-base-sheet-walkdiag8-r1c6-DqEYTMZV-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-railtough-sheet-walkdiag4-a-r1c3-DhfRBVpb-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-thief-sheet-walkdiag8-r1c0-BBNg-GxB-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-thief-sheet-walkdiag8-r1c6-DvhQV_bQ-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-base-sheet-walkdiag8-r1c5-DXMNHwV6-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-thief-sheet-walkdiag8-r1c5-Ccnn4mb8-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-base-sheet-walkdiag8-r1c1-C152EXew-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-hero-sheet-rotation-f-r1c2-DnC71R4h-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-railtough-sheet-walkdiag4-a-r1c1-D44j4ATX-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-thief-sheet-walkdiag8-r1c2-dBcbv0OC-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-baron-sheet-walkdiag8-r0c6-DaDdHvBu-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-thief-sheet-walkdiag8-r1c1-C_S9j9LO-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-base-sheet-walkdiag8-r1c4-Cd9eavKe-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-base-sheet-walkdiag8-r1c7-e7sT7mzm-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-thief-sheet-walkdiag8-r1c7-CYvEtlxg-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-base-sheet-walkdiag8-r1c0-CYPLC1av-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-base-sheet-walkdiag8-r1c2-DaOks9sM-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-base-sheet-walkdiag8-r1c3-BPQAQwmY-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-thief-sheet-walkdiag8-r1c4-BwyVKn4Y-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-thief-sheet-walkdiag8-r1c3-B17ZD96p-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-railtough-sheet-walkdiag4-a-r1c0-niqmG90M-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-baron-sheet-walkdiag8-r0c7-DByxO0TY-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-railtough-sheet-walkdiag4-a-r1c2-8m0qnY6E-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-youngster-m-sheet-walk8-r3c5-DydHMDml-diet-1408f6b4.js",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-tavernkeeper-sheet-walk8-r2c5-vca24S9a-diet-1408f6b4.js",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-hero-sheet-attack8-r2c7-Dit0E1H2-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-base-sheet-walkdiag8-r3c5-5ZvIY3JL-diet-1408f6b4.js",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-base-sheet-walkdiag8-r3c7-DzABvouD-diet-1408f6b4.js",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-base-sheet-walkdiag8-r3c6-BPDqTs8Z-diet-1408f6b4.js",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-railtough-sheet-walkdiag4-a-r2c0-CehT3oc8-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-base-sheet-walkdiag8-r3c2-D4i0ZY6b-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-baron-sheet-walkdiag8-r2c6-bV5cgmDA-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-thief-sheet-walkdiag8-r2c6-CTQrc2ad-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-baron-sheet-walkdiag8-r2c7-CMwlWvIy-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-baron-sheet-walkdiag8-r2c1-BmPWrm0k-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-railtough-sheet-walkdiag4-a-r2c1-Dc8gMvyE-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-baron-sheet-walkdiag8-r2c5-Du3dS-aa-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-baron-sheet-walkdiag8-r2c0-CJaPGtNl-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-base-sheet-walkdiag8-r3c3-DvFYeCBB-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-hero-sheet-rotation-f-r2c1-Dq-r5wRJ-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-baron-sheet-walkdiag8-r2c2-CGYvsUXY-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-baron-sheet-walkdiag8-r2c3-BcWucxMz-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-railtough-sheet-walkdiag4-a-r2c2-CHuhO2X0-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-base-sheet-walkdiag8-r3c4-B9yS972z-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-hero-sheet-rotation-f-r2c0-CtDXOMyX-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-base-sheet-walkdiag8-r3c0-Cs8saLMz-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-baron-sheet-walkdiag8-r2c4-BKycx-Up-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-hero-sheet-rotation-f-r2c3-Do3v2rli-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-thief-sheet-walkdiag8-r2c7-BmKAFFe--diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-railtough-sheet-walkdiag4-a-r2c3-Dd9JVF5W-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-base-sheet-walkdiag8-r3c1-C1t_AoR1-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-railtough-sheet-walkdiag4-a-r1c1-Dvun6G1w-diet-1408f6b4.js",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-railtough-sheet-walkdiag4-a-r1c3-cWDabbcZ-diet-1408f6b4.js",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-railtough-sheet-walkdiag4-a-r1c0-DYAOol3z-diet-1408f6b4.js",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-base-sheet-walkdiag8-r1c6-l2irkGeU-diet-1408f6b4.js",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-railtough-sheet-walkdiag4-a-r1c2-BiMMApAh-diet-1408f6b4.js",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-base-sheet-walkdiag8-r1c7-HbZpJia8-diet-1408f6b4.js",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-baron-sheet-walkdiag8-r0c3-C8MB2VTu-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-hero-sheet-rotation-f-r1c1-se-bKQJV-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-thief-sheet-walkdiag8-r1c7-CYvEtlxg-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-thief-sheet-walkdiag8-r1c4-BwyVKn4Y-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-base-sheet-walkdiag8-r1c5-DXMNHwV6-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-thief-sheet-walkdiag8-r1c5-Ccnn4mb8-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-baron-sheet-walkdiag8-r0c5-D06hvYO7-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-baron-sheet-walkdiag8-r0c7-DByxO0TY-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-baron-sheet-walkdiag8-r0c6-DaDdHvBu-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-thief-sheet-walkdiag8-r1c6-DvhQV_bQ-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-base-sheet-walkdiag8-r1c2-DaOks9sM-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-thief-sheet-walkdiag8-r1c3-B17ZD96p-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-hero-sheet-rotation-f-r1c0-CTPQPgU6-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-base-sheet-walkdiag8-r1c0-CYPLC1av-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-base-sheet-walkdiag8-r1c3-BPQAQwmY-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-baron-sheet-walkdiag8-r0c4-CsNmGj3k-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-hero-sheet-rotation2-f-r1c3-U0TG2Wvm-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-base-sheet-walkdiag8-r1c1-C152EXew-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-thief-sheet-walkdiag8-r1c0-BBNg-GxB-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-thief-sheet-walkdiag8-r1c1-C_S9j9LO-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-thief-sheet-walkdiag8-r1c2-dBcbv0OC-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-base-sheet-walkdiag8-r1c4-Cd9eavKe-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-hero-sheet-rotation2-f-r0c0-BaWqdCjS-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-railtough-sheet-walkdiag4-a-r3c1-BvQaBwm_-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-base-sheet-walkdiag8-r3c5-l_3v8hGc-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-base-sheet-walkdiag8-r3c7-GGsAsnps-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-baron-sheet-walkdiag8-r3c1-DVHTLZBM-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-baron-sheet-walkdiag8-r3c3-DSKWi8rE-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-baron-sheet-walkdiag8-r3c0-BWsBVpFs-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-baron-sheet-walkdiag8-r3c5-CtVD8ouZ-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-base-sheet-walkdiag8-r3c6-DJN4ycv4-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-baron-sheet-walkdiag8-r3c2-DYxoojlo-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-railtough-sheet-walkdiag4-a-r3c2-BPNodqG2-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-hero-sheet-rotation2-f-r0c1-B03qLtCA-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-baron-sheet-walkdiag8-r3c7-DDGAIJmU-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-base-sheet-walkdiag8-r3c4-B9yS972z-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-railtough-sheet-walkdiag4-a-r3c0-DPOAfihl-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-railtough-sheet-walkdiag4-a-r3c3-B1_v0xqA-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-bandit-base-sheet-walkdiag8-r3c3-DvFYeCBB-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-baron-sheet-walkdiag8-r3c6-DrAG4GJn-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:5316/assets/char-baron-sheet-walkdiag8-r3c4-D3PiQHV_-diet-1408f6b4.png",
+        "error": "net::ERR_ABORTED"
+      }
+    ]
+  },
+  "sameDocument": [
+    {
+      "cycle": -1,
+      "warmup": true,
+      "label": "town",
+      "documentId": "81f343bf-feff-40f4-9d30-a473f85c9cbe",
+      "heap": 21995434,
+      "renderer": {
+        "calls": 45,
+        "triangles": 78858,
+        "geometries": 66,
+        "textures": 42,
+        "programs": 24
+      },
+      "gpuEstimate": {
+        "textureRgba8MipBytes": 100817578.66666664,
+        "geometryBufferBytes": 2352012,
+        "formula": "reachable scene textures: width * height * 4 * (generateMipmaps ? 4/3 : 1), deduped by source + sampler; unique geometry ArrayBuffers. Excludes cached/unreachable textures, render targets, driver overhead and depth buffers."
+      },
+      "dataset": {
+        "assetPrefetchScene": "town",
+        "assetPrefetchState": "allowance",
+        "assetPrefetchReady": "0",
+        "assetPrefetchTotal": "0",
+        "assetPrefetchProgress": "0/0",
+        "assetPrefetchFailed": "0",
+        "assetPrefetchPriority": "1",
+        "assetPrefetchTarget": "the-claim",
+        "assetPrefetchSaveData": "false",
+        "assetPrefetchEnabled": "true",
+        "assetPrefetchAllowance": "24000000",
+        "assetPrefetchBytes": "24003128",
+        "assetPrefetchTownState": "partial",
+        "assetLoadingLabel": "the town",
+        "assetLoadingReady": "28",
+        "assetLoadingTotal": "28",
+        "assetLoadingProgress": "28/28",
+        "assetLoadingState": "ready",
+        "engine": "three.js r184",
+        "townEraAccent": "1",
+        "town3dPilotState": "loaded",
+        "town3dPilotRenderSource": "glb",
+        "town3dSteamAnchors": "0",
+        "town3dSteamPlumes": "0",
+        "town3dPlateState": "loaded",
+        "town3dPlateGround": "glb",
+        "cameraAspect": "0.46208530805687204",
+        "cssAspect": "0.46208530805687204",
+        "prospectorSkin": "stock",
+        "prospectorSheet": "stock",
+        "town3dPilotMeshes": "1",
+        "town3dPilotTriangles": "3340",
+        "town3dPilotMaterials": "1",
+        "town3dPilotBounds": "4.424x4.200x3.320",
+        "town3dPilotBuildingOrientations": "{\"tavern\":{\"width\":4.2295708656311035,\"height\":3.961084052663402,\"depth\":3.349243911573542,\"upY\":1},\"general_store\":{\"width\":4.700000047683716,\"height\":4.440092210945446,\"depth\":3.2597491709237993,\"upY\":1},\"claim_office\":{\"width\":4.260113512668952,\"height\":5.019999980926514,\"depth\":3.120130607365623,\"upY\":1},\"schoolhouse\":{\"width\":3.9598375740939544,\"height\":5.599999904632568,\"depth\":3.3753470905634697,\"upY\":1},\"chapel\":{\"width\":3.4642323068941314,\"height\":6.25,\"depth\":3.1949064607684563,\"upY\":1},\"assay_office\":{\"width\":4.423999786376953,\"height\":4.1998767465690445,\"depth\":3.3201263083833017,\"upY\":1}}",
+        "town3dPlazaPropsState": "loaded",
+        "town3dArcAnchors": "0",
+        "town3dArcFlickers": "0",
+        "town3dExhaustAnchors": "0",
+        "town3dDustPuffs": "0",
+        "town3dPilotEra": "1",
+        "town3dPilotModel": "http://127.0.0.1:5316/assets/assay-office-xAW04uBp-diet-1408f6b4.glb",
+        "town3dPilotLoadedIds": "tavern,general_store,claim_office,plate,schoolhouse,chapel,assay_office",
+        "town3dPilotInstances": "5",
+        "town3dPanMonumentInstances": "1",
+        "town3dEraPropIds": "",
+        "heroSheet": "young",
+        "heroSkin": "stock",
+        "heroSkinSheet": "stock"
+      },
+      "sceneWalked": true
+    },
+    {
+      "cycle": 0,
+      "warmup": true,
+      "label": "town",
+      "documentId": "81f343bf-feff-40f4-9d30-a473f85c9cbe",
+      "heap": 22701738,
+      "renderer": {
+        "calls": 45,
+        "triangles": 78858,
+        "geometries": 66,
+        "textures": 41,
+        "programs": 24
+      },
+      "gpuEstimate": {
+        "textureRgba8MipBytes": 100817578.66666664,
+        "geometryBufferBytes": 2352012,
+        "formula": "reachable scene textures: width * height * 4 * (generateMipmaps ? 4/3 : 1), deduped by source + sampler; unique geometry ArrayBuffers. Excludes cached/unreachable textures, render targets, driver overhead and depth buffers."
+      },
+      "dataset": {
+        "assetPrefetchScene": "town",
+        "assetPrefetchState": "allowance",
+        "assetPrefetchReady": "0",
+        "assetPrefetchTotal": "0",
+        "assetPrefetchProgress": "0/0",
+        "assetPrefetchFailed": "0",
+        "assetPrefetchPriority": "1",
+        "assetPrefetchTarget": "the-claim",
+        "assetPrefetchSaveData": "false",
+        "assetPrefetchEnabled": "true",
+        "assetPrefetchAllowance": "24000000",
+        "assetPrefetchBytes": "24003128",
+        "assetPrefetchTownState": "partial",
+        "assetLoadingLabel": "the town",
+        "assetLoadingReady": "28",
+        "assetLoadingTotal": "28",
+        "assetLoadingProgress": "28/28",
+        "assetLoadingState": "ready",
+        "engine": "three.js r184",
+        "townEraAccent": "1",
+        "town3dPilotState": "loaded",
+        "town3dPilotRenderSource": "glb",
+        "town3dSteamAnchors": "0",
+        "town3dSteamPlumes": "0",
+        "town3dPlateState": "loaded",
+        "town3dPlateGround": "glb",
+        "cameraAspect": "0.46208530805687204",
+        "cssAspect": "0.46208530805687204",
+        "prospectorSkin": "stock",
+        "prospectorSheet": "stock",
+        "town3dPilotMeshes": "1",
+        "town3dPilotTriangles": "17596",
+        "town3dPilotMaterials": "1",
+        "town3dPilotBounds": "44.000x3.330x44.000",
+        "town3dPilotBuildingOrientations": "{\"tavern\":{\"width\":4.2295708656311035,\"height\":3.961084052663402,\"depth\":3.349243911573542,\"upY\":1},\"schoolhouse\":{\"width\":3.9598375740939544,\"height\":5.599999904632568,\"depth\":3.3753470905634697,\"upY\":1},\"chapel\":{\"width\":3.4642323068941314,\"height\":6.25,\"depth\":3.1949064607684563,\"upY\":1},\"general_store\":{\"width\":4.700000047683716,\"height\":4.440092210945446,\"depth\":3.2597491709237993,\"upY\":1},\"claim_office\":{\"width\":4.260113512668952,\"height\":5.019999980926514,\"depth\":3.120130607365623,\"upY\":1},\"assay_office\":{\"width\":4.423999786376953,\"height\":4.1998767465690445,\"depth\":3.3201263083833017,\"upY\":1}}",
+        "town3dPlazaPropsState": "loaded",
+        "town3dArcAnchors": "0",
+        "town3dArcFlickers": "0",
+        "town3dExhaustAnchors": "0",
+        "town3dDustPuffs": "0",
+        "town3dPilotEra": "1",
+        "town3dPilotModel": "http://127.0.0.1:5316/assets/assay-office-xAW04uBp-diet-1408f6b4.glb",
+        "town3dPilotLoadedIds": "tavern,schoolhouse,chapel,general_store,claim_office,assay_office,plate",
+        "town3dPilotInstances": "5",
+        "town3dPanMonumentInstances": "1",
+        "town3dEraPropIds": "",
+        "heroSheet": "young",
+        "heroSkin": "stock",
+        "heroSkinSheet": "stock"
+      },
+      "sceneWalked": true
+    },
+    {
+      "cycle": 1,
+      "warmup": false,
+      "label": "town",
+      "documentId": "81f343bf-feff-40f4-9d30-a473f85c9cbe",
+      "heap": 23294362,
+      "renderer": {
+        "calls": 45,
+        "triangles": 78858,
+        "geometries": 66,
+        "textures": 41,
+        "programs": 24
+      },
+      "gpuEstimate": {
+        "textureRgba8MipBytes": 100817578.66666664,
+        "geometryBufferBytes": 2352012,
+        "formula": "reachable scene textures: width * height * 4 * (generateMipmaps ? 4/3 : 1), deduped by source + sampler; unique geometry ArrayBuffers. Excludes cached/unreachable textures, render targets, driver overhead and depth buffers."
+      },
+      "dataset": {
+        "assetPrefetchScene": "town",
+        "assetPrefetchState": "allowance",
+        "assetPrefetchReady": "0",
+        "assetPrefetchTotal": "0",
+        "assetPrefetchProgress": "0/0",
+        "assetPrefetchFailed": "0",
+        "assetPrefetchPriority": "1",
+        "assetPrefetchTarget": "the-claim",
+        "assetPrefetchSaveData": "false",
+        "assetPrefetchEnabled": "true",
+        "assetPrefetchAllowance": "24000000",
+        "assetPrefetchBytes": "24003128",
+        "assetPrefetchTownState": "partial",
+        "assetLoadingLabel": "the town",
+        "assetLoadingReady": "28",
+        "assetLoadingTotal": "28",
+        "assetLoadingProgress": "28/28",
+        "assetLoadingState": "ready",
+        "engine": "three.js r184",
+        "townEraAccent": "1",
+        "town3dPilotState": "loaded",
+        "town3dPilotRenderSource": "glb",
+        "town3dSteamAnchors": "0",
+        "town3dSteamPlumes": "0",
+        "town3dPlateState": "loaded",
+        "town3dPlateGround": "glb",
+        "cameraAspect": "0.46208530805687204",
+        "cssAspect": "0.46208530805687204",
+        "prospectorSkin": "stock",
+        "prospectorSheet": "stock",
+        "town3dPilotMeshes": "1",
+        "town3dPilotTriangles": "17596",
+        "town3dPilotMaterials": "1",
+        "town3dPilotBounds": "44.000x3.330x44.000",
+        "town3dPilotBuildingOrientations": "{\"tavern\":{\"width\":4.2295708656311035,\"height\":3.961084052663402,\"depth\":3.349243911573542,\"upY\":1},\"schoolhouse\":{\"width\":3.9598375740939544,\"height\":5.599999904632568,\"depth\":3.3753470905634697,\"upY\":1},\"general_store\":{\"width\":4.700000047683716,\"height\":4.440092210945446,\"depth\":3.2597491709237993,\"upY\":1},\"claim_office\":{\"width\":4.260113512668952,\"height\":5.019999980926514,\"depth\":3.120130607365623,\"upY\":1},\"chapel\":{\"width\":3.4642323068941314,\"height\":6.25,\"depth\":3.1949064607684563,\"upY\":1},\"assay_office\":{\"width\":4.423999786376953,\"height\":4.1998767465690445,\"depth\":3.3201263083833017,\"upY\":1}}",
+        "town3dPlazaPropsState": "loaded",
+        "town3dArcAnchors": "0",
+        "town3dArcFlickers": "0",
+        "town3dExhaustAnchors": "0",
+        "town3dDustPuffs": "0",
+        "town3dPilotEra": "1",
+        "town3dPilotModel": "http://127.0.0.1:5316/assets/assay-office-xAW04uBp-diet-1408f6b4.glb",
+        "town3dPilotLoadedIds": "tavern,schoolhouse,general_store,claim_office,chapel,assay_office,plate",
+        "town3dPilotInstances": "5",
+        "town3dPanMonumentInstances": "1",
+        "town3dEraPropIds": "",
+        "heroSheet": "young",
+        "heroSkin": "stock",
+        "heroSkinSheet": "stock"
+      },
+      "sceneWalked": true
+    },
+    {
+      "cycle": 2,
+      "warmup": false,
+      "label": "town",
+      "documentId": "81f343bf-feff-40f4-9d30-a473f85c9cbe",
+      "heap": 24178658,
+      "renderer": {
+        "calls": 45,
+        "triangles": 78858,
+        "geometries": 66,
+        "textures": 41,
+        "programs": 24
+      },
+      "gpuEstimate": {
+        "textureRgba8MipBytes": 100817578.66666664,
+        "geometryBufferBytes": 2352012,
+        "formula": "reachable scene textures: width * height * 4 * (generateMipmaps ? 4/3 : 1), deduped by source + sampler; unique geometry ArrayBuffers. Excludes cached/unreachable textures, render targets, driver overhead and depth buffers."
+      },
+      "dataset": {
+        "assetPrefetchScene": "town",
+        "assetPrefetchState": "allowance",
+        "assetPrefetchReady": "0",
+        "assetPrefetchTotal": "0",
+        "assetPrefetchProgress": "0/0",
+        "assetPrefetchFailed": "0",
+        "assetPrefetchPriority": "1",
+        "assetPrefetchTarget": "the-claim",
+        "assetPrefetchSaveData": "false",
+        "assetPrefetchEnabled": "true",
+        "assetPrefetchAllowance": "24000000",
+        "assetPrefetchBytes": "24003128",
+        "assetPrefetchTownState": "partial",
+        "assetLoadingLabel": "the town",
+        "assetLoadingReady": "28",
+        "assetLoadingTotal": "28",
+        "assetLoadingProgress": "28/28",
+        "assetLoadingState": "ready",
+        "engine": "three.js r184",
+        "townEraAccent": "1",
+        "town3dPilotState": "loaded",
+        "town3dPilotRenderSource": "glb",
+        "town3dSteamAnchors": "0",
+        "town3dSteamPlumes": "0",
+        "town3dPlateState": "loaded",
+        "town3dPlateGround": "glb",
+        "cameraAspect": "0.46208530805687204",
+        "cssAspect": "0.46208530805687204",
+        "prospectorSkin": "stock",
+        "prospectorSheet": "stock",
+        "town3dPilotMeshes": "1",
+        "town3dPilotTriangles": "3340",
+        "town3dPilotMaterials": "1",
+        "town3dPilotBounds": "4.424x4.200x3.320",
+        "town3dPilotBuildingOrientations": "{\"tavern\":{\"width\":4.2295708656311035,\"height\":3.961084052663402,\"depth\":3.349243911573542,\"upY\":1},\"schoolhouse\":{\"width\":3.9598375740939544,\"height\":5.599999904632568,\"depth\":3.3753470905634697,\"upY\":1},\"claim_office\":{\"width\":4.260113512668952,\"height\":5.019999980926514,\"depth\":3.120130607365623,\"upY\":1},\"general_store\":{\"width\":4.700000047683716,\"height\":4.440092210945446,\"depth\":3.2597491709237993,\"upY\":1},\"chapel\":{\"width\":3.4642323068941314,\"height\":6.25,\"depth\":3.1949064607684563,\"upY\":1},\"assay_office\":{\"width\":4.423999786376953,\"height\":4.1998767465690445,\"depth\":3.3201263083833017,\"upY\":1}}",
+        "town3dPlazaPropsState": "loaded",
+        "town3dArcAnchors": "0",
+        "town3dArcFlickers": "0",
+        "town3dExhaustAnchors": "0",
+        "town3dDustPuffs": "0",
+        "town3dPilotEra": "1",
+        "town3dPilotModel": "http://127.0.0.1:5316/assets/assay-office-xAW04uBp-diet-1408f6b4.glb",
+        "town3dPilotLoadedIds": "tavern,schoolhouse,claim_office,general_store,plate,chapel,assay_office",
+        "town3dPilotInstances": "5",
+        "town3dPanMonumentInstances": "1",
+        "town3dEraPropIds": "",
+        "heroSheet": "young",
+        "heroSkin": "stock",
+        "heroSkinSheet": "stock"
+      },
+      "sceneWalked": true
+    },
+    {
+      "cycle": 3,
+      "warmup": false,
+      "label": "town",
+      "documentId": "81f343bf-feff-40f4-9d30-a473f85c9cbe",
+      "heap": 24543701,
+      "renderer": {
+        "calls": 45,
+        "triangles": 78858,
+        "geometries": 66,
+        "textures": 41,
+        "programs": 24
+      },
+      "gpuEstimate": {
+        "textureRgba8MipBytes": 100817578.66666664,
+        "geometryBufferBytes": 2352012,
+        "formula": "reachable scene textures: width * height * 4 * (generateMipmaps ? 4/3 : 1), deduped by source + sampler; unique geometry ArrayBuffers. Excludes cached/unreachable textures, render targets, driver overhead and depth buffers."
+      },
+      "dataset": {
+        "assetPrefetchScene": "town",
+        "assetPrefetchState": "allowance",
+        "assetPrefetchReady": "0",
+        "assetPrefetchTotal": "0",
+        "assetPrefetchProgress": "0/0",
+        "assetPrefetchFailed": "0",
+        "assetPrefetchPriority": "1",
+        "assetPrefetchTarget": "the-claim",
+        "assetPrefetchSaveData": "false",
+        "assetPrefetchEnabled": "true",
+        "assetPrefetchAllowance": "24000000",
+        "assetPrefetchBytes": "24003128",
+        "assetPrefetchTownState": "partial",
+        "assetLoadingLabel": "the town",
+        "assetLoadingReady": "28",
+        "assetLoadingTotal": "28",
+        "assetLoadingProgress": "28/28",
+        "assetLoadingState": "ready",
+        "engine": "three.js r184",
+        "townEraAccent": "1",
+        "town3dPilotState": "loaded",
+        "town3dPilotRenderSource": "glb",
+        "town3dSteamAnchors": "0",
+        "town3dSteamPlumes": "0",
+        "town3dPlateState": "loaded",
+        "town3dPlateGround": "glb",
+        "cameraAspect": "0.46208530805687204",
+        "cssAspect": "0.46208530805687204",
+        "prospectorSkin": "stock",
+        "prospectorSheet": "stock",
+        "town3dPilotMeshes": "1",
+        "town3dPilotTriangles": "5520",
+        "town3dPilotMaterials": "1",
+        "town3dPilotBounds": "3.960x5.600x3.375",
+        "town3dPilotBuildingOrientations": "{\"tavern\":{\"width\":4.2295708656311035,\"height\":3.961084052663402,\"depth\":3.349243911573542,\"upY\":1},\"chapel\":{\"width\":3.4642323068941314,\"height\":6.25,\"depth\":3.1949064607684563,\"upY\":1},\"claim_office\":{\"width\":4.260113512668952,\"height\":5.019999980926514,\"depth\":3.120130607365623,\"upY\":1},\"general_store\":{\"width\":4.700000047683716,\"height\":4.440092210945446,\"depth\":3.2597491709237993,\"upY\":1},\"assay_office\":{\"width\":4.423999786376953,\"height\":4.1998767465690445,\"depth\":3.3201263083833017,\"upY\":1},\"schoolhouse\":{\"width\":3.9598375740939544,\"height\":5.599999904632568,\"depth\":3.3753470905634697,\"upY\":1}}",
+        "town3dPlazaPropsState": "loaded",
+        "town3dArcAnchors": "0",
+        "town3dArcFlickers": "0",
+        "town3dExhaustAnchors": "0",
+        "town3dDustPuffs": "0",
+        "town3dPilotEra": "1",
+        "town3dPilotModel": "http://127.0.0.1:5316/assets/schoolhouse-BR3cnoTX-diet-1408f6b4.glb",
+        "town3dPilotLoadedIds": "tavern,chapel,claim_office,general_store,assay_office,plate,schoolhouse",
+        "town3dPilotInstances": "5",
+        "town3dPanMonumentInstances": "1",
+        "town3dEraPropIds": "",
+        "heroSheet": "young",
+        "heroSkin": "stock",
+        "heroSkinSheet": "stock"
+      },
+      "sceneWalked": true
+    },
+    {
+      "cycle": 4,
+      "warmup": false,
+      "label": "town",
+      "documentId": "81f343bf-feff-40f4-9d30-a473f85c9cbe",
+      "heap": 25369145,
+      "renderer": {
+        "calls": 46,
+        "triangles": 78860,
+        "geometries": 66,
+        "textures": 41,
+        "programs": 24
+      },
+      "gpuEstimate": {
+        "textureRgba8MipBytes": 100817578.66666664,
+        "geometryBufferBytes": 2352012,
+        "formula": "reachable scene textures: width * height * 4 * (generateMipmaps ? 4/3 : 1), deduped by source + sampler; unique geometry ArrayBuffers. Excludes cached/unreachable textures, render targets, driver overhead and depth buffers."
+      },
+      "dataset": {
+        "assetPrefetchScene": "town",
+        "assetPrefetchState": "allowance",
+        "assetPrefetchReady": "0",
+        "assetPrefetchTotal": "0",
+        "assetPrefetchProgress": "0/0",
+        "assetPrefetchFailed": "0",
+        "assetPrefetchPriority": "1",
+        "assetPrefetchTarget": "the-claim",
+        "assetPrefetchSaveData": "false",
+        "assetPrefetchEnabled": "true",
+        "assetPrefetchAllowance": "24000000",
+        "assetPrefetchBytes": "24003128",
+        "assetPrefetchTownState": "partial",
+        "assetLoadingLabel": "the town",
+        "assetLoadingReady": "28",
+        "assetLoadingTotal": "28",
+        "assetLoadingProgress": "28/28",
+        "assetLoadingState": "ready",
+        "engine": "three.js r184",
+        "townEraAccent": "1",
+        "town3dPilotState": "loaded",
+        "town3dPilotRenderSource": "glb",
+        "town3dSteamAnchors": "0",
+        "town3dSteamPlumes": "0",
+        "town3dPlateState": "loaded",
+        "town3dPlateGround": "glb",
+        "cameraAspect": "0.46208530805687204",
+        "cssAspect": "0.46208530805687204",
+        "prospectorSkin": "stock",
+        "prospectorSheet": "stock",
+        "town3dPilotMeshes": "1",
+        "town3dPilotTriangles": "17596",
+        "town3dPilotMaterials": "1",
+        "town3dPilotBounds": "44.000x3.330x44.000",
+        "town3dPilotBuildingOrientations": "{\"tavern\":{\"width\":4.2295708656311035,\"height\":3.961084052663402,\"depth\":3.349243911573542,\"upY\":1},\"schoolhouse\":{\"width\":3.9598375740939544,\"height\":5.599999904632568,\"depth\":3.3753470905634697,\"upY\":1},\"general_store\":{\"width\":4.700000047683716,\"height\":4.440092210945446,\"depth\":3.2597491709237993,\"upY\":1},\"chapel\":{\"width\":3.4642323068941314,\"height\":6.25,\"depth\":3.1949064607684563,\"upY\":1},\"claim_office\":{\"width\":4.260113512668952,\"height\":5.019999980926514,\"depth\":3.120130607365623,\"upY\":1},\"assay_office\":{\"width\":4.423999786376953,\"height\":4.1998767465690445,\"depth\":3.3201263083833017,\"upY\":1}}",
+        "town3dPlazaPropsState": "loaded",
+        "town3dArcAnchors": "0",
+        "town3dArcFlickers": "0",
+        "town3dExhaustAnchors": "0",
+        "town3dDustPuffs": "0",
+        "town3dPilotEra": "1",
+        "town3dPilotModel": "http://127.0.0.1:5316/assets/assay-office-xAW04uBp-diet-1408f6b4.glb",
+        "town3dPilotLoadedIds": "tavern,schoolhouse,general_store,chapel,claim_office,assay_office,plate",
+        "town3dPilotInstances": "5",
+        "town3dPanMonumentInstances": "1",
+        "town3dEraPropIds": "",
+        "heroSheet": "young",
+        "heroSkin": "stock",
+        "heroSkinSheet": "stock"
+      },
+      "sceneWalked": true
+    },
+    {
+      "cycle": 5,
+      "warmup": false,
+      "label": "town",
+      "documentId": "81f343bf-feff-40f4-9d30-a473f85c9cbe",
+      "heap": 25705619,
+      "renderer": {
+        "calls": 45,
+        "triangles": 78858,
+        "geometries": 66,
+        "textures": 41,
+        "programs": 24
+      },
+      "gpuEstimate": {
+        "textureRgba8MipBytes": 100817578.66666664,
+        "geometryBufferBytes": 2352012,
+        "formula": "reachable scene textures: width * height * 4 * (generateMipmaps ? 4/3 : 1), deduped by source + sampler; unique geometry ArrayBuffers. Excludes cached/unreachable textures, render targets, driver overhead and depth buffers."
+      },
+      "dataset": {
+        "assetPrefetchScene": "town",
+        "assetPrefetchState": "allowance",
+        "assetPrefetchReady": "0",
+        "assetPrefetchTotal": "0",
+        "assetPrefetchProgress": "0/0",
+        "assetPrefetchFailed": "0",
+        "assetPrefetchPriority": "1",
+        "assetPrefetchTarget": "the-claim",
+        "assetPrefetchSaveData": "false",
+        "assetPrefetchEnabled": "true",
+        "assetPrefetchAllowance": "24000000",
+        "assetPrefetchBytes": "24003128",
+        "assetPrefetchTownState": "partial",
+        "assetLoadingLabel": "the town",
+        "assetLoadingReady": "28",
+        "assetLoadingTotal": "28",
+        "assetLoadingProgress": "28/28",
+        "assetLoadingState": "ready",
+        "engine": "three.js r184",
+        "townEraAccent": "1",
+        "town3dPilotState": "loaded",
+        "town3dPilotRenderSource": "glb",
+        "town3dSteamAnchors": "0",
+        "town3dSteamPlumes": "0",
+        "town3dPlateState": "loaded",
+        "town3dPlateGround": "glb",
+        "cameraAspect": "0.46208530805687204",
+        "cssAspect": "0.46208530805687204",
+        "prospectorSkin": "stock",
+        "prospectorSheet": "stock",
+        "town3dPilotMeshes": "1",
+        "town3dPilotTriangles": "17596",
+        "town3dPilotMaterials": "1",
+        "town3dPilotBounds": "44.000x3.330x44.000",
+        "town3dPilotBuildingOrientations": "{\"tavern\":{\"width\":4.2295708656311035,\"height\":3.961084052663402,\"depth\":3.349243911573542,\"upY\":1},\"chapel\":{\"width\":3.4642323068941314,\"height\":6.25,\"depth\":3.1949064607684563,\"upY\":1},\"claim_office\":{\"width\":4.260113512668952,\"height\":5.019999980926514,\"depth\":3.120130607365623,\"upY\":1},\"general_store\":{\"width\":4.700000047683716,\"height\":4.440092210945446,\"depth\":3.2597491709237993,\"upY\":1},\"schoolhouse\":{\"width\":3.9598375740939544,\"height\":5.599999904632568,\"depth\":3.3753470905634697,\"upY\":1},\"assay_office\":{\"width\":4.423999786376953,\"height\":4.1998767465690445,\"depth\":3.3201263083833017,\"upY\":1}}",
+        "town3dPlazaPropsState": "loaded",
+        "town3dArcAnchors": "0",
+        "town3dArcFlickers": "0",
+        "town3dExhaustAnchors": "0",
+        "town3dDustPuffs": "0",
+        "town3dPilotEra": "1",
+        "town3dPilotModel": "http://127.0.0.1:5316/assets/assay-office-xAW04uBp-diet-1408f6b4.glb",
+        "town3dPilotLoadedIds": "tavern,chapel,claim_office,general_store,schoolhouse,assay_office,plate",
+        "town3dPilotInstances": "5",
+        "town3dPanMonumentInstances": "1",
+        "town3dEraPropIds": "",
+        "heroSheet": "young",
+        "heroSkin": "stock",
+        "heroSkinSheet": "stock"
+      },
+      "sceneWalked": true
+    }
+  ]
+}

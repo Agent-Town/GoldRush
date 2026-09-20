@@ -1,0 +1,31 @@
+[
+  {
+    "command": [
+      "node",
+      "scripts/desk-declaration-guard.mjs"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "node",
+      "scripts/desk-birth-guard.mjs"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "node",
+      "scripts/desk-carryforward-guard.mjs"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "node",
+      "scripts/gazette-backfill-sweep.mjs",
+      "--since=2026-09-05"
+    ],
+    "exitCode": 0
+  }
+]

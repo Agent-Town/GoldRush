@@ -1,0 +1,29 @@
+{
+  "rawId": "e10-river",
+  "rawTileId": "frontier-river-claim",
+  "rawDimensions": {
+    "width": 128,
+    "height": 128
+  },
+  "rawTerrainMeshDeclaration": {
+    "terrainMesh": "off"
+  },
+  "claimSculptBounds": {
+    "min": [
+      -32.0,
+      -32.0,
+      -0.51
+    ],
+    "max": [
+      32.0,
+      32.0,
+      2.2383
+    ]
+  },
+  "claimSculptTileId": "frontier-river-claim",
+  "claimLandmarkCount": 5,
+  "rawCollisionRegistryCount": 0,
+  "claimCollisionRegistryCount": 3,
+  "cause": "Raw River has no REGISTRY entry. Same tileId does not establish identical geometry: raw descriptor is 128x128, shipped Claim sculpt is 64x64. Claim mounts would also be visible on a route with no corresponding collider registry entry.",
+  "firewall": "Reconcile raw descriptor/charter route with owning gameplay/finale code before a renderer alias. Do not change height-grid or collision meaning to paper over the mismatch."
+}

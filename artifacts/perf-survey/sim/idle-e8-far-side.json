@@ -1,0 +1,197 @@
+{
+  "key": "idle-e8-far-side",
+  "tapePath": "tapes/idle-e8-far-side.json",
+  "contract": "e8-far-side",
+  "kind": "null-floor",
+  "node": "v26.4.0",
+  "before": {
+    "at": "2026-09-05T16:19:54.612Z",
+    "load": [
+      21.98095703125,
+      21.53369140625,
+      21.17626953125
+    ],
+    "freeMemory": 11083988992
+  },
+  "after": {
+    "at": "2026-09-05T16:19:57.421Z",
+    "load": [
+      20.861328125,
+      21.30859375,
+      21.0986328125
+    ],
+    "freeMemory": 12491079680
+  },
+  "declaredDurationTicks": 2387,
+  "simulatedSeconds": 79.56666666666666,
+  "bootMs": 44.262917000000016,
+  "replayMs": 773.014208,
+  "ticksPerSecond": 3087.9121952697665,
+  "realtimeMultiple": 102.9304065089922,
+  "estimateTenMinuteSeconds": 5.829181291998325,
+  "estimateFormula": "600 seconds / measured realtimeMultiple; extrapolation, not an actual 10-minute tape when duration differs",
+  "tickMs": {
+    "n": 2387,
+    "min": 0.21604200000001583,
+    "p50": 0.2752090000003591,
+    "p95": 0.5294159999998556,
+    "p99": 0.9817909999997028,
+    "max": 10.288082999999915
+  },
+  "tickPath": "sim/idle-e8-far-side-ticks.json",
+  "result": {
+    "eventLogHash": "fnv1a32:a45ba9ac",
+    "outcome": {
+      "secured": false,
+      "waves": 2,
+      "gold": 0,
+      "timeAlive": 79.567
+    },
+    "ticks": 2387,
+    "engine": "headless-contract-sim"
+  },
+  "expectedHash": "fnv1a32:a45ba9ac",
+  "hashMatches": true,
+  "top20": [
+    {
+      "name": "dispatch",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 159.104
+    },
+    {
+      "name": "multiplyMatrices",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 10385,
+      "column": 18,
+      "selfMs": 50.38199999999999
+    },
+    {
+      "name": "terrainSeed",
+      "url": "",
+      "line": 1469,
+      "column": 21,
+      "selfMs": 41.88000000000001
+    },
+    {
+      "name": "terrainHash",
+      "url": "",
+      "line": 1486,
+      "column": 21,
+      "selfMs": 31.594
+    },
+    {
+      "name": "diagnostics",
+      "url": "",
+      "line": 1795,
+      "column": 13,
+      "selfMs": 31.287
+    },
+    {
+      "name": "toArray",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 11099,
+      "column": 9,
+      "selfMs": 29.725
+    },
+    {
+      "name": "maxHpForInstance",
+      "url": "",
+      "line": 1619,
+      "column": 18,
+      "selfMs": 27.685999999999996
+    },
+    {
+      "name": "get diagnostics",
+      "url": "",
+      "line": 484,
+      "column": 17,
+      "selfMs": 24.001000000000005
+    },
+    {
+      "name": "activePositions",
+      "url": "",
+      "line": 1533,
+      "column": 17,
+      "selfMs": 21.198
+    },
+    {
+      "name": "step",
+      "url": "",
+      "line": 1318,
+      "column": 6,
+      "selfMs": 20.102
+    },
+    {
+      "name": "hpBarDiagnostics",
+      "url": "",
+      "line": 1663,
+      "column": 18,
+      "selfMs": 18.935
+    },
+    {
+      "name": "maxHpForPlacement",
+      "url": "",
+      "line": 1622,
+      "column": 19,
+      "selfMs": 18.805
+    },
+    {
+      "name": "syncEnemyInstance",
+      "url": "",
+      "line": 1343,
+      "column": 19,
+      "selfMs": 16.975
+    },
+    {
+      "name": "currentTrickleInterval",
+      "url": "",
+      "line": 641,
+      "column": 24,
+      "selfMs": 15.049999999999997
+    },
+    {
+      "name": "update",
+      "url": "",
+      "line": 809,
+      "column": 8,
+      "selfMs": 14.311
+    },
+    {
+      "name": "updateRepairs",
+      "url": "",
+      "line": 1881,
+      "column": 15,
+      "selfMs": 11.584
+    },
+    {
+      "name": "setFromEuler",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 4167,
+      "column": 14,
+      "selfMs": 11.313
+    },
+    {
+      "name": "hpDiagnostics",
+      "url": "",
+      "line": 1631,
+      "column": 15,
+      "selfMs": 10.372
+    },
+    {
+      "name": "stableProbeMask",
+      "url": "",
+      "line": 1266,
+      "column": 25,
+      "selfMs": 9.975
+    },
+    {
+      "name": "rubbleDiagnostics",
+      "url": "",
+      "line": 2052,
+      "column": 19,
+      "selfMs": 8.549999999999999
+    }
+  ]
+}

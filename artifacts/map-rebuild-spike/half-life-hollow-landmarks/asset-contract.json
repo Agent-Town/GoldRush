@@ -1,0 +1,105 @@
+{
+  "law": "reuse > derive > build-new; era-stamped; grit-dressed",
+  "packs": {
+    "half-life-hollow": {
+      "era": 6,
+      "atlasSha256": "7f0fb0f378f5f9148369c462c71461f752199291062ab52302cb16f6e1dc9df6",
+      "assets": {
+        "south-countdown-gate": {
+          "sourceTier": "derive",
+          "triangles": 508,
+          "sha256": "6e4037fcbd2a55e7d0dccaefccbdcb00f36dc08aac1f37b5b3a1d1ab0edaa12f",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "west-hollow-warning-pylon": {
+          "sourceTier": "derive",
+          "triangles": 596,
+          "sha256": "aa11a885b7bedc2468dd3e1502abe2c960771690b23d662664eeac431df1bdf9",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "east-hollow-warning-pylon": {
+          "sourceTier": "derive",
+          "triangles": 596,
+          "sha256": "15a7000e57b64cbea2b7d9b1fadda77ccbae5e661d0985ae69e9e1b2a0ab7b87",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "expired-appliance-convoy": {
+          "sourceTier": "derive",
+          "triangles": 972,
+          "sha256": "ac0b0aa1d8bbccbe3a923fc904ef66bbe72aa82007ece8be472572b1c26231e0",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "north-extraction-gantry": {
+          "sourceTier": "reuse",
+          "triangles": 1148,
+          "sha256": "60596861547f2959a943ccce9fe7e68607b45fa561d18fc57d888183d750a9b8",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        }
+      }
+    }
+  },
+  "totals": {
+    "packs": 1,
+    "assets": 5,
+    "sourceTiers": {
+      "reuse": 1,
+      "derive": 4,
+      "build-new": 0
+    }
+  },
+  "boards": {
+    "half-life-hollow-landmarks-turntable.png": {
+      "size": [
+        1920,
+        1160
+      ],
+      "sha256": "0701be4dfc5bc7eb35821d8922dee5705e26486c7770aa62925dc944b4e4eea4"
+    },
+    "half-life-hollow-landmarks-verdict.png": {
+      "size": [
+        1920,
+        1008
+      ],
+      "sha256": "bbc85eaaa532cab726979013a0cca5ae9fc136c51de166e83ea1bf427651cb7f"
+    },
+    "half-life-hollow-landmarks-pack.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "ef6d0b92c8c995b758f5d0feb67e6931fe71c2916d712b37bf013dbbf591c10b"
+    },
+    "half-life-hollow-landmarks-mounted.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "cc6755778be8748845d6d408226d1ae3d82871614fde7421080d3821761802a1"
+    },
+    "half-life-hollow-landmarks-mounted-overview.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "5c7f5e304fbf0e74993f15ee51178b8feb38915ef366ebe9a5bd4ce28c1f2e7c"
+    },
+    "half-life-hollow-landmarks-clearance-overlay.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "f23938c77ae7500e46cf21c5853a76fa2abc1ce5fd9eeff8ab4612006cd9fd6f"
+    }
+  },
+  "simulation": "unchanged; every landmark is a separate render-only GLB mounted by contract"
+}

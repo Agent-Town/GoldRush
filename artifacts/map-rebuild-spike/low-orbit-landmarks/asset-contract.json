@@ -1,0 +1,105 @@
+{
+  "law": "reuse > derive > build-new; era-stamped; grit-dressed",
+  "packs": {
+    "low-orbit": {
+      "era": 8,
+      "atlasSha256": "3925bfe4b272c41d114e03247ea08a8a88c8b43bb819000466d46701837157cd",
+      "assets": {
+        "west-scaffold-handhold-frame": {
+          "sourceTier": "reuse",
+          "triangles": 976,
+          "sha256": "696bfbfaf62982ad83c05823b3ddf79075fba4f0beb136851b598970bab5c9a9",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "claw-carcass-rig": {
+          "sourceTier": "derive",
+          "triangles": 2360,
+          "sha256": "505afe0564731da2317b0f0ec5c2f61821d6cc8a72cd1dc5a0cadb8228f3d118",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "east-scaffold-handhold-frame": {
+          "sourceTier": "reuse",
+          "triangles": 976,
+          "sha256": "e4527406284d527b104c9d2442a10b09ae52b9d3b3c11ef284c6e453c76d4833",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "north-debris-catcher": {
+          "sourceTier": "reuse",
+          "triangles": 1216,
+          "sha256": "b28f13a149e1a4783738893c2f4d989626de69619968efd315528f519bc5b3d2",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "south-return-beacon": {
+          "sourceTier": "derive",
+          "triangles": 732,
+          "sha256": "06d02201ad02e7825e2d94a8735be3488ae155bb5cf62330f0fe16efe8e717e2",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        }
+      }
+    }
+  },
+  "totals": {
+    "packs": 1,
+    "assets": 5,
+    "sourceTiers": {
+      "reuse": 3,
+      "derive": 2,
+      "build-new": 0
+    }
+  },
+  "boards": {
+    "low-orbit-landmarks-turntable.png": {
+      "size": [
+        1920,
+        1160
+      ],
+      "sha256": "3c7dacc53de1fab3f7a3c9946e26cb1937316ffa1add71ad652b4c5658c62155"
+    },
+    "low-orbit-landmarks-verdict.png": {
+      "size": [
+        1920,
+        1008
+      ],
+      "sha256": "9b3c57fb48003d9868bf6bc466f9534343608daf4502ce335f719b90ddfd8008"
+    },
+    "low-orbit-landmarks-pack.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "5a2039f34a46ee1ce5e6c4d4fcb3fb971bcf641f2e0680400cb07dbb5ad97d19"
+    },
+    "low-orbit-landmarks-mounted.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "4fc437b797e49cc55b5fd8278c59e7274bcc0dd14cd2df762f3b766aab1b24c2"
+    },
+    "low-orbit-landmarks-mounted-overview.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "f8a601d19db5af7a6f94b64a11d262b2ef60de4c1f3939ba1a38d2f1d2c32b93"
+    },
+    "low-orbit-landmarks-clearance-overlay.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "7584899504e78ae1d12fb91611c4695176a193115be5245ea21f0e4b0acc2b41"
+    }
+  },
+  "simulation": "unchanged; every landmark is a separate render-only GLB mounted by contract"
+}

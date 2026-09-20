@@ -1,0 +1,126 @@
+// SCRATCH probe for portraits-era-aging-2-batch. NOT COMMITTED (evidence only).
+// Mistake #10: a plain boot, no `?debug` in the URL, asserted. One re-keyed card per era plus the
+// preacher, each read for speaker id, display name, portrait file, object-position and a DECODED
+// portrait (naturalWidth > 0, not merely addressed); then every registered speaker portrait is
+// resolved so a broken reference anywhere in the set fails here.
+import { mkdir } from 'node:fs/promises';
+import { expect, test, type Page } from '@playwright/test';
+import { FIRST_CLAIM_DONE_KEY, PROFILE_KEY, TOWN_NAME_KEY, profileDataKey, type ProfileState } from '../src/game/ProfileStorage';
+import { ACTIVE_EPOCH_KEY } from '../src/meta/ContractFamilies';
+import { STORY_RUNTIME_BEATS } from '../src/story/beats';
+import type { RuntimeStorySignal } from '../src/story/signals';
+import { STORY_SPEAKERS } from '../src/story/speakers';
+import { expectNoConsoleErrors, watchErrors } from './support/console-watch';
+
+const SHOTS = 'reviews/shots-portraits-era-aging-2';
+const OLD_STORY_HINTS = STORY_RUNTIME_BEATS.filter((beat) => beat.oncePerProfile).map((beat) => `story:${beat.id}`);
+
+const CASES = [
+  { epoch: 'epoch-5-deepwater', contractId: 'e5-deepwater-claim', beat: 'e5-rebuild-long-table', speaker: 'tavernkeeper-e5', name: 'Tavernkeeper', portrait: 'townsfolk-tavernkeeper-e5' },
+  { epoch: 'epoch-5-deepwater', contractId: 'e5-flotilla', beat: 'e5-flotilla-formation', speaker: 'preacher-e5', name: 'Preacher', portrait: 'townsfolk-preacher-e5' },
+  { epoch: 'epoch-6-atomic', contractId: 'e6-glow-mesa', beat: 'e6-gazette-free-trial', speaker: 'newsie-e6', name: 'Mei Chen', portrait: 'townsfolk-newsie-e6' },
+  { epoch: 'epoch-7-signal', contractId: 'e7-relay-valley', beat: 'e7-playbook-library-tape-001', speaker: 'schoolteacher-e7', name: 'Schoolteacher', portrait: 'townsfolk-schoolteacher-e7' },
+  { epoch: 'epoch-8-orbital', contractId: 'e8-far-side', beat: 'e8-far-side-probe', speaker: 'clerk-e8', name: 'Assay Clerk', portrait: 'townsfolk-clerk-e8' },
+  { epoch: 'epoch-9-redfields', contractId: 'e9-devils-alley', beat: 'e9-devils-alley-wind', speaker: 'tavernkeeper-e9', name: 'Tavernkeeper', portrait: 'townsfolk-tavernkeeper-e9' },
+  { epoch: 'epoch-10-deepsky', contractId: 'e10-archive-world', beat: 'e10-archive-world-shelf', speaker: 'schoolteacher-e10', name: 'Schoolteacher', portrait: 'townsfolk-schoolteacher-e10' },
+] as const;
+
+async function seedTown(page: Page, epochId: string): Promise<void> {
+  await page.addInitScript(({ activeEpochKey, epochId, firstClaimKey, flatEpochKey, flatFirstClaimKey, flatTownKey, hints, marker, profileKey, townKey }) => {
+    if (localStorage.getItem(marker)) return;
+    localStorage.clear();
+    sessionStorage.clear();
+    const profile: ProfileState = {
+      version: 2,
+      activeId: 'robin',
+      profiles: [{ id: 'robin', name: 'Robin', createdAt: 1, updatedAt: 1, difficultyPreset: 'trail', hintsSeen: hints }],
+    };
+    localStorage.setItem(profileKey, JSON.stringify(profile));
+    localStorage.setItem(townKey, 'Quartz Hill');
+    localStorage.setItem(flatTownKey, 'Quartz Hill');
+    localStorage.setItem(firstClaimKey, '1');
+    localStorage.setItem(flatFirstClaimKey, '1');
+    localStorage.setItem(activeEpochKey, epochId);
+    localStorage.setItem(flatEpochKey, epochId);
+    localStorage.setItem(marker, '1');
+  }, {
+    activeEpochKey: profileDataKey('robin', ACTIVE_EPOCH_KEY),
+    epochId,
+    firstClaimKey: profileDataKey('robin', FIRST_CLAIM_DONE_KEY),
+    flatEpochKey: ACTIVE_EPOCH_KEY,
+    flatFirstClaimKey: FIRST_CLAIM_DONE_KEY,
+    flatTownKey: TOWN_NAME_KEY,
+    hints: OLD_STORY_HINTS,
+    marker: `aging2-seeded:${epochId}`,
+    profileKey: PROFILE_KEY,
+    townKey: profileDataKey('robin', TOWN_NAME_KEY),
+  });
+}
+
+async function dismiss(page: Page): Promise<void> {
+  await page.mouse.click(6, 6);
+  await expect(page.getByTestId('story-beat-card')).toHaveCount(0);
+}
+
+for (const item of CASES) {
+  test(`plain boot: ${item.beat} speaks as ${item.speaker}`, async ({ page }, testInfo) => {
+    test.setTimeout(120_000);
+    const errors = watchErrors(page);
+    await seedTown(page, item.epoch);
+    await page.goto('/');
+    expect(page.url()).not.toContain('debug');
+    await page.waitForFunction(() => Boolean(window.__GR_STORY__));
+    const signal: RuntimeStorySignal = { type: 'contract-unlocked', contractId: item.contractId, contractName: 'probe', ledgerBlurb: 'probe' };
+    await page.evaluate((value) => window.__GR_STORY__?.emit(value), signal);
+
+    for (let attempt = 0; attempt < 24; attempt += 1) {
+      await expect.poll(() => page.evaluate(() => window.__GR_STORY__?.active() ?? null), { timeout: 8_000 }).not.toBeNull();
+      if ((await page.evaluate(() => window.__GR_STORY__?.active())) === item.beat) break;
+      await dismiss(page);
+    }
+    const card = page.getByTestId('story-beat-card');
+    await expect(card).toHaveAttribute('data-beat-id', item.beat);
+    await expect(card).toHaveAttribute('data-speaker', item.speaker);
+    await expect(page.locator('.story-beat-card__speaker')).toHaveText(item.name);
+
+    const portrait = page.getByTestId('story-beat-portrait');
+    const shape = await portrait.evaluate((node) => {
+      const img = node as HTMLImageElement;
+      return { src: img.getAttribute('src') ?? '', naturalWidth: img.naturalWidth, objectPosition: getComputedStyle(img).objectPosition };
+    });
+    expect(shape.src).toContain(item.portrait);
+    expect(shape.naturalWidth).toBeGreaterThan(0);
+    expect(shape.objectPosition).toBe('50% 42%');
+
+    await mkdir(SHOTS, { recursive: true });
+    await page.screenshot({ path: `${SHOTS}/plainboot-${testInfo.project.name}-${item.speaker}.png` });
+    expectNoConsoleErrors(errors);
+  });
+}
+
+test('every registered speaker portrait decodes', async ({ page }) => {
+  test.setTimeout(180_000);
+  const errors = watchErrors(page);
+  await seedTown(page, 'epoch-1-frontier');
+  await page.goto('/');
+  // The URLs must come from the PAGE's own module graph: `portraitUrl` is built from
+  // `import.meta.url`, so the Node-side value is a file:// path the browser cannot fetch. Resolving
+  // it here through the dev server's own module is the only honest read (vite DEV, not preview).
+  const result = await page.evaluate(async () => {
+    const mod = await import('/src/story/speakers.ts');
+    const speakers = Object.values(mod.STORY_SPEAKERS) as { id: string; portraitUrl: string }[];
+    const bad: string[] = [];
+    await Promise.all(speakers.map(({ id, portraitUrl }) => new Promise<void>((resolve) => {
+      const img = new Image();
+      img.onload = () => { if (!img.naturalWidth) bad.push(id); resolve(); };
+      img.onerror = () => { bad.push(id); resolve(); };
+      img.src = portraitUrl;
+    })));
+    return { count: speakers.length, bad, sample: speakers[0]?.portraitUrl ?? '' };
+  });
+  expect(Object.values(STORY_SPEAKERS).length).toBe(87);
+  expect(result.count).toBe(87);
+  expect(result.sample.startsWith('http')).toBe(true);
+  expect(result.bad).toEqual([]);
+  expectNoConsoleErrors(errors);
+});

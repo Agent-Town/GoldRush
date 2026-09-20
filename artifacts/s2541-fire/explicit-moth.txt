@@ -1,0 +1,26 @@
+gate battery transcript (append-only — see scripts/gate-battery.mjs)
+
+
+######## BATTERY 2026-09-07T13:03:23.925Z — s2541-explicit-moth-writer ########
+cwd=/private/tmp/gr-gate-s2541
+env+ PATH=/Users/robin/.nvm/versions/node/v26.4.0/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin CLAUDE_CONFIG_DIR=/Users/robin/.claude-fires GR_REFRESH_EVIDENCE=1
+
+===== explicit Moth writer =====
+$ node --test --test-name-pattern=corridor circuit scripts/moth-season-pressure.test.mjs
+rc=0 12.5s
+(node:32710) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+moth-season circuit beats dark@0 lit@1 cut@24 relit=none terminal=dark hash=fnv1a32:f7af6739
+✔ the corridor circuit is cut, dark, repaired and lit across the floor ride (12367.253708ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12448.33375
+
+
+SUMMARY {"explicit Moth writer":0}
+OVERALL rc=0

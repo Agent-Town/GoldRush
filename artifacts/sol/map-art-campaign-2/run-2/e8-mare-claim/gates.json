@@ -1,0 +1,80 @@
+[
+  {
+    "name": "builds",
+    "command": [
+      "python3",
+      "artifacts/sol/map-art-campaign-2/run-2/build-map.py",
+      "e8-mare-claim"
+    ],
+    "exit": 0,
+    "seconds": 48.98677611351013,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-2/dome-builds.log"
+  },
+  {
+    "name": "plain",
+    "command": [
+      "node",
+      "artifacts/sol/map-art-campaign-2/run-2/capture.mjs"
+    ],
+    "exit": 0,
+    "seconds": 22.988293886184692,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-2/dome-plain.log"
+  },
+  {
+    "name": "repeat",
+    "command": [
+      "node",
+      "scripts/map-landmark-repeat-check.mjs"
+    ],
+    "exit": 0,
+    "seconds": 5.217657804489136,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-2/dome-repeat.log"
+  },
+  {
+    "name": "loading",
+    "command": [
+      "node",
+      "scripts/map-landmark-loading-check.mjs"
+    ],
+    "exit": 0,
+    "seconds": 19.61767601966858,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-2/dome-loading.log"
+  },
+  {
+    "name": "own-collision",
+    "command": [
+      "python3",
+      "artifacts/sol/map-art-campaign-2/run-2/map-gates.py",
+      "e8-mare-claim",
+      "e8-own-collision",
+      "e2e/e8-mare-claim-physics-parity.spec.ts",
+      "e2e/landmark-collision.spec.ts",
+      "e2e/fort-landmark-collision.spec.ts"
+    ],
+    "exit": 0,
+    "seconds": 134.3728802204132,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-2/dome-own-collision.log"
+  },
+  {
+    "name": "glb-contract",
+    "command": [
+      "node",
+      "scripts/glb-contract-guard.mjs"
+    ],
+    "exit": 0,
+    "seconds": 3.6708168983459473,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-2/dome-glb-contract.log"
+  },
+  {
+    "name": "named",
+    "command": [
+      "node",
+      "scripts/run-guards.mjs",
+      "--only",
+      "test:task-guards,test:citations,test:gate-callers"
+    ],
+    "exit": 0,
+    "seconds": 3.5074350833892822,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-2/dome-named.log"
+  }
+]

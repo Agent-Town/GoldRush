@@ -1,0 +1,119 @@
+
+Running 16 tests using 1 worker
+
+(node:37882) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘   1 [desktop-chrome] › e2e/advance-stream-bounded.spec.ts:17:1 › normal mode stops after the successor and honours the byte allowance (9.6s)
+(node:51336) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘   2 [desktop-chrome] › e2e/advance-stream-bounded.spec.ts:64:1 › balanced uses the smaller allowance and completed URLs are counted once across replans (46.7s)
+(node:43842) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘   3 [desktop-chrome] › e2e/advance-stream.spec.ts:34:1 › menu idle warms town first and publishes progress (18.1s)
+
+
+  1) [desktop-chrome] › e2e/advance-stream-bounded.spec.ts:17:1 › normal mode stops after the successor and honours the byte allowance 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 7
+    + Received  + 0
+
+    @@ -4,13 +4,6 @@
+        "/assets/pilots/map-rebuild-spike/landmarks/the-claim/active_headframe.glb",
+        "/assets/pilots/map-rebuild-spike/landmarks/the-claim/maintained_claim_house.glb",
+        "/assets/pilots/map-rebuild-spike/landmarks/the-claim/working_camp.glb",
+        "/assets/pilots/map-rebuild-spike/landmarks/the-claim/claim_stake.glb",
+        "/assets/pilots/map-rebuild-spike/landmarks/the-claim/riparian_dressing_pack.glb",
+    -   "http://127.0.0.1:5176/assets/pilots/map-rebuild-spike/dry-gulch-terrain.glb",
+    -   "http://127.0.0.1:5176/assets/pilots/map-rebuild-spike/dry-gulch-panorama.glb",
+    -   "/assets/pilots/map-rebuild-spike/landmarks/dry-gulch/ruined_mining_operation.glb",
+    -   "/assets/pilots/map-rebuild-spike/landmarks/dry-gulch/abandoned_farmhouse.glb",
+    -   "/assets/pilots/map-rebuild-spike/landmarks/dry-gulch/cactus_thicket.glb",
+    -   "/assets/pilots/map-rebuild-spike/landmarks/dry-gulch/bison_skeleton.glb",
+    -   "/assets/pilots/map-rebuild-spike/landmarks/dry-gulch/isolated_spring.glb",
+      ]
+
+      24 |     return { urls: requests.map(({ url }) => url), expected: [...new Set([...primary, ...successor])], allowance };
+      25 |   });
+    > 26 |   expect(normal.urls).toEqual(normal.expected);
+         |                       ^
+      27 |   expect(normal.allowance).toBe(testInfo.project.name === 'mobile-chrome' ? 12_000_000 : 24_000_000);
+      28 |   await page.waitForTimeout(1_200);
+      29 |   expect(await page.evaluate(() => window.__PREFETCH_FIXTURE__.requests.length)).toBe(normal.urls.length);
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/advance-stream-bounded.spec.ts:26:23
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/prefetch-bounded-warming/test-results/advance-stream-bounded-nor-b2b7e--honours-the-byte-allowance-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/prefetch-bounded-warming/test-results/advance-stream-bounded-nor-b2b7e--honours-the-byte-allowance-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/prefetch-bounded-warming/test-results/advance-stream-bounded-nor-b2b7e--honours-the-byte-allowance-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/prefetch-bounded-warming/test-results/advance-stream-bounded-nor-b2b7e--honours-the-byte-allowance-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [desktop-chrome] › e2e/advance-stream-bounded.spec.ts:64:1 › balanced uses the smaller allowance and completed URLs are counted once across replans 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.evaluate: Test timeout of 30000ms exceeded.
+
+      89 |
+      90 | async function mountStream(page: Page, scene: AdvanceStreamScene): Promise<void> {
+    > 91 |   await page.evaluate(async (scene) => {
+         |              ^
+      92 |     const streamPath = '/src/assets/AdvanceStream.ts';
+      93 |     const terrainPath = '/src/world/Terrain3dClaimPilot.ts';
+      94 |     const { createAdvanceStream, ADVANCE_STREAM_BYTES_KEY } = await import(streamPath);
+        at mountStream (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/advance-stream-bounded.spec.ts:91:14)
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/advance-stream-bounded.spec.ts:66:9
+
+    Error Context: artifacts/prefetch-bounded-warming/test-results/advance-stream-bounded-bal-9fccd-counted-once-across-replans-desktop-chrome/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/prefetch-bounded-warming/test-results/advance-stream-bounded-bal-9fccd-counted-once-across-replans-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/prefetch-bounded-warming/test-results/advance-stream-bounded-bal-9fccd-counted-once-across-replans-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [desktop-chrome] › e2e/advance-stream.spec.ts:34:1 › menu idle warms town first and publishes progress 
+
+    Test was interrupted.
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  locator('#game-canvas')
+    Expected: "menu"
+    Received: ""
+
+
+      44 |   const firstGlbs = prefetched.filter((url) => url.includes('.glb')).slice(0, 2).join('\n');
+      45 |   expect(firstGlbs).toMatch(/town-plate|town-v3-tavern/);
+    > 46 |   await expect(page.locator('#game-canvas')).toHaveAttribute('data-asset-prefetch-scene', 'menu');
+         |                                              ^
+      47 |   await expect.poll(() => page.locator('#game-canvas').getAttribute('data-asset-prefetch-total')).not.toBe('0');
+      48 |   await expect(page.locator('#game-canvas')).toHaveAttribute('data-asset-prefetch-progress', /\d+\/\d+/);
+      49 |   expect(errors).toEqual([]);
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/advance-stream.spec.ts:46:46
+
+    attachment #1: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/prefetch-bounded-warming/test-results/advance-stream-menu-idle-w-0422e-irst-and-publishes-progress-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/prefetch-bounded-warming/test-results/advance-stream-menu-idle-w-0422e-irst-and-publishes-progress-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [desktop-chrome] › e2e/advance-stream-bounded.spec.ts:17:1 › normal mode stops after the successor and honours the byte allowance 
+    [desktop-chrome] › e2e/advance-stream-bounded.spec.ts:64:1 › balanced uses the smaller allowance and completed URLs are counted once across replans 
+  1 interrupted
+    [desktop-chrome] › e2e/advance-stream.spec.ts:34:1 › menu idle warms town first and publishes progress 
+  13 did not run

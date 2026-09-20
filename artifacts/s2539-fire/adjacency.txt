@@ -1,0 +1,138 @@
+gate battery transcript (append-only — see scripts/gate-battery.mjs)
+
+
+######## BATTERY 2026-09-07T11:41:17.869Z — s2539 complete candidate adjacency and boot ########
+cwd=/private/tmp/gr-gate-s2539
+env+ PATH=/Users/robin/.nvm/versions/node/v26.4.0/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin GR_CAPTURE_EXTERNAL_SERVER=1 GR_CAPTURE_BASE_URL=http://127.0.0.1:5329 PROBE_BASE=http://127.0.0.1:5329
+
+===== complete task025 M1 M2 =====
+$ npx playwright test e2e/task-025-bandits-dont-swim.spec.ts e2e/m1-01-claim-jumpers-death.spec.ts e2e/m2-01-build-menu.spec.ts --project=desktop-chrome --project=mobile-chrome --workers=1 --trace=off --reporter=line --output=artifacts/s2539-gate/full-adjacency
+rc=1 208.9s
+
+Running 32 tests using 1 worker
+
+
+
+[1/32] [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:29:1 › T spawns Claim Jumpers, contact kills hero, R restarts in place
+  1) [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:29:1 › T spawns Claim Jumpers, contact kills hero, R restarts in place 
+
+    Error: expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      34 |   // damage outpaces the rig (iframes cap intake at ~16 dmg/s -> death ~6.5s).
+      35 |   await spawnDebugPack(page);
+    > 36 |   await expect.poll(async () => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.enemiesAlive)).toBeGreaterThan(0);
+         |                                                                                                       ^
+      37 |   for (let i = 0; i < 5; i += 1) {
+      38 |     await spawnDebugPack(page);
+      39 |   }
+        at /private/tmp/gr-gate-s2539/e2e/m1-01-claim-jumpers-death.spec.ts:36:103
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/s2539-gate/full-adjacency/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/s2539-gate/full-adjacency/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-desktop-chrome/error-context.md
+
+
+
+
+[2/32] [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:59:1 › nospawn blocks debug packs
+[3/32] [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:70:1 › double restart recycles enemies without geometry growth
+[4/32] [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:96:1 › stress=120 stays within pool and draw-call budget
+[5/32] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend
+[6/32] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs
+[7/32] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining
+[8/32] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:205:1 › beacon cost curve stays intact through the menu
+[9/32] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:227:1 › single enemy slides around a finite palisade line without passing through
+[10/32] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:284:1 › 390px build menu is visible, tappable, and clear of HUD controls
+[11/32] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:329:1 › stress draw calls stay under 200 with palisades and beacons
+[12/32] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only
+[13/32] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves
+[14/32] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel
+[15/32] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote
+[16/32] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open
+
+
+[17/32] [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:29:1 › T spawns Claim Jumpers, contact kills hero, R restarts in place
+  2) [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:29:1 › T spawns Claim Jumpers, contact kills hero, R restarts in place 
+
+    Error: expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      34 |   // damage outpaces the rig (iframes cap intake at ~16 dmg/s -> death ~6.5s).
+      35 |   await spawnDebugPack(page);
+    > 36 |   await expect.poll(async () => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.enemiesAlive)).toBeGreaterThan(0);
+         |                                                                                                       ^
+      37 |   for (let i = 0; i < 5; i += 1) {
+      38 |     await spawnDebugPack(page);
+      39 |   }
+        at /private/tmp/gr-gate-s2539/e2e/m1-01-claim-jumpers-death.spec.ts:36:103
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/s2539-gate/full-adjacency/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/s2539-gate/full-adjacency/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-mobile-chrome/error-context.md
+
+
+
+
+[18/32] [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:59:1 › nospawn blocks debug packs
+[19/32] [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:70:1 › double restart recycles enemies without geometry growth
+[20/32] [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:96:1 › stress=120 stays within pool and draw-call budget
+[21/32] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend
+[22/32] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs
+[23/32] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining
+[24/32] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:205:1 › beacon cost curve stays intact through the menu
+[25/32] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:227:1 › single enemy slides around a finite palisade line without passing through
+[26/32] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:284:1 › 390px build menu is visible, tappable, and clear of HUD controls
+[27/32] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:329:1 › stress draw calls stay under 200 with palisades and beacons
+[28/32] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only
+[29/32] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves
+[30/32] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel
+[31/32] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote
+[32/32] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open
+  2 failed
+    [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:29:1 › T spawns Claim Jumpers, contact kills hero, R restarts in place 
+    [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:29:1 › T spawns Claim Jumpers, contact kills hero, R restarts in place 
+  30 passed (3.5m)
+(node:14606) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:14704) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:16889) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:16986) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+===== plain desktop and 390px boot =====
+$ node scripts/probe-plain-boot-console.mjs
+rc=1 0.3s
+file:///private/tmp/gr-gate-s2539/rehearsal/base-url.mjs:40
+    throw new Error(`${envVarName} port ${port} belongs to ${cwd}, not ${root}. Start a server from ${root} and pass its URL.`);
+          ^
+
+Error: PROBE_BASE port 5329 belongs to /Users/robin/Claude/Projects/Gold Rush, not /private/tmp/gr-gate-s2539. Start a server from /private/tmp/gr-gate-s2539 and pass its URL.
+    at resolveBase (file:///private/tmp/gr-gate-s2539/rehearsal/base-url.mjs:40:11)
+    at file:///private/tmp/gr-gate-s2539/scripts/probe-plain-boot-console.mjs:28:17
+    at ModuleJob.run (node:internal/modules/esm/module_job:447:25)
+    at async node:internal/modules/esm/loader:646:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v26.4.0
+
+
+SUMMARY {"complete task025 M1 M2":1,"plain desktop and 390px boot":1}
+OVERALL rc=1

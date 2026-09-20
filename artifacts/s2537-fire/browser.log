@@ -1,0 +1,428 @@
+gate battery transcript (append-only — see scripts/gate-battery.mjs)
+
+
+######## BATTERY 2026-09-07T09:44:46.884Z — s2537-chapters-and-mandatory-adjacency ########
+cwd=/private/tmp/gr-gate-s2537
+env+ PATH=/Users/robin/.nvm/versions/node/v26.4.0/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin GR_CAPTURE_BASE_URL=http://127.0.0.1:5313 GR_CAPTURE_EXTERNAL_SERVER=1
+
+===== six chapter suites =====
+$ npx playwright test e2e/ss-06-e5-beats.spec.ts e2e/ss-07-e6-beats.spec.ts e2e/ss-08-e7-beats.spec.ts e2e/ss-09-e8-beats.spec.ts e2e/ss-10-e9-beats.spec.ts e2e/ss-11-e10-beats.spec.ts --project=desktop-chrome --project=mobile-chrome --workers=1 --trace=off --reporter=line
+rc=1 1313.0s
+
+Running 68 tests using 1 worker
+
+
+
+
+[1/68] [desktop-chrome] › e2e/ss-06-e5-beats.spec.ts:120:1 › SS-06 table is attributed, presentational, and uses the E2/E3 trigger vocabulary
+[2/68] [desktop-chrome] › e2e/ss-06-e5-beats.spec.ts:130:1 › a player-selected Deepwater town presents the Claim-Boat arrival and the manifest before the ride
+[desktop-chrome] › e2e/ss-06-e5-beats.spec.ts:130:1 › a player-selected Deepwater town presents the Claim-Boat arrival and the manifest before the ride
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[3/68] [desktop-chrome] › e2e/ss-06-e5-beats.spec.ts:162:1 › The Claim cannot load Deepwater beats in Frontier
+[desktop-chrome] › e2e/ss-06-e5-beats.spec.ts:162:1 › The Claim cannot load Deepwater beats in Frontier
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[4/68] [desktop-chrome] › e2e/ss-06-e5-beats.spec.ts:186:1 › F-SS06-2: the post-run Deepwater beats read the map the run returned from
+[desktop-chrome] › e2e/ss-06-e5-beats.spec.ts:186:1 › F-SS06-2: the post-run Deepwater beats read the map the run returned from
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[5/68] [desktop-chrome] › e2e/ss-06-e5-beats.spec.ts:214:1 › epoch-2-steamworks cannot load Deepwater beats
+[desktop-chrome] › e2e/ss-06-e5-beats.spec.ts:214:1 › epoch-2-steamworks cannot load Deepwater beats
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[6/68] [desktop-chrome] › e2e/ss-07-e6-beats.spec.ts:111:1 › SS-07 table is attributed, presentational, and uses the E2/E3 trigger vocabulary
+[7/68] [desktop-chrome] › e2e/ss-07-e6-beats.spec.ts:123:1 › a player-selected Atomic town presents the mesa arrival and the steward before the ride
+[desktop-chrome] › e2e/ss-07-e6-beats.spec.ts:123:1 › a player-selected Atomic town presents the mesa arrival and the steward before the ride
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[8/68] [desktop-chrome] › e2e/ss-07-e6-beats.spec.ts:150:1 › The Claim cannot load Atomic beats in Frontier
+[desktop-chrome] › e2e/ss-07-e6-beats.spec.ts:150:1 › The Claim cannot load Atomic beats in Frontier
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[9/68] [desktop-chrome] › e2e/ss-07-e6-beats.spec.ts:164:1 › epoch-3-voltage cannot load Atomic beats
+[desktop-chrome] › e2e/ss-07-e6-beats.spec.ts:164:1 › epoch-3-voltage cannot load Atomic beats
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[10/68] [desktop-chrome] › e2e/ss-07-e6-beats.spec.ts:181:1 › the Atomic boss and return beats fire only on their own triggers
+[desktop-chrome] › e2e/ss-07-e6-beats.spec.ts:181:1 › the Atomic boss and return beats fire only on their own triggers
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[11/68] [desktop-chrome] › e2e/ss-08-e7-beats.spec.ts:114:1 › SS-08 table is attributed, presentational, and uses the E2/E3 trigger vocabulary
+[12/68] [desktop-chrome] › e2e/ss-08-e7-beats.spec.ts:126:1 › a player-selected Signal town presents the ridge arrival, the wrong number and Chalk before the ride
+[desktop-chrome] › e2e/ss-08-e7-beats.spec.ts:126:1 › a player-selected Signal town presents the ridge arrival, the wrong number and Chalk before the ride
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[13/68] [desktop-chrome] › e2e/ss-08-e7-beats.spec.ts:155:1 › The Claim cannot load Signal beats in Frontier
+[desktop-chrome] › e2e/ss-08-e7-beats.spec.ts:155:1 › The Claim cannot load Signal beats in Frontier
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[14/68] [desktop-chrome] › e2e/ss-08-e7-beats.spec.ts:169:1 › epoch-3-voltage cannot load Signal beats
+[desktop-chrome] › e2e/ss-08-e7-beats.spec.ts:169:1 › epoch-3-voltage cannot load Signal beats
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[15/68] [desktop-chrome] › e2e/ss-08-e7-beats.spec.ts:186:1 › the Echo and the silences fire only on their own triggers
+[desktop-chrome] › e2e/ss-08-e7-beats.spec.ts:186:1 › the Echo and the silences fire only on their own triggers
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[16/68] [desktop-chrome] › e2e/ss-09-e8-beats.spec.ts:145:1 › SS-09 table is attributed, presentational, and uses the E2/E3 trigger vocabulary
+[17/68] [desktop-chrome] › e2e/ss-09-e8-beats.spec.ts:158:1 › a player-selected Orbital town presents the mare arrival and the breach drill before the ride
+[desktop-chrome] › e2e/ss-09-e8-beats.spec.ts:158:1 › a player-selected Orbital town presents the mare arrival and the breach drill before the ride
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[18/68] [desktop-chrome] › e2e/ss-09-e8-beats.spec.ts:187:1 › The Claim cannot load Orbital beats in Frontier
+[desktop-chrome] › e2e/ss-09-e8-beats.spec.ts:187:1 › The Claim cannot load Orbital beats in Frontier
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[19/68] [desktop-chrome] › e2e/ss-09-e8-beats.spec.ts:201:1 › epoch-3-voltage cannot load Orbital beats
+[desktop-chrome] › e2e/ss-09-e8-beats.spec.ts:201:1 › epoch-3-voltage cannot load Orbital beats
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[20/68] [desktop-chrome] › e2e/ss-09-e8-beats.spec.ts:212:1 › the Orbital boss, return and ceiling beats fire only on their own triggers
+[desktop-chrome] › e2e/ss-09-e8-beats.spec.ts:212:1 › the Orbital boss, return and ceiling beats fire only on their own triggers
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[21/68] [desktop-chrome] › e2e/ss-09-e8-beats.spec.ts:276:1 › the other three Orbital maps speak only when their own card unlocks
+[desktop-chrome] › e2e/ss-09-e8-beats.spec.ts:276:1 › the other three Orbital maps speak only when their own card unlocks
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[22/68] [desktop-chrome] › e2e/ss-10-e9-beats.spec.ts:149:1 › SS-10 table is attributed, presentational, and uses the shipped trigger vocabulary
+[23/68] [desktop-chrome] › e2e/ss-10-e9-beats.spec.ts:159:1 › every SS-10 artKey names a plate that is actually on disk
+[24/68] [desktop-chrome] › e2e/ss-10-e9-beats.spec.ts:166:1 › a player-selected Red Fields town presents the arrival, the water ledger and the cast before the ride
+[desktop-chrome] › e2e/ss-10-e9-beats.spec.ts:166:1 › a player-selected Red Fields town presents the arrival, the water ledger and the cast before the ride
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[25/68] [desktop-chrome] › e2e/ss-10-e9-beats.spec.ts:202:1 › The Claim cannot load Red Fields beats in Frontier
+[desktop-chrome] › e2e/ss-10-e9-beats.spec.ts:202:1 › The Claim cannot load Red Fields beats in Frontier
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[26/68] [desktop-chrome] › e2e/ss-10-e9-beats.spec.ts:216:1 › every Old Digger act reaches one beat, and only its own
+[desktop-chrome] › e2e/ss-10-e9-beats.spec.ts:216:1 › every Old Digger act reaches one beat, and only its own
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[27/68] [desktop-chrome] › e2e/ss-10-e9-beats.spec.ts:249:1 › epoch-2-steamworks cannot load Red Fields beats
+[desktop-chrome] › e2e/ss-10-e9-beats.spec.ts:249:1 › epoch-2-steamworks cannot load Red Fields beats
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[28/68] [desktop-chrome] › e2e/ss-11-e10-beats.spec.ts:169:1 › SS-11 table is attributed, presentational, and uses the E2/E3 trigger vocabulary
+[29/68] [desktop-chrome] › e2e/ss-11-e10-beats.spec.ts:182:1 › every Deep Sky beat cites a storybook line in source
+[30/68] [desktop-chrome] › e2e/ss-11-e10-beats.spec.ts:194:1 › a player-selected Deep Sky town presents the boarding and the Long Table before the ride
+[desktop-chrome] › e2e/ss-11-e10-beats.spec.ts:194:1 › a player-selected Deep Sky town presents the boarding and the Long Table before the ride
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[31/68] [desktop-chrome] › e2e/ss-11-e10-beats.spec.ts:234:1 › The Claim cannot load Deep Sky beats in Frontier
+[desktop-chrome] › e2e/ss-11-e10-beats.spec.ts:234:1 › The Claim cannot load Deep Sky beats in Frontier
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[32/68] [desktop-chrome] › e2e/ss-11-e10-beats.spec.ts:248:1 › epoch-3-voltage cannot load Deep Sky beats
+[desktop-chrome] › e2e/ss-11-e10-beats.spec.ts:248:1 › epoch-3-voltage cannot load Deep Sky beats
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[33/68] [desktop-chrome] › e2e/ss-11-e10-beats.spec.ts:259:1 › the Quiet, the return and the Press beats fire only on their own triggers
+[desktop-chrome] › e2e/ss-11-e10-beats.spec.ts:259:1 › the Quiet, the return and the Press beats fire only on their own triggers
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[34/68] [desktop-chrome] › e2e/ss-11-e10-beats.spec.ts:339:1 › the other two Deep Sky worlds speak only when their own card unlocks
+[desktop-chrome] › e2e/ss-11-e10-beats.spec.ts:339:1 › the other two Deep Sky worlds speak only when their own card unlocks
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+
+
+
+[35/68] [mobile-chrome] › e2e/ss-06-e5-beats.spec.ts:120:1 › SS-06 table is attributed, presentational, and uses the E2/E3 trigger vocabulary
+[36/68] [mobile-chrome] › e2e/ss-06-e5-beats.spec.ts:130:1 › a player-selected Deepwater town presents the Claim-Boat arrival and the manifest before the ride
+[mobile-chrome] › e2e/ss-06-e5-beats.spec.ts:130:1 › a player-selected Deepwater town presents the Claim-Boat arrival and the manifest before the ride
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[37/68] [mobile-chrome] › e2e/ss-06-e5-beats.spec.ts:162:1 › The Claim cannot load Deepwater beats in Frontier
+[mobile-chrome] › e2e/ss-06-e5-beats.spec.ts:162:1 › The Claim cannot load Deepwater beats in Frontier
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[38/68] [mobile-chrome] › e2e/ss-06-e5-beats.spec.ts:186:1 › F-SS06-2: the post-run Deepwater beats read the map the run returned from
+[mobile-chrome] › e2e/ss-06-e5-beats.spec.ts:186:1 › F-SS06-2: the post-run Deepwater beats read the map the run returned from
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[39/68] [mobile-chrome] › e2e/ss-06-e5-beats.spec.ts:214:1 › epoch-2-steamworks cannot load Deepwater beats
+[mobile-chrome] › e2e/ss-06-e5-beats.spec.ts:214:1 › epoch-2-steamworks cannot load Deepwater beats
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[40/68] [mobile-chrome] › e2e/ss-07-e6-beats.spec.ts:111:1 › SS-07 table is attributed, presentational, and uses the E2/E3 trigger vocabulary
+[41/68] [mobile-chrome] › e2e/ss-07-e6-beats.spec.ts:123:1 › a player-selected Atomic town presents the mesa arrival and the steward before the ride
+[mobile-chrome] › e2e/ss-07-e6-beats.spec.ts:123:1 › a player-selected Atomic town presents the mesa arrival and the steward before the ride
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[42/68] [mobile-chrome] › e2e/ss-07-e6-beats.spec.ts:150:1 › The Claim cannot load Atomic beats in Frontier
+[mobile-chrome] › e2e/ss-07-e6-beats.spec.ts:150:1 › The Claim cannot load Atomic beats in Frontier
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[43/68] [mobile-chrome] › e2e/ss-07-e6-beats.spec.ts:164:1 › epoch-3-voltage cannot load Atomic beats
+[mobile-chrome] › e2e/ss-07-e6-beats.spec.ts:164:1 › epoch-3-voltage cannot load Atomic beats
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[44/68] [mobile-chrome] › e2e/ss-07-e6-beats.spec.ts:181:1 › the Atomic boss and return beats fire only on their own triggers
+[mobile-chrome] › e2e/ss-07-e6-beats.spec.ts:181:1 › the Atomic boss and return beats fire only on their own triggers
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[45/68] [mobile-chrome] › e2e/ss-08-e7-beats.spec.ts:114:1 › SS-08 table is attributed, presentational, and uses the E2/E3 trigger vocabulary
+[46/68] [mobile-chrome] › e2e/ss-08-e7-beats.spec.ts:126:1 › a player-selected Signal town presents the ridge arrival, the wrong number and Chalk before the ride
+[mobile-chrome] › e2e/ss-08-e7-beats.spec.ts:126:1 › a player-selected Signal town presents the ridge arrival, the wrong number and Chalk before the ride
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[47/68] [mobile-chrome] › e2e/ss-08-e7-beats.spec.ts:155:1 › The Claim cannot load Signal beats in Frontier
+  1) [mobile-chrome] › e2e/ss-08-e7-beats.spec.ts:155:1 › The Claim cannot load Signal beats in Frontier 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    Expected: []
+    Received: undefined
+
+      162 |   await page.getByTestId('contract-launch-the-claim').click();
+      163 |   await page.waitForFunction(() => window.__THREE_GAME_DIAGNOSTICS__?.contract.activeId === 'the-claim', undefined, { timeout: 60_000 });
+    > 164 |   expect(await page.evaluate(() => window.__GR_STORY__?.pending().filter((id) => id.startsWith('e7-')))).toEqual([]);
+          |                                                                                                          ^
+      165 |   await expect(page.locator('[data-beat-id^="e7-"]')).toHaveCount(0);
+      166 |   expectNoConsoleErrors(errors);
+      167 | });
+        at /private/tmp/gr-gate-s2537/e2e/ss-08-e7-beats.spec.ts:164:106
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ss-08-e7-beats-The-Claim-c-1f3fb-ad-Signal-beats-in-Frontier-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/ss-08-e7-beats-The-Claim-c-1f3fb-ad-Signal-beats-in-Frontier-mobile-chrome/error-context.md
+
+
+
+
+
+[48/68] [mobile-chrome] › e2e/ss-08-e7-beats.spec.ts:169:1 › epoch-3-voltage cannot load Signal beats
+[mobile-chrome] › e2e/ss-08-e7-beats.spec.ts:169:1 › epoch-3-voltage cannot load Signal beats
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[49/68] [mobile-chrome] › e2e/ss-08-e7-beats.spec.ts:186:1 › the Echo and the silences fire only on their own triggers
+[mobile-chrome] › e2e/ss-08-e7-beats.spec.ts:186:1 › the Echo and the silences fire only on their own triggers
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[50/68] [mobile-chrome] › e2e/ss-09-e8-beats.spec.ts:145:1 › SS-09 table is attributed, presentational, and uses the E2/E3 trigger vocabulary
+[51/68] [mobile-chrome] › e2e/ss-09-e8-beats.spec.ts:158:1 › a player-selected Orbital town presents the mare arrival and the breach drill before the ride
+[mobile-chrome] › e2e/ss-09-e8-beats.spec.ts:158:1 › a player-selected Orbital town presents the mare arrival and the breach drill before the ride
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[52/68] [mobile-chrome] › e2e/ss-09-e8-beats.spec.ts:187:1 › The Claim cannot load Orbital beats in Frontier
+[mobile-chrome] › e2e/ss-09-e8-beats.spec.ts:187:1 › The Claim cannot load Orbital beats in Frontier
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[53/68] [mobile-chrome] › e2e/ss-09-e8-beats.spec.ts:201:1 › epoch-3-voltage cannot load Orbital beats
+[mobile-chrome] › e2e/ss-09-e8-beats.spec.ts:201:1 › epoch-3-voltage cannot load Orbital beats
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[54/68] [mobile-chrome] › e2e/ss-09-e8-beats.spec.ts:212:1 › the Orbital boss, return and ceiling beats fire only on their own triggers
+[mobile-chrome] › e2e/ss-09-e8-beats.spec.ts:212:1 › the Orbital boss, return and ceiling beats fire only on their own triggers
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[55/68] [mobile-chrome] › e2e/ss-09-e8-beats.spec.ts:276:1 › the other three Orbital maps speak only when their own card unlocks
+[mobile-chrome] › e2e/ss-09-e8-beats.spec.ts:276:1 › the other three Orbital maps speak only when their own card unlocks
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[56/68] [mobile-chrome] › e2e/ss-10-e9-beats.spec.ts:149:1 › SS-10 table is attributed, presentational, and uses the shipped trigger vocabulary
+[57/68] [mobile-chrome] › e2e/ss-10-e9-beats.spec.ts:159:1 › every SS-10 artKey names a plate that is actually on disk
+[58/68] [mobile-chrome] › e2e/ss-10-e9-beats.spec.ts:166:1 › a player-selected Red Fields town presents the arrival, the water ledger and the cast before the ride
+[mobile-chrome] › e2e/ss-10-e9-beats.spec.ts:166:1 › a player-selected Red Fields town presents the arrival, the water ledger and the cast before the ride
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[59/68] [mobile-chrome] › e2e/ss-10-e9-beats.spec.ts:202:1 › The Claim cannot load Red Fields beats in Frontier
+[mobile-chrome] › e2e/ss-10-e9-beats.spec.ts:202:1 › The Claim cannot load Red Fields beats in Frontier
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[60/68] [mobile-chrome] › e2e/ss-10-e9-beats.spec.ts:216:1 › every Old Digger act reaches one beat, and only its own
+[mobile-chrome] › e2e/ss-10-e9-beats.spec.ts:216:1 › every Old Digger act reaches one beat, and only its own
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[61/68] [mobile-chrome] › e2e/ss-10-e9-beats.spec.ts:249:1 › epoch-2-steamworks cannot load Red Fields beats
+[mobile-chrome] › e2e/ss-10-e9-beats.spec.ts:249:1 › epoch-2-steamworks cannot load Red Fields beats
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[62/68] [mobile-chrome] › e2e/ss-11-e10-beats.spec.ts:169:1 › SS-11 table is attributed, presentational, and uses the E2/E3 trigger vocabulary
+[63/68] [mobile-chrome] › e2e/ss-11-e10-beats.spec.ts:182:1 › every Deep Sky beat cites a storybook line in source
+[64/68] [mobile-chrome] › e2e/ss-11-e10-beats.spec.ts:194:1 › a player-selected Deep Sky town presents the boarding and the Long Table before the ride
+[mobile-chrome] › e2e/ss-11-e10-beats.spec.ts:194:1 › a player-selected Deep Sky town presents the boarding and the Long Table before the ride
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[65/68] [mobile-chrome] › e2e/ss-11-e10-beats.spec.ts:234:1 › The Claim cannot load Deep Sky beats in Frontier
+[mobile-chrome] › e2e/ss-11-e10-beats.spec.ts:234:1 › The Claim cannot load Deep Sky beats in Frontier
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[66/68] [mobile-chrome] › e2e/ss-11-e10-beats.spec.ts:248:1 › epoch-3-voltage cannot load Deep Sky beats
+[mobile-chrome] › e2e/ss-11-e10-beats.spec.ts:248:1 › epoch-3-voltage cannot load Deep Sky beats
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[67/68] [mobile-chrome] › e2e/ss-11-e10-beats.spec.ts:259:1 › the Quiet, the return and the Press beats fire only on their own triggers
+[mobile-chrome] › e2e/ss-11-e10-beats.spec.ts:259:1 › the Quiet, the return and the Press beats fire only on their own triggers
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[68/68] [mobile-chrome] › e2e/ss-11-e10-beats.spec.ts:339:1 › the other two Deep Sky worlds speak only when their own card unlocks
+[mobile-chrome] › e2e/ss-11-e10-beats.spec.ts:339:1 › the other two Deep Sky worlds speak only when their own card unlocks
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+  1 failed
+    [mobile-chrome] › e2e/ss-08-e7-beats.spec.ts:155:1 › The Claim cannot load Signal beats in Frontier 
+  67 passed (21.9m)
+(node:73428) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:73449) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:73449) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(node:50638) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:50638) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(node:56163) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:56163) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+
+
+===== minimum adjacency =====
+$ npx playwright test e2e/task-025-bandits-dont-swim.spec.ts e2e/m1-01-claim-jumpers-death.spec.ts e2e/m2-01-build-menu.spec.ts --project=desktop-chrome --project=mobile-chrome --workers=1 --trace=off --reporter=line
+rc=1 143.9s
+
+Running 32 tests using 1 worker
+
+
+
+[1/32] [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:29:1 › T spawns Claim Jumpers, contact kills hero, R restarts in place
+  1) [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:29:1 › T spawns Claim Jumpers, contact kills hero, R restarts in place 
+
+    Error: expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      34 |   // damage outpaces the rig (iframes cap intake at ~16 dmg/s -> death ~6.5s).
+      35 |   await spawnDebugPack(page);
+    > 36 |   await expect.poll(async () => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.enemiesAlive)).toBeGreaterThan(0);
+         |                                                                                                       ^
+      37 |   for (let i = 0; i < 5; i += 1) {
+      38 |     await spawnDebugPack(page);
+      39 |   }
+        at /private/tmp/gr-gate-s2537/e2e/m1-01-claim-jumpers-death.spec.ts:36:103
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-desktop-chrome/error-context.md
+
+
+
+
+[2/32] [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:59:1 › nospawn blocks debug packs
+[3/32] [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:70:1 › double restart recycles enemies without geometry growth
+[4/32] [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:96:1 › stress=120 stays within pool and draw-call budget
+[5/32] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend
+[6/32] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs
+[7/32] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining
+  2) [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 2
+    Received: 1
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      85 |   const before = await buildableCount(page, id);
+      86 |   await page.keyboard.press('Enter');
+    > 87 |   await expect.poll(() => buildableCount(page, id)).toBe(before + 1);
+         |                                                     ^
+      88 | }
+      89 |
+      90 | async function buildableCount(page: Page, id: BuildableId): Promise<number> {
+        at placeSelected (/private/tmp/gr-gate-s2537/e2e/m2-01-build-menu.spec.ts:87:53)
+        at /private/tmp/gr-gate-s2537/e2e/m2-01-build-menu.spec.ts:197:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/m2-01-build-menu-palisade--49d2a-llowing-edge-touch-chaining-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/m2-01-build-menu-palisade--49d2a-llowing-edge-touch-chaining-desktop-chrome/error-context.md
+
+
+
+
+[8/32] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:204:1 › beacon cost curve stays intact through the menu
+[9/32] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:226:1 › single enemy slides around a finite palisade line without passing through
+[10/32] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:283:1 › 390px build menu is visible, tappable, and clear of HUD controls
+[11/32] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:328:1 › stress draw calls stay under 200 with palisades and beacons
+[12/32] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only
+[13/32] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves
+[14/32] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel
+[15/32] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote
+[16/32] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open
+
+
+[17/32] [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:29:1 › T spawns Claim Jumpers, contact kills hero, R restarts in place
+  3) [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:29:1 › T spawns Claim Jumpers, contact kills hero, R restarts in place 
+
+    Error: expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      34 |   // damage outpaces the rig (iframes cap intake at ~16 dmg/s -> death ~6.5s).
+      35 |   await spawnDebugPack(page);
+    > 36 |   await expect.poll(async () => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.enemiesAlive)).toBeGreaterThan(0);
+         |                                                                                                       ^
+      37 |   for (let i = 0; i < 5; i += 1) {
+      38 |     await spawnDebugPack(page);
+      39 |   }
+        at /private/tmp/gr-gate-s2537/e2e/m1-01-claim-jumpers-death.spec.ts:36:103
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-mobile-chrome/error-context.md
+
+
+
+
+[18/32] [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:59:1 › nospawn blocks debug packs
+[19/32] [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:70:1 › double restart recycles enemies without geometry growth
+[20/32] [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:96:1 › stress=120 stays within pool and draw-call budget
+[21/32] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend
+[22/32] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs
+[23/32] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining
+[24/32] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:204:1 › beacon cost curve stays intact through the menu
+[25/32] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:226:1 › single enemy slides around a finite palisade line without passing through
+[26/32] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:283:1 › 390px build menu is visible, tappable, and clear of HUD controls
+[27/32] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:328:1 › stress draw calls stay under 200 with palisades and beacons
+[28/32] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only
+[29/32] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves
+[30/32] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel
+[31/32] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote
+[32/32] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open
+  3 failed
+    [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:29:1 › T spawns Claim Jumpers, contact kills hero, R restarts in place 
+    [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining 
+    [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:29:1 › T spawns Claim Jumpers, contact kills hero, R restarts in place 
+  29 passed (2.4m)
+(node:68610) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:68668) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:68816) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:70804) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:70843) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+SUMMARY {"six chapter suites":1,"minimum adjacency":1}
+OVERALL rc=1

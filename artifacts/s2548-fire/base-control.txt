@@ -1,0 +1,99 @@
+gate battery transcript (append-only — see scripts/gate-battery.mjs)
+
+
+######## BATTERY 2026-09-07T16:53:55.541Z — s2548 unchanged-base sources ########
+cwd=/tmp/gr-fire-s2548-capture
+
+===== unchanged-base gold control =====
+$ node --test --test-name-pattern=standing.*gold scripts/board-tape-gold.test.mjs
+rc=1 4.8s
+✖ e8-mare-claim: the standing's gold is the purse held at the secure tick (1426.949667ms)
+✖ e3-moth-season: the standing's gold is the purse held at the secure tick (1511.339625ms)
+✖ e7-relay-rush: the standing's gold is the purse held at the secure tick (1593.818625ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 0
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4748.296541
+
+✖ failing tests:
+
+test at scripts/board-tape-gold.test.mjs:96:3
+✖ e8-mare-claim: the standing's gold is the purse held at the secure tick (1426.949667ms)
+  AssertionError [ERR_ASSERTION]: (node:29400) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+  (Use `node --trace-warnings ...` to show where the warning was created)
+  assay replay failed: malformed tape
+  
+  
+  1 !== 0
+  
+      at seam (file:///private/tmp/gr-fire-s2548-capture/scripts/board-tape-gold.test.mjs:330:12)
+      at TestContext.<anonymous> (file:///private/tmp/gr-fire-s2548-capture/scripts/board-tape-gold.test.mjs:105:20)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at scripts/board-tape-gold.test.mjs:96:3
+✖ e3-moth-season: the standing's gold is the purse held at the secure tick (1511.339625ms)
+  AssertionError [ERR_ASSERTION]: (node:29416) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+  (Use `node --trace-warnings ...` to show where the warning was created)
+  assay replay failed: malformed tape
+  
+  
+  1 !== 0
+  
+      at seam (file:///private/tmp/gr-fire-s2548-capture/scripts/board-tape-gold.test.mjs:330:12)
+      at TestContext.<anonymous> (file:///private/tmp/gr-fire-s2548-capture/scripts/board-tape-gold.test.mjs:105:20)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at scripts/board-tape-gold.test.mjs:96:3
+✖ e7-relay-rush: the standing's gold is the purse held at the secure tick (1593.818625ms)
+  AssertionError [ERR_ASSERTION]: (node:30126) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+  (Use `node --trace-warnings ...` to show where the warning was created)
+  assay replay failed: malformed tape
+  
+  
+  1 !== 0
+  
+      at seam (file:///private/tmp/gr-fire-s2548-capture/scripts/board-tape-gold.test.mjs:330:12)
+      at TestContext.<anonymous> (file:///private/tmp/gr-fire-s2548-capture/scripts/board-tape-gold.test.mjs:105:20)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+
+SUMMARY {"unchanged-base gold control":1}
+OVERALL rc=1

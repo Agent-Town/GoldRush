@@ -1,0 +1,36 @@
+{
+  "kind": "fixed-framing-flat-vs-sculpted",
+  "note": "Metrics locate change; they are not an acceptance score.",
+  "results": [
+    {
+      "map": "pressure-garden",
+      "dimensions": {
+        "width": 1280,
+        "height": 720
+      },
+      "luminanceMae": 5.6759,
+      "luminanceRmse": 9.807,
+      "diffRatio16": 0.118005,
+      "diffRatio32": 0.011458,
+      "edgeEnergyFlat": 2.4036,
+      "edgeEnergySculpted": 2.516,
+      "edgeEnergyRatio": 1.0468,
+      "interpretation": "location telemetry only; difference is expected because the sculpt must depart from the flat plane"
+    },
+    {
+      "map": "incline",
+      "dimensions": {
+        "width": 1280,
+        "height": 720
+      },
+      "luminanceMae": 5.2218,
+      "luminanceRmse": 9.81,
+      "diffRatio16": 0.105651,
+      "diffRatio32": 0.018216,
+      "edgeEnergyFlat": 2.1076,
+      "edgeEnergySculpted": 2.2241,
+      "edgeEnergyRatio": 1.0553,
+      "interpretation": "location telemetry only; difference is expected because the sculpt must depart from the flat plane"
+    }
+  ]
+}

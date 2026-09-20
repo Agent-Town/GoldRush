@@ -1,0 +1,466 @@
+[
+  {
+    "width": 1280,
+    "url": "http://127.0.0.1:5303/?contract=the-claim&nowaves=",
+    "state": {
+      "contract": {
+        "activeId": "the-claim",
+        "requestedId": "the-claim",
+        "fallbackReason": null,
+        "stagedLaunchClear": null,
+        "warningSuppressed": false,
+        "epochId": "epoch-1-frontier",
+        "epochResources": [],
+        "claimOffice": null,
+        "name": "The River",
+        "tileParams": {
+          "tileId": "frontier-river-claim",
+          "biome": "river-claim",
+          "river": true,
+          "ford": true,
+          "waterSources": [],
+          "lanes": {
+            "spawnEdges": [
+              "north",
+              "south",
+              "east",
+              "west"
+            ],
+            "territoryRingBiasWaves": 0,
+            "territoryRingLaneBias": 0
+          },
+          "size": 64,
+          "fords": [
+            {
+              "id": "center-ford",
+              "x": 0,
+              "halfWidth": 3
+            }
+          ],
+          "harvestAnchors": [
+            {
+              "x": -22,
+              "z": -6.8
+            },
+            {
+              "x": -9,
+              "z": 6.7
+            },
+            {
+              "x": -1.5,
+              "z": -6.4
+            },
+            {
+              "x": 7.5,
+              "z": 6.5
+            },
+            {
+              "x": 18,
+              "z": -7
+            },
+            {
+              "x": 25,
+              "z": 6.9
+            }
+          ],
+          "water": {
+            "id": "frontier-river-depth",
+            "centerZ": 0,
+            "halfWidth": 5,
+            "visualHalfWidth": 6.25
+          }
+        },
+        "boardRow": {
+          "name": "The River",
+          "ledgerBlurb": "The first claim, re-inked in dawn light.",
+          "tags": [
+            "river"
+          ],
+          "unlock": "post-credits"
+        },
+        "briefing": {
+          "goals": [
+            "Pan the dawn river."
+          ],
+          "rules": [
+            "There are no enemies and no waves.",
+            "Names surface as gold flecks; when the last settles, the river keeps going."
+          ],
+          "geographyLine": "The first claim returns in dawn light: one river, one ford, and one pan."
+        },
+        "seamYieldMult": 1,
+        "secureWave": 10,
+        "waveCadenceMult": 1,
+        "lightRamp": null,
+        "dayNightCycle": null,
+        "baron": null,
+        "medals": {
+          "version": 1,
+          "baronBeaten": false,
+          "rocketCartCaptured": false
+        }
+      },
+      "hero": {
+        "x": 0,
+        "y": 0.3708261525630951,
+        "z": 12
+      },
+      "dataset": {
+        "assetPrefetchScene": "run",
+        "assetPrefetchState": "ready",
+        "assetPrefetchReady": "12",
+        "assetPrefetchTotal": "12",
+        "assetPrefetchProgress": "12/12",
+        "assetPrefetchFailed": "0",
+        "assetPrefetchPriority": "0",
+        "assetPrefetchTarget": "",
+        "assetPrefetchSaveData": "false",
+        "assetPrefetchEnabled": "true",
+        "assetPrefetchAllowance": "24000000",
+        "assetPrefetchBytes": "18207032",
+        "assetPrefetchTownState": "ready",
+        "spriteClipGroups": "claim town",
+        "railcar3dState": "off",
+        "railcar3dSource": "billboard",
+        "railcar3dMounted": "false",
+        "railcar3dDamageStates": "{\"wheels\":\"intact\",\"boiler\":\"intact\",\"cabin\":\"intact\"}",
+        "bossBarVisible": "false",
+        "bossBarSemantic": "none",
+        "bossBarRemaining": "0",
+        "bossBarDepleted": "0",
+        "bossBarRemainingColor": "#6bb36b",
+        "bossBarDepletedColor": "#a0522d",
+        "bossBarComponent": "shared",
+        "bossBarAnchor": "none",
+        "bossBarOrientation": "none",
+        "bossBarPosition": "none",
+        "crawler3dState": "off",
+        "crawler3dSource": "placeholder",
+        "crawler3dMounted": "false",
+        "crawler3dDamageStates": "{\"drain_mast\":\"intact\",\"tracks\":\"intact\",\"capacitor_bank\":\"intact\"}",
+        "dredgeQueen3dState": "off",
+        "dredgeQueen3dSource": "placeholder",
+        "dredgeQueen3dMounted": "false",
+        "dredgeQueen3dPresentation": "hidden",
+        "dredgeQueen3dDamageStates": "{\"claw\":\"intact\",\"paddle_port\":\"intact\",\"paddle_starboard\":\"intact\",\"hold\":\"intact\"}",
+        "salvageClaw3dState": "off",
+        "salvageClaw3dSource": "placeholder",
+        "salvageClaw3dMounted": "false",
+        "salvageClaw3dPresentation": "hidden",
+        "homemaker3dState": "off",
+        "homemaker3dSource": "placeholder",
+        "homemaker3dMounted": "false",
+        "homemaker3dPresentation": "hidden",
+        "homemaker3dDamageStates": "{\"vac\":\"intact\",\"rack\":\"intact\",\"core\":\"intact\"}",
+        "oldDigger3dState": "off",
+        "oldDigger3dSource": "placeholder",
+        "oldDigger3dMounted": "false",
+        "oldDigger3dPresentation": "hidden",
+        "assetLoadingLabel": "the claim",
+        "assetLoadingReady": "30",
+        "assetLoadingTotal": "30",
+        "assetLoadingProgress": "30/30",
+        "assetLoadingState": "ready",
+        "engine": "three.js r184",
+        "terrain3dPilotState": "ready",
+        "terrain3dPilotRenderSource": "glb",
+        "run3dPilotState": "ready",
+        "nightPoolSurfaceSources": "0",
+        "nightPoolSurfaceMaxRadius": "0",
+        "cameraAspect": "1.6",
+        "cssAspect": "1.6",
+        "prospectorSkin": "stock",
+        "prospectorSheet": "stock",
+        "run3dPilotMeshes": "0",
+        "run3dPilotTriangles": "0",
+        "terrain3dPilotContract": "the-claim",
+        "terrain3dPilotTerrainLoadState": "mounted",
+        "terrain3dPilotPanoramaLoadState": "mounted",
+        "terrain3dPilotLandmarkLoadState": "mounted",
+        "terrain3dPilotHeightSource": "baked-grid",
+        "terrain3dPilotMeshes": "1",
+        "terrain3dPilotTriangles": "32768",
+        "terrain3dPilotMaterials": "1",
+        "terrain3dPilotVertices": "16641",
+        "terrain3dPilotPanorama": "the-claim-panorama",
+        "terrain3dPilotPanoramaMeshes": "1",
+        "terrain3dPilotPanoramaTriangles": "1920",
+        "terrain3dPilotPanoramaMaterials": "1",
+        "terrain3dPilotPanoramaVertices": "1351",
+        "heroSheet": "young",
+        "heroSkin": "stock",
+        "heroSkinSheet": "stock",
+        "terrain3dPilotNightPools": "off",
+        "terrain3dPilotNightPoolSources": "0",
+        "terrain3dPilotSpringPonds": "0",
+        "terrain3dPilotSpringPondWaterRadii": "[]",
+        "terrain3dPilotChannelWater": "0",
+        "terrain3dPilotFordWater": "0",
+        "terrain3dPilotChannelWaterHalfWidths": "[]",
+        "terrain3dPilotSculptWater": "living-water-quad",
+        "terrain3dPilotSculptWaterHalfWidth": "6.250",
+        "terrain3dPilotSculptWaterSimHalfWidth": "6.250",
+        "terrain3dPilotSculptWaterY": "-0.0274",
+        "terrain3dPilotSculptWaterGlints": "6",
+        "terrain3dPilotSculptWaterDeepest": "0.483",
+        "terrain3dPilotSculptWaterFords": "center-ford@0",
+        "terrain3dPilotMotes": "200",
+        "terrain3dPilotHiddenRelief": "6",
+        "terrain3dPilotHiddenGroundLayers": "TerrainVistaRing|TerrainReliefMesh|terrain.river|terrain.ford|FordSteppingStones|SpringPonds",
+        "terrain3dPilotContinuation": "sculpt-edge-continuation",
+        "terrain3dPilotHorizonApron": "painted",
+        "terrain3dPilotFarGroundProbe": "off",
+        "terrain3dPilotPanoramaFraming": "world-projected-horizon",
+        "terrain3dPilotSkirtBlend": "opaque-sculpt-edge",
+        "terrain3dPilotPanoramaFog": "excluded",
+        "terrain3dPilotPanoramaDepth": "screen-horizon-backdrop",
+        "terrain3dPilotLandmarkExpected": "5",
+        "terrain3dPilotWalkSurfaces": "0",
+        "terrain3dPilotContactShadows": "4",
+        "terrain3dPilotRushEmbers": "0",
+        "terrain3dPilotLandmarkEmissive": "1.45",
+        "terrain3dPilotLandmarkSides": "{\"total\":{\"meshes\":5,\"closed\":5,\"open\":0,\"culled\":5,\"doubleSided\":0},\"mounts\":[{\"id\":\"active_headframe\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.167,\"topY\":7.16},{\"id\":\"maintained_claim_house\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.879,\"topY\":5.17},{\"id\":\"working_camp\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.391,\"topY\":3.177},{\"id\":\"claim_stake\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.503,\"topY\":2.414},{\"id\":\"riparian_dressing_pack\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.222,\"topY\":1.789}]}",
+        "terrain3dPilotLandmarks": "5",
+        "terrain3dPilotLandmarkSkipped": "0",
+        "terrain3dPilotLandmarkDiagnostics": "",
+        "terrain3dPilotLandmarkMounts": "[{\"id\":\"active_headframe\",\"x\":-13,\"y\":0.5760577440261843,\"z\":-8.8},{\"id\":\"maintained_claim_house\",\"x\":10.5,\"y\":0.8792812824249268,\"z\":14.5},{\"id\":\"working_camp\",\"x\":-8.5,\"y\":0.6460151076316833,\"z\":16.5},{\"id\":\"claim_stake\",\"x\":6.5,\"y\":0.5139772295951843,\"z\":10.5},{\"id\":\"riparian_dressing_pack\",\"x\":0,\"y\":-0.09651920944452286,\"z\":0}]",
+        "terrain3dPilotLandmarkMaterials": "[{\"id\":\"active_headframe\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.217,0.217],\"authoredEmissive\":[1.45,1.45],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.9,\"metalness\":0},{\"id\":\"maintained_claim_house\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.217,0.217],\"authoredEmissive\":[1.45,1.45],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.9,\"metalness\":0},{\"id\":\"working_camp\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.217,0.217],\"authoredEmissive\":[1.45,1.45],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.9,\"metalness\":0},{\"id\":\"claim_stake\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.217,0.217],\"authoredEmissive\":[1.45,1.45],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.9,\"metalness\":0},{\"id\":\"riparian_dressing_pack\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.217,0.217],\"authoredEmissive\":[1.45,1.45],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.9,\"metalness\":0}]"
+      },
+      "testHook": "undefined"
+    },
+    "errors": [],
+    "scope": "Finale debug staging exercises the real lever; destination is the plain stamped charter route. No full native final-boss completion claim."
+  },
+  {
+    "width": 390,
+    "url": "http://127.0.0.1:5303/?contract=the-claim&nowaves=",
+    "state": {
+      "contract": {
+        "activeId": "the-claim",
+        "requestedId": "the-claim",
+        "fallbackReason": null,
+        "stagedLaunchClear": null,
+        "warningSuppressed": false,
+        "epochId": "epoch-1-frontier",
+        "epochResources": [],
+        "claimOffice": null,
+        "name": "The River",
+        "tileParams": {
+          "tileId": "frontier-river-claim",
+          "biome": "river-claim",
+          "river": true,
+          "ford": true,
+          "waterSources": [],
+          "lanes": {
+            "spawnEdges": [
+              "north",
+              "south",
+              "east",
+              "west"
+            ],
+            "territoryRingBiasWaves": 0,
+            "territoryRingLaneBias": 0
+          },
+          "size": 64,
+          "fords": [
+            {
+              "id": "center-ford",
+              "x": 0,
+              "halfWidth": 3
+            }
+          ],
+          "harvestAnchors": [
+            {
+              "x": -22,
+              "z": -6.8
+            },
+            {
+              "x": -9,
+              "z": 6.7
+            },
+            {
+              "x": -1.5,
+              "z": -6.4
+            },
+            {
+              "x": 7.5,
+              "z": 6.5
+            },
+            {
+              "x": 18,
+              "z": -7
+            },
+            {
+              "x": 25,
+              "z": 6.9
+            }
+          ],
+          "water": {
+            "id": "frontier-river-depth",
+            "centerZ": 0,
+            "halfWidth": 5,
+            "visualHalfWidth": 6.25
+          }
+        },
+        "boardRow": {
+          "name": "The River",
+          "ledgerBlurb": "The first claim, re-inked in dawn light.",
+          "tags": [
+            "river"
+          ],
+          "unlock": "post-credits"
+        },
+        "briefing": {
+          "goals": [
+            "Pan the dawn river."
+          ],
+          "rules": [
+            "There are no enemies and no waves.",
+            "Names surface as gold flecks; when the last settles, the river keeps going."
+          ],
+          "geographyLine": "The first claim returns in dawn light: one river, one ford, and one pan."
+        },
+        "seamYieldMult": 1,
+        "secureWave": 10,
+        "waveCadenceMult": 1,
+        "lightRamp": null,
+        "dayNightCycle": null,
+        "baron": null,
+        "medals": {
+          "version": 1,
+          "baronBeaten": false,
+          "rocketCartCaptured": false
+        }
+      },
+      "hero": {
+        "x": 0,
+        "y": 0.3708261525630951,
+        "z": 12
+      },
+      "dataset": {
+        "assetPrefetchScene": "run",
+        "assetPrefetchState": "allowance",
+        "assetPrefetchReady": "6",
+        "assetPrefetchTotal": "12",
+        "assetPrefetchProgress": "6/12",
+        "assetPrefetchFailed": "0",
+        "assetPrefetchPriority": "1",
+        "assetPrefetchTarget": "town",
+        "assetPrefetchSaveData": "false",
+        "assetPrefetchEnabled": "true",
+        "assetPrefetchAllowance": "12000000",
+        "assetPrefetchBytes": "14087836",
+        "assetPrefetchTownState": "partial",
+        "spriteClipGroups": "claim town",
+        "railcar3dState": "off",
+        "railcar3dSource": "billboard",
+        "railcar3dMounted": "false",
+        "railcar3dDamageStates": "{\"wheels\":\"intact\",\"boiler\":\"intact\",\"cabin\":\"intact\"}",
+        "bossBarVisible": "false",
+        "bossBarSemantic": "none",
+        "bossBarRemaining": "0",
+        "bossBarDepleted": "0",
+        "bossBarRemainingColor": "#6bb36b",
+        "bossBarDepletedColor": "#a0522d",
+        "bossBarComponent": "shared",
+        "bossBarAnchor": "none",
+        "bossBarOrientation": "none",
+        "bossBarPosition": "none",
+        "crawler3dState": "off",
+        "crawler3dSource": "placeholder",
+        "crawler3dMounted": "false",
+        "crawler3dDamageStates": "{\"drain_mast\":\"intact\",\"tracks\":\"intact\",\"capacitor_bank\":\"intact\"}",
+        "dredgeQueen3dState": "off",
+        "dredgeQueen3dSource": "placeholder",
+        "dredgeQueen3dMounted": "false",
+        "dredgeQueen3dPresentation": "hidden",
+        "dredgeQueen3dDamageStates": "{\"claw\":\"intact\",\"paddle_port\":\"intact\",\"paddle_starboard\":\"intact\",\"hold\":\"intact\"}",
+        "salvageClaw3dState": "off",
+        "salvageClaw3dSource": "placeholder",
+        "salvageClaw3dMounted": "false",
+        "salvageClaw3dPresentation": "hidden",
+        "homemaker3dState": "off",
+        "homemaker3dSource": "placeholder",
+        "homemaker3dMounted": "false",
+        "homemaker3dPresentation": "hidden",
+        "homemaker3dDamageStates": "{\"vac\":\"intact\",\"rack\":\"intact\",\"core\":\"intact\"}",
+        "oldDigger3dState": "off",
+        "oldDigger3dSource": "placeholder",
+        "oldDigger3dMounted": "false",
+        "oldDigger3dPresentation": "hidden",
+        "assetLoadingLabel": "the claim",
+        "assetLoadingReady": "30",
+        "assetLoadingTotal": "30",
+        "assetLoadingProgress": "30/30",
+        "assetLoadingState": "ready",
+        "engine": "three.js r184",
+        "terrain3dPilotState": "ready",
+        "terrain3dPilotRenderSource": "glb",
+        "run3dPilotState": "ready",
+        "nightPoolSurfaceSources": "0",
+        "nightPoolSurfaceMaxRadius": "0",
+        "cameraAspect": "0.46208530805687204",
+        "cssAspect": "0.46208530805687204",
+        "prospectorSkin": "stock",
+        "prospectorSheet": "stock",
+        "run3dPilotMeshes": "0",
+        "run3dPilotTriangles": "0",
+        "terrain3dPilotContract": "the-claim",
+        "terrain3dPilotTerrainLoadState": "mounted",
+        "terrain3dPilotPanoramaLoadState": "mounted",
+        "terrain3dPilotLandmarkLoadState": "mounted",
+        "terrain3dPilotHeightSource": "baked-grid",
+        "terrain3dPilotMeshes": "1",
+        "terrain3dPilotTriangles": "32768",
+        "terrain3dPilotMaterials": "1",
+        "terrain3dPilotVertices": "16641",
+        "terrain3dPilotPanorama": "the-claim-panorama",
+        "terrain3dPilotPanoramaMeshes": "1",
+        "terrain3dPilotPanoramaTriangles": "1920",
+        "terrain3dPilotPanoramaMaterials": "1",
+        "terrain3dPilotPanoramaVertices": "1351",
+        "heroSheet": "young",
+        "heroSkin": "stock",
+        "heroSkinSheet": "stock",
+        "terrain3dPilotNightPools": "off",
+        "terrain3dPilotNightPoolSources": "0",
+        "terrain3dPilotSpringPonds": "0",
+        "terrain3dPilotSpringPondWaterRadii": "[]",
+        "terrain3dPilotChannelWater": "0",
+        "terrain3dPilotFordWater": "0",
+        "terrain3dPilotChannelWaterHalfWidths": "[]",
+        "terrain3dPilotSculptWater": "living-water-quad",
+        "terrain3dPilotSculptWaterHalfWidth": "6.250",
+        "terrain3dPilotSculptWaterSimHalfWidth": "6.250",
+        "terrain3dPilotSculptWaterY": "-0.0274",
+        "terrain3dPilotSculptWaterGlints": "6",
+        "terrain3dPilotSculptWaterDeepest": "0.483",
+        "terrain3dPilotSculptWaterFords": "center-ford@0",
+        "terrain3dPilotMotes": "90",
+        "terrain3dPilotHiddenRelief": "6",
+        "terrain3dPilotHiddenGroundLayers": "TerrainVistaRing|TerrainReliefMesh|terrain.river|terrain.ford|FordSteppingStones|SpringPonds",
+        "terrain3dPilotContinuation": "sculpt-edge-continuation",
+        "terrain3dPilotHorizonApron": "painted",
+        "terrain3dPilotFarGroundProbe": "off",
+        "terrain3dPilotPanoramaFraming": "world-projected-horizon",
+        "terrain3dPilotSkirtBlend": "opaque-sculpt-edge",
+        "terrain3dPilotPanoramaFog": "excluded",
+        "terrain3dPilotPanoramaDepth": "screen-horizon-backdrop",
+        "terrain3dPilotLandmarkExpected": "5",
+        "terrain3dPilotWalkSurfaces": "0",
+        "terrain3dPilotContactShadows": "4",
+        "terrain3dPilotRushEmbers": "0",
+        "terrain3dPilotLandmarkEmissive": "1.45",
+        "terrain3dPilotLandmarkSides": "{\"total\":{\"meshes\":5,\"closed\":5,\"open\":0,\"culled\":5,\"doubleSided\":0},\"mounts\":[{\"id\":\"active_headframe\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.167,\"topY\":7.16},{\"id\":\"maintained_claim_house\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.879,\"topY\":5.17},{\"id\":\"working_camp\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.391,\"topY\":3.177},{\"id\":\"claim_stake\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.503,\"topY\":2.414},{\"id\":\"riparian_dressing_pack\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.222,\"topY\":1.789}]}",
+        "terrain3dPilotLandmarks": "5",
+        "terrain3dPilotLandmarkSkipped": "0",
+        "terrain3dPilotLandmarkDiagnostics": "",
+        "terrain3dPilotLandmarkMounts": "[{\"id\":\"active_headframe\",\"x\":-13,\"y\":0.5760577440261843,\"z\":-8.8},{\"id\":\"maintained_claim_house\",\"x\":10.5,\"y\":0.8792812824249268,\"z\":14.5},{\"id\":\"working_camp\",\"x\":-8.5,\"y\":0.6460151076316833,\"z\":16.5},{\"id\":\"claim_stake\",\"x\":6.5,\"y\":0.5139772295951843,\"z\":10.5},{\"id\":\"riparian_dressing_pack\",\"x\":0,\"y\":-0.09651920944452286,\"z\":0}]",
+        "terrain3dPilotLandmarkMaterials": "[{\"id\":\"active_headframe\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.217,0.217],\"authoredEmissive\":[1.45,1.45],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.9,\"metalness\":0},{\"id\":\"maintained_claim_house\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.217,0.217],\"authoredEmissive\":[1.45,1.45],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.9,\"metalness\":0},{\"id\":\"working_camp\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.217,0.217],\"authoredEmissive\":[1.45,1.45],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.9,\"metalness\":0},{\"id\":\"claim_stake\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.217,0.217],\"authoredEmissive\":[1.45,1.45],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.9,\"metalness\":0},{\"id\":\"riparian_dressing_pack\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.217,0.217],\"authoredEmissive\":[1.45,1.45],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.9,\"metalness\":0}]"
+      },
+      "testHook": "undefined"
+    },
+    "errors": [],
+    "scope": "Finale debug staging exercises the real lever; destination is the plain stamped charter route. No full native final-boss completion claim."
+  }
+]

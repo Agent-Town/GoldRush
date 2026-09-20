@@ -1,0 +1,38 @@
+{
+  "mode": "baseline",
+  "project": "desktop-chrome",
+  "throttle": {
+    "cpuRate": 1.25,
+    "latencyMs": 1,
+    "downloadBytesPerSecond": 20000000,
+    "uploadBytesPerSecond": 5000000
+  },
+  "metrics": {
+    "ttiMs": 2693,
+    "firstFrameMs": 2518,
+    "waveWarningMs": 8247,
+    "waveSpawnMs": 8247,
+    "bootBytes": 5949428
+  },
+  "lazy": {
+    "beforeFirstFrame": [
+      "bld-claim-office.png",
+      "bld-palisade.png",
+      "bld-sentry-beacon.png",
+      "bld-signal-turret.png",
+      "bld-sluice-works.png",
+      "bld-stockpile-yard.png",
+      "char-prospector-portrait.png",
+      "char-prospector-sheet-hover4-a-r0c0.png",
+      "char-prospector-sheet-hover4-a-r0c1.png",
+      "char-prospector-sheet-hover4-a-r0c2.png",
+      "char-prospector-sheet-hover4-a-r0c3.png"
+    ],
+    "prefetchedBeforeWaveSpawn": []
+  },
+  "errors": {
+    "consoleErrors": [],
+    "pageErrors": [],
+    "assetErrors": []
+  }
+}

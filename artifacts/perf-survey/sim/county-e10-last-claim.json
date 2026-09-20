@@ -1,0 +1,202 @@
+{
+  "key": "county-e10-last-claim",
+  "tapePath": "tapes/county-e10-last-claim.json",
+  "contract": "e10-last-claim",
+  "kind": "county-played",
+  "node": "v26.4.0",
+  "before": {
+    "at": "2026-09-05T16:25:52.820Z",
+    "load": [
+      22.80810546875,
+      21.65625,
+      21.3125
+    ],
+    "freeMemory": 11275108352
+  },
+  "after": {
+    "at": "2026-09-05T16:26:24.842Z",
+    "load": [
+      29.6201171875,
+      23.3330078125,
+      21.9267578125
+    ],
+    "freeMemory": 11434426368
+  },
+  "declaredDurationTicks": 7202,
+  "simulatedSeconds": 240.06666666666666,
+  "bootMs": 49.11033400000042,
+  "replayMs": 29804.44475,
+  "ticksPerSecond": 241.64181082420603,
+  "realtimeMultiple": 8.054727027473534,
+  "estimateTenMinuteSeconds": 74.4904200916412,
+  "estimateFormula": "600 seconds / measured realtimeMultiple; extrapolation, not an actual 10-minute tape when duration differs",
+  "tickMs": {
+    "n": 7202,
+    "min": 0.34062500000027285,
+    "p50": 4.373208000000886,
+    "p95": 7.283416999998735,
+    "p99": 10.408124999998108,
+    "max": 106.59612500000003
+  },
+  "tickPath": "sim/county-e10-last-claim-ticks.json",
+  "result": {
+    "eventLogHash": "fnv1a32:01f63745",
+    "outcome": {
+      "secured": true,
+      "waves": 8,
+      "gold": 136,
+      "timeAlive": 240.033
+    },
+    "securedSnapshot": {
+      "waves": 8,
+      "gold": 540,
+      "timeAlive": 240.03333333332228
+    },
+    "ticks": 7202,
+    "engine": "headless-contract-sim"
+  },
+  "expectedHash": "fnv1a32:01f63745",
+  "hashMatches": true,
+  "top20": [
+    {
+      "name": "structuredClone",
+      "url": "node:internal/worker/js_transferable",
+      "line": 113,
+      "column": 25,
+      "selfMs": 14714.946000000002
+    },
+    {
+      "name": "structuredClone",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 5356.802
+    },
+    {
+      "name": "snapshot",
+      "url": "",
+      "line": 189,
+      "column": 10,
+      "selfMs": 962.02
+    },
+    {
+      "name": "(anonymous)",
+      "url": "",
+      "line": 193,
+      "column": 26,
+      "selfMs": 655.038
+    },
+    {
+      "name": "terrainSeed",
+      "url": "",
+      "line": 1469,
+      "column": 21,
+      "selfMs": 478.05600000000004
+    },
+    {
+      "name": "(anonymous)",
+      "url": "node:internal/webidl",
+      "line": 712,
+      "column": 18,
+      "selfMs": 442.24
+    },
+    {
+      "name": "clone",
+      "url": "",
+      "line": 320,
+      "column": 15,
+      "selfMs": 427.52
+    },
+    {
+      "name": "diagnostics",
+      "url": "",
+      "line": 1795,
+      "column": 13,
+      "selfMs": 353.14099999999996
+    },
+    {
+      "name": "terrainHash",
+      "url": "",
+      "line": 1486,
+      "column": 21,
+      "selfMs": 347.884
+    },
+    {
+      "name": "(garbage collector)",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 310.417
+    },
+    {
+      "name": "get diagnostics",
+      "url": "",
+      "line": 484,
+      "column": 17,
+      "selfMs": 289.30199999999996
+    },
+    {
+      "name": "(anonymous)",
+      "url": "",
+      "line": 805,
+      "column": 21,
+      "selfMs": 276.13
+    },
+    {
+      "name": "multiplyMatrices",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 10385,
+      "column": 18,
+      "selfMs": 180.04299999999998
+    },
+    {
+      "name": "dispatch",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 168.189
+    },
+    {
+      "name": "(program)",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 147.186
+    },
+    {
+      "name": "toArray",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 11099,
+      "column": 9,
+      "selfMs": 145.88299999999995
+    },
+    {
+      "name": "stableProbeMask",
+      "url": "",
+      "line": 1266,
+      "column": 25,
+      "selfMs": 137.874
+    },
+    {
+      "name": "copyRecords",
+      "url": "",
+      "line": 804,
+      "column": 21,
+      "selfMs": 120.293
+    },
+    {
+      "name": "hpBarDiagnostics",
+      "url": "",
+      "line": 1663,
+      "column": 18,
+      "selfMs": 119.85199999999999
+    },
+    {
+      "name": "activePositions",
+      "url": "",
+      "line": 1533,
+      "column": 17,
+      "selfMs": 110.607
+    }
+  ]
+}

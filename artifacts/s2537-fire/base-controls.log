@@ -1,0 +1,44 @@
+gate battery transcript (append-only — see scripts/gate-battery.mjs)
+
+
+######## BATTERY 2026-09-07T10:11:17.663Z — unchanged-818223c97-controls ########
+cwd=/private/tmp/gr-gate-s2537
+env+ PATH=/Users/robin/.nvm/versions/node/v26.4.0/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin GR_CAPTURE_BASE_URL=http://127.0.0.1:5313 GR_CAPTURE_EXTERNAL_SERVER=1
+
+===== base E7 mobile =====
+$ npx playwright test e2e/ss-08-e7-beats.spec.ts --grep=The Claim cannot load Signal beats in Frontier --project=mobile-chrome --workers=1 --trace=off --reporter=line --output=/Users/robin/Claude/Projects/Gold Rush/artifacts/s2537-fire/base-e7
+rc=0 8.8s
+
+Running 1 test using 1 worker
+
+
+
+
+[1/1] [mobile-chrome] › e2e/ss-08-e7-beats.spec.ts:155:1 › The Claim cannot load Signal beats in Frontier
+[mobile-chrome] › e2e/ss-08-e7-beats.spec.ts:155:1 › The Claim cannot load Signal beats in Frontier
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+  1 passed (8.3s)
+(node:75786) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:75827) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:75827) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+
+
+===== base M2 desktop =====
+$ npx playwright test e2e/m2-01-build-menu.spec.ts --grep=palisade footprint rejects overlap --project=desktop-chrome --workers=1 --trace=off --reporter=line --output=/Users/robin/Claude/Projects/Gold Rush/artifacts/s2537-fire/base-m2
+rc=0 4.8s
+
+Running 1 test using 1 worker
+
+
+
+[1/1] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining
+  1 passed (4.2s)
+(node:76435) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+SUMMARY {"base E7 mobile":0,"base M2 desktop":0}
+OVERALL rc=0

@@ -1,0 +1,22 @@
+[
+  [
+    "adjacency",
+    "npx",
+    "playwright",
+    "test",
+    "e2e/task-025-bandits-dont-swim.spec.ts",
+    "e2e/m1-01-claim-jumpers-death.spec.ts",
+    "e2e/m2-01-build-menu.spec.ts",
+    "--project=desktop-chrome",
+    "--project=mobile-chrome",
+    "--workers=1",
+    "--trace=off",
+    "--reporter=line",
+    "--output=/private/tmp/gr-gate-s2552/adjacency-results"
+  ],
+  [
+    "plain boots",
+    "node",
+    "scripts/probe-plain-boot-console.mjs"
+  ]
+]

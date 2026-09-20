@@ -1,0 +1,705 @@
+{
+  "blender": "5.1.2",
+  "maskTables": [
+    "assets/contracts/epoch-3-voltage/mask-tables/e3-canyon-works.json",
+    "assets/contracts/epoch-3-voltage/mask-tables/e3-moth-season.json"
+  ],
+  "terrains": {
+    "canyon-works": {
+      "asset": "canyon-works-terrain.glb",
+      "checked": {
+        "sha256": "e230248caf31a133ad80fa449991bb16c8d787de8fa60c90dee667cea9cc2ac3",
+        "bytes": 8238136,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 32768,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -48,
+            -1.063961,
+            -56
+          ],
+          "max": [
+            48,
+            6.063998,
+            56
+          ],
+          "size": [
+            96,
+            7.127959,
+            112
+          ],
+          "center": [
+            0.0,
+            2.500019,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.8999999761581421,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "reexported": {
+        "sha256": "e230248caf31a133ad80fa449991bb16c8d787de8fa60c90dee667cea9cc2ac3",
+        "bytes": 8238136,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 32768,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -48,
+            -1.063961,
+            -56
+          ],
+          "max": [
+            48,
+            6.063998,
+            56
+          ],
+          "size": [
+            96,
+            7.127959,
+            112
+          ],
+          "center": [
+            0.0,
+            2.500019,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.8999999761581421,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "byteIdenticalReexport": true,
+      "semanticIdenticalReexport": true,
+      "embeddedTexture": {
+        "bytes": 7507264,
+        "sha256": "d6f9245cf23af0f337c9d822a4829e6ee81e75ce94cfd8a3dfb80e0a9a3bf5c5",
+        "width": 2048,
+        "height": 2048
+      },
+      "extras": {
+        "render_only": true,
+        "sim_authority": "published mask table and planar simulation; unchanged",
+        "height_socket": "Terrain.visualY",
+        "contract_id": "e3-canyon-works",
+        "tile_id": "e3-canyon-works",
+        "mask_table": "assets/contracts/epoch-3-voltage/mask-tables/e3-canyon-works.json",
+        "pylon_sites_flat": true,
+        "landmarks_frozen": true
+      },
+      "geometryProbes": [
+        {
+          "requested": [
+            0,
+            0
+          ],
+          "sampled": [
+            0.0,
+            0.0
+          ],
+          "height": -1.0
+        },
+        {
+          "requested": [
+            -24,
+            -20
+          ],
+          "sampled": [
+            -24.0,
+            -20.125
+          ],
+          "height": 0.5
+        },
+        {
+          "requested": [
+            24,
+            -20
+          ],
+          "sampled": [
+            24.0,
+            -20.125
+          ],
+          "height": 0.5
+        },
+        {
+          "requested": [
+            0,
+            32
+          ],
+          "sampled": [
+            0.0,
+            32.375
+          ],
+          "height": 4.602
+        }
+      ],
+      "pylonSurfaceFlatness": [
+        {
+          "id": "pylon-west-base",
+          "sampledSurfacePoints": 2176,
+          "maxDeviationMeters": 0.0
+        },
+        {
+          "id": "pylon-west-switch",
+          "sampledSurfacePoints": 2176,
+          "maxDeviationMeters": 0.0
+        },
+        {
+          "id": "pylon-west-rim",
+          "sampledSurfacePoints": 2176,
+          "maxDeviationMeters": 0.0
+        },
+        {
+          "id": "pylon-east-base",
+          "sampledSurfacePoints": 2176,
+          "maxDeviationMeters": 0.0
+        },
+        {
+          "id": "pylon-east-switch",
+          "sampledSurfacePoints": 2176,
+          "maxDeviationMeters": 0.0
+        },
+        {
+          "id": "pylon-east-rim",
+          "sampledSurfacePoints": 2176,
+          "maxDeviationMeters": 0.0
+        }
+      ],
+      "maskSource": "assets/contracts/epoch-3-voltage/mask-tables/e3-canyon-works.json"
+    },
+    "moth-season": {
+      "asset": "moth-season-terrain.glb",
+      "checked": {
+        "sha256": "7861776cbfdf762e10508c9683c0d80eb63b7636b758b88cadb9ed92db3b721f",
+        "bytes": 8235400,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 32768,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -40,
+            -0.33376,
+            -40
+          ],
+          "max": [
+            40,
+            3.349101,
+            40
+          ],
+          "size": [
+            80,
+            3.682861,
+            80
+          ],
+          "center": [
+            0.0,
+            1.507671,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.8999999761581421,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "reexported": {
+        "sha256": "7861776cbfdf762e10508c9683c0d80eb63b7636b758b88cadb9ed92db3b721f",
+        "bytes": 8235400,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 32768,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -40,
+            -0.33376,
+            -40
+          ],
+          "max": [
+            40,
+            3.349101,
+            40
+          ],
+          "size": [
+            80,
+            3.682861,
+            80
+          ],
+          "center": [
+            0.0,
+            1.507671,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.8999999761581421,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "byteIdenticalReexport": true,
+      "semanticIdenticalReexport": true,
+      "embeddedTexture": {
+        "bytes": 7504529,
+        "sha256": "f06c5e9a42a0b213443481bb89dc64c0749ebbd39d304cc68f875b6f2d224533",
+        "width": 2048,
+        "height": 2048
+      },
+      "extras": {
+        "render_only": true,
+        "sim_authority": "published mask table and planar simulation; unchanged",
+        "height_socket": "Terrain.visualY",
+        "contract_id": "e3-moth-season",
+        "tile_id": "e3-moth-season",
+        "mask_table": "assets/contracts/epoch-3-voltage/mask-tables/e3-moth-season.json",
+        "pylon_sites_flat": false,
+        "landmarks_frozen": true
+      },
+      "geometryProbes": [
+        {
+          "requested": [
+            0,
+            0
+          ],
+          "sampled": [
+            0.0,
+            0.0
+          ],
+          "height": -0.3003
+        },
+        {
+          "requested": [
+            -28,
+            20
+          ],
+          "sampled": [
+            -28.125,
+            20.0
+          ],
+          "height": 1.0788
+        },
+        {
+          "requested": [
+            28,
+            -20
+          ],
+          "sampled": [
+            28.125,
+            -20.0
+          ],
+          "height": 1.3088
+        },
+        {
+          "requested": [
+            0,
+            34
+          ],
+          "sampled": [
+            0.0,
+            33.75
+          ],
+          "height": 0.0753
+        }
+      ],
+      "pylonSurfaceFlatness": [],
+      "maskSource": "assets/contracts/epoch-3-voltage/mask-tables/e3-moth-season.json"
+    }
+  },
+  "panoramas": {
+    "canyon-works": {
+      "asset": "canyon-works-panorama.glb",
+      "checked": {
+        "sha256": "f0187b59853977f0ba06bf6d038f8143736a3c225a99f0f6f2fb17f2c481b6f9",
+        "bytes": 827688,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 2496,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -193,
+            -10,
+            -193
+          ],
+          "max": [
+            193,
+            130,
+            193
+          ],
+          "size": [
+            386,
+            140,
+            386
+          ],
+          "center": [
+            0.0,
+            60.0,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 1,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": true,
+            "emissiveFactor": [
+              1,
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "reexported": {
+        "sha256": "f0187b59853977f0ba06bf6d038f8143736a3c225a99f0f6f2fb17f2c481b6f9",
+        "bytes": 827688,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 2496,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -193,
+            -10,
+            -193
+          ],
+          "max": [
+            193,
+            130,
+            193
+          ],
+          "size": [
+            386,
+            140,
+            386
+          ],
+          "center": [
+            0.0,
+            60.0,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 1,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": true,
+            "emissiveFactor": [
+              1,
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "byteIdenticalReexport": true,
+      "semanticIdenticalReexport": true,
+      "embeddedTexture": {
+        "bytes": 555017,
+        "sha256": "17cddd1fafea2f2daa7768f571a6ef682b427223a0f9ddb5e1c03b6ba9c9304d",
+        "width": 2048,
+        "height": 2048
+      },
+      "extras": {
+        "render_only": true,
+        "panorama": true,
+        "affects_playfield": false,
+        "affects_masks": false,
+        "affects_spawn_edges": false,
+        "affects_fog_gating": false,
+        "mount_space": "game X/Y/Z at county origin",
+        "panorama_law": "v2"
+      },
+      "mount": {
+        "id": "canyon-works-panorama",
+        "asset": "canyon-works-panorama.glb",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "renderOnly": true,
+        "ownership": "separate mounted scenery; never terrain or gameplay bounds"
+      }
+    },
+    "moth-season": {
+      "asset": "moth-season-panorama.glb",
+      "checked": {
+        "sha256": "ec75d6c6e2a0c6fd19245cf4f1aa178833732234d0089fa1b130f63ab5aa9f52",
+        "bytes": 784052,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 2496,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -193,
+            -10,
+            -193
+          ],
+          "max": [
+            193,
+            130,
+            193
+          ],
+          "size": [
+            386,
+            140,
+            386
+          ],
+          "center": [
+            0.0,
+            60.0,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 1,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": true,
+            "emissiveFactor": [
+              1,
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "reexported": {
+        "sha256": "ec75d6c6e2a0c6fd19245cf4f1aa178833732234d0089fa1b130f63ab5aa9f52",
+        "bytes": 784052,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 2496,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -193,
+            -10,
+            -193
+          ],
+          "max": [
+            193,
+            130,
+            193
+          ],
+          "size": [
+            386,
+            140,
+            386
+          ],
+          "center": [
+            0.0,
+            60.0,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 1,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": true,
+            "emissiveFactor": [
+              1,
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "byteIdenticalReexport": true,
+      "semanticIdenticalReexport": true,
+      "embeddedTexture": {
+        "bytes": 511386,
+        "sha256": "74af1110998ed29b3e82c1d080bf1cd5e8bea3ab8a35b51a88a7cef92f887126",
+        "width": 2048,
+        "height": 2048
+      },
+      "extras": {
+        "render_only": true,
+        "panorama": true,
+        "affects_playfield": false,
+        "affects_masks": false,
+        "affects_spawn_edges": false,
+        "affects_fog_gating": false,
+        "mount_space": "game X/Y/Z at county origin",
+        "panorama_law": "v2"
+      },
+      "mount": {
+        "id": "moth-season-panorama",
+        "asset": "moth-season-panorama.glb",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "renderOnly": true,
+        "ownership": "separate mounted scenery; never terrain or gameplay bounds"
+      }
+    }
+  },
+  "boards": {
+    "e3-mood-ab.png": {
+      "size": [
+        1920,
+        1260
+      ],
+      "bytes": 1994957,
+      "sha256": "2b4fdb0af09b933716a9345b614fc9180ea953932ea19e6e508907688343f832"
+    },
+    "e3-flat-vs-sculpted-ab.png": {
+      "size": [
+        1920,
+        1260
+      ],
+      "bytes": 2221855,
+      "sha256": "b3e66c434768d7a2590b061b9b8cf3d73c3405f00b8c7650363e3ae897e64276"
+    },
+    "e3-owner-verdict.png": {
+      "size": [
+        1920,
+        900
+      ],
+      "bytes": 1413407,
+      "sha256": "4e2993dcb6b0e947db3d436cb93c6eff574f915ee6d2bd9ff571a09361db1359"
+    },
+    "e3-panorama-mood-ab.png": {
+      "size": [
+        1920,
+        900
+      ],
+      "bytes": 937034,
+      "sha256": "4110d9c4372ca03aa46f4cba26da116af1f450a4eb9e2e719d2c452209c10046"
+    },
+    "e3-panorama-distance-gate.png": {
+      "size": [
+        1920,
+        1260
+      ],
+      "bytes": 1937512,
+      "sha256": "7388331f099e4a093bbf97aca7efed2cc148c4bd8d8b850fa3b8a72d0d9b074c"
+    },
+    "e3-mask-agreement-board.png": {
+      "size": [
+        1920,
+        1260
+      ],
+      "bytes": 1777790,
+      "sha256": "6ead31e3045a5a15d95e0de4616eeb0874a525aec8ea9ecf85667fb7d5ea712d"
+    }
+  },
+  "verdict": {
+    "grit": "fight under dusk rig",
+    "panorama": "distance",
+    "masks": "published and unchanged",
+    "pylonSites": "six independently sampled buildable-flat disks",
+    "landmarks": "frozen; no assets or mounts authored"
+  }
+}

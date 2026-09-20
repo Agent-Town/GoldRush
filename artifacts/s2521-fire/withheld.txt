@@ -1,0 +1,23 @@
+WITHHELD EVIDENCE AUDIT — paths lane-runner-v3 declined to commit
+
+  corpus                  : read (368 run log(s) read)
+  dir                     : /Users/robin/Claude/Projects/Gold Rush/tasks/runs
+  runs that withheld      : 5
+  withheld rows           : 112  (58 distinct path(s))
+
+                                 rows   distinct
+  TRACKED  (on main)              3          3
+  IN-GIT   (another ref)          0          0
+  ON-DISK  (untracked, HERE)      0          0
+  LOST     (no ref, no disk)    109         55
+
+  20260812-103037-lane-d-lane-d-f1700-1-runner-delta-autocommit.md.log
+     ON-DISK 0 · LOST 1
+  20260902-071130-lane-b-gauntlet-heat10-r2.md.log
+     ON-DISK 0 · LOST 54
+  20260902-075135-lane-b-reel-deep-links.md.log
+     ON-DISK 0 · LOST 54
+
+  LOST bytes cannot be recovered by any command. Record the judgement
+  where the next fire reads it, and say WHAT the evidence substantiated.
+  Re-run with --list to see every path.

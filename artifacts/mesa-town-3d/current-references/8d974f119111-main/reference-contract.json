@@ -1,0 +1,60 @@
+{
+  "baseSha": "8d974f11911187136469fbd017c9598e5b2faf28",
+  "rule": "fresh render from current tracked GLBs and manifests; no prior PNG is an input",
+  "order": [
+    "E1 current plate",
+    "E4 southern boulevard and motor caravan",
+    "E5 submerged square"
+  ],
+  "sources": {
+    "townPlate": "assets/pilots/town-plate-3d/town-plate.glb",
+    "e4Models": {
+      "tavern": "assets/pilots/tavern-3d/tavern.e4.glb",
+      "general_store": "assets/pilots/general-store-3d/general-store.e4.glb",
+      "claim_office": "assets/pilots/claim-office-3d/claim-office.e4.glb",
+      "assay_office": "assets/pilots/assay-office-3d/assay-office.e4.glb",
+      "chapel": "assets/pilots/chapel-3d/chapel.e4.glb",
+      "schoolhouse": "assets/pilots/schoolhouse-3d/schoolhouse.e4.glb",
+      "stamp-mill": "assets/pilots/stamp-mill-3d/stamp-mill.e4.glb",
+      "dynamo-hall": "assets/pilots/dynamo-hall-3d/dynamo-hall.e4.glb"
+    },
+    "e5Models": {
+      "tavern": "assets/pilots/tavern-3d/tavern.e5.glb",
+      "general_store": "assets/pilots/general-store-3d/general-store.e5.glb",
+      "claim_office": "assets/pilots/claim-office-3d/claim-office.e5.glb",
+      "assay_office": "assets/pilots/assay-office-3d/assay-office.e5.glb",
+      "chapel": "assets/pilots/chapel-3d/chapel.e5.glb",
+      "schoolhouse": "assets/pilots/schoolhouse-3d/schoolhouse.e5.glb",
+      "stamp-mill": "assets/pilots/stamp-mill-3d/stamp-mill.e5.glb",
+      "dynamo-hall": "assets/pilots/dynamo-hall-3d/dynamo-hall.e5.glb"
+    },
+    "e4Manifest": "assets/pilots/plaza-props-3d/era-props.e4.json",
+    "e5Manifest": "assets/pilots/plaza-props-3d/era-props.e5.json"
+  },
+  "assetSha256": {
+    "assets/pilots/town-plate-3d/town-plate.glb": "6450898a74303282913f75a26583b20e1544f234c4d5831cab3df768af91be29",
+    "assets/pilots/tavern-3d/tavern.e4.glb": "c922b0d5414626b49600d9c3e9ec3bcba2ce39ad7380ea4429b28493e01085f9",
+    "assets/pilots/general-store-3d/general-store.e4.glb": "f8c63f3377e554e61005189f3f82ad05f24630afb1625a3cdc4eb9598978cf47",
+    "assets/pilots/claim-office-3d/claim-office.e4.glb": "072bbaafe501ada0adce8d05b5358e3c119f2f6ff75031ff138545dc700c783c",
+    "assets/pilots/assay-office-3d/assay-office.e4.glb": "5b3c81c761008378ab26bfd5ca78cd3b56a2c5dc18f4a4f78d91e77b807ebd50",
+    "assets/pilots/chapel-3d/chapel.e4.glb": "813faa9edc14bb1656f14c4a6e9162ed1b44448eaf0d10bf41013c95b447bd69",
+    "assets/pilots/schoolhouse-3d/schoolhouse.e4.glb": "f014a4e3107c45cd65806367b462f32e680b8b02a3549ddc06c822060ccf7ede",
+    "assets/pilots/stamp-mill-3d/stamp-mill.e4.glb": "880a8170514063aae7010d901e449c253f3c3988e4b47b3a6def46f727c703a7",
+    "assets/pilots/dynamo-hall-3d/dynamo-hall.e4.glb": "b041261091179e34c01d64e331e6dfe8dbd077a0cdd47cc84117edae2c48334c",
+    "assets/pilots/tavern-3d/tavern.e5.glb": "02a6d71fa97ef2599a468bc921873ca091d76d3a231ab41f6a97d510e85fb273",
+    "assets/pilots/general-store-3d/general-store.e5.glb": "c4d0d3f89679ca7d86e3b9220262628ed7bd1b410f50484e98c67dc23187ab9a",
+    "assets/pilots/claim-office-3d/claim-office.e5.glb": "8f192c4efb460cd4ea17fcb33b38faafd9d68c81905deb73bd86233b8c37b998",
+    "assets/pilots/assay-office-3d/assay-office.e5.glb": "140de2941ff566693cc12316cc2b9bd8e767cd8a568cbbc9aeee2ce2a78e3f78",
+    "assets/pilots/chapel-3d/chapel.e5.glb": "0e6bb2fc5c8babe4174142f948c8500c788be91cbf656f45bbc3166abf02a6b2",
+    "assets/pilots/schoolhouse-3d/schoolhouse.e5.glb": "941076bc0b4fdd4a50709785c65de18df2398b0472cc87998ab58d1a20db2c7d",
+    "assets/pilots/stamp-mill-3d/stamp-mill.e5.glb": "2c33e260a9a09ca7b18f6a48d0d5fb6c3f5279e1839b12cbc2e0e2ee39c282cf",
+    "assets/pilots/dynamo-hall-3d/dynamo-hall.e5.glb": "e711f0d7b3982d32e3d1dbdb1071d46095c5e473270dd5268451ce4aa23182e3"
+  },
+  "renders": [
+    "artifacts/mesa-town-3d/current-references/8d974f119111-main/town-e1-current.png",
+    "artifacts/mesa-town-3d/current-references/8d974f119111-main/town-e4-current.png",
+    "artifacts/mesa-town-3d/current-references/8d974f119111-main/town-e5-current-underwater.png",
+    "artifacts/mesa-town-3d/current-references/8d974f119111-main/e3-e4-current-motor-caravan.png",
+    "artifacts/mesa-town-3d/current-references/8d974f119111-main/town-e1-e4-e5-current.png"
+  ]
+}

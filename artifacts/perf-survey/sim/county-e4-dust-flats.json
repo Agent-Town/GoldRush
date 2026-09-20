@@ -1,0 +1,202 @@
+{
+  "key": "county-e4-dust-flats",
+  "tapePath": "tapes/county-e4-dust-flats.json",
+  "contract": "e4-dust-flats",
+  "kind": "county-played",
+  "node": "v26.4.0",
+  "before": {
+    "at": "2026-09-05T16:06:39.511Z",
+    "load": [
+      39.33935546875,
+      34.82958984375,
+      23.64990234375
+    ],
+    "freeMemory": 13110525952
+  },
+  "after": {
+    "at": "2026-09-05T16:07:11.054Z",
+    "load": [
+      31.1171875,
+      33.2158203125,
+      23.44873046875
+    ],
+    "freeMemory": 14405255168
+  },
+  "declaredDurationTicks": 13140,
+  "simulatedSeconds": 438,
+  "bootMs": 495.6927089999999,
+  "replayMs": 28224.101709000002,
+  "ticksPerSecond": 465.5595467830235,
+  "realtimeMultiple": 15.518651559434117,
+  "estimateTenMinuteSeconds": 38.6631530260274,
+  "estimateFormula": "600 seconds / measured realtimeMultiple; extrapolation, not an actual 10-minute tape when duration differs",
+  "tickMs": {
+    "n": 13140,
+    "min": 0.40366700000049605,
+    "p50": 1.9292500000001382,
+    "p95": 4.36974999999984,
+    "p99": 6.1183340000025055,
+    "max": 177.36758299999929
+  },
+  "tickPath": "sim/county-e4-dust-flats-ticks.json",
+  "result": {
+    "eventLogHash": "fnv1a32:7f6cd5d3",
+    "outcome": {
+      "secured": true,
+      "waves": 14,
+      "gold": 40,
+      "timeAlive": 437.967
+    },
+    "securedSnapshot": {
+      "waves": 12,
+      "gold": 485,
+      "timeAlive": 437.9666666667995
+    },
+    "ticks": 13140,
+    "engine": "headless-contract-sim"
+  },
+  "expectedHash": "fnv1a32:7f6cd5d3",
+  "hashMatches": true,
+  "top20": [
+    {
+      "name": "structuredClone",
+      "url": "node:internal/worker/js_transferable",
+      "line": 113,
+      "column": 25,
+      "selfMs": 12048.825
+    },
+    {
+      "name": "structuredClone",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 3339.116
+    },
+    {
+      "name": "terrainSeed",
+      "url": "",
+      "line": 1469,
+      "column": 21,
+      "selfMs": 1127.1580000000001
+    },
+    {
+      "name": "terrainHash",
+      "url": "",
+      "line": 1486,
+      "column": 21,
+      "selfMs": 782.0800000000002
+    },
+    {
+      "name": "clone",
+      "url": "",
+      "line": 320,
+      "column": 15,
+      "selfMs": 510.974
+    },
+    {
+      "name": "get diagnostics",
+      "url": "",
+      "line": 484,
+      "column": 17,
+      "selfMs": 467.06600000000003
+    },
+    {
+      "name": "diagnostics",
+      "url": "",
+      "line": 1795,
+      "column": 13,
+      "selfMs": 450.692
+    },
+    {
+      "name": "snapshot",
+      "url": "",
+      "line": 189,
+      "column": 10,
+      "selfMs": 439.575
+    },
+    {
+      "name": "stableProbeMask",
+      "url": "",
+      "line": 1266,
+      "column": 25,
+      "selfMs": 360.717
+    },
+    {
+      "name": "multiplyMatrices",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 10385,
+      "column": 18,
+      "selfMs": 349.72999999999996
+    },
+    {
+      "name": "snapshotStandingOrders",
+      "url": "",
+      "line": 425,
+      "column": 32,
+      "selfMs": 298.979
+    },
+    {
+      "name": "(anonymous)",
+      "url": "",
+      "line": 193,
+      "column": 26,
+      "selfMs": 269.74199999999996
+    },
+    {
+      "name": "(garbage collector)",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 242.942
+    },
+    {
+      "name": "toArray",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 11099,
+      "column": 9,
+      "selfMs": 242.14600000000002
+    },
+    {
+      "name": "dispatch",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 230.76
+    },
+    {
+      "name": "(anonymous)",
+      "url": "node:internal/webidl",
+      "line": 712,
+      "column": 18,
+      "selfMs": 216.12
+    },
+    {
+      "name": "currentTrickleInterval",
+      "url": "",
+      "line": 641,
+      "column": 24,
+      "selfMs": 213.08099999999996
+    },
+    {
+      "name": "maxHpForPlacement",
+      "url": "",
+      "line": 1622,
+      "column": 19,
+      "selfMs": 212.405
+    },
+    {
+      "name": "(anonymous)",
+      "url": "",
+      "line": 805,
+      "column": 21,
+      "selfMs": 209.92200000000003
+    },
+    {
+      "name": "maxHpForInstance",
+      "url": "",
+      "line": 1619,
+      "column": 18,
+      "selfMs": 203.72799999999998
+    }
+  ]
+}

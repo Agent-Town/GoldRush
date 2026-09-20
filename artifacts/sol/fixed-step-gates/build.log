@@ -1,0 +1,838 @@
+
+> gold-rush@0.1.0 build
+> tsc && vite build
+
+vite v8.0.13 building client environment for production...
+[2Ktransforming...✓ 558 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                                   1.05 kB │ gzip:   0.50 kB
+dist/assets/menu-tap-DMz5CpTr.mp3                                 8.82 kB
+dist/assets/save-tick-CxuEzus4.mp3                                8.82 kB
+dist/assets/invalid-CjTH51il.mp3                                 10.49 kB
+dist/assets/build-place-CPgxh9CD.mp3                             12.16 kB
+dist/assets/chirp-acknowledge-DcSL2kP3.mp3                       12.16 kB
+dist/assets/chirp-refuse-CbGLOIGZ.mp3                            12.16 kB
+dist/assets/spark-bolt-hit-B7cQc6VD.mp3                          12.16 kB
+dist/assets/turret-fire-BtaMB8RD.mp3                             12.16 kB
+dist/assets/char-jumper-sheet-walk8-r3c0-t4tJla6U.png            13.46 kB
+dist/assets/agent-works-ZeMZN2bu.mp3                             13.83 kB
+dist/assets/founding-stamp-thunk-LrQMhCat.mp3                    13.83 kB
+dist/assets/gold-chime-BO80qT5L.mp3                              13.83 kB
+dist/assets/ledger-open-MW76KJsZ.mp3                             13.83 kB
+dist/assets/palisade-hit-E4hWomWo.mp3                            13.83 kB
+dist/assets/spark-bolt-fire-BQ8ybg8h.mp3                         13.83 kB
+dist/assets/char-jumper-sheet-walk8-r3c4-h5nL0gBz.png            14.10 kB
+dist/assets/char-hero-sheet-walk8-r2c5-B7Ioql32.png              14.12 kB
+dist/assets/char-hero-sheet-walk8-r2c2-CJF7a4Gh.png              14.55 kB
+dist/assets/char-jumper-sheet-walk8-r3c3-DrYVwPCA.png            14.71 kB
+dist/assets/char-jumper-sheet-walk8-r3c6-mOPcPyEy.png            14.73 kB
+dist/assets/char-jumper-sheet-walk8-r3c1--JM55ng1.png            15.07 kB
+dist/assets/research-pick-C2KA88UW.mp3                           15.09 kB
+dist/assets/stockpile-deposit-BRUN-tEB.mp3                       15.09 kB
+dist/assets/char-jumper-sheet-walk8-r3c7-DW95aEg6.png            15.13 kB
+dist/assets/char-jumper-sheet-walk8-r3c2-CdEvYLng.png            15.41 kB
+dist/assets/char-hero-sheet-walk8-r1c6-BiEHFPdU.png              15.43 kB
+dist/assets/char-hero-sheet-walk8-r1c4-C1ndGy4c.png              15.73 kB
+dist/assets/char-jumper-sheet-walk8-r3c5-BIJcujkx.png            15.78 kB
+dist/assets/char-hero-sheet-walk8-r1c2-D8fn8cJ6.png              16.24 kB
+dist/assets/char-hero-sheet-walk8-r1c0-B9KNvJPd.png              16.26 kB
+dist/assets/char-hero-sheet-walk8-r1c1-DUugkbH9.png              16.42 kB
+dist/assets/char-hero-sheet-walk8-r1c7-DAu16A4q.png              16.43 kB
+dist/assets/char-hero-sheet-walk8-r3c3-BDsONuYV.png              16.95 kB
+dist/assets/char-hero-sheet-walk8-r3c0-BK5r9J21.png              16.99 kB
+dist/assets/char-hero-sheet-walk8-r3c1-tjZ6ARlA.png              17.01 kB
+dist/assets/char-hero-sheet-walk8-r3c5-B9BJRkNv.png              17.02 kB
+dist/assets/char-hero-sheet-walk8-r3c2-BNITFyO8.png              17.04 kB
+dist/assets/char-hero-sheet-walk8-r3c6-DrCDUWBZ.png              17.11 kB
+dist/assets/char-hero-sheet-walk8-r1c5-CwkI0Veu.png              17.16 kB
+dist/assets/palisade-crack-VvvYcTgw.mp3                          17.18 kB
+dist/assets/pan-swish-2I4JWZIB.mp3                               17.18 kB
+dist/assets/slot-save-confirm-T42JEhXS.mp3                       17.18 kB
+dist/assets/tier-up-BKof9-Ld.mp3                                 17.18 kB
+dist/assets/char-hero-sheet-walk8-r3c4-BpMwWbto.png              17.18 kB
+dist/assets/char-hero-sheet-walk8-r3c7-CoRRptMH.png              17.28 kB
+dist/assets/char-hero-sheet-walk8-r1c3-CB8yZoTH.png              17.36 kB
+dist/assets/char-hero-sheet-walk8-r2c7-CLgs08RF.png              17.37 kB
+dist/assets/char-hero-sheet-walk8-r2c4-ZsU0iJT-.png              17.39 kB
+dist/assets/char-hero-sheet-walk8-r2c0-6Y7IpAax.png              17.49 kB
+dist/assets/char-hero-sheet-walk8-r2c1-BdRCBmlj.png              17.55 kB
+dist/assets/char-hero-sheet-walk8-r0c4-DWNoofYy.png              17.69 kB
+dist/assets/char-hero-sheet-walk8-r0c2-Da9FZLMl.png              17.71 kB
+dist/assets/char-hero-sheet-walk8-r2c6-sMEEE1pj.png              17.80 kB
+dist/assets/char-hero-sheet-walk8-r0c6-CMNEvJ72.png              17.99 kB
+dist/assets/char-hero-sheet-walk8-r0c3-BYiEmfUh.png              18.21 kB
+dist/assets/char-prospector-sheet-hover8-r2c5-DGJ6EAwG.png       18.25 kB
+dist/assets/char-prospector-sheet-hover8-r2c0-BgyiF2M_.png       18.25 kB
+dist/assets/char-prospector-sheet-hover8-r2c3-vwLNhXr1.png       18.26 kB
+dist/assets/char-prospector-sheet-hover8-r2c7-Cm_7D5FE.png       18.36 kB
+dist/assets/char-hero-sheet-walk8-r0c7-_J5wQ6HQ.png              18.36 kB
+dist/assets/char-jumper-sheet-walk8-r0c1-B2NypUvM.png            18.39 kB
+dist/assets/char-hero-sheet-walk8-r0c1-Dj-PNTT2.png              18.40 kB
+dist/assets/char-prospector-sheet-hover8-r2c1-D4cCsv5x.png       18.41 kB
+dist/assets/char-hero-sheet-walk8-r0c0-BsqR6F_c.png              18.42 kB
+dist/assets/char-hero-sheet-walk8-r0c5-Me4Uhiew.png              18.56 kB
+dist/assets/char-jumper-sheet-walk8-r0c0-D3cGpQaX.png            18.57 kB
+dist/assets/char-jumper-sheet-walk8-r0c2-Dhz5ZjOg.png            18.79 kB
+dist/assets/char-hero-sheet-walk8-r2c3-Dmu9yBgV.png              18.80 kB
+dist/assets/char-jumper-sheet-walk8-r0c4-DoAgRVe6.png            18.83 kB
+dist/assets/char-prospector-sheet-hover8-r1c0-D89ZNgZR.png       18.84 kB
+dist/assets/char-prospector-sheet-hover8-r1c2-D5VhTbxQ.png       18.87 kB
+dist/assets/char-jumper-sheet-walk8-r0c3-Ckk-TEBK.png            18.95 kB
+dist/assets/char-prospector-sheet-hover8-r1c4-BRsL59gd.png       18.98 kB
+dist/assets/char-prospector-sheet-hover8-r1c5-DBKZcQzy.png       19.05 kB
+dist/assets/char-prospector-sheet-hover8-r2c4-omT9YuSw.png       19.12 kB
+dist/assets/char-prospector-sheet-hover8-r2c6-DU3IIn1u.png       19.22 kB
+dist/assets/char-prospector-sheet-hover8-r1c1-B1TMjZ7w.png       19.24 kB
+dist/assets/char-prospector-sheet-hover8-r1c6-cs-dISNR.png       19.27 kB
+dist/assets/char-prospector-sheet-hover8-r2c2-DSbxzdZi.png       19.28 kB
+dist/assets/char-jumper-sheet-walk8-r0c5-DJMdrYiG.png            19.30 kB
+dist/assets/char-prospector-sheet-hover8-r1c7-0QJHBrv2.png       19.49 kB
+dist/assets/char-prospector-sheet-hover8-r1c3-D7S2HY-e.png       19.50 kB
+dist/assets/char-jumper-sheet-walk8-r0c6-IJaYt-RK.png            19.56 kB
+dist/assets/char-prospector-sheet-hover8-r3c3-CXHB1F1J.png       19.65 kB
+dist/assets/char-prospector-sheet-hover8-r3c6-C_TqvTua.png       19.66 kB
+dist/assets/char-prospector-sheet-hover8-r3c4-4Z2YuTCV.png       19.66 kB
+dist/assets/char-prospector-sheet-hover8-r3c7-CDuK2XMJ.png       19.71 kB
+dist/assets/char-jumper-sheet-walk8-r0c7-JpuZ2c0s.png            19.81 kB
+dist/assets/char-prospector-sheet-hover8-r3c2-l1Dpi0OP.png       19.82 kB
+dist/assets/blast-charge-arm-B0YaTajY.mp3                        20.10 kB
+dist/assets/blast-charge-boom-BSfk_auF.mp3                       20.10 kB
+dist/assets/sign-in-chime-CiNrxw6U.mp3                           20.10 kB
+dist/assets/char-prospector-sheet-hover8-r0c4-CQYi1XK4.png       20.26 kB
+dist/assets/char-prospector-sheet-hover8-r0c7-CupltX-H.png       20.27 kB
+dist/assets/char-prospector-sheet-hover8-r0c0-CWXPfRO_.png       20.32 kB
+dist/assets/char-prospector-sheet-hover8-r0c3-DJdROQOD.png       20.34 kB
+dist/assets/char-prospector-sheet-hover8-r0c6-CwstH_oy.png       20.34 kB
+dist/assets/char-prospector-sheet-hover8-r0c5-CKuRX3Qe.png       20.42 kB
+dist/assets/char-prospector-sheet-hover8-r0c2-BBPxasJh.png       20.49 kB
+dist/assets/char-prospector-sheet-hover8-r0c1-Bj2UhR-4.png       20.59 kB
+dist/assets/char-prospector-sheet-hover8-r3c1-CPFiX03m.png       20.63 kB
+dist/assets/char-prospector-sheet-hover8-r3c0-gJIXApYP.png       20.67 kB
+dist/assets/char-prospector-sheet-hover8-r3c5-C1QgxCcm.png       20.67 kB
+dist/assets/wind-gust-BC-IK8qp.mp3                               21.35 kB
+dist/assets/demolish-DR09iHP3.mp3                                23.03 kB
+dist/assets/char-hero-sheet-walk4-b-r2c2-m-xu6GtY.png            24.43 kB
+dist/assets/research-pick-sting-Diyl-iL6.mp3                     24.70 kB
+dist/assets/char-hero-sheet-walk4-b-r2c1-CsN7wwD_.png            24.87 kB
+dist/assets/char-jumper-sheet-walk8-r2c0-BsJVQ9mR.png            24.98 kB
+dist/assets/char-jumper-sheet-walk8-r2c1-6z2jKJc_.png            24.98 kB
+dist/assets/char-jumper-sheet-walk8-r2c5-CRVvf0d2.png            25.01 kB
+dist/assets/char-jumper-sheet-walk8-r2c4-BpZLNDMP.png            25.03 kB
+dist/assets/char-jumper-sheet-walk8-r2c6-Df9VpKZs.png            25.04 kB
+dist/assets/char-jumper-sheet-walk8-r2c3-BXMzFWy2.png            25.06 kB
+dist/assets/char-hero-sheet-walk4-b-r2c3-DsJF8bBU.png            25.15 kB
+dist/assets/char-hero-sheet-walk4-a-r2c2-BgY3K8rq.png            25.22 kB
+dist/assets/char-jumper-sheet-walk8-r2c2-BG8RecPu.png            25.36 kB
+dist/assets/char-hero-sheet-walk4-a-r2c3-VJInvDIH.png            25.41 kB
+dist/assets/char-jumper-sheet-walk8-r1c7-B2L6fAX_.png            25.45 kB
+dist/assets/char-jumper-sheet-walk8-r2c7-BpbO-uTQ.png            25.58 kB
+dist/assets/char-hero-sheet-walk4-b-r2c0-BA3EEu_2.png            25.59 kB
+dist/assets/char-jumper-sheet-walk8-r1c4-BtVkaK_2.png            25.63 kB
+dist/assets/char-hero-sheet-walk4-a-r2c0-BjXjRzgU.png            26.48 kB
+dist/assets/char-jumper-sheet-walk4-a-r3c3-7KUSYz4O.png          26.59 kB
+dist/assets/char-hero-sheet-walk4-a-r2c1-DlcKJm_G.png            26.71 kB
+dist/assets/char-jumper-sheet-walk8-r1c1-uTNCRloG.png            26.89 kB
+dist/assets/char-hero-sheet-walk4-b-r1c3-CFSU4L5W.png            26.89 kB
+dist/assets/char-jumper-sheet-walk8-r1c2-DOMAsQYm.png            27.10 kB
+dist/assets/char-hero-sheet-walk4-a-r0c2-DpoZruP_.png            27.11 kB
+dist/assets/char-jumper-sheet-walk8-r1c0-E1wZHTHt.png            27.21 kB
+dist/assets/char-jumper-sheet-walk8-r1c6-DbILUGSW.png            27.26 kB
+dist/assets/char-jumper-sheet-walk4-b-r0c3-BjEqmB12.png          27.31 kB
+dist/assets/char-jumper-sheet-walk8-r1c3-VUK0J82C.png            27.31 kB
+dist/assets/char-jumper-sheet-walk8-r1c5-DexUIxuR.png            27.32 kB
+dist/assets/char-jumper-sheet-walk4-b-r0c2-CxSjeJEY.png          27.34 kB
+dist/assets/char-hero-sheet-walk4-b-r1c2-Cvz6wYru.png            27.36 kB
+dist/assets/char-hero-sheet-walk4-a-r1c2-D_WnZ9cn.png            27.82 kB
+dist/assets/char-hero-sheet-walk4-a-r1c3-D0H4VabV.png            27.90 kB
+dist/assets/char-hero-sheet-walk4-b-r1c1-CVa_TGRN.png            27.95 kB
+dist/assets/char-hero-sheet-walk4-b-r0c1-uqc_AVF5.png            28.01 kB
+dist/assets/char-jumper-sheet-walk4-a-r3c2-CU5axnEz.png          28.02 kB
+dist/assets/char-hero-sheet-walk4-a-r3c3-DCQd1Y2V.png            28.23 kB
+dist/assets/char-hero-sheet-walk4-b-r0c2-j815EErC.png            28.30 kB
+dist/assets/char-jumper-sheet-walk4-a-r2c2-CrjNFwBp.png          28.30 kB
+dist/assets/char-hero-sheet-walk4-b-r0c0-DjZd_lwn.png            28.41 kB
+dist/assets/char-hero-sheet-walk4-b-r0c3-Dpx8hXxu.png            28.47 kB
+dist/assets/char-jumper-sheet-walk4-b-r0c1-BZL5EMJe.png          28.58 kB
+dist/assets/char-jumper-sheet-walk4-b-r1c2-RWg0h_6e.png          28.95 kB
+dist/assets/char-hero-sheet-walk4-a-r0c0-DarFkRpL.png            29.00 kB
+dist/assets/char-jumper-sheet-walk4-a-r3c1-aKAR2rp1.png          29.12 kB
+dist/assets/char-hero-sheet-walk4-b-r1c0-C8MxRfKr.png            29.17 kB
+dist/assets/char-hero-sheet-walk4-a-r1c1-Q2pCzZFZ.png            29.17 kB
+dist/assets/char-jumper-sheet-walk4-a-r2c1-CqN-p2fJ.png          29.18 kB
+dist/assets/char-jumper-sheet-walk4-a-r2c3-DYMkBrWD.png          29.27 kB
+dist/assets/palisade-collapse-Dkq4yD_Q.mp3                       29.30 kB
+dist/assets/wave-start-horn-D2de_fqw.mp3                         29.30 kB
+dist/assets/char-jumper-sheet-walk4-b-r1c3-fbG0ewkh.png          29.57 kB
+dist/assets/char-jumper-sheet-walk4-b-r2c2-DbXB8bP6.png          29.63 kB
+dist/assets/char-hero-sheet-walk4-a-r3c2-BCkjVB5b.png            29.67 kB
+dist/assets/char-hero-sheet-walk4-a-r0c1-XxZl0E4r.png            29.84 kB
+dist/assets/char-jumper-sheet-walk4-a-r3c0-DdRekOmc.png          30.00 kB
+dist/assets/char-jumper-sheet-walk4-b-r2c3-DS7tZpXk.png          30.01 kB
+dist/assets/char-jumper-sheet-walk4-b-r3c2-TYhAwfzu.png          30.01 kB
+dist/assets/char-jumper-sheet-walk4-b-r1c0-D0tLU0cz.png          30.02 kB
+dist/assets/char-hero-sheet-walk4-a-r3c1-B-MQNdmz.png            30.03 kB
+dist/assets/char-jumper-sheet-walk4-b-r0c0-hz3ZUzBs.png          30.18 kB
+dist/assets/char-hero-sheet-walk4-a-r0c3-BFEDMEDN.png            30.33 kB
+dist/assets/char-hero-sheet-walk4-a-r3c0-BnfW3qBx.png            30.40 kB
+dist/assets/char-jumper-sheet-walk4-b-r3c1-BI2s8Ime.png          30.40 kB
+dist/assets/char-jumper-sheet-walk4-b-r3c3-6vOA6ISt.png          30.41 kB
+dist/assets/char-jumper-sheet-walk4-a-r1c2-C3CZ-osf.png          30.41 kB
+dist/assets/char-jumper-sheet-walk4-b-r1c1-DJ3fyB5q.png          30.43 kB
+dist/assets/char-hero-sheet-walk4-b-r3c2-Cx1QCG09.png            30.72 kB
+dist/assets/char-jumper-sheet-walk4-b-r3c0-DlFfPbsZ.png          30.85 kB
+dist/assets/char-jumper-sheet-walk4-a-r0c3-C45eYcAA.png          30.96 kB
+dist/assets/char-hero-sheet-walk4-b-r3c0-INEOCGO9.png            30.96 kB
+dist/assets/char-hero-sheet-walk4-a-r1c0-BokYIPMY.png            31.04 kB
+dist/assets/char-jumper-sheet-walk4-a-r0c1-BFX6QP7m.png          31.09 kB
+dist/assets/char-hero-sheet-walk4-b-r3c1-bbzxolpD.png            31.15 kB
+dist/assets/char-jumper-sheet-walk4-a-r1c3-rpZL4Pim.png          31.16 kB
+dist/assets/char-jumper-sheet-walk4-a-r0c2-C7qZ_la7.png          31.18 kB
+dist/assets/char-hero-sheet-walk4-b-r3c3-CghM2tp_.png            31.21 kB
+dist/assets/char-jumper-sheet-walk4-a-r0c0-FDw2VVFj.png          31.44 kB
+dist/assets/char-jumper-sheet-walk4-a-r2c0-CqsU9F-o.png          31.45 kB
+dist/assets/char-jumper-sheet-walk4-a-r1c1-tLplye3E.png          31.50 kB
+dist/assets/char-hero-sheet-rotation2-r1c2-DY_Ghafq.png          32.06 kB
+dist/assets/char-jumper-sheet-walk4-a-r1c0-B5FI36NW.png          32.16 kB
+dist/assets/char-prospector-sheet-hover4-b-r2c0-BSFf9lLU.png     32.28 kB
+dist/assets/char-hero-sheet-rotation2-r1c3-CUmP4cuq.png          32.50 kB
+dist/assets/char-baron-sheet-walk8-r1c6-_M36O9Nc.png             32.53 kB
+dist/assets/char-jumper-sheet-walk4-b-r2c1-rsQofKeS.png          32.61 kB
+dist/assets/char-baron-sheet-walk8-r1c2-DE5q3K4Y.png             32.63 kB
+dist/assets/char-prospector-sheet-hover4-b-r2c2-boo2BK5h.png     32.98 kB
+dist/assets/town-enter-chime-f_8ClOsM.mp3                        33.06 kB
+dist/assets/char-jumper-sheet-walk4-b-r2c0-Dm9fLLZQ.png          33.58 kB
+dist/assets/char-baron-sheet-walk8-r1c3-CBLrgJwN.png             33.90 kB
+dist/assets/char-baron-sheet-walk4-b-r2c3-DwL6GqiI.png           33.90 kB
+dist/assets/char-baron-sheet-walk8-r1c7-Di8odey8.png             33.92 kB
+dist/assets/char-prospector-sheet-hover4-b-r2c3-DljboJmP.png     34.03 kB
+dist/assets/char-baron-sheet-walk4-b-r2c1-C64ajNBU.png           34.08 kB
+dist/assets/char-baron-sheet-walk4-b-r2c2-BNrqxlav.png           34.14 kB
+dist/assets/char-prospector-sheet-hover4-b-r2c1-C_82jK6n.png     34.30 kB
+dist/assets/char-baron-sheet-walk8-r1c5-CEbzG-FE.png             34.38 kB
+dist/assets/char-baron-sheet-walk8-r1c1-C5v6XwUX.png             34.71 kB
+dist/assets/char-baron-sheet-walk8-r1c0-C_GfloKA.png             34.88 kB
+dist/assets/char-baron-sheet-walk4-b-r1c3-DDtcYzmE.png           35.01 kB
+dist/assets/char-baron-sheet-walk4-b-r1c2-CN7sH2rk.png           35.17 kB
+dist/assets/char-hero-sheet-rotation2-r0c3-Dcl_1ExC.png          35.20 kB
+dist/assets/char-baron-sheet-walk8-r3c2-CGet-Ojt.png             35.38 kB
+dist/assets/char-hero-sheet-rotation2-r0c2-C7vqSDtY.png          35.47 kB
+dist/assets/char-prospector-sheet-hover4-a-r2c1-Dx27pVSN.png     35.52 kB
+dist/assets/char-baron-sheet-walk8-r3c5-DXjW85sW.png             35.66 kB
+dist/assets/char-prospector-sheet-hover4-a-r2c3-n9uPaOTI.png     35.66 kB
+dist/assets/char-prospector-sheet-hover4-b-r1c0-WmEMkaBP.png     35.69 kB
+dist/assets/char-baron-sheet-walk4-b-r2c0-TTOTtdmb.png           35.72 kB
+dist/assets/char-prospector-sheet-hover4-a-r2c2-eElHLRTg.png     35.74 kB
+dist/assets/char-baron-sheet-walk4-b-r1c0-Df-jUsV2.png           35.79 kB
+dist/assets/char-prospector-sheet-hover4-b-r1c3-Cq33Mie_.png     35.99 kB
+dist/assets/char-prospector-sheet-hover4-b-r1c1-C38hHxXb.png     36.05 kB
+dist/assets/char-baron-sheet-walk8-r3c3-B1PH_hSp.png             36.16 kB
+dist/assets/char-baron-sheet-walk8-r3c6-BrPnBWSA.png             36.62 kB
+dist/assets/char-baron-sheet-walk4-b-r1c1-T1GuNIiZ.png           36.64 kB
+dist/assets/char-prospector-sheet-hover4-b-r1c2-BgZOoP_U.png     36.64 kB
+dist/assets/char-baron-sheet-walk8-r3c1-DkGZLtAb.png             36.69 kB
+dist/assets/char-prospector-sheet-hover4-b-r3c0-n4hlZoNm.png     36.90 kB
+dist/assets/char-prospector-sheet-hover4-a-r2c0-CCkvVh8_.png     37.00 kB
+dist/assets/char-baron-sheet-walk8-r3c7-2Eqqdjll.png             37.04 kB
+dist/assets/char-baron-sheet-walk8-r1c4-BNJ6nOYs.png             37.04 kB
+dist/assets/char-prospector-sheet-hover4-b-r3c3-CewyMEen.png     37.05 kB
+dist/assets/char-baron-sheet-walk8-r3c4-BVYU5n41.png             37.15 kB
+dist/assets/char-hero-sheet-rotation2-r1c0-BwR0ttkr.png          37.16 kB
+dist/assets/char-baron-sheet-walk8-r3c0-BxTBjZ80.png             37.17 kB
+dist/assets/char-prospector-sheet-hover4-a-r3c0-D7DapszI.png     37.35 kB
+dist/assets/char-hero-sheet-rotation2-r0c0-DfjWobnc.png          37.43 kB
+dist/assets/char-hero-sheet-rotation2-r1c1-B7CmrMPc.png          37.60 kB
+dist/assets/char-prospector-sheet-hover4-b-r0c1-D_T0tH97.png     37.87 kB
+dist/assets/char-prospector-sheet-hover4-a-r3c2-C-sM8m2Q.png     37.87 kB
+dist/assets/char-prospector-sheet-hover4-a-r0c1-DTMr7AO5.png     37.88 kB
+dist/assets/char-prospector-sheet-hover4-a-r3c1-DDiP6Aob.png     37.90 kB
+dist/assets/char-prospector-sheet-hover4-b-r0c0-DK8rqjh0.png     37.97 kB
+dist/assets/char-prospector-sheet-hover4-a-r0c0-aMKMk6pE.png     38.10 kB
+dist/assets/char-prospector-sheet-hover4-b-r0c2-DTDy0Mxo.png     38.10 kB
+dist/assets/char-hero-sheet-rotation2-r0c1-B47jGt8n.png          38.19 kB
+dist/assets/char-prospector-sheet-hover4-a-r0c2-BDmtuBVE.png     38.20 kB
+dist/assets/char-prospector-sheet-hover4-a-r1c0-DOXZyMNI.png     38.35 kB
+dist/assets/char-baron-sheet-walk8-r2c2-C2frHLkK.png             38.37 kB
+dist/assets/char-prospector-sheet-hover4-a-r1c1-DIe3myx2.png     38.76 kB
+dist/assets/char-prospector-sheet-hover4-b-r3c1-CocsWCUq.png     38.76 kB
+dist/assets/char-prospector-sheet-hover4-a-r1c3-BegGxWTZ.png     38.76 kB
+dist/assets/char-prospector-sheet-hover4-b-r3c2-rdOv5p4p.png     38.76 kB
+dist/assets/char-prospector-sheet-hover4-a-r3c3-DAtMuyPk.png     38.99 kB
+dist/assets/char-prospector-sheet-hover4-a-r0c3-BkZmP0mR.png     39.24 kB
+dist/assets/char-prospector-sheet-hover4-b-r0c3-Dksp-XiY.png     39.70 kB
+dist/assets/char-baron-sheet-walk4-b-r3c2-CpQaG59k.png           39.82 kB
+dist/assets/char-baron-sheet-walk4-a-r1c3-DI3b6g7E.png           40.00 kB
+dist/assets/char-baron-sheet-walk4-a-r2c3-CvZU1Jnf.png           40.13 kB
+dist/assets/char-baron-sheet-walk4-a-r2c1-BFg6Xz4_.png           40.36 kB
+dist/assets/char-baron-sheet-walk8-r2c4-B4bUkRJx.png             40.44 kB
+dist/assets/char-prospector-sheet-hover4-a-r1c2-BZonwUF_.png     40.56 kB
+dist/assets/baron-arrival-sting-DRqnFRv3.mp3                     40.58 kB
+dist/assets/char-baron-sheet-walk4-b-r3c0-DXuBChi6.png           40.60 kB
+dist/assets/char-baron-sheet-walk4-a-r1c1-DGxTVrS0.png           40.81 kB
+dist/assets/char-baron-sheet-walk4-b-r3c3-BoP_3vzL.png           40.87 kB
+dist/assets/char-baron-sheet-walk8-r2c6-Bx5N5n4-.png             40.90 kB
+dist/assets/char-baron-sheet-walk4-a-r2c2-BrmuhSS9.png           41.01 kB
+dist/assets/char-baron-sheet-walk4-a-r1c2-CBmIpM-1.png           41.05 kB
+dist/assets/char-baron-sheet-walk8-r2c1-CfAOszLG.png             41.22 kB
+dist/assets/char-baron-sheet-walk4-a-r2c0-DfQcmVlV.png           41.48 kB
+dist/assets/char-baron-sheet-walk4-b-r3c1-RrdE36b1.png           41.87 kB
+dist/assets/char-baron-sheet-walk4-a-r1c0-BWGBEoxM.png           43.16 kB
+dist/assets/char-baron-sheet-walk8-r2c3-DzbE7z2C.png             43.75 kB
+dist/assets/char-baron-sheet-walk8-r2c5-rpu7eYfS.png             44.84 kB
+dist/assets/char-baron-sheet-walk4-b-r0c3-Dge7dqQY.png           44.96 kB
+dist/assets/char-baron-sheet-walk8-r2c7-BlpVd3Oe.png             44.97 kB
+dist/assets/char-baron-sheet-walk4-b-r0c2-C47Brcf7.png           45.44 kB
+dist/assets/char-baron-sheet-walk8-r2c0-CtUo6fRi.png             45.93 kB
+dist/assets/prospector-hover-loop-DJnx17Oq.mp3                   46.01 kB
+dist/assets/char-baron-sheet-walk4-a-r3c1-vD-dSUUg.png           46.03 kB
+dist/assets/char-baron-sheet-walk4-b-r0c0-CyvA78B9.png           46.09 kB
+dist/assets/char-baron-sheet-walk4-a-r3c0-Dh3zac1o.png           46.37 kB
+dist/assets/char-baron-sheet-walk4-b-r0c1-BK-i0Nfd.png           46.51 kB
+dist/assets/char-baron-sheet-walk4-a-r3c2-C1SHF_Kb.png           47.07 kB
+dist/assets/char-baron-sheet-walk4-a-r3c3-BsSxiGL1.png           47.23 kB
+dist/assets/char-jumper-sheet-rotation-r2c2-DZTfcIj7.png         47.97 kB
+dist/assets/char-hero-sheet-rotation-r1c0-BB5mSvuH.png           48.01 kB
+dist/assets/char-hero-sheet-rotation-r1c1-BwLxNL1Y.png           48.47 kB
+dist/assets/defeat-sting-BvoSPKeR.mp3                            48.94 kB
+dist/assets/epoch-door-sting-B7W9AZTL.mp3                        48.94 kB
+dist/assets/victory-sting-BqX18h28.mp3                           48.94 kB
+dist/assets/char-jumper-sheet-rotation-r2c1-B1HLuSM5.png         49.38 kB
+dist/assets/char-baron-sheet-walk8-r0c1-BQ5owXlF.png             49.57 kB
+dist/assets/char-hero-sheet-rotation-r2c0-C9AF3kNA.png           49.63 kB
+dist/assets/char-baron-sheet-walk8-r0c6-B-LoKqUa.png             49.84 kB
+dist/assets/char-jumper-sheet-rotation-r2c0-DNMO6IXS.png         49.97 kB
+dist/assets/char-jumper-sheet-rotation-r2c3-B_6ygLSS.png         50.06 kB
+dist/assets/char-hero-sheet-rotation-r2c1--Wum5_Rf.png           50.60 kB
+dist/assets/char-hero-sheet-rotation-r1c2-4OvdkKAs.png           50.63 kB
+dist/assets/char-baron-sheet-walk8-r0c3-CKS120ZQ.png             50.68 kB
+dist/assets/char-jumper-sheet-rotation-r1c3-DgDt6hUa.png         50.95 kB
+dist/assets/char-jumper-sheet-rotation-r1c2-DXKzigyq.png         51.32 kB
+dist/assets/char-baron-sheet-walk4-a-r0c3-DCqJka9r.png           51.40 kB
+dist/assets/char-baron-sheet-walk8-r0c4-C-HA8SI_.png             51.48 kB
+dist/assets/char-jumper-sheet-rotation-r1c1-DBM2PKV4.png         51.72 kB
+dist/assets/char-jumper-sheet-rotation-r0c0-r9ObMgL1.png         51.77 kB
+dist/assets/char-jumper-sheet-rotation-r0c2-CZyjjIb9.png         51.81 kB
+dist/assets/char-baron-sheet-walk8-r0c0-CKOHpaJA.png             51.92 kB
+dist/assets/char-jumper-sheet-rotation-r1c0-zFqmNmQq.png         51.95 kB
+dist/assets/char-baron-sheet-walk4-a-r0c2-gTfS8kv1.png           51.95 kB
+dist/assets/char-baron-sheet-walk8-r0c7-BdE-MxLL.png             52.04 kB
+dist/assets/char-hero-sheet-rotation-r1c3-CejUjjwm.png           52.35 kB
+dist/assets/char-baron-sheet-walk4-a-r0c1-B5w0TQaa.png           52.42 kB
+dist/assets/char-baron-sheet-walk8-r0c5-Dkikb8gv.png             52.46 kB
+dist/assets/char-baron-sheet-walk8-r0c2-CwxGJIKf.png             52.60 kB
+dist/assets/char-baron-sheet-walk4-a-r0c0-DVwdAzfG.png           52.75 kB
+dist/assets/char-jumper-sheet-rotation-r0c1-fNuva8Cj.png         52.83 kB
+dist/assets/char-jumper-sheet-rotation-r0c3-OgAQQ40r.png         53.12 kB
+dist/assets/char-hero-sheet-rotation-r2c3-aMYcbTh5.png           53.25 kB
+dist/assets/char-hero-sheet-rotation-r0c0-nH72NNRX.png           53.77 kB
+dist/assets/char-hero-sheet-rotation-r2c2-BHZ8nU0q.png           54.97 kB
+dist/assets/char-hero-sheet-rotation-r0c2-HTgwLZ3C.png           56.38 kB
+dist/assets/char-hero-sheet-rotation-r0c3-0B5vtUhq.png           56.49 kB
+dist/assets/char-hero-sheet-rotation-r0c1-CbgPJ1qx.png           56.80 kB
+dist/assets/sluice-water-loop-DoISZtZd.mp3                       58.14 kB
+dist/assets/river-ambience-loop-BZul2Hc_.mp3                     61.06 kB
+dist/assets/char-hero-sheet-front-r1c1-BWOvT3Lj.png              62.05 kB
+dist/assets/char-hero-sheet-back-r1c0-C6Vau5Xk.png               65.08 kB
+dist/assets/baron-defeat-fanfare-C4iOYq3E.mp3                    65.24 kB
+dist/assets/desert-day-loop-BisSeUtA.mp3                         65.24 kB
+dist/assets/desert-dusk-loop-B81LoTwA.mp3                        65.24 kB
+dist/assets/river-bed-v2-loop-DzxHvq0Z.mp3                       65.24 kB
+dist/assets/tavern-interior-loop-gETHo_e_.mp3                    65.24 kB
+dist/assets/town-square-loop-CjEVTDUi.mp3                        65.24 kB
+dist/assets/char-hero-sheet-front-r1c2-DJ2kJqnx.png              66.33 kB
+dist/assets/char-hero-sheet-back-r1c1-cz5Ug7ki.png               67.90 kB
+dist/assets/char-hero-sheet-front-r0c2-CoDA_2bT.png              68.57 kB
+dist/assets/char-hero-sheet-front-r0c1-Byxj8mQL.png              70.28 kB
+dist/assets/char-jumper-sheet-front-r1c1-DuxkrOI4.png            70.29 kB
+dist/assets/char-hero-sheet-back-r0c2-DxoXDlb7.png               70.40 kB
+dist/assets/char-hero-sheet-front-r0c0-BcS5NtFa.png              71.11 kB
+dist/assets/char-hero-sheet-back-r0c1-zjOBNJnF.png               71.37 kB
+dist/assets/char-jumper-sheet-front-r0c1-DHkbCCHf.png            71.44 kB
+dist/assets/char-hero-sheet-side-actions-r1c2-BEZsH5q_.png       71.50 kB
+dist/assets/char-hero-sheet-back-r1c2-D8NZWp66.png               71.73 kB
+dist/assets/char-hero-sheet-front-r1c0-C551LlwE.png              72.18 kB
+dist/assets/char-hero-sheet-side-actions-r1c1-Q7saePCi.png       72.21 kB
+dist/assets/char-hero-sheet-back-r0c0-C3pTOnHl.png               72.39 kB
+dist/assets/char-jumper-sheet-front-r0c0-2pJbxYyO.png            72.49 kB
+dist/assets/char-jumper-sheet-front-r0c2-DQISGoz_.png            73.34 kB
+dist/assets/char-hero-sheet-side-actions-r0c0-BFogGzZP.png       73.61 kB
+dist/assets/char-hero-sheet-side-actions-r1c0-qyFEnedi.png       75.75 kB
+dist/assets/char-jumper-sheet-front-r1c0-DL19BXnl.png            76.02 kB
+dist/assets/char-jumper-sheet-front-r1c2-DuqYn4C3.png            76.06 kB
+dist/assets/char-jumper-sheet-back-r0c2-D_Ce9VZA.png             76.44 kB
+dist/assets/char-jumper-sheet-back-r1c0-DWlWA7nP.png             77.40 kB
+dist/assets/char-hero-sheet-side-actions-r0c2-D51ebr4X.png       77.42 kB
+dist/assets/char-jumper-sheet-back-r1c1-xvE-187l.png             78.09 kB
+dist/assets/char-hero-sheet-side-actions-r0c1-CYUZgblM.png       79.40 kB
+dist/assets/char-jumper-sheet-back-r1c2-4N6rDt6S.png             80.60 kB
+dist/assets/char-jumper-sheet-back-r0c1-D9ALTgEq.png             80.63 kB
+dist/assets/char-jumper-sheet-back-r0c0-CeI7DSg8.png             80.69 kB
+dist/assets/char-hero-sheet-side-r0c0-BGu403xd.png               84.53 kB
+dist/assets/char-hero-sheet-side-r1c0-BZFKv9QQ.png               84.89 kB
+dist/assets/char-hero-sheet-side-r0c1-BhbltGe_.png               84.90 kB
+dist/assets/char-hero-sheet-side-r1c1-CwkQTGkq.png               85.67 kB
+dist/assets/char-jumper-sheet-side-r0c0-Ch0LcwCM.png             91.53 kB
+dist/assets/char-jumper-sheet-side-r1c0-CcE6HMf7.png             93.38 kB
+dist/assets/char-jumper-sheet-side-r1c1-BvqAOwO2.png             95.66 kB
+dist/assets/char-jumper-sheet-side-r0c1-yWXWYfOP.png             96.26 kB
+dist/assets/ui-menu-panel-C2N8bZCn.png                          110.16 kB
+dist/assets/ui-title-emblem-CWTi9GYO.png                        123.01 kB
+dist/assets/prop-baron-banner-BZ2DDZ30.png                      188.89 kB
+dist/assets/bld-signal-turret-D1uYrKuR.png                      209.16 kB
+dist/assets/hero-homesteader-BtdfA94L.png                       216.66 kB
+dist/assets/townsfolk-youngster-b-D4sRr-Fv.png                  223.96 kB
+dist/assets/enemy-claim-jumper-Pzu2ez2p.png                     225.67 kB
+dist/assets/bld-palisade-CqelEfI1.png                           242.24 kB
+dist/assets/townsfolk-youngster-a-DAUgla1K.png                  248.35 kB
+dist/assets/townsfolk-preacher-DC8pVZyb.png                     249.20 kB
+dist/assets/bld-sluice-works-CFTm3u73.png                       252.39 kB
+dist/assets/townsfolk-assay-clerk-F-Qt2e6e.png                  256.71 kB
+dist/assets/townsfolk-storekeeper-B-wTzJBZ.png                  263.98 kB
+dist/assets/townsfolk-schoolteacher-DJ92WxfX.png                274.18 kB
+dist/assets/townsfolk-elder-YauxlVWZ.png                        275.60 kB
+dist/assets/bld-stockpile-yard-DZqfsp0_.png                     283.24 kB
+dist/assets/townsfolk-tavernkeeper-1biiFpXR.png                 285.30 kB
+dist/assets/char-prospector-portrait-8YhwfReU.png               286.90 kB
+dist/assets/bld-claim-office-CyCDgQ6J.png                       300.05 kB
+dist/assets/node-gold-seam-CnWo61Jp.png                         305.10 kB
+dist/assets/icon-damage-DZUv2BnQ.png                            314.64 kB
+dist/assets/icon-range-DVj413_p.png                             327.55 kB
+dist/assets/icon-beacon-Dtl_Qmxn.png                            328.61 kB
+dist/assets/icon-volley-BY2Au2Kk.png                            332.63 kB
+dist/assets/bld-sentry-beacon-vVUkzSC9.png                      343.61 kB
+dist/assets/icon-prospecting-Gli3x4zT.png                       378.08 kB
+dist/assets/icon-mobility-CVm6uM1H.png                          382.17 kB
+dist/assets/icon-blast-DivDiVnC.png                             391.66 kB
+dist/assets/icon-gold-CEuAcerh.png                              420.77 kB
+dist/assets/icon-firerate-CF_Xno5I.png                          433.15 kB
+dist/assets/terrain-river-tile-DEUgMoOp.png                     436.91 kB
+dist/assets/terrain-bank-tile-CrWGkPgg.png                      439.63 kB
+dist/assets/terrain-bank-tile-c-C4rfR6nJ.png                    440.99 kB
+dist/assets/icon-plating-CLk5tPna.png                           444.88 kB
+dist/assets/terrain-bank-tile-b-B8wQl3Sc.png                    446.32 kB
+dist/assets/icon-panning-Cn-r1OIM.png                           460.11 kB
+dist/assets/icon-mend-BE5Vdm6P.png                              466.92 kB
+dist/assets/tavern-interior-backdrop-C9Aw0WZU.png               562.07 kB
+dist/assets/ui-menu-backdrop-B5p9vzbt.png                       579.57 kB
+dist/assets/story-SoeGQKTg.css                                    1.82 kB │ gzip:   0.87 kB
+dist/assets/reader-Dckvtehs.css                                   2.83 kB │ gzip:   1.07 kB
+dist/assets/TownScene-Csk15jRG.css                               15.68 kB │ gzip:   3.45 kB
+dist/assets/index-BjPLw2Br.css                                   56.76 kB │ gzip:  11.01 kB
+dist/assets/invalid-CqgUP9-B.js                                   0.08 kB │ gzip:   0.10 kB
+dist/assets/tier-up-B0MIft-T.js                                   0.08 kB │ gzip:   0.10 kB
+dist/assets/demolish-my8zgZ5Z.js                                  0.08 kB │ gzip:   0.10 kB
+dist/assets/menu-tap-CriIH21j.js                                  0.08 kB │ gzip:   0.10 kB
+dist/assets/icon-gold-C0vvyyYQ.js                                 0.08 kB │ gzip:   0.10 kB
+dist/assets/icon-mend-9w2dOi4w.js                                 0.08 kB │ gzip:   0.10 kB
+dist/assets/pan-swish-BgTv8881.js                                 0.08 kB │ gzip:   0.10 kB
+dist/assets/save-tick-BMyaGt8w.js                                 0.08 kB │ gzip:   0.10 kB
+dist/assets/wind-gust-D3-tx6ee.js                                 0.08 kB │ gzip:   0.10 kB
+dist/assets/gold-chime-BHYe9Erc.js                                0.08 kB │ gzip:   0.10 kB
+dist/assets/icon-blast-B7dRDSk3.js                                0.08 kB │ gzip:   0.10 kB
+dist/assets/icon-range-Dp-jey9J.js                                0.08 kB │ gzip:   0.10 kB
+dist/assets/agent-works-DYHhgVHU.js                               0.08 kB │ gzip:   0.10 kB
+dist/assets/build-place-CkCIH-X6.js                               0.08 kB │ gzip:   0.10 kB
+dist/assets/icon-beacon-DiIjNqSj.js                               0.08 kB │ gzip:   0.10 kB
+dist/assets/icon-damage-z_b4sZhi.js                               0.08 kB │ gzip:   0.10 kB
+dist/assets/icon-volley-Bu7axaww.js                               0.08 kB │ gzip:   0.10 kB
+dist/assets/ledger-open-BqnMP5rb.js                               0.08 kB │ gzip:   0.10 kB
+dist/assets/turret-fire-z3UXvCKx.js                               0.08 kB │ gzip:   0.10 kB
+dist/assets/bld-palisade-DAKgrWe5.js                              0.08 kB │ gzip:   0.10 kB
+dist/assets/chirp-refuse-325eKm0q.js                              0.08 kB │ gzip:   0.10 kB
+dist/assets/defeat-sting-2zIKWIjm.js                              0.08 kB │ gzip:   0.10 kB
+dist/assets/icon-panning-DgTlKXXC.js                              0.08 kB │ gzip:   0.10 kB
+dist/assets/icon-plating-CVETXdMl.js                              0.08 kB │ gzip:   0.10 kB
+dist/assets/palisade-hit-vzzJGrp7.js                              0.08 kB │ gzip:   0.10 kB
+dist/assets/icon-firerate-Cnqvi24m.js                             0.08 kB │ gzip:   0.10 kB
+dist/assets/icon-mobility-Cwv832JU.js                             0.08 kB │ gzip:   0.10 kB
+dist/assets/research-pick-BL5N21LT.js                             0.08 kB │ gzip:   0.10 kB
+dist/assets/sign-in-chime-BNIuPWXd.js                             0.08 kB │ gzip:   0.10 kB
+dist/assets/victory-sting-DMLxMRSc.js                             0.08 kB │ gzip:   0.10 kB
+dist/assets/palisade-crack-C_5tyPG-.js                            0.09 kB │ gzip:   0.10 kB
+dist/assets/spark-bolt-hit-5Wm4QeFM.js                            0.09 kB │ gzip:   0.10 kB
+dist/assets/desert-day-loop-BB7z-6Ae.js                           0.09 kB │ gzip:   0.10 kB
+dist/assets/spark-bolt-fire-C-CmxSao.js                           0.09 kB │ gzip:   0.10 kB
+dist/assets/townsfolk-elder-Ds4I8ioP.js                           0.09 kB │ gzip:   0.10 kB
+dist/assets/wave-start-horn-DUEWFgBy.js                           0.09 kB │ gzip:   0.10 kB
+dist/assets/blast-charge-arm-MTJtfONm.js                          0.09 kB │ gzip:   0.11 kB
+dist/assets/bld-claim-office-CzWgJrEl.js                          0.09 kB │ gzip:   0.11 kB
+dist/assets/bld-sluice-works-BT-TBzg1.js                          0.09 kB │ gzip:   0.11 kB
+dist/assets/desert-dusk-loop-By2RnUQx.js                          0.09 kB │ gzip:   0.11 kB
+dist/assets/epoch-door-sting-Dlh12EHB.js                          0.09 kB │ gzip:   0.11 kB
+dist/assets/icon-prospecting-B6xZlDfp.js                          0.09 kB │ gzip:   0.11 kB
+dist/assets/town-enter-chime-BptnqzlO.js                          0.09 kB │ gzip:   0.11 kB
+dist/assets/town-square-loop-COF1Ob9f.js                          0.09 kB │ gzip:   0.11 kB
+dist/assets/ui-menu-backdrop-Bqru9Wdz.js                          0.09 kB │ gzip:   0.10 kB
+dist/assets/blast-charge-boom-Bofgx52c.js                         0.09 kB │ gzip:   0.11 kB
+dist/assets/bld-sentry-beacon-DJ4cuHVb.js                         0.09 kB │ gzip:   0.11 kB
+dist/assets/bld-signal-turret-Bh31HF8M.js                         0.09 kB │ gzip:   0.11 kB
+dist/assets/chirp-acknowledge-BaIYnwg5.js                         0.09 kB │ gzip:   0.11 kB
+dist/assets/palisade-collapse-ZaxVb1QS.js                         0.09 kB │ gzip:   0.11 kB
+dist/assets/prop-baron-banner-DLi76EV1.js                         0.09 kB │ gzip:   0.11 kB
+dist/assets/river-bed-v2-loop-qcVeqvtS.js                         0.09 kB │ gzip:   0.11 kB
+dist/assets/slot-save-confirm-D9u_eRCx.js                         0.09 kB │ gzip:   0.11 kB
+dist/assets/sluice-water-loop-CZBJRFhF.js                         0.09 kB │ gzip:   0.11 kB
+dist/assets/stockpile-deposit-CmJ0CTVF.js                         0.09 kB │ gzip:   0.11 kB
+dist/assets/terrain-bank-tile-CVXaHd0z.js                         0.09 kB │ gzip:   0.11 kB
+dist/assets/bld-stockpile-yard-BeCFutfY.js                        0.09 kB │ gzip:   0.11 kB
+dist/assets/terrain-river-tile-6p-yAqRe.js                        0.09 kB │ gzip:   0.11 kB
+dist/assets/townsfolk-preacher-ByNeW-9d.js                        0.09 kB │ gzip:   0.11 kB
+dist/assets/baron-arrival-sting-HbzKfxAx.js                       0.09 kB │ gzip:   0.11 kB
+dist/assets/research-pick-sting-DWDrqzxx.js                       0.09 kB │ gzip:   0.11 kB
+dist/assets/river-ambience-loop-DBASjvNz.js                       0.09 kB │ gzip:   0.11 kB
+dist/assets/terrain-bank-tile-b-DXKqVPOp.js                       0.09 kB │ gzip:   0.11 kB
+dist/assets/terrain-bank-tile-c-km0vK6VC.js                       0.09 kB │ gzip:   0.11 kB
+dist/assets/baron-defeat-fanfare-UrJhNVFT.js                      0.09 kB │ gzip:   0.11 kB
+dist/assets/founding-stamp-thunk-CrypmDj2.js                      0.09 kB │ gzip:   0.11 kB
+dist/assets/tavern-interior-loop-Qd2X-pQB.js                      0.09 kB │ gzip:   0.11 kB
+dist/assets/prospector-hover-loop-DtqjGp1J.js                     0.09 kB │ gzip:   0.11 kB
+dist/assets/townsfolk-assay-clerk-BAyvS8P0.js                     0.09 kB │ gzip:   0.11 kB
+dist/assets/townsfolk-storekeeper-CQqXQ1o9.js                     0.09 kB │ gzip:   0.11 kB
+dist/assets/townsfolk-youngster-a-zNs2gdBV.js                     0.09 kB │ gzip:   0.11 kB
+dist/assets/townsfolk-youngster-b-L_esgehd.js                     0.09 kB │ gzip:   0.11 kB
+dist/assets/townsfolk-tavernkeeper-DwckX72K.js                    0.09 kB │ gzip:   0.11 kB
+dist/assets/townsfolk-schoolteacher-Dfyoforq.js                   0.09 kB │ gzip:   0.11 kB
+dist/assets/char-prospector-portrait-akLtEtT6.js                  0.10 kB │ gzip:   0.11 kB
+dist/assets/tavern-interior-backdrop-He6mcKXT.js                  0.10 kB │ gzip:   0.11 kB
+dist/assets/char-hero-sheet-back-r0c0-Xy6G_hWI.js                 0.10 kB │ gzip:   0.11 kB
+dist/assets/char-hero-sheet-back-r0c1-CujyIaSg.js                 0.10 kB │ gzip:   0.11 kB
+dist/assets/char-hero-sheet-back-r0c2-DCAaAFM_.js                 0.10 kB │ gzip:   0.11 kB
+dist/assets/char-hero-sheet-back-r1c0-HHGgb4R9.js                 0.10 kB │ gzip:   0.11 kB
+dist/assets/char-hero-sheet-back-r1c1-CU-fdoki.js                 0.10 kB │ gzip:   0.11 kB
+dist/assets/char-hero-sheet-back-r1c2-DF1NvVxf.js                 0.10 kB │ gzip:   0.11 kB
+dist/assets/char-hero-sheet-side-r0c0-KcYIKi-G.js                 0.10 kB │ gzip:   0.11 kB
+dist/assets/char-hero-sheet-side-r0c1-DVhljIUH.js                 0.10 kB │ gzip:   0.11 kB
+dist/assets/char-hero-sheet-side-r1c0-BcCtFjvu.js                 0.10 kB │ gzip:   0.11 kB
+dist/assets/char-hero-sheet-side-r1c1-60DjvK4Y.js                 0.10 kB │ gzip:   0.11 kB
+dist/assets/char-hero-sheet-front-r0c0-DE-uuPQh.js                0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-front-r0c1-CvHiGqoV.js                0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-front-r0c2-rmiNiiYa.js                0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-front-r1c0-Bj2f0e90.js                0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-front-r1c1-FRDsnMQO.js                0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-front-r1c2-CMt1udRb.js                0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-walk8-r0c0-BiuOne5d.js                0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-walk8-r0c1-CWtGiCi8.js                0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-walk8-r0c2-B7bUcPJ2.js                0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-walk8-r0c3-DOkbllR8.js                0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-walk8-r0c4-VyF3A15r.js                0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-walk8-r0c5-BPVZ6MIy.js                0.10 kB │ gzip:   0.11 kB
+dist/assets/char-hero-sheet-walk8-r0c6-D_VRhd9O.js                0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-walk8-r0c7-C3AzfYm3.js                0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-walk8-r1c0-QMD9mkMt.js                0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-walk8-r1c1-CaTrGY1L.js                0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-walk8-r1c2-CvJF2g8B.js                0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-walk8-r1c3-87rmrOrd.js                0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-walk8-r1c4-CHv-6jEm.js                0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-walk8-r1c5-9cr-QwTE.js                0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-walk8-r1c6-Bz_ZwNFW.js                0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-walk8-r1c7-CLHoWRaG.js                0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-walk8-r2c0-BxfSVuhG.js                0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-walk8-r2c1-CgaIZ4qU.js                0.10 kB │ gzip:   0.11 kB
+dist/assets/char-hero-sheet-walk8-r2c2-BNpZDQxA.js                0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-walk8-r2c3-QmvJfiwR.js                0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-walk8-r2c4-PFkA54Zf.js                0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-walk8-r2c5-CfKW6sd5.js                0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-walk8-r2c6-aJ60YB_X.js                0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-walk8-r2c7-D-3Bago0.js                0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-walk8-r3c0-W6DizcJj.js                0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-walk8-r3c1-BQyWtfY4.js                0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-walk8-r3c2-3MaAR3Lw.js                0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-walk8-r3c3-QVXtXQDE.js                0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-walk8-r3c4-DxqIrFd7.js                0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-walk8-r3c5-CIVGN0Md.js                0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-walk8-r3c6-ChT7gw3T.js                0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-walk8-r3c7-2qZLqGNA.js                0.10 kB │ gzip:   0.12 kB
+dist/assets/char-baron-sheet-walk8-r0c0-CeFdR7lh.js               0.10 kB │ gzip:   0.12 kB
+dist/assets/char-baron-sheet-walk8-r0c1-BGodIQ7r.js               0.10 kB │ gzip:   0.12 kB
+dist/assets/char-baron-sheet-walk8-r0c2-Bloox9eO.js               0.10 kB │ gzip:   0.12 kB
+dist/assets/char-baron-sheet-walk8-r0c3-Y3n4R88U.js               0.10 kB │ gzip:   0.12 kB
+dist/assets/char-baron-sheet-walk8-r0c4-Dgl-GqvX.js               0.10 kB │ gzip:   0.12 kB
+dist/assets/char-baron-sheet-walk8-r0c5-D-X5kYeE.js               0.10 kB │ gzip:   0.12 kB
+dist/assets/char-baron-sheet-walk8-r0c6-MnrtPSt7.js               0.10 kB │ gzip:   0.12 kB
+dist/assets/char-baron-sheet-walk8-r0c7-Cx562Pvh.js               0.10 kB │ gzip:   0.12 kB
+dist/assets/char-baron-sheet-walk8-r1c0-CisJcwEQ.js               0.10 kB │ gzip:   0.12 kB
+dist/assets/char-baron-sheet-walk8-r1c1-Du7bSTWp.js               0.10 kB │ gzip:   0.12 kB
+dist/assets/char-baron-sheet-walk8-r1c2-xdPLMK2c.js               0.10 kB │ gzip:   0.12 kB
+dist/assets/char-baron-sheet-walk8-r1c3-nom9ofbP.js               0.10 kB │ gzip:   0.12 kB
+dist/assets/char-baron-sheet-walk8-r1c4-BpS3Gbji.js               0.10 kB │ gzip:   0.12 kB
+dist/assets/char-baron-sheet-walk8-r1c5-BS4m6rZc.js               0.10 kB │ gzip:   0.12 kB
+dist/assets/char-baron-sheet-walk8-r1c6-CWMS9FQZ.js               0.10 kB │ gzip:   0.12 kB
+dist/assets/char-baron-sheet-walk8-r1c7-CITnaDrO.js               0.10 kB │ gzip:   0.12 kB
+dist/assets/char-baron-sheet-walk8-r2c0-bxAsTe9T.js               0.10 kB │ gzip:   0.12 kB
+dist/assets/char-baron-sheet-walk8-r2c1-YY08aO3s.js               0.10 kB │ gzip:   0.12 kB
+dist/assets/char-baron-sheet-walk8-r2c2-03pl-D6P.js               0.10 kB │ gzip:   0.12 kB
+dist/assets/char-baron-sheet-walk8-r2c3-YH0LrqZ6.js               0.10 kB │ gzip:   0.12 kB
+dist/assets/char-baron-sheet-walk8-r2c4-DwM1tLmO.js               0.10 kB │ gzip:   0.12 kB
+dist/assets/char-baron-sheet-walk8-r2c5-CVdP5-YV.js               0.10 kB │ gzip:   0.12 kB
+dist/assets/char-baron-sheet-walk8-r2c6-Bexjoy1_.js               0.10 kB │ gzip:   0.12 kB
+dist/assets/char-baron-sheet-walk8-r2c7-CrPIWzdt.js               0.10 kB │ gzip:   0.12 kB
+dist/assets/char-baron-sheet-walk8-r3c0-CHSx86qh.js               0.10 kB │ gzip:   0.12 kB
+dist/assets/char-baron-sheet-walk8-r3c1-Bs9F6bBQ.js               0.10 kB │ gzip:   0.12 kB
+dist/assets/char-baron-sheet-walk8-r3c2-n5tzu0Cm.js               0.10 kB │ gzip:   0.12 kB
+dist/assets/char-baron-sheet-walk8-r3c3-n69c-19M.js               0.10 kB │ gzip:   0.12 kB
+dist/assets/char-baron-sheet-walk8-r3c4-MFOM2btz.js               0.10 kB │ gzip:   0.12 kB
+dist/assets/char-baron-sheet-walk8-r3c5-C0-bdnxS.js               0.10 kB │ gzip:   0.12 kB
+dist/assets/char-baron-sheet-walk8-r3c6-B9cDxCmb.js               0.10 kB │ gzip:   0.12 kB
+dist/assets/char-baron-sheet-walk8-r3c7-1QRPZm0O.js               0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-back-r0c0-CC83njHY.js               0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-back-r0c1-DMBV1D81.js               0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-back-r0c2-DglFQMzh.js               0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-back-r1c0-DHGLAdJc.js               0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-back-r1c1-DryL-sBB.js               0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-back-r1c2-CuBFnW8X.js               0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-side-r0c0-Cl8wq5l0.js               0.10 kB │ gzip:   0.11 kB
+dist/assets/char-jumper-sheet-side-r0c1-DpV7Y-Sd.js               0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-side-r1c0-C2VDJdX1.js               0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-side-r1c1-BzqEwvzB.js               0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-walk4-a-r0c0-DJ0nc_Lx.js              0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-walk4-a-r0c1-BAPjwL6X.js              0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-walk4-a-r0c2-BHXjTBtK.js              0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-walk4-a-r0c3-DWD7JFmn.js              0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-walk4-a-r1c0-CgYV3RTq.js              0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-walk4-a-r1c1-BEO1dtYb.js              0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-walk4-a-r1c2-B4Mp8_v7.js              0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-walk4-a-r1c3-DdYzaj7g.js              0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-walk4-a-r2c0-Oy4AdUie.js              0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-walk4-a-r2c1-BisCqsAe.js              0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-walk4-a-r2c2-5vm1FnIN.js              0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-walk4-a-r2c3-DwZ_4b8w.js              0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-walk4-a-r3c0-5fIomP1M.js              0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-walk4-a-r3c1-DXOI2aRt.js              0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-walk4-a-r3c2-RbS1aFS3.js              0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-walk4-a-r3c3-BChIR1nU.js              0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-walk4-b-r0c0-Dz7VIIC8.js              0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-walk4-b-r0c1-1hm72kWu.js              0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-walk4-b-r0c2-Duu6wBRL.js              0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-walk4-b-r0c3-lBlBetke.js              0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-walk4-b-r1c0-D-X-lHYb.js              0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-walk4-b-r1c1-CNG-xHNJ.js              0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-walk4-b-r1c2-BqLiTk-5.js              0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-walk4-b-r1c3-lyI4vnIf.js              0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-walk4-b-r2c0-BKgSViF0.js              0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-walk4-b-r2c1-DZoVnI9e.js              0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-walk4-b-r2c2-DAiUvvbl.js              0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-walk4-b-r2c3-9qhFCoLB.js              0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-walk4-b-r3c0-BzYNFj7W.js              0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-walk4-b-r3c1-BGvqq_Rp.js              0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-walk4-b-r3c2-DP8velF9.js              0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-walk4-b-r3c3-CPka3U6M.js              0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-front-r0c0-BoZMt61Z.js              0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-front-r0c1-DJnTb5_B.js              0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-front-r0c2-CP8yARRG.js              0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-front-r1c0-CdZiYlpx.js              0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-front-r1c1-C1GL4nEF.js              0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-front-r1c2-BFyA9ioM.js              0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-walk8-r0c0-DgcpubXK.js              0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-walk8-r0c1-MDmwS8To.js              0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-walk8-r0c2-Di7o1rip.js              0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-walk8-r0c3-CpsYmnBD.js              0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-walk8-r0c4-DQP8qu68.js              0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-walk8-r0c5-BdhgyYBJ.js              0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-walk8-r0c6-CYdtqrOc.js              0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-walk8-r0c7-B0e9R2sy.js              0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-walk8-r1c0-BbWNH7OF.js              0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-walk8-r1c1-BbH3RdHk.js              0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-walk8-r1c2-HQdjsIvg.js              0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-walk8-r1c3-Bbsfec_D.js              0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-walk8-r1c4-mUurVdbJ.js              0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-walk8-r1c5-GJcxdDmK.js              0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-walk8-r1c6-9cRdMWPp.js              0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-walk8-r1c7-x9HUm31E.js              0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-walk8-r2c0-CrWps1Qz.js              0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-walk8-r2c1-CHhatn4q.js              0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-walk8-r2c2-CvcLfW4Z.js              0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-walk8-r2c3-D2MX77MT.js              0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-walk8-r2c4-9vsPIZAJ.js              0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-walk8-r2c5-NIB4wSvh.js              0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-walk8-r2c6-D1TzV-e9.js              0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-walk8-r2c7-CASOe5hX.js              0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-walk8-r3c0-D1N8vN7n.js              0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-walk8-r3c1-BmultCfY.js              0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-walk8-r3c2-jsS504tg.js              0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-walk8-r3c3-BNg3mXXz.js              0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-walk8-r3c4-Df0MX7wt.js              0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-walk8-r3c5-hUB9PBww.js              0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-walk8-r3c6-6f3r3zrs.js              0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-walk8-r3c7-D_ctFdJe.js              0.10 kB │ gzip:   0.12 kB
+dist/assets/char-baron-sheet-walk4-a-r0c0-D-xhgdOC.js             0.10 kB │ gzip:   0.12 kB
+dist/assets/char-baron-sheet-walk4-a-r0c1-6tOwjCS_.js             0.10 kB │ gzip:   0.12 kB
+dist/assets/char-baron-sheet-walk4-a-r0c2-D1fQhDCi.js             0.10 kB │ gzip:   0.12 kB
+dist/assets/char-baron-sheet-walk4-a-r0c3-DPNfV2VG.js             0.10 kB │ gzip:   0.12 kB
+dist/assets/char-baron-sheet-walk4-a-r1c0-C7ILc2xp.js             0.10 kB │ gzip:   0.12 kB
+dist/assets/char-baron-sheet-walk4-a-r1c1-B3x45-yi.js             0.10 kB │ gzip:   0.12 kB
+dist/assets/char-baron-sheet-walk4-a-r1c2-DgfLD3nI.js             0.10 kB │ gzip:   0.12 kB
+dist/assets/char-baron-sheet-walk4-a-r1c3-syDYE2lf.js             0.10 kB │ gzip:   0.12 kB
+dist/assets/char-baron-sheet-walk4-a-r2c0-DPWraNI1.js             0.10 kB │ gzip:   0.12 kB
+dist/assets/char-baron-sheet-walk4-a-r2c1-DaQIfk4Z.js             0.10 kB │ gzip:   0.12 kB
+dist/assets/char-baron-sheet-walk4-a-r2c2-CoEkb86C.js             0.10 kB │ gzip:   0.12 kB
+dist/assets/char-baron-sheet-walk4-a-r2c3-CXHNFcVH.js             0.10 kB │ gzip:   0.12 kB
+dist/assets/char-baron-sheet-walk4-a-r3c0-C8kw3pK-.js             0.10 kB │ gzip:   0.12 kB
+dist/assets/char-baron-sheet-walk4-a-r3c1-DZVYEx4n.js             0.10 kB │ gzip:   0.12 kB
+dist/assets/char-baron-sheet-walk4-a-r3c2-rV1r2qH-.js             0.10 kB │ gzip:   0.12 kB
+dist/assets/char-baron-sheet-walk4-a-r3c3-oUsfJ61Z.js             0.10 kB │ gzip:   0.12 kB
+dist/assets/char-baron-sheet-walk4-b-r0c0-zG1CBEcr.js             0.10 kB │ gzip:   0.12 kB
+dist/assets/char-baron-sheet-walk4-b-r0c1-eOgBe9sT.js             0.10 kB │ gzip:   0.12 kB
+dist/assets/char-baron-sheet-walk4-b-r0c2-BLdhRWfL.js             0.10 kB │ gzip:   0.12 kB
+dist/assets/char-baron-sheet-walk4-b-r0c3-D80t4eWf.js             0.10 kB │ gzip:   0.12 kB
+dist/assets/char-baron-sheet-walk4-b-r1c0-DRME6fIi.js             0.10 kB │ gzip:   0.12 kB
+dist/assets/char-baron-sheet-walk4-b-r1c1-B1OGGp8D.js             0.10 kB │ gzip:   0.12 kB
+dist/assets/char-baron-sheet-walk4-b-r1c2-D9NnlWS0.js             0.10 kB │ gzip:   0.12 kB
+dist/assets/char-baron-sheet-walk4-b-r1c3-bMj8YY61.js             0.10 kB │ gzip:   0.12 kB
+dist/assets/char-baron-sheet-walk4-b-r2c0-CLN-nO-1.js             0.10 kB │ gzip:   0.12 kB
+dist/assets/char-baron-sheet-walk4-b-r2c1-dv2vMVY0.js             0.10 kB │ gzip:   0.12 kB
+dist/assets/char-baron-sheet-walk4-b-r2c2-C7bBECzH.js             0.10 kB │ gzip:   0.12 kB
+dist/assets/char-baron-sheet-walk4-b-r2c3-BrI-M5A-.js             0.10 kB │ gzip:   0.12 kB
+dist/assets/char-baron-sheet-walk4-b-r3c0-CqQjMm75.js             0.10 kB │ gzip:   0.12 kB
+dist/assets/char-baron-sheet-walk4-b-r3c1-DN_EzLYE.js             0.10 kB │ gzip:   0.12 kB
+dist/assets/char-baron-sheet-walk4-b-r3c2-DS5BPAFz.js             0.10 kB │ gzip:   0.12 kB
+dist/assets/char-baron-sheet-walk4-b-r3c3-D0Xjdvgr.js             0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-rotation-r0c0-CAVev-cE.js             0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-rotation-r0c1-DzkppPBq.js             0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-rotation-r0c2-Q4FGtkmx.js             0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-rotation-r0c3-ClzBaDmd.js             0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-rotation-r1c0-DeAxvY8X.js             0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-rotation-r1c1-DP_y0_Sn.js             0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-rotation-r1c2-CCuGYLEB.js             0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-rotation-r1c3-Cxpby1Xe.js             0.10 kB │ gzip:   0.11 kB
+dist/assets/char-hero-sheet-rotation-r2c0-C2VBHhcv.js             0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-rotation-r2c1-CjJHfdHR.js             0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-rotation-r2c2-CONly9Zk.js             0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-rotation-r2c3-NS4lfFCv.js             0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-rotation2-r0c0-Cf5yXVF9.js            0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-rotation2-r0c1-D0RGS1zN.js            0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-rotation2-r0c2-BggRgoOO.js            0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-rotation2-r0c3-GNm43D0P.js            0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-rotation2-r1c0-mzpIehPI.js            0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-rotation2-r1c1-KZXPs4I9.js            0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-rotation2-r1c2-CHxApJX0.js            0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-rotation2-r1c3-CNDILkwF.js            0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-walk4-a-r0c0-CW-Dj6hV.js            0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-walk4-a-r0c1-BH7vivgc.js            0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-walk4-a-r0c2-Dwnrc2s1.js            0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-walk4-a-r0c3-COA5GIJH.js            0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-walk4-a-r1c0-Clz3fqyp.js            0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-walk4-a-r1c1-C1-G3kfB.js            0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-walk4-a-r1c2-DqwEX0Q5.js            0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-walk4-a-r1c3-LP2hTbPF.js            0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-walk4-a-r2c0-BCt2S1qG.js            0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-walk4-a-r2c1-DmdW8FMz.js            0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-walk4-a-r2c2-D0bnwy-G.js            0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-walk4-a-r2c3-CYe2EV8w.js            0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-walk4-a-r3c0-Bj_Z7m4A.js            0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-walk4-a-r3c1-Cjx8uMTl.js            0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-walk4-a-r3c2-Bj9sjkjI.js            0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-walk4-a-r3c3-Cs3SagoE.js            0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-walk4-b-r0c0-yAig20hR.js            0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-walk4-b-r0c1-kowwY3gd.js            0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-walk4-b-r0c2-Cay_3Dm4.js            0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-walk4-b-r0c3-B7gSGjLU.js            0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-walk4-b-r1c0-GPS8aPvF.js            0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-walk4-b-r1c1-BERZkZqW.js            0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-walk4-b-r1c2-CF3MD0Xb.js            0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-walk4-b-r1c3-1U1j1FnP.js            0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-walk4-b-r2c0-sNJrLhMu.js            0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-walk4-b-r2c1-C_U1vcxb.js            0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-walk4-b-r2c2-BvhszMZt.js            0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-walk4-b-r2c3-CWu4CV9o.js            0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-walk4-b-r3c0-DCUKzrY7.js            0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-walk4-b-r3c1-dLrg_qNR.js            0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-walk4-b-r3c2-pgYcYD23.js            0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-walk4-b-r3c3-D-3XG5Za.js            0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-rotation-r0c0-CyfhLcf-.js           0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-rotation-r0c1-zjOsKZl4.js           0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-rotation-r0c2-DDpDEhyU.js           0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-rotation-r0c3-B6oucJun.js           0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-rotation-r1c0-D-kLRGMX.js           0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-rotation-r1c1-B8JvSGSA.js           0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-rotation-r1c2-YTGAGy6b.js           0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-rotation-r1c3-CQUNSqKX.js           0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-rotation-r2c0-VCF_Ke_g.js           0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-rotation-r2c1-DVPl9u54.js           0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-rotation-r2c2-C26MkZ6f.js           0.10 kB │ gzip:   0.12 kB
+dist/assets/char-jumper-sheet-rotation-r2c3-CSBi62Ia.js           0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-side-actions-r0c0-BF4ntThh.js         0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-side-actions-r0c1-XO7Y700d.js         0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-side-actions-r0c2-DscWOwS8.js         0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-side-actions-r1c0-CMr8aF2b.js         0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-side-actions-r1c1-LOmV3R9e.js         0.10 kB │ gzip:   0.12 kB
+dist/assets/char-hero-sheet-side-actions-r1c2-jIKliV5S.js         0.10 kB │ gzip:   0.12 kB
+dist/assets/char-prospector-sheet-hover8-r0c0-C0abmI60.js         0.10 kB │ gzip:   0.12 kB
+dist/assets/char-prospector-sheet-hover8-r0c1-ireM1pZn.js         0.10 kB │ gzip:   0.12 kB
+dist/assets/char-prospector-sheet-hover8-r0c2-C0AkSZ0F.js         0.10 kB │ gzip:   0.12 kB
+dist/assets/char-prospector-sheet-hover8-r0c3-DDhEdsrj.js         0.10 kB │ gzip:   0.12 kB
+dist/assets/char-prospector-sheet-hover8-r0c4-9CRUUuQR.js         0.10 kB │ gzip:   0.12 kB
+dist/assets/char-prospector-sheet-hover8-r0c5-BUsu_-XM.js         0.10 kB │ gzip:   0.12 kB
+dist/assets/char-prospector-sheet-hover8-r0c6-CFOXTh3b.js         0.10 kB │ gzip:   0.12 kB
+dist/assets/char-prospector-sheet-hover8-r0c7-B4Nmg4ZR.js         0.10 kB │ gzip:   0.12 kB
+dist/assets/char-prospector-sheet-hover8-r1c0-BezdA6Q3.js         0.10 kB │ gzip:   0.12 kB
+dist/assets/char-prospector-sheet-hover8-r1c1-Cu0GAh5L.js         0.10 kB │ gzip:   0.12 kB
+dist/assets/char-prospector-sheet-hover8-r1c2-D-mDq2cT.js         0.10 kB │ gzip:   0.12 kB
+dist/assets/char-prospector-sheet-hover8-r1c3-Kt04HvCs.js         0.10 kB │ gzip:   0.12 kB
+dist/assets/char-prospector-sheet-hover8-r1c4-CE190Vvd.js         0.10 kB │ gzip:   0.12 kB
+dist/assets/char-prospector-sheet-hover8-r1c5-BpIuTKRm.js         0.10 kB │ gzip:   0.12 kB
+dist/assets/char-prospector-sheet-hover8-r1c6-yf_mJFSb.js         0.10 kB │ gzip:   0.12 kB
+dist/assets/char-prospector-sheet-hover8-r1c7-B5b-lnVI.js         0.10 kB │ gzip:   0.12 kB
+dist/assets/char-prospector-sheet-hover8-r2c0-iZnP66FR.js         0.10 kB │ gzip:   0.12 kB
+dist/assets/char-prospector-sheet-hover8-r2c1-ORXoh3rP.js         0.10 kB │ gzip:   0.12 kB
+dist/assets/char-prospector-sheet-hover8-r2c2-D43ibvZ_.js         0.10 kB │ gzip:   0.12 kB
+dist/assets/char-prospector-sheet-hover8-r2c3-Ocfg-oxF.js         0.10 kB │ gzip:   0.12 kB
+dist/assets/char-prospector-sheet-hover8-r2c4-C49jXBOR.js         0.10 kB │ gzip:   0.12 kB
+dist/assets/char-prospector-sheet-hover8-r2c5-BRSDtC9V.js         0.10 kB │ gzip:   0.12 kB
+dist/assets/char-prospector-sheet-hover8-r2c6-DQRVcR1O.js         0.10 kB │ gzip:   0.12 kB
+dist/assets/char-prospector-sheet-hover8-r2c7-LYS5_Tsn.js         0.10 kB │ gzip:   0.12 kB
+dist/assets/char-prospector-sheet-hover8-r3c0-DTr5YKMi.js         0.10 kB │ gzip:   0.12 kB
+dist/assets/char-prospector-sheet-hover8-r3c1-DVhqD7iF.js         0.10 kB │ gzip:   0.12 kB
+dist/assets/char-prospector-sheet-hover8-r3c2-auo1PCzs.js         0.10 kB │ gzip:   0.12 kB
+dist/assets/char-prospector-sheet-hover8-r3c3-BrnLcOmz.js         0.10 kB │ gzip:   0.12 kB
+dist/assets/char-prospector-sheet-hover8-r3c4-DtAQcJRU.js         0.10 kB │ gzip:   0.12 kB
+dist/assets/char-prospector-sheet-hover8-r3c5-BNS_zgrp.js         0.10 kB │ gzip:   0.12 kB
+dist/assets/char-prospector-sheet-hover8-r3c6-BBrEvBMj.js         0.10 kB │ gzip:   0.12 kB
+dist/assets/char-prospector-sheet-hover8-r3c7-kOZHaibC.js         0.10 kB │ gzip:   0.12 kB
+dist/assets/char-prospector-sheet-hover4-a-r0c0-CBpZGFV-.js       0.11 kB │ gzip:   0.12 kB
+dist/assets/char-prospector-sheet-hover4-a-r0c1-Dn70oUUo.js       0.11 kB │ gzip:   0.12 kB
+dist/assets/char-prospector-sheet-hover4-a-r0c2-C-OIvVpN.js       0.11 kB │ gzip:   0.12 kB
+dist/assets/char-prospector-sheet-hover4-a-r0c3-DMaLERTp.js       0.11 kB │ gzip:   0.12 kB
+dist/assets/char-prospector-sheet-hover4-a-r1c0-D6aPRl9F.js       0.11 kB │ gzip:   0.12 kB
+dist/assets/char-prospector-sheet-hover4-a-r1c1-CE0ncq1d.js       0.11 kB │ gzip:   0.12 kB
+dist/assets/char-prospector-sheet-hover4-a-r1c2-D1X5cO4T.js       0.11 kB │ gzip:   0.12 kB
+dist/assets/char-prospector-sheet-hover4-a-r1c3-emE4hiWF.js       0.11 kB │ gzip:   0.12 kB
+dist/assets/char-prospector-sheet-hover4-a-r2c0-BNuPhMov.js       0.11 kB │ gzip:   0.12 kB
+dist/assets/char-prospector-sheet-hover4-a-r2c1-BGzct4dh.js       0.11 kB │ gzip:   0.12 kB
+dist/assets/char-prospector-sheet-hover4-a-r2c2-IUdNxzOl.js       0.11 kB │ gzip:   0.12 kB
+dist/assets/char-prospector-sheet-hover4-a-r2c3-BnTT0m59.js       0.11 kB │ gzip:   0.12 kB
+dist/assets/char-prospector-sheet-hover4-a-r3c0-Clk-0Q4X.js       0.11 kB │ gzip:   0.12 kB
+dist/assets/char-prospector-sheet-hover4-a-r3c1-CSNtpCxV.js       0.11 kB │ gzip:   0.12 kB
+dist/assets/char-prospector-sheet-hover4-a-r3c2-Cknw-omr.js       0.11 kB │ gzip:   0.12 kB
+dist/assets/char-prospector-sheet-hover4-a-r3c3-BNBk7MQ6.js       0.11 kB │ gzip:   0.12 kB
+dist/assets/char-prospector-sheet-hover4-b-r0c0-DzN1ixLh.js       0.11 kB │ gzip:   0.12 kB
+dist/assets/char-prospector-sheet-hover4-b-r0c1-Cim6G9WQ.js       0.11 kB │ gzip:   0.12 kB
+dist/assets/char-prospector-sheet-hover4-b-r0c2-B6IudH-G.js       0.11 kB │ gzip:   0.12 kB
+dist/assets/char-prospector-sheet-hover4-b-r0c3-epuTlr_8.js       0.11 kB │ gzip:   0.12 kB
+dist/assets/char-prospector-sheet-hover4-b-r1c0-DmjvqqlD.js       0.11 kB │ gzip:   0.12 kB
+dist/assets/char-prospector-sheet-hover4-b-r1c1-Ko2pWIet.js       0.11 kB │ gzip:   0.12 kB
+dist/assets/char-prospector-sheet-hover4-b-r1c2-B8xTiP57.js       0.11 kB │ gzip:   0.12 kB
+dist/assets/char-prospector-sheet-hover4-b-r1c3-BtiCLCCP.js       0.11 kB │ gzip:   0.12 kB
+dist/assets/char-prospector-sheet-hover4-b-r2c0-NY3LHqmG.js       0.11 kB │ gzip:   0.12 kB
+dist/assets/char-prospector-sheet-hover4-b-r2c1-BrypWMnU.js       0.11 kB │ gzip:   0.12 kB
+dist/assets/char-prospector-sheet-hover4-b-r2c2-CxXO2FxO.js       0.11 kB │ gzip:   0.12 kB
+dist/assets/char-prospector-sheet-hover4-b-r2c3-yuo4i3lT.js       0.11 kB │ gzip:   0.12 kB
+dist/assets/char-prospector-sheet-hover4-b-r3c0-SHVe8_Ei.js       0.11 kB │ gzip:   0.12 kB
+dist/assets/char-prospector-sheet-hover4-b-r3c1-DsOE94gk.js       0.11 kB │ gzip:   0.12 kB
+dist/assets/char-prospector-sheet-hover4-b-r3c2-D3ollh6k.js       0.11 kB │ gzip:   0.12 kB
+dist/assets/char-prospector-sheet-hover4-b-r3c3-DhxA4s9F.js       0.11 kB │ gzip:   0.12 kB
+dist/assets/DeterminismHarness-CF2W0po4.js                        3.08 kB │ gzip:   1.44 kB
+dist/assets/reader-CiaTUhcx.js                                    4.59 kB │ gzip:   1.99 kB
+dist/assets/CraftingQueueStatic-C0ILd-P7.js                       6.73 kB │ gzip:   1.59 kB
+dist/assets/StatSimHarness-SYERfexu.js                            7.05 kB │ gzip:   2.47 kB
+dist/assets/AssayBench-BB5L1u-w.js                                8.56 kB │ gzip:   2.87 kB
+dist/assets/story-C_RR-zwq.js                                    11.22 kB │ gzip:   3.77 kB
+dist/assets/StartMenu-DwS_VwTZ.js                                11.73 kB │ gzip:   3.51 kB
+dist/assets/TownScene-Bq7_pkbS.js                                40.56 kB │ gzip:  12.36 kB
+dist/assets/index-C2gf0Sma.js                                 1,361.53 kB │ gzip: 352.80 kB
+
+[plugin builtin:vite-reporter]
+(!) Some chunks are larger than 900 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 330ms

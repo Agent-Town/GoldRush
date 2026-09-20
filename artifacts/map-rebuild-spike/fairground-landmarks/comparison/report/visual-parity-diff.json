@@ -1,0 +1,50 @@
+{
+  "kind": "screenshot-parity-diff",
+  "generatedAt": "2026-07-18T06:50:05.728Z",
+  "note": "Lower parityDistance means the candidate is closer to the reference for this fixed pair. This is a distance metric, not an acceptance gate.",
+  "pairCount": 1,
+  "worstPair": "fairground",
+  "results": [
+    {
+      "id": "fairground",
+      "current": "artifacts/map-rebuild-spike/fairground-landmarks/comparison/reference/fairground.png",
+      "candidate": "artifacts/map-rebuild-spike/fairground-landmarks/comparison/candidate/fairground.png",
+      "dimensions": {
+        "width": 1600,
+        "height": 900
+      },
+      "parityDistance": 0.00744,
+      "grayscale": {
+        "mae": 0.36541,
+        "rmse": 3.60847,
+        "diffRatio16": 0.00548,
+        "diffRatio32": 0.00244,
+        "diffRatio64": 0.0006,
+        "pixelmatchRatio": 0.0041
+      },
+      "contentProxies": {
+        "blackRatioCurrent": 0.39201,
+        "blackRatioCandidate": 0.39372,
+        "terrainLikeRatioCurrent": 0.00167,
+        "terrainLikeRatioCandidate": 0.00182,
+        "avgLuminanceCurrent": 25.27916,
+        "avgLuminanceCandidate": 25.21986,
+        "avgLuminanceDelta": -0.0593,
+        "edgeEnergyCurrent": 0.05357,
+        "edgeEnergyCandidate": 0.0546,
+        "edgeEnergyRatio": 1.01918,
+        "edgeDiffRatio32": 0.0058
+      },
+      "artifacts": {
+        "sideBySide": "report/fairground-side-by-side.png",
+        "currentGray": "report/fairground-current-gray.png",
+        "candidateGray": "report/fairground-candidate-gray.png",
+        "absDiff": "report/fairground-absdiff.png",
+        "pixelmatch": "report/fairground-pixelmatch.png",
+        "currentEdges": "report/fairground-current-edges.png",
+        "candidateEdges": "report/fairground-candidate-edges.png",
+        "edgeDiff": "report/fairground-edge-diff.png"
+      }
+    }
+  ]
+}

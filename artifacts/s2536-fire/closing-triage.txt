@@ -1,0 +1,172 @@
+gate battery transcript (append-only — see scripts/gate-battery.mjs)
+
+
+######## BATTERY 2026-09-07T09:15:12.417Z — s2536 closing retention and board reads ########
+cwd=/Users/robin/Claude/Projects/Gold Rush
+env+ PATH=/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin
+
+===== art staging =====
+$ node scripts/art-staging-audit.mjs
+rc=0 28.5s
+ART STAGING AUDIT — 6 areas scanned, 1024 files
+  staging/(root) · staging/(worktree-root) · staging/contact-sheets · staging/motion-pilot · staging/raw · staging/requests
+main tracks 6845 files under assets/
+
+NOT AUDITED — 4 tree(s) under worktrees/ that no git worktree owns and this audit does not scan:
+  worktrees/lane-a-salvage  383 files  —  ⚠️  SHARES the gitdir of worktrees/lane-a
+  worktrees/lane-b-salvage  387 files  —  ⚠️  SHARES the gitdir of worktrees/lane-b
+  worktrees/lane-c-salvage  407 files  —  ⚠️  SHARES the gitdir of worktrees/lane-c
+  worktrees/lane-d-salvage  379 files  —  ⚠️  SHARES the gitdir of worktrees/lane-d
+  These are outside the scan root BY DESIGN (walking them would drown AT RISK in build output).
+  They are named so a new one is visible on the next run, not after 48 days — F-2196-1.
+  ⚠️  A tree marked SHARES has its OWN working tree but BORROWS that lane's HEAD,
+      index and branch refs. Reading there is safe; a WRITE is not — `git add`
+      dirties the live lane's index, and `reset`/`checkout`/`commit` move the live
+      lane's HEAD and branch ref without rewriting its disk, silently dropping
+      commits out of `main..<lane>` (Mistake #2, the Reset Massacre). These trees
+      are ABSENT from `git worktree list`, so `lane-usable` cannot see them.
+      Never run a writing git command inside one — F-2406-1.
+
+AT RISK (in NO object database — dies with this disk): 0 files, 0 KB
+  UNTRACKED (name not on main): 0 files, 0 KB
+  EXPOSED (name IS on main, but these bytes are not): 0 files, 0 KB
+
+LOCAL-ONLY (in git HERE, but on no origin ref — one push from safe): 0 files, 0 KB
+  committed-but-unpushed source: ran (this bucket was asked)
+
+SALVAGED (not on main, but the bytes ARE in git — parked): 797 files, 600.08 MB
+  worktrees/art/assets/contact-sheets/_gilded-r3c0-debug.png  55 KB
+  worktrees/art/assets/contact-sheets/char-hero-ages-sheets-25pct.png  658 KB
+  worktrees/art/assets/contact-sheets/char-hero-claimday-detail-crops-2x.png  1.76 MB
+  worktrees/art/assets/contact-sheets/char-hero-claimday-sheets-25pct.png  246 KB
+  worktrees/art/assets/contact-sheets/char-hero-four-ages-lineup.png  306 KB
+  worktrees/art/assets/contact-sheets/char-prospector-skins-detail-crops-2x.png  3.03 MB
+  worktrees/art/assets/contact-sheets/char-prospector-skins-sheets-25pct.png  1.64 MB
+  worktrees/art/assets/contact-sheets/char-prospector-three-coat-lineup.png  242 KB
+  worktrees/art/assets/contact-sheets/char-tailor-release-lineup.png  291 KB
+  worktrees/art/assets/contact-sheets/e2-icons-preview.png  122 KB
+  worktrees/art/assets/contact-sheets/e2-rail-elements-preview.png  137 KB
+  worktrees/art/assets/contact-sheets/stream-overlay-pack-preview.png  1.07 MB
+  … and 785 more (use --json for the full list)
+
+DIVERGED (regenerated over shipped art, bytes ARE in git): 22 files
+  worktrees/art/assets/LEDGER.md  staging 62 KB vs main 325 KB
+  worktrees/art/assets/raw/bld-canal-works.png  staging 2.95 MB vs main 3.05 MB
+  worktrees/art/assets/raw/bld-dome-commons.png  staging 2.82 MB vs main 3.37 MB
+  worktrees/art/assets/raw/bld-ice-quarry-rig.png  staging 2.77 MB vs main 3.28 MB
+  worktrees/art/assets/raw/bld-seed-vault.png  staging 2.79 MB vs main 3.21 MB
+  worktrees/art/assets/raw/bld-weather-spire.png  staging 2.40 MB vs main 2.86 MB
+  worktrees/art/assets/raw/char-coalthief-sheet-walk4-a.png  staging 1.26 MB vs main 1.30 MB
+  worktrees/art/assets/raw/char-e9-feral_terraformer-sheet-walk8.png  staging 1.35 MB vs main 1.52 MB
+  worktrees/art/assets/raw/char-hero-midlife-sheet-walk4-b.png  staging 1.11 MB vs main 1.26 MB
+  worktrees/art/assets/raw/char-hero-silver-sheet-walk4-b.png  staging 1.13 MB vs main 1.29 MB
+  worktrees/art/assets/raw/char-railtough-sheet-walk4-a.png  staging 1.11 MB vs main 1.08 MB
+  worktrees/art/assets/raw/char-railtough-sheet-walk4-b.png  staging 1.16 MB vs main 1.23 MB
+  … and 10 more (use --json for the full list)
+
+SHIPPED (blob-identical to main): 205 files
+
+
+===== health =====
+$ bash scripts/health-watch.sh status
+rc=0 3.8s
+=== Gold Rush factory — 2026-09-07 16:15:40 ===
+edge   : landing=200 game=200 api=200   (200 = up; 2xx-slow = answered but missed the budget; anything else is dark — F-OUT-0829)
+runner : ALIVE
+fire   : between-fires
+agents :
+  com.goldrush.dashboard:LOADED
+  com.goldrush.health:LOADED
+  com.goldrush.fire:LOADED
+lock   : ACTIVE 2026-09-07T15:58Z (s2536 fire) — full native node gate running on isolated chapter-evidence candidate; browser 
+queued : 0 task(s)   in-flight: 0   pending-orders: 0
+lanes ahead of main (commit count — may be squash-merged dupes, verify by content):
+  feat/e10s-4-door: 1 commit(s) ahead
+  feat/hero-move-verb: 1 commit(s) ahead
+art staged, in NO commit: 0 file(s)  (detail: node scripts/art-staging-audit.mjs)
+failed tail: superseded-s239-bt-00-demolish.md
+last fire log line: 
+
+
+===== done-moves =====
+$ node scripts/dry-board-probe.mjs
+rc=0 4.0s
+dry-board-probe — scripts/fire.md §2F, in one command (F-2207-1)
+
+  corpus tasks/done/      : read
+  done-moves (.md)        : 1410
+  prefix convention start : 20260725  [DERIVED, not pinned]
+  skipped, legacy         : 644  (bare-dated before the convention existed)
+  skipped, terminal prefix: 706
+  SUBJECTS to classify    : 60
+
+  non-terminal prefixes in the subject set (F-2207-1 — invisible to §2F's prose filter):
+       7 · held
+       2 · blocked
+       1 · OWNER
+       1 · partial
+       1 · ready
+       1 · terminal
+
+  REAL DRAINS — work you were about to walk past: 2
+      20260907-115228-lane-c-chapter-evidence-opt-in.md
+      20260907-130829-lane-a-m1-debug-spawn-contract.md
+  UNKNOWN — the ledger declines to answer; each owes the s1061 FILE PROBE: 0
+  CLOSED / BLOCKED — do not drain: 12
+      20260812-062406-lane-d-ap16-6b-final-verbs-reland.md
+      20260813-214436-fix-e2-railcar-arsenal-floor.md
+      20260814-064304-fix-e2-railcar-arsenal-floor-v2.md
+      20260905-083833-e5-stillwater-front-crew.md
+      20260905-103053-asset-diet-explicit-manifest.md
+      20260905-104752-lantern-true-world-reel.md
+      OWNER-GATED-F-1096-2-do-not-drain-20260727-011937-lane-hero-y-restore-roundtrip.md
+      blocked-firewall-s1380-reauthored-as-lift-20260802-064330-lane-seam-yield-single-source.md
+      blocked-s1217-F1217-1-20260729-165229-ap-orders-adapter-wiring.md
+      held-s1403-F1403-1-hash-divergence-20260802-204650-f1400-1-twin-banks-rebase-and-repin.md
+      held-s2376-gate-f2376-1-f2376-2-v2-authored-20260830-204724-reel-era-projection.md
+      ready-for-gates-s1330-UNDRAINED-7c4f132f-leaf-blocked-20260801-122335-f1328-1-drill-yard-census-debt.md
+  MERGED (shipped-but-unrenamed ghost — cosmetic): 46
+
+  ⛔ NOT DRY — 2 undrained done-move(s). Do not declare §2F.
+
+  Advisory: this reads tasks/done/ only. A lane branch can hold unabsorbed
+  content with no done-move at all — ask `node scripts/lane-usable.mjs --all` too.
+
+
+===== Gazette current day =====
+$ node scripts/gazette-backfill-sweep.mjs --since=2026-09-07
+rc=0 1.2s
+=== GZ-01 BACKFILL SWEEP (since 2026-09-07T00:00:00) ===
+scan space: src/ assets/ public/ functions/ site/ index.html
+  (a merge touching NONE of these is never examined — widen the list, not the verdict)
+examined 79 first-parent merge(s) in the window
+player-path-touching first-parent merges: 19
+  already cited in marketing/outbox/ (either sink): 19
+    ...of which cited only via a CONTAINED commit:  0
+  reported:                                          8
+  dismissed (NOT PLAYER-VISIBLE):                  11
+  NOT cited anywhere — candidates to judge:         0
+
+weekly headline budget (2026-W37): 2 standalone, 1 batched
+  GZ-01 allows <=3 standalone item(s) per week; the rest batch into a ROUNDUP.
+  (counted in NO week: 117 item(s) carry no merge citation this parser
+   resolves — the pre-2026-08 house format — and 0 cite a hash on no ref.)
+
+--- dismissed (newest first; available to re-judge) ---
+  503d7f283  2026-09-07  art: the youngsters re-chained — five raws from Higgsfield batch 4, the E2 pair referenced to th
+  7ac49dcf3  2026-09-07  fix: first-town budget 25,000,000 → 35,000,000 B and the cast sheets gated (owner A11, 2026-09-0
+  8d2080102  2026-09-07  docs(story): refresh nine beat citations; preserve runtime tokens and append era-5 pin
+  e0f1880ed  2026-09-07  s-att: canon-calls-a8-batch bookkeeping — goal leaf merged, SHIPPED row, review with the plate a
+  3d498ac07  2026-09-07  art: the Elder as a woman — two raws from Higgsfield batch 3 (E1 attempt 2 TL 139.6 / TR 137.5 /
+  f88843ade  2026-09-07  fix: two main reds the full battery found after the fast-forward — the payload gate's named JSON
+  c1aeb58be  2026-09-07  s-att: portraits-era-aging-2-batch bookkeeping — goal leaf merged, SHIPPED row with the plate an
+  fc47e1bf0  2026-09-07  merge: first-town-payload-gate — the deploy's first-town verdict judges the declared payload com
+  f8f1c2132  2026-09-07  art: portrait batch 2 — the five trades across E5-E10 by chained reference (thirty plates), the 
+  9e1d8a2e3  2026-09-07  fix: F-RPA-4 — the T debug spawn key requires isDebugEnabled() like every other debug key (it wa
+  81eca5828  2026-09-07  merge: spec-hygiene-batch — evidence writers write tracked artifacts only under GR_REFRESH_EVIDE
+
+--- candidates (newest first; judge each for player-visibility) ---
+
+
+SUMMARY {"art staging":0,"health":0,"done-moves":0,"Gazette current day":0}
+OVERALL rc=0

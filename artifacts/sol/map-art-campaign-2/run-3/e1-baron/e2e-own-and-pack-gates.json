@@ -1,0 +1,32 @@
+[
+  {
+    "label": "own-and-pack",
+    "command": [
+      "npx",
+      "playwright",
+      "test",
+      "--workers=1",
+      "--project=desktop-chrome",
+      "--project=mobile-chrome",
+      "--trace=off",
+      "--reporter=line",
+      "--output=artifacts/sol/map-art-campaign-2/_raw/run-3/e1-baron-own-and-pack",
+      "e2e/e1-baron.spec.ts",
+      "e2e/054-baron-epic.spec.ts",
+      "e2e/055-baron-kill-stop.spec.ts",
+      "e2e/057-baron-rocket-cart.spec.ts",
+      "e2e/beauty-baron.spec.ts",
+      "e2e/lane-baron-arrival.spec.ts",
+      "e2e/lane-baron-props-detail.spec.ts",
+      "e2e/f-bw-16-baron-siege.spec.ts",
+      "e2e/fort-static-routing.spec.ts",
+      "e2e/landmark-brightness.spec.ts",
+      "e2e/landmark-collision.spec.ts",
+      "e2e/fort-landmark-collision.spec.ts"
+    ],
+    "environment": {},
+    "exit": 1,
+    "seconds": 796.22,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-3/e1-baron-own-and-pack.log"
+  }
+]

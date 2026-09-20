@@ -1,0 +1,29 @@
+[
+  {
+    "phase": "production",
+    "exit": 0,
+    "command": [
+      "npx",
+      "playwright",
+      "test",
+      "e2e/landmark-brightness.spec.ts",
+      "--grep",
+      "reference rig",
+      "--workers=1",
+      "--project=desktop-chrome",
+      "--project=mobile-chrome",
+      "--trace=off",
+      "--reporter=line"
+    ],
+    "query": "&epoch=epoch-7-signal",
+    "seconds": 36.98775792121887,
+    "files": [
+      "campaign2-e7-relay-valley-production-e7-relay-valley-mobile-chrome.png",
+      "campaign2-e7-relay-valley-production-e7-relay-rush-mobile-chrome.png",
+      "campaign2-e7-relay-valley-production-e7-relay-rush-desktop-chrome.png",
+      "campaign2-e7-relay-valley-production-desktop-chrome.json",
+      "campaign2-e7-relay-valley-production-e7-relay-valley-desktop-chrome.png",
+      "campaign2-e7-relay-valley-production-mobile-chrome.json"
+    ]
+  }
+]

@@ -1,0 +1,23 @@
+gate battery transcript (append-only — see scripts/gate-battery.mjs)
+
+
+######## BATTERY 2026-09-07T12:22:00.707Z — s2540 bounded story-reader observation ########
+cwd=/private/tmp/gr-gate-s2540
+
+===== story module held then released =====
+$ /Users/robin/.nvm/versions/node/v26.4.0/bin/node /tmp/s2540-ordering.mjs
+rc=0 0.6s
+{
+  "arrangement": "hold story module response; observe absent reader; then release",
+  "before": {
+    "story": "undefined"
+  },
+  "after": {
+    "story": "object",
+    "later": []
+  }
+}
+
+
+SUMMARY {"story module held then released":0}
+OVERALL rc=0

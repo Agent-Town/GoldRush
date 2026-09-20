@@ -1,0 +1,69 @@
+gate battery transcript (append-only — see scripts/gate-battery.mjs)
+
+
+######## BATTERY 2026-09-07T05:41:09.342Z — s2533 mandatory drain guards ########
+cwd=/private/tmp/gr-s2533-citation-gate
+env+ PATH=/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin
+
+===== diff-selected guards =====
+$ node scripts/run-guards.mjs --changed-since 047c1e6e61db2928501b3f15b6ee4708a3fcc24d
+rc=1 906.0s
+run-guards: 15 file(s) changed since 047c1e6e61db2928501b3f15b6ee4708a3fcc24d
+  base gate: test:node-guards, test:power-budget, test:task-guards, test:citations, test:gate-callers
+  (no path rule matched -- base gate only)
+
+FAIL  rc=signal:SIGTERM  900s  test:node-guards
+FAIL  rc=1  1s  test:power-budget  p95=2.566ms
+PASS  rc=0  0s  test:task-guards
+PASS  rc=0  4s  test:citations
+PASS  rc=0  1s  test:gate-callers
+
+--- test:node-guards (rc=signal:SIGTERM) last 20 lines ---
+✔ a dead port classifies as unreachable (1.459917ms)
+✔ a trailing slash on baseURL does not break the probe (0.882959ms)
+✔ the not-dev message names the actual fix, not just the fault (0.095958ms)
+✔ globalSetup THROWS on a preview server — the violation path actually runs (1.722917ms)
+✔ globalSetup RESOLVES on a dev server — the guard is not one that always fires (0.899333ms)
+✔ globalSetup is INERT when the flag is unset — lanes and ordinary runs pay nothing (0.103208ms)
+✔ a default write leaves the banked census byte-identical (27.580625ms)
+✔ an explicit F2135_CENSUS_FILE write still lands where asked (26.016458ms)
+✔ a differing third run recomputes the comparison across all three runs (26.669458ms)
+✔ the committed two-run artifact round-trips byte-identically (289.223667ms)
+✔ real history has exactly the four former double-state findings and current BACKLOG has none (111.123625ms)
+✔ prose citations are not declarations, only struck declarations close, and duplicate opens stay open (33.087458ms)
+✔ regression arm: narrow open vocabulary is byte-identical when explicitly selected (0.303083ms)
+✔ wide open vocabulary admits an explicit 🟠 OPEN declaration (0.092167ms)
+✔ 🟢 RULING without a state word is not an open declaration (0.067417ms)
+✔ wide open vocabulary exposes a ✅ plus separate 🔬 OPEN conflict without reddening narrow (29.158334ms)
+✔ wide-open advisory reports skipped rows, hidden open IDs, and narrow closed-only IDs (26.596ms)
+✔ fire shell (CLAUDE_CONFIG_DIR present) resolves playwright workers to 1 (240.822ms)
+✔ non-fire shell (CLAUDE_CONFIG_DIR absent) keeps playwright parallelism (247.281167ms)
+FIRE SHELL — test:node-guards ran with reduced file concurrency 1 (F-1409-1/F-1410-1); this is the conservative default pending fire-side measurement.
+
+--- test:power-budget (rc=1) last 20 lines ---
+power-graph-budget: p95=2.566ms cap=0.500ms samples=160 verdict=FAIL
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: power graph fixed-step p95 2.566ms exceeded 0.500ms
+    at file:///private/tmp/gr-s2533-citation-gate/scripts/check-power-graph-budget.mjs:44:8
+    at ModuleJob.run (node:internal/modules/esm/module_job:447:25)
+    at async node:internal/modules/esm/loader:646:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v26.4.0
+
+guards: 3/5 passed -- RED: test:node-guards, test:power-budget
+guard-stats: appended 5 record(s) to /private/tmp/gr-s2533-citation-gate/logs/guard-stats.jsonl
+
+
+SUMMARY {"diff-selected guards":1}
+OVERALL rc=1

@@ -1,0 +1,48 @@
+gate battery transcript (append-only — see scripts/gate-battery.mjs)
+
+
+######## BATTERY 2026-09-07T08:31:57.737Z — s2536 power base control ########
+cwd=/Users/robin/Claude/Projects/Gold Rush
+env+ PATH=/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin
+
+===== base power =====
+$ npm run test:power-budget
+rc=0 0.2s
+
+> gold-rush@0.1.0 test:power-budget
+> node --experimental-strip-types scripts/check-power-graph-budget.mjs
+
+power-graph-budget: p95=0.374ms cap=0.500ms samples=160 verdict=PASS
+
+
+===== main task guard =====
+$ npm run test:task-guards
+rc=0 0.2s
+
+> gold-rush@0.1.0 test:task-guards
+> node scripts/task-guard-audit.mjs
+
+task-guard-audit: 1321 masters, 0 invisible (baseline 0).
+  ✅ no NEW invisible master. rc=0
+
+
+SUMMARY {"base power":0,"main task guard":0}
+OVERALL rc=0
+
+
+######## BATTERY 2026-09-07T09:12:30.227Z — s2536 power after node completion ########
+cwd=/private/tmp/gr-gate-s2536
+env+ PATH=/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin
+
+===== candidate power alone =====
+$ npm run test:power-budget
+rc=0 0.2s
+
+> gold-rush@0.1.0 test:power-budget
+> node --experimental-strip-types scripts/check-power-graph-budget.mjs
+
+power-graph-budget: p95=0.329ms cap=0.500ms samples=160 verdict=PASS
+
+
+SUMMARY {"candidate power alone":0}
+OVERALL rc=0

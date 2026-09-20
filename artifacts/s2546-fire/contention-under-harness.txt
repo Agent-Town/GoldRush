@@ -1,0 +1,36 @@
+FIRE SHELL — test:node-guards ran with reduced file concurrency 1 (F-1409-1/F-1410-1); this is the conservative default pending fire-side measurement.
+✖ contention is advisory, correctly counted, and absent when alone (1141.95325ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1174.410334
+
+✖ failing tests:
+
+test at scripts/node-guards-contention.test.mjs:116:1
+✖ contention is advisory, correctly counted, and absent when alone (1141.95325ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + null
+  - [
+  -   'CONTENDED — 2 concurrent batteries',
+  -   'CONTENDED — 2 concurrent batteries'
+  - ]
+  
+      at assertTwoStamps (file:///Users/robin/Claude/Projects/Gold%20Rush/scripts/node-guards-contention.test.mjs:34:10)
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/scripts/node-guards-contention.test.mjs:172:5)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: [ 'CONTENDED — 2 concurrent batteries', 'CONTENDED — 2 concurrent batteries' ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

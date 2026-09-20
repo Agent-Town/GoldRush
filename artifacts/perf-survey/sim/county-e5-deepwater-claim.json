@@ -1,0 +1,202 @@
+{
+  "key": "county-e5-deepwater-claim",
+  "tapePath": "tapes/county-e5-deepwater-claim.json",
+  "contract": "e5-deepwater-claim",
+  "kind": "county-played",
+  "node": "v26.4.0",
+  "before": {
+    "at": "2026-09-05T16:09:36.512Z",
+    "load": [
+      15.59619140625,
+      26.29248046875,
+      22.22509765625
+    ],
+    "freeMemory": 7686897664
+  },
+  "after": {
+    "at": "2026-09-05T16:09:40.959Z",
+    "load": [
+      15.59619140625,
+      26.29248046875,
+      22.22509765625
+    ],
+    "freeMemory": 7925088256
+  },
+  "declaredDurationTicks": 8161,
+  "simulatedSeconds": 272.03333333333336,
+  "bootMs": 39.60024999999996,
+  "replayMs": 2844.2825829999997,
+  "ticksPerSecond": 2869.2648363343023,
+  "realtimeMultiple": 95.64216121114342,
+  "estimateTenMinuteSeconds": 6.273383959563777,
+  "estimateFormula": "600 seconds / measured realtimeMultiple; extrapolation, not an actual 10-minute tape when duration differs",
+  "tickMs": {
+    "n": 8161,
+    "min": 0.19250000000010914,
+    "p50": 0.3205830000001697,
+    "p95": 0.539958000000297,
+    "p99": 0.8275000000003274,
+    "max": 11.034750000000031
+  },
+  "tickPath": "sim/county-e5-deepwater-claim-ticks.json",
+  "result": {
+    "eventLogHash": "fnv1a32:b74ae864",
+    "outcome": {
+      "secured": true,
+      "waves": 12,
+      "gold": 165,
+      "timeAlive": 272
+    },
+    "securedSnapshot": {
+      "waves": 12,
+      "gold": 165,
+      "timeAlive": 272.00000000000074
+    },
+    "ticks": 8161,
+    "engine": "headless-contract-sim"
+  },
+  "expectedHash": "fnv1a32:b74ae864",
+  "hashMatches": true,
+  "top20": [
+    {
+      "name": "structuredClone",
+      "url": "node:internal/worker/js_transferable",
+      "line": 113,
+      "column": 25,
+      "selfMs": 415.712
+    },
+    {
+      "name": "get diagnostics",
+      "url": "",
+      "line": 484,
+      "column": 17,
+      "selfMs": 141.121
+    },
+    {
+      "name": "multiplyMatrices",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 10385,
+      "column": 18,
+      "selfMs": 140.08800000000002
+    },
+    {
+      "name": "dispatch",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 134.382
+    },
+    {
+      "name": "terrainSeed",
+      "url": "",
+      "line": 1469,
+      "column": 21,
+      "selfMs": 125.98000000000002
+    },
+    {
+      "name": "structuredClone",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 117.845
+    },
+    {
+      "name": "diagnostics",
+      "url": "",
+      "line": 1795,
+      "column": 13,
+      "selfMs": 91.78399999999999
+    },
+    {
+      "name": "hpBarDiagnostics",
+      "url": "",
+      "line": 1663,
+      "column": 18,
+      "selfMs": 88.132
+    },
+    {
+      "name": "terrainHash",
+      "url": "",
+      "line": 1486,
+      "column": 21,
+      "selfMs": 83.124
+    },
+    {
+      "name": "toArray",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 11099,
+      "column": 9,
+      "selfMs": 78.197
+    },
+    {
+      "name": "currentTrickleInterval",
+      "url": "",
+      "line": 641,
+      "column": 24,
+      "selfMs": 70.42000000000002
+    },
+    {
+      "name": "maxHpForPlacement",
+      "url": "",
+      "line": 1622,
+      "column": 19,
+      "selfMs": 70.202
+    },
+    {
+      "name": "clone",
+      "url": "",
+      "line": 320,
+      "column": 15,
+      "selfMs": 63.468999999999994
+    },
+    {
+      "name": "syncEnemyInstance",
+      "url": "",
+      "line": 1343,
+      "column": 19,
+      "selfMs": 60.085
+    },
+    {
+      "name": "(program)",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 53.696
+    },
+    {
+      "name": "activePositions",
+      "url": "",
+      "line": 1533,
+      "column": 17,
+      "selfMs": 45.401999999999994
+    },
+    {
+      "name": "hpDiagnostics",
+      "url": "",
+      "line": 1631,
+      "column": 15,
+      "selfMs": 38.554
+    },
+    {
+      "name": "maxHpForInstance",
+      "url": "",
+      "line": 1619,
+      "column": 18,
+      "selfMs": 37.891
+    },
+    {
+      "name": "stableProbeMask",
+      "url": "",
+      "line": 1266,
+      "column": 25,
+      "selfMs": 33.166000000000004
+    },
+    {
+      "name": "get diagnostics",
+      "url": "",
+      "line": 153,
+      "column": 17,
+      "selfMs": 32.72
+    }
+  ]
+}

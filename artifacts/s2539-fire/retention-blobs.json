@@ -1,0 +1,1666 @@
+{
+  "time": "2026-09-07T18:34:53+0700",
+  "files": 1291,
+  "hashes": 1291,
+  "remoteObjects": 114570,
+  "counts": {
+    "REMOTE-SAFE": 1289,
+    "LOCAL-ONLY": 1,
+    "AT-RISK": 1
+  },
+  "exceptions": [
+    {
+      "tree": "/private/tmp/heat12-038cc280",
+      "path": "artifacts/heat12/opus/e4-dust-flats/attempt-1-views.jsonl",
+      "bytes": 274833116,
+      "mtime": 1788636433.7785208,
+      "ageSeconds": 144434.3,
+      "absolute": "/private/tmp/heat12-038cc280/artifacts/heat12/opus/e4-dust-flats/attempt-1-views.jsonl",
+      "blob": "c8cf24fa1e1f13121062d1f7c8533343c1d6f0ef",
+      "verdict": "LOCAL-ONLY"
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/gr-task-rehearsal",
+      "path": "rehearsal-video/segments.jsonl",
+      "bytes": 2203,
+      "mtime": 1784699808.3313062,
+      "ageSeconds": 4081059.8,
+      "absolute": "/Users/robin/Claude/Projects/gr-task-rehearsal/rehearsal-video/segments.jsonl",
+      "blob": "5f94bc144f1ff8bdc3faf4970bca04f3cecc42af",
+      "verdict": "AT-RISK"
+    }
+  ],
+  "deferred": [
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/ab-port-check.txt",
+      "bytes": 0,
+      "mtime": 1788582350.8634405,
+      "ageSeconds": 198517.2
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/ab-reviewed-port-check.txt",
+      "bytes": 0,
+      "mtime": 1788582735.7796247,
+      "ageSeconds": 198132.3
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/baseline-desk-declaration.log",
+      "bytes": 757,
+      "mtime": 1788584632.4050395,
+      "ageSeconds": 196235.7
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/before-fixture.log",
+      "bytes": 41,
+      "mtime": 1788582135.447832,
+      "ageSeconds": 198732.6
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/browser-snapshot-source-diff.txt",
+      "bytes": 0,
+      "mtime": 1788584027.4028327,
+      "ageSeconds": 196840.7
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/codex-review-cue-split.log",
+      "bytes": 148187,
+      "mtime": 1788583339.7206213,
+      "ageSeconds": 197528.4
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/codex-review-final.log",
+      "bytes": 172224,
+      "mtime": 1788582864.0162437,
+      "ageSeconds": 198004.1
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/codex-review.log",
+      "bytes": 624545,
+      "mtime": 1788582421.0220842,
+      "ageSeconds": 198447.1
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/concurrent-changes.txt",
+      "bytes": 7103,
+      "mtime": 1788583907.5962343,
+      "ageSeconds": 196960.5
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/concurrent-engine-pin.patch",
+      "bytes": 0,
+      "mtime": 1788583907.5982177,
+      "ageSeconds": 196960.5
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/cues-port-check.txt",
+      "bytes": 0,
+      "mtime": 1788583109.9736145,
+      "ageSeconds": 197758.1
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/cues-split-port-check.txt",
+      "bytes": 0,
+      "mtime": 1788583264.5710652,
+      "ageSeconds": 197603.5
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/dry-run-port-check.txt",
+      "bytes": 0,
+      "mtime": 1788582297.814946,
+      "ageSeconds": 198570.3
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/dry-run-result.json",
+      "bytes": 131,
+      "mtime": 1788582341.340255,
+      "ageSeconds": 198526.8
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/dry-run.log",
+      "bytes": 1559,
+      "mtime": 1788582341.338706,
+      "ageSeconds": 198526.8
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/e1-ab-reviewed.log",
+      "bytes": 8520,
+      "mtime": 1788583046.5815532,
+      "ageSeconds": 197821.5
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/e1-ab.log",
+      "bytes": 8514,
+      "mtime": 1788582644.667318,
+      "ageSeconds": 198223.4
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/e1-build-final.log",
+      "bytes": 324325,
+      "mtime": 1788582239.2984185,
+      "ageSeconds": 198628.8
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/e1-build.log",
+      "bytes": 305,
+      "mtime": 1788582216.4490006,
+      "ageSeconds": 198651.6
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/e1-port-check.txt",
+      "bytes": 0,
+      "mtime": 1788582250.812049,
+      "ageSeconds": 198617.3
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/e1-probe.log",
+      "bytes": 1807,
+      "mtime": 1788582286.4504416,
+      "ageSeconds": 198581.6
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/e1-probe/ab-test-results/.last-run.json",
+      "bytes": 96,
+      "mtime": 1788582644.6570127,
+      "ageSeconds": 198223.4
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/e1-probe/ab-test-results/asset-diet-town-byte-budge-360a8-al-and-saveData-arms-by-URL-mobile-chrome/error-context.md",
+      "bytes": 8090,
+      "mtime": 1788582637.2666347,
+      "ageSeconds": 198230.8
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/e1-probe/ab-test-results/asset-diet-town-byte-budge-360a8-al-and-saveData-arms-by-URL-mobile-chrome/test-failed-1.png",
+      "bytes": 12031,
+      "mtime": 1788582637.240992,
+      "ageSeconds": 198230.9
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/e1-probe/ab-test-results/asset-diet-town-byte-budge-360a8-al-and-saveData-arms-by-URL-mobile-chrome/test-failed-2.png",
+      "bytes": 2215479,
+      "mtime": 1788582544.2803762,
+      "ageSeconds": 198323.8
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/e1-probe/ab-test-results/asset-diet-town-byte-budge-360a8-al-and-saveData-arms-by-URL-mobile-chrome/test-failed-3.png",
+      "bytes": 2227729,
+      "mtime": 1788582571.234955,
+      "ageSeconds": 198296.9
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/e1-probe/ab-test-results/asset-diet-town-byte-budge-360a8-al-and-saveData-arms-by-URL-mobile-chrome/test-failed-4.png",
+      "bytes": 2228327,
+      "mtime": 1788582599.5846982,
+      "ageSeconds": 198268.5
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/e1-probe/ab-test-results/asset-diet-town-byte-budge-360a8-al-and-saveData-arms-by-URL-mobile-chrome/test-failed-5.png",
+      "bytes": 2223965,
+      "mtime": 1788582626.6218202,
+      "ageSeconds": 198241.5
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/e1-probe/ab-test-results/asset-diet-town-byte-budge-360a8-al-and-saveData-arms-by-URL-mobile-chrome/test-failed-6.png",
+      "bytes": 2160326,
+      "mtime": 1788582632.8357852,
+      "ageSeconds": 198235.3
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/e1-probe/ab-test-results/asset-diet-town-byte-budge-360a8-al-and-saveData-arms-by-URL-mobile-chrome/test-failed-7.png",
+      "bytes": 2174854,
+      "mtime": 1788582637.136426,
+      "ageSeconds": 198231.0
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/e1-probe/ab-test-results/asset-diet-town-byte-budge-360a8-al-and-saveData-arms-by-URL-mobile-chrome/trace.zip",
+      "bytes": 177232908,
+      "mtime": 1788582644.3419535,
+      "ageSeconds": 198223.7
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/e1-probe/artifacts/asset-diet/town-budget-desktop-chrome.md",
+      "bytes": 27012,
+      "mtime": 1788582474.0930767,
+      "ageSeconds": 198394.0
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/e1-probe/artifacts/asset-diet/town-budget-mobile-chrome.md",
+      "bytes": 27002,
+      "mtime": 1788582626.657106,
+      "ageSeconds": 198241.4
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/e1-probe/artifacts/asset-diet/town-transfer-desktop-chrome.json",
+      "bytes": 127365,
+      "mtime": 1788582268.8984318,
+      "ageSeconds": 198599.2
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/e1-probe/artifacts/asset-diet/town-transfer-mobile-chrome.json",
+      "bytes": 96643,
+      "mtime": 1788582285.9079766,
+      "ageSeconds": 198582.2
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/e1-reviewed.log",
+      "bytes": 1809,
+      "mtime": 1788582709.051406,
+      "ageSeconds": 198159.0
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/e1-reviewed/ab-test-results/.last-run.json",
+      "bytes": 96,
+      "mtime": 1788583046.5527043,
+      "ageSeconds": 197821.5
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/e1-reviewed/ab-test-results/asset-diet-town-byte-budge-360a8-al-and-saveData-arms-by-URL-mobile-chrome/error-context.md",
+      "bytes": 8091,
+      "mtime": 1788583039.5711796,
+      "ageSeconds": 197828.5
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/e1-reviewed/ab-test-results/asset-diet-town-byte-budge-360a8-al-and-saveData-arms-by-URL-mobile-chrome/test-failed-1.png",
+      "bytes": 12031,
+      "mtime": 1788583039.546679,
+      "ageSeconds": 197828.5
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/e1-reviewed/ab-test-results/asset-diet-town-byte-budge-360a8-al-and-saveData-arms-by-URL-mobile-chrome/test-failed-2.png",
+      "bytes": 2226196,
+      "mtime": 1788582951.3331096,
+      "ageSeconds": 197916.8
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/e1-reviewed/ab-test-results/asset-diet-town-byte-budge-360a8-al-and-saveData-arms-by-URL-mobile-chrome/test-failed-3.png",
+      "bytes": 2223058,
+      "mtime": 1788582977.5647652,
+      "ageSeconds": 197890.5
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/e1-reviewed/ab-test-results/asset-diet-town-byte-budge-360a8-al-and-saveData-arms-by-URL-mobile-chrome/test-failed-4.png",
+      "bytes": 2215165,
+      "mtime": 1788583005.9715524,
+      "ageSeconds": 197862.1
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/e1-reviewed/ab-test-results/asset-diet-town-byte-budge-360a8-al-and-saveData-arms-by-URL-mobile-chrome/test-failed-5.png",
+      "bytes": 2228076,
+      "mtime": 1788583032.1172469,
+      "ageSeconds": 197836.0
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/e1-reviewed/ab-test-results/asset-diet-town-byte-budge-360a8-al-and-saveData-arms-by-URL-mobile-chrome/test-failed-6.png",
+      "bytes": 2222884,
+      "mtime": 1788583036.756293,
+      "ageSeconds": 197831.3
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/e1-reviewed/ab-test-results/asset-diet-town-byte-budge-360a8-al-and-saveData-arms-by-URL-mobile-chrome/test-failed-7.png",
+      "bytes": 2154370,
+      "mtime": 1788583039.4701452,
+      "ageSeconds": 197828.6
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/e1-reviewed/ab-test-results/asset-diet-town-byte-budge-360a8-al-and-saveData-arms-by-URL-mobile-chrome/trace.zip",
+      "bytes": 212141445,
+      "mtime": 1788583046.2646937,
+      "ageSeconds": 197821.8
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/e1-reviewed/artifacts/asset-diet/town-budget-desktop-chrome.md",
+      "bytes": 26918,
+      "mtime": 1788582879.0167964,
+      "ageSeconds": 197989.1
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/e1-reviewed/artifacts/asset-diet/town-budget-mobile-chrome.md",
+      "bytes": 27033,
+      "mtime": 1788583032.2283728,
+      "ageSeconds": 197835.9
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/e1-reviewed/artifacts/asset-diet/town-transfer-desktop-chrome.json",
+      "bytes": 107816,
+      "mtime": 1788582691.384224,
+      "ageSeconds": 198176.7
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/e1-reviewed/artifacts/asset-diet/town-transfer-mobile-chrome.json",
+      "bytes": 110724,
+      "mtime": 1788582708.506401,
+      "ageSeconds": 198159.6
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/final-dry-run-detail.log",
+      "bytes": 328521,
+      "mtime": 1788583369.8622596,
+      "ageSeconds": 197498.2
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/final-dry-run-port-check.txt",
+      "bytes": 0,
+      "mtime": 1788583309.7957077,
+      "ageSeconds": 197558.3
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/final-dry-run-result.json",
+      "bytes": 131,
+      "mtime": 1788583368.8406694,
+      "ageSeconds": 197499.3
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/final-dry-run.log",
+      "bytes": 1559,
+      "mtime": 1788583368.838891,
+      "ageSeconds": 197499.3
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/final-implementation.patch",
+      "bytes": 26556,
+      "mtime": 1788583907.6434264,
+      "ageSeconds": 196960.4
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/final-integrity-check.json",
+      "bytes": 551,
+      "mtime": 1788586595.6393647,
+      "ageSeconds": 194272.5
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/final-source-hashes.json",
+      "bytes": 874,
+      "mtime": 1788583434.1689532,
+      "ageSeconds": 197433.9
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/fixture.log",
+      "bytes": 3333,
+      "mtime": 1788582215.551525,
+      "ageSeconds": 198652.5
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/focused.log",
+      "bytes": 1336,
+      "mtime": 1788582209.588651,
+      "ageSeconds": 198658.5
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/full-build.log",
+      "bytes": 516860,
+      "mtime": 1788583109.971767,
+      "ageSeconds": 197758.1
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/full-cues-split.log",
+      "bytes": 1980,
+      "mtime": 1788583294.0595064,
+      "ageSeconds": 197574.0
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/full-cues-split/artifacts/asset-diet/desktop-chrome-claim-throttled.png",
+      "bytes": 740972,
+      "mtime": 1788583277.918088,
+      "ageSeconds": 197590.2
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/full-cues-split/artifacts/asset-diet/desktop-chrome-town-throttled.png",
+      "bytes": 678936,
+      "mtime": 1788583270.7731242,
+      "ageSeconds": 197597.3
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/full-cues-split/artifacts/asset-diet/mobile-chrome-claim-throttled.png",
+      "bytes": 1025789,
+      "mtime": 1788583290.8053348,
+      "ageSeconds": 197577.3
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/full-cues-split/artifacts/asset-diet/mobile-chrome-town-throttled.png",
+      "bytes": 1226716,
+      "mtime": 1788583283.677089,
+      "ageSeconds": 197584.4
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/full-cues.log",
+      "bytes": 4377,
+      "mtime": 1788583222.5333805,
+      "ageSeconds": 197645.6
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/full-cues/artifacts/asset-diet/desktop-chrome-town-throttled.png",
+      "bytes": 666992,
+      "mtime": 1788583130.020356,
+      "ageSeconds": 197738.1
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/full-cues/artifacts/asset-diet/mobile-chrome-claim-throttled.png",
+      "bytes": 1025612,
+      "mtime": 1788583207.1436384,
+      "ageSeconds": 197660.9
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/full-cues/artifacts/asset-diet/mobile-chrome-town-throttled.png",
+      "bytes": 1301589,
+      "mtime": 1788583198.4823763,
+      "ageSeconds": 197669.6
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/investigation.md",
+      "bytes": 5054,
+      "mtime": 1788583434.1222956,
+      "ageSeconds": 197434.0
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/main-desk-declaration-control.log",
+      "bytes": 200,
+      "mtime": 1788585567.2916737,
+      "ageSeconds": 195300.8
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/node-battery-isolated-preflight.log",
+      "bytes": 178,
+      "mtime": 1788584027.450922,
+      "ageSeconds": 196840.6
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/node-battery-isolated-result.json",
+      "bytes": 504,
+      "mtime": 1788586573.1596026,
+      "ageSeconds": 194294.9
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/node-battery-isolated.log",
+      "bytes": 111026,
+      "mtime": 1788586515.5991738,
+      "ageSeconds": 194352.5
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/node-battery-preflight.log",
+      "bytes": 269,
+      "mtime": 1788583410.7027063,
+      "ageSeconds": 197457.4
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/node-battery.log",
+      "bytes": 65538,
+      "mtime": 1788584005.351203,
+      "ageSeconds": 196862.7
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/predecessor-dry-run.txt",
+      "bytes": 1019,
+      "mtime": 1788582133.6795516,
+      "ageSeconds": 198734.4
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/preflight.txt",
+      "bytes": 1353,
+      "mtime": 1788582117.6597896,
+      "ageSeconds": 198750.4
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/refusing-bin/rsync",
+      "bytes": 17,
+      "mtime": 1788582133.6895204,
+      "ageSeconds": 198734.4
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/refusing-bin/ssh",
+      "bytes": 17,
+      "mtime": 1788582133.6877391,
+      "ageSeconds": 198734.4
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/replayed.patch",
+      "bytes": 24993,
+      "mtime": 1788582117.6780698,
+      "ageSeconds": 198750.4
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/report.md",
+      "bytes": 13232,
+      "mtime": 1788586625.7239585,
+      "ageSeconds": 194242.4
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/reviewed-port-check.txt",
+      "bytes": 0,
+      "mtime": 1788582670.8425472,
+      "ageSeconds": 198197.2
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/reviewed-source-hashes.json",
+      "bytes": 874,
+      "mtime": 1788582890.7281308,
+      "ageSeconds": 197977.4
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/stopped-battery-processes.json",
+      "bytes": 1170,
+      "mtime": 1788584005.3097196,
+      "ageSeconds": 196862.8
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/typecheck-cue-split.log",
+      "bytes": 7,
+      "mtime": 1788583264.5677934,
+      "ageSeconds": 197603.5
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/typecheck-final.log",
+      "bytes": 7,
+      "mtime": 1788582231.3129504,
+      "ageSeconds": 198636.8
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/typecheck-reviewed.log",
+      "bytes": 7,
+      "mtime": 1788582670.8397677,
+      "ageSeconds": 198197.3
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/typecheck-shared.log",
+      "bytes": 7,
+      "mtime": 1788582735.7782152,
+      "ageSeconds": 198132.3
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/typecheck.log",
+      "bytes": 228,
+      "mtime": 1788582203.5751739,
+      "ageSeconds": 198664.5
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/verification-tree-setup.log",
+      "bytes": 5638,
+      "mtime": 1788583967.2345953,
+      "ageSeconds": 196900.9
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/deploy-budget-production-probe/verification-tree.txt",
+      "bytes": 43,
+      "mtime": 1788583907.647308,
+      "ageSeconds": 196960.4
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/m2-palisade-placement-diagnosis/adjacent-results/.last-run.json",
+      "bytes": 194,
+      "mtime": 1788780827.8656235,
+      "ageSeconds": 40.2
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/m2-palisade-placement-diagnosis/adjacent-results/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-desktop-chrome/error-context.md",
+      "bytes": 9527,
+      "mtime": 1788780680.405261,
+      "ageSeconds": 187.7
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/m2-palisade-placement-diagnosis/adjacent-results/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-desktop-chrome/test-failed-1.png",
+      "bytes": 1183381,
+      "mtime": 1788780680.3820953,
+      "ageSeconds": 187.7
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/m2-palisade-placement-diagnosis/adjacent-results/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-mobile-chrome/error-context.md",
+      "bytes": 9935,
+      "mtime": 1788780750.50551,
+      "ageSeconds": 117.6
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/m2-palisade-placement-diagnosis/adjacent-results/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-mobile-chrome/test-failed-1.png",
+      "bytes": 1707014,
+      "mtime": 1788780750.4884367,
+      "ageSeconds": 117.6
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/m2-palisade-placement-diagnosis/adjacent-results/m2-01-build-menu-palisade--49d2a-llowing-edge-touch-chaining-mobile-chrome/error-context.md",
+      "bytes": 12888,
+      "mtime": 1788780784.6533237,
+      "ageSeconds": 83.4
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/m2-palisade-placement-diagnosis/adjacent-results/m2-01-build-menu-palisade--49d2a-llowing-edge-touch-chaining-mobile-chrome/test-failed-1.png",
+      "bytes": 1626012,
+      "mtime": 1788780784.623193,
+      "ageSeconds": 83.5
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/m2-palisade-placement-diagnosis/controlled-desktop-chrome.json",
+      "bytes": 10522,
+      "mtime": 1788780488.0998592,
+      "ageSeconds": 380.0
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/m2-palisade-placement-diagnosis/controlled-mobile-chrome.json",
+      "bytes": 10522,
+      "mtime": 1788780490.847882,
+      "ageSeconds": 377.2
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/m2-palisade-placement-diagnosis/controlled-results/.last-run.json",
+      "bytes": 45,
+      "mtime": 1788780491.408258,
+      "ageSeconds": 376.7
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/m2-palisade-placement-diagnosis/corrected-focused-results/.last-run.json",
+      "bytes": 45,
+      "mtime": 1788780596.0178516,
+      "ageSeconds": 272.1
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/m2-palisade-placement-diagnosis/m2-results/.last-run.json",
+      "bytes": 45,
+      "mtime": 1788780663.320442,
+      "ageSeconds": 204.8
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/m2-palisade-placement-diagnosis/vite.config.mjs",
+      "bytes": 317,
+      "mtime": 1788780337.4395554,
+      "ageSeconds": 530.7
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "artifacts/s2539-fire/triage.md",
+      "bytes": 837,
+      "mtime": 1788780856.2763464,
+      "ageSeconds": 11.8
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "logs/runs-archive/traces/prefetch-bounded-warming/advance-stream-cache-reuse-6f92f--without-route-interception-desktop-chrome/trace.zip",
+      "bytes": 54071028,
+      "mtime": 1788591942.4863389,
+      "ageSeconds": 188925.6
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "logs/runs-archive/traces/prefetch-bounded-warming/advance-stream-cache-reuse-c5d46-se-under-production-headers-desktop-chrome/trace.zip",
+      "bytes": 90495099,
+      "mtime": 1788591942.5772078,
+      "ageSeconds": 188925.5
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "logs/runs-archive/traces/prefetch-bounded-warming/advance-stream-launch-abor-c3f36-he-run-requests-its-own-map-desktop-chrome/trace.zip",
+      "bytes": 49867085,
+      "mtime": 1788591942.6256573,
+      "ageSeconds": 188925.5
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "logs/runs-archive/traces/prefetch-bounded-warming/advance-stream-launch-abor-c3f36-he-run-requests-its-own-map-mobile-chrome/trace.zip",
+      "bytes": 36896986,
+      "mtime": 1788591942.6653976,
+      "ageSeconds": 188925.4
+    },
+    {
+      "tree": "/Users/robin/Claude/Projects/Gold Rush",
+      "path": "logs/runs-archive/traces/prefetch-bounded-warming/asset-diet-town-byte-budge-360a8-al-and-saveData-arms-by-URL-desktop-chrome/trace.zip",
+      "bytes": 195659243,
+      "mtime": 1788591942.4255958,
+      "ageSeconds": 188925.7
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e3-moth-season/attempt-1-tape.json",
+      "bytes": 937547,
+      "mtime": 1788775692.0178006,
+      "ageSeconds": 5176.1
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e3-moth-season/ctrl-v1.mjs",
+      "bytes": 6375,
+      "mtime": 1788775466.1042128,
+      "ageSeconds": 5402.0
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e3-moth-season/gauntlet-outcome.json",
+      "bytes": 1803,
+      "mtime": 1788775706.1020503,
+      "ageSeconds": 5162.0
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e3-moth-season/gauntlet-report.md",
+      "bytes": 11482,
+      "mtime": 1788775772.1562269,
+      "ageSeconds": 5095.9
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e3-moth-season/probe-idle-table.txt",
+      "bytes": 643,
+      "mtime": 1788775262.8323832,
+      "ageSeconds": 5605.3
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e3-moth-season/probe-idle-tape.json",
+      "bytes": 1464,
+      "mtime": 1788775262.806123,
+      "ageSeconds": 5605.3
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e3-moth-season/probe-idle-views.jsonl",
+      "bytes": 55554,
+      "mtime": 1788775262.7683077,
+      "ageSeconds": 5605.3
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e3-moth-season/runner.mjs",
+      "bytes": 5535,
+      "mtime": 1788775257.8208613,
+      "ageSeconds": 5610.3
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e3-moth-season/tune-1-table.txt",
+      "bytes": 19316,
+      "mtime": 1788775533.3608112,
+      "ageSeconds": 5334.7
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e3-moth-season/tune-1-tape.json",
+      "bytes": 937547,
+      "mtime": 1788775533.3351402,
+      "ageSeconds": 5334.8
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e3-moth-season/tune-1-views.jsonl",
+      "bytes": 4344708,
+      "mtime": 1788775533.296839,
+      "ageSeconds": 5334.8
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e5-stillwater/attempt-1-tape.json",
+      "bytes": 27323,
+      "mtime": 1788778766.587974,
+      "ageSeconds": 2101.5
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e5-stillwater/ctrl-v1.mjs",
+      "bytes": 5474,
+      "mtime": 1788778692.5386856,
+      "ageSeconds": 2175.6
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e5-stillwater/gauntlet-outcome.json",
+      "bytes": 1804,
+      "mtime": 1788778816.409518,
+      "ageSeconds": 2051.7
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e5-stillwater/gauntlet-report.md",
+      "bytes": 10979,
+      "mtime": 1788778879.9435146,
+      "ageSeconds": 1988.1
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e5-stillwater/probe-idle-stderr.txt",
+      "bytes": 27,
+      "mtime": 1788778435.8232534,
+      "ageSeconds": 2432.3
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e5-stillwater/probe-idle-summary.json",
+      "bytes": 447,
+      "mtime": 1788778435.823463,
+      "ageSeconds": 2432.3
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e5-stillwater/probe-idle-tape.json",
+      "bytes": 1462,
+      "mtime": 1788778435.8132973,
+      "ageSeconds": 2432.3
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e5-stillwater/probe-idle-view0.json",
+      "bytes": 16050,
+      "mtime": 1788778435.7767673,
+      "ageSeconds": 2432.3
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e5-stillwater/probe-idle-views.jsonl",
+      "bytes": 22568,
+      "mtime": 1788778435.8134537,
+      "ageSeconds": 2432.3
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e5-stillwater/runner.mjs",
+      "bytes": 4782,
+      "mtime": 1788778430.0463774,
+      "ageSeconds": 2438.0
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e5-stillwater/tune-1-stderr.txt",
+      "bytes": 27,
+      "mtime": 1788778703.191595,
+      "ageSeconds": 2164.9
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e5-stillwater/tune-1-summary.json",
+      "bytes": 424,
+      "mtime": 1788778703.191778,
+      "ageSeconds": 2164.9
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e5-stillwater/tune-1-tape.json",
+      "bytes": 27323,
+      "mtime": 1788778703.182192,
+      "ageSeconds": 2164.9
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e5-stillwater/tune-1-view0.json",
+      "bytes": 16050,
+      "mtime": 1788778697.1930127,
+      "ageSeconds": 2170.9
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e5-stillwater/tune-1-views.jsonl",
+      "bytes": 214289,
+      "mtime": 1788778703.1823328,
+      "ageSeconds": 2164.9
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e7-dead-band/.best.json",
+      "bytes": 380,
+      "mtime": 1788778075.600388,
+      "ageSeconds": 2792.5
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e7-dead-band/attempt-1-summary.json",
+      "bytes": 510,
+      "mtime": 1788778075.6000402,
+      "ageSeconds": 2792.5
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e7-dead-band/attempt-1-table.txt",
+      "bytes": 12703,
+      "mtime": 1788778075.6002588,
+      "ageSeconds": 2792.5
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e7-dead-band/attempt-1-tape.json",
+      "bytes": 150576,
+      "mtime": 1788778075.589094,
+      "ageSeconds": 2792.5
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e7-dead-band/attempt-1-views.jsonl",
+      "bytes": 820724,
+      "mtime": 1788778075.549719,
+      "ageSeconds": 2792.5
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e7-dead-band/ctrl-v1.mjs",
+      "bytes": 7019,
+      "mtime": 1788777854.6920464,
+      "ageSeconds": 3013.4
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e7-dead-band/ctrl-v2.mjs",
+      "bytes": 9184,
+      "mtime": 1788778033.672694,
+      "ageSeconds": 2834.4
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e7-dead-band/gauntlet-outcome.json",
+      "bytes": 828,
+      "mtime": 1788778121.590418,
+      "ageSeconds": 2746.5
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e7-dead-band/gauntlet-report.md",
+      "bytes": 10398,
+      "mtime": 1788778218.460254,
+      "ageSeconds": 2649.6
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e7-dead-band/probe-idle-summary.json",
+      "bytes": 501,
+      "mtime": 1788777742.5044954,
+      "ageSeconds": 3125.6
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e7-dead-band/probe-idle-table.txt",
+      "bytes": 1204,
+      "mtime": 1788777742.5046015,
+      "ageSeconds": 3125.6
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e7-dead-band/probe-idle-tape.json",
+      "bytes": 1456,
+      "mtime": 1788777742.494022,
+      "ageSeconds": 3125.6
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e7-dead-band/probe-idle-views.jsonl",
+      "bytes": 41787,
+      "mtime": 1788777742.448737,
+      "ageSeconds": 3125.6
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e7-dead-band/runner.mjs",
+      "bytes": 4962,
+      "mtime": 1788777736.7323778,
+      "ageSeconds": 3131.4
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e7-dead-band/tune-1-summary.json",
+      "bytes": 505,
+      "mtime": 1788777888.4564004,
+      "ageSeconds": 2979.6
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e7-dead-band/tune-1-table.txt",
+      "bytes": 12327,
+      "mtime": 1788777888.456686,
+      "ageSeconds": 2979.6
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e7-dead-band/tune-1-tape.json",
+      "bytes": 154627,
+      "mtime": 1788777888.4438725,
+      "ageSeconds": 2979.6
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e7-dead-band/tune-1-views.jsonl",
+      "bytes": 802095,
+      "mtime": 1788777888.4061391,
+      "ageSeconds": 2979.7
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e7-echo-canyon/attempt-1-tape.json",
+      "bytes": 332831,
+      "mtime": 1788777258.1505013,
+      "ageSeconds": 3609.9
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e7-echo-canyon/controller.mjs",
+      "bytes": 9831,
+      "mtime": 1788777095.013863,
+      "ageSeconds": 3773.1
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e7-echo-canyon/gauntlet-outcome.json",
+      "bytes": 2474,
+      "mtime": 1788777297.1145747,
+      "ageSeconds": 3571.0
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e7-echo-canyon/gauntlet-report.md",
+      "bytes": 12826,
+      "mtime": 1788777372.3786712,
+      "ageSeconds": 3495.7
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e7-echo-canyon/probe-idle-rows.json",
+      "bytes": 1225,
+      "mtime": 1788776973.1756475,
+      "ageSeconds": 3894.9
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e7-echo-canyon/probe-idle-stderr.txt",
+      "bytes": 27,
+      "mtime": 1788776973.1757092,
+      "ageSeconds": 3894.9
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e7-echo-canyon/probe-idle-summary.json",
+      "bytes": 369,
+      "mtime": 1788776973.175834,
+      "ageSeconds": 3894.9
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e7-echo-canyon/probe-idle-tape.json",
+      "bytes": 1466,
+      "mtime": 1788776973.1651132,
+      "ageSeconds": 3894.9
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e7-echo-canyon/probe-idle-views.jsonl",
+      "bytes": 45801,
+      "mtime": 1788776973.1048622,
+      "ageSeconds": 3895.0
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e7-echo-canyon/runner.mjs",
+      "bytes": 4195,
+      "mtime": 1788776967.8284569,
+      "ageSeconds": 3900.3
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e7-echo-canyon/tune-1-rows.json",
+      "bytes": 14152,
+      "mtime": 1788777156.0359254,
+      "ageSeconds": 3712.1
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e7-echo-canyon/tune-1-stderr.txt",
+      "bytes": 27,
+      "mtime": 1788777156.036,
+      "ageSeconds": 3712.1
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e7-echo-canyon/tune-1-summary.json",
+      "bytes": 350,
+      "mtime": 1788777156.0366344,
+      "ageSeconds": 3712.1
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e7-echo-canyon/tune-1-tape.json",
+      "bytes": 332831,
+      "mtime": 1788777156.0244133,
+      "ageSeconds": 3712.1
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e7-echo-canyon/tune-1-views.jsonl",
+      "bytes": 1214481,
+      "mtime": 1788777155.9894826,
+      "ageSeconds": 3712.1
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e7-relay-rush/attempt-1-tape.json",
+      "bytes": 236395,
+      "mtime": 1788776507.3928807,
+      "ageSeconds": 4360.7
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e7-relay-rush/ctrl-v1.mjs",
+      "bytes": 9616,
+      "mtime": 1788776425.9135015,
+      "ageSeconds": 4442.2
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e7-relay-rush/gauntlet-outcome.json",
+      "bytes": 817,
+      "mtime": 1788776507.3931236,
+      "ageSeconds": 4360.7
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e7-relay-rush/gauntlet-report.md",
+      "bytes": 13898,
+      "mtime": 1788776651.2796025,
+      "ageSeconds": 4216.8
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e7-relay-rush/probe-idle-rows.json",
+      "bytes": 1423,
+      "mtime": 1788776208.347852,
+      "ageSeconds": 4659.7
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e7-relay-rush/probe-idle-stderr.txt",
+      "bytes": 27,
+      "mtime": 1788776208.347933,
+      "ageSeconds": 4659.7
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e7-relay-rush/probe-idle-summary.json",
+      "bytes": 508,
+      "mtime": 1788776208.3480792,
+      "ageSeconds": 4659.7
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e7-relay-rush/probe-idle-tape.json",
+      "bytes": 1463,
+      "mtime": 1788776208.3389182,
+      "ageSeconds": 4659.8
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e7-relay-rush/probe-idle-views.jsonl",
+      "bytes": 32346,
+      "mtime": 1788776208.3027875,
+      "ageSeconds": 4659.8
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e7-relay-rush/runner.mjs",
+      "bytes": 4781,
+      "mtime": 1788776203.7844582,
+      "ageSeconds": 4664.3
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e7-relay-rush/tune-1-rows.json",
+      "bytes": 20800,
+      "mtime": 1788776474.888347,
+      "ageSeconds": 4393.2
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e7-relay-rush/tune-1-stderr.txt",
+      "bytes": 27,
+      "mtime": 1788776474.888448,
+      "ageSeconds": 4393.2
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e7-relay-rush/tune-1-summary.json",
+      "bytes": 510,
+      "mtime": 1788776474.8889587,
+      "ageSeconds": 4393.2
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e7-relay-rush/tune-1-tape.json",
+      "bytes": 236395,
+      "mtime": 1788776474.8758805,
+      "ageSeconds": 4393.2
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e7-relay-rush/tune-1-views.jsonl",
+      "bytes": 998076,
+      "mtime": 1788776474.837838,
+      "ageSeconds": 4393.3
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e8-far-side/attempt-1-rows.json",
+      "bytes": 14716,
+      "mtime": 1788780170.323282,
+      "ageSeconds": 697.8
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e8-far-side/attempt-1-summary.json",
+      "bytes": 425,
+      "mtime": 1788780170.3235486,
+      "ageSeconds": 697.8
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e8-far-side/attempt-1-tape.json",
+      "bytes": 63404,
+      "mtime": 1788780170.3135476,
+      "ageSeconds": 697.8
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e8-far-side/attempt-1-views.jsonl",
+      "bytes": 534023,
+      "mtime": 1788780170.2775333,
+      "ageSeconds": 697.8
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e8-far-side/ctrl-v1.mjs",
+      "bytes": 12340,
+      "mtime": 1788780157.4926062,
+      "ageSeconds": 710.6
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e8-far-side/gauntlet-outcome.json",
+      "bytes": 1150,
+      "mtime": 1788780254.0223916,
+      "ageSeconds": 614.1
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e8-far-side/gauntlet-report.md",
+      "bytes": 11831,
+      "mtime": 1788780274.7882318,
+      "ageSeconds": 593.3
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e8-far-side/probe-idle-rows.json",
+      "bytes": 1772,
+      "mtime": 1788779669.8847122,
+      "ageSeconds": 1198.2
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e8-far-side/probe-idle-summary.json",
+      "bytes": 413,
+      "mtime": 1788779669.8848772,
+      "ageSeconds": 1198.2
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e8-far-side/probe-idle-tape.json",
+      "bytes": 1452,
+      "mtime": 1788779669.8732712,
+      "ageSeconds": 1198.2
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e8-far-side/probe-idle-views.jsonl",
+      "bytes": 47595,
+      "mtime": 1788779669.827796,
+      "ageSeconds": 1198.3
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e8-far-side/runner.mjs",
+      "bytes": 5464,
+      "mtime": 1788779941.8666418,
+      "ageSeconds": 926.2
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e8-far-side/tune-1-rows.json",
+      "bytes": 16528,
+      "mtime": 1788779957.8559206,
+      "ageSeconds": 910.2
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e8-far-side/tune-1-summary.json",
+      "bytes": 422,
+      "mtime": 1788779957.8562138,
+      "ageSeconds": 910.2
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e8-far-side/tune-1-tape.json",
+      "bytes": 74211,
+      "mtime": 1788779957.846149,
+      "ageSeconds": 910.2
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e8-far-side/tune-1-views.jsonl",
+      "bytes": 612681,
+      "mtime": 1788779957.8098578,
+      "ageSeconds": 910.3
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e8-far-side/tune-2-rows.json",
+      "bytes": 14799,
+      "mtime": 1788780117.9930012,
+      "ageSeconds": 750.1
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e8-far-side/tune-2-summary.json",
+      "bytes": 422,
+      "mtime": 1788780117.9932768,
+      "ageSeconds": 750.1
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e8-far-side/tune-2-tape.json",
+      "bytes": 65536,
+      "mtime": 1788780117.9830608,
+      "ageSeconds": 750.1
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e8-far-side/tune-2-views.jsonl",
+      "bytes": 525574,
+      "mtime": 1788780117.9475496,
+      "ageSeconds": 750.1
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e8-low-orbit/ctrl-probe2.mjs",
+      "bytes": 1594,
+      "mtime": 1788780837.7166321,
+      "ageSeconds": 30.4
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e8-low-orbit/ctrl-v1.mjs",
+      "bytes": 8898,
+      "mtime": 1788780748.8686583,
+      "ageSeconds": 119.2
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e8-low-orbit/gauntlet-outcome.json",
+      "bytes": 703,
+      "mtime": 1788780842.6168487,
+      "ageSeconds": 25.5
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e8-low-orbit/probe-idle-result.json",
+      "bytes": 434,
+      "mtime": 1788780446.561183,
+      "ageSeconds": 421.5
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e8-low-orbit/probe-idle-tape.json",
+      "bytes": 1457,
+      "mtime": 1788780446.5494025,
+      "ageSeconds": 421.5
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e8-low-orbit/probe-idle-views.jsonl",
+      "bytes": 37369,
+      "mtime": 1788780446.4835765,
+      "ageSeconds": 421.6
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e8-low-orbit/probe-route-result.json",
+      "bytes": 436,
+      "mtime": 1788780842.6164105,
+      "ageSeconds": 25.5
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e8-low-orbit/probe-route-table.json",
+      "bytes": 880,
+      "mtime": 1788780842.616711,
+      "ageSeconds": 25.5
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e8-low-orbit/probe-route-tape.json",
+      "bytes": 11577,
+      "mtime": 1788780842.6053996,
+      "ageSeconds": 25.5
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e8-low-orbit/probe-route-views.jsonl",
+      "bytes": 49766,
+      "mtime": 1788780842.5728452,
+      "ageSeconds": 25.5
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e8-low-orbit/runner.mjs",
+      "bytes": 4002,
+      "mtime": 1788780441.7814512,
+      "ageSeconds": 426.3
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e8-low-orbit/tune-1-result.json",
+      "bytes": 436,
+      "mtime": 1788780755.5424778,
+      "ageSeconds": 112.5
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e8-low-orbit/tune-1-table.json",
+      "bytes": 3599,
+      "mtime": 1788780755.5427673,
+      "ageSeconds": 112.5
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e8-low-orbit/tune-1-tape.json",
+      "bytes": 46102,
+      "mtime": 1788780755.5310395,
+      "ageSeconds": 112.6
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e8-low-orbit/tune-1-views.jsonl",
+      "bytes": 149577,
+      "mtime": 1788780755.4687576,
+      "ageSeconds": 112.6
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e8-mare-claim/attempt-1-log.json",
+      "bytes": 21555,
+      "mtime": 1788774804.7522395,
+      "ageSeconds": 6063.3
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e8-mare-claim/attempt-1-tape.json",
+      "bytes": 155762,
+      "mtime": 1788774804.7403202,
+      "ageSeconds": 6063.4
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e8-mare-claim/attempt-1-views.json",
+      "bytes": 271487,
+      "mtime": 1788774804.7529233,
+      "ageSeconds": 6063.3
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e8-mare-claim/ctrl.mjs",
+      "bytes": 8273,
+      "mtime": 1788774771.987569,
+      "ageSeconds": 6096.1
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e8-mare-claim/gauntlet-outcome.json",
+      "bytes": 1269,
+      "mtime": 1788774962.0750601,
+      "ageSeconds": 5906.0
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e8-mare-claim/gauntlet-report.md",
+      "bytes": 14593,
+      "mtime": 1788775038.6978874,
+      "ageSeconds": 5829.4
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e8-mare-claim/probe-idle-log.json",
+      "bytes": 1957,
+      "mtime": 1788774357.0578547,
+      "ageSeconds": 6511.0
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e8-mare-claim/probe-idle-tape.json",
+      "bytes": 1461,
+      "mtime": 1788774357.0472822,
+      "ageSeconds": 6511.0
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e8-mare-claim/probe-idle-views.json",
+      "bytes": 10656,
+      "mtime": 1788774357.057972,
+      "ageSeconds": 6511.0
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e8-mare-claim/run.mjs",
+      "bytes": 5006,
+      "mtime": 1788774962.0745237,
+      "ageSeconds": 5906.0
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e8-mare-claim/tune-1-log.json",
+      "bytes": 19106,
+      "mtime": 1788774613.038331,
+      "ageSeconds": 6255.1
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e8-mare-claim/tune-1-tape.json",
+      "bytes": 72571,
+      "mtime": 1788774613.028327,
+      "ageSeconds": 6255.1
+    },
+    {
+      "tree": "/private/tmp/heat13-569a41f9",
+      "path": "artifacts/heat13/opus/e8-mare-claim/tune-1-views.json",
+      "bytes": 197941,
+      "mtime": 1788774613.038759,
+      "ageSeconds": 6255.1
+    }
+  ]
+}

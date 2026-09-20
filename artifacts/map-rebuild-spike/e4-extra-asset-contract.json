@@ -1,0 +1,412 @@
+{
+  "blender": "5.1.2",
+  "freshReferenceBaseSha": "78b6f2ce984d3dd6ac4df69292cad0d5a5abd3b8",
+  "maps": {
+    "long-road": {
+      "maskTable": "assets/contracts/epoch-4-motor/mask-tables/e4-long-road.json",
+      "terrain": {
+        "sha256": "af583c7eaa54b9a0ea020b11e1304641a7e335ce254aa6419d7ada10d43e8b90",
+        "bytes": 9048536,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 32768,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -200,
+            -0.18206,
+            -48
+          ],
+          "max": [
+            200,
+            1.835643,
+            48
+          ],
+          "size": [
+            400,
+            2.017704,
+            96
+          ],
+          "center": [
+            0.0,
+            0.826791,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.8999999761581421,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "panorama": {
+        "sha256": "e183aa5a2f0d829a03b34aa9a222201ec690e749e5bfbb164d2df39080fc79a7",
+        "bytes": 1551280,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 2688,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -263,
+            -10,
+            -263
+          ],
+          "max": [
+            263,
+            245,
+            263
+          ],
+          "size": [
+            526,
+            255,
+            526
+          ],
+          "center": [
+            0.0,
+            117.5,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 1,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": true,
+            "emissiveFactor": [
+              1,
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "independentBuildZoneSurfaceFlatness": [
+        {
+          "id": "west-way-station",
+          "sampledSurfacePoints": 2145,
+          "maxDeviationMeters": 0.0
+        },
+        {
+          "id": "middle-way-station",
+          "sampledSurfacePoints": 2145,
+          "maxDeviationMeters": 0.0
+        },
+        {
+          "id": "east-way-station",
+          "sampledSurfacePoints": 2145,
+          "maxDeviationMeters": 0.0
+        }
+      ],
+      "landmarkMountCount": 5
+    },
+    "gusher-county": {
+      "maskTable": "assets/contracts/epoch-4-motor/mask-tables/e4-gusher-county.json",
+      "terrain": {
+        "sha256": "8fc3e56c4830884bfde16a96f523ad3a7ace659d53008a3d4b9746699077e23c",
+        "bytes": 8599916,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 32768,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -80,
+            -0.14,
+            -80
+          ],
+          "max": [
+            80,
+            3.055223,
+            80
+          ],
+          "size": [
+            160,
+            3.195223,
+            160
+          ],
+          "center": [
+            0.0,
+            1.457612,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.8999999761581421,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "panorama": {
+        "sha256": "6536803b2e7e6b4d875d9ced42ee79c04aa129cc843f6daf318667b7e280633b",
+        "bytes": 1495884,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 3072,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -193,
+            -10,
+            -193
+          ],
+          "max": [
+            193,
+            130,
+            193
+          ],
+          "size": [
+            386,
+            140,
+            386
+          ],
+          "center": [
+            0.0,
+            60.0,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 1,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": true,
+            "emissiveFactor": [
+              1,
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "independentBuildZoneSurfaceFlatness": [
+        {
+          "id": "county-camp",
+          "sampledSurfacePoints": 2145,
+          "maxDeviationMeters": 0.0
+        },
+        {
+          "id": "west-lease",
+          "sampledSurfacePoints": 2145,
+          "maxDeviationMeters": 0.0
+        },
+        {
+          "id": "east-lease",
+          "sampledSurfacePoints": 2145,
+          "maxDeviationMeters": 0.0
+        },
+        {
+          "id": "north-lease",
+          "sampledSurfacePoints": 2145,
+          "maxDeviationMeters": 0.0
+        }
+      ],
+      "landmarkMountCount": 10
+    },
+    "boneyard": {
+      "maskTable": "assets/contracts/epoch-4-motor/mask-tables/e4-boneyard.json",
+      "terrain": {
+        "sha256": "f294710cfca3ff4ba1a00ee0b179624678540ab8d798c0a502b436ab949ce88f",
+        "bytes": 8653832,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 32768,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -64,
+            -0.25583,
+            -64
+          ],
+          "max": [
+            64,
+            2.602476,
+            64
+          ],
+          "size": [
+            128,
+            2.858307,
+            128
+          ],
+          "center": [
+            0.0,
+            1.173323,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.8999999761581421,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "panorama": {
+        "sha256": "507f9b72db212d76b2d3688912f541bf88aa095aa336850c95da90ec6911a278",
+        "bytes": 1491076,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 3072,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -193,
+            -10,
+            -193
+          ],
+          "max": [
+            193,
+            130,
+            193
+          ],
+          "size": [
+            386,
+            140,
+            386
+          ],
+          "center": [
+            0.0,
+            60.0,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 1,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": true,
+            "emissiveFactor": [
+              1,
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "independentBuildZoneSurfaceFlatness": [
+        {
+          "id": "gate-camp",
+          "sampledSurfacePoints": 2145,
+          "maxDeviationMeters": 0.0
+        },
+        {
+          "id": "west-rows",
+          "sampledSurfacePoints": 2145,
+          "maxDeviationMeters": 0.0
+        },
+        {
+          "id": "east-rows",
+          "sampledSurfacePoints": 2145,
+          "maxDeviationMeters": 0.0
+        }
+      ],
+      "landmarkMountCount": 12
+    }
+  },
+  "boards": {
+    "e4-extra-mood-ab.png": {
+      "size": [
+        1920,
+        1836
+      ],
+      "bytes": 6300527,
+      "sha256": "67a148c70e03c2214532f9c3d5b5d0eee69754ab11b63433daa0f7760e83e8b6"
+    },
+    "e4-extra-flat-vs-sculpted-ab.png": {
+      "size": [
+        1920,
+        1836
+      ],
+      "bytes": 3144803,
+      "sha256": "ed24d92f50ee2e08ca8b008228c11bf981e1d909b4c9ca0ce6c9af661f86e9cd"
+    },
+    "e4-extra-owner-verdict.png": {
+      "size": [
+        1920,
+        1296
+      ],
+      "bytes": 3086630,
+      "sha256": "23ca2fd2441fbca8a29d10e777d424752c3bd3d6561c878a1127745d52a6fe34"
+    },
+    "e4-extra-panorama-mood-ab.png": {
+      "size": [
+        1920,
+        1296
+      ],
+      "bytes": 1863838,
+      "sha256": "18c2e8d5cbf4947ba117803c591d37250f6f3fb73eb09b61c9eeda85e1dfc97a"
+    },
+    "e4-extra-panorama-distance-gate.png": {
+      "size": [
+        1920,
+        1836
+      ],
+      "bytes": 3574264,
+      "sha256": "a915b0519ab0e4309a5bbf29bd2ac5e854bd5401ca9bf2e1d9006de262a68020"
+    },
+    "e4-extra-mask-agreement-board.png": {
+      "size": [
+        1920,
+        828
+      ],
+      "bytes": 606229,
+      "sha256": "6328f939cae5a894477f2c95a302d1dc567f623364125a1fd748a8f668ddf028"
+    }
+  }
+}

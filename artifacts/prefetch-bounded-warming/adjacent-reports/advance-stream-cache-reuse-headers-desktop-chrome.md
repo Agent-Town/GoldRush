@@ -1,0 +1,100 @@
+# Advance-stream cache reuse: dev vs production headers
+
+Boot flags: `debug&timescale=24&nolevel&seed=advance-stream-walkthrough` · route interception: none · network emulation: none · project: desktop-chrome
+Dev `cache-control` observed via CDP `Network.responseReceived`: `no-cache`
+Production `cache-control` observed via CDP `Network.responseReceived` from Vite preview's native header option: `public, max-age=31536000, immutable`
+
+| Door | Dev DOUBLE-DOWNLOAD | Dev REVALIDATED | Dev OVERLAP | Dev CACHE-HIT | Dev wire bytes | Production DOUBLE-DOWNLOAD | Production REVALIDATED | Production OVERLAP | Production CACHE-HIT | Production wire bytes |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| menu | 0 | 0 | 0 | 0 | 18052922 | 0 | 0 | 0 | 0 | 4880370 |
+| town | 2 | 8 | 0 | 0 | 16550002 | 0 | 0 | 0 | 10 | 3036296 |
+| contract1 | 2 | 0 | 13 | 0 | 35427963 | 0 | 0 | 8 | 7 | 5879958 |
+| town-return | 8 | 2 | 0 | 0 | 25946082 | 0 | 0 | 0 | 10 | 0 |
+| contract2 | 1 | 1 | 8 | 0 | 19282389 | 0 | 0 | 8 | 2 | 6602290 |
+
+## Dev-server detail
+
+# Advance-stream cache reuse
+
+Boot flags: `debug&timescale=24&nolevel&seed=advance-stream-walkthrough` · arm: dev-server · route interception: none · network emulation: none · project: desktop-chrome
+Observed `cache-control` via CDP `Network.responseReceived`: `no-cache`
+
+| Door | DOUBLE-DOWNLOAD | REVALIDATED | OVERLAP | CACHE-HIT | Wire bytes |
+|---|---:|---:|---:|---:|---:|
+| menu | 0 | 0 | 0 | 0 | 18052922 |
+| town | 2 | 8 | 0 | 0 | 16550002 |
+| contract1 | 2 | 0 | 13 | 0 | 35427963 |
+| town-return | 8 | 2 | 0 | 0 | 25946082 |
+| contract2 | 1 | 1 | 8 | 0 | 19282389 |
+
+| URL | Prefetch bytes | Subsequent fetch bytes and bucket |
+|---|---:|---|
+| /assets/pilots/town-plate-3d/town-plate.glb | 7904347<br>7904347<br>7904347 | 7904347 (DOUBLE-DOWNLOAD)<br>7904347 (DOUBLE-DOWNLOAD) |
+| /assets/pilots/tavern-3d/town-v3-tavern.glb | 912453<br>912453<br>0 | 127 (DOUBLE-DOWNLOAD)<br>912453 (DOUBLE-DOWNLOAD) |
+| /assets/pilots/general-store-3d/general-store.glb | 1219823<br>1219823<br>0 | 127 (REVALIDATED)<br>1219823 (DOUBLE-DOWNLOAD) |
+| /assets/pilots/claim-office-3d/claim-office.glb | 1227119<br>1227119<br>0 | 127 (REVALIDATED)<br>1227119 (DOUBLE-DOWNLOAD) |
+| /assets/pilots/assay-office-3d/assay-office.glb | 1455399<br>1455399 | 127 (REVALIDATED)<br>127 (REVALIDATED) |
+| /assets/pilots/chapel-3d/chapel.glb | 1212923<br>1212923 | 127 (REVALIDATED)<br>127 (REVALIDATED) |
+| /assets/pilots/schoolhouse-3d/schoolhouse.glb | 1386543 | 127 (REVALIDATED)<br>1386543 (DOUBLE-DOWNLOAD) |
+| /assets/pilots/plaza-props-3d/covered_wagon.glb | 54551 | 127 (REVALIDATED)<br>54551 (DOUBLE-DOWNLOAD) |
+| /assets/pilots/plaza-props-3d/water_trough.glb | 34623 | 127 (REVALIDATED)<br>34623 (DOUBLE-DOWNLOAD) |
+| /assets/pilots/plaza-props-3d/pan_monument.glb | 59787 | 127 (REVALIDATED)<br>59787 (DOUBLE-DOWNLOAD) |
+| /assets/pilots/map-rebuild-spike/the-claim-terrain.glb | 8126415 | 8126415 (DOUBLE-DOWNLOAD) |
+| /assets/pilots/map-rebuild-spike/the-claim-panorama.glb | 518097 | 518097 (DOUBLE-DOWNLOAD) |
+| /assets/pilots/run3d/assay-bench.glb | — | 350301 (OVERLAP)<br>350301 (OVERLAP) |
+| /assets/pilots/run3d/boiler-house.glb | — | 361601 (OVERLAP)<br>361601 (OVERLAP) |
+| /assets/pilots/run3d/lantern-post.glb | — | 158577 (OVERLAP)<br>158577 (OVERLAP) |
+| /assets/pilots/run3d/palisade.glb | — | 347977 (OVERLAP)<br>347977 (OVERLAP) |
+| /assets/pilots/run3d/sluice.glb | — | 447333 (OVERLAP)<br>447333 (OVERLAP) |
+| /assets/pilots/run3d/turret.glb | — | 419605 (OVERLAP)<br>419605 (OVERLAP) |
+| /assets/pilots/run3d/stockpile.glb | — | 483305 (OVERLAP)<br>483305 (OVERLAP) |
+| /assets/pilots/run3d/sentry-beacon.glb | — | 351905 (OVERLAP)<br>351905 (OVERLAP) |
+| /assets/pilots/map-rebuild-spike/dry-gulch-terrain.glb | 8457311 | 8457311 (DOUBLE-DOWNLOAD) |
+| /assets/pilots/map-rebuild-spike/dry-gulch-panorama.glb | 520777 | 127 (REVALIDATED) |
+
+## Production-headers detail
+
+# Advance-stream cache reuse
+
+Boot flags: `debug&timescale=24&nolevel&seed=advance-stream-walkthrough` · arm: production-headers · route interception: none · network emulation: none · project: desktop-chrome
+Observed `cache-control` via CDP `Network.responseReceived`: `public, max-age=31536000, immutable`
+
+| Door | DOUBLE-DOWNLOAD | REVALIDATED | OVERLAP | CACHE-HIT | Wire bytes |
+|---|---:|---:|---:|---:|---:|
+| menu | 0 | 0 | 0 | 0 | 4880370 |
+| town | 0 | 0 | 0 | 10 | 3036296 |
+| contract1 | 0 | 0 | 8 | 7 | 5879958 |
+| town-return | 0 | 0 | 0 | 10 | 0 |
+| contract2 | 0 | 0 | 8 | 2 | 6602290 |
+
+| URL | Prefetch bytes | Subsequent fetch bytes and bucket |
+|---|---:|---|
+| /assets/town-plate-C90tsADa-diet-a9d5c9a0.glb | 879116<br>0<br>0 | 0 (CACHE-HIT)<br>0 (CACHE-HIT) |
+| /assets/town-v3-tavern-CXl1aOfB-diet-a9d5c9a0.glb | 294796<br>0<br>0 | 0 (CACHE-HIT)<br>0 (CACHE-HIT) |
+| /assets/general-store-Crb4mVFW-diet-a9d5c9a0.glb | 196224<br>0 | 0 (CACHE-HIT)<br>0 (CACHE-HIT) |
+| /assets/claim-office-CY6Ib5so-diet-a9d5c9a0.glb | 191908<br>0 | 0 (CACHE-HIT)<br>0 (CACHE-HIT) |
+| /assets/assay-office-xAW04uBp-diet-a9d5c9a0.glb | 249584<br>0 | 0 (CACHE-HIT)<br>0 (CACHE-HIT) |
+| /assets/chapel-DqOSe4LC-diet-a9d5c9a0.glb | 204068<br>0 | 0 (CACHE-HIT)<br>0 (CACHE-HIT) |
+| /assets/schoolhouse-BR3cnoTX-diet-a9d5c9a0.glb | 224688<br>224688 | 0 (CACHE-HIT)<br>0 (CACHE-HIT) |
+| /assets/stamp-mill-CxhOFdRx-diet-a9d5c9a0.glb | 1178038<br>1178038 | — |
+| /assets/dynamo-hall-D_Gc9RPJ-diet-a9d5c9a0.glb | 1407370<br>1407370 | — |
+| /assets/covered_wagon-DoD5oKIb-diet-a9d5c9a0.glb | 54578<br>54578 | 0 (CACHE-HIT)<br>0 (CACHE-HIT) |
+| /assets/water_trough-GmocFW04-diet-a9d5c9a0.glb | 34650<br>34650 | 0 (CACHE-HIT)<br>0 (CACHE-HIT) |
+| /assets/pan_monument-DXhG2mKX-diet-a9d5c9a0.glb | 59814<br>59814 | 0 (CACHE-HIT)<br>0 (CACHE-HIT) |
+| /assets/the-claim-terrain-CPmx4txo-diet-a9d5c9a0.glb | 966368 | 0 (CACHE-HIT) |
+| /assets/the-claim-panorama-DkzE3d2l-diet-a9d5c9a0.glb | 518124 | 0 (CACHE-HIT) |
+| /assets/active_headframe-DFnjayGK-diet-a9d5c9a0.glb | 293072 | 0 (CACHE-HIT) |
+| /assets/maintained_claim_house-CHFZbLoB-diet-a9d5c9a0.glb | 301620 | 0 (CACHE-HIT) |
+| /assets/working_camp-D0I4uygC-diet-a9d5c9a0.glb | 294784 | 0 (CACHE-HIT) |
+| /assets/claim_stake-DlQCz6m--diet-a9d5c9a0.glb | 281888 | 0 (CACHE-HIT) |
+| /assets/riparian_dressing_pack-93xutUyz-diet-a9d5c9a0.glb | 285976 | 0 (CACHE-HIT) |
+| /assets/assay-bench-Bjbx1XJa-diet-a9d5c9a0.glb | — | 350328 (OVERLAP)<br>350328 (OVERLAP) |
+| /assets/boiler-house-D9Un6OkB-diet-a9d5c9a0.glb | — | 361628 (OVERLAP)<br>361628 (OVERLAP) |
+| /assets/lantern-post-DBKwGdtm-diet-a9d5c9a0.glb | — | 158604 (OVERLAP)<br>158604 (OVERLAP) |
+| /assets/palisade-B4vjb3yv-diet-a9d5c9a0.glb | — | 348004 (OVERLAP)<br>348004 (OVERLAP) |
+| /assets/sluice-C0nN0uF0-diet-a9d5c9a0.glb | — | 447360 (OVERLAP)<br>447360 (OVERLAP) |
+| /assets/turret-DHjcPTUp-diet-a9d5c9a0.glb | — | 419632 (OVERLAP)<br>419632 (OVERLAP) |
+| /assets/stockpile-BGhyDRv3-diet-a9d5c9a0.glb | — | 483332 (OVERLAP)<br>483332 (OVERLAP) |
+| /assets/sentry-beacon-DBPVij-2-diet-a9d5c9a0.glb | — | 351932 (OVERLAP)<br>351932 (OVERLAP) |
+| /assets/dry-gulch-terrain-DrNSfJzI-diet-a9d5c9a0.glb | 1457602 | 0 (CACHE-HIT) |
+| /assets/dry-gulch-panorama-BSQAYWzK-diet-a9d5c9a0.glb | 520804 | 0 (CACHE-HIT) |

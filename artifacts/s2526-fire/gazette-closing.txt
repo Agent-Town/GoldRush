@@ -1,0 +1,43 @@
+=== GZ-01 BACKFILL SWEEP (since 2026-09-05T00:00:00) ===
+scan space: src/ assets/ public/ functions/ site/ index.html
+  (a merge touching NONE of these is never examined — widen the list, not the verdict)
+examined 118 first-parent merge(s) in the window
+player-path-touching first-parent merges: 32
+  already cited in marketing/outbox/ (either sink): 32
+    ...of which cited only via a CONTAINED commit:  0
+  reported:                                          16
+  dismissed (NOT PLAYER-VISIBLE):                  16
+  NOT cited anywhere — candidates to judge:         0
+
+weekly headline budget (2026-W36): 18 standalone, 18 batched
+  GZ-01 allows <=3 standalone item(s) per week; the rest batch into a ROUNDUP.
+  (counted in NO week: 117 item(s) carry no merge citation this parser
+   resolves — the pre-2026-08 house format — and 0 cite a hash on no ref.)
+  ⚠️  THE WEEK'S 3 HEADLINE SLOTS ARE SPENT. File as ROUNDUP-CLASS, not as a
+      new headline — the budget is a WEEKLY aggregate and your one item looks fine alone.
+        already standing: A reel that cannot name its era is turned away, not quietly played
+        already standing: The county opens a fresh claim each week, and closes it on time
+        already standing: The door now says which claims still stand unclaimed
+        already standing: A rider that hits a wall no longer loses the ride
+        already standing: The door now says why it turned a rider away
+        ... and 13 more
+
+--- dismissed (newest first; available to re-judge) ---
+  a5f9f7ab9  2026-09-05  drain bookkeeping: landmark-lighting-calibration SHIPPED ab3704716 (Opus) — leaf, review, era-5 
+  c0e1ccf58  2026-09-05  drain bookkeeping: bounded-prefetch-town-halls SHIPPED 55ac2976f (Opus) — leaf, review, era-5 pi
+  67ec836c7  2026-09-05  drain bookkeeping: homemaker-kept-state-init-order SHIPPED c3e16ae93 (Opus) — leaf, review, era-
+  53c555d8b  2026-09-05  drain bookkeeping: terrain-height-triangle-sampler SHIPPED cf91fe5e9 (Opus) — leaf, review, era-
+  f9006774b  2026-09-05  drain bookkeeping: glb-export-contract-and-validator SHIPPED 3e32f3e09 (Opus) — leaf, review, er
+  3e32f3e09  2026-09-05  merge: glb-export-contract-and-validator — per-asset export profiles (the terrain profile reprod
+  c641fc859  2026-09-05  ledger: re-point every cited hash after the trace rewrite (F-PUSH-1; 19 shas, map recorded in BA
+  30bab24b2  2026-09-05  drain bookkeeping: asset-diet-explicit-manifest v1+v2 SHIPPED 3ef81a3a0 — leaf, review, era-5 pi
+  4fe0d568e  2026-09-05  drain bookkeeping: lantern-true-world-reel-2 SHIPPED 6faf890df — leaf, review, era-5 pin b395ee1
+  acb9295cc  2026-09-05  drain bookkeeping: shared-atlas-texture-dedupe SHIPPED b7fdb9796 — leaf, review, era-5 pin 9254f
+  65f9459f5  2026-09-05  drain bookkeeping: prefetch-bounded-warming SHIPPED dfbed9491 (era pin 8afae55f); lantern-true-w
+  e48d9e119  2026-09-05  drain bookkeeping: e7-player-playbook-parity SHIPPED 6abcaf1bb — leaf, review, era-5 pin 1ecca47
+  0ad02751b  2026-09-05  drain bookkeeping: e5-storm-predicate-split SHIPPED 036cb6037 — leaf, review, era-5 pin b061540c
+  036cb6037  2026-09-05  merge: e5-storm-predicate-split — storm cargo split from schedule suppression in both engines; e
+  29df0dabf  2026-09-05  drain bookkeeping: e3-moth-season-grid SHIPPED de21da4f5 — leaf, review, era-5 pin 324bb3cd; F-E
+  4620d4d31  2026-09-05  drain bookkeeping: e7-playbook-rows SHIPPED b38d60295 — leaf, review, era-5 pin 82ea9af6; F-E7PB
+
+--- candidates (newest first; judge each for player-visibility) ---

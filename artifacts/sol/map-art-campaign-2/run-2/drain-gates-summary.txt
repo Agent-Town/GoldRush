@@ -1,0 +1,41 @@
+base main ea9df4691 branch 760addabb 17:59Z
+merged 02f97c060
+engine hash merged: 2ad0aa1e14a1b7f639bc9c797ae5e14839d11c7b34b70f3f7ac7ca9479fbf6f4
+hash NOT pinned
+tsc/build/e1: 0 / 0 / 0
+first-town payload: 34233744 bytes
+halo: rc=0 halo re-extraction PASS: 315 cured, 0 held, 760 regenerated-and-cured, 2127 scanned; alpha and opaque RGB unchanged
+null floors: rc=0 83 of 83 null floors match assets/contracts/null-floors.json (285.3s).
+law-pointer: rc=0 law-pointer-guard — do the law surfaces still point at what they claim?
+guards: ℹ pass 29 ℹ fail 2 
+e2e start 18:06Z
+e2e: rc=1   16 failed   4 skipped   96 passed (8.8m)  18:15Z
+  1) [desktop-chrome] › e2e/e5-flotilla-hulls.spec.ts:6:1 › the Flotilla keeps three losable hulls and secures both bench seeds deterministi
+  2) [desktop-chrome] › e2e/e5-flotilla-hulls.spec.ts:118:1 › idle Flotilla runs lose all hulls ────
+  3) [desktop-chrome] › e2e/e5-regatta-race.spec.ts:35:1 › the Regatta runs its authored course and secures both bench seeds deterministical
+  4) [desktop-chrome] › e2e/e5-regatta-race.spec.ts:141:1 › idle Regatta runs lose because the course remains unfinished 
+  5) [desktop-chrome] › e2e/e5-stillwater-noise.spec.ts:181:1 › Stillwater SECURES both bench seeds twice through the PLAIN door 
+  6) [desktop-chrome] › e2e/e5-stillwater-noise.spec.ts:208:1 › the same play through the in-process door agrees, and the decks survive with
+  7) [desktop-chrome] › e2e/e5-stillwater-noise.spec.ts:251:1 › idle Stillwater runs stay silent and still lose 
+  8) [desktop-chrome] › e2e/shared-atlas-dedupe.spec.ts:84:1 › production WebP atlas load-dispose-load returns to the renderer baseline 
+  9) [mobile-chrome] › e2e/e5-flotilla-hulls.spec.ts:6:1 › the Flotilla keeps three losable hulls and secures both bench seeds deterministic
+  10) [mobile-chrome] › e2e/e5-flotilla-hulls.spec.ts:118:1 › idle Flotilla runs lose all hulls ────
+  11) [mobile-chrome] › e2e/e5-regatta-race.spec.ts:35:1 › the Regatta runs its authored course and secures both bench seeds deterministical
+  12) [mobile-chrome] › e2e/e5-regatta-race.spec.ts:141:1 › idle Regatta runs lose because the course remains unfinished 
+  13) [mobile-chrome] › e2e/e5-stillwater-noise.spec.ts:181:1 › Stillwater SECURES both bench seeds twice through the PLAIN door 
+  14) [mobile-chrome] › e2e/e5-stillwater-noise.spec.ts:208:1 › the same play through the in-process door agrees, and the decks survive with
+  15) [mobile-chrome] › e2e/e5-stillwater-noise.spec.ts:251:1 › idle Stillwater runs stay silent and still lose 
+  16) [mobile-chrome] › e2e/shared-atlas-dedupe.spec.ts:84:1 › production WebP atlas load-dispose-load returns to the renderer baseline 
+dirt after e2e: 0
+battery start 18:15Z
+battery: rc=1 ℹ tests 929 ℹ pass 921 ℹ fail 3 ℹ skipped 5  18:22Z
+✖ all 152 scripts/*.test.mjs fixture owners remove their temp directories (150431.047625ms)
+✖ failing tests:
+✖ rotation registry stays outside the engine identity corpus (622.359541ms)
+✖ the landed registry names the live engine and stays outside its hash corpus (146.577084ms)
+dirt after battery: 0
+MAPC2B-PREP-DONE
+last-claim: 71796abe8
+pin #16
+era: ℹ pass 9 ℹ fail 0 
+postpin: ℹ pass 10 ℹ fail 0 

@@ -1,0 +1,56 @@
+[
+  {
+    "phase": "baseline",
+    "exit": 0,
+    "command": [
+      "npx",
+      "playwright",
+      "test",
+      "e2e/landmark-brightness.spec.ts",
+      "--grep",
+      "reference rig",
+      "--workers=1",
+      "--project=desktop-chrome",
+      "--project=mobile-chrome",
+      "--trace=off",
+      "--reporter=line"
+    ],
+    "query": "&epoch=epoch-7-signal",
+    "seconds": 96.30949115753174,
+    "files": [
+      "campaign2-e7-relay-valley-baseline-e7-relay-rush-desktop-chrome.png",
+      "campaign2-e7-relay-valley-baseline-desktop-chrome.json",
+      "campaign2-e7-relay-valley-baseline-e7-relay-valley-mobile-chrome.png",
+      "campaign2-e7-relay-valley-baseline-e7-relay-valley-desktop-chrome.png",
+      "campaign2-e7-relay-valley-baseline-e7-relay-rush-mobile-chrome.png",
+      "campaign2-e7-relay-valley-baseline-mobile-chrome.json"
+    ]
+  },
+  {
+    "phase": "max",
+    "exit": 0,
+    "command": [
+      "npx",
+      "playwright",
+      "test",
+      "e2e/landmark-brightness.spec.ts",
+      "--grep",
+      "reference rig",
+      "--workers=1",
+      "--project=desktop-chrome",
+      "--project=mobile-chrome",
+      "--trace=off",
+      "--reporter=line"
+    ],
+    "query": "&epoch=epoch-7-signal&lmemissive=0.6",
+    "seconds": 591.9146699905396,
+    "files": [
+      "campaign2-e7-relay-valley-max-e7-relay-rush-desktop-chrome.png",
+      "campaign2-e7-relay-valley-max-e7-relay-valley-mobile-chrome.png",
+      "campaign2-e7-relay-valley-max-e7-relay-rush-mobile-chrome.png",
+      "campaign2-e7-relay-valley-max-desktop-chrome.json",
+      "campaign2-e7-relay-valley-max-e7-relay-valley-desktop-chrome.png",
+      "campaign2-e7-relay-valley-max-mobile-chrome.json"
+    ]
+  }
+]

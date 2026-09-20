@@ -1,0 +1,3 @@
+UNACCEPTED: boiler-house and terrace hierarchy is not communicated at plain entry; broad soft river band, dark repetitive ground and peripheral machinery dominate; portrait loses the machinery behind framing and HUD.
+
+The plate organizes three boiler houses, connected pipes and stepped cultivated terraces across a river. The plain desktop entry instead shows a large flat water strip with a small pump at its edge, over strongly mottled ground; portrait removes that pump from view. This is an entry-composition verdict, not a claim that all authored landmarks are absent elsewhere. The machinery, terrain forms and framing need coordinated work; a blanket brightness change would not supply the missing hierarchy. No production change was made.

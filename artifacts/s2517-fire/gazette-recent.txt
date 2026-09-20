@@ -1,0 +1,55 @@
+=== GZ-01 BACKFILL SWEEP (since 2026-09-04T00:00:00) ===
+scan space: src/ assets/ public/ functions/ site/ index.html
+  (a merge touching NONE of these is never examined — widen the list, not the verdict)
+examined 205 first-parent merge(s) in the window
+player-path-touching first-parent merges: 28
+  already cited in marketing/outbox/ (either sink): 17
+    ...of which cited only via a CONTAINED commit:  0
+  reported:                                          7
+  dismissed (NOT PLAYER-VISIBLE):                  10
+  NOT cited anywhere — candidates to judge:         11
+
+weekly headline budget (2026-W36): 18 standalone, 14 batched
+  GZ-01 allows <=3 standalone item(s) per week; the rest batch into a ROUNDUP.
+  (counted in NO week: 117 item(s) carry no merge citation this parser
+   resolves — the pre-2026-08 house format — and 0 cite a hash on no ref.)
+  ⚠️  THE WEEK'S 3 HEADLINE SLOTS ARE SPENT. File as ROUNDUP-CLASS, not as a
+      new headline — the budget is a WEEKLY aggregate and your one item looks fine alone.
+        already standing: A reel that cannot name its era is turned away, not quietly played
+        already standing: The county opens a fresh claim each week, and closes it on time
+        already standing: The door now says which claims still stand unclaimed
+        already standing: A rider that hits a wall no longer loses the ride
+        already standing: The door now says why it turned a rider away
+        ... and 13 more
+
+--- dismissed (newest first; available to re-judge) ---
+  da78de0d3  2026-09-04  fix: make every contract clock explicit
+  528363bdc  2026-09-04  s2505: drain standing formula dependency unit
+  89b12c799  2026-09-04  fix: move winnability receipts outside engine corpus
+  d64574aaf  2026-09-04  chore: era 5 pin for the receipts re-hash + F-RCPT-1 corrective queued (receipts ledger out of t
+  08458d164  2026-09-04  chore: era 5 pin 737a979a — the four overnight drains left main's corpus unrecorded; pinned befo
+  79053ddaf  2026-09-04  s2497: drain bookkeeping for e4-vehicles-plain-boot — engine era 5 pin 20 (41583818, measured on
+  a55581eed  2026-09-04  s2493 drain bookkeeping: reel-contract-routing-hazard merged 22b9538e5
+  22b9538e5  2026-09-04  drain: reel-contract-routing-hazard (lane-c) — a reel routes by its own tape, not by page locati
+  f43e30ecb  2026-09-04  drain bookkeeping: e4-roads-and-convoys SHIPPED 48ef7df8d — leaf, review, era-5 pin 49c34f8b; co
+  b5a535c14  2026-09-04  drain bookkeeping: e8-mare-claim-physics SHIPPED a121c7f14 — leaf, review, era-5 pin 5d2fc156; F
+
+--- candidates (newest first; judge each for player-visibility) ---
+  69080c3cd  2026-09-05  files=12  merge: e5-stillwater-front-crew-2 — the Stillwater's first crewed front (corsairWaveSize 1, 32 s
+  e48d9e119  2026-09-05  files=4  drain bookkeeping: e7-player-playbook-parity SHIPPED 6abcaf1bb — leaf, review, era-5 pin 1ecca47
+  6abcaf1bb  2026-09-05  files=7  merge: e7-player-playbook-parity — E7PlaybookLatch is the one four-rule secure decision for both
+  0ad02751b  2026-09-05  files=4  drain bookkeeping: e5-storm-predicate-split SHIPPED 036cb6037 — leaf, review, era-5 pin b061540c
+  036cb6037  2026-09-05  files=7  merge: e5-storm-predicate-split — storm cargo split from schedule suppression in both engines; e
+  29df0dabf  2026-09-05  files=6  drain bookkeeping: e3-moth-season-grid SHIPPED de21da4f5 — leaf, review, era-5 pin 324bb3cd; F-E
+  de21da4f5  2026-09-05  files=22  merge: e3-moth-season — the sabotageable light circuit lands as contract data (lane/a, 7 commits
+  4620d4d31  2026-09-05  files=5  drain bookkeeping: e7-playbook-rows SHIPPED b38d60295 — leaf, review, era-5 pin 82ea9af6; F-E7PB
+  b38d60295  2026-09-05  files=20  feat: merge lane/b e7-playbook-rows — the four Signal Era maps expose PLAYBOOK_USE through the s
+  a65ea2c17  2026-09-05  files=33  feat: merge lane/d e8-remaining-maps — Far Side, Low Orbit and the Eclipse compose the shipped E
+  032ccd392  2026-09-05  files=22  feat: gauntlet-heat11 — the F-HEAT11-1 fix admits three refused reels unchanged; 32 unclaimed → 
+
+    to DISCHARGE a candidate, write its verdict where THIS TOOL reads:
+      - news      -> a gazette item in marketing/outbox/ citing the hash
+      - not news  -> a paragraph in marketing/outbox/ containing "NOT PLAYER-VISIBLE" AND the hash
+    a verdict written only into a STATUS.md handoff is INVISIBLE here and
+    the candidate returns next fire. Blank lines scope the marker paragraph:
+    never cite a REPORTED hash inside one (F-1613-1).

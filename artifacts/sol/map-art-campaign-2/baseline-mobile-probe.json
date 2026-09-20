@@ -1,0 +1,10 @@
+{
+  "engineHash": "cc3fd5d45add762fc0878a42618af1eaec836edeee83b03954c5e75a569b71f5",
+  "command": "GR_CAPTURE_EXTERNAL_SERVER=1 GR_CAPTURE_BASE_URL=http://127.0.0.1:5303 npx playwright test e2e/e5-deepwater-claim.spec.ts --grep \"shows the active run wave\" --project=mobile-chrome --workers=1 --repeat-each=2 --reporter=line --trace=off",
+  "exitCode": 1,
+  "results": [
+    "30 second timeout at page.evaluate line 101",
+    "30 second timeout at page.goto line 20"
+  ],
+  "textureErrorAttribution": "Inconclusive; neither base run reached the final error assertion."
+}

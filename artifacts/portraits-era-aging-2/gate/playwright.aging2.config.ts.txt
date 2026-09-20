@@ -1,0 +1,23 @@
+// SCRATCH config for portraits-era-aging-2-batch. Port 5303 only; NOT committed.
+import { defineConfig, devices } from '@playwright/test';
+
+const baseURL = 'http://127.0.0.1:5303';
+
+export default defineConfig({
+  testDir: './e2e',
+  testIgnore: ['**/*.rig.ts'],
+  timeout: 60_000,
+  workers: 1,
+  expect: { timeout: 8_000 },
+  use: { baseURL, trace: 'off', screenshot: 'only-on-failure' },
+  webServer: {
+    command: 'npx vite --port 5303 --strictPort',
+    url: baseURL,
+    reuseExistingServer: true,
+    timeout: 60_000,
+  },
+  projects: [
+    { name: 'desktop-chrome', use: { ...devices['Desktop Chrome'], viewport: { width: 1280, height: 800 }, channel: 'chromium' } },
+    { name: 'mobile-chrome', use: { ...devices['Pixel 5'], browserName: 'chromium', viewport: { width: 390, height: 844 }, channel: 'chromium' } },
+  ],
+});

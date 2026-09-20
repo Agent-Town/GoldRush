@@ -1,0 +1,71 @@
+NODE=v26.4.0
+QUIET_SCRATCH=/tmp/node-guards-quiet26.F6V9MG
+MUTATION=quiet-reader ps maxBuffer removed only
+✖ contention is advisory, correctly counted, and absent when alone (766.659625ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 802.456625
+
+✖ failing tests:
+
+test at ../../../../../../../private/tmp/node-guards-quiet26.F6V9MG/scripts/node-guards-contention.test.mjs:123:1
+✖ contention is advisory, correctly counted, and absent when alone (766.659625ms)
+  AssertionError [ERR_ASSERTION]: could not inspect node-guards contention: spawnSync ps ENOBUFS
+      at nodeGuardsBatteryRunning (file:///private/tmp/node-guards-quiet26.F6V9MG/scripts/node-guards-contention.test.mjs:50:12)
+      at TestContext.<anonymous> (file:///private/tmp/node-guards-quiet26.F6V9MG/scripts/node-guards-contention.test.mjs:145:18)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: undefined,
+    operator: 'fail',
+    diff: 'simple'
+  }
+QUIET_MUTATED_EXIT=1
+STAMP_SCRATCH=/tmp/node-guards-stamp26.hj2UAe
+MUTATION=advisory-reader ps maxBuffer removed only
+✖ contention is advisory, correctly counted, and absent when alone (949.631417ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 985.354708
+
+✖ failing tests:
+
+test at ../../../../../../../private/tmp/node-guards-stamp26.hj2UAe/scripts/node-guards-contention.test.mjs:124:1
+✖ contention is advisory, correctly counted, and absent when alone (949.631417ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + null
+  - [
+  -   'CONTENDED — 2 concurrent batteries',
+  -   'CONTENDED — 2 concurrent batteries'
+  - ]
+  
+      at assertTwoStamps (file:///private/tmp/node-guards-stamp26.hj2UAe/scripts/node-guards-contention.test.mjs:34:10)
+      at TestContext.<anonymous> (file:///private/tmp/node-guards-stamp26.hj2UAe/scripts/node-guards-contention.test.mjs:153:5)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: [ 'CONTENDED — 2 concurrent batteries', 'CONTENDED — 2 concurrent batteries' ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+STAMP_MUTATED_EXIT=1

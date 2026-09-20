@@ -1,0 +1,50 @@
+[
+  {
+    "invocation": 5,
+    "title": "s1152b-5 trajectory run 1",
+    "status": "failed",
+    "failure": {
+      "id": "palisade",
+      "x": 0,
+      "z": 9,
+      "reason": "invalid_overlap",
+      "mode": true,
+      "valid": false,
+      "selectedBuildable": "palisade",
+      "ghostPos": {
+        "x": -1,
+        "z": 9
+      },
+      "playerPos": {
+        "x": -1,
+        "z": 11
+      },
+      "count": 2,
+      "maxCount": 48,
+      "gold": 0,
+      "cost": 0,
+      "economyOk": true,
+      "placementOk": true,
+      "rangeOk": true,
+      "overlapOk": false,
+      "distanceSq": 4,
+      "placeRadius": 6,
+      "deepwaterClaim": false
+    },
+    "line": 43
+  },
+  {
+    "invocation": 5,
+    "title": "s1152b-5 trajectory run 2",
+    "status": "passed",
+    "failure": null,
+    "line": null
+  },
+  {
+    "invocation": 5,
+    "title": "s1152b-5 trajectory run 3",
+    "status": "passed",
+    "failure": null,
+    "line": null
+  }
+]

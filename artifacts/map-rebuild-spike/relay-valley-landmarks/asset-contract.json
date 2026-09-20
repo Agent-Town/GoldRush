@@ -1,0 +1,105 @@
+{
+  "law": "reuse > derive > build-new; era-stamped; grit-dressed",
+  "packs": {
+    "relay-valley": {
+      "era": 7,
+      "atlasSha256": "b969eb572631b847f04bbc06abbeab930c315a0e3c41b9e02efd1ceb00b79568",
+      "assets": {
+        "west-ridge-dish-cluster": {
+          "sourceTier": "derive",
+          "triangles": 1188,
+          "sha256": "d7f65e5e58fa2208b031d29f6e5062b81af51c53015df6bd217c0b2a1dc0f7c9",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "east-ridge-dish-cluster": {
+          "sourceTier": "derive",
+          "triangles": 1188,
+          "sha256": "8efc08e6bbd2aa26a0940a136217b7754983ea7fee6518cb2f13d059a8a7eba8",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "dead-gap-charting-station": {
+          "sourceTier": "derive",
+          "triangles": 660,
+          "sha256": "8bf3eb76f1a4c2633237beec1d84f296c131b1ecc3e6640be987686150d1d2e6",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "valley-cable-drum-yard": {
+          "sourceTier": "reuse",
+          "triangles": 1812,
+          "sha256": "873f85c68dd3cfa370678d904d3c920ec8ae037b0cf29a32c307db7eb12bb67a",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "drone-recovery-beacon": {
+          "sourceTier": "reuse",
+          "triangles": 860,
+          "sha256": "a0c69d6699934787da3fdfc27da769ecac73e1178617c941b47b6d8890373441",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        }
+      }
+    }
+  },
+  "totals": {
+    "packs": 1,
+    "assets": 5,
+    "sourceTiers": {
+      "reuse": 2,
+      "derive": 3,
+      "build-new": 0
+    }
+  },
+  "boards": {
+    "relay-valley-landmarks-turntable.png": {
+      "size": [
+        1920,
+        1160
+      ],
+      "sha256": "add0db8639abe780e995961f5e4e4d631aea52211f454cc6247bf00062ef1c13"
+    },
+    "relay-valley-landmarks-verdict.png": {
+      "size": [
+        1920,
+        1008
+      ],
+      "sha256": "f3056b07ac5b645de8770746850a8d45536cc165d27d6938885041d376e728fb"
+    },
+    "relay-valley-landmarks-pack.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "41fcf3b8be04a794a0fead3dd401603e7b3f0974c38b553deb95ecbccf06f93a"
+    },
+    "relay-valley-landmarks-proposed.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "a9f52a25c11f16beed5da04f0481646084058f608838901c4d6301a31c2be11a"
+    },
+    "relay-valley-landmarks-proposed-overview.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "d1529074c4594e26addcb6a46256bc4c0c7f61a606dcdba163fc6585fc6ee59d"
+    },
+    "relay-valley-landmarks-clearance-overlay.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "72dba7416decf28461e51b03887fdd89188a58cd956f25c93144ab9a10bd5071"
+    }
+  },
+  "simulation": "unchanged; every landmark is a separate render-only GLB mounted by contract"
+}

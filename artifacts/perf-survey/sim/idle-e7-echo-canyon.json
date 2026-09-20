@@ -1,0 +1,197 @@
+{
+  "key": "idle-e7-echo-canyon",
+  "tapePath": "tapes/idle-e7-echo-canyon.json",
+  "contract": "e7-echo-canyon",
+  "kind": "null-floor",
+  "node": "v26.4.0",
+  "before": {
+    "at": "2026-09-05T16:13:42.429Z",
+    "load": [
+      24.56298828125,
+      21.93017578125,
+      20.994140625
+    ],
+    "freeMemory": 10906681344
+  },
+  "after": {
+    "at": "2026-09-05T16:13:45.246Z",
+    "load": [
+      24.56298828125,
+      21.93017578125,
+      20.994140625
+    ],
+    "freeMemory": 9583378432
+  },
+  "declaredDurationTicks": 3865,
+  "simulatedSeconds": 128.83333333333334,
+  "bootMs": 38.00324999999998,
+  "replayMs": 1249.017291,
+  "ticksPerSecond": 3094.4327415239923,
+  "realtimeMultiple": 103.14775805079975,
+  "estimateTenMinuteSeconds": 5.816898121086675,
+  "estimateFormula": "600 seconds / measured realtimeMultiple; extrapolation, not an actual 10-minute tape when duration differs",
+  "tickMs": {
+    "n": 3865,
+    "min": 0.18941600000016479,
+    "p50": 0.29029099999979735,
+    "p95": 0.533708000000388,
+    "p99": 0.8470420000001013,
+    "max": 8.452457999999979
+  },
+  "tickPath": "sim/idle-e7-echo-canyon-ticks.json",
+  "result": {
+    "eventLogHash": "fnv1a32:a45ba9ac",
+    "outcome": {
+      "secured": false,
+      "waves": 4,
+      "gold": 0,
+      "timeAlive": 128.833
+    },
+    "ticks": 3865,
+    "engine": "headless-contract-sim"
+  },
+  "expectedHash": "fnv1a32:a45ba9ac",
+  "hashMatches": true,
+  "top20": [
+    {
+      "name": "dispatch",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 137.494
+    },
+    {
+      "name": "terrainSeed",
+      "url": "",
+      "line": 1469,
+      "column": 21,
+      "selfMs": 103.25
+    },
+    {
+      "name": "get diagnostics",
+      "url": "",
+      "line": 484,
+      "column": 17,
+      "selfMs": 63.973
+    },
+    {
+      "name": "terrainHash",
+      "url": "",
+      "line": 1486,
+      "column": 21,
+      "selfMs": 57.70399999999999
+    },
+    {
+      "name": "multiplyMatrices",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 10385,
+      "column": 18,
+      "selfMs": 53.727999999999994
+    },
+    {
+      "name": "update",
+      "url": "",
+      "line": 809,
+      "column": 8,
+      "selfMs": 43.929
+    },
+    {
+      "name": "maxHpForInstance",
+      "url": "",
+      "line": 1619,
+      "column": 18,
+      "selfMs": 42.07900000000001
+    },
+    {
+      "name": "maxHpForPlacement",
+      "url": "",
+      "line": 1622,
+      "column": 19,
+      "selfMs": 37.202
+    },
+    {
+      "name": "stableProbeMask",
+      "url": "",
+      "line": 1266,
+      "column": 25,
+      "selfMs": 32.448
+    },
+    {
+      "name": "diagnostics",
+      "url": "",
+      "line": 1795,
+      "column": 13,
+      "selfMs": 32.096999999999994
+    },
+    {
+      "name": "syncEnemyInstance",
+      "url": "",
+      "line": 1343,
+      "column": 19,
+      "selfMs": 31.924
+    },
+    {
+      "name": "toArray",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 11099,
+      "column": 9,
+      "selfMs": 31.401
+    },
+    {
+      "name": "currentTrickleInterval",
+      "url": "",
+      "line": 641,
+      "column": 24,
+      "selfMs": 30.142000000000003
+    },
+    {
+      "name": "hpBarDiagnostics",
+      "url": "",
+      "line": 1663,
+      "column": 18,
+      "selfMs": 29.081999999999997
+    },
+    {
+      "name": "activePositions",
+      "url": "",
+      "line": 1533,
+      "column": 17,
+      "selfMs": 27.247
+    },
+    {
+      "name": "setFromEuler",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 4167,
+      "column": 14,
+      "selfMs": 23.691
+    },
+    {
+      "name": "(program)",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 22.844
+    },
+    {
+      "name": "(anonymous)",
+      "url": "",
+      "line": 1534,
+      "column": 32,
+      "selfMs": 20.854
+    },
+    {
+      "name": "(garbage collector)",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 18.686
+    },
+    {
+      "name": "update",
+      "url": "",
+      "line": 485,
+      "column": 8,
+      "selfMs": 16.168
+    }
+  ]
+}

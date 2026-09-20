@@ -1,0 +1,52 @@
+# Generation log: E5 / E8 / E10 townsfolk plates, Higgsfield GPT Image 2 (gpt_image_2), 1:1, 1k, quality high, 2026-09-06 attended
+# Style anchor verbatim in every prompt + the parchment clause + the weak-tea clause (see roles.tsv and batch.sh); corner statistic = mean R-B over the TL/TR 60x60 corners, band 124-145, both corners > 120; retakes native only, no channel arithmetic.
+# Credits: 3690.99 before the first test, 3603.49 after the batch (87.5 credits: 13 generations incl. 3 calibration tests and retakes).
+
+tf-tide-teller-e5 already present, skip
+tf-cannery-hand-e5 attempt 1: 1024x1024 3ch TL 130.1 TR 129.8 mean 130.0 IN-BAND
+tf-cannery-hand-e5 KEPT attempt 1 -> assets/raw/tf-cannery-hand-e5.png
+tf-harbormaster-e5 attempt 1: 1024x1024 3ch TL 126.5 TR 125.7 mean 126.1 IN-BAND
+tf-harbormaster-e5 KEPT attempt 1 -> assets/raw/tf-harbormaster-e5.png
+tf-shipwright-e5 attempt 1: 1024x1024 3ch TL 144.0 TR 146.1 mean 145.0 retake
+tf-shipwright-e5 attempt 2: no url (Error: request failed (no response received) )
+tf-shipwright-e5 attempt 3: no url (Error: request failed (no response received) )
+tf-shipwright-e5 attempt 4: 1024x1024 3ch TL 144.9 TR 146.5 mean 145.7 retake
+tf-shipwright-e5 attempt 5: no url (Error: request failed (no response received) )
+tf-shipwright-e5 attempt 6: no url (Error: request failed (no response received) )
+tf-shipwright-e5 attempt 7: 1024x1024 3ch TL 129.0 TR 129.6 mean 129.3 IN-BAND
+tf-shipwright-e5 KEPT attempt 7 -> assets/raw/tf-shipwright-e5.png
+tf-pearl-diver-e5 attempt 1: 1024x1024 3ch TL 148.7 TR 142.5 mean 145.6 retake
+tf-pearl-diver-e5 attempt 2: 1024x1024 3ch TL 125.3 TR 125.7 mean 125.5 IN-BAND
+tf-pearl-diver-e5 KEPT attempt 2 -> assets/raw/tf-pearl-diver-e5.png
+tf-he3-assayer-e8 attempt 1: 1024x1024 3ch TL 126.1 TR 124.7 mean 125.4 IN-BAND
+tf-he3-assayer-e8 KEPT attempt 1 -> assets/raw/tf-he3-assayer-e8.png
+tf-eldest-heir-e10 attempt 1: 1024x1024 3ch TL 134.4 TR 131.4 mean 132.9 IN-BAND
+tf-eldest-heir-e10 KEPT attempt 1 -> assets/raw/tf-eldest-heir-e10.png
+tf-baron-e10 attempt 1: 1024x1024 3ch TL 134.8 TR 134.7 mean 134.7 IN-BAND
+tf-baron-e10 KEPT attempt 1 -> assets/raw/tf-baron-e10.png
+tf-quack-e10 attempt 1: 1024x1024 3ch TL 122.4 TR 117.9 mean 120.2 retake
+tf-quack-e10 attempt 2: 1024x1024 3ch TL 123.0 TR 123.4 mean 123.2 retake
+tf-quack-e10 attempt 3: 1024x1024 3ch TL 134.7 TR 128.2 mean 131.5 IN-BAND
+tf-quack-e10 KEPT attempt 3 -> assets/raw/tf-quack-e10.png
+tf-charter-keeper-e10 attempt 1: no url (Error: request failed (no response received) )
+tf-charter-keeper-e10 attempt 2: 1024x1024 3ch TL 144.5 TR 147.9 mean 146.2 retake
+tf-charter-keeper-e10 attempt 3: 1024x1024 3ch TL 116.9 TR 119.7 mean 118.3 retake
+tf-charter-keeper-e10 attempt 4: 1024x1024 3ch TL 146.4 TR 145.9 mean 146.2 retake
+tf-charter-keeper-e10 attempt 5: 1024x1024 3ch TL 128.1 TR 124.8 mean 126.5 IN-BAND
+tf-charter-keeper-e10 KEPT attempt 5 -> assets/raw/tf-charter-keeper-e10.png
+=== batch done 09:39:35Z ===
+3603.49 credits
+
+# calibration tests (tide-teller): attempt1 mean 82.9 (parchment too cool, retake), attempt2 request failed, attempt3 mean 140.6 KEPT as assets/raw/tf-tide-teller-e5.png
+
+# roles
+tf-tide-teller-e5	The tide-teller of the Deepwater era: an older woman, the sea-reading sage dressed as a hermit, weathered kind face, sea-glass spectacles pushed up into windblown grey hair, a shawl of knotted kelp-cord over an oilskin, a rolled kelp chart under one arm, a small brass storm-glass on a cord at her throat, eyes bright with warm eccentricity.
+tf-cannery-hand-e5	The cannery-hand of the Deepwater era: the newcomer kid of the Steamworks years now grown into a young adult with a weathered open face, a cannery apron over a rolled-sleeve work shirt, a small folded paper boat held in one hand like an old habit, salt-cracked knuckles, a quiet vindicated smile.
+tf-harbormaster-e5	The harbormaster of the Deepwater era: a woman in a wheelhouse coat with brass buttons, a steady level gaze, a retired stub of manifest chalk hanging on a cord at her collar, hair tied back against the wind, the calm authority of someone the flood appointed and the town confirmed.
+tf-shipwright-e5	The shipwright of the Deepwater era: a broad-shouldered figure in an oilskin apron dusted with sawdust, an adze resting on one shoulder, calloused hands, a face that learned its trade in grief and learned it well, warm and tired.
+tf-pearl-diver-e5	The pearl-diver of the Deepwater era: a lean diver with wet hair pushed back, a knotted net bag and a small diving knife on a belt, salt-pale skin, a mother-of-pearl button at the throat, calm unhurried eyes used to holding breath.
+tf-he3-assayer-e8	The He-3 assayer of the Orbital era: an assayer of the old assay lineage in a suit-brass collar with a glass visor pushed up, silver-and-teal orbital garb, a jeweller's loupe on a chain, a small sealed glass vial held up to the light, a precise kind face and silver hair.
+tf-eldest-heir-e10	The eldest heir of the Deep Sky era: the old rival's line grown kind, a young man in an Ark-yard coat with a working pocket watch on a chain, a small crossed-pickaxes emblem stitched on the lapel, an open half-laughing face that has just been told yes.
+tf-baron-e10	The Baron of the Deep Sky era, ancient now: the old rival turned caretaker of the canals on the red world, a lined weathered face gone gentle, a canal-keeper's staff in one hand, a worn coat with a faded crossed-pickaxes crest, eyes that once declared everything spent and now keep the greenest thing they ever touched.
+tf-quack-e10	The Quack of the Deep Sky era, ancient and freed: the old medicine-show man, a threadbare showman's coat and a dented tonic bottle held like a relic, long white hair, a face that spent a century in a cell and now sits at the far end of a long table, warm, unnamed, never grim.
+tf-charter-keeper-e10	The Charter-Keeper of the Deep Sky era: the custodian of the Charter Press hall, a middle-aged figure in a printer's apron with ink-stained hands, a small glass jar holding a single bright mote of light set on the desk before them, the brass handle of a child-height lever just in frame, a patient proud face.

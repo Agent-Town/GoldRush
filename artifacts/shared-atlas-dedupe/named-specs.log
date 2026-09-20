@@ -1,0 +1,172 @@
+
+Running 16 tests using 1 worker
+
+
+(node:12198) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[1/16] [desktop-chrome] › e2e/landmark-brightness.spec.ts:57:1 › The Claim keeps daylight landmarks opaque, lit, and under the frame budget
+  1) [desktop-chrome] › e2e/landmark-brightness.spec.ts:57:1 › The Claim keeps daylight landmarks opaque, lit, and under the frame budget 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 33.4
+    Received:    58.60000002384186
+
+      89 |   expect(renderedLuminance / atlasLuminance).toBeGreaterThan(0.25);
+      90 |
+    > 91 |   expect(await p95(page)).toBeLessThanOrEqual(Balance.render.night.frameBudgetMs * Balance.render.night.collapseRatio);
+         |                           ^
+      92 |   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.performance.runtimeVerdict)).toBe(0);
+      93 |   expect(errors).toEqual({ console: [], page: [] });
+      94 | });
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/e2e/landmark-brightness.spec.ts:91:27
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/shared-atlas-dedupe/named-test-results/landmark-brightness-The-Cl-284bd--and-under-the-frame-budget-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/shared-atlas-dedupe/named-test-results/landmark-brightness-The-Cl-284bd--and-under-the-frame-budget-desktop-chrome/error-context.md
+
+
+
+(node:13034) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[2/16] [desktop-chrome] › e2e/landmark-brightness.spec.ts:96:1 › Night Shift keeps ground light pools without mutating landmark materials
+[3/16] [desktop-chrome] › e2e/perf-01-stress-budget.spec.ts:98:1 › stress profile stays within draw-call and sprite-swap budgets
+[4/16] [desktop-chrome] › e2e/terrain3d-claim-pilot.spec.ts:64:1 › terrain2d is byte-lazy and keeps the painted Claim
+[5/16] [desktop-chrome] › e2e/terrain3d-claim-pilot.spec.ts:76:1 › contract-valid GLB feeds every visualY consumer and keeps the water agreement
+  2) [desktop-chrome] › e2e/terrain3d-claim-pilot.spec.ts:76:1 › contract-valid GLB feeds every visualY consumer and keeps the water agreement 
+
+    Error: expect(received).toBeCloseTo(expected, precision)
+
+    Expected: 0.7964298105239869
+    Received: 0.8177936887741089
+
+    Expected precision:    2
+    Expected difference: < 0.005
+    Received difference:   0.02136387825012198
+
+       99 |       heroY: window.__THREE_GAME_DIAGNOSTICS__!.heroPos.y,
+      100 |     }), [x, z]);
+    > 101 |     expect(sample.heroY).toBeCloseTo(sample.height + 0.06, 2);
+          |                          ^
+      102 |     table.push({ x, z, ...sample });
+      103 |   }
+      104 |   expect(Math.max(...table.map((entry) => entry.height)) - Math.min(...table.map((entry) => entry.height))).toBeGreaterThan(0.35);
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/e2e/terrain3d-claim-pilot.spec.ts:101:26
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/shared-atlas-dedupe/named-test-results/terrain3d-claim-pilot-cont-43bda-d-keeps-the-water-agreement-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/shared-atlas-dedupe/named-test-results/terrain3d-claim-pilot-cont-43bda-d-keeps-the-water-agreement-desktop-chrome/error-context.md
+
+
+
+(node:13943) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[6/16] [desktop-chrome] › e2e/terrain3d-claim-pilot.spec.ts:140:1 › the terrain pilot leaves the planar simulation fingerprint unchanged
+[7/16] [desktop-chrome] › e2e/terrain3d-claim-pilot.spec.ts:151:1 › LITE and invalid bytes retain the painted fallback
+[8/16] [desktop-chrome] › e2e/terrain3d-claim-pilot.spec.ts:166:1 › the mounted terrain stays inside the 115% p95 budget
+
+(node:14776) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[9/16] [mobile-chrome] › e2e/landmark-brightness.spec.ts:57:1 › The Claim keeps daylight landmarks opaque, lit, and under the frame budget
+  3) [mobile-chrome] › e2e/landmark-brightness.spec.ts:57:1 › The Claim keeps daylight landmarks opaque, lit, and under the frame budget 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 33.4
+    Received:    85.60000002384186
+
+      89 |   expect(renderedLuminance / atlasLuminance).toBeGreaterThan(0.25);
+      90 |
+    > 91 |   expect(await p95(page)).toBeLessThanOrEqual(Balance.render.night.frameBudgetMs * Balance.render.night.collapseRatio);
+         |                           ^
+      92 |   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.performance.runtimeVerdict)).toBe(0);
+      93 |   expect(errors).toEqual({ console: [], page: [] });
+      94 | });
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/e2e/landmark-brightness.spec.ts:91:27
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/shared-atlas-dedupe/named-test-results/landmark-brightness-The-Cl-284bd--and-under-the-frame-budget-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/shared-atlas-dedupe/named-test-results/landmark-brightness-The-Cl-284bd--and-under-the-frame-budget-mobile-chrome/error-context.md
+
+
+
+(node:15879) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[10/16] [mobile-chrome] › e2e/landmark-brightness.spec.ts:96:1 › Night Shift keeps ground light pools without mutating landmark materials
+[11/16] [mobile-chrome] › e2e/perf-01-stress-budget.spec.ts:98:1 › stress profile stays within draw-call and sprite-swap budgets
+[12/16] [mobile-chrome] › e2e/terrain3d-claim-pilot.spec.ts:64:1 › terrain2d is byte-lazy and keeps the painted Claim
+[13/16] [mobile-chrome] › e2e/terrain3d-claim-pilot.spec.ts:76:1 › contract-valid GLB feeds every visualY consumer and keeps the water agreement
+  4) [mobile-chrome] › e2e/terrain3d-claim-pilot.spec.ts:76:1 › contract-valid GLB feeds every visualY consumer and keeps the water agreement 
+
+    Error: expect(received).toBeCloseTo(expected, precision)
+
+    Expected: 0.7964298105239869
+    Received: 0.8177936887741089
+
+    Expected precision:    2
+    Expected difference: < 0.005
+    Received difference:   0.02136387825012198
+
+       99 |       heroY: window.__THREE_GAME_DIAGNOSTICS__!.heroPos.y,
+      100 |     }), [x, z]);
+    > 101 |     expect(sample.heroY).toBeCloseTo(sample.height + 0.06, 2);
+          |                          ^
+      102 |     table.push({ x, z, ...sample });
+      103 |   }
+      104 |   expect(Math.max(...table.map((entry) => entry.height)) - Math.min(...table.map((entry) => entry.height))).toBeGreaterThan(0.35);
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/e2e/terrain3d-claim-pilot.spec.ts:101:26
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/shared-atlas-dedupe/named-test-results/terrain3d-claim-pilot-cont-43bda-d-keeps-the-water-agreement-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/shared-atlas-dedupe/named-test-results/terrain3d-claim-pilot-cont-43bda-d-keeps-the-water-agreement-mobile-chrome/error-context.md
+
+
+
+(node:16922) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[14/16] [mobile-chrome] › e2e/terrain3d-claim-pilot.spec.ts:140:1 › the terrain pilot leaves the planar simulation fingerprint unchanged
+[15/16] [mobile-chrome] › e2e/terrain3d-claim-pilot.spec.ts:151:1 › LITE and invalid bytes retain the painted fallback
+[16/16] [mobile-chrome] › e2e/terrain3d-claim-pilot.spec.ts:166:1 › the mounted terrain stays inside the 115% p95 budget
+  5) [mobile-chrome] › e2e/terrain3d-claim-pilot.spec.ts:166:1 › the mounted terrain stays inside the 115% p95 budget 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: page.waitForFunction: Test timeout of 60000ms exceeded.
+
+      172 |   const paintedP95Ms = await p95(page);
+      173 |   await release!();
+    > 174 |   await page.waitForFunction(() => document.querySelector('canvas')?.dataset.terrain3dPilotState === 'ready');
+          |              ^
+      175 |   const pilotP95Ms = await p95(page);
+      176 |   const report = { paintedP95Ms, pilotP95Ms, ratio: pilotP95Ms / paintedP95Ms };
+      177 |   await mkdir(ARTIFACT_DIR, { recursive: true });
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/e2e/terrain3d-claim-pilot.spec.ts:174:14
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/shared-atlas-dedupe/named-test-results/terrain3d-claim-pilot-the--7f0b9-s-inside-the-115-p95-budget-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/shared-atlas-dedupe/named-test-results/terrain3d-claim-pilot-the--7f0b9-s-inside-the-115-p95-budget-mobile-chrome/error-context.md
+
+
+  5 failed
+    [desktop-chrome] › e2e/landmark-brightness.spec.ts:57:1 › The Claim keeps daylight landmarks opaque, lit, and under the frame budget 
+    [desktop-chrome] › e2e/terrain3d-claim-pilot.spec.ts:76:1 › contract-valid GLB feeds every visualY consumer and keeps the water agreement 
+    [mobile-chrome] › e2e/landmark-brightness.spec.ts:57:1 › The Claim keeps daylight landmarks opaque, lit, and under the frame budget 
+    [mobile-chrome] › e2e/terrain3d-claim-pilot.spec.ts:76:1 › contract-valid GLB feeds every visualY consumer and keeps the water agreement 
+    [mobile-chrome] › e2e/terrain3d-claim-pilot.spec.ts:166:1 › the mounted terrain stays inside the 115% p95 budget 
+  11 passed (3.5m)

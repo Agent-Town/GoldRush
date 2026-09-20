@@ -1,0 +1,3 @@
+UNACCEPTED: crater basin, pressure equipment, suit rack and isolated dish are not communicated at plain entry; broad blurred ground bands and a long dark stripe dominate an otherwise sparse scene.
+
+Far Side deliberately reuses the Mare Claim sculpt. The plate presents a low lunar horizon, crater, equipment station and long utility runs; entry instead shows soft brown bands and a dark linear mark with only small actors and debris. Portrait offers no additional landmark context. Quiet ground is useful, but this degree of blur and missing local hierarchy does not establish the lunar scene. A dedicated environmental/entry composition pass is needed; this verdict does not extend the earlier Mare/Eclipse dome improvement to unrelated views. No production change was made.

@@ -1,0 +1,47 @@
+(node:15477) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+<anonymous_script>:166
+		if (!this.complete) throw new Error(`tape ran out after ${this.steps} steps with the run still alive`);
+		                          ^
+
+Error: tape ran out after 27600 steps with the run still alive
+    at AgentTapeReplaySession.result (eval at runInlinedModule (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/vite/dist/node/module-runner.js:1000:9), <anonymous>:166:29)
+    at file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/scripts/perf-survey/sim-tape.mjs:17:22
+
+Node.js v26.4.0

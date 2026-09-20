@@ -1,0 +1,202 @@
+{
+  "key": "county-e2-trestle",
+  "tapePath": "tapes/county-e2-trestle.json",
+  "contract": "e2-trestle",
+  "kind": "county-played",
+  "node": "v26.4.0",
+  "before": {
+    "at": "2026-09-05T16:00:20.575Z",
+    "load": [
+      5.1845703125,
+      7.373046875,
+      12.28564453125
+    ],
+    "freeMemory": 6601670656
+  },
+  "after": {
+    "at": "2026-09-05T16:00:46.571Z",
+    "load": [
+      4.275390625,
+      6.93896484375,
+      11.95703125
+    ],
+    "freeMemory": 5903335424
+  },
+  "declaredDurationTicks": 19585,
+  "simulatedSeconds": 652.8333333333334,
+  "bootMs": 32.07687499999997,
+  "replayMs": 24776.0995,
+  "ticksPerSecond": 790.4795506653498,
+  "realtimeMultiple": 26.349318355511663,
+  "estimateTenMinuteSeconds": 22.77098754148583,
+  "estimateFormula": "600 seconds / measured realtimeMultiple; extrapolation, not an actual 10-minute tape when duration differs",
+  "tickMs": {
+    "n": 19585,
+    "min": 0.18737499999997453,
+    "p50": 0.8249999999998181,
+    "p95": 3.743333000002167,
+    "p99": 4.146625000001222,
+    "max": 10.12170800000058
+  },
+  "tickPath": "sim/county-e2-trestle-ticks.json",
+  "result": {
+    "eventLogHash": "fnv1a32:f15601e3",
+    "outcome": {
+      "secured": true,
+      "waves": 15,
+      "gold": 18,
+      "timeAlive": 652.8
+    },
+    "securedSnapshot": {
+      "waves": 12,
+      "gold": 725,
+      "timeAlive": 652.8000000000636
+    },
+    "ticks": 19585,
+    "engine": "headless-contract-sim"
+  },
+  "expectedHash": "fnv1a32:f15601e3",
+  "hashMatches": true,
+  "top20": [
+    {
+      "name": "structuredClone",
+      "url": "node:internal/worker/js_transferable",
+      "line": 113,
+      "column": 25,
+      "selfMs": 12963.199999999997
+    },
+    {
+      "name": "structuredClone",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 3104.403
+    },
+    {
+      "name": "(anonymous)",
+      "url": "",
+      "line": 193,
+      "column": 26,
+      "selfMs": 909.6870000000001
+    },
+    {
+      "name": "clone",
+      "url": "",
+      "line": 320,
+      "column": 15,
+      "selfMs": 855.1460000000001
+    },
+    {
+      "name": "snapshot",
+      "url": "",
+      "line": 189,
+      "column": 10,
+      "selfMs": 543.779
+    },
+    {
+      "name": "get diagnostics",
+      "url": "",
+      "line": 484,
+      "column": 17,
+      "selfMs": 437.067
+    },
+    {
+      "name": "simHeight",
+      "url": "",
+      "line": 61,
+      "column": 19,
+      "selfMs": 355.705
+    },
+    {
+      "name": "terrainLineOfSight",
+      "url": "",
+      "line": 115,
+      "column": 28,
+      "selfMs": 329.285
+    },
+    {
+      "name": "multiplyMatrices",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 10385,
+      "column": 18,
+      "selfMs": 239.89299999999997
+    },
+    {
+      "name": "update",
+      "url": "",
+      "line": 809,
+      "column": 8,
+      "selfMs": 235.442
+    },
+    {
+      "name": "diagnostics",
+      "url": "",
+      "line": 1795,
+      "column": 13,
+      "selfMs": 235.279
+    },
+    {
+      "name": "(anonymous)",
+      "url": "node:internal/webidl",
+      "line": 712,
+      "column": 18,
+      "selfMs": 207.84799999999998
+    },
+    {
+      "name": "(garbage collector)",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 182.272
+    },
+    {
+      "name": "(anonymous)",
+      "url": "",
+      "line": 805,
+      "column": 21,
+      "selfMs": 178.187
+    },
+    {
+      "name": "(program)",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 152.599
+    },
+    {
+      "name": "cacheLos",
+      "url": "",
+      "line": 373,
+      "column": 18,
+      "selfMs": 132.869
+    },
+    {
+      "name": "toArray",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 11099,
+      "column": 9,
+      "selfMs": 126.542
+    },
+    {
+      "name": "maxHpForPlacement",
+      "url": "",
+      "line": 1622,
+      "column": 19,
+      "selfMs": 124.639
+    },
+    {
+      "name": "dispatch",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 121.848
+    },
+    {
+      "name": "currentTrickleInterval",
+      "url": "",
+      "line": 641,
+      "column": 24,
+      "selfMs": 118.37
+    }
+  ]
+}

@@ -1,0 +1,607 @@
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+{
+ "generatedAt": "2026-09-19T15:12:57.600Z",
+ "arms": [
+  {
+   "contract": "e2-hill-mine",
+   "arm": "census-rig (boilers placed, hero on coal)",
+   "secured": true,
+   "waves": 12,
+   "turns": 34,
+   "published": true,
+   "distinctValues": {
+    "stored": 1,
+    "band": 1,
+    "coal": 1,
+    "coalSeconds": 1,
+    "boilers": 1,
+    "vents": 1,
+    "dug": 1
+   },
+   "bandsSeen": [
+    "empty"
+   ],
+   "peakStored": 0,
+   "maxCoal": 0,
+   "maxCoalSeconds": 0,
+   "maxVents": 0,
+   "boilersBuilt": 2,
+   "boilersHot": 0,
+   "seamsDug": 0,
+   "cap": 100,
+   "safeBandFirst": null,
+   "safeBandLast": null,
+   "first": {
+    "wave": 0,
+    "t": 0,
+    "stored": 0,
+    "cap": 100,
+    "band": "empty",
+    "safeBand": null,
+    "coal": 0,
+    "coalSeconds": 0,
+    "boilers": {
+     "built": 2,
+     "hot": 0,
+     "cooling": 0,
+     "max": 3
+    },
+    "vents": 0,
+    "dug": 0,
+    "seams": 3,
+    "objective": "0/2 idle"
+   },
+   "last": {
+    "wave": 12,
+    "t": 484.33,
+    "stored": 0,
+    "cap": 100,
+    "band": "empty",
+    "safeBand": null,
+    "coal": 0,
+    "coalSeconds": 0,
+    "boilers": {
+     "built": 2,
+     "hot": 0,
+     "cooling": 0,
+     "max": 3
+    },
+    "vents": 0,
+    "dug": 0,
+    "seams": 3,
+    "objective": "0/2 active failed"
+   }
+  },
+  {
+   "contract": "e2-hill-mine",
+   "arm": "plain rider economy (nothing placed)",
+   "secured": false,
+   "waves": 1,
+   "turns": 4,
+   "published": true,
+   "distinctValues": {
+    "stored": 1,
+    "band": 1,
+    "coal": 1,
+    "coalSeconds": 1,
+    "boilers": 1,
+    "vents": 1,
+    "dug": 1
+   },
+   "bandsSeen": [
+    "empty"
+   ],
+   "peakStored": 0,
+   "maxCoal": 0,
+   "maxCoalSeconds": 0,
+   "maxVents": 0,
+   "boilersBuilt": 0,
+   "boilersHot": 0,
+   "seamsDug": 0,
+   "cap": 100,
+   "safeBandFirst": null,
+   "safeBandLast": null,
+   "first": {
+    "wave": 0,
+    "t": 0,
+    "stored": 0,
+    "cap": 100,
+    "band": "empty",
+    "safeBand": null,
+    "coal": 0,
+    "coalSeconds": 0,
+    "boilers": {
+     "built": 0,
+     "hot": 0,
+     "cooling": 0,
+     "max": 3
+    },
+    "vents": 0,
+    "dug": 0,
+    "seams": 3,
+    "objective": "0/2 idle"
+   },
+   "last": {
+    "wave": 1,
+    "t": 55.2,
+    "stored": 0,
+    "cap": 100,
+    "band": "empty",
+    "safeBand": null,
+    "coal": 0,
+    "coalSeconds": 0,
+    "boilers": {
+     "built": 0,
+     "hot": 0,
+     "cooling": 0,
+     "max": 3
+    },
+    "vents": 0,
+    "dug": 0,
+    "seams": 3,
+    "objective": "0/2 idle"
+   }
+  },
+  {
+   "contract": "e2-trestle",
+   "arm": "census-rig (boilers placed, hero on coal)",
+   "secured": true,
+   "waves": 12,
+   "turns": 38,
+   "published": true,
+   "distinctValues": {
+    "stored": 4,
+    "band": 2,
+    "coal": 2,
+    "coalSeconds": 2,
+    "boilers": 3,
+    "vents": 4,
+    "dug": 2
+   },
+   "bandsSeen": [
+    "empty",
+    "working"
+   ],
+   "peakStored": 78,
+   "maxCoal": 1,
+   "maxCoalSeconds": 36,
+   "maxVents": 14,
+   "boilersBuilt": 2,
+   "boilersHot": 1,
+   "seamsDug": 1,
+   "cap": 100,
+   "safeBandFirst": null,
+   "safeBandLast": null,
+   "first": {
+    "wave": 0,
+    "t": 0,
+    "stored": 0,
+    "cap": 100,
+    "band": "empty",
+    "safeBand": null,
+    "coal": 0,
+    "coalSeconds": 0,
+    "boilers": {
+     "built": 2,
+     "hot": 0,
+     "cooling": 0,
+     "max": 3
+    },
+    "vents": 0,
+    "dug": 0,
+    "seams": 3,
+    "objective": "0/2 idle"
+   },
+   "last": {
+    "wave": 12,
+    "t": 518,
+    "stored": 78,
+    "cap": 100,
+    "band": "working",
+    "safeBand": null,
+    "coal": 0,
+    "coalSeconds": 0,
+    "boilers": {
+     "built": 2,
+     "hot": 0,
+     "cooling": 0,
+     "max": 3
+    },
+    "vents": 14,
+    "dug": 1,
+    "seams": 3,
+    "objective": "0/2 active failed"
+   }
+  },
+  {
+   "contract": "e2-trestle",
+   "arm": "plain rider economy (nothing placed)",
+   "secured": false,
+   "waves": 1,
+   "turns": 4,
+   "published": true,
+   "distinctValues": {
+    "stored": 1,
+    "band": 1,
+    "coal": 1,
+    "coalSeconds": 1,
+    "boilers": 1,
+    "vents": 1,
+    "dug": 1
+   },
+   "bandsSeen": [
+    "empty"
+   ],
+   "peakStored": 0,
+   "maxCoal": 0,
+   "maxCoalSeconds": 0,
+   "maxVents": 0,
+   "boilersBuilt": 0,
+   "boilersHot": 0,
+   "seamsDug": 0,
+   "cap": 100,
+   "safeBandFirst": null,
+   "safeBandLast": null,
+   "first": {
+    "wave": 0,
+    "t": 0,
+    "stored": 0,
+    "cap": 100,
+    "band": "empty",
+    "safeBand": null,
+    "coal": 0,
+    "coalSeconds": 0,
+    "boilers": {
+     "built": 0,
+     "hot": 0,
+     "cooling": 0,
+     "max": 3
+    },
+    "vents": 0,
+    "dug": 0,
+    "seams": 3,
+    "objective": "0/2 idle"
+   },
+   "last": {
+    "wave": 1,
+    "t": 60.37,
+    "stored": 0,
+    "cap": 100,
+    "band": "empty",
+    "safeBand": null,
+    "coal": 0,
+    "coalSeconds": 0,
+    "boilers": {
+     "built": 0,
+     "hot": 0,
+     "cooling": 0,
+     "max": 3
+    },
+    "vents": 0,
+    "dug": 0,
+    "seams": 3,
+    "objective": "0/2 idle"
+   }
+  },
+  {
+   "contract": "e2-pressure-garden",
+   "arm": "census-rig (boilers placed, hero on coal)",
+   "secured": true,
+   "waves": 12,
+   "turns": 27,
+   "published": true,
+   "distinctValues": {
+    "stored": 1,
+    "band": 1,
+    "coal": 1,
+    "coalSeconds": 1,
+    "boilers": 1,
+    "vents": 1,
+    "dug": 1
+   },
+   "bandsSeen": [
+    "empty"
+   ],
+   "peakStored": 0,
+   "maxCoal": 0,
+   "maxCoalSeconds": 0,
+   "maxVents": 0,
+   "boilersBuilt": 2,
+   "boilersHot": 0,
+   "seamsDug": 0,
+   "cap": 100,
+   "safeBandFirst": null,
+   "safeBandLast": null,
+   "first": {
+    "wave": 0,
+    "t": 0,
+    "stored": 0,
+    "cap": 100,
+    "band": "empty",
+    "safeBand": null,
+    "coal": 0,
+    "coalSeconds": 0,
+    "boilers": {
+     "built": 2,
+     "hot": 0,
+     "cooling": 0,
+     "max": 3
+    },
+    "vents": 0,
+    "dug": 0,
+    "seams": 3,
+    "objective": "0/2 idle"
+   },
+   "last": {
+    "wave": 12,
+    "t": 360,
+    "stored": 0,
+    "cap": 100,
+    "band": "empty",
+    "safeBand": null,
+    "coal": 0,
+    "coalSeconds": 0,
+    "boilers": {
+     "built": 2,
+     "hot": 0,
+     "cooling": 0,
+     "max": 3
+    },
+    "vents": 0,
+    "dug": 0,
+    "seams": 3,
+    "objective": "0/2 active failed"
+   }
+  },
+  {
+   "contract": "e2-pressure-garden",
+   "arm": "plain rider economy (nothing placed)",
+   "secured": false,
+   "waves": 1,
+   "turns": 4,
+   "published": true,
+   "distinctValues": {
+    "stored": 1,
+    "band": 1,
+    "coal": 1,
+    "coalSeconds": 1,
+    "boilers": 1,
+    "vents": 1,
+    "dug": 1
+   },
+   "bandsSeen": [
+    "empty"
+   ],
+   "peakStored": 0,
+   "maxCoal": 0,
+   "maxCoalSeconds": 0,
+   "maxVents": 0,
+   "boilersBuilt": 0,
+   "boilersHot": 0,
+   "seamsDug": 0,
+   "cap": 100,
+   "safeBandFirst": null,
+   "safeBandLast": null,
+   "first": {
+    "wave": 0,
+    "t": 0,
+    "stored": 0,
+    "cap": 100,
+    "band": "empty",
+    "safeBand": null,
+    "coal": 0,
+    "coalSeconds": 0,
+    "boilers": {
+     "built": 0,
+     "hot": 0,
+     "cooling": 0,
+     "max": 3
+    },
+    "vents": 0,
+    "dug": 0,
+    "seams": 3,
+    "objective": "0/2 idle"
+   },
+   "last": {
+    "wave": 1,
+    "t": 53.23,
+    "stored": 0,
+    "cap": 100,
+    "band": "empty",
+    "safeBand": null,
+    "coal": 0,
+    "coalSeconds": 0,
+    "boilers": {
+     "built": 0,
+     "hot": 0,
+     "cooling": 0,
+     "max": 3
+    },
+    "vents": 0,
+    "dug": 0,
+    "seams": 3,
+    "objective": "0/2 idle"
+   }
+  },
+  {
+   "contract": "e2-incline",
+   "arm": "census-rig (boilers placed, hero on coal)",
+   "secured": true,
+   "waves": 12,
+   "turns": 41,
+   "published": true,
+   "distinctValues": {
+    "stored": 4,
+    "band": 2,
+    "coal": 2,
+    "coalSeconds": 2,
+    "boilers": 3,
+    "vents": 4,
+    "dug": 2
+   },
+   "bandsSeen": [
+    "empty",
+    "working"
+   ],
+   "peakStored": 78,
+   "maxCoal": 1,
+   "maxCoalSeconds": 36,
+   "maxVents": 14,
+   "boilersBuilt": 2,
+   "boilersHot": 2,
+   "seamsDug": 1,
+   "cap": 100,
+   "safeBandFirst": null,
+   "safeBandLast": null,
+   "first": {
+    "wave": 0,
+    "t": 0,
+    "stored": 0,
+    "cap": 100,
+    "band": "empty",
+    "safeBand": null,
+    "coal": 0,
+    "coalSeconds": 0,
+    "boilers": {
+     "built": 2,
+     "hot": 0,
+     "cooling": 0,
+     "max": 3
+    },
+    "vents": 0,
+    "dug": 0,
+    "seams": 3,
+    "objective": "0/2 idle"
+   },
+   "last": {
+    "wave": 12,
+    "t": 482.3,
+    "stored": 78,
+    "cap": 100,
+    "band": "working",
+    "safeBand": null,
+    "coal": 0,
+    "coalSeconds": 0,
+    "boilers": {
+     "built": 2,
+     "hot": 0,
+     "cooling": 0,
+     "max": 3
+    },
+    "vents": 14,
+    "dug": 1,
+    "seams": 3,
+    "objective": "0/2 active failed"
+   }
+  },
+  {
+   "contract": "e2-incline",
+   "arm": "plain rider economy (nothing placed)",
+   "secured": false,
+   "waves": 3,
+   "turns": 7,
+   "published": true,
+   "distinctValues": {
+    "stored": 1,
+    "band": 1,
+    "coal": 1,
+    "coalSeconds": 1,
+    "boilers": 1,
+    "vents": 1,
+    "dug": 1
+   },
+   "bandsSeen": [
+    "empty"
+   ],
+   "peakStored": 0,
+   "maxCoal": 0,
+   "maxCoalSeconds": 0,
+   "maxVents": 0,
+   "boilersBuilt": 0,
+   "boilersHot": 0,
+   "seamsDug": 0,
+   "cap": 100,
+   "safeBandFirst": null,
+   "safeBandLast": null,
+   "first": {
+    "wave": 0,
+    "t": 0,
+    "stored": 0,
+    "cap": 100,
+    "band": "empty",
+    "safeBand": null,
+    "coal": 0,
+    "coalSeconds": 0,
+    "boilers": {
+     "built": 0,
+     "hot": 0,
+     "cooling": 0,
+     "max": 3
+    },
+    "vents": 0,
+    "dug": 0,
+    "seams": 3,
+    "objective": "0/2 idle"
+   },
+   "last": {
+    "wave": 3,
+    "t": 120.3,
+    "stored": 0,
+    "cap": 100,
+    "band": "empty",
+    "safeBand": null,
+    "coal": 0,
+    "coalSeconds": 0,
+    "boilers": {
+     "built": 0,
+     "hot": 0,
+     "cooling": 0,
+     "max": 3
+    },
+    "vents": 0,
+    "dug": 0,
+    "seams": 3,
+    "objective": "0/2 idle"
+   }
+  }
+ ],
+ "control": {
+  "contract": "the-claim",
+  "pressurePublished": false
+ }
+}

@@ -1,0 +1,202 @@
+{
+  "key": "county-e1-night-shift",
+  "tapePath": "tapes/county-e1-night-shift.json",
+  "contract": "e1-night-shift",
+  "kind": "county-played",
+  "node": "v26.4.0",
+  "before": {
+    "at": "2026-09-05T15:56:39.666Z",
+    "load": [
+      6.7314453125,
+      9.7822265625,
+      14.4033203125
+    ],
+    "freeMemory": 3881910272
+  },
+  "after": {
+    "at": "2026-09-05T15:57:22.494Z",
+    "load": [
+      5.40478515625,
+      9.015625,
+      13.8818359375
+    ],
+    "freeMemory": 3186212864
+  },
+  "declaredDurationTicks": 22502,
+  "simulatedSeconds": 750.0666666666667,
+  "bootMs": 36.89929200000006,
+  "replayMs": 41505.375459,
+  "ticksPerSecond": 542.1466436854188,
+  "realtimeMultiple": 18.07155478951396,
+  "estimateTenMinuteSeconds": 33.201349136165675,
+  "estimateFormula": "600 seconds / measured realtimeMultiple; extrapolation, not an actual 10-minute tape when duration differs",
+  "tickMs": {
+    "n": 22502,
+    "min": 0.5076660000004267,
+    "p50": 1.8018750000010186,
+    "p95": 3.244875000003958,
+    "p99": 4.076000000000931,
+    "max": 11.179165999999896
+  },
+  "tickPath": "sim/county-e1-night-shift-ticks.json",
+  "result": {
+    "eventLogHash": "fnv1a32:bc318a1d",
+    "outcome": {
+      "secured": true,
+      "waves": 25,
+      "gold": 481,
+      "timeAlive": 750.033
+    },
+    "securedSnapshot": {
+      "waves": 25,
+      "gold": 1730,
+      "timeAlive": 750.0333333333085
+    },
+    "ticks": 22502,
+    "engine": "headless-contract-sim"
+  },
+  "expectedHash": "fnv1a32:bc318a1d",
+  "hashMatches": true,
+  "top20": [
+    {
+      "name": "structuredClone",
+      "url": "node:internal/worker/js_transferable",
+      "line": 113,
+      "column": 25,
+      "selfMs": 16714.978
+    },
+    {
+      "name": "structuredClone",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 4954.3099999999995
+    },
+    {
+      "name": "clone",
+      "url": "",
+      "line": 320,
+      "column": 15,
+      "selfMs": 3199.1449999999995
+    },
+    {
+      "name": "terrainSeed",
+      "url": "",
+      "line": 1469,
+      "column": 21,
+      "selfMs": 2144.112
+    },
+    {
+      "name": "(anonymous)",
+      "url": "",
+      "line": 193,
+      "column": 26,
+      "selfMs": 1635.1899999999998
+    },
+    {
+      "name": "terrainHash",
+      "url": "",
+      "line": 1486,
+      "column": 21,
+      "selfMs": 1441.093
+    },
+    {
+      "name": "snapshot",
+      "url": "",
+      "line": 189,
+      "column": 10,
+      "selfMs": 621.692
+    },
+    {
+      "name": "stableProbeMask",
+      "url": "",
+      "line": 1266,
+      "column": 25,
+      "selfMs": 576.528
+    },
+    {
+      "name": "get diagnostics",
+      "url": "",
+      "line": 484,
+      "column": 17,
+      "selfMs": 543.83
+    },
+    {
+      "name": "diagnostics",
+      "url": "",
+      "line": 1795,
+      "column": 13,
+      "selfMs": 500.606
+    },
+    {
+      "name": "(garbage collector)",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 465.705
+    },
+    {
+      "name": "snapshotStandingOrders",
+      "url": "",
+      "line": 425,
+      "column": 32,
+      "selfMs": 455.043
+    },
+    {
+      "name": "(anonymous)",
+      "url": "node:internal/webidl",
+      "line": 712,
+      "column": 18,
+      "selfMs": 352.154
+    },
+    {
+      "name": "multiplyMatrices",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 10385,
+      "column": 18,
+      "selfMs": 304.46400000000006
+    },
+    {
+      "name": "terrainFeatures",
+      "url": "",
+      "line": 1193,
+      "column": 25,
+      "selfMs": 289.84000000000003
+    },
+    {
+      "name": "(program)",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 269.129
+    },
+    {
+      "name": "channelMask",
+      "url": "",
+      "line": 1247,
+      "column": 21,
+      "selfMs": 259.277
+    },
+    {
+      "name": "(anonymous)",
+      "url": "",
+      "line": 805,
+      "column": 21,
+      "selfMs": 209.90800000000002
+    },
+    {
+      "name": "toArray",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 11099,
+      "column": 9,
+      "selfMs": 203.21699999999998
+    },
+    {
+      "name": "hpDiagnostics",
+      "url": "",
+      "line": 1631,
+      "column": 15,
+      "selfMs": 187.33
+    }
+  ]
+}

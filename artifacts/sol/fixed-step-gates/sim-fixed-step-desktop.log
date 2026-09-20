@@ -1,0 +1,17 @@
+
+Running 6 tests using 1 worker
+
+
+(node:9565) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[1/6] [desktop-chrome] › e2e/sim-fixed-step.spec.ts:38:1 › 30/60/144 fps render schedules produce the same 300-tick simulation
+[desktop-chrome] › e2e/sim-fixed-step.spec.ts:38:1 › 30/60/144 fps render schedules produce the same 300-tick simulation
+[sim-fixed-step] [{"fps":30,"renderFrames":300,"simTicks":300,"economyHash":"fnv1a32:0f6f2150","economyLogLength":7,"loop":{"fixed":true,"stepSeconds":0.03333333333333333,"alpha":0,"stepsLastFrame":1,"totalSteps":300,"droppedSeconds":0,"droppedTicks":0}},{"fps":60,"renderFrames":600,"simTicks":300,"economyHash":"fnv1a32:0f6f2150","economyLogLength":7,"loop":{"fixed":true,"stepSeconds":0.03333333333333333,"alpha":0,"stepsLastFrame":1,"totalSteps":300,"droppedSeconds":0,"droppedTicks":0}},{"fps":144,"renderFrames":1440,"simTicks":300,"economyHash":"fnv1a32:0f6f2150","economyLogLength":7,"loop":{"fixed":true,"stepSeconds":0.03333333333333333,"alpha":0,"stepsLastFrame":1,"totalSteps":300,"droppedSeconds":0,"droppedTicks":0}}]
+
+[2/6] [desktop-chrome] › e2e/sim-fixed-step.spec.ts:79:1 › 144 fps presentation interpolates hero motion between fixed ticks
+[3/6] [desktop-chrome] › e2e/sim-fixed-step.spec.ts:95:1 › paused fixed ticks keep the last rendered hero position stable
+[4/6] [desktop-chrome] › e2e/sim-fixed-step.spec.ts:135:1 › a stalled frame runs at most five ticks and reports dropped time
+[5/6] [desktop-chrome] › e2e/sim-fixed-step.spec.ts:157:1 › fixed ticks carry fractional cooldown debt instead of losing volleys
+[6/6] [desktop-chrome] › e2e/sim-fixed-step.spec.ts:181:1 › Baron ceremony completion is independent of render cadence
+  6 passed (1.2m)

@@ -1,0 +1,15 @@
+=== Gold Rush factory — 2026-09-08 01:32:52 ===
+edge   : landing=200 game=200 api=200   (200 = up; 2xx-slow = answered but missed the budget; anything else is dark — F-OUT-0829)
+runner : ALIVE
+fire   : between-fires
+agents :
+  com.goldrush.dashboard:LOADED
+  com.goldrush.health:LOADED
+  com.goldrush.fire:LOADED
+lock   : Last updated: 2026-09-08T01:30Z s2550 handoff, lock CLEARED — NO SOURCE MERGE. Preserved gold candidate completed its 
+queued : 0 task(s)   in-flight: 1   pending-orders: 0
+lanes ahead of main (commit count — may be squash-merged dupes, verify by content):
+  feat/hero-move-verb: 1 commit(s) ahead
+art staged, in NO commit: 0 file(s)  (detail: node scripts/art-staging-audit.mjs)
+failed tail: superseded-s239-bt-00-demolish.md
+last fire log line: bash scripts/health-watch.sh status > artifacts/s2550-fire/health-after.txt" in /Users/robin/Claude/Projects/Gold Rush

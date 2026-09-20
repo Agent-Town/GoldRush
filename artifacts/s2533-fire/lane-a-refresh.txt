@@ -1,0 +1,1599 @@
+Updating cb7e68360..79037634e
+Fast-forward
+ STATUS.md                                          |     6 +-
+ .../asset-diet/town-transfer-desktop-chrome.json   |     2 +-
+ .../asset-diet/town-transfer-mobile-chrome.json    |     2 +-
+ artifacts/beat-citation-refresh/REPORT.md          |    45 +
+ artifacts/beat-citation-refresh/after.json         |    70 +
+ .../beat-citation-refresh/before-assert-fixed.txt  |    77 +
+ artifacts/beat-citation-refresh/before.json        |    70 +
+ artifacts/beat-citation-refresh/build-after.txt    |  2298 +
+ artifacts/beat-citation-refresh/build-before.txt   |  2297 +
+ artifacts/beat-citation-refresh/compare-tokens.mjs |    32 +
+ artifacts/beat-citation-refresh/diff-check.txt     |     1 +
+ .../beat-citation-refresh/engine-provenance.json   |     7 +
+ artifacts/beat-citation-refresh/source.diff        |    56 +
+ .../token-line-invariance.json                     |     9 +
+ artifacts/beat-citation-refresh/tsc.txt            |     1 +
+ .../e8-mare-claim-air-logical/submission.json      |  9365 ++
+ .../e8-mare-claim-air-logical/verdict-slip.json    |     4 +
+ .../e8-mare-claim-air-prevalent/submission.json    |  3647 +
+ .../e8-mare-claim-air-prevalent/verdict-slip.json  |     4 +
+ .../browser-door-held-gold/browser-submission.json |    33 +
+ .../browser-door-held-gold/hash-neutrality.json    |    31 +
+ .../standing-formula-explained-desktop-chrome.png  |   Bin 0 -> 1227412 bytes
+ .../standing-formula-explained-mobile-chrome.png   |   Bin 0 -> 1964153 bytes
+ artifacts/e8-air-logical/card-e8-eclipse-390.png   |   Bin 0 -> 292619 bytes
+ artifacts/e8-air-logical/card-e8-far-side-390.png  |   Bin 0 -> 296361 bytes
+ artifacts/e8-air-logical/card-e8-low-orbit-390.png |   Bin 0 -> 289489 bytes
+ .../e8-air-logical/card-e8-mare-claim-390.png      |   Bin 0 -> 289780 bytes
+ artifacts/e8-air-logical/control-e8-eclipse.json   |   626 +
+ artifacts/e8-air-logical/control-e8-far-side.json  |   603 +
+ artifacts/e8-air-logical/control-e8-low-orbit.json |   651 +
+ .../e8-air-logical/control-e8-mare-claim.json      |   610 +
+ .../control-no-sortie-e8-low-orbit.json            |   636 +
+ artifacts/e8-air-logical/control-runs.log          |     4 +
+ artifacts/e8-air-logical/dial-e8-eclipse-390.png   |   Bin 0 -> 206942 bytes
+ artifacts/e8-air-logical/dial-e8-far-side-390.png  |   Bin 0 -> 210306 bytes
+ artifacts/e8-air-logical/dial-e8-low-orbit-390.png |   Bin 0 -> 218548 bytes
+ .../e8-air-logical/dial-e8-mare-claim-390.png      |   Bin 0 -> 206867 bytes
+ artifacts/e8-air-logical/floor-attribution.json    |   258 +
+ artifacts/e8-air-logical/floor-attribution.log     |    32 +
+ artifacts/e8-air-logical/floor-attribution.mjs     |    84 +
+ artifacts/e8-air-logical/heat12-e8-eclipse.json    | 11256 +++
+ artifacts/e8-air-logical/heat12-e8-far-side.json   | 12887 +++
+ artifacts/e8-air-logical/heat12-e8-low-orbit.json  | 11932 +++
+ artifacts/e8-air-logical/heat12-e8-mare-claim.json | 11909 +++
+ artifacts/e8-air-logical/measure-body.mjs          |   173 +
+ artifacts/e8-air-logical/measure-heat12-bodies.log |    20 +
+ .../e8-air-logical/prover-e8-eclipse-01.tape.json  |  9944 ++
+ artifacts/e8-air-logical/prover-e8-eclipse.json    | 11545 +++
+ .../e8-air-logical/prover-e8-far-side-01.tape.json |  8825 ++
+ artifacts/e8-air-logical/prover-e8-far-side.json   | 11519 +++
+ .../prover-e8-low-orbit-01.tape.json               | 11773 +++
+ artifacts/e8-air-logical/prover-e8-low-orbit.json  | 11552 +++
+ .../prover-e8-mare-claim-01.tape.json              |  9337 ++
+ artifacts/e8-air-logical/prover-e8-mare-claim.json | 11530 +++
+ artifacts/e8-air-logical/prover-final-tree.log     |     8 +
+ .../e8-air-logical/prover-run-e8-eclipse.json      |  1237 +
+ .../e8-air-logical/prover-run-e8-far-side.json     |  1147 +
+ .../e8-air-logical/prover-run-e8-low-orbit.json    |  1213 +
+ .../e8-air-logical/prover-run-e8-mare-claim.json   |  1215 +
+ artifacts/e8-air-logical/prover-runs.log           |    26 +
+ artifacts/e8-air-logical/prover.mjs                |  1001 +
+ artifacts/e8-air-logical/reassay-e8-low-orbit.json | 12809 +++
+ .../e8-air-logical/reassay-e8-mare-claim.json      |  1646 +
+ artifacts/e8-air-logical/shoot-card.mjs            |   106 +
+ artifacts/e8-air-logical/shoot-dial.mjs            |    88 +
+ .../e8-air-wall-all-maps/card-e8-eclipse-390.png   |   Bin 0 -> 272835 bytes
+ .../e8-air-wall-all-maps/card-e8-far-side-390.png  |   Bin 0 -> 271343 bytes
+ .../e8-air-wall-all-maps/card-e8-low-orbit-390.png |   Bin 0 -> 269107 bytes
+ .../e8-air-wall-all-maps/floor-attribution.json    |   501 +
+ .../e8-air-wall-all-maps/floor-attribution.log     |    41 +
+ .../e8-air-wall-all-maps/floor-attribution.mjs     |   133 +
+ .../measure-heat12-e8-eclipse.json                 |  7149 ++
+ .../measure-heat12-e8-far-side.json                |  7510 ++
+ .../measure-heat12-e8-low-orbit.json               |  6956 ++
+ .../measure-prover-e8-eclipse.json                 |  7190 ++
+ .../measure-prover-e8-far-side.json                |  6718 ++
+ .../measure-prover-e8-low-orbit.json               |  6736 ++
+ artifacts/e8-air-wall-all-maps/measure-provers.log |    24 +
+ artifacts/e8-air-wall-all-maps/measure-ride.mjs    |   154 +
+ .../e8-air-wall-all-maps/measure-rides-after.log   |    24 +
+ .../e8-air-wall-all-maps/measure-rides-before.log  |    24 +
+ .../prover-e8-eclipse-01.tape.json                 |  9340 ++
+ .../e8-air-wall-all-maps/prover-e8-eclipse.json    |  1182 +
+ .../prover-e8-far-side-01.tape.json                |  8117 ++
+ .../e8-air-wall-all-maps/prover-e8-far-side.json   |  1072 +
+ .../prover-e8-low-orbit-01.tape.json               | 12090 +++
+ .../e8-air-wall-all-maps/prover-e8-low-orbit.json  |  1114 +
+ artifacts/e8-air-wall-all-maps/prover.mjs          |   544 +
+ artifacts/e8-air-wall-all-maps/shoot-card.mjs      |   101 +
+ artifacts/eclipse-winnable/LADDER.log              |    30 +
+ artifacts/eclipse-winnable/MEASUREMENT.md          |   184 +
+ artifacts/eclipse-winnable/arm-bank-1200.json      |  5094 +
+ artifacts/eclipse-winnable/arm-bank-400.json       |  5094 +
+ .../eclipse-winnable/arm-buildline-apron.json      |  5257 ++
+ artifacts/eclipse-winnable/arm-control-seed02.json |  6035 ++
+ artifacts/eclipse-winnable/arm-control.json        |  5090 +
+ artifacts/eclipse-winnable/arm-fort-t5b6.json      |  5172 +
+ artifacts/eclipse-winnable/arm-fort-t6b9.json      |  5282 ++
+ artifacts/eclipse-winnable/arm-fort.mjs            |   113 +
+ artifacts/eclipse-winnable/arm-grit-100.json       |  5212 ++
+ artifacts/eclipse-winnable/arm-grit-300.json       |  5211 ++
+ artifacts/eclipse-winnable/arm-kite-0-0.json       |  5374 ++
+ .../eclipse-winnable/arm-kite-0-4-seed02.json      |  6193 ++
+ artifacts/eclipse-winnable/arm-kite-0-4.json       |  5369 ++
+ .../eclipse-winnable/arm-kite-north-0-26.json      |  1105 +
+ artifacts/eclipse-winnable/arm-roster-hp80.json    |  5468 ++
+ artifacts/eclipse-winnable/arm-seam-140.json       |  5398 ++
+ artifacts/eclipse-winnable/arm.mjs                 |   108 +
+ artifacts/eclipse-winnable/baseline-prover-01.json |  5083 +
+ .../baseline-prover-01.progress.log                |    81 +
+ .../measure-heat12-e8-eclipse.json                 | 14066 +++
+ .../measure-prover-e8-eclipse.json                 | 14166 +++
+ artifacts/eclipse-winnable/measure-ride.mjs        |   142 +
+ .../eclipse-winnable/prover-e8-eclipse-01.json     | 10618 +++
+ .../prover-e8-eclipse-01.tape.json                 |  9753 ++
+ .../eclipse-winnable/prover-e8-eclipse-02.json     | 12266 +++
+ .../prover-e8-eclipse-02.tape.json                 | 12717 +++
+ artifacts/eclipse-winnable/prover.mjs              |   665 +
+ artifacts/eclipse-winnable/tile-apron.json         |    68 +
+ .../probe-inert-retire.mjs                         |    27 +
+ .../probe-profile-keys.mjs                         |    13 +
+ .../set-dep-description.mjs                        |    26 +
+ .../first-town-audio-deferred/measurements.md      |    86 +
+ .../runs/after-8mbps-final.log                     |    28 +
+ .../runs/after-8mbps-run1.log                      |    28 +
+ .../runs/after-8mbps-run2.log                      |    28 +
+ .../runs/after-8mbps-run3.log                      |    28 +
+ .../runs/after-loopback-final.log                  |    48 +
+ .../runs/after-loopback-run1.log                   |    32 +
+ .../runs/after-loopback-run2.log                   |    32 +
+ .../runs/after-loopback-run3.log                   |    30 +
+ .../runs/before-8mbps-run1.log                     |   120 +
+ .../runs/before-8mbps-run2.log                     |   120 +
+ .../runs/before-8mbps-run3.log                     |   120 +
+ .../runs/before-loopback-run1.log                  |   120 +
+ .../runs/before-loopback-run2.log                  |   120 +
+ .../runs/before-loopback-run3.log                  |   120 +
+ .../timeline-desktop-chrome-8mbps.json             |    73 +
+ .../timeline-desktop-chrome-loopback.json          |    79 +
+ .../timeline-mobile-chrome-8mbps.json              |    73 +
+ .../timeline-mobile-chrome-loopback.json           |    79 +
+ .../first-town-payload-gate/dry-run-verdict.txt    |    22 +
+ artifacts/first-town-payload-gate/gates.txt        |    22 +
+ artifacts/first-town-payload-gate/measurements.md  |   124 +
+ .../first-town-payload-gate/payload-table.txt      |    39 +
+ .../swing/run1-desktop-chrome.json                 |     1 +
+ .../swing/run1-mobile-chrome.json                  |     1 +
+ artifacts/first-town-payload-gate/swing/run1.log   |    20 +
+ .../swing/run2-desktop-chrome.json                 |     1 +
+ .../swing/run2-mobile-chrome.json                  |     1 +
+ artifacts/first-town-payload-gate/swing/run2.log   |    20 +
+ .../swing/run3-desktop-chrome.json                 |     1 +
+ .../swing/run3-mobile-chrome.json                  |     1 +
+ artifacts/first-town-payload-gate/swing/run3.log   |    20 +
+ artifacts/first-town-transfer-bisect/1119a4e9.json |   862 +
+ artifacts/first-town-transfer-bisect/220886ab.json |   862 +
+ artifacts/first-town-transfer-bisect/3691960c.json |   862 +
+ artifacts/first-town-transfer-bisect/85900872.json |   862 +
+ artifacts/first-town-transfer-bisect/87abff83.json |   862 +
+ artifacts/first-town-transfer-bisect/b31adf7b.json |   862 +
+ .../first-town-transfer-bisect/composition.json    |   116 +
+ artifacts/first-town-transfer-bisect/cure.json     |   862 +
+ .../first-town-transfer-bisect/main-e5f3ac82.json  |   862 +
+ artifacts/hero-move-verb/MEASUREMENT.md            |    92 +
+ artifacts/hero-move-verb/audit-after.err.txt       |     2 +
+ artifacts/hero-move-verb/audit-after.json          | 14274 +++
+ .../hero-move-verb/audit-report-regen.err.txt      |     2 +
+ artifacts/hero-move-verb/audit-verb-only.err.txt   |     2 +
+ artifacts/hero-move-verb/audit-verb-only.json      | 13938 +++
+ artifacts/hero-move-verb/boot-shot.mjs             |    34 +
+ artifacts/hero-move-verb/ctrl-v3-kite.mjs          |   130 +
+ .../hero-move-verb/ember-shore-kite.tape.json      |  1561 +
+ artifacts/hero-move-verb/kite-01.replay.json       |    21 +
+ artifacts/hero-move-verb/kite-01.tape.json         |   128 +
+ artifacts/hero-move-verb/ladder.err.txt            |     0
+ artifacts/hero-move-verb/ladder.json               |    72 +
+ artifacts/hero-move-verb/ladder.mjs                |    29 +
+ artifacts/hero-move-verb/ladder.txt                |     7 +
+ artifacts/hero-move-verb/null-floors-check.err.txt |     4 +
+ artifacts/hero-move-verb/null-floors-check.txt     |     1 +
+ .../hero-move-verb/prover-control-defence2.json    |   655 +
+ artifacts/hero-move-verb/prover-control.err.txt    |     0
+ artifacts/hero-move-verb/prover-control.json       |   707 +
+ artifacts/hero-move-verb/prover-kite-attempt1.json |   739 +
+ artifacts/hero-move-verb/prover-kite-defence2.json |   809 +
+ artifacts/hero-move-verb/prover-kite.err.txt       |     0
+ artifacts/hero-move-verb/prover-kite.json          |   725 +
+ artifacts/hero-move-verb/prover.mjs                |   388 +
+ artifacts/hero-move-verb/relay-run.mjs             |    64 +
+ .../hero-move-verb/relay/grit-kite-result.json     |    22 +
+ .../hero-move-verb/relay/grit-kite-stderr.txt      |     3 +
+ artifacts/hero-move-verb/relay/grit-kite-tape.json |  8687 ++
+ .../hero-move-verb/relay/grit-nokite-result.json   |    22 +
+ .../hero-move-verb/relay/grit-nokite-stderr.txt    |     3 +
+ .../hero-move-verb/relay/grit-nokite-tape.json     |  9047 ++
+ .../relay/nogrit-kite-always-result.json           |    22 +
+ .../relay/nogrit-kite-always-stderr.txt            |     3 +
+ .../relay/nogrit-kite-always-tape.json             |  4318 +
+ .../relay/nogrit-kite-hp30-result.json             |    22 +
+ .../relay/nogrit-kite-hp30-stderr.txt              |     3 +
+ .../relay/nogrit-kite-hp30-tape.json               |  6711 ++
+ .../relay/nogrit-kite-hp45-result.json             |    22 +
+ .../relay/nogrit-kite-hp45-stderr.txt              |     3 +
+ .../relay/nogrit-kite-hp45-tape.json               |  5864 ++
+ .../hero-move-verb/relay/nogrit-kite-result.json   |    22 +
+ .../hero-move-verb/relay/nogrit-kite-stderr.txt    |     3 +
+ .../hero-move-verb/relay/nogrit-kite-tape.json     |  5864 ++
+ .../hero-move-verb/relay/nogrit-nokite-result.json |    22 +
+ .../hero-move-verb/relay/nogrit-nokite-stderr.txt  |     3 +
+ .../hero-move-verb/relay/nogrit-nokite-tape.json   |  6857 ++
+ artifacts/hero-move-verb/replay-probe.err.txt      |     2 +
+ artifacts/hero-move-verb/replay-probe.mjs          |    28 +
+ artifacts/hero-move-verb/shots/boot-report.json    |    12 +
+ .../shots/desktop-chrome-plain-boot.png            |   Bin 0 -> 709425 bytes
+ .../shots/mobile-chrome-plain-boot.png             |   Bin 0 -> 268114 bytes
+ artifacts/hero-move-verb/verb-probe.err.txt        |     0
+ artifacts/hero-move-verb/verb-probe.json           |   197 +
+ artifacts/hero-move-verb/verb-probe.mjs            |    62 +
+ artifacts/hero-slot-clip-split/README.md           |   207 +
+ .../hero-slot-clip-split/after-desktop-chrome.json |     1 +
+ .../hero-slot-clip-split/after-mobile-chrome.json  |     1 +
+ .../before-desktop-chrome.json                     |     1 +
+ .../hero-slot-clip-split/before-mobile-chrome.json |     1 +
+ artifacts/hero-slot-clip-split/claim-swing-390.png |   Bin 0 -> 959045 bytes
+ artifacts/hero-slot-clip-split/gate.config.ts      |    27 +
+ artifacts/hero-slot-clip-split/hero-window.mjs     |    41 +
+ artifacts/hero-slot-clip-split/shots.json          |    32 +
+ artifacts/hero-slot-clip-split/shots.mjs           |   118 +
+ .../hero-slot-clip-split/timings-after-final.json  |   218 +
+ artifacts/hero-slot-clip-split/timings-after.json  |   330 +
+ artifacts/hero-slot-clip-split/timings-before.json |   194 +
+ artifacts/hero-slot-clip-split/timings.mjs         |   200 +
+ artifacts/hero-slot-clip-split/town-390.png        |   Bin 0 -> 1388329 bytes
+ artifacts/ledger-backups/ledger-2026-09-06.db      |   Bin 0 -> 6508544 bytes
+ artifacts/ledger-backups/ledger-2026-09-07.db      |   Bin 0 -> 6516736 bytes
+ .../mare-claim-air-prevalent/card-desktop.png      |   Bin 0 -> 686922 bytes
+ .../mare-claim-air-prevalent/card-mobile-390.png   |   Bin 0 -> 297645 bytes
+ .../floor-attribution.json                         |    94 +
+ .../mare-claim-air-prevalent/floor-attribution.mjs |   106 +
+ .../measure-e8-eclipse.json                        |  7154 ++
+ .../measure-e8-far-side.json                       |  6928 ++
+ .../measure-e8-low-orbit.json                      |  6946 ++
+ .../measure-e8-mare-claim.json                     |  6310 ++
+ .../mare-claim-air-prevalent/measure-ride.mjs      |   154 +
+ .../mare-claim-air-prevalent/measure-rides.log     |    31 +
+ .../null-floor-check-after.txt                     |     4 +
+ .../mare-claim-air-prevalent/null-floor-check.txt  |     6 +
+ .../mare-claim-air-prevalent/prover-01-assay.txt   |     2 +
+ .../mare-claim-air-prevalent/prover-01.tape.json   |  3619 +
+ .../mare-claim-air-prevalent/prover-02.tape.json   |  4503 +
+ .../mare-claim-air-prevalent/prover-seed01.json    | 10678 +++
+ artifacts/mare-claim-air-prevalent/prover.json     | 23634 +++++
+ artifacts/mare-claim-air-prevalent/prover.mjs      |   370 +
+ .../mare-claim-air-prevalent/reassay-canonical.txt |     3 +
+ .../reassay-e8-mare-claim-after.json               |  6310 ++
+ artifacts/mare-claim-air-prevalent/shoot-card.mjs  |    77 +
+ artifacts/perf-correctives-batch/MEASUREMENTS.md   |   206 +
+ .../perf-correctives-batch/build-dev-after.log     |  2267 +
+ .../perf-correctives-batch/build-dev-before.log    |  3588 +
+ .../perf-correctives-batch/build-dev-final.log     |  2267 +
+ .../perf-correctives-batch/build-e1-after.log      |  1182 +
+ .../perf-correctives-batch/build-e1-before.log     |  2417 +
+ .../perf-correctives-batch/build-e1-control.log    |  2417 +
+ .../perf-correctives-batch/build-e1-corpus.log     |  1182 +
+ .../perf-correctives-batch/build-e1-final.log      |  1182 +
+ .../perf-correctives-batch/dist-dev-after.txt      |  2231 +
+ .../perf-correctives-batch/dist-dev-before.txt     |  3552 +
+ artifacts/perf-correctives-batch/dist-e1-after.txt |  1146 +
+ .../perf-correctives-batch/dist-e1-before.txt      |  2381 +
+ artifacts/perf-correctives-batch/probe.config.ts   |    19 +
+ artifacts/perf-correctives-batch/probe.spec.ts     |    47 +
+ .../town-transfer-desktop-chrome-precure.json      |     1 +
+ .../town-transfer-mobile-chrome-precure.json       |     1 +
+ artifacts/portraits-e5-e10-generated/batch.sh      |    23 +
+ .../contact-sheet-first-nine.png                   |   Bin 0 -> 2451704 bytes
+ .../portraits-e5-e10-generated/generation.log      |    52 +
+ artifacts/portraits-era-aging-2/batch.mjs          |    59 +
+ .../portraits-era-aging-2/contact-sheet-36.png     |   Bin 0 -> 3877907 bytes
+ .../gate/_aging2-probe.spec.ts.txt                 |   126 +
+ .../portraits-era-aging-2/gate/attended-e2e.txt    |   304 +
+ .../gate/attended-node-guards.txt                  |  4499 +
+ .../gate/playwright.aging2.config.ts.txt           |    23 +
+ artifacts/portraits-era-aging-2/generation.jsonl   |   144 +
+ artifacts/portraits-era-aging/batch.mjs            |    82 +
+ artifacts/portraits-era-aging/contact-sheet-19.png |   Bin 0 -> 3352290 bytes
+ artifacts/portraits-era-aging/generation.jsonl     |    86 +
+ artifacts/reassay-county-2026-09-06/after.json     |   592 +
+ artifacts/reassay-county-2026-09-06/before.json    |   578 +
+ artifacts/reassay-county-2026-09-06/monitor.mjs    |    47 +
+ artifacts/reassay-county-2026-09-06/progress.log   |    59 +
+ artifacts/reassay-county-2026-09-06/started-at.txt |     1 +
+ artifacts/reassay-county-2026-09-06/table.txt      |    49 +
+ .../e8-low-orbit-after.json                        |    12 +
+ .../e8-low-orbit-before.json                       |    44 +
+ .../e8-low-orbit-progress.log                      |    15 +
+ .../e8-eclipse-after.json                          |    12 +
+ .../e8-eclipse-before.json                         |    12 +
+ .../e8-eclipse-progress.log                        |     4 +
+ .../e8-far-side-after.json                         |    12 +
+ .../e8-far-side-before.json                        |    44 +
+ .../e8-far-side-progress.log                       |     7 +
+ .../e8-low-orbit-after.json                        |    44 +
+ .../e8-low-orbit-before.json                       |    44 +
+ .../e8-low-orbit-progress.log                      |     9 +
+ artifacts/reassay-e8-air-wall-2026-09-06/e8.mjs    |    19 +
+ artifacts/reassay-mare-claim-2026-09-06/after.json |    12 +
+ .../reassay-mare-claim-2026-09-06/before.json      |    44 +
+ artifacts/reassay-mare-claim-2026-09-06/mare.mjs   |    19 +
+ .../reassay-mare-claim-2026-09-06/progress.log     |     6 +
+ artifacts/relay-rush-replays-again/MEASUREMENT.md  |   156 +
+ artifacts/relay-rush-replays-again/bisect.sh       |    25 +
+ .../relay-rush-replays-again/bisect/032ccd392.json |     1 +
+ .../relay-rush-replays-again/bisect/0958456a4.json |     1 +
+ .../relay-rush-replays-again/bisect/2fb1f6151.json |     1 +
+ .../relay-rush-replays-again/bisect/41b1e63cf.json |     1 +
+ .../relay-rush-replays-again/bisect/502a398d9.json |     1 +
+ .../relay-rush-replays-again/bisect/55ac2976f.json |     1 +
+ .../relay-rush-replays-again/bisect/78fe8e586.json |     1 +
+ .../relay-rush-replays-again/bisect/a65ea2c17.json |     1 +
+ .../relay-rush-replays-again/bisect/b38d60295.json |     1 +
+ .../relay-rush-replays-again/bisect/de21da4f5.json |     1 +
+ .../relay-rush-replays-again/bisect/e5f3ac820.json |     1 +
+ .../relay-rush-replays-again/bisect/f429f19c6.json |     1 +
+ .../relay-rush-replays-again/bisect/ledger.txt     |    12 +
+ .../head-full-ceiling.json                         |     1 +
+ artifacts/relay-rush-replays-again/probe.mjs       |   122 +
+ .../relay-rush-replays-again/prover-01.replay.json |     1 +
+ .../relay-rush-replays-again/prover-01.tape.json   | 93109 +++++++++++++++++++
+ artifacts/relay-rush-replays-again/prover.json     |   236 +
+ artifacts/relay-rush-replays-again/prover.mjs      |   268 +
+ artifacts/relay-rush-replays-again/range.txt       |   158 +
+ artifacts/relay-rush-replays-again/search.sh       |    17 +
+ .../relay-rush-replays-again/stranded-guards.log   |     8 +
+ .../rider-parity-audit/count-heat12-verbs.mjs      |   119 +
+ .../rider-parity-audit/heat12-verb-counts.json     |   529 +
+ artifacts/s2529-fire/push-corrective.log           |     2 +
+ artifacts/s2530-fire/art-staging.txt               |    65 +
+ artifacts/s2530-fire/authorable.txt                |    79 +
+ artifacts/s2530-fire/backup-corrective.log         |     2 +
+ .../s2530-fire/backup-evidence-corrective.log      |     2 +
+ artifacts/s2530-fire/backup-handoff.log            |     2 +
+ artifacts/s2530-fire/backup-ledgers.log            |     2 +
+ artifacts/s2530-fire/backup-nul-corrective.log     |     2 +
+ artifacts/s2530-fire/coverage-2026-09-05.txt       |   137 +
+ artifacts/s2530-fire/coverage-2026-09-06.txt       |    99 +
+ artifacts/s2530-fire/desk-declaration.txt          |     9 +
+ artifacts/s2530-fire/desk-final.txt                |    58 +
+ artifacts/s2530-fire/dry-board.txt                 |    38 +
+ artifacts/s2530-fire/existing-trace-backups.json   |    11 +
+ artifacts/s2530-fire/failure-log-encoding.json     |    18 +
+ .../finished-evidence-backup-manifest.json         |  1124 +
+ artifacts/s2530-fire/finished-evidence-backup.json |    13 +
+ artifacts/s2530-fire/finished-evidence-push.log    |     6 +
+ .../finished-evidence-remote-restore.json          |    14 +
+ .../s2530-fire/finished-evidence-restore-fetch.txt |     4 +
+ artifacts/s2530-fire/gazette-after-concurrent.txt  |    23 +
+ artifacts/s2530-fire/gazette-final.txt             |   120 +
+ artifacts/s2530-fire/health-final.txt              |    15 +
+ artifacts/s2530-fire/inherited-desk.txt            |    56 +
+ artifacts/s2530-fire/lane-usable.txt               |   426 +
+ artifacts/s2530-fire/ledger-exposure.txt           |    67 +
+ artifacts/s2530-fire/ledger-final-result.json      |    27 +
+ artifacts/s2530-fire/ledger-final.log              |  1433 +
+ artifacts/s2530-fire/ledger-first-result.json      |     8 +
+ artifacts/s2530-fire/ledger-first.log              |  1106 +
+ artifacts/s2530-fire/ledger-freshness.txt          |     8 +
+ artifacts/s2530-fire/ledger-gap-fill.txt           |    72 +
+ artifacts/s2530-fire/ledger-pull.txt               |    44 +
+ artifacts/s2530-fire/ledger-second-result.json     |     8 +
+ artifacts/s2530-fire/ledger-second.log             |  1338 +
+ artifacts/s2530-fire/ledger-second.log.gz          |   Bin 0 -> 40852 bytes
+ artifacts/s2530-fire/ledger-third-result.json      |    22 +
+ artifacts/s2530-fire/ledger-third.log              |  1338 +
+ artifacts/s2530-fire/ledger-third.log.gz           |   Bin 0 -> 40925 bytes
+ artifacts/s2530-fire/master-preflight.txt          |     1 +
+ artifacts/s2530-fire/nul-after-evidence.txt        |     6 +
+ artifacts/s2530-fire/nul-after.txt                 |     6 +
+ artifacts/s2530-fire/nul-corrective.json           |     8 +
+ artifacts/s2530-fire/payload-after.txt             |    39 +
+ artifacts/s2530-fire/payload-before.txt            |    39 +
+ artifacts/s2530-fire/report.md                     |    43 +
+ artifacts/s2530-fire/retention.json                |  6981 ++
+ artifacts/s2530-fire/rotation.json                 |     9 +
+ artifacts/s2530-fire/source-checks.json            |     6 +
+ artifacts/s2530-fire/untracked-main.txt            |   178 +
+ artifacts/s2530-fire/weekly-lanes-push.log         |     7 +
+ artifacts/s2530-fire/weekly-lanes.json             |    10 +
+ artifacts/s2530-fire/withheld.txt                  |    23 +
+ artifacts/s2531-fire/art-staging.log               |    57 +
+ artifacts/s2531-fire/authorable.log                |    78 +
+ artifacts/s2531-fire/daily-duties.log              |     2 +
+ artifacts/s2531-fire/desk-declaration.log          |     9 +
+ artifacts/s2531-fire/desk-final.log                |    59 +
+ artifacts/s2531-fire/desk-inherited.log            |    58 +
+ artifacts/s2531-fire/dispatch.log                  |     4 +
+ artifacts/s2531-fire/dry-board.log                 |    38 +
+ artifacts/s2531-fire/gazette-final.log             |   123 +
+ artifacts/s2531-fire/gazette.log                   |   131 +
+ artifacts/s2531-fire/health.log                    |    15 +
+ artifacts/s2531-fire/lane-c-preflight.log          |    19 +
+ artifacts/s2531-fire/lane-c-refresh.log            |     4 +
+ artifacts/s2531-fire/lanes.log                     |   426 +
+ artifacts/s2531-fire/ledger-guards-result.json     |    15 +
+ artifacts/s2531-fire/ledger-guards.log             |  1426 +
+ artifacts/s2531-fire/mirror-exposure.log           |    67 +
+ artifacts/s2531-fire/mirror-freshness.log          |     8 +
+ artifacts/s2531-fire/report.md                     |    28 +
+ artifacts/s2531-fire/retention-counts.log          |    11 +
+ artifacts/s2531-fire/retention-new-paths.json      |    18 +
+ artifacts/s2531-fire/retention.json                |  6056 ++
+ artifacts/s2531-fire/task-queue-clear.log          |     1 +
+ artifacts/s2531-fire/trace-backup-check.json       |    52 +
+ artifacts/s2531-fire/withheld.log                  |    23 +
+ artifacts/s2532-fire/art-staging.log               |    57 +
+ artifacts/s2532-fire/authorable.log                |    80 +
+ artifacts/s2532-fire/backup.json                   |     8 +
+ artifacts/s2532-fire/beat-citations-before.json    |    70 +
+ artifacts/s2532-fire/citation-control.json         |     7 +
+ artifacts/s2532-fire/closing-receipt.json          |    11 +
+ artifacts/s2532-fire/desk.log                      |    59 +
+ artifacts/s2532-fire/dispatch.json                 |    17 +
+ artifacts/s2532-fire/dry-board-final.log           |    38 +
+ artifacts/s2532-fire/dry-board.log                 |    38 +
+ artifacts/s2532-fire/gazette.log                   |   123 +
+ artifacts/s2532-fire/health.log                    |    14 +
+ artifacts/s2532-fire/lanes.log                     |   419 +
+ artifacts/s2532-fire/ledger-closing.log            |  1426 +
+ artifacts/s2532-fire/master-prequeue.log           |     1 +
+ artifacts/s2532-fire/mirror-exposure.log           |    67 +
+ artifacts/s2532-fire/mirror-freshness.log          |     8 +
+ artifacts/s2532-fire/report.md                     |    23 +
+ artifacts/s2532-fire/retention-name-delta.json     |    98 +
+ artifacts/s2532-fire/retention.json                |  6039 ++
+ artifacts/s2532-fire/retention.log                 |    11 +
+ artifacts/s2532-fire/trace-backup-check.json       |    52 +
+ artifacts/s2532-fire/verify-citations.py           |    35 +
+ artifacts/s2532-fire/withheld.log                  |    23 +
+ artifacts/s2533-fire/authorable.txt                |    82 +
+ artifacts/s2533-fire/base-controls.txt             |   126 +
+ .../s2533-fire/boot/desktop-chrome-default.png     |   Bin 0 -> 1166200 bytes
+ .../s2533-fire/boot/mobile-chrome-default.png      |   Bin 0 -> 1700620 bytes
+ .../s2533-adjacent-private/.last-run.json          |     7 +
+ .../error-context.md                               |   194 +
+ .../test-failed-1.png                              |   Bin 0 -> 1170720 bytes
+ .../trace-records.zip                              |   Bin 0 -> 216077 bytes
+ .../error-context.md                               |   204 +
+ .../test-failed-1.png                              |   Bin 0 -> 1671163 bytes
+ .../trace-records.zip                              |   Bin 0 -> 214107 bytes
+ .../browser-evidence/s2533-adjacent/.last-run.json |     6 +
+ .../error-context.md                               |   140 +
+ .../test-failed-1.png                              |   Bin 0 -> 5519 bytes
+ .../trace-records.zip                              |   Bin 0 -> 88274 bytes
+ .../test-failed-1.png                              |   Bin 0 -> 1076884 bytes
+ .../trace-records.zip                              |   Bin 0 -> 196426 bytes
+ .../browser-evidence/s2533-base-m1/.last-run.json  |     7 +
+ .../error-context.md                               |   200 +
+ .../test-failed-1.png                              |   Bin 0 -> 1183162 bytes
+ .../trace-records.zip                              |   Bin 0 -> 272951 bytes
+ .../error-context.md                               |   204 +
+ .../test-failed-1.png                              |   Bin 0 -> 1671964 bytes
+ .../trace-records.zip                              |   Bin 0 -> 216493 bytes
+ .../s2533-boot-private/.last-run.json              |     4 +
+ .../browser-evidence/s2533-boot/.last-run.json     |     7 +
+ .../error-context.md                               |    92 +
+ .../test-failed-1.png                              |   Bin 0 -> 5519 bytes
+ .../trace-records.zip                              |   Bin 0 -> 84156 bytes
+ .../error-context.md                               |    92 +
+ .../test-failed-1.png                              |   Bin 0 -> 14340 bytes
+ .../trace-records.zip                              |   Bin 0 -> 87439 bytes
+ artifacts/s2533-fire/browser-gates.txt             |   335 +
+ artifacts/s2533-fire/browser-server.txt            |     1 +
+ artifacts/s2533-fire/candidate-engine-era.json     |   603 +
+ artifacts/s2533-fire/candidate.patch               |    82 +
+ artifacts/s2533-fire/citation-gates.txt            |  2421 +
+ artifacts/s2533-fire/corrective-queue-gate.txt     |     1 +
+ artifacts/s2533-fire/daily-duties.json             |    25 +
+ artifacts/s2533-fire/drain-guards.txt              |    69 +
+ artifacts/s2533-fire/drain-permission.txt          |     1 +
+ artifacts/s2533-fire/engine-pin.json               |     6 +
+ artifacts/s2533-fire/gate-context.json             |     6 +
+ artifacts/s2533-fire/inherited-desk.txt            |    59 +
+ .../s2533-fire/initial-browser-cache-errors.json   |    20 +
+ artifacts/s2533-fire/lane-a-before-queue.txt       |    19 +
+ artifacts/s2533-fire/lanes.txt                     |   433 +
+ artifacts/s2533-fire/ledger-exposure.txt           |    67 +
+ artifacts/s2533-fire/ledger-freshness.txt          |     8 +
+ artifacts/s2533-fire/m1-inventory.txt              |     4 +
+ artifacts/s2533-fire/power-control.txt             |    37 +
+ artifacts/s2533-fire/report.md                     |    13 +
+ artifacts/s2533-fire/review-evidence-audit.txt     |    12 +
+ artifacts/s2533-fire/trace-retention.json          |   106 +
+ .../secure-choice-refusal/after-until-end.json     |  9869 ++
+ artifacts/secure-choice-refusal/after.json         |  4208 +
+ .../secure-choice-refusal/before-until-end.json    |  9145 ++
+ artifacts/secure-choice-refusal/before.json        |  3907 +
+ artifacts/secure-choice-refusal/probe.mjs          |   170 +
+ .../after-desktop-chrome.json                      |     1 +
+ .../sprite-cell-manifests/after-mobile-chrome.json |     1 +
+ .../before-desktop-chrome.json                     |     1 +
+ .../before-mobile-chrome.json                      |     1 +
+ artifacts/sprite-cell-manifests/measurements.json  |  1105 +
+ .../town-390-plain-boot-a.png                      |   Bin 0 -> 359013 bytes
+ .../town-390-plain-boot-b.png                      |   Bin 0 -> 359032 bytes
+ .../sprite-cell-manifests/town-390-plain-boot.json |   122 +
+ assets/LEDGER.md                                   |     4 +
+ assets/contracts/epoch-10-deepsky/contracts.json   |     2 +-
+ assets/contracts/epoch-8-orbital/contracts.json    |    72 +-
+ assets/contracts/null-floors.json                  |    32 +-
+ assets/engine-era.json                             |   122 +-
+ assets/first-town-payload.json                     |   164 +
+ assets/layer-contracts/characters.v2.json          |     8 +
+ assets/processed/townsfolk-baron-e10.png           |   Bin 0 -> 385051 bytes
+ assets/processed/townsfolk-boilerwright-e2.png     |   Bin 0 -> 324752 bytes
+ assets/processed/townsfolk-cannery-hand-e5.png     |   Bin 0 -> 397605 bytes
+ assets/processed/townsfolk-charter-keeper-e10.png  |   Bin 0 -> 386272 bytes
+ assets/processed/townsfolk-clerk-e10.png           |   Bin 0 -> 300900 bytes
+ assets/processed/townsfolk-clerk-e2.png            |   Bin 0 -> 311397 bytes
+ assets/processed/townsfolk-clerk-e3.png            |   Bin 0 -> 305856 bytes
+ assets/processed/townsfolk-clerk-e4.png            |   Bin 0 -> 310532 bytes
+ assets/processed/townsfolk-clerk-e5.png            |   Bin 0 -> 307481 bytes
+ assets/processed/townsfolk-clerk-e6.png            |   Bin 0 -> 306868 bytes
+ assets/processed/townsfolk-clerk-e7.png            |   Bin 0 -> 310456 bytes
+ assets/processed/townsfolk-clerk-e8.png            |   Bin 0 -> 304111 bytes
+ assets/processed/townsfolk-clerk-e9.png            |   Bin 0 -> 315964 bytes
+ assets/processed/townsfolk-elder-e2.png            |   Bin 0 -> 311686 bytes
+ assets/processed/townsfolk-eldest-heir-e10.png     |   Bin 0 -> 401181 bytes
+ assets/processed/townsfolk-harbormaster-e5.png     |   Bin 0 -> 380940 bytes
+ assets/processed/townsfolk-he3-assayer-e8.png      |   Bin 0 -> 402138 bytes
+ assets/processed/townsfolk-newsie-e10.png          |   Bin 0 -> 296390 bytes
+ assets/processed/townsfolk-newsie-e2.png           |   Bin 0 -> 319084 bytes
+ assets/processed/townsfolk-newsie-e3.png           |   Bin 0 -> 311211 bytes
+ assets/processed/townsfolk-newsie-e4.png           |   Bin 0 -> 310168 bytes
+ assets/processed/townsfolk-newsie-e5.png           |   Bin 0 -> 309336 bytes
+ assets/processed/townsfolk-newsie-e6.png           |   Bin 0 -> 301448 bytes
+ assets/processed/townsfolk-newsie-e7.png           |   Bin 0 -> 297071 bytes
+ assets/processed/townsfolk-newsie-e8.png           |   Bin 0 -> 296406 bytes
+ assets/processed/townsfolk-newsie-e9.png           |   Bin 0 -> 301078 bytes
+ assets/processed/townsfolk-pearl-diver-e5.png      |   Bin 0 -> 383762 bytes
+ assets/processed/townsfolk-preacher-e10.png        |   Bin 0 -> 294340 bytes
+ assets/processed/townsfolk-preacher-e2.png         |   Bin 0 -> 305217 bytes
+ assets/processed/townsfolk-preacher-e3.png         |   Bin 0 -> 299798 bytes
+ assets/processed/townsfolk-preacher-e5.png         |   Bin 0 -> 305297 bytes
+ assets/processed/townsfolk-preacher-e6.png         |   Bin 0 -> 291192 bytes
+ assets/processed/townsfolk-preacher-e7.png         |   Bin 0 -> 294427 bytes
+ assets/processed/townsfolk-preacher-e8.png         |   Bin 0 -> 296191 bytes
+ assets/processed/townsfolk-preacher-e9.png         |   Bin 0 -> 300612 bytes
+ assets/processed/townsfolk-pressman-e2.png         |   Bin 0 -> 319450 bytes
+ assets/processed/townsfolk-quack-e10.png           |   Bin 0 -> 391657 bytes
+ assets/processed/townsfolk-salvage-king-e8.png     |   Bin 0 -> 318747 bytes
+ assets/processed/townsfolk-schoolteacher-e10.png   |   Bin 0 -> 286668 bytes
+ assets/processed/townsfolk-schoolteacher-e2.png    |   Bin 0 -> 312011 bytes
+ assets/processed/townsfolk-schoolteacher-e3.png    |   Bin 0 -> 316910 bytes
+ assets/processed/townsfolk-schoolteacher-e4.png    |   Bin 0 -> 312457 bytes
+ assets/processed/townsfolk-schoolteacher-e5.png    |   Bin 0 -> 311285 bytes
+ assets/processed/townsfolk-schoolteacher-e6.png    |   Bin 0 -> 303249 bytes
+ assets/processed/townsfolk-schoolteacher-e7.png    |   Bin 0 -> 300774 bytes
+ assets/processed/townsfolk-schoolteacher-e8.png    |   Bin 0 -> 295771 bytes
+ assets/processed/townsfolk-schoolteacher-e9.png    |   Bin 0 -> 294250 bytes
+ assets/processed/townsfolk-shipwright-e5.png       |   Bin 0 -> 394859 bytes
+ assets/processed/townsfolk-tavernkeeper-e10.png    |   Bin 0 -> 307527 bytes
+ assets/processed/townsfolk-tavernkeeper-e2.png     |   Bin 0 -> 308086 bytes
+ assets/processed/townsfolk-tavernkeeper-e3.png     |   Bin 0 -> 320230 bytes
+ assets/processed/townsfolk-tavernkeeper-e4.png     |   Bin 0 -> 318586 bytes
+ assets/processed/townsfolk-tavernkeeper-e5.png     |   Bin 0 -> 318519 bytes
+ assets/processed/townsfolk-tavernkeeper-e6.png     |   Bin 0 -> 312543 bytes
+ assets/processed/townsfolk-tavernkeeper-e7.png     |   Bin 0 -> 314901 bytes
+ assets/processed/townsfolk-tavernkeeper-e8.png     |   Bin 0 -> 311009 bytes
+ assets/processed/townsfolk-tavernkeeper-e9.png     |   Bin 0 -> 308803 bytes
+ assets/processed/townsfolk-tide-teller-e5.png      |   Bin 0 -> 407105 bytes
+ assets/processed/townsfolk-typesetter-e2.png       |   Bin 0 -> 317663 bytes
+ assets/raw/tf-baron-e10.png                        |   Bin 0 -> 2693293 bytes
+ assets/raw/tf-boilerwright-e2.png                  |   Bin 0 -> 2685487 bytes
+ assets/raw/tf-cannery-hand-e5.png                  |   Bin 0 -> 2866791 bytes
+ assets/raw/tf-charter-keeper-e10.png               |   Bin 0 -> 2545577 bytes
+ assets/raw/tf-clerk-e10.png                        |   Bin 0 -> 2341746 bytes
+ assets/raw/tf-clerk-e2.png                         |   Bin 0 -> 2560148 bytes
+ assets/raw/tf-clerk-e3.png                         |   Bin 0 -> 2429810 bytes
+ assets/raw/tf-clerk-e4.png                         |   Bin 0 -> 2454328 bytes
+ assets/raw/tf-clerk-e5.png                         |   Bin 0 -> 2368727 bytes
+ assets/raw/tf-clerk-e6.png                         |   Bin 0 -> 2341571 bytes
+ assets/raw/tf-clerk-e7.png                         |   Bin 0 -> 2419382 bytes
+ assets/raw/tf-clerk-e8.png                         |   Bin 0 -> 2311430 bytes
+ assets/raw/tf-clerk-e9.png                         |   Bin 0 -> 2396901 bytes
+ assets/raw/tf-dredge-queen-machine-e5.png          |   Bin 0 -> 2552117 bytes
+ assets/raw/tf-elder-e2.png                         |   Bin 0 -> 2435596 bytes
+ assets/raw/tf-eldest-heir-e10.png                  |   Bin 0 -> 2940693 bytes
+ assets/raw/tf-harbormaster-e5.png                  |   Bin 0 -> 2527070 bytes
+ assets/raw/tf-he3-assayer-e8.png                   |   Bin 0 -> 2651757 bytes
+ assets/raw/tf-newsie-e10.png                       |   Bin 0 -> 2352148 bytes
+ assets/raw/tf-newsie-e2.png                        |   Bin 0 -> 2638712 bytes
+ assets/raw/tf-newsie-e3.png                        |   Bin 0 -> 2442040 bytes
+ assets/raw/tf-newsie-e4.png                        |   Bin 0 -> 2410583 bytes
+ assets/raw/tf-newsie-e5.png                        |   Bin 0 -> 2410910 bytes
+ assets/raw/tf-newsie-e6.png                        |   Bin 0 -> 2339687 bytes
+ assets/raw/tf-newsie-e7.png                        |   Bin 0 -> 2317235 bytes
+ assets/raw/tf-newsie-e8.png                        |   Bin 0 -> 2312525 bytes
+ assets/raw/tf-newsie-e9.png                        |   Bin 0 -> 2426095 bytes
+ assets/raw/tf-old-digger-e10.png                   |   Bin 0 -> 2686346 bytes
+ assets/raw/tf-old-digger-machine-e9.png            |   Bin 0 -> 2595097 bytes
+ assets/raw/tf-pearl-diver-e5.png                   |   Bin 0 -> 2579348 bytes
+ assets/raw/tf-preacher-e10.png                     |   Bin 0 -> 2340199 bytes
+ assets/raw/tf-preacher-e2.png                      |   Bin 0 -> 2389780 bytes
+ assets/raw/tf-preacher-e3.png                      |   Bin 0 -> 2450942 bytes
+ assets/raw/tf-preacher-e5.png                      |   Bin 0 -> 2351025 bytes
+ assets/raw/tf-preacher-e6.png                      |   Bin 0 -> 2252365 bytes
+ assets/raw/tf-preacher-e7.png                      |   Bin 0 -> 2315775 bytes
+ assets/raw/tf-preacher-e8.png                      |   Bin 0 -> 2318687 bytes
+ assets/raw/tf-preacher-e9.png                      |   Bin 0 -> 2425931 bytes
+ assets/raw/tf-pressman-e2.png                      |   Bin 0 -> 2630935 bytes
+ assets/raw/tf-quack-e10.png                        |   Bin 0 -> 2636064 bytes
+ assets/raw/tf-salvage-claw-machine-e5.png          |   Bin 0 -> 2361660 bytes
+ assets/raw/tf-salvage-king-e5.png                  |   Bin 0 -> 2574846 bytes
+ assets/raw/tf-schoolteacher-e10.png                |   Bin 0 -> 2295455 bytes
+ assets/raw/tf-schoolteacher-e2.png                 |   Bin 0 -> 2565383 bytes
+ assets/raw/tf-schoolteacher-e3.png                 |   Bin 0 -> 2617987 bytes
+ assets/raw/tf-schoolteacher-e4.png                 |   Bin 0 -> 2511104 bytes
+ assets/raw/tf-schoolteacher-e5.png                 |   Bin 0 -> 2434760 bytes
+ assets/raw/tf-schoolteacher-e6.png                 |   Bin 0 -> 2407938 bytes
+ assets/raw/tf-schoolteacher-e7.png                 |   Bin 0 -> 2374943 bytes
+ assets/raw/tf-schoolteacher-e8.png                 |   Bin 0 -> 2323726 bytes
+ assets/raw/tf-schoolteacher-e9.png                 |   Bin 0 -> 2310474 bytes
+ assets/raw/tf-shipwright-e5.png                    |   Bin 0 -> 2604159 bytes
+ assets/raw/tf-tavernkeeper-e10.png                 |   Bin 0 -> 2513107 bytes
+ assets/raw/tf-tavernkeeper-e2.png                  |   Bin 0 -> 2507569 bytes
+ assets/raw/tf-tavernkeeper-e3.png                  |   Bin 0 -> 2611139 bytes
+ assets/raw/tf-tavernkeeper-e4.png                  |   Bin 0 -> 2526826 bytes
+ assets/raw/tf-tavernkeeper-e5.png                  |   Bin 0 -> 2458575 bytes
+ assets/raw/tf-tavernkeeper-e6.png                  |   Bin 0 -> 2526906 bytes
+ assets/raw/tf-tavernkeeper-e7.png                  |   Bin 0 -> 2571185 bytes
+ assets/raw/tf-tavernkeeper-e8.png                  |   Bin 0 -> 2556623 bytes
+ assets/raw/tf-tavernkeeper-e9.png                  |   Bin 0 -> 2547969 bytes
+ assets/raw/tf-tide-teller-e5.png                   |   Bin 0 -> 2727886 bytes
+ assets/raw/tf-typesetter-e2.png                    |   Bin 0 -> 2535413 bytes
+ assets/raw/tf-youngster-a-e2.png                   |   Bin 0 -> 2607301 bytes
+ assets/raw/tf-youngster-a-e4.png                   |   Bin 0 -> 2457692 bytes
+ assets/raw/tf-youngster-a-e8.png                   |   Bin 0 -> 2387437 bytes
+ assets/raw/tf-youngster-b-e2.png                   |   Bin 0 -> 2635790 bytes
+ assets/raw/tf-youngster-b-e4.png                   |   Bin 0 -> 2478337 bytes
+ docs/HANDOVER-2026-09-06-attended.md               |   120 +
+ docs/OWNER-DESK-2026-09-06.md                      |    89 +
+ docs/bench/rider-parity-audit.md                   |   251 +
+ docs/bench/same-game-audit.md                      |  2665 +-
+ docs/decisions/ADR-005-rider-parity.md             |    24 +
+ docs/ops/archive-repo.md                           |    46 +
+ e2e/agent-view.spec.ts                             |    41 +
+ e2e/asset-diet.spec.ts                             |   224 +-
+ e2e/contract-briefings.spec.ts                     |    26 +-
+ e2e/drill-yard-manifest.spec.ts                    |     4 +
+ e2e/e10-ember-shore-preserve.spec.ts               |    15 +-
+ e2e/e6-picnic-opening.spec.ts                      |    46 +-
+ e2e/e8-mare-claim-physics-parity.spec.ts           |    28 +-
+ e2e/e8-remaining-maps-parity.spec.ts               |    91 +-
+ e2e/er01-e10-census.spec.ts                        |    43 +-
+ e2e/er01-e6-census.spec.ts                         |    13 +-
+ e2e/er01-e7-census.spec.ts                         |    13 +-
+ e2e/er01-e8-census.spec.ts                         |    31 +-
+ e2e/er01-e9-census.spec.ts                         |    13 +-
+ e2e/first-town-audio-deferred.spec.ts              |   247 +
+ e2e/fixtures/e1-mechanics-manifests.json           |   120 +
+ e2e/hero-pose-library.spec.ts                      |    20 +-
+ e2e/m1-08-wave18-corrections.spec.ts               |     2 +-
+ e2e/mu-02-music.spec.ts                            |    11 +
+ e2e/music-survives-pause.spec.ts                   |    13 +
+ e2e/ss-03-beats.spec.ts                            |    36 +-
+ e2e/ss-04-e3-beats.spec.ts                         |     4 +
+ e2e/ss-06-e5-beats.spec.ts                         |    45 +
+ e2e/ss-09-e8-beats.spec.ts                         |    25 +-
+ e2e/ss-10-e9-beats.spec.ts                         |    44 +
+ e2e/ss-11-e10-beats.spec.ts                        |    21 +-
+ e2e/town-t5-townsfolk.spec.ts                      |    61 +-
+ logs/suite-red-inventory.md                        |     1 +
+ lore/STORYBOOK.md                                  |     4 +-
+ marketing/outbox/gazette-queue.md                  |    21 +
+ marketing/outbox/ticker-digest-2026-09-05.md       |    21 +
+ marketing/outbox/ticker-digest-2026-09-06.md       |    27 +
+ package.json                                       |     2 +-
+ public/skill.md                                    |     5 +-
+ reviews/beat-citation-refresh.md                   |    34 +
+ reviews/browser-door-held-gold.md                  |    32 +
+ reviews/e10s-4-ember-shore-door.md                 |    32 +
+ reviews/e8-air-logical.md                          |    25 +
+ reviews/e8-air-wall-all-maps.md                    |    36 +
+ reviews/eclipse-winnable.md                        |    27 +
+ reviews/engine-correctives-batch.md                |    24 +
+ reviews/first-town-audio-deferred.md               |    26 +
+ reviews/first-town-payload-gate.md                 |    26 +
+ reviews/first-town-transfer-bisect.md              |    35 +
+ reviews/hero-move-verb.md                          |    31 +
+ reviews/hero-slot-clip-split.md                    |    26 +
+ reviews/mare-claim-air-prevalent.md                |    40 +
+ reviews/perf-correctives-batch.md                  |    23 +
+ reviews/portraits-e5-e10-generated.md              |    31 +
+ reviews/portraits-era-aging-2-batch.md             |    39 +
+ reviews/portraits-era-aging-batch.md               |    27 +
+ reviews/relay-rush-replays-again.md                |    28 +
+ reviews/rider-parity-grammar.md                    |    39 +
+ reviews/secure-choice-refusal-both-cures.md        |    23 +
+ .../desktop-chrome-e10-baron-stays.png             |   Bin 0 -> 1036203 bytes
+ .../desktop-chrome-e10-quack-freed.png             |   Bin 0 -> 1038103 bytes
+ .../desktop-chrome-e5-harbormaster-manifest.png    |   Bin 0 -> 1054095 bytes
+ .../desktop-chrome-e5-tide-teller-reading.png      |   Bin 0 -> 1054018 bytes
+ .../desktop-chrome-portrait-probe-boot.png         |   Bin 0 -> 689494 bytes
+ .../mobile-chrome-e10-baron-stays.png              |   Bin 0 -> 347878 bytes
+ .../mobile-chrome-e10-quack-freed.png              |   Bin 0 -> 350134 bytes
+ .../mobile-chrome-e5-harbormaster-manifest.png     |   Bin 0 -> 339403 bytes
+ .../mobile-chrome-e5-tide-teller-reading.png       |   Bin 0 -> 339004 bytes
+ .../mobile-chrome-portrait-probe-boot.png          |   Bin 0 -> 249656 bytes
+ .../portrait-120px-legibility-10.png               |   Bin 0 -> 399734 bytes
+ .../portrait-card-crop-grid-10.png                 |   Bin 0 -> 1708939 bytes
+ .../card-crops-31-at-1x.png                        |   Bin 0 -> 564723 bytes
+ .../card-crops-31-at-2x.png                        |   Bin 0 -> 2190839 bytes
+ .../identity-chains-e1-to-e10.png                  |   Bin 0 -> 3981998 bytes
+ .../plainboot-desktop-chrome-clerk-e8.png          |   Bin 0 -> 912123 bytes
+ .../plainboot-desktop-chrome-newsie-e6.png         |   Bin 0 -> 903515 bytes
+ .../plainboot-desktop-chrome-preacher-e5.png       |   Bin 0 -> 881228 bytes
+ .../plainboot-desktop-chrome-schoolteacher-e10.png |   Bin 0 -> 846199 bytes
+ .../plainboot-desktop-chrome-schoolteacher-e7.png  |   Bin 0 -> 920729 bytes
+ .../plainboot-desktop-chrome-tavernkeeper-e5.png   |   Bin 0 -> 883633 bytes
+ .../plainboot-desktop-chrome-tavernkeeper-e9.png   |   Bin 0 -> 835268 bytes
+ .../plainboot-mobile-chrome-clerk-e8.png           |   Bin 0 -> 749813 bytes
+ .../plainboot-mobile-chrome-newsie-e6.png          |   Bin 0 -> 724130 bytes
+ .../plainboot-mobile-chrome-preacher-e5.png        |   Bin 0 -> 713848 bytes
+ .../plainboot-mobile-chrome-schoolteacher-e10.png  |   Bin 0 -> 706736 bytes
+ .../plainboot-mobile-chrome-schoolteacher-e7.png   |   Bin 0 -> 757928 bytes
+ .../plainboot-mobile-chrome-tavernkeeper-e5.png    |   Bin 0 -> 723657 bytes
+ .../plainboot-mobile-chrome-tavernkeeper-e9.png    |   Bin 0 -> 696767 bytes
+ .../plates-31-at-120px.png                         |   Bin 0 -> 1192263 bytes
+ .../withheld-youngsters-identity-break.png         |   Bin 0 -> 294833 bytes
+ ...sktop-chrome-e2-elder-tree-schoolteacher-e2.png |   Bin 0 -> 1728826 bytes
+ ...hrome-e3-first-night-round-schoolteacher-e3.png |   Bin 0 -> 1623194 bytes
+ ...ktop-chrome-e4-gazette-crude-bath-newsie-e4.png |   Bin 0 -> 1731486 bytes
+ .../desktop-chrome-portrait-probe-boot.png         |   Bin 0 -> 1726617 bytes
+ ...obile-chrome-e2-elder-tree-schoolteacher-e2.png |   Bin 0 -> 1987283 bytes
+ ...hrome-e3-first-night-round-schoolteacher-e3.png |   Bin 0 -> 1797939 bytes
+ ...bile-chrome-e4-gazette-crude-bath-newsie-e4.png |   Bin 0 -> 1960763 bytes
+ .../mobile-chrome-portrait-probe-boot.png          |   Bin 0 -> 1919263 bytes
+ .../portrait-120px-legibility-19.png               |   Bin 0 -> 597108 bytes
+ .../portrait-card-crop-grid-19.png                 |   Bin 0 -> 1087276 bytes
+ .../portrait-identity-chains-e1-to-e4.png          |   Bin 0 -> 1871185 bytes
+ .../portrait-new-faces-4.png                       |   Bin 0 -> 584544 bytes
+ .../boss-claw-winch.jpg                            |   Bin 0 -> 40538 bytes
+ .../boss-digger-swap.jpg                           |   Bin 0 -> 40080 bytes
+ .../boss-quiet-approach.jpg                        |   Bin 0 -> 40563 bytes
+ .../face-boilerwright-e2.jpg                       |   Bin 0 -> 40154 bytes
+ .../face-cannery-hand-e5.jpg                       |   Bin 0 -> 39666 bytes
+ .../face-charter-keeper-e10.jpg                    |   Bin 0 -> 39529 bytes
+ .../face-eldest-heir-e10.jpg                       |   Bin 0 -> 39087 bytes
+ .../face-he3-assayer-e8.jpg                        |   Bin 0 -> 40264 bytes
+ .../face-pearl-diver-e5.jpg                        |   Bin 0 -> 40732 bytes
+ .../face-preacher-e3.jpg                           |   Bin 0 -> 40927 bytes
+ .../face-pressman-e2.jpg                           |   Bin 0 -> 39677 bytes
+ .../face-shipwright-e5.jpg                         |   Bin 0 -> 39475 bytes
+ .../face-tavernkeeper-e2.jpg                       |   Bin 0 -> 38647 bytes
+ .../face-typesetter-e2.jpg                         |   Bin 0 -> 40484 bytes
+ reviews/spec-hygiene-batch.md                      |    24 +
+ reviews/sprite-cell-manifests.md                   |    25 +
+ reviews/story-correctives-batch.md                 |    23 +
+ scripts/assay-replay.mjs                           |     8 +-
+ scripts/assay-replay.test.mjs                      |    28 +
+ scripts/board-tape-gold.test.mjs                   |   239 +-
+ scripts/deploy-budget.test.mjs                     |   296 +-
+ scripts/deploy-mirror-allowlist.test.mjs           |     8 +-
+ scripts/deploy.sh                                  |   105 +-
+ scripts/e8-air-suit-human.test.mjs                 |   353 +
+ scripts/e8-crossing-gate-override.test.mjs         |   377 +
+ scripts/e8-mare-claim-physics.test.mjs             |    69 +-
+ scripts/e8-regolith-gate-override.test.mjs         |   350 +
+ scripts/e8-remaining-maps.test.mjs                 |   207 +-
+ scripts/eclipse-winnable.test.mjs                  |   184 +
+ scripts/fire.md                                    |     2 +-
+ scripts/first-town-payload.mjs                     |   380 +
+ scripts/first-town-request-families.test.mjs       |   307 +
+ scripts/gr-sim-resume-tape-safety.test.mjs         |    83 +
+ scripts/gr-sim.mjs                                 |    36 +-
+ scripts/gr-sim.test.mjs                            |    33 +-
+ scripts/halo-reextraction-check.mjs                |    16 +-
+ scripts/hero-clip-groups.test.mjs                  |   179 +
+ scripts/hero-move-verb.test.mjs                    |   286 +
+ scripts/lane-usable-untracked-files-guard.test.mjs |    13 +-
+ scripts/law-pointer-baseline.json                  |     4 +-
+ scripts/profile-data-key-sweep.test.mjs            |   189 +
+ scripts/relay-rush-reel.test.mjs                   |   197 +
+ scripts/same-game-audit.mjs                        |   456 +-
+ scripts/same-game-audit.test.mjs                   |   104 +-
+ scripts/secure-choice-refusal.test.mjs             |   256 +
+ scripts/sprite-cell-url-inlining.test.mjs          |   166 +
+ specs/epoch-saga/e8-orbital-bundle.md              |     6 +
+ src/agent/MechanicsManifest.ts                     |   140 +
+ src/agent/StandingOrders.ts                        |   277 +-
+ src/agent/View.ts                                  |    42 +-
+ src/assets/AdvanceStream.ts                        |    93 +-
+ src/assets/SpriteAnimator.ts                       |   322 +-
+ src/assets/generated.ts                            |    25 +-
+ src/audio/SoundSystem.ts                           |   123 +-
+ src/entities/pools.ts                              |    36 +-
+ src/game/Balance.ts.orig                           |   355 -
+ src/game/Game.ts                                   |   146 +-
+ src/game/RunManager.ts                             |    15 +-
+ src/meta/ContractFamilies.ts                       |   241 +-
+ src/mp/AgentRiderBody.ts                           |    34 +-
+ src/sim/HeadlessContractSim.ts                     |   158 +-
+ src/story/beats.ts                                 |   737 +-
+ src/story/speakers.ts                              |   592 +-
+ src/systems/E8AirWindow.ts                         |    81 +
+ src/systems/E8PhysicsSystem.ts                     |   399 +-
+ src/systems/E8SuitAirSystem.ts                     |   308 +-
+ src/town/TownScene.ts                              |    13 +-
+ src/ui/DeathOverlay.ts                             |     9 +-
+ src/ui/Hud.ts                                      |    76 +
+ src/vite-env.d.ts                                  |    35 +
+ src/world/Terrain.ts                               |    13 +-
+ tasks/BACKLOG.md                                   |   108 +-
+ tasks/e10-bank-secured-claim-regression.md         |     4 +-
+ tasks/e8-air-logical.md                            |    24 +
+ tasks/e8-air-wall-all-maps.md                      |    24 +
+ tasks/eclipse-winnable.md                          |    23 +
+ tasks/engine-correctives-batch.md                  |    21 +
+ tasks/first-town-audio-deferred.md                 |    21 +
+ tasks/first-town-payload-gate.md                   |    22 +
+ tasks/first-town-transfer-bisect.md                |    21 +
+ tasks/goals.json                                   |   225 +-
+ tasks/hero-move-verb.md                            |    26 +
+ tasks/hero-slot-clip-split.md                      |    21 +
+ tasks/lane-a-m1-debug-spawn-contract.md            |    24 +
+ tasks/lane-c-chapter-evidence-opt-in.md            |    30 +
+ tasks/main-beat-citation-refresh.md                |    42 +
+ tasks/mare-claim-air-prevalent.md                  |    25 +
+ tasks/perf-correctives-batch.md                    |    21 +
+ tasks/portraits-e5-e10-generated-batch.md          |    24 +
+ tasks/portraits-era-aging-2-batch.md               |    22 +
+ tasks/portraits-era-aging-batch.md                 |    22 +
+ tasks/relay-rush-replays-again.md                  |    21 +
+ tasks/rider-parity-audit.md                        |    21 +
+ tasks/rider-parity-grammar-stage3.md               |    80 +
+ tasks/rider-parity-grammar.md                      |    84 +
+ tasks/secure-choice-refusal-both-cures.md          |    22 +
+ tasks/spec-hygiene-batch.md                        |    23 +
+ tasks/sprite-cell-manifests.md                     |    21 +
+ tasks/story-correctives-batch.md                   |    21 +
+ vite.config.ts                                     |    35 +-
+ 840 files changed, 786992 insertions(+), 2273 deletions(-)
+ create mode 100644 artifacts/beat-citation-refresh/REPORT.md
+ create mode 100644 artifacts/beat-citation-refresh/after.json
+ create mode 100644 artifacts/beat-citation-refresh/before-assert-fixed.txt
+ create mode 100644 artifacts/beat-citation-refresh/before.json
+ create mode 100644 artifacts/beat-citation-refresh/build-after.txt
+ create mode 100644 artifacts/beat-citation-refresh/build-before.txt
+ create mode 100644 artifacts/beat-citation-refresh/compare-tokens.mjs
+ create mode 100644 artifacts/beat-citation-refresh/diff-check.txt
+ create mode 100644 artifacts/beat-citation-refresh/engine-provenance.json
+ create mode 100644 artifacts/beat-citation-refresh/source.diff
+ create mode 100644 artifacts/beat-citation-refresh/token-line-invariance.json
+ create mode 100644 artifacts/beat-citation-refresh/tsc.txt
+ create mode 100644 artifacts/board-tape-gold/e8-mare-claim-air-logical/submission.json
+ create mode 100644 artifacts/board-tape-gold/e8-mare-claim-air-logical/verdict-slip.json
+ create mode 100644 artifacts/board-tape-gold/e8-mare-claim-air-prevalent/submission.json
+ create mode 100644 artifacts/board-tape-gold/e8-mare-claim-air-prevalent/verdict-slip.json
+ create mode 100644 artifacts/browser-door-held-gold/browser-submission.json
+ create mode 100644 artifacts/browser-door-held-gold/hash-neutrality.json
+ create mode 100644 artifacts/browser-door-held-gold/shots/standing-formula-explained-desktop-chrome.png
+ create mode 100644 artifacts/browser-door-held-gold/shots/standing-formula-explained-mobile-chrome.png
+ create mode 100644 artifacts/e8-air-logical/card-e8-eclipse-390.png
+ create mode 100644 artifacts/e8-air-logical/card-e8-far-side-390.png
+ create mode 100644 artifacts/e8-air-logical/card-e8-low-orbit-390.png
+ create mode 100644 artifacts/e8-air-logical/card-e8-mare-claim-390.png
+ create mode 100644 artifacts/e8-air-logical/control-e8-eclipse.json
+ create mode 100644 artifacts/e8-air-logical/control-e8-far-side.json
+ create mode 100644 artifacts/e8-air-logical/control-e8-low-orbit.json
+ create mode 100644 artifacts/e8-air-logical/control-e8-mare-claim.json
+ create mode 100644 artifacts/e8-air-logical/control-no-sortie-e8-low-orbit.json
+ create mode 100644 artifacts/e8-air-logical/control-runs.log
+ create mode 100644 artifacts/e8-air-logical/dial-e8-eclipse-390.png
+ create mode 100644 artifacts/e8-air-logical/dial-e8-far-side-390.png
+ create mode 100644 artifacts/e8-air-logical/dial-e8-low-orbit-390.png
+ create mode 100644 artifacts/e8-air-logical/dial-e8-mare-claim-390.png
+ create mode 100644 artifacts/e8-air-logical/floor-attribution.json
+ create mode 100644 artifacts/e8-air-logical/floor-attribution.log
+ create mode 100644 artifacts/e8-air-logical/floor-attribution.mjs
+ create mode 100644 artifacts/e8-air-logical/heat12-e8-eclipse.json
+ create mode 100644 artifacts/e8-air-logical/heat12-e8-far-side.json
+ create mode 100644 artifacts/e8-air-logical/heat12-e8-low-orbit.json
+ create mode 100644 artifacts/e8-air-logical/heat12-e8-mare-claim.json
+ create mode 100644 artifacts/e8-air-logical/measure-body.mjs
+ create mode 100644 artifacts/e8-air-logical/measure-heat12-bodies.log
+ create mode 100644 artifacts/e8-air-logical/prover-e8-eclipse-01.tape.json
+ create mode 100644 artifacts/e8-air-logical/prover-e8-eclipse.json
+ create mode 100644 artifacts/e8-air-logical/prover-e8-far-side-01.tape.json
+ create mode 100644 artifacts/e8-air-logical/prover-e8-far-side.json
+ create mode 100644 artifacts/e8-air-logical/prover-e8-low-orbit-01.tape.json
+ create mode 100644 artifacts/e8-air-logical/prover-e8-low-orbit.json
+ create mode 100644 artifacts/e8-air-logical/prover-e8-mare-claim-01.tape.json
+ create mode 100644 artifacts/e8-air-logical/prover-e8-mare-claim.json
+ create mode 100644 artifacts/e8-air-logical/prover-final-tree.log
+ create mode 100644 artifacts/e8-air-logical/prover-run-e8-eclipse.json
+ create mode 100644 artifacts/e8-air-logical/prover-run-e8-far-side.json
+ create mode 100644 artifacts/e8-air-logical/prover-run-e8-low-orbit.json
+ create mode 100644 artifacts/e8-air-logical/prover-run-e8-mare-claim.json
+ create mode 100644 artifacts/e8-air-logical/prover-runs.log
+ create mode 100644 artifacts/e8-air-logical/prover.mjs
+ create mode 100644 artifacts/e8-air-logical/reassay-e8-low-orbit.json
+ create mode 100644 artifacts/e8-air-logical/reassay-e8-mare-claim.json
+ create mode 100644 artifacts/e8-air-logical/shoot-card.mjs
+ create mode 100644 artifacts/e8-air-logical/shoot-dial.mjs
+ create mode 100644 artifacts/e8-air-wall-all-maps/card-e8-eclipse-390.png
+ create mode 100644 artifacts/e8-air-wall-all-maps/card-e8-far-side-390.png
+ create mode 100644 artifacts/e8-air-wall-all-maps/card-e8-low-orbit-390.png
+ create mode 100644 artifacts/e8-air-wall-all-maps/floor-attribution.json
+ create mode 100644 artifacts/e8-air-wall-all-maps/floor-attribution.log
+ create mode 100644 artifacts/e8-air-wall-all-maps/floor-attribution.mjs
+ create mode 100644 artifacts/e8-air-wall-all-maps/measure-heat12-e8-eclipse.json
+ create mode 100644 artifacts/e8-air-wall-all-maps/measure-heat12-e8-far-side.json
+ create mode 100644 artifacts/e8-air-wall-all-maps/measure-heat12-e8-low-orbit.json
+ create mode 100644 artifacts/e8-air-wall-all-maps/measure-prover-e8-eclipse.json
+ create mode 100644 artifacts/e8-air-wall-all-maps/measure-prover-e8-far-side.json
+ create mode 100644 artifacts/e8-air-wall-all-maps/measure-prover-e8-low-orbit.json
+ create mode 100644 artifacts/e8-air-wall-all-maps/measure-provers.log
+ create mode 100644 artifacts/e8-air-wall-all-maps/measure-ride.mjs
+ create mode 100644 artifacts/e8-air-wall-all-maps/measure-rides-after.log
+ create mode 100644 artifacts/e8-air-wall-all-maps/measure-rides-before.log
+ create mode 100644 artifacts/e8-air-wall-all-maps/prover-e8-eclipse-01.tape.json
+ create mode 100644 artifacts/e8-air-wall-all-maps/prover-e8-eclipse.json
+ create mode 100644 artifacts/e8-air-wall-all-maps/prover-e8-far-side-01.tape.json
+ create mode 100644 artifacts/e8-air-wall-all-maps/prover-e8-far-side.json
+ create mode 100644 artifacts/e8-air-wall-all-maps/prover-e8-low-orbit-01.tape.json
+ create mode 100644 artifacts/e8-air-wall-all-maps/prover-e8-low-orbit.json
+ create mode 100644 artifacts/e8-air-wall-all-maps/prover.mjs
+ create mode 100644 artifacts/e8-air-wall-all-maps/shoot-card.mjs
+ create mode 100644 artifacts/eclipse-winnable/LADDER.log
+ create mode 100644 artifacts/eclipse-winnable/MEASUREMENT.md
+ create mode 100644 artifacts/eclipse-winnable/arm-bank-1200.json
+ create mode 100644 artifacts/eclipse-winnable/arm-bank-400.json
+ create mode 100644 artifacts/eclipse-winnable/arm-buildline-apron.json
+ create mode 100644 artifacts/eclipse-winnable/arm-control-seed02.json
+ create mode 100644 artifacts/eclipse-winnable/arm-control.json
+ create mode 100644 artifacts/eclipse-winnable/arm-fort-t5b6.json
+ create mode 100644 artifacts/eclipse-winnable/arm-fort-t6b9.json
+ create mode 100644 artifacts/eclipse-winnable/arm-fort.mjs
+ create mode 100644 artifacts/eclipse-winnable/arm-grit-100.json
+ create mode 100644 artifacts/eclipse-winnable/arm-grit-300.json
+ create mode 100644 artifacts/eclipse-winnable/arm-kite-0-0.json
+ create mode 100644 artifacts/eclipse-winnable/arm-kite-0-4-seed02.json
+ create mode 100644 artifacts/eclipse-winnable/arm-kite-0-4.json
+ create mode 100644 artifacts/eclipse-winnable/arm-kite-north-0-26.json
+ create mode 100644 artifacts/eclipse-winnable/arm-roster-hp80.json
+ create mode 100644 artifacts/eclipse-winnable/arm-seam-140.json
+ create mode 100644 artifacts/eclipse-winnable/arm.mjs
+ create mode 100644 artifacts/eclipse-winnable/baseline-prover-01.json
+ create mode 100644 artifacts/eclipse-winnable/baseline-prover-01.progress.log
+ create mode 100644 artifacts/eclipse-winnable/measure-heat12-e8-eclipse.json
+ create mode 100644 artifacts/eclipse-winnable/measure-prover-e8-eclipse.json
+ create mode 100644 artifacts/eclipse-winnable/measure-ride.mjs
+ create mode 100644 artifacts/eclipse-winnable/prover-e8-eclipse-01.json
+ create mode 100644 artifacts/eclipse-winnable/prover-e8-eclipse-01.tape.json
+ create mode 100644 artifacts/eclipse-winnable/prover-e8-eclipse-02.json
+ create mode 100644 artifacts/eclipse-winnable/prover-e8-eclipse-02.tape.json
+ create mode 100644 artifacts/eclipse-winnable/prover.mjs
+ create mode 100644 artifacts/eclipse-winnable/tile-apron.json
+ create mode 100644 artifacts/engine-correctives-batch/probe-inert-retire.mjs
+ create mode 100644 artifacts/engine-correctives-batch/probe-profile-keys.mjs
+ create mode 100644 artifacts/engine-correctives-batch/set-dep-description.mjs
+ create mode 100644 artifacts/first-town-audio-deferred/measurements.md
+ create mode 100644 artifacts/first-town-audio-deferred/runs/after-8mbps-final.log
+ create mode 100644 artifacts/first-town-audio-deferred/runs/after-8mbps-run1.log
+ create mode 100644 artifacts/first-town-audio-deferred/runs/after-8mbps-run2.log
+ create mode 100644 artifacts/first-town-audio-deferred/runs/after-8mbps-run3.log
+ create mode 100644 artifacts/first-town-audio-deferred/runs/after-loopback-final.log
+ create mode 100644 artifacts/first-town-audio-deferred/runs/after-loopback-run1.log
+ create mode 100644 artifacts/first-town-audio-deferred/runs/after-loopback-run2.log
+ create mode 100644 artifacts/first-town-audio-deferred/runs/after-loopback-run3.log
+ create mode 100644 artifacts/first-town-audio-deferred/runs/before-8mbps-run1.log
+ create mode 100644 artifacts/first-town-audio-deferred/runs/before-8mbps-run2.log
+ create mode 100644 artifacts/first-town-audio-deferred/runs/before-8mbps-run3.log
+ create mode 100644 artifacts/first-town-audio-deferred/runs/before-loopback-run1.log
+ create mode 100644 artifacts/first-town-audio-deferred/runs/before-loopback-run2.log
+ create mode 100644 artifacts/first-town-audio-deferred/runs/before-loopback-run3.log
+ create mode 100644 artifacts/first-town-audio-deferred/timeline-desktop-chrome-8mbps.json
+ create mode 100644 artifacts/first-town-audio-deferred/timeline-desktop-chrome-loopback.json
+ create mode 100644 artifacts/first-town-audio-deferred/timeline-mobile-chrome-8mbps.json
+ create mode 100644 artifacts/first-town-audio-deferred/timeline-mobile-chrome-loopback.json
+ create mode 100644 artifacts/first-town-payload-gate/dry-run-verdict.txt
+ create mode 100644 artifacts/first-town-payload-gate/gates.txt
+ create mode 100644 artifacts/first-town-payload-gate/measurements.md
+ create mode 100644 artifacts/first-town-payload-gate/payload-table.txt
+ create mode 100644 artifacts/first-town-payload-gate/swing/run1-desktop-chrome.json
+ create mode 100644 artifacts/first-town-payload-gate/swing/run1-mobile-chrome.json
+ create mode 100644 artifacts/first-town-payload-gate/swing/run1.log
+ create mode 100644 artifacts/first-town-payload-gate/swing/run2-desktop-chrome.json
+ create mode 100644 artifacts/first-town-payload-gate/swing/run2-mobile-chrome.json
+ create mode 100644 artifacts/first-town-payload-gate/swing/run2.log
+ create mode 100644 artifacts/first-town-payload-gate/swing/run3-desktop-chrome.json
+ create mode 100644 artifacts/first-town-payload-gate/swing/run3-mobile-chrome.json
+ create mode 100644 artifacts/first-town-payload-gate/swing/run3.log
+ create mode 100644 artifacts/first-town-transfer-bisect/1119a4e9.json
+ create mode 100644 artifacts/first-town-transfer-bisect/220886ab.json
+ create mode 100644 artifacts/first-town-transfer-bisect/3691960c.json
+ create mode 100644 artifacts/first-town-transfer-bisect/85900872.json
+ create mode 100644 artifacts/first-town-transfer-bisect/87abff83.json
+ create mode 100644 artifacts/first-town-transfer-bisect/b31adf7b.json
+ create mode 100644 artifacts/first-town-transfer-bisect/composition.json
+ create mode 100644 artifacts/first-town-transfer-bisect/cure.json
+ create mode 100644 artifacts/first-town-transfer-bisect/main-e5f3ac82.json
+ create mode 100644 artifacts/hero-move-verb/MEASUREMENT.md
+ create mode 100644 artifacts/hero-move-verb/audit-after.err.txt
+ create mode 100644 artifacts/hero-move-verb/audit-after.json
+ create mode 100644 artifacts/hero-move-verb/audit-report-regen.err.txt
+ create mode 100644 artifacts/hero-move-verb/audit-verb-only.err.txt
+ create mode 100644 artifacts/hero-move-verb/audit-verb-only.json
+ create mode 100644 artifacts/hero-move-verb/boot-shot.mjs
+ create mode 100644 artifacts/hero-move-verb/ctrl-v3-kite.mjs
+ create mode 100644 artifacts/hero-move-verb/ember-shore-kite.tape.json
+ create mode 100644 artifacts/hero-move-verb/kite-01.replay.json
+ create mode 100644 artifacts/hero-move-verb/kite-01.tape.json
+ create mode 100644 artifacts/hero-move-verb/ladder.err.txt
+ create mode 100644 artifacts/hero-move-verb/ladder.json
+ create mode 100644 artifacts/hero-move-verb/ladder.mjs
+ create mode 100644 artifacts/hero-move-verb/ladder.txt
+ create mode 100644 artifacts/hero-move-verb/null-floors-check.err.txt
+ create mode 100644 artifacts/hero-move-verb/null-floors-check.txt
+ create mode 100644 artifacts/hero-move-verb/prover-control-defence2.json
+ create mode 100644 artifacts/hero-move-verb/prover-control.err.txt
+ create mode 100644 artifacts/hero-move-verb/prover-control.json
+ create mode 100644 artifacts/hero-move-verb/prover-kite-attempt1.json
+ create mode 100644 artifacts/hero-move-verb/prover-kite-defence2.json
+ create mode 100644 artifacts/hero-move-verb/prover-kite.err.txt
+ create mode 100644 artifacts/hero-move-verb/prover-kite.json
+ create mode 100644 artifacts/hero-move-verb/prover.mjs
+ create mode 100644 artifacts/hero-move-verb/relay-run.mjs
+ create mode 100644 artifacts/hero-move-verb/relay/grit-kite-result.json
+ create mode 100644 artifacts/hero-move-verb/relay/grit-kite-stderr.txt
+ create mode 100644 artifacts/hero-move-verb/relay/grit-kite-tape.json
+ create mode 100644 artifacts/hero-move-verb/relay/grit-nokite-result.json
+ create mode 100644 artifacts/hero-move-verb/relay/grit-nokite-stderr.txt
+ create mode 100644 artifacts/hero-move-verb/relay/grit-nokite-tape.json
+ create mode 100644 artifacts/hero-move-verb/relay/nogrit-kite-always-result.json
+ create mode 100644 artifacts/hero-move-verb/relay/nogrit-kite-always-stderr.txt
+ create mode 100644 artifacts/hero-move-verb/relay/nogrit-kite-always-tape.json
+ create mode 100644 artifacts/hero-move-verb/relay/nogrit-kite-hp30-result.json
+ create mode 100644 artifacts/hero-move-verb/relay/nogrit-kite-hp30-stderr.txt
+ create mode 100644 artifacts/hero-move-verb/relay/nogrit-kite-hp30-tape.json
+ create mode 100644 artifacts/hero-move-verb/relay/nogrit-kite-hp45-result.json
+ create mode 100644 artifacts/hero-move-verb/relay/nogrit-kite-hp45-stderr.txt
+ create mode 100644 artifacts/hero-move-verb/relay/nogrit-kite-hp45-tape.json
+ create mode 100644 artifacts/hero-move-verb/relay/nogrit-kite-result.json
+ create mode 100644 artifacts/hero-move-verb/relay/nogrit-kite-stderr.txt
+ create mode 100644 artifacts/hero-move-verb/relay/nogrit-kite-tape.json
+ create mode 100644 artifacts/hero-move-verb/relay/nogrit-nokite-result.json
+ create mode 100644 artifacts/hero-move-verb/relay/nogrit-nokite-stderr.txt
+ create mode 100644 artifacts/hero-move-verb/relay/nogrit-nokite-tape.json
+ create mode 100644 artifacts/hero-move-verb/replay-probe.err.txt
+ create mode 100644 artifacts/hero-move-verb/replay-probe.mjs
+ create mode 100644 artifacts/hero-move-verb/shots/boot-report.json
+ create mode 100644 artifacts/hero-move-verb/shots/desktop-chrome-plain-boot.png
+ create mode 100644 artifacts/hero-move-verb/shots/mobile-chrome-plain-boot.png
+ create mode 100644 artifacts/hero-move-verb/verb-probe.err.txt
+ create mode 100644 artifacts/hero-move-verb/verb-probe.json
+ create mode 100644 artifacts/hero-move-verb/verb-probe.mjs
+ create mode 100644 artifacts/hero-slot-clip-split/README.md
+ create mode 100644 artifacts/hero-slot-clip-split/after-desktop-chrome.json
+ create mode 100644 artifacts/hero-slot-clip-split/after-mobile-chrome.json
+ create mode 100644 artifacts/hero-slot-clip-split/before-desktop-chrome.json
+ create mode 100644 artifacts/hero-slot-clip-split/before-mobile-chrome.json
+ create mode 100644 artifacts/hero-slot-clip-split/claim-swing-390.png
+ create mode 100644 artifacts/hero-slot-clip-split/gate.config.ts
+ create mode 100644 artifacts/hero-slot-clip-split/hero-window.mjs
+ create mode 100644 artifacts/hero-slot-clip-split/shots.json
+ create mode 100644 artifacts/hero-slot-clip-split/shots.mjs
+ create mode 100644 artifacts/hero-slot-clip-split/timings-after-final.json
+ create mode 100644 artifacts/hero-slot-clip-split/timings-after.json
+ create mode 100644 artifacts/hero-slot-clip-split/timings-before.json
+ create mode 100644 artifacts/hero-slot-clip-split/timings.mjs
+ create mode 100644 artifacts/hero-slot-clip-split/town-390.png
+ create mode 100644 artifacts/ledger-backups/ledger-2026-09-06.db
+ create mode 100644 artifacts/ledger-backups/ledger-2026-09-07.db
+ create mode 100644 artifacts/mare-claim-air-prevalent/card-desktop.png
+ create mode 100644 artifacts/mare-claim-air-prevalent/card-mobile-390.png
+ create mode 100644 artifacts/mare-claim-air-prevalent/floor-attribution.json
+ create mode 100644 artifacts/mare-claim-air-prevalent/floor-attribution.mjs
+ create mode 100644 artifacts/mare-claim-air-prevalent/measure-e8-eclipse.json
+ create mode 100644 artifacts/mare-claim-air-prevalent/measure-e8-far-side.json
+ create mode 100644 artifacts/mare-claim-air-prevalent/measure-e8-low-orbit.json
+ create mode 100644 artifacts/mare-claim-air-prevalent/measure-e8-mare-claim.json
+ create mode 100644 artifacts/mare-claim-air-prevalent/measure-ride.mjs
+ create mode 100644 artifacts/mare-claim-air-prevalent/measure-rides.log
+ create mode 100644 artifacts/mare-claim-air-prevalent/null-floor-check-after.txt
+ create mode 100644 artifacts/mare-claim-air-prevalent/null-floor-check.txt
+ create mode 100644 artifacts/mare-claim-air-prevalent/prover-01-assay.txt
+ create mode 100644 artifacts/mare-claim-air-prevalent/prover-01.tape.json
+ create mode 100644 artifacts/mare-claim-air-prevalent/prover-02.tape.json
+ create mode 100644 artifacts/mare-claim-air-prevalent/prover-seed01.json
+ create mode 100644 artifacts/mare-claim-air-prevalent/prover.json
+ create mode 100644 artifacts/mare-claim-air-prevalent/prover.mjs
+ create mode 100644 artifacts/mare-claim-air-prevalent/reassay-canonical.txt
+ create mode 100644 artifacts/mare-claim-air-prevalent/reassay-e8-mare-claim-after.json
+ create mode 100644 artifacts/mare-claim-air-prevalent/shoot-card.mjs
+ create mode 100644 artifacts/perf-correctives-batch/MEASUREMENTS.md
+ create mode 100644 artifacts/perf-correctives-batch/build-dev-after.log
+ create mode 100644 artifacts/perf-correctives-batch/build-dev-before.log
+ create mode 100644 artifacts/perf-correctives-batch/build-dev-final.log
+ create mode 100644 artifacts/perf-correctives-batch/build-e1-after.log
+ create mode 100644 artifacts/perf-correctives-batch/build-e1-before.log
+ create mode 100644 artifacts/perf-correctives-batch/build-e1-control.log
+ create mode 100644 artifacts/perf-correctives-batch/build-e1-corpus.log
+ create mode 100644 artifacts/perf-correctives-batch/build-e1-final.log
+ create mode 100644 artifacts/perf-correctives-batch/dist-dev-after.txt
+ create mode 100644 artifacts/perf-correctives-batch/dist-dev-before.txt
+ create mode 100644 artifacts/perf-correctives-batch/dist-e1-after.txt
+ create mode 100644 artifacts/perf-correctives-batch/dist-e1-before.txt
+ create mode 100644 artifacts/perf-correctives-batch/probe.config.ts
+ create mode 100644 artifacts/perf-correctives-batch/probe.spec.ts
+ create mode 100644 artifacts/perf-correctives-batch/town-transfer-desktop-chrome-precure.json
+ create mode 100644 artifacts/perf-correctives-batch/town-transfer-mobile-chrome-precure.json
+ create mode 100755 artifacts/portraits-e5-e10-generated/batch.sh
+ create mode 100644 artifacts/portraits-e5-e10-generated/contact-sheet-first-nine.png
+ create mode 100644 artifacts/portraits-e5-e10-generated/generation.log
+ create mode 100644 artifacts/portraits-era-aging-2/batch.mjs
+ create mode 100644 artifacts/portraits-era-aging-2/contact-sheet-36.png
+ create mode 100644 artifacts/portraits-era-aging-2/gate/_aging2-probe.spec.ts.txt
+ create mode 100644 artifacts/portraits-era-aging-2/gate/attended-e2e.txt
+ create mode 100644 artifacts/portraits-era-aging-2/gate/attended-node-guards.txt
+ create mode 100644 artifacts/portraits-era-aging-2/gate/playwright.aging2.config.ts.txt
+ create mode 100644 artifacts/portraits-era-aging-2/generation.jsonl
+ create mode 100644 artifacts/portraits-era-aging/batch.mjs
+ create mode 100644 artifacts/portraits-era-aging/contact-sheet-19.png
+ create mode 100644 artifacts/portraits-era-aging/generation.jsonl
+ create mode 100644 artifacts/reassay-county-2026-09-06/after.json
+ create mode 100644 artifacts/reassay-county-2026-09-06/before.json
+ create mode 100644 artifacts/reassay-county-2026-09-06/monitor.mjs
+ create mode 100644 artifacts/reassay-county-2026-09-06/progress.log
+ create mode 100644 artifacts/reassay-county-2026-09-06/started-at.txt
+ create mode 100644 artifacts/reassay-county-2026-09-06/table.txt
+ create mode 100644 artifacts/reassay-e8-air-logical-2026-09-07/e8-low-orbit-after.json
+ create mode 100644 artifacts/reassay-e8-air-logical-2026-09-07/e8-low-orbit-before.json
+ create mode 100644 artifacts/reassay-e8-air-logical-2026-09-07/e8-low-orbit-progress.log
+ create mode 100644 artifacts/reassay-e8-air-wall-2026-09-06/e8-eclipse-after.json
+ create mode 100644 artifacts/reassay-e8-air-wall-2026-09-06/e8-eclipse-before.json
+ create mode 100644 artifacts/reassay-e8-air-wall-2026-09-06/e8-eclipse-progress.log
+ create mode 100644 artifacts/reassay-e8-air-wall-2026-09-06/e8-far-side-after.json
+ create mode 100644 artifacts/reassay-e8-air-wall-2026-09-06/e8-far-side-before.json
+ create mode 100644 artifacts/reassay-e8-air-wall-2026-09-06/e8-far-side-progress.log
+ create mode 100644 artifacts/reassay-e8-air-wall-2026-09-06/e8-low-orbit-after.json
+ create mode 100644 artifacts/reassay-e8-air-wall-2026-09-06/e8-low-orbit-before.json
+ create mode 100644 artifacts/reassay-e8-air-wall-2026-09-06/e8-low-orbit-progress.log
+ create mode 100644 artifacts/reassay-e8-air-wall-2026-09-06/e8.mjs
+ create mode 100644 artifacts/reassay-mare-claim-2026-09-06/after.json
+ create mode 100644 artifacts/reassay-mare-claim-2026-09-06/before.json
+ create mode 100644 artifacts/reassay-mare-claim-2026-09-06/mare.mjs
+ create mode 100644 artifacts/reassay-mare-claim-2026-09-06/progress.log
+ create mode 100644 artifacts/relay-rush-replays-again/MEASUREMENT.md
+ create mode 100755 artifacts/relay-rush-replays-again/bisect.sh
+ create mode 100644 artifacts/relay-rush-replays-again/bisect/032ccd392.json
+ create mode 100644 artifacts/relay-rush-replays-again/bisect/0958456a4.json
+ create mode 100644 artifacts/relay-rush-replays-again/bisect/2fb1f6151.json
+ create mode 100644 artifacts/relay-rush-replays-again/bisect/41b1e63cf.json
+ create mode 100644 artifacts/relay-rush-replays-again/bisect/502a398d9.json
+ create mode 100644 artifacts/relay-rush-replays-again/bisect/55ac2976f.json
+ create mode 100644 artifacts/relay-rush-replays-again/bisect/78fe8e586.json
+ create mode 100644 artifacts/relay-rush-replays-again/bisect/a65ea2c17.json
+ create mode 100644 artifacts/relay-rush-replays-again/bisect/b38d60295.json
+ create mode 100644 artifacts/relay-rush-replays-again/bisect/de21da4f5.json
+ create mode 100644 artifacts/relay-rush-replays-again/bisect/e5f3ac820.json
+ create mode 100644 artifacts/relay-rush-replays-again/bisect/f429f19c6.json
+ create mode 100644 artifacts/relay-rush-replays-again/bisect/ledger.txt
+ create mode 100644 artifacts/relay-rush-replays-again/head-full-ceiling.json
+ create mode 100644 artifacts/relay-rush-replays-again/probe.mjs
+ create mode 100644 artifacts/relay-rush-replays-again/prover-01.replay.json
+ create mode 100644 artifacts/relay-rush-replays-again/prover-01.tape.json
+ create mode 100644 artifacts/relay-rush-replays-again/prover.json
+ create mode 100644 artifacts/relay-rush-replays-again/prover.mjs
+ create mode 100644 artifacts/relay-rush-replays-again/range.txt
+ create mode 100644 artifacts/relay-rush-replays-again/search.sh
+ create mode 100644 artifacts/relay-rush-replays-again/stranded-guards.log
+ create mode 100644 artifacts/rider-parity-audit/count-heat12-verbs.mjs
+ create mode 100644 artifacts/rider-parity-audit/heat12-verb-counts.json
+ create mode 100644 artifacts/s2529-fire/push-corrective.log
+ create mode 100644 artifacts/s2530-fire/art-staging.txt
+ create mode 100644 artifacts/s2530-fire/authorable.txt
+ create mode 100644 artifacts/s2530-fire/backup-corrective.log
+ create mode 100644 artifacts/s2530-fire/backup-evidence-corrective.log
+ create mode 100644 artifacts/s2530-fire/backup-handoff.log
+ create mode 100644 artifacts/s2530-fire/backup-ledgers.log
+ create mode 100644 artifacts/s2530-fire/backup-nul-corrective.log
+ create mode 100644 artifacts/s2530-fire/coverage-2026-09-05.txt
+ create mode 100644 artifacts/s2530-fire/coverage-2026-09-06.txt
+ create mode 100644 artifacts/s2530-fire/desk-declaration.txt
+ create mode 100644 artifacts/s2530-fire/desk-final.txt
+ create mode 100644 artifacts/s2530-fire/dry-board.txt
+ create mode 100644 artifacts/s2530-fire/existing-trace-backups.json
+ create mode 100644 artifacts/s2530-fire/failure-log-encoding.json
+ create mode 100644 artifacts/s2530-fire/finished-evidence-backup-manifest.json
+ create mode 100644 artifacts/s2530-fire/finished-evidence-backup.json
+ create mode 100644 artifacts/s2530-fire/finished-evidence-push.log
+ create mode 100644 artifacts/s2530-fire/finished-evidence-remote-restore.json
+ create mode 100644 artifacts/s2530-fire/finished-evidence-restore-fetch.txt
+ create mode 100644 artifacts/s2530-fire/gazette-after-concurrent.txt
+ create mode 100644 artifacts/s2530-fire/gazette-final.txt
+ create mode 100644 artifacts/s2530-fire/health-final.txt
+ create mode 100644 artifacts/s2530-fire/inherited-desk.txt
+ create mode 100644 artifacts/s2530-fire/lane-usable.txt
+ create mode 100644 artifacts/s2530-fire/ledger-exposure.txt
+ create mode 100644 artifacts/s2530-fire/ledger-final-result.json
+ create mode 100644 artifacts/s2530-fire/ledger-final.log
+ create mode 100644 artifacts/s2530-fire/ledger-first-result.json
+ create mode 100644 artifacts/s2530-fire/ledger-first.log
+ create mode 100644 artifacts/s2530-fire/ledger-freshness.txt
+ create mode 100644 artifacts/s2530-fire/ledger-gap-fill.txt
+ create mode 100644 artifacts/s2530-fire/ledger-pull.txt
+ create mode 100644 artifacts/s2530-fire/ledger-second-result.json
+ create mode 100644 artifacts/s2530-fire/ledger-second.log
+ create mode 100644 artifacts/s2530-fire/ledger-second.log.gz
+ create mode 100644 artifacts/s2530-fire/ledger-third-result.json
+ create mode 100644 artifacts/s2530-fire/ledger-third.log
+ create mode 100644 artifacts/s2530-fire/ledger-third.log.gz
+ create mode 100644 artifacts/s2530-fire/master-preflight.txt
+ create mode 100644 artifacts/s2530-fire/nul-after-evidence.txt
+ create mode 100644 artifacts/s2530-fire/nul-after.txt
+ create mode 100644 artifacts/s2530-fire/nul-corrective.json
+ create mode 100644 artifacts/s2530-fire/payload-after.txt
+ create mode 100644 artifacts/s2530-fire/payload-before.txt
+ create mode 100644 artifacts/s2530-fire/report.md
+ create mode 100644 artifacts/s2530-fire/retention.json
+ create mode 100644 artifacts/s2530-fire/rotation.json
+ create mode 100644 artifacts/s2530-fire/source-checks.json
+ create mode 100644 artifacts/s2530-fire/untracked-main.txt
+ create mode 100644 artifacts/s2530-fire/weekly-lanes-push.log
+ create mode 100644 artifacts/s2530-fire/weekly-lanes.json
+ create mode 100644 artifacts/s2530-fire/withheld.txt
+ create mode 100644 artifacts/s2531-fire/art-staging.log
+ create mode 100644 artifacts/s2531-fire/authorable.log
+ create mode 100644 artifacts/s2531-fire/daily-duties.log
+ create mode 100644 artifacts/s2531-fire/desk-declaration.log
+ create mode 100644 artifacts/s2531-fire/desk-final.log
+ create mode 100644 artifacts/s2531-fire/desk-inherited.log
+ create mode 100644 artifacts/s2531-fire/dispatch.log
+ create mode 100644 artifacts/s2531-fire/dry-board.log
+ create mode 100644 artifacts/s2531-fire/gazette-final.log
+ create mode 100644 artifacts/s2531-fire/gazette.log
+ create mode 100644 artifacts/s2531-fire/health.log
+ create mode 100644 artifacts/s2531-fire/lane-c-preflight.log
+ create mode 100644 artifacts/s2531-fire/lane-c-refresh.log
+ create mode 100644 artifacts/s2531-fire/lanes.log
+ create mode 100644 artifacts/s2531-fire/ledger-guards-result.json
+ create mode 100644 artifacts/s2531-fire/ledger-guards.log
+ create mode 100644 artifacts/s2531-fire/mirror-exposure.log
+ create mode 100644 artifacts/s2531-fire/mirror-freshness.log
+ create mode 100644 artifacts/s2531-fire/report.md
+ create mode 100644 artifacts/s2531-fire/retention-counts.log
+ create mode 100644 artifacts/s2531-fire/retention-new-paths.json
+ create mode 100644 artifacts/s2531-fire/retention.json
+ create mode 100644 artifacts/s2531-fire/task-queue-clear.log
+ create mode 100644 artifacts/s2531-fire/trace-backup-check.json
+ create mode 100644 artifacts/s2531-fire/withheld.log
+ create mode 100644 artifacts/s2532-fire/art-staging.log
+ create mode 100644 artifacts/s2532-fire/authorable.log
+ create mode 100644 artifacts/s2532-fire/backup.json
+ create mode 100644 artifacts/s2532-fire/beat-citations-before.json
+ create mode 100644 artifacts/s2532-fire/citation-control.json
+ create mode 100644 artifacts/s2532-fire/closing-receipt.json
+ create mode 100644 artifacts/s2532-fire/desk.log
+ create mode 100644 artifacts/s2532-fire/dispatch.json
+ create mode 100644 artifacts/s2532-fire/dry-board-final.log
+ create mode 100644 artifacts/s2532-fire/dry-board.log
+ create mode 100644 artifacts/s2532-fire/gazette.log
+ create mode 100644 artifacts/s2532-fire/health.log
+ create mode 100644 artifacts/s2532-fire/lanes.log
+ create mode 100644 artifacts/s2532-fire/ledger-closing.log
+ create mode 100644 artifacts/s2532-fire/master-prequeue.log
+ create mode 100644 artifacts/s2532-fire/mirror-exposure.log
+ create mode 100644 artifacts/s2532-fire/mirror-freshness.log
+ create mode 100644 artifacts/s2532-fire/report.md
+ create mode 100644 artifacts/s2532-fire/retention-name-delta.json
+ create mode 100644 artifacts/s2532-fire/retention.json
+ create mode 100644 artifacts/s2532-fire/retention.log
+ create mode 100644 artifacts/s2532-fire/trace-backup-check.json
+ create mode 100644 artifacts/s2532-fire/verify-citations.py
+ create mode 100644 artifacts/s2532-fire/withheld.log
+ create mode 100644 artifacts/s2533-fire/authorable.txt
+ create mode 100644 artifacts/s2533-fire/base-controls.txt
+ create mode 100644 artifacts/s2533-fire/boot/desktop-chrome-default.png
+ create mode 100644 artifacts/s2533-fire/boot/mobile-chrome-default.png
+ create mode 100644 artifacts/s2533-fire/browser-evidence/s2533-adjacent-private/.last-run.json
+ create mode 100644 artifacts/s2533-fire/browser-evidence/s2533-adjacent-private/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-desktop-chrome/error-context.md
+ create mode 100644 artifacts/s2533-fire/browser-evidence/s2533-adjacent-private/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-desktop-chrome/test-failed-1.png
+ create mode 100644 artifacts/s2533-fire/browser-evidence/s2533-adjacent-private/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-desktop-chrome/trace-records.zip
+ create mode 100644 artifacts/s2533-fire/browser-evidence/s2533-adjacent-private/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-mobile-chrome/error-context.md
+ create mode 100644 artifacts/s2533-fire/browser-evidence/s2533-adjacent-private/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-mobile-chrome/test-failed-1.png
+ create mode 100644 artifacts/s2533-fire/browser-evidence/s2533-adjacent-private/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-mobile-chrome/trace-records.zip
+ create mode 100644 artifacts/s2533-fire/browser-evidence/s2533-adjacent/.last-run.json
+ create mode 100644 artifacts/s2533-fire/browser-evidence/s2533-adjacent/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-desktop-chrome/error-context.md
+ create mode 100644 artifacts/s2533-fire/browser-evidence/s2533-adjacent/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-desktop-chrome/test-failed-1.png
+ create mode 100644 artifacts/s2533-fire/browser-evidence/s2533-adjacent/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-desktop-chrome/trace-records.zip
+ create mode 100644 artifacts/s2533-fire/browser-evidence/s2533-adjacent/task-025-bandits-dont-swim-bce0f--hero-through-the-ford-only-desktop-chrome/test-failed-1.png
+ create mode 100644 artifacts/s2533-fire/browser-evidence/s2533-adjacent/task-025-bandits-dont-swim-bce0f--hero-through-the-ford-only-desktop-chrome/trace-records.zip
+ create mode 100644 artifacts/s2533-fire/browser-evidence/s2533-base-m1/.last-run.json
+ create mode 100644 artifacts/s2533-fire/browser-evidence/s2533-base-m1/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-desktop-chrome/error-context.md
+ create mode 100644 artifacts/s2533-fire/browser-evidence/s2533-base-m1/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-desktop-chrome/test-failed-1.png
+ create mode 100644 artifacts/s2533-fire/browser-evidence/s2533-base-m1/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-desktop-chrome/trace-records.zip
+ create mode 100644 artifacts/s2533-fire/browser-evidence/s2533-base-m1/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-mobile-chrome/error-context.md
+ create mode 100644 artifacts/s2533-fire/browser-evidence/s2533-base-m1/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-mobile-chrome/test-failed-1.png
+ create mode 100644 artifacts/s2533-fire/browser-evidence/s2533-base-m1/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-mobile-chrome/trace-records.zip
+ create mode 100644 artifacts/s2533-fire/browser-evidence/s2533-boot-private/.last-run.json
+ create mode 100644 artifacts/s2533-fire/browser-evidence/s2533-boot/.last-run.json
+ create mode 100644 artifacts/s2533-fire/browser-evidence/s2533-boot/_s2080-f1742-1-boot-probe--e4a1a-ain-boot-is-clean-no-debug--desktop-chrome/error-context.md
+ create mode 100644 artifacts/s2533-fire/browser-evidence/s2533-boot/_s2080-f1742-1-boot-probe--e4a1a-ain-boot-is-clean-no-debug--desktop-chrome/test-failed-1.png
+ create mode 100644 artifacts/s2533-fire/browser-evidence/s2533-boot/_s2080-f1742-1-boot-probe--e4a1a-ain-boot-is-clean-no-debug--desktop-chrome/trace-records.zip
+ create mode 100644 artifacts/s2533-fire/browser-evidence/s2533-boot/_s2080-f1742-1-boot-probe--e4a1a-ain-boot-is-clean-no-debug--mobile-chrome/error-context.md
+ create mode 100644 artifacts/s2533-fire/browser-evidence/s2533-boot/_s2080-f1742-1-boot-probe--e4a1a-ain-boot-is-clean-no-debug--mobile-chrome/test-failed-1.png
+ create mode 100644 artifacts/s2533-fire/browser-evidence/s2533-boot/_s2080-f1742-1-boot-probe--e4a1a-ain-boot-is-clean-no-debug--mobile-chrome/trace-records.zip
+ create mode 100644 artifacts/s2533-fire/browser-gates.txt
+ create mode 100644 artifacts/s2533-fire/browser-server.txt
+ create mode 100644 artifacts/s2533-fire/candidate-engine-era.json
+ create mode 100644 artifacts/s2533-fire/candidate.patch
+ create mode 100644 artifacts/s2533-fire/citation-gates.txt
+ create mode 100644 artifacts/s2533-fire/corrective-queue-gate.txt
+ create mode 100644 artifacts/s2533-fire/daily-duties.json
+ create mode 100644 artifacts/s2533-fire/drain-guards.txt
+ create mode 100644 artifacts/s2533-fire/drain-permission.txt
+ create mode 100644 artifacts/s2533-fire/engine-pin.json
+ create mode 100644 artifacts/s2533-fire/gate-context.json
+ create mode 100644 artifacts/s2533-fire/inherited-desk.txt
+ create mode 100644 artifacts/s2533-fire/initial-browser-cache-errors.json
+ create mode 100644 artifacts/s2533-fire/lane-a-before-queue.txt
+ create mode 100644 artifacts/s2533-fire/lanes.txt
+ create mode 100644 artifacts/s2533-fire/ledger-exposure.txt
+ create mode 100644 artifacts/s2533-fire/ledger-freshness.txt
+ create mode 100644 artifacts/s2533-fire/m1-inventory.txt
+ create mode 100644 artifacts/s2533-fire/power-control.txt
+ create mode 100644 artifacts/s2533-fire/report.md
+ create mode 100644 artifacts/s2533-fire/review-evidence-audit.txt
+ create mode 100644 artifacts/s2533-fire/trace-retention.json
+ create mode 100644 artifacts/secure-choice-refusal/after-until-end.json
+ create mode 100644 artifacts/secure-choice-refusal/after.json
+ create mode 100644 artifacts/secure-choice-refusal/before-until-end.json
+ create mode 100644 artifacts/secure-choice-refusal/before.json
+ create mode 100644 artifacts/secure-choice-refusal/probe.mjs
+ create mode 100644 artifacts/sprite-cell-manifests/after-desktop-chrome.json
+ create mode 100644 artifacts/sprite-cell-manifests/after-mobile-chrome.json
+ create mode 100644 artifacts/sprite-cell-manifests/before-desktop-chrome.json
+ create mode 100644 artifacts/sprite-cell-manifests/before-mobile-chrome.json
+ create mode 100644 artifacts/sprite-cell-manifests/measurements.json
+ create mode 100644 artifacts/sprite-cell-manifests/town-390-plain-boot-a.png
+ create mode 100644 artifacts/sprite-cell-manifests/town-390-plain-boot-b.png
+ create mode 100644 artifacts/sprite-cell-manifests/town-390-plain-boot.json
+ create mode 100644 assets/first-town-payload.json
+ create mode 100644 assets/processed/townsfolk-baron-e10.png
+ create mode 100644 assets/processed/townsfolk-boilerwright-e2.png
+ create mode 100644 assets/processed/townsfolk-cannery-hand-e5.png
+ create mode 100644 assets/processed/townsfolk-charter-keeper-e10.png
+ create mode 100644 assets/processed/townsfolk-clerk-e10.png
+ create mode 100644 assets/processed/townsfolk-clerk-e2.png
+ create mode 100644 assets/processed/townsfolk-clerk-e3.png
+ create mode 100644 assets/processed/townsfolk-clerk-e4.png
+ create mode 100644 assets/processed/townsfolk-clerk-e5.png
+ create mode 100644 assets/processed/townsfolk-clerk-e6.png
+ create mode 100644 assets/processed/townsfolk-clerk-e7.png
+ create mode 100644 assets/processed/townsfolk-clerk-e8.png
+ create mode 100644 assets/processed/townsfolk-clerk-e9.png
+ create mode 100644 assets/processed/townsfolk-elder-e2.png
+ create mode 100644 assets/processed/townsfolk-eldest-heir-e10.png
+ create mode 100644 assets/processed/townsfolk-harbormaster-e5.png
+ create mode 100644 assets/processed/townsfolk-he3-assayer-e8.png
+ create mode 100644 assets/processed/townsfolk-newsie-e10.png
+ create mode 100644 assets/processed/townsfolk-newsie-e2.png
+ create mode 100644 assets/processed/townsfolk-newsie-e3.png
+ create mode 100644 assets/processed/townsfolk-newsie-e4.png
+ create mode 100644 assets/processed/townsfolk-newsie-e5.png
+ create mode 100644 assets/processed/townsfolk-newsie-e6.png
+ create mode 100644 assets/processed/townsfolk-newsie-e7.png
+ create mode 100644 assets/processed/townsfolk-newsie-e8.png
+ create mode 100644 assets/processed/townsfolk-newsie-e9.png
+ create mode 100644 assets/processed/townsfolk-pearl-diver-e5.png
+ create mode 100644 assets/processed/townsfolk-preacher-e10.png
+ create mode 100644 assets/processed/townsfolk-preacher-e2.png
+ create mode 100644 assets/processed/townsfolk-preacher-e3.png
+ create mode 100644 assets/processed/townsfolk-preacher-e5.png
+ create mode 100644 assets/processed/townsfolk-preacher-e6.png
+ create mode 100644 assets/processed/townsfolk-preacher-e7.png
+ create mode 100644 assets/processed/townsfolk-preacher-e8.png
+ create mode 100644 assets/processed/townsfolk-preacher-e9.png
+ create mode 100644 assets/processed/townsfolk-pressman-e2.png
+ create mode 100644 assets/processed/townsfolk-quack-e10.png
+ create mode 100644 assets/processed/townsfolk-salvage-king-e8.png
+ create mode 100644 assets/processed/townsfolk-schoolteacher-e10.png
+ create mode 100644 assets/processed/townsfolk-schoolteacher-e2.png
+ create mode 100644 assets/processed/townsfolk-schoolteacher-e3.png
+ create mode 100644 assets/processed/townsfolk-schoolteacher-e4.png
+ create mode 100644 assets/processed/townsfolk-schoolteacher-e5.png
+ create mode 100644 assets/processed/townsfolk-schoolteacher-e6.png
+ create mode 100644 assets/processed/townsfolk-schoolteacher-e7.png
+ create mode 100644 assets/processed/townsfolk-schoolteacher-e8.png
+ create mode 100644 assets/processed/townsfolk-schoolteacher-e9.png
+ create mode 100644 assets/processed/townsfolk-shipwright-e5.png
+ create mode 100644 assets/processed/townsfolk-tavernkeeper-e10.png
+ create mode 100644 assets/processed/townsfolk-tavernkeeper-e2.png
+ create mode 100644 assets/processed/townsfolk-tavernkeeper-e3.png
+ create mode 100644 assets/processed/townsfolk-tavernkeeper-e4.png
+ create mode 100644 assets/processed/townsfolk-tavernkeeper-e5.png
+ create mode 100644 assets/processed/townsfolk-tavernkeeper-e6.png
+ create mode 100644 assets/processed/townsfolk-tavernkeeper-e7.png
+ create mode 100644 assets/processed/townsfolk-tavernkeeper-e8.png
+ create mode 100644 assets/processed/townsfolk-tavernkeeper-e9.png
+ create mode 100644 assets/processed/townsfolk-tide-teller-e5.png
+ create mode 100644 assets/processed/townsfolk-typesetter-e2.png
+ create mode 100644 assets/raw/tf-baron-e10.png
+ create mode 100644 assets/raw/tf-boilerwright-e2.png
+ create mode 100644 assets/raw/tf-cannery-hand-e5.png
+ create mode 100644 assets/raw/tf-charter-keeper-e10.png
+ create mode 100644 assets/raw/tf-clerk-e10.png
+ create mode 100644 assets/raw/tf-clerk-e2.png
+ create mode 100644 assets/raw/tf-clerk-e3.png
+ create mode 100644 assets/raw/tf-clerk-e4.png
+ create mode 100644 assets/raw/tf-clerk-e5.png
+ create mode 100644 assets/raw/tf-clerk-e6.png
+ create mode 100644 assets/raw/tf-clerk-e7.png
+ create mode 100644 assets/raw/tf-clerk-e8.png
+ create mode 100644 assets/raw/tf-clerk-e9.png
+ create mode 100644 assets/raw/tf-dredge-queen-machine-e5.png
+ create mode 100644 assets/raw/tf-elder-e2.png
+ create mode 100644 assets/raw/tf-eldest-heir-e10.png
+ create mode 100644 assets/raw/tf-harbormaster-e5.png
+ create mode 100644 assets/raw/tf-he3-assayer-e8.png
+ create mode 100644 assets/raw/tf-newsie-e10.png
+ create mode 100644 assets/raw/tf-newsie-e2.png
+ create mode 100644 assets/raw/tf-newsie-e3.png
+ create mode 100644 assets/raw/tf-newsie-e4.png
+ create mode 100644 assets/raw/tf-newsie-e5.png
+ create mode 100644 assets/raw/tf-newsie-e6.png
+ create mode 100644 assets/raw/tf-newsie-e7.png
+ create mode 100644 assets/raw/tf-newsie-e8.png
+ create mode 100644 assets/raw/tf-newsie-e9.png
+ create mode 100644 assets/raw/tf-old-digger-e10.png
+ create mode 100644 assets/raw/tf-old-digger-machine-e9.png
+ create mode 100644 assets/raw/tf-pearl-diver-e5.png
+ create mode 100644 assets/raw/tf-preacher-e10.png
+ create mode 100644 assets/raw/tf-preacher-e2.png
+ create mode 100644 assets/raw/tf-preacher-e3.png
+ create mode 100644 assets/raw/tf-preacher-e5.png
+ create mode 100644 assets/raw/tf-preacher-e6.png
+ create mode 100644 assets/raw/tf-preacher-e7.png
+ create mode 100644 assets/raw/tf-preacher-e8.png
+ create mode 100644 assets/raw/tf-preacher-e9.png
+ create mode 100644 assets/raw/tf-pressman-e2.png
+ create mode 100644 assets/raw/tf-quack-e10.png
+ create mode 100644 assets/raw/tf-salvage-claw-machine-e5.png
+ create mode 100644 assets/raw/tf-salvage-king-e5.png
+ create mode 100644 assets/raw/tf-schoolteacher-e10.png
+ create mode 100644 assets/raw/tf-schoolteacher-e2.png
+ create mode 100644 assets/raw/tf-schoolteacher-e3.png
+ create mode 100644 assets/raw/tf-schoolteacher-e4.png
+ create mode 100644 assets/raw/tf-schoolteacher-e5.png
+ create mode 100644 assets/raw/tf-schoolteacher-e6.png
+ create mode 100644 assets/raw/tf-schoolteacher-e7.png
+ create mode 100644 assets/raw/tf-schoolteacher-e8.png
+ create mode 100644 assets/raw/tf-schoolteacher-e9.png
+ create mode 100644 assets/raw/tf-shipwright-e5.png
+ create mode 100644 assets/raw/tf-tavernkeeper-e10.png
+ create mode 100644 assets/raw/tf-tavernkeeper-e2.png
+ create mode 100644 assets/raw/tf-tavernkeeper-e3.png
+ create mode 100644 assets/raw/tf-tavernkeeper-e4.png
+ create mode 100644 assets/raw/tf-tavernkeeper-e5.png
+ create mode 100644 assets/raw/tf-tavernkeeper-e6.png
+ create mode 100644 assets/raw/tf-tavernkeeper-e7.png
+ create mode 100644 assets/raw/tf-tavernkeeper-e8.png
+ create mode 100644 assets/raw/tf-tavernkeeper-e9.png
+ create mode 100644 assets/raw/tf-tide-teller-e5.png
+ create mode 100644 assets/raw/tf-typesetter-e2.png
+ create mode 100644 assets/raw/tf-youngster-a-e2.png
+ create mode 100644 assets/raw/tf-youngster-a-e4.png
+ create mode 100644 assets/raw/tf-youngster-a-e8.png
+ create mode 100644 assets/raw/tf-youngster-b-e2.png
+ create mode 100644 assets/raw/tf-youngster-b-e4.png
+ create mode 100644 docs/OWNER-DESK-2026-09-06.md
+ create mode 100644 docs/bench/rider-parity-audit.md
+ create mode 100644 docs/decisions/ADR-005-rider-parity.md
+ create mode 100644 docs/ops/archive-repo.md
+ create mode 100644 e2e/first-town-audio-deferred.spec.ts
+ create mode 100644 marketing/outbox/ticker-digest-2026-09-05.md
+ create mode 100644 marketing/outbox/ticker-digest-2026-09-06.md
+ create mode 100644 reviews/beat-citation-refresh.md
+ create mode 100644 reviews/browser-door-held-gold.md
+ create mode 100644 reviews/e10s-4-ember-shore-door.md
+ create mode 100644 reviews/e8-air-logical.md
+ create mode 100644 reviews/e8-air-wall-all-maps.md
+ create mode 100644 reviews/eclipse-winnable.md
+ create mode 100644 reviews/engine-correctives-batch.md
+ create mode 100644 reviews/first-town-audio-deferred.md
+ create mode 100644 reviews/first-town-payload-gate.md
+ create mode 100644 reviews/first-town-transfer-bisect.md
+ create mode 100644 reviews/hero-move-verb.md
+ create mode 100644 reviews/hero-slot-clip-split.md
+ create mode 100644 reviews/mare-claim-air-prevalent.md
+ create mode 100644 reviews/perf-correctives-batch.md
+ create mode 100644 reviews/portraits-e5-e10-generated.md
+ create mode 100644 reviews/portraits-era-aging-2-batch.md
+ create mode 100644 reviews/portraits-era-aging-batch.md
+ create mode 100644 reviews/relay-rush-replays-again.md
+ create mode 100644 reviews/rider-parity-grammar.md
+ create mode 100644 reviews/secure-choice-refusal-both-cures.md
+ create mode 100644 reviews/shots-portraits-e5-e10-generated/desktop-chrome-e10-baron-stays.png
+ create mode 100644 reviews/shots-portraits-e5-e10-generated/desktop-chrome-e10-quack-freed.png
+ create mode 100644 reviews/shots-portraits-e5-e10-generated/desktop-chrome-e5-harbormaster-manifest.png
+ create mode 100644 reviews/shots-portraits-e5-e10-generated/desktop-chrome-e5-tide-teller-reading.png
+ create mode 100644 reviews/shots-portraits-e5-e10-generated/desktop-chrome-portrait-probe-boot.png
+ create mode 100644 reviews/shots-portraits-e5-e10-generated/mobile-chrome-e10-baron-stays.png
+ create mode 100644 reviews/shots-portraits-e5-e10-generated/mobile-chrome-e10-quack-freed.png
+ create mode 100644 reviews/shots-portraits-e5-e10-generated/mobile-chrome-e5-harbormaster-manifest.png
+ create mode 100644 reviews/shots-portraits-e5-e10-generated/mobile-chrome-e5-tide-teller-reading.png
+ create mode 100644 reviews/shots-portraits-e5-e10-generated/mobile-chrome-portrait-probe-boot.png
+ create mode 100644 reviews/shots-portraits-e5-e10-generated/portrait-120px-legibility-10.png
+ create mode 100644 reviews/shots-portraits-e5-e10-generated/portrait-card-crop-grid-10.png
+ create mode 100644 reviews/shots-portraits-era-aging-2/card-crops-31-at-1x.png
+ create mode 100644 reviews/shots-portraits-era-aging-2/card-crops-31-at-2x.png
+ create mode 100644 reviews/shots-portraits-era-aging-2/identity-chains-e1-to-e10.png
+ create mode 100644 reviews/shots-portraits-era-aging-2/plainboot-desktop-chrome-clerk-e8.png
+ create mode 100644 reviews/shots-portraits-era-aging-2/plainboot-desktop-chrome-newsie-e6.png
+ create mode 100644 reviews/shots-portraits-era-aging-2/plainboot-desktop-chrome-preacher-e5.png
+ create mode 100644 reviews/shots-portraits-era-aging-2/plainboot-desktop-chrome-schoolteacher-e10.png
+ create mode 100644 reviews/shots-portraits-era-aging-2/plainboot-desktop-chrome-schoolteacher-e7.png
+ create mode 100644 reviews/shots-portraits-era-aging-2/plainboot-desktop-chrome-tavernkeeper-e5.png
+ create mode 100644 reviews/shots-portraits-era-aging-2/plainboot-desktop-chrome-tavernkeeper-e9.png
+ create mode 100644 reviews/shots-portraits-era-aging-2/plainboot-mobile-chrome-clerk-e8.png
+ create mode 100644 reviews/shots-portraits-era-aging-2/plainboot-mobile-chrome-newsie-e6.png
+ create mode 100644 reviews/shots-portraits-era-aging-2/plainboot-mobile-chrome-preacher-e5.png
+ create mode 100644 reviews/shots-portraits-era-aging-2/plainboot-mobile-chrome-schoolteacher-e10.png
+ create mode 100644 reviews/shots-portraits-era-aging-2/plainboot-mobile-chrome-schoolteacher-e7.png
+ create mode 100644 reviews/shots-portraits-era-aging-2/plainboot-mobile-chrome-tavernkeeper-e5.png
+ create mode 100644 reviews/shots-portraits-era-aging-2/plainboot-mobile-chrome-tavernkeeper-e9.png
+ create mode 100644 reviews/shots-portraits-era-aging-2/plates-31-at-120px.png
+ create mode 100644 reviews/shots-portraits-era-aging-2/withheld-youngsters-identity-break.png
+ create mode 100644 reviews/shots-portraits-era-aging/desktop-chrome-e2-elder-tree-schoolteacher-e2.png
+ create mode 100644 reviews/shots-portraits-era-aging/desktop-chrome-e3-first-night-round-schoolteacher-e3.png
+ create mode 100644 reviews/shots-portraits-era-aging/desktop-chrome-e4-gazette-crude-bath-newsie-e4.png
+ create mode 100644 reviews/shots-portraits-era-aging/desktop-chrome-portrait-probe-boot.png
+ create mode 100644 reviews/shots-portraits-era-aging/mobile-chrome-e2-elder-tree-schoolteacher-e2.png
+ create mode 100644 reviews/shots-portraits-era-aging/mobile-chrome-e3-first-night-round-schoolteacher-e3.png
+ create mode 100644 reviews/shots-portraits-era-aging/mobile-chrome-e4-gazette-crude-bath-newsie-e4.png
+ create mode 100644 reviews/shots-portraits-era-aging/mobile-chrome-portrait-probe-boot.png
+ create mode 100644 reviews/shots-portraits-era-aging/portrait-120px-legibility-19.png
+ create mode 100644 reviews/shots-portraits-era-aging/portrait-card-crop-grid-19.png
+ create mode 100644 reviews/shots-portraits-era-aging/portrait-identity-chains-e1-to-e4.png
+ create mode 100644 reviews/shots-portraits-era-aging/portrait-new-faces-4.png
+ create mode 100644 reviews/shots-story-correctives-batch/boss-claw-winch.jpg
+ create mode 100644 reviews/shots-story-correctives-batch/boss-digger-swap.jpg
+ create mode 100644 reviews/shots-story-correctives-batch/boss-quiet-approach.jpg
+ create mode 100644 reviews/shots-story-correctives-batch/face-boilerwright-e2.jpg
+ create mode 100644 reviews/shots-story-correctives-batch/face-cannery-hand-e5.jpg
+ create mode 100644 reviews/shots-story-correctives-batch/face-charter-keeper-e10.jpg
+ create mode 100644 reviews/shots-story-correctives-batch/face-eldest-heir-e10.jpg
+ create mode 100644 reviews/shots-story-correctives-batch/face-he3-assayer-e8.jpg
+ create mode 100644 reviews/shots-story-correctives-batch/face-pearl-diver-e5.jpg
+ create mode 100644 reviews/shots-story-correctives-batch/face-preacher-e3.jpg
+ create mode 100644 reviews/shots-story-correctives-batch/face-pressman-e2.jpg
+ create mode 100644 reviews/shots-story-correctives-batch/face-shipwright-e5.jpg
+ create mode 100644 reviews/shots-story-correctives-batch/face-tavernkeeper-e2.jpg
+ create mode 100644 reviews/shots-story-correctives-batch/face-typesetter-e2.jpg
+ create mode 100644 reviews/spec-hygiene-batch.md
+ create mode 100644 reviews/sprite-cell-manifests.md
+ create mode 100644 reviews/story-correctives-batch.md
+ create mode 100644 scripts/e8-air-suit-human.test.mjs
+ create mode 100644 scripts/e8-crossing-gate-override.test.mjs
+ create mode 100644 scripts/e8-regolith-gate-override.test.mjs
+ create mode 100644 scripts/eclipse-winnable.test.mjs
+ create mode 100644 scripts/first-town-payload.mjs
+ create mode 100644 scripts/first-town-request-families.test.mjs
+ create mode 100644 scripts/gr-sim-resume-tape-safety.test.mjs
+ create mode 100644 scripts/hero-clip-groups.test.mjs
+ create mode 100644 scripts/hero-move-verb.test.mjs
+ create mode 100644 scripts/profile-data-key-sweep.test.mjs
+ create mode 100644 scripts/relay-rush-reel.test.mjs
+ create mode 100644 scripts/secure-choice-refusal.test.mjs
+ create mode 100644 scripts/sprite-cell-url-inlining.test.mjs
+ delete mode 100644 src/game/Balance.ts.orig
+ create mode 100644 src/systems/E8AirWindow.ts
+ create mode 100644 tasks/e8-air-logical.md
+ create mode 100644 tasks/e8-air-wall-all-maps.md
+ create mode 100644 tasks/eclipse-winnable.md
+ create mode 100644 tasks/engine-correctives-batch.md
+ create mode 100644 tasks/first-town-audio-deferred.md
+ create mode 100644 tasks/first-town-payload-gate.md
+ create mode 100644 tasks/first-town-transfer-bisect.md
+ create mode 100644 tasks/hero-move-verb.md
+ create mode 100644 tasks/hero-slot-clip-split.md
+ create mode 100644 tasks/lane-a-m1-debug-spawn-contract.md
+ create mode 100644 tasks/lane-c-chapter-evidence-opt-in.md
+ create mode 100644 tasks/main-beat-citation-refresh.md
+ create mode 100644 tasks/mare-claim-air-prevalent.md
+ create mode 100644 tasks/perf-correctives-batch.md
+ create mode 100644 tasks/portraits-e5-e10-generated-batch.md
+ create mode 100644 tasks/portraits-era-aging-2-batch.md
+ create mode 100644 tasks/portraits-era-aging-batch.md
+ create mode 100644 tasks/relay-rush-replays-again.md
+ create mode 100644 tasks/rider-parity-audit.md
+ create mode 100644 tasks/rider-parity-grammar-stage3.md
+ create mode 100644 tasks/rider-parity-grammar.md
+ create mode 100644 tasks/secure-choice-refusal-both-cures.md
+ create mode 100644 tasks/spec-hygiene-batch.md
+ create mode 100644 tasks/sprite-cell-manifests.md
+ create mode 100644 tasks/story-correctives-batch.md

@@ -1,0 +1,36 @@
+{
+  "command": "npm run test:ledger-guards",
+  "node": "v26.4.0",
+  "startedAt": "2026-09-07T21:22:09.660220+07:00",
+  "durationSeconds": 134.685,
+  "exitCode": 0,
+  "handoffCommit": "b69e5efdc930e0e6a2eeb06ac431b1f56ddd11a0",
+  "logSha256": "8f65f3bc48adc8d542a0ec98e4b978285ad227c8b4e17993e675f62e55329cac",
+  "nodeTests": {
+    "tests": 1050,
+    "pass": 1050,
+    "fail": 0,
+    "skipped": 0
+  },
+  "shellChecks": {
+    "pass": 83,
+    "fail": 0
+  },
+  "deskGuards": {
+    "declaration": "PASS \u2014 every non-grandfathered desk item has a declaring row.",
+    "birth": "PASS \u2014 every owner-gated row filed this window reached the desk.",
+    "carryforward": "PASS \u2014 every item on the previous desk is carried, closed, or accounted for."
+  },
+  "archiveChecks": "archive-check.txt",
+  "handoffBackup": {
+    "exitCode": 0,
+    "receipt": "backup-handoff.txt"
+  },
+  "mainAtClose": {
+    "observedAt": "2026-09-07T21:27:34.365232+07:00",
+    "pid": 43351,
+    "alive": true,
+    "task": "main-board-gold-current-grammar",
+    "readiness": "running; not accepted"
+  }
+}

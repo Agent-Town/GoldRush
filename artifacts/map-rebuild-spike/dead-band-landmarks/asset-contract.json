@@ -1,0 +1,105 @@
+{
+  "law": "reuse > derive > build-new; era-stamped; grit-dressed",
+  "packs": {
+    "dead-band": {
+      "era": 7,
+      "atlasSha256": "b969eb572631b847f04bbc06abbeab930c315a0e3c41b9e02efd1ceb00b79568",
+      "assets": {
+        "dead-band-yard-null-post": {
+          "sourceTier": "derive",
+          "triangles": 168,
+          "sha256": "e377ee9d40ad9dfbe16d205a04ba8f5d47d4b041c7d993a5d89c14e7777d5ffc",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "west-old-tool-cache": {
+          "sourceTier": "reuse",
+          "triangles": 1812,
+          "sha256": "5642bc576e02c43f4d9e9030bc1279e99b450d7351f700f7dc699a306fa907dc",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "east-old-tool-cache": {
+          "sourceTier": "reuse",
+          "triangles": 1812,
+          "sha256": "498dd6bb66b612c164ec50c4354b7947a4ad817b734d466c780506d6db2f6ad8",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "iron-shadow-warning-frame": {
+          "sourceTier": "derive",
+          "triangles": 156,
+          "sha256": "306aaf65231ce1da69a5c27c5dd57c81e8312bdc9f0742092536e5c335481f94",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "north-silence-gate": {
+          "sourceTier": "derive",
+          "triangles": 180,
+          "sha256": "b92eec113c392515270b6aed8266ee78bc2133172badb0b8be9dd8575c32d17d",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        }
+      }
+    }
+  },
+  "totals": {
+    "packs": 1,
+    "assets": 5,
+    "sourceTiers": {
+      "reuse": 2,
+      "derive": 3,
+      "build-new": 0
+    }
+  },
+  "boards": {
+    "dead-band-landmarks-turntable.png": {
+      "size": [
+        1920,
+        1160
+      ],
+      "sha256": "8ef89bfe196612876c6a7e3c917cd7fbce50b9a40c9cc58df8aaff5fc26bd6ef"
+    },
+    "dead-band-landmarks-verdict.png": {
+      "size": [
+        1920,
+        1008
+      ],
+      "sha256": "6d4627ab7dfe76e37db6566a33417f5e2fb711cf37d32a038ce33eb84c361b60"
+    },
+    "dead-band-landmarks-pack.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "2958808e7ced2810cca61d2221d888c2466a4a1b20d7ee696b3ee1435ac8f5ad"
+    },
+    "dead-band-landmarks-mounted.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "86e1d68c0823ce9b4cb031862dbd3bd6f0a1fa8a61beb8399493d4db3d3a3da3"
+    },
+    "dead-band-landmarks-mounted-overview.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "cb039305cae2294e1c688a7601d3b2f48c987442a94fc341ec309ec9c8aa0bf8"
+    },
+    "dead-band-landmarks-clearance-overlay.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "0f508e46c0781854c041fc5a587e34dcb40ed1a6a00c01d68382ca909d61a5bb"
+    }
+  },
+  "simulation": "unchanged; every landmark is a separate render-only GLB mounted by contract"
+}

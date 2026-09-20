@@ -1,0 +1,42 @@
+dry-board-probe — scripts/fire.md §2F, in one command (F-2207-1)
+
+  corpus tasks/done/      : read
+  done-moves (.md)        : 1404
+  prefix convention start : 20260725  [DERIVED, not pinned]
+  skipped, legacy         : 644  (bare-dated before the convention existed)
+  skipped, terminal prefix: 704
+  SUBJECTS to classify    : 56
+
+  non-terminal prefixes in the subject set (F-2207-1 — invisible to §2F's prose filter):
+       7 · held
+       2 · blocked
+       1 · OWNER
+       1 · partial
+       1 · ready
+       1 · terminal
+
+  REAL DRAINS — work you were about to walk past: 4
+      20260905-103053-asset-diet-explicit-manifest.md
+      20260905-103054-prefetch-bounded-warming.md
+      20260905-103054-shared-atlas-texture-dedupe.md
+      20260905-104752-lantern-true-world-reel.md
+  UNKNOWN — the ledger declines to answer; each owes the s1061 FILE PROBE: 0
+  CLOSED / BLOCKED — do not drain: 10
+      20260812-062406-lane-d-ap16-6b-final-verbs-reland.md
+      20260813-214436-fix-e2-railcar-arsenal-floor.md
+      20260814-064304-fix-e2-railcar-arsenal-floor-v2.md
+      20260905-083833-e5-stillwater-front-crew.md
+      OWNER-GATED-F-1096-2-do-not-drain-20260727-011937-lane-hero-y-restore-roundtrip.md
+      blocked-firewall-s1380-reauthored-as-lift-20260802-064330-lane-seam-yield-single-source.md
+      blocked-s1217-F1217-1-20260729-165229-ap-orders-adapter-wiring.md
+      held-s1403-F1403-1-hash-divergence-20260802-204650-f1400-1-twin-banks-rebase-and-repin.md
+      held-s2376-gate-f2376-1-f2376-2-v2-authored-20260830-204724-reel-era-projection.md
+      ready-for-gates-s1330-UNDRAINED-7c4f132f-leaf-blocked-20260801-122335-f1328-1-drill-yard-census-debt.md
+  MERGED (shipped-but-unrenamed ghost — cosmetic): 42
+
+  ⛔ NOT DRY — 4 undrained done-move(s). Do not declare §2F.
+
+  Advisory: this reads tasks/done/ only. A lane branch can hold unabsorbed
+  content with no done-move at all — ask `node scripts/lane-usable.mjs --all` too.
+
+EXIT 0

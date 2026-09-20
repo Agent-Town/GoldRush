@@ -1,0 +1,202 @@
+{
+  "key": "county-e5-flotilla",
+  "tapePath": "tapes/county-e5-flotilla.json",
+  "contract": "e5-flotilla",
+  "kind": "county-played",
+  "node": "v26.4.0",
+  "before": {
+    "at": "2026-09-05T16:10:43.668Z",
+    "load": [
+      11.1494140625,
+      22.9384765625,
+      21.2646484375
+    ],
+    "freeMemory": 6862913536
+  },
+  "after": {
+    "at": "2026-09-05T16:10:52.459Z",
+    "load": [
+      10.83154296875,
+      22.47998046875,
+      21.12060546875
+    ],
+    "freeMemory": 2905178112
+  },
+  "declaredDurationTicks": 8161,
+  "simulatedSeconds": 272.03333333333336,
+  "bootMs": 48.74687499999982,
+  "replayMs": 7217.712542,
+  "ticksPerSecond": 1130.6906381365277,
+  "realtimeMultiple": 37.689687937884266,
+  "estimateTenMinuteSeconds": 15.91947380909202,
+  "estimateFormula": "600 seconds / measured realtimeMultiple; extrapolation, not an actual 10-minute tape when duration differs",
+  "tickMs": {
+    "n": 8161,
+    "min": 0.2912910000000011,
+    "p50": 0.8511669999998048,
+    "p95": 1.4291670000002341,
+    "p99": 1.8873750000002474,
+    "max": 19.270292000000154
+  },
+  "tickPath": "sim/county-e5-flotilla-ticks.json",
+  "result": {
+    "eventLogHash": "fnv1a32:7ba04a75",
+    "outcome": {
+      "secured": true,
+      "waves": 12,
+      "gold": 200,
+      "timeAlive": 272
+    },
+    "securedSnapshot": {
+      "waves": 12,
+      "gold": 200,
+      "timeAlive": 272.00000000000074
+    },
+    "ticks": 8161,
+    "engine": "headless-contract-sim"
+  },
+  "expectedHash": "fnv1a32:7ba04a75",
+  "hashMatches": true,
+  "top20": [
+    {
+      "name": "structuredClone",
+      "url": "node:internal/worker/js_transferable",
+      "line": 113,
+      "column": 25,
+      "selfMs": 3093.5799999999995
+    },
+    {
+      "name": "structuredClone",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 867.298
+    },
+    {
+      "name": "snapshot",
+      "url": "",
+      "line": 189,
+      "column": 10,
+      "selfMs": 215.006
+    },
+    {
+      "name": "clone",
+      "url": "",
+      "line": 320,
+      "column": 15,
+      "selfMs": 171.691
+    },
+    {
+      "name": "get diagnostics",
+      "url": "",
+      "line": 484,
+      "column": 17,
+      "selfMs": 153.35999999999999
+    },
+    {
+      "name": "terrainSeed",
+      "url": "",
+      "line": 1469,
+      "column": 21,
+      "selfMs": 152.49800000000005
+    },
+    {
+      "name": "dispatch",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 146.836
+    },
+    {
+      "name": "diagnostics",
+      "url": "",
+      "line": 1795,
+      "column": 13,
+      "selfMs": 133.279
+    },
+    {
+      "name": "multiplyMatrices",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 10385,
+      "column": 18,
+      "selfMs": 119.278
+    },
+    {
+      "name": "hpBarDiagnostics",
+      "url": "",
+      "line": 1663,
+      "column": 18,
+      "selfMs": 109.26299999999999
+    },
+    {
+      "name": "(anonymous)",
+      "url": "",
+      "line": 193,
+      "column": 26,
+      "selfMs": 106.79499999999999
+    },
+    {
+      "name": "(anonymous)",
+      "url": "node:internal/webidl",
+      "line": 712,
+      "column": 18,
+      "selfMs": 89.56099999999999
+    },
+    {
+      "name": "terrainHash",
+      "url": "",
+      "line": 1486,
+      "column": 21,
+      "selfMs": 85.17
+    },
+    {
+      "name": "toArray",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 11099,
+      "column": 9,
+      "selfMs": 73.02600000000002
+    },
+    {
+      "name": "syncEnemyInstance",
+      "url": "",
+      "line": 1343,
+      "column": 19,
+      "selfMs": 68.06
+    },
+    {
+      "name": "currentTrickleInterval",
+      "url": "",
+      "line": 641,
+      "column": 24,
+      "selfMs": 66.095
+    },
+    {
+      "name": "(garbage collector)",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 60.421
+    },
+    {
+      "name": "(anonymous)",
+      "url": "",
+      "line": 805,
+      "column": 21,
+      "selfMs": 59.887
+    },
+    {
+      "name": "activePositions",
+      "url": "",
+      "line": 1533,
+      "column": 17,
+      "selfMs": 48.072
+    },
+    {
+      "name": "maxHpForPlacement",
+      "url": "",
+      "line": 1622,
+      "column": 19,
+      "selfMs": 47.774
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+import { chromium } from 'playwright';
+const browser = await chromium.launch({ channel: 'chromium' });
+const page = await browser.newPage({ viewport: { width: 1280, height: 800 } });
+await page.goto('http://127.0.0.1:5470/?debug&nolevel');
+await page.waitForFunction(() => window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations['char.hero']?.loaded);
+await page.waitForTimeout(6000);
+const slots = await page.evaluate(() => Object.keys(window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations ?? {}));
+const requested = await page.evaluate(() => performance.getEntriesByType('resource').map(e => e.name.split('/').pop()).filter(n => /char-(jumper|schoolteacher|baron|coalthief|steamwrecker)/.test(n)));
+console.log('slots with sprite animations:', slots.join(', '));
+console.log('claim_jumper present:', slots.includes('char.claim_jumper'));
+console.log('requested family cells (sample):', [...new Set(requested)].slice(0, 14).join(', '));
+await browser.close();

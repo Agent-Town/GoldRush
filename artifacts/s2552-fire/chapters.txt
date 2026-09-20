@@ -1,0 +1,256 @@
+gate battery transcript (append-only — see scripts/gate-battery.mjs)
+
+
+######## BATTERY 2026-09-07T19:41:44.074Z — s2552 chapter browser gate ########
+cwd=/private/tmp/gr-gate-s2552
+env+ PATH=/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin CLAUDE_CONFIG_DIR=/Users/robin/.claude-fires GR_GUARD_NO_ARTIFACT=1 GR_CAPTURE_BASE_URL=http://127.0.0.1:5313 GR_CAPTURE_EXTERNAL_SERVER=1
+
+===== chapter desktop and mobile =====
+$ npx playwright test e2e/ss-06-e5-beats.spec.ts e2e/ss-07-e6-beats.spec.ts e2e/ss-08-e7-beats.spec.ts e2e/ss-09-e8-beats.spec.ts e2e/ss-10-e9-beats.spec.ts e2e/ss-11-e10-beats.spec.ts --workers=1 --trace=off --project=desktop-chrome --project=mobile-chrome --reporter=line --output=/private/tmp/gr-gate-s2552/chapter-results
+rc=0 1304.9s
+
+Running 68 tests using 1 worker
+
+
+
+
+[1/68] [desktop-chrome] › e2e/ss-06-e5-beats.spec.ts:120:1 › SS-06 table is attributed, presentational, and uses the E2/E3 trigger vocabulary
+[2/68] [desktop-chrome] › e2e/ss-06-e5-beats.spec.ts:130:1 › a player-selected Deepwater town presents the Claim-Boat arrival and the manifest before the ride
+[desktop-chrome] › e2e/ss-06-e5-beats.spec.ts:130:1 › a player-selected Deepwater town presents the Claim-Boat arrival and the manifest before the ride
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[3/68] [desktop-chrome] › e2e/ss-06-e5-beats.spec.ts:162:1 › The Claim cannot load Deepwater beats in Frontier
+[desktop-chrome] › e2e/ss-06-e5-beats.spec.ts:162:1 › The Claim cannot load Deepwater beats in Frontier
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[4/68] [desktop-chrome] › e2e/ss-06-e5-beats.spec.ts:187:1 › F-SS06-2: the post-run Deepwater beats read the map the run returned from
+[desktop-chrome] › e2e/ss-06-e5-beats.spec.ts:187:1 › F-SS06-2: the post-run Deepwater beats read the map the run returned from
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[5/68] [desktop-chrome] › e2e/ss-06-e5-beats.spec.ts:215:1 › epoch-2-steamworks cannot load Deepwater beats
+[desktop-chrome] › e2e/ss-06-e5-beats.spec.ts:215:1 › epoch-2-steamworks cannot load Deepwater beats
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[6/68] [desktop-chrome] › e2e/ss-07-e6-beats.spec.ts:111:1 › SS-07 table is attributed, presentational, and uses the E2/E3 trigger vocabulary
+[7/68] [desktop-chrome] › e2e/ss-07-e6-beats.spec.ts:123:1 › a player-selected Atomic town presents the mesa arrival and the steward before the ride
+[desktop-chrome] › e2e/ss-07-e6-beats.spec.ts:123:1 › a player-selected Atomic town presents the mesa arrival and the steward before the ride
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[8/68] [desktop-chrome] › e2e/ss-07-e6-beats.spec.ts:150:1 › The Claim cannot load Atomic beats in Frontier
+[desktop-chrome] › e2e/ss-07-e6-beats.spec.ts:150:1 › The Claim cannot load Atomic beats in Frontier
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[9/68] [desktop-chrome] › e2e/ss-07-e6-beats.spec.ts:165:1 › epoch-3-voltage cannot load Atomic beats
+[desktop-chrome] › e2e/ss-07-e6-beats.spec.ts:165:1 › epoch-3-voltage cannot load Atomic beats
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[10/68] [desktop-chrome] › e2e/ss-07-e6-beats.spec.ts:182:1 › the Atomic boss and return beats fire only on their own triggers
+[desktop-chrome] › e2e/ss-07-e6-beats.spec.ts:182:1 › the Atomic boss and return beats fire only on their own triggers
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[11/68] [desktop-chrome] › e2e/ss-08-e7-beats.spec.ts:114:1 › SS-08 table is attributed, presentational, and uses the E2/E3 trigger vocabulary
+[12/68] [desktop-chrome] › e2e/ss-08-e7-beats.spec.ts:126:1 › a player-selected Signal town presents the ridge arrival, the wrong number and Chalk before the ride
+[desktop-chrome] › e2e/ss-08-e7-beats.spec.ts:126:1 › a player-selected Signal town presents the ridge arrival, the wrong number and Chalk before the ride
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[13/68] [desktop-chrome] › e2e/ss-08-e7-beats.spec.ts:155:1 › The Claim cannot load Signal beats in Frontier
+[desktop-chrome] › e2e/ss-08-e7-beats.spec.ts:155:1 › The Claim cannot load Signal beats in Frontier
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[14/68] [desktop-chrome] › e2e/ss-08-e7-beats.spec.ts:170:1 › epoch-3-voltage cannot load Signal beats
+[desktop-chrome] › e2e/ss-08-e7-beats.spec.ts:170:1 › epoch-3-voltage cannot load Signal beats
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[15/68] [desktop-chrome] › e2e/ss-08-e7-beats.spec.ts:187:1 › the Echo and the silences fire only on their own triggers
+[desktop-chrome] › e2e/ss-08-e7-beats.spec.ts:187:1 › the Echo and the silences fire only on their own triggers
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[16/68] [desktop-chrome] › e2e/ss-09-e8-beats.spec.ts:145:1 › SS-09 table is attributed, presentational, and uses the E2/E3 trigger vocabulary
+[17/68] [desktop-chrome] › e2e/ss-09-e8-beats.spec.ts:158:1 › a player-selected Orbital town presents the mare arrival and the breach drill before the ride
+[desktop-chrome] › e2e/ss-09-e8-beats.spec.ts:158:1 › a player-selected Orbital town presents the mare arrival and the breach drill before the ride
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[18/68] [desktop-chrome] › e2e/ss-09-e8-beats.spec.ts:187:1 › The Claim cannot load Orbital beats in Frontier
+[desktop-chrome] › e2e/ss-09-e8-beats.spec.ts:187:1 › The Claim cannot load Orbital beats in Frontier
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[19/68] [desktop-chrome] › e2e/ss-09-e8-beats.spec.ts:202:1 › epoch-3-voltage cannot load Orbital beats
+[desktop-chrome] › e2e/ss-09-e8-beats.spec.ts:202:1 › epoch-3-voltage cannot load Orbital beats
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[20/68] [desktop-chrome] › e2e/ss-09-e8-beats.spec.ts:213:1 › the Orbital boss, return and ceiling beats fire only on their own triggers
+[desktop-chrome] › e2e/ss-09-e8-beats.spec.ts:213:1 › the Orbital boss, return and ceiling beats fire only on their own triggers
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[21/68] [desktop-chrome] › e2e/ss-09-e8-beats.spec.ts:277:1 › the other three Orbital maps speak only when their own card unlocks
+[desktop-chrome] › e2e/ss-09-e8-beats.spec.ts:277:1 › the other three Orbital maps speak only when their own card unlocks
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[22/68] [desktop-chrome] › e2e/ss-10-e9-beats.spec.ts:149:1 › SS-10 table is attributed, presentational, and uses the shipped trigger vocabulary
+[23/68] [desktop-chrome] › e2e/ss-10-e9-beats.spec.ts:159:1 › every SS-10 artKey names a plate that is actually on disk
+[24/68] [desktop-chrome] › e2e/ss-10-e9-beats.spec.ts:166:1 › a player-selected Red Fields town presents the arrival, the water ledger and the cast before the ride
+[desktop-chrome] › e2e/ss-10-e9-beats.spec.ts:166:1 › a player-selected Red Fields town presents the arrival, the water ledger and the cast before the ride
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[25/68] [desktop-chrome] › e2e/ss-10-e9-beats.spec.ts:202:1 › The Claim cannot load Red Fields beats in Frontier
+[desktop-chrome] › e2e/ss-10-e9-beats.spec.ts:202:1 › The Claim cannot load Red Fields beats in Frontier
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[26/68] [desktop-chrome] › e2e/ss-10-e9-beats.spec.ts:217:1 › every Old Digger act reaches one beat, and only its own
+[desktop-chrome] › e2e/ss-10-e9-beats.spec.ts:217:1 › every Old Digger act reaches one beat, and only its own
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[27/68] [desktop-chrome] › e2e/ss-10-e9-beats.spec.ts:250:1 › epoch-2-steamworks cannot load Red Fields beats
+[desktop-chrome] › e2e/ss-10-e9-beats.spec.ts:250:1 › epoch-2-steamworks cannot load Red Fields beats
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[28/68] [desktop-chrome] › e2e/ss-11-e10-beats.spec.ts:169:1 › SS-11 table is attributed, presentational, and uses the E2/E3 trigger vocabulary
+[29/68] [desktop-chrome] › e2e/ss-11-e10-beats.spec.ts:182:1 › every Deep Sky beat cites a storybook line in source
+[30/68] [desktop-chrome] › e2e/ss-11-e10-beats.spec.ts:194:1 › a player-selected Deep Sky town presents the boarding and the Long Table before the ride
+[desktop-chrome] › e2e/ss-11-e10-beats.spec.ts:194:1 › a player-selected Deep Sky town presents the boarding and the Long Table before the ride
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[31/68] [desktop-chrome] › e2e/ss-11-e10-beats.spec.ts:234:1 › The Claim cannot load Deep Sky beats in Frontier
+[desktop-chrome] › e2e/ss-11-e10-beats.spec.ts:234:1 › The Claim cannot load Deep Sky beats in Frontier
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[32/68] [desktop-chrome] › e2e/ss-11-e10-beats.spec.ts:249:1 › epoch-3-voltage cannot load Deep Sky beats
+[desktop-chrome] › e2e/ss-11-e10-beats.spec.ts:249:1 › epoch-3-voltage cannot load Deep Sky beats
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[33/68] [desktop-chrome] › e2e/ss-11-e10-beats.spec.ts:260:1 › the Quiet, the return and the Press beats fire only on their own triggers
+[desktop-chrome] › e2e/ss-11-e10-beats.spec.ts:260:1 › the Quiet, the return and the Press beats fire only on their own triggers
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[34/68] [desktop-chrome] › e2e/ss-11-e10-beats.spec.ts:340:1 › the other two Deep Sky worlds speak only when their own card unlocks
+[desktop-chrome] › e2e/ss-11-e10-beats.spec.ts:340:1 › the other two Deep Sky worlds speak only when their own card unlocks
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+
+
+
+[35/68] [mobile-chrome] › e2e/ss-06-e5-beats.spec.ts:120:1 › SS-06 table is attributed, presentational, and uses the E2/E3 trigger vocabulary
+[36/68] [mobile-chrome] › e2e/ss-06-e5-beats.spec.ts:130:1 › a player-selected Deepwater town presents the Claim-Boat arrival and the manifest before the ride
+[mobile-chrome] › e2e/ss-06-e5-beats.spec.ts:130:1 › a player-selected Deepwater town presents the Claim-Boat arrival and the manifest before the ride
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[37/68] [mobile-chrome] › e2e/ss-06-e5-beats.spec.ts:162:1 › The Claim cannot load Deepwater beats in Frontier
+[mobile-chrome] › e2e/ss-06-e5-beats.spec.ts:162:1 › The Claim cannot load Deepwater beats in Frontier
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[38/68] [mobile-chrome] › e2e/ss-06-e5-beats.spec.ts:187:1 › F-SS06-2: the post-run Deepwater beats read the map the run returned from
+[mobile-chrome] › e2e/ss-06-e5-beats.spec.ts:187:1 › F-SS06-2: the post-run Deepwater beats read the map the run returned from
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[39/68] [mobile-chrome] › e2e/ss-06-e5-beats.spec.ts:215:1 › epoch-2-steamworks cannot load Deepwater beats
+[mobile-chrome] › e2e/ss-06-e5-beats.spec.ts:215:1 › epoch-2-steamworks cannot load Deepwater beats
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[40/68] [mobile-chrome] › e2e/ss-07-e6-beats.spec.ts:111:1 › SS-07 table is attributed, presentational, and uses the E2/E3 trigger vocabulary
+[41/68] [mobile-chrome] › e2e/ss-07-e6-beats.spec.ts:123:1 › a player-selected Atomic town presents the mesa arrival and the steward before the ride
+[mobile-chrome] › e2e/ss-07-e6-beats.spec.ts:123:1 › a player-selected Atomic town presents the mesa arrival and the steward before the ride
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[42/68] [mobile-chrome] › e2e/ss-07-e6-beats.spec.ts:150:1 › The Claim cannot load Atomic beats in Frontier
+[mobile-chrome] › e2e/ss-07-e6-beats.spec.ts:150:1 › The Claim cannot load Atomic beats in Frontier
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[43/68] [mobile-chrome] › e2e/ss-07-e6-beats.spec.ts:165:1 › epoch-3-voltage cannot load Atomic beats
+[mobile-chrome] › e2e/ss-07-e6-beats.spec.ts:165:1 › epoch-3-voltage cannot load Atomic beats
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[44/68] [mobile-chrome] › e2e/ss-07-e6-beats.spec.ts:182:1 › the Atomic boss and return beats fire only on their own triggers
+[mobile-chrome] › e2e/ss-07-e6-beats.spec.ts:182:1 › the Atomic boss and return beats fire only on their own triggers
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[45/68] [mobile-chrome] › e2e/ss-08-e7-beats.spec.ts:114:1 › SS-08 table is attributed, presentational, and uses the E2/E3 trigger vocabulary
+[46/68] [mobile-chrome] › e2e/ss-08-e7-beats.spec.ts:126:1 › a player-selected Signal town presents the ridge arrival, the wrong number and Chalk before the ride
+[mobile-chrome] › e2e/ss-08-e7-beats.spec.ts:126:1 › a player-selected Signal town presents the ridge arrival, the wrong number and Chalk before the ride
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[47/68] [mobile-chrome] › e2e/ss-08-e7-beats.spec.ts:155:1 › The Claim cannot load Signal beats in Frontier
+[mobile-chrome] › e2e/ss-08-e7-beats.spec.ts:155:1 › The Claim cannot load Signal beats in Frontier
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[48/68] [mobile-chrome] › e2e/ss-08-e7-beats.spec.ts:170:1 › epoch-3-voltage cannot load Signal beats
+[mobile-chrome] › e2e/ss-08-e7-beats.spec.ts:170:1 › epoch-3-voltage cannot load Signal beats
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[49/68] [mobile-chrome] › e2e/ss-08-e7-beats.spec.ts:187:1 › the Echo and the silences fire only on their own triggers
+[mobile-chrome] › e2e/ss-08-e7-beats.spec.ts:187:1 › the Echo and the silences fire only on their own triggers
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[50/68] [mobile-chrome] › e2e/ss-09-e8-beats.spec.ts:145:1 › SS-09 table is attributed, presentational, and uses the E2/E3 trigger vocabulary
+[51/68] [mobile-chrome] › e2e/ss-09-e8-beats.spec.ts:158:1 › a player-selected Orbital town presents the mare arrival and the breach drill before the ride
+[mobile-chrome] › e2e/ss-09-e8-beats.spec.ts:158:1 › a player-selected Orbital town presents the mare arrival and the breach drill before the ride
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[52/68] [mobile-chrome] › e2e/ss-09-e8-beats.spec.ts:187:1 › The Claim cannot load Orbital beats in Frontier
+[mobile-chrome] › e2e/ss-09-e8-beats.spec.ts:187:1 › The Claim cannot load Orbital beats in Frontier
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[53/68] [mobile-chrome] › e2e/ss-09-e8-beats.spec.ts:202:1 › epoch-3-voltage cannot load Orbital beats
+[mobile-chrome] › e2e/ss-09-e8-beats.spec.ts:202:1 › epoch-3-voltage cannot load Orbital beats
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[54/68] [mobile-chrome] › e2e/ss-09-e8-beats.spec.ts:213:1 › the Orbital boss, return and ceiling beats fire only on their own triggers
+[mobile-chrome] › e2e/ss-09-e8-beats.spec.ts:213:1 › the Orbital boss, return and ceiling beats fire only on their own triggers
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[55/68] [mobile-chrome] › e2e/ss-09-e8-beats.spec.ts:277:1 › the other three Orbital maps speak only when their own card unlocks
+[mobile-chrome] › e2e/ss-09-e8-beats.spec.ts:277:1 › the other three Orbital maps speak only when their own card unlocks
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[56/68] [mobile-chrome] › e2e/ss-10-e9-beats.spec.ts:149:1 › SS-10 table is attributed, presentational, and uses the shipped trigger vocabulary
+[57/68] [mobile-chrome] › e2e/ss-10-e9-beats.spec.ts:159:1 › every SS-10 artKey names a plate that is actually on disk
+[58/68] [mobile-chrome] › e2e/ss-10-e9-beats.spec.ts:166:1 › a player-selected Red Fields town presents the arrival, the water ledger and the cast before the ride
+[mobile-chrome] › e2e/ss-10-e9-beats.spec.ts:166:1 › a player-selected Red Fields town presents the arrival, the water ledger and the cast before the ride
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[59/68] [mobile-chrome] › e2e/ss-10-e9-beats.spec.ts:202:1 › The Claim cannot load Red Fields beats in Frontier
+[mobile-chrome] › e2e/ss-10-e9-beats.spec.ts:202:1 › The Claim cannot load Red Fields beats in Frontier
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[60/68] [mobile-chrome] › e2e/ss-10-e9-beats.spec.ts:217:1 › every Old Digger act reaches one beat, and only its own
+[mobile-chrome] › e2e/ss-10-e9-beats.spec.ts:217:1 › every Old Digger act reaches one beat, and only its own
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[61/68] [mobile-chrome] › e2e/ss-10-e9-beats.spec.ts:250:1 › epoch-2-steamworks cannot load Red Fields beats
+[mobile-chrome] › e2e/ss-10-e9-beats.spec.ts:250:1 › epoch-2-steamworks cannot load Red Fields beats
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[62/68] [mobile-chrome] › e2e/ss-11-e10-beats.spec.ts:169:1 › SS-11 table is attributed, presentational, and uses the E2/E3 trigger vocabulary
+[63/68] [mobile-chrome] › e2e/ss-11-e10-beats.spec.ts:182:1 › every Deep Sky beat cites a storybook line in source
+[64/68] [mobile-chrome] › e2e/ss-11-e10-beats.spec.ts:194:1 › a player-selected Deep Sky town presents the boarding and the Long Table before the ride
+[mobile-chrome] › e2e/ss-11-e10-beats.spec.ts:194:1 › a player-selected Deep Sky town presents the boarding and the Long Table before the ride
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[65/68] [mobile-chrome] › e2e/ss-11-e10-beats.spec.ts:234:1 › The Claim cannot load Deep Sky beats in Frontier
+[mobile-chrome] › e2e/ss-11-e10-beats.spec.ts:234:1 › The Claim cannot load Deep Sky beats in Frontier
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[66/68] [mobile-chrome] › e2e/ss-11-e10-beats.spec.ts:249:1 › epoch-3-voltage cannot load Deep Sky beats
+[mobile-chrome] › e2e/ss-11-e10-beats.spec.ts:249:1 › epoch-3-voltage cannot load Deep Sky beats
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[67/68] [mobile-chrome] › e2e/ss-11-e10-beats.spec.ts:260:1 › the Quiet, the return and the Press beats fire only on their own triggers
+[mobile-chrome] › e2e/ss-11-e10-beats.spec.ts:260:1 › the Quiet, the return and the Press beats fire only on their own triggers
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[68/68] [mobile-chrome] › e2e/ss-11-e10-beats.spec.ts:340:1 › the other two Deep Sky worlds speak only when their own card unlocks
+[mobile-chrome] › e2e/ss-11-e10-beats.spec.ts:340:1 › the other two Deep Sky worlds speak only when their own card unlocks
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+  68 passed (21.7m)
+(node:54976) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:54993) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:54993) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(node:81738) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:81738) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+
+
+SUMMARY {"chapter desktop and mobile":0}
+OVERALL rc=0

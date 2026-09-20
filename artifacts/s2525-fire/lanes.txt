@@ -1,0 +1,1600 @@
+run surface: 9 base + gate leaves from main:package.json (+6: foundry ops playwright.preview.config.ts playwright.release-base.config.ts playwright.release.config.ts server)
+agent-a074ca5aabe748fbe  worktree-agent-a074ca5aabe748fbe  ahead=0  behind=2776  paths=0  tracked-dirt=58  untracked=0
+    TRACKED-DIRT artifacts/056/desktop-build-menu-icons-blurb.png
+    TRACKED-DIRT artifacts/056/desktop-build-menu-palisade.png
+    TRACKED-DIRT artifacts/056/mobile-390-build-menu-icons-blurb.png
+    TRACKED-DIRT artifacts/accounts-worker/test-accounts.json
+    TRACKED-DIRT artifacts/assay-ledger-page/desktop-chrome-records.png
+    TRACKED-DIRT artifacts/assay-ledger-page/mobile-chrome-records.png
+    TRACKED-DIRT artifacts/assay-ledger/mobile-chrome.png
+    TRACKED-DIRT artifacts/county-standings/desktop-chrome.png
+    TRACKED-DIRT artifacts/county-standings/mobile-chrome.png
+    TRACKED-DIRT artifacts/drill-yard-affordances/desktop-chrome-after-board.png
+  => DIRTY: TRACKED dirt in the worktree — find its owner before touching this lane
+agent-a126dacac7d095de0  worktree-agent-a126dacac7d095de0  ahead=0  behind=2165  paths=0  tracked-dirt=0  untracked=0
+  => USABLE: refill freely — a master pre-flight will find main..branch empty
+     ⚠️  but worktree-agent-a126dacac7d095de0 is 2165 commit(s) BEHIND main. USABLE does not mean CURRENT.
+     Before queueing, name the commit your task depends on and prove the lane has it:
+       git merge-base --is-ancestor <sha> worktree-agent-a126dacac7d095de0
+     If it does not, request a refresh (tasks/janitor/<name>.req: refresh-lane agent-a126dacac7d095de0) — F-1320-2.
+     📋 run-surface drift: 430 file(s) main has moved that this lane lacks:
+          e2e/044-start-screen.spec.ts
+          e2e/057-baron-rocket-cart.spec.ts
+          e2e/advance-stream-bounded.spec.ts
+          e2e/advance-stream.spec.ts
+          e2e/agent-reels.spec.ts
+          e2e/agent-view.spec.ts
+          e2e/ap16-8b-capture-loop-probe.mjs
+          e2e/assay-auto-tape.spec.ts
+          … and 422 more
+        ⚠️  package.json is among them — this lane's npm GATES may be a strict SUBSET of
+        main's, so a green here can mean less than a green on main. Diff it before trusting a gate.
+agent-a177c1e22ed14fe03  worktree-agent-a177c1e22ed14fe03  ahead=0  behind=2439  paths=0  tracked-dirt=0  untracked=0
+  => USABLE: refill freely — a master pre-flight will find main..branch empty
+     ⚠️  but worktree-agent-a177c1e22ed14fe03 is 2439 commit(s) BEHIND main. USABLE does not mean CURRENT.
+     Before queueing, name the commit your task depends on and prove the lane has it:
+       git merge-base --is-ancestor <sha> worktree-agent-a177c1e22ed14fe03
+     If it does not, request a refresh (tasks/janitor/<name>.req: refresh-lane agent-a177c1e22ed14fe03) — F-1320-2.
+     📋 run-surface drift: 459 file(s) main has moved that this lane lacks:
+          e2e/044-start-screen.spec.ts
+          e2e/057-baron-rocket-cart.spec.ts
+          e2e/advance-stream-bounded.spec.ts
+          e2e/advance-stream.spec.ts
+          e2e/agent-reels.spec.ts
+          e2e/agent-view.spec.ts
+          e2e/ap16-4-contract-admission.spec.ts
+          e2e/ap16-8b-capture-loop-probe.mjs
+          … and 451 more
+        ⚠️  package.json is among them — this lane's npm GATES may be a strict SUBSET of
+        main's, so a green here can mean less than a green on main. Diff it before trusting a gate.
+agent-a195235f7799aa9e2  worktree-agent-a195235f7799aa9e2  ahead=0  behind=2791  paths=0  tracked-dirt=0  untracked=0
+  => USABLE: refill freely — a master pre-flight will find main..branch empty
+     ⚠️  but worktree-agent-a195235f7799aa9e2 is 2791 commit(s) BEHIND main. USABLE does not mean CURRENT.
+     Before queueing, name the commit your task depends on and prove the lane has it:
+       git merge-base --is-ancestor <sha> worktree-agent-a195235f7799aa9e2
+     If it does not, request a refresh (tasks/janitor/<name>.req: refresh-lane agent-a195235f7799aa9e2) — F-1320-2.
+     📋 run-surface drift: 519 file(s) main has moved that this lane lacks:
+          e2e/044-start-screen.spec.ts
+          e2e/057-baron-rocket-cart.spec.ts
+          e2e/_s2080-f1742-1-boot-probe.spec.ts
+          e2e/advance-stream-bounded.spec.ts
+          e2e/advance-stream.spec.ts
+          e2e/agent-reels.spec.ts
+          e2e/agent-view.spec.ts
+          e2e/ap16-4-contract-admission.spec.ts
+          … and 511 more
+        ⚠️  package.json is among them — this lane's npm GATES may be a strict SUBSET of
+        main's, so a green here can mean less than a green on main. Diff it before trusting a gate.
+agent-a383c2ed5dd452ebd  worktree-agent-a383c2ed5dd452ebd  ahead=0  behind=2210  paths=0  tracked-dirt=20  untracked=0
+    TRACKED-DIRT artifacts/e2-arsenal/desktop-chrome-boiler-lance-steam-jet.png
+    TRACKED-DIRT artifacts/e2-arsenal/desktop-chrome-pressure-mortar-arc.png
+    TRACKED-DIRT artifacts/e2-arsenal/desktop-chrome-sky-rocket-gold-teal-salvo.png
+    TRACKED-DIRT artifacts/e2-hill-mine/desktop-chrome-flooded-gallery.png
+    TRACKED-DIRT artifacts/e2-hill-mine/desktop-chrome-high-turret-firing-long.png
+    TRACKED-DIRT artifacts/e2-hill-mine/desktop-chrome-mine-mouth.png
+    TRACKED-DIRT artifacts/e2-hill-mine/desktop-chrome-terrace-face-blocks-west.png
+    TRACKED-DIRT artifacts/e2-hill-mine/desktop-chrome-terraces-wide.png
+    TRACKED-DIRT artifacts/e2-hill-mine/stress-report.json
+    TRACKED-DIRT artifacts/e2-pressure-garden/desktop-chrome-board.png
+  => DIRTY: TRACKED dirt in the worktree — find its owner before touching this lane
+agent-a448136106935d471  worktree-agent-a448136106935d471  ahead=0  behind=2634  paths=0  tracked-dirt=32  untracked=1
+    TRACKED-DIRT artifacts/065/desktop-chrome-after-hill-mine-turret-shot.png
+    TRACKED-DIRT artifacts/065/desktop-chrome-hill-report.json
+    TRACKED-DIRT artifacts/065/mobile-chrome-after-hill-mine-turret-shot.png
+    TRACKED-DIRT artifacts/065/mobile-chrome-hill-report.json
+    TRACKED-DIRT artifacts/e1-dry-gulch/desktop-chrome-gulch-overview.png
+    TRACKED-DIRT artifacts/e1-dry-gulch/desktop-chrome-pond-sluice.png
+    TRACKED-DIRT artifacts/e1-dry-gulch/desktop-chrome-rejection-feedback.png
+    TRACKED-DIRT artifacts/e1-dry-gulch/mobile-chrome-gulch-overview.png
+    TRACKED-DIRT artifacts/e1-dry-gulch/mobile-chrome-pond-sluice.png
+    TRACKED-DIRT artifacts/e1-dry-gulch/mobile-chrome-rejection-feedback.png
+    untracked (clean -fd) node_modules
+  => DIRTY: TRACKED dirt in the worktree — find its owner before touching this lane
+agent-a6513377b3cf5b143  worktree-agent-a6513377b3cf5b143  ahead=0  behind=2808  paths=0  tracked-dirt=6  untracked=0
+    TRACKED-DIRT artifacts/056/desktop-build-menu-icons-blurb.png
+    TRACKED-DIRT artifacts/056/desktop-build-menu-palisade.png
+    TRACKED-DIRT artifacts/056/mobile-390-build-menu-icons-blurb.png
+    TRACKED-DIRT reviews/shots-homemaker/act1-unbuild.png
+    TRACKED-DIRT reviews/shots-homemaker/act3-chair.png
+    TRACKED-DIRT reviews/shots-wrangle/exhausted-capture.png
+  => DIRTY: TRACKED dirt in the worktree — find its owner before touching this lane
+agent-a688e4a408c5fa62f  worktree-agent-a688e4a408c5fa62f  ahead=0  behind=2198  paths=0  tracked-dirt=0  untracked=18
+    untracked (clean -fd) artifacts/assay-e2e-20260822/build-submission.mjs
+    untracked (clean -fd) artifacts/assay-e2e-20260822/claim-prover.mjs
+    untracked (clean -fd) artifacts/assay-e2e-20260822/make-v2-control.mjs
+    untracked (clean -fd) artifacts/assay-e2e-20260822/poll-assay.mjs
+    untracked (clean -fd) artifacts/assay-e2e-20260822/poll.log
+    untracked (clean -fd) artifacts/assay-e2e-20260822/replay-v2-control.err
+    untracked (clean -fd) artifacts/assay-e2e-20260822/replay-v2-control.json
+    untracked (clean -fd) artifacts/assay-e2e-20260822/run-secure-verb.out
+    untracked (clean -fd) artifacts/assay-e2e-20260822/run1.err
+    untracked (clean -fd) artifacts/assay-e2e-20260822/run1.out
+  => USABLE: refill freely — a master pre-flight will find main..branch empty
+     ⚠️  but worktree-agent-a688e4a408c5fa62f is 2198 commit(s) BEHIND main. USABLE does not mean CURRENT.
+     Before queueing, name the commit your task depends on and prove the lane has it:
+       git merge-base --is-ancestor <sha> worktree-agent-a688e4a408c5fa62f
+     If it does not, request a refresh (tasks/janitor/<name>.req: refresh-lane agent-a688e4a408c5fa62f) — F-1320-2.
+     📋 run-surface drift: 436 file(s) main has moved that this lane lacks:
+          e2e/044-start-screen.spec.ts
+          e2e/057-baron-rocket-cart.spec.ts
+          e2e/advance-stream-bounded.spec.ts
+          e2e/advance-stream.spec.ts
+          e2e/agent-reels.spec.ts
+          e2e/agent-view.spec.ts
+          e2e/ap16-4-contract-admission.spec.ts
+          e2e/ap16-8b-capture-loop-probe.mjs
+          … and 428 more
+        ⚠️  package.json is among them — this lane's npm GATES may be a strict SUBSET of
+        main's, so a green here can mean less than a green on main. Diff it before trusting a gate.
+agent-a6b1bbd373315d0c0  worktree-agent-a6b1bbd373315d0c0  ahead=0  behind=2809  paths=0  tracked-dirt=50  untracked=0
+    TRACKED-DIRT artifacts/056/desktop-build-menu-icons-blurb.png
+    TRACKED-DIRT artifacts/056/desktop-build-menu-palisade.png
+    TRACKED-DIRT artifacts/056/mobile-390-build-menu-icons-blurb.png
+    TRACKED-DIRT artifacts/accounts-worker/test-accounts.json
+    TRACKED-DIRT artifacts/assay-season-roll/current-season-mobile-chrome.png
+    TRACKED-DIRT artifacts/assay-season-roll/first-ledger-mobile-chrome.png
+    TRACKED-DIRT artifacts/county-standings/desktop-chrome.png
+    TRACKED-DIRT artifacts/county-standings/mobile-chrome.png
+    TRACKED-DIRT artifacts/drill-yard-affordances/desktop-chrome-after-board.png
+    TRACKED-DIRT artifacts/drill-yard-affordances/desktop-chrome-bell-prompt.png
+  => DIRTY: TRACKED dirt in the worktree — find its owner before touching this lane
+agent-a6farside  worktree-agent-a6-far-side  ahead=0  behind=2734  paths=0  tracked-dirt=0  untracked=0
+  => USABLE: refill freely — a master pre-flight will find main..branch empty
+     ⚠️  but worktree-agent-a6-far-side is 2734 commit(s) BEHIND main. USABLE does not mean CURRENT.
+     Before queueing, name the commit your task depends on and prove the lane has it:
+       git merge-base --is-ancestor <sha> worktree-agent-a6-far-side
+     If it does not, request a refresh (tasks/janitor/<name>.req: refresh-lane agent-a6farside) — F-1320-2.
+     📋 run-surface drift: 508 file(s) main has moved that this lane lacks:
+          e2e/044-start-screen.spec.ts
+          e2e/057-baron-rocket-cart.spec.ts
+          e2e/advance-stream-bounded.spec.ts
+          e2e/advance-stream.spec.ts
+          e2e/agent-reels.spec.ts
+          e2e/agent-view.spec.ts
+          e2e/ap16-4-contract-admission.spec.ts
+          e2e/ap16-8b-capture-loop-probe.mjs
+          … and 500 more
+        ⚠️  package.json is among them — this lane's npm GATES may be a strict SUBSET of
+        main's, so a green here can mean less than a green on main. Diff it before trusting a gate.
+agent-a7loworbit  worktree-agent-a7-low-orbit  ahead=0  behind=2734  paths=0  tracked-dirt=0  untracked=0
+  => USABLE: refill freely — a master pre-flight will find main..branch empty
+     ⚠️  but worktree-agent-a7-low-orbit is 2734 commit(s) BEHIND main. USABLE does not mean CURRENT.
+     Before queueing, name the commit your task depends on and prove the lane has it:
+       git merge-base --is-ancestor <sha> worktree-agent-a7-low-orbit
+     If it does not, request a refresh (tasks/janitor/<name>.req: refresh-lane agent-a7loworbit) — F-1320-2.
+     📋 run-surface drift: 506 file(s) main has moved that this lane lacks:
+          e2e/044-start-screen.spec.ts
+          e2e/057-baron-rocket-cart.spec.ts
+          e2e/advance-stream-bounded.spec.ts
+          e2e/advance-stream.spec.ts
+          e2e/agent-reels.spec.ts
+          e2e/agent-view.spec.ts
+          e2e/ap16-4-contract-admission.spec.ts
+          e2e/ap16-8b-capture-loop-probe.mjs
+          … and 498 more
+        ⚠️  package.json is among them — this lane's npm GATES may be a strict SUBSET of
+        main's, so a green here can mean less than a green on main. Diff it before trusting a gate.
+agent-a92ce8965ad80a2a3  worktree-agent-a92ce8965ad80a2a3  ahead=0  behind=2818  paths=0  tracked-dirt=3  untracked=0
+    TRACKED-DIRT artifacts/056/desktop-build-menu-icons-blurb.png
+    TRACKED-DIRT artifacts/056/desktop-build-menu-palisade.png
+    TRACKED-DIRT artifacts/056/mobile-390-build-menu-icons-blurb.png
+  => DIRTY: TRACKED dirt in the worktree — find its owner before touching this lane
+agent-a932151866f4f456e  worktree-agent-a932151866f4f456e  ahead=0  behind=2673  paths=0  tracked-dirt=0  untracked=0
+  => USABLE: refill freely — a master pre-flight will find main..branch empty
+     ⚠️  but worktree-agent-a932151866f4f456e is 2673 commit(s) BEHIND main. USABLE does not mean CURRENT.
+     Before queueing, name the commit your task depends on and prove the lane has it:
+       git merge-base --is-ancestor <sha> worktree-agent-a932151866f4f456e
+     If it does not, request a refresh (tasks/janitor/<name>.req: refresh-lane agent-a932151866f4f456e) — F-1320-2.
+     📋 run-surface drift: 498 file(s) main has moved that this lane lacks:
+          e2e/044-start-screen.spec.ts
+          e2e/057-baron-rocket-cart.spec.ts
+          e2e/advance-stream-bounded.spec.ts
+          e2e/advance-stream.spec.ts
+          e2e/agent-reels.spec.ts
+          e2e/agent-view.spec.ts
+          e2e/ap16-4-contract-admission.spec.ts
+          e2e/ap16-8b-capture-loop-probe.mjs
+          … and 490 more
+        ⚠️  package.json is among them — this lane's npm GATES may be a strict SUBSET of
+        main's, so a green here can mean less than a green on main. Diff it before trusting a gate.
+agent-a98eb66014d0d4afc  worktree-agent-a98eb66014d0d4afc  ahead=0  behind=2621  paths=0  tracked-dirt=16  untracked=0
+    TRACKED-DIRT artifacts/board-gating/desktop-chrome-fresh-secrets-kept.png
+    TRACKED-DIRT artifacts/board-gating/desktop-chrome-steamworks-profiles.png
+    TRACKED-DIRT artifacts/board-gating/mobile-chrome-fresh-secrets-kept.png
+    TRACKED-DIRT artifacts/board-gating/mobile-chrome-steamworks-profiles.png
+    TRACKED-DIRT artifacts/lane-roster-wiring-e9-01/desktop-chrome-placeholders.png
+    TRACKED-DIRT artifacts/lane-roster-wiring-e9-01/mobile-chrome-placeholders.png
+    TRACKED-DIRT artifacts/survive-copy/desktop-chrome-card-e1-baron.png
+    TRACKED-DIRT artifacts/survive-copy/desktop-chrome-card-e1-dry-gulch.png
+    TRACKED-DIRT artifacts/survive-copy/desktop-chrome-mobile-390-card.png
+    TRACKED-DIRT artifacts/survive-copy/desktop-chrome-mobile-390-pause.png
+  => DIRTY: TRACKED dirt in the worktree — find its owner before touching this lane
+agent-a9e7d8321e70f7a1f  worktree-agent-a9e7d8321e70f7a1f  ahead=0  behind=2340  paths=0  tracked-dirt=0  untracked=0
+  => USABLE: refill freely — a master pre-flight will find main..branch empty
+     ⚠️  but worktree-agent-a9e7d8321e70f7a1f is 2340 commit(s) BEHIND main. USABLE does not mean CURRENT.
+     Before queueing, name the commit your task depends on and prove the lane has it:
+       git merge-base --is-ancestor <sha> worktree-agent-a9e7d8321e70f7a1f
+     If it does not, request a refresh (tasks/janitor/<name>.req: refresh-lane agent-a9e7d8321e70f7a1f) — F-1320-2.
+     📋 run-surface drift: 450 file(s) main has moved that this lane lacks:
+          e2e/044-start-screen.spec.ts
+          e2e/057-baron-rocket-cart.spec.ts
+          e2e/advance-stream-bounded.spec.ts
+          e2e/advance-stream.spec.ts
+          e2e/agent-reels.spec.ts
+          e2e/agent-view.spec.ts
+          e2e/ap16-4-contract-admission.spec.ts
+          e2e/ap16-8b-capture-loop-probe.mjs
+          … and 442 more
+        ⚠️  package.json is among them — this lane's npm GATES may be a strict SUBSET of
+        main's, so a green here can mean less than a green on main. Diff it before trusting a gate.
+agent-a9ef6c846b5a10e64  worktree-agent-a9ef6c846b5a10e64  ahead=0  behind=2747  paths=0  tracked-dirt=22  untracked=0
+    TRACKED-DIRT artifacts/e3-day-night/desktop-chrome-dawn.png
+    TRACKED-DIRT artifacts/e3-day-night/desktop-chrome-dusk-midnight-dawn-strip.png
+    TRACKED-DIRT artifacts/e3-day-night/desktop-chrome-dusk.png
+    TRACKED-DIRT artifacts/e3-day-night/desktop-chrome-midnight.png
+    TRACKED-DIRT artifacts/e3-day-night/mobile-chrome-dawn.png
+    TRACKED-DIRT artifacts/e3-day-night/mobile-chrome-dusk-midnight-dawn-strip.png
+    TRACKED-DIRT artifacts/e3-day-night/mobile-chrome-dusk.png
+    TRACKED-DIRT artifacts/e3-day-night/mobile-chrome-midnight.png
+    TRACKED-DIRT artifacts/e3-fairground-flocks/desktop-chrome-crowds-at-the-gate.png
+    TRACKED-DIRT artifacts/e3-fairground-flocks/desktop-chrome-fright-scatter.png
+  => DIRTY: TRACKED dirt in the worktree — find its owner before touching this lane
+agent-aa7ccb79d2d03ada8  worktree-agent-aa7ccb79d2d03ada8  ahead=0  behind=2776  paths=0  tracked-dirt=46  untracked=0
+    TRACKED-DIRT artifacts/056/desktop-build-menu-icons-blurb.png
+    TRACKED-DIRT artifacts/056/desktop-build-menu-palisade.png
+    TRACKED-DIRT artifacts/056/mobile-390-build-menu-icons-blurb.png
+    TRACKED-DIRT artifacts/e2-arsenal/desktop-chrome-boiler-lance-steam-jet.png
+    TRACKED-DIRT artifacts/e2-arsenal/desktop-chrome-pressure-mortar-arc.png
+    TRACKED-DIRT artifacts/e2-arsenal/desktop-chrome-sky-rocket-gold-teal-salvo.png
+    TRACKED-DIRT artifacts/e2-arsenal/mobile-chrome-boiler-lance-steam-jet.png
+    TRACKED-DIRT artifacts/e2-arsenal/mobile-chrome-pressure-mortar-arc.png
+    TRACKED-DIRT artifacts/e2-arsenal/mobile-chrome-sky-rocket-gold-teal-salvo.png
+    TRACKED-DIRT artifacts/e2-escort-mode/desktop-chrome-arrival.png
+  => DIRTY: TRACKED dirt in the worktree — find its owner before touching this lane
+agent-ab5c2b2f3528ad4c3  worktree-agent-ab5c2b2f3528ad4c3  ahead=0  behind=2713  paths=0  tracked-dirt=0  untracked=0
+  => USABLE: refill freely — a master pre-flight will find main..branch empty
+     ⚠️  but worktree-agent-ab5c2b2f3528ad4c3 is 2713 commit(s) BEHIND main. USABLE does not mean CURRENT.
+     Before queueing, name the commit your task depends on and prove the lane has it:
+       git merge-base --is-ancestor <sha> worktree-agent-ab5c2b2f3528ad4c3
+     If it does not, request a refresh (tasks/janitor/<name>.req: refresh-lane agent-ab5c2b2f3528ad4c3) — F-1320-2.
+     📋 run-surface drift: 507 file(s) main has moved that this lane lacks:
+          e2e/044-start-screen.spec.ts
+          e2e/057-baron-rocket-cart.spec.ts
+          e2e/advance-stream-bounded.spec.ts
+          e2e/advance-stream.spec.ts
+          e2e/agent-reels.spec.ts
+          e2e/agent-view.spec.ts
+          e2e/ap16-4-contract-admission.spec.ts
+          e2e/ap16-8b-capture-loop-probe.mjs
+          … and 499 more
+        ⚠️  package.json is among them — this lane's npm GATES may be a strict SUBSET of
+        main's, so a green here can mean less than a green on main. Diff it before trusting a gate.
+agent-ac6a4904ef7986cff  worktree-agent-ac6a4904ef7986cff  ahead=0  behind=2492  paths=0  tracked-dirt=3  untracked=0
+    TRACKED-DIRT artifacts/056/desktop-build-menu-icons-blurb.png
+    TRACKED-DIRT artifacts/056/desktop-build-menu-palisade.png
+    TRACKED-DIRT artifacts/056/mobile-390-build-menu-icons-blurb.png
+  => DIRTY: TRACKED dirt in the worktree — find its owner before touching this lane
+agent-acb0d58c05ef3464e  worktree-agent-acb0d58c05ef3464e  ahead=0  behind=2749  paths=0  tracked-dirt=3  untracked=0
+    TRACKED-DIRT artifacts/056/desktop-build-menu-icons-blurb.png
+    TRACKED-DIRT artifacts/056/desktop-build-menu-palisade.png
+    TRACKED-DIRT artifacts/056/mobile-390-build-menu-icons-blurb.png
+  => DIRTY: TRACKED dirt in the worktree — find its owner before touching this lane
+agent-ad297088098a5a90d  worktree-agent-ad297088098a5a90d  ahead=0  behind=2721  paths=0  tracked-dirt=0  untracked=0
+  => USABLE: refill freely — a master pre-flight will find main..branch empty
+     ⚠️  but worktree-agent-ad297088098a5a90d is 2721 commit(s) BEHIND main. USABLE does not mean CURRENT.
+     Before queueing, name the commit your task depends on and prove the lane has it:
+       git merge-base --is-ancestor <sha> worktree-agent-ad297088098a5a90d
+     If it does not, request a refresh (tasks/janitor/<name>.req: refresh-lane agent-ad297088098a5a90d) — F-1320-2.
+     📋 run-surface drift: 510 file(s) main has moved that this lane lacks:
+          e2e/044-start-screen.spec.ts
+          e2e/057-baron-rocket-cart.spec.ts
+          e2e/advance-stream-bounded.spec.ts
+          e2e/advance-stream.spec.ts
+          e2e/agent-reels.spec.ts
+          e2e/agent-view.spec.ts
+          e2e/ap16-4-contract-admission.spec.ts
+          e2e/ap16-8b-capture-loop-probe.mjs
+          … and 502 more
+        ⚠️  package.json is among them — this lane's npm GATES may be a strict SUBSET of
+        main's, so a green here can mean less than a green on main. Diff it before trusting a gate.
+agent-ad90f0a8eb7716664  worktree-agent-ad90f0a8eb7716664  ahead=0  behind=2207  paths=0  tracked-dirt=0  untracked=0
+  => USABLE: refill freely — a master pre-flight will find main..branch empty
+     ⚠️  but worktree-agent-ad90f0a8eb7716664 is 2207 commit(s) BEHIND main. USABLE does not mean CURRENT.
+     Before queueing, name the commit your task depends on and prove the lane has it:
+       git merge-base --is-ancestor <sha> worktree-agent-ad90f0a8eb7716664
+     If it does not, request a refresh (tasks/janitor/<name>.req: refresh-lane agent-ad90f0a8eb7716664) — F-1320-2.
+     📋 run-surface drift: 434 file(s) main has moved that this lane lacks:
+          e2e/044-start-screen.spec.ts
+          e2e/057-baron-rocket-cart.spec.ts
+          e2e/advance-stream-bounded.spec.ts
+          e2e/advance-stream.spec.ts
+          e2e/agent-reels.spec.ts
+          e2e/agent-view.spec.ts
+          e2e/ap16-4-contract-admission.spec.ts
+          e2e/ap16-8b-capture-loop-probe.mjs
+          … and 426 more
+        ⚠️  package.json is among them — this lane's npm GATES may be a strict SUBSET of
+        main's, so a green here can mean less than a green on main. Diff it before trusting a gate.
+agent-ada3202c7f5b8074b  worktree-agent-ada3202c7f5b8074b  ahead=0  behind=2681  paths=0  tracked-dirt=3  untracked=0
+    TRACKED-DIRT artifacts/056/desktop-build-menu-icons-blurb.png
+    TRACKED-DIRT artifacts/056/desktop-build-menu-palisade.png
+    TRACKED-DIRT artifacts/056/mobile-390-build-menu-icons-blurb.png
+  => DIRTY: TRACKED dirt in the worktree — find its owner before touching this lane
+agent-ae099afce3741d363  worktree-agent-ae099afce3741d363  ahead=0  behind=2791  paths=0  tracked-dirt=3  untracked=0
+    TRACKED-DIRT artifacts/056/desktop-build-menu-icons-blurb.png
+    TRACKED-DIRT artifacts/056/desktop-build-menu-palisade.png
+    TRACKED-DIRT artifacts/056/mobile-390-build-menu-icons-blurb.png
+  => DIRTY: TRACKED dirt in the worktree — find its owner before touching this lane
+agent-aec0c52b1d3e82294  worktree-agent-aec0c52b1d3e82294  ahead=0  behind=2769  paths=0  tracked-dirt=0  untracked=0
+  => USABLE: refill freely — a master pre-flight will find main..branch empty
+     ⚠️  but worktree-agent-aec0c52b1d3e82294 is 2769 commit(s) BEHIND main. USABLE does not mean CURRENT.
+     Before queueing, name the commit your task depends on and prove the lane has it:
+       git merge-base --is-ancestor <sha> worktree-agent-aec0c52b1d3e82294
+     If it does not, request a refresh (tasks/janitor/<name>.req: refresh-lane agent-aec0c52b1d3e82294) — F-1320-2.
+     📋 run-surface drift: 516 file(s) main has moved that this lane lacks:
+          e2e/044-start-screen.spec.ts
+          e2e/057-baron-rocket-cart.spec.ts
+          e2e/_s2080-f1742-1-boot-probe.spec.ts
+          e2e/advance-stream-bounded.spec.ts
+          e2e/advance-stream.spec.ts
+          e2e/agent-reels.spec.ts
+          e2e/agent-view.spec.ts
+          e2e/ap16-4-contract-admission.spec.ts
+          … and 508 more
+        ⚠️  package.json is among them — this lane's npm GATES may be a strict SUBSET of
+        main's, so a green here can mean less than a green on main. Diff it before trusting a gate.
+agent-afb0b4a8ee24d0d5f  worktree-agent-afb0b4a8ee24d0d5f  ahead=0  behind=2497  paths=0  tracked-dirt=3  untracked=0
+    TRACKED-DIRT artifacts/056/desktop-build-menu-icons-blurb.png
+    TRACKED-DIRT artifacts/056/desktop-build-menu-palisade.png
+    TRACKED-DIRT artifacts/056/mobile-390-build-menu-icons-blurb.png
+  => DIRTY: TRACKED dirt in the worktree — find its owner before touching this lane
+lane-a  lane/a  ahead=2  behind=4  paths=14  tracked-dirt=0  untracked=0
+    HELD LANE-ONLY  e2e/ss-05-e4-beats.spec.ts  (193 of 193 added lines absent from main)
+      "import { mkdir } from 'node:fs/promises';"
+      "import { expect, test, type Page, type TestInfo } from '@playwright/test';"
+      "import { FIRST_CLAIM_DONE_KEY, PROFILE_KEY, TOWN_NAME_KEY, profileDataKey, type ProfileState } from…"
+    HELD LANE-ONLY  reviews/shots-ss-05-e4-beats/desktop-chrome-arrival.png  (BINARY)
+    HELD LANE-ONLY  reviews/shots-ss-05-e4-beats/desktop-chrome-dust-flats-ride.png  (BINARY)
+    HELD LANE-ONLY  reviews/shots-ss-05-e4-beats/desktop-chrome-first-flivver.png  (BINARY)
+    HELD LANE-ONLY  reviews/shots-ss-05-e4-beats/desktop-chrome-freed-hands.png  (BINARY)
+    HELD LANE-ONLY  reviews/shots-ss-05-e4-beats/desktop-chrome-land-yacht-dread.png  (BINARY)
+    HELD LANE-ONLY  reviews/shots-ss-05-e4-beats/mobile-chrome-arrival.png  (BINARY)
+    HELD LANE-ONLY  reviews/shots-ss-05-e4-beats/mobile-chrome-dust-flats-ride.png  (BINARY)
+    HELD LANE-ONLY  reviews/shots-ss-05-e4-beats/mobile-chrome-first-flivver.png  (BINARY)
+    HELD LANE-ONLY  reviews/shots-ss-05-e4-beats/mobile-chrome-freed-hands.png  (BINARY)
+    HELD LANE-ONLY  reviews/shots-ss-05-e4-beats/mobile-chrome-land-yacht-dread.png  (BINARY)
+    HELD LANE-ONLY  src/story/StoryRuntime.ts  (2 of 2 added lines absent from main)
+      "import { E3_STORY_BEATS, E4_STORY_BEATS, STORY_RUNTIME_BEATS, type RuntimeStoryBeat } from './beats…"
+      "      ...(activeEpochId() === 'epoch-4-motor' ? E4_STORY_BEATS : []),"
+    HELD LANE-ONLY  src/story/beats.ts  (73 of 158 added lines absent from main)
+      "// Chapter E4 follows the E2/E3 single-table shape above (see the E3 note at lines 409-410):"
+      "// the era's tavern tales and Gazette headlines are ordinary attributed beats in THIS table"
+      "// (tavern tale shape: e2-depot-wedding at lines 367-374 and e3-tavern-twins-defect at lines"
+    HELD LANE-ONLY  tasks/BACKLOG.md  (1 of 1 added lines absent from main)
+      "📖 **ss-05-e4-beats READY-FOR-GATES (lane/a, 2026-09-05 night; Claude Opus 5 implementer, the codex…"
+  => HOLDS: drain or rule on the held paths first — never auto-reset over them
+lane-b  lane/b  ahead=1  behind=32  paths=288  tracked-dirt=7  untracked=267
+    HELD LANE-ONLY  artifacts/perf-survey/calibration-wave0.json  (6121 of 6121 added lines absent from main)
+      "{"
+      "  \"reason\": \"Probe caught nowaves boot at wave 0. Retained as calibration only; wave1 now calls exi…"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/census-final-run.log  (107 of 107 added lines absent from main)
+      "e6-showroom-full-desktop-wave1: measured calls=76 p95=8.80 load=4.4 "
+      "e6-showroom-full-mobile-wave1: measured calls=55 p95=9.00 load=5.1 "
+      "e6-showroom-lite-desktop-wave1: measured calls=75 p95=16.70 load=5.0 "
+    HELD LANE-ONLY  artifacts/perf-survey/census-run-resume.log  (12 of 12 added lines absent from main)
+      "e6-showroom-lite-desktop-stress: measured calls=176 p95=10.20 load=6.3 "
+      "e6-showroom-lite-mobile-wave1: measured calls=59 p95=10.20 load=5.7 "
+      "e6-showroom-lite-mobile-stress: measured calls=160 p95=10.10 load=6.4 "
+    HELD LANE-ONLY  artifacts/perf-survey/census-run.log  (5 of 5 added lines absent from main)
+      "e6-showroom-full-desktop-wave1: measured calls=76 p95=8.60 load=3.0 "
+      "e6-showroom-full-desktop-stress: measured calls=169 p95=8.80 load=3.2 "
+      "e6-showroom-full-mobile-wave1: measured calls=55 p95=9.10 load=4.6 "
+    HELD LANE-ONLY  artifacts/perf-survey/census.json  (72952 of 72952 added lines absent from main)
+      "{"
+      "  \"schemaVersion\": 1,"
+      "  \"instrument\": \"scripts/perf-survey/run.mjs\","
+    HELD LANE-ONLY  artifacts/perf-survey/county-fetch.log  (42 of 42 added lines absent from main)
+      "the-claim: HTTP 200 reels=7 "
+      "e1-drill-yard: HTTP 400 reels=0 "
+      "e1-dry-gulch: HTTP 200 reels=2 "
+    HELD LANE-ONLY  artifacts/perf-survey/county-tapes.json  (2403 of 2403 added lines absent from main)
+      "{"
+      "  \"at\": \"2026-09-05T14:38:42.430Z\","
+      "  \"origin\": \"https://agenttown.app\","
+    HELD LANE-ONLY  artifacts/perf-survey/inventory.json  (32750 of 32750 added lines absent from main)
+      "{"
+      "  \"at\": \"2026-09-05T14:52:57.119Z\","
+      "  \"maps\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/phases-run.log  (1 of 1 added lines absent from main)
+      "Waiting for the existing serial census PID 16453"
+    HELD LANE-ONLY  artifacts/perf-survey/preflight.json  (23 of 23 added lines absent from main)
+      "{"
+      "  \"at\": \"2026-09-05T14:24:44.164Z\","
+      "  \"head\": \"5f1cc3cea589bcd9b5bf7d95402fef33dd232525\","
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e1-dry-gulch-full-desktop-stress.json  (16763 of 16763 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10000.1,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e1-dry-gulch-full-desktop-wave1.json  (16273 of 16273 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10008.7,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e1-dry-gulch-full-mobile-stress.json  (15209 of 15209 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10008.099999999999,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e1-dry-gulch-full-mobile-wave1.json  (14061 of 14061 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10008.5,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e1-dry-gulch-lite-desktop-stress.json  (9175 of 9175 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10001.5,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e1-dry-gulch-lite-desktop-wave1.json  (9609 of 9609 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10009.8,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e1-dry-gulch-lite-mobile-stress.json  (14509 of 14509 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10001,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e1-dry-gulch-lite-mobile-wave1.json  (15839 of 15839 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10000.9,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e4-boneyard-full-desktop-stress.json  (14467 of 14467 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10004.099999999999,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e4-boneyard-full-desktop-wave1.json  (15531 of 15531 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10008.300000000001,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e4-boneyard-full-mobile-stress.json  (15895 of 15895 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10008.3,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e4-boneyard-full-mobile-wave1.json  (15419 of 15419 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10008.300000000001,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e4-boneyard-lite-desktop-stress.json  (6725 of 6725 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10004.099999999999,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e4-boneyard-lite-desktop-wave1.json  (8013 of 8013 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10008.3,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e4-boneyard-lite-mobile-stress.json  (4359 of 4359 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10048.3,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e4-boneyard-lite-mobile-wave1.json  (7957 of 7957 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10016.5,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e4-dust-flats-full-desktop-stress.json  (15293 of 15293 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10007,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e4-dust-flats-full-desktop-wave1.json  (15433 of 15433 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10005.7,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e4-dust-flats-full-mobile-stress.json  (16091 of 16091 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10008.2,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e4-dust-flats-full-mobile-wave1.json  (16021 of 16021 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10003,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e4-dust-flats-lite-desktop-stress.json  (4667 of 4667 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10012.5,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e4-dust-flats-lite-desktop-wave1.json  (6179 of 6179 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10024.900000000001,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e4-dust-flats-lite-mobile-stress.json  (4135 of 4135 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10032.9,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e4-dust-flats-lite-mobile-wave1.json  (5073 of 5073 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10008,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e4-gusher-county-full-desktop-stress.json  (15195 of 15195 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10008.2,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e4-gusher-county-full-desktop-wave1.json  (16385 of 16385 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10000,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e4-gusher-county-full-mobile-stress.json  (16805 of 16805 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10001.1,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e4-gusher-county-full-mobile-wave1.json  (16637 of 16637 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10008.199999999999,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e4-gusher-county-lite-desktop-stress.json  (5437 of 5437 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10008.300000000001,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e4-gusher-county-lite-desktop-wave1.json  (6375 of 6375 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10007.9,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e4-gusher-county-lite-mobile-stress.json  (6753 of 6753 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10000,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e4-gusher-county-lite-mobile-wave1.json  (6207 of 6207 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10000.4,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e4-long-road-full-desktop-stress.json  (16805 of 16805 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10000,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e4-long-road-full-desktop-wave1.json  (16819 of 16819 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10007.5,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e4-long-road-full-mobile-stress.json  (16847 of 16847 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10004.099999999999,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e4-long-road-full-mobile-wave1.json  (16805 of 16805 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10000,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e4-long-road-lite-desktop-stress.json  (8475 of 8475 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10008.2,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e4-long-road-lite-desktop-wave1.json  (6781 of 6781 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10016.599999999999,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e4-long-road-lite-mobile-stress.json  (8601 of 8601 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10012.4,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e4-long-road-lite-mobile-wave1.json  (4989 of 4989 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10025,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e6-glow-mesa-full-desktop-stress.json  (16819 of 16819 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10008.3,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e6-glow-mesa-full-desktop-wave1.json  (16623 of 16623 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10000.7,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e6-glow-mesa-full-mobile-stress.json  (16329 of 16329 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10008.300000000001,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e6-glow-mesa-full-mobile-wave1.json  (16805 of 16805 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10000.2,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e6-glow-mesa-lite-desktop-stress.json  (10603 of 10603 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10015.8,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e6-glow-mesa-lite-desktop-wave1.json  (10701 of 10701 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10003.8,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e6-glow-mesa-lite-mobile-stress.json  (9903 of 9903 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10008.3,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e6-glow-mesa-lite-mobile-wave1.json  (11051 of 11051 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10008.3,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e6-half-life-hollow-full-desktop-stress.json  (16119 of 16119 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10008.099999999999,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e6-half-life-hollow-full-desktop-wave1.json  (15825 of 15825 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10000,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e6-half-life-hollow-full-mobile-stress.json  (16805 of 16805 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10000.099999999999,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e6-half-life-hollow-full-mobile-wave1.json  (16609 of 16609 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10008.300000000001,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e6-half-life-hollow-lite-desktop-stress.json  (7033 of 7033 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10017.2,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e6-half-life-hollow-lite-desktop-wave1.json  (8895 of 8895 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10008.3,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e6-half-life-hollow-lite-mobile-stress.json  (11149 of 11149 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10000.9,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e6-half-life-hollow-lite-mobile-wave1.json  (11233 of 11233 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10004.099999999999,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e6-picnic-full-desktop-stress.json  (6459 of 6459 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10037.5,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e6-picnic-full-desktop-wave1.json  (15741 of 15741 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10004.2,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e6-picnic-full-mobile-stress.json  (3365 of 3365 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10188.600000000002,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e6-picnic-full-mobile-wave1.json  (2637 of 2637 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10022.899999999998,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e6-picnic-lite-desktop-stress.json  (3057 of 3057 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10092.900000000001,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e6-picnic-lite-desktop-wave1.json  (1839 of 1839 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10084.199999999999,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e6-picnic-lite-mobile-stress.json  (6739 of 6739 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10016.3,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e6-picnic-lite-mobile-wave1.json  (5031 of 5031 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10016.1,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e6-showroom-full-desktop-stress.json  (16805 of 16805 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10000.2,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e6-showroom-full-desktop-wave1.json  (16819 of 16819 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10004.1,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e6-showroom-full-mobile-stress.json  (16805 of 16805 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10000,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e6-showroom-full-mobile-wave1.json  (16805 of 16805 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10000,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e6-showroom-lite-desktop-stress.json  (16693 of 16693 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10008.6,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e6-showroom-lite-desktop-wave1.json  (15377 of 15377 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10000.5,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e6-showroom-lite-mobile-stress.json  (16665 of 16665 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10008.3,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e6-showroom-lite-mobile-wave1.json  (15405 of 15405 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10000,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e7-dead-band-full-desktop-stress.json  (14075 of 14075 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10007.5,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e7-dead-band-full-desktop-wave1.json  (13067 of 13067 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10001.2,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e7-dead-band-full-mobile-stress.json  (16259 of 16259 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10000.1,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e7-dead-band-full-mobile-wave1.json  (16665 of 16665 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10006.6,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e7-dead-band-lite-desktop-stress.json  (8895 of 8895 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10016.199999999999,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e7-dead-band-lite-desktop-wave1.json  (7677 of 7677 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10008.4,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e7-dead-band-lite-mobile-stress.json  (7537 of 7537 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10000,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e7-dead-band-lite-mobile-wave1.json  (7523 of 7523 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10015.7,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e7-relay-rush-full-desktop-stress.json  (16441 of 16441 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10000.3,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e7-relay-rush-full-desktop-wave1.json  (15559 of 15559 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10000.3,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e7-relay-rush-full-mobile-stress.json  (7551 of 7551 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10001.000000000002,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e7-relay-rush-full-mobile-wave1.json  (16147 of 16147 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10092,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e7-relay-rush-lite-desktop-stress.json  (3281 of 3281 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10035.199999999999,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e7-relay-rush-lite-desktop-wave1.json  (3365 of 3365 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10041.300000000001,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e7-relay-rush-lite-mobile-stress.json  (4597 of 4597 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10001.1,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e7-relay-rush-lite-mobile-wave1.json  (4471 of 4471 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10002.5,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e7-relay-valley-full-desktop-stress.json  (15699 of 15699 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10007.300000000001,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e7-relay-valley-full-desktop-wave1.json  (15699 of 15699 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10007.8,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e7-relay-valley-full-mobile-stress.json  (15755 of 15755 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10001,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e7-relay-valley-full-mobile-wave1.json  (15069 of 15069 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10008.300000000001,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e7-relay-valley-lite-desktop-stress.json  (5633 of 5633 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10033.7,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e7-relay-valley-lite-desktop-wave1.json  (7831 of 7831 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10006.9,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e7-relay-valley-lite-mobile-stress.json  (8727 of 8727 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10008.099999999999,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e7-relay-valley-lite-mobile-wave1.json  (8335 of 8335 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10008.900000000001,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e9-devils-alley-full-desktop-stress.json  (16133 of 16133 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10004.2,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e9-devils-alley-full-desktop-wave1.json  (15517 of 15517 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10004.099999999999,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e9-devils-alley-full-mobile-stress.json  (16035 of 16035 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10000.3,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e9-devils-alley-full-mobile-wave1.json  (15125 of 15125 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10007,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e9-devils-alley-lite-desktop-stress.json  (7411 of 7411 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10016.6,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e9-devils-alley-lite-desktop-wave1.json  (10659 of 10659 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10016.2,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e9-devils-alley-lite-mobile-stress.json  (9329 of 9329 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10008.3,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e9-devils-alley-lite-mobile-wave1.json  (10197 of 10197 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10008.8,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e9-seed-run-full-desktop-stress.json  (14341 of 14341 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10006.2,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e9-seed-run-full-desktop-wave1.json  (13361 of 13361 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10006.100000000002,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e9-seed-run-full-mobile-stress.json  (15923 of 15923 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10000,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e9-seed-run-full-mobile-wave1.json  (16091 of 16091 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10007.9,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e9-seed-run-lite-desktop-stress.json  (6403 of 6403 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10000,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e9-seed-run-lite-desktop-wave1.json  (9861 of 9861 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10024.2,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e9-seed-run-lite-mobile-stress.json  (6781 of 6781 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10008.3,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/e9-seed-run-lite-mobile-wave1.json  (7355 of 7355 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10008.5,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/the-claim-full-desktop-stress.json  (10701 of 10701 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10004.2,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/the-claim-full-desktop-wave1.json  (11191 of 11191 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10002.900000000001,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/samples/the-claim-full-mobile-wave1.json  (11037 of 11037 added lines absent from main)
+      "{"
+      "  \"elapsedMs\": 10007.1,"
+      "  \"rows\": ["
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e1-dry-gulch-full-desktop-stress.json  (5621 of 5621 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 1002.2999999523163,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e1-dry-gulch-full-desktop-wave1.json  (5603 of 5603 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 1022.1000000238419,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e1-dry-gulch-full-mobile-stress.json  (5612 of 5612 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 1802.6999999284744,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e1-dry-gulch-full-mobile-wave1.json  (5603 of 5603 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 858.2999999523163,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e1-dry-gulch-lite-desktop-stress.json  (5353 of 5353 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 1342.7999999523163,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e1-dry-gulch-lite-desktop-wave1.json  (5335 of 5335 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 1052,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e1-dry-gulch-lite-mobile-stress.json  (5353 of 5353 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 501.89999997615814,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e1-dry-gulch-lite-mobile-wave1.json  (5335 of 5335 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 523.8999999761581,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e4-boneyard-full-desktop-stress.json  (5767 of 5767 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 1315,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e4-boneyard-full-desktop-wave1.json  (5758 of 5758 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 1118.9000000953674,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e4-boneyard-full-mobile-stress.json  (5767 of 5767 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 742.2000000476837,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e4-boneyard-full-mobile-wave1.json  (5758 of 5758 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 1075.1000000238419,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e4-boneyard-lite-desktop-stress.json  (5490 of 5490 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 882.2999999523163,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e4-boneyard-lite-desktop-wave1.json  (5472 of 5472 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 682.3999999761581,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e4-boneyard-lite-mobile-stress.json  (5490 of 5490 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 907.1000000238419,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e4-boneyard-lite-mobile-wave1.json  (5472 of 5472 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 811.2999999523163,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e4-dust-flats-full-desktop-stress.json  (5783 of 5783 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 1162.3999999761581,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e4-dust-flats-full-desktop-wave1.json  (5774 of 5774 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 1351.3000000715256,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e4-dust-flats-full-mobile-stress.json  (5783 of 5783 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 855.8999999761581,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e4-dust-flats-full-mobile-wave1.json  (5774 of 5774 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 907.3000000715256,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e4-dust-flats-lite-desktop-stress.json  (5604 of 5604 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 823.7000000476837,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e4-dust-flats-lite-desktop-wave1.json  (5586 of 5586 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 703.1000000238419,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e4-dust-flats-lite-mobile-stress.json  (5604 of 5604 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 928.8999999761581,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e4-dust-flats-lite-mobile-wave1.json  (5586 of 5586 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 855.6999999284744,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e4-gusher-county-full-desktop-stress.json  (5749 of 5749 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 655.2000000476837,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e4-gusher-county-full-desktop-wave1.json  (5722 of 5722 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 1078.7999999523163,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e4-gusher-county-full-mobile-stress.json  (5740 of 5740 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 485.8000000715256,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e4-gusher-county-full-mobile-wave1.json  (5722 of 5722 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 824.2999999523163,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e4-gusher-county-lite-desktop-stress.json  (5482 of 5482 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 832.1000000238419,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e4-gusher-county-lite-desktop-wave1.json  (5464 of 5464 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 474.3000000715256,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e4-gusher-county-lite-mobile-stress.json  (5482 of 5482 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 661,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e4-gusher-county-lite-mobile-wave1.json  (5464 of 5464 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 721.7000000476837,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e4-long-road-full-desktop-stress.json  (5546 of 5546 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 601.3999999761581,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e4-long-road-full-desktop-wave1.json  (5537 of 5537 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 653.3000000715256,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e4-long-road-full-mobile-stress.json  (5546 of 5546 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 495.8000000715256,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e4-long-road-full-mobile-wave1.json  (5537 of 5537 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 496.1999999284744,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e4-long-road-lite-desktop-stress.json  (5349 of 5349 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 463.2000000476837,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e4-long-road-lite-desktop-wave1.json  (5349 of 5349 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 474.1999999284744,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e4-long-road-lite-mobile-stress.json  (5349 of 5349 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 390.3000000715256,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e4-long-road-lite-mobile-wave1.json  (5358 of 5358 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 628,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e6-glow-mesa-full-desktop-stress.json  (5438 of 5438 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 593.7000000476837,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e6-glow-mesa-full-desktop-wave1.json  (5420 of 5420 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 708.3999999761581,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e6-glow-mesa-full-mobile-stress.json  (5429 of 5429 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 609.3999999761581,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e6-glow-mesa-full-mobile-wave1.json  (5420 of 5420 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 442.3000000715256,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e6-glow-mesa-lite-desktop-stress.json  (5250 of 5250 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 604.5,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e6-glow-mesa-lite-desktop-wave1.json  (5232 of 5232 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 682.7999999523163,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e6-glow-mesa-lite-mobile-stress.json  (5250 of 5250 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 726.3000000715256,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e6-glow-mesa-lite-mobile-wave1.json  (5232 of 5232 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 429,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e6-half-life-hollow-full-desktop-stress.json  (5384 of 5384 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 1338.1000000238419,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e6-half-life-hollow-full-desktop-wave1.json  (5375 of 5375 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 1773.6000000238419,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e6-half-life-hollow-full-mobile-stress.json  (5393 of 5393 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 812.7999999523163,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e6-half-life-hollow-full-mobile-wave1.json  (5384 of 5384 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 1211.6000000238419,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e6-half-life-hollow-lite-desktop-stress.json  (5205 of 5205 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 842.5,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e6-half-life-hollow-lite-desktop-wave1.json  (5187 of 5187 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 527.3999999761581,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e6-half-life-hollow-lite-mobile-stress.json  (5205 of 5205 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 626.2000000476837,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e6-half-life-hollow-lite-mobile-wave1.json  (5187 of 5187 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 739.3000000715256,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e6-picnic-full-desktop-stress.json  (5336 of 5336 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 1119.7000000476837,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e6-picnic-full-desktop-wave1.json  (5327 of 5327 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 934.5,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e6-picnic-full-mobile-stress.json  (5333 of 5333 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 5087.399999976158,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e6-picnic-full-mobile-wave1.json  (5324 of 5324 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 4977.200000047684,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e6-picnic-lite-desktop-stress.json  (5148 of 5148 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 2370.7999999523163,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e6-picnic-lite-desktop-wave1.json  (5136 of 5136 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 5646.899999976158,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e6-picnic-lite-mobile-stress.json  (5148 of 5148 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 1012.2999999523163,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e6-picnic-lite-mobile-wave1.json  (5139 of 5139 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 1322.3000000715256,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e6-showroom-full-desktop-stress.json  (5372 of 5372 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 903.1999999284744,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e6-showroom-full-desktop-wave1.json  (5354 of 5354 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 929.7000000476837,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e6-showroom-full-mobile-stress.json  (5372 of 5372 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 848.2000000476837,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e6-showroom-full-mobile-wave1.json  (5354 of 5354 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 863.2999999523163,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e6-showroom-lite-desktop-stress.json  (5184 of 5184 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 526.8000000715256,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e6-showroom-lite-desktop-wave1.json  (5166 of 5166 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 571.1000000238419,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e6-showroom-lite-mobile-stress.json  (5184 of 5184 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 468.39999997615814,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e6-showroom-lite-mobile-wave1.json  (5166 of 5166 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 505,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e7-dead-band-full-desktop-stress.json  (5335 of 5335 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 1344.5,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e7-dead-band-full-desktop-wave1.json  (5308 of 5308 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 1410.3000000715256,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e7-dead-band-full-mobile-stress.json  (5326 of 5326 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 909.4000000953674,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e7-dead-band-full-mobile-wave1.json  (5317 of 5317 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 903.1000000238419,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e7-dead-band-lite-desktop-stress.json  (5147 of 5147 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 976,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e7-dead-band-lite-desktop-wave1.json  (5120 of 5120 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 908.5,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e7-dead-band-lite-mobile-stress.json  (5147 of 5147 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 1043.7000000476837,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e7-dead-band-lite-mobile-wave1.json  (5120 of 5120 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 864.6000000238419,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e7-relay-rush-full-desktop-stress.json  (5411 of 5411 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 831,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e7-relay-rush-full-desktop-wave1.json  (5347 of 5347 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 1098.3999999761581,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e7-relay-rush-full-mobile-stress.json  (5402 of 5402 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 1800.6000000238419,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e7-relay-rush-full-mobile-wave1.json  (5347 of 5347 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 536.5,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e7-relay-rush-lite-desktop-stress.json  (5228 of 5228 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 1589,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e7-relay-rush-lite-desktop-wave1.json  (5150 of 5150 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 1880.8999999761581,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e7-relay-rush-lite-mobile-stress.json  (5223 of 5223 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 1424.1999999284744,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e7-relay-rush-lite-mobile-wave1.json  (5150 of 5150 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 1507.7999999523163,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e7-relay-valley-full-desktop-stress.json  (5446 of 5446 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 1248.5,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e7-relay-valley-full-desktop-wave1.json  (5364 of 5364 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 999.9000000953674,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e7-relay-valley-full-mobile-stress.json  (5428 of 5428 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 876,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e7-relay-valley-full-mobile-wave1.json  (5373 of 5373 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 1305.7999999523163,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e7-relay-valley-lite-desktop-stress.json  (5258 of 5258 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 817.3999999761581,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e7-relay-valley-lite-desktop-wave1.json  (5176 of 5176 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 927.5,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e7-relay-valley-lite-mobile-stress.json  (5240 of 5240 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 762.4000000953674,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e7-relay-valley-lite-mobile-wave1.json  (5176 of 5176 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 791.7000000476837,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e9-devils-alley-full-desktop-stress.json  (5469 of 5469 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 817.7000000476837,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e9-devils-alley-full-desktop-wave1.json  (5442 of 5442 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 1318.3999999761581,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e9-devils-alley-full-mobile-stress.json  (5460 of 5460 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 809.1999999284744,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e9-devils-alley-full-mobile-wave1.json  (5442 of 5442 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 914.4000000953674,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e9-devils-alley-lite-desktop-stress.json  (5272 of 5272 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 659,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e9-devils-alley-lite-desktop-wave1.json  (5254 of 5254 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 963.1999999284744,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e9-devils-alley-lite-mobile-stress.json  (5290 of 5290 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 589.5,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e9-devils-alley-lite-mobile-wave1.json  (5254 of 5254 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 769.3000000715256,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e9-seed-run-full-desktop-stress.json  (5510 of 5510 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 1538.6000000238419,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e9-seed-run-full-desktop-wave1.json  (5455 of 5455 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 1478.9000000953674,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e9-seed-run-full-mobile-stress.json  (5510 of 5510 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 744.2000000476837,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e9-seed-run-full-mobile-wave1.json  (5455 of 5455 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 1010.6999999284744,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e9-seed-run-lite-desktop-stress.json  (5331 of 5331 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 736,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e9-seed-run-lite-desktop-wave1.json  (5267 of 5267 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 521,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e9-seed-run-lite-mobile-stress.json  (5331 of 5331 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 781.2999999523163,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/e9-seed-run-lite-mobile-wave1.json  (5267 of 5267 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 689.5,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/the-claim-full-desktop-stress.json  (5714 of 5714 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 2162.4000000953674,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/the-claim-full-desktop-wave1.json  (5682 of 5682 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 1592.7999999523163,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/scenes/the-claim-full-mobile-wave1.json  (5682 of 5682 added lines absent from main)
+      "{"
+      "  \"firstFrameMs\": 1303.2999999523163,"
+      "  \"renderer\": {"
+    HELD LANE-ONLY  artifacts/perf-survey/source-state.json  (73 of 73 added lines absent from main)
+      "{"
+      "  \"at\": \"2026-09-05T14:54:31.447Z\","
+      "  \"head\": \"5f1cc3cea589bcd9b5bf7d95402fef33dd232525\","
+    HELD LANE-ONLY  artifacts/perf-survey/tapes/county-e1-baron.json  (50418 of 50418 added lines absent from main)
+      "{"
+      "  \"version\": 2,"
+      "  \"id\": \"agent-bb7f6efb-ca2955c2-9ed5-4e09-b2cd-5d23425c7c2d\","
+    HELD LANE-ONLY  artifacts/perf-survey/tapes/county-e1-dry-gulch.json  (5527 of 5527 added lines absent from main)
+      "{"
+      "  \"version\": 2,"
+      "  \"id\": \"agent-58a67743-c518c284-3e88-49d1-8e4b-79763cd2142f\","
+    HELD LANE-ONLY  artifacts/perf-survey/tapes/county-e1-night-shift.json  (11554 of 11554 added lines absent from main)
+      "{"
+      "  \"version\": 2,"
+      "  \"id\": \"agent-002a3357-020c6da8-5d97-4538-abb4-36a96b3b5b9b\","
+    HELD LANE-ONLY  artifacts/perf-survey/tapes/county-e1-twin-banks.json  (15408 of 15408 added lines absent from main)
+      "{"
+      "  \"version\": 2,"
+      "  \"id\": \"agent-53894abf-fdfce405-e8f7-4a36-b23b-43e35bd42d97\","
+    HELD LANE-ONLY  artifacts/perf-survey/tapes/county-e10-last-claim.json  (10152 of 10152 added lines absent from main)
+      "{"
+      "  \"version\": 2,"
+      "  \"id\": \"agent-d436e801-5aaba30b-26e6-4af8-8669-405da2fe1bba\","
+    HELD LANE-ONLY  artifacts/perf-survey/tapes/county-e2-hill-mine.json  (5908 of 5908 added lines absent from main)
+      "{"
+      "  \"version\": 2,"
+      "  \"id\": \"agent-cea96b2c-c8b525e1-1250-4736-9c6c-13463294dc39\","
+    HELD LANE-ONLY  artifacts/perf-survey/tapes/county-e2-incline.json  (8544 of 8544 added lines absent from main)
+      "{"
+      "  \"version\": 2,"
+      "  \"id\": \"agent-752bff96-86e8e5fa-56b7-4831-9d08-758d592ad76f\","
+    HELD LANE-ONLY  artifacts/perf-survey/tapes/county-e2-pressure-garden.json  (2283 of 2283 added lines absent from main)
+      "{"
+      "  \"version\": 2,"
+      "  \"id\": \"agent-fa0b6486-18ee5da2-1e02-4664-af4e-ffd0506b3aa4\","
+    HELD LANE-ONLY  artifacts/perf-survey/tapes/county-e2-trestle.json  (14864 of 14864 added lines absent from main)
+      "{"
+      "  \"version\": 2,"
+      "  \"id\": \"agent-a643f0bd-02a3a269-ab32-4e80-9ef0-506dd1dd88bc\","
+    HELD LANE-ONLY  artifacts/perf-survey/tapes/county-e3-blackout-ridge.json  (1927 of 1927 added lines absent from main)
+      "{"
+      "  \"version\": 2,"
+      "  \"id\": \"agent-330cb53a-429effb2-2bfa-42d1-b143-9b8c67699cd6\","
+    HELD LANE-ONLY  artifacts/perf-survey/tapes/county-e3-fairground.json  (34792 of 34792 added lines absent from main)
+      "{"
+      "  \"version\": 2,"
+      "  \"id\": \"agent-1c9cd83b-b8ac877b-07d9-45e6-ab51-ef215a8201cd\","
+    HELD LANE-ONLY  artifacts/perf-survey/tapes/county-e3-moth-season.json  (2279 of 2279 added lines absent from main)
+      "{"
+      "  \"version\": 2,"
+      "  \"id\": \"agent-bb0b3b67-da54dcd9-4293-42ee-b29b-1425fb419a2e\","
+    HELD LANE-ONLY  artifacts/perf-survey/tapes/county-e4-boneyard.json  (5600 of 5600 added lines absent from main)
+      "{"
+      "  \"version\": 2,"
+      "  \"id\": \"agent-98011d35-1faec3aa-a568-41f5-9a84-f8fa3b54738b\","
+    HELD LANE-ONLY  artifacts/perf-survey/tapes/county-e4-dust-flats.json  (5664 of 5664 added lines absent from main)
+      "{"
+      "  \"version\": 2,"
+      "  \"id\": \"agent-682f7b8a-7121da46-33e9-4d30-8965-7aea0124c90b\","
+    HELD LANE-ONLY  artifacts/perf-survey/tapes/county-e4-gusher-county.json  (2002 of 2002 added lines absent from main)
+      "{"
+      "  \"version\": 2,"
+      "  \"id\": \"agent-b7a36de0-62bcba24-726b-481c-9bd4-46f87f982556\","
+    HELD LANE-ONLY  artifacts/perf-survey/tapes/county-e4-long-road.json  (3297 of 3297 added lines absent from main)
+      "{"
+      "  \"version\": 2,"
+      "  \"id\": \"agent-4a59b92c-ca8e7a83-0cfb-4d2f-af63-22ea38c637c1\","
+    HELD LANE-ONLY  artifacts/perf-survey/tapes/county-e5-deepwater-claim.json  (622 of 622 added lines absent from main)
+      "{"
+      "  \"version\": 2,"
+      "  \"id\": \"agent-c5afbddf-2fe91bad-56c8-41bb-a836-1a35ee89eb0d\","
+    HELD LANE-ONLY  artifacts/perf-survey/tapes/county-e5-flotilla.json  (2650 of 2650 added lines absent from main)
+      "{"
+      "  \"version\": 2,"
+      "  \"id\": \"agent-f79ca3c5-821a560b-c01a-40e0-b16f-6d06bdd7bf55\","
+    HELD LANE-ONLY  artifacts/perf-survey/tapes/county-e5-regatta.json  (1987 of 1987 added lines absent from main)
+      "{"
+      "  \"version\": 2,"
+      "  \"id\": \"agent-1e68427d-738d92d6-a086-4a90-8414-197dcb6cb580\","
+    HELD LANE-ONLY  artifacts/perf-survey/tapes/county-e5-stillwater.json  (725 of 725 added lines absent from main)
+      "{"
+      "  \"version\": 2,"
+      "  \"id\": \"agent-635f1756-87afc819-8ad6-4cd0-b892-4adcfc6a4f5b\","
+    HELD LANE-ONLY  artifacts/perf-survey/tapes/county-e6-glow-mesa.json  (4078 of 4078 added lines absent from main)
+      "{"
+      "  \"version\": 2,"
+      "  \"id\": \"agent-0d40ec77-ef8eac12-b70a-4190-881e-54fdde9727e1\","
+    HELD LANE-ONLY  artifacts/perf-survey/tapes/county-e6-half-life-hollow.json  (11074 of 11074 added lines absent from main)
+      "{"
+      "  \"version\": 2,"
+      "  \"id\": \"agent-48851619-4d5aea25-8563-47e4-941c-5fa662edbffc\","
+    HELD LANE-ONLY  artifacts/perf-survey/tapes/county-e6-picnic.json  (7845 of 7845 added lines absent from main)
+      "{"
+      "  \"version\": 2,"
+      "  \"id\": \"agent-76a0d1a7-862d746e-5c9f-43a2-b01c-aaef676289c2\","
+    HELD LANE-ONLY  artifacts/perf-survey/tapes/county-e7-dead-band.json  (11715 of 11715 added lines absent from main)
+      "{"
+      "  \"version\": 2,"
+      "  \"id\": \"agent-3512d321-45ee3c65-6e71-44f7-8115-935f66d81e53\","
+    HELD LANE-ONLY  artifacts/perf-survey/tapes/county-e7-echo-canyon.json  (6865 of 6865 added lines absent from main)
+      "{"
+      "  \"version\": 2,"
+      "  \"id\": \"agent-1fb7409a-837964b0-ae4e-4ca9-b029-568b9f1a5c6a\","
+    HELD LANE-ONLY  artifacts/perf-survey/tapes/county-e7-relay-rush.json  (7643 of 7643 added lines absent from main)
+      "{"
+      "  \"version\": 2,"
+      "  \"id\": \"agent-bf8cd86d-75f73cc6-ae0e-4f79-ae6f-167c3085475e\","
+    HELD LANE-ONLY  artifacts/perf-survey/tapes/county-e8-eclipse.json  (8740 of 8740 added lines absent from main)
+      "{"
+      "  \"version\": 2,"
+      "  \"id\": \"agent-b0f19794-5e22174c-af87-4172-889d-ae5c72c17b5f\","
+    HELD LANE-ONLY  artifacts/perf-survey/tapes/county-e8-far-side.json  (7365 of 7365 added lines absent from main)
+      "{"
+      "  \"version\": 2,"
+      "  \"id\": \"agent-83b2b6bb-e89b3965-b388-4795-9fd4-a5f981b9fddc\","
+    HELD LANE-ONLY  artifacts/perf-survey/tapes/county-e8-low-orbit.json  (10636 of 10636 added lines absent from main)
+      "{"
+      "  \"version\": 2,"
+      "  \"id\": \"agent-003b8757-7f88efd0-fead-4df8-83f0-34b50814cb60\","
+    HELD LANE-ONLY  artifacts/perf-survey/tapes/county-e9-devils-alley.json  (3398 of 3398 added lines absent from main)
+      "{"
+      "  \"version\": 2,"
+      "  \"id\": \"agent-9eeef40c-e3247787-f427-482a-be42-f6f11f1663e8\","
+    HELD LANE-ONLY  artifacts/perf-survey/tapes/county-the-claim.json  (5775 of 5775 added lines absent from main)
+      "{"
+      "  \"version\": 2,"
+      "  \"id\": \"agent-6acf1470-558ef6ba-6c86-47ac-9a00-2ac938f56a27\","
+    HELD LANE-ONLY  docs/reviews/2026-09-05-perf-survey.md  (6 of 6 added lines absent from main)
+      "# Gold Rush performance survey — 2026-09-05"
+      "Measurement in progress on `lane/b`, baseline `5f1cc3cea589bcd9b5bf7d95402fef33dd232525`. No game c…"
+      "The live board contains 42 contracts, not the task's earlier 36. The fresh all-epoch production bui…"
+    HELD LANE-ONLY  scripts/perf-survey/attribution.mjs  (46 of 46 added lines absent from main)
+      "import {parseArgs} from 'node:util';"
+      "import {launch,pageFor,boot,sample,snapshot,summarize,profile,topFunctions,read,write,host} from '.…"
+      "const {values}=parseArgs({options:{map:{type:'string'},rounds:{type:'string',default:'3'}}});"
+    HELD LANE-ONLY  scripts/perf-survey/browser.mjs  (120 of 120 added lines absent from main)
+      "import fs from 'node:fs/promises';"
+      "import path from 'node:path';"
+      "import os from 'node:os';"
+    HELD LANE-ONLY  scripts/perf-survey/census.schema.json  (34 of 34 added lines absent from main)
+      "{"
+      "  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\","
+      "  \"title\": \"Gold Rush performance survey census\","
+    HELD LANE-ONLY  scripts/perf-survey/delivery.mjs  (43 of 43 added lines absent from main)
+      "import {parseArgs} from 'node:util';"
+      "import {launch,pageFor,read,write,host} from './browser.mjs';"
+      "const {values}=parseArgs({options:{map:{type:'string'},profile:{type:'string'},minutes:{type:'strin…"
+    HELD LANE-ONLY  scripts/perf-survey/inventory.mjs  (33 of 33 added lines absent from main)
+      "import fs from 'node:fs/promises';"
+      "import path from 'node:path';"
+      "import { createServer } from 'vite';"
+    HELD LANE-ONLY  scripts/perf-survey/memory.mjs  (25 of 25 added lines absent from main)
+      "import {launch,pageFor,boot,snapshot,read,write,host} from './browser.mjs';"
+      "const inventory=await read('inventory.json'),env=await launch();const result={at:new Date().toISOSt…"
+      "const {page,context,errors}=await pageFor(env.browser,{width:390,height:844});await page.addInitScr…"
+    HELD LANE-ONLY  scripts/perf-survey/phases.mjs  (26 of 26 added lines absent from main)
+      "import fs from 'node:fs/promises';"
+      "import path from 'node:path';"
+      "import {spawn} from 'node:child_process';"
+    HELD LANE-ONLY  scripts/perf-survey/run.mjs  (31 of 31 added lines absent from main)
+      "import {parseArgs} from 'node:util';"
+      "import {launch,pageFor,boot,sample,snapshot,summarize,read,write,host} from './browser.mjs';"
+      "const {values}=parseArgs({options:{map:{type:'string'},all:{type:'boolean'},tier:{type:'string'},vi…"
+    HELD LANE-ONLY  scripts/perf-survey/sim-tape.mjs  (20 of 20 added lines absent from main)
+      "import fs from 'node:fs/promises';"
+      "import path from 'node:path';"
+      "import {Session} from 'node:inspector/promises';"
+    HELD LANE-ONLY  scripts/perf-survey/sim.mjs  (26 of 26 added lines absent from main)
+      "import fs from 'node:fs/promises';"
+      "import path from 'node:path';"
+      "import {spawn} from 'node:child_process';"
+    HELD LANE-ONLY  scripts/perf-survey/tapes.mjs  (15 of 15 added lines absent from main)
+      "import {parseArgs} from 'node:util';"
+      "import {read,write} from './browser.mjs';"
+      "const {values}=parseArgs({options:{origin:{type:'string',default:'https://agenttown.app'}}});"
+    HELD LANE-ONLY  scripts/perf-survey/terrain.mjs  (26 of 26 added lines absent from main)
+      "import fs from 'node:fs/promises';"
+      "import path from 'node:path';"
+      "import {NodeIO} from '@gltf-transform/core';"
+    HELD LANE-ONLY  scripts/perf-survey/validate.mjs  (19 of 19 added lines absent from main)
+      "import assert from 'node:assert/strict';"
+      "import fs from 'node:fs/promises';"
+      "import path from 'node:path';"
+    HELD LANE-ONLY  scripts/perf-survey/worker.mjs  (29 of 29 added lines absent from main)
+      "import {parseArgs} from 'node:util';"
+      "import {launch,pageFor,read,write,host} from './browser.mjs';"
+      "const {values}=parseArgs({options:{map:{type:'string'}}});"
+    HELD LANE-ONLY  scripts/perf-survey/zoom.mjs  (19 of 19 added lines absent from main)
+      "import {parseArgs} from 'node:util';"
+      "import {launch,pageFor,boot,snapshot,read,write,host} from './browser.mjs';"
+      "const {values}=parseArgs({options:{map:{type:'string'}}});const inventory=await read('inventory.jso…"
+    TRACKED-DIRT artifacts/perf-survey/census.json
+    TRACKED-DIRT scripts/perf-survey/browser.mjs
+    TRACKED-DIRT scripts/perf-survey/delivery.mjs
+    TRACKED-DIRT scripts/perf-survey/memory.mjs
+    TRACKED-DIRT scripts/perf-survey/run.mjs
+    TRACKED-DIRT scripts/perf-survey/sim.mjs
+    TRACKED-DIRT scripts/perf-survey/worker.mjs
+    untracked (clean -fd) artifacts/perf-survey/census-b1.json
+    untracked (clean -fd) artifacts/perf-survey/census-b1.log
+    untracked (clean -fd) artifacts/perf-survey/census-b2.json
+    untracked (clean -fd) artifacts/perf-survey/census-b2.log
+    untracked (clean -fd) artifacts/perf-survey/census-table.md
+    untracked (clean -fd) artifacts/perf-survey/delivery-run.log
+    untracked (clean -fd) artifacts/perf-survey/delivery-town.log
+    untracked (clean -fd) artifacts/perf-survey/delivery.json
+    untracked (clean -fd) artifacts/perf-survey/memory-run.log
+    untracked (clean -fd) artifacts/perf-survey/memory.json
+  => DIRTY: TRACKED dirt in the worktree — find its owner before touching this lane
+lane-c  lane/c  ahead=3  behind=4  paths=14  tracked-dirt=16  untracked=0
+    HELD LANE-ONLY  e2e/ss-06-e5-beats.spec.ts  (170 of 170 added lines absent from main)
+      "import { mkdir } from 'node:fs/promises';"
+      "import { expect, test, type Page, type TestInfo } from '@playwright/test';"
+      "import { FIRST_CLAIM_DONE_KEY, PROFILE_KEY, TOWN_NAME_KEY, profileDataKey, type ProfileState } from…"
+    HELD LANE-ONLY  reviews/shots-ss-06-e5-beats/desktop-chrome-arrival.png  (BINARY)
+    HELD LANE-ONLY  reviews/shots-ss-06-e5-beats/desktop-chrome-deepwater-ride.png  (BINARY)
+    HELD LANE-ONLY  reviews/shots-ss-06-e5-beats/desktop-chrome-manifest.png  (BINARY)
+    HELD LANE-ONLY  reviews/shots-ss-06-e5-beats/desktop-chrome-rebuild.png  (BINARY)
+    HELD LANE-ONLY  reviews/shots-ss-06-e5-beats/desktop-chrome-tide-teller.png  (BINARY)
+    HELD LANE-ONLY  reviews/shots-ss-06-e5-beats/mobile-chrome-arrival.png  (BINARY)
+    HELD LANE-ONLY  reviews/shots-ss-06-e5-beats/mobile-chrome-deepwater-ride.png  (BINARY)
+    HELD LANE-ONLY  reviews/shots-ss-06-e5-beats/mobile-chrome-manifest.png  (BINARY)
+    HELD LANE-ONLY  reviews/shots-ss-06-e5-beats/mobile-chrome-rebuild.png  (BINARY)
+    HELD LANE-ONLY  reviews/shots-ss-06-e5-beats/mobile-chrome-tide-teller.png  (BINARY)
+    HELD LANE-ONLY  src/story/StoryRuntime.ts  (2 of 2 added lines absent from main)
+      "import { E3_STORY_BEATS, E5_STORY_BEATS, STORY_RUNTIME_BEATS, type RuntimeStoryBeat } from './beats…"
+      "      ...(activeEpochId() === 'epoch-5-deepwater' ? E5_STORY_BEATS : []),"
+    HELD LANE-ONLY  src/story/beats.ts  (69 of 154 added lines absent from main)
+      "// Chapter E5 follows the E2/E3 single-table shape above: tavern tales and Gazette headlines are"
+      "// ordinary, attributed beats (E3 examples at lines 435-441 and 487-493), not a second narrative"
+      "// system. Every line is LEXICON-clean and cites its STORYBOOK source in the comment above it."
+    HELD LANE-ONLY  tasks/BACKLOG.md  (1 of 1 added lines absent from main)
+      "🌊 **ss-06-e5-beats READY-FOR-GATES (lane/c, 2026-09-05; Claude Opus 5 implementer, the codex accou…"
+    TRACKED-DIRT artifacts/062/desktop-chrome-direct-contract-return-primary.png
+    TRACKED-DIRT artifacts/062/desktop-chrome-overrun-return-beat.png
+    TRACKED-DIRT artifacts/062/desktop-chrome-overrun-return-primary.png
+    TRACKED-DIRT artifacts/062/desktop-chrome-rush-return-secured-beat.png
+    TRACKED-DIRT artifacts/062/desktop-chrome-secured-return-beat.png
+    TRACKED-DIRT artifacts/062/desktop-chrome-secured-return-primary.png
+    TRACKED-DIRT artifacts/ss-01/desktop-chrome-founding-beat.png
+    TRACKED-DIRT artifacts/ss-01/desktop-chrome-pointer-glow.png
+    TRACKED-DIRT artifacts/ss-01/mobile-chrome-founding-beat.png
+    TRACKED-DIRT artifacts/ss-02/desktop-chrome-baron-shadow.png
+  => DIRTY: TRACKED dirt in the worktree — find its owner before touching this lane
+lane-d  lane/d  ahead=2  behind=4  paths=10  tracked-dirt=0  untracked=0
+    HELD LANE-ONLY  e2e/ss-07-e6-beats.spec.ts  (206 of 206 added lines absent from main)
+      "import { mkdir } from 'node:fs/promises';"
+      "import { expect, test, type Page, type TestInfo } from '@playwright/test';"
+      "import { FIRST_CLAIM_DONE_KEY, PROFILE_KEY, TOWN_NAME_KEY, profileDataKey, type ProfileState } from…"
+    HELD LANE-ONLY  reviews/shots-ss-07-e6-beats/desktop-chrome-arrival.png  (BINARY)
+    HELD LANE-ONLY  reviews/shots-ss-07-e6-beats/desktop-chrome-mesa-ride.png  (BINARY)
+    HELD LANE-ONLY  reviews/shots-ss-07-e6-beats/desktop-chrome-steward.png  (BINARY)
+    HELD LANE-ONLY  reviews/shots-ss-07-e6-beats/mobile-chrome-arrival.png  (BINARY)
+    HELD LANE-ONLY  reviews/shots-ss-07-e6-beats/mobile-chrome-mesa-ride.png  (BINARY)
+    HELD LANE-ONLY  reviews/shots-ss-07-e6-beats/mobile-chrome-steward.png  (BINARY)
+    HELD LANE-ONLY  src/story/StoryRuntime.ts  (2 of 2 added lines absent from main)
+      "import { E3_STORY_BEATS, E6_STORY_BEATS, STORY_RUNTIME_BEATS, type RuntimeStoryBeat } from './beats…"
+      "      ...(activeEpochId() === 'epoch-6-atomic' ? E6_STORY_BEATS : []),"
+    HELD LANE-ONLY  src/story/beats.ts  (58 of 131 added lines absent from main)
+      "// Chapter E6 follows the E2/E3 single-table shape above (E3 at lines 411-514): tavern tales and"
+      "// Gazette headlines are ordinary, attributed beats, not a second narrative system."
+      "// Cast note (honesty guard): STORYBOOK lines 341-345 name five new E6 townsfolk (reactor steward,"
+    HELD LANE-ONLY  tasks/BACKLOG.md  (1 of 1 added lines absent from main)
+      "📖 **ss-07-e6-beats READY-FOR-GATES (lane/d, 2026-09-05; Claude Opus 5 implementer, the codex accou…"
+  => HOLDS: drain or rule on the held paths first — never auto-reset over them

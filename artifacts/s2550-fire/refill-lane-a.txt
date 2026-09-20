@@ -1,0 +1,13 @@
+run surface: 9 base + gate leaves from main:package.json (+6: foundry ops playwright.preview.config.ts playwright.release-base.config.ts playwright.release.config.ts server)
+lane-a  feat/e10s-4-door  ahead=0  behind=13  paths=0  tracked-dirt=0  untracked=0
+  => USABLE: refill freely — a master pre-flight will find main..branch empty
+     ⚠️  but feat/e10s-4-door is 13 commit(s) BEHIND main. USABLE does not mean CURRENT.
+     Before queueing, name the commit your task depends on and prove the lane has it:
+       git merge-base --is-ancestor <sha> feat/e10s-4-door
+     If it does not, request a refresh (tasks/janitor/<name>.req: refresh-lane lane-a) — F-1320-2.
+     ✅ ...but NONE of it is run-surface: the 15 compared paths (see the run-surface line above) are
+        byte-identical to main.
+     📒 ledger drift: 2 file(s) main has moved that this lane lacks:
+          tasks/BACKLOG.md
+          tasks/goals.json
+        ⚠️  A master whose READ-FIRST cites the ledger BY CONTENT will fail its grep in this lane.

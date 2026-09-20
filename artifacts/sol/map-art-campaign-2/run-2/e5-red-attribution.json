@@ -1,0 +1,97 @@
+[
+  {
+    "run": "e5-own",
+    "case": "[desktop-chrome] \u203a e2e/e5-deepwater-claim.spec.ts:99:1 \u203a shows the active run wave in Deepwater and WaveSystem contracts ",
+    "error": "    Error: expect(received).toEqual(expected) // deep equality\n\n    - Expected  - 1\n    + Received  + 3\n\n    - Array []\n    + Array [\n    +   \"THREE.GLTFLoader: Couldn't load texture blob:<URL>\",\n    + ]"
+  },
+  {
+    "run": "e5-own",
+    "case": "[desktop-chrome] \u203a e2e/e5-deepwater-claim.spec.ts:135:1 \u203a replays boat placement and two storm cycles deterministically ",
+    "error": "    Error: browserType.launch: ENOSPC: no space left on device, mkdtemp '/var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/playwright_chromiumdev_profile-tTlOT2'\n\n    Error: ENOSPC: no space left on device, mkdir '/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/artifacts/sol/map-art-campaign-2/_raw/run-2/e5/e5-deepwater-claim-replays-26644-rm-cycles-deterministically-desktop-chrome'\n\n"
+  },
+  {
+    "run": "e5-own",
+    "case": "[desktop-chrome] \u203a e2e/e5-flotilla-hulls.spec.ts:6:1 \u203a the Flotilla keeps three losable hulls and secures both bench seeds deterministically ",
+    "error": "    Error: expect(received).toMatchObject(expected)\n\n    - Expected  - 1\n    + Received  + 1\n\n      Object {\n    -   \"eventLogHash\": \"fnv1a32:a9f33e48\",\n    +   \"eventLogHash\": \"fnv1a32:c01dd739\",\n        \"kills\": 30,\n        \"secured\": true,\n        \"waves\": 12,\n      }"
+  },
+  {
+    "run": "e5-own",
+    "case": "[desktop-chrome] \u203a e2e/e5-flotilla-hulls.spec.ts:118:1 \u203a idle Flotilla runs lose all hulls \u2500\u2500\u2500\u2500",
+    "error": "    Error: expect(received).toMatchObject(expected)\n\n    - Expected  - 1\n    + Received  + 1\n\n      Object {\n    -   \"eventLogHash\": \"fnv1a32:68d87963\",\n    +   \"eventLogHash\": \"fnv1a32:815739a6\",\n        \"kills\": 0,\n        \"secured\": false,\n        \"timeMs\": 46800,\n        \"waves\": 2,\n      }"
+  },
+  {
+    "run": "e5-own",
+    "case": "[desktop-chrome] \u203a e2e/e5-regatta-race.spec.ts:35:1 \u203a the Regatta runs its authored course and secures both bench seeds deterministically ",
+    "error": "    Error: expect(received).toBe(expected) // Object.is equality\n\n    Expected: true\n    Received: false"
+  },
+  {
+    "run": "e5-own",
+    "case": "[desktop-chrome] \u203a e2e/e5-regatta-race.spec.ts:141:1 \u203a idle Regatta runs lose because the course remains unfinished ",
+    "error": "    Error: expect(received).toMatchObject(expected)\n\n    - Expected  - 1\n    + Received  + 1\n\n      Object {\n        \"endReason\": \"wave-ceiling\",\n    -   \"eventLogHash\": \"fnv1a32:80b36bec\",\n    +   \"eventLogHash\": \"fnv1a32:d461683d\",\n        \"secured\": false,\n        \"waves\": 14,\n      }"
+  },
+  {
+    "run": "e5-own",
+    "case": "[desktop-chrome] \u203a e2e/e5-stillwater-noise.spec.ts:181:1 \u203a Stillwater SECURES both bench seeds twice through the PLAIN door ",
+    "error": "    Error: expect(received).toMatchObject(expected)\n\n    - Expected  - 2\n    + Received  + 2\n\n      Object {\n    -   \"eventLogHash\": \"fnv1a32:7661ca43\",\n    -   \"kills\": 103,\n    +   \"eventLogHash\": \"fnv1a32:e5c6d612\",\n    +   \"kills\": 391,\n        \"secured\": true,\n        \"waves\": 12,\n      }"
+  },
+  {
+    "run": "e5-own",
+    "case": "[desktop-chrome] \u203a e2e/e5-stillwater-noise.spec.ts:208:1 \u203a the same play through the in-process door agrees, and the decks survive with margin ",
+    "error": "    Error: expect(received).toMatchObject(expected)\n\n    - Expected  - 2\n    + Received  + 2\n\n      Object {\n    -   \"eventLogHash\": \"fnv1a32:4e99e655\",\n    +   \"eventLogHash\": \"fnv1a32:e5c6d612\",\n        \"noiseHunt\": Object {\n    -     \"strikes\": 77,\n    +     \"strikes\": 64,\n        },\n        \"secured\": true,\n        \"waves\": 12,\n      }"
+  },
+  {
+    "run": "e5-own",
+    "case": "[desktop-chrome] \u203a e2e/e5-stillwater-noise.spec.ts:251:1 \u203a idle Stillwater runs stay silent and still lose ",
+    "error": "    Error: expect(received).toMatchObject(expected)\n\n    - Expected  - 1\n    + Received  + 1\n\n      Object {\n    -   \"eventLogHash\": \"fnv1a32:ba80f970\",\n    +   \"eventLogHash\": \"fnv1a32:c212c318\",\n        \"secured\": false,\n        \"waves\": 3,\n      }"
+  },
+  {
+    "run": "e5-own",
+    "case": "[mobile-chrome] \u203a e2e/e5-deepwater-claim.spec.ts:99:1 \u203a shows the active run wave in Deepwater and WaveSystem contracts ",
+    "error": "    Error: expect(received).toEqual(expected) // deep equality\n\n    - Expected  - 1\n    + Received  + 3\n\n    - Array []\n    + Array [\n    +   \"THREE.GLTFLoader: Couldn't load texture blob:<URL>\",\n    + ]"
+  },
+  {
+    "run": "e5-own",
+    "case": "[mobile-chrome] \u203a e2e/e5-flotilla-hulls.spec.ts:6:1 \u203a the Flotilla keeps three losable hulls and secures both bench seeds deterministically ",
+    "error": "    Error: expect(received).toMatchObject(expected)\n\n    - Expected  - 1\n    + Received  + 1\n\n      Object {\n    -   \"eventLogHash\": \"fnv1a32:a9f33e48\",\n    +   \"eventLogHash\": \"fnv1a32:c01dd739\",\n        \"kills\": 30,\n        \"secured\": true,\n        \"waves\": 12,\n      }"
+  },
+  {
+    "run": "e5-own",
+    "case": "[mobile-chrome] \u203a e2e/e5-flotilla-hulls.spec.ts:118:1 \u203a idle Flotilla runs lose all hulls \u2500\u2500\u2500\u2500",
+    "error": "    Error: expect(received).toMatchObject(expected)\n\n    - Expected  - 1\n    + Received  + 1\n\n      Object {\n    -   \"eventLogHash\": \"fnv1a32:68d87963\",\n    +   \"eventLogHash\": \"fnv1a32:815739a6\",\n        \"kills\": 0,\n        \"secured\": false,\n        \"timeMs\": 46800,\n        \"waves\": 2,\n      }"
+  },
+  {
+    "run": "e5-own",
+    "case": "[mobile-chrome] \u203a e2e/e5-regatta-race.spec.ts:35:1 \u203a the Regatta runs its authored course and secures both bench seeds deterministically ",
+    "error": "    Error: expect(received).toBe(expected) // Object.is equality\n\n    Expected: true\n    Received: false"
+  },
+  {
+    "run": "e5-own",
+    "case": "[mobile-chrome] \u203a e2e/e5-regatta-race.spec.ts:141:1 \u203a idle Regatta runs lose because the course remains unfinished ",
+    "error": "    Error: expect(received).toMatchObject(expected)\n\n    - Expected  - 1\n    + Received  + 1\n\n      Object {\n        \"endReason\": \"wave-ceiling\",\n    -   \"eventLogHash\": \"fnv1a32:80b36bec\",\n    +   \"eventLogHash\": \"fnv1a32:d461683d\",\n        \"secured\": false,\n        \"waves\": 14,\n      }"
+  },
+  {
+    "run": "e5-own",
+    "case": "[mobile-chrome] \u203a e2e/e5-stillwater-noise.spec.ts:181:1 \u203a Stillwater SECURES both bench seeds twice through the PLAIN door ",
+    "error": "    Error: expect(received).toMatchObject(expected)\n\n    - Expected  - 2\n    + Received  + 2\n\n      Object {\n    -   \"eventLogHash\": \"fnv1a32:7661ca43\",\n    -   \"kills\": 103,\n    +   \"eventLogHash\": \"fnv1a32:e5c6d612\",\n    +   \"kills\": 391,\n        \"secured\": true,\n        \"waves\": 12,\n      }"
+  },
+  {
+    "run": "e5-own",
+    "case": "[mobile-chrome] \u203a e2e/e5-stillwater-noise.spec.ts:208:1 \u203a the same play through the in-process door agrees, and the decks survive with margin ",
+    "error": "    Error: expect(received).toMatchObject(expected)\n\n    - Expected  - 2\n    + Received  + 2\n\n      Object {\n    -   \"eventLogHash\": \"fnv1a32:4e99e655\",\n    +   \"eventLogHash\": \"fnv1a32:e5c6d612\",\n        \"noiseHunt\": Object {\n    -     \"strikes\": 77,\n    +     \"strikes\": 64,\n        },\n        \"secured\": true,\n        \"waves\": 12,\n      }"
+  },
+  {
+    "run": "e5-own",
+    "case": "[mobile-chrome] \u203a e2e/e5-stillwater-noise.spec.ts:251:1 \u203a idle Stillwater runs stay silent and still lose ",
+    "error": "    Error: expect(received).toMatchObject(expected)\n\n    - Expected  - 1\n    + Received  + 1\n\n      Object {\n    -   \"eventLogHash\": \"fnv1a32:ba80f970\",\n    +   \"eventLogHash\": \"fnv1a32:c212c318\",\n        \"secured\": false,\n        \"waves\": 3,\n      }"
+  },
+  {
+    "run": "base-navigation",
+    "case": "[desktop-chrome] \u203a e2e/e5-deepwater-claim.spec.ts:99:1 \u203a shows the active run wave in Deepwater and WaveSystem contracts ",
+    "error": "    Error: expect(received).toEqual(expected) // deep equality\n\n    - Expected  - 1\n    + Received  + 3\n\n    - Array []\n    + Array [\n    +   \"THREE.GLTFLoader: Couldn't load texture blob:<URL>\",\n    + ]"
+  },
+  {
+    "run": "base-navigation",
+    "case": "[mobile-chrome] \u203a e2e/e5-deepwater-claim.spec.ts:99:1 \u203a shows the active run wave in Deepwater and WaveSystem contracts ",
+    "error": "    Error: expect(received).toEqual(expected) // deep equality\n\n    - Expected  - 1\n    + Received  + 3\n\n    - Array []\n    + Array [\n    +   \"THREE.GLTFLoader: Couldn't load texture blob:<URL>\",\n    + ]"
+  }
+]

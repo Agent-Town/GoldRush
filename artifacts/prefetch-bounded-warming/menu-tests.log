@@ -1,0 +1,54 @@
+
+Running 12 tests using 1 worker
+
+(node:68444) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [desktop-chrome] › e2e/advance-stream.spec.ts:34:1 › menu idle warms town first and publishes progress (13.7s)
+  ✓   2 [desktop-chrome] › e2e/advance-stream.spec.ts:52:1 › saveData keeps tier one within the byte allowance and skips bulk contract maps (11.6s)
+  ✓   3 [desktop-chrome] › e2e/advance-stream.spec.ts:75:1 › lite rendering skips unused 3D prefetch (6.2s)
+  ✓   4 [desktop-chrome] › e2e/advance-stream.spec.ts:90:1 › the warm-every-map opt-in restores the sweep (14.3s)
+  ✓   5 [desktop-chrome] › e2e/advance-stream.spec.ts:121:1 › closing profiles resumes the menu stream (5.8s)
+  ✓   6 [desktop-chrome] › e2e/advance-stream.spec.ts:138:1 › launch aborts pending prefetch before the run requests its own map (42.9s)
+(node:27024) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   7 [mobile-chrome] › e2e/advance-stream.spec.ts:34:1 › menu idle warms town first and publishes progress (13.0s)
+  ✓   8 [mobile-chrome] › e2e/advance-stream.spec.ts:52:1 › saveData keeps tier one within the byte allowance and skips bulk contract maps (9.3s)
+  ✓   9 [mobile-chrome] › e2e/advance-stream.spec.ts:75:1 › lite rendering skips unused 3D prefetch (6.9s)
+  ✓  10 [mobile-chrome] › e2e/advance-stream.spec.ts:90:1 › the warm-every-map opt-in restores the sweep (20.0s)
+  ✓  11 [mobile-chrome] › e2e/advance-stream.spec.ts:121:1 › closing profiles resumes the menu stream (8.5s)
+  ✘  12 [mobile-chrome] › e2e/advance-stream.spec.ts:138:1 › launch aborts pending prefetch before the run requests its own map (47.7s)
+
+
+  1) [mobile-chrome] › e2e/advance-stream.spec.ts:138:1 › launch aborts pending prefetch before the run requests its own map 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "tavern"
+    Received: null
+
+    Call Log:
+    - Timeout 8000ms exceeded while waiting on the predicate
+
+      187 |   page.on('console', (message) => { if (message.type() === 'error') errors.push(message.text()); });
+      188 |   page.on('pageerror', (error) => errors.push(error.message));
+    > 189 |   return errors;
+          |                 ^
+      190 | }
+      191 |
+      192 | async function openBoard(page: Page): Promise<void> {
+        at openBoard (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/advance-stream.spec.ts:189:114)
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/advance-stream.spec.ts:166:3
+
+    Error Context: artifacts/prefetch-bounded-warming/menu-test-results/advance-stream-launch-abor-c3f36-he-run-requests-its-own-map-mobile-chrome/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/prefetch-bounded-warming/menu-test-results/advance-stream-launch-abor-c3f36-he-run-requests-its-own-map-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/prefetch-bounded-warming/menu-test-results/advance-stream-launch-abor-c3f36-he-run-requests-its-own-map-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [mobile-chrome] › e2e/advance-stream.spec.ts:138:1 › launch aborts pending prefetch before the run requests its own map 
+  11 passed (4.7m)

@@ -1,0 +1,12 @@
+
+> gold-rush@0.1.0 test:stats
+> node scripts/test-stats.mjs && node scripts/test-standings.mjs && node scripts/test-ledger-worker.mjs
+
+stats worker checks passed (87)
+contract clock census 42/25/17/0
+refusals kv sample {"ok":true,"counts":{"unsecured":1,"bad_payload":1},"recent":[{"reason":"bad_payload","contractId":"the-claim","refusedAt":1789354908586},{"reason":"unsecured","contractId":"the-claim","refusedAt":1789354908586}]}
+standings assay kv checks passed (320)
+contract clock census 42/25/17/0
+refusals sqlite sample {"ok":true,"counts":{"bad_payload":1,"unsecured":1},"recent":[{"reason":"bad_payload","contractId":"the-claim","refusedAt":1789354909706},{"reason":"unsecured","contractId":"the-claim","refusedAt":1789354909705}]}
+standings assay sqlite checks passed (320)
+ledger worker HTTP contract checks passed (26)

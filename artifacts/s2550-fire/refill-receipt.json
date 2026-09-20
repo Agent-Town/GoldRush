@@ -1,0 +1,9 @@
+{
+  "queuedAt": "2026-09-08T01:29:32.432244+07:00",
+  "task": "lane-a-rider-parity-reach-stage3.md",
+  "slot": "lane-a",
+  "masterBlob": "05c094d32e206b02d5f807edbc38e2d0e9f98b61",
+  "clearance": "  \u2705 CLEAR \u2014 lane-a-rider-parity-reach-stage3.md [lane-a-rider-parity-reach-stage3] status=\"queued\"\n",
+  "laneUsable": "run surface: 9 base + gate leaves from main:package.json (+6: foundry ops playwright.preview.config.ts playwright.release-base.config.ts playwright.release.config.ts server)\nlane-a  feat/e10s-4-door  ahead=0  behind=14  paths=0  tracked-dirt=0  untracked=0\n  => USABLE: refill freely \u2014 a master pre-flight will find main..branch empty\n     \u26a0\ufe0f  but feat/e10s-4-door is 14 commit(s) BEHIND main. USABLE does not mean CURRENT.\n     Before queueing, name the commit your task depends on and prove the lane has it:\n       git merge-base --is-ancestor <sha> feat/e10s-4-door\n     If it does not, request a refresh (tasks/janitor/<name>.req: refresh-lane lane-a) \u2014 F-1320-2.\n     \u2705 ...but NONE of it is run-surface: the 15 compared paths (see the run-surface line above) are\n        byte-identical to main.\n     \ud83d\udcd2 ledger drift: 3 file(s) main has moved that this lane lacks:\n          tasks/BACKLOG.md\n          tasks/goals.json\n          tasks/lane-a-rider-parity-reach-stage3.md\n        \u26a0\ufe0f  A master whose READ-FIRST cites the ledger BY CONTENT will fail its grep in this lane.\n",
+  "copiedByteIdentical": true
+}

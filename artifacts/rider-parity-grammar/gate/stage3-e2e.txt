@@ -1,0 +1,867 @@
+
+Running 88 tests using 1 worker
+
+[1/88] [desktop-chrome] › e2e/agent-view.spec.ts:415:1 › the zero-error rider suppresses only the known transient
+[desktop-chrome] › e2e/agent-view.spec.ts:415:1 › the zero-error rider suppresses only the known transient
+mutation control watchErrors suppressed 1 known GLTFLoader blob error(s)
+
+[2/88] [desktop-chrome] › e2e/agent-view.spec.ts:426:1 › all six E1 mechanics manifests match their byte-stable fixture
+[3/88] [desktop-chrome] › e2e/agent-view.spec.ts:459:1 › the derived manifest rides THE VIEW and every E1 briefing speaks it
+[desktop-chrome] › e2e/agent-view.spec.ts:459:1 › the derived manifest rides THE VIEW and every E1 briefing speaks it
+manifest view watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[4/88] [desktop-chrome] › e2e/agent-view.spec.ts:523:1 › THE VIEW publishes the Prospector and hero as different bodies
+[desktop-chrome] › e2e/agent-view.spec.ts:523:1 › THE VIEW publishes the Prospector and hero as different bodies
+prospector view watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[5/88] [desktop-chrome] › e2e/agent-view.spec.ts:553:1 › the seeded rider view stays cache-shaped and grows one honest wave at a time
+[desktop-chrome] › e2e/agent-view.spec.ts:553:1 › the seeded rider view stays cache-shaped and grows one honest wave at a time
+seeded rider watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[6/88] [desktop-chrome] › e2e/ap-standing-orders.spec.ts:123:1 › seeded standing orders obey priority, gates, legal actions, surprises, and the live rung
+[7/88] [desktop-chrome] › e2e/ap-standing-orders.spec.ts:264:1 › manual early-wave seam resets an expired countdown before forcing the transition
+[8/88] [desktop-chrome] › e2e/ap-standing-orders.spec.ts:283:1 › consent restores a save from before place-building existed
+[9/88] [desktop-chrome] › e2e/ap-standing-orders.spec.ts:311:1 › place-building consent survives a new save round-trip
+[10/88] [desktop-chrome] › e2e/ap-standing-orders.spec.ts:355:1 › plain-boot production orders pan a seam and place a real building
+[11/88] [desktop-chrome] › e2e/ap-standing-orders.spec.ts:429:1 › production pan does not advance an active player channel
+[12/88] [desktop-chrome] › e2e/ap16-6-browser-seat.spec.ts:5:1 › the browser-owned seat binds actor verbs without borrowing the headless singleton
+[13/88] [desktop-chrome] › e2e/ap16-6-browser-seat.spec.ts:81:1 › a browser secure window stays nonterminal until the bank transition lands
+[14/88] [desktop-chrome] › e2e/e4-roads-and-convoys.spec.ts:69:1 › every Motor reel replays to its claimed hash in Node and Chromium
+
+[desktop-chrome] › e2e/e4-roads-and-convoys.spec.ts:69:1 › every Motor reel replays to its claimed hash in Node and Chromium
+assay replay failed: malformed tape
+  1) [desktop-chrome] › e2e/e4-roads-and-convoys.spec.ts:69:1 › every Motor reel replays to its claimed hash in Node and Chromium 
+
+    Error: Command failed: /Users/robin/.nvm/versions/node/v23.11.1/bin/node scripts/assay-replay-agent.mjs artifacts/e4-roads-and-convoys/e4-dust-flats-floor.tape.json
+    assay replay failed: malformed tape
+
+
+      78 |     const tapePath = `${ARTIFACTS}/${map.id}-floor.tape.json`;
+      79 |     const tape = JSON.parse(await readFile(tapePath, 'utf8'));
+    > 80 |     const node = JSON.parse(execFileSync(process.execPath, ['scripts/assay-replay-agent.mjs', tapePath], { encoding: 'utf8', timeout: 150_000 }).trim().split('\n').at(-1)!);
+         |                             ^
+      81 |     expect(tape.contract).toBe(map.id);
+      82 |     // THE HASH CLAIM, in the half that holds: the reel this slice recorded replays to its claimed
+      83 |     // hash in a second Node engine (`assay-replay-agent.mjs`, a separate process and module graph).
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-grammar/e2e/e4-roads-and-convoys.spec.ts:80:29
+
+    Error Context: test-results/e4-roads-and-convoys-every-84f41-d-hash-in-Node-and-Chromium-desktop-chrome/error-context.md
+
+
+[15/88] [desktop-chrome] › e2e/e4-roads-and-convoys.spec.ts:123:1 › every Motor map publishes its own errand to a browser rider, and GRADE is refused off-stake
+[16/88] [desktop-chrome] › e2e/e4-roads-and-convoys.spec.ts:160:1 › human parity: a Motor plain boot mounts its declared Hauler and tar
+
+[WebServer] 3:32:03 PM [vite] (client) [console.error] THREE.GLTFLoader: Couldn't load texture blob:http://127.0.0.1:5310/13954d51-a75d-41c2-8ceb-d652a3cdb5b0
+
+[WebServer] 3:32:03 PM [vite] (client) [console.warn] [gold-rush] render demotion {"event":"render_demotion","reason":"pilot-load-failed:Failed to fetch","contractId":"e4-dust-flats","buildId":"dev","tier":"FULL","dataset":{"terrain3dPilotState":"failed","terrain3dPilotRenderSource":"painted","run3dPilotState":"loading","run3dPilotMeshes":"0","run3dPilotTriangles":"0","terrain3dPilotContract":"e4-dust-flats","terrain3dPilotTerrainLoadState":"pending","terrain3dPilotPanoramaLoadState":"pending","terrain3dPilotLandmarkLoadState":"pending","terrain3dPilotHeightSource":"painted","terrain3dPilotMeshes":"0","terrain3dPilotTriangles":"0","terrain3dPilotMaterials":"0","terrain3dPilotVertices":"0","terrain3dPilotPanorama":"off","terrain3dPilotPanoramaMeshes":"0","terrain3dPilotPanoramaTriangles":"0","terrain3dPilotPanoramaMaterials":"0","terrain3dPilotPanoramaVertices":"0"}}
+
+[WebServer] 3:32:05 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+  2) [desktop-chrome] › e2e/e4-roads-and-convoys.spec.ts:160:1 › human parity: a Motor plain boot mounts its declared Hauler and tar 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 3
+
+    - Array []
+    + Array [
+    +   "console: THREE.GLTFLoader: Couldn't load texture blob:http://127.0.0.1:5310/13954d51-a75d-41c2-8ceb-d652a3cdb5b0",
+    + ]
+
+      192 |   expect(dev.vehicle).toMatchObject({ kind: 'hauler', state: 'idle', x: -20, z: -8 });
+      193 |   expect(dev.fuel).toMatchObject({ capacity: 24, harvestedNodes: 0 });
+    > 194 |   expect(errors).toEqual([]);
+          |                  ^
+      195 | });
+      196 |
+      197 | test('a plain-boot Dust Flats player gathers tar and calls the Hauler with recorded inputs', async ({ page }, testInfo) => {
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-grammar/e2e/e4-roads-and-convoys.spec.ts:194:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e4-roads-and-convoys-human-7151d-its-declared-Hauler-and-tar-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e4-roads-and-convoys-human-7151d-its-declared-Hauler-and-tar-desktop-chrome/error-context.md
+
+
+[17/88] [desktop-chrome] › e2e/e4-roads-and-convoys.spec.ts:197:1 › a plain-boot Dust Flats player gathers tar and calls the Hauler with recorded inputs
+
+[desktop-chrome] › e2e/e4-roads-and-convoys.spec.ts:197:1 › a plain-boot Dust Flats player gathers tar and calls the Hauler with recorded inputs
+assay replay failed: page.waitForFunction: Timeout 60000ms exceeded.
+  3) [desktop-chrome] › e2e/e4-roads-and-convoys.spec.ts:197:1 › a plain-boot Dust Flats player gathers tar and calls the Hauler with recorded inputs 
+
+    Error: Command failed: /Users/robin/.nvm/versions/node/v23.11.1/bin/node scripts/assay-replay.mjs /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-grammar/test-results/e4-roads-and-convoys-a-pla-48c97-Hauler-with-recorded-inputs-desktop-chrome/plain-boot-motor.tape.json
+    assay replay failed: page.waitForFunction: Timeout 60000ms exceeded.
+
+
+      248 |   const tapePath = testInfo.outputPath('plain-boot-motor.tape.json');
+      249 |   await writeFile(tapePath, JSON.stringify(tape));
+    > 250 |   const slip = JSON.parse(execFileSync(process.execPath, ['scripts/assay-replay.mjs', tapePath], {
+          |                           ^
+      251 |     cwd: process.cwd(),
+      252 |     encoding: 'utf8',
+      253 |     timeout: 180_000,
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-grammar/e2e/e4-roads-and-convoys.spec.ts:250:27
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e4-roads-and-convoys-a-pla-48c97-Hauler-with-recorded-inputs-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e4-roads-and-convoys-a-pla-48c97-Hauler-with-recorded-inputs-desktop-chrome/error-context.md
+
+
+[18/88] [desktop-chrome] › e2e/e5-flotilla-hulls.spec.ts:6:1 › the Flotilla keeps three losable hulls and secures both bench seeds deterministically
+[desktop-chrome] › e2e/e5-flotilla-hulls.spec.ts:6:1 › the Flotilla keeps three losable hulls and secures both bench seeds deterministically
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/23',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[19/88] [desktop-chrome] › e2e/e5-flotilla-hulls.spec.ts:118:1 › idle Flotilla runs lose all hulls
+[20/88] [desktop-chrome] › e2e/e5-flotilla-hulls.spec.ts:135:1 › plain boot resolves the Flotilla contract without browser errors
+[desktop-chrome] › e2e/e5-flotilla-hulls.spec.ts:135:1 › plain boot resolves the Flotilla contract without browser errors
+e5-flotilla plain boot watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[21/88] [desktop-chrome] › e2e/e5-regatta-race.spec.ts:35:1 › the Regatta runs its authored course and secures both bench seeds deterministically
+[desktop-chrome] › e2e/e5-regatta-race.spec.ts:35:1 › the Regatta runs its authored course and secures both bench seeds deterministically
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/23',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+  4) [desktop-chrome] › e2e/e5-regatta-race.spec.ts:35:1 › the Regatta runs its authored course and secures both bench seeds deterministically 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      112 |         turn = sim.advanceToTurn();
+      113 |       }
+    > 114 |       expect(turn.terminal).toBe(true);
+          |                             ^
+      115 |       expect(turn.view.now.deepwater?.race?.finished).toBe(true);
+      116 |       expect(turn.view.now.deepwater?.race?.gatesPassed).toHaveLength(5);
+      117 |       return sim.outcome();
+        at run (/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-grammar/e2e/e5-regatta-race.spec.ts:114:29)
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-grammar/e2e/e5-regatta-race.spec.ts:125:21
+
+    Error Context: test-results/e5-regatta-race-the-Regatt-6c659-nch-seeds-deterministically-desktop-chrome/error-context.md
+
+
+[22/88] [desktop-chrome] › e2e/e5-regatta-race.spec.ts:141:1 › idle Regatta runs lose because the course remains unfinished
+[23/88] [desktop-chrome] › e2e/e5-regatta-race.spec.ts:157:1 › plain boot resolves the Regatta contract without browser errors
+[desktop-chrome] › e2e/e5-regatta-race.spec.ts:157:1 › plain boot resolves the Regatta contract without browser errors
+e5-regatta plain boot watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[24/88] [desktop-chrome] › e2e/e7-playbook-rows.spec.ts:163:1 › the four Signal maps run the playbook verb identically in the browser runtime and in Node
+[desktop-chrome] › e2e/e7-playbook-rows.spec.ts:163:1 › the four Signal maps run the playbook verb identically in the browser runtime and in Node
+[e7-both-engines] e7-relay-valley tickHash node=fnv1a32:0d9d07c9 browser=fnv1a32:0d9d07c9 met=true uses=1 runs=1 relays=["relay-site-r1"] refusals={"suppressed":0,"muted":0,"unrecorded":0}
+
+[e7-both-engines] e7-echo-canyon tickHash node=fnv1a32:becbba92 browser=fnv1a32:becbba92 met=false uses=2 runs=2 relays=[] refusals={"suppressed":0,"muted":0,"unrecorded":0}
+
+[e7-both-engines] e7-dead-band tickHash node=fnv1a32:97bdab00 browser=fnv1a32:97bdab00 met=true uses=0 runs=0 relays=[] refusals={"suppressed":1,"muted":0,"unrecorded":0}
+
+[e7-both-engines] e7-relay-rush tickHash node=fnv1a32:00793392 browser=fnv1a32:00793392 met=false uses=1 runs=1 relays=["relay-site-r1"] refusals={"suppressed":0,"muted":0,"unrecorded":0}
+
+[25/88] [desktop-chrome] › e2e/e7-playbook-rows.spec.ts:198:1 › every Signal map still boots clean for a player, and the E7 board is where the player sees it
+[26/88] [desktop-chrome] › e2e/e7-playbook-rows.spec.ts:218:1 › HUMAN PARITY: a plain-boot player records and delegates a patrol through the shared latch
+[desktop-chrome] › e2e/e7-playbook-rows.spec.ts:218:1 › HUMAN PARITY: a plain-boot player records and delegates a patrol through the shared latch
+[e7-parity] plain player use={"declared":true,"objective":"relay","objectiveMet":true,"uses":1,"relaysLitByProgram":["relay-site-r1"]} lit=["ford-table"]
+
+[27/88] [desktop-chrome] › e2e/e7-playbook-rows.spec.ts:267:1 › the human run tape records and assay-replays a player playbook use
+[28/88] [desktop-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-hill-mine census support is explicit and deterministic
+[desktop-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-hill-mine census support is explicit and deterministic
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/23',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[29/88] [desktop-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-trestle census support is explicit and deterministic
+[desktop-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-trestle census support is explicit and deterministic
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/23',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[30/88] [desktop-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-pressure-garden census support is explicit and deterministic
+[desktop-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-pressure-garden census support is explicit and deterministic
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/23',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[31/88] [desktop-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-incline census support is explicit and deterministic
+[desktop-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-incline census support is explicit and deterministic
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/23',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[32/88] [desktop-chrome] › e2e/front-door-parity.spec.ts:87:1 › pure stdin progression and panning secure the Claim deterministically
+[33/88] [desktop-chrome] › e2e/front-door-parity.spec.ts:124:1 › silence defaults the first upgrade at the deadline
+[34/88] [desktop-chrome] › e2e/front-door-parity.spec.ts:146:1 › idle remains deterministic and losable after progression parity
+[35/88] [desktop-chrome] › e2e/rider-parity-context-press.spec.ts:56:1 › a plain-boot human works the drill yard with the confirm key, and the rider reads the same yard
+
+[WebServer] 3:36:03 PM [vite] (client) [console.warn] [gold-rush] render demotion {"event":"render_demotion","reason":"pilot-contract-unavailable","contractId":"e1-drill-yard","buildId":"dev","tier":"FULL","dataset":{"terrain3dPilotState":"failed","terrain3dPilotRenderSource":"painted","run3dPilotState":"loading","run3dPilotMeshes":"0","run3dPilotTriangles":"0","terrain3dPilotContract":"e1-drill-yard","terrain3dPilotLandmarkLoadState":"off","terrain3dPilotHeightSource":"painted","terrain3dPilotMeshes":"0","terrain3dPilotTriangles":"0","terrain3dPilotMaterials":"0","terrain3dPilotVertices":"0","terrain3dPilotPanorama":"off","terrain3dPilotPanoramaMeshes":"0","terrain3dPilotPanoramaTriangles":"0","terrain3dPilotPanoramaMaterials":"0","terrain3dPilotPanoramaVertices":"0"}}
+[36/88] [desktop-chrome] › e2e/rider-parity-grammar.spec.ts:17:1 › plain boot is clean on both viewports (no ?debug)
+[37/88] [desktop-chrome] › e2e/rider-parity-grammar.spec.ts:77:1 › a plain-boot human can build on the Claim-Boat deck (BOAT_BUILD parity)
+[38/88] [desktop-chrome] › e2e/rider-parity-grammar.spec.ts:107:1 › a plain-boot human can weigh anchor from the same prompt (REANCHOR parity)
+[39/88] [desktop-chrome] › e2e/skillmd-door.spec.ts:3:1 › served skill.md exposes the source-locked grammar and replace warning
+[40/88] [desktop-chrome] › e2e/tape-01-run-tape.spec.ts:75:1 › the profile tape ring keeps the latest ten plus older marked runs
+[41/88] [desktop-chrome] › e2e/tape-01-run-tape.spec.ts:90:1 › the keep result stays false when profile storage rejects the write
+[42/88] [desktop-chrome] › e2e/tape-01-run-tape.spec.ts:102:1 › the recorder deduplicates routed actions and freezes the hash at its input ceiling
+
+[desktop-chrome] › e2e/tape-01-run-tape.spec.ts:102:1 › the recorder deduplicates routed actions and freezes the hash at its input ceiling
+[run-tape] recording truncated: max-ticks at tick 18000
+[43/88] [desktop-chrome] › e2e/tape-01-run-tape.spec.ts:123:1 › a resumed recording keeps the engine stamp captured by the original build
+[44/88] [desktop-chrome] › e2e/tape-01-run-tape.spec.ts:140:1 › every ended run writes a keepable tape whose replay reproduces its event hash
+[45/88] [mobile-chrome] › e2e/agent-view.spec.ts:415:1 › the zero-error rider suppresses only the known transient
+[mobile-chrome] › e2e/agent-view.spec.ts:415:1 › the zero-error rider suppresses only the known transient
+mutation control watchErrors suppressed 1 known GLTFLoader blob error(s)
+
+[46/88] [mobile-chrome] › e2e/agent-view.spec.ts:426:1 › all six E1 mechanics manifests match their byte-stable fixture
+[47/88] [mobile-chrome] › e2e/agent-view.spec.ts:459:1 › the derived manifest rides THE VIEW and every E1 briefing speaks it
+[mobile-chrome] › e2e/agent-view.spec.ts:459:1 › the derived manifest rides THE VIEW and every E1 briefing speaks it
+manifest view watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[48/88] [mobile-chrome] › e2e/agent-view.spec.ts:523:1 › THE VIEW publishes the Prospector and hero as different bodies
+[mobile-chrome] › e2e/agent-view.spec.ts:523:1 › THE VIEW publishes the Prospector and hero as different bodies
+prospector view watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[49/88] [mobile-chrome] › e2e/agent-view.spec.ts:553:1 › the seeded rider view stays cache-shaped and grows one honest wave at a time
+[mobile-chrome] › e2e/agent-view.spec.ts:553:1 › the seeded rider view stays cache-shaped and grows one honest wave at a time
+seeded rider watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[50/88] [mobile-chrome] › e2e/ap-standing-orders.spec.ts:123:1 › seeded standing orders obey priority, gates, legal actions, surprises, and the live rung
+  5) [mobile-chrome] › e2e/ap-standing-orders.spec.ts:123:1 › seeded standing orders obey priority, gates, legal actions, surprises, and the live rung 
+
+    Error: expect(received).toMatchObject(expected)
+
+    - Expected  - 4
+    + Received  + 1
+
+      Object {
+    -   "message": "BUILD requires the granted place_building ability.",
+    -   "ok": false,
+    -   "reason": "PERMISSION_DENIED",
+    -   "requiredLevel": 3,
+    +   "ok": true,
+      }
+
+      160 |     { verb: 'BUILD', what: 'sentry_beacon', where: { x: 0, z: 10 }, when: { goldGte: 25 } },
+      161 |   ]);
+    > 162 |   expect(revokedAbility.outcome).toMatchObject({
+          |                                  ^
+      163 |     ok: false,
+      164 |     reason: 'PERMISSION_DENIED',
+      165 |     requiredLevel: 3,
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-grammar/e2e/ap-standing-orders.spec.ts:162:34
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ap-standing-orders-seeded--acb18-surprises-and-the-live-rung-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/ap-standing-orders-seeded--acb18-surprises-and-the-live-rung-mobile-chrome/error-context.md
+
+
+[51/88] [mobile-chrome] › e2e/ap-standing-orders.spec.ts:264:1 › manual early-wave seam resets an expired countdown before forcing the transition
+[52/88] [mobile-chrome] › e2e/ap-standing-orders.spec.ts:283:1 › consent restores a save from before place-building existed
+[53/88] [mobile-chrome] › e2e/ap-standing-orders.spec.ts:311:1 › place-building consent survives a new save round-trip
+[54/88] [mobile-chrome] › e2e/ap-standing-orders.spec.ts:355:1 › plain-boot production orders pan a seam and place a real building
+[55/88] [mobile-chrome] › e2e/ap-standing-orders.spec.ts:429:1 › production pan does not advance an active player channel
+[56/88] [mobile-chrome] › e2e/ap16-6-browser-seat.spec.ts:5:1 › the browser-owned seat binds actor verbs without borrowing the headless singleton
+[57/88] [mobile-chrome] › e2e/ap16-6-browser-seat.spec.ts:81:1 › a browser secure window stays nonterminal until the bank transition lands
+[58/88] [mobile-chrome] › e2e/e4-roads-and-convoys.spec.ts:69:1 › every Motor reel replays to its claimed hash in Node and Chromium
+
+[mobile-chrome] › e2e/e4-roads-and-convoys.spec.ts:69:1 › every Motor reel replays to its claimed hash in Node and Chromium
+assay replay failed: malformed tape
+  6) [mobile-chrome] › e2e/e4-roads-and-convoys.spec.ts:69:1 › every Motor reel replays to its claimed hash in Node and Chromium 
+
+    Error: Command failed: /Users/robin/.nvm/versions/node/v23.11.1/bin/node scripts/assay-replay-agent.mjs artifacts/e4-roads-and-convoys/e4-dust-flats-floor.tape.json
+    assay replay failed: malformed tape
+
+
+      78 |     const tapePath = `${ARTIFACTS}/${map.id}-floor.tape.json`;
+      79 |     const tape = JSON.parse(await readFile(tapePath, 'utf8'));
+    > 80 |     const node = JSON.parse(execFileSync(process.execPath, ['scripts/assay-replay-agent.mjs', tapePath], { encoding: 'utf8', timeout: 150_000 }).trim().split('\n').at(-1)!);
+         |                             ^
+      81 |     expect(tape.contract).toBe(map.id);
+      82 |     // THE HASH CLAIM, in the half that holds: the reel this slice recorded replays to its claimed
+      83 |     // hash in a second Node engine (`assay-replay-agent.mjs`, a separate process and module graph).
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-grammar/e2e/e4-roads-and-convoys.spec.ts:80:29
+
+    Error Context: test-results/e4-roads-and-convoys-every-84f41-d-hash-in-Node-and-Chromium-mobile-chrome/error-context.md
+
+
+[59/88] [mobile-chrome] › e2e/e4-roads-and-convoys.spec.ts:123:1 › every Motor map publishes its own errand to a browser rider, and GRADE is refused off-stake
+[60/88] [mobile-chrome] › e2e/e4-roads-and-convoys.spec.ts:160:1 › human parity: a Motor plain boot mounts its declared Hauler and tar
+
+[WebServer] 3:36:58 PM [vite] (client) [console.error] THREE.GLTFLoader: Couldn't load texture blob:http://127.0.0.1:5310/103af2a0-e44f-404b-b5a2-bb8ae2639ef0
+
+[WebServer] 3:36:58 PM [vite] (client) [console.warn] [gold-rush] render demotion {"event":"render_demotion","reason":"pilot-load-failed:Failed to fetch","contractId":"e4-dust-flats","buildId":"dev","tier":"FULL","dataset":{"terrain3dPilotState":"failed","terrain3dPilotRenderSource":"painted","run3dPilotState":"loading","run3dPilotMeshes":"0","run3dPilotTriangles":"0","terrain3dPilotContract":"e4-dust-flats","terrain3dPilotTerrainLoadState":"pending","terrain3dPilotPanoramaLoadState":"pending","terrain3dPilotLandmarkLoadState":"pending","terrain3dPilotHeightSource":"painted","terrain3dPilotMeshes":"0","terrain3dPilotTriangles":"0","terrain3dPilotMaterials":"0","terrain3dPilotVertices":"0","terrain3dPilotPanorama":"off","terrain3dPilotPanoramaMeshes":"0","terrain3dPilotPanoramaTriangles":"0","terrain3dPilotPanoramaMaterials":"0","terrain3dPilotPanoramaVertices":"0"}}
+
+[WebServer] 3:36:59 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+  7) [mobile-chrome] › e2e/e4-roads-and-convoys.spec.ts:160:1 › human parity: a Motor plain boot mounts its declared Hauler and tar 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 3
+
+    - Array []
+    + Array [
+    +   "console: THREE.GLTFLoader: Couldn't load texture blob:http://127.0.0.1:5310/103af2a0-e44f-404b-b5a2-bb8ae2639ef0",
+    + ]
+
+      192 |   expect(dev.vehicle).toMatchObject({ kind: 'hauler', state: 'idle', x: -20, z: -8 });
+      193 |   expect(dev.fuel).toMatchObject({ capacity: 24, harvestedNodes: 0 });
+    > 194 |   expect(errors).toEqual([]);
+          |                  ^
+      195 | });
+      196 |
+      197 | test('a plain-boot Dust Flats player gathers tar and calls the Hauler with recorded inputs', async ({ page }, testInfo) => {
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-grammar/e2e/e4-roads-and-convoys.spec.ts:194:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e4-roads-and-convoys-human-7151d-its-declared-Hauler-and-tar-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e4-roads-and-convoys-human-7151d-its-declared-Hauler-and-tar-mobile-chrome/error-context.md
+
+
+[61/88] [mobile-chrome] › e2e/e4-roads-and-convoys.spec.ts:197:1 › a plain-boot Dust Flats player gathers tar and calls the Hauler with recorded inputs
+[mobile-chrome] › e2e/e4-roads-and-convoys.spec.ts:197:1 › a plain-boot Dust Flats player gathers tar and calls the Hauler with recorded inputs
+E4_PLAIN_BOOT_ASSAY_SLIP {"eventLogHash":"fnv1a32:458b619a","outcome":{"secured":false,"waves":0,"gold":0,"timeAlive":5.233333},"securedSnapshot":null,"ticks":157,"wallMs":2543}
+
+[62/88] [mobile-chrome] › e2e/e5-flotilla-hulls.spec.ts:6:1 › the Flotilla keeps three losable hulls and secures both bench seeds deterministically
+[mobile-chrome] › e2e/e5-flotilla-hulls.spec.ts:6:1 › the Flotilla keeps three losable hulls and secures both bench seeds deterministically
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/23',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[63/88] [mobile-chrome] › e2e/e5-flotilla-hulls.spec.ts:118:1 › idle Flotilla runs lose all hulls
+[64/88] [mobile-chrome] › e2e/e5-flotilla-hulls.spec.ts:135:1 › plain boot resolves the Flotilla contract without browser errors
+[mobile-chrome] › e2e/e5-flotilla-hulls.spec.ts:135:1 › plain boot resolves the Flotilla contract without browser errors
+e5-flotilla plain boot watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[65/88] [mobile-chrome] › e2e/e5-regatta-race.spec.ts:35:1 › the Regatta runs its authored course and secures both bench seeds deterministically
+[mobile-chrome] › e2e/e5-regatta-race.spec.ts:35:1 › the Regatta runs its authored course and secures both bench seeds deterministically
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/23',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+  8) [mobile-chrome] › e2e/e5-regatta-race.spec.ts:35:1 › the Regatta runs its authored course and secures both bench seeds deterministically 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      112 |         turn = sim.advanceToTurn();
+      113 |       }
+    > 114 |       expect(turn.terminal).toBe(true);
+          |                             ^
+      115 |       expect(turn.view.now.deepwater?.race?.finished).toBe(true);
+      116 |       expect(turn.view.now.deepwater?.race?.gatesPassed).toHaveLength(5);
+      117 |       return sim.outcome();
+        at run (/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-grammar/e2e/e5-regatta-race.spec.ts:114:29)
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-grammar/e2e/e5-regatta-race.spec.ts:125:21
+
+    Error Context: test-results/e5-regatta-race-the-Regatt-6c659-nch-seeds-deterministically-mobile-chrome/error-context.md
+
+
+[66/88] [mobile-chrome] › e2e/e5-regatta-race.spec.ts:141:1 › idle Regatta runs lose because the course remains unfinished
+[67/88] [mobile-chrome] › e2e/e5-regatta-race.spec.ts:157:1 › plain boot resolves the Regatta contract without browser errors
+[mobile-chrome] › e2e/e5-regatta-race.spec.ts:157:1 › plain boot resolves the Regatta contract without browser errors
+e5-regatta plain boot watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[68/88] [mobile-chrome] › e2e/e7-playbook-rows.spec.ts:163:1 › the four Signal maps run the playbook verb identically in the browser runtime and in Node
+[mobile-chrome] › e2e/e7-playbook-rows.spec.ts:163:1 › the four Signal maps run the playbook verb identically in the browser runtime and in Node
+[e7-both-engines] e7-relay-valley tickHash node=fnv1a32:0d9d07c9 browser=fnv1a32:0d9d07c9 met=true uses=1 runs=1 relays=["relay-site-r1"] refusals={"suppressed":0,"muted":0,"unrecorded":0}
+
+[e7-both-engines] e7-echo-canyon tickHash node=fnv1a32:becbba92 browser=fnv1a32:becbba92 met=false uses=2 runs=2 relays=[] refusals={"suppressed":0,"muted":0,"unrecorded":0}
+
+[e7-both-engines] e7-dead-band tickHash node=fnv1a32:97bdab00 browser=fnv1a32:97bdab00 met=true uses=0 runs=0 relays=[] refusals={"suppressed":1,"muted":0,"unrecorded":0}
+
+[e7-both-engines] e7-relay-rush tickHash node=fnv1a32:00793392 browser=fnv1a32:00793392 met=false uses=1 runs=1 relays=["relay-site-r1"] refusals={"suppressed":0,"muted":0,"unrecorded":0}
+
+[69/88] [mobile-chrome] › e2e/e7-playbook-rows.spec.ts:198:1 › every Signal map still boots clean for a player, and the E7 board is where the player sees it
+[70/88] [mobile-chrome] › e2e/e7-playbook-rows.spec.ts:218:1 › HUMAN PARITY: a plain-boot player records and delegates a patrol through the shared latch
+[mobile-chrome] › e2e/e7-playbook-rows.spec.ts:218:1 › HUMAN PARITY: a plain-boot player records and delegates a patrol through the shared latch
+[e7-parity] plain player use={"declared":true,"objective":"relay","objectiveMet":true,"uses":1,"relaysLitByProgram":["relay-site-r1"]} lit=["ford-table"]
+
+[71/88] [mobile-chrome] › e2e/e7-playbook-rows.spec.ts:267:1 › the human run tape records and assay-replays a player playbook use
+
+[WebServer] 3:38:31 PM [vite] (client) [console.error] THREE.GLTFLoader: Couldn't load texture blob:http://127.0.0.1:5310/b8fe2a99-1b53-4ab4-9dcc-3495ddd7f87b
+  9) [mobile-chrome] › e2e/e7-playbook-rows.spec.ts:267:1 › the human run tape records and assay-replays a player playbook use 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 3
+
+    - Array []
+    + Array [
+    +   "console: THREE.GLTFLoader: Couldn't load texture blob:http://127.0.0.1:5310/b8fe2a99-1b53-4ab4-9dcc-3495ddd7f87b",
+    + ]
+
+      287 |   await page.goto(`/?debug&assayReplay&replay=${tape.id}&contract=${tape.contract}&seed=${tape.seed}&difficulty=${tape.difficulty}`);
+      288 |   await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__ as unknown as { playbookUse?: { uses: number } })?.playbookUse?.uses === 1);
+    > 289 |   expect(errors).toEqual([]);
+          |                  ^
+      290 | });
+      291 |
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-grammar/e2e/e7-playbook-rows.spec.ts:289:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e7-playbook-rows-the-human-57cfc-plays-a-player-playbook-use-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e7-playbook-rows-the-human-57cfc-plays-a-player-playbook-use-mobile-chrome/error-context.md
+
+
+[72/88] [mobile-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-hill-mine census support is explicit and deterministic
+[mobile-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-hill-mine census support is explicit and deterministic
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/23',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[73/88] [mobile-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-trestle census support is explicit and deterministic
+[mobile-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-trestle census support is explicit and deterministic
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/23',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[74/88] [mobile-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-pressure-garden census support is explicit and deterministic
+[mobile-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-pressure-garden census support is explicit and deterministic
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/23',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[75/88] [mobile-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-incline census support is explicit and deterministic
+[mobile-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-incline census support is explicit and deterministic
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/23',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[76/88] [mobile-chrome] › e2e/front-door-parity.spec.ts:87:1 › pure stdin progression and panning secure the Claim deterministically
+[77/88] [mobile-chrome] › e2e/front-door-parity.spec.ts:124:1 › silence defaults the first upgrade at the deadline
+[78/88] [mobile-chrome] › e2e/front-door-parity.spec.ts:146:1 › idle remains deterministic and losable after progression parity
+[79/88] [mobile-chrome] › e2e/rider-parity-context-press.spec.ts:56:1 › a plain-boot human works the drill yard with the confirm key, and the rider reads the same yard
+
+[WebServer] 3:39:45 PM [vite] (client) [console.warn] [gold-rush] render demotion {"event":"render_demotion","reason":"pilot-contract-unavailable","contractId":"e1-drill-yard","buildId":"dev","tier":"FULL","dataset":{"terrain3dPilotState":"failed","terrain3dPilotRenderSource":"painted","run3dPilotState":"loading","run3dPilotMeshes":"0","run3dPilotTriangles":"0","terrain3dPilotContract":"e1-drill-yard","terrain3dPilotLandmarkLoadState":"off","terrain3dPilotHeightSource":"painted","terrain3dPilotMeshes":"0","terrain3dPilotTriangles":"0","terrain3dPilotMaterials":"0","terrain3dPilotVertices":"0","terrain3dPilotPanorama":"off","terrain3dPilotPanoramaMeshes":"0","terrain3dPilotPanoramaTriangles":"0","terrain3dPilotPanoramaMaterials":"0","terrain3dPilotPanoramaVertices":"0"}}
+[80/88] [mobile-chrome] › e2e/rider-parity-grammar.spec.ts:17:1 › plain boot is clean on both viewports (no ?debug)
+[81/88] [mobile-chrome] › e2e/rider-parity-grammar.spec.ts:77:1 › a plain-boot human can build on the Claim-Boat deck (BOAT_BUILD parity)
+[82/88] [mobile-chrome] › e2e/rider-parity-grammar.spec.ts:107:1 › a plain-boot human can weigh anchor from the same prompt (REANCHOR parity)
+[83/88] [mobile-chrome] › e2e/skillmd-door.spec.ts:3:1 › served skill.md exposes the source-locked grammar and replace warning
+[84/88] [mobile-chrome] › e2e/tape-01-run-tape.spec.ts:75:1 › the profile tape ring keeps the latest ten plus older marked runs
+[85/88] [mobile-chrome] › e2e/tape-01-run-tape.spec.ts:90:1 › the keep result stays false when profile storage rejects the write
+[86/88] [mobile-chrome] › e2e/tape-01-run-tape.spec.ts:102:1 › the recorder deduplicates routed actions and freezes the hash at its input ceiling
+
+[mobile-chrome] › e2e/tape-01-run-tape.spec.ts:102:1 › the recorder deduplicates routed actions and freezes the hash at its input ceiling
+[run-tape] recording truncated: max-ticks at tick 18000
+[87/88] [mobile-chrome] › e2e/tape-01-run-tape.spec.ts:123:1 › a resumed recording keeps the engine stamp captured by the original build
+[88/88] [mobile-chrome] › e2e/tape-01-run-tape.spec.ts:140:1 › every ended run writes a keepable tape whose replay reproduces its event hash
+  9 failed
+    [desktop-chrome] › e2e/e4-roads-and-convoys.spec.ts:69:1 › every Motor reel replays to its claimed hash in Node and Chromium 
+    [desktop-chrome] › e2e/e4-roads-and-convoys.spec.ts:160:1 › human parity: a Motor plain boot mounts its declared Hauler and tar 
+    [desktop-chrome] › e2e/e4-roads-and-convoys.spec.ts:197:1 › a plain-boot Dust Flats player gathers tar and calls the Hauler with recorded inputs 
+    [desktop-chrome] › e2e/e5-regatta-race.spec.ts:35:1 › the Regatta runs its authored course and secures both bench seeds deterministically 
+    [mobile-chrome] › e2e/ap-standing-orders.spec.ts:123:1 › seeded standing orders obey priority, gates, legal actions, surprises, and the live rung 
+    [mobile-chrome] › e2e/e4-roads-and-convoys.spec.ts:69:1 › every Motor reel replays to its claimed hash in Node and Chromium 
+    [mobile-chrome] › e2e/e4-roads-and-convoys.spec.ts:160:1 › human parity: a Motor plain boot mounts its declared Hauler and tar 
+    [mobile-chrome] › e2e/e5-regatta-race.spec.ts:35:1 › the Regatta runs its authored course and secures both bench seeds deterministically 
+    [mobile-chrome] › e2e/e7-playbook-rows.spec.ts:267:1 › the human run tape records and assay-replays a player playbook use 
+  3 skipped
+  76 passed (8.8m)

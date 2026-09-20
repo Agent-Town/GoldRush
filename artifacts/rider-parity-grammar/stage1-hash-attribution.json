@@ -1,0 +1,676 @@
+{
+  "before": "artifacts/rider-parity-grammar/hashes-base-af767e318.json",
+  "after": "artifacts/rider-parity-grammar/hashes-stage1.json",
+  "attributionClass": "rebased",
+  "tapes": 24,
+  "moved": 3,
+  "unmoved": 16,
+  "movedWithoutCause": [],
+  "carriedTheVerbButDidNotMove": [
+    "e4-boneyard/attempt-1-tape.json",
+    "e4-gusher-county/attempt-1-tape.json",
+    "e4-long-road/tune-2-tape.json",
+    "e5-stillwater/attempt-1-tape.json",
+    "e7-echo-canyon/tune-1-tape.json",
+    "e7-relay-rush/attempt-1-tape.json",
+    "e7-relay-valley.attempt-1/tune-3-tape.json",
+    "e7-relay-valley/attempt-1-tape.json"
+  ],
+  "replayErrors": [
+    {
+      "key": "e1-baron/tune-1.json",
+      "before": "fnv1a32:fe24406d",
+      "after": "REPLAY-ERROR"
+    },
+    {
+      "key": "e3-canyon-works/attempt-1-tape.json",
+      "before": "REPLAY-ERROR",
+      "after": "REPLAY-ERROR"
+    },
+    {
+      "key": "e7-dead-band/attempt-1-tape.json",
+      "before": "fnv1a32:e181301c",
+      "after": "REPLAY-ERROR"
+    },
+    {
+      "key": "e8-eclipse/attempt-1-tape.json",
+      "before": "REPLAY-ERROR",
+      "after": "REPLAY-ERROR"
+    },
+    {
+      "key": "e8-mare-claim/attempt-1-tape.json",
+      "before": "REPLAY-ERROR",
+      "after": "REPLAY-ERROR"
+    }
+  ],
+  "rows": [
+    {
+      "key": "e1-baron/tune-1.json",
+      "ride": "e1-baron",
+      "tape": "tune-1.json",
+      "contract": "e1-baron",
+      "seed": "e1-baron-01",
+      "scored": true,
+      "beforeHash": "fnv1a32:fe24406d",
+      "afterHash": "REPLAY-ERROR",
+      "moved": true,
+      "carriesRebased": [
+        "CONTEXT_ACTION"
+      ],
+      "carriesRepair": [
+        "REPAIR_UNDER"
+      ],
+      "expectedToMove": true,
+      "beforeOutcome": {
+        "secured": false,
+        "waves": 20,
+        "gold": 200,
+        "timeAlive": 536.2
+      },
+      "afterOutcome": null
+    },
+    {
+      "key": "e1-drill-yard/attempt-1-tape.json",
+      "ride": "e1-drill-yard",
+      "tape": "attempt-1-tape.json",
+      "contract": "e1-drill-yard",
+      "seed": "gold-rush",
+      "scored": true,
+      "beforeHash": "fnv1a32:a874c4fb",
+      "afterHash": "fnv1a32:a874c4fb",
+      "moved": false,
+      "carriesRebased": [],
+      "carriesRepair": [],
+      "expectedToMove": false,
+      "beforeOutcome": {
+        "secured": false,
+        "waves": 3,
+        "gold": 180,
+        "timeAlive": 98.7
+      },
+      "afterOutcome": {
+        "secured": false,
+        "waves": 3,
+        "gold": 180,
+        "timeAlive": 98.7
+      }
+    },
+    {
+      "key": "e1-night-shift/attempt-1-tape.json",
+      "ride": "e1-night-shift",
+      "tape": "attempt-1-tape.json",
+      "contract": "e1-night-shift",
+      "seed": "e1-night-shift-01",
+      "scored": true,
+      "beforeHash": "fnv1a32:9eede9cf",
+      "afterHash": "fnv1a32:9eede9cf",
+      "moved": false,
+      "carriesRebased": [],
+      "carriesRepair": [
+        "REPAIR_UNDER"
+      ],
+      "expectedToMove": false,
+      "beforeOutcome": {
+        "secured": false,
+        "waves": 20,
+        "gold": 32,
+        "timeAlive": 615.4
+      },
+      "afterOutcome": {
+        "secured": false,
+        "waves": 20,
+        "gold": 32,
+        "timeAlive": 615.4
+      }
+    },
+    {
+      "key": "e2-hill-mine/attempt-1-tape.json",
+      "ride": "e2-hill-mine",
+      "tape": "attempt-1-tape.json",
+      "contract": "e2-hill-mine",
+      "seed": "e2-hill-mine-01",
+      "scored": true,
+      "beforeHash": "fnv1a32:a8525220",
+      "afterHash": "fnv1a32:a8525220",
+      "moved": false,
+      "carriesRebased": [],
+      "carriesRepair": [
+        "REPAIR_UNDER"
+      ],
+      "expectedToMove": false,
+      "beforeOutcome": {
+        "secured": false,
+        "waves": 15,
+        "gold": 48,
+        "timeAlive": 470.567
+      },
+      "afterOutcome": {
+        "secured": false,
+        "waves": 15,
+        "gold": 48,
+        "timeAlive": 470.567
+      }
+    },
+    {
+      "key": "e3-canyon-works.attempt-1/attempt-1-tape.json",
+      "ride": "e3-canyon-works.attempt-1",
+      "tape": "attempt-1-tape.json",
+      "contract": "e3-canyon-works",
+      "seed": "e3-canyon-works-01",
+      "scored": true,
+      "beforeHash": "fnv1a32:46bc4a77",
+      "afterHash": "fnv1a32:46bc4a77",
+      "moved": false,
+      "carriesRebased": [],
+      "carriesRepair": [],
+      "expectedToMove": false,
+      "beforeOutcome": {
+        "secured": false,
+        "waves": 3,
+        "gold": 120,
+        "timeAlive": 106.5
+      },
+      "afterOutcome": {
+        "secured": false,
+        "waves": 3,
+        "gold": 120,
+        "timeAlive": 106.5
+      }
+    },
+    {
+      "key": "e3-canyon-works/attempt-1-tape.json",
+      "ride": "e3-canyon-works",
+      "tape": "attempt-1-tape.json",
+      "contract": "e3-canyon-works",
+      "seed": "e3-canyon-works-01",
+      "scored": true,
+      "beforeHash": "REPLAY-ERROR",
+      "afterHash": "REPLAY-ERROR",
+      "moved": false,
+      "carriesRebased": [],
+      "carriesRepair": [],
+      "expectedToMove": false,
+      "beforeOutcome": null,
+      "afterOutcome": null
+    },
+    {
+      "key": "e3-moth-season/attempt-1-tape.json",
+      "ride": "e3-moth-season",
+      "tape": "attempt-1-tape.json",
+      "contract": "e3-moth-season",
+      "seed": "e3-moth-season-01",
+      "scored": true,
+      "beforeHash": "fnv1a32:ed3974ff",
+      "afterHash": "fnv1a32:ed3974ff",
+      "moved": false,
+      "carriesRebased": [],
+      "carriesRepair": [],
+      "expectedToMove": false,
+      "beforeOutcome": {
+        "secured": true,
+        "waves": 12,
+        "gold": 200,
+        "timeAlive": 360
+      },
+      "afterOutcome": {
+        "secured": true,
+        "waves": 12,
+        "gold": 200,
+        "timeAlive": 360
+      }
+    },
+    {
+      "key": "e4-boneyard/attempt-1-tape.json",
+      "ride": "e4-boneyard",
+      "tape": "attempt-1-tape.json",
+      "contract": "e4-boneyard",
+      "seed": "e4-boneyard-01",
+      "scored": true,
+      "beforeHash": "fnv1a32:49e829d4",
+      "afterHash": "fnv1a32:49e829d4",
+      "moved": false,
+      "carriesRebased": [
+        "HAUL"
+      ],
+      "carriesRepair": [],
+      "expectedToMove": true,
+      "beforeOutcome": {
+        "secured": true,
+        "waves": 12,
+        "gold": 200,
+        "timeAlive": 360
+      },
+      "afterOutcome": {
+        "secured": false,
+        "waves": 28,
+        "gold": 200,
+        "timeAlive": 840.567
+      }
+    },
+    {
+      "key": "e4-dust-flats/attempt-2-tape.json",
+      "ride": "e4-dust-flats",
+      "tape": "attempt-2-tape.json",
+      "contract": "e4-dust-flats",
+      "seed": "e4-dust-flats-01",
+      "scored": true,
+      "beforeHash": "fnv1a32:46686d78",
+      "afterHash": "fnv1a32:d025098f",
+      "moved": true,
+      "carriesRebased": [
+        "GRADE",
+        "HAUL"
+      ],
+      "carriesRepair": [],
+      "expectedToMove": true,
+      "beforeOutcome": {
+        "secured": true,
+        "waves": 14,
+        "gold": 55,
+        "timeAlive": 426.133
+      },
+      "afterOutcome": {
+        "secured": false,
+        "waves": 15,
+        "gold": 15,
+        "timeAlive": 458.467
+      }
+    },
+    {
+      "key": "e4-gusher-county/attempt-1-tape.json",
+      "ride": "e4-gusher-county",
+      "tape": "attempt-1-tape.json",
+      "contract": "e4-gusher-county",
+      "seed": "e4-gusher-county-01",
+      "scored": true,
+      "beforeHash": "fnv1a32:abfd532f",
+      "afterHash": "fnv1a32:abfd532f",
+      "moved": false,
+      "carriesRebased": [
+        "GRADE",
+        "HAUL"
+      ],
+      "carriesRepair": [],
+      "expectedToMove": true,
+      "beforeOutcome": {
+        "secured": true,
+        "waves": 12,
+        "gold": 5,
+        "timeAlive": 360
+      },
+      "afterOutcome": {
+        "secured": false,
+        "waves": 19,
+        "gold": 90,
+        "timeAlive": 577.933
+      }
+    },
+    {
+      "key": "e4-long-road/tune-2-tape.json",
+      "ride": "e4-long-road",
+      "tape": "tune-2-tape.json",
+      "contract": "e4-long-road",
+      "seed": "e4-long-road-01",
+      "scored": true,
+      "beforeHash": "fnv1a32:ce8e0383",
+      "afterHash": "fnv1a32:ce8e0383",
+      "moved": false,
+      "carriesRebased": [
+        "GRADE"
+      ],
+      "carriesRepair": [],
+      "expectedToMove": true,
+      "beforeOutcome": {
+        "secured": false,
+        "waves": 5,
+        "gold": 35,
+        "timeAlive": 157.6
+      },
+      "afterOutcome": {
+        "secured": false,
+        "waves": 5,
+        "gold": 35,
+        "timeAlive": 157.6
+      }
+    },
+    {
+      "key": "e5-stillwater/attempt-1-tape.json",
+      "ride": "e5-stillwater",
+      "tape": "attempt-1-tape.json",
+      "contract": "e5-stillwater",
+      "seed": "e5-stillwater-01",
+      "scored": true,
+      "beforeHash": "fnv1a32:338d5c80",
+      "afterHash": "fnv1a32:338d5c80",
+      "moved": false,
+      "carriesRebased": [
+        "BOAT_BUILD",
+        "REANCHOR"
+      ],
+      "carriesRepair": [],
+      "expectedToMove": true,
+      "beforeOutcome": {
+        "secured": true,
+        "waves": 12,
+        "gold": 200,
+        "timeAlive": 360
+      },
+      "afterOutcome": {
+        "secured": true,
+        "waves": 12,
+        "gold": 200,
+        "timeAlive": 360
+      }
+    },
+    {
+      "key": "e7-dead-band/attempt-1-tape.json",
+      "ride": "e7-dead-band",
+      "tape": "attempt-1-tape.json",
+      "contract": "e7-dead-band",
+      "seed": "e7-dead-band-01",
+      "scored": true,
+      "beforeHash": "fnv1a32:e181301c",
+      "afterHash": "REPLAY-ERROR",
+      "moved": true,
+      "carriesRebased": [
+        "CONTEXT_ACTION",
+        "PLAYBOOK_USE"
+      ],
+      "carriesRepair": [],
+      "expectedToMove": true,
+      "beforeOutcome": {
+        "secured": true,
+        "waves": 20,
+        "gold": 200,
+        "timeAlive": 600
+      },
+      "afterOutcome": null
+    },
+    {
+      "key": "e7-echo-canyon/tune-1-tape.json",
+      "ride": "e7-echo-canyon",
+      "tape": "tune-1-tape.json",
+      "contract": "e7-echo-canyon",
+      "seed": "e7-echo-canyon-01",
+      "scored": true,
+      "beforeHash": "fnv1a32:8007b47d",
+      "afterHash": "fnv1a32:8007b47d",
+      "moved": false,
+      "carriesRebased": [
+        "PLAYBOOK_USE"
+      ],
+      "carriesRepair": [],
+      "expectedToMove": true,
+      "beforeOutcome": {
+        "secured": true,
+        "waves": 20,
+        "gold": 200,
+        "timeAlive": 600
+      },
+      "afterOutcome": {
+        "secured": true,
+        "waves": 20,
+        "gold": 200,
+        "timeAlive": 600
+      }
+    },
+    {
+      "key": "e7-relay-rush/attempt-1-tape.json",
+      "ride": "e7-relay-rush",
+      "tape": "attempt-1-tape.json",
+      "contract": "e7-relay-rush",
+      "seed": "e7-relay-rush-01",
+      "scored": true,
+      "beforeHash": "fnv1a32:d381ebe2",
+      "afterHash": "fnv1a32:d381ebe2",
+      "moved": false,
+      "carriesRebased": [
+        "PLAYBOOK_USE"
+      ],
+      "carriesRepair": [],
+      "expectedToMove": true,
+      "beforeOutcome": {
+        "secured": true,
+        "waves": 20,
+        "gold": 200,
+        "timeAlive": 600
+      },
+      "afterOutcome": {
+        "secured": true,
+        "waves": 20,
+        "gold": 200,
+        "timeAlive": 600
+      }
+    },
+    {
+      "key": "e7-relay-valley.attempt-1/tune-3-tape.json",
+      "ride": "e7-relay-valley.attempt-1",
+      "tape": "tune-3-tape.json",
+      "contract": "e7-relay-valley",
+      "seed": "e7-relay-valley-01",
+      "scored": true,
+      "beforeHash": "fnv1a32:6ab1633a",
+      "afterHash": "fnv1a32:6ab1633a",
+      "moved": false,
+      "carriesRebased": [
+        "PLAYBOOK_USE"
+      ],
+      "carriesRepair": [],
+      "expectedToMove": true,
+      "beforeOutcome": {
+        "secured": false,
+        "waves": 16,
+        "gold": 0,
+        "timeAlive": 508.067
+      },
+      "afterOutcome": {
+        "secured": false,
+        "waves": 16,
+        "gold": 0,
+        "timeAlive": 508.067
+      }
+    },
+    {
+      "key": "e7-relay-valley/attempt-1-tape.json",
+      "ride": "e7-relay-valley",
+      "tape": "attempt-1-tape.json",
+      "contract": "e7-relay-valley",
+      "seed": "e7-relay-valley-01",
+      "scored": true,
+      "beforeHash": "fnv1a32:291833ef",
+      "afterHash": "fnv1a32:291833ef",
+      "moved": false,
+      "carriesRebased": [
+        "PLAYBOOK_USE"
+      ],
+      "carriesRepair": [],
+      "expectedToMove": true,
+      "beforeOutcome": {
+        "secured": false,
+        "waves": 11,
+        "gold": 0,
+        "timeAlive": 354.567
+      },
+      "afterOutcome": {
+        "secured": false,
+        "waves": 11,
+        "gold": 0,
+        "timeAlive": 354.567
+      }
+    },
+    {
+      "key": "e8-eclipse/attempt-1-tape.json",
+      "ride": "e8-eclipse",
+      "tape": "attempt-1-tape.json",
+      "contract": "e8-eclipse",
+      "seed": "e8-eclipse-01",
+      "scored": true,
+      "beforeHash": "REPLAY-ERROR",
+      "afterHash": "REPLAY-ERROR",
+      "moved": false,
+      "carriesRebased": [
+        "CONTEXT_ACTION"
+      ],
+      "carriesRepair": [],
+      "expectedToMove": true,
+      "beforeOutcome": null,
+      "afterOutcome": null
+    },
+    {
+      "key": "e8-far-side/attempt-1-tape.json",
+      "ride": "e8-far-side",
+      "tape": "attempt-1-tape.json",
+      "contract": "e8-far-side",
+      "seed": "e8-far-side-01",
+      "scored": true,
+      "beforeHash": "fnv1a32:a9448c78",
+      "afterHash": "fnv1a32:b7b3438d",
+      "moved": true,
+      "carriesRebased": [
+        "CONTEXT_ACTION"
+      ],
+      "carriesRepair": [],
+      "expectedToMove": true,
+      "beforeOutcome": {
+        "secured": false,
+        "waves": 22,
+        "gold": 200,
+        "timeAlive": 672.333
+      },
+      "afterOutcome": {
+        "secured": false,
+        "waves": 19,
+        "gold": 200,
+        "timeAlive": 588.133
+      }
+    },
+    {
+      "key": "e8-low-orbit/attempt-1-tape.json",
+      "ride": "e8-low-orbit",
+      "tape": "attempt-1-tape.json",
+      "contract": "e8-low-orbit",
+      "seed": "e8-low-orbit-01",
+      "scored": true,
+      "beforeHash": "fnv1a32:c69324de",
+      "afterHash": "fnv1a32:2b48de28",
+      "moved": true,
+      "carriesRebased": [
+        "CONTEXT_ACTION"
+      ],
+      "carriesRepair": [],
+      "expectedToMove": true,
+      "beforeOutcome": {
+        "secured": false,
+        "waves": 22,
+        "gold": 200,
+        "timeAlive": 667.4
+      },
+      "afterOutcome": {
+        "secured": false,
+        "waves": 19,
+        "gold": 200,
+        "timeAlive": 585.467
+      }
+    },
+    {
+      "key": "e8-mare-claim/attempt-1-tape.json",
+      "ride": "e8-mare-claim",
+      "tape": "attempt-1-tape.json",
+      "contract": "e8-mare-claim",
+      "seed": "e8-mare-claim-01",
+      "scored": true,
+      "beforeHash": "REPLAY-ERROR",
+      "afterHash": "REPLAY-ERROR",
+      "moved": false,
+      "carriesRebased": [
+        "CONTEXT_ACTION"
+      ],
+      "carriesRepair": [],
+      "expectedToMove": true,
+      "beforeOutcome": null,
+      "afterOutcome": null
+    },
+    {
+      "key": "e9-dome-basin.attempt-1/tune-3-tape.json",
+      "ride": "e9-dome-basin.attempt-1",
+      "tape": "tune-3-tape.json",
+      "contract": "e9-dome-basin",
+      "seed": "e9-dome-basin-01",
+      "scored": true,
+      "beforeHash": "fnv1a32:a0581a78",
+      "afterHash": "fnv1a32:a0581a78",
+      "moved": false,
+      "carriesRebased": [],
+      "carriesRepair": [
+        "REPAIR_UNDER"
+      ],
+      "expectedToMove": false,
+      "beforeOutcome": {
+        "secured": false,
+        "waves": 16,
+        "gold": 80,
+        "timeAlive": 499.2
+      },
+      "afterOutcome": {
+        "secured": false,
+        "waves": 16,
+        "gold": 80,
+        "timeAlive": 499.2
+      }
+    },
+    {
+      "key": "e9-dome-basin/tune-1-tape.json",
+      "ride": "e9-dome-basin",
+      "tape": "tune-1-tape.json",
+      "contract": "e9-dome-basin",
+      "seed": "e9-dome-basin-01",
+      "scored": true,
+      "beforeHash": "fnv1a32:0673e86b",
+      "afterHash": "fnv1a32:0673e86b",
+      "moved": false,
+      "carriesRebased": [],
+      "carriesRepair": [
+        "REPAIR_UNDER"
+      ],
+      "expectedToMove": false,
+      "beforeOutcome": {
+        "secured": false,
+        "waves": 14,
+        "gold": 96,
+        "timeAlive": 439.567
+      },
+      "afterOutcome": {
+        "secured": false,
+        "waves": 14,
+        "gold": 96,
+        "timeAlive": 439.567
+      }
+    },
+    {
+      "key": "the-claim/attempt-1-tape.json",
+      "ride": "the-claim",
+      "tape": "attempt-1-tape.json",
+      "contract": "the-claim",
+      "seed": "e1-the-claim-01",
+      "scored": true,
+      "beforeHash": "fnv1a32:0e4ff630",
+      "afterHash": "fnv1a32:0e4ff630",
+      "moved": false,
+      "carriesRebased": [],
+      "carriesRepair": [],
+      "expectedToMove": false,
+      "beforeOutcome": {
+        "secured": true,
+        "waves": 10,
+        "gold": 76,
+        "timeAlive": 300
+      },
+      "afterOutcome": {
+        "secured": true,
+        "waves": 10,
+        "gold": 76,
+        "timeAlive": 300
+      }
+    }
+  ]
+}

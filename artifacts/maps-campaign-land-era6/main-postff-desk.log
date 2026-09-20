@@ -1,0 +1,18 @@
+
+> gold-rush@0.1.0 test:desk-declaration
+> node scripts/desk-declaration-guard.mjs
+
+=== desk-declaration-guard ===
+corpus tree       : main
+desk F-IDs        : 5
+desk slugs        : 0
+🔺 desk segments  : 6
+unexamined        : 1
+   | **A18** Astra's evidence trees and its open app (docs/OWNER-DESK-2026-09-06.md).
+   ⓘ ADVISORY, not a failure: each line above is a 🔺 segment carrying neither an F-ID
+     nor a front `backticked-slug`, so this guard never examined it. If one is a real
+     owner item, key it — otherwise it is prose and the count is expected to be non-zero.
+with a BACKLOG row: 5
+undeclared        : 0 (grandfathered 0)
+PASS — every non-grandfathered desk item has a declaring row.
+rc=0

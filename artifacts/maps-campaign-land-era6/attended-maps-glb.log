@@ -1,0 +1,76 @@
+| family            | assets | triangles | vertices  | materials | textures | max tex | cap   | 2-sided | anims | skins | extras | anchors |
+|-------------------|--------|-----------|-----------|-----------|----------|---------|-------|---------|-------|-------|--------|---------|
+| bosses            | 7      | 137,137   | 75,563    | 7         | 7        | 1024²   | 1024² | 7       | 0     | 0     | 1      | 0       |
+| finale            | 2      | 25,260    | 13,834    | 2         | 2        | 1024²   | 1024² | 2       | 0     | 0     | 0      | 0       |
+| landmarks         | 202    | 213,896   | 122,549   | 203       | 202      | 1024²   | 1024² | 202     | 0     | 0     | 202    | 0       |
+| panoramas         | 32     | 83,960    | 59,706    | 32        | 32       | 2048²   | 2048² | 32      | 0     | 0     | 32     | 0       |
+| props             | 65     | 92,934    | 50,517    | 68        | 67       | 1024²   | 512²  | 68      | 0     | 0     | 0      | 19      |
+| rail-element      | 1      | 132       | 72        | 1         | 1        | 256²    | 512²  | 1       | 0     | 0     | 0      | 0       |
+| terrain           | 32     | 1,067,008 | 541,792   | 32        | 32       | 2048²   | 2048² | 32      | 0     | 0     | 32     | 0       |
+| town-buildings    | 9      | 49,744    | 26,371    | 9         | 9        | 2048²   | 1024² | 9       | 0     | 0     | 0      | 0       |
+| town-era-variants | 73     | 472,838   | 252,013   | 73        | 73       | 1024²   | 1024² | 73      | 0     | 0     | 0      | 55      |
+| TOTAL             | 423    | 2,142,909 | 1,142,417 | 427       | 425      |         |       | 426     | 0     | 0     | 267    | 74      |
+
+423 production GLBs · 5 violations · 67 grandfathered · 0 live
+STALE BASELINE ENTRY (asset was fixed — delete this line from the baseline): assets/pilots/ark-plaza-e10-3d/ark-plaza-e10.glb::texture-over-cap::image 0 2048x2048 > 1024
+STALE BASELINE ENTRY (asset was fixed — delete this line from the baseline): assets/pilots/map-rebuild-spike/landmarks/baron/fortified_far_bank.glb::missing-extra::extras.render_only extras.landmark extras.mount_id extras.map_pack extras.era
+STALE BASELINE ENTRY (asset was fixed — delete this line from the baseline): assets/pilots/map-rebuild-spike/landmarks/baron/oxblood_banners.glb::missing-extra::extras.render_only extras.landmark extras.mount_id extras.map_pack extras.era
+STALE BASELINE ENTRY (asset was fixed — delete this line from the baseline): assets/pilots/map-rebuild-spike/landmarks/baron/rocket_cart.glb::missing-extra::extras.render_only extras.landmark extras.mount_id extras.map_pack extras.era
+STALE BASELINE ENTRY (asset was fixed — delete this line from the baseline): assets/pilots/map-rebuild-spike/landmarks/baron/seized_headframe.glb::missing-extra::extras.render_only extras.landmark extras.mount_id extras.map_pack extras.era
+STALE BASELINE ENTRY (asset was fixed — delete this line from the baseline): assets/pilots/map-rebuild-spike/landmarks/baron/siege_line.glb::missing-extra::extras.render_only extras.landmark extras.mount_id extras.map_pack extras.era
+STALE BASELINE ENTRY (asset was fixed — delete this line from the baseline): assets/pilots/map-rebuild-spike/landmarks/dry-gulch/abandoned_farmhouse.glb::missing-extra::extras.render_only extras.landmark extras.mount_id extras.map_pack extras.era
+STALE BASELINE ENTRY (asset was fixed — delete this line from the baseline): assets/pilots/map-rebuild-spike/landmarks/dry-gulch/bison_skeleton.glb::missing-extra::extras.render_only extras.landmark extras.mount_id extras.map_pack extras.era
+STALE BASELINE ENTRY (asset was fixed — delete this line from the baseline): assets/pilots/map-rebuild-spike/landmarks/dry-gulch/cactus_thicket.glb::missing-extra::extras.render_only extras.landmark extras.mount_id extras.map_pack extras.era
+STALE BASELINE ENTRY (asset was fixed — delete this line from the baseline): assets/pilots/map-rebuild-spike/landmarks/dry-gulch/isolated_spring.glb::missing-extra::extras.render_only extras.landmark extras.mount_id extras.map_pack extras.era
+STALE BASELINE ENTRY (asset was fixed — delete this line from the baseline): assets/pilots/map-rebuild-spike/landmarks/dry-gulch/ruined_mining_operation.glb::missing-extra::extras.render_only extras.landmark extras.mount_id extras.map_pack extras.era
+STALE BASELINE ENTRY (asset was fixed — delete this line from the baseline): assets/pilots/map-rebuild-spike/landmarks/night-shift/central_ford.glb::missing-extra::extras.render_only extras.landmark extras.mount_id extras.map_pack extras.era
+STALE BASELINE ENTRY (asset was fixed — delete this line from the baseline): assets/pilots/map-rebuild-spike/landmarks/night-shift/dark_rock_shoulders.glb::missing-extra::extras.render_only extras.landmark extras.mount_id extras.map_pack extras.era
+STALE BASELINE ENTRY (asset was fixed — delete this line from the baseline): assets/pilots/map-rebuild-spike/landmarks/night-shift/lampworks_yard.glb::missing-extra::extras.render_only extras.landmark extras.mount_id extras.map_pack extras.era
+STALE BASELINE ENTRY (asset was fixed — delete this line from the baseline): assets/pilots/map-rebuild-spike/landmarks/night-shift/night_work_road.glb::missing-extra::extras.render_only extras.landmark extras.mount_id extras.map_pack extras.era
+STALE BASELINE ENTRY (asset was fixed — delete this line from the baseline): assets/pilots/map-rebuild-spike/landmarks/night-shift/seven_lantern_terraces.glb::missing-extra::extras.render_only extras.landmark extras.mount_id extras.map_pack extras.era
+STALE BASELINE ENTRY (asset was fixed — delete this line from the baseline): assets/pilots/map-rebuild-spike/landmarks/the-claim/active_headframe.glb::missing-extra::extras.render_only extras.landmark extras.mount_id extras.map_pack extras.era
+STALE BASELINE ENTRY (asset was fixed — delete this line from the baseline): assets/pilots/map-rebuild-spike/landmarks/the-claim/claim_stake.glb::missing-extra::extras.render_only extras.landmark extras.mount_id extras.map_pack extras.era
+STALE BASELINE ENTRY (asset was fixed — delete this line from the baseline): assets/pilots/map-rebuild-spike/landmarks/the-claim/maintained_claim_house.glb::missing-extra::extras.render_only extras.landmark extras.mount_id extras.map_pack extras.era
+STALE BASELINE ENTRY (asset was fixed — delete this line from the baseline): assets/pilots/map-rebuild-spike/landmarks/the-claim/riparian_dressing_pack.glb::missing-extra::extras.render_only extras.landmark extras.mount_id extras.map_pack extras.era
+STALE BASELINE ENTRY (asset was fixed — delete this line from the baseline): assets/pilots/map-rebuild-spike/landmarks/the-claim/working_camp.glb::missing-extra::extras.render_only extras.landmark extras.mount_id extras.map_pack extras.era
+STALE BASELINE ENTRY (asset was fixed — delete this line from the baseline): assets/pilots/map-rebuild-spike/landmarks/twin-banks/floodplain_dressing_pack.glb::missing-extra::extras.render_only extras.landmark extras.mount_id extras.map_pack extras.era
+STALE BASELINE ENTRY (asset was fixed — delete this line from the baseline): assets/pilots/map-rebuild-spike/landmarks/twin-banks/north_bank_homestead.glb::missing-extra::extras.render_only extras.landmark extras.mount_id extras.map_pack extras.era
+STALE BASELINE ENTRY (asset was fixed — delete this line from the baseline): assets/pilots/map-rebuild-spike/landmarks/twin-banks/north_bank_winch.glb::missing-extra::extras.render_only extras.landmark extras.mount_id extras.map_pack extras.era
+STALE BASELINE ENTRY (asset was fixed — delete this line from the baseline): assets/pilots/map-rebuild-spike/landmarks/twin-banks/south_bank_homestead.glb::missing-extra::extras.render_only extras.landmark extras.mount_id extras.map_pack extras.era
+STALE BASELINE ENTRY (asset was fixed — delete this line from the baseline): assets/pilots/map-rebuild-spike/landmarks/twin-banks/south_bank_winch.glb::missing-extra::extras.render_only extras.landmark extras.mount_id extras.map_pack extras.era
+STALE BASELINE ENTRY (asset was fixed — delete this line from the baseline): assets/pilots/map-rebuild-spike/low-orbit-panorama.glb::missing-extra::extras.panorama
+STALE BASELINE ENTRY (asset was fixed — delete this line from the baseline): assets/pilots/plaza-props-3d/ark-scaffold-stage-1.e9.glb::texture-over-cap::image 0 1024x1024 > 512
+STALE BASELINE ENTRY (asset was fixed — delete this line from the baseline): assets/pilots/plaza-props-3d/ark-scaffold-stage-2.e9.glb::texture-over-cap::image 0 1024x1024 > 512
+STALE BASELINE ENTRY (asset was fixed — delete this line from the baseline): assets/pilots/plaza-props-3d/ark-scaffold-stage-3.e9.glb::texture-over-cap::image 0 1024x1024 > 512
+STALE BASELINE ENTRY (asset was fixed — delete this line from the baseline): assets/pilots/plaza-props-3d/bridge-school.e10.glb::texture-over-cap::image 0 1024x1024 > 512
+STALE BASELINE ENTRY (asset was fixed — delete this line from the baseline): assets/pilots/plaza-props-3d/canal-segment-dry.e9.glb::texture-over-cap::image 0 1024x1024 > 512
+STALE BASELINE ENTRY (asset was fixed — delete this line from the baseline): assets/pilots/plaza-props-3d/canal-segment-flowing.e9.glb::texture-over-cap::image 0 1024x1024 > 512
+STALE BASELINE ENTRY (asset was fixed — delete this line from the baseline): assets/pilots/plaza-props-3d/canal-segment-wet.e9.glb::texture-over-cap::image 0 1024x1024 > 512
+STALE BASELINE ENTRY (asset was fixed — delete this line from the baseline): assets/pilots/plaza-props-3d/charter-press.e10.glb::texture-over-cap::image 0 1024x1024 > 512
+STALE BASELINE ENTRY (asset was fixed — delete this line from the baseline): assets/pilots/plaza-props-3d/coal-bin.e2.glb::texture-over-cap::image 0 1024x1024 > 512
+STALE BASELINE ENTRY (asset was fixed — delete this line from the baseline): assets/pilots/plaza-props-3d/covered_wagon.e5.glb::texture-over-cap::image 0 1024x1024 > 512
+STALE BASELINE ENTRY (asset was fixed — delete this line from the baseline): assets/pilots/plaza-props-3d/crater-rim-set.e8.glb::texture-over-cap::image 0 1024x1024 > 512
+STALE BASELINE ENTRY (asset was fixed — delete this line from the baseline): assets/pilots/plaza-props-3d/engine-glow-cruise.e10.glb::texture-over-cap::image 0 1024x1024 > 512
+STALE BASELINE ENTRY (asset was fixed — delete this line from the baseline): assets/pilots/plaza-props-3d/engine-glow-idle.e10.glb::texture-over-cap::image 0 1024x1024 > 512
+STALE BASELINE ENTRY (asset was fixed — delete this line from the baseline): assets/pilots/plaza-props-3d/engine-glow-ward.e10.glb::texture-over-cap::image 0 1024x1024 > 512
+STALE BASELINE ENTRY (asset was fixed — delete this line from the baseline): assets/pilots/plaza-props-3d/filling-shed.e4.glb::texture-over-cap::image 0 1024x1024 > 512
+STALE BASELINE ENTRY (asset was fixed — delete this line from the baseline): assets/pilots/plaza-props-3d/fuel-rack.e4.glb::texture-over-cap::image 0 1024x1024 > 512
+STALE BASELINE ENTRY (asset was fixed — delete this line from the baseline): assets/pilots/plaza-props-3d/gauge-post.e2.glb::texture-over-cap::image 0 1024x1024 > 512
+STALE BASELINE ENTRY (asset was fixed — delete this line from the baseline): assets/pilots/plaza-props-3d/harbor-lantern.e5.glb::texture-over-cap::image 0 1024x1024 > 512
+STALE BASELINE ENTRY (asset was fixed — delete this line from the baseline): assets/pilots/plaza-props-3d/ice-blocks.e9.glb::texture-over-cap::image 0 1024x1024 > 512
+STALE BASELINE ENTRY (asset was fixed — delete this line from the baseline): assets/pilots/plaza-props-3d/insulator-post.e3.glb::texture-over-cap::image 0 1024x1024 > 512
+STALE BASELINE ENTRY (asset was fixed — delete this line from the baseline): assets/pilots/plaza-props-3d/iron-lamp-post.e2.glb::texture-over-cap::image 0 1024x1024 > 512
+STALE BASELINE ENTRY (asset was fixed — delete this line from the baseline): assets/pilots/plaza-props-3d/journey-flag-line.e8.glb::texture-over-cap::image 0 1024x1024 > 512
+STALE BASELINE ENTRY (asset was fixed — delete this line from the baseline): assets/pilots/plaza-props-3d/lander-legs.e8.glb::texture-over-cap::image 0 1024x1024 > 512
+STALE BASELINE ENTRY (asset was fixed — delete this line from the baseline): assets/pilots/plaza-props-3d/motor-roadway.e4.glb::texture-over-cap::image 0 1024x1024 > 512
+STALE BASELINE ENTRY (asset was fixed — delete this line from the baseline): assets/pilots/plaza-props-3d/net-frame.e5.glb::texture-over-cap::image 0 1024x1024 > 512
+STALE BASELINE ENTRY (asset was fixed — delete this line from the baseline): assets/pilots/plaza-props-3d/pipe-run.e2.glb::texture-over-cap::image 0 1024x1024 > 512
+STALE BASELINE ENTRY (asset was fixed — delete this line from the baseline): assets/pilots/plaza-props-3d/preserve-rack.e10.glb::texture-over-cap::image 0 1024x1024 > 512
+STALE BASELINE ENTRY (asset was fixed — delete this line from the baseline): assets/pilots/plaza-props-3d/pressure-manifold.e2.glb::texture-over-cap::image 0 1024x1024 > 512
+STALE BASELINE ENTRY (asset was fixed — delete this line from the baseline): assets/pilots/plaza-props-3d/road-marker.e4.glb::texture-over-cap::image 0 1024x1024 > 512
+STALE BASELINE ENTRY (asset was fixed — delete this line from the baseline): assets/pilots/plaza-props-3d/rope-buoy-rack.e5.glb::texture-over-cap::image 0 1024x1024 > 512
+STALE BASELINE ENTRY (asset was fixed — delete this line from the baseline): assets/pilots/plaza-props-3d/survey-cairn.e9.glb::texture-over-cap::image 0 1024x1024 > 512
+STALE BASELINE ENTRY (asset was fixed — delete this line from the baseline): assets/pilots/plaza-props-3d/tide-board.e5.glb::texture-over-cap::image 0 1024x1024 > 512
+STALE BASELINE ENTRY (asset was fixed — delete this line from the baseline): assets/pilots/plaza-props-3d/transformer-shed.e3.glb::texture-over-cap::image 0 1024x1024 > 512
+STALE BASELINE ENTRY (asset was fixed — delete this line from the baseline): assets/pilots/plaza-props-3d/water_trough.e5.glb::texture-over-cap::image 0 1024x1024 > 512
+STALE BASELINE ENTRY (asset was fixed — delete this line from the baseline): assets/pilots/plaza-props-3d/wire-run.e3.glb::texture-over-cap::image 0 1024x1024 > 512

@@ -1,0 +1,40 @@
+{
+  "command": "npm run test:ledger-guards",
+  "node": "v26.4.0",
+  "startedAt": "2026-09-07T22:09:44.464910+07:00",
+  "handoffCommit": "76d052e8207eddc9118bb0f15ed8ab679e79aa6a",
+  "waitedForMainGroup": 31302,
+  "additionalWaitSeconds": 30.996,
+  "firstWaitSeconds": 1200,
+  "priorAttempt": "closing-ledger-overlap.json",
+  "durationSeconds": 140.784,
+  "exitCode": 0,
+  "logSha256": "c06183523af96a4c07f989de4320165121b7139b55a8aef246367681b5f09f3c",
+  "nodeTests": {
+    "tests": 1050,
+    "pass": 1050,
+    "fail": 0,
+    "skipped": 0
+  },
+  "shellChecks": {
+    "pass": 83,
+    "fail": 0
+  },
+  "deskGuards": {
+    "declaration": "PASS \u2014 every non-grandfathered desk item has a declaring row.",
+    "birth": "PASS \u2014 every owner-gated row filed this window reached the desk.",
+    "carryforward": "PASS \u2014 every item on the previous desk is carried, closed, or accounted for."
+  },
+  "mainAtClose": {
+    "observedAt": "2026-09-07T22:13:13.283577+07:00",
+    "pid": 43351,
+    "alive": true,
+    "runningTaskPresent": true,
+    "readiness": "not accepted; full Node gate failed"
+  },
+  "archiveChecks": "archive-check.txt",
+  "handoffBackup": {
+    "exitCode": 0,
+    "receipt": "backup-failure-note.txt"
+  }
+}

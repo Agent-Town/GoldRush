@@ -1,0 +1,14 @@
+$ GR_CAPTURE_EXTERNAL_SERVER=1 GR_CAPTURE_BASE_URL=http://127.0.0.1:5292 npx playwright test e2e/mp-02-lockstep.spec.ts --project=desktop-chrome --workers=1 --grep "hash mismatch" --repeat-each=2 --reporter=line
+
+Running 2 tests using 1 worker
+
+[1/2] [desktop-chrome] › e2e/mp-02-lockstep.spec.ts:68:1 › hash mismatch pauses, shows the wire card, and restores from relay snapshot
+  1) TimeoutError: page.waitForFunction: Timeout 20000ms exceeded.
+     at e2e/mp-02-lockstep.spec.ts:82:15 — Bob never reached tick >= 110 with desyncs >= 1 and resyncs >= 1.
+
+[2/2] [desktop-chrome] › e2e/mp-02-lockstep.spec.ts:68:1 › hash mismatch pauses, shows the wire card, and restores from relay snapshot
+  2) TimeoutError: page.waitForFunction: Timeout 20000ms exceeded.
+     at e2e/mp-02-lockstep.spec.ts:82:15 — Bob never reached tick >= 110 with desyncs >= 1 and resyncs >= 1.
+
+2 failed
+exit code: 1

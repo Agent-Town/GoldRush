@@ -1,0 +1,239 @@
+{
+  "capturedAt": "2026-07-10T06:12:48.065Z",
+  "query": "?debug&seed=sol-fixed-step-feel-v1&timescale=1&nowaves&nolevel&nopause&nosteal&nowreck",
+  "seed": "sol-fixed-step-feel-v1",
+  "viewport": {
+    "width": 1280,
+    "height": 800
+  },
+  "deviceScaleFactor": 1,
+  "durationSeconds": 30,
+  "sideBySideVideo": "side-by-side-30s.webm",
+  "contactSheet": "contact-sheet.png",
+  "frameMetrics": "frame-metrics.json",
+  "targets": [
+    [
+      -8,
+      12
+    ],
+    [
+      8,
+      12
+    ],
+    [
+      0,
+      -2
+    ],
+    [
+      -8,
+      0
+    ],
+    [
+      8,
+      0
+    ],
+    [
+      0,
+      22
+    ]
+  ],
+  "choreography": [
+    {
+      "at": 0,
+      "key": "KeyD",
+      "action": "down"
+    },
+    {
+      "at": 3,
+      "key": "KeyD",
+      "action": "up"
+    },
+    {
+      "at": 4.5,
+      "key": "KeyA",
+      "action": "down"
+    },
+    {
+      "at": 7.5,
+      "key": "KeyA",
+      "action": "up"
+    },
+    {
+      "at": 9,
+      "key": "KeyW",
+      "action": "down"
+    },
+    {
+      "at": 12,
+      "key": "KeyW",
+      "action": "up"
+    },
+    {
+      "at": 12,
+      "key": "KeyS",
+      "action": "down"
+    },
+    {
+      "at": 15,
+      "key": "KeyS",
+      "action": "up"
+    },
+    {
+      "at": 15,
+      "key": "KeyW",
+      "action": "down"
+    },
+    {
+      "at": 15,
+      "key": "KeyD",
+      "action": "down"
+    },
+    {
+      "at": 18,
+      "key": "KeyW",
+      "action": "up"
+    },
+    {
+      "at": 18,
+      "key": "KeyD",
+      "action": "up"
+    },
+    {
+      "at": 18,
+      "key": "KeyS",
+      "action": "down"
+    },
+    {
+      "at": 18,
+      "key": "KeyA",
+      "action": "down"
+    },
+    {
+      "at": 21,
+      "key": "KeyS",
+      "action": "up"
+    },
+    {
+      "at": 21,
+      "key": "KeyA",
+      "action": "up"
+    },
+    {
+      "at": 23,
+      "key": "KeyD",
+      "action": "down"
+    },
+    {
+      "at": 23.5,
+      "key": "KeyD",
+      "action": "up"
+    },
+    {
+      "at": 23.5,
+      "key": "KeyA",
+      "action": "down"
+    },
+    {
+      "at": 24,
+      "key": "KeyA",
+      "action": "up"
+    },
+    {
+      "at": 24,
+      "key": "KeyD",
+      "action": "down"
+    },
+    {
+      "at": 24.5,
+      "key": "KeyD",
+      "action": "up"
+    },
+    {
+      "at": 24.5,
+      "key": "KeyA",
+      "action": "down"
+    },
+    {
+      "at": 25,
+      "key": "KeyA",
+      "action": "up"
+    },
+    {
+      "at": 25,
+      "key": "KeyD",
+      "action": "down"
+    },
+    {
+      "at": 25.5,
+      "key": "KeyD",
+      "action": "up"
+    },
+    {
+      "at": 26,
+      "key": "KeyW",
+      "action": "down"
+    },
+    {
+      "at": 29,
+      "key": "KeyW",
+      "action": "up"
+    }
+  ],
+  "dashNote": "Gold Rush has no dash input; the 23-25.5s hard-reversal sequence is the response/acceleration proxy.",
+  "captures": [
+    {
+      "label": "main",
+      "baseURL": "http://127.0.0.1:5293",
+      "commit": "e374f47",
+      "trimmedVideo": "main-30s.webm",
+      "diagnostics": {
+        "frame": 1889,
+        "simTick": 0,
+        "timeAlive": 31.474699999999796,
+        "heroPos": {
+          "x": 3.2696690722480604,
+          "y": -0.0795232557683441,
+          "z": -1.3755300934011554
+        },
+        "heroRenderPos": {
+          "x": 3.2696690722480604,
+          "y": -0.0795232557683441,
+          "z": -1.3755300934011554
+        },
+        "boltsAlive": 0,
+        "frameP95Ms": 24.900000000001455
+      },
+      "errors": {
+        "consoleErrors": [],
+        "pageErrors": []
+      }
+    },
+    {
+      "label": "fixed-step",
+      "baseURL": "http://127.0.0.1:5292",
+      "commit": "1b575fd",
+      "trimmedVideo": "fixed-step-30s.webm",
+      "diagnostics": {
+        "frame": 1920,
+        "simTick": 946,
+        "timeAlive": 31.53333333333406,
+        "heroPos": {
+          "x": 3.167806647730298,
+          "y": -0.07900372084672097,
+          "z": -1.4859721561090486
+        },
+        "heroRenderPos": {
+          "x": 3.167806647730298,
+          "y": -0.07900372084672097,
+          "z": -1.4859721561090484
+        },
+        "boltsAlive": 0,
+        "frameP95Ms": 25
+      },
+      "errors": {
+        "consoleErrors": [],
+        "pageErrors": []
+      }
+    }
+  ]
+}

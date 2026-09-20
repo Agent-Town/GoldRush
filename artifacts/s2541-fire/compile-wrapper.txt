@@ -1,0 +1,34 @@
+
+===== typecheck — rc=0 5.1s =====
+
+
+===== build — rc=0 19.9s =====
+
+✓ built in 1.42s
+[asset-diet] Herald dev-path art 1158214 bytes (1500000 byte ceiling).
+[asset-diet] 408 manifest GLBs 831352072 -> 120354464 bytes (86% cut); 54 plate-class PNGs 187042157 -> 24822346 bytes (87% cut); herald spot cuts 375470 bytes.
+[asset-diet] GLB bytes by manifest family:
+| Family | GLBs | Before bytes | After bytes | Cut | Policy |
+| --- | ---: | ---: | ---: | ---: | --- |
+| terrain | 32 | 263541092 | 37455104 | 86% | compress |
+| landmarks | 196 | 313187204 | 53025380 | 83% | compress |
+| panoramas | 32 | 28727380 | 3106360 | 89% | compress |
+| town-buildings | 9 | 17901452 | 2573016 | 86% | compress |
+| town-era-variants | 73 | 112127592 | 17922008 | 84% | compress |
+| props | 58 | 64223844 | 2279968 | 96% | compress |
+| rail-element | 1 | 35048 | 35048 | 0% | skip: Run3dPilot instances raw geometry without the node transform required by Meshopt quantization; preserve sleeper size and grounding until that consumer is fixed. |
+| bosses | 6 | 23871636 | 3415576 | 86% | compress |
+| finale | 2 | 7771872 | 577052 | 93% | compress |
+[33m[INEFFECTIVE_DYNAMIC_IMPORT] [0massets/processed/char-baron-sheet-walk8-r0c0.png?url is dynamically imported by src/assets/generated.ts but also statically imported by src/assets/SpriteAnimator.ts, src/assets/generated.ts, dynamic import will not move module into another chunk.
+
+[plugin builtin:vite-reporter] 
+(!) Some chunks are larger than 900 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+
+
+SUMMARY {"typecheck":0,"build":0}
+OVERALL rc=0
+transcript -> artifacts/s2541-fire/compile.txt

@@ -1,0 +1,50 @@
+{
+  "kind": "screenshot-parity-diff",
+  "generatedAt": "2026-07-13T10:10:56.352Z",
+  "note": "Lower parityDistance means the candidate is closer to the reference for this fixed pair. This is a distance metric, not an acceptance gate.",
+  "pairCount": 1,
+  "worstPair": "run-camera",
+  "results": [
+    {
+      "id": "run-camera",
+      "current": "artifacts/map-rebuild-spike/telemetry/reference/run-camera.png",
+      "candidate": "artifacts/map-rebuild-spike/telemetry/candidate/run-camera.png",
+      "dimensions": {
+        "width": 814,
+        "height": 560
+      },
+      "parityDistance": 0.39464,
+      "grayscale": {
+        "mae": 25.2271,
+        "rmse": 32.84983,
+        "diffRatio16": 0.55928,
+        "diffRatio32": 0.31117,
+        "diffRatio64": 0.05768,
+        "pixelmatchRatio": 0.45722
+      },
+      "contentProxies": {
+        "blackRatioCurrent": 0.00104,
+        "blackRatioCandidate": 0.00103,
+        "terrainLikeRatioCurrent": 0.9924,
+        "terrainLikeRatioCandidate": 0.66501,
+        "avgLuminanceCurrent": 119.67525,
+        "avgLuminanceCandidate": 113.57696,
+        "avgLuminanceDelta": -6.09829,
+        "edgeEnergyCurrent": 0.0576,
+        "edgeEnergyCandidate": 0.10535,
+        "edgeEnergyRatio": 1.82879,
+        "edgeDiffRatio32": 0.16316
+      },
+      "artifacts": {
+        "sideBySide": "report/run-camera-side-by-side.png",
+        "currentGray": "report/run-camera-current-gray.png",
+        "candidateGray": "report/run-camera-candidate-gray.png",
+        "absDiff": "report/run-camera-absdiff.png",
+        "pixelmatch": "report/run-camera-pixelmatch.png",
+        "currentEdges": "report/run-camera-current-edges.png",
+        "candidateEdges": "report/run-camera-candidate-edges.png",
+        "edgeDiff": "report/run-camera-edge-diff.png"
+      }
+    }
+  ]
+}

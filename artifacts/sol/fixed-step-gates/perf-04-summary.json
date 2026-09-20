@@ -1,0 +1,38 @@
+{
+  "source": "e2e/perf-04-determinism.spec.ts",
+  "project": "desktop-chrome",
+  "result": "pass",
+  "testsPassed": 2,
+  "duration": "9.7m",
+  "first": {
+    "status": "pass",
+    "seed": "perf-04-determinism",
+    "normalizedSeed": 2067093441,
+    "timescale": 24,
+    "stepSeconds": 0.03333333333333333,
+    "simSeconds": 600,
+    "ticks": 18000,
+    "economyHash": "fnv1a32:598dff4d",
+    "economyLogLength": 1,
+    "findings": [],
+    "error": null
+  },
+  "second": {
+    "status": "pass",
+    "seed": "perf-04-determinism",
+    "normalizedSeed": 2067093441,
+    "timescale": 24,
+    "stepSeconds": 0.03333333333333333,
+    "simSeconds": 600,
+    "ticks": 18000,
+    "economyHash": "fnv1a32:598dff4d",
+    "economyLogLength": 1,
+    "findings": [],
+    "error": null
+  },
+  "errors": {
+    "first": { "consoleErrors": [], "pageErrors": [] },
+    "second": { "consoleErrors": [], "pageErrors": [] }
+  },
+  "note": "The generated per-tick entity timelines were intentionally omitted from this compact branch artifact; equality was asserted by the passing test."
+}

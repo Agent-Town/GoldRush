@@ -1,0 +1,72 @@
+diff --git a/e2e/ss-06-e5-beats.spec.ts b/e2e/ss-06-e5-beats.spec.ts
+index dde4642ad..b2254fdc3 100644
+--- a/e2e/ss-06-e5-beats.spec.ts
++++ b/e2e/ss-06-e5-beats.spec.ts
+@@ -168,6 +168,7 @@ test('The Claim cannot load Deepwater beats in Frontier', async ({ page }) => {
+   await page.getByTestId('town-open-board').click();
+   await page.getByTestId('contract-launch-the-claim').click();
+   await page.waitForFunction(() => window.__THREE_GAME_DIAGNOSTICS__?.contract.activeId === 'the-claim');
++  await page.waitForFunction(() => Boolean(window.__GR_STORY__));
+   expect(await page.evaluate(() => window.__GR_STORY__?.pending().filter((id) => id.startsWith('e5-')))).toEqual([]);
+   await expect(page.locator('[data-beat-id^="e5-"]')).toHaveCount(0);
+   expectNoConsoleErrors(errors);
+diff --git a/e2e/ss-07-e6-beats.spec.ts b/e2e/ss-07-e6-beats.spec.ts
+index 951405ced..aadd77699 100644
+--- a/e2e/ss-07-e6-beats.spec.ts
++++ b/e2e/ss-07-e6-beats.spec.ts
+@@ -156,6 +156,7 @@ test('The Claim cannot load Atomic beats in Frontier', async ({ page }) => {
+   await page.getByTestId('town-open-board').click();
+   await page.getByTestId('contract-launch-the-claim').click();
+   await page.waitForFunction(() => window.__THREE_GAME_DIAGNOSTICS__?.contract.activeId === 'the-claim');
++  await page.waitForFunction(() => Boolean(window.__GR_STORY__));
+   expect(await page.evaluate(() => window.__GR_STORY__?.pending().filter((id) => id.startsWith('e6-')))).toEqual([]);
+   await expect(page.locator('[data-beat-id^="e6-"]')).toHaveCount(0);
+   expectNoConsoleErrors(errors);
+diff --git a/e2e/ss-08-e7-beats.spec.ts b/e2e/ss-08-e7-beats.spec.ts
+index 19a0d7ab5..3418416a2 100644
+--- a/e2e/ss-08-e7-beats.spec.ts
++++ b/e2e/ss-08-e7-beats.spec.ts
+@@ -161,6 +161,7 @@ test('The Claim cannot load Signal beats in Frontier', async ({ page }) => {
+   await page.getByTestId('town-open-board').click();
+   await page.getByTestId('contract-launch-the-claim').click();
+   await page.waitForFunction(() => window.__THREE_GAME_DIAGNOSTICS__?.contract.activeId === 'the-claim', undefined, { timeout: 60_000 });
++  await page.waitForFunction(() => Boolean(window.__GR_STORY__));
+   expect(await page.evaluate(() => window.__GR_STORY__?.pending().filter((id) => id.startsWith('e7-')))).toEqual([]);
+   await expect(page.locator('[data-beat-id^="e7-"]')).toHaveCount(0);
+   expectNoConsoleErrors(errors);
+diff --git a/e2e/ss-09-e8-beats.spec.ts b/e2e/ss-09-e8-beats.spec.ts
+index 114e4febf..f27f8eddc 100644
+--- a/e2e/ss-09-e8-beats.spec.ts
++++ b/e2e/ss-09-e8-beats.spec.ts
+@@ -193,6 +193,7 @@ test('The Claim cannot load Orbital beats in Frontier', async ({ page }) => {
+   await page.getByTestId('town-open-board').click();
+   await page.getByTestId('contract-launch-the-claim').click();
+   await page.waitForFunction(() => window.__THREE_GAME_DIAGNOSTICS__?.contract.activeId === 'the-claim');
++  await page.waitForFunction(() => Boolean(window.__GR_STORY__));
+   expect(await page.evaluate(() => window.__GR_STORY__?.pending().filter((id) => id.startsWith('e8-')))).toEqual([]);
+   await expect(page.locator('[data-beat-id^="e8-"]')).toHaveCount(0);
+   expectNoConsoleErrors(errors);
+diff --git a/e2e/ss-10-e9-beats.spec.ts b/e2e/ss-10-e9-beats.spec.ts
+index f7d17dd80..933cdd4e9 100644
+--- a/e2e/ss-10-e9-beats.spec.ts
++++ b/e2e/ss-10-e9-beats.spec.ts
+@@ -208,6 +208,7 @@ test('The Claim cannot load Red Fields beats in Frontier', async ({ page }) => {
+   await page.getByTestId('town-open-board').click();
+   await page.getByTestId('contract-launch-the-claim').click();
+   await page.waitForFunction(() => window.__THREE_GAME_DIAGNOSTICS__?.contract.activeId === 'the-claim');
++  await page.waitForFunction(() => Boolean(window.__GR_STORY__));
+   expect(await page.evaluate(() => window.__GR_STORY__?.pending().filter((id) => id.startsWith('e9-')))).toEqual([]);
+   await expect(page.locator('[data-beat-id^="e9-"]')).toHaveCount(0);
+   expectNoConsoleErrors(errors);
+diff --git a/e2e/ss-11-e10-beats.spec.ts b/e2e/ss-11-e10-beats.spec.ts
+index e2e5a48e1..3952c4472 100644
+--- a/e2e/ss-11-e10-beats.spec.ts
++++ b/e2e/ss-11-e10-beats.spec.ts
+@@ -240,6 +240,7 @@ test('The Claim cannot load Deep Sky beats in Frontier', async ({ page }) => {
+   await page.getByTestId('town-open-board').click();
+   await page.getByTestId('contract-launch-the-claim').click();
+   await page.waitForFunction(() => window.__THREE_GAME_DIAGNOSTICS__?.contract.activeId === 'the-claim');
++  await page.waitForFunction(() => Boolean(window.__GR_STORY__));
+   expect(await page.evaluate(() => window.__GR_STORY__?.pending().filter((id) => id.startsWith('e10-')))).toEqual([]);
+   await expect(page.locator('[data-beat-id^="e10-"]')).toHaveCount(0);
+   expectNoConsoleErrors(errors);

@@ -1,0 +1,70 @@
+{
+  "version": 2,
+  "id": "agent-eee9dc6b-6d4ca967-cab3-431e-ab72-31608539ed20",
+  "createdAt": 0,
+  "kept": true,
+  "contract": "e5-stillwater",
+  "seed": "perf-survey-20260905",
+  "difficulty": "trail",
+  "simVersion": 1,
+  "meta": {
+    "buildId": "a3ba9af82",
+    "engineHash": "17943318aff7d1081a502fc2d31b0223139c0e8188ad48c1cafee31b87482761",
+    "era": 5,
+    "viewVersion": 2
+  },
+  "runStart": {
+    "meta": {
+      "version": 1,
+      "tracks": {
+        "territory": 0,
+        "science": 0,
+        "hero": 0,
+        "agent": 0
+      }
+    },
+    "research": {
+      "version": 1,
+      "epochId": "epoch-1-frontier",
+      "metaScienceCursor": 0,
+      "progress": {
+        "version": 1,
+        "tracks": {
+          "territory": 0,
+          "science": 0,
+          "hero": 0,
+          "agent": 0
+        }
+      },
+      "taken": [],
+      "proposalSalt": 0,
+      "pinnedTarget": null,
+      "unlocks": {}
+    }
+  },
+  "inputLog": {
+    "version": 1,
+    "name": "agent-eee9dc6b",
+    "contractId": "e5-stillwater",
+    "seed": "perf-survey-20260905",
+    "difficultyPreset": "trail",
+    "stepSeconds": 0.03333333333333333,
+    "start": {
+      "x": 0,
+      "z": 30
+    },
+    "durationTicks": 2703,
+    "entries": [],
+    "truncated": null,
+    "primarySlot": 0,
+    "streams": []
+  },
+  "eventLogHash": "fnv1a32:a45ba9ac",
+  "outcome": {
+    "reason": "death",
+    "secured": false,
+    "waves": 3,
+    "timeAlive": 90.1,
+    "gold": 0
+  }
+}

@@ -1,0 +1,7 @@
+# Reproduce the input-sample collision
+
+`input-sample-control.patch` is the independent, runnable diagnostic. Apply it to an owned detached checkout containing the production candidate, then run M2 with `--grep 'controlled palisade input sample' --project=desktop-chrome --project=mobile-chrome --workers=1 --trace=off` against that checkout’s Vite server. Reverse the patch afterward. The production candidate was restored byte-identical after this check.
+
+The diagnostic intercepts the existing InputController prototype only inside each disposable browser page. It still delivers real Enter keydown/keyup events and uses the original input sampler and Game/BuildSystem. It proves its trigger by asserting confirm sequences `[true,true,false]` versus `[true,false,true,false]`, rejects the first input at issue, and verifies the second input was valid at issue. Sample 2 leaves count 1 / gold 40; sample 3 reaches count 2 / gold 30. The sample-2 arm then accepts the next normal press. All four project/arrangement cases passed; samples and exact command output are retained.
+
+`controlled-reproduction.patch` separately preserves the runner’s original frame-scheduled arrangement verbatim. The runner saw 2/2 passes, but this fire saw 1/2: desktop accepted the deliberately rushed input because its schedule included a release sample. This is a trigger-validity limitation, not a production-candidate failure. The input-sample diagnostic removes that unobserved scheduling assumption. Both receipts remain retained.

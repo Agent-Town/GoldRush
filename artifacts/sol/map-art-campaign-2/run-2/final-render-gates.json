@@ -1,0 +1,46 @@
+[
+  {
+    "name": "final-sea-river-deepwater",
+    "command": [
+      "npx",
+      "playwright",
+      "test",
+      "--workers=1",
+      "--project=desktop-chrome",
+      "--project=mobile-chrome",
+      "--trace=off",
+      "--reporter=line",
+      "--output=artifacts/sol/map-art-campaign-2/_raw/run-2/final-render",
+      "e2e/e5-sea-contact.spec.ts",
+      "e2e/w1-02-living-water.spec.ts",
+      "e2e/e5-deepwater-claim.spec.ts"
+    ],
+    "exit": 0,
+    "seconds": 115.71,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-2/final-sea-river-deepwater.log",
+    "release": null
+  },
+  {
+    "name": "final-plain-others",
+    "command": [
+      "npx",
+      "playwright",
+      "test",
+      "--workers=1",
+      "--project=desktop-chrome",
+      "--project=mobile-chrome",
+      "--trace=off",
+      "--reporter=line",
+      "--output=artifacts/sol/map-art-campaign-2/_raw/run-2/final-render",
+      "e2e/e5-regatta-race.spec.ts",
+      "e2e/e5-stillwater-noise.spec.ts",
+      "e2e/e5-flotilla-hulls.spec.ts",
+      "--grep",
+      "plain boot"
+    ],
+    "exit": 0,
+    "seconds": 30.16,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-2/final-plain-others.log",
+    "release": null
+  }
+]

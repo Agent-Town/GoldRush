@@ -1,0 +1,107 @@
+gate battery transcript (append-only — see scripts/gate-battery.mjs)
+
+
+######## BATTERY 2026-09-07T10:13:07.975Z — s2537-candidate-focused-controls ########
+cwd=/private/tmp/gr-gate-s2537
+env+ PATH=/Users/robin/.nvm/versions/node/v26.4.0/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin GR_CAPTURE_BASE_URL=http://127.0.0.1:5313 GR_CAPTURE_EXTERNAL_SERVER=1 PROBE_BASE=http://127.0.0.1:5313
+
+===== candidate E7 mobile =====
+$ npx playwright test e2e/ss-08-e7-beats.spec.ts --grep=The Claim cannot load Signal beats in Frontier --project=mobile-chrome --workers=1 --trace=off --reporter=line --output=/Users/robin/Claude/Projects/Gold Rush/artifacts/s2537-fire/repeat-e7
+rc=0 7.7s
+
+Running 1 test using 1 worker
+
+
+
+
+[1/1] [mobile-chrome] › e2e/ss-08-e7-beats.spec.ts:155:1 › The Claim cannot load Signal beats in Frontier
+[mobile-chrome] › e2e/ss-08-e7-beats.spec.ts:155:1 › The Claim cannot load Signal beats in Frontier
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+  1 passed (7.3s)
+(node:78729) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:78748) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:78748) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+
+
+===== candidate M2 desktop =====
+$ npx playwright test e2e/m2-01-build-menu.spec.ts --grep=palisade footprint rejects overlap --project=desktop-chrome --workers=1 --trace=off --reporter=line --output=/Users/robin/Claude/Projects/Gold Rush/artifacts/s2537-fire/repeat-m2
+rc=0 3.3s
+
+Running 1 test using 1 worker
+
+
+
+[1/1] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining
+  1 passed (2.9s)
+(node:78874) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+===== plain boot desktop and 390px =====
+$ node scripts/probe-plain-boot-console.mjs
+rc=0 8.4s
+--- desktop (1280x800) ---
+  frames ok · console types: debug, info
+  errors: 0 []
+  warnings: 0 []
+  pageErrors: 0 []
+  >>> new guard's "Tile state read failed" warns: 0 (MUST be 0)
+--- mobile-390 (390x844) ---
+  frames ok · console types: debug, info
+  errors: 0 []
+  warnings: 0 []
+  pageErrors: 0 []
+  >>> new guard's "Tile state read failed" warns: 0 (MUST be 0)
+PROBE CLEAN
+
+
+===== default Moth writer =====
+$ node --test --test-name-pattern=the corridor circuit scripts/moth-season-pressure.test.mjs
+rc=0 12.7s
+(node:78986) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+moth-season circuit beats dark@0 lit@1 cut@24 relit=none terminal=dark hash=fnv1a32:f7af6739
+✔ the corridor circuit is cut, dark, repaired and lit across the floor ride (12539.192041ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12634.320375
+
+
+===== explicit Moth writer =====
+$ env GR_REFRESH_EVIDENCE=1 node --test --test-name-pattern=the corridor circuit scripts/moth-season-pressure.test.mjs
+rc=0 12.7s
+(node:79107) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+moth-season circuit beats dark@0 lit@1 cut@24 relit=none terminal=dark hash=fnv1a32:f7af6739
+✔ the corridor circuit is cut, dark, repaired and lit across the floor ride (12578.28575ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12667.900292
+
+
+===== remaining cheap guards =====
+$ node scripts/run-guards.mjs --only test:power-budget,test:citations,test:gate-callers
+rc=0 2.2s
+PASS  rc=0  0s  test:power-budget  p95=0.341ms
+PASS  rc=0  2s  test:citations
+PASS  rc=0  0s  test:gate-callers
+
+guards: 3/3 passed
+guard-stats: appended 3 record(s) to /private/tmp/gr-gate-s2537/logs/guard-stats.jsonl
+
+
+SUMMARY {"candidate E7 mobile":0,"candidate M2 desktop":0,"plain boot desktop and 390px":0,"default Moth writer":0,"explicit Moth writer":0,"remaining cheap guards":0}
+OVERALL rc=0

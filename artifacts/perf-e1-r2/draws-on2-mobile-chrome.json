@@ -1,0 +1,4850 @@
+{
+  "stage": "on2",
+  "bootSuffix": "",
+  "project": "mobile-chrome",
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Max, Unspecified Version)",
+  "shedLineMs": 33.4,
+  "report": [
+    {
+      "contract": "e1-night-shift",
+      "pressure": {
+        "p95Ms": 11.90000057220459,
+        "avgMs": 8.37666666507721,
+        "maxDrawCalls": 68,
+        "workMsPerFrame": 4.009999942779541,
+        "census": {
+          "renderer": {
+            "calls": 68,
+            "triangles": 156114,
+            "programs": 72,
+            "geometries": 104,
+            "textures": 27
+          },
+          "scene": {
+            "singletonMeshes": 24,
+            "instancedMeshes": 70,
+            "instances": 2186,
+            "sprites": 7,
+            "points": 0,
+            "lines": 0,
+            "uniqueGeometries": 89,
+            "uniqueMaterials": 75,
+            "shadowCasters": 12,
+            "shadowReceivers": 21,
+            "animatedObjects": 36,
+            "topSingletons": [
+              {
+                "name": "Mesh",
+                "count": 16
+              },
+              {
+                "name": "NightShiftTerrain",
+                "count": 1
+              },
+              {
+                "name": "NightShiftPanorama",
+                "count": 1
+              },
+              {
+                "name": "Terrain3dSculptContinuation",
+                "count": 1
+              },
+              {
+                "name": "seven_lantern_terraces",
+                "count": 1
+              },
+              {
+                "name": "lampworks_yard",
+                "count": 1
+              },
+              {
+                "name": "dark_rock_shoulders",
+                "count": 1
+              },
+              {
+                "name": "central_ford",
+                "count": 1
+              },
+              {
+                "name": "night_work_road",
+                "count": 1
+              }
+            ],
+            "topInstances": [
+              {
+                "name": "SparkRigBoltPool",
+                "instances": 128
+              },
+              {
+                "name": "SparkRigBoltPool",
+                "instances": 128
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              }
+            ],
+            "topMaterials": [
+              {
+                "label": "MeshStandardMaterial",
+                "uses": 6
+              },
+              {
+                "label": "MeshStandardMaterial",
+                "uses": 5
+              },
+              {
+                "label": "MeshStandardMaterial",
+                "uses": 5
+              },
+              {
+                "label": "MeshStandardMaterial",
+                "uses": 4
+              },
+              {
+                "label": "MeshStandardMaterial",
+                "uses": 4
+              },
+              {
+                "label": "MeshBasicMaterial",
+                "uses": 4
+              },
+              {
+                "label": "SpriteMaterial",
+                "uses": 3
+              },
+              {
+                "label": "MeshBasicMaterial",
+                "uses": 3
+              },
+              {
+                "label": "MeshBasicMaterial",
+                "uses": 1
+              },
+              {
+                "label": "MeshBasicMaterial",
+                "uses": 1
+              },
+              {
+                "label": "MeshBasicMaterial",
+                "uses": 1
+              },
+              {
+                "label": "MeshBasicMaterial",
+                "uses": 1
+              }
+            ]
+          }
+        },
+        "draws": {
+          "totalCalls": 68,
+          "sceneCalls": 67,
+          "postCalls": 1,
+          "attributedCalls": 57,
+          "unattributedCalls": 10,
+          "byObject": [
+            {
+              "label": "EnemyPool",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 13,
+              "triangles": 39360,
+              "transparent": false,
+              "renderOrder": 2
+            },
+            {
+              "label": "DecoyShedPool",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 5,
+              "triangles": 1152,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "CapacitorBankPool",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 5,
+              "triangles": 1152,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "Mesh",
+              "material": "MeshStandardMaterial",
+              "kind": "mesh",
+              "calls": 4,
+              "triangles": 68,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "CombatVfx",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 2,
+              "triangles": 1152,
+              "transparent": true,
+              "renderOrder": 3
+            },
+            {
+              "label": "NightShiftPanorama",
+              "material": "NightShiftPanoramaMaterial",
+              "kind": "mesh",
+              "calls": 1,
+              "triangles": 1920,
+              "transparent": false,
+              "renderOrder": -100
+            },
+            {
+              "label": "XpMotePool",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 256,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "GoldPickupPool",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 864,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "EnemyHandLanternBulbs",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 2560,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "DetailScatter.rocks",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 648,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "DetailScatter.stumps",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 196,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "DetailScatter.dry_grass",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 152,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "DetailScatter.claim_posts",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 60,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "seven_lantern_terraces",
+              "material": "Night-ShiftLandmarkPaint",
+              "kind": "mesh",
+              "calls": 1,
+              "triangles": 2884,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "lampworks_yard",
+              "material": "Night-ShiftLandmarkPaint",
+              "kind": "mesh",
+              "calls": 1,
+              "triangles": 2908,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "dark_rock_shoulders",
+              "material": "Night-ShiftLandmarkPaint",
+              "kind": "mesh",
+              "calls": 1,
+              "triangles": 280,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "central_ford",
+              "material": "Night-ShiftLandmarkPaint",
+              "kind": "mesh",
+              "calls": 1,
+              "triangles": 140,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "night_work_road",
+              "material": "Night-ShiftLandmarkPaint",
+              "kind": "mesh",
+              "calls": 1,
+              "triangles": 2112,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "BuildSystem",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 1968,
+              "transparent": false,
+              "renderOrder": 1
+            },
+            {
+              "label": "SparkRigBoltPool",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 12800,
+              "transparent": false,
+              "renderOrder": 3
+            },
+            {
+              "label": "Terrain3dSculptContinuation",
+              "material": "NightShiftPaintedTerrainMaterial",
+              "kind": "mesh",
+              "calls": 1,
+              "triangles": 6656,
+              "transparent": true,
+              "renderOrder": -50
+            },
+            {
+              "label": "NightShiftTerrain",
+              "material": "NightShiftPaintedTerrainMaterial",
+              "kind": "mesh",
+              "calls": 1,
+              "triangles": 32768,
+              "transparent": true,
+              "renderOrder": 0.1
+            },
+            {
+              "label": "DetailScatter.contactShadows",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 952,
+              "transparent": true,
+              "renderOrder": 0.5
+            },
+            {
+              "label": "GeneratedSpriteBlobShadows.7c32afdc-bf0e-4469-bbd7-29abe8fc4ca3",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 28,
+              "transparent": true,
+              "renderOrder": 0.5
+            },
+            {
+              "label": "GeneratedSpriteBlobShadows.31d68a9f-2624-400e-965b-d2c57ed44cf7",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 28,
+              "transparent": true,
+              "renderOrder": 0.5
+            },
+            {
+              "label": "DetailScatter.wagon_ruts",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 20,
+              "transparent": true,
+              "renderOrder": 1
+            },
+            {
+              "label": "GeneratedClaimJumperSprites",
+              "material": "SpriteMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 120,
+              "transparent": true,
+              "renderOrder": 2
+            },
+            {
+              "label": "GeneratedHeroHomesteader",
+              "material": "SpriteMaterial",
+              "kind": "sprite",
+              "calls": 1,
+              "triangles": 2,
+              "transparent": true,
+              "renderOrder": 2
+            },
+            {
+              "label": "EnemyHandLanternCones",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 384,
+              "transparent": true,
+              "renderOrder": 2.01
+            },
+            {
+              "label": "GeneratedHeroHomesteaderFade",
+              "material": "SpriteMaterial",
+              "kind": "sprite",
+              "calls": 1,
+              "triangles": 2,
+              "transparent": true,
+              "renderOrder": 2.01
+            },
+            {
+              "label": "ProspectorSprite",
+              "material": "SpriteMaterial",
+              "kind": "sprite",
+              "calls": 1,
+              "triangles": 2,
+              "transparent": true,
+              "renderOrder": 2.5
+            },
+            {
+              "label": "ProspectorSpriteFade",
+              "material": "SpriteMaterial",
+              "kind": "sprite",
+              "calls": 1,
+              "triangles": 2,
+              "transparent": true,
+              "renderOrder": 2.51
+            },
+            {
+              "label": "SparkRigBoltPool",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 1536,
+              "transparent": true,
+              "renderOrder": 3
+            }
+          ],
+          "byKind": [
+            {
+              "kind": "mesh",
+              "calls": 12,
+              "objects": 9
+            },
+            {
+              "kind": "instanced",
+              "calls": 41,
+              "objects": 20
+            },
+            {
+              "kind": "sprite",
+              "calls": 4,
+              "objects": 4
+            },
+            {
+              "kind": "points",
+              "calls": 0,
+              "objects": 0
+            },
+            {
+              "kind": "line",
+              "calls": 0,
+              "objects": 0
+            }
+          ],
+          "mergeCandidates": [
+            {
+              "material": "Night-ShiftLandmarkPaint",
+              "renderOrder": 0,
+              "calls": 5,
+              "labels": [
+                "seven_lantern_terraces",
+                "lampworks_yard",
+                "dark_rock_shoulders",
+                "central_ford",
+                "night_work_road"
+              ]
+            }
+          ]
+        }
+      },
+      "empty": {
+        "p95Ms": 12.600000381469727,
+        "avgMs": 8.334166669845581,
+        "maxDrawCalls": 63,
+        "workMsPerFrame": 3.15,
+        "census": {
+          "renderer": {
+            "calls": 62,
+            "triangles": 152662,
+            "programs": 61,
+            "geometries": 104,
+            "textures": 27
+          },
+          "scene": {
+            "singletonMeshes": 24,
+            "instancedMeshes": 70,
+            "instances": 2062,
+            "sprites": 5,
+            "points": 0,
+            "lines": 0,
+            "uniqueGeometries": 89,
+            "uniqueMaterials": 73,
+            "shadowCasters": 12,
+            "shadowReceivers": 21,
+            "animatedObjects": 34,
+            "topSingletons": [
+              {
+                "name": "Mesh",
+                "count": 16
+              },
+              {
+                "name": "NightShiftTerrain",
+                "count": 1
+              },
+              {
+                "name": "NightShiftPanorama",
+                "count": 1
+              },
+              {
+                "name": "Terrain3dSculptContinuation",
+                "count": 1
+              },
+              {
+                "name": "seven_lantern_terraces",
+                "count": 1
+              },
+              {
+                "name": "lampworks_yard",
+                "count": 1
+              },
+              {
+                "name": "dark_rock_shoulders",
+                "count": 1
+              },
+              {
+                "name": "central_ford",
+                "count": 1
+              },
+              {
+                "name": "night_work_road",
+                "count": 1
+              }
+            ],
+            "topInstances": [
+              {
+                "name": "SparkRigBoltPool",
+                "instances": 128
+              },
+              {
+                "name": "SparkRigBoltPool",
+                "instances": 128
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              }
+            ],
+            "topMaterials": [
+              {
+                "label": "MeshStandardMaterial",
+                "uses": 6
+              },
+              {
+                "label": "MeshStandardMaterial",
+                "uses": 5
+              },
+              {
+                "label": "MeshStandardMaterial",
+                "uses": 5
+              },
+              {
+                "label": "MeshStandardMaterial",
+                "uses": 4
+              },
+              {
+                "label": "MeshStandardMaterial",
+                "uses": 4
+              },
+              {
+                "label": "MeshBasicMaterial",
+                "uses": 4
+              },
+              {
+                "label": "SpriteMaterial",
+                "uses": 3
+              },
+              {
+                "label": "MeshBasicMaterial",
+                "uses": 3
+              },
+              {
+                "label": "MeshBasicMaterial",
+                "uses": 1
+              },
+              {
+                "label": "MeshBasicMaterial",
+                "uses": 1
+              },
+              {
+                "label": "MeshBasicMaterial",
+                "uses": 1
+              },
+              {
+                "label": "MeshBasicMaterial",
+                "uses": 1
+              }
+            ]
+          }
+        },
+        "draws": {
+          "totalCalls": 62,
+          "sceneCalls": 61,
+          "postCalls": 1,
+          "attributedCalls": 52,
+          "unattributedCalls": 9,
+          "byObject": [
+            {
+              "label": "EnemyPool",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 13,
+              "triangles": 39360,
+              "transparent": false,
+              "renderOrder": 2
+            },
+            {
+              "label": "DecoyShedPool",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 5,
+              "triangles": 1152,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "CapacitorBankPool",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 5,
+              "triangles": 1152,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "Mesh",
+              "material": "MeshStandardMaterial",
+              "kind": "mesh",
+              "calls": 4,
+              "triangles": 68,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "CombatVfx",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 2,
+              "triangles": 1152,
+              "transparent": true,
+              "renderOrder": 3
+            },
+            {
+              "label": "NightShiftPanorama",
+              "material": "NightShiftPanoramaMaterial",
+              "kind": "mesh",
+              "calls": 1,
+              "triangles": 1920,
+              "transparent": false,
+              "renderOrder": -100
+            },
+            {
+              "label": "XpMotePool",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 256,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "GoldPickupPool",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 864,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "DetailScatter.rocks",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 648,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "DetailScatter.stumps",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 196,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "DetailScatter.dry_grass",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 152,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "DetailScatter.claim_posts",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 60,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "seven_lantern_terraces",
+              "material": "Night-ShiftLandmarkPaint",
+              "kind": "mesh",
+              "calls": 1,
+              "triangles": 2884,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "central_ford",
+              "material": "Night-ShiftLandmarkPaint",
+              "kind": "mesh",
+              "calls": 1,
+              "triangles": 140,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "dark_rock_shoulders",
+              "material": "Night-ShiftLandmarkPaint",
+              "kind": "mesh",
+              "calls": 1,
+              "triangles": 280,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "lampworks_yard",
+              "material": "Night-ShiftLandmarkPaint",
+              "kind": "mesh",
+              "calls": 1,
+              "triangles": 2908,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "night_work_road",
+              "material": "Night-ShiftLandmarkPaint",
+              "kind": "mesh",
+              "calls": 1,
+              "triangles": 2112,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "BuildSystem",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 1968,
+              "transparent": false,
+              "renderOrder": 1
+            },
+            {
+              "label": "SparkRigBoltPool",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 12800,
+              "transparent": false,
+              "renderOrder": 3
+            },
+            {
+              "label": "Terrain3dSculptContinuation",
+              "material": "NightShiftPaintedTerrainMaterial",
+              "kind": "mesh",
+              "calls": 1,
+              "triangles": 6656,
+              "transparent": true,
+              "renderOrder": -50
+            },
+            {
+              "label": "NightShiftTerrain",
+              "material": "NightShiftPaintedTerrainMaterial",
+              "kind": "mesh",
+              "calls": 1,
+              "triangles": 32768,
+              "transparent": true,
+              "renderOrder": 0.1
+            },
+            {
+              "label": "DetailScatter.contactShadows",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 952,
+              "transparent": true,
+              "renderOrder": 0.5
+            },
+            {
+              "label": "GeneratedSpriteBlobShadows.eab75404-be7f-4a8a-a2ec-5515627ba3d5",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 28,
+              "transparent": true,
+              "renderOrder": 0.5
+            },
+            {
+              "label": "GeneratedSpriteBlobShadows.854270ad-7f7f-4868-a658-2138f0e85048",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 28,
+              "transparent": true,
+              "renderOrder": 0.5
+            },
+            {
+              "label": "DetailScatter.wagon_ruts",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 20,
+              "transparent": true,
+              "renderOrder": 1
+            },
+            {
+              "label": "GeneratedHeroHomesteader",
+              "material": "SpriteMaterial",
+              "kind": "sprite",
+              "calls": 1,
+              "triangles": 2,
+              "transparent": true,
+              "renderOrder": 2
+            },
+            {
+              "label": "ProspectorSprite",
+              "material": "SpriteMaterial",
+              "kind": "sprite",
+              "calls": 1,
+              "triangles": 2,
+              "transparent": true,
+              "renderOrder": 2.5
+            },
+            {
+              "label": "SparkRigBoltPool",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 1536,
+              "transparent": true,
+              "renderOrder": 3
+            }
+          ],
+          "byKind": [
+            {
+              "kind": "mesh",
+              "calls": 12,
+              "objects": 9
+            },
+            {
+              "kind": "instanced",
+              "calls": 38,
+              "objects": 17
+            },
+            {
+              "kind": "sprite",
+              "calls": 2,
+              "objects": 2
+            },
+            {
+              "kind": "points",
+              "calls": 0,
+              "objects": 0
+            },
+            {
+              "kind": "line",
+              "calls": 0,
+              "objects": 0
+            }
+          ],
+          "mergeCandidates": [
+            {
+              "material": "Night-ShiftLandmarkPaint",
+              "renderOrder": 0,
+              "calls": 5,
+              "labels": [
+                "seven_lantern_terraces",
+                "central_ford",
+                "dark_rock_shoulders",
+                "lampworks_yard",
+                "night_work_road"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "contract": "the-claim",
+      "pressure": {
+        "p95Ms": 11.90000057220459,
+        "avgMs": 8.354166666666666,
+        "maxDrawCalls": 63,
+        "workMsPerFrame": 2.75,
+        "census": {
+          "renderer": {
+            "calls": 63,
+            "triangles": 104868,
+            "programs": 52,
+            "geometries": 104,
+            "textures": 27
+          },
+          "scene": {
+            "singletonMeshes": 25,
+            "instancedMeshes": 70,
+            "instances": 2044,
+            "sprites": 6,
+            "points": 1,
+            "lines": 0,
+            "uniqueGeometries": 91,
+            "uniqueMaterials": 79,
+            "shadowCasters": 12,
+            "shadowReceivers": 21,
+            "animatedObjects": 36,
+            "topSingletons": [
+              {
+                "name": "Mesh",
+                "count": 16
+              },
+              {
+                "name": "TheClaimTerrain",
+                "count": 1
+              },
+              {
+                "name": "TheClaimPanorama",
+                "count": 1
+              },
+              {
+                "name": "Terrain3dSculptContinuation",
+                "count": 1
+              },
+              {
+                "name": "SculptLivingWater",
+                "count": 1
+              },
+              {
+                "name": "active_headframe",
+                "count": 1
+              },
+              {
+                "name": "maintained_claim_house",
+                "count": 1
+              },
+              {
+                "name": "working_camp",
+                "count": 1
+              },
+              {
+                "name": "claim_stake",
+                "count": 1
+              },
+              {
+                "name": "riparian_dressing_pack",
+                "count": 1
+              }
+            ],
+            "topInstances": [
+              {
+                "name": "SparkRigBoltPool",
+                "instances": 128
+              },
+              {
+                "name": "SparkRigBoltPool",
+                "instances": 128
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              }
+            ],
+            "topMaterials": [
+              {
+                "label": "MeshStandardMaterial",
+                "uses": 6
+              },
+              {
+                "label": "MeshStandardMaterial",
+                "uses": 5
+              },
+              {
+                "label": "MeshStandardMaterial",
+                "uses": 5
+              },
+              {
+                "label": "MeshStandardMaterial",
+                "uses": 4
+              },
+              {
+                "label": "MeshStandardMaterial",
+                "uses": 4
+              },
+              {
+                "label": "MeshBasicMaterial",
+                "uses": 4
+              },
+              {
+                "label": "SpriteMaterial",
+                "uses": 2
+              },
+              {
+                "label": "MeshBasicMaterial",
+                "uses": 1
+              },
+              {
+                "label": "MeshBasicMaterial",
+                "uses": 1
+              },
+              {
+                "label": "MeshBasicMaterial",
+                "uses": 1
+              },
+              {
+                "label": "MeshBasicMaterial",
+                "uses": 1
+              },
+              {
+                "label": "MeshBasicMaterial",
+                "uses": 1
+              }
+            ]
+          }
+        },
+        "draws": {
+          "totalCalls": 63,
+          "sceneCalls": 62,
+          "postCalls": 1,
+          "attributedCalls": 55,
+          "unattributedCalls": 7,
+          "byObject": [
+            {
+              "label": "EnemyPool",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 10,
+              "triangles": 31680,
+              "transparent": true,
+              "renderOrder": 2
+            },
+            {
+              "label": "DecoyShedPool",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 5,
+              "triangles": 1152,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "CapacitorBankPool",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 5,
+              "triangles": 1152,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "Mesh",
+              "material": "MeshStandardMaterial",
+              "kind": "mesh",
+              "calls": 4,
+              "triangles": 68,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "EnemyPool",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 3,
+              "triangles": 7680,
+              "transparent": false,
+              "renderOrder": 2
+            },
+            {
+              "label": "CombatVfx",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 2,
+              "triangles": 1152,
+              "transparent": true,
+              "renderOrder": 3
+            },
+            {
+              "label": "TheClaimPanorama",
+              "material": "TheClaimPanoramaMaterial",
+              "kind": "mesh",
+              "calls": 1,
+              "triangles": 1920,
+              "transparent": false,
+              "renderOrder": -100
+            },
+            {
+              "label": "Terrain3dSculptContinuation",
+              "material": "TheClaimPaintedTerrainMaterial",
+              "kind": "mesh",
+              "calls": 1,
+              "triangles": 6656,
+              "transparent": false,
+              "renderOrder": -50
+            },
+            {
+              "label": "XpMotePool",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 256,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "GoldPickupPool",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 864,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "DetailScatter.rocks",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 648,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "DetailScatter.stumps",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 196,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "DetailScatter.dry_grass",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 152,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "DetailScatter.claim_posts",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 60,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "TheClaimTerrain",
+              "material": "TheClaimPaintedTerrainMaterial",
+              "kind": "mesh",
+              "calls": 1,
+              "triangles": 32768,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "claim_stake",
+              "material": "The-ClaimLandmarkPaint",
+              "kind": "mesh",
+              "calls": 1,
+              "triangles": 280,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "riparian_dressing_pack",
+              "material": "The-ClaimLandmarkPaint",
+              "kind": "mesh",
+              "calls": 1,
+              "triangles": 504,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "working_camp",
+              "material": "The-ClaimLandmarkPaint",
+              "kind": "mesh",
+              "calls": 1,
+              "triangles": 916,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "SparkRigBoltPool",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 12800,
+              "transparent": false,
+              "renderOrder": 3
+            },
+            {
+              "label": "DetailScatter.contactShadows",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 952,
+              "transparent": true,
+              "renderOrder": 0.5
+            },
+            {
+              "label": "GeneratedSpriteBlobShadows.f7aeb254-90ec-437a-bf18-07468edb6202",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 28,
+              "transparent": true,
+              "renderOrder": 0.5
+            },
+            {
+              "label": "Terrain3dLandmarkContacts",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 96,
+              "transparent": true,
+              "renderOrder": 0.5
+            },
+            {
+              "label": "GeneratedSpriteBlobShadows.085bdb17-2145-4838-adf8-d477fada83c1",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 28,
+              "transparent": true,
+              "renderOrder": 0.5
+            },
+            {
+              "label": "SculptLivingWater",
+              "material": "MeshStandardMaterial",
+              "kind": "mesh",
+              "calls": 1,
+              "triangles": 2,
+              "transparent": true,
+              "renderOrder": 1
+            },
+            {
+              "label": "DetailScatter.wagon_ruts",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 20,
+              "transparent": true,
+              "renderOrder": 1
+            },
+            {
+              "label": "GeneratedClaimJumperSprites",
+              "material": "SpriteMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 120,
+              "transparent": true,
+              "renderOrder": 2
+            },
+            {
+              "label": "GeneratedHeroHomesteader",
+              "material": "SpriteMaterial",
+              "kind": "sprite",
+              "calls": 1,
+              "triangles": 2,
+              "transparent": true,
+              "renderOrder": 2
+            },
+            {
+              "label": "GeneratedHeroHomesteaderFade",
+              "material": "SpriteMaterial",
+              "kind": "sprite",
+              "calls": 1,
+              "triangles": 2,
+              "transparent": true,
+              "renderOrder": 2.01
+            },
+            {
+              "label": "ProspectorSprite",
+              "material": "SpriteMaterial",
+              "kind": "sprite",
+              "calls": 1,
+              "triangles": 2,
+              "transparent": true,
+              "renderOrder": 2.5
+            },
+            {
+              "label": "ProspectorSpriteFade",
+              "material": "SpriteMaterial",
+              "kind": "sprite",
+              "calls": 1,
+              "triangles": 2,
+              "transparent": true,
+              "renderOrder": 2.51
+            },
+            {
+              "label": "SparkRigBoltPool",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 1536,
+              "transparent": true,
+              "renderOrder": 3
+            },
+            {
+              "label": "SunMotes",
+              "material": "ShaderMaterial",
+              "kind": "points",
+              "calls": 1,
+              "triangles": 30,
+              "transparent": true,
+              "renderOrder": 3
+            }
+          ],
+          "byKind": [
+            {
+              "kind": "mesh",
+              "calls": 11,
+              "objects": 8
+            },
+            {
+              "kind": "instanced",
+              "calls": 39,
+              "objects": 19
+            },
+            {
+              "kind": "sprite",
+              "calls": 4,
+              "objects": 4
+            },
+            {
+              "kind": "points",
+              "calls": 1,
+              "objects": 1
+            },
+            {
+              "kind": "line",
+              "calls": 0,
+              "objects": 0
+            }
+          ],
+          "mergeCandidates": []
+        }
+      },
+      "empty": {
+        "p95Ms": 12.59999942779541,
+        "avgMs": 8.245833333333334,
+        "maxDrawCalls": 61,
+        "workMsPerFrame": 2.280000019073486,
+        "census": {
+          "renderer": {
+            "calls": 61,
+            "triangles": 104746,
+            "programs": 52,
+            "geometries": 104,
+            "textures": 27
+          },
+          "scene": {
+            "singletonMeshes": 25,
+            "instancedMeshes": 70,
+            "instances": 1984,
+            "sprites": 5,
+            "points": 1,
+            "lines": 0,
+            "uniqueGeometries": 91,
+            "uniqueMaterials": 78,
+            "shadowCasters": 12,
+            "shadowReceivers": 21,
+            "animatedObjects": 35,
+            "topSingletons": [
+              {
+                "name": "Mesh",
+                "count": 16
+              },
+              {
+                "name": "TheClaimTerrain",
+                "count": 1
+              },
+              {
+                "name": "TheClaimPanorama",
+                "count": 1
+              },
+              {
+                "name": "Terrain3dSculptContinuation",
+                "count": 1
+              },
+              {
+                "name": "SculptLivingWater",
+                "count": 1
+              },
+              {
+                "name": "active_headframe",
+                "count": 1
+              },
+              {
+                "name": "maintained_claim_house",
+                "count": 1
+              },
+              {
+                "name": "working_camp",
+                "count": 1
+              },
+              {
+                "name": "claim_stake",
+                "count": 1
+              },
+              {
+                "name": "riparian_dressing_pack",
+                "count": 1
+              }
+            ],
+            "topInstances": [
+              {
+                "name": "SparkRigBoltPool",
+                "instances": 128
+              },
+              {
+                "name": "SparkRigBoltPool",
+                "instances": 128
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              }
+            ],
+            "topMaterials": [
+              {
+                "label": "MeshStandardMaterial",
+                "uses": 6
+              },
+              {
+                "label": "MeshStandardMaterial",
+                "uses": 5
+              },
+              {
+                "label": "MeshStandardMaterial",
+                "uses": 5
+              },
+              {
+                "label": "MeshStandardMaterial",
+                "uses": 4
+              },
+              {
+                "label": "MeshStandardMaterial",
+                "uses": 4
+              },
+              {
+                "label": "MeshBasicMaterial",
+                "uses": 4
+              },
+              {
+                "label": "SpriteMaterial",
+                "uses": 2
+              },
+              {
+                "label": "MeshBasicMaterial",
+                "uses": 1
+              },
+              {
+                "label": "MeshBasicMaterial",
+                "uses": 1
+              },
+              {
+                "label": "MeshBasicMaterial",
+                "uses": 1
+              },
+              {
+                "label": "MeshBasicMaterial",
+                "uses": 1
+              },
+              {
+                "label": "MeshBasicMaterial",
+                "uses": 1
+              }
+            ]
+          }
+        },
+        "draws": {
+          "totalCalls": 61,
+          "sceneCalls": 60,
+          "postCalls": 1,
+          "attributedCalls": 53,
+          "unattributedCalls": 7,
+          "byObject": [
+            {
+              "label": "EnemyPool",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 10,
+              "triangles": 31680,
+              "transparent": true,
+              "renderOrder": 2
+            },
+            {
+              "label": "DecoyShedPool",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 5,
+              "triangles": 1152,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "CapacitorBankPool",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 5,
+              "triangles": 1152,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "Mesh",
+              "material": "MeshStandardMaterial",
+              "kind": "mesh",
+              "calls": 4,
+              "triangles": 68,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "EnemyPool",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 3,
+              "triangles": 7680,
+              "transparent": false,
+              "renderOrder": 2
+            },
+            {
+              "label": "CombatVfx",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 2,
+              "triangles": 1152,
+              "transparent": true,
+              "renderOrder": 3
+            },
+            {
+              "label": "TheClaimPanorama",
+              "material": "TheClaimPanoramaMaterial",
+              "kind": "mesh",
+              "calls": 1,
+              "triangles": 1920,
+              "transparent": false,
+              "renderOrder": -100
+            },
+            {
+              "label": "Terrain3dSculptContinuation",
+              "material": "TheClaimPaintedTerrainMaterial",
+              "kind": "mesh",
+              "calls": 1,
+              "triangles": 6656,
+              "transparent": false,
+              "renderOrder": -50
+            },
+            {
+              "label": "XpMotePool",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 256,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "GoldPickupPool",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 864,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "DetailScatter.rocks",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 648,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "DetailScatter.stumps",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 196,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "DetailScatter.dry_grass",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 152,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "DetailScatter.claim_posts",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 60,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "TheClaimTerrain",
+              "material": "TheClaimPaintedTerrainMaterial",
+              "kind": "mesh",
+              "calls": 1,
+              "triangles": 32768,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "working_camp",
+              "material": "The-ClaimLandmarkPaint",
+              "kind": "mesh",
+              "calls": 1,
+              "triangles": 916,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "riparian_dressing_pack",
+              "material": "The-ClaimLandmarkPaint",
+              "kind": "mesh",
+              "calls": 1,
+              "triangles": 504,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "claim_stake",
+              "material": "The-ClaimLandmarkPaint",
+              "kind": "mesh",
+              "calls": 1,
+              "triangles": 280,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "SparkRigBoltPool",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 12800,
+              "transparent": false,
+              "renderOrder": 3
+            },
+            {
+              "label": "DetailScatter.contactShadows",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 952,
+              "transparent": true,
+              "renderOrder": 0.5
+            },
+            {
+              "label": "GeneratedSpriteBlobShadows.9f20b6b2-5dff-41a6-907a-7f98e3781264",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 28,
+              "transparent": true,
+              "renderOrder": 0.5
+            },
+            {
+              "label": "Terrain3dLandmarkContacts",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 96,
+              "transparent": true,
+              "renderOrder": 0.5
+            },
+            {
+              "label": "GeneratedSpriteBlobShadows.f2e48c93-4969-4e64-9653-6d6b8b5ce749",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 28,
+              "transparent": true,
+              "renderOrder": 0.5
+            },
+            {
+              "label": "SculptLivingWater",
+              "material": "MeshStandardMaterial",
+              "kind": "mesh",
+              "calls": 1,
+              "triangles": 2,
+              "transparent": true,
+              "renderOrder": 1
+            },
+            {
+              "label": "DetailScatter.wagon_ruts",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 20,
+              "transparent": true,
+              "renderOrder": 1
+            },
+            {
+              "label": "GeneratedHeroHomesteader",
+              "material": "SpriteMaterial",
+              "kind": "sprite",
+              "calls": 1,
+              "triangles": 2,
+              "transparent": true,
+              "renderOrder": 2
+            },
+            {
+              "label": "ProspectorSprite",
+              "material": "SpriteMaterial",
+              "kind": "sprite",
+              "calls": 1,
+              "triangles": 2,
+              "transparent": true,
+              "renderOrder": 2.5
+            },
+            {
+              "label": "ProspectorSpriteFade",
+              "material": "SpriteMaterial",
+              "kind": "sprite",
+              "calls": 1,
+              "triangles": 2,
+              "transparent": true,
+              "renderOrder": 2.51
+            },
+            {
+              "label": "SparkRigBoltPool",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 1536,
+              "transparent": true,
+              "renderOrder": 3
+            },
+            {
+              "label": "SunMotes",
+              "material": "ShaderMaterial",
+              "kind": "points",
+              "calls": 1,
+              "triangles": 30,
+              "transparent": true,
+              "renderOrder": 3
+            }
+          ],
+          "byKind": [
+            {
+              "kind": "mesh",
+              "calls": 11,
+              "objects": 8
+            },
+            {
+              "kind": "instanced",
+              "calls": 38,
+              "objects": 18
+            },
+            {
+              "kind": "sprite",
+              "calls": 3,
+              "objects": 3
+            },
+            {
+              "kind": "points",
+              "calls": 1,
+              "objects": 1
+            },
+            {
+              "kind": "line",
+              "calls": 0,
+              "objects": 0
+            }
+          ],
+          "mergeCandidates": []
+        }
+      }
+    },
+    {
+      "contract": "e1-dry-gulch",
+      "pressure": {
+        "p95Ms": 12.700000762939453,
+        "avgMs": 8.242500003178915,
+        "maxDrawCalls": 63,
+        "workMsPerFrame": 3.5699999809265135,
+        "census": {
+          "renderer": {
+            "calls": 63,
+            "triangles": 105102,
+            "programs": 50,
+            "geometries": 103,
+            "textures": 24
+          },
+          "scene": {
+            "singletonMeshes": 26,
+            "instancedMeshes": 72,
+            "instances": 1967,
+            "sprites": 7,
+            "points": 0,
+            "lines": 0,
+            "uniqueGeometries": 93,
+            "uniqueMaterials": 81,
+            "shadowCasters": 12,
+            "shadowReceivers": 24,
+            "animatedObjects": 36,
+            "topSingletons": [
+              {
+                "name": "Mesh",
+                "count": 16
+              },
+              {
+                "name": "DryGulchTerrain",
+                "count": 1
+              },
+              {
+                "name": "DryGulchPanorama",
+                "count": 1
+              },
+              {
+                "name": "Terrain3dSculptContinuation",
+                "count": 1
+              },
+              {
+                "name": "SpringPondLiveSurface",
+                "count": 1
+              },
+              {
+                "name": "SpringPondDampGround",
+                "count": 1
+              },
+              {
+                "name": "ruined_mining_operation",
+                "count": 1
+              },
+              {
+                "name": "abandoned_farmhouse",
+                "count": 1
+              },
+              {
+                "name": "cactus_thicket",
+                "count": 1
+              },
+              {
+                "name": "bison_skeleton",
+                "count": 1
+              },
+              {
+                "name": "isolated_spring",
+                "count": 1
+              }
+            ],
+            "topInstances": [
+              {
+                "name": "SparkRigBoltPool",
+                "instances": 128
+              },
+              {
+                "name": "SparkRigBoltPool",
+                "instances": 128
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              }
+            ],
+            "topMaterials": [
+              {
+                "label": "MeshStandardMaterial",
+                "uses": 6
+              },
+              {
+                "label": "MeshStandardMaterial",
+                "uses": 5
+              },
+              {
+                "label": "MeshStandardMaterial",
+                "uses": 5
+              },
+              {
+                "label": "MeshStandardMaterial",
+                "uses": 4
+              },
+              {
+                "label": "MeshStandardMaterial",
+                "uses": 4
+              },
+              {
+                "label": "MeshBasicMaterial",
+                "uses": 4
+              },
+              {
+                "label": "SpriteMaterial",
+                "uses": 3
+              },
+              {
+                "label": "MeshBasicMaterial",
+                "uses": 1
+              },
+              {
+                "label": "MeshBasicMaterial",
+                "uses": 1
+              },
+              {
+                "label": "MeshBasicMaterial",
+                "uses": 1
+              },
+              {
+                "label": "MeshBasicMaterial",
+                "uses": 1
+              },
+              {
+                "label": "MeshBasicMaterial",
+                "uses": 1
+              }
+            ]
+          }
+        },
+        "draws": {
+          "totalCalls": 63,
+          "sceneCalls": 62,
+          "postCalls": 1,
+          "attributedCalls": 55,
+          "unattributedCalls": 7,
+          "byObject": [
+            {
+              "label": "EnemyPool",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 10,
+              "triangles": 31680,
+              "transparent": true,
+              "renderOrder": 2
+            },
+            {
+              "label": "DecoyShedPool",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 5,
+              "triangles": 1152,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "CapacitorBankPool",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 5,
+              "triangles": 1152,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "Mesh",
+              "material": "MeshStandardMaterial",
+              "kind": "mesh",
+              "calls": 4,
+              "triangles": 68,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "EnemyPool",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 3,
+              "triangles": 7680,
+              "transparent": false,
+              "renderOrder": 2
+            },
+            {
+              "label": "CombatVfx",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 2,
+              "triangles": 1152,
+              "transparent": true,
+              "renderOrder": 3
+            },
+            {
+              "label": "DryGulchPanorama",
+              "material": "DryGulchPanoramaMaterial",
+              "kind": "mesh",
+              "calls": 1,
+              "triangles": 1920,
+              "transparent": false,
+              "renderOrder": -100
+            },
+            {
+              "label": "Terrain3dSculptContinuation",
+              "material": "DryGulchPaintedTerrainMaterial",
+              "kind": "mesh",
+              "calls": 1,
+              "triangles": 6656,
+              "transparent": false,
+              "renderOrder": -50
+            },
+            {
+              "label": "XpMotePool",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 256,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "GoldPickupPool",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 864,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "DetailScatter.rocks",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 504,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "DetailScatter.stumps",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 28,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "DetailScatter.dry_grass",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 36,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "DetailScatter.claim_posts",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 24,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "DetailScatter.cactus",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 168,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "DryGulchTerrain",
+              "material": "DryGulchPaintedTerrainMaterial",
+              "kind": "mesh",
+              "calls": 1,
+              "triangles": 32768,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "SpringPondLiveReeds",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 24,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "ruined_mining_operation",
+              "material": "Dry-GulchLandmarkPaint",
+              "kind": "mesh",
+              "calls": 1,
+              "triangles": 1196,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "bison_skeleton",
+              "material": "Dry-GulchLandmarkPaint",
+              "kind": "mesh",
+              "calls": 1,
+              "triangles": 1472,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "SpringPondDampGround",
+              "material": "MeshStandardMaterial",
+              "kind": "mesh",
+              "calls": 1,
+              "triangles": 112,
+              "transparent": false,
+              "renderOrder": 1
+            },
+            {
+              "label": "SparkRigBoltPool",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 12800,
+              "transparent": false,
+              "renderOrder": 3
+            },
+            {
+              "label": "GeneratedSpriteBlobShadows.beaf32bc-644d-48b7-90be-65224272fb8c",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 28,
+              "transparent": true,
+              "renderOrder": 0.5
+            },
+            {
+              "label": "DetailScatter.contactShadows",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 448,
+              "transparent": true,
+              "renderOrder": 0.5
+            },
+            {
+              "label": "GeneratedSpriteBlobShadows.926ac39e-8401-488c-8ae6-51f4273dcafb",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 28,
+              "transparent": true,
+              "renderOrder": 0.5
+            },
+            {
+              "label": "SpringPondLiveSurface",
+              "material": "MeshStandardMaterial",
+              "kind": "mesh",
+              "calls": 1,
+              "triangles": 56,
+              "transparent": true,
+              "renderOrder": 1
+            },
+            {
+              "label": "DetailScatter.wagon_ruts",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 6,
+              "transparent": true,
+              "renderOrder": 1
+            },
+            {
+              "label": "GeneratedClaimJumperSprites",
+              "material": "SpriteMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 120,
+              "transparent": true,
+              "renderOrder": 2
+            },
+            {
+              "label": "GeneratedHeroHomesteader",
+              "material": "SpriteMaterial",
+              "kind": "sprite",
+              "calls": 1,
+              "triangles": 2,
+              "transparent": true,
+              "renderOrder": 2
+            },
+            {
+              "label": "GeneratedHeroHomesteaderFade",
+              "material": "SpriteMaterial",
+              "kind": "sprite",
+              "calls": 1,
+              "triangles": 2,
+              "transparent": true,
+              "renderOrder": 2.01
+            },
+            {
+              "label": "ProspectorSprite",
+              "material": "SpriteMaterial",
+              "kind": "sprite",
+              "calls": 1,
+              "triangles": 2,
+              "transparent": true,
+              "renderOrder": 2.5
+            },
+            {
+              "label": "ProspectorSpriteFade",
+              "material": "SpriteMaterial",
+              "kind": "sprite",
+              "calls": 1,
+              "triangles": 2,
+              "transparent": true,
+              "renderOrder": 2.51
+            },
+            {
+              "label": "SparkRigBoltPool",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 1536,
+              "transparent": true,
+              "renderOrder": 3
+            }
+          ],
+          "byKind": [
+            {
+              "kind": "mesh",
+              "calls": 11,
+              "objects": 8
+            },
+            {
+              "kind": "instanced",
+              "calls": 40,
+              "objects": 20
+            },
+            {
+              "kind": "sprite",
+              "calls": 4,
+              "objects": 4
+            },
+            {
+              "kind": "points",
+              "calls": 0,
+              "objects": 0
+            },
+            {
+              "kind": "line",
+              "calls": 0,
+              "objects": 0
+            }
+          ],
+          "mergeCandidates": []
+        }
+      },
+      "empty": {
+        "p95Ms": 11.100000381469727,
+        "avgMs": 8.295833333333333,
+        "maxDrawCalls": 64,
+        "workMsPerFrame": 2.95,
+        "census": {
+          "renderer": {
+            "calls": 64,
+            "triangles": 105070,
+            "programs": 50,
+            "geometries": 103,
+            "textures": 24
+          },
+          "scene": {
+            "singletonMeshes": 26,
+            "instancedMeshes": 72,
+            "instances": 1929,
+            "sprites": 6,
+            "points": 0,
+            "lines": 0,
+            "uniqueGeometries": 93,
+            "uniqueMaterials": 80,
+            "shadowCasters": 12,
+            "shadowReceivers": 24,
+            "animatedObjects": 35,
+            "topSingletons": [
+              {
+                "name": "Mesh",
+                "count": 16
+              },
+              {
+                "name": "DryGulchTerrain",
+                "count": 1
+              },
+              {
+                "name": "DryGulchPanorama",
+                "count": 1
+              },
+              {
+                "name": "Terrain3dSculptContinuation",
+                "count": 1
+              },
+              {
+                "name": "SpringPondLiveSurface",
+                "count": 1
+              },
+              {
+                "name": "SpringPondDampGround",
+                "count": 1
+              },
+              {
+                "name": "ruined_mining_operation",
+                "count": 1
+              },
+              {
+                "name": "abandoned_farmhouse",
+                "count": 1
+              },
+              {
+                "name": "cactus_thicket",
+                "count": 1
+              },
+              {
+                "name": "bison_skeleton",
+                "count": 1
+              },
+              {
+                "name": "isolated_spring",
+                "count": 1
+              }
+            ],
+            "topInstances": [
+              {
+                "name": "SparkRigBoltPool",
+                "instances": 128
+              },
+              {
+                "name": "SparkRigBoltPool",
+                "instances": 128
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              }
+            ],
+            "topMaterials": [
+              {
+                "label": "MeshStandardMaterial",
+                "uses": 6
+              },
+              {
+                "label": "MeshStandardMaterial",
+                "uses": 5
+              },
+              {
+                "label": "MeshStandardMaterial",
+                "uses": 5
+              },
+              {
+                "label": "MeshStandardMaterial",
+                "uses": 4
+              },
+              {
+                "label": "MeshStandardMaterial",
+                "uses": 4
+              },
+              {
+                "label": "MeshBasicMaterial",
+                "uses": 4
+              },
+              {
+                "label": "SpriteMaterial",
+                "uses": 3
+              },
+              {
+                "label": "MeshBasicMaterial",
+                "uses": 1
+              },
+              {
+                "label": "MeshBasicMaterial",
+                "uses": 1
+              },
+              {
+                "label": "MeshBasicMaterial",
+                "uses": 1
+              },
+              {
+                "label": "MeshBasicMaterial",
+                "uses": 1
+              },
+              {
+                "label": "MeshBasicMaterial",
+                "uses": 1
+              }
+            ]
+          }
+        },
+        "draws": {
+          "totalCalls": 64,
+          "sceneCalls": 62,
+          "postCalls": 2,
+          "attributedCalls": 54,
+          "unattributedCalls": 8,
+          "byObject": [
+            {
+              "label": "EnemyPool",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 10,
+              "triangles": 31680,
+              "transparent": true,
+              "renderOrder": 2
+            },
+            {
+              "label": "DecoyShedPool",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 5,
+              "triangles": 1152,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "CapacitorBankPool",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 5,
+              "triangles": 1152,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "Mesh",
+              "material": "MeshStandardMaterial",
+              "kind": "mesh",
+              "calls": 4,
+              "triangles": 68,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "EnemyPool",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 3,
+              "triangles": 7680,
+              "transparent": false,
+              "renderOrder": 2
+            },
+            {
+              "label": "CombatVfx",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 2,
+              "triangles": 1152,
+              "transparent": true,
+              "renderOrder": 3
+            },
+            {
+              "label": "DryGulchPanorama",
+              "material": "DryGulchPanoramaMaterial",
+              "kind": "mesh",
+              "calls": 1,
+              "triangles": 1920,
+              "transparent": false,
+              "renderOrder": -100
+            },
+            {
+              "label": "Terrain3dSculptContinuation",
+              "material": "DryGulchPaintedTerrainMaterial",
+              "kind": "mesh",
+              "calls": 1,
+              "triangles": 6656,
+              "transparent": false,
+              "renderOrder": -50
+            },
+            {
+              "label": "XpMotePool",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 256,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "GoldPickupPool",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 864,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "DetailScatter.rocks",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 504,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "DetailScatter.stumps",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 28,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "DetailScatter.dry_grass",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 36,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "DetailScatter.claim_posts",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 24,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "DetailScatter.cactus",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 168,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "DryGulchTerrain",
+              "material": "DryGulchPaintedTerrainMaterial",
+              "kind": "mesh",
+              "calls": 1,
+              "triangles": 32768,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "SpringPondLiveReeds",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 24,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "ruined_mining_operation",
+              "material": "Dry-GulchLandmarkPaint",
+              "kind": "mesh",
+              "calls": 1,
+              "triangles": 1196,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "bison_skeleton",
+              "material": "Dry-GulchLandmarkPaint",
+              "kind": "mesh",
+              "calls": 1,
+              "triangles": 1472,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "SpringPondDampGround",
+              "material": "MeshStandardMaterial",
+              "kind": "mesh",
+              "calls": 1,
+              "triangles": 112,
+              "transparent": false,
+              "renderOrder": 1
+            },
+            {
+              "label": "SparkRigBoltPool",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 12800,
+              "transparent": false,
+              "renderOrder": 3
+            },
+            {
+              "label": "GeneratedSpriteBlobShadows.c1f760c4-908d-4e9a-b7f5-91d12d7d1a4c",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 28,
+              "transparent": true,
+              "renderOrder": 0.5
+            },
+            {
+              "label": "DetailScatter.contactShadows",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 448,
+              "transparent": true,
+              "renderOrder": 0.5
+            },
+            {
+              "label": "GeneratedSpriteBlobShadows.c5a2265e-598a-48dd-a710-260403db2eac",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 28,
+              "transparent": true,
+              "renderOrder": 0.5
+            },
+            {
+              "label": "SpringPondLiveSurface",
+              "material": "MeshStandardMaterial",
+              "kind": "mesh",
+              "calls": 1,
+              "triangles": 56,
+              "transparent": true,
+              "renderOrder": 1
+            },
+            {
+              "label": "DetailScatter.wagon_ruts",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 6,
+              "transparent": true,
+              "renderOrder": 1
+            },
+            {
+              "label": "GeneratedHeroHomesteader",
+              "material": "SpriteMaterial",
+              "kind": "sprite",
+              "calls": 1,
+              "triangles": 2,
+              "transparent": true,
+              "renderOrder": 2
+            },
+            {
+              "label": "DryGulchDustDevilQuads",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 44,
+              "transparent": true,
+              "renderOrder": 2.01
+            },
+            {
+              "label": "ProspectorSprite",
+              "material": "SpriteMaterial",
+              "kind": "sprite",
+              "calls": 1,
+              "triangles": 2,
+              "transparent": true,
+              "renderOrder": 2.5
+            },
+            {
+              "label": "ProspectorSpriteFade",
+              "material": "SpriteMaterial",
+              "kind": "sprite",
+              "calls": 1,
+              "triangles": 2,
+              "transparent": true,
+              "renderOrder": 2.51
+            },
+            {
+              "label": "SparkRigBoltPool",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 1536,
+              "transparent": true,
+              "renderOrder": 3
+            }
+          ],
+          "byKind": [
+            {
+              "kind": "mesh",
+              "calls": 11,
+              "objects": 8
+            },
+            {
+              "kind": "instanced",
+              "calls": 40,
+              "objects": 20
+            },
+            {
+              "kind": "sprite",
+              "calls": 3,
+              "objects": 3
+            },
+            {
+              "kind": "points",
+              "calls": 0,
+              "objects": 0
+            },
+            {
+              "kind": "line",
+              "calls": 0,
+              "objects": 0
+            }
+          ],
+          "mergeCandidates": []
+        }
+      }
+    },
+    {
+      "contract": "e1-twin-banks",
+      "pressure": {
+        "p95Ms": 11.5,
+        "avgMs": 8.265000001589458,
+        "maxDrawCalls": 60,
+        "workMsPerFrame": 2.65,
+        "census": {
+          "renderer": {
+            "calls": 59,
+            "triangles": 122492,
+            "programs": 55,
+            "geometries": 99,
+            "textures": 28
+          },
+          "scene": {
+            "singletonMeshes": 32,
+            "instancedMeshes": 71,
+            "instances": 2079,
+            "sprites": 6,
+            "points": 0,
+            "lines": 0,
+            "uniqueGeometries": 98,
+            "uniqueMaterials": 82,
+            "shadowCasters": 15,
+            "shadowReceivers": 24,
+            "animatedObjects": 39,
+            "topSingletons": [
+              {
+                "name": "Mesh",
+                "count": 19
+              },
+              {
+                "name": "TwinBanksTerrain",
+                "count": 1
+              },
+              {
+                "name": "TwinBanksPanorama",
+                "count": 1
+              },
+              {
+                "name": "Terrain3dSculptContinuation",
+                "count": 1
+              },
+              {
+                "name": "Terrain3dChannelWater.north-channel",
+                "count": 1
+              },
+              {
+                "name": "Terrain3dChannelWater.south-channel",
+                "count": 1
+              },
+              {
+                "name": "Terrain3dChannelWater.confluences",
+                "count": 1
+              },
+              {
+                "name": "Terrain3dChannelWater.fords",
+                "count": 1
+              },
+              {
+                "name": "north_bank_homestead",
+                "count": 1
+              },
+              {
+                "name": "south_bank_homestead",
+                "count": 1
+              },
+              {
+                "name": "south_bank_homestead.Lamp",
+                "count": 1
+              },
+              {
+                "name": "north_bank_winch",
+                "count": 1
+              }
+            ],
+            "topInstances": [
+              {
+                "name": "SparkRigBoltPool",
+                "instances": 128
+              },
+              {
+                "name": "SparkRigBoltPool",
+                "instances": 128
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              }
+            ],
+            "topMaterials": [
+              {
+                "label": "MeshStandardMaterial",
+                "uses": 8
+              },
+              {
+                "label": "MeshStandardMaterial",
+                "uses": 6
+              },
+              {
+                "label": "MeshStandardMaterial",
+                "uses": 5
+              },
+              {
+                "label": "MeshStandardMaterial",
+                "uses": 4
+              },
+              {
+                "label": "MeshStandardMaterial",
+                "uses": 4
+              },
+              {
+                "label": "MeshBasicMaterial",
+                "uses": 4
+              },
+              {
+                "label": "SpriteMaterial",
+                "uses": 3
+              },
+              {
+                "label": "MeshBasicMaterial",
+                "uses": 1
+              },
+              {
+                "label": "MeshBasicMaterial",
+                "uses": 1
+              },
+              {
+                "label": "MeshBasicMaterial",
+                "uses": 1
+              },
+              {
+                "label": "MeshBasicMaterial",
+                "uses": 1
+              },
+              {
+                "label": "MeshBasicMaterial",
+                "uses": 1
+              }
+            ]
+          }
+        },
+        "draws": {
+          "totalCalls": 59,
+          "sceneCalls": 58,
+          "postCalls": 1,
+          "attributedCalls": 51,
+          "unattributedCalls": 7,
+          "byObject": [
+            {
+              "label": "EnemyPool",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 10,
+              "triangles": 31680,
+              "transparent": true,
+              "renderOrder": 2
+            },
+            {
+              "label": "Mesh",
+              "material": "MeshStandardMaterial",
+              "kind": "mesh",
+              "calls": 4,
+              "triangles": 68,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "DecoyShedPool",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 3,
+              "triangles": 768,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "CapacitorBankPool",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 3,
+              "triangles": 768,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "EnemyPool",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 3,
+              "triangles": 7680,
+              "transparent": false,
+              "renderOrder": 2
+            },
+            {
+              "label": "CombatVfx",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 2,
+              "triangles": 1152,
+              "transparent": true,
+              "renderOrder": 3
+            },
+            {
+              "label": "TwinBanksPanorama",
+              "material": "TwinBanksPanoramaMaterial",
+              "kind": "mesh",
+              "calls": 1,
+              "triangles": 1920,
+              "transparent": false,
+              "renderOrder": -100
+            },
+            {
+              "label": "Terrain3dSculptContinuation",
+              "material": "TwinBanksPaintedTerrainMaterial",
+              "kind": "mesh",
+              "calls": 1,
+              "triangles": 6656,
+              "transparent": false,
+              "renderOrder": -50
+            },
+            {
+              "label": "XpMotePool",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 256,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "GoldPickupPool",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 864,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "DetailScatter.rocks",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 648,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "DetailScatter.stumps",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 196,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "DetailScatter.dry_grass",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 176,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "DetailScatter.claim_posts",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 60,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "DetailScatter.reeds",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 108,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "TwinBanksTerrain",
+              "material": "TwinBanksPaintedTerrainMaterial",
+              "kind": "mesh",
+              "calls": 1,
+              "triangles": 51200,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "floodplain_dressing_pack",
+              "material": "Twin-BanksLandmarkPaint",
+              "kind": "mesh",
+              "calls": 1,
+              "triangles": 944,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "SparkRigBoltPool",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 12800,
+              "transparent": false,
+              "renderOrder": 3
+            },
+            {
+              "label": "GeneratedSpriteBlobShadows.0446cdc9-0764-4233-b102-5782913ff085",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 28,
+              "transparent": true,
+              "renderOrder": 0.5
+            },
+            {
+              "label": "GeneratedSpriteBlobShadows.1e420d5f-5b15-4237-934e-fbedb86b7292",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 28,
+              "transparent": true,
+              "renderOrder": 0.5
+            },
+            {
+              "label": "DetailScatter.contactShadows",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 1036,
+              "transparent": true,
+              "renderOrder": 0.5
+            },
+            {
+              "label": "DetailScatter.reeds.contact",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 108,
+              "transparent": true,
+              "renderOrder": 1
+            },
+            {
+              "label": "Terrain3dChannelWater.south-channel",
+              "material": "MeshStandardMaterial",
+              "kind": "mesh",
+              "calls": 1,
+              "triangles": 232,
+              "transparent": true,
+              "renderOrder": 1
+            },
+            {
+              "label": "Terrain3dChannelWater.fords",
+              "material": "MeshStandardMaterial",
+              "kind": "mesh",
+              "calls": 1,
+              "triangles": 4,
+              "transparent": true,
+              "renderOrder": 1
+            },
+            {
+              "label": "Terrain3dChannelWater.confluences",
+              "material": "MeshStandardMaterial",
+              "kind": "mesh",
+              "calls": 1,
+              "triangles": 24,
+              "transparent": true,
+              "renderOrder": 1
+            },
+            {
+              "label": "Terrain3dChannelWater.north-channel",
+              "material": "MeshStandardMaterial",
+              "kind": "mesh",
+              "calls": 1,
+              "triangles": 232,
+              "transparent": true,
+              "renderOrder": 1
+            },
+            {
+              "label": "DetailScatter.wagon_ruts",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 20,
+              "transparent": true,
+              "renderOrder": 1
+            },
+            {
+              "label": "GeneratedHeroHomesteader",
+              "material": "SpriteMaterial",
+              "kind": "sprite",
+              "calls": 1,
+              "triangles": 2,
+              "transparent": true,
+              "renderOrder": 2
+            },
+            {
+              "label": "GeneratedClaimJumperSprites",
+              "material": "SpriteMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 120,
+              "transparent": true,
+              "renderOrder": 2
+            },
+            {
+              "label": "GeneratedHeroHomesteaderFade",
+              "material": "SpriteMaterial",
+              "kind": "sprite",
+              "calls": 1,
+              "triangles": 2,
+              "transparent": true,
+              "renderOrder": 2.01
+            },
+            {
+              "label": "ProspectorSprite",
+              "material": "SpriteMaterial",
+              "kind": "sprite",
+              "calls": 1,
+              "triangles": 2,
+              "transparent": true,
+              "renderOrder": 2.5
+            },
+            {
+              "label": "SparkRigBoltPool",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 1536,
+              "transparent": true,
+              "renderOrder": 3
+            }
+          ],
+          "byKind": [
+            {
+              "kind": "mesh",
+              "calls": 12,
+              "objects": 9
+            },
+            {
+              "kind": "instanced",
+              "calls": 36,
+              "objects": 20
+            },
+            {
+              "kind": "sprite",
+              "calls": 3,
+              "objects": 3
+            },
+            {
+              "kind": "points",
+              "calls": 0,
+              "objects": 0
+            },
+            {
+              "kind": "line",
+              "calls": 0,
+              "objects": 0
+            }
+          ],
+          "mergeCandidates": []
+        }
+      },
+      "empty": {
+        "p95Ms": 10.399999618530273,
+        "avgMs": 8.313333336512247,
+        "maxDrawCalls": 58,
+        "workMsPerFrame": 2.740000057220459,
+        "census": {
+          "renderer": {
+            "calls": 57,
+            "triangles": 122370,
+            "programs": 55,
+            "geometries": 99,
+            "textures": 28
+          },
+          "scene": {
+            "singletonMeshes": 32,
+            "instancedMeshes": 71,
+            "instances": 2019,
+            "sprites": 5,
+            "points": 0,
+            "lines": 0,
+            "uniqueGeometries": 98,
+            "uniqueMaterials": 81,
+            "shadowCasters": 15,
+            "shadowReceivers": 24,
+            "animatedObjects": 38,
+            "topSingletons": [
+              {
+                "name": "Mesh",
+                "count": 19
+              },
+              {
+                "name": "TwinBanksTerrain",
+                "count": 1
+              },
+              {
+                "name": "TwinBanksPanorama",
+                "count": 1
+              },
+              {
+                "name": "Terrain3dSculptContinuation",
+                "count": 1
+              },
+              {
+                "name": "Terrain3dChannelWater.north-channel",
+                "count": 1
+              },
+              {
+                "name": "Terrain3dChannelWater.south-channel",
+                "count": 1
+              },
+              {
+                "name": "Terrain3dChannelWater.confluences",
+                "count": 1
+              },
+              {
+                "name": "Terrain3dChannelWater.fords",
+                "count": 1
+              },
+              {
+                "name": "north_bank_homestead",
+                "count": 1
+              },
+              {
+                "name": "south_bank_homestead",
+                "count": 1
+              },
+              {
+                "name": "south_bank_homestead.Lamp",
+                "count": 1
+              },
+              {
+                "name": "north_bank_winch",
+                "count": 1
+              }
+            ],
+            "topInstances": [
+              {
+                "name": "SparkRigBoltPool",
+                "instances": 128
+              },
+              {
+                "name": "SparkRigBoltPool",
+                "instances": 128
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              }
+            ],
+            "topMaterials": [
+              {
+                "label": "MeshStandardMaterial",
+                "uses": 8
+              },
+              {
+                "label": "MeshStandardMaterial",
+                "uses": 6
+              },
+              {
+                "label": "MeshStandardMaterial",
+                "uses": 5
+              },
+              {
+                "label": "MeshStandardMaterial",
+                "uses": 4
+              },
+              {
+                "label": "MeshStandardMaterial",
+                "uses": 4
+              },
+              {
+                "label": "MeshBasicMaterial",
+                "uses": 4
+              },
+              {
+                "label": "SpriteMaterial",
+                "uses": 3
+              },
+              {
+                "label": "MeshBasicMaterial",
+                "uses": 1
+              },
+              {
+                "label": "MeshBasicMaterial",
+                "uses": 1
+              },
+              {
+                "label": "MeshBasicMaterial",
+                "uses": 1
+              },
+              {
+                "label": "MeshBasicMaterial",
+                "uses": 1
+              },
+              {
+                "label": "MeshBasicMaterial",
+                "uses": 1
+              }
+            ]
+          }
+        },
+        "draws": {
+          "totalCalls": 57,
+          "sceneCalls": 56,
+          "postCalls": 1,
+          "attributedCalls": 49,
+          "unattributedCalls": 7,
+          "byObject": [
+            {
+              "label": "EnemyPool",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 10,
+              "triangles": 31680,
+              "transparent": true,
+              "renderOrder": 2
+            },
+            {
+              "label": "Mesh",
+              "material": "MeshStandardMaterial",
+              "kind": "mesh",
+              "calls": 4,
+              "triangles": 68,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "DecoyShedPool",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 3,
+              "triangles": 768,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "CapacitorBankPool",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 3,
+              "triangles": 768,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "EnemyPool",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 3,
+              "triangles": 7680,
+              "transparent": false,
+              "renderOrder": 2
+            },
+            {
+              "label": "CombatVfx",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 2,
+              "triangles": 1152,
+              "transparent": true,
+              "renderOrder": 3
+            },
+            {
+              "label": "TwinBanksPanorama",
+              "material": "TwinBanksPanoramaMaterial",
+              "kind": "mesh",
+              "calls": 1,
+              "triangles": 1920,
+              "transparent": false,
+              "renderOrder": -100
+            },
+            {
+              "label": "Terrain3dSculptContinuation",
+              "material": "TwinBanksPaintedTerrainMaterial",
+              "kind": "mesh",
+              "calls": 1,
+              "triangles": 6656,
+              "transparent": false,
+              "renderOrder": -50
+            },
+            {
+              "label": "XpMotePool",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 256,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "GoldPickupPool",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 864,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "DetailScatter.rocks",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 648,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "DetailScatter.stumps",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 196,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "DetailScatter.dry_grass",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 176,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "DetailScatter.claim_posts",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 60,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "DetailScatter.reeds",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 108,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "TwinBanksTerrain",
+              "material": "TwinBanksPaintedTerrainMaterial",
+              "kind": "mesh",
+              "calls": 1,
+              "triangles": 51200,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "floodplain_dressing_pack",
+              "material": "Twin-BanksLandmarkPaint",
+              "kind": "mesh",
+              "calls": 1,
+              "triangles": 944,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "SparkRigBoltPool",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 12800,
+              "transparent": false,
+              "renderOrder": 3
+            },
+            {
+              "label": "GeneratedSpriteBlobShadows.6f630ae1-f1fa-4b96-844b-e2f7fb830964",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 28,
+              "transparent": true,
+              "renderOrder": 0.5
+            },
+            {
+              "label": "GeneratedSpriteBlobShadows.d729f36c-5091-4550-84fe-67851695089e",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 28,
+              "transparent": true,
+              "renderOrder": 0.5
+            },
+            {
+              "label": "DetailScatter.contactShadows",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 1036,
+              "transparent": true,
+              "renderOrder": 0.5
+            },
+            {
+              "label": "DetailScatter.reeds.contact",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 108,
+              "transparent": true,
+              "renderOrder": 1
+            },
+            {
+              "label": "Terrain3dChannelWater.south-channel",
+              "material": "MeshStandardMaterial",
+              "kind": "mesh",
+              "calls": 1,
+              "triangles": 232,
+              "transparent": true,
+              "renderOrder": 1
+            },
+            {
+              "label": "Terrain3dChannelWater.fords",
+              "material": "MeshStandardMaterial",
+              "kind": "mesh",
+              "calls": 1,
+              "triangles": 4,
+              "transparent": true,
+              "renderOrder": 1
+            },
+            {
+              "label": "Terrain3dChannelWater.confluences",
+              "material": "MeshStandardMaterial",
+              "kind": "mesh",
+              "calls": 1,
+              "triangles": 24,
+              "transparent": true,
+              "renderOrder": 1
+            },
+            {
+              "label": "Terrain3dChannelWater.north-channel",
+              "material": "MeshStandardMaterial",
+              "kind": "mesh",
+              "calls": 1,
+              "triangles": 232,
+              "transparent": true,
+              "renderOrder": 1
+            },
+            {
+              "label": "DetailScatter.wagon_ruts",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 20,
+              "transparent": true,
+              "renderOrder": 1
+            },
+            {
+              "label": "GeneratedHeroHomesteader",
+              "material": "SpriteMaterial",
+              "kind": "sprite",
+              "calls": 1,
+              "triangles": 2,
+              "transparent": true,
+              "renderOrder": 2
+            },
+            {
+              "label": "ProspectorSprite",
+              "material": "SpriteMaterial",
+              "kind": "sprite",
+              "calls": 1,
+              "triangles": 2,
+              "transparent": true,
+              "renderOrder": 2.5
+            },
+            {
+              "label": "SparkRigBoltPool",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 1536,
+              "transparent": true,
+              "renderOrder": 3
+            }
+          ],
+          "byKind": [
+            {
+              "kind": "mesh",
+              "calls": 12,
+              "objects": 9
+            },
+            {
+              "kind": "instanced",
+              "calls": 35,
+              "objects": 19
+            },
+            {
+              "kind": "sprite",
+              "calls": 2,
+              "objects": 2
+            },
+            {
+              "kind": "points",
+              "calls": 0,
+              "objects": 0
+            },
+            {
+              "kind": "line",
+              "calls": 0,
+              "objects": 0
+            }
+          ],
+          "mergeCandidates": []
+        }
+      }
+    },
+    {
+      "contract": "e1-baron",
+      "pressure": {
+        "p95Ms": 11,
+        "avgMs": 8.304166666666667,
+        "maxDrawCalls": 60,
+        "workMsPerFrame": 2.6300000190734862,
+        "census": {
+          "renderer": {
+            "calls": 59,
+            "triangles": 106956,
+            "programs": 52,
+            "geometries": 101,
+            "textures": 24
+          },
+          "scene": {
+            "singletonMeshes": 24,
+            "instancedMeshes": 69,
+            "instances": 2040,
+            "sprites": 6,
+            "points": 0,
+            "lines": 0,
+            "uniqueGeometries": 88,
+            "uniqueMaterials": 75,
+            "shadowCasters": 12,
+            "shadowReceivers": 21,
+            "animatedObjects": 36,
+            "topSingletons": [
+              {
+                "name": "Mesh",
+                "count": 16
+              },
+              {
+                "name": "BaronTerrain",
+                "count": 1
+              },
+              {
+                "name": "BaronPanorama",
+                "count": 1
+              },
+              {
+                "name": "Terrain3dSculptContinuation",
+                "count": 1
+              },
+              {
+                "name": "fortified_far_bank",
+                "count": 1
+              },
+              {
+                "name": "seized_headframe",
+                "count": 1
+              },
+              {
+                "name": "rocket_cart",
+                "count": 1
+              },
+              {
+                "name": "siege_line",
+                "count": 1
+              },
+              {
+                "name": "oxblood_banners",
+                "count": 1
+              }
+            ],
+            "topInstances": [
+              {
+                "name": "SparkRigBoltPool",
+                "instances": 128
+              },
+              {
+                "name": "SparkRigBoltPool",
+                "instances": 128
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              }
+            ],
+            "topMaterials": [
+              {
+                "label": "MeshStandardMaterial",
+                "uses": 6
+              },
+              {
+                "label": "MeshStandardMaterial",
+                "uses": 5
+              },
+              {
+                "label": "MeshStandardMaterial",
+                "uses": 5
+              },
+              {
+                "label": "MeshStandardMaterial",
+                "uses": 4
+              },
+              {
+                "label": "MeshStandardMaterial",
+                "uses": 4
+              },
+              {
+                "label": "MeshBasicMaterial",
+                "uses": 4
+              },
+              {
+                "label": "SpriteMaterial",
+                "uses": 3
+              },
+              {
+                "label": "MeshBasicMaterial",
+                "uses": 1
+              },
+              {
+                "label": "MeshBasicMaterial",
+                "uses": 1
+              },
+              {
+                "label": "MeshBasicMaterial",
+                "uses": 1
+              },
+              {
+                "label": "MeshBasicMaterial",
+                "uses": 1
+              },
+              {
+                "label": "MeshBasicMaterial",
+                "uses": 1
+              }
+            ]
+          }
+        },
+        "draws": {
+          "totalCalls": 59,
+          "sceneCalls": 58,
+          "postCalls": 1,
+          "attributedCalls": 51,
+          "unattributedCalls": 7,
+          "byObject": [
+            {
+              "label": "EnemyPool",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 10,
+              "triangles": 31680,
+              "transparent": true,
+              "renderOrder": 2
+            },
+            {
+              "label": "DecoyShedPool",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 5,
+              "triangles": 1152,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "CapacitorBankPool",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 5,
+              "triangles": 1152,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "Mesh",
+              "material": "MeshStandardMaterial",
+              "kind": "mesh",
+              "calls": 4,
+              "triangles": 68,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "EnemyPool",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 3,
+              "triangles": 7680,
+              "transparent": false,
+              "renderOrder": 2
+            },
+            {
+              "label": "CombatVfx",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 2,
+              "triangles": 1152,
+              "transparent": true,
+              "renderOrder": 3
+            },
+            {
+              "label": "BaronPanorama",
+              "material": "BaronPanoramaMaterial",
+              "kind": "mesh",
+              "calls": 1,
+              "triangles": 1920,
+              "transparent": false,
+              "renderOrder": -100
+            },
+            {
+              "label": "Terrain3dSculptContinuation",
+              "material": "BaronPaintedTerrainMaterial",
+              "kind": "mesh",
+              "calls": 1,
+              "triangles": 6656,
+              "transparent": false,
+              "renderOrder": -50
+            },
+            {
+              "label": "XpMotePool",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 256,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "GoldPickupPool",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 864,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "DetailScatter.rocks",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 648,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "DetailScatter.stumps",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 196,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "DetailScatter.dry_grass",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 152,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "DetailScatter.claim_posts",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 60,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "BaronTerrain",
+              "material": "BaronPaintedTerrainMaterial",
+              "kind": "mesh",
+              "calls": 1,
+              "triangles": 32768,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "fortified_far_bank",
+              "material": "BaronLandmarkPaint",
+              "kind": "mesh",
+              "calls": 1,
+              "triangles": 1508,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "siege_line",
+              "material": "BaronLandmarkPaint",
+              "kind": "mesh",
+              "calls": 1,
+              "triangles": 880,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "oxblood_banners",
+              "material": "BaronLandmarkPaint",
+              "kind": "mesh",
+              "calls": 1,
+              "triangles": 1500,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "SparkRigBoltPool",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 12800,
+              "transparent": false,
+              "renderOrder": 3
+            },
+            {
+              "label": "GeneratedSpriteBlobShadows.1005fb64-bd25-46dc-a88a-a1035519f57b",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 28,
+              "transparent": true,
+              "renderOrder": 0.5
+            },
+            {
+              "label": "DetailScatter.contactShadows",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 952,
+              "transparent": true,
+              "renderOrder": 0.5
+            },
+            {
+              "label": "GeneratedSpriteBlobShadows.554847e9-83ba-46c8-9406-5384eda0516d",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 28,
+              "transparent": true,
+              "renderOrder": 0.5
+            },
+            {
+              "label": "DetailScatter.wagon_ruts",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 20,
+              "transparent": true,
+              "renderOrder": 1
+            },
+            {
+              "label": "GeneratedClaimJumperSprites",
+              "material": "SpriteMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 120,
+              "transparent": true,
+              "renderOrder": 2
+            },
+            {
+              "label": "GeneratedHeroHomesteader",
+              "material": "SpriteMaterial",
+              "kind": "sprite",
+              "calls": 1,
+              "triangles": 2,
+              "transparent": true,
+              "renderOrder": 2
+            },
+            {
+              "label": "GeneratedHeroHomesteaderFade",
+              "material": "SpriteMaterial",
+              "kind": "sprite",
+              "calls": 1,
+              "triangles": 2,
+              "transparent": true,
+              "renderOrder": 2.01
+            },
+            {
+              "label": "ProspectorSprite",
+              "material": "SpriteMaterial",
+              "kind": "sprite",
+              "calls": 1,
+              "triangles": 2,
+              "transparent": true,
+              "renderOrder": 2.5
+            },
+            {
+              "label": "SparkRigBoltPool",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 1536,
+              "transparent": true,
+              "renderOrder": 3
+            }
+          ],
+          "byKind": [
+            {
+              "kind": "mesh",
+              "calls": 10,
+              "objects": 7
+            },
+            {
+              "kind": "instanced",
+              "calls": 38,
+              "objects": 18
+            },
+            {
+              "kind": "sprite",
+              "calls": 3,
+              "objects": 3
+            },
+            {
+              "kind": "points",
+              "calls": 0,
+              "objects": 0
+            },
+            {
+              "kind": "line",
+              "calls": 0,
+              "objects": 0
+            }
+          ],
+          "mergeCandidates": []
+        }
+      },
+      "empty": {
+        "p95Ms": 11,
+        "avgMs": 8.3375,
+        "maxDrawCalls": 58,
+        "workMsPerFrame": 2.6300000190734862,
+        "census": {
+          "renderer": {
+            "calls": 57,
+            "triangles": 106834,
+            "programs": 52,
+            "geometries": 101,
+            "textures": 24
+          },
+          "scene": {
+            "singletonMeshes": 24,
+            "instancedMeshes": 69,
+            "instances": 1980,
+            "sprites": 5,
+            "points": 0,
+            "lines": 0,
+            "uniqueGeometries": 88,
+            "uniqueMaterials": 74,
+            "shadowCasters": 12,
+            "shadowReceivers": 21,
+            "animatedObjects": 35,
+            "topSingletons": [
+              {
+                "name": "Mesh",
+                "count": 16
+              },
+              {
+                "name": "BaronTerrain",
+                "count": 1
+              },
+              {
+                "name": "BaronPanorama",
+                "count": 1
+              },
+              {
+                "name": "Terrain3dSculptContinuation",
+                "count": 1
+              },
+              {
+                "name": "fortified_far_bank",
+                "count": 1
+              },
+              {
+                "name": "seized_headframe",
+                "count": 1
+              },
+              {
+                "name": "rocket_cart",
+                "count": 1
+              },
+              {
+                "name": "siege_line",
+                "count": 1
+              },
+              {
+                "name": "oxblood_banners",
+                "count": 1
+              }
+            ],
+            "topInstances": [
+              {
+                "name": "SparkRigBoltPool",
+                "instances": 128
+              },
+              {
+                "name": "SparkRigBoltPool",
+                "instances": 128
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              },
+              {
+                "name": "EnemyPool",
+                "instances": 96
+              }
+            ],
+            "topMaterials": [
+              {
+                "label": "MeshStandardMaterial",
+                "uses": 6
+              },
+              {
+                "label": "MeshStandardMaterial",
+                "uses": 5
+              },
+              {
+                "label": "MeshStandardMaterial",
+                "uses": 5
+              },
+              {
+                "label": "MeshStandardMaterial",
+                "uses": 4
+              },
+              {
+                "label": "MeshStandardMaterial",
+                "uses": 4
+              },
+              {
+                "label": "MeshBasicMaterial",
+                "uses": 4
+              },
+              {
+                "label": "SpriteMaterial",
+                "uses": 3
+              },
+              {
+                "label": "MeshBasicMaterial",
+                "uses": 1
+              },
+              {
+                "label": "MeshBasicMaterial",
+                "uses": 1
+              },
+              {
+                "label": "MeshBasicMaterial",
+                "uses": 1
+              },
+              {
+                "label": "MeshBasicMaterial",
+                "uses": 1
+              },
+              {
+                "label": "MeshBasicMaterial",
+                "uses": 1
+              }
+            ]
+          }
+        },
+        "draws": {
+          "totalCalls": 57,
+          "sceneCalls": 56,
+          "postCalls": 1,
+          "attributedCalls": 49,
+          "unattributedCalls": 7,
+          "byObject": [
+            {
+              "label": "EnemyPool",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 10,
+              "triangles": 31680,
+              "transparent": true,
+              "renderOrder": 2
+            },
+            {
+              "label": "DecoyShedPool",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 5,
+              "triangles": 1152,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "CapacitorBankPool",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 5,
+              "triangles": 1152,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "Mesh",
+              "material": "MeshStandardMaterial",
+              "kind": "mesh",
+              "calls": 4,
+              "triangles": 68,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "EnemyPool",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 3,
+              "triangles": 7680,
+              "transparent": false,
+              "renderOrder": 2
+            },
+            {
+              "label": "CombatVfx",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 2,
+              "triangles": 1152,
+              "transparent": true,
+              "renderOrder": 3
+            },
+            {
+              "label": "BaronPanorama",
+              "material": "BaronPanoramaMaterial",
+              "kind": "mesh",
+              "calls": 1,
+              "triangles": 1920,
+              "transparent": false,
+              "renderOrder": -100
+            },
+            {
+              "label": "Terrain3dSculptContinuation",
+              "material": "BaronPaintedTerrainMaterial",
+              "kind": "mesh",
+              "calls": 1,
+              "triangles": 6656,
+              "transparent": false,
+              "renderOrder": -50
+            },
+            {
+              "label": "XpMotePool",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 256,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "GoldPickupPool",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 864,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "DetailScatter.rocks",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 648,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "DetailScatter.stumps",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 196,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "DetailScatter.dry_grass",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 152,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "DetailScatter.claim_posts",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 60,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "BaronTerrain",
+              "material": "BaronPaintedTerrainMaterial",
+              "kind": "mesh",
+              "calls": 1,
+              "triangles": 32768,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "fortified_far_bank",
+              "material": "BaronLandmarkPaint",
+              "kind": "mesh",
+              "calls": 1,
+              "triangles": 1508,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "siege_line",
+              "material": "BaronLandmarkPaint",
+              "kind": "mesh",
+              "calls": 1,
+              "triangles": 880,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "oxblood_banners",
+              "material": "BaronLandmarkPaint",
+              "kind": "mesh",
+              "calls": 1,
+              "triangles": 1500,
+              "transparent": false,
+              "renderOrder": 0
+            },
+            {
+              "label": "SparkRigBoltPool",
+              "material": "MeshStandardMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 12800,
+              "transparent": false,
+              "renderOrder": 3
+            },
+            {
+              "label": "GeneratedSpriteBlobShadows.18060979-c506-410d-b616-1230a7babc4e",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 28,
+              "transparent": true,
+              "renderOrder": 0.5
+            },
+            {
+              "label": "DetailScatter.contactShadows",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 952,
+              "transparent": true,
+              "renderOrder": 0.5
+            },
+            {
+              "label": "GeneratedSpriteBlobShadows.bdab5f0f-4a98-4028-a9ec-b92c94333055",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 28,
+              "transparent": true,
+              "renderOrder": 0.5
+            },
+            {
+              "label": "DetailScatter.wagon_ruts",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 20,
+              "transparent": true,
+              "renderOrder": 1
+            },
+            {
+              "label": "GeneratedHeroHomesteader",
+              "material": "SpriteMaterial",
+              "kind": "sprite",
+              "calls": 1,
+              "triangles": 2,
+              "transparent": true,
+              "renderOrder": 2
+            },
+            {
+              "label": "ProspectorSprite",
+              "material": "SpriteMaterial",
+              "kind": "sprite",
+              "calls": 1,
+              "triangles": 2,
+              "transparent": true,
+              "renderOrder": 2.5
+            },
+            {
+              "label": "SparkRigBoltPool",
+              "material": "MeshBasicMaterial",
+              "kind": "instanced",
+              "calls": 1,
+              "triangles": 1536,
+              "transparent": true,
+              "renderOrder": 3
+            }
+          ],
+          "byKind": [
+            {
+              "kind": "mesh",
+              "calls": 10,
+              "objects": 7
+            },
+            {
+              "kind": "instanced",
+              "calls": 37,
+              "objects": 17
+            },
+            {
+              "kind": "sprite",
+              "calls": 2,
+              "objects": 2
+            },
+            {
+              "kind": "points",
+              "calls": 0,
+              "objects": 0
+            },
+            {
+              "kind": "line",
+              "calls": 0,
+              "objects": 0
+            }
+          ],
+          "mergeCandidates": []
+        }
+      }
+    }
+  ]
+}

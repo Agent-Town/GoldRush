@@ -1,0 +1,159 @@
+gate battery transcript (append-only — see scripts/gate-battery.mjs)
+
+
+######## BATTERY 2026-08-06T11:47:41.352Z — s1493 ledger-guards FINAL (after the line-1 note) ########
+cwd=/Users/robin/Claude/Projects/Gold Rush
+
+===== ledger-guards =====
+$ npm run test:ledger-guards
+rc=0 23.8s
+
+> gold-rush@0.1.0 test:ledger-guards
+> node --test scripts/goal-tracker.test.mjs scripts/goal-closure-reason.test.mjs scripts/ruling-propagation-guard.test.mjs scripts/law-pointer-guard.test.mjs scripts/gate-caller-audit.test.mjs scripts/block-class-guard.test.mjs scripts/banked-master-preflight-guard.test.mjs scripts/stale-hold-verdict-guard.test.mjs scripts/claimed-spec-harness-guard.test.mjs scripts/stale-ready-for-gates-guard.test.mjs && npm run test:findings-state && npm run test:blocker-panel && npm run test:ruling-propagation && npm run test:citations && npm run test:desk-declaration && node scripts/status-archive-audit.mjs --limit 40 --quiet && node scripts/attended-owed-audit.mjs && bash scripts/main-lock-gate-guard.test.sh && bash scripts/janitor-request-rejection.test.sh && node scripts/nul-audit.mjs
+
+✔ every banked (queued) master carries the current main-slot pre-flight exception (3.978291ms)
+✔ every blocked leaf declares a valid blockClass (4.953167ms)
+✔ disputed leaves are surfaced, not silently accumulated (2.287166ms)
+✔ drain-block-check prints class-specific verdicts, and gate-side is not called owner debt (2.076458ms)
+✔ the claimed-spec -> owning-config map is DERIVED, not tabulated (1.897834ms)
+✔ derivation REFUSES rather than silently measuring nothing if the array is renamed (0.725459ms)
+✔ MANUFACTURED: a bare playwright command naming a claimed spec FAILS the guard (33.975542ms)
+✔ MANUFACTURED: a CHECKLIST-form adjacent-suite line FAILS the guard (why arm (b), not (a)) (35.102042ms)
+✔ MANUFACTURED: a mention inside the SELF-CHECK region FAILS the guard (33.78425ms)
+✔ a DESCRIPTIVE mention outside any gate region is NOT an offender (why not arm (c)) (33.02425ms)
+✔ naming the owning CONFIG clears the master (32.695375ms)
+✔ naming the npm ALIAS clears the master (30.580583ms)
+✔ the guard actually RUNS when invoked as a script (entrypoint is not a silent no-op) (93.96ms)
+✔ the live board has no LIVE offender (91.234791ms)
+✔ every grandfathered file is still a real offender (no stale excuses) (86.110417ms)
+✔ a gate nothing calls is reported as a NEW orphan and exits 1 (133.97225ms)
+✔ grandfathering that orphan with a reason turns the gate green (110.77575ms)
+✔ a gate whose only caller is a *.config.ts webServer command counts as REACHED (114.733625ms)
+✔ a guard named only in a COMMENT is not reached — prose is not a caller (111.690167ms)
+✔ putting it in the GUARDS array clears it — the control for the arm above (109.315416ms)
+✔ a non-gate script (dev, preview, census) is never ratcheted on (112.968083ms)
+✔ an orphan that GAINED a caller is reported so the baseline can tighten (112.590542ms)
+✔ --report never gates, even with a fresh orphan present (112.295917ms)
+✔ REFUSES (rc=2) when package.json has no scripts block (109.514333ms)
+✔ REFUSES (rc=2) when no scripts/*.mjs is tracked (112.80425ms)
+✔ REFUSES (rc=2) when the resolver cannot reach its own anchors (109.564625ms)
+✔ REFUSES (rc=2) when the baseline file is missing — not read as {} (109.943833ms)
+✔ REFUSES (rc=2) when the baseline is unreadable (111.566708ms)
+✔ REFUSES (rc=2) when no subject matches the gate patterns (225.004083ms)
+✔ an owner escalation whose cited F-ID has no ledger row exits 1 (112.158208ms)
+✔ the SAME escalation goes green once the F-ID has a ledger row -- the control (111.941708ms)
+✔ escalating with NO F-ID cited at all exits 1 -- it can never be found (111.694667ms)
+✔ all four desk spellings are matched, so the check cannot be dodged by an apostrophe (453.561208ms)
+✔ POSITIVE CONTROL: the real repo passes, with a non-empty measured subject (88.771541ms)
+✔ every terminal-closed goal leaf can state why it closed (0.965625ms)
+✔ the mirrored resolver vocabulary still matches drain-block-check.mjs (0.893416ms)
+✔ goal tree schema is valid (1.984875ms)
+✔ ten sampled merged leaves have a done receipt and ancestral merge (18561.265042ms)
+✔ a correctly-pointed law passes once baselined (76.65625ms)
+✔ CODE-SIDE ROT: the cited line moves under a fixed coordinate -> POINTER DRIFT (the fire.md :315 shape) (70.80325ms)
+✔ LAW-SIDE ROT: the law is edited to a stale coordinate -> red until re-verified (the F-1276-2 shape) (69.426125ms)
+✔ a pointer past EOF is caught as OUT OF RANGE, not silently skipped (36.011292ms)
+✔ a pointer to a file that does not exist fails rather than being ignored (38.251292ms)
+✔ prose that is not a file:line is not mistaken for a pointer (35.75025ms)
+✔ a MISSING law surface is itself a red — the law cannot be checked if it is gone (36.7425ms)
+✔ THE REAL TREE: every law-surface pointer in this repo currently holds (42.490541ms)
+✔ MARKDOWN TARGET: a law surface citing another .md by coordinate is checked, not skipped (F-1278-2) (106.627959ms)
+✔ GOAL LEDGER ROT: a live non-terminal blockedReason pointer moves -> red names the leaf (105.542916ms)
+✔ BACKLOG COORDINATE BAN: live leaves red, --update cannot bury it, terminal history stays out (178.518292ms)
+✔ a blocked leaf citing a RULED finding is stale (1.473459ms)
+✔ a blocked leaf citing an UNRULED finding is not stale (0.083917ms)
+✔ "RULING REQUIRED" prose does not count as a ruling — only "<id> RULED" does (0.049334ms)
+✔ terminal-closed statuses refuse work too, so their reasons are checked (0.065125ms)
+✔ a merged leaf is not a refusal, however its reason reads (0.059209ms)
+✔ a leaf is any node carrying taskFile — NOT a childless node (0.054417ms)
+✔ denominator agrees with drain-block-check on the live tree (3.965917ms)
+✔ the live tree carries no stale refusal (8.688708ms)
+  ⓘ 5 refusal verdict(s) have no goal leaf, so this guard cannot judge them (F-1448-6 leaf debt): ap-view.md, f-seed-1-front-door-parity.md, fix-enemy-pathing-wrecker-read.md, lane-m4-claim-geometry-and-headless.md, trail-guide-plain-boot-observed-beats.md
+✔ the sweep still sees the corpus it judges (33.533083ms)
+✔ a MERGE verdict whose prose discusses holding is not a refusal (0.10575ms)
+✔ a genuine refusal is still caught in every form the corpus uses (0.066625ms)
+✔ a supersede banner retires the verdict, but only inside the verdict block (0.053708ms)
+✔ no shipped slice is left carrying a live refusal verdict (20.065209ms)
+✔ unmappable reviews are surfaced as leaf debt, not treated as clearance (22.405667ms)
+✔ reds on the s1461 incident row that motivated the finding (0.613375ms)
+✔ reds on the live e3-moth-socket ghost line (0.131792ms)
+✔ stays silent on a leaf mentioned in the body as an aside (0.053167ms)
+✔ does not red on an open 🟡 finding whose slice merged (arm (a) is rejected) (0.061292ms)
+✔ treats a backticked mention as a quotation, not a claim (0.053292ms)
+✔ stays silent on a row already marked closed (0.054417ms)
+✔ stays silent while the leaf has not landed (0.05675ms)
+✔ reports a claim it cannot resolve rather than guessing (0.05025ms)
+✔ rows without the claim are not classified at all (0.047416ms)
+✔ resolves a leaf by taskFile as well as by id (0.082583ms)
+✔ headline is the leading bold span, and falls back when there is none (0.077041ms)
+✔ the guard RUNS when invoked as a script (entrypoint is not a silent no-op) (42.286625ms)
+✔ the live ledger carries no stale READY-FOR-GATES claim (41.358167ms)
+✔ a shipped leaf counts as landed, not only a merged one (0.151708ms)
+ℹ tests 77
+ℹ suites 0
+ℹ pass 77
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 18616.503875
+
+> gold-rush@0.1.0 test:findings-state
+> node scripts/findings-state-guard.mjs
+
+declared subjects : 340
+declared closed   : 218
+declared open     : 122
+double-state      : 0
+findings-state-guard: PASS
+
+> gold-rush@0.1.0 test:blocker-panel
+> node scripts/blocker-panel-closed-guard.mjs
+
+panel rows        : 89
+rows with an F-ID : 80
+census closed     : 298
+closed-on-panel   : 0
+blocker-panel-closed-guard: PASS
+
+> gold-rush@0.1.0 test:ruling-propagation
+> node scripts/ruling-propagation-guard.mjs
+
+ruling-propagation: 3 findings recorded RULED · 27 goal leaves still refuse work · 0 stale
+PASS — no refusal cites a finding the owner has already ruled.
+
+> gold-rush@0.1.0 test:citations
+> node scripts/citation-title-guard.mjs
+
+=== citation-title-guard ===
+citations scanned : 463  (in 1148 tracked tasks/**/*.md)
+  NUMBER-ONLY     263
+  CARRIES-TITLE   159
+  CARRIES-LINE    41
+grandfathered keys: 262
+NOT GATED         : 1105 citation(s) in 156 tracked .md outside tasks/ — largest logs/suite-red-inventory.md (646). Scope ruling: F-1252-1, owner's desk.
+PASS — no new bare `spec:line` citation among the 463 scanned. This verdict covers tasks/** only.
+
+> gold-rush@0.1.0 test:desk-declaration
+> node scripts/desk-declaration-guard.mjs
+
+=== desk-declaration-guard ===
+desk F-IDs        : 6
+with a BACKLOG row: 6
+undeclared        : 0 (grandfathered 0)
+PASS — every non-grandfathered desk item has a declaring row.
+CLEAN: 0 handoff line-1s PERMANENTLY absent at HEAD (3 more were dropped at lock time but restored by the fire's own handoff commit -- normal, not a defect), 0 abridged, 13 same-session rewrites excluded, of 40 replacements across 40 STATUS.md commits
+  ⏳ OPEN  001-drain-skill-custody-rule.md  (4d)  → .claude/skills/drain/SKILL.md
+      F-1295-1's custody cure is law in scripts/fire.md §3.0b but absent from the surface a drainer actually reads. RE-TESTED s1349 (F-1349-1): still denied, and NO settings change can lift it — .claude/settings.json already grants bare Edit+Write. Do NOT shell around it.
+      opened s1343 2026-08-01 · anchor: "CUSTODY — NEVER PLACE CONTENT YOU HAVE NOT"
+attended-owed: OPEN ITEMS (attended-side) — 1 item(s): 1 open, 0 landed-not-archived, 0 malformed/bad-target
+  (OPEN is not a defect: only the attended side can clear it. --strict to enforce.)
+PASS: main-lock gate correct on 7 fixtures (4 lock forms hold, 2 handoff forms release, 1 fails safe)
+PASS(a): well-formed refresh kept janitor-<epoch>-<name> with no rejection marker
+PASS(b): both malformed historical shapes were visibly filed as janitor-REJECTED
+PASS(c): BUSY refresh remained in tasks/janitor with no archive
+nul-audit: CLEAN — no raw NUL bytes in tracked text sources.
+
+
+SUMMARY {"ledger-guards":0}
+OVERALL rc=0

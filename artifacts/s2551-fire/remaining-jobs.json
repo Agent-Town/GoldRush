@@ -1,0 +1,21 @@
+[
+  [
+    "tsc",
+    "npx",
+    "tsc",
+    "--noEmit"
+  ],
+  [
+    "build",
+    "npm",
+    "run",
+    "build"
+  ],
+  [
+    "four selected guards",
+    "node",
+    "scripts/run-guards.mjs",
+    "--only",
+    "test:power-budget,test:task-guards,test:citations,test:gate-callers"
+  ]
+]

@@ -1,0 +1,16 @@
+[deploy] building…
+[deploy] checking first-town asset budget…
+[deploy] asset budget mobile-chrome: 17365554 / 25000000 bytes (7634446 bytes headroom)
+[deploy] top five contributing files (mobile-chrome, cue-window transfer including repeat requests):
+[deploy]   1800881 bytes /assets/era-e1-frontier-loop-CQyR4akc-diet-a9d5c9a0.mp3
+[deploy]   1757624 bytes /assets/town-plate-C90tsADa-diet-a9d5c9a0.glb
+[deploy]   1200587 bytes /assets/title-theme-CXP4b20O-diet-a9d5c9a0.mp3
+[deploy]   966064 bytes /assets/the-claim-terrain-CPmx4txo-diet-a9d5c9a0.glb
+[deploy]   588984 bytes /assets/town-v3-tavern-CXl1aOfB-diet-a9d5c9a0.glb
+[deploy] ABORT: asset budget check failed; use --allow-over-budget to waive explicitly
+[deploy] RELEASE VERDICT
+[deploy] Build: 69080c3c
+[deploy] Budget: FAIL (probe rc=1; measured projects=1; report failures=0) (limit: 25000000 bytes)
+[deploy] mobile-chrome: 17365554 / 25000000 bytes
+[deploy] Device verdict: WARN missing docs/release/verdict-69080c3c.md
+[deploy] Outcome: budget_failed

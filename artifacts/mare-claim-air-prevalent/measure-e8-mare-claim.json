@@ -1,0 +1,6310 @@
+{
+  "contract": "e8-mare-claim",
+  "seed": "e8-mare-claim-01",
+  "consumer": "E8AtmosphereSystem",
+  "tape": "artifacts/gauntlet-heat12-20260905/rides/e8-mare-claim/work/attempt-1-tape.json",
+  "reproducedTape": true,
+  "tapeEventLogHash": "fnv1a32:f84d1d2b",
+  "replayEventLogHash": "fnv1a32:f84d1d2b",
+  "replayTicks": 18600,
+  "outcome": {
+    "secured": true,
+    "waves": 20,
+    "gold": 60,
+    "timeAlive": 600
+  },
+  "tapeOutcome": {
+    "reason": "secured",
+    "secured": true,
+    "waves": 20,
+    "timeAlive": 600,
+    "gold": 60
+  },
+  "air": {
+    "declared": true,
+    "wall": "suit-timer",
+    "suit": {
+      "body": "prospector",
+      "seconds": 2.4,
+      "capacity": 60,
+      "refillPerSecond": 4,
+      "inDome": null,
+      "empty": false,
+      "drainedTotal": 100.533,
+      "emptySeconds": 488.767
+    },
+    "domes": [
+      {
+        "id": "dome-cluster-pad-west",
+        "air": 0,
+        "breached": true,
+        "breaches": 38,
+        "siegers": 1
+      },
+      {
+        "id": "dome-cluster-pad-center",
+        "air": 1,
+        "breached": false,
+        "breaches": 0,
+        "siegers": 0
+      },
+      {
+        "id": "dome-cluster-pad-east",
+        "air": 0.953,
+        "breached": false,
+        "breaches": 49,
+        "siegers": 0
+      }
+    ],
+    "regolith": {
+      "grounds": 6,
+      "required": 1,
+      "worked": [
+        0,
+        1,
+        2,
+        4
+      ],
+      "runsOnAir": 39,
+      "breathlessPans": 197,
+      "complete": true
+    }
+  },
+  "timeline": {
+    "sampledSeconds": 620,
+    "secondsWithAir": 133,
+    "secondsEmpty": 488,
+    "firstEmptyAt": 62,
+    "latchClosedAt": 6,
+    "firstWorkedAt": [
+      {
+        "ground": 1,
+        "at": 6
+      },
+      {
+        "ground": 4,
+        "at": 17
+      },
+      {
+        "ground": 2,
+        "at": 42
+      },
+      {
+        "ground": 0,
+        "at": 283
+      }
+    ]
+  },
+  "samples": [
+    {
+      "t": 0,
+      "wave": 0,
+      "air": 60,
+      "inDome": null,
+      "worked": 0,
+      "runsOnAir": 0,
+      "breathless": 0,
+      "complete": false
+    },
+    {
+      "t": 1,
+      "wave": 0,
+      "air": 59,
+      "inDome": null,
+      "worked": 0,
+      "runsOnAir": 0,
+      "breathless": 0,
+      "complete": false
+    },
+    {
+      "t": 2,
+      "wave": 0,
+      "air": 58,
+      "inDome": null,
+      "worked": 0,
+      "runsOnAir": 0,
+      "breathless": 0,
+      "complete": false
+    },
+    {
+      "t": 3,
+      "wave": 0,
+      "air": 57,
+      "inDome": null,
+      "worked": 0,
+      "runsOnAir": 0,
+      "breathless": 0,
+      "complete": false
+    },
+    {
+      "t": 4,
+      "wave": 0,
+      "air": 56,
+      "inDome": null,
+      "worked": 0,
+      "runsOnAir": 0,
+      "breathless": 0,
+      "complete": false
+    },
+    {
+      "t": 5,
+      "wave": 0,
+      "air": 55,
+      "inDome": null,
+      "worked": 0,
+      "runsOnAir": 0,
+      "breathless": 0,
+      "complete": false
+    },
+    {
+      "t": 6,
+      "wave": 0,
+      "air": 54,
+      "inDome": null,
+      "worked": 1,
+      "runsOnAir": 6,
+      "breathless": 0,
+      "complete": true
+    },
+    {
+      "t": 7,
+      "wave": 0,
+      "air": 53,
+      "inDome": null,
+      "worked": 1,
+      "runsOnAir": 6,
+      "breathless": 0,
+      "complete": true
+    },
+    {
+      "t": 8,
+      "wave": 0,
+      "air": 52,
+      "inDome": null,
+      "worked": 1,
+      "runsOnAir": 6,
+      "breathless": 0,
+      "complete": true
+    },
+    {
+      "t": 9,
+      "wave": 0,
+      "air": 51,
+      "inDome": null,
+      "worked": 1,
+      "runsOnAir": 6,
+      "breathless": 0,
+      "complete": true
+    },
+    {
+      "t": 10,
+      "wave": 0,
+      "air": 50,
+      "inDome": null,
+      "worked": 1,
+      "runsOnAir": 6,
+      "breathless": 0,
+      "complete": true
+    },
+    {
+      "t": 11,
+      "wave": 0,
+      "air": 49,
+      "inDome": null,
+      "worked": 1,
+      "runsOnAir": 6,
+      "breathless": 0,
+      "complete": true
+    },
+    {
+      "t": 12,
+      "wave": 0,
+      "air": 48,
+      "inDome": null,
+      "worked": 1,
+      "runsOnAir": 6,
+      "breathless": 0,
+      "complete": true
+    },
+    {
+      "t": 13,
+      "wave": 0,
+      "air": 47,
+      "inDome": null,
+      "worked": 1,
+      "runsOnAir": 6,
+      "breathless": 0,
+      "complete": true
+    },
+    {
+      "t": 14,
+      "wave": 0,
+      "air": 46,
+      "inDome": null,
+      "worked": 1,
+      "runsOnAir": 6,
+      "breathless": 0,
+      "complete": true
+    },
+    {
+      "t": 15,
+      "wave": 0,
+      "air": 45,
+      "inDome": null,
+      "worked": 1,
+      "runsOnAir": 6,
+      "breathless": 0,
+      "complete": true
+    },
+    {
+      "t": 16,
+      "wave": 0,
+      "air": 44,
+      "inDome": null,
+      "worked": 1,
+      "runsOnAir": 6,
+      "breathless": 0,
+      "complete": true
+    },
+    {
+      "t": 17,
+      "wave": 0,
+      "air": 43,
+      "inDome": null,
+      "worked": 2,
+      "runsOnAir": 10,
+      "breathless": 0,
+      "complete": true
+    },
+    {
+      "t": 18,
+      "wave": 0,
+      "air": 42,
+      "inDome": null,
+      "worked": 2,
+      "runsOnAir": 10,
+      "breathless": 0,
+      "complete": true
+    },
+    {
+      "t": 19,
+      "wave": 0,
+      "air": 41,
+      "inDome": null,
+      "worked": 2,
+      "runsOnAir": 10,
+      "breathless": 0,
+      "complete": true
+    },
+    {
+      "t": 20,
+      "wave": 0,
+      "air": 40,
+      "inDome": null,
+      "worked": 2,
+      "runsOnAir": 10,
+      "breathless": 0,
+      "complete": true
+    },
+    {
+      "t": 21,
+      "wave": 0,
+      "air": 39,
+      "inDome": null,
+      "worked": 2,
+      "runsOnAir": 10,
+      "breathless": 0,
+      "complete": true
+    },
+    {
+      "t": 22,
+      "wave": 0,
+      "air": 38,
+      "inDome": null,
+      "worked": 2,
+      "runsOnAir": 10,
+      "breathless": 0,
+      "complete": true
+    },
+    {
+      "t": 23,
+      "wave": 0,
+      "air": 37,
+      "inDome": null,
+      "worked": 2,
+      "runsOnAir": 10,
+      "breathless": 0,
+      "complete": true
+    },
+    {
+      "t": 24,
+      "wave": 0,
+      "air": 36,
+      "inDome": null,
+      "worked": 2,
+      "runsOnAir": 10,
+      "breathless": 0,
+      "complete": true
+    },
+    {
+      "t": 25,
+      "wave": 0,
+      "air": 36.5,
+      "inDome": null,
+      "worked": 2,
+      "runsOnAir": 10,
+      "breathless": 0,
+      "complete": true
+    },
+    {
+      "t": 26,
+      "wave": 0,
+      "air": 35.5,
+      "inDome": null,
+      "worked": 2,
+      "runsOnAir": 10,
+      "breathless": 0,
+      "complete": true
+    },
+    {
+      "t": 27,
+      "wave": 0,
+      "air": 34.5,
+      "inDome": null,
+      "worked": 2,
+      "runsOnAir": 10,
+      "breathless": 0,
+      "complete": true
+    },
+    {
+      "t": 28,
+      "wave": 0,
+      "air": 33.5,
+      "inDome": null,
+      "worked": 2,
+      "runsOnAir": 10,
+      "breathless": 0,
+      "complete": true
+    },
+    {
+      "t": 29,
+      "wave": 0,
+      "air": 32.5,
+      "inDome": null,
+      "worked": 2,
+      "runsOnAir": 10,
+      "breathless": 0,
+      "complete": true
+    },
+    {
+      "t": 30,
+      "wave": 1,
+      "air": 31.5,
+      "inDome": null,
+      "worked": 2,
+      "runsOnAir": 10,
+      "breathless": 0,
+      "complete": true
+    },
+    {
+      "t": 31,
+      "wave": 1,
+      "air": 30.5,
+      "inDome": null,
+      "worked": 2,
+      "runsOnAir": 10,
+      "breathless": 0,
+      "complete": true
+    },
+    {
+      "t": 32,
+      "wave": 1,
+      "air": 29.5,
+      "inDome": null,
+      "worked": 2,
+      "runsOnAir": 10,
+      "breathless": 0,
+      "complete": true
+    },
+    {
+      "t": 33,
+      "wave": 1,
+      "air": 28.5,
+      "inDome": null,
+      "worked": 2,
+      "runsOnAir": 10,
+      "breathless": 0,
+      "complete": true
+    },
+    {
+      "t": 34,
+      "wave": 1,
+      "air": 27.5,
+      "inDome": null,
+      "worked": 2,
+      "runsOnAir": 12,
+      "breathless": 0,
+      "complete": true
+    },
+    {
+      "t": 35,
+      "wave": 1,
+      "air": 26.5,
+      "inDome": null,
+      "worked": 2,
+      "runsOnAir": 12,
+      "breathless": 0,
+      "complete": true
+    },
+    {
+      "t": 36,
+      "wave": 1,
+      "air": 25.5,
+      "inDome": null,
+      "worked": 2,
+      "runsOnAir": 12,
+      "breathless": 0,
+      "complete": true
+    },
+    {
+      "t": 37,
+      "wave": 1,
+      "air": 24.5,
+      "inDome": null,
+      "worked": 2,
+      "runsOnAir": 12,
+      "breathless": 0,
+      "complete": true
+    },
+    {
+      "t": 38,
+      "wave": 1,
+      "air": 23.5,
+      "inDome": null,
+      "worked": 2,
+      "runsOnAir": 12,
+      "breathless": 0,
+      "complete": true
+    },
+    {
+      "t": 39,
+      "wave": 1,
+      "air": 22.5,
+      "inDome": null,
+      "worked": 2,
+      "runsOnAir": 12,
+      "breathless": 0,
+      "complete": true
+    },
+    {
+      "t": 40,
+      "wave": 1,
+      "air": 21.5,
+      "inDome": null,
+      "worked": 2,
+      "runsOnAir": 12,
+      "breathless": 0,
+      "complete": true
+    },
+    {
+      "t": 41,
+      "wave": 1,
+      "air": 20.5,
+      "inDome": null,
+      "worked": 2,
+      "runsOnAir": 12,
+      "breathless": 0,
+      "complete": true
+    },
+    {
+      "t": 42,
+      "wave": 1,
+      "air": 19.5,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 15,
+      "breathless": 0,
+      "complete": true
+    },
+    {
+      "t": 43,
+      "wave": 1,
+      "air": 18.5,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 15,
+      "breathless": 0,
+      "complete": true
+    },
+    {
+      "t": 44,
+      "wave": 1,
+      "air": 17.5,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 15,
+      "breathless": 0,
+      "complete": true
+    },
+    {
+      "t": 45,
+      "wave": 1,
+      "air": 16.5,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 15,
+      "breathless": 0,
+      "complete": true
+    },
+    {
+      "t": 46,
+      "wave": 1,
+      "air": 15.5,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 0,
+      "complete": true
+    },
+    {
+      "t": 47,
+      "wave": 1,
+      "air": 14.5,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 0,
+      "complete": true
+    },
+    {
+      "t": 48,
+      "wave": 1,
+      "air": 13.5,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 0,
+      "complete": true
+    },
+    {
+      "t": 49,
+      "wave": 1,
+      "air": 12.5,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 0,
+      "complete": true
+    },
+    {
+      "t": 50,
+      "wave": 1,
+      "air": 11.5,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 0,
+      "complete": true
+    },
+    {
+      "t": 51,
+      "wave": 1,
+      "air": 10.5,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 0,
+      "complete": true
+    },
+    {
+      "t": 52,
+      "wave": 1,
+      "air": 9.5,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 0,
+      "complete": true
+    },
+    {
+      "t": 53,
+      "wave": 1,
+      "air": 8.5,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 0,
+      "complete": true
+    },
+    {
+      "t": 54,
+      "wave": 1,
+      "air": 7.5,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 0,
+      "complete": true
+    },
+    {
+      "t": 55,
+      "wave": 1,
+      "air": 6.5,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 0,
+      "complete": true
+    },
+    {
+      "t": 56,
+      "wave": 1,
+      "air": 5.5,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 0,
+      "complete": true
+    },
+    {
+      "t": 57,
+      "wave": 1,
+      "air": 4.5,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 0,
+      "complete": true
+    },
+    {
+      "t": 58,
+      "wave": 1,
+      "air": 3.5,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 0,
+      "complete": true
+    },
+    {
+      "t": 59,
+      "wave": 1,
+      "air": 2.5,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 0,
+      "complete": true
+    },
+    {
+      "t": 60,
+      "wave": 1,
+      "air": 1.5,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 0,
+      "complete": true
+    },
+    {
+      "t": 61,
+      "wave": 2,
+      "air": 0.5,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 0,
+      "complete": true
+    },
+    {
+      "t": 62,
+      "wave": 2,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 0,
+      "complete": true
+    },
+    {
+      "t": 63,
+      "wave": 2,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 0,
+      "complete": true
+    },
+    {
+      "t": 64,
+      "wave": 2,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 0,
+      "complete": true
+    },
+    {
+      "t": 65,
+      "wave": 2,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 6,
+      "complete": true
+    },
+    {
+      "t": 66,
+      "wave": 2,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 6,
+      "complete": true
+    },
+    {
+      "t": 67,
+      "wave": 2,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 6,
+      "complete": true
+    },
+    {
+      "t": 68,
+      "wave": 2,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 6,
+      "complete": true
+    },
+    {
+      "t": 69,
+      "wave": 2,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 6,
+      "complete": true
+    },
+    {
+      "t": 70,
+      "wave": 2,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 6,
+      "complete": true
+    },
+    {
+      "t": 71,
+      "wave": 2,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 6,
+      "complete": true
+    },
+    {
+      "t": 72,
+      "wave": 2,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 6,
+      "complete": true
+    },
+    {
+      "t": 73,
+      "wave": 2,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 6,
+      "complete": true
+    },
+    {
+      "t": 74,
+      "wave": 2,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 6,
+      "complete": true
+    },
+    {
+      "t": 75,
+      "wave": 2,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 6,
+      "complete": true
+    },
+    {
+      "t": 76,
+      "wave": 2,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 6,
+      "complete": true
+    },
+    {
+      "t": 77,
+      "wave": 2,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 6,
+      "complete": true
+    },
+    {
+      "t": 78,
+      "wave": 2,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 6,
+      "complete": true
+    },
+    {
+      "t": 79,
+      "wave": 2,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 6,
+      "complete": true
+    },
+    {
+      "t": 80,
+      "wave": 2,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 6,
+      "complete": true
+    },
+    {
+      "t": 81,
+      "wave": 2,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 6,
+      "complete": true
+    },
+    {
+      "t": 82,
+      "wave": 2,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 6,
+      "complete": true
+    },
+    {
+      "t": 83,
+      "wave": 2,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 6,
+      "complete": true
+    },
+    {
+      "t": 84,
+      "wave": 2,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 6,
+      "complete": true
+    },
+    {
+      "t": 85,
+      "wave": 2,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 6,
+      "complete": true
+    },
+    {
+      "t": 86,
+      "wave": 2,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 6,
+      "complete": true
+    },
+    {
+      "t": 87,
+      "wave": 2,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 6,
+      "complete": true
+    },
+    {
+      "t": 88,
+      "wave": 2,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 6,
+      "complete": true
+    },
+    {
+      "t": 89,
+      "wave": 2,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 6,
+      "complete": true
+    },
+    {
+      "t": 90,
+      "wave": 2,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 6,
+      "complete": true
+    },
+    {
+      "t": 91,
+      "wave": 3,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 6,
+      "complete": true
+    },
+    {
+      "t": 92,
+      "wave": 3,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 6,
+      "complete": true
+    },
+    {
+      "t": 93,
+      "wave": 3,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 9,
+      "complete": true
+    },
+    {
+      "t": 94,
+      "wave": 3,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 11,
+      "complete": true
+    },
+    {
+      "t": 95,
+      "wave": 3,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 11,
+      "complete": true
+    },
+    {
+      "t": 96,
+      "wave": 3,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 11,
+      "complete": true
+    },
+    {
+      "t": 97,
+      "wave": 3,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 11,
+      "complete": true
+    },
+    {
+      "t": 98,
+      "wave": 3,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 11,
+      "complete": true
+    },
+    {
+      "t": 99,
+      "wave": 3,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 11,
+      "complete": true
+    },
+    {
+      "t": 100,
+      "wave": 3,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 11,
+      "complete": true
+    },
+    {
+      "t": 101,
+      "wave": 3,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 12,
+      "complete": true
+    },
+    {
+      "t": 102,
+      "wave": 3,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 12,
+      "complete": true
+    },
+    {
+      "t": 103,
+      "wave": 3,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 12,
+      "complete": true
+    },
+    {
+      "t": 104,
+      "wave": 3,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 12,
+      "complete": true
+    },
+    {
+      "t": 105,
+      "wave": 3,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 12,
+      "complete": true
+    },
+    {
+      "t": 106,
+      "wave": 3,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 12,
+      "complete": true
+    },
+    {
+      "t": 107,
+      "wave": 3,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 12,
+      "complete": true
+    },
+    {
+      "t": 108,
+      "wave": 3,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 12,
+      "complete": true
+    },
+    {
+      "t": 109,
+      "wave": 3,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 12,
+      "complete": true
+    },
+    {
+      "t": 110,
+      "wave": 3,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 18,
+      "complete": true
+    },
+    {
+      "t": 111,
+      "wave": 3,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 18,
+      "complete": true
+    },
+    {
+      "t": 112,
+      "wave": 3,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 18,
+      "complete": true
+    },
+    {
+      "t": 113,
+      "wave": 3,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 18,
+      "complete": true
+    },
+    {
+      "t": 114,
+      "wave": 3,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 18,
+      "complete": true
+    },
+    {
+      "t": 115,
+      "wave": 3,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 18,
+      "complete": true
+    },
+    {
+      "t": 116,
+      "wave": 3,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 18,
+      "complete": true
+    },
+    {
+      "t": 117,
+      "wave": 3,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 18,
+      "complete": true
+    },
+    {
+      "t": 118,
+      "wave": 3,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 18,
+      "complete": true
+    },
+    {
+      "t": 119,
+      "wave": 3,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 18,
+      "complete": true
+    },
+    {
+      "t": 120,
+      "wave": 3,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 18,
+      "complete": true
+    },
+    {
+      "t": 121,
+      "wave": 4,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 18,
+      "complete": true
+    },
+    {
+      "t": 122,
+      "wave": 4,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 18,
+      "complete": true
+    },
+    {
+      "t": 123,
+      "wave": 4,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 18,
+      "complete": true
+    },
+    {
+      "t": 124,
+      "wave": 4,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 18,
+      "complete": true
+    },
+    {
+      "t": 125,
+      "wave": 4,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 18,
+      "complete": true
+    },
+    {
+      "t": 126,
+      "wave": 4,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 18,
+      "complete": true
+    },
+    {
+      "t": 127,
+      "wave": 4,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 18,
+      "complete": true
+    },
+    {
+      "t": 128,
+      "wave": 4,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 18,
+      "complete": true
+    },
+    {
+      "t": 129,
+      "wave": 4,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 18,
+      "complete": true
+    },
+    {
+      "t": 130,
+      "wave": 4,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 18,
+      "complete": true
+    },
+    {
+      "t": 131,
+      "wave": 4,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 18,
+      "complete": true
+    },
+    {
+      "t": 132,
+      "wave": 4,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 24,
+      "complete": true
+    },
+    {
+      "t": 133,
+      "wave": 4,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 24,
+      "complete": true
+    },
+    {
+      "t": 134,
+      "wave": 4,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 24,
+      "complete": true
+    },
+    {
+      "t": 135,
+      "wave": 4,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 24,
+      "complete": true
+    },
+    {
+      "t": 136,
+      "wave": 4,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 24,
+      "complete": true
+    },
+    {
+      "t": 137,
+      "wave": 4,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 24,
+      "complete": true
+    },
+    {
+      "t": 138,
+      "wave": 4,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 24,
+      "complete": true
+    },
+    {
+      "t": 139,
+      "wave": 4,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 24,
+      "complete": true
+    },
+    {
+      "t": 140,
+      "wave": 4,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 24,
+      "complete": true
+    },
+    {
+      "t": 141,
+      "wave": 4,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 30,
+      "complete": true
+    },
+    {
+      "t": 142,
+      "wave": 4,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 30,
+      "complete": true
+    },
+    {
+      "t": 143,
+      "wave": 4,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 30,
+      "complete": true
+    },
+    {
+      "t": 144,
+      "wave": 4,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 30,
+      "complete": true
+    },
+    {
+      "t": 145,
+      "wave": 4,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 30,
+      "complete": true
+    },
+    {
+      "t": 146,
+      "wave": 4,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 30,
+      "complete": true
+    },
+    {
+      "t": 147,
+      "wave": 4,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 30,
+      "complete": true
+    },
+    {
+      "t": 148,
+      "wave": 4,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 30,
+      "complete": true
+    },
+    {
+      "t": 149,
+      "wave": 4,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 30,
+      "complete": true
+    },
+    {
+      "t": 150,
+      "wave": 4,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 30,
+      "complete": true
+    },
+    {
+      "t": 151,
+      "wave": 5,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 30,
+      "complete": true
+    },
+    {
+      "t": 152,
+      "wave": 5,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 30,
+      "complete": true
+    },
+    {
+      "t": 153,
+      "wave": 5,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 30,
+      "complete": true
+    },
+    {
+      "t": 154,
+      "wave": 5,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 30,
+      "complete": true
+    },
+    {
+      "t": 155,
+      "wave": 5,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 30,
+      "complete": true
+    },
+    {
+      "t": 156,
+      "wave": 5,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 30,
+      "complete": true
+    },
+    {
+      "t": 157,
+      "wave": 5,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 30,
+      "complete": true
+    },
+    {
+      "t": 158,
+      "wave": 5,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 30,
+      "complete": true
+    },
+    {
+      "t": 159,
+      "wave": 5,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 30,
+      "complete": true
+    },
+    {
+      "t": 160,
+      "wave": 5,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 30,
+      "complete": true
+    },
+    {
+      "t": 161,
+      "wave": 5,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 30,
+      "complete": true
+    },
+    {
+      "t": 162,
+      "wave": 5,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 36,
+      "complete": true
+    },
+    {
+      "t": 163,
+      "wave": 5,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 36,
+      "complete": true
+    },
+    {
+      "t": 164,
+      "wave": 5,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 36,
+      "complete": true
+    },
+    {
+      "t": 165,
+      "wave": 5,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 36,
+      "complete": true
+    },
+    {
+      "t": 166,
+      "wave": 5,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 36,
+      "complete": true
+    },
+    {
+      "t": 167,
+      "wave": 5,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 36,
+      "complete": true
+    },
+    {
+      "t": 168,
+      "wave": 5,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 36,
+      "complete": true
+    },
+    {
+      "t": 169,
+      "wave": 5,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 36,
+      "complete": true
+    },
+    {
+      "t": 170,
+      "wave": 5,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 36,
+      "complete": true
+    },
+    {
+      "t": 171,
+      "wave": 5,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 36,
+      "complete": true
+    },
+    {
+      "t": 172,
+      "wave": 5,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 36,
+      "complete": true
+    },
+    {
+      "t": 173,
+      "wave": 5,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 37,
+      "complete": true
+    },
+    {
+      "t": 174,
+      "wave": 5,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 37,
+      "complete": true
+    },
+    {
+      "t": 175,
+      "wave": 5,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 37,
+      "complete": true
+    },
+    {
+      "t": 176,
+      "wave": 5,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 37,
+      "complete": true
+    },
+    {
+      "t": 177,
+      "wave": 5,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 37,
+      "complete": true
+    },
+    {
+      "t": 178,
+      "wave": 5,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 37,
+      "complete": true
+    },
+    {
+      "t": 179,
+      "wave": 5,
+      "air": 1.333,
+      "inDome": "dome-cluster-pad-center",
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 37,
+      "complete": true
+    },
+    {
+      "t": 180,
+      "wave": 5,
+      "air": 1.5,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 37,
+      "complete": true
+    },
+    {
+      "t": 181,
+      "wave": 6,
+      "air": 0.5,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 37,
+      "complete": true
+    },
+    {
+      "t": 182,
+      "wave": 6,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 37,
+      "complete": true
+    },
+    {
+      "t": 183,
+      "wave": 6,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 37,
+      "complete": true
+    },
+    {
+      "t": 184,
+      "wave": 6,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 37,
+      "complete": true
+    },
+    {
+      "t": 185,
+      "wave": 6,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 37,
+      "complete": true
+    },
+    {
+      "t": 186,
+      "wave": 6,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 42,
+      "complete": true
+    },
+    {
+      "t": 187,
+      "wave": 6,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 42,
+      "complete": true
+    },
+    {
+      "t": 188,
+      "wave": 6,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 42,
+      "complete": true
+    },
+    {
+      "t": 189,
+      "wave": 6,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 42,
+      "complete": true
+    },
+    {
+      "t": 190,
+      "wave": 6,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 46,
+      "complete": true
+    },
+    {
+      "t": 191,
+      "wave": 6,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 46,
+      "complete": true
+    },
+    {
+      "t": 192,
+      "wave": 6,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 46,
+      "complete": true
+    },
+    {
+      "t": 193,
+      "wave": 6,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 46,
+      "complete": true
+    },
+    {
+      "t": 194,
+      "wave": 6,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 46,
+      "complete": true
+    },
+    {
+      "t": 195,
+      "wave": 6,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 46,
+      "complete": true
+    },
+    {
+      "t": 196,
+      "wave": 6,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 46,
+      "complete": true
+    },
+    {
+      "t": 197,
+      "wave": 6,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 46,
+      "complete": true
+    },
+    {
+      "t": 198,
+      "wave": 6,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 46,
+      "complete": true
+    },
+    {
+      "t": 199,
+      "wave": 6,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 46,
+      "complete": true
+    },
+    {
+      "t": 200,
+      "wave": 6,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 46,
+      "complete": true
+    },
+    {
+      "t": 201,
+      "wave": 6,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 46,
+      "complete": true
+    },
+    {
+      "t": 202,
+      "wave": 6,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 46,
+      "complete": true
+    },
+    {
+      "t": 203,
+      "wave": 6,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 48,
+      "complete": true
+    },
+    {
+      "t": 204,
+      "wave": 6,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 48,
+      "complete": true
+    },
+    {
+      "t": 205,
+      "wave": 6,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 48,
+      "complete": true
+    },
+    {
+      "t": 206,
+      "wave": 6,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 48,
+      "complete": true
+    },
+    {
+      "t": 207,
+      "wave": 6,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 48,
+      "complete": true
+    },
+    {
+      "t": 208,
+      "wave": 6,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 48,
+      "complete": true
+    },
+    {
+      "t": 209,
+      "wave": 6,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 48,
+      "complete": true
+    },
+    {
+      "t": 210,
+      "wave": 6,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 48,
+      "complete": true
+    },
+    {
+      "t": 211,
+      "wave": 7,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 48,
+      "complete": true
+    },
+    {
+      "t": 212,
+      "wave": 7,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 48,
+      "complete": true
+    },
+    {
+      "t": 213,
+      "wave": 7,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 48,
+      "complete": true
+    },
+    {
+      "t": 214,
+      "wave": 7,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 48,
+      "complete": true
+    },
+    {
+      "t": 215,
+      "wave": 7,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 48,
+      "complete": true
+    },
+    {
+      "t": 216,
+      "wave": 7,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 48,
+      "complete": true
+    },
+    {
+      "t": 217,
+      "wave": 7,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 50,
+      "complete": true
+    },
+    {
+      "t": 218,
+      "wave": 7,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 54,
+      "complete": true
+    },
+    {
+      "t": 219,
+      "wave": 7,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 54,
+      "complete": true
+    },
+    {
+      "t": 220,
+      "wave": 7,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 54,
+      "complete": true
+    },
+    {
+      "t": 221,
+      "wave": 7,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 54,
+      "complete": true
+    },
+    {
+      "t": 222,
+      "wave": 7,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 54,
+      "complete": true
+    },
+    {
+      "t": 223,
+      "wave": 7,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 54,
+      "complete": true
+    },
+    {
+      "t": 224,
+      "wave": 7,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 54,
+      "complete": true
+    },
+    {
+      "t": 225,
+      "wave": 7,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 54,
+      "complete": true
+    },
+    {
+      "t": 226,
+      "wave": 7,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 54,
+      "complete": true
+    },
+    {
+      "t": 227,
+      "wave": 7,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 54,
+      "complete": true
+    },
+    {
+      "t": 228,
+      "wave": 7,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 54,
+      "complete": true
+    },
+    {
+      "t": 229,
+      "wave": 7,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 54,
+      "complete": true
+    },
+    {
+      "t": 230,
+      "wave": 7,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 54,
+      "complete": true
+    },
+    {
+      "t": 231,
+      "wave": 7,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 60,
+      "complete": true
+    },
+    {
+      "t": 232,
+      "wave": 7,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 60,
+      "complete": true
+    },
+    {
+      "t": 233,
+      "wave": 7,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 60,
+      "complete": true
+    },
+    {
+      "t": 234,
+      "wave": 7,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 60,
+      "complete": true
+    },
+    {
+      "t": 235,
+      "wave": 7,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 60,
+      "complete": true
+    },
+    {
+      "t": 236,
+      "wave": 7,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 60,
+      "complete": true
+    },
+    {
+      "t": 237,
+      "wave": 7,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 60,
+      "complete": true
+    },
+    {
+      "t": 238,
+      "wave": 7,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 60,
+      "complete": true
+    },
+    {
+      "t": 239,
+      "wave": 7,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 60,
+      "complete": true
+    },
+    {
+      "t": 240,
+      "wave": 7,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 60,
+      "complete": true
+    },
+    {
+      "t": 241,
+      "wave": 8,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 60,
+      "complete": true
+    },
+    {
+      "t": 242,
+      "wave": 8,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 60,
+      "complete": true
+    },
+    {
+      "t": 243,
+      "wave": 8,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 60,
+      "complete": true
+    },
+    {
+      "t": 244,
+      "wave": 8,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 60,
+      "complete": true
+    },
+    {
+      "t": 245,
+      "wave": 8,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 66,
+      "complete": true
+    },
+    {
+      "t": 246,
+      "wave": 8,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 66,
+      "complete": true
+    },
+    {
+      "t": 247,
+      "wave": 8,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 66,
+      "complete": true
+    },
+    {
+      "t": 248,
+      "wave": 8,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 66,
+      "complete": true
+    },
+    {
+      "t": 249,
+      "wave": 8,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 66,
+      "complete": true
+    },
+    {
+      "t": 250,
+      "wave": 8,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 66,
+      "complete": true
+    },
+    {
+      "t": 251,
+      "wave": 8,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 66,
+      "complete": true
+    },
+    {
+      "t": 252,
+      "wave": 8,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 66,
+      "complete": true
+    },
+    {
+      "t": 253,
+      "wave": 8,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 66,
+      "complete": true
+    },
+    {
+      "t": 254,
+      "wave": 8,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 66,
+      "complete": true
+    },
+    {
+      "t": 255,
+      "wave": 8,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 66,
+      "complete": true
+    },
+    {
+      "t": 256,
+      "wave": 8,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 66,
+      "complete": true
+    },
+    {
+      "t": 257,
+      "wave": 8,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 66,
+      "complete": true
+    },
+    {
+      "t": 258,
+      "wave": 8,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 66,
+      "complete": true
+    },
+    {
+      "t": 259,
+      "wave": 8,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 66,
+      "complete": true
+    },
+    {
+      "t": 260,
+      "wave": 8,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 66,
+      "complete": true
+    },
+    {
+      "t": 261,
+      "wave": 8,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 66,
+      "complete": true
+    },
+    {
+      "t": 262,
+      "wave": 8,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 66,
+      "complete": true
+    },
+    {
+      "t": 263,
+      "wave": 8,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 66,
+      "complete": true
+    },
+    {
+      "t": 264,
+      "wave": 8,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 66,
+      "complete": true
+    },
+    {
+      "t": 265,
+      "wave": 8,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 71,
+      "complete": true
+    },
+    {
+      "t": 266,
+      "wave": 8,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 71,
+      "complete": true
+    },
+    {
+      "t": 267,
+      "wave": 8,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 71,
+      "complete": true
+    },
+    {
+      "t": 268,
+      "wave": 8,
+      "air": 0,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 71,
+      "complete": true
+    },
+    {
+      "t": 269,
+      "wave": 8,
+      "air": 1.733,
+      "inDome": "dome-cluster-pad-west",
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 71,
+      "complete": true
+    },
+    {
+      "t": 270,
+      "wave": 8,
+      "air": 2.4,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 71,
+      "complete": true
+    },
+    {
+      "t": 271,
+      "wave": 9,
+      "air": 3.067,
+      "inDome": "dome-cluster-pad-center",
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 71,
+      "complete": true
+    },
+    {
+      "t": 272,
+      "wave": 9,
+      "air": 7.067,
+      "inDome": "dome-cluster-pad-center",
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 71,
+      "complete": true
+    },
+    {
+      "t": 273,
+      "wave": 9,
+      "air": 11.067,
+      "inDome": "dome-cluster-pad-center",
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 71,
+      "complete": true
+    },
+    {
+      "t": 274,
+      "wave": 9,
+      "air": 11.4,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 71,
+      "complete": true
+    },
+    {
+      "t": 275,
+      "wave": 9,
+      "air": 10.4,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 71,
+      "complete": true
+    },
+    {
+      "t": 276,
+      "wave": 9,
+      "air": 9.4,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 18,
+      "breathless": 71,
+      "complete": true
+    },
+    {
+      "t": 277,
+      "wave": 9,
+      "air": 8.4,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 24,
+      "breathless": 71,
+      "complete": true
+    },
+    {
+      "t": 278,
+      "wave": 9,
+      "air": 7.4,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 24,
+      "breathless": 71,
+      "complete": true
+    },
+    {
+      "t": 279,
+      "wave": 9,
+      "air": 6.4,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 24,
+      "breathless": 71,
+      "complete": true
+    },
+    {
+      "t": 280,
+      "wave": 9,
+      "air": 5.4,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 24,
+      "breathless": 71,
+      "complete": true
+    },
+    {
+      "t": 281,
+      "wave": 9,
+      "air": 4.4,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 24,
+      "breathless": 71,
+      "complete": true
+    },
+    {
+      "t": 282,
+      "wave": 9,
+      "air": 3.4,
+      "inDome": null,
+      "worked": 3,
+      "runsOnAir": 24,
+      "breathless": 71,
+      "complete": true
+    },
+    {
+      "t": 283,
+      "wave": 9,
+      "air": 2.4,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 71,
+      "complete": true
+    },
+    {
+      "t": 284,
+      "wave": 9,
+      "air": 1.4,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 71,
+      "complete": true
+    },
+    {
+      "t": 285,
+      "wave": 9,
+      "air": 0.4,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 71,
+      "complete": true
+    },
+    {
+      "t": 286,
+      "wave": 9,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 71,
+      "complete": true
+    },
+    {
+      "t": 287,
+      "wave": 9,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 71,
+      "complete": true
+    },
+    {
+      "t": 288,
+      "wave": 9,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 71,
+      "complete": true
+    },
+    {
+      "t": 289,
+      "wave": 9,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 71,
+      "complete": true
+    },
+    {
+      "t": 290,
+      "wave": 9,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 71,
+      "complete": true
+    },
+    {
+      "t": 291,
+      "wave": 9,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 71,
+      "complete": true
+    },
+    {
+      "t": 292,
+      "wave": 9,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 71,
+      "complete": true
+    },
+    {
+      "t": 293,
+      "wave": 9,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 71,
+      "complete": true
+    },
+    {
+      "t": 294,
+      "wave": 9,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 71,
+      "complete": true
+    },
+    {
+      "t": 295,
+      "wave": 9,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 71,
+      "complete": true
+    },
+    {
+      "t": 296,
+      "wave": 9,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 71,
+      "complete": true
+    },
+    {
+      "t": 297,
+      "wave": 9,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 71,
+      "complete": true
+    },
+    {
+      "t": 298,
+      "wave": 9,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 71,
+      "complete": true
+    },
+    {
+      "t": 299,
+      "wave": 9,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 71,
+      "complete": true
+    },
+    {
+      "t": 300,
+      "wave": 10,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 71,
+      "complete": true
+    },
+    {
+      "t": 301,
+      "wave": 10,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 71,
+      "complete": true
+    },
+    {
+      "t": 302,
+      "wave": 10,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 71,
+      "complete": true
+    },
+    {
+      "t": 303,
+      "wave": 10,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 71,
+      "complete": true
+    },
+    {
+      "t": 304,
+      "wave": 10,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 71,
+      "complete": true
+    },
+    {
+      "t": 305,
+      "wave": 10,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 71,
+      "complete": true
+    },
+    {
+      "t": 306,
+      "wave": 10,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 75,
+      "complete": true
+    },
+    {
+      "t": 307,
+      "wave": 10,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 75,
+      "complete": true
+    },
+    {
+      "t": 308,
+      "wave": 10,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 75,
+      "complete": true
+    },
+    {
+      "t": 309,
+      "wave": 10,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 75,
+      "complete": true
+    },
+    {
+      "t": 310,
+      "wave": 10,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 75,
+      "complete": true
+    },
+    {
+      "t": 311,
+      "wave": 10,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 75,
+      "complete": true
+    },
+    {
+      "t": 312,
+      "wave": 10,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 75,
+      "complete": true
+    },
+    {
+      "t": 313,
+      "wave": 10,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 75,
+      "complete": true
+    },
+    {
+      "t": 314,
+      "wave": 10,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 75,
+      "complete": true
+    },
+    {
+      "t": 315,
+      "wave": 10,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 77,
+      "complete": true
+    },
+    {
+      "t": 316,
+      "wave": 10,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 77,
+      "complete": true
+    },
+    {
+      "t": 317,
+      "wave": 10,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 77,
+      "complete": true
+    },
+    {
+      "t": 318,
+      "wave": 10,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 77,
+      "complete": true
+    },
+    {
+      "t": 319,
+      "wave": 10,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 77,
+      "complete": true
+    },
+    {
+      "t": 320,
+      "wave": 10,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 77,
+      "complete": true
+    },
+    {
+      "t": 321,
+      "wave": 10,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 77,
+      "complete": true
+    },
+    {
+      "t": 322,
+      "wave": 10,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 77,
+      "complete": true
+    },
+    {
+      "t": 323,
+      "wave": 10,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 77,
+      "complete": true
+    },
+    {
+      "t": 324,
+      "wave": 10,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 77,
+      "complete": true
+    },
+    {
+      "t": 325,
+      "wave": 10,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 77,
+      "complete": true
+    },
+    {
+      "t": 326,
+      "wave": 10,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 77,
+      "complete": true
+    },
+    {
+      "t": 327,
+      "wave": 10,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 83,
+      "complete": true
+    },
+    {
+      "t": 328,
+      "wave": 10,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 83,
+      "complete": true
+    },
+    {
+      "t": 329,
+      "wave": 10,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 83,
+      "complete": true
+    },
+    {
+      "t": 330,
+      "wave": 11,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 83,
+      "complete": true
+    },
+    {
+      "t": 331,
+      "wave": 11,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 83,
+      "complete": true
+    },
+    {
+      "t": 332,
+      "wave": 11,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 83,
+      "complete": true
+    },
+    {
+      "t": 333,
+      "wave": 11,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 83,
+      "complete": true
+    },
+    {
+      "t": 334,
+      "wave": 11,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 83,
+      "complete": true
+    },
+    {
+      "t": 335,
+      "wave": 11,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 83,
+      "complete": true
+    },
+    {
+      "t": 336,
+      "wave": 11,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 83,
+      "complete": true
+    },
+    {
+      "t": 337,
+      "wave": 11,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 83,
+      "complete": true
+    },
+    {
+      "t": 338,
+      "wave": 11,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 83,
+      "complete": true
+    },
+    {
+      "t": 339,
+      "wave": 11,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 83,
+      "complete": true
+    },
+    {
+      "t": 340,
+      "wave": 11,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 83,
+      "complete": true
+    },
+    {
+      "t": 341,
+      "wave": 11,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 83,
+      "complete": true
+    },
+    {
+      "t": 342,
+      "wave": 11,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 83,
+      "complete": true
+    },
+    {
+      "t": 343,
+      "wave": 11,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 83,
+      "complete": true
+    },
+    {
+      "t": 344,
+      "wave": 11,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 83,
+      "complete": true
+    },
+    {
+      "t": 345,
+      "wave": 11,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 83,
+      "complete": true
+    },
+    {
+      "t": 346,
+      "wave": 11,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 83,
+      "complete": true
+    },
+    {
+      "t": 347,
+      "wave": 11,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 83,
+      "complete": true
+    },
+    {
+      "t": 348,
+      "wave": 11,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 83,
+      "complete": true
+    },
+    {
+      "t": 349,
+      "wave": 11,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 83,
+      "complete": true
+    },
+    {
+      "t": 350,
+      "wave": 11,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 83,
+      "complete": true
+    },
+    {
+      "t": 351,
+      "wave": 11,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 83,
+      "complete": true
+    },
+    {
+      "t": 352,
+      "wave": 11,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 90,
+      "complete": true
+    },
+    {
+      "t": 353,
+      "wave": 11,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 90,
+      "complete": true
+    },
+    {
+      "t": 354,
+      "wave": 11,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 90,
+      "complete": true
+    },
+    {
+      "t": 355,
+      "wave": 11,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 90,
+      "complete": true
+    },
+    {
+      "t": 356,
+      "wave": 11,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 90,
+      "complete": true
+    },
+    {
+      "t": 357,
+      "wave": 11,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 90,
+      "complete": true
+    },
+    {
+      "t": 358,
+      "wave": 11,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 90,
+      "complete": true
+    },
+    {
+      "t": 359,
+      "wave": 11,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 90,
+      "complete": true
+    },
+    {
+      "t": 360,
+      "wave": 12,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 90,
+      "complete": true
+    },
+    {
+      "t": 361,
+      "wave": 12,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 90,
+      "complete": true
+    },
+    {
+      "t": 362,
+      "wave": 12,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 90,
+      "complete": true
+    },
+    {
+      "t": 363,
+      "wave": 12,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 90,
+      "complete": true
+    },
+    {
+      "t": 364,
+      "wave": 12,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 90,
+      "complete": true
+    },
+    {
+      "t": 365,
+      "wave": 12,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 91,
+      "complete": true
+    },
+    {
+      "t": 366,
+      "wave": 12,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 91,
+      "complete": true
+    },
+    {
+      "t": 367,
+      "wave": 12,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 91,
+      "complete": true
+    },
+    {
+      "t": 368,
+      "wave": 12,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 91,
+      "complete": true
+    },
+    {
+      "t": 369,
+      "wave": 12,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 91,
+      "complete": true
+    },
+    {
+      "t": 370,
+      "wave": 12,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 91,
+      "complete": true
+    },
+    {
+      "t": 371,
+      "wave": 12,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 91,
+      "complete": true
+    },
+    {
+      "t": 372,
+      "wave": 12,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 91,
+      "complete": true
+    },
+    {
+      "t": 373,
+      "wave": 12,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 91,
+      "complete": true
+    },
+    {
+      "t": 374,
+      "wave": 12,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 91,
+      "complete": true
+    },
+    {
+      "t": 375,
+      "wave": 12,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 91,
+      "complete": true
+    },
+    {
+      "t": 376,
+      "wave": 12,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 91,
+      "complete": true
+    },
+    {
+      "t": 377,
+      "wave": 12,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 91,
+      "complete": true
+    },
+    {
+      "t": 378,
+      "wave": 12,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 91,
+      "complete": true
+    },
+    {
+      "t": 379,
+      "wave": 12,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 94,
+      "complete": true
+    },
+    {
+      "t": 380,
+      "wave": 12,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 99,
+      "complete": true
+    },
+    {
+      "t": 381,
+      "wave": 12,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 99,
+      "complete": true
+    },
+    {
+      "t": 382,
+      "wave": 12,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 99,
+      "complete": true
+    },
+    {
+      "t": 383,
+      "wave": 12,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 99,
+      "complete": true
+    },
+    {
+      "t": 384,
+      "wave": 12,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 99,
+      "complete": true
+    },
+    {
+      "t": 385,
+      "wave": 12,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 107,
+      "complete": true
+    },
+    {
+      "t": 386,
+      "wave": 12,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 107,
+      "complete": true
+    },
+    {
+      "t": 387,
+      "wave": 12,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 107,
+      "complete": true
+    },
+    {
+      "t": 388,
+      "wave": 12,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 107,
+      "complete": true
+    },
+    {
+      "t": 389,
+      "wave": 12,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 107,
+      "complete": true
+    },
+    {
+      "t": 390,
+      "wave": 13,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 107,
+      "complete": true
+    },
+    {
+      "t": 391,
+      "wave": 13,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 107,
+      "complete": true
+    },
+    {
+      "t": 392,
+      "wave": 13,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 107,
+      "complete": true
+    },
+    {
+      "t": 393,
+      "wave": 13,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 107,
+      "complete": true
+    },
+    {
+      "t": 394,
+      "wave": 13,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 107,
+      "complete": true
+    },
+    {
+      "t": 395,
+      "wave": 13,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 107,
+      "complete": true
+    },
+    {
+      "t": 396,
+      "wave": 13,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 107,
+      "complete": true
+    },
+    {
+      "t": 397,
+      "wave": 13,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 107,
+      "complete": true
+    },
+    {
+      "t": 398,
+      "wave": 13,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 107,
+      "complete": true
+    },
+    {
+      "t": 399,
+      "wave": 13,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 107,
+      "complete": true
+    },
+    {
+      "t": 400,
+      "wave": 13,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 107,
+      "complete": true
+    },
+    {
+      "t": 401,
+      "wave": 13,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 107,
+      "complete": true
+    },
+    {
+      "t": 402,
+      "wave": 13,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 107,
+      "complete": true
+    },
+    {
+      "t": 403,
+      "wave": 13,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 107,
+      "complete": true
+    },
+    {
+      "t": 404,
+      "wave": 13,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 107,
+      "complete": true
+    },
+    {
+      "t": 405,
+      "wave": 13,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 107,
+      "complete": true
+    },
+    {
+      "t": 406,
+      "wave": 13,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 107,
+      "complete": true
+    },
+    {
+      "t": 407,
+      "wave": 13,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 109,
+      "complete": true
+    },
+    {
+      "t": 408,
+      "wave": 13,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 109,
+      "complete": true
+    },
+    {
+      "t": 409,
+      "wave": 13,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 109,
+      "complete": true
+    },
+    {
+      "t": 410,
+      "wave": 13,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 109,
+      "complete": true
+    },
+    {
+      "t": 411,
+      "wave": 13,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 109,
+      "complete": true
+    },
+    {
+      "t": 412,
+      "wave": 13,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 113,
+      "complete": true
+    },
+    {
+      "t": 413,
+      "wave": 13,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 113,
+      "complete": true
+    },
+    {
+      "t": 414,
+      "wave": 13,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 113,
+      "complete": true
+    },
+    {
+      "t": 415,
+      "wave": 13,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 113,
+      "complete": true
+    },
+    {
+      "t": 416,
+      "wave": 13,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 113,
+      "complete": true
+    },
+    {
+      "t": 417,
+      "wave": 13,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 113,
+      "complete": true
+    },
+    {
+      "t": 418,
+      "wave": 13,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 113,
+      "complete": true
+    },
+    {
+      "t": 419,
+      "wave": 13,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 113,
+      "complete": true
+    },
+    {
+      "t": 420,
+      "wave": 14,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 113,
+      "complete": true
+    },
+    {
+      "t": 421,
+      "wave": 14,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 119,
+      "complete": true
+    },
+    {
+      "t": 422,
+      "wave": 14,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 119,
+      "complete": true
+    },
+    {
+      "t": 423,
+      "wave": 14,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 119,
+      "complete": true
+    },
+    {
+      "t": 424,
+      "wave": 14,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 119,
+      "complete": true
+    },
+    {
+      "t": 425,
+      "wave": 14,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 119,
+      "complete": true
+    },
+    {
+      "t": 426,
+      "wave": 14,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 119,
+      "complete": true
+    },
+    {
+      "t": 427,
+      "wave": 14,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 119,
+      "complete": true
+    },
+    {
+      "t": 428,
+      "wave": 14,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 119,
+      "complete": true
+    },
+    {
+      "t": 429,
+      "wave": 14,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 119,
+      "complete": true
+    },
+    {
+      "t": 430,
+      "wave": 14,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 121,
+      "complete": true
+    },
+    {
+      "t": 431,
+      "wave": 14,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 121,
+      "complete": true
+    },
+    {
+      "t": 432,
+      "wave": 14,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 121,
+      "complete": true
+    },
+    {
+      "t": 433,
+      "wave": 14,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 121,
+      "complete": true
+    },
+    {
+      "t": 434,
+      "wave": 14,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 121,
+      "complete": true
+    },
+    {
+      "t": 435,
+      "wave": 14,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 121,
+      "complete": true
+    },
+    {
+      "t": 436,
+      "wave": 14,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 121,
+      "complete": true
+    },
+    {
+      "t": 437,
+      "wave": 14,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 121,
+      "complete": true
+    },
+    {
+      "t": 438,
+      "wave": 14,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 121,
+      "complete": true
+    },
+    {
+      "t": 439,
+      "wave": 14,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 123,
+      "complete": true
+    },
+    {
+      "t": 440,
+      "wave": 14,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 123,
+      "complete": true
+    },
+    {
+      "t": 441,
+      "wave": 14,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 123,
+      "complete": true
+    },
+    {
+      "t": 442,
+      "wave": 14,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 123,
+      "complete": true
+    },
+    {
+      "t": 443,
+      "wave": 14,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 123,
+      "complete": true
+    },
+    {
+      "t": 444,
+      "wave": 14,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 123,
+      "complete": true
+    },
+    {
+      "t": 445,
+      "wave": 14,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 123,
+      "complete": true
+    },
+    {
+      "t": 446,
+      "wave": 14,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 123,
+      "complete": true
+    },
+    {
+      "t": 447,
+      "wave": 14,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 123,
+      "complete": true
+    },
+    {
+      "t": 448,
+      "wave": 14,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 123,
+      "complete": true
+    },
+    {
+      "t": 449,
+      "wave": 14,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 123,
+      "complete": true
+    },
+    {
+      "t": 450,
+      "wave": 15,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 123,
+      "complete": true
+    },
+    {
+      "t": 451,
+      "wave": 15,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 123,
+      "complete": true
+    },
+    {
+      "t": 452,
+      "wave": 15,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 123,
+      "complete": true
+    },
+    {
+      "t": 453,
+      "wave": 15,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 131,
+      "complete": true
+    },
+    {
+      "t": 454,
+      "wave": 15,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 131,
+      "complete": true
+    },
+    {
+      "t": 455,
+      "wave": 15,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 131,
+      "complete": true
+    },
+    {
+      "t": 456,
+      "wave": 15,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 131,
+      "complete": true
+    },
+    {
+      "t": 457,
+      "wave": 15,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 131,
+      "complete": true
+    },
+    {
+      "t": 458,
+      "wave": 15,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 131,
+      "complete": true
+    },
+    {
+      "t": 459,
+      "wave": 15,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 131,
+      "complete": true
+    },
+    {
+      "t": 460,
+      "wave": 15,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 131,
+      "complete": true
+    },
+    {
+      "t": 461,
+      "wave": 15,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 131,
+      "complete": true
+    },
+    {
+      "t": 462,
+      "wave": 15,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 131,
+      "complete": true
+    },
+    {
+      "t": 463,
+      "wave": 15,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 131,
+      "complete": true
+    },
+    {
+      "t": 464,
+      "wave": 15,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 131,
+      "complete": true
+    },
+    {
+      "t": 465,
+      "wave": 15,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 131,
+      "complete": true
+    },
+    {
+      "t": 466,
+      "wave": 15,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 131,
+      "complete": true
+    },
+    {
+      "t": 467,
+      "wave": 15,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 131,
+      "complete": true
+    },
+    {
+      "t": 468,
+      "wave": 15,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 131,
+      "complete": true
+    },
+    {
+      "t": 469,
+      "wave": 15,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 131,
+      "complete": true
+    },
+    {
+      "t": 470,
+      "wave": 15,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 131,
+      "complete": true
+    },
+    {
+      "t": 471,
+      "wave": 15,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 131,
+      "complete": true
+    },
+    {
+      "t": 472,
+      "wave": 15,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 131,
+      "complete": true
+    },
+    {
+      "t": 473,
+      "wave": 15,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 131,
+      "complete": true
+    },
+    {
+      "t": 474,
+      "wave": 15,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 134,
+      "complete": true
+    },
+    {
+      "t": 475,
+      "wave": 15,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 137,
+      "complete": true
+    },
+    {
+      "t": 476,
+      "wave": 15,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 137,
+      "complete": true
+    },
+    {
+      "t": 477,
+      "wave": 15,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 137,
+      "complete": true
+    },
+    {
+      "t": 478,
+      "wave": 15,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 138,
+      "complete": true
+    },
+    {
+      "t": 479,
+      "wave": 15,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 143,
+      "complete": true
+    },
+    {
+      "t": 480,
+      "wave": 16,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 143,
+      "complete": true
+    },
+    {
+      "t": 481,
+      "wave": 16,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 143,
+      "complete": true
+    },
+    {
+      "t": 482,
+      "wave": 16,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 143,
+      "complete": true
+    },
+    {
+      "t": 483,
+      "wave": 16,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 143,
+      "complete": true
+    },
+    {
+      "t": 484,
+      "wave": 16,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 143,
+      "complete": true
+    },
+    {
+      "t": 485,
+      "wave": 16,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 143,
+      "complete": true
+    },
+    {
+      "t": 486,
+      "wave": 16,
+      "air": 0.133,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 143,
+      "complete": true
+    },
+    {
+      "t": 487,
+      "wave": 16,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 143,
+      "complete": true
+    },
+    {
+      "t": 488,
+      "wave": 16,
+      "air": 3.2,
+      "inDome": "dome-cluster-pad-west",
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 143,
+      "complete": true
+    },
+    {
+      "t": 489,
+      "wave": 16,
+      "air": 3.7,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 143,
+      "complete": true
+    },
+    {
+      "t": 490,
+      "wave": 16,
+      "air": 2.7,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 143,
+      "complete": true
+    },
+    {
+      "t": 491,
+      "wave": 16,
+      "air": 1.7,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 143,
+      "complete": true
+    },
+    {
+      "t": 492,
+      "wave": 16,
+      "air": 0.7,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 25,
+      "breathless": 143,
+      "complete": true
+    },
+    {
+      "t": 493,
+      "wave": 16,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 143,
+      "complete": true
+    },
+    {
+      "t": 494,
+      "wave": 16,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 143,
+      "complete": true
+    },
+    {
+      "t": 495,
+      "wave": 16,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 143,
+      "complete": true
+    },
+    {
+      "t": 496,
+      "wave": 16,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 143,
+      "complete": true
+    },
+    {
+      "t": 497,
+      "wave": 16,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 147,
+      "complete": true
+    },
+    {
+      "t": 498,
+      "wave": 16,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 147,
+      "complete": true
+    },
+    {
+      "t": 499,
+      "wave": 16,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 147,
+      "complete": true
+    },
+    {
+      "t": 500,
+      "wave": 16,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 147,
+      "complete": true
+    },
+    {
+      "t": 501,
+      "wave": 16,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 147,
+      "complete": true
+    },
+    {
+      "t": 502,
+      "wave": 16,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 147,
+      "complete": true
+    },
+    {
+      "t": 503,
+      "wave": 16,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 147,
+      "complete": true
+    },
+    {
+      "t": 504,
+      "wave": 16,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 147,
+      "complete": true
+    },
+    {
+      "t": 505,
+      "wave": 16,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 147,
+      "complete": true
+    },
+    {
+      "t": 506,
+      "wave": 16,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 147,
+      "complete": true
+    },
+    {
+      "t": 507,
+      "wave": 16,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 147,
+      "complete": true
+    },
+    {
+      "t": 508,
+      "wave": 16,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 147,
+      "complete": true
+    },
+    {
+      "t": 509,
+      "wave": 16,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 147,
+      "complete": true
+    },
+    {
+      "t": 510,
+      "wave": 17,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 147,
+      "complete": true
+    },
+    {
+      "t": 511,
+      "wave": 17,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 147,
+      "complete": true
+    },
+    {
+      "t": 512,
+      "wave": 17,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 147,
+      "complete": true
+    },
+    {
+      "t": 513,
+      "wave": 17,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 147,
+      "complete": true
+    },
+    {
+      "t": 514,
+      "wave": 17,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 147,
+      "complete": true
+    },
+    {
+      "t": 515,
+      "wave": 17,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 153,
+      "complete": true
+    },
+    {
+      "t": 516,
+      "wave": 17,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 153,
+      "complete": true
+    },
+    {
+      "t": 517,
+      "wave": 17,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 153,
+      "complete": true
+    },
+    {
+      "t": 518,
+      "wave": 17,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 153,
+      "complete": true
+    },
+    {
+      "t": 519,
+      "wave": 17,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 158,
+      "complete": true
+    },
+    {
+      "t": 520,
+      "wave": 17,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 159,
+      "complete": true
+    },
+    {
+      "t": 521,
+      "wave": 17,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 159,
+      "complete": true
+    },
+    {
+      "t": 522,
+      "wave": 17,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 159,
+      "complete": true
+    },
+    {
+      "t": 523,
+      "wave": 17,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 159,
+      "complete": true
+    },
+    {
+      "t": 524,
+      "wave": 17,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 163,
+      "complete": true
+    },
+    {
+      "t": 525,
+      "wave": 17,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 163,
+      "complete": true
+    },
+    {
+      "t": 526,
+      "wave": 17,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 163,
+      "complete": true
+    },
+    {
+      "t": 527,
+      "wave": 17,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 163,
+      "complete": true
+    },
+    {
+      "t": 528,
+      "wave": 17,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 167,
+      "complete": true
+    },
+    {
+      "t": 529,
+      "wave": 17,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 167,
+      "complete": true
+    },
+    {
+      "t": 530,
+      "wave": 17,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 167,
+      "complete": true
+    },
+    {
+      "t": 531,
+      "wave": 17,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 167,
+      "complete": true
+    },
+    {
+      "t": 532,
+      "wave": 17,
+      "air": 1.067,
+      "inDome": "dome-cluster-pad-east",
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 167,
+      "complete": true
+    },
+    {
+      "t": 533,
+      "wave": 17,
+      "air": 4.567,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 167,
+      "complete": true
+    },
+    {
+      "t": 534,
+      "wave": 17,
+      "air": 3.567,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 167,
+      "complete": true
+    },
+    {
+      "t": 535,
+      "wave": 17,
+      "air": 6.567,
+      "inDome": "dome-cluster-pad-center",
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 167,
+      "complete": true
+    },
+    {
+      "t": 536,
+      "wave": 17,
+      "air": 7.233,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 167,
+      "complete": true
+    },
+    {
+      "t": 537,
+      "wave": 17,
+      "air": 6.233,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 167,
+      "complete": true
+    },
+    {
+      "t": 538,
+      "wave": 17,
+      "air": 5.233,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 167,
+      "complete": true
+    },
+    {
+      "t": 539,
+      "wave": 17,
+      "air": 4.233,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 167,
+      "complete": true
+    },
+    {
+      "t": 540,
+      "wave": 18,
+      "air": 3.233,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 167,
+      "complete": true
+    },
+    {
+      "t": 541,
+      "wave": 18,
+      "air": 2.233,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 167,
+      "complete": true
+    },
+    {
+      "t": 542,
+      "wave": 18,
+      "air": 1.233,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 167,
+      "complete": true
+    },
+    {
+      "t": 543,
+      "wave": 18,
+      "air": 0.233,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 167,
+      "complete": true
+    },
+    {
+      "t": 544,
+      "wave": 18,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 167,
+      "complete": true
+    },
+    {
+      "t": 545,
+      "wave": 18,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 167,
+      "complete": true
+    },
+    {
+      "t": 546,
+      "wave": 18,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 172,
+      "complete": true
+    },
+    {
+      "t": 547,
+      "wave": 18,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 173,
+      "complete": true
+    },
+    {
+      "t": 548,
+      "wave": 18,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 173,
+      "complete": true
+    },
+    {
+      "t": 549,
+      "wave": 18,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 173,
+      "complete": true
+    },
+    {
+      "t": 550,
+      "wave": 18,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 173,
+      "complete": true
+    },
+    {
+      "t": 551,
+      "wave": 18,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 173,
+      "complete": true
+    },
+    {
+      "t": 552,
+      "wave": 18,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 173,
+      "complete": true
+    },
+    {
+      "t": 553,
+      "wave": 18,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 173,
+      "complete": true
+    },
+    {
+      "t": 554,
+      "wave": 18,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 173,
+      "complete": true
+    },
+    {
+      "t": 555,
+      "wave": 18,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 173,
+      "complete": true
+    },
+    {
+      "t": 556,
+      "wave": 18,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 173,
+      "complete": true
+    },
+    {
+      "t": 557,
+      "wave": 18,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 176,
+      "complete": true
+    },
+    {
+      "t": 558,
+      "wave": 18,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 179,
+      "complete": true
+    },
+    {
+      "t": 559,
+      "wave": 18,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 179,
+      "complete": true
+    },
+    {
+      "t": 560,
+      "wave": 18,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 179,
+      "complete": true
+    },
+    {
+      "t": 561,
+      "wave": 18,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 179,
+      "complete": true
+    },
+    {
+      "t": 562,
+      "wave": 18,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 179,
+      "complete": true
+    },
+    {
+      "t": 563,
+      "wave": 18,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 179,
+      "complete": true
+    },
+    {
+      "t": 564,
+      "wave": 18,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 179,
+      "complete": true
+    },
+    {
+      "t": 565,
+      "wave": 18,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 179,
+      "complete": true
+    },
+    {
+      "t": 566,
+      "wave": 18,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 179,
+      "complete": true
+    },
+    {
+      "t": 567,
+      "wave": 18,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 179,
+      "complete": true
+    },
+    {
+      "t": 568,
+      "wave": 18,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 180,
+      "complete": true
+    },
+    {
+      "t": 569,
+      "wave": 18,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 183,
+      "complete": true
+    },
+    {
+      "t": 570,
+      "wave": 19,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 183,
+      "complete": true
+    },
+    {
+      "t": 571,
+      "wave": 19,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 183,
+      "complete": true
+    },
+    {
+      "t": 572,
+      "wave": 19,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 183,
+      "complete": true
+    },
+    {
+      "t": 573,
+      "wave": 19,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 183,
+      "complete": true
+    },
+    {
+      "t": 574,
+      "wave": 19,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 183,
+      "complete": true
+    },
+    {
+      "t": 575,
+      "wave": 19,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 183,
+      "complete": true
+    },
+    {
+      "t": 576,
+      "wave": 19,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 183,
+      "complete": true
+    },
+    {
+      "t": 577,
+      "wave": 19,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 183,
+      "complete": true
+    },
+    {
+      "t": 578,
+      "wave": 19,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 183,
+      "complete": true
+    },
+    {
+      "t": 579,
+      "wave": 19,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 183,
+      "complete": true
+    },
+    {
+      "t": 580,
+      "wave": 19,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 187,
+      "complete": true
+    },
+    {
+      "t": 581,
+      "wave": 19,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 187,
+      "complete": true
+    },
+    {
+      "t": 582,
+      "wave": 19,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 187,
+      "complete": true
+    },
+    {
+      "t": 583,
+      "wave": 19,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 187,
+      "complete": true
+    },
+    {
+      "t": 584,
+      "wave": 19,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 197,
+      "complete": true
+    },
+    {
+      "t": 585,
+      "wave": 19,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 197,
+      "complete": true
+    },
+    {
+      "t": 586,
+      "wave": 19,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 197,
+      "complete": true
+    },
+    {
+      "t": 587,
+      "wave": 19,
+      "air": 0,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 197,
+      "complete": true
+    },
+    {
+      "t": 588,
+      "wave": 19,
+      "air": 3.067,
+      "inDome": "dome-cluster-pad-east",
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 197,
+      "complete": true
+    },
+    {
+      "t": 589,
+      "wave": 19,
+      "air": 3.733,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 197,
+      "complete": true
+    },
+    {
+      "t": 590,
+      "wave": 19,
+      "air": 4.4,
+      "inDome": "dome-cluster-pad-center",
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 197,
+      "complete": true
+    },
+    {
+      "t": 591,
+      "wave": 19,
+      "air": 8.4,
+      "inDome": "dome-cluster-pad-center",
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 197,
+      "complete": true
+    },
+    {
+      "t": 592,
+      "wave": 19,
+      "air": 10.4,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 197,
+      "complete": true
+    },
+    {
+      "t": 593,
+      "wave": 19,
+      "air": 9.4,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 197,
+      "complete": true
+    },
+    {
+      "t": 594,
+      "wave": 19,
+      "air": 8.4,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 197,
+      "complete": true
+    },
+    {
+      "t": 595,
+      "wave": 19,
+      "air": 7.4,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 197,
+      "complete": true
+    },
+    {
+      "t": 596,
+      "wave": 19,
+      "air": 6.4,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 197,
+      "complete": true
+    },
+    {
+      "t": 597,
+      "wave": 19,
+      "air": 5.4,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 29,
+      "breathless": 197,
+      "complete": true
+    },
+    {
+      "t": 598,
+      "wave": 19,
+      "air": 4.4,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 34,
+      "breathless": 197,
+      "complete": true
+    },
+    {
+      "t": 599,
+      "wave": 19,
+      "air": 3.4,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 39,
+      "breathless": 197,
+      "complete": true
+    },
+    {
+      "t": 600,
+      "wave": 20,
+      "air": 2.4,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 39,
+      "breathless": 197,
+      "complete": true
+    },
+    {
+      "t": 601,
+      "wave": 20,
+      "air": 2.4,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 39,
+      "breathless": 197,
+      "complete": true
+    },
+    {
+      "t": 602,
+      "wave": 20,
+      "air": 2.4,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 39,
+      "breathless": 197,
+      "complete": true
+    },
+    {
+      "t": 603,
+      "wave": 20,
+      "air": 2.4,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 39,
+      "breathless": 197,
+      "complete": true
+    },
+    {
+      "t": 604,
+      "wave": 20,
+      "air": 2.4,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 39,
+      "breathless": 197,
+      "complete": true
+    },
+    {
+      "t": 605,
+      "wave": 20,
+      "air": 2.4,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 39,
+      "breathless": 197,
+      "complete": true
+    },
+    {
+      "t": 606,
+      "wave": 20,
+      "air": 2.4,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 39,
+      "breathless": 197,
+      "complete": true
+    },
+    {
+      "t": 607,
+      "wave": 20,
+      "air": 2.4,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 39,
+      "breathless": 197,
+      "complete": true
+    },
+    {
+      "t": 608,
+      "wave": 20,
+      "air": 2.4,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 39,
+      "breathless": 197,
+      "complete": true
+    },
+    {
+      "t": 609,
+      "wave": 20,
+      "air": 2.4,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 39,
+      "breathless": 197,
+      "complete": true
+    },
+    {
+      "t": 610,
+      "wave": 20,
+      "air": 2.4,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 39,
+      "breathless": 197,
+      "complete": true
+    },
+    {
+      "t": 611,
+      "wave": 20,
+      "air": 2.4,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 39,
+      "breathless": 197,
+      "complete": true
+    },
+    {
+      "t": 612,
+      "wave": 20,
+      "air": 2.4,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 39,
+      "breathless": 197,
+      "complete": true
+    },
+    {
+      "t": 613,
+      "wave": 20,
+      "air": 2.4,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 39,
+      "breathless": 197,
+      "complete": true
+    },
+    {
+      "t": 614,
+      "wave": 20,
+      "air": 2.4,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 39,
+      "breathless": 197,
+      "complete": true
+    },
+    {
+      "t": 615,
+      "wave": 20,
+      "air": 2.4,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 39,
+      "breathless": 197,
+      "complete": true
+    },
+    {
+      "t": 616,
+      "wave": 20,
+      "air": 2.4,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 39,
+      "breathless": 197,
+      "complete": true
+    },
+    {
+      "t": 617,
+      "wave": 20,
+      "air": 2.4,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 39,
+      "breathless": 197,
+      "complete": true
+    },
+    {
+      "t": 618,
+      "wave": 20,
+      "air": 2.4,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 39,
+      "breathless": 197,
+      "complete": true
+    },
+    {
+      "t": 619,
+      "wave": 20,
+      "air": 2.4,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 39,
+      "breathless": 197,
+      "complete": true
+    },
+    {
+      "t": 620,
+      "wave": 20,
+      "air": 2.4,
+      "inDome": null,
+      "worked": 4,
+      "runsOnAir": 39,
+      "breathless": 197,
+      "complete": true
+    }
+  ]
+}

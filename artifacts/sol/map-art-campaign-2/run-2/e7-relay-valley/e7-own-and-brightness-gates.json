@@ -1,0 +1,19 @@
+{
+  "exit": 1,
+  "command": [
+    "npx",
+    "playwright",
+    "test",
+    "--workers=1",
+    "--project=desktop-chrome",
+    "--project=mobile-chrome",
+    "--trace=off",
+    "--reporter=line",
+    "--output=artifacts/sol/map-art-campaign-2/_raw/run-2/e7-own-and-brightness",
+    "e2e/e7-relay-rush-front.spec.ts",
+    "e2e/e7-echo-canyon-mirror.spec.ts",
+    "e2e/landmark-brightness.spec.ts"
+  ],
+  "log": "artifacts/sol/map-art-campaign-2/_raw/run-2/e7-own-and-brightness.log",
+  "seconds": 321.7071146965027
+}

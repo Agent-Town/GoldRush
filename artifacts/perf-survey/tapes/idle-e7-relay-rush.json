@@ -1,0 +1,70 @@
+{
+  "version": 2,
+  "id": "agent-94c08274-9cf62c56-6a0e-4ca9-8676-0917750d6e9e",
+  "createdAt": 0,
+  "kept": true,
+  "contract": "e7-relay-rush",
+  "seed": "perf-survey-20260905",
+  "difficulty": "trail",
+  "simVersion": 1,
+  "meta": {
+    "buildId": "a3ba9af82",
+    "engineHash": "17943318aff7d1081a502fc2d31b0223139c0e8188ad48c1cafee31b87482761",
+    "era": 5,
+    "viewVersion": 2
+  },
+  "runStart": {
+    "meta": {
+      "version": 1,
+      "tracks": {
+        "territory": 0,
+        "science": 0,
+        "hero": 0,
+        "agent": 0
+      }
+    },
+    "research": {
+      "version": 1,
+      "epochId": "epoch-1-frontier",
+      "metaScienceCursor": 0,
+      "progress": {
+        "version": 1,
+        "tracks": {
+          "territory": 0,
+          "science": 0,
+          "hero": 0,
+          "agent": 0
+        }
+      },
+      "taken": [],
+      "proposalSalt": 0,
+      "pinnedTarget": null,
+      "unlocks": {}
+    }
+  },
+  "inputLog": {
+    "version": 1,
+    "name": "agent-94c08274",
+    "contractId": "e7-relay-rush",
+    "seed": "perf-survey-20260905",
+    "difficultyPreset": "trail",
+    "stepSeconds": 0.03333333333333333,
+    "start": {
+      "x": -25,
+      "z": 41
+    },
+    "durationTicks": 2337,
+    "entries": [],
+    "truncated": null,
+    "primarySlot": 0,
+    "streams": []
+  },
+  "eventLogHash": "fnv1a32:a45ba9ac",
+  "outcome": {
+    "reason": "death",
+    "secured": false,
+    "waves": 2,
+    "timeAlive": 77.9,
+    "gold": 0
+  }
+}

@@ -1,0 +1,1826 @@
+{
+  "blender": "5.1.2",
+  "assets": {
+    "claim": {
+      "key": "claim",
+      "tileId": "frontier-river-claim",
+      "blendObjects": [
+        "TheClaimTerrain"
+      ],
+      "blendCameras": 0,
+      "blendLights": 0,
+      "checked": {
+        "sha256": "f9ef02736e821e70b51d532626b0eb1f50b8d1560ad619c1c57956b6f6dacce9",
+        "bytes": 8134116,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 32768,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -32,
+            -0.509999,
+            -32
+          ],
+          "max": [
+            32,
+            2.238265,
+            32
+          ],
+          "size": [
+            64,
+            2.748263,
+            64
+          ],
+          "center": [
+            0.0,
+            0.864133,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.8999999761581421,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "reexported": {
+        "sha256": "ff5fe1b797d5563d51b502fac02a192af84ddf30c66b941606715a7b168b7ccb",
+        "bytes": 8133728,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 32768,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -32,
+            -0.509999,
+            -32
+          ],
+          "max": [
+            32,
+            2.238265,
+            32
+          ],
+          "size": [
+            64,
+            2.748263,
+            64
+          ],
+          "center": [
+            0.0,
+            0.864133,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.8999999761581421,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "semanticReexportIdentical": true,
+      "binaryPayloadReexportIdentical": true,
+      "binaryPayloadSha256": "8f324c3613d3e67254e044d8113fb8457b2a34e16913b063eae13677fd4b4537",
+      "embeddedTexture": {
+        "bytes": 7403190,
+        "sha256": "2af09b685d53355ed1646f04e024466b4b2edb0b509eebeba394ed8f04092dda",
+        "width": 2048,
+        "height": 2048
+      },
+      "geometrySha256": "d4039a3f78691cc694c29cc7fbc5c36a63ac6ced3a43ac68d93497b410ea044a",
+      "geometryProbes": {
+        "riverCenterlineMax": -0.09651920944452286,
+        "fordLift": 0.4055609032511711,
+        "northBankRise": 0.5366742759943008
+      },
+      "customSafetyExtras": {
+        "render_only": true,
+        "sim_surface": "planar",
+        "height_socket": "Terrain.visualY",
+        "tile_id": "frontier-river-claim",
+        "water_mask": "z=-5..5; shallows to +/-6.25",
+        "ford_mask": "x=-3..3 inside water band",
+        "grid_segments": 128,
+        "grid_step_m": 0.5,
+        "source_plates": "terrain-bank-tile a/b/c; terrain-river-tile; kit-era-1 palette",
+        "owner_preview_landmarks": "render helpers only; excluded from GLB"
+      }
+    },
+    "dryGulch": {
+      "key": "dryGulch",
+      "tileId": "e1-dry-gulch",
+      "blendObjects": [
+        "DryGulchTerrain"
+      ],
+      "blendCameras": 0,
+      "blendLights": 0,
+      "checked": {
+        "sha256": "1189f0caa89f8f2482d55830510c2c6e859cd08b50e1c3b7541edd060a3616eb",
+        "bytes": 8457032,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 32768,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -32,
+            -0.410224,
+            -32
+          ],
+          "max": [
+            32,
+            2.386623,
+            32
+          ],
+          "size": [
+            64,
+            2.796848,
+            64
+          ],
+          "center": [
+            0.0,
+            0.988199,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.8999999761581421,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "reexported": {
+        "sha256": "a1df8b07cfa066d5c986f2b6150dadc799590852de47a9bea06e6693c2f097d3",
+        "bytes": 8456772,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 32768,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -32,
+            -0.410224,
+            -32
+          ],
+          "max": [
+            32,
+            2.386623,
+            32
+          ],
+          "size": [
+            64,
+            2.796848,
+            64
+          ],
+          "center": [
+            0.0,
+            0.988199,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.8999999761581421,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "semanticReexportIdentical": true,
+      "binaryPayloadReexportIdentical": true,
+      "binaryPayloadSha256": "902aa5a0cbd2618ceedcfd0330158f22ff90ee48a62ec3fac8eee178043c400c",
+      "embeddedTexture": {
+        "bytes": 7726234,
+        "sha256": "73f24e3d534bd6f0b23a68e6bba29ce6fd89766c531ac7c2422bbd6f34812024",
+        "width": 2048,
+        "height": 2048
+      },
+      "geometrySha256": "69661c4444511ac7e8639ab5b43bfa812addb6e877524e867591913292bd0a2e",
+      "geometryProbes": {
+        "springBasinRelief": 1.0063805989921093,
+        "southwestWashDepth": 0.2210971638560295,
+        "eastWashDepth": 0.1445554792881012
+      },
+      "customSafetyExtras": {
+        "render_only": true,
+        "sim_surface": "planar",
+        "height_socket": "Terrain.visualY",
+        "tile_id": "e1-dry-gulch",
+        "water_mask": "spring pond circle at (-18,-18), radius 1.4; runtime-owned",
+        "heightfield": "spring basin plus southwest and east descriptor washes"
+      }
+    },
+    "twinBanks": {
+      "key": "twinBanks",
+      "tileId": "e1-twin-banks",
+      "blendObjects": [
+        "TwinBanksTerrain"
+      ],
+      "blendCameras": 0,
+      "blendLights": 0,
+      "checked": {
+        "sha256": "d292a5d09c362a24437b46de32ff272fd96058ea8267c8b16ee6c96ea74d5dd7",
+        "bytes": 7936340,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 32768,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -32,
+            -0.337985,
+            -32
+          ],
+          "max": [
+            32,
+            1.949798,
+            32
+          ],
+          "size": [
+            64,
+            2.287783,
+            64
+          ],
+          "center": [
+            0.0,
+            0.805906,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.8999999761581421,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "reexported": {
+        "sha256": "5d42fdb8484d62732c2142a440db83944c5a8364e40b052570baca81716d0198",
+        "bytes": 7935920,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 32768,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -32,
+            -0.337985,
+            -32
+          ],
+          "max": [
+            32,
+            1.949798,
+            32
+          ],
+          "size": [
+            64,
+            2.287783,
+            64
+          ],
+          "center": [
+            0.0,
+            0.805906,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.8999999761581421,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "semanticReexportIdentical": true,
+      "binaryPayloadReexportIdentical": true,
+      "binaryPayloadSha256": "236f439bcaaf01d1c782c3ce47528fa3475e6dc821074a7d56c34efa1ddc2310",
+      "embeddedTexture": {
+        "bytes": 7205377,
+        "sha256": "421dda50957da8bcc07de79cb2ec54cf9c9a6124df504a6fd9f9bc0f4309eed9",
+        "width": 2048,
+        "height": 2048
+      },
+      "geometrySha256": "f579c79cd7274b6415dce101e495bcd852de13ea712e2970726802e87ecc94b2",
+      "geometryProbes": {
+        "westFordLift": 0.1355290412902832,
+        "eastFordLift": 0.14992479234933853,
+        "wideBankRise": 0.6160567104816437,
+        "opposedBankAsymmetry": 0.6638197898864746
+      },
+      "customSafetyExtras": {
+        "render_only": true,
+        "sim_surface": "planar",
+        "height_socket": "Terrain.visualY",
+        "contract_id": "e1-twin-banks",
+        "tile_id": "e1-twin-banks",
+        "water_mask": "z=-7.8..7.8 visual river; runtime water remains descriptor-owned",
+        "ford_mask": "two fords centered x=-16 and x=16, each halfWidth=3",
+        "regional_family": "Epoch 1 frontier river county",
+        "identity_rule": "unique mesh, atlas, macro silhouette, and landmark composition"
+      }
+    },
+    "nightShift": {
+      "key": "nightShift",
+      "tileId": "frontier-river-claim",
+      "blendObjects": [
+        "NightShiftTerrain"
+      ],
+      "blendCameras": 0,
+      "blendLights": 0,
+      "checked": {
+        "sha256": "747eacb0a5656713f60a4b1f7ebb9f18e5f75b225065b46e5239c46f304b756f",
+        "bytes": 7068896,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 32768,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -32,
+            -0.47,
+            -32
+          ],
+          "max": [
+            32,
+            3.18,
+            32
+          ],
+          "size": [
+            64,
+            3.65,
+            64
+          ],
+          "center": [
+            0.0,
+            1.355,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.8999999761581421,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "reexported": {
+        "sha256": "51c8227af0bfd0293f4e4201033158ff7b5982a4c3ae874d367c270bdc627161",
+        "bytes": 7068532,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 32768,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -32,
+            -0.47,
+            -32
+          ],
+          "max": [
+            32,
+            3.18,
+            32
+          ],
+          "size": [
+            64,
+            3.65,
+            64
+          ],
+          "center": [
+            0.0,
+            1.355,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.8999999761581421,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "semanticReexportIdentical": true,
+      "binaryPayloadReexportIdentical": true,
+      "binaryPayloadSha256": "d61c6bb7f87472b105189dc77c9200e6332c50fc1eed0c32347d21958d9b2a24",
+      "embeddedTexture": {
+        "bytes": 6337985,
+        "sha256": "a4c417ab22a887bea645738d73fde0180a4f80b24e53302f38f2c4f45ad9d6df",
+        "width": 2048,
+        "height": 2048
+      },
+      "geometrySha256": "add2f9ac3328f5da5a8610aeb35ed5e4d68bdb36c0efc602754a38ab26e8d4de",
+      "geometryProbes": {
+        "fordLift": 0.36932000517845154,
+        "leftRockShoulder": 2.0169936418533325,
+        "rightRockShoulder": 1.6688180565834045,
+        "lanternTerraceDelta": -0.174066960811615
+      },
+      "customSafetyExtras": {
+        "render_only": true,
+        "sim_surface": "planar",
+        "height_socket": "Terrain.visualY",
+        "contract_id": "e1-night-shift",
+        "tile_id": "frontier-river-claim",
+        "water_mask": "z=-5..5; shallows to +/-6.25",
+        "ford_mask": "x=-3..3 inside water band",
+        "regional_family": "Epoch 1 frontier river county",
+        "identity_rule": "unique mesh, atlas, macro silhouette, and landmark composition"
+      }
+    },
+    "baron": {
+      "key": "baron",
+      "tileId": "frontier-river-claim",
+      "blendObjects": [
+        "BaronTerrain"
+      ],
+      "blendCameras": 0,
+      "blendLights": 0,
+      "checked": {
+        "sha256": "accf4035907c0e69f534c71b924a0e359223c53e3fdac0b33dc1be5db3f236c4",
+        "bytes": 7840096,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 32768,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -32,
+            -0.48,
+            -32
+          ],
+          "max": [
+            32,
+            3.15177,
+            32
+          ],
+          "size": [
+            64,
+            3.63177,
+            64
+          ],
+          "center": [
+            0.0,
+            1.335885,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.8999999761581421,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "reexported": {
+        "sha256": "50225bdeedad25683b027f257010d32f78e9e82dba3b47569752fcd0ed098059",
+        "bytes": 7839736,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 32768,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -32,
+            -0.48,
+            -32
+          ],
+          "max": [
+            32,
+            3.15177,
+            32
+          ],
+          "size": [
+            64,
+            3.63177,
+            64
+          ],
+          "center": [
+            0.0,
+            1.335885,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.8999999761581421,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "semanticReexportIdentical": true,
+      "binaryPayloadReexportIdentical": true,
+      "binaryPayloadSha256": "a8d7fefc897a6a67bb45865e6a8158220eab44c0f20260d928937fbf4bdce9a6",
+      "embeddedTexture": {
+        "bytes": 7109212,
+        "sha256": "5b8721e3be13abfa9270ed678bcce5b2ed1c8d2e8066c068b79fc51e1ef3242e",
+        "width": 2048,
+        "height": 2048
+      },
+      "geometrySha256": "851283fde131f6e69171b104e6e2244d734757d38b1b328bd114e1fa97c64996",
+      "geometryProbes": {
+        "fordLift": 0.3837500214576721,
+        "farBankRise": 2.070064067840576,
+        "siegeTrenchDepth": 0.1282743215560913,
+        "westBastionRelief": 1.9352446794509888
+      },
+      "customSafetyExtras": {
+        "render_only": true,
+        "sim_surface": "planar",
+        "height_socket": "Terrain.visualY",
+        "contract_id": "e1-baron",
+        "tile_id": "frontier-river-claim",
+        "water_mask": "z=-5..5; shallows to +/-6.25",
+        "ford_mask": "x=-3..3 inside water band",
+        "regional_family": "Epoch 1 frontier river county",
+        "identity_rule": "unique mesh, atlas, macro silhouette, and landmark composition"
+      }
+    }
+  },
+  "panoramas": {
+    "claim": {
+      "key": "claim",
+      "asset": "the-claim-panorama.glb",
+      "checked": {
+        "sha256": "9ecaa2f4055e59bcce3750f13583ffb3c6103c6ab8df013e47e57a31d853068c",
+        "bytes": 517820,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 1920,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -193,
+            -10,
+            -193
+          ],
+          "max": [
+            193,
+            130,
+            193
+          ],
+          "size": [
+            386,
+            140,
+            386
+          ],
+          "center": [
+            0.0,
+            60.0,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.9,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "reexported": {
+        "sha256": "9ecaa2f4055e59bcce3750f13583ffb3c6103c6ab8df013e47e57a31d853068c",
+        "bytes": 517820,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 1920,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -193,
+            -10,
+            -193
+          ],
+          "max": [
+            193,
+            130,
+            193
+          ],
+          "size": [
+            386,
+            140,
+            386
+          ],
+          "center": [
+            0.0,
+            60.0,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.9,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "semanticReexportIdentical": true,
+      "binaryPayloadReexportIdentical": true,
+      "embeddedTexture": {
+        "bytes": 367684,
+        "sha256": "f65db0b1cd58518423bb7fefcd916519f557ec3a8af110e787d27751ffbf60e6",
+        "width": 2048,
+        "height": 2048
+      },
+      "customSafetyExtras": {
+        "render_only": true,
+        "panorama": true,
+        "affects_playfield": false,
+        "affects_masks": false,
+        "affects_spawn_edges": false,
+        "affects_fog_gating": false,
+        "mount_space": "game X/Y/Z at county origin",
+        "panorama_law": "v2"
+      },
+      "projectionRadiusRanges": {
+        "ridgeFootMeters": [
+          159.80004023141396,
+          163.199959669638
+        ],
+        "ridgeOccluderMeters": [
+          172.30003853405108,
+          175.69996064635234
+        ]
+      },
+      "mount": {
+        "id": "the-claim-panorama",
+        "asset": "the-claim-panorama.glb",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "renderOnly": true,
+        "ownership": "separate mounted scenery; never terrain or gameplay bounds"
+      }
+    },
+    "dryGulch": {
+      "key": "dryGulch",
+      "asset": "dry-gulch-panorama.glb",
+      "checked": {
+        "sha256": "4ecc42bb85f56a20eb79933e71a7f197ad229596669a7c32e09244669abb0da3",
+        "bytes": 520500,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 1920,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -193,
+            -10,
+            -193
+          ],
+          "max": [
+            193,
+            130,
+            193
+          ],
+          "size": [
+            386,
+            140,
+            386
+          ],
+          "center": [
+            0.0,
+            60.0,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.9,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "reexported": {
+        "sha256": "4ecc42bb85f56a20eb79933e71a7f197ad229596669a7c32e09244669abb0da3",
+        "bytes": 520500,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 1920,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -193,
+            -10,
+            -193
+          ],
+          "max": [
+            193,
+            130,
+            193
+          ],
+          "size": [
+            386,
+            140,
+            386
+          ],
+          "center": [
+            0.0,
+            60.0,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.9,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "semanticReexportIdentical": true,
+      "binaryPayloadReexportIdentical": true,
+      "embeddedTexture": {
+        "bytes": 370364,
+        "sha256": "bd4243d2a958f09c0d8816fb577f741c15bad852b561100f7e8d540d5bc93550",
+        "width": 2048,
+        "height": 2048
+      },
+      "customSafetyExtras": {
+        "render_only": true,
+        "panorama": true,
+        "affects_playfield": false,
+        "affects_masks": false,
+        "affects_spawn_edges": false,
+        "affects_fog_gating": false,
+        "mount_space": "game X/Y/Z at county origin",
+        "panorama_law": "v2"
+      },
+      "projectionRadiusRanges": {
+        "ridgeFootMeters": [
+          159.80004023141396,
+          163.199959669638
+        ],
+        "ridgeOccluderMeters": [
+          172.30003853405108,
+          175.69996064635234
+        ]
+      },
+      "mount": {
+        "id": "dry-gulch-panorama",
+        "asset": "dry-gulch-panorama.glb",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "renderOnly": true,
+        "ownership": "separate mounted scenery; never terrain or gameplay bounds"
+      }
+    },
+    "twinBanks": {
+      "key": "twinBanks",
+      "asset": "twin-banks-panorama.glb",
+      "checked": {
+        "sha256": "d5164f49383f3db6b59b1a1bb920ad7840c422c5eabbfa5048154958e7406a87",
+        "bytes": 469768,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 1920,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -193,
+            -10,
+            -193
+          ],
+          "max": [
+            193,
+            130,
+            193
+          ],
+          "size": [
+            386,
+            140,
+            386
+          ],
+          "center": [
+            0.0,
+            60.0,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.9,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "reexported": {
+        "sha256": "d5164f49383f3db6b59b1a1bb920ad7840c422c5eabbfa5048154958e7406a87",
+        "bytes": 469768,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 1920,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -193,
+            -10,
+            -193
+          ],
+          "max": [
+            193,
+            130,
+            193
+          ],
+          "size": [
+            386,
+            140,
+            386
+          ],
+          "center": [
+            0.0,
+            60.0,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.9,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "semanticReexportIdentical": true,
+      "binaryPayloadReexportIdentical": true,
+      "embeddedTexture": {
+        "bytes": 319625,
+        "sha256": "f163c1041426796ca35320d2eb0e0d3e857909584076069df01e963eff44f6e5",
+        "width": 2048,
+        "height": 2048
+      },
+      "customSafetyExtras": {
+        "render_only": true,
+        "panorama": true,
+        "affects_playfield": false,
+        "affects_masks": false,
+        "affects_spawn_edges": false,
+        "affects_fog_gating": false,
+        "mount_space": "game X/Y/Z at county origin",
+        "panorama_law": "v2"
+      },
+      "projectionRadiusRanges": {
+        "ridgeFootMeters": [
+          159.80004023141396,
+          163.199959669638
+        ],
+        "ridgeOccluderMeters": [
+          172.30003853405108,
+          175.69996064635234
+        ]
+      },
+      "mount": {
+        "id": "twin-banks-panorama",
+        "asset": "twin-banks-panorama.glb",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "renderOnly": true,
+        "ownership": "separate mounted scenery; never terrain or gameplay bounds"
+      }
+    },
+    "nightShift": {
+      "key": "nightShift",
+      "asset": "night-shift-panorama.glb",
+      "checked": {
+        "sha256": "f59a156aec2001a4f48a6fba20e8b10b42ac06165de873038340ee8107de39f0",
+        "bytes": 474332,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 1920,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -193,
+            -10,
+            -193
+          ],
+          "max": [
+            193,
+            130,
+            193
+          ],
+          "size": [
+            386,
+            140,
+            386
+          ],
+          "center": [
+            0.0,
+            60.0,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.9,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "reexported": {
+        "sha256": "f59a156aec2001a4f48a6fba20e8b10b42ac06165de873038340ee8107de39f0",
+        "bytes": 474332,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 1920,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -193,
+            -10,
+            -193
+          ],
+          "max": [
+            193,
+            130,
+            193
+          ],
+          "size": [
+            386,
+            140,
+            386
+          ],
+          "center": [
+            0.0,
+            60.0,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.9,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "semanticReexportIdentical": true,
+      "binaryPayloadReexportIdentical": true,
+      "embeddedTexture": {
+        "bytes": 324251,
+        "sha256": "e1e0b583240a7d048bc677587692ed84fa81a009271b0edd19fcb947cbf51d34",
+        "width": 2048,
+        "height": 2048
+      },
+      "customSafetyExtras": {
+        "render_only": true,
+        "panorama": true,
+        "affects_playfield": false,
+        "affects_masks": false,
+        "affects_spawn_edges": false,
+        "affects_fog_gating": false,
+        "mount_space": "game X/Y/Z at county origin",
+        "panorama_law": "v2"
+      },
+      "projectionRadiusRanges": {
+        "ridgeFootMeters": [
+          159.80004023141396,
+          163.199959669638
+        ],
+        "ridgeOccluderMeters": [
+          172.30003853405108,
+          175.69996064635234
+        ]
+      },
+      "mount": {
+        "id": "night-shift-panorama",
+        "asset": "night-shift-panorama.glb",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "renderOnly": true,
+        "ownership": "separate mounted scenery; never terrain or gameplay bounds"
+      }
+    },
+    "baron": {
+      "key": "baron",
+      "asset": "baron-panorama.glb",
+      "checked": {
+        "sha256": "82753d0923986d72a5feec271aacc6c1fb8fd4de90ab4e38ebc57ccd70fe577a",
+        "bytes": 527688,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 1920,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -193,
+            -10,
+            -193
+          ],
+          "max": [
+            193,
+            130,
+            193
+          ],
+          "size": [
+            386,
+            140,
+            386
+          ],
+          "center": [
+            0.0,
+            60.0,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.9,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "reexported": {
+        "sha256": "82753d0923986d72a5feec271aacc6c1fb8fd4de90ab4e38ebc57ccd70fe577a",
+        "bytes": 527688,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 1920,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -193,
+            -10,
+            -193
+          ],
+          "max": [
+            193,
+            130,
+            193
+          ],
+          "size": [
+            386,
+            140,
+            386
+          ],
+          "center": [
+            0.0,
+            60.0,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.9,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "semanticReexportIdentical": true,
+      "binaryPayloadReexportIdentical": true,
+      "embeddedTexture": {
+        "bytes": 377631,
+        "sha256": "1a3eb50e320015cefe462ce7606e39c169afffdc924663eee130db629832a414",
+        "width": 2048,
+        "height": 2048
+      },
+      "customSafetyExtras": {
+        "render_only": true,
+        "panorama": true,
+        "affects_playfield": false,
+        "affects_masks": false,
+        "affects_spawn_edges": false,
+        "affects_fog_gating": false,
+        "mount_space": "game X/Y/Z at county origin",
+        "panorama_law": "v2"
+      },
+      "projectionRadiusRanges": {
+        "ridgeFootMeters": [
+          159.80004023141396,
+          163.199959669638
+        ],
+        "ridgeOccluderMeters": [
+          172.30003853405108,
+          175.69996064635234
+        ]
+      },
+      "mount": {
+        "id": "baron-panorama",
+        "asset": "baron-panorama.glb",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "renderOnly": true,
+        "ownership": "separate mounted scenery; never terrain or gameplay bounds"
+      }
+    }
+  },
+  "identityChecks": {
+    "uniqueGeometryHashes": 5,
+    "uniqueGlbHashes": 5,
+    "uniqueAtlasHashes": 5,
+    "uniquePanoramaGlbHashes": 5,
+    "uniquePanoramaAtlasHashes": 5
+  },
+  "ownerEvidence": {
+    "all-contracts-mood-ab.png": {
+      "bytes": 4207174,
+      "pixelSha256": "baca111367eb164149607b7738b3cee3d38363f9273cd4a9bf20512af97638d4",
+      "containerSha256": "a67bc4f83f91f4d467ac46a5fde161d25ca5fd06e2b61feac7ebc8f839dd335f",
+      "width": 1280,
+      "height": 2092,
+      "inputs": {
+        "assets/raw/plate-contract-the-claim.png": {
+          "bytes": 3462008,
+          "pixelSha256": "30f8785f4b7d6fbe383847099d7ec2bc73a3263f1ade662fbba352bf6e00d8fa",
+          "containerSha256": "60ae92a9b85105a2c36820f10fab8e3cd1c18024d904ab936c4ca28994931da8",
+          "width": 1672,
+          "height": 941
+        },
+        "artifacts/map-rebuild-spike/owner-run-camera-sculpted.png": {
+          "bytes": 1449297,
+          "pixelSha256": "bd2bc951b0b254cdd7577131ff63b22f6bde67979b750bc2c446f6f72a1d3d26",
+          "containerSha256": "ede8b19eca01c88615e589ea205ffb6cf449ffe399dcd91c78b72406e437d16f",
+          "width": 1280,
+          "height": 720
+        },
+        "assets/raw/plate-contract-dry-gulch.png": {
+          "bytes": 3757742,
+          "pixelSha256": "56c86dbe87afde3c5be42626843dc036aac4a827b82f68a59a235c2d35ad0f57",
+          "containerSha256": "0a5837649880993ccc76c27ba8e660c852e57a5b93de43ffd412c11d62ca9d43",
+          "width": 1672,
+          "height": 941
+        },
+        "artifacts/map-rebuild-spike/dry-gulch-run-camera.png": {
+          "bytes": 1790463,
+          "pixelSha256": "627a3ab7f50d746c51d512331c1497e5ea0e46a290b1dc56d122dea3aa857c15",
+          "containerSha256": "33dc8f9857cc98ef6414b75c81895c04a573526b36fe4a3fe36a7e66bf95bdff",
+          "width": 1280,
+          "height": 720
+        },
+        "assets/raw/plate-contract-twin-banks.png": {
+          "bytes": 3816252,
+          "pixelSha256": "6dc2a97319eed5f3c17622b7c77be8b032522ad3dc620d11c666ae9d3895c73f",
+          "containerSha256": "7e73786875af381a549f204bc28f4f73825bfe5d79982c79e1d02d4f478903c0",
+          "width": 1672,
+          "height": 941
+        },
+        "artifacts/map-rebuild-spike/twin-banks-run-camera-unique.png": {
+          "bytes": 1393525,
+          "pixelSha256": "1ca26d9a6ab6e88a60b7dfce5819e249314a985903a3c2f2658291782f9dec91",
+          "containerSha256": "62c7be7bd81f9461523ed7a841fcfba81255f89abba493c7f89b513087336ce4",
+          "width": 1280,
+          "height": 720
+        },
+        "assets/raw/plate-contract-night-shift.png": {
+          "bytes": 2503952,
+          "pixelSha256": "d1ff71857376e4d9337e1e1d69a23b63aa6968cdbcf9f2b72524e21a688b1ade",
+          "containerSha256": "926ed4bb7726789876881dae5d8d829ec16453970c141adfd9447d4c2bca8b35",
+          "width": 1672,
+          "height": 941
+        },
+        "artifacts/map-rebuild-spike/night-shift-run-camera-unique.png": {
+          "bytes": 1200686,
+          "pixelSha256": "7f076b87d4fd1bf71622e3a2dd753311eed6fb6cd1bbfa172733e8fef1889176",
+          "containerSha256": "962369f507258c5d21d9fb5b754c10a5c1aababaf98624e2219c07f08daf5ca0",
+          "width": 1280,
+          "height": 720
+        },
+        "assets/raw/plate-contract-baron.png": {
+          "bytes": 3176392,
+          "pixelSha256": "287a20e3df6d98f22b5e55340f1fd5b928cbcd3b13d77d6a5bfcccb98bcc1059",
+          "containerSha256": "1a51cdf1e018e6ab60d3556d3ce340413efb8df5f38c2c46b0ffc07c37874433",
+          "width": 1672,
+          "height": 941
+        },
+        "artifacts/map-rebuild-spike/baron-run-camera-unique.png": {
+          "bytes": 1405411,
+          "pixelSha256": "055703273fceeb9fc8169e033fdaf5d03c48e908869cdff96d50dc6c05f64c43",
+          "containerSha256": "cb269274abf7d98f8373529721d220ba68de2ab68db80eff18cb102c24eed80f",
+          "width": 1280,
+          "height": 720
+        }
+      }
+    },
+    "all-contracts-building-grit-ab.png": {
+      "bytes": 2630923,
+      "pixelSha256": "5c8dc109834f3c1fd7b56606da6c0d1faf4e2528a6336c3d5cc0604690618975",
+      "containerSha256": "83c01d2b3bfb99fe520dceb0253267b682edf85fd6895392957bab521eaa3776",
+      "width": 1552,
+      "height": 1945,
+      "inputs": {}
+    },
+    "the-claim-exterior-ab.png": {
+      "bytes": 882243,
+      "pixelSha256": "2053765f157d85d857988d290aeaf8ea9717365ddf89c2a2e258f3e11176bdea",
+      "containerSha256": "ae776b8bfe74e31f6b5f91d0cd4cd201ccfbc580e7b36aec821c710a13c5a49b",
+      "width": 1920,
+      "height": 604,
+      "inputs": {
+        "artifacts/map-rebuild-spike/the-claim-exterior-before-low.png": {
+          "bytes": 1122752,
+          "pixelSha256": "337e06cca6b5e015e2ed57c02dd82e1d8401ef96c1af77a9dc725183356ce4dd",
+          "containerSha256": "febfbe324bf38fc98c33756225826ca47942e8384cf760695451bf7a45c25b3f",
+          "width": 1280,
+          "height": 720
+        },
+        "artifacts/map-rebuild-spike/the-claim-panorama-before.png": {
+          "bytes": 1175542,
+          "pixelSha256": "2f1c0cadbc540d2a9019de88142861519215687cdd2b334834fc5f9c0cfce0f8",
+          "containerSha256": "73fb9206f04893430e665da063782fbf09fe12d1161b41d90acafabee519218d",
+          "width": 1280,
+          "height": 720
+        }
+      }
+    },
+    "all-contracts-exterior-ab.png": {
+      "bytes": 4681206,
+      "pixelSha256": "9bb6da238dd228c6c8aa1d9d91144a276e36fa4461cca940780723c6e7058c1f",
+      "containerSha256": "4e16a3e100b68b58ade8fb54f962cc5faf29640469080a7ba022ba99dec93235",
+      "width": 1920,
+      "height": 2472,
+      "inputs": {
+        "artifacts/map-rebuild-spike/dry-gulch-exterior-before-edge.png": {
+          "bytes": 1586365,
+          "pixelSha256": "b9524cfee3661c491b77baccbe9af07f474456e90f70ac78ee6c29d1b33ffba2",
+          "containerSha256": "be37521ed4997b0ae3b03ed784cbd66dbaa92d9a9c94d08fe4c912ed8061029a",
+          "width": 1280,
+          "height": 720
+        },
+        "artifacts/map-rebuild-spike/dry-gulch-run-camera-east-edge.png": {
+          "bytes": 1693070,
+          "pixelSha256": "cf908aaab51dc31ab7b32c5eeb01b6c45f0fac55f9088d1fcb51d87edcdb3938",
+          "containerSha256": "bd7b9b7dbe0050874c2af7ff013ed3e5e9794c8dbbb9bb5694b7d7147638a54f",
+          "width": 1280,
+          "height": 720
+        },
+        "artifacts/map-rebuild-spike/twin-banks-exterior-before-edge.png": {
+          "bytes": 1274469,
+          "pixelSha256": "4af832dd592bbd4ff410bd589d2c8ee1b54426bc758ad53e96c7ac2b68b8501b",
+          "containerSha256": "ac0ed5bbcb53c9307738cc83f161679bc57b2cd0c73b7bdb0fbe1d3ca46ff8a7",
+          "width": 1280,
+          "height": 720
+        },
+        "artifacts/map-rebuild-spike/twin-banks-run-camera-east-edge.png": {
+          "bytes": 1312327,
+          "pixelSha256": "c7c344ae9b8c374ecdc31483e33df6953de4d14cc97b23df12fd4d9b2eac6d98",
+          "containerSha256": "709b0a0ca99493b9d3b905be7ea4ee88869ee3932e014dfda368fc455bb75e1d",
+          "width": 1280,
+          "height": 720
+        },
+        "artifacts/map-rebuild-spike/night-shift-exterior-before-edge.png": {
+          "bytes": 1006651,
+          "pixelSha256": "c2af561bc9fcbbd1ef77fb38a94bb330e60ee1e0caa451326f824bb792ef1095",
+          "containerSha256": "e1f275192bb3d062b6cb98ab6ce95f77362e9d877baea2de4b3cb9eac6595828",
+          "width": 1280,
+          "height": 720
+        },
+        "artifacts/map-rebuild-spike/night-shift-run-camera-east-edge.png": {
+          "bytes": 1032564,
+          "pixelSha256": "f5dd7ae95544a294bd5628dc26e169f40b7b1df59d199b9e9e5a7c25fb8711c7",
+          "containerSha256": "5092acbfaf2268fed9f44099627ef1a18125daff3186978c65a5bb175e5f9d6d",
+          "width": 1280,
+          "height": 720
+        },
+        "artifacts/map-rebuild-spike/baron-exterior-before-edge.png": {
+          "bytes": 1323702,
+          "pixelSha256": "0f0b6006cd7785297cdd7e03a8d043946de282905062bccc4ad66dc03d99fdc5",
+          "containerSha256": "1bc0c05403c52f4a204eeb2cab8c4bfd5f72781e06cfc17d97df2f3c395b70f3",
+          "width": 1280,
+          "height": 720
+        },
+        "artifacts/map-rebuild-spike/baron-run-camera-east-edge.png": {
+          "bytes": 1374349,
+          "pixelSha256": "d96d3ea3d766571824ddfa53caee42e4087647203f45df8b2b69cfc70cf02feb",
+          "containerSha256": "3958f2884ca9352fa549df69f19426e4670bd602c48287dfafde41f3808d4691",
+          "width": 1280,
+          "height": 720
+        }
+      }
+    },
+    "all-contracts-exterior-low-verdict.png": {
+      "bytes": 1781886,
+      "pixelSha256": "2d311db747a47bd44b5cbeebaee04ca3f1bebbafe5062eb03bbe40747aeab1ff",
+      "containerSha256": "32b8c32fe143e45e075a1969b3de98565384ab5f9bebd96f285f73a587070a3b",
+      "width": 1920,
+      "height": 1080,
+      "inputs": {
+        "artifacts/map-rebuild-spike/dry-gulch-low-angle-unique.png": {
+          "bytes": 1269038,
+          "pixelSha256": "9ecac3f4d6b025df4b3416a1011b996c2fb260d487847aeda9961a8fb6a0bd0a",
+          "containerSha256": "0ecc4bb9563b8fed9677249d438616cdda6ac54890fc5e02e08b73053271e8ae",
+          "width": 1280,
+          "height": 720
+        },
+        "artifacts/map-rebuild-spike/twin-banks-low-angle-unique.png": {
+          "bytes": 1104155,
+          "pixelSha256": "f1eb17695cb4b4e661f9b9011276afffb3592f94fdcbfd64c8f5175b1e39bd7c",
+          "containerSha256": "b77643b4efc5d30aec43170ad0b1ed10208c74ec752d7c0329f0cc782afd4b21",
+          "width": 1280,
+          "height": 720
+        },
+        "artifacts/map-rebuild-spike/night-shift-low-angle-unique.png": {
+          "bytes": 987102,
+          "pixelSha256": "df7ced59dd767be562064c564d7e51cd343625804c81221ddc613961237982de",
+          "containerSha256": "199bbdf479181f653ff974be15e1478de1399038d009179b04328321a9f1687d",
+          "width": 1280,
+          "height": 720
+        },
+        "artifacts/map-rebuild-spike/baron-low-angle-unique.png": {
+          "bytes": 1053901,
+          "pixelSha256": "10bb499324450d9cc7f33754af155b0d3a721a61b7b453a45a3132ed45931ad2",
+          "containerSha256": "e4771e7803c4d69ad210218910324f1169dfd40fb1f59f9408f1b2191736573e",
+          "width": 1280,
+          "height": 720
+        }
+      }
+    },
+    "all-contracts-exterior-edge-crops.png": {
+      "bytes": 2021744,
+      "pixelSha256": "c1ef653126cb368c19fc51b1167a702e72c334b56643ab646f5b11257236dc38",
+      "containerSha256": "3ce097b7f7dd786a50818f7e0f97efa2768f77fa811ffce5f523423eec289eb4",
+      "width": 1920,
+      "height": 1080,
+      "inputs": {
+        "artifacts/map-rebuild-spike/dry-gulch-run-camera-east-edge.png": {
+          "bytes": 1693070,
+          "pixelSha256": "cf908aaab51dc31ab7b32c5eeb01b6c45f0fac55f9088d1fcb51d87edcdb3938",
+          "containerSha256": "bd7b9b7dbe0050874c2af7ff013ed3e5e9794c8dbbb9bb5694b7d7147638a54f",
+          "width": 1280,
+          "height": 720
+        },
+        "artifacts/map-rebuild-spike/twin-banks-run-camera-east-edge.png": {
+          "bytes": 1312327,
+          "pixelSha256": "c7c344ae9b8c374ecdc31483e33df6953de4d14cc97b23df12fd4d9b2eac6d98",
+          "containerSha256": "709b0a0ca99493b9d3b905be7ea4ee88869ee3932e014dfda368fc455bb75e1d",
+          "width": 1280,
+          "height": 720
+        },
+        "artifacts/map-rebuild-spike/night-shift-run-camera-east-edge.png": {
+          "bytes": 1032564,
+          "pixelSha256": "f5dd7ae95544a294bd5628dc26e169f40b7b1df59d199b9e9e5a7c25fb8711c7",
+          "containerSha256": "5092acbfaf2268fed9f44099627ef1a18125daff3186978c65a5bb175e5f9d6d",
+          "width": 1280,
+          "height": 720
+        },
+        "artifacts/map-rebuild-spike/baron-run-camera-east-edge.png": {
+          "bytes": 1374349,
+          "pixelSha256": "d96d3ea3d766571824ddfa53caee42e4087647203f45df8b2b69cfc70cf02feb",
+          "containerSha256": "3958f2884ca9352fa549df69f19426e4670bd602c48287dfafde41f3808d4691",
+          "width": 1280,
+          "height": 720
+        }
+      }
+    },
+    "all-contracts-panorama-mood-ab.png": {
+      "bytes": 3864270,
+      "pixelSha256": "e4c09f477c76b3abfbeb7f74c7a5a221a51083181952daa23fe0046a4d347966",
+      "containerSha256": "cf2fad80aeb22388a0c142181a0eed648b05dcd846b45d2d2f321eb87bb75298",
+      "width": 1920,
+      "height": 2092,
+      "inputs": {
+        "assets/raw/plate-contract-the-claim.png": {
+          "bytes": 3462008,
+          "pixelSha256": "30f8785f4b7d6fbe383847099d7ec2bc73a3263f1ade662fbba352bf6e00d8fa",
+          "containerSha256": "60ae92a9b85105a2c36820f10fab8e3cd1c18024d904ab936c4ca28994931da8",
+          "width": 1672,
+          "height": 941
+        },
+        "artifacts/map-rebuild-spike/the-claim-panorama-before.png": {
+          "bytes": 1175542,
+          "pixelSha256": "2f1c0cadbc540d2a9019de88142861519215687cdd2b334834fc5f9c0cfce0f8",
+          "containerSha256": "73fb9206f04893430e665da063782fbf09fe12d1161b41d90acafabee519218d",
+          "width": 1280,
+          "height": 720
+        },
+        "artifacts/map-rebuild-spike/the-claim-panorama-mounted.png": {
+          "bytes": 1185136,
+          "pixelSha256": "e46631bee3cfbbe4d7ac5c7392123386e8fed036d58261da4e94bada3f644cf4",
+          "containerSha256": "af24c9bd6400e0847dd79e9ecc8f702e11727ec5349cf68a2f88769e70f36ecb",
+          "width": 1280,
+          "height": 720
+        },
+        "assets/raw/plate-contract-dry-gulch.png": {
+          "bytes": 3757742,
+          "pixelSha256": "56c86dbe87afde3c5be42626843dc036aac4a827b82f68a59a235c2d35ad0f57",
+          "containerSha256": "0a5837649880993ccc76c27ba8e660c852e57a5b93de43ffd412c11d62ca9d43",
+          "width": 1672,
+          "height": 941
+        },
+        "artifacts/map-rebuild-spike/dry-gulch-panorama-before.png": {
+          "bytes": 1269038,
+          "pixelSha256": "9ecac3f4d6b025df4b3416a1011b996c2fb260d487847aeda9961a8fb6a0bd0a",
+          "containerSha256": "34f736d4538395a0550fb891d8b09bd4d2079be02272f03b81ccddd360de04ca",
+          "width": 1280,
+          "height": 720
+        },
+        "artifacts/map-rebuild-spike/dry-gulch-panorama-mounted.png": {
+          "bytes": 1276559,
+          "pixelSha256": "f8872abe56616daff1db4eb289647718d069d724dabbf6a9376fbeb60e6698c4",
+          "containerSha256": "e839aa8d1e5742d822e1b771bee74876ec5d63b044d75c8e5742771fecf2bb1f",
+          "width": 1280,
+          "height": 720
+        },
+        "assets/raw/plate-contract-twin-banks.png": {
+          "bytes": 3816252,
+          "pixelSha256": "6dc2a97319eed5f3c17622b7c77be8b032522ad3dc620d11c666ae9d3895c73f",
+          "containerSha256": "7e73786875af381a549f204bc28f4f73825bfe5d79982c79e1d02d4f478903c0",
+          "width": 1672,
+          "height": 941
+        },
+        "artifacts/map-rebuild-spike/twin-banks-panorama-before.png": {
+          "bytes": 1104155,
+          "pixelSha256": "f1eb17695cb4b4e661f9b9011276afffb3592f94fdcbfd64c8f5175b1e39bd7c",
+          "containerSha256": "f9316cee98faf0126e51f1025253070596d8b6347a14ced3df4fc0e5646d44c5",
+          "width": 1280,
+          "height": 720
+        },
+        "artifacts/map-rebuild-spike/twin-banks-panorama-mounted.png": {
+          "bytes": 1115753,
+          "pixelSha256": "a72940a0857888c07b22f29eeb1f1433283b98f4a941b17f5340a6243bbd76dd",
+          "containerSha256": "6bc27f9452336cecb048a59b601eabb14ac9186fcad8e856da5ce99afd45e913",
+          "width": 1280,
+          "height": 720
+        },
+        "assets/raw/plate-contract-night-shift.png": {
+          "bytes": 2503952,
+          "pixelSha256": "d1ff71857376e4d9337e1e1d69a23b63aa6968cdbcf9f2b72524e21a688b1ade",
+          "containerSha256": "926ed4bb7726789876881dae5d8d829ec16453970c141adfd9447d4c2bca8b35",
+          "width": 1672,
+          "height": 941
+        },
+        "artifacts/map-rebuild-spike/night-shift-panorama-before.png": {
+          "bytes": 987102,
+          "pixelSha256": "df7ced59dd767be562064c564d7e51cd343625804c81221ddc613961237982de",
+          "containerSha256": "0cdf66c200354290c35b8a78074f0aa50d11bae0b08aaca50829bde16dea0f00",
+          "width": 1280,
+          "height": 720
+        },
+        "artifacts/map-rebuild-spike/night-shift-panorama-mounted.png": {
+          "bytes": 1009754,
+          "pixelSha256": "3e428a90df61c11bc43465b6b86ae97fc68fdd1afa604c35a38185d7b2b65c58",
+          "containerSha256": "5d4bc58ade7221ff0afe25a767921f391fe527426465a05568b155ec71c34e60",
+          "width": 1280,
+          "height": 720
+        },
+        "assets/raw/plate-contract-baron.png": {
+          "bytes": 3176392,
+          "pixelSha256": "287a20e3df6d98f22b5e55340f1fd5b928cbcd3b13d77d6a5bfcccb98bcc1059",
+          "containerSha256": "1a51cdf1e018e6ab60d3556d3ce340413efb8df5f38c2c46b0ffc07c37874433",
+          "width": 1672,
+          "height": 941
+        },
+        "artifacts/map-rebuild-spike/baron-panorama-before.png": {
+          "bytes": 1053901,
+          "pixelSha256": "10bb499324450d9cc7f33754af155b0d3a721a61b7b453a45a3132ed45931ad2",
+          "containerSha256": "e4771e7803c4d69ad210218910324f1169dfd40fb1f59f9408f1b2191736573e",
+          "width": 1280,
+          "height": 720
+        },
+        "artifacts/map-rebuild-spike/baron-panorama-mounted.png": {
+          "bytes": 1058054,
+          "pixelSha256": "73e57026c5016e5398b74e767adf5ef0ea29682058cbdc450324a95770ee22e0",
+          "containerSha256": "87b3927035524cc2eedea969c8e2b300d048653d01cdf039279779fe15febca5",
+          "width": 1280,
+          "height": 720
+        }
+      }
+    },
+    "all-contracts-panorama-distance-gate.png": {
+      "bytes": 2249543,
+      "pixelSha256": "63820a384100b78edb88c7dcb88b3c7bd222ea93fc99bed904e714fe041893fc",
+      "containerSha256": "39ee8cb7997567f031c4e22488948640f40a78b19402615cbaf076194df8d596",
+      "width": 1920,
+      "height": 1792,
+      "inputs": {
+        "artifacts/map-rebuild-spike/the-claim-panorama-horizon.png": {
+          "bytes": 1032605,
+          "pixelSha256": "eb3921a5654b80df39309efd8dcdf4a5eada1ffbeba21003328c78d4fd373523",
+          "containerSha256": "a5a7dafae06bc4d5191efa545d11d71f1fde7ad33e064522b72726a488114382",
+          "width": 1280,
+          "height": 720
+        },
+        "artifacts/map-rebuild-spike/dry-gulch-panorama-horizon.png": {
+          "bytes": 1092652,
+          "pixelSha256": "3192a6172c94ec3cc2953eea3a1e7668645a8aeff5ce5acbaee111dcdd94f452",
+          "containerSha256": "47d722f5e820f85cc9054385c9927adf58219e15e33a894796ed393de8ec8b29",
+          "width": 1280,
+          "height": 720
+        },
+        "artifacts/map-rebuild-spike/twin-banks-panorama-horizon.png": {
+          "bytes": 1037614,
+          "pixelSha256": "2dd6c6eaa0920ff1d5d9810e95b214d0868b818ff2adf7ae6f815a84d6d56b92",
+          "containerSha256": "587b39ddd967b8566bf1a7636fd4393c0121f99db13ad71081885affd3d80133",
+          "width": 1280,
+          "height": 720
+        },
+        "artifacts/map-rebuild-spike/night-shift-panorama-horizon.png": {
+          "bytes": 972662,
+          "pixelSha256": "e02267deac9caa90097257f0abc14c81f3909b361cc34da2e3e982bf5d20af0b",
+          "containerSha256": "1f457f83710e82d1d391461ce607c48b860a658f645f02fbc1c3ace17a90a084",
+          "width": 1280,
+          "height": 720
+        },
+        "artifacts/map-rebuild-spike/baron-panorama-horizon.png": {
+          "bytes": 1053358,
+          "pixelSha256": "2d50092e8034b03878c64b5b5fdaa245e2b0c1df8d5e51caef7faf810cc71314",
+          "containerSha256": "1b79b565b53bd89e77fb8ae094ece0d8116fdadad42bf4ff8102206f54c2d111",
+          "width": 1280,
+          "height": 720
+        }
+      }
+    }
+  },
+  "srcEdits": false,
+  "srcPaths": []
+}

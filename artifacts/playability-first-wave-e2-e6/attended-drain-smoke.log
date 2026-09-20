@@ -1,0 +1,74 @@
+(node:59037) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 8 tests using 1 worker
+
+
+(node:59108) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/8] [desktop-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e1-drill-yard boots plain, briefs, moves and reaches wave 2 @slow
+[2/8] [desktop-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e2-trestle boots plain, briefs, moves and reaches wave 2 @slow
+[3/8] [desktop-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e2-incline boots plain, briefs, moves and reaches wave 2 @slow
+[4/8] [desktop-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e6-picnic boots plain, briefs, moves and reaches wave 2 @slow
+  1) [desktop-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e6-picnic boots plain, briefs, moves and reaches wave 2 @slow 
+
+    Error: wave 2: reached wave 1 after 5.6s wall / 37.6s sim at timescale 4 (runState=dead, HUD wave reads "1", simTick=293)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      520 |       expect(row.hud.ok, `HUD: ${row.hud.detail}`).toBe(true);
+      521 |       expect(row.moves.ok, `moves: ${row.moves.detail}`).toBe(true);
+    > 522 |       expect(row.wave2.ok, `wave 2: ${row.wave2.detail}`).toBe(true);
+          |                                                           ^
+      523 |       expect(row.clean.ok, `clean: ${row.clean.detail}`).toBe(true);
+      524 |       expect(row.screenshotBytes, 'screenshot exists and is under 300 KB').toBeGreaterThan(0);
+      525 |       expect(row.screenshotBytes, 'screenshot is under 300 KB').toBeLessThan(300 * 1024);
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-play/e2e/playability-smoke.spec.ts:522:59
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/playability-smoke-playabil-1a6c7-fs-moves-and-reaches-wave-2-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/playability-smoke-playabil-1a6c7-fs-moves-and-reaches-wave-2-desktop-chrome/error-context.md
+
+
+
+(node:51615) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[5/8] [mobile-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e1-drill-yard boots plain, briefs, moves and reaches wave 2 @slow
+[6/8] [mobile-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e2-trestle boots plain, briefs, moves and reaches wave 2 @slow
+[7/8] [mobile-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e2-incline boots plain, briefs, moves and reaches wave 2 @slow
+[8/8] [mobile-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e6-picnic boots plain, briefs, moves and reaches wave 2 @slow
+  2) [mobile-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e6-picnic boots plain, briefs, moves and reaches wave 2 @slow 
+
+    Error: wave 2: reached wave 0 after 2.5s wall / 27.2s sim at timescale 4 (runState=dead, HUD wave reads "0", simTick=214)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      520 |       expect(row.hud.ok, `HUD: ${row.hud.detail}`).toBe(true);
+      521 |       expect(row.moves.ok, `moves: ${row.moves.detail}`).toBe(true);
+    > 522 |       expect(row.wave2.ok, `wave 2: ${row.wave2.detail}`).toBe(true);
+          |                                                           ^
+      523 |       expect(row.clean.ok, `clean: ${row.clean.detail}`).toBe(true);
+      524 |       expect(row.screenshotBytes, 'screenshot exists and is under 300 KB').toBeGreaterThan(0);
+      525 |       expect(row.screenshotBytes, 'screenshot is under 300 KB').toBeLessThan(300 * 1024);
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-play/e2e/playability-smoke.spec.ts:522:59
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/playability-smoke-playabil-1a6c7-fs-moves-and-reaches-wave-2-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/playability-smoke-playabil-1a6c7-fs-moves-and-reaches-wave-2-mobile-chrome/error-context.md
+
+
+  2 failed
+    [desktop-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e6-picnic boots plain, briefs, moves and reaches wave 2 @slow 
+    [mobile-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e6-picnic boots plain, briefs, moves and reaches wave 2 @slow 
+  6 passed (2.5m)
+rc=1

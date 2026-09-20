@@ -1,0 +1,60 @@
+base main 35d509b6c branch e2e589c3e 03:05Z
+merged b6fafeb6c
+engine hash merged: f141ba2f1881fa5ebbee7d80f032b1378b378f402e75873dfe53e9022f97f320
+tsc/build/e1: 0 / 0 / 1
+
+halo: rc=0 halo re-extraction PASS: 315 cured, 0 held, 760 regenerated-and-cured, 2127 scanned; alpha and opaque RGB unchanged
+null floors: rc=0 83 of 83 null floors match assets/contracts/null-floors.json (474.7s).
+law-pointer: rc=0 law-pointer-guard — do the law surfaces still point at what they claim?
+guards: ℹ pass 93 ℹ fail 0 
+e2e start 03:16Z
+e2e: rc=1   10 failed   4 skipped   70 passed (10.7m)  03:26Z
+  1) [desktop-chrome] › e2e/e1-baron.spec.ts:411:1 › Baron manifest loads and taunts fire at waves 5, 12, and 18 
+  2) [desktop-chrome] › e2e/e1-twin-banks.spec.ts:64:1 › loads Twin Banks contract with two fords, two build zones, and one loss stake 
+  3) [desktop-chrome] › e2e/e1-twin-banks.spec.ts:103:1 › builds sluices and stockpiles on both banks against one gold pool 
+  4) [desktop-chrome] › e2e/e1-twin-banks.spec.ts:122:1 › routes enemies through both west and east fords 
+  5) [desktop-chrome] › e2e/e10-static-boss.spec.ts:153:1 › recession hands the secured claim to the existing T10 re-inking finale 
+  6) [mobile-chrome] › e2e/e1-baron.spec.ts:411:1 › Baron manifest loads and taunts fire at waves 5, 12, and 18 
+  7) [mobile-chrome] › e2e/e1-twin-banks.spec.ts:64:1 › loads Twin Banks contract with two fords, two build zones, and one loss stake 
+  8) [mobile-chrome] › e2e/e1-twin-banks.spec.ts:103:1 › builds sluices and stockpiles on both banks against one gold pool 
+  9) [mobile-chrome] › e2e/e1-twin-banks.spec.ts:122:1 › routes enemies through both west and east fords 
+  10) [mobile-chrome] › e2e/e10-static-boss.spec.ts:153:1 › recession hands the secured claim to the existing T10 re-inking finale 
+battery start 03:26Z
+battery: rc=1 ℹ tests 934 ℹ pass 924 ℹ fail 5 ℹ skipped 5  03:36Z
+    actual: [ 'CONTENDED — 3 concurrent batteries', 'CONTENDED — 3 concurrent batteries' ],
+    expected: [ 'CONTENDED — 2 concurrent batteries', 'CONTENDED — 2 concurrent batteries' ],
+  +   'CONTENDED — 3 concurrent batteries'
+  +   'CONTENDED — 3 concurrent batteries',
+  -   'CONTENDED — 2 concurrent batteries'
+  -   'CONTENDED — 2 concurrent batteries',
+✖ all 152 scripts/*.test.mjs fixture owners remove their temp directories (277122.495417ms)
+✖ contention is advisory, correctly counted, and absent when alone (5834.3495ms)
+✖ failing tests:
+✖ gr-sim replays the same contract, seed, and orders byte-for-byte (60358.24725ms)
+✖ rotation registry stays outside the engine identity corpus (857.610917ms)
+✖ the landed registry names the live engine and stays outside its hash corpus (658.198125ms)
+dirt after battery: 0
+CORR1-PREP-DONE
+re-flattened (F-RB-1 single-line law): 'e2-trestle'
+tsc/build/e1: 0 / 0 / 0 (after the F-RB-1 re-flatten; the default build is whitespace-identical)
+re-flatten committed 7bf15bf6f
+engine hash after the re-flatten: 8a22b488cfb38cb0f946388c54410fc9700871ec46314d10fe522a799947e4bc
+CORR1-FIX-DONE
+gr-sim alone on the corrections tree: ℹ pass 22 ℹ fail 0  byte-for-byte (9185.683375ms)
+attribution: the battery's gr-sim red (60 s) carried a Node localStorage ExperimentalWarning in one arm's captured output under three concurrent batteries; green alone (F-CORR1-6)
+CORR1-RESUMED
+e2e2: rc=1   5 failed   2 skipped   25 passed (3.9m) 
+1) [desktop-chrome] › e2e/beauty-twin-banks.spec.ts:295:1 › the braid renders living water without touching the sculpt contract or the frame
+2) [desktop-chrome] › e2e/e1-night-shift.spec.ts:271:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting 
+3) [mobile-chrome] › e2e/beauty-twin-banks.spec.ts:295:1 › the braid renders living water without touching the sculpt contract or the frame 
+4) [mobile-chrome] › e2e/e1-night-shift.spec.ts:271:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting 
+5) [mobile-chrome] › e2e/e1-night-shift.spec.ts:372:1 › lantern post is Night Shift gated and relights a true-dark light ring 
+e2e2: rc=1   5 failed   2 skipped   25 passed (3.9m) 
+1) [desktop-chrome] › e2e/beauty-twin-banks.spec.ts:295:1 › the braid renders living water without touching the sculpt contract or the frame
+2) [desktop-chrome] › e2e/e1-night-shift.spec.ts:271:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting 
+3) [mobile-chrome] › e2e/beauty-twin-banks.spec.ts:295:1 › the braid renders living water without touching the sculpt contract or the frame 
+4) [mobile-chrome] › e2e/e1-night-shift.spec.ts:271:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting 
+5) [mobile-chrome] › e2e/e1-night-shift.spec.ts:372:1 › lantern post is Night Shift gated and relights a true-dark light ring 
+pin #18
+era: ℹ pass 9 ℹ fail 0 
+postpin: ℹ pass 9 ℹ fail 0 

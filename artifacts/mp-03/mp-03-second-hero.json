@@ -1,0 +1,300 @@
+{
+  "alice": [
+    {
+      "slot": 0,
+      "playerId": "p1",
+      "name": "Bob",
+      "town": "River Bend",
+      "local": false,
+      "hp": 100,
+      "maxHp": 100,
+      "weapon": "rig",
+      "position": {
+        "x": 16.788970332038033,
+        "y": 0.924575196041985,
+        "z": 10.8
+      },
+      "speed": 5.999999999999999,
+      "visible": true
+    },
+    {
+      "slot": 1,
+      "playerId": "p2",
+      "name": "Alice",
+      "town": "Dawn Claim",
+      "local": true,
+      "hp": 100,
+      "maxHp": 100,
+      "weapon": "rig",
+      "position": {
+        "x": -2.963344974116235,
+        "y": -0.36829100121131103,
+        "z": -2.7017407237622333
+      },
+      "speed": 4.922752693425641e-25,
+      "visible": true
+    }
+  ],
+  "bob": [
+    {
+      "slot": 0,
+      "playerId": "p1",
+      "name": "Bob",
+      "town": "River Bend",
+      "local": true,
+      "hp": 100,
+      "maxHp": 100,
+      "weapon": "rig",
+      "position": {
+        "x": 16.788970332038033,
+        "y": 0.9261646026459553,
+        "z": 10.8
+      },
+      "speed": 5.999999999999999,
+      "visible": true
+    },
+    {
+      "slot": 1,
+      "playerId": "p2",
+      "name": "Alice",
+      "town": "Dawn Claim",
+      "local": false,
+      "hp": 100,
+      "maxHp": 100,
+      "weapon": "rig",
+      "position": {
+        "x": -2.963344974116235,
+        "y": -0.36829100121131103,
+        "z": -2.7017407237622333
+      },
+      "speed": 4.922752693425641e-25,
+      "visible": true
+    }
+  ],
+  "mp": {
+    "alice": {
+      "active": true,
+      "connected": true,
+      "partySize": 2,
+      "started": true,
+      "code": "ED4C35432AABD46CA3DE68C1",
+      "playerId": "p2",
+      "roster": [
+        {
+          "playerId": "p1",
+          "name": "Bob",
+          "town": "River Bend",
+          "client": "browser"
+        },
+        {
+          "playerId": "p2",
+          "name": "Alice",
+          "town": "Dawn Claim",
+          "client": "browser"
+        }
+      ],
+      "tick": 273,
+      "buffered": 3,
+      "latencyMs": 92,
+      "tickRate": 32,
+      "hashes": [
+        {
+          "tick": 0,
+          "hash": "fnv1a32:58c46e1f"
+        },
+        {
+          "tick": 30,
+          "hash": "fnv1a32:c457ef65"
+        },
+        {
+          "tick": 60,
+          "hash": "fnv1a32:64196a88"
+        },
+        {
+          "tick": 90,
+          "hash": "fnv1a32:ecdcc6bf"
+        },
+        {
+          "tick": 120,
+          "hash": "fnv1a32:1825bcfe"
+        },
+        {
+          "tick": 150,
+          "hash": "fnv1a32:b2a81a7c"
+        },
+        {
+          "tick": 180,
+          "hash": "fnv1a32:0ed2173f"
+        },
+        {
+          "tick": 210,
+          "hash": "fnv1a32:0e8b7787"
+        },
+        {
+          "tick": 240,
+          "hash": "fnv1a32:c6239213"
+        },
+        {
+          "tick": 270,
+          "hash": "fnv1a32:16d33fe2"
+        }
+      ],
+      "desyncs": 0,
+      "resyncs": 0,
+      "lastResyncTick": null,
+      "reconnecting": false,
+      "reconnects": 0,
+      "lastReconnectTick": null,
+      "lastReconnectReplayTicks": null,
+      "heldPlayerIds": [],
+      "paused": false,
+      "error": null,
+      "setup": {
+        "contractId": "the-claim",
+        "seed": "mp-02-lockstep",
+        "difficultyPreset": "trail",
+        "meta": {
+          "version": 1,
+          "tracks": {
+            "territory": 0,
+            "science": 0,
+            "hero": 0,
+            "agent": 0
+          }
+        },
+        "research": {
+          "version": 1,
+          "epochId": "epoch-1-frontier",
+          "metaScienceCursor": 0,
+          "progress": {
+            "version": 1,
+            "tracks": {
+              "territory": 0,
+              "science": 0,
+              "hero": 0,
+              "agent": 0
+            }
+          },
+          "taken": [],
+          "proposalSalt": 0,
+          "pinnedTarget": null,
+          "unlocks": {
+            "rocketCartCaptured": false
+          }
+        }
+      }
+    },
+    "bob": {
+      "active": true,
+      "connected": true,
+      "partySize": 2,
+      "started": true,
+      "code": "ED4C35432AABD46CA3DE68C1",
+      "playerId": "p1",
+      "roster": [
+        {
+          "playerId": "p1",
+          "name": "Bob",
+          "town": "River Bend",
+          "client": "browser"
+        },
+        {
+          "playerId": "p2",
+          "name": "Alice",
+          "town": "Dawn Claim",
+          "client": "browser"
+        }
+      ],
+      "tick": 274,
+      "buffered": 2,
+      "latencyMs": 99,
+      "tickRate": 32.1,
+      "hashes": [
+        {
+          "tick": 0,
+          "hash": "fnv1a32:58c46e1f"
+        },
+        {
+          "tick": 30,
+          "hash": "fnv1a32:c457ef65"
+        },
+        {
+          "tick": 60,
+          "hash": "fnv1a32:64196a88"
+        },
+        {
+          "tick": 90,
+          "hash": "fnv1a32:ecdcc6bf"
+        },
+        {
+          "tick": 120,
+          "hash": "fnv1a32:1825bcfe"
+        },
+        {
+          "tick": 150,
+          "hash": "fnv1a32:b2a81a7c"
+        },
+        {
+          "tick": 180,
+          "hash": "fnv1a32:0ed2173f"
+        },
+        {
+          "tick": 210,
+          "hash": "fnv1a32:0e8b7787"
+        },
+        {
+          "tick": 240,
+          "hash": "fnv1a32:c6239213"
+        },
+        {
+          "tick": 270,
+          "hash": "fnv1a32:16d33fe2"
+        }
+      ],
+      "desyncs": 0,
+      "resyncs": 0,
+      "lastResyncTick": null,
+      "reconnecting": false,
+      "reconnects": 0,
+      "lastReconnectTick": null,
+      "lastReconnectReplayTicks": null,
+      "heldPlayerIds": [],
+      "paused": false,
+      "error": null,
+      "setup": {
+        "contractId": "the-claim",
+        "seed": "mp-02-lockstep",
+        "difficultyPreset": "trail",
+        "meta": {
+          "version": 1,
+          "tracks": {
+            "territory": 0,
+            "science": 0,
+            "hero": 0,
+            "agent": 0
+          }
+        },
+        "research": {
+          "version": 1,
+          "epochId": "epoch-1-frontier",
+          "metaScienceCursor": 0,
+          "progress": {
+            "version": 1,
+            "tracks": {
+              "territory": 0,
+              "science": 0,
+              "hero": 0,
+              "agent": 0
+            }
+          },
+          "taken": [],
+          "proposalSalt": 0,
+          "pinnedTarget": null,
+          "unlocks": {
+            "rocketCartCaptured": false
+          }
+        }
+      }
+    }
+  }
+}

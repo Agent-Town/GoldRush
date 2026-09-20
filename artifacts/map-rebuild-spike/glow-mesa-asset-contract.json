@@ -1,0 +1,422 @@
+{
+  "blender": "5.1.2",
+  "maskTables": [
+    "assets/contracts/epoch-6-atomic/mask-tables/e6-glow-mesa.json"
+  ],
+  "terrains": {
+    "glow-mesa": {
+      "asset": "glow-mesa-terrain.glb",
+      "checked": {
+        "sha256": "6ea7f06da0f4bd697cdef5025946f999987c8b93e2b6a94bc3503cbf69f77a71",
+        "bytes": 10938808,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 32768,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -64,
+            0.58,
+            -64
+          ],
+          "max": [
+            64,
+            5.016908,
+            64
+          ],
+          "size": [
+            128,
+            4.436908,
+            128
+          ],
+          "center": [
+            0.0,
+            2.798454,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.8999999761581421,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "reexported": {
+        "sha256": "6ea7f06da0f4bd697cdef5025946f999987c8b93e2b6a94bc3503cbf69f77a71",
+        "bytes": 10938808,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 32768,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -64,
+            0.58,
+            -64
+          ],
+          "max": [
+            64,
+            5.016908,
+            64
+          ],
+          "size": [
+            128,
+            4.436908,
+            128
+          ],
+          "center": [
+            0.0,
+            2.798454,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.8999999761581421,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "byteIdenticalReexport": true,
+      "semanticIdenticalReexport": true,
+      "embeddedTexture": {
+        "bytes": 8851433,
+        "sha256": "0e2af985412fa50cc9e2c479cbc7313e2dff790ef06b57702d1345f0d548bbb5",
+        "width": 2048,
+        "height": 2048
+      },
+      "extras": {
+        "render_only": true,
+        "sim_authority": "published mask table and planar simulation; unchanged",
+        "height_socket": "Terrain.visualY",
+        "contract_id": "e6-glow-mesa",
+        "tile_id": "e6-glow-mesa",
+        "mask_table": "assets/contracts/epoch-6-atomic/mask-tables/e6-glow-mesa.json",
+        "load_bearing_sites_flat": true,
+        "landmarks_frozen": false
+      },
+      "geometryProbes": [
+        {
+          "requested": [
+            0,
+            -32
+          ],
+          "sampled": [
+            0.0,
+            -32.0
+          ],
+          "height": 1.0
+        },
+        {
+          "requested": [
+            -30,
+            15
+          ],
+          "sampled": [
+            -30.0,
+            15.0
+          ],
+          "height": 5.0
+        },
+        {
+          "requested": [
+            0,
+            20
+          ],
+          "sampled": [
+            0.0,
+            20.0
+          ],
+          "height": 5.0
+        },
+        {
+          "requested": [
+            40,
+            15
+          ],
+          "sampled": [
+            40.0,
+            15.0
+          ],
+          "height": 3.0512
+        },
+        {
+          "requested": [
+            -35,
+            45
+          ],
+          "sampled": [
+            -35.0,
+            45.0
+          ],
+          "height": 5.0
+        }
+      ],
+      "pylonSurfaceFlatness": [],
+      "capacitorSurfaceFlatness": [],
+      "fixtureSurfaceFlatness": [
+        {
+          "id": "calculating-house-site",
+          "sampledSurfacePoints": 2145,
+          "maxDeviationMeters": 0.0
+        },
+        {
+          "id": "reactor-dome-site",
+          "sampledSurfacePoints": 2145,
+          "maxDeviationMeters": 0.0
+        }
+      ],
+      "buildZoneSurfaceFlatness": [
+        {
+          "id": "base-flat",
+          "sampledSurfacePoints": 2145,
+          "maxDeviationMeters": 0.0
+        },
+        {
+          "id": "decay-clock-site",
+          "sampledSurfacePoints": 2145,
+          "maxDeviationMeters": 0.0
+        },
+        {
+          "id": "warehouse-approach",
+          "sampledSurfacePoints": 2145,
+          "maxDeviationMeters": 0.0
+        },
+        {
+          "id": "calculating-house-site",
+          "sampledSurfacePoints": 2145,
+          "maxDeviationMeters": 0.0
+        },
+        {
+          "id": "reactor-dome-site",
+          "sampledSurfacePoints": 2145,
+          "maxDeviationMeters": 0.0
+        }
+      ],
+      "maskSource": "assets/contracts/epoch-6-atomic/mask-tables/e6-glow-mesa.json"
+    }
+  },
+  "panoramas": {
+    "glow-mesa": {
+      "asset": "glow-mesa-panorama.glb",
+      "checked": {
+        "sha256": "fe0eab4fad143283bc99b0f848e8a3ce4c9eb358c0632ee471c46b967d65c286",
+        "bytes": 982768,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 2496,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -193,
+            -10,
+            -193
+          ],
+          "max": [
+            193,
+            130,
+            193
+          ],
+          "size": [
+            386,
+            140,
+            386
+          ],
+          "center": [
+            0.0,
+            60.0,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 1,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": true,
+            "emissiveFactor": [
+              1,
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "reexported": {
+        "sha256": "fe0eab4fad143283bc99b0f848e8a3ce4c9eb358c0632ee471c46b967d65c286",
+        "bytes": 982768,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 2496,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -193,
+            -10,
+            -193
+          ],
+          "max": [
+            193,
+            130,
+            193
+          ],
+          "size": [
+            386,
+            140,
+            386
+          ],
+          "center": [
+            0.0,
+            60.0,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 1,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": true,
+            "emissiveFactor": [
+              1,
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "byteIdenticalReexport": true,
+      "semanticIdenticalReexport": true,
+      "embeddedTexture": {
+        "bytes": 889504,
+        "sha256": "5dcf23622721c71a972f2c3917d3af570443275669b8e68a30f2b17eeffa853a",
+        "width": 2048,
+        "height": 2048
+      },
+      "extras": {
+        "render_only": true,
+        "panorama": true,
+        "affects_playfield": false,
+        "affects_masks": false,
+        "affects_spawn_edges": false,
+        "affects_fog_gating": false,
+        "mount_space": "game X/Y/Z at county origin",
+        "panorama_law": "v2"
+      },
+      "mount": {
+        "id": "glow-mesa-panorama",
+        "asset": "glow-mesa-panorama.glb",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "renderOnly": true,
+        "ownership": "separate mounted scenery; never terrain or gameplay bounds"
+      }
+    }
+  },
+  "boards": {
+    "glow-mesa-mood-ab.png": {
+      "size": [
+        1920,
+        684
+      ],
+      "bytes": 2101936,
+      "sha256": "3237c7a2396588843a0d4862d7dae4fbbb82d06cc9ceac4f69d74de233650729"
+    },
+    "glow-mesa-flat-vs-sculpted-ab.png": {
+      "size": [
+        1920,
+        684
+      ],
+      "bytes": 1466083,
+      "sha256": "512553b7094574172cdd30c361849aacfc61626dc2d561b74ed4c8b947c9e410"
+    },
+    "glow-mesa-owner-verdict.png": {
+      "size": [
+        1920,
+        504
+      ],
+      "bytes": 1003068,
+      "sha256": "4f703ce92577e968d788d68364c55f41a2b1408c2364252ded9dc4b84f3a6075"
+    },
+    "glow-mesa-panorama-mood-ab.png": {
+      "size": [
+        1920,
+        504
+      ],
+      "bytes": 620082,
+      "sha256": "9aabed097ae4f6c19b789c4483c81879ad9f73e901dd0672121df418df393c64"
+    },
+    "glow-mesa-panorama-distance-gate.png": {
+      "size": [
+        1920,
+        684
+      ],
+      "bytes": 1222815,
+      "sha256": "0f24d16042ce2c037c21c40235f472cc7292dd9659646c7b711e39c23262416f"
+    },
+    "glow-mesa-mask-agreement-board.png": {
+      "size": [
+        1600,
+        1260
+      ],
+      "bytes": 1292871,
+      "sha256": "f646307c17ea5ff85355f6cdf19ff8d3a5ed9b483b5e283d72d09d2280be329e"
+    }
+  },
+  "verdict": {
+    "grit": "polished convalescent homestead under dangerous teal night; fight, never holiday",
+    "panorama": "distance",
+    "masks": "published and unchanged",
+    "loadBearingSites": "five build zones plus two civic fixtures independently sampled buildable-flat",
+    "landmarks": "freeze lifted; no assets or mounts authored in this pair"
+  },
+  "freshReferenceBaseSha": "ce9f9beb5d3c9298e96287d7b6c4549673a059ca"
+}

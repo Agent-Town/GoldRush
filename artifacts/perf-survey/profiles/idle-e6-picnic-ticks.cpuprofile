@@ -1,0 +1,8053 @@
+{
+  "nodes": [
+    {
+      "id": 1,
+      "callFrame": {
+        "functionName": "(root)",
+        "scriptId": "0",
+        "url": "",
+        "lineNumber": -1,
+        "columnNumber": -1
+      },
+      "hitCount": 0,
+      "children": [
+        2,
+        67,
+        112,
+        164,
+        336,
+        378,
+        388,
+        391,
+        395,
+        397
+      ]
+    },
+    {
+      "id": 2,
+      "callFrame": {
+        "functionName": "",
+        "scriptId": "88",
+        "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/scripts/perf-survey/sim-tape.mjs",
+        "lineNumber": -1,
+        "columnNumber": -1
+      },
+      "hitCount": 0,
+      "children": [
+        3,
+        7
+      ]
+    },
+    {
+      "id": 3,
+      "callFrame": {
+        "functionName": "fn",
+        "scriptId": "13",
+        "url": "node:internal/util",
+        "lineNumber": 476,
+        "columnNumber": 13
+      },
+      "hitCount": 0,
+      "children": [
+        4
+      ]
+    },
+    {
+      "id": 4,
+      "callFrame": {
+        "functionName": "",
+        "scriptId": "13",
+        "url": "node:internal/util",
+        "lineNumber": 477,
+        "columnNumber": 23
+      },
+      "hitCount": 0,
+      "children": [
+        5
+      ]
+    },
+    {
+      "id": 5,
+      "callFrame": {
+        "functionName": "post",
+        "scriptId": "101",
+        "url": "node:inspector",
+        "lineNumber": 114,
+        "columnNumber": 6
+      },
+      "hitCount": 0,
+      "children": [
+        6
+      ]
+    },
+    {
+      "id": 6,
+      "callFrame": {
+        "functionName": "dispatch",
+        "scriptId": "0",
+        "url": "",
+        "lineNumber": -1,
+        "columnNumber": -1
+      },
+      "hitCount": 0
+    },
+    {
+      "id": 7,
+      "callFrame": {
+        "functionName": "advanceOneTick",
+        "scriptId": "293",
+        "url": "",
+        "lineNumber": 67,
+        "columnNumber": 15
+      },
+      "hitCount": 0,
+      "children": [
+        8
+      ]
+    },
+    {
+      "id": 8,
+      "callFrame": {
+        "functionName": "advanceOneTick",
+        "scriptId": "427",
+        "url": "",
+        "lineNumber": 1247,
+        "columnNumber": 15
+      },
+      "hitCount": 1,
+      "children": [
+        9,
+        346
+      ],
+      "positionTicks": [
+        {
+          "line": 1249,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "callFrame": {
+        "functionName": "step",
+        "scriptId": "427",
+        "url": "",
+        "lineNumber": 1317,
+        "columnNumber": 5
+      },
+      "hitCount": 2,
+      "children": [
+        10,
+        11,
+        13,
+        15,
+        23,
+        27,
+        29,
+        39,
+        80,
+        119,
+        169,
+        181,
+        186,
+        192,
+        201,
+        234,
+        341
+      ],
+      "positionTicks": [
+        {
+          "line": 1403,
+          "ticks": 1
+        },
+        {
+          "line": 1423,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "callFrame": {
+        "functionName": "update",
+        "scriptId": "1991",
+        "url": "",
+        "lineNumber": 201,
+        "columnNumber": 7
+      },
+      "hitCount": 2,
+      "children": [
+        130,
+        313,
+        315,
+        316,
+        317
+      ],
+      "positionTicks": [
+        {
+          "line": 221,
+          "ticks": 1
+        },
+        {
+          "line": 223,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 130,
+      "callFrame": {
+        "functionName": "spawnAt",
+        "scriptId": "1991",
+        "url": "",
+        "lineNumber": 470,
+        "columnNumber": 8
+      },
+      "hitCount": 0,
+      "children": [
+        131
+      ]
+    },
+    {
+      "id": 131,
+      "callFrame": {
+        "functionName": "spawnAtPosition",
+        "scriptId": "1991",
+        "url": "",
+        "lineNumber": 501,
+        "columnNumber": 16
+      },
+      "hitCount": 0,
+      "children": [
+        132
+      ]
+    },
+    {
+      "id": 132,
+      "callFrame": {
+        "functionName": "spawn",
+        "scriptId": "1891",
+        "url": "",
+        "lineNumber": 705,
+        "columnNumber": 6
+      },
+      "hitCount": 1,
+      "children": [
+        133,
+        134,
+        139
+      ],
+      "positionTicks": [
+        {
+          "line": 716,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 133,
+      "callFrame": {
+        "functionName": "get eliteKind",
+        "scriptId": "1900",
+        "url": "",
+        "lineNumber": 170,
+        "columnNumber": 14
+      },
+      "hitCount": 0
+    },
+    {
+      "id": 134,
+      "callFrame": {
+        "functionName": "syncEnemyInstance",
+        "scriptId": "1891",
+        "url": "",
+        "lineNumber": 1342,
+        "columnNumber": 18
+      },
+      "hitCount": 0,
+      "children": [
+        135,
+        136
+      ]
+    },
+    {
+      "id": 135,
+      "callFrame": {
+        "functionName": "get isWrecker",
+        "scriptId": "1900",
+        "url": "",
+        "lineNumber": 246,
+        "columnNumber": 14
+      },
+      "hitCount": 0
+    },
+    {
+      "id": 136,
+      "callFrame": {
+        "functionName": "syncWatchPaint",
+        "scriptId": "1891",
+        "url": "",
+        "lineNumber": 1544,
+        "columnNumber": 15
+      },
+      "hitCount": 0,
+      "children": [
+        137
+      ]
+    },
+    {
+      "id": 137,
+      "callFrame": {
+        "functionName": "feverAccentFor",
+        "scriptId": "1891",
+        "url": "",
+        "lineNumber": 654,
+        "columnNumber": 15
+      },
+      "hitCount": 0,
+      "children": [
+        138
+      ]
+    },
+    {
+      "id": 138,
+      "callFrame": {
+        "functionName": "feverAccentState",
+        "scriptId": "1891",
+        "url": "",
+        "lineNumber": 237,
+        "columnNumber": 25
+      },
+      "hitCount": 0
+    },
+    {
+      "id": 139,
+      "callFrame": {
+        "functionName": "syncEnemySprite",
+        "scriptId": "1891",
+        "url": "",
+        "lineNumber": 1576,
+        "columnNumber": 16
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 1604,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 313,
+      "callFrame": {
+        "functionName": "planDueWaves",
+        "scriptId": "1991",
+        "url": "",
+        "lineNumber": 349,
+        "columnNumber": 13
+      },
+      "hitCount": 0,
+      "children": [
+        314
+      ]
+    },
+    {
+      "id": 314,
+      "callFrame": {
+        "functionName": "planWave",
+        "scriptId": "1991",
+        "url": "",
+        "lineNumber": 356,
+        "columnNumber": 9
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 358,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 315,
+      "callFrame": {
+        "functionName": "telegraphDuePulses",
+        "scriptId": "1991",
+        "url": "",
+        "lineNumber": 383,
+        "columnNumber": 19
+      },
+      "hitCount": 0
+    },
+    {
+      "id": 316,
+      "callFrame": {
+        "functionName": "spawnDuePulses",
+        "scriptId": "1991",
+        "url": "",
+        "lineNumber": 403,
+        "columnNumber": 15
+      },
+      "hitCount": 0
+    },
+    {
+      "id": 317,
+      "callFrame": {
+        "functionName": "resolveWaveState",
+        "scriptId": "1991",
+        "url": "",
+        "lineNumber": 786,
+        "columnNumber": 17
+      },
+      "hitCount": 0
+    },
+    {
+      "id": 11,
+      "callFrame": {
+        "functionName": "update",
+        "scriptId": "1958",
+        "url": "",
+        "lineNumber": 593,
+        "columnNumber": 7
+      },
+      "hitCount": 5,
+      "children": [
+        12,
+        26,
+        102
+      ],
+      "positionTicks": [
+        {
+          "line": 603,
+          "ticks": 4
+        },
+        {
+          "line": 604,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "callFrame": {
+        "functionName": "updateBuildingVisuals",
+        "scriptId": "1958",
+        "url": "",
+        "lineNumber": 1955,
+        "columnNumber": 22
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 1962,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "callFrame": {
+        "functionName": "update",
+        "scriptId": "1960",
+        "url": "",
+        "lineNumber": 129,
+        "columnNumber": 7
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 132,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 102,
+      "callFrame": {
+        "functionName": "updateRepairs",
+        "scriptId": "1958",
+        "url": "",
+        "lineNumber": 1880,
+        "columnNumber": 14
+      },
+      "hitCount": 0,
+      "children": [
+        103
+      ]
+    },
+    {
+      "id": 103,
+      "callFrame": {
+        "functionName": "maxHpForInstance",
+        "scriptId": "1958",
+        "url": "",
+        "lineNumber": 1618,
+        "columnNumber": 17
+      },
+      "hitCount": 3,
+      "children": [
+        104,
+        292
+      ],
+      "positionTicks": [
+        {
+          "line": 1620,
+          "ticks": 1
+        },
+        {
+          "line": 1620,
+          "ticks": 2
+        }
+      ]
+    },
+    {
+      "id": 104,
+      "callFrame": {
+        "functionName": "maxHpForPlacement",
+        "scriptId": "1958",
+        "url": "",
+        "lineNumber": 1621,
+        "columnNumber": 18
+      },
+      "hitCount": 2,
+      "children": [
+        105,
+        200
+      ],
+      "positionTicks": [
+        {
+          "line": 1624,
+          "ticks": 2
+        }
+      ]
+    },
+    {
+      "id": 105,
+      "callFrame": {
+        "functionName": "",
+        "scriptId": "427",
+        "url": "",
+        "lineNumber": 777,
+        "columnNumber": 3
+      },
+      "hitCount": 1,
+      "children": [
+        106
+      ],
+      "positionTicks": [
+        {
+          "line": 778,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 106,
+      "callFrame": {
+        "functionName": "get diagnostics",
+        "scriptId": "1991",
+        "url": "",
+        "lineNumber": 152,
+        "columnNumber": 16
+      },
+      "hitCount": 0,
+      "children": [
+        107
+      ]
+    },
+    {
+      "id": 107,
+      "callFrame": {
+        "functionName": "currentTrickleInterval",
+        "scriptId": "1991",
+        "url": "",
+        "lineNumber": 640,
+        "columnNumber": 23
+      },
+      "hitCount": 2,
+      "children": [
+        228
+      ],
+      "positionTicks": [
+        {
+          "line": 643,
+          "ticks": 1
+        },
+        {
+          "line": 643,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 228,
+      "callFrame": {
+        "functionName": "scalePerWave",
+        "scriptId": "1991",
+        "url": "",
+        "lineNumber": 20,
+        "columnNumber": 21
+      },
+      "hitCount": 0
+    },
+    {
+      "id": 200,
+      "callFrame": {
+        "functionName": "",
+        "scriptId": "295",
+        "url": "",
+        "lineNumber": 2,
+        "columnNumber": 48
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 3,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 292,
+      "callFrame": {
+        "functionName": "effectiveMaxHp",
+        "scriptId": "1958",
+        "url": "",
+        "lineNumber": 1744,
+        "columnNumber": 15
+      },
+      "hitCount": 0,
+      "children": [
+        293
+      ]
+    },
+    {
+      "id": 293,
+      "callFrame": {
+        "functionName": "effectiveStat",
+        "scriptId": "1958",
+        "url": "",
+        "lineNumber": 1740,
+        "columnNumber": 14
+      },
+      "hitCount": 0,
+      "children": [
+        294
+      ]
+    },
+    {
+      "id": 294,
+      "callFrame": {
+        "functionName": "tierRung",
+        "scriptId": "1958",
+        "url": "",
+        "lineNumber": 1736,
+        "columnNumber": 9
+      },
+      "hitCount": 1,
+      "children": [
+        295
+      ],
+      "positionTicks": [
+        {
+          "line": 1739,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 295,
+      "callFrame": {
+        "functionName": "tierFor",
+        "scriptId": "1958",
+        "url": "",
+        "lineNumber": 1727,
+        "columnNumber": 8
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 1729,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "callFrame": {
+        "functionName": "syncStockpileHoldings",
+        "scriptId": "427",
+        "url": "",
+        "lineNumber": 2782,
+        "columnNumber": 22
+      },
+      "hitCount": 0,
+      "children": [
+        14
+      ]
+    },
+    {
+      "id": 14,
+      "callFrame": {
+        "functionName": "get diagnostics",
+        "scriptId": "1958",
+        "url": "",
+        "lineNumber": 483,
+        "columnNumber": 16
+      },
+      "hitCount": 4,
+      "children": [
+        47,
+        71,
+        328,
+        329,
+        340,
+        354
+      ],
+      "positionTicks": [
+        {
+          "line": 541,
+          "ticks": 1
+        },
+        {
+          "line": 536,
+          "ticks": 2
+        },
+        {
+          "line": 557,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 47,
+      "callFrame": {
+        "functionName": "get activeRotations",
+        "scriptId": "1958",
+        "url": "",
+        "lineNumber": 2480,
+        "columnNumber": 20
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 2482,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 71,
+      "callFrame": {
+        "functionName": "hpBarDiagnostics",
+        "scriptId": "1958",
+        "url": "",
+        "lineNumber": 1662,
+        "columnNumber": 17
+      },
+      "hitCount": 3,
+      "children": [
+        72
+      ],
+      "positionTicks": [
+        {
+          "line": 1667,
+          "ticks": 1
+        },
+        {
+          "line": 1668,
+          "ticks": 2
+        }
+      ]
+    },
+    {
+      "id": 72,
+      "callFrame": {
+        "functionName": "maxHpForInstance",
+        "scriptId": "1958",
+        "url": "",
+        "lineNumber": 1618,
+        "columnNumber": 17
+      },
+      "hitCount": 4,
+      "children": [
+        73,
+        287
+      ],
+      "positionTicks": [
+        {
+          "line": 1620,
+          "ticks": 3
+        },
+        {
+          "line": 1620,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 73,
+      "callFrame": {
+        "functionName": "maxHpForPlacement",
+        "scriptId": "1958",
+        "url": "",
+        "lineNumber": 1621,
+        "columnNumber": 18
+      },
+      "hitCount": 3,
+      "children": [
+        116
+      ],
+      "positionTicks": [
+        {
+          "line": 1622,
+          "ticks": 1
+        },
+        {
+          "line": 1623,
+          "ticks": 1
+        },
+        {
+          "line": 1624,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 116,
+      "callFrame": {
+        "functionName": "",
+        "scriptId": "427",
+        "url": "",
+        "lineNumber": 777,
+        "columnNumber": 3
+      },
+      "hitCount": 0,
+      "children": [
+        117
+      ]
+    },
+    {
+      "id": 117,
+      "callFrame": {
+        "functionName": "get diagnostics",
+        "scriptId": "1991",
+        "url": "",
+        "lineNumber": 152,
+        "columnNumber": 16
+      },
+      "hitCount": 0,
+      "children": [
+        118
+      ]
+    },
+    {
+      "id": 118,
+      "callFrame": {
+        "functionName": "currentTrickleInterval",
+        "scriptId": "1991",
+        "url": "",
+        "lineNumber": 640,
+        "columnNumber": 23
+      },
+      "hitCount": 1,
+      "children": [
+        369
+      ],
+      "positionTicks": [
+        {
+          "line": 642,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 369,
+      "callFrame": {
+        "functionName": "",
+        "scriptId": "295",
+        "url": "",
+        "lineNumber": 2,
+        "columnNumber": 48
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 3,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 287,
+      "callFrame": {
+        "functionName": "effectiveMaxHp",
+        "scriptId": "1958",
+        "url": "",
+        "lineNumber": 1744,
+        "columnNumber": 15
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 1746,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 328,
+      "callFrame": {
+        "functionName": "get maxPileStep",
+        "scriptId": "1962",
+        "url": "",
+        "lineNumber": 87,
+        "columnNumber": 16
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 90,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 329,
+      "callFrame": {
+        "functionName": "shellDiagnostics",
+        "scriptId": "1958",
+        "url": "",
+        "lineNumber": 2147,
+        "columnNumber": 17
+      },
+      "hitCount": 0,
+      "children": [
+        330
+      ]
+    },
+    {
+      "id": 330,
+      "callFrame": {
+        "functionName": "get activeCount",
+        "scriptId": "1963",
+        "url": "",
+        "lineNumber": 65,
+        "columnNumber": 16
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 67,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 340,
+      "callFrame": {
+        "functionName": "rubbleDiagnostics",
+        "scriptId": "1958",
+        "url": "",
+        "lineNumber": 2051,
+        "columnNumber": 18
+      },
+      "hitCount": 2,
+      "positionTicks": [
+        {
+          "line": 2055,
+          "ticks": 1
+        },
+        {
+          "line": 2054,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 354,
+      "callFrame": {
+        "functionName": "activePositions",
+        "scriptId": "1958",
+        "url": "",
+        "lineNumber": 1532,
+        "columnNumber": 16
+      },
+      "hitCount": 0,
+      "children": [
+        355
+      ]
+    },
+    {
+      "id": 355,
+      "callFrame": {
+        "functionName": "",
+        "scriptId": "1958",
+        "url": "",
+        "lineNumber": 1533,
+        "columnNumber": 31
+      },
+      "hitCount": 2,
+      "positionTicks": [
+        {
+          "line": 1534,
+          "ticks": 1
+        },
+        {
+          "line": 1534,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "callFrame": {
+        "functionName": "updateSimulation",
+        "scriptId": "1911",
+        "url": "",
+        "lineNumber": 110,
+        "columnNumber": 17
+      },
+      "hitCount": 0,
+      "children": [
+        16,
+        127,
+        143
+      ]
+    },
+    {
+      "id": 16,
+      "callFrame": {
+        "functionName": "tickStandingOrders",
+        "scriptId": "310",
+        "url": "",
+        "lineNumber": 418,
+        "columnNumber": 27
+      },
+      "hitCount": 0,
+      "children": [
+        17
+      ]
+    },
+    {
+      "id": 17,
+      "callFrame": {
+        "functionName": "tick",
+        "scriptId": "310",
+        "url": "",
+        "lineNumber": 138,
+        "columnNumber": 5
+      },
+      "hitCount": 1,
+      "children": [
+        18,
+        332
+      ],
+      "positionTicks": [
+        {
+          "line": 141,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "callFrame": {
+        "functionName": "state",
+        "scriptId": "310",
+        "url": "",
+        "lineNumber": 402,
+        "columnNumber": 6
+      },
+      "hitCount": 1,
+      "children": [
+        19,
+        33,
+        89,
+        165
+      ],
+      "positionTicks": [
+        {
+          "line": 404,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "callFrame": {
+        "functionName": "",
+        "scriptId": "482",
+        "url": "",
+        "lineNumber": 70,
+        "columnNumber": 76
+      },
+      "hitCount": 0,
+      "children": [
+        20
+      ]
+    },
+    {
+      "id": 20,
+      "callFrame": {
+        "functionName": "readLiveState",
+        "scriptId": "482",
+        "url": "",
+        "lineNumber": 257,
+        "columnNumber": 22
+      },
+      "hitCount": 0,
+      "children": [
+        21
+      ]
+    },
+    {
+      "id": 21,
+      "callFrame": {
+        "functionName": "diagnostics",
+        "scriptId": "427",
+        "url": "",
+        "lineNumber": 998,
+        "columnNumber": 16
+      },
+      "hitCount": 0,
+      "children": [
+        22,
+        265
+      ]
+    },
+    {
+      "id": 22,
+      "callFrame": {
+        "functionName": "diagnostics",
+        "scriptId": "427",
+        "url": "",
+        "lineNumber": 1794,
+        "columnNumber": 12
+      },
+      "hitCount": 6,
+      "children": [
+        35,
+        52,
+        54,
+        95,
+        121,
+        182,
+        183,
+        189,
+        252
+      ],
+      "positionTicks": [
+        {
+          "line": 1882,
+          "ticks": 1
+        },
+        {
+          "line": 1878,
+          "ticks": 1
+        },
+        {
+          "line": 1874,
+          "ticks": 1
+        },
+        {
+          "line": 1850,
+          "ticks": 1
+        },
+        {
+          "line": 1839,
+          "ticks": 1
+        },
+        {
+          "line": 1810,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 35,
+      "callFrame": {
+        "functionName": "get snapshot",
+        "scriptId": "1911",
+        "url": "",
+        "lineNumber": 198,
+        "columnNumber": 13
+      },
+      "hitCount": 0,
+      "children": [
+        36
+      ]
+    },
+    {
+      "id": 36,
+      "callFrame": {
+        "functionName": "visualY",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 443,
+        "columnNumber": 16
+      },
+      "hitCount": 0,
+      "children": [
+        37
+      ]
+    },
+    {
+      "id": 37,
+      "callFrame": {
+        "functionName": "samplePaddedHeight",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 438,
+        "columnNumber": 27
+      },
+      "hitCount": 0,
+      "children": [
+        38
+      ]
+    },
+    {
+      "id": 38,
+      "callFrame": {
+        "functionName": "sampleHeight",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 366,
+        "columnNumber": 21
+      },
+      "hitCount": 1,
+      "children": [
+        298
+      ],
+      "positionTicks": [
+        {
+          "line": 371,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 298,
+      "callFrame": {
+        "functionName": "sampleHeightFamily",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 421,
+        "columnNumber": 27
+      },
+      "hitCount": 0,
+      "children": [
+        299,
+        362
+      ]
+    },
+    {
+      "id": 299,
+      "callFrame": {
+        "functionName": "valueNoise",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 1474,
+        "columnNumber": 19
+      },
+      "hitCount": 0,
+      "children": [
+        300
+      ]
+    },
+    {
+      "id": 300,
+      "callFrame": {
+        "functionName": "terrainHash",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 1485,
+        "columnNumber": 20
+      },
+      "hitCount": 0,
+      "children": [
+        301
+      ]
+    },
+    {
+      "id": 301,
+      "callFrame": {
+        "functionName": "terrainSeed",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 1468,
+        "columnNumber": 20
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 1472,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 362,
+      "callFrame": {
+        "functionName": "terrainFeatures",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 1192,
+        "columnNumber": 24
+      },
+      "hitCount": 0,
+      "children": [
+        363
+      ]
+    },
+    {
+      "id": 363,
+      "callFrame": {
+        "functionName": "channelMask",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 1246,
+        "columnNumber": 20
+      },
+      "hitCount": 2,
+      "positionTicks": [
+        {
+          "line": 1251,
+          "ticks": 1
+        },
+        {
+          "line": 1253,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 52,
+      "callFrame": {
+        "functionName": "get diagnostics",
+        "scriptId": "1958",
+        "url": "",
+        "lineNumber": 483,
+        "columnNumber": 16
+      },
+      "hitCount": 7,
+      "children": [
+        53,
+        68,
+        82,
+        114,
+        290,
+        356,
+        357,
+        368
+      ],
+      "positionTicks": [
+        {
+          "line": 541,
+          "ticks": 3
+        },
+        {
+          "line": 536,
+          "ticks": 1
+        },
+        {
+          "line": 538,
+          "ticks": 2
+        },
+        {
+          "line": 535,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 53,
+      "callFrame": {
+        "functionName": "get activePulseCount",
+        "scriptId": "1934",
+        "url": "",
+        "lineNumber": 104,
+        "columnNumber": 21
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 106,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 68,
+      "callFrame": {
+        "functionName": "activePositions",
+        "scriptId": "1958",
+        "url": "",
+        "lineNumber": 1532,
+        "columnNumber": 16
+      },
+      "hitCount": 4,
+      "children": [
+        69,
+        345,
+        350
+      ],
+      "positionTicks": [
+        {
+          "line": 1534,
+          "ticks": 4
+        }
+      ]
+    },
+    {
+      "id": 69,
+      "callFrame": {
+        "functionName": "",
+        "scriptId": "1958",
+        "url": "",
+        "lineNumber": 1533,
+        "columnNumber": 31
+      },
+      "hitCount": 1,
+      "children": [
+        70
+      ],
+      "positionTicks": [
+        {
+          "line": 1537,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 70,
+      "callFrame": {
+        "functionName": "isActive",
+        "scriptId": "1963",
+        "url": "",
+        "lineNumber": 74,
+        "columnNumber": 9
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 76,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 345,
+      "callFrame": {
+        "functionName": "isActive",
+        "scriptId": "1958",
+        "url": "",
+        "lineNumber": 2486,
+        "columnNumber": 9
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 2487,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 350,
+      "callFrame": {
+        "functionName": "",
+        "scriptId": "1958",
+        "url": "",
+        "lineNumber": 1537,
+        "columnNumber": 13
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 1538,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 82,
+      "callFrame": {
+        "functionName": "hpBarDiagnostics",
+        "scriptId": "1958",
+        "url": "",
+        "lineNumber": 1662,
+        "columnNumber": 17
+      },
+      "hitCount": 8,
+      "children": [
+        83
+      ],
+      "positionTicks": [
+        {
+          "line": 1666,
+          "ticks": 1
+        },
+        {
+          "line": 1666,
+          "ticks": 1
+        },
+        {
+          "line": 1663,
+          "ticks": 1
+        },
+        {
+          "line": 1667,
+          "ticks": 1
+        },
+        {
+          "line": 1668,
+          "ticks": 4
+        }
+      ]
+    },
+    {
+      "id": 83,
+      "callFrame": {
+        "functionName": "maxHpForInstance",
+        "scriptId": "1958",
+        "url": "",
+        "lineNumber": 1618,
+        "columnNumber": 17
+      },
+      "hitCount": 2,
+      "children": [
+        84,
+        236
+      ],
+      "positionTicks": [
+        {
+          "line": 1620,
+          "ticks": 1
+        },
+        {
+          "line": 1619,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 84,
+      "callFrame": {
+        "functionName": "effectiveMaxHp",
+        "scriptId": "1958",
+        "url": "",
+        "lineNumber": 1744,
+        "columnNumber": 15
+      },
+      "hitCount": 0,
+      "children": [
+        85
+      ]
+    },
+    {
+      "id": 85,
+      "callFrame": {
+        "functionName": "effectiveStat",
+        "scriptId": "1958",
+        "url": "",
+        "lineNumber": 1740,
+        "columnNumber": 14
+      },
+      "hitCount": 1,
+      "children": [
+        86
+      ],
+      "positionTicks": [
+        {
+          "line": 1742,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 86,
+      "callFrame": {
+        "functionName": "tierRung",
+        "scriptId": "1958",
+        "url": "",
+        "lineNumber": 1736,
+        "columnNumber": 9
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 1739,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 236,
+      "callFrame": {
+        "functionName": "maxHpForPlacement",
+        "scriptId": "1958",
+        "url": "",
+        "lineNumber": 1621,
+        "columnNumber": 18
+      },
+      "hitCount": 2,
+      "children": [
+        237,
+        380
+      ],
+      "positionTicks": [
+        {
+          "line": 1624,
+          "ticks": 1
+        },
+        {
+          "line": 1627,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 237,
+      "callFrame": {
+        "functionName": "",
+        "scriptId": "427",
+        "url": "",
+        "lineNumber": 777,
+        "columnNumber": 3
+      },
+      "hitCount": 0,
+      "children": [
+        238
+      ]
+    },
+    {
+      "id": 238,
+      "callFrame": {
+        "functionName": "get diagnostics",
+        "scriptId": "1991",
+        "url": "",
+        "lineNumber": 152,
+        "columnNumber": 16
+      },
+      "hitCount": 0,
+      "children": [
+        239,
+        359
+      ]
+    },
+    {
+      "id": 239,
+      "callFrame": {
+        "functionName": "currentTrickleInterval",
+        "scriptId": "1991",
+        "url": "",
+        "lineNumber": 640,
+        "columnNumber": 23
+      },
+      "hitCount": 4,
+      "children": [
+        366
+      ],
+      "positionTicks": [
+        {
+          "line": 642,
+          "ticks": 2
+        },
+        {
+          "line": 643,
+          "ticks": 1
+        },
+        {
+          "line": 643,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 366,
+      "callFrame": {
+        "functionName": "",
+        "scriptId": "295",
+        "url": "",
+        "lineNumber": 2,
+        "columnNumber": 48
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 3,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 359,
+      "callFrame": {
+        "functionName": "get escortDiagnostics",
+        "scriptId": "1991",
+        "url": "",
+        "lineNumber": 171,
+        "columnNumber": 22
+      },
+      "hitCount": 0,
+      "children": [
+        360
+      ]
+    },
+    {
+      "id": 360,
+      "callFrame": {
+        "functionName": "get escortMode",
+        "scriptId": "1991",
+        "url": "",
+        "lineNumber": 139,
+        "columnNumber": 15
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 141,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 380,
+      "callFrame": {
+        "functionName": "",
+        "scriptId": "295",
+        "url": "",
+        "lineNumber": 2,
+        "columnNumber": 48
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 3,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 114,
+      "callFrame": {
+        "functionName": "shellDiagnostics",
+        "scriptId": "1958",
+        "url": "",
+        "lineNumber": 2147,
+        "columnNumber": 17
+      },
+      "hitCount": 0,
+      "children": [
+        115
+      ]
+    },
+    {
+      "id": 115,
+      "callFrame": {
+        "functionName": "diagnostics",
+        "scriptId": "1961",
+        "url": "",
+        "lineNumber": 284,
+        "columnNumber": 12
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 301,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 290,
+      "callFrame": {
+        "functionName": "get activeRotations",
+        "scriptId": "1958",
+        "url": "",
+        "lineNumber": 2480,
+        "columnNumber": 20
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 2482,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 356,
+      "callFrame": {
+        "functionName": "get buildableCounts",
+        "scriptId": "1958",
+        "url": "",
+        "lineNumber": 337,
+        "columnNumber": 20
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 339,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 357,
+      "callFrame": {
+        "functionName": "get beaconCount",
+        "scriptId": "1958",
+        "url": "",
+        "lineNumber": 291,
+        "columnNumber": 16
+      },
+      "hitCount": 0,
+      "children": [
+        358
+      ]
+    },
+    {
+      "id": 358,
+      "callFrame": {
+        "functionName": "get activeCount",
+        "scriptId": "1960",
+        "url": "",
+        "lineNumber": 86,
+        "columnNumber": 16
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 87,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 368,
+      "callFrame": {
+        "functionName": "rubbleDiagnostics",
+        "scriptId": "1958",
+        "url": "",
+        "lineNumber": 2051,
+        "columnNumber": 18
+      },
+      "hitCount": 3,
+      "positionTicks": [
+        {
+          "line": 2055,
+          "ticks": 2
+        },
+        {
+          "line": 2056,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 54,
+      "callFrame": {
+        "functionName": "get diagnostics",
+        "scriptId": "1985",
+        "url": "",
+        "lineNumber": 172,
+        "columnNumber": 16
+      },
+      "hitCount": 0,
+      "children": [
+        55
+      ]
+    },
+    {
+      "id": 55,
+      "callFrame": {
+        "functionName": "",
+        "scriptId": "1985",
+        "url": "",
+        "lineNumber": 178,
+        "columnNumber": 25
+      },
+      "hitCount": 0,
+      "children": [
+        56
+      ]
+    },
+    {
+      "id": 56,
+      "callFrame": {
+        "functionName": "visualAnchorY",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 446,
+        "columnNumber": 22
+      },
+      "hitCount": 0,
+      "children": [
+        57
+      ]
+    },
+    {
+      "id": 57,
+      "callFrame": {
+        "functionName": "visualY",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 443,
+        "columnNumber": 16
+      },
+      "hitCount": 0,
+      "children": [
+        58
+      ]
+    },
+    {
+      "id": 58,
+      "callFrame": {
+        "functionName": "samplePaddedHeight",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 438,
+        "columnNumber": 27
+      },
+      "hitCount": 0,
+      "children": [
+        59
+      ]
+    },
+    {
+      "id": 59,
+      "callFrame": {
+        "functionName": "sampleHeight",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 366,
+        "columnNumber": 21
+      },
+      "hitCount": 0,
+      "children": [
+        60
+      ]
+    },
+    {
+      "id": 60,
+      "callFrame": {
+        "functionName": "sampleHeightFamily",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 421,
+        "columnNumber": 27
+      },
+      "hitCount": 1,
+      "children": [
+        61,
+        64
+      ],
+      "positionTicks": [
+        {
+          "line": 432,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 61,
+      "callFrame": {
+        "functionName": "valueNoise",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 1474,
+        "columnNumber": 19
+      },
+      "hitCount": 1,
+      "children": [
+        62
+      ],
+      "positionTicks": [
+        {
+          "line": 1476,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 62,
+      "callFrame": {
+        "functionName": "terrainHash",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 1485,
+        "columnNumber": 20
+      },
+      "hitCount": 1,
+      "children": [
+        155
+      ],
+      "positionTicks": [
+        {
+          "line": 1488,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 155,
+      "callFrame": {
+        "functionName": "terrainSeed",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 1468,
+        "columnNumber": 20
+      },
+      "hitCount": 2,
+      "positionTicks": [
+        {
+          "line": 1472,
+          "ticks": 1
+        },
+        {
+          "line": 1471,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 64,
+      "callFrame": {
+        "functionName": "terrainFeatures",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 1192,
+        "columnNumber": 24
+      },
+      "hitCount": 0,
+      "children": [
+        65,
+        92,
+        156,
+        213
+      ]
+    },
+    {
+      "id": 65,
+      "callFrame": {
+        "functionName": "routingLaneDistance",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 413,
+        "columnNumber": 28
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 415,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 92,
+      "callFrame": {
+        "functionName": "valueNoise",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 1474,
+        "columnNumber": 19
+      },
+      "hitCount": 0,
+      "children": [
+        93
+      ]
+    },
+    {
+      "id": 93,
+      "callFrame": {
+        "functionName": "terrainHash",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 1485,
+        "columnNumber": 20
+      },
+      "hitCount": 2,
+      "children": [
+        264
+      ],
+      "positionTicks": [
+        {
+          "line": 1488,
+          "ticks": 2
+        }
+      ]
+    },
+    {
+      "id": 264,
+      "callFrame": {
+        "functionName": "terrainSeed",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 1468,
+        "columnNumber": 20
+      },
+      "hitCount": 2,
+      "positionTicks": [
+        {
+          "line": 1472,
+          "ticks": 2
+        }
+      ]
+    },
+    {
+      "id": 156,
+      "callFrame": {
+        "functionName": "stableProbeMask",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 1265,
+        "columnNumber": 24
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 1275,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 213,
+      "callFrame": {
+        "functionName": "channelMask",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 1246,
+        "columnNumber": 20
+      },
+      "hitCount": 2,
+      "children": [
+        214
+      ],
+      "positionTicks": [
+        {
+          "line": 1251,
+          "ticks": 1
+        },
+        {
+          "line": 1254,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 214,
+      "callFrame": {
+        "functionName": "smoothstep",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 1489,
+        "columnNumber": 19
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 1492,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 95,
+      "callFrame": {
+        "functionName": "blastReadyInMs",
+        "scriptId": "427",
+        "url": "",
+        "lineNumber": 2778,
+        "columnNumber": 15
+      },
+      "hitCount": 0,
+      "children": [
+        96
+      ]
+    },
+    {
+      "id": 96,
+      "callFrame": {
+        "functionName": "captureSuspend",
+        "scriptId": "1967",
+        "url": "",
+        "lineNumber": 165,
+        "columnNumber": 15
+      },
+      "hitCount": 0,
+      "children": [
+        97,
+        210,
+        211,
+        233
+      ]
+    },
+    {
+      "id": 97,
+      "callFrame": {
+        "functionName": "captureSuspend",
+        "scriptId": "555",
+        "url": "",
+        "lineNumber": 148,
+        "columnNumber": 15
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 151,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 210,
+      "callFrame": {
+        "functionName": "",
+        "scriptId": "1967",
+        "url": "",
+        "lineNumber": 190,
+        "columnNumber": 77
+      },
+      "hitCount": 0
+    },
+    {
+      "id": 211,
+      "callFrame": {
+        "functionName": "captureSuspend",
+        "scriptId": "1909",
+        "url": "",
+        "lineNumber": 196,
+        "columnNumber": 15
+      },
+      "hitCount": 0
+    },
+    {
+      "id": 233,
+      "callFrame": {
+        "functionName": "captureSuspend",
+        "scriptId": "1913",
+        "url": "",
+        "lineNumber": 176,
+        "columnNumber": 15
+      },
+      "hitCount": 0
+    },
+    {
+      "id": 121,
+      "callFrame": {
+        "functionName": "get diagnostics",
+        "scriptId": "1920",
+        "url": "",
+        "lineNumber": 98,
+        "columnNumber": 16
+      },
+      "hitCount": 0,
+      "children": [
+        122
+      ]
+    },
+    {
+      "id": 122,
+      "callFrame": {
+        "functionName": "diagnostics",
+        "scriptId": "1927",
+        "url": "",
+        "lineNumber": 198,
+        "columnNumber": 12
+      },
+      "hitCount": 3,
+      "positionTicks": [
+        {
+          "line": 212,
+          "ticks": 1
+        },
+        {
+          "line": 212,
+          "ticks": 1
+        },
+        {
+          "line": 215,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 182,
+      "callFrame": {
+        "functionName": "",
+        "scriptId": "427",
+        "url": "",
+        "lineNumber": 1822,
+        "columnNumber": 45
+      },
+      "hitCount": 0
+    },
+    {
+      "id": 183,
+      "callFrame": {
+        "functionName": "",
+        "scriptId": "427",
+        "url": "",
+        "lineNumber": 1824,
+        "columnNumber": 38
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 1825,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 189,
+      "callFrame": {
+        "functionName": "get snapshot",
+        "scriptId": "1916",
+        "url": "",
+        "lineNumber": 38,
+        "columnNumber": 13
+      },
+      "hitCount": 0,
+      "children": [
+        190
+      ]
+    },
+    {
+      "id": 190,
+      "callFrame": {
+        "functionName": "eligibleDefs",
+        "scriptId": "1916",
+        "url": "",
+        "lineNumber": 233,
+        "columnNumber": 13
+      },
+      "hitCount": 2,
+      "children": [
+        191,
+        288
+      ],
+      "positionTicks": [
+        {
+          "line": 237,
+          "ticks": 2
+        }
+      ]
+    },
+    {
+      "id": 191,
+      "callFrame": {
+        "functionName": "visibleUpgradeDefs",
+        "scriptId": "1916",
+        "url": "",
+        "lineNumber": 245,
+        "columnNumber": 19
+      },
+      "hitCount": 2,
+      "positionTicks": [
+        {
+          "line": 248,
+          "ticks": 2
+        }
+      ]
+    },
+    {
+      "id": 288,
+      "callFrame": {
+        "functionName": "",
+        "scriptId": "1916",
+        "url": "",
+        "lineNumber": 236,
+        "columnNumber": 42
+      },
+      "hitCount": 0,
+      "children": [
+        289,
+        389
+      ]
+    },
+    {
+      "id": 289,
+      "callFrame": {
+        "functionName": "",
+        "scriptId": "548",
+        "url": "",
+        "lineNumber": 7,
+        "columnNumber": 45
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 8,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 389,
+      "callFrame": {
+        "functionName": "isMasteryConversionUnlocked",
+        "scriptId": "548",
+        "url": "",
+        "lineNumber": 239,
+        "columnNumber": 36
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 241,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 252,
+      "callFrame": {
+        "functionName": "preserveDiagnostics",
+        "scriptId": "427",
+        "url": "",
+        "lineNumber": 1891,
+        "columnNumber": 20
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 1893,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 265,
+      "callFrame": {
+        "functionName": "blastReadyInMs",
+        "scriptId": "427",
+        "url": "",
+        "lineNumber": 2778,
+        "columnNumber": 15
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 2779,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 33,
+      "callFrame": {
+        "functionName": "runtimeState",
+        "scriptId": "310",
+        "url": "",
+        "lineNumber": 688,
+        "columnNumber": 21
+      },
+      "hitCount": 1,
+      "children": [
+        34
+      ],
+      "positionTicks": [
+        {
+          "line": 713,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 34,
+      "callFrame": {
+        "functionName": "predictedWave",
+        "scriptId": "310",
+        "url": "",
+        "lineNumber": 717,
+        "columnNumber": 22
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 721,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 89,
+      "callFrame": {
+        "functionName": "readEconomyLog",
+        "scriptId": "482",
+        "url": "",
+        "lineNumber": 266,
+        "columnNumber": 23
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 268,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 165,
+      "callFrame": {
+        "functionName": "",
+        "scriptId": "482",
+        "url": "",
+        "lineNumber": 70,
+        "columnNumber": 103
+      },
+      "hitCount": 0,
+      "children": [
+        166
+      ]
+    },
+    {
+      "id": 166,
+      "callFrame": {
+        "functionName": "readEconomyLog",
+        "scriptId": "482",
+        "url": "",
+        "lineNumber": 266,
+        "columnNumber": 23
+      },
+      "hitCount": 0,
+      "children": [
+        167
+      ]
+    },
+    {
+      "id": 167,
+      "callFrame": {
+        "functionName": "cloneArray",
+        "scriptId": "482",
+        "url": "",
+        "lineNumber": 316,
+        "columnNumber": 19
+      },
+      "hitCount": 0,
+      "children": [
+        168
+      ]
+    },
+    {
+      "id": 168,
+      "callFrame": {
+        "functionName": "clone",
+        "scriptId": "482",
+        "url": "",
+        "lineNumber": 319,
+        "columnNumber": 14
+      },
+      "hitCount": 5,
+      "positionTicks": [
+        {
+          "line": 322,
+          "ticks": 5
+        }
+      ]
+    },
+    {
+      "id": 332,
+      "callFrame": {
+        "functionName": "detectSurprises",
+        "scriptId": "310",
+        "url": "",
+        "lineNumber": 372,
+        "columnNumber": 16
+      },
+      "hitCount": 0
+    },
+    {
+      "id": 127,
+      "callFrame": {
+        "functionName": "say",
+        "scriptId": "1911",
+        "url": "",
+        "lineNumber": 271,
+        "columnNumber": 4
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 278,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 143,
+      "callFrame": {
+        "functionName": "floatY",
+        "scriptId": "1911",
+        "url": "",
+        "lineNumber": 268,
+        "columnNumber": 7
+      },
+      "hitCount": 0,
+      "children": [
+        144
+      ]
+    },
+    {
+      "id": 144,
+      "callFrame": {
+        "functionName": "visualY",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 443,
+        "columnNumber": 16
+      },
+      "hitCount": 0,
+      "children": [
+        145
+      ]
+    },
+    {
+      "id": 145,
+      "callFrame": {
+        "functionName": "samplePaddedHeight",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 438,
+        "columnNumber": 27
+      },
+      "hitCount": 0,
+      "children": [
+        146
+      ]
+    },
+    {
+      "id": 146,
+      "callFrame": {
+        "functionName": "sampleHeight",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 366,
+        "columnNumber": 21
+      },
+      "hitCount": 0,
+      "children": [
+        147
+      ]
+    },
+    {
+      "id": 147,
+      "callFrame": {
+        "functionName": "sampleHeightFamily",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 421,
+        "columnNumber": 27
+      },
+      "hitCount": 0,
+      "children": [
+        148
+      ]
+    },
+    {
+      "id": 148,
+      "callFrame": {
+        "functionName": "terrainFeatures",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 1192,
+        "columnNumber": 24
+      },
+      "hitCount": 1,
+      "children": [
+        149,
+        152,
+        253
+      ],
+      "positionTicks": [
+        {
+          "line": 1196,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 149,
+      "callFrame": {
+        "functionName": "stableProbeMask",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 1265,
+        "columnNumber": 24
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 1275,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 152,
+      "callFrame": {
+        "functionName": "routingLaneDistance",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 413,
+        "columnNumber": 28
+      },
+      "hitCount": 0,
+      "children": [
+        153
+      ]
+    },
+    {
+      "id": 153,
+      "callFrame": {
+        "functionName": "nearestFordRange",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 316,
+        "columnNumber": 25
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 320,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 253,
+      "callFrame": {
+        "functionName": "valueNoise",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 1474,
+        "columnNumber": 19
+      },
+      "hitCount": 0,
+      "children": [
+        254
+      ]
+    },
+    {
+      "id": 254,
+      "callFrame": {
+        "functionName": "terrainHash",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 1485,
+        "columnNumber": 20
+      },
+      "hitCount": 1,
+      "children": [
+        255
+      ],
+      "positionTicks": [
+        {
+          "line": 1488,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 255,
+      "callFrame": {
+        "functionName": "terrainSeed",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 1468,
+        "columnNumber": 20
+      },
+      "hitCount": 0,
+      "children": [
+        256
+      ]
+    },
+    {
+      "id": 256,
+      "callFrame": {
+        "functionName": "get search",
+        "scriptId": "39",
+        "url": "node:internal/url",
+        "lineNumber": 1117,
+        "columnNumber": 12
+      },
+      "hitCount": 0,
+      "children": [
+        257
+      ]
+    },
+    {
+      "id": 257,
+      "callFrame": {
+        "functionName": "#getSearchFromContext",
+        "scriptId": "39",
+        "url": "node:internal/url",
+        "lineNumber": 888,
+        "columnNumber": 23
+      },
+      "hitCount": 0,
+      "children": [
+        258
+      ]
+    },
+    {
+      "id": 258,
+      "callFrame": {
+        "functionName": "get hasSearch",
+        "scriptId": "39",
+        "url": "node:internal/url",
+        "lineNumber": 209,
+        "columnNumber": 15
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 211,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "callFrame": {
+        "functionName": "update",
+        "scriptId": "1975",
+        "url": "",
+        "lineNumber": 131,
+        "columnNumber": 7
+      },
+      "hitCount": 3,
+      "children": [
+        24,
+        259
+      ],
+      "positionTicks": [
+        {
+          "line": 169,
+          "ticks": 1
+        },
+        {
+          "line": 168,
+          "ticks": 1
+        },
+        {
+          "line": 170,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "callFrame": {
+        "functionName": "update",
+        "scriptId": "1976",
+        "url": "",
+        "lineNumber": 203,
+        "columnNumber": 7
+      },
+      "hitCount": 0,
+      "children": [
+        25
+      ]
+    },
+    {
+      "id": 25,
+      "callFrame": {
+        "functionName": "updateGlint",
+        "scriptId": "1976",
+        "url": "",
+        "lineNumber": 98,
+        "columnNumber": 12
+      },
+      "hitCount": 2,
+      "children": [
+        263,
+        266,
+        343
+      ],
+      "positionTicks": [
+        {
+          "line": 100,
+          "ticks": 1
+        },
+        {
+          "line": 102,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 263,
+      "callFrame": {
+        "functionName": "Vector3",
+        "scriptId": "297",
+        "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+        "lineNumber": 4830,
+        "columnNumber": 12
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 4838,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 266,
+      "callFrame": {
+        "functionName": "visualY",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 443,
+        "columnNumber": 16
+      },
+      "hitCount": 0,
+      "children": [
+        267
+      ]
+    },
+    {
+      "id": 267,
+      "callFrame": {
+        "functionName": "samplePaddedHeight",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 438,
+        "columnNumber": 27
+      },
+      "hitCount": 0,
+      "children": [
+        268
+      ]
+    },
+    {
+      "id": 268,
+      "callFrame": {
+        "functionName": "sampleHeight",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 366,
+        "columnNumber": 21
+      },
+      "hitCount": 0,
+      "children": [
+        269
+      ]
+    },
+    {
+      "id": 269,
+      "callFrame": {
+        "functionName": "sampleHeightFamily",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 421,
+        "columnNumber": 27
+      },
+      "hitCount": 0,
+      "children": [
+        270
+      ]
+    },
+    {
+      "id": 270,
+      "callFrame": {
+        "functionName": "terrainFeatures",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 1192,
+        "columnNumber": 24
+      },
+      "hitCount": 0,
+      "children": [
+        271
+      ]
+    },
+    {
+      "id": 271,
+      "callFrame": {
+        "functionName": "valueNoise",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 1474,
+        "columnNumber": 19
+      },
+      "hitCount": 0,
+      "children": [
+        272
+      ]
+    },
+    {
+      "id": 272,
+      "callFrame": {
+        "functionName": "terrainHash",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 1485,
+        "columnNumber": 20
+      },
+      "hitCount": 2,
+      "children": [
+        273
+      ],
+      "positionTicks": [
+        {
+          "line": 1488,
+          "ticks": 2
+        }
+      ]
+    },
+    {
+      "id": 273,
+      "callFrame": {
+        "functionName": "terrainSeed",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 1468,
+        "columnNumber": 20
+      },
+      "hitCount": 0,
+      "children": [
+        274
+      ]
+    },
+    {
+      "id": 274,
+      "callFrame": {
+        "functionName": "get search",
+        "scriptId": "39",
+        "url": "node:internal/url",
+        "lineNumber": 1117,
+        "columnNumber": 12
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 1118,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 343,
+      "callFrame": {
+        "functionName": "setFromAxisAngle",
+        "scriptId": "297",
+        "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+        "lineNumber": 4247,
+        "columnNumber": 17
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 4252,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 259,
+      "callFrame": {
+        "functionName": "buildSnapshot",
+        "scriptId": "1975",
+        "url": "",
+        "lineNumber": 350,
+        "columnNumber": 14
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 354,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "callFrame": {
+        "functionName": "update",
+        "scriptId": "1908",
+        "url": "",
+        "lineNumber": 118,
+        "columnNumber": 7
+      },
+      "hitCount": 1,
+      "children": [
+        28,
+        321
+      ],
+      "positionTicks": [
+        {
+          "line": 126,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "callFrame": {
+        "functionName": "",
+        "scriptId": "295",
+        "url": "",
+        "lineNumber": 2,
+        "columnNumber": 48
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 3,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 321,
+      "callFrame": {
+        "functionName": "",
+        "scriptId": "1797",
+        "url": "",
+        "lineNumber": 4,
+        "columnNumber": 50
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 5,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "callFrame": {
+        "functionName": "update",
+        "scriptId": "1891",
+        "url": "",
+        "lineNumber": 808,
+        "columnNumber": 7
+      },
+      "hitCount": 6,
+      "children": [
+        30,
+        63,
+        66,
+        140,
+        175,
+        188,
+        205,
+        246,
+        331,
+        337,
+        364,
+        392
+      ],
+      "positionTicks": [
+        {
+          "line": 812,
+          "ticks": 1
+        },
+        {
+          "line": 881,
+          "ticks": 1
+        },
+        {
+          "line": 827,
+          "ticks": 2
+        },
+        {
+          "line": 821,
+          "ticks": 1
+        },
+        {
+          "line": 866,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "callFrame": {
+        "functionName": "syncRenderInstances",
+        "scriptId": "1891",
+        "url": "",
+        "lineNumber": 1292,
+        "columnNumber": 20
+      },
+      "hitCount": 1,
+      "children": [
+        31,
+        172,
+        177,
+        319
+      ],
+      "positionTicks": [
+        {
+          "line": 1296,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 31,
+      "callFrame": {
+        "functionName": "syncEnemyInstance",
+        "scriptId": "1891",
+        "url": "",
+        "lineNumber": 1342,
+        "columnNumber": 18
+      },
+      "hitCount": 12,
+      "children": [
+        32,
+        51,
+        79,
+        90,
+        94,
+        99,
+        128,
+        173,
+        180,
+        347
+      ],
+      "positionTicks": [
+        {
+          "line": 1359,
+          "ticks": 1
+        },
+        {
+          "line": 1357,
+          "ticks": 1
+        },
+        {
+          "line": 1370,
+          "ticks": 1
+        },
+        {
+          "line": 1380,
+          "ticks": 1
+        },
+        {
+          "line": 1357,
+          "ticks": 1
+        },
+        {
+          "line": 1362,
+          "ticks": 1
+        },
+        {
+          "line": 1343,
+          "ticks": 1
+        },
+        {
+          "line": 1349,
+          "ticks": 1
+        },
+        {
+          "line": 1377,
+          "ticks": 1
+        },
+        {
+          "line": 1352,
+          "ticks": 1
+        },
+        {
+          "line": 1356,
+          "ticks": 1
+        },
+        {
+          "line": 1351,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 32,
+      "callFrame": {
+        "functionName": "syncWatchPaint",
+        "scriptId": "1891",
+        "url": "",
+        "lineNumber": 1544,
+        "columnNumber": 15
+      },
+      "hitCount": 4,
+      "children": [
+        74,
+        81,
+        150,
+        374
+      ],
+      "positionTicks": [
+        {
+          "line": 1553,
+          "ticks": 1
+        },
+        {
+          "line": 1546,
+          "ticks": 1
+        },
+        {
+          "line": 1551,
+          "ticks": 1
+        },
+        {
+          "line": 1550,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 74,
+      "callFrame": {
+        "functionName": "setColorAt",
+        "scriptId": "297",
+        "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+        "lineNumber": 24723,
+        "columnNumber": 11
+      },
+      "hitCount": 2,
+      "children": [
+        75
+      ],
+      "positionTicks": [
+        {
+          "line": 24726,
+          "ticks": 1
+        },
+        {
+          "line": 24724,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 75,
+      "callFrame": {
+        "functionName": "toArray",
+        "scriptId": "297",
+        "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+        "lineNumber": 14727,
+        "columnNumber": 8
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 14731,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 81,
+      "callFrame": {
+        "functionName": "multiplyMatrices",
+        "scriptId": "297",
+        "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+        "lineNumber": 10384,
+        "columnNumber": 17
+      },
+      "hitCount": 6,
+      "positionTicks": [
+        {
+          "line": 10399,
+          "ticks": 1
+        },
+        {
+          "line": 10391,
+          "ticks": 1
+        },
+        {
+          "line": 10419,
+          "ticks": 1
+        },
+        {
+          "line": 10414,
+          "ticks": 1
+        },
+        {
+          "line": 10401,
+          "ticks": 1
+        },
+        {
+          "line": 10409,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 150,
+      "callFrame": {
+        "functionName": "setMatrixAt",
+        "scriptId": "297",
+        "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+        "lineNumber": 24744,
+        "columnNumber": 12
+      },
+      "hitCount": 1,
+      "children": [
+        151
+      ],
+      "positionTicks": [
+        {
+          "line": 24745,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 151,
+      "callFrame": {
+        "functionName": "toArray",
+        "scriptId": "297",
+        "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+        "lineNumber": 11098,
+        "columnNumber": 8
+      },
+      "hitCount": 6,
+      "positionTicks": [
+        {
+          "line": 11105,
+          "ticks": 1
+        },
+        {
+          "line": 11106,
+          "ticks": 1
+        },
+        {
+          "line": 11118,
+          "ticks": 1
+        },
+        {
+          "line": 11108,
+          "ticks": 1
+        },
+        {
+          "line": 11115,
+          "ticks": 1
+        },
+        {
+          "line": 11111,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 374,
+      "callFrame": {
+        "functionName": "feverAccentFor",
+        "scriptId": "1891",
+        "url": "",
+        "lineNumber": 654,
+        "columnNumber": 15
+      },
+      "hitCount": 0,
+      "children": [
+        375
+      ]
+    },
+    {
+      "id": 375,
+      "callFrame": {
+        "functionName": "feverAccentState",
+        "scriptId": "1891",
+        "url": "",
+        "lineNumber": 237,
+        "columnNumber": 25
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 240,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 51,
+      "callFrame": {
+        "functionName": "set z",
+        "scriptId": "297",
+        "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+        "lineNumber": 11233,
+        "columnNumber": 6
+      },
+      "hitCount": 1,
+      "children": [
+        184
+      ],
+      "positionTicks": [
+        {
+          "line": 11239,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 184,
+      "callFrame": {
+        "functionName": "onRotationChange",
+        "scriptId": "297",
+        "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+        "lineNumber": 11832,
+        "columnNumber": 27
+      },
+      "hitCount": 1,
+      "children": [
+        185
+      ],
+      "positionTicks": [
+        {
+          "line": 11835,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 185,
+      "callFrame": {
+        "functionName": "setFromEuler",
+        "scriptId": "297",
+        "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+        "lineNumber": 4166,
+        "columnNumber": 13
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 4190,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 79,
+      "callFrame": {
+        "functionName": "multiplyMatrices",
+        "scriptId": "297",
+        "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+        "lineNumber": 10384,
+        "columnNumber": 17
+      },
+      "hitCount": 10,
+      "positionTicks": [
+        {
+          "line": 10392,
+          "ticks": 1
+        },
+        {
+          "line": 10391,
+          "ticks": 1
+        },
+        {
+          "line": 10403,
+          "ticks": 1
+        },
+        {
+          "line": 10387,
+          "ticks": 1
+        },
+        {
+          "line": 10414,
+          "ticks": 2
+        },
+        {
+          "line": 10398,
+          "ticks": 1
+        },
+        {
+          "line": 10385,
+          "ticks": 2
+        },
+        {
+          "line": 10414,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 90,
+      "callFrame": {
+        "functionName": "syncBanner",
+        "scriptId": "1891",
+        "url": "",
+        "lineNumber": 1533,
+        "columnNumber": 11
+      },
+      "hitCount": 0,
+      "children": [
+        91,
+        243,
+        353
+      ]
+    },
+    {
+      "id": 91,
+      "callFrame": {
+        "functionName": "multiplyMatrices",
+        "scriptId": "297",
+        "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+        "lineNumber": 10384,
+        "columnNumber": 17
+      },
+      "hitCount": 4,
+      "positionTicks": [
+        {
+          "line": 10389,
+          "ticks": 1
+        },
+        {
+          "line": 10401,
+          "ticks": 1
+        },
+        {
+          "line": 10391,
+          "ticks": 1
+        },
+        {
+          "line": 10385,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 243,
+      "callFrame": {
+        "functionName": "setMatrixAt",
+        "scriptId": "297",
+        "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+        "lineNumber": 24744,
+        "columnNumber": 12
+      },
+      "hitCount": 0,
+      "children": [
+        244
+      ]
+    },
+    {
+      "id": 244,
+      "callFrame": {
+        "functionName": "toArray",
+        "scriptId": "297",
+        "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+        "lineNumber": 11098,
+        "columnNumber": 8
+      },
+      "hitCount": 2,
+      "positionTicks": [
+        {
+          "line": 11108,
+          "ticks": 1
+        },
+        {
+          "line": 11109,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 353,
+      "callFrame": {
+        "functionName": "setInstanceColor",
+        "scriptId": "1891",
+        "url": "",
+        "lineNumber": 1742,
+        "columnNumber": 17
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 1743,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 94,
+      "callFrame": {
+        "functionName": "setInstanceColor",
+        "scriptId": "1891",
+        "url": "",
+        "lineNumber": 1742,
+        "columnNumber": 17
+      },
+      "hitCount": 3,
+      "children": [
+        318
+      ],
+      "positionTicks": [
+        {
+          "line": 1746,
+          "ticks": 1
+        },
+        {
+          "line": 1743,
+          "ticks": 2
+        }
+      ]
+    },
+    {
+      "id": 318,
+      "callFrame": {
+        "functionName": "setColorAt",
+        "scriptId": "297",
+        "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+        "lineNumber": 24723,
+        "columnNumber": 11
+      },
+      "hitCount": 1,
+      "children": [
+        376
+      ],
+      "positionTicks": [
+        {
+          "line": 24732,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 376,
+      "callFrame": {
+        "functionName": "toArray",
+        "scriptId": "297",
+        "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+        "lineNumber": 14727,
+        "columnNumber": 8
+      },
+      "hitCount": 2,
+      "positionTicks": [
+        {
+          "line": 14731,
+          "ticks": 1
+        },
+        {
+          "line": 14730,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 99,
+      "callFrame": {
+        "functionName": "set",
+        "scriptId": "297",
+        "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+        "lineNumber": 11268,
+        "columnNumber": 4
+      },
+      "hitCount": 0,
+      "children": [
+        100
+      ]
+    },
+    {
+      "id": 100,
+      "callFrame": {
+        "functionName": "onRotationChange",
+        "scriptId": "297",
+        "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+        "lineNumber": 11832,
+        "columnNumber": 27
+      },
+      "hitCount": 1,
+      "children": [
+        101
+      ],
+      "positionTicks": [
+        {
+          "line": 11835,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 101,
+      "callFrame": {
+        "functionName": "setFromEuler",
+        "scriptId": "297",
+        "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+        "lineNumber": 4166,
+        "columnNumber": 13
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 4180,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 128,
+      "callFrame": {
+        "functionName": "setMatrixAt",
+        "scriptId": "297",
+        "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+        "lineNumber": 24744,
+        "columnNumber": 12
+      },
+      "hitCount": 0,
+      "children": [
+        129
+      ]
+    },
+    {
+      "id": 129,
+      "callFrame": {
+        "functionName": "toArray",
+        "scriptId": "297",
+        "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+        "lineNumber": 11098,
+        "columnNumber": 8
+      },
+      "hitCount": 8,
+      "positionTicks": [
+        {
+          "line": 11116,
+          "ticks": 1
+        },
+        {
+          "line": 11118,
+          "ticks": 2
+        },
+        {
+          "line": 11108,
+          "ticks": 1
+        },
+        {
+          "line": 11103,
+          "ticks": 2
+        },
+        {
+          "line": 11113,
+          "ticks": 1
+        },
+        {
+          "line": 11106,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 173,
+      "callFrame": {
+        "functionName": "get motion",
+        "scriptId": "1896",
+        "url": "",
+        "lineNumber": 153,
+        "columnNumber": 11
+      },
+      "hitCount": 0,
+      "children": [
+        174
+      ]
+    },
+    {
+      "id": 174,
+      "callFrame": {
+        "functionName": "currentMotion",
+        "scriptId": "1896",
+        "url": "",
+        "lineNumber": 481,
+        "columnNumber": 14
+      },
+      "hitCount": 2,
+      "positionTicks": [
+        {
+          "line": 489,
+          "ticks": 1
+        },
+        {
+          "line": 494,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 180,
+      "callFrame": {
+        "functionName": "get isWrecker",
+        "scriptId": "1900",
+        "url": "",
+        "lineNumber": 246,
+        "columnNumber": 14
+      },
+      "hitCount": 0
+    },
+    {
+      "id": 347,
+      "callFrame": {
+        "functionName": "updateMatrix",
+        "scriptId": "297",
+        "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+        "lineNumber": 12820,
+        "columnNumber": 13
+      },
+      "hitCount": 0,
+      "children": [
+        348
+      ]
+    },
+    {
+      "id": 348,
+      "callFrame": {
+        "functionName": "compose",
+        "scriptId": "297",
+        "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+        "lineNumber": 10826,
+        "columnNumber": 8
+      },
+      "hitCount": 2,
+      "positionTicks": [
+        {
+          "line": 10856,
+          "ticks": 1
+        },
+        {
+          "line": 10833,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 172,
+      "callFrame": {
+        "functionName": "bossBarState",
+        "scriptId": "1891",
+        "url": "",
+        "lineNumber": 1080,
+        "columnNumber": 13
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 1081,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 177,
+      "callFrame": {
+        "functionName": "updateRailcar3d",
+        "scriptId": "1891",
+        "url": "",
+        "lineNumber": 1455,
+        "columnNumber": 16
+      },
+      "hitCount": 0,
+      "children": [
+        178
+      ]
+    },
+    {
+      "id": 178,
+      "callFrame": {
+        "functionName": "",
+        "scriptId": "1891",
+        "url": "",
+        "lineNumber": 1456,
+        "columnNumber": 39
+      },
+      "hitCount": 1,
+      "children": [
+        179
+      ],
+      "positionTicks": [
+        {
+          "line": 1457,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 179,
+      "callFrame": {
+        "functionName": "get eliteKind",
+        "scriptId": "1900",
+        "url": "",
+        "lineNumber": 170,
+        "columnNumber": 14
+      },
+      "hitCount": 0
+    },
+    {
+      "id": 319,
+      "callFrame": {
+        "functionName": "syncBossHpBar",
+        "scriptId": "1891",
+        "url": "",
+        "lineNumber": 1299,
+        "columnNumber": 14
+      },
+      "hitCount": 0,
+      "children": [
+        320
+      ]
+    },
+    {
+      "id": 320,
+      "callFrame": {
+        "functionName": "get isAlive",
+        "scriptId": "1900",
+        "url": "",
+        "lineNumber": 146,
+        "columnNumber": 12
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 147,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 63,
+      "callFrame": {
+        "functionName": "activeVariantAnimation",
+        "scriptId": "1891",
+        "url": "",
+        "lineNumber": 1031,
+        "columnNumber": 23
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 1033,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 66,
+      "callFrame": {
+        "functionName": "rebuildSpatialHash",
+        "scriptId": "1891",
+        "url": "",
+        "lineNumber": 1768,
+        "columnNumber": 19
+      },
+      "hitCount": 4,
+      "positionTicks": [
+        {
+          "line": 1770,
+          "ticks": 1
+        },
+        {
+          "line": 1771,
+          "ticks": 3
+        }
+      ]
+    },
+    {
+      "id": 140,
+      "callFrame": {
+        "functionName": "update",
+        "scriptId": "1900",
+        "url": "",
+        "lineNumber": 484,
+        "columnNumber": 7
+      },
+      "hitCount": 3,
+      "children": [
+        141,
+        157,
+        370,
+        393,
+        400
+      ],
+      "positionTicks": [
+        {
+          "line": 503,
+          "ticks": 1
+        },
+        {
+          "line": 530,
+          "ticks": 1
+        },
+        {
+          "line": 543,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 141,
+      "callFrame": {
+        "functionName": "updateGapFlow",
+        "scriptId": "1900",
+        "url": "",
+        "lineNumber": 746,
+        "columnNumber": 14
+      },
+      "hitCount": 0,
+      "children": [
+        142
+      ]
+    },
+    {
+      "id": 142,
+      "callFrame": {
+        "functionName": "palisadeRoute",
+        "scriptId": "427",
+        "url": "",
+        "lineNumber": 1420,
+        "columnNumber": 18
+      },
+      "hitCount": 1,
+      "children": [
+        283
+      ],
+      "positionTicks": [
+        {
+          "line": 1421,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 283,
+      "callFrame": {
+        "functionName": "palisadeRoute",
+        "scriptId": "1958",
+        "url": "",
+        "lineNumber": 355,
+        "columnNumber": 14
+      },
+      "hitCount": 4,
+      "positionTicks": [
+        {
+          "line": 358,
+          "ticks": 2
+        },
+        {
+          "line": 365,
+          "ticks": 2
+        }
+      ]
+    },
+    {
+      "id": 157,
+      "callFrame": {
+        "functionName": "syncVisualY",
+        "scriptId": "1900",
+        "url": "",
+        "lineNumber": 1101,
+        "columnNumber": 12
+      },
+      "hitCount": 0,
+      "children": [
+        158
+      ]
+    },
+    {
+      "id": 158,
+      "callFrame": {
+        "functionName": "visualY",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 443,
+        "columnNumber": 16
+      },
+      "hitCount": 0,
+      "children": [
+        159
+      ]
+    },
+    {
+      "id": 159,
+      "callFrame": {
+        "functionName": "samplePaddedHeight",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 438,
+        "columnNumber": 27
+      },
+      "hitCount": 0,
+      "children": [
+        160
+      ]
+    },
+    {
+      "id": 160,
+      "callFrame": {
+        "functionName": "sampleHeight",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 366,
+        "columnNumber": 21
+      },
+      "hitCount": 0,
+      "children": [
+        161
+      ]
+    },
+    {
+      "id": 161,
+      "callFrame": {
+        "functionName": "sampleHeightFamily",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 421,
+        "columnNumber": 27
+      },
+      "hitCount": 1,
+      "children": [
+        162,
+        240
+      ],
+      "positionTicks": [
+        {
+          "line": 432,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 162,
+      "callFrame": {
+        "functionName": "terrainFeatures",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 1192,
+        "columnNumber": 24
+      },
+      "hitCount": 1,
+      "children": [
+        163,
+        245,
+        248
+      ],
+      "positionTicks": [
+        {
+          "line": 1198,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 163,
+      "callFrame": {
+        "functionName": "ovalMask",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 1256,
+        "columnNumber": 17
+      },
+      "hitCount": 0
+    },
+    {
+      "id": 245,
+      "callFrame": {
+        "functionName": "",
+        "scriptId": "295",
+        "url": "",
+        "lineNumber": 2,
+        "columnNumber": 48
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 3,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 248,
+      "callFrame": {
+        "functionName": "valueNoise",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 1474,
+        "columnNumber": 19
+      },
+      "hitCount": 0,
+      "children": [
+        249
+      ]
+    },
+    {
+      "id": 249,
+      "callFrame": {
+        "functionName": "terrainHash",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 1485,
+        "columnNumber": 20
+      },
+      "hitCount": 2,
+      "children": [
+        250
+      ],
+      "positionTicks": [
+        {
+          "line": 1487,
+          "ticks": 1
+        },
+        {
+          "line": 1488,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 250,
+      "callFrame": {
+        "functionName": "terrainSeed",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 1468,
+        "columnNumber": 20
+      },
+      "hitCount": 3,
+      "children": [
+        251
+      ],
+      "positionTicks": [
+        {
+          "line": 1472,
+          "ticks": 3
+        }
+      ]
+    },
+    {
+      "id": 251,
+      "callFrame": {
+        "functionName": "get search",
+        "scriptId": "39",
+        "url": "node:internal/url",
+        "lineNumber": 1117,
+        "columnNumber": 12
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 1118,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 240,
+      "callFrame": {
+        "functionName": "valueNoise",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 1474,
+        "columnNumber": 19
+      },
+      "hitCount": 0,
+      "children": [
+        241
+      ]
+    },
+    {
+      "id": 241,
+      "callFrame": {
+        "functionName": "terrainHash",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 1485,
+        "columnNumber": 20
+      },
+      "hitCount": 1,
+      "children": [
+        242
+      ],
+      "positionTicks": [
+        {
+          "line": 1488,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 242,
+      "callFrame": {
+        "functionName": "terrainSeed",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 1468,
+        "columnNumber": 20
+      },
+      "hitCount": 3,
+      "positionTicks": [
+        {
+          "line": 1472,
+          "ticks": 2
+        },
+        {
+          "line": 1471,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 370,
+      "callFrame": {
+        "functionName": "set y",
+        "scriptId": "297",
+        "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+        "lineNumber": 11214,
+        "columnNumber": 6
+      },
+      "hitCount": 0,
+      "children": [
+        371
+      ]
+    },
+    {
+      "id": 371,
+      "callFrame": {
+        "functionName": "onRotationChange",
+        "scriptId": "297",
+        "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+        "lineNumber": 11832,
+        "columnNumber": 27
+      },
+      "hitCount": 0,
+      "children": [
+        372
+      ]
+    },
+    {
+      "id": 372,
+      "callFrame": {
+        "functionName": "setFromEuler",
+        "scriptId": "297",
+        "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+        "lineNumber": 4166,
+        "columnNumber": 13
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 4186,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 393,
+      "callFrame": {
+        "functionName": "move",
+        "scriptId": "1900",
+        "url": "",
+        "lineNumber": 909,
+        "columnNumber": 5
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 912,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 400,
+      "callFrame": {
+        "functionName": "resolve",
+        "scriptId": "1898",
+        "url": "",
+        "lineNumber": 34,
+        "columnNumber": 8
+      },
+      "hitCount": 0,
+      "children": [
+        401
+      ]
+    },
+    {
+      "id": 401,
+      "callFrame": {
+        "functionName": "resolve",
+        "scriptId": "1898",
+        "url": "",
+        "lineNumber": 34,
+        "columnNumber": 8
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 36,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 175,
+      "callFrame": {
+        "functionName": "herdDriveBias",
+        "scriptId": "1891",
+        "url": "",
+        "lineNumber": 891,
+        "columnNumber": 14
+      },
+      "hitCount": 1,
+      "children": [
+        176
+      ],
+      "positionTicks": [
+        {
+          "line": 899,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 176,
+      "callFrame": {
+        "functionName": "get isAlive",
+        "scriptId": "1900",
+        "url": "",
+        "lineNumber": 146,
+        "columnNumber": 12
+      },
+      "hitCount": 0
+    },
+    {
+      "id": 188,
+      "callFrame": {
+        "functionName": "cellAt",
+        "scriptId": "1891",
+        "url": "",
+        "lineNumber": 1787,
+        "columnNumber": 7
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 1790,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 205,
+      "callFrame": {
+        "functionName": "activeAnimation",
+        "scriptId": "1891",
+        "url": "",
+        "lineNumber": 1005,
+        "columnNumber": 16
+      },
+      "hitCount": 2,
+      "children": [
+        206
+      ],
+      "positionTicks": [
+        {
+          "line": 1009,
+          "ticks": 1
+        },
+        {
+          "line": 1013,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 206,
+      "callFrame": {
+        "functionName": "regularAnimation",
+        "scriptId": "1891",
+        "url": "",
+        "lineNumber": 287,
+        "columnNumber": 25
+      },
+      "hitCount": 0,
+      "children": [
+        207
+      ]
+    },
+    {
+      "id": 207,
+      "callFrame": {
+        "functionName": "get velocityX",
+        "scriptId": "1900",
+        "url": "",
+        "lineNumber": 273,
+        "columnNumber": 14
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 275,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 246,
+      "callFrame": {
+        "functionName": "activeBaronAnimation",
+        "scriptId": "1891",
+        "url": "",
+        "lineNumber": 1045,
+        "columnNumber": 21
+      },
+      "hitCount": 0,
+      "children": [
+        247
+      ]
+    },
+    {
+      "id": 247,
+      "callFrame": {
+        "functionName": "get isAlive",
+        "scriptId": "1900",
+        "url": "",
+        "lineNumber": 146,
+        "columnNumber": 12
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 148,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 331,
+      "callFrame": {
+        "functionName": "updateThiefSprites",
+        "scriptId": "1891",
+        "url": "",
+        "lineNumber": 870,
+        "columnNumber": 29
+      },
+      "hitCount": 0
+    },
+    {
+      "id": 337,
+      "callFrame": {
+        "functionName": "syncHitFlashes",
+        "scriptId": "1891",
+        "url": "",
+        "lineNumber": 1640,
+        "columnNumber": 15
+      },
+      "hitCount": 1,
+      "children": [
+        338
+      ],
+      "positionTicks": [
+        {
+          "line": 1644,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 338,
+      "callFrame": {
+        "functionName": "setMatrixAt",
+        "scriptId": "297",
+        "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+        "lineNumber": 24744,
+        "columnNumber": 12
+      },
+      "hitCount": 0,
+      "children": [
+        339
+      ]
+    },
+    {
+      "id": 339,
+      "callFrame": {
+        "functionName": "toArray",
+        "scriptId": "297",
+        "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+        "lineNumber": 11098,
+        "columnNumber": 8
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 11120,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 364,
+      "callFrame": {
+        "functionName": "syncEnemyFog",
+        "scriptId": "1891",
+        "url": "",
+        "lineNumber": 1693,
+        "columnNumber": 13
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 1698,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 392,
+      "callFrame": {
+        "functionName": "get isLoaded",
+        "scriptId": "1793",
+        "url": "",
+        "lineNumber": 468,
+        "columnNumber": 13
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 470,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 39,
+      "callFrame": {
+        "functionName": "observeStandingOrders",
+        "scriptId": "310",
+        "url": "",
+        "lineNumber": 421,
+        "columnNumber": 30
+      },
+      "hitCount": 0,
+      "children": [
+        40
+      ]
+    },
+    {
+      "id": 40,
+      "callFrame": {
+        "functionName": "observe",
+        "scriptId": "310",
+        "url": "",
+        "lineNumber": 155,
+        "columnNumber": 8
+      },
+      "hitCount": 0,
+      "children": [
+        41
+      ]
+    },
+    {
+      "id": 41,
+      "callFrame": {
+        "functionName": "",
+        "scriptId": "482",
+        "url": "",
+        "lineNumber": 70,
+        "columnNumber": 76
+      },
+      "hitCount": 0,
+      "children": [
+        42
+      ]
+    },
+    {
+      "id": 42,
+      "callFrame": {
+        "functionName": "readLiveState",
+        "scriptId": "482",
+        "url": "",
+        "lineNumber": 257,
+        "columnNumber": 22
+      },
+      "hitCount": 0,
+      "children": [
+        43
+      ]
+    },
+    {
+      "id": 43,
+      "callFrame": {
+        "functionName": "diagnostics",
+        "scriptId": "427",
+        "url": "",
+        "lineNumber": 998,
+        "columnNumber": 16
+      },
+      "hitCount": 0,
+      "children": [
+        44
+      ]
+    },
+    {
+      "id": 44,
+      "callFrame": {
+        "functionName": "diagnostics",
+        "scriptId": "427",
+        "url": "",
+        "lineNumber": 1794,
+        "columnNumber": 12
+      },
+      "hitCount": 7,
+      "children": [
+        45,
+        48,
+        98,
+        260,
+        322,
+        333
+      ],
+      "positionTicks": [
+        {
+          "line": 1835,
+          "ticks": 1
+        },
+        {
+          "line": 1823,
+          "ticks": 1
+        },
+        {
+          "line": 1866,
+          "ticks": 1
+        },
+        {
+          "line": 1825,
+          "ticks": 1
+        },
+        {
+          "line": 1869,
+          "ticks": 1
+        },
+        {
+          "line": 1837,
+          "ticks": 1
+        },
+        {
+          "line": 1829,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 45,
+      "callFrame": {
+        "functionName": "get diagnostics",
+        "scriptId": "1958",
+        "url": "",
+        "lineNumber": 483,
+        "columnNumber": 16
+      },
+      "hitCount": 3,
+      "children": [
+        46,
+        50,
+        76,
+        87,
+        212,
+        373
+      ],
+      "positionTicks": [
+        {
+          "line": 536,
+          "ticks": 2
+        },
+        {
+          "line": 538,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 46,
+      "callFrame": {
+        "functionName": "hpBarDiagnostics",
+        "scriptId": "1958",
+        "url": "",
+        "lineNumber": 1662,
+        "columnNumber": 17
+      },
+      "hitCount": 6,
+      "children": [
+        108
+      ],
+      "positionTicks": [
+        {
+          "line": 1666,
+          "ticks": 1
+        },
+        {
+          "line": 1668,
+          "ticks": 3
+        },
+        {
+          "line": 1666,
+          "ticks": 2
+        }
+      ]
+    },
+    {
+      "id": 108,
+      "callFrame": {
+        "functionName": "maxHpForInstance",
+        "scriptId": "1958",
+        "url": "",
+        "lineNumber": 1618,
+        "columnNumber": 17
+      },
+      "hitCount": 7,
+      "children": [
+        109,
+        123
+      ],
+      "positionTicks": [
+        {
+          "line": 1619,
+          "ticks": 1
+        },
+        {
+          "line": 1620,
+          "ticks": 1
+        },
+        {
+          "line": 1620,
+          "ticks": 1
+        },
+        {
+          "line": 1620,
+          "ticks": 4
+        }
+      ]
+    },
+    {
+      "id": 109,
+      "callFrame": {
+        "functionName": "effectiveMaxHp",
+        "scriptId": "1958",
+        "url": "",
+        "lineNumber": 1744,
+        "columnNumber": 15
+      },
+      "hitCount": 0,
+      "children": [
+        110
+      ]
+    },
+    {
+      "id": 110,
+      "callFrame": {
+        "functionName": "effectiveStat",
+        "scriptId": "1958",
+        "url": "",
+        "lineNumber": 1740,
+        "columnNumber": 14
+      },
+      "hitCount": 1,
+      "children": [
+        111
+      ],
+      "positionTicks": [
+        {
+          "line": 1742,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 111,
+      "callFrame": {
+        "functionName": "tierRung",
+        "scriptId": "1958",
+        "url": "",
+        "lineNumber": 1736,
+        "columnNumber": 9
+      },
+      "hitCount": 3,
+      "positionTicks": [
+        {
+          "line": 1739,
+          "ticks": 1
+        },
+        {
+          "line": 1739,
+          "ticks": 2
+        }
+      ]
+    },
+    {
+      "id": 123,
+      "callFrame": {
+        "functionName": "maxHpForPlacement",
+        "scriptId": "1958",
+        "url": "",
+        "lineNumber": 1621,
+        "columnNumber": 18
+      },
+      "hitCount": 2,
+      "children": [
+        124,
+        335
+      ],
+      "positionTicks": [
+        {
+          "line": 1623,
+          "ticks": 1
+        },
+        {
+          "line": 1622,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 124,
+      "callFrame": {
+        "functionName": "",
+        "scriptId": "427",
+        "url": "",
+        "lineNumber": 777,
+        "columnNumber": 3
+      },
+      "hitCount": 0,
+      "children": [
+        125
+      ]
+    },
+    {
+      "id": 125,
+      "callFrame": {
+        "functionName": "get diagnostics",
+        "scriptId": "1991",
+        "url": "",
+        "lineNumber": 152,
+        "columnNumber": 16
+      },
+      "hitCount": 0,
+      "children": [
+        126
+      ]
+    },
+    {
+      "id": 126,
+      "callFrame": {
+        "functionName": "currentTrickleInterval",
+        "scriptId": "1991",
+        "url": "",
+        "lineNumber": 640,
+        "columnNumber": 23
+      },
+      "hitCount": 5,
+      "children": [
+        386
+      ],
+      "positionTicks": [
+        {
+          "line": 642,
+          "ticks": 1
+        },
+        {
+          "line": 642,
+          "ticks": 2
+        },
+        {
+          "line": 643,
+          "ticks": 2
+        }
+      ]
+    },
+    {
+      "id": 386,
+      "callFrame": {
+        "functionName": "scalePerWave",
+        "scriptId": "1991",
+        "url": "",
+        "lineNumber": 20,
+        "columnNumber": 21
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 24,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 335,
+      "callFrame": {
+        "functionName": "",
+        "scriptId": "295",
+        "url": "",
+        "lineNumber": 2,
+        "columnNumber": 48
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 3,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 50,
+      "callFrame": {
+        "functionName": "hpDiagnostics",
+        "scriptId": "1958",
+        "url": "",
+        "lineNumber": 1630,
+        "columnNumber": 14
+      },
+      "hitCount": 5,
+      "positionTicks": [
+        {
+          "line": 1636,
+          "ticks": 1
+        },
+        {
+          "line": 1634,
+          "ticks": 1
+        },
+        {
+          "line": 1634,
+          "ticks": 2
+        },
+        {
+          "line": 1633,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 76,
+      "callFrame": {
+        "functionName": "shellDiagnostics",
+        "scriptId": "1958",
+        "url": "",
+        "lineNumber": 2147,
+        "columnNumber": 17
+      },
+      "hitCount": 0,
+      "children": [
+        77,
+        154,
+        390
+      ]
+    },
+    {
+      "id": 77,
+      "callFrame": {
+        "functionName": "diagnostics",
+        "scriptId": "1934",
+        "url": "",
+        "lineNumber": 192,
+        "columnNumber": 12
+      },
+      "hitCount": 0,
+      "children": [
+        78
+      ]
+    },
+    {
+      "id": 78,
+      "callFrame": {
+        "functionName": "",
+        "scriptId": "295",
+        "url": "",
+        "lineNumber": 2,
+        "columnNumber": 48
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 3,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 154,
+      "callFrame": {
+        "functionName": "diagnostics",
+        "scriptId": "1961",
+        "url": "",
+        "lineNumber": 284,
+        "columnNumber": 12
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 300,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 390,
+      "callFrame": {
+        "functionName": "diagnostics",
+        "scriptId": "1959",
+        "url": "",
+        "lineNumber": 220,
+        "columnNumber": 12
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 222,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 87,
+      "callFrame": {
+        "functionName": "activePositions",
+        "scriptId": "1958",
+        "url": "",
+        "lineNumber": 1532,
+        "columnNumber": 16
+      },
+      "hitCount": 5,
+      "children": [
+        88,
+        352
+      ],
+      "positionTicks": [
+        {
+          "line": 1538,
+          "ticks": 2
+        },
+        {
+          "line": 1534,
+          "ticks": 3
+        }
+      ]
+    },
+    {
+      "id": 88,
+      "callFrame": {
+        "functionName": "",
+        "scriptId": "1958",
+        "url": "",
+        "lineNumber": 1533,
+        "columnNumber": 31
+      },
+      "hitCount": 2,
+      "positionTicks": [
+        {
+          "line": 1534,
+          "ticks": 1
+        },
+        {
+          "line": 1535,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 352,
+      "callFrame": {
+        "functionName": "isActive",
+        "scriptId": "1959",
+        "url": "",
+        "lineNumber": 122,
+        "columnNumber": 9
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 123,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 212,
+      "callFrame": {
+        "functionName": "rubbleDiagnostics",
+        "scriptId": "1958",
+        "url": "",
+        "lineNumber": 2051,
+        "columnNumber": 18
+      },
+      "hitCount": 3,
+      "positionTicks": [
+        {
+          "line": 2056,
+          "ticks": 1
+        },
+        {
+          "line": 2055,
+          "ticks": 2
+        }
+      ]
+    },
+    {
+      "id": 373,
+      "callFrame": {
+        "functionName": "get buildableCounts",
+        "scriptId": "1958",
+        "url": "",
+        "lineNumber": 337,
+        "columnNumber": 20
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 339,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 48,
+      "callFrame": {
+        "functionName": "get snapshot",
+        "scriptId": "1916",
+        "url": "",
+        "lineNumber": 38,
+        "columnNumber": 13
+      },
+      "hitCount": 0,
+      "children": [
+        49
+      ]
+    },
+    {
+      "id": 49,
+      "callFrame": {
+        "functionName": "eligibleDefs",
+        "scriptId": "1916",
+        "url": "",
+        "lineNumber": 233,
+        "columnNumber": 13
+      },
+      "hitCount": 1,
+      "children": [
+        351,
+        387
+      ],
+      "positionTicks": [
+        {
+          "line": 237,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 351,
+      "callFrame": {
+        "functionName": "visibleUpgradeDefs",
+        "scriptId": "1916",
+        "url": "",
+        "lineNumber": 245,
+        "columnNumber": 19
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 248,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 387,
+      "callFrame": {
+        "functionName": "",
+        "scriptId": "1916",
+        "url": "",
+        "lineNumber": 236,
+        "columnNumber": 42
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 238,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 98,
+      "callFrame": {
+        "functionName": "blastReadyInMs",
+        "scriptId": "427",
+        "url": "",
+        "lineNumber": 2778,
+        "columnNumber": 15
+      },
+      "hitCount": 1,
+      "children": [
+        113
+      ],
+      "positionTicks": [
+        {
+          "line": 2780,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 113,
+      "callFrame": {
+        "functionName": "captureSuspend",
+        "scriptId": "1967",
+        "url": "",
+        "lineNumber": 165,
+        "columnNumber": 15
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 200,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 260,
+      "callFrame": {
+        "functionName": "get diagnostics",
+        "scriptId": "1985",
+        "url": "",
+        "lineNumber": 172,
+        "columnNumber": 16
+      },
+      "hitCount": 1,
+      "children": [
+        261
+      ],
+      "positionTicks": [
+        {
+          "line": 179,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 261,
+      "callFrame": {
+        "functionName": "",
+        "scriptId": "1985",
+        "url": "",
+        "lineNumber": 178,
+        "columnNumber": 25
+      },
+      "hitCount": 0,
+      "children": [
+        262,
+        275
+      ]
+    },
+    {
+      "id": 262,
+      "callFrame": {
+        "functionName": "",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 43,
+        "columnNumber": 41
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 44,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 275,
+      "callFrame": {
+        "functionName": "visualAnchorY",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 446,
+        "columnNumber": 22
+      },
+      "hitCount": 0,
+      "children": [
+        276
+      ]
+    },
+    {
+      "id": 276,
+      "callFrame": {
+        "functionName": "visualY",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 443,
+        "columnNumber": 16
+      },
+      "hitCount": 0,
+      "children": [
+        277
+      ]
+    },
+    {
+      "id": 277,
+      "callFrame": {
+        "functionName": "samplePaddedHeight",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 438,
+        "columnNumber": 27
+      },
+      "hitCount": 0,
+      "children": [
+        278
+      ]
+    },
+    {
+      "id": 278,
+      "callFrame": {
+        "functionName": "sampleHeight",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 366,
+        "columnNumber": 21
+      },
+      "hitCount": 0,
+      "children": [
+        279
+      ]
+    },
+    {
+      "id": 279,
+      "callFrame": {
+        "functionName": "sampleHeightFamily",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 421,
+        "columnNumber": 27
+      },
+      "hitCount": 0,
+      "children": [
+        280,
+        284
+      ]
+    },
+    {
+      "id": 280,
+      "callFrame": {
+        "functionName": "terrainFeatures",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 1192,
+        "columnNumber": 24
+      },
+      "hitCount": 0,
+      "children": [
+        281,
+        379,
+        396
+      ]
+    },
+    {
+      "id": 281,
+      "callFrame": {
+        "functionName": "valueNoise",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 1474,
+        "columnNumber": 19
+      },
+      "hitCount": 0,
+      "children": [
+        282
+      ]
+    },
+    {
+      "id": 282,
+      "callFrame": {
+        "functionName": "terrainHash",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 1485,
+        "columnNumber": 20
+      },
+      "hitCount": 2,
+      "children": [
+        394
+      ],
+      "positionTicks": [
+        {
+          "line": 1488,
+          "ticks": 2
+        }
+      ]
+    },
+    {
+      "id": 394,
+      "callFrame": {
+        "functionName": "terrainSeed",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 1468,
+        "columnNumber": 20
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 1472,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 379,
+      "callFrame": {
+        "functionName": "stableProbeMask",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 1265,
+        "columnNumber": 24
+      },
+      "hitCount": 2,
+      "positionTicks": [
+        {
+          "line": 1275,
+          "ticks": 1
+        },
+        {
+          "line": 1275,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 396,
+      "callFrame": {
+        "functionName": "channelMask",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 1246,
+        "columnNumber": 20
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 1251,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 284,
+      "callFrame": {
+        "functionName": "valueNoise",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 1474,
+        "columnNumber": 19
+      },
+      "hitCount": 0,
+      "children": [
+        285
+      ]
+    },
+    {
+      "id": 285,
+      "callFrame": {
+        "functionName": "terrainHash",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 1485,
+        "columnNumber": 20
+      },
+      "hitCount": 0,
+      "children": [
+        286
+      ]
+    },
+    {
+      "id": 286,
+      "callFrame": {
+        "functionName": "terrainSeed",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 1468,
+        "columnNumber": 20
+      },
+      "hitCount": 2,
+      "positionTicks": [
+        {
+          "line": 1472,
+          "ticks": 2
+        }
+      ]
+    },
+    {
+      "id": 322,
+      "callFrame": {
+        "functionName": "get snapshot",
+        "scriptId": "1911",
+        "url": "",
+        "lineNumber": 198,
+        "columnNumber": 13
+      },
+      "hitCount": 0,
+      "children": [
+        323
+      ]
+    },
+    {
+      "id": 323,
+      "callFrame": {
+        "functionName": "visualY",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 443,
+        "columnNumber": 16
+      },
+      "hitCount": 0,
+      "children": [
+        324
+      ]
+    },
+    {
+      "id": 324,
+      "callFrame": {
+        "functionName": "samplePaddedHeight",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 438,
+        "columnNumber": 27
+      },
+      "hitCount": 0,
+      "children": [
+        325
+      ]
+    },
+    {
+      "id": 325,
+      "callFrame": {
+        "functionName": "sampleHeight",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 366,
+        "columnNumber": 21
+      },
+      "hitCount": 0,
+      "children": [
+        326
+      ]
+    },
+    {
+      "id": 326,
+      "callFrame": {
+        "functionName": "sampleHeightFamily",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 421,
+        "columnNumber": 27
+      },
+      "hitCount": 0,
+      "children": [
+        327
+      ]
+    },
+    {
+      "id": 327,
+      "callFrame": {
+        "functionName": "terrainFeatures",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 1192,
+        "columnNumber": 24
+      },
+      "hitCount": 1,
+      "children": [
+        381
+      ],
+      "positionTicks": [
+        {
+          "line": 1215,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 381,
+      "callFrame": {
+        "functionName": "valueNoise",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 1474,
+        "columnNumber": 19
+      },
+      "hitCount": 0,
+      "children": [
+        382
+      ]
+    },
+    {
+      "id": 382,
+      "callFrame": {
+        "functionName": "terrainHash",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 1485,
+        "columnNumber": 20
+      },
+      "hitCount": 0,
+      "children": [
+        383
+      ]
+    },
+    {
+      "id": 383,
+      "callFrame": {
+        "functionName": "terrainSeed",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 1468,
+        "columnNumber": 20
+      },
+      "hitCount": 2,
+      "positionTicks": [
+        {
+          "line": 1472,
+          "ticks": 2
+        }
+      ]
+    },
+    {
+      "id": 333,
+      "callFrame": {
+        "functionName": "get diagnostics",
+        "scriptId": "1920",
+        "url": "",
+        "lineNumber": 98,
+        "columnNumber": 16
+      },
+      "hitCount": 0,
+      "children": [
+        334
+      ]
+    },
+    {
+      "id": 334,
+      "callFrame": {
+        "functionName": "diagnostics",
+        "scriptId": "1927",
+        "url": "",
+        "lineNumber": 198,
+        "columnNumber": 12
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 212,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 80,
+      "callFrame": {
+        "functionName": "resolveBoltHits",
+        "scriptId": "1967",
+        "url": "",
+        "lineNumber": 664,
+        "columnNumber": 16
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 665,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 119,
+      "callFrame": {
+        "functionName": "update",
+        "scriptId": "1967",
+        "url": "",
+        "lineNumber": 253,
+        "columnNumber": 7
+      },
+      "hitCount": 0,
+      "children": [
+        120,
+        170,
+        209,
+        232
+      ]
+    },
+    {
+      "id": 120,
+      "callFrame": {
+        "functionName": "updateRigArcs",
+        "scriptId": "1967",
+        "url": "",
+        "lineNumber": 412,
+        "columnNumber": 14
+      },
+      "hitCount": 1,
+      "children": [
+        208,
+        218
+      ],
+      "positionTicks": [
+        {
+          "line": 420,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 208,
+      "callFrame": {
+        "functionName": "findNearest",
+        "scriptId": "1968",
+        "url": "",
+        "lineNumber": 10,
+        "columnNumber": 12
+      },
+      "hitCount": 0
+    },
+    {
+      "id": 218,
+      "callFrame": {
+        "functionName": "emitVolley",
+        "scriptId": "1967",
+        "url": "",
+        "lineNumber": 433,
+        "columnNumber": 11
+      },
+      "hitCount": 1,
+      "children": [
+        219
+      ],
+      "positionTicks": [
+        {
+          "line": 438,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 219,
+      "callFrame": {
+        "functionName": "activate",
+        "scriptId": "1909",
+        "url": "",
+        "lineNumber": 106,
+        "columnNumber": 9
+      },
+      "hitCount": 0,
+      "children": [
+        220
+      ]
+    },
+    {
+      "id": 220,
+      "callFrame": {
+        "functionName": "visualY",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 443,
+        "columnNumber": 16
+      },
+      "hitCount": 0,
+      "children": [
+        221
+      ]
+    },
+    {
+      "id": 221,
+      "callFrame": {
+        "functionName": "samplePaddedHeight",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 438,
+        "columnNumber": 27
+      },
+      "hitCount": 0,
+      "children": [
+        222
+      ]
+    },
+    {
+      "id": 222,
+      "callFrame": {
+        "functionName": "sampleHeight",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 366,
+        "columnNumber": 21
+      },
+      "hitCount": 0,
+      "children": [
+        223
+      ]
+    },
+    {
+      "id": 223,
+      "callFrame": {
+        "functionName": "sampleHeightFamily",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 421,
+        "columnNumber": 27
+      },
+      "hitCount": 0,
+      "children": [
+        224
+      ]
+    },
+    {
+      "id": 224,
+      "callFrame": {
+        "functionName": "valueNoise",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 1474,
+        "columnNumber": 19
+      },
+      "hitCount": 0,
+      "children": [
+        225
+      ]
+    },
+    {
+      "id": 225,
+      "callFrame": {
+        "functionName": "terrainHash",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 1485,
+        "columnNumber": 20
+      },
+      "hitCount": 0,
+      "children": [
+        226
+      ]
+    },
+    {
+      "id": 226,
+      "callFrame": {
+        "functionName": "terrainSeed",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 1468,
+        "columnNumber": 20
+      },
+      "hitCount": 0,
+      "children": [
+        227
+      ]
+    },
+    {
+      "id": 227,
+      "callFrame": {
+        "functionName": "get search",
+        "scriptId": "39",
+        "url": "node:internal/url",
+        "lineNumber": 1117,
+        "columnNumber": 12
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 1118,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 170,
+      "callFrame": {
+        "functionName": "resolveBoltHits",
+        "scriptId": "1967",
+        "url": "",
+        "lineNumber": 664,
+        "columnNumber": 16
+      },
+      "hitCount": 0,
+      "children": [
+        171,
+        215,
+        229,
+        365
+      ]
+    },
+    {
+      "id": 171,
+      "callFrame": {
+        "functionName": "get capacity",
+        "scriptId": "1909",
+        "url": "",
+        "lineNumber": 85,
+        "columnNumber": 13
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 87,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 215,
+      "callFrame": {
+        "functionName": "hit",
+        "scriptId": "1970",
+        "url": "",
+        "lineNumber": 94,
+        "columnNumber": 4
+      },
+      "hitCount": 0,
+      "children": [
+        216
+      ]
+    },
+    {
+      "id": 216,
+      "callFrame": {
+        "functionName": "spawnTick",
+        "scriptId": "1970",
+        "url": "",
+        "lineNumber": 206,
+        "columnNumber": 10
+      },
+      "hitCount": 0,
+      "children": [
+        217,
+        349
+      ]
+    },
+    {
+      "id": 217,
+      "callFrame": {
+        "functionName": "visualAnchorY",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 446,
+        "columnNumber": 22
+      },
+      "hitCount": 0
+    },
+    {
+      "id": 349,
+      "callFrame": {
+        "functionName": "updateMatrix",
+        "scriptId": "297",
+        "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+        "lineNumber": 12820,
+        "columnNumber": 13
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 12821,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 229,
+      "callFrame": {
+        "functionName": "killEnemy",
+        "scriptId": "1967",
+        "url": "",
+        "lineNumber": 733,
+        "columnNumber": 10
+      },
+      "hitCount": 1,
+      "children": [
+        230,
+        296
+      ],
+      "positionTicks": [
+        {
+          "line": 736,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 230,
+      "callFrame": {
+        "functionName": "spawn",
+        "scriptId": "1969",
+        "url": "",
+        "lineNumber": 184,
+        "columnNumber": 6
+      },
+      "hitCount": 0,
+      "children": [
+        231,
+        344
+      ]
+    },
+    {
+      "id": 231,
+      "callFrame": {
+        "functionName": "escapeRoute",
+        "scriptId": "1969",
+        "url": "",
+        "lineNumber": 489,
+        "columnNumber": 20
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 518,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 344,
+      "callFrame": {
+        "functionName": "syncSlot",
+        "scriptId": "1969",
+        "url": "",
+        "lineNumber": 273,
+        "columnNumber": 9
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 307,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 296,
+      "callFrame": {
+        "functionName": "emit",
+        "scriptId": "554",
+        "url": "",
+        "lineNumber": 17,
+        "columnNumber": 5
+      },
+      "hitCount": 0,
+      "children": [
+        297
+      ]
+    },
+    {
+      "id": 297,
+      "callFrame": {
+        "functionName": "",
+        "scriptId": "427",
+        "url": "",
+        "lineNumber": 1624,
+        "columnNumber": 24
+      },
+      "hitCount": 1,
+      "children": [
+        384
+      ],
+      "positionTicks": [
+        {
+          "line": 1658,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 384,
+      "callFrame": {
+        "functionName": "canonicalEvent",
+        "scriptId": "427",
+        "url": "",
+        "lineNumber": 2856,
+        "columnNumber": 23
+      },
+      "hitCount": 0,
+      "children": [
+        385
+      ]
+    },
+    {
+      "id": 385,
+      "callFrame": {
+        "functionName": "structuredClone",
+        "scriptId": "28",
+        "url": "node:internal/worker/js_transferable",
+        "lineNumber": 112,
+        "columnNumber": 24
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 127,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 365,
+      "callFrame": {
+        "functionName": "isActive",
+        "scriptId": "1909",
+        "url": "",
+        "lineNumber": 88,
+        "columnNumber": 9
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 90,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 209,
+      "callFrame": {
+        "functionName": "update",
+        "scriptId": "1909",
+        "url": "",
+        "lineNumber": 133,
+        "columnNumber": 7
+      },
+      "hitCount": 0
+    },
+    {
+      "id": 232,
+      "callFrame": {
+        "functionName": "update",
+        "scriptId": "1913",
+        "url": "",
+        "lineNumber": 69,
+        "columnNumber": 7
+      },
+      "hitCount": 0,
+      "children": [
+        302
+      ]
+    },
+    {
+      "id": 302,
+      "callFrame": {
+        "functionName": "visualAnchorY",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 446,
+        "columnNumber": 22
+      },
+      "hitCount": 0,
+      "children": [
+        303
+      ]
+    },
+    {
+      "id": 303,
+      "callFrame": {
+        "functionName": "visualY",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 443,
+        "columnNumber": 16
+      },
+      "hitCount": 0,
+      "children": [
+        304
+      ]
+    },
+    {
+      "id": 304,
+      "callFrame": {
+        "functionName": "samplePaddedHeight",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 438,
+        "columnNumber": 27
+      },
+      "hitCount": 0,
+      "children": [
+        305
+      ]
+    },
+    {
+      "id": 305,
+      "callFrame": {
+        "functionName": "sampleHeight",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 366,
+        "columnNumber": 21
+      },
+      "hitCount": 1,
+      "children": [
+        306
+      ],
+      "positionTicks": [
+        {
+          "line": 371,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 306,
+      "callFrame": {
+        "functionName": "sampleHeightFamily",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 421,
+        "columnNumber": 27
+      },
+      "hitCount": 0,
+      "children": [
+        307
+      ]
+    },
+    {
+      "id": 307,
+      "callFrame": {
+        "functionName": "terrainFeatures",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 1192,
+        "columnNumber": 24
+      },
+      "hitCount": 2,
+      "children": [
+        308,
+        361,
+        377,
+        398
+      ],
+      "positionTicks": [
+        {
+          "line": 1198,
+          "ticks": 1
+        },
+        {
+          "line": 1203,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 308,
+      "callFrame": {
+        "functionName": "valueNoise",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 1474,
+        "columnNumber": 19
+      },
+      "hitCount": 0,
+      "children": [
+        309
+      ]
+    },
+    {
+      "id": 309,
+      "callFrame": {
+        "functionName": "terrainHash",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 1485,
+        "columnNumber": 20
+      },
+      "hitCount": 8,
+      "children": [
+        367
+      ],
+      "positionTicks": [
+        {
+          "line": 1488,
+          "ticks": 8
+        }
+      ]
+    },
+    {
+      "id": 367,
+      "callFrame": {
+        "functionName": "terrainSeed",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 1468,
+        "columnNumber": 20
+      },
+      "hitCount": 5,
+      "positionTicks": [
+        {
+          "line": 1472,
+          "ticks": 4
+        },
+        {
+          "line": 1471,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 361,
+      "callFrame": {
+        "functionName": "channelMask",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 1246,
+        "columnNumber": 20
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 1251,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 377,
+      "callFrame": {
+        "functionName": "stableProbeMask",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 1265,
+        "columnNumber": 24
+      },
+      "hitCount": 2,
+      "positionTicks": [
+        {
+          "line": 1275,
+          "ticks": 1
+        },
+        {
+          "line": 1275,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 398,
+      "callFrame": {
+        "functionName": "routingLaneDistance",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 413,
+        "columnNumber": 28
+      },
+      "hitCount": 0,
+      "children": [
+        399
+      ]
+    },
+    {
+      "id": 399,
+      "callFrame": {
+        "functionName": "nearestFordRange",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 316,
+        "columnNumber": 25
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 320,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 169,
+      "callFrame": {
+        "functionName": "update",
+        "scriptId": "434",
+        "url": "",
+        "lineNumber": 62,
+        "columnNumber": 7
+      },
+      "hitCount": 0
+    },
+    {
+      "id": 181,
+      "callFrame": {
+        "functionName": "",
+        "scriptId": "427",
+        "url": "",
+        "lineNumber": 1422,
+        "columnNumber": 79
+      },
+      "hitCount": 0
+    },
+    {
+      "id": 186,
+      "callFrame": {
+        "functionName": "updateWrangle",
+        "scriptId": "1920",
+        "url": "",
+        "lineNumber": 63,
+        "columnNumber": 14
+      },
+      "hitCount": 1,
+      "children": [
+        187
+      ],
+      "positionTicks": [
+        {
+          "line": 65,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 187,
+      "callFrame": {
+        "functionName": "update",
+        "scriptId": "1927",
+        "url": "",
+        "lineNumber": 63,
+        "columnNumber": 7
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 71,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 192,
+      "callFrame": {
+        "functionName": "harvestTargets",
+        "scriptId": "427",
+        "url": "",
+        "lineNumber": 2234,
+        "columnNumber": 15
+      },
+      "hitCount": 0,
+      "children": [
+        193
+      ]
+    },
+    {
+      "id": 193,
+      "callFrame": {
+        "functionName": "get snapshot",
+        "scriptId": "1911",
+        "url": "",
+        "lineNumber": 198,
+        "columnNumber": 13
+      },
+      "hitCount": 0,
+      "children": [
+        194
+      ]
+    },
+    {
+      "id": 194,
+      "callFrame": {
+        "functionName": "visualY",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 443,
+        "columnNumber": 16
+      },
+      "hitCount": 0,
+      "children": [
+        195
+      ]
+    },
+    {
+      "id": 195,
+      "callFrame": {
+        "functionName": "samplePaddedHeight",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 438,
+        "columnNumber": 27
+      },
+      "hitCount": 0,
+      "children": [
+        196
+      ]
+    },
+    {
+      "id": 196,
+      "callFrame": {
+        "functionName": "sampleHeight",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 366,
+        "columnNumber": 21
+      },
+      "hitCount": 0,
+      "children": [
+        197
+      ]
+    },
+    {
+      "id": 197,
+      "callFrame": {
+        "functionName": "sampleHeightFamily",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 421,
+        "columnNumber": 27
+      },
+      "hitCount": 1,
+      "children": [
+        198,
+        310
+      ],
+      "positionTicks": [
+        {
+          "line": 432,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 198,
+      "callFrame": {
+        "functionName": "terrainFeatures",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 1192,
+        "columnNumber": 24
+      },
+      "hitCount": 0,
+      "children": [
+        199,
+        202,
+        291
+      ]
+    },
+    {
+      "id": 199,
+      "callFrame": {
+        "functionName": "smoothstep",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 1489,
+        "columnNumber": 19
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 1492,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 202,
+      "callFrame": {
+        "functionName": "valueNoise",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 1474,
+        "columnNumber": 19
+      },
+      "hitCount": 0,
+      "children": [
+        203
+      ]
+    },
+    {
+      "id": 203,
+      "callFrame": {
+        "functionName": "terrainHash",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 1485,
+        "columnNumber": 20
+      },
+      "hitCount": 0,
+      "children": [
+        204
+      ]
+    },
+    {
+      "id": 204,
+      "callFrame": {
+        "functionName": "terrainSeed",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 1468,
+        "columnNumber": 20
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 1472,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 291,
+      "callFrame": {
+        "functionName": "stableProbeMask",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 1265,
+        "columnNumber": 24
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 1276,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 310,
+      "callFrame": {
+        "functionName": "valueNoise",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 1474,
+        "columnNumber": 19
+      },
+      "hitCount": 0,
+      "children": [
+        311
+      ]
+    },
+    {
+      "id": 311,
+      "callFrame": {
+        "functionName": "terrainHash",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 1485,
+        "columnNumber": 20
+      },
+      "hitCount": 0,
+      "children": [
+        312
+      ]
+    },
+    {
+      "id": 312,
+      "callFrame": {
+        "functionName": "terrainSeed",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 1468,
+        "columnNumber": 20
+      },
+      "hitCount": 2,
+      "positionTicks": [
+        {
+          "line": 1472,
+          "ticks": 2
+        }
+      ]
+    },
+    {
+      "id": 201,
+      "callFrame": {
+        "functionName": "",
+        "scriptId": "579",
+        "url": "",
+        "lineNumber": 16,
+        "columnNumber": 34
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 17,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 234,
+      "callFrame": {
+        "functionName": "tickDecay",
+        "scriptId": "1920",
+        "url": "",
+        "lineNumber": 55,
+        "columnNumber": 10
+      },
+      "hitCount": 0,
+      "children": [
+        235
+      ]
+    },
+    {
+      "id": 235,
+      "callFrame": {
+        "functionName": "tick",
+        "scriptId": "1921",
+        "url": "",
+        "lineNumber": 78,
+        "columnNumber": 5
+      },
+      "hitCount": 0
+    },
+    {
+      "id": 341,
+      "callFrame": {
+        "functionName": "get diagnostics",
+        "scriptId": "1991",
+        "url": "",
+        "lineNumber": 152,
+        "columnNumber": 16
+      },
+      "hitCount": 0,
+      "children": [
+        342
+      ]
+    },
+    {
+      "id": 342,
+      "callFrame": {
+        "functionName": "currentTrickleInterval",
+        "scriptId": "1991",
+        "url": "",
+        "lineNumber": 640,
+        "columnNumber": 23
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 642,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 346,
+      "callFrame": {
+        "functionName": "syncUpgradeOfferClock",
+        "scriptId": "427",
+        "url": "",
+        "lineNumber": 1575,
+        "columnNumber": 22
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 1577,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 67,
+      "callFrame": {
+        "functionName": "(garbage collector)",
+        "scriptId": "0",
+        "url": "",
+        "lineNumber": -1,
+        "columnNumber": -1
+      },
+      "hitCount": 7
+    },
+    {
+      "id": 112,
+      "callFrame": {
+        "functionName": "",
+        "scriptId": "295",
+        "url": "",
+        "lineNumber": 2,
+        "columnNumber": 48
+      },
+      "hitCount": 2,
+      "positionTicks": [
+        {
+          "line": 3,
+          "ticks": 2
+        }
+      ]
+    },
+    {
+      "id": 164,
+      "callFrame": {
+        "functionName": "(program)",
+        "scriptId": "0",
+        "url": "",
+        "lineNumber": -1,
+        "columnNumber": -1
+      },
+      "hitCount": 11
+    },
+    {
+      "id": 336,
+      "callFrame": {
+        "functionName": "get escortMode",
+        "scriptId": "1991",
+        "url": "",
+        "lineNumber": 139,
+        "columnNumber": 15
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 141,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 378,
+      "callFrame": {
+        "functionName": "isActive",
+        "scriptId": "1959",
+        "url": "",
+        "lineNumber": 122,
+        "columnNumber": 9
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 124,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 388,
+      "callFrame": {
+        "functionName": "get search",
+        "scriptId": "39",
+        "url": "node:internal/url",
+        "lineNumber": 1117,
+        "columnNumber": 12
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 1121,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 391,
+      "callFrame": {
+        "functionName": "maxHpForInstance",
+        "scriptId": "1958",
+        "url": "",
+        "lineNumber": 1618,
+        "columnNumber": 17
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 1620,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 395,
+      "callFrame": {
+        "functionName": "get isAlive",
+        "scriptId": "1900",
+        "url": "",
+        "lineNumber": 146,
+        "columnNumber": 12
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 148,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 397,
+      "callFrame": {
+        "functionName": "multiplyMatrices",
+        "scriptId": "297",
+        "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+        "lineNumber": 10384,
+        "columnNumber": 17
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 10421,
+          "ticks": 1
+        }
+      ]
+    }
+  ],
+  "startTime": 800329063489,
+  "endTime": 800329854457,
+  "samples": [
+    6,
+    10,
+    12,
+    14,
+    9,
+    22,
+    18,
+    10,
+    25,
+    26,
+    28,
+    32,
+    34,
+    38,
+    46,
+    47,
+    29,
+    23,
+    49,
+    50,
+    51,
+    53,
+    62,
+    63,
+    65,
+    66,
+    67,
+    70,
+    44,
+    73,
+    50,
+    75,
+    78,
+    79,
+    80,
+    81,
+    22,
+    9,
+    86,
+    88,
+    89,
+    52,
+    91,
+    93,
+    94,
+    81,
+    82,
+    50,
+    97,
+    72,
+    98,
+    101,
+    52,
+    107,
+    111,
+    46,
+    112,
+    67,
+    113,
+    115,
+    118,
+    120,
+    69,
+    122,
+    23,
+    126,
+    126,
+    127,
+    129,
+    100,
+    133,
+    135,
+    138,
+    139,
+    142,
+    122,
+    149,
+    82,
+    71,
+    31,
+    151,
+    74,
+    66,
+    44,
+    23,
+    153,
+    154,
+    66,
+    155,
+    66,
+    156,
+    31,
+    79,
+    162,
+    163,
+    60,
+    164,
+    126,
+    161,
+    29,
+    168,
+    140,
+    107,
+    31,
+    169,
+    171,
+    172,
+    174,
+    29,
+    176,
+    178,
+    179,
+    180,
+    74,
+    31,
+    63,
+    181,
+    182,
+    183,
+    17,
+    79,
+    185,
+    164,
+    126,
+    46,
+    29,
+    150,
+    187,
+    188,
+    186,
+    91,
+    67,
+    87,
+    93,
+    191,
+    162,
+    199,
+    200,
+    88,
+    29,
+    108,
+    201,
+    204,
+    207,
+    168,
+    208,
+    120,
+    209,
+    170,
+    210,
+    211,
+    212,
+    132,
+    211,
+    214,
+    170,
+    217,
+    112,
+    227,
+    103,
+    104,
+    107,
+    228,
+    61,
+    83,
+    170,
+    231,
+    232,
+    233,
+    168,
+    235,
+    29,
+    239,
+    79,
+    197,
+    68,
+    242,
+    244,
+    175,
+    245,
+    247,
+    82,
+    44,
+    251,
+    252,
+    103,
+    79,
+    73,
+    66,
+    258,
+    67,
+    208,
+    239,
+    81,
+    259,
+    262,
+    263,
+    264,
+    108,
+    168,
+    31,
+    260,
+    8,
+    168,
+    265,
+    45,
+    274,
+    282,
+    187,
+    31,
+    283,
+    129,
+    29,
+    164,
+    32,
+    286,
+    287,
+    66,
+    108,
+    205,
+    27,
+    289,
+    290,
+    291,
+    111,
+    294,
+    272,
+    264,
+    123,
+    103,
+    151,
+    94,
+    31,
+    72,
+    295,
+    29,
+    297,
+    11,
+    85,
+    272,
+    151,
+    301,
+    309,
+    82,
+    309,
+    213,
+    32,
+    151,
+    81,
+    312,
+    313,
+    314,
+    315,
+    316,
+    10,
+    317,
+    164,
+    110,
+    318,
+    45,
+    320,
+    321,
+    22,
+    242,
+    45,
+    327,
+    108,
+    328,
+    244,
+    79,
+    330,
+    331,
+    332,
+    334,
+    164,
+    335,
+    44,
+    91,
+    129,
+    44,
+    29,
+    108,
+    336,
+    339,
+    29,
+    178,
+    340,
+    46,
+    342,
+    343,
+    44,
+    122,
+    344,
+    164,
+    283,
+    32,
+    108,
+    345,
+    162,
+    11,
+    151,
+    104,
+    140,
+    31,
+    52,
+    346,
+    348,
+    107,
+    129,
+    129,
+    31,
+    212,
+    349,
+    164,
+    205,
+    82,
+    25,
+    241,
+    350,
+    351,
+    31,
+    352,
+    155,
+    353,
+    71,
+    235,
+    355,
+    79,
+    356,
+    358,
+    360,
+    11,
+    67,
+    361,
+    87,
+    87,
+    307,
+    286,
+    22,
+    52,
+    363,
+    183,
+    190,
+    250,
+    364,
+    29,
+    46,
+    365,
+    312,
+    72,
+    52,
+    212,
+    366,
+    309,
+    367,
+    254,
+    140,
+    67,
+    151,
+    368,
+    72,
+    22,
+    369,
+    372,
+    104,
+    242,
+    52,
+    239,
+    50,
+    14,
+    340,
+    87,
+    164,
+    82,
+    373,
+    363,
+    164,
+    111,
+    68,
+    74,
+    375,
+    376,
+    68,
+    377,
+    22,
+    148,
+    378,
+    31,
+    282,
+    108,
+    11,
+    379,
+    73,
+    174,
+    44,
+    337,
+    46,
+    380,
+    283,
+    379,
+    126,
+    250,
+    377,
+    383,
+    67,
+    307,
+    82,
+    14,
+    129,
+    190,
+    376,
+    14,
+    184,
+    83,
+    191,
+    385,
+    367,
+    79,
+    367,
+    71,
+    386,
+    91,
+    368,
+    239,
+    236,
+    164,
+    305,
+    229,
+    87,
+    81,
+    129,
+    249,
+    387,
+    309,
+    309,
+    218,
+    309,
+    105,
+    388,
+    68,
+    389,
+    52,
+    390,
+    11,
+    175,
+    81,
+    30,
+    29,
+    355,
+    391,
+    368,
+    94,
+    392,
+    79,
+    129,
+    123,
+    309,
+    250,
+    393,
+    283,
+    164,
+    348,
+    33,
+    394,
+    236,
+    395,
+    367,
+    309,
+    396,
+    82,
+    383,
+    140,
+    397,
+    249,
+    399,
+    50,
+    401,
+    79,
+    31,
+    213,
+    169,
+    367,
+    40
+  ],
+  "timeDeltas": [
+    160283,
+    1565,
+    1521,
+    1488,
+    1510,
+    1499,
+    1501,
+    1513,
+    1061,
+    1488,
+    1503,
+    1499,
+    1501,
+    1510,
+    1500,
+    1508,
+    1498,
+    1527,
+    1675,
+    1444,
+    1501,
+    1542,
+    1465,
+    1500,
+    1500,
+    1525,
+    1499,
+    1491,
+    1520,
+    1513,
+    1496,
+    1525,
+    1490,
+    1250,
+    1513,
+    1512,
+    1513,
+    1492,
+    1506,
+    1504,
+    1520,
+    1518,
+    1504,
+    1498,
+    1496,
+    1511,
+    1159,
+    1504,
+    1499,
+    1509,
+    1501,
+    1518,
+    1504,
+    214,
+    1285,
+    1487,
+    1184,
+    1502,
+    1522,
+    1664,
+    1440,
+    1502,
+    1483,
+    1517,
+    1532,
+    1513,
+    1504,
+    1274,
+    1193,
+    1493,
+    1312,
+    84,
+    16,
+    129,
+    1453,
+    1518,
+    1466,
+    1495,
+    1512,
+    1516,
+    1504,
+    1518,
+    656,
+    840,
+    1508,
+    1520,
+    1501,
+    1498,
+    1466,
+    1069,
+    431,
+    1306,
+    1554,
+    702,
+    330,
+    453,
+    1483,
+    1518,
+    1491,
+    1511,
+    1519,
+    1527,
+    1502,
+    1495,
+    32,
+    1497,
+    1508,
+    1494,
+    927,
+    94,
+    248,
+    9,
+    32,
+    9,
+    218,
+    212,
+    40,
+    89,
+    11,
+    1161,
+    1511,
+    1519,
+    1280,
+    1512,
+    1518,
+    1157,
+    351,
+    1389,
+    117,
+    1561,
+    1516,
+    1497,
+    1515,
+    1510,
+    1505,
+    1335,
+    169,
+    1501,
+    1519,
+    1482,
+    1310,
+    1553,
+    1502,
+    1498,
+    1237,
+    650,
+    28,
+    447,
+    69,
+    57,
+    13,
+    227,
+    2677,
+    450,
+    1058,
+    768,
+    344,
+    394,
+    1327,
+    1064,
+    2,
+    36,
+    13,
+    1509,
+    1462,
+    737,
+    750,
+    615,
+    72,
+    826,
+    818,
+    144,
+    525,
+    1496,
+    1524,
+    1475,
+    1516,
+    1489,
+    1450,
+    1506,
+    1504,
+    1530,
+    1056,
+    1496,
+    1050,
+    1163,
+    1520,
+    1268,
+    1526,
+    1497,
+    1494,
+    1422,
+    83,
+    1503,
+    1523,
+    1495,
+    1505,
+    1357,
+    1515,
+    1507,
+    1523,
+    1530,
+    1521,
+    1510,
+    1555,
+    1488,
+    1488,
+    1507,
+    1491,
+    1355,
+    1894,
+    1472,
+    1481,
+    1498,
+    1526,
+    1297,
+    1504,
+    1517,
+    1505,
+    1379,
+    1507,
+    1513,
+    1503,
+    1207,
+    1379,
+    1510,
+    1505,
+    1518,
+    1114,
+    1503,
+    1501,
+    1526,
+    1501,
+    1502,
+    1511,
+    1496,
+    1507,
+    1502,
+    1265,
+    1469,
+    1486,
+    1509,
+    1512,
+    1507,
+    1491,
+    1523,
+    1499,
+    1497,
+    1507,
+    1517,
+    1353,
+    158,
+    127,
+    224,
+    13,
+    16,
+    1127,
+    1493,
+    1503,
+    1502,
+    1181,
+    1510,
+    1515,
+    1512,
+    1480,
+    1535,
+    1563,
+    1480,
+    1499,
+    1454,
+    1526,
+    79,
+    334,
+    1113,
+    1559,
+    1502,
+    1038,
+    1508,
+    1473,
+    1381,
+    68,
+    1463,
+    1508,
+    1504,
+    322,
+    1179,
+    1518,
+    1518,
+    1513,
+    1515,
+    1095,
+    1524,
+    1488,
+    1515,
+    1194,
+    1500,
+    1512,
+    1529,
+    1510,
+    1515,
+    1493,
+    1513,
+    1497,
+    1521,
+    1256,
+    1496,
+    1401,
+    1523,
+    1501,
+    1078,
+    1352,
+    1509,
+    1489,
+    1513,
+    1504,
+    1510,
+    1321,
+    1070,
+    1498,
+    1496,
+    1510,
+    1449,
+    1530,
+    1499,
+    1494,
+    1071,
+    429,
+    1497,
+    1519,
+    1458,
+    1494,
+    1256,
+    1509,
+    1512,
+    1182,
+    1500,
+    1519,
+    1025,
+    1490,
+    1523,
+    1059,
+    1081,
+    1480,
+    1510,
+    1495,
+    1518,
+    1518,
+    1507,
+    1513,
+    1441,
+    1500,
+    1517,
+    1507,
+    1512,
+    1503,
+    1497,
+    1498,
+    1513,
+    1507,
+    1518,
+    1497,
+    1509,
+    1513,
+    1510,
+    1508,
+    1485,
+    1501,
+    1497,
+    1486,
+    1516,
+    1513,
+    1492,
+    1500,
+    1527,
+    1527,
+    1488,
+    1521,
+    1488,
+    1508,
+    1512,
+    1528,
+    1461,
+    1518,
+    1491,
+    1505,
+    1573,
+    1457,
+    1505,
+    1491,
+    1516,
+    1163,
+    1534,
+    1501,
+    1506,
+    1516,
+    1519,
+    1508,
+    1494,
+    1513,
+    1233,
+    1524,
+    1499,
+    1496,
+    1509,
+    1102,
+    1495,
+    1514,
+    1541,
+    1518,
+    1518,
+    1503,
+    1335,
+    1479,
+    1532,
+    1526,
+    1505,
+    1115,
+    1522,
+    1510,
+    1521,
+    1512,
+    1507,
+    1070,
+    1500,
+    1512,
+    1509,
+    1524,
+    1500,
+    1499,
+    1505,
+    1686,
+    1516,
+    1497,
+    1502,
+    1489,
+    1529,
+    1523,
+    1502,
+    1521,
+    1499,
+    1524,
+    1509,
+    1512,
+    1491,
+    1314,
+    199,
+    1493,
+    506,
+    527,
+    1508,
+    1511,
+    1513,
+    1499,
+    1250,
+    1423,
+    1508,
+    1502,
+    1516,
+    1502,
+    1522,
+    1549,
+    1451,
+    1497,
+    1516,
+    1362,
+    1473,
+    1437,
+    1492,
+    1482,
+    1509,
+    1510,
+    1139,
+    369,
+    1502,
+    1519,
+    1501,
+    1509,
+    1481,
+    1523,
+    1504,
+    904,
+    610,
+    243
+  ]
+}

@@ -1,0 +1,19 @@
+run surface: 9 base + gate leaves from main:package.json (+6: foundry ops playwright.preview.config.ts playwright.release-base.config.ts playwright.release.config.ts server)
+lane-c  feat/hero-move-verb  ahead=0  behind=119  paths=0  tracked-dirt=0  untracked=0
+  => USABLE: refill freely — a master pre-flight will find main..branch empty
+     ⚠️  but feat/hero-move-verb is 119 commit(s) BEHIND main. USABLE does not mean CURRENT.
+     Before queueing, name the commit your task depends on and prove the lane has it:
+       git merge-base --is-ancestor <sha> feat/hero-move-verb
+     If it does not, request a refresh (tasks/janitor/<name>.req: refresh-lane lane-c) — F-1320-2.
+     📋 run-surface drift: 69 file(s) main has moved that this lane lacks:
+          e2e/agent-view.spec.ts
+          e2e/asset-diet.spec.ts
+          e2e/contract-briefings.spec.ts
+          e2e/e10-ember-shore-preserve.spec.ts
+          e2e/e6-picnic-opening.spec.ts
+          e2e/e8-mare-claim-physics-parity.spec.ts
+          e2e/e8-remaining-maps-parity.spec.ts
+          e2e/er01-e10-census.spec.ts
+          … and 61 more
+        ⚠️  package.json is among them — this lane's npm GATES may be a strict SUBSET of
+        main's, so a green here can mean less than a green on main. Diff it before trusting a gate.

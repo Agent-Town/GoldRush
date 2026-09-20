@@ -1,0 +1,82 @@
+diff --git a/assets/engine-era.json b/assets/engine-era.json
+index 997259158..91681081d 100644
+--- a/assets/engine-era.json
++++ b/assets/engine-era.json
+@@ -1,7 +1,7 @@
+ {
+   "era": 5,
+   "name": "the Replayed Board",
+-  "engineHash": "32c940079ba3dd1921ca2be10a4a0d5a1de36f49c9199e1f99ecc02230f9f33d",
++  "engineHash": "64d634d4aaf285f04f0fead86724213cbded79e28cec6544d18efcd136485229",
+   "declaredAt": "2026-08-31",
+   "note": "Owner ruling 2026-08-31: \"we don't need stuff in the leaderboards that does not get replayed\". The era marks a board-law change: only current-lineage reels rank; simulation behaviour did not change.",
+   "viewSchema": {
+@@ -566,6 +566,12 @@
+       "pinnedAt": "2026-09-07",
+       "cause": "F-FTP-5 (attended review fix 2026-09-07): src/assets/AdvanceStream.ts imports assets/first-town-payload.json as a DEFAULT import (Node's JSON modules have no named exports; the named form broke every Node loader of the module, caught by whole-suite-collection on main); the browser bundle is byte-equivalent and no sim path changes",
+       "aliases": []
++    },
++    {
++      "engineHash": "64d634d4aaf285f04f0fead86724213cbded79e28cec6544d18efcd136485229",
++      "pinnedAt": "2026-09-07",
++      "cause": "F-AGE2-2 / s2533 MAIN citation drain: nine live numeric comment ranges in src/story/beats.ts re-derived in place; all 9182 TypeScript token kind/text pairs and all 2280 lines preserved. No runtime behavior or player copy change.",
++      "aliases": []
+     }
+   ],
+   "history": [
+diff --git a/src/story/beats.ts b/src/story/beats.ts
+index 400e813c8..95f2d0675 100644
+--- a/src/story/beats.ts
++++ b/src/story/beats.ts
+@@ -1142,12 +1142,12 @@ export const E6_STORY_BEATS: readonly RuntimeStoryBeat[] = [
+   },
+ ];
+ 
+-// Chapter E7 follows the E2/E3 single-table shape above (E3 at lines 484-607, E5 at 796-981,
+-// E6 at 1004-1127): the era's tavern tales and Gazette headlines are ordinary attributed beats in
++// Chapter E7 follows the E2/E3 single-table shape above (E3 at lines 484-607, E5 at 796-997,
++// E6 at 1020-1143): the era's tavern tales and Gazette headlines are ordinary attributed beats in
+ // THIS table, not a second narrative system (tavern-tale shape: e2-depot-wedding at lines
+-// 388-395, e3-tavern-twins-defect at 558-567, e5-tavern-locomotive-argument at 902-911;
++// 388-395, e3-tavern-twins-defect at 558-567, e5-tavern-locomotive-argument at 902-921;
+ // Gazette-headline shape: e2-iron-correction-rumor-one at 396-403, e3-gazette-two-offers at
+-// 506-515, e6-gazette-the-printing at 1108-1117). Mystery law holds: the Gazette prints what it
++// 506-515, e6-gazette-the-printing at 1124-1133). Mystery law holds: the Gazette prints what it
+ // can prove and never the meaning. Every beat cites its storybook line; artKey is set only
+ // where a plate exists on disk under assets/raw/.
+ // Cast note (honesty guard): STORYBOOK lines 421-425 name six E7 cast members (Chalk the first
+@@ -1326,10 +1326,10 @@ export const E7_STORY_BEATS: readonly RuntimeStoryBeat[] = [
+   },
+ ];
+ 
+-// Chapter E8 follows the E2/E3 single-table shape above (E3 at lines 484-607, E6 at lines 1004-1127):
++// Chapter E8 follows the E2/E3 single-table shape above (E3 at lines 484-607, E6 at lines 1020-1143):
+ // the era's tavern tales and Gazette headlines are ordinary attributed beats in THIS table
+ // (tavern-tale shape: e3-tavern-twins-defect at lines 558-567 and e6-tavern-wrangler-drinks-free
+-// at lines 1098-1107; Gazette shape: e3-gazette-two-offers at lines 506-515), not a second
++// at lines 1114-1123; Gazette shape: e3-gazette-two-offers at lines 506-515), not a second
+ // narrative system. Mystery law holds: the Gazette prints what it can prove and never the meaning.
+ // SPEAKER GAP (reported, not invented, the same finding ss-06 and ss-07 recorded for E5 and E6):
+ // STORYBOOK lines 485-486 name five new E8 townsfolk (the moon-born child, the dome gardener, the
+@@ -1837,10 +1837,10 @@ export const E9_STORY_BEATS: readonly RuntimeStoryBeat[] = [
+   },
+ ];
+ 
+-// Chapter E10 follows the E2/E3 single-table shape above (E3 at lines 484-607, E8 at lines 1341-1588):
++// Chapter E10 follows the E2/E3 single-table shape above (E3 at lines 484-607, E8 at lines 1357-1604):
+ // the era's tavern tales and Gazette headlines are ordinary attributed beats in THIS table
+ // (tavern-tale shape: e3-tavern-twins-defect at lines 558-567 and e8-tavern-river-question at lines
+-// 1477-1486; Gazette shape: e3-gazette-two-offers at lines 506-515), not a second narrative system.
++// 1493-1502; Gazette shape: e3-gazette-two-offers at lines 506-515), not a second narrative system.
+ // Mystery law holds: the Gazette prints what it can prove and never the meaning.
+ // LANDED 2026-09-06 (attended drain, CLAUDE.md section 4.10b): the E8 coordinates above were re-based
+ // by +175 in the landing commit, E7 and E9 having landed on main after this lane was cut. Measured on
+@@ -2127,7 +2127,7 @@ export const E10_STORY_BEATS: readonly RuntimeStoryBeat[] = [
+   },
+   {
+     // lore/STORYBOOK.md:621; the last node opens the Press, in the shape of e8-riverward-launch at
+-    // lines 1507-1515 (F-PORT-3: this cited 1144-1153, stale by -175 since the E10 landing commit,
++    // lines 1523-1531 (F-PORT-3: this cited 1144-1153, stale by -175 since the E10 landing commit,
+     // whose own +175 re-base fixed the table header and missed this body citation; re-derived by
+     // locating the beat, not by arithmetic). Household Law (lore/canon-rules.md:19-20): the child is
+     // at the lever with her.

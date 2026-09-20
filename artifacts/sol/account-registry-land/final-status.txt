@@ -1,0 +1,14 @@
+ M functions/api/_accounts.ts
+ M logs/task-stats.jsonl
+ M scripts/bootstrap-account-registry.mjs
+ M server/ledger/storage.mjs
+ M wrangler.toml
+?? artifacts/sol/account-registry-land/
+?? docs/ops/account-registry.md
+?? functions/api/_account-registry.ts
+?? wrangler.account-registry.toml
+
+Firewall: PASS; only permitted source/docs/config and task artifacts, plus documented logs/task-stats.jsonl factory churn.
+Source hashes unchanged since source-verification.json.
+git diff --check: PASS.
+No commit created. Broad guard acceptance remains red (4/8).

@@ -1,0 +1,360 @@
+gate battery transcript (append-only — see scripts/gate-battery.mjs)
+
+
+######## BATTERY 2026-08-06T11:25:32.247Z — s1493 gr-sim REPEAT (same commit, determinism control) ########
+cwd=/Users/robin/Claude/Projects/Gold Rush/gate-s1493
+
+===== gr-sim run2 =====
+$ node --test scripts/gr-sim.test.mjs
+rc=1 42.9s
+✖ gr-sim replays the same contract, seed, and orders byte-for-byte (3810.638959ms)
+(node:58537) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ gr-sim hashes a fractional-yield run identically twice (3186.450458ms)
+✖ gr-sim deterministically runs the Claim objective (2735.726208ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ gr-sim boots escort mode from data instead of URL state (6577.851208ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✖ the Claim driver consumes declared water and posts RunManager secure at wave 10 (4603.282833ms)
+✖ Twin Banks consumes its declared crossings and build zones before securing at wave 20 (2881.493417ms)
+✔ the frozen Claim environment rows equal the five pinned bench seeds (0.214125ms)
+✖ gr-sim places Night Shift fixtures from the contract (10554.862416ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✖ the Baron driver runs the declared fight and keeps medal writes off headless (8427.308041ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 3
+ℹ fail 6
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 42868.72375
+
+✖ failing tests:
+
+test at scripts/gr-sim.test.mjs:22:1
+✖ gr-sim replays the same contract, seed, and orders byte-for-byte (3810.638959ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+      calls: 5,
+  +   eventLogHash: 'fnv1a32:f63d981b',
+  -   eventLogHash: 'fnv1a32:68b99428',
+      gold: 4,
+      kills: 37,
+      secured: false,
+      timeMs: 135667,
+      waves: 4
+  
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/gate-s1493/scripts/gr-sim.test.mjs:37:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { secured: false, waves: 4, timeMs: 135667, gold: 4, kills: 37, calls: 5, eventLogHash: 'fnv1a32:f63d981b' },
+    expected: { secured: false, waves: 4, timeMs: 135667, gold: 4, kills: 37, calls: 5, eventLogHash: 'fnv1a32:68b99428' },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at scripts/gr-sim.test.mjs:98:1
+✖ gr-sim deterministically runs the Claim objective (2735.726208ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+      goldDelta: 0,
+  +   kills: 7,
+  -   kills: 13,
+      outcome: 'rider-down',
+      surprises: [
+        'hero_down'
+      ],
+  +   wave: 3,
+  -   wave: 2,
+      worksHp: {
+        current: 0,
+        delta: 0,
+        max: 0
+      }
+  
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/gate-s1493/scripts/gr-sim.test.mjs:113:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { wave: 3, outcome: 'rider-down', goldDelta: 0, worksHp: { current: 0, max: 0, delta: 0 }, kills: 7, surprises: [ 'hero_down' ] },
+    expected: { wave: 2, outcome: 'rider-down', goldDelta: 0, worksHp: { current: 0, max: 0, delta: 0 }, kills: 13, surprises: [ 'hero_down' ] },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at scripts/gr-sim.test.mjs:160:1
+✖ the Claim driver consumes declared water and posts RunManager secure at wave 10 (4603.282833ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+      calls: 0,
+  +   eventLogHash: 'fnv1a32:fa8a49e7',
+  -   eventLogHash: 'fnv1a32:b1eeb320',
+      gold: 0,
+  +   kills: 297,
+  -   kills: 137,
+      secured: true,
+      timeMs: 300000,
+      waves: 10
+    }
+  
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/gate-s1493/scripts/gr-sim.test.mjs:206:12)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { secured: true, waves: 10, timeMs: 300000, gold: 0, kills: 297, calls: 0, eventLogHash: 'fnv1a32:fa8a49e7' },
+    expected: { secured: true, waves: 10, timeMs: 300000, gold: 0, kills: 137, calls: 0, eventLogHash: 'fnv1a32:b1eeb320' },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at scripts/gr-sim.test.mjs:225:1
+✖ Twin Banks consumes its declared crossings and build zones before securing at wave 20 (2881.493417ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'fnv1a32:bd7fa297'
+  - 'fnv1a32:80c5cae4'
+             ^
+  
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/gate-s1493/scripts/gr-sim.test.mjs:245:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'fnv1a32:bd7fa297',
+    expected: 'fnv1a32:80c5cae4',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at scripts/gr-sim.test.mjs:327:1
+✖ gr-sim places Night Shift fixtures from the contract (10554.862416ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+      calls: 0,
+  +   eventLogHash: 'fnv1a32:7a7c1e7b',
+  -   eventLogHash: 'fnv1a32:0bbf2fec',
+      gold: 0,
+  +   kills: 95,
+  -   kills: 65,
+      secured: false,
+  +   timeMs: 155300,
+  +   waves: 5
+  -   timeMs: 126167,
+  -   waves: 4
+    }
+  
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/gate-s1493/scripts/gr-sim.test.mjs:342:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { secured: false, waves: 5, timeMs: 155300, gold: 0, kills: 95, calls: 0, eventLogHash: 'fnv1a32:7a7c1e7b' },
+    expected: { secured: false, waves: 4, timeMs: 126167, gold: 0, kills: 65, calls: 0, eventLogHash: 'fnv1a32:0bbf2fec' },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at scripts/gr-sim.test.mjs:355:1
+✖ the Baron driver runs the declared fight and keeps medal writes off headless (8427.308041ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+      calls: 0,
+  +   eventLogHash: 'fnv1a32:61d8cfd9',
+  -   eventLogHash: 'fnv1a32:36004eab',
+      gold: 0,
+  +   kills: 862,
+  -   kills: 861,
+      secured: true,
+  +   timeMs: 528400,
+  -   timeMs: 528433,
+      waves: 20
+    }
+  
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/gate-s1493/scripts/gr-sim.test.mjs:404:14)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { secured: true, waves: 20, timeMs: 528400, gold: 0, kills: 862, calls: 0, eventLogHash: 'fnv1a32:61d8cfd9' },
+    expected: { secured: true, waves: 20, timeMs: 528433, gold: 0, kills: 861, calls: 0, eventLogHash: 'fnv1a32:36004eab' },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+
+SUMMARY {"gr-sim run2":1}
+OVERALL rc=1

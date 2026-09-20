@@ -1,0 +1,66 @@
+[
+  {
+    "width": 1280,
+    "p95": {
+      "before": [
+        25.60000000000582,
+        27.80000000000291,
+        25.89999999999418,
+        34.5
+      ],
+      "after": [
+        24,
+        16.30000000000291,
+        18.60000000000582,
+        42.60000000000582
+      ]
+    },
+    "medianP95": {
+      "before": 26.849999999998545,
+      "after": 21.30000000000291
+    },
+    "drawCalls": {
+      "before": [
+        75
+      ],
+      "after": [
+        77
+      ]
+    },
+    "errors": [],
+    "medianP95ChangePercent": -20.67039106143738,
+    "verdict": "Medians within 15%; host mode drift and spikes remain, not full performance acceptance."
+  },
+  {
+    "width": 390,
+    "p95": {
+      "before": [
+        14.600000000000364,
+        10.199999999998909,
+        13.19999999999709,
+        12.200000000000728
+      ],
+      "after": [
+        12.399999999999636,
+        12.5,
+        13.5,
+        12.700000000000728
+      ]
+    },
+    "medianP95": {
+      "before": 12.699999999998909,
+      "after": 12.600000000000364
+    },
+    "drawCalls": {
+      "before": [
+        57
+      ],
+      "after": [
+        59
+      ]
+    },
+    "errors": [],
+    "medianP95ChangePercent": -0.7874015747917573,
+    "verdict": "Medians within 15%; host mode drift and spikes remain, not full performance acceptance."
+  }
+]

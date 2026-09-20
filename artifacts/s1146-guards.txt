@@ -1,0 +1,110 @@
+
+======================================================================
+SUITE: test:guards   rc=0   100.4s   signal=none
+======================================================================
+--- stdout ---
+PASS  rc=0  11s  test:node-guards
+PASS  rc=0  0s  test:power-budget
+PASS  rc=0  4s  test:stats
+PASS  rc=0  1s  test:accounts
+PASS  rc=0  3s  test:mp
+PASS  rc=0  80s  test:deploy-contract
+PASS  rc=0  1s  test:deploy-site-contract
+PASS  rc=0  0s  test:task-guards
+
+guards: 8/8 passed
+
+--- stderr ---
+
+
+======================================================================
+SUITE: test:node-guards   rc=0   10.8s   signal=none
+======================================================================
+--- stdout ---
+✔ published mask tables exactly track authored contract data (13.806458ms)
+✔ published Moth Season mask stays inside bounds and agrees with authored water (0.51875ms)
+✔ e2-trestle mask stays inside bounds and agrees with authored water (0.329583ms)
+✔ e2-pressure-garden mask stays inside bounds and agrees with authored water (0.271167ms)
+✔ e2-incline mask stays inside bounds and agrees with authored water (0.261959ms)
+✔ e3-canyon-works mask stays inside bounds and agrees with authored water (0.276875ms)
+✔ e3-blackout-ridge mask stays inside bounds and agrees with authored water (0.226209ms)
+✔ e3-moth-season mask stays inside bounds and agrees with authored water (0.259416ms)
+✔ e3-fairground mask stays inside bounds and agrees with authored water (0.270916ms)
+✔ e4-dust-flats mask stays inside bounds and agrees with authored water (0.441959ms)
+✔ e4-long-road mask stays inside bounds and agrees with authored water (0.270917ms)
+✔ e4-gusher-county mask stays inside bounds and agrees with authored water (0.244208ms)
+✔ e4-boneyard mask stays inside bounds and agrees with authored water (0.288625ms)
+✔ e5-regatta mask stays inside bounds and agrees with authored water (0.287875ms)
+✔ e5-stillwater mask stays inside bounds and agrees with authored water (0.277625ms)
+✔ e5-flotilla mask stays inside bounds and agrees with authored water (0.665542ms)
+✔ e6-glow-mesa mask stays inside bounds and agrees with authored water (0.297292ms)
+✔ e6-showroom mask stays inside bounds and agrees with authored water (0.219042ms)
+✔ e6-half-life-hollow mask stays inside bounds and agrees with authored water (0.230583ms)
+✔ e6-picnic mask stays inside bounds and agrees with authored water (0.196583ms)
+✔ e7-relay-valley mask stays inside bounds and agrees with authored water (0.207125ms)
+✔ e7-echo-canyon mask stays inside bounds and agrees with authored water (0.198292ms)
+✔ e7-dead-band mask stays inside bounds and agrees with authored water (0.220917ms)
+✔ e7-relay-rush mask stays inside bounds and agrees with authored water (0.21ms)
+✔ e8-mare-claim mask stays inside bounds and agrees with authored water (0.258167ms)
+✔ e9-dome-basin mask stays inside bounds and agrees with authored water (0.200417ms)
+✔ e9-seed-run mask stays inside bounds and agrees with authored water (0.266417ms)
+✔ e9-devils-alley mask stays inside bounds and agrees with authored water (0.178167ms)
+✔ e9-old-canal mask stays inside bounds and agrees with authored water (0.262458ms)
+✔ e10-ember-shore mask stays inside bounds and agrees with authored water (0.250625ms)
+✔ entry damage tables include both E1 contracts (0.384458ms)
+✔ night shift wave 3 has reduced entry damage (0.071041ms)
+✔ night shift wave 12 has no entry damage scale (0.062625ms)
+✔ entry damage scaling ends after wave 10 (0.053042ms)
+✔ entry damage scales are finite reductions (0.066584ms)
+✔ E1 entry damage tables agree (0.311542ms)
+fallbackTownEraPropManifests: 7 fallback keys = 7 static imports = 7 files
+fallbackManifests (non-release): 10 fallback keys = 10 files
+fallbackFamilyBundles: 1 fallback keys = 1 files
+fallbackCapsBundles: 1 fallback keys = 1 files
+fallbackContractBundles (non-release): 10 fallback keys = 10 files
+✔ node glob fallbacks match every on-disk manifest (non-release branches) (3.180167ms)
+✔ goal tree schema is valid (1.283666ms)
+✔ ten sampled merged leaves have a done receipt and ancestral merge (10580.870334ms)
+✔ rejects an unset PROBE_BASE before launching a browser (168.869583ms)
+✔ rejects an unset PROBE_BASE before checking the browser executable (165.697708ms)
+✔ rejects a positional base URL with a PROBE_BASE directive (165.869292ms)
+✔ rejects an unset base before probing ownership (0.628709ms)
+✔ accepts a listener owned by this checkout (0.072625ms)
+✔ rejects a listener owned by another checkout (0.070125ms)
+✔ rejects a port with no listener (1.084459ms)
+✔ rejects an unusable ownership probe (0.20125ms)
+✔ curation is deterministic, interleaved, and never repeats thin-pool items (1.513292ms)
+✔ intake rejects headless captures and explicit banned files (2.488459ms)
+✔ OBS v5 authentication, scene discovery, and switch request use one websocket (2.098708ms)
+✔ failed preconditions are silent no-ops (0.117375ms)
+✔ missing spec, websocket, or required scenes never enter FACTORY (2.676833ms)
+✔ offline stream leaves FACTORY untouched (0.395833ms)
+✔ green showcase switches FACTORY, dwells, and always restores AUTOPILOT (0.462084ms)
+✔ red showcase skips dwell and restores AUTOPILOT (0.431167ms)
+✔ append is hash-idempotent and keeps one JSON line per entry (6.844375ms)
+✔ downtime accumulates and catch-up shows oldest first without double-show (7.646084ms)
+✔ concurrent appenders preserve every entry and concurrent consumers show once (248.393833ms)
+✔ townEraProps resolves its manifests under plain node, not only under Vite (63.180416ms)
+✔ town specs collect without loading Vite-only modules (447.492958ms)
+✔ whole suite collects without loading Vite-only modules (1270.578167ms)
+ℹ tests 61
+ℹ suites 0
+ℹ pass 61
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 10624.761583
+ticker stats checks passed (populated, empty, failures, invalid shape, endpoint diagnostic, poison control, shared URL, JSON)
+
+--- stderr ---
+
+
+======================================================================
+SUITE: test:task-guards   rc=0   0.1s   signal=none
+======================================================================
+--- stdout ---
+task-guard-audit: 664 masters, 0 invisible (baseline 0).
+  ✅ no NEW invisible master. rc=0
+
+--- stderr ---

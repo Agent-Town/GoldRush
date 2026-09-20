@@ -1,0 +1,202 @@
+{
+  "key": "county-e9-devils-alley",
+  "tapePath": "tapes/county-e9-devils-alley.json",
+  "contract": "e9-devils-alley",
+  "kind": "county-played",
+  "node": "v26.4.0",
+  "before": {
+    "at": "2026-09-05T15:20:56.520Z",
+    "load": [
+      17.4033203125,
+      22.18408203125,
+      25.65673828125
+    ],
+    "freeMemory": 12721291264
+  },
+  "after": {
+    "at": "2026-09-05T15:21:24.946Z",
+    "load": [
+      17.19580078125,
+      21.75048828125,
+      25.39892578125
+    ],
+    "freeMemory": 12609339392
+  },
+  "declaredDurationTicks": 18000,
+  "simulatedSeconds": 620,
+  "bootMs": 58.656666000000314,
+  "replayMs": 25958.586375,
+  "ticksPerSecond": 716.5259206068766,
+  "realtimeMultiple": 23.884197353562556,
+  "estimateTenMinuteSeconds": 25.121212620967743,
+  "estimateFormula": "600 seconds / measured realtimeMultiple; extrapolation, not an actual 10-minute tape when duration differs",
+  "tickMs": {
+    "n": 18600,
+    "min": 0.31137500000022555,
+    "p50": 1.2947919999996884,
+    "p95": 2.6328749999993306,
+    "p99": 3.668042000001151,
+    "max": 19.443083000000115
+  },
+  "tickPath": "sim/county-e9-devils-alley-ticks.json",
+  "result": {
+    "eventLogHash": "fnv1a32:687553f2",
+    "outcome": {
+      "secured": true,
+      "waves": 20,
+      "gold": 200,
+      "timeAlive": 600
+    },
+    "securedSnapshot": {
+      "waves": 20,
+      "gold": 650,
+      "timeAlive": 600.0000000001116
+    },
+    "ticks": 18600,
+    "engine": "headless-contract-sim"
+  },
+  "expectedHash": "fnv1a32:687553f2",
+  "hashMatches": true,
+  "top20": [
+    {
+      "name": "structuredClone",
+      "url": "node:internal/worker/js_transferable",
+      "line": 113,
+      "column": 25,
+      "selfMs": 7648.099999999999
+    },
+    {
+      "name": "structuredClone",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 2580.432
+    },
+    {
+      "name": "clone",
+      "url": "",
+      "line": 320,
+      "column": 15,
+      "selfMs": 1613.704
+    },
+    {
+      "name": "terrainSeed",
+      "url": "",
+      "line": 1469,
+      "column": 21,
+      "selfMs": 1380.6470000000002
+    },
+    {
+      "name": "terrainHash",
+      "url": "",
+      "line": 1486,
+      "column": 21,
+      "selfMs": 1001.97
+    },
+    {
+      "name": "get diagnostics",
+      "url": "",
+      "line": 484,
+      "column": 17,
+      "selfMs": 548.602
+    },
+    {
+      "name": "diagnostics",
+      "url": "",
+      "line": 1795,
+      "column": 13,
+      "selfMs": 533.373
+    },
+    {
+      "name": "(anonymous)",
+      "url": "",
+      "line": 193,
+      "column": 26,
+      "selfMs": 455.10699999999997
+    },
+    {
+      "name": "stableProbeMask",
+      "url": "",
+      "line": 1266,
+      "column": 25,
+      "selfMs": 430.2990000000001
+    },
+    {
+      "name": "snapshotStandingOrders",
+      "url": "",
+      "line": 425,
+      "column": 32,
+      "selfMs": 419.271
+    },
+    {
+      "name": "multiplyMatrices",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 10385,
+      "column": 18,
+      "selfMs": 415.635
+    },
+    {
+      "name": "snapshot",
+      "url": "",
+      "line": 189,
+      "column": 10,
+      "selfMs": 283.799
+    },
+    {
+      "name": "toArray",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 11099,
+      "column": 9,
+      "selfMs": 262.835
+    },
+    {
+      "name": "maxHpForInstance",
+      "url": "",
+      "line": 1619,
+      "column": 18,
+      "selfMs": 251.29099999999997
+    },
+    {
+      "name": "(garbage collector)",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 233.511
+    },
+    {
+      "name": "terrainFeatures",
+      "url": "",
+      "line": 1193,
+      "column": 25,
+      "selfMs": 211.482
+    },
+    {
+      "name": "channelMask",
+      "url": "",
+      "line": 1247,
+      "column": 21,
+      "selfMs": 208.46099999999998
+    },
+    {
+      "name": "(anonymous)",
+      "url": "node:internal/webidl",
+      "line": 712,
+      "column": 18,
+      "selfMs": 198.31099999999998
+    },
+    {
+      "name": "dispatch",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 187.944
+    },
+    {
+      "name": "(program)",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 184.213
+    }
+  ]
+}

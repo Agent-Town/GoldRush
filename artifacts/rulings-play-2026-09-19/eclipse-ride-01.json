@@ -1,0 +1,3071 @@
+{
+ "contract": "e8-eclipse",
+ "seed": "e8-eclipse-01",
+ "exitCode": 0,
+ "turns": 84,
+ "picks": 28,
+ "outcome": {
+  "secured": true,
+  "waves": 20,
+  "timeMs": 600000,
+  "gold": 140,
+  "kills": 923,
+  "calls": 83,
+  "defaultedPicks": 0,
+  "defaultedSecure": 0,
+  "eventLogHash": "fnv1a32:98994a5b"
+ },
+ "refusals": [],
+ "gate": {
+  "required": 4,
+  "windowWaves": 4,
+  "grounds": 6
+ },
+ "latchClosedAt": {
+  "runSeconds": 447.63,
+  "wave": 14,
+  "worked": [
+   2,
+   3,
+   4,
+   5
+  ],
+  "window": 3
+ },
+ "windowsSeen": 5,
+ "windowHeldPans": 90,
+ "breathlessPans": 0,
+ "runsOnAir": 192,
+ "trace": [
+  {
+   "wave": 0,
+   "runSeconds": 0,
+   "gold": 0,
+   "suit": 60,
+   "inDome": null,
+   "window": 0,
+   "windowWaves": 4,
+   "creditedThisWindow": 0,
+   "worked": [],
+   "required": 4,
+   "grounds": 6,
+   "held": 0,
+   "breathless": 0,
+   "runsOnAir": 0,
+   "complete": false,
+   "solar": "online",
+   "after": "0/1",
+   "works": {},
+   "heroHp": 100,
+   "heroAt": {
+    "x": 0,
+    "z": 12
+   },
+   "threats": 0,
+   "plan": "credit",
+   "target": "gold-seam-1",
+   "sortieSeconds": 9.38,
+   "pans": 28
+  },
+  {
+   "wave": 0,
+   "runSeconds": 4.67,
+   "gold": 30,
+   "suit": 55.333,
+   "inDome": null,
+   "window": 0,
+   "windowWaves": 4,
+   "creditedThisWindow": 1,
+   "worked": [
+    3
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 0,
+   "breathless": 0,
+   "runsOnAir": 6,
+   "complete": false,
+   "solar": "online",
+   "after": "0/1",
+   "works": {},
+   "heroHp": 100,
+   "heroAt": {
+    "x": 0,
+    "z": 12
+   },
+   "threats": 0,
+   "plan": "work",
+   "target": "gold-seam-2",
+   "sortieSeconds": 11.63,
+   "pans": 29
+  },
+  {
+   "wave": 0,
+   "runSeconds": 24.27,
+   "gold": 10,
+   "suit": 35.733,
+   "inDome": null,
+   "window": 0,
+   "windowWaves": 4,
+   "creditedThisWindow": 1,
+   "worked": [
+    3
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 6,
+   "breathless": 0,
+   "runsOnAir": 12,
+   "complete": false,
+   "solar": "online",
+   "after": "0/1",
+   "works": {
+    "turret": 1
+   },
+   "heroHp": 100,
+   "heroAt": {
+    "x": 0,
+    "z": 12
+   },
+   "threats": 4,
+   "plan": "work",
+   "target": null,
+   "sortieSeconds": null,
+   "pans": 0
+  },
+  {
+   "wave": 1,
+   "runSeconds": 30,
+   "gold": 10,
+   "suit": 51.167,
+   "inDome": "dome-cluster-pad-center",
+   "window": 0,
+   "windowWaves": 4,
+   "creditedThisWindow": 1,
+   "worked": [
+    3
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 6,
+   "breathless": 0,
+   "runsOnAir": 12,
+   "complete": false,
+   "solar": "online",
+   "after": "0/1",
+   "works": {
+    "turret": 1
+   },
+   "heroHp": 100,
+   "heroAt": {
+    "x": 0,
+    "z": -2.03
+   },
+   "threats": 8,
+   "plan": "work",
+   "target": "gold-seam-1",
+   "sortieSeconds": 18.74,
+   "pans": 29
+  },
+  {
+   "wave": 1,
+   "runSeconds": 41.73,
+   "gold": 40,
+   "suit": 60,
+   "inDome": "dome-cluster-pad-center",
+   "window": 0,
+   "windowWaves": 4,
+   "creditedThisWindow": 1,
+   "worked": [
+    3
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 12,
+   "breathless": 0,
+   "runsOnAir": 18,
+   "complete": false,
+   "solar": "online",
+   "after": "0/1",
+   "works": {
+    "turret": 1
+   },
+   "heroHp": 100,
+   "heroAt": {
+    "x": 0,
+    "z": -2.26
+   },
+   "threats": 3,
+   "plan": "work",
+   "target": null,
+   "sortieSeconds": null,
+   "pans": 0
+  },
+  {
+   "wave": 2,
+   "runSeconds": 60.03,
+   "gold": 40,
+   "suit": 43.7,
+   "inDome": null,
+   "window": 0,
+   "windowWaves": 4,
+   "creditedThisWindow": 1,
+   "worked": [
+    3
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 12,
+   "breathless": 0,
+   "runsOnAir": 18,
+   "complete": false,
+   "solar": "online",
+   "after": "0/1",
+   "works": {
+    "turret": 1
+   },
+   "heroHp": 100,
+   "heroAt": {
+    "x": 0,
+    "z": 10.1
+   },
+   "threats": 8,
+   "plan": "work",
+   "target": "gold-seam-2",
+   "sortieSeconds": 14.74,
+   "pans": 29
+  },
+  {
+   "wave": 2,
+   "runSeconds": 73.47,
+   "gold": 0,
+   "suit": 30.267,
+   "inDome": null,
+   "window": 0,
+   "windowWaves": 4,
+   "creditedThisWindow": 1,
+   "worked": [
+    3
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 18,
+   "breathless": 0,
+   "runsOnAir": 24,
+   "complete": false,
+   "solar": "online",
+   "after": "0/1",
+   "works": {
+    "turret": 2
+   },
+   "heroHp": 100,
+   "heroAt": {
+    "x": 0,
+    "z": 10.1
+   },
+   "threats": 6,
+   "plan": "work",
+   "target": null,
+   "sortieSeconds": null,
+   "pans": 29
+  },
+  {
+   "wave": 2,
+   "runSeconds": 78.07,
+   "gold": 30,
+   "suit": 25.667,
+   "inDome": null,
+   "window": 0,
+   "windowWaves": 4,
+   "creditedThisWindow": 1,
+   "worked": [
+    3
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 18,
+   "breathless": 0,
+   "runsOnAir": 30,
+   "complete": false,
+   "solar": "online",
+   "after": "0/1",
+   "works": {
+    "turret": 2
+   },
+   "heroHp": 100,
+   "heroAt": {
+    "x": 0,
+    "z": 10.1
+   },
+   "threats": 4,
+   "plan": "work",
+   "target": null,
+   "sortieSeconds": null,
+   "pans": 0
+  },
+  {
+   "wave": 3,
+   "runSeconds": 90.03,
+   "gold": 30,
+   "suit": 60,
+   "inDome": "dome-cluster-pad-center",
+   "window": 0,
+   "windowWaves": 4,
+   "creditedThisWindow": 1,
+   "worked": [
+    3
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 18,
+   "breathless": 0,
+   "runsOnAir": 30,
+   "complete": false,
+   "solar": "online",
+   "after": "0/1",
+   "works": {
+    "turret": 2
+   },
+   "heroHp": 100,
+   "heroAt": {
+    "x": 0,
+    "z": -2.04
+   },
+   "threats": 8,
+   "plan": "work",
+   "target": "gold-seam-2",
+   "sortieSeconds": 17.82,
+   "pans": 29
+  },
+  {
+   "wave": 3,
+   "runSeconds": 99.87,
+   "gold": 60,
+   "suit": 60,
+   "inDome": "dome-cluster-pad-center",
+   "window": 0,
+   "windowWaves": 4,
+   "creditedThisWindow": 1,
+   "worked": [
+    3
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 24,
+   "breathless": 0,
+   "runsOnAir": 36,
+   "complete": false,
+   "solar": "online",
+   "after": "0/1",
+   "works": {
+    "turret": 2
+   },
+   "heroHp": 100,
+   "heroAt": {
+    "x": 0,
+    "z": -2.04
+   },
+   "threats": 7,
+   "plan": "work",
+   "target": "gold-seam-1",
+   "sortieSeconds": 17.35,
+   "pans": 29
+  },
+  {
+   "wave": 3,
+   "runSeconds": 111,
+   "gold": 90,
+   "suit": 60,
+   "inDome": "dome-cluster-pad-center",
+   "window": 0,
+   "windowWaves": 4,
+   "creditedThisWindow": 1,
+   "worked": [
+    3
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 30,
+   "breathless": 0,
+   "runsOnAir": 42,
+   "complete": false,
+   "solar": "online",
+   "after": "0/1",
+   "works": {
+    "turret": 2
+   },
+   "heroHp": 100,
+   "heroAt": {
+    "x": 0,
+    "z": -2.04
+   },
+   "threats": 3,
+   "plan": "work",
+   "target": null,
+   "sortieSeconds": null,
+   "pans": 0
+  },
+  {
+   "wave": 4,
+   "runSeconds": 120.03,
+   "gold": 90,
+   "suit": 52.933,
+   "inDome": null,
+   "window": 1,
+   "windowWaves": 4,
+   "creditedThisWindow": 0,
+   "worked": [
+    3
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 30,
+   "breathless": 0,
+   "runsOnAir": 42,
+   "complete": false,
+   "solar": "online",
+   "after": "0/1",
+   "works": {
+    "turret": 2
+   },
+   "heroHp": 100,
+   "heroAt": {
+    "x": 0,
+    "z": 10.09
+   },
+   "threats": 12,
+   "plan": "credit",
+   "target": "gold-seam-2",
+   "sortieSeconds": 15.39,
+   "pans": 28
+  },
+  {
+   "wave": 4,
+   "runSeconds": 121.33,
+   "gold": 90,
+   "suit": 51.633,
+   "inDome": null,
+   "window": 1,
+   "windowWaves": 4,
+   "creditedThisWindow": 0,
+   "worked": [
+    3
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 30,
+   "breathless": 0,
+   "runsOnAir": 42,
+   "complete": false,
+   "solar": "online",
+   "after": "0/1",
+   "works": {
+    "turret": 2
+   },
+   "heroHp": 100,
+   "heroAt": {
+    "x": 0,
+    "z": 10.1
+   },
+   "threats": 11,
+   "plan": "credit",
+   "target": "gold-seam-2",
+   "sortieSeconds": 14.1,
+   "pans": 29
+  },
+  {
+   "wave": 4,
+   "runSeconds": 126.27,
+   "gold": 90,
+   "suit": 46.7,
+   "inDome": null,
+   "window": 1,
+   "windowWaves": 4,
+   "creditedThisWindow": 0,
+   "worked": [
+    3
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 30,
+   "breathless": 0,
+   "runsOnAir": 42,
+   "complete": false,
+   "solar": "online",
+   "after": "0/1",
+   "works": {
+    "turret": 2
+   },
+   "heroHp": 125,
+   "heroAt": {
+    "x": 0,
+    "z": 10.1
+   },
+   "threats": 6,
+   "plan": "credit",
+   "target": "gold-seam-2",
+   "sortieSeconds": 9.17,
+   "pans": 28
+  },
+  {
+   "wave": 4,
+   "runSeconds": 131.9,
+   "gold": 95,
+   "suit": 41.067,
+   "inDome": null,
+   "window": 1,
+   "windowWaves": 4,
+   "creditedThisWindow": 1,
+   "worked": [
+    3,
+    5
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 30,
+   "breathless": 0,
+   "runsOnAir": 43,
+   "complete": false,
+   "solar": "online",
+   "after": "0/1",
+   "works": {
+    "turret": 2
+   },
+   "heroHp": 150,
+   "heroAt": {
+    "x": 0,
+    "z": 10.1
+   },
+   "threats": 8,
+   "plan": "work",
+   "target": "gold-seam-1",
+   "sortieSeconds": 17.89,
+   "pans": 29
+  },
+  {
+   "wave": 4,
+   "runSeconds": 139.5,
+   "gold": 0,
+   "suit": 33.467,
+   "inDome": null,
+   "window": 1,
+   "windowWaves": 4,
+   "creditedThisWindow": 1,
+   "worked": [
+    3,
+    5
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 30,
+   "breathless": 0,
+   "runsOnAir": 43,
+   "complete": false,
+   "solar": "online",
+   "after": "0/1",
+   "works": {
+    "turret": 3
+   },
+   "heroHp": 150,
+   "heroAt": {
+    "x": 0,
+    "z": 10.1
+   },
+   "threats": 3,
+   "plan": "work",
+   "target": "gold-seam-1",
+   "sortieSeconds": 18.08,
+   "pans": 29
+  },
+  {
+   "wave": 4,
+   "runSeconds": 143.23,
+   "gold": 25,
+   "suit": 29.733,
+   "inDome": null,
+   "window": 1,
+   "windowWaves": 4,
+   "creditedThisWindow": 1,
+   "worked": [
+    3,
+    5
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 30,
+   "breathless": 0,
+   "runsOnAir": 48,
+   "complete": false,
+   "solar": "online",
+   "after": "0/1",
+   "works": {
+    "turret": 3
+   },
+   "heroHp": 150,
+   "heroAt": {
+    "x": 0,
+    "z": 10.1
+   },
+   "threats": 3,
+   "plan": "work",
+   "target": "gold-seam-1",
+   "sortieSeconds": 21.44,
+   "pans": 29
+  },
+  {
+   "wave": 5,
+   "runSeconds": 150.03,
+   "gold": 25,
+   "suit": 22.933,
+   "inDome": null,
+   "window": 1,
+   "windowWaves": 4,
+   "creditedThisWindow": 1,
+   "worked": [
+    3,
+    5
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 30,
+   "breathless": 0,
+   "runsOnAir": 48,
+   "complete": false,
+   "solar": "online",
+   "after": "0/1",
+   "works": {
+    "turret": 3
+   },
+   "heroHp": 150,
+   "heroAt": {
+    "x": 0,
+    "z": 10.1
+   },
+   "threats": 14,
+   "plan": "work",
+   "target": "gold-seam-1",
+   "sortieSeconds": 14.68,
+   "pans": 29
+  },
+  {
+   "wave": 5,
+   "runSeconds": 155.27,
+   "gold": 25,
+   "suit": 17.7,
+   "inDome": null,
+   "window": 1,
+   "windowWaves": 4,
+   "creditedThisWindow": 1,
+   "worked": [
+    3,
+    5
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 30,
+   "breathless": 0,
+   "runsOnAir": 48,
+   "complete": false,
+   "solar": "online",
+   "after": "0/1",
+   "works": {
+    "turret": 3
+   },
+   "heroHp": 150,
+   "heroAt": {
+    "x": 0,
+    "z": 10.1
+   },
+   "threats": 9,
+   "plan": "work",
+   "target": "gold-seam-1",
+   "sortieSeconds": 9.44,
+   "pans": 29
+  },
+  {
+   "wave": 5,
+   "runSeconds": 157.7,
+   "gold": 55,
+   "suit": 15.267,
+   "inDome": null,
+   "window": 1,
+   "windowWaves": 4,
+   "creditedThisWindow": 1,
+   "worked": [
+    3,
+    5
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 36,
+   "breathless": 0,
+   "runsOnAir": 54,
+   "complete": false,
+   "solar": "online",
+   "after": "0/1",
+   "works": {
+    "turret": 3
+   },
+   "heroHp": 150,
+   "heroAt": {
+    "x": 0,
+    "z": 10.1
+   },
+   "threats": 3,
+   "plan": "work",
+   "target": null,
+   "sortieSeconds": null,
+   "pans": 0
+  },
+  {
+   "wave": 5,
+   "runSeconds": 165.27,
+   "gold": 55,
+   "suit": 39.867,
+   "inDome": "dome-cluster-pad-center",
+   "window": 1,
+   "windowWaves": 4,
+   "creditedThisWindow": 1,
+   "worked": [
+    3,
+    5
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 36,
+   "breathless": 0,
+   "runsOnAir": 54,
+   "complete": false,
+   "solar": "online",
+   "after": "0/1",
+   "works": {
+    "turret": 3
+   },
+   "heroHp": 150,
+   "heroAt": {
+    "x": 0,
+    "z": -2.01
+   },
+   "threats": 8,
+   "plan": "work",
+   "target": "gold-seam-2",
+   "sortieSeconds": 7.47,
+   "pans": 29
+  },
+  {
+   "wave": 5,
+   "runSeconds": 169.33,
+   "gold": 85,
+   "suit": 56.133,
+   "inDome": "dome-cluster-pad-center",
+   "window": 1,
+   "windowWaves": 4,
+   "creditedThisWindow": 1,
+   "worked": [
+    3,
+    5
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 42,
+   "breathless": 0,
+   "runsOnAir": 60,
+   "complete": false,
+   "solar": "online",
+   "after": "0/1",
+   "works": {
+    "turret": 3
+   },
+   "heroHp": 175,
+   "heroAt": {
+    "x": 0,
+    "z": -2.04
+   },
+   "threats": 4,
+   "plan": "work",
+   "target": null,
+   "sortieSeconds": null,
+   "pans": 0
+  },
+  {
+   "wave": 6,
+   "runSeconds": 180.03,
+   "gold": 85,
+   "suit": 51.267,
+   "inDome": null,
+   "window": 1,
+   "windowWaves": 4,
+   "creditedThisWindow": 1,
+   "worked": [
+    3,
+    5
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 42,
+   "breathless": 0,
+   "runsOnAir": 60,
+   "complete": false,
+   "solar": "online",
+   "after": "0/1",
+   "works": {
+    "turret": 3
+   },
+   "heroHp": 175,
+   "heroAt": {
+    "x": 0,
+    "z": 10.1
+   },
+   "threats": 15,
+   "plan": "work",
+   "target": "gold-seam-1",
+   "sortieSeconds": 6.38,
+   "pans": 29
+  },
+  {
+   "wave": 6,
+   "runSeconds": 181.63,
+   "gold": 85,
+   "suit": 49.667,
+   "inDome": null,
+   "window": 1,
+   "windowWaves": 4,
+   "creditedThisWindow": 1,
+   "worked": [
+    3,
+    5
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 42,
+   "breathless": 0,
+   "runsOnAir": 60,
+   "complete": false,
+   "solar": "online",
+   "after": "0/1",
+   "works": {
+    "turret": 3
+   },
+   "heroHp": 175,
+   "heroAt": {
+    "x": 0,
+    "z": 10.1
+   },
+   "threats": 14,
+   "plan": "work",
+   "target": "gold-seam-1",
+   "sortieSeconds": 4.82,
+   "pans": 30
+  },
+  {
+   "wave": 6,
+   "runSeconds": 182.97,
+   "gold": 115,
+   "suit": 48.333,
+   "inDome": null,
+   "window": 1,
+   "windowWaves": 4,
+   "creditedThisWindow": 1,
+   "worked": [
+    3,
+    5
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 48,
+   "breathless": 0,
+   "runsOnAir": 66,
+   "complete": false,
+   "solar": "online",
+   "after": "0/1",
+   "works": {
+    "turret": 3
+   },
+   "heroHp": 175,
+   "heroAt": {
+    "x": 0,
+    "z": 10.1
+   },
+   "threats": 14,
+   "plan": "work",
+   "target": null,
+   "sortieSeconds": null,
+   "pans": 0
+  },
+  {
+   "wave": 6,
+   "runSeconds": 193.97,
+   "gold": 115,
+   "suit": 60,
+   "inDome": "dome-cluster-pad-center",
+   "window": 1,
+   "windowWaves": 4,
+   "creditedThisWindow": 1,
+   "worked": [
+    3,
+    5
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 48,
+   "breathless": 0,
+   "runsOnAir": 66,
+   "complete": false,
+   "solar": "online",
+   "after": "0/1",
+   "works": {
+    "turret": 3
+   },
+   "heroHp": 175,
+   "heroAt": {
+    "x": 0,
+    "z": -2.04
+   },
+   "threats": 11,
+   "plan": "work",
+   "target": "gold-seam-2",
+   "sortieSeconds": 14.7,
+   "pans": 29
+  },
+  {
+   "wave": 6,
+   "runSeconds": 209.5,
+   "gold": 0,
+   "suit": 60,
+   "inDome": "dome-cluster-pad-center",
+   "window": 1,
+   "windowWaves": 4,
+   "creditedThisWindow": 1,
+   "worked": [
+    3,
+    5
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 50,
+   "breathless": 0,
+   "runsOnAir": 68,
+   "complete": false,
+   "solar": "online",
+   "after": "0/1",
+   "works": {
+    "turret": 4
+   },
+   "heroHp": 175,
+   "heroAt": {
+    "x": 0,
+    "z": -2.04
+   },
+   "threats": 3,
+   "plan": "work",
+   "target": "gold-seam-2",
+   "sortieSeconds": 14.11,
+   "pans": 29
+  },
+  {
+   "wave": 7,
+   "runSeconds": 210.03,
+   "gold": 0,
+   "suit": 60,
+   "inDome": "dome-cluster-pad-center",
+   "window": 1,
+   "windowWaves": 4,
+   "creditedThisWindow": 1,
+   "worked": [
+    3,
+    5
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 50,
+   "breathless": 0,
+   "runsOnAir": 68,
+   "complete": false,
+   "solar": "online",
+   "after": "0/1",
+   "works": {
+    "turret": 4
+   },
+   "heroHp": 175,
+   "heroAt": {
+    "x": 0,
+    "z": -2.04
+   },
+   "threats": 16,
+   "plan": "work",
+   "target": "gold-seam-2",
+   "sortieSeconds": 13.58,
+   "pans": 30
+  },
+  {
+   "wave": 7,
+   "runSeconds": 216.53,
+   "gold": 20,
+   "suit": 60,
+   "inDome": "dome-cluster-pad-center",
+   "window": 1,
+   "windowWaves": 4,
+   "creditedThisWindow": 1,
+   "worked": [
+    3,
+    5
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 54,
+   "breathless": 0,
+   "runsOnAir": 72,
+   "complete": false,
+   "solar": "online",
+   "after": "0/1",
+   "works": {
+    "turret": 4
+   },
+   "heroHp": 175,
+   "heroAt": {
+    "x": 0,
+    "z": -2.04
+   },
+   "threats": 5,
+   "plan": "work",
+   "target": null,
+   "sortieSeconds": null,
+   "pans": 29
+  },
+  {
+   "wave": 7,
+   "runSeconds": 222.67,
+   "gold": 20,
+   "suit": 60,
+   "inDome": "dome-cluster-pad-center",
+   "window": 1,
+   "windowWaves": 4,
+   "creditedThisWindow": 1,
+   "worked": [
+    3,
+    5
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 54,
+   "breathless": 0,
+   "runsOnAir": 72,
+   "complete": false,
+   "solar": "online",
+   "after": "0/1",
+   "works": {
+    "turret": 4
+   },
+   "heroHp": 175,
+   "heroAt": {
+    "x": 0,
+    "z": -2.04
+   },
+   "threats": 9,
+   "plan": "work",
+   "target": null,
+   "sortieSeconds": null,
+   "pans": 29
+  },
+  {
+   "wave": 8,
+   "runSeconds": 240.03,
+   "gold": 0,
+   "suit": 60,
+   "inDome": "dome-cluster-pad-center",
+   "window": 2,
+   "windowWaves": 4,
+   "creditedThisWindow": 0,
+   "worked": [
+    3,
+    5
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 54,
+   "breathless": 0,
+   "runsOnAir": 73,
+   "complete": false,
+   "solar": "online",
+   "after": "0/1",
+   "works": {
+    "sentry_beacon": 1,
+    "turret": 4
+   },
+   "heroHp": 175,
+   "heroAt": {
+    "x": 0,
+    "z": -2.04
+   },
+   "threats": 19,
+   "plan": "credit",
+   "target": "gold-seam-2",
+   "sortieSeconds": 13.13,
+   "pans": 28
+  },
+  {
+   "wave": 8,
+   "runSeconds": 243.27,
+   "gold": 0,
+   "suit": 60,
+   "inDome": "dome-cluster-pad-center",
+   "window": 2,
+   "windowWaves": 4,
+   "creditedThisWindow": 0,
+   "worked": [
+    3,
+    5
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 54,
+   "breathless": 0,
+   "runsOnAir": 73,
+   "complete": false,
+   "solar": "online",
+   "after": "0/1",
+   "works": {
+    "sentry_beacon": 1,
+    "turret": 4
+   },
+   "heroHp": 175,
+   "heroAt": {
+    "x": 0,
+    "z": -2.04
+   },
+   "threats": 15,
+   "plan": "credit",
+   "target": "gold-seam-2",
+   "sortieSeconds": 9.91,
+   "pans": 28
+  },
+  {
+   "wave": 8,
+   "runSeconds": 245.17,
+   "gold": 30,
+   "suit": 60,
+   "inDome": "dome-cluster-pad-center",
+   "window": 2,
+   "windowWaves": 4,
+   "creditedThisWindow": 1,
+   "worked": [
+    3,
+    4,
+    5
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 54,
+   "breathless": 0,
+   "runsOnAir": 79,
+   "complete": false,
+   "solar": "online",
+   "after": "0/1",
+   "works": {
+    "sentry_beacon": 1,
+    "turret": 4
+   },
+   "heroHp": 175,
+   "heroAt": {
+    "x": 0,
+    "z": -2.04
+   },
+   "threats": 11,
+   "plan": "work",
+   "target": null,
+   "sortieSeconds": null,
+   "pans": 30
+  },
+  {
+   "wave": 8,
+   "runSeconds": 254.47,
+   "gold": 35,
+   "suit": 60,
+   "inDome": "dome-cluster-pad-center",
+   "window": 2,
+   "windowWaves": 4,
+   "creditedThisWindow": 1,
+   "worked": [
+    3,
+    4,
+    5
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 54,
+   "breathless": 0,
+   "runsOnAir": 80,
+   "complete": false,
+   "solar": "online",
+   "after": "0/1",
+   "works": {
+    "sentry_beacon": 1,
+    "turret": 4
+   },
+   "heroHp": 175,
+   "heroAt": {
+    "x": 0,
+    "z": -2.04
+   },
+   "threats": 8,
+   "plan": "work",
+   "target": null,
+   "sortieSeconds": null,
+   "pans": 29
+  },
+  {
+   "wave": 8,
+   "runSeconds": 260.87,
+   "gold": 20,
+   "suit": 60,
+   "inDome": "dome-cluster-pad-center",
+   "window": 2,
+   "windowWaves": 4,
+   "creditedThisWindow": 1,
+   "worked": [
+    3,
+    4,
+    5
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 54,
+   "breathless": 0,
+   "runsOnAir": 84,
+   "complete": false,
+   "solar": "online",
+   "after": "0/1",
+   "works": {
+    "sentry_beacon": 2,
+    "turret": 4
+   },
+   "heroHp": 175,
+   "heroAt": {
+    "x": 0,
+    "z": -2.04
+   },
+   "threats": 5,
+   "plan": "work",
+   "target": null,
+   "sortieSeconds": null,
+   "pans": 0
+  },
+  {
+   "wave": 9,
+   "runSeconds": 270.03,
+   "gold": 20,
+   "suit": 52.8,
+   "inDome": null,
+   "window": 2,
+   "windowWaves": 4,
+   "creditedThisWindow": 1,
+   "worked": [
+    3,
+    4,
+    5
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 54,
+   "breathless": 0,
+   "runsOnAir": 84,
+   "complete": false,
+   "solar": "online",
+   "after": "0/1",
+   "works": {
+    "sentry_beacon": 2,
+    "turret": 4
+   },
+   "heroHp": 175,
+   "heroAt": {
+    "x": 0,
+    "z": 10.09
+   },
+   "threats": 20,
+   "plan": "work",
+   "target": "gold-seam-2",
+   "sortieSeconds": 8.27,
+   "pans": 29
+  },
+  {
+   "wave": 9,
+   "runSeconds": 275.3,
+   "gold": 45,
+   "suit": 47.533,
+   "inDome": null,
+   "window": 2,
+   "windowWaves": 4,
+   "creditedThisWindow": 1,
+   "worked": [
+    3,
+    4,
+    5
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 59,
+   "breathless": 0,
+   "runsOnAir": 89,
+   "complete": false,
+   "solar": "online",
+   "after": "0/1",
+   "works": {
+    "sentry_beacon": 2,
+    "turret": 4
+   },
+   "heroHp": 175,
+   "heroAt": {
+    "x": 0,
+    "z": 10.1
+   },
+   "threats": 11,
+   "plan": "work",
+   "target": "gold-seam-2",
+   "sortieSeconds": 4.26,
+   "pans": 29
+  },
+  {
+   "wave": 9,
+   "runSeconds": 278.67,
+   "gold": 5,
+   "suit": 44.167,
+   "inDome": null,
+   "window": 2,
+   "windowWaves": 4,
+   "creditedThisWindow": 1,
+   "worked": [
+    3,
+    4,
+    5
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 60,
+   "breathless": 0,
+   "runsOnAir": 90,
+   "complete": false,
+   "solar": "online",
+   "after": "0/1",
+   "works": {
+    "sentry_beacon": 3,
+    "turret": 4
+   },
+   "heroHp": 175,
+   "heroAt": {
+    "x": 0,
+    "z": 10.1
+   },
+   "threats": 14,
+   "plan": "work",
+   "target": null,
+   "sortieSeconds": null,
+   "pans": 0
+  },
+  {
+   "wave": 9,
+   "runSeconds": 290.6,
+   "gold": 5,
+   "suit": 60,
+   "inDome": "dome-cluster-pad-center",
+   "window": 2,
+   "windowWaves": 4,
+   "creditedThisWindow": 1,
+   "worked": [
+    3,
+    4,
+    5
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 60,
+   "breathless": 0,
+   "runsOnAir": 90,
+   "complete": false,
+   "solar": "online",
+   "after": "0/1",
+   "works": {
+    "sentry_beacon": 3,
+    "turret": 4
+   },
+   "heroHp": 175,
+   "heroAt": {
+    "x": 0,
+    "z": -2.04
+   },
+   "threats": 8,
+   "plan": "work",
+   "target": "gold-seam-1",
+   "sortieSeconds": 14.7,
+   "pans": 29
+  },
+  {
+   "wave": 9,
+   "runSeconds": 298.33,
+   "gold": 35,
+   "suit": 60,
+   "inDome": "dome-cluster-pad-center",
+   "window": 2,
+   "windowWaves": 4,
+   "creditedThisWindow": 1,
+   "worked": [
+    3,
+    4,
+    5
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 66,
+   "breathless": 0,
+   "runsOnAir": 96,
+   "complete": false,
+   "solar": "online",
+   "after": "0/1",
+   "works": {
+    "sentry_beacon": 3,
+    "turret": 4
+   },
+   "heroHp": 175,
+   "heroAt": {
+    "x": 0,
+    "z": -2.04
+   },
+   "threats": 7,
+   "plan": "work",
+   "target": null,
+   "sortieSeconds": null,
+   "pans": 0
+  },
+  {
+   "wave": 10,
+   "runSeconds": 300,
+   "gold": 35,
+   "suit": 60,
+   "inDome": "dome-cluster-pad-center",
+   "window": 2,
+   "windowWaves": 4,
+   "creditedThisWindow": 1,
+   "worked": [
+    3,
+    4,
+    5
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 66,
+   "breathless": 0,
+   "runsOnAir": 96,
+   "complete": false,
+   "solar": "offline",
+   "after": "0/1",
+   "works": {
+    "sentry_beacon": 3,
+    "turret": 4
+   },
+   "heroHp": 175,
+   "heroAt": {
+    "x": 0,
+    "z": 4.67
+   },
+   "threats": 25,
+   "plan": "work",
+   "target": "gold-seam-2",
+   "sortieSeconds": 10.17,
+   "pans": 30
+  },
+  {
+   "wave": 10,
+   "runSeconds": 308,
+   "gold": 55,
+   "suit": 52.3,
+   "inDome": null,
+   "window": 2,
+   "windowWaves": 4,
+   "creditedThisWindow": 1,
+   "worked": [
+    3,
+    4,
+    5
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 70,
+   "breathless": 0,
+   "runsOnAir": 100,
+   "complete": false,
+   "solar": "offline",
+   "after": "4/1",
+   "works": {
+    "sentry_beacon": 3,
+    "turret": 4
+   },
+   "heroHp": 175,
+   "heroAt": {
+    "x": 0,
+    "z": 10.09
+   },
+   "threats": 19,
+   "plan": "work",
+   "target": "gold-seam-2",
+   "sortieSeconds": 10.65,
+   "pans": 29
+  },
+  {
+   "wave": 10,
+   "runSeconds": 314.87,
+   "gold": 10,
+   "suit": 45.433,
+   "inDome": null,
+   "window": 2,
+   "windowWaves": 4,
+   "creditedThisWindow": 1,
+   "worked": [
+    3,
+    4,
+    5
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 72,
+   "breathless": 0,
+   "runsOnAir": 102,
+   "complete": false,
+   "solar": "offline",
+   "after": "6/1",
+   "works": {
+    "sentry_beacon": 4,
+    "turret": 4
+   },
+   "heroHp": 175,
+   "heroAt": {
+    "x": 0,
+    "z": 10.1
+   },
+   "threats": 13,
+   "plan": "work",
+   "target": null,
+   "sortieSeconds": null,
+   "pans": 0
+  },
+  {
+   "wave": 10,
+   "runSeconds": 328.73,
+   "gold": 10,
+   "suit": 60,
+   "inDome": "dome-cluster-pad-center",
+   "window": 2,
+   "windowWaves": 4,
+   "creditedThisWindow": 1,
+   "worked": [
+    3,
+    4,
+    5
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 72,
+   "breathless": 0,
+   "runsOnAir": 102,
+   "complete": false,
+   "solar": "offline",
+   "after": "6/1",
+   "works": {
+    "sentry_beacon": 4,
+    "turret": 4
+   },
+   "heroHp": 175,
+   "heroAt": {
+    "x": 0,
+    "z": -2.04
+   },
+   "threats": 8,
+   "plan": "work",
+   "target": "gold-seam-1",
+   "sortieSeconds": 8.72,
+   "pans": 29
+  },
+  {
+   "wave": 11,
+   "runSeconds": 330,
+   "gold": 10,
+   "suit": 60,
+   "inDome": "dome-cluster-pad-center",
+   "window": 2,
+   "windowWaves": 4,
+   "creditedThisWindow": 1,
+   "worked": [
+    3,
+    4,
+    5
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 72,
+   "breathless": 0,
+   "runsOnAir": 102,
+   "complete": false,
+   "solar": "offline",
+   "after": "6/1",
+   "works": {
+    "sentry_beacon": 4,
+    "turret": 4
+   },
+   "heroHp": 175,
+   "heroAt": {
+    "x": 0,
+    "z": -2.04
+   },
+   "threats": 25,
+   "plan": "work",
+   "target": "gold-seam-1",
+   "sortieSeconds": 7.52,
+   "pans": 30
+  },
+  {
+   "wave": 11,
+   "runSeconds": 334.03,
+   "gold": 40,
+   "suit": 60,
+   "inDome": "dome-cluster-pad-center",
+   "window": 2,
+   "windowWaves": 4,
+   "creditedThisWindow": 1,
+   "worked": [
+    3,
+    4,
+    5
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 78,
+   "breathless": 0,
+   "runsOnAir": 108,
+   "complete": false,
+   "solar": "offline",
+   "after": "12/1",
+   "works": {
+    "sentry_beacon": 4,
+    "turret": 4
+   },
+   "heroHp": 175,
+   "heroAt": {
+    "x": 0,
+    "z": -2.04
+   },
+   "threats": 19,
+   "plan": "work",
+   "target": null,
+   "sortieSeconds": null,
+   "pans": 0
+  },
+  {
+   "wave": 11,
+   "runSeconds": 343.57,
+   "gold": 40,
+   "suit": 52.433,
+   "inDome": null,
+   "window": 2,
+   "windowWaves": 4,
+   "creditedThisWindow": 1,
+   "worked": [
+    3,
+    4,
+    5
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 78,
+   "breathless": 0,
+   "runsOnAir": 108,
+   "complete": false,
+   "solar": "offline",
+   "after": "12/1",
+   "works": {
+    "sentry_beacon": 4,
+    "turret": 4
+   },
+   "heroHp": 175,
+   "heroAt": {
+    "x": 0,
+    "z": 10.09
+   },
+   "threats": 15,
+   "plan": "work",
+   "target": null,
+   "sortieSeconds": null,
+   "pans": 29
+  },
+  {
+   "wave": 11,
+   "runSeconds": 351.4,
+   "gold": 70,
+   "suit": 44.6,
+   "inDome": null,
+   "window": 2,
+   "windowWaves": 4,
+   "creditedThisWindow": 1,
+   "worked": [
+    3,
+    4,
+    5
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 78,
+   "breathless": 0,
+   "runsOnAir": 114,
+   "complete": false,
+   "solar": "offline",
+   "after": "18/1",
+   "works": {
+    "sentry_beacon": 4,
+    "turret": 4
+   },
+   "heroHp": 175,
+   "heroAt": {
+    "x": 0,
+    "z": 10.1
+   },
+   "threats": 10,
+   "plan": "work",
+   "target": null,
+   "sortieSeconds": null,
+   "pans": 0
+  },
+  {
+   "wave": 12,
+   "runSeconds": 360,
+   "gold": 70,
+   "suit": 60,
+   "inDome": "dome-cluster-pad-center",
+   "window": 3,
+   "windowWaves": 4,
+   "creditedThisWindow": 0,
+   "worked": [
+    3,
+    4,
+    5
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 78,
+   "breathless": 0,
+   "runsOnAir": 114,
+   "complete": false,
+   "solar": "offline",
+   "after": "18/1",
+   "works": {
+    "sentry_beacon": 4,
+    "turret": 4
+   },
+   "heroHp": 175,
+   "heroAt": {
+    "x": 0,
+    "z": -2.03
+   },
+   "threats": 28,
+   "plan": "work",
+   "target": null,
+   "sortieSeconds": null,
+   "pans": 29
+  },
+  {
+   "wave": 12,
+   "runSeconds": 364.9,
+   "gold": 75,
+   "suit": 60,
+   "inDome": "dome-cluster-pad-center",
+   "window": 3,
+   "windowWaves": 4,
+   "creditedThisWindow": 0,
+   "worked": [
+    3,
+    4,
+    5
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 78,
+   "breathless": 0,
+   "runsOnAir": 115,
+   "complete": false,
+   "solar": "offline",
+   "after": "19/1",
+   "works": {
+    "sentry_beacon": 4,
+    "turret": 4
+   },
+   "heroHp": 175,
+   "heroAt": {
+    "x": 0,
+    "z": -2.04
+   },
+   "threats": 15,
+   "plan": "work",
+   "target": null,
+   "sortieSeconds": null,
+   "pans": 29
+  },
+  {
+   "wave": 12,
+   "runSeconds": 372.7,
+   "gold": 25,
+   "suit": 60,
+   "inDome": "dome-cluster-pad-center",
+   "window": 3,
+   "windowWaves": 4,
+   "creditedThisWindow": 0,
+   "worked": [
+    3,
+    4,
+    5
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 78,
+   "breathless": 0,
+   "runsOnAir": 120,
+   "complete": false,
+   "solar": "offline",
+   "after": "24/1",
+   "works": {
+    "sentry_beacon": 5,
+    "turret": 4
+   },
+   "heroHp": 175,
+   "heroAt": {
+    "x": 0,
+    "z": -2.04
+   },
+   "threats": 17,
+   "plan": "work",
+   "target": null,
+   "sortieSeconds": null,
+   "pans": 29
+  },
+  {
+   "wave": 12,
+   "runSeconds": 376.33,
+   "gold": 55,
+   "suit": 60,
+   "inDome": "dome-cluster-pad-center",
+   "window": 3,
+   "windowWaves": 4,
+   "creditedThisWindow": 0,
+   "worked": [
+    3,
+    4,
+    5
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 78,
+   "breathless": 0,
+   "runsOnAir": 126,
+   "complete": false,
+   "solar": "offline",
+   "after": "30/1",
+   "works": {
+    "sentry_beacon": 5,
+    "turret": 4
+   },
+   "heroHp": 175,
+   "heroAt": {
+    "x": 0,
+    "z": -2.04
+   },
+   "threats": 11,
+   "plan": "work",
+   "target": null,
+   "sortieSeconds": null,
+   "pans": 0
+  },
+  {
+   "wave": 12,
+   "runSeconds": 380,
+   "gold": 55,
+   "suit": 58.3,
+   "inDome": null,
+   "window": 3,
+   "windowWaves": 4,
+   "creditedThisWindow": 0,
+   "worked": [
+    3,
+    4,
+    5
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 78,
+   "breathless": 0,
+   "runsOnAir": 126,
+   "complete": false,
+   "solar": "offline",
+   "after": "30/1",
+   "works": {
+    "sentry_beacon": 5,
+    "turret": 4
+   },
+   "heroHp": 175,
+   "heroAt": {
+    "x": 0,
+    "z": 9.13
+   },
+   "threats": 8,
+   "plan": "work",
+   "target": null,
+   "sortieSeconds": null,
+   "pans": 0
+  },
+  {
+   "wave": 13,
+   "runSeconds": 390,
+   "gold": 55,
+   "suit": 60,
+   "inDome": "dome-cluster-pad-center",
+   "window": 3,
+   "windowWaves": 4,
+   "creditedThisWindow": 0,
+   "worked": [
+    3,
+    4,
+    5
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 78,
+   "breathless": 0,
+   "runsOnAir": 126,
+   "complete": false,
+   "solar": "offline",
+   "after": "30/1",
+   "works": {
+    "sentry_beacon": 5,
+    "turret": 4
+   },
+   "heroHp": 175,
+   "heroAt": {
+    "x": 0,
+    "z": -1.93
+   },
+   "threats": 26,
+   "plan": "work",
+   "target": null,
+   "sortieSeconds": null,
+   "pans": 0
+  },
+  {
+   "wave": 13,
+   "runSeconds": 402.03,
+   "gold": 55,
+   "suit": 49.933,
+   "inDome": null,
+   "window": 3,
+   "windowWaves": 4,
+   "creditedThisWindow": 0,
+   "worked": [
+    3,
+    4,
+    5
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 78,
+   "breathless": 0,
+   "runsOnAir": 126,
+   "complete": false,
+   "solar": "offline",
+   "after": "30/1",
+   "works": {
+    "sentry_beacon": 5,
+    "turret": 4
+   },
+   "heroHp": 175,
+   "heroAt": {
+    "x": 0,
+    "z": 10
+   },
+   "threats": 21,
+   "plan": "work",
+   "target": null,
+   "sortieSeconds": null,
+   "pans": 29
+  },
+  {
+   "wave": 13,
+   "runSeconds": 409.87,
+   "gold": 85,
+   "suit": 42.1,
+   "inDome": null,
+   "window": 3,
+   "windowWaves": 4,
+   "creditedThisWindow": 0,
+   "worked": [
+    3,
+    4,
+    5
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 78,
+   "breathless": 0,
+   "runsOnAir": 132,
+   "complete": false,
+   "solar": "offline",
+   "after": "36/1",
+   "works": {
+    "sentry_beacon": 5,
+    "turret": 4
+   },
+   "heroHp": 175,
+   "heroAt": {
+    "x": 0,
+    "z": 10
+   },
+   "threats": 8,
+   "plan": "work",
+   "target": null,
+   "sortieSeconds": null,
+   "pans": 29
+  },
+  {
+   "wave": 14,
+   "runSeconds": 420,
+   "gold": 0,
+   "suit": 31.967,
+   "inDome": null,
+   "window": 3,
+   "windowWaves": 4,
+   "creditedThisWindow": 0,
+   "worked": [
+    3,
+    4,
+    5
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 78,
+   "breathless": 0,
+   "runsOnAir": 134,
+   "complete": false,
+   "solar": "offline",
+   "after": "38/1",
+   "works": {
+    "sentry_beacon": 6,
+    "turret": 4
+   },
+   "heroHp": 175,
+   "heroAt": {
+    "x": 0,
+    "z": 10
+   },
+   "threats": 29,
+   "plan": "work",
+   "target": null,
+   "sortieSeconds": null,
+   "pans": 30
+  },
+  {
+   "wave": 14,
+   "runSeconds": 425.7,
+   "gold": 0,
+   "suit": 26.267,
+   "inDome": null,
+   "window": 3,
+   "windowWaves": 4,
+   "creditedThisWindow": 0,
+   "worked": [
+    3,
+    4,
+    5
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 78,
+   "breathless": 0,
+   "runsOnAir": 134,
+   "complete": false,
+   "solar": "offline",
+   "after": "38/1",
+   "works": {
+    "sentry_beacon": 6,
+    "turret": 4
+   },
+   "heroHp": 175,
+   "heroAt": {
+    "x": 0,
+    "z": 10
+   },
+   "threats": 19,
+   "plan": "work",
+   "target": null,
+   "sortieSeconds": null,
+   "pans": 30
+  },
+  {
+   "wave": 14,
+   "runSeconds": 426.07,
+   "gold": 20,
+   "suit": 25.9,
+   "inDome": null,
+   "window": 3,
+   "windowWaves": 4,
+   "creditedThisWindow": 0,
+   "worked": [
+    3,
+    4,
+    5
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 78,
+   "breathless": 0,
+   "runsOnAir": 138,
+   "complete": false,
+   "solar": "offline",
+   "after": "42/1",
+   "works": {
+    "sentry_beacon": 6,
+    "turret": 4
+   },
+   "heroHp": 175,
+   "heroAt": {
+    "x": 0,
+    "z": 10
+   },
+   "threats": 17,
+   "plan": "work",
+   "target": null,
+   "sortieSeconds": null,
+   "pans": 0
+  },
+  {
+   "wave": 14,
+   "runSeconds": 442.57,
+   "gold": 20,
+   "suit": 60,
+   "inDome": "dome-cluster-pad-center",
+   "window": 3,
+   "windowWaves": 4,
+   "creditedThisWindow": 0,
+   "worked": [
+    3,
+    4,
+    5
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 78,
+   "breathless": 0,
+   "runsOnAir": 138,
+   "complete": false,
+   "solar": "offline",
+   "after": "42/1",
+   "works": {
+    "sentry_beacon": 6,
+    "turret": 4
+   },
+   "heroHp": 175,
+   "heroAt": {
+    "x": 0,
+    "z": -1.93
+   },
+   "threats": 10,
+   "plan": "credit",
+   "target": "gold-seam-2",
+   "sortieSeconds": 8.47,
+   "pans": 29
+  },
+  {
+   "wave": 14,
+   "runSeconds": 447.63,
+   "gold": 50,
+   "suit": 60,
+   "inDome": "dome-cluster-pad-center",
+   "window": 3,
+   "windowWaves": 4,
+   "creditedThisWindow": 1,
+   "worked": [
+    2,
+    3,
+    4,
+    5
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 78,
+   "breathless": 0,
+   "runsOnAir": 144,
+   "complete": true,
+   "solar": "offline",
+   "after": "48/1",
+   "works": {
+    "sentry_beacon": 6,
+    "turret": 4
+   },
+   "heroHp": 175,
+   "heroAt": {
+    "x": 0,
+    "z": -1.93
+   },
+   "threats": 8,
+   "plan": "work",
+   "target": "gold-seam-1",
+   "sortieSeconds": 12.94,
+   "pans": 30
+  },
+  {
+   "wave": 15,
+   "runSeconds": 450,
+   "gold": 50,
+   "suit": 60,
+   "inDome": "dome-cluster-pad-center",
+   "window": 3,
+   "windowWaves": 4,
+   "creditedThisWindow": 1,
+   "worked": [
+    2,
+    3,
+    4,
+    5
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 78,
+   "breathless": 0,
+   "runsOnAir": 144,
+   "complete": true,
+   "solar": "offline",
+   "after": "48/1",
+   "works": {
+    "sentry_beacon": 6,
+    "turret": 4
+   },
+   "heroHp": 175,
+   "heroAt": {
+    "x": 0,
+    "z": -1.93
+   },
+   "threats": 28,
+   "plan": "work",
+   "target": "gold-seam-1",
+   "sortieSeconds": 10.61,
+   "pans": 30
+  },
+  {
+   "wave": 15,
+   "runSeconds": 453.6,
+   "gold": 80,
+   "suit": 60,
+   "inDome": "dome-cluster-pad-center",
+   "window": 3,
+   "windowWaves": 4,
+   "creditedThisWindow": 1,
+   "worked": [
+    2,
+    3,
+    4,
+    5
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 84,
+   "breathless": 0,
+   "runsOnAir": 150,
+   "complete": true,
+   "solar": "offline",
+   "after": "54/1",
+   "works": {
+    "sentry_beacon": 6,
+    "turret": 4
+   },
+   "heroHp": 175,
+   "heroAt": {
+    "x": 0,
+    "z": -1.93
+   },
+   "threats": 23,
+   "plan": "work",
+   "target": null,
+   "sortieSeconds": null,
+   "pans": 0
+  },
+  {
+   "wave": 15,
+   "runSeconds": 464.6,
+   "gold": 80,
+   "suit": 50.967,
+   "inDome": null,
+   "window": 3,
+   "windowWaves": 4,
+   "creditedThisWindow": 1,
+   "worked": [
+    2,
+    3,
+    4,
+    5
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 84,
+   "breathless": 0,
+   "runsOnAir": 150,
+   "complete": true,
+   "solar": "offline",
+   "after": "54/1",
+   "works": {
+    "sentry_beacon": 6,
+    "turret": 4
+   },
+   "heroHp": 175,
+   "heroAt": {
+    "x": 0,
+    "z": 10
+   },
+   "threats": 17,
+   "plan": "work",
+   "target": null,
+   "sortieSeconds": null,
+   "pans": 0
+  },
+  {
+   "wave": 16,
+   "runSeconds": 480,
+   "gold": 80,
+   "suit": 60,
+   "inDome": "dome-cluster-pad-center",
+   "window": 4,
+   "windowWaves": 4,
+   "creditedThisWindow": 0,
+   "worked": [
+    2,
+    3,
+    4,
+    5
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 84,
+   "breathless": 0,
+   "runsOnAir": 150,
+   "complete": true,
+   "solar": "offline",
+   "after": "54/1",
+   "works": {
+    "sentry_beacon": 6,
+    "turret": 4
+   },
+   "heroHp": 175,
+   "heroAt": {
+    "x": 0,
+    "z": -1.93
+   },
+   "threats": 29,
+   "plan": "work",
+   "target": "gold-seam-2",
+   "sortieSeconds": 14.68,
+   "pans": 30
+  },
+  {
+   "wave": 16,
+   "runSeconds": 487.7,
+   "gold": 110,
+   "suit": 60,
+   "inDome": "dome-cluster-pad-center",
+   "window": 4,
+   "windowWaves": 4,
+   "creditedThisWindow": 1,
+   "worked": [
+    0,
+    2,
+    3,
+    4,
+    5
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 84,
+   "breathless": 0,
+   "runsOnAir": 156,
+   "complete": true,
+   "solar": "offline",
+   "after": "60/1",
+   "works": {
+    "sentry_beacon": 6,
+    "turret": 4
+   },
+   "heroHp": 175,
+   "heroAt": {
+    "x": 0,
+    "z": -1.93
+   },
+   "threats": 9,
+   "plan": "work",
+   "target": null,
+   "sortieSeconds": null,
+   "pans": 30
+  },
+  {
+   "wave": 16,
+   "runSeconds": 488.13,
+   "gold": 110,
+   "suit": 60,
+   "inDome": "dome-cluster-pad-center",
+   "window": 4,
+   "windowWaves": 4,
+   "creditedThisWindow": 1,
+   "worked": [
+    0,
+    2,
+    3,
+    4,
+    5
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 84,
+   "breathless": 0,
+   "runsOnAir": 156,
+   "complete": true,
+   "solar": "offline",
+   "after": "60/1",
+   "works": {
+    "sentry_beacon": 6,
+    "turret": 4
+   },
+   "heroHp": 175,
+   "heroAt": {
+    "x": 0,
+    "z": -1.93
+   },
+   "threats": 24,
+   "plan": "work",
+   "target": null,
+   "sortieSeconds": null,
+   "pans": 31
+  },
+  {
+   "wave": 16,
+   "runSeconds": 502.17,
+   "gold": 140,
+   "suit": 60,
+   "inDome": "dome-cluster-pad-center",
+   "window": 4,
+   "windowWaves": 4,
+   "creditedThisWindow": 1,
+   "worked": [
+    0,
+    2,
+    3,
+    4,
+    5
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 84,
+   "breathless": 0,
+   "runsOnAir": 162,
+   "complete": true,
+   "solar": "offline",
+   "after": "66/1",
+   "works": {
+    "sentry_beacon": 6,
+    "turret": 4
+   },
+   "heroHp": 175,
+   "heroAt": {
+    "x": 0,
+    "z": -1.93
+   },
+   "threats": 9,
+   "plan": "work",
+   "target": null,
+   "sortieSeconds": null,
+   "pans": 0
+  },
+  {
+   "wave": 16,
+   "runSeconds": 503.33,
+   "gold": 140,
+   "suit": 60,
+   "inDome": "dome-cluster-pad-center",
+   "window": 4,
+   "windowWaves": 4,
+   "creditedThisWindow": 1,
+   "worked": [
+    0,
+    2,
+    3,
+    4,
+    5
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 84,
+   "breathless": 0,
+   "runsOnAir": 162,
+   "complete": true,
+   "solar": "offline",
+   "after": "66/1",
+   "works": {
+    "sentry_beacon": 6,
+    "turret": 4
+   },
+   "heroHp": 175,
+   "heroAt": {
+    "x": -2.88,
+    "z": 0.88
+   },
+   "threats": 10,
+   "plan": "work",
+   "target": null,
+   "sortieSeconds": null,
+   "pans": 0
+  },
+  {
+   "wave": 17,
+   "runSeconds": 510,
+   "gold": 140,
+   "suit": 56,
+   "inDome": null,
+   "window": 4,
+   "windowWaves": 4,
+   "creditedThisWindow": 1,
+   "worked": [
+    0,
+    2,
+    3,
+    4,
+    5
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 84,
+   "breathless": 0,
+   "runsOnAir": 162,
+   "complete": true,
+   "solar": "offline",
+   "after": "66/1",
+   "works": {
+    "sentry_beacon": 6,
+    "turret": 4
+   },
+   "heroHp": 175,
+   "heroAt": {
+    "x": 5.36,
+    "z": 4.9
+   },
+   "threats": 30,
+   "plan": "work",
+   "target": null,
+   "sortieSeconds": null,
+   "pans": 28
+  },
+  {
+   "wave": 17,
+   "runSeconds": 515.07,
+   "gold": 140,
+   "suit": 57.867,
+   "inDome": null,
+   "window": 4,
+   "windowWaves": 4,
+   "creditedThisWindow": 1,
+   "worked": [
+    0,
+    2,
+    3,
+    4,
+    5
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 84,
+   "breathless": 0,
+   "runsOnAir": 162,
+   "complete": true,
+   "solar": "offline",
+   "after": "66/1",
+   "works": {
+    "sentry_beacon": 6,
+    "turret": 4
+   },
+   "heroHp": 151.8,
+   "heroAt": {
+    "x": -8.23,
+    "z": -1.43
+   },
+   "threats": 20,
+   "plan": "work",
+   "target": null,
+   "sortieSeconds": null,
+   "pans": 28
+  },
+  {
+   "wave": 17,
+   "runSeconds": 518.93,
+   "gold": 170,
+   "suit": 60,
+   "inDome": "dome-cluster-pad-center",
+   "window": 4,
+   "windowWaves": 4,
+   "creditedThisWindow": 1,
+   "worked": [
+    0,
+    2,
+    3,
+    4,
+    5
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 84,
+   "breathless": 0,
+   "runsOnAir": 168,
+   "complete": true,
+   "solar": "offline",
+   "after": "72/1",
+   "works": {
+    "sentry_beacon": 6,
+    "turret": 4
+   },
+   "heroHp": 144.60000000000002,
+   "heroAt": {
+    "x": 1.63,
+    "z": 3.15
+   },
+   "threats": 27,
+   "plan": "work",
+   "target": null,
+   "sortieSeconds": null,
+   "pans": 0
+  },
+  {
+   "wave": 17,
+   "runSeconds": 537.03,
+   "gold": 20,
+   "suit": 45.467,
+   "inDome": null,
+   "window": 4,
+   "windowWaves": 4,
+   "creditedThisWindow": 1,
+   "worked": [
+    0,
+    2,
+    3,
+    4,
+    5
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 84,
+   "breathless": 0,
+   "runsOnAir": 168,
+   "complete": true,
+   "solar": "offline",
+   "after": "72/1",
+   "works": {
+    "sentry_beacon": 6,
+    "turret": 4
+   },
+   "heroHp": 137.40000000000003,
+   "heroAt": {
+    "x": 4.58,
+    "z": 7.4
+   },
+   "threats": 8,
+   "plan": "work",
+   "target": null,
+   "sortieSeconds": null,
+   "pans": 30
+  },
+  {
+   "wave": 18,
+   "runSeconds": 540,
+   "gold": 20,
+   "suit": 42.5,
+   "inDome": null,
+   "window": 4,
+   "windowWaves": 4,
+   "creditedThisWindow": 1,
+   "worked": [
+    0,
+    2,
+    3,
+    4,
+    5
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 84,
+   "breathless": 0,
+   "runsOnAir": 168,
+   "complete": true,
+   "solar": "offline",
+   "after": "72/1",
+   "works": {
+    "sentry_beacon": 6,
+    "turret": 4
+   },
+   "heroHp": 137.40000000000003,
+   "heroAt": {
+    "x": 4.58,
+    "z": 7.4
+   },
+   "threats": 29,
+   "plan": "work",
+   "target": null,
+   "sortieSeconds": null,
+   "pans": 30
+  },
+  {
+   "wave": 18,
+   "runSeconds": 542.83,
+   "gold": 50,
+   "suit": 39.667,
+   "inDome": null,
+   "window": 4,
+   "windowWaves": 4,
+   "creditedThisWindow": 1,
+   "worked": [
+    0,
+    2,
+    3,
+    4,
+    5
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 84,
+   "breathless": 0,
+   "runsOnAir": 174,
+   "complete": true,
+   "solar": "offline",
+   "after": "78/1",
+   "works": {
+    "sentry_beacon": 6,
+    "turret": 4
+   },
+   "heroHp": 137.40000000000003,
+   "heroAt": {
+    "x": 4.58,
+    "z": 7.4
+   },
+   "threats": 25,
+   "plan": "work",
+   "target": null,
+   "sortieSeconds": null,
+   "pans": 30
+  },
+  {
+   "wave": 18,
+   "runSeconds": 548.8,
+   "gold": 80,
+   "suit": 33.7,
+   "inDome": null,
+   "window": 4,
+   "windowWaves": 4,
+   "creditedThisWindow": 1,
+   "worked": [
+    0,
+    2,
+    3,
+    4,
+    5
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 84,
+   "breathless": 0,
+   "runsOnAir": 180,
+   "complete": true,
+   "solar": "offline",
+   "after": "84/1",
+   "works": {
+    "sentry_beacon": 6,
+    "turret": 4
+   },
+   "heroHp": 137.40000000000003,
+   "heroAt": {
+    "x": 4.58,
+    "z": 7.4
+   },
+   "threats": 28,
+   "plan": "work",
+   "target": null,
+   "sortieSeconds": null,
+   "pans": 0
+  },
+  {
+   "wave": 18,
+   "runSeconds": 560.5,
+   "gold": 80,
+   "suit": 60,
+   "inDome": "dome-cluster-pad-center",
+   "window": 4,
+   "windowWaves": 4,
+   "creditedThisWindow": 1,
+   "worked": [
+    0,
+    2,
+    3,
+    4,
+    5
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 84,
+   "breathless": 0,
+   "runsOnAir": 180,
+   "complete": true,
+   "solar": "offline",
+   "after": "84/1",
+   "works": {
+    "sentry_beacon": 6,
+    "turret": 4
+   },
+   "heroHp": 137.40000000000003,
+   "heroAt": {
+    "x": -4.82,
+    "z": 0.42
+   },
+   "threats": 10,
+   "plan": "work",
+   "target": null,
+   "sortieSeconds": null,
+   "pans": 0
+  },
+  {
+   "wave": 19,
+   "runSeconds": 570,
+   "gold": 80,
+   "suit": 52.7,
+   "inDome": null,
+   "window": 4,
+   "windowWaves": 4,
+   "creditedThisWindow": 1,
+   "worked": [
+    0,
+    2,
+    3,
+    4,
+    5
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 84,
+   "breathless": 0,
+   "runsOnAir": 180,
+   "complete": true,
+   "solar": "offline",
+   "after": "84/1",
+   "works": {
+    "sentry_beacon": 6,
+    "turret": 4
+   },
+   "heroHp": 137.40000000000003,
+   "heroAt": {
+    "x": 4.92,
+    "z": 7.65
+   },
+   "threats": 29,
+   "plan": "work",
+   "target": "gold-seam-2",
+   "sortieSeconds": 13.07,
+   "pans": 30
+  },
+  {
+   "wave": 19,
+   "runSeconds": 573.9,
+   "gold": 110,
+   "suit": 48.8,
+   "inDome": null,
+   "window": 4,
+   "windowWaves": 4,
+   "creditedThisWindow": 1,
+   "worked": [
+    0,
+    2,
+    3,
+    4,
+    5
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 84,
+   "breathless": 0,
+   "runsOnAir": 186,
+   "complete": true,
+   "solar": "offline",
+   "after": "90/1",
+   "works": {
+    "sentry_beacon": 6,
+    "turret": 4
+   },
+   "heroHp": 137.40000000000003,
+   "heroAt": {
+    "x": 4.93,
+    "z": 7.66
+   },
+   "threats": 25,
+   "plan": "work",
+   "target": "gold-seam-2",
+   "sortieSeconds": 9.66,
+   "pans": 30
+  },
+  {
+   "wave": 19,
+   "runSeconds": 577.37,
+   "gold": 140,
+   "suit": 45.333,
+   "inDome": null,
+   "window": 4,
+   "windowWaves": 4,
+   "creditedThisWindow": 1,
+   "worked": [
+    0,
+    2,
+    3,
+    4,
+    5
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 90,
+   "breathless": 0,
+   "runsOnAir": 192,
+   "complete": true,
+   "solar": "offline",
+   "after": "96/1",
+   "works": {
+    "sentry_beacon": 6,
+    "turret": 4
+   },
+   "heroHp": 137.40000000000003,
+   "heroAt": {
+    "x": 4.93,
+    "z": 7.66
+   },
+   "threats": 14,
+   "plan": "work",
+   "target": null,
+   "sortieSeconds": null,
+   "pans": 0
+  },
+  {
+   "wave": 19,
+   "runSeconds": 579,
+   "gold": 140,
+   "suit": 46.867,
+   "inDome": "dome-cluster-pad-center",
+   "window": 4,
+   "windowWaves": 4,
+   "creditedThisWindow": 1,
+   "worked": [
+    0,
+    2,
+    3,
+    4,
+    5
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 90,
+   "breathless": 0,
+   "runsOnAir": 192,
+   "complete": true,
+   "solar": "offline",
+   "after": "96/1",
+   "works": {
+    "sentry_beacon": 6,
+    "turret": 4
+   },
+   "heroHp": 129.40000000000003,
+   "heroAt": {
+    "x": 3.08,
+    "z": 1.28
+   },
+   "threats": 27,
+   "plan": "work",
+   "target": null,
+   "sortieSeconds": null,
+   "pans": 0
+  },
+  {
+   "wave": 19,
+   "runSeconds": 588.03,
+   "gold": 140,
+   "suit": 48,
+   "inDome": null,
+   "window": 4,
+   "windowWaves": 4,
+   "creditedThisWindow": 1,
+   "worked": [
+    0,
+    2,
+    3,
+    4,
+    5
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 90,
+   "breathless": 0,
+   "runsOnAir": 192,
+   "complete": true,
+   "solar": "offline",
+   "after": "96/1",
+   "works": {
+    "sentry_beacon": 6,
+    "turret": 4
+   },
+   "heroHp": 129.40000000000003,
+   "heroAt": {
+    "x": -1.9,
+    "z": 9.21
+   },
+   "threats": 15,
+   "plan": "work",
+   "target": null,
+   "sortieSeconds": null,
+   "pans": 0
+  },
+  {
+   "wave": 20,
+   "runSeconds": 600,
+   "gold": 140,
+   "suit": 51.533,
+   "inDome": null,
+   "window": 5,
+   "windowWaves": 4,
+   "creditedThisWindow": 0,
+   "worked": [
+    0,
+    2,
+    3,
+    4,
+    5
+   ],
+   "required": 4,
+   "grounds": 6,
+   "held": 90,
+   "breathless": 0,
+   "runsOnAir": 192,
+   "complete": true,
+   "solar": "offline",
+   "after": "96/1",
+   "works": {
+    "sentry_beacon": 6,
+    "turret": 4
+   },
+   "heroHp": 129.40000000000003,
+   "heroAt": {
+    "x": -3.63,
+    "z": 8.6
+   },
+   "threats": 11,
+   "plan": "work",
+   "target": "gold-seam-1",
+   "sortieSeconds": 11.7,
+   "pans": 28
+  }
+ ]
+}

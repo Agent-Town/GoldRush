@@ -1,0 +1,199 @@
+▶ closed account gate preserves saves, sessions, identity and retry code
+  ✔ unconfigured routes retain baseline status and body (5.01075ms)
+  ✔ verifyCode: missing binding and scope (2.998917ms)
+  ✖ deleteAccount: missing binding and scope (1.315917ms)
+  ✔ verifyCode: missing binding (1ms)
+  ✖ deleteAccount: missing binding (0.4595ms)
+  ✔ verifyCode: missing scope (0.604333ms)
+  ✖ deleteAccount: missing scope (0.271042ms)
+  ✔ verifyCode: unreachable registry (0.65475ms)
+  ✖ deleteAccount: unreachable registry (0.347917ms)
+  ✔ verifyCode: unopened real registry (26.410834ms)
+  ✖ deleteAccount: unopened real registry (69.951625ms)
+✖ closed account gate preserves saves, sessions, identity and retry code (2067.975667ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 6
+ℹ fail 6
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2228.374458
+
+✖ failing tests:
+
+test at artifacts/sol/account-registry-land/closed-gate.test.mjs:69:68
+✖ deleteAccount: missing binding and scope (1.315917ms)
+  AssertionError [ERR_ASSERTION]: unavailable registry must not change saves, sessions, identity or the retry code
+  + actual - expected
+  ... Skipped lines
+  
+    [
+      [
+        'account:f7cc1ec318aa8497feb92a781494b751428e3cc81b583cccfc0e02510eeff19d',
+        '{"version":1,"accountId":"22222222222222222222222222222222","email":"gate-fixture@example.com","emailHash":"f7cc1ec318aa8497feb92a781494b751428e3cc81b583cccfc0e02510eeff19d","createdAt":"2026-07-01T00:00:00Z"}'
+      ],
+  ...
+      [
+  -     'save:22222222222222222222222222222222:child:current',
+  -     'existing save bytes'
+  -   ],
+  -   [
+        'code:f7cc1ec318aa8497feb92a781494b751428e3cc81b583cccfc0e02510eeff19d',
+        '{"hash":"97156bd2d448c3bed2d590224bc59267f0701fbda8ea1c60523b143890fe029b","revokeSessions":true}'
+      ]
+    ]
+  
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/artifacts/sol/account-registry-land/closed-gate.test.mjs:86:14)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/artifacts/sol/account-registry-land/closed-gate.test.mjs:69:60)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [ [ 'account:f7cc1ec318aa8497feb92a781494b751428e3cc81b583cccfc0e02510eeff19d', '{"version":1,"accountId":"22222222222222222222222222222222","email":"gate-fixture@example.com","emailHash":"f7cc1ec318aa8497feb92a781494b751428e3cc81b583cccfc0e02510eeff19d","createdAt":"2026-07-01T00:00:00Z"}' ], [ 'session:1111111111111111111111111111111111111111111111111111111111111111', '{"version":1,"accountId":"22222222222222222222222222222222","emailHash":"f7cc1ec318aa8497feb92a781494b751428e3cc81b583cccfc0e02510eeff19d","createdAt":"2026-07-01T00:00:00Z","expiresAt":"2026-09-20T12:11:37.852Z"}' ], [ 'code:f7cc1ec318aa8497feb92a781494b751428e3cc81b583cccfc0e02510eeff19d', '{"hash":"97156bd2d448c3bed2d590224bc59267f0701fbda8ea1c60523b143890fe029b","revokeSessions":true}' ] ],
+    expected: [ [ 'account:f7cc1ec318aa8497feb92a781494b751428e3cc81b583cccfc0e02510eeff19d', '{"version":1,"accountId":"22222222222222222222222222222222","email":"gate-fixture@example.com","emailHash":"f7cc1ec318aa8497feb92a781494b751428e3cc81b583cccfc0e02510eeff19d","createdAt":"2026-07-01T00:00:00Z"}' ], [ 'session:1111111111111111111111111111111111111111111111111111111111111111', '{"version":1,"accountId":"22222222222222222222222222222222","emailHash":"f7cc1ec318aa8497feb92a781494b751428e3cc81b583cccfc0e02510eeff19d","createdAt":"2026-07-01T00:00:00Z","expiresAt":"2026-09-20T12:11:37.852Z"}' ], [ 'save:22222222222222222222222222222222:child:current', 'existing save bytes' ], [ 'code:f7cc1ec318aa8497feb92a781494b751428e3cc81b583cccfc0e02510eeff19d', '{"hash":"97156bd2d448c3bed2d590224bc59267f0701fbda8ea1c60523b143890fe029b","revokeSessions":true}' ] ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at artifacts/sol/account-registry-land/closed-gate.test.mjs:69:68
+✖ deleteAccount: missing binding (0.4595ms)
+  AssertionError [ERR_ASSERTION]: unavailable registry must not change saves, sessions, identity or the retry code
+  + actual - expected
+  ... Skipped lines
+  
+    [
+      [
+        'account:f7cc1ec318aa8497feb92a781494b751428e3cc81b583cccfc0e02510eeff19d',
+        '{"version":1,"accountId":"22222222222222222222222222222222","email":"gate-fixture@example.com","emailHash":"f7cc1ec318aa8497feb92a781494b751428e3cc81b583cccfc0e02510eeff19d","createdAt":"2026-07-01T00:00:00Z"}'
+      ],
+  ...
+      [
+  -     'save:22222222222222222222222222222222:child:current',
+  -     'existing save bytes'
+  -   ],
+  -   [
+        'code:f7cc1ec318aa8497feb92a781494b751428e3cc81b583cccfc0e02510eeff19d',
+        '{"hash":"97156bd2d448c3bed2d590224bc59267f0701fbda8ea1c60523b143890fe029b","revokeSessions":true}'
+      ]
+    ]
+  
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/artifacts/sol/account-registry-land/closed-gate.test.mjs:86:14)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/artifacts/sol/account-registry-land/closed-gate.test.mjs:69:60)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [ [ 'account:f7cc1ec318aa8497feb92a781494b751428e3cc81b583cccfc0e02510eeff19d', '{"version":1,"accountId":"22222222222222222222222222222222","email":"gate-fixture@example.com","emailHash":"f7cc1ec318aa8497feb92a781494b751428e3cc81b583cccfc0e02510eeff19d","createdAt":"2026-07-01T00:00:00Z"}' ], [ 'session:1111111111111111111111111111111111111111111111111111111111111111', '{"version":1,"accountId":"22222222222222222222222222222222","emailHash":"f7cc1ec318aa8497feb92a781494b751428e3cc81b583cccfc0e02510eeff19d","createdAt":"2026-07-01T00:00:00Z","expiresAt":"2026-09-20T12:11:37.854Z"}' ], [ 'code:f7cc1ec318aa8497feb92a781494b751428e3cc81b583cccfc0e02510eeff19d', '{"hash":"97156bd2d448c3bed2d590224bc59267f0701fbda8ea1c60523b143890fe029b","revokeSessions":true}' ] ],
+    expected: [ [ 'account:f7cc1ec318aa8497feb92a781494b751428e3cc81b583cccfc0e02510eeff19d', '{"version":1,"accountId":"22222222222222222222222222222222","email":"gate-fixture@example.com","emailHash":"f7cc1ec318aa8497feb92a781494b751428e3cc81b583cccfc0e02510eeff19d","createdAt":"2026-07-01T00:00:00Z"}' ], [ 'session:1111111111111111111111111111111111111111111111111111111111111111', '{"version":1,"accountId":"22222222222222222222222222222222","emailHash":"f7cc1ec318aa8497feb92a781494b751428e3cc81b583cccfc0e02510eeff19d","createdAt":"2026-07-01T00:00:00Z","expiresAt":"2026-09-20T12:11:37.854Z"}' ], [ 'save:22222222222222222222222222222222:child:current', 'existing save bytes' ], [ 'code:f7cc1ec318aa8497feb92a781494b751428e3cc81b583cccfc0e02510eeff19d', '{"hash":"97156bd2d448c3bed2d590224bc59267f0701fbda8ea1c60523b143890fe029b","revokeSessions":true}' ] ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at artifacts/sol/account-registry-land/closed-gate.test.mjs:69:68
+✖ deleteAccount: missing scope (0.271042ms)
+  AssertionError [ERR_ASSERTION]: unavailable registry must not change saves, sessions, identity or the retry code
+  + actual - expected
+  ... Skipped lines
+  
+    [
+      [
+        'account:f7cc1ec318aa8497feb92a781494b751428e3cc81b583cccfc0e02510eeff19d',
+        '{"version":1,"accountId":"22222222222222222222222222222222","email":"gate-fixture@example.com","emailHash":"f7cc1ec318aa8497feb92a781494b751428e3cc81b583cccfc0e02510eeff19d","createdAt":"2026-07-01T00:00:00Z"}'
+      ],
+  ...
+      [
+  -     'save:22222222222222222222222222222222:child:current',
+  -     'existing save bytes'
+  -   ],
+  -   [
+        'code:f7cc1ec318aa8497feb92a781494b751428e3cc81b583cccfc0e02510eeff19d',
+        '{"hash":"97156bd2d448c3bed2d590224bc59267f0701fbda8ea1c60523b143890fe029b","revokeSessions":true}'
+      ]
+    ]
+  
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/artifacts/sol/account-registry-land/closed-gate.test.mjs:86:14)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/artifacts/sol/account-registry-land/closed-gate.test.mjs:69:60)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [ [ 'account:f7cc1ec318aa8497feb92a781494b751428e3cc81b583cccfc0e02510eeff19d', '{"version":1,"accountId":"22222222222222222222222222222222","email":"gate-fixture@example.com","emailHash":"f7cc1ec318aa8497feb92a781494b751428e3cc81b583cccfc0e02510eeff19d","createdAt":"2026-07-01T00:00:00Z"}' ], [ 'session:1111111111111111111111111111111111111111111111111111111111111111', '{"version":1,"accountId":"22222222222222222222222222222222","emailHash":"f7cc1ec318aa8497feb92a781494b751428e3cc81b583cccfc0e02510eeff19d","createdAt":"2026-07-01T00:00:00Z","expiresAt":"2026-09-20T12:11:37.855Z"}' ], [ 'code:f7cc1ec318aa8497feb92a781494b751428e3cc81b583cccfc0e02510eeff19d', '{"hash":"97156bd2d448c3bed2d590224bc59267f0701fbda8ea1c60523b143890fe029b","revokeSessions":true}' ] ],
+    expected: [ [ 'account:f7cc1ec318aa8497feb92a781494b751428e3cc81b583cccfc0e02510eeff19d', '{"version":1,"accountId":"22222222222222222222222222222222","email":"gate-fixture@example.com","emailHash":"f7cc1ec318aa8497feb92a781494b751428e3cc81b583cccfc0e02510eeff19d","createdAt":"2026-07-01T00:00:00Z"}' ], [ 'session:1111111111111111111111111111111111111111111111111111111111111111', '{"version":1,"accountId":"22222222222222222222222222222222","emailHash":"f7cc1ec318aa8497feb92a781494b751428e3cc81b583cccfc0e02510eeff19d","createdAt":"2026-07-01T00:00:00Z","expiresAt":"2026-09-20T12:11:37.855Z"}' ], [ 'save:22222222222222222222222222222222:child:current', 'existing save bytes' ], [ 'code:f7cc1ec318aa8497feb92a781494b751428e3cc81b583cccfc0e02510eeff19d', '{"hash":"97156bd2d448c3bed2d590224bc59267f0701fbda8ea1c60523b143890fe029b","revokeSessions":true}' ] ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at artifacts/sol/account-registry-land/closed-gate.test.mjs:69:68
+✖ deleteAccount: unreachable registry (0.347917ms)
+  AssertionError [ERR_ASSERTION]: unavailable registry must not change saves, sessions, identity or the retry code
+  + actual - expected
+  ... Skipped lines
+  
+    [
+      [
+        'account:f7cc1ec318aa8497feb92a781494b751428e3cc81b583cccfc0e02510eeff19d',
+        '{"version":1,"accountId":"22222222222222222222222222222222","email":"gate-fixture@example.com","emailHash":"f7cc1ec318aa8497feb92a781494b751428e3cc81b583cccfc0e02510eeff19d","createdAt":"2026-07-01T00:00:00Z"}'
+      ],
+  ...
+      [
+  -     'save:22222222222222222222222222222222:child:current',
+  -     'existing save bytes'
+  -   ],
+  -   [
+        'code:f7cc1ec318aa8497feb92a781494b751428e3cc81b583cccfc0e02510eeff19d',
+        '{"hash":"97156bd2d448c3bed2d590224bc59267f0701fbda8ea1c60523b143890fe029b","revokeSessions":true}'
+      ]
+    ]
+  
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/artifacts/sol/account-registry-land/closed-gate.test.mjs:86:14)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/artifacts/sol/account-registry-land/closed-gate.test.mjs:69:60)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [ [ 'account:f7cc1ec318aa8497feb92a781494b751428e3cc81b583cccfc0e02510eeff19d', '{"version":1,"accountId":"22222222222222222222222222222222","email":"gate-fixture@example.com","emailHash":"f7cc1ec318aa8497feb92a781494b751428e3cc81b583cccfc0e02510eeff19d","createdAt":"2026-07-01T00:00:00Z"}' ], [ 'session:1111111111111111111111111111111111111111111111111111111111111111', '{"version":1,"accountId":"22222222222222222222222222222222","emailHash":"f7cc1ec318aa8497feb92a781494b751428e3cc81b583cccfc0e02510eeff19d","createdAt":"2026-07-01T00:00:00Z","expiresAt":"2026-09-20T12:11:37.856Z"}' ], [ 'code:f7cc1ec318aa8497feb92a781494b751428e3cc81b583cccfc0e02510eeff19d', '{"hash":"97156bd2d448c3bed2d590224bc59267f0701fbda8ea1c60523b143890fe029b","revokeSessions":true}' ] ],
+    expected: [ [ 'account:f7cc1ec318aa8497feb92a781494b751428e3cc81b583cccfc0e02510eeff19d', '{"version":1,"accountId":"22222222222222222222222222222222","email":"gate-fixture@example.com","emailHash":"f7cc1ec318aa8497feb92a781494b751428e3cc81b583cccfc0e02510eeff19d","createdAt":"2026-07-01T00:00:00Z"}' ], [ 'session:1111111111111111111111111111111111111111111111111111111111111111', '{"version":1,"accountId":"22222222222222222222222222222222","emailHash":"f7cc1ec318aa8497feb92a781494b751428e3cc81b583cccfc0e02510eeff19d","createdAt":"2026-07-01T00:00:00Z","expiresAt":"2026-09-20T12:11:37.856Z"}' ], [ 'save:22222222222222222222222222222222:child:current', 'existing save bytes' ], [ 'code:f7cc1ec318aa8497feb92a781494b751428e3cc81b583cccfc0e02510eeff19d', '{"hash":"97156bd2d448c3bed2d590224bc59267f0701fbda8ea1c60523b143890fe029b","revokeSessions":true}' ] ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at artifacts/sol/account-registry-land/closed-gate.test.mjs:69:68
+✖ deleteAccount: unopened real registry (69.951625ms)
+  AssertionError [ERR_ASSERTION]: unavailable registry must not change saves, sessions, identity or the retry code
+  + actual - expected
+  ... Skipped lines
+  
+    [
+      [
+        'account:f7cc1ec318aa8497feb92a781494b751428e3cc81b583cccfc0e02510eeff19d',
+        '{"version":1,"accountId":"22222222222222222222222222222222","email":"gate-fixture@example.com","emailHash":"f7cc1ec318aa8497feb92a781494b751428e3cc81b583cccfc0e02510eeff19d","createdAt":"2026-07-01T00:00:00Z"}'
+      ],
+  ...
+      [
+  -     'save:22222222222222222222222222222222:child:current',
+  -     'existing save bytes'
+  -   ],
+  -   [
+        'code:f7cc1ec318aa8497feb92a781494b751428e3cc81b583cccfc0e02510eeff19d',
+        '{"hash":"97156bd2d448c3bed2d590224bc59267f0701fbda8ea1c60523b143890fe029b","revokeSessions":true}'
+      ]
+    ]
+  
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/artifacts/sol/account-registry-land/closed-gate.test.mjs:86:14)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/artifacts/sol/account-registry-land/closed-gate.test.mjs:69:60)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [ [ 'account:f7cc1ec318aa8497feb92a781494b751428e3cc81b583cccfc0e02510eeff19d', '{"version":1,"accountId":"22222222222222222222222222222222","email":"gate-fixture@example.com","emailHash":"f7cc1ec318aa8497feb92a781494b751428e3cc81b583cccfc0e02510eeff19d","createdAt":"2026-07-01T00:00:00Z"}' ], [ 'session:1111111111111111111111111111111111111111111111111111111111111111', '{"version":1,"accountId":"22222222222222222222222222222222","emailHash":"f7cc1ec318aa8497feb92a781494b751428e3cc81b583cccfc0e02510eeff19d","createdAt":"2026-07-01T00:00:00Z","expiresAt":"2026-09-20T12:11:37.884Z"}' ], [ 'code:f7cc1ec318aa8497feb92a781494b751428e3cc81b583cccfc0e02510eeff19d', '{"hash":"97156bd2d448c3bed2d590224bc59267f0701fbda8ea1c60523b143890fe029b","revokeSessions":true}' ] ],
+    expected: [ [ 'account:f7cc1ec318aa8497feb92a781494b751428e3cc81b583cccfc0e02510eeff19d', '{"version":1,"accountId":"22222222222222222222222222222222","email":"gate-fixture@example.com","emailHash":"f7cc1ec318aa8497feb92a781494b751428e3cc81b583cccfc0e02510eeff19d","createdAt":"2026-07-01T00:00:00Z"}' ], [ 'session:1111111111111111111111111111111111111111111111111111111111111111', '{"version":1,"accountId":"22222222222222222222222222222222","emailHash":"f7cc1ec318aa8497feb92a781494b751428e3cc81b583cccfc0e02510eeff19d","createdAt":"2026-07-01T00:00:00Z","expiresAt":"2026-09-20T12:11:37.884Z"}' ], [ 'save:22222222222222222222222222222222:child:current', 'existing save bytes' ], [ 'code:f7cc1ec318aa8497feb92a781494b751428e3cc81b583cccfc0e02510eeff19d', '{"hash":"97156bd2d448c3bed2d590224bc59267f0701fbda8ea1c60523b143890fe029b","revokeSessions":true}' ] ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

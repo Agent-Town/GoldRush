@@ -1,0 +1,35 @@
+{
+  "runner": "ALIVE",
+  "queues": 0,
+  "inFlight": 0,
+  "pendingOrders": 0,
+  "drainsCompleted": 1,
+  "realDrainsRemaining": 0,
+  "unknownDoneMoves": 0,
+  "authorable": {
+    "planned": 10,
+    "priced": 10,
+    "unpriced": 0
+  },
+  "desk": {
+    "closed": 0,
+    "open": 2,
+    "both": 0,
+    "openDeskOnly": 53,
+    "unrecorded": 0
+  },
+  "lanes": {
+    "a": "USABLE",
+    "b": "USABLE;119 untracked foreign evidence paths preserved",
+    "c": "USABLE; ahead0 after ancestry integration",
+    "d": "DIRTY;26 tracked foreign art paths preserved"
+  },
+  "rotation": "r2026w37 already minted and open; landing matches",
+  "LB01": "15/15 days through 2026-09-07;0 account rows;54 unrecognised rows advisory;pull idempotent",
+  "TK01": "September 7 digest due first fire after06:00 local, not yet due",
+  "GZ01": "249 reported/112 dismissed/0 candidates at entry; W37 3 standalone/2 batched; own two test-only merges explicitly dismissed",
+  "ART": "untouched; one real drain completed, no no-drain trigger",
+  "retention": "106trees,105answered,1gitless answered by6775hashes;8unchanged exceptions,6chunk-backed blobs/23parts verified",
+  "withheld": "377 logs;0on-disk recoverable;55historical absent",
+  "terminalDoneMove": "drained-s2553-20260907-115228-lane-c-chapter-evidence-opt-in.md; intentionally ignored local runtime state; master and merged goal are durable"
+}

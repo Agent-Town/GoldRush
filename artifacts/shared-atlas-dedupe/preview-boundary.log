@@ -1,0 +1,26 @@
+
+[WebServer] (node:55217) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+[WebServer] (node:56351) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 8 tests using 1 worker
+
+
+(node:57589) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[1/8] [desktop-chrome] › e2e/shared-atlas-dedupe.spec.ts:59:35 › the-claim: identical atlas sources share residency
+[2/8] [desktop-chrome] › e2e/shared-atlas-dedupe.spec.ts:59:35 › e2-hill-mine: identical atlas sources share residency
+[3/8] [desktop-chrome] › e2e/shared-atlas-dedupe.spec.ts:59:35 › e8-mare-claim: identical atlas sources share residency
+[4/8] [desktop-chrome] › e2e/shared-atlas-dedupe.spec.ts:80:1 › production WebP atlas load-dispose-load returns to the renderer baseline
+
+(node:59393) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[5/8] [mobile-chrome] › e2e/shared-atlas-dedupe.spec.ts:59:35 › the-claim: identical atlas sources share residency
+[6/8] [mobile-chrome] › e2e/shared-atlas-dedupe.spec.ts:59:35 › e2-hill-mine: identical atlas sources share residency
+[7/8] [mobile-chrome] › e2e/shared-atlas-dedupe.spec.ts:59:35 › e8-mare-claim: identical atlas sources share residency
+[8/8] [mobile-chrome] › e2e/shared-atlas-dedupe.spec.ts:80:1 › production WebP atlas load-dispose-load returns to the renderer baseline
+  8 skipped

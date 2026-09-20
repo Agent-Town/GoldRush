@@ -1,0 +1,15 @@
+=== Gold Rush factory — 2026-09-08 10:12:39 ===
+edge   : landing=200 game=200 api=200   (200 = up; 2xx-slow = answered but missed the budget; anything else is dark — F-OUT-0829)
+runner : ALIVE
+fire   : between-fires
+agents :
+  com.goldrush.dashboard:LOADED
+  com.goldrush.health:LOADED
+  com.goldrush.fire:LOADED
+lock   : ACTIVE 2026-09-08T10:04Z (s2558 fire) — verify drains, daily backup and retention
+- **s2557 handoff (line-1 archive):*
+queued : 0 task(s)   in-flight: 0   pending-orders: 0
+lanes ahead of main (commit count — may be squash-merged dupes, verify by content):
+art staged, in NO commit: 0 file(s)  (detail: node scripts/art-staging-audit.mjs)
+failed tail: superseded-s239-bt-00-demolish.md
+last fire log line: /bin/zsh -lc 'python3 /tmp/s2558-capture.py health bash scripts/health-watch.sh status' in /Users/robin/Claude/Projects/

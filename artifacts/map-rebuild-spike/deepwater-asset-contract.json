@@ -1,0 +1,340 @@
+{
+  "blender": "5.1.2",
+  "maskTable": "assets/contracts/epoch-5-deepwater/mask-tables/e5-deepwater-claim.json",
+  "terrain": {
+    "asset": "deepwater-claim-terrain.glb",
+    "checked": {
+      "sha256": "499af7336cd7927a1aca35a7eb598232c05dc9726b5cda4ac0371706dce621e5",
+      "bytes": 8389592,
+      "meshes": 1,
+      "primitives": 1,
+      "triangles": 32768,
+      "materials": 1,
+      "images": 1,
+      "embeddedImages": 1,
+      "cameras": 0,
+      "lights": 0,
+      "animations": 0,
+      "bounds": {
+        "min": [
+          -64,
+          -8.039993,
+          -64
+        ],
+        "max": [
+          64,
+          -0.34,
+          64
+        ],
+        "size": [
+          128,
+          7.699993,
+          128
+        ],
+        "center": [
+          0.0,
+          -4.189997,
+          0.0
+        ]
+      },
+      "materialContract": [
+        {
+          "metallicFactor": 0,
+          "roughnessFactor": 0.8999999761581421,
+          "hasBaseColorTexture": true,
+          "hasEmissiveTexture": false,
+          "emissiveFactor": [
+            0,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    "reexported": {
+      "sha256": "499af7336cd7927a1aca35a7eb598232c05dc9726b5cda4ac0371706dce621e5",
+      "bytes": 8389592,
+      "meshes": 1,
+      "primitives": 1,
+      "triangles": 32768,
+      "materials": 1,
+      "images": 1,
+      "embeddedImages": 1,
+      "cameras": 0,
+      "lights": 0,
+      "animations": 0,
+      "bounds": {
+        "min": [
+          -64,
+          -8.039993,
+          -64
+        ],
+        "max": [
+          64,
+          -0.34,
+          64
+        ],
+        "size": [
+          128,
+          7.699993,
+          128
+        ],
+        "center": [
+          0.0,
+          -4.189997,
+          0.0
+        ]
+      },
+      "materialContract": [
+        {
+          "metallicFactor": 0,
+          "roughnessFactor": 0.8999999761581421,
+          "hasBaseColorTexture": true,
+          "hasEmissiveTexture": false,
+          "emissiveFactor": [
+            0,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    "byteIdenticalReexport": true,
+    "semanticIdenticalReexport": true,
+    "embeddedTexture": {
+      "bytes": 7658609,
+      "sha256": "60133affc9c9c28c5d29718133b835b015d8ace21247fdffd50648830fc132db",
+      "width": 2048,
+      "height": 2048
+    },
+    "extras": {
+      "render_only": true,
+      "sim_authority": "published mask table and planar simulation; unchanged",
+      "height_socket": "Terrain.visualY",
+      "contract_id": "e5-deepwater-claim",
+      "tile_id": "e5-deepwater-claim",
+      "mask_table": "assets/contracts/epoch-5-deepwater/mask-tables/e5-deepwater-claim.json",
+      "load_bearing_sites_flat": false,
+      "landmarks_frozen": true,
+      "water_surface_owner": "runtime; absent from this GLB",
+      "bathymetry_only": true
+    },
+    "bathymetryProbes": {
+      "lagoonShallows": -0.7338,
+      "reefCrest": -1.2084,
+      "reefGap": -2.85,
+      "wreckShelf": -5.225,
+      "trenchEdge": -7.92
+    },
+    "ruinMountFloorProbes": {
+      "drowned-claim-office": -5.9848,
+      "drowned-chapel": -5.9737,
+      "drowned-general-store": -5.7411,
+      "drowned-stamp-mill": -5.8856
+    },
+    "maskSource": "assets/contracts/epoch-5-deepwater/mask-tables/e5-deepwater-claim.json"
+  },
+  "panorama": {
+    "asset": "deepwater-claim-panorama.glb",
+    "checked": {
+      "sha256": "5ab61c4f7480a0b6a65d77397b3cb2132896421d0dc32bae0184b7b5c80938e4",
+      "bytes": 1705824,
+      "meshes": 1,
+      "primitives": 1,
+      "triangles": 2704,
+      "materials": 1,
+      "images": 1,
+      "embeddedImages": 1,
+      "cameras": 0,
+      "lights": 0,
+      "animations": 0,
+      "bounds": {
+        "min": [
+          -190,
+          -160,
+          -190
+        ],
+        "max": [
+          190,
+          130,
+          190
+        ],
+        "size": [
+          380,
+          290,
+          380
+        ],
+        "center": [
+          0.0,
+          -15.0,
+          0.0
+        ]
+      },
+      "materialContract": [
+        {
+          "metallicFactor": 0,
+          "roughnessFactor": 1,
+          "hasBaseColorTexture": true,
+          "hasEmissiveTexture": true,
+          "emissiveFactor": [
+            1,
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    "reexported": {
+      "sha256": "5ab61c4f7480a0b6a65d77397b3cb2132896421d0dc32bae0184b7b5c80938e4",
+      "bytes": 1705824,
+      "meshes": 1,
+      "primitives": 1,
+      "triangles": 2704,
+      "materials": 1,
+      "images": 1,
+      "embeddedImages": 1,
+      "cameras": 0,
+      "lights": 0,
+      "animations": 0,
+      "bounds": {
+        "min": [
+          -190,
+          -160,
+          -190
+        ],
+        "max": [
+          190,
+          130,
+          190
+        ],
+        "size": [
+          380,
+          290,
+          380
+        ],
+        "center": [
+          0.0,
+          -15.0,
+          0.0
+        ]
+      },
+      "materialContract": [
+        {
+          "metallicFactor": 0,
+          "roughnessFactor": 1,
+          "hasBaseColorTexture": true,
+          "hasEmissiveTexture": true,
+          "emissiveFactor": [
+            1,
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    "byteIdenticalReexport": true,
+    "semanticIdenticalReexport": true,
+    "embeddedTexture": {
+      "bytes": 1605608,
+      "sha256": "9bdf0dd7f95bb047a79001c7b083ef3ddd3bf761d48c4a4f26b3a2be1e3bdfea",
+      "width": 2048,
+      "height": 2048
+    },
+    "extras": {
+      "render_only": true,
+      "panorama": true,
+      "affects_playfield": false,
+      "affects_masks": false,
+      "affects_spawn_edges": false,
+      "affects_fog_gating": false,
+      "mount_space": "game X/Y/Z at county origin",
+      "panorama_law": "v2"
+    },
+    "mount": {
+      "id": "deepwater-claim-panorama",
+      "asset": "deepwater-claim-panorama.glb",
+      "position": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "renderOnly": true,
+      "ownership": "separate mounted scenery; never terrain or gameplay bounds"
+    }
+  },
+  "boards": {
+    "deepwater-mood-ab.png": {
+      "size": [
+        1920,
+        1260
+      ],
+      "bytes": 3926981,
+      "sha256": "8207c65db1a7f8a4fca87d92aa50f19e7f3b344f0dcfb1d278ec3a9e9643905c"
+    },
+    "deepwater-flat-vs-sculpted-ab.png": {
+      "size": [
+        1920,
+        630
+      ],
+      "bytes": 939042,
+      "sha256": "8c2fad13d9b3c1ad04386922362744e55efb66b0311e8fcf895f18d1c55874c7"
+    },
+    "deepwater-owner-verdict.png": {
+      "size": [
+        1920,
+        900
+      ],
+      "bytes": 1524947,
+      "sha256": "a4d689a1eb9819a1e5e064064cbaa1ad1c4a5896f4f82ccb030503e98c5ee4d1"
+    },
+    "deepwater-panorama-mood-ab.png": {
+      "size": [
+        1920,
+        630
+      ],
+      "bytes": 684649,
+      "sha256": "65ddfb359b8cdf35748298bd087409bb70afd8614d58740c8e4e116a0eaf77fb"
+    },
+    "deepwater-panorama-distance-gate.png": {
+      "size": [
+        1920,
+        630
+      ],
+      "bytes": 952328,
+      "sha256": "69ea4f48d8d03de1711b131d7e7334cd8db82e4664ddfdaad59d262df857cda0"
+    },
+    "deepwater-mask-agreement-board.png": {
+      "size": [
+        1920,
+        1260
+      ],
+      "bytes": 664295,
+      "sha256": "55c4e0831a37c1f60ff324d9f591c36b4aec7fdb990810b6319096db49503345"
+    },
+    "deepwater-ruin-contact-gate.png": {
+      "size": [
+        1920,
+        630
+      ],
+      "bytes": 1125966,
+      "sha256": "5207dca3006fd6885585a390340ca43bc5eeb29326a393fff35ea5efe08ad24f"
+    }
+  },
+  "verdict": {
+    "grit": "working post-flood harbor; fight, never postcard",
+    "panorama": "open-sea distance; no wall, ceiling, or confirming coast",
+    "masks": "published and unchanged",
+    "water": "runtime-owned; no sea surface in terrain GLB",
+    "landmarks": "frozen; four existing E4 town bodies recorded as separate reuse-only drowned mounts"
+  }
+}

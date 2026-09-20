@@ -1,0 +1,3645 @@
+{
+  "at": "2026-09-05T15:09:13.067Z",
+  "method": "Renderer camera.zoom 1/2/3, same frozen stress scene. Instance bounding spheres tested against six clip planes. Conservative frustum visibility, not depth visibility. Render counts are scene-only, not post. Matrix zero-scale hidden slots excluded from visible count.",
+  "rows": [
+    {
+      "map": "the-claim",
+      "host": {
+        "at": "2026-09-05T15:08:50.257Z",
+        "load": [
+          54.3193359375,
+          41.189453125,
+          27.87744140625
+        ],
+        "freeMemory": 10246799360
+      },
+      "zoom": 1,
+      "sceneOnlyCalls": 169,
+      "sceneOnlyTriangles": 112882,
+      "instances": [
+        {
+          "name": "GeneratedSpriteBlobShadows.813758cb-3beb-4cc1-826e-011a906f0210",
+          "frustumCulled": false,
+          "count": 1,
+          "inFrustum": 1,
+          "outside": 0,
+          "trianglesPerInstance": 28
+        },
+        {
+          "name": "GeneratedSpriteBlobShadows.bbb42a38-1bbc-4c2a-85b3-9833803b1f4a",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 96,
+          "outside": 0,
+          "trianglesPerInstance": 28
+        },
+        {
+          "name": "GeneratedSpriteBlobShadows.cfd62443-91b6-4f96-b62d-b116ad346dd7",
+          "frustumCulled": false,
+          "count": 1,
+          "inFrustum": 1,
+          "outside": 0,
+          "trianglesPerInstance": 28
+        },
+        {
+          "name": "DetailScatter.rocks",
+          "frustumCulled": false,
+          "count": 44,
+          "inFrustum": 14,
+          "outside": 30,
+          "trianglesPerInstance": 36
+        },
+        {
+          "name": "DetailScatter.stumps",
+          "frustumCulled": false,
+          "count": 18,
+          "inFrustum": 6,
+          "outside": 12,
+          "trianglesPerInstance": 28
+        },
+        {
+          "name": "DetailScatter.dry_grass",
+          "frustumCulled": false,
+          "count": 92,
+          "inFrustum": 16,
+          "outside": 76,
+          "trianglesPerInstance": 4
+        },
+        {
+          "name": "DetailScatter.wagon_ruts",
+          "frustumCulled": false,
+          "count": 24,
+          "inFrustum": 8,
+          "outside": 16,
+          "trianglesPerInstance": 2
+        },
+        {
+          "name": "DetailScatter.claim_posts",
+          "frustumCulled": false,
+          "count": 12,
+          "inFrustum": 1,
+          "outside": 11,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "DetailScatter.contactShadows",
+          "frustumCulled": false,
+          "count": 166,
+          "inFrustum": 45,
+          "outside": 121,
+          "trianglesPerInstance": 14
+        },
+        {
+          "name": "DecoyShedPool",
+          "frustumCulled": false,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 24
+        },
+        {
+          "name": "DecoyShedPool",
+          "frustumCulled": false,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "DecoyShedPool",
+          "frustumCulled": false,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "DecoyShedPool",
+          "frustumCulled": true,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "DecoyShedPool",
+          "frustumCulled": true,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "CapacitorBankPool",
+          "frustumCulled": false,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 24
+        },
+        {
+          "name": "CapacitorBankPool",
+          "frustumCulled": false,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "CapacitorBankPool",
+          "frustumCulled": false,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "CapacitorBankPool",
+          "frustumCulled": true,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "CapacitorBankPool",
+          "frustumCulled": true,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "SparkRigBoltPool",
+          "frustumCulled": false,
+          "count": 128,
+          "inFrustum": 2,
+          "outside": 126,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "SparkRigBoltPool",
+          "frustumCulled": false,
+          "count": 128,
+          "inFrustum": 2,
+          "outside": 126,
+          "trianglesPerInstance": 100
+        },
+        {
+          "name": "XpMotePool",
+          "frustumCulled": false,
+          "count": 64,
+          "inFrustum": 0,
+          "outside": 64,
+          "trianglesPerInstance": 4
+        },
+        {
+          "name": "GoldPickupPool",
+          "frustumCulled": false,
+          "count": 24,
+          "inFrustum": 0,
+          "outside": 24,
+          "trianglesPerInstance": 36
+        },
+        {
+          "name": "CombatVfx",
+          "frustumCulled": false,
+          "count": 32,
+          "inFrustum": 0,
+          "outside": 32,
+          "trianglesPerInstance": 18
+        },
+        {
+          "name": "CombatVfx",
+          "frustumCulled": false,
+          "count": 48,
+          "inFrustum": 0,
+          "outside": 48,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 14
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 96,
+          "outside": 0,
+          "trianglesPerInstance": 168
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 72
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 64
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 2
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 2
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 2
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 2
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 2
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 2
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 36
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 32
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "Terrain3dLandmarkContacts",
+          "frustumCulled": false,
+          "count": 4,
+          "inFrustum": 4,
+          "outside": 0,
+          "trianglesPerInstance": 24
+        }
+      ],
+      "terrain": [
+        {
+          "name": "TerrainVistaRing",
+          "parent": "",
+          "kind": "Mesh",
+          "visible": false,
+          "frustumCulled": true,
+          "instances": 1,
+          "capacity": 1,
+          "triangles": 7296,
+          "transparent": false,
+          "renderOrder": -1,
+          "trianglesIntersectingFrustum": 0,
+          "objects": 1,
+          "spriteCoverage": 0
+        },
+        {
+          "name": "TerrainReliefMesh",
+          "parent": "",
+          "kind": "Mesh",
+          "visible": false,
+          "frustumCulled": true,
+          "instances": 1,
+          "capacity": 1,
+          "triangles": 8192,
+          "transparent": false,
+          "renderOrder": 0,
+          "trianglesIntersectingFrustum": 3790,
+          "objects": 1,
+          "spriteCoverage": 0
+        },
+        {
+          "name": "TheClaimTerrain",
+          "parent": "Terrain3dClaimPilot",
+          "kind": "Mesh",
+          "visible": true,
+          "frustumCulled": true,
+          "instances": 1,
+          "capacity": 1,
+          "triangles": 32768,
+          "transparent": false,
+          "renderOrder": 0,
+          "trianglesIntersectingFrustum": 14136,
+          "objects": 1,
+          "spriteCoverage": 0
+        },
+        {
+          "name": "Terrain3dSculptContinuation",
+          "parent": "",
+          "kind": "Mesh",
+          "visible": true,
+          "frustumCulled": false,
+          "instances": 1,
+          "capacity": 1,
+          "triangles": 6656,
+          "transparent": false,
+          "renderOrder": -50,
+          "trianglesIntersectingFrustum": 0,
+          "objects": 1,
+          "spriteCoverage": 0
+        }
+      ],
+      "errors": {
+        "console": [],
+        "page": [],
+        "network": []
+      }
+    },
+    {
+      "map": "the-claim",
+      "host": {
+        "at": "2026-09-05T15:08:50.901Z",
+        "load": [
+          54.3193359375,
+          41.189453125,
+          27.87744140625
+        ],
+        "freeMemory": 9835692032
+      },
+      "zoom": 2,
+      "sceneOnlyCalls": 139,
+      "sceneOnlyTriangles": 111770,
+      "instances": [
+        {
+          "name": "GeneratedSpriteBlobShadows.813758cb-3beb-4cc1-826e-011a906f0210",
+          "frustumCulled": false,
+          "count": 1,
+          "inFrustum": 1,
+          "outside": 0,
+          "trianglesPerInstance": 28
+        },
+        {
+          "name": "GeneratedSpriteBlobShadows.bbb42a38-1bbc-4c2a-85b3-9833803b1f4a",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 80,
+          "outside": 16,
+          "trianglesPerInstance": 28
+        },
+        {
+          "name": "GeneratedSpriteBlobShadows.cfd62443-91b6-4f96-b62d-b116ad346dd7",
+          "frustumCulled": false,
+          "count": 1,
+          "inFrustum": 1,
+          "outside": 0,
+          "trianglesPerInstance": 28
+        },
+        {
+          "name": "DetailScatter.rocks",
+          "frustumCulled": false,
+          "count": 44,
+          "inFrustum": 0,
+          "outside": 44,
+          "trianglesPerInstance": 36
+        },
+        {
+          "name": "DetailScatter.stumps",
+          "frustumCulled": false,
+          "count": 18,
+          "inFrustum": 0,
+          "outside": 18,
+          "trianglesPerInstance": 28
+        },
+        {
+          "name": "DetailScatter.dry_grass",
+          "frustumCulled": false,
+          "count": 92,
+          "inFrustum": 0,
+          "outside": 92,
+          "trianglesPerInstance": 4
+        },
+        {
+          "name": "DetailScatter.wagon_ruts",
+          "frustumCulled": false,
+          "count": 24,
+          "inFrustum": 0,
+          "outside": 24,
+          "trianglesPerInstance": 2
+        },
+        {
+          "name": "DetailScatter.claim_posts",
+          "frustumCulled": false,
+          "count": 12,
+          "inFrustum": 0,
+          "outside": 12,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "DetailScatter.contactShadows",
+          "frustumCulled": false,
+          "count": 166,
+          "inFrustum": 0,
+          "outside": 166,
+          "trianglesPerInstance": 14
+        },
+        {
+          "name": "DecoyShedPool",
+          "frustumCulled": false,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 24
+        },
+        {
+          "name": "DecoyShedPool",
+          "frustumCulled": false,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "DecoyShedPool",
+          "frustumCulled": false,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "DecoyShedPool",
+          "frustumCulled": true,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "DecoyShedPool",
+          "frustumCulled": true,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "CapacitorBankPool",
+          "frustumCulled": false,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 24
+        },
+        {
+          "name": "CapacitorBankPool",
+          "frustumCulled": false,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "CapacitorBankPool",
+          "frustumCulled": false,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "CapacitorBankPool",
+          "frustumCulled": true,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "CapacitorBankPool",
+          "frustumCulled": true,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "SparkRigBoltPool",
+          "frustumCulled": false,
+          "count": 128,
+          "inFrustum": 1,
+          "outside": 127,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "SparkRigBoltPool",
+          "frustumCulled": false,
+          "count": 128,
+          "inFrustum": 1,
+          "outside": 127,
+          "trianglesPerInstance": 100
+        },
+        {
+          "name": "XpMotePool",
+          "frustumCulled": false,
+          "count": 64,
+          "inFrustum": 0,
+          "outside": 64,
+          "trianglesPerInstance": 4
+        },
+        {
+          "name": "GoldPickupPool",
+          "frustumCulled": false,
+          "count": 24,
+          "inFrustum": 0,
+          "outside": 24,
+          "trianglesPerInstance": 36
+        },
+        {
+          "name": "CombatVfx",
+          "frustumCulled": false,
+          "count": 32,
+          "inFrustum": 0,
+          "outside": 32,
+          "trianglesPerInstance": 18
+        },
+        {
+          "name": "CombatVfx",
+          "frustumCulled": false,
+          "count": 48,
+          "inFrustum": 0,
+          "outside": 48,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 14
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 76,
+          "outside": 20,
+          "trianglesPerInstance": 168
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 72
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 64
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 2
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 2
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 2
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 2
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 2
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 2
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 36
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 32
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "Terrain3dLandmarkContacts",
+          "frustumCulled": false,
+          "count": 4,
+          "inFrustum": 3,
+          "outside": 1,
+          "trianglesPerInstance": 24
+        }
+      ],
+      "terrain": [
+        {
+          "name": "TerrainVistaRing",
+          "parent": "",
+          "kind": "Mesh",
+          "visible": false,
+          "frustumCulled": true,
+          "instances": 1,
+          "capacity": 1,
+          "triangles": 7296,
+          "transparent": false,
+          "renderOrder": -1,
+          "trianglesIntersectingFrustum": 0,
+          "objects": 1,
+          "spriteCoverage": 0
+        },
+        {
+          "name": "TerrainReliefMesh",
+          "parent": "",
+          "kind": "Mesh",
+          "visible": false,
+          "frustumCulled": true,
+          "instances": 1,
+          "capacity": 1,
+          "triangles": 8192,
+          "transparent": false,
+          "renderOrder": 0,
+          "trianglesIntersectingFrustum": 877,
+          "objects": 1,
+          "spriteCoverage": 0
+        },
+        {
+          "name": "TheClaimTerrain",
+          "parent": "Terrain3dClaimPilot",
+          "kind": "Mesh",
+          "visible": true,
+          "frustumCulled": true,
+          "instances": 1,
+          "capacity": 1,
+          "triangles": 32768,
+          "transparent": false,
+          "renderOrder": 0,
+          "trianglesIntersectingFrustum": 3434,
+          "objects": 1,
+          "spriteCoverage": 0
+        },
+        {
+          "name": "Terrain3dSculptContinuation",
+          "parent": "",
+          "kind": "Mesh",
+          "visible": true,
+          "frustumCulled": false,
+          "instances": 1,
+          "capacity": 1,
+          "triangles": 6656,
+          "transparent": false,
+          "renderOrder": -50,
+          "trianglesIntersectingFrustum": 0,
+          "objects": 1,
+          "spriteCoverage": 0
+        }
+      ],
+      "errors": {
+        "console": [],
+        "page": [],
+        "network": []
+      }
+    },
+    {
+      "map": "the-claim",
+      "host": {
+        "at": "2026-09-05T15:08:51.371Z",
+        "load": [
+          54.3193359375,
+          41.189453125,
+          27.87744140625
+        ],
+        "freeMemory": 9685368832
+      },
+      "zoom": 3,
+      "sceneOnlyCalls": 125,
+      "sceneOnlyTriangles": 110930,
+      "instances": [
+        {
+          "name": "GeneratedSpriteBlobShadows.813758cb-3beb-4cc1-826e-011a906f0210",
+          "frustumCulled": false,
+          "count": 1,
+          "inFrustum": 1,
+          "outside": 0,
+          "trianglesPerInstance": 28
+        },
+        {
+          "name": "GeneratedSpriteBlobShadows.bbb42a38-1bbc-4c2a-85b3-9833803b1f4a",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 73,
+          "outside": 23,
+          "trianglesPerInstance": 28
+        },
+        {
+          "name": "GeneratedSpriteBlobShadows.cfd62443-91b6-4f96-b62d-b116ad346dd7",
+          "frustumCulled": false,
+          "count": 1,
+          "inFrustum": 1,
+          "outside": 0,
+          "trianglesPerInstance": 28
+        },
+        {
+          "name": "DetailScatter.rocks",
+          "frustumCulled": false,
+          "count": 44,
+          "inFrustum": 0,
+          "outside": 44,
+          "trianglesPerInstance": 36
+        },
+        {
+          "name": "DetailScatter.stumps",
+          "frustumCulled": false,
+          "count": 18,
+          "inFrustum": 0,
+          "outside": 18,
+          "trianglesPerInstance": 28
+        },
+        {
+          "name": "DetailScatter.dry_grass",
+          "frustumCulled": false,
+          "count": 92,
+          "inFrustum": 0,
+          "outside": 92,
+          "trianglesPerInstance": 4
+        },
+        {
+          "name": "DetailScatter.wagon_ruts",
+          "frustumCulled": false,
+          "count": 24,
+          "inFrustum": 0,
+          "outside": 24,
+          "trianglesPerInstance": 2
+        },
+        {
+          "name": "DetailScatter.claim_posts",
+          "frustumCulled": false,
+          "count": 12,
+          "inFrustum": 0,
+          "outside": 12,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "DetailScatter.contactShadows",
+          "frustumCulled": false,
+          "count": 166,
+          "inFrustum": 0,
+          "outside": 166,
+          "trianglesPerInstance": 14
+        },
+        {
+          "name": "DecoyShedPool",
+          "frustumCulled": false,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 24
+        },
+        {
+          "name": "DecoyShedPool",
+          "frustumCulled": false,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "DecoyShedPool",
+          "frustumCulled": false,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "DecoyShedPool",
+          "frustumCulled": true,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "DecoyShedPool",
+          "frustumCulled": true,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "CapacitorBankPool",
+          "frustumCulled": false,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 24
+        },
+        {
+          "name": "CapacitorBankPool",
+          "frustumCulled": false,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "CapacitorBankPool",
+          "frustumCulled": false,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "CapacitorBankPool",
+          "frustumCulled": true,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "CapacitorBankPool",
+          "frustumCulled": true,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "SparkRigBoltPool",
+          "frustumCulled": false,
+          "count": 128,
+          "inFrustum": 1,
+          "outside": 127,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "SparkRigBoltPool",
+          "frustumCulled": false,
+          "count": 128,
+          "inFrustum": 1,
+          "outside": 127,
+          "trianglesPerInstance": 100
+        },
+        {
+          "name": "XpMotePool",
+          "frustumCulled": false,
+          "count": 64,
+          "inFrustum": 0,
+          "outside": 64,
+          "trianglesPerInstance": 4
+        },
+        {
+          "name": "GoldPickupPool",
+          "frustumCulled": false,
+          "count": 24,
+          "inFrustum": 0,
+          "outside": 24,
+          "trianglesPerInstance": 36
+        },
+        {
+          "name": "CombatVfx",
+          "frustumCulled": false,
+          "count": 32,
+          "inFrustum": 0,
+          "outside": 32,
+          "trianglesPerInstance": 18
+        },
+        {
+          "name": "CombatVfx",
+          "frustumCulled": false,
+          "count": 48,
+          "inFrustum": 0,
+          "outside": 48,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 14
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 66,
+          "outside": 30,
+          "trianglesPerInstance": 168
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 72
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 64
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 2
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 2
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 2
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 2
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 2
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 2
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 36
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 32
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "Terrain3dLandmarkContacts",
+          "frustumCulled": false,
+          "count": 4,
+          "inFrustum": 2,
+          "outside": 2,
+          "trianglesPerInstance": 24
+        }
+      ],
+      "terrain": [
+        {
+          "name": "TerrainVistaRing",
+          "parent": "",
+          "kind": "Mesh",
+          "visible": false,
+          "frustumCulled": true,
+          "instances": 1,
+          "capacity": 1,
+          "triangles": 7296,
+          "transparent": false,
+          "renderOrder": -1,
+          "trianglesIntersectingFrustum": 0,
+          "objects": 1,
+          "spriteCoverage": 0
+        },
+        {
+          "name": "TerrainReliefMesh",
+          "parent": "",
+          "kind": "Mesh",
+          "visible": false,
+          "frustumCulled": true,
+          "instances": 1,
+          "capacity": 1,
+          "triangles": 8192,
+          "transparent": false,
+          "renderOrder": 0,
+          "trianglesIntersectingFrustum": 398,
+          "objects": 1,
+          "spriteCoverage": 0
+        },
+        {
+          "name": "TheClaimTerrain",
+          "parent": "Terrain3dClaimPilot",
+          "kind": "Mesh",
+          "visible": true,
+          "frustumCulled": true,
+          "instances": 1,
+          "capacity": 1,
+          "triangles": 32768,
+          "transparent": false,
+          "renderOrder": 0,
+          "trianglesIntersectingFrustum": 1546,
+          "objects": 1,
+          "spriteCoverage": 0
+        },
+        {
+          "name": "Terrain3dSculptContinuation",
+          "parent": "",
+          "kind": "Mesh",
+          "visible": true,
+          "frustumCulled": false,
+          "instances": 1,
+          "capacity": 1,
+          "triangles": 6656,
+          "transparent": false,
+          "renderOrder": -50,
+          "trianglesIntersectingFrustum": 0,
+          "objects": 1,
+          "spriteCoverage": 0
+        }
+      ],
+      "errors": {
+        "console": [],
+        "page": [],
+        "network": []
+      }
+    },
+    {
+      "map": "e2-incline",
+      "host": {
+        "at": "2026-09-05T15:09:01.843Z",
+        "load": [
+          55.09912109375,
+          41.791015625,
+          28.24658203125
+        ],
+        "freeMemory": 6576128000
+      },
+      "zoom": 1,
+      "sceneOnlyCalls": 85,
+      "sceneOnlyTriangles": 106214,
+      "instances": [
+        {
+          "name": "GeneratedSpriteBlobShadows.ba26fff3-fc71-4cde-af3f-34f2facf4c1b",
+          "frustumCulled": false,
+          "count": 1,
+          "inFrustum": 1,
+          "outside": 0,
+          "trianglesPerInstance": 28
+        },
+        {
+          "name": "GeneratedSpriteBlobShadows.19a5be4b-4452-4f80-be9f-f093a915a1e6",
+          "frustumCulled": false,
+          "count": 1,
+          "inFrustum": 1,
+          "outside": 0,
+          "trianglesPerInstance": 28
+        },
+        {
+          "name": "RailPath.Rails",
+          "frustumCulled": false,
+          "count": 416,
+          "inFrustum": 86,
+          "outside": 330,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "RailPath.Sleepers",
+          "frustumCulled": false,
+          "count": 208,
+          "inFrustum": 43,
+          "outside": 165,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "DetailScatter.rocks",
+          "frustumCulled": false,
+          "count": 58,
+          "inFrustum": 16,
+          "outside": 42,
+          "trianglesPerInstance": 36
+        },
+        {
+          "name": "DetailScatter.stumps",
+          "frustumCulled": false,
+          "count": 12,
+          "inFrustum": 5,
+          "outside": 7,
+          "trianglesPerInstance": 28
+        },
+        {
+          "name": "DetailScatter.dry_grass",
+          "frustumCulled": false,
+          "count": 19,
+          "inFrustum": 4,
+          "outside": 15,
+          "trianglesPerInstance": 4
+        },
+        {
+          "name": "DetailScatter.wagon_ruts",
+          "frustumCulled": false,
+          "count": 12,
+          "inFrustum": 4,
+          "outside": 8,
+          "trianglesPerInstance": 2
+        },
+        {
+          "name": "DetailScatter.claim_posts",
+          "frustumCulled": false,
+          "count": 7,
+          "inFrustum": 1,
+          "outside": 6,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "DetailScatter.reeds",
+          "frustumCulled": false,
+          "count": 15,
+          "inFrustum": 4,
+          "outside": 11,
+          "trianglesPerInstance": 6
+        },
+        {
+          "name": "DetailScatter.reeds.contact",
+          "frustumCulled": false,
+          "count": 11,
+          "inFrustum": 2,
+          "outside": 9,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "DetailScatter.contactShadows",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 27,
+          "outside": 69,
+          "trianglesPerInstance": 14
+        },
+        {
+          "name": "DecoyShedPool",
+          "frustumCulled": false,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 24
+        },
+        {
+          "name": "DecoyShedPool",
+          "frustumCulled": false,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "DecoyShedPool",
+          "frustumCulled": false,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "DecoyShedPool",
+          "frustumCulled": true,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "DecoyShedPool",
+          "frustumCulled": true,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "CapacitorBankPool",
+          "frustumCulled": false,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 24
+        },
+        {
+          "name": "CapacitorBankPool",
+          "frustumCulled": false,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "CapacitorBankPool",
+          "frustumCulled": false,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "CapacitorBankPool",
+          "frustumCulled": true,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "CapacitorBankPool",
+          "frustumCulled": true,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "CoalSeams",
+          "frustumCulled": true,
+          "count": 3,
+          "inFrustum": 0,
+          "outside": 3,
+          "trianglesPerInstance": 36
+        },
+        {
+          "name": "CoalSurveyMarks",
+          "frustumCulled": true,
+          "count": 3,
+          "inFrustum": 0,
+          "outside": 3,
+          "trianglesPerInstance": 36
+        },
+        {
+          "name": "SparkRigBoltPool",
+          "frustumCulled": false,
+          "count": 128,
+          "inFrustum": 2,
+          "outside": 126,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "SparkRigBoltPool",
+          "frustumCulled": false,
+          "count": 128,
+          "inFrustum": 2,
+          "outside": 126,
+          "trianglesPerInstance": 100
+        },
+        {
+          "name": "XpMotePool",
+          "frustumCulled": false,
+          "count": 64,
+          "inFrustum": 0,
+          "outside": 64,
+          "trianglesPerInstance": 4
+        },
+        {
+          "name": "GoldPickupPool",
+          "frustumCulled": false,
+          "count": 24,
+          "inFrustum": 0,
+          "outside": 24,
+          "trianglesPerInstance": 36
+        },
+        {
+          "name": "CombatVfx",
+          "frustumCulled": false,
+          "count": 32,
+          "inFrustum": 0,
+          "outside": 32,
+          "trianglesPerInstance": 18
+        },
+        {
+          "name": "CombatVfx",
+          "frustumCulled": false,
+          "count": 48,
+          "inFrustum": 0,
+          "outside": 48,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 14
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 24,
+          "outside": 72,
+          "trianglesPerInstance": 168
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 72
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 64
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 2
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 2
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 2
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 2
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 2
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 2
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 36
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 32
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "Terrain3dLandmarkContacts",
+          "frustumCulled": false,
+          "count": 5,
+          "inFrustum": 0,
+          "outside": 5,
+          "trianglesPerInstance": 24
+        },
+        {
+          "name": "InclineHaulSteam",
+          "frustumCulled": false,
+          "count": 8,
+          "inFrustum": 0,
+          "outside": 8,
+          "trianglesPerInstance": 2
+        }
+      ],
+      "terrain": [
+        {
+          "name": "TerrainVistaRing",
+          "parent": "",
+          "kind": "Mesh",
+          "visible": false,
+          "frustumCulled": true,
+          "instances": 1,
+          "capacity": 1,
+          "triangles": 7296,
+          "transparent": false,
+          "renderOrder": -1,
+          "trianglesIntersectingFrustum": 114,
+          "objects": 1,
+          "spriteCoverage": 0
+        },
+        {
+          "name": "TerrainContinuousGroundMesh",
+          "parent": "",
+          "kind": "Mesh",
+          "visible": false,
+          "frustumCulled": true,
+          "instances": 1,
+          "capacity": 1,
+          "triangles": 18432,
+          "transparent": false,
+          "renderOrder": 0,
+          "trianglesIntersectingFrustum": 3692,
+          "objects": 1,
+          "spriteCoverage": 0
+        },
+        {
+          "name": "InclineTerrain",
+          "parent": "Terrain3dClaimPilot",
+          "kind": "Mesh",
+          "visible": true,
+          "frustumCulled": true,
+          "instances": 1,
+          "capacity": 1,
+          "triangles": 32768,
+          "transparent": false,
+          "renderOrder": 0,
+          "trianglesIntersectingFrustum": 6378,
+          "objects": 1,
+          "spriteCoverage": 0
+        },
+        {
+          "name": "Terrain3dSculptContinuation",
+          "parent": "",
+          "kind": "Mesh",
+          "visible": true,
+          "frustumCulled": false,
+          "instances": 1,
+          "capacity": 1,
+          "triangles": 512,
+          "transparent": false,
+          "renderOrder": -50,
+          "trianglesIntersectingFrustum": 78,
+          "objects": 1,
+          "spriteCoverage": 0
+        }
+      ],
+      "errors": {
+        "console": [],
+        "page": [],
+        "network": []
+      }
+    },
+    {
+      "map": "e2-incline",
+      "host": {
+        "at": "2026-09-05T15:09:02.744Z",
+        "load": [
+          55.09912109375,
+          41.791015625,
+          28.24658203125
+        ],
+        "freeMemory": 6202277888
+      },
+      "zoom": 2,
+      "sceneOnlyCalls": 81,
+      "sceneOnlyTriangles": 106014,
+      "instances": [
+        {
+          "name": "GeneratedSpriteBlobShadows.ba26fff3-fc71-4cde-af3f-34f2facf4c1b",
+          "frustumCulled": false,
+          "count": 1,
+          "inFrustum": 1,
+          "outside": 0,
+          "trianglesPerInstance": 28
+        },
+        {
+          "name": "GeneratedSpriteBlobShadows.19a5be4b-4452-4f80-be9f-f093a915a1e6",
+          "frustumCulled": false,
+          "count": 1,
+          "inFrustum": 1,
+          "outside": 0,
+          "trianglesPerInstance": 28
+        },
+        {
+          "name": "RailPath.Rails",
+          "frustumCulled": false,
+          "count": 416,
+          "inFrustum": 17,
+          "outside": 399,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "RailPath.Sleepers",
+          "frustumCulled": false,
+          "count": 208,
+          "inFrustum": 12,
+          "outside": 196,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "DetailScatter.rocks",
+          "frustumCulled": false,
+          "count": 58,
+          "inFrustum": 5,
+          "outside": 53,
+          "trianglesPerInstance": 36
+        },
+        {
+          "name": "DetailScatter.stumps",
+          "frustumCulled": false,
+          "count": 12,
+          "inFrustum": 3,
+          "outside": 9,
+          "trianglesPerInstance": 28
+        },
+        {
+          "name": "DetailScatter.dry_grass",
+          "frustumCulled": false,
+          "count": 19,
+          "inFrustum": 1,
+          "outside": 18,
+          "trianglesPerInstance": 4
+        },
+        {
+          "name": "DetailScatter.wagon_ruts",
+          "frustumCulled": false,
+          "count": 12,
+          "inFrustum": 1,
+          "outside": 11,
+          "trianglesPerInstance": 2
+        },
+        {
+          "name": "DetailScatter.claim_posts",
+          "frustumCulled": false,
+          "count": 7,
+          "inFrustum": 1,
+          "outside": 6,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "DetailScatter.reeds",
+          "frustumCulled": false,
+          "count": 15,
+          "inFrustum": 0,
+          "outside": 15,
+          "trianglesPerInstance": 6
+        },
+        {
+          "name": "DetailScatter.reeds.contact",
+          "frustumCulled": false,
+          "count": 11,
+          "inFrustum": 0,
+          "outside": 11,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "DetailScatter.contactShadows",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 12,
+          "outside": 84,
+          "trianglesPerInstance": 14
+        },
+        {
+          "name": "DecoyShedPool",
+          "frustumCulled": false,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 24
+        },
+        {
+          "name": "DecoyShedPool",
+          "frustumCulled": false,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "DecoyShedPool",
+          "frustumCulled": false,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "DecoyShedPool",
+          "frustumCulled": true,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "DecoyShedPool",
+          "frustumCulled": true,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "CapacitorBankPool",
+          "frustumCulled": false,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 24
+        },
+        {
+          "name": "CapacitorBankPool",
+          "frustumCulled": false,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "CapacitorBankPool",
+          "frustumCulled": false,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "CapacitorBankPool",
+          "frustumCulled": true,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "CapacitorBankPool",
+          "frustumCulled": true,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "CoalSeams",
+          "frustumCulled": true,
+          "count": 3,
+          "inFrustum": 0,
+          "outside": 3,
+          "trianglesPerInstance": 36
+        },
+        {
+          "name": "CoalSurveyMarks",
+          "frustumCulled": true,
+          "count": 3,
+          "inFrustum": 0,
+          "outside": 3,
+          "trianglesPerInstance": 36
+        },
+        {
+          "name": "SparkRigBoltPool",
+          "frustumCulled": false,
+          "count": 128,
+          "inFrustum": 2,
+          "outside": 126,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "SparkRigBoltPool",
+          "frustumCulled": false,
+          "count": 128,
+          "inFrustum": 2,
+          "outside": 126,
+          "trianglesPerInstance": 100
+        },
+        {
+          "name": "XpMotePool",
+          "frustumCulled": false,
+          "count": 64,
+          "inFrustum": 0,
+          "outside": 64,
+          "trianglesPerInstance": 4
+        },
+        {
+          "name": "GoldPickupPool",
+          "frustumCulled": false,
+          "count": 24,
+          "inFrustum": 0,
+          "outside": 24,
+          "trianglesPerInstance": 36
+        },
+        {
+          "name": "CombatVfx",
+          "frustumCulled": false,
+          "count": 32,
+          "inFrustum": 0,
+          "outside": 32,
+          "trianglesPerInstance": 18
+        },
+        {
+          "name": "CombatVfx",
+          "frustumCulled": false,
+          "count": 48,
+          "inFrustum": 0,
+          "outside": 48,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 14
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 24,
+          "outside": 72,
+          "trianglesPerInstance": 168
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 72
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 64
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 2
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 2
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 2
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 2
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 2
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 2
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 36
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 32
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "Terrain3dLandmarkContacts",
+          "frustumCulled": false,
+          "count": 5,
+          "inFrustum": 0,
+          "outside": 5,
+          "trianglesPerInstance": 24
+        },
+        {
+          "name": "InclineHaulSteam",
+          "frustumCulled": false,
+          "count": 8,
+          "inFrustum": 0,
+          "outside": 8,
+          "trianglesPerInstance": 2
+        }
+      ],
+      "terrain": [
+        {
+          "name": "TerrainVistaRing",
+          "parent": "",
+          "kind": "Mesh",
+          "visible": false,
+          "frustumCulled": true,
+          "instances": 1,
+          "capacity": 1,
+          "triangles": 7296,
+          "transparent": false,
+          "renderOrder": -1,
+          "trianglesIntersectingFrustum": 0,
+          "objects": 1,
+          "spriteCoverage": 0
+        },
+        {
+          "name": "TerrainContinuousGroundMesh",
+          "parent": "",
+          "kind": "Mesh",
+          "visible": false,
+          "frustumCulled": true,
+          "instances": 1,
+          "capacity": 1,
+          "triangles": 18432,
+          "transparent": false,
+          "renderOrder": 0,
+          "trianglesIntersectingFrustum": 864,
+          "objects": 1,
+          "spriteCoverage": 0
+        },
+        {
+          "name": "InclineTerrain",
+          "parent": "Terrain3dClaimPilot",
+          "kind": "Mesh",
+          "visible": true,
+          "frustumCulled": true,
+          "instances": 1,
+          "capacity": 1,
+          "triangles": 32768,
+          "transparent": false,
+          "renderOrder": 0,
+          "trianglesIntersectingFrustum": 1444,
+          "objects": 1,
+          "spriteCoverage": 0
+        },
+        {
+          "name": "Terrain3dSculptContinuation",
+          "parent": "",
+          "kind": "Mesh",
+          "visible": true,
+          "frustumCulled": false,
+          "instances": 1,
+          "capacity": 1,
+          "triangles": 512,
+          "transparent": false,
+          "renderOrder": -50,
+          "trianglesIntersectingFrustum": 0,
+          "objects": 1,
+          "spriteCoverage": 0
+        }
+      ],
+      "errors": {
+        "console": [],
+        "page": [],
+        "network": []
+      }
+    },
+    {
+      "map": "e2-incline",
+      "host": {
+        "at": "2026-09-05T15:09:03.357Z",
+        "load": [
+          55.09912109375,
+          41.791015625,
+          28.24658203125
+        ],
+        "freeMemory": 5938069504
+      },
+      "zoom": 3,
+      "sceneOnlyCalls": 81,
+      "sceneOnlyTriangles": 106014,
+      "instances": [
+        {
+          "name": "GeneratedSpriteBlobShadows.ba26fff3-fc71-4cde-af3f-34f2facf4c1b",
+          "frustumCulled": false,
+          "count": 1,
+          "inFrustum": 1,
+          "outside": 0,
+          "trianglesPerInstance": 28
+        },
+        {
+          "name": "GeneratedSpriteBlobShadows.19a5be4b-4452-4f80-be9f-f093a915a1e6",
+          "frustumCulled": false,
+          "count": 1,
+          "inFrustum": 1,
+          "outside": 0,
+          "trianglesPerInstance": 28
+        },
+        {
+          "name": "RailPath.Rails",
+          "frustumCulled": false,
+          "count": 416,
+          "inFrustum": 0,
+          "outside": 416,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "RailPath.Sleepers",
+          "frustumCulled": false,
+          "count": 208,
+          "inFrustum": 0,
+          "outside": 208,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "DetailScatter.rocks",
+          "frustumCulled": false,
+          "count": 58,
+          "inFrustum": 3,
+          "outside": 55,
+          "trianglesPerInstance": 36
+        },
+        {
+          "name": "DetailScatter.stumps",
+          "frustumCulled": false,
+          "count": 12,
+          "inFrustum": 2,
+          "outside": 10,
+          "trianglesPerInstance": 28
+        },
+        {
+          "name": "DetailScatter.dry_grass",
+          "frustumCulled": false,
+          "count": 19,
+          "inFrustum": 1,
+          "outside": 18,
+          "trianglesPerInstance": 4
+        },
+        {
+          "name": "DetailScatter.wagon_ruts",
+          "frustumCulled": false,
+          "count": 12,
+          "inFrustum": 0,
+          "outside": 12,
+          "trianglesPerInstance": 2
+        },
+        {
+          "name": "DetailScatter.claim_posts",
+          "frustumCulled": false,
+          "count": 7,
+          "inFrustum": 0,
+          "outside": 7,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "DetailScatter.reeds",
+          "frustumCulled": false,
+          "count": 15,
+          "inFrustum": 0,
+          "outside": 15,
+          "trianglesPerInstance": 6
+        },
+        {
+          "name": "DetailScatter.reeds.contact",
+          "frustumCulled": false,
+          "count": 11,
+          "inFrustum": 0,
+          "outside": 11,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "DetailScatter.contactShadows",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 7,
+          "outside": 89,
+          "trianglesPerInstance": 14
+        },
+        {
+          "name": "DecoyShedPool",
+          "frustumCulled": false,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 24
+        },
+        {
+          "name": "DecoyShedPool",
+          "frustumCulled": false,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "DecoyShedPool",
+          "frustumCulled": false,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "DecoyShedPool",
+          "frustumCulled": true,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "DecoyShedPool",
+          "frustumCulled": true,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "CapacitorBankPool",
+          "frustumCulled": false,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 24
+        },
+        {
+          "name": "CapacitorBankPool",
+          "frustumCulled": false,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "CapacitorBankPool",
+          "frustumCulled": false,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "CapacitorBankPool",
+          "frustumCulled": true,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "CapacitorBankPool",
+          "frustumCulled": true,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "CoalSeams",
+          "frustumCulled": true,
+          "count": 3,
+          "inFrustum": 0,
+          "outside": 3,
+          "trianglesPerInstance": 36
+        },
+        {
+          "name": "CoalSurveyMarks",
+          "frustumCulled": true,
+          "count": 3,
+          "inFrustum": 0,
+          "outside": 3,
+          "trianglesPerInstance": 36
+        },
+        {
+          "name": "SparkRigBoltPool",
+          "frustumCulled": false,
+          "count": 128,
+          "inFrustum": 1,
+          "outside": 127,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "SparkRigBoltPool",
+          "frustumCulled": false,
+          "count": 128,
+          "inFrustum": 1,
+          "outside": 127,
+          "trianglesPerInstance": 100
+        },
+        {
+          "name": "XpMotePool",
+          "frustumCulled": false,
+          "count": 64,
+          "inFrustum": 0,
+          "outside": 64,
+          "trianglesPerInstance": 4
+        },
+        {
+          "name": "GoldPickupPool",
+          "frustumCulled": false,
+          "count": 24,
+          "inFrustum": 0,
+          "outside": 24,
+          "trianglesPerInstance": 36
+        },
+        {
+          "name": "CombatVfx",
+          "frustumCulled": false,
+          "count": 32,
+          "inFrustum": 0,
+          "outside": 32,
+          "trianglesPerInstance": 18
+        },
+        {
+          "name": "CombatVfx",
+          "frustumCulled": false,
+          "count": 48,
+          "inFrustum": 0,
+          "outside": 48,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 14
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 24,
+          "outside": 72,
+          "trianglesPerInstance": 168
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 72
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 64
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 2
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 2
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 2
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 2
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 2
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 2
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 36
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 32
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "Terrain3dLandmarkContacts",
+          "frustumCulled": false,
+          "count": 5,
+          "inFrustum": 0,
+          "outside": 5,
+          "trianglesPerInstance": 24
+        },
+        {
+          "name": "InclineHaulSteam",
+          "frustumCulled": false,
+          "count": 8,
+          "inFrustum": 0,
+          "outside": 8,
+          "trianglesPerInstance": 2
+        }
+      ],
+      "terrain": [
+        {
+          "name": "TerrainVistaRing",
+          "parent": "",
+          "kind": "Mesh",
+          "visible": false,
+          "frustumCulled": true,
+          "instances": 1,
+          "capacity": 1,
+          "triangles": 7296,
+          "transparent": false,
+          "renderOrder": -1,
+          "trianglesIntersectingFrustum": 0,
+          "objects": 1,
+          "spriteCoverage": 0
+        },
+        {
+          "name": "TerrainContinuousGroundMesh",
+          "parent": "",
+          "kind": "Mesh",
+          "visible": false,
+          "frustumCulled": true,
+          "instances": 1,
+          "capacity": 1,
+          "triangles": 18432,
+          "transparent": false,
+          "renderOrder": 0,
+          "trianglesIntersectingFrustum": 395,
+          "objects": 1,
+          "spriteCoverage": 0
+        },
+        {
+          "name": "InclineTerrain",
+          "parent": "Terrain3dClaimPilot",
+          "kind": "Mesh",
+          "visible": true,
+          "frustumCulled": true,
+          "instances": 1,
+          "capacity": 1,
+          "triangles": 32768,
+          "transparent": false,
+          "renderOrder": 0,
+          "trianglesIntersectingFrustum": 642,
+          "objects": 1,
+          "spriteCoverage": 0
+        },
+        {
+          "name": "Terrain3dSculptContinuation",
+          "parent": "",
+          "kind": "Mesh",
+          "visible": true,
+          "frustumCulled": false,
+          "instances": 1,
+          "capacity": 1,
+          "triangles": 512,
+          "transparent": false,
+          "renderOrder": -50,
+          "trianglesIntersectingFrustum": 0,
+          "objects": 1,
+          "spriteCoverage": 0
+        }
+      ],
+      "errors": {
+        "console": [],
+        "page": [],
+        "network": []
+      }
+    },
+    {
+      "map": "e6-showroom",
+      "host": {
+        "at": "2026-09-05T15:09:12.105Z",
+        "load": [
+          52.857421875,
+          41.74853515625,
+          28.3896484375
+        ],
+        "freeMemory": 6815825920
+      },
+      "zoom": 1,
+      "sceneOnlyCalls": 152,
+      "sceneOnlyTriangles": 100772,
+      "instances": [
+        {
+          "name": "GeneratedSpriteBlobShadows.c0051e39-b3da-4379-8d2f-5cb95b54e761",
+          "frustumCulled": false,
+          "count": 1,
+          "inFrustum": 1,
+          "outside": 0,
+          "trianglesPerInstance": 28
+        },
+        {
+          "name": "GeneratedSpriteBlobShadows.fb759eb9-b134-4a80-9f1d-0df739869093",
+          "frustumCulled": false,
+          "count": 1,
+          "inFrustum": 1,
+          "outside": 0,
+          "trianglesPerInstance": 28
+        },
+        {
+          "name": "DetailScatter.rocks",
+          "frustumCulled": false,
+          "count": 44,
+          "inFrustum": 0,
+          "outside": 44,
+          "trianglesPerInstance": 36
+        },
+        {
+          "name": "DetailScatter.stumps",
+          "frustumCulled": false,
+          "count": 18,
+          "inFrustum": 2,
+          "outside": 16,
+          "trianglesPerInstance": 28
+        },
+        {
+          "name": "DetailScatter.dry_grass",
+          "frustumCulled": false,
+          "count": 92,
+          "inFrustum": 8,
+          "outside": 84,
+          "trianglesPerInstance": 4
+        },
+        {
+          "name": "DetailScatter.wagon_ruts",
+          "frustumCulled": false,
+          "count": 24,
+          "inFrustum": 2,
+          "outside": 22,
+          "trianglesPerInstance": 2
+        },
+        {
+          "name": "DetailScatter.claim_posts",
+          "frustumCulled": false,
+          "count": 12,
+          "inFrustum": 0,
+          "outside": 12,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "DetailScatter.contactShadows",
+          "frustumCulled": false,
+          "count": 166,
+          "inFrustum": 11,
+          "outside": 155,
+          "trianglesPerInstance": 14
+        },
+        {
+          "name": "DecoyShedPool",
+          "frustumCulled": false,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 24
+        },
+        {
+          "name": "DecoyShedPool",
+          "frustumCulled": false,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "DecoyShedPool",
+          "frustumCulled": false,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "DecoyShedPool",
+          "frustumCulled": true,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "DecoyShedPool",
+          "frustumCulled": true,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "CapacitorBankPool",
+          "frustumCulled": false,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 24
+        },
+        {
+          "name": "CapacitorBankPool",
+          "frustumCulled": false,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "CapacitorBankPool",
+          "frustumCulled": false,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "CapacitorBankPool",
+          "frustumCulled": true,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "CapacitorBankPool",
+          "frustumCulled": true,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "SunlineMountTrackingMirrorHeads",
+          "frustumCulled": false,
+          "count": 4,
+          "inFrustum": 0,
+          "outside": 4,
+          "trianglesPerInstance": 72
+        },
+        {
+          "name": "SparkRigBoltPool",
+          "frustumCulled": false,
+          "count": 128,
+          "inFrustum": 1,
+          "outside": 127,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "SparkRigBoltPool",
+          "frustumCulled": false,
+          "count": 128,
+          "inFrustum": 1,
+          "outside": 127,
+          "trianglesPerInstance": 100
+        },
+        {
+          "name": "XpMotePool",
+          "frustumCulled": false,
+          "count": 64,
+          "inFrustum": 0,
+          "outside": 64,
+          "trianglesPerInstance": 4
+        },
+        {
+          "name": "GoldPickupPool",
+          "frustumCulled": false,
+          "count": 24,
+          "inFrustum": 0,
+          "outside": 24,
+          "trianglesPerInstance": 36
+        },
+        {
+          "name": "CombatVfx",
+          "frustumCulled": false,
+          "count": 32,
+          "inFrustum": 0,
+          "outside": 32,
+          "trianglesPerInstance": 18
+        },
+        {
+          "name": "CombatVfx",
+          "frustumCulled": false,
+          "count": 48,
+          "inFrustum": 0,
+          "outside": 48,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 14
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 88,
+          "outside": 8,
+          "trianglesPerInstance": 168
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 72
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 64
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 2
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 2
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 2
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 2
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 2
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 2
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 36
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 32
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 12
+        }
+      ],
+      "terrain": [
+        {
+          "name": "TerrainVistaRing",
+          "parent": "",
+          "kind": "Mesh",
+          "visible": false,
+          "frustumCulled": true,
+          "instances": 1,
+          "capacity": 1,
+          "triangles": 7296,
+          "transparent": false,
+          "renderOrder": -1,
+          "trianglesIntersectingFrustum": 0,
+          "objects": 1,
+          "spriteCoverage": 0
+        },
+        {
+          "name": "TerrainContinuousGroundMesh",
+          "parent": "",
+          "kind": "Mesh",
+          "visible": false,
+          "frustumCulled": true,
+          "instances": 1,
+          "capacity": 1,
+          "triangles": 32768,
+          "transparent": false,
+          "renderOrder": 0,
+          "trianglesIntersectingFrustum": 3970,
+          "objects": 1,
+          "spriteCoverage": 0
+        },
+        {
+          "name": "ShowroomTerrain",
+          "parent": "Terrain3dClaimPilot",
+          "kind": "Mesh",
+          "visible": true,
+          "frustumCulled": true,
+          "instances": 1,
+          "capacity": 1,
+          "triangles": 32768,
+          "transparent": false,
+          "renderOrder": 0,
+          "trianglesIntersectingFrustum": 3860,
+          "objects": 1,
+          "spriteCoverage": 0
+        }
+      ],
+      "errors": {
+        "console": [],
+        "page": [],
+        "network": []
+      }
+    },
+    {
+      "map": "e6-showroom",
+      "host": {
+        "at": "2026-09-05T15:09:12.508Z",
+        "load": [
+          52.857421875,
+          41.74853515625,
+          28.3896484375
+        ],
+        "freeMemory": 6389448704
+      },
+      "zoom": 2,
+      "sceneOnlyCalls": 127,
+      "sceneOnlyTriangles": 100456,
+      "instances": [
+        {
+          "name": "GeneratedSpriteBlobShadows.c0051e39-b3da-4379-8d2f-5cb95b54e761",
+          "frustumCulled": false,
+          "count": 1,
+          "inFrustum": 1,
+          "outside": 0,
+          "trianglesPerInstance": 28
+        },
+        {
+          "name": "GeneratedSpriteBlobShadows.fb759eb9-b134-4a80-9f1d-0df739869093",
+          "frustumCulled": false,
+          "count": 1,
+          "inFrustum": 1,
+          "outside": 0,
+          "trianglesPerInstance": 28
+        },
+        {
+          "name": "DetailScatter.rocks",
+          "frustumCulled": false,
+          "count": 44,
+          "inFrustum": 0,
+          "outside": 44,
+          "trianglesPerInstance": 36
+        },
+        {
+          "name": "DetailScatter.stumps",
+          "frustumCulled": false,
+          "count": 18,
+          "inFrustum": 0,
+          "outside": 18,
+          "trianglesPerInstance": 28
+        },
+        {
+          "name": "DetailScatter.dry_grass",
+          "frustumCulled": false,
+          "count": 92,
+          "inFrustum": 2,
+          "outside": 90,
+          "trianglesPerInstance": 4
+        },
+        {
+          "name": "DetailScatter.wagon_ruts",
+          "frustumCulled": false,
+          "count": 24,
+          "inFrustum": 0,
+          "outside": 24,
+          "trianglesPerInstance": 2
+        },
+        {
+          "name": "DetailScatter.claim_posts",
+          "frustumCulled": false,
+          "count": 12,
+          "inFrustum": 0,
+          "outside": 12,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "DetailScatter.contactShadows",
+          "frustumCulled": false,
+          "count": 166,
+          "inFrustum": 4,
+          "outside": 162,
+          "trianglesPerInstance": 14
+        },
+        {
+          "name": "DecoyShedPool",
+          "frustumCulled": false,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 24
+        },
+        {
+          "name": "DecoyShedPool",
+          "frustumCulled": false,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "DecoyShedPool",
+          "frustumCulled": false,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "DecoyShedPool",
+          "frustumCulled": true,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "DecoyShedPool",
+          "frustumCulled": true,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "CapacitorBankPool",
+          "frustumCulled": false,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 24
+        },
+        {
+          "name": "CapacitorBankPool",
+          "frustumCulled": false,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "CapacitorBankPool",
+          "frustumCulled": false,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "CapacitorBankPool",
+          "frustumCulled": true,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "CapacitorBankPool",
+          "frustumCulled": true,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "SunlineMountTrackingMirrorHeads",
+          "frustumCulled": false,
+          "count": 4,
+          "inFrustum": 0,
+          "outside": 4,
+          "trianglesPerInstance": 72
+        },
+        {
+          "name": "SparkRigBoltPool",
+          "frustumCulled": false,
+          "count": 128,
+          "inFrustum": 1,
+          "outside": 127,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "SparkRigBoltPool",
+          "frustumCulled": false,
+          "count": 128,
+          "inFrustum": 1,
+          "outside": 127,
+          "trianglesPerInstance": 100
+        },
+        {
+          "name": "XpMotePool",
+          "frustumCulled": false,
+          "count": 64,
+          "inFrustum": 0,
+          "outside": 64,
+          "trianglesPerInstance": 4
+        },
+        {
+          "name": "GoldPickupPool",
+          "frustumCulled": false,
+          "count": 24,
+          "inFrustum": 0,
+          "outside": 24,
+          "trianglesPerInstance": 36
+        },
+        {
+          "name": "CombatVfx",
+          "frustumCulled": false,
+          "count": 32,
+          "inFrustum": 0,
+          "outside": 32,
+          "trianglesPerInstance": 18
+        },
+        {
+          "name": "CombatVfx",
+          "frustumCulled": false,
+          "count": 48,
+          "inFrustum": 0,
+          "outside": 48,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 14
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 75,
+          "outside": 21,
+          "trianglesPerInstance": 168
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 72
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 64
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 2
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 2
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 2
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 2
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 2
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 2
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 36
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 32
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 12
+        }
+      ],
+      "terrain": [
+        {
+          "name": "TerrainVistaRing",
+          "parent": "",
+          "kind": "Mesh",
+          "visible": false,
+          "frustumCulled": true,
+          "instances": 1,
+          "capacity": 1,
+          "triangles": 7296,
+          "transparent": false,
+          "renderOrder": -1,
+          "trianglesIntersectingFrustum": 0,
+          "objects": 1,
+          "spriteCoverage": 0
+        },
+        {
+          "name": "TerrainContinuousGroundMesh",
+          "parent": "",
+          "kind": "Mesh",
+          "visible": false,
+          "frustumCulled": true,
+          "instances": 1,
+          "capacity": 1,
+          "triangles": 32768,
+          "transparent": false,
+          "renderOrder": 0,
+          "trianglesIntersectingFrustum": 936,
+          "objects": 1,
+          "spriteCoverage": 0
+        },
+        {
+          "name": "ShowroomTerrain",
+          "parent": "Terrain3dClaimPilot",
+          "kind": "Mesh",
+          "visible": true,
+          "frustumCulled": true,
+          "instances": 1,
+          "capacity": 1,
+          "triangles": 32768,
+          "transparent": false,
+          "renderOrder": 0,
+          "trianglesIntersectingFrustum": 864,
+          "objects": 1,
+          "spriteCoverage": 0
+        }
+      ],
+      "errors": {
+        "console": [],
+        "page": [],
+        "network": []
+      }
+    },
+    {
+      "map": "e6-showroom",
+      "host": {
+        "at": "2026-09-05T15:09:13.066Z",
+        "load": [
+          52.857421875,
+          41.74853515625,
+          28.3896484375
+        ],
+        "freeMemory": 5937872896
+      },
+      "zoom": 3,
+      "sceneOnlyCalls": 119,
+      "sceneOnlyTriangles": 99628,
+      "instances": [
+        {
+          "name": "GeneratedSpriteBlobShadows.c0051e39-b3da-4379-8d2f-5cb95b54e761",
+          "frustumCulled": false,
+          "count": 1,
+          "inFrustum": 1,
+          "outside": 0,
+          "trianglesPerInstance": 28
+        },
+        {
+          "name": "GeneratedSpriteBlobShadows.fb759eb9-b134-4a80-9f1d-0df739869093",
+          "frustumCulled": false,
+          "count": 1,
+          "inFrustum": 1,
+          "outside": 0,
+          "trianglesPerInstance": 28
+        },
+        {
+          "name": "DetailScatter.rocks",
+          "frustumCulled": false,
+          "count": 44,
+          "inFrustum": 0,
+          "outside": 44,
+          "trianglesPerInstance": 36
+        },
+        {
+          "name": "DetailScatter.stumps",
+          "frustumCulled": false,
+          "count": 18,
+          "inFrustum": 0,
+          "outside": 18,
+          "trianglesPerInstance": 28
+        },
+        {
+          "name": "DetailScatter.dry_grass",
+          "frustumCulled": false,
+          "count": 92,
+          "inFrustum": 0,
+          "outside": 92,
+          "trianglesPerInstance": 4
+        },
+        {
+          "name": "DetailScatter.wagon_ruts",
+          "frustumCulled": false,
+          "count": 24,
+          "inFrustum": 0,
+          "outside": 24,
+          "trianglesPerInstance": 2
+        },
+        {
+          "name": "DetailScatter.claim_posts",
+          "frustumCulled": false,
+          "count": 12,
+          "inFrustum": 0,
+          "outside": 12,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "DetailScatter.contactShadows",
+          "frustumCulled": false,
+          "count": 166,
+          "inFrustum": 1,
+          "outside": 165,
+          "trianglesPerInstance": 14
+        },
+        {
+          "name": "DecoyShedPool",
+          "frustumCulled": false,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 24
+        },
+        {
+          "name": "DecoyShedPool",
+          "frustumCulled": false,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "DecoyShedPool",
+          "frustumCulled": false,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "DecoyShedPool",
+          "frustumCulled": true,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "DecoyShedPool",
+          "frustumCulled": true,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "CapacitorBankPool",
+          "frustumCulled": false,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 24
+        },
+        {
+          "name": "CapacitorBankPool",
+          "frustumCulled": false,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "CapacitorBankPool",
+          "frustumCulled": false,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "CapacitorBankPool",
+          "frustumCulled": true,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "CapacitorBankPool",
+          "frustumCulled": true,
+          "count": 16,
+          "inFrustum": 0,
+          "outside": 16,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "SunlineMountTrackingMirrorHeads",
+          "frustumCulled": false,
+          "count": 4,
+          "inFrustum": 0,
+          "outside": 4,
+          "trianglesPerInstance": 72
+        },
+        {
+          "name": "SparkRigBoltPool",
+          "frustumCulled": false,
+          "count": 128,
+          "inFrustum": 1,
+          "outside": 127,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "SparkRigBoltPool",
+          "frustumCulled": false,
+          "count": 128,
+          "inFrustum": 1,
+          "outside": 127,
+          "trianglesPerInstance": 100
+        },
+        {
+          "name": "XpMotePool",
+          "frustumCulled": false,
+          "count": 64,
+          "inFrustum": 0,
+          "outside": 64,
+          "trianglesPerInstance": 4
+        },
+        {
+          "name": "GoldPickupPool",
+          "frustumCulled": false,
+          "count": 24,
+          "inFrustum": 0,
+          "outside": 24,
+          "trianglesPerInstance": 36
+        },
+        {
+          "name": "CombatVfx",
+          "frustumCulled": false,
+          "count": 32,
+          "inFrustum": 0,
+          "outside": 32,
+          "trianglesPerInstance": 18
+        },
+        {
+          "name": "CombatVfx",
+          "frustumCulled": false,
+          "count": 48,
+          "inFrustum": 0,
+          "outside": 48,
+          "trianglesPerInstance": 12
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 14
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 70,
+          "outside": 26,
+          "trianglesPerInstance": 168
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 72
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 64
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 2
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 2
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 2
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 2
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 2
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 2
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 36
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 32
+        },
+        {
+          "name": "EnemyPool",
+          "frustumCulled": false,
+          "count": 96,
+          "inFrustum": 0,
+          "outside": 96,
+          "trianglesPerInstance": 12
+        }
+      ],
+      "terrain": [
+        {
+          "name": "TerrainVistaRing",
+          "parent": "",
+          "kind": "Mesh",
+          "visible": false,
+          "frustumCulled": true,
+          "instances": 1,
+          "capacity": 1,
+          "triangles": 7296,
+          "transparent": false,
+          "renderOrder": -1,
+          "trianglesIntersectingFrustum": 0,
+          "objects": 1,
+          "spriteCoverage": 0
+        },
+        {
+          "name": "TerrainContinuousGroundMesh",
+          "parent": "",
+          "kind": "Mesh",
+          "visible": false,
+          "frustumCulled": true,
+          "instances": 1,
+          "capacity": 1,
+          "triangles": 32768,
+          "transparent": false,
+          "renderOrder": 0,
+          "trianglesIntersectingFrustum": 412,
+          "objects": 1,
+          "spriteCoverage": 0
+        },
+        {
+          "name": "ShowroomTerrain",
+          "parent": "Terrain3dClaimPilot",
+          "kind": "Mesh",
+          "visible": true,
+          "frustumCulled": true,
+          "instances": 1,
+          "capacity": 1,
+          "triangles": 32768,
+          "transparent": false,
+          "renderOrder": 0,
+          "trianglesIntersectingFrustum": 395,
+          "objects": 1,
+          "spriteCoverage": 0
+        }
+      ],
+      "errors": {
+        "console": [],
+        "page": [],
+        "network": []
+      }
+    }
+  ]
+}

@@ -1,0 +1,9693 @@
+{
+  "nodes": [
+    {
+      "id": 1,
+      "callFrame": {
+        "functionName": "(root)",
+        "scriptId": "0",
+        "url": "",
+        "lineNumber": -1,
+        "columnNumber": -1
+      },
+      "hitCount": 0,
+      "children": [
+        2,
+        3,
+        23,
+        75,
+        97,
+        122,
+        148,
+        259,
+        283,
+        288,
+        316,
+        343,
+        371,
+        386
+      ]
+    },
+    {
+      "id": 2,
+      "callFrame": {
+        "functionName": "(program)",
+        "scriptId": "0",
+        "url": "",
+        "lineNumber": -1,
+        "columnNumber": -1
+      },
+      "hitCount": 83
+    },
+    {
+      "id": 3,
+      "callFrame": {
+        "functionName": "tick",
+        "scriptId": "33",
+        "url": "http://127.0.0.1:5320/assets/Loop-Bshpxs4x-diet-1408f6b4.js",
+        "lineNumber": 0,
+        "columnNumber": 1200
+      },
+      "hitCount": 1,
+      "children": [
+        4,
+        86
+      ],
+      "positionTicks": [
+        {
+          "line": 1,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "callFrame": {
+        "functionName": "runFrame",
+        "scriptId": "33",
+        "url": "http://127.0.0.1:5320/assets/Loop-Bshpxs4x-diet-1408f6b4.js",
+        "lineNumber": 0,
+        "columnNumber": 1375
+      },
+      "hitCount": 0,
+      "children": [
+        5,
+        24
+      ]
+    },
+    {
+      "id": 5,
+      "callFrame": {
+        "functionName": "_b.loop.Ca.stepSeconds",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 907,
+        "columnNumber": 44870
+      },
+      "hitCount": 0,
+      "children": [
+        6
+      ]
+    },
+    {
+      "id": 6,
+      "callFrame": {
+        "functionName": "present",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 907,
+        "columnNumber": 100878
+      },
+      "hitCount": 0,
+      "children": [
+        7,
+        10,
+        16,
+        60,
+        123,
+        289,
+        385
+      ]
+    },
+    {
+      "id": 7,
+      "callFrame": {
+        "functionName": "applyRenderInterpolation",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 907,
+        "columnNumber": 101744
+      },
+      "hitCount": 0,
+      "children": [
+        8,
+        328
+      ]
+    },
+    {
+      "id": 8,
+      "callFrame": {
+        "functionName": "applyRenderInterpolation",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 81,
+        "columnNumber": 168426
+      },
+      "hitCount": 1,
+      "children": [
+        9,
+        116,
+        153
+      ],
+      "positionTicks": [
+        {
+          "line": 82,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "callFrame": {
+        "functionName": "syncSpriteVisuals",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 81,
+        "columnNumber": 187451
+      },
+      "hitCount": 2,
+      "children": [
+        42,
+        186
+      ],
+      "positionTicks": [
+        {
+          "line": 82,
+          "ticks": 2
+        }
+      ]
+    },
+    {
+      "id": 42,
+      "callFrame": {
+        "functionName": "syncEnemySprite",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 81,
+        "columnNumber": 188067
+      },
+      "hitCount": 50,
+      "children": [
+        120,
+        255
+      ],
+      "positionTicks": [
+        {
+          "line": 82,
+          "ticks": 50
+        }
+      ]
+    },
+    {
+      "id": 120,
+      "callFrame": {
+        "functionName": "set",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4160,
+        "columnNumber": 2341
+      },
+      "hitCount": 9,
+      "positionTicks": [
+        {
+          "line": 4161,
+          "ticks": 9
+        }
+      ]
+    },
+    {
+      "id": 255,
+      "callFrame": {
+        "functionName": "get motion",
+        "scriptId": "41",
+        "url": "http://127.0.0.1:5320/assets/SpriteAnimator-DmoBYZnV-diet-1408f6b4.js",
+        "lineNumber": 553,
+        "columnNumber": 222614
+      },
+      "hitCount": 5,
+      "positionTicks": [
+        {
+          "line": 554,
+          "ticks": 5
+        }
+      ]
+    },
+    {
+      "id": 186,
+      "callFrame": {
+        "functionName": "renderLightFactor",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 81,
+        "columnNumber": 194558
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 82,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 116,
+      "callFrame": {
+        "functionName": "syncEnemyInstance",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 81,
+        "columnNumber": 179377
+      },
+      "hitCount": 2,
+      "children": [
+        117,
+        126,
+        265,
+        355
+      ],
+      "positionTicks": [
+        {
+          "line": 82,
+          "ticks": 2
+        }
+      ]
+    },
+    {
+      "id": 117,
+      "callFrame": {
+        "functionName": "syncWatchPaint",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 81,
+        "columnNumber": 186793
+      },
+      "hitCount": 2,
+      "children": [
+        375
+      ],
+      "positionTicks": [
+        {
+          "line": 82,
+          "ticks": 2
+        }
+      ]
+    },
+    {
+      "id": 375,
+      "callFrame": {
+        "functionName": "multiplyMatrices",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 1,
+        "columnNumber": 46515
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 2,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 126,
+      "callFrame": {
+        "functionName": "setInstanceColor",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 81,
+        "columnNumber": 194230
+      },
+      "hitCount": 2,
+      "positionTicks": [
+        {
+          "line": 82,
+          "ticks": 2
+        }
+      ]
+    },
+    {
+      "id": 265,
+      "callFrame": {
+        "functionName": "multiplyMatrices",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 1,
+        "columnNumber": 46515
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 2,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 355,
+      "callFrame": {
+        "functionName": "syncBanner",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 81,
+        "columnNumber": 186139
+      },
+      "hitCount": 0,
+      "children": [
+        356
+      ]
+    },
+    {
+      "id": 356,
+      "callFrame": {
+        "functionName": "multiplyMatrices",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 1,
+        "columnNumber": 46515
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 2,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 153,
+      "callFrame": {
+        "functionName": "setFromEuler",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 1,
+        "columnNumber": 11698
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 2,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 328,
+      "callFrame": {
+        "functionName": "updateMatrix",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 1,
+        "columnNumber": 60229
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 2,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "callFrame": {
+        "functionName": "updatePresentation",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 907,
+        "columnNumber": 105368
+      },
+      "hitCount": 5,
+      "children": [
+        11,
+        33,
+        58,
+        87,
+        149,
+        215,
+        216,
+        232,
+        243,
+        284,
+        347,
+        349,
+        366,
+        369,
+        382
+      ],
+      "positionTicks": [
+        {
+          "line": 908,
+          "ticks": 1
+        },
+        {
+          "line": 908,
+          "ticks": 1
+        },
+        {
+          "line": 908,
+          "ticks": 2
+        },
+        {
+          "line": 908,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "callFrame": {
+        "functionName": "publishDiagnostics",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 913,
+        "columnNumber": 29833
+      },
+      "hitCount": 5,
+      "children": [
+        12,
+        43,
+        79,
+        121,
+        128,
+        137,
+        161,
+        165,
+        178,
+        192,
+        194,
+        199,
+        224,
+        245,
+        257,
+        260,
+        268,
+        269,
+        308,
+        310,
+        319,
+        322,
+        389,
+        393
+      ],
+      "positionTicks": [
+        {
+          "line": 914,
+          "ticks": 1
+        },
+        {
+          "line": 914,
+          "ticks": 1
+        },
+        {
+          "line": 914,
+          "ticks": 1
+        },
+        {
+          "line": 914,
+          "ticks": 1
+        },
+        {
+          "line": 914,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "callFrame": {
+        "functionName": "diagnostics",
+        "scriptId": "50",
+        "url": "http://127.0.0.1:5320/assets/SoundSystem-Bay4VfzL-diet-1408f6b4.js",
+        "lineNumber": 0,
+        "columnNumber": 14188
+      },
+      "hitCount": 1,
+      "children": [
+        13,
+        71
+      ],
+      "positionTicks": [
+        {
+          "line": 1,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "callFrame": {
+        "functionName": "Z_",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4107,
+        "columnNumber": 51841
+      },
+      "hitCount": 0,
+      "children": [
+        14,
+        108
+      ]
+    },
+    {
+      "id": 14,
+      "callFrame": {
+        "functionName": "Storage.getItem",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4155,
+        "columnNumber": 4232
+      },
+      "hitCount": 0,
+      "children": [
+        15
+      ]
+    },
+    {
+      "id": 15,
+      "callFrame": {
+        "functionName": "tx",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4155,
+        "columnNumber": 2085
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 4156,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 108,
+      "callFrame": {
+        "functionName": "av",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4107,
+        "columnNumber": 52310
+      },
+      "hitCount": 0,
+      "children": [
+        109
+      ]
+    },
+    {
+      "id": 109,
+      "callFrame": {
+        "functionName": "Storage.getItem",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4155,
+        "columnNumber": 4232
+      },
+      "hitCount": 0,
+      "children": [
+        110
+      ]
+    },
+    {
+      "id": 110,
+      "callFrame": {
+        "functionName": "tx",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4155,
+        "columnNumber": 2085
+      },
+      "hitCount": 1,
+      "children": [
+        111
+      ],
+      "positionTicks": [
+        {
+          "line": 4156,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 111,
+      "callFrame": {
+        "functionName": "Lx",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4155,
+        "columnNumber": 7287
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 4156,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 71,
+      "callFrame": {
+        "functionName": "$_",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4107,
+        "columnNumber": 51971
+      },
+      "hitCount": 0,
+      "children": [
+        72
+      ]
+    },
+    {
+      "id": 72,
+      "callFrame": {
+        "functionName": "ov",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4107,
+        "columnNumber": 52423
+      },
+      "hitCount": 1,
+      "children": [
+        73
+      ],
+      "positionTicks": [
+        {
+          "line": 4108,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 73,
+      "callFrame": {
+        "functionName": "Storage.getItem",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4155,
+        "columnNumber": 4232
+      },
+      "hitCount": 0,
+      "children": [
+        74,
+        279,
+        381
+      ]
+    },
+    {
+      "id": 74,
+      "callFrame": {
+        "functionName": "tx",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4155,
+        "columnNumber": 2085
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 4156,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 279,
+      "callFrame": {
+        "functionName": "wx",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4155,
+        "columnNumber": 5585
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 4156,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 381,
+      "callFrame": {
+        "functionName": "lx",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4155,
+        "columnNumber": 3650
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 4156,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 43,
+      "callFrame": {
+        "functionName": "fn",
+        "scriptId": "39",
+        "url": "http://127.0.0.1:5320/assets/Terrain-Drb1CsDo-diet-1408f6b4.js",
+        "lineNumber": 218,
+        "columnNumber": 13296
+      },
+      "hitCount": 1,
+      "children": [
+        44
+      ],
+      "positionTicks": [
+        {
+          "line": 219,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 44,
+      "callFrame": {
+        "functionName": "ar",
+        "scriptId": "39",
+        "url": "http://127.0.0.1:5320/assets/Terrain-Drb1CsDo-diet-1408f6b4.js",
+        "lineNumber": 384,
+        "columnNumber": 5785
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 385,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 79,
+      "callFrame": {
+        "functionName": "get clientWidth",
+        "scriptId": "0",
+        "url": "",
+        "lineNumber": -1,
+        "columnNumber": -1
+      },
+      "hitCount": 97,
+      "positionTicks": [
+        {
+          "line": 914,
+          "ticks": 97
+        }
+      ]
+    },
+    {
+      "id": 121,
+      "callFrame": {
+        "functionName": "get visualDiagnostics",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 505,
+        "columnNumber": 16915
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 506,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 128,
+      "callFrame": {
+        "functionName": "dn",
+        "scriptId": "39",
+        "url": "http://127.0.0.1:5320/assets/Terrain-Drb1CsDo-diet-1408f6b4.js",
+        "lineNumber": 218,
+        "columnNumber": 12564
+      },
+      "hitCount": 0,
+      "children": [
+        129,
+        196,
+        217
+      ]
+    },
+    {
+      "id": 129,
+      "callFrame": {
+        "functionName": "q",
+        "scriptId": "39",
+        "url": "http://127.0.0.1:5320/assets/Terrain-Drb1CsDo-diet-1408f6b4.js",
+        "lineNumber": 218,
+        "columnNumber": 11782
+      },
+      "hitCount": 0,
+      "children": [
+        130
+      ]
+    },
+    {
+      "id": 130,
+      "callFrame": {
+        "functionName": "Zn",
+        "scriptId": "39",
+        "url": "http://127.0.0.1:5320/assets/Terrain-Drb1CsDo-diet-1408f6b4.js",
+        "lineNumber": 384,
+        "columnNumber": 3635
+      },
+      "hitCount": 0,
+      "children": [
+        131,
+        213
+      ]
+    },
+    {
+      "id": 131,
+      "callFrame": {
+        "functionName": "er",
+        "scriptId": "39",
+        "url": "http://127.0.0.1:5320/assets/Terrain-Drb1CsDo-diet-1408f6b4.js",
+        "lineNumber": 384,
+        "columnNumber": 4978
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 385,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 213,
+      "callFrame": {
+        "functionName": "Z",
+        "scriptId": "39",
+        "url": "http://127.0.0.1:5320/assets/Terrain-Drb1CsDo-diet-1408f6b4.js",
+        "lineNumber": 384,
+        "columnNumber": 8960
+      },
+      "hitCount": 2,
+      "positionTicks": [
+        {
+          "line": 385,
+          "ticks": 2
+        }
+      ]
+    },
+    {
+      "id": 196,
+      "callFrame": {
+        "functionName": "W",
+        "scriptId": "39",
+        "url": "http://127.0.0.1:5320/assets/Terrain-Drb1CsDo-diet-1408f6b4.js",
+        "lineNumber": 218,
+        "columnNumber": 10840
+      },
+      "hitCount": 0,
+      "children": [
+        197,
+        329
+      ]
+    },
+    {
+      "id": 197,
+      "callFrame": {
+        "functionName": "",
+        "scriptId": "60",
+        "url": "http://127.0.0.1:5320/assets/Terrain3dClaimPilot-N5k_ZCD7-diet-1408f6b4.js",
+        "lineNumber": 16430,
+        "columnNumber": 57861
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 16431,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 329,
+      "callFrame": {
+        "functionName": "L",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 1,
+        "columnNumber": 4495
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 2,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 217,
+      "callFrame": {
+        "functionName": "",
+        "scriptId": "39",
+        "url": "http://127.0.0.1:5320/assets/Terrain-Drb1CsDo-diet-1408f6b4.js",
+        "lineNumber": 218,
+        "columnNumber": 12952
+      },
+      "hitCount": 0,
+      "children": [
+        218
+      ]
+    },
+    {
+      "id": 218,
+      "callFrame": {
+        "functionName": "q",
+        "scriptId": "39",
+        "url": "http://127.0.0.1:5320/assets/Terrain-Drb1CsDo-diet-1408f6b4.js",
+        "lineNumber": 218,
+        "columnNumber": 11782
+      },
+      "hitCount": 0,
+      "children": [
+        219
+      ]
+    },
+    {
+      "id": 219,
+      "callFrame": {
+        "functionName": "Zn",
+        "scriptId": "39",
+        "url": "http://127.0.0.1:5320/assets/Terrain-Drb1CsDo-diet-1408f6b4.js",
+        "lineNumber": 384,
+        "columnNumber": 3635
+      },
+      "hitCount": 0,
+      "children": [
+        220
+      ]
+    },
+    {
+      "id": 220,
+      "callFrame": {
+        "functionName": "Z",
+        "scriptId": "39",
+        "url": "http://127.0.0.1:5320/assets/Terrain-Drb1CsDo-diet-1408f6b4.js",
+        "lineNumber": 384,
+        "columnNumber": 8960
+      },
+      "hitCount": 3,
+      "positionTicks": [
+        {
+          "line": 385,
+          "ticks": 3
+        }
+      ]
+    },
+    {
+      "id": 137,
+      "callFrame": {
+        "functionName": "diagnostics",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 900,
+        "columnNumber": 7610
+      },
+      "hitCount": 1,
+      "children": [
+        138
+      ],
+      "positionTicks": [
+        {
+          "line": 901,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 138,
+      "callFrame": {
+        "functionName": "",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 900,
+        "columnNumber": 7636
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 901,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 161,
+      "callFrame": {
+        "functionName": "researchDiagnostics",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 913,
+        "columnNumber": 134210
+      },
+      "hitCount": 0,
+      "children": [
+        162
+      ]
+    },
+    {
+      "id": 162,
+      "callFrame": {
+        "functionName": "r_",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4107,
+        "columnNumber": 45170
+      },
+      "hitCount": 0,
+      "children": [
+        163
+      ]
+    },
+    {
+      "id": 163,
+      "callFrame": {
+        "functionName": "Xg",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4107,
+        "columnNumber": 43656
+      },
+      "hitCount": 1,
+      "children": [
+        273
+      ],
+      "positionTicks": [
+        {
+          "line": 4108,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 273,
+      "callFrame": {
+        "functionName": "Yg",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4107,
+        "columnNumber": 43605
+      },
+      "hitCount": 0,
+      "children": [
+        274
+      ]
+    },
+    {
+      "id": 274,
+      "callFrame": {
+        "functionName": "sh",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4107,
+        "columnNumber": 4152
+      },
+      "hitCount": 0,
+      "children": [
+        275
+      ]
+    },
+    {
+      "id": 275,
+      "callFrame": {
+        "functionName": "Xh",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4107,
+        "columnNumber": 12932
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 4108,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 165,
+      "callFrame": {
+        "functionName": "baronRocketDiagnostics",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 913,
+        "columnNumber": 59632
+      },
+      "hitCount": 2,
+      "positionTicks": [
+        {
+          "line": 914,
+          "ticks": 2
+        }
+      ]
+    },
+    {
+      "id": 178,
+      "callFrame": {
+        "functionName": "get hitFlashCount",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 81,
+        "columnNumber": 160576
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 82,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 192,
+      "callFrame": {
+        "functionName": "wreckDiagnostics",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 913,
+        "columnNumber": 124057
+      },
+      "hitCount": 0,
+      "children": [
+        193
+      ]
+    },
+    {
+      "id": 193,
+      "callFrame": {
+        "functionName": "get diagnostics",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 81,
+        "columnNumber": 233532
+      },
+      "hitCount": 2,
+      "children": [
+        363,
+        391,
+        394
+      ],
+      "positionTicks": [
+        {
+          "line": 82,
+          "ticks": 2
+        }
+      ]
+    },
+    {
+      "id": 363,
+      "callFrame": {
+        "functionName": "hpBarDiagnostics",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 81,
+        "columnNumber": 263095
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 82,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 391,
+      "callFrame": {
+        "functionName": "",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 81,
+        "columnNumber": 260044
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 82,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 394,
+      "callFrame": {
+        "functionName": "rubbleDiagnostics",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 81,
+        "columnNumber": 273300
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 82,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 194,
+      "callFrame": {
+        "functionName": "get dimmingDiagnostics",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 81,
+        "columnNumber": 161081
+      },
+      "hitCount": 1,
+      "children": [
+        195
+      ],
+      "positionTicks": [
+        {
+          "line": 82,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 195,
+      "callFrame": {
+        "functionName": "lightFactorFor",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 81,
+        "columnNumber": 161943
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 82,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 199,
+      "callFrame": {
+        "functionName": "megaprojectDiagnostics",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 913,
+        "columnNumber": 28649
+      },
+      "hitCount": 0,
+      "children": [
+        200
+      ]
+    },
+    {
+      "id": 200,
+      "callFrame": {
+        "functionName": "megaprojectSiteReadDiagnostics",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 913,
+        "columnNumber": 28836
+      },
+      "hitCount": 0,
+      "children": [
+        201
+      ]
+    },
+    {
+      "id": 201,
+      "callFrame": {
+        "functionName": "megaprojectFundCandidate",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 913,
+        "columnNumber": 27750
+      },
+      "hitCount": 0,
+      "children": [
+        202
+      ]
+    },
+    {
+      "id": 202,
+      "callFrame": {
+        "functionName": "megaprojectUnlocked",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 913,
+        "columnNumber": 24149
+      },
+      "hitCount": 0,
+      "children": [
+        203
+      ]
+    },
+    {
+      "id": 203,
+      "callFrame": {
+        "functionName": "m_",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4107,
+        "columnNumber": 46498
+      },
+      "hitCount": 0,
+      "children": [
+        204
+      ]
+    },
+    {
+      "id": 204,
+      "callFrame": {
+        "functionName": "sh",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4107,
+        "columnNumber": 4152
+      },
+      "hitCount": 0,
+      "children": [
+        205
+      ]
+    },
+    {
+      "id": 205,
+      "callFrame": {
+        "functionName": "Ah",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4107,
+        "columnNumber": 9590
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 4108,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 224,
+      "callFrame": {
+        "functionName": "get snapshot",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 907,
+        "columnNumber": 11461
+      },
+      "hitCount": 0,
+      "children": [
+        225
+      ]
+    },
+    {
+      "id": 225,
+      "callFrame": {
+        "functionName": "",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 907,
+        "columnNumber": 16125
+      },
+      "hitCount": 0,
+      "children": [
+        226
+      ]
+    },
+    {
+      "id": 226,
+      "callFrame": {
+        "functionName": "HC",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4155,
+        "columnNumber": 40021
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 4156,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 245,
+      "callFrame": {
+        "functionName": "get diagnostics",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 28,
+        "columnNumber": 3295
+      },
+      "hitCount": 0,
+      "children": [
+        246
+      ]
+    },
+    {
+      "id": 246,
+      "callFrame": {
+        "functionName": "diagnostics",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4155,
+        "columnNumber": 51214
+      },
+      "hitCount": 0,
+      "children": [
+        247
+      ]
+    },
+    {
+      "id": 247,
+      "callFrame": {
+        "functionName": "Sw",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4155,
+        "columnNumber": 52635
+      },
+      "hitCount": 0,
+      "children": [
+        248
+      ]
+    },
+    {
+      "id": 248,
+      "callFrame": {
+        "functionName": "Storage.getItem",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4155,
+        "columnNumber": 4232
+      },
+      "hitCount": 0,
+      "children": [
+        249
+      ]
+    },
+    {
+      "id": 249,
+      "callFrame": {
+        "functionName": "tx",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4155,
+        "columnNumber": 2085
+      },
+      "hitCount": 0,
+      "children": [
+        250,
+        352
+      ]
+    },
+    {
+      "id": 250,
+      "callFrame": {
+        "functionName": "Lx",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4155,
+        "columnNumber": 7287
+      },
+      "hitCount": 0,
+      "children": [
+        251
+      ]
+    },
+    {
+      "id": 251,
+      "callFrame": {
+        "functionName": "getItem",
+        "scriptId": "0",
+        "url": "",
+        "lineNumber": -1,
+        "columnNumber": -1
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 4156,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 352,
+      "callFrame": {
+        "functionName": "Ex",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4155,
+        "columnNumber": 5721
+      },
+      "hitCount": 0,
+      "children": [
+        353
+      ]
+    },
+    {
+      "id": 353,
+      "callFrame": {
+        "functionName": "Dx",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4155,
+        "columnNumber": 5995
+      },
+      "hitCount": 0,
+      "children": [
+        354
+      ]
+    },
+    {
+      "id": 354,
+      "callFrame": {
+        "functionName": "Nx",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4155,
+        "columnNumber": 6982
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 4156,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 257,
+      "callFrame": {
+        "functionName": "Lt",
+        "scriptId": "39",
+        "url": "http://127.0.0.1:5320/assets/Terrain-Drb1CsDo-diet-1408f6b4.js",
+        "lineNumber": 218,
+        "columnNumber": 8227
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 219,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 260,
+      "callFrame": {
+        "functionName": "diagnostics",
+        "scriptId": "42",
+        "url": "http://127.0.0.1:5320/assets/runBeacon-COhKGaNb-diet-1408f6b4.js",
+        "lineNumber": 251,
+        "columnNumber": 4997
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 252,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 268,
+      "callFrame": {
+        "functionName": "activeResourceSnapshots",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 913,
+        "columnNumber": 72007
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 914,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 269,
+      "callFrame": {
+        "functionName": "get bossHpBarDiagnostics",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 81,
+        "columnNumber": 160665
+      },
+      "hitCount": 0,
+      "children": [
+        270
+      ]
+    },
+    {
+      "id": 270,
+      "callFrame": {
+        "functionName": "bossBarState",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 81,
+        "columnNumber": 172033
+      },
+      "hitCount": 0,
+      "children": [
+        271
+      ]
+    },
+    {
+      "id": 271,
+      "callFrame": {
+        "functionName": "get isAlive",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 81,
+        "columnNumber": 108205
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 82,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 308,
+      "callFrame": {
+        "functionName": "T",
+        "scriptId": "40",
+        "url": "http://127.0.0.1:5320/assets/LandmarkCollision-CvWoVcoR-diet-1408f6b4.js",
+        "lineNumber": 0,
+        "columnNumber": 3810
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 1,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 310,
+      "callFrame": {
+        "functionName": "arsenalDiagnostics",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 913,
+        "columnNumber": 120665
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 914,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 319,
+      "callFrame": {
+        "functionName": "a",
+        "scriptId": "45",
+        "url": "http://127.0.0.1:5320/assets/Medals-Bq3Hm5mC-diet-1408f6b4.js",
+        "lineNumber": 0,
+        "columnNumber": 213
+      },
+      "hitCount": 0,
+      "children": [
+        320,
+        387
+      ]
+    },
+    {
+      "id": 320,
+      "callFrame": {
+        "functionName": "ex",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4155,
+        "columnNumber": 1860
+      },
+      "hitCount": 0,
+      "children": [
+        321
+      ]
+    },
+    {
+      "id": 321,
+      "callFrame": {
+        "functionName": "bx",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4155,
+        "columnNumber": 5136
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 4156,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 387,
+      "callFrame": {
+        "functionName": "Storage.getItem",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4155,
+        "columnNumber": 4232
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 4156,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 322,
+      "callFrame": {
+        "functionName": "get diagnostics",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 81,
+        "columnNumber": 98695
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 82,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 389,
+      "callFrame": {
+        "functionName": "get diagnostics",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 81,
+        "columnNumber": 233532
+      },
+      "hitCount": 0,
+      "children": [
+        390
+      ]
+    },
+    {
+      "id": 390,
+      "callFrame": {
+        "functionName": "isActive",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 81,
+        "columnNumber": 25689
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 82,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 393,
+      "callFrame": {
+        "functionName": "get diagnostics",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 81,
+        "columnNumber": 37787
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 82,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 33,
+      "callFrame": {
+        "functionName": "update",
+        "scriptId": "42",
+        "url": "http://127.0.0.1:5320/assets/runBeacon-COhKGaNb-diet-1408f6b4.js",
+        "lineNumber": 251,
+        "columnNumber": 3178
+      },
+      "hitCount": 0,
+      "children": [
+        34,
+        313
+      ]
+    },
+    {
+      "id": 34,
+      "callFrame": {
+        "functionName": "update",
+        "scriptId": "42",
+        "url": "http://127.0.0.1:5320/assets/runBeacon-COhKGaNb-diet-1408f6b4.js",
+        "lineNumber": 251,
+        "columnNumber": 12225
+      },
+      "hitCount": 2,
+      "children": [
+        35
+      ],
+      "positionTicks": [
+        {
+          "line": 252,
+          "ticks": 2
+        }
+      ]
+    },
+    {
+      "id": 35,
+      "callFrame": {
+        "functionName": "traverse",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 1,
+        "columnNumber": 59928
+      },
+      "hitCount": 4,
+      "children": [
+        36
+      ],
+      "positionTicks": [
+        {
+          "line": 2,
+          "ticks": 4
+        }
+      ]
+    },
+    {
+      "id": 36,
+      "callFrame": {
+        "functionName": "traverse",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 1,
+        "columnNumber": 59928
+      },
+      "hitCount": 8,
+      "children": [
+        37,
+        133
+      ],
+      "positionTicks": [
+        {
+          "line": 2,
+          "ticks": 8
+        }
+      ]
+    },
+    {
+      "id": 37,
+      "callFrame": {
+        "functionName": "traverse",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 1,
+        "columnNumber": 59928
+      },
+      "hitCount": 2,
+      "children": [
+        38
+      ],
+      "positionTicks": [
+        {
+          "line": 2,
+          "ticks": 2
+        }
+      ]
+    },
+    {
+      "id": 38,
+      "callFrame": {
+        "functionName": "",
+        "scriptId": "42",
+        "url": "http://127.0.0.1:5320/assets/runBeacon-COhKGaNb-diet-1408f6b4.js",
+        "lineNumber": 251,
+        "columnNumber": 12331
+      },
+      "hitCount": 2,
+      "children": [
+        39
+      ],
+      "positionTicks": [
+        {
+          "line": 252,
+          "ticks": 2
+        }
+      ]
+    },
+    {
+      "id": 39,
+      "callFrame": {
+        "functionName": "writeShadow",
+        "scriptId": "42",
+        "url": "http://127.0.0.1:5320/assets/runBeacon-COhKGaNb-diet-1408f6b4.js",
+        "lineNumber": 251,
+        "columnNumber": 12838
+      },
+      "hitCount": 1,
+      "children": [
+        174,
+        335
+      ],
+      "positionTicks": [
+        {
+          "line": 252,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 174,
+      "callFrame": {
+        "functionName": "setFromEuler",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 1,
+        "columnNumber": 11698
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 2,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 335,
+      "callFrame": {
+        "functionName": "updateWorldMatrix",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 1,
+        "columnNumber": 60881
+      },
+      "hitCount": 0,
+      "children": [
+        336
+      ]
+    },
+    {
+      "id": 336,
+      "callFrame": {
+        "functionName": "updateWorldMatrix",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 1,
+        "columnNumber": 60881
+      },
+      "hitCount": 0,
+      "children": [
+        337
+      ]
+    },
+    {
+      "id": 337,
+      "callFrame": {
+        "functionName": "updateWorldMatrix",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 1,
+        "columnNumber": 60881
+      },
+      "hitCount": 2,
+      "children": [
+        338
+      ],
+      "positionTicks": [
+        {
+          "line": 2,
+          "ticks": 2
+        }
+      ]
+    },
+    {
+      "id": 338,
+      "callFrame": {
+        "functionName": "updateWorldMatrix",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 1,
+        "columnNumber": 60881
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 2,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 133,
+      "callFrame": {
+        "functionName": "",
+        "scriptId": "42",
+        "url": "http://127.0.0.1:5320/assets/runBeacon-COhKGaNb-diet-1408f6b4.js",
+        "lineNumber": 251,
+        "columnNumber": 12331
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 252,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 313,
+      "callFrame": {
+        "functionName": "applyNightShiftPalette",
+        "scriptId": "42",
+        "url": "http://127.0.0.1:5320/assets/runBeacon-COhKGaNb-diet-1408f6b4.js",
+        "lineNumber": 251,
+        "columnNumber": 7171
+      },
+      "hitCount": 0,
+      "children": [
+        314
+      ]
+    },
+    {
+      "id": 314,
+      "callFrame": {
+        "functionName": "dD",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4155,
+        "columnNumber": 354189
+      },
+      "hitCount": 0,
+      "children": [
+        315
+      ]
+    },
+    {
+      "id": 315,
+      "callFrame": {
+        "functionName": "setStyle",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 1,
+        "columnNumber": 73447
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 2,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 58,
+      "callFrame": {
+        "functionName": "syncUi",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 913,
+        "columnNumber": 70545
+      },
+      "hitCount": 0,
+      "children": [
+        59,
+        89,
+        154,
+        156,
+        167,
+        281,
+        311,
+        383
+      ]
+    },
+    {
+      "id": 59,
+      "callFrame": {
+        "functionName": "update",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 800,
+        "columnNumber": 2322
+      },
+      "hitCount": 8,
+      "children": [
+        118,
+        261,
+        278
+      ],
+      "positionTicks": [
+        {
+          "line": 801,
+          "ticks": 1
+        },
+        {
+          "line": 801,
+          "ticks": 1
+        },
+        {
+          "line": 801,
+          "ticks": 1
+        },
+        {
+          "line": 801,
+          "ticks": 1
+        },
+        {
+          "line": 801,
+          "ticks": 1
+        },
+        {
+          "line": 801,
+          "ticks": 2
+        },
+        {
+          "line": 801,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 118,
+      "callFrame": {
+        "functionName": "updateAnnouncement",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 819,
+        "columnNumber": 3733
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 820,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 261,
+      "callFrame": {
+        "functionName": "update",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 631,
+        "columnNumber": 463
+      },
+      "hitCount": 1,
+      "children": [
+        351
+      ],
+      "positionTicks": [
+        {
+          "line": 632,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 351,
+      "callFrame": {
+        "functionName": "",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 631,
+        "columnNumber": 1105
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 632,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 278,
+      "callFrame": {
+        "functionName": "update",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 657,
+        "columnNumber": 689
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 658,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 89,
+      "callFrame": {
+        "functionName": "heroWeaponsDisarmed",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 913,
+        "columnNumber": 119309
+      },
+      "hitCount": 0,
+      "children": [
+        90
+      ]
+    },
+    {
+      "id": 90,
+      "callFrame": {
+        "functionName": "heroWeaponsDisarmedFor",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 913,
+        "columnNumber": 119467
+      },
+      "hitCount": 0,
+      "children": [
+        91
+      ]
+    },
+    {
+      "id": 91,
+      "callFrame": {
+        "functionName": "Ft",
+        "scriptId": "39",
+        "url": "http://127.0.0.1:5320/assets/Terrain-Drb1CsDo-diet-1408f6b4.js",
+        "lineNumber": 218,
+        "columnNumber": 8030
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 219,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 154,
+      "callFrame": {
+        "functionName": "get buildableSnapshots",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 81,
+        "columnNumber": 228914
+      },
+      "hitCount": 1,
+      "children": [
+        264,
+        357
+      ],
+      "positionTicks": [
+        {
+          "line": 82,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 264,
+      "callFrame": {
+        "functionName": "",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 81,
+        "columnNumber": 228971
+      },
+      "hitCount": 1,
+      "children": [
+        297,
+        323
+      ],
+      "positionTicks": [
+        {
+          "line": 82,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 297,
+      "callFrame": {
+        "functionName": "blurb",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4104,
+        "columnNumber": 269416
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 4105,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 323,
+      "callFrame": {
+        "functionName": "blurb",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4104,
+        "columnNumber": 270089
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 4105,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 357,
+      "callFrame": {
+        "functionName": "maxCountFor",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 81,
+        "columnNumber": 268303
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 82,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 156,
+      "callFrame": {
+        "functionName": "update",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 876,
+        "columnNumber": 409
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 877,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 167,
+      "callFrame": {
+        "functionName": "pauseMetaSnapshot",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 913,
+        "columnNumber": 135034
+      },
+      "hitCount": 0,
+      "children": [
+        168,
+        180,
+        187,
+        294
+      ]
+    },
+    {
+      "id": 168,
+      "callFrame": {
+        "functionName": "manualSaveSnapshot",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 913,
+        "columnNumber": 135869
+      },
+      "hitCount": 0,
+      "children": [
+        169
+      ]
+    },
+    {
+      "id": 169,
+      "callFrame": {
+        "functionName": "Sw",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4155,
+        "columnNumber": 52635
+      },
+      "hitCount": 0,
+      "children": [
+        170
+      ]
+    },
+    {
+      "id": 170,
+      "callFrame": {
+        "functionName": "Storage.getItem",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4155,
+        "columnNumber": 4232
+      },
+      "hitCount": 0,
+      "children": [
+        171
+      ]
+    },
+    {
+      "id": 171,
+      "callFrame": {
+        "functionName": "tx",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4155,
+        "columnNumber": 2085
+      },
+      "hitCount": 2,
+      "children": [
+        324
+      ],
+      "positionTicks": [
+        {
+          "line": 4156,
+          "ticks": 2
+        }
+      ]
+    },
+    {
+      "id": 324,
+      "callFrame": {
+        "functionName": "Lx",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4155,
+        "columnNumber": 7287
+      },
+      "hitCount": 0,
+      "children": [
+        325
+      ]
+    },
+    {
+      "id": 325,
+      "callFrame": {
+        "functionName": "zx",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4155,
+        "columnNumber": 7505
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 4156,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 180,
+      "callFrame": {
+        "functionName": "m_",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4107,
+        "columnNumber": 46498
+      },
+      "hitCount": 0,
+      "children": [
+        181
+      ]
+    },
+    {
+      "id": 181,
+      "callFrame": {
+        "functionName": "sh",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4107,
+        "columnNumber": 4152
+      },
+      "hitCount": 0,
+      "children": [
+        182
+      ]
+    },
+    {
+      "id": 182,
+      "callFrame": {
+        "functionName": "Xh",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4107,
+        "columnNumber": 12932
+      },
+      "hitCount": 3,
+      "positionTicks": [
+        {
+          "line": 4108,
+          "ticks": 3
+        }
+      ]
+    },
+    {
+      "id": 187,
+      "callFrame": {
+        "functionName": "get diagnostics",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 81,
+        "columnNumber": 233532
+      },
+      "hitCount": 0,
+      "children": [
+        188
+      ]
+    },
+    {
+      "id": 188,
+      "callFrame": {
+        "functionName": "hpBarDiagnostics",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 81,
+        "columnNumber": 263095
+      },
+      "hitCount": 1,
+      "children": [
+        330
+      ],
+      "positionTicks": [
+        {
+          "line": 82,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 330,
+      "callFrame": {
+        "functionName": "maxHpForPlacement",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 81,
+        "columnNumber": 262126
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 82,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 294,
+      "callFrame": {
+        "functionName": "autoSecureWaveForRun",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 913,
+        "columnNumber": 44895
+      },
+      "hitCount": 0,
+      "children": [
+        295
+      ]
+    },
+    {
+      "id": 295,
+      "callFrame": {
+        "functionName": "get playbookObjectiveAllowsSecure",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 913,
+        "columnNumber": 45881
+      },
+      "hitCount": 0,
+      "children": [
+        296
+      ]
+    },
+    {
+      "id": 296,
+      "callFrame": {
+        "functionName": "get diagnostics",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4104,
+        "columnNumber": 314426
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 4105,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 281,
+      "callFrame": {
+        "functionName": "build",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 505,
+        "columnNumber": 38822
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 506,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 311,
+      "callFrame": {
+        "functionName": "activeResourceSnapshots",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 913,
+        "columnNumber": 72007
+      },
+      "hitCount": 0,
+      "children": [
+        312
+      ]
+    },
+    {
+      "id": 312,
+      "callFrame": {
+        "functionName": "get diagnostics",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 81,
+        "columnNumber": 37787
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 82,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 383,
+      "callFrame": {
+        "functionName": "agentUiState",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 913,
+        "columnNumber": 75585
+      },
+      "hitCount": 0,
+      "children": [
+        384
+      ]
+    },
+    {
+      "id": 384,
+      "callFrame": {
+        "functionName": "snapshot",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 61,
+        "columnNumber": 22289
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 62,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 87,
+      "callFrame": {
+        "functionName": "syncAudioLoops",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 913,
+        "columnNumber": 4976
+      },
+      "hitCount": 1,
+      "children": [
+        88,
+        157
+      ],
+      "positionTicks": [
+        {
+          "line": 914,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 88,
+      "callFrame": {
+        "functionName": "get diagnostics",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 81,
+        "columnNumber": 233532
+      },
+      "hitCount": 4,
+      "children": [
+        164
+      ],
+      "positionTicks": [
+        {
+          "line": 82,
+          "ticks": 4
+        }
+      ]
+    },
+    {
+      "id": 164,
+      "callFrame": {
+        "functionName": "rubbleDiagnostics",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 81,
+        "columnNumber": 273300
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 82,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 157,
+      "callFrame": {
+        "functionName": "setLoop",
+        "scriptId": "50",
+        "url": "http://127.0.0.1:5320/assets/SoundSystem-Bay4VfzL-diet-1408f6b4.js",
+        "lineNumber": 0,
+        "columnNumber": 12718
+      },
+      "hitCount": 1,
+      "children": [
+        158,
+        227
+      ],
+      "positionTicks": [
+        {
+          "line": 1,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 158,
+      "callFrame": {
+        "functionName": "Z_",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4107,
+        "columnNumber": 51841
+      },
+      "hitCount": 0,
+      "children": [
+        159
+      ]
+    },
+    {
+      "id": 159,
+      "callFrame": {
+        "functionName": "Storage.getItem",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4155,
+        "columnNumber": 4232
+      },
+      "hitCount": 0,
+      "children": [
+        160,
+        333
+      ]
+    },
+    {
+      "id": 160,
+      "callFrame": {
+        "functionName": "wx",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4155,
+        "columnNumber": 5585
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 4156,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 333,
+      "callFrame": {
+        "functionName": "tx",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4155,
+        "columnNumber": 2085
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 4156,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 227,
+      "callFrame": {
+        "functionName": "$_",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4107,
+        "columnNumber": 51971
+      },
+      "hitCount": 1,
+      "children": [
+        228
+      ],
+      "positionTicks": [
+        {
+          "line": 4108,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 228,
+      "callFrame": {
+        "functionName": "Storage.getItem",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4155,
+        "columnNumber": 4232
+      },
+      "hitCount": 0,
+      "children": [
+        229,
+        361
+      ]
+    },
+    {
+      "id": 229,
+      "callFrame": {
+        "functionName": "tx",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4155,
+        "columnNumber": 2085
+      },
+      "hitCount": 2,
+      "children": [
+        339
+      ],
+      "positionTicks": [
+        {
+          "line": 4156,
+          "ticks": 2
+        }
+      ]
+    },
+    {
+      "id": 339,
+      "callFrame": {
+        "functionName": "Ex",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4155,
+        "columnNumber": 5721
+      },
+      "hitCount": 0,
+      "children": [
+        340
+      ]
+    },
+    {
+      "id": 340,
+      "callFrame": {
+        "functionName": "Dx",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4155,
+        "columnNumber": 5995
+      },
+      "hitCount": 0,
+      "children": [
+        341,
+        367
+      ]
+    },
+    {
+      "id": 341,
+      "callFrame": {
+        "functionName": "Nx",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4155,
+        "columnNumber": 6982
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 4156,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 367,
+      "callFrame": {
+        "functionName": "kx",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4155,
+        "columnNumber": 6529
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 4156,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 361,
+      "callFrame": {
+        "functionName": "getItem",
+        "scriptId": "0",
+        "url": "",
+        "lineNumber": -1,
+        "columnNumber": -1
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 4156,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 149,
+      "callFrame": {
+        "functionName": "syncWorldInfoNotePrompt",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 913,
+        "columnNumber": 98375
+      },
+      "hitCount": 0,
+      "children": [
+        150
+      ]
+    },
+    {
+      "id": 150,
+      "callFrame": {
+        "functionName": "querySelector",
+        "scriptId": "0",
+        "url": "",
+        "lineNumber": -1,
+        "columnNumber": -1
+      },
+      "hitCount": 2,
+      "positionTicks": [
+        {
+          "line": 914,
+          "ticks": 2
+        }
+      ]
+    },
+    {
+      "id": 215,
+      "callFrame": {
+        "functionName": "Et",
+        "scriptId": "13",
+        "url": "http://127.0.0.1:5320/assets/AssetLoading-D7GSfmRQ-diet-1408f6b4.js",
+        "lineNumber": 0,
+        "columnNumber": 169087
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 1,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 216,
+      "callFrame": {
+        "functionName": "syncNightShiftLighting",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 913,
+        "columnNumber": 61173
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 914,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 232,
+      "callFrame": {
+        "functionName": "detailClearings",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 913,
+        "columnNumber": 66430
+      },
+      "hitCount": 0,
+      "children": [
+        233
+      ]
+    },
+    {
+      "id": 233,
+      "callFrame": {
+        "functionName": "get diagnostics",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 81,
+        "columnNumber": 233532
+      },
+      "hitCount": 0,
+      "children": [
+        234
+      ]
+    },
+    {
+      "id": 234,
+      "callFrame": {
+        "functionName": "hpBarDiagnostics",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 81,
+        "columnNumber": 263095
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 82,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 243,
+      "callFrame": {
+        "functionName": "update",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 505,
+        "columnNumber": 78450
+      },
+      "hitCount": 0,
+      "children": [
+        244
+      ]
+    },
+    {
+      "id": 244,
+      "callFrame": {
+        "functionName": "setMatrixAt",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 1,
+        "columnNumber": 139387
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 2,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 284,
+      "callFrame": {
+        "functionName": "update",
+        "scriptId": "52",
+        "url": "http://127.0.0.1:5320/assets/CameraRig-6PAv2qj1-diet-1408f6b4.js",
+        "lineNumber": 0,
+        "columnNumber": 1520
+      },
+      "hitCount": 0,
+      "children": [
+        285
+      ]
+    },
+    {
+      "id": 285,
+      "callFrame": {
+        "functionName": "lookAt",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 1,
+        "columnNumber": 57563
+      },
+      "hitCount": 0,
+      "children": [
+        286
+      ]
+    },
+    {
+      "id": 286,
+      "callFrame": {
+        "functionName": "updateWorldMatrix",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 5,
+        "columnNumber": 30182
+      },
+      "hitCount": 0,
+      "children": [
+        287
+      ]
+    },
+    {
+      "id": 287,
+      "callFrame": {
+        "functionName": "determinant",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 1,
+        "columnNumber": 47377
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 2,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 347,
+      "callFrame": {
+        "functionName": "syncBuildingContextPrompt",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 913,
+        "columnNumber": 96750
+      },
+      "hitCount": 0,
+      "children": [
+        348
+      ]
+    },
+    {
+      "id": 348,
+      "callFrame": {
+        "functionName": "querySelector",
+        "scriptId": "0",
+        "url": "",
+        "lineNumber": -1,
+        "columnNumber": -1
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 914,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 349,
+      "callFrame": {
+        "functionName": "updateWithCombatVfx",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 81,
+        "columnNumber": 295515
+      },
+      "hitCount": 0,
+      "children": [
+        350
+      ]
+    },
+    {
+      "id": 350,
+      "callFrame": {
+        "functionName": "update",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 505,
+        "columnNumber": 72156
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 506,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 366,
+      "callFrame": {
+        "functionName": "Lt",
+        "scriptId": "39",
+        "url": "http://127.0.0.1:5320/assets/Terrain-Drb1CsDo-diet-1408f6b4.js",
+        "lineNumber": 218,
+        "columnNumber": 8227
+      },
+      "hitCount": 2,
+      "positionTicks": [
+        {
+          "line": 219,
+          "ticks": 2
+        }
+      ]
+    },
+    {
+      "id": 369,
+      "callFrame": {
+        "functionName": "syncUpgradeOverlay",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 913,
+        "columnNumber": 138175
+      },
+      "hitCount": 0,
+      "children": [
+        370
+      ]
+    },
+    {
+      "id": 370,
+      "callFrame": {
+        "functionName": "hide",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 891,
+        "columnNumber": 1304
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 892,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 382,
+      "callFrame": {
+        "functionName": "syncProbeHint",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 913,
+        "columnNumber": 27192
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 914,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "callFrame": {
+        "functionName": "render",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 913,
+        "columnNumber": 7041
+      },
+      "hitCount": 0,
+      "children": [
+        17,
+        147
+      ]
+    },
+    {
+      "id": 17,
+      "callFrame": {
+        "functionName": "r.render",
+        "scriptId": "5",
+        "url": "",
+        "lineNumber": 8,
+        "columnNumber": 21
+      },
+      "hitCount": 1,
+      "children": [
+        18,
+        388
+      ],
+      "positionTicks": [
+        {
+          "line": 10,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "callFrame": {
+        "functionName": "render",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4104,
+        "columnNumber": 31533
+      },
+      "hitCount": 0,
+      "children": [
+        19,
+        45,
+        64,
+        93,
+        198,
+        208,
+        212,
+        256,
+        263
+      ]
+    },
+    {
+      "id": 19,
+      "callFrame": {
+        "functionName": "updateMatrixWorld",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 1,
+        "columnNumber": 60508
+      },
+      "hitCount": 2,
+      "children": [
+        20
+      ],
+      "positionTicks": [
+        {
+          "line": 2,
+          "ticks": 2
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "callFrame": {
+        "functionName": "updateMatrixWorld",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 1,
+        "columnNumber": 60508
+      },
+      "hitCount": 9,
+      "children": [
+        21,
+        334
+      ],
+      "positionTicks": [
+        {
+          "line": 2,
+          "ticks": 9
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "callFrame": {
+        "functionName": "updateMatrixWorld",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 1,
+        "columnNumber": 60508
+      },
+      "hitCount": 41,
+      "children": [
+        22,
+        119
+      ],
+      "positionTicks": [
+        {
+          "line": 2,
+          "ticks": 41
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "callFrame": {
+        "functionName": "updateMatrixWorld",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 1,
+        "columnNumber": 60508
+      },
+      "hitCount": 17,
+      "children": [
+        85,
+        276
+      ],
+      "positionTicks": [
+        {
+          "line": 2,
+          "ticks": 17
+        }
+      ]
+    },
+    {
+      "id": 85,
+      "callFrame": {
+        "functionName": "multiplyMatrices",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 1,
+        "columnNumber": 46515
+      },
+      "hitCount": 38,
+      "positionTicks": [
+        {
+          "line": 2,
+          "ticks": 38
+        }
+      ]
+    },
+    {
+      "id": 276,
+      "callFrame": {
+        "functionName": "updateMatrixWorld",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 1,
+        "columnNumber": 60508
+      },
+      "hitCount": 0,
+      "children": [
+        277
+      ]
+    },
+    {
+      "id": 277,
+      "callFrame": {
+        "functionName": "multiplyMatrices",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 1,
+        "columnNumber": 46515
+      },
+      "hitCount": 6,
+      "positionTicks": [
+        {
+          "line": 2,
+          "ticks": 6
+        }
+      ]
+    },
+    {
+      "id": 119,
+      "callFrame": {
+        "functionName": "multiplyMatrices",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 1,
+        "columnNumber": 46515
+      },
+      "hitCount": 5,
+      "positionTicks": [
+        {
+          "line": 2,
+          "ticks": 5
+        }
+      ]
+    },
+    {
+      "id": 334,
+      "callFrame": {
+        "functionName": "multiplyMatrices",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 1,
+        "columnNumber": 46515
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 2,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 45,
+      "callFrame": {
+        "functionName": "bt",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4104,
+        "columnNumber": 33562
+      },
+      "hitCount": 0,
+      "children": [
+        46
+      ]
+    },
+    {
+      "id": 46,
+      "callFrame": {
+        "functionName": "bt",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4104,
+        "columnNumber": 33562
+      },
+      "hitCount": 2,
+      "children": [
+        47,
+        280
+      ],
+      "positionTicks": [
+        {
+          "line": 4105,
+          "ticks": 2
+        }
+      ]
+    },
+    {
+      "id": 47,
+      "callFrame": {
+        "functionName": "bt",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4104,
+        "columnNumber": 33562
+      },
+      "hitCount": 8,
+      "children": [
+        48,
+        125
+      ],
+      "positionTicks": [
+        {
+          "line": 4105,
+          "ticks": 8
+        }
+      ]
+    },
+    {
+      "id": 48,
+      "callFrame": {
+        "functionName": "o",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 3956,
+        "columnNumber": 6288
+      },
+      "hitCount": 1,
+      "children": [
+        49
+      ],
+      "positionTicks": [
+        {
+          "line": 3957,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 49,
+      "callFrame": {
+        "functionName": "o",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 5,
+        "columnNumber": 55104
+      },
+      "hitCount": 2,
+      "children": [
+        50
+      ],
+      "positionTicks": [
+        {
+          "line": 6,
+          "ticks": 2
+        }
+      ]
+    },
+    {
+      "id": 50,
+      "callFrame": {
+        "functionName": "r",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 5,
+        "columnNumber": 54467
+      },
+      "hitCount": 1,
+      "children": [
+        51,
+        374
+      ],
+      "positionTicks": [
+        {
+          "line": 6,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 51,
+      "callFrame": {
+        "functionName": "bufferSubData",
+        "scriptId": "0",
+        "url": "",
+        "lineNumber": -1,
+        "columnNumber": -1
+      },
+      "hitCount": 4,
+      "positionTicks": [
+        {
+          "line": 6,
+          "ticks": 3
+        },
+        {
+          "line": 6,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 374,
+      "callFrame": {
+        "functionName": "bindBuffer",
+        "scriptId": "0",
+        "url": "",
+        "lineNumber": -1,
+        "columnNumber": -1
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 6,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 125,
+      "callFrame": {
+        "functionName": "bt",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4104,
+        "columnNumber": 33562
+      },
+      "hitCount": 4,
+      "children": [
+        189,
+        210,
+        258
+      ],
+      "positionTicks": [
+        {
+          "line": 4105,
+          "ticks": 4
+        }
+      ]
+    },
+    {
+      "id": 189,
+      "callFrame": {
+        "functionName": "o",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 3956,
+        "columnNumber": 6288
+      },
+      "hitCount": 3,
+      "children": [
+        190
+      ],
+      "positionTicks": [
+        {
+          "line": 3957,
+          "ticks": 3
+        }
+      ]
+    },
+    {
+      "id": 190,
+      "callFrame": {
+        "functionName": "o",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 5,
+        "columnNumber": 55104
+      },
+      "hitCount": 1,
+      "children": [
+        191
+      ],
+      "positionTicks": [
+        {
+          "line": 6,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 191,
+      "callFrame": {
+        "functionName": "r",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 5,
+        "columnNumber": 54467
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 6,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 210,
+      "callFrame": {
+        "functionName": "bt",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4104,
+        "columnNumber": 33562
+      },
+      "hitCount": 0,
+      "children": [
+        211
+      ]
+    },
+    {
+      "id": 211,
+      "callFrame": {
+        "functionName": "c",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4053,
+        "columnNumber": 13506
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 4054,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 258,
+      "callFrame": {
+        "functionName": "c",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4053,
+        "columnNumber": 13506
+      },
+      "hitCount": 3,
+      "positionTicks": [
+        {
+          "line": 4054,
+          "ticks": 3
+        }
+      ]
+    },
+    {
+      "id": 280,
+      "callFrame": {
+        "functionName": "c",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4053,
+        "columnNumber": 13506
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 4054,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 64,
+      "callFrame": {
+        "functionName": "xt",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4104,
+        "columnNumber": 34634
+      },
+      "hitCount": 0,
+      "children": [
+        65
+      ]
+    },
+    {
+      "id": 65,
+      "callFrame": {
+        "functionName": "Ct",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4104,
+        "columnNumber": 36418
+      },
+      "hitCount": 1,
+      "children": [
+        66
+      ],
+      "positionTicks": [
+        {
+          "line": 4105,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 66,
+      "callFrame": {
+        "functionName": "wt",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4104,
+        "columnNumber": 36650
+      },
+      "hitCount": 3,
+      "children": [
+        67,
+        173,
+        214
+      ],
+      "positionTicks": [
+        {
+          "line": 4105,
+          "ticks": 3
+        }
+      ]
+    },
+    {
+      "id": 67,
+      "callFrame": {
+        "functionName": "renderBufferDirect",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4104,
+        "columnNumber": 28673
+      },
+      "hitCount": 27,
+      "children": [
+        68,
+        76,
+        80,
+        143,
+        272,
+        317,
+        342
+      ],
+      "positionTicks": [
+        {
+          "line": 4105,
+          "ticks": 27
+        }
+      ]
+    },
+    {
+      "id": 68,
+      "callFrame": {
+        "functionName": "kt",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4104,
+        "columnNumber": 39922
+      },
+      "hitCount": 14,
+      "children": [
+        69,
+        83,
+        112,
+        134,
+        141,
+        146,
+        241
+      ],
+      "positionTicks": [
+        {
+          "line": 4105,
+          "ticks": 1
+        },
+        {
+          "line": 4105,
+          "ticks": 1
+        },
+        {
+          "line": 4105,
+          "ticks": 1
+        },
+        {
+          "line": 4105,
+          "ticks": 1
+        },
+        {
+          "line": 4105,
+          "ticks": 1
+        },
+        {
+          "line": 4105,
+          "ticks": 1
+        },
+        {
+          "line": 4105,
+          "ticks": 1
+        },
+        {
+          "line": 4105,
+          "ticks": 1
+        },
+        {
+          "line": 4105,
+          "ticks": 1
+        },
+        {
+          "line": 4105,
+          "ticks": 1
+        },
+        {
+          "line": 4105,
+          "ticks": 2
+        },
+        {
+          "line": 4105,
+          "ticks": 1
+        },
+        {
+          "line": 4105,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 69,
+      "callFrame": {
+        "functionName": "Tt",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4104,
+        "columnNumber": 37105
+      },
+      "hitCount": 2,
+      "children": [
+        70,
+        113,
+        115
+      ],
+      "positionTicks": [
+        {
+          "line": 4105,
+          "ticks": 2
+        }
+      ]
+    },
+    {
+      "id": 70,
+      "callFrame": {
+        "functionName": "h",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4053,
+        "columnNumber": 2357
+      },
+      "hitCount": 32,
+      "children": [
+        392
+      ],
+      "positionTicks": [
+        {
+          "line": 4054,
+          "ticks": 32
+        }
+      ]
+    },
+    {
+      "id": 392,
+      "callFrame": {
+        "functionName": "customProgramCacheKey",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 1,
+        "columnNumber": 110132
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 2,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 113,
+      "callFrame": {
+        "functionName": "g",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4053,
+        "columnNumber": 8789
+      },
+      "hitCount": 7,
+      "children": [
+        114,
+        282
+      ],
+      "positionTicks": [
+        {
+          "line": 4054,
+          "ticks": 2
+        },
+        {
+          "line": 4054,
+          "ticks": 5
+        }
+      ]
+    },
+    {
+      "id": 114,
+      "callFrame": {
+        "functionName": "v",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4053,
+        "columnNumber": 10361
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 4054,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 282,
+      "callFrame": {
+        "functionName": "_",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4053,
+        "columnNumber": 9103
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 4054,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 115,
+      "callFrame": {
+        "functionName": "Dt",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4104,
+        "columnNumber": 39125
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 4105,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 83,
+      "callFrame": {
+        "functionName": "ge",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4080,
+        "columnNumber": 10083
+      },
+      "hitCount": 0,
+      "children": [
+        84
+      ]
+    },
+    {
+      "id": 84,
+      "callFrame": {
+        "functionName": "useProgram",
+        "scriptId": "0",
+        "url": "",
+        "lineNumber": -1,
+        "columnNumber": -1
+      },
+      "hitCount": 4,
+      "positionTicks": [
+        {
+          "line": 4081,
+          "ticks": 4
+        }
+      ]
+    },
+    {
+      "id": 112,
+      "callFrame": {
+        "functionName": "i",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4104,
+        "columnNumber": 9095
+      },
+      "hitCount": 3,
+      "children": [
+        166,
+        293
+      ],
+      "positionTicks": [
+        {
+          "line": 4105,
+          "ticks": 3
+        }
+      ]
+    },
+    {
+      "id": 166,
+      "callFrame": {
+        "functionName": "a",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4104,
+        "columnNumber": 9857
+      },
+      "hitCount": 3,
+      "positionTicks": [
+        {
+          "line": 4105,
+          "ticks": 3
+        }
+      ]
+    },
+    {
+      "id": 293,
+      "callFrame": {
+        "functionName": "n",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4104,
+        "columnNumber": 8861
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 4105,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 134,
+      "callFrame": {
+        "functionName": "setValue",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4002,
+        "columnNumber": 9228
+      },
+      "hitCount": 1,
+      "children": [
+        135,
+        206
+      ],
+      "positionTicks": [
+        {
+          "line": 4003,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 135,
+      "callFrame": {
+        "functionName": "Jc",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4002,
+        "columnNumber": 3163
+      },
+      "hitCount": 0,
+      "children": [
+        136,
+        145,
+        262
+      ]
+    },
+    {
+      "id": 136,
+      "callFrame": {
+        "functionName": "Bc",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4002,
+        "columnNumber": 1741
+      },
+      "hitCount": 6,
+      "positionTicks": [
+        {
+          "line": 4003,
+          "ticks": 1
+        },
+        {
+          "line": 4003,
+          "ticks": 2
+        },
+        {
+          "line": 4003,
+          "ticks": 3
+        }
+      ]
+    },
+    {
+      "id": 145,
+      "callFrame": {
+        "functionName": "zc",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4002,
+        "columnNumber": 1628
+      },
+      "hitCount": 2,
+      "positionTicks": [
+        {
+          "line": 4003,
+          "ticks": 1
+        },
+        {
+          "line": 4003,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 262,
+      "callFrame": {
+        "functionName": "uniformMatrix4fv",
+        "scriptId": "0",
+        "url": "",
+        "lineNumber": -1,
+        "columnNumber": -1
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 4003,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 206,
+      "callFrame": {
+        "functionName": "qc",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4002,
+        "columnNumber": 2962
+      },
+      "hitCount": 0,
+      "children": [
+        207
+      ]
+    },
+    {
+      "id": 207,
+      "callFrame": {
+        "functionName": "Bc",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4002,
+        "columnNumber": 1741
+      },
+      "hitCount": 2,
+      "positionTicks": [
+        {
+          "line": 4003,
+          "ticks": 2
+        }
+      ]
+    },
+    {
+      "id": 141,
+      "callFrame": {
+        "functionName": "upload",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4002,
+        "columnNumber": 9362
+      },
+      "hitCount": 1,
+      "children": [
+        142,
+        151,
+        183,
+        298,
+        303
+      ],
+      "positionTicks": [
+        {
+          "line": 4003,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 142,
+      "callFrame": {
+        "functionName": "cl",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4002,
+        "columnNumber": 6014
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 4003,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 151,
+      "callFrame": {
+        "functionName": "fe",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4080,
+        "columnNumber": 23335
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 4081,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 183,
+      "callFrame": {
+        "functionName": "setValue",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4002,
+        "columnNumber": 8393
+      },
+      "hitCount": 1,
+      "children": [
+        184
+      ],
+      "positionTicks": [
+        {
+          "line": 4003,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 184,
+      "callFrame": {
+        "functionName": "setValue",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4002,
+        "columnNumber": 8393
+      },
+      "hitCount": 2,
+      "children": [
+        185,
+        292
+      ],
+      "positionTicks": [
+        {
+          "line": 4003,
+          "ticks": 2
+        }
+      ]
+    },
+    {
+      "id": 185,
+      "callFrame": {
+        "functionName": "Hc",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4002,
+        "columnNumber": 1930
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 4003,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 292,
+      "callFrame": {
+        "functionName": "Wc",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4002,
+        "columnNumber": 2193
+      },
+      "hitCount": 3,
+      "positionTicks": [
+        {
+          "line": 4003,
+          "ticks": 1
+        },
+        {
+          "line": 4003,
+          "ticks": 1
+        },
+        {
+          "line": 4003,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 298,
+      "callFrame": {
+        "functionName": "Wc",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4002,
+        "columnNumber": 2193
+      },
+      "hitCount": 0,
+      "children": [
+        299
+      ]
+    },
+    {
+      "id": 299,
+      "callFrame": {
+        "functionName": "uniform3f",
+        "scriptId": "0",
+        "url": "",
+        "lineNumber": -1,
+        "columnNumber": -1
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 4003,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 303,
+      "callFrame": {
+        "functionName": "rl",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4002,
+        "columnNumber": 4787
+      },
+      "hitCount": 0,
+      "children": [
+        304
+      ]
+    },
+    {
+      "id": 304,
+      "callFrame": {
+        "functionName": "fe",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4080,
+        "columnNumber": 23335
+      },
+      "hitCount": 0,
+      "children": [
+        305
+      ]
+    },
+    {
+      "id": 305,
+      "callFrame": {
+        "functionName": "Ce",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4080,
+        "columnNumber": 27460
+      },
+      "hitCount": 0,
+      "children": [
+        306
+      ]
+    },
+    {
+      "id": 306,
+      "callFrame": {
+        "functionName": "je",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4080,
+        "columnNumber": 13609
+      },
+      "hitCount": 0,
+      "children": [
+        307
+      ]
+    },
+    {
+      "id": 307,
+      "callFrame": {
+        "functionName": "texSubImage2D",
+        "scriptId": "0",
+        "url": "",
+        "lineNumber": -1,
+        "columnNumber": -1
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 4081,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 146,
+      "callFrame": {
+        "functionName": "At",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4104,
+        "columnNumber": 45012
+      },
+      "hitCount": 2,
+      "positionTicks": [
+        {
+          "line": 4105,
+          "ticks": 1
+        },
+        {
+          "line": 4105,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 241,
+      "callFrame": {
+        "functionName": "r",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4104,
+        "columnNumber": 8942
+      },
+      "hitCount": 0,
+      "children": [
+        242
+      ]
+    },
+    {
+      "id": 242,
+      "callFrame": {
+        "functionName": "getRGB",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 1,
+        "columnNumber": 75742
+      },
+      "hitCount": 1,
+      "children": [
+        362
+      ],
+      "positionTicks": [
+        {
+          "line": 2,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 362,
+      "callFrame": {
+        "functionName": "Gt",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 1,
+        "columnNumber": 27576
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 2,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 76,
+      "callFrame": {
+        "functionName": "s",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 3667,
+        "columnNumber": 10663
+      },
+      "hitCount": 3,
+      "children": [
+        77,
+        152,
+        179
+      ],
+      "positionTicks": [
+        {
+          "line": 3668,
+          "ticks": 2
+        },
+        {
+          "line": 3668,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 77,
+      "callFrame": {
+        "functionName": "l",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 3667,
+        "columnNumber": 10935
+      },
+      "hitCount": 3,
+      "children": [
+        78
+      ],
+      "positionTicks": [
+        {
+          "line": 3668,
+          "ticks": 2
+        },
+        {
+          "line": 3668,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 78,
+      "callFrame": {
+        "functionName": "bindVertexArray",
+        "scriptId": "0",
+        "url": "",
+        "lineNumber": -1,
+        "columnNumber": -1
+      },
+      "hitCount": 3,
+      "positionTicks": [
+        {
+          "line": 3668,
+          "ticks": 2
+        },
+        {
+          "line": 3668,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 152,
+      "callFrame": {
+        "functionName": "p",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 3667,
+        "columnNumber": 11477
+      },
+      "hitCount": 6,
+      "children": [
+        358
+      ],
+      "positionTicks": [
+        {
+          "line": 3668,
+          "ticks": 1
+        },
+        {
+          "line": 3668,
+          "ticks": 2
+        },
+        {
+          "line": 3668,
+          "ticks": 1
+        },
+        {
+          "line": 3668,
+          "ticks": 1
+        },
+        {
+          "line": 3668,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 358,
+      "callFrame": {
+        "functionName": "getAttributes",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4053,
+        "columnNumber": 345
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 4054,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 179,
+      "callFrame": {
+        "functionName": "o",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 5,
+        "columnNumber": 55104
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 6,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 80,
+      "callFrame": {
+        "functionName": "be",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4080,
+        "columnNumber": 11837
+      },
+      "hitCount": 1,
+      "children": [
+        81,
+        132,
+        254,
+        331
+      ],
+      "positionTicks": [
+        {
+          "line": 4081,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 81,
+      "callFrame": {
+        "functionName": "ye",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4080,
+        "columnNumber": 10566
+      },
+      "hitCount": 0,
+      "children": [
+        82
+      ]
+    },
+    {
+      "id": 82,
+      "callFrame": {
+        "functionName": "blendFuncSeparate",
+        "scriptId": "0",
+        "url": "",
+        "lineNumber": -1,
+        "columnNumber": -1
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 4081,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 132,
+      "callFrame": {
+        "functionName": "pe",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4080,
+        "columnNumber": 9586
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 4081,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 254,
+      "callFrame": {
+        "functionName": "xe",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4080,
+        "columnNumber": 12544
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 4081,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 331,
+      "callFrame": {
+        "functionName": "we",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4080,
+        "columnNumber": 12807
+      },
+      "hitCount": 0,
+      "children": [
+        332
+      ]
+    },
+    {
+      "id": 332,
+      "callFrame": {
+        "functionName": "polygonOffset",
+        "scriptId": "0",
+        "url": "",
+        "lineNumber": -1,
+        "columnNumber": -1
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 4081,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 143,
+      "callFrame": {
+        "functionName": "c",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 3956,
+        "columnNumber": 3674
+      },
+      "hitCount": 0,
+      "children": [
+        144
+      ]
+    },
+    {
+      "id": 144,
+      "callFrame": {
+        "functionName": "drawElements",
+        "scriptId": "0",
+        "url": "",
+        "lineNumber": -1,
+        "columnNumber": -1
+      },
+      "hitCount": 3,
+      "positionTicks": [
+        {
+          "line": 3957,
+          "ticks": 3
+        }
+      ]
+    },
+    {
+      "id": 272,
+      "callFrame": {
+        "functionName": "i",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4104,
+        "columnNumber": 9095
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 4105,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 317,
+      "callFrame": {
+        "functionName": "o",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 3667,
+        "columnNumber": 15404
+      },
+      "hitCount": 0,
+      "children": [
+        318
+      ]
+    },
+    {
+      "id": 318,
+      "callFrame": {
+        "functionName": "drawArraysInstanced",
+        "scriptId": "0",
+        "url": "",
+        "lineNumber": -1,
+        "columnNumber": -1
+      },
+      "hitCount": 2,
+      "positionTicks": [
+        {
+          "line": 3668,
+          "ticks": 2
+        }
+      ]
+    },
+    {
+      "id": 342,
+      "callFrame": {
+        "functionName": "Hc",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4002,
+        "columnNumber": 1930
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 4003,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 173,
+      "callFrame": {
+        "functionName": "e.onBeforeRender",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4155,
+        "columnNumber": 354369
+      },
+      "hitCount": 1,
+      "children": [
+        309
+      ],
+      "positionTicks": [
+        {
+          "line": 4156,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 309,
+      "callFrame": {
+        "functionName": "",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4160,
+        "columnNumber": 530
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 4161,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 214,
+      "callFrame": {
+        "functionName": "multiplyMatrices",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 1,
+        "columnNumber": 46515
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 2,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 93,
+      "callFrame": {
+        "functionName": "m",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 3667,
+        "columnNumber": 7728
+      },
+      "hitCount": 0,
+      "children": [
+        94,
+        266
+      ]
+    },
+    {
+      "id": 94,
+      "callFrame": {
+        "functionName": "g",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 3667,
+        "columnNumber": 10152
+      },
+      "hitCount": 0,
+      "children": [
+        95
+      ]
+    },
+    {
+      "id": 95,
+      "callFrame": {
+        "functionName": "ao",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 1,
+        "columnNumber": 169997
+      },
+      "hitCount": 0,
+      "children": [
+        96
+      ]
+    },
+    {
+      "id": 96,
+      "callFrame": {
+        "functionName": "get outputColorSpace",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4104,
+        "columnNumber": 54389
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 4105,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 266,
+      "callFrame": {
+        "functionName": "clear",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4104,
+        "columnNumber": 26906
+      },
+      "hitCount": 0,
+      "children": [
+        267
+      ]
+    },
+    {
+      "id": 267,
+      "callFrame": {
+        "functionName": "clear",
+        "scriptId": "0",
+        "url": "",
+        "lineNumber": -1,
+        "columnNumber": -1
+      },
+      "hitCount": 2,
+      "positionTicks": [
+        {
+          "line": 4105,
+          "ticks": 2
+        }
+      ]
+    },
+    {
+      "id": 198,
+      "callFrame": {
+        "functionName": "u",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4053,
+        "columnNumber": 13737
+      },
+      "hitCount": 3,
+      "children": [
+        327
+      ],
+      "positionTicks": [
+        {
+          "line": 4054,
+          "ticks": 3
+        }
+      ]
+    },
+    {
+      "id": 327,
+      "callFrame": {
+        "functionName": "Cu",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4053,
+        "columnNumber": 12560
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 4054,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 208,
+      "callFrame": {
+        "functionName": "updateMatrixWorld",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 5,
+        "columnNumber": 29950
+      },
+      "hitCount": 0,
+      "children": [
+        209,
+        230
+      ]
+    },
+    {
+      "id": 209,
+      "callFrame": {
+        "functionName": "updateMatrixWorld",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 1,
+        "columnNumber": 60508
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 2,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 230,
+      "callFrame": {
+        "functionName": "decompose",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 1,
+        "columnNumber": 50170
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 2,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 212,
+      "callFrame": {
+        "functionName": "get reversedDepth",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 5,
+        "columnNumber": 29601
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 6,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 256,
+      "callFrame": {
+        "functionName": "s",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4053,
+        "columnNumber": 16050
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 4054,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 263,
+      "callFrame": {
+        "functionName": "normalize",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 1,
+        "columnNumber": 140495
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 2,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 388,
+      "callFrame": {
+        "functionName": "h",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 3667,
+        "columnNumber": 8111
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 3668,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 147,
+      "callFrame": {
+        "functionName": "o",
+        "scriptId": "49",
+        "url": "http://127.0.0.1:5320/assets/Renderer-CVIi6ZhN-diet-1408f6b4.js",
+        "lineNumber": 0,
+        "columnNumber": 175
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 1,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 60,
+      "callFrame": {
+        "functionName": "F",
+        "scriptId": "59",
+        "url": "http://127.0.0.1:5320/assets/Run3dPilot-CoIJdC2k-diet-1408f6b4.js",
+        "lineNumber": 0,
+        "columnNumber": 3198
+      },
+      "hitCount": 0,
+      "children": [
+        61,
+        139
+      ]
+    },
+    {
+      "id": 61,
+      "callFrame": {
+        "functionName": "m",
+        "scriptId": "59",
+        "url": "http://127.0.0.1:5320/assets/Run3dPilot-CoIJdC2k-diet-1408f6b4.js",
+        "lineNumber": 0,
+        "columnNumber": 2066
+      },
+      "hitCount": 2,
+      "children": [
+        62
+      ],
+      "positionTicks": [
+        {
+          "line": 1,
+          "ticks": 2
+        }
+      ]
+    },
+    {
+      "id": 62,
+      "callFrame": {
+        "functionName": "getObjectByProperty",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 1,
+        "columnNumber": 59197
+      },
+      "hitCount": 9,
+      "children": [
+        63
+      ],
+      "positionTicks": [
+        {
+          "line": 2,
+          "ticks": 9
+        }
+      ]
+    },
+    {
+      "id": 63,
+      "callFrame": {
+        "functionName": "getObjectByProperty",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 1,
+        "columnNumber": 59197
+      },
+      "hitCount": 9,
+      "children": [
+        172
+      ],
+      "positionTicks": [
+        {
+          "line": 2,
+          "ticks": 9
+        }
+      ]
+    },
+    {
+      "id": 172,
+      "callFrame": {
+        "functionName": "getObjectByProperty",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 1,
+        "columnNumber": 59197
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 2,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 139,
+      "callFrame": {
+        "functionName": "diagnostics",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 907,
+        "columnNumber": 70897
+      },
+      "hitCount": 0,
+      "children": [
+        140
+      ]
+    },
+    {
+      "id": 140,
+      "callFrame": {
+        "functionName": "get diagnostics",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 81,
+        "columnNumber": 233532
+      },
+      "hitCount": 4,
+      "children": [
+        372,
+        380
+      ],
+      "positionTicks": [
+        {
+          "line": 82,
+          "ticks": 4
+        }
+      ]
+    },
+    {
+      "id": 372,
+      "callFrame": {
+        "functionName": "shellDiagnostics",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 81,
+        "columnNumber": 275825
+      },
+      "hitCount": 0,
+      "children": [
+        373,
+        379
+      ]
+    },
+    {
+      "id": 373,
+      "callFrame": {
+        "functionName": "diagnostics",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 81,
+        "columnNumber": 211240
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 82,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 379,
+      "callFrame": {
+        "functionName": "diagnostics",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 81,
+        "columnNumber": 27229
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 82,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 380,
+      "callFrame": {
+        "functionName": "hpBarDiagnostics",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 81,
+        "columnNumber": 263095
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 82,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 123,
+      "callFrame": {
+        "functionName": "recordFrameMs",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 913,
+        "columnNumber": 39624
+      },
+      "hitCount": 4,
+      "children": [
+        124
+      ],
+      "positionTicks": [
+        {
+          "line": 914,
+          "ticks": 2
+        },
+        {
+          "line": 914,
+          "ticks": 1
+        },
+        {
+          "line": 914,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 124,
+      "callFrame": {
+        "functionName": "",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 913,
+        "columnNumber": 40395
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 914,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 289,
+      "callFrame": {
+        "functionName": "update",
+        "scriptId": "39",
+        "url": "http://127.0.0.1:5320/assets/Terrain-Drb1CsDo-diet-1408f6b4.js",
+        "lineNumber": 218,
+        "columnNumber": 16558
+      },
+      "hitCount": 0,
+      "children": [
+        290
+      ]
+    },
+    {
+      "id": 290,
+      "callFrame": {
+        "functionName": "ur",
+        "scriptId": "39",
+        "url": "http://127.0.0.1:5320/assets/Terrain-Drb1CsDo-diet-1408f6b4.js",
+        "lineNumber": 384,
+        "columnNumber": 6769
+      },
+      "hitCount": 0,
+      "children": [
+        291
+      ]
+    },
+    {
+      "id": 291,
+      "callFrame": {
+        "functionName": "dr",
+        "scriptId": "39",
+        "url": "http://127.0.0.1:5320/assets/Terrain-Drb1CsDo-diet-1408f6b4.js",
+        "lineNumber": 384,
+        "columnNumber": 7214
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 385,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 385,
+      "callFrame": {
+        "functionName": "He",
+        "scriptId": "39",
+        "url": "http://127.0.0.1:5320/assets/Terrain-Drb1CsDo-diet-1408f6b4.js",
+        "lineNumber": 137,
+        "columnNumber": 1735
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 138,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "callFrame": {
+        "functionName": "",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 907,
+        "columnNumber": 44852
+      },
+      "hitCount": 1,
+      "children": [
+        25
+      ],
+      "positionTicks": [
+        {
+          "line": 908,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "callFrame": {
+        "functionName": "update",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 907,
+        "columnNumber": 90026
+      },
+      "hitCount": 0,
+      "children": [
+        26,
+        40,
+        52,
+        127,
+        155,
+        175,
+        221,
+        300,
+        326
+      ]
+    },
+    {
+      "id": 26,
+      "callFrame": {
+        "functionName": "update",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 81,
+        "columnNumber": 165854
+      },
+      "hitCount": 6,
+      "children": [
+        27,
+        30,
+        231,
+        364
+      ],
+      "positionTicks": [
+        {
+          "line": 82,
+          "ticks": 6
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "callFrame": {
+        "functionName": "syncRenderInstances",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 81,
+        "columnNumber": 177577
+      },
+      "hitCount": 0,
+      "children": [
+        28
+      ]
+    },
+    {
+      "id": 28,
+      "callFrame": {
+        "functionName": "syncEnemyInstance",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 81,
+        "columnNumber": 179377
+      },
+      "hitCount": 1,
+      "children": [
+        29
+      ],
+      "positionTicks": [
+        {
+          "line": 82,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "callFrame": {
+        "functionName": "setMatrixAt",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 1,
+        "columnNumber": 139387
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 2,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "callFrame": {
+        "functionName": "update",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 81,
+        "columnNumber": 117981
+      },
+      "hitCount": 0,
+      "children": [
+        31,
+        92,
+        252,
+        359,
+        395
+      ]
+    },
+    {
+      "id": 31,
+      "callFrame": {
+        "functionName": "updateGapFlow",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 81,
+        "columnNumber": 125006
+      },
+      "hitCount": 0,
+      "children": [
+        32
+      ]
+    },
+    {
+      "id": 32,
+      "callFrame": {
+        "functionName": "palisadeRoute",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 81,
+        "columnNumber": 230324
+      },
+      "hitCount": 2,
+      "positionTicks": [
+        {
+          "line": 82,
+          "ticks": 2
+        }
+      ]
+    },
+    {
+      "id": 92,
+      "callFrame": {
+        "functionName": "vu",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 81,
+        "columnNumber": 135673
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 82,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 252,
+      "callFrame": {
+        "functionName": "set y",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 1,
+        "columnNumber": 52282
+      },
+      "hitCount": 0,
+      "children": [
+        253
+      ]
+    },
+    {
+      "id": 253,
+      "callFrame": {
+        "functionName": "setFromEuler",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 1,
+        "columnNumber": 11698
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 2,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 359,
+      "callFrame": {
+        "functionName": "move",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 81,
+        "columnNumber": 129452
+      },
+      "hitCount": 0,
+      "children": [
+        360
+      ]
+    },
+    {
+      "id": 360,
+      "callFrame": {
+        "functionName": "resolveBlocker",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 81,
+        "columnNumber": 133119
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 82,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 395,
+      "callFrame": {
+        "functionName": "terrainAwareTarget",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 81,
+        "columnNumber": 129300
+      },
+      "hitCount": 0
+    },
+    {
+      "id": 231,
+      "callFrame": {
+        "functionName": "activeAnimation",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 81,
+        "columnNumber": 170768
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 82,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 364,
+      "callFrame": {
+        "functionName": "syncEnemyFog",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 81,
+        "columnNumber": 192949
+      },
+      "hitCount": 0,
+      "children": [
+        365
+      ]
+    },
+    {
+      "id": 365,
+      "callFrame": {
+        "functionName": "setProceduralVisible",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 81,
+        "columnNumber": 192891
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 82,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 40,
+      "callFrame": {
+        "functionName": "updateActors",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 907,
+        "columnNumber": 102575
+      },
+      "hitCount": 0,
+      "children": [
+        41,
+        368
+      ]
+    },
+    {
+      "id": 41,
+      "callFrame": {
+        "functionName": "update",
+        "scriptId": "44",
+        "url": "http://127.0.0.1:5320/assets/WorldInfoNotes-C0K_M06b-diet-1408f6b4.js",
+        "lineNumber": 0,
+        "columnNumber": 80079
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 1,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 368,
+      "callFrame": {
+        "functionName": "watchMovePin",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 907,
+        "columnNumber": 103577
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 908,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 52,
+      "callFrame": {
+        "functionName": "updateSimulation",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 61,
+        "columnNumber": 46570
+      },
+      "hitCount": 0,
+      "children": [
+        53
+      ]
+    },
+    {
+      "id": 53,
+      "callFrame": {
+        "functionName": "Rf",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4104,
+        "columnNumber": 280889
+      },
+      "hitCount": 0,
+      "children": [
+        54
+      ]
+    },
+    {
+      "id": 54,
+      "callFrame": {
+        "functionName": "tick",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4104,
+        "columnNumber": 274760
+      },
+      "hitCount": 0,
+      "children": [
+        55
+      ]
+    },
+    {
+      "id": 55,
+      "callFrame": {
+        "functionName": "state",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4104,
+        "columnNumber": 280753
+      },
+      "hitCount": 0,
+      "children": [
+        56
+      ]
+    },
+    {
+      "id": 56,
+      "callFrame": {
+        "functionName": "",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 61,
+        "columnNumber": 36155
+      },
+      "hitCount": 0,
+      "children": [
+        57
+      ]
+    },
+    {
+      "id": 57,
+      "callFrame": {
+        "functionName": "economyLog",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 907,
+        "columnNumber": 83740
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 908,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 127,
+      "callFrame": {
+        "functionName": "update",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 505,
+        "columnNumber": 15609
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 506,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 155,
+      "callFrame": {
+        "functionName": "update",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 81,
+        "columnNumber": 387901
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 82,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 175,
+      "callFrame": {
+        "functionName": "update",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 81,
+        "columnNumber": 338093
+      },
+      "hitCount": 1,
+      "children": [
+        176
+      ],
+      "positionTicks": [
+        {
+          "line": 82,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 176,
+      "callFrame": {
+        "functionName": "syncPresentation",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 81,
+        "columnNumber": 347002
+      },
+      "hitCount": 0,
+      "children": [
+        177
+      ]
+    },
+    {
+      "id": 177,
+      "callFrame": {
+        "functionName": "publishDredgeQueen3d",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 81,
+        "columnNumber": 351123
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 82,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 221,
+      "callFrame": {
+        "functionName": "update",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 81,
+        "columnNumber": 236715
+      },
+      "hitCount": 0,
+      "children": [
+        222
+      ]
+    },
+    {
+      "id": 222,
+      "callFrame": {
+        "functionName": "updateRepairs",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 81,
+        "columnNumber": 268863
+      },
+      "hitCount": 0,
+      "children": [
+        223
+      ]
+    },
+    {
+      "id": 223,
+      "callFrame": {
+        "functionName": "effectiveMaxHp",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 81,
+        "columnNumber": 264585
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 82,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 300,
+      "callFrame": {
+        "functionName": "update",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 81,
+        "columnNumber": 310276
+      },
+      "hitCount": 0,
+      "children": [
+        301
+      ]
+    },
+    {
+      "id": 301,
+      "callFrame": {
+        "functionName": "updateRigArcs",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 81,
+        "columnNumber": 313608
+      },
+      "hitCount": 0,
+      "children": [
+        302
+      ]
+    },
+    {
+      "id": 302,
+      "callFrame": {
+        "functionName": "enabled",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 81,
+        "columnNumber": 93432
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 82,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 326,
+      "callFrame": {
+        "functionName": "driftNearHero",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 61,
+        "columnNumber": 50317
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 62,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 86,
+      "callFrame": {
+        "functionName": "requestAnimationFrame",
+        "scriptId": "0",
+        "url": "",
+        "lineNumber": -1,
+        "columnNumber": -1
+      },
+      "hitCount": 4,
+      "positionTicks": [
+        {
+          "line": 1,
+          "ticks": 4
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "callFrame": {
+        "functionName": "(idle)",
+        "scriptId": "0",
+        "url": "",
+        "lineNumber": -1,
+        "columnNumber": -1
+      },
+      "hitCount": 597
+    },
+    {
+      "id": 75,
+      "callFrame": {
+        "functionName": "(garbage collector)",
+        "scriptId": "0",
+        "url": "",
+        "lineNumber": -1,
+        "columnNumber": -1
+      },
+      "hitCount": 15
+    },
+    {
+      "id": 97,
+      "callFrame": {
+        "functionName": "",
+        "scriptId": "56",
+        "url": "http://127.0.0.1:5320/assets/story-DuIZ8IEI-diet-1408f6b4.js",
+        "lineNumber": 1,
+        "columnNumber": 19771
+      },
+      "hitCount": 0,
+      "children": [
+        98
+      ]
+    },
+    {
+      "id": 98,
+      "callFrame": {
+        "functionName": "schedule",
+        "scriptId": "56",
+        "url": "http://127.0.0.1:5320/assets/story-DuIZ8IEI-diet-1408f6b4.js",
+        "lineNumber": 1,
+        "columnNumber": 19479
+      },
+      "hitCount": 0,
+      "children": [
+        99
+      ]
+    },
+    {
+      "id": 99,
+      "callFrame": {
+        "functionName": "show",
+        "scriptId": "56",
+        "url": "http://127.0.0.1:5320/assets/story-DuIZ8IEI-diet-1408f6b4.js",
+        "lineNumber": 1,
+        "columnNumber": 19846
+      },
+      "hitCount": 0,
+      "children": [
+        100,
+        102
+      ]
+    },
+    {
+      "id": 100,
+      "callFrame": {
+        "functionName": "render",
+        "scriptId": "56",
+        "url": "http://127.0.0.1:5320/assets/story-DuIZ8IEI-diet-1408f6b4.js",
+        "lineNumber": 1,
+        "columnNumber": 20616
+      },
+      "hitCount": 0,
+      "children": [
+        101
+      ]
+    },
+    {
+      "id": 101,
+      "callFrame": {
+        "functionName": "R",
+        "scriptId": "56",
+        "url": "http://127.0.0.1:5320/assets/story-DuIZ8IEI-diet-1408f6b4.js",
+        "lineNumber": 14,
+        "columnNumber": 2856
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 15,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 102,
+      "callFrame": {
+        "functionName": "m",
+        "scriptId": "56",
+        "url": "http://127.0.0.1:5320/assets/story-DuIZ8IEI-diet-1408f6b4.js",
+        "lineNumber": 1,
+        "columnNumber": 413
+      },
+      "hitCount": 0,
+      "children": [
+        103
+      ]
+    },
+    {
+      "id": 103,
+      "callFrame": {
+        "functionName": "cx",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4155,
+        "columnNumber": 3463
+      },
+      "hitCount": 0,
+      "children": [
+        104
+      ]
+    },
+    {
+      "id": 104,
+      "callFrame": {
+        "functionName": "nx",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4155,
+        "columnNumber": 2237
+      },
+      "hitCount": 0,
+      "children": [
+        105
+      ]
+    },
+    {
+      "id": 105,
+      "callFrame": {
+        "functionName": "Ex",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4155,
+        "columnNumber": 5721
+      },
+      "hitCount": 0,
+      "children": [
+        106
+      ]
+    },
+    {
+      "id": 106,
+      "callFrame": {
+        "functionName": "Dx",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4155,
+        "columnNumber": 5995
+      },
+      "hitCount": 0,
+      "children": [
+        107
+      ]
+    },
+    {
+      "id": 107,
+      "callFrame": {
+        "functionName": "Nx",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4155,
+        "columnNumber": 6982
+      },
+      "hitCount": 0
+    },
+    {
+      "id": 122,
+      "callFrame": {
+        "functionName": "applyMatrix4",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 1,
+        "columnNumber": 35773
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 2,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 148,
+      "callFrame": {
+        "functionName": "s",
+        "scriptId": "60",
+        "url": "http://127.0.0.1:5320/assets/Terrain3dClaimPilot-N5k_ZCD7-diet-1408f6b4.js",
+        "lineNumber": 16431,
+        "columnNumber": 12493
+      },
+      "hitCount": 3,
+      "children": [
+        235
+      ],
+      "positionTicks": [
+        {
+          "line": 16432,
+          "ticks": 3
+        }
+      ]
+    },
+    {
+      "id": 235,
+      "callFrame": {
+        "functionName": "rushActive",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 907,
+        "columnNumber": 70222
+      },
+      "hitCount": 0,
+      "children": [
+        236
+      ]
+    },
+    {
+      "id": 236,
+      "callFrame": {
+        "functionName": "get diagnostics",
+        "scriptId": "16",
+        "url": "http://127.0.0.1:5320/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+        "lineNumber": 28,
+        "columnNumber": 3295
+      },
+      "hitCount": 0,
+      "children": [
+        237
+      ]
+    },
+    {
+      "id": 237,
+      "callFrame": {
+        "functionName": "diagnostics",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4155,
+        "columnNumber": 51214
+      },
+      "hitCount": 0,
+      "children": [
+        238
+      ]
+    },
+    {
+      "id": 238,
+      "callFrame": {
+        "functionName": "Sw",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4155,
+        "columnNumber": 52635
+      },
+      "hitCount": 0,
+      "children": [
+        239
+      ]
+    },
+    {
+      "id": 239,
+      "callFrame": {
+        "functionName": "Storage.getItem",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4155,
+        "columnNumber": 4232
+      },
+      "hitCount": 0,
+      "children": [
+        240
+      ]
+    },
+    {
+      "id": 240,
+      "callFrame": {
+        "functionName": "tx",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4155,
+        "columnNumber": 2085
+      },
+      "hitCount": 2,
+      "children": [
+        376
+      ],
+      "positionTicks": [
+        {
+          "line": 4156,
+          "ticks": 2
+        }
+      ]
+    },
+    {
+      "id": 376,
+      "callFrame": {
+        "functionName": "Ex",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4155,
+        "columnNumber": 5721
+      },
+      "hitCount": 1,
+      "children": [
+        377
+      ],
+      "positionTicks": [
+        {
+          "line": 4156,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 377,
+      "callFrame": {
+        "functionName": "Dx",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4155,
+        "columnNumber": 5995
+      },
+      "hitCount": 0,
+      "children": [
+        378
+      ]
+    },
+    {
+      "id": 378,
+      "callFrame": {
+        "functionName": "sd",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4104,
+        "columnNumber": 72741
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 4105,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 259,
+      "callFrame": {
+        "functionName": "Hc",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4002,
+        "columnNumber": 1930
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 4003,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 283,
+      "callFrame": {
+        "functionName": "traverse",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 1,
+        "columnNumber": 59928
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 2,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 288,
+      "callFrame": {
+        "functionName": "multiplyMatrices",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 1,
+        "columnNumber": 46515
+      },
+      "hitCount": 2,
+      "positionTicks": [
+        {
+          "line": 2,
+          "ticks": 2
+        }
+      ]
+    },
+    {
+      "id": 316,
+      "callFrame": {
+        "functionName": "get motion",
+        "scriptId": "41",
+        "url": "http://127.0.0.1:5320/assets/SpriteAnimator-DmoBYZnV-diet-1408f6b4.js",
+        "lineNumber": 553,
+        "columnNumber": 222614
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 554,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 343,
+      "callFrame": {
+        "functionName": "",
+        "scriptId": "41",
+        "url": "http://127.0.0.1:5320/assets/SpriteAnimator-DmoBYZnV-diet-1408f6b4.js",
+        "lineNumber": 553,
+        "columnNumber": 238564
+      },
+      "hitCount": 0,
+      "children": [
+        344
+      ]
+    },
+    {
+      "id": 344,
+      "callFrame": {
+        "functionName": "",
+        "scriptId": "41",
+        "url": "http://127.0.0.1:5320/assets/SpriteAnimator-DmoBYZnV-diet-1408f6b4.js",
+        "lineNumber": 553,
+        "columnNumber": 238579
+      },
+      "hitCount": 0,
+      "children": [
+        345
+      ]
+    },
+    {
+      "id": 345,
+      "callFrame": {
+        "functionName": "load",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 5,
+        "columnNumber": 26628
+      },
+      "hitCount": 0,
+      "children": [
+        346
+      ]
+    },
+    {
+      "id": 346,
+      "callFrame": {
+        "functionName": "load",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 5,
+        "columnNumber": 25607
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 6,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 371,
+      "callFrame": {
+        "functionName": "getObjectByProperty",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 1,
+        "columnNumber": 59197
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 2,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 386,
+      "callFrame": {
+        "functionName": "renderBufferDirect",
+        "scriptId": "7",
+        "url": "http://127.0.0.1:5320/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+        "lineNumber": 4104,
+        "columnNumber": 28673
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 4105,
+          "ticks": 1
+        }
+      ]
+    }
+  ],
+  "startTime": 800616364086,
+  "endTime": 800621922206,
+  "samples": [
+    2,
+    9,
+    15,
+    22,
+    23,
+    23,
+    23,
+    23,
+    23,
+    23,
+    23,
+    23,
+    23,
+    23,
+    23,
+    23,
+    29,
+    32,
+    39,
+    2,
+    23,
+    23,
+    23,
+    23,
+    23,
+    23,
+    23,
+    23,
+    23,
+    23,
+    23,
+    23,
+    23,
+    23,
+    23,
+    41,
+    42,
+    44,
+    51,
+    57,
+    59,
+    63,
+    70,
+    74,
+    46,
+    75,
+    75,
+    76,
+    2,
+    10,
+    11,
+    78,
+    23,
+    79,
+    82,
+    23,
+    42,
+    23,
+    23,
+    84,
+    23,
+    2,
+    23,
+    42,
+    59,
+    85,
+    86,
+    23,
+    23,
+    88,
+    70,
+    23,
+    23,
+    42,
+    91,
+    21,
+    2,
+    23,
+    2,
+    23,
+    23,
+    23,
+    23,
+    2,
+    85,
+    2,
+    23,
+    92,
+    79,
+    2,
+    23,
+    23,
+    96,
+    23,
+    101,
+    107,
+    111,
+    23,
+    23,
+    69,
+    2,
+    23,
+    21,
+    23,
+    23,
+    23,
+    42,
+    69,
+    23,
+    36,
+    79,
+    67,
+    23,
+    85,
+    23,
+    2,
+    85,
+    23,
+    23,
+    79,
+    2,
+    23,
+    21,
+    112,
+    23,
+    23,
+    79,
+    67,
+    23,
+    21,
+    23,
+    20,
+    114,
+    23,
+    23,
+    21,
+    23,
+    70,
+    23,
+    79,
+    115,
+    23,
+    2,
+    23,
+    117,
+    118,
+    119,
+    2,
+    23,
+    120,
+    79,
+    23,
+    79,
+    70,
+    23,
+    23,
+    21,
+    2,
+    23,
+    121,
+    122,
+    23,
+    23,
+    23,
+    124,
+    59,
+    113,
+    125,
+    23,
+    23,
+    79,
+    77,
+    23,
+    126,
+    85,
+    23,
+    23,
+    23,
+    127,
+    131,
+    132,
+    23,
+    133,
+    79,
+    23,
+    23,
+    79,
+    67,
+    23,
+    23,
+    136,
+    23,
+    23,
+    24,
+    138,
+    21,
+    2,
+    23,
+    79,
+    68,
+    75,
+    23,
+    35,
+    140,
+    2,
+    23,
+    43,
+    21,
+    23,
+    79,
+    142,
+    23,
+    79,
+    70,
+    23,
+    68,
+    23,
+    79,
+    144,
+    23,
+    79,
+    3,
+    145,
+    23,
+    23,
+    22,
+    23,
+    23,
+    146,
+    23,
+    23,
+    10,
+    2,
+    79,
+    67,
+    23,
+    23,
+    20,
+    147,
+    23,
+    42,
+    148,
+    23,
+    85,
+    2,
+    150,
+    21,
+    23,
+    23,
+    23,
+    79,
+    23,
+    2,
+    23,
+    42,
+    23,
+    23,
+    75,
+    23,
+    23,
+    20,
+    46,
+    23,
+    23,
+    34,
+    62,
+    2,
+    23,
+    23,
+    92,
+    42,
+    79,
+    151,
+    23,
+    23,
+    36,
+    79,
+    152,
+    2,
+    23,
+    153,
+    154,
+    21,
+    80,
+    23,
+    23,
+    42,
+    79,
+    67,
+    23,
+    23,
+    155,
+    156,
+    85,
+    2,
+    42,
+    20,
+    2,
+    23,
+    23,
+    160,
+    23,
+    126,
+    75,
+    75,
+    79,
+    51,
+    23,
+    163,
+    47,
+    23,
+    23,
+    164,
+    79,
+    70,
+    23,
+    23,
+    79,
+    2,
+    23,
+    165,
+    166,
+    23,
+    171,
+    172,
+    173,
+    23,
+    174,
+    70,
+    140,
+    23,
+    177,
+    42,
+    79,
+    67,
+    23,
+    42,
+    178,
+    76,
+    23,
+    23,
+    140,
+    2,
+    42,
+    79,
+    179,
+    23,
+    23,
+    23,
+    23,
+    23,
+    23,
+    23,
+    23,
+    23,
+    23,
+    23,
+    23,
+    23,
+    23,
+    23,
+    26,
+    182,
+    119,
+    185,
+    23,
+    28,
+    2,
+    12,
+    20,
+    23,
+    23,
+    186,
+    21,
+    23,
+    23,
+    79,
+    23,
+    23,
+    85,
+    67,
+    23,
+    59,
+    152,
+    23,
+    23,
+    36,
+    188,
+    67,
+    36,
+    63,
+    23,
+    70,
+    23,
+    191,
+    23,
+    23,
+    63,
+    75,
+    23,
+    42,
+    79,
+    23,
+    10,
+    23,
+    79,
+    78,
+    23,
+    23,
+    23,
+    23,
+    193,
+    20,
+    23,
+    23,
+    23,
+    23,
+    23,
+    26,
+    195,
+    21,
+    22,
+    23,
+    152,
+    23,
+    23,
+    79,
+    75,
+    42,
+    23,
+    85,
+    23,
+    23,
+    88,
+    79,
+    23,
+    23,
+    23,
+    23,
+    23,
+    23,
+    36,
+    197,
+    23,
+    68,
+    70,
+    23,
+    85,
+    23,
+    26,
+    198,
+    23,
+    79,
+    23,
+    120,
+    2,
+    2,
+    23,
+    23,
+    23,
+    2,
+    23,
+    23,
+    70,
+    23,
+    23,
+    23,
+    23,
+    79,
+    70,
+    23,
+    42,
+    205,
+    85,
+    2,
+    23,
+    23,
+    23,
+    23,
+    23,
+    23,
+    23,
+    23,
+    23,
+    23,
+    23,
+    42,
+    157,
+    79,
+    79,
+    207,
+    2,
+    75,
+    79,
+    85,
+    209,
+    42,
+    79,
+    70,
+    23,
+    198,
+    23,
+    23,
+    23,
+    211,
+    23,
+    123,
+    79,
+    152,
+    23,
+    79,
+    23,
+    23,
+    37,
+    79,
+    11,
+    212,
+    213,
+    2,
+    23,
+    23,
+    20,
+    214,
+    23,
+    23,
+    113,
+    23,
+    23,
+    215,
+    79,
+    207,
+    23,
+    216,
+    47,
+    23,
+    23,
+    23,
+    79,
+    70,
+    23,
+    23,
+    220,
+    23,
+    23,
+    223,
+    79,
+    148,
+    63,
+    23,
+    226,
+    67,
+    23,
+    23,
+    35,
+    70,
+    23,
+    23,
+    23,
+    21,
+    23,
+    23,
+    23,
+    23,
+    23,
+    23,
+    23,
+    23,
+    23,
+    229,
+    79,
+    134,
+    75,
+    62,
+    70,
+    23,
+    47,
+    23,
+    23,
+    140,
+    230,
+    70,
+    23,
+    23,
+    231,
+    234,
+    61,
+    240,
+    23,
+    62,
+    113,
+    23,
+    23,
+    21,
+    68,
+    23,
+    23,
+    59,
+    21,
+    86,
+    120,
+    47,
+    23,
+    23,
+    242,
+    23,
+    23,
+    85,
+    2,
+    244,
+    70,
+    23,
+    23,
+    23,
+    42,
+    251,
+    119,
+    2,
+    23,
+    23,
+    23,
+    79,
+    253,
+    2,
+    123,
+    47,
+    23,
+    23,
+    59,
+    2,
+    23,
+    79,
+    254,
+    42,
+    85,
+    23,
+    23,
+    255,
+    79,
+    256,
+    75,
+    255,
+    79,
+    67,
+    23,
+    23,
+    79,
+    152,
+    23,
+    257,
+    258,
+    23,
+    23,
+    23,
+    23,
+    255,
+    259,
+    23,
+    79,
+    23,
+    23,
+    23,
+    260,
+    125,
+    23,
+    261,
+    189,
+    23,
+    119,
+    23,
+    23,
+    79,
+    23,
+    79,
+    86,
+    42,
+    165,
+    262,
+    23,
+    23,
+    34,
+    67,
+    23,
+    23,
+    79,
+    23,
+    79,
+    70,
+    23,
+    23,
+    229,
+    79,
+    22,
+    2,
+    2,
+    263,
+    23,
+    42,
+    62,
+    2,
+    62,
+    23,
+    85,
+    23,
+    23,
+    23,
+    23,
+    59,
+    68,
+    42,
+    20,
+    67,
+    23,
+    23,
+    21,
+    23,
+    11,
+    21,
+    70,
+    23,
+    23,
+    264,
+    19,
+    68,
+    265,
+    62,
+    267,
+    23,
+    23,
+    268,
+    189,
+    23,
+    23,
+    22,
+    23,
+    271,
+    22,
+    23,
+    23,
+    79,
+    272,
+    23,
+    23,
+    42,
+    275,
+    85,
+    23,
+    23,
+    79,
+    23,
+    85,
+    136,
+    23,
+    42,
+    277,
+    23,
+    278,
+    67,
+    23,
+    279,
+    2,
+    23,
+    22,
+    23,
+    23,
+    79,
+    280,
+    23,
+    23,
+    213,
+    258,
+    23,
+    23,
+    281,
+    21,
+    70,
+    23,
+    258,
+    23,
+    23,
+    2,
+    23,
+    120,
+    79,
+    282,
+    23,
+    23,
+    184,
+    23,
+    79,
+    23,
+    79,
+    23,
+    23,
+    283,
+    85,
+    2,
+    23,
+    79,
+    48,
+    49,
+    23,
+    23,
+    21,
+    23,
+    23,
+    67,
+    287,
+    288,
+    23,
+    79,
+    50,
+    23,
+    23,
+    291,
+    79,
+    2,
+    23,
+    38,
+    67,
+    292,
+    23,
+    21,
+    23,
+    23,
+    42,
+    23,
+    23,
+    23,
+    116,
+    23,
+    23,
+    85,
+    23,
+    21,
+    23,
+    23,
+    84,
+    21,
+    23,
+    23,
+    120,
+    194,
+    22,
+    85,
+    23,
+    10,
+    85,
+    23,
+    42,
+    23,
+    2,
+    23,
+    79,
+    293,
+    23,
+    79,
+    67,
+    137,
+    78,
+    23,
+    9,
+    79,
+    70,
+    23,
+    42,
+    79,
+    67,
+    23,
+    23,
+    23,
+    67,
+    42,
+    296,
+    22,
+    23,
+    23,
+    23,
+    23,
+    68,
+    42,
+    85,
+    23,
+    85,
+    23,
+    23,
+    150,
+    77,
+    23,
+    189,
+    23,
+    23,
+    35,
+    66,
+    42,
+    21,
+    23,
+    23,
+    79,
+    113,
+    23,
+    63,
+    23,
+    297,
+    277,
+    255,
+    68,
+    23,
+    23,
+    2,
+    67,
+    23,
+    21,
+    299,
+    23,
+    42,
+    144,
+    23,
+    75,
+    21,
+    136,
+    23,
+    302,
+    88,
+    63,
+    63,
+    66,
+    23,
+    51,
+    23,
+    23,
+    79,
+    23,
+    79,
+    23,
+    113,
+    23,
+    23,
+    123,
+    36,
+    267,
+    307,
+    75,
+    308,
+    85,
+    309,
+    75,
+    310,
+    136,
+    2,
+    2,
+    182,
+    85,
+    70,
+    37,
+    63,
+    67,
+    23,
+    312,
+    21,
+    144,
+    23,
+    182,
+    21,
+    2,
+    23,
+    184,
+    23,
+    62,
+    23,
+    23,
+    21,
+    2,
+    315,
+    2,
+    23,
+    79,
+    65,
+    70,
+    23,
+    79,
+    166,
+    2,
+    23,
+    79,
+    112,
+    23,
+    240,
+    23,
+    23,
+    22,
+    70,
+    23,
+    316,
+    145,
+    23,
+    61,
+    2,
+    227,
+    22,
+    23,
+    318,
+    23,
+    23,
+    321,
+    67,
+    23,
+    42,
+    21,
+    2,
+    79,
+    23,
+    42,
+    85,
+    23,
+    23,
+    79,
+    21,
+    23,
+    23,
+    322,
+    85,
+    2,
+    23,
+    23,
+    23,
+    23,
+    23,
+    166,
+    23,
+    23,
+    68,
+    23,
+    323,
+    23,
+    23,
+    23,
+    85,
+    23,
+    51,
+    23,
+    23,
+    23,
+    11,
+    23,
+    42,
+    11,
+    23,
+    23,
+    66,
+    23,
+    325,
+    67,
+    23,
+    326,
+    23,
+    23,
+    21,
+    120,
+    136,
+    2,
+    2,
+    23,
+    23,
+    23,
+    23,
+    2,
+    327,
+    70,
+    23,
+    23,
+    23,
+    23,
+    79,
+    42,
+    136,
+    328,
+    329,
+    23,
+    79,
+    220,
+    21,
+    23,
+    23,
+    42,
+    22,
+    68,
+    23,
+    2,
+    330,
+    21,
+    2,
+    68,
+    23,
+    85,
+    23,
+    110,
+    23,
+    23,
+    23,
+    59,
+    23,
+    23,
+    120,
+    193,
+    79,
+    23,
+    23,
+    23,
+    26,
+    42,
+    79,
+    190,
+    2,
+    116,
+    10,
+    79,
+    332,
+    23,
+    23,
+    333,
+    79,
+    334,
+    23,
+    23,
+    86,
+    23,
+    26,
+    338,
+    85,
+    23,
+    23,
+    341,
+    79,
+    342,
+    23,
+    337,
+    79,
+    23,
+    79,
+    120,
+    67,
+    23,
+    23,
+    23,
+    2,
+    23,
+    2,
+    23,
+    23,
+    2,
+    346,
+    23,
+    348,
+    68,
+    350,
+    277,
+    23,
+    351,
+    85,
+    2,
+    23,
+    42,
+    354,
+    70,
+    23,
+    356,
+    357,
+    22,
+    23,
+    23,
+    113,
+    23,
+    23,
+    42,
+    21,
+    85,
+    2,
+    23,
+    85,
+    2,
+    277,
+    84,
+    23,
+    358,
+    23,
+    23,
+    23,
+    23,
+    68,
+    23,
+    360,
+    67,
+    75,
+    23,
+    68,
+    23,
+    38,
+    2,
+    23,
+    42,
+    277,
+    2,
+    361,
+    85,
+    362,
+    23,
+    79,
+    67,
+    23,
+    23,
+    79,
+    152,
+    23,
+    23,
+    123,
+    363,
+    22,
+    23,
+    23,
+    23,
+    365,
+    42,
+    85,
+    23,
+    366,
+    318,
+    23,
+    367,
+    23,
+    368,
+    21,
+    67,
+    8,
+    370,
+    62,
+    70,
+    23,
+    79,
+    23,
+    371,
+    77,
+    79,
+    125,
+    373,
+    117,
+    141,
+    374,
+    21,
+    23,
+    23,
+    23,
+    87,
+    23,
+    21,
+    21,
+    19,
+    23,
+    23,
+    79,
+    198,
+    35,
+    79,
+    23,
+    23,
+    2,
+    23,
+    23,
+    375,
+    47,
+    378,
+    2,
+    23,
+    23,
+    379,
+    23,
+    36,
+    380,
+    2,
+    42,
+    381,
+    125,
+    2,
+    171,
+    183,
+    23,
+    23,
+    23,
+    2,
+    23,
+    79,
+    23,
+    23,
+    23,
+    23,
+    32,
+    23,
+    85,
+    23,
+    42,
+    23,
+    62,
+    79,
+    337,
+    113,
+    23,
+    23,
+    175,
+    23,
+    23,
+    70,
+    23,
+    382,
+    23,
+    72,
+    2,
+    23,
+    384,
+    85,
+    23,
+    23,
+    84,
+    23,
+    23,
+    70,
+    23,
+    42,
+    23,
+    148,
+    23,
+    255,
+    67,
+    23,
+    385,
+    21,
+    23,
+    23,
+    23,
+    23,
+    23,
+    23,
+    47,
+    22,
+    23,
+    36,
+    85,
+    2,
+    23,
+    120,
+    23,
+    79,
+    386,
+    63,
+    70,
+    23,
+    42,
+    76,
+    23,
+    23,
+    22,
+    2,
+    23,
+    23,
+    23,
+    21,
+    2,
+    23,
+    366,
+    376,
+    2,
+    23,
+    23,
+    23,
+    387,
+    17,
+    388,
+    376,
+    112,
+    390,
+    79,
+    2,
+    2,
+    23,
+    23,
+    49,
+    23,
+    42,
+    119,
+    70,
+    23,
+    23,
+    42,
+    391,
+    392,
+    23,
+    288,
+    292,
+    23,
+    393,
+    70,
+    23,
+    22,
+    23,
+    42,
+    220,
+    47,
+    23,
+    26,
+    79,
+    292,
+    23,
+    277,
+    2,
+    23,
+    394,
+    20,
+    79,
+    146,
+    23,
+    301,
+    21,
+    88,
+    23,
+    23,
+    42,
+    23,
+    395,
+    2,
+    23,
+    2,
+    23
+  ],
+  "timeDeltas": [
+    155513,
+    1492,
+    1252,
+    1488,
+    6673,
+    1470,
+    3416,
+    1548,
+    1957,
+    1546,
+    1533,
+    1535,
+    1250,
+    1515,
+    1535,
+    1511,
+    4783,
+    2214,
+    1900,
+    4694,
+    1434,
+    1079,
+    1266,
+    1499,
+    1571,
+    1517,
+    2044,
+    1818,
+    1478,
+    1480,
+    1667,
+    1514,
+    1514,
+    1868,
+    1541,
+    1099,
+    1523,
+    1489,
+    1426,
+    2532,
+    1577,
+    1381,
+    1520,
+    2871,
+    1842,
+    9777,
+    2044,
+    6277,
+    1449,
+    4623,
+    1571,
+    1262,
+    1514,
+    3962,
+    1827,
+    1513,
+    2074,
+    6090,
+    9408,
+    6339,
+    1513,
+    6811,
+    1702,
+    1516,
+    1542,
+    1506,
+    1523,
+    1508,
+    1518,
+    1509,
+    3608,
+    1418,
+    1568,
+    1905,
+    1521,
+    1500,
+    1641,
+    1528,
+    6654,
+    9917,
+    6934,
+    1509,
+    6187,
+    16950,
+    6617,
+    1493,
+    1722,
+    1509,
+    2895,
+    18683,
+    2522,
+    8256,
+    5687,
+    9427,
+    8722,
+    355,
+    3951,
+    7614,
+    13165,
+    6581,
+    17674,
+    18499,
+    20541,
+    1523,
+    2357,
+    7448,
+    2652,
+    3730,
+    1527,
+    5305,
+    1513,
+    1532,
+    9149,
+    13470,
+    2617,
+    8345,
+    5237,
+    1977,
+    1343,
+    4346,
+    2319,
+    1537,
+    5488,
+    1092,
+    1510,
+    1771,
+    4082,
+    1576,
+    1499,
+    5547,
+    2612,
+    5207,
+    1079,
+    1777,
+    1373,
+    4374,
+    4118,
+    5898,
+    2667,
+    2983,
+    1921,
+    2906,
+    6310,
+    1554,
+    1516,
+    1706,
+    2355,
+    1464,
+    1766,
+    2505,
+    1922,
+    4111,
+    3725,
+    1506,
+    1485,
+    1545,
+    4227,
+    1498,
+    2228,
+    3016,
+    1584,
+    1420,
+    1530,
+    1595,
+    1813,
+    1496,
+    2523,
+    6731,
+    2103,
+    1547,
+    3150,
+    1514,
+    1858,
+    1518,
+    3214,
+    1955,
+    1602,
+    1542,
+    1692,
+    2320,
+    1802,
+    2361,
+    2309,
+    1633,
+    2520,
+    1688,
+    3292,
+    2087,
+    1908,
+    1594,
+    5644,
+    1565,
+    1377,
+    1518,
+    2318,
+    1078,
+    1612,
+    1475,
+    3346,
+    1496,
+    1143,
+    1593,
+    3498,
+    1523,
+    1921,
+    1572,
+    3994,
+    1455,
+    1974,
+    6305,
+    1511,
+    1499,
+    3588,
+    1999,
+    1908,
+    5303,
+    3859,
+    4471,
+    1896,
+    1517,
+    5499,
+    3439,
+    4446,
+    1591,
+    1547,
+    6107,
+    2070,
+    1949,
+    4499,
+    1747,
+    1570,
+    3719,
+    2958,
+    4242,
+    1514,
+    1615,
+    1716,
+    5335,
+    1570,
+    2126,
+    1725,
+    4232,
+    5624,
+    3634,
+    1999,
+    3516,
+    1534,
+    3013,
+    6363,
+    8653,
+    5987,
+    3180,
+    6857,
+    2017,
+    1508,
+    5279,
+    1552,
+    15520,
+    1633,
+    6951,
+    3769,
+    1212,
+    2055,
+    1534,
+    2320,
+    1527,
+    1858,
+    1684,
+    1607,
+    1559,
+    1409,
+    1506,
+    1521,
+    1406,
+    1558,
+    1462,
+    1530,
+    1586,
+    1749,
+    1212,
+    1344,
+    1524,
+    1498,
+    1522,
+    1451,
+    1552,
+    1718,
+    1335,
+    1553,
+    1523,
+    1540,
+    1751,
+    2801,
+    1652,
+    1547,
+    1565,
+    3034,
+    1932,
+    1729,
+    15945,
+    11515,
+    5153,
+    1942,
+    6620,
+    2266,
+    21333,
+    1549,
+    51372,
+    4030,
+    1681,
+    2929,
+    6651,
+    3503,
+    1496,
+    1869,
+    1527,
+    1593,
+    3353,
+    2252,
+    1527,
+    5133,
+    1970,
+    1896,
+    2802,
+    1357,
+    1681,
+    1519,
+    3567,
+    2935,
+    7132,
+    4423,
+    1510,
+    1531,
+    1552,
+    1582,
+    1896,
+    1607,
+    1512,
+    2042,
+    1545,
+    5635,
+    2920,
+    1953,
+    1518,
+    1522,
+    1606,
+    1523,
+    1994,
+    1749,
+    1734,
+    1711,
+    1030,
+    1517,
+    1524,
+    1593,
+    1564,
+    1513,
+    1523,
+    1651,
+    1550,
+    1496,
+    1522,
+    1732,
+    1527,
+    5747,
+    2705,
+    1498,
+    5162,
+    4294,
+    1521,
+    1947,
+    1531,
+    1529,
+    3011,
+    2851,
+    1821,
+    2760,
+    3159,
+    9253,
+    5447,
+    9774,
+    2513,
+    1796,
+    2162,
+    1513,
+    6727,
+    2291,
+    5495,
+    2940,
+    4683,
+    1517,
+    4257,
+    5265,
+    2672,
+    4842,
+    1978,
+    1508,
+    4066,
+    1506,
+    1570,
+    1789,
+    1534,
+    3099,
+    6687,
+    4120,
+    4985,
+    1492,
+    1506,
+    1523,
+    6078,
+    1582,
+    2802,
+    1516,
+    4497,
+    7987,
+    6419,
+    1715,
+    7280,
+    5889,
+    2386,
+    1416,
+    5058,
+    2381,
+    4781,
+    2688,
+    1037,
+    5504,
+    2832,
+    1535,
+    15008,
+    3950,
+    3382,
+    1203,
+    4091,
+    1512,
+    3724,
+    8023,
+    15734,
+    8195,
+    1530,
+    13052,
+    1507,
+    6546,
+    3863,
+    4524,
+    9010,
+    1467,
+    5551,
+    3803,
+    1500,
+    11966,
+    11213,
+    4318,
+    3719,
+    3390,
+    4534,
+    2084,
+    6185,
+    7904,
+    1521,
+    5433,
+    1538,
+    1657,
+    6781,
+    7713,
+    2022,
+    7088,
+    1528,
+    3515,
+    1498,
+    1513,
+    3007,
+    1518,
+    1386,
+    1519,
+    1246,
+    1544,
+    6917,
+    1619,
+    4336,
+    1735,
+    1151,
+    5365,
+    1499,
+    1557,
+    5790,
+    1585,
+    5878,
+    1499,
+    15033,
+    1483,
+    1499,
+    2013,
+    5114,
+    1003,
+    1503,
+    1521,
+    1504,
+    2322,
+    1712,
+    5724,
+    1521,
+    2199,
+    6398,
+    7712,
+    1858,
+    1197,
+    3147,
+    1503,
+    1532,
+    4116,
+    3723,
+    2122,
+    2881,
+    1528,
+    8776,
+    1717,
+    4171,
+    2651,
+    1817,
+    1526,
+    3951,
+    1533,
+    1507,
+    1524,
+    4431,
+    1878,
+    1544,
+    3362,
+    1525,
+    1532,
+    1533,
+    1530,
+    2594,
+    1905,
+    1266,
+    1597,
+    3307,
+    1626,
+    1720,
+    1533,
+    3550,
+    3183,
+    1487,
+    1581,
+    3259,
+    2213,
+    5183,
+    3360,
+    4051,
+    1909,
+    1615,
+    1525,
+    1470,
+    3173,
+    1550,
+    1529,
+    1521,
+    5147,
+    3530,
+    1093,
+    1515,
+    3880,
+    1516,
+    2734,
+    1622,
+    1551,
+    1117,
+    1271,
+    6051,
+    1177,
+    1517,
+    4208,
+    1509,
+    1500,
+    5393,
+    2513,
+    5003,
+    2624,
+    1755,
+    5045,
+    1527,
+    1502,
+    2074,
+    1218,
+    1542,
+    1810,
+    1615,
+    4241,
+    1528,
+    9739,
+    1659,
+    4267,
+    1173,
+    1524,
+    1577,
+    3135,
+    1328,
+    1503,
+    1528,
+    3657,
+    1695,
+    1575,
+    6541,
+    1822,
+    2521,
+    3702,
+    1828,
+    2778,
+    3378,
+    1753,
+    1627,
+    1539,
+    2590,
+    1380,
+    1867,
+    1515,
+    6582,
+    5325,
+    5550,
+    4583,
+    3566,
+    6156,
+    1565,
+    4264,
+    1898,
+    1534,
+    3869,
+    3617,
+    1797,
+    5110,
+    1769,
+    1541,
+    3171,
+    2373,
+    2004,
+    2297,
+    1848,
+    1663,
+    1515,
+    1581,
+    2699,
+    1514,
+    1694,
+    2212,
+    5530,
+    1524,
+    2074,
+    2801,
+    1708,
+    1746,
+    1491,
+    5753,
+    1564,
+    1508,
+    3362,
+    2420,
+    4389,
+    3445,
+    1509,
+    1544,
+    4101,
+    1895,
+    2475,
+    2373,
+    2257,
+    2138,
+    4859,
+    2644,
+    1515,
+    5188,
+    3275,
+    3793,
+    2690,
+    2123,
+    1714,
+    2666,
+    1781,
+    2013,
+    2706,
+    2887,
+    1639,
+    1201,
+    4435,
+    3132,
+    4008,
+    2079,
+    1515,
+    1042,
+    1590,
+    1535,
+    1228,
+    2199,
+    2127,
+    5324,
+    2454,
+    3789,
+    2228,
+    2287,
+    4786,
+    3573,
+    3915,
+    2363,
+    2137,
+    7685,
+    1501,
+    3454,
+    2658,
+    2139,
+    2652,
+    1208,
+    3268,
+    1587,
+    4188,
+    2793,
+    3868,
+    1517,
+    1095,
+    1544,
+    1476,
+    3415,
+    1725,
+    1667,
+    1686,
+    2791,
+    1078,
+    1622,
+    1573,
+    2080,
+    1829,
+    2197,
+    1688,
+    15257,
+    1966,
+    4075,
+    1671,
+    2432,
+    1558,
+    3037,
+    1567,
+    1661,
+    1082,
+    1650,
+    1790,
+    1498,
+    2456,
+    1448,
+    4199,
+    2971,
+    5050,
+    10352,
+    2666,
+    1554,
+    2341,
+    2742,
+    5185,
+    2685,
+    2109,
+    2818,
+    3090,
+    1616,
+    4986,
+    2914,
+    9767,
+    4297,
+    2601,
+    1675,
+    7182,
+    3912,
+    1666,
+    1528,
+    9470,
+    4119,
+    9433,
+    1487,
+    10249,
+    4832,
+    1437,
+    1703,
+    5400,
+    2231,
+    1940,
+    2819,
+    1590,
+    2922,
+    9010,
+    4991,
+    2184,
+    5948,
+    3340,
+    3927,
+    3159,
+    8386,
+    3536,
+    2105,
+    1827,
+    2312,
+    4369,
+    1494,
+    5132,
+    2785,
+    2725,
+    3710,
+    3302,
+    4470,
+    5114,
+    3463,
+    2241,
+    3053,
+    2502,
+    1302,
+    1635,
+    1946,
+    1350,
+    2788,
+    2406,
+    1654,
+    2922,
+    13028,
+    6464,
+    1550,
+    6364,
+    2175,
+    1822,
+    1533,
+    5600,
+    16549,
+    8125,
+    1524,
+    7677,
+    8975,
+    4102,
+    3662,
+    13314,
+    2277,
+    1518,
+    5873,
+    6532,
+    3211,
+    3849,
+    2919,
+    1502,
+    1583,
+    4745,
+    2260,
+    3548,
+    2262,
+    1646,
+    1899,
+    6885,
+    7894,
+    1732,
+    3323,
+    1587,
+    1786,
+    6252,
+    2294,
+    3366,
+    2029,
+    1899,
+    3425,
+    2530,
+    1795,
+    1521,
+    1499,
+    1523,
+    1672,
+    1652,
+    1634,
+    1442,
+    6150,
+    2332,
+    1522,
+    1564,
+    4193,
+    1501,
+    6529,
+    1681,
+    4437,
+    6225,
+    3299,
+    2137,
+    4205,
+    2900,
+    1428,
+    2813,
+    2477,
+    2061,
+    5788,
+    1860,
+    1791,
+    3188,
+    3007,
+    1493,
+    3598,
+    3113,
+    1707,
+    3964,
+    1842,
+    2041,
+    5137,
+    3190,
+    4671,
+    1516,
+    4857,
+    3840,
+    1786,
+    8622,
+    1509,
+    4828,
+    2201,
+    5763,
+    8253,
+    3356,
+    21756,
+    17502,
+    10002,
+    7875,
+    5120,
+    1558,
+    15507,
+    6918,
+    1244,
+    1844,
+    6216,
+    1504,
+    1884,
+    4280,
+    2829,
+    6202,
+    10055,
+    9791,
+    4729,
+    3583,
+    5452,
+    1740,
+    1921,
+    2763,
+    1532,
+    2565,
+    1723,
+    8108,
+    3715,
+    1210,
+    1622,
+    1566,
+    5298,
+    3337,
+    1659,
+    987,
+    2784,
+    1629,
+    1312,
+    2579,
+    1743,
+    1728,
+    1591,
+    3498,
+    1808,
+    1757,
+    1221,
+    3558,
+    1683,
+    1940,
+    2241,
+    5864,
+    2137,
+    4045,
+    2499,
+    1733,
+    4728,
+    1489,
+    2851,
+    3854,
+    2312,
+    6226,
+    2317,
+    6629,
+    1635,
+    4671,
+    1512,
+    1094,
+    3567,
+    2346,
+    1601,
+    1549,
+    6389,
+    1482,
+    1662,
+    6791,
+    1242,
+    7494,
+    1562,
+    3670,
+    2915,
+    6835,
+    2333,
+    2988,
+    2125,
+    2957,
+    5531,
+    2064,
+    1678,
+    3324,
+    2277,
+    1631,
+    4206,
+    2198,
+    3586,
+    3838,
+    4035,
+    1876,
+    2327,
+    2909,
+    1581,
+    3257,
+    1258,
+    2173,
+    1815,
+    3781,
+    1571,
+    1580,
+    6114,
+    2629,
+    7824,
+    8637,
+    9458,
+    5235,
+    1553,
+    9336,
+    5826,
+    11843,
+    13781,
+    34493,
+    25418,
+    7808,
+    14731,
+    35070,
+    33161,
+    8454,
+    1653,
+    6805,
+    5204,
+    3078,
+    1546,
+    1486,
+    4369,
+    2265,
+    6394,
+    2025,
+    10986,
+    3177,
+    2957,
+    1390,
+    22253,
+    42473,
+    14177,
+    2217,
+    9002,
+    5998,
+    8243,
+    8568,
+    2027,
+    6857,
+    17920,
+    12509,
+    9716,
+    9479,
+    1064,
+    17791,
+    7795,
+    15461,
+    8408,
+    5633,
+    3772,
+    3393,
+    1153,
+    7834,
+    3165,
+    5168,
+    1457,
+    1792,
+    1062,
+    1511,
+    2986,
+    1498,
+    1237,
+    1614,
+    2472,
+    1694,
+    1915,
+    7446,
+    2661,
+    4700,
+    2559,
+    13582,
+    3654,
+    6970,
+    1535,
+    3022,
+    4891,
+    11365,
+    1513,
+    1876,
+    6190,
+    4677,
+    7060,
+    9825,
+    1515,
+    1520,
+    1507,
+    1576,
+    1512,
+    1631,
+    1538,
+    1303,
+    1546,
+    1593,
+    1519,
+    1902,
+    1504,
+    1436,
+    1963,
+    1519,
+    5774,
+    2243,
+    1520,
+    1587,
+    2197,
+    1803,
+    1957,
+    1517,
+    1535,
+    1508,
+    7766,
+    1618,
+    6640,
+    19676,
+    2873,
+    3595,
+    8851,
+    1345,
+    8782,
+    8102,
+    5890,
+    3654,
+    5541,
+    1524,
+    8317,
+    1589,
+    14311,
+    14036,
+    3105,
+    3095,
+    1508,
+    2354,
+    1630,
+    2179,
+    1666,
+    2105,
+    1526,
+    1523,
+    1528,
+    2883,
+    2923,
+    2504,
+    1498,
+    1508,
+    3097,
+    8791,
+    5672,
+    1949,
+    13642,
+    1548,
+    8236,
+    7124,
+    1508,
+    1504,
+    5344,
+    1503,
+    7473,
+    1514,
+    1623,
+    5367,
+    1522,
+    1652,
+    6818,
+    1414,
+    5644,
+    1524,
+    1620,
+    4786,
+    1415,
+    10289,
+    4503,
+    1598,
+    4307,
+    3597,
+    1538,
+    3472,
+    2311,
+    1985,
+    3407,
+    2231,
+    1020,
+    2219,
+    3088,
+    1653,
+    1817,
+    1931,
+    2286,
+    1616,
+    1530,
+    1491,
+    1535,
+    2298,
+    1506,
+    1891,
+    1539,
+    1746,
+    1604,
+    1359,
+    2351,
+    2662,
+    3282,
+    1977,
+    1807,
+    1867,
+    7805,
+    1541,
+    4800,
+    1299,
+    1632,
+    1575,
+    1541,
+    1635,
+    17436,
+    14481,
+    13602,
+    3107,
+    1519,
+    3220,
+    1540,
+    5925,
+    8882,
+    13573,
+    8649,
+    6873,
+    2473,
+    1655,
+    7276,
+    1715,
+    5819,
+    7175,
+    15313,
+    8118,
+    10041,
+    18507,
+    7870,
+    8179,
+    3790,
+    1659,
+    3757,
+    8606,
+    6660,
+    1021,
+    1522,
+    1673,
+    10977,
+    1204,
+    8472,
+    1556,
+    12815,
+    9401,
+    6486,
+    1533,
+    1638,
+    1956,
+    1510,
+    1538,
+    1868,
+    1426,
+    5813,
+    2582,
+    2884,
+    5753,
+    9725,
+    5685,
+    2332,
+    5547,
+    3058,
+    12503,
+    11468,
+    1520,
+    1515,
+    5497,
+    4399,
+    3880,
+    2809,
+    4767,
+    5992,
+    16167,
+    7139,
+    3319,
+    2495,
+    6588,
+    1918,
+    8106,
+    7693,
+    6843,
+    1514,
+    3651,
+    4072,
+    5519,
+    3023,
+    1600,
+    1671,
+    1515,
+    5670,
+    6267,
+    5476,
+    1507,
+    10420,
+    14514,
+    2536,
+    1490,
+    7288,
+    6715,
+    1514,
+    1507,
+    3726,
+    2123,
+    1685,
+    3749,
+    1799,
+    2442,
+    8094,
+    8057,
+    6786,
+    1538,
+    4600,
+    10034,
+    16139,
+    1514,
+    1724,
+    6441,
+    1569,
+    10433,
+    9365,
+    2766,
+    1590,
+    4367,
+    1487,
+    1821,
+    1541,
+    3414,
+    2840,
+    1770,
+    5946,
+    1507,
+    8391,
+    7138,
+    1865,
+    12944,
+    1491,
+    1571,
+    3955,
+    3002,
+    19,
+    1249,
+    14137,
+    1498,
+    17962,
+    1327,
+    5833,
+    9091,
+    19066,
+    3370,
+    945,
+    8463,
+    1661,
+    7780,
+    1532,
+    5102,
+    2038,
+    1710,
+    2833,
+    1502,
+    1826,
+    1529,
+    1560,
+    1524,
+    2129,
+    1545,
+    3329,
+    3762,
+    1616,
+    4750,
+    2488,
+    1659,
+    5272,
+    2692,
+    3738,
+    1578,
+    1985,
+    2288,
+    1513,
+    3681,
+    1600,
+    1928,
+    4243,
+    1493,
+    1517,
+    21228,
+    1588,
+    22492,
+    1373,
+    1560,
+    4315,
+    3815,
+    4467,
+    4891,
+    10127,
+    1579,
+    6242,
+    1610,
+    5999,
+    8055,
+    9277,
+    6776
+  ]
+}

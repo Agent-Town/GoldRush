@@ -1,0 +1,46 @@
+gate battery transcript (append-only — see scripts/gate-battery.mjs)
+
+
+######## BATTERY 2026-09-05T04:09:31.158Z — s2518 deploy-budget review ########
+cwd=/Users/robin/Claude/Projects/Gold Rush
+env+ PATH=/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin
+
+===== deploy guard =====
+$ /opt/homebrew/bin/node --test scripts/deploy-budget.test.mjs
+rc=0 7.1s
+✔ deploy fails closed: overage even when probe exits zero (1013.403166ms)
+✔ deploy fails closed: overage with the real probe assertion exit (498.7665ms)
+✔ deploy fails closed: exact ceiling (existing less-than budget) (480.243666ms)
+✔ deploy fails closed: failed probe with under-budget numbers (533.136ms)
+✔ deploy fails closed: no measurement (443.011916ms)
+✔ deploy fails closed: unreadable per-file report (520.354125ms)
+✔ allowance dry run reports the overage, top five files and missing device verdict (598.506042ms)
+✔ explicit waiver keeps a failed measurement visibly failed (445.985667ms)
+✔ under-budget dry run passes; an existing owner verdict is reported without interpreting it (497.9385ms)
+✔ allowance reaches the publisher; strict still governs deploy errors (988.827084ms)
+✔ build failure prints a verdict and preserves strict=false (389.985959ms)
+✔ build failure prints a verdict and preserves strict=true (366.849584ms)
+✔ lock refusal prints the release verdict before any build (209.913834ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7031.559042
+
+
+===== shell syntax =====
+$ bash -n scripts/deploy.sh
+rc=0 0.0s
+
+
+===== existing deploy contract =====
+$ bash scripts/test-deploy-contract.sh
+rc=1 1.6s
+strict-skip: expected rc 2, got 5
+
+
+SUMMARY {"deploy guard":0,"shell syntax":0,"existing deploy contract":1}
+OVERALL rc=1

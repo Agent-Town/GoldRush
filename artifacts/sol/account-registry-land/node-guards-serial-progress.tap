@@ -1,0 +1,814 @@
+TAP version 13
+# Subtest: VACUUM INTO backup restores byte-identical ledger rows
+ok 1 - VACUUM INTO backup restores byte-identical ledger rows
+  ---
+  duration_ms: 14.359041
+  type: 'test'
+  ...
+# Subtest: rotation deletes only dated ledger backups older than 14 days
+ok 2 - rotation deletes only dated ledger backups older than 14 days
+  ---
+  duration_ms: 3.649083
+  type: 'test'
+  ...
+# (node:59364) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: agent reel validation reuses the door bounds and CLI tape content stays deterministic under unique ids
+ok 3 - agent reel validation reuses the door bounds and CLI tape content stays deterministic under unique ids
+  ---
+  duration_ms: 21816.0885
+  type: 'test'
+  ...
+# Subtest: agent consent keeps the ruled pan and build rungs plus shipped repair rung
+ok 4 - agent consent keeps the ruled pan and build rungs plus shipped repair rung
+  ---
+  duration_ms: 1.332542
+  type: 'test'
+  ...
+# Subtest: tool surface keeps auto-pan and place-building at their ruled rungs
+ok 5 - tool surface keeps auto-pan and place-building at their ruled rungs
+  ---
+  duration_ms: 0.208833
+  type: 'test'
+  ...
+# Subtest: standing orders keep harvest at rung 2 and build at rung 3
+ok 6 - standing orders keep harvest at rung 2 and build at rung 3
+  ---
+  duration_ms: 0.265042
+  type: 'test'
+  ...
+# (node:59878) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# [gold-rush] performance tier {
+#   tier: 'full',
+#   override: 'auto',
+#   source: 'auto',
+#   reason: 'desktop-class defaults',
+#   gpuRenderer: 'unknown',
+#   deviceMemory: null,
+#   userAgent: 'Node.js/26',
+#   config: {
+#     maxDpr: 2,
+#     shadowsQuality: 'soft',
+#     shadowMapSize: 1536,
+#     fogNear: 42,
+#     fogFar: 88,
+#     postEnabled: true,
+#     postPaperGrainOpacity: 0.008,
+#     detailDensity: 1,
+#     detailMobileDensity: 0.42,
+#     terrainSegments: 64,
+#     terrainMobileSegments: 40,
+#     vistaSegments: 12,
+#     vistaMobileSegments: 7,
+#     waterQuality: 1,
+#     waterMobileQuality: 0.55,
+#     terrainMesh: false,
+#     terrainSplat: false,
+#     terrainMeshVertexStep: 1,
+#     floatTextPool: 12,
+#     combatVfxPuffs: 32,
+#     combatVfxTicks: 48,
+#     combatVfxRings: 8,
+#     freedWalkerCap: 10,
+#     enemyBarCap: 60
+#   },
+#   runtimeVerdict: 0
+# }
+# Subtest: a wire act crosses into the sim and changes it
+ok 7 - a wire act crosses into the sim and changes it
+  ---
+  duration_ms: 6267.133208
+  type: 'test'
+  ...
+# Subtest: agent_orders validates the standing-order grammar and wire bounds
+ok 8 - agent_orders validates the standing-order grammar and wire bounds
+  ---
+  duration_ms: 194.927583
+  type: 'test'
+  ...
+# [gold-rush] performance tier {
+#   tier: 'full',
+#   override: 'auto',
+#   source: 'auto',
+#   reason: 'desktop-class defaults',
+#   gpuRenderer: 'unknown',
+#   deviceMemory: null,
+#   userAgent: 'Node.js/26',
+#   config: {
+#     maxDpr: 2,
+#     shadowsQuality: 'soft',
+#     shadowMapSize: 1536,
+#     fogNear: 42,
+#     fogFar: 88,
+#     postEnabled: true,
+#     postPaperGrainOpacity: 0.008,
+#     detailDensity: 1,
+#     detailMobileDensity: 0.42,
+#     terrainSegments: 64,
+#     terrainMobileSegments: 40,
+#     vistaSegments: 12,
+#     vistaMobileSegments: 7,
+#     waterQuality: 1,
+#     waterMobileQuality: 0.55,
+#     terrainMesh: false,
+#     terrainSplat: false,
+#     terrainMeshVertexStep: 1,
+#     floatTextPool: 12,
+#     combatVfxPuffs: 32,
+#     combatVfxTicks: 48,
+#     combatVfxRings: 8,
+#     freedWalkerCap: 10,
+#     enemyBarCap: 60
+#   },
+#   runtimeVerdict: 0
+# }
+# Subtest: two independently booted sims agree tick for tick
+ok 9 - two independently booted sims agree tick for tick
+  ---
+  duration_ms: 3882.641333
+  type: 'test'
+  ...
+# Subtest: the seat carries BUILD and refuses to stretch for the rest
+ok 10 - the seat carries BUILD and refuses to stretch for the rest
+  ---
+  duration_ms: 82.756
+  type: 'test'
+  ...
+# Subtest: the seat carries the facing, and refuses a facing the county does not keep
+ok 11 - the seat carries the facing, and refuses a facing the county does not keep
+  ---
+  duration_ms: 63.993292
+  type: 'test'
+  ...
+# Subtest: the throttle ceiling is the relay rate limit, not a taste
+ok 12 - the throttle ceiling is the relay rate limit, not a taste
+  ---
+  duration_ms: 2661.059541
+  type: 'test'
+  ...
+# Generation provenance: 8 cases passed; no real CLI or image generation.
+# Factory prompts: 72 cast/direction cases passed; complete walking cycles and companion hover retained.
+# Subtest: scripts/anim-pass-gen.test.mjs
+ok 5 - scripts/anim-pass-gen.test.mjs
+  ---
+  duration_ms: 2821.816458
+  type: 'test'
+  ...
+# Graft: row and single-cell sources validated; invalid/dry calls preserve target; all seven neighboring cells preserved.
+# Subtest: scripts/anim-pass-graft.test.mjs
+ok 6 - scripts/anim-pass-graft.test.mjs
+  ---
+  duration_ms: 1426.7435
+  type: 'test'
+  ...
+# Factory grid: inspection matches extraction; duplicate proof/head crops pass divisible, remainder-bearing and historical cached grids.
+# Subtest: scripts/anim-pass-grid.test.mjs
+ok 7 - scripts/anim-pass-grid.test.mjs
+  ---
+  duration_ms: 739.765625
+  type: 'test'
+  ...
+# Montage default spacing, exact zero-gap cells and invalid-input preservation pass.
+# Subtest: scripts/anim-pass-montage.test.mjs
+ok 8 - scripts/anim-pass-montage.test.mjs
+  ---
+  duration_ms: 461.248708
+  type: 'test'
+  ...
+# Subtest: rob's v1 live reel is retained but reported as unverifiable legacy
+ok 17 - rob's v1 live reel is retained but reported as unverifiable legacy
+  ---
+  duration_ms: 354.927709
+  type: 'test'
+  ...
+# Subtest: the browser arm of the assay instrument reports the purse held, not lifetime panning
+ok 18 - the browser arm of the assay instrument reports the purse held, not lifetime panning
+  ---
+  duration_ms: 0.206625
+  type: 'test'
+  ...
+# Subtest: the round-2 corpus hash remains byte-for-byte pinned
+ok 19 - the round-2 corpus hash remains byte-for-byte pinned
+  ---
+  duration_ms: 2.480333
+  type: 'test'
+  ...
+# Subtest: pre-era engine-stamped agent tapes are retired: the assayer refuses their plans
+ok 20 - pre-era engine-stamped agent tapes are retired: the assayer refuses their plans
+  ---
+  duration_ms: 3516.119417
+  type: 'test'
+  ...
+# Subtest: the hill-mine libm divergence tape is retired, and the tape it was measured from is kept
+ok 21 - the hill-mine libm divergence tape is retired, and the tape it was measured from is kept
+  ---
+  duration_ms: 2913.961875
+  type: 'test'
+  ...
+# Subtest: a securing door tape carries its start, its boundary answer, and replays to its own hash
+ok 22 - a securing door tape carries its start, its boundary answer, and replays to its own hash
+  ---
+  duration_ms: 79965.509833
+  type: 'test'
+  ...
+# Subtest: an overtime replay returns the immutable secure-event snapshot and the later final outcome
+not ok 23 - an overtime replay returns the immutable secure-event snapshot and the later final outcome
+  ---
+  duration_ms: 240265.704917
+  type: 'test'
+  location: '/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/scripts/assay-replay.test.mjs:183:1'
+  failureType: 'testTimeoutFailure'
+  error: 'test timed out after 240000ms'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: once keeps completed mismatches rejected and retries instrument failures before unassayable
+ok 24 - once keeps completed mismatches rejected and retries instrument failures before unassayable
+  ---
+  duration_ms: 11498.822375
+  type: 'test'
+  ...
+# Subtest: engine lineage wins over build id, with build id retained for legacy tapes
+ok 25 - engine lineage wins over build id, with build id retained for legacy tapes
+  ---
+  duration_ms: 719.686334
+  type: 'test'
+  ...
+# Subtest: an earlier pin in the current era remains assayable
+ok 26 - an earlier pin in the current era remains assayable
+  ---
+  duration_ms: 611.614833
+  type: 'test'
+  ...
+# Subtest: the worker environment law refuses every Node version except the exact canonical one
+ok 27 - the worker environment law refuses every Node version except the exact canonical one
+  ---
+  duration_ms: 1.368083
+  type: 'test'
+  ...
+# Subtest: engine hash ignores a doc-only commit and moves on a Balance edit in a scratch worktree
+ok 28 - engine hash ignores a doc-only commit and moves on a Balance edit in a scratch worktree
+  ---
+  duration_ms: 1178.303166
+  type: 'test'
+  ...
+# Subtest: a posted unassayable reason names files, never paths; the operator log keeps both
+ok 29 - a posted unassayable reason names files, never paths; the operator log keeps both
+  ---
+  duration_ms: 1070.043666
+  type: 'test'
+  ...
+# Subtest: dry-run prints the verdict without posting it
+ok 30 - dry-run prints the verdict without posting it
+  ---
+  duration_ms: 541.463208
+  type: 'test'
+  ...
+# Subtest: shutdown during replay leaves the row pending
+ok 31 - shutdown during replay leaves the row pending
+  ---
+  duration_ms: 478.897458
+  type: 'test'
+  ...
+# Subtest: API failures back off before polling again
+ok 32 - API failures back off before polling again
+  ---
+  duration_ms: 657.000542
+  type: 'test'
+  ...
+# Subtest: a row flipped back to pending is assayed again from a clean attempt budget
+ok 33 - a row flipped back to pending is assayed again from a clean attempt budget
+  ---
+  duration_ms: 870.090208
+  type: 'test'
+  ...
+# Subtest: a missing dist/ is refused, not cleared
+ok 34 - a missing dist/ is refused, not cleared
+  ---
+  duration_ms: 104.542917
+  type: 'test'
+  ...
+# Subtest: CONTROL: the same fixture with one benign dist file passes — it is the emptiness, not the fixture
+ok 35 - CONTROL: the same fixture with one benign dist file passes — it is the emptiness, not the fixture
+  ---
+  duration_ms: 114.7065
+  type: 'test'
+  ...
+# Subtest: an empty later-asset blacklist is refused — the leak check would otherwise pass vacuously
+ok 36 - an empty later-asset blacklist is refused — the leak check would otherwise pass vacuously
+  ---
+  duration_ms: 89.783375
+  type: 'test'
+  ...
+# Subtest: the success line reports the denominator, so a vacuous clearance would be legible
+ok 37 - the success line reports the denominator, so a vacuous clearance would be legible
+  ---
+  duration_ms: 142.131834
+  type: 'test'
+  ...
+# Subtest: POSITIVE CONTROL: a later-epoch manifest id in dist still fails
+ok 38 - POSITIVE CONTROL: a later-epoch manifest id in dist still fails
+  ---
+  duration_ms: 79.757334
+  type: 'test'
+  ...
+# Subtest: POSITIVE CONTROL: a leaked later-epoch plate asset in dist still fails
+ok 39 - POSITIVE CONTROL: a leaked later-epoch plate asset in dist still fails
+  ---
+  duration_ms: 92.935792
+  type: 'test'
+  ...
+# Subtest: POSITIVE CONTROL: the GR_RELEASE=e1 precondition still refuses a bare invocation
+ok 40 - POSITIVE CONTROL: the GR_RELEASE=e1 precondition still refuses a bare invocation
+  ---
+  duration_ms: 109.849916
+  type: 'test'
+  ...
+# Subtest: an E1 asset whose content hash reads like an era tag is NOT a leak
+ok 41 - an E1 asset whose content hash reads like an era tag is NOT a leak
+  ---
+  duration_ms: 113.127916
+  type: 'test'
+  ...
+# Subtest: POSITIVE CONTROL: a genuine later-era asset in dist still fails
+ok 42 - POSITIVE CONTROL: a genuine later-era asset in dist still fails
+  ---
+  duration_ms: 130.906833
+  type: 'test'
+  ...
+# Subtest: POSITIVE CONTROL: a later-era tag ENDING the module name still fails (the `$` anchor)
+ok 43 - POSITIVE CONTROL: a later-era tag ENDING the module name still fails (the `$` anchor)
+  ---
+  duration_ms: 160.257
+  type: 'test'
+  ...
+# Subtest: two named additions account for a two-test tally delta
+ok 44 - two named additions account for a two-test tally delta
+  ---
+  duration_ms: 854.953042
+  type: 'test'
+  ...
+# Subtest: identical manifests have an empty diff
+ok 45 - identical manifests have an empty diff
+  ---
+  duration_ms: 340.858417
+  type: 'test'
+  ...
+# Subtest: a file-level collection failure leaves an unaccounted tally residue
+ok 46 - a file-level collection failure leaves an unaccounted tally residue
+  ---
+  duration_ms: 601.497458
+  type: 'test'
+  ...
+# Subtest: a status flip is visible when the tally is unchanged
+ok 47 - a status flip is visible when the tally is unchanged
+  ---
+  duration_ms: 701.812
+  type: 'test'
+  ...
+# Subtest: stdin and --from-log emit the same deterministic manifest
+ok 48 - stdin and --from-log emit the same deterministic manifest
+  ---
+  duration_ms: 1082.322666
+  type: 'test'
+  ...
+# Subtest: rotation registry stays outside the engine identity corpus
+ok 49 - rotation registry stays outside the engine identity corpus
+  ---
+  duration_ms: 1358.040875
+  type: 'test'
+  ...
+# Subtest: contract ids are globally unique across the ten epoch bundles
+ok 50 - contract ids are globally unique across the ten epoch bundles
+  ---
+  duration_ms: 0.35625
+  type: 'test'
+  ...
+# Subtest: bench seed sets cover Frontier and contain only valid known-contract seeds
+ok 51 - bench seed sets cover Frontier and contain only valid known-contract seeds
+  ---
+  duration_ms: 0.43125
+  type: 'test'
+  ...
+# Subtest: rotation mint is deterministic, week-sensitive, and requires a salt
+ok 52 - rotation mint is deterministic, week-sensitive, and requires a salt
+  ---
+  duration_ms: 663.269875
+  type: 'test'
+  ...
+# Subtest: reds on a real ledger with a subject-led closed finding on the panel, greens on the live root
+ok 53 - reds on a real ledger with a subject-led closed finding on the panel, greens on the live root
+  ---
+  duration_ms: 3367.601958
+  type: 'test'
+  ...
+# Subtest: a cited id does not borrow the subject id closure on the old real ledger
+ok 54 - a cited id does not borrow the subject id closure on the old real ledger
+  ---
+  duration_ms: 903.124958
+  type: 'test'
+  ...
+# Subtest: a closure APPENDED below the panel row does not clear the panel — which is the whole defect
+ok 55 - a closure APPENDED below the panel row does not clear the panel — which is the whole defect
+  ---
+  duration_ms: 144.239583
+  type: 'test'
+  ...
+# Subtest: striking the ORIGINAL line clears the panel — the fix the guard prescribes actually works
+ok 56 - striking the ORIGINAL line clears the panel — the fix the guard prescribes actually works
+  ---
+  duration_ms: 133.101708
+  type: 'test'
+  ...
+# Subtest: an open finding on the panel is left alone
+ok 57 - an open finding on the panel is left alone
+  ---
+  duration_ms: 174.833416
+  type: 'test'
+  ...
+# Subtest: REFUSES rather than passes when the panel moves out from under it
+ok 58 - REFUSES rather than passes when the panel moves out from under it
+  ---
+  duration_ms: 138.730708
+  type: 'test'
+  ...
+# Subtest: the wide closure vocabulary is opt-in and does not leak into the default census
+ok 59 - the wide closure vocabulary is opt-in and does not leak into the default census
+  ---
+  duration_ms: 1.052584
+  type: 'test'
+  ...
+# (node:1882) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: the board is not empty
+ok 60 - the board is not empty
+  ---
+  duration_ms: 3.113042
+  type: 'test'
+  ...
+# Subtest: every board contract either has seams or declares a harvest-free objective
+ok 61 - every board contract either has seams or declares a harvest-free objective
+  ---
+  duration_ms: 1.880958
+  type: 'test'
+  ...
+# Subtest: the harvest-free declaration is ratcheted, and only seamless maps carry it
+ok 62 - the harvest-free declaration is ratcheted, and only seamless maps carry it
+  ---
+  duration_ms: 0.937167
+  type: 'test'
+  ...
+# Subtest: the door still reads the declaration, in the shape the same-game audit can lift
+ok 63 - the door still reads the declaration, in the shape the same-game audit can lift
+  ---
+  duration_ms: 1.23725
+  type: 'test'
+  ...
+# Subtest: the harvest-free exemption does not open the agent-play door
+ok 64 - the harvest-free exemption does not open the agent-play door
+  ---
+  duration_ms: 0.130458
+  type: 'test'
+  ...
+# Subtest: e8-mare-claim: the standing's gold is the purse held at the secure tick
+ok 65 - e8-mare-claim: the standing's gold is the purse held at the secure tick # SKIP retired in era 6: era 6 "the Re-surveyed Claims" (maps-campaign-land-era6, 2026-09-14): this heat-13 reel rode era 5 and no longer installs on the re-surveyed map; the purse-at-secure property is re-measured on era-6 reels when heat 14 rides (F-MAPL-4)
+  ---
+  duration_ms: 1.890709
+  type: 'test'
+  ...
+# Subtest: e3-moth-season: the standing's gold is the purse held at the secure tick
+ok 66 - e3-moth-season: the standing's gold is the purse held at the secure tick # SKIP retired in era 6: era 6 "the Re-surveyed Claims" (maps-campaign-land-era6, 2026-09-14): this heat-13 reel rode era 5 and no longer installs on the re-surveyed map; the purse-at-secure property is re-measured on era-6 reels when heat 14 rides (F-MAPL-4)
+  ---
+  duration_ms: 0.132875
+  type: 'test'
+  ...
+# Subtest: e7-relay-rush: the standing's gold is the purse held at the secure tick
+ok 67 - e7-relay-rush: the standing's gold is the purse held at the secure tick # SKIP retired in era 6: era 6 "the Re-surveyed Claims" (maps-campaign-land-era6, 2026-09-14): this heat-13 reel rode era 5 and no longer installs on the re-surveyed map; the purse-at-secure property is re-measured on era-6 reels when heat 14 rides (F-MAPL-4)
+  ---
+  duration_ms: 0.096292
+  type: 'test'
+  ...
+# Subtest: the browser door submits the purse held at the secure tick, not the run's lifetime panning
+ok 68 - the browser door submits the purse held at the secure tick, not the run's lifetime panning
+  ---
+  duration_ms: 88996.040417
+  type: 'test'
+  ...
+# Subtest: campaign harness URL binds Terrain to its selected contract
+ok 69 - campaign harness URL binds Terrain to its selected contract
+  ---
+  duration_ms: 58672.549208
+  type: 'test'
+  ...
+# (node:75642) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# [gold-rush] performance tier {
+#   tier: 'full',
+#   override: 'auto',
+#   source: 'auto',
+#   reason: 'desktop-class defaults',
+#   gpuRenderer: 'unknown',
+#   deviceMemory: null,
+#   userAgent: 'Node.js/26',
+#   config: {
+#     maxDpr: 2,
+#     shadowsQuality: 'soft',
+#     shadowMapSize: 1536,
+#     fogNear: 42,
+#     fogFar: 88,
+#     postEnabled: true,
+#     postPaperGrainOpacity: 0.008,
+#     detailDensity: 1,
+#     detailMobileDensity: 0.42,
+#     terrainSegments: 64,
+#     terrainMobileSegments: 40,
+#     vistaSegments: 12,
+#     vistaMobileSegments: 7,
+#     waterQuality: 1,
+#     waterMobileQuality: 0.55,
+#     terrainMesh: false,
+#     terrainSplat: false,
+#     terrainMeshVertexStep: 1,
+#     floatTextPool: 12,
+#     combatVfxPuffs: 32,
+#     combatVfxTicks: 48,
+#     combatVfxRings: 8,
+#     freedWalkerCap: 10,
+#     enemyBarCap: 60
+#   },
+#   runtimeVerdict: 0
+# }
+# Subtest: Canyon Works alone publishes its live connection objective
+ok 70 - Canyon Works alone publishes its live connection objective
+  ---
+  duration_ms: 5929.566083
+  type: 'test'
+  ...
+# Subtest: every destructured ssrLoadModule symbol is exported by its source module
+ok 71 - every destructured ssrLoadModule symbol is exported by its source module
+  ---
+  duration_ms: 4.626542
+  type: 'test'
+  ...
+# Subtest: contract direction files exist under assets/processed
+ok 72 - contract direction files exist under assets/processed
+  ---
+  duration_ms: 1.532208
+  type: 'test'
+  ...
+# Subtest: contract direction aliases do not overwrite explicit directions
+ok 73 - contract direction aliases do not overwrite explicit directions
+  ---
+  duration_ms: 0.270583
+  type: 'test'
+  ...
+# Subtest: a bare spec:line citation fails the guard
+ok 74 - a bare spec:line citation fails the guard
+  ---
+  duration_ms: 435.814291
+  type: 'test'
+  ...
+# Subtest: a citation carrying an exact test title passes
+ok 75 - a citation carrying an exact test title passes
+  ---
+  duration_ms: 731.622625
+  type: 'test'
+  ...
+# Subtest: a short code span cannot consume the following quoted title
+ok 76 - a short code span cannot consume the following quoted title
+  ---
+  duration_ms: 445.023
+  type: 'test'
+  ...
+# Subtest: a bare apostrophe cannot consume the following quoted title
+ok 77 - a bare apostrophe cannot consume the following quoted title
+  ---
+  duration_ms: 417.0345
+  type: 'test'
+  ...
+# Subtest: an odd same-kind delimiter cannot consume the following quoted title
+ok 78 - an odd same-kind delimiter cannot consume the following quoted title
+  ---
+  duration_ms: 777.360167
+  type: 'test'
+  ...
+# Subtest: a test helper string is not harvested as a title
+ok 79 - a test helper string is not harvested as a title
+  ---
+  duration_ms: 869.083333
+  type: 'test'
+  ...
+# Subtest: chained describe modifiers remain title declarations
+ok 80 - chained describe modifiers remain title declarations
+  ---
+  duration_ms: 422.260417
+  type: 'test'
+  ...
+# Subtest: a citation carrying an ELIDED test title passes
+ok 81 - a citation carrying an ELIDED test title passes
+  ---
+  duration_ms: 1262.200083
+  type: 'test'
+  ...
+# Subtest: a quoted title that does not exist in the spec still fails
+ok 82 - a quoted title that does not exist in the spec still fails
+  ---
+  duration_ms: 1708.981792
+  type: 'test'
+  ...
+# Subtest: a grandfathered bare citation passes, and a second copy of it does not
+ok 83 - a grandfathered bare citation passes, and a second copy of it does not
+  ---
+  duration_ms: 3117.038292
+  type: 'test'
+  ...
+# Subtest: --report never gates
+ok 84 - --report never gates
+  ---
+  duration_ms: 1953.569459
+  type: 'test'
+  ...
+# Subtest: REFUSES when no tracked task markdown exists (denominator 0 docs)
+ok 85 - REFUSES when no tracked task markdown exists (denominator 0 docs)
+  ---
+  duration_ms: 1838.115709
+  type: 'test'
+  ...
+# Subtest: REFUSES when task docs exist but carry zero citations
+ok 86 - REFUSES when task docs exist but carry zero citations
+  ---
+  duration_ms: 792.153917
+  type: 'test'
+  ...
+# Subtest: REFUSES when the baseline it ratchets against is missing
+ok 87 - REFUSES when the baseline it ratchets against is missing
+  ---
+  duration_ms: 2388.6105
+  type: 'test'
+  ...
+# Subtest: a citation quoting a real NON-TEST source line is carried, not a violation
+ok 88 - a citation quoting a real NON-TEST source line is carried, not a violation
+  ---
+  duration_ms: 2126.797542
+  type: 'test'
+  ...
+# Subtest: a quote matching NEITHER a title nor any source line still fails
+ok 89 - a quote matching NEITHER a title nor any source line still fails
+  ---
+  duration_ms: 1274.195417
+  type: 'test'
+  ...
+# Subtest: the verdict names the citations it did NOT gate
+ok 90 - the verdict names the citations it did NOT gate
+  ---
+  duration_ms: 4919.439875
+  type: 'test'
+  ...
+# Subtest: --report still never gates, even on a denominator it could not read
+ok 91 - --report still never gates, even on a denominator it could not read
+  ---
+  duration_ms: 1190.732042
+  type: 'test'
+  ...
+# Subtest: Claim Boat candidate preserves its pinned source, export and clear authored pad contract
+not ok 92 - Claim Boat candidate preserves its pinned source, export and clear authored pad contract
+  ---
+  duration_ms: 31.45625
+  type: 'test'
+  location: '/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/scripts/claim-boat-asset.test.mjs:8:1'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, open '/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/assets/raw/claim-boat-material-atlas.png'"
+  code: 'ENOENT'
+  stack: |-
+    async open (node:internal/fs/promises:1360:25)
+    async readFile (node:internal/fs/promises:2149:14)
+    async TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/scripts/claim-boat-asset.test.mjs:14:22)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+  ...
+# Subtest: Flotilla exports match three authored hull identities with compliant textures and clear pads
+not ok 93 - Flotilla exports match three authored hull identities with compliant textures and clear pads
+  ---
+  duration_ms: 25.109166
+  type: 'test'
+  location: '/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/scripts/claim-boat-asset.test.mjs:29:1'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, open '/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/assets/raw/flotilla-material-atlas.png'"
+  code: 'ENOENT'
+  stack: |-
+    async open (node:internal/fs/promises:1360:25)
+    async readFile (node:internal/fs/promises:2149:14)
+    async TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/scripts/claim-boat-asset.test.mjs:34:92)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: boat follows its owner and reset, projects only a loaded deck, and disposes late loads
+ok 94 - boat follows its owner and reset, projects only a loaded deck, and disposes late loads
+  ---
+  duration_ms: 30.797792
+  type: 'test'
+  ...
+# Subtest: rendered deck equipment leaves every combat origin and owner position unchanged
+ok 95 - rendered deck equipment leaves every combat origin and owner position unchanged
+  ---
+  duration_ms: 8.193958
+  type: 'test'
+  ...
+# Subtest: three Flotilla bodies follow movement, loss and reset without changing the hull owner
+ok 96 - three Flotilla bodies follow movement, loss and reset without changing the hull owner
+  ---
+  duration_ms: 628.224083
+  type: 'test'
+  ...
+# Subtest: the claimed-spec -> owning-config map is DERIVED, not tabulated
+ok 97 - the claimed-spec -> owning-config map is DERIVED, not tabulated
+  ---
+  duration_ms: 17.623583
+  type: 'test'
+  ...
+# Subtest: derivation REFUSES rather than silently measuring nothing if the array is renamed
+ok 98 - derivation REFUSES rather than silently measuring nothing if the array is renamed
+  ---
+  duration_ms: 4.171292
+  type: 'test'
+  ...
+# Subtest: MANUFACTURED: a claimed spec whose owning config has NO npm caller is named
+ok 99 - MANUFACTURED: a claimed spec whose owning config has NO npm caller is named
+  ---
+  duration_ms: 4.941708
+  type: 'test'
+  ...
+# Subtest: a runnerless harness WARNS and never changes the exit code
+ok 100 - a runnerless harness WARNS and never changes the exit code
+  ---
+  duration_ms: 283.7835
+  type: 'test'
+  ...
+# Subtest: NO package.json is not the same as no caller — a synthetic root must stay silent
+ok 101 - NO package.json is not the same as no caller — a synthetic root must stay silent
+  ---
+  duration_ms: 211.891458
+  type: 'test'
+  ...
+# Subtest: MANUFACTURED: a bare playwright command naming a claimed spec FAILS the guard
+ok 102 - MANUFACTURED: a bare playwright command naming a claimed spec FAILS the guard
+  ---
+  duration_ms: 272.834792
+  type: 'test'
+  ...
+# Subtest: MANUFACTURED: a CHECKLIST-form adjacent-suite line FAILS the guard (why arm (b), not (a))
+ok 103 - MANUFACTURED: a CHECKLIST-form adjacent-suite line FAILS the guard (why arm (b), not (a))
+  ---
+  duration_ms: 283.289958
+  type: 'test'
+  ...
+# Subtest: MANUFACTURED: a mention inside the SELF-CHECK region FAILS the guard
+ok 104 - MANUFACTURED: a mention inside the SELF-CHECK region FAILS the guard
+  ---
+  duration_ms: 320.677666
+  type: 'test'
+  ...
+# Subtest: a DESCRIPTIVE mention outside any gate region is NOT an offender (why not arm (c))
+ok 105 - a DESCRIPTIVE mention outside any gate region is NOT an offender (why not arm (c))
+  ---
+  duration_ms: 125.462875
+  type: 'test'
+  ...
+# Subtest: naming the owning CONFIG clears the master
+ok 106 - naming the owning CONFIG clears the master
+  ---
+  duration_ms: 742.266708
+  type: 'test'
+  ...
+# Subtest: naming the npm ALIAS clears the master
+ok 107 - naming the npm ALIAS clears the master
+  ---
+  duration_ms: 2783.174709
+  type: 'test'
+  ...
+# Subtest: the guard actually RUNS when invoked as a script (entrypoint is not a silent no-op)
+ok 108 - the guard actually RUNS when invoked as a script (entrypoint is not a silent no-op)
+  ---
+  duration_ms: 2413.646625
+  type: 'test'
+  ...
+# Subtest: the live board has no LIVE offender
+ok 109 - the live board has no LIVE offender
+  ---
+  duration_ms: 3273.38975
+  type: 'test'
+  ...
+# Subtest: every grandfathered file is still a real offender (no stale excuses)
+ok 110 - every grandfathered file is still a real offender (no stale excuses)
+  ---
+  duration_ms: 975.410917
+  type: 'test'
+  ...
+# Subtest: the guard sets process.exitCode and never force-exits (F-2098-1)
+ok 111 - the guard sets process.exitCode and never force-exits (F-2098-1)
+  ---
+  duration_ms: 8.893916
+  type: 'test'
+  ...
+# (node:99873) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+# (Use `node --trace-warnings ...` to show where the warning was created)

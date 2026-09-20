@@ -1,0 +1,71 @@
+
+Running 4 tests using 1 worker
+
+[1/4] [desktop-chrome] › e2e/eight-winds-enemies.spec.ts:19:1 › plain boot sends an outlaw runner southwest on walkdiag row 0
+[2/4] [desktop-chrome] › e2e/eight-winds-enemies.spec.ts:39:1 › diagnostics drive thief northeast and Baron southwest on their correct rows
+  1) [desktop-chrome] › e2e/eight-winds-enemies.spec.ts:39:1 › diagnostics drive thief northeast and Baron southwest on their correct rows 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: page.waitForFunction: Test timeout of 60000ms exceeded.
+
+      62 |     if (enemy) window.__GR_TEST__?.teleport(enemy.x - 8, enemy.z + 8);
+      63 |   });
+    > 64 |   await page.waitForFunction(() => {
+         |              ^
+      65 |     const sprite = window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations['char.baron'];
+      66 |     const key = sprite?.sourceFrameKey ?? sprite?.frameKey ?? '';
+      67 |     return sprite?.clip === 'walk' && sprite.direction === 'sw'
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-rul-play/e2e/eight-winds-enemies.spec.ts:64:14
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/eight-winds-enemies-diagno-a12fd-hwest-on-their-correct-rows-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/eight-winds-enemies-diagno-a12fd-hwest-on-their-correct-rows-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/eight-winds-enemies-diagno-a12fd-hwest-on-their-correct-rows-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/eight-winds-enemies-diagno-a12fd-hwest-on-their-correct-rows-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[3/4] [mobile-chrome] › e2e/eight-winds-enemies.spec.ts:19:1 › plain boot sends an outlaw runner southwest on walkdiag row 0
+[4/4] [mobile-chrome] › e2e/eight-winds-enemies.spec.ts:39:1 › diagnostics drive thief northeast and Baron southwest on their correct rows
+  2) [mobile-chrome] › e2e/eight-winds-enemies.spec.ts:39:1 › diagnostics drive thief northeast and Baron southwest on their correct rows 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: page.waitForFunction: Test timeout of 60000ms exceeded.
+
+      62 |     if (enemy) window.__GR_TEST__?.teleport(enemy.x - 8, enemy.z + 8);
+      63 |   });
+    > 64 |   await page.waitForFunction(() => {
+         |              ^
+      65 |     const sprite = window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations['char.baron'];
+      66 |     const key = sprite?.sourceFrameKey ?? sprite?.frameKey ?? '';
+      67 |     return sprite?.clip === 'walk' && sprite.direction === 'sw'
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-rul-play/e2e/eight-winds-enemies.spec.ts:64:14
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/eight-winds-enemies-diagno-a12fd-hwest-on-their-correct-rows-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/eight-winds-enemies-diagno-a12fd-hwest-on-their-correct-rows-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/eight-winds-enemies-diagno-a12fd-hwest-on-their-correct-rows-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/eight-winds-enemies-diagno-a12fd-hwest-on-their-correct-rows-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  2 failed
+    [desktop-chrome] › e2e/eight-winds-enemies.spec.ts:39:1 › diagnostics drive thief northeast and Baron southwest on their correct rows 
+    [mobile-chrome] › e2e/eight-winds-enemies.spec.ts:39:1 › diagnostics drive thief northeast and Baron southwest on their correct rows 
+  2 passed (2.4m)

@@ -1,0 +1,682 @@
+(node:22279) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 52 tests using 1 worker
+
+
+(node:22349) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/52] [desktop-chrome] › e2e/e1-baron.spec.ts:317:1 › default contract does not preload Baron art
+[2/52] [desktop-chrome] › e2e/e1-baron.spec.ts:343:1 › contract board requires science plus two secured claims and always shows an earned medal
+[3/52] [desktop-chrome] › e2e/e1-baron.spec.ts:389:1 › board launch uses the live Baron contract for cadence and wave 20 spawn
+[4/52] [desktop-chrome] › e2e/e1-baron.spec.ts:411:1 › Baron manifest loads and taunts fire at waves 5, 12, and 18
+  1) [desktop-chrome] › e2e/e1-baron.spec.ts:411:1 › Baron manifest loads and taunts fire at waves 5, 12, and 18 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 1
+
+      Object {
+        "bannerAsset": "loaded",
+        "bannerSprites": 0,
+    -   "baronAnimationLoaded": true,
+    +   "baronAnimationLoaded": false,
+        "baronAsset": "loaded",
+        "baronSprites": 0,
+        "portraitSrc": null,
+      }
+
+    Call Log:
+    - Timeout 10000ms exceeded while waiting on the predicate
+
+      300 |       { timeout: 10_000 },
+      301 |     )
+    > 302 |     .toEqual({
+          |      ^
+      303 |       baronAsset: 'loaded',
+      304 |       bannerAsset: 'loaded',
+      305 |       baronAnimationLoaded: true,
+        at expectBaronPresentationPrefetched (/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-cells-art/e2e/e1-baron.spec.ts:302:6)
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-cells-art/e2e/e1-baron.spec.ts:414:9
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-baron-Baron-manifest-lo-b4ca0-s-fire-at-waves-5-12-and-18-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-baron-Baron-manifest-lo-b4ca0-s-fire-at-waves-5-12-and-18-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-baron-Baron-manifest-lo-b4ca0-s-fire-at-waves-5-12-and-18-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-baron-Baron-manifest-lo-b4ca0-s-fire-at-waves-5-12-and-18-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:22675) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[5/52] [desktop-chrome] › e2e/e1-baron.spec.ts:489:1 › wave 20 spawns the Baron with elite stats, banner, escorts, and stable seed data
+[6/52] [desktop-chrome] › e2e/e1-baron.spec.ts:526:1 › Baron damage visibly drains bar segments and the launcher stays carried
+[7/52] [desktop-chrome] › e2e/e1-baron.spec.ts:557:1 › standard rig damage defeats the Baron, doubles science, and persists the medal
+[8/52] [desktop-chrome] › e2e/e1-baron.spec.ts:607:1 › fast Baron kill preserves the queued arrival card before secure
+[9/52] [desktop-chrome] › e2e/e1-baron.spec.ts:644:1 › Baron art fallback keeps the placeholder path green when generated art fails
+[10/52] [desktop-chrome] › e2e/e1-baron.spec.ts:675:1 › same-frame overrun and Baron kill does not award the medal
+[11/52] [desktop-chrome] › e2e/e1-baron.spec.ts:704:1 › loss to the Baron contract remains the normal overrun ledger with no medal
+[12/52] [desktop-chrome] › e2e/e2-enemies.spec.ts:77:1 › E2 enemy roster is manifest-gated and leaves E1 default spawns untagged
+[13/52] [desktop-chrome] › e2e/e2-enemies.spec.ts:113:1 › wave pulses spawn Rail Toughs, Steam Wreckers, and Coal Thieves from E2 data
+  2) [desktop-chrome] › e2e/e2-enemies.spec.ts:113:1 › wave pulses spawn Rail Toughs, Steam Wreckers, and Coal Thieves from E2 data 
+
+    Error: expect(received).toBeCloseTo(expected, precision)
+
+    Expected: 37.9323
+    Received: 34.02
+
+    Expected precision:    4
+    Expected difference: < 0.00005
+    Received difference:   3.912299999999995
+
+      123 |   );
+      124 |   expect(railTough).toMatchObject({ variantLabel: 'Rail Tough', boltDamageMult: 0.65, scale: 1.16 });
+    > 125 |   expect(railTough.maxHp).toBeCloseTo(Balance.enemy.hp * waveHp * 1.35, 4);
+          |                           ^
+      126 |   expect(steamWrecker).toMatchObject({ variantLabel: 'Steam Wrecker', wrecker: true, scale: 1.28 });
+      127 |   expect(steamWrecker.maxHp).toBeCloseTo(Balance.enemy.hp * waveHp * 1.65, 4);
+      128 |   expect(steamWrecker.buildingDamage).toBeCloseTo(Balance.wreck.damage * 1.35, 4);
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-cells-art/e2e/e2-enemies.spec.ts:125:27
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e2-enemies-wave-pulses-spa-7d374-d-Coal-Thieves-from-E2-data-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e2-enemies-wave-pulses-spa-7d374-d-Coal-Thieves-from-E2-data-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e2-enemies-wave-pulses-spa-7d374-d-Coal-Thieves-from-E2-data-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e2-enemies-wave-pulses-spa-7d374-d-Coal-Thieves-from-E2-data-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[14/52] [desktop-chrome] › e2e/e2-enemies.spec.ts:135:1 › armored railcar arrives as three rail-bound boss components and degrades as parts fail
+[15/52] [desktop-chrome] › e2e/e2-enemies.spec.ts:243:1 › Coal Thief and Steam Wrecker behavior runs through E2 roster variants
+[16/52] [desktop-chrome] › e2e/e2-enemies.spec.ts:314:1 › same seed keeps the E2 roster wave deterministic
+  3) [desktop-chrome] › e2e/e2-enemies.spec.ts:314:1 › same seed keeps the E2 roster wave deterministic 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "e303a859e9eb9611ce3f1c4c3f13fedb029daa3a00d423b43c4947f25e722cd7"
+    Received: "4f6e92445271721221d46d8538399429b9e8e3dc3ce940a971d289438ee88f54"
+
+      315 |   const first = await e2WaveHash(browser, 'e2-enemies-deterministic');
+      316 |   const second = await e2WaveHash(browser, 'e2-enemies-deterministic');
+    > 317 |   expect(second.hash).toBe(first.hash);
+          |                       ^
+      318 |   expect(second.count).toBe(first.count);
+      319 | });
+      320 |
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-cells-art/e2e/e2-enemies.spec.ts:317:23
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e2-enemies-same-seed-keeps-the-E2-roster-wave-deterministic-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e2-enemies-same-seed-keeps-the-E2-roster-wave-deterministic-desktop-chrome/test-failed-2.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e2-enemies-same-seed-keeps-the-E2-roster-wave-deterministic-desktop-chrome/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e2-enemies-same-seed-keeps-the-E2-roster-wave-deterministic-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e2-enemies-same-seed-keeps-the-E2-roster-wave-deterministic-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[17/52] [desktop-chrome] › e2e/e2-enemies.spec.ts:321:1 › E2 enemies survive the 200-stress draw-call envelope
+[18/52] [desktop-chrome] › e2e/e2-hill-mine.spec.ts:75:1 › loads the locked Steamworks poster contract and ships the Hill Mine elevation table
+  4) [desktop-chrome] › e2e/e2-hill-mine.spec.ts:75:1 › loads the locked Steamworks poster contract and ships the Hill Mine elevation table 
+
+    Error: expect(received).toMatchObject(expected)
+
+    - Expected  - 3
+    + Received  + 2
+
+      Object {
+    -   "walkable": false,
+    -   "waterClass": "deep",
+    -   "zone": "river",
+    +   "walkable": true,
+    +   "zone": "bank",
+      }
+
+      121 |   expect(snapshot.bounds.mineMouth?.height ?? 0).toBeGreaterThan(4.5);
+      122 |   expect(snapshot.bounds.cliffFace?.traversable).toBe(false);
+    > 123 |   expect(snapshot.bounds.gallery).toMatchObject({ walkable: false, zone: 'river', waterClass: 'deep' });
+          |                                   ^
+      124 |   expect(snapshot.bounds.trestle).toMatchObject({ walkable: true, zone: 'ford', waterClass: 'wade' });
+      125 |
+      126 |   await page.evaluate(() => window.__GR_TEST__?.teleport(-6, 41));
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-cells-art/e2e/e2-hill-mine.spec.ts:123:35
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e2-hill-mine-loads-the-loc-cf657-e-Hill-Mine-elevation-table-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e2-hill-mine-loads-the-loc-cf657-e-Hill-Mine-elevation-table-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e2-hill-mine-loads-the-loc-cf657-e-Hill-Mine-elevation-table-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e2-hill-mine-loads-the-loc-cf657-e-Hill-Mine-elevation-table-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[19/52] [desktop-chrome] › e2e/e2-hill-mine.spec.ts:131:1 › Hill Mine render descriptor auto-activates mesh relief and leaves the flat claim fallback alone
+  5) [desktop-chrome] › e2e/e2-hill-mine.spec.ts:131:1 › Hill Mine render descriptor auto-activates mesh relief and leaves the flat claim fallback alone 
+
+    Error: expect(received).toBeCloseTo(expected, precision)
+
+    Expected: -0.5
+    Received: -0.45728564262390137
+
+    Expected precision:    5
+    Expected difference: < 0.000005
+    Received difference:   0.04271435737609863
+
+      164 |   });
+      165 |   for (const key of ['creek', 'railCut', 't1', 't2', 't3'] as const) {
+    > 166 |     expect(hill.visual[key]).toBeCloseTo(hill.sim[key], 5);
+          |                              ^
+      167 |   }
+      168 |   expect(hill.visual.t3 - hill.visual.railCut).toBeGreaterThan(4.25);
+      169 |
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-cells-art/e2e/e2-hill-mine.spec.ts:166:30
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e2-hill-mine-Hill-Mine-ren-a6e61-e-flat-claim-fallback-alone-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e2-hill-mine-Hill-Mine-ren-a6e61-e-flat-claim-fallback-alone-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e2-hill-mine-Hill-Mine-ren-a6e61-e-flat-claim-fallback-alone-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e2-hill-mine-Hill-Mine-ren-a6e61-e-flat-claim-fallback-alone-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[20/52] [desktop-chrome] › e2e/e2-hill-mine.spec.ts:184:1 › T2 high ground out-ranges the rail cut while the terrace face blocks bolts both ways
+  6) [desktop-chrome] › e2e/e2-hill-mine.spec.ts:184:1 › T2 high ground out-ranges the rail cut while the terrace face blocks bolts both ways 
+
+    Error: expect(received).toMatchObject(expected)
+
+    - Expected  - 1
+    + Received  + 3
+
+      Object {
+    -   "waterClass": "wade",
+    +   "speedMul": 1,
+    +   "walkable": true,
+    +   "zone": "bank",
+      }
+
+      208 |   expect(highGround.distance).toBeGreaterThan(16);
+      209 |   expect(highGround.turret?.height ?? 0).toBeGreaterThan(2.8);
+    > 210 |   expect(highGround.target).toMatchObject({ waterClass: 'wade' });
+          |                             ^
+      211 |   await shot(page, testInfo, 'high-turret-firing-long');
+      212 |
+      213 |   await page.goto(`${QUERY}&seed=hillmine-los-west-${testInfo.project.name}&timescale=8&nokill`);
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-cells-art/e2e/e2-hill-mine.spec.ts:210:29
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e2-hill-mine-T2-high-groun-917d9-face-blocks-bolts-both-ways-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e2-hill-mine-T2-high-groun-917d9-face-blocks-bolts-both-ways-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e2-hill-mine-T2-high-groun-917d9-face-blocks-bolts-both-ways-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e2-hill-mine-T2-high-groun-917d9-face-blocks-bolts-both-ways-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[21/52] [desktop-chrome] › e2e/e2-hill-mine.spec.ts:250:1 › bandits route switchbacks and flooded gallery depth blocks deep water but allows edge wading
+  7) [desktop-chrome] › e2e/e2-hill-mine.spec.ts:250:1 › bandits route switchbacks and flooded gallery depth blocks deep water but allows edge wading 
+
+    Error: expect(received).toMatchObject(expected)
+
+    - Expected  - 4
+    + Received  + 2
+
+      Object {
+    -   "walkable": false,
+    -   "waterClass": "deep",
+    -   "waterDepth": 1.25,
+    -   "zone": "river",
+    +   "walkable": true,
+    +   "zone": "bank",
+      }
+
+      282 |     edge: window.__GR_TEST__?.terrainSample(-12, 5.8),
+      283 |   }));
+    > 284 |   expect(water.deep).toMatchObject({ walkable: false, zone: 'river', waterClass: 'deep', waterDepth: 1.25 });
+          |                      ^
+      285 |   expect(water.trestle).toMatchObject({ walkable: true, zone: 'ford', waterClass: 'wade', speedMul: 0.8 });
+      286 |   expect(water.edge).toMatchObject({ walkable: true, zone: 'shallows', waterClass: 'wade', speedMul: 0.72 });
+      287 |
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-cells-art/e2e/e2-hill-mine.spec.ts:284:22
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e2-hill-mine-bandits-route-6d6e1-ater-but-allows-edge-wading-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e2-hill-mine-bandits-route-6d6e1-ater-but-allows-edge-wading-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e2-hill-mine-bandits-route-6d6e1-ater-but-allows-edge-wading-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e2-hill-mine-bandits-route-6d6e1-ater-but-allows-edge-wading-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[22/52] [desktop-chrome] › e2e/e2-hill-mine.spec.ts:318:1 › Hill Mine terrain simulation is deterministic for a seeded route
+[23/52] [desktop-chrome] › e2e/e2-hill-mine.spec.ts:334:1 › captures the Hill Mine relief before-after wide shot
+[24/52] [desktop-chrome] › e2e/e2-hill-mine.spec.ts:352:1 › Hill Mine 200-enemy stress stays inside envelope
+[25/52] [desktop-chrome] › e2e/eight-winds-enemies.spec.ts:19:1 › plain boot sends an outlaw runner southwest on walkdiag row 0
+[26/52] [desktop-chrome] › e2e/eight-winds-enemies.spec.ts:39:1 › diagnostics drive thief northeast and Baron southwest on their correct rows
+  8) [desktop-chrome] › e2e/eight-winds-enemies.spec.ts:39:1 › diagnostics drive thief northeast and Baron southwest on their correct rows 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: page.waitForFunction: Test timeout of 60000ms exceeded.
+
+      62 |     if (enemy) window.__GR_TEST__?.teleport(enemy.x - 8, enemy.z + 8);
+      63 |   });
+    > 64 |   await page.waitForFunction(() => {
+         |              ^
+      65 |     const sprite = window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations['char.baron'];
+      66 |     const key = sprite?.sourceFrameKey ?? sprite?.frameKey ?? '';
+      67 |     return sprite?.clip === 'walk' && sprite.direction === 'sw'
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-cells-art/e2e/eight-winds-enemies.spec.ts:64:14
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/eight-winds-enemies-diagno-a12fd-hwest-on-their-correct-rows-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/eight-winds-enemies-diagno-a12fd-hwest-on-their-correct-rows-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/eight-winds-enemies-diagno-a12fd-hwest-on-their-correct-rows-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/eight-winds-enemies-diagno-a12fd-hwest-on-their-correct-rows-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:28685) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[27/52] [mobile-chrome] › e2e/e1-baron.spec.ts:317:1 › default contract does not preload Baron art
+[28/52] [mobile-chrome] › e2e/e1-baron.spec.ts:343:1 › contract board requires science plus two secured claims and always shows an earned medal
+[29/52] [mobile-chrome] › e2e/e1-baron.spec.ts:389:1 › board launch uses the live Baron contract for cadence and wave 20 spawn
+[30/52] [mobile-chrome] › e2e/e1-baron.spec.ts:411:1 › Baron manifest loads and taunts fire at waves 5, 12, and 18
+  9) [mobile-chrome] › e2e/e1-baron.spec.ts:411:1 › Baron manifest loads and taunts fire at waves 5, 12, and 18 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 1
+
+      Object {
+        "bannerAsset": "loaded",
+        "bannerSprites": 0,
+    -   "baronAnimationLoaded": true,
+    +   "baronAnimationLoaded": false,
+        "baronAsset": "loaded",
+        "baronSprites": 0,
+        "portraitSrc": null,
+      }
+
+    Call Log:
+    - Timeout 10000ms exceeded while waiting on the predicate
+
+      300 |       { timeout: 10_000 },
+      301 |     )
+    > 302 |     .toEqual({
+          |      ^
+      303 |       baronAsset: 'loaded',
+      304 |       bannerAsset: 'loaded',
+      305 |       baronAnimationLoaded: true,
+        at expectBaronPresentationPrefetched (/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-cells-art/e2e/e1-baron.spec.ts:302:6)
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-cells-art/e2e/e1-baron.spec.ts:414:9
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-baron-Baron-manifest-lo-b4ca0-s-fire-at-waves-5-12-and-18-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-baron-Baron-manifest-lo-b4ca0-s-fire-at-waves-5-12-and-18-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-baron-Baron-manifest-lo-b4ca0-s-fire-at-waves-5-12-and-18-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-baron-Baron-manifest-lo-b4ca0-s-fire-at-waves-5-12-and-18-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:28970) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[31/52] [mobile-chrome] › e2e/e1-baron.spec.ts:489:1 › wave 20 spawns the Baron with elite stats, banner, escorts, and stable seed data
+[32/52] [mobile-chrome] › e2e/e1-baron.spec.ts:526:1 › Baron damage visibly drains bar segments and the launcher stays carried
+[33/52] [mobile-chrome] › e2e/e1-baron.spec.ts:557:1 › standard rig damage defeats the Baron, doubles science, and persists the medal
+[34/52] [mobile-chrome] › e2e/e1-baron.spec.ts:607:1 › fast Baron kill preserves the queued arrival card before secure
+[35/52] [mobile-chrome] › e2e/e1-baron.spec.ts:644:1 › Baron art fallback keeps the placeholder path green when generated art fails
+[36/52] [mobile-chrome] › e2e/e1-baron.spec.ts:675:1 › same-frame overrun and Baron kill does not award the medal
+[37/52] [mobile-chrome] › e2e/e1-baron.spec.ts:704:1 › loss to the Baron contract remains the normal overrun ledger with no medal
+[38/52] [mobile-chrome] › e2e/e2-enemies.spec.ts:77:1 › E2 enemy roster is manifest-gated and leaves E1 default spawns untagged
+[39/52] [mobile-chrome] › e2e/e2-enemies.spec.ts:113:1 › wave pulses spawn Rail Toughs, Steam Wreckers, and Coal Thieves from E2 data
+  10) [mobile-chrome] › e2e/e2-enemies.spec.ts:113:1 › wave pulses spawn Rail Toughs, Steam Wreckers, and Coal Thieves from E2 data 
+
+    Error: expect(received).toBeCloseTo(expected, precision)
+
+    Expected: 37.9323
+    Received: 34.02
+
+    Expected precision:    4
+    Expected difference: < 0.00005
+    Received difference:   3.912299999999995
+
+      123 |   );
+      124 |   expect(railTough).toMatchObject({ variantLabel: 'Rail Tough', boltDamageMult: 0.65, scale: 1.16 });
+    > 125 |   expect(railTough.maxHp).toBeCloseTo(Balance.enemy.hp * waveHp * 1.35, 4);
+          |                           ^
+      126 |   expect(steamWrecker).toMatchObject({ variantLabel: 'Steam Wrecker', wrecker: true, scale: 1.28 });
+      127 |   expect(steamWrecker.maxHp).toBeCloseTo(Balance.enemy.hp * waveHp * 1.65, 4);
+      128 |   expect(steamWrecker.buildingDamage).toBeCloseTo(Balance.wreck.damage * 1.35, 4);
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-cells-art/e2e/e2-enemies.spec.ts:125:27
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e2-enemies-wave-pulses-spa-7d374-d-Coal-Thieves-from-E2-data-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e2-enemies-wave-pulses-spa-7d374-d-Coal-Thieves-from-E2-data-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e2-enemies-wave-pulses-spa-7d374-d-Coal-Thieves-from-E2-data-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e2-enemies-wave-pulses-spa-7d374-d-Coal-Thieves-from-E2-data-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[40/52] [mobile-chrome] › e2e/e2-enemies.spec.ts:135:1 › armored railcar arrives as three rail-bound boss components and degrades as parts fail
+[41/52] [mobile-chrome] › e2e/e2-enemies.spec.ts:243:1 › Coal Thief and Steam Wrecker behavior runs through E2 roster variants
+[42/52] [mobile-chrome] › e2e/e2-enemies.spec.ts:314:1 › same seed keeps the E2 roster wave deterministic
+  11) [mobile-chrome] › e2e/e2-enemies.spec.ts:314:1 › same seed keeps the E2 roster wave deterministic 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "42d0f920a48a426142a50833f1dfb3f80f33df00b2e669c5038f6b95fd75b772"
+    Received: "79c20597d1b758fbc279423d60c8508d44fff58403c71a8d3d8b8cc7b27ec10a"
+
+      315 |   const first = await e2WaveHash(browser, 'e2-enemies-deterministic');
+      316 |   const second = await e2WaveHash(browser, 'e2-enemies-deterministic');
+    > 317 |   expect(second.hash).toBe(first.hash);
+          |                       ^
+      318 |   expect(second.count).toBe(first.count);
+      319 | });
+      320 |
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-cells-art/e2e/e2-enemies.spec.ts:317:23
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e2-enemies-same-seed-keeps-the-E2-roster-wave-deterministic-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e2-enemies-same-seed-keeps-the-E2-roster-wave-deterministic-mobile-chrome/test-failed-2.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e2-enemies-same-seed-keeps-the-E2-roster-wave-deterministic-mobile-chrome/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e2-enemies-same-seed-keeps-the-E2-roster-wave-deterministic-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e2-enemies-same-seed-keeps-the-E2-roster-wave-deterministic-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[43/52] [mobile-chrome] › e2e/e2-enemies.spec.ts:321:1 › E2 enemies survive the 200-stress draw-call envelope
+[44/52] [mobile-chrome] › e2e/e2-hill-mine.spec.ts:75:1 › loads the locked Steamworks poster contract and ships the Hill Mine elevation table
+  12) [mobile-chrome] › e2e/e2-hill-mine.spec.ts:75:1 › loads the locked Steamworks poster contract and ships the Hill Mine elevation table 
+
+    Error: expect(received).toMatchObject(expected)
+
+    - Expected  - 3
+    + Received  + 2
+
+      Object {
+    -   "walkable": false,
+    -   "waterClass": "deep",
+    -   "zone": "river",
+    +   "walkable": true,
+    +   "zone": "bank",
+      }
+
+      121 |   expect(snapshot.bounds.mineMouth?.height ?? 0).toBeGreaterThan(4.5);
+      122 |   expect(snapshot.bounds.cliffFace?.traversable).toBe(false);
+    > 123 |   expect(snapshot.bounds.gallery).toMatchObject({ walkable: false, zone: 'river', waterClass: 'deep' });
+          |                                   ^
+      124 |   expect(snapshot.bounds.trestle).toMatchObject({ walkable: true, zone: 'ford', waterClass: 'wade' });
+      125 |
+      126 |   await page.evaluate(() => window.__GR_TEST__?.teleport(-6, 41));
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-cells-art/e2e/e2-hill-mine.spec.ts:123:35
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e2-hill-mine-loads-the-loc-cf657-e-Hill-Mine-elevation-table-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e2-hill-mine-loads-the-loc-cf657-e-Hill-Mine-elevation-table-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e2-hill-mine-loads-the-loc-cf657-e-Hill-Mine-elevation-table-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e2-hill-mine-loads-the-loc-cf657-e-Hill-Mine-elevation-table-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[45/52] [mobile-chrome] › e2e/e2-hill-mine.spec.ts:131:1 › Hill Mine render descriptor auto-activates mesh relief and leaves the flat claim fallback alone
+  13) [mobile-chrome] › e2e/e2-hill-mine.spec.ts:131:1 › Hill Mine render descriptor auto-activates mesh relief and leaves the flat claim fallback alone 
+
+    Error: expect(received).toBeCloseTo(expected, precision)
+
+    Expected: -0.5
+    Received: -0.45728564262390137
+
+    Expected precision:    5
+    Expected difference: < 0.000005
+    Received difference:   0.04271435737609863
+
+      164 |   });
+      165 |   for (const key of ['creek', 'railCut', 't1', 't2', 't3'] as const) {
+    > 166 |     expect(hill.visual[key]).toBeCloseTo(hill.sim[key], 5);
+          |                              ^
+      167 |   }
+      168 |   expect(hill.visual.t3 - hill.visual.railCut).toBeGreaterThan(4.25);
+      169 |
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-cells-art/e2e/e2-hill-mine.spec.ts:166:30
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e2-hill-mine-Hill-Mine-ren-a6e61-e-flat-claim-fallback-alone-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e2-hill-mine-Hill-Mine-ren-a6e61-e-flat-claim-fallback-alone-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e2-hill-mine-Hill-Mine-ren-a6e61-e-flat-claim-fallback-alone-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e2-hill-mine-Hill-Mine-ren-a6e61-e-flat-claim-fallback-alone-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[46/52] [mobile-chrome] › e2e/e2-hill-mine.spec.ts:184:1 › T2 high ground out-ranges the rail cut while the terrace face blocks bolts both ways
+  14) [mobile-chrome] › e2e/e2-hill-mine.spec.ts:184:1 › T2 high ground out-ranges the rail cut while the terrace face blocks bolts both ways 
+
+    Error: expect(received).toMatchObject(expected)
+
+    - Expected  - 1
+    + Received  + 3
+
+      Object {
+    -   "waterClass": "wade",
+    +   "speedMul": 1,
+    +   "walkable": true,
+    +   "zone": "bank",
+      }
+
+      208 |   expect(highGround.distance).toBeGreaterThan(16);
+      209 |   expect(highGround.turret?.height ?? 0).toBeGreaterThan(2.8);
+    > 210 |   expect(highGround.target).toMatchObject({ waterClass: 'wade' });
+          |                             ^
+      211 |   await shot(page, testInfo, 'high-turret-firing-long');
+      212 |
+      213 |   await page.goto(`${QUERY}&seed=hillmine-los-west-${testInfo.project.name}&timescale=8&nokill`);
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-cells-art/e2e/e2-hill-mine.spec.ts:210:29
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e2-hill-mine-T2-high-groun-917d9-face-blocks-bolts-both-ways-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e2-hill-mine-T2-high-groun-917d9-face-blocks-bolts-both-ways-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e2-hill-mine-T2-high-groun-917d9-face-blocks-bolts-both-ways-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e2-hill-mine-T2-high-groun-917d9-face-blocks-bolts-both-ways-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[47/52] [mobile-chrome] › e2e/e2-hill-mine.spec.ts:250:1 › bandits route switchbacks and flooded gallery depth blocks deep water but allows edge wading
+  15) [mobile-chrome] › e2e/e2-hill-mine.spec.ts:250:1 › bandits route switchbacks and flooded gallery depth blocks deep water but allows edge wading 
+
+    Error: expect(received).toMatchObject(expected)
+
+    - Expected  - 4
+    + Received  + 2
+
+      Object {
+    -   "walkable": false,
+    -   "waterClass": "deep",
+    -   "waterDepth": 1.25,
+    -   "zone": "river",
+    +   "walkable": true,
+    +   "zone": "bank",
+      }
+
+      282 |     edge: window.__GR_TEST__?.terrainSample(-12, 5.8),
+      283 |   }));
+    > 284 |   expect(water.deep).toMatchObject({ walkable: false, zone: 'river', waterClass: 'deep', waterDepth: 1.25 });
+          |                      ^
+      285 |   expect(water.trestle).toMatchObject({ walkable: true, zone: 'ford', waterClass: 'wade', speedMul: 0.8 });
+      286 |   expect(water.edge).toMatchObject({ walkable: true, zone: 'shallows', waterClass: 'wade', speedMul: 0.72 });
+      287 |
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-cells-art/e2e/e2-hill-mine.spec.ts:284:22
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e2-hill-mine-bandits-route-6d6e1-ater-but-allows-edge-wading-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e2-hill-mine-bandits-route-6d6e1-ater-but-allows-edge-wading-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e2-hill-mine-bandits-route-6d6e1-ater-but-allows-edge-wading-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e2-hill-mine-bandits-route-6d6e1-ater-but-allows-edge-wading-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[48/52] [mobile-chrome] › e2e/e2-hill-mine.spec.ts:318:1 › Hill Mine terrain simulation is deterministic for a seeded route
+[49/52] [mobile-chrome] › e2e/e2-hill-mine.spec.ts:334:1 › captures the Hill Mine relief before-after wide shot
+[50/52] [mobile-chrome] › e2e/e2-hill-mine.spec.ts:352:1 › Hill Mine 200-enemy stress stays inside envelope
+[51/52] [mobile-chrome] › e2e/eight-winds-enemies.spec.ts:19:1 › plain boot sends an outlaw runner southwest on walkdiag row 0
+[52/52] [mobile-chrome] › e2e/eight-winds-enemies.spec.ts:39:1 › diagnostics drive thief northeast and Baron southwest on their correct rows
+  16) [mobile-chrome] › e2e/eight-winds-enemies.spec.ts:39:1 › diagnostics drive thief northeast and Baron southwest on their correct rows 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: page.waitForFunction: Test timeout of 60000ms exceeded.
+
+      62 |     if (enemy) window.__GR_TEST__?.teleport(enemy.x - 8, enemy.z + 8);
+      63 |   });
+    > 64 |   await page.waitForFunction(() => {
+         |              ^
+      65 |     const sprite = window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations['char.baron'];
+      66 |     const key = sprite?.sourceFrameKey ?? sprite?.frameKey ?? '';
+      67 |     return sprite?.clip === 'walk' && sprite.direction === 'sw'
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-cells-art/e2e/eight-winds-enemies.spec.ts:64:14
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/eight-winds-enemies-diagno-a12fd-hwest-on-their-correct-rows-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/eight-winds-enemies-diagno-a12fd-hwest-on-their-correct-rows-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/eight-winds-enemies-diagno-a12fd-hwest-on-their-correct-rows-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/eight-winds-enemies-diagno-a12fd-hwest-on-their-correct-rows-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  16 failed
+    [desktop-chrome] › e2e/e1-baron.spec.ts:411:1 › Baron manifest loads and taunts fire at waves 5, 12, and 18 
+    [desktop-chrome] › e2e/e2-enemies.spec.ts:113:1 › wave pulses spawn Rail Toughs, Steam Wreckers, and Coal Thieves from E2 data 
+    [desktop-chrome] › e2e/e2-enemies.spec.ts:314:1 › same seed keeps the E2 roster wave deterministic 
+    [desktop-chrome] › e2e/e2-hill-mine.spec.ts:75:1 › loads the locked Steamworks poster contract and ships the Hill Mine elevation table 
+    [desktop-chrome] › e2e/e2-hill-mine.spec.ts:131:1 › Hill Mine render descriptor auto-activates mesh relief and leaves the flat claim fallback alone 
+    [desktop-chrome] › e2e/e2-hill-mine.spec.ts:184:1 › T2 high ground out-ranges the rail cut while the terrace face blocks bolts both ways 
+    [desktop-chrome] › e2e/e2-hill-mine.spec.ts:250:1 › bandits route switchbacks and flooded gallery depth blocks deep water but allows edge wading 
+    [desktop-chrome] › e2e/eight-winds-enemies.spec.ts:39:1 › diagnostics drive thief northeast and Baron southwest on their correct rows 
+    [mobile-chrome] › e2e/e1-baron.spec.ts:411:1 › Baron manifest loads and taunts fire at waves 5, 12, and 18 
+    [mobile-chrome] › e2e/e2-enemies.spec.ts:113:1 › wave pulses spawn Rail Toughs, Steam Wreckers, and Coal Thieves from E2 data 
+    [mobile-chrome] › e2e/e2-enemies.spec.ts:314:1 › same seed keeps the E2 roster wave deterministic 
+    [mobile-chrome] › e2e/e2-hill-mine.spec.ts:75:1 › loads the locked Steamworks poster contract and ships the Hill Mine elevation table 
+    [mobile-chrome] › e2e/e2-hill-mine.spec.ts:131:1 › Hill Mine render descriptor auto-activates mesh relief and leaves the flat claim fallback alone 
+    [mobile-chrome] › e2e/e2-hill-mine.spec.ts:184:1 › T2 high ground out-ranges the rail cut while the terrace face blocks bolts both ways 
+    [mobile-chrome] › e2e/e2-hill-mine.spec.ts:250:1 › bandits route switchbacks and flooded gallery depth blocks deep water but allows edge wading 
+    [mobile-chrome] › e2e/eight-winds-enemies.spec.ts:39:1 › diagnostics drive thief northeast and Baron southwest on their correct rows 
+  3 skipped
+  33 passed (8.2m)

@@ -1,0 +1,145 @@
+[
+  {
+    "project": "desktop-chrome",
+    "test": "e2e/e5-flotilla-hulls.spec.ts:6:1 \u203a the Flotilla keeps three losable hulls and secures both bench seeds deterministically",
+    "details": [
+      "Error: expect(received).toMatchObject(expected)",
+      "-   \"eventLogHash\": \"fnv1a32:a9f33e48\",",
+      "+   \"eventLogHash\": \"fnv1a32:c01dd739\","
+    ]
+  },
+  {
+    "project": "desktop-chrome",
+    "test": "e2e/e5-flotilla-hulls.spec.ts:118:1 \u203a idle Flotilla runs lose all hulls",
+    "details": [
+      "Error: expect(received).toMatchObject(expected)",
+      "-   \"eventLogHash\": \"fnv1a32:68d87963\",",
+      "+   \"eventLogHash\": \"fnv1a32:815739a6\","
+    ]
+  },
+  {
+    "project": "desktop-chrome",
+    "test": "e2e/e5-regatta-race.spec.ts:35:1 \u203a the Regatta runs its authored course and secures both bench seeds deterministically",
+    "details": [
+      "Error: expect(received).toBe(expected) // Object.is equality",
+      "Expected: true",
+      "Received: false"
+    ]
+  },
+  {
+    "project": "desktop-chrome",
+    "test": "e2e/e5-regatta-race.spec.ts:141:1 \u203a idle Regatta runs lose because the course remains unfinished",
+    "details": [
+      "Error: expect(received).toMatchObject(expected)",
+      "-   \"eventLogHash\": \"fnv1a32:80b36bec\",",
+      "+   \"eventLogHash\": \"fnv1a32:d461683d\","
+    ]
+  },
+  {
+    "project": "desktop-chrome",
+    "test": "e2e/e5-stillwater-noise.spec.ts:181:1 \u203a Stillwater SECURES both bench seeds twice through the PLAIN door",
+    "details": [
+      "Error: expect(received).toMatchObject(expected)",
+      "-   \"eventLogHash\": \"fnv1a32:7661ca43\",",
+      "-   \"kills\": 103,",
+      "+   \"eventLogHash\": \"fnv1a32:e5c6d612\",",
+      "+   \"kills\": 391,"
+    ]
+  },
+  {
+    "project": "desktop-chrome",
+    "test": "e2e/e5-stillwater-noise.spec.ts:208:1 \u203a the same play through the in-process door agrees, and the decks survive with margin",
+    "details": [
+      "Error: expect(received).toMatchObject(expected)",
+      "-   \"eventLogHash\": \"fnv1a32:4e99e655\",",
+      "+   \"eventLogHash\": \"fnv1a32:e5c6d612\",",
+      "-     \"strikes\": 77,",
+      "+     \"strikes\": 64,"
+    ]
+  },
+  {
+    "project": "desktop-chrome",
+    "test": "e2e/e5-stillwater-noise.spec.ts:251:1 \u203a idle Stillwater runs stay silent and still lose",
+    "details": [
+      "Error: expect(received).toMatchObject(expected)",
+      "-   \"eventLogHash\": \"fnv1a32:ba80f970\",",
+      "+   \"eventLogHash\": \"fnv1a32:c212c318\","
+    ]
+  },
+  {
+    "project": "mobile-chrome",
+    "test": "e2e/e5-deepwater-claim.spec.ts:99:1 \u203a shows the active run wave in Deepwater and WaveSystem contracts",
+    "details": [
+      "Error: expect(received).toEqual(expected) // deep equality",
+      "+   \"THREE.GLTFLoader: Couldn't load texture blob:http://127.0.0.1:5303/0d823734-0e9d-4336-aea6-9ba5f3e6bc66\",",
+      "+ ]"
+    ]
+  },
+  {
+    "project": "mobile-chrome",
+    "test": "e2e/e5-flotilla-hulls.spec.ts:6:1 \u203a the Flotilla keeps three losable hulls and secures both bench seeds deterministically",
+    "details": [
+      "Error: expect(received).toMatchObject(expected)",
+      "-   \"eventLogHash\": \"fnv1a32:a9f33e48\",",
+      "+   \"eventLogHash\": \"fnv1a32:c01dd739\","
+    ]
+  },
+  {
+    "project": "mobile-chrome",
+    "test": "e2e/e5-flotilla-hulls.spec.ts:118:1 \u203a idle Flotilla runs lose all hulls",
+    "details": [
+      "Error: expect(received).toMatchObject(expected)",
+      "-   \"eventLogHash\": \"fnv1a32:68d87963\",",
+      "+   \"eventLogHash\": \"fnv1a32:815739a6\","
+    ]
+  },
+  {
+    "project": "mobile-chrome",
+    "test": "e2e/e5-regatta-race.spec.ts:35:1 \u203a the Regatta runs its authored course and secures both bench seeds deterministically",
+    "details": [
+      "Error: expect(received).toBe(expected) // Object.is equality",
+      "Expected: true",
+      "Received: false"
+    ]
+  },
+  {
+    "project": "mobile-chrome",
+    "test": "e2e/e5-regatta-race.spec.ts:141:1 \u203a idle Regatta runs lose because the course remains unfinished",
+    "details": [
+      "Error: expect(received).toMatchObject(expected)",
+      "-   \"eventLogHash\": \"fnv1a32:80b36bec\",",
+      "+   \"eventLogHash\": \"fnv1a32:d461683d\","
+    ]
+  },
+  {
+    "project": "mobile-chrome",
+    "test": "e2e/e5-stillwater-noise.spec.ts:181:1 \u203a Stillwater SECURES both bench seeds twice through the PLAIN door",
+    "details": [
+      "Error: expect(received).toMatchObject(expected)",
+      "-   \"eventLogHash\": \"fnv1a32:7661ca43\",",
+      "-   \"kills\": 103,",
+      "+   \"eventLogHash\": \"fnv1a32:e5c6d612\",",
+      "+   \"kills\": 391,"
+    ]
+  },
+  {
+    "project": "mobile-chrome",
+    "test": "e2e/e5-stillwater-noise.spec.ts:208:1 \u203a the same play through the in-process door agrees, and the decks survive with margin",
+    "details": [
+      "Error: expect(received).toMatchObject(expected)",
+      "-   \"eventLogHash\": \"fnv1a32:4e99e655\",",
+      "+   \"eventLogHash\": \"fnv1a32:e5c6d612\",",
+      "-     \"strikes\": 77,",
+      "+     \"strikes\": 64,"
+    ]
+  },
+  {
+    "project": "mobile-chrome",
+    "test": "e2e/e5-stillwater-noise.spec.ts:251:1 \u203a idle Stillwater runs stay silent and still lose",
+    "details": [
+      "Error: expect(received).toMatchObject(expected)",
+      "-   \"eventLogHash\": \"fnv1a32:ba80f970\",",
+      "+   \"eventLogHash\": \"fnv1a32:c212c318\","
+    ]
+  }
+]

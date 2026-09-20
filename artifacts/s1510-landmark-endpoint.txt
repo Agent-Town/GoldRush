@@ -1,0 +1,51 @@
+gate battery transcript (append-only — see scripts/gate-battery.mjs)
+
+
+######## BATTERY 2026-08-06T22:43:13.214Z — s1510 landmark-routing proven-green endpoint probe @1761da401 ########
+cwd=/Users/robin/Claude/Projects/Gold Rush/gate-s1510
+env+ GR_CAPTURE_BASE_URL=http://127.0.0.1:5234
+
+===== landmark-collision @1761da401 =====
+$ npx playwright test e2e/landmark-collision.spec.ts --reporter=line --workers=1
+rc=1 20.4s
+Error: Timed out waiting 20000ms from config.webServer.
+
+
+
+SUMMARY {"landmark-collision @1761da401":1}
+OVERALL rc=1
+
+
+######## BATTERY 2026-08-06T22:44:11.004Z — s1510 landmark proven-green endpoint @1761da401 ########
+cwd=/Users/robin/Claude/Projects/Gold Rush/gate-s1510
+env+ GR_CAPTURE_EXTERNAL_SERVER=1 GR_CAPTURE_BASE_URL=http://127.0.0.1:5234
+
+===== landmark-collision @1761da401 =====
+$ npx playwright test e2e/landmark-collision.spec.ts --reporter=line --workers=1
+rc=0 57.2s
+
+Running 10 tests using 1 worker
+
+
+[1/10] [desktop-chrome] › e2e/landmark-collision.spec.ts:52:1 › authored footprints stop the hero on The Claim and a county map while an unfootprinted mount stays walkable
+[2/10] [desktop-chrome] › e2e/landmark-collision.spec.ts:68:1 › enemy blocker routing is deterministic and goes around a county landmark
+[3/10] [desktop-chrome] › e2e/landmark-collision.spec.ts:121:1 › Town chapel and Pan Monument are solid and default 3D renders exactly one monument
+[4/10] [desktop-chrome] › e2e/landmark-collision.spec.ts:144:1 › a failed 3D prop load keeps the legacy Pan Monument visible and solid
+[5/10] [desktop-chrome] › e2e/landmark-collision.spec.ts:157:1 › later-era modeled plaza props use their authored Town footprints
+
+[6/10] [mobile-chrome] › e2e/landmark-collision.spec.ts:52:1 › authored footprints stop the hero on The Claim and a county map while an unfootprinted mount stays walkable
+[7/10] [mobile-chrome] › e2e/landmark-collision.spec.ts:68:1 › enemy blocker routing is deterministic and goes around a county landmark
+[8/10] [mobile-chrome] › e2e/landmark-collision.spec.ts:121:1 › Town chapel and Pan Monument are solid and default 3D renders exactly one monument
+[9/10] [mobile-chrome] › e2e/landmark-collision.spec.ts:144:1 › a failed 3D prop load keeps the legacy Pan Monument visible and solid
+[10/10] [mobile-chrome] › e2e/landmark-collision.spec.ts:157:1 › later-era modeled plaza props use their authored Town footprints
+  10 passed (56.8s)
+(node:4426) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:4427) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:4569) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+SUMMARY {"landmark-collision @1761da401":0}
+OVERALL rc=0

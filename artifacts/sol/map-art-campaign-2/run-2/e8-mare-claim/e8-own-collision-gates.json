@@ -1,0 +1,19 @@
+{
+  "exit": 0,
+  "command": [
+    "npx",
+    "playwright",
+    "test",
+    "--workers=1",
+    "--project=desktop-chrome",
+    "--project=mobile-chrome",
+    "--trace=off",
+    "--reporter=line",
+    "--output=artifacts/sol/map-art-campaign-2/_raw/run-2/e8-own-collision",
+    "e2e/e8-mare-claim-physics-parity.spec.ts",
+    "e2e/landmark-collision.spec.ts",
+    "e2e/fort-landmark-collision.spec.ts"
+  ],
+  "log": "artifacts/sol/map-art-campaign-2/_raw/run-2/e8-own-collision.log",
+  "seconds": 134.16903805732727
+}

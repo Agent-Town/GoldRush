@@ -1,0 +1,38 @@
+[
+  {
+    "name": "tsc",
+    "command": [
+      "npx",
+      "tsc",
+      "--noEmit"
+    ],
+    "exit": 0,
+    "seconds": 12.96,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-2/tsc.log",
+    "release": null
+  },
+  {
+    "name": "build",
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "exit": 0,
+    "seconds": 45.2,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-2/build.log",
+    "release": null
+  },
+  {
+    "name": "full-build",
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "exit": 0,
+    "seconds": 50.4,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-2/full-build.log",
+    "release": "full"
+  }
+]

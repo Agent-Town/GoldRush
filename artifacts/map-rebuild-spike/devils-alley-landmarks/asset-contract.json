@@ -1,0 +1,105 @@
+{
+  "law": "reuse > derive > build-new; era-stamped; grit-dressed",
+  "packs": {
+    "devils-alley": {
+      "era": 9,
+      "atlasSha256": "d4a8511eeb3b9bbbe9a61ea4e61db8ae0a6a690f7af87724cd1a85fba227af29",
+      "assets": {
+        "south-anchor-gate": {
+          "sourceTier": "derive",
+          "triangles": 676,
+          "sha256": "c69349a8c9adf1e4b974eb5b4f622cb1f172837a8dde5da7ea2232b39ca1edf4",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "west-wind-anchor": {
+          "sourceTier": "reuse",
+          "triangles": 752,
+          "sha256": "bae4c77b7f2af8495a075f539f4c9f748b5d22320787423dbd2d6b0a22579899",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "center-wind-anchor": {
+          "sourceTier": "derive",
+          "triangles": 848,
+          "sha256": "bb713de3de3dc113123db50214a917763b18f9438b01b03cf4af72b2ba8dcd2f",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "east-wind-anchor": {
+          "sourceTier": "derive",
+          "triangles": 944,
+          "sha256": "2a45d1690ed5efde68217a489165f6bbdf3a478057d8761749df51513198091d",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "north-anchor-gate": {
+          "sourceTier": "derive",
+          "triangles": 700,
+          "sha256": "42ef6ec52049237a63dcf9c5f65302cb5bc99870eb8687937a2fdae78a1111a9",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        }
+      }
+    }
+  },
+  "totals": {
+    "packs": 1,
+    "assets": 5,
+    "sourceTiers": {
+      "reuse": 1,
+      "derive": 4,
+      "build-new": 0
+    }
+  },
+  "boards": {
+    "devils-alley-landmarks-turntable.png": {
+      "size": [
+        1920,
+        1160
+      ],
+      "sha256": "14bda8db63404dc4ed24e5f02aa94c57b7cbb9229b6b95bbd5d79819d336fe4a"
+    },
+    "devils-alley-landmarks-verdict.png": {
+      "size": [
+        1920,
+        1008
+      ],
+      "sha256": "9c32b115ad9c47191a70a7abcc2584fbd6ec234f543925481ff490938633e1a4"
+    },
+    "devils-alley-landmarks-pack.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "27ea0a1d78d111b891dbdb02a1d0cd5f7e28e56e90ffc0a1b805e96538acb1a5"
+    },
+    "devils-alley-landmarks-mounted.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "197f6d2ff251c4adad9fe0669bb863a0f0d9535d46e7e49006e8cc4609d7a75d"
+    },
+    "devils-alley-landmarks-mounted-overview.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "8c522505a665f935556e211a6dbd8864d06b67941b5d67cbd7c7e40942760ae6"
+    },
+    "devils-alley-landmarks-clearance-overlay.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "b75507cda1311d3b4c5a91745fa6e9a261c42d9abf6de7b4af9bd2952366225d"
+    }
+  },
+  "simulation": "unchanged; every landmark is a separate render-only GLB mounted by contract"
+}

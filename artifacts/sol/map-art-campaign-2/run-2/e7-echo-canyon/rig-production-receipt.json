@@ -1,0 +1,29 @@
+[
+  {
+    "phase": "production",
+    "exit": 0,
+    "command": [
+      "npx",
+      "playwright",
+      "test",
+      "e2e/landmark-brightness.spec.ts",
+      "--grep",
+      "reference rig",
+      "--workers=1",
+      "--project=desktop-chrome",
+      "--project=mobile-chrome",
+      "--trace=off",
+      "--reporter=line"
+    ],
+    "query": "&epoch=epoch-7-signal",
+    "seconds": 38.175633907318115,
+    "files": [
+      "campaign2-e7-echo-canyon-production-mobile-chrome.json",
+      "campaign2-e7-echo-canyon-production-e7-relay-rush-mobile-chrome.png",
+      "campaign2-e7-echo-canyon-production-desktop-chrome.json",
+      "campaign2-e7-echo-canyon-production-e7-relay-rush-desktop-chrome.png",
+      "campaign2-e7-echo-canyon-production-e7-echo-canyon-mobile-chrome.png",
+      "campaign2-e7-echo-canyon-production-e7-echo-canyon-desktop-chrome.png"
+    ]
+  }
+]

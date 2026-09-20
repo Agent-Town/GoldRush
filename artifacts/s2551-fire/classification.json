@@ -1,0 +1,10 @@
+{
+  "base": "6f6675de6830ad5d0742bf1c9580b86f426da2d0",
+  "reachTip": "7f6d4065926d8f3055db265ca114d5b602882a46",
+  "goldTip": "ffac3a697ee37c01e24fe16a36b70b2a1fc145c6",
+  "candidate": "b8c94406dde131168217e59a190ec7f953013aa0",
+  "worktree": "/private/tmp/gr-gate-s2551",
+  "sourceDiff": "artifacts/rider-parity-reach-stage3/report.md |  67 ++++++++++++++\n scripts/board-tape-gold.test.mjs              |  58 ++++--------\n scripts/rider-parity-reach.test.mjs           | 123 ++++++++++++++++++--------\n 3 files changed, 169 insertions(+), 79 deletions(-)",
+  "mainStatus": "M logs/.blocked-seen\n M logs/.goal-tree.html\n M logs/dashboard.html\n M logs/factory-usage.json\n M logs/task-stats.jsonl\n M logs/usage-history.jsonl\n M scripts/board-tape-gold.test.mjs\n?? .claude/cache/\n?? .claude/skills/higgsfield-brandkit/\n?? .claude/skills/higgsfield-generate/\n?? artifacts/deploy-budget-production-probe/\n?? logs/.health-state\n?? logs/guard-stats.jsonl\n?? logs/runs-archive/traces/\n?? skills-lock.json\n?? tasks/queue-paused/",
+  "policy": "Explicit disjoint-pair exception: test source files are disjoint; neither changes runtime inputs read by the other; full union gates on one detached candidate."
+}

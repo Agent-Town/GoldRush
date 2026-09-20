@@ -1,0 +1,11 @@
+# s2541 handoff — writer candidate held for current board-gold fixtures
+
+The saved candidate is `44fd2661f345f25c9d9099359ff405eabd6b641e`, on origin `save/chapter-evidence-s2541`, parent main `c03903e3a1905e26d91914532154fc014b699781`. Seven writer changes only; source lane tip `386e129f714e634d9a2a9a18f31f8afa9f08f0fd` and its done-move remain untouched. Do not copy the old lane's Moth JSON over main.
+
+The complete Node command ran alone on Node 26.4.0 and failed after 818.1 s: first group 742 tests / 736 pass / 1 fail / 5 explicit skips. Its chained tail did not run. The single top-level failure is the fixture sweep's board-gold child: three old tapes name retired positioning verbs. The unchanged candidate parent reproduces all three malformed-tape errors (0/3, 4.06 s). This is F-2541-1, not a writer regression and not an excuse to mark the command green.
+
+Next: drain `main-board-gold-current-grammar.md` when its MAIN-slot output exists. It must restore three positive held-purse comparisons with current recordings while preserving the historic fixtures. Then reclassify the saved seven writer changes against main. The prior full Node result remains red; it is not acceptance for the corrective. Run the complete Node command after that correction, including its chained tail. Preserve the exact tree/result association.
+
+Still owed for the writer drain: all six chapter suites on both Chromium projects, task-025/M1/M2 adjacency (fresh unchanged-base control for any known red), plain desktop/390px boot with zero console/page errors, chapter explicit-refresh behavior, and changed-since auxiliary gates. Typecheck/build pass here, all four Moth tests pass in the first Node group, explicit Moth refresh passes 1/1, and all 51 retained artifacts remain unchanged. Evidence is in this directory and the review; historical s2537 browser results are not current acceptance.
+
+Both existing chapter/M1 done-moves remain live drain candidates. No refills on their held lanes. No gameplay code merged, so deploy is not owed. Do not touch foreign telemetry, heat output, or lane-d screenshot dirt. All 55 owner-desk items are carried without a new owner question. Retention and daily-duty dispositions are in `retention-judgment.md`.

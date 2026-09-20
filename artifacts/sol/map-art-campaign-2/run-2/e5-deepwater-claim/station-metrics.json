@@ -1,0 +1,42 @@
+{
+  "quiet-water": {
+    "box": [
+      250,
+      180,
+      450,
+      280
+    ],
+    "method": "Grayscale RMS against Gaussian blur radius 3. Same page and camera, frozen simulation, flowing render water; spatial detail telemetry, not an animation-quality score.",
+    "before": {
+      "meanLuma": 47.53725,
+      "textureRms": 1.8603494295427405,
+      "sourceFile": "before-final-station-drowned-office-1280.png"
+    },
+    "after": {
+      "meanLuma": 44.23695,
+      "textureRms": 0.7055494312945054,
+      "sourceFile": "after-final-station-drowned-office-1280.png"
+    },
+    "rmsChangePercent": -62.074359790143085
+  },
+  "submerged-roof": {
+    "box": [
+      620,
+      304,
+      683,
+      332
+    ],
+    "method": "Grayscale RMS against Gaussian blur radius 3. Same page and camera, frozen simulation, flowing render water; spatial detail telemetry, not an animation-quality score.",
+    "before": {
+      "meanLuma": 47.49603174603175,
+      "textureRms": 2.843618786063546,
+      "sourceFile": "before-final-station-drowned-office-1280.png"
+    },
+    "after": {
+      "meanLuma": 48.11167800453515,
+      "textureRms": 3.4664736994959378,
+      "sourceFile": "after-final-station-drowned-office-1280.png"
+    },
+    "rmsChangePercent": 21.903601020114838
+  }
+}

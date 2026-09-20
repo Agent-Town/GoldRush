@@ -1,0 +1,52 @@
+(node:11244) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 3 tests using 1 worker
+
+
+(node:11291) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:11291) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[1/3] [desktop-chrome] › e2e/mp-02-lockstep.spec.ts:36:1 › two clients advance 500 ticks with identical lockstep hashes
+[2/3] [desktop-chrome] › e2e/mp-02-lockstep.spec.ts:67:1 › hash mismatch pauses, shows the wire card, and restores from relay snapshot
+  1) [desktop-chrome] › e2e/mp-02-lockstep.spec.ts:67:1 › hash mismatch pauses, shows the wire card, and restores from relay snapshot
+
+    TimeoutError: page.waitForFunction: Timeout 20000ms exceeded.
+
+      79 |       return state && state.tick >= 110 && state.desyncs >= 1 && state.resyncs >= 1;
+      80 |     }, undefined, { timeout: 20_000 });
+    > 81 |     await bob.waitForFunction(() => {
+         |               ^
+      82 |       const state = window.__GR_MP__?.state();
+      83 |       return state && state.tick >= 110 && state.desyncs >= 1 && state.resyncs >= 1;
+      84 |     }, undefined, { timeout: 20_000 });
+        at /Users/robin/.codex/worktrees/fixed-step-unification/Gold Rush/e2e/mp-02-lockstep.spec.ts:81:15
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/mp-02-lockstep-hash-mismat-855a7-estores-from-relay-snapshot-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/mp-02-lockstep-hash-mismat-855a7-estores-from-relay-snapshot-desktop-chrome/test-failed-2.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/mp-02-lockstep-hash-mismat-855a7-estores-from-relay-snapshot-desktop-chrome/error-context.md
+
+    Error Context: test-results/mp-02-lockstep-hash-mismat-855a7-estores-from-relay-snapshot-desktop-chrome/error-context.md
+
+    attachment #5: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/mp-02-lockstep-hash-mismat-855a7-estores-from-relay-snapshot-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/mp-02-lockstep-hash-mismat-855a7-estores-from-relay-snapshot-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[3/3] [desktop-chrome] › e2e/mp-02-lockstep.spec.ts:105:1 › two clients promote both roster slots to real local-camera heroes and shared run credit
+  1 failed
+    [desktop-chrome] › e2e/mp-02-lockstep.spec.ts:67:1 › hash mismatch pauses, shows the wire card, and restores from relay snapshot
+  1 did not run
+  1 passed (54.9s)

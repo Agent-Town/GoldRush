@@ -1,0 +1,131 @@
+WITHHELD EVIDENCE AUDIT — paths lane-runner-v3 declined to commit
+
+  corpus                  : read (374 run log(s) read)
+  dir                     : /Users/robin/Claude/Projects/Gold Rush/tasks/runs
+  runs that withheld      : 5
+  withheld rows           : 112  (58 distinct path(s))
+
+                                 rows   distinct
+  TRACKED  (on main)              3          3
+  IN-GIT   (another ref)          0          0
+  ON-DISK  (untracked, HERE)      0          0
+  LOST     (no ref, no disk)    109         55
+
+  20260812-103037-lane-d-lane-d-f1700-1-runner-delta-autocommit.md.log
+     ON-DISK 0 · LOST 1
+        LOST        base-b
+  20260902-071130-lane-b-gauntlet-heat10-r2.md.log
+     ON-DISK 0 · LOST 54
+        LOST        artifacts/gauntlet-heat10-r2-20260902/author-controller.mjs
+        LOST        artifacts/gauntlet-heat10-r2-20260902/build-submission.mjs
+        LOST        artifacts/gauntlet-heat10-r2-20260902/controller-runner.mjs
+        LOST        artifacts/gauntlet-heat10-r2-20260902/first-view-e1-baron.json
+        LOST        artifacts/gauntlet-heat10-r2-20260902/first-view-e1-night-shift.json
+        LOST        artifacts/gauntlet-heat10-r2-20260902/first-view-e2-hill-mine.json
+        LOST        artifacts/gauntlet-heat10-r2-20260902/first-view-the-claim.json
+        LOST        artifacts/gauntlet-heat10-r2-20260902/first-view.mjs
+        LOST        artifacts/gauntlet-heat10-r2-20260902/pi/charter.md
+        LOST        artifacts/gauntlet-heat10-r2-20260902/pi/e1-night-shift/attempt-1.outcome.json
+        LOST        artifacts/gauntlet-heat10-r2-20260902/pi/e1-night-shift/attempt-1.tape.json
+        LOST        artifacts/gauntlet-heat10-r2-20260902/pi/e1-night-shift/attempt-1.transcript.log
+        LOST        artifacts/gauntlet-heat10-r2-20260902/pi/e1-night-shift/attempt-2.outcome.json
+        LOST        artifacts/gauntlet-heat10-r2-20260902/pi/e1-night-shift/attempt-2.tape.json
+        LOST        artifacts/gauntlet-heat10-r2-20260902/pi/e1-night-shift/attempt-2.transcript.log
+        LOST        artifacts/gauntlet-heat10-r2-20260902/pi/e1-night-shift/attempt-3.outcome.json
+        LOST        artifacts/gauntlet-heat10-r2-20260902/pi/e1-night-shift/attempt-3.tape.json
+        LOST        artifacts/gauntlet-heat10-r2-20260902/pi/e1-night-shift/attempt-3.transcript.log
+        LOST        artifacts/gauntlet-heat10-r2-20260902/pi/e1-night-shift/author-1.transcript.txt
+        LOST        artifacts/gauntlet-heat10-r2-20260902/pi/e1-night-shift/author-2.transcript.txt
+        LOST        artifacts/gauntlet-heat10-r2-20260902/pi/e1-night-shift/author-3.transcript.txt
+        LOST        artifacts/gauntlet-heat10-r2-20260902/pi/e1-night-shift/controller-1.mjs
+        LOST        artifacts/gauntlet-heat10-r2-20260902/pi/e1-night-shift/controller-2.mjs
+        LOST        artifacts/gauntlet-heat10-r2-20260902/pi/e1-night-shift/controller-3.mjs
+        LOST        artifacts/gauntlet-heat10-r2-20260902/pi/e2-hill-mine/attempt-1.outcome.json
+        LOST        artifacts/gauntlet-heat10-r2-20260902/pi/e2-hill-mine/attempt-1.tape.json
+        LOST        artifacts/gauntlet-heat10-r2-20260902/pi/e2-hill-mine/attempt-1.transcript.log
+        LOST        artifacts/gauntlet-heat10-r2-20260902/pi/e2-hill-mine/author-1.transcript.txt
+        LOST        artifacts/gauntlet-heat10-r2-20260902/pi/e2-hill-mine/controller-1.mjs
+        LOST        artifacts/gauntlet-heat10-r2-20260902/pi/the-claim/attempt-1.outcome.json
+        LOST        artifacts/gauntlet-heat10-r2-20260902/pi/the-claim/attempt-1.tape.json
+        LOST        artifacts/gauntlet-heat10-r2-20260902/pi/the-claim/attempt-1.transcript.log
+        LOST        artifacts/gauntlet-heat10-r2-20260902/pi/the-claim/attempt-2.outcome.json
+        LOST        artifacts/gauntlet-heat10-r2-20260902/pi/the-claim/attempt-2.tape.json
+        LOST        artifacts/gauntlet-heat10-r2-20260902/pi/the-claim/attempt-2.transcript.log
+        LOST        artifacts/gauntlet-heat10-r2-20260902/pi/the-claim/attempt-3.transcript.log
+        LOST        artifacts/gauntlet-heat10-r2-20260902/pi/the-claim/author-1.transcript.txt
+        LOST        artifacts/gauntlet-heat10-r2-20260902/pi/the-claim/author-2.transcript.txt
+        LOST        artifacts/gauntlet-heat10-r2-20260902/pi/the-claim/author-3.transcript.txt
+        LOST        artifacts/gauntlet-heat10-r2-20260902/pi/the-claim/controller-1.mjs
+        LOST        artifacts/gauntlet-heat10-r2-20260902/pi/the-claim/controller-2.mjs
+        LOST        artifacts/gauntlet-heat10-r2-20260902/pi/the-claim/controller-3.mjs
+        LOST        artifacts/gauntlet-heat10-r2-20260902/preflight.md
+        LOST        artifacts/gauntlet-heat10-r2-20260902/prime/charter.md
+        LOST        artifacts/gauntlet-heat10-r2-20260902/probe/outcome.json
+        LOST        artifacts/gauntlet-heat10-r2-20260902/probe/post-response.json
+        LOST        artifacts/gauntlet-heat10-r2-20260902/probe/submission.json
+        LOST        artifacts/gauntlet-heat10-r2-20260902/probe/tape.json
+        LOST        artifacts/gauntlet-heat10-r2-20260902/probe/verdict-slip.json
+        LOST        artifacts/gauntlet-heat10-r2-20260902/probe/watch-reel.json
+        LOST        artifacts/gauntlet-heat10-r2-20260902/publish-submission.mjs
+        LOST        artifacts/gauntlet-heat10-r2-20260902/shim-abort-rc.txt
+        LOST        artifacts/gauntlet-heat10-r2-20260902/shim-models-after-abort.json
+        LOST        artifacts/gauntlet-heat10-r2-20260902/shim-sse.txt
+  20260902-075135-lane-b-reel-deep-links.md.log
+     ON-DISK 0 · LOST 54
+        LOST        artifacts/gauntlet-heat10-r2-20260902/author-controller.mjs
+        LOST        artifacts/gauntlet-heat10-r2-20260902/build-submission.mjs
+        LOST        artifacts/gauntlet-heat10-r2-20260902/controller-runner.mjs
+        LOST        artifacts/gauntlet-heat10-r2-20260902/first-view-e1-baron.json
+        LOST        artifacts/gauntlet-heat10-r2-20260902/first-view-e1-night-shift.json
+        LOST        artifacts/gauntlet-heat10-r2-20260902/first-view-e2-hill-mine.json
+        LOST        artifacts/gauntlet-heat10-r2-20260902/first-view-the-claim.json
+        LOST        artifacts/gauntlet-heat10-r2-20260902/first-view.mjs
+        LOST        artifacts/gauntlet-heat10-r2-20260902/pi/charter.md
+        LOST        artifacts/gauntlet-heat10-r2-20260902/pi/e1-night-shift/attempt-1.outcome.json
+        LOST        artifacts/gauntlet-heat10-r2-20260902/pi/e1-night-shift/attempt-1.tape.json
+        LOST        artifacts/gauntlet-heat10-r2-20260902/pi/e1-night-shift/attempt-1.transcript.log
+        LOST        artifacts/gauntlet-heat10-r2-20260902/pi/e1-night-shift/attempt-2.outcome.json
+        LOST        artifacts/gauntlet-heat10-r2-20260902/pi/e1-night-shift/attempt-2.tape.json
+        LOST        artifacts/gauntlet-heat10-r2-20260902/pi/e1-night-shift/attempt-2.transcript.log
+        LOST        artifacts/gauntlet-heat10-r2-20260902/pi/e1-night-shift/attempt-3.outcome.json
+        LOST        artifacts/gauntlet-heat10-r2-20260902/pi/e1-night-shift/attempt-3.tape.json
+        LOST        artifacts/gauntlet-heat10-r2-20260902/pi/e1-night-shift/attempt-3.transcript.log
+        LOST        artifacts/gauntlet-heat10-r2-20260902/pi/e1-night-shift/author-1.transcript.txt
+        LOST        artifacts/gauntlet-heat10-r2-20260902/pi/e1-night-shift/author-2.transcript.txt
+        LOST        artifacts/gauntlet-heat10-r2-20260902/pi/e1-night-shift/author-3.transcript.txt
+        LOST        artifacts/gauntlet-heat10-r2-20260902/pi/e1-night-shift/controller-1.mjs
+        LOST        artifacts/gauntlet-heat10-r2-20260902/pi/e1-night-shift/controller-2.mjs
+        LOST        artifacts/gauntlet-heat10-r2-20260902/pi/e1-night-shift/controller-3.mjs
+        LOST        artifacts/gauntlet-heat10-r2-20260902/pi/e2-hill-mine/attempt-1.outcome.json
+        LOST        artifacts/gauntlet-heat10-r2-20260902/pi/e2-hill-mine/attempt-1.tape.json
+        LOST        artifacts/gauntlet-heat10-r2-20260902/pi/e2-hill-mine/attempt-1.transcript.log
+        LOST        artifacts/gauntlet-heat10-r2-20260902/pi/e2-hill-mine/author-1.transcript.txt
+        LOST        artifacts/gauntlet-heat10-r2-20260902/pi/e2-hill-mine/controller-1.mjs
+        LOST        artifacts/gauntlet-heat10-r2-20260902/pi/the-claim/attempt-1.outcome.json
+        LOST        artifacts/gauntlet-heat10-r2-20260902/pi/the-claim/attempt-1.tape.json
+        LOST        artifacts/gauntlet-heat10-r2-20260902/pi/the-claim/attempt-1.transcript.log
+        LOST        artifacts/gauntlet-heat10-r2-20260902/pi/the-claim/attempt-2.outcome.json
+        LOST        artifacts/gauntlet-heat10-r2-20260902/pi/the-claim/attempt-2.tape.json
+        LOST        artifacts/gauntlet-heat10-r2-20260902/pi/the-claim/attempt-2.transcript.log
+        LOST        artifacts/gauntlet-heat10-r2-20260902/pi/the-claim/attempt-3.transcript.log
+        LOST        artifacts/gauntlet-heat10-r2-20260902/pi/the-claim/author-1.transcript.txt
+        LOST        artifacts/gauntlet-heat10-r2-20260902/pi/the-claim/author-2.transcript.txt
+        LOST        artifacts/gauntlet-heat10-r2-20260902/pi/the-claim/author-3.transcript.txt
+        LOST        artifacts/gauntlet-heat10-r2-20260902/pi/the-claim/controller-1.mjs
+        LOST        artifacts/gauntlet-heat10-r2-20260902/pi/the-claim/controller-2.mjs
+        LOST        artifacts/gauntlet-heat10-r2-20260902/pi/the-claim/controller-3.mjs
+        LOST        artifacts/gauntlet-heat10-r2-20260902/preflight.md
+        LOST        artifacts/gauntlet-heat10-r2-20260902/prime/charter.md
+        LOST        artifacts/gauntlet-heat10-r2-20260902/probe/outcome.json
+        LOST        artifacts/gauntlet-heat10-r2-20260902/probe/post-response.json
+        LOST        artifacts/gauntlet-heat10-r2-20260902/probe/submission.json
+        LOST        artifacts/gauntlet-heat10-r2-20260902/probe/tape.json
+        LOST        artifacts/gauntlet-heat10-r2-20260902/probe/verdict-slip.json
+        LOST        artifacts/gauntlet-heat10-r2-20260902/probe/watch-reel.json
+        LOST        artifacts/gauntlet-heat10-r2-20260902/publish-submission.mjs
+        LOST        artifacts/gauntlet-heat10-r2-20260902/shim-abort-rc.txt
+        LOST        artifacts/gauntlet-heat10-r2-20260902/shim-models-after-abort.json
+        LOST        artifacts/gauntlet-heat10-r2-20260902/shim-sse.txt
+
+  LOST bytes cannot be recovered by any command. Record the judgement
+  where the next fire reads it, and say WHAT the evidence substantiated.

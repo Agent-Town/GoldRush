@@ -1,0 +1,20 @@
+=== s2268 gate battery :: merged tree (main 8a3dc50db + lane/a fa9a757f0) ===
+cores=16 loadavg_at_start=13.76 16.84 12.46
+bt-04b desktop-chrome (full file) :: rc=0 :: 14.8s :: loadavg_before=13.76 :: passed=3 failed=0 flaky=0
+bt-04b mobile-chrome run 1/5 (full file) :: rc=1 :: 26.0s :: loadavg_before=13.51 :: passed=2 failed=1 flaky=0
+    FAILURE EXCERPT:
+      ✘  3 [mobile-chrome] › e2e/bt-04b-automation.spec.ts:102:1 › plain boot exposes operable automation controls (11.8s)
+      Error: expect(locator).toBeVisible() failed
+      Expected: visible
+      Error: element(s) not found
+      > 17 |   await expect(page.getByTestId('prospector-panel')).toBeVisible();
+      test-results/bt-04b-automation-plain-bo-cefbc-perable-automation-controls-mobile-chrome/test-failed-1.png
+      1 failed
+      [WebServer] 1:37:19 PM [vite] (client) [console.warn] [gold-rush] render demotion {"event":"render_demotion","reason":"pilot-load-failed:Failed to fetch","contractId":"the-claim","buildId":"dev","tier
+      [WebServer] 1:37:21 PM [vite] (client) [console.warn] [gold-rush] render demotion {"event":"render_demotion","reason":"pilot-load-failed:Failed to fetch","contractId":"the-claim","buildId":"dev","tier
+bt-04b mobile-chrome run 2/5 (full file) :: rc=0 :: 21.7s :: loadavg_before=14.39 :: passed=3 failed=0 flaky=0
+bt-04b mobile-chrome run 3/5 (full file) :: rc=0 :: 19.5s :: loadavg_before=13.33 :: passed=3 failed=0 flaky=0
+bt-04b mobile-chrome run 4/5 (full file) :: rc=0 :: 17.7s :: loadavg_before=13.09 :: passed=3 failed=0 flaky=0
+bt-04b mobile-chrome run 5/5 (full file) :: rc=0 :: 18.1s :: loadavg_before=12.83 :: passed=3 failed=0 flaky=0
+MOBILE DETERMINISM: 4/5 clean — acceptance bar is 5/5
+=== END ===

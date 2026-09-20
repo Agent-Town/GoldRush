@@ -1,0 +1,104 @@
+s1497 DRAIN GATE TRANSCRIPT — milk/saga-surgeon
+================================================
+Merged: 325241e233bf9af5949654171885f85693d1a142 (fast-forward from the gated commit)
+Gate worktree: gate-s1497 (detached, §3.0b — undecided content never entered main's working tree)
+Base of the shift: 18b2ef276 · review's merged-main: bab80361 · main at drain time: 21a307f5f (97 commits later)
+
+§3.0 BLOCK CHECK
+----------------
+$ node scripts/drain-block-check.mjs milk/saga-surgeon
+  ? UNKNOWN — no BLOCKED goal leaf matches "milk/saga-surgeon".
+    Goal Registration Law: every authored master registers a leaf in tasks/goals.json.
+    A missing leaf is a bookkeeping finding, not a clearance.
+rc=0 (default is advisory — F-1262-3: UNKNOWN reads IDENTICAL to CLEAR by exit code; the WORD was read,
+and the leaf was registered retroactively in the drain bookkeeping commit).
+
+MERGE
+-----
+$ git -C gate-s1497 merge --no-ff milk/saga-surgeon
+rc=1
+Auto-merging docs/bench/e4-readiness-census.md
+CONFLICT (content): Merge conflict in docs/bench/e4-readiness-census.md
+Auto-merging tasks/BACKLOG.md
+Automatic merge failed; fix conflicts and then commit the result.
+
+  --> THE REVIEW SAYS "Conflicts: none — zero file overlap". That was true of base bab80361.
+      The s1496 milk/motor-socket drain amended THE SAME e4 census file. Three conflicts:
+      (1) executive summary  (2) the e4-dust-flats table row  (3) the appended findings block.
+      All resolved as a UNION; resolution documented inside the census file itself.
+      Resolved commit: 325241e23 "gate-s1497: merge milk/saga-surgeon (e4 census conflict resolved as a union)"
+
+MERGED-TREE DIFF vs main (7 files, zero deletions)
+--------------------------------------------------
+M	assets/contracts/epoch-6-atomic/contracts.json
+M	docs/bench/e3-readiness-census.md
+M	docs/bench/e4-readiness-census.md
+M	docs/bench/e6-readiness-census.md
+M	e2e/er01-e6-census.spec.ts
+A	reviews/milk-saga-surgeon.md
+M	tasks/BACKLOG.md
+
+$ git -C gate-s1497 diff --name-only main HEAD -- src/
+  (empty)  --> src/ BYTE-UNCHANGED, measured rather than inherited from the review.
+
+INSTRUMENT CUSTODY (F-1457 class)
+---------------------------------
+$ node -e "net.createServer().listen(5188)"  -->  5188 FREE
+(The census family is in-process; s1496 measured 0 page.goto / 0 baseURL / 2 createServer for it.)
+
+BATTERY — all on the MERGED tree, --workers=1 (§3.1), both Playwright projects
+-------------------------------------------------------------------------------
+$ npx tsc --noEmit
+  rc=0, no output
+
+$ npm run build
+  ✓ built in 1.04s
+  [asset-diet] 235 terrain/landmark GLBs 592044952 -> 92718740 bytes (84% cut)
+
+$ npx playwright test e2e/er01-e2..e10-census.spec.ts e2e/contract-bundle-validation.spec.ts --workers=1
+  74 passed (4.0m)
+  --> ADJACENT SET RE-ENUMERATED FROM THE TREE, not copied from the review (the s1496 lesson).
+      The review gates 26 + 48; the tree holds nine er01-e*-census specs + contract-bundle-validation.
+      Count matches s1496's independent enumeration exactly: 74.
+
+$ npm run test:node-guards
+  ℹ tests 341 · pass 338 · fail 0 · cancelled 0 · skipped 3 · todo 0
+  RC=0
+  --> 3 skips = the documented F-1408-2 cross-engine cases. The F-1460-1 Baron pin red is GONE
+      (cured s1462) — confirming s1496's note; no future drain should hunt for it.
+      341 matches the post-s1495 baseline (+1 from the Baron pin), so no test silently stopped running.
+
+$ npx playwright test e2e/_s106-prospector-boot-probe.spec.ts --workers=1
+  2 passed (6.4s)  [desktop-chrome + mobile-chrome]  --> zero console/page errors, plain boot
+
+SUBSTANCE RE-DERIVED AT DRAIN TIME (VERIFY-DON'T-INHERIT)
+----------------------------------------------------------
+F-MILK-SS-3, from assets/contracts/epoch-4-motor/contracts.json:
+  e4-dust-flats    goals[0] "Build from the Motor Camp into four surveyed fields."
+                   buildZones(4): motor-camp, north-field, southwest-field, southeast-field   -> camp + 3
+  e4-long-road     goals[0] "...between three old way-stations."
+                   buildZones(3): west/middle/east-way-station                                 -> 3, NO camp zone
+  e4-gusher-county goals[0] "Build from the County Camp across the three leases."
+                   buildZones(4): county-camp, west-lease, east-lease, north-lease             -> camp + 3  ✅ control
+  e4-boneyard      goals[0] "...into the dead-machine rows." (no count)
+                   buildZones(3): gate-camp, west-rows, east-rows                              -> camp + 2
+  --> The convention holds in all three controls and breaks only at dust-flats. CONFIRMED.
+
+Picnic's new declaration, from assets/contracts/epoch-6-atomic/contracts.json:
+  e6-picnic stakeMarkers: 3 — sandwich-west, sandwich-center, sandwich-east, ALL heroStart:true
+  src/world/Terrain.ts:312  lossStakeMarker() = stakeMarkers().find(m => m.heroStart) ?? null
+  --> ".. each select only the first marker" is LITERALLY accurate. CONFIRMED.
+
+Zero-runtime-effect claim, read from the code:
+  $ grep -rn engineDependencies src/
+    ContractFamilies.ts:703 (type) :1532 (key allowlist) :1695 :1698 :1700 (validateEngineDependencies)
+  $ sed -n '45,57p' src/sim/HeadlessContractSim.ts
+    SUPPORTED_CONTRACTS = { e1-dry-gulch, the-claim, e1-night-shift, e1-twin-banks, e1-baron,
+                            e2-hill-mine, e2-trestle, e2-pressure-garden, e2-incline,
+                            e3-blackout-ridge, e3-moth-season, e3-canyon-works }   -- no e6-*
+  --> Declarations are honesty, not admission. CONFIRMED.
+
+POST-MERGE
+----------
+$ git diff 325241e23 HEAD --stat        (empty)  -- the evidence describes exactly what shipped
+$ git log --oneline main..milk/saga-surgeon      (empty)  -- fully absorbed

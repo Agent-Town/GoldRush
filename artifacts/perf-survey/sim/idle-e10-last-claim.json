@@ -1,0 +1,197 @@
+{
+  "key": "idle-e10-last-claim",
+  "tapePath": "tapes/idle-e10-last-claim.json",
+  "contract": "e10-last-claim",
+  "kind": "null-floor",
+  "node": "v26.4.0",
+  "before": {
+    "at": "2026-09-05T16:25:46.104Z",
+    "load": [
+      23.81103515625,
+      21.81298828125,
+      21.36376953125
+    ],
+    "freeMemory": 11881021440
+  },
+  "after": {
+    "at": "2026-09-05T16:25:49.212Z",
+    "load": [
+      22.70458984375,
+      21.61669921875,
+      21.296875
+    ],
+    "freeMemory": 11242815488
+  },
+  "declaredDurationTicks": 2814,
+  "simulatedSeconds": 93.8,
+  "bootMs": 48.53774999999973,
+  "replayMs": 1133.848625,
+  "ticksPerSecond": 2481.812772846992,
+  "realtimeMultiple": 82.72709242823308,
+  "estimateTenMinuteSeconds": 7.252763059701493,
+  "estimateFormula": "600 seconds / measured realtimeMultiple; extrapolation, not an actual 10-minute tape when duration differs",
+  "tickMs": {
+    "n": 2814,
+    "min": 0.20533300000033705,
+    "p50": 0.32645899999988615,
+    "p95": 0.7859169999996993,
+    "p99": 1.4674999999997453,
+    "max": 9.352792000000136
+  },
+  "tickPath": "sim/idle-e10-last-claim-ticks.json",
+  "result": {
+    "eventLogHash": "fnv1a32:a45ba9ac",
+    "outcome": {
+      "secured": false,
+      "waves": 3,
+      "gold": 0,
+      "timeAlive": 93.8
+    },
+    "ticks": 2814,
+    "engine": "headless-contract-sim"
+  },
+  "expectedHash": "fnv1a32:a45ba9ac",
+  "hashMatches": true,
+  "top20": [
+    {
+      "name": "dispatch",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 159.807
+    },
+    {
+      "name": "terrainHash",
+      "url": "",
+      "line": 1486,
+      "column": 21,
+      "selfMs": 56.760999999999996
+    },
+    {
+      "name": "terrainSeed",
+      "url": "",
+      "line": 1469,
+      "column": 21,
+      "selfMs": 51.690999999999995
+    },
+    {
+      "name": "get diagnostics",
+      "url": "",
+      "line": 484,
+      "column": 17,
+      "selfMs": 44.236999999999995
+    },
+    {
+      "name": "multiplyMatrices",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 10385,
+      "column": 18,
+      "selfMs": 43.959
+    },
+    {
+      "name": "diagnostics",
+      "url": "",
+      "line": 1795,
+      "column": 13,
+      "selfMs": 43.340999999999994
+    },
+    {
+      "name": "maxHpForPlacement",
+      "url": "",
+      "line": 1622,
+      "column": 19,
+      "selfMs": 37.484
+    },
+    {
+      "name": "currentTrickleInterval",
+      "url": "",
+      "line": 641,
+      "column": 24,
+      "selfMs": 36.048
+    },
+    {
+      "name": "hpBarDiagnostics",
+      "url": "",
+      "line": 1663,
+      "column": 18,
+      "selfMs": 31.187
+    },
+    {
+      "name": "toArray",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 11099,
+      "column": 9,
+      "selfMs": 30.853
+    },
+    {
+      "name": "maxHpForInstance",
+      "url": "",
+      "line": 1619,
+      "column": 18,
+      "selfMs": 27.843
+    },
+    {
+      "name": "activePositions",
+      "url": "",
+      "line": 1533,
+      "column": 17,
+      "selfMs": 24.953000000000003
+    },
+    {
+      "name": "stableProbeMask",
+      "url": "",
+      "line": 1266,
+      "column": 25,
+      "selfMs": 23.899
+    },
+    {
+      "name": "clone",
+      "url": "",
+      "line": 320,
+      "column": 15,
+      "selfMs": 19.111
+    },
+    {
+      "name": "(anonymous)",
+      "url": "",
+      "line": 1534,
+      "column": 32,
+      "selfMs": 18.542
+    },
+    {
+      "name": "syncEnemyInstance",
+      "url": "",
+      "line": 1343,
+      "column": 19,
+      "selfMs": 18.397
+    },
+    {
+      "name": "update",
+      "url": "",
+      "line": 809,
+      "column": 8,
+      "selfMs": 17.629
+    },
+    {
+      "name": "multiplyScalar",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 14581,
+      "column": 16,
+      "selfMs": 16.855
+    },
+    {
+      "name": "step",
+      "url": "",
+      "line": 1318,
+      "column": 6,
+      "selfMs": 16.489
+    },
+    {
+      "name": "(program)",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 15.749
+    }
+  ]
+}

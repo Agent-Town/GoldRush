@@ -1,0 +1,811 @@
+{
+  "version": 2,
+  "id": "agent-7489ba00-fd8c87cb-e18f-495c-b519-abf6b2f1e738",
+  "createdAt": 0,
+  "kept": true,
+  "contract": "the-claim",
+  "seed": "e1-the-claim-01",
+  "difficulty": "trail",
+  "simVersion": 1,
+  "meta": {
+    "buildId": "3158eaff4"
+  },
+  "runStart": {
+    "meta": {
+      "version": 1,
+      "tracks": {
+        "territory": 0,
+        "science": 0,
+        "hero": 0,
+        "agent": 0
+      }
+    },
+    "research": {
+      "version": 1,
+      "epochId": "epoch-1-frontier",
+      "metaScienceCursor": 0,
+      "progress": {
+        "version": 1,
+        "tracks": {
+          "territory": 0,
+          "science": 0,
+          "hero": 0,
+          "agent": 0
+        }
+      },
+      "taken": [],
+      "proposalSalt": 0,
+      "pinnedTarget": null,
+      "unlocks": {}
+    }
+  },
+  "inputLog": {
+    "version": 1,
+    "name": "agent-7489ba00",
+    "contractId": "the-claim",
+    "seed": "e1-the-claim-01",
+    "difficultyPreset": "trail",
+    "stepSeconds": 0.03333333333333333,
+    "start": {
+      "x": 0,
+      "z": 12
+    },
+    "durationTicks": 9000,
+    "entries": [
+      {
+        "t": 0,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 60
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 900,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 60
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 1801,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 60
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 3,
+                  "z": 10
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 3,
+                  "z": 10
+                },
+                "when": {
+                  "goldGte": 50
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 2701,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 60
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 25
+                }
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 3601,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 60
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 4193,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 60
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 4501,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 60
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": -3,
+                  "z": 10
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -3,
+                  "z": 10
+                },
+                "when": {
+                  "goldGte": 70
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 4793,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 60
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 5401,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 60
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 5993,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 60
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 6301,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 60
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 0,
+                  "z": 15
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 0,
+                  "z": 15
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-3"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 6593,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 60
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 7201,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 60
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 7793,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 60
+              },
+              {
+                "verb": "MOVE_TO",
+                "pos": {
+                  "x": 0,
+                  "z": 8
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 8
+                },
+                "when": {
+                  "goldGte": 35
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 8101,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "REPAIR_UNDER",
+                "pct": 60
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "truncated": null,
+    "primarySlot": 0,
+    "streams": []
+  },
+  "eventLogHash": "fnv1a32:8fda13d2",
+  "outcome": {
+    "reason": "secured",
+    "secured": true,
+    "waves": 10,
+    "timeAlive": 300,
+    "gold": 55
+  }
+}

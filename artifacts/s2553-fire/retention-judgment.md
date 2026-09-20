@@ -1,0 +1,9 @@
+# s2553 retention judgment
+
+All 106 registered trees were visited: 105 answered with a non-empty tracked-file control; the gitless heat11 tree was answered separately. All 6,775 gitless evidence files (7,107,705,597 bytes) are reachable from origin refs. The quiet pass hashed 1,478/1,478 files: 1,470 raw blobs remote-safe, seven local-only and one absent. The eight exception identities match s2552 exactly.
+
+Six large trace blobs match the tracked reconstruction manifests on origin/main; all 23 parts exist at their expected sizes on the two offsite save refs, whose tips were queried live. The first read incorrectly searched for a main-held manifest on its parts ref; that rc128 is retained in chunk-initial-error.txt, and the corrected verification passed. No new salvage is owed. The 274,833,116-byte heat12 full-view stream remains the recorded local-only size-boundary exception; the 2,203-byte rehearsal index remains the recorded redundant index. Neither is newly declared offsite-safe. Two owned-gate paths were deferred; the gate tree was restored tracked-clean and its owned server stopped.
+
+The withheld audit read 377 logs: zero newly recoverable on-disk paths, 55 historical absent paths unchanged. Three screenshots produced by this fire's adjacency checks were copied into adjacency-shots before restoring the private gate tree. Foreign scratch, telemetry, lane dirt and arena bytes were untouched. The ART slot was untouched and this fire completed a real drain, so the no-drain ART audit trigger did not apply.
+
+Methods are the three retained s2552 methods named in reuse-and-duties.json, with only output-prefix substitution; the reused gate exclusion stayed /private/tmp/gr-gate-s2552. Counters and exceptions are in worktree-retention.json, retention-blobs-expanded.json, gitless-retention-blobs.json and chunk-backed-exceptions.json.

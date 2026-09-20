@@ -1,0 +1,567 @@
+{
+  "tests": 68,
+  "pass": 68,
+  "fail": 0,
+  "seconds": 1304.9,
+  "candidate": "ca0fec7e361c2a5ed82e5a8598a93dc47a7cd281",
+  "retained": [
+    {
+      "path": "artifacts/e3-moth-season/ride-e3-moth-season-01.json",
+      "sha256": "bd6704891f76c1aabb5b441cbc6afe3dc14a01ea15c722c0da7675158cdf7214",
+      "afterSha256": "bd6704891f76c1aabb5b441cbc6afe3dc14a01ea15c722c0da7675158cdf7214",
+      "mtime": 1788809785.204218
+    },
+    {
+      "path": "reviews/shots-ss-06-e5-beats/desktop-chrome-arrival.png",
+      "sha256": "e26ab9b12456acf1298d5ca77500a7757d6fef8b93ad013b71da32cea74cf5f4",
+      "afterSha256": "e26ab9b12456acf1298d5ca77500a7757d6fef8b93ad013b71da32cea74cf5f4",
+      "mtime": 1788809801.8241684
+    },
+    {
+      "path": "reviews/shots-ss-06-e5-beats/desktop-chrome-deepwater-ride.png",
+      "sha256": "887c1c0dd42d57a20e41f57c3dcceed595b43968026de78c66fd75ee2f866e4b",
+      "afterSha256": "887c1c0dd42d57a20e41f57c3dcceed595b43968026de78c66fd75ee2f866e4b",
+      "mtime": 1788809801.82445
+    },
+    {
+      "path": "reviews/shots-ss-06-e5-beats/desktop-chrome-manifest.png",
+      "sha256": "f3e64f706b3d17f9e68c078ded0cee33601489fa1f58d0390625a44a183c8160",
+      "afterSha256": "f3e64f706b3d17f9e68c078ded0cee33601489fa1f58d0390625a44a183c8160",
+      "mtime": 1788809801.8249028
+    },
+    {
+      "path": "reviews/shots-ss-06-e5-beats/desktop-chrome-rebuild.png",
+      "sha256": "189c064c6c5624e665490ffb1b3e610712b1a443f2178e3246ecb511f23dca6a",
+      "afterSha256": "189c064c6c5624e665490ffb1b3e610712b1a443f2178e3246ecb511f23dca6a",
+      "mtime": 1788809801.8253503
+    },
+    {
+      "path": "reviews/shots-ss-06-e5-beats/desktop-chrome-tide-teller.png",
+      "sha256": "4ecb400c24f84f61190cf88d5acc2eea067e3d9587196c19a083f1f0a5069d75",
+      "afterSha256": "4ecb400c24f84f61190cf88d5acc2eea067e3d9587196c19a083f1f0a5069d75",
+      "mtime": 1788809801.8257968
+    },
+    {
+      "path": "reviews/shots-ss-06-e5-beats/mobile-chrome-arrival.png",
+      "sha256": "e6fa830aac55a31d8ccc9ddea684364d113be7970fe633dabdcd09d22260bc08",
+      "afterSha256": "e6fa830aac55a31d8ccc9ddea684364d113be7970fe633dabdcd09d22260bc08",
+      "mtime": 1788809801.8260891
+    },
+    {
+      "path": "reviews/shots-ss-06-e5-beats/mobile-chrome-deepwater-ride.png",
+      "sha256": "dd203397d90d15f3b9e5dda8d480c626ec2534dd7be73c5ca5d9381dd4cccf6c",
+      "afterSha256": "dd203397d90d15f3b9e5dda8d480c626ec2534dd7be73c5ca5d9381dd4cccf6c",
+      "mtime": 1788809801.826328
+    },
+    {
+      "path": "reviews/shots-ss-06-e5-beats/mobile-chrome-manifest.png",
+      "sha256": "5d5b9dbc3b8ce810a09b71e3e979ab0e49273342e5abacc1202d15142f2474df",
+      "afterSha256": "5d5b9dbc3b8ce810a09b71e3e979ab0e49273342e5abacc1202d15142f2474df",
+      "mtime": 1788809801.8266137
+    },
+    {
+      "path": "reviews/shots-ss-06-e5-beats/mobile-chrome-rebuild.png",
+      "sha256": "2fcff04680be1821c76efce8856c2cc8e129224c7149afa3d984fddf39216602",
+      "afterSha256": "2fcff04680be1821c76efce8856c2cc8e129224c7149afa3d984fddf39216602",
+      "mtime": 1788809801.8268964
+    },
+    {
+      "path": "reviews/shots-ss-06-e5-beats/mobile-chrome-tide-teller.png",
+      "sha256": "7482eb33ca42a4ba6b70d88f87aafdcaa1740657bf789483532b27c443e1afe1",
+      "afterSha256": "7482eb33ca42a4ba6b70d88f87aafdcaa1740657bf789483532b27c443e1afe1",
+      "mtime": 1788809801.8276446
+    },
+    {
+      "path": "reviews/shots-ss-07-e6-beats/desktop-chrome-arrival.png",
+      "sha256": "f6a06ecebea4f279741b2dcd054928d7e82ca95bd60948b762a106a1bbed998f",
+      "afterSha256": "f6a06ecebea4f279741b2dcd054928d7e82ca95bd60948b762a106a1bbed998f",
+      "mtime": 1788809801.8280432
+    },
+    {
+      "path": "reviews/shots-ss-07-e6-beats/desktop-chrome-mesa-ride.png",
+      "sha256": "e99f5d9618f51cc7ae744a899f0fc228fed4bc059e551108460cceec4b78ac24",
+      "afterSha256": "e99f5d9618f51cc7ae744a899f0fc228fed4bc059e551108460cceec4b78ac24",
+      "mtime": 1788809801.828365
+    },
+    {
+      "path": "reviews/shots-ss-07-e6-beats/desktop-chrome-steward.png",
+      "sha256": "ad5a6cad2ec054f935aa06d49139d9a3d789a20428dd527d1ac03897bba112de",
+      "afterSha256": "ad5a6cad2ec054f935aa06d49139d9a3d789a20428dd527d1ac03897bba112de",
+      "mtime": 1788809801.828741
+    },
+    {
+      "path": "reviews/shots-ss-07-e6-beats/mobile-chrome-arrival.png",
+      "sha256": "b47db2ff7ddd1d98768e5b6b0f1d3e2384c57a1c8be7bc945b682fa8198bd8d4",
+      "afterSha256": "b47db2ff7ddd1d98768e5b6b0f1d3e2384c57a1c8be7bc945b682fa8198bd8d4",
+      "mtime": 1788809801.8289828
+    },
+    {
+      "path": "reviews/shots-ss-07-e6-beats/mobile-chrome-mesa-ride.png",
+      "sha256": "424d036072a5278f00dacb12f21b885e864a2116867258540763a6cc618165ed",
+      "afterSha256": "424d036072a5278f00dacb12f21b885e864a2116867258540763a6cc618165ed",
+      "mtime": 1788809801.8292303
+    },
+    {
+      "path": "reviews/shots-ss-07-e6-beats/mobile-chrome-steward.png",
+      "sha256": "2c01c78762d406a0467c056495b21d688c78ad3c81508b5c28fc07482edb024e",
+      "afterSha256": "2c01c78762d406a0467c056495b21d688c78ad3c81508b5c28fc07482edb024e",
+      "mtime": 1788809801.8294806
+    },
+    {
+      "path": "reviews/shots-ss-08-e7-beats/desktop-chrome-arrival.png",
+      "sha256": "031591d17c7253d77b0257797820404b7c3c2f9a8e2009920688c8e408c48b04",
+      "afterSha256": "031591d17c7253d77b0257797820404b7c3c2f9a8e2009920688c8e408c48b04",
+      "mtime": 1788809801.8299043
+    },
+    {
+      "path": "reviews/shots-ss-08-e7-beats/desktop-chrome-chalk.png",
+      "sha256": "444497833c70dee56686e9aaa567eea187d36696ad15b6ae8fafdeaeac092586",
+      "afterSha256": "444497833c70dee56686e9aaa567eea187d36696ad15b6ae8fafdeaeac092586",
+      "mtime": 1788809801.830304
+    },
+    {
+      "path": "reviews/shots-ss-08-e7-beats/desktop-chrome-relay-valley-ride.png",
+      "sha256": "65d006ad198b088366a46bf38f6bcacfdf764512436cf681b22061f8899ef540",
+      "afterSha256": "65d006ad198b088366a46bf38f6bcacfdf764512436cf681b22061f8899ef540",
+      "mtime": 1788809801.8306262
+    },
+    {
+      "path": "reviews/shots-ss-08-e7-beats/desktop-chrome-wrong-number.png",
+      "sha256": "d59719598420209b226e5226596eb6da112019ec1b48ab8fef5beb1513624c60",
+      "afterSha256": "d59719598420209b226e5226596eb6da112019ec1b48ab8fef5beb1513624c60",
+      "mtime": 1788809801.8310323
+    },
+    {
+      "path": "reviews/shots-ss-08-e7-beats/mobile-chrome-arrival.png",
+      "sha256": "a170ef141a316931560bf2e2334e05543e5c5bc401ac3925461a9d2e4ab0fcac",
+      "afterSha256": "a170ef141a316931560bf2e2334e05543e5c5bc401ac3925461a9d2e4ab0fcac",
+      "mtime": 1788809801.8313212
+    },
+    {
+      "path": "reviews/shots-ss-08-e7-beats/mobile-chrome-chalk.png",
+      "sha256": "e4ebaa9b867f330d0cfb135797045aaf640381c7ff22461fee5eb8c01b414949",
+      "afterSha256": "e4ebaa9b867f330d0cfb135797045aaf640381c7ff22461fee5eb8c01b414949",
+      "mtime": 1788809801.8330593
+    },
+    {
+      "path": "reviews/shots-ss-08-e7-beats/mobile-chrome-relay-valley-ride.png",
+      "sha256": "f9df5b604cef6d553082a127acd2400a252011aaf7ab7927bc76cdf824f21236",
+      "afterSha256": "f9df5b604cef6d553082a127acd2400a252011aaf7ab7927bc76cdf824f21236",
+      "mtime": 1788809801.8332663
+    },
+    {
+      "path": "reviews/shots-ss-08-e7-beats/mobile-chrome-wrong-number.png",
+      "sha256": "76d88d5e904a7b315214086028b5dd2e38bbcdcf13b1c0d48a1ef59ef043dd35",
+      "afterSha256": "76d88d5e904a7b315214086028b5dd2e38bbcdcf13b1c0d48a1ef59ef043dd35",
+      "mtime": 1788809801.833529
+    },
+    {
+      "path": "reviews/shots-ss-09-e8-beats/desktop-chrome-arrival.png",
+      "sha256": "058d9d7d9f769303cea13aecf0f9d1a9340ba12224d2609a369d2b3dc0a841b1",
+      "afterSha256": "058d9d7d9f769303cea13aecf0f9d1a9340ba12224d2609a369d2b3dc0a841b1",
+      "mtime": 1788809801.8339238
+    },
+    {
+      "path": "reviews/shots-ss-09-e8-beats/desktop-chrome-breach-drill.png",
+      "sha256": "f85454550aeabc17ade490ec3c6b0421458dca99900868785d59ab1cd06f80c4",
+      "afterSha256": "f85454550aeabc17ade490ec3c6b0421458dca99900868785d59ab1cd06f80c4",
+      "mtime": 1788809801.8343046
+    },
+    {
+      "path": "reviews/shots-ss-09-e8-beats/desktop-chrome-left-last.png",
+      "sha256": "3aec9176e3c9df033e9ec4644d2e11c865dd7ffe666d69d2b9de1885c8bfbe30",
+      "afterSha256": "3aec9176e3c9df033e9ec4644d2e11c865dd7ffe666d69d2b9de1885c8bfbe30",
+      "mtime": 1788809801.8346758
+    },
+    {
+      "path": "reviews/shots-ss-09-e8-beats/desktop-chrome-mare-claim-ride.png",
+      "sha256": "d0d1fa70667481ceae3b59203d7a8026200d434fdac92d218b2ce26be3577694",
+      "afterSha256": "d0d1fa70667481ceae3b59203d7a8026200d434fdac92d218b2ce26be3577694",
+      "mtime": 1788809801.8362768
+    },
+    {
+      "path": "reviews/shots-ss-09-e8-beats/mobile-chrome-arrival.png",
+      "sha256": "6099fc4fa7dcd657eb27150f5027cd9dd7a752e5c7978905565f883673c3c08b",
+      "afterSha256": "6099fc4fa7dcd657eb27150f5027cd9dd7a752e5c7978905565f883673c3c08b",
+      "mtime": 1788809801.8364224
+    },
+    {
+      "path": "reviews/shots-ss-09-e8-beats/mobile-chrome-breach-drill.png",
+      "sha256": "512bea57d0b54a727a6f617adfcda072face22f20050af81f90dbbaa912800dc",
+      "afterSha256": "512bea57d0b54a727a6f617adfcda072face22f20050af81f90dbbaa912800dc",
+      "mtime": 1788809801.8365517
+    },
+    {
+      "path": "reviews/shots-ss-09-e8-beats/mobile-chrome-left-last.png",
+      "sha256": "5c2bcc6590faf1a1ee1ad0506cb2d8ad2549254b31f98add07ea64b00966d39d",
+      "afterSha256": "5c2bcc6590faf1a1ee1ad0506cb2d8ad2549254b31f98add07ea64b00966d39d",
+      "mtime": 1788809801.8366868
+    },
+    {
+      "path": "reviews/shots-ss-09-e8-beats/mobile-chrome-mare-claim-ride.png",
+      "sha256": "30de4e005c43dfe8aa40b6501590e9f32ee6ac96a8565c8d96f4faf410429c44",
+      "afterSha256": "30de4e005c43dfe8aa40b6501590e9f32ee6ac96a8565c8d96f4faf410429c44",
+      "mtime": 1788809801.8368244
+    },
+    {
+      "path": "reviews/shots-ss-10-e9-beats/desktop-chrome-arrival.png",
+      "sha256": "baa553f082161fe3f9e13aad85c43244b52d241253c182d9ebac75fc22ecf715",
+      "afterSha256": "baa553f082161fe3f9e13aad85c43244b52d241253c182d9ebac75fc22ecf715",
+      "mtime": 1788809801.837255
+    },
+    {
+      "path": "reviews/shots-ss-10-e9-beats/desktop-chrome-devils-alley-beat.png",
+      "sha256": "15b742f065f763f2523eaa498b534156c9ea338cfb4e79e823085f228dd51fbb",
+      "afterSha256": "15b742f065f763f2523eaa498b534156c9ea338cfb4e79e823085f228dd51fbb",
+      "mtime": 1788809801.8376386
+    },
+    {
+      "path": "reviews/shots-ss-10-e9-beats/desktop-chrome-devils-alley-ride.png",
+      "sha256": "5dc8881ab92a96e1111067f6a33ccfe1084be3edcc7a550b47106accc765e4a8",
+      "afterSha256": "5dc8881ab92a96e1111067f6a33ccfe1084be3edcc7a550b47106accc765e4a8",
+      "mtime": 1788809801.8380125
+    },
+    {
+      "path": "reviews/shots-ss-10-e9-beats/desktop-chrome-grass-square.png",
+      "sha256": "7369cbe909856c2a002a21e47ad17fbb23eb5f2823d2b7ca1b9fe28efee1ce48",
+      "afterSha256": "7369cbe909856c2a002a21e47ad17fbb23eb5f2823d2b7ca1b9fe28efee1ce48",
+      "mtime": 1788809801.8384008
+    },
+    {
+      "path": "reviews/shots-ss-10-e9-beats/desktop-chrome-water-ledger.png",
+      "sha256": "0de6f7f19f97180e7f61161c36a47c06093419ade3203a539ddfa82f01385ae3",
+      "afterSha256": "0de6f7f19f97180e7f61161c36a47c06093419ade3203a539ddfa82f01385ae3",
+      "mtime": 1788809801.8392036
+    },
+    {
+      "path": "reviews/shots-ss-10-e9-beats/mobile-chrome-arrival.png",
+      "sha256": "1f9dad62692c3e260fdb65597a0bb04c665f2e09d9485a6b0dcdfd56379d3bc9",
+      "afterSha256": "1f9dad62692c3e260fdb65597a0bb04c665f2e09d9485a6b0dcdfd56379d3bc9",
+      "mtime": 1788809801.8395846
+    },
+    {
+      "path": "reviews/shots-ss-10-e9-beats/mobile-chrome-devils-alley-beat.png",
+      "sha256": "7a51a1c945d5fcaba980e1a1c052a45f01feb93b4e45b8011848f92a154d8702",
+      "afterSha256": "7a51a1c945d5fcaba980e1a1c052a45f01feb93b4e45b8011848f92a154d8702",
+      "mtime": 1788809801.8399568
+    },
+    {
+      "path": "reviews/shots-ss-10-e9-beats/mobile-chrome-devils-alley-ride.png",
+      "sha256": "b1d92c060098e0d988813bd651c65bee1715ede4ff5ce4ae1e38cf78a5d6d0e5",
+      "afterSha256": "b1d92c060098e0d988813bd651c65bee1715ede4ff5ce4ae1e38cf78a5d6d0e5",
+      "mtime": 1788809801.8402698
+    },
+    {
+      "path": "reviews/shots-ss-10-e9-beats/mobile-chrome-grass-square.png",
+      "sha256": "2f315f287911bb7398cf6b757b61ccbf51b00ab98c5602901cf48168226108a1",
+      "afterSha256": "2f315f287911bb7398cf6b757b61ccbf51b00ab98c5602901cf48168226108a1",
+      "mtime": 1788809801.8406453
+    },
+    {
+      "path": "reviews/shots-ss-10-e9-beats/mobile-chrome-water-ledger.png",
+      "sha256": "902eec3bfad3f0eba13ef6acf3f4f5836bd014228fdc069b274ad4b4f1382c8b",
+      "afterSha256": "902eec3bfad3f0eba13ef6acf3f4f5836bd014228fdc069b274ad4b4f1382c8b",
+      "mtime": 1788809801.841045
+    },
+    {
+      "path": "reviews/shots-ss-11-e10-beats/desktop-chrome-baron-stays.png",
+      "sha256": "5e8c9da2077e80c98210571600c72d275e2ea2349a5f11ac87c318d8153636ca",
+      "afterSha256": "5e8c9da2077e80c98210571600c72d275e2ea2349a5f11ac87c318d8153636ca",
+      "mtime": 1788809801.8415332
+    },
+    {
+      "path": "reviews/shots-ss-11-e10-beats/desktop-chrome-boarding.png",
+      "sha256": "cefadc710d90b8b2f87e27bfc546ee0139ae618c525baae0a528e8d5eab61e7a",
+      "afterSha256": "cefadc710d90b8b2f87e27bfc546ee0139ae618c525baae0a528e8d5eab61e7a",
+      "mtime": 1788809801.841997
+    },
+    {
+      "path": "reviews/shots-ss-11-e10-beats/desktop-chrome-last-claim-decks.png",
+      "sha256": "5bb1533f01931502bb4563e2d96330742d1fa7321b55c0bbc504e12efb5af731",
+      "afterSha256": "5bb1533f01931502bb4563e2d96330742d1fa7321b55c0bbc504e12efb5af731",
+      "mtime": 1788809801.8424802
+    },
+    {
+      "path": "reviews/shots-ss-11-e10-beats/desktop-chrome-last-claim-ride.png",
+      "sha256": "c3314ce6e1d39a95c9b8b8073ed600c7f4313c003ab23d3e9d0000b034d86f62",
+      "afterSha256": "c3314ce6e1d39a95c9b8b8073ed600c7f4313c003ab23d3e9d0000b034d86f62",
+      "mtime": 1788809801.842817
+    },
+    {
+      "path": "reviews/shots-ss-11-e10-beats/mobile-chrome-baron-stays.png",
+      "sha256": "bd40cf055c83433c49a27c9f52d0f820c51b8ffe415d051613e835b9a8302251",
+      "afterSha256": "bd40cf055c83433c49a27c9f52d0f820c51b8ffe415d051613e835b9a8302251",
+      "mtime": 1788809801.843311
+    },
+    {
+      "path": "reviews/shots-ss-11-e10-beats/mobile-chrome-boarding.png",
+      "sha256": "584793ec3e83f0c295d6812e0e65c061bdd8d8e9cfc4637215150cc816443e0d",
+      "afterSha256": "584793ec3e83f0c295d6812e0e65c061bdd8d8e9cfc4637215150cc816443e0d",
+      "mtime": 1788809801.8434567
+    },
+    {
+      "path": "reviews/shots-ss-11-e10-beats/mobile-chrome-last-claim-decks.png",
+      "sha256": "bb0d9dff61b43c37d5837cdb143c0a359c098b9ac3ff33bb1d2ed220441ec5df",
+      "afterSha256": "bb0d9dff61b43c37d5837cdb143c0a359c098b9ac3ff33bb1d2ed220441ec5df",
+      "mtime": 1788809801.843635
+    },
+    {
+      "path": "reviews/shots-ss-11-e10-beats/mobile-chrome-last-claim-ride.png",
+      "sha256": "36e278056a1aaab28742fb312891b8fb347cf3f784dbd20eaef24fe1966c29a7",
+      "afterSha256": "36e278056a1aaab28742fb312891b8fb347cf3f784dbd20eaef24fe1966c29a7",
+      "mtime": 1788809801.8437822
+    }
+  ],
+  "scratch": [
+    {
+      "path": "test-results/evidence/shots-ss-06-e5-beats/desktop-chrome-arrival.png",
+      "bytes": 1037944,
+      "sha256": "078ada858a5d14fbb0e94a23f9281a477126353e56e6fedc33f7f187e4813cc7"
+    },
+    {
+      "path": "test-results/evidence/shots-ss-06-e5-beats/desktop-chrome-deepwater-ride.png",
+      "bytes": 679565,
+      "sha256": "f1e2d04dd1c969a236cc1b53ab910396c264724274a6d896453e3d0874ae4055"
+    },
+    {
+      "path": "test-results/evidence/shots-ss-06-e5-beats/desktop-chrome-manifest.png",
+      "bytes": 1051665,
+      "sha256": "e3646a19fe3ceff2c977dcd06244566ff55c5d3146213f3319d71e01a9ebade4"
+    },
+    {
+      "path": "test-results/evidence/shots-ss-06-e5-beats/desktop-chrome-rebuild.png",
+      "bytes": 1041732,
+      "sha256": "0d8adbd098d01bf5c10810a59ea1a1c3e15fee89b541f60f54fafa5a5877a585"
+    },
+    {
+      "path": "test-results/evidence/shots-ss-06-e5-beats/desktop-chrome-tide-teller.png",
+      "bytes": 1051454,
+      "sha256": "202c6a87964fb38aef0d5826f1c2160ec7d6fcc0f42febdec7ca605e8db5e328"
+    },
+    {
+      "path": "test-results/evidence/shots-ss-06-e5-beats/mobile-chrome-arrival.png",
+      "bytes": 1831936,
+      "sha256": "fc6c4bc743e6284f8dddddd1a5bbfcf575cc63af3f1da8699a59770a981f7480"
+    },
+    {
+      "path": "test-results/evidence/shots-ss-06-e5-beats/mobile-chrome-deepwater-ride.png",
+      "bytes": 1176379,
+      "sha256": "d19ea43a0d634bc1a57ab9df0d38b509eedfd646278bd00d5bcf29131c8bee61"
+    },
+    {
+      "path": "test-results/evidence/shots-ss-06-e5-beats/mobile-chrome-manifest.png",
+      "bytes": 1847004,
+      "sha256": "7c1d0f876939ddfaa41338a9b39ba89ee3642407899bdb6d366cc253b3936ef2"
+    },
+    {
+      "path": "test-results/evidence/shots-ss-06-e5-beats/mobile-chrome-rebuild.png",
+      "bytes": 1850315,
+      "sha256": "0702f5222f95e3fe1745aa0b139131419755531729f6cfee3068688b7f3bdb0a"
+    },
+    {
+      "path": "test-results/evidence/shots-ss-06-e5-beats/mobile-chrome-tide-teller.png",
+      "bytes": 1840908,
+      "sha256": "97cecc008dbd2922a795327d7a75390bcad1b2bddcde06b4cda06791d570f4d0"
+    },
+    {
+      "path": "test-results/evidence/shots-ss-07-e6-beats/desktop-chrome-arrival.png",
+      "bytes": 1088426,
+      "sha256": "01ef3b0f1082d79a5a72e2bf307e65299f39d341a2148afd2529be22497050cc"
+    },
+    {
+      "path": "test-results/evidence/shots-ss-07-e6-beats/desktop-chrome-mesa-ride.png",
+      "bytes": 1081368,
+      "sha256": "e80a96306ae3a449d96adadf65f127055396181f5f3062dde51231458ee715fa"
+    },
+    {
+      "path": "test-results/evidence/shots-ss-07-e6-beats/desktop-chrome-steward.png",
+      "bytes": 1107937,
+      "sha256": "befa7a264fcf5f01dc1c0b70524789990774e92f87d5a4c0d8980945c5d4c420"
+    },
+    {
+      "path": "test-results/evidence/shots-ss-07-e6-beats/mobile-chrome-arrival.png",
+      "bytes": 1868663,
+      "sha256": "ff361330abdfd685540fb26d57b999ffaffb85e13a69a248a2f18e52b89b95dd"
+    },
+    {
+      "path": "test-results/evidence/shots-ss-07-e6-beats/mobile-chrome-mesa-ride.png",
+      "bytes": 1318990,
+      "sha256": "b7000441fecde3aed0808bc0a2c1002d900e95a4b92f99b790b45f323be726d6"
+    },
+    {
+      "path": "test-results/evidence/shots-ss-07-e6-beats/mobile-chrome-steward.png",
+      "bytes": 1824760,
+      "sha256": "9a702df05b26acb17ca703c7c1767794b8d41b32401c6f2721f725432e6c26a5"
+    },
+    {
+      "path": "test-results/evidence/shots-ss-08-e7-beats/desktop-chrome-arrival.png",
+      "bytes": 1095093,
+      "sha256": "f0c96c93b29ab72e7850c352554af89869e59fed2ba685ca64326efc1490aca4"
+    },
+    {
+      "path": "test-results/evidence/shots-ss-08-e7-beats/desktop-chrome-chalk.png",
+      "bytes": 1090643,
+      "sha256": "4f9dd0e7144a02547175150c12043f8eae6bc539ffe2d59fc009b8f5ecf198e7"
+    },
+    {
+      "path": "test-results/evidence/shots-ss-08-e7-beats/desktop-chrome-relay-valley-ride.png",
+      "bytes": 1064563,
+      "sha256": "0d8ef6a833d7eb02a2fd58e9a7ac9ea24a093339259928c1d10eb8268a9f275c"
+    },
+    {
+      "path": "test-results/evidence/shots-ss-08-e7-beats/desktop-chrome-wrong-number.png",
+      "bytes": 1089764,
+      "sha256": "1a6c2eaf7261e3e467d8659a83381e2d986f8f2ef07c1e90582e441f84a2ea48"
+    },
+    {
+      "path": "test-results/evidence/shots-ss-08-e7-beats/mobile-chrome-arrival.png",
+      "bytes": 1859827,
+      "sha256": "d7db6f984b2f47325cb0f527a9028e54361af9d288fd17fb234c7f8cfe46b950"
+    },
+    {
+      "path": "test-results/evidence/shots-ss-08-e7-beats/mobile-chrome-chalk.png",
+      "bytes": 1904707,
+      "sha256": "ae9efead40179ff5bea0117b02538c14f4885074011dd972ec1e0260fa6cd177"
+    },
+    {
+      "path": "test-results/evidence/shots-ss-08-e7-beats/mobile-chrome-relay-valley-ride.png",
+      "bytes": 1498152,
+      "sha256": "c44fbc569b7f4a981978c166941133a27cc31cd1905335f32e5198ccdf08f90c"
+    },
+    {
+      "path": "test-results/evidence/shots-ss-08-e7-beats/mobile-chrome-wrong-number.png",
+      "bytes": 1898556,
+      "sha256": "e13401da921f15964b632ce2ffba40381760296e4e4a42a63ae2bd0d61b5bab4"
+    },
+    {
+      "path": "test-results/evidence/shots-ss-09-e8-beats/desktop-chrome-arrival.png",
+      "bytes": 1019532,
+      "sha256": "54cbffc1b0172236301ca957b6253d6da7ac791b2060be7f0713ef5826e3349d"
+    },
+    {
+      "path": "test-results/evidence/shots-ss-09-e8-beats/desktop-chrome-breach-drill.png",
+      "bytes": 1017968,
+      "sha256": "d5fa1748f79e995970624cf2a7cfda5d647e68eaeffc30179c58c4b9d45076ba"
+    },
+    {
+      "path": "test-results/evidence/shots-ss-09-e8-beats/desktop-chrome-left-last.png",
+      "bytes": 1037559,
+      "sha256": "addb88bb9677b387e231ec44bb257254206eee6c50e995414f59969bca40ff5c"
+    },
+    {
+      "path": "test-results/evidence/shots-ss-09-e8-beats/desktop-chrome-mare-claim-ride.png",
+      "bytes": 1041692,
+      "sha256": "0c732977cfe9e5e4a0b0949c4a95d15882b84ff27f3fb379dc2c75355ac56eeb"
+    },
+    {
+      "path": "test-results/evidence/shots-ss-09-e8-beats/mobile-chrome-arrival.png",
+      "bytes": 1756684,
+      "sha256": "63cc6f08be90ba684bba178c49ca2e3b7c8b87f3b196ae14e8fac1768fa9e44d"
+    },
+    {
+      "path": "test-results/evidence/shots-ss-09-e8-beats/mobile-chrome-breach-drill.png",
+      "bytes": 1900336,
+      "sha256": "0eeef9ca480d480048869f4e2486aef8f5546c4f1dedd2e36bce24fb6c59b68d"
+    },
+    {
+      "path": "test-results/evidence/shots-ss-09-e8-beats/mobile-chrome-left-last.png",
+      "bytes": 1877792,
+      "sha256": "2a3edb6cb2a0647b7bf4bdeb6d0d1b674f8b8f3a16bf7ff539ddb85da68e61bd"
+    },
+    {
+      "path": "test-results/evidence/shots-ss-09-e8-beats/mobile-chrome-mare-claim-ride.png",
+      "bytes": 1505506,
+      "sha256": "1805d88d6720ef9cfa424bd9c7f6542dec2a69dbf066bd2cb16ed2f20c68cce7"
+    },
+    {
+      "path": "test-results/evidence/shots-ss-10-e9-beats/desktop-chrome-arrival.png",
+      "bytes": 1034991,
+      "sha256": "211efadc9444d880f9d18faad0db886fc3b2201409b226af2e685b28edb27087"
+    },
+    {
+      "path": "test-results/evidence/shots-ss-10-e9-beats/desktop-chrome-devils-alley-beat.png",
+      "bytes": 1039132,
+      "sha256": "f744926b5dbf2370fec057f27dbc9ce24ce0327eb087fcf9884a8718b6b96e1c"
+    },
+    {
+      "path": "test-results/evidence/shots-ss-10-e9-beats/desktop-chrome-devils-alley-ride.png",
+      "bytes": 1078825,
+      "sha256": "e2ba78b84efb04792c10e56779ee0179041a24916f98e259d5dd559e027ac3f8"
+    },
+    {
+      "path": "test-results/evidence/shots-ss-10-e9-beats/desktop-chrome-grass-square.png",
+      "bytes": 1062459,
+      "sha256": "51fe212158694ef32485504cf2b8947dba2d896aabecfa176979245f59cf7246"
+    },
+    {
+      "path": "test-results/evidence/shots-ss-10-e9-beats/desktop-chrome-water-ledger.png",
+      "bytes": 1037048,
+      "sha256": "6dea9533845e985592d763e72b023eda228809eebc06543f7a5eaea3472863bc"
+    },
+    {
+      "path": "test-results/evidence/shots-ss-10-e9-beats/mobile-chrome-arrival.png",
+      "bytes": 1922909,
+      "sha256": "844cd3fe625617818baf2bd184305d36bbcfbce1224bdcac900733f14e31b7b3"
+    },
+    {
+      "path": "test-results/evidence/shots-ss-10-e9-beats/mobile-chrome-devils-alley-beat.png",
+      "bytes": 1947400,
+      "sha256": "21f7f066df3db3d629d2886d8c4f12c60eb02d6d4e2ba3776d5cf3fb1add230e"
+    },
+    {
+      "path": "test-results/evidence/shots-ss-10-e9-beats/mobile-chrome-devils-alley-ride.png",
+      "bytes": 1551913,
+      "sha256": "a59352e5167f1f548eb9249f7c7d0e9f5088ecc7d250ab4d3ade21e80214401e"
+    },
+    {
+      "path": "test-results/evidence/shots-ss-10-e9-beats/mobile-chrome-grass-square.png",
+      "bytes": 1914989,
+      "sha256": "e0348c03489e9a076016102dfef1e8644436c3b0fe3f19393015a1e8f326e2dc"
+    },
+    {
+      "path": "test-results/evidence/shots-ss-10-e9-beats/mobile-chrome-water-ledger.png",
+      "bytes": 1928252,
+      "sha256": "b68cb89e33abbd1d558828e12f4fdfcb64076ccaa5ef5a0ce2942fddee7e14b8"
+    },
+    {
+      "path": "test-results/evidence/shots-ss-11-e10-beats/desktop-chrome-baron-stays.png",
+      "bytes": 994013,
+      "sha256": "dd632749365e91d6618ae85a29360a70c3b07d1b19c6d5d8f32f3b7c42f2892f"
+    },
+    {
+      "path": "test-results/evidence/shots-ss-11-e10-beats/desktop-chrome-boarding.png",
+      "bytes": 995023,
+      "sha256": "3c641e2efd4fd36215296e8c4a465d9816fc6cd0835c7f1de1bc10e99c6ac4f5"
+    },
+    {
+      "path": "test-results/evidence/shots-ss-11-e10-beats/desktop-chrome-last-claim-decks.png",
+      "bytes": 988018,
+      "sha256": "47ac4099d4580d7b359357eb542a9b4ed36e5c2668ed919ba1b58d6fbd2b1a24"
+    },
+    {
+      "path": "test-results/evidence/shots-ss-11-e10-beats/desktop-chrome-last-claim-ride.png",
+      "bytes": 675573,
+      "sha256": "9caf178951a1140715b320b85a03c957fe3d0207a05809cd6e855512f0618f49"
+    },
+    {
+      "path": "test-results/evidence/shots-ss-11-e10-beats/mobile-chrome-baron-stays.png",
+      "bytes": 349753,
+      "sha256": "11a29ced99fb58efa311efe767e36e95b5cc22ba525cfb76757bd0796b539c2b"
+    },
+    {
+      "path": "test-results/evidence/shots-ss-11-e10-beats/mobile-chrome-boarding.png",
+      "bytes": 348655,
+      "sha256": "4a43f7ef3ec8daedb81ca0735aaea61538cb4eac2f88a7c0459a6b0fd4877fa6"
+    },
+    {
+      "path": "test-results/evidence/shots-ss-11-e10-beats/mobile-chrome-last-claim-decks.png",
+      "bytes": 353485,
+      "sha256": "2f29fac692ca6b9de9811fff03b8d37d6a72ab401415a6984d9bc211bb65ab30"
+    },
+    {
+      "path": "test-results/evidence/shots-ss-11-e10-beats/mobile-chrome-last-claim-ride.png",
+      "bytes": 245020,
+      "sha256": "0e5f863a3edc6e0a77d5d55f105abbe80771e9e5e73cc2f1e27e3cd13986440c"
+    }
+  ]
+}

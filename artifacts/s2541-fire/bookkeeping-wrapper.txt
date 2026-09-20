@@ -1,0 +1,68 @@
+
+===== goal tracker — rc=0 17.7s =====
+✔ goal tree schema is valid (1.582417ms)
+✔ ten sampled merged leaves have a done receipt and ancestral merge (17610.812792ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 17647.87875
+
+
+===== task guard audit — rc=0 0.2s =====
+
+> gold-rush@0.1.0 test:task-guards
+> node scripts/task-guard-audit.mjs
+
+task-guard-audit: 1326 masters, 0 invisible (baseline 0).
+  ✅ no NEW invisible master. rc=0
+
+
+===== citations — rc=0 1.8s =====
+
+> gold-rush@0.1.0 test:citations
+> node scripts/citation-title-guard.mjs
+
+=== citation-title-guard ===
+citations scanned : 697  (in 1572 tracked tasks/**/*.md)
+  CARRIES-TITLE   379
+  NUMBER-ONLY     261
+  CARRIES-LINE    57
+grandfathered keys: 262
+NOT GATED         : 2240 citation(s) in 306 tracked .md outside tasks/ — largest logs/suite-red-inventory.md (1239). Scope ruling: F-1252-1, owner's desk.
+PASS — no new bare `spec:line` citation among the 697 scanned. This verdict covers tasks/** only.
+
+
+===== gate callers — rc=0 0.2s =====
+  root                : /Users/robin/Claude/Projects/Gold Rush
+  npm scripts         : 33 (26 gate-shaped)
+  scripts/ files      : 599 (37 guard-shaped)
+  test files (role)   : 241 (9 bash)
+  battery steps       : 2 admitted (163 persisted)
+  law-called roots    : 4   build, test:guards, test:ledger-guards, test:node-guards
+  config.ts read      : 53   .github/ files: 0
+  edge vocabulary     : package.json scripts, scripts/**.mjs, scripts/**.sh, *.config.ts, .github/**, law surfaces (`npm run` only)
+  roots               : 164   reached: 389
+  subjects            : 306   orphans: 10
+  grandfathered       : 10   superseded (history, excuses nothing): 18
+  known  npm:test:asset-diet                       s1253 F-1253-1: NO CALLER, but measured GREEN this fire (4/4, rc=0, 52.3s). It is the CORRECT harness for e2e/asset-diet.spec.ts, which the default config also collects against a dev server it cannot satisfy (F-1251-1). Wiring it is gate policy, not a drive-by: owner's desk.
+  known  npm:test:codex-shim                       s2272 F-2272-1: NO CALLER, and measured GREEN on the merged tree this drain (4/4, rc=0, 16.7s) — the live arm really rode the subscription (model=gpt-5.6-luna, 16,741 prompt + 19 completion tokens, latency 10.5s; the concurrency arm 3 parallel requests at 6.0/4.8/6.0s), reproducing the runner's headline independently rather than inheriting it. DELIBERATELY UNROOTED, for a reason no prior entry in this baseline carries: rooting it would SPEND THE OWNER'S CODEX SUBSCRIPTION ALLOWANCE on every drain — ~16.7k prompt tokens per run — where test:asset-diet (52.3s) and halo-reextraction-check (+28%) were held back for WALL TIME alone. Per CLAUDE.md §7.3 anything spending money is an OWNER decision, not a fire's, so it goes to the desk on exactly the precedent those two set. It is also structurally unfit for a pre-merge battery on a second ground: its live arm depends on a third-party service over the network, so an outage would red every unrelated drain and the gate would be excused into uselessness inside a week (F-1460-1, the cross-engine fate). PARTIAL COVERAGE HOLE, STATED PLAINLY RATHER THAN WAVED AT — unlike npm:verify:visual, this is NOT "nothing to wire": 2 of the 4 tests are PURE (no auth, no network, 15ms total) and one of them, "browser-origin requests cannot spend subscription quota", is a genuine SECURITY assertion protecting the very allowance this entry declines to spend. Those two are cheap and belong in a battery today. RECOMMENDATION: split the file — pure arms into a rooted guard, live arms behind the auth skip and owner-gated. That is an implementation change, i.e. a corrective task rather than a drain's drive-by, and it is filed as F-2272-1. The auth-absent skip path was proven at this same gate (CODEX_HOME=/tmp/no-codex-auth-s2272 -> rc=0, 2 skipped loudly, the 2 pure arms still green), so the file is safe in any shell that lacks the subscription. [npm script; the alias for the test file below.]
+  known  npm:test:playability                      s2529 F-2529-1: DELIBERATELY MANUAL, matching the shipped e2e/playability-smoke.spec.ts header and GR_PLAYABILITY_SMOKE test.skip. This is the whole-board 42-contract x 2-project browser census; the implementer recorded dev 26 min and preview 28 min per environment. It is run explicitly via npm run test:playability for the playability-smoke task, not on every drain. The audit does not read task/e2e comments as callers, so the package alias needs this declaration. Existing coverage policy retained; no runtime/test assertion changed, no fresh playability PASS claimed. Evidence and outstanding gameplay failures remain in artifacts/playability-smoke/report.md.
+  known  npm:verify:visual                         DELIBERATELY UNROOTED, and not a coverage hole: a convenience alias for one spec. Verified s1253 by `npx playwright test --list e2e/visual.spec.ts` -- its 5 tests are collected by the DEFAULT config (playwright.config.ts:8 testDir './e2e'), so `npm run test` already gates them. Nothing to wire.
+  known  npm:test:preview                          s1253 F-1253-1: NO CALLER and, as far as any tracked evidence shows, NEVER RUN. Whole e2e suite against the production bundle (docs/DEPLOY.md:19 'Playwright has a preview project (npm run test:preview) that runs the e2e suite against the production bundle'). Cost and likely structural reds make this an owner ruling, not a fire's decision.
+  known  npm:test:release-base                     s2160 F-2117-1: NO CALLER, but measured GREEN this run (2/2, rc=0, 18.73s). It is the CORRECT and ONLY harness for e2e/release-base-path.spec.ts, which the default config testIgnores. The webServer does a full build:release, measured within that 18.73s run, so rooting it is a per-drain tax and therefore gate policy for the owner's desk, on the npm:test:asset-diet (52.3s) and halo-reextraction-check (+28%) precedent.
+  known  scripts/anim-pass-dupecheck.mjs           DELIBERATELY UNROOTED: not a gate. A one-off forensic instrument from THE ANIMATION PASS (2026-07-25) that measures mad/diff% between two sprite cells to settle whether a silhouette-hash duplicate suspicion is real. Matches GUARDISH_FILE on the word 'check' only. Verdicts are for a human reading a batch, not for a battery.
+  known  scripts/f2135-canyon-epoch3-checkpoint.mjss2141 F-2141-4: NOT A GATE AT ALL — a FALSE POSITIVE of the name pattern, which matches "check" inside "checkpoint". It is a one-shot CHECKPOINT GENERATOR: it walks epoch-1-frontier -> epoch-2-steamworks -> epoch-3-voltage through activateEpoch(), completing each predecessor megaproject, and packs the result with packActiveProfile(storage).envelope so gr-sim-campaign.mjs --resume can supply epochIsActive(epoch-3-voltage) — the ONLY unlock gate on e3-canyon-works (ContractUnlock.ts:22). It asserts nothing and has no verdict to be unread; giving it a battery caller would run a profile generator on every drain for no signal. Its correctness is not unobserved either: it is exercised end-to-end by the census itself, and the s2141 drain re-ran that census independently and reproduced a byte-identical 10-row trace plus the verbatim GATE B exception. Authored s2135, landed s2141 at 14e50ea3aa84cb1500dce5897543e04d992485e2. RETAINED, never deleted: it is the proven checkpoint every future Canyon Works attempt re-uses, and the f2141-1 master firewalled it as run-it-never-edit-it.
+  known  scripts/halo-reextraction-check.mjs       s1470 F-1470-3: NO CALLER, but measured GREEN on the merged tree this drain (rc=0, 45.3s: 774 cured, 301 held, 1314 scanned, alpha and opaque RGB unchanged). It is the acceptance invariant of the F-1464-1 halo batch — it asserts the exact 774/301 split and byte-compares every cured file against pre-batch 89bfc10c for alpha and fully-opaque RGB. GRANDFATHERED, NOT DISMISSED: unlike verify:visual this IS a live coverage question, because its subject is 774 shipped sprite files that a later art batch could silently revert — precisely F-1464-1's own class (a cure applied to a generator never reaches its past output). Wiring it costs 45.3s on top of test:node-guards' 162.6s (+28% on every src-touching drain), which is gate policy and not a drive-by: owner's desk, on the npm:test:asset-diet precedent (52.3s, same disposition). RECOMMENDATION: root it — a guard over 774 assets that nothing calls will not fire the day it is needed.
+  known  server/codex-shim/serve.test.mjs          s2272 F-2272-1: NO CALLER, and measured GREEN on the merged tree this drain (4/4, rc=0, 16.7s) — the live arm really rode the subscription (model=gpt-5.6-luna, 16,741 prompt + 19 completion tokens, latency 10.5s; the concurrency arm 3 parallel requests at 6.0/4.8/6.0s), reproducing the runner's headline independently rather than inheriting it. DELIBERATELY UNROOTED, for a reason no prior entry in this baseline carries: rooting it would SPEND THE OWNER'S CODEX SUBSCRIPTION ALLOWANCE on every drain — ~16.7k prompt tokens per run — where test:asset-diet (52.3s) and halo-reextraction-check (+28%) were held back for WALL TIME alone. Per CLAUDE.md §7.3 anything spending money is an OWNER decision, not a fire's, so it goes to the desk on exactly the precedent those two set. It is also structurally unfit for a pre-merge battery on a second ground: its live arm depends on a third-party service over the network, so an outage would red every unrelated drain and the gate would be excused into uselessness inside a week (F-1460-1, the cross-engine fate). PARTIAL COVERAGE HOLE, STATED PLAINLY RATHER THAN WAVED AT — unlike npm:verify:visual, this is NOT "nothing to wire": 2 of the 4 tests are PURE (no auth, no network, 15ms total) and one of them, "browser-origin requests cannot spend subscription quota", is a genuine SECURITY assertion protecting the very allowance this entry declines to spend. Those two are cheap and belong in a battery today. RECOMMENDATION: split the file — pure arms into a rooted guard, live arms behind the auth skip and owner-gated. That is an implementation change, i.e. a corrective task rather than a drain's drive-by, and it is filed as F-2272-1. The auth-absent skip path was proven at this same gate (CODEX_HOME=/tmp/no-codex-auth-s2272 -> rc=0, 2 skipped loudly, the 2 pure arms still green), so the file is safe in any shell that lacks the subscription. [the test file itself; npm:test:codex-shim above is its alias.]
+  owner escalations   : 3   unrouted: 0
+
+PASS — every gate-shaped subject is either reached or grandfathered with a reason.
+
+
+SUMMARY {"goal tracker":0,"task guard audit":0,"citations":0,"gate callers":0}
+OVERALL rc=0
+transcript -> artifacts/s2541-fire/bookkeeping-gates.txt

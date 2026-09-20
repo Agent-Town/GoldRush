@@ -1,0 +1,696 @@
+{
+  "blender": "5.1.2",
+  "freshReferenceBaseSha": "5e40ae6d123a3865353c91d8d82f95cac34e0e7b",
+  "terrains": {
+    "showroom": {
+      "asset": "showroom-terrain.glb",
+      "checked": {
+        "sha256": "05036b087dc04bc09b436002915628ea94d9100686e65457be423c48185d7ec9",
+        "bytes": 8960748,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 32768,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -64,
+            -0.305189,
+            -64
+          ],
+          "max": [
+            64,
+            3.184613,
+            64
+          ],
+          "size": [
+            128,
+            3.489803,
+            128
+          ],
+          "center": [
+            0.0,
+            1.439712,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.8999999761581421,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "reexported": {
+        "sha256": "05036b087dc04bc09b436002915628ea94d9100686e65457be423c48185d7ec9",
+        "bytes": 8960748,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 32768,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -64,
+            -0.305189,
+            -64
+          ],
+          "max": [
+            64,
+            3.184613,
+            64
+          ],
+          "size": [
+            128,
+            3.489803,
+            128
+          ],
+          "center": [
+            0.0,
+            1.439712,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.8999999761581421,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "byteIdenticalReexport": true,
+      "semanticIdenticalReexport": true,
+      "embeddedTexture": {
+        "bytes": 8229661,
+        "sha256": "5a3048d31fdd2bf1f0de1b5f46a07081d6bbede3b68b0414d967cc90951d85fd",
+        "width": 2048,
+        "height": 2048
+      },
+      "extras": {
+        "render_only": true,
+        "sim_authority": "published mask table and planar simulation; unchanged",
+        "height_socket": "Terrain.visualY",
+        "contract_id": "e6-showroom",
+        "tile_id": "e6-showroom",
+        "mask_table": "assets/contracts/epoch-6-atomic/mask-tables/e6-showroom.json",
+        "load_bearing_sites_flat": false,
+        "landmarks_frozen": false,
+        "sim_surface": "planar",
+        "runtime_owned_visuals_absent": true,
+        "landmark_mount_ids": "[\"showroom-entrance-arch\", \"west-starburst-billboard\", \"east-starburst-billboard\", \"abandoned-catalog-office\", \"catalog-sorting-gantry\"]"
+      },
+      "buildZoneSurfaceFlatness": [
+        {
+          "id": "south-showroom-approach",
+          "sampledSurfacePoints": 2145,
+          "maxDeviationMeters": 0.0
+        },
+        {
+          "id": "model-home-village",
+          "sampledSurfacePoints": 2145,
+          "maxDeviationMeters": 0.0
+        },
+        {
+          "id": "catalog-goods-yard",
+          "sampledSurfacePoints": 2145,
+          "maxDeviationMeters": 0.0
+        }
+      ],
+      "geometryAgreement": [
+        {
+          "point": [
+            -58,
+            -6
+          ],
+          "height": 1.7347
+        },
+        {
+          "point": [
+            0,
+            -41
+          ],
+          "height": 0.18
+        },
+        {
+          "point": [
+            0,
+            0
+          ],
+          "height": 0.82
+        },
+        {
+          "point": [
+            0,
+            46
+          ],
+          "height": 1.52
+        },
+        {
+          "point": [
+            57,
+            45
+          ],
+          "height": 1.2585
+        }
+      ],
+      "maskSource": "assets/contracts/epoch-6-atomic/mask-tables/e6-showroom.json"
+    },
+    "half-life-hollow": {
+      "asset": "half-life-hollow-terrain.glb",
+      "checked": {
+        "sha256": "fc9b0f73723f10beadc19b063f26d9505ca5e3f6f590d0b4a62a641f2bbe6651",
+        "bytes": 8975676,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 32768,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -64,
+            -2.41,
+            -64
+          ],
+          "max": [
+            64,
+            2.953283,
+            64
+          ],
+          "size": [
+            128,
+            5.363283,
+            128
+          ],
+          "center": [
+            0.0,
+            0.271641,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.8999999761581421,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "reexported": {
+        "sha256": "fc9b0f73723f10beadc19b063f26d9505ca5e3f6f590d0b4a62a641f2bbe6651",
+        "bytes": 8975676,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 32768,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -64,
+            -2.41,
+            -64
+          ],
+          "max": [
+            64,
+            2.953283,
+            64
+          ],
+          "size": [
+            128,
+            5.363283,
+            128
+          ],
+          "center": [
+            0.0,
+            0.271641,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.8999999761581421,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "byteIdenticalReexport": true,
+      "semanticIdenticalReexport": true,
+      "embeddedTexture": {
+        "bytes": 8244537,
+        "sha256": "f2c64077baa36adbfd068f76474198d17871a28010fda1e56dadd2cc22069573",
+        "width": 2048,
+        "height": 2048
+      },
+      "extras": {
+        "render_only": true,
+        "sim_authority": "published mask table and planar simulation; unchanged",
+        "height_socket": "Terrain.visualY",
+        "contract_id": "e6-half-life-hollow",
+        "tile_id": "e6-half-life-hollow",
+        "mask_table": "assets/contracts/epoch-6-atomic/mask-tables/e6-half-life-hollow.json",
+        "load_bearing_sites_flat": false,
+        "landmarks_frozen": false,
+        "sim_surface": "planar",
+        "runtime_owned_visuals_absent": true,
+        "landmark_mount_ids": "[\"south-countdown-gate\", \"west-hollow-warning-pylon\", \"east-hollow-warning-pylon\", \"expired-appliance-convoy\", \"north-extraction-gantry\"]"
+      },
+      "buildZoneSurfaceFlatness": [
+        {
+          "id": "south-launch-shelf",
+          "sampledSurfacePoints": 2145,
+          "maxDeviationMeters": 0.0
+        },
+        {
+          "id": "west-countdown-ground",
+          "sampledSurfacePoints": 2145,
+          "maxDeviationMeters": 0.0
+        },
+        {
+          "id": "east-countdown-ground",
+          "sampledSurfacePoints": 2145,
+          "maxDeviationMeters": 0.0
+        },
+        {
+          "id": "north-extraction-shelf",
+          "sampledSurfacePoints": 2145,
+          "maxDeviationMeters": 0.0
+        }
+      ],
+      "geometryAgreement": [
+        {
+          "point": [
+            -56,
+            36
+          ],
+          "height": 2.7301
+        },
+        {
+          "point": [
+            0,
+            -31
+          ],
+          "height": -2.4024
+        },
+        {
+          "point": [
+            0,
+            2
+          ],
+          "height": -2.3767
+        },
+        {
+          "point": [
+            0,
+            33
+          ],
+          "height": -2.3288
+        },
+        {
+          "point": [
+            57,
+            -35
+          ],
+          "height": 2.6355
+        }
+      ],
+      "maskSource": "assets/contracts/epoch-6-atomic/mask-tables/e6-half-life-hollow.json"
+    }
+  },
+  "panoramas": {
+    "showroom": {
+      "asset": "showroom-panorama.glb",
+      "checked": {
+        "sha256": "52f33280cf51e798ee99f9605613feea33f4be3cb5141380041368deb529eb59",
+        "bytes": 1219784,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 2688,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -193,
+            -10,
+            -193
+          ],
+          "max": [
+            193,
+            130,
+            193
+          ],
+          "size": [
+            386,
+            140,
+            386
+          ],
+          "center": [
+            0.0,
+            60.0,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 1,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": true,
+            "emissiveFactor": [
+              1,
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "reexported": {
+        "sha256": "52f33280cf51e798ee99f9605613feea33f4be3cb5141380041368deb529eb59",
+        "bytes": 1219784,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 2688,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -193,
+            -10,
+            -193
+          ],
+          "max": [
+            193,
+            130,
+            193
+          ],
+          "size": [
+            386,
+            140,
+            386
+          ],
+          "center": [
+            0.0,
+            60.0,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 1,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": true,
+            "emissiveFactor": [
+              1,
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "byteIdenticalReexport": true,
+      "semanticIdenticalReexport": true,
+      "embeddedTexture": {
+        "bytes": 1121099,
+        "sha256": "8de5e018443d8f0d866293148bbf0f7beb1f5a131dbfbf3fe339cc5b96d526bd",
+        "width": 2048,
+        "height": 2048
+      },
+      "mount": {
+        "id": "showroom-panorama",
+        "asset": "showroom-panorama.glb",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "renderOnly": true,
+        "ownership": "separate mounted scenery; never terrain or gameplay bounds"
+      }
+    },
+    "half-life-hollow": {
+      "asset": "half-life-hollow-panorama.glb",
+      "checked": {
+        "sha256": "b38bc2099bf08f72964a77e272b9ec7936623d46fb03e69046fed3ad78bcf41a",
+        "bytes": 1209432,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 2688,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -193,
+            -10,
+            -193
+          ],
+          "max": [
+            193,
+            130,
+            193
+          ],
+          "size": [
+            386,
+            140,
+            386
+          ],
+          "center": [
+            0.0,
+            60.0,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 1,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": true,
+            "emissiveFactor": [
+              1,
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "reexported": {
+        "sha256": "b38bc2099bf08f72964a77e272b9ec7936623d46fb03e69046fed3ad78bcf41a",
+        "bytes": 1209432,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 2688,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -193,
+            -10,
+            -193
+          ],
+          "max": [
+            193,
+            130,
+            193
+          ],
+          "size": [
+            386,
+            140,
+            386
+          ],
+          "center": [
+            0.0,
+            60.0,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 1,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": true,
+            "emissiveFactor": [
+              1,
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "byteIdenticalReexport": true,
+      "semanticIdenticalReexport": true,
+      "embeddedTexture": {
+        "bytes": 1110717,
+        "sha256": "e42818b17afee70b6f195268953e5c85a635b2ef5791ebf99832e75484e5e64a",
+        "width": 2048,
+        "height": 2048
+      },
+      "mount": {
+        "id": "half-life-hollow-panorama",
+        "asset": "half-life-hollow-panorama.glb",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "renderOnly": true,
+        "ownership": "separate mounted scenery; never terrain or gameplay bounds"
+      }
+    }
+  },
+  "boards": {
+    "e6-extra-mood-ab.png": {
+      "size": [
+        1920,
+        1260
+      ],
+      "bytes": 3945423,
+      "sha256": "0e941d356005432dba05609931cf89d814820f20672183df1025331e26c2b000"
+    },
+    "e6-extra-flat-vs-sculpted-ab.png": {
+      "size": [
+        1920,
+        1260
+      ],
+      "bytes": 3194344,
+      "sha256": "55574ebe235bf042c8d0d9671f950bbd7855016e8af460694ac628a7438cf397"
+    },
+    "e6-extra-owner-verdict.png": {
+      "size": [
+        1920,
+        900
+      ],
+      "bytes": 2142447,
+      "sha256": "c0265d2cf32598a42cce74f7401a8236cf1cfbb354fe3944a8caefc8578c33f2"
+    },
+    "e6-extra-panorama-mood-ab.png": {
+      "size": [
+        1920,
+        900
+      ],
+      "bytes": 1237889,
+      "sha256": "7d9418bacfcafa22371ba0d2bc781b1d1922a4ae7bae57a13763c976cfc93950"
+    },
+    "e6-extra-panorama-distance-gate.png": {
+      "size": [
+        1920,
+        1260
+      ],
+      "bytes": 2389019,
+      "sha256": "9e683d14bdfa09b28113b7a8a5adaa88117bccde49d09e3a6b7c8334b3e62d02"
+    },
+    "e6-extra-mask-agreement-board.png": {
+      "size": [
+        1920,
+        1260
+      ],
+      "bytes": 2448602,
+      "sha256": "a2db480705ea99b0d47570629c1f89980277fbd4064e0b86f1323bbc976bd851"
+    }
+  },
+  "reuse": {
+    "contractId": "e6-picnic",
+    "tileId": "e6-glow-mesa",
+    "decision": "variant-tagged tile reuse; no duplicate terrain or panorama sculpt",
+    "maskSource": "assets/contracts/epoch-6-atomic/mask-tables/e6-picnic.json"
+  },
+  "regattaMountBackfill": {
+    "contractId": "e5-regatta",
+    "mountIds": [
+      "start-line-rig",
+      "finish-line-rig",
+      "northwest-buoy-line-anchor",
+      "midcourse-buoy-line-anchor",
+      "northeast-buoy-line-anchor",
+      "spectator-raft-port",
+      "spectator-raft-starboard",
+      "judges-tower"
+    ],
+    "surfacePlacement": "positionY offsets lift floating furniture from bathymetry to runtime sea level"
+  },
+  "verdict": {
+    "grit": "ratified E6 painted earth and kit-plate language; polished effort inside hard desert; fight, never holiday",
+    "panorama": "distance; quiet zenith, unequal atomic-weather marks, no wall or ceiling",
+    "masks": "published and byte-for-byte copied into each contract",
+    "simulation": "planar and unchanged; all homes, goods, bridges, causeway, countdown, and extraction state remain code-owned",
+    "landmarks": "mount interlock satisfied with empty asset fields; landmark bodies remain separate and 3D-C-owned"
+  }
+}

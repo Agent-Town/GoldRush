@@ -1,0 +1,413 @@
+
+> gold-rush@0.1.0 test:playability
+> GR_PLAYABILITY_SMOKE=1 playwright test e2e/playability-smoke.spec.ts --project=desktop-chrome --project=mobile-chrome --workers=1 --reporter=line
+
+(node:97957) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 84 tests using 1 worker
+
+
+(node:98014) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/84] [desktop-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › the-claim boots plain, briefs, moves and reaches wave 2 @slow
+[2/84] [desktop-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e1-drill-yard boots plain, briefs, moves and reaches wave 2 @slow
+
+[WebServer] 12:56:33 AM [vite] (client) [console.warn] [gold-rush] render demotion {"event":"render_demotion","reason":"pilot-contract-unavailable","contractId":"e1-drill-yard","buildId":"dev","tier":"FULL","dataset":{"terrain3dPilotState":"failed","terrain3dPilotRenderSource":"painted","run3dPilotState":"loading","run3dPilotMeshes":"0","run3dPilotTriangles":"0","terrain3dPilotContract":"e1-drill-yard","terrain3dPilotLandmarkLoadState":"off","terrain3dPilotHeightSource":"painted","terrain3dPilotMeshes":"0","terrain3dPilotTriangles":"0","terrain3dPilotMaterials":"0","terrain3dPilotVertices":"0","terrain3dPilotPanorama":"off","terrain3dPilotPanoramaMeshes":"0","terrain3dPilotPanoramaTriangles":"0","terrain3dPilotPanoramaMaterials":"0","terrain3dPilotPanoramaVertices":"0"}}
+  1) [desktop-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e1-drill-yard boots plain, briefs, moves and reaches wave 2 @slow 
+
+    Error: wave 2: reached wave 0 after 90.5s wall / 374.4s sim at timescale 4 (runState=playing, HUD wave reads "0", simTick=2819)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      424 |       expect(row.hud.ok, `HUD: ${row.hud.detail}`).toBe(true);
+      425 |       expect(row.moves.ok, `moves: ${row.moves.detail}`).toBe(true);
+    > 426 |       expect(row.wave2.ok, `wave 2: ${row.wave2.detail}`).toBe(true);
+          |                                                           ^
+      427 |       expect(row.clean.ok, `clean: ${row.clean.detail}`).toBe(true);
+      428 |       expect(row.screenshotBytes, 'screenshot exists and is under 300 KB').toBeGreaterThan(0);
+      429 |       expect(row.screenshotBytes, 'screenshot is under 300 KB').toBeLessThan(300 * 1024);
+        at /Users/robin/Claude/Projects/Gold Rush/gate-census-s2583/e2e/playability-smoke.spec.ts:426:59
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/playability-smoke-playabil-e4abb-fs-moves-and-reaches-wave-2-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/playability-smoke-playabil-e4abb-fs-moves-and-reaches-wave-2-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playability-smoke-playabil-e4abb-fs-moves-and-reaches-wave-2-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playability-smoke-playabil-e4abb-fs-moves-and-reaches-wave-2-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:438) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[3/84] [desktop-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e1-dry-gulch boots plain, briefs, moves and reaches wave 2 @slow
+
+[WebServer] 12:58:42 AM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[4/84] [desktop-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e1-night-shift boots plain, briefs, moves and reaches wave 2 @slow
+[5/84] [desktop-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e1-twin-banks boots plain, briefs, moves and reaches wave 2 @slow
+[6/84] [desktop-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e1-baron boots plain, briefs, moves and reaches wave 2 @slow
+[7/84] [desktop-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e2-hill-mine boots plain, briefs, moves and reaches wave 2 @slow
+[8/84] [desktop-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e2-trestle boots plain, briefs, moves and reaches wave 2 @slow
+  2) [desktop-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e2-trestle boots plain, briefs, moves and reaches wave 2 @slow 
+
+    Error: wave 2: reached wave 1 after 6.8s wall / 50.3s sim at timescale 4 (runState=dead, HUD wave reads "1", simTick=403)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      424 |       expect(row.hud.ok, `HUD: ${row.hud.detail}`).toBe(true);
+      425 |       expect(row.moves.ok, `moves: ${row.moves.detail}`).toBe(true);
+    > 426 |       expect(row.wave2.ok, `wave 2: ${row.wave2.detail}`).toBe(true);
+          |                                                           ^
+      427 |       expect(row.clean.ok, `clean: ${row.clean.detail}`).toBe(true);
+      428 |       expect(row.screenshotBytes, 'screenshot exists and is under 300 KB').toBeGreaterThan(0);
+      429 |       expect(row.screenshotBytes, 'screenshot is under 300 KB').toBeLessThan(300 * 1024);
+        at /Users/robin/Claude/Projects/Gold Rush/gate-census-s2583/e2e/playability-smoke.spec.ts:426:59
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/playability-smoke-playabil-94867-fs-moves-and-reaches-wave-2-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/playability-smoke-playabil-94867-fs-moves-and-reaches-wave-2-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playability-smoke-playabil-94867-fs-moves-and-reaches-wave-2-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playability-smoke-playabil-94867-fs-moves-and-reaches-wave-2-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:2587) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[9/84] [desktop-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e2-pressure-garden boots plain, briefs, moves and reaches wave 2 @slow
+[10/84] [desktop-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e2-incline boots plain, briefs, moves and reaches wave 2 @slow
+  3) [desktop-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e2-incline boots plain, briefs, moves and reaches wave 2 @slow 
+
+    Error: wave 2: reached wave 1 after 13.3s wall / 69.6s sim at timescale 4 (runState=dead, HUD wave reads "1", simTick=546)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      424 |       expect(row.hud.ok, `HUD: ${row.hud.detail}`).toBe(true);
+      425 |       expect(row.moves.ok, `moves: ${row.moves.detail}`).toBe(true);
+    > 426 |       expect(row.wave2.ok, `wave 2: ${row.wave2.detail}`).toBe(true);
+          |                                                           ^
+      427 |       expect(row.clean.ok, `clean: ${row.clean.detail}`).toBe(true);
+      428 |       expect(row.screenshotBytes, 'screenshot exists and is under 300 KB').toBeGreaterThan(0);
+      429 |       expect(row.screenshotBytes, 'screenshot is under 300 KB').toBeLessThan(300 * 1024);
+        at /Users/robin/Claude/Projects/Gold Rush/gate-census-s2583/e2e/playability-smoke.spec.ts:426:59
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/playability-smoke-playabil-224d5-fs-moves-and-reaches-wave-2-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/playability-smoke-playabil-224d5-fs-moves-and-reaches-wave-2-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playability-smoke-playabil-224d5-fs-moves-and-reaches-wave-2-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playability-smoke-playabil-224d5-fs-moves-and-reaches-wave-2-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:3535) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[11/84] [desktop-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e3-blackout-ridge boots plain, briefs, moves and reaches wave 2 @slow
+[12/84] [desktop-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e3-moth-season boots plain, briefs, moves and reaches wave 2 @slow
+[13/84] [desktop-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e3-canyon-works boots plain, briefs, moves and reaches wave 2 @slow
+[14/84] [desktop-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e3-fairground boots plain, briefs, moves and reaches wave 2 @slow
+[15/84] [desktop-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e4-dust-flats boots plain, briefs, moves and reaches wave 2 @slow
+[16/84] [desktop-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e4-long-road boots plain, briefs, moves and reaches wave 2 @slow
+[17/84] [desktop-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e4-gusher-county boots plain, briefs, moves and reaches wave 2 @slow
+[18/84] [desktop-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e4-boneyard boots plain, briefs, moves and reaches wave 2 @slow
+[19/84] [desktop-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e5-deepwater-claim boots plain, briefs, moves and reaches wave 2 @slow
+[20/84] [desktop-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e5-regatta boots plain, briefs, moves and reaches wave 2 @slow
+[21/84] [desktop-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e5-stillwater boots plain, briefs, moves and reaches wave 2 @slow
+[22/84] [desktop-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e5-flotilla boots plain, briefs, moves and reaches wave 2 @slow
+[23/84] [desktop-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e6-glow-mesa boots plain, briefs, moves and reaches wave 2 @slow
+[24/84] [desktop-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e6-showroom boots plain, briefs, moves and reaches wave 2 @slow
+[25/84] [desktop-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e6-half-life-hollow boots plain, briefs, moves and reaches wave 2 @slow
+[26/84] [desktop-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e6-picnic boots plain, briefs, moves and reaches wave 2 @slow
+  4) [desktop-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e6-picnic boots plain, briefs, moves and reaches wave 2 @slow 
+
+    Error: wave 2: reached wave 1 after 3.6s wall / 34.7s sim at timescale 4 (runState=dead, HUD wave reads "1", simTick=295)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      424 |       expect(row.hud.ok, `HUD: ${row.hud.detail}`).toBe(true);
+      425 |       expect(row.moves.ok, `moves: ${row.moves.detail}`).toBe(true);
+    > 426 |       expect(row.wave2.ok, `wave 2: ${row.wave2.detail}`).toBe(true);
+          |                                                           ^
+      427 |       expect(row.clean.ok, `clean: ${row.clean.detail}`).toBe(true);
+      428 |       expect(row.screenshotBytes, 'screenshot exists and is under 300 KB').toBeGreaterThan(0);
+      429 |       expect(row.screenshotBytes, 'screenshot is under 300 KB').toBeLessThan(300 * 1024);
+        at /Users/robin/Claude/Projects/Gold Rush/gate-census-s2583/e2e/playability-smoke.spec.ts:426:59
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/playability-smoke-playabil-1a6c7-fs-moves-and-reaches-wave-2-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/playability-smoke-playabil-1a6c7-fs-moves-and-reaches-wave-2-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playability-smoke-playabil-1a6c7-fs-moves-and-reaches-wave-2-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playability-smoke-playabil-1a6c7-fs-moves-and-reaches-wave-2-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:8038) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[27/84] [desktop-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e7-relay-valley boots plain, briefs, moves and reaches wave 2 @slow
+[28/84] [desktop-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e7-echo-canyon boots plain, briefs, moves and reaches wave 2 @slow
+[29/84] [desktop-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e7-dead-band boots plain, briefs, moves and reaches wave 2 @slow
+[30/84] [desktop-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e7-relay-rush boots plain, briefs, moves and reaches wave 2 @slow
+[31/84] [desktop-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e8-mare-claim boots plain, briefs, moves and reaches wave 2 @slow
+[32/84] [desktop-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e8-far-side boots plain, briefs, moves and reaches wave 2 @slow
+[33/84] [desktop-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e8-low-orbit boots plain, briefs, moves and reaches wave 2 @slow
+[34/84] [desktop-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e8-eclipse boots plain, briefs, moves and reaches wave 2 @slow
+[35/84] [desktop-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e9-dome-basin boots plain, briefs, moves and reaches wave 2 @slow
+[36/84] [desktop-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e9-seed-run boots plain, briefs, moves and reaches wave 2 @slow
+[37/84] [desktop-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e9-devils-alley boots plain, briefs, moves and reaches wave 2 @slow
+[38/84] [desktop-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e9-old-canal boots plain, briefs, moves and reaches wave 2 @slow
+[39/84] [desktop-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e10-ember-shore boots plain, briefs, moves and reaches wave 2 @slow
+[40/84] [desktop-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e10-archive-world boots plain, briefs, moves and reaches wave 2 @slow
+[41/84] [desktop-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e10-last-claim boots plain, briefs, moves and reaches wave 2 @slow
+
+[WebServer] 1:10:05 AM [vite] (client) [console.warn] [gold-rush] render demotion {"event":"render_demotion","reason":"pilot-contract-unavailable","contractId":"e10-last-claim","buildId":"dev","tier":"FULL","dataset":{"terrain3dPilotState":"failed","terrain3dPilotRenderSource":"painted","run3dPilotState":"loading","run3dPilotMeshes":"0","run3dPilotTriangles":"0","terrain3dPilotContract":"e10-last-claim","terrain3dPilotLandmarkLoadState":"off","terrain3dPilotHeightSource":"painted","terrain3dPilotMeshes":"0","terrain3dPilotTriangles":"0","terrain3dPilotMaterials":"0","terrain3dPilotVertices":"0","terrain3dPilotPanorama":"off","terrain3dPilotPanoramaMeshes":"0","terrain3dPilotPanoramaTriangles":"0","terrain3dPilotPanoramaMaterials":"0","terrain3dPilotPanoramaVertices":"0"}}
+[42/84] [desktop-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e10-river boots plain, briefs, moves and reaches wave 2 @slow
+
+[WebServer] 1:10:24 AM [vite] (client) [console.warn] [gold-rush] render demotion {"event":"render_demotion","reason":"pilot-contract-unavailable","contractId":"e10-river","buildId":"dev","tier":"FULL","dataset":{"terrain3dPilotState":"failed","terrain3dPilotRenderSource":"painted","run3dPilotState":"loading","run3dPilotMeshes":"0","run3dPilotTriangles":"0","terrain3dPilotContract":"e10-river","terrain3dPilotLandmarkLoadState":"off","terrain3dPilotHeightSource":"painted","terrain3dPilotMeshes":"0","terrain3dPilotTriangles":"0","terrain3dPilotMaterials":"0","terrain3dPilotVertices":"0","terrain3dPilotPanorama":"off","terrain3dPilotPanoramaMeshes":"0","terrain3dPilotPanoramaTriangles":"0","terrain3dPilotPanoramaMaterials":"0","terrain3dPilotPanoramaVertices":"0"}}
+
+(node:12440) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[43/84] [mobile-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › the-claim boots plain, briefs, moves and reaches wave 2 @slow
+[44/84] [mobile-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e1-drill-yard boots plain, briefs, moves and reaches wave 2 @slow
+
+[WebServer] 1:11:03 AM [vite] (client) [console.warn] [gold-rush] render demotion {"event":"render_demotion","reason":"pilot-contract-unavailable","contractId":"e1-drill-yard","buildId":"dev","tier":"FULL","dataset":{"terrain3dPilotState":"failed","terrain3dPilotRenderSource":"painted","run3dPilotState":"loading","run3dPilotMeshes":"0","run3dPilotTriangles":"0","terrain3dPilotContract":"e1-drill-yard","terrain3dPilotLandmarkLoadState":"off","terrain3dPilotHeightSource":"painted","terrain3dPilotMeshes":"0","terrain3dPilotTriangles":"0","terrain3dPilotMaterials":"0","terrain3dPilotVertices":"0","terrain3dPilotPanorama":"off","terrain3dPilotPanoramaMeshes":"0","terrain3dPilotPanoramaTriangles":"0","terrain3dPilotPanoramaMaterials":"0","terrain3dPilotPanoramaVertices":"0"}}
+  5) [mobile-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e1-drill-yard boots plain, briefs, moves and reaches wave 2 @slow 
+
+    Error: wave 2: reached wave 0 after 90.2s wall / 374.9s sim at timescale 4 (runState=playing, HUD wave reads "0", simTick=2817)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      424 |       expect(row.hud.ok, `HUD: ${row.hud.detail}`).toBe(true);
+      425 |       expect(row.moves.ok, `moves: ${row.moves.detail}`).toBe(true);
+    > 426 |       expect(row.wave2.ok, `wave 2: ${row.wave2.detail}`).toBe(true);
+          |                                                           ^
+      427 |       expect(row.clean.ok, `clean: ${row.clean.detail}`).toBe(true);
+      428 |       expect(row.screenshotBytes, 'screenshot exists and is under 300 KB').toBeGreaterThan(0);
+      429 |       expect(row.screenshotBytes, 'screenshot is under 300 KB').toBeLessThan(300 * 1024);
+        at /Users/robin/Claude/Projects/Gold Rush/gate-census-s2583/e2e/playability-smoke.spec.ts:426:59
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/playability-smoke-playabil-e4abb-fs-moves-and-reaches-wave-2-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/playability-smoke-playabil-e4abb-fs-moves-and-reaches-wave-2-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playability-smoke-playabil-e4abb-fs-moves-and-reaches-wave-2-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playability-smoke-playabil-e4abb-fs-moves-and-reaches-wave-2-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:14622) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[45/84] [mobile-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e1-dry-gulch boots plain, briefs, moves and reaches wave 2 @slow
+
+[WebServer] 1:13:06 AM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[46/84] [mobile-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e1-night-shift boots plain, briefs, moves and reaches wave 2 @slow
+[47/84] [mobile-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e1-twin-banks boots plain, briefs, moves and reaches wave 2 @slow
+[48/84] [mobile-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e1-baron boots plain, briefs, moves and reaches wave 2 @slow
+[49/84] [mobile-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e2-hill-mine boots plain, briefs, moves and reaches wave 2 @slow
+[50/84] [mobile-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e2-trestle boots plain, briefs, moves and reaches wave 2 @slow
+  6) [mobile-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e2-trestle boots plain, briefs, moves and reaches wave 2 @slow 
+
+    Error: wave 2: reached wave 1 after 12.7s wall / 61.1s sim at timescale 4 (runState=dead, HUD wave reads "1", simTick=503)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      424 |       expect(row.hud.ok, `HUD: ${row.hud.detail}`).toBe(true);
+      425 |       expect(row.moves.ok, `moves: ${row.moves.detail}`).toBe(true);
+    > 426 |       expect(row.wave2.ok, `wave 2: ${row.wave2.detail}`).toBe(true);
+          |                                                           ^
+      427 |       expect(row.clean.ok, `clean: ${row.clean.detail}`).toBe(true);
+      428 |       expect(row.screenshotBytes, 'screenshot exists and is under 300 KB').toBeGreaterThan(0);
+      429 |       expect(row.screenshotBytes, 'screenshot is under 300 KB').toBeLessThan(300 * 1024);
+        at /Users/robin/Claude/Projects/Gold Rush/gate-census-s2583/e2e/playability-smoke.spec.ts:426:59
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/playability-smoke-playabil-94867-fs-moves-and-reaches-wave-2-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/playability-smoke-playabil-94867-fs-moves-and-reaches-wave-2-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playability-smoke-playabil-94867-fs-moves-and-reaches-wave-2-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playability-smoke-playabil-94867-fs-moves-and-reaches-wave-2-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:16474) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[51/84] [mobile-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e2-pressure-garden boots plain, briefs, moves and reaches wave 2 @slow
+[52/84] [mobile-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e2-incline boots plain, briefs, moves and reaches wave 2 @slow
+  7) [mobile-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e2-incline boots plain, briefs, moves and reaches wave 2 @slow 
+
+    Error: wave 2: reached wave 1 after 14.8s wall / 70.9s sim at timescale 4 (runState=dead, HUD wave reads "1", simTick=569)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      424 |       expect(row.hud.ok, `HUD: ${row.hud.detail}`).toBe(true);
+      425 |       expect(row.moves.ok, `moves: ${row.moves.detail}`).toBe(true);
+    > 426 |       expect(row.wave2.ok, `wave 2: ${row.wave2.detail}`).toBe(true);
+          |                                                           ^
+      427 |       expect(row.clean.ok, `clean: ${row.clean.detail}`).toBe(true);
+      428 |       expect(row.screenshotBytes, 'screenshot exists and is under 300 KB').toBeGreaterThan(0);
+      429 |       expect(row.screenshotBytes, 'screenshot is under 300 KB').toBeLessThan(300 * 1024);
+        at /Users/robin/Claude/Projects/Gold Rush/gate-census-s2583/e2e/playability-smoke.spec.ts:426:59
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/playability-smoke-playabil-224d5-fs-moves-and-reaches-wave-2-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/playability-smoke-playabil-224d5-fs-moves-and-reaches-wave-2-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playability-smoke-playabil-224d5-fs-moves-and-reaches-wave-2-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playability-smoke-playabil-224d5-fs-moves-and-reaches-wave-2-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:17900) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[53/84] [mobile-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e3-blackout-ridge boots plain, briefs, moves and reaches wave 2 @slow
+[54/84] [mobile-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e3-moth-season boots plain, briefs, moves and reaches wave 2 @slow
+[55/84] [mobile-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e3-canyon-works boots plain, briefs, moves and reaches wave 2 @slow
+[56/84] [mobile-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e3-fairground boots plain, briefs, moves and reaches wave 2 @slow
+[57/84] [mobile-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e4-dust-flats boots plain, briefs, moves and reaches wave 2 @slow
+[58/84] [mobile-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e4-long-road boots plain, briefs, moves and reaches wave 2 @slow
+[59/84] [mobile-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e4-gusher-county boots plain, briefs, moves and reaches wave 2 @slow
+[60/84] [mobile-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e4-boneyard boots plain, briefs, moves and reaches wave 2 @slow
+[61/84] [mobile-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e5-deepwater-claim boots plain, briefs, moves and reaches wave 2 @slow
+[62/84] [mobile-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e5-regatta boots plain, briefs, moves and reaches wave 2 @slow
+[63/84] [mobile-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e5-stillwater boots plain, briefs, moves and reaches wave 2 @slow
+[64/84] [mobile-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e5-flotilla boots plain, briefs, moves and reaches wave 2 @slow
+[65/84] [mobile-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e6-glow-mesa boots plain, briefs, moves and reaches wave 2 @slow
+[66/84] [mobile-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e6-showroom boots plain, briefs, moves and reaches wave 2 @slow
+[67/84] [mobile-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e6-half-life-hollow boots plain, briefs, moves and reaches wave 2 @slow
+[68/84] [mobile-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e6-picnic boots plain, briefs, moves and reaches wave 2 @slow
+  8) [mobile-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e6-picnic boots plain, briefs, moves and reaches wave 2 @slow 
+
+    Error: wave 2: reached wave 0 after 2.0s wall / 27.2s sim at timescale 4 (runState=dead, HUD wave reads "0", simTick=216)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      424 |       expect(row.hud.ok, `HUD: ${row.hud.detail}`).toBe(true);
+      425 |       expect(row.moves.ok, `moves: ${row.moves.detail}`).toBe(true);
+    > 426 |       expect(row.wave2.ok, `wave 2: ${row.wave2.detail}`).toBe(true);
+          |                                                           ^
+      427 |       expect(row.clean.ok, `clean: ${row.clean.detail}`).toBe(true);
+      428 |       expect(row.screenshotBytes, 'screenshot exists and is under 300 KB').toBeGreaterThan(0);
+      429 |       expect(row.screenshotBytes, 'screenshot is under 300 KB').toBeLessThan(300 * 1024);
+        at /Users/robin/Claude/Projects/Gold Rush/gate-census-s2583/e2e/playability-smoke.spec.ts:426:59
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/playability-smoke-playabil-1a6c7-fs-moves-and-reaches-wave-2-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/playability-smoke-playabil-1a6c7-fs-moves-and-reaches-wave-2-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playability-smoke-playabil-1a6c7-fs-moves-and-reaches-wave-2-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playability-smoke-playabil-1a6c7-fs-moves-and-reaches-wave-2-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:22084) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[69/84] [mobile-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e7-relay-valley boots plain, briefs, moves and reaches wave 2 @slow
+[70/84] [mobile-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e7-echo-canyon boots plain, briefs, moves and reaches wave 2 @slow
+[71/84] [mobile-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e7-dead-band boots plain, briefs, moves and reaches wave 2 @slow
+[72/84] [mobile-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e7-relay-rush boots plain, briefs, moves and reaches wave 2 @slow
+[73/84] [mobile-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e8-mare-claim boots plain, briefs, moves and reaches wave 2 @slow
+[74/84] [mobile-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e8-far-side boots plain, briefs, moves and reaches wave 2 @slow
+[75/84] [mobile-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e8-low-orbit boots plain, briefs, moves and reaches wave 2 @slow
+[76/84] [mobile-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e8-eclipse boots plain, briefs, moves and reaches wave 2 @slow
+[77/84] [mobile-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e9-dome-basin boots plain, briefs, moves and reaches wave 2 @slow
+[78/84] [mobile-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e9-seed-run boots plain, briefs, moves and reaches wave 2 @slow
+[79/84] [mobile-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e9-devils-alley boots plain, briefs, moves and reaches wave 2 @slow
+[80/84] [mobile-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e9-old-canal boots plain, briefs, moves and reaches wave 2 @slow
+[81/84] [mobile-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e10-ember-shore boots plain, briefs, moves and reaches wave 2 @slow
+[82/84] [mobile-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e10-archive-world boots plain, briefs, moves and reaches wave 2 @slow
+[83/84] [mobile-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e10-last-claim boots plain, briefs, moves and reaches wave 2 @slow
+
+[WebServer] 1:24:17 AM [vite] (client) [console.warn] [gold-rush] render demotion {"event":"render_demotion","reason":"pilot-contract-unavailable","contractId":"e10-last-claim","buildId":"dev","tier":"FULL","dataset":{"terrain3dPilotState":"failed","terrain3dPilotRenderSource":"painted","run3dPilotState":"loading","run3dPilotMeshes":"0","run3dPilotTriangles":"0","terrain3dPilotContract":"e10-last-claim","terrain3dPilotLandmarkLoadState":"off","terrain3dPilotHeightSource":"painted","terrain3dPilotMeshes":"0","terrain3dPilotTriangles":"0","terrain3dPilotMaterials":"0","terrain3dPilotVertices":"0","terrain3dPilotPanorama":"off","terrain3dPilotPanoramaMeshes":"0","terrain3dPilotPanoramaTriangles":"0","terrain3dPilotPanoramaMaterials":"0","terrain3dPilotPanoramaVertices":"0"}}
+[84/84] [mobile-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e10-river boots plain, briefs, moves and reaches wave 2 @slow
+
+[WebServer] 1:24:36 AM [vite] (client) [console.warn] [gold-rush] render demotion {"event":"render_demotion","reason":"pilot-contract-unavailable","contractId":"e10-river","buildId":"dev","tier":"FULL","dataset":{"terrain3dPilotState":"failed","terrain3dPilotRenderSource":"painted","run3dPilotState":"loading","run3dPilotMeshes":"0","run3dPilotTriangles":"0","terrain3dPilotContract":"e10-river","terrain3dPilotLandmarkLoadState":"off","terrain3dPilotHeightSource":"painted","terrain3dPilotMeshes":"0","terrain3dPilotTriangles":"0","terrain3dPilotMaterials":"0","terrain3dPilotVertices":"0","terrain3dPilotPanorama":"off","terrain3dPilotPanoramaMeshes":"0","terrain3dPilotPanoramaTriangles":"0","terrain3dPilotPanoramaMaterials":"0","terrain3dPilotPanoramaVertices":"0"}}
+  8 failed
+    [desktop-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e1-drill-yard boots plain, briefs, moves and reaches wave 2 @slow 
+    [desktop-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e2-trestle boots plain, briefs, moves and reaches wave 2 @slow 
+    [desktop-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e2-incline boots plain, briefs, moves and reaches wave 2 @slow 
+    [desktop-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e6-picnic boots plain, briefs, moves and reaches wave 2 @slow 
+    [mobile-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e1-drill-yard boots plain, briefs, moves and reaches wave 2 @slow 
+    [mobile-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e2-trestle boots plain, briefs, moves and reaches wave 2 @slow 
+    [mobile-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e2-incline boots plain, briefs, moves and reaches wave 2 @slow 
+    [mobile-chrome] › e2e/playability-smoke.spec.ts:217:5 › playability smoke: every board contract, plain boot › e6-picnic boots plain, briefs, moves and reaches wave 2 @slow 
+  76 passed (28.7m)

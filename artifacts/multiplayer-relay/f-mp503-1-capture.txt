@@ -1,0 +1,14 @@
+wrangler-version: 4.107.0
+request: POST /api/multiplayer/create
+status: 503 Service Unavailable
+headers:
+Content-Length: 70
+Content-Type: text/plain;charset=UTF-8
+Access-Control-Allow-Origin: http://localhost:5188
+Cache-Control: no-store
+Vary: Origin
+Access-Control-Allow-Headers: authorization, content-type
+Access-Control-Allow-Methods: GET, POST, OPTIONS
+
+body:
+Worker "gold-rush-mp-room" not found. Make sure it is running locally.

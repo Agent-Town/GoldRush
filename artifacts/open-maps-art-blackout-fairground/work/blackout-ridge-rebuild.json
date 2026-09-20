@@ -1,0 +1,217 @@
+{
+ "pack": "blackout-ridge",
+ "mode": "build",
+ "original_atlas_sha256": "8ba525bd84d042a7b54e434d8560d91d0be27a0aecf99a2fe5b85a946be9a3c5",
+ "new_atlas_sha256": "dc090249aa8337a4eac43bf45480b577917466fa961e6b36700afd4c5ab6a1d7",
+ "texture_nodes_repointed": 1,
+ "blend_sha256": "827bffcf428b075d629fcb4125886f4ab803e61ef8da6b52bcdc914229e19342",
+ "bodies": {
+  "blackout-watch-lamp": {
+   "glb": "blackout-watch-lamp.glb",
+   "sha256": "6c136ca8289b069091ed9f24aba9308c9837d706b0f7e2a8cb547a44f41d4109",
+   "previous_sha256": "8cc781f2c9b8b3e6c40a14a2966620b3deba6cffc5541915881af699281438bb",
+   "bytes": 1535568,
+   "triangles": 956,
+   "bounds": {
+    "min": [
+     -1.9,
+     -1.9,
+     0.0
+    ],
+    "max": [
+     1.9,
+     1.9,
+     8.92
+    ]
+   },
+   "materials": 1,
+   "extras": {
+    "render_only": true,
+    "landmark": true,
+    "mount_id": "blackout-watch-lamp",
+    "map_pack": "blackout-ridge",
+    "source_tier": "reuse",
+    "era": 3,
+    "simulation_authority": "none; mounted render-only scenery"
+   }
+  },
+  "breath-bank-service-rack": {
+   "glb": "breath-bank-service-rack.glb",
+   "sha256": "32cfcdfa599cc0be8670b5a14bc888e2d759bb18f83763d7c170c7e2a9cf487b",
+   "previous_sha256": "c03bbab275da0502e427952ac6541b8104a081a4cf348e94e17c2bf128b56d76",
+   "bytes": 1542692,
+   "triangles": 1044,
+   "bounds": {
+    "min": [
+     -4.3,
+     -2.4,
+     0.0
+    ],
+    "max": [
+     4.3,
+     2.4,
+     4.25
+    ]
+   },
+   "materials": 1,
+   "extras": {
+    "render_only": true,
+    "landmark": true,
+    "mount_id": "breath-bank-service-rack",
+    "map_pack": "blackout-ridge",
+    "source_tier": "reuse",
+    "era": 3,
+    "simulation_authority": "none; mounted render-only scenery"
+   }
+  },
+  "off-map-current-receiver": {
+   "glb": "off-map-current-receiver.glb",
+   "sha256": "95cd54bff924193d06770cd1261d619c231a115ac85d24e172bba6a4e0b29974",
+   "previous_sha256": "1009de1daa4bdafd1cefca6de82724df42d7b0700ecb1331e7e55971ae845c0e",
+   "bytes": 1557320,
+   "triangles": 1316,
+   "bounds": {
+    "min": [
+     -4.1,
+     -2.4,
+     0.0
+    ],
+    "max": [
+     4.1,
+     2.4,
+     10.25
+    ]
+   },
+   "materials": 1,
+   "extras": {
+    "render_only": true,
+    "landmark": true,
+    "mount_id": "off-map-current-receiver",
+    "map_pack": "blackout-ridge",
+    "source_tier": "derive",
+    "era": 3,
+    "simulation_authority": "none; mounted render-only scenery"
+   }
+  },
+  "ridge-switch-house": {
+   "glb": "ridge-switch-house.glb",
+   "sha256": "acd9590ac5605c53199b12baa916ac2b17ed5b84738643ee762edd2950cd448d",
+   "previous_sha256": "07d221d21e062210ddfc55288a73f1ecf1880da10c31d83a6ecd0a0feff689d0",
+   "bytes": 1530104,
+   "triangles": 856,
+   "bounds": {
+    "min": [
+     -3.7,
+     -2.9,
+     0.0
+    ],
+    "max": [
+     3.7,
+     2.9,
+     7.4
+    ]
+   },
+   "materials": 1,
+   "extras": {
+    "render_only": true,
+    "landmark": true,
+    "mount_id": "ridge-switch-house",
+    "map_pack": "blackout-ridge",
+    "source_tier": "derive",
+    "era": 3,
+    "simulation_authority": "none; mounted render-only scenery"
+   }
+  },
+  "trunk-line-breaker-shelter": {
+   "glb": "trunk-line-breaker-shelter.glb",
+   "sha256": "c322f4182160f92625c7b10a7fe0905a1b796c8b90ea2621cf959b8b62a91329",
+   "previous_sha256": "969cb3e0579c50dca659248c2001390d2560475fcf5f4023148cfe3c881d58cc",
+   "bytes": 1565536,
+   "triangles": 1456,
+   "bounds": {
+    "min": [
+     -3.4,
+     -2.6,
+     0.0
+    ],
+    "max": [
+     3.4,
+     2.6,
+     7.1
+    ]
+   },
+   "materials": 1,
+   "extras": {
+    "render_only": true,
+    "landmark": true,
+    "mount_id": "trunk-line-breaker-shelter",
+    "map_pack": "blackout-ridge",
+    "source_tier": "reuse",
+    "era": 3,
+    "simulation_authority": "none; mounted render-only scenery"
+   }
+  }
+ },
+ "palette": {
+  "timber": [
+   0.36,
+   0.205,
+   0.08
+  ],
+  "iron": [
+   0.155,
+   0.205,
+   0.225
+  ],
+  "stone": [
+   0.115,
+   0.098,
+   0.078
+  ],
+  "earth": [
+   0.37,
+   0.205,
+   0.08
+  ],
+  "water": [
+   0.045,
+   0.5,
+   0.46
+  ],
+  "cactus": [
+   0.07,
+   0.25,
+   0.18
+  ],
+  "bone": [
+   0.69,
+   0.58,
+   0.37
+  ],
+  "cloth": [
+   0.29,
+   0.05,
+   0.025
+  ],
+  "brass": [
+   0.78,
+   0.5,
+   0.12
+  ],
+  "soot": [
+   0.035,
+   0.05,
+   0.07
+  ],
+  "parchment": [
+   0.75,
+   0.59,
+   0.32
+  ],
+  "rust": [
+   0.42,
+   0.13,
+   0.04
+  ]
+ }
+}

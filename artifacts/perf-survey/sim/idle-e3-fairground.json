@@ -1,0 +1,197 @@
+{
+  "key": "idle-e3-fairground",
+  "tapePath": "tapes/idle-e3-fairground.json",
+  "contract": "e3-fairground",
+  "kind": "null-floor",
+  "node": "v26.4.0",
+  "before": {
+    "at": "2026-09-05T16:04:08.918Z",
+    "load": [
+      67.369140625,
+      28.23779296875,
+      19.21435546875
+    ],
+    "freeMemory": 6998081536
+  },
+  "after": {
+    "at": "2026-09-05T16:04:15.513Z",
+    "load": [
+      71.02294921875,
+      29.64453125,
+      19.763671875
+    ],
+    "freeMemory": 10600480768
+  },
+  "declaredDurationTicks": 1467,
+  "simulatedSeconds": 48.9,
+  "bootMs": 145.53358299999945,
+  "replayMs": 1551.4428750000006,
+  "ticksPerSecond": 945.5713926946871,
+  "realtimeMultiple": 31.519046423156237,
+  "estimateTenMinuteSeconds": 19.03610889570553,
+  "estimateFormula": "600 seconds / measured realtimeMultiple; extrapolation, not an actual 10-minute tape when duration differs",
+  "tickMs": {
+    "n": 1467,
+    "min": 0.22995799999989686,
+    "p50": 0.3125419999996666,
+    "p95": 3.466457999999875,
+    "p99": 16.248999999999796,
+    "max": 81.18983299999945
+  },
+  "tickPath": "sim/idle-e3-fairground-ticks.json",
+  "result": {
+    "eventLogHash": "fnv1a32:a45ba9ac",
+    "outcome": {
+      "secured": false,
+      "waves": 1,
+      "gold": 0,
+      "timeAlive": 48.9
+    },
+    "ticks": 1467,
+    "engine": "headless-contract-sim"
+  },
+  "expectedHash": "fnv1a32:a45ba9ac",
+  "hashMatches": true,
+  "top20": [
+    {
+      "name": "dispatch",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 433.534
+    },
+    {
+      "name": "maxHpForInstance",
+      "url": "",
+      "line": 1619,
+      "column": 18,
+      "selfMs": 96.113
+    },
+    {
+      "name": "diagnostics",
+      "url": "",
+      "line": 1795,
+      "column": 13,
+      "selfMs": 65.96300000000001
+    },
+    {
+      "name": "toArray",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 11099,
+      "column": 9,
+      "selfMs": 64.71900000000001
+    },
+    {
+      "name": "set needsUpdate",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 16821,
+      "column": 17,
+      "selfMs": 58.04600000000001
+    },
+    {
+      "name": "step",
+      "url": "",
+      "line": 1318,
+      "column": 6,
+      "selfMs": 57.683
+    },
+    {
+      "name": "terrainSeed",
+      "url": "",
+      "line": 1469,
+      "column": 21,
+      "selfMs": 56
+    },
+    {
+      "name": "(anonymous)",
+      "url": "",
+      "line": 4,
+      "column": 44,
+      "selfMs": 49.379999999999995
+    },
+    {
+      "name": "get diagnostics",
+      "url": "",
+      "line": 484,
+      "column": 17,
+      "selfMs": 40.641999999999996
+    },
+    {
+      "name": "get y",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 11209,
+      "column": 7,
+      "selfMs": 36.383
+    },
+    {
+      "name": "update",
+      "url": "",
+      "line": 809,
+      "column": 8,
+      "selfMs": 35.77
+    },
+    {
+      "name": "setMatrixAt",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 24745,
+      "column": 13,
+      "selfMs": 34.283
+    },
+    {
+      "name": "multiplyMatrices",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 10385,
+      "column": 18,
+      "selfMs": 33.839
+    },
+    {
+      "name": "(anonymous)",
+      "url": "",
+      "line": 3,
+      "column": 49,
+      "selfMs": 29.706999999999994
+    },
+    {
+      "name": "(garbage collector)",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 29.436
+    },
+    {
+      "name": "currentTrickleInterval",
+      "url": "",
+      "line": 641,
+      "column": 24,
+      "selfMs": 27.080000000000002
+    },
+    {
+      "name": "syncEnemyInstance",
+      "url": "",
+      "line": 1343,
+      "column": 19,
+      "selfMs": 26.394
+    },
+    {
+      "name": "maxHpForPlacement",
+      "url": "",
+      "line": 1622,
+      "column": 19,
+      "selfMs": 26.059
+    },
+    {
+      "name": "activeVariantAnimation",
+      "url": "",
+      "line": 1032,
+      "column": 24,
+      "selfMs": 26.058
+    },
+    {
+      "name": "hpDiagnostics",
+      "url": "",
+      "line": 1631,
+      "column": 15,
+      "selfMs": 25.979
+    }
+  ]
+}

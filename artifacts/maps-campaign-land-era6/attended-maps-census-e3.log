@@ -1,0 +1,182 @@
+
+Running 4 tests using 1 worker
+
+[1/4] [desktop-chrome] › e2e/er01-e3-census.spec.ts:16:3 › e3-blackout-ridge census support is explicit and deterministic
+[desktop-chrome] › e2e/er01-e3-census.spec.ts:16:3 › e3-blackout-ridge census support is explicit and deterministic
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[2/4] [desktop-chrome] › e2e/er01-e3-census.spec.ts:16:3 › e3-moth-season census support is explicit and deterministic
+[desktop-chrome] › e2e/er01-e3-census.spec.ts:16:3 › e3-moth-season census support is explicit and deterministic
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[3/4] [desktop-chrome] › e2e/er01-e3-census.spec.ts:16:3 › e3-canyon-works census support is explicit and deterministic
+[desktop-chrome] › e2e/er01-e3-census.spec.ts:16:3 › e3-canyon-works census support is explicit and deterministic
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+  1) [desktop-chrome] › e2e/er01-e3-census.spec.ts:16:3 › e3-canyon-works census support is explicit and deterministic 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    Expected: ArrayContaining [{"data": {"byWave": 6, "completionLatch": "one-way-at-or-before-deadline", "consumerRole": "gallery", "failureLatch": "one-way-after-deadline", "missedDeadline": "run-unsecurable", "poweredState": "powered", "required": 2}, "id": "connect_objective", "source": "Game.syncCanyonConnectObjective"}, {"data": {"darkWave": 8, "duskWave": 4, "nightDepth": 1, "phases": ["full", "dusk", "dark"], "progression": "clamp((wave-duskWave)/max(1,darkWave-duskWave),0,1)", "returnsToFull": false}, "id": "darkness_cycle", "source": "Game.nightShiftLightingState"}]
+    Received: [{"data": {"escortCount": 0, "hpScale": 1}, "id": "baron", "source": "twist.baron"}, {"data": {"banks": ["north", "south"], "count": 5}, "id": "build_zones", "source": "tileParams.buildZones"}, {"data": {"byWave": 8, "completionLatch": "one-way-at-or-before-deadline", "consumerRole": "gallery", "failureLatch": "one-way-after-deadline", "missedDeadline": "run-unsecurable", "poweredState": "powered", "required": 2}, "id": "connect_objective", "source": "Game.syncCanyonConnectObjective"}, {"data": {"bankCap": 360, "defaultBankCap": 200, "rule": "income-above-the-purse-is-refused"}, "id": "contract_bank_cap", "source": "twist.economy.bankCap"}, {"data": {"defaultTotal": 330, "ladder": [{"cost": 25, "defaultCost": 25, "rung": 1}, {"cost": 30, "defaultCost": 35, "rung": 2}, {"cost": 35, "defaultCost": 45, "rung": 3}, {"cost": 45, "defaultCost": 55, "rung": 4}, {"cost": 50, "defaultCost": 75, "rung": 5}, {"cost": 55, "defaultCost": 95, "rung": 6}], "rule": "authored-prices-replace-the-default-curve-on-this-claim; buildables[].costs carries the same prices", "total": 240}, "id": "contract_beacon_ladder", "source": "twist.economy.beaconLadder"}, {"data": {"darkWave": 8, "duskWave": 4, "nightDepth": 1, "phases": ["full", "dusk", "dark"], "progression": "clamp((wave-duskWave)/max(1,darkWave-duskWave),0,1)", "returnsToFull": false}, "id": "darkness_cycle", "source": "Game.nightShiftLightingState"}, {"data": {"arriveRadius": 0.5, "body": "hero", "pilots": {"headless": "the rider pilots the run's only hero", "roomSeat": "a headless roster seat pilots its own hero", "soloBrowser": "a human pilots the hero; MOVE_HERO refuses HERO_NOT_YOURS"}, "refusals": ["HERO_NOT_YOURS", "UNREACHABLE_TERRAIN", "UNREACHABLE_APPROACH", "HERO_UNAVAILABLE"], "verb": "MOVE_HERO"}, "id": "hero_orders", "source": "StandingOrders.MOVE_HERO"}, {"data": {}, "id": "river", "source": "tileParams.river"}, {"data": {"count": 1, "ids": ["works-bridge"]}, "id": "water_crossings", "source": "tileParams.ford"}]
+
+      59 |         expect(mechanics.buildables.map(({ id }: { id: string }) => id)).not.toContain('turret');
+      60 |         expect(mechanics.interactables.flatMap(({ operations }: { operations: string[] }) => operations)).toEqual([]);
+    > 61 |         expect(mechanics.rules).toEqual(expect.arrayContaining([
+         |                                 ^
+      62 |           {
+      63 |             id: 'connect_objective',
+      64 |             source: 'Game.syncCanyonConnectObjective',
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-maps/e2e/er01-e3-census.spec.ts:61:33
+
+    Error Context: test-results/er01-e3-census-e3-canyon-w-257fc--explicit-and-deterministic-desktop-chrome/error-context.md
+
+
+[4/4] [desktop-chrome] › e2e/er01-e3-census.spec.ts:16:3 › e3-fairground census support is explicit and deterministic
+[desktop-chrome] › e2e/er01-e3-census.spec.ts:16:3 › e3-fairground census support is explicit and deterministic
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+  1 failed
+    [desktop-chrome] › e2e/er01-e3-census.spec.ts:16:3 › e3-canyon-works census support is explicit and deterministic 
+  3 passed (1.1m)
+rc=1

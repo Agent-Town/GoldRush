@@ -1,0 +1,140 @@
+{
+  "map": "dust-flats",
+  "referenceBase": "27587b7c6efbb804743f9f6aad192fd8df52bfd2",
+  "inputsSha256": "4bc9f5549b6bac7c914645f04bd7e6480e4ad1e5ac085a798398643107fe8ff0",
+  "method": "conservative rotated GLB AABBs against authored masks plus the boot-time hero-centred spawn ring; preview transforms only; later hero-centred spawn motion is not statically constrainable and landmarks remain render-only",
+  "roadShoulderHalfWidth": 4.6,
+  "orbitReservedBand": [
+    18.0,
+    30.0
+  ],
+  "initialSpawnRing": {
+    "center": {
+      "x": 0,
+      "z": 8
+    },
+    "radius": 26.0,
+    "reservedBand": [
+      18.0,
+      34.0
+    ],
+    "scope": "boot-time WaveSystem spawn ring around the loss-stake hero start; dynamic hero-centred spawns are render-only overlap, not a static map mask"
+  },
+  "landmarks": {
+    "north-railhead-storm-tower": {
+      "aabb": [
+        9.2807,
+        14.7193,
+        69.1026,
+        73.8974
+      ],
+      "clearanceMeters": {
+        "buildZones": 1.1026,
+        "roads": 4.6807,
+        "orbit": 39.7231,
+        "dryWash": 81.0909,
+        "harvest": 21.5115,
+        "tar": 48.1187,
+        "stake": 59.6034,
+        "initialSpawnRing": 27.8034,
+        "mapEdge": 6.1026
+      },
+      "tightest": {
+        "constraint": "buildZones",
+        "meters": 1.1026
+      }
+    },
+    "west-road-wrecker-shed": {
+      "aabb": [
+        -76.5414,
+        -67.4586,
+        -25.7057,
+        -18.2943
+      ],
+      "clearanceMeters": {
+        "buildZones": 2.2943,
+        "roads": 1.8319,
+        "orbit": 39.8953,
+        "dryWash": 57.3341,
+        "harvest": 19.7866,
+        "tar": 54.4212,
+        "stake": 70.2021,
+        "initialSpawnRing": 38.4021,
+        "mapEdge": 3.4586
+      },
+      "tightest": {
+        "constraint": "roads",
+        "meters": 1.8319
+      }
+    },
+    "east-horizon-fuel-reserve": {
+      "aabb": [
+        67.9502,
+        76.0498,
+        42.6634,
+        49.3366
+      ],
+      "clearanceMeters": {
+        "buildZones": 5.9502,
+        "roads": 63.3502,
+        "orbit": 50.2334,
+        "dryWash": 83.6036,
+        "harvest": 18.1502,
+        "tar": 61.8252,
+        "stake": 74.081,
+        "initialSpawnRing": 42.281,
+        "mapEdge": 3.9502
+      },
+      "tightest": {
+        "constraint": "mapEdge",
+        "meters": 3.9502
+      }
+    },
+    "south-grade-charting-post": {
+      "aabb": [
+        -42.1953,
+        -33.8047,
+        -74.854,
+        -69.146
+      ],
+      "clearanceMeters": {
+        "buildZones": 7.146,
+        "roads": 23.4273,
+        "orbit": 46.9671,
+        "dryWash": 54.9027,
+        "harvest": 11.4693,
+        "tar": 62.5572,
+        "stake": 82.0275,
+        "initialSpawnRing": 50.2275,
+        "mapEdge": 5.146
+      },
+      "tightest": {
+        "constraint": "mapEdge",
+        "meters": 5.146
+      }
+    },
+    "dry-wash-recovery-gantry": {
+      "aabb": [
+        67.2684,
+        76.7316,
+        -74.1247,
+        -65.8753
+      ],
+      "clearanceMeters": {
+        "buildZones": 3.8753,
+        "roads": 17.3301,
+        "orbit": 64.1519,
+        "dryWash": 2.3422,
+        "harvest": 22.807,
+        "tar": 72.6891,
+        "stake": 97.7129,
+        "initialSpawnRing": 65.9129,
+        "mapEdge": 3.2684
+      },
+      "tightest": {
+        "constraint": "dryWash",
+        "meters": 2.3422
+      }
+    }
+  }
+}

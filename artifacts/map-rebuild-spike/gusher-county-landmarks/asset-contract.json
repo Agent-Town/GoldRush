@@ -1,0 +1,145 @@
+{
+  "law": "reuse > derive > build-new; era-stamped; grit-dressed",
+  "packs": {
+    "gusher-county": {
+      "era": 4,
+      "atlasSha256": "4ca9b758c04c8cd1cf570e86d96d493492c002f8a0caea06302d5303ecc551d5",
+      "assets": {
+        "derrick-01": {
+          "sourceTier": "derive",
+          "triangles": 868,
+          "sha256": "d2851e2169608b4d5022d4c10095764117704887a42a6748103ed4313b7bab75",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "derrick-02": {
+          "sourceTier": "derive",
+          "triangles": 536,
+          "sha256": "932e5d908c67a97d3cd0869b96d914de310496d3a0b83f3ec9bdb59d433fd686",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "derrick-03": {
+          "sourceTier": "derive",
+          "triangles": 684,
+          "sha256": "353fb6c8a3c10f235526b7f006fc929b1b724f9ea2f2d030aa2519216a42c403",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "derrick-04": {
+          "sourceTier": "derive",
+          "triangles": 564,
+          "sha256": "11ebb82fcf6200143181fef8ac444d0096bc0d0df4ca952e0bddd155bf82ed1d",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "derrick-05": {
+          "sourceTier": "derive",
+          "triangles": 892,
+          "sha256": "e6c26bf73f26c47553bbd951a0a8ae809451b05ee3677fb9f8461a5852f1c413",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "derrick-06": {
+          "sourceTier": "derive",
+          "triangles": 536,
+          "sha256": "866d540dd21b0ce0ee48f8775615e09d1d8937b9d327bc5f7b448c75749e3758",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "derrick-07": {
+          "sourceTier": "derive",
+          "triangles": 684,
+          "sha256": "2a4777446179cb704f3ff7e79e734a1b43488e2803268b91b4af717193c9c57e",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "derrick-08": {
+          "sourceTier": "derive",
+          "triangles": 564,
+          "sha256": "571142d5722904672457a5e4ef8ae1a0e819161c91fdd76181f1c9c1e1d344fb",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "outhouse-geyser": {
+          "sourceTier": "derive",
+          "triangles": 640,
+          "sha256": "fee4a3d08b58b56ce6f0eb89a2fe39d3e56ed87733c3d2aef24f8c331d347a5b",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "county-camp-rig": {
+          "sourceTier": "reuse",
+          "triangles": 1584,
+          "sha256": "998410b6380e4a002e1007737dc94f885bf6a89d743ea546a796959522137482",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        }
+      }
+    }
+  },
+  "totals": {
+    "packs": 1,
+    "assets": 10,
+    "sourceTiers": {
+      "reuse": 1,
+      "derive": 9,
+      "build-new": 0
+    }
+  },
+  "boards": {
+    "gusher-county-landmarks-turntable.png": {
+      "size": [
+        1920,
+        1160
+      ],
+      "sha256": "6251cc55dc04078ddd84ad662c092b33851125e5335d98f87e1bf4df87ef5f87"
+    },
+    "gusher-county-landmarks-verdict.png": {
+      "size": [
+        1920,
+        1008
+      ],
+      "sha256": "3e4fdf26bf10171346af5596939c5ef04215c3060679a9fb947b7c36a30b47ee"
+    },
+    "gusher-county-landmarks-pack.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "6d9eb0bf6c57d5c5625838847e519c8f3688856614afe4c2537f0e2a3b62e36d"
+    },
+    "gusher-county-landmarks-mounted.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "ae602485d92e369916e5f6323fc1815cb1b76e12f0beb06c93c59a8813d32b6b"
+    },
+    "gusher-county-landmarks-mounted-overview.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "f4bbfd1e9c002df0244ca9720938d4af44da740c3b9e9b4180cda780d1451551"
+    },
+    "gusher-county-landmarks-clearance-overlay.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "4f7393dca16092fba098952589fd46c9987167972ba63e9ed0964fe79338c36c"
+    }
+  },
+  "simulation": "unchanged; every landmark is a separate render-only GLB mounted by contract"
+}

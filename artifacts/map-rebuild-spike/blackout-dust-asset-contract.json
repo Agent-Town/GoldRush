@@ -1,0 +1,703 @@
+{
+  "blender": "5.1.2",
+  "maskTables": [
+    "assets/contracts/epoch-3-voltage/mask-tables/e3-blackout-ridge.json",
+    "assets/contracts/epoch-4-motor/mask-tables/e4-dust-flats.json"
+  ],
+  "terrains": {
+    "blackout-ridge": {
+      "asset": "blackout-ridge-terrain.glb",
+      "checked": {
+        "sha256": "9cb8fdb55d962d880486aac963461c49ad4eabf921ef93eae56452ef280ea2c3",
+        "bytes": 8683576,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 32768,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -40,
+            -0.09397,
+            -48
+          ],
+          "max": [
+            40,
+            8.262512,
+            48
+          ],
+          "size": [
+            80,
+            8.356482,
+            96
+          ],
+          "center": [
+            0.0,
+            4.084271,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.8999999761581421,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "reexported": {
+        "sha256": "9cb8fdb55d962d880486aac963461c49ad4eabf921ef93eae56452ef280ea2c3",
+        "bytes": 8683576,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 32768,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -40,
+            -0.09397,
+            -48
+          ],
+          "max": [
+            40,
+            8.262512,
+            48
+          ],
+          "size": [
+            80,
+            8.356482,
+            96
+          ],
+          "center": [
+            0.0,
+            4.084271,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.8999999761581421,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "byteIdenticalReexport": true,
+      "semanticIdenticalReexport": true,
+      "embeddedTexture": {
+        "bytes": 7952681,
+        "sha256": "8580b98dfa6c74d644c0a9a183d1abdb737a9c307f8eb259c24bd951d8565298",
+        "width": 2048,
+        "height": 2048
+      },
+      "extras": {
+        "render_only": true,
+        "sim_authority": "published mask table and planar simulation; unchanged",
+        "height_socket": "Terrain.visualY",
+        "contract_id": "e3-blackout-ridge",
+        "tile_id": "e3-blackout-ridge",
+        "mask_table": "assets/contracts/epoch-3-voltage/mask-tables/e3-blackout-ridge.json",
+        "load_bearing_sites_flat": true,
+        "landmarks_frozen": true
+      },
+      "geometryProbes": [
+        {
+          "requested": [
+            -30,
+            -30
+          ],
+          "sampled": [
+            -30.0,
+            -30.0
+          ],
+          "height": 0.0993
+        },
+        {
+          "requested": [
+            -18,
+            -18
+          ],
+          "sampled": [
+            -18.125,
+            -18.0
+          ],
+          "height": 1.3782
+        },
+        {
+          "requested": [
+            6,
+            4
+          ],
+          "sampled": [
+            6.25,
+            3.75
+          ],
+          "height": 4.8026
+        },
+        {
+          "requested": [
+            24,
+            30
+          ],
+          "sampled": [
+            23.75,
+            30.0
+          ],
+          "height": 6.5114
+        }
+      ],
+      "pylonSurfaceFlatness": [
+        {
+          "id": "trunk-west",
+          "sampledSurfacePoints": 2176,
+          "maxDeviationMeters": 0.0
+        },
+        {
+          "id": "trunk-middle",
+          "sampledSurfacePoints": 2176,
+          "maxDeviationMeters": 0.0
+        },
+        {
+          "id": "trunk-ridge",
+          "sampledSurfacePoints": 2176,
+          "maxDeviationMeters": 0.0
+        }
+      ],
+      "capacitorSurfaceFlatness": [
+        {
+          "id": "breath-bank-west",
+          "sampledSurfacePoints": 2176,
+          "maxDeviationMeters": 0.0
+        },
+        {
+          "id": "breath-bank-east",
+          "sampledSurfacePoints": 2176,
+          "maxDeviationMeters": 0.0
+        }
+      ],
+      "maskSource": "assets/contracts/epoch-3-voltage/mask-tables/e3-blackout-ridge.json"
+    },
+    "dust-flats": {
+      "asset": "dust-flats-terrain.glb",
+      "checked": {
+        "sha256": "937538ee560a1c83bd822c8ed0e4b82ec3466324f3804b742d430c59c5af642e",
+        "bytes": 9396716,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 32768,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -80,
+            -1.501825,
+            -80
+          ],
+          "max": [
+            80,
+            1.297493,
+            80
+          ],
+          "size": [
+            160,
+            2.799318,
+            160
+          ],
+          "center": [
+            0.0,
+            -0.102166,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.8999999761581421,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "reexported": {
+        "sha256": "937538ee560a1c83bd822c8ed0e4b82ec3466324f3804b742d430c59c5af642e",
+        "bytes": 9396716,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 32768,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -80,
+            -1.501825,
+            -80
+          ],
+          "max": [
+            80,
+            1.297493,
+            80
+          ],
+          "size": [
+            160,
+            2.799318,
+            160
+          ],
+          "center": [
+            0.0,
+            -0.102166,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.8999999761581421,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "byteIdenticalReexport": true,
+      "semanticIdenticalReexport": true,
+      "embeddedTexture": {
+        "bytes": 8665851,
+        "sha256": "3efb916126b440cd24a78ab36996414aead85ae54ed3d44f9011f53c8bd8506c",
+        "width": 2048,
+        "height": 2048
+      },
+      "extras": {
+        "render_only": true,
+        "sim_authority": "published mask table and planar simulation; unchanged",
+        "height_socket": "Terrain.visualY",
+        "contract_id": "e4-dust-flats",
+        "tile_id": "e4-dust-flats",
+        "mask_table": "assets/contracts/epoch-4-motor/mask-tables/e4-dust-flats.json",
+        "load_bearing_sites_flat": false,
+        "landmarks_frozen": true
+      },
+      "geometryProbes": [
+        {
+          "requested": [
+            0,
+            0
+          ],
+          "sampled": [
+            0.0,
+            0.0
+          ],
+          "height": 0.4944
+        },
+        {
+          "requested": [
+            24,
+            0
+          ],
+          "sampled": [
+            23.75,
+            0.0
+          ],
+          "height": 0.5668
+        },
+        {
+          "requested": [
+            30,
+            -38
+          ],
+          "sampled": [
+            30.0,
+            -37.5
+          ],
+          "height": -1.4571
+        },
+        {
+          "requested": [
+            70,
+            70
+          ],
+          "sampled": [
+            70.0,
+            70.0
+          ],
+          "height": 0.6361
+        }
+      ],
+      "pylonSurfaceFlatness": [],
+      "capacitorSurfaceFlatness": [],
+      "maskSource": "assets/contracts/epoch-4-motor/mask-tables/e4-dust-flats.json"
+    }
+  },
+  "panoramas": {
+    "blackout-ridge": {
+      "asset": "blackout-ridge-panorama.glb",
+      "checked": {
+        "sha256": "29a0e6f6dabf24e310f362308f4dd98178e83efad6be2638b6bfa758289c1a58",
+        "bytes": 1181888,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 3072,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -193,
+            -10,
+            -193
+          ],
+          "max": [
+            193,
+            130,
+            193
+          ],
+          "size": [
+            386,
+            140,
+            386
+          ],
+          "center": [
+            0.0,
+            60.0,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 1,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": true,
+            "emissiveFactor": [
+              1,
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "reexported": {
+        "sha256": "29a0e6f6dabf24e310f362308f4dd98178e83efad6be2638b6bfa758289c1a58",
+        "bytes": 1181888,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 3072,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -193,
+            -10,
+            -193
+          ],
+          "max": [
+            193,
+            130,
+            193
+          ],
+          "size": [
+            386,
+            140,
+            386
+          ],
+          "center": [
+            0.0,
+            60.0,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 1,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": true,
+            "emissiveFactor": [
+              1,
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "byteIdenticalReexport": true,
+      "semanticIdenticalReexport": true,
+      "embeddedTexture": {
+        "bytes": 1063890,
+        "sha256": "49f66a4910a91330f72995568155abfef136f3cbdf0a6dfaa11df76dc66c975e",
+        "width": 2048,
+        "height": 2048
+      },
+      "extras": {
+        "render_only": true,
+        "panorama": true,
+        "affects_playfield": false,
+        "affects_masks": false,
+        "affects_spawn_edges": false,
+        "affects_fog_gating": false,
+        "mount_space": "game X/Y/Z at county origin",
+        "panorama_law": "v2"
+      },
+      "mount": {
+        "id": "blackout-ridge-panorama",
+        "asset": "blackout-ridge-panorama.glb",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "renderOnly": true,
+        "ownership": "separate mounted scenery; never terrain or gameplay bounds"
+      }
+    },
+    "dust-flats": {
+      "asset": "dust-flats-panorama.glb",
+      "checked": {
+        "sha256": "36ee8fd4743d78fe9f26af13c7f2611a4542afe4a555057fff057843b65d43c0",
+        "bytes": 1105796,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 2688,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -193,
+            -10,
+            -193
+          ],
+          "max": [
+            193,
+            130,
+            193
+          ],
+          "size": [
+            386,
+            140,
+            386
+          ],
+          "center": [
+            0.0,
+            60.0,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 1,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": true,
+            "emissiveFactor": [
+              1,
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "reexported": {
+        "sha256": "36ee8fd4743d78fe9f26af13c7f2611a4542afe4a555057fff057843b65d43c0",
+        "bytes": 1105796,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 2688,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -193,
+            -10,
+            -193
+          ],
+          "max": [
+            193,
+            130,
+            193
+          ],
+          "size": [
+            386,
+            140,
+            386
+          ],
+          "center": [
+            0.0,
+            60.0,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 1,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": true,
+            "emissiveFactor": [
+              1,
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "byteIdenticalReexport": true,
+      "semanticIdenticalReexport": true,
+      "embeddedTexture": {
+        "bytes": 1007105,
+        "sha256": "7133b325ca3b15a53341c3aa2b5d5961b88019dfb4dddaac9a95281564862332",
+        "width": 2048,
+        "height": 2048
+      },
+      "extras": {
+        "render_only": true,
+        "panorama": true,
+        "affects_playfield": false,
+        "affects_masks": false,
+        "affects_spawn_edges": false,
+        "affects_fog_gating": false,
+        "mount_space": "game X/Y/Z at county origin",
+        "panorama_law": "v2"
+      },
+      "mount": {
+        "id": "dust-flats-panorama",
+        "asset": "dust-flats-panorama.glb",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "renderOnly": true,
+        "ownership": "separate mounted scenery; never terrain or gameplay bounds"
+      }
+    }
+  },
+  "boards": {
+    "blackout-dust-mood-ab.png": {
+      "size": [
+        1920,
+        1260
+      ],
+      "bytes": 2476135,
+      "sha256": "f8ea9616a9155b2a452f238e7c5f9b5838379eb703fa46fd574e7b79034ac715"
+    },
+    "blackout-dust-flat-vs-sculpted-ab.png": {
+      "size": [
+        1920,
+        1260
+      ],
+      "bytes": 2995653,
+      "sha256": "28c87621eabb70ee214cea37e3df19577662238a460849b1624f9811a97c5a63"
+    },
+    "blackout-dust-owner-verdict.png": {
+      "size": [
+        1920,
+        900
+      ],
+      "bytes": 2073429,
+      "sha256": "afee6c99f13fd265505cab2ce94b61acd55eda15f17f005456fd5b6600d6464d"
+    },
+    "blackout-dust-panorama-mood-ab.png": {
+      "size": [
+        1920,
+        900
+      ],
+      "bytes": 1153721,
+      "sha256": "a94bf5a4f4271285754391b823eaf2122b1e17a0d62473766a31594a110419cf"
+    },
+    "blackout-dust-panorama-distance-gate.png": {
+      "size": [
+        1920,
+        1260
+      ],
+      "bytes": 2319607,
+      "sha256": "1f99afb9d0035e0291de751a9848c328e73d1178cbd9849967a3d292edb20ad5"
+    },
+    "blackout-dust-mask-agreement-board.png": {
+      "size": [
+        1920,
+        1260
+      ],
+      "bytes": 2228631,
+      "sha256": "9a300de77c3d564a3e9afa0a1fba4fc20d4509102d5312db6b039670ee32f625"
+    }
+  },
+  "verdict": {
+    "grit": "fight under locked night and motor haze",
+    "panorama": "distance",
+    "masks": "published and unchanged",
+    "loadBearingSites": "three pylon and two capacitor disks independently sampled buildable-flat",
+    "landmarks": "frozen; no assets or mounts authored"
+  }
+}

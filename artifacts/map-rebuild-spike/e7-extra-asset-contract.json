@@ -1,0 +1,361 @@
+{
+  "blender": "5.1.2",
+  "freshReferenceBaseSha": "9e324ce111d27550fddf63ce1401b4262a1b30e3",
+  "terrain": {
+    "asset": "echo-canyon-terrain.glb",
+    "checked": {
+      "sha256": "795f6907278f8362531d4b2d1ef1d50f24415184eee8c2d376eb13ae57f82e6d",
+      "bytes": 9214036,
+      "meshes": 1,
+      "primitives": 1,
+      "triangles": 32768,
+      "materials": 1,
+      "images": 1,
+      "embeddedImages": 1,
+      "cameras": 0,
+      "lights": 0,
+      "animations": 0,
+      "bounds": {
+        "min": [
+          -64,
+          0,
+          -64
+        ],
+        "max": [
+          64,
+          5.167348,
+          64
+        ],
+        "size": [
+          128,
+          5.167348,
+          128
+        ],
+        "center": [
+          0.0,
+          2.583674,
+          0.0
+        ]
+      },
+      "materialContract": [
+        {
+          "metallicFactor": 0,
+          "roughnessFactor": 0.8999999761581421,
+          "hasBaseColorTexture": true,
+          "hasEmissiveTexture": true,
+          "emissiveFactor": [
+            0.2199999988079071,
+            0.2199999988079071,
+            0.2199999988079071
+          ]
+        }
+      ]
+    },
+    "reexported": {
+      "sha256": "795f6907278f8362531d4b2d1ef1d50f24415184eee8c2d376eb13ae57f82e6d",
+      "bytes": 9214036,
+      "meshes": 1,
+      "primitives": 1,
+      "triangles": 32768,
+      "materials": 1,
+      "images": 1,
+      "embeddedImages": 1,
+      "cameras": 0,
+      "lights": 0,
+      "animations": 0,
+      "bounds": {
+        "min": [
+          -64,
+          0,
+          -64
+        ],
+        "max": [
+          64,
+          5.167348,
+          64
+        ],
+        "size": [
+          128,
+          5.167348,
+          128
+        ],
+        "center": [
+          0.0,
+          2.583674,
+          0.0
+        ]
+      },
+      "materialContract": [
+        {
+          "metallicFactor": 0,
+          "roughnessFactor": 0.8999999761581421,
+          "hasBaseColorTexture": true,
+          "hasEmissiveTexture": true,
+          "emissiveFactor": [
+            0.2199999988079071,
+            0.2199999988079071,
+            0.2199999988079071
+          ]
+        }
+      ]
+    },
+    "byteIdenticalReexport": true,
+    "semanticIdenticalReexport": true,
+    "embeddedTexture": {
+      "bytes": 7734802,
+      "sha256": "ace9c2bee2205ff2813ebe3fe1550c5f73326e18404caeb51630afd8f5cab14f",
+      "width": 2048,
+      "height": 2048
+    },
+    "extras": {
+      "render_only": true,
+      "sim_authority": "published mask table and planar simulation; unchanged",
+      "height_socket": "Terrain.visualY",
+      "contract_id": "e7-echo-canyon",
+      "tile_id": "e7-echo-canyon",
+      "mask_table": "assets/contracts/epoch-7-signal/mask-tables/e7-echo-canyon.json",
+      "load_bearing_sites_flat": true,
+      "landmarks_frozen": false,
+      "landmark_mount_ids": "[\"south-broadcast-gate\", \"west-echo-array\", \"east-echo-array\", \"mirror-observation-post\", \"north-return-gate\"]",
+      "runtime_owned_visuals_absent": true
+    },
+    "buildZoneSurfaceFlatness": [
+      {
+        "id": "canyon-floor-yard",
+        "sampledSurfacePoints": 2145,
+        "maxDeviationMeters": 0.0
+      },
+      {
+        "id": "west-echo-shelf",
+        "sampledSurfacePoints": 2145,
+        "maxDeviationMeters": 0.0
+      },
+      {
+        "id": "east-echo-shelf",
+        "sampledSurfacePoints": 2145,
+        "maxDeviationMeters": 0.0
+      }
+    ],
+    "echoCanyonBandAgreement": [
+      {
+        "id": "west-canyon-wall-h5",
+        "targetHeightMeters": 5.0,
+        "sampledSurfacePoints": 561,
+        "maximumErrorMeters": 0.0
+      },
+      {
+        "id": "echo-floor-h0",
+        "targetHeightMeters": 0.0,
+        "sampledSurfacePoints": 561,
+        "maximumErrorMeters": 0.0
+      },
+      {
+        "id": "east-canyon-wall-h5",
+        "targetHeightMeters": 5.0,
+        "sampledSurfacePoints": 561,
+        "maximumErrorMeters": 0.0
+      }
+    ],
+    "maskSource": "assets/contracts/epoch-7-signal/mask-tables/e7-echo-canyon.json",
+    "factoryTileId": "e7-echo-canyon"
+  },
+  "panorama": {
+    "asset": "echo-canyon-panorama.glb",
+    "checked": {
+      "sha256": "293c03b121dd3c1aa2d34b68a28b56aba9d21044e9c00ac2179b32fd81f7f7ac",
+      "bytes": 954032,
+      "meshes": 1,
+      "primitives": 1,
+      "triangles": 3084,
+      "materials": 1,
+      "images": 1,
+      "embeddedImages": 1,
+      "cameras": 0,
+      "lights": 0,
+      "animations": 0,
+      "bounds": {
+        "min": [
+          -193,
+          -10,
+          -193
+        ],
+        "max": [
+          193,
+          130,
+          193
+        ],
+        "size": [
+          386,
+          140,
+          386
+        ],
+        "center": [
+          0.0,
+          60.0,
+          0.0
+        ]
+      },
+      "materialContract": [
+        {
+          "metallicFactor": 0,
+          "roughnessFactor": 1,
+          "hasBaseColorTexture": true,
+          "hasEmissiveTexture": true,
+          "emissiveFactor": [
+            1,
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    "reexported": {
+      "sha256": "293c03b121dd3c1aa2d34b68a28b56aba9d21044e9c00ac2179b32fd81f7f7ac",
+      "bytes": 954032,
+      "meshes": 1,
+      "primitives": 1,
+      "triangles": 3084,
+      "materials": 1,
+      "images": 1,
+      "embeddedImages": 1,
+      "cameras": 0,
+      "lights": 0,
+      "animations": 0,
+      "bounds": {
+        "min": [
+          -193,
+          -10,
+          -193
+        ],
+        "max": [
+          193,
+          130,
+          193
+        ],
+        "size": [
+          386,
+          140,
+          386
+        ],
+        "center": [
+          0.0,
+          60.0,
+          0.0
+        ]
+      },
+      "materialContract": [
+        {
+          "metallicFactor": 0,
+          "roughnessFactor": 1,
+          "hasBaseColorTexture": true,
+          "hasEmissiveTexture": true,
+          "emissiveFactor": [
+            1,
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    "byteIdenticalReexport": true,
+    "semanticIdenticalReexport": true,
+    "embeddedTexture": {
+      "bytes": 834921,
+      "sha256": "27c8ca4eb91b7f05076b61a539d4609a995498e32e8dd022c205d01dd958d9d4",
+      "width": 2048,
+      "height": 2048
+    },
+    "mount": {
+      "id": "echo-canyon-panorama",
+      "asset": "echo-canyon-panorama.glb",
+      "position": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "renderOnly": true,
+      "ownership": "separate mounted scenery; never terrain or gameplay bounds"
+    }
+  },
+  "boards": {
+    "e7-extra-mood-ab.png": {
+      "size": [
+        1920,
+        684
+      ],
+      "bytes": 2006293,
+      "sha256": "c2bdd9acda6df58ba336e38ad165df607958eafc04c5b2c272be79859c696b0c"
+    },
+    "e7-extra-flat-vs-sculpted-ab.png": {
+      "size": [
+        1920,
+        684
+      ],
+      "bytes": 930320,
+      "sha256": "9f15ab55e432a85ef9f9cb8e978b951599548824273d36eac764a957c5e4b2ab"
+    },
+    "e7-extra-owner-verdict.png": {
+      "size": [
+        1920,
+        504
+      ],
+      "bytes": 888711,
+      "sha256": "1a155962a4580efb05031dba206a4d45e5f16fc46b0b309660d97a847e4d99db"
+    },
+    "e7-extra-panorama-mood-ab.png": {
+      "size": [
+        1920,
+        504
+      ],
+      "bytes": 603163,
+      "sha256": "b1817c587c7b23867425d4ae0202b4dc88504e95eab1611ced35861c75a0f112"
+    },
+    "e7-extra-panorama-distance-gate.png": {
+      "size": [
+        1920,
+        684
+      ],
+      "bytes": 1178426,
+      "sha256": "4536de845f50a6f8c35b336c4fae30a38ff0c41b9da76d4eb17f71fccd5a703b"
+    },
+    "e7-extra-mask-agreement-board.png": {
+      "size": [
+        1280,
+        1260
+      ],
+      "bytes": 1116226,
+      "sha256": "31d1b0c077acf4897294f49e5e2dbbd176878c23e01f12e4c0991891f50fc184"
+    }
+  },
+  "reuse": [
+    {
+      "contractId": "e7-dead-band",
+      "tileId": "e7-relay-valley",
+      "decision": "variant-tagged tile reuse; no duplicate terrain or panorama sculpt",
+      "maskSource": "assets/contracts/epoch-7-signal/mask-tables/e7-dead-band.json"
+    },
+    {
+      "contractId": "e7-relay-rush",
+      "tileId": "e7-relay-valley",
+      "decision": "variant-tagged tile reuse; no duplicate terrain or panorama sculpt",
+      "maskSource": "assets/contracts/epoch-7-signal/mask-tables/e7-relay-rush.json"
+    }
+  ],
+  "verdict": {
+    "grit": "walnut loam, engraved shale, punch-tape scars, honey work light, and restrained agent teal; fight, never holiday",
+    "panorama": "distance; quiet zenith, unequal signal weather, two canyon mouths, no painted wall or ceiling",
+    "masks": "published and byte-for-byte copied into the terrain contract; exact h0/h5 bands independently surface-sampled",
+    "simulation": "planar and unchanged; broadcast mirroring, enemy spawns, buildability, and all contract state remain code-owned",
+    "landmarks": "five canonical empty-asset mounts ship; verdict proxies are absent from the terrain GLB"
+  }
+}

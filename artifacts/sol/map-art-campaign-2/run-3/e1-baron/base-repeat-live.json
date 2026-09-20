@@ -1,0 +1,57 @@
+{
+  "base": "37921b5c9",
+  "paths": {
+    "assets/pilots/map-rebuild-spike/baron-terrain-contract.json": {
+      "candidateSha256": "8a49e6f0a426b205c63ff5ef2ba4807e289295f22608058eaf9b0473ed8a7ab2",
+      "baseSha256": "42a5fcab8728cb38bf00b8d3f5a449e5c28ed7b631722e643af5bb577dbaffec"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/baron/baron-landmark-pack-contract.json": {
+      "candidateSha256": "b972e19c5f90c5b61421cc87ed558bb3fbe1b66c09414eb9fb48337438d9e0c9",
+      "baseSha256": "03fa7cb9a8ba94f7dc219f8409f97f7a2435cf7b53cb7d610cfd7ed5bfb70aa9"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/baron/oxblood_banners.blend": {
+      "candidateSha256": "adb48814af2363b8ce0a7687f42246a364dbc329bb38b24a1bd8c05c87c618f1",
+      "baseSha256": "441eb64cb310e9c395783dd134d58e02862f0dca101f91da7340f929ff206ae6"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/baron/oxblood_banners.glb": {
+      "candidateSha256": "f298e6b77761b1d8b43197e047549ef1d9d2ec93f1d75c96d6f7a5f345669453",
+      "baseSha256": "fc576d712c67812c8cd2d794fa2c1f22041c8cf797679526aebd2f00e008b1a6"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/landmark-source-ledger.json": {
+      "candidateSha256": "2f2951aae9b5b17e19870e05abaeba7908be3496accd9bc04da827284ca9be3f",
+      "baseSha256": "787a671ecb3219f0f71f028716938ef261bd4757cbabf92ad1d0e03f5af058ba"
+    },
+    "src/world/Terrain3dClaimPilot.ts": {
+      "candidateSha256": "8d1cfde7988553f44a63c881115253146dda74d0aa2b5810aef22769c823bf6e",
+      "baseSha256": "4ad3572b1565495e311d53823fb7d36b0f69db0da75b981e70ef92b7689e6f43"
+    }
+  },
+  "pattern": "stationary unplated hero|defeating the Baron captures",
+  "specs": [
+    "e2e/054-baron-epic.spec.ts",
+    "e2e/057-baron-rocket-cart.spec.ts",
+    "--repeat-each=2"
+  ],
+  "candidateEngine": "e993b9ec062d5d02e2b503c2edf42ab8bf600c9074381e01d8634a4758b03d7b",
+  "baseEngine": "011419f4873aebb9a8d9d6580844dbf02d116813898fdcc98579cfbf39a88ebe",
+  "command": [
+    "npx",
+    "playwright",
+    "test",
+    "--workers=1",
+    "--project=desktop-chrome",
+    "--project=mobile-chrome",
+    "--trace=off",
+    "--reporter=line",
+    "--output=artifacts/sol/map-art-campaign-2/_raw/run-3/e1-baron-base-repeat-live/test-results",
+    "--grep",
+    "stationary unplated hero|defeating the Baron captures",
+    "e2e/054-baron-epic.spec.ts",
+    "e2e/057-baron-rocket-cart.spec.ts",
+    "--repeat-each=2"
+  ],
+  "exit": 0,
+  "restoredEngine": "e993b9ec062d5d02e2b503c2edf42ab8bf600c9074381e01d8634a4758b03d7b",
+  "candidateRestoredExactly": true,
+  "log": "artifacts/sol/map-art-campaign-2/_raw/run-3/e1-baron-base-repeat-live/tests.log"
+}

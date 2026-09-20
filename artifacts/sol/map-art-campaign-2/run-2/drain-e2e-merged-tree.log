@@ -1,0 +1,900 @@
+(node:68938) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 116 tests using 1 worker
+
+[1/116] [desktop-chrome] › e2e/e3-canyon-works.spec.ts:34:1 › strings the gorge, holds the night, and restores a cut span
+[desktop-chrome] › e2e/e3-canyon-works.spec.ts:34:1 › strings the gorge, holds the night, and restores a cut span
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[2/116] [desktop-chrome] › e2e/e3-canyon-works.spec.ts:116:1 › keeps the Voltage era gate and saboteur ledger explicit
+[desktop-chrome] › e2e/e3-canyon-works.spec.ts:116:1 › keeps the Voltage era gate and saboteur ledger explicit
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[3/116] [desktop-chrome] › e2e/e5-deepwater-claim.spec.ts:30:1 › boots the Deepwater contract with deck pads, depth gates, and a storm-scheduled corsair wave
+[4/116] [desktop-chrome] › e2e/e5-deepwater-claim.spec.ts:99:1 › shows the active run wave in Deepwater and WaveSystem contracts
+[5/116] [desktop-chrome] › e2e/e5-deepwater-claim.spec.ts:135:1 › replays boat placement and two storm cycles deterministically
+[6/116] [desktop-chrome] › e2e/e5-flotilla-hulls.spec.ts:6:1 › the Flotilla keeps three losable hulls and secures both bench seeds deterministically
+
+[desktop-chrome] › e2e/e5-flotilla-hulls.spec.ts:6:1 › the Flotilla keeps three losable hulls and secures both bench seeds deterministically
+(node:68998) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+  1) [desktop-chrome] › e2e/e5-flotilla-hulls.spec.ts:6:1 › the Flotilla keeps three losable hulls and secures both bench seeds deterministically 
+
+    Error: expect(received).toMatchObject(expected)
+
+    - Expected  - 1
+    + Received  + 1
+
+      Object {
+    -   "eventLogHash": "fnv1a32:a9f33e48",
+    +   "eventLogHash": "fnv1a32:c01dd739",
+        "kills": 30,
+        "secured": true,
+        "waves": 12,
+      }
+
+      105 |       // NAMED-CAUSE PIN (b2-flotilla-hulls, 2026-08-20): three deck builds, repeated
+      106 |       // straggler-biased defense, and REANCHOR formation pulls through secure wave 12.
+    > 107 |       expect(first).toMatchObject({ secured: true, waves: 12, kills: 30, eventLogHash });
+          |                     ^
+      108 |     }
+      109 |   } finally {
+      110 |     await vite.close();
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-mapc2b/e2e/e5-flotilla-hulls.spec.ts:107:21
+
+    Error Context: test-results/e5-flotilla-hulls-the-Flot-5cf7c-nch-seeds-deterministically-desktop-chrome/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e5-flotilla-hulls-the-Flot-5cf7c-nch-seeds-deterministically-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e5-flotilla-hulls-the-Flot-5cf7c-nch-seeds-deterministically-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[7/116] [desktop-chrome] › e2e/e5-flotilla-hulls.spec.ts:118:1 › idle Flotilla runs lose all hulls
+  2) [desktop-chrome] › e2e/e5-flotilla-hulls.spec.ts:118:1 › idle Flotilla runs lose all hulls ────
+
+    Error: expect(received).toMatchObject(expected)
+
+    - Expected  - 1
+    + Received  + 1
+
+      Object {
+    -   "eventLogHash": "fnv1a32:68d87963",
+    +   "eventLogHash": "fnv1a32:815739a6",
+        "kills": 0,
+        "secured": false,
+        "timeMs": 46800,
+        "waves": 2,
+      }
+
+      129 |     const outcome = JSON.parse(run.stdout.trim().split('\n').at(-1)!);
+      130 |     // NAMED-CAUSE PIN: no rider follows the straggler, so all three hulls reach zero integrity.
+    > 131 |     expect(outcome).toMatchObject({ secured: false, waves: 2, timeMs: 46800, kills: 0, eventLogHash });
+          |                     ^
+      132 |   }
+      133 | });
+      134 |
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-mapc2b/e2e/e5-flotilla-hulls.spec.ts:131:21
+
+    Error Context: test-results/e5-flotilla-hulls-idle-Flotilla-runs-lose-all-hulls-desktop-chrome/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e5-flotilla-hulls-idle-Flotilla-runs-lose-all-hulls-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e5-flotilla-hulls-idle-Flotilla-runs-lose-all-hulls-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[8/116] [desktop-chrome] › e2e/e5-flotilla-hulls.spec.ts:135:1 › plain boot resolves the Flotilla contract without browser errors
+[desktop-chrome] › e2e/e5-flotilla-hulls.spec.ts:135:1 › plain boot resolves the Flotilla contract without browser errors
+e5-flotilla plain boot watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[9/116] [desktop-chrome] › e2e/e5-regatta-race.spec.ts:35:1 › the Regatta runs its authored course and secures both bench seeds deterministically
+
+[desktop-chrome] › e2e/e5-regatta-race.spec.ts:35:1 › the Regatta runs its authored course and secures both bench seeds deterministically
+(node:69338) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+  3) [desktop-chrome] › e2e/e5-regatta-race.spec.ts:35:1 › the Regatta runs its authored course and secures both bench seeds deterministically 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      112 |         turn = sim.advanceToTurn();
+      113 |       }
+    > 114 |       expect(turn.terminal).toBe(true);
+          |                             ^
+      115 |       expect(turn.view.now.deepwater?.race?.finished).toBe(true);
+      116 |       expect(turn.view.now.deepwater?.race?.gatesPassed).toHaveLength(5);
+      117 |       return sim.outcome();
+        at run (/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-mapc2b/e2e/e5-regatta-race.spec.ts:114:29)
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-mapc2b/e2e/e5-regatta-race.spec.ts:125:21
+
+    Error Context: test-results/e5-regatta-race-the-Regatt-6c659-nch-seeds-deterministically-desktop-chrome/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e5-regatta-race-the-Regatt-6c659-nch-seeds-deterministically-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e5-regatta-race-the-Regatt-6c659-nch-seeds-deterministically-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[10/116] [desktop-chrome] › e2e/e5-regatta-race.spec.ts:141:1 › idle Regatta runs lose because the course remains unfinished
+  4) [desktop-chrome] › e2e/e5-regatta-race.spec.ts:141:1 › idle Regatta runs lose because the course remains unfinished 
+
+    Error: expect(received).toMatchObject(expected)
+
+    - Expected  - 1
+    + Received  + 1
+
+      Object {
+        "endReason": "wave-ceiling",
+    -   "eventLogHash": "fnv1a32:80b36bec",
+    +   "eventLogHash": "fnv1a32:d461683d",
+        "secured": false,
+        "waves": 14,
+      }
+
+      151 |     expect(run.status, run.stderr).toBe(0);
+      152 |     const outcome = JSON.parse(run.stdout.trim().split('\n').at(-1)!);
+    > 153 |     expect(outcome).toMatchObject({ secured: false, waves: 14, endReason: 'wave-ceiling', eventLogHash });
+          |                     ^
+      154 |   }
+      155 | });
+      156 |
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-mapc2b/e2e/e5-regatta-race.spec.ts:153:21
+
+    Error Context: test-results/e5-regatta-race-idle-Regat-7290d-e-course-remains-unfinished-desktop-chrome/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e5-regatta-race-idle-Regat-7290d-e-course-remains-unfinished-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e5-regatta-race-idle-Regat-7290d-e-course-remains-unfinished-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[11/116] [desktop-chrome] › e2e/e5-regatta-race.spec.ts:157:1 › plain boot resolves the Regatta contract without browser errors
+[desktop-chrome] › e2e/e5-regatta-race.spec.ts:157:1 › plain boot resolves the Regatta contract without browser errors
+e5-regatta plain boot watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[12/116] [desktop-chrome] › e2e/e5-sea-contact.spec.ts:4:3 › e5-deepwater-claim: sea apron preserves geometry and hull contact loads without render errors
+[13/116] [desktop-chrome] › e2e/e5-sea-contact.spec.ts:4:3 › e5-regatta: sea apron preserves geometry and hull contact loads without render errors
+[14/116] [desktop-chrome] › e2e/e5-sea-contact.spec.ts:4:3 › e5-stillwater: sea apron preserves geometry and hull contact loads without render errors
+[15/116] [desktop-chrome] › e2e/e5-sea-contact.spec.ts:4:3 › e5-flotilla: sea apron preserves geometry and hull contact loads without render errors
+[16/116] [desktop-chrome] › e2e/e5-sea-contact.spec.ts:30:1 › sea panorama foreground silhouettes remain visible over the apron
+[desktop-chrome] › e2e/e5-sea-contact.spec.ts:30:1 › sea panorama foreground silhouettes remain visible over the apron
+sea-panorama-order {"apronTriangles":2,"pixel":[255,0,0,255],"apron":[0,0,255,255]}
+
+[17/116] [desktop-chrome] › e2e/e5-stillwater-noise.spec.ts:43:1 › the noise-hunt hears its three machines, trails the loudest, sheds the trail and costs a deck
+
+[desktop-chrome] › e2e/e5-stillwater-noise.spec.ts:43:1 › the noise-hunt hears its three machines, trails the loudest, sheds the trail and costs a deck
+(node:69544) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[18/116] [desktop-chrome] › e2e/e5-stillwater-noise.spec.ts:181:1 › Stillwater SECURES both bench seeds twice through the PLAIN door
+  5) [desktop-chrome] › e2e/e5-stillwater-noise.spec.ts:181:1 › Stillwater SECURES both bench seeds twice through the PLAIN door 
+
+    Error: expect(received).toMatchObject(expected)
+
+    - Expected  - 2
+    + Received  + 2
+
+      Object {
+    -   "eventLogHash": "fnv1a32:7661ca43",
+    -   "kills": 103,
+    +   "eventLogHash": "fnv1a32:e5c6d612",
+    +   "kills": 391,
+        "secured": true,
+        "waves": 12,
+      }
+
+      202 |     // hero — while the trail is up. The leviathans hunt the BOAT, so the hero is never touched,
+      203 |     // and the decks outlast the run with a pad to spare at the owner-authorised strike cost.
+    > 204 |     expect(outcomes[0]).toMatchObject({ secured: true, waves: 12, kills, eventLogHash });
+          |                         ^
+      205 |   }
+      206 | });
+      207 |
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-mapc2b/e2e/e5-stillwater-noise.spec.ts:204:25
+
+    Error Context: test-results/e5-stillwater-noise-Stillw-9cb65-wice-through-the-PLAIN-door-desktop-chrome/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e5-stillwater-noise-Stillw-9cb65-wice-through-the-PLAIN-door-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e5-stillwater-noise-Stillw-9cb65-wice-through-the-PLAIN-door-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[19/116] [desktop-chrome] › e2e/e5-stillwater-noise.spec.ts:208:1 › the same play through the in-process door agrees, and the decks survive with margin
+  6) [desktop-chrome] › e2e/e5-stillwater-noise.spec.ts:208:1 › the same play through the in-process door agrees, and the decks survive with margin 
+
+    Error: expect(received).toMatchObject(expected)
+
+    - Expected  - 2
+    + Received  + 2
+
+      Object {
+    -   "eventLogHash": "fnv1a32:4e99e655",
+    +   "eventLogHash": "fnv1a32:e5c6d612",
+        "noiseHunt": Object {
+    -     "strikes": 77,
+    +     "strikes": 64,
+        },
+        "secured": true,
+        "waves": 12,
+      }
+
+      229 |     // i.e. it wins on the last pad dying. If this ever drops to an empty `decks`, the dial has
+      230 |     // been pushed back onto that knife-edge and the balance-later pass needs to know.
+    > 231 |     expect(outcomes[0]).toMatchObject({
+          |                         ^
+      232 |       secured: true,
+      233 |       waves: 12,
+      234 |       eventLogHash,
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-mapc2b/e2e/e5-stillwater-noise.spec.ts:231:25
+
+    Error Context: test-results/e5-stillwater-noise-the-sa-c3477-e-decks-survive-with-margin-desktop-chrome/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e5-stillwater-noise-the-sa-c3477-e-decks-survive-with-margin-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e5-stillwater-noise-the-sa-c3477-e-decks-survive-with-margin-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[20/116] [desktop-chrome] › e2e/e5-stillwater-noise.spec.ts:251:1 › idle Stillwater runs stay silent and still lose
+  7) [desktop-chrome] › e2e/e5-stillwater-noise.spec.ts:251:1 › idle Stillwater runs stay silent and still lose 
+
+    Error: expect(received).toMatchObject(expected)
+
+    - Expected  - 1
+    + Received  + 1
+
+      Object {
+    -   "eventLogHash": "fnv1a32:ba80f970",
+    +   "eventLogHash": "fnv1a32:c212c318",
+        "secured": false,
+        "waves": 3,
+      }
+
+      271 |     // `noiseHunt` block — that is the prover's own annotation on the in-process path — so the
+      272 |     // silence is asserted by the floor being a LOSS at the same wave the mechanic never touched.)
+    > 273 |     expect(outcomes[0]).toMatchObject({ secured: false, waves: 3, eventLogHash });
+          |                         ^
+      274 |   }
+      275 | });
+      276 |
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-mapc2b/e2e/e5-stillwater-noise.spec.ts:273:25
+
+    Error Context: test-results/e5-stillwater-noise-idle-S-01060--stay-silent-and-still-lose-desktop-chrome/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e5-stillwater-noise-idle-S-01060--stay-silent-and-still-lose-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e5-stillwater-noise-idle-S-01060--stay-silent-and-still-lose-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[21/116] [desktop-chrome] › e2e/e5-stillwater-noise.spec.ts:277:1 › plain boot shows the first crewed front shivering through the fog
+[desktop-chrome] › e2e/e5-stillwater-noise.spec.ts:277:1 › plain boot shows the first crewed front shivering through the fog
+e5-stillwater plain boot watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[22/116] [desktop-chrome] › e2e/e5-water-spike.spec.ts:22:1 › deepwater boots the 128x128 real dev tile with swim, boat, and depth classes
+[23/116] [desktop-chrome] › e2e/e5-water-spike.spec.ts:48:1 › Claim-Boat pads accept buildings and carry them between anchors
+[24/116] [desktop-chrome] › e2e/e5-water-spike.spec.ts:63:1 › storm fronts carry one west-to-east wave per deterministic cycle
+[25/116] [desktop-chrome] › e2e/e5-water-spike.spec.ts:84:1 › plain debug boot leaves the deepwater chunk dormant
+[26/116] [desktop-chrome] › e2e/e7-echo-canyon-mirror.spec.ts:69:1 › a playbook used in Echo Canyon returns as a corrupted squad on the next wave
+[27/116] [desktop-chrome] › e2e/e7-echo-canyon-mirror.spec.ts:128:1 › CONTROL — the Relay Valley, same epoch and same tape, casts no shadow
+[28/116] [desktop-chrome] › e2e/e8-mare-claim-physics-parity.spec.ts:56:1 › the Mare Claim rides to the same event-log hash in the browser as in node
+[29/116] [desktop-chrome] › e2e/landmark-brightness.spec.ts:57:1 › The Claim keeps daylight landmarks opaque, lit, and under the frame budget
+[30/116] [desktop-chrome] › e2e/landmark-brightness.spec.ts:96:1 › Night Shift keeps ground light pools without mutating landmark materials
+[31/116] [desktop-chrome] › e2e/landmark-brightness.spec.ts:182:1 › reference rig: terrain, landmark and hero sprite measured together (F-ASTRA-9 calibration)
+[32/116] [desktop-chrome] › e2e/landmark-brightness.spec.ts:315:1 › closed/open mesh census across the landmark packs (F-ASTRA-9)
+
+(node:71502) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[33/116] [desktop-chrome] › e2e/landmark-collision.spec.ts:52:1 › authored footprints stop the hero on The Claim and a county map while an unfootprinted mount stays walkable
+[34/116] [desktop-chrome] › e2e/landmark-collision.spec.ts:68:1 › enemy blocker routing is deterministic and goes around a county landmark
+[35/116] [desktop-chrome] › e2e/landmark-collision.spec.ts:121:1 › Town chapel and Pan Monument are solid and default 3D renders exactly one monument
+[36/116] [desktop-chrome] › e2e/landmark-collision.spec.ts:144:1 › a failed 3D prop load keeps the legacy Pan Monument visible and solid
+[37/116] [desktop-chrome] › e2e/landmark-collision.spec.ts:157:1 › later-era modeled plaza props use their authored Town footprints
+[38/116] [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:29:1 › T spawns Claim Jumpers, contact kills hero, R restarts in place
+[39/116] [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:59:1 › T does not spawn Claim Jumpers without debug consent
+[40/116] [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:72:1 › nospawn blocks debug packs
+[41/116] [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:83:1 › double restart recycles enemies without geometry growth
+[42/116] [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:109:1 › stress=120 stays within pool and draw-call budget
+[43/116] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend
+[44/116] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs
+[45/116] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining
+[46/116] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:205:1 › beacon cost curve stays intact through the menu
+[47/116] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:227:1 › single enemy slides around a finite palisade line without passing through
+[48/116] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:284:1 › 390px build menu is visible, tappable, and clear of HUD controls
+[49/116] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:329:1 › stress draw calls stay under 200 with palisades and beacons
+[50/116] [desktop-chrome] › e2e/shared-atlas-dedupe.spec.ts:62:35 › the-claim: identical atlas sources share residency
+[51/116] [desktop-chrome] › e2e/shared-atlas-dedupe.spec.ts:62:35 › e2-hill-mine: identical atlas sources share residency
+[52/116] [desktop-chrome] › e2e/shared-atlas-dedupe.spec.ts:62:35 › e8-mare-claim: identical atlas sources share residency
+[53/116] [desktop-chrome] › e2e/shared-atlas-dedupe.spec.ts:84:1 › production WebP atlas load-dispose-load returns to the renderer baseline
+  8) [desktop-chrome] › e2e/shared-atlas-dedupe.spec.ts:84:1 › production WebP atlas load-dispose-load returns to the renderer baseline 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      92 |   const files: string[] = group.images.map((file: string) => file.split('#')[0]);
+      93 |   const available = await readdir('dist/assets');
+    > 94 |   expect(files.every(file => available.includes(file))).toBe(true);
+         |                                                         ^
+      95 |   const proof = await page.evaluate(async urls => {
+      96 |     const { lifecycle } = await Function('return import("/artifacts/shared-atlas-dedupe/browser-harness.ts")')() as typeof import('../artifacts/shared-atlas-dedupe/browser-harness');
+      97 |     return lifecycle(window.__ATLAS_RUNTIME__!().renderer, urls);
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-mapc2b/e2e/shared-atlas-dedupe.spec.ts:94:57
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/shared-atlas-dedupe-produc-9df92-ns-to-the-renderer-baseline-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/shared-atlas-dedupe-produc-9df92-ns-to-the-renderer-baseline-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/shared-atlas-dedupe-produc-9df92-ns-to-the-renderer-baseline-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/shared-atlas-dedupe-produc-9df92-ns-to-the-renderer-baseline-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[54/116] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only
+[55/116] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves
+[56/116] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel
+[57/116] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote
+[58/116] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open
+[59/116] [mobile-chrome] › e2e/e3-canyon-works.spec.ts:34:1 › strings the gorge, holds the night, and restores a cut span
+[mobile-chrome] › e2e/e3-canyon-works.spec.ts:34:1 › strings the gorge, holds the night, and restores a cut span
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[60/116] [mobile-chrome] › e2e/e3-canyon-works.spec.ts:116:1 › keeps the Voltage era gate and saboteur ledger explicit
+[mobile-chrome] › e2e/e3-canyon-works.spec.ts:116:1 › keeps the Voltage era gate and saboteur ledger explicit
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[61/116] [mobile-chrome] › e2e/e5-deepwater-claim.spec.ts:30:1 › boots the Deepwater contract with deck pads, depth gates, and a storm-scheduled corsair wave
+[62/116] [mobile-chrome] › e2e/e5-deepwater-claim.spec.ts:99:1 › shows the active run wave in Deepwater and WaveSystem contracts
+[63/116] [mobile-chrome] › e2e/e5-deepwater-claim.spec.ts:135:1 › replays boat placement and two storm cycles deterministically
+[64/116] [mobile-chrome] › e2e/e5-flotilla-hulls.spec.ts:6:1 › the Flotilla keeps three losable hulls and secures both bench seeds deterministically
+
+[mobile-chrome] › e2e/e5-flotilla-hulls.spec.ts:6:1 › the Flotilla keeps three losable hulls and secures both bench seeds deterministically
+(node:76176) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+  9) [mobile-chrome] › e2e/e5-flotilla-hulls.spec.ts:6:1 › the Flotilla keeps three losable hulls and secures both bench seeds deterministically 
+
+    Error: expect(received).toMatchObject(expected)
+
+    - Expected  - 1
+    + Received  + 1
+
+      Object {
+    -   "eventLogHash": "fnv1a32:a9f33e48",
+    +   "eventLogHash": "fnv1a32:c01dd739",
+        "kills": 30,
+        "secured": true,
+        "waves": 12,
+      }
+
+      105 |       // NAMED-CAUSE PIN (b2-flotilla-hulls, 2026-08-20): three deck builds, repeated
+      106 |       // straggler-biased defense, and REANCHOR formation pulls through secure wave 12.
+    > 107 |       expect(first).toMatchObject({ secured: true, waves: 12, kills: 30, eventLogHash });
+          |                     ^
+      108 |     }
+      109 |   } finally {
+      110 |     await vite.close();
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-mapc2b/e2e/e5-flotilla-hulls.spec.ts:107:21
+
+    Error Context: test-results/e5-flotilla-hulls-the-Flot-5cf7c-nch-seeds-deterministically-mobile-chrome/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e5-flotilla-hulls-the-Flot-5cf7c-nch-seeds-deterministically-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e5-flotilla-hulls-the-Flot-5cf7c-nch-seeds-deterministically-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[65/116] [mobile-chrome] › e2e/e5-flotilla-hulls.spec.ts:118:1 › idle Flotilla runs lose all hulls
+  10) [mobile-chrome] › e2e/e5-flotilla-hulls.spec.ts:118:1 › idle Flotilla runs lose all hulls ────
+
+    Error: expect(received).toMatchObject(expected)
+
+    - Expected  - 1
+    + Received  + 1
+
+      Object {
+    -   "eventLogHash": "fnv1a32:68d87963",
+    +   "eventLogHash": "fnv1a32:815739a6",
+        "kills": 0,
+        "secured": false,
+        "timeMs": 46800,
+        "waves": 2,
+      }
+
+      129 |     const outcome = JSON.parse(run.stdout.trim().split('\n').at(-1)!);
+      130 |     // NAMED-CAUSE PIN: no rider follows the straggler, so all three hulls reach zero integrity.
+    > 131 |     expect(outcome).toMatchObject({ secured: false, waves: 2, timeMs: 46800, kills: 0, eventLogHash });
+          |                     ^
+      132 |   }
+      133 | });
+      134 |
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-mapc2b/e2e/e5-flotilla-hulls.spec.ts:131:21
+
+    Error Context: test-results/e5-flotilla-hulls-idle-Flotilla-runs-lose-all-hulls-mobile-chrome/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e5-flotilla-hulls-idle-Flotilla-runs-lose-all-hulls-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e5-flotilla-hulls-idle-Flotilla-runs-lose-all-hulls-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[66/116] [mobile-chrome] › e2e/e5-flotilla-hulls.spec.ts:135:1 › plain boot resolves the Flotilla contract without browser errors
+[mobile-chrome] › e2e/e5-flotilla-hulls.spec.ts:135:1 › plain boot resolves the Flotilla contract without browser errors
+e5-flotilla plain boot watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[67/116] [mobile-chrome] › e2e/e5-regatta-race.spec.ts:35:1 › the Regatta runs its authored course and secures both bench seeds deterministically
+
+[mobile-chrome] › e2e/e5-regatta-race.spec.ts:35:1 › the Regatta runs its authored course and secures both bench seeds deterministically
+(node:78967) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+  11) [mobile-chrome] › e2e/e5-regatta-race.spec.ts:35:1 › the Regatta runs its authored course and secures both bench seeds deterministically 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      112 |         turn = sim.advanceToTurn();
+      113 |       }
+    > 114 |       expect(turn.terminal).toBe(true);
+          |                             ^
+      115 |       expect(turn.view.now.deepwater?.race?.finished).toBe(true);
+      116 |       expect(turn.view.now.deepwater?.race?.gatesPassed).toHaveLength(5);
+      117 |       return sim.outcome();
+        at run (/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-mapc2b/e2e/e5-regatta-race.spec.ts:114:29)
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-mapc2b/e2e/e5-regatta-race.spec.ts:125:21
+
+    Error Context: test-results/e5-regatta-race-the-Regatt-6c659-nch-seeds-deterministically-mobile-chrome/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e5-regatta-race-the-Regatt-6c659-nch-seeds-deterministically-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e5-regatta-race-the-Regatt-6c659-nch-seeds-deterministically-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[68/116] [mobile-chrome] › e2e/e5-regatta-race.spec.ts:141:1 › idle Regatta runs lose because the course remains unfinished
+  12) [mobile-chrome] › e2e/e5-regatta-race.spec.ts:141:1 › idle Regatta runs lose because the course remains unfinished 
+
+    Error: expect(received).toMatchObject(expected)
+
+    - Expected  - 1
+    + Received  + 1
+
+      Object {
+        "endReason": "wave-ceiling",
+    -   "eventLogHash": "fnv1a32:80b36bec",
+    +   "eventLogHash": "fnv1a32:d461683d",
+        "secured": false,
+        "waves": 14,
+      }
+
+      151 |     expect(run.status, run.stderr).toBe(0);
+      152 |     const outcome = JSON.parse(run.stdout.trim().split('\n').at(-1)!);
+    > 153 |     expect(outcome).toMatchObject({ secured: false, waves: 14, endReason: 'wave-ceiling', eventLogHash });
+          |                     ^
+      154 |   }
+      155 | });
+      156 |
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-mapc2b/e2e/e5-regatta-race.spec.ts:153:21
+
+    Error Context: test-results/e5-regatta-race-idle-Regat-7290d-e-course-remains-unfinished-mobile-chrome/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e5-regatta-race-idle-Regat-7290d-e-course-remains-unfinished-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e5-regatta-race-idle-Regat-7290d-e-course-remains-unfinished-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[69/116] [mobile-chrome] › e2e/e5-regatta-race.spec.ts:157:1 › plain boot resolves the Regatta contract without browser errors
+[mobile-chrome] › e2e/e5-regatta-race.spec.ts:157:1 › plain boot resolves the Regatta contract without browser errors
+e5-regatta plain boot watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[70/116] [mobile-chrome] › e2e/e5-sea-contact.spec.ts:4:3 › e5-deepwater-claim: sea apron preserves geometry and hull contact loads without render errors
+[71/116] [mobile-chrome] › e2e/e5-sea-contact.spec.ts:4:3 › e5-regatta: sea apron preserves geometry and hull contact loads without render errors
+[72/116] [mobile-chrome] › e2e/e5-sea-contact.spec.ts:4:3 › e5-stillwater: sea apron preserves geometry and hull contact loads without render errors
+[73/116] [mobile-chrome] › e2e/e5-sea-contact.spec.ts:4:3 › e5-flotilla: sea apron preserves geometry and hull contact loads without render errors
+[74/116] [mobile-chrome] › e2e/e5-sea-contact.spec.ts:30:1 › sea panorama foreground silhouettes remain visible over the apron
+[mobile-chrome] › e2e/e5-sea-contact.spec.ts:30:1 › sea panorama foreground silhouettes remain visible over the apron
+sea-panorama-order {"apronTriangles":2,"pixel":[255,0,0,255],"apron":[0,0,255,255]}
+
+[75/116] [mobile-chrome] › e2e/e5-stillwater-noise.spec.ts:43:1 › the noise-hunt hears its three machines, trails the loudest, sheds the trail and costs a deck
+
+[mobile-chrome] › e2e/e5-stillwater-noise.spec.ts:43:1 › the noise-hunt hears its three machines, trails the loudest, sheds the trail and costs a deck
+(node:79416) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[76/116] [mobile-chrome] › e2e/e5-stillwater-noise.spec.ts:181:1 › Stillwater SECURES both bench seeds twice through the PLAIN door
+  13) [mobile-chrome] › e2e/e5-stillwater-noise.spec.ts:181:1 › Stillwater SECURES both bench seeds twice through the PLAIN door 
+
+    Error: expect(received).toMatchObject(expected)
+
+    - Expected  - 2
+    + Received  + 2
+
+      Object {
+    -   "eventLogHash": "fnv1a32:7661ca43",
+    -   "kills": 103,
+    +   "eventLogHash": "fnv1a32:e5c6d612",
+    +   "kills": 391,
+        "secured": true,
+        "waves": 12,
+      }
+
+      202 |     // hero — while the trail is up. The leviathans hunt the BOAT, so the hero is never touched,
+      203 |     // and the decks outlast the run with a pad to spare at the owner-authorised strike cost.
+    > 204 |     expect(outcomes[0]).toMatchObject({ secured: true, waves: 12, kills, eventLogHash });
+          |                         ^
+      205 |   }
+      206 | });
+      207 |
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-mapc2b/e2e/e5-stillwater-noise.spec.ts:204:25
+
+    Error Context: test-results/e5-stillwater-noise-Stillw-9cb65-wice-through-the-PLAIN-door-mobile-chrome/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e5-stillwater-noise-Stillw-9cb65-wice-through-the-PLAIN-door-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e5-stillwater-noise-Stillw-9cb65-wice-through-the-PLAIN-door-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[77/116] [mobile-chrome] › e2e/e5-stillwater-noise.spec.ts:208:1 › the same play through the in-process door agrees, and the decks survive with margin
+  14) [mobile-chrome] › e2e/e5-stillwater-noise.spec.ts:208:1 › the same play through the in-process door agrees, and the decks survive with margin 
+
+    Error: expect(received).toMatchObject(expected)
+
+    - Expected  - 2
+    + Received  + 2
+
+      Object {
+    -   "eventLogHash": "fnv1a32:4e99e655",
+    +   "eventLogHash": "fnv1a32:e5c6d612",
+        "noiseHunt": Object {
+    -     "strikes": 77,
+    +     "strikes": 64,
+        },
+        "secured": true,
+        "waves": 12,
+      }
+
+      229 |     // i.e. it wins on the last pad dying. If this ever drops to an empty `decks`, the dial has
+      230 |     // been pushed back onto that knife-edge and the balance-later pass needs to know.
+    > 231 |     expect(outcomes[0]).toMatchObject({
+          |                         ^
+      232 |       secured: true,
+      233 |       waves: 12,
+      234 |       eventLogHash,
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-mapc2b/e2e/e5-stillwater-noise.spec.ts:231:25
+
+    Error Context: test-results/e5-stillwater-noise-the-sa-c3477-e-decks-survive-with-margin-mobile-chrome/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e5-stillwater-noise-the-sa-c3477-e-decks-survive-with-margin-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e5-stillwater-noise-the-sa-c3477-e-decks-survive-with-margin-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[78/116] [mobile-chrome] › e2e/e5-stillwater-noise.spec.ts:251:1 › idle Stillwater runs stay silent and still lose
+  15) [mobile-chrome] › e2e/e5-stillwater-noise.spec.ts:251:1 › idle Stillwater runs stay silent and still lose 
+
+    Error: expect(received).toMatchObject(expected)
+
+    - Expected  - 1
+    + Received  + 1
+
+      Object {
+    -   "eventLogHash": "fnv1a32:ba80f970",
+    +   "eventLogHash": "fnv1a32:c212c318",
+        "secured": false,
+        "waves": 3,
+      }
+
+      271 |     // `noiseHunt` block — that is the prover's own annotation on the in-process path — so the
+      272 |     // silence is asserted by the floor being a LOSS at the same wave the mechanic never touched.)
+    > 273 |     expect(outcomes[0]).toMatchObject({ secured: false, waves: 3, eventLogHash });
+          |                         ^
+      274 |   }
+      275 | });
+      276 |
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-mapc2b/e2e/e5-stillwater-noise.spec.ts:273:25
+
+    Error Context: test-results/e5-stillwater-noise-idle-S-01060--stay-silent-and-still-lose-mobile-chrome/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e5-stillwater-noise-idle-S-01060--stay-silent-and-still-lose-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e5-stillwater-noise-idle-S-01060--stay-silent-and-still-lose-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[79/116] [mobile-chrome] › e2e/e5-stillwater-noise.spec.ts:277:1 › plain boot shows the first crewed front shivering through the fog
+[mobile-chrome] › e2e/e5-stillwater-noise.spec.ts:277:1 › plain boot shows the first crewed front shivering through the fog
+e5-stillwater plain boot watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[80/116] [mobile-chrome] › e2e/e5-water-spike.spec.ts:22:1 › deepwater boots the 128x128 real dev tile with swim, boat, and depth classes
+[81/116] [mobile-chrome] › e2e/e5-water-spike.spec.ts:48:1 › Claim-Boat pads accept buildings and carry them between anchors
+[82/116] [mobile-chrome] › e2e/e5-water-spike.spec.ts:63:1 › storm fronts carry one west-to-east wave per deterministic cycle
+[83/116] [mobile-chrome] › e2e/e5-water-spike.spec.ts:84:1 › plain debug boot leaves the deepwater chunk dormant
+[84/116] [mobile-chrome] › e2e/e7-echo-canyon-mirror.spec.ts:69:1 › a playbook used in Echo Canyon returns as a corrupted squad on the next wave
+[85/116] [mobile-chrome] › e2e/e7-echo-canyon-mirror.spec.ts:128:1 › CONTROL — the Relay Valley, same epoch and same tape, casts no shadow
+[86/116] [mobile-chrome] › e2e/e8-mare-claim-physics-parity.spec.ts:56:1 › the Mare Claim rides to the same event-log hash in the browser as in node
+[87/116] [mobile-chrome] › e2e/landmark-brightness.spec.ts:57:1 › The Claim keeps daylight landmarks opaque, lit, and under the frame budget
+[88/116] [mobile-chrome] › e2e/landmark-brightness.spec.ts:96:1 › Night Shift keeps ground light pools without mutating landmark materials
+[89/116] [mobile-chrome] › e2e/landmark-brightness.spec.ts:182:1 › reference rig: terrain, landmark and hero sprite measured together (F-ASTRA-9 calibration)
+[90/116] [mobile-chrome] › e2e/landmark-brightness.spec.ts:315:1 › closed/open mesh census across the landmark packs (F-ASTRA-9)
+
+(node:87180) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[91/116] [mobile-chrome] › e2e/landmark-collision.spec.ts:52:1 › authored footprints stop the hero on The Claim and a county map while an unfootprinted mount stays walkable
+[92/116] [mobile-chrome] › e2e/landmark-collision.spec.ts:68:1 › enemy blocker routing is deterministic and goes around a county landmark
+[93/116] [mobile-chrome] › e2e/landmark-collision.spec.ts:121:1 › Town chapel and Pan Monument are solid and default 3D renders exactly one monument
+[94/116] [mobile-chrome] › e2e/landmark-collision.spec.ts:144:1 › a failed 3D prop load keeps the legacy Pan Monument visible and solid
+[95/116] [mobile-chrome] › e2e/landmark-collision.spec.ts:157:1 › later-era modeled plaza props use their authored Town footprints
+[96/116] [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:29:1 › T spawns Claim Jumpers, contact kills hero, R restarts in place
+[97/116] [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:59:1 › T does not spawn Claim Jumpers without debug consent
+[98/116] [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:72:1 › nospawn blocks debug packs
+[99/116] [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:83:1 › double restart recycles enemies without geometry growth
+[100/116] [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:109:1 › stress=120 stays within pool and draw-call budget
+[101/116] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend
+[102/116] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs
+[103/116] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining
+[104/116] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:205:1 › beacon cost curve stays intact through the menu
+[105/116] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:227:1 › single enemy slides around a finite palisade line without passing through
+[106/116] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:284:1 › 390px build menu is visible, tappable, and clear of HUD controls
+[107/116] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:329:1 › stress draw calls stay under 200 with palisades and beacons
+[108/116] [mobile-chrome] › e2e/shared-atlas-dedupe.spec.ts:62:35 › the-claim: identical atlas sources share residency
+[109/116] [mobile-chrome] › e2e/shared-atlas-dedupe.spec.ts:62:35 › e2-hill-mine: identical atlas sources share residency
+[110/116] [mobile-chrome] › e2e/shared-atlas-dedupe.spec.ts:62:35 › e8-mare-claim: identical atlas sources share residency
+[111/116] [mobile-chrome] › e2e/shared-atlas-dedupe.spec.ts:84:1 › production WebP atlas load-dispose-load returns to the renderer baseline
+  16) [mobile-chrome] › e2e/shared-atlas-dedupe.spec.ts:84:1 › production WebP atlas load-dispose-load returns to the renderer baseline 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      92 |   const files: string[] = group.images.map((file: string) => file.split('#')[0]);
+      93 |   const available = await readdir('dist/assets');
+    > 94 |   expect(files.every(file => available.includes(file))).toBe(true);
+         |                                                         ^
+      95 |   const proof = await page.evaluate(async urls => {
+      96 |     const { lifecycle } = await Function('return import("/artifacts/shared-atlas-dedupe/browser-harness.ts")')() as typeof import('../artifacts/shared-atlas-dedupe/browser-harness');
+      97 |     return lifecycle(window.__ATLAS_RUNTIME__!().renderer, urls);
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-mapc2b/e2e/shared-atlas-dedupe.spec.ts:94:57
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/shared-atlas-dedupe-produc-9df92-ns-to-the-renderer-baseline-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/shared-atlas-dedupe-produc-9df92-ns-to-the-renderer-baseline-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/shared-atlas-dedupe-produc-9df92-ns-to-the-renderer-baseline-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/shared-atlas-dedupe-produc-9df92-ns-to-the-renderer-baseline-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[112/116] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only
+[113/116] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves
+[114/116] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel
+[115/116] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote
+[116/116] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open
+  16 failed
+    [desktop-chrome] › e2e/e5-flotilla-hulls.spec.ts:6:1 › the Flotilla keeps three losable hulls and secures both bench seeds deterministically 
+    [desktop-chrome] › e2e/e5-flotilla-hulls.spec.ts:118:1 › idle Flotilla runs lose all hulls ─────
+    [desktop-chrome] › e2e/e5-regatta-race.spec.ts:35:1 › the Regatta runs its authored course and secures both bench seeds deterministically 
+    [desktop-chrome] › e2e/e5-regatta-race.spec.ts:141:1 › idle Regatta runs lose because the course remains unfinished 
+    [desktop-chrome] › e2e/e5-stillwater-noise.spec.ts:181:1 › Stillwater SECURES both bench seeds twice through the PLAIN door 
+    [desktop-chrome] › e2e/e5-stillwater-noise.spec.ts:208:1 › the same play through the in-process door agrees, and the decks survive with margin 
+    [desktop-chrome] › e2e/e5-stillwater-noise.spec.ts:251:1 › idle Stillwater runs stay silent and still lose 
+    [desktop-chrome] › e2e/shared-atlas-dedupe.spec.ts:84:1 › production WebP atlas load-dispose-load returns to the renderer baseline 
+    [mobile-chrome] › e2e/e5-flotilla-hulls.spec.ts:6:1 › the Flotilla keeps three losable hulls and secures both bench seeds deterministically 
+    [mobile-chrome] › e2e/e5-flotilla-hulls.spec.ts:118:1 › idle Flotilla runs lose all hulls ──────
+    [mobile-chrome] › e2e/e5-regatta-race.spec.ts:35:1 › the Regatta runs its authored course and secures both bench seeds deterministically 
+    [mobile-chrome] › e2e/e5-regatta-race.spec.ts:141:1 › idle Regatta runs lose because the course remains unfinished 
+    [mobile-chrome] › e2e/e5-stillwater-noise.spec.ts:181:1 › Stillwater SECURES both bench seeds twice through the PLAIN door 
+    [mobile-chrome] › e2e/e5-stillwater-noise.spec.ts:208:1 › the same play through the in-process door agrees, and the decks survive with margin 
+    [mobile-chrome] › e2e/e5-stillwater-noise.spec.ts:251:1 › idle Stillwater runs stay silent and still lose 
+    [mobile-chrome] › e2e/shared-atlas-dedupe.spec.ts:84:1 › production WebP atlas load-dispose-load returns to the renderer baseline 
+  4 skipped
+  96 passed (8.8m)

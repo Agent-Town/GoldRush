@@ -1,0 +1,197 @@
+{
+  "key": "idle-e6-glow-mesa",
+  "tapePath": "tapes/idle-e6-glow-mesa.json",
+  "contract": "e6-glow-mesa",
+  "kind": "null-floor",
+  "node": "v26.4.0",
+  "before": {
+    "at": "2026-09-05T16:11:07.847Z",
+    "load": [
+      12.865234375,
+      22.35791015625,
+      21.1005859375
+    ],
+    "freeMemory": 5085806592
+  },
+  "after": {
+    "at": "2026-09-05T16:11:13.398Z",
+    "load": [
+      12.8759765625,
+      22.2021484375,
+      21.052734375
+    ],
+    "freeMemory": 7034208256
+  },
+  "declaredDurationTicks": 7808,
+  "simulatedSeconds": 260.26666666666665,
+  "bootMs": 45.14362499999993,
+  "replayMs": 3943.7604579999997,
+  "ticksPerSecond": 1979.8362712829858,
+  "realtimeMultiple": 65.99454237609952,
+  "estimateTenMinuteSeconds": 9.091660891905738,
+  "estimateFormula": "600 seconds / measured realtimeMultiple; extrapolation, not an actual 10-minute tape when duration differs",
+  "tickMs": {
+    "n": 7808,
+    "min": 0.2108330000000933,
+    "p50": 0.49037500000031287,
+    "p95": 0.808749999999236,
+    "p99": 1.0343329999996058,
+    "max": 9.557209000000057
+  },
+  "tickPath": "sim/idle-e6-glow-mesa-ticks.json",
+  "result": {
+    "eventLogHash": "fnv1a32:a45ba9ac",
+    "outcome": {
+      "secured": false,
+      "waves": 8,
+      "gold": 0,
+      "timeAlive": 260.267
+    },
+    "ticks": 7808,
+    "engine": "headless-contract-sim"
+  },
+  "expectedHash": "fnv1a32:a45ba9ac",
+  "hashMatches": true,
+  "top20": [
+    {
+      "name": "terrainSeed",
+      "url": "",
+      "line": 1469,
+      "column": 21,
+      "selfMs": 460.155
+    },
+    {
+      "name": "terrainHash",
+      "url": "",
+      "line": 1486,
+      "column": 21,
+      "selfMs": 311.123
+    },
+    {
+      "name": "update",
+      "url": "",
+      "line": 809,
+      "column": 8,
+      "selfMs": 289.943
+    },
+    {
+      "name": "dispatch",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 139.12
+    },
+    {
+      "name": "stableProbeMask",
+      "url": "",
+      "line": 1266,
+      "column": 25,
+      "selfMs": 121.849
+    },
+    {
+      "name": "get diagnostics",
+      "url": "",
+      "line": 484,
+      "column": 17,
+      "selfMs": 112.332
+    },
+    {
+      "name": "multiplyMatrices",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 10385,
+      "column": 18,
+      "selfMs": 106.805
+    },
+    {
+      "name": "maxHpForInstance",
+      "url": "",
+      "line": 1619,
+      "column": 18,
+      "selfMs": 93.47399999999999
+    },
+    {
+      "name": "currentTrickleInterval",
+      "url": "",
+      "line": 641,
+      "column": 24,
+      "selfMs": 85.42
+    },
+    {
+      "name": "diagnostics",
+      "url": "",
+      "line": 1795,
+      "column": 13,
+      "selfMs": 67.689
+    },
+    {
+      "name": "maxHpForPlacement",
+      "url": "",
+      "line": 1622,
+      "column": 19,
+      "selfMs": 63.80500000000001
+    },
+    {
+      "name": "toArray",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 11099,
+      "column": 9,
+      "selfMs": 63.769999999999996
+    },
+    {
+      "name": "terrainFeatures",
+      "url": "",
+      "line": 1193,
+      "column": 25,
+      "selfMs": 63.660999999999994
+    },
+    {
+      "name": "hpBarDiagnostics",
+      "url": "",
+      "line": 1663,
+      "column": 18,
+      "selfMs": 59.354
+    },
+    {
+      "name": "step",
+      "url": "",
+      "line": 1318,
+      "column": 6,
+      "selfMs": 58.71
+    },
+    {
+      "name": "(program)",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 54.833
+    },
+    {
+      "name": "syncEnemyInstance",
+      "url": "",
+      "line": 1343,
+      "column": 19,
+      "selfMs": 54.682
+    },
+    {
+      "name": "update",
+      "url": "",
+      "line": 485,
+      "column": 8,
+      "selfMs": 51.217999999999996
+    },
+    {
+      "name": "channelMask",
+      "url": "",
+      "line": 1247,
+      "column": 21,
+      "selfMs": 48.64
+    },
+    {
+      "name": "(anonymous)",
+      "url": "",
+      "line": 3,
+      "column": 49,
+      "selfMs": 46.97699999999999
+    }
+  ]
+}

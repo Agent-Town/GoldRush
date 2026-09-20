@@ -1,0 +1,167 @@
+(node:99158) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 6 tests using 1 worker
+
+
+(node:99254) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:99254) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[1/6] [desktop-chrome] › e2e/e1-night-shift.spec.ts:348:1 › cold lantern relight costs survive run suspend and continue
+[2/6] [desktop-chrome] › e2e/gt-03-enemy-elevation.spec.ts:125:1 › enemies slow on slopes and expose grounded terrain diagnostics
+[3/6] [desktop-chrome] › e2e/gt-03-enemy-elevation.spec.ts:224:1 › basin stress stays in frame envelope while the flat claim remains neutral
+  1) [desktop-chrome] › e2e/gt-03-enemy-elevation.spec.ts:224:1 › basin stress stays in frame envelope while the flat claim remains neutral
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      248 |   expect(basin.frameMs?.p95 ?? Number.POSITIVE_INFINITY).toBeLessThanOrEqual(80);
+      249 |   expect(flat.sim?.flat).toBe(true);
+    > 250 |   expect(flat.enemies.every((terrain) => terrain?.grounded && terrain.traversable && terrain.speedMul === 1)).toBe(true);
+          |                                                                                                               ^
+      251 |   expect(errors.consoleErrors).toEqual([]);
+      252 |   expect(errors.pageErrors).toEqual([]);
+      253 | });
+        at /Users/robin/.codex/worktrees/fixed-step-baseline/Gold Rush/e2e/gt-03-enemy-elevation.spec.ts:250:111
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/gt-03-enemy-elevation-basi-0a887--flat-claim-remains-neutral-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/gt-03-enemy-elevation-basi-0a887--flat-claim-remains-neutral-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/gt-03-enemy-elevation-basi-0a887--flat-claim-remains-neutral-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/gt-03-enemy-elevation-basi-0a887--flat-claim-remains-neutral-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:99481) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[4/6] [desktop-chrome] › e2e/m2-07-base-self-hold.spec.ts:349:1 › blast clump TTK at wave 20+ stays within 2x wave-10
+  2) [desktop-chrome] › e2e/m2-07-base-self-hold.spec.ts:349:1 › blast clump TTK at wave 20+ stays within 2x wave-10
+
+    Error: expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 6
+    Received:    0
+
+    Call Log:
+    - Timeout 20000ms exceeded while waiting on the predicate
+
+      210 |       timeout: 20_000,
+      211 |     })
+    > 212 |     .toBeGreaterThanOrEqual(6);
+          |      ^
+      213 |   const done = await page.evaluate(() => ({
+      214 |     time: window.__THREE_GAME_DIAGNOSTICS__?.timeAlive ?? 0,
+      215 |     wave: window.__THREE_GAME_DIAGNOSTICS__?.wave ?? 0,
+        at measureBlastTtk (/Users/robin/.codex/worktrees/fixed-step-baseline/Gold Rush/e2e/m2-07-base-self-hold.spec.ts:212:6)
+        at /Users/robin/.codex/worktrees/fixed-step-baseline/Gold Rush/e2e/m2-07-base-self-hold.spec.ts:363:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/m2-07-base-self-hold-blast-c2181--20-stays-within-2x-wave-10-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/m2-07-base-self-hold-blast-c2181--20-stays-within-2x-wave-10-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m2-07-base-self-hold-blast-c2181--20-stays-within-2x-wave-10-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/m2-07-base-self-hold-blast-c2181--20-stays-within-2x-wave-10-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:99607) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[5/6] [desktop-chrome] › e2e/vp-02b-rotation-resolver.spec.ts:149:1 › idle snaps to rotation idle hemispheres after movement
+  3) [desktop-chrome] › e2e/vp-02b-rotation-resolver.spec.ts:149:1 › idle snaps to rotation idle hemispheres after movement
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.waitForFunction: Test timeout of 30000ms exceeded.
+
+      91 |
+      92 | async function waitForHero(page: Page, direction: string, clip = 'walk'): Promise<SpriteSnapshot> {
+    > 93 |   await page.waitForFunction(
+         |              ^
+      94 |     ({ direction: expectedDirection, clip: expectedClip }) => {
+      95 |       const snapshot = window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations['char.hero'] as SpriteSnapshot | undefined;
+      96 |       return snapshot?.loaded === true && snapshot.clip === expectedClip && snapshot.direction === expectedDirection;
+        at waitForHero (/Users/robin/.codex/worktrees/fixed-step-baseline/Gold Rush/e2e/vp-02b-rotation-resolver.spec.ts:93:14)
+        at /Users/robin/.codex/worktrees/fixed-step-baseline/Gold Rush/e2e/vp-02b-rotation-resolver.spec.ts:164:9
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/vp-02b-rotation-resolver-i-77128--hemispheres-after-movement-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/vp-02b-rotation-resolver-i-77128--hemispheres-after-movement-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/vp-02b-rotation-resolver-i-77128--hemispheres-after-movement-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/vp-02b-rotation-resolver-i-77128--hemispheres-after-movement-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:359) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[6/6] [desktop-chrome] › e2e/xp-economy-audit.spec.ts:92:1 › seeded dense kill windows bank every death XP exactly once
+  4) [desktop-chrome] › e2e/xp-economy-audit.spec.ts:92:1 › seeded dense kill windows bank every death XP exactly once
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      51 |   await setBalance(page, 'xp.moteMagnetRadius', 0.5);
+      52 |   await page.evaluate(() => window.__GR_TEST__?.clearEnemies());
+    > 53 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.vfx.activeFloatTexts ?? -1)).toBe(0);
+         |                                                                                                               ^
+      54 |   await page.evaluate(() => {
+      55 |     const w = window as unknown as { __xpFloatMax: number; __xpFloatTracking?: boolean };
+      56 |     w.__xpFloatMax = 0;
+        at runDenseWindow (/Users/robin/.codex/worktrees/fixed-step-baseline/Gold Rush/e2e/xp-economy-audit.spec.ts:53:111)
+        at /Users/robin/.codex/worktrees/fixed-step-baseline/Gold Rush/e2e/xp-economy-audit.spec.ts:100:35
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/xp-economy-audit-seeded-de-1f658-every-death-XP-exactly-once-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/xp-economy-audit-seeded-de-1f658-every-death-XP-exactly-once-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/xp-economy-audit-seeded-de-1f658-every-death-XP-exactly-once-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/xp-economy-audit-seeded-de-1f658-every-death-XP-exactly-once-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  4 failed
+    [desktop-chrome] › e2e/gt-03-enemy-elevation.spec.ts:224:1 › basin stress stays in frame envelope while the flat claim remains neutral
+    [desktop-chrome] › e2e/m2-07-base-self-hold.spec.ts:349:1 › blast clump TTK at wave 20+ stays within 2x wave-10
+    [desktop-chrome] › e2e/vp-02b-rotation-resolver.spec.ts:149:1 › idle snaps to rotation idle hemispheres after movement
+    [desktop-chrome] › e2e/xp-economy-audit.spec.ts:92:1 › seeded dense kill windows bank every death XP exactly once
+  2 passed (1.5m)

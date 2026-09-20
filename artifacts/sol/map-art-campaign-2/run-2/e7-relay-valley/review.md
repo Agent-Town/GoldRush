@@ -1,0 +1,24 @@
+# Relay Valley — bounded lighting pass, 2026-09-19
+
+Candidate: map-specific authored emission 3→4, which the existing calibration maps from 0.45→0.60. The whole-body cap remains 0.6. Same-era Relay Rush and Dead Band remain at the default. No material allocation, shader, geometry, mount, sampler, collision or simulation change.
+
+| Defect | Verdict |
+| --- | --- |
+| Landmark darkness / separation | IMPROVED within a bounded body-pixel measurement: median luminance 0.12025→0.13503 desktop (+12.29%), 0.11913→0.13197 phone (+10.78%). Fraction below 0.06 falls 19.43%→13.71% / 16.02%→11.08%. Supports remain dark; not full material acceptance. |
+| Dark engraved terrain | HELD: the atlas's dense high-contrast engraving remains visually dominant. An emissive row cannot repair terrain texture or local lighting. |
+| Landmark contact | HELD: the rectangular base remains visually flat against the ridge; no new contact shadow promoted. |
+| Tower scale / architecture | HELD: three simple dishes and thin trestles still lack the concept's layered inhabited tower architecture. No mount scaling or collider reinterpretation. |
+| Full-map concept | HELD: empty plain entry and sparse silhouettes do not reproduce the plate's connected settlement. |
+| Portrait station | Full bounds fit at a **9 m south stand-off** (x=-56,z=39, body centre=-56,30): x76.1..313.9, y48.0..337.0 on 390×844. This is a diagnostic station, not proof of native navigation. HUD hides the upper portion; HUD remains HELD. The 9 m east station clips at x=-357.6..2.9 and is rejected. |
+
+Measurement discipline: `lighting-metrics.json` samples only pixels identified by a separate opaque-magenta body mask. Depth is retained; HUD is hidden for that diagnostic only because changing tutorial notices contaminated the first phone comparison. Plain boards and framing stations retain the real HUD. The 9 m focus lies near the field edge; the visible terrain/panorama tonal seam is also HELD.
+
+The requested reference rig was run both baseline and at 0.6, against Relay Rush. Its labels initially suggested different packs, but live registry inspection establishes that Relay Rush intentionally reuses Relay Valley's terrain and these five mounts; its separately authored pack is not selected here. Open-lattice centre probes can hit ground, and the max-emission run was affected by host load (p95 223–1412 ms, renderer tier shedding). Those readings are retained as an insufficient instrument, not substituted for masked body measurements. The final production/default-query rig passes both projects: Relay Valley materials are 0.6 and Relay Rush materials remain 0.45. Landmark/terrain probe ratios are 1.119 versus 1.100 desktop, 1.047 versus 0.946 phone; this corroborates the bounded scope, while the body mask remains the visual-change measurement.
+
+Normal-HUD performance is `performance-with-hud.json`: four interleaved 180-frame runs per arm, fixed station and frozen simulation. Desktop p95 medians 10.1→10.1 ms, phone 10.15→10.2 ms (+0.49%); draws remain 61/47. The later HUD-hidden diagnostic has different timing and is retained separately. Geometry: terrain 32,768/60,000, panorama 3,084/4,000, five landmark bodies 660–1,812 each /3,000 each. Actual GLB counts match declarations (`asset-budgets.json`). No pack rebake, so pack load/repeat checks are not applicable.
+
+One interrupted driver attempt timed out when a briefing auto-dismissed during a click; the corrected driver rechecks visibility rather than concealing a visible-button failure. Another attempt was interrupted by my source-comment HMR edit; it is retained in raw and excluded. The final source stayed fixed throughout the accepted performance run.
+
+Engine: `35db6dcf14954aa36cb232cde030c766e8a9cf21ef77c6e48375666a1a73f809` → `14d0ca36b8474f5284c71733530de331e7bac33e87569539f07f4175743ab476`. Engine pin unchanged.
+
+TypeScript, default build and full build PASS. Final plain boots at 1280 and 390 have zero page/console errors, correct active contract, no debug hook, and all five mounted materials at 0.6. The broader E7/brightness run returned 11 PASS / 5 FAIL / 4 opt-in SKIP: desktop Claim p95 34>33.4 ms, desktop Night Shift timeout, mobile Echo/Relay Valley entry timeouts, mobile Claim runtimeVerdict 1 rather than 0. Exact pre-Relay source reproduced entry/briefing timeouts in both desktop Echo/Relay tests (6 PASS / 2 FAIL); the profiles/stages differed from the first candidate run, so this proves base entry flakiness, not exact attribution of every failed assertion. The final candidate retry is **8/8 PASS**, including both mirror/control and both brightness checks on both profiles. Relay Rush front tests were **8/8 PASS** in the initial run. Production calibration **2/2 PASS**. Named narrow guards PASS. Collision geometry is unchanged by this one-row grade; the earlier 12/12 shared collision result remains the geometry regression evidence. No visual ACCEPTED claim.

@@ -1,0 +1,3164 @@
+[
+  {
+    "map": "e3-blackout-ridge",
+    "pack": "blackout-ridge",
+    "viewport": "desktop",
+    "boot": "plain",
+    "shot": "blackout-ridge-plain-desktop.png",
+    "shotNoHud": "blackout-ridge-plain-desktop-nohud.png",
+    "errors": [],
+    "hudRects": [
+      {
+        "tag": "div",
+        "cls": "hud__wave",
+        "x": 480,
+        "y": 16,
+        "w": 320,
+        "h": 56
+      },
+      {
+        "tag": "span",
+        "cls": "",
+        "x": 502,
+        "y": 25,
+        "w": 276,
+        "h": 38
+      },
+      {
+        "tag": "section",
+        "cls": "hud-panel hud-panel--vitals",
+        "x": 16,
+        "y": 16,
+        "w": 188,
+        "h": 117
+      },
+      {
+        "tag": "span",
+        "cls": "hud-label",
+        "x": 30,
+        "y": 32,
+        "w": 19.640625,
+        "h": 14
+      },
+      {
+        "tag": "strong",
+        "cls": "hud-value",
+        "x": 111.46875,
+        "y": 28,
+        "w": 78.53125,
+        "h": 19
+      },
+      {
+        "tag": "div",
+        "cls": "hud-bar",
+        "x": 30,
+        "y": 55,
+        "w": 160,
+        "h": 10
+      },
+      {
+        "tag": "span",
+        "cls": "hud-label",
+        "x": 30,
+        "y": 77,
+        "w": 34.96875,
+        "h": 14
+      },
+      {
+        "tag": "strong",
+        "cls": "hud-value",
+        "x": 111.46875,
+        "y": 73,
+        "w": 78.53125,
+        "h": 19
+      },
+      {
+        "tag": "span",
+        "cls": "hud-label",
+        "x": 30,
+        "y": 105,
+        "w": 40.96875,
+        "h": 14
+      },
+      {
+        "tag": "strong",
+        "cls": "hud-value",
+        "x": 111.46875,
+        "y": 101,
+        "w": 78.53125,
+        "h": 19
+      },
+      {
+        "tag": "section",
+        "cls": "hud-panel hud-panel--gold",
+        "x": 1095,
+        "y": 16,
+        "w": 169,
+        "h": 43
+      },
+      {
+        "tag": "span",
+        "cls": "hud-coin",
+        "x": 1109,
+        "y": 29.5,
+        "w": 16,
+        "h": 16
+      },
+      {
+        "tag": "span",
+        "cls": "hud-label",
+        "x": 1135,
+        "y": 30.5,
+        "w": 38.265625,
+        "h": 14
+      },
+      {
+        "tag": "strong",
+        "cls": "hud-value",
+        "x": 1181.265625,
+        "y": 28,
+        "w": 68.734375,
+        "h": 19
+      },
+      {
+        "tag": "section",
+        "cls": "hud-panel hud-panel--resource hud-panel--power",
+        "x": 749.40625,
+        "y": 16,
+        "w": 334.59375,
+        "h": 43
+      },
+      {
+        "tag": "span",
+        "cls": "hud-gauge",
+        "x": 763.40625,
+        "y": 29.5,
+        "w": 16,
+        "h": 16
+      },
+      {
+        "tag": "span",
+        "cls": "hud-label",
+        "x": 789.40625,
+        "y": 30.5,
+        "w": 35.078125,
+        "h": 14
+      },
+      {
+        "tag": "strong",
+        "cls": "hud-value",
+        "x": 832.484375,
+        "y": 28,
+        "w": 150.953125,
+        "h": 19
+      },
+      {
+        "tag": "section",
+        "cls": "hud-panel hud-panel--weapon",
+        "x": 1055.421875,
+        "y": 74,
+        "w": 208.578125,
+        "h": 91
+      },
+      {
+        "tag": "span",
+        "cls": "hud-label",
+        "x": 1069.421875,
+        "y": 90,
+        "w": 60.390625,
+        "h": 14
+      },
+      {
+        "tag": "strong",
+        "cls": "hud-value",
+        "x": 1137.8125,
+        "y": 86,
+        "w": 112.1875,
+        "h": 19
+      },
+      {
+        "tag": "img",
+        "cls": "hud-agent-chip__portrait",
+        "x": 1069.421875,
+        "y": 117,
+        "w": 34,
+        "h": 34
+      },
+      {
+        "tag": "span",
+        "cls": "",
+        "x": 1111.421875,
+        "y": 116,
+        "w": 116.59375,
+        "h": 14
+      },
+      {
+        "tag": "strong",
+        "cls": "",
+        "x": 1234.015625,
+        "y": 116,
+        "w": 15.984375,
+        "h": 14
+      },
+      {
+        "tag": "span",
+        "cls": "",
+        "x": 1111.421875,
+        "y": 132,
+        "w": 138.578125,
+        "h": 14
+      },
+      {
+        "tag": "section",
+        "cls": "hud-panel hud-panel--xp",
+        "x": 380,
+        "y": 721,
+        "w": 520,
+        "h": 61
+      },
+      {
+        "tag": "strong",
+        "cls": "",
+        "x": 440.578125,
+        "y": 737,
+        "w": 5.96875,
+        "h": 14
+      },
+      {
+        "tag": "strong",
+        "cls": "hud-value",
+        "x": 807.46875,
+        "y": 733,
+        "w": 78.53125,
+        "h": 19
+      },
+      {
+        "tag": "div",
+        "cls": "hud-bar",
+        "x": 394,
+        "y": 760,
+        "w": 492,
+        "h": 10
+      },
+      {
+        "tag": "section",
+        "cls": "hud-panel hud-panel--build",
+        "x": 18,
+        "y": 714,
+        "w": 340,
+        "h": 68
+      },
+      {
+        "tag": "button",
+        "cls": "hud-build-button",
+        "x": 32,
+        "y": 726,
+        "w": 312,
+        "h": 44
+      },
+      {
+        "tag": "button",
+        "cls": "hud-pause",
+        "x": 1111,
+        "y": 747,
+        "w": 153,
+        "h": 35
+      },
+      {
+        "tag": "span",
+        "cls": "hud-pause__key",
+        "x": 1127.203125,
+        "y": 757,
+        "w": 19.25,
+        "h": 15
+      },
+      {
+        "tag": "details",
+        "cls": "world-info-note",
+        "x": 410,
+        "y": 621.71875,
+        "w": 460,
+        "h": 72.28125
+      },
+      {
+        "tag": "summary",
+        "cls": "world-info-note__title",
+        "x": 424,
+        "y": 631.71875,
+        "w": 432,
+        "h": 14.78125
+      },
+      {
+        "tag": "p",
+        "cls": "world-info-note__body",
+        "x": 424,
+        "y": 652.5,
+        "w": 432,
+        "h": 31.5
+      }
+    ],
+    "info": {
+      "activeId": "e3-blackout-ridge",
+      "fallback": null,
+      "wheel": null,
+      "testHook": "undefined"
+    },
+    "dataset": {
+      "landmarks": "5",
+      "expected": "5",
+      "skipped": "0",
+      "state": "ready",
+      "loadState": "mounted",
+      "skirtBlend": "opaque-sculpt-edge"
+    }
+  },
+  {
+    "map": "e3-blackout-ridge",
+    "pack": "blackout-ridge",
+    "viewport": "desktop",
+    "boot": "debug",
+    "errors": [],
+    "wheel": null,
+    "hudRects": [
+      {
+        "tag": "div",
+        "cls": "hud__wave",
+        "x": 480,
+        "y": 16,
+        "w": 320,
+        "h": 56
+      },
+      {
+        "tag": "span",
+        "cls": "",
+        "x": 502,
+        "y": 25,
+        "w": 276,
+        "h": 38
+      },
+      {
+        "tag": "section",
+        "cls": "hud-panel hud-panel--vitals",
+        "x": 16,
+        "y": 16,
+        "w": 188,
+        "h": 117
+      },
+      {
+        "tag": "span",
+        "cls": "hud-label",
+        "x": 30,
+        "y": 32,
+        "w": 19.640625,
+        "h": 14
+      },
+      {
+        "tag": "strong",
+        "cls": "hud-value",
+        "x": 111.46875,
+        "y": 28,
+        "w": 78.53125,
+        "h": 19
+      },
+      {
+        "tag": "div",
+        "cls": "hud-bar",
+        "x": 30,
+        "y": 55,
+        "w": 160,
+        "h": 10
+      },
+      {
+        "tag": "span",
+        "cls": "hud-label",
+        "x": 30,
+        "y": 77,
+        "w": 34.96875,
+        "h": 14
+      },
+      {
+        "tag": "strong",
+        "cls": "hud-value",
+        "x": 111.46875,
+        "y": 73,
+        "w": 78.53125,
+        "h": 19
+      },
+      {
+        "tag": "span",
+        "cls": "hud-label",
+        "x": 30,
+        "y": 105,
+        "w": 40.96875,
+        "h": 14
+      },
+      {
+        "tag": "strong",
+        "cls": "hud-value",
+        "x": 111.46875,
+        "y": 101,
+        "w": 78.53125,
+        "h": 19
+      },
+      {
+        "tag": "section",
+        "cls": "hud-panel hud-panel--gold",
+        "x": 1095,
+        "y": 16,
+        "w": 169,
+        "h": 43
+      },
+      {
+        "tag": "span",
+        "cls": "hud-coin",
+        "x": 1109,
+        "y": 29.5,
+        "w": 16,
+        "h": 16
+      },
+      {
+        "tag": "span",
+        "cls": "hud-label",
+        "x": 1135,
+        "y": 30.5,
+        "w": 38.265625,
+        "h": 14
+      },
+      {
+        "tag": "strong",
+        "cls": "hud-value",
+        "x": 1181.265625,
+        "y": 28,
+        "w": 68.734375,
+        "h": 19
+      },
+      {
+        "tag": "section",
+        "cls": "hud-panel hud-panel--resource hud-panel--power",
+        "x": 749.40625,
+        "y": 16,
+        "w": 334.59375,
+        "h": 43
+      },
+      {
+        "tag": "span",
+        "cls": "hud-gauge",
+        "x": 763.40625,
+        "y": 29.5,
+        "w": 16,
+        "h": 16
+      },
+      {
+        "tag": "span",
+        "cls": "hud-label",
+        "x": 789.40625,
+        "y": 30.5,
+        "w": 35.078125,
+        "h": 14
+      },
+      {
+        "tag": "strong",
+        "cls": "hud-value",
+        "x": 832.484375,
+        "y": 28,
+        "w": 150.953125,
+        "h": 19
+      },
+      {
+        "tag": "section",
+        "cls": "hud-panel hud-panel--weapon",
+        "x": 1055.421875,
+        "y": 74,
+        "w": 208.578125,
+        "h": 91
+      },
+      {
+        "tag": "span",
+        "cls": "hud-label",
+        "x": 1069.421875,
+        "y": 90,
+        "w": 60.390625,
+        "h": 14
+      },
+      {
+        "tag": "strong",
+        "cls": "hud-value",
+        "x": 1137.8125,
+        "y": 86,
+        "w": 112.1875,
+        "h": 19
+      },
+      {
+        "tag": "img",
+        "cls": "hud-agent-chip__portrait",
+        "x": 1069.421875,
+        "y": 117,
+        "w": 34,
+        "h": 34
+      },
+      {
+        "tag": "span",
+        "cls": "",
+        "x": 1111.421875,
+        "y": 116,
+        "w": 116.59375,
+        "h": 14
+      },
+      {
+        "tag": "strong",
+        "cls": "",
+        "x": 1234.015625,
+        "y": 116,
+        "w": 15.984375,
+        "h": 14
+      },
+      {
+        "tag": "span",
+        "cls": "",
+        "x": 1111.421875,
+        "y": 132,
+        "w": 138.578125,
+        "h": 14
+      },
+      {
+        "tag": "section",
+        "cls": "hud-panel hud-panel--xp",
+        "x": 380,
+        "y": 721,
+        "w": 520,
+        "h": 61
+      },
+      {
+        "tag": "strong",
+        "cls": "",
+        "x": 440.578125,
+        "y": 737,
+        "w": 5.96875,
+        "h": 14
+      },
+      {
+        "tag": "strong",
+        "cls": "hud-value",
+        "x": 807.46875,
+        "y": 733,
+        "w": 78.53125,
+        "h": 19
+      },
+      {
+        "tag": "div",
+        "cls": "hud-bar",
+        "x": 394,
+        "y": 760,
+        "w": 492,
+        "h": 10
+      },
+      {
+        "tag": "section",
+        "cls": "hud-panel hud-panel--build",
+        "x": 18,
+        "y": 714,
+        "w": 340,
+        "h": 68
+      },
+      {
+        "tag": "button",
+        "cls": "hud-build-button",
+        "x": 32,
+        "y": 726,
+        "w": 312,
+        "h": 44
+      },
+      {
+        "tag": "button",
+        "cls": "hud-pause",
+        "x": 1111,
+        "y": 747,
+        "w": 153,
+        "h": 35
+      },
+      {
+        "tag": "span",
+        "cls": "hud-pause__key",
+        "x": 1127.203125,
+        "y": 757,
+        "w": 19.25,
+        "h": 15
+      },
+      {
+        "tag": "details",
+        "cls": "world-info-note",
+        "x": 410,
+        "y": 621.71875,
+        "w": 460,
+        "h": 72.28125
+      },
+      {
+        "tag": "summary",
+        "cls": "world-info-note__title",
+        "x": 424,
+        "y": 631.71875,
+        "w": 432,
+        "h": 14.78125
+      },
+      {
+        "tag": "p",
+        "cls": "world-info-note__body",
+        "x": 424,
+        "y": 652.5,
+        "w": 432,
+        "h": 31.5
+      }
+    ],
+    "stations": [
+      {
+        "id": "off-map-current-receiver",
+        "file": "blackout-ridge-station-off-map-current-receiver-desktop.png",
+        "top": 10.25,
+        "base": {
+          "x": 643.5720250511306,
+          "y": 211.7487852302938,
+          "z": 0.997175359870206,
+          "inView": true
+        },
+        "apex": {
+          "x": 644.3999213055441,
+          "y": -37.50140329788767,
+          "z": 0.996056678202214,
+          "inView": false
+        },
+        "box": {
+          "x": 643.5720250511306,
+          "y": -37.50140329788767,
+          "w": 0.8278962544135311,
+          "h": 249.25018852818147
+        },
+        "overlapPlain": 0.2188,
+        "apexCoveredPlain": false,
+        "overlapDebug": 0.2188
+      },
+      {
+        "id": "trunk-line-breaker-shelter",
+        "file": "blackout-ridge-station-trunk-line-breaker-shelter-desktop.png",
+        "top": 7.1,
+        "base": {
+          "x": 640.0057714864024,
+          "y": 209.0086989513482,
+          "z": 0.9971363263926302,
+          "inView": true
+        },
+        "apex": {
+          "x": 640.0066521995915,
+          "y": 46.94169970542701,
+          "z": 0.9963938374767144,
+          "inView": true
+        },
+        "box": {
+          "x": 640.0057714864024,
+          "y": 46.94169970542701,
+          "w": 0.0008807131890762321,
+          "h": 162.06699924592118
+        },
+        "overlapPlain": 0.1563,
+        "apexCoveredPlain": true,
+        "overlapDebug": 0.1563
+      },
+      {
+        "id": "breath-bank-service-rack",
+        "file": "blackout-ridge-station-breath-bank-service-rack-desktop.png",
+        "top": 4.25,
+        "base": {
+          "x": 636.2636545129051,
+          "y": 304.5390855495817,
+          "z": 0.9975724632930605,
+          "inView": true
+        },
+        "apex": {
+          "x": 635.9733837603775,
+          "y": 229.31781336593957,
+          "z": 0.9972283394589997,
+          "inView": true
+        },
+        "box": {
+          "x": 635.9733837603775,
+          "y": 229.31781336593957,
+          "w": 0.29027075252759005,
+          "h": 75.22127218364216
+        },
+        "overlapPlain": 0,
+        "apexCoveredPlain": false,
+        "overlapDebug": 0
+      },
+      {
+        "id": "ridge-switch-house",
+        "file": "blackout-ridge-station-ridge-switch-house-desktop.png",
+        "top": 7.4,
+        "base": {
+          "x": 639.7787327810258,
+          "y": 325.9412587428426,
+          "z": 0.9976717881439399,
+          "inView": true
+        },
+        "apex": {
+          "x": 639.7477664825412,
+          "y": 193.58787317688657,
+          "z": 0.9970657756697369,
+          "inView": true
+        },
+        "box": {
+          "x": 639.7477664825412,
+          "y": 193.58787317688657,
+          "w": 0.030966298484599974,
+          "h": 132.35338556595602
+        },
+        "overlapPlain": 0,
+        "apexCoveredPlain": false,
+        "overlapDebug": 0
+      },
+      {
+        "id": "blackout-watch-lamp",
+        "file": "blackout-ridge-station-blackout-watch-lamp-desktop.png",
+        "top": 8.92,
+        "base": {
+          "x": 640.0364958730887,
+          "y": 412.98323899361355,
+          "z": 0.9961823929466539,
+          "inView": true
+        },
+        "apex": {
+          "x": 640.045541842462,
+          "y": 199.47272115688074,
+          "z": 0.9947399283383953,
+          "inView": true
+        },
+        "box": {
+          "x": 640.0364958730887,
+          "y": 199.47272115688074,
+          "w": 0.009045969373232765,
+          "h": 213.51051783673282
+        },
+        "overlapPlain": 0,
+        "apexCoveredPlain": false,
+        "overlapDebug": 0
+      }
+    ]
+  },
+  {
+    "map": "e3-blackout-ridge",
+    "pack": "blackout-ridge",
+    "viewport": "mobile",
+    "boot": "plain",
+    "shot": "blackout-ridge-plain-mobile.png",
+    "shotNoHud": "blackout-ridge-plain-mobile-nohud.png",
+    "errors": [],
+    "hudRects": [
+      {
+        "tag": "div",
+        "cls": "hud__wave",
+        "x": 12,
+        "y": 278,
+        "w": 366,
+        "h": 52.8125
+      },
+      {
+        "tag": "span",
+        "cls": "",
+        "x": 24,
+        "y": 288,
+        "w": 342,
+        "h": 32.8125
+      },
+      {
+        "tag": "section",
+        "cls": "hud-panel hud-panel--vitals",
+        "x": 12,
+        "y": 12,
+        "w": 162,
+        "h": 94
+      },
+      {
+        "tag": "span",
+        "cls": "hud-label",
+        "x": 24,
+        "y": 26,
+        "w": 19.640625,
+        "h": 14
+      },
+      {
+        "tag": "strong",
+        "cls": "hud-value",
+        "x": 83.46875,
+        "y": 22,
+        "w": 78.53125,
+        "h": 19
+      },
+      {
+        "tag": "div",
+        "cls": "hud-bar",
+        "x": 24,
+        "y": 55,
+        "w": 138,
+        "h": 10
+      },
+      {
+        "tag": "span",
+        "cls": "hud-label",
+        "x": 24,
+        "y": 71,
+        "w": 27.609375,
+        "h": 11
+      },
+      {
+        "tag": "strong",
+        "cls": "hud-value",
+        "x": 24,
+        "y": 82,
+        "w": 36.671875,
+        "h": 14
+      },
+      {
+        "tag": "span",
+        "cls": "hud-label",
+        "x": 96,
+        "y": 71,
+        "w": 32.34375,
+        "h": 11
+      },
+      {
+        "tag": "strong",
+        "cls": "hud-value",
+        "x": 96,
+        "y": 82,
+        "w": 8.3125,
+        "h": 14
+      },
+      {
+        "tag": "section",
+        "cls": "hud-panel hud-panel--gold",
+        "x": 216,
+        "y": 12,
+        "w": 162,
+        "h": 39
+      },
+      {
+        "tag": "span",
+        "cls": "hud-coin",
+        "x": 228,
+        "y": 23.5,
+        "w": 16,
+        "h": 16
+      },
+      {
+        "tag": "span",
+        "cls": "hud-label",
+        "x": 250,
+        "y": 24.5,
+        "w": 38.265625,
+        "h": 14
+      },
+      {
+        "tag": "strong",
+        "cls": "hud-value",
+        "x": 294.265625,
+        "y": 22,
+        "w": 71.734375,
+        "h": 19
+      },
+      {
+        "tag": "section",
+        "cls": "hud-panel hud-panel--resource hud-panel--power",
+        "x": 216,
+        "y": 60,
+        "w": 162,
+        "h": 45
+      },
+      {
+        "tag": "span",
+        "cls": "hud-label",
+        "x": 228,
+        "y": 68,
+        "w": 135,
+        "h": 14
+      },
+      {
+        "tag": "strong",
+        "cls": "hud-value",
+        "x": 228,
+        "y": 85,
+        "w": 138,
+        "h": 12
+      },
+      {
+        "tag": "section",
+        "cls": "hud-panel hud-panel--weapon",
+        "x": 216,
+        "y": 140,
+        "w": 162,
+        "h": 115
+      },
+      {
+        "tag": "span",
+        "cls": "hud-label",
+        "x": 228,
+        "y": 150,
+        "w": 138,
+        "h": 14
+      },
+      {
+        "tag": "strong",
+        "cls": "hud-value",
+        "x": 228,
+        "y": 166,
+        "w": 138,
+        "h": 19
+      },
+      {
+        "tag": "img",
+        "cls": "hud-agent-chip__portrait",
+        "x": 228,
+        "y": 215,
+        "w": 30,
+        "h": 30
+      },
+      {
+        "tag": "span",
+        "cls": "",
+        "x": 228,
+        "y": 197,
+        "w": 138,
+        "h": 14
+      },
+      {
+        "tag": "strong",
+        "cls": "",
+        "x": 266,
+        "y": 216,
+        "w": 100,
+        "h": 11
+      },
+      {
+        "tag": "span",
+        "cls": "",
+        "x": 266,
+        "y": 233,
+        "w": 100,
+        "h": 11
+      },
+      {
+        "tag": "section",
+        "cls": "hud-panel hud-panel--xp",
+        "x": 12,
+        "y": 120,
+        "w": 162,
+        "h": 57
+      },
+      {
+        "tag": "strong",
+        "cls": "",
+        "x": 63.828125,
+        "y": 131,
+        "w": 5.09375,
+        "h": 12
+      },
+      {
+        "tag": "strong",
+        "cls": "hud-value",
+        "x": 107.265625,
+        "y": 130,
+        "w": 54.734375,
+        "h": 14
+      },
+      {
+        "tag": "div",
+        "cls": "hud-bar",
+        "x": 24,
+        "y": 157,
+        "w": 138,
+        "h": 10
+      },
+      {
+        "tag": "button",
+        "cls": "hud-build-button",
+        "x": 296,
+        "y": 594,
+        "w": 76,
+        "h": 76
+      },
+      {
+        "tag": "button",
+        "cls": "hud-pause",
+        "x": 296,
+        "y": 528.71875,
+        "w": 76,
+        "h": 59.28125
+      },
+      {
+        "tag": "div",
+        "cls": "prompt-stack",
+        "x": 14,
+        "y": 526.296875,
+        "w": 162,
+        "h": 143.703125
+      },
+      {
+        "tag": "summary",
+        "cls": "world-info-note__title",
+        "x": 24,
+        "y": 545.296875,
+        "w": 142,
+        "h": 45.703125
+      },
+      {
+        "tag": "p",
+        "cls": "world-info-note__body",
+        "x": 24,
+        "y": 597,
+        "w": 142,
+        "h": 63
+      },
+      {
+        "tag": "div",
+        "cls": "",
+        "x": 18,
+        "y": 716.8125,
+        "w": 109.1875,
+        "h": 109.1875
+      },
+      {
+        "tag": "div",
+        "cls": "",
+        "x": 50.0859375,
+        "y": 748.8984375,
+        "w": 45.015625,
+        "h": 45.015625
+      },
+      {
+        "tag": "button",
+        "cls": "",
+        "x": 216,
+        "y": 758,
+        "w": 58,
+        "h": 58
+      },
+      {
+        "tag": "button",
+        "cls": "",
+        "x": 264,
+        "y": 690,
+        "w": 58,
+        "h": 58
+      },
+      {
+        "tag": "button",
+        "cls": "",
+        "x": 296,
+        "y": 750,
+        "w": 76,
+        "h": 76
+      }
+    ],
+    "info": {
+      "activeId": "e3-blackout-ridge",
+      "fallback": null,
+      "wheel": null,
+      "testHook": "undefined"
+    },
+    "dataset": {
+      "landmarks": "5",
+      "expected": "5",
+      "skipped": "0",
+      "state": "ready",
+      "loadState": "mounted",
+      "skirtBlend": "opaque-sculpt-edge"
+    }
+  },
+  {
+    "map": "e3-blackout-ridge",
+    "pack": "blackout-ridge",
+    "viewport": "mobile",
+    "boot": "debug",
+    "errors": [],
+    "wheel": null,
+    "hudRects": [
+      {
+        "tag": "div",
+        "cls": "hud__wave",
+        "x": 12,
+        "y": 278,
+        "w": 366,
+        "h": 52.8125
+      },
+      {
+        "tag": "span",
+        "cls": "",
+        "x": 24,
+        "y": 288,
+        "w": 342,
+        "h": 32.8125
+      },
+      {
+        "tag": "section",
+        "cls": "hud-panel hud-panel--vitals",
+        "x": 12,
+        "y": 12,
+        "w": 162,
+        "h": 94
+      },
+      {
+        "tag": "span",
+        "cls": "hud-label",
+        "x": 24,
+        "y": 26,
+        "w": 19.640625,
+        "h": 14
+      },
+      {
+        "tag": "strong",
+        "cls": "hud-value",
+        "x": 83.46875,
+        "y": 22,
+        "w": 78.53125,
+        "h": 19
+      },
+      {
+        "tag": "div",
+        "cls": "hud-bar",
+        "x": 24,
+        "y": 55,
+        "w": 138,
+        "h": 10
+      },
+      {
+        "tag": "span",
+        "cls": "hud-label",
+        "x": 24,
+        "y": 71,
+        "w": 27.609375,
+        "h": 11
+      },
+      {
+        "tag": "strong",
+        "cls": "hud-value",
+        "x": 24,
+        "y": 82,
+        "w": 35.0625,
+        "h": 14
+      },
+      {
+        "tag": "span",
+        "cls": "hud-label",
+        "x": 96,
+        "y": 71,
+        "w": 32.34375,
+        "h": 11
+      },
+      {
+        "tag": "strong",
+        "cls": "hud-value",
+        "x": 96,
+        "y": 82,
+        "w": 8.3125,
+        "h": 14
+      },
+      {
+        "tag": "section",
+        "cls": "hud-panel hud-panel--gold",
+        "x": 216,
+        "y": 12,
+        "w": 162,
+        "h": 39
+      },
+      {
+        "tag": "span",
+        "cls": "hud-coin",
+        "x": 228,
+        "y": 23.5,
+        "w": 16,
+        "h": 16
+      },
+      {
+        "tag": "span",
+        "cls": "hud-label",
+        "x": 250,
+        "y": 24.5,
+        "w": 38.265625,
+        "h": 14
+      },
+      {
+        "tag": "strong",
+        "cls": "hud-value",
+        "x": 294.265625,
+        "y": 22,
+        "w": 71.734375,
+        "h": 19
+      },
+      {
+        "tag": "section",
+        "cls": "hud-panel hud-panel--resource hud-panel--power",
+        "x": 216,
+        "y": 60,
+        "w": 162,
+        "h": 45
+      },
+      {
+        "tag": "span",
+        "cls": "hud-label",
+        "x": 228,
+        "y": 68,
+        "w": 135,
+        "h": 14
+      },
+      {
+        "tag": "strong",
+        "cls": "hud-value",
+        "x": 228,
+        "y": 85,
+        "w": 138,
+        "h": 12
+      },
+      {
+        "tag": "section",
+        "cls": "hud-panel hud-panel--weapon",
+        "x": 216,
+        "y": 140,
+        "w": 162,
+        "h": 115
+      },
+      {
+        "tag": "span",
+        "cls": "hud-label",
+        "x": 228,
+        "y": 150,
+        "w": 138,
+        "h": 14
+      },
+      {
+        "tag": "strong",
+        "cls": "hud-value",
+        "x": 228,
+        "y": 166,
+        "w": 138,
+        "h": 19
+      },
+      {
+        "tag": "img",
+        "cls": "hud-agent-chip__portrait",
+        "x": 228,
+        "y": 215,
+        "w": 30,
+        "h": 30
+      },
+      {
+        "tag": "span",
+        "cls": "",
+        "x": 228,
+        "y": 197,
+        "w": 138,
+        "h": 14
+      },
+      {
+        "tag": "strong",
+        "cls": "",
+        "x": 266,
+        "y": 216,
+        "w": 100,
+        "h": 11
+      },
+      {
+        "tag": "span",
+        "cls": "",
+        "x": 266,
+        "y": 233,
+        "w": 100,
+        "h": 11
+      },
+      {
+        "tag": "section",
+        "cls": "hud-panel hud-panel--xp",
+        "x": 12,
+        "y": 120,
+        "w": 162,
+        "h": 57
+      },
+      {
+        "tag": "strong",
+        "cls": "",
+        "x": 63.828125,
+        "y": 131,
+        "w": 5.09375,
+        "h": 12
+      },
+      {
+        "tag": "strong",
+        "cls": "hud-value",
+        "x": 107.265625,
+        "y": 130,
+        "w": 54.734375,
+        "h": 14
+      },
+      {
+        "tag": "div",
+        "cls": "hud-bar",
+        "x": 24,
+        "y": 157,
+        "w": 138,
+        "h": 10
+      },
+      {
+        "tag": "button",
+        "cls": "hud-build-button",
+        "x": 296,
+        "y": 594,
+        "w": 76,
+        "h": 76
+      },
+      {
+        "tag": "button",
+        "cls": "hud-pause",
+        "x": 296,
+        "y": 528.71875,
+        "w": 76,
+        "h": 59.28125
+      },
+      {
+        "tag": "div",
+        "cls": "prompt-stack",
+        "x": 14,
+        "y": 526.296875,
+        "w": 162,
+        "h": 143.703125
+      },
+      {
+        "tag": "summary",
+        "cls": "world-info-note__title",
+        "x": 24,
+        "y": 545.296875,
+        "w": 142,
+        "h": 45.703125
+      },
+      {
+        "tag": "p",
+        "cls": "world-info-note__body",
+        "x": 24,
+        "y": 597,
+        "w": 142,
+        "h": 63
+      },
+      {
+        "tag": "div",
+        "cls": "",
+        "x": 18,
+        "y": 716.8125,
+        "w": 109.1875,
+        "h": 109.1875
+      },
+      {
+        "tag": "div",
+        "cls": "",
+        "x": 50.0859375,
+        "y": 748.8984375,
+        "w": 45.015625,
+        "h": 45.015625
+      },
+      {
+        "tag": "button",
+        "cls": "",
+        "x": 216,
+        "y": 758,
+        "w": 58,
+        "h": 58
+      },
+      {
+        "tag": "button",
+        "cls": "",
+        "x": 264,
+        "y": 690,
+        "w": 58,
+        "h": 58
+      },
+      {
+        "tag": "button",
+        "cls": "",
+        "x": 296,
+        "y": 750,
+        "w": 76,
+        "h": 76
+      }
+    ],
+    "stations": [
+      {
+        "id": "off-map-current-receiver",
+        "file": "blackout-ridge-station-off-map-current-receiver-mobile.png",
+        "top": 10.25,
+        "base": {
+          "x": 198.72685988384137,
+          "y": 223.36680106121025,
+          "z": 0.9971750052614785,
+          "inView": true
+        },
+        "apex": {
+          "x": 199.5907796745264,
+          "y": -39.61181982260063,
+          "z": 0.9960560638084364,
+          "inView": false
+        },
+        "box": {
+          "x": 198.72685988384137,
+          "y": -39.61181982260063,
+          "w": 0.8639197906850313,
+          "h": 262.9786208838109
+        },
+        "overlapPlain": 0,
+        "apexCoveredPlain": false,
+        "overlapDebug": 0
+      },
+      {
+        "id": "trunk-line-breaker-shelter",
+        "file": "blackout-ridge-station-trunk-line-breaker-shelter-mobile.png",
+        "top": 7.1,
+        "base": {
+          "x": 195.01185140607703,
+          "y": 220.5071821623299,
+          "z": 0.997136363080841,
+          "inView": true
+        },
+        "apex": {
+          "x": 195.01365987004675,
+          "y": 49.52756102273676,
+          "z": 0.9963938914600641,
+          "inView": true
+        },
+        "box": {
+          "x": 195.01185140607703,
+          "y": 49.52756102273676,
+          "w": 0.0018084639697235616,
+          "h": 170.97962113959315
+        },
+        "overlapPlain": 0,
+        "apexCoveredPlain": false,
+        "overlapDebug": 0
+      },
+      {
+        "id": "breath-bank-service-rack",
+        "file": "blackout-ridge-station-breath-bank-service-rack-mobile.png",
+        "top": 4.25,
+        "base": {
+          "x": 191.0554919327512,
+          "y": 321.2869540304691,
+          "z": 0.9975724453417796,
+          "inView": true
+        },
+        "apex": {
+          "x": 190.74904664972752,
+          "y": 241.92839228671235,
+          "z": 0.9972283170699472,
+          "inView": true
+        },
+        "box": {
+          "x": 190.74904664972752,
+          "y": 241.92839228671235,
+          "w": 0.3064452830236917,
+          "h": 79.35856174375672
+        },
+        "overlapPlain": 0.5469,
+        "apexCoveredPlain": false,
+        "overlapDebug": 0.5469
+      },
+      {
+        "id": "ridge-switch-house",
+        "file": "blackout-ridge-station-ridge-switch-house-mobile.png",
+        "top": 7.4,
+        "base": {
+          "x": 194.76087073534262,
+          "y": 343.86578418249593,
+          "z": 0.9976717649046063,
+          "inView": true
+        },
+        "apex": {
+          "x": 194.72740424908366,
+          "y": 204.23257317687282,
+          "z": 0.9970657419633085,
+          "inView": true
+        },
+        "box": {
+          "x": 194.72740424908366,
+          "y": 204.23257317687282,
+          "w": 0.033466486258959094,
+          "h": 139.6332110056231
+        },
+        "overlapPlain": 0.375,
+        "apexCoveredPlain": false,
+        "overlapDebug": 0.375
+      },
+      {
+        "id": "blackout-watch-lamp",
+        "file": "blackout-ridge-station-blackout-watch-lamp-mobile.png",
+        "top": 8.92,
+        "base": {
+          "x": 195.0363916201785,
+          "y": 435.69977776294604,
+          "z": 0.9961825537224932,
+          "inView": true
+        },
+        "apex": {
+          "x": 195.0454103054946,
+          "y": 210.42715924877487,
+          "z": 0.9947403598193707,
+          "inView": true
+        },
+        "box": {
+          "x": 195.0363916201785,
+          "y": 210.42715924877487,
+          "w": 0.009018685316107167,
+          "h": 225.27261851417117
+        },
+        "overlapPlain": 0.2344,
+        "apexCoveredPlain": false,
+        "overlapDebug": 0.2344
+      }
+    ]
+  },
+  {
+    "map": "e3-fairground",
+    "pack": "fairground",
+    "viewport": "desktop",
+    "boot": "plain",
+    "shot": "fairground-plain-desktop.png",
+    "shotNoHud": "fairground-plain-desktop-nohud.png",
+    "errors": [],
+    "hudRects": [
+      {
+        "tag": "div",
+        "cls": "hud__wave",
+        "x": 480,
+        "y": 16,
+        "w": 320,
+        "h": 56
+      },
+      {
+        "tag": "span",
+        "cls": "",
+        "x": 502,
+        "y": 25,
+        "w": 276,
+        "h": 38
+      },
+      {
+        "tag": "section",
+        "cls": "hud-panel hud-panel--vitals",
+        "x": 16,
+        "y": 16,
+        "w": 188,
+        "h": 117
+      },
+      {
+        "tag": "span",
+        "cls": "hud-label",
+        "x": 30,
+        "y": 32,
+        "w": 19.640625,
+        "h": 14
+      },
+      {
+        "tag": "strong",
+        "cls": "hud-value",
+        "x": 111.46875,
+        "y": 28,
+        "w": 78.53125,
+        "h": 19
+      },
+      {
+        "tag": "div",
+        "cls": "hud-bar",
+        "x": 30,
+        "y": 55,
+        "w": 160,
+        "h": 10
+      },
+      {
+        "tag": "span",
+        "cls": "hud-label",
+        "x": 30,
+        "y": 77,
+        "w": 34.96875,
+        "h": 14
+      },
+      {
+        "tag": "strong",
+        "cls": "hud-value",
+        "x": 111.46875,
+        "y": 73,
+        "w": 78.53125,
+        "h": 19
+      },
+      {
+        "tag": "span",
+        "cls": "hud-label",
+        "x": 30,
+        "y": 105,
+        "w": 40.96875,
+        "h": 14
+      },
+      {
+        "tag": "strong",
+        "cls": "hud-value",
+        "x": 111.46875,
+        "y": 101,
+        "w": 78.53125,
+        "h": 19
+      },
+      {
+        "tag": "section",
+        "cls": "hud-panel hud-panel--gold",
+        "x": 1095,
+        "y": 16,
+        "w": 169,
+        "h": 43
+      },
+      {
+        "tag": "span",
+        "cls": "hud-coin",
+        "x": 1109,
+        "y": 29.5,
+        "w": 16,
+        "h": 16
+      },
+      {
+        "tag": "span",
+        "cls": "hud-label",
+        "x": 1135,
+        "y": 30.5,
+        "w": 38.265625,
+        "h": 14
+      },
+      {
+        "tag": "strong",
+        "cls": "hud-value",
+        "x": 1181.265625,
+        "y": 28,
+        "w": 68.734375,
+        "h": 19
+      },
+      {
+        "tag": "section",
+        "cls": "hud-panel hud-panel--resource hud-panel--power",
+        "x": 503.015625,
+        "y": 16,
+        "w": 580.984375,
+        "h": 43
+      },
+      {
+        "tag": "span",
+        "cls": "hud-gauge",
+        "x": 517.015625,
+        "y": 29.5,
+        "w": 16,
+        "h": 16
+      },
+      {
+        "tag": "span",
+        "cls": "hud-label",
+        "x": 543.015625,
+        "y": 30.5,
+        "w": 35.078125,
+        "h": 14
+      },
+      {
+        "tag": "strong",
+        "cls": "hud-value",
+        "x": 586.09375,
+        "y": 28,
+        "w": 397.34375,
+        "h": 19
+      },
+      {
+        "tag": "section",
+        "cls": "hud-panel hud-panel--weapon",
+        "x": 1055.421875,
+        "y": 74,
+        "w": 208.578125,
+        "h": 91
+      },
+      {
+        "tag": "span",
+        "cls": "hud-label",
+        "x": 1069.421875,
+        "y": 90,
+        "w": 60.390625,
+        "h": 14
+      },
+      {
+        "tag": "strong",
+        "cls": "hud-value",
+        "x": 1137.8125,
+        "y": 86,
+        "w": 112.1875,
+        "h": 19
+      },
+      {
+        "tag": "img",
+        "cls": "hud-agent-chip__portrait",
+        "x": 1069.421875,
+        "y": 117,
+        "w": 34,
+        "h": 34
+      },
+      {
+        "tag": "span",
+        "cls": "",
+        "x": 1111.421875,
+        "y": 116,
+        "w": 116.59375,
+        "h": 14
+      },
+      {
+        "tag": "strong",
+        "cls": "",
+        "x": 1234.015625,
+        "y": 116,
+        "w": 15.984375,
+        "h": 14
+      },
+      {
+        "tag": "span",
+        "cls": "",
+        "x": 1111.421875,
+        "y": 132,
+        "w": 138.578125,
+        "h": 14
+      },
+      {
+        "tag": "section",
+        "cls": "hud-panel hud-panel--xp",
+        "x": 380,
+        "y": 721,
+        "w": 520,
+        "h": 61
+      },
+      {
+        "tag": "strong",
+        "cls": "",
+        "x": 440.578125,
+        "y": 737,
+        "w": 5.96875,
+        "h": 14
+      },
+      {
+        "tag": "strong",
+        "cls": "hud-value",
+        "x": 807.46875,
+        "y": 733,
+        "w": 78.53125,
+        "h": 19
+      },
+      {
+        "tag": "div",
+        "cls": "hud-bar",
+        "x": 394,
+        "y": 760,
+        "w": 492,
+        "h": 10
+      },
+      {
+        "tag": "section",
+        "cls": "hud-panel hud-panel--build",
+        "x": 18,
+        "y": 714,
+        "w": 340,
+        "h": 68
+      },
+      {
+        "tag": "button",
+        "cls": "hud-build-button",
+        "x": 32,
+        "y": 726,
+        "w": 312,
+        "h": 44
+      },
+      {
+        "tag": "button",
+        "cls": "hud-pause",
+        "x": 1111,
+        "y": 747,
+        "w": 153,
+        "h": 35
+      },
+      {
+        "tag": "span",
+        "cls": "hud-pause__key",
+        "x": 1127.203125,
+        "y": 757,
+        "w": 19.25,
+        "h": 15
+      },
+      {
+        "tag": "details",
+        "cls": "world-info-note",
+        "x": 410,
+        "y": 637.46875,
+        "w": 460,
+        "h": 56.53125
+      },
+      {
+        "tag": "summary",
+        "cls": "world-info-note__title",
+        "x": 424,
+        "y": 647.46875,
+        "w": 432,
+        "h": 14.78125
+      },
+      {
+        "tag": "p",
+        "cls": "world-info-note__body",
+        "x": 424,
+        "y": 668.25,
+        "w": 432,
+        "h": 15.75
+      }
+    ],
+    "info": {
+      "activeId": "e3-fairground",
+      "fallback": null,
+      "wheel": {
+        "active": true,
+        "spinning": true,
+        "hp": 240,
+        "maxHp": 240,
+        "outputWatts": 24,
+        "configuredWatts": 24,
+        "viewRadius": 18,
+        "x": 0,
+        "z": 8
+      },
+      "testHook": "undefined"
+    },
+    "dataset": {
+      "landmarks": "5",
+      "expected": "5",
+      "skipped": "0",
+      "state": "ready",
+      "loadState": "mounted",
+      "skirtBlend": "opaque-sculpt-edge"
+    }
+  },
+  {
+    "map": "e3-fairground",
+    "pack": "fairground",
+    "viewport": "desktop",
+    "boot": "debug",
+    "errors": [],
+    "wheel": {
+      "active": true,
+      "spinning": true,
+      "hp": 240,
+      "maxHp": 240,
+      "outputWatts": 24,
+      "configuredWatts": 24,
+      "viewRadius": 18,
+      "x": 0,
+      "z": 8
+    },
+    "hudRects": [
+      {
+        "tag": "div",
+        "cls": "hud__wave",
+        "x": 480,
+        "y": 16,
+        "w": 320,
+        "h": 56
+      },
+      {
+        "tag": "span",
+        "cls": "",
+        "x": 502,
+        "y": 25,
+        "w": 276,
+        "h": 38
+      },
+      {
+        "tag": "section",
+        "cls": "hud-panel hud-panel--vitals",
+        "x": 16,
+        "y": 16,
+        "w": 188,
+        "h": 117
+      },
+      {
+        "tag": "span",
+        "cls": "hud-label",
+        "x": 30,
+        "y": 32,
+        "w": 19.640625,
+        "h": 14
+      },
+      {
+        "tag": "strong",
+        "cls": "hud-value",
+        "x": 111.46875,
+        "y": 28,
+        "w": 78.53125,
+        "h": 19
+      },
+      {
+        "tag": "div",
+        "cls": "hud-bar",
+        "x": 30,
+        "y": 55,
+        "w": 160,
+        "h": 10
+      },
+      {
+        "tag": "span",
+        "cls": "hud-label",
+        "x": 30,
+        "y": 77,
+        "w": 34.96875,
+        "h": 14
+      },
+      {
+        "tag": "strong",
+        "cls": "hud-value",
+        "x": 111.46875,
+        "y": 73,
+        "w": 78.53125,
+        "h": 19
+      },
+      {
+        "tag": "span",
+        "cls": "hud-label",
+        "x": 30,
+        "y": 105,
+        "w": 40.96875,
+        "h": 14
+      },
+      {
+        "tag": "strong",
+        "cls": "hud-value",
+        "x": 111.46875,
+        "y": 101,
+        "w": 78.53125,
+        "h": 19
+      },
+      {
+        "tag": "section",
+        "cls": "hud-panel hud-panel--gold",
+        "x": 1095,
+        "y": 16,
+        "w": 169,
+        "h": 43
+      },
+      {
+        "tag": "span",
+        "cls": "hud-coin",
+        "x": 1109,
+        "y": 29.5,
+        "w": 16,
+        "h": 16
+      },
+      {
+        "tag": "span",
+        "cls": "hud-label",
+        "x": 1135,
+        "y": 30.5,
+        "w": 38.265625,
+        "h": 14
+      },
+      {
+        "tag": "strong",
+        "cls": "hud-value",
+        "x": 1181.265625,
+        "y": 28,
+        "w": 68.734375,
+        "h": 19
+      },
+      {
+        "tag": "section",
+        "cls": "hud-panel hud-panel--resource hud-panel--power",
+        "x": 503.015625,
+        "y": 16,
+        "w": 580.984375,
+        "h": 43
+      },
+      {
+        "tag": "span",
+        "cls": "hud-gauge",
+        "x": 517.015625,
+        "y": 29.5,
+        "w": 16,
+        "h": 16
+      },
+      {
+        "tag": "span",
+        "cls": "hud-label",
+        "x": 543.015625,
+        "y": 30.5,
+        "w": 35.078125,
+        "h": 14
+      },
+      {
+        "tag": "strong",
+        "cls": "hud-value",
+        "x": 586.09375,
+        "y": 28,
+        "w": 397.34375,
+        "h": 19
+      },
+      {
+        "tag": "section",
+        "cls": "hud-panel hud-panel--weapon",
+        "x": 1055.421875,
+        "y": 74,
+        "w": 208.578125,
+        "h": 91
+      },
+      {
+        "tag": "span",
+        "cls": "hud-label",
+        "x": 1069.421875,
+        "y": 90,
+        "w": 60.390625,
+        "h": 14
+      },
+      {
+        "tag": "strong",
+        "cls": "hud-value",
+        "x": 1137.8125,
+        "y": 86,
+        "w": 112.1875,
+        "h": 19
+      },
+      {
+        "tag": "img",
+        "cls": "hud-agent-chip__portrait",
+        "x": 1069.421875,
+        "y": 117,
+        "w": 34,
+        "h": 34
+      },
+      {
+        "tag": "span",
+        "cls": "",
+        "x": 1111.421875,
+        "y": 116,
+        "w": 116.59375,
+        "h": 14
+      },
+      {
+        "tag": "strong",
+        "cls": "",
+        "x": 1234.015625,
+        "y": 116,
+        "w": 15.984375,
+        "h": 14
+      },
+      {
+        "tag": "span",
+        "cls": "",
+        "x": 1111.421875,
+        "y": 132,
+        "w": 138.578125,
+        "h": 14
+      },
+      {
+        "tag": "section",
+        "cls": "hud-panel hud-panel--xp",
+        "x": 380,
+        "y": 721,
+        "w": 520,
+        "h": 61
+      },
+      {
+        "tag": "strong",
+        "cls": "",
+        "x": 440.578125,
+        "y": 737,
+        "w": 5.96875,
+        "h": 14
+      },
+      {
+        "tag": "strong",
+        "cls": "hud-value",
+        "x": 807.46875,
+        "y": 733,
+        "w": 78.53125,
+        "h": 19
+      },
+      {
+        "tag": "div",
+        "cls": "hud-bar",
+        "x": 394,
+        "y": 760,
+        "w": 492,
+        "h": 10
+      },
+      {
+        "tag": "section",
+        "cls": "hud-panel hud-panel--build",
+        "x": 18,
+        "y": 714,
+        "w": 340,
+        "h": 68
+      },
+      {
+        "tag": "button",
+        "cls": "hud-build-button",
+        "x": 32,
+        "y": 726,
+        "w": 312,
+        "h": 44
+      },
+      {
+        "tag": "button",
+        "cls": "hud-pause",
+        "x": 1111,
+        "y": 747,
+        "w": 153,
+        "h": 35
+      },
+      {
+        "tag": "span",
+        "cls": "hud-pause__key",
+        "x": 1127.203125,
+        "y": 757,
+        "w": 19.25,
+        "h": 15
+      },
+      {
+        "tag": "details",
+        "cls": "world-info-note",
+        "x": 410,
+        "y": 637.46875,
+        "w": 460,
+        "h": 56.53125
+      },
+      {
+        "tag": "summary",
+        "cls": "world-info-note__title",
+        "x": 424,
+        "y": 647.46875,
+        "w": 432,
+        "h": 14.78125
+      },
+      {
+        "tag": "p",
+        "cls": "world-info-note__body",
+        "x": 424,
+        "y": 668.25,
+        "w": 432,
+        "h": 15.75
+      }
+    ],
+    "stations": [
+      {
+        "id": "south-midway-admission-arch",
+        "file": "fairground-station-south-midway-admission-arch-desktop.png",
+        "top": 6.3802,
+        "base": {
+          "x": 640,
+          "y": 198.67650453995708,
+          "z": 0.9970961542428667,
+          "inView": true
+        },
+        "apex": {
+          "x": 640,
+          "y": 52.23819760461503,
+          "z": 0.9964291232322965,
+          "inView": true
+        },
+        "box": {
+          "x": 640,
+          "y": 52.23819760461503,
+          "w": 0,
+          "h": 146.43830693534204
+        },
+        "overlapPlain": 0,
+        "apexCoveredPlain": true,
+        "overlapDebug": 0
+      },
+      {
+        "id": "west-current-calliope-wagon",
+        "file": "fairground-station-west-current-calliope-wagon-desktop.png",
+        "top": 5.54,
+        "base": {
+          "x": 642.4251911276575,
+          "y": 266.1800281746932,
+          "z": 0.9973910346809812,
+          "inView": true
+        },
+        "apex": {
+          "x": 642.6889933911889,
+          "y": 157.36052174499164,
+          "z": 0.996889472720572,
+          "inView": true
+        },
+        "box": {
+          "x": 642.4251911276575,
+          "y": 157.36052174499164,
+          "w": 0.2638022635313746,
+          "h": 108.81950642970153
+        },
+        "overlapPlain": 0,
+        "apexCoveredPlain": false,
+        "overlapDebug": 0
+      },
+      {
+        "id": "east-mothglass-prize-cage",
+        "file": "fairground-station-east-mothglass-prize-cage-desktop.png",
+        "top": 5.3929,
+        "base": {
+          "x": 635.3095986671668,
+          "y": 275.879982659877,
+          "z": 0.997447868835392,
+          "inView": true
+        },
+        "apex": {
+          "x": 634.8235895886885,
+          "y": 172.21559548601994,
+          "z": 0.9969759795648349,
+          "inView": true
+        },
+        "box": {
+          "x": 634.8235895886885,
+          "y": 172.21559548601994,
+          "w": 0.4860090784783324,
+          "h": 103.66438717385705
+        },
+        "overlapPlain": 0,
+        "apexCoveredPlain": false,
+        "overlapDebug": 0
+      },
+      {
+        "id": "north-crowd-counting-rostrum",
+        "file": "fairground-station-north-crowd-counting-rostrum-desktop.png",
+        "top": 5.29,
+        "base": {
+          "x": 641.4343247964766,
+          "y": 317.37967131900723,
+          "z": 0.9969260719478578,
+          "inView": true
+        },
+        "apex": {
+          "x": 641.5987324587486,
+          "y": 207.90102858762634,
+          "z": 0.996344249897435,
+          "inView": true
+        },
+        "box": {
+          "x": 641.4343247964766,
+          "y": 207.90102858762634,
+          "w": 0.16440766227196946,
+          "h": 109.47864273138089
+        },
+        "overlapPlain": 0,
+        "apexCoveredPlain": false,
+        "overlapDebug": 0
+      },
+      {
+        "id": "fair-bell-battery-kiosk",
+        "file": "fairground-station-fair-bell-battery-kiosk-desktop.png",
+        "top": 6.205,
+        "base": {
+          "x": 639.715770478441,
+          "y": 330.5555685907632,
+          "z": 0.9970002708436111,
+          "inView": true
+        },
+        "apex": {
+          "x": 639.6775115979351,
+          "y": 203.22841624269006,
+          "z": 0.9963270099041382,
+          "inView": true
+        },
+        "box": {
+          "x": 639.6775115979351,
+          "y": 203.22841624269006,
+          "w": 0.03825888050585036,
+          "h": 127.32715234807313
+        },
+        "overlapPlain": 0,
+        "apexCoveredPlain": false,
+        "overlapDebug": 0
+      },
+      {
+        "id": "ferris-wheel",
+        "file": "fairground-station-ferris-wheel-desktop.png",
+        "apex": {
+          "x": 640.7938010744891,
+          "y": -66.50860034422817,
+          "z": 0.9968532667982777,
+          "inView": false
+        },
+        "hub": {
+          "x": 640.7399742607104,
+          "y": 24.71552360793887,
+          "z": 0.9972023971029778,
+          "inView": true
+        },
+        "foot": {
+          "x": 640.6825807596341,
+          "y": 121.98436581973824,
+          "z": 0.9975746615769784,
+          "inView": true
+        },
+        "left": {
+          "x": 548.3168261972231,
+          "y": 24.62800864605952,
+          "z": 0.997202885345746,
+          "inView": true
+        },
+        "right": {
+          "x": 733.1819297540558,
+          "y": 24.80305637846829,
+          "z": 0.9972019087608558,
+          "inView": true
+        },
+        "box": {
+          "x": 548.3168261972231,
+          "y": -66.50860034422817,
+          "w": 184.86510355683265,
+          "h": 188.4929661639664
+        },
+        "overlapPlain": 0.2969,
+        "apexCoveredPlain": false,
+        "overlapDebug": 0.2969
+      }
+    ]
+  },
+  {
+    "map": "e3-fairground",
+    "pack": "fairground",
+    "viewport": "mobile",
+    "boot": "plain",
+    "shot": "fairground-plain-mobile.png",
+    "shotNoHud": "fairground-plain-mobile-nohud.png",
+    "errors": [],
+    "hudRects": [
+      {
+        "tag": "div",
+        "cls": "hud__wave",
+        "x": 12,
+        "y": 278,
+        "w": 366,
+        "h": 52.8125
+      },
+      {
+        "tag": "span",
+        "cls": "",
+        "x": 24,
+        "y": 288,
+        "w": 342,
+        "h": 32.8125
+      },
+      {
+        "tag": "section",
+        "cls": "hud-panel hud-panel--vitals",
+        "x": 12,
+        "y": 12,
+        "w": 162,
+        "h": 94
+      },
+      {
+        "tag": "span",
+        "cls": "hud-label",
+        "x": 24,
+        "y": 26,
+        "w": 19.640625,
+        "h": 14
+      },
+      {
+        "tag": "strong",
+        "cls": "hud-value",
+        "x": 83.46875,
+        "y": 22,
+        "w": 78.53125,
+        "h": 19
+      },
+      {
+        "tag": "div",
+        "cls": "hud-bar",
+        "x": 24,
+        "y": 55,
+        "w": 138,
+        "h": 10
+      },
+      {
+        "tag": "span",
+        "cls": "hud-label",
+        "x": 24,
+        "y": 71,
+        "w": 27.609375,
+        "h": 11
+      },
+      {
+        "tag": "strong",
+        "cls": "hud-value",
+        "x": 24,
+        "y": 82,
+        "w": 36.671875,
+        "h": 14
+      },
+      {
+        "tag": "span",
+        "cls": "hud-label",
+        "x": 96,
+        "y": 71,
+        "w": 32.34375,
+        "h": 11
+      },
+      {
+        "tag": "strong",
+        "cls": "hud-value",
+        "x": 96,
+        "y": 82,
+        "w": 8.3125,
+        "h": 14
+      },
+      {
+        "tag": "section",
+        "cls": "hud-panel hud-panel--gold",
+        "x": 216,
+        "y": 12,
+        "w": 162,
+        "h": 39
+      },
+      {
+        "tag": "span",
+        "cls": "hud-coin",
+        "x": 228,
+        "y": 23.5,
+        "w": 16,
+        "h": 16
+      },
+      {
+        "tag": "span",
+        "cls": "hud-label",
+        "x": 250,
+        "y": 24.5,
+        "w": 38.265625,
+        "h": 14
+      },
+      {
+        "tag": "strong",
+        "cls": "hud-value",
+        "x": 294.265625,
+        "y": 22,
+        "w": 71.734375,
+        "h": 19
+      },
+      {
+        "tag": "section",
+        "cls": "hud-panel hud-panel--resource hud-panel--power",
+        "x": 216,
+        "y": 60,
+        "w": 162,
+        "h": 69
+      },
+      {
+        "tag": "span",
+        "cls": "hud-label",
+        "x": 228,
+        "y": 68,
+        "w": 135,
+        "h": 14
+      },
+      {
+        "tag": "strong",
+        "cls": "hud-value",
+        "x": 228,
+        "y": 85,
+        "w": 138,
+        "h": 36
+      },
+      {
+        "tag": "section",
+        "cls": "hud-panel hud-panel--weapon",
+        "x": 216,
+        "y": 140,
+        "w": 162,
+        "h": 115
+      },
+      {
+        "tag": "span",
+        "cls": "hud-label",
+        "x": 228,
+        "y": 150,
+        "w": 138,
+        "h": 14
+      },
+      {
+        "tag": "strong",
+        "cls": "hud-value",
+        "x": 228,
+        "y": 166,
+        "w": 138,
+        "h": 19
+      },
+      {
+        "tag": "img",
+        "cls": "hud-agent-chip__portrait",
+        "x": 228,
+        "y": 215,
+        "w": 30,
+        "h": 30
+      },
+      {
+        "tag": "span",
+        "cls": "",
+        "x": 228,
+        "y": 197,
+        "w": 138,
+        "h": 14
+      },
+      {
+        "tag": "strong",
+        "cls": "",
+        "x": 266,
+        "y": 216,
+        "w": 100,
+        "h": 11
+      },
+      {
+        "tag": "span",
+        "cls": "",
+        "x": 266,
+        "y": 233,
+        "w": 100,
+        "h": 11
+      },
+      {
+        "tag": "section",
+        "cls": "hud-panel hud-panel--xp",
+        "x": 12,
+        "y": 120,
+        "w": 162,
+        "h": 57
+      },
+      {
+        "tag": "strong",
+        "cls": "",
+        "x": 63.828125,
+        "y": 131,
+        "w": 5.09375,
+        "h": 12
+      },
+      {
+        "tag": "strong",
+        "cls": "hud-value",
+        "x": 107.265625,
+        "y": 130,
+        "w": 54.734375,
+        "h": 14
+      },
+      {
+        "tag": "div",
+        "cls": "hud-bar",
+        "x": 24,
+        "y": 157,
+        "w": 138,
+        "h": 10
+      },
+      {
+        "tag": "button",
+        "cls": "hud-build-button",
+        "x": 296,
+        "y": 594,
+        "w": 76,
+        "h": 76
+      },
+      {
+        "tag": "button",
+        "cls": "hud-pause",
+        "x": 296,
+        "y": 528.71875,
+        "w": 76,
+        "h": 59.28125
+      },
+      {
+        "tag": "div",
+        "cls": "prompt-stack",
+        "x": 14,
+        "y": 542.046875,
+        "w": 162,
+        "h": 127.953125
+      },
+      {
+        "tag": "summary",
+        "cls": "world-info-note__title",
+        "x": 24,
+        "y": 561.046875,
+        "w": 142,
+        "h": 45.703125
+      },
+      {
+        "tag": "p",
+        "cls": "world-info-note__body",
+        "x": 24,
+        "y": 612.75,
+        "w": 142,
+        "h": 47.25
+      },
+      {
+        "tag": "div",
+        "cls": "",
+        "x": 18,
+        "y": 716.8125,
+        "w": 109.1875,
+        "h": 109.1875
+      },
+      {
+        "tag": "div",
+        "cls": "",
+        "x": 50.0859375,
+        "y": 748.8984375,
+        "w": 45.015625,
+        "h": 45.015625
+      },
+      {
+        "tag": "button",
+        "cls": "",
+        "x": 216,
+        "y": 758,
+        "w": 58,
+        "h": 58
+      },
+      {
+        "tag": "button",
+        "cls": "",
+        "x": 264,
+        "y": 690,
+        "w": 58,
+        "h": 58
+      },
+      {
+        "tag": "button",
+        "cls": "",
+        "x": 296,
+        "y": 750,
+        "w": 76,
+        "h": 76
+      }
+    ],
+    "info": {
+      "activeId": "e3-fairground",
+      "fallback": null,
+      "wheel": {
+        "active": true,
+        "spinning": true,
+        "hp": 240,
+        "maxHp": 240,
+        "outputWatts": 24,
+        "configuredWatts": 24,
+        "viewRadius": 18,
+        "x": 0,
+        "z": 8
+      },
+      "testHook": "undefined"
+    },
+    "dataset": {
+      "landmarks": "5",
+      "expected": "5",
+      "skipped": "0",
+      "state": "ready",
+      "loadState": "mounted",
+      "skirtBlend": "opaque-sculpt-edge"
+    }
+  },
+  {
+    "map": "e3-fairground",
+    "pack": "fairground",
+    "viewport": "mobile",
+    "boot": "debug",
+    "errors": [],
+    "wheel": {
+      "active": true,
+      "spinning": true,
+      "hp": 240,
+      "maxHp": 240,
+      "outputWatts": 24,
+      "configuredWatts": 24,
+      "viewRadius": 18,
+      "x": 0,
+      "z": 8
+    },
+    "hudRects": [
+      {
+        "tag": "div",
+        "cls": "hud__wave",
+        "x": 12,
+        "y": 278,
+        "w": 366,
+        "h": 52.8125
+      },
+      {
+        "tag": "span",
+        "cls": "",
+        "x": 24,
+        "y": 288,
+        "w": 342,
+        "h": 32.8125
+      },
+      {
+        "tag": "section",
+        "cls": "hud-panel hud-panel--vitals",
+        "x": 12,
+        "y": 12,
+        "w": 162,
+        "h": 94
+      },
+      {
+        "tag": "span",
+        "cls": "hud-label",
+        "x": 24,
+        "y": 26,
+        "w": 19.640625,
+        "h": 14
+      },
+      {
+        "tag": "strong",
+        "cls": "hud-value",
+        "x": 83.46875,
+        "y": 22,
+        "w": 78.53125,
+        "h": 19
+      },
+      {
+        "tag": "div",
+        "cls": "hud-bar",
+        "x": 24,
+        "y": 55,
+        "w": 138,
+        "h": 10
+      },
+      {
+        "tag": "span",
+        "cls": "hud-label",
+        "x": 24,
+        "y": 71,
+        "w": 27.609375,
+        "h": 11
+      },
+      {
+        "tag": "strong",
+        "cls": "hud-value",
+        "x": 24,
+        "y": 82,
+        "w": 35.0625,
+        "h": 14
+      },
+      {
+        "tag": "span",
+        "cls": "hud-label",
+        "x": 96,
+        "y": 71,
+        "w": 32.34375,
+        "h": 11
+      },
+      {
+        "tag": "strong",
+        "cls": "hud-value",
+        "x": 96,
+        "y": 82,
+        "w": 8.3125,
+        "h": 14
+      },
+      {
+        "tag": "section",
+        "cls": "hud-panel hud-panel--gold",
+        "x": 216,
+        "y": 12,
+        "w": 162,
+        "h": 39
+      },
+      {
+        "tag": "span",
+        "cls": "hud-coin",
+        "x": 228,
+        "y": 23.5,
+        "w": 16,
+        "h": 16
+      },
+      {
+        "tag": "span",
+        "cls": "hud-label",
+        "x": 250,
+        "y": 24.5,
+        "w": 38.265625,
+        "h": 14
+      },
+      {
+        "tag": "strong",
+        "cls": "hud-value",
+        "x": 294.265625,
+        "y": 22,
+        "w": 71.734375,
+        "h": 19
+      },
+      {
+        "tag": "section",
+        "cls": "hud-panel hud-panel--resource hud-panel--power",
+        "x": 216,
+        "y": 60,
+        "w": 162,
+        "h": 69
+      },
+      {
+        "tag": "span",
+        "cls": "hud-label",
+        "x": 228,
+        "y": 68,
+        "w": 135,
+        "h": 14
+      },
+      {
+        "tag": "strong",
+        "cls": "hud-value",
+        "x": 228,
+        "y": 85,
+        "w": 138,
+        "h": 36
+      },
+      {
+        "tag": "section",
+        "cls": "hud-panel hud-panel--weapon",
+        "x": 216,
+        "y": 140,
+        "w": 162,
+        "h": 115
+      },
+      {
+        "tag": "span",
+        "cls": "hud-label",
+        "x": 228,
+        "y": 150,
+        "w": 138,
+        "h": 14
+      },
+      {
+        "tag": "strong",
+        "cls": "hud-value",
+        "x": 228,
+        "y": 166,
+        "w": 138,
+        "h": 19
+      },
+      {
+        "tag": "img",
+        "cls": "hud-agent-chip__portrait",
+        "x": 228,
+        "y": 215,
+        "w": 30,
+        "h": 30
+      },
+      {
+        "tag": "span",
+        "cls": "",
+        "x": 228,
+        "y": 197,
+        "w": 138,
+        "h": 14
+      },
+      {
+        "tag": "strong",
+        "cls": "",
+        "x": 266,
+        "y": 216,
+        "w": 100,
+        "h": 11
+      },
+      {
+        "tag": "span",
+        "cls": "",
+        "x": 266,
+        "y": 233,
+        "w": 100,
+        "h": 11
+      },
+      {
+        "tag": "section",
+        "cls": "hud-panel hud-panel--xp",
+        "x": 12,
+        "y": 120,
+        "w": 162,
+        "h": 57
+      },
+      {
+        "tag": "strong",
+        "cls": "",
+        "x": 63.828125,
+        "y": 131,
+        "w": 5.09375,
+        "h": 12
+      },
+      {
+        "tag": "strong",
+        "cls": "hud-value",
+        "x": 107.265625,
+        "y": 130,
+        "w": 54.734375,
+        "h": 14
+      },
+      {
+        "tag": "div",
+        "cls": "hud-bar",
+        "x": 24,
+        "y": 157,
+        "w": 138,
+        "h": 10
+      },
+      {
+        "tag": "button",
+        "cls": "hud-build-button",
+        "x": 296,
+        "y": 594,
+        "w": 76,
+        "h": 76
+      },
+      {
+        "tag": "button",
+        "cls": "hud-pause",
+        "x": 296,
+        "y": 528.71875,
+        "w": 76,
+        "h": 59.28125
+      },
+      {
+        "tag": "div",
+        "cls": "prompt-stack",
+        "x": 14,
+        "y": 542.046875,
+        "w": 162,
+        "h": 127.953125
+      },
+      {
+        "tag": "summary",
+        "cls": "world-info-note__title",
+        "x": 24,
+        "y": 561.046875,
+        "w": 142,
+        "h": 45.703125
+      },
+      {
+        "tag": "p",
+        "cls": "world-info-note__body",
+        "x": 24,
+        "y": 612.75,
+        "w": 142,
+        "h": 47.25
+      },
+      {
+        "tag": "div",
+        "cls": "",
+        "x": 18,
+        "y": 716.8125,
+        "w": 109.1875,
+        "h": 109.1875
+      },
+      {
+        "tag": "div",
+        "cls": "",
+        "x": 50.0859375,
+        "y": 748.8984375,
+        "w": 45.015625,
+        "h": 45.015625
+      },
+      {
+        "tag": "button",
+        "cls": "",
+        "x": 216,
+        "y": 758,
+        "w": 58,
+        "h": 58
+      },
+      {
+        "tag": "button",
+        "cls": "",
+        "x": 264,
+        "y": 690,
+        "w": 58,
+        "h": 58
+      },
+      {
+        "tag": "button",
+        "cls": "",
+        "x": 296,
+        "y": 750,
+        "w": 76,
+        "h": 76
+      }
+    ],
+    "stations": [
+      {
+        "id": "south-midway-admission-arch",
+        "file": "fairground-station-south-midway-admission-arch-mobile.png",
+        "top": 6.3802,
+        "base": {
+          "x": 195,
+          "y": 209.6077512648412,
+          "z": 0.9970961799274414,
+          "inView": true
+        },
+        "apex": {
+          "x": 195,
+          "y": 55.115176065089415,
+          "z": 0.9964291660229181,
+          "inView": true
+        },
+        "box": {
+          "x": 195,
+          "y": 55.115176065089415,
+          "w": 0,
+          "h": 154.4925751997518
+        },
+        "overlapPlain": 0,
+        "apexCoveredPlain": false,
+        "overlapDebug": 0
+      },
+      {
+        "id": "west-current-calliope-wagon",
+        "file": "fairground-station-west-current-calliope-wagon-mobile.png",
+        "top": 5.54,
+        "base": {
+          "x": 197.54819893550518,
+          "y": 280.827792426045,
+          "z": 0.9973911199013253,
+          "inView": true
+        },
+        "apex": {
+          "x": 197.82537039403684,
+          "y": 166.02438166277827,
+          "z": 0.9968895872701187,
+          "inView": true
+        },
+        "box": {
+          "x": 197.54819893550518,
+          "y": 166.02438166277827,
+          "w": 0.2771714585316545,
+          "h": 114.80341076326673
+        },
+        "overlapPlain": 0.0313,
+        "apexCoveredPlain": false,
+        "overlapDebug": 0.0313
+      },
+      {
+        "id": "east-mothglass-prize-cage",
+        "file": "fairground-station-east-mothglass-prize-cage-mobile.png",
+        "top": 5.3929,
+        "base": {
+          "x": 190.01899299660138,
+          "y": 291.0511113744816,
+          "z": 0.9974478368808201,
+          "inView": true
+        },
+        "apex": {
+          "x": 189.50286462777504,
+          "y": 181.6847553660957,
+          "z": 0.9969759375613133,
+          "inView": true
+        },
+        "box": {
+          "x": 189.50286462777504,
+          "y": 181.6847553660957,
+          "w": 0.5161283688263438,
+          "h": 109.3663560083859
+        },
+        "overlapPlain": 0.125,
+        "apexCoveredPlain": false,
+        "overlapDebug": 0.125
+      },
+      {
+        "id": "north-crowd-counting-rostrum",
+        "file": "fairground-station-north-crowd-counting-rostrum-mobile.png",
+        "top": 5.29,
+        "base": {
+          "x": 196.60286462079404,
+          "y": 334.7862514132187,
+          "z": 0.9969252734611367,
+          "inView": true
+        },
+        "apex": {
+          "x": 196.78666127749418,
+          "y": 219.284070937951,
+          "z": 0.9963431371280488,
+          "inView": true
+        },
+        "box": {
+          "x": 196.60286462079404,
+          "y": 219.284070937951,
+          "w": 0.18379665670013878,
+          "h": 115.50218047526769
+        },
+        "overlapPlain": 0.4531,
+        "apexCoveredPlain": false,
+        "overlapDebug": 0.4531
+      },
+      {
+        "id": "fair-bell-battery-kiosk",
+        "file": "fairground-station-fair-bell-battery-kiosk-mobile.png",
+        "top": 6.205,
+        "base": {
+          "x": 194.70163888088825,
+          "y": 348.73588382318053,
+          "z": 0.9970002679066645,
+          "inView": true
+        },
+        "apex": {
+          "x": 194.66147773884842,
+          "y": 214.40575531186485,
+          "z": 0.9963270054050143,
+          "inView": true
+        },
+        "box": {
+          "x": 194.66147773884842,
+          "y": 214.40575531186485,
+          "w": 0.04016114203983534,
+          "h": 134.33012851131568
+        },
+        "overlapPlain": 0.3906,
+        "apexCoveredPlain": false,
+        "overlapDebug": 0.3906
+      },
+      {
+        "id": "ferris-wheel",
+        "file": "fairground-station-ferris-wheel-mobile.png",
+        "apex": {
+          "x": 195.83495750606195,
+          "y": -70.16901248658586,
+          "z": 0.9968532456172841,
+          "inView": false
+        },
+        "hub": {
+          "x": 195.7783395761381,
+          "y": 26.07282722263434,
+          "z": 0.9972023794666941,
+          "inView": true
+        },
+        "foot": {
+          "x": 195.71797006800034,
+          "y": 128.69177732076014,
+          "z": 0.9975746473823781,
+          "inView": true
+        },
+        "left": {
+          "x": 98.27152995299758,
+          "y": 25.980774621706335,
+          "z": 0.9972028662505246,
+          "inView": true
+        },
+        "right": {
+          "x": 293.304931741659,
+          "y": 26.16489849953456,
+          "z": 0.9972018925841031,
+          "inView": true
+        },
+        "box": {
+          "x": 98.27152995299758,
+          "y": -70.16901248658586,
+          "w": 195.03340178866142,
+          "h": 198.860789807346
+        },
+        "overlapPlain": 0.4211,
+        "apexCoveredPlain": false,
+        "overlapDebug": 0.4211
+      }
+    ]
+  }
+]

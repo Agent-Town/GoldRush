@@ -1,0 +1,15 @@
+# s2538 fire handoff
+
+No implementation merged. The MAIN six-wait readiness candidate is held at `83f1429f6ff2dc26254f0c18225466991b6454ea`, based on `03d9fe1a1bcd6c771d085175b51bc6e02583b10d`, and backed up as `origin/save/main-chapter-readiness-s2538`. The corresponding MAIN edits were removed after exact-patch and saved-ref checks. The goal carries a gate-side hold, not an owner decision. The broader chapter writer patch and the M1 done-move remain separate.
+
+On native Node 26.4.0: typecheck 5.5 s, build 23.1 s, twelve Frontier checks 80.9 s, three mobile E7 repeats 22.5 s and plain desktop/390px boot 8.5 s passed. Both boots reported zero warnings, console errors and page errors. Power passed at p95 0.428 ms; citation and gate-caller legs passed. The generic wrapper terminated the optional full Node attempt at 900 seconds, so there is no complete Node verdict. The explicit FIRE scope and this fire's over-broad initial gate choice are recorded in `gate-scope.md`.
+
+Complete candidate adjacency was 29/32: the two known M1 debug-consent failures plus mobile M2 second palisade count 1 instead of 2. Complete unchanged-base adjacency was 30/32, reproducing both M1 failures but passing M2. The M2 cause remains unproven. A bounded MAIN diagnostic is authored and registered as `main-m2-palisade-placement-diagnosis.md`; its dispatch follows the handoff backup. No count/gold assertion, timeout or placement rule was softened.
+
+The runner is alive, no wall or pending crafting order exists, and no eligible planned refill was invented. Ledger mirrors cover all fifteen days through today with zero account-class rows; the 54 unrecognised refusal fields remain advisory. Ticker and open rotation already exist. Art audit: 6 areas / 1,024 files, AT RISK 0 and LOCAL-ONLY 0. The triage retention census answered for all 104 then-registered trees: 1,289 of 1,291 quiet files remote-safe; the two known local dispositions and 152 live/own exclusions are recorded in `retention-judgment.md`. The newly created, owned gate tree is preserved separately.
+
+The attended retired-reel count change is one drafted Gazette item: the week now holds 3 standalone and 2 batched items, with no unreported candidate. Appending left the existing Gazette citation at line 1834 unchanged. Publication remains owner-only. All 55 inherited desk items are carried, with no closed or unrecorded item in the incoming audit. The s2537 line was archived verbatim in the lock commit. No deploy is owed.
+
+Backup transport: ordinary SSH on port 22 failed with No route to host. The same origin accepted the candidate through SSH port 443 with strict host-key checking. No persistent SSH or git configuration changed.
+
+Closing verification ran after the actual handoff line was written: main task guard 1,325 masters / zero invisible; test:ledger-guards PASS in 106.2 seconds, 1,050 Node assertions with no failures/cancellations/skips and 83 foundry checks. Review evidence audit PASS with no untracked or absent cited path. The outgoing desk audit is CLOSED 0 / OPEN 2 / BOTH 0 / OPEN-DESK-ONLY 53 / UNRECORDED 0.

@@ -1,0 +1,66 @@
+--- a/e2e/m2-01-build-menu.spec.ts
++++ b/e2e/m2-01-build-menu.spec.ts
+@@ -175,27 +175,48 @@
+   expect(errors.pageErrors).toEqual([]);
+ });
+ 
+-test('palisade footprint rejects overlap while allowing edge-touch chaining', async ({ page }) => {
++for (const secondSample of [2, 3]) test(`controlled palisade input sample ${secondSample}`, async ({ page }) => {
+   const errors = await openGame(page, '?debug&timescale=3&nowaves&seed=m2-01-palisade-footprint');
+   await grantGold(page, 50);
+-
+   await placeBuildableAt(page, 'palisade', 0, 9);
+-
+   await teleport(page, 0, 12);
+   await page.evaluate(() => window.__GR_TEST__?.selectBuildable('palisade'));
+   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.ghostValid ?? true)).toBe(false);
+-  const tick = await page.evaluate(() => {
+-    const before = window.__THREE_GAME_DIAGNOSTICS__?.simulation.tick ?? 0;
+-    window.dispatchEvent(new KeyboardEvent('keydown', { code: 'Enter' }));
+-    window.dispatchEvent(new KeyboardEvent('keyup', { code: 'Enter' }));
+-    window.__GR_TEST__?.teleport(0, 14);
+-    return before;
+-  });
+-  await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.simulation.tick ?? 0)).toBeGreaterThan(tick + 1);
+-  await expect.poll(() => buildableCount(page, 'palisade')).toBe(1);
+-  expect(await gold(page)).toBe(40);
+-
+-  await placeSelected(page, 'palisade');
++  const samples = await page.evaluate(async (injectAt) => {
++    const { InputController } = await import(new URL('/src/core/InputController.ts', location.href).href);
++    const original = InputController.prototype.readIntents;
++    const samples: Array<{ index: number; confirm: boolean; allowed: boolean }> = [];
++    await new Promise<void>((resolve) => {
++      InputController.prototype.readIntents = function () {
++        const index = samples.length + 1;
++        if (index === injectAt) {
++          window.dispatchEvent(new KeyboardEvent('keydown', { code: 'Enter' }));
++          window.dispatchEvent(new KeyboardEvent('keyup', { code: 'Enter' }));
++        }
++        const result = original.call(this);
++        samples.push({ index, confirm: result.confirm, allowed: this.confirmAllowedAtIssue });
++        if (index === injectAt + 1) {
++          InputController.prototype.readIntents = original;
++          queueMicrotask(resolve);
++        }
++        return result;
++      };
++      window.dispatchEvent(new KeyboardEvent('keydown', { code: 'Enter' }));
++      window.dispatchEvent(new KeyboardEvent('keyup', { code: 'Enter' }));
++      window.__GR_TEST__?.teleport(0, 14);
++    });
++    return samples;
++  }, secondSample);
++  expect(samples.map(s => s.confirm)).toEqual(secondSample === 2 ? [true, true, false] : [true, false, true, false]);
++  expect(samples[0].allowed).toBe(false);
++  expect(samples[secondSample - 1].allowed).toBe(true);
++  const count = await buildableCount(page, 'palisade');
++  const balance = await gold(page);
++  fs.mkdirSync(path.resolve('artifacts/s2539-gate/sample-controls'), { recursive: true });
++  fs.writeFileSync(path.resolve(`artifacts/s2539-gate/sample-controls/${test.info().project.name}-${secondSample}.json`), JSON.stringify({ samples, count, gold: balance }, null, 2) + '\n');
++  expect(count).toBe(secondSample === 2 ? 1 : 2);
++  expect(balance).toBe(secondSample === 2 ? 40 : 30);
++  if (secondSample === 2) await placeSelected(page, 'palisade');
+   expect(await buildableCount(page, 'palisade')).toBe(2);
+   expect(await gold(page)).toBe(30);
+   expect(errors.consoleErrors).toEqual([]);

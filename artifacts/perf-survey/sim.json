@@ -1,0 +1,1703 @@
+{
+  "at": "2026-09-05T16:26:50.810Z",
+  "node": "/opt/homebrew/Cellar/node/26.4.0/bin/node",
+  "rows": [
+    {
+      "map": "the-claim",
+      "host": {
+        "at": "2026-09-05T15:15:33.152Z",
+        "load": [
+          13.9384765625,
+          30.30859375,
+          29.0517578125
+        ],
+        "freeMemory": 14140112896
+      },
+      "tapes": [
+        {
+          "key": "idle-the-claim",
+          "tapePath": "tapes/idle-the-claim.json",
+          "measurement": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 2753.0669169999996,
+            "log": "sim/idle-the-claim-measure.log"
+          },
+          "verifier": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 2559.743125,
+            "log": "sim/idle-the-claim-assay.log"
+          },
+          "measuredPath": "sim/idle-the-claim.json"
+        },
+        {
+          "key": "county-the-claim",
+          "tapePath": "tapes/county-the-claim.json",
+          "measurement": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 15857.974542,
+            "log": "sim/county-the-claim-measure.log"
+          },
+          "verifier": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 19569.275042,
+            "log": "sim/county-the-claim-assay.log"
+          },
+          "measuredPath": "sim/county-the-claim.json"
+        }
+      ],
+      "grSim": {
+        "code": 0,
+        "signal": null,
+        "wallMs": 2152.6877080000004,
+        "log": "sim/the-claim-gr-sim.log"
+      },
+      "countyTape": "tapes/county-the-claim.json"
+    },
+    {
+      "map": "e1-baron",
+      "host": {
+        "at": "2026-09-05T15:16:16.047Z",
+        "load": [
+          13.01953125,
+          27.73828125,
+          28.16650390625
+        ],
+        "freeMemory": 10617044992
+      },
+      "tapes": [
+        {
+          "key": "idle-e1-baron",
+          "tapePath": "tapes/idle-e1-baron.json",
+          "measurement": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 6661.738832999996,
+            "log": "sim/idle-e1-baron-measure.log"
+          },
+          "verifier": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 6035.344707999997,
+            "log": "sim/idle-e1-baron-assay.log"
+          },
+          "measuredPath": "sim/idle-e1-baron.json"
+        },
+        {
+          "key": "county-e1-baron",
+          "tapePath": "tapes/county-e1-baron.json",
+          "measurement": {
+            "code": null,
+            "signal": "SIGKILL",
+            "wallMs": 60017.086083,
+            "log": "sim/county-e1-baron-measure.log"
+          },
+          "verifier": {
+            "code": null,
+            "signal": "SIGKILL",
+            "wallMs": 60013.50241700001,
+            "log": "sim/county-e1-baron-assay.log"
+          }
+        }
+      ],
+      "grSim": {
+        "code": 0,
+        "signal": null,
+        "wallMs": 9185.936583000002,
+        "log": "sim/e1-baron-gr-sim.log"
+      },
+      "countyTape": "tapes/county-e1-baron.json"
+    },
+    {
+      "map": "e4-gusher-county",
+      "host": {
+        "at": "2026-09-05T15:18:37.963Z",
+        "load": [
+          19.78759765625,
+          25.9892578125,
+          27.4580078125
+        ],
+        "freeMemory": 8934457344
+      },
+      "tapes": [
+        {
+          "key": "idle-e4-gusher-county",
+          "tapePath": "tapes/idle-e4-gusher-county.json",
+          "measurement": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 3317.3222910000186,
+            "log": "sim/idle-e4-gusher-county-measure.log"
+          },
+          "verifier": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 3294.004209000006,
+            "log": "sim/idle-e4-gusher-county-assay.log"
+          },
+          "measuredPath": "sim/idle-e4-gusher-county.json"
+        },
+        {
+          "key": "county-e4-gusher-county",
+          "tapePath": "tapes/county-e4-gusher-county.json",
+          "measurement": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 10919.732583000005,
+            "log": "sim/county-e4-gusher-county-measure.log"
+          },
+          "verifier": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 9675.502750000014,
+            "log": "sim/county-e4-gusher-county-assay.log"
+          },
+          "measuredPath": "sim/county-e4-gusher-county.json"
+        }
+      ],
+      "grSim": {
+        "code": 0,
+        "signal": null,
+        "wallMs": 3724.144499999995,
+        "log": "sim/e4-gusher-county-gr-sim.log"
+      },
+      "countyTape": "tapes/county-e4-gusher-county.json"
+    },
+    {
+      "map": "e6-picnic",
+      "host": {
+        "at": "2026-09-05T15:19:08.895Z",
+        "load": [
+          17.14501953125,
+          24.72216796875,
+          26.9453125
+        ],
+        "freeMemory": 12849971200
+      },
+      "tapes": [
+        {
+          "key": "idle-e6-picnic",
+          "tapePath": "tapes/idle-e6-picnic.json",
+          "measurement": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 2671.177416999999,
+            "log": "sim/idle-e6-picnic-measure.log"
+          },
+          "verifier": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 1919.1365839999926,
+            "log": "sim/idle-e6-picnic-assay.log"
+          },
+          "measuredPath": "sim/idle-e6-picnic.json"
+        },
+        {
+          "key": "county-e6-picnic",
+          "tapePath": "tapes/county-e6-picnic.json",
+          "measurement": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 43615.20520799997,
+            "log": "sim/county-e6-picnic-measure.log"
+          },
+          "verifier": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 43612.99408399995,
+            "log": "sim/county-e6-picnic-assay.log"
+          },
+          "measuredPath": "sim/county-e6-picnic.json"
+        }
+      ],
+      "grSim": {
+        "code": 0,
+        "signal": null,
+        "wallMs": 2807.288042,
+        "log": "sim/e6-picnic-gr-sim.log"
+      },
+      "countyTape": "tapes/county-e6-picnic.json"
+    },
+    {
+      "map": "e9-devils-alley",
+      "host": {
+        "at": "2026-09-05T15:20:43.523Z",
+        "load": [
+          16.7978515625,
+          22.32958984375,
+          25.76953125
+        ],
+        "freeMemory": 13171064832
+      },
+      "tapes": [
+        {
+          "key": "idle-e9-devils-alley",
+          "tapePath": "tapes/idle-e9-devils-alley.json",
+          "measurement": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 4563.933290999965,
+            "log": "sim/idle-e9-devils-alley-measure.log"
+          },
+          "verifier": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 3833.713083999988,
+            "log": "sim/idle-e9-devils-alley-assay.log"
+          },
+          "measuredPath": "sim/idle-e9-devils-alley.json"
+        },
+        {
+          "key": "county-e9-devils-alley",
+          "tapePath": "tapes/county-e9-devils-alley.json",
+          "measurement": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 28960.73329200002,
+            "log": "sim/county-e9-devils-alley-measure.log"
+          },
+          "verifier": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 23462.02883299999,
+            "log": "sim/county-e9-devils-alley-assay.log"
+          },
+          "measuredPath": "sim/county-e9-devils-alley.json"
+        }
+      ],
+      "grSim": {
+        "code": 0,
+        "signal": null,
+        "wallMs": 4143.944332999992,
+        "log": "sim/e9-devils-alley-gr-sim.log"
+      },
+      "countyTape": "tapes/county-e9-devils-alley.json"
+    },
+    {
+      "map": "e1-dry-gulch",
+      "host": {
+        "at": "2026-09-05T15:55:28.322Z",
+        "load": [
+          7.46630859375,
+          10.70458984375,
+          15.1025390625
+        ],
+        "freeMemory": 4048519168
+      },
+      "tapes": [
+        {
+          "key": "idle-e1-dry-gulch",
+          "tapePath": "tapes/idle-e1-dry-gulch.json",
+          "measurement": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 2761.6567919999998,
+            "log": "sim/idle-e1-dry-gulch-measure.log"
+          },
+          "verifier": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 2363.115667,
+            "log": "sim/idle-e1-dry-gulch-assay.log"
+          },
+          "measuredPath": "sim/idle-e1-dry-gulch.json"
+        },
+        {
+          "key": "county-e1-dry-gulch",
+          "tapePath": "tapes/county-e1-dry-gulch.json",
+          "measurement": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 23184.306667,
+            "log": "sim/county-e1-dry-gulch-measure.log"
+          },
+          "verifier": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 21763.96125,
+            "log": "sim/county-e1-dry-gulch-assay.log"
+          },
+          "measuredPath": "sim/county-e1-dry-gulch.json"
+        }
+      ],
+      "grSim": {
+        "code": 0,
+        "signal": null,
+        "wallMs": 2720.623625,
+        "log": "sim/e1-dry-gulch-gr-sim.log"
+      },
+      "countyTape": "tapes/county-e1-dry-gulch.json"
+    },
+    {
+      "map": "e1-night-shift",
+      "host": {
+        "at": "2026-09-05T15:56:21.118Z",
+        "load": [
+          6.63916015625,
+          9.92578125,
+          14.53564453125
+        ],
+        "freeMemory": 3679076352
+      },
+      "tapes": [
+        {
+          "key": "idle-e1-night-shift",
+          "tapePath": "tapes/idle-e1-night-shift.json",
+          "measurement": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 6375.762459000005,
+            "log": "sim/idle-e1-night-shift-measure.log"
+          },
+          "verifier": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 5774.671875,
+            "log": "sim/idle-e1-night-shift-assay.log"
+          },
+          "measuredPath": "sim/idle-e1-night-shift.json"
+        },
+        {
+          "key": "county-e1-night-shift",
+          "tapePath": "tapes/county-e1-night-shift.json",
+          "measurement": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 43111.041042,
+            "log": "sim/county-e1-night-shift-measure.log"
+          },
+          "verifier": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 40697.64379200002,
+            "log": "sim/county-e1-night-shift-assay.log"
+          },
+          "measuredPath": "sim/county-e1-night-shift.json"
+        }
+      ],
+      "grSim": {
+        "code": 0,
+        "signal": null,
+        "wallMs": 6158.448166000002,
+        "log": "sim/e1-night-shift-gr-sim.log"
+      },
+      "countyTape": "tapes/county-e1-night-shift.json"
+    },
+    {
+      "map": "e1-twin-banks",
+      "host": {
+        "at": "2026-09-05T15:58:03.237Z",
+        "load": [
+          5.18994140625,
+          8.4970703125,
+          13.46630859375
+        ],
+        "freeMemory": 3405905920
+      },
+      "tapes": [
+        {
+          "key": "idle-e1-twin-banks",
+          "tapePath": "tapes/idle-e1-twin-banks.json",
+          "measurement": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 2318.9850829999777,
+            "log": "sim/idle-e1-twin-banks-measure.log"
+          },
+          "verifier": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 1952.4665410000016,
+            "log": "sim/idle-e1-twin-banks-assay.log"
+          },
+          "measuredPath": "sim/idle-e1-twin-banks.json"
+        },
+        {
+          "key": "county-e1-twin-banks",
+          "tapePath": "tapes/county-e1-twin-banks.json",
+          "measurement": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 44752.24566700001,
+            "log": "sim/county-e1-twin-banks-measure.log"
+          },
+          "verifier": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 43731.863375000015,
+            "log": "sim/county-e1-twin-banks-assay.log"
+          },
+          "measuredPath": "sim/county-e1-twin-banks.json"
+        }
+      ],
+      "grSim": {
+        "code": 0,
+        "signal": null,
+        "wallMs": 2155.1110840000038,
+        "log": "sim/e1-twin-banks-gr-sim.log"
+      },
+      "countyTape": "tapes/county-e1-twin-banks.json"
+    },
+    {
+      "map": "e2-hill-mine",
+      "host": {
+        "at": "2026-09-05T15:59:38.148Z",
+        "load": [
+          5.15869140625,
+          7.63720703125,
+          12.60986328125
+        ],
+        "freeMemory": 4378198016
+      },
+      "tapes": [
+        {
+          "key": "idle-e2-hill-mine",
+          "tapePath": "tapes/idle-e2-hill-mine.json",
+          "measurement": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 2054.3003750000207,
+            "log": "sim/idle-e2-hill-mine-measure.log"
+          },
+          "verifier": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 1762.458666999999,
+            "log": "sim/idle-e2-hill-mine-assay.log"
+          },
+          "measuredPath": "sim/idle-e2-hill-mine.json"
+        },
+        {
+          "key": "county-e2-hill-mine",
+          "tapePath": "tapes/county-e2-hill-mine.json",
+          "measurement": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 16130.840040999989,
+            "log": "sim/county-e2-hill-mine-measure.log"
+          },
+          "verifier": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 15076.898791000014,
+            "log": "sim/county-e2-hill-mine-assay.log"
+          },
+          "measuredPath": "sim/county-e2-hill-mine.json"
+        }
+      ],
+      "grSim": {
+        "code": 0,
+        "signal": null,
+        "wallMs": 1874.1992920000048,
+        "log": "sim/e2-hill-mine-gr-sim.log"
+      },
+      "countyTape": "tapes/county-e2-hill-mine.json"
+    },
+    {
+      "map": "e2-trestle",
+      "host": {
+        "at": "2026-09-05T16:00:15.049Z",
+        "load": [
+          5.375,
+          7.447265625,
+          12.3408203125
+        ],
+        "freeMemory": 3872063488
+      },
+      "tapes": [
+        {
+          "key": "idle-e2-trestle",
+          "tapePath": "tapes/idle-e2-trestle.json",
+          "measurement": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 1978.5470000000205,
+            "log": "sim/idle-e2-trestle-measure.log"
+          },
+          "verifier": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 1565.3778750000056,
+            "log": "sim/idle-e2-trestle-assay.log"
+          },
+          "measuredPath": "sim/idle-e2-trestle.json"
+        },
+        {
+          "key": "county-e2-trestle",
+          "tapePath": "tapes/county-e2-trestle.json",
+          "measurement": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 26292.575291999965,
+            "log": "sim/county-e2-trestle-measure.log"
+          },
+          "verifier": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 25660.04691700003,
+            "log": "sim/county-e2-trestle-assay.log"
+          },
+          "measuredPath": "sim/county-e2-trestle.json"
+        }
+      ],
+      "grSim": {
+        "code": 0,
+        "signal": null,
+        "wallMs": 1751.175500000012,
+        "log": "sim/e2-trestle-gr-sim.log"
+      },
+      "countyTape": "tapes/county-e2-trestle.json"
+    },
+    {
+      "map": "e2-pressure-garden",
+      "host": {
+        "at": "2026-09-05T16:01:12.298Z",
+        "load": [
+          4.17626953125,
+          6.70166015625,
+          11.7255859375
+        ],
+        "freeMemory": 7095926784
+      },
+      "tapes": [
+        {
+          "key": "idle-e2-pressure-garden",
+          "tapePath": "tapes/idle-e2-pressure-garden.json",
+          "measurement": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 1890.780040999991,
+            "log": "sim/idle-e2-pressure-garden-measure.log"
+          },
+          "verifier": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 1538.3980829999782,
+            "log": "sim/idle-e2-pressure-garden-assay.log"
+          },
+          "measuredPath": "sim/idle-e2-pressure-garden.json"
+        },
+        {
+          "key": "county-e2-pressure-garden",
+          "tapePath": "tapes/county-e2-pressure-garden.json",
+          "measurement": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 6392.659083999984,
+            "log": "sim/county-e2-pressure-garden-measure.log"
+          },
+          "verifier": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 6030.57587499998,
+            "log": "sim/county-e2-pressure-garden-assay.log"
+          },
+          "measuredPath": "sim/county-e2-pressure-garden.json"
+        }
+      ],
+      "grSim": {
+        "code": 0,
+        "signal": null,
+        "wallMs": 1731.4862079999875,
+        "log": "sim/e2-pressure-garden-gr-sim.log"
+      },
+      "countyTape": "tapes/county-e2-pressure-garden.json"
+    },
+    {
+      "map": "e2-incline",
+      "host": {
+        "at": "2026-09-05T16:01:29.882Z",
+        "load": [
+          3.60791015625,
+          6.4541015625,
+          11.548828125
+        ],
+        "freeMemory": 6688964608
+      },
+      "tapes": [
+        {
+          "key": "idle-e2-incline",
+          "tapePath": "tapes/idle-e2-incline.json",
+          "measurement": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 1920.2619159999886,
+            "log": "sim/idle-e2-incline-measure.log"
+          },
+          "verifier": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 1621.413750000007,
+            "log": "sim/idle-e2-incline-assay.log"
+          },
+          "measuredPath": "sim/idle-e2-incline.json"
+        },
+        {
+          "key": "county-e2-incline",
+          "tapePath": "tapes/county-e2-incline.json",
+          "measurement": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 32645.73225,
+            "log": "sim/county-e2-incline-measure.log"
+          },
+          "verifier": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 32747.073416,
+            "log": "sim/county-e2-incline-assay.log"
+          },
+          "measuredPath": "sim/county-e2-incline.json"
+        }
+      ],
+      "grSim": {
+        "code": 0,
+        "signal": null,
+        "wallMs": 1765.990541999985,
+        "log": "sim/e2-incline-gr-sim.log"
+      },
+      "countyTape": "tapes/county-e2-incline.json"
+    },
+    {
+      "map": "e3-blackout-ridge",
+      "host": {
+        "at": "2026-09-05T16:02:40.584Z",
+        "load": [
+          23.25732421875,
+          10.10107421875,
+          12.4267578125
+        ],
+        "freeMemory": 4967677952
+      },
+      "tapes": [
+        {
+          "key": "idle-e3-blackout-ridge",
+          "tapePath": "tapes/idle-e3-blackout-ridge.json",
+          "measurement": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 3949.9317080000183,
+            "log": "sim/idle-e3-blackout-ridge-measure.log"
+          },
+          "verifier": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 3548.732707999996,
+            "log": "sim/idle-e3-blackout-ridge-assay.log"
+          },
+          "measuredPath": "sim/idle-e3-blackout-ridge.json"
+        },
+        {
+          "key": "county-e3-blackout-ridge",
+          "tapePath": "tapes/county-e3-blackout-ridge.json",
+          "measurement": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 12026.440125000023,
+            "log": "sim/county-e3-blackout-ridge-measure.log"
+          },
+          "verifier": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 11678.211165999994,
+            "log": "sim/county-e3-blackout-ridge-assay.log"
+          },
+          "measuredPath": "sim/county-e3-blackout-ridge.json"
+        }
+      ],
+      "grSim": {
+        "code": 0,
+        "signal": null,
+        "wallMs": 3772.4320420000004,
+        "log": "sim/e3-blackout-ridge-gr-sim.log"
+      },
+      "countyTape": "tapes/county-e3-blackout-ridge.json"
+    },
+    {
+      "map": "e3-moth-season",
+      "host": {
+        "at": "2026-09-05T16:03:15.560Z",
+        "load": [
+          57.53759765625,
+          20.07861328125,
+          15.9658203125
+        ],
+        "freeMemory": 2628222976
+      },
+      "tapes": [
+        {
+          "key": "idle-e3-moth-season",
+          "tapePath": "tapes/idle-e3-moth-season.json",
+          "measurement": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 2744.0878329999978,
+            "log": "sim/idle-e3-moth-season-measure.log"
+          },
+          "verifier": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 2393.331792000041,
+            "log": "sim/idle-e3-moth-season-assay.log"
+          },
+          "measuredPath": "sim/idle-e3-moth-season.json"
+        },
+        {
+          "key": "county-e3-moth-season",
+          "tapePath": "tapes/county-e3-moth-season.json",
+          "measurement": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 15155.580999999947,
+            "log": "sim/county-e3-moth-season-measure.log"
+          },
+          "verifier": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 20586.625916999998,
+            "log": "sim/county-e3-moth-season-assay.log"
+          },
+          "measuredPath": "sim/county-e3-moth-season.json"
+        }
+      ],
+      "grSim": {
+        "code": 0,
+        "signal": null,
+        "wallMs": 2587.3006250000326,
+        "log": "sim/e3-moth-season-gr-sim.log"
+      },
+      "countyTape": "tapes/county-e3-moth-season.json"
+    },
+    {
+      "map": "e3-fairground",
+      "host": {
+        "at": "2026-09-05T16:03:59.029Z",
+        "load": [
+          52.171875,
+          24.09912109375,
+          17.67333984375
+        ],
+        "freeMemory": 511098880
+      },
+      "tapes": [
+        {
+          "key": "idle-e3-fairground",
+          "tapePath": "tapes/idle-e3-fairground.json",
+          "measurement": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 7402.0966659999685,
+            "log": "sim/idle-e3-fairground-measure.log"
+          },
+          "verifier": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 6167.949957999983,
+            "log": "sim/idle-e3-fairground-assay.log"
+          },
+          "measuredPath": "sim/idle-e3-fairground.json"
+        },
+        {
+          "key": "county-e3-fairground",
+          "tapePath": "tapes/county-e3-fairground.json",
+          "measurement": {
+            "code": null,
+            "signal": "SIGKILL",
+            "wallMs": 60023.59612500004,
+            "log": "sim/county-e3-fairground-measure.log"
+          },
+          "verifier": {
+            "code": null,
+            "signal": "SIGKILL",
+            "wallMs": 60017.49820899998,
+            "log": "sim/county-e3-fairground-assay.log"
+          }
+        }
+      ],
+      "grSim": {
+        "code": 0,
+        "signal": null,
+        "wallMs": 9175.52675000002,
+        "log": "sim/e3-fairground-gr-sim.log"
+      },
+      "countyTape": "tapes/county-e3-fairground.json"
+    },
+    {
+      "map": "e4-dust-flats",
+      "host": {
+        "at": "2026-09-05T16:06:21.818Z",
+        "load": [
+          39.5751953125,
+          34.689453125,
+          23.4052734375
+        ],
+        "freeMemory": 15277260800
+      },
+      "tapes": [
+        {
+          "key": "idle-e4-dust-flats",
+          "tapePath": "tapes/idle-e4-dust-flats.json",
+          "measurement": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 5940.469999999972,
+            "log": "sim/idle-e4-dust-flats-measure.log"
+          },
+          "verifier": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 4959.034875000012,
+            "log": "sim/idle-e4-dust-flats-assay.log"
+          },
+          "measuredPath": "sim/idle-e4-dust-flats.json"
+        },
+        {
+          "key": "county-e4-dust-flats",
+          "tapePath": "tapes/county-e4-dust-flats.json",
+          "measurement": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 32136.88612499996,
+            "log": "sim/county-e4-dust-flats-measure.log"
+          },
+          "verifier": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 24882.866625000024,
+            "log": "sim/county-e4-dust-flats-assay.log"
+          },
+          "measuredPath": "sim/county-e4-dust-flats.json"
+        }
+      ],
+      "grSim": {
+        "code": 0,
+        "signal": null,
+        "wallMs": 6261.260374999954,
+        "log": "sim/e4-dust-flats-gr-sim.log"
+      },
+      "countyTape": "tapes/county-e4-dust-flats.json"
+    },
+    {
+      "map": "e4-long-road",
+      "host": {
+        "at": "2026-09-05T16:07:36.002Z",
+        "load": [
+          25.64404296875,
+          31.76611328125,
+          23.2080078125
+        ],
+        "freeMemory": 10342514688
+      },
+      "tapes": [
+        {
+          "key": "idle-e4-long-road",
+          "tapePath": "tapes/idle-e4-long-road.json",
+          "measurement": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 6571.514957999927,
+            "log": "sim/idle-e4-long-road-measure.log"
+          },
+          "verifier": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 5156.634250000003,
+            "log": "sim/idle-e4-long-road-assay.log"
+          },
+          "measuredPath": "sim/idle-e4-long-road.json"
+        },
+        {
+          "key": "county-e4-long-road",
+          "tapePath": "tapes/county-e4-long-road.json",
+          "measurement": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 23246.518249999965,
+            "log": "sim/county-e4-long-road-measure.log"
+          },
+          "verifier": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 13183.907540999935,
+            "log": "sim/county-e4-long-road-assay.log"
+          },
+          "measuredPath": "sim/county-e4-long-road.json"
+        }
+      ],
+      "grSim": {
+        "code": 0,
+        "signal": null,
+        "wallMs": 6038.901458000066,
+        "log": "sim/e4-long-road-gr-sim.log"
+      },
+      "countyTape": "tapes/county-e4-long-road.json"
+    },
+    {
+      "map": "e4-boneyard",
+      "host": {
+        "at": "2026-09-05T16:08:30.200Z",
+        "load": [
+          21.0615234375,
+          29.5224609375,
+          22.912109375
+        ],
+        "freeMemory": 10959273984
+      },
+      "tapes": [
+        {
+          "key": "idle-e4-boneyard",
+          "tapePath": "tapes/idle-e4-boneyard.json",
+          "measurement": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 4201.707541999989,
+            "log": "sim/idle-e4-boneyard-measure.log"
+          },
+          "verifier": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 2969.5935000000754,
+            "log": "sim/idle-e4-boneyard-assay.log"
+          },
+          "measuredPath": "sim/idle-e4-boneyard.json"
+        },
+        {
+          "key": "county-e4-boneyard",
+          "tapePath": "tapes/county-e4-boneyard.json",
+          "measurement": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 17780.19650000008,
+            "log": "sim/county-e4-boneyard-measure.log"
+          },
+          "verifier": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 14966.634415999986,
+            "log": "sim/county-e4-boneyard-assay.log"
+          },
+          "measuredPath": "sim/county-e4-boneyard.json"
+        }
+      ],
+      "grSim": {
+        "code": 0,
+        "signal": null,
+        "wallMs": 3342.0242089999374,
+        "log": "sim/e4-boneyard-gr-sim.log"
+      },
+      "countyTape": "tapes/county-e4-boneyard.json"
+    },
+    {
+      "map": "e5-deepwater-claim",
+      "host": {
+        "at": "2026-09-05T16:09:13.461Z",
+        "load": [
+          17.82861328125,
+          27.609375,
+          22.5546875
+        ],
+        "freeMemory": 7651278848
+      },
+      "tapes": [
+        {
+          "key": "idle-e5-deepwater-claim",
+          "tapePath": "tapes/idle-e5-deepwater-claim.json",
+          "measurement": {
+            "code": 1,
+            "signal": null,
+            "wallMs": 9945.788249999983,
+            "log": "sim/idle-e5-deepwater-claim-measure.log"
+          },
+          "verifier": {
+            "code": 1,
+            "signal": null,
+            "wallMs": 8499.237333000056,
+            "log": "sim/idle-e5-deepwater-claim-assay.log"
+          }
+        },
+        {
+          "key": "county-e5-deepwater-claim",
+          "tapePath": "tapes/county-e5-deepwater-claim.json",
+          "measurement": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 4781.54224999994,
+            "log": "sim/county-e5-deepwater-claim-measure.log"
+          },
+          "verifier": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 3828.7942909999983,
+            "log": "sim/county-e5-deepwater-claim-assay.log"
+          },
+          "measuredPath": "sim/county-e5-deepwater-claim.json"
+        }
+      ],
+      "grSim": {
+        "code": 0,
+        "signal": null,
+        "wallMs": 4317.912125000032,
+        "log": "sim/e5-deepwater-claim-gr-sim.log"
+      },
+      "countyTape": "tapes/county-e5-deepwater-claim.json"
+    },
+    {
+      "map": "e5-regatta",
+      "host": {
+        "at": "2026-09-05T16:09:44.853Z",
+        "load": [
+          15.30810546875,
+          26.05517578125,
+          22.1650390625
+        ],
+        "freeMemory": 8241119232
+      },
+      "tapes": [
+        {
+          "key": "idle-e5-regatta",
+          "tapePath": "tapes/idle-e5-regatta.json",
+          "measurement": {
+            "code": 1,
+            "signal": null,
+            "wallMs": 9987.31549999991,
+            "log": "sim/idle-e5-regatta-measure.log"
+          },
+          "verifier": {
+            "code": 1,
+            "signal": null,
+            "wallMs": 7961.090708000003,
+            "log": "sim/idle-e5-regatta-assay.log"
+          }
+        },
+        {
+          "key": "county-e5-regatta",
+          "tapePath": "tapes/county-e5-regatta.json",
+          "measurement": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 7014.467958000023,
+            "log": "sim/county-e5-regatta-measure.log"
+          },
+          "verifier": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 6399.494750000071,
+            "log": "sim/county-e5-regatta-assay.log"
+          },
+          "measuredPath": "sim/county-e5-regatta.json"
+        }
+      ],
+      "grSim": {
+        "code": 0,
+        "signal": null,
+        "wallMs": 4117.290541999973,
+        "log": "sim/e5-regatta-gr-sim.log"
+      },
+      "countyTape": "tapes/county-e5-regatta.json"
+    },
+    {
+      "map": "e5-stillwater",
+      "host": {
+        "at": "2026-09-05T16:10:20.333Z",
+        "load": [
+          12.61962890625,
+          24.2109375,
+          21.64990234375
+        ],
+        "freeMemory": 7351042048
+      },
+      "tapes": [
+        {
+          "key": "idle-e5-stillwater",
+          "tapePath": "tapes/idle-e5-stillwater.json",
+          "measurement": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 2405.991625000024,
+            "log": "sim/idle-e5-stillwater-measure.log"
+          },
+          "verifier": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 1991.2243330000201,
+            "log": "sim/idle-e5-stillwater-assay.log"
+          },
+          "measuredPath": "sim/idle-e5-stillwater.json"
+        },
+        {
+          "key": "county-e5-stillwater",
+          "tapePath": "tapes/county-e5-stillwater.json",
+          "measurement": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 6041.648667000001,
+            "log": "sim/county-e5-stillwater-measure.log"
+          },
+          "verifier": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 4966.868041999987,
+            "log": "sim/county-e5-stillwater-assay.log"
+          },
+          "measuredPath": "sim/county-e5-stillwater.json"
+        }
+      ],
+      "grSim": {
+        "code": 0,
+        "signal": null,
+        "wallMs": 2217.617499999935,
+        "log": "sim/e5-stillwater-gr-sim.log"
+      },
+      "countyTape": "tapes/county-e5-stillwater.json"
+    },
+    {
+      "map": "e5-flotilla",
+      "host": {
+        "at": "2026-09-05T16:10:37.953Z",
+        "load": [
+          11.423828125,
+          23.19091796875,
+          21.34326171875
+        ],
+        "freeMemory": 7708459008
+      },
+      "tapes": [
+        {
+          "key": "idle-e5-flotilla",
+          "tapePath": "tapes/idle-e5-flotilla.json",
+          "measurement": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 2020.8208749999758,
+            "log": "sim/idle-e5-flotilla-measure.log"
+          },
+          "verifier": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 1626.6124999999302,
+            "log": "sim/idle-e5-flotilla-assay.log"
+          },
+          "measuredPath": "sim/idle-e5-flotilla.json"
+        },
+        {
+          "key": "county-e5-flotilla",
+          "tapePath": "tapes/county-e5-flotilla.json",
+          "measurement": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 9109.351249999949,
+            "log": "sim/county-e5-flotilla-measure.log"
+          },
+          "verifier": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 8591.940917000058,
+            "log": "sim/county-e5-flotilla-assay.log"
+          },
+          "measuredPath": "sim/county-e5-flotilla.json"
+        }
+      ],
+      "grSim": {
+        "code": 0,
+        "signal": null,
+        "wallMs": 1787.1758750000736,
+        "log": "sim/e5-flotilla-gr-sim.log"
+      },
+      "countyTape": "tapes/county-e5-flotilla.json"
+    },
+    {
+      "map": "e6-glow-mesa",
+      "host": {
+        "at": "2026-09-05T16:11:01.087Z",
+        "load": [
+          11.0849609375,
+          22.3388671875,
+          21.07861328125
+        ],
+        "freeMemory": 5713575936
+      },
+      "tapes": [
+        {
+          "key": "idle-e6-glow-mesa",
+          "tapePath": "tapes/idle-e6-glow-mesa.json",
+          "measurement": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 5909.716082999948,
+            "log": "sim/idle-e6-glow-mesa-measure.log"
+          },
+          "verifier": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 5416.065165999928,
+            "log": "sim/idle-e6-glow-mesa-assay.log"
+          },
+          "measuredPath": "sim/idle-e6-glow-mesa.json"
+        },
+        {
+          "key": "county-e6-glow-mesa",
+          "tapePath": "tapes/county-e6-glow-mesa.json",
+          "measurement": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 14944.696500000078,
+            "log": "sim/county-e6-glow-mesa-measure.log"
+          },
+          "verifier": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 12899.102249999996,
+            "log": "sim/county-e6-glow-mesa-assay.log"
+          },
+          "measuredPath": "sim/county-e6-glow-mesa.json"
+        }
+      ],
+      "grSim": {
+        "code": 0,
+        "signal": null,
+        "wallMs": 6444.655833000084,
+        "log": "sim/e6-glow-mesa-gr-sim.log"
+      },
+      "countyTape": "tapes/county-e6-glow-mesa.json"
+    },
+    {
+      "map": "e6-half-life-hollow",
+      "host": {
+        "at": "2026-09-05T16:11:46.702Z",
+        "load": [
+          12.0703125,
+          20.98828125,
+          20.65673828125
+        ],
+        "freeMemory": 8131543040
+      },
+      "tapes": [
+        {
+          "key": "idle-e6-half-life-hollow",
+          "tapePath": "tapes/idle-e6-half-life-hollow.json",
+          "measurement": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 3098.2757909999928,
+            "log": "sim/idle-e6-half-life-hollow-measure.log"
+          },
+          "verifier": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 2053.170749999932,
+            "log": "sim/idle-e6-half-life-hollow-assay.log"
+          },
+          "measuredPath": "sim/idle-e6-half-life-hollow.json"
+        },
+        {
+          "key": "county-e6-half-life-hollow",
+          "tapePath": "tapes/county-e6-half-life-hollow.json",
+          "measurement": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 51567.00699999998,
+            "log": "sim/county-e6-half-life-hollow-measure.log"
+          },
+          "verifier": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 53074.5567079999,
+            "log": "sim/county-e6-half-life-hollow-assay.log"
+          },
+          "measuredPath": "sim/county-e6-half-life-hollow.json"
+        }
+      ],
+      "grSim": {
+        "code": 0,
+        "signal": null,
+        "wallMs": 2584.6964579999913,
+        "log": "sim/e6-half-life-hollow-gr-sim.log"
+      },
+      "countyTape": "tapes/county-e6-half-life-hollow.json"
+    },
+    {
+      "map": "e7-echo-canyon",
+      "host": {
+        "at": "2026-09-05T16:13:39.081Z",
+        "load": [
+          25.74365234375,
+          22.11474609375,
+          21.05322265625
+        ],
+        "freeMemory": 11214782464
+      },
+      "tapes": [
+        {
+          "key": "idle-e7-echo-canyon",
+          "tapePath": "tapes/idle-e7-echo-canyon.json",
+          "measurement": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 3184.0993329999037,
+            "log": "sim/idle-e7-echo-canyon-measure.log"
+          },
+          "verifier": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 3346.7120829999913,
+            "log": "sim/idle-e7-echo-canyon-assay.log"
+          },
+          "measuredPath": "sim/idle-e7-echo-canyon.json"
+        },
+        {
+          "key": "county-e7-echo-canyon",
+          "tapePath": "tapes/county-e7-echo-canyon.json",
+          "measurement": {
+            "code": null,
+            "signal": "SIGKILL",
+            "wallMs": 60016.60474999994,
+            "log": "sim/county-e7-echo-canyon-measure.log"
+          },
+          "verifier": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 38256.33741699997,
+            "log": "sim/county-e7-echo-canyon-assay.log"
+          }
+        }
+      ],
+      "grSim": {
+        "code": 0,
+        "signal": null,
+        "wallMs": 3030.518625000026,
+        "log": "sim/e7-echo-canyon-gr-sim.log"
+      },
+      "countyTape": "tapes/county-e7-echo-canyon.json"
+    },
+    {
+      "map": "e7-dead-band",
+      "host": {
+        "at": "2026-09-05T16:15:26.917Z",
+        "load": [
+          22.14697265625,
+          22.9169921875,
+          21.54931640625
+        ],
+        "freeMemory": 5961678848
+      },
+      "tapes": [
+        {
+          "key": "idle-e7-dead-band",
+          "tapePath": "tapes/idle-e7-dead-band.json",
+          "measurement": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 3705.4966250001453,
+            "log": "sim/idle-e7-dead-band-measure.log"
+          },
+          "verifier": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 3043.238582999911,
+            "log": "sim/idle-e7-dead-band-assay.log"
+          },
+          "measuredPath": "sim/idle-e7-dead-band.json"
+        },
+        {
+          "key": "county-e7-dead-band",
+          "tapePath": "tapes/county-e7-dead-band.json",
+          "measurement": {
+            "code": null,
+            "signal": "SIGKILL",
+            "wallMs": 60016.10208400013,
+            "log": "sim/county-e7-dead-band-measure.log"
+          },
+          "verifier": {
+            "code": null,
+            "signal": "SIGKILL",
+            "wallMs": 60016.296583000105,
+            "log": "sim/county-e7-dead-band-assay.log"
+          }
+        }
+      ],
+      "grSim": {
+        "code": 0,
+        "signal": null,
+        "wallMs": 2998.948709000135,
+        "log": "sim/e7-dead-band-gr-sim.log"
+      },
+      "countyTape": "tapes/county-e7-dead-band.json"
+    },
+    {
+      "map": "e7-relay-rush",
+      "host": {
+        "at": "2026-09-05T16:17:36.699Z",
+        "load": [
+          16.81298828125,
+          20.66162109375,
+          20.84521484375
+        ],
+        "freeMemory": 9622454272
+      },
+      "tapes": [
+        {
+          "key": "idle-e7-relay-rush",
+          "tapePath": "tapes/idle-e7-relay-rush.json",
+          "measurement": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 3912.584833999863,
+            "log": "sim/idle-e7-relay-rush-measure.log"
+          },
+          "verifier": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 3147.7005000000354,
+            "log": "sim/idle-e7-relay-rush-assay.log"
+          },
+          "measuredPath": "sim/idle-e7-relay-rush.json"
+        },
+        {
+          "key": "county-e7-relay-rush",
+          "tapePath": "tapes/county-e7-relay-rush.json",
+          "measurement": {
+            "code": null,
+            "signal": "SIGKILL",
+            "wallMs": 60032.95108300005,
+            "log": "sim/county-e7-relay-rush-measure.log"
+          },
+          "verifier": {
+            "code": null,
+            "signal": "SIGKILL",
+            "wallMs": 60021.12091699988,
+            "log": "sim/county-e7-relay-rush-assay.log"
+          }
+        }
+      ],
+      "grSim": {
+        "code": 0,
+        "signal": null,
+        "wallMs": 5796.535457999911,
+        "log": "sim/e7-relay-rush-gr-sim.log"
+      },
+      "countyTape": "tapes/county-e7-relay-rush.json"
+    },
+    {
+      "map": "e8-far-side",
+      "host": {
+        "at": "2026-09-05T16:19:49.611Z",
+        "load": [
+          22.67578125,
+          21.6611328125,
+          21.21875
+        ],
+        "freeMemory": 9716613120
+      },
+      "tapes": [
+        {
+          "key": "idle-e8-far-side",
+          "tapePath": "tapes/idle-e8-far-side.json",
+          "measurement": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 3234.4887920001056,
+            "log": "sim/idle-e8-far-side-measure.log"
+          },
+          "verifier": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 2623.4087090000976,
+            "log": "sim/idle-e8-far-side-assay.log"
+          },
+          "measuredPath": "sim/idle-e8-far-side.json"
+        },
+        {
+          "key": "county-e8-far-side",
+          "tapePath": "tapes/county-e8-far-side.json",
+          "measurement": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 57545.143666000105,
+            "log": "sim/county-e8-far-side-measure.log"
+          },
+          "verifier": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 32348.218707999913,
+            "log": "sim/county-e8-far-side-assay.log"
+          },
+          "measuredPath": "sim/county-e8-far-side.json"
+        }
+      ],
+      "grSim": {
+        "code": 0,
+        "signal": null,
+        "wallMs": 4619.450959000038,
+        "log": "sim/e8-far-side-gr-sim.log"
+      },
+      "countyTape": "tapes/county-e8-far-side.json"
+    },
+    {
+      "map": "e8-low-orbit",
+      "host": {
+        "at": "2026-09-05T16:21:29.983Z",
+        "load": [
+          20.45556640625,
+          21.53515625,
+          21.2353515625
+        ],
+        "freeMemory": 11831525376
+      },
+      "tapes": [
+        {
+          "key": "idle-e8-low-orbit",
+          "tapePath": "tapes/idle-e8-low-orbit.json",
+          "measurement": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 2920.261832999997,
+            "log": "sim/idle-e8-low-orbit-measure.log"
+          },
+          "verifier": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 3479.021291999845,
+            "log": "sim/idle-e8-low-orbit-assay.log"
+          },
+          "measuredPath": "sim/idle-e8-low-orbit.json"
+        },
+        {
+          "key": "county-e8-low-orbit",
+          "tapePath": "tapes/county-e8-low-orbit.json",
+          "measurement": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 59644.154374999925,
+            "log": "sim/county-e8-low-orbit-measure.log"
+          },
+          "verifier": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 58021.81258299993,
+            "log": "sim/county-e8-low-orbit-assay.log"
+          },
+          "measuredPath": "sim/county-e8-low-orbit.json"
+        }
+      ],
+      "grSim": {
+        "code": 0,
+        "signal": null,
+        "wallMs": 2820.7455829998944,
+        "log": "sim/e8-low-orbit-gr-sim.log"
+      },
+      "countyTape": "tapes/county-e8-low-orbit.json"
+    },
+    {
+      "map": "e8-eclipse",
+      "host": {
+        "at": "2026-09-05T16:23:36.872Z",
+        "load": [
+          18.85205078125,
+          20.8525390625,
+          21.0244140625
+        ],
+        "freeMemory": 10240933888
+      },
+      "tapes": [
+        {
+          "key": "idle-e8-eclipse",
+          "tapePath": "tapes/idle-e8-eclipse.json",
+          "measurement": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 4386.05941700004,
+            "log": "sim/idle-e8-eclipse-measure.log"
+          },
+          "verifier": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 3938.791959000053,
+            "log": "sim/idle-e8-eclipse-assay.log"
+          },
+          "measuredPath": "sim/idle-e8-eclipse.json"
+        },
+        {
+          "key": "county-e8-eclipse",
+          "tapePath": "tapes/county-e8-eclipse.json",
+          "measurement": {
+            "code": null,
+            "signal": "SIGKILL",
+            "wallMs": 60019.77958300011,
+            "log": "sim/county-e8-eclipse-measure.log"
+          },
+          "verifier": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 53209.37750000018,
+            "log": "sim/county-e8-eclipse-assay.log"
+          }
+        }
+      ],
+      "grSim": {
+        "code": 0,
+        "signal": null,
+        "wallMs": 4164.578959000064,
+        "log": "sim/e8-eclipse-gr-sim.log"
+      },
+      "countyTape": "tapes/county-e8-eclipse.json"
+    },
+    {
+      "map": "e10-last-claim",
+      "host": {
+        "at": "2026-09-05T16:25:42.593Z",
+        "load": [
+          23.81103515625,
+          21.81298828125,
+          21.36376953125
+        ],
+        "freeMemory": 9821077504
+      },
+      "tapes": [
+        {
+          "key": "idle-e10-last-claim",
+          "tapePath": "tapes/idle-e10-last-claim.json",
+          "measurement": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 3485.5231669999193,
+            "log": "sim/idle-e10-last-claim-measure.log"
+          },
+          "verifier": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 3161.3255410001148,
+            "log": "sim/idle-e10-last-claim-assay.log"
+          },
+          "measuredPath": "sim/idle-e10-last-claim.json"
+        },
+        {
+          "key": "county-e10-last-claim",
+          "tapePath": "tapes/county-e10-last-claim.json",
+          "measurement": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 32459.49549999996,
+            "log": "sim/county-e10-last-claim-measure.log"
+          },
+          "verifier": {
+            "code": 0,
+            "signal": null,
+            "wallMs": 25897.563791999826,
+            "log": "sim/county-e10-last-claim-assay.log"
+          },
+          "measuredPath": "sim/county-e10-last-claim.json"
+        }
+      ],
+      "grSim": {
+        "code": 0,
+        "signal": null,
+        "wallMs": 3199.6275830001105,
+        "log": "sim/e10-last-claim-gr-sim.log"
+      },
+      "countyTape": "tapes/county-e10-last-claim.json"
+    }
+  ]
+}

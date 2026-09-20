@@ -1,0 +1,20 @@
+null floors rc=0 Wrote 83 null floors to assets/contracts/null-floors.json in 318.5s.
+null floors check rc=0 83 of 83 null floors match assets/contracts/null-floors.json (293.4s).
+pin #12
+era guards rc=0 ℹ pass 9 ℹ fail 0 
+pinned 9e2851bd2
+tsc rc=0
+build rc=0
+e1 build rc=0
+payload rc=0 first-town payload: 34645358 bytes
+halo rc=0 halo re-extraction PASS: 379 cured, 0 held, 696 regenerated-and-cured, 2127 scanned; alpha
+character-direction-assets rc=1
+battery rc=1 ℹ tests 929 ℹ pass 923 ℹ fail 1 ℹ skipped 5 
+    'CONTENDED — 2 concurrent batteries\n'
+    'CONTENDED — 2 concurrent batteries\n' +
+    actual: '✖ fail (0.408459ms)\nℹ tests 1\nℹ suites 0\nℹ pass 0\nℹ fail 1\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 56.422125\n\n✖ failing tests:\n
+    expected: /CONTENDED/,
+  AssertionError [ERR_ASSERTION]: The input was expected to not match the regular expression /CONTENDED/. Input:
+✖ contention is advisory, correctly counted, and absent when alone (2243.022416ms)
+✖ failing tests:
+STRIPS-GATES-READ

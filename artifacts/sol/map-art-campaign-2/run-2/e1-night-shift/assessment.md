@@ -1,0 +1,3 @@
+UNACCEPTED: lantern sequence and warm light pools are not communicated in the plain entry view; the river and foreground rig lose dark detail, the rig is cropped, and phone story/HUD cards cover the player-facing space.
+
+No cheap material-only correction was promoted: the dominant problems are the entry composition, local light hierarchy and foreground framing. The desktop capture includes the real automatic quality-reduction notice under host load; it is not hidden or counted as an art improvement. The phone story card is also retained in evidence. Camera/HUD and character assets are excluded.

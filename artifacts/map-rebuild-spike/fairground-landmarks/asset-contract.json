@@ -1,0 +1,112 @@
+{
+  "law": "reuse > derive > build-new; era-stamped; grit-dressed",
+  "packs": {
+    "fairground": {
+      "era": 3,
+      "atlasSha256": "3573fb688b1ae37ff45b00f7be6dbc6b3e08e797c0b84e875c9edda1be560f40",
+      "assets": {
+        "south-midway-admission-arch": {
+          "sourceTier": "derive",
+          "triangles": 1324,
+          "sha256": "01486bcf068c69a4a1f4421acc2ccf0a8f50ab586c2e83b11c3e084e21354a23",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "west-current-calliope-wagon": {
+          "sourceTier": "reuse",
+          "triangles": 2696,
+          "sha256": "e35fe0556a3443764f3b8b49ef07577973dc38580c8b0371ba7271a7446cd461",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "east-mothglass-prize-cage": {
+          "sourceTier": "derive",
+          "triangles": 1048,
+          "sha256": "dc610c9946d874e81519bb739bed054ce5595918f12a4f3605d293da345775fd",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "north-crowd-counting-rostrum": {
+          "sourceTier": "reuse",
+          "triangles": 1196,
+          "sha256": "0f7ab32d3b1e6d37db7de2bfc69890b120ab63f27aa4304b2b3738e1b6f80c89",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "fair-bell-battery-kiosk": {
+          "sourceTier": "reuse",
+          "triangles": 1268,
+          "sha256": "7d6b909868f733a0f938762d7acdc465bd038562dd70000cba484cbe3650e1b2",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        }
+      }
+    }
+  },
+  "totals": {
+    "packs": 1,
+    "assets": 5,
+    "sourceTiers": {
+      "reuse": 3,
+      "derive": 2,
+      "build-new": 0
+    }
+  },
+  "boards": {
+    "fairground-landmarks-turntable.png": {
+      "size": [
+        1920,
+        1160
+      ],
+      "sha256": "deb2cadda8db00aef26237207c74684297c67fe9349a21cb1611c86a9f96d115"
+    },
+    "fairground-landmarks-verdict.png": {
+      "size": [
+        1920,
+        1008
+      ],
+      "sha256": "80e78db82b2f1214d7861d715f9bed324d360219631e087e62810ed8be977ae7"
+    },
+    "fairground-landmarks-pack.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "2e32ac1a65f9e26e083b5ad87996c3f40e84999369bc5c24c69c7b18bc9d1be6"
+    },
+    "fairground-landmarks-proposed.png": {
+      "size": [
+        1600,
+        900
+      ],
+      "sha256": "9ae88e4f4339a82325c3bd5ac010ca9c600b9a7be7b2ce061ed717b4a84dc9db"
+    },
+    "fairground-landmarks-proposed-overview.png": {
+      "size": [
+        1600,
+        900
+      ],
+      "sha256": "070d3bee2a904b1f54ffc2b10df5689c5f1bcade537b26442e36a41b0941ff1d"
+    },
+    "fairground-landmarks-bare-reference.png": {
+      "size": [
+        1600,
+        900
+      ],
+      "sha256": "98e99c6207dbcddf44da3bfe24bcdf315e33103cd23764afe8eb12dc8a0df9a6"
+    },
+    "fairground-landmarks-clearance-overlay.png": {
+      "size": [
+        1600,
+        900
+      ],
+      "sha256": "6c4e1e9d2b0b2be66e71f5a8f7085a549e7e488f8892a7060ccc5d04cc199cfe"
+    }
+  },
+  "simulation": "unchanged; every landmark is a separate render-only GLB mounted by contract"
+}

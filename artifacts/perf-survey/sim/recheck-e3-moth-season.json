@@ -1,0 +1,197 @@
+{
+  "key": "recheck-e3-moth-season",
+  "tapePath": "tapes/county-e3-moth-season.json",
+  "contract": "e3-moth-season",
+  "kind": "county-played",
+  "node": "v26.4.0",
+  "before": {
+    "at": "2026-09-05T16:29:17.564Z",
+    "load": [
+      16.52001953125,
+      19.7880859375,
+      20.71435546875
+    ],
+    "freeMemory": 2003959808
+  },
+  "after": {
+    "at": "2026-09-05T16:29:39.922Z",
+    "load": [
+      15.154296875,
+      19.27880859375,
+      20.5107421875
+    ],
+    "freeMemory": 1380892672
+  },
+  "declaredDurationTicks": 10801,
+  "simulatedSeconds": 546.3333333333334,
+  "bootMs": 42.98341699999992,
+  "replayMs": 20482.858207999998,
+  "ticksPerSecond": 800.1812946983421,
+  "realtimeMultiple": 26.672709823278073,
+  "estimateTenMinuteSeconds": 22.49490224185478,
+  "estimateFormula": "600 seconds / measured realtimeMultiple; extrapolation, not an actual 10-minute tape when duration differs",
+  "tickMs": {
+    "n": 16390,
+    "min": 0.3405840000000353,
+    "p50": 1.1947920000002341,
+    "p95": 1.8774579999990237,
+    "p99": 3.057415999999648,
+    "max": 29.19024999999965
+  },
+  "tickPath": "sim/recheck-e3-moth-season-ticks.json",
+  "result": {
+    "eventLogHash": "fnv1a32:9be0399e",
+    "outcome": {
+      "secured": false,
+      "waves": 18,
+      "gold": 194,
+      "timeAlive": 546.333
+    },
+    "ticks": 16390,
+    "engine": "headless-contract-sim"
+  },
+  "expectedHash": "fnv1a32:64e32dde",
+  "hashMatches": false,
+  "top20": [
+    {
+      "name": "structuredClone",
+      "url": "node:internal/worker/js_transferable",
+      "line": 113,
+      "column": 25,
+      "selfMs": 4187.183
+    },
+    {
+      "name": "terrainSeed",
+      "url": "",
+      "line": 1469,
+      "column": 21,
+      "selfMs": 1710.0349999999994
+    },
+    {
+      "name": "terrainHash",
+      "url": "",
+      "line": 1486,
+      "column": 21,
+      "selfMs": 1145.6399999999999
+    },
+    {
+      "name": "structuredClone",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 940.112
+    },
+    {
+      "name": "(anonymous)",
+      "url": "",
+      "line": 193,
+      "column": 26,
+      "selfMs": 654.248
+    },
+    {
+      "name": "update",
+      "url": "",
+      "line": 809,
+      "column": 8,
+      "selfMs": 648.427
+    },
+    {
+      "name": "get diagnostics",
+      "url": "",
+      "line": 484,
+      "column": 17,
+      "selfMs": 521.2120000000001
+    },
+    {
+      "name": "clone",
+      "url": "",
+      "line": 320,
+      "column": 15,
+      "selfMs": 509.887
+    },
+    {
+      "name": "stableProbeMask",
+      "url": "",
+      "line": 1266,
+      "column": 25,
+      "selfMs": 491.97099999999995
+    },
+    {
+      "name": "diagnostics",
+      "url": "",
+      "line": 1795,
+      "column": 13,
+      "selfMs": 398.487
+    },
+    {
+      "name": "maxHpForInstance",
+      "url": "",
+      "line": 1619,
+      "column": 18,
+      "selfMs": 323.931
+    },
+    {
+      "name": "setFromEuler",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 4167,
+      "column": 14,
+      "selfMs": 305.658
+    },
+    {
+      "name": "multiplyMatrices",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 10385,
+      "column": 18,
+      "selfMs": 292.01
+    },
+    {
+      "name": "(program)",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 257.966
+    },
+    {
+      "name": "toArray",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 11099,
+      "column": 9,
+      "selfMs": 248.11499999999998
+    },
+    {
+      "name": "currentTrickleInterval",
+      "url": "",
+      "line": 641,
+      "column": 24,
+      "selfMs": 231.661
+    },
+    {
+      "name": "maxHpForPlacement",
+      "url": "",
+      "line": 1622,
+      "column": 19,
+      "selfMs": 214.26100000000002
+    },
+    {
+      "name": "(garbage collector)",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 196.095
+    },
+    {
+      "name": "terrainFeatures",
+      "url": "",
+      "line": 1193,
+      "column": 25,
+      "selfMs": 194.10699999999994
+    },
+    {
+      "name": "hpBarDiagnostics",
+      "url": "",
+      "line": 1663,
+      "column": 18,
+      "selfMs": 188.369
+    }
+  ]
+}

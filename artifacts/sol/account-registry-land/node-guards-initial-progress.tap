@@ -1,0 +1,247 @@
+TAP version 13
+# Subtest: VACUUM INTO backup restores byte-identical ledger rows
+ok 1 - VACUUM INTO backup restores byte-identical ledger rows
+  ---
+  duration_ms: 59.285625
+  type: 'test'
+  ...
+# Subtest: rotation deletes only dated ledger backups older than 14 days
+ok 2 - rotation deletes only dated ledger backups older than 14 days
+  ---
+  duration_ms: 3.737333
+  type: 'test'
+  ...
+# (node:72882) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: agent reel validation reuses the door bounds and CLI tape content stays deterministic under unique ids
+not ok 3 - agent reel validation reuses the door bounds and CLI tape content stays deterministic under unique ids
+  ---
+  duration_ms: 51102.307208
+  type: 'test'
+  location: '/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/scripts/agent-reels.test.mjs:14:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    (node:81077) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+    (Use `node --trace-warnings ...` to show where the warning was created)
+    
+    
+    null !== 0
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: ~
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/scripts/agent-reels.test.mjs:86:14)
+    process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+  ...
+# Subtest: agent consent keeps the ruled pan and build rungs plus shipped repair rung
+ok 4 - agent consent keeps the ruled pan and build rungs plus shipped repair rung
+  ---
+  duration_ms: 36.500292
+  type: 'test'
+  ...
+# Subtest: tool surface keeps auto-pan and place-building at their ruled rungs
+ok 5 - tool surface keeps auto-pan and place-building at their ruled rungs
+  ---
+  duration_ms: 0.351458
+  type: 'test'
+  ...
+# Subtest: standing orders keep harvest at rung 2 and build at rung 3
+ok 6 - standing orders keep harvest at rung 2 and build at rung 3
+  ---
+  duration_ms: 0.442417
+  type: 'test'
+  ...
+# (node:72885) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# [gold-rush] performance tier {
+#   tier: 'full',
+#   override: 'auto',
+#   source: 'auto',
+#   reason: 'desktop-class defaults',
+#   gpuRenderer: 'unknown',
+#   deviceMemory: null,
+#   userAgent: 'Node.js/26',
+#   config: {
+#     maxDpr: 2,
+#     shadowsQuality: 'soft',
+#     shadowMapSize: 1536,
+#     fogNear: 42,
+#     fogFar: 88,
+#     postEnabled: true,
+#     postPaperGrainOpacity: 0.008,
+#     detailDensity: 1,
+#     detailMobileDensity: 0.42,
+#     terrainSegments: 64,
+#     terrainMobileSegments: 40,
+#     vistaSegments: 12,
+#     vistaMobileSegments: 7,
+#     waterQuality: 1,
+#     waterMobileQuality: 0.55,
+#     terrainMesh: false,
+#     terrainSplat: false,
+#     terrainMeshVertexStep: 1,
+#     floatTextPool: 12,
+#     combatVfxPuffs: 32,
+#     combatVfxTicks: 48,
+#     combatVfxRings: 8,
+#     freedWalkerCap: 10,
+#     enemyBarCap: 60
+#   },
+#   runtimeVerdict: 0
+# }
+# Subtest: a wire act crosses into the sim and changes it
+ok 7 - a wire act crosses into the sim and changes it
+  ---
+  duration_ms: 58429.275125
+  type: 'test'
+  ...
+# Subtest: agent_orders validates the standing-order grammar and wire bounds
+ok 8 - agent_orders validates the standing-order grammar and wire bounds
+  ---
+  duration_ms: 1986.359583
+  type: 'test'
+  ...
+# [gold-rush] performance tier {
+#   tier: 'full',
+#   override: 'auto',
+#   source: 'auto',
+#   reason: 'desktop-class defaults',
+#   gpuRenderer: 'unknown',
+#   deviceMemory: null,
+#   userAgent: 'Node.js/26',
+#   config: {
+#     maxDpr: 2,
+#     shadowsQuality: 'soft',
+#     shadowMapSize: 1536,
+#     fogNear: 42,
+#     fogFar: 88,
+#     postEnabled: true,
+#     postPaperGrainOpacity: 0.008,
+#     detailDensity: 1,
+#     detailMobileDensity: 0.42,
+#     terrainSegments: 64,
+#     terrainMobileSegments: 40,
+#     vistaSegments: 12,
+#     vistaMobileSegments: 7,
+#     waterQuality: 1,
+#     waterMobileQuality: 0.55,
+#     terrainMesh: false,
+#     terrainSplat: false,
+#     terrainMeshVertexStep: 1,
+#     floatTextPool: 12,
+#     combatVfxPuffs: 32,
+#     combatVfxTicks: 48,
+#     combatVfxRings: 8,
+#     freedWalkerCap: 10,
+#     enemyBarCap: 60
+#   },
+#   runtimeVerdict: 0
+# }
+# Subtest: two independently booted sims agree tick for tick
+ok 9 - two independently booted sims agree tick for tick
+  ---
+  duration_ms: 45534.91625
+  type: 'test'
+  ...
+# Subtest: the seat carries BUILD and refuses to stretch for the rest
+ok 10 - the seat carries BUILD and refuses to stretch for the rest
+  ---
+  duration_ms: 619.088958
+  type: 'test'
+  ...
+# Subtest: the seat carries the facing, and refuses a facing the county does not keep
+ok 11 - the seat carries the facing, and refuses a facing the county does not keep
+  ---
+  duration_ms: 661.061458
+  type: 'test'
+  ...
+# Subtest: the throttle ceiling is the relay rate limit, not a taste
+ok 12 - the throttle ceiling is the relay rate limit, not a taste
+  ---
+  duration_ms: 31562.65925
+  type: 'test'
+  ...
+# Generation provenance: 8 cases passed; no real CLI or image generation.
+# Factory prompts: 72 cast/direction cases passed; complete walking cycles and companion hover retained.
+# Subtest: scripts/anim-pass-gen.test.mjs
+ok 5 - scripts/anim-pass-gen.test.mjs
+  ---
+  duration_ms: 28996.427
+  type: 'test'
+  ...
+# Graft: row and single-cell sources validated; invalid/dry calls preserve target; all seven neighboring cells preserved.
+# Subtest: scripts/anim-pass-graft.test.mjs
+ok 6 - scripts/anim-pass-graft.test.mjs
+  ---
+  duration_ms: 14460.742709
+  type: 'test'
+  ...
+# Factory grid: inspection matches extraction; duplicate proof/head crops pass divisible, remainder-bearing and historical cached grids.
+# Subtest: scripts/anim-pass-grid.test.mjs
+ok 7 - scripts/anim-pass-grid.test.mjs
+  ---
+  duration_ms: 8584.435542
+  type: 'test'
+  ...
+# Montage default spacing, exact zero-gap cells and invalid-input preservation pass.
+# Subtest: scripts/anim-pass-montage.test.mjs
+ok 8 - scripts/anim-pass-montage.test.mjs
+  ---
+  duration_ms: 3882.541834
+  type: 'test'
+  ...
+# Subtest: rob's v1 live reel is retained but reported as unverifiable legacy
+ok 17 - rob's v1 live reel is retained but reported as unverifiable legacy
+  ---
+  duration_ms: 4855.653833
+  type: 'test'
+  ...
+# Subtest: the browser arm of the assay instrument reports the purse held, not lifetime panning
+ok 18 - the browser arm of the assay instrument reports the purse held, not lifetime panning
+  ---
+  duration_ms: 0.479416
+  type: 'test'
+  ...
+# Subtest: the round-2 corpus hash remains byte-for-byte pinned
+ok 19 - the round-2 corpus hash remains byte-for-byte pinned
+  ---
+  duration_ms: 1.935416
+  type: 'test'
+  ...
+# Subtest: pre-era engine-stamped agent tapes are retired: the assayer refuses their plans
+ok 20 - pre-era engine-stamped agent tapes are retired: the assayer refuses their plans
+  ---
+  duration_ms: 45202.458458
+  type: 'test'
+  ...
+# Subtest: the hill-mine libm divergence tape is retired, and the tape it was measured from is kept
+ok 21 - the hill-mine libm divergence tape is retired, and the tape it was measured from is kept
+  ---
+  duration_ms: 42778.712625
+  type: 'test'
+  ...
+# Subtest: a securing door tape carries its start, its boundary answer, and replays to its own hash
+not ok 22 - a securing door tape carries its start, its boundary answer, and replays to its own hash
+  ---
+  duration_ms: 240026.897084
+  type: 'test'
+  location: '/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/scripts/assay-replay.test.mjs:131:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    (node:94644) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+    (Use `node --trace-warnings ...` to show where the warning was created)
+    
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    ChildProcess.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/scripts/assay-replay.test.mjs:292:30)
+    ChildProcess.emit (node:events:509:20)
+    maybeClose (node:internal/child_process:1125:16)
+    Socket.<anonymous> (node:internal/child_process:497:11)
+    Socket.emit (node:events:509:20)
+    Pipe.<anonymous> (node:net:355:12)
+  ...

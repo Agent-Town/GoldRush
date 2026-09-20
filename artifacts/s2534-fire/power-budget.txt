@@ -1,0 +1,12 @@
+CWD /private/tmp/gr-s2534-citation-gate
+COMMAND ['npm', 'run', 'test:power-budget']
+START 2026-09-07T13:29:39+0700
+
+> gold-rush@0.1.0 test:power-budget
+> node --experimental-strip-types scripts/check-power-graph-budget.mjs
+
+power-graph-budget: p95=0.392ms cap=0.500ms samples=160 verdict=PASS
+(node:27755) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+EXIT 0; SECONDS 0.257

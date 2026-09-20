@@ -1,0 +1,105 @@
+{
+  "law": "reuse > derive > build-new; era-stamped; grit-dressed",
+  "packs": {
+    "picnic": {
+      "era": 6,
+      "atlasSha256": "2046aa476a50ab31bbfc9e2fb658114ebee624c2d53498e687698894c761384b",
+      "assets": {
+        "picnic-staging-gate": {
+          "sourceTier": "derive",
+          "triangles": 288,
+          "sha256": "8da3800ab183b82c7911f7a7c1f871600d46ee4601f911e60139e55a37898c8e",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "west-picnic-blanket": {
+          "sourceTier": "derive",
+          "triangles": 324,
+          "sha256": "214473b7765e30bc3b820e2e8f15d9a60a67cadf022d789544913f14cede8a0a",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "center-picnic-blanket": {
+          "sourceTier": "derive",
+          "triangles": 516,
+          "sha256": "7b2f1f863e8005cbdf06089484c4d13478776d3356d191fe7988a2ad99633b99",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "east-picnic-blanket": {
+          "sourceTier": "derive",
+          "triangles": 324,
+          "sha256": "fb18ef8ddf162ac6928b071a413ef6d4dd1325c937bca2f9c1c0155fd1ef9661",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "mesa-civilian-shade": {
+          "sourceTier": "derive",
+          "triangles": 216,
+          "sha256": "7be61299d70ee0f633a607c5811cf86539d18e7eb6a798a9c3e0123779a566ac",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        }
+      }
+    }
+  },
+  "totals": {
+    "packs": 1,
+    "assets": 5,
+    "sourceTiers": {
+      "reuse": 0,
+      "derive": 5,
+      "build-new": 0
+    }
+  },
+  "boards": {
+    "picnic-landmarks-turntable.png": {
+      "size": [
+        1920,
+        1160
+      ],
+      "sha256": "ff5b9e86834640b594c914e7bbf6900b5be1b5c4868532dd3cc7e628dd8febea"
+    },
+    "picnic-landmarks-verdict.png": {
+      "size": [
+        1920,
+        1008
+      ],
+      "sha256": "9560d219fa2ab7459bc41e9fc032d402d216f8cdc03a7699c888c87c401d4dcc"
+    },
+    "picnic-landmarks-pack.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "783b8676c8f095a981d1158e963420623ee8f61f1426ff5e52d4f65cd666081b"
+    },
+    "picnic-landmarks-mounted.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "8ad4817537814af582e6cbc8353a52149e8e06698eabbf4e0f4d6df2a2d55fd2"
+    },
+    "picnic-landmarks-mounted-overview.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "e1e6e3c29b60ed621f511b70a82f4fb413d30ac49b841e1b2ae47375684fe5b8"
+    },
+    "picnic-landmarks-clearance-overlay.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "1410611be5dcbe7854bc4730b7b327cbad086d493d58cb2c152459a0157907a2"
+    }
+  },
+  "simulation": "unchanged; every landmark is a separate render-only GLB mounted by contract"
+}

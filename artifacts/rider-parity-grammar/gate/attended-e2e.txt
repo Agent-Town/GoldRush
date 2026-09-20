@@ -1,0 +1,85 @@
+(node:51425) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 34 tests using 1 worker
+
+[1/34] [desktop-chrome] › e2e/ap-standing-orders.spec.ts:123:1 › seeded standing orders obey priority, gates, legal actions, surprises, and the live rung
+[2/34] [desktop-chrome] › e2e/ap-standing-orders.spec.ts:251:1 › manual early-wave seam resets an expired countdown before forcing the transition
+[3/34] [desktop-chrome] › e2e/ap-standing-orders.spec.ts:270:1 › consent restores a save from before place-building existed
+[4/34] [desktop-chrome] › e2e/ap-standing-orders.spec.ts:298:1 › place-building consent survives a new save round-trip
+[5/34] [desktop-chrome] › e2e/ap-standing-orders.spec.ts:342:1 › plain-boot production orders pan a seam and place a real building
+[6/34] [desktop-chrome] › e2e/ap-standing-orders.spec.ts:416:1 › production pan does not advance an active player channel
+
+(node:51466) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[7/34] [desktop-chrome] › e2e/ap16-6-browser-seat.spec.ts:5:1 › the browser-owned seat binds actor verbs without borrowing the headless singleton
+[8/34] [desktop-chrome] › e2e/ap16-6-browser-seat.spec.ts:81:1 › a browser secure window stays nonterminal until the bank transition lands
+[9/34] [desktop-chrome] › e2e/rider-parity-grammar.spec.ts:17:1 › plain boot is clean on both viewports (no ?debug)
+[10/34] [desktop-chrome] › e2e/rider-parity-grammar.spec.ts:77:1 › a plain-boot human can build on the Claim-Boat deck (BOAT_BUILD parity)
+[11/34] [desktop-chrome] › e2e/rider-parity-grammar.spec.ts:107:1 › a plain-boot human can weigh anchor from the same prompt (REANCHOR parity)
+[12/34] [desktop-chrome] › e2e/skillmd-door.spec.ts:3:1 › served skill.md exposes the source-locked grammar and replace warning
+[13/34] [desktop-chrome] › e2e/tape-01-run-tape.spec.ts:75:1 › the profile tape ring keeps the latest ten plus older marked runs
+[14/34] [desktop-chrome] › e2e/tape-01-run-tape.spec.ts:90:1 › the keep result stays false when profile storage rejects the write
+[15/34] [desktop-chrome] › e2e/tape-01-run-tape.spec.ts:102:1 › the recorder deduplicates routed actions and freezes the hash at its input ceiling
+
+[desktop-chrome] › e2e/tape-01-run-tape.spec.ts:102:1 › the recorder deduplicates routed actions and freezes the hash at its input ceiling
+[run-tape] recording truncated: max-ticks at tick 18000
+[16/34] [desktop-chrome] › e2e/tape-01-run-tape.spec.ts:123:1 › a resumed recording keeps the engine stamp captured by the original build
+[17/34] [desktop-chrome] › e2e/tape-01-run-tape.spec.ts:140:1 › every ended run writes a keepable tape whose replay reproduces its event hash
+[18/34] [mobile-chrome] › e2e/ap-standing-orders.spec.ts:123:1 › seeded standing orders obey priority, gates, legal actions, surprises, and the live rung
+  1) [mobile-chrome] › e2e/ap-standing-orders.spec.ts:123:1 › seeded standing orders obey priority, gates, legal actions, surprises, and the live rung 
+
+    Error: expect(received).toMatchObject(expected)
+
+    - Expected  - 4
+    + Received  + 1
+
+      Object {
+    -   "message": "BUILD requires the granted place_building ability.",
+    -   "ok": false,
+    -   "reason": "PERMISSION_DENIED",
+    -   "requiredLevel": 3,
+    +   "ok": true,
+      }
+
+      153 |     { verb: 'BUILD', what: 'sentry_beacon', where: { x: 0, z: 10 }, when: { goldGte: 25 } },
+      154 |   ]);
+    > 155 |   expect(revokedAbility.outcome).toMatchObject({
+          |                                  ^
+      156 |     ok: false,
+      157 |     reason: 'PERMISSION_DENIED',
+      158 |     requiredLevel: 3,
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-grammar/e2e/ap-standing-orders.spec.ts:155:34
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ap-standing-orders-seeded--acb18-surprises-and-the-live-rung-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/ap-standing-orders-seeded--acb18-surprises-and-the-live-rung-mobile-chrome/error-context.md
+
+
+[19/34] [mobile-chrome] › e2e/ap-standing-orders.spec.ts:251:1 › manual early-wave seam resets an expired countdown before forcing the transition
+[20/34] [mobile-chrome] › e2e/ap-standing-orders.spec.ts:270:1 › consent restores a save from before place-building existed
+[21/34] [mobile-chrome] › e2e/ap-standing-orders.spec.ts:298:1 › place-building consent survives a new save round-trip
+[22/34] [mobile-chrome] › e2e/ap-standing-orders.spec.ts:342:1 › plain-boot production orders pan a seam and place a real building
+[23/34] [mobile-chrome] › e2e/ap-standing-orders.spec.ts:416:1 › production pan does not advance an active player channel
+
+(node:83902) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[24/34] [mobile-chrome] › e2e/ap16-6-browser-seat.spec.ts:5:1 › the browser-owned seat binds actor verbs without borrowing the headless singleton
+[25/34] [mobile-chrome] › e2e/ap16-6-browser-seat.spec.ts:81:1 › a browser secure window stays nonterminal until the bank transition lands
+[26/34] [mobile-chrome] › e2e/rider-parity-grammar.spec.ts:17:1 › plain boot is clean on both viewports (no ?debug)
+[27/34] [mobile-chrome] › e2e/rider-parity-grammar.spec.ts:77:1 › a plain-boot human can build on the Claim-Boat deck (BOAT_BUILD parity)
+[28/34] [mobile-chrome] › e2e/rider-parity-grammar.spec.ts:107:1 › a plain-boot human can weigh anchor from the same prompt (REANCHOR parity)
+[29/34] [mobile-chrome] › e2e/skillmd-door.spec.ts:3:1 › served skill.md exposes the source-locked grammar and replace warning
+[30/34] [mobile-chrome] › e2e/tape-01-run-tape.spec.ts:75:1 › the profile tape ring keeps the latest ten plus older marked runs
+[31/34] [mobile-chrome] › e2e/tape-01-run-tape.spec.ts:90:1 › the keep result stays false when profile storage rejects the write
+[32/34] [mobile-chrome] › e2e/tape-01-run-tape.spec.ts:102:1 › the recorder deduplicates routed actions and freezes the hash at its input ceiling
+
+[mobile-chrome] › e2e/tape-01-run-tape.spec.ts:102:1 › the recorder deduplicates routed actions and freezes the hash at its input ceiling
+[run-tape] recording truncated: max-ticks at tick 18000
+[33/34] [mobile-chrome] › e2e/tape-01-run-tape.spec.ts:123:1 › a resumed recording keeps the engine stamp captured by the original build
+[34/34] [mobile-chrome] › e2e/tape-01-run-tape.spec.ts:140:1 › every ended run writes a keepable tape whose replay reproduces its event hash
+  1 failed
+    [mobile-chrome] › e2e/ap-standing-orders.spec.ts:123:1 › seeded standing orders obey priority, gates, legal actions, surprises, and the live rung 
+  33 passed (1.4m)

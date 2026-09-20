@@ -1,0 +1,197 @@
+{
+  "key": "idle-e8-eclipse",
+  "tapePath": "tapes/idle-e8-eclipse.json",
+  "contract": "e8-eclipse",
+  "kind": "null-floor",
+  "node": "v26.4.0",
+  "before": {
+    "at": "2026-09-05T16:23:41.475Z",
+    "load": [
+      18.85205078125,
+      20.8525390625,
+      21.0244140625
+    ],
+    "freeMemory": 10861199360
+  },
+  "after": {
+    "at": "2026-09-05T16:23:45.330Z",
+    "load": [
+      19.66455078125,
+      20.98779296875,
+      21.07080078125
+    ],
+    "freeMemory": 9382821888
+  },
+  "declaredDurationTicks": 2373,
+  "simulatedSeconds": 79.1,
+  "bootMs": 66.91608400000041,
+  "replayMs": 1431.39475,
+  "ticksPerSecond": 1657.8236017702316,
+  "realtimeMultiple": 55.26078672567438,
+  "estimateTenMinuteSeconds": 10.857608723135272,
+  "estimateFormula": "600 seconds / measured realtimeMultiple; extrapolation, not an actual 10-minute tape when duration differs",
+  "tickMs": {
+    "n": 2373,
+    "min": 0.26233400000000984,
+    "p50": 0.4336670000002414,
+    "p95": 1.354415999999219,
+    "p99": 2.558458999999857,
+    "max": 13.722707999999784
+  },
+  "tickPath": "sim/idle-e8-eclipse-ticks.json",
+  "result": {
+    "eventLogHash": "fnv1a32:a45ba9ac",
+    "outcome": {
+      "secured": false,
+      "waves": 2,
+      "gold": 0,
+      "timeAlive": 79.1
+    },
+    "ticks": 2373,
+    "engine": "headless-contract-sim"
+  },
+  "expectedHash": "fnv1a32:a45ba9ac",
+  "hashMatches": true,
+  "top20": [
+    {
+      "name": "dispatch",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 221.776
+    },
+    {
+      "name": "multiplyMatrices",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 10385,
+      "column": 18,
+      "selfMs": 74.165
+    },
+    {
+      "name": "get diagnostics",
+      "url": "",
+      "line": 484,
+      "column": 17,
+      "selfMs": 64.244
+    },
+    {
+      "name": "diagnostics",
+      "url": "",
+      "line": 1795,
+      "column": 13,
+      "selfMs": 58.514
+    },
+    {
+      "name": "terrainSeed",
+      "url": "",
+      "line": 1469,
+      "column": 21,
+      "selfMs": 53.716
+    },
+    {
+      "name": "maxHpForInstance",
+      "url": "",
+      "line": 1619,
+      "column": 18,
+      "selfMs": 53.635000000000005
+    },
+    {
+      "name": "terrainHash",
+      "url": "",
+      "line": 1486,
+      "column": 21,
+      "selfMs": 40.669
+    },
+    {
+      "name": "currentTrickleInterval",
+      "url": "",
+      "line": 641,
+      "column": 24,
+      "selfMs": 37.059
+    },
+    {
+      "name": "toArray",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 11099,
+      "column": 9,
+      "selfMs": 35.165
+    },
+    {
+      "name": "activePositions",
+      "url": "",
+      "line": 1533,
+      "column": 17,
+      "selfMs": 34.824000000000005
+    },
+    {
+      "name": "hpBarDiagnostics",
+      "url": "",
+      "line": 1663,
+      "column": 18,
+      "selfMs": 26.967999999999996
+    },
+    {
+      "name": "step",
+      "url": "",
+      "line": 1318,
+      "column": 6,
+      "selfMs": 24.804
+    },
+    {
+      "name": "syncEnemyInstance",
+      "url": "",
+      "line": 1343,
+      "column": 19,
+      "selfMs": 22.915
+    },
+    {
+      "name": "setFromEuler",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 4167,
+      "column": 14,
+      "selfMs": 22.831999999999997
+    },
+    {
+      "name": "(anonymous)",
+      "url": "",
+      "line": 3,
+      "column": 49,
+      "selfMs": 22.166
+    },
+    {
+      "name": "maxHpForPlacement",
+      "url": "",
+      "line": 1622,
+      "column": 19,
+      "selfMs": 21.659999999999997
+    },
+    {
+      "name": "update",
+      "url": "",
+      "line": 809,
+      "column": 8,
+      "selfMs": 21.22
+    },
+    {
+      "name": "stableProbeMask",
+      "url": "",
+      "line": 1266,
+      "column": 25,
+      "selfMs": 20.813
+    },
+    {
+      "name": "syncWatchPaint",
+      "url": "",
+      "line": 1545,
+      "column": 16,
+      "selfMs": 19.572
+    },
+    {
+      "name": "get diagnostics",
+      "url": "",
+      "line": 25,
+      "column": 17,
+      "selfMs": 19.036
+    }
+  ]
+}

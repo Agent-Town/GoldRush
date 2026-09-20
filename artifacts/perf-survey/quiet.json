@@ -1,0 +1,1642 @@
+{
+  "at": "2026-09-05T15:54:03.521Z",
+  "ceiling": 12,
+  "reps": 3,
+  "method": "Median of three 10 s samples, each discarded and retaken if the 1-minute load exceeded the ceiling before or during it. Delivered frames per second and renderMs are the reported frame signals; frameMs p50 is the headless rAF pace and is not reported as a cost.",
+  "rows": [
+    {
+      "key": "town-full-desktop-town-quiet",
+      "map": "town",
+      "state": "town",
+      "tier": "full",
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "ceiling": 12,
+      "reps": 3,
+      "samples": [],
+      "discarded": [
+        {
+          "attempt": 0,
+          "reason": "load before",
+          "load": 39.50732421875
+        },
+        {
+          "attempt": 1,
+          "reason": "load before",
+          "load": 45.298828125
+        },
+        {
+          "attempt": 2,
+          "reason": "load before",
+          "load": 39.35693359375
+        },
+        {
+          "attempt": 3,
+          "reason": "load before",
+          "load": 32.201171875
+        },
+        {
+          "attempt": 4,
+          "reason": "load before",
+          "load": 26.53076171875
+        },
+        {
+          "attempt": 5,
+          "reason": "load before",
+          "load": 22.037109375
+        }
+      ],
+      "status": "insufficient-clean-samples"
+    },
+    {
+      "key": "the-claim-full-desktop-wave1-quiet",
+      "map": "the-claim",
+      "state": "wave1",
+      "tier": "full",
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "ceiling": 12,
+      "reps": 3,
+      "samples": [
+        {
+          "attempt": 3,
+          "before": {
+            "at": "2026-09-05T15:43:59.871Z",
+            "load": [
+              11.7802734375,
+              18.02734375,
+              21.13037109375
+            ],
+            "freeMemory": 4204232704
+          },
+          "after": {
+            "at": "2026-09-05T15:44:14.103Z",
+            "load": [
+              10.85009765625,
+              17.5185546875,
+              20.89453125
+            ],
+            "freeMemory": 2169143296
+          },
+          "peakLoad": 11.7802734375,
+          "elapsedMs": 10006.6,
+          "fpsDelivered": 120.0207862810545,
+          "renderMsP50": 1.0999999046325684,
+          "renderMsP95": 1.2000000476837158,
+          "renderMsP99": 1.3000000715255737,
+          "frameMsP95": 10,
+          "frameMsP99": 10.299999999999272,
+          "callsP95": 86,
+          "trianglesP95": 110330,
+          "longFrames": 0,
+          "errors": {
+            "console": 0,
+            "page": 0,
+            "network": 0
+          }
+        },
+        {
+          "attempt": 4,
+          "before": {
+            "at": "2026-09-05T15:44:14.165Z",
+            "load": [
+              10.85009765625,
+              17.5185546875,
+              20.89453125
+            ],
+            "freeMemory": 2151546880
+          },
+          "after": {
+            "at": "2026-09-05T15:44:28.346Z",
+            "load": [
+              10.07666015625,
+              17.01953125,
+              20.6572265625
+            ],
+            "freeMemory": 1686568960
+          },
+          "peakLoad": 10.85009765625,
+          "elapsedMs": 10000,
+          "fpsDelivered": 120,
+          "renderMsP50": 1,
+          "renderMsP95": 1.1999999284744263,
+          "renderMsP99": 1.2000000476837158,
+          "frameMsP95": 10,
+          "frameMsP99": 10.299999999999272,
+          "callsP95": 86,
+          "trianglesP95": 110330,
+          "longFrames": 0,
+          "errors": {
+            "console": 0,
+            "page": 0,
+            "network": 0
+          }
+        },
+        {
+          "attempt": 5,
+          "before": {
+            "at": "2026-09-05T15:44:28.402Z",
+            "load": [
+              10.07666015625,
+              17.01953125,
+              20.6572265625
+            ],
+            "freeMemory": 1687060480
+          },
+          "after": {
+            "at": "2026-09-05T15:44:42.398Z",
+            "load": [
+              9.40087890625,
+              16.5283203125,
+              20.41845703125
+            ],
+            "freeMemory": 2056486912
+          },
+          "peakLoad": 10.07666015625,
+          "elapsedMs": 10000,
+          "fpsDelivered": 120,
+          "renderMsP50": 1,
+          "renderMsP95": 1.2000000476837158,
+          "renderMsP99": 1.2000000476837158,
+          "frameMsP95": 10,
+          "frameMsP99": 10.300000000000182,
+          "callsP95": 86,
+          "trianglesP95": 110330,
+          "longFrames": 0,
+          "errors": {
+            "console": 0,
+            "page": 0,
+            "network": 0
+          }
+        }
+      ],
+      "discarded": [
+        {
+          "attempt": 0,
+          "reason": "load before",
+          "load": 19.57763671875
+        },
+        {
+          "attempt": 1,
+          "reason": "load before",
+          "load": 16.2919921875
+        },
+        {
+          "attempt": 2,
+          "reason": "load before",
+          "load": 13.97705078125
+        }
+      ],
+      "status": "measured",
+      "median": {
+        "fpsDelivered": 120,
+        "renderMsP50": 1,
+        "renderMsP95": 1.2000000476837158,
+        "frameMsP95": 10,
+        "longFrames": 0,
+        "callsP95": 86,
+        "trianglesP95": 110330,
+        "peakLoad": 10.85009765625
+      },
+      "spread": {
+        "fpsDelivered": {
+          "n": 3,
+          "min": 120,
+          "p50": 120,
+          "p95": 120,
+          "p99": 120,
+          "max": 120.0207862810545
+        },
+        "renderMsP95": {
+          "n": 3,
+          "min": 1.1999999284744263,
+          "p50": 1.2000000476837158,
+          "p95": 1.2000000476837158,
+          "p99": 1.2000000476837158,
+          "max": 1.2000000476837158
+        }
+      }
+    },
+    {
+      "key": "the-claim-full-desktop-stress-quiet",
+      "map": "the-claim",
+      "state": "stress",
+      "tier": "full",
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "ceiling": 12,
+      "reps": 3,
+      "samples": [
+        {
+          "attempt": 0,
+          "before": {
+            "at": "2026-09-05T15:44:42.458Z",
+            "load": [
+              9.40087890625,
+              16.5283203125,
+              20.41845703125
+            ],
+            "freeMemory": 2059517952
+          },
+          "after": {
+            "at": "2026-09-05T15:44:56.532Z",
+            "load": [
+              10.6162109375,
+              16.46484375,
+              20.328125
+            ],
+            "freeMemory": 2643312640
+          },
+          "peakLoad": 10.6162109375,
+          "elapsedMs": 10000.2,
+          "fpsDelivered": 119.99760004799903,
+          "renderMsP50": 1,
+          "renderMsP95": 1.100000023841858,
+          "renderMsP99": 1.2000000476837158,
+          "frameMsP95": 10,
+          "frameMsP99": 10.200000000000728,
+          "callsP95": 172,
+          "trianglesP95": 112888,
+          "longFrames": 0,
+          "errors": {
+            "console": 0,
+            "page": 0,
+            "network": 0
+          }
+        },
+        {
+          "attempt": 1,
+          "before": {
+            "at": "2026-09-05T15:44:56.589Z",
+            "load": [
+              10.6162109375,
+              16.46484375,
+              20.328125
+            ],
+            "freeMemory": 2598404096
+          },
+          "after": {
+            "at": "2026-09-05T15:45:10.894Z",
+            "load": [
+              10.05517578125,
+              16.05029296875,
+              20.1123046875
+            ],
+            "freeMemory": 1666252800
+          },
+          "peakLoad": 10.6162109375,
+          "elapsedMs": 10008,
+          "fpsDelivered": 120.00399680255796,
+          "renderMsP50": 1,
+          "renderMsP95": 1.100000023841858,
+          "renderMsP99": 1.2000000476837158,
+          "frameMsP95": 9.800000000001091,
+          "frameMsP99": 10.200000000000728,
+          "callsP95": 172,
+          "trianglesP95": 112888,
+          "longFrames": 0,
+          "errors": {
+            "console": 0,
+            "page": 0,
+            "network": 0
+          }
+        },
+        {
+          "attempt": 2,
+          "before": {
+            "at": "2026-09-05T15:45:10.949Z",
+            "load": [
+              10.05517578125,
+              16.05029296875,
+              20.1123046875
+            ],
+            "freeMemory": 1640235008
+          },
+          "after": {
+            "at": "2026-09-05T15:45:25.050Z",
+            "load": [
+              10.32763671875,
+              15.91552734375,
+              20.0166015625
+            ],
+            "freeMemory": 4689526784
+          },
+          "peakLoad": 10.32763671875,
+          "elapsedMs": 10007.2,
+          "fpsDelivered": 119.91366216324245,
+          "renderMsP50": 1.100000023841858,
+          "renderMsP95": 1.2000000476837158,
+          "renderMsP99": 1.3000000715255737,
+          "frameMsP95": 10.100000000000364,
+          "frameMsP99": 10.300000000000182,
+          "callsP95": 172,
+          "trianglesP95": 112888,
+          "longFrames": 1,
+          "errors": {
+            "console": 0,
+            "page": 0,
+            "network": 0
+          }
+        }
+      ],
+      "discarded": [],
+      "status": "measured",
+      "median": {
+        "fpsDelivered": 119.99760004799903,
+        "renderMsP50": 1,
+        "renderMsP95": 1.100000023841858,
+        "frameMsP95": 10,
+        "longFrames": 0,
+        "callsP95": 172,
+        "trianglesP95": 112888,
+        "peakLoad": 10.6162109375
+      },
+      "spread": {
+        "fpsDelivered": {
+          "n": 3,
+          "min": 119.91366216324245,
+          "p50": 119.99760004799903,
+          "p95": 119.99760004799903,
+          "p99": 119.99760004799903,
+          "max": 120.00399680255796
+        },
+        "renderMsP95": {
+          "n": 3,
+          "min": 1.100000023841858,
+          "p50": 1.100000023841858,
+          "p95": 1.100000023841858,
+          "p99": 1.100000023841858,
+          "max": 1.2000000476837158
+        }
+      }
+    },
+    {
+      "key": "e9-seed-run-full-desktop-wave1-quiet",
+      "map": "e9-seed-run",
+      "state": "wave1",
+      "tier": "full",
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "ceiling": 12,
+      "reps": 3,
+      "samples": [
+        {
+          "attempt": 0,
+          "before": {
+            "at": "2026-09-05T15:45:25.125Z",
+            "load": [
+              10.32763671875,
+              15.91552734375,
+              20.0166015625
+            ],
+            "freeMemory": 4689526784
+          },
+          "after": {
+            "at": "2026-09-05T15:45:39.532Z",
+            "load": [
+              10.53125,
+              15.67626953125,
+              19.8583984375
+            ],
+            "freeMemory": 4717412352
+          },
+          "peakLoad": 10.53125,
+          "elapsedMs": 10008.2,
+          "fpsDelivered": 119.50200835315042,
+          "renderMsP50": 1.100000023841858,
+          "renderMsP95": 1.2999999523162842,
+          "renderMsP99": 1.3000000715255737,
+          "frameMsP95": 10.100000000000364,
+          "frameMsP99": 10.300000000000182,
+          "callsP95": 128,
+          "trianglesP95": 102740,
+          "longFrames": 1,
+          "errors": {
+            "console": 0,
+            "page": 0,
+            "network": 0
+          }
+        },
+        {
+          "attempt": 1,
+          "before": {
+            "at": "2026-09-05T15:45:39.589Z",
+            "load": [
+              10.53125,
+              15.67626953125,
+              19.8583984375
+            ],
+            "freeMemory": 4705812480
+          },
+          "after": {
+            "at": "2026-09-05T15:45:53.819Z",
+            "load": [
+              9.6806640625,
+              15.23486328125,
+              19.626953125
+            ],
+            "freeMemory": 5268062208
+          },
+          "peakLoad": 10.53125,
+          "elapsedMs": 10007.9,
+          "fpsDelivered": 119.30574845871762,
+          "renderMsP50": 1.100000023841858,
+          "renderMsP95": 1.2000000476837158,
+          "renderMsP99": 1.3000000715255737,
+          "frameMsP95": 10.199999999998909,
+          "frameMsP99": 10.300000000001091,
+          "callsP95": 128,
+          "trianglesP95": 102740,
+          "longFrames": 1,
+          "errors": {
+            "console": 0,
+            "page": 0,
+            "network": 0
+          }
+        },
+        {
+          "attempt": 2,
+          "before": {
+            "at": "2026-09-05T15:45:53.879Z",
+            "load": [
+              9.6806640625,
+              15.23486328125,
+              19.626953125
+            ],
+            "freeMemory": 5268062208
+          },
+          "after": {
+            "at": "2026-09-05T15:46:07.946Z",
+            "load": [
+              9.72607421875,
+              14.97705078125,
+              19.4580078125
+            ],
+            "freeMemory": 4941037568
+          },
+          "peakLoad": 9.72607421875,
+          "elapsedMs": 10008.3,
+          "fpsDelivered": 119.500814324111,
+          "renderMsP50": 1.100000023841858,
+          "renderMsP95": 1.2000000476837158,
+          "renderMsP99": 1.3000000715255737,
+          "frameMsP95": 10.199999999998909,
+          "frameMsP99": 10.300000000001091,
+          "callsP95": 128,
+          "trianglesP95": 102740,
+          "longFrames": 1,
+          "errors": {
+            "console": 0,
+            "page": 0,
+            "network": 0
+          }
+        }
+      ],
+      "discarded": [],
+      "status": "measured",
+      "median": {
+        "fpsDelivered": 119.500814324111,
+        "renderMsP50": 1.100000023841858,
+        "renderMsP95": 1.2000000476837158,
+        "frameMsP95": 10.199999999998909,
+        "longFrames": 1,
+        "callsP95": 128,
+        "trianglesP95": 102740,
+        "peakLoad": 10.53125
+      },
+      "spread": {
+        "fpsDelivered": {
+          "n": 3,
+          "min": 119.30574845871762,
+          "p50": 119.500814324111,
+          "p95": 119.500814324111,
+          "p99": 119.500814324111,
+          "max": 119.50200835315042
+        },
+        "renderMsP95": {
+          "n": 3,
+          "min": 1.2000000476837158,
+          "p50": 1.2000000476837158,
+          "p95": 1.2000000476837158,
+          "p99": 1.2000000476837158,
+          "max": 1.2999999523162842
+        }
+      }
+    },
+    {
+      "key": "e9-seed-run-full-desktop-stress-quiet",
+      "map": "e9-seed-run",
+      "state": "stress",
+      "tier": "full",
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "ceiling": 12,
+      "reps": 3,
+      "samples": [
+        {
+          "attempt": 0,
+          "before": {
+            "at": "2026-09-05T15:46:08.003Z",
+            "load": [
+              9.72607421875,
+              14.97705078125,
+              19.4580078125
+            ],
+            "freeMemory": 4921016320
+          },
+          "after": {
+            "at": "2026-09-05T15:46:22.060Z",
+            "load": [
+              9.19482421875,
+              14.60205078125,
+              19.24560546875
+            ],
+            "freeMemory": 5812404224
+          },
+          "peakLoad": 9.72607421875,
+          "elapsedMs": 10001.4,
+          "fpsDelivered": 119.28330033795268,
+          "renderMsP50": 1.1999999284744263,
+          "renderMsP95": 1.399999976158142,
+          "renderMsP99": 1.4000000953674316,
+          "frameMsP95": 10.199999999998909,
+          "frameMsP99": 10.300000000000182,
+          "callsP95": 210,
+          "trianglesP95": 103022,
+          "longFrames": 2,
+          "errors": {
+            "console": 0,
+            "page": 0,
+            "network": 0
+          }
+        },
+        {
+          "attempt": 1,
+          "before": {
+            "at": "2026-09-05T15:46:22.122Z",
+            "load": [
+              9.19482421875,
+              14.60205078125,
+              19.24560546875
+            ],
+            "freeMemory": 5810438144
+          },
+          "after": {
+            "at": "2026-09-05T15:46:36.281Z",
+            "load": [
+              8.8564453125,
+              14.26171875,
+              19.04248046875
+            ],
+            "freeMemory": 7200407552
+          },
+          "peakLoad": 9.19482421875,
+          "elapsedMs": 10001.3,
+          "fpsDelivered": 119.48446701928751,
+          "renderMsP50": 1.100000023841858,
+          "renderMsP95": 1.3000000715255737,
+          "renderMsP99": 1.4000000953674316,
+          "frameMsP95": 10.199999999998909,
+          "frameMsP99": 10.300000000000182,
+          "callsP95": 210,
+          "trianglesP95": 103022,
+          "longFrames": 1,
+          "errors": {
+            "console": 0,
+            "page": 0,
+            "network": 0
+          }
+        },
+        {
+          "attempt": 2,
+          "before": {
+            "at": "2026-09-05T15:46:36.338Z",
+            "load": [
+              8.8564453125,
+              14.26171875,
+              19.04248046875
+            ],
+            "freeMemory": 6719291392
+          },
+          "after": {
+            "at": "2026-09-05T15:46:50.526Z",
+            "load": [
+              8.810546875,
+              14.072265625,
+              18.9189453125
+            ],
+            "freeMemory": 6445301760
+          },
+          "peakLoad": 8.8564453125,
+          "elapsedMs": 10001.2,
+          "fpsDelivered": 119.38567371915369,
+          "renderMsP50": 1.100000023841858,
+          "renderMsP95": 1.3000000715255737,
+          "renderMsP99": 1.399999976158142,
+          "frameMsP95": 10.100000000000364,
+          "frameMsP99": 10.299999999999272,
+          "callsP95": 210,
+          "trianglesP95": 103022,
+          "longFrames": 1,
+          "errors": {
+            "console": 0,
+            "page": 0,
+            "network": 0
+          }
+        }
+      ],
+      "discarded": [],
+      "status": "measured",
+      "median": {
+        "fpsDelivered": 119.38567371915369,
+        "renderMsP50": 1.100000023841858,
+        "renderMsP95": 1.3000000715255737,
+        "frameMsP95": 10.199999999998909,
+        "longFrames": 1,
+        "callsP95": 210,
+        "trianglesP95": 103022,
+        "peakLoad": 9.19482421875
+      },
+      "spread": {
+        "fpsDelivered": {
+          "n": 3,
+          "min": 119.28330033795268,
+          "p50": 119.38567371915369,
+          "p95": 119.38567371915369,
+          "p99": 119.38567371915369,
+          "max": 119.48446701928751
+        },
+        "renderMsP95": {
+          "n": 3,
+          "min": 1.3000000715255737,
+          "p50": 1.3000000715255737,
+          "p95": 1.3000000715255737,
+          "p99": 1.3000000715255737,
+          "max": 1.399999976158142
+        }
+      }
+    },
+    {
+      "key": "e2-hill-mine-full-desktop-wave1-quiet",
+      "map": "e2-hill-mine",
+      "state": "wave1",
+      "tier": "full",
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "ceiling": 12,
+      "reps": 3,
+      "samples": [
+        {
+          "attempt": 3,
+          "before": {
+            "at": "2026-09-05T15:47:50.603Z",
+            "load": [
+              10.201171875,
+              13.95751953125,
+              18.576171875
+            ],
+            "freeMemory": 6056214528
+          },
+          "after": {
+            "at": "2026-09-05T15:48:04.299Z",
+            "load": [
+              10.4814453125,
+              13.84228515625,
+              18.45458984375
+            ],
+            "freeMemory": 3897212928
+          },
+          "peakLoad": 10.4814453125,
+          "elapsedMs": 10000,
+          "fpsDelivered": 120,
+          "renderMsP50": 1,
+          "renderMsP95": 1.100000023841858,
+          "renderMsP99": 1.2000000476837158,
+          "frameMsP95": 9.699999999998909,
+          "frameMsP99": 10.299999999999272,
+          "callsP95": 87,
+          "trianglesP95": 116722,
+          "longFrames": 0,
+          "errors": {
+            "console": 0,
+            "page": 0,
+            "network": 0
+          }
+        },
+        {
+          "attempt": 4,
+          "before": {
+            "at": "2026-09-05T15:48:04.366Z",
+            "load": [
+              10.4814453125,
+              13.84228515625,
+              18.45458984375
+            ],
+            "freeMemory": 3862708224
+          },
+          "after": {
+            "at": "2026-09-05T15:48:18.085Z",
+            "load": [
+              9.8896484375,
+              13.54052734375,
+              18.265625
+            ],
+            "freeMemory": 4311252992
+          },
+          "peakLoad": 10.4814453125,
+          "elapsedMs": 10008,
+          "fpsDelivered": 120.00399680255796,
+          "renderMsP50": 1,
+          "renderMsP95": 1.100000023841858,
+          "renderMsP99": 1.2000000476837158,
+          "frameMsP95": 9.699999999999818,
+          "frameMsP99": 10.299999999999272,
+          "callsP95": 87,
+          "trianglesP95": 116722,
+          "longFrames": 0,
+          "errors": {
+            "console": 0,
+            "page": 0,
+            "network": 0
+          }
+        },
+        {
+          "attempt": 5,
+          "before": {
+            "at": "2026-09-05T15:48:18.148Z",
+            "load": [
+              9.8896484375,
+              13.54052734375,
+              18.265625
+            ],
+            "freeMemory": 4311695360
+          },
+          "after": {
+            "at": "2026-09-05T15:48:32.010Z",
+            "load": [
+              9.48388671875,
+              13.26904296875,
+              18.08544921875
+            ],
+            "freeMemory": 4409196544
+          },
+          "peakLoad": 9.8896484375,
+          "elapsedMs": 10009.4,
+          "fpsDelivered": 119.98721202070055,
+          "renderMsP50": 1,
+          "renderMsP95": 1.100000023841858,
+          "renderMsP99": 1.1999999284744263,
+          "frameMsP95": 9.899999999999636,
+          "frameMsP99": 10.299999999999272,
+          "callsP95": 87,
+          "trianglesP95": 116722,
+          "longFrames": 0,
+          "errors": {
+            "console": 0,
+            "page": 0,
+            "network": 0
+          }
+        }
+      ],
+      "discarded": [
+        {
+          "attempt": 0,
+          "reason": "load before",
+          "load": 15.87255859375
+        },
+        {
+          "attempt": 1,
+          "reason": "load before",
+          "load": 13.83251953125
+        },
+        {
+          "attempt": 2,
+          "reason": "load before",
+          "load": 12.24658203125
+        }
+      ],
+      "status": "measured",
+      "median": {
+        "fpsDelivered": 120,
+        "renderMsP50": 1,
+        "renderMsP95": 1.100000023841858,
+        "frameMsP95": 9.699999999999818,
+        "longFrames": 0,
+        "callsP95": 87,
+        "trianglesP95": 116722,
+        "peakLoad": 10.4814453125
+      },
+      "spread": {
+        "fpsDelivered": {
+          "n": 3,
+          "min": 119.98721202070055,
+          "p50": 120,
+          "p95": 120,
+          "p99": 120,
+          "max": 120.00399680255796
+        },
+        "renderMsP95": {
+          "n": 3,
+          "min": 1.100000023841858,
+          "p50": 1.100000023841858,
+          "p95": 1.100000023841858,
+          "p99": 1.100000023841858,
+          "max": 1.100000023841858
+        }
+      }
+    },
+    {
+      "key": "e2-hill-mine-full-desktop-stress-quiet",
+      "map": "e2-hill-mine",
+      "state": "stress",
+      "tier": "full",
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "ceiling": 12,
+      "reps": 3,
+      "samples": [
+        {
+          "attempt": 0,
+          "before": {
+            "at": "2026-09-05T15:48:32.071Z",
+            "load": [
+              9.48388671875,
+              13.26904296875,
+              18.08544921875
+            ],
+            "freeMemory": 4414947328
+          },
+          "after": {
+            "at": "2026-09-05T15:48:45.668Z",
+            "load": [
+              9.48779296875,
+              13.08984375,
+              17.9375
+            ],
+            "freeMemory": 4539154432
+          },
+          "peakLoad": 9.48779296875,
+          "elapsedMs": 10006.7,
+          "fpsDelivered": 120.01958687679254,
+          "renderMsP50": 1,
+          "renderMsP95": 1.100000023841858,
+          "renderMsP99": 1.2000000476837158,
+          "frameMsP95": 9.900000000000546,
+          "frameMsP99": 10.300000000000182,
+          "callsP95": 155,
+          "trianglesP95": 116558,
+          "longFrames": 0,
+          "errors": {
+            "console": 0,
+            "page": 0,
+            "network": 0
+          }
+        },
+        {
+          "attempt": 1,
+          "before": {
+            "at": "2026-09-05T15:48:45.738Z",
+            "load": [
+              9.48779296875,
+              13.08984375,
+              17.9375
+            ],
+            "freeMemory": 4498702336
+          },
+          "after": {
+            "at": "2026-09-05T15:48:59.425Z",
+            "load": [
+              9.4990234375,
+              12.97119140625,
+              17.83837890625
+            ],
+            "freeMemory": 6181289984
+          },
+          "peakLoad": 9.4990234375,
+          "elapsedMs": 10001.099999999999,
+          "fpsDelivered": 119.98680145184031,
+          "renderMsP50": 1,
+          "renderMsP95": 1.100000023841858,
+          "renderMsP99": 1.2000000476837158,
+          "frameMsP95": 10.200000000000728,
+          "frameMsP99": 10.300000000001091,
+          "callsP95": 156,
+          "trianglesP95": 116560,
+          "longFrames": 0,
+          "errors": {
+            "console": 0,
+            "page": 0,
+            "network": 0
+          }
+        },
+        {
+          "attempt": 2,
+          "before": {
+            "at": "2026-09-05T15:48:59.499Z",
+            "load": [
+              9.4990234375,
+              12.97119140625,
+              17.83837890625
+            ],
+            "freeMemory": 6123438080
+          },
+          "after": {
+            "at": "2026-09-05T15:49:13.186Z",
+            "load": [
+              9.28369140625,
+              12.7578125,
+              17.67724609375
+            ],
+            "freeMemory": 5149835264
+          },
+          "peakLoad": 9.4990234375,
+          "elapsedMs": 10000,
+          "fpsDelivered": 120,
+          "renderMsP50": 1,
+          "renderMsP95": 1.100000023841858,
+          "renderMsP99": 1.2000000476837158,
+          "frameMsP95": 9.800000000000182,
+          "frameMsP99": 10.299999999999272,
+          "callsP95": 156,
+          "trianglesP95": 116560,
+          "longFrames": 0,
+          "errors": {
+            "console": 0,
+            "page": 0,
+            "network": 0
+          }
+        }
+      ],
+      "discarded": [],
+      "status": "measured",
+      "median": {
+        "fpsDelivered": 120,
+        "renderMsP50": 1,
+        "renderMsP95": 1.100000023841858,
+        "frameMsP95": 9.900000000000546,
+        "longFrames": 0,
+        "callsP95": 156,
+        "trianglesP95": 116560,
+        "peakLoad": 9.4990234375
+      },
+      "spread": {
+        "fpsDelivered": {
+          "n": 3,
+          "min": 119.98680145184031,
+          "p50": 120,
+          "p95": 120,
+          "p99": 120,
+          "max": 120.01958687679254
+        },
+        "renderMsP95": {
+          "n": 3,
+          "min": 1.100000023841858,
+          "p50": 1.100000023841858,
+          "p95": 1.100000023841858,
+          "p99": 1.100000023841858,
+          "max": 1.100000023841858
+        }
+      }
+    },
+    {
+      "key": "e1-night-shift-full-desktop-wave1-quiet",
+      "map": "e1-night-shift",
+      "state": "wave1",
+      "tier": "full",
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "ceiling": 12,
+      "reps": 3,
+      "samples": [
+        {
+          "attempt": 0,
+          "before": {
+            "at": "2026-09-05T15:49:13.251Z",
+            "load": [
+              9.28369140625,
+              12.7578125,
+              17.67724609375
+            ],
+            "freeMemory": 5145395200
+          },
+          "after": {
+            "at": "2026-09-05T15:49:27.322Z",
+            "load": [
+              9.8984375,
+              12.720703125,
+              17.5771484375
+            ],
+            "freeMemory": 18881576960
+          },
+          "peakLoad": 9.8984375,
+          "elapsedMs": 10008,
+          "fpsDelivered": 120.00399680255796,
+          "renderMsP50": 1,
+          "renderMsP95": 1.100000023841858,
+          "renderMsP99": 1.2000000476837158,
+          "frameMsP95": 10,
+          "frameMsP99": 10.299999999999272,
+          "callsP95": 86,
+          "trianglesP95": 156240,
+          "longFrames": 0,
+          "errors": {
+            "console": 0,
+            "page": 0,
+            "network": 0
+          }
+        },
+        {
+          "attempt": 4,
+          "before": {
+            "at": "2026-09-05T15:50:21.927Z",
+            "load": [
+              10.38330078125,
+              12.56591796875,
+              17.2255859375
+            ],
+            "freeMemory": 19615907840
+          },
+          "after": {
+            "at": "2026-09-05T15:50:35.959Z",
+            "load": [
+              11.96630859375,
+              12.8134765625,
+              17.232421875
+            ],
+            "freeMemory": 17194926080
+          },
+          "peakLoad": 11.96630859375,
+          "elapsedMs": 10000.8,
+          "fpsDelivered": 119.99040076793857,
+          "renderMsP50": 1,
+          "renderMsP95": 1.1999999284744263,
+          "renderMsP99": 1.2000000476837158,
+          "frameMsP95": 9.900000000001455,
+          "frameMsP99": 10.300000000000182,
+          "callsP95": 86,
+          "trianglesP95": 156240,
+          "longFrames": 0,
+          "errors": {
+            "console": 0,
+            "page": 0,
+            "network": 0
+          }
+        },
+        {
+          "attempt": 5,
+          "before": {
+            "at": "2026-09-05T15:50:36.021Z",
+            "load": [
+              11.96630859375,
+              12.8134765625,
+              17.232421875
+            ],
+            "freeMemory": 17190486016
+          },
+          "after": {
+            "at": "2026-09-05T15:50:50.110Z",
+            "load": [
+              11.6025390625,
+              12.70458984375,
+              17.1416015625
+            ],
+            "freeMemory": 17235935232
+          },
+          "peakLoad": 11.96630859375,
+          "elapsedMs": 10000,
+          "fpsDelivered": 120,
+          "renderMsP50": 1,
+          "renderMsP95": 1.100000023841858,
+          "renderMsP99": 1.2000000476837158,
+          "frameMsP95": 9.899999999999636,
+          "frameMsP99": 10.200000000000728,
+          "callsP95": 86,
+          "trianglesP95": 156240,
+          "longFrames": 0,
+          "errors": {
+            "console": 0,
+            "page": 0,
+            "network": 0
+          }
+        }
+      ],
+      "discarded": [
+        {
+          "attempt": 1,
+          "before": {
+            "at": "2026-09-05T15:49:27.387Z",
+            "load": [
+              9.8984375,
+              12.720703125,
+              17.5771484375
+            ],
+            "freeMemory": 18737250304
+          },
+          "after": {
+            "at": "2026-09-05T15:49:41.857Z",
+            "load": [
+              12.1455078125,
+              13.0771484375,
+              17.619140625
+            ],
+            "freeMemory": 18033836032
+          },
+          "peakLoad": 12.1455078125,
+          "elapsedMs": 10006.8,
+          "fpsDelivered": 120.01838749650237,
+          "renderMsP50": 1,
+          "renderMsP95": 1.100000023841858,
+          "renderMsP99": 1.2000000476837158,
+          "frameMsP95": 9.799999999999272,
+          "frameMsP99": 10.200000000000728,
+          "callsP95": 86,
+          "trianglesP95": 156240,
+          "longFrames": 0,
+          "errors": {
+            "console": 0,
+            "page": 0,
+            "network": 0
+          },
+          "reason": "load during"
+        },
+        {
+          "attempt": 2,
+          "reason": "load before",
+          "load": 12.1455078125
+        },
+        {
+          "attempt": 3,
+          "reason": "load before",
+          "load": 12.015625
+        }
+      ],
+      "status": "measured",
+      "median": {
+        "fpsDelivered": 120,
+        "renderMsP50": 1,
+        "renderMsP95": 1.100000023841858,
+        "frameMsP95": 9.900000000001455,
+        "longFrames": 0,
+        "callsP95": 86,
+        "trianglesP95": 156240,
+        "peakLoad": 11.96630859375
+      },
+      "spread": {
+        "fpsDelivered": {
+          "n": 3,
+          "min": 119.99040076793857,
+          "p50": 120,
+          "p95": 120,
+          "p99": 120,
+          "max": 120.00399680255796
+        },
+        "renderMsP95": {
+          "n": 3,
+          "min": 1.100000023841858,
+          "p50": 1.100000023841858,
+          "p95": 1.100000023841858,
+          "p99": 1.100000023841858,
+          "max": 1.1999999284744263
+        }
+      }
+    },
+    {
+      "key": "e1-night-shift-full-desktop-stress-quiet",
+      "map": "e1-night-shift",
+      "state": "stress",
+      "tier": "full",
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "ceiling": 12,
+      "reps": 3,
+      "samples": [
+        {
+          "attempt": 0,
+          "before": {
+            "at": "2026-09-05T15:50:50.166Z",
+            "load": [
+              11.6025390625,
+              12.70458984375,
+              17.1416015625
+            ],
+            "freeMemory": 17236017152
+          },
+          "after": {
+            "at": "2026-09-05T15:51:04.169Z",
+            "load": [
+              11.64013671875,
+              12.654296875,
+              17.04541015625
+            ],
+            "freeMemory": 14529970176
+          },
+          "peakLoad": 11.64013671875,
+          "elapsedMs": 10000,
+          "fpsDelivered": 120,
+          "renderMsP50": 1,
+          "renderMsP95": 1.100000023841858,
+          "renderMsP99": 1.2000000476837158,
+          "frameMsP95": 9.899999999999636,
+          "frameMsP99": 10.200000000000728,
+          "callsP95": 172,
+          "trianglesP95": 158798,
+          "longFrames": 0,
+          "errors": {
+            "console": 0,
+            "page": 0,
+            "network": 0
+          }
+        }
+      ],
+      "discarded": [
+        {
+          "attempt": 1,
+          "before": {
+            "at": "2026-09-05T15:51:04.223Z",
+            "load": [
+              11.64013671875,
+              12.654296875,
+              17.04541015625
+            ],
+            "freeMemory": 14511865856
+          },
+          "after": {
+            "at": "2026-09-05T15:51:18.332Z",
+            "load": [
+              14.3388671875,
+              13.22021484375,
+              17.17138671875
+            ],
+            "freeMemory": 17002758144
+          },
+          "peakLoad": 14.3388671875,
+          "elapsedMs": 10008.3,
+          "fpsDelivered": 120.00039966827535,
+          "renderMsP50": 1,
+          "renderMsP95": 1.100000023841858,
+          "renderMsP99": 1.2000000476837158,
+          "frameMsP95": 9.700000000000728,
+          "frameMsP99": 10.299999999999272,
+          "callsP95": 172,
+          "trianglesP95": 158798,
+          "longFrames": 0,
+          "errors": {
+            "console": 0,
+            "page": 0,
+            "network": 0
+          },
+          "reason": "load during"
+        },
+        {
+          "attempt": 2,
+          "reason": "load before",
+          "load": 14.3388671875
+        },
+        {
+          "attempt": 3,
+          "reason": "load before",
+          "load": 15.54296875
+        },
+        {
+          "attempt": 4,
+          "reason": "load before",
+          "load": 14.2197265625
+        },
+        {
+          "attempt": 5,
+          "reason": "load before",
+          "load": 12.794921875
+        }
+      ],
+      "status": "insufficient-clean-samples"
+    },
+    {
+      "key": "e4-long-road-full-desktop-wave1-quiet",
+      "map": "e4-long-road",
+      "state": "wave1",
+      "tier": "full",
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "ceiling": 12,
+      "reps": 3,
+      "samples": [
+        {
+          "attempt": 0,
+          "before": {
+            "at": "2026-09-05T15:52:38.407Z",
+            "load": [
+              10.63671875,
+              12.6005859375,
+              16.59814453125
+            ],
+            "freeMemory": 10250616832
+          },
+          "after": {
+            "at": "2026-09-05T15:52:52.510Z",
+            "load": [
+              10.24951171875,
+              12.4091796875,
+              16.458984375
+            ],
+            "freeMemory": 4140597248
+          },
+          "peakLoad": 10.63671875,
+          "elapsedMs": 10000.6,
+          "fpsDelivered": 119.49283043017418,
+          "renderMsP50": 0.8999999761581421,
+          "renderMsP95": 1,
+          "renderMsP99": 1.100000023841858,
+          "frameMsP95": 9.800000000000182,
+          "frameMsP99": 10.200000000000728,
+          "callsP95": 63,
+          "trianglesP95": 98194,
+          "longFrames": 1,
+          "errors": {
+            "console": 0,
+            "page": 0,
+            "network": 0
+          }
+        },
+        {
+          "attempt": 1,
+          "before": {
+            "at": "2026-09-05T15:52:52.562Z",
+            "load": [
+              10.24951171875,
+              12.4091796875,
+              16.458984375
+            ],
+            "freeMemory": 4132913152
+          },
+          "after": {
+            "at": "2026-09-05T15:53:06.654Z",
+            "load": [
+              10.32958984375,
+              12.32275390625,
+              16.35693359375
+            ],
+            "freeMemory": 586727424
+          },
+          "peakLoad": 10.32958984375,
+          "elapsedMs": 10000,
+          "fpsDelivered": 119.6,
+          "renderMsP50": 0.8999999761581421,
+          "renderMsP95": 1,
+          "renderMsP99": 1.0999999046325684,
+          "frameMsP95": 9.799999999999272,
+          "frameMsP99": 10.200000000000728,
+          "callsP95": 63,
+          "trianglesP95": 98194,
+          "longFrames": 1,
+          "errors": {
+            "console": 0,
+            "page": 0,
+            "network": 0
+          }
+        },
+        {
+          "attempt": 2,
+          "before": {
+            "at": "2026-09-05T15:53:06.706Z",
+            "load": [
+              10.32958984375,
+              12.32275390625,
+              16.35693359375
+            ],
+            "freeMemory": 571408384
+          },
+          "after": {
+            "at": "2026-09-05T15:53:20.785Z",
+            "load": [
+              10.0048828125,
+              12.1708984375,
+              16.23291015625
+            ],
+            "freeMemory": 140017664
+          },
+          "peakLoad": 10.32958984375,
+          "elapsedMs": 10000,
+          "fpsDelivered": 120,
+          "renderMsP50": 0.8999999761581421,
+          "renderMsP95": 1,
+          "renderMsP99": 1.100000023841858,
+          "frameMsP95": 9.800000000000182,
+          "frameMsP99": 10.200000000000728,
+          "callsP95": 63,
+          "trianglesP95": 98194,
+          "longFrames": 0,
+          "errors": {
+            "console": 0,
+            "page": 0,
+            "network": 0
+          }
+        }
+      ],
+      "discarded": [],
+      "status": "measured",
+      "median": {
+        "fpsDelivered": 119.6,
+        "renderMsP50": 0.8999999761581421,
+        "renderMsP95": 1,
+        "frameMsP95": 9.800000000000182,
+        "longFrames": 1,
+        "callsP95": 63,
+        "trianglesP95": 98194,
+        "peakLoad": 10.32958984375
+      },
+      "spread": {
+        "fpsDelivered": {
+          "n": 3,
+          "min": 119.49283043017418,
+          "p50": 119.6,
+          "p95": 119.6,
+          "p99": 119.6,
+          "max": 120
+        },
+        "renderMsP95": {
+          "n": 3,
+          "min": 1,
+          "p50": 1,
+          "p95": 1,
+          "p99": 1,
+          "max": 1
+        }
+      }
+    },
+    {
+      "key": "e4-long-road-full-desktop-stress-quiet",
+      "map": "e4-long-road",
+      "state": "stress",
+      "tier": "full",
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "ceiling": 12,
+      "reps": 3,
+      "samples": [
+        {
+          "attempt": 0,
+          "before": {
+            "at": "2026-09-05T15:53:20.839Z",
+            "load": [
+              10.0048828125,
+              12.1708984375,
+              16.23291015625
+            ],
+            "freeMemory": 150093824
+          },
+          "after": {
+            "at": "2026-09-05T15:53:35.293Z",
+            "load": [
+              9.548828125,
+              12.00048828125,
+              16.12451171875
+            ],
+            "freeMemory": 324845568
+          },
+          "peakLoad": 10.0048828125,
+          "elapsedMs": 10001.3,
+          "fpsDelivered": 119.58445402097729,
+          "renderMsP50": 0.7999999523162842,
+          "renderMsP95": 0.9000000953674316,
+          "renderMsP99": 1,
+          "frameMsP95": 9.899999999999636,
+          "frameMsP99": 10.200000000000728,
+          "callsP95": 80,
+          "trianglesP95": 100640,
+          "longFrames": 1,
+          "errors": {
+            "console": 0,
+            "page": 0,
+            "network": 0
+          }
+        },
+        {
+          "attempt": 1,
+          "before": {
+            "at": "2026-09-05T15:53:35.347Z",
+            "load": [
+              9.548828125,
+              12.00048828125,
+              16.12451171875
+            ],
+            "freeMemory": 334315520
+          },
+          "after": {
+            "at": "2026-09-05T15:53:49.394Z",
+            "load": [
+              9.00830078125,
+              11.755859375,
+              15.96484375
+            ],
+            "freeMemory": 1320943616
+          },
+          "peakLoad": 9.548828125,
+          "elapsedMs": 10000,
+          "fpsDelivered": 120,
+          "renderMsP50": 0.7999999523162842,
+          "renderMsP95": 0.9000000953674316,
+          "renderMsP99": 1,
+          "frameMsP95": 9.399999999999636,
+          "frameMsP99": 10.199999999999818,
+          "callsP95": 80,
+          "trianglesP95": 100640,
+          "longFrames": 0,
+          "errors": {
+            "console": 0,
+            "page": 0,
+            "network": 0
+          }
+        },
+        {
+          "attempt": 2,
+          "before": {
+            "at": "2026-09-05T15:53:49.454Z",
+            "load": [
+              9.00830078125,
+              11.755859375,
+              15.96484375
+            ],
+            "freeMemory": 1254211584
+          },
+          "after": {
+            "at": "2026-09-05T15:54:03.467Z",
+            "load": [
+              9.55615234375,
+              11.736328125,
+              15.88330078125
+            ],
+            "freeMemory": 755744768
+          },
+          "peakLoad": 9.55615234375,
+          "elapsedMs": 10006.8,
+          "fpsDelivered": 120.01838749650237,
+          "renderMsP50": 0.7999999523162842,
+          "renderMsP95": 0.9000000953674316,
+          "renderMsP99": 1,
+          "frameMsP95": 9.899999999999636,
+          "frameMsP99": 10.299999999999272,
+          "callsP95": 80,
+          "trianglesP95": 100640,
+          "longFrames": 0,
+          "errors": {
+            "console": 0,
+            "page": 0,
+            "network": 0
+          }
+        }
+      ],
+      "discarded": [],
+      "status": "measured",
+      "median": {
+        "fpsDelivered": 120,
+        "renderMsP50": 0.7999999523162842,
+        "renderMsP95": 0.9000000953674316,
+        "frameMsP95": 9.899999999999636,
+        "longFrames": 0,
+        "callsP95": 80,
+        "trianglesP95": 100640,
+        "peakLoad": 9.55615234375
+      },
+      "spread": {
+        "fpsDelivered": {
+          "n": 3,
+          "min": 119.58445402097729,
+          "p50": 120,
+          "p95": 120,
+          "p99": 120,
+          "max": 120.01838749650237
+        },
+        "renderMsP95": {
+          "n": 3,
+          "min": 0.9000000953674316,
+          "p50": 0.9000000953674316,
+          "p95": 0.9000000953674316,
+          "p99": 0.9000000953674316,
+          "max": 0.9000000953674316
+        }
+      }
+    }
+  ]
+}

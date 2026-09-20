@@ -1,0 +1,6474 @@
+[
+  {
+    "width": 1280,
+    "plain": {
+      "diagnostics": {
+        "frame": 422,
+        "elapsed": 4.2588,
+        "timeAlive": 4.799999999999993,
+        "simulation": {
+          "tick": 144,
+          "fixed": true,
+          "stepSeconds": 0.03333333333333333,
+          "alpha": 0.02500000000002056,
+          "stepsLastFrame": 1,
+          "totalSteps": 144,
+          "droppedSeconds": 0.36666666666666664,
+          "droppedTicks": 11
+        },
+        "runState": "playing",
+        "paused": false,
+        "state": "playing",
+        "mp": null,
+        "difficultyPreset": "trail",
+        "renderLayers": {
+          "backdrop": -2,
+          "terrainBackdrop": -1,
+          "terrain": 0,
+          "groundShadows": 0.5,
+          "groundDecals": 1,
+          "gameplay": 2,
+          "gameplayFade": 2.01,
+          "companion": 2.5,
+          "impactVfx": 3,
+          "worldUi": 4
+        },
+        "ui": {
+          "hp": 100,
+          "maxHp": 100,
+          "gold": 0,
+          "bankCap": 200,
+          "resources": [],
+          "power": null,
+          "xp": 0,
+          "xpNeed": 12,
+          "level": 1,
+          "wave": 0,
+          "waveState": "quiet",
+          "announcement": "the Prospector: follows and observes. Chip by weapon; claim wins grow it.",
+          "announcementAt": 0,
+          "announcementDurationSeconds": 5.6,
+          "announcementEdge": null,
+          "announcementKind": "wave",
+          "announcementTitle": null,
+          "enemiesAlive": 0,
+          "timeAlive": 4.799999999999993,
+          "state": "playing",
+          "paused": false,
+          "buildMode": false,
+          "buildMenuOpen": false,
+          "selectedBuildable": "sentry_beacon",
+          "buildables": [
+            {
+              "id": "sentry_beacon",
+              "displayName": "Sentry Beacon",
+              "blurb": "Lights the dark and slows what it touches; radius 8wu.",
+              "cost": 25,
+              "count": 0,
+              "maxCount": 6,
+              "canAfford": false,
+              "selected": true,
+              "iconSlot": "ui.build.icon.sentry_beacon",
+              "portraitSlug": "sentry-beacon"
+            },
+            {
+              "id": "palisade",
+              "displayName": "Palisade",
+              "blurb": "Timber that holds. Bandits break it before you.",
+              "cost": 10,
+              "count": 0,
+              "maxCount": 48,
+              "canAfford": false,
+              "selected": false,
+              "iconSlot": "ui.build.icon.palisade",
+              "portraitSlug": "palisade",
+              "tierLine": "T1: 60 HP",
+              "kitCredits": 0
+            },
+            {
+              "id": "sluice",
+              "displayName": "Sluice Works",
+              "blurb": "Works the river for you: 3g per cycle beside water.",
+              "cost": 40,
+              "count": 0,
+              "maxCount": 3,
+              "canAfford": false,
+              "selected": false,
+              "iconSlot": "ui.build.icon.sluice",
+              "portraitSlug": "sluice-works",
+              "tierLine": "T1: 3g every 5s"
+            },
+            {
+              "id": "stockpile",
+              "displayName": "Stockpile Yard",
+              "blurb": "Holds +150 gold above the pan cap.",
+              "cost": 60,
+              "count": 0,
+              "maxCount": 2,
+              "canAfford": false,
+              "selected": false,
+              "iconSlot": "ui.build.icon.stockpile",
+              "portraitSlug": "stockpile-yard",
+              "tierLine": "T1: +150 gold capacity"
+            },
+            {
+              "id": "turret",
+              "displayName": "Signal Turret",
+              "blurb": "Spark bolts, line-of-sight, 16wu range.",
+              "cost": 50,
+              "count": 0,
+              "maxCount": 4,
+              "canAfford": false,
+              "selected": false,
+              "iconSlot": "ui.build.icon.turret",
+              "portraitSlug": "signal-turret",
+              "tierLine": "T1: 52 damage at 1.1/s"
+            },
+            {
+              "id": "assay_office",
+              "displayName": "Assay Office",
+              "blurb": "Write orders; the town's craftsmen answer. One per claim.",
+              "cost": 80,
+              "count": 0,
+              "maxCount": 1,
+              "canAfford": false,
+              "selected": false,
+              "iconSlot": "ui.build.icon.assay_office",
+              "portraitSlug": "claim-office"
+            }
+          ],
+          "stockpileCount": 0,
+          "beaconCount": 0,
+          "beaconMax": 6,
+          "nextBeaconCost": 25,
+          "canAffordBeacon": false,
+          "weapon": "rig",
+          "agent": {
+            "name": "the Prospector",
+            "permissionLevel": 0,
+            "permissionLabel": "suggest-only",
+            "capabilities": [
+              {
+                "id": "auto_collect",
+                "level": 1,
+                "label": "Let the Prospector gather loose XP and dropped gold",
+                "tools": [
+                  "et.goldrush.collect_xp",
+                  "et.goldrush.collect_gold"
+                ]
+              },
+              {
+                "id": "auto_repair",
+                "level": 1,
+                "label": "Let the Prospector tend walls",
+                "tools": [
+                  "et.goldrush.repair"
+                ]
+              },
+              {
+                "id": "auto_pan",
+                "level": 2,
+                "label": "Let the Prospector work claim pans",
+                "tools": [
+                  "et.goldrush.pan_at"
+                ]
+              },
+              {
+                "id": "place_building",
+                "level": 3,
+                "label": "Let the Prospector place buildings",
+                "tools": [
+                  "et.goldrush.place_building"
+                ]
+              }
+            ],
+            "lastActionAt": {},
+            "receiptCount": 1,
+            "lastReceiptTool": "et.goldrush.get_state",
+            "receiptFeed": [],
+            "autonomyTrack": 0,
+            "policySlotBonus": 0,
+            "consent": {
+              "ceiling": 0,
+              "rungs": {
+                "0": {
+                  "earned": true,
+                  "granted": true
+                },
+                "1": {
+                  "earned": false,
+                  "granted": true
+                },
+                "2": {
+                  "earned": false,
+                  "granted": true
+                },
+                "3": {
+                  "earned": false,
+                  "granted": true
+                }
+              },
+              "abilities": {
+                "auto_collect": {
+                  "earned": false,
+                  "granted": true,
+                  "allowed": false,
+                  "level": 1
+                },
+                "auto_repair": {
+                  "earned": false,
+                  "granted": true,
+                  "allowed": false,
+                  "level": 1
+                },
+                "light_duty": {
+                  "earned": false,
+                  "granted": false,
+                  "allowed": false,
+                  "level": 1
+                },
+                "auto_pan": {
+                  "earned": false,
+                  "granted": true,
+                  "allowed": false,
+                  "level": 2
+                },
+                "place_building": {
+                  "earned": false,
+                  "granted": true,
+                  "allowed": false,
+                  "level": 3
+                }
+              },
+              "repairUnderPct": 60,
+              "idleSeconds": 0.8
+            }
+          }
+        },
+        "camera": {
+          "scene": "run",
+          "distanceScale": 1,
+          "targetDistanceScale": 1,
+          "minDistanceScale": 0.7,
+          "maxDistanceScale": 1.6,
+          "baseDistance": 31.958254019892887,
+          "targetDistance": 31.958254019892887,
+          "actualDistance": 31.958254019866356,
+          "glanceActive": false
+        },
+        "hp": 100,
+        "maxHp": 100,
+        "heroIframes": false,
+        "enemiesAlive": 0,
+        "enemyPoolSize": 96,
+        "boltsAlive": 0,
+        "arsenal": {
+          "active": "rig",
+          "blastsAlive": 0,
+          "detonations": 0,
+          "blastKills": 0,
+          "turretKills": 0,
+          "weaponToggles": 0,
+          "blastTime": 0,
+          "blastDamage": 20,
+          "blastRadius": 2.2,
+          "disarmed": false,
+          "aimReticleRadius": 2.2,
+          "aimMode": "cursor",
+          "aimTarget": {
+            "x": 0,
+            "z": 2
+          },
+          "lastDetonation": null
+        },
+        "xp": 0,
+        "xpMotesAlive": 0,
+        "xpAudit": {
+          "deaths": 0,
+          "motesSpawned": 0,
+          "motesCollected": 0,
+          "motesCollectedXp": 0,
+          "overflowBanked": 0,
+          "expiredBanked": 0,
+          "autoBanked": 0,
+          "dropped": 0,
+          "xpAwarded": 0,
+          "xpPerKill": 4,
+          "motePool": 64,
+          "expiryBanks": true
+        },
+        "kills": 0,
+        "goldPanned": 0,
+        "deathLedger": {
+          "timeAlive": 0,
+          "kills": 0,
+          "goldPanned": 0,
+          "spent": 0,
+          "beaconsBuilt": 0,
+          "wavesSurvived": 0,
+          "weaponToggles": 0,
+          "blastTime": 0
+        },
+        "wave": 0,
+        "nextWaveInSim": 21.28695652173914,
+        "trickleInterval": 2.4,
+        "waveSpawnedTotal": 0,
+        "waveState": "quiet",
+        "pulse": 0,
+        "edge": null,
+        "drillYard": null,
+        "budget": 0,
+        "lastPulseAt": null,
+        "spawnDisabled": false,
+        "stressCount": 0,
+        "score": 0,
+        "targetScore": 0,
+        "complete": false,
+        "heroPos": {
+          "x": 0,
+          "y": 0.573093113899231,
+          "z": 12
+        },
+        "movePin": null,
+        "heroRenderPos": {
+          "x": 0,
+          "y": 0.573093113899231,
+          "z": 12
+        },
+        "speed": 0,
+        "player": {
+          "position": {
+            "x": 0,
+            "y": 0.573093113899231,
+            "z": 12
+          },
+          "speed": 0
+        },
+        "actors": [
+          {
+            "slot": 0,
+            "playerId": "local",
+            "name": "Rider",
+            "town": null,
+            "local": true,
+            "hp": 100,
+            "maxHp": 100,
+            "weapon": "rig",
+            "position": {
+              "x": 0,
+              "y": 0.573093113899231,
+              "z": 12
+            },
+            "speed": 0,
+            "visible": true
+          }
+        ],
+        "economy": {
+          "gold": 0,
+          "banked": 0,
+          "bankCap": 200,
+          "resources": {
+            "gold": {
+              "amount": 0,
+              "cap": 200
+            },
+            "pressure": {
+              "amount": 0,
+              "cap": 100
+            }
+          },
+          "activeResources": [],
+          "logLength": 0,
+          "state": {
+            "gold": 0,
+            "bankCap": 200,
+            "resources": {
+              "gold": {
+                "amount": 0,
+                "cap": 200
+              },
+              "pressure": {
+                "amount": 0,
+                "cap": 100
+              }
+            }
+          },
+          "replay": {
+            "gold": 0,
+            "bankCap": 200,
+            "resources": {
+              "gold": {
+                "amount": 0,
+                "cap": 200
+              },
+              "pressure": {
+                "amount": 0,
+                "cap": 100
+              }
+            }
+          },
+          "summary": {
+            "panned": 0,
+            "sluiced": 0,
+            "granted": 0,
+            "stolen": 0,
+            "reclaimed": 0,
+            "pannedByProspector": 0,
+            "sluicedByProspector": 0,
+            "reclaimedByProspector": 0,
+            "spent": 0,
+            "baseValue": 0,
+            "buildingsBuilt": 0,
+            "beaconsBuilt": 0,
+            "repairSpent": 0,
+            "repairs": 0
+          }
+        },
+        "decay": {
+          "active": 0,
+          "events": []
+        },
+        "e6Tiles": {
+          "active": false,
+          "storyGate": "puddles decay to safe on dials; harvest the six-vein ring after dark",
+          "puddles": [
+            {
+              "id": "decay-field-east",
+              "safe": false,
+              "stage": 1,
+              "remainingTicks": 0,
+              "minX": 18,
+              "maxX": 34,
+              "minZ": -46,
+              "maxZ": -30,
+              "visualY": true
+            },
+            {
+              "id": "decay-field-southeast",
+              "safe": false,
+              "stage": 1,
+              "remainingTicks": 0,
+              "minX": 32,
+              "maxX": 50,
+              "minZ": -28,
+              "maxZ": -12,
+              "visualY": true
+            }
+          ],
+          "night": {
+            "active": false,
+            "remainingTicks": 0
+          },
+          "veins": {
+            "active": false,
+            "channelId": null,
+            "progress": 0,
+            "harvested": 0,
+            "total": 6,
+            "payoutGold": 0,
+            "nodes": [
+              {
+                "id": "night-vein-1",
+                "x": -22,
+                "z": -6.8,
+                "harvested": false
+              },
+              {
+                "id": "night-vein-2",
+                "x": -9,
+                "z": 6.7,
+                "harvested": false
+              },
+              {
+                "id": "night-vein-3",
+                "x": -1.5,
+                "z": -6.4,
+                "harvested": false
+              },
+              {
+                "id": "night-vein-4",
+                "x": 7.5,
+                "z": 6.5,
+                "harvested": false
+              },
+              {
+                "id": "night-vein-5",
+                "x": 18,
+                "z": -7,
+                "harvested": false
+              },
+              {
+                "id": "night-vein-6",
+                "x": 25,
+                "z": 6.9,
+                "harvested": false
+              }
+            ]
+          }
+        },
+        "picnicHold": [],
+        "wrangle": {
+          "enabled": false,
+          "windDownSeconds": 8,
+          "windDownTicks": 240,
+          "captureRadius": 2.2,
+          "exhaustedSpeedMultiplier": 0.2,
+          "active": [],
+          "pen": {
+            "roster": [],
+            "total": 0,
+            "tickSeconds": 15,
+            "goldPerMachine": 1,
+            "incomeGranted": 0
+          }
+        },
+        "pressure": {
+          "enabled": false,
+          "multiplayerPosture": "single-player-gated",
+          "coal": 0,
+          "seams": [
+            {
+              "x": -12,
+              "z": 39,
+              "harvested": false,
+              "progress": 0,
+              "marked": false,
+              "visualY": null,
+              "groundY": 0.6415973901748657,
+              "spriteVisible": false
+            },
+            {
+              "x": -5,
+              "z": 43,
+              "harvested": false,
+              "progress": 0,
+              "marked": false,
+              "visualY": null,
+              "groundY": 0.6359289884567261,
+              "spriteVisible": false
+            },
+            {
+              "x": 3,
+              "z": 39,
+              "harvested": false,
+              "progress": 0,
+              "marked": false,
+              "visualY": null,
+              "groundY": 0.6058942079544067,
+              "spriteVisible": false
+            }
+          ],
+          "seamSource": "PressureSystem.DEFAULT_COAL_SEAMS",
+          "boilers": [
+            {
+              "index": 0,
+              "active": false,
+              "position": {
+                "x": 0,
+                "z": 0
+              },
+              "hot": false,
+              "cooling": false
+            },
+            {
+              "index": 1,
+              "active": false,
+              "position": {
+                "x": 0,
+                "z": 0
+              },
+              "hot": false,
+              "cooling": false
+            },
+            {
+              "index": 2,
+              "active": false,
+              "position": {
+                "x": 0,
+                "z": 0
+              },
+              "hot": false,
+              "cooling": false
+            }
+          ],
+          "vents": 0,
+          "safeBand": null,
+          "objective": {
+            "active": false,
+            "failed": false,
+            "complete": false,
+            "hotBoilers": 0,
+            "waves": "8-12"
+          }
+        },
+        "pressureArsenal": {
+          "multiplayerPosture": "single-player-gated",
+          "fires": {
+            "boilerLance": 0,
+            "pressureMortar": 0,
+            "skyRocket": 0
+          },
+          "pressureSpent": 0,
+          "autoPanSeconds": 0
+        },
+        "deepwaterArsenal": {
+          "active": false,
+          "items": [],
+          "fires": {
+            "harpoonBallista": 0,
+            "depthChargeRack": 0,
+            "depthChargeLobber": 0
+          },
+          "sharedMunition": {
+            "id": "depth_charge",
+            "stock": 12,
+            "capacity": 12,
+            "spentBy": {
+              "depthChargeRack": 0,
+              "depthChargeLobber": 0
+            }
+          },
+          "pressureSealed": {
+            "active": false,
+            "inDiveZone": false
+          },
+          "silhouette": {
+            "harpoonBallista": 1.1,
+            "priorTurret": 1.1
+          },
+          "treatmentEvents": [],
+          "visuals": {
+            "harpoonBallista": false,
+            "depthChargeRack": false,
+            "depthChargeLobber": false
+          }
+        },
+        "e6Arsenal": {
+          "eraActive": false,
+          "items": [],
+          "fires": {
+            "sunlineBeam": 0,
+            "sunlineMount": 0,
+            "tongsThrown": 0
+          },
+          "caltropsDeployments": 0,
+          "denialTicks": 0,
+          "outcomes": [],
+          "presentation": {
+            "beam": {
+              "visible": false,
+              "smoke": false
+            },
+            "mount": {
+              "active": 0,
+              "tracking": 0,
+              "silhouetteHeight": 1.1,
+              "previousTurretSilhouetteHeight": 1.1
+            },
+            "caltrops": {
+              "active": 0,
+              "visibleDials": 0,
+              "fields": []
+            },
+            "tongs": {
+              "visible": false,
+              "delivery": "underhand-arc"
+            }
+          }
+        },
+        "e9Arsenal": {
+          "eraActive": false,
+          "items": [],
+          "weather": {
+            "phase": "storm",
+            "charge": 0,
+            "capacity": 30
+          },
+          "fires": {
+            "stormDraw": 0,
+            "stormLance": 0,
+            "terraformCannon": 0
+          },
+          "fenceDeployments": 0,
+          "denialTicks": 0,
+          "pushedDistance": 0,
+          "outcomes": [],
+          "presentation": {
+            "stormDraw": {
+              "visible": false,
+              "smoke": false
+            },
+            "stormLance": {
+              "active": 0,
+              "tracking": 0,
+              "silhouetteHeight": 1.1,
+              "previousTurretSilhouetteHeight": 1.1
+            },
+            "stormFence": {
+              "active": 0,
+              "fields": []
+            },
+            "terraformCannon": {
+              "visible": false,
+              "ammunition": "map"
+            }
+          }
+        },
+        "e9Canal": {
+          "active": false,
+          "stage": 0,
+          "activeGateId": null,
+          "stageProgress": 0,
+          "contested": false,
+          "stagePayoutGold": 0,
+          "gates": [
+            {
+              "id": "canal-stage-c1",
+              "x": -28,
+              "z": 34,
+              "complete": false,
+              "active": false
+            },
+            {
+              "id": "canal-stage-c2",
+              "x": -12,
+              "z": 10,
+              "complete": false,
+              "active": false
+            },
+            {
+              "id": "canal-stage-c3",
+              "x": 4,
+              "z": -24,
+              "complete": false,
+              "active": false
+            }
+          ],
+          "quarry": {
+            "bandId": "ice-quarry-scarp-north-h4",
+            "channelNodeId": null,
+            "progress": 0,
+            "harvested": 0,
+            "total": 4,
+            "payoutGold": 0,
+            "nodes": [
+              {
+                "id": "ice-pack-1",
+                "x": -49.5,
+                "z": 47,
+                "harvested": false
+              },
+              {
+                "id": "ice-pack-2",
+                "x": -40.5,
+                "z": 49,
+                "harvested": false
+              },
+              {
+                "id": "ice-pack-3",
+                "x": -31.5,
+                "z": 47,
+                "harvested": false
+              },
+              {
+                "id": "ice-pack-4",
+                "x": -22.5,
+                "z": 49,
+                "harvested": false
+              }
+            ]
+          },
+          "canal": {
+            "wet": false,
+            "renderOnly": true,
+            "visualY": true,
+            "segments": 5
+          },
+          "dustDevil": {
+            "mode": "wander-lane",
+            "targeting": "none",
+            "phase": "clear",
+            "warning": false,
+            "laneId": "dust-devil-wander",
+            "laneProgress": 0,
+            "position": null,
+            "shoves": 0,
+            "pushedDistance": 0
+          }
+        },
+        "seedCaravan": null,
+        "canalChoices": null,
+        "canalFlow": null,
+        "seedCaravanPresentation": null,
+        "interferenceFront": null,
+        "squall": null,
+        "preserveVent": null,
+        "squallPresentation": null,
+        "devilsAlley": null,
+        "devilsAlleyPresentation": null,
+        "e10Finale": {
+          "enabled": false,
+          "ark": {
+            "sceneClass": "river-claim",
+            "tileId": "frontier-river-claim",
+            "deckCount": 0,
+            "loadState": "off",
+            "models": [],
+            "renderOnly": true,
+            "visualY": true
+          },
+          "reink": {
+            "state": "idle",
+            "progress": 0,
+            "renderOnly": true
+          },
+          "riverOffer": {
+            "offered": false,
+            "charterName": "The River",
+            "launchTemplate": "the-claim"
+          }
+        },
+        "e10Static": {
+          "enabled": false,
+          "active": false,
+          "act": 0,
+          "appetite": "meaning",
+          "arrivalCount": 0,
+          "aura": 0,
+          "musicGain": 1,
+          "pressureSeconds": 0,
+          "sites": [],
+          "allPreserved": false,
+          "recessionProgress": 0,
+          "victory": null,
+          "jarredMote": false,
+          "damageAccepted": 0,
+          "killPath": false
+        },
+        "preserve": null,
+        "e7Signal": {
+          "enabled": false,
+          "graphHash": "fnv1a32:77c8ee63",
+          "nodes": [],
+          "links": [],
+          "linkedCoverage": false,
+          "threatVisibilityBonus": false,
+          "droneDropped": false,
+          "relayChainsSuppressed": false,
+          "dronesSuppressed": false,
+          "jacks": [],
+          "midpointReached": false,
+          "lastBeatCount": 0,
+          "e8ExitBeatReady": false,
+          "fragmentEvents": 0,
+          "latestFragment": ""
+        },
+        "e7Arsenal": {
+          "enabled": false,
+          "items": [],
+          "fires": {
+            "playbookSparkRig": 0,
+            "beamRelay": 0,
+            "signalJammer": 0,
+            "reportRocket": 0
+          },
+          "relayLinks": 0,
+          "activeRelayTurrets": 0,
+          "jammerDeployed": false,
+          "playbookSlaved": false,
+          "turretSilhouetteHeight": 1.1,
+          "cureEvents": [],
+          "deathEvents": 0
+        },
+        "e8Arsenal": {
+          "available": false,
+          "multiplayerPosture": "single-player-gated",
+          "items": {
+            "sunlineBeam": false,
+            "kineticLobber": false,
+            "magnetGrapple": false,
+            "lensTurret": false,
+            "breachPatchSeals": false
+          },
+          "fires": {
+            "sunlineBeam": 0,
+            "kineticLobber": 0,
+            "magnetGrapple": 0
+          },
+          "grapplePulls": 0,
+          "silentCollisions": 0,
+          "vfxClasses": [
+            "light",
+            "kinetic",
+            "magnetic"
+          ],
+          "lensSilhouette": {
+            "base": 1.1,
+            "transformed": 1.1
+          },
+          "breachSealLimit": 4
+        },
+        "e8Physics": {
+          "active": false,
+          "contractId": "e1-baron",
+          "source": "default",
+          "movement": "normal",
+          "feelG": 1,
+          "lobArcDistanceMultiplier": 1,
+          "lobAirTimeMultiplier": 1,
+          "knockbackScale": 1,
+          "orbitalReturn": false,
+          "vacuum": false,
+          "fixedTimestepOnly": true,
+          "filteredMovement": {
+            "x": 0,
+            "y": 0
+          },
+          "adaptedLobs": [
+            {
+              "resumeKey": "orbital:kineticLobber",
+              "range": 15,
+              "airTime": 1.68
+            }
+          ]
+        },
+        "e8Atmosphere": null,
+        "e8SuitAir": null,
+        "probeRecovery": {
+          "declared": false,
+          "trigger": null,
+          "zones": [],
+          "recovered": false,
+          "recoveredZoneId": null,
+          "playedFragment": null,
+          "playbackCount": 0,
+          "refusals": {
+            "outOfReach": 0,
+            "alreadyRecovered": 0
+          }
+        },
+        "broadcastMirror": null,
+        "playbookUse": null,
+        "lowOrbit": {
+          "declared": false,
+          "orbitalReturn": false,
+          "returnSeconds": 12,
+          "scaffoldZones": 0,
+          "debrisFields": 0,
+          "handholdSegments": 0,
+          "returnsScheduled": 0,
+          "returnsDetonated": 0,
+          "driftSteps": 0,
+          "debrisSteps": 0,
+          "debrisDamageDealt": 0
+        },
+        "hollowCrossing": {
+          "declared": false,
+          "stage": "launch",
+          "routeId": null,
+          "onGlowBridge": false,
+          "radiationDamageDealt": 0
+        },
+        "run": {
+          "secured": false,
+          "rush": false,
+          "lastRunEndedReason": null,
+          "meta": {
+            "version": 1,
+            "tracks": {
+              "territory": 0,
+              "science": 0,
+              "hero": 0,
+              "agent": 0
+            }
+          },
+          "victoryPayout": null,
+          "secureWaveReached": null,
+          "securedResultAt": null,
+          "securedSnapshot": null,
+          "suspend": {
+            "hasSuspend": false,
+            "restored": false,
+            "restoredWave": null,
+            "lastWriteAt": null,
+            "lastWriteMs": null,
+            "sizeBytes": 0
+          }
+        },
+        "contract": {
+          "activeId": "e1-baron",
+          "requestedId": "e1-baron",
+          "fallbackReason": null,
+          "stagedLaunchClear": null,
+          "warningSuppressed": false,
+          "epochId": "epoch-1-frontier",
+          "epochResources": [],
+          "claimOffice": null,
+          "name": "The Claim-Jumper Baron",
+          "tileParams": {
+            "tileId": "frontier-river-claim",
+            "biome": "river-claim",
+            "size": 64,
+            "river": true,
+            "ford": true,
+            "fords": [
+              {
+                "id": "center-ford",
+                "x": 0,
+                "halfWidth": 3
+              }
+            ],
+            "waterSources": [],
+            "harvestAnchors": [
+              {
+                "x": -22,
+                "z": -6.8
+              },
+              {
+                "x": -9,
+                "z": 6.7
+              },
+              {
+                "x": -1.5,
+                "z": -6.4
+              },
+              {
+                "x": 7.5,
+                "z": 6.5
+              },
+              {
+                "x": 18,
+                "z": -7
+              },
+              {
+                "x": 25,
+                "z": 6.9
+              }
+            ],
+            "water": {
+              "id": "frontier-river-depth",
+              "centerZ": 0,
+              "halfWidth": 5,
+              "visualHalfWidth": 6.25
+            },
+            "prebuiltPalisades": false,
+            "lanes": {
+              "spawnEdges": [
+                "north",
+                "south",
+                "east",
+                "west"
+              ],
+              "territoryRingBiasWaves": 3,
+              "territoryRingLaneBias": 0.75
+            }
+          },
+          "boardRow": {
+            "name": "The Claim-Jumper Baron",
+            "ledgerBlurb": "An oxblood banner marks the outfit that keeps buying trouble.",
+            "tags": [
+              "vein-hunter"
+            ],
+            "unlock": "science-complete+2-secured"
+          },
+          "briefing": {
+            "goals": [
+              "The Baron rides at wave 20. Break his Rocket Cart."
+            ],
+            "rules": [
+              "His outfit rides hot: waves come 15% faster.",
+              "Taunts warn you before his banner appears.",
+              "Turn back the Baron for the medal and double science."
+            ],
+            "geographyLine": "A brass-bannered bully compresses the waves and waits at the twentieth horn."
+          },
+          "seamYieldMult": 1,
+          "secureWave": 20,
+          "waveCadenceMult": 1.15,
+          "lightRamp": null,
+          "dayNightCycle": null,
+          "baron": {
+            "wave": 20,
+            "hpScale": 240,
+            "speedScale": 0.75,
+            "scale": 4,
+            "contactDamageScale": 5,
+            "buildingDamageScale": 16,
+            "supportBuildingDamageScale": 12,
+            "pursuitRange": 18,
+            "escortCount": 8,
+            "tauntWaves": [
+              5,
+              12,
+              18
+            ],
+            "taunt": "The Baron sends his regards. The claim won't hold.",
+            "defeatBeat": "Dragged off by his own men, swearing revenge.",
+            "medalBlurb": "The Rocket Cart, captured. He'll be back with machines.",
+            "sciencePayoutMult": 2,
+            "rocketVolley": {
+              "count": 3,
+              "damage": 18,
+              "radius": 2.35,
+              "cadenceSeconds": 8,
+              "telegraphSeconds": 1.2,
+              "airTime": 1.1,
+              "spreadRadius": 0.9
+            }
+          },
+          "medals": {
+            "version": 1,
+            "baronBeaten": false,
+            "rocketCartCaptured": false
+          }
+        },
+        "deepwaterClaim": null,
+        "tilePersistence": {
+          "contractId": "e1-baron",
+          "entries": 0,
+          "greenWaypoint": null,
+          "greenWaypoints": [],
+          "greenWaypointStaged": false,
+          "swatchColor": "#848c6c",
+          "noSpawnZones": []
+        },
+        "research": {
+          "taken": [],
+          "available": [
+            "assay_grading",
+            "chain_spark_primer"
+          ],
+          "steps": 0,
+          "remaining": 6,
+          "threshold": 6,
+          "overflow": 0,
+          "meter": "Science: 0 steps - 6 to the Steamworks",
+          "continued": {
+            "seamYieldMult": 0,
+            "turretDamageMult": 0,
+            "stockpileCapBonus": 0
+          },
+          "assayOrderSlots": 1,
+          "contractTier": 1,
+          "pinnedTarget": null
+        },
+        "megaproject": {
+          "active": false,
+          "id": "stamp-mill",
+          "name": "The Stamp Mill",
+          "unlocked": false,
+          "complete": false,
+          "stage": 0,
+          "totalStages": 3,
+          "funded": false,
+          "hp": 80,
+          "maxHp": 80,
+          "ticksRemaining": 0,
+          "delayTicks": 0,
+          "materials": {
+            "gold": 90
+          },
+          "siteFootprint": {
+            "x": -8,
+            "z": 16,
+            "w": 5,
+            "d": 3
+          },
+          "siteRead": {
+            "packedEarth": false,
+            "stakes": 0,
+            "stringLines": 0,
+            "walkwayPlanks": 0,
+            "signboard": false,
+            "plaque": "STAMP MILL & RAIL SPUR / surveyed for the town / Claim Office takes pledges",
+            "constructionProps": 0,
+            "promptReady": false,
+            "surveyVisible": false
+          }
+        },
+        "escort": {
+          "enabled": false
+        },
+        "tram": null,
+        "fairground": null,
+        "crowdFlocks": null,
+        "fuel": null,
+        "vehicle": null,
+        "power": {
+          "active": false,
+          "id": "",
+          "tick": 0,
+          "topologyRevision": 0,
+          "allocationRevision": 0,
+          "totalSupplyWatts": 0,
+          "totalDemandWatts": 0,
+          "nodes": [],
+          "wires": [],
+          "components": [],
+          "signature": "",
+          "budgetMs": 0.5,
+          "lastSolveMs": 0,
+          "maxSolveMs": 0,
+          "lastStepMs": 0,
+          "maxStepMs": 0,
+          "overBudget": false,
+          "overBudgetCount": 0,
+          "solveCount": 0,
+          "nodeCount": 0,
+          "wireCount": 0,
+          "intactWireCount": 0,
+          "cutWireCount": 0,
+          "events": [],
+          "render": {
+            "active": false,
+            "renderLayer": 0,
+            "renderSlot": "gameplay",
+            "topologyRevision": -1,
+            "allocationRevision": -1,
+            "rebuildCount": 0,
+            "spans": 0,
+            "poweredSpans": 0,
+            "darkSpans": 0,
+            "intactSpans": 0,
+            "cutSpans": 0,
+            "segments": 0,
+            "poweredSegments": 0,
+            "darkSegments": 0,
+            "drawCalls": 0,
+            "asset": "procedural-catenary"
+          }
+        },
+        "canyonWorks": null,
+        "crawlerBoss": null,
+        "landYachtBoss": null,
+        "salvageClawBoss": null,
+        "homemakerBoss": null,
+        "echoBoss": null,
+        "oldDiggerBoss": null,
+        "agent": {
+          "stub": {
+            "name": "the Prospector",
+            "permissionLevel": 0,
+            "permissionLabel": "suggest-only",
+            "capabilities": [
+              {
+                "id": "auto_collect",
+                "level": 1,
+                "label": "Let the Prospector gather loose XP and dropped gold",
+                "tools": [
+                  "et.goldrush.collect_xp",
+                  "et.goldrush.collect_gold"
+                ]
+              },
+              {
+                "id": "auto_repair",
+                "level": 1,
+                "label": "Let the Prospector tend walls",
+                "tools": [
+                  "et.goldrush.repair"
+                ]
+              },
+              {
+                "id": "auto_pan",
+                "level": 2,
+                "label": "Let the Prospector work claim pans",
+                "tools": [
+                  "et.goldrush.pan_at"
+                ]
+              },
+              {
+                "id": "place_building",
+                "level": 3,
+                "label": "Let the Prospector place buildings",
+                "tools": [
+                  "et.goldrush.place_building"
+                ]
+              }
+            ],
+            "lastActionAt": {},
+            "receiptCount": 1,
+            "lastReceiptTool": "et.goldrush.get_state",
+            "receiptFeed": []
+          },
+          "embodiment": {
+            "visible": true,
+            "moving": false,
+            "drifting": true,
+            "working": false,
+            "receiptCount": 1,
+            "lastReceiptTool": "et.goldrush.get_state",
+            "lastLine": "Prospector ready",
+            "position": {
+              "x": -1.925,
+              "y": 1.811,
+              "z": 10.606
+            },
+            "target": {
+              "x": -1.8,
+              "z": 10.93
+            },
+            "terrainY": 0.511,
+            "clearance": 1.3
+          },
+          "riders": []
+        },
+        "audio": {
+          "unlocked": true,
+          "muted": false,
+          "volume": 0.8,
+          "musicVolume": 0.35,
+          "requests": 0,
+          "started": 10,
+          "missing": 0,
+          "active": 3,
+          "concurrentVoices": 2,
+          "voiceCap": 12,
+          "dropsPerSecond": 0,
+          "headroomGain": 1,
+          "loops": [
+            "river-ambience-loop",
+            "era-e1-frontier-loop",
+            "prospector-hover-loop"
+          ],
+          "loopSourceCounts": {
+            "river-ambience-loop": 1,
+            "era-e1-frontier-loop": 1,
+            "prospector-hover-loop": 1
+          },
+          "loopVolumes": {
+            "river-ambience-loop": 0.07573235034942627,
+            "era-e1-frontier-loop": 0.1469999998807907,
+            "prospector-hover-loop": 0.0019092924194410443
+          },
+          "loopElapsedSeconds": {
+            "river-ambience-loop": 3.1573333333333333,
+            "era-e1-frontier-loop": 2.933333333333333,
+            "prospector-hover-loop": 0
+          },
+          "lastRequested": null,
+          "lastStarted": "prospector-hover-loop",
+          "playsPerSecond": {
+            "river-ambience-loop": 0,
+            "era-e1-frontier-loop": 0,
+            "prospector-hover-loop": 3
+          },
+          "startedBySound": {
+            "river-ambience-loop": 1,
+            "era-e1-frontier-loop": 1,
+            "prospector-hover-loop": 8
+          },
+          "droppedBySound": {},
+          "droppedByFamily": {},
+          "droppedByPriority": {}
+        },
+        "build": {
+          "mode": false,
+          "selectedBuildable": "sentry_beacon",
+          "ghostValid": false,
+          "ghostLight": 1,
+          "ghostPos": {
+            "x": 0,
+            "z": 0
+          },
+          "ghostY": 0,
+          "ghostVisible": false,
+          "ghostRotationSteps": 0,
+          "ghostFootprint": {
+            "w": 1,
+            "d": 1
+          },
+          "beacons": 0,
+          "palisades": 0,
+          "palisadeKitCredits": 0,
+          "sluices": 0,
+          "stockpiles": 0,
+          "boilerHouses": 0,
+          "turrets": 0,
+          "assayOffices": 0,
+          "lanternPosts": 0,
+          "capacitorBanks": 0,
+          "beaconPositions": [],
+          "palisadePositions": [],
+          "sluicePositions": [],
+          "stockpilePositions": [],
+          "boilerHousePositions": [],
+          "turretPositions": [],
+          "assayOfficePositions": [],
+          "lanternPostPositions": [],
+          "capacitorBankPositions": [],
+          "lanternPostRotations": [],
+          "reservedFootprints": [],
+          "buildables": [
+            {
+              "id": "sentry_beacon",
+              "count": 0
+            },
+            {
+              "id": "palisade",
+              "count": 0
+            },
+            {
+              "id": "sluice",
+              "count": 0
+            },
+            {
+              "id": "stockpile",
+              "count": 0
+            },
+            {
+              "id": "boiler_house",
+              "count": 0
+            },
+            {
+              "id": "turret",
+              "count": 0
+            },
+            {
+              "id": "lantern_post",
+              "count": 0
+            },
+            {
+              "id": "decoy_shed",
+              "count": 0
+            },
+            {
+              "id": "capacitor_bank",
+              "count": 0
+            },
+            {
+              "id": "assay_office",
+              "count": 0
+            }
+          ],
+          "sluicesState": [],
+          "stockpilesState": [],
+          "pileStep": 0,
+          "nextCost": 25,
+          "hp": [],
+          "ruins": 0,
+          "ruinDetails": [],
+          "hpBars": 0,
+          "hpBarsVisible": false,
+          "hpBarDetails": [],
+          "repair": {
+            "active": false,
+            "id": null,
+            "index": -1,
+            "progress": 0,
+            "blocked": false
+          },
+          "shooterRegistrations": 0,
+          "turretPulses": 0,
+          "activeTurretPulses": 0,
+          "breachSeals": 0,
+          "lensTurrets": 0,
+          "tierUpgrades": 0,
+          "repairs": 0,
+          "repairGold": 0,
+          "shells": {
+            "palisade": {
+              "active": 0,
+              "signs": 0,
+              "meshes": [
+                "PalisadePosts",
+                "PalisadeRails",
+                "PalisadeBraces",
+                "PalisadePortraitSigns"
+              ],
+              "lit": true
+            },
+            "sluice": {
+              "active": 0,
+              "signs": 0,
+              "meshes": [
+                "SluiceTroughs",
+                "SluiceWaterChannels",
+                "SluiceTimberRails",
+                "SluiceTimberLegs",
+                "SluiceWheelRims",
+                "SluiceWheelSpokesA",
+                "SluiceWheelSpokesB",
+                "SluicePortraitSigns"
+              ],
+              "lit": true,
+              "wheelPhase": 0
+            },
+            "stockpile": {
+              "active": 0,
+              "signs": 0,
+              "meshes": [
+                "StockpileTimberCribs",
+                "StockpileStrongboxes",
+                "StockpileGoldNuggets",
+                "StockpilePortraitSigns"
+              ],
+              "lit": true
+            },
+            "boiler_house": {
+              "active": 0,
+              "signs": 0,
+              "meshes": [
+                "BoilerHousePlaceholder",
+                "BoilerHouseBrassDrum",
+                "BoilerHouseStack",
+                "BoilerHouseSign"
+              ],
+              "lit": true
+            },
+            "turret": {
+              "active": 0,
+              "signs": 0,
+              "meshes": [
+                "TurretTimberBases",
+                "TurretTripodLegs",
+                "TurretSignalMasts",
+                "TurretPortraitSigns"
+              ],
+              "lit": true,
+              "variant": "signal",
+              "silhouetteHeight": 1.1
+            },
+            "assay_office": {
+              "active": 0,
+              "signs": 0,
+              "meshes": [
+                "AssayOfficeTimberShell",
+                "AssayOfficeBrassRoof",
+                "AssayOfficePlaqueFrame",
+                "AssayOfficeTimberLintel",
+                "AssayOfficePortraitSign"
+              ],
+              "lit": true
+            }
+          },
+          "killsByOwner": {},
+          "damageByOwner": {}
+        },
+        "progression": {
+          "level": 1,
+          "xpInto": 0,
+          "xpNeed": 12,
+          "pendingLevels": 0,
+          "offer": null,
+          "stacks": {},
+          "stats": {
+            "fireRateMult": 1,
+            "damageMult": 1,
+            "rangeMult": 1,
+            "boltSpeedMult": 1,
+            "volleyBonus": 0,
+            "maxHpBonus": 0,
+            "moveSpeedMult": 1,
+            "panTickMult": 1,
+            "seamCapacityBonus": 0,
+            "seamRespawnReduction": 0,
+            "stockpileCapBonus": 0,
+            "beaconFireRateMult": 1,
+            "blastDamageMult": 1,
+            "blastRadiusMult": 1,
+            "blastCooldownMult": 1,
+            "agentPolicySlots": 0
+          },
+          "eligibility": [
+            "double_tap_coil",
+            "heavy_spark",
+            "long_resonator",
+            "split_spark",
+            "tinkers_plating",
+            "spring_heels",
+            "pan_legend",
+            "prospectors_luck",
+            "powder_charge",
+            "wide_ring",
+            "quick_fuse",
+            "assay_bonus",
+            "field_dressing",
+            "sharpen"
+          ]
+        },
+        "harvest": {
+          "activeNodes": [
+            {
+              "id": "gold-seam-1",
+              "active": true,
+              "anchorIndex": 4,
+              "position": {
+                "x": 18,
+                "z": -7
+              },
+              "remaining": 30,
+              "respawnScheduled": false,
+              "respawnIn": 0
+            },
+            {
+              "id": "gold-seam-2",
+              "active": true,
+              "anchorIndex": 0,
+              "position": {
+                "x": -22,
+                "z": -6.8
+              },
+              "remaining": 30,
+              "respawnScheduled": false,
+              "respawnIn": 0
+            },
+            {
+              "id": "gold-seam-3",
+              "active": true,
+              "anchorIndex": 3,
+              "position": {
+                "x": 7.5,
+                "z": 6.5
+              },
+              "remaining": 30,
+              "respawnScheduled": false,
+              "respawnIn": 0
+            },
+            {
+              "id": "gold-seam-4",
+              "active": false,
+              "anchorIndex": -1,
+              "position": {
+                "x": 0,
+                "z": 0
+              },
+              "remaining": 30,
+              "respawnScheduled": false,
+              "respawnIn": 0
+            },
+            {
+              "id": "gold-seam-5",
+              "active": false,
+              "anchorIndex": -1,
+              "position": {
+                "x": 0,
+                "z": 0
+              },
+              "remaining": 30,
+              "respawnScheduled": false,
+              "respawnIn": 0
+            },
+            {
+              "id": "gold-seam-6",
+              "active": false,
+              "anchorIndex": -1,
+              "position": {
+                "x": 0,
+                "z": 0
+              },
+              "remaining": 30,
+              "respawnScheduled": false,
+              "respawnIn": 0
+            }
+          ],
+          "channeling": false,
+          "channelNodeId": null,
+          "progress": 0,
+          "channels": [
+            {
+              "actorId": "0",
+              "channelNodeId": null,
+              "progress": 0,
+              "channeling": false
+            }
+          ],
+          "lastGoldGain": 0,
+          "lastGoldPosition": null
+        },
+        "harvestVisuals": {
+          "seams": [
+            {
+              "id": "gold-seam-1",
+              "x": 18,
+              "z": -7,
+              "visualY": 1.0520776987075806,
+              "groundY": 1.0020776987075806,
+              "spriteVisible": true
+            },
+            {
+              "id": "gold-seam-2",
+              "x": -22,
+              "z": -6.8,
+              "visualY": 1.2397497415542604,
+              "groundY": 1.1897497415542604,
+              "spriteVisible": true
+            },
+            {
+              "id": "gold-seam-3",
+              "x": 7.5,
+              "z": 6.5,
+              "visualY": 0.4817736327648163,
+              "groundY": 0.4317736327648163,
+              "spriteVisible": true
+            }
+          ]
+        },
+        "steal": {
+          "thieves": 0,
+          "fleeing": 0,
+          "carriedTotal": 0,
+          "stolenTotal": 0,
+          "reclaimedTotal": 0,
+          "pickups": 0,
+          "pickupTotal": 0
+        },
+        "wreck": {
+          "wreckers": 0,
+          "swinging": 0,
+          "gnawing": 0,
+          "stuckWatchdogTrips": 0,
+          "ruins": 0,
+          "hitsResolved": 0,
+          "wrecked": 0,
+          "repairs": 0,
+          "repairGold": 0
+        },
+        "charmPause": false,
+        "camImpulseActive": false,
+        "baronSpawnImpulses": 0,
+        "baronCeremony": {
+          "active": false,
+          "elapsed": 0,
+          "holdSeconds": 2.2
+        },
+        "baronStandard": {
+          "visible": false,
+          "x": 0,
+          "z": 0,
+          "dropElapsed": 0
+        },
+        "baronRocket": {
+          "cartVisible": false,
+          "carried": false,
+          "distanceFromBaron": 0,
+          "telegraphActive": false,
+          "telegraphElapsed": 0,
+          "nextVolleyIn": 0,
+          "volleys": 0,
+          "suppressed": false,
+          "targetKind": null,
+          "lastOwnerId": "",
+          "lastTarget": {
+            "x": 0,
+            "z": 0
+          },
+          "target": {
+            "x": 0,
+            "z": 0
+          },
+          "props": {
+            "state": "ready",
+            "source": "glb",
+            "launcher": true,
+            "rocket": true,
+            "powderKeg": true,
+            "triangles": {
+              "launcher": 2020,
+              "rocket": 876,
+              "powder_keg": 704
+            }
+          },
+          "manifest": {
+            "count": 3,
+            "damage": 18,
+            "radius": 2.35,
+            "cadenceSeconds": 8,
+            "telegraphSeconds": 1.2,
+            "airTime": 1.1,
+            "spreadRadius": 0.9
+          }
+        },
+        "damSurge": {
+          "phase": "idle",
+          "active": false,
+          "telegraphSeconds": 2,
+          "sweepSeconds": 2.4,
+          "frontX": -32,
+          "damage": 12,
+          "push": 5,
+          "hits": 0,
+          "marksVisible": false,
+          "fieldVisible": false,
+          "log": []
+        },
+        "lighting": {
+          "sunPresent": true,
+          "shadowsQuality": "soft",
+          "fogNear": 42,
+          "fogFar": 88,
+          "postEnabled": true,
+          "paperGrainOpacity": 0.008,
+          "shadowMapSize": 1536,
+          "shadowMapTargetSize": 1536,
+          "blobShadows": 2,
+          "heatShimmer": false,
+          "dustDevilQuads": 0,
+          "palette": {
+            "background": "#f1c887",
+            "fog": "#ead2a3",
+            "sun": "#ffd28a",
+            "sunIntensity": 2.35,
+            "fill": "#fff2cc",
+            "fillIntensity": 1.12
+          },
+          "nightShift": {
+            "enabled": false,
+            "phase": "full",
+            "darkness": 0,
+            "lampIntensityMult": 1
+          },
+          "nightPools": 0,
+          "nightPoolCap": 8,
+          "nightPoolSources": 0,
+          "enemyLanterns": 0,
+          "enemyLanternCones": 0,
+          "prospectorLights": 0,
+          "muzzleFlashes": 0,
+          "muzzleFlashCount": 0,
+          "billboardLights": 0,
+          "dayNight": null,
+          "coverage": {
+            "darkness": 0,
+            "minLight": 0.045,
+            "falloff": 1.25,
+            "litThreshold": 0.35,
+            "sources": 0,
+            "lanterns": 0,
+            "poweredLamps": 0
+          }
+        },
+        "mothSwarm": {
+          "enabled": false,
+          "alive": 0,
+          "attached": 0,
+          "sourceId": null,
+          "baseRadius": 0,
+          "effectiveRadius": 0,
+          "attachCounts": []
+        },
+        "enemyDimming": {
+          "enabled": false,
+          "darkness": 0,
+          "minLight": 1,
+          "falloff": 1.25,
+          "sources": 0,
+          "dimmed": 0,
+          "minFactor": 1
+        },
+        "vfx": {
+          "activeFloatTexts": 0,
+          "floatTextPool": 12,
+          "lastFloatText": {
+            "text": "Prospector ready",
+            "x": -1.8,
+            "z": 10.93,
+            "y": 4.094378087875963,
+            "terrainY": -0.025621912124036875,
+            "renderedText": "Prospector ready",
+            "renderedWidthPx": 566.40625,
+            "canvasWidthPx": 768,
+            "fontPx": 64
+          },
+          "combat": {
+            "puffs": {
+              "active": 0,
+              "capacity": 32
+            },
+            "ticks": {
+              "active": 0,
+              "capacity": 48
+            },
+            "rings": {
+              "active": 0,
+              "capacity": 8
+            }
+          },
+          "baronVolley": {
+            "tracers": {
+              "active": 0,
+              "capacity": 16,
+              "spawned": 0
+            },
+            "rockets": {
+              "active": 0,
+              "capacity": 16,
+              "modelReady": true
+            },
+            "rings": {
+              "active": 0,
+              "capacity": 8,
+              "spawned": 0
+            },
+            "wisps": {
+              "active": 0,
+              "capacity": 8,
+              "spawned": 0
+            },
+            "detail": true
+          }
+        },
+        "performance": {
+          "tier": "full",
+          "override": "auto",
+          "source": "auto",
+          "reason": "desktop-class defaults",
+          "gpuRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Max, Unspecified Version)",
+          "deviceMemory": 32,
+          "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.0.0 Safari/537.36",
+          "config": {
+            "maxDpr": 2,
+            "shadowsQuality": "soft",
+            "shadowMapSize": 1536,
+            "fogNear": 42,
+            "fogFar": 88,
+            "postEnabled": true,
+            "postPaperGrainOpacity": 0.008,
+            "detailDensity": 1,
+            "detailMobileDensity": 0.42,
+            "terrainSegments": 64,
+            "terrainMobileSegments": 40,
+            "vistaSegments": 12,
+            "vistaMobileSegments": 7,
+            "waterQuality": 1,
+            "waterMobileQuality": 0.55,
+            "terrainMesh": false,
+            "terrainSplat": false,
+            "terrainMeshVertexStep": 1,
+            "floatTextPool": 12,
+            "combatVfxPuffs": 32,
+            "combatVfxTicks": 48,
+            "combatVfxRings": 8,
+            "freedWalkerCap": 10,
+            "enemyBarCap": 60
+          },
+          "runtimeVerdict": 0
+        },
+        "readability": {
+          "enemyHitFlashes": 0,
+          "activeEnemyFlashes": 0,
+          "buildingHpBars": 0,
+          "bossHpBar": {
+            "visible": false,
+            "ratio": 0,
+            "renderedRatio": 1,
+            "litSegments": 7,
+            "segments": 0,
+            "groupId": null,
+            "aliveComponents": 0,
+            "destroyedComponents": 0,
+            "components": []
+          },
+          "turretPulses": 0,
+          "activeTurretPulses": 0
+        },
+        "renderer": {
+          "calls": 82,
+          "triangles": 112412,
+          "geometries": 84,
+          "textures": 24
+        },
+        "assets": {
+          "char.hero": "loaded",
+          "char.bandit_base": "loaded",
+          "char.bandit_thief": "loaded",
+          "node.gold_seam": "loaded",
+          "bld.sentry_beacon": "loaded",
+          "bld.portrait.palisade": "loaded",
+          "bld.portrait.sluice": "loaded",
+          "bld.portrait.stockpile": "loaded",
+          "bld.portrait.turret": "loaded",
+          "terrain.bank": "loaded",
+          "terrain.river": "loaded",
+          "prop.baron_banner": "loaded",
+          "char.baron": "loaded",
+          "char.town.tavernkeeper": "loaded",
+          "char.town.storekeeper": "loaded",
+          "char.town.elder": "loaded",
+          "char.town.preacher": "loaded",
+          "char.town.schoolteacher": "loaded",
+          "char.town.assay_clerk": "loaded",
+          "char.town.youngster_a": "loaded",
+          "char.town.youngster_b": "loaded",
+          "char.town.newsie": "loaded",
+          "char.e2.rail_tough": "loaded",
+          "char.e2.steam_wrecker": "loaded",
+          "char.e2.coal_thief": "loaded",
+          "char.prospector_agent": "missing"
+        },
+        "assetSprites": {
+          "char.hero": 1,
+          "node.gold_seam": 3
+        },
+        "spriteAnimations": {
+          "char.hero": {
+            "clip": "idle",
+            "frame": 0,
+            "frameKey": "char-hero-sheet-rotation-f-r0c0.png",
+            "frameCount": 1,
+            "fps": 1,
+            "loaded": true,
+            "fadeActive": false,
+            "fadeMsRemaining": 0,
+            "fadeWindow": 0,
+            "direction": "s",
+            "mirrored": false
+          },
+          "char.bandit_base": {
+            "clip": "idle",
+            "frame": 0,
+            "frameKey": "pending",
+            "frameCount": 0,
+            "fps": 0,
+            "loaded": false
+          },
+          "char.bandit_thief": {
+            "clip": "idle",
+            "frame": 0,
+            "frameKey": "pending",
+            "frameCount": 0,
+            "fps": 0,
+            "loaded": false
+          },
+          "char.e2.rail_tough": {
+            "clip": "idle",
+            "frame": 0,
+            "frameKey": "pending",
+            "frameCount": 0,
+            "fps": 0,
+            "loaded": false
+          },
+          "char.e2.steam_wrecker": {
+            "clip": "idle",
+            "frame": 0,
+            "frameKey": "pending",
+            "frameCount": 0,
+            "fps": 0,
+            "loaded": false
+          },
+          "char.e2.coal_thief": {
+            "clip": "idle",
+            "frame": 0,
+            "frameKey": "pending",
+            "frameCount": 0,
+            "fps": 0,
+            "loaded": false
+          },
+          "char.prospector_agent": {
+            "clip": "walk",
+            "frame": 1,
+            "frameKey": "char-prospector-sheet-hover8-r1c1.png",
+            "frameCount": 8,
+            "fps": 19,
+            "loaded": true,
+            "fadeActive": false,
+            "fadeMsRemaining": 0,
+            "fadeWindow": 3,
+            "direction": "nw",
+            "mirrored": false
+          }
+        },
+        "spriteStats": {
+          "activeAnimators": 1,
+          "textureSwapsPerFrame": 1,
+          "fadeOverlaysActive": 0
+        },
+        "terrain": {
+          "playerZone": "bank",
+          "ground": {
+            "enabled": false,
+            "mode": "fallback",
+            "drawCalls": 1,
+            "segments": 64,
+            "vertexStep": 1,
+            "vertices": 4225,
+            "triangles": 8192,
+            "heightSource": "visual",
+            "textureSource": "bank-atlas",
+            "textureSeams": "texture seams remain until TR-02"
+          },
+          "sim": {
+            "flat": true,
+            "tile": "frontier-river-claim",
+            "balance": {
+              "uphillMin": 0.6,
+              "downhillMax": 1.1,
+              "slopeMax": 0.35,
+              "wadeDepth": 0.35,
+              "deepDepth": 1
+            },
+            "gt": {
+              "highGroundRangeBonus": 1.5
+            },
+            "lastLos": {
+              "flat": true,
+              "clear": true,
+              "samples": 0,
+              "from": {
+                "x": 0,
+                "z": 0,
+                "h": 0
+              },
+              "to": {
+                "x": 0,
+                "z": 0,
+                "h": 0
+              },
+              "blockedAt": null
+            },
+            "probes": {
+              "heroStart": {
+                "height": 0,
+                "slope": {
+                  "dx": 0,
+                  "dz": 0
+                },
+                "traversable": true
+              },
+              "ford": {
+                "height": 0,
+                "slope": {
+                  "dx": 0,
+                  "dz": 0
+                },
+                "traversable": true
+              },
+              "farBank": {
+                "height": 0,
+                "slope": {
+                  "dx": 0,
+                  "dz": 0
+                },
+                "traversable": true
+              }
+            }
+          },
+          "water": {
+            "material": "LivingWaterShader",
+            "riverPresent": true,
+            "fordPresent": true,
+            "riverTime": 4.259,
+            "fordTime": 4.259,
+            "quality": 1,
+            "mobile": false,
+            "foam": true,
+            "glints": 6,
+            "fordStones": 7,
+            "gravelBars": 0,
+            "visualHalfWidth": 6.25,
+            "springPonds": 0,
+            "waterPhaseVariance": 0.43,
+            "depth": {
+              "river": 1.25,
+              "ford": 0.35,
+              "wade": 0.35,
+              "deep": 1
+            }
+          },
+          "rails": {
+            "active": false,
+            "paths": 0,
+            "points": 0,
+            "style": null,
+            "renderLayer": 1,
+            "renderSlot": "groundDecals",
+            "railInstances": 0,
+            "tieInstances": 0,
+            "drawCalls": 0,
+            "asset": "procedural-placeholder",
+            "samples": [],
+            "ties": []
+          },
+          "vista": {
+            "present": true,
+            "segments": 12,
+            "radius": 90,
+            "vertices": 4004,
+            "seamMaxDelta": 0,
+            "seam": [
+              {
+                "x": -32,
+                "z": -24,
+                "clamped": 2.134247303009033,
+                "unclamped": 2.134247303009033,
+                "delta": 0
+              },
+              {
+                "x": 32,
+                "z": -12,
+                "clamped": 1.5017834901809692,
+                "unclamped": 1.5017834901809692,
+                "delta": 0
+              },
+              {
+                "x": -18,
+                "z": -32,
+                "clamped": 2.1269826889038086,
+                "unclamped": 2.1269826889038086,
+                "delta": 0
+              },
+              {
+                "x": 0,
+                "z": 32,
+                "clamped": 0.6169692277908325,
+                "unclamped": 0.6169692277908325,
+                "delta": 0
+              },
+              {
+                "x": 18,
+                "z": 32,
+                "clamped": 0.6259422302246094,
+                "unclamped": 0.6259422302246094,
+                "delta": 0
+              },
+              {
+                "x": 32,
+                "z": 4,
+                "clamped": -0.3100000023841858,
+                "unclamped": -0.3100000023841858,
+                "delta": 0
+              }
+            ],
+            "river": {
+              "present": true,
+              "drawCalls": 1,
+              "radius": 90,
+              "vertices": 445,
+              "visualHalfWidth": 6.25,
+              "fadeStart": 78,
+              "westEdgeCenterZ": 0,
+              "eastEdgeCenterZ": 0,
+              "westFarCenterZ": 0.732,
+              "eastFarCenterZ": -0.732,
+              "meanderAmplitude": 2.788
+            }
+          },
+          "detailScatter": {
+            "instanceClasses": 5,
+            "contactShadows": 166,
+            "totalInstances": 190,
+            "seededInstances": 190,
+            "densityTier": "desktop",
+            "seed": 1308932508,
+            "classes": [
+              {
+                "id": "rocks",
+                "instances": 44,
+                "visibleInstances": 44,
+                "drawCalls": 1
+              },
+              {
+                "id": "stumps",
+                "instances": 18,
+                "visibleInstances": 18,
+                "drawCalls": 1
+              },
+              {
+                "id": "dry_grass",
+                "instances": 92,
+                "visibleInstances": 92,
+                "drawCalls": 1
+              },
+              {
+                "id": "wagon_ruts",
+                "instances": 24,
+                "visibleInstances": 24,
+                "drawCalls": 1
+              },
+              {
+                "id": "claim_posts",
+                "instances": 12,
+                "visibleInstances": 12,
+                "drawCalls": 1
+              },
+              {
+                "id": "cactus",
+                "instances": 0,
+                "visibleInstances": 0,
+                "drawCalls": 1
+              },
+              {
+                "id": "reeds",
+                "instances": 0,
+                "visibleInstances": 0,
+                "drawCalls": 1
+              }
+            ],
+            "exclusions": {
+              "buildPadRadius": 4.8,
+              "routingLaneRadius": 4.2,
+              "harvestAnchorRadius": 2.4,
+              "buildingClearRadius": 2.4
+            },
+            "probes": {
+              "buildPad": {
+                "x": 0,
+                "z": 9,
+                "clearRadius": 4.8,
+                "nearest": 9.40186436327742,
+                "clear": true
+              },
+              "ford": {
+                "x": 0,
+                "z": 0,
+                "clearRadius": 6.25,
+                "nearest": 10.428901538822066,
+                "clear": true
+              },
+              "routingLane": {
+                "x": 0,
+                "z": -14,
+                "clearRadius": 4.2,
+                "nearest": 7.074446105010602,
+                "clear": true
+              },
+              "building": {
+                "x": 0,
+                "z": 9,
+                "clearRadius": 2.4,
+                "nearest": 9.40186436327742,
+                "clear": true
+              }
+            },
+            "signature": "-11.87,-20.67|30.01,-17.63|28.58,29.80|-27.37,-23.00|-14.80,26.71|-28.46,-27.65|-7.83,-9.62|-7.25,-27.23|-30.40,7.02|-13.70,-17.82|10.47,28.21|-22.46,-21.07"
+          },
+          "height": {
+            "min": -0.48000001907348633,
+            "max": 3.1018099784851074,
+            "segments": 64,
+            "waterY": 0.025,
+            "probes": {
+              "heroStart": 0.513093113899231,
+              "river": -0.48000001907348633,
+              "ford": -0.09624999761581421,
+              "nearBank": 0.3971790075302124,
+              "farBank": 2.7880382537841797
+            },
+            "natural": {
+              "range": 3.5818099975585938,
+              "fordApproachDelta": 0.15482251346111298,
+              "routingLaneDelta": 2.1220824122428894,
+              "routingFeatureMax": 0,
+              "probes": {
+                "gully": 2.0128047466278076,
+                "shelf": 3.000847578048706,
+                "bluff": 0.643649697303772,
+                "pocket": 0.577445924282074
+              },
+              "features": {
+                "gully": {
+                  "gully": 0.899079276440085,
+                  "shelf": 0,
+                  "bluff": 0,
+                  "pocket": 0,
+                  "routeMask": 1,
+                  "calmMask": 1,
+                  "heightOffset": -0.2697237829320255
+                },
+                "shelf": {
+                  "gully": 0,
+                  "shelf": 0.9387657740452812,
+                  "bluff": 0,
+                  "pocket": 0,
+                  "routeMask": 1,
+                  "calmMask": 1,
+                  "heightOffset": 0.3942816250990181
+                },
+                "bluff": {
+                  "gully": 0.49167399979691745,
+                  "shelf": 0,
+                  "bluff": 0.695950934629739,
+                  "pocket": 0,
+                  "routeMask": 1,
+                  "calmMask": 1,
+                  "heightOffset": 0.18655424868319945
+                },
+                "pocket": {
+                  "gully": 0.045908799870919816,
+                  "shelf": 0,
+                  "bluff": 0,
+                  "pocket": 0.9248883739649698,
+                  "routeMask": 1,
+                  "calmMask": 1,
+                  "heightOffset": -0.2172480822335693
+                }
+              }
+            },
+            "heroGround": 0.513093113899231,
+            "heroVisualY": 0.573093113899231
+          },
+          "probes": {
+            "bank": {
+              "walkable": false,
+              "speedMul": 0,
+              "zone": "bank"
+            },
+            "shallows": {
+              "walkable": true,
+              "speedMul": 0.8,
+              "zone": "shallows",
+              "waterSource": "river",
+              "waterDepth": 0.2,
+              "waterClass": "wade"
+            },
+            "river": {
+              "walkable": false,
+              "speedMul": 0,
+              "zone": "river",
+              "waterSource": "river",
+              "waterDepth": 1.25,
+              "waterClass": "deep"
+            },
+            "ford": {
+              "walkable": true,
+              "speedMul": 0.85,
+              "zone": "ford",
+              "waterSource": "river",
+              "waterDepth": 0.35,
+              "waterClass": "wade"
+            },
+            "northBank": {
+              "walkable": true,
+              "speedMul": 1,
+              "zone": "bank"
+            },
+            "out": {
+              "walkable": false,
+              "speedMul": 0,
+              "zone": "out"
+            }
+          }
+        },
+        "canvas": {
+          "clientWidth": 1280,
+          "clientHeight": 800,
+          "width": 1280,
+          "height": 800,
+          "dpr": 1
+        },
+        "frameMs": {
+          "last": 10,
+          "avg": 8.33277777777778,
+          "p95": 10.299999999999272,
+          "sampleCount": 180
+        },
+        "freedWalkers": {
+          "spawned": 0,
+          "active": 0,
+          "capSkips": 0,
+          "entities": [
+            {
+              "slot": 0,
+              "active": false,
+              "readState": "none",
+              "behavior": "run",
+              "silhouette": "none",
+              "contactDamage": 0,
+              "age": 0,
+              "x": 0,
+              "z": 0,
+              "target": {
+                "x": 0,
+                "z": 0,
+                "kind": "none"
+              },
+              "avoidedPlayer": false
+            },
+            {
+              "slot": 1,
+              "active": false,
+              "readState": "none",
+              "behavior": "run",
+              "silhouette": "none",
+              "contactDamage": 0,
+              "age": 0,
+              "x": 0,
+              "z": 0,
+              "target": {
+                "x": 0,
+                "z": 0,
+                "kind": "none"
+              },
+              "avoidedPlayer": false
+            },
+            {
+              "slot": 2,
+              "active": false,
+              "readState": "none",
+              "behavior": "run",
+              "silhouette": "none",
+              "contactDamage": 0,
+              "age": 0,
+              "x": 0,
+              "z": 0,
+              "target": {
+                "x": 0,
+                "z": 0,
+                "kind": "none"
+              },
+              "avoidedPlayer": false
+            },
+            {
+              "slot": 3,
+              "active": false,
+              "readState": "none",
+              "behavior": "run",
+              "silhouette": "none",
+              "contactDamage": 0,
+              "age": 0,
+              "x": 0,
+              "z": 0,
+              "target": {
+                "x": 0,
+                "z": 0,
+                "kind": "none"
+              },
+              "avoidedPlayer": false
+            },
+            {
+              "slot": 4,
+              "active": false,
+              "readState": "none",
+              "behavior": "run",
+              "silhouette": "none",
+              "contactDamage": 0,
+              "age": 0,
+              "x": 0,
+              "z": 0,
+              "target": {
+                "x": 0,
+                "z": 0,
+                "kind": "none"
+              },
+              "avoidedPlayer": false
+            },
+            {
+              "slot": 5,
+              "active": false,
+              "readState": "none",
+              "behavior": "run",
+              "silhouette": "none",
+              "contactDamage": 0,
+              "age": 0,
+              "x": 0,
+              "z": 0,
+              "target": {
+                "x": 0,
+                "z": 0,
+                "kind": "none"
+              },
+              "avoidedPlayer": false
+            },
+            {
+              "slot": 6,
+              "active": false,
+              "readState": "none",
+              "behavior": "run",
+              "silhouette": "none",
+              "contactDamage": 0,
+              "age": 0,
+              "x": 0,
+              "z": 0,
+              "target": {
+                "x": 0,
+                "z": 0,
+                "kind": "none"
+              },
+              "avoidedPlayer": false
+            },
+            {
+              "slot": 7,
+              "active": false,
+              "readState": "none",
+              "behavior": "run",
+              "silhouette": "none",
+              "contactDamage": 0,
+              "age": 0,
+              "x": 0,
+              "z": 0,
+              "target": {
+                "x": 0,
+                "z": 0,
+                "kind": "none"
+              },
+              "avoidedPlayer": false
+            },
+            {
+              "slot": 8,
+              "active": false,
+              "readState": "none",
+              "behavior": "run",
+              "silhouette": "none",
+              "contactDamage": 0,
+              "age": 0,
+              "x": 0,
+              "z": 0,
+              "target": {
+                "x": 0,
+                "z": 0,
+                "kind": "none"
+              },
+              "avoidedPlayer": false
+            },
+            {
+              "slot": 9,
+              "active": false,
+              "readState": "none",
+              "behavior": "run",
+              "silhouette": "none",
+              "contactDamage": 0,
+              "age": 0,
+              "x": 0,
+              "z": 0,
+              "target": {
+                "x": 0,
+                "z": 0,
+                "kind": "none"
+              },
+              "avoidedPlayer": false
+            }
+          ]
+        },
+        "defaultedPicks": 0
+      },
+      "dataset": {
+        "assetPrefetchScene": "run",
+        "assetPrefetchState": "allowance",
+        "assetPrefetchReady": "14",
+        "assetPrefetchTotal": "19",
+        "assetPrefetchProgress": "14/19",
+        "assetPrefetchFailed": "0",
+        "assetPrefetchPriority": "2",
+        "assetPrefetchTarget": "e2-hill-mine",
+        "assetPrefetchSaveData": "false",
+        "assetPrefetchEnabled": "true",
+        "assetPrefetchAllowance": "24000000",
+        "assetPrefetchBytes": "26454348",
+        "assetPrefetchTownState": "ready",
+        "spriteClipGroups": "claim town",
+        "railcar3dState": "off",
+        "railcar3dSource": "billboard",
+        "railcar3dMounted": "false",
+        "railcar3dDamageStates": "{\"wheels\":\"intact\",\"boiler\":\"intact\",\"cabin\":\"intact\"}",
+        "bossBarVisible": "false",
+        "bossBarSemantic": "none",
+        "bossBarRemaining": "0",
+        "bossBarDepleted": "0",
+        "bossBarRemainingColor": "#6bb36b",
+        "bossBarDepletedColor": "#a0522d",
+        "bossBarComponent": "shared",
+        "bossBarAnchor": "none",
+        "bossBarOrientation": "none",
+        "bossBarPosition": "none",
+        "crawler3dState": "off",
+        "crawler3dSource": "placeholder",
+        "crawler3dMounted": "false",
+        "crawler3dDamageStates": "{\"drain_mast\":\"intact\",\"tracks\":\"intact\",\"capacitor_bank\":\"intact\"}",
+        "dredgeQueen3dState": "off",
+        "dredgeQueen3dSource": "placeholder",
+        "dredgeQueen3dMounted": "false",
+        "dredgeQueen3dPresentation": "hidden",
+        "dredgeQueen3dDamageStates": "{\"claw\":\"intact\",\"paddle_port\":\"intact\",\"paddle_starboard\":\"intact\",\"hold\":\"intact\"}",
+        "salvageClaw3dState": "off",
+        "salvageClaw3dSource": "placeholder",
+        "salvageClaw3dMounted": "false",
+        "salvageClaw3dPresentation": "hidden",
+        "homemaker3dState": "off",
+        "homemaker3dSource": "placeholder",
+        "homemaker3dMounted": "false",
+        "homemaker3dPresentation": "hidden",
+        "homemaker3dDamageStates": "{\"vac\":\"intact\",\"rack\":\"intact\",\"core\":\"intact\"}",
+        "oldDigger3dState": "off",
+        "oldDigger3dSource": "placeholder",
+        "oldDigger3dMounted": "false",
+        "oldDigger3dPresentation": "hidden",
+        "assetLoadingLabel": "the claim",
+        "assetLoadingReady": "30",
+        "assetLoadingTotal": "30",
+        "assetLoadingProgress": "30/30",
+        "assetLoadingState": "ready",
+        "engine": "three.js r184",
+        "terrain3dPilotState": "ready",
+        "terrain3dPilotRenderSource": "glb",
+        "run3dPilotState": "ready",
+        "nightPoolSurfaceSources": "0",
+        "nightPoolSurfaceMaxRadius": "0",
+        "cameraAspect": "1.6",
+        "cssAspect": "1.6",
+        "prospectorSkin": "stock",
+        "prospectorSheet": "stock",
+        "run3dPilotMeshes": "0",
+        "run3dPilotTriangles": "0",
+        "terrain3dPilotContract": "e1-baron",
+        "terrain3dPilotTerrainLoadState": "mounted",
+        "terrain3dPilotPanoramaLoadState": "mounted",
+        "terrain3dPilotLandmarkLoadState": "mounted",
+        "terrain3dPilotHeightSource": "baked-grid",
+        "terrain3dPilotMeshes": "1",
+        "terrain3dPilotTriangles": "32768",
+        "terrain3dPilotMaterials": "1",
+        "terrain3dPilotVertices": "16641",
+        "terrain3dPilotPanorama": "baron-panorama",
+        "terrain3dPilotPanoramaMeshes": "1",
+        "terrain3dPilotPanoramaTriangles": "1920",
+        "terrain3dPilotPanoramaMaterials": "1",
+        "terrain3dPilotPanoramaVertices": "1351",
+        "heroSheet": "young",
+        "heroSkin": "stock",
+        "heroSkinSheet": "stock",
+        "terrain3dPilotNightPools": "off",
+        "terrain3dPilotNightPoolSources": "0",
+        "terrain3dPilotSpringPonds": "0",
+        "terrain3dPilotSpringPondWaterRadii": "[]",
+        "terrain3dPilotChannelWater": "0",
+        "terrain3dPilotFordWater": "0",
+        "terrain3dPilotChannelWaterHalfWidths": "[]",
+        "terrain3dPilotHiddenRelief": "6",
+        "terrain3dPilotHiddenGroundLayers": "TerrainVistaRing|TerrainReliefMesh|terrain.river|terrain.ford|FordSteppingStones|SpringPonds",
+        "terrain3dPilotContinuation": "sculpt-edge-continuation",
+        "terrain3dPilotHorizonApron": "painted",
+        "terrain3dPilotFarGroundProbe": "off",
+        "terrain3dPilotPanoramaFraming": "world-projected-horizon",
+        "terrain3dPilotSkirtBlend": "opaque-sculpt-edge",
+        "terrain3dPilotPanoramaFog": "excluded",
+        "terrain3dPilotPanoramaDepth": "screen-horizon-backdrop",
+        "terrain3dPilotLandmarkExpected": "5",
+        "terrain3dPilotWalkSurfaces": "0",
+        "terrain3dPilotLandmarkEmissive": "3",
+        "terrain3dPilotLandmarkSides": "{\"total\":{\"meshes\":5,\"closed\":5,\"open\":0,\"culled\":5,\"doubleSided\":0},\"mounts\":[{\"id\":\"fortified_far_bank\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":1.171,\"topY\":8.125},{\"id\":\"seized_headframe\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":-0.392,\"topY\":8.459},{\"id\":\"rocket_cart\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.305,\"topY\":3.507},{\"id\":\"siege_line\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":-0.119,\"topY\":2.617},{\"id\":\"oxblood_banners\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.559,\"topY\":7.419}]}",
+        "terrain3dPilotLandmarks": "5",
+        "terrain3dPilotLandmarkSkipped": "0",
+        "terrain3dPilotLandmarkDiagnostics": "",
+        "terrain3dPilotLandmarkMounts": "[{\"id\":\"fortified_far_bank\",\"x\":0,\"y\":1.3928472995758059,\"z\":-10.8},{\"id\":\"seized_headframe\",\"x\":-13,\"y\":0.5311161279678345,\"z\":13},{\"id\":\"rocket_cart\",\"x\":12.5,\"y\":0.5519192218780518,\"z\":14},{\"id\":\"siege_line\",\"x\":0,\"y\":0.629871106147766,\"z\":-7.4},{\"id\":\"oxblood_banners\",\"x\":0,\"y\":-0.09624999761581421,\"z\":0}]",
+        "terrain3dPilotLandmarkMaterials": "[{\"id\":\"fortified_far_bank\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.255,0.255],\"authoredEmissive\":[1.7,1.7],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.9,\"metalness\":0},{\"id\":\"seized_headframe\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.315,0.315],\"authoredEmissive\":[2.1,2.1],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.9,\"metalness\":0},{\"id\":\"rocket_cart\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.9,\"metalness\":0},{\"id\":\"siege_line\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.285,0.285],\"authoredEmissive\":[1.9,1.9],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.9,\"metalness\":0},{\"id\":\"oxblood_banners\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.51,0.51],\"authoredEmissive\":[3.4,3.4],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.9,\"metalness\":0}]"
+      },
+      "testHook": "undefined"
+    },
+    "errors": [],
+    "performance": [],
+    "stations": [
+      {
+        "back": "entry",
+        "focus": "seized_headframe",
+        "bounds": {
+          "min": [
+            -15.585618414350435,
+            -0.3919763326644897,
+            11.257066157471916
+          ],
+          "max": [
+            -10.332716248323877,
+            8.458694863319398,
+            16.100556945299758
+          ]
+        },
+        "corners": [
+          {
+            "x": 148.56090203270568,
+            "y": 491.6349924412261,
+            "z": 0.9959440251951346,
+            "inView": true
+          },
+          {
+            "x": 97.38190207570184,
+            "y": 630.2475624398987,
+            "z": 0.995313140928863,
+            "inView": true
+          },
+          {
+            "x": 21.844694609994875,
+            "y": 289.35788888296787,
+            "z": 0.9943819926893854,
+            "inView": true
+          },
+          {
+            "x": -61.364038744464295,
+            "y": 441.29419290088697,
+            "z": 0.9933562774402831,
+            "inView": false
+          },
+          {
+            "x": 314.1931813271637,
+            "y": 491.6349924412261,
+            "z": 0.9959440251951346,
+            "inView": true
+          },
+          {
+            "x": 280.2633063379369,
+            "y": 630.2475624398987,
+            "z": 0.995313140928863,
+            "inView": true
+          },
+          {
+            "x": 230.18479740849506,
+            "y": 289.35788888296787,
+            "z": 0.9943819926893854,
+            "inView": true
+          },
+          {
+            "x": 175.0203369246919,
+            "y": 441.29419290088697,
+            "z": 0.9933562774402831,
+            "inView": true
+          }
+        ],
+        "hero": {
+          "x": 0,
+          "y": 0.573093113899231,
+          "z": 12
+        },
+        "materials": [
+          {
+            "id": "fortified_far_bank",
+            "total": 1,
+            "transparent": 0,
+            "depthWriteDisabled": 0,
+            "emissiveIntensity": [
+              0.255,
+              0.255
+            ],
+            "authoredEmissive": [
+              1.7,
+              1.7
+            ],
+            "frontSided": 1,
+            "doubleSided": 0,
+            "roughness": 0.9,
+            "metalness": 0
+          },
+          {
+            "id": "seized_headframe",
+            "total": 1,
+            "transparent": 0,
+            "depthWriteDisabled": 0,
+            "emissiveIntensity": [
+              0.315,
+              0.315
+            ],
+            "authoredEmissive": [
+              2.1,
+              2.1
+            ],
+            "frontSided": 1,
+            "doubleSided": 0,
+            "roughness": 0.9,
+            "metalness": 0
+          },
+          {
+            "id": "rocket_cart",
+            "total": 1,
+            "transparent": 0,
+            "depthWriteDisabled": 0,
+            "emissiveIntensity": [
+              0.45,
+              0.45
+            ],
+            "authoredEmissive": [
+              3,
+              3
+            ],
+            "frontSided": 1,
+            "doubleSided": 0,
+            "roughness": 0.9,
+            "metalness": 0
+          },
+          {
+            "id": "siege_line",
+            "total": 1,
+            "transparent": 0,
+            "depthWriteDisabled": 0,
+            "emissiveIntensity": [
+              0.285,
+              0.285
+            ],
+            "authoredEmissive": [
+              1.9,
+              1.9
+            ],
+            "frontSided": 1,
+            "doubleSided": 0,
+            "roughness": 0.9,
+            "metalness": 0
+          },
+          {
+            "id": "oxblood_banners",
+            "total": 1,
+            "transparent": 0,
+            "depthWriteDisabled": 0,
+            "emissiveIntensity": [
+              0.51,
+              0.51
+            ],
+            "authoredEmissive": [
+              3.4,
+              3.4
+            ],
+            "frontSided": 1,
+            "doubleSided": 0,
+            "roughness": 0.9,
+            "metalness": 0
+          }
+        ]
+      },
+      {
+        "back": 9,
+        "focus": "seized_headframe",
+        "bounds": {
+          "min": [
+            -15.585618414350435,
+            -0.3919763326644897,
+            11.257066157471916
+          ],
+          "max": [
+            -10.332716248323877,
+            8.458694863319398,
+            16.100556945299758
+          ]
+        },
+        "corners": [
+          {
+            "x": 572.3828865990914,
+            "y": 276.2774114445499,
+            "z": 0.9969376297823506,
+            "inView": true
+          },
+          {
+            "x": 566.2192593681837,
+            "y": 371.8699949195585,
+            "z": 0.9965047106595046,
+            "inView": true
+          },
+          {
+            "x": 558.3842961075039,
+            "y": 69.66407785117457,
+            "z": 0.9958891663204523,
+            "inView": true
+          },
+          {
+            "x": 549.340188981445,
+            "y": 165.42312450825784,
+            "z": 0.9952470766657032,
+            "inView": true
+          },
+          {
+            "x": 710.8650546730601,
+            "y": 276.5417621985079,
+            "z": 0.9969364325922301,
+            "inView": true
+          },
+          {
+            "x": 716.5407927533323,
+            "y": 372.181478818411,
+            "z": 0.9965033000130783,
+            "inView": true
+          },
+          {
+            "x": 725.540244127575,
+            "y": 69.9242152109242,
+            "z": 0.99588742203087,
+            "inView": true
+          },
+          {
+            "x": 734.0568112323764,
+            "y": 165.7407910008641,
+            "z": 0.9952449466281175,
+            "inView": true
+          }
+        ],
+        "hero": {
+          "x": -13,
+          "y": 0.6756271100044251,
+          "z": 22
+        },
+        "materials": [
+          {
+            "id": "fortified_far_bank",
+            "total": 1,
+            "transparent": 0,
+            "depthWriteDisabled": 0,
+            "emissiveIntensity": [
+              0.255,
+              0.255
+            ],
+            "authoredEmissive": [
+              1.7,
+              1.7
+            ],
+            "frontSided": 1,
+            "doubleSided": 0,
+            "roughness": 0.9,
+            "metalness": 0
+          },
+          {
+            "id": "seized_headframe",
+            "total": 1,
+            "transparent": 0,
+            "depthWriteDisabled": 0,
+            "emissiveIntensity": [
+              0.315,
+              0.315
+            ],
+            "authoredEmissive": [
+              2.1,
+              2.1
+            ],
+            "frontSided": 1,
+            "doubleSided": 0,
+            "roughness": 0.9,
+            "metalness": 0
+          },
+          {
+            "id": "rocket_cart",
+            "total": 1,
+            "transparent": 0,
+            "depthWriteDisabled": 0,
+            "emissiveIntensity": [
+              0.45,
+              0.45
+            ],
+            "authoredEmissive": [
+              3,
+              3
+            ],
+            "frontSided": 1,
+            "doubleSided": 0,
+            "roughness": 0.9,
+            "metalness": 0
+          },
+          {
+            "id": "siege_line",
+            "total": 1,
+            "transparent": 0,
+            "depthWriteDisabled": 0,
+            "emissiveIntensity": [
+              0.285,
+              0.285
+            ],
+            "authoredEmissive": [
+              1.9,
+              1.9
+            ],
+            "frontSided": 1,
+            "doubleSided": 0,
+            "roughness": 0.9,
+            "metalness": 0
+          },
+          {
+            "id": "oxblood_banners",
+            "total": 1,
+            "transparent": 0,
+            "depthWriteDisabled": 0,
+            "emissiveIntensity": [
+              0.51,
+              0.51
+            ],
+            "authoredEmissive": [
+              3.4,
+              3.4
+            ],
+            "frontSided": 1,
+            "doubleSided": 0,
+            "roughness": 0.9,
+            "metalness": 0
+          }
+        ]
+      },
+      {
+        "back": 5,
+        "focus": "seized_headframe",
+        "bounds": {
+          "min": [
+            -15.585618414350435,
+            -0.3919763326644897,
+            11.257066157471916
+          ],
+          "max": [
+            -10.332716248323877,
+            8.458694863319398,
+            16.100556945299758
+          ]
+        },
+        "corners": [
+          {
+            "x": 567.0764625292538,
+            "y": 353.07324095106037,
+            "z": 0.9965834237872516,
+            "inView": true
+          },
+          {
+            "x": 560.3537504593345,
+            "y": 462.902791276582,
+            "z": 0.996083895301383,
+            "inView": true
+          },
+          {
+            "x": 550.7107801982752,
+            "y": 145.74908417567642,
+            "z": 0.9953673729369517,
+            "inView": true
+          },
+          {
+            "x": 540.4191025667238,
+            "y": 259.1712885957735,
+            "z": 0.9946026532598793,
+            "inView": true
+          },
+          {
+            "x": 715.2268264137679,
+            "y": 353.07326211839734,
+            "z": 0.996583423690978,
+            "inView": true
+          },
+          {
+            "x": 722.1618165580321,
+            "y": 462.9028165265663,
+            "z": 0.9960838951865405,
+            "inView": true
+          },
+          {
+            "x": 732.1094189667189,
+            "y": 145.7491055831638,
+            "z": 0.9953673727926174,
+            "inView": true
+          },
+          {
+            "x": 742.7260858423456,
+            "y": 259.1713152225994,
+            "z": 0.9946026530803547,
+            "inView": true
+          }
+        ],
+        "hero": {
+          "x": -13,
+          "y": 0.6058179712295533,
+          "z": 18
+        },
+        "materials": [
+          {
+            "id": "fortified_far_bank",
+            "total": 1,
+            "transparent": 0,
+            "depthWriteDisabled": 0,
+            "emissiveIntensity": [
+              0.255,
+              0.255
+            ],
+            "authoredEmissive": [
+              1.7,
+              1.7
+            ],
+            "frontSided": 1,
+            "doubleSided": 0,
+            "roughness": 0.9,
+            "metalness": 0
+          },
+          {
+            "id": "seized_headframe",
+            "total": 1,
+            "transparent": 0,
+            "depthWriteDisabled": 0,
+            "emissiveIntensity": [
+              0.315,
+              0.315
+            ],
+            "authoredEmissive": [
+              2.1,
+              2.1
+            ],
+            "frontSided": 1,
+            "doubleSided": 0,
+            "roughness": 0.9,
+            "metalness": 0
+          },
+          {
+            "id": "rocket_cart",
+            "total": 1,
+            "transparent": 0,
+            "depthWriteDisabled": 0,
+            "emissiveIntensity": [
+              0.45,
+              0.45
+            ],
+            "authoredEmissive": [
+              3,
+              3
+            ],
+            "frontSided": 1,
+            "doubleSided": 0,
+            "roughness": 0.9,
+            "metalness": 0
+          },
+          {
+            "id": "siege_line",
+            "total": 1,
+            "transparent": 0,
+            "depthWriteDisabled": 0,
+            "emissiveIntensity": [
+              0.285,
+              0.285
+            ],
+            "authoredEmissive": [
+              1.9,
+              1.9
+            ],
+            "frontSided": 1,
+            "doubleSided": 0,
+            "roughness": 0.9,
+            "metalness": 0
+          },
+          {
+            "id": "oxblood_banners",
+            "total": 1,
+            "transparent": 0,
+            "depthWriteDisabled": 0,
+            "emissiveIntensity": [
+              0.51,
+              0.51
+            ],
+            "authoredEmissive": [
+              3.4,
+              3.4
+            ],
+            "frontSided": 1,
+            "doubleSided": 0,
+            "roughness": 0.9,
+            "metalness": 0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "width": 390,
+    "plain": {
+      "diagnostics": {
+        "frame": 411,
+        "elapsed": 4.024999999999999,
+        "timeAlive": 4.399999999999994,
+        "simulation": {
+          "tick": 132,
+          "fixed": true,
+          "stepSeconds": 0.03333333333333333,
+          "alpha": 0.4879999999999943,
+          "stepsLastFrame": 0,
+          "totalSteps": 132,
+          "droppedSeconds": 0.13333333333333333,
+          "droppedTicks": 4
+        },
+        "runState": "playing",
+        "paused": false,
+        "state": "playing",
+        "mp": null,
+        "difficultyPreset": "trail",
+        "renderLayers": {
+          "backdrop": -2,
+          "terrainBackdrop": -1,
+          "terrain": 0,
+          "groundShadows": 0.5,
+          "groundDecals": 1,
+          "gameplay": 2,
+          "gameplayFade": 2.01,
+          "companion": 2.5,
+          "impactVfx": 3,
+          "worldUi": 4
+        },
+        "ui": {
+          "hp": 100,
+          "maxHp": 100,
+          "gold": 0,
+          "bankCap": 200,
+          "resources": [],
+          "power": null,
+          "xp": 0,
+          "xpNeed": 12,
+          "level": 1,
+          "wave": 0,
+          "waveState": "quiet",
+          "announcement": "the Prospector: follows and observes. Chip by weapon; claim wins grow it.",
+          "announcementAt": 0,
+          "announcementDurationSeconds": 5.6,
+          "announcementEdge": null,
+          "announcementKind": "wave",
+          "announcementTitle": null,
+          "enemiesAlive": 0,
+          "timeAlive": 4.399999999999994,
+          "state": "playing",
+          "paused": false,
+          "buildMode": false,
+          "buildMenuOpen": false,
+          "selectedBuildable": "sentry_beacon",
+          "buildables": [
+            {
+              "id": "sentry_beacon",
+              "displayName": "Sentry Beacon",
+              "blurb": "Lights the dark and slows what it touches; radius 8wu.",
+              "cost": 25,
+              "count": 0,
+              "maxCount": 6,
+              "canAfford": false,
+              "selected": true,
+              "iconSlot": "ui.build.icon.sentry_beacon",
+              "portraitSlug": "sentry-beacon"
+            },
+            {
+              "id": "palisade",
+              "displayName": "Palisade",
+              "blurb": "Timber that holds. Bandits break it before you.",
+              "cost": 10,
+              "count": 0,
+              "maxCount": 48,
+              "canAfford": false,
+              "selected": false,
+              "iconSlot": "ui.build.icon.palisade",
+              "portraitSlug": "palisade",
+              "tierLine": "T1: 60 HP",
+              "kitCredits": 0
+            },
+            {
+              "id": "sluice",
+              "displayName": "Sluice Works",
+              "blurb": "Works the river for you: 3g per cycle beside water.",
+              "cost": 40,
+              "count": 0,
+              "maxCount": 3,
+              "canAfford": false,
+              "selected": false,
+              "iconSlot": "ui.build.icon.sluice",
+              "portraitSlug": "sluice-works",
+              "tierLine": "T1: 3g every 5s"
+            },
+            {
+              "id": "stockpile",
+              "displayName": "Stockpile Yard",
+              "blurb": "Holds +150 gold above the pan cap.",
+              "cost": 60,
+              "count": 0,
+              "maxCount": 2,
+              "canAfford": false,
+              "selected": false,
+              "iconSlot": "ui.build.icon.stockpile",
+              "portraitSlug": "stockpile-yard",
+              "tierLine": "T1: +150 gold capacity"
+            },
+            {
+              "id": "turret",
+              "displayName": "Signal Turret",
+              "blurb": "Spark bolts, line-of-sight, 16wu range.",
+              "cost": 50,
+              "count": 0,
+              "maxCount": 4,
+              "canAfford": false,
+              "selected": false,
+              "iconSlot": "ui.build.icon.turret",
+              "portraitSlug": "signal-turret",
+              "tierLine": "T1: 52 damage at 1.1/s"
+            },
+            {
+              "id": "assay_office",
+              "displayName": "Assay Office",
+              "blurb": "Write orders; the town's craftsmen answer. One per claim.",
+              "cost": 80,
+              "count": 0,
+              "maxCount": 1,
+              "canAfford": false,
+              "selected": false,
+              "iconSlot": "ui.build.icon.assay_office",
+              "portraitSlug": "claim-office"
+            }
+          ],
+          "stockpileCount": 0,
+          "beaconCount": 0,
+          "beaconMax": 6,
+          "nextBeaconCost": 25,
+          "canAffordBeacon": false,
+          "weapon": "rig",
+          "agent": {
+            "name": "the Prospector",
+            "permissionLevel": 0,
+            "permissionLabel": "suggest-only",
+            "capabilities": [
+              {
+                "id": "auto_collect",
+                "level": 1,
+                "label": "Let the Prospector gather loose XP and dropped gold",
+                "tools": [
+                  "et.goldrush.collect_xp",
+                  "et.goldrush.collect_gold"
+                ]
+              },
+              {
+                "id": "auto_repair",
+                "level": 1,
+                "label": "Let the Prospector tend walls",
+                "tools": [
+                  "et.goldrush.repair"
+                ]
+              },
+              {
+                "id": "auto_pan",
+                "level": 2,
+                "label": "Let the Prospector work claim pans",
+                "tools": [
+                  "et.goldrush.pan_at"
+                ]
+              },
+              {
+                "id": "place_building",
+                "level": 3,
+                "label": "Let the Prospector place buildings",
+                "tools": [
+                  "et.goldrush.place_building"
+                ]
+              }
+            ],
+            "lastActionAt": {},
+            "receiptCount": 1,
+            "lastReceiptTool": "et.goldrush.get_state",
+            "receiptFeed": [],
+            "autonomyTrack": 0,
+            "policySlotBonus": 0,
+            "consent": {
+              "ceiling": 0,
+              "rungs": {
+                "0": {
+                  "earned": true,
+                  "granted": true
+                },
+                "1": {
+                  "earned": false,
+                  "granted": true
+                },
+                "2": {
+                  "earned": false,
+                  "granted": true
+                },
+                "3": {
+                  "earned": false,
+                  "granted": true
+                }
+              },
+              "abilities": {
+                "auto_collect": {
+                  "earned": false,
+                  "granted": true,
+                  "allowed": false,
+                  "level": 1
+                },
+                "auto_repair": {
+                  "earned": false,
+                  "granted": true,
+                  "allowed": false,
+                  "level": 1
+                },
+                "light_duty": {
+                  "earned": false,
+                  "granted": false,
+                  "allowed": false,
+                  "level": 1
+                },
+                "auto_pan": {
+                  "earned": false,
+                  "granted": true,
+                  "allowed": false,
+                  "level": 2
+                },
+                "place_building": {
+                  "earned": false,
+                  "granted": true,
+                  "allowed": false,
+                  "level": 3
+                }
+              },
+              "repairUnderPct": 60,
+              "idleSeconds": 0.8
+            }
+          }
+        },
+        "camera": {
+          "scene": "run",
+          "distanceScale": 1,
+          "targetDistanceScale": 1,
+          "minDistanceScale": 0.7,
+          "maxDistanceScale": 1.6,
+          "baseDistance": 31.958254019892887,
+          "targetDistance": 31.958254019892887,
+          "actualDistance": 31.958254019812113,
+          "glanceActive": false
+        },
+        "hp": 100,
+        "maxHp": 100,
+        "heroIframes": false,
+        "enemiesAlive": 0,
+        "enemyPoolSize": 96,
+        "boltsAlive": 0,
+        "arsenal": {
+          "active": "rig",
+          "blastsAlive": 0,
+          "detonations": 0,
+          "blastKills": 0,
+          "turretKills": 0,
+          "weaponToggles": 0,
+          "blastTime": 0,
+          "blastDamage": 20,
+          "blastRadius": 2.2,
+          "disarmed": false,
+          "aimReticleRadius": 2.2,
+          "aimMode": "cursor",
+          "aimTarget": {
+            "x": 0,
+            "z": 2
+          },
+          "lastDetonation": null
+        },
+        "xp": 0,
+        "xpMotesAlive": 0,
+        "xpAudit": {
+          "deaths": 0,
+          "motesSpawned": 0,
+          "motesCollected": 0,
+          "motesCollectedXp": 0,
+          "overflowBanked": 0,
+          "expiredBanked": 0,
+          "autoBanked": 0,
+          "dropped": 0,
+          "xpAwarded": 0,
+          "xpPerKill": 4,
+          "motePool": 64,
+          "expiryBanks": true
+        },
+        "kills": 0,
+        "goldPanned": 0,
+        "deathLedger": {
+          "timeAlive": 0,
+          "kills": 0,
+          "goldPanned": 0,
+          "spent": 0,
+          "beaconsBuilt": 0,
+          "wavesSurvived": 0,
+          "weaponToggles": 0,
+          "blastTime": 0
+        },
+        "wave": 0,
+        "nextWaveInSim": 21.686956521739138,
+        "trickleInterval": 2.4,
+        "waveSpawnedTotal": 0,
+        "waveState": "quiet",
+        "pulse": 0,
+        "edge": null,
+        "drillYard": null,
+        "budget": 0,
+        "lastPulseAt": null,
+        "spawnDisabled": false,
+        "stressCount": 0,
+        "score": 0,
+        "targetScore": 0,
+        "complete": false,
+        "heroPos": {
+          "x": 0,
+          "y": 0.573093113899231,
+          "z": 12
+        },
+        "movePin": null,
+        "heroRenderPos": {
+          "x": 0,
+          "y": 0.573093113899231,
+          "z": 12
+        },
+        "speed": 0,
+        "player": {
+          "position": {
+            "x": 0,
+            "y": 0.573093113899231,
+            "z": 12
+          },
+          "speed": 0
+        },
+        "actors": [
+          {
+            "slot": 0,
+            "playerId": "local",
+            "name": "Rider",
+            "town": null,
+            "local": true,
+            "hp": 100,
+            "maxHp": 100,
+            "weapon": "rig",
+            "position": {
+              "x": 0,
+              "y": 0.573093113899231,
+              "z": 12
+            },
+            "speed": 0,
+            "visible": true
+          }
+        ],
+        "economy": {
+          "gold": 0,
+          "banked": 0,
+          "bankCap": 200,
+          "resources": {
+            "gold": {
+              "amount": 0,
+              "cap": 200
+            },
+            "pressure": {
+              "amount": 0,
+              "cap": 100
+            }
+          },
+          "activeResources": [],
+          "logLength": 0,
+          "state": {
+            "gold": 0,
+            "bankCap": 200,
+            "resources": {
+              "gold": {
+                "amount": 0,
+                "cap": 200
+              },
+              "pressure": {
+                "amount": 0,
+                "cap": 100
+              }
+            }
+          },
+          "replay": {
+            "gold": 0,
+            "bankCap": 200,
+            "resources": {
+              "gold": {
+                "amount": 0,
+                "cap": 200
+              },
+              "pressure": {
+                "amount": 0,
+                "cap": 100
+              }
+            }
+          },
+          "summary": {
+            "panned": 0,
+            "sluiced": 0,
+            "granted": 0,
+            "stolen": 0,
+            "reclaimed": 0,
+            "pannedByProspector": 0,
+            "sluicedByProspector": 0,
+            "reclaimedByProspector": 0,
+            "spent": 0,
+            "baseValue": 0,
+            "buildingsBuilt": 0,
+            "beaconsBuilt": 0,
+            "repairSpent": 0,
+            "repairs": 0
+          }
+        },
+        "decay": {
+          "active": 0,
+          "events": []
+        },
+        "e6Tiles": {
+          "active": false,
+          "storyGate": "puddles decay to safe on dials; harvest the six-vein ring after dark",
+          "puddles": [
+            {
+              "id": "decay-field-east",
+              "safe": false,
+              "stage": 1,
+              "remainingTicks": 0,
+              "minX": 18,
+              "maxX": 34,
+              "minZ": -46,
+              "maxZ": -30,
+              "visualY": true
+            },
+            {
+              "id": "decay-field-southeast",
+              "safe": false,
+              "stage": 1,
+              "remainingTicks": 0,
+              "minX": 32,
+              "maxX": 50,
+              "minZ": -28,
+              "maxZ": -12,
+              "visualY": true
+            }
+          ],
+          "night": {
+            "active": false,
+            "remainingTicks": 0
+          },
+          "veins": {
+            "active": false,
+            "channelId": null,
+            "progress": 0,
+            "harvested": 0,
+            "total": 6,
+            "payoutGold": 0,
+            "nodes": [
+              {
+                "id": "night-vein-1",
+                "x": -22,
+                "z": -6.8,
+                "harvested": false
+              },
+              {
+                "id": "night-vein-2",
+                "x": -9,
+                "z": 6.7,
+                "harvested": false
+              },
+              {
+                "id": "night-vein-3",
+                "x": -1.5,
+                "z": -6.4,
+                "harvested": false
+              },
+              {
+                "id": "night-vein-4",
+                "x": 7.5,
+                "z": 6.5,
+                "harvested": false
+              },
+              {
+                "id": "night-vein-5",
+                "x": 18,
+                "z": -7,
+                "harvested": false
+              },
+              {
+                "id": "night-vein-6",
+                "x": 25,
+                "z": 6.9,
+                "harvested": false
+              }
+            ]
+          }
+        },
+        "picnicHold": [],
+        "wrangle": {
+          "enabled": false,
+          "windDownSeconds": 8,
+          "windDownTicks": 240,
+          "captureRadius": 2.2,
+          "exhaustedSpeedMultiplier": 0.2,
+          "active": [],
+          "pen": {
+            "roster": [],
+            "total": 0,
+            "tickSeconds": 15,
+            "goldPerMachine": 1,
+            "incomeGranted": 0
+          }
+        },
+        "pressure": {
+          "enabled": false,
+          "multiplayerPosture": "single-player-gated",
+          "coal": 0,
+          "seams": [
+            {
+              "x": -12,
+              "z": 39,
+              "harvested": false,
+              "progress": 0,
+              "marked": false,
+              "visualY": null,
+              "groundY": 0.6415973901748657,
+              "spriteVisible": false
+            },
+            {
+              "x": -5,
+              "z": 43,
+              "harvested": false,
+              "progress": 0,
+              "marked": false,
+              "visualY": null,
+              "groundY": 0.6359289884567261,
+              "spriteVisible": false
+            },
+            {
+              "x": 3,
+              "z": 39,
+              "harvested": false,
+              "progress": 0,
+              "marked": false,
+              "visualY": null,
+              "groundY": 0.6058942079544067,
+              "spriteVisible": false
+            }
+          ],
+          "seamSource": "PressureSystem.DEFAULT_COAL_SEAMS",
+          "boilers": [
+            {
+              "index": 0,
+              "active": false,
+              "position": {
+                "x": 0,
+                "z": 0
+              },
+              "hot": false,
+              "cooling": false
+            },
+            {
+              "index": 1,
+              "active": false,
+              "position": {
+                "x": 0,
+                "z": 0
+              },
+              "hot": false,
+              "cooling": false
+            },
+            {
+              "index": 2,
+              "active": false,
+              "position": {
+                "x": 0,
+                "z": 0
+              },
+              "hot": false,
+              "cooling": false
+            }
+          ],
+          "vents": 0,
+          "safeBand": null,
+          "objective": {
+            "active": false,
+            "failed": false,
+            "complete": false,
+            "hotBoilers": 0,
+            "waves": "8-12"
+          }
+        },
+        "pressureArsenal": {
+          "multiplayerPosture": "single-player-gated",
+          "fires": {
+            "boilerLance": 0,
+            "pressureMortar": 0,
+            "skyRocket": 0
+          },
+          "pressureSpent": 0,
+          "autoPanSeconds": 0
+        },
+        "deepwaterArsenal": {
+          "active": false,
+          "items": [],
+          "fires": {
+            "harpoonBallista": 0,
+            "depthChargeRack": 0,
+            "depthChargeLobber": 0
+          },
+          "sharedMunition": {
+            "id": "depth_charge",
+            "stock": 12,
+            "capacity": 12,
+            "spentBy": {
+              "depthChargeRack": 0,
+              "depthChargeLobber": 0
+            }
+          },
+          "pressureSealed": {
+            "active": false,
+            "inDiveZone": false
+          },
+          "silhouette": {
+            "harpoonBallista": 1.1,
+            "priorTurret": 1.1
+          },
+          "treatmentEvents": [],
+          "visuals": {
+            "harpoonBallista": false,
+            "depthChargeRack": false,
+            "depthChargeLobber": false
+          }
+        },
+        "e6Arsenal": {
+          "eraActive": false,
+          "items": [],
+          "fires": {
+            "sunlineBeam": 0,
+            "sunlineMount": 0,
+            "tongsThrown": 0
+          },
+          "caltropsDeployments": 0,
+          "denialTicks": 0,
+          "outcomes": [],
+          "presentation": {
+            "beam": {
+              "visible": false,
+              "smoke": false
+            },
+            "mount": {
+              "active": 0,
+              "tracking": 0,
+              "silhouetteHeight": 1.1,
+              "previousTurretSilhouetteHeight": 1.1
+            },
+            "caltrops": {
+              "active": 0,
+              "visibleDials": 0,
+              "fields": []
+            },
+            "tongs": {
+              "visible": false,
+              "delivery": "underhand-arc"
+            }
+          }
+        },
+        "e9Arsenal": {
+          "eraActive": false,
+          "items": [],
+          "weather": {
+            "phase": "storm",
+            "charge": 0,
+            "capacity": 30
+          },
+          "fires": {
+            "stormDraw": 0,
+            "stormLance": 0,
+            "terraformCannon": 0
+          },
+          "fenceDeployments": 0,
+          "denialTicks": 0,
+          "pushedDistance": 0,
+          "outcomes": [],
+          "presentation": {
+            "stormDraw": {
+              "visible": false,
+              "smoke": false
+            },
+            "stormLance": {
+              "active": 0,
+              "tracking": 0,
+              "silhouetteHeight": 1.1,
+              "previousTurretSilhouetteHeight": 1.1
+            },
+            "stormFence": {
+              "active": 0,
+              "fields": []
+            },
+            "terraformCannon": {
+              "visible": false,
+              "ammunition": "map"
+            }
+          }
+        },
+        "e9Canal": {
+          "active": false,
+          "stage": 0,
+          "activeGateId": null,
+          "stageProgress": 0,
+          "contested": false,
+          "stagePayoutGold": 0,
+          "gates": [
+            {
+              "id": "canal-stage-c1",
+              "x": -28,
+              "z": 34,
+              "complete": false,
+              "active": false
+            },
+            {
+              "id": "canal-stage-c2",
+              "x": -12,
+              "z": 10,
+              "complete": false,
+              "active": false
+            },
+            {
+              "id": "canal-stage-c3",
+              "x": 4,
+              "z": -24,
+              "complete": false,
+              "active": false
+            }
+          ],
+          "quarry": {
+            "bandId": "ice-quarry-scarp-north-h4",
+            "channelNodeId": null,
+            "progress": 0,
+            "harvested": 0,
+            "total": 4,
+            "payoutGold": 0,
+            "nodes": [
+              {
+                "id": "ice-pack-1",
+                "x": -49.5,
+                "z": 47,
+                "harvested": false
+              },
+              {
+                "id": "ice-pack-2",
+                "x": -40.5,
+                "z": 49,
+                "harvested": false
+              },
+              {
+                "id": "ice-pack-3",
+                "x": -31.5,
+                "z": 47,
+                "harvested": false
+              },
+              {
+                "id": "ice-pack-4",
+                "x": -22.5,
+                "z": 49,
+                "harvested": false
+              }
+            ]
+          },
+          "canal": {
+            "wet": false,
+            "renderOnly": true,
+            "visualY": true,
+            "segments": 5
+          },
+          "dustDevil": {
+            "mode": "wander-lane",
+            "targeting": "none",
+            "phase": "clear",
+            "warning": false,
+            "laneId": "dust-devil-wander",
+            "laneProgress": 0,
+            "position": null,
+            "shoves": 0,
+            "pushedDistance": 0
+          }
+        },
+        "seedCaravan": null,
+        "canalChoices": null,
+        "canalFlow": null,
+        "seedCaravanPresentation": null,
+        "interferenceFront": null,
+        "squall": null,
+        "preserveVent": null,
+        "squallPresentation": null,
+        "devilsAlley": null,
+        "devilsAlleyPresentation": null,
+        "e10Finale": {
+          "enabled": false,
+          "ark": {
+            "sceneClass": "river-claim",
+            "tileId": "frontier-river-claim",
+            "deckCount": 0,
+            "loadState": "off",
+            "models": [],
+            "renderOnly": true,
+            "visualY": true
+          },
+          "reink": {
+            "state": "idle",
+            "progress": 0,
+            "renderOnly": true
+          },
+          "riverOffer": {
+            "offered": false,
+            "charterName": "The River",
+            "launchTemplate": "the-claim"
+          }
+        },
+        "e10Static": {
+          "enabled": false,
+          "active": false,
+          "act": 0,
+          "appetite": "meaning",
+          "arrivalCount": 0,
+          "aura": 0,
+          "musicGain": 1,
+          "pressureSeconds": 0,
+          "sites": [],
+          "allPreserved": false,
+          "recessionProgress": 0,
+          "victory": null,
+          "jarredMote": false,
+          "damageAccepted": 0,
+          "killPath": false
+        },
+        "preserve": null,
+        "e7Signal": {
+          "enabled": false,
+          "graphHash": "fnv1a32:77c8ee63",
+          "nodes": [],
+          "links": [],
+          "linkedCoverage": false,
+          "threatVisibilityBonus": false,
+          "droneDropped": false,
+          "relayChainsSuppressed": false,
+          "dronesSuppressed": false,
+          "jacks": [],
+          "midpointReached": false,
+          "lastBeatCount": 0,
+          "e8ExitBeatReady": false,
+          "fragmentEvents": 0,
+          "latestFragment": ""
+        },
+        "e7Arsenal": {
+          "enabled": false,
+          "items": [],
+          "fires": {
+            "playbookSparkRig": 0,
+            "beamRelay": 0,
+            "signalJammer": 0,
+            "reportRocket": 0
+          },
+          "relayLinks": 0,
+          "activeRelayTurrets": 0,
+          "jammerDeployed": false,
+          "playbookSlaved": false,
+          "turretSilhouetteHeight": 1.1,
+          "cureEvents": [],
+          "deathEvents": 0
+        },
+        "e8Arsenal": {
+          "available": false,
+          "multiplayerPosture": "single-player-gated",
+          "items": {
+            "sunlineBeam": false,
+            "kineticLobber": false,
+            "magnetGrapple": false,
+            "lensTurret": false,
+            "breachPatchSeals": false
+          },
+          "fires": {
+            "sunlineBeam": 0,
+            "kineticLobber": 0,
+            "magnetGrapple": 0
+          },
+          "grapplePulls": 0,
+          "silentCollisions": 0,
+          "vfxClasses": [
+            "light",
+            "kinetic",
+            "magnetic"
+          ],
+          "lensSilhouette": {
+            "base": 1.1,
+            "transformed": 1.1
+          },
+          "breachSealLimit": 4
+        },
+        "e8Physics": {
+          "active": false,
+          "contractId": "e1-baron",
+          "source": "default",
+          "movement": "normal",
+          "feelG": 1,
+          "lobArcDistanceMultiplier": 1,
+          "lobAirTimeMultiplier": 1,
+          "knockbackScale": 1,
+          "orbitalReturn": false,
+          "vacuum": false,
+          "fixedTimestepOnly": true,
+          "filteredMovement": {
+            "x": 0,
+            "y": 0
+          },
+          "adaptedLobs": [
+            {
+              "resumeKey": "orbital:kineticLobber",
+              "range": 15,
+              "airTime": 1.68
+            }
+          ]
+        },
+        "e8Atmosphere": null,
+        "e8SuitAir": null,
+        "probeRecovery": {
+          "declared": false,
+          "trigger": null,
+          "zones": [],
+          "recovered": false,
+          "recoveredZoneId": null,
+          "playedFragment": null,
+          "playbackCount": 0,
+          "refusals": {
+            "outOfReach": 0,
+            "alreadyRecovered": 0
+          }
+        },
+        "broadcastMirror": null,
+        "playbookUse": null,
+        "lowOrbit": {
+          "declared": false,
+          "orbitalReturn": false,
+          "returnSeconds": 12,
+          "scaffoldZones": 0,
+          "debrisFields": 0,
+          "handholdSegments": 0,
+          "returnsScheduled": 0,
+          "returnsDetonated": 0,
+          "driftSteps": 0,
+          "debrisSteps": 0,
+          "debrisDamageDealt": 0
+        },
+        "hollowCrossing": {
+          "declared": false,
+          "stage": "launch",
+          "routeId": null,
+          "onGlowBridge": false,
+          "radiationDamageDealt": 0
+        },
+        "run": {
+          "secured": false,
+          "rush": false,
+          "lastRunEndedReason": null,
+          "meta": {
+            "version": 1,
+            "tracks": {
+              "territory": 0,
+              "science": 0,
+              "hero": 0,
+              "agent": 0
+            }
+          },
+          "victoryPayout": null,
+          "secureWaveReached": null,
+          "securedResultAt": null,
+          "securedSnapshot": null,
+          "suspend": {
+            "hasSuspend": false,
+            "restored": false,
+            "restoredWave": null,
+            "lastWriteAt": null,
+            "lastWriteMs": null,
+            "sizeBytes": 0
+          }
+        },
+        "contract": {
+          "activeId": "e1-baron",
+          "requestedId": "e1-baron",
+          "fallbackReason": null,
+          "stagedLaunchClear": null,
+          "warningSuppressed": false,
+          "epochId": "epoch-1-frontier",
+          "epochResources": [],
+          "claimOffice": null,
+          "name": "The Claim-Jumper Baron",
+          "tileParams": {
+            "tileId": "frontier-river-claim",
+            "biome": "river-claim",
+            "size": 64,
+            "river": true,
+            "ford": true,
+            "fords": [
+              {
+                "id": "center-ford",
+                "x": 0,
+                "halfWidth": 3
+              }
+            ],
+            "waterSources": [],
+            "harvestAnchors": [
+              {
+                "x": -22,
+                "z": -6.8
+              },
+              {
+                "x": -9,
+                "z": 6.7
+              },
+              {
+                "x": -1.5,
+                "z": -6.4
+              },
+              {
+                "x": 7.5,
+                "z": 6.5
+              },
+              {
+                "x": 18,
+                "z": -7
+              },
+              {
+                "x": 25,
+                "z": 6.9
+              }
+            ],
+            "water": {
+              "id": "frontier-river-depth",
+              "centerZ": 0,
+              "halfWidth": 5,
+              "visualHalfWidth": 6.25
+            },
+            "prebuiltPalisades": false,
+            "lanes": {
+              "spawnEdges": [
+                "north",
+                "south",
+                "east",
+                "west"
+              ],
+              "territoryRingBiasWaves": 3,
+              "territoryRingLaneBias": 0.75
+            }
+          },
+          "boardRow": {
+            "name": "The Claim-Jumper Baron",
+            "ledgerBlurb": "An oxblood banner marks the outfit that keeps buying trouble.",
+            "tags": [
+              "vein-hunter"
+            ],
+            "unlock": "science-complete+2-secured"
+          },
+          "briefing": {
+            "goals": [
+              "The Baron rides at wave 20. Break his Rocket Cart."
+            ],
+            "rules": [
+              "His outfit rides hot: waves come 15% faster.",
+              "Taunts warn you before his banner appears.",
+              "Turn back the Baron for the medal and double science."
+            ],
+            "geographyLine": "A brass-bannered bully compresses the waves and waits at the twentieth horn."
+          },
+          "seamYieldMult": 1,
+          "secureWave": 20,
+          "waveCadenceMult": 1.15,
+          "lightRamp": null,
+          "dayNightCycle": null,
+          "baron": {
+            "wave": 20,
+            "hpScale": 240,
+            "speedScale": 0.75,
+            "scale": 4,
+            "contactDamageScale": 5,
+            "buildingDamageScale": 16,
+            "supportBuildingDamageScale": 12,
+            "pursuitRange": 18,
+            "escortCount": 8,
+            "tauntWaves": [
+              5,
+              12,
+              18
+            ],
+            "taunt": "The Baron sends his regards. The claim won't hold.",
+            "defeatBeat": "Dragged off by his own men, swearing revenge.",
+            "medalBlurb": "The Rocket Cart, captured. He'll be back with machines.",
+            "sciencePayoutMult": 2,
+            "rocketVolley": {
+              "count": 3,
+              "damage": 18,
+              "radius": 2.35,
+              "cadenceSeconds": 8,
+              "telegraphSeconds": 1.2,
+              "airTime": 1.1,
+              "spreadRadius": 0.9
+            }
+          },
+          "medals": {
+            "version": 1,
+            "baronBeaten": false,
+            "rocketCartCaptured": false
+          }
+        },
+        "deepwaterClaim": null,
+        "tilePersistence": {
+          "contractId": "e1-baron",
+          "entries": 0,
+          "greenWaypoint": null,
+          "greenWaypoints": [],
+          "greenWaypointStaged": false,
+          "swatchColor": "#848c6c",
+          "noSpawnZones": []
+        },
+        "research": {
+          "taken": [],
+          "available": [
+            "assay_grading",
+            "chain_spark_primer"
+          ],
+          "steps": 0,
+          "remaining": 6,
+          "threshold": 6,
+          "overflow": 0,
+          "meter": "Science: 0 steps - 6 to the Steamworks",
+          "continued": {
+            "seamYieldMult": 0,
+            "turretDamageMult": 0,
+            "stockpileCapBonus": 0
+          },
+          "assayOrderSlots": 1,
+          "contractTier": 1,
+          "pinnedTarget": null
+        },
+        "megaproject": {
+          "active": false,
+          "id": "stamp-mill",
+          "name": "The Stamp Mill",
+          "unlocked": false,
+          "complete": false,
+          "stage": 0,
+          "totalStages": 3,
+          "funded": false,
+          "hp": 80,
+          "maxHp": 80,
+          "ticksRemaining": 0,
+          "delayTicks": 0,
+          "materials": {
+            "gold": 90
+          },
+          "siteFootprint": {
+            "x": -8,
+            "z": 16,
+            "w": 5,
+            "d": 3
+          },
+          "siteRead": {
+            "packedEarth": false,
+            "stakes": 0,
+            "stringLines": 0,
+            "walkwayPlanks": 0,
+            "signboard": false,
+            "plaque": "STAMP MILL & RAIL SPUR / surveyed for the town / Claim Office takes pledges",
+            "constructionProps": 0,
+            "promptReady": false,
+            "surveyVisible": false
+          }
+        },
+        "escort": {
+          "enabled": false
+        },
+        "tram": null,
+        "fairground": null,
+        "crowdFlocks": null,
+        "fuel": null,
+        "vehicle": null,
+        "power": {
+          "active": false,
+          "id": "",
+          "tick": 0,
+          "topologyRevision": 0,
+          "allocationRevision": 0,
+          "totalSupplyWatts": 0,
+          "totalDemandWatts": 0,
+          "nodes": [],
+          "wires": [],
+          "components": [],
+          "signature": "",
+          "budgetMs": 0.5,
+          "lastSolveMs": 0,
+          "maxSolveMs": 0,
+          "lastStepMs": 0,
+          "maxStepMs": 0,
+          "overBudget": false,
+          "overBudgetCount": 0,
+          "solveCount": 0,
+          "nodeCount": 0,
+          "wireCount": 0,
+          "intactWireCount": 0,
+          "cutWireCount": 0,
+          "events": [],
+          "render": {
+            "active": false,
+            "renderLayer": 0,
+            "renderSlot": "gameplay",
+            "topologyRevision": -1,
+            "allocationRevision": -1,
+            "rebuildCount": 0,
+            "spans": 0,
+            "poweredSpans": 0,
+            "darkSpans": 0,
+            "intactSpans": 0,
+            "cutSpans": 0,
+            "segments": 0,
+            "poweredSegments": 0,
+            "darkSegments": 0,
+            "drawCalls": 0,
+            "asset": "procedural-catenary"
+          }
+        },
+        "canyonWorks": null,
+        "crawlerBoss": null,
+        "landYachtBoss": null,
+        "salvageClawBoss": null,
+        "homemakerBoss": null,
+        "echoBoss": null,
+        "oldDiggerBoss": null,
+        "agent": {
+          "stub": {
+            "name": "the Prospector",
+            "permissionLevel": 0,
+            "permissionLabel": "suggest-only",
+            "capabilities": [
+              {
+                "id": "auto_collect",
+                "level": 1,
+                "label": "Let the Prospector gather loose XP and dropped gold",
+                "tools": [
+                  "et.goldrush.collect_xp",
+                  "et.goldrush.collect_gold"
+                ]
+              },
+              {
+                "id": "auto_repair",
+                "level": 1,
+                "label": "Let the Prospector tend walls",
+                "tools": [
+                  "et.goldrush.repair"
+                ]
+              },
+              {
+                "id": "auto_pan",
+                "level": 2,
+                "label": "Let the Prospector work claim pans",
+                "tools": [
+                  "et.goldrush.pan_at"
+                ]
+              },
+              {
+                "id": "place_building",
+                "level": 3,
+                "label": "Let the Prospector place buildings",
+                "tools": [
+                  "et.goldrush.place_building"
+                ]
+              }
+            ],
+            "lastActionAt": {},
+            "receiptCount": 1,
+            "lastReceiptTool": "et.goldrush.get_state",
+            "receiptFeed": []
+          },
+          "embodiment": {
+            "visible": true,
+            "moving": false,
+            "drifting": false,
+            "working": false,
+            "receiptCount": 1,
+            "lastReceiptTool": "et.goldrush.get_state",
+            "lastLine": "Prospector ready",
+            "position": {
+              "x": -1.812,
+              "y": 1.811,
+              "z": 10.654
+            },
+            "target": {
+              "x": -1.8,
+              "z": 10.93
+            },
+            "terrainY": 0.511,
+            "clearance": 1.3
+          },
+          "riders": []
+        },
+        "audio": {
+          "unlocked": true,
+          "muted": false,
+          "volume": 0.8,
+          "musicVolume": 0.35,
+          "requests": 0,
+          "started": 8,
+          "missing": 0,
+          "active": 2,
+          "concurrentVoices": 1,
+          "voiceCap": 12,
+          "dropsPerSecond": 0,
+          "headroomGain": 1,
+          "loops": [
+            "river-ambience-loop",
+            "era-e1-frontier-loop"
+          ],
+          "loopSourceCounts": {
+            "river-ambience-loop": 1,
+            "era-e1-frontier-loop": 1
+          },
+          "loopVolumes": {
+            "river-ambience-loop": 0.07573235034942627,
+            "era-e1-frontier-loop": 0.1469999998807907
+          },
+          "loopElapsedSeconds": {
+            "river-ambience-loop": 3.0666666666666664,
+            "era-e1-frontier-loop": 2.8426666666666667
+          },
+          "lastRequested": null,
+          "lastStarted": "prospector-hover-loop",
+          "playsPerSecond": {
+            "river-ambience-loop": 0,
+            "era-e1-frontier-loop": 0,
+            "prospector-hover-loop": 3
+          },
+          "startedBySound": {
+            "river-ambience-loop": 1,
+            "era-e1-frontier-loop": 1,
+            "prospector-hover-loop": 6
+          },
+          "droppedBySound": {},
+          "droppedByFamily": {},
+          "droppedByPriority": {}
+        },
+        "build": {
+          "mode": false,
+          "selectedBuildable": "sentry_beacon",
+          "ghostValid": false,
+          "ghostLight": 1,
+          "ghostPos": {
+            "x": 0,
+            "z": 0
+          },
+          "ghostY": 0,
+          "ghostVisible": false,
+          "ghostRotationSteps": 0,
+          "ghostFootprint": {
+            "w": 1,
+            "d": 1
+          },
+          "beacons": 0,
+          "palisades": 0,
+          "palisadeKitCredits": 0,
+          "sluices": 0,
+          "stockpiles": 0,
+          "boilerHouses": 0,
+          "turrets": 0,
+          "assayOffices": 0,
+          "lanternPosts": 0,
+          "capacitorBanks": 0,
+          "beaconPositions": [],
+          "palisadePositions": [],
+          "sluicePositions": [],
+          "stockpilePositions": [],
+          "boilerHousePositions": [],
+          "turretPositions": [],
+          "assayOfficePositions": [],
+          "lanternPostPositions": [],
+          "capacitorBankPositions": [],
+          "lanternPostRotations": [],
+          "reservedFootprints": [],
+          "buildables": [
+            {
+              "id": "sentry_beacon",
+              "count": 0
+            },
+            {
+              "id": "palisade",
+              "count": 0
+            },
+            {
+              "id": "sluice",
+              "count": 0
+            },
+            {
+              "id": "stockpile",
+              "count": 0
+            },
+            {
+              "id": "boiler_house",
+              "count": 0
+            },
+            {
+              "id": "turret",
+              "count": 0
+            },
+            {
+              "id": "lantern_post",
+              "count": 0
+            },
+            {
+              "id": "decoy_shed",
+              "count": 0
+            },
+            {
+              "id": "capacitor_bank",
+              "count": 0
+            },
+            {
+              "id": "assay_office",
+              "count": 0
+            }
+          ],
+          "sluicesState": [],
+          "stockpilesState": [],
+          "pileStep": 0,
+          "nextCost": 25,
+          "hp": [],
+          "ruins": 0,
+          "ruinDetails": [],
+          "hpBars": 0,
+          "hpBarsVisible": false,
+          "hpBarDetails": [],
+          "repair": {
+            "active": false,
+            "id": null,
+            "index": -1,
+            "progress": 0,
+            "blocked": false
+          },
+          "shooterRegistrations": 0,
+          "turretPulses": 0,
+          "activeTurretPulses": 0,
+          "breachSeals": 0,
+          "lensTurrets": 0,
+          "tierUpgrades": 0,
+          "repairs": 0,
+          "repairGold": 0,
+          "shells": {
+            "palisade": {
+              "active": 0,
+              "signs": 0,
+              "meshes": [
+                "PalisadePosts",
+                "PalisadeRails",
+                "PalisadeBraces",
+                "PalisadePortraitSigns"
+              ],
+              "lit": true
+            },
+            "sluice": {
+              "active": 0,
+              "signs": 0,
+              "meshes": [
+                "SluiceTroughs",
+                "SluiceWaterChannels",
+                "SluiceTimberRails",
+                "SluiceTimberLegs",
+                "SluiceWheelRims",
+                "SluiceWheelSpokesA",
+                "SluiceWheelSpokesB",
+                "SluicePortraitSigns"
+              ],
+              "lit": true,
+              "wheelPhase": 0
+            },
+            "stockpile": {
+              "active": 0,
+              "signs": 0,
+              "meshes": [
+                "StockpileTimberCribs",
+                "StockpileStrongboxes",
+                "StockpileGoldNuggets",
+                "StockpilePortraitSigns"
+              ],
+              "lit": true
+            },
+            "boiler_house": {
+              "active": 0,
+              "signs": 0,
+              "meshes": [
+                "BoilerHousePlaceholder",
+                "BoilerHouseBrassDrum",
+                "BoilerHouseStack",
+                "BoilerHouseSign"
+              ],
+              "lit": true
+            },
+            "turret": {
+              "active": 0,
+              "signs": 0,
+              "meshes": [
+                "TurretTimberBases",
+                "TurretTripodLegs",
+                "TurretSignalMasts",
+                "TurretPortraitSigns"
+              ],
+              "lit": true,
+              "variant": "signal",
+              "silhouetteHeight": 1.1
+            },
+            "assay_office": {
+              "active": 0,
+              "signs": 0,
+              "meshes": [
+                "AssayOfficeTimberShell",
+                "AssayOfficeBrassRoof",
+                "AssayOfficePlaqueFrame",
+                "AssayOfficeTimberLintel",
+                "AssayOfficePortraitSign"
+              ],
+              "lit": true
+            }
+          },
+          "killsByOwner": {},
+          "damageByOwner": {}
+        },
+        "progression": {
+          "level": 1,
+          "xpInto": 0,
+          "xpNeed": 12,
+          "pendingLevels": 0,
+          "offer": null,
+          "stacks": {},
+          "stats": {
+            "fireRateMult": 1,
+            "damageMult": 1,
+            "rangeMult": 1,
+            "boltSpeedMult": 1,
+            "volleyBonus": 0,
+            "maxHpBonus": 0,
+            "moveSpeedMult": 1,
+            "panTickMult": 1,
+            "seamCapacityBonus": 0,
+            "seamRespawnReduction": 0,
+            "stockpileCapBonus": 0,
+            "beaconFireRateMult": 1,
+            "blastDamageMult": 1,
+            "blastRadiusMult": 1,
+            "blastCooldownMult": 1,
+            "agentPolicySlots": 0
+          },
+          "eligibility": [
+            "double_tap_coil",
+            "heavy_spark",
+            "long_resonator",
+            "split_spark",
+            "tinkers_plating",
+            "spring_heels",
+            "pan_legend",
+            "prospectors_luck",
+            "powder_charge",
+            "wide_ring",
+            "quick_fuse",
+            "assay_bonus",
+            "field_dressing",
+            "sharpen"
+          ]
+        },
+        "harvest": {
+          "activeNodes": [
+            {
+              "id": "gold-seam-1",
+              "active": true,
+              "anchorIndex": 4,
+              "position": {
+                "x": 18,
+                "z": -7
+              },
+              "remaining": 30,
+              "respawnScheduled": false,
+              "respawnIn": 0
+            },
+            {
+              "id": "gold-seam-2",
+              "active": true,
+              "anchorIndex": 0,
+              "position": {
+                "x": -22,
+                "z": -6.8
+              },
+              "remaining": 30,
+              "respawnScheduled": false,
+              "respawnIn": 0
+            },
+            {
+              "id": "gold-seam-3",
+              "active": true,
+              "anchorIndex": 3,
+              "position": {
+                "x": 7.5,
+                "z": 6.5
+              },
+              "remaining": 30,
+              "respawnScheduled": false,
+              "respawnIn": 0
+            },
+            {
+              "id": "gold-seam-4",
+              "active": false,
+              "anchorIndex": -1,
+              "position": {
+                "x": 0,
+                "z": 0
+              },
+              "remaining": 30,
+              "respawnScheduled": false,
+              "respawnIn": 0
+            },
+            {
+              "id": "gold-seam-5",
+              "active": false,
+              "anchorIndex": -1,
+              "position": {
+                "x": 0,
+                "z": 0
+              },
+              "remaining": 30,
+              "respawnScheduled": false,
+              "respawnIn": 0
+            },
+            {
+              "id": "gold-seam-6",
+              "active": false,
+              "anchorIndex": -1,
+              "position": {
+                "x": 0,
+                "z": 0
+              },
+              "remaining": 30,
+              "respawnScheduled": false,
+              "respawnIn": 0
+            }
+          ],
+          "channeling": false,
+          "channelNodeId": null,
+          "progress": 0,
+          "channels": [
+            {
+              "actorId": "0",
+              "channelNodeId": null,
+              "progress": 0,
+              "channeling": false
+            }
+          ],
+          "lastGoldGain": 0,
+          "lastGoldPosition": null
+        },
+        "harvestVisuals": {
+          "seams": [
+            {
+              "id": "gold-seam-1",
+              "x": 18,
+              "z": -7,
+              "visualY": 1.0520776987075806,
+              "groundY": 1.0020776987075806,
+              "spriteVisible": true
+            },
+            {
+              "id": "gold-seam-2",
+              "x": -22,
+              "z": -6.8,
+              "visualY": 1.2397497415542604,
+              "groundY": 1.1897497415542604,
+              "spriteVisible": true
+            },
+            {
+              "id": "gold-seam-3",
+              "x": 7.5,
+              "z": 6.5,
+              "visualY": 0.4817736327648163,
+              "groundY": 0.4317736327648163,
+              "spriteVisible": true
+            }
+          ]
+        },
+        "steal": {
+          "thieves": 0,
+          "fleeing": 0,
+          "carriedTotal": 0,
+          "stolenTotal": 0,
+          "reclaimedTotal": 0,
+          "pickups": 0,
+          "pickupTotal": 0
+        },
+        "wreck": {
+          "wreckers": 0,
+          "swinging": 0,
+          "gnawing": 0,
+          "stuckWatchdogTrips": 0,
+          "ruins": 0,
+          "hitsResolved": 0,
+          "wrecked": 0,
+          "repairs": 0,
+          "repairGold": 0
+        },
+        "charmPause": false,
+        "camImpulseActive": false,
+        "baronSpawnImpulses": 0,
+        "baronCeremony": {
+          "active": false,
+          "elapsed": 0,
+          "holdSeconds": 2.2
+        },
+        "baronStandard": {
+          "visible": false,
+          "x": 0,
+          "z": 0,
+          "dropElapsed": 0
+        },
+        "baronRocket": {
+          "cartVisible": false,
+          "carried": false,
+          "distanceFromBaron": 0,
+          "telegraphActive": false,
+          "telegraphElapsed": 0,
+          "nextVolleyIn": 0,
+          "volleys": 0,
+          "suppressed": false,
+          "targetKind": null,
+          "lastOwnerId": "",
+          "lastTarget": {
+            "x": 0,
+            "z": 0
+          },
+          "target": {
+            "x": 0,
+            "z": 0
+          },
+          "props": {
+            "state": "ready",
+            "source": "glb",
+            "launcher": true,
+            "rocket": true,
+            "powderKeg": true,
+            "triangles": {
+              "launcher": 2020,
+              "rocket": 876,
+              "powder_keg": 704
+            }
+          },
+          "manifest": {
+            "count": 3,
+            "damage": 18,
+            "radius": 2.35,
+            "cadenceSeconds": 8,
+            "telegraphSeconds": 1.2,
+            "airTime": 1.1,
+            "spreadRadius": 0.9
+          }
+        },
+        "damSurge": {
+          "phase": "idle",
+          "active": false,
+          "telegraphSeconds": 2,
+          "sweepSeconds": 2.4,
+          "frontX": -32,
+          "damage": 12,
+          "push": 5,
+          "hits": 0,
+          "marksVisible": false,
+          "fieldVisible": false,
+          "log": []
+        },
+        "lighting": {
+          "sunPresent": true,
+          "shadowsQuality": "blob",
+          "fogNear": 42,
+          "fogFar": 88,
+          "postEnabled": true,
+          "paperGrainOpacity": 0.008,
+          "shadowMapSize": 0,
+          "shadowMapTargetSize": 0,
+          "blobShadows": 2,
+          "heatShimmer": false,
+          "dustDevilQuads": 0,
+          "palette": {
+            "background": "#f1c887",
+            "fog": "#ead2a3",
+            "sun": "#ffd28a",
+            "sunIntensity": 2.35,
+            "fill": "#fff2cc",
+            "fillIntensity": 1.12
+          },
+          "nightShift": {
+            "enabled": false,
+            "phase": "full",
+            "darkness": 0,
+            "lampIntensityMult": 1
+          },
+          "nightPools": 0,
+          "nightPoolCap": 8,
+          "nightPoolSources": 0,
+          "enemyLanterns": 0,
+          "enemyLanternCones": 0,
+          "prospectorLights": 0,
+          "muzzleFlashes": 0,
+          "muzzleFlashCount": 0,
+          "billboardLights": 0,
+          "dayNight": null,
+          "coverage": {
+            "darkness": 0,
+            "minLight": 0.045,
+            "falloff": 1.25,
+            "litThreshold": 0.35,
+            "sources": 0,
+            "lanterns": 0,
+            "poweredLamps": 0
+          }
+        },
+        "mothSwarm": {
+          "enabled": false,
+          "alive": 0,
+          "attached": 0,
+          "sourceId": null,
+          "baseRadius": 0,
+          "effectiveRadius": 0,
+          "attachCounts": []
+        },
+        "enemyDimming": {
+          "enabled": false,
+          "darkness": 0,
+          "minLight": 1,
+          "falloff": 1.25,
+          "sources": 0,
+          "dimmed": 0,
+          "minFactor": 1
+        },
+        "vfx": {
+          "activeFloatTexts": 0,
+          "floatTextPool": 12,
+          "lastFloatText": {
+            "text": "Prospector ready",
+            "x": -1.8,
+            "z": 10.93,
+            "y": 4.094378087875963,
+            "terrainY": -0.025621912124036875,
+            "renderedText": "Prospector ready",
+            "renderedWidthPx": 566.40625,
+            "canvasWidthPx": 768,
+            "fontPx": 64
+          },
+          "combat": {
+            "puffs": {
+              "active": 0,
+              "capacity": 32
+            },
+            "ticks": {
+              "active": 0,
+              "capacity": 48
+            },
+            "rings": {
+              "active": 0,
+              "capacity": 8
+            }
+          },
+          "baronVolley": {
+            "tracers": {
+              "active": 0,
+              "capacity": 16,
+              "spawned": 0
+            },
+            "rockets": {
+              "active": 0,
+              "capacity": 16,
+              "modelReady": true
+            },
+            "rings": {
+              "active": 0,
+              "capacity": 8,
+              "spawned": 0
+            },
+            "wisps": {
+              "active": 0,
+              "capacity": 8,
+              "spawned": 0
+            },
+            "detail": true
+          }
+        },
+        "performance": {
+          "tier": "full",
+          "override": "auto",
+          "source": "auto",
+          "reason": "desktop-class defaults",
+          "gpuRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Max, Unspecified Version)",
+          "deviceMemory": 32,
+          "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.0.0 Safari/537.36",
+          "config": {
+            "maxDpr": 2,
+            "shadowsQuality": "soft",
+            "shadowMapSize": 1536,
+            "fogNear": 42,
+            "fogFar": 88,
+            "postEnabled": true,
+            "postPaperGrainOpacity": 0.008,
+            "detailDensity": 1,
+            "detailMobileDensity": 0.42,
+            "terrainSegments": 64,
+            "terrainMobileSegments": 40,
+            "vistaSegments": 12,
+            "vistaMobileSegments": 7,
+            "waterQuality": 1,
+            "waterMobileQuality": 0.55,
+            "terrainMesh": false,
+            "terrainSplat": false,
+            "terrainMeshVertexStep": 1,
+            "floatTextPool": 12,
+            "combatVfxPuffs": 32,
+            "combatVfxTicks": 48,
+            "combatVfxRings": 8,
+            "freedWalkerCap": 10,
+            "enemyBarCap": 60
+          },
+          "runtimeVerdict": 0
+        },
+        "readability": {
+          "enemyHitFlashes": 0,
+          "activeEnemyFlashes": 0,
+          "buildingHpBars": 0,
+          "bossHpBar": {
+            "visible": false,
+            "ratio": 0,
+            "renderedRatio": 1,
+            "litSegments": 7,
+            "segments": 0,
+            "groupId": null,
+            "aliveComponents": 0,
+            "destroyedComponents": 0,
+            "components": []
+          },
+          "turretPulses": 0,
+          "activeTurretPulses": 0
+        },
+        "renderer": {
+          "calls": 56,
+          "triangles": 107738,
+          "geometries": 71,
+          "textures": 21
+        },
+        "assets": {
+          "char.hero": "loaded",
+          "char.bandit_base": "loaded",
+          "char.bandit_thief": "loaded",
+          "node.gold_seam": "loaded",
+          "bld.sentry_beacon": "loaded",
+          "bld.portrait.palisade": "loaded",
+          "bld.portrait.sluice": "loaded",
+          "bld.portrait.stockpile": "loaded",
+          "bld.portrait.turret": "loaded",
+          "terrain.bank": "loaded",
+          "terrain.river": "loaded",
+          "prop.baron_banner": "loaded",
+          "char.baron": "loaded",
+          "char.town.tavernkeeper": "loaded",
+          "char.town.storekeeper": "loaded",
+          "char.town.elder": "loaded",
+          "char.town.preacher": "loaded",
+          "char.town.schoolteacher": "loaded",
+          "char.town.assay_clerk": "loaded",
+          "char.town.youngster_a": "loaded",
+          "char.town.youngster_b": "loaded",
+          "char.town.newsie": "loaded",
+          "char.e2.rail_tough": "loaded",
+          "char.e2.steam_wrecker": "loaded",
+          "char.e2.coal_thief": "loaded",
+          "char.prospector_agent": "missing"
+        },
+        "assetSprites": {
+          "char.hero": 1,
+          "node.gold_seam": 3
+        },
+        "spriteAnimations": {
+          "char.hero": {
+            "clip": "idle",
+            "frame": 0,
+            "frameKey": "char-hero-sheet-rotation-f-r0c0.png",
+            "frameCount": 1,
+            "fps": 1,
+            "loaded": true,
+            "fadeActive": false,
+            "fadeMsRemaining": 0,
+            "fadeWindow": 0,
+            "direction": "s",
+            "mirrored": false
+          },
+          "char.bandit_base": {
+            "clip": "idle",
+            "frame": 0,
+            "frameKey": "pending",
+            "frameCount": 0,
+            "fps": 0,
+            "loaded": false
+          },
+          "char.bandit_thief": {
+            "clip": "idle",
+            "frame": 0,
+            "frameKey": "pending",
+            "frameCount": 0,
+            "fps": 0,
+            "loaded": false
+          },
+          "char.e2.rail_tough": {
+            "clip": "idle",
+            "frame": 0,
+            "frameKey": "pending",
+            "frameCount": 0,
+            "fps": 0,
+            "loaded": false
+          },
+          "char.e2.steam_wrecker": {
+            "clip": "idle",
+            "frame": 0,
+            "frameKey": "pending",
+            "frameCount": 0,
+            "fps": 0,
+            "loaded": false
+          },
+          "char.e2.coal_thief": {
+            "clip": "idle",
+            "frame": 0,
+            "frameKey": "pending",
+            "frameCount": 0,
+            "fps": 0,
+            "loaded": false
+          },
+          "char.prospector_agent": {
+            "clip": "idle",
+            "frame": 0,
+            "frameKey": "char-prospector-sheet-hover8-r1c0.png",
+            "frameCount": 1,
+            "fps": 1,
+            "loaded": true,
+            "fadeActive": false,
+            "fadeMsRemaining": 0,
+            "fadeWindow": 3,
+            "direction": "nw",
+            "mirrored": false
+          }
+        },
+        "spriteStats": {
+          "activeAnimators": 1,
+          "textureSwapsPerFrame": 0,
+          "fadeOverlaysActive": 0
+        },
+        "terrain": {
+          "playerZone": "bank",
+          "ground": {
+            "enabled": false,
+            "mode": "fallback",
+            "drawCalls": 1,
+            "segments": 40,
+            "vertexStep": 1.6,
+            "vertices": 1681,
+            "triangles": 3200,
+            "heightSource": "visual",
+            "textureSource": "bank-atlas",
+            "textureSeams": "texture seams remain until TR-02"
+          },
+          "sim": {
+            "flat": true,
+            "tile": "frontier-river-claim",
+            "balance": {
+              "uphillMin": 0.6,
+              "downhillMax": 1.1,
+              "slopeMax": 0.35,
+              "wadeDepth": 0.35,
+              "deepDepth": 1
+            },
+            "gt": {
+              "highGroundRangeBonus": 1.5
+            },
+            "lastLos": {
+              "flat": true,
+              "clear": true,
+              "samples": 0,
+              "from": {
+                "x": 0,
+                "z": 0,
+                "h": 0
+              },
+              "to": {
+                "x": 0,
+                "z": 0,
+                "h": 0
+              },
+              "blockedAt": null
+            },
+            "probes": {
+              "heroStart": {
+                "height": 0,
+                "slope": {
+                  "dx": 0,
+                  "dz": 0
+                },
+                "traversable": true
+              },
+              "ford": {
+                "height": 0,
+                "slope": {
+                  "dx": 0,
+                  "dz": 0
+                },
+                "traversable": true
+              },
+              "farBank": {
+                "height": 0,
+                "slope": {
+                  "dx": 0,
+                  "dz": 0
+                },
+                "traversable": true
+              }
+            }
+          },
+          "water": {
+            "material": "LivingWaterShader",
+            "riverPresent": true,
+            "fordPresent": true,
+            "riverTime": 4.025,
+            "fordTime": 4.025,
+            "quality": 0.55,
+            "mobile": true,
+            "foam": true,
+            "glints": 6,
+            "fordStones": 7,
+            "gravelBars": 0,
+            "visualHalfWidth": 6.25,
+            "springPonds": 0,
+            "waterPhaseVariance": 0.237,
+            "depth": {
+              "river": 1.25,
+              "ford": 0.35,
+              "wade": 0.35,
+              "deep": 1
+            }
+          },
+          "rails": {
+            "active": false,
+            "paths": 0,
+            "points": 0,
+            "style": null,
+            "renderLayer": 1,
+            "renderSlot": "groundDecals",
+            "railInstances": 0,
+            "tieInstances": 0,
+            "drawCalls": 0,
+            "asset": "procedural-placeholder",
+            "samples": [],
+            "ties": []
+          },
+          "vista": {
+            "present": true,
+            "segments": 7,
+            "radius": 90,
+            "vertices": 1536,
+            "seamMaxDelta": 0,
+            "seam": [
+              {
+                "x": -32,
+                "z": -24,
+                "clamped": 2.134247303009033,
+                "unclamped": 2.134247303009033,
+                "delta": 0
+              },
+              {
+                "x": 32,
+                "z": -12,
+                "clamped": 1.5017834901809692,
+                "unclamped": 1.5017834901809692,
+                "delta": 0
+              },
+              {
+                "x": -18,
+                "z": -32,
+                "clamped": 2.1269826889038086,
+                "unclamped": 2.1269826889038086,
+                "delta": 0
+              },
+              {
+                "x": 0,
+                "z": 32,
+                "clamped": 0.6169692277908325,
+                "unclamped": 0.6169692277908325,
+                "delta": 0
+              },
+              {
+                "x": 18,
+                "z": 32,
+                "clamped": 0.6259422302246094,
+                "unclamped": 0.6259422302246094,
+                "delta": 0
+              },
+              {
+                "x": 32,
+                "z": 4,
+                "clamped": -0.3100000023841858,
+                "unclamped": -0.3100000023841858,
+                "delta": 0
+              }
+            ],
+            "river": {
+              "present": true,
+              "drawCalls": 1,
+              "radius": 90,
+              "vertices": 275,
+              "visualHalfWidth": 6.25,
+              "fadeStart": 78,
+              "westEdgeCenterZ": 0,
+              "eastEdgeCenterZ": 0,
+              "westFarCenterZ": 0.732,
+              "eastFarCenterZ": -0.732,
+              "meanderAmplitude": 1.398
+            }
+          },
+          "detailScatter": {
+            "instanceClasses": 5,
+            "contactShadows": 68,
+            "totalInstances": 78,
+            "seededInstances": 78,
+            "densityTier": "mobile-reduced",
+            "seed": 1308932508,
+            "classes": [
+              {
+                "id": "rocks",
+                "instances": 18,
+                "visibleInstances": 18,
+                "drawCalls": 1
+              },
+              {
+                "id": "stumps",
+                "instances": 7,
+                "visibleInstances": 7,
+                "drawCalls": 1
+              },
+              {
+                "id": "dry_grass",
+                "instances": 38,
+                "visibleInstances": 38,
+                "drawCalls": 1
+              },
+              {
+                "id": "wagon_ruts",
+                "instances": 10,
+                "visibleInstances": 10,
+                "drawCalls": 1
+              },
+              {
+                "id": "claim_posts",
+                "instances": 5,
+                "visibleInstances": 5,
+                "drawCalls": 1
+              },
+              {
+                "id": "cactus",
+                "instances": 0,
+                "visibleInstances": 0,
+                "drawCalls": 1
+              },
+              {
+                "id": "reeds",
+                "instances": 0,
+                "visibleInstances": 0,
+                "drawCalls": 1
+              }
+            ],
+            "exclusions": {
+              "buildPadRadius": 4.8,
+              "routingLaneRadius": 4.2,
+              "harvestAnchorRadius": 2.4,
+              "buildingClearRadius": 2.4
+            },
+            "probes": {
+              "buildPad": {
+                "x": 0,
+                "z": 9,
+                "clearRadius": 4.8,
+                "nearest": 12.11175618373835,
+                "clear": true
+              },
+              "ford": {
+                "x": 0,
+                "z": 0,
+                "clearRadius": 6.25,
+                "nearest": 10.428901538822066,
+                "clear": true
+              },
+              "routingLane": {
+                "x": 0,
+                "z": -14,
+                "clearRadius": 4.2,
+                "nearest": 7.201375476563039,
+                "clear": true
+              },
+              "building": {
+                "x": 0,
+                "z": 9,
+                "clearRadius": 2.4,
+                "nearest": 12.11175618373835,
+                "clear": true
+              }
+            },
+            "signature": "-11.87,-20.67|30.01,-17.63|28.58,29.80|-27.37,-23.00|-14.80,26.71|-28.46,-27.65|-7.83,-9.62|-7.25,-27.23|-30.40,7.02|-13.70,-17.82|10.47,28.21|-22.46,-21.07"
+          },
+          "height": {
+            "min": -0.48000001907348633,
+            "max": 3.1018099784851074,
+            "segments": 40,
+            "waterY": 0.025,
+            "probes": {
+              "heroStart": 0.513093113899231,
+              "river": -0.48000001907348633,
+              "ford": -0.09624999761581421,
+              "nearBank": 0.3971790075302124,
+              "farBank": 2.7880382537841797
+            },
+            "natural": {
+              "range": 3.5818099975585938,
+              "fordApproachDelta": 0.15482251346111298,
+              "routingLaneDelta": 2.1220824122428894,
+              "routingFeatureMax": 0,
+              "probes": {
+                "gully": 2.0128047466278076,
+                "shelf": 3.000847578048706,
+                "bluff": 0.643649697303772,
+                "pocket": 0.577445924282074
+              },
+              "features": {
+                "gully": {
+                  "gully": 0.899079276440085,
+                  "shelf": 0,
+                  "bluff": 0,
+                  "pocket": 0,
+                  "routeMask": 1,
+                  "calmMask": 1,
+                  "heightOffset": -0.1672287454178558
+                },
+                "shelf": {
+                  "gully": 0,
+                  "shelf": 0.9387657740452812,
+                  "bluff": 0,
+                  "pocket": 0,
+                  "routeMask": 1,
+                  "calmMask": 1,
+                  "heightOffset": 0.24445460756139123
+                },
+                "bluff": {
+                  "gully": 0.49167399979691745,
+                  "shelf": 0,
+                  "bluff": 0.695950934629739,
+                  "pocket": 0,
+                  "routeMask": 1,
+                  "calmMask": 1,
+                  "heightOffset": 0.11566363418358366
+                },
+                "pocket": {
+                  "gully": 0.045908799870919816,
+                  "shelf": 0,
+                  "bluff": 0,
+                  "pocket": 0.9248883739649698,
+                  "routeMask": 1,
+                  "calmMask": 1,
+                  "heightOffset": -0.13469381098481298
+                }
+              }
+            },
+            "heroGround": 0.513093113899231,
+            "heroVisualY": 0.573093113899231
+          },
+          "probes": {
+            "bank": {
+              "walkable": false,
+              "speedMul": 0,
+              "zone": "bank"
+            },
+            "shallows": {
+              "walkable": true,
+              "speedMul": 0.8,
+              "zone": "shallows",
+              "waterSource": "river",
+              "waterDepth": 0.2,
+              "waterClass": "wade"
+            },
+            "river": {
+              "walkable": false,
+              "speedMul": 0,
+              "zone": "river",
+              "waterSource": "river",
+              "waterDepth": 1.25,
+              "waterClass": "deep"
+            },
+            "ford": {
+              "walkable": true,
+              "speedMul": 0.85,
+              "zone": "ford",
+              "waterSource": "river",
+              "waterDepth": 0.35,
+              "waterClass": "wade"
+            },
+            "northBank": {
+              "walkable": true,
+              "speedMul": 1,
+              "zone": "bank"
+            },
+            "out": {
+              "walkable": false,
+              "speedMul": 0,
+              "zone": "out"
+            }
+          }
+        },
+        "canvas": {
+          "clientWidth": 390,
+          "clientHeight": 844,
+          "width": 390,
+          "height": 844,
+          "dpr": 1
+        },
+        "frameMs": {
+          "last": 8.399999999999636,
+          "avg": 8.332777777777777,
+          "p95": 9.099999999999454,
+          "sampleCount": 180
+        },
+        "freedWalkers": {
+          "spawned": 0,
+          "active": 0,
+          "capSkips": 0,
+          "entities": [
+            {
+              "slot": 0,
+              "active": false,
+              "readState": "none",
+              "behavior": "run",
+              "silhouette": "none",
+              "contactDamage": 0,
+              "age": 0,
+              "x": 0,
+              "z": 0,
+              "target": {
+                "x": 0,
+                "z": 0,
+                "kind": "none"
+              },
+              "avoidedPlayer": false
+            },
+            {
+              "slot": 1,
+              "active": false,
+              "readState": "none",
+              "behavior": "run",
+              "silhouette": "none",
+              "contactDamage": 0,
+              "age": 0,
+              "x": 0,
+              "z": 0,
+              "target": {
+                "x": 0,
+                "z": 0,
+                "kind": "none"
+              },
+              "avoidedPlayer": false
+            },
+            {
+              "slot": 2,
+              "active": false,
+              "readState": "none",
+              "behavior": "run",
+              "silhouette": "none",
+              "contactDamage": 0,
+              "age": 0,
+              "x": 0,
+              "z": 0,
+              "target": {
+                "x": 0,
+                "z": 0,
+                "kind": "none"
+              },
+              "avoidedPlayer": false
+            },
+            {
+              "slot": 3,
+              "active": false,
+              "readState": "none",
+              "behavior": "run",
+              "silhouette": "none",
+              "contactDamage": 0,
+              "age": 0,
+              "x": 0,
+              "z": 0,
+              "target": {
+                "x": 0,
+                "z": 0,
+                "kind": "none"
+              },
+              "avoidedPlayer": false
+            },
+            {
+              "slot": 4,
+              "active": false,
+              "readState": "none",
+              "behavior": "run",
+              "silhouette": "none",
+              "contactDamage": 0,
+              "age": 0,
+              "x": 0,
+              "z": 0,
+              "target": {
+                "x": 0,
+                "z": 0,
+                "kind": "none"
+              },
+              "avoidedPlayer": false
+            },
+            {
+              "slot": 5,
+              "active": false,
+              "readState": "none",
+              "behavior": "run",
+              "silhouette": "none",
+              "contactDamage": 0,
+              "age": 0,
+              "x": 0,
+              "z": 0,
+              "target": {
+                "x": 0,
+                "z": 0,
+                "kind": "none"
+              },
+              "avoidedPlayer": false
+            },
+            {
+              "slot": 6,
+              "active": false,
+              "readState": "none",
+              "behavior": "run",
+              "silhouette": "none",
+              "contactDamage": 0,
+              "age": 0,
+              "x": 0,
+              "z": 0,
+              "target": {
+                "x": 0,
+                "z": 0,
+                "kind": "none"
+              },
+              "avoidedPlayer": false
+            },
+            {
+              "slot": 7,
+              "active": false,
+              "readState": "none",
+              "behavior": "run",
+              "silhouette": "none",
+              "contactDamage": 0,
+              "age": 0,
+              "x": 0,
+              "z": 0,
+              "target": {
+                "x": 0,
+                "z": 0,
+                "kind": "none"
+              },
+              "avoidedPlayer": false
+            },
+            {
+              "slot": 8,
+              "active": false,
+              "readState": "none",
+              "behavior": "run",
+              "silhouette": "none",
+              "contactDamage": 0,
+              "age": 0,
+              "x": 0,
+              "z": 0,
+              "target": {
+                "x": 0,
+                "z": 0,
+                "kind": "none"
+              },
+              "avoidedPlayer": false
+            },
+            {
+              "slot": 9,
+              "active": false,
+              "readState": "none",
+              "behavior": "run",
+              "silhouette": "none",
+              "contactDamage": 0,
+              "age": 0,
+              "x": 0,
+              "z": 0,
+              "target": {
+                "x": 0,
+                "z": 0,
+                "kind": "none"
+              },
+              "avoidedPlayer": false
+            }
+          ]
+        },
+        "defaultedPicks": 0
+      },
+      "dataset": {
+        "assetPrefetchScene": "run",
+        "assetPrefetchState": "allowance",
+        "assetPrefetchReady": "6",
+        "assetPrefetchTotal": "12",
+        "assetPrefetchProgress": "6/12",
+        "assetPrefetchFailed": "0",
+        "assetPrefetchPriority": "1",
+        "assetPrefetchTarget": "town",
+        "assetPrefetchSaveData": "false",
+        "assetPrefetchEnabled": "true",
+        "assetPrefetchAllowance": "12000000",
+        "assetPrefetchBytes": "14087836",
+        "assetPrefetchTownState": "partial",
+        "spriteClipGroups": "claim town",
+        "railcar3dState": "off",
+        "railcar3dSource": "billboard",
+        "railcar3dMounted": "false",
+        "railcar3dDamageStates": "{\"wheels\":\"intact\",\"boiler\":\"intact\",\"cabin\":\"intact\"}",
+        "bossBarVisible": "false",
+        "bossBarSemantic": "none",
+        "bossBarRemaining": "0",
+        "bossBarDepleted": "0",
+        "bossBarRemainingColor": "#6bb36b",
+        "bossBarDepletedColor": "#a0522d",
+        "bossBarComponent": "shared",
+        "bossBarAnchor": "none",
+        "bossBarOrientation": "none",
+        "bossBarPosition": "none",
+        "crawler3dState": "off",
+        "crawler3dSource": "placeholder",
+        "crawler3dMounted": "false",
+        "crawler3dDamageStates": "{\"drain_mast\":\"intact\",\"tracks\":\"intact\",\"capacitor_bank\":\"intact\"}",
+        "dredgeQueen3dState": "off",
+        "dredgeQueen3dSource": "placeholder",
+        "dredgeQueen3dMounted": "false",
+        "dredgeQueen3dPresentation": "hidden",
+        "dredgeQueen3dDamageStates": "{\"claw\":\"intact\",\"paddle_port\":\"intact\",\"paddle_starboard\":\"intact\",\"hold\":\"intact\"}",
+        "salvageClaw3dState": "off",
+        "salvageClaw3dSource": "placeholder",
+        "salvageClaw3dMounted": "false",
+        "salvageClaw3dPresentation": "hidden",
+        "homemaker3dState": "off",
+        "homemaker3dSource": "placeholder",
+        "homemaker3dMounted": "false",
+        "homemaker3dPresentation": "hidden",
+        "homemaker3dDamageStates": "{\"vac\":\"intact\",\"rack\":\"intact\",\"core\":\"intact\"}",
+        "oldDigger3dState": "off",
+        "oldDigger3dSource": "placeholder",
+        "oldDigger3dMounted": "false",
+        "oldDigger3dPresentation": "hidden",
+        "assetLoadingLabel": "the claim",
+        "assetLoadingReady": "30",
+        "assetLoadingTotal": "30",
+        "assetLoadingProgress": "30/30",
+        "assetLoadingState": "ready",
+        "engine": "three.js r184",
+        "terrain3dPilotState": "ready",
+        "terrain3dPilotRenderSource": "glb",
+        "run3dPilotState": "ready",
+        "nightPoolSurfaceSources": "0",
+        "nightPoolSurfaceMaxRadius": "0",
+        "cameraAspect": "0.46208530805687204",
+        "cssAspect": "0.46208530805687204",
+        "prospectorSkin": "stock",
+        "prospectorSheet": "stock",
+        "run3dPilotMeshes": "0",
+        "run3dPilotTriangles": "0",
+        "terrain3dPilotContract": "e1-baron",
+        "terrain3dPilotTerrainLoadState": "mounted",
+        "terrain3dPilotPanoramaLoadState": "mounted",
+        "terrain3dPilotLandmarkLoadState": "mounted",
+        "terrain3dPilotHeightSource": "baked-grid",
+        "terrain3dPilotMeshes": "1",
+        "terrain3dPilotTriangles": "32768",
+        "terrain3dPilotMaterials": "1",
+        "terrain3dPilotVertices": "16641",
+        "terrain3dPilotPanorama": "baron-panorama",
+        "terrain3dPilotPanoramaMeshes": "1",
+        "terrain3dPilotPanoramaTriangles": "1920",
+        "terrain3dPilotPanoramaMaterials": "1",
+        "terrain3dPilotPanoramaVertices": "1351",
+        "heroSheet": "young",
+        "heroSkin": "stock",
+        "heroSkinSheet": "stock",
+        "terrain3dPilotNightPools": "off",
+        "terrain3dPilotNightPoolSources": "0",
+        "terrain3dPilotSpringPonds": "0",
+        "terrain3dPilotSpringPondWaterRadii": "[]",
+        "terrain3dPilotChannelWater": "0",
+        "terrain3dPilotFordWater": "0",
+        "terrain3dPilotChannelWaterHalfWidths": "[]",
+        "terrain3dPilotHiddenRelief": "6",
+        "terrain3dPilotHiddenGroundLayers": "TerrainVistaRing|TerrainReliefMesh|terrain.river|terrain.ford|FordSteppingStones|SpringPonds",
+        "terrain3dPilotContinuation": "sculpt-edge-continuation",
+        "terrain3dPilotHorizonApron": "painted",
+        "terrain3dPilotFarGroundProbe": "off",
+        "terrain3dPilotPanoramaFraming": "world-projected-horizon",
+        "terrain3dPilotSkirtBlend": "opaque-sculpt-edge",
+        "terrain3dPilotPanoramaFog": "excluded",
+        "terrain3dPilotPanoramaDepth": "screen-horizon-backdrop",
+        "terrain3dPilotLandmarkExpected": "5",
+        "terrain3dPilotWalkSurfaces": "0",
+        "terrain3dPilotLandmarkEmissive": "3",
+        "terrain3dPilotLandmarkSides": "{\"total\":{\"meshes\":5,\"closed\":5,\"open\":0,\"culled\":5,\"doubleSided\":0},\"mounts\":[{\"id\":\"fortified_far_bank\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":1.171,\"topY\":8.125},{\"id\":\"seized_headframe\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":-0.392,\"topY\":8.459},{\"id\":\"rocket_cart\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.305,\"topY\":3.507},{\"id\":\"siege_line\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":-0.119,\"topY\":2.617},{\"id\":\"oxblood_banners\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.559,\"topY\":7.419}]}",
+        "terrain3dPilotLandmarks": "5",
+        "terrain3dPilotLandmarkSkipped": "0",
+        "terrain3dPilotLandmarkDiagnostics": "",
+        "terrain3dPilotLandmarkMounts": "[{\"id\":\"fortified_far_bank\",\"x\":0,\"y\":1.3928472995758059,\"z\":-10.8},{\"id\":\"seized_headframe\",\"x\":-13,\"y\":0.5311161279678345,\"z\":13},{\"id\":\"rocket_cart\",\"x\":12.5,\"y\":0.5519192218780518,\"z\":14},{\"id\":\"siege_line\",\"x\":0,\"y\":0.629871106147766,\"z\":-7.4},{\"id\":\"oxblood_banners\",\"x\":0,\"y\":-0.09624999761581421,\"z\":0}]",
+        "terrain3dPilotLandmarkMaterials": "[{\"id\":\"fortified_far_bank\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.255,0.255],\"authoredEmissive\":[1.7,1.7],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.9,\"metalness\":0},{\"id\":\"seized_headframe\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.315,0.315],\"authoredEmissive\":[2.1,2.1],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.9,\"metalness\":0},{\"id\":\"rocket_cart\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.9,\"metalness\":0},{\"id\":\"siege_line\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.285,0.285],\"authoredEmissive\":[1.9,1.9],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.9,\"metalness\":0},{\"id\":\"oxblood_banners\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.51,0.51],\"authoredEmissive\":[3.4,3.4],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.9,\"metalness\":0}]"
+      },
+      "testHook": "undefined"
+    },
+    "errors": [],
+    "performance": [],
+    "stations": [
+      {
+        "back": "entry",
+        "focus": "seized_headframe",
+        "bounds": {
+          "min": [
+            -15.585618414350435,
+            -0.3919763326644897,
+            11.257066157471916
+          ],
+          "max": [
+            -10.332716248323877,
+            8.458694863319398,
+            16.100556945299758
+          ]
+        },
+        "corners": [
+          {
+            "x": -323.4682578494701,
+            "y": 518.6749185168543,
+            "z": 0.9959440250842033,
+            "inView": false
+          },
+          {
+            "x": -377.46210588427004,
+            "y": 664.9111817874407,
+            "z": 0.9953131407819422,
+            "inView": false
+          },
+          {
+            "x": -457.1538602141806,
+            "y": 305.2725660921335,
+            "z": 0.9943819925371646,
+            "inView": false
+          },
+          {
+            "x": -544.9390793167795,
+            "y": 465.5653675768906,
+            "z": 0.9933562772248072,
+            "inView": false
+          },
+          {
+            "x": -148.72619999401323,
+            "y": 518.6749185168543,
+            "z": 0.9959440250842033,
+            "inView": false
+          },
+          {
+            "x": -184.5222201496856,
+            "y": 664.9111817874407,
+            "z": 0.9953131407819422,
+            "inView": false
+          },
+          {
+            "x": -237.35504737096085,
+            "y": 305.2725660921335,
+            "z": 0.9943819925371646,
+            "inView": false
+          },
+          {
+            "x": -295.5535567704289,
+            "y": 465.5653675768906,
+            "z": 0.9933562772248072,
+            "inView": false
+          }
+        ],
+        "hero": {
+          "x": 0,
+          "y": 0.573093113899231,
+          "z": 12
+        },
+        "materials": [
+          {
+            "id": "fortified_far_bank",
+            "total": 1,
+            "transparent": 0,
+            "depthWriteDisabled": 0,
+            "emissiveIntensity": [
+              0.255,
+              0.255
+            ],
+            "authoredEmissive": [
+              1.7,
+              1.7
+            ],
+            "frontSided": 1,
+            "doubleSided": 0,
+            "roughness": 0.9,
+            "metalness": 0
+          },
+          {
+            "id": "seized_headframe",
+            "total": 1,
+            "transparent": 0,
+            "depthWriteDisabled": 0,
+            "emissiveIntensity": [
+              0.315,
+              0.315
+            ],
+            "authoredEmissive": [
+              2.1,
+              2.1
+            ],
+            "frontSided": 1,
+            "doubleSided": 0,
+            "roughness": 0.9,
+            "metalness": 0
+          },
+          {
+            "id": "rocket_cart",
+            "total": 1,
+            "transparent": 0,
+            "depthWriteDisabled": 0,
+            "emissiveIntensity": [
+              0.45,
+              0.45
+            ],
+            "authoredEmissive": [
+              3,
+              3
+            ],
+            "frontSided": 1,
+            "doubleSided": 0,
+            "roughness": 0.9,
+            "metalness": 0
+          },
+          {
+            "id": "siege_line",
+            "total": 1,
+            "transparent": 0,
+            "depthWriteDisabled": 0,
+            "emissiveIntensity": [
+              0.285,
+              0.285
+            ],
+            "authoredEmissive": [
+              1.9,
+              1.9
+            ],
+            "frontSided": 1,
+            "doubleSided": 0,
+            "roughness": 0.9,
+            "metalness": 0
+          },
+          {
+            "id": "oxblood_banners",
+            "total": 1,
+            "transparent": 0,
+            "depthWriteDisabled": 0,
+            "emissiveIntensity": [
+              0.51,
+              0.51
+            ],
+            "authoredEmissive": [
+              3.4,
+              3.4
+            ],
+            "frontSided": 1,
+            "doubleSided": 0,
+            "roughness": 0.9,
+            "metalness": 0
+          }
+        ]
+      },
+      {
+        "back": 9,
+        "focus": "seized_headframe",
+        "bounds": {
+          "min": [
+            -15.585618414350435,
+            -0.3919763326644897,
+            11.257066157471916
+          ],
+          "max": [
+            -10.332716248323877,
+            8.458694863319398,
+            16.100556945299758
+          ]
+        },
+        "corners": [
+          {
+            "x": 123.68466331359214,
+            "y": 291.4557662662268,
+            "z": 0.996937475094499,
+            "inView": true
+          },
+          {
+            "x": 117.16765632059563,
+            "y": 392.3118349164733,
+            "z": 0.9965045518058471,
+            "inView": true
+          },
+          {
+            "x": 108.91927420012267,
+            "y": 73.47410217674555,
+            "z": 0.9958888968511721,
+            "inView": true
+          },
+          {
+            "x": 99.36029227657961,
+            "y": 174.5086071570587,
+            "z": 0.9952467829615733,
+            "inView": true
+          },
+          {
+            "x": 269.78848311174374,
+            "y": 291.74588953907266,
+            "z": 0.9969362297443375,
+            "inView": true
+          },
+          {
+            "x": 275.76224192493135,
+            "y": 392.65368566745326,
+            "z": 0.9965030844161965,
+            "inView": true
+          },
+          {
+            "x": 285.27756136333227,
+            "y": 73.75960947395437,
+            "z": 0.9958870823403656,
+            "inView": true
+          },
+          {
+            "x": 294.2460021273695,
+            "y": 174.85725412500295,
+            "z": 0.9952445671734054,
+            "inView": true
+          }
+        ],
+        "hero": {
+          "x": -13,
+          "y": 0.6756271100044251,
+          "z": 22
+        },
+        "materials": [
+          {
+            "id": "fortified_far_bank",
+            "total": 1,
+            "transparent": 0,
+            "depthWriteDisabled": 0,
+            "emissiveIntensity": [
+              0.255,
+              0.255
+            ],
+            "authoredEmissive": [
+              1.7,
+              1.7
+            ],
+            "frontSided": 1,
+            "doubleSided": 0,
+            "roughness": 0.9,
+            "metalness": 0
+          },
+          {
+            "id": "seized_headframe",
+            "total": 1,
+            "transparent": 0,
+            "depthWriteDisabled": 0,
+            "emissiveIntensity": [
+              0.315,
+              0.315
+            ],
+            "authoredEmissive": [
+              2.1,
+              2.1
+            ],
+            "frontSided": 1,
+            "doubleSided": 0,
+            "roughness": 0.9,
+            "metalness": 0
+          },
+          {
+            "id": "rocket_cart",
+            "total": 1,
+            "transparent": 0,
+            "depthWriteDisabled": 0,
+            "emissiveIntensity": [
+              0.45,
+              0.45
+            ],
+            "authoredEmissive": [
+              3,
+              3
+            ],
+            "frontSided": 1,
+            "doubleSided": 0,
+            "roughness": 0.9,
+            "metalness": 0
+          },
+          {
+            "id": "siege_line",
+            "total": 1,
+            "transparent": 0,
+            "depthWriteDisabled": 0,
+            "emissiveIntensity": [
+              0.285,
+              0.285
+            ],
+            "authoredEmissive": [
+              1.9,
+              1.9
+            ],
+            "frontSided": 1,
+            "doubleSided": 0,
+            "roughness": 0.9,
+            "metalness": 0
+          },
+          {
+            "id": "oxblood_banners",
+            "total": 1,
+            "transparent": 0,
+            "depthWriteDisabled": 0,
+            "emissiveIntensity": [
+              0.51,
+              0.51
+            ],
+            "authoredEmissive": [
+              3.4,
+              3.4
+            ],
+            "frontSided": 1,
+            "doubleSided": 0,
+            "roughness": 0.9,
+            "metalness": 0
+          }
+        ]
+      },
+      {
+        "back": 5,
+        "focus": "seized_headframe",
+        "bounds": {
+          "min": [
+            -15.585618414350435,
+            -0.3919763326644897,
+            11.257066157471916
+          ],
+          "max": [
+            -10.332716248323877,
+            8.458694863319398,
+            16.100556945299758
+          ]
+        },
+        "corners": [
+          {
+            "x": 118.08621207757648,
+            "y": 372.53670790170423,
+            "z": 0.9965848720874116,
+            "inView": true
+          },
+          {
+            "x": 110.99481480408221,
+            "y": 488.34719349698014,
+            "z": 0.9960854165512658,
+            "inView": true
+          },
+          {
+            "x": 100.83633953139106,
+            "y": 153.82885655860957,
+            "z": 0.9953699429684991,
+            "inView": true
+          },
+          {
+            "x": 89.98297027583155,
+            "y": 273.3980874740709,
+            "z": 0.9946055272642053,
+            "inView": true
+          },
+          {
+            "x": 274.34306844260027,
+            "y": 372.5367083229601,
+            "z": 0.9965848720855948,
+            "inView": true
+          },
+          {
+            "x": 281.6584425069274,
+            "y": 488.347193999496,
+            "z": 0.9960854165490984,
+            "inView": true
+          },
+          {
+            "x": 292.13776891945787,
+            "y": 153.82885698454422,
+            "z": 0.9953699429657761,
+            "inView": true
+          },
+          {
+            "x": 303.33393453284305,
+            "y": 273.3980880038512,
+            "z": 0.9946055272608182,
+            "inView": true
+          }
+        ],
+        "hero": {
+          "x": -13,
+          "y": 0.6058179712295533,
+          "z": 18
+        },
+        "materials": [
+          {
+            "id": "fortified_far_bank",
+            "total": 1,
+            "transparent": 0,
+            "depthWriteDisabled": 0,
+            "emissiveIntensity": [
+              0.255,
+              0.255
+            ],
+            "authoredEmissive": [
+              1.7,
+              1.7
+            ],
+            "frontSided": 1,
+            "doubleSided": 0,
+            "roughness": 0.9,
+            "metalness": 0
+          },
+          {
+            "id": "seized_headframe",
+            "total": 1,
+            "transparent": 0,
+            "depthWriteDisabled": 0,
+            "emissiveIntensity": [
+              0.315,
+              0.315
+            ],
+            "authoredEmissive": [
+              2.1,
+              2.1
+            ],
+            "frontSided": 1,
+            "doubleSided": 0,
+            "roughness": 0.9,
+            "metalness": 0
+          },
+          {
+            "id": "rocket_cart",
+            "total": 1,
+            "transparent": 0,
+            "depthWriteDisabled": 0,
+            "emissiveIntensity": [
+              0.45,
+              0.45
+            ],
+            "authoredEmissive": [
+              3,
+              3
+            ],
+            "frontSided": 1,
+            "doubleSided": 0,
+            "roughness": 0.9,
+            "metalness": 0
+          },
+          {
+            "id": "siege_line",
+            "total": 1,
+            "transparent": 0,
+            "depthWriteDisabled": 0,
+            "emissiveIntensity": [
+              0.285,
+              0.285
+            ],
+            "authoredEmissive": [
+              1.9,
+              1.9
+            ],
+            "frontSided": 1,
+            "doubleSided": 0,
+            "roughness": 0.9,
+            "metalness": 0
+          },
+          {
+            "id": "oxblood_banners",
+            "total": 1,
+            "transparent": 0,
+            "depthWriteDisabled": 0,
+            "emissiveIntensity": [
+              0.51,
+              0.51
+            ],
+            "authoredEmissive": [
+              3.4,
+              3.4
+            ],
+            "frontSided": 1,
+            "doubleSided": 0,
+            "roughness": 0.9,
+            "metalness": 0
+          }
+        ]
+      }
+    ]
+  }
+]

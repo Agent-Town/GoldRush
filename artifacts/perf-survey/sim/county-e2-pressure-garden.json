@@ -1,0 +1,202 @@
+{
+  "key": "county-e2-pressure-garden",
+  "tapePath": "tapes/county-e2-pressure-garden.json",
+  "contract": "e2-pressure-garden",
+  "kind": "county-played",
+  "node": "v26.4.0",
+  "before": {
+    "at": "2026-09-05T16:01:17.675Z",
+    "load": [
+      4.08203125,
+      6.64013671875,
+      11.67431640625
+    ],
+    "freeMemory": 7042908160
+  },
+  "after": {
+    "at": "2026-09-05T16:01:23.814Z",
+    "load": [
+      3.8349609375,
+      6.54638671875,
+      11.611328125
+    ],
+    "freeMemory": 6692339712
+  },
+  "declaredDurationTicks": 10801,
+  "simulatedSeconds": 360.03333333333336,
+  "bootMs": 29.238583999999946,
+  "replayMs": 4970.362584,
+  "ticksPerSecond": 2173.080900530133,
+  "realtimeMultiple": 72.43603001767111,
+  "estimateTenMinuteSeconds": 8.283170679751874,
+  "estimateFormula": "600 seconds / measured realtimeMultiple; extrapolation, not an actual 10-minute tape when duration differs",
+  "tickMs": {
+    "n": 10801,
+    "min": 0.17150000000015098,
+    "p50": 0.45929100000012113,
+    "p95": 0.7907499999992069,
+    "p99": 0.9104579999993803,
+    "max": 7.064790999999786
+  },
+  "tickPath": "sim/county-e2-pressure-garden-ticks.json",
+  "result": {
+    "eventLogHash": "fnv1a32:b3c666a1",
+    "outcome": {
+      "secured": true,
+      "waves": 12,
+      "gold": 63,
+      "timeAlive": 360
+    },
+    "securedSnapshot": {
+      "waves": 12,
+      "gold": 345,
+      "timeAlive": 360.00000000007077
+    },
+    "ticks": 10801,
+    "engine": "headless-contract-sim"
+  },
+  "expectedHash": "fnv1a32:b3c666a1",
+  "hashMatches": true,
+  "top20": [
+    {
+      "name": "structuredClone",
+      "url": "node:internal/worker/js_transferable",
+      "line": 113,
+      "column": 25,
+      "selfMs": 1626.0969999999998
+    },
+    {
+      "name": "structuredClone",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 374.73600000000005
+    },
+    {
+      "name": "get diagnostics",
+      "url": "",
+      "line": 484,
+      "column": 17,
+      "selfMs": 199.53
+    },
+    {
+      "name": "clone",
+      "url": "",
+      "line": 320,
+      "column": 15,
+      "selfMs": 146.164
+    },
+    {
+      "name": "multiplyMatrices",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 10385,
+      "column": 18,
+      "selfMs": 135.748
+    },
+    {
+      "name": "dispatch",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 110.008
+    },
+    {
+      "name": "diagnostics",
+      "url": "",
+      "line": 1795,
+      "column": 13,
+      "selfMs": 91.686
+    },
+    {
+      "name": "(anonymous)",
+      "url": "",
+      "line": 193,
+      "column": 26,
+      "selfMs": 84.253
+    },
+    {
+      "name": "hillMineHeight",
+      "url": "",
+      "line": 385,
+      "column": 24,
+      "selfMs": 80.187
+    },
+    {
+      "name": "maxHpForPlacement",
+      "url": "",
+      "line": 1622,
+      "column": 19,
+      "selfMs": 76.406
+    },
+    {
+      "name": "snapshot",
+      "url": "",
+      "line": 189,
+      "column": 10,
+      "selfMs": 74.894
+    },
+    {
+      "name": "currentTrickleInterval",
+      "url": "",
+      "line": 641,
+      "column": 24,
+      "selfMs": 70.604
+    },
+    {
+      "name": "terrainLineOfSight",
+      "url": "",
+      "line": 115,
+      "column": 28,
+      "selfMs": 70.423
+    },
+    {
+      "name": "toArray",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 11099,
+      "column": 9,
+      "selfMs": 65.39200000000001
+    },
+    {
+      "name": "(anonymous)",
+      "url": "",
+      "line": 194,
+      "column": 49,
+      "selfMs": 60.543
+    },
+    {
+      "name": "palisadeRoute",
+      "url": "",
+      "line": 356,
+      "column": 15,
+      "selfMs": 55.939
+    },
+    {
+      "name": "syncEnemyInstance",
+      "url": "",
+      "line": 1343,
+      "column": 19,
+      "selfMs": 55.308
+    },
+    {
+      "name": "(program)",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 54.249
+    },
+    {
+      "name": "activePositions",
+      "url": "",
+      "line": 1533,
+      "column": 17,
+      "selfMs": 53.416
+    },
+    {
+      "name": "hpBarDiagnostics",
+      "url": "",
+      "line": 1663,
+      "column": 18,
+      "selfMs": 43.983999999999995
+    }
+  ]
+}

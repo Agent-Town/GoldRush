@@ -1,0 +1,202 @@
+{
+  "key": "county-the-claim",
+  "tapePath": "tapes/county-the-claim.json",
+  "contract": "the-claim",
+  "kind": "county-played",
+  "node": "v26.4.0",
+  "before": {
+    "at": "2026-09-05T15:15:41.001Z",
+    "load": [
+      13.73291015625,
+      29.72216796875,
+      28.85791015625
+    ],
+    "freeMemory": 14372749312
+  },
+  "after": {
+    "at": "2026-09-05T15:15:56.400Z",
+    "load": [
+      12.8486328125,
+      28.73974609375,
+      28.52197265625
+    ],
+    "freeMemory": 12222169088
+  },
+  "declaredDurationTicks": 9001,
+  "simulatedSeconds": 300.03333333333336,
+  "bootMs": 57.440000000000055,
+  "replayMs": 13040.370083,
+  "ticksPerSecond": 690.2411467397003,
+  "realtimeMultiple": 23.00803822465668,
+  "estimateTenMinuteSeconds": 26.077842627930224,
+  "estimateFormula": "600 seconds / measured realtimeMultiple; extrapolation, not an actual 10-minute tape when duration differs",
+  "tickMs": {
+    "n": 9001,
+    "min": 0.3662909999998192,
+    "p50": 1.219875000000684,
+    "p95": 2.9981669999997393,
+    "p99": 4.391584000000876,
+    "max": 15.05099999999993
+  },
+  "tickPath": "sim/county-the-claim-ticks.json",
+  "result": {
+    "eventLogHash": "fnv1a32:cc026656",
+    "outcome": {
+      "secured": true,
+      "waves": 10,
+      "gold": 680,
+      "timeAlive": 300
+    },
+    "securedSnapshot": {
+      "waves": 10,
+      "gold": 1390,
+      "timeAlive": 300.000000000023
+    },
+    "ticks": 9001,
+    "engine": "headless-contract-sim"
+  },
+  "expectedHash": "fnv1a32:cc026656",
+  "hashMatches": true,
+  "top20": [
+    {
+      "name": "structuredClone",
+      "url": "node:internal/worker/js_transferable",
+      "line": 113,
+      "column": 25,
+      "selfMs": 5659.47
+    },
+    {
+      "name": "structuredClone",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 1466.787
+    },
+    {
+      "name": "clone",
+      "url": "",
+      "line": 320,
+      "column": 15,
+      "selfMs": 550.134
+    },
+    {
+      "name": "terrainSeed",
+      "url": "",
+      "line": 1469,
+      "column": 21,
+      "selfMs": 471.90299999999996
+    },
+    {
+      "name": "snapshot",
+      "url": "",
+      "line": 189,
+      "column": 10,
+      "selfMs": 314.727
+    },
+    {
+      "name": "terrainHash",
+      "url": "",
+      "line": 1486,
+      "column": 21,
+      "selfMs": 303.96899999999994
+    },
+    {
+      "name": "get diagnostics",
+      "url": "",
+      "line": 484,
+      "column": 17,
+      "selfMs": 238.00599999999997
+    },
+    {
+      "name": "(anonymous)",
+      "url": "",
+      "line": 193,
+      "column": 26,
+      "selfMs": 215.557
+    },
+    {
+      "name": "diagnostics",
+      "url": "",
+      "line": 1795,
+      "column": 13,
+      "selfMs": 185.507
+    },
+    {
+      "name": "multiplyMatrices",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 10385,
+      "column": 18,
+      "selfMs": 162.73499999999999
+    },
+    {
+      "name": "(garbage collector)",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 141.368
+    },
+    {
+      "name": "dispatch",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 119.809
+    },
+    {
+      "name": "stableProbeMask",
+      "url": "",
+      "line": 1266,
+      "column": 25,
+      "selfMs": 116.351
+    },
+    {
+      "name": "(anonymous)",
+      "url": "node:internal/webidl",
+      "line": 712,
+      "column": 18,
+      "selfMs": 97.676
+    },
+    {
+      "name": "hpDiagnostics",
+      "url": "",
+      "line": 1631,
+      "column": 15,
+      "selfMs": 95.56400000000001
+    },
+    {
+      "name": "maxHpForInstance",
+      "url": "",
+      "line": 1619,
+      "column": 18,
+      "selfMs": 91.849
+    },
+    {
+      "name": "(program)",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 90.53
+    },
+    {
+      "name": "toArray",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 11099,
+      "column": 9,
+      "selfMs": 88.593
+    },
+    {
+      "name": "(anonymous)",
+      "url": "",
+      "line": 805,
+      "column": 21,
+      "selfMs": 84.901
+    },
+    {
+      "name": "currentTrickleInterval",
+      "url": "",
+      "line": 641,
+      "column": 24,
+      "selfMs": 82.25299999999999
+    }
+  ]
+}

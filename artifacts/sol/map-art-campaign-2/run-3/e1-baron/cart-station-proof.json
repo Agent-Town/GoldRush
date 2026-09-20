@@ -1,0 +1,1690 @@
+[
+  {
+    "width": 1280,
+    "arm": "before",
+    "focus": "rocket_cart",
+    "back": "entry",
+    "hero": {
+      "x": 0,
+      "y": 0.573093113899231,
+      "z": 12
+    },
+    "performance": {
+      "tier": "full",
+      "override": "full",
+      "source": "override",
+      "reason": "settings override",
+      "gpuRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Max, Unspecified Version)",
+      "deviceMemory": 32,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.0.0 Safari/537.36",
+      "config": {
+        "maxDpr": 2,
+        "shadowsQuality": "soft",
+        "shadowMapSize": 1536,
+        "fogNear": 42,
+        "fogFar": 88,
+        "postEnabled": true,
+        "postPaperGrainOpacity": 0.008,
+        "detailDensity": 1,
+        "detailMobileDensity": 0.42,
+        "terrainSegments": 64,
+        "terrainMobileSegments": 40,
+        "vistaSegments": 12,
+        "vistaMobileSegments": 7,
+        "waterQuality": 1,
+        "waterMobileQuality": 0.55,
+        "terrainMesh": false,
+        "terrainSplat": false,
+        "terrainMeshVertexStep": 1,
+        "floatTextPool": 12,
+        "combatVfxPuffs": 32,
+        "combatVfxTicks": 48,
+        "combatVfxRings": 8,
+        "freedWalkerCap": 10,
+        "enemyBarCap": 60
+      },
+      "runtimeVerdict": 0
+    },
+    "bodyBounds": {
+      "world": {
+        "min": [
+          10.665021300315857,
+          0.3053838014602661,
+          12.975000023841858
+        ],
+        "max": [
+          14.049999952316284,
+          3.506829023361206,
+          15.024999976158142
+        ]
+      },
+      "corners": [
+        {
+          "x": 993.8371657366571,
+          "y": 525.154323813288,
+          "z": 0.9956278317270374,
+          "inView": true
+        },
+        {
+          "x": 1009.3513390436544,
+          "y": 584.982707957428,
+          "z": 0.9953483529387415,
+          "inView": true
+        },
+        {
+          "x": 1023.7792455562341,
+          "y": 461.6068590719978,
+          "z": 0.995088442613519,
+          "inView": true
+        },
+        {
+          "x": 1042.0981312430458,
+          "y": 523.7063413402014,
+          "z": 0.9947584385666793,
+          "inView": true
+        },
+        {
+          "x": 1106.1417939765884,
+          "y": 525.154323813288,
+          "z": 0.9956278317270374,
+          "inView": true
+        },
+        {
+          "x": 1126.580021719939,
+          "y": 584.982707957428,
+          "z": 0.9953483529387415,
+          "inView": true
+        },
+        {
+          "x": 1145.5872116828662,
+          "y": 461.6068590719978,
+          "z": 0.995088442613519,
+          "inView": true
+        },
+        {
+          "x": 1169.7203414515398,
+          "y": 523.7063413402014,
+          "z": 0.9947584385666793,
+          "inView": true
+        }
+      ]
+    },
+    "primaryBounds": null,
+    "water": [],
+    "materials": [
+      {
+        "id": "fortified_far_bank",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.255,
+          0.255
+        ],
+        "authoredEmissive": [
+          1.7,
+          1.7
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.9,
+        "metalness": 0
+      },
+      {
+        "id": "seized_headframe",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.315,
+          0.315
+        ],
+        "authoredEmissive": [
+          2.1,
+          2.1
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.9,
+        "metalness": 0
+      },
+      {
+        "id": "rocket_cart",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.9,
+        "metalness": 0
+      },
+      {
+        "id": "siege_line",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.285,
+          0.285
+        ],
+        "authoredEmissive": [
+          1.9,
+          1.9
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.9,
+        "metalness": 0
+      },
+      {
+        "id": "oxblood_banners",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.51,
+          0.51
+        ],
+        "authoredEmissive": [
+          3.4,
+          3.4
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.9,
+        "metalness": 0
+      }
+    ],
+    "persistentSelector": ".hud-panel,.hud-pause,.world-info-note,#touch-controls",
+    "errors": []
+  },
+  {
+    "width": 1280,
+    "arm": "before",
+    "focus": "rocket_cart",
+    "back": 5,
+    "hero": {
+      "x": 12.5,
+      "y": 0.5477261519432068,
+      "z": 19
+    },
+    "performance": {
+      "tier": "full",
+      "override": "full",
+      "source": "override",
+      "reason": "settings override",
+      "gpuRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Max, Unspecified Version)",
+      "deviceMemory": 32,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.0.0 Safari/537.36",
+      "config": {
+        "maxDpr": 2,
+        "shadowsQuality": "soft",
+        "shadowMapSize": 1536,
+        "fogNear": 42,
+        "fogFar": 88,
+        "postEnabled": true,
+        "postPaperGrainOpacity": 0.008,
+        "detailDensity": 1,
+        "detailMobileDensity": 0.42,
+        "terrainSegments": 64,
+        "terrainMobileSegments": 40,
+        "vistaSegments": 12,
+        "vistaMobileSegments": 7,
+        "waterQuality": 1,
+        "waterMobileQuality": 0.55,
+        "terrainMesh": false,
+        "terrainSplat": false,
+        "terrainMeshVertexStep": 1,
+        "floatTextPool": 12,
+        "combatVfxPuffs": 32,
+        "combatVfxTicks": 48,
+        "combatVfxRings": 8,
+        "freedWalkerCap": 10,
+        "enemyBarCap": 60
+      },
+      "runtimeVerdict": 0
+    },
+    "bodyBounds": {
+      "world": {
+        "min": [
+          10.665021300315857,
+          0.3053838014602661,
+          12.975000023841858
+        ],
+        "max": [
+          14.049999952316284,
+          3.506829023361206,
+          15.024999976158142
+        ]
+      },
+      "corners": [
+        {
+          "x": 586.7256073865846,
+          "y": 353.4941172645572,
+          "z": 0.9964243325987849,
+          "inView": true
+        },
+        {
+          "x": 584.6944262959788,
+          "y": 399.0113697949409,
+          "z": 0.9962115038889578,
+          "inView": true
+        },
+        {
+          "x": 582.8220473672385,
+          "y": 285.89180449306315,
+          "z": 0.9960156415520091,
+          "inView": true
+        },
+        {
+          "x": 580.4756125684303,
+          "y": 332.1049078194054,
+          "z": 0.9957697937448879,
+          "inView": true
+        },
+        {
+          "x": 684.9968495604908,
+          "y": 353.49221322655336,
+          "z": 0.9964243415016502,
+          "inView": true
+        },
+        {
+          "x": 686.7154292192073,
+          "y": 399.0093176789903,
+          "z": 0.9962115134842028,
+          "inView": true
+        },
+        {
+          "x": 688.2938857803124,
+          "y": 285.88987675192186,
+          "z": 0.9960156518073456,
+          "inView": true
+        },
+        {
+          "x": 690.2789641287254,
+          "y": 332.1028184902034,
+          "z": 0.9957698048598527,
+          "inView": true
+        }
+      ]
+    },
+    "primaryBounds": null,
+    "water": [],
+    "materials": [
+      {
+        "id": "fortified_far_bank",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.255,
+          0.255
+        ],
+        "authoredEmissive": [
+          1.7,
+          1.7
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.9,
+        "metalness": 0
+      },
+      {
+        "id": "seized_headframe",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.315,
+          0.315
+        ],
+        "authoredEmissive": [
+          2.1,
+          2.1
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.9,
+        "metalness": 0
+      },
+      {
+        "id": "rocket_cart",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.9,
+        "metalness": 0
+      },
+      {
+        "id": "siege_line",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.285,
+          0.285
+        ],
+        "authoredEmissive": [
+          1.9,
+          1.9
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.9,
+        "metalness": 0
+      },
+      {
+        "id": "oxblood_banners",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.51,
+          0.51
+        ],
+        "authoredEmissive": [
+          3.4,
+          3.4
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.9,
+        "metalness": 0
+      }
+    ],
+    "persistentSelector": ".hud-panel,.hud-pause,.world-info-note,#touch-controls",
+    "errors": []
+  },
+  {
+    "width": 1280,
+    "arm": "after",
+    "focus": "rocket_cart",
+    "back": "entry",
+    "hero": {
+      "x": 0,
+      "y": 0.573093113899231,
+      "z": 12
+    },
+    "performance": {
+      "tier": "full",
+      "override": "full",
+      "source": "override",
+      "reason": "settings override",
+      "gpuRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Max, Unspecified Version)",
+      "deviceMemory": 32,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.0.0 Safari/537.36",
+      "config": {
+        "maxDpr": 2,
+        "shadowsQuality": "soft",
+        "shadowMapSize": 1536,
+        "fogNear": 42,
+        "fogFar": 88,
+        "postEnabled": true,
+        "postPaperGrainOpacity": 0.008,
+        "detailDensity": 1,
+        "detailMobileDensity": 0.42,
+        "terrainSegments": 64,
+        "terrainMobileSegments": 40,
+        "vistaSegments": 12,
+        "vistaMobileSegments": 7,
+        "waterQuality": 1,
+        "waterMobileQuality": 0.55,
+        "terrainMesh": false,
+        "terrainSplat": false,
+        "terrainMeshVertexStep": 1,
+        "floatTextPool": 12,
+        "combatVfxPuffs": 32,
+        "combatVfxTicks": 48,
+        "combatVfxRings": 8,
+        "freedWalkerCap": 10,
+        "enemyBarCap": 60
+      },
+      "runtimeVerdict": 0
+    },
+    "bodyBounds": {
+      "world": {
+        "min": [
+          10.665021300315857,
+          0.3053838014602661,
+          12.975000023841858
+        ],
+        "max": [
+          14.049999952316284,
+          3.506829023361206,
+          15.024999976158142
+        ]
+      },
+      "corners": [
+        {
+          "x": 993.8371467052185,
+          "y": 525.1543199413179,
+          "z": 0.9956278320698776,
+          "inView": true
+        },
+        {
+          "x": 1009.3513175636127,
+          "y": 584.9827019472345,
+          "z": 0.9953483533256918,
+          "inView": true
+        },
+        {
+          "x": 1023.7792242210635,
+          "y": 461.6068621507326,
+          "z": 0.9950884429978596,
+          "inView": true
+        },
+        {
+          "x": 1042.0981069417428,
+          "y": 523.7063425969172,
+          "z": 0.9947584390044529,
+          "inView": true
+        },
+        {
+          "x": 1106.141768904748,
+          "y": 525.1543199413179,
+          "z": 0.9956278320698776,
+          "inView": true
+        },
+        {
+          "x": 1126.5799934223314,
+          "y": 584.9827019472345,
+          "z": 0.9953483533256918,
+          "inView": true
+        },
+        {
+          "x": 1145.5871835761106,
+          "y": 461.6068621507326,
+          "z": 0.9950884429978596,
+          "inView": true
+        },
+        {
+          "x": 1169.720309437229,
+          "y": 523.7063425969172,
+          "z": 0.9947584390044529,
+          "inView": true
+        }
+      ]
+    },
+    "primaryBounds": null,
+    "water": [
+      {
+        "name": "SculptLivingWater",
+        "visible": true,
+        "y": -0.0455359983444214,
+        "depthTest": true,
+        "depthWrite": false
+      }
+    ],
+    "materials": [
+      {
+        "id": "fortified_far_bank",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.375,
+          0.375
+        ],
+        "authoredEmissive": [
+          2.5,
+          2.5
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.9,
+        "metalness": 0
+      },
+      {
+        "id": "seized_headframe",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.36,
+          0.36
+        ],
+        "authoredEmissive": [
+          2.4,
+          2.4
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.9,
+        "metalness": 0
+      },
+      {
+        "id": "rocket_cart",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.9,
+        "metalness": 0
+      },
+      {
+        "id": "siege_line",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.33,
+          0.33
+        ],
+        "authoredEmissive": [
+          2.2,
+          2.2
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.9,
+        "metalness": 0
+      },
+      {
+        "id": "oxblood_banners",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.51,
+          0.51
+        ],
+        "authoredEmissive": [
+          3.4,
+          3.4
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.9,
+        "metalness": 0
+      }
+    ],
+    "persistentSelector": ".hud-panel,.hud-pause,.world-info-note,#touch-controls",
+    "errors": []
+  },
+  {
+    "width": 1280,
+    "arm": "after",
+    "focus": "rocket_cart",
+    "back": 5,
+    "hero": {
+      "x": 12.5,
+      "y": 0.5477261519432068,
+      "z": 19
+    },
+    "performance": {
+      "tier": "full",
+      "override": "full",
+      "source": "override",
+      "reason": "settings override",
+      "gpuRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Max, Unspecified Version)",
+      "deviceMemory": 32,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.0.0 Safari/537.36",
+      "config": {
+        "maxDpr": 2,
+        "shadowsQuality": "soft",
+        "shadowMapSize": 1536,
+        "fogNear": 42,
+        "fogFar": 88,
+        "postEnabled": true,
+        "postPaperGrainOpacity": 0.008,
+        "detailDensity": 1,
+        "detailMobileDensity": 0.42,
+        "terrainSegments": 64,
+        "terrainMobileSegments": 40,
+        "vistaSegments": 12,
+        "vistaMobileSegments": 7,
+        "waterQuality": 1,
+        "waterMobileQuality": 0.55,
+        "terrainMesh": false,
+        "terrainSplat": false,
+        "terrainMeshVertexStep": 1,
+        "floatTextPool": 12,
+        "combatVfxPuffs": 32,
+        "combatVfxTicks": 48,
+        "combatVfxRings": 8,
+        "freedWalkerCap": 10,
+        "enemyBarCap": 60
+      },
+      "runtimeVerdict": 0
+    },
+    "bodyBounds": {
+      "world": {
+        "min": [
+          10.665021300315857,
+          0.3053838014602661,
+          12.975000023841858
+        ],
+        "max": [
+          14.049999952316284,
+          3.506829023361206,
+          15.024999976158142
+        ]
+      },
+      "corners": [
+        {
+          "x": 586.7257461686758,
+          "y": 353.49410131797254,
+          "z": 0.9964243348100987,
+          "inView": true
+        },
+        {
+          "x": 584.6944765450021,
+          "y": 399.0113178215668,
+          "z": 0.9962115061620795,
+          "inView": true
+        },
+        {
+          "x": 582.8221994557961,
+          "y": 285.8917870845948,
+          "z": 0.996015644253842,
+          "inView": true
+        },
+        {
+          "x": 580.4756700332713,
+          "y": 332.1048486552474,
+          "z": 0.9957697965455801,
+          "inView": true
+        },
+        {
+          "x": 684.9969535232938,
+          "y": 353.49230696945904,
+          "z": 0.996424343200084,
+          "inView": true
+        },
+        {
+          "x": 686.7154438821773,
+          "y": 399.00938392568884,
+          "z": 0.9962115152045579,
+          "inView": true
+        },
+        {
+          "x": 688.2939950360861,
+          "y": 285.88997039864273,
+          "z": 0.9960156539183842,
+          "inView": true
+        },
+        {
+          "x": 690.2789774190235,
+          "y": 332.1028796901413,
+          "z": 0.9957698070202282,
+          "inView": true
+        }
+      ]
+    },
+    "primaryBounds": null,
+    "water": [
+      {
+        "name": "SculptLivingWater",
+        "visible": true,
+        "y": -0.0455359983444214,
+        "depthTest": true,
+        "depthWrite": false
+      }
+    ],
+    "materials": [
+      {
+        "id": "fortified_far_bank",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.375,
+          0.375
+        ],
+        "authoredEmissive": [
+          2.5,
+          2.5
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.9,
+        "metalness": 0
+      },
+      {
+        "id": "seized_headframe",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.36,
+          0.36
+        ],
+        "authoredEmissive": [
+          2.4,
+          2.4
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.9,
+        "metalness": 0
+      },
+      {
+        "id": "rocket_cart",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.9,
+        "metalness": 0
+      },
+      {
+        "id": "siege_line",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.33,
+          0.33
+        ],
+        "authoredEmissive": [
+          2.2,
+          2.2
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.9,
+        "metalness": 0
+      },
+      {
+        "id": "oxblood_banners",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.51,
+          0.51
+        ],
+        "authoredEmissive": [
+          3.4,
+          3.4
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.9,
+        "metalness": 0
+      }
+    ],
+    "persistentSelector": ".hud-panel,.hud-pause,.world-info-note,#touch-controls",
+    "errors": []
+  },
+  {
+    "width": 390,
+    "arm": "before",
+    "focus": "rocket_cart",
+    "back": "entry",
+    "hero": {
+      "x": 0,
+      "y": 0.573093113899231,
+      "z": 12
+    },
+    "performance": {
+      "tier": "full",
+      "override": "full",
+      "source": "override",
+      "reason": "settings override",
+      "gpuRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Max, Unspecified Version)",
+      "deviceMemory": 32,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.0.0 Safari/537.36",
+      "config": {
+        "maxDpr": 2,
+        "shadowsQuality": "soft",
+        "shadowMapSize": 1536,
+        "fogNear": 42,
+        "fogFar": 88,
+        "postEnabled": true,
+        "postPaperGrainOpacity": 0.008,
+        "detailDensity": 1,
+        "detailMobileDensity": 0.42,
+        "terrainSegments": 64,
+        "terrainMobileSegments": 40,
+        "vistaSegments": 12,
+        "vistaMobileSegments": 7,
+        "waterQuality": 1,
+        "waterMobileQuality": 0.55,
+        "terrainMesh": false,
+        "terrainSplat": false,
+        "terrainMeshVertexStep": 1,
+        "floatTextPool": 12,
+        "combatVfxPuffs": 32,
+        "combatVfxTicks": 48,
+        "combatVfxRings": 8,
+        "freedWalkerCap": 10,
+        "enemyBarCap": 60
+      },
+      "runtimeVerdict": 0
+    },
+    "bodyBounds": {
+      "world": {
+        "min": [
+          10.665021300315857,
+          0.3053838014602661,
+          12.975000023841858
+        ],
+        "max": [
+          14.049999952316284,
+          3.506829023361206,
+          15.024999976158142
+        ]
+      },
+      "corners": [
+        {
+          "x": 568.2982064847297,
+          "y": 554.0378109379083,
+          "z": 0.9956278317845373,
+          "inView": false
+        },
+        {
+          "x": 584.6656588903535,
+          "y": 617.1567558316365,
+          "z": 0.9953483530036393,
+          "inView": false
+        },
+        {
+          "x": 599.8871002867587,
+          "y": 486.99523686571246,
+          "z": 0.9950884426779792,
+          "inView": false
+        },
+        {
+          "x": 619.2135241615144,
+          "y": 552.5101903362772,
+          "z": 0.9947584386401013,
+          "inView": false
+        },
+        {
+          "x": 686.779588209062,
+          "y": 554.0378109379083,
+          "z": 0.9956278317845373,
+          "inView": false
+        },
+        {
+          "x": 708.3419179075261,
+          "y": 617.1567558316365,
+          "z": 0.9953483530036393,
+          "inView": false
+        },
+        {
+          "x": 728.394503352184,
+          "y": 486.99523686571246,
+          "z": 0.9950884426779792,
+          "inView": false
+        },
+        {
+          "x": 753.8549545667275,
+          "y": 552.5101903362772,
+          "z": 0.9947584386401013,
+          "inView": false
+        }
+      ]
+    },
+    "primaryBounds": null,
+    "water": [],
+    "materials": [
+      {
+        "id": "fortified_far_bank",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.255,
+          0.255
+        ],
+        "authoredEmissive": [
+          1.7,
+          1.7
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.9,
+        "metalness": 0
+      },
+      {
+        "id": "seized_headframe",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.315,
+          0.315
+        ],
+        "authoredEmissive": [
+          2.1,
+          2.1
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.9,
+        "metalness": 0
+      },
+      {
+        "id": "rocket_cart",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.9,
+        "metalness": 0
+      },
+      {
+        "id": "siege_line",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.285,
+          0.285
+        ],
+        "authoredEmissive": [
+          1.9,
+          1.9
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.9,
+        "metalness": 0
+      },
+      {
+        "id": "oxblood_banners",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.51,
+          0.51
+        ],
+        "authoredEmissive": [
+          3.4,
+          3.4
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.9,
+        "metalness": 0
+      }
+    ],
+    "persistentSelector": ".hud-panel,.hud-pause,.world-info-note,#touch-controls",
+    "errors": []
+  },
+  {
+    "width": 390,
+    "arm": "before",
+    "focus": "rocket_cart",
+    "back": 5,
+    "hero": {
+      "x": 12.5,
+      "y": 0.5477261519432068,
+      "z": 19
+    },
+    "performance": {
+      "tier": "full",
+      "override": "full",
+      "source": "override",
+      "reason": "settings override",
+      "gpuRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Max, Unspecified Version)",
+      "deviceMemory": 32,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.0.0 Safari/537.36",
+      "config": {
+        "maxDpr": 2,
+        "shadowsQuality": "soft",
+        "shadowMapSize": 1536,
+        "fogNear": 42,
+        "fogFar": 88,
+        "postEnabled": true,
+        "postPaperGrainOpacity": 0.008,
+        "detailDensity": 1,
+        "detailMobileDensity": 0.42,
+        "terrainSegments": 64,
+        "terrainMobileSegments": 40,
+        "vistaSegments": 12,
+        "vistaMobileSegments": 7,
+        "waterQuality": 1,
+        "waterMobileQuality": 0.55,
+        "terrainMesh": false,
+        "terrainSplat": false,
+        "terrainMeshVertexStep": 1,
+        "floatTextPool": 12,
+        "combatVfxPuffs": 32,
+        "combatVfxTicks": 48,
+        "combatVfxRings": 8,
+        "freedWalkerCap": 10,
+        "enemyBarCap": 60
+      },
+      "runtimeVerdict": 0
+    },
+    "bodyBounds": {
+      "world": {
+        "min": [
+          10.665021300315857,
+          0.3053838014602661,
+          12.975000023841858
+        ],
+        "max": [
+          14.049999952316284,
+          3.506829023361206,
+          15.024999976158142
+        ]
+      },
+      "corners": [
+        {
+          "x": 138.79552425072978,
+          "y": 372.93629274225714,
+          "z": 0.9964243327265228,
+          "inView": true
+        },
+        {
+          "x": 136.65262280459382,
+          "y": 420.95699196621297,
+          "z": 0.9962115040202656,
+          "inView": true
+        },
+        {
+          "x": 134.6772692412643,
+          "y": 301.6158526791793,
+          "z": 0.9960156417080823,
+          "inView": true
+        },
+        {
+          "x": 132.20177476178637,
+          "y": 350.3706741437267,
+          "z": 0.9957697939066716,
+          "inView": true
+        },
+        {
+          "x": 242.47168262223195,
+          "y": 372.93429066706216,
+          "z": 0.9964243415997605,
+          "inView": true
+        },
+        {
+          "x": 244.28477871990754,
+          "y": 420.95483418867053,
+          "z": 0.9962115135835792,
+          "inView": true
+        },
+        {
+          "x": 245.9500561567203,
+          "y": 301.6138256804059,
+          "z": 0.9960156519292906,
+          "inView": true
+        },
+        {
+          "x": 248.04430796579615,
+          "y": 350.3684772368698,
+          "z": 0.9957698049846473,
+          "inView": true
+        }
+      ]
+    },
+    "primaryBounds": null,
+    "water": [],
+    "materials": [
+      {
+        "id": "fortified_far_bank",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.255,
+          0.255
+        ],
+        "authoredEmissive": [
+          1.7,
+          1.7
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.9,
+        "metalness": 0
+      },
+      {
+        "id": "seized_headframe",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.315,
+          0.315
+        ],
+        "authoredEmissive": [
+          2.1,
+          2.1
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.9,
+        "metalness": 0
+      },
+      {
+        "id": "rocket_cart",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.9,
+        "metalness": 0
+      },
+      {
+        "id": "siege_line",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.285,
+          0.285
+        ],
+        "authoredEmissive": [
+          1.9,
+          1.9
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.9,
+        "metalness": 0
+      },
+      {
+        "id": "oxblood_banners",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.51,
+          0.51
+        ],
+        "authoredEmissive": [
+          3.4,
+          3.4
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.9,
+        "metalness": 0
+      }
+    ],
+    "persistentSelector": ".hud-panel,.hud-pause,.world-info-note,#touch-controls",
+    "errors": []
+  },
+  {
+    "width": 390,
+    "arm": "after",
+    "focus": "rocket_cart",
+    "back": "entry",
+    "hero": {
+      "x": 0,
+      "y": 0.573093113899231,
+      "z": 12
+    },
+    "performance": {
+      "tier": "full",
+      "override": "full",
+      "source": "override",
+      "reason": "settings override",
+      "gpuRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Max, Unspecified Version)",
+      "deviceMemory": 32,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.0.0 Safari/537.36",
+      "config": {
+        "maxDpr": 2,
+        "shadowsQuality": "soft",
+        "shadowMapSize": 1536,
+        "fogNear": 42,
+        "fogFar": 88,
+        "postEnabled": true,
+        "postPaperGrainOpacity": 0.008,
+        "detailDensity": 1,
+        "detailMobileDensity": 0.42,
+        "terrainSegments": 64,
+        "terrainMobileSegments": 40,
+        "vistaSegments": 12,
+        "vistaMobileSegments": 7,
+        "waterQuality": 1,
+        "waterMobileQuality": 0.55,
+        "terrainMesh": false,
+        "terrainSplat": false,
+        "terrainMeshVertexStep": 1,
+        "floatTextPool": 12,
+        "combatVfxPuffs": 32,
+        "combatVfxTicks": 48,
+        "combatVfxRings": 8,
+        "freedWalkerCap": 10,
+        "enemyBarCap": 60
+      },
+      "runtimeVerdict": 0
+    },
+    "bodyBounds": {
+      "world": {
+        "min": [
+          10.665021300315857,
+          0.3053838014602661,
+          12.975000023841858
+        ],
+        "max": [
+          14.049999952316284,
+          3.506829023361206,
+          15.024999976158142
+        ]
+      },
+      "corners": [
+        {
+          "x": 568.2982171794486,
+          "y": 554.0378131137624,
+          "z": 0.995627831601922,
+          "inView": false
+        },
+        {
+          "x": 584.6656709610652,
+          "y": 617.1567592090652,
+          "z": 0.9953483527975288,
+          "inView": false
+        },
+        {
+          "x": 599.8871122760598,
+          "y": 486.99523513561695,
+          "z": 0.9950884424732587,
+          "inView": false
+        },
+        {
+          "x": 619.213537817634,
+          "y": 552.5101896300654,
+          "z": 0.9947584384069194,
+          "inView": false
+        },
+        {
+          "x": 686.7796022981852,
+          "y": 554.0378131137624,
+          "z": 0.995627831601922,
+          "inView": false
+        },
+        {
+          "x": 708.3419338093694,
+          "y": 617.1567592090652,
+          "z": 0.9953483527975288,
+          "inView": false
+        },
+        {
+          "x": 728.3945191467778,
+          "y": 486.99523513561695,
+          "z": 0.9950884424732587,
+          "inView": false
+        },
+        {
+          "x": 753.8549725571727,
+          "y": 552.5101896300654,
+          "z": 0.9947584384069194,
+          "inView": false
+        }
+      ]
+    },
+    "primaryBounds": null,
+    "water": [
+      {
+        "name": "SculptLivingWater",
+        "visible": true,
+        "y": -0.0455359983444214,
+        "depthTest": true,
+        "depthWrite": false
+      }
+    ],
+    "materials": [
+      {
+        "id": "fortified_far_bank",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.375,
+          0.375
+        ],
+        "authoredEmissive": [
+          2.5,
+          2.5
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.9,
+        "metalness": 0
+      },
+      {
+        "id": "seized_headframe",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.36,
+          0.36
+        ],
+        "authoredEmissive": [
+          2.4,
+          2.4
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.9,
+        "metalness": 0
+      },
+      {
+        "id": "rocket_cart",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.9,
+        "metalness": 0
+      },
+      {
+        "id": "siege_line",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.33,
+          0.33
+        ],
+        "authoredEmissive": [
+          2.2,
+          2.2
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.9,
+        "metalness": 0
+      },
+      {
+        "id": "oxblood_banners",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.51,
+          0.51
+        ],
+        "authoredEmissive": [
+          3.4,
+          3.4
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.9,
+        "metalness": 0
+      }
+    ],
+    "persistentSelector": ".hud-panel,.hud-pause,.world-info-note,#touch-controls",
+    "errors": []
+  },
+  {
+    "width": 390,
+    "arm": "after",
+    "focus": "rocket_cart",
+    "back": 5,
+    "hero": {
+      "x": 12.5,
+      "y": 0.5477261519432068,
+      "z": 19
+    },
+    "performance": {
+      "tier": "full",
+      "override": "full",
+      "source": "override",
+      "reason": "settings override",
+      "gpuRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Max, Unspecified Version)",
+      "deviceMemory": 32,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.0.0 Safari/537.36",
+      "config": {
+        "maxDpr": 2,
+        "shadowsQuality": "soft",
+        "shadowMapSize": 1536,
+        "fogNear": 42,
+        "fogFar": 88,
+        "postEnabled": true,
+        "postPaperGrainOpacity": 0.008,
+        "detailDensity": 1,
+        "detailMobileDensity": 0.42,
+        "terrainSegments": 64,
+        "terrainMobileSegments": 40,
+        "vistaSegments": 12,
+        "vistaMobileSegments": 7,
+        "waterQuality": 1,
+        "waterMobileQuality": 0.55,
+        "terrainMesh": false,
+        "terrainSplat": false,
+        "terrainMeshVertexStep": 1,
+        "floatTextPool": 12,
+        "combatVfxPuffs": 32,
+        "combatVfxTicks": 48,
+        "combatVfxRings": 8,
+        "freedWalkerCap": 10,
+        "enemyBarCap": 60
+      },
+      "runtimeVerdict": 0
+    },
+    "bodyBounds": {
+      "world": {
+        "min": [
+          10.665021300315857,
+          0.3053838014602661,
+          12.975000023841858
+        ],
+        "max": [
+          14.049999952316284,
+          3.506829023361206,
+          15.024999976158142
+        ]
+      },
+      "corners": [
+        {
+          "x": 138.7956606105885,
+          "y": 372.93627707400856,
+          "z": 0.9964243347859704,
+          "inView": true
+        },
+        {
+          "x": 136.6526721765848,
+          "y": 420.95694089996294,
+          "z": 0.9962115061372762,
+          "inView": true
+        },
+        {
+          "x": 134.677418675345,
+          "y": 301.6158355745139,
+          "z": 0.9960156442243617,
+          "inView": true
+        },
+        {
+          "x": 132.2018312236531,
+          "y": 350.3706160121443,
+          "z": 0.9957697965150205,
+          "inView": true
+        },
+        {
+          "x": 242.4717847705442,
+          "y": 372.9343827738488,
+          "z": 0.9964243431815507,
+          "inView": true
+        },
+        {
+          "x": 244.28479312697297,
+          "y": 420.9548992791504,
+          "z": 0.9962115151857849,
+          "inView": true
+        },
+        {
+          "x": 245.95016350562375,
+          "y": 301.6139176926381,
+          "z": 0.9960156538953491,
+          "inView": true
+        },
+        {
+          "x": 248.0443210241486,
+          "y": 350.36853736861957,
+          "z": 0.9957698069966544,
+          "inView": true
+        }
+      ]
+    },
+    "primaryBounds": null,
+    "water": [
+      {
+        "name": "SculptLivingWater",
+        "visible": true,
+        "y": -0.0455359983444214,
+        "depthTest": true,
+        "depthWrite": false
+      }
+    ],
+    "materials": [
+      {
+        "id": "fortified_far_bank",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.375,
+          0.375
+        ],
+        "authoredEmissive": [
+          2.5,
+          2.5
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.9,
+        "metalness": 0
+      },
+      {
+        "id": "seized_headframe",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.36,
+          0.36
+        ],
+        "authoredEmissive": [
+          2.4,
+          2.4
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.9,
+        "metalness": 0
+      },
+      {
+        "id": "rocket_cart",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.9,
+        "metalness": 0
+      },
+      {
+        "id": "siege_line",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.33,
+          0.33
+        ],
+        "authoredEmissive": [
+          2.2,
+          2.2
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.9,
+        "metalness": 0
+      },
+      {
+        "id": "oxblood_banners",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.51,
+          0.51
+        ],
+        "authoredEmissive": [
+          3.4,
+          3.4
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.9,
+        "metalness": 0
+      }
+    ],
+    "persistentSelector": ".hud-panel,.hud-pause,.world-info-note,#touch-controls",
+    "errors": []
+  }
+]

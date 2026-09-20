@@ -1,0 +1,1424 @@
+
+> gold-rush@0.1.0 test:ledger-guards
+> node --test --test-timeout=300000 scripts/guard-stats-persistence.test.mjs scripts/guard-stats-test-isolation-guard.test.mjs scripts/vite-only-import-reachability-guard.test.mjs scripts/finding-id-pattern-guard.test.mjs scripts/nul-audit-corpus-guard.test.mjs scripts/art-staging-corpus-header-guard.test.mjs scripts/withheld-evidence-audit-guard.test.mjs scripts/gazette-weekly-budget-guard.test.mjs scripts/goal-tracker.test.mjs scripts/goal-closure-reason.test.mjs scripts/ruling-propagation-guard.test.mjs scripts/law-pointer-guard.test.mjs scripts/law-pointer-surface-count-guard.test.mjs scripts/gate-caller-audit.test.mjs scripts/block-class-guard.test.mjs scripts/block-class-guard-worktree.test.mjs scripts/banked-master-preflight-guard.test.mjs scripts/stale-hold-verdict-guard.test.mjs scripts/claimed-spec-harness-guard.test.mjs scripts/stale-ready-for-gates-guard.test.mjs scripts/stale-successor-pointer-guard.test.mjs scripts/stopped-leaf-supersession-guard.test.mjs scripts/desk-carryforward-guard.test.mjs scripts/desk-birth-guard.test.mjs scripts/desk-state-audit.test.mjs scripts/desk-unrecorded-mention-guard.test.mjs scripts/ghost-ladder-row-guard.test.mjs scripts/authorable-candidates.test.mjs scripts/authorable-unpriced-block-guard.test.mjs scripts/authorable-single-read-guard.test.mjs scripts/fixture-corpus-copy-guard.test.mjs scripts/salvage-art-staging-reach.test.mjs scripts/dry-board-probe.test.mjs scripts/dry-board-advisory-prescription-guard.test.mjs scripts/dry-board-probe-corpus-guard.test.mjs scripts/dry-board-probe-worktree-guard.test.mjs scripts/dry-board-bucket-verdict-guard.test.mjs scripts/dry-board-sibling-refusal-guard.test.mjs scripts/dry-board-sibling-refusal-banner-guard.test.mjs scripts/dry-board-detached-head-guard.test.mjs scripts/drain-block-ancestry-guard.test.mjs scripts/master-shipped-review-source-guard.test.mjs scripts/master-shipped-crash-exit-guard.test.mjs scripts/review-evidence-crash-exit-guard.test.mjs scripts/review-evidence-scan-space-guard.test.mjs scripts/art-staging-local-only-source-guard.test.mjs scripts/art-staging-gitdir-link-guard.test.mjs scripts/dispatch-corpus-guard.test.mjs scripts/master-shipped-goals-source-guard.test.mjs scripts/lane-usable-pathspec-root-guard.test.mjs scripts/lane-usable-gate-leaf-surface-guard.test.mjs scripts/lane-usable-stale-pid-guard.test.mjs scripts/lane-usable-untracked-files-guard.test.mjs scripts/master-shipped-worktree-guard.test.mjs scripts/drain-block-worktree-guard.test.mjs scripts/drain-block-subject-divergence-guard.test.mjs scripts/drain-block-queue-nearmiss-guard.test.mjs scripts/attended-owed-anchor-tree-guard.test.mjs scripts/ghost-ladder-worktree-guard.test.mjs scripts/ghost-ladder-subject-set-guard.test.mjs scripts/collection-guards-subject-set-guard.test.mjs scripts/desk-family-worktree-guard.test.mjs scripts/desk-lock-predicate-guard.test.mjs scripts/desk-tail-anchor-guard.test.mjs scripts/desk-row-key-token-guard.test.mjs scripts/desk-birth-prefix-token-guard.test.mjs scripts/desk-carryforward-ack-token-guard.test.mjs scripts/desk-carryforward-worktree-guard.test.mjs scripts/battery-manifest-attribution-guard.test.mjs scripts/desk-frozen-tree-unverifiable-guard.test.mjs scripts/corpus-tree-unverifiable-guard.test.mjs scripts/desk-detached-head-guard.test.mjs scripts/detached-head-instruments-guard.test.mjs scripts/attended-owed-cross-check-value-guard.test.mjs scripts/ghost-ladder-evidence-source-guard.test.mjs scripts/nul-audit-subject-scope-guard.test.mjs scripts/refusal-reason-corpus-guard.test.mjs scripts/desk-birth-gate-distance-guard.test.mjs scripts/desk-declaration-segment-denominator-guard.test.mjs scripts/desk-birth-row-denominator-guard.test.mjs scripts/desk-birth-gateless-row-guard.test.mjs scripts/guard-source-snapshot-race-guard.test.mjs scripts/desk-birth-window-start-guard.test.mjs scripts/desk-status-single-read-guard.test.mjs scripts/status-archive-arg-guard.test.mjs scripts/status-archive-empty-corpus-guard.test.mjs scripts/terrain-canonicalization-domain-guard.test.mjs scripts/terrain-comparator-margin-guard.test.mjs scripts/reaching-contract-extent-guard.test.mjs scripts/foundry-kit-token-derivation-guard.test.mjs scripts/bash-leg-misuse-code-guard.test.mjs scripts/cross-engine-engine-source-guard.test.mjs scripts/desk-word-single-source-guard.test.mjs scripts/blocker-panel-classifiable-guard.test.mjs scripts/source-pointer-guard.test.mjs scripts/start-lane-runner-citation-guard.test.mjs scripts/law-bash-prescription-guard.test.mjs scripts/runner-env-provenance-guard.test.mjs scripts/gazette-scan-space-guard.test.mjs scripts/no-emdash-scan-space-guard.test.mjs scripts/ledger-mirror-freshness-guard.test.mjs scripts/ledger-backup-fill-gaps-guard.test.mjs scripts/ledger-mirror-exposure-guard.test.mjs scripts/edge-probe-composite-guard.test.mjs scripts/edge-alarm-clock-guard.test.mjs scripts/triage-instrument-spawn-bound-guard.test.mjs scripts/spawn-census-mask-regex-guard.test.mjs && node scripts/ghost-ladder-row-guard.mjs --strict && npm run test:findings-state && npm run test:blocker-panel && npm run test:ruling-propagation && npm run test:citations && npm run test:desk-declaration && npm run test:desk-birth && node scripts/desk-carryforward-guard.mjs && node scripts/status-archive-audit.mjs --limit 40 --quiet && node scripts/attended-owed-audit.mjs && bash scripts/main-lock-gate-guard.test.sh && bash scripts/janitor-request-rejection.test.sh && bash scripts/lane-dispatch-safety-guard.test.sh && bash scripts/codex-client-floor.test.sh && bash scripts/runner-restart-recipe.test.sh && bash scripts/runner-commit-decoupling-guard.test.sh && node scripts/ledger-mirror-exposure.mjs && node scripts/nul-audit.mjs && node scripts/source-pointer-guard.mjs && bash foundry/kit/test-init.sh
+
+✔ REVERSE CONTROL — a genuinely clean board still reports AT RISK 0 with a POPULATED header (no manufactured alarm) (540.197459ms)
+✔ validity — the healthy arm really does see a file whose bytes are in no object database (720.444667ms)
+✔ THE HARM — an ABSENT staging root is byte-identical to a clean board on BOTH buckets the ART-SLOT LAW prescribes (2598.879958ms)
+✔ THE DISCRIMINATOR — the corpus header DOES separate an emptied scan set from a clean one (3098.560792ms)
+✔ the declaration is printed on the HAPPY path too — one that appears only on failure re-creates the ambiguity it removes (F-2208-1) (1670.316583ms)
+✔ REVERSE CONTROL — the header COUNTS track the real scan set; they are not a constant (2441.355917ms)
+✔ THE LAW must tell a fire to read the discriminator, not only the two buckets that cannot (F-2449-1) (3.722916ms)
+✔ 1. a cp -R copy of a linked worktree is classified `shared` and names its owner (372.283833ms)
+✔ 2. the human channel names the borrowed lane ON THE ROW, not merely somewhere (329.689708ms)
+✔ 3. the hazard paragraph prints when any tree is shared (432.378542ms)
+✔ 4. REVERSE CONTROL — a self-contained tree with no .git is NOT shared (1239.555208ms)
+✔ 5. REVERSE CONTROL — a gitdir no registered worktree owns is `orphan`, not `shared` (1628.443083ms)
+✔ 6. REVERSE CONTROL — an independent repository is `own-repo`, not `shared` (1178.962584ms)
+✔ 7. a .git that cannot be parsed is `unverifiable` — declared, never assumed benign (1913.445625ms)
+✔ 8. REVERSE CONTROL — it DECLARES and does not REFUSE: a shared tree moves NO exit code (6461.489834ms)
+✔ 9. REVERSE CONTROL — a REGISTERED worktree never enters the unowned list at all (1026.155042ms)
+✔ 10. F-2208-1 — the link is declared on EVERY row, including the benign ones (1261.059917ms)
+✔ REVERSE CONTROL — real unpushed content refuses with 1, not 2 (a cure that collapses the two codes is caught here) (909.73675ms)
+✔ origin/main ref unavailable while the remote and its other refs are present — --strict refuses with 2, never 0 (1956.773333ms)
+✔ a transient failure of that one call, origin/main present — declared distinctly, --strict refuses with 2 (3182.045458ms)
+✔ the advisory default still exits 0 even when the source did not run — a routine audit must never block a drain (2742.094417ms)
+✔ REVERSE CONTROL — the declaration is printed on the HAPPY path too, so "asked and empty" is distinguishable from "never asked" (2152.99275ms)
+✔ REVERSE CONTROL — a genuinely clean board stays quiet in both modes (a cure that manufactures an alarm is caught here) (2928.904916ms)
+✔ 1. root, cure landed on main: LANDED-NOT-ARCHIVED at rc=1 (legacy behaviour intact) (330.82075ms)
+✔ 2. THE DEFECT: linked worktree, stale target, main carries the anchor -> reds, not OPEN (311.101917ms)
+✔ 3. REVERSE CONTROL: nothing landed anywhere -> plain OPEN at rc=0, no false red (286.874916ms)
+✔ 4. REVERSE CONTROL: a linked worktree whose main ALSO lacks the anchor must not red (484.65125ms)
+✔ 5. the declaration names the tree on the happy path too (F-2208-1) (629.727667ms)
+✔ 6. the declaration names a LINKED WORKTREE as the cause, breaking byte-identity (1944.353125ms)
+✔ 7. a non-git fixture root is LAWFUL: git exit 128 must not refuse or crash (178.821125ms)
+✔ 8. --strict still reds a plain OPEN, and the stale arm reds in BARE mode (2321.036834ms)
+✔ 1. THE DEFECT: a frozen tree whose cross-check could not run must SAY SO, not print plain OPEN (1121.201208ms)
+✔ 2. the uncross-checked arm is NOT byte-identical to a genuinely clean board (1872.516417ms)
+✔ 3. --strict separates 2 ("could not answer") from 1 ("answered, and refuses") (1894.35025ms)
+✔ 4. REVERSE CONTROL: an uncross-checked item must NOT red BARE mode (1168.583416ms)
+✔ 5. REVERSE CONTROL: a non-git fixture root stays silent and green (243.961583ms)
+✔ 6. REVERSE CONTROL: from the MAIN worktree the cross-check is inert — do not declare (860.704ms)
+✔ 7. the landed-on-main branch still fires: a healthy frozen tree reds STALE-TREE-OPEN (1064.811625ms)
+✔ 8. the count is declared on the happy path too (F-2208-1) (796.970875ms)
+✔ an UNPRICED planned leaf is reported and fails --strict (35.434458ms)
+✔ the default stays advisory — an unpriced leaf must not red the board (31.105708ms)
+✔ a structured authoringBlock is classified, cited, and priced (35.951625ms)
+✔ attended-owed is reported as its own class, never folded into owner-gated (34.747333ms)
+✔ an UNKNOWN declared class degrades to unclassified and says so, rather than being trusted (32.49175ms)
+✔ a legacy prose key counts as priced but is marked class-unreadable (33.049875ms)
+✔ the note_sNNNN family resolves — a reason must not be missed for its spelling (0.403708ms)
+✔ an authoringBlock WITHOUT a reason is not a price — it falls through (0.20675ms)
+✔ non-planned leaves are outside the denominator (1.162042ms)
+✔ planned leaves are found at any depth, through subgoals AND tasks (0.280375ms)
+✔ a leaf in a status NO instrument resolves is named in the residue (33.638125ms)
+✔ the residue is ADVISORY — an unresolved status must not trip --strict (34.403333ms)
+✔ statuses SOME instrument resolves stay out of the residue (29.574667ms)
+✔ the mirrored status set does not drift from drain-block-check own literals (0.471083ms)
+✔ unresolvedStatuses finds residue at any depth and sorts by count (0.160375ms)
+✔ the corpus is read exactly ONCE per verdict (the property, not a message) (0.528917ms)
+✔ the residue consumes the SAME parsed object the rows came from (0.298834ms)
+✔ DEFECT ARM: a splice that COMPLETES cannot move the residue (63.734542ms)
+✔ DEFECT ARM: a splice that TRUNCATES cannot vanish the residue (63.869416ms)
+✔ PRE-CURE restored verbatim: the completing splice DIVERGES (proves these arms have teeth) (71.345042ms)
+✔ PRE-CURE restored verbatim: the truncating splice loses the residue at a COMPLETE headline (29.209209ms)
+✔ REVERSE CONTROL: a genuinely healthy board is unchanged — verdict, counts and rc (29.052541ms)
+✔ REVERSE CONTROL: reading once must not silence UNPRICED — the verdict still reds (28.582167ms)
+✔ REVERSE CONTROL: auditRoot keeps its signature and behaviour for the legacy suite (1.858292ms)
+✔ the two UNPRICED branches are not byte-identical — the conflation itself (38.239042ms)
+✔ an unreadable block names the evidence it still carries (35.877583ms)
+✔ an unreadable block does NOT tell the reader to measure it themselves (31.761667ms)
+✔ the ABSENT branch is declared too, not left silent (F-2208-1) (38.659917ms)
+✔ an unreadable block with nothing salvageable says repair, not re-measure (35.314167ms)
+✔ REVERSE CONTROL: verdict and counts are unchanged — no new class invented (37.351125ms)
+✔ REVERSE CONTROL: a readable block is still priced, with its class and reason (27.751416ms)
+✔ REVERSE CONTROL: it DECLARES and does not refuse — advisory still exits 0 (62.327292ms)
+✔ REVERSE CONTROL: a prose key still wins over an unreadable block (0.127958ms)
+✔ the readability predicate is DERIVED, not re-typed (F-2227-1) (0.195417ms)
+✔ blockState is a STRING, so a careless truthiness test errs toward noticing (F-2212-1) (0.06125ms)
+✔ a non-object authoringBlock is PRESENT, not absent (29.427167ms)
+✔ every banked master carries the current main-slot pre-flight exception (6.543916ms)
+✔ MANUFACTURED: a master that disclaims a pre-flight is not treated as declaring one (0.08775ms)
+✔ CONTROL: an affirmative pre-flight is still a declaration, in every form the corpus uses (0.056583ms)
+✔ the negation is scoped — a master that disclaims one pre-flight but declares another still counts (0.045958ms)
+✔ MANUFACTURED: an affirmative pre-flight WITHOUT the cure is still an offender (0.056917ms)
+✔ every banked lane master resets the branch its own worktree is actually on (73.496125ms)
+✔ the derived leg set covers the contract floor (a leg removed reds by name) (0.734958ms)
+✔ every bash leg refuses an ABSENT subject with MISUSE and exit 2 (107.512458ms)
+✔ REVERSE CONTROL: a PRESENT but unparseable subject still exits 1 and still says "does not parse" (17.434584ms)
+✔ REVERSE CONTROL: a healthy board prints no MISUSE (the precondition cannot decay into a banner) (2150.485542ms)
+✔ a test file named by a NON-node-guards battery is attributed to its file (40.566333ms)
+✔ PRE-CURE CONTROL: the single-battery roster leaves the other battery unattributed (37.257333ms)
+✔ unattributed rows are COUNTED, not merely marked <unknown> row by row (37.936666ms)
+✔ the declaration is present on the HAPPY path, not only when something is wrong (41.964667ms)
+✔ an unreadable package.json DECLARES log-only rather than pretending to a roster (35.435708ms)
+✔ --diff flags a DEGRADED comparison when either side has unattributed rows (102.454209ms)
+✔ REVERSE CONTROL: a fully attributed diff carries NO attribution line (102.696875ms)
+✔ REVERSE CONTROL: widening the roster does not re-point a name shared by two files (38.620583ms)
+✔ linked worktree declares exactly the two reached cross-checks as loud skips (340.817291ms)
+✔ repo-root verdict and rc are byte-identical to the pre-cure subject (1237.470916ms)
+✔ manufactured pre-cure spawn reds exactly two arms in the linked worktree (1116.954875ms)
+✔ manufactured forced-main cwd is caught by denominator parity (1552.415833ms)
+✔ manufactured unconditional skip is caught at the repo root (2253.875792ms)
+✔ every blocked leaf declares a valid blockClass (5.503584ms)
+✔ disputed leaves are surfaced, not silently accumulated (3.259125ms)
+✔ every blocked leaf is visible to the §3.0 drain guard (denominator parity) (123.276292ms)
+✔ every blocked leaf refuses the drain under the name a fire would type (124.9535ms)
+✔ drain-block-check prints class-specific verdicts, and gate-side is not called owner debt (3.586292ms)
+✔ GROUND TRUTH — with the panel intact, the closed-on-panel finding IS caught (64.001333ms)
+✔ THE DEFECT — the same board, with the panel truncating past the id, must REFUSE not PASS (68.304583ms)
+✔ REVERSE CONTROL — an EMPTY panel is lawful and must not refuse (53.32175ms)
+✔ REVERSE CONTROL — a panel row naming no F-ID is lawful while another row carries one (61.959042ms)
+✔ REVERSE CONTROL — --report stays advisory even on the unclassifiable board (55.400625ms)
+✔ the live root is unaffected — the cure is behaviour-neutral where it matters (392.2795ms)
+✔ the claimed-spec -> owning-config map is DERIVED, not tabulated (3.448458ms)
+✔ derivation REFUSES rather than silently measuring nothing if the array is renamed (0.934083ms)
+✔ MANUFACTURED: a claimed spec whose owning config has NO npm caller is named (3.573958ms)
+✔ a runnerless harness WARNS and never changes the exit code (34.614125ms)
+✔ NO package.json is not the same as no caller — a synthetic root must stay silent (40.421584ms)
+✔ MANUFACTURED: a bare playwright command naming a claimed spec FAILS the guard (36.365708ms)
+✔ MANUFACTURED: a CHECKLIST-form adjacent-suite line FAILS the guard (why arm (b), not (a)) (36.462542ms)
+✔ MANUFACTURED: a mention inside the SELF-CHECK region FAILS the guard (33.74775ms)
+✔ a DESCRIPTIVE mention outside any gate region is NOT an offender (why not arm (c)) (35.347792ms)
+✔ naming the owning CONFIG clears the master (32.442875ms)
+✔ naming the npm ALIAS clears the master (30.856125ms)
+✔ the guard actually RUNS when invoked as a script (entrypoint is not a silent no-op) (157.678208ms)
+✔ the live board has no LIVE offender (161.14675ms)
+✔ every grandfathered file is still a real offender (no stale excuses) (183.4075ms)
+✔ the guard sets process.exitCode and never force-exits (F-2098-1) (0.371833ms)
+✔ 1. the live subject set is derived, non-empty, and holds both known collection guards (12.547958ms)
+✔ 2. every file that spawns playwright list-mode carries the marker, or is exempt by name (12.247667ms)
+✔ 3. self-extension: a NEW marked subject is picked up with no edit to the guard (221.061459ms)
+✔ 4. TEETH: a marked subject with a cwd-relative corpus root REDS the guard (211.260292ms)
+✔ 5. reverse control: an UNMARKED playwright-mentioning file is not selected, and the empty set REFUSES (71.204166ms)
+✔ 6. a marked file is excluded from its OWN subject set — no guard can spawn itself (2.300875ms)
+✔ 7. TEETH: the census sees a guard that spawns via execFileSync, not only via `spawn` (0.116625ms)
+✔ 8. reverse control: widening did not reach into prose that merely QUOTES list-mode (0.15575ms)
+✔ 9. reverse control: the by-name exemption is load-bearing and swallows no real subject (10.713708ms)
+✔ desk-declaration-guard: an UNIDENTIFIABLE tree must REFUSE, not PASS (1531.716ms)
+✔ desk-birth-guard: an UNIDENTIFIABLE tree must REFUSE, not PASS (1461.621042ms)
+✔ desk-carryforward-guard: an UNIDENTIFIABLE tree must REFUSE, not PASS (1808.665542ms)
+✔ the tree refusal is distinct from the COMPARISON refusal — they owe different acts (2548.097125ms)
+✔ the tree refusal does not ASSERT a linked worktree it never established (1200.026ms)
+✔ REVERSE CONTROL: a non-git root is LAWFUL and must still PROCEED (182.563ms)
+✔ REVERSE CONTROL: a genuinely clean MAIN with healthy git still passes (1125.454083ms)
+✔ a MAIN tree whose probe FAILED must refuse too — you cannot know it is main (1249.844625ms)
+✔ frozenTreeCheck tests the failure value EXPLICITLY, not by inequality alone (0.728833ms)
+✔ both cross-engine consumers read the engine list from the shared module (1.752542ms)
+✔ no consumer keeps a private copy of an engine path (0.516667ms)
+✔ the shared resolver drops candidates that are not installed (0.557916ms)
+✔ the declared candidate list can still support a cross-engine comparison (9.963666ms)
+✔ both consumers see the same engine count — it is the argument the ruling turns on (0.401042ms)
+✔ a GATE: OWNER row is decided at the gate marker itself, not somewhere downstream (0.881708ms)
+✔ a positive owner verb is reported AT ITS OFFSET, not as a bare boolean (0.280709ms)
+✔ a NON-owner gate reports -1 — the two functions must agree in both directions (0.060583ms)
+✔ a NEGATED owner verb does not decide (F-1551-4 disclaimer handling is preserved) (0.660375ms)
+✔ the NEAREST admission wins when both forms match — a far incidental cite must not mask a real gate (0.3705ms)
+✔ THE LIVE FALSE-POSITIVE SHAPE: `GATE: none` admitted by a distant recorded ruling reports a large offset (0.177417ms)
+✔ REVERSE CONTROL: a far-decided row still QUALIFIES — the distance must never gate membership (1.031333ms)
+✔ REVERSE CONTROL: a NEAR-decided row is unaffected — the cure is additive, not selective (0.229125ms)
+✔ THE SEAM (F-2209-1): analyse() attaches decidedAt to EVERY qualifying row (0.1455ms)
+✔ F-2331-1: a QUOTED gate clause is admitted, and reports the same offset 0 as a real one (0.117417ms)
+✔ F-2331-1: analyse() acts on it — a quoted gate reaches `missing` and reds the fire (0.070125ms)
+✔ F-2331-1 REVERSE CONTROL: the backtick-skip cure flips verdicts BOTH ways, so it is refused (0.27275ms)
+✔ AGREEMENT INVARIANT over the LIVE ledger: decidedAt !== -1 exactly when isOwnerGate is true (36.198041ms)
+✔ 1 — a gateless row declaring an owner ACT is admitted and, undesked, FAILS (1.849875ms)
+✔ 2 — the same row, DESKED, is admitted and does NOT fail (reverse control) (0.589542ms)
+✔ 3 — the row really has no gate clause, so the OLD selector could not see it (0.212125ms)
+✔ 4 — a NEGATED owner ask is not an owner ask (F-1551-4, same sentence scope) (0.102ms)
+✔ 5 — a CLOSURE record declaring an owner act is SUPPRESSED, not flagged (0.081542ms)
+✔ 6 — suppression is COUNTED, never silent (F-2259-1: declare the denominator) (0.071625ms)
+✔ 7 — closureMarked keys on the vocabulary, glyph or word (0.151834ms)
+✔ 8 — main() DECLARES the arm on the happy path, not only on failure (466.693458ms)
+✔ 9 — PRE-CURE analyse (gate arm only) misses the row entirely (88.986417ms)
+✔ 10 — REVERSE CONTROL: dropping the closure filter re-admits closure records (104.598542ms)
+✔ 11 — REVERSE CONTROL: an ACT arm that ignores an existing gate clause over-reaches (138.855833ms)
+✔ 12 — REVERSE CONTROL: the FAIL text for an ACT row must not cite a "GATE:" offset (875.642875ms)
+✔ the SELECTOR admits an owner ACT and refuses a gate that merely says the word (0.953459ms)
+✔ a NEGATED owner gate is a disclaimer and must NOT flag (F-1551-4) (0.652542ms)
+✔ negation handling does not disarm the guard — every positive still flags (0.063416ms)
+✔ a negation is scoped to its own sentence, so a mixed gate keeps its owner half (0.051375ms)
+✔ the selector reads the other real owner-gate phrasings on the board (0.064416ms)
+✔ and refuses the fire-actionable phrasings that sit beside them (0.058333ms)
+✔ a row is keyed by the id it INTRODUCES, not one its prose cites (0.131542ms)
+✔ gateOf takes the LAST gate clause, since row prose quotes earlier ones (0.051625ms)
+✔ MANUFACTURED DEFECT — an owner-gated row filed with no desk mention is named (0.5375ms)
+✔ THE REAL s1540->s1541 EVENT: both undesked owner rows are caught, the six others are not (0.189375ms)
+✔ ...and once they are ON the desk, the same window passes (0.092084ms)
+✔ the desk is the LAST desk word, so an upstream PROSE mention does not satisfy it (0.071ms)
+✔ DESK-NOT-OWED excuses an id, and is scoped so it cannot cover an unrelated one (0.120042ms)
+✔ SKIPS mid-fire on an ACTIVE lock, so drain batteries are unaffected (0.045542ms)
+✔ REFUSES rather than greening when line-1 carries no desk at all (0.039417ms)
+✔ the backtick header is readable here too — the three desk parsers stay in step (0.06ms)
+✔ addedRows reads the ledger glyphs and ignores diff noise (0.097875ms)
+✔ control: an ordinary owner-gated row already on the desk reaches the verdict path and passes (2.776916ms)
+✔ THE DEFECT (truncation): a row keyed by a SUB-ID is not answered for by its PARENT (0.500042ms)
+✔ THE DEFECT (shadow): a row keyed by a PARENT is not answered for by a longer SUB-ID (0.122625ms)
+✔ a sub-id genuinely ON the desk keys ITSELF and is not flagged (0.285292ms)
+✔ an id genuinely ABSENT from the desk is still flagged (0.207292ms)
+✔ ordinary desk markup still satisfies the containment — no over-strict boundary (0.237292ms)
+✔ the TRAILING hyphen exclusion is load-bearing on the multi-segment alpha families (0.171542ms)
+✔ DESK-NOT-OWED of a LONGER id does not excuse a distinct shorter row key (0.150375ms)
+✔ DESK-NOT-OWED of the EXACT id still excuses it — the escape hatch survives (0.113667ms)
+✔ TEETH: the pre-cure source reds the defect arms and leaves the reverse controls green (3.346375ms)
+✔ TEETH: the REFUTED ledger-anchored grammar makes a sub-id row VANISH (2.983375ms)
+✔ TEETH: curing only the KEY side leaves the shadow hazard live (2.466375ms)
+✔ TEETH: reverting only the DESK-NOT-OWED site leaves that hatch leaking (2.600083ms)
+✔ TEETH: excluding the hyphen on the LEADING side reds the ordinary-markup arm (2.653583ms)
+✔ TEETH: dropping the hyphen from the TRAILING side re-opens the multi-segment shadow (2.328417ms)
+✔ TEETH: a helper loosened until nothing reds is caught by the absent-id arm (1.496292ms)
+✔ TEETH: a helper tightened until nothing passes is caught by the control (1.697958ms)
+✔ 1 — a row using BOTH house conventions at once escapes the parser and is NAMED (0.751416ms)
+✔ 2 — a bare-glyph row is ADMITTED, so it must NOT be reported (reverse control) (0.636667ms)
+✔ 3 — a bullet row with a BARE **F- key is ADMITTED too (the other convention) (0.064167ms)
+✔ 4 — an excluded row with NO owner gate is NOT reported (qualifying set, not corpus) (0.24625ms)
+✔ 5 — an excluded row with an owner gate but NO key is NOT reported (0.057ms)
+✔ 6 — a glyph outside the admitted four escapes and is reported (0.059958ms)
+✔ 7 — CLI: an escaping UNDESKED owner fork is NAMED and still exits 0 (declare, do not refuse) (324.813583ms)
+✔ 8 — CLI: the denominator is declared on the HAPPY path too (F-2208-1) (466.109042ms)
+✔ 9 — CLI: the VERDICT is unchanged — an admitted undesked owner row still FAILS (663.214084ms)
+✔ 10 — CLI: an escaping row does not inflate the owner-gated count it sits under (802.285459ms)
+✔ 1 — an ADDENDUM does not collapse the window onto this fire: the undesked row still FAILS (344.752208ms)
+✔ 2 — the window start names the PREVIOUS FIRE, not this one (627.69225ms)
+✔ 3 — an ordinary fire with NO addendum is untouched (reverse control) (777.216ms)
+✔ 4 — MULTIPLE addenda are all skipped, not just the first (1109.325833ms)
+✔ 5 — a genuinely clean board WITH an addendum still PASSES (reverse control) (1211.799291ms)
+✔ 6 — nothing is declared when nothing was skipped (reverse control) (1012.578667ms)
+✔ 7 — the skip IS declared when it happens, and says how many (1385.183667ms)
+✔ 8 — with NO earlier FIRE at all, it REFUSES rather than passing over nothing (781.602666ms)
+✔ a sub-id acknowledgement does NOT excuse the parent it merely prefixes (1.202833ms)
+✔ a prose inflection of an id does NOT excuse that id (0.130375ms)
+✔ REVERSE CONTROL — a genuine acknowledgement of the exact id still excuses it (0.088833ms)
+✔ REVERSE CONTROL — ordinary desk markup around the id must still count as named (0.139ms)
+✔ REVERSE CONTROL — a backticked SLUG item is excused by naming it, not by a longer slug (0.126709ms)
+✔ F-2231-2 RESIDUE, DELIBERATE — a cross-reference in another clause still excuses (0.079292ms)
+✔ acknowledged() uses the SHARED whole-token predicate, not a private copy (0.093125ms)
+✔ the window bound still applies — a mark cannot reach an id 400+ chars away (0.06625ms)
+✔ deskItems reproduces the counts the fires wrote in their own headers (0.717542ms)
+✔ the desk is the LAST desk word on the line, so an upstream mention loses (0.349417ms)
+✔ a clean carry-forward passes (0.273833ms)
+✔ the newest archived desk wins even when archive rows are out of order (0.082833ms)
+✔ MANUFACTURED DEFECT — a silently dropped item is caught (0.38575ms)
+✔ GROUND TRUTH — the real s1526 -> s1527 event reds, and names ten, not thirteen (0.453083ms)
+✔ GROUND TRUTH — the real s1529 backtick header is read, not scored as a mass drop (0.090541ms)
+✔ a BACKLOG closure row excuses a drop, in the wide vocabulary (0.075958ms)
+✔ acknowledgement is scoped — a DESK-DROPPED elsewhere does not cover any id (0.094459ms)
+✔ SKIPS mid-fire on an ACTIVE lock, so drain batteries are unaffected (0.094583ms)
+✔ REFUSES rather than greening over an unreadable previous desk (0.106542ms)
+✔ citation-only closure cannot silently excuse a dropped desk item (57.664042ms)
+✔ subject-led closure still excuses a dropped desk item (72.736792ms)
+✔ DESK-DROPPED remains an independent lawful exit (72.417958ms)
+✔ REFUSES both absent and empty previous desks at the CLI boundary (105.077084ms)
+✔ ACTIVE line-1 still skips mid-fire (48.858084ms)
+✔ live declared count delta 0 passes (69.665917ms)
+✔ s1533 protection — live declared count deltas +1 and -1 pass (268.949375ms)
+✔ s1585 live delta +4 refuses and names its four real unkeyed slugs (65.011208ms)
+✔ s1583 dot-separated live delta +22 refuses (137.150167ms)
+✔ a live desk with no declared count still passes (119.8355ms)
+✔ a live ACTIVE lock still skips before declared-count evaluation (99.615125ms)
+✔ a collapsed previous desk remains advisory when the live desk is clean (130.955167ms)
+✔ F-1588-2 — a doubly-broken desk reports BOTH defects in one run (110.267166ms)
+✔ F-1588-2 — an unkeyed segment can FAKE a drop, so the drop list says so (94.114708ms)
+✔ CONTROL — a real drop on a fully-keyed desk carries NO phantom caveat (92.541ms)
+✔ 1. a frozen linked worktree REFUSES rather than passing on a stale board (422.771333ms)
+✔ 2. the same board from the MAIN worktree still FAILS loudly and names the id (623.332125ms)
+✔ 3. the refusal is distinguishable from a clean board on BOTH channels (1096.448833ms)
+✔ 4. a genuinely clean MAIN worktree still PASSES (802.182042ms)
+✔ 5. REVERSE CONTROL — a linked worktree whose line-1 MATCHES main must NOT refuse (987.356333ms)
+✔ 6. REVERSE CONTROL — a live ACTIVE lock still SKIPs from a linked worktree (688.169167ms)
+✔ 7. REVERSE CONTROL — git exit 128 (not a repo) is LAWFUL, not a failure (230.33775ms)
+✔ 8. a subdirectory of the MAIN worktree is still main, and is not flagged (732.368417ms)
+✔ 9. the corpus tree is declared ALWAYS, including on the happy path (240.669084ms)
+✔ 10. exit 128 maps to no-git, and that conflation is deliberate (175.628875ms)
+✔ 1. an unexamined segment is NAMED — the substantive detection (82.554083ms)
+✔ 2. the declaration is printed on the HAPPY path too (F-2208-1) (49.225125ms)
+✔ 3. the declaration reaches STDOUT, not stderr (F-2211-1) (63.17475ms)
+✔ 4. REVERSE CONTROL — an unexamined segment must NOT change the exit code (96.088667ms)
+✔ 5. REVERSE CONTROL — a deep F-ID is EXAMINED, not reported as a miss (74.87375ms)
+✔ 6. REVERSE CONTROL — the real undeclared check is not blunted (128.779542ms)
+✔ 7. the segment count is the real denominator, not the keyed count (0.726125ms)
+✔ 8. a live ACTIVE lock makes no denominator claim at all (59.957ms)
+✔ 9. unexaminedSegments is pure and survives repeated calls (0.557167ms)
+✔ 10. the four bare goal slugs of s1585 all read unexamined (0.11425ms)
+✔ 1. a DETACHED main worktree REFUSES rather than certifying a board it never read (548.682625ms)
+✔ 2. the refusal is distinguishable from a GENUINELY clean board on both channels (1637.991958ms)
+✔ 3. the SAME board from a healthy main worktree still FAILS loudly and names the id (820.424834ms)
+✔ 4. REVERSE CONTROL — a clean main worktree ON a branch still PASSES (1031.462416ms)
+✔ 5. REVERSE CONTROL — a NON-GIT root must not be refused (247.884333ms)
+✔ 6. REVERSE CONTROL — an uncommitted STATUS.md on main is NOT refused (1061.442833ms)
+✔ 9. a git that cannot answer the HEAD question REFUSES — and does NOT cry "detached" (1356.154959ms)
+✔ 7. frozenTreeCheck tests the failure value EXPLICITLY, not by inequality alone (0.254125ms)
+✔ 8. headDetached separates a failure value from both real answers (0.136458ms)
+✔ 1. desk-declaration-guard FAILS on main when a desk item has no declaring row (803.076625ms)
+✔ 2. desk-declaration-guard REFUSES from a frozen worktree — it must not print PASS (1137.9745ms)
+✔ 3. desk-declaration-guard still PASSES on a genuinely clean main (reverse control) (1323.985208ms)
+✔ 4. desk-birth-guard FAILS on main when an owner-gated row never reached the desk (1179.113083ms)
+✔ 5. desk-birth-guard REFUSES from a frozen worktree — it must not print PASS (1374.008375ms)
+✔ 6. desk-birth-guard still PASSES on a genuinely clean main (reverse control) (1415.858875ms)
+✔ 7. a worktree whose line-1 MATCHES main must NOT refuse — §3.0b mandates gating there (1994.105583ms)
+✔ 8. the desk family shares ONE corpusTree implementation (F-2227-1) (0.175291ms)
+✔ 9. corpusTree reads a subdirectory of the MAIN worktree as main, not linked (1097.753125ms)
+✔ 10. git exit 128 is LAWFUL (no-git), never a refusal (365.655833ms)
+✔ 11. the declaration is printed on the happy path too (F-2208-1) (1589.866291ms)
+✔ desk-declaration-guard: an UNVERIFIABLE comparison must REFUSE, not PASS (1347.479ms)
+✔ desk-birth-guard: an UNVERIFIABLE comparison must REFUSE, not PASS (1839.933667ms)
+✔ desk-carryforward-guard: an UNVERIFIABLE comparison must REFUSE, not PASS (1553.267584ms)
+✔ desk-declaration-guard: the refusal distinguishes 'unverifiable' from 'different' (2568.395667ms)
+✔ desk-birth-guard: the refusal distinguishes 'unverifiable' from 'different' (2654.378209ms)
+✔ desk-carryforward-guard: the refusal distinguishes 'unverifiable' from 'different' (2545.774375ms)
+✔ desk-declaration-guard: a genuinely clean MAIN still passes (reverse control) (1198.560541ms)
+✔ desk-birth-guard: a genuinely clean MAIN still passes (reverse control) (1337.229917ms)
+✔ desk-carryforward-guard: a genuinely clean MAIN still passes (reverse control) (1310.6335ms)
+✔ a LAWFUL worktree whose line-1 matches main is NOT refused — §3.0b mandates gating there (1741.474958ms)
+✔ all three guards share the SAME frozenTreeCheck function object (303.991375ms)
+✔ the CURRENT lock-line convention is classified as a lock (0.482875ms)
+✔ the RETIRED startsWith-ACTIVE convention is still classified as a lock (0.062959ms)
+✔ a real HANDOFF line is NOT a lock and still yields a desk (0.246125ms)
+✔ a handoff whose prose contains ACTIVE is still a handoff (0.121083ms)
+✔ all four desk tools agree on every real line-1 shape (0.159583ms)
+✔ CLI on a lock line prints SKIP at rc=0, the behaviour fire.md documents (33.945667ms)
+✔ CLI on a handoff still audits rather than skipping (156.697ms)
+✔ a non-lock line with no desk header still REFUSES at rc=2 (47.464875ms)
+
+FAIL — 1 desk item(s) have no declaring row in tasks/BACKLOG.md:
+  F-CLAW-2
+
+The dashboard renders BACKLOG.md, so these are on no board the owner reads
+(Completeness Law: "invisible = forgotten"). Give each one a row whose FIRST
+key, within the first 90 characters, is that item — its F-ID for an
+F-keyed item, its `backticked-slug` for a slug-keyed one. A mention inside
+another finding's row does NOT count — that is the F-1328-3 shape.
+✔ control: the guard runs and reaches its verdict path on an ordinary desk (253.937292ms)
+✔ THE DEFECT: a row about a sub-finding must not declare its PREFIX (161.146708ms)
+✔ a real sub-id keys its OWN row — the anchored ledger pattern would key nothing (0.657209ms)
+✔ all four live sub-ids key themselves, not their prefixes (0.213417ms)
+✔ a parent and its sub-finding are DISTINCT keys (0.145541ms)
+✔ the DESK-TAIL scan stays narrow — prose inflection must not become an item (0.450292ms)
+✔ first-key-wins inside the subject zone is preserved (0.109292ms)
+✔ an id past the 90-character subject zone is still not a key (0.076625ms)
+✔ subject-led closure is CLOSED and strict exits 1 (258.700375ms)
+✔ incidental citation in another closed subject is not CLOSED (73.777459ms)
+✔ a subject-led triangle row is OPEN-DESK-ONLY (50.128375ms)
+✔ all required finding shapes are desk items and alpha closures use scan (130.165959ms)
+✔ an absent finding is UNRECORDED (90.623458ms)
+✔ subject-led open and closed rows classify BOTH (137.143792ms)
+✔ ACTIVE line 1 skips with exit 0 (104.033041ms)
+✔ prose-only finding outside a desk segment is not an item (1.141917ms)
+✔ a late finding citation does not replace the segment key (0.690333ms)
+✔ desk audit and carryforward guard use the same item keys (6.900834ms)
+✔ goal slugs resolve merged and blocked states (63.823541ms)
+✔ running the auditor does not mutate the shared scan census (37.780375ms)
+✔ 1. desk-birth-guard reads STATUS.md exactly ONCE on the path that consumes it (1472.129875ms)
+✔ 2. desk-declaration-guard reads STATUS.md exactly ONCE on the path that consumes it (1247.663167ms)
+✔ 3. REVERSE CONTROL — desk-carryforward-guard, which always had the cured structure, still reads ONCE (1316.983125ms)
+✔ 4. TEETH — the pre-cure desk-birth-guard reads STATUS.md TWICE (1501.925125ms)
+✔ 5. TEETH — the pre-cure desk-declaration-guard reads STATUS.md TWICE (1223.313125ms)
+✔ 6. INSTRUMENT VALIDITY — the counter counts, so a 0 cannot be mistaken for a pass (947.67ms)
+✔ 8. TEETH (F-2273-1) — the SAME double read through `git show HEAD:STATUS.md` must RED (1473.579167ms)
+✔ 9. REVERSE CONTROL (F-2273-1) — the sanctioned `main:STATUS.md` read must NOT count as a violation (1232.87625ms)
+✔ 10. INSTRUMENT VALIDITY — the git counter counts, so an empty rev list cannot be mistaken for a pass (1196.118333ms)
+✔ 7. the cure is behaviour-neutral — both guards still REFUSE from a frozen worktree (1571.866042ms)
+✔ control: the subjects exist and export what this guard drives (0.992584ms)
+✔ THE CORE — a fragment INSIDE the desk body does not steal the parse start (0.717625ms)
+✔ F-1471-3's REVERSE CONTROL — an UPSTREAM prose mention still loses (0.189875ms)
+✔ THE FALLBACK — a desk whose header is not 🔺-shaped still parses (last-wins) (0.144ms)
+✔ the shape requires 🔺 — a BOLDED downstream prose mention still loses (0.140625ms)
+✔ among SEVERAL shaped hits the LAST wins — an earlier 🔺 header loses (0.074666ms)
+✔ NEUTRALITY — a fragment-free desk parses byte-identically to the old rule (0.059542ms)
+✔ ONE IMPLEMENTATION — all three modules resolve to the same function (1.004375ms)
+✔ END TO END — the gate SEES an item that sits above a fragment (F-2210-1) (131.520083ms)
+✔ END TO END REVERSE CONTROL — an UNDECLARED item above a fragment now FAILS (194.58675ms)
+✔ an id mentioned only as a NON-SUBJECT declares WHERE it was seen (8.967875ms)
+✔ an id absent from the board declares its ABSENCE, not silence (0.92775ms)
+✔ THE CORE ASSERTION — the two are DISTINGUISHABLE (0.453125ms)
+✔ the declaration names the state it must NOT attribute (0.283958ms)
+✔ REVERSE CONTROL — a subject id is untouched by the cure (0.590917ms)
+✔ REVERSE CONTROL — an id that is BOTH a subject and a mention is not UNRECORDED (0.309666ms)
+✔ the counts line is untouched — both kinds still tally as UNRECORDED (0.277792ms)
+✔ REVERSE CONTROL — declaring must not become refusing (--strict stays 0) (115.022334ms)
+✔ END TO END — the CLI stdout carries both declarations (F-2210-1) (124.424542ms)
+✔ --json carries the declaration for machine callers (36.934125ms)
+✔ the two id regexes are DERIVED from one source and cannot drift (0.195208ms)
+✔ a multi-mention id lists every line, deduped, in order (0.114875ms)
+✔ control: the subjects exist, export what this guard drives, and the corpus is real (1.371917ms)
+✔ the copies have COLLAPSED — exactly one desk-word declaration in the corpus (15.2825ms)
+✔ all three parsers AGREE on every spelling — the direction that was invisible (0.513708ms)
+✔ REVERSE CONTROL: the separator is not a wildcard — prose "OWNER-DESK" supplies no tail (0.08925ms)
+✔ REVERSE CONTROL: the shared /g pattern is STATELESS across consumers (0.115583ms)
+✔ REVERSE CONTROL: the LAST desk word wins, so an earlier prose mention loses (0.063708ms)
+✔ 1. CONTROL — on a healthy main worktree the already-shipped refusal is REACHABLE (1008.785584ms)
+✔ 2. a MAIN worktree with a DETACHED HEAD refuses instead of clearing (1094.175042ms)
+✔ 3. REVERSE CONTROL — a NON-GIT root still answers on its counts (F-1460-1) (222.433458ms)
+✔ 4. a LINKED worktree still names ITS OWN cause, not detachment (F-2225-1) (1043.980625ms)
+✔ 5. CONTROL — on a healthy main worktree the classifier is silent and ships the master (1529.595292ms)
+✔ 6. the classifier DECLARES and REFUSES on a detached main worktree (2056.811916ms)
+✔ 7. REVERSE CONTROL — the classifier does not refuse a NON-GIT root (353.437584ms)
+✔ 8. headState is declared on the machine channel ALWAYS, including the happy path (1163.382042ms)
+✔ 9. headDetached maps git 128 to no-git — the arm that keeps every legacy fixture alive (940.50125ms)
+✔ 10. all three copies of headDetached AGREE — the anti-drift duty F-2227-1 asks for (2608.227083ms)
+✔ CONTROL — a healthy corpus still refuses a master a runner is holding (239.6375ms)
+✔ an ABSENT corpus is DECLARED, so its clearance is no longer silent (746.908333ms)
+✔ the declaration reaches STDOUT, not only stderr (706.8675ms)
+✔ DEFECT ARM — an absent corpus is no longer byte-identical to a clear board (1395.21525ms)
+✔ REVERSE CONTROL — a genuinely clear board still CLEARS, and says nothing extra (684.080792ms)
+✔ REVERSE CONTROL — an absent corpus must NOT refuse (568.262916ms)
+✔ an UNREADABLE corpus REFUSES, and with 2 rather than 1 (256.632334ms)
+✔ the UNDRAINED sibling arm declares when tasks/done could not be read (602.077792ms)
+✔ CONTROL: with healthy git, an already-merged master is refused (1114.098875ms)
+✔ F-2212-1: git exiting 128 is NOT the verdict "not shipped" (1270.819ms)
+✔ F-2212-1: a failure WEARING the verdict's exit code is caught by stderr (1538.151542ms)
+✔ F-2212-1: git missing entirely (ENOENT) is not a clearance (824.046625ms)
+✔ REVERSE CONTROL: a genuine "not an ancestor" still CLEARS (1567.341ms)
+✔ REVERSE CONTROL: a leaf with no mergeHash still CLEARS (1396.361333ms)
+✔ 1. the parked name declares the near-miss it silently discarded (233.097542ms)
+✔ 2. the declaration names the leaf, its status and its merge hash (210.186625ms)
+✔ 3. it DECLARES and does not refuse — verdict and rc are unchanged (175.299917ms)
+✔ 4. --strict still separates "could not answer" (2) from "answered and refuses" (1) (210.801625ms)
+✔ 5. SILENT when nothing matches — the 524-master majority path gains no noise (185.881459ms)
+✔ 6. the REGISTERED name still refuses, and says nothing about near-misses (242.363042ms)
+✔ 7. scoped to --queue: a branch-shaped subject gets no near-miss (212.696792ms)
+✔ 8. REVERSE CONTROL — the pre-cure file is silent on the defect fixture (177.883416ms)
+✔ 9. REVERSE CONTROL — dropping the hits guard makes it fire on every UNKNOWN (279.728375ms)
+✔ 10. REVERSE CONTROL — a cure that REFUSES instead of declaring breaks the advisory default (208.981334ms)
+✔ 1. the silent single-hit near-miss is DECLARED (the sharpest case: no caveat exists today) (231.429792ms)
+✔ 2. the declaration does NOT refuse — a near-miss stays advisory (rc unchanged) (238.622542ms)
+✔ 3. the declaration reaches a REFUSAL arm too — it is printed before the verdict branches (152.861833ms)
+✔ 4. REVERSE CONTROL — an EXACT match declares NOTHING (identity is the majority path) (259.615375ms)
+✔ 5. REVERSE CONTROL — a DECORATED needle declares nothing (23 of 30 inexact hits are this) (141.53375ms)
+✔ 6. REVERSE CONTROL — an ID-KEYED leaf declares nothing (its taskFile points at a successor) (258.358541ms)
+✔ 7. REVERSE CONTROL — the DECLARED LIMIT: no master on disk means no claim is made (126.261375ms)
+✔ 8. REVERSE CONTROL — a subject that DOES own a leaf declares nothing even with neighbours (276.397042ms)
+✔ 9. PRE-CURE: removing the call restores the silence, and reds the defect arms only (248.464125ms)
+✔ 10. OVER-GENERAL: gating on hits.length>1 (F-1250-1s condition) misses the silent case (183.751375ms)
+✔ 11. OVER-GENERAL: dropping the master-exists test declares on ordinary decoration (259.772417ms)
+✔ 12. OVER-GENERAL: dropping the id comparison mislabels an id-keyed leaf (220.0635ms)
+✔ 13. OVER-GENERAL: turning the declaration into a refusal reds every lawful near-miss drain (435.503375ms)
+✔ F-2223-1: from a LINKED WORKTREE the tool refuses instead of answering off a frozen board (1096.5845ms)
+✔ REVERSE CONTROL: from the MAIN worktree the real verdict still lands (no refusal) (1146.93925ms)
+✔ REVERSE CONTROL: a SUBDIRECTORY of the main worktree is not a linked worktree (1104.151042ms)
+✔ REVERSE CONTROL: a NON-GIT fixture root stays lawful (git exit 128 is not a failure) (194.459208ms)
+✔ the DRAIN arm is refused too, not only --queue (1130.077458ms)
+✔ --all is refused too — it is the arm that printed the 594-vs-591 divergence (1075.6435ms)
+✔ PRE-CURE CONTROL: the uncured file really does hand out the clearance (1233.093167ms)
+✔ PARTIAL-CURE CONTROL: curing the exit code but not the banner must still red (1177.389792ms)
+✔ 1. the probe advisory region is locatable — else this guard cannot answer (3.9115ms)
+✔ 2. the advisory names at least one runnable command — an empty subject set REFUSES (0.162916ms)
+✔ 3. §2F of scripts/fire.md is locatable — else this guard cannot answer (1.204958ms)
+✔ 4. every command the advisory names is PRESCRIBED in §2F, not merely mentioned (8.563542ms)
+✔ 5. the bare tool NAME is an insufficient needle — proven against the law minus this cure (1.967083ms)
+✔ 6. the selector is SCOPED to the advisory, not the whole file (0.225292ms)
+✔ 6b. the selector reads EVERY prescribed idiom, not only the one in front of it (0.415917ms)
+✔ 7. the advisory is printed on the DRY path — the one where a fire stops reading (296.611833ms)
+✔ 8. the advisory is printed on a NOT-DRY path too — it is not verdict-conditional (310.395333ms)
+✔ 1. the finding: a closed verdict whose NOTE says UNKNOWN is still closed (1.028584ms)
+✔ 2. the dangerous direction: a real drain survives every token in its body (0.485042ms)
+✔ 3. every legacy single-line shape is unchanged (0.8055ms)
+✔ 4. F-2211-1 still holds: an empty capture falls through to the LOUD bucket (0.439708ms)
+✔ 5. leading blank lines do not hide the verdict (0.346875ms)
+✔ 6. REVERSE CONTROL — restoring the pre-cure blob match reds arms 1 and 2 (0.945416ms)
+✔ 7. REVERSE CONTROL — a naive split()[0] breaks arm 5, not arms 1-4 (5.0185ms)
+✔ 8. REVERSE CONTROL — dropping the UNKNOWN-first order reds arm 3 (2.284417ms)
+✔ 9. the cure is exercised by the CLI, not just the unit (F-2209-1) (281.637ms)
+✔ a DETACHED main worktree never prints the earned-DRY banner in ADVISORY mode (1445.884708ms)
+✔ the refusal fires even though ZERO subjects were classified — the enumeration, not the classifier (1114.940083ms)
+✔ a DETACHED main worktree exits 2 = "could not answer" under --strict, never 0 and never 1 (1032.724583ms)
+✔ the corpus declaration names the detachment on stdout — the only channel advisory mode has (1004.244417ms)
+✔ REVERSE CONTROL: a genuinely dry ATTACHED main worktree still earns the word (1103.292292ms)
+✔ REVERSE CONTROL: a NON-GIT fixture root is unaffected — the sibling suites depend on it (349.431667ms)
+✔ REVERSE CONTROL: a LINKED worktree keeps its OWN diagnosis — the two are not collapsed (1426.90675ms)
+✔ ORDERING: a DETACHED LINKED worktree is still diagnosed as LINKED — corpusTree answers first (1020.896458ms)
+✔ this file's headDetached copy AGREES with corpus-tree.mjs's, code-for-code (0.5375ms)
+✔ an unreadable corpus never prints the earned-DRY banner in ADVISORY mode (397.095459ms)
+✔ an unreadable corpus exits 2 = "could not answer" under --strict (121.762ms)
+✔ the corpus source is declared on stdout ALWAYS, including the happy path (187.640541ms)
+✔ REVERSE CONTROL: a genuinely dry board still earns the word, rc=0 in both modes (435.679541ms)
+✔ REVERSE CONTROL: a real drain still exits 1, never collapsed into 2 (289.348542ms)
+✔ REVERSE CONTROL: the advisory default still exits 0 on an unreadable corpus (43.210792ms)
+✔ exitCodeFor: an unreadable corpus outranks every bucket verdict (0.101541ms)
+✔ exitCodeFor: the legacy two-argument call is unchanged (corpus defaults to read) (0.04525ms)
+✔ selectSubjects declares corpus="unreadable" with a detail, not a bare empty result (19.484416ms)
+✔ selectSubjects declares corpus="read" on a corpus it really read (174.371333ms)
+✔ a linked worktree never prints the earned-DRY banner in ADVISORY mode (1241.771875ms)
+✔ a linked worktree exits 2 = "could not answer" under --strict, never 0 and never 1 (1046.6845ms)
+✔ the corpus declaration names the staleness on stdout — the only channel advisory mode has (1027.130291ms)
+✔ REVERSE CONTROL: a genuinely dry MAIN worktree still earns the word (1268.228291ms)
+✔ REVERSE CONTROL: an ordinary SUBDIRECTORY of the main worktree is not a linked worktree (799.83425ms)
+✔ REVERSE CONTROL: a NON-GIT fixture root is unaffected — the sibling suites depend on it (413.17725ms)
+✔ the convention start is DERIVED from the corpus, never pinned (236.545334ms)
+✔ a NUMERIC SHORT HASH is never mistaken for a date (151.310708ms)
+✔ a bare-dated file on/after the convention start is a subject; before it is legacy (141.260834ms)
+✔ F-2207-1: a NON-TERMINAL prefix is a subject — this is the whole finding (95.559125ms)
+✔ an UNRECOGNISED prefix fails SAFE into the subject set (142.144208ms)
+✔ terminal prefixes are skipped, case-insensitively (101.181417ms)
+✔ with no prefixed file at all, nothing is legacy (134.635042ms)
+✔ UNKNOWN is bucketed apart from CLEAR — it is not a clearance (0.174875ms)
+✔ advisory mode reports and never gates — every arm exits 0 (0.118459ms)
+✔ F-2208-1: --strict exits 2 on UNKNOWN — the ledger declining is not a clearance (0.144709ms)
+✔ --strict exits 1 on a real drain, 0 on an earned dry (0.066291ms)
+✔ a real drain outranks an UNKNOWN — the worse verdict wins the code (0.0525ms)
+✔ a missing tasks/done directory yields an empty, non-throwing result (0.609625ms)
+✔ F-2209-1: the CLI itself exits 2 on UNKNOWN — observed where a caller stands (654.22425ms)
+✔ F-2209-1: the CLI exits 1 on a real drain and 0 on an earned dry (630.790583ms)
+✔ F-2209-1: the --strict flag is actually read — advisory stays advisory (976.3555ms)
+✔ F-2210-1: in ADVISORY mode the banner is the ONLY signal — it must match the bucket (896.383417ms)
+✔ F-2210-1: a drain and an UNKNOWN are NAMED, not merely counted (628.629959ms)
+✔ F-2211-1: a CRASH is never classified as the verdict whose line it died on (1210.624459ms)
+✔ F-2211-1: --strict gates on a crashed classifier — it is a drain, not a clearance (1206.063167ms)
+✔ F-2211-1: a REAL rc=1 verdict still classifies — the cure must not break the live path (655.054208ms)
+✔ F-2211-1: the capture refuses stderr, and says so at the unit level too (0.48975ms)
+✔ 1. the subject set is DERIVED from the sibling and REFUSES if empty (4.04575ms)
+✔ 2. LIVE: every unconditional rc=2 site in the sibling is fail-safe (0.729292ms)
+✔ 3. TEETH: a differently-worded rc=2 refusal is DETECTED (0.30075ms)
+✔ 4. and the defect it detects is LOAD-BEARING — measured, not asserted (246.728917ms)
+✔ 5. REVERSE CONTROL: a GENUINE closure (rc=1) must still be `closed` (296.777917ms)
+✔ 6. DECLARED BOUNDARY: `exit(strict ? 2 : 0)` is excluded by construction (0.4725ms)
+✔ 7. CONTROL for the derivation itself: a neighbour must not exonerate a site (0.426ms)
+✔ 1. THE FINDING: a sibling refusal is not a verdict, and never `closed` (1.474458ms)
+✔ 2. it falls to the LOUD bucket BY CONSTRUCTION, not via the banner (F-2211-1) (0.525958ms)
+✔ 3. REVERSE CONTROL — a GENUINE closure (rc=1) is still `closed` (0.843208ms)
+✔ 4. REVERSE CONTROL — rc=2 with no banner is a CRASH, not a refusal (0.50075ms)
+✔ 5. a healthy CLEAR verdict on a non-merged leaf is still a REAL DRAIN (0.44825ms)
+✔ 6. exitCodeFor: "could not answer" (2) OUTRANKS "answered" (1) (0.386458ms)
+✔ 7. CLI — the refusal is NAMED and the banner refuses (F-2209-1 + F-2210-1) (253.918917ms)
+✔ 8. CLI advisory — the verdict travels on stdout, where §2F reads it (386.58075ms)
+✔ 9. CLI REVERSE CONTROL — a genuinely closed board is STILL earned-DRY (225.678208ms)
+✔ 10. CLI CONTROL — a healthy sibling still reports the real drain (300.521791ms)
+✔ [mac] a door that goes DARK after slow passes pages AT ONCE (17491.818541ms)
+✔ [mac] a DARK door from a cold state still pages at once (7040.352375ms)
+✔ [mac] SLOW still holds its fire for two passes and pages on the third (11894.92575ms)
+✔ [droplet] a door that goes DARK after slow passes mails AT ONCE (1977.427667ms)
+✔ [droplet] a DARK door from a cold state still mails at once, and a healthy door mails nothing (1541.460375ms)
+✔ [droplet] SLOW still holds its fire for two passes and mails on the third (1452.800208ms)
+✔ [droplet] a legacy single-number state file cannot suppress a DARK mail (462.059458ms)
+✔ [droplet] recovery announces a paged episode and stays silent after an unpaged blip (1681.592208ms)
+✔ neither watcher increments a single shared tally before choosing its branch (0.500417ms)
+✔ a code followed by a failed transfer reads as slow, never as a composite (12260.516ms)
+✔ a request that never answered reads as 000, not 000000, and is not "slow" (15215.731333ms)
+✔ a healthy door still reads exactly 200 (8690.812458ms)
+✔ a real non-200 still reads as its own code (6126.065083ms)
+✔ neither probe carries the concatenating fallback (0.764583ms)
+✔ the droplet watcher classifies slow apart from dark (0.155875ms)
+✔ the dashboard legend names the slow state it can print (0.134916ms)
+✔ control: the corpus is non-empty and the consumers all exist (0.513083ms)
+✔ no live script outside the ledger family and the declared desk trio declares an F-ID pattern (17.866375ms)
+✔ every consumer reaches the shared pattern by import, not by copy (0.361667ms)
+✔ the pattern SEES lettered ids — the permissive miss that made this a finding (0.137875ms)
+✔ the pattern still sees plain numeric ids — no regression on the old corpus (0.069917ms)
+✔ the pattern does NOT match inside a longer token — the desk copy over-matches here (0.062792ms)
+✔ closure is SUBJECT-FIRST: a row that merely CITES an id does not close it (91.956416ms)
+✔ the panel guard consults subject-first closure, not bare census membership (5.291875ms)
+corpus: 223 guard test file(s) scanned
+✔ the corpus is non-empty and contains the file this finding came from (69.803291ms)
+✔ no guard fixture recursively copies its own script directory (F-2284-1) (22.641958ms)
+✔ DEFECT ARM: the pre-cure shape is what this guard actually detects (0.141ms)
+✔ REVERSE CONTROL: copying a SINGLE named file is permitted, not flagged (0.126625ms)
+✔ no guard fixture enumerate-and-copies the shared scripts/ dir unaided (F-2421-1) (65.893916ms)
+✔ DEFECT ARM: the enumerate-and-copy shape is what the widened detector detects (0.5045ms)
+✔ REVERSE CONTROL: copying NAMED constants out of scripts/ is permitted (0.187833ms)
+✔ REVERSE CONTROL: copying RESOLVED IMPORT DEPS out of scripts/ is permitted (0.167167ms)
+✔ REVERSE CONTROL: enumerating scripts/ to READ is permitted; only copying races (0.315625ms)
+✔ REVERSE CONTROL: enumerate-and-copy of a SCRATCH dir is permitted (0.244ms)
+✔ REVERSE CONTROL: the sanctioned helper route is accepted, not flagged (0.415209ms)
+✔ REVERSE CONTROL: the cured fixture still BUILDS its fixture dir and subject (0.324291ms)
+✔ the detector survives a real file on disk, not just string literals (1.1355ms)
+✔ the kit self-test is green on an unmodified tree (2975.396208ms)
+✔ the check DECLARES how many tokens it derived, on the happy path too (2914.566292ms)
+✔ dropping the <date> substitution REDS (this is the defect that was invisible) (2829.970708ms)
+✔ dropping the <project> substitution REDS (the case the old hand-list caught — no regression) (2864.143958ms)
+✔ a token ADDED to instantiate() is picked up automatically (the derived half is not decoration) (5900.066667ms)
+✔ an underivable instantiate() REFUSES rather than checking nothing (270.973625ms)
+✔ the contract floor names every token init.mjs actually substitutes (0.640625ms)
+✔ a gate nothing calls is reported as a NEW orphan and exits 1 (610.898334ms)
+✔ a tracked test file nothing calls is reported as a NEW orphan and exits 1 (520.105958ms)
+✔ grandfathering that orphan with a reason turns the gate green (604.161417ms)
+✔ a gate whose only caller is a *.config.ts webServer command counts as REACHED (550.408125ms)
+✔ a guard named only in a COMMENT is not reached — prose is not a caller (773.582792ms)
+✔ putting it in the GUARDS array clears it — the control for the arm above (467.90825ms)
+✔ a non-gate script (dev, preview, census) is never ratcheted on (469.600666ms)
+✔ an orphan that GAINED a caller is reported so the baseline can tighten (551.799833ms)
+✔ --report never gates, even with a fresh orphan present (556.406625ms)
+✔ REGRESSION: an untracked guard-shaped file is byte-invisible by default (812.939875ms)
+✔ --include-untracked reports an untracked guard-shaped file as NEW with no caller (550.730958ms)
+✔ a tracked baselined orphan stays known under --include-untracked (658.156958ms)
+✔ --include-untracked still excludes untracked SCRATCH_FILE probes (586.397208ms)
+✔ --include-untracked excludes gitignored guard-shaped files (599.03675ms)
+✔ --update-baseline --include-untracked REFUSES without writing baseline bytes (430.879166ms)
+✔ REFUSES (rc=2) when package.json has no scripts block (562.127667ms)
+✔ REFUSES (rc=2) when no scripts/*.mjs is tracked (525.243333ms)
+✔ REFUSES (rc=2) when the resolver cannot reach its own anchors (480.202625ms)
+✔ REFUSES (rc=2) when the baseline file is missing — not read as {} (457.314083ms)
+✔ REFUSES (rc=2) when the baseline is unreadable (410.67525ms)
+✔ REFUSES (rc=2) when no subject matches the gate patterns (1027.424292ms)
+✔ an owner escalation whose cited F-ID has no ledger row exits 1 (465.504542ms)
+✔ the SAME escalation goes green once the F-ID has a ledger row -- the control (499.168916ms)
+✔ escalating with NO F-ID cited at all exits 1 -- it can never be found (469.442041ms)
+✔ all five desk spellings are matched, so the check cannot be dodged by an apostrophe (2424.947833ms)
+✔ ADMISSION: a *.test.sh nothing calls is a NEW orphan (pre-cure it is byte-invisible) (774.029709ms)
+✔ ADMISSION: a guard-shaped .sh nothing calls is a NEW orphan (pre-cure invisible) (844.635458ms)
+✔ ADMISSION CONTROL: a NON-guard-shaped .sh is still never ratcheted on (550.291417ms)
+✔ ADMISSION: a test-<thing>.mjs nothing calls is a NEW orphan (pre-cure invisible) (670.698875ms)
+✔ TEETH: dropping a test-<thing>.mjs from a live gate now REDS (the real silent-drop) (1076.0625ms)
+✔ EDGE: a test file OUTSIDE scripts/ is REACHED when a gate calls it (710.800667ms)
+✔ ADMISSION CONTROL: a `test-` prefix in a DIRECTORY name does not admit the file (580.842208ms)
+✔ LAW ROOT: a battery only a LAW surface calls is REACHED, and so are its leaves (596.1495ms)
+✔ LAW ROOT TEETH: dropping a leaf from the chain now REDS — the whole point (551.295042ms)
+✔ LAW ROOT: a law citing a script package.json does NOT define confers nothing (579.74325ms)
+✔ RETENTION: --update-baseline SUPERSEDES a healed entry instead of deleting its reason (541.724708ms)
+✔ RETENTION: `superseded` excuses NOTHING — a re-orphaned gate reds as FRESH (504.543834ms)
+✔ a NON-guard-named step of a gate script is admitted as a subject (491.179792ms)
+✔ CONTROL: that same file, named by nothing and persisted nowhere, is invisible (577.988ms)
+✔ DROPPING a persisted battery step from its battery reds as a NEW orphan (470.974791ms)
+✔ a dropped battery step can be grandfathered with a reason, like any orphan (526.880334ms)
+✔ --update-baseline is ADDITIVE: a step no script names any longer is KEPT (447.666916ms)
+✔ a step of a NON-gate script (dev, census) is never admitted (372.778417ms)
+✔ REGRESSION: the real repo persists asset-diet.mjs as a battery step (0.265791ms)
+✔ POSITIVE CONTROL: the real repo passes, with a non-empty measured subject (430.308125ms)
+✔ site/ is in the scan space — the public door is examined at all (F-2345-1) (0.529208ms)
+✔ a site/-only change is classified as a player path (0.1265ms)
+✔ the original player paths still match — the cure is additive, not a replacement (0.065459ms)
+✔ REVERSE CONTROL: factory surfaces are NOT player paths (0.057125ms)
+✔ REVERSE CONTROL: the prefixes are anchored at the start, not matched anywhere (0.053709ms)
+✔ REVERSE CONTROL: the dot in index.html is escaped (0.042041ms)
+✔ every declared prefix is load-bearing — the list drives the predicate (0.057ms)
+✔ the scan space is DECLARED on stdout, naming every prefix (46946.483167ms)
+✔ the declaration prints on the emptiest happy path too (F-2208-1) (260.209334ms)
+✔ isoWeekOf: ISO-8601 week boundaries, including the year boundary (1.419667ms)
+✔ isoWeekOf: the year-boundary rule, where naive week arithmetic goes wrong (0.071125ms)
+✔ isBatchedItem recognises BOTH live batching forms, and no others (0.126958ms)
+✔ weeklyItemCensus counts a standalone item in the target week (0.178375ms)
+✔ weeklyItemCensus excludes items from other weeks (0.10625ms)
+✔ a batched item is counted apart and spends NO headline slot (0.149333ms)
+✔ an undatable item is declared apart by CAUSE, never silently counted in the week (0.071ms)
+✔ an EMPTY corpus REFUSES rather than reporting a clean week (0.0545ms)
+✔ CLI: the budget declaration prints on the HAPPY path (under budget) (1606.965417ms)
+✔ CLI: going over budget prints the warning AND names what already stands (1760.295667ms)
+✔ CLI: batched items do NOT trip the warning (1798.310833ms)
+✔ CLI: items citing a CONTAINED commit still count — the census is not a floor (1648.509917ms)
+✔ CLI: the pre-existing sweep numbers are untouched by this addition (1640.558875ms)
+✔ 1 — an unreadable review list REFUSES instead of reporting a short ghost count (1615.068208ms)
+✔ 2 — the shipped-evidence corpora are DECLARED on the happy path, not only on failure (912.250459ms)
+✔ 3 — an ABSENT goals.json is DECLARED and does NOT refuse (a lawful routine state) (1022.471834ms)
+✔ 4 — a lawful non-git root does NOT refuse (the walk is the honest source there) (280.573458ms)
+✔ 5 — REVERSE CONTROL: a genuinely clean board says nothing extra and exits 0 (747.371375ms)
+✔ 6 — the refusal is 2 ("could not answer"), never 1 ("answered, and it refuses") (983.589334ms)
+✔ 7 — the refusal reaches STDOUT, where an output-classifying caller reads it (F-2211-1) (876.669875ms)
+✔ 8 — a ghost carried ONLY by goals.json is still found, and losing that corpus is declared (1226.627417ms)
+✔ a lead-📋 row naming a SHIPPED master is a strict failure (386.509209ms)
+✔ a lead-📋 row naming an open master passes (288.926542ms)
+✔ a finding that merely cites a shipped master is not a master row (254.206792ms)
+✔ a mid-line 📋 does not make the row a ladder row (221.416417ms)
+✔ 1 — GROUND TRUTH: a board with a real ghost still reds, and declares the set it checked (863.906667ms)
+✔ 2 — DEFECT: the two zeros must not be byte-identical (1847.212625ms)
+✔ 3 — the two numbers are distinct: "no rows at all" differs from "rows that name no master" (1541.09725ms)
+✔ 4 — REVERSE CONTROL: an empty subject set DECLARES and does NOT refuse (810.3935ms)
+✔ 5 — REVERSE CONTROL: the declaration prints on the HAPPY path, not only on failure (861.816375ms)
+✔ 6 — the declaration prints in ADVISORY mode too, not only under --strict (767.079208ms)
+✔ 7 — MANUFACTURED: dropping the declaration reds arms 2, 3, 5 and 6 (639.772708ms)
+✔ 8 — MANUFACTURED: reporting the CLIPBOARD count as the subject set hides the defect (624.375833ms)
+✔ 1 — DEFECT: a frozen worktree must not clear a row main records as shipped (1122.741959ms)
+✔ 2 — the ghost found from a frozen board NAMES the frozen board as the reason (1248.27775ms)
+✔ 3 — REVERSE CONTROL: main still finds an ordinary ghost the ordinary way (1079.112875ms)
+✔ 4 — REVERSE CONTROL: a genuinely clean main board stays green and invents no ghost (940.03075ms)
+✔ 5 — REVERSE CONTROL: a LAWFUL worktree with no ghost must NOT be flagged or refused (907.97575ms)
+✔ 6 — the corpus tree is DECLARED on the happy path, not only on failure (1307.950333ms)
+✔ 7 — an unreadable main corpus REFUSES with 2 ("could not answer"), never 1 or 0 (838.085667ms)
+✔ 8 — a non-git fixture root is LAWFUL (git 128) and behaves exactly as before (266.883375ms)
+✔ 10 — a worktree whose main carries NO goals.json is ABSENT, not unverifiable (860.959917ms)
+✔ 9 — REVERSE CONTROL: the PARTIAL cure (declare, drop the cross-check) is caught (885.885792ms)
+✔ every terminal-closed goal leaf can state why it closed (2.148792ms)
+✔ the mirrored resolver vocabulary still matches drain-block-check.mjs (0.566125ms)
+✔ goal tree schema is valid (1.823291ms)
+✔ ten sampled merged leaves have a done receipt and ancestral merge (46585.697666ms)
+✔ 1 — a clean snapshot copies the sources and reports nothing vanished (13.997916ms)
+✔ 2 — THE DEFECT: an entry that vanishes mid-copy is skipped, not fatal (1.463125ms)
+✔ 3 — .test.mjs files are excluded from the snapshot (0.801625ms)
+✔ 4 — REVERSE CONTROL: a NON-ENOENT copy failure is rethrown, never skipped (1.030291ms)
+✔ 5 — REVERSE CONTROL: an absent SUBJECT refuses, and names what it skipped (3.677541ms)
+✔ 6 — REVERSE CONTROL: calling it with no required subject refuses (1.359959ms)
+✔ happy, failing, append, projection, p95, and declarations (2079.406958ms)
+✔ default path is anchored to the script tree, not cwd (710.499125ms)
+✔ write failure is declared but cannot change a passing guard exit (724.176459ms)
+✔ tracked stats path is skipped without dirtying the repository or changing the guard exit (992.535583ms)
+✔ untracked stats path in the same repository still appends without changing the guard exit (947.827875ms)
+✔ stats path outside a repository still appends without changing the guard exit (659.007292ms)
+✔ an unclassifiable stats path fails closed without changing the guard exit (603.606833ms)
+✔ git exit 128 from a classification failure is not mistaken for an outside-repository path (757.107125ms)
+✔ manufactured pre-cure append dirties a tracked stats path without changing the guard exit (896.601125ms)
+✔ manufactured defects prove the reverse controls have teeth (2032.252333ms)
+✔ pre-change persistence absence reddens every persistence arm, but not guard exits (1100.647125ms)
+✔ every test that spawns run-guards.mjs redirects GR_GUARD_STATS_PATH (115.500583ms)
+✔ the production prior is never a literal target in a test file (33.682875ms)
+✔ the selector does not over-reach onto fixture content (reverse control) (26.270667ms)
+✔ the selector covers the PROPERTY its header names, not one spelling of it (0.316ms)
+✔ the originally covered idiom still matches (regression control) (0.094583ms)
+✔ provenance is load-bearing: a fixture-rooted path is NOT a subject (reverse control) (0.073ms)
+✔ a prose mention of the script is NOT a subject (reverse control) (0.052417ms)
+✔ the anchoring behaviour this guard depends on is still real (0.229334ms)
+✔ VALIDITY + arm 1 (THE DEFECT): pre-cure, a moved GATE LEAF reads as the affirmative all-clear (1843.350791ms)
+✔ arm 2: the drift section NAMES the gate leaf, not merely a bigger number (1207.823667ms)
+✔ arm 3: the derivation is DECLARED on stdout on the happy path (F-2208-1) (1078.862875ms)
+✔ REVERSE CONTROL, arm 4: a package.json naming only COVERED paths adds nothing (1267.287625ms)
+✔ arm 5: an ABSENT package.json degrades to the base list and SAYS SO (956.113125ms)
+✔ arm 6 (REVERSE CONTROL): an unreadable package.json must DECLARE, never REFUSE (998.962875ms)
+✔ arm 7: a MALFORMED package.json degrades to the base list and says so (1022.1ms)
+✔ arm 9: the DEGRADED path writes NOTHING to stderr — a 2>&1 consumer parses this output (961.107791ms)
+✔ arm 10: lane-absorbed-lines.mjs — the IMPORTING consumer — is stderr-clean too (886.605625ms)
+✔ REVERSE CONTROL, arm 8: the gates are read from MAIN, not from the lane worktree (2493.069167ms)
+✔ VALIDITY + arm 1: at the repo root the cured subject reports the drift that exists (1196.813833ms)
+✔ arm 2: the cured subject is byte-identical from a subdirectory (3440.749167ms)
+✔ arm 3 (THE DEFECT): pre-cure, a subdirectory turns real drift into the all-clear (1492.062708ms)
+✔ arm 4: the ledger pathspec is anchored too — fix the CLASS, not the instance (1666.173375ms)
+✔ arm 5: the anchor is repoRoot(), not the script directory (1418.326459ms)
+✔ REVERSE CONTROL, arm 6: curing inside git() must not re-point dirt()/cure() at main (1620.14ms)
+✔ CONTROL VALIDITY — the fixture really mints a gone pid and a live pid (118.970708ms)
+✔ arm 1 — a GONE holder is classified stale (171.815958ms)
+✔ arm 2 — a LIVE foreign holder is classified live (130.58075ms)
+✔ arm 3 — stale and live are DISTINGUISHABLE (the defect itself) (364.59675ms)
+✔ arm 4 — REVERSE CONTROL: a stale holder is still BUSY (never USABLE) (178.781334ms)
+✔ arm 5 — REVERSE CONTROL: EPERM is LIVE, not stale; ESRCH is the ONLY proof of absence (42.494208ms)
+✔ arm 6 — an unparseable pidfile stays unverifiable and BUSY (0.102833ms)
+✔ arm 7 — isSlotBusy is UNCHANGED for none/self (no pidfile, own dispatcher) (290.906ms)
+✔ arm 8 — a STALE holder is named on stdout as a crashed-runner corpse (1216.965916ms)
+✔ arm 9 — a LIVE holder also declares its cause, and does NOT claim a corpse (1033.493ms)
+✔ arm 10 — with NO pidfile the lane is not BUSY and declares no holder (948.376042ms)
+✔ CONTROL: the fixture really does collapse, and the guard can see it (F-2215-1) (658.565042ms)
+✔ the subject RUNS against the fixture and reports the lane (not a vacuous pass) (952.227208ms)
+✔ untracked= counts FILES, not porcelain ENTRIES (the defect) (825.005583ms)
+✔ the count scales with FILES — a bigger directory is a bigger number (859.210667ms)
+✔ dirt() passes --untracked-files=all to git status (the flag is load-bearing) (0.328458ms)
+✔ REVERSE CONTROL: the verdict word and exit code are NOT changed by the flag (842.60975ms)
+✔ REVERSE CONTROL: a genuinely clean lane still reports untracked=0 (882.004667ms)
+✔ REVERSE CONTROL: gitignored build output moves NO bucket and NO verdict (1540.625167ms)
+✔ TEETH: the pre-cure subject reds this guard (proven by manufacturing the defect) (887.353375ms)
+✔ corpus — every law surface was really read, and the allowlist is non-empty (1.726666ms)
+✔ arm 1 — no law surface prescribes a gate-refused command without a runnable path (6.550209ms)
+✔ arm 2 — the verdict is computed from the REAL settings, not baked in (0.344375ms)
+✔ arm 3 — fire.md does prescribe refused commands, so arm 1 is not vacuous (4.995791ms)
+✔ arm 4 — bash AND npm-run are represented in the live corpus, or the widening is decoration (3.383292ms)
+✔ arm 5 — an allowlisted npm form is NOT flagged (no over-reach onto `npm run build`) (0.264959ms)
+✔ arm 6 — stripping the fallback from fire.md reds arm 1 (3.962542ms)
+✔ arm 7 — a surface whose ONLY refused prescription is npm is still caught (0.194083ms)
+✔ arm 8 — the allowlist matcher agrees with ground truth MEASURED s2359, not assumed (0.424875ms)
+✔ arm 9 — REVERSE CONTROL: allowlisting a family retires exactly that family (6.996875ms)
+✔ arm 12 — a surface whose ONLY refused prescription is sqlite3 is caught (0.178583ms)
+✔ arm 21 — a surface whose ONLY refused prescription is ps or kill is caught (0.18375ms)
+✔ arm 22 — the ps/kill patterns select IMPERATIVES, never the prose that narrates them (50.064583ms)
+✔ arm 13 — a surface prescribing a PUBLISH-GATED command must carry its carve-out (0.262125ms)
+✔ arm 14 — arm 13 is not vacuous: the live corpus really does prescribe deploy.sh (0.220583ms)
+✔ arm 15 — MANUFACTURED DEFECT: deleting the carve-out sentence reds arm 13 (0.691125ms)
+✔ arm 16 — REVERSE CONTROL: the carve-out does not exempt deploy.sh from the fallback census (0.12875ms)
+✔ arm 10 — REVERSE CONTROL: a surface that prescribes nothing refused is never flagged (0.082917ms)
+✔ arm 11 — the allowlist matcher does not confuse `bash` with other Bash(...) entries (0.087125ms)
+✔ arm 17 — no allowlist entry may make a PUBLISH-GATED command runnable (0.117709ms)
+✔ arm 18 — arm 17 is not vacuous: there really is a publish-gated command to protect (0.073417ms)
+✔ arm 19 — MANUFACTURED DEFECT: F-2350-3's recommendation verbatim reds arm 17 (0.106375ms)
+✔ arm 20 — REVERSE CONTROL: a per-script enumeration serves F-2350-3 and keeps the gate (0.122625ms)
+✔ a correctly-pointed law passes once baselined (206.931166ms)
+✔ CODE-SIDE ROT: the cited line moves under a fixed coordinate -> POINTER DRIFT (the fire.md :315 shape) (211.79925ms)
+✔ LAW-SIDE ROT: the law is edited to a stale coordinate -> red until re-verified (the F-1276-2 shape) (213.936209ms)
+✔ a pointer past EOF is caught as OUT OF RANGE, not silently skipped (115.411084ms)
+✔ a pointer to a file that does not exist fails rather than being ignored (93.582583ms)
+✔ prose that is not a file:line is not mistaken for a pointer (154.462542ms)
+✔ a MISSING law surface is itself a red — the law cannot be checked if it is gone (106.238625ms)
+✔ THE REAL TREE: every law-surface pointer in this repo currently holds (986.696042ms)
+✔ MARKDOWN TARGET: a law surface citing another .md by coordinate is checked, not skipped (F-1278-2) (380.256042ms)
+✔ BOUNDARY: a NEW law surface outside the closed SURFACES list is NAMED (pre-cure it is invisible) (391.394584ms)
+✔ BOUNDARY: a DECLARED exclusion prints its reason instead of the undeclared prompt (203.713916ms)
+✔ BOUNDARY: the live/frozen split is DERIVED from the file, so a new handoff cannot rot it (322.367084ms)
+✔ BOUNDARY: a law-surface-shaped file with NO citations is reported as costless, not as a problem (193.056458ms)
+✔ BOUNDARY: a file already IN SURFACES is never named as unscanned, and a red still reds (335.310125ms)
+✔ GOAL LEDGER ROT: a live non-terminal blockedReason pointer moves -> red names the leaf (338.037584ms)
+✔ BACKLOG COORDINATE BAN: live leaves red, --update cannot bury it, terminal history stays out (601.934417ms)
+✔ DEAD INSTRUMENT: a law ordering fires to run a tool that does not exist is a red (F-2198-1) (153.229959ms)
+✔ a bare citation to a tool that EXISTS resolves and does not red (60.292459ms)
+✔ a citation WITH a coordinate stays POINTER-owned and is not counted as an instrument (229.96675ms)
+✔ SCAN SPACE: declared on the HAPPY path too — a declaration that appears only on failure re-creates the ambiguity it removes (F-2208-1) (353.593958ms)
+✔ SCAN SPACE: DERIVED from the families it enumerates, never transcribed (387.925375ms)
+✔ SCAN SPACE (reverse control): the edge is DECLARED, not widened — a law-shaped .md outside the families stays unscanned (302.28575ms)
+✔ 1. the surfaces headline decomposes rather than printing a bare count (1050.308375ms)
+✔ 2. the headline is self-consistent: total == law surfaces + named extras (0.210958ms)
+✔ 3. the extra scanned corpus is NAMED — the finding itself (0.066416ms)
+✔ 4. the count is DERIVED from the scanned list, not transcribed (0.322417ms)
+✔ 5. REVERSE CONTROL: the law-surface component is derived too, so growing LAW_SURFACES is lawful (0.164375ms)
+✔ 6. REVERSE CONTROL: the goal ledger must NOT be folded into LAW_SURFACES (0.735042ms)
+✔ 7. the declaration prints on the happy path, at an unchanged exit code (0.126584ms)
+✔ 8. the shared happy-path run shares its FAILURE too, not only its value (F-2415-1) (0.348042ms)
+✔ --fill-gaps pulls exactly the missing dated backup, and nothing else (982.651542ms)
+✔ the recovered file is the REMOTE bytes, not a placeholder (1704.675458ms)
+✔ --fill-gaps --dry-run names the gap and rsyncs NOTHING (536.326584ms)
+✔ the corpus is declared even on the happy path — "0 gaps" must not look like "I could not read the box" (F-2208-1) (521.830667ms)
+✔ THE DEFECT ARM: the default path leaves the hole behind today untouched (554.725958ms)
+✔ non-dated debris on the box is never pulled (1081.552042ms)
+✔ a mirror directory that does not exist yet is created, not crashed on (1163.417042ms)
+✔ an unreachable box fails LOUD — it must never report a clean series (560.606125ms)
+✔ THE DEFECT ARM: an account row in a mirror REFUSES with exit 1 and names the key (131.264ms)
+✔ every account prefix _accounts.ts writes is detected, not just the memorable ones (638.315667ms)
+✔ REVERSE CONTROL: a clean mirror is cleared — exit 0 and the CLEAN banner (70.824875ms)
+✔ REVERSE CONTROL: an account token that is not a PREFIX does not refuse (41.235541ms)
+✔ the corpus is DECLARED even on the happy path — "0 account rows" must not look like "I read nothing" (F-2208-1) (134.638792ms)
+✔ an unmapped table without `key` is NAMED as skipped on the happy path (144.807291ms)
+✔ mapped refusals identity columns are declared and catch an exposed account identity (92.891292ms)
+✔ an UNRECOGNISED key class warns and does NOT refuse by default (97.571542ms)
+✔ --strict turns an UNRECOGNISED key into a refusal (134.085541ms)
+✔ an ABSENT corpus DECLARES and does not refuse — it is lawful, and it answers the question (F-2218-1) (85.205542ms)
+✔ an UNREADABLE corpus DIRECTORY is "could not answer" (2) — the case absence must not be confused with (144.603125ms)
+✔ an UNREADABLE member is counted and named, and drives "could not answer" (96.195417ms)
+✔ the refusal reaches STDOUT — a caller that classifies stdout reads silence otherwise (F-2211-1) (93.712916ms)
+✔ --json carries the declaration and the offending keys ALWAYS (196.770917ms)
+✔ THE ALARM: the denylist covers every account key class functions/api/_accounts.ts writes (0.43325ms)
+✔ the corpus root is cwd-INVARIANT — the dangerous cwd is the one that still looks like home (F-2220-1) (187.577166ms)
+✔ the DEFAULT dir is anchored to the script, not to the working directory (39.832458ms)
+✔ --dir without a path is "could not answer" (2), not a silent default (130.652ms)
+✔ MANUFACTURED: refusing on UNRECOGNISED unconditionally reds the lawful-growth arm (90.395791ms)
+✔ MANUFACTURED: substring matching instead of prefix matching reds the not-a-prefix control (88.708ms)
+✔ MANUFACTURED: treating an unreadable member as clean reds the denominator arm (152.248458ms)
+✔ MANUFACTURED: dropping the always-on declaration reds the F-2208-1 arm (97.88425ms)
+✔ MANUFACTURED: removing the refusals map recreates the blind spot (92.89275ms)
+✔ 1. a whole, current series reports WHOLE AND CURRENT and strict exits 0 (196.673458ms)
+✔ 2. an INTERIOR hole is NAMED and strict exits 1 — the defect LB-01 cannot see (227.916875ms)
+✔ 3. a STALE newest (no holes) is reported with its age and strict exits 1 (92.822ms)
+✔ 4. an ABSENT mirror directory CANNOT VERIFY — strict exits 2, never 1 (255.50525ms)
+✔ 5. a readable but EMPTY series CANNOT VERIFY — an empty series has no gaps (195.808084ms)
+✔ 6. ADVISORY default is 0 in EVERY state, including a gap and an unreadable corpus (384.309958ms)
+✔ 7. the corpus is DECLARED on the HAPPY path too, not only on failure (110.654667ms)
+✔ 8. the CALENDAR is validated, not the digit count (92.879584ms)
+✔ 9. REVERSE CONTROL: a relocated copy measures ITS OWN tree, from any cwd (316.268208ms)
+✔ 10. gaps are computed across month and year boundaries (1.210208ms)
+✔ 11. day arithmetic is leap-correct and monotone (no Date, so no timezone) (0.197417ms)
+✔ 12. parseName accepts only well-formed calendar names (0.341375ms)
+✔ 13. exitCodeFor keeps 2 (could not answer) above 1 (refuses) above 0 (0.157834ms)
+✔ 15. localToday reads LOCAL components — the UTC date-only trap, guarded (0.428625ms)
+✔ 14. readMirrors DECLARES an unreadable corpus rather than returning an empty selection (0.25525ms)
+✔ a crashed --strict run refuses (2) rather than exiting like a clean board (0) (320.147125ms)
+✔ a crashed run names itself on STDOUT, not only on stderr (177.304708ms)
+✔ REVERSE CONTROL — a crashed DEFAULT run stays advisory (0), never blocking a drain (149.254125ms)
+✔ REVERSE CONTROL — a clean board under --strict still exits 0 (204.412833ms)
+✔ "could not answer" (2) stays distinct from "answered, and the answer refuses" (1) (495.659458ms)
+✔ the second manufactured trigger — a --root one directory off — also refuses (220.5295ms)
+✔ 1. goal corpus READ: the source is declared on the machine channel (251.599ms)
+✔ 2. goal corpus ABSENT: the machine channel says so — it is not silently the same (226.240792ms)
+✔ 3. the two states are DISTINGUISHABLE — the pre-cure defect, stated as an assertion (557.320916ms)
+✔ 4. the human channel names the loss — stdout is the advisory default's real interface (246.037042ms)
+✔ 5. REVERSE CONTROL — an absent goal corpus must NOT refuse (it is lawful) (521.864041ms)
+✔ 6. REVERSE CONTROL — a healthy board says nothing extra (230.024666ms)
+✔ 7. the MALFORMED path is untouched and still fails LOUD (F-2214-1 not regressed) (182.508833ms)
+✔ 8. the reviews declaration still works — the sibling cure is not disturbed (209.527959ms)
+✔ CONTROL: with healthy git the corpus is MAIN, and main ships the master (556.82675ms)
+✔ F-2213-1: a broken ls-tree is NOT silently answered by the working tree (1178.911ms)
+✔ F-2213-1: an unspawnable git is a crash, not "no main here" (581.5815ms)
+✔ REVERSE CONTROL: a non-git root still walks the working tree, silently and OK (164.438042ms)
+✔ REVERSE CONTROL: a repo with no `main` branch is also legitimate, not unverifiable (325.876625ms)
+✔ F-2213-1: the 1 MiB default maxBuffer is a growth-keyed trap, and is not in force (1826.960583ms)
+✔ a linked worktree REFUSES in ADVISORY mode — the mode actually in use (1763.725125ms)
+✔ --strict from a linked worktree exits 2 ("could not answer"), never 1 (1016.835541ms)
+✔ the machine channel names the tree when it is a linked worktree (938.474833ms)
+✔ the machine channel declares the tree ALWAYS, including the happy path (1031.999083ms)
+✔ REVERSE CONTROL: the MAIN worktree of a real repo does not refuse (1006.905458ms)
+✔ REVERSE CONTROL: an ordinary SUBDIRECTORY of the main worktree does not refuse (1475.18325ms)
+✔ REVERSE CONTROL: a non-git scratch root still behaves exactly as the 12 legacy fixtures expect (573.923959ms)
+✔ REVERSE CONTROL: --strict on a real main board with a candidate still exits 1, not 2 (1169.734ms)
+✔ the scan space covers EVERY tracked src TypeScript file, at every depth (91.827959ms)
+✔ files sitting DIRECTLY under src/ are subjects — the exact class the `src/**/*.ts` pathspec dropped (105.061542ms)
+✔ the declared numbers account for the WHOLE corpus — scanned + skipped === all (73.413417ms)
+✔ an empty corpus REFUSES rather than certifying — a loop over nothing reports success (173.010375ms)
+✔ every SRC_EXCEPTIONS entry is a real tracked file — a rotted allowlist quietly mis-states the skip count (21.34475ms)
+✔ the guard consumes the shared selector and carries no second implementation of it (0.443708ms)
+✔ the selector reads the same corpus from a subdirectory — the dangerous cwd, not tmpdir (671.146041ms)
+✔ the guard anchors its ROOT to import.meta.url, never to the process cwd (0.485167ms)
+✔ 1 · from the repo root it still FINDS a NUL and still exits 1 (the cure is not a mute button) (570.489625ms)
+✔ 2 · a narrowed scan REFUSES with 2 rather than printing the happy-path verdict (435.112584ms)
+✔ 3 · 2 = "could not answer" is kept DISTINCT from 1 = "answered, and the answer refuses" (1115.08325ms)
+✔ 4 · REVERSE CONTROL — a genuinely clean board at the root still passes, quietly (577.425ms)
+✔ 5 · the corpus declaration prints on the HAPPY PATH too (F-2208-1) (508.47725ms)
+✔ 6 · the declaration states a REAL denominator, not a constant (584.626667ms)
+✔ 7 · a refusal SPEAKS under --quiet — a refusal is not a report (622.878292ms)
+✔ 8 · --quiet still says NOTHING on a genuine happy path (the cure is not noise) (597.926083ms)
+✔ 9 · outside any repository it refuses with 2, not a stack trace at rc=1 (132.857041ms)
+✔ 10 · REVERSE CONTROL — an unreadable member DECLARES but must NOT refuse (642.237375ms)
+✔ 1. a NUL in a tracked .py is FOUND — the defect arm (457.357541ms)
+✔ 2. the corpus declaration reports BOTH sides of the denominator, always (394.428041ms)
+✔ 3. an UNLISTED suffix is named rather than vanishing (424.5085ms)
+✔ 4. REVERSE CONTROL — an unclassified suffix DECLARES and does NOT refuse (292.870875ms)
+✔ 5. REVERSE CONTROL — NULs in known-binary do NOT red the gate (438.062125ms)
+✔ 6. the three buckets PARTITION the tracked set — nothing falls out unaccounted (389.327791ms)
+✔ 7. --quiet still REACHES the verdict (an agreeing silence is not agreement) (815.863667ms)
+✔ 8. F-2220-1 is NOT regressed — a narrowed scan still refuses on stdout (359.074708ms)
+✔ the contract corpus is readable and non-trivial (0.3995ms)
+✔ at least one contract still reaches the goalBias surface (0.071417ms)
+✔ (F-2288-1) no REACHING contract exceeds the binade the margin was measured in (0.293167ms)
+✔ the dormant exposure is still only dormant — large contracts do not reach (0.065125ms)
+✔ F-2247-1: a refusal stating its basis under closureReason is READ (pre-cure: unread, green) (0.859584ms)
+✔ F-2247-1: a session-stamped variant is the same field, not a new one (0.214084ms)
+✔ F-2247-1: a refusal with NO readable basis is counted as unreadable, not as clean (0.295458ms)
+✔ F-2247-1: the declaration prints on the HAPPY path — unreadable === 0 (F-2208-1) (0.412625ms)
+✔ F-2247-1: the CLI is WIRED to the declaration (the call site, not just the decision) (255.6975ms)
+✔ F-2247-1: the PASS sentence states its own scope when anything went unread (188.11675ms)
+✔ REVERSE CONTROL: a narrative note RECORDING a propagation must not red (0.26625ms)
+✔ REVERSE CONTROL: a RETIRED prior* reason must not red (0.18425ms)
+✔ REVERSE CONTROL: authorNotes states intent, never outcome (0.170834ms)
+✔ refusalText excludes retired and authoring keys but keeps live ones (0.287709ms)
+✔ F-2247-2: closureReason outranks a retired priorStoppedReason (pre-cure: reversed) (185.949834ms)
+✔ F-2247-2: a _SUPERSEDED-suffixed reason is retired too (249.228708ms)
+✔ REVERSE CONTROL: excluding the retired CLASS must not swallow a legitimate closure reason (281.939958ms)
+✔ strict + absent review path: rc=2, not a clearance (665.117584ms)
+✔ strict + root outside a git repo: rc=2 (251.049208ms)
+✔ strict + unknown option: rc=2 — strict is parsed OUTSIDE the try (45.599291ms)
+✔ advisory + crash: rc stays 0, but stdout SPEAKS (F-2211-1) (590.59175ms)
+✔ REVERSE CONTROL: a real ON-DISK-UNTRACKED finding is rc=1, NOT rc=2 (490.3455ms)
+✔ REVERSE CONTROL: a clean strict run is rc=0 and silent of the banner (565.932417ms)
+✔ arm 1 — a genuinely clean board STILL names its scan space (F-2208-1) (508.0635ms)
+✔ arm 2 — the declaration is DERIVED: it names every prefix the predicate uses (590.798584ms)
+✔ arm 3 — the predicate ACCEPTS every declared prefix (0.181542ms)
+✔ arm 4 — the predicate REJECTS the measured-excluded classes (an over-general widening reds) (0.084958ms)
+✔ arm 5 — the regex is DERIVED from the list, not a parallel literal that can drift (0.114958ms)
+✔ arm 6 — an on-disk-untracked citation is still FOUND and NAMED, and still reds --strict (733.064875ms)
+✔ arm 7 — F-2215-1 exit codes still mean three different things (613.346208ms)
+✔ arm 8 — a run that COULD NOT answer must not claim a scan space (450.460167ms)
+✔ a blocked leaf citing a RULED finding is stale (1.411375ms)
+✔ a blocked leaf citing an UNRULED finding is not stale (0.204041ms)
+✔ "RULING REQUIRED" prose does not count as a ruling — only "<id> RULED" does (0.135083ms)
+✔ terminal-closed statuses refuse work too, so their reasons are checked (0.173333ms)
+✔ a merged leaf is not a refusal, however its reason reads (0.169375ms)
+✔ a leaf is any node carrying taskFile — NOT a childless node (0.144167ms)
+✔ denominator agrees with drain-block-check on the live tree (23.445ms)
+✔ the live tree carries no stale refusal (259.1945ms)
+✔ a REFUSED start is recorded durably in the runner log, not just on stdout (118.019958ms)
+✔ the record names the facts that decide every lane gate (45.198584ms)
+✔ --check records NOTHING: it started no runner, so there is no provenance to write (282.019ms)
+✔ an unwritable log degrades to a WARN and never changes the exit code (78.1315ms)
+✔ the record survives an un-redirected stdout — the prescribed fire invocation (80.111542ms)
+✔ PRE-CURE: stripping the record_env calls loses the refusal provenance entirely (28.833125ms)
+✔ WIRING (static): the verified-start path still records, after custody is confirmed (0.191792ms)
+✔ OVER-GENERAL: recording on --check pollutes provenance with non-events (302.940917ms)
+fatal: bad revision 'origin/main..main'
+fatal: bad revision 'origin/main..main'
+fatal: bad revision 'origin/main..main'
+fatal: bad revision 'origin/main..main'
+REFUSING: save/dupe already exists. Pick another name.
+✔ reaches a NESTED staging file — the F-1120-2 class (641.990875ms)
+✔ RED PATH PROVEN: the historical one-dir, non-recursive reader finds NONE of it (451.770417ms)
+✔ reaches a file sitting LOOSE at the staging root — the F-1658-3 class (570.810417ms)
+✔ RED PATH PROVEN: a directories-only enumeration finds none of the root file (558.225458ms)
+✔ reaches a DOT-PREFIXED staging file — the F-2174-1 class (551.41625ms)
+✔ RED PATH PROVEN: the historical startsWith(".") skip finds none of it (590.234667ms)
+✔ still skips VCS and OS noise by name (644.223ms)
+✔ the audit and the salvage tool share ONE skip rule — they must not drift (0.355084ms)
+✔ the ALARM asks the same question as the audit — all THREE sites, not two (0.499666ms)
+✔ reaches a file at the ART WORKTREE ROOT — the F-2195-1 class (646.499ms)
+✔ RED PATH PROVEN: an assets-only scan root finds none of the worktree-root file (587.797ms)
+✔ all THREE implementations scan the ART WORKTREE ROOT, not just assets/ (F-2195-1) (1.118709ms)
+✔ the audit NAMES an unregistered sibling tree under worktrees/ (F-2196-1) (1017.015958ms)
+✔ RED PATH PROVEN: without the declaration, that same tree goes unnamed (1360.162917ms)
+✔ the declaration EXCLUDES registered worktrees, resolved from git not a hardcoded list (1023.419125ms)
+✔ selects by BLOB, not name: regenerated bytes under a tracked name are AT RISK (385.258ms)
+✔ RED PATH PROVEN: name-based selection skips those same bytes — the F-1054-1 class (580.449209ms)
+✔ bytes already in git are NOT at risk (no pointless re-salvage) (440.017458ms)
+✔ --dry-run writes no object and no ref (442.708375ms)
+✔ a real run salvages the nested bytes onto save/*, leaving main untouched (776.985875ms)
+✔ refuses to clobber an existing ref (744.853666ms)
+✔ 1. a rotted same-file pointer REDS and names the file, symbol and both lines (204.234542ms)
+✔ 2. REVERSE CONTROL — a correct pointer PASSES (232.929833ms)
+✔ 3. TOLERANCE — a pointer aimed at the docstring above the declaration is NOT rot (145.852333ms)
+✔ 4. a CROSS-FILE citation is counted and named, never silently dropped or redded (148.726042ms)
+✔ 5. FALSE-POSITIVE CONTROL — a list marker beside a backticked local symbol is not a citation (107.797375ms)
+✔ 6. FALSE-POSITIVE CONTROL — a count in prose is not a coordinate (105.727458ms)
+✔ 7. THE RUNG — an EMPTY subject set REFUSES rc=2, it does not PASS (98.735667ms)
+✔ 8. FALSE-POSITIVE CONTROL — the citation shape in real CODE is not a comment pointer (137.856625ms)
+✔ 9. the corpus declaration prints on the HAPPY PATH, not only on failure (222.489ms)
+✔ 10. an unenumerable root REFUSES rc=2 rather than reporting a clean corpus (97.0155ms)
+✔ 11. a .sh comment carries pointers too — the corpus is mixed by design (100.8135ms)
+✔ 13. a corpus the FILE key emptied names the file key, not the citation key (124.787084ms)
+✔ 14. REVERSE CONTROL — files read but no citations still names the CITATION key (92.172875ms)
+✔ 12. a nested directory is NOT walked — the corpus claim is one directory deep (95.957875ms)
+✔ a regex literal holding a quote does NOT hide a later spawn site (3.028958ms)
+✔ a spawner genuinely INSIDE a regex literal stays hidden (the mask must still mask) (1.390875ms)
+✔ DIVISION is not mistaken for a regex literal (reverse control) (0.905791ms)
+✔ property access (re.exec, db.exec) is excluded and counted, not scored as a spawn (0.881542ms)
+✔ the census DECLARES both exclusion counts on stdout, always (665.817375ms)
+✔ the banner does not print a green tick beside a non-zero exposed count (498.707166ms)
+✔ the census still SEES the site that proved F-2465-1 (anti-vacuity on the live tree) (322.228084ms)
+  ⓘ 5 refusal verdict(s) have no goal leaf, so this guard cannot judge them (F-1448-6 leaf debt): ap-view.md, f-board-1.md, fix-enemy-pathing-wrecker-read.md, lane-m4-claim-geometry-and-headless.md, trail-guide-plain-boot-observed-beats.md
+✔ the sweep still sees the corpus it judges (219.387166ms)
+✔ a MERGE verdict whose prose discusses holding is not a refusal (0.156167ms)
+✔ a genuine refusal is still caught in every form the corpus uses (0.0775ms)
+✔ a supersede banner retires the verdict, but only inside the verdict block (0.055958ms)
+✔ no shipped slice is left carrying a live refusal verdict (442.140208ms)
+✔ unmappable reviews are surfaced as leaf debt, not treated as clearance (113.928041ms)
+✔ reds on the s1461 incident row that motivated the finding (2.063916ms)
+✔ reds on the live e3-moth-socket ghost line (0.348166ms)
+✔ stays silent on a leaf mentioned in the body as an aside (0.155291ms)
+✔ does not red on an open 🟡 finding whose slice merged (arm (a) is rejected) (0.154167ms)
+✔ treats a backticked mention as a quotation, not a claim (0.169ms)
+✔ stays silent on a row already marked closed (0.116125ms)
+✔ stays silent while the leaf has not landed (0.150041ms)
+✔ reports a claim it cannot resolve rather than guessing (0.1225ms)
+✔ rows without the claim are not classified at all (0.1335ms)
+✔ resolves a leaf by taskFile as well as by id (0.236333ms)
+✔ headline is the leading bold span, and falls back when there is none (0.206708ms)
+✔ the guard RUNS when invoked as a script (entrypoint is not a silent no-op) (243.513084ms)
+✔ the live ledger carries no stale READY-FOR-GATES claim (193.95475ms)
+✔ a shipped leaf counts as landed, not only a merged one (0.224375ms)
+✔ no stopped leaf names a successor that has already shipped (3.031875ms)
+✔ the detector fires on the F-1519-1 shape (manufactured, not observed) (0.151583ms)
+✔ loose supersession prose is NOT treated as a successor commitment (0.065667ms)
+✔ a stopped leaf whose successor is still in flight stays green (0.075875ms)
+✔ corpus is non-empty and both subjects were really read (0.418459ms)
+✔ arm 1 — the helper carries no bare lane-runner-v3.sh:NNN coordinate (0.479875ms)
+✔ arm 2 — every cited anchor resolves EXACTLY ONCE in lane-runner-v3.sh (0.114375ms)
+✔ arm 3 — the helper still CITES every anchor (the list cannot go vacuous) (0.096083ms)
+✔ arm 4 — the live pair is clean end to end (0.094625ms)
+✔ arm 5 — restoring the pre-cure coordinate reds arm 1 and NOTHING else (0.123791ms)
+✔ arm 6 — renaming the runner message reds arm 2 (the cross-file rot this cures) (0.108959ms)
+✔ arm 7 — REVERSE CONTROL: dropping a citation from the helper reds arm 3, not arm 2 (1.458667ms)
+✔ 1. REVERSE CONTROL — the battery leg `--limit 40 --quiet` still succeeds and still reports (16487.721625ms)
+✔ 2. TEETH — an unrecognised option REFUSES with 2 rather than being swallowed (41.577208ms)
+✔ 3. TEETH — a TYPO of the bounding flag refuses, and does so BOUNDED in time (45.04675ms)
+✔ 4. TEETH — a non-positive limit refuses instead of printing CLEAN over an empty corpus (99.350834ms)
+✔ 5. REVERSE CONTROL — the refusal reaches STDOUT, not stderr alone (F-2211-1) (32.241875ms)
+✔ 6. REVERSE CONTROL — `--limit N` consumes its value, so the number is not read as an option (7667.7765ms)
+✔ 7. REVERSE CONTROL — `--quiet` must NOT suppress the DROPPED blocks or the verdict (311.530666ms)
+✔ 8. REVERSE CONTROL — `--all` still lists the excluded shapes; the cure did not break advisory output (9505.581791ms)
+✔ 9. TEETH — on a board that IS LOST, every prescribed form answers with 1 and never refuses as 2 (357.980375ms)
+✔ 1. REVERSE CONTROL — the live battery leg still answers and still examines commits (16490.359083ms)
+✔ 2. REVERSE CONTROL — a genuinely CLEAN board still reads CLEAN at rc=0 (354.4715ms)
+✔ 3. REVERSE CONTROL — a board with a REAL drop still reads LOST at rc=1 (375.256709ms)
+✔ 4. TEETH — no STATUS.md history at all REFUSES rather than printing CLEAN (154.074833ms)
+✔ 5. TEETH — a history with no unambiguous transition REFUSES (155.2555ms)
+✔ 6. TEETH — THE INVERSION: a real drop + unreadable blobs refuses instead of flipping to CLEAN (1177.843875ms)
+✔ 7. TEETH — the refusal reaches STDOUT even under --quiet (F-2211-1) (215.174625ms)
+✔ 8. TEETH — the three routes are DISCRIMINATED, because they name different owed acts (835.784334ms)
+✔ 9. REVERSE CONTROL — a LAWFUL failed blob read must not be mistaken for an empty corpus (802.2485ms)
+✔ THE RED: a shipped leaf naming an unacknowledged stopped leaf is reported (9.222833ms)
+✔ THE ACK silences it, and only for the referent it names (0.263541ms)
+✔ AN ACK MUST STATE A REASON — empty strings and bare arrays do not acknowledge (0.22675ms)
+✔ NARROWNESS IS LOCKED IN: owner-gated blocked leaves are NOT this guard's business (0.194917ms)
+✔ a leaf naming ITSELF is not a supersession (0.129333ms)
+✔ LIVE: every shipped leaf naming a stopped leaf has been walked and answered (132.742625ms)
+✔ every constant the bound is derived from was actually found in source (0.631125ms)
+✔ the canonicalization quantum is still 1e15 (0.076875ms)
+✔ max per-step hero displacement stays inside the pinned canonicalization domain (0.37825ms)
+✔ absorption at the derived bound holds its measured floor (12.622292ms)
+✔ the domain is a GRADIENT, not a cliff — absorption is never total, at any magnitude (21.506916ms)
+✔ the bound is load-bearing — absorption degrades materially above it (69.821667ms)
+✔ roundMotion quantum is extractable and is the 1e15 canonicalization grid (0.529083ms)
+✔ every winner comparison in consider() shares ONE epsilon (0.301208ms)
+✔ the comparator epsilon clears the canonicalization quantum by >=1e6 (0.230125ms)
+✔ the hero reaches resolveTerrainMove ONLY behind hasElevationTile() (0.148209ms)
+✔ the enemy reaches it only on an elevation tile or an authored water mask (0.175084ms)
+✔ the canonicalization still covers both rotation candidates (0.055917ms)
+✔ (3) the map half-extent the carried delta was measured at has not grown (0.201ms)
+✔ (4) goalBias still differences two distances — the cancellation the margin was measured on (0.047917ms)
+✔ dry-board-probe.mjs is still a live census subject (anti-vacuity for its clean bill) (0.844917ms)
+✔ dry-board-probe.mjs has no unbounded sync node spawn (§2F — the first command of every dry-board declaration) (0.66175ms)
+✔ dry-board-probe.mjs node-child bounds are generous (>= 120000 ms) — no panic-shrinking (0.649958ms)
+✔ ledger-backup-pull.mjs is still a live census subject (anti-vacuity for its clean bill) (0.15575ms)
+✔ ledger-backup-pull.mjs has no unbounded sync node spawn (§LB-01 — the daily mirror pull and its exposure gate) (0.136166ms)
+✔ ledger-backup-pull.mjs node-child bounds are generous (>= 120000 ms) — no panic-shrinking (0.259292ms)
+✔ spawn-bound-census --list names the OUTSIDE set, not only the in-battery set (375.401583ms)
+✔ the outside set is reported honestly — count and listing agree (435.541ms)
+✔ e2e collection cannot statically reach a module with a Vite-only ?raw import (8232.766833ms)
+✔ 1 — the needle is ANCHORED: a log that only NARRATES the line contributes nothing (F-2102-1) (559.848375ms)
+✔ 2 — ground truth: TRACKED / ON-DISK / LOST are told apart (636.587167ms)
+✔ 3 — the corpus is declared on the HAPPY path too (F-2208-1) (481.891667ms)
+✔ 4 — an ABSENT corpus REFUSES; it never reads as "nothing was withheld" (374.868166ms)
+✔ 5 — --strict separates 1 (owed) from 0 (clean) from 2 (cannot answer) (840.744792ms)
+✔ 6 — rows and DISTINCT paths are both reported (a repeat withhold is the ordinary case) (619.116458ms)
+✔ 7 — cwd-invariant: the verdict does not change when run from a subdirectory (F-2220-1) (752.311ms)
+✔ 8 — an unverifiable TRACKED SET refuses rather than calling everything LOST (314.5345ms)
+✔ 11 — a path surviving ONLY in a lane worktree is ON-DISK, not LOST (555.977ms)
+✔ 9 — TEETH: dropping the anchor reds arm 1 (the manufactured F-2102-1 defect) (736.667958ms)
+✔ 10 — TEETH: an empty tracked set that classifies instead of refusing is visibly wrong (177.525333ms)
+ℹ tests 1050
+ℹ suites 0
+ℹ pass 1050
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 66572.868084
+=== ghost-ladder-row-guard ===
+0 ghost ladder row(s).
+ladder corpus: 1 master row(s) selected from 27 clipboard-lead row(s).
+corpus tree: main — main shipped-evidence cross-check: not-needed
+shipped-evidence corpora: reviews main, goals goals
+
+> gold-rush@0.1.0 test:findings-state
+> node scripts/findings-state-guard.mjs
+
+declared subjects : 647
+declared closed   : 463
+declared open     : 184
+double-state      : 0
+wide-open advisory : 373 skipped marker-led rows; 7 F-IDs open only there; 0 narrow closed-only
+findings-state-guard: PASS
+
+> gold-rush@0.1.0 test:blocker-panel
+> node scripts/blocker-panel-closed-guard.mjs
+
+panel rows        : 37
+rows with an F-ID : 36
+census closed     : 573
+closed-on-panel   : 0
+blocker-panel-closed-guard: PASS
+
+> gold-rush@0.1.0 test:ruling-propagation
+> node scripts/ruling-propagation-guard.mjs
+
+ruling-propagation: 6 findings recorded RULED · 66 goal leaves still refuse work · 0 stale
+  reason corpus     : 58/66 refusals state their basis under a key this guard reads · 8 DECLARED UNREAD
+      unread: stopped     b4v3-picnic-active-defense  [note_s2131, note]
+      unread: stopped     b4v2-picnic-stake-pressure  [note_s2090, note_s2088, note_s2089, note_s2139, note]
+      unread: stopped     f2251-1-county-board-red  [note_s2251b, note]
+      unread: superseded  art-jumper-rotation-retake  [note_s_att_20260824, note_s2249, note]
+      unread: superseded  lane-vp-02b-jumper-slot-red  [authorNotes, drainNotes]
+      unread: superseded  lane-c-f1148-1-trajectory-split  [authorNotes, drainNotes]
+      unread: superseded  jumper-8way-wiring  [note_s_att_20260824]
+      unread: superseded  ap-orders-adapter-wiring  [note]
+PASS — no READABLE refusal cites a finding the owner has already ruled. 8 refusal(s) state their basis in a narrative field this guard does not scan; their text is above.
+
+> gold-rush@0.1.0 test:citations
+> node scripts/citation-title-guard.mjs
+
+=== citation-title-guard ===
+citations scanned : 697  (in 1573 tracked tasks/**/*.md)
+  CARRIES-TITLE   379
+  NUMBER-ONLY     261
+  CARRIES-LINE    57
+grandfathered keys: 262
+NOT GATED         : 2240 citation(s) in 306 tracked .md outside tasks/ — largest logs/suite-red-inventory.md (1239). Scope ruling: F-1252-1, owner's desk.
+PASS — no new bare `spec:line` citation among the 697 scanned. This verdict covers tasks/** only.
+
+> gold-rush@0.1.0 test:desk-declaration
+> node scripts/desk-declaration-guard.mjs
+
+=== desk-declaration-guard ===
+corpus tree       : main
+desk F-IDs        : 76
+desk slugs        : 1
+🔺 desk segments  : 55
+unexamined        : 0
+with a BACKLOG row: 77
+undeclared        : 0 (grandfathered 0)
+PASS — every non-grandfathered desk item has a declaring row.
+
+> gold-rush@0.1.0 test:desk-birth
+> node scripts/desk-birth-guard.mjs
+
+=== desk-birth-guard ===
+corpus tree               : main
+window start              : 259864fc (s2528 handoff)
+owner-gated rows filed    : 0
+  ├ by an owner GATE clause : 0
+  └ by an owner-ACT declaration, no gate clause : 0
+unexamined by the parser  : 0
+of those, undesked        : 0
+PASS — every owner-gated row filed this window reached the desk.
+=== desk-carryforward-guard ===
+corpus tree               : main
+previous desk (s2540): 55 items
+this desk                 : 55 items
+dropped                   : 0 (0 accounted for)
+PASS — every item on the previous desk is carried, closed, or accounted for.
+CLEAN: 0 handoff line-1s PERMANENTLY absent at HEAD (0 more were dropped at lock time but restored by the fire's own handoff commit -- normal, not a defect), 0 abridged, 27 same-session rewrites excluded, of 40 replacements across 40 STATUS.md commits
+  anchor targets read from: the main worktree.
+  ⏳ OPEN  001-drain-skill-custody-rule.md  (36d)  → .claude/skills/drain/SKILL.md
+      F-1295-1's custody cure is law in scripts/fire.md §3.0b but absent from the surface a drainer actually reads. RE-TESTED s1349 (F-1349-1): still denied, and NO settings change can lift it — .claude/settings.json already grants bare Edit+Write. Do NOT shell around it.
+      opened s1343 2026-08-01 · anchor: "CUSTODY — NEVER PLACE CONTENT YOU HAVE NOT"
+  ⏳ OPEN  002-transfer-board-spec-registry-path.md  (4d)  → specs/transfer-board.md
+      F-2472-3 (s2472, control-proven): the registry path this RATIFIED spec names at :15 and :19 puts a new .json inside the engine identity corpus, which rotates computeEngineHash and refuses every existing verified reel — violating the spec's OWN law L1 ADDITIVE ("existing tapes, seeds, eras and ranking are untouched"). The fix is a path, not a ruling, but a fire may not edit a ratified spec (CLAUDE.md §2, §7.7).
+      opened s2472 2026-09-03 · anchor: "assets/rotations/rotation-seeds.json"
+attended-owed: OPEN ITEMS (attended-side) — 2 item(s): 2 open, 0 landed-not-archived, 0 stale-tree-open, 0 uncross-checked, 0 malformed/bad-target
+  (OPEN is not a defect: only the attended side can clear it. --strict to enforce.)
+PASS: both lock predicates correct on 11 fixtures each (7 hold incl. 3 anchored-prefix blind spots, 3 release, 1 fails safe)
+PASS(a): well-formed refresh kept janitor-<epoch>-<name> with no rejection marker
+PASS(b): both malformed historical shapes were visibly filed as janitor-REJECTED
+PASS(c): BUSY refresh remained in tasks/janitor with no archive
+PASS(REFUSES-HOLDS): queue file stayed queued and held-path.txt was logged
+PASS(DISPATCHES-HOLDS-BUT-FULLY-ABSORBED): BOTH-MOVED path with zero residue dispatched and was logged
+PASS(REFUSES-HOLDS-WITH-REAL-RESIDUE): queue file stayed queued for unseen additions and mixed add/delete residue
+PASS(REFUSES-ON-RESIDUE-PROBE-FAILURE): inner probe failure kept the queue file queued
+PASS(DISPATCHES-AHEAD-BUT-ABSORBED): safe squash-dupe shape dispatched
+PASS(DISPATCHES-USABLE): clean ahead=0 lane dispatched
+PASS(DISPATCHES-DIRTY-RC2): DIRTY shares rc=2 but is not HOLDS
+PASS(DISPATCHES-PROBE-FAIL-OPEN): missing probe dispatched
+PASS(HONOURS-DECLARED-BUILD-ON-PREDECESSOR): a full declaration dispatched over a real HOLDS lane
+PASS(REFUSES-PARTIAL-DECLARATION): an undeclared second held path still refused
+PASS(HONOURS-SUPERSET-DECLARATION): declaring a path main already absorbed did not block dispatch
+PASS(REFUSES-DECLARATION-WITHOUT-OPT-IN): a path list alone is not an opt-in
+PASS(REFUSES-OPT-IN-WITHOUT-DECLARED-PATHS): the token alone is not a blank cheque
+PASS(RETRIES-THEN-NAMES-FAIL-OPEN): no-verdict probe was retried once, conceded in the log, and still dispatched
+PASS(RETRY-RECOVERS-REAL-HOLDS): a transient blip over a HOLDS lane was retried and then REFUSED
+codex-client-floor guard (F-1651-1)
+  ok   — lane-runner-v3.sh parses
+  ok   — floor check (line 423) precedes master consumption (line 431)
+  ok   — dispatch invokes "$codex_bin"
+  ok   — no bare-codex dispatch remains
+  ok   — 0.145.0 >= 0.144.1
+  ok   — 0.144.1 >= 0.144.1 (equal)
+  ok   — 0.144.0 < 0.144.1
+  ok   — 0.133.0 < 0.144.1
+  ok   — 1.0.0 >= 0.144.1 (major bump)
+  ok   — codex_ver parses 'codex-cli 0.145.0' -> 0.145.0
+  ok   — self-heals past a 0.133.0 PATH to the nvm 0.145.0 client
+  ok   — prefers a floor-meeting PATH client (no-op when healthy)
+  ok   — refuses (rc 1) when no client meets the floor
+RESULT: 0 failure(s)
+runner-restart-recipe guard (F-1652-1 / F-1653-1)
+  ok   — start-lane-runner.sh parses
+  ok   — health-watch.sh parses
+  ok   — runner-processes.sh parses
+  ok   — old broad pgrep goes red on the prompt carrier
+  ok   — shared discriminator rejects protocol prose
+  ok   — shared discriminator finds one absolute-path runner
+  ok   — runner self-exclusion leaves zero fixture runners
+  ok   — shared discriminator accepts a relative runner path
+  ok   — real helper launched its recorded PID at PPID 1 with no controlling terminal
+  ok   — helper rejects a substitute runner instead of verifying the wrong PID
+  ok   — rejected-runner cleanup waits for exit and has bounded KILL escalation
+/private/var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/runner-processes.treNKq/stop-rejected-runner.sh: line 1: 42151 Killed: 9               IGNORE_TERM=1 bash "$isolated/lane-runner-v3.sh"
+  ok   — rejected-runner cleanup returns only after the runner is gone
+  ok   — health-watch.sh has no bare nohup restart of lane-runner-v3.sh
+  ok   — health-watch.sh routes its restart through start-lane-runner.sh
+  ok   — helper unsets CLAUDE_CONFIG_DIR and CLAUDECODE
+  ok   — helper prepends the resolved client's bin dir to PATH (carries node/npm/npx)
+  ok   — helper refuses when a runner is already alive
+  ok   — helper never rmdir's the runner lock
+  ok   — CODEX_FLOOR agrees: helper 0.144.1 == runner 0.144.1
+  ok   — staleness computation lives in the shared runner-processes.sh (one implementation)
+  ok   — health-watch's runner line calls runner_staleness_note (wired, not merely defined)
+  ok   — health-watch runner line goes STALE when the process predates the script
+  ok   — health-watch runner line is silent when the runner is current (no noise)
+  ok   — stale runner (process older than the newest runner-script commit) is REPORTED
+  ok   — fresh runner is reported as current (no false STALE alarm)
+  ok   — staleness report is WARN-only (rc 0 both arms) — never blocks a restart
+  ok   — staleness report is bounded (<=20 lines)
+RESULT: 0 failure(s)
+runner-commit-decoupling guard (F-1657-1, from F-1656-1)
+  ok   — lane-runner-v3.sh parses
+  ok   — DEFECT REPRODUCES: the compound form leaves HEAD at 'init' with work.txt stranded staged
+  ok   — CURE WORKS: the decoupled form commits the work and leaves the index clean
+  ok   — the ignored path did NOT leak into the decoupled commit
+  ok   — delta commit includes literal *.txt only; moved tracked/raw baseline dirt remains unstaged
+  ok   — factory accounting withheld; logs/session-scratch evidence and src still committed
+  ok   — no commit site is gated on the add's rc
+  ok   — both art routes keep the decoupled form and ordinary lanes use the delta boundary
+  ok   — the debris excludes are still in place on the lane commit site
+  ok   — red path fires — a runner with the `&&` restored is rejected
+  ok   — red path fires — restoring the old broad commit sweeps baseline dirt and is rejected
+  ok   — red path fires — a runner that sweeps logs/ accounting into lane commits is rejected
+  ok   — reverse control fires — a wholesale logs/ exclusion is rejected (retention hole)
+RESULT: 0 failure(s)
+LEDGER MIRROR EXPOSURE — LB-01 standing encryption gate
+
+  corpus                  : read (15 mirror(s), 15 read, 0 unreadable)
+  dir                     : /Users/robin/Claude/Projects/Gold Rush/artifacts/ledger-backups/
+  tables inspected        : ledger-2026-08-24.db:kv[key]; ledger-2026-08-25.db:kv[key]; ledger-2026-08-26.db:kv[key]; ledger-2026-08-27.db:kv[key]; ledger-2026-08-28.db:kv[key]; ledger-2026-08-29.db:kv[key]; ledger-2026-08-30.db:kv[key]; ledger-2026-08-31.db:kv[key]; ledger-2026-09-01.db:kv[key]; ledger-2026-09-02.db:kv[key]; ledger-2026-09-03.db:kv[key]; ledger-2026-09-04.db:kv[key]; ledger-2026-09-04.db:refusals[anon_id,profile_name]; ledger-2026-09-04.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-09-05.db:kv[key]; ledger-2026-09-05.db:refusals[anon_id,profile_name]; ledger-2026-09-05.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-09-06.db:kv[key]; ledger-2026-09-06.db:refusals[anon_id,profile_name]; ledger-2026-09-06.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-09-07.db:kv[key]; ledger-2026-09-07.db:refusals[anon_id,profile_name]; ledger-2026-09-07.db:sqlite_sequence[SKIPPED: no declared columns]
+  keys inspected          : 238
+  account-class rows      : 0
+  unrecognised rows       : 54
+
+⚠️  UNRECOGNISED KEY CLASS(ES) — not known-account, not known-safe.
+   Not a refusal by default: the county adding a standings-class key is
+   lawful and routine. Read them, then either add the prefix to
+   SAFE_PREFIXES or treat them as account data.
+     ledger-2026-09-05.db  9677a7e7ba4a1704cafa3f083b74e935
+     ledger-2026-09-05.db  9677a7e7ba4a1704cafa3f083b74e935
+     ledger-2026-09-05.db  9677a7e7ba4a1704cafa3f083b74e935
+     ledger-2026-09-05.db  Claude Opus 5
+     ledger-2026-09-05.db  Claude Opus 5
+     ledger-2026-09-05.db  Claude Opus 5
+     ledger-2026-09-06.db  9677a7e7ba4a1704cafa3f083b74e935
+     ledger-2026-09-06.db  9677a7e7ba4a1704cafa3f083b74e935
+     ledger-2026-09-06.db  9677a7e7ba4a1704cafa3f083b74e935
+     ledger-2026-09-06.db  9677a7e7ba4a1704cafa3f083b74e935
+     ledger-2026-09-06.db  9677a7e7ba4a1704cafa3f083b74e935
+     ledger-2026-09-06.db  9677a7e7ba4a1704cafa3f083b74e935
+     ledger-2026-09-06.db  9677a7e7ba4a1704cafa3f083b74e935
+     ledger-2026-09-06.db  9677a7e7ba4a1704cafa3f083b74e935
+     ledger-2026-09-06.db  9677a7e7ba4a1704cafa3f083b74e935
+     ledger-2026-09-06.db  9677a7e7ba4a1704cafa3f083b74e935
+     ledger-2026-09-06.db  9677a7e7ba4a1704cafa3f083b74e935
+     ledger-2026-09-06.db  9677a7e7ba4a1704cafa3f083b74e935
+     ledger-2026-09-06.db  Claude Opus 5
+     ledger-2026-09-06.db  Claude Opus 5
+     ledger-2026-09-06.db  Claude Opus 5
+     ledger-2026-09-06.db  Claude Opus 5
+     ledger-2026-09-06.db  Claude Opus 5
+     ledger-2026-09-06.db  Claude Opus 5
+     ledger-2026-09-06.db  Claude Opus 5
+     ledger-2026-09-06.db  Claude Opus 5
+     ledger-2026-09-06.db  Claude Opus 5
+     ledger-2026-09-06.db  Claude Opus 5
+     ledger-2026-09-06.db  Claude Opus 5
+     ledger-2026-09-06.db  Claude Opus 5
+     ledger-2026-09-07.db  9677a7e7ba4a1704cafa3f083b74e935
+     ledger-2026-09-07.db  9677a7e7ba4a1704cafa3f083b74e935
+     ledger-2026-09-07.db  9677a7e7ba4a1704cafa3f083b74e935
+     ledger-2026-09-07.db  9677a7e7ba4a1704cafa3f083b74e935
+     ledger-2026-09-07.db  9677a7e7ba4a1704cafa3f083b74e935
+     ledger-2026-09-07.db  9677a7e7ba4a1704cafa3f083b74e935
+     ledger-2026-09-07.db  9677a7e7ba4a1704cafa3f083b74e935
+     ledger-2026-09-07.db  9677a7e7ba4a1704cafa3f083b74e935
+     ledger-2026-09-07.db  9677a7e7ba4a1704cafa3f083b74e935
+     ledger-2026-09-07.db  9677a7e7ba4a1704cafa3f083b74e935
+     ledger-2026-09-07.db  9677a7e7ba4a1704cafa3f083b74e935
+     ledger-2026-09-07.db  9677a7e7ba4a1704cafa3f083b74e935
+     ledger-2026-09-07.db  Claude Opus 5
+     ledger-2026-09-07.db  Claude Opus 5
+     ledger-2026-09-07.db  Claude Opus 5
+     ledger-2026-09-07.db  Claude Opus 5
+     ledger-2026-09-07.db  Claude Opus 5
+     ledger-2026-09-07.db  Claude Opus 5
+     ledger-2026-09-07.db  Claude Opus 5
+     ledger-2026-09-07.db  Claude Opus 5
+     ledger-2026-09-07.db  Claude Opus 5
+     ledger-2026-09-07.db  Claude Opus 5
+     ledger-2026-09-07.db  Claude Opus 5
+     ledger-2026-09-07.db  Claude Opus 5
+nul-audit: corpus 18686 text subject(s) — 18454 read, 232 empty.
+nul-audit: excluded 12617 known-binary, 100 UNCLASSIFIED of 31403 tracked file(s).
+  ⓘ  UNCLASSIFIED (not audited, not known-binary): .cpuprofile×29 (no extension)×11 .bak×11 .exit×6 .summary×5 .viewlog×4 .stale×4 .req×4 .hold×3 .sha256×3 .db-shm×2 .db-wal×2 .stderr×2 .timer×2 .stranded-1e057810×1 .lock×1 .attested×1 .progress×1 .disabled×1 .blocked-seen×1 .salvaged×1 .sha×1 .probe×1 .pid×1 .cured×1 .mts×1
+     Add each to TEXT_EXT or BINARY_EXT — this list is how a new suffix
+     announces itself instead of silently leaving the corpus.
+nul-audit: CLEAN — no raw NUL bytes in tracked text sources.
+=== source-pointer-guard ===
+corpus                    : 610 source file(s) under /Users/robin/Claude/Projects/Gold Rush/scripts
+same-file citations checked: 5
+cross-file citations (not checkable here): 5
+PASS — every checkable source pointer still lands on its declaration.
+== 1. kit scripts parse (bash -n) ==
+  ok: bash -n fire-runner.sh
+  ok: bash -n lane-runner.sh
+  ok: bash -n dashboard-gen.sh
+  ok: bash -n health-watch.sh
+  ok: bash -n test-init.sh
+== 2. init scaffolds a fresh target ==
+  ok: init.mjs exited 0
+== 3. directory tree ==
+  ok: dir  /tmp/foundry-kit-test.7HNjLJ/newgame/tasks/queue/main
+  ok: dir  /tmp/foundry-kit-test.7HNjLJ/newgame/tasks/queue/lane-a
+  ok: dir  /tmp/foundry-kit-test.7HNjLJ/newgame/tasks/queue/lane-b
+  ok: dir  /tmp/foundry-kit-test.7HNjLJ/newgame/tasks/queue/lane-c
+  ok: dir  /tmp/foundry-kit-test.7HNjLJ/newgame/tasks/queue/lane-d
+  ok: dir  /tmp/foundry-kit-test.7HNjLJ/newgame/tasks/queue/art
+  ok: dir  /tmp/foundry-kit-test.7HNjLJ/newgame/tasks/done
+  ok: dir  /tmp/foundry-kit-test.7HNjLJ/newgame/tasks/failed
+  ok: dir  /tmp/foundry-kit-test.7HNjLJ/newgame/tasks/runs
+  ok: dir  /tmp/foundry-kit-test.7HNjLJ/newgame/tasks/running
+  ok: dir  /tmp/foundry-kit-test.7HNjLJ/newgame/tasks/janitor
+  ok: dir  /tmp/foundry-kit-test.7HNjLJ/newgame/reviews
+  ok: dir  /tmp/foundry-kit-test.7HNjLJ/newgame/specs
+  ok: dir  /tmp/foundry-kit-test.7HNjLJ/newgame/docs
+  ok: dir  /tmp/foundry-kit-test.7HNjLJ/newgame/logs
+  ok: dir  /tmp/foundry-kit-test.7HNjLJ/newgame/worktrees
+  ok: dir  /tmp/foundry-kit-test.7HNjLJ/newgame/scripts
+  ok: dir  /tmp/foundry-kit-test.7HNjLJ/newgame/.claude
+== 4. every 09-template instantiated + seeds + scripts present ==
+  ok: file /tmp/foundry-kit-test.7HNjLJ/newgame/CLAUDE.md
+  ok: file /tmp/foundry-kit-test.7HNjLJ/newgame/AGENTS.md
+  ok: file /tmp/foundry-kit-test.7HNjLJ/newgame/STATUS.md
+  ok: file /tmp/foundry-kit-test.7HNjLJ/newgame/README.md
+  ok: file /tmp/foundry-kit-test.7HNjLJ/newgame/foundry.config.json
+  ok: file /tmp/foundry-kit-test.7HNjLJ/newgame/tasks/BACKLOG.md
+  ok: file /tmp/foundry-kit-test.7HNjLJ/newgame/tasks/goals.json
+  ok: file /tmp/foundry-kit-test.7HNjLJ/newgame/tasks/TEMPLATE-task-master.md
+  ok: file /tmp/foundry-kit-test.7HNjLJ/newgame/reviews/TEMPLATE-review.md
+  ok: file /tmp/foundry-kit-test.7HNjLJ/newgame/docs/TEMPLATE-specialist-queue.md
+  ok: file /tmp/foundry-kit-test.7HNjLJ/newgame/docs/TEMPLATES-INDEX.md
+  ok: file /tmp/foundry-kit-test.7HNjLJ/newgame/worktrees/README.md
+  ok: file /tmp/foundry-kit-test.7HNjLJ/newgame/.claude/settings.json
+  ok: file /tmp/foundry-kit-test.7HNjLJ/newgame/scripts/fire.md
+  ok: file /tmp/foundry-kit-test.7HNjLJ/newgame/scripts/fire-runner.sh
+  ok: file /tmp/foundry-kit-test.7HNjLJ/newgame/scripts/lane-runner.sh
+  ok: file /tmp/foundry-kit-test.7HNjLJ/newgame/scripts/dashboard-gen.sh
+  ok: file /tmp/foundry-kit-test.7HNjLJ/newgame/scripts/health-watch.sh
+  ok: file /tmp/foundry-kit-test.7HNjLJ/newgame/scripts/com.test-game.fire.plist
+  ok: executable scripts/fire-runner.sh
+  ok: executable scripts/lane-runner.sh
+  ok: executable scripts/dashboard-gen.sh
+  ok: executable scripts/health-watch.sh
+== 5. name/path substitution ==
+  ok: /tmp/foundry-kit-test.7HNjLJ/newgame/CLAUDE.md contains 'Test Game'
+  ok: /tmp/foundry-kit-test.7HNjLJ/newgame/scripts/fire.md contains 'Test Game'
+  ok: /tmp/foundry-kit-test.7HNjLJ/newgame/tasks/BACKLOG.md contains 'Test Game'
+  ok: derived 4 substitution token(s) from init.mjs instantiate() [DERIVED, not hand-listed]
+  ok: no unsubstituted tokens in CLAUDE.md (checked 4 derived token(s))
+  ok: no unsubstituted tokens in scripts/fire.md (checked 4 derived token(s))
+  ok: no unsubstituted tokens in tasks/TEMPLATE-task-master.md (checked 4 derived token(s))
+  ok: no unsubstituted tokens in reviews/TEMPLATE-review.md (checked 4 derived token(s))
+  ok: no unsubstituted tokens in docs/TEMPLATE-specialist-queue.md (checked 4 derived token(s))
+  ok: no unsubstituted tokens in docs/TEMPLATES-INDEX.md (checked 4 derived token(s))
+== 6. plist paths + label + cadence ==
+  ok: /tmp/foundry-kit-test.7HNjLJ/newgame/scripts/com.test-game.fire.plist contains '<string>com.test-game.fire</string>'
+  ok: /tmp/foundry-kit-test.7HNjLJ/newgame/scripts/com.test-game.fire.plist contains '<string>/tmp/foundry-kit-test.7HNjLJ/newgame/scripts/fire-runner.sh</string>'
+  ok: /tmp/foundry-kit-test.7HNjLJ/newgame/scripts/com.test-game.fire.plist contains '<string>/tmp/foundry-kit-test.7HNjLJ/newgame</string>'
+  ok: /tmp/foundry-kit-test.7HNjLJ/newgame/scripts/com.test-game.fire.plist contains '<integer>300</integer>'
+  ok: plutil -lint plist
+== 7. config is valid JSON with the contract fields ==
+  ok: foundry.config.json contract
+  ok: .claude/settings.json valid JSON
+== 8. scaffolded shell scripts parse (bash -n) ==
+  ok: bash -n dashboard-gen.sh
+  ok: bash -n fire-runner.sh
+  ok: bash -n health-watch.sh
+  ok: bash -n lane-runner.sh
+== 9. fire-runner --dry-run: exit 0, plans only, no side effects ==
+  ok: fire-runner --dry-run exit 0
+  ok: fire-runner prints DRY-RUN
+  ok: fire-runner reads model from config
+  ok: fire-runner sees protocol file
+  ok: no lock taken
+  ok: no log written
+== 10. lane-runner --dry-run: exit 0, flags missing worktrees, no side effects ==
+  ok: lane-runner --dry-run exit 0
+  ok: lane-runner prints DRY-RUN
+  ok: missing worktree flagged for lane-a
+  ok: main workdir resolves to root
+  ok: dry-run left the queue untouched
+  ok: no runner lock taken
+== 11. idempotency: re-run refuses loudly, overwrites nothing ==
+  ok: re-run exited nonzero
+  ok: refusal is loud (REFUSED)
+  ok: existing files untouched
+
+RESULT: 83 passed, 0 failed

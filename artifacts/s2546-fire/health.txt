@@ -1,0 +1,15 @@
+=== Gold Rush factory — 2026-09-07 22:24:41 ===
+edge   : landing=200 game=200 api=200   (200 = up; 2xx-slow = answered but missed the budget; anything else is dark — F-OUT-0829)
+runner : ALIVE
+fire   : between-fires
+agents :
+  com.goldrush.dashboard:LOADED
+  com.goldrush.health:LOADED
+  com.goldrush.fire:LOADED
+lock   : ACTIVE 2026-09-07T22:21Z (s2546 fire) — diagnose completed Node gate failure, preserve live MAIN corrective, then resu
+queued : 0 task(s)   in-flight: 1   pending-orders: 0
+lanes ahead of main (commit count — may be squash-merged dupes, verify by content):
+  feat/hero-move-verb: 1 commit(s) ahead
+art staged, in NO commit: 0 file(s)  (detail: node scripts/art-staging-audit.mjs)
+failed tail: superseded-s239-bt-00-demolish.md
+last fire log line:  succeeded in 122088ms:

@@ -1,0 +1,39 @@
+{
+  "command": "npm run test:ledger-guards",
+  "exitCode": 0,
+  "wallSeconds": 116.8,
+  "nodeGroup": {
+    "tests": 1050,
+    "passed": 1050,
+    "failed": 0,
+    "cancelled": 0,
+    "skipped": 0
+  },
+  "desk": {
+    "declaration": "PASS",
+    "birth": "PASS",
+    "carryforward": "PASS",
+    "previousEntries": 55,
+    "currentEntries": 55
+  },
+  "foundryTestInit": {
+    "passed": 83,
+    "failed": 0
+  },
+  "explicitUnexecutedArms": [
+    "runner-restart-recipe: real helper custody",
+    "runner-restart-recipe: substitute-runner custody"
+  ],
+  "skipReason": "/usr/bin/script: tcgetattr/ioctl: Operation not supported on socket",
+  "handoffCommit": "3cf0b8f8a",
+  "handoffPushed": true,
+  "sourceAcceptance": "HOLD",
+  "sourceMerged": false,
+  "deployRan": false,
+  "correctiveRun": "20260908-012943-lane-a-lane-a-rider-parity-reach-stage3.md.log",
+  "citedEvidence": {
+    "tracked": 22,
+    "absent": 0,
+    "onDiskUntracked": 0
+  }
+}

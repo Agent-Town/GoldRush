@@ -1,0 +1,417 @@
+{
+  "blender": "5.1.2",
+  "maskTables": [
+    "assets/contracts/epoch-7-signal/mask-tables/e7-relay-valley.json"
+  ],
+  "terrains": {
+    "relay-valley": {
+      "asset": "relay-valley-terrain.glb",
+      "checked": {
+        "sha256": "4a3193ffff6f0f82603e2dbbb0026be86581f9025a158fe8124869d5d72c02fb",
+        "bytes": 10982748,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 32768,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -64,
+            -0.552454,
+            -64
+          ],
+          "max": [
+            64,
+            5.319556,
+            64
+          ],
+          "size": [
+            128,
+            5.87201,
+            128
+          ],
+          "center": [
+            0.0,
+            2.383551,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.8999999761581421,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "reexported": {
+        "sha256": "4a3193ffff6f0f82603e2dbbb0026be86581f9025a158fe8124869d5d72c02fb",
+        "bytes": 10982748,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 32768,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -64,
+            -0.552454,
+            -64
+          ],
+          "max": [
+            64,
+            5.319556,
+            64
+          ],
+          "size": [
+            128,
+            5.87201,
+            128
+          ],
+          "center": [
+            0.0,
+            2.383551,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.8999999761581421,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "byteIdenticalReexport": true,
+      "semanticIdenticalReexport": true,
+      "embeddedTexture": {
+        "bytes": 7897717,
+        "sha256": "e29f9f62e04f7edf1cad34a8f40fb2524cd6ed8bd3863435c50154b6806803aa",
+        "width": 2048,
+        "height": 2048
+      },
+      "extras": {
+        "render_only": true,
+        "sim_authority": "published mask table and planar simulation; unchanged",
+        "height_socket": "Terrain.visualY",
+        "contract_id": "e7-relay-valley",
+        "tile_id": "e7-relay-valley",
+        "mask_table": "assets/contracts/epoch-7-signal/mask-tables/e7-relay-valley.json",
+        "load_bearing_sites_flat": true,
+        "landmarks_frozen": false
+      },
+      "geometryProbes": [
+        {
+          "requested": [
+            0,
+            -20
+          ],
+          "sampled": [
+            0.0,
+            -20.0
+          ],
+          "height": 0.0311
+        },
+        {
+          "requested": [
+            -45,
+            41
+          ],
+          "sampled": [
+            -45.0,
+            41.0
+          ],
+          "height": 5.0
+        },
+        {
+          "requested": [
+            -25,
+            41
+          ],
+          "sampled": [
+            -25.0,
+            41.0
+          ],
+          "height": 5.0
+        },
+        {
+          "requested": [
+            25,
+            41
+          ],
+          "sampled": [
+            25.0,
+            41.0
+          ],
+          "height": 5.0
+        },
+        {
+          "requested": [
+            45,
+            41
+          ],
+          "sampled": [
+            45.0,
+            41.0
+          ],
+          "height": 5.0
+        },
+        {
+          "requested": [
+            0,
+            39
+          ],
+          "sampled": [
+            0.0,
+            39.0
+          ],
+          "height": -0.4795
+        }
+      ],
+      "pylonSurfaceFlatness": [],
+      "capacitorSurfaceFlatness": [],
+      "fixtureSurfaceFlatness": [],
+      "buildZoneSurfaceFlatness": [
+        {
+          "id": "relay-site-r1",
+          "sampledSurfacePoints": 2145,
+          "maxDeviationMeters": 0.0
+        },
+        {
+          "id": "relay-site-r2",
+          "sampledSurfacePoints": 2145,
+          "maxDeviationMeters": 0.0
+        },
+        {
+          "id": "relay-site-r3",
+          "sampledSurfacePoints": 2145,
+          "maxDeviationMeters": 0.0
+        },
+        {
+          "id": "relay-site-r4",
+          "sampledSurfacePoints": 2145,
+          "maxDeviationMeters": 0.0
+        }
+      ],
+      "maskSource": "assets/contracts/epoch-7-signal/mask-tables/e7-relay-valley.json"
+    }
+  },
+  "panoramas": {
+    "relay-valley": {
+      "asset": "relay-valley-panorama.glb",
+      "checked": {
+        "sha256": "df740eeff4692cf61ce1d436ac8b167ebdb5e2f0c5e41e36e58d30369a62c698",
+        "bytes": 1137776,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 3084,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -193,
+            -10,
+            -193
+          ],
+          "max": [
+            193,
+            130,
+            193
+          ],
+          "size": [
+            386,
+            140,
+            386
+          ],
+          "center": [
+            0.0,
+            60.0,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 1,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": true,
+            "emissiveFactor": [
+              1,
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "reexported": {
+        "sha256": "df740eeff4692cf61ce1d436ac8b167ebdb5e2f0c5e41e36e58d30369a62c698",
+        "bytes": 1137776,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 3084,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -193,
+            -10,
+            -193
+          ],
+          "max": [
+            193,
+            130,
+            193
+          ],
+          "size": [
+            386,
+            140,
+            386
+          ],
+          "center": [
+            0.0,
+            60.0,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 1,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": true,
+            "emissiveFactor": [
+              1,
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "byteIdenticalReexport": true,
+      "semanticIdenticalReexport": true,
+      "embeddedTexture": {
+        "bytes": 1018659,
+        "sha256": "364ee4bf54df7929817f9e2520320390adbf214e12a0a9d814f200704d062981",
+        "width": 2048,
+        "height": 2048
+      },
+      "extras": {
+        "render_only": true,
+        "panorama": true,
+        "affects_playfield": false,
+        "affects_masks": false,
+        "affects_spawn_edges": false,
+        "affects_fog_gating": false,
+        "mount_space": "game X/Y/Z at county origin",
+        "panorama_law": "v2"
+      },
+      "mount": {
+        "id": "relay-valley-panorama",
+        "asset": "relay-valley-panorama.glb",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "renderOnly": true,
+        "ownership": "separate mounted scenery; never terrain or gameplay bounds"
+      }
+    }
+  },
+  "boards": {
+    "relay-valley-mood-ab.png": {
+      "size": [
+        1920,
+        684
+      ],
+      "bytes": 2059367,
+      "sha256": "df194d37e1a35e1020f02ddea58d18cca08a046c0fddde34db5028b7951464a7"
+    },
+    "relay-valley-flat-vs-sculpted-ab.png": {
+      "size": [
+        1920,
+        684
+      ],
+      "bytes": 1203203,
+      "sha256": "d04db7f67bba46bdd0a3ddda6aacc20b6645f982c618eb563bf205a96dbd2b91"
+    },
+    "relay-valley-owner-verdict.png": {
+      "size": [
+        1920,
+        504
+      ],
+      "bytes": 929589,
+      "sha256": "70a8dcd0b5567cfe52a5c7f2086c81fce35ea72d55ce91c093186fcf72501d31"
+    },
+    "relay-valley-panorama-mood-ab.png": {
+      "size": [
+        1920,
+        504
+      ],
+      "bytes": 611181,
+      "sha256": "70a0b2be12a5f1effab01deedc2f3ecc4de33dbf259ade2be3b7b0febfe5fda0"
+    },
+    "relay-valley-panorama-distance-gate.png": {
+      "size": [
+        1920,
+        684
+      ],
+      "bytes": 1224814,
+      "sha256": "eafb1dd5d7cbd4156dc3cff19a5598c6c4131ba12f327de0b9fc74b30faf0024"
+    },
+    "relay-valley-mask-agreement-board.png": {
+      "size": [
+        1600,
+        1260
+      ],
+      "bytes": 1199257,
+      "sha256": "574e8a4e198e110867643ec2838791fa4dac426ec14eb41ecdcb1c07a13566f6"
+    }
+  },
+  "verdict": {
+    "grit": "worn signal frontier under teal-gray dusk and honey work light; fight, never holiday",
+    "panorama": "distance",
+    "masks": "published and unchanged",
+    "loadBearingSites": "four relay pads independently sampled buildable-flat; two h5 ridge bands and h0 valley retained",
+    "landmarks": "freeze lifted; no assets or mounts authored in this pair"
+  },
+  "freshReferenceBaseSha": "b9df7e2127dadc1ea74859026459e32a2405af34"
+}

@@ -1,0 +1,78 @@
+{
+  "maskId": "twin-banks-true-braid-dev",
+  "waterPlaneY": 0.025,
+  "gridSamples": 410881,
+  "transitionBandMetres": 0.45,
+  "dryGroundInsideMask": 0,
+  "waterOutsideMask": 0,
+  "zones": {
+    "river": {
+      "samples": 18743,
+      "minHeight": -0.4605,
+      "meanHeight": -0.3071,
+      "maxHeight": -0.0555
+    },
+    "ford": {
+      "samples": 11162,
+      "minHeight": -0.3379,
+      "meanHeight": -0.0467,
+      "maxHeight": -0.0111
+    },
+    "bank": {
+      "samples": 361936,
+      "minHeight": 0.1001,
+      "meanHeight": 0.8534,
+      "maxHeight": 1.9649
+    },
+    "plaitIsland": {
+      "samples": 10831,
+      "minHeight": 0.1456,
+      "meanHeight": 0.5234,
+      "maxHeight": 0.727
+    }
+  },
+  "channelSeparation": {
+    "northBedMinY": -0.4596,
+    "southBedMinY": -0.3507,
+    "fordMeanY": -0.0397,
+    "plaitMeanY": 0.5234
+  },
+  "buildZoneFlatness": {
+    "minY": 0.2273,
+    "maxY": 1.9649,
+    "meanY": 0.8398,
+    "p95AbsSlopePerMetre": 0.144
+  },
+  "mountGround": {
+    "north_bank_homestead": {
+      "x": 13.5,
+      "z": 14.2,
+      "zone": "bank",
+      "terrainY": 0.5678
+    },
+    "south_bank_homestead": {
+      "x": -13.0,
+      "z": -14.0,
+      "zone": "bank",
+      "terrainY": 0.6064
+    },
+    "north_bank_winch": {
+      "x": -16.0,
+      "z": 10.7,
+      "zone": "bank",
+      "terrainY": 0.2868
+    },
+    "south_bank_winch": {
+      "x": 16.0,
+      "z": -10.7,
+      "zone": "bank",
+      "terrainY": 0.5064
+    },
+    "floodplain_dressing_pack": {
+      "x": 0.0,
+      "z": 0.0,
+      "zone": "bank",
+      "terrainY": 0.2592
+    }
+  }
+}

@@ -1,0 +1,17 @@
+commit a0106998eb8ee97f7abac6e817c76da4ecffcee6
+Author:     Claude (Cowork orchestrator) <<owner-email>>
+AuthorDate: Mon Sep 7 16:45:25 2026 +0700
+Commit:     Claude (Cowork orchestrator) <<owner-email>>
+CommitDate: Mon Sep 7 16:45:25 2026 +0700
+
+    fix: F-RPG-21 — the county counts reels that name a retired verb as retired at read instead of dropping them (25 boards read empty with retiredCount 0 after the grammar deploy); validateTape gains a stored mode whose order grammar is judged by tapeGrammarRefusal through currentLineageRefusal; the door stays strict; test-standings re-pointed under ADR-005 (banked heat-6/heat-11 reels refused at the door and counted when stored; the queue path rides them with the retired orders struck)
+    
+    Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>
+    Claude-Session: https://claude.ai/code/session_01Rpu6VBzeT24Kk8jHuRHkpQ
+
+ functions/api/standings.ts | 53 ++++++++++++++++++++++++++++---------
+ scripts/test-standings.mjs | 66 +++++++++++++++++++++++++++++++++++++++-------
+ tasks/BACKLOG.md           |  2 ++
+ 3 files changed, 98 insertions(+), 23 deletions(-)
+
+Fire judgment: PLAYER-VISIBLE. Source inspection confirms stored rows use validateTape with stored=true, currentLineageRefusal tests tapeGrammarRefusal, and retired grammar is counted through the existing retirement path. New submissions still use the strict default. This is a source/commit receipt for attended work; this fire did not deploy or run a live county probe.

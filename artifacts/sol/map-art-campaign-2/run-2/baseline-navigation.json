@@ -1,0 +1,23 @@
+{
+  "base": "0340775f852153e619e76ba00ce705323e5f19c2",
+  "candidateEngine": "35db6dcf14954aa36cb232cde030c766e8a9cf21ef77c6e48375666a1a73f809",
+  "baseEngine": "cc3fd5d45add762fc0878a42618af1eaec836edeee83b03954c5e75a569b71f5",
+  "command": [
+    "npx",
+    "playwright",
+    "test",
+    "e2e/e5-deepwater-claim.spec.ts",
+    "--grep",
+    "active run wave",
+    "--workers=1",
+    "--project=desktop-chrome",
+    "--project=mobile-chrome",
+    "--trace=off",
+    "--reporter=line",
+    "--output=artifacts/sol/map-art-campaign-2/_raw/run-2/base-navigation"
+  ],
+  "exit": 1,
+  "seconds": 17.72,
+  "restoredEngine": "35db6dcf14954aa36cb232cde030c766e8a9cf21ef77c6e48375666a1a73f809",
+  "byteExactRestoration": true
+}

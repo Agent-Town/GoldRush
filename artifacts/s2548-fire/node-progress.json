@@ -1,0 +1,37 @@
+{
+  "time": "2026-09-07T16:42:21.602Z",
+  "batteries": [
+    {
+      "pid": 47551,
+      "ppid": 47539,
+      "cpu": "0.0",
+      "elapsed": "04:29",
+      "commandBytes": 4941
+    },
+    {
+      "pid": 47552,
+      "ppid": 47551,
+      "cpu": "0.0",
+      "elapsed": "04:29",
+      "commandBytes": 3959
+    }
+  ],
+  "children": [
+    {
+      "pid": 47564,
+      "ppid": 47552,
+      "cpu": "0.0",
+      "elapsed": "04:29",
+      "script": "scripts/secure-choice-refusal.test.mjs",
+      "commandBytes": 4018
+    },
+    {
+      "pid": 79013,
+      "ppid": 47564,
+      "cpu": "99.6",
+      "elapsed": "00:12",
+      "script": "scripts/e8-remaining-maps.test.mjs",
+      "commandBytes": 1129
+    }
+  ]
+}

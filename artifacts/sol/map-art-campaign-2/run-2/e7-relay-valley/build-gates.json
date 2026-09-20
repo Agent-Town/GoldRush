@@ -1,0 +1,35 @@
+[
+  {
+    "name": "tsc",
+    "command": [
+      "npx",
+      "tsc",
+      "--noEmit"
+    ],
+    "exit": 0,
+    "seconds": 17.071049213409424,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-2/e7-relay-valley-tsc.log"
+  },
+  {
+    "name": "build",
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "exit": 0,
+    "seconds": 40.456787109375,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-2/e7-relay-valley-build.log"
+  },
+  {
+    "name": "full-build",
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "exit": 0,
+    "seconds": 39.08442401885986,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-2/e7-relay-valley-full-build.log"
+  }
+]

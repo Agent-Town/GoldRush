@@ -1,0 +1,25 @@
+[
+  {
+    "label": "live-isolation",
+    "command": [
+      "npx",
+      "playwright",
+      "test",
+      "--workers=1",
+      "--project=desktop-chrome",
+      "--project=mobile-chrome",
+      "--trace=off",
+      "--reporter=line",
+      "--output=artifacts/sol/map-art-campaign-2/_raw/run-3/e1-baron-live-isolation",
+      "--grep",
+      "stationary unplated hero|defeating the Baron captures",
+      "e2e/054-baron-epic.spec.ts",
+      "e2e/057-baron-rocket-cart.spec.ts",
+      "--repeat-each=2"
+    ],
+    "environment": {},
+    "exit": 0,
+    "seconds": 122.97,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-3/e1-baron-live-isolation.log"
+  }
+]

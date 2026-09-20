@@ -1,0 +1,197 @@
+{
+  "key": "idle-e1-baron",
+  "tapePath": "tapes/idle-e1-baron.json",
+  "contract": "e1-baron",
+  "kind": "null-floor",
+  "node": "v26.4.0",
+  "before": {
+    "at": "2026-09-05T15:16:26.032Z",
+    "load": [
+      16.7216796875,
+      28.056640625,
+      28.27490234375
+    ],
+    "freeMemory": 9137782784
+  },
+  "after": {
+    "at": "2026-09-05T15:16:31.815Z",
+    "load": [
+      17.22412109375,
+      27.97265625,
+      28.24365234375
+    ],
+    "freeMemory": 11460591616
+  },
+  "declaredDurationTicks": 3493,
+  "simulatedSeconds": 116.43333333333334,
+  "bootMs": 70.33795799999916,
+  "replayMs": 1757.674709,
+  "ticksPerSecond": 1987.284667700137,
+  "realtimeMultiple": 66.24282225667123,
+  "estimateTenMinuteSeconds": 9.05758510220441,
+  "estimateFormula": "600 seconds / measured realtimeMultiple; extrapolation, not an actual 10-minute tape when duration differs",
+  "tickMs": {
+    "n": 3493,
+    "min": 0.2644579999996495,
+    "p50": 0.40770899999915855,
+    "p95": 0.9544169999999212,
+    "p99": 1.6054169999997612,
+    "max": 16.877666999999747
+  },
+  "tickPath": "sim/idle-e1-baron-ticks.json",
+  "result": {
+    "eventLogHash": "fnv1a32:a45ba9ac",
+    "outcome": {
+      "secured": false,
+      "waves": 4,
+      "gold": 0,
+      "timeAlive": 116.433
+    },
+    "ticks": 3493,
+    "engine": "headless-contract-sim"
+  },
+  "expectedHash": "fnv1a32:a45ba9ac",
+  "hashMatches": true,
+  "top20": [
+    {
+      "name": "dispatch",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 246.597
+    },
+    {
+      "name": "terrainSeed",
+      "url": "",
+      "line": 1469,
+      "column": 21,
+      "selfMs": 89.71600000000001
+    },
+    {
+      "name": "get diagnostics",
+      "url": "",
+      "line": 484,
+      "column": 17,
+      "selfMs": 81.09700000000001
+    },
+    {
+      "name": "terrainHash",
+      "url": "",
+      "line": 1486,
+      "column": 21,
+      "selfMs": 68.295
+    },
+    {
+      "name": "multiplyMatrices",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 10385,
+      "column": 18,
+      "selfMs": 67.95
+    },
+    {
+      "name": "diagnostics",
+      "url": "",
+      "line": 1795,
+      "column": 13,
+      "selfMs": 60.687
+    },
+    {
+      "name": "(program)",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 49.587
+    },
+    {
+      "name": "palisadeRoute",
+      "url": "",
+      "line": 356,
+      "column": 15,
+      "selfMs": 47.701
+    },
+    {
+      "name": "toArray",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 11099,
+      "column": 9,
+      "selfMs": 44.599000000000004
+    },
+    {
+      "name": "hpBarDiagnostics",
+      "url": "",
+      "line": 1663,
+      "column": 18,
+      "selfMs": 38.812
+    },
+    {
+      "name": "stableProbeMask",
+      "url": "",
+      "line": 1266,
+      "column": 25,
+      "selfMs": 37.387
+    },
+    {
+      "name": "currentTrickleInterval",
+      "url": "",
+      "line": 641,
+      "column": 24,
+      "selfMs": 36.690000000000005
+    },
+    {
+      "name": "update",
+      "url": "",
+      "line": 809,
+      "column": 8,
+      "selfMs": 35.206
+    },
+    {
+      "name": "syncEnemyInstance",
+      "url": "",
+      "line": 1343,
+      "column": 19,
+      "selfMs": 34.338
+    },
+    {
+      "name": "maxHpForPlacement",
+      "url": "",
+      "line": 1622,
+      "column": 19,
+      "selfMs": 31.636999999999997
+    },
+    {
+      "name": "step",
+      "url": "",
+      "line": 1318,
+      "column": 6,
+      "selfMs": 31.155
+    },
+    {
+      "name": "maxHpForInstance",
+      "url": "",
+      "line": 1619,
+      "column": 18,
+      "selfMs": 30.240000000000002
+    },
+    {
+      "name": "(anonymous)",
+      "url": "",
+      "line": 3,
+      "column": 49,
+      "selfMs": 27.892000000000003
+    },
+    {
+      "name": "(garbage collector)",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 23.23
+    },
+    {
+      "name": "rubbleDiagnostics",
+      "url": "",
+      "line": 2052,
+      "column": 19,
+      "selfMs": 21.032
+    }
+  ]
+}

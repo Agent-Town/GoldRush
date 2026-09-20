@@ -1,0 +1,241 @@
+
+Running 4 tests using 1 worker
+
+[1/4] [desktop-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-hill-mine census support is explicit and deterministic
+[desktop-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-hill-mine census support is explicit and deterministic
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+  1) [desktop-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-hill-mine census support is explicit and deterministic 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    Expected: ArrayContaining [{"data": {"above": 80, "cooldownSeconds": 3, "loss": 35}, "id": "pressure_auto_vent", "source": "PressureSystem.vent"}, {"data": {"bands": ["empty:<=0", "low:>0,<25", "working:>=25,<=80", "high:>80"]}, "id": "pressure_bands", "source": "PressureSystem.band"}, {"data": {"buildable": "boiler_house", "coalSeconds": 12, "input": "coal", "pressurePerTick": 4, "tickSeconds": 1}, "id": "pressure_generation", "source": "PressureSystem.update"}, {"data": {"bandBoosts": ["boiler_battery"], "spends": ["auto_pan", "boiler_lance", "pressure_mortar", "sky_rocket_battery"]}, "id": "pressure_powers", "source": "PressureArsenalSystem"}]
+    Received: [{"data": {"escortCount": 6, "hpScale": 12.5}, "id": "baron", "source": "twist.baron"}, {"data": {"banks": ["north"], "count": 5}, "id": "build_zones", "source": "tileParams.buildZones"}, {"data": {"arriveRadius": 0.5, "body": "hero", "pilots": {"headless": "the rider pilots the run's only hero", "roomSeat": "a headless roster seat pilots its own hero", "soloBrowser": "a human pilots the hero; MOVE_HERO refuses HERO_NOT_YOURS"}, "refusals": ["HERO_NOT_YOURS", "UNREACHABLE_TERRAIN", "UNREACHABLE_APPROACH", "HERO_UNAVAILABLE"], "verb": "MOVE_HERO"}, "id": "hero_orders", "source": "StandingOrders.MOVE_HERO"}, {"data": {"above": 80, "cooldownSeconds": 3, "loss": 35}, "id": "pressure_auto_vent", "source": "PressureSystem.vent"}, {"data": {"bands": ["empty:<=0", "low:>0,<25", "working:>=25,<=80", "high:>80"]}, "id": "pressure_bands", "source": "PressureSystem.band"}, {"data": {"buildable": "boiler_house", "coalSeconds": 36, "input": "coal", "pressurePerTick": 4, "tickSeconds": 1}, "id": "pressure_generation", "source": "PressureSystem.update"}, {"data": {"bandBoosts": ["boiler_battery"], "spends": ["auto_pan", "boiler_lance", "pressure_mortar", "sky_rocket_battery"]}, "id": "pressure_powers", "source": "PressureArsenalSystem"}, {"data": {}, "id": "river", "source": "tileParams.river"}, {"data": {"count": 1, "ids": ["trestle"]}, "id": "water_crossings", "source": "tileParams.ford"}]
+
+       98 |             source: 'twist.pressureEnabled',
+       99 |           })]));
+    > 100 |         expect(probe.currentTurn().view.stablePrefix.mechanics.rules).toEqual(expect.arrayContaining([
+          |                                                                       ^
+      101 |             {
+      102 |               id: 'pressure_auto_vent',
+      103 |               source: 'PressureSystem.vent',
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-maps/e2e/er01-e2-census.spec.ts:100:71
+
+    Error Context: test-results/er01-e2-census-e2-hill-min-5a34b--explicit-and-deterministic-desktop-chrome/error-context.md
+
+
+[2/4] [desktop-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-trestle census support is explicit and deterministic
+[desktop-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-trestle census support is explicit and deterministic
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+  2) [desktop-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-trestle census support is explicit and deterministic 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    Expected: ArrayContaining [{"data": {"above": 80, "cooldownSeconds": 3, "loss": 35}, "id": "pressure_auto_vent", "source": "PressureSystem.vent"}, {"data": {"bands": ["empty:<=0", "low:>0,<25", "working:>=25,<=80", "high:>80"]}, "id": "pressure_bands", "source": "PressureSystem.band"}, {"data": {"buildable": "boiler_house", "coalSeconds": 12, "input": "coal", "pressurePerTick": 4, "tickSeconds": 1}, "id": "pressure_generation", "source": "PressureSystem.update"}, {"data": {"bandBoosts": ["boiler_battery"], "spends": ["auto_pan", "boiler_lance", "pressure_mortar", "sky_rocket_battery"]}, "id": "pressure_powers", "source": "PressureArsenalSystem"}]
+    Received: [{"data": {"escortCount": 6, "hpScale": 12.5}, "id": "baron", "source": "twist.baron"}, {"data": {"banks": ["north", "south"], "count": 2}, "id": "build_zones", "source": "tileParams.buildZones"}, {"data": {"arriveRadius": 0.5, "body": "hero", "pilots": {"headless": "the rider pilots the run's only hero", "roomSeat": "a headless roster seat pilots its own hero", "soloBrowser": "a human pilots the hero; MOVE_HERO refuses HERO_NOT_YOURS"}, "refusals": ["HERO_NOT_YOURS", "UNREACHABLE_TERRAIN", "UNREACHABLE_APPROACH", "HERO_UNAVAILABLE"], "verb": "MOVE_HERO"}, "id": "hero_orders", "source": "StandingOrders.MOVE_HERO"}, {"data": {"above": 80, "cooldownSeconds": 3, "loss": 35}, "id": "pressure_auto_vent", "source": "PressureSystem.vent"}, {"data": {"bands": ["empty:<=0", "low:>0,<25", "working:>=25,<=80", "high:>80"]}, "id": "pressure_bands", "source": "PressureSystem.band"}, {"data": {"buildable": "boiler_house", "coalSeconds": 36, "input": "coal", "pressurePerTick": 4, "tickSeconds": 1}, "id": "pressure_generation", "source": "PressureSystem.update"}, {"data": {"bandBoosts": ["boiler_battery"], "spends": ["auto_pan", "boiler_lance", "pressure_mortar", "sky_rocket_battery"]}, "id": "pressure_powers", "source": "PressureArsenalSystem"}, {"data": {}, "id": "river", "source": "tileParams.river"}, {"data": {"count": 1, "ids": ["trestle"]}, "id": "water_crossings", "source": "tileParams.ford"}, {"data": {"multiplier": 0.7}, "id": "wave_cadence_multiplier", "source": "twist.waveCadenceMult"}]
+
+       98 |             source: 'twist.pressureEnabled',
+       99 |           })]));
+    > 100 |         expect(probe.currentTurn().view.stablePrefix.mechanics.rules).toEqual(expect.arrayContaining([
+          |                                                                       ^
+      101 |             {
+      102 |               id: 'pressure_auto_vent',
+      103 |               source: 'PressureSystem.vent',
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-maps/e2e/er01-e2-census.spec.ts:100:71
+
+    Error Context: test-results/er01-e2-census-e2-trestle--8ba84--explicit-and-deterministic-desktop-chrome/error-context.md
+
+
+[3/4] [desktop-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-pressure-garden census support is explicit and deterministic
+[desktop-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-pressure-garden census support is explicit and deterministic
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+  3) [desktop-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-pressure-garden census support is explicit and deterministic 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    Expected: ArrayContaining [{"data": {"above": 80, "cooldownSeconds": 3, "loss": 35}, "id": "pressure_auto_vent", "source": "PressureSystem.vent"}, {"data": {"bands": ["empty:<=0", "low:>0,<25", "working:>=25,<=80", "high:>80"]}, "id": "pressure_bands", "source": "PressureSystem.band"}, {"data": {"buildable": "boiler_house", "coalSeconds": 12, "input": "coal", "pressurePerTick": 4, "tickSeconds": 1}, "id": "pressure_generation", "source": "PressureSystem.update"}, {"data": {"bandBoosts": ["boiler_battery"], "spends": ["auto_pan", "boiler_lance", "pressure_mortar", "sky_rocket_battery"]}, "id": "pressure_powers", "source": "PressureArsenalSystem"}]
+    Received: [{"data": {"banks": ["north"], "count": 4}, "id": "build_zones", "source": "tileParams.buildZones"}, {"data": {"arriveRadius": 0.5, "body": "hero", "pilots": {"headless": "the rider pilots the run's only hero", "roomSeat": "a headless roster seat pilots its own hero", "soloBrowser": "a human pilots the hero; MOVE_HERO refuses HERO_NOT_YOURS"}, "refusals": ["HERO_NOT_YOURS", "UNREACHABLE_TERRAIN", "UNREACHABLE_APPROACH", "HERO_UNAVAILABLE"], "verb": "MOVE_HERO"}, "id": "hero_orders", "source": "StandingOrders.MOVE_HERO"}, {"data": {"above": 80, "cooldownSeconds": 3, "loss": 35}, "id": "pressure_auto_vent", "source": "PressureSystem.vent"}, {"data": {"bands": ["empty:<=0", "low:>0,<25", "working:>=25,<=80", "high:>80"]}, "id": "pressure_bands", "source": "PressureSystem.band"}, {"data": {"buildable": "boiler_house", "coalSeconds": 36, "input": "coal", "pressurePerTick": 4, "tickSeconds": 1}, "id": "pressure_generation", "source": "PressureSystem.update"}, {"data": {"bandBoosts": ["boiler_battery"], "spends": ["auto_pan", "boiler_lance", "pressure_mortar", "sky_rocket_battery"]}, "id": "pressure_powers", "source": "PressureArsenalSystem"}, {"data": {}, "id": "river", "source": "tileParams.river"}, {"data": {"count": 1, "ids": ["garden-crossing"]}, "id": "water_crossings", "source": "tileParams.ford"}]
+
+       98 |             source: 'twist.pressureEnabled',
+       99 |           })]));
+    > 100 |         expect(probe.currentTurn().view.stablePrefix.mechanics.rules).toEqual(expect.arrayContaining([
+          |                                                                       ^
+      101 |             {
+      102 |               id: 'pressure_auto_vent',
+      103 |               source: 'PressureSystem.vent',
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-maps/e2e/er01-e2-census.spec.ts:100:71
+
+    Error Context: test-results/er01-e2-census-e2-pressure-25f67--explicit-and-deterministic-desktop-chrome/error-context.md
+
+
+[4/4] [desktop-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-incline census support is explicit and deterministic
+[desktop-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-incline census support is explicit and deterministic
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+  4) [desktop-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-incline census support is explicit and deterministic 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    Expected: ArrayContaining [{"data": {"above": 80, "cooldownSeconds": 3, "loss": 35}, "id": "pressure_auto_vent", "source": "PressureSystem.vent"}, {"data": {"bands": ["empty:<=0", "low:>0,<25", "working:>=25,<=80", "high:>80"]}, "id": "pressure_bands", "source": "PressureSystem.band"}, {"data": {"buildable": "boiler_house", "coalSeconds": 12, "input": "coal", "pressurePerTick": 4, "tickSeconds": 1}, "id": "pressure_generation", "source": "PressureSystem.update"}, {"data": {"bandBoosts": ["boiler_battery"], "spends": ["auto_pan", "boiler_lance", "pressure_mortar", "sky_rocket_battery"]}, "id": "pressure_powers", "source": "PressureArsenalSystem"}]
+    Received: [{"data": {"escortCount": 6, "hpScale": 12.5}, "id": "baron", "source": "twist.baron"}, {"data": {"banks": ["north", "south"], "count": 4}, "id": "build_zones", "source": "tileParams.buildZones"}, {"data": {"arriveRadius": 0.5, "body": "hero", "pilots": {"headless": "the rider pilots the run's only hero", "roomSeat": "a headless roster seat pilots its own hero", "soloBrowser": "a human pilots the hero; MOVE_HERO refuses HERO_NOT_YOURS"}, "refusals": ["HERO_NOT_YOURS", "UNREACHABLE_TERRAIN", "UNREACHABLE_APPROACH", "HERO_UNAVAILABLE"], "verb": "MOVE_HERO"}, "id": "hero_orders", "source": "StandingOrders.MOVE_HERO"}, {"data": {"above": 80, "cooldownSeconds": 3, "loss": 35}, "id": "pressure_auto_vent", "source": "PressureSystem.vent"}, {"data": {"bands": ["empty:<=0", "low:>0,<25", "working:>=25,<=80", "high:>80"]}, "id": "pressure_bands", "source": "PressureSystem.band"}, {"data": {"buildable": "boiler_house", "coalSeconds": 36, "input": "coal", "pressurePerTick": 4, "tickSeconds": 1}, "id": "pressure_generation", "source": "PressureSystem.update"}, {"data": {"bandBoosts": ["boiler_battery"], "spends": ["auto_pan", "boiler_lance", "pressure_mortar", "sky_rocket_battery"]}, "id": "pressure_powers", "source": "PressureArsenalSystem"}, {"data": {}, "id": "river", "source": "tileParams.river"}, {"data": {"count": 2, "ids": ["lower-line-crossing", "upper-line-crossing"]}, "id": "water_crossings", "source": "tileParams.ford"}, {"data": {"multiplier": 0.75}, "id": "wave_cadence_multiplier", "source": "twist.waveCadenceMult"}]
+
+       98 |             source: 'twist.pressureEnabled',
+       99 |           })]));
+    > 100 |         expect(probe.currentTurn().view.stablePrefix.mechanics.rules).toEqual(expect.arrayContaining([
+          |                                                                       ^
+      101 |             {
+      102 |               id: 'pressure_auto_vent',
+      103 |               source: 'PressureSystem.vent',
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-maps/e2e/er01-e2-census.spec.ts:100:71
+
+    Error Context: test-results/er01-e2-census-e2-incline--0dfce--explicit-and-deterministic-desktop-chrome/error-context.md
+
+
+  4 failed
+    [desktop-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-hill-mine census support is explicit and deterministic 
+    [desktop-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-trestle census support is explicit and deterministic 
+    [desktop-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-pressure-garden census support is explicit and deterministic 
+    [desktop-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-incline census support is explicit and deterministic 
+rc=1

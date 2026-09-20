@@ -1,0 +1,1655 @@
+(node:34251) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 528 tests using 1 worker
+
+
+(node:34271) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[1/528] [desktop-chrome] › e2e/_s106-prospector-boot-probe.spec.ts:6:1 › s106 boot probe: zero errors + prospector visible (plain boot)
+[2/528] [desktop-chrome] › e2e/_s106-sci-copy-boot-probe.spec.ts:6:1 › s106 boot probe: zero errors (sci-copy drain)
+[3/528] [desktop-chrome] › e2e/_s93-w1-04-boot-probe.spec.ts:6:1 › w1-04 boot probe: zero errors + scatter live
+[desktop-chrome] › e2e/_s93-w1-04-boot-probe.spec.ts:6:1 › w1-04 boot probe: zero errors + scatter live
+[s93 probe desktop-chrome] tier=desktop classes=5 instances=190 sig=-22.21,-17.75|-30.43,30.
+
+[4/528] [desktop-chrome] › e2e/_s99-combat-readability-boot-probe.spec.ts:7:1 › s99 boot probe: zero errors + readability diagnostics live
+[desktop-chrome] › e2e/_s99-combat-readability-boot-probe.spec.ts:7:1 › s99 boot probe: zero errors + readability diagnostics live
+[s99 probe desktop-chrome] flashes=0 bars=0 pulses=0
+
+
+(node:34271) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[5/528] [desktop-chrome] › e2e/044-start-screen.spec.ts:45:1 › plain boot shows the Storybook start menu without Continue
+[6/528] [desktop-chrome] › e2e/044-start-screen.spec.ts:70:1 › debug boot skips the start menu and enters the game
+[7/528] [desktop-chrome] › e2e/044-start-screen.spec.ts:80:1 › Enter Town opens the town scene and disposes the menu
+[8/528] [desktop-chrome] › e2e/044-start-screen.spec.ts:92:1 › Profile opens the existing selector with arrow and Enter
+  1) [desktop-chrome] › e2e/044-start-screen.spec.ts:92:1 › Profile opens the existing selector with arrow and Enter
+
+    Error: expect(locator).toBeFocused() failed
+
+    Locator:  getByTestId('start-menu-profile')
+    Expected: focused
+    Received: inactive
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeFocused" with timeout 5000ms
+      - waiting for getByTestId('start-menu-profile')
+        14 × locator resolved to <button type="button" data-menu-action="profile" class="gr-start-menu__button" data-testid="start-menu-profile">Profile</button>
+           - unexpected value "inactive"
+
+
+       96 |
+       97 |   await page.keyboard.press('ArrowDown');
+    >  98 |   await expect(page.getByTestId('start-menu-profile')).toBeFocused();
+          |                                                        ^
+       99 |   await page.keyboard.press('Enter');
+      100 |   await expect(page.getByTestId('profile-title')).toBeVisible();
+      101 |   assertNoErrors(errors);
+        at /Users/robin/.codex/worktrees/fixed-step-unification/Gold Rush/e2e/044-start-screen.spec.ts:98:56
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/044-start-screen-Profile-o-e43d4-lector-with-arrow-and-Enter-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/044-start-screen-Profile-o-e43d4-lector-with-arrow-and-Enter-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/044-start-screen-Profile-o-e43d4-lector-with-arrow-and-Enter-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/044-start-screen-Profile-o-e43d4-lector-with-arrow-and-Enter-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:34956) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:34956) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[9/528] [desktop-chrome] › e2e/044-start-screen.spec.ts:104:1 › Settings volume writes through
+[10/528] [desktop-chrome] › e2e/044-start-screen.spec.ts:120:1 › Continue appears only for an existing suspend slot and enters the run path
+[11/528] [desktop-chrome] › e2e/045-megaproject.spec.ts:64:1 › debug dev megaproject reserves, funds, delays, completes, and persists
+[12/528] [desktop-chrome] › e2e/050-audio-mix-and-access.spec.ts:49:1 › pause overlay volume and mute persist and sync with Settings
+[13/528] [desktop-chrome] › e2e/050-audio-mix-and-access.spec.ts:90:1 › M toggles mute mid-run with ledger toast
+[14/528] [desktop-chrome] › e2e/050-audio-mix-and-access.spec.ts:105:1 › spark rapid fire is throttled in render audio diagnostics
+[15/528] [desktop-chrome] › e2e/050-audio-mix-and-access.spec.ts:126:1 › audio fetch failures stay silent no-ops
+[16/528] [desktop-chrome] › e2e/051-audio-governor.spec.ts:85:1 › 20-source sluice mix uses one deduped water loop with source-count scaling
+[17/528] [desktop-chrome] › e2e/051-audio-governor.spec.ts:100:1 › global voice cap holds and UI displaces low-priority ambience
+[18/528] [desktop-chrome] › e2e/051-audio-governor.spec.ts:132:1 › gold and hit families share global cooldowns
+[19/528] [desktop-chrome] › e2e/051-audio-governor.spec.ts:153:1 › audio-absent stress releases governor slots cleanly
+[20/528] [desktop-chrome] › e2e/054-baron-epic.spec.ts:171:1 › wave 20 Baron spawns as epic-scale boss with anchored bar and one camera impulse
+[21/528] [desktop-chrome] › e2e/054-baron-epic.spec.ts:211:1 › unkited Baron wrecks structures with boss hit counts and governed crack audio
+[22/528] [desktop-chrome] › e2e/054-baron-epic.spec.ts:261:1 › stationary unplated hero dies within three Baron contacts, while base-speed kite opens distance
+[23/528] [desktop-chrome] › e2e/054-baron-epic.spec.ts:316:1 › scaled Baron collider accepts weapon hits at the visible edge
+[24/528] [desktop-chrome] › e2e/054-baron-epic.spec.ts:335:1 › scripted wave-20 kite build survives 60 seconds, wins before 180, and is deterministic
+[25/528] [desktop-chrome] › e2e/055-baron-kill-stop.spec.ts:121:1 › Baron kill-stop freezes sim, advances render, plants the standard, then the note persists
+[26/528] [desktop-chrome] › e2e/055-baron-kill-stop.spec.ts:156:1 › click or key skips only the hold and leaves the defeat card active
+[27/528] [desktop-chrome] › e2e/055-baron-kill-stop.spec.ts:168:1 › kill-stop leaves the sim hash identical to a nopause control
+[28/528] [desktop-chrome] › e2e/055-baron-kill-stop.spec.ts:193:1 › same-tick overrun and Baron kill does not start the celebration
+[29/528] [desktop-chrome] › e2e/057-baron-rocket-cart.spec.ts:223:1 › kited Baron telegraphs and launches rockets that damage hero and buildings through CombatSystem
+[30/528] [desktop-chrome] › e2e/057-baron-rocket-cart.spec.ts:247:1 › melee range suppresses the Baron rocket volley
+[31/528] [desktop-chrome] › e2e/057-baron-rocket-cart.spec.ts:272:1 › defeating the Baron captures the cart, shows the medal line, and unlocks captured research
+[32/528] [desktop-chrome] › e2e/057-baron-rocket-cart.spec.ts:307:1 › Sky-Rocket Battery starts unlocked only for captured profiles and remains normally researchable
+[33/528] [desktop-chrome] › e2e/057-baron-rocket-cart.spec.ts:324:1 › Baron rocket volley targeting is deterministic for the same seed
+[34/528] [desktop-chrome] › e2e/058-device-tiers.spec.ts:68:1 › desktop Chrome tier proofs › Settings performance override persists and applies Lite render knobs
+[35/528] [desktop-chrome] › e2e/058-device-tiers.spec.ts:97:1 › desktop Chrome tier proofs › iPad-class auto detection chooses Lite
+[36/528] [desktop-chrome] › e2e/058-device-tiers.spec.ts:117:1 › desktop Chrome tier proofs › tier switch is render-only for a deterministic economy slice
+[37/528] [desktop-chrome] › e2e/058-device-tiers.spec.ts:138:1 › desktop Chrome tier proofs › FULL and LITE same-scene screenshots are captured
+[38/528] [desktop-chrome] › e2e/058-device-tiers.spec.ts:148:1 › desktop WebKit records FULL baseline and LITE wave-20 stress envelope
+[39/528] [desktop-chrome] › e2e/058-device-tiers.spec.ts:177:1 › built hashed assets have immutable cache headers and small-merge download estimate
+[40/528] [desktop-chrome] › e2e/061-first-claim-onboarding.spec.ts:105:1 › fresh profile gets first-claim guidance, launch sets the per-profile done flag, and second town entry is quiet
+[41/528] [desktop-chrome] › e2e/061-first-claim-onboarding.spec.ts:137:1 › mobile first-entry trail and tavern pulse fit at 390px
+[42/528] [desktop-chrome] › e2e/061-first-claim-onboarding.spec.ts:149:1 › name-only exit keeps the first-claim guide pending until launch
+[43/528] [desktop-chrome] › e2e/061-first-claim-onboarding.spec.ts:168:1 › existing profile without the new flag gets no first-run visual delta
+[44/528] [desktop-chrome] › e2e/064-river-continues.spec.ts:59:1 › river continues through the vista in both terrain render paths
+[45/528] [desktop-chrome] › e2e/064-river-continues.spec.ts:104:1 › river-zone, panning, and sluice sim contracts stay unchanged
+[46/528] [desktop-chrome] › e2e/065-shots-follow-terrain.spec.ts:96:1 › Hill Mine turret bolts interpolate from terrace muzzle to lower target terrain
+[47/528] [desktop-chrome] › e2e/065-shots-follow-terrain.spec.ts:118:1 › flat Claim shots keep the old zero-height bolt plane
+[48/528] [desktop-chrome] › e2e/066-walk8-engine.spec.ts:161:1 › Prospector hover8 plays eight distinct frames while panning
+[49/528] [desktop-chrome] › e2e/066-walk8-engine.spec.ts:194:1 › hero stays on walk4 while walk8 cells are registered
+[50/528] [desktop-chrome] › e2e/066-walk8-engine.spec.ts:208:1 › Claim Jumper walk8 keeps the old stride duration at higher frame count
+[51/528] [desktop-chrome] › e2e/accounts-sync.spec.ts:13:1 › sign-in pushes, local wipe pulls the profile back, and chips stay quiet
+  2) [desktop-chrome] › e2e/accounts-sync.spec.ts:13:1 › sign-in pushes, local wipe pulls the profile back, and chips stay quiet
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.textContent: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for getByTestId('account-dev-code')
+
+
+      124 |   await page.getByTestId('account-email').fill(email);
+      125 |   await page.getByTestId('account-request-code').click();
+    > 126 |   const code = (await page.getByTestId('account-dev-code').textContent())?.trim() ?? '';
+          |                                                            ^
+      127 |   expect(code).toMatch(/^\d{6}$/);
+      128 |   await page.getByTestId('account-code').fill(code);
+      129 |   await page.getByTestId('account-verify').click();
+        at signIn (/Users/robin/.codex/worktrees/fixed-step-unification/Gold Rush/e2e/accounts-sync.spec.ts:126:60)
+        at /Users/robin/.codex/worktrees/fixed-step-unification/Gold Rush/e2e/accounts-sync.spec.ts:21:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/accounts-sync-sign-in-push-902ab-e-back-and-chips-stay-quiet-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/accounts-sync-sign-in-push-902ab-e-back-and-chips-stay-quiet-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/accounts-sync-sign-in-push-902ab-e-back-and-chips-stay-quiet-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/accounts-sync-sign-in-push-902ab-e-back-and-chips-stay-quiet-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[52/528] [desktop-chrome] › e2e/accounts-sync.spec.ts:37:1 › compare card can use cloud over local
+[53/528] [desktop-chrome] › e2e/accounts-sync.spec.ts:58:1 › compare card can keep local, then burn the cloud ledger
+[54/528] [desktop-chrome] › e2e/accounts-sync.spec.ts:88:1 › signed-out boot leaves profile bytes alone and makes no account request
+
+(node:39402) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:39402) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[55/528] [desktop-chrome] › e2e/audio-integration.spec.ts:61:1 › boot stays audio-locked until gesture, then seeded panning requests sound
+[56/528] [desktop-chrome] › e2e/audio-integration.spec.ts:80:1 › settings volume and mute persist across reload
+  3) [desktop-chrome] › e2e/audio-integration.spec.ts:80:1 › settings volume and mute persist across reload
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for getByTestId('start-menu-settings')
+
+
+      87 |   await page.reload();
+      88 |
+    > 89 |   await page.getByTestId('start-menu-settings').click();
+         |                                                 ^
+      90 |   await mkdir(SHOT_DIR, { recursive: true });
+      91 |   await page.screenshot({ path: `${SHOT_DIR}/${testInfo.project.name}-settings.png`, fullPage: true });
+      92 |
+        at /Users/robin/.codex/worktrees/fixed-step-unification/Gold Rush/e2e/audio-integration.spec.ts:89:49
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/audio-integration-settings-422a5--mute-persist-across-reload-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/audio-integration-settings-422a5--mute-persist-across-reload-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/audio-integration-settings-422a5--mute-persist-across-reload-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/audio-integration-settings-422a5--mute-persist-across-reload-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:39549) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:39549) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[57/528] [desktop-chrome] › e2e/audio-integration.spec.ts:118:1 › legacy audio preferences migrate into profile storage
+  4) [desktop-chrome] › e2e/audio-integration.spec.ts:118:1 › legacy audio preferences migrate into profile storage
+
+    Error: expect(locator).toHaveValue(expected) failed
+
+    Locator:  getByTestId('start-menu-volume')
+    Expected: "35"
+    Received: "80"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveValue" with timeout 5000ms
+      - waiting for getByTestId('start-menu-volume')
+        14 × locator resolved to <input min="0" step="5" max="100" value="80" type="range" data-testid="start-menu-volume"/>
+           - unexpected value "80"
+
+
+      139 |   await page.getByTestId('start-menu-settings').click();
+      140 |
+    > 141 |   await expect(page.getByTestId('start-menu-volume')).toHaveValue('35');
+          |                                                       ^
+      142 |   await expect(page.getByTestId('start-menu-mute')).toBeChecked();
+      143 |   await expect(
+      144 |     page.evaluate(
+        at /Users/robin/.codex/worktrees/fixed-step-unification/Gold Rush/e2e/audio-integration.spec.ts:141:55
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/audio-integration-legacy-a-6f86c-igrate-into-profile-storage-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/audio-integration-legacy-a-6f86c-igrate-into-profile-storage-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/audio-integration-legacy-a-6f86c-igrate-into-profile-storage-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/audio-integration-legacy-a-6f86c-igrate-into-profile-storage-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:40070) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:40070) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[58/528] [desktop-chrome] › e2e/audio-integration.spec.ts:155:1 › first-use bursts respect the per-sound pool cap
+[59/528] [desktop-chrome] › e2e/audio-integration.spec.ts:173:1 › missing audio names are silent no-ops
+[60/528] [desktop-chrome] › e2e/blast-relief-height.spec.ts:70:1 › blast arc and detonation sit on raised visual terrain without moving planar impact XZ
+[61/528] [desktop-chrome] › e2e/blast-relief-height.spec.ts:101:1 › zero-height samples preserve flat impact offset and sim payload determinism
+[62/528] [desktop-chrome] › e2e/bt-00-demolish.spec.ts:107:1 › demolish refunds full-HP palisade and frees its footprint for replacement
+[63/528] [desktop-chrome] › e2e/bt-00-demolish.spec.ts:144:1 › demolish button removes an assay office without stealing the bench Enter path
+[64/528] [desktop-chrome] › e2e/bt-00-demolish.spec.ts:181:1 › building context bar keeps both actions inside a mid-size phone viewport
+  5) [desktop-chrome] › e2e/bt-00-demolish.spec.ts:181:1 › building context bar keeps both actions inside a mid-size phone viewport
+
+    Error: expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 14
+    Received:    0
+
+      198 |   );
+      199 |   for (const box of buttonBoxes) {
+    > 200 |     expect(box.x).toBeGreaterThanOrEqual(promptBox!.x);
+          |                   ^
+      201 |     expect(box.right).toBeLessThanOrEqual(promptBox!.x + promptBox!.width);
+      202 |     expect(box.right).toBeLessThanOrEqual(480);
+      203 |   }
+        at /Users/robin/.codex/worktrees/fixed-step-unification/Gold Rush/e2e/bt-00-demolish.spec.ts:200:19
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/bt-00-demolish-building-co-1d762-e-a-mid-size-phone-viewport-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/bt-00-demolish-building-co-1d762-e-a-mid-size-phone-viewport-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/bt-00-demolish-building-co-1d762-e-a-mid-size-phone-viewport-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/bt-00-demolish-building-co-1d762-e-a-mid-size-phone-viewport-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:40375) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[65/528] [desktop-chrome] › e2e/bt-00-demolish.spec.ts:208:1 › tiered full-HP sluice refunds base cost only and shows the loss
+[66/528] [desktop-chrome] › e2e/bt-00-demolish.spec.ts:237:1 › tiered half-HP sluice refund scales from base cost only
+[67/528] [desktop-chrome] › e2e/bt-00-demolish.spec.ts:271:1 › demolish scales refund by remaining HP after building damage
+  6) [desktop-chrome] › e2e/bt-00-demolish.spec.ts:271:1 › demolish scales refund by remaining HP after building damage
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 42
+    Received: 44
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      294 |   await teleport(page, damaged.position.x, damaged.position.z);
+      295 |   await expect(page.evaluate(([id, index]) => window.__GR_TEST__?.demolish(id, index), [built.id, built.index] as const)).resolves.toBe(true);
+    > 296 |   await expect.poll(() => gold(page)).toBe(beforeDemolish + expectedRefund);
+          |                                       ^
+      297 |   await expect.poll(() => hpEntry(page, built.id, built.index)).toBeNull();
+      298 |   await expect.poll(() => buildableCount(page, 'palisade')).toBe(0);
+      299 |   expect(errors.consoleErrors).toEqual([]);
+        at /Users/robin/.codex/worktrees/fixed-step-unification/Gold Rush/e2e/bt-00-demolish.spec.ts:296:39
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/bt-00-demolish-demolish-sc-5c535-ng-HP-after-building-damage-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/bt-00-demolish-demolish-sc-5c535-ng-HP-after-building-damage-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/bt-00-demolish-demolish-sc-5c535-ng-HP-after-building-damage-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/bt-00-demolish-demolish-sc-5c535-ng-HP-after-building-damage-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:41013) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[68/528] [desktop-chrome] › e2e/bt-01-tiers.spec.ts:129:1 › every buyable tier rung changes a live stat
+[69/528] [desktop-chrome] › e2e/bt-01-tiers.spec.ts:146:1 › turret tier raises live damage and spends the exact tier-2 cost
+[70/528] [desktop-chrome] › e2e/bt-01-tiers.spec.ts:175:1 › same-frame upgrade and confirm does not demolish the upgraded building
+[71/528] [desktop-chrome] › e2e/bt-01-tiers.spec.ts:199:1 › Enter tears down after clicking upgrade instead of re-clicking the focused upgrade button
+[72/528] [desktop-chrome] › e2e/bt-01-tiers.spec.ts:216:1 › palisade tier raises max HP, heals, and wears only below half the new max
+[73/528] [desktop-chrome] › e2e/bt-01-tiers.spec.ts:249:1 › sluice tier raises pan-out yield and out-earns two tier-1 rates
+[74/528] [desktop-chrome] › e2e/bt-01-tiers.spec.ts:278:1 › upgraded palisade keeps identical footprint blocking and edge-touch behavior
+[75/528] [desktop-chrome] › e2e/bt-01-tiers.spec.ts:300:1 › tier cap stops at tier 3 without extra spend
+[76/528] [desktop-chrome] › e2e/bt-01-tiers.spec.ts:316:1 › demolish refund ignores tier investment
+[77/528] [desktop-chrome] › e2e/bt-01-tiers.spec.ts:331:1 › insufficient gold leaves tier and gold unchanged
+[78/528] [desktop-chrome] › e2e/combat-readability.spec.ts:164:1 › lit buildings keep procedural beacon silhouette out of the base
+[79/528] [desktop-chrome] › e2e/combat-readability.spec.ts:191:1 › damaged building bars are visible at desktop and 390px
+[80/528] [desktop-chrome] › e2e/combat-readability.spec.ts:219:1 › palisade bars stay in the wall frame for rotationSteps 0 and 1
+[81/528] [desktop-chrome] › e2e/combat-readability.spec.ts:269:1 › building bar keeps world footprint orientation instead of billboarding
+[82/528] [desktop-chrome] › e2e/combat-readability.spec.ts:301:1 › enemy hits do not flash while turret pulse diagnostics advance
+[83/528] [desktop-chrome] › e2e/combat-readability.spec.ts:329:1 › 120-enemy no-flash stress stays inside draw-call and frame budget
+
+(node:41013) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[84/528] [desktop-chrome] › e2e/contract-briefings.spec.ts:259:1 › every current contract launch shows manifest briefing goals and rules
+[85/528] [desktop-chrome] › e2e/contract-briefings.spec.ts:271:1 › run briefing dismisses by click and by eight second timer while sim keeps running
+[86/528] [desktop-chrome] › e2e/contract-briefings.spec.ts:288:1 › pause panel repeats the active contract briefing
+[87/528] [desktop-chrome] › e2e/contract-briefings.spec.ts:299:1 › plain no-debug board launch still briefs The Claim
+[88/528] [desktop-chrome] › e2e/contract-briefings.spec.ts:310:1 › board cards show the same briefing data
+[89/528] [desktop-chrome] › e2e/contract-briefings.spec.ts:320:1 › briefing card and pause contract fit at 390px
+[90/528] [desktop-chrome] › e2e/e1-baron.spec.ts:305:1 › default contract does not preload Baron art
+[91/528] [desktop-chrome] › e2e/e1-baron.spec.ts:331:1 › contract board locks Baron until science-complete and shows the profile medal
+[92/528] [desktop-chrome] › e2e/e1-baron.spec.ts:365:1 › board launch uses the live Baron contract for cadence and wave 20 spawn
+[93/528] [desktop-chrome] › e2e/e1-baron.spec.ts:387:1 › Baron manifest loads and taunts fire at waves 5, 12, and 18
+[94/528] [desktop-chrome] › e2e/e1-baron.spec.ts:464:1 › wave 20 spawns the Baron with elite stats, banner, escorts, and stable seed data
+[95/528] [desktop-chrome] › e2e/e1-baron.spec.ts:499:1 › standard rig damage defeats the Baron, doubles science, and persists the medal
+[96/528] [desktop-chrome] › e2e/e1-baron.spec.ts:549:1 › fast Baron kill preserves the queued arrival card before secure
+[97/528] [desktop-chrome] › e2e/e1-baron.spec.ts:586:1 › Baron art fallback keeps the placeholder path green when generated art fails
+[98/528] [desktop-chrome] › e2e/e1-baron.spec.ts:620:1 › same-frame overrun and Baron kill does not award the medal
+[99/528] [desktop-chrome] › e2e/e1-baron.spec.ts:649:1 › loss to the Baron contract remains the normal overrun ledger with no medal
+[100/528] [desktop-chrome] › e2e/e1-dry-gulch.spec.ts:71:1 › loads Dry Gulch via debug param and suppresses bad contract fallback to diagnostics
+[101/528] [desktop-chrome] › e2e/e1-dry-gulch.spec.ts:101:1 › removes river and ford collision while keeping the spring as the only water source
+[102/528] [desktop-chrome] › e2e/e1-dry-gulch.spec.ts:120:1 › sluice placement rejects away from the pond and accepts beside it
+[103/528] [desktop-chrome] › e2e/e1-dry-gulch.spec.ts:138:1 › Dry Gulch seam panning uses the +40% contract yield multiplier
+[104/528] [desktop-chrome] › e2e/e1-dry-gulch.spec.ts:165:1 › contract lane constants allow all four spawn edges
+[105/528] [desktop-chrome] › e2e/e1-dry-gulch.spec.ts:198:1 › seeded Dry Gulch diagnostics are stable
+[106/528] [desktop-chrome] › e2e/e1-night-shift.spec.ts:214:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting
+[107/528] [desktop-chrome] › e2e/e1-night-shift.spec.ts:285:1 › lantern post is Night Shift gated and relights a true-dark light ring
+[108/528] [desktop-chrome] › e2e/e1-night-shift.spec.ts:326:1 › lantern coverage is necessary for threat visibility
+[109/528] [desktop-chrome] › e2e/e1-night-shift.spec.ts:348:1 › cold lantern relight costs survive run suspend and continue
+  7) [desktop-chrome] › e2e/e1-night-shift.spec.ts:348:1 › cold lantern relight costs survive run suspend and continue
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for getByTestId('contract-briefing-dismiss')
+        - locator resolved to <button type="button" class="contract-briefing__dismiss" data-testid="contract-briefing-dismiss">Begin</button>
+      - attempting click action
+        2 × waiting for element to be visible, enabled and stable
+          - element is visible, enabled and stable
+          - scrolling into view if needed
+          - done scrolling
+          - <section aria-hidden="false" aria-label="Run ledger" data-testid="death-overlay" class="death-overlay death-overlay--visible">…</section> intercepts pointer events
+        - retrying click action
+        - waiting 20ms
+        2 × waiting for element to be visible, enabled and stable
+          - element is visible, enabled and stable
+          - scrolling into view if needed
+          - done scrolling
+          - <section aria-hidden="false" aria-label="Run ledger" data-testid="death-overlay" class="death-overlay death-overlay--visible">…</section> intercepts pointer events
+        - retrying click action
+          - waiting 100ms
+        11 × waiting for element to be visible, enabled and stable
+           - element is visible, enabled and stable
+           - scrolling into view if needed
+           - done scrolling
+           - <section aria-hidden="false" aria-label="Run ledger" data-testid="death-overlay" class="death-overlay death-overlay--visible">…</section> intercepts pointer events
+         - retrying click action
+           - waiting 500ms
+        31 × waiting for element to be visible, enabled and stable
+           - element is not visible
+         - retrying click action
+           - waiting 500ms
+
+
+      61 | async function dismissBriefing(page: Page): Promise<void> {
+      62 |   const briefing = page.getByTestId('contract-briefing');
+    > 63 |   if (await briefing.isVisible().catch(() => false)) await page.getByTestId('contract-briefing-dismiss').click();
+         |                                                                                                          ^
+      64 |   await expect(briefing).toBeHidden();
+      65 | }
+      66 |
+        at dismissBriefing (/Users/robin/.codex/worktrees/fixed-step-unification/Gold Rush/e2e/e1-night-shift.spec.ts:63:106)
+        at gotoGame (/Users/robin/.codex/worktrees/fixed-step-unification/Gold Rush/e2e/e1-night-shift.spec.ts:58:3)
+        at openGame (/Users/robin/.codex/worktrees/fixed-step-unification/Gold Rush/e2e/e1-night-shift.spec.ts:51:3)
+        at /Users/robin/.codex/worktrees/fixed-step-unification/Gold Rush/e2e/e1-night-shift.spec.ts:370:26
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome/test-failed-2.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:44949) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:44949) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[110/528] [desktop-chrome] › e2e/e1-night-shift.spec.ts:382:1 › render dimming does not stop turret acquisition or damage
+[111/528] [desktop-chrome] › e2e/e1-night-shift.spec.ts:409:1 › wave 25 secures the claim through the dawn victory path
+[112/528] [desktop-chrome] › e2e/e1-night-shift.spec.ts:438:1 › seeded Night Shift diagnostics and dark render budget are stable
+[113/528] [desktop-chrome] › e2e/e1-twin-banks.spec.ts:64:1 › loads Twin Banks contract with two fords, two build zones, and one loss stake
+[114/528] [desktop-chrome] › e2e/e1-twin-banks.spec.ts:103:1 › builds sluices and stockpiles on both banks against one gold pool
+[115/528] [desktop-chrome] › e2e/e1-twin-banks.spec.ts:122:1 › routes enemies through both west and east fords
+[116/528] [desktop-chrome] › e2e/e1-twin-banks.spec.ts:135:1 › north marker is not the run loss stake, south overrun still ends the run, and waves use four edges
+[117/528] [desktop-chrome] › e2e/e1-twin-banks.spec.ts:175:1 › seeded Twin Banks diagnostics are stable
+[118/528] [desktop-chrome] › e2e/e2-enemies.spec.ts:77:1 › E2 enemy roster is manifest-gated and leaves E1 default spawns untagged
+[119/528] [desktop-chrome] › e2e/e2-enemies.spec.ts:113:1 › wave pulses spawn Rail Toughs, Steam Wreckers, and Coal Thieves from E2 data
+[120/528] [desktop-chrome] › e2e/e2-enemies.spec.ts:135:1 › armored railcar arrives as three rail-bound boss components and degrades as parts fail
+[121/528] [desktop-chrome] › e2e/e2-enemies.spec.ts:243:1 › Coal Thief and Steam Wrecker behavior runs through E2 roster variants
+[122/528] [desktop-chrome] › e2e/e2-enemies.spec.ts:314:1 › same seed keeps the E2 roster wave deterministic
+[123/528] [desktop-chrome] › e2e/e2-enemies.spec.ts:321:1 › E2 enemies survive the 200-stress draw-call envelope
+[124/528] [desktop-chrome] › e2e/e2-hill-mine.spec.ts:75:1 › loads the locked Steamworks poster contract and ships the Hill Mine elevation table
+[125/528] [desktop-chrome] › e2e/e2-hill-mine.spec.ts:131:1 › Hill Mine render descriptor auto-activates mesh relief and leaves the flat claim fallback alone
+[126/528] [desktop-chrome] › e2e/e2-hill-mine.spec.ts:184:1 › T2 high ground out-ranges the rail cut while the terrace face blocks bolts both ways
+[127/528] [desktop-chrome] › e2e/e2-hill-mine.spec.ts:250:1 › bandits route switchbacks and flooded gallery depth blocks deep water but allows edge wading
+[128/528] [desktop-chrome] › e2e/e2-hill-mine.spec.ts:318:1 › Hill Mine terrain simulation is deterministic for a seeded route
+[129/528] [desktop-chrome] › e2e/e2-hill-mine.spec.ts:334:1 › captures the Hill Mine relief before-after wide shot
+[130/528] [desktop-chrome] › e2e/e2-hill-mine.spec.ts:352:1 › Hill Mine 200-enemy stress stays inside envelope
+[131/528] [desktop-chrome] › e2e/e2-pressure-economy.spec.ts:35:1 › Economy keeps gold replay byte-identical while pressure is separate
+[132/528] [desktop-chrome] › e2e/e2-pressure-economy.spec.ts:66:1 › epoch-1 boot hides pressure chip and leaves gold flow unchanged
+[133/528] [desktop-chrome] › e2e/e2-pressure-economy.spec.ts:94:1 › debug Steamworks epoch override shows pressure chip and exchange rows
+[134/528] [desktop-chrome] › e2e/e2-rail-entity.spec.ts:100:1 › epoch-1 boot renders zero rails
+[135/528] [desktop-chrome] › e2e/e2-rail-entity.spec.ts:120:1 › gt-test-basin rails=dev renders a terrain-conforming rail spine
+[136/528] [desktop-chrome] › e2e/e2-rail-entity.spec.ts:166:1 › rails do not change sim hash and stay under the draw-call budget
+[137/528] [desktop-chrome] › e2e/e2-stamp-mill.spec.ts:157:1 › Stamp Mill manifest builds to the door without switching epochs
+  8) [desktop-chrome] › e2e/e2-stamp-mill.spec.ts:157:1 › Stamp Mill manifest builds to the door without switching epochs
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByTestId('story-beat-card')
+    Timeout: 5000ms
+    - Expected substring  - 1
+    + Received string     + 7
+
+    - The survey's done.
+    +
+    +
+    +
+    +           Elder
+    +           Fund the first stage here.The Steamworks wants a founder's gold.
+    +
+    +
+
+    Call log:
+      - Expect "toContainText" with timeout 5000ms
+      - waiting for getByTestId('story-beat-card')
+        14 × locator resolved to <article role="status" aria-live="polite" data-speaker="elder" data-testid="story-beat-card" data-beat-id="stamp-site-found" class="story-beat-card story-beat-card--visible">…</article>
+           - unexpected value "
+
+
+              Elder
+              Fund the first stage here.The Steamworks wants a founder's gold.
+
+          "
+
+
+      200 |   await expect(page.getByTestId('story-beat-card')).toHaveAttribute('data-beat-id', 'stamp-site-found');
+      201 |   await expect(page.getByTestId('story-beat-card')).toHaveAttribute('data-speaker', 'elder');
+    > 202 |   await expect(page.getByTestId('story-beat-card')).toContainText("The survey's done.");
+          |                                                     ^
+      203 |   await expect(page.getByTestId('story-beat-card')).toContainText("The Steamworks wants a founder's gold.");
+      204 |   await expect(firstFundButton).toHaveAttribute('data-story-pointer', 'true');
+      205 |   await shot(page, testInfo, 'pre-funding-surveyed-site');
+        at /Users/robin/.codex/worktrees/fixed-step-unification/Gold Rush/e2e/e2-stamp-mill.spec.ts:202:53
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e2-stamp-mill-Stamp-Mill-m-90d73-or-without-switching-epochs-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e2-stamp-mill-Stamp-Mill-m-90d73-or-without-switching-epochs-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e2-stamp-mill-Stamp-Mill-m-90d73-or-without-switching-epochs-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e2-stamp-mill-Stamp-Mill-m-90d73-or-without-switching-epochs-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:46874) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:46874) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[138/528] [desktop-chrome] › e2e/e2-stamp-mill.spec.ts:255:1 › Stamp Mill claim site stays hidden before Steamworks science
+[139/528] [desktop-chrome] › e2e/e3-power-graph.spec.ts:41:1 › flag-off boot has zero power graph work
+[140/528] [desktop-chrome] › e2e/e3-power-graph.spec.ts:61:1 › dev graph solves producer, pylons, consumers, invalid span, and brown-out branch
+[141/528] [desktop-chrome] › e2e/e3-power-graph.spec.ts:114:1 › dev graph is deterministic across seeded runs
+[142/528] [desktop-chrome] › e2e/en-01-claim-ledger.spec.ts:87:1 › EN-01 claim ledger access, discovery beat, dupe guard, persistence, and fact cap
+[143/528] [desktop-chrome] › e2e/en-02-e1-coverage.spec.ts:217:1 › EN-02 plain ledger access and fresh seeds stay intact
+[144/528] [desktop-chrome] › e2e/en-02-e1-coverage.spec.ts:251:1 › EN-02 full E1 roster has manifest-backed entries and capped facts
+[145/528] [desktop-chrome] › e2e/en-02-e1-coverage.spec.ts:279:1 › EN-02 town board and bark discover contracts and townsfolk
+[146/528] [desktop-chrome] › e2e/en-02-e1-coverage.spec.ts:299:1 › EN-02 enemy stats reveal once, persist, and hero facts live-read abilities
+[147/528] [desktop-chrome] › e2e/feedback-fx.spec.ts:28:1 › announcement banner fades after the opening claim notice
+  9) [desktop-chrome] › e2e/feedback-fx.spec.ts:28:1 › announcement banner fades after the opening claim notice
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByTestId('hud-wave')
+    Timeout: 5000ms
+    - Expected substring  - 1
+    + Received string     + 8
+
+    - Stake your claim.
+    +
+    +
+    +
+    +
+    +
+    +           the Prospector: follows and observes. Chip by weapon; claim wins grow it.
+    +
+    +
+
+    Call log:
+      - Expect "toContainText" with timeout 5000ms
+      - waiting for getByTestId('hud-wave')
+        14 × locator resolved to <div class="hud__wave" data-testid="hud-wave" aria-label="Wave status">…</div>
+           - unexpected value "
+
+
+
+
+              the Prospector: follows and observes. Chip by weapon; claim wins grow it.
+
+          "
+
+
+      31 |
+      32 |   const banner = page.getByTestId('hud-wave');
+    > 33 |   await expect(banner).toContainText('Stake your claim.');
+         |                        ^
+      34 |   await expect
+      35 |     .poll(async () => Number(await banner.evaluate((element) => getComputedStyle(element).opacity)))
+      36 |     .toBeGreaterThan(0.5);
+        at /Users/robin/.codex/worktrees/fixed-step-unification/Gold Rush/e2e/feedback-fx.spec.ts:33:24
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/feedback-fx-announcement-b-cb8b5-er-the-opening-claim-notice-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/feedback-fx-announcement-b-cb8b5-er-the-opening-claim-notice-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/feedback-fx-announcement-b-cb8b5-er-the-opening-claim-notice-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/feedback-fx-announcement-b-cb8b5-er-the-opening-claim-notice-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:47167) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[148/528] [desktop-chrome] › e2e/feedback-fx.spec.ts:45:1 › gold panning spawns pooled world-space float text
+[desktop-chrome] › e2e/feedback-fx.spec.ts:45:1 › gold panning spawns pooled world-space float text
+frameMs avg=18.36 p95=33.60
+
+[149/528] [desktop-chrome] › e2e/feedback-fx.spec.ts:69:1 › xp mote pickup spawns teal world-space float text
+[150/528] [desktop-chrome] › e2e/gt-01-substrate.spec.ts:14:1 › flat claim exposes simulation height substrate without changing behavior
+[151/528] [desktop-chrome] › e2e/gt-02-slope.spec.ts:169:1 › tile param is debug-gated and first-claim fingerprint remains flat
+[152/528] [desktop-chrome] › e2e/gt-02-slope.spec.ts:207:1 › cliff slide resolver never wedges reachable hero positions
+[153/528] [desktop-chrome] › e2e/gt-02-slope.spec.ts:254:1 › slope movement, cliff blocking, and visual height use the sim field
+[154/528] [desktop-chrome] › e2e/gt-03-enemy-elevation.spec.ts:125:1 › enemies slow on slopes and expose grounded terrain diagnostics
+  10) [desktop-chrome] › e2e/gt-03-enemy-elevation.spec.ts:125:1 › enemies slow on slopes and expose grounded terrain diagnostics
+
+    Error: expect(received).toBeLessThan(expected)
+
+    Expected: < 0.85
+    Received:   3.362
+
+      144 |   await writeFile(path.join(ARTIFACT_DIR, `slope-report-${testInfo.project.name}.json`), `${JSON.stringify(report, null, 2)}\n`);
+      145 |
+    > 146 |   expect(report.uphillVsFlatSpeed).toBeLessThan(0.85);
+          |                                    ^
+      147 |   expect(report.downhillVsFlatSpeed).toBeGreaterThanOrEqual(0.98);
+      148 |   expect(uphill.terrain?.grounded).toBe(true);
+      149 |   expect(uphill.terrain?.traversable).toBe(true);
+        at /Users/robin/.codex/worktrees/fixed-step-unification/Gold Rush/e2e/gt-03-enemy-elevation.spec.ts:146:36
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/gt-03-enemy-elevation-enem-9eac4-rounded-terrain-diagnostics-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/gt-03-enemy-elevation-enem-9eac4-rounded-terrain-diagnostics-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/gt-03-enemy-elevation-enem-9eac4-rounded-terrain-diagnostics-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/gt-03-enemy-elevation-enem-9eac4-rounded-terrain-diagnostics-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:48049) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[155/528] [desktop-chrome] › e2e/gt-03-enemy-elevation.spec.ts:155:1 › cliff blocks enemies and local routing sends them around the ridge
+[156/528] [desktop-chrome] › e2e/gt-03-enemy-elevation.spec.ts:210:1 › seeded basin diagnostics include hash-identical enemy positions
+[157/528] [desktop-chrome] › e2e/gt-03-enemy-elevation.spec.ts:224:1 › basin stress stays in frame envelope while the flat claim remains neutral
+  11) [desktop-chrome] › e2e/gt-03-enemy-elevation.spec.ts:224:1 › basin stress stays in frame envelope while the flat claim remains neutral
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      248 |   expect(basin.frameMs?.p95 ?? Number.POSITIVE_INFINITY).toBeLessThanOrEqual(80);
+      249 |   expect(flat.sim?.flat).toBe(true);
+    > 250 |   expect(flat.enemies.every((terrain) => terrain?.grounded && terrain.traversable && terrain.speedMul === 1)).toBe(true);
+          |                                                                                                               ^
+      251 |   expect(errors.consoleErrors).toEqual([]);
+      252 |   expect(errors.pageErrors).toEqual([]);
+      253 | });
+        at /Users/robin/.codex/worktrees/fixed-step-unification/Gold Rush/e2e/gt-03-enemy-elevation.spec.ts:250:111
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/gt-03-enemy-elevation-basi-0a887--flat-claim-remains-neutral-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/gt-03-enemy-elevation-basi-0a887--flat-claim-remains-neutral-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/gt-03-enemy-elevation-basi-0a887--flat-claim-remains-neutral-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/gt-03-enemy-elevation-basi-0a887--flat-claim-remains-neutral-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:48663) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[158/528] [desktop-chrome] › e2e/gt-04-sightlines.spec.ts:93:1 › ridge blocks bolt acquisition from both sides
+[159/528] [desktop-chrome] › e2e/gt-04-sightlines.spec.ts:126:1 › lob arcs over ridge and detonates on target terrain height
+[160/528] [desktop-chrome] › e2e/gt-04-sightlines.spec.ts:159:1 › high ground range bonus extends turret acquisition beyond base range
+[161/528] [desktop-chrome] › e2e/gt-04-sightlines.spec.ts:191:1 › flat claim fingerprint keeps LOS fast path sample-free
+[162/528] [desktop-chrome] › e2e/gt-04-sightlines.spec.ts:205:1 › terrain LOS is deterministic and 200-enemy basin stress stays in envelope
+[163/528] [desktop-chrome] › e2e/gt-05-water-depth.spec.ts:143:1 › depth data declares deep river, wade ford, and measurable ford slowdown
+[164/528] [desktop-chrome] › e2e/gt-05-water-depth.spec.ts:181:1 › deep water blocks hero and enemy through the shared resolver
+[165/528] [desktop-chrome] › e2e/gt-05-water-depth.spec.ts:249:1 › wadeable river depth lets enemies cross without ford routing
+[166/528] [desktop-chrome] › e2e/gt-05-water-depth.spec.ts:292:1 › flat wadeable river applies enemy water speed
+[167/528] [desktop-chrome] › e2e/gt-05-water-depth.spec.ts:333:1 › classic claim keeps legacy water behavior while carrying equivalent depth data
+[168/528] [desktop-chrome] › e2e/gt-05-water-depth.spec.ts:391:1 › GT water depth simulation is deterministic
+[169/528] [desktop-chrome] › e2e/lane-c-activations-assay-office.spec.ts:80:1 › claim jumpers walk through the 8-way rotation matrix
+[170/528] [desktop-chrome] › e2e/lane-c-activations-assay-office.spec.ts:107:1 › build menu shows the six processed building portraits
+[171/528] [desktop-chrome] › e2e/lane-c-activations-assay-office.spec.ts:126:1 › Assay Office is river-adjacent only and opens the bench on confirm
+[172/528] [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:29:1 › T spawns Claim Jumpers, contact kills hero, R restarts in place
+[173/528] [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:59:1 › nospawn blocks debug packs
+[174/528] [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:70:1 › double restart recycles enemies without geometry growth
+[175/528] [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:96:1 › stress=120 stays within pool and draw-call budget
+[176/528] [desktop-chrome] › e2e/m1-02-auto-fire.spec.ts:25:1 › Spark Rig clears a debug pack and motes grant XP with zero input
+[177/528] [desktop-chrome] › e2e/m1-02-auto-fire.spec.ts:41:1 › stress pack never exceeds the bolt pool and logs no console errors
+[178/528] [desktop-chrome] › e2e/m1-02-auto-fire.spec.ts:64:1 › run reset recycles combat pools without renderer memory growth
+  12) [desktop-chrome] › e2e/m1-02-auto-fire.spec.ts:64:1 › run reset recycles combat pools without renderer memory growth
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 33
+    Received: 34
+
+      94 |   const after = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.renderer);
+      95 |   expect(after?.geometries).toBe(baseline?.geometries);
+    > 96 |   expect(after?.textures).toBe(baseline?.textures);
+         |                           ^
+      97 |   expect(errors.consoleErrors).toEqual([]);
+      98 |   expect(errors.pageErrors).toEqual([]);
+      99 | });
+        at /Users/robin/.codex/worktrees/fixed-step-unification/Gold Rush/e2e/m1-02-auto-fire.spec.ts:96:27
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/m1-02-auto-fire-run-reset--da7b7-hout-renderer-memory-growth-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/m1-02-auto-fire-run-reset--da7b7-hout-renderer-memory-growth-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m1-02-auto-fire-run-reset--da7b7-hout-renderer-memory-growth-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/m1-02-auto-fire-run-reset--da7b7-hout-renderer-memory-growth-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:49945) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[179/528] [desktop-chrome] › e2e/m1-03-wave-pressure.spec.ts:31:1 › grace holds pressure until sim-t 5, then first trickle arrives
+[180/528] [desktop-chrome] › e2e/m1-03-wave-pressure.spec.ts:44:1 › wave banner and diagnostics advance on the 30s cadence
+[181/528] [desktop-chrome] › e2e/m1-03-wave-pressure.spec.ts:59:1 › spawn accounting reaches trickle plus first two wave pulses by sim-t 60
+[182/528] [desktop-chrome] › e2e/m1-03-wave-pressure.spec.ts:73:1 › alive cap holds under no-kill pressure
+[183/528] [desktop-chrome] › e2e/m1-03-wave-pressure.spec.ts:89:1 › resetRun mid-wave clears wave pressure and opens with the claim banner
+[184/528] [desktop-chrome] › e2e/m1-04-gold-panning-economy.spec.ts:67:1 › scripted walk to a gold seam pans at least one tick
+[185/528] [desktop-chrome] › e2e/m1-04-gold-panning-economy.spec.ts:88:1 › leaving mid-pan decays harvest progress
+[186/528] [desktop-chrome] › e2e/m1-04-gold-panning-economy.spec.ts:109:1 › depleted gold seam relocates after its respawn timer
+[187/528] [desktop-chrome] › e2e/m1-04-gold-panning-economy.spec.ts:144:1 › economy rejects overspend and replays its mutation log
+[188/528] [desktop-chrome] › e2e/m1-05-sentry-beacon-build.spec.ts:46:1 › grant gold then keyboard-build places one Sentry Beacon for 25g
+[189/528] [desktop-chrome] › e2e/m1-05-sentry-beacon-build.spec.ts:61:1 › Sentry Beacon registers kills through combat with zero input
+[190/528] [desktop-chrome] › e2e/m1-05-sentry-beacon-build.spec.ts:80:1 › river placement is rejected without spending gold
+[191/528] [desktop-chrome] › e2e/m1-05-sentry-beacon-build.spec.ts:95:1 › Sentry Beacon cost escalates after each placement
+[192/528] [desktop-chrome] › e2e/m1-05-sentry-beacon-build.spec.ts:112:1 › resetRun clears Sentry Beacons, owner kills, and keeps renderer memory stable
+[193/528] [desktop-chrome] › e2e/m1-05-sentry-beacon-build.spec.ts:175:1 › resetRun clears active harvest channel progress
+[194/528] [desktop-chrome] › e2e/m1-06-level-up-choices.spec.ts:82:1 › X opens level-up and freezes sim clocks while enemies are alive
+[195/528] [desktop-chrome] › e2e/m1-06-level-up-choices.spec.ts:99:1 › picking a card applies stacks and resumes after pending choices without wave drift
+[196/528] [desktop-chrome] › e2e/m1-06-level-up-choices.spec.ts:118:1 › first offer is deterministic for a fixed seed and has no duplicates
+[197/528] [desktop-chrome] › e2e/m1-06-level-up-choices.spec.ts:137:1 › investment weighting prefers owned families without losing discovery
+[198/528] [desktop-chrome] › e2e/m1-06-level-up-choices.spec.ts:169:1 › owned-family cards show a compact stack pip
+[199/528] [desktop-chrome] › e2e/m1-06-level-up-choices.spec.ts:181:1 › sampled offers never contain duplicate ids
+[200/528] [desktop-chrome] › e2e/m1-06-level-up-choices.spec.ts:194:1 › maxed upgrades leave the offer pool
+[201/528] [desktop-chrome] › e2e/m1-06-level-up-choices.spec.ts:218:1 › Beacon Dynamo is gated until a beacon stands
+[202/528] [desktop-chrome] › e2e/m1-06-level-up-choices.spec.ts:238:1 › Split Spark visibly increases volley stats and live bolts
+[203/528] [desktop-chrome] › e2e/m1-06-level-up-choices.spec.ts:275:1 › resetRun clears progression and HUD XP truth
+[204/528] [desktop-chrome] › e2e/m1-07-charm.spec.ts:56:1 › debug exposes GUI and setBalance mutates rig tuning echo
+[205/528] [desktop-chrome] › e2e/m1-07-charm.spec.ts:66:1 › enemy kill triggers hit-pause and then sim time resumes
+[206/528] [desktop-chrome] › e2e/m1-07-charm.spec.ts:92:1 › nopause disables hit-pause and camera impulse on kills
+[207/528] [desktop-chrome] › e2e/m1-07-charm.spec.ts:118:1 › death overlay shows flavor line and secondary Try Again restarts
+[208/528] [desktop-chrome] › e2e/m1-07-charm.spec.ts:134:1 › wave banner rotation avoids immediate repeats
+[209/528] [desktop-chrome] › e2e/m1-07-charm.spec.ts:153:1 › upgrade cards show concrete effects and procedural icon slots
+[210/528] [desktop-chrome] › e2e/m1-07-charm.spec.ts:168:1 › scoreboard records two deaths and highlights current run
+[211/528] [desktop-chrome] › e2e/m1-08-wave18-corrections.spec.ts:118:1 › death ledger derives lifetime panned, spent, and beacons from economy log
+[212/528] [desktop-chrome] › e2e/m1-08-wave18-corrections.spec.ts:149:1 › summarizeLog reports exact panned granted spent and beacon counts
+[213/528] [desktop-chrome] › e2e/m1-08-wave18-corrections.spec.ts:179:1 › exhausted core pool offers three distinct pickable filler cards
+[214/528] [desktop-chrome] › e2e/m1-08-wave18-corrections.spec.ts:196:1 › zero offerable upgrades consume the level without freezing
+[215/528] [desktop-chrome] › e2e/m1-08-wave18-corrections.spec.ts:212:1 › filler cards grant assay gold and capped field dressing healing
+[216/528] [desktop-chrome] › e2e/m1-08-wave18-corrections.spec.ts:248:1 › wave-10 tuned beacons and hero clear a small clump without chewing hero down
+[217/528] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend
+[218/528] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs
+[219/528] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining
+[220/528] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:198:1 › beacon cost curve stays intact through the menu
+[221/528] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:220:1 › single enemy slides around a finite palisade line without passing through
+[222/528] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:277:1 › 390px build menu is visible, tappable, and clear of HUD controls
+[223/528] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:322:1 › stress draw calls stay under 200 with palisades and beacons
+[224/528] [desktop-chrome] › e2e/m2-02-sluice-and-stockpile.spec.ts:90:1 › river-adjacent placement rejects away from river and accepts near the bank
+[225/528] [desktop-chrome] › e2e/m2-02-sluice-and-stockpile.spec.ts:111:1 › sluice income follows Balance cadence and replays to the HUD balance
+[226/528] [desktop-chrome] › e2e/m2-02-sluice-and-stockpile.spec.ts:137:1 › contested sluice pauses its timer and resumes after the threat is cleared
+[227/528] [desktop-chrome] › e2e/m2-02-sluice-and-stockpile.spec.ts:156:1 › bank cap blocks panning and sluicing until a stockpile raises capacity
+[228/528] [desktop-chrome] › e2e/m2-02-sluice-and-stockpile.spec.ts:207:1 › R rotates the palisade footprint and the rotated AABB blocks on that axis
+[229/528] [desktop-chrome] › e2e/m2-02-sluice-and-stockpile.spec.ts:260:1 › 390px build menu has four tappable tiles and keyboard slots 1-4 select them
+[230/528] [desktop-chrome] › e2e/m2-03-wave-scheduler.spec.ts:126:1 › spawn accounting follows the knee budget at waves 8, 10, and 14
+[231/528] [desktop-chrome] › e2e/m2-03-wave-scheduler.spec.ts:155:1 › lull window stays spawn-free between scheduled pulses
+[232/528] [desktop-chrome] › e2e/m2-03-wave-scheduler.spec.ts:185:1 › edge telegraphs precede the pulse spawn
+[233/528] [desktop-chrome] › e2e/m2-03-wave-scheduler.spec.ts:219:1 › next-wave timer stays locked to sim time across three waves
+[234/528] [desktop-chrome] › e2e/m2-04-gold-stealing.spec.ts:112:1 › steal debits bank through gold_stolen and shows a float
+[235/528] [desktop-chrome] › e2e/m2-04-gold-stealing.spec.ts:131:1 › fleeing carrier moves toward its own spawn edge and despawns
+[236/528] [desktop-chrome] › e2e/m2-04-gold-stealing.spec.ts:170:1 › killed carrier drops reclaimable gold pickup
+[237/528] [desktop-chrome] › e2e/m2-04-gold-stealing.spec.ts:188:1 › bank cap blocks pickup reclaim until room exists
+[238/528] [desktop-chrome] › e2e/m2-04-gold-stealing.spec.ts:211:1 › thief routes around a finite palisade line to steal
+  13) [desktop-chrome] › e2e/m2-04-gold-stealing.spec.ts:211:1 › thief routes around a finite palisade line to steal
+
+    Error: expect(received).toBeLessThan(expected)
+
+    Expected: < 20
+    Received:   20.66666666666665
+
+      224 |     true,
+      225 |   );
+    > 226 |   expect((await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.timeAlive ?? 99)) - spawnedAt).toBeLessThan(20);
+          |                                                                                                       ^
+      227 |   expect(errors.consoleErrors).toEqual([]);
+      228 |   expect(errors.pageErrors).toEqual([]);
+      229 | });
+        at /Users/robin/.codex/worktrees/fixed-step-unification/Gold Rush/e2e/m2-04-gold-stealing.spec.ts:226:103
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/m2-04-gold-stealing-thief--fb6ec-nite-palisade-line-to-steal-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/m2-04-gold-stealing-thief--fb6ec-nite-palisade-line-to-steal-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m2-04-gold-stealing-thief--fb6ec-nite-palisade-line-to-steal-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/m2-04-gold-stealing-thief--fb6ec-nite-palisade-line-to-steal-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:54718) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[239/528] [desktop-chrome] › e2e/m2-04-gold-stealing.spec.ts:231:1 › real waves spawn no thieves without a stockpile
+[240/528] [desktop-chrome] › e2e/m2-04-gold-stealing.spec.ts:251:1 › loose pickup can be re-stolen without another Economy event
+[241/528] [desktop-chrome] › e2e/m2-05-base-damage-repair.spec.ts:105:1 › damage cadence emits building damage and shows damaged-only HP bar
+[242/528] [desktop-chrome] › e2e/m2-05-base-damage-repair.spec.ts:143:1 › wreck opens a real palisade breach, disables beacon fire, and drops stockpile cap without deleting banked gold
+[243/528] [desktop-chrome] › e2e/m2-05-base-damage-repair.spec.ts:198:1 › repair dwell spends exact sink, restores function, and keeps replay equal to HUD
+[244/528] [desktop-chrome] › e2e/m2-05-base-damage-repair.spec.ts:227:1 › repair interrupt does not debit and no-funds repair shows one blocked float
+[245/528] [desktop-chrome] › e2e/m2-05-base-damage-repair.spec.ts:255:1 › wrecker targets nearest buildable and ignores a closer hero
+[246/528] [desktop-chrome] › e2e/m2-05-base-damage-repair.spec.ts:277:1 › real waves spawn zero wreckers without buildables and nowreck disables them with buildables present
+[247/528] [desktop-chrome] › e2e/m2-05-base-damage-repair.spec.ts:319:1 › wreck and repair cycles leave shooter and renderer counts at baseline
+[248/528] [desktop-chrome] › e2e/m2-05b-overwhelm-valves.spec.ts:161:1 › scheduled thief flags never exceed the concurrency cap
+[249/528] [desktop-chrome] › e2e/m2-05b-overwhelm-valves.spec.ts:189:1 › wrecker pulses get a distinct telegraph and normal pulses do not
+[250/528] [desktop-chrome] › e2e/m2-05b-overwhelm-valves.spec.ts:223:1 › lullFloor12 only clamps post-wave-12 pulse spacing
+[251/528] [desktop-chrome] › e2e/m2-05b-overwhelm-valves.spec.ts:252:1 › theft ping shows edge glyph, auto-hides, and debug flags suppress it
+[252/528] [desktop-chrome] › e2e/m2-05b-overwhelm-valves.spec.ts:293:1 › wave-12 palisade line survives one wrecker pulse and repair stays cheaper than new placement
+[253/528] [desktop-chrome] › e2e/m2-06-arsenal-blast-charge.spec.ts:71:1 › toggle defaults to rig, then blast kills while rig owner stops
+[254/528] [desktop-chrome] › e2e/m2-06-arsenal-blast-charge.spec.ts:92:1 › one blast detonation kills a frozen cluster once through hero_blast
+[255/528] [desktop-chrome] › e2e/m2-06-arsenal-blast-charge.spec.ts:106:1 › blast friendly fire leaves hero and buildables intact, beacon still fires
+[256/528] [desktop-chrome] › e2e/m2-06-arsenal-blast-charge.spec.ts:131:1 › turret line of sight ignores blocked nearest and shoots clear second target
+  14) [desktop-chrome] › e2e/m2-06-arsenal-blast-charge.spec.ts:131:1 › turret line of sight ignores blocked nearest and shoots clear second target
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      153 |   await page.evaluate(() => window.__GR_TEST__?.spawnEnemyAt(0, 8));
+      154 |   await page.waitForTimeout(2200);
+    > 155 |   expect(await page.evaluate(() => window.__GR_TEST__?.state().arsenal.turretKills ?? 0)).toBe(0);
+          |                                                                                           ^
+      156 |   expect(await page.evaluate(() => window.__GR_TEST__?.state().enemiesAlive ?? 0)).toBe(1);
+      157 |
+      158 |   await page.evaluate(() => window.__GR_TEST__?.spawnEnemyAt(6, 12));
+        at /Users/robin/.codex/worktrees/fixed-step-unification/Gold Rush/e2e/m2-06-arsenal-blast-charge.spec.ts:155:91
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/m2-06-arsenal-blast-charge-49405--shoots-clear-second-target-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/m2-06-arsenal-blast-charge-49405--shoots-clear-second-target-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m2-06-arsenal-blast-charge-49405--shoots-clear-second-target-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/m2-06-arsenal-blast-charge-49405--shoots-clear-second-target-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:56493) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[257/528] [desktop-chrome] › e2e/m2-06-arsenal-blast-charge.spec.ts:168:1 › slot 5 selects turret, spends once, and HUD gold matches replay
+[258/528] [desktop-chrome] › e2e/m2-06-arsenal-blast-charge.spec.ts:189:1 › real waves stay neutral without toggling or turrets
+[259/528] [desktop-chrome] › e2e/m2-06-arsenal-blast-charge.spec.ts:212:1 › stress blast pool never exceeds cap
+[260/528] [desktop-chrome] › e2e/m2-07-base-self-hold.spec.ts:244:1 › SELF-HOLD reference base survives two wave-15 pulse cycles without hero intervention
+[261/528] [desktop-chrome] › e2e/m2-07-base-self-hold.spec.ts:298:1 › SELF-HOLD reference base keeps half standing through wave-25 pulse cycles
+[262/528] [desktop-chrome] › e2e/m2-07-base-self-hold.spec.ts:349:1 › blast clump TTK at wave 20+ stays within 2x wave-10
+  15) [desktop-chrome] › e2e/m2-07-base-self-hold.spec.ts:349:1 › blast clump TTK at wave 20+ stays within 2x wave-10
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 2
+    Received:    4
+
+      369 |   };
+      370 |   await writeReport(testInfo, 'blast-ttk', { report, errors });
+    > 371 |   expect(report.ratio).toBeLessThanOrEqual(2);
+          |                        ^
+      372 |   expect(wave10.weaponSplit.hero ?? 0).toBe(0);
+      373 |   expect(wave21.weaponSplit.hero ?? 0).toBe(0);
+      374 |   expect(errors.consoleErrors).toEqual([]);
+        at /Users/robin/.codex/worktrees/fixed-step-unification/Gold Rush/e2e/m2-07-base-self-hold.spec.ts:371:24
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/m2-07-base-self-hold-blast-c2181--20-stays-within-2x-wave-10-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/m2-07-base-self-hold-blast-c2181--20-stays-within-2x-wave-10-desktop-chrome/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m2-07-base-self-hold-blast-c2181--20-stays-within-2x-wave-10-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/m2-07-base-self-hold-blast-c2181--20-stays-within-2x-wave-10-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:56789) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[263/528] [desktop-chrome] › e2e/m2-07b-building-incentive-tune.spec.ts:95:1 › half-damaged sluice repairs for proportional global cost
+[264/528] [desktop-chrome] › e2e/m2-07b-building-incentive-tune.spec.ts:154:1 › building-targeting bandits share the wave pressure budget
+[265/528] [desktop-chrome] › e2e/m2-07b-building-incentive-tune.spec.ts:166:1 › blast cards enter offers and apply stacks
+[266/528] [desktop-chrome] › e2e/m2-07b-building-incentive-tune.spec.ts:197:1 › six blast stacks kill a wave-15 clump and log blast usage
+
+(node:56789) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[267/528] [desktop-chrome] › e2e/m3-01-run-scaffold.spec.ts:15:1 › run end summary matches Economy log replay
+[268/528] [desktop-chrome] › e2e/m3-01-run-scaffold.spec.ts:77:1 › meta persists across reload
+[269/528] [desktop-chrome] › e2e/m3-01-run-scaffold.spec.ts:101:1 › fresh profile migrates to gr.meta.v1 defaults
+[270/528] [desktop-chrome] › e2e/m3-01-run-scaffold.spec.ts:110:1 › MetaProgress keeps agent reserved but exposes autonomy level
+[271/528] [desktop-chrome] › e2e/m3-06-demo-profiles.spec.ts:14:1 › two title profiles isolate meta, suspend slots, and Best Claims scores
+[272/528] [desktop-chrome] › e2e/m3-06-demo-profiles.spec.ts:49:1 › legacy single-profile scores migrate into Robin with difficulty and hints defaults
+[273/528] [desktop-chrome] › e2e/m3-06-demo-profiles.spec.ts:75:1 › difficulty preset key follows the active profile
+[274/528] [desktop-chrome] › e2e/m3-06-demo-profiles.spec.ts:109:1 › running profile keeps its storage when another tab changes active profile
+[275/528] [desktop-chrome] › e2e/m4-01-tool-surface.spec.ts:99:1 › get_state returns the same state and economy log as the direct harness
+[276/528] [desktop-chrome] › e2e/m4-01-tool-surface.spec.ts:127:1 › place_building delegates to the direct build path and receipts the exact economy log
+[277/528] [desktop-chrome] › e2e/m4-01-tool-surface.spec.ts:146:1 › level 0 blocks every side-effect tool with a typed refusal and no log delta
+[278/528] [desktop-chrome] › e2e/m4-01-tool-surface.spec.ts:172:1 › unbacked action tools refuse without mutating the direct economy log
+[279/528] [desktop-chrome] › e2e/m4-05-agent-closeout.spec.ts:212:1 › hero death creates no orphan agent receipts and reset returns the Prospector home
+[280/528] [desktop-chrome] › e2e/m4-05-agent-closeout.spec.ts:243:1 › side-effect permission checks read live meta on each call
+[281/528] [desktop-chrome] › e2e/m4-05-agent-closeout.spec.ts:280:1 › victory pause agent calls do not bank gold into the stale or next run
+[282/528] [desktop-chrome] › e2e/m4-06-embodiment.spec.ts:139:1 › plain boot renders the Prospector near the claim with no debug gate
+[283/528] [desktop-chrome] › e2e/m4-06-embodiment.spec.ts:178:1 › permission chip shows portrait, current level, abilities, and growth path
+[284/528] [desktop-chrome] › e2e/m4-06-embodiment.spec.ts:196:1 › Prospector floats above terrain while following hero probe points
+[285/528] [desktop-chrome] › e2e/m4-06-embodiment.spec.ts:229:1 › normal play Prospector gathers XP motes when permission allows
+[286/528] [desktop-chrome] › e2e/m4-06-embodiment.spec.ts:248:1 › Prospector defers XP gathering while a higher-priority receipt is active
+[287/528] [desktop-chrome] › e2e/m4-06-embodiment.spec.ts:289:1 › real Prospector sprite loads and faces pan movement
+[288/528] [desktop-chrome] › e2e/m4-06-embodiment.spec.ts:364:1 › debug receipt moves the Prospector toward a panning target and floats ledger voice
+[289/528] [desktop-chrome] › e2e/m4-06-embodiment.spec.ts:395:1 › permission-denied receipts do not send the Prospector to the denied target
+[290/528] [desktop-chrome] › e2e/m4-06-embodiment.spec.ts:419:1 › the Prospector has no collider for scripted enemy movement
+[291/528] [desktop-chrome] › e2e/m4-07-prospector-panel.spec.ts:56:1 › G, Esc, chip, and outside tap control the panel without pausing the run
+[292/528] [desktop-chrome] › e2e/m4-07-prospector-panel.spec.ts:93:1 › ladder renders earned toggles, unearned hints, and current abilities
+[293/528] [desktop-chrome] › e2e/m4-07-prospector-panel.spec.ts:113:1 › auto-collect consent halts and resumes behavior, with stacked newest-first receipts
+[294/528] [desktop-chrome] › e2e/m4-07-prospector-panel.spec.ts:151:1 › mobile chip tap opens a full-width bottom sheet with a 44px close target
+[295/528] [desktop-chrome] › e2e/m4-08-agent-attribution.spec.ts:81:1 › actor tags add attribution without changing economy replay totals
+[296/528] [desktop-chrome] › e2e/m4-08-agent-attribution.spec.ts:116:1 › death card shows seeded player and Prospector panned split on plain boot
+[297/528] [desktop-chrome] › e2e/m4-08-agent-attribution.spec.ts:140:1 › player-only death card keeps the single panned number on plain boot
+[298/528] [desktop-chrome] › e2e/m4-09-agent-rung-clarity.spec.ts:89:1 › rung 0 panel shows the canonical ladder, progress, and blocked repair reason
+[299/528] [desktop-chrome] › e2e/m4-09-agent-rung-clarity.spec.ts:114:1 › rung 1 panel highlights approval-required and keeps earned controls readable
+[300/528] [desktop-chrome] › e2e/m4-09-agent-rung-clarity.spec.ts:132:1 › run-only policy slot bonus is named beside base autonomy progress
+[301/528] [desktop-chrome] › e2e/m4-09-agent-rung-clarity.spec.ts:151:1 › run ledger only adds Prospector growth when agent autonomy moved
+[302/528] [desktop-chrome] › e2e/m4-09-agent-rung-clarity.spec.ts:159:1 › secured run ledger names the Prospector autonomy gain
+[303/528] [desktop-chrome] › e2e/m4-09-agent-rung-clarity.spec.ts:175:1 › secured run ledger does not advertise autonomy past the max rung
+[304/528] [desktop-chrome] › e2e/m4-10-agent-actions-integrity.spec.ts:103:1 › panel only offers registered ToolSurface capabilities
+[305/528] [desktop-chrome] › e2e/m4-10-agent-actions-integrity.spec.ts:121:1 › repair, dropped-gold, and XP actions work and freeze while paused
+[306/528] [desktop-chrome] › e2e/m5-03-stat-sim-harness.spec.ts:53:1 › overpowered item passes declared budget but is caught empirically
+[307/528] [desktop-chrome] › e2e/m5-03-stat-sim-harness.spec.ts:66:1 › fair item passes declared budget and stat sim tolerance
+[308/528] [desktop-chrome] › e2e/m5-03-stat-sim-harness.spec.ts:79:1 › same item produces hash-identical deterministic measurements
+[309/528] [desktop-chrome] › e2e/m5-03-stat-sim-harness.spec.ts:90:1 › ?simitem exposes diagnostics and absent param leaves normal boot unchanged
+[310/528] [desktop-chrome] › e2e/m5-04-offline-queue.spec.ts:75:1 › booting never posts the default local sample order
+[311/528] [desktop-chrome] › e2e/m5-04-offline-queue.spec.ts:89:1 › post the order writes the exact pending request JSON
+[312/528] [desktop-chrome] › e2e/m5-04-offline-queue.spec.ts:122:1 › posted orders stay visible across reloads and refresh to verdicts on reopen
+  16) [desktop-chrome] › e2e/m5-04-offline-queue.spec.ts:122:1 › posted orders stay visible across reloads and refresh to verdicts on reopen
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      154 |       window.__GR_TEST__?.teleport(0, 7);
+      155 |     });
+    > 156 |     await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.assayOffices ?? 0)).toBe(1);
+          |                                                                                                              ^
+      157 |     await page.getByTestId('assay-close').click();
+      158 |     await expect(page.getByTestId('assay-bench')).toBeHidden();
+      159 |
+        at /Users/robin/.codex/worktrees/fixed-step-unification/Gold Rush/e2e/m5-04-offline-queue.spec.ts:156:110
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/m5-04-offline-queue-posted-fc79c-fresh-to-verdicts-on-reopen-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/m5-04-offline-queue-posted-fc79c-fresh-to-verdicts-on-reopen-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m5-04-offline-queue-posted-fc79c-fresh-to-verdicts-on-reopen-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/m5-04-offline-queue-posted-fc79c-fresh-to-verdicts-on-reopen-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:59751) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[313/528] [desktop-chrome] › e2e/m5-04-offline-queue.spec.ts:201:1 › stale open refresh cannot hide a newly posted pending order
+[314/528] [desktop-chrome] › e2e/m5-04-offline-queue.spec.ts:243:1 › verdicted order ids cannot be recreated as pending
+[315/528] [desktop-chrome] › e2e/m5-04-offline-queue.spec.ts:276:1 › blank bench submits stay local
+[316/528] [desktop-chrome] › e2e/m5-04-offline-queue.spec.ts:288:1 › first-run pipeline consumes pending orders and keeps verdicts flexible
+[317/528] [desktop-chrome] › e2e/m5-04-offline-queue.spec.ts:317:1 › approved fixtures enter a profile history once
+[318/528] [desktop-chrome] › e2e/m5-04-offline-queue.spec.ts:342:1 › bench hint is visible, avoids HUD chips, and closes both ways
+[319/528] [desktop-chrome] › e2e/m5-04-offline-queue.spec.ts:366:1 › rejected fixtures show pipeline reasons in the bench
+
+(node:59751) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[320/528] [desktop-chrome] › e2e/meta-presence.spec.ts:114:1 › earned meta is visible in run recap, pause ledger, and boosted cards
+[321/528] [desktop-chrome] › e2e/meta-presence.spec.ts:153:1 › gated prospecting cards keep assay provenance when both research perks apply
+[322/528] [desktop-chrome] › e2e/meta-presence.spec.ts:166:1 › conditional research recap copy does not imply a run-start stat
+[323/528] [desktop-chrome] › e2e/meta-presence.spec.ts:176:1 › continued study recap matches the live run stat on first load
+[324/528] [desktop-chrome] › e2e/meta-presence.spec.ts:195:1 › fresh profile shows no false meta recap or card provenance
+[325/528] [desktop-chrome] › e2e/meta-presence.spec.ts:205:1 › stay for the rush does not call newly banked territory active
+[326/528] [desktop-chrome] › e2e/meta-presence.spec.ts:221:1 › combat hit-pause does not open the claim memory ledger
+[327/528] [desktop-chrome] › e2e/meta-presence.spec.ts:260:1 › secured new claim shows recap after research ledger closes
+[328/528] [desktop-chrome] › e2e/mp-02-lockstep.spec.ts:36:1 › two clients advance 500 ticks with identical lockstep hashes
+[329/528] [desktop-chrome] › e2e/mp-02-lockstep.spec.ts:67:1 › hash mismatch pauses, shows the wire card, and restores from relay snapshot
+  17) [desktop-chrome] › e2e/mp-02-lockstep.spec.ts:67:1 › hash mismatch pauses, shows the wire card, and restores from relay snapshot
+
+    TimeoutError: page.waitForFunction: Timeout 20000ms exceeded.
+
+      79 |       return state && state.tick >= 110 && state.desyncs >= 1 && state.resyncs >= 1;
+      80 |     }, undefined, { timeout: 20_000 });
+    > 81 |     await bob.waitForFunction(() => {
+         |               ^
+      82 |       const state = window.__GR_MP__?.state();
+      83 |       return state && state.tick >= 110 && state.desyncs >= 1 && state.resyncs >= 1;
+      84 |     }, undefined, { timeout: 20_000 });
+        at /Users/robin/.codex/worktrees/fixed-step-unification/Gold Rush/e2e/mp-02-lockstep.spec.ts:81:15
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/mp-02-lockstep-hash-mismat-855a7-estores-from-relay-snapshot-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/mp-02-lockstep-hash-mismat-855a7-estores-from-relay-snapshot-desktop-chrome/test-failed-2.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/mp-02-lockstep-hash-mismat-855a7-estores-from-relay-snapshot-desktop-chrome/error-context.md
+
+    Error Context: test-results/mp-02-lockstep-hash-mismat-855a7-estores-from-relay-snapshot-desktop-chrome/error-context.md
+
+    attachment #5: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/mp-02-lockstep-hash-mismat-855a7-estores-from-relay-snapshot-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/mp-02-lockstep-hash-mismat-855a7-estores-from-relay-snapshot-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[330/528] [desktop-chrome] › e2e/mp-02-lockstep.spec.ts:105:1 › two clients promote both roster slots to real local-camera heroes and shared run credit
+
+(node:61399) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[331/528] [desktop-chrome] › e2e/perf-01-stress-budget.spec.ts:98:1 › stress profile stays within draw-call and sprite-swap budgets
+[332/528] [desktop-chrome] › e2e/perf-02-fullbase-bench.spec.ts:35:1 › full-base benchmark stays inside draw-call and frame envelopes
+[333/528] [desktop-chrome] › e2e/perf-04-determinism.spec.ts:58:1 › ?debug without determinism leaves the harness dormant
+[334/528] [desktop-chrome] › e2e/perf-04-determinism.spec.ts:68:1 › same seed produces identical economy hash and entity timeline
+[335/528] [desktop-chrome] › e2e/perf-05-startup.spec.ts:213:1 › startup reaches playable quickly and defers non-critical textures
+
+(node:61399) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[336/528] [desktop-chrome] › e2e/polish-02-rivalry-stats.spec.ts:85:1 › expanded run ledger mirrors economy replay and run diagnostics
+[337/528] [desktop-chrome] › e2e/polish-02-rivalry-stats.spec.ts:144:1 › profile-scoped v1 scores migrate to v2 as legacy records for the selected profile
+[338/528] [desktop-chrome] › e2e/polish-02-rivalry-stats.spec.ts:204:1 › base value replay subtracts demolished build cost before replacement
+[339/528] [desktop-chrome] › e2e/polish-02-rivalry-stats.spec.ts:237:1 › Best Claims sorts by wave before base value
+[340/528] [desktop-chrome] › e2e/polish-02-rivalry-stats.spec.ts:264:1 › a single secured victory increments every meta track exactly once
+[341/528] [desktop-chrome] › e2e/polish-03-mobile-hud.spec.ts:197:1 › mobile HUD controls fit, tap, and avoid overlap at 390px and 430px
+[342/528] [desktop-chrome] › e2e/profile-first-boot.spec.ts:41:1 › cleared-storage boot asks who is prospecting and creates no Robin ghost
+[343/528] [desktop-chrome] › e2e/profile-first-boot.spec.ts:66:1 › existing profile state boots straight to the menu
+[344/528] [desktop-chrome] › e2e/profile-first-boot.spec.ts:79:1 › pack the ledger downloads human-readable active profile data
+[345/528] [desktop-chrome] › e2e/profile-first-boot.spec.ts:100:1 › unpack a ledger previews, imports as a new profile, and suffixes collisions
+[346/528] [desktop-chrome] › e2e/profile-first-boot.spec.ts:132:1 › malformed ledgers are rejected warmly and the picker fits at 390px
+[347/528] [desktop-chrome] › e2e/research-chart.spec.ts:104:1 › live unlock nodes use the same icon key and reveal copy as their run cards
+[348/528] [desktop-chrome] › e2e/research-chart.spec.ts:118:1 › survey chart renders node states, traces locked requirements, and persists one pin
+[349/528] [desktop-chrome] › e2e/research-chart.spec.ts:183:1 › pinned path marks post-run proposals without auto-picking
+[350/528] [desktop-chrome] › e2e/research-chart.spec.ts:207:1 › fresh profile chart has no false marks
+[351/528] [desktop-chrome] › e2e/research-chart.spec.ts:216:1 › exhausted frontier shows Continued Study stack and banked overflow
+[352/528] [desktop-chrome] › e2e/run-suspend.spec.ts:171:1 › pause overlay explains the ledger before the first boundary save
+[353/528] [desktop-chrome] › e2e/run-suspend.spec.ts:182:1 › wave-boundary suspend restores state and matches the uninterrupted seeded run
+[354/528] [desktop-chrome] › e2e/run-suspend.spec.ts:268:1 › ended runs clear suspend and town board launch confirms abandoning a saved claim
+[355/528] [desktop-chrome] › e2e/save-slots.spec.ts:138:1 › manual save creates a curated slot, preserves auto, and loads through the suspend restore path
+[356/528] [desktop-chrome] › e2e/save-slots.spec.ts:195:1 › load screen renames, deletes, and carries slots through Pack/Unpack
+[357/528] [desktop-chrome] › e2e/save-slots.spec.ts:241:1 › 12-slot cap and storage warning show on the 390px save flow
+[358/528] [desktop-chrome] › e2e/sci-01-research-loop.spec.ts:117:1 › research node descriptions stay concrete
+[359/528] [desktop-chrome] › e2e/sci-01-research-loop.spec.ts:125:1 › science ceiling promises the Steamworks and surfaces banked overflow
+[360/528] [desktop-chrome] › e2e/sci-01-research-loop.spec.ts:145:1 › exhausted Frontier tree offers Continued Study proposals with numeric copy
+[361/528] [desktop-chrome] › e2e/sci-01-research-loop.spec.ts:175:1 › death ledger offers research, persists the pick, and changes the next proposal pool
+[362/528] [desktop-chrome] › e2e/sci-01-research-loop.spec.ts:220:1 › victory grants a second research proposal round
+[363/528] [desktop-chrome] › e2e/sci-01-research-loop.spec.ts:243:1 › launch nodes apply live effects
+[364/528] [desktop-chrome] › e2e/sci-01-research-loop.spec.ts:256:1 › Chain Spark family is absent before its node and present after
+[365/528] [desktop-chrome] › e2e/sci-01-research-loop.spec.ts:274:1 › research registry follows the active profile
+[366/528] [desktop-chrome] › e2e/sci-02-families-mastery.spec.ts:77:1 › Beacon Handoff is absent before its Arsenal node and present after
+[367/528] [desktop-chrome] › e2e/sci-02-families-mastery.spec.ts:101:1 › maxed firerate mastery converts into a named blast-radius offer
+[368/528] [desktop-chrome] › e2e/sci-02-families-mastery.spec.ts:124:1 › mastery synergy stats stay inside epoch caps
+[369/528] [desktop-chrome] › e2e/sci-02-families-mastery.spec.ts:144:1 › Assay Grading stockpile room counts pact prospecting stacks
+[370/528] [desktop-chrome] › e2e/sci-02-families-mastery.spec.ts:157:1 › fresh profile keeps SCI-01 research pick persistence and no gated mastery offers
+[371/528] [desktop-chrome] › e2e/sci-03-assay-branch.spec.ts:77:3 › Assay research stamps contract tier 1 into pending orders
+[372/528] [desktop-chrome] › e2e/sci-03-assay-branch.spec.ts:77:3 › Assay research stamps contract tier 2 into pending orders
+[373/528] [desktop-chrome] › e2e/sci-03-assay-branch.spec.ts:77:3 › Assay research stamps contract tier 3 into pending orders
+[374/528] [desktop-chrome] › e2e/sci-03-assay-branch.spec.ts:106:1 › contract tier budgets come from the epoch bundle
+[375/528] [desktop-chrome] › e2e/sci-03-assay-branch.spec.ts:140:1 › Pattern Library offers family-tagged approved items with a 2-card cap
+[376/528] [desktop-chrome] › e2e/sci-03-assay-branch.spec.ts:163:1 › Pattern Library keeps approved fixtures scoped to their queue profile
+[377/528] [desktop-chrome] › e2e/sci-03-assay-branch.spec.ts:181:1 › Agent Schooling appears after wave 15 and grants one run policy slot
+[378/528] [desktop-chrome] › e2e/sci-03-assay-branch.spec.ts:206:1 › SCI-03 node copy stays effect-first and numbered
+[379/528] [desktop-chrome] › e2e/sci-04-contract-registry.spec.ts:59:1 › contract registry lists Frontier and locked Steamworks in order
+[380/528] [desktop-chrome] › e2e/sci-04-contract-registry.spec.ts:97:1 › Frontier registry routing preserves gated Arsenal offers
+[381/528] [desktop-chrome] › e2e/sci-04-contract-registry.spec.ts:120:1 › locked Steamworks stub loads without changing fresh offers
+[382/528] [desktop-chrome] › e2e/sim-fixed-step.spec.ts:38:1 › 30/60/144 fps render schedules produce the same 300-tick simulation
+[desktop-chrome] › e2e/sim-fixed-step.spec.ts:38:1 › 30/60/144 fps render schedules produce the same 300-tick simulation
+[sim-fixed-step] [{"fps":30,"renderFrames":300,"simTicks":300,"economyHash":"fnv1a32:0f6f2150","economyLogLength":7,"loop":{"fixed":true,"stepSeconds":0.03333333333333333,"alpha":0,"stepsLastFrame":1,"totalSteps":300,"droppedSeconds":0,"droppedTicks":0}},{"fps":60,"renderFrames":600,"simTicks":300,"economyHash":"fnv1a32:0f6f2150","economyLogLength":7,"loop":{"fixed":true,"stepSeconds":0.03333333333333333,"alpha":0,"stepsLastFrame":1,"totalSteps":300,"droppedSeconds":0,"droppedTicks":0}},{"fps":144,"renderFrames":1440,"simTicks":300,"economyHash":"fnv1a32:0f6f2150","economyLogLength":7,"loop":{"fixed":true,"stepSeconds":0.03333333333333333,"alpha":0,"stepsLastFrame":1,"totalSteps":300,"droppedSeconds":0,"droppedTicks":0}}]
+
+[383/528] [desktop-chrome] › e2e/sim-fixed-step.spec.ts:79:1 › 144 fps presentation interpolates hero motion between fixed ticks
+[384/528] [desktop-chrome] › e2e/sim-fixed-step.spec.ts:95:1 › paused fixed ticks keep the last rendered hero position stable
+[385/528] [desktop-chrome] › e2e/sim-fixed-step.spec.ts:135:1 › a stalled frame runs at most five ticks and reports dropped time
+[386/528] [desktop-chrome] › e2e/sim-fixed-step.spec.ts:157:1 › fixed ticks carry fractional cooldown debt instead of losing volleys
+[387/528] [desktop-chrome] › e2e/sim-fixed-step.spec.ts:181:1 › Baron ceremony completion is independent of render cadence
+[388/528] [desktop-chrome] › e2e/soak-30.spec.ts:319:1 › scripted auto-play reaches wave 30 inside perf and pool envelopes
+[389/528] [desktop-chrome] › e2e/ss-01-beats.spec.ts:103:1 › founding, first contract, and Prospector XP beats fire once with portraits
+  18) [desktop-chrome] › e2e/ss-01-beats.spec.ts:103:1 › founding, first contract, and Prospector XP beats fire once with portraits
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  getByTestId('story-beat-card')
+    Expected: "first-contract"
+    Received: "ledger-page:town_youngster_a"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAttribute" with timeout 5000ms
+      - waiting for getByTestId('story-beat-card')
+        14 × locator resolved to <article role="status" aria-live="polite" data-speaker="clerk" data-testid="story-beat-card" data-beat-id="ledger-page:town_youngster_a" class="story-beat-card story-beat-card--visible">…</article>
+           - unexpected value "ledger-page:town_youngster_a"
+
+
+      86 |   await expect(card).toBeVisible({ timeout: 8_000 });
+      87 |   await expect(card).toHaveClass(/story-beat-card--visible/);
+    > 88 |   await expect(card).toHaveAttribute('data-beat-id', id);
+         |                      ^
+      89 |   await expect(card).toHaveAttribute('data-speaker', speaker);
+      90 |   await expect(page.getByTestId('story-beat-portrait')).toHaveAttribute('src', new RegExp(portraitNeedle));
+      91 | }
+        at expectBeat (/Users/robin/.codex/worktrees/fixed-step-unification/Gold Rush/e2e/ss-01-beats.spec.ts:88:22)
+        at /Users/robin/.codex/worktrees/fixed-step-unification/Gold Rush/e2e/ss-01-beats.spec.ts:118:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ss-01-beats-founding-first-d6d9b-ts-fire-once-with-portraits-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/ss-01-beats-founding-first-d6d9b-ts-fire-once-with-portraits-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/ss-01-beats-founding-first-d6d9b-ts-fire-once-with-portraits-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/ss-01-beats-founding-first-d6d9b-ts-fire-once-with-portraits-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:82800) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:82800) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[390/528] [desktop-chrome] › e2e/ss-01-beats.spec.ts:150:1 › Tales setting silences story beats at queue level
+[391/528] [desktop-chrome] › e2e/ss-01-beats.spec.ts:169:1 › pointer glow clears on first interaction
+[392/528] [desktop-chrome] › e2e/ss-01-beats.spec.ts:187:1 › story card waits until wave banner clears when both fire same tick
+[393/528] [desktop-chrome] › e2e/ss-02-beats.spec.ts:170:1 › SS-02 table is 23 registered, attributed, two-line E1 beats
+[394/528] [desktop-chrome] › e2e/ss-02-beats.spec.ts:185:1 › full E1 thread fires each authored arc once with portraits
+[395/528] [desktop-chrome] › e2e/ss-02-beats.spec.ts:338:1 › Tales off silences SS-02 beats
+[396/528] [desktop-chrome] › e2e/story-loop.spec.ts:161:1 › secured contract returns to town, fires the secured beat, and leaves the board open
+[397/528] [desktop-chrome] › e2e/story-loop.spec.ts:185:1 › fresh-profile first boot returns to town after the first ending
+[398/528] [desktop-chrome] › e2e/story-loop.spec.ts:206:1 › direct contract route returns to town after the ending
+[399/528] [desktop-chrome] › e2e/story-loop.spec.ts:228:1 › overrun contract returns to town, fires the overrun beat, and never forces the menu
+[400/528] [desktop-chrome] › e2e/story-loop.spec.ts:248:1 › staying for the rush still returns as secured after a later death
+[401/528] [desktop-chrome] › e2e/task-023-victory-palisade.spec.ts:62:1 › live wave 20 shows Claim Secured, Stay for the Rush resumes, and later death ends as rush
+[402/528] [desktop-chrome] › e2e/task-023-victory-palisade.spec.ts:91:1 › legacy meta profile still reaches the live Claim Secured ceremony
+[403/528] [desktop-chrome] › e2e/task-023-victory-palisade.spec.ts:104:1 › Bank Claim opens the secured ledger and secondary New Claim resets fresh
+[404/528] [desktop-chrome] › e2e/task-023-victory-palisade.spec.ts:125:1 › Claim Secured cannot be bypassed by a pending level-up
+[405/528] [desktop-chrome] › e2e/task-023-victory-palisade.spec.ts:143:1 › Claim Secured blocks gameplay input behind the modal
+[406/528] [desktop-chrome] › e2e/task-023-victory-palisade.spec.ts:165:1 › rotated palisade blocks as the mirrored unrotated footprint
+[407/528] [desktop-chrome] › e2e/task-023-victory-palisade.spec.ts:177:1 › wrecker reach uses the rotated palisade rectangle, not the center radius
+[408/528] [desktop-chrome] › e2e/task-024-blast-aim-presets.spec.ts:48:1 › cursor blast lands at the aimed ground point
+[409/528] [desktop-chrome] › e2e/task-024-blast-aim-presets.spec.ts:63:1 › cursor blast clamps an out-of-range aim ray to blast range
+[410/528] [desktop-chrome] › e2e/task-024-blast-aim-presets.spec.ts:76:1 › auto blast mode still lands on the selected enemy position
+[411/528] [desktop-chrome] › e2e/task-024-blast-aim-presets.spec.ts:88:1 › difficulty presets apply the hard-mode bundle and persist by profile key
+[412/528] [desktop-chrome] › e2e/task-024-blast-aim-presets.spec.ts:130:1 › difficulty preset falls back to default when profile storage is blocked
+[413/528] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:111:1 › enemy crossing the river reaches the hero through the ford only
+[414/528] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:129:1 › scheduled waves never place enemies in deep river over three waves
+[415/528] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:145:1 › hero still wades but wet powder disables and then restores weapons
+[416/528] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:207:1 › xp from a residual deep-water death is auto-banked with no mote
+[417/528] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:228:1 › far-bank sluice stays untouched when the river flank is open
+[418/528] [desktop-chrome] › e2e/task-026-prospector-collects-xp.spec.ts:16:1 › collect_xp sweeps aged motes in batched receipts without entering deep water
+[419/528] [desktop-chrome] › e2e/task-027-victory-must-matter.spec.ts:80:1 › real victory pays meta, opens Claim Office, and tier one changes the next claim
+[420/528] [desktop-chrome] › e2e/task-028-spark-target-leading.spec.ts:63:1 › Spark Rig leads a ford-speed crosser
+[desktop-chrome] › e2e/task-028-spark-target-leading.spec.ts:63:1 › Spark Rig leads a ford-speed crosser
+task-028 hit rates OFF=13% (1/8) ON=100% (8/8)
+
+[421/528] [desktop-chrome] › e2e/task-028-spark-target-leading.spec.ts:76:1 › stale target switch drops a runner after N misses
+[422/528] [desktop-chrome] › e2e/task-031-anim-roundness.spec.ts:175:1 › default frame blending and gait motion are active for hero and bandits
+[423/528] [desktop-chrome] › e2e/task-031-anim-roundness.spec.ts:230:1 › zeroed animation knobs preserve hard frameKey cycling
+[424/528] [desktop-chrome] › e2e/task-037-assay-bench-ungate.spec.ts:142:1 › normal play shows the Assay Office prompt and opens the bench without debug
+  19) [desktop-chrome] › e2e/task-037-assay-bench-ungate.spec.ts:142:1 › normal play shows the Assay Office prompt and opens the bench without debug
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+    Call Log:
+    - Timeout 1000ms exceeded while waiting on the predicate
+
+      60 |       return dx * dx + dz * dz <= tolerance * tolerance && hero.speed < 0.12;
+      61 |     }, { timeout: 1_000 })
+    > 62 |     .toBe(true);
+         |      ^
+      63 | }
+      64 |
+      65 | async function panGold(page: Page, goal: number): Promise<void> {
+        at walkTo (/Users/robin/.codex/worktrees/fixed-step-unification/Gold Rush/e2e/task-037-assay-bench-ungate.spec.ts:62:6)
+        at panGold (/Users/robin/.codex/worktrees/fixed-step-unification/Gold Rush/e2e/task-037-assay-bench-ungate.spec.ts:84:5)
+        at /Users/robin/.codex/worktrees/fixed-step-unification/Gold Rush/e2e/task-037-assay-bench-ungate.spec.ts:148:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/task-037-assay-bench-ungat-ee17b-ens-the-bench-without-debug-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/task-037-assay-bench-ungat-ee17b-ens-the-bench-without-debug-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/task-037-assay-bench-ungat-ee17b-ens-the-bench-without-debug-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/task-037-assay-bench-ungat-ee17b-ens-the-bench-without-debug-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:85763) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[425/528] [desktop-chrome] › e2e/task-037-assay-bench-ungate.spec.ts:171:1 › prompt hides in build mode and returns after closing the bench
+  20) [desktop-chrome] › e2e/task-037-assay-bench-ungate.spec.ts:171:1 › prompt hides in build mode and returns after closing the bench
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      127 |     window.__GR_TEST__?.teleport(0, 7);
+      128 |   });
+    > 129 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.assayOffices ?? 0)).toBe(1);
+          |                                                                                                            ^
+      130 | }
+      131 |
+      132 | function intersects(a: Rect | null, b: Rect | null): boolean {
+        at debugPlaceAssayOffice (/Users/robin/.codex/worktrees/fixed-step-unification/Gold Rush/e2e/task-037-assay-bench-ungate.spec.ts:129:108)
+        at /Users/robin/.codex/worktrees/fixed-step-unification/Gold Rush/e2e/task-037-assay-bench-ungate.spec.ts:173:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/task-037-assay-bench-ungat-53d70-rns-after-closing-the-bench-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/task-037-assay-bench-ungat-53d70-rns-after-closing-the-bench-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/task-037-assay-bench-ungat-53d70-rns-after-closing-the-bench-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/task-037-assay-bench-ungat-53d70-rns-after-closing-the-bench-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:85826) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[426/528] [desktop-chrome] › e2e/task-037-assay-bench-ungate.spec.ts:192:1 › mobile touch confirm opens and closes the bench without HUD overlap
+[427/528] [desktop-chrome] › e2e/task-041-turret-overwatch.spec.ts:92:1 › turret behind a ford palisade line acquires through the wall and lobs crossing shots
+[428/528] [desktop-chrome] › e2e/task-041-turret-overwatch.spec.ts:125:1 › beacons still fire flat bolts through palisades
+[429/528] [desktop-chrome] › e2e/task-042-anim-smoothness.spec.ts:54:1 › walk cadence is speed-scaled and restart keeps phase
+[430/528] [desktop-chrome] › e2e/task-046-territory-ring-pacing.spec.ts:242:1 › territory ring gaps keep waves 1-3 contact time paced
+[431/528] [desktop-chrome] › e2e/task-047-late-game-valves.spec.ts:64:1 › task-047 seeded late-game probe moves T3 and wave-35 curves into band
+[432/528] [desktop-chrome] › e2e/task-048-funnel-formation-spread.spec.ts:140:1 › funnel formation spread breaks nose-to-tail files
+[433/528] [desktop-chrome] › e2e/task-048-funnel-formation-spread.spec.ts:165:1 › formation offsets are deterministic for the m6 seed
+[434/528] [desktop-chrome] › e2e/task-053-weapon-cycling-audit.spec.ts:50:1 › task-053 seeded weapon cycling DPS probe
+[435/528] [desktop-chrome] › e2e/tile-identity-pass.spec.ts:57:1 › The Claim keeps the default tile params and seeded flat-claim fingerprint
+[436/528] [desktop-chrome] › e2e/tile-identity-pass.spec.ts:81:1 › E1 contracts load place descriptors, render identity shots, and stay deterministic
+
+(node:85826) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[437/528] [desktop-chrome] › e2e/tl-01-run-telemetry.spec.ts:156:1 › run end posts one anonymous telemetry payload
+[438/528] [desktop-chrome] › e2e/tl-01-run-telemetry.spec.ts:173:1 › settings toggle defaults on, persists, and opt-out suppresses posts
+[439/528] [desktop-chrome] › e2e/tl-01-run-telemetry.spec.ts:198:1 › same run id is deduped before a second POST
+[440/528] [desktop-chrome] › e2e/tl-01-run-telemetry.spec.ts:229:1 › plain no-debug secure return keeps telemetry invisible to gameplay
+[441/528] [desktop-chrome] › e2e/tl-01-run-telemetry.spec.ts:244:1 › server route rejects GET and identifier-shaped payloads
+[442/528] [desktop-chrome] › e2e/tl-01-run-telemetry.spec.ts:291:1 › opt-out remains honored when localStorage writes fail
+[443/528] [desktop-chrome] › e2e/tl-01-run-telemetry.spec.ts:313:1 › server route stores aggregate-only counters when KV is bound
+[444/528] [desktop-chrome] › e2e/tl-02-public-stats.spec.ts:134:1 › GET /api/stats returns populated aggregate counters
+[445/528] [desktop-chrome] › e2e/tl-02-public-stats.spec.ts:162:1 › GET /api/stats returns graceful empty states when bound with no runs or unbound
+[446/528] [desktop-chrome] › e2e/tl-02-public-stats.spec.ts:189:1 › GET /api/stats guards methods and CORS preflight
+[447/528] [desktop-chrome] › e2e/tl-02-public-stats.spec.ts:199:1 › GET /api/stats falls back to empty state on KV errors
+[448/528] [desktop-chrome] › e2e/tl-03-assay-office-site.spec.ts:32:1 › renders populated Assay Office aggregates
+[449/528] [desktop-chrome] › e2e/tl-03-assay-office-site.spec.ts:55:1 › renders empty office message without zero tallies
+[450/528] [desktop-chrome] › e2e/tl-03-assay-office-site.spec.ts:75:1 › renders quiet fallback when the stats wire fails
+[451/528] [desktop-chrome] › e2e/tl-03-assay-office-site.spec.ts:95:1 › refreshes the Assay Office feed
+[452/528] [desktop-chrome] › e2e/tl-03-assay-office-site.spec.ts:107:1 › keeps the telemetry promise honest
+[453/528] [desktop-chrome] › e2e/town-t1-square.spec.ts:65:1 › menu enters town square, prompts at four shells, exits, then starts normal run
+[454/528] [desktop-chrome] › e2e/town-t1-square.spec.ts:97:1 › town exit is reachable and square renders at 390px
+[455/528] [desktop-chrome] › e2e/town-t2-naming.spec.ts:73:1 › fresh town naming persists, renames, and appears in recap and run ledger
+[456/528] [desktop-chrome] › e2e/town-t2-naming.spec.ts:128:1 › profile created before naming gets its own founding prompt
+[457/528] [desktop-chrome] › e2e/town-t2-naming.spec.ts:157:1 › founding input is usable at 390px
+[458/528] [desktop-chrome] › e2e/town-t3-board.spec.ts:157:1 › contract board renders manifest rows, locks, conditions, and per-contract bests
+[459/528] [desktop-chrome] › e2e/town-t3-board.spec.ts:222:1 › board launch loads Dry Gulch and New Claim hashes to the default contract config
+[460/528] [desktop-chrome] › e2e/town-t3-board.spec.ts:246:1 › post-run overrun returns straight to the town board and records a contract result
+[461/528] [desktop-chrome] › e2e/town-t3-board.spec.ts:268:1 › contract catalog navigation remembers the last page
+[462/528] [desktop-chrome] › e2e/town-t3-board.spec.ts:287:1 › contract board swipes and keeps tap targets usable at 390px
+[463/528] [desktop-chrome] › e2e/town-t4-growth.spec.ts:146:1 › fresh and seeded territory tiers render only earned town buildings
+[464/528] [desktop-chrome] › e2e/town-t4-growth.spec.ts:183:1 › Stamp Mill town vignette mirrors megaproject stage state
+[465/528] [desktop-chrome] › e2e/town-t4-growth.spec.ts:234:1 › growth beats fire once per profile
+  21) [desktop-chrome] › e2e/town-t4-growth.spec.ts:234:1 › growth beats fire once per profile ─────
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  getByTestId('story-beat-card')
+    Expected: "town-growth-general-store"
+    Received: "ledger-page:the_claim"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAttribute" with timeout 5000ms
+      - waiting for getByTestId('story-beat-card')
+        14 × locator resolved to <article role="status" aria-live="polite" data-speaker="clerk" data-testid="story-beat-card" data-beat-id="ledger-page:the_claim" class="story-beat-card story-beat-card--visible">…</article>
+           - unexpected value "ledger-page:the_claim"
+
+
+      121 |   const card = page.getByTestId('story-beat-card');
+      122 |   await expect(card).toBeVisible({ timeout: 8_000 });
+    > 123 |   await expect(card).toHaveAttribute('data-beat-id', id);
+          |                      ^
+      124 |   await expect(card).toContainText(text);
+      125 | }
+      126 |
+        at expectBeat (/Users/robin/.codex/worktrees/fixed-step-unification/Gold Rush/e2e/town-t4-growth.spec.ts:123:22)
+        at /Users/robin/.codex/worktrees/fixed-step-unification/Gold Rush/e2e/town-t4-growth.spec.ts:239:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/town-t4-growth-growth-beats-fire-once-per-profile-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/town-t4-growth-growth-beats-fire-once-per-profile-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/town-t4-growth-growth-beats-fire-once-per-profile-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/town-t4-growth-growth-beats-fire-once-per-profile-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:89221) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:89221) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[466/528] [desktop-chrome] › e2e/town-t4-growth.spec.ts:251:1 › grown town remains readable at 390px
+[467/528] [desktop-chrome] › e2e/town-t5-townsfolk.spec.ts:160:1 › townsfolk bark data is epoch-scoped and short
+[468/528] [desktop-chrome] › e2e/town-t5-townsfolk.spec.ts:170:1 › seeded growth tiers show the correct townsfolk roster with no run sim diagnostics
+[469/528] [desktop-chrome] › e2e/town-t5-townsfolk.spec.ts:202:1 › approach barks identify sampled speakers and the Prospector greets by town name
+[470/528] [desktop-chrome] › e2e/town-t5-townsfolk.spec.ts:222:1 › youngsters stay on their small square loops
+[471/528] [desktop-chrome] › e2e/town-t5-townsfolk.spec.ts:242:1 › mobile bark card is readable above the stick zone and captures concept comparison
+[472/528] [desktop-chrome] › e2e/town-t6-surfaces.spec.ts:89:1 › plain menu thins to town, profile, settings
+  22) [desktop-chrome] › e2e/town-t6-surfaces.spec.ts:89:1 › plain menu thins to town, profile, settings
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator: locator('.gr-start-menu__nav [data-menu-action]')
+    Timeout: 5000ms
+    - Expected  - 0
+    + Received  + 1
+
+      Array [
+        "Enter Town",
+    +   "Claim Ledger",
+        "Profile",
+        "Settings",
+      ]
+
+    Call log:
+      - Expect "toHaveText" with timeout 5000ms
+      - waiting for locator('.gr-start-menu__nav [data-menu-action]')
+        14 × locator resolved to 4 elements
+
+
+      94 |   await expect(page.getByTestId('start-menu-new-claim')).toHaveCount(0);
+      95 |   await expect(page.getByTestId('start-menu-research')).toHaveCount(0);
+    > 96 |   await expect(page.locator('.gr-start-menu__nav [data-menu-action]')).toHaveText(['Enter Town', 'Profile', 'Settings']);
+         |                                                                        ^
+      97 |   await shot(page, testInfo, 'menu-thinned');
+      98 |   assertNoErrors(errors);
+      99 | });
+        at /Users/robin/.codex/worktrees/fixed-step-unification/Gold Rush/e2e/town-t6-surfaces.spec.ts:96:72
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/town-t6-surfaces-plain-menu-thins-to-town-profile-settings-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/town-t6-surfaces-plain-menu-thins-to-town-profile-settings-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/town-t6-surfaces-plain-menu-thins-to-town-profile-settings-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/town-t6-surfaces-plain-menu-thins-to-town-profile-settings-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:89936) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:89936) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[473/528] [desktop-chrome] › e2e/town-t6-surfaces.spec.ts:101:1 › Schoolhouse opens the existing Research chart and returns to the square
+[474/528] [desktop-chrome] › e2e/town-t6-surfaces.spec.ts:118:1 › Assay porch opens the existing crafting order status panel
+[475/528] [desktop-chrome] › e2e/town-t6-surfaces.spec.ts:134:1 › run launch remains reachable through the tavern board
+[476/528] [desktop-chrome] › e2e/town-t6-surfaces.spec.ts:154:1 › town surfaces stay readable at 390px
+[477/528] [desktop-chrome] › e2e/tr-01-continuous-ground.spec.ts:69:1 › terrainMesh flag swaps in a one-draw continuous ground mesh and preserves fallback probes
+[478/528] [desktop-chrome] › e2e/tr-01-continuous-ground.spec.ts:104:1 › terrainMesh stress perf stays inside the draw-call envelope
+[479/528] [desktop-chrome] › e2e/tr-02-splat-ground.spec.ts:49:1 › TR-02 captures old/TR-01/TR-02 triptychs and keeps flags default-off
+[480/528] [desktop-chrome] › e2e/tr-02-splat-ground.spec.ts:90:1 › TR-02 splat is smooth, deterministic, identity-driven, and inside perf envelope
+[481/528] [desktop-chrome] › e2e/ui-upgrade-icons.spec.ts:31:1 › offered upgrade cards resolve their icon files; file-less families stay clean
+[482/528] [desktop-chrome] › e2e/vfx-layering.spec.ts:80:1 › blast VFX renders above rubble ground decals
+[483/528] [desktop-chrome] › e2e/visual-polish-assets.spec.ts:54:1 › batch-001 generated asset slots load and stay playable
+[484/528] [desktop-chrome] › e2e/visual-polish-assets.spec.ts:108:1 › failed generated seam image keeps procedural fallback playable
+[485/528] [desktop-chrome] › e2e/visual.spec.ts:64:1 › renders a nonblank interactive game canvas
+[486/528] [desktop-chrome] › e2e/visual.spec.ts:113:1 › terrain diagnostics expose claim zones and speeds
+[487/528] [desktop-chrome] › e2e/visual.spec.ts:128:1 › HUD shell is readable and stable as run numbers tick
+[488/528] [desktop-chrome] › e2e/visual.spec.ts:190:1 › P toggles pause diagnostics and freezes sim time
+[489/528] [desktop-chrome] › e2e/visual.spec.ts:212:1 › river band slows the hero through diagnostics
+[490/528] [desktop-chrome] › e2e/vp-02-sprite-animation.spec.ts:303:1 › hero test clip advances on sim time and holds during hit-pause
+[491/528] [desktop-chrome] › e2e/vp-02-sprite-animation.spec.ts:350:1 › missing sheet cells fall back to the existing one-frame billboard without drift
+[492/528] [desktop-chrome] › e2e/vp-02-sprite-animation.spec.ts:382:1 › warmed test clip swaps do not grow renderer memory or draw calls
+[493/528] [desktop-chrome] › e2e/vp-02-sprite-animation.spec.ts:447:1 › hero rotation contract fires both stride cells for all 8 headings
+[494/528] [desktop-chrome] › e2e/vp-02-sprite-animation.spec.ts:506:1 › hero walk frameKey alternates while each 8-way heading is held
+[495/528] [desktop-chrome] › e2e/vp-02-sprite-animation.spec.ts:541:1 › east heading uses explicit rotation2 files with unmirrored pixels
+[desktop-chrome] › e2e/vp-02-sprite-animation.spec.ts:541:1 › east heading uses explicit rotation2 files with unmirrored pixels
+[mirror-pixels] heroCropDifference direct=0.1885 flipped=0.0832
+
+[496/528] [desktop-chrome] › e2e/vp-02-sprite-animation.spec.ts:586:1 › damped heading sweep visits every orientation in order
+[497/528] [desktop-chrome] › e2e/vp-02-sprite-animation.spec.ts:606:1 › 180-degree reversal crosses intermediate orientations
+[498/528] [desktop-chrome] › e2e/vp-02-sprite-animation.spec.ts:626:1 › small boundary wiggle does not oscillate orientation
+[499/528] [desktop-chrome] › e2e/vp-02-sprite-animation.spec.ts:645:1 › orientation swap crossfades once and adds no draw call at rest
+[500/528] [desktop-chrome] › e2e/vp-02-sprite-animation.spec.ts:699:1 › captures VP-02 desktop and narrow screenshots
+[501/528] [desktop-chrome] › e2e/vp-02b-rotation-resolver.spec.ts:112:1 › hero locomotion resolves all 8 contract directions
+[502/528] [desktop-chrome] › e2e/vp-02b-rotation-resolver.spec.ts:128:1 › resolver hysteresis holds across small boundary oscillation
+[503/528] [desktop-chrome] › e2e/vp-02b-rotation-resolver.spec.ts:149:1 › idle snaps to rotation idle hemispheres after movement
+  23) [desktop-chrome] › e2e/vp-02b-rotation-resolver.spec.ts:149:1 › idle snaps to rotation idle hemispheres after movement
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.waitForFunction: Test timeout of 30000ms exceeded.
+
+      91 |
+      92 | async function waitForHero(page: Page, direction: string, clip = 'walk'): Promise<SpriteSnapshot> {
+    > 93 |   await page.waitForFunction(
+         |              ^
+      94 |     ({ direction: expectedDirection, clip: expectedClip }) => {
+      95 |       const snapshot = window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations['char.hero'] as SpriteSnapshot | undefined;
+      96 |       return snapshot?.loaded === true && snapshot.clip === expectedClip && snapshot.direction === expectedDirection;
+        at waitForHero (/Users/robin/.codex/worktrees/fixed-step-unification/Gold Rush/e2e/vp-02b-rotation-resolver.spec.ts:93:14)
+        at /Users/robin/.codex/worktrees/fixed-step-unification/Gold Rush/e2e/vp-02b-rotation-resolver.spec.ts:164:9
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/vp-02b-rotation-resolver-i-77128--hemispheres-after-movement-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/vp-02b-rotation-resolver-i-77128--hemispheres-after-movement-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/vp-02b-rotation-resolver-i-77128--hemispheres-after-movement-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/vp-02b-rotation-resolver-i-77128--hemispheres-after-movement-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:94094) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[504/528] [desktop-chrome] › e2e/vp-02b-rotation-resolver.spec.ts:174:1 › action clips stay on coarse orientation cells and jumper diagnostics stay old shape
+[505/528] [desktop-chrome] › e2e/vp-02b-rotation-resolver.spec.ts:229:1 › captures rotation scale-pulse review shots
+[506/528] [desktop-chrome] › e2e/vp-03-terrain-variety.spec.ts:56:1 › distant bank ground varies without adding draw calls
+[507/528] [desktop-chrome] › e2e/vp-03-terrain-variety.spec.ts:68:1 › same seed renders deterministic bank ground
+[508/528] [desktop-chrome] › e2e/w1-01-terrain-relief.spec.ts:31:1 › terrain mesh has seeded relief and mobile density knob
+[509/528] [desktop-chrome] › e2e/w1-01-terrain-relief.spec.ts:48:1 › hero and enemy visual Y track terrain while XZ stays planar
+[510/528] [desktop-chrome] › e2e/w1-02-living-water.spec.ts:34:1 › living water shader animates and keeps a mobile quality knob
+[511/528] [desktop-chrome] › e2e/w1-03-light.spec.ts:23:1 › light, fog, shadows, post, and water variance expose stable diagnostics
+[512/528] [desktop-chrome] › e2e/w1-03-light.spec.ts:51:1 › post grade has a kill knob
+[513/528] [desktop-chrome] › e2e/w1-04-detail.spec.ts:31:1 › instanced detail scatter exposes density diagnostics and mobile reduction
+[514/528] [desktop-chrome] › e2e/w1-04-detail.spec.ts:55:1 › detail placement keeps build pads, ford water, and routing lanes clear
+[515/528] [desktop-chrome] › e2e/w1-04-detail.spec.ts:69:1 › scatter is seed-stable across boots and varies by seed
+[516/528] [desktop-chrome] › e2e/w1-05-building-shells.spec.ts:99:1 › buildables render timber shells with fixed local signs and a turning sluice wheel
+[517/528] [desktop-chrome] › e2e/w1-06-vista.spec.ts:39:1 › vista diagnostics expose a low-res radius-90 terrain ring
+[518/528] [desktop-chrome] › e2e/w1-06-vista.spec.ts:59:1 › vista seam and W1-01 in-bounds height probes stay stable
+[519/528] [desktop-chrome] › e2e/w1-07-natural.spec.ts:47:1 › natural claim relief exposes gullies, shelves, bluffs, and pockets
+[520/528] [desktop-chrome] › e2e/w1-07-natural.spec.ts:73:1 › ford approach and sim lanes stay visually calm while the sim remains planar
+
+(node:94094) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[521/528] [desktop-chrome] › e2e/world-info-notes.spec.ts:160:1 › run-world notes explain seams, stake, ford, prospector, and soften after two approaches
+[522/528] [desktop-chrome] › e2e/world-info-notes.spec.ts:193:1 › building notes sit with existing assay and upgrade prompts
+[523/528] [desktop-chrome] › e2e/world-info-notes.spec.ts:232:1 › contract-specific world notes cover Dry Gulch water, territory gaps, and Night Shift lanterns
+[524/528] [desktop-chrome] › e2e/world-info-notes.spec.ts:262:1 › Night Shift lantern post note uses the same registry
+[525/528] [desktop-chrome] › e2e/world-info-notes.spec.ts:271:1 › megaproject site registers a note without replacing the signboard readout
+[526/528] [desktop-chrome] › e2e/world-info-notes.spec.ts:286:1 › town shells use info notes beside opens-soon prompts
+[527/528] [desktop-chrome] › e2e/world-info-notes.spec.ts:318:1 › 390px world note clears the touch stick zone
+  24) [desktop-chrome] › e2e/world-info-notes.spec.ts:318:1 › 390px world note clears the touch stick zone
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 586
+    Received:    636
+
+      333 |   });
+      334 |   expect(boxes).toBeTruthy();
+    > 335 |   expect(boxes!.note.bottom).toBeLessThanOrEqual(boxes!.controls.top - 8);
+          |                              ^
+      336 |   await shot(page, testInfo, 'mobile-390-stake-note');
+      337 |   assertNoErrors(errors);
+      338 | });
+        at /Users/robin/.codex/worktrees/fixed-step-unification/Gold Rush/e2e/world-info-notes.spec.ts:335:30
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/world-info-notes-390px-wor-5c2cb-clears-the-touch-stick-zone-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/world-info-notes-390px-wor-5c2cb-clears-the-touch-stick-zone-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/world-info-notes-390px-wor-5c2cb-clears-the-touch-stick-zone-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/world-info-notes-390px-wor-5c2cb-clears-the-touch-stick-zone-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:96005) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[528/528] [desktop-chrome] › e2e/xp-economy-audit.spec.ts:92:1 › seeded dense kill windows bank every death XP exactly once
+  25) [desktop-chrome] › e2e/xp-economy-audit.spec.ts:92:1 › seeded dense kill windows bank every death XP exactly once
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      51 |   await setBalance(page, 'xp.moteMagnetRadius', 0.5);
+      52 |   await page.evaluate(() => window.__GR_TEST__?.clearEnemies());
+    > 53 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.vfx.activeFloatTexts ?? -1)).toBe(0);
+         |                                                                                                               ^
+      54 |   await page.evaluate(() => {
+      55 |     const w = window as unknown as { __xpFloatMax: number; __xpFloatTracking?: boolean };
+      56 |     w.__xpFloatMax = 0;
+        at runDenseWindow (/Users/robin/.codex/worktrees/fixed-step-unification/Gold Rush/e2e/xp-economy-audit.spec.ts:53:111)
+        at /Users/robin/.codex/worktrees/fixed-step-unification/Gold Rush/e2e/xp-economy-audit.spec.ts:100:35
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/xp-economy-audit-seeded-de-1f658-every-death-XP-exactly-once-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/xp-economy-audit-seeded-de-1f658-every-death-XP-exactly-once-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/xp-economy-audit-seeded-de-1f658-every-death-XP-exactly-once-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/xp-economy-audit-seeded-de-1f658-every-death-XP-exactly-once-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  Slow test file: [desktop-chrome] › e2e/perf-04-determinism.spec.ts (9.8m)
+  Consider running tests from slow files in parallel. See: https://playwright.dev/docs/test-parallel
+  25 failed
+    [desktop-chrome] › e2e/044-start-screen.spec.ts:92:1 › Profile opens the existing selector with arrow and Enter
+    [desktop-chrome] › e2e/accounts-sync.spec.ts:13:1 › sign-in pushes, local wipe pulls the profile back, and chips stay quiet
+    [desktop-chrome] › e2e/audio-integration.spec.ts:80:1 › settings volume and mute persist across reload
+    [desktop-chrome] › e2e/audio-integration.spec.ts:118:1 › legacy audio preferences migrate into profile storage
+    [desktop-chrome] › e2e/bt-00-demolish.spec.ts:181:1 › building context bar keeps both actions inside a mid-size phone viewport
+    [desktop-chrome] › e2e/bt-00-demolish.spec.ts:271:1 › demolish scales refund by remaining HP after building damage
+    [desktop-chrome] › e2e/e1-night-shift.spec.ts:348:1 › cold lantern relight costs survive run suspend and continue
+    [desktop-chrome] › e2e/e2-stamp-mill.spec.ts:157:1 › Stamp Mill manifest builds to the door without switching epochs
+    [desktop-chrome] › e2e/feedback-fx.spec.ts:28:1 › announcement banner fades after the opening claim notice
+    [desktop-chrome] › e2e/gt-03-enemy-elevation.spec.ts:125:1 › enemies slow on slopes and expose grounded terrain diagnostics
+    [desktop-chrome] › e2e/gt-03-enemy-elevation.spec.ts:224:1 › basin stress stays in frame envelope while the flat claim remains neutral
+    [desktop-chrome] › e2e/m1-02-auto-fire.spec.ts:64:1 › run reset recycles combat pools without renderer memory growth
+    [desktop-chrome] › e2e/m2-04-gold-stealing.spec.ts:211:1 › thief routes around a finite palisade line to steal
+    [desktop-chrome] › e2e/m2-06-arsenal-blast-charge.spec.ts:131:1 › turret line of sight ignores blocked nearest and shoots clear second target
+    [desktop-chrome] › e2e/m2-07-base-self-hold.spec.ts:349:1 › blast clump TTK at wave 20+ stays within 2x wave-10
+    [desktop-chrome] › e2e/m5-04-offline-queue.spec.ts:122:1 › posted orders stay visible across reloads and refresh to verdicts on reopen
+    [desktop-chrome] › e2e/mp-02-lockstep.spec.ts:67:1 › hash mismatch pauses, shows the wire card, and restores from relay snapshot
+    [desktop-chrome] › e2e/ss-01-beats.spec.ts:103:1 › founding, first contract, and Prospector XP beats fire once with portraits
+    [desktop-chrome] › e2e/task-037-assay-bench-ungate.spec.ts:142:1 › normal play shows the Assay Office prompt and opens the bench without debug
+    [desktop-chrome] › e2e/task-037-assay-bench-ungate.spec.ts:171:1 › prompt hides in build mode and returns after closing the bench
+    [desktop-chrome] › e2e/town-t4-growth.spec.ts:234:1 › growth beats fire once per profile ───────
+    [desktop-chrome] › e2e/town-t6-surfaces.spec.ts:89:1 › plain menu thins to town, profile, settings
+    [desktop-chrome] › e2e/vp-02b-rotation-resolver.spec.ts:149:1 › idle snaps to rotation idle hemispheres after movement
+    [desktop-chrome] › e2e/world-info-notes.spec.ts:318:1 › 390px world note clears the touch stick zone
+    [desktop-chrome] › e2e/xp-economy-audit.spec.ts:92:1 › seeded dense kill windows bank every death XP exactly once
+  4 skipped
+  4 did not run
+  495 passed (59.0m)

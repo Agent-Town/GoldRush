@@ -1,0 +1,33 @@
+# s2545 FIRE — preserve live corrective and verify recurring duties
+
+No drain or runtime change landed. The board is NOT DRY: the probe read 1,412 done-moves, classified 61 subjects and found one real chapter-writer drain, zero unknowns, twelve closed and 48 merged ghosts. MAIN still owns `main-board-gold-current-grammar`, with pid 43351 alive and recent run-log writes. Both task policy checks are CLEAR; readiness remains outstanding. No CODEX-WALL, fresh failed run, queued master or pending assayer order was found.
+
+## Next actions
+
+1. Inspect MAIN's final done-move and gate its completed corrective first. Preserve `scripts/board-tape-gold.test.mjs` and `artifacts/board-tape-gold/current-grammar/` while the runner owns them. The latest observed command compares a replacement Relay recording against its original base. `runner-report-observed.md` preserves its intermediate report verbatim; `main-observation.json` records provenance. These are progress observations, not acceptance evidence. The earlier non-green full Node attempt remains in `artifacts/s2543-fire/main-node-observed.txt`.
+2. Then reclassify and resume `save/chapter-evidence-s2541` at `44fd2661f345f25c9d9099359ff405eabd6b641e`, preserving main's 138-row Moth recording. Complete every remaining declared gate; the chapter review remains HOLD. Do not re-dispatch either master.
+3. No refill: ten planned leaves are priced, zero unpriced. Lane-c HOLDS the chapter work; lane-d has attended tracked dirt; lane-b has untracked evidence. Foreign dirt remains with its owner. The inherited desk audit reads CLOSED 0, OPEN 2, BOTH 0, OPEN-DESK-ONLY 53 and UNRECORDED 0. All 55 questions are carried verbatim without an inferred ruling.
+
+## Recurring duties
+
+LB-01: fifteen of fifteen coverage days are present through September 7; all mirrors are readable, with 238 keys inspected, zero account-class rows and 54 advisory unknowns. Today's mirror is tracked; no pull was needed. TK-01: yesterday's September 6 digest is tracked. RT-01: r2026w37 is minted, open, listed in the public door and selected by the county book; no salt read or mint was needed. GZ-01: 249 reported, 112 dismissed and zero candidates; W37 has three standalone and two batched items. No news filing or deployment is owed by this maintenance increment.
+
+ART: six areas scanned, 1,024 files; AT RISK zero and LOCAL-ONLY zero. Retention: all 105 registered trees answered with nonempty tracked controls; 1,311 quiet hashes, 1,309 origin-safe and two unchanged, explicitly documented exclusions. Another 434 live or own paths were deferred. See `retention-judgment.md`. Existing temporary sweep helpers were reused; no repository mechanism was added.
+
+Withheld audit: 375 run logs read, 58 distinct paths, three tracked, zero recoverable on disk and 55 historical LOST. This repeats the recorded historical loss; no new loss or available recovery was found.
+
+Runner health is ALIVE. The captured health check returned landing 200, game 200 and API 000; a bounded follow-up returned HTTP 200 in 1.368 seconds at 21:40:59 local, exit 0. Both observations are retained in `health.txt` and `edge-recheck.json`. The fire-process field matches Claude's launch command and does not identify this Codex session; it is not evidence that this fire is absent.
+
+## Closeout
+
+The predecessor was archived verbatim in lock commit `77f95d82a`; its archive remains exactly once below the law bullets. The handoff clears the semaphore and preserves the inherited desk. The required closing ledger battery runs after the handoff commit with verified native Node 26.4.0; its actual result, transcript and backup receipt will be recorded here. No runtime, engine pin, gameplay build or browser gate is claimed by this fire.
+
+The first closing ledger attempt overlapped MAIN's full Node battery from 21:43:49 to 21:44:49 local. I cancelled only my process group, preserved the transcript and exit 143 in `closing-ledger-overlap.*`, and verified that no process from that group survived. This is a cancellation, not a gate verdict. MAIN was not signalled. Its current Node run therefore does not establish the master's ALONE condition; a completed candidate still needs that acceptance run without another battery beside it. The final closing ledger attempt waits for that active group to finish.
+
+An additional unbounded historical archive audit exhausted Node 23's heap and returned no verdict; see `archive-unbounded-attempt.txt`. The direct predecessor/desk checks passed. The required closing battery's bounded archive leg must pass before closeout.
+
+MAIN's full Node suite subsequently reported `all 128 scripts/*.test.mjs fixture owners remove their temp directories` as failed after 710.783 seconds, then continued through its remaining tests. `main-node-observed.txt` and its JSON provenance preserve an interim failure snapshot. The source run remains owned by MAIN; no cause is inferred and no failure is excused as contention. The initial 20-minute closeout wait ended without starting a battery; waiting continues while the source run makes progress.
+
+Final MAIN observation: the Node aggregate completed 742 tests: 735 passed, two failed, five skipped, in 1623.300 seconds. Both failures report `spawnSync ps ENOBUFS` from `waitForQuietBoard` at `scripts/node-guards-contention.test.mjs:50`: once directly, once as a child of the fixture-owner sweep. The sweep's title declares 128 subjects, but it aborted at that child and did not visit all 128. The command's chained tail did not run. The immediate failure is a process-list capture error, not proof of contention; a later live census matched zero processes and does not reproduce or explain the earlier overflow. Full terminal output and provenance are retained in `main-node-terminal-observed.*`. Diagnose this failure before requiring the next full isolated acceptance run. MAIN pid 43351 alive at close: true; source ownership and the chapter HOLD are preserved.
+
+Closing result: `npm run test:ledger-guards` passed at exit 0 in 140.784 seconds under Node v26.4.0: 1,050 Node tests passed, zero failed/skipped, and 83 shell checks passed with zero failures. Desk declaration, birth and carryforward each reported PASS. The bounded archive leg passed, and `archive-check.txt` confirms the predecessor and inherited 55-item desk are preserved. The final attempt started only after MAIN process group 31302 exited; it gates handoff `76d052e8207eddc9118bb0f15ed8ab679e79aa6a`. That handoff was pushed successfully; see `backup-failure-note.txt`. Gate output, result and SHA-256 are in `closing-ledger.txt` and `closing-ledger.json`.

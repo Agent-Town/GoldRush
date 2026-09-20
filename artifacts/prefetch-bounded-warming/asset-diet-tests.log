@@ -1,0 +1,95 @@
+[WebServer] (node:8923) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:8964) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 6 tests using 1 worker
+
+(node:8966) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+  ✓  1 [desktop-chrome] › e2e/asset-diet.spec.ts:193:1 › dieted output keeps two terrain census views and town within screenshot tolerance (18.3s)
+[asset-diet] desktop-chrome townResponses: 11145819 bytes
+[asset-diet] desktop-chrome settledTownResponses: 27071274 bytes settleCapHit: false
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+  ✓  2 [desktop-chrome] › e2e/asset-diet.spec.ts:227:1 › honest town and claim cues appear while GLBs are throttled and leave at ready (21.1s)
+normal prefetchWait=false cacheDisabled=false watchErrors suppressed 0 known GLTFLoader blob error(s)
+normal prefetchWait=false cacheDisabled=true watchErrors suppressed 0 known GLTFLoader blob error(s)
+normal prefetchWait=true cacheDisabled=false watchErrors suppressed 0 known GLTFLoader blob error(s)
+normal prefetchWait=true cacheDisabled=true watchErrors suppressed 0 known GLTFLoader blob error(s)
+normal watchErrors suppressed 0 known GLTFLoader blob error(s)
+saveData watchErrors suppressed 0 known GLTFLoader blob error(s)
+  ✘  3 [desktop-chrome] › e2e/asset-diet.spec.ts:277:1 › town byte budget reports normal and saveData arms by URL (2.3m)
+(node:16480) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+  ✓  4 [mobile-chrome] › e2e/asset-diet.spec.ts:193:1 › dieted output keeps two terrain census views and town within screenshot tolerance (16.3s)
+[asset-diet] mobile-chrome townResponses: 11213584 bytes
+[asset-diet] mobile-chrome settledTownResponses: 27071274 bytes settleCapHit: false
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+  ✓  5 [mobile-chrome] › e2e/asset-diet.spec.ts:227:1 › honest town and claim cues appear while GLBs are throttled and leave at ready (20.7s)
+normal prefetchWait=false cacheDisabled=false watchErrors suppressed 0 known GLTFLoader blob error(s)
+normal prefetchWait=false cacheDisabled=true watchErrors suppressed 0 known GLTFLoader blob error(s)
+normal prefetchWait=true cacheDisabled=false watchErrors suppressed 0 known GLTFLoader blob error(s)
+normal prefetchWait=true cacheDisabled=true watchErrors suppressed 0 known GLTFLoader blob error(s)
+normal watchErrors suppressed 0 known GLTFLoader blob error(s)
+saveData watchErrors suppressed 0 known GLTFLoader blob error(s)
+  ✓  6 [mobile-chrome] › e2e/asset-diet.spec.ts:277:1 › town byte budget reports normal and saveData arms by URL (2.2m)
+
+
+  1) [desktop-chrome] › e2e/asset-diet.spec.ts:277:1 › town byte budget reports normal and saveData arms by URL 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 9326887
+    Received:    16343695
+
+      464 |     `release-gated cue test bytes were ${cueTestMeasurementProvenance}`,
+      465 |   ).toBeLessThan(TOWN_TRANSFER_CEILING_BYTES);
+    > 466 |   expect(saveDataCueWindowBytes).toBeLessThanOrEqual(normalCueWindowBytes);
+          |                                  ^
+      467 | });
+      468 |
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/asset-diet.spec.ts:466:34
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/prefetch-bounded-warming/asset-diet-results/asset-diet-town-byte-budge-360a8-al-and-saveData-arms-by-URL-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/prefetch-bounded-warming/asset-diet-results/asset-diet-town-byte-budge-360a8-al-and-saveData-arms-by-URL-desktop-chrome/test-failed-3.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #3: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/prefetch-bounded-warming/asset-diet-results/asset-diet-town-byte-budge-360a8-al-and-saveData-arms-by-URL-desktop-chrome/test-failed-4.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #4: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/prefetch-bounded-warming/asset-diet-results/asset-diet-town-byte-budge-360a8-al-and-saveData-arms-by-URL-desktop-chrome/test-failed-5.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #5: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/prefetch-bounded-warming/asset-diet-results/asset-diet-town-byte-budge-360a8-al-and-saveData-arms-by-URL-desktop-chrome/test-failed-2.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #6: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/prefetch-bounded-warming/asset-diet-results/asset-diet-town-byte-budge-360a8-al-and-saveData-arms-by-URL-desktop-chrome/test-failed-6.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #7: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/prefetch-bounded-warming/asset-diet-results/asset-diet-town-byte-budge-360a8-al-and-saveData-arms-by-URL-desktop-chrome/test-failed-7.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/prefetch-bounded-warming/asset-diet-results/asset-diet-town-byte-budge-360a8-al-and-saveData-arms-by-URL-desktop-chrome/error-context.md
+
+    attachment #9: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/prefetch-bounded-warming/asset-diet-results/asset-diet-town-byte-budge-360a8-al-and-saveData-arms-by-URL-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/prefetch-bounded-warming/asset-diet-results/asset-diet-town-byte-budge-360a8-al-and-saveData-arms-by-URL-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [desktop-chrome] › e2e/asset-diet.spec.ts:277:1 › town byte budget reports normal and saveData arms by URL 
+  5 passed (6.0m)

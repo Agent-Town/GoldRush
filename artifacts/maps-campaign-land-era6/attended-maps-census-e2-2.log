@@ -1,0 +1,241 @@
+
+Running 4 tests using 1 worker
+
+[1/4] [desktop-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-hill-mine census support is explicit and deterministic
+[desktop-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-hill-mine census support is explicit and deterministic
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+  1) [desktop-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-hill-mine census support is explicit and deterministic 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    Expected: [ObjectContaining {"status": "missing"}]
+    Received: undefined
+
+      127 |           ]));
+      128 |       }
+    > 129 |       expect(probe.manifest.tileParams.engineDependencies).toEqual([
+          |                                                            ^
+      130 |         expect.objectContaining({ status: 'missing' }),
+      131 |       ]);
+      132 |       for (const order of GRAMMAR_ORDERS) expect(probe.submitOrders([order]).outcome.ok).toBe(true);
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-maps/e2e/er01-e2-census.spec.ts:129:60
+
+    Error Context: test-results/er01-e2-census-e2-hill-min-5a34b--explicit-and-deterministic-desktop-chrome/error-context.md
+
+
+[2/4] [desktop-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-trestle census support is explicit and deterministic
+[desktop-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-trestle census support is explicit and deterministic
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+  2) [desktop-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-trestle census support is explicit and deterministic 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    Expected: [ObjectContaining {"status": "missing"}]
+    Received: undefined
+
+      127 |           ]));
+      128 |       }
+    > 129 |       expect(probe.manifest.tileParams.engineDependencies).toEqual([
+          |                                                            ^
+      130 |         expect.objectContaining({ status: 'missing' }),
+      131 |       ]);
+      132 |       for (const order of GRAMMAR_ORDERS) expect(probe.submitOrders([order]).outcome.ok).toBe(true);
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-maps/e2e/er01-e2-census.spec.ts:129:60
+
+    Error Context: test-results/er01-e2-census-e2-trestle--8ba84--explicit-and-deterministic-desktop-chrome/error-context.md
+
+
+[3/4] [desktop-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-pressure-garden census support is explicit and deterministic
+[desktop-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-pressure-garden census support is explicit and deterministic
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+  3) [desktop-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-pressure-garden census support is explicit and deterministic 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    Expected: [ObjectContaining {"status": "missing"}]
+    Received: undefined
+
+      127 |           ]));
+      128 |       }
+    > 129 |       expect(probe.manifest.tileParams.engineDependencies).toEqual([
+          |                                                            ^
+      130 |         expect.objectContaining({ status: 'missing' }),
+      131 |       ]);
+      132 |       for (const order of GRAMMAR_ORDERS) expect(probe.submitOrders([order]).outcome.ok).toBe(true);
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-maps/e2e/er01-e2-census.spec.ts:129:60
+
+    Error Context: test-results/er01-e2-census-e2-pressure-25f67--explicit-and-deterministic-desktop-chrome/error-context.md
+
+
+[4/4] [desktop-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-incline census support is explicit and deterministic
+[desktop-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-incline census support is explicit and deterministic
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+  4) [desktop-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-incline census support is explicit and deterministic 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    Expected: [ObjectContaining {"status": "missing"}]
+    Received: undefined
+
+      127 |           ]));
+      128 |       }
+    > 129 |       expect(probe.manifest.tileParams.engineDependencies).toEqual([
+          |                                                            ^
+      130 |         expect.objectContaining({ status: 'missing' }),
+      131 |       ]);
+      132 |       for (const order of GRAMMAR_ORDERS) expect(probe.submitOrders([order]).outcome.ok).toBe(true);
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-maps/e2e/er01-e2-census.spec.ts:129:60
+
+    Error Context: test-results/er01-e2-census-e2-incline--0dfce--explicit-and-deterministic-desktop-chrome/error-context.md
+
+
+  4 failed
+    [desktop-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-hill-mine census support is explicit and deterministic 
+    [desktop-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-trestle census support is explicit and deterministic 
+    [desktop-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-pressure-garden census support is explicit and deterministic 
+    [desktop-chrome] › e2e/er01-e2-census.spec.ts:17:3 › e2-incline census support is explicit and deterministic 
+rc=1

@@ -1,0 +1,265 @@
+Using the verified dieted bundle through the existing per-runner build cache; no build during cache measurements.
+
+Running 22 tests using 1 worker
+
+(node:92279) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [desktop-chrome] › e2e/advance-stream-bounded.spec.ts:19:1 › normal mode stops after the successor and honours the byte allowance (11.1s)
+  ✓   2 [desktop-chrome] › e2e/advance-stream-bounded.spec.ts:67:1 › balanced uses the smaller allowance and completed URLs are counted once across replans (5.2s)
+  ✘   3 [desktop-chrome] › e2e/advance-stream-cache-reuse.spec.ts:60:1 › measures advance-stream cache reuse without route interception (40.7s)
+(node:18793) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘   4 [desktop-chrome] › e2e/advance-stream-cache-reuse.spec.ts:67:1 › compares advance-stream cache reuse under production headers (1.1m)
+(node:71601) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+# Advance-stream walkthrough
+
+Boot flags: `debug&timescale=24&nolevel&seed=advance-stream-walkthrough` · GLB throttle: 150 ms/request · project: desktop-chrome
+
+| Door | WARM | COLD | First cold URLs |
+|---|---:|---:|---|
+| menu | 0 | 0 | — |
+| town | 2 | 8 | /assets/pilots/general-store-3d/general-store.glb<br>/assets/pilots/claim-office-3d/claim-office.glb<br>/assets/pilots/assay-office-3d/assay-office.glb<br>/assets/pilots/chapel-3d/chapel.glb |
+| contract1 | 6 | 9 | /assets/pilots/run3d/assay-bench.glb<br>/assets/pilots/run3d/boiler-house.glb<br>/assets/pilots/run3d/lantern-post.glb<br>/assets/pilots/run3d/palisade.glb |
+| town-return | 6 | 4 | /assets/pilots/schoolhouse-3d/schoolhouse.glb<br>/assets/pilots/plaza-props-3d/covered_wagon.glb<br>/assets/pilots/plaza-props-3d/water_trough.glb<br>/assets/pilots/plaza-props-3d/pan_monument.glb |
+| contract2 | 2 | 8 | /assets/pilots/run3d/assay-bench.glb<br>/assets/pilots/run3d/boiler-house.glb<br>/assets/pilots/run3d/lantern-post.glb<br>/assets/pilots/run3d/palisade.glb |
+
+  ✓   5 [desktop-chrome] › e2e/advance-stream-walkthrough.spec.ts:19:1 › measures warm assets across menu, town, and two contracts (30.9s)
+  ✓   6 [desktop-chrome] › e2e/advance-stream.spec.ts:34:1 › menu idle warms town first and publishes progress (1.9s)
+  ✓   7 [desktop-chrome] › e2e/advance-stream.spec.ts:52:1 › saveData keeps tier one with the full-map opt-in and skips bulk contract maps (1.4s)
+  ✓   8 [desktop-chrome] › e2e/advance-stream.spec.ts:79:1 › lite rendering skips unused 3D prefetch (1.1s)
+  ✓   9 [desktop-chrome] › e2e/advance-stream.spec.ts:94:1 › the warm-every-map opt-in restores the sweep (4.5s)
+  ✓  10 [desktop-chrome] › e2e/advance-stream.spec.ts:127:1 › closing profiles resumes the menu stream (1.6s)
+  ✓  11 [desktop-chrome] › e2e/advance-stream.spec.ts:144:1 › launch aborts pending prefetch before the run requests its own map (10.3s)
+(node:88321) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  12 [mobile-chrome] › e2e/advance-stream-bounded.spec.ts:19:1 › normal mode stops after the successor and honours the byte allowance (2.8s)
+  ✓  13 [mobile-chrome] › e2e/advance-stream-bounded.spec.ts:67:1 › balanced uses the smaller allowance and completed URLs are counted once across replans (793ms)
+
+# Advance-stream cache reuse
+
+Boot flags: `debug&timescale=24&nolevel&seed=advance-stream-walkthrough` · arm: dev-server · route interception: none · network emulation: none · project: mobile-chrome
+Observed `cache-control` via CDP `Network.responseReceived`: `no-cache`
+
+| Door | DOUBLE-DOWNLOAD | REVALIDATED | OVERLAP | CACHE-HIT | Wire bytes |
+|---|---:|---:|---:|---:|---:|
+| menu | 0 | 0 | 0 | 0 | 13932064 |
+| town | 5 | 1 | 4 | 0 | 9440486 |
+| contract1 | 0 | 0 | 15 | 0 | 35427963 |
+| town-return | 4 | 2 | 4 | 0 | 12799500 |
+| contract2 | 0 | 0 | 10 | 0 | 19803039 |
+
+| URL | Prefetch bytes | Subsequent fetch bytes and bucket |
+|---|---:|---|
+| /assets/pilots/town-plate-3d/town-plate.glb | 7904347<br>7904347<br>7904347 | 7904347 (DOUBLE-DOWNLOAD)<br>7904347 (DOUBLE-DOWNLOAD) |
+| /assets/pilots/tavern-3d/town-v3-tavern.glb | 912453<br>912453<br>0 | 127 (DOUBLE-DOWNLOAD)<br>912453 (DOUBLE-DOWNLOAD) |
+| /assets/pilots/general-store-3d/general-store.glb | 1219823<br>1219823<br>0 | 127 (DOUBLE-DOWNLOAD)<br>1219823 (DOUBLE-DOWNLOAD) |
+| /assets/pilots/claim-office-3d/claim-office.glb | 1227119<br>1227119<br>0 | 127 (DOUBLE-DOWNLOAD)<br>1227119 (DOUBLE-DOWNLOAD) |
+| /assets/pilots/assay-office-3d/assay-office.glb | 1455399<br>1455399 | 127 (DOUBLE-DOWNLOAD)<br>127 (REVALIDATED) |
+| /assets/pilots/chapel-3d/chapel.glb | 1212923<br>1212923 | 127 (REVALIDATED)<br>127 (REVALIDATED) |
+| /assets/pilots/schoolhouse-3d/schoolhouse.glb | — | 1386543 (OVERLAP)<br>1386543 (OVERLAP) |
+| /assets/pilots/plaza-props-3d/covered_wagon.glb | — | 54551 (OVERLAP)<br>54551 (OVERLAP) |
+| /assets/pilots/plaza-props-3d/water_trough.glb | — | 34623 (OVERLAP)<br>34623 (OVERLAP) |
+| /assets/pilots/plaza-props-3d/pan_monument.glb | — | 59787 (OVERLAP)<br>59787 (OVERLAP) |
+| /assets/pilots/run3d/assay-bench.glb | — | 350301 (OVERLAP)<br>350301 (OVERLAP) |
+| /assets/pilots/run3d/boiler-house.glb | — | 361601 (OVERLAP)<br>361601 (OVERLAP) |
+| /assets/pilots/run3d/lantern-post.glb | — | 158577 (OVERLAP)<br>158577 (OVERLAP) |
+| /assets/pilots/run3d/palisade.glb | — | 347977 (OVERLAP)<br>347977 (OVERLAP) |
+| /assets/pilots/run3d/sluice.glb | — | 447333 (OVERLAP)<br>447333 (OVERLAP) |
+| /assets/pilots/run3d/turret.glb | — | 419605 (OVERLAP)<br>419605 (OVERLAP) |
+| /assets/pilots/run3d/stockpile.glb | — | 483305 (OVERLAP)<br>483305 (OVERLAP) |
+| /assets/pilots/run3d/sentry-beacon.glb | — | 351905 (OVERLAP)<br>351905 (OVERLAP) |
+
+  ✓  14 [mobile-chrome] › e2e/advance-stream-cache-reuse.spec.ts:60:1 › measures advance-stream cache reuse without route interception (21.1s)
+
+# Advance-stream cache reuse: dev vs production headers
+
+Boot flags: `debug&timescale=24&nolevel&seed=advance-stream-walkthrough` · route interception: none · network emulation: none · project: mobile-chrome
+Dev `cache-control` observed via CDP `Network.responseReceived`: `no-cache`
+Production `cache-control` observed via CDP `Network.responseReceived` from Vite preview's native header option: `public, max-age=31536000, immutable`
+
+| Door | Dev DOUBLE-DOWNLOAD | Dev REVALIDATED | Dev OVERLAP | Dev CACHE-HIT | Dev wire bytes | Production DOUBLE-DOWNLOAD | Production REVALIDATED | Production OVERLAP | Production CACHE-HIT | Production wire bytes |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| menu | 0 | 0 | 0 | 0 | 13932064 | 0 | 0 | 0 | 0 | 4880370 |
+| town | 5 | 1 | 4 | 0 | 9440486 | 0 | 0 | 2 | 8 | 3036296 |
+| contract1 | 0 | 0 | 15 | 0 | 35427963 | 0 | 0 | 8 | 7 | 2920820 |
+| town-return | 4 | 2 | 4 | 0 | 12799500 | 8 | 0 | 0 | 2 | 4273368 |
+| contract2 | 0 | 0 | 10 | 0 | 19803039 | 0 | 0 | 8 | 2 | 4623884 |
+
+## Dev-server detail
+
+# Advance-stream cache reuse
+
+Boot flags: `debug&timescale=24&nolevel&seed=advance-stream-walkthrough` · arm: dev-server · route interception: none · network emulation: none · project: mobile-chrome
+Observed `cache-control` via CDP `Network.responseReceived`: `no-cache`
+
+| Door | DOUBLE-DOWNLOAD | REVALIDATED | OVERLAP | CACHE-HIT | Wire bytes |
+|---|---:|---:|---:|---:|---:|
+| menu | 0 | 0 | 0 | 0 | 13932064 |
+| town | 5 | 1 | 4 | 0 | 9440486 |
+| contract1 | 0 | 0 | 15 | 0 | 35427963 |
+| town-return | 4 | 2 | 4 | 0 | 12799500 |
+| contract2 | 0 | 0 | 10 | 0 | 19803039 |
+
+| URL | Prefetch bytes | Subsequent fetch bytes and bucket |
+|---|---:|---|
+| /assets/pilots/town-plate-3d/town-plate.glb | 7904347<br>7904347<br>7904347 | 7904347 (DOUBLE-DOWNLOAD)<br>7904347 (DOUBLE-DOWNLOAD) |
+| /assets/pilots/tavern-3d/town-v3-tavern.glb | 912453<br>912453<br>0 | 127 (DOUBLE-DOWNLOAD)<br>912453 (DOUBLE-DOWNLOAD) |
+| /assets/pilots/general-store-3d/general-store.glb | 1219823<br>1219823<br>0 | 127 (DOUBLE-DOWNLOAD)<br>1219823 (DOUBLE-DOWNLOAD) |
+| /assets/pilots/claim-office-3d/claim-office.glb | 1227119<br>1227119<br>0 | 127 (DOUBLE-DOWNLOAD)<br>1227119 (DOUBLE-DOWNLOAD) |
+| /assets/pilots/assay-office-3d/assay-office.glb | 1455399<br>1455399 | 127 (DOUBLE-DOWNLOAD)<br>127 (REVALIDATED) |
+| /assets/pilots/chapel-3d/chapel.glb | 1212923<br>1212923 | 127 (REVALIDATED)<br>127 (REVALIDATED) |
+| /assets/pilots/schoolhouse-3d/schoolhouse.glb | — | 1386543 (OVERLAP)<br>1386543 (OVERLAP) |
+| /assets/pilots/plaza-props-3d/covered_wagon.glb | — | 54551 (OVERLAP)<br>54551 (OVERLAP) |
+| /assets/pilots/plaza-props-3d/water_trough.glb | — | 34623 (OVERLAP)<br>34623 (OVERLAP) |
+| /assets/pilots/plaza-props-3d/pan_monument.glb | — | 59787 (OVERLAP)<br>59787 (OVERLAP) |
+| /assets/pilots/run3d/assay-bench.glb | — | 350301 (OVERLAP)<br>350301 (OVERLAP) |
+| /assets/pilots/run3d/boiler-house.glb | — | 361601 (OVERLAP)<br>361601 (OVERLAP) |
+| /assets/pilots/run3d/lantern-post.glb | — | 158577 (OVERLAP)<br>158577 (OVERLAP) |
+| /assets/pilots/run3d/palisade.glb | — | 347977 (OVERLAP)<br>347977 (OVERLAP) |
+| /assets/pilots/run3d/sluice.glb | — | 447333 (OVERLAP)<br>447333 (OVERLAP) |
+| /assets/pilots/run3d/turret.glb | — | 419605 (OVERLAP)<br>419605 (OVERLAP) |
+| /assets/pilots/run3d/stockpile.glb | — | 483305 (OVERLAP)<br>483305 (OVERLAP) |
+| /assets/pilots/run3d/sentry-beacon.glb | — | 351905 (OVERLAP)<br>351905 (OVERLAP) |
+
+## Production-headers detail
+
+# Advance-stream cache reuse
+
+Boot flags: `debug&timescale=24&nolevel&seed=advance-stream-walkthrough` · arm: production-headers · route interception: none · network emulation: none · project: mobile-chrome
+Observed `cache-control` via CDP `Network.responseReceived`: `public, max-age=31536000, immutable`
+
+| Door | DOUBLE-DOWNLOAD | REVALIDATED | OVERLAP | CACHE-HIT | Wire bytes |
+|---|---:|---:|---:|---:|---:|
+| menu | 0 | 0 | 0 | 0 | 4880370 |
+| town | 0 | 0 | 2 | 8 | 3036296 |
+| contract1 | 0 | 0 | 8 | 7 | 2920820 |
+| town-return | 8 | 0 | 0 | 2 | 4273368 |
+| contract2 | 0 | 0 | 8 | 2 | 4623884 |
+
+| URL | Prefetch bytes | Subsequent fetch bytes and bucket |
+|---|---:|---|
+| /assets/town-plate-C90tsADa-diet-a9d5c9a0.glb | 879116<br>0<br>0 | 0 (CACHE-HIT)<br>879116 (DOUBLE-DOWNLOAD) |
+| /assets/town-v3-tavern-CXl1aOfB-diet-a9d5c9a0.glb | 294796<br>0<br>0 | 0 (CACHE-HIT)<br>294796 (DOUBLE-DOWNLOAD) |
+| /assets/general-store-Crb4mVFW-diet-a9d5c9a0.glb | 196224<br>0 | 0 (CACHE-HIT)<br>196224 (DOUBLE-DOWNLOAD) |
+| /assets/claim-office-CY6Ib5so-diet-a9d5c9a0.glb | 191908<br>0 | 0 (CACHE-HIT)<br>191908 (DOUBLE-DOWNLOAD) |
+| /assets/assay-office-xAW04uBp-diet-a9d5c9a0.glb | 249584<br>0 | 0 (CACHE-HIT)<br>249584 (DOUBLE-DOWNLOAD) |
+| /assets/chapel-DqOSe4LC-diet-a9d5c9a0.glb | 204068<br>0 | 0 (CACHE-HIT)<br>204068 (DOUBLE-DOWNLOAD) |
+| /assets/schoolhouse-BR3cnoTX-diet-a9d5c9a0.glb | 224688<br>0 | 0 (CACHE-HIT)<br>224688 (DOUBLE-DOWNLOAD) |
+| /assets/stamp-mill-CxhOFdRx-diet-a9d5c9a0.glb | 1178038<br>0 | — |
+| /assets/dynamo-hall-D_Gc9RPJ-diet-a9d5c9a0.glb | 1407370<br>0 | — |
+| /assets/covered_wagon-DoD5oKIb-diet-a9d5c9a0.glb | 54578<br>0 | 0 (CACHE-HIT)<br>54578 (DOUBLE-DOWNLOAD) |
+| /assets/water_trough-GmocFW04-diet-a9d5c9a0.glb | 0 | 34650 (OVERLAP)<br>0 (CACHE-HIT) |
+| /assets/pan_monument-DXhG2mKX-diet-a9d5c9a0.glb | 0 | 59814 (OVERLAP)<br>0 (CACHE-HIT) |
+| /assets/the-claim-terrain-CPmx4txo-diet-a9d5c9a0.glb | 966368 | 0 (CACHE-HIT) |
+| /assets/the-claim-panorama-DkzE3d2l-diet-a9d5c9a0.glb | 518124 | 0 (CACHE-HIT) |
+| /assets/active_headframe-DFnjayGK-diet-a9d5c9a0.glb | 293072 | 0 (CACHE-HIT) |
+| /assets/maintained_claim_house-CHFZbLoB-diet-a9d5c9a0.glb | 301620 | 0 (CACHE-HIT) |
+| /assets/working_camp-D0I4uygC-diet-a9d5c9a0.glb | 294784 | 0 (CACHE-HIT) |
+| /assets/claim_stake-DlQCz6m--diet-a9d5c9a0.glb | 281888 | 0 (CACHE-HIT) |
+| /assets/riparian_dressing_pack-93xutUyz-diet-a9d5c9a0.glb | 285976 | 0 (CACHE-HIT) |
+| /assets/assay-bench-Bjbx1XJa-diet-a9d5c9a0.glb | — | 350328 (OVERLAP)<br>350328 (OVERLAP) |
+| /assets/boiler-house-D9Un6OkB-diet-a9d5c9a0.glb | — | 361628 (OVERLAP)<br>361628 (OVERLAP) |
+| /assets/lantern-post-DBKwGdtm-diet-a9d5c9a0.glb | — | 158604 (OVERLAP)<br>158604 (OVERLAP) |
+| /assets/palisade-B4vjb3yv-diet-a9d5c9a0.glb | — | 348004 (OVERLAP)<br>348004 (OVERLAP) |
+| /assets/sluice-C0nN0uF0-diet-a9d5c9a0.glb | — | 447360 (OVERLAP)<br>447360 (OVERLAP) |
+| /assets/turret-DHjcPTUp-diet-a9d5c9a0.glb | — | 419632 (OVERLAP)<br>419632 (OVERLAP) |
+| /assets/stockpile-BGhyDRv3-diet-a9d5c9a0.glb | — | 483332 (OVERLAP)<br>483332 (OVERLAP) |
+| /assets/sentry-beacon-DBPVij-2-diet-a9d5c9a0.glb | — | 351932 (OVERLAP)<br>351932 (OVERLAP) |
+| /assets/dry-gulch-terrain-DrNSfJzI-diet-a9d5c9a0.glb | 1457602 | 0 (CACHE-HIT) |
+| /assets/dry-gulch-panorama-BSQAYWzK-diet-a9d5c9a0.glb | 520804 | 0 (CACHE-HIT) |
+
+  ✓  15 [mobile-chrome] › e2e/advance-stream-cache-reuse.spec.ts:67:1 › compares advance-stream cache reuse under production headers (30.6s)
+
+# Advance-stream walkthrough
+
+Boot flags: `debug&timescale=24&nolevel&seed=advance-stream-walkthrough` · GLB throttle: 150 ms/request · project: mobile-chrome
+
+| Door | WARM | COLD | First cold URLs |
+|---|---:|---:|---|
+| menu | 0 | 0 | — |
+| town | 4 | 6 | /assets/pilots/assay-office-3d/assay-office.glb<br>/assets/pilots/chapel-3d/chapel.glb<br>/assets/pilots/schoolhouse-3d/schoolhouse.glb<br>/assets/pilots/plaza-props-3d/covered_wagon.glb |
+| contract1 | 2 | 13 | /assets/pilots/run3d/assay-bench.glb<br>/assets/pilots/run3d/boiler-house.glb<br>/assets/pilots/run3d/lantern-post.glb<br>/assets/pilots/run3d/palisade.glb |
+| town-return | 6 | 4 | /assets/pilots/schoolhouse-3d/schoolhouse.glb<br>/assets/pilots/plaza-props-3d/covered_wagon.glb<br>/assets/pilots/plaza-props-3d/water_trough.glb<br>/assets/pilots/plaza-props-3d/pan_monument.glb |
+| contract2 | 0 | 10 | /assets/pilots/map-rebuild-spike/dry-gulch-terrain.glb<br>/assets/pilots/map-rebuild-spike/dry-gulch-panorama.glb<br>/assets/pilots/run3d/assay-bench.glb<br>/assets/pilots/run3d/boiler-house.glb |
+
+  ✓  16 [mobile-chrome] › e2e/advance-stream-walkthrough.spec.ts:19:1 › measures warm assets across menu, town, and two contracts (22.8s)
+  ✓  17 [mobile-chrome] › e2e/advance-stream.spec.ts:34:1 › menu idle warms town first and publishes progress (1.8s)
+  ✓  18 [mobile-chrome] › e2e/advance-stream.spec.ts:52:1 › saveData keeps tier one with the full-map opt-in and skips bulk contract maps (1.5s)
+  ✓  19 [mobile-chrome] › e2e/advance-stream.spec.ts:79:1 › lite rendering skips unused 3D prefetch (1.0s)
+  ✓  20 [mobile-chrome] › e2e/advance-stream.spec.ts:94:1 › the warm-every-map opt-in restores the sweep (2.9s)
+  ✓  21 [mobile-chrome] › e2e/advance-stream.spec.ts:127:1 › closing profiles resumes the menu stream (1.4s)
+  ✓  22 [mobile-chrome] › e2e/advance-stream.spec.ts:144:1 › launch aborts pending prefetch before the run requests its own map (7.8s)
+
+
+  1) [desktop-chrome] › e2e/advance-stream-cache-reuse.spec.ts:60:1 › measures advance-stream cache reuse without route interception 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "tavern"
+    Received: null
+
+    Call Log:
+    - Timeout 8000ms exceeded while waiting on the predicate
+
+      324 |   await hold(page, 'KeyA', 850);
+      325 |   await hold(page, 'KeyW', 850);
+    > 326 |   await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.activePrompt), { timeout: 8_000 }).toBe('tavern');
+          |                                                                                                                  ^
+      327 |   await page.getByTestId('town-open-board').click();
+      328 |   await expect(page.getByTestId('contract-board')).toBeVisible();
+      329 | }
+        at openBoard (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/advance-stream-cache-reuse.spec.ts:326:114)
+        at measure (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/advance-stream-cache-reuse.spec.ts:145:3)
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/advance-stream-cache-reuse.spec.ts:61:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/prefetch-bounded-warming/dev-gate-results/advance-stream-cache-reuse-6f92f--without-route-interception-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/prefetch-bounded-warming/dev-gate-results/advance-stream-cache-reuse-6f92f--without-route-interception-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/prefetch-bounded-warming/dev-gate-results/advance-stream-cache-reuse-6f92f--without-route-interception-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/prefetch-bounded-warming/dev-gate-results/advance-stream-cache-reuse-6f92f--without-route-interception-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [desktop-chrome] › e2e/advance-stream-cache-reuse.spec.ts:67:1 › compares advance-stream cache reuse under production headers 
+
+    Error: the dev-server arm must run before the production arm
+
+    expect(received).toBeDefined()
+
+    Received: undefined
+
+      71 |     const production = await measure(page, testInfo, 'production-headers', preview.url);
+      72 |     const dev = devResults.get(testInfo.project.name);
+    > 73 |     expect(dev, 'the dev-server arm must run before the production arm').toBeDefined();
+         |                                                                          ^
+      74 |     await writeReport(`artifacts/advance-stream-cache-reuse-headers-${testInfo.project.name}.md`, renderComparison(dev!, production));
+      75 |   } finally {
+      76 |     await preview.server.close();
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/advance-stream-cache-reuse.spec.ts:73:74
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/prefetch-bounded-warming/dev-gate-results/advance-stream-cache-reuse-c5d46-se-under-production-headers-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/prefetch-bounded-warming/dev-gate-results/advance-stream-cache-reuse-c5d46-se-under-production-headers-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/prefetch-bounded-warming/dev-gate-results/advance-stream-cache-reuse-c5d46-se-under-production-headers-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/prefetch-bounded-warming/dev-gate-results/advance-stream-cache-reuse-c5d46-se-under-production-headers-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [desktop-chrome] › e2e/advance-stream-cache-reuse.spec.ts:60:1 › measures advance-stream cache reuse without route interception 
+    [desktop-chrome] › e2e/advance-stream-cache-reuse.spec.ts:67:1 › compares advance-stream cache reuse under production headers 
+  20 passed (5.7m)

@@ -1,0 +1,31 @@
+[
+  {
+    "file": "e2e/ss-06-e5-beats.spec.ts",
+    "check": "exact one-line substitution; every other byte unchanged"
+  },
+  {
+    "file": "e2e/ss-07-e6-beats.spec.ts",
+    "check": "exact one-line substitution; every other byte unchanged"
+  },
+  {
+    "file": "e2e/ss-08-e7-beats.spec.ts",
+    "check": "exact one-line substitution; every other byte unchanged"
+  },
+  {
+    "file": "e2e/ss-09-e8-beats.spec.ts",
+    "check": "exact one-line substitution; every other byte unchanged"
+  },
+  {
+    "file": "e2e/ss-10-e9-beats.spec.ts",
+    "check": "exact one-line substitution; every other byte unchanged"
+  },
+  {
+    "file": "e2e/ss-11-e10-beats.spec.ts",
+    "check": "exact one-line substitution; every other byte unchanged"
+  },
+  {
+    "file": "scripts/moth-season-pressure.test.mjs",
+    "check": "manual diff review: only directory selection and writeFileSync path change; assertions and ride unchanged",
+    "probeNote": "The initial ad-hoc expected-string probe used the wrong old path expression and refused before writing a receipt. The actual diff was then read; no subject file was changed."
+  }
+]

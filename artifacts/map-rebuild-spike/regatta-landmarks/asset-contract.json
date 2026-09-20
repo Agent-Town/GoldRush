@@ -1,0 +1,86 @@
+{
+  "law": "reuse > derive > build-new; era-stamped; grit-dressed",
+  "packs": {
+    "regatta": {
+      "era": 5,
+      "atlasSha256": "7b168e10480e8b70eaca6564e556bfe63e5e9c2542bb0073d5e6fe432bb68f0a",
+      "assets": {
+        "start-line-rig": {
+          "sourceTier": "reuse",
+          "triangles": 1908,
+          "sha256": "1de99d12885ec2686e1aadd950ed85a893a8c573fcd059526fdd11e126577999",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "finish-line-rig": {
+          "sourceTier": "reuse",
+          "triangles": 2028,
+          "sha256": "9df2a25ab11b3bd28929ab1930fce4986725acc6fe037aec338f6a05d8e35167",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "northwest-buoy-line-anchor": {
+          "sourceTier": "reuse",
+          "triangles": 1156,
+          "sha256": "dc9aa49088488445a12be54eca69dc3ddd10e0914c38557230d436e4dfce3f9d",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "midcourse-buoy-line-anchor": {
+          "sourceTier": "reuse",
+          "triangles": 1156,
+          "sha256": "1a2a542d657d93eecfd6c85bfe6522058e7fc4935e31c156c144e68e9669bc33",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "northeast-buoy-line-anchor": {
+          "sourceTier": "reuse",
+          "triangles": 1156,
+          "sha256": "f5c6408015694c8986c2c390b70e5696953bd5aedcdc18fa68777599c5ff1021",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "spectator-raft-port": {
+          "sourceTier": "reuse",
+          "triangles": 1680,
+          "sha256": "90b68079b3e49bde73da62a035482e0e0d28097198a84d2dec26a2e4bb846a5e",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "spectator-raft-starboard": {
+          "sourceTier": "reuse",
+          "triangles": 1680,
+          "sha256": "7c92f242d7b37a868cb34704c354cf50793617218f99c16be3c0d8dc90a1073c",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "judges-tower": {
+          "sourceTier": "derive",
+          "triangles": 1204,
+          "sha256": "cded1a8fa5a6796c2d3efa31d85d10a3f395cab853c1d81ccbf3f6155ffd0fef",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        }
+      }
+    }
+  },
+  "totals": {
+    "packs": 1,
+    "assets": 8,
+    "sourceTiers": {
+      "reuse": 7,
+      "derive": 1,
+      "build-new": 0
+    }
+  },
+  "boards": {},
+  "simulation": "unchanged; every landmark is a separate render-only GLB mounted by contract"
+}

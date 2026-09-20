@@ -1,0 +1,1939 @@
+Updating e5de72e8d..a2498a2bc
+Fast-forward
+ STATUS.md                                          |    19 +-
+ .../canon-calls-a8/a8-canon-probe.spec.ts.txt      |   139 +
+ artifacts/canon-calls-a8/batch.mjs                 |    63 +
+ artifacts/canon-calls-a8/contact.mjs               |    41 +
+ .../canon-calls-a8/e2e-ss01-reverted-to-HEAD.txt   |   217 +
+ .../canon-calls-a8/e2e-ss01-ss10-with-changes.txt  |   253 +
+ artifacts/canon-calls-a8/generation.jsonl          |     7 +
+ artifacts/canon-calls-a8/plate-tool.mjs            |   113 +
+ .../playwright.a8canon-scratch.config.ts.txt       |    19 +
+ artifacts/canon-calls-a8/probe-transcript.txt      |    20 +
+ artifacts/canon-calls-a8/uploads.json              |     3 +
+ artifacts/chapter-story-readiness/report.md        |    57 +
+ .../e3-moth-season/ride-e3-moth-season-01.json     |  1585 +-
+ artifacts/e5-stillwater/prover.mjs                 |     5 +-
+ .../both-engines-desktop-chrome.json               |    16 +-
+ .../both-engines-mobile-chrome.json                |    16 +-
+ .../char-elder-sheet-walk8.png                     |   Bin 0 -> 2095571 bytes
+ artifacts/low-orbit-second-build-line/CARD.log     |    12 +
+ artifacts/low-orbit-second-build-line/E2E.log      |   399 +
+ artifacts/low-orbit-second-build-line/GATES.log    |  2306 +++
+ artifacts/low-orbit-second-build-line/GUARDS.log   |   268 +
+ artifacts/low-orbit-second-build-line/LADDER.log   |    57 +
+ .../low-orbit-second-build-line/LADDER.progress    |   119 +
+ .../low-orbit-second-build-line/MEASUREMENT.md     |   225 +
+ artifacts/low-orbit-second-build-line/RUNS.log     |     4 +
+ .../ZONE-PRINT.before.txt                          |   113 +
+ .../arm-apron-01-twice.json                        |  9355 ++++++++++
+ .../arm-apron-02-twice.json                        |  5371 ++++++
+ .../arm-apron-beacon-north.json                    |  7640 ++++++++
+ .../arm-apron-no-sortie.json                       |  6200 +++++++
+ .../arm-apron-no-zone.json                         |  4193 +++++
+ .../arm-apron-turret-last.json                     |  6256 +++++++
+ .../arm-north-apron.json                           |  4367 +++++
+ .../arm-north-beacons-shallow.json                 |  4697 +++++
+ .../arm-north-gantry.json                          |  4566 +++++
+ .../arm-north-turret-1.json                        |  4768 +++++
+ .../arm-north-turret-2.json                        |  4632 +++++
+ .../low-orbit-second-build-line/arm-nt-z16.json    |  4631 +++++
+ .../low-orbit-second-build-line/arm-nt-z19.json    |  4702 +++++
+ .../arm-nt-z22-west.json                           |  4242 +++++
+ .../low-orbit-second-build-line/arm-nt-z24.json    |  3776 ++++
+ .../low-orbit-second-build-line/arm-nt-z25.json    |  4753 +++++
+ .../arm-spine-gantry-4out.json                     |  4154 +++++
+ .../arm-spine-gantry.json                          |  4565 +++++
+ .../arm-spine-one-out.json                         |  4767 +++++
+ .../arm-zone-only-apron.json                       |  7640 ++++++++
+ .../arm-zone-only-spine.json                       |  4829 ++++++
+ artifacts/low-orbit-second-build-line/arm.mjs      |   142 +
+ .../baseline-e8-low-orbit-01.err                   |     0
+ .../baseline-e8-low-orbit-01.json                  |  9461 ++++++++++
+ .../baseline-e8-low-orbit-02.err                   |     0
+ .../baseline-e8-low-orbit-02.json                  |  5728 ++++++
+ .../control-ignore-air-01.err                      |     0
+ .../control-ignore-air-01.json                     |   651 +
+ .../control-no-sortie-01.err                       |     0
+ .../control-no-sortie-01.json                      |   636 +
+ .../defence-apron-beacon-north.json                |    72 +
+ .../defence-apron-turret-last.json                 |    72 +
+ .../low-orbit-second-build-line/defence-apron.json |    72 +
+ .../defence-deck-turrets-outer.json                |    72 +
+ .../defence-deck-turrets.json                      |    72 +
+ .../defence-north-apron.json                       |    72 +
+ .../defence-north-beacons-shallow.json             |    72 +
+ .../defence-north-gantry.json                      |    72 +
+ .../defence-north-turret-1.json                    |    72 +
+ .../defence-north-turret-2.json                    |    72 +
+ .../defence-nt-z16.json                            |    72 +
+ .../defence-nt-z19.json                            |    72 +
+ .../defence-nt-z22-west.json                       |    72 +
+ .../defence-nt-z24.json                            |    72 +
+ .../defence-nt-z25.json                            |    72 +
+ .../defence-spine-gantry-4out.json                 |    72 +
+ .../defence-spine-gantry.json                      |    72 +
+ .../defence-spine-one-out.json                     |    72 +
+ .../probe-deck-turrets-outer.err                   |     0
+ .../probe-deck-turrets-outer.json                  |  4373 +++++
+ .../probe-deck-turrets.err                         |     0
+ .../probe-deck-turrets.json                        |  3855 +++++
+ artifacts/low-orbit-second-build-line/prover.mjs   |  1056 ++
+ .../low-orbit-second-build-line/shoot-card.mjs     |    87 +
+ .../tile-north-apron.json                          |    36 +
+ .../tile-north-gantry.json                         |    36 +
+ .../tile-spine-gantry.json                         |    36 +
+ .../low-orbit-second-build-line/zone-print.err     |     0
+ .../low-orbit-second-build-line/zone-print.mjs     |   147 +
+ .../m2-palisade-placement-diagnosis/REPORT.md      |    55 +
+ .../adjacent-results/.last-run.json                |     7 +
+ .../error-context.md                               |   200 +
+ .../test-failed-1.png                              |   Bin 0 -> 1168199 bytes
+ .../error-context.md                               |   217 +
+ .../test-failed-1.png                              |   Bin 0 -> 1700471 bytes
+ .../controlled-desktop-chrome.json                 |   472 +
+ .../controlled-mobile-chrome.json                  |   472 +
+ .../controlled-results/.last-run.json              |     4 +
+ .../corrected-focused-results/.last-run.json       |     4 +
+ .../m2-results/.last-run.json                      |     4 +
+ .../vite.config.mjs                                |     9 +
+ artifacts/rider-parity-grammar/compare-panels.mjs  |    64 +
+ artifacts/rider-parity-grammar/e8-prover-1to1.mjs  |  1008 ++
+ .../e8-provers/e8-eclipse.json                     |  1235 ++
+ .../e8-provers/e8-far-side.json                    |  1145 ++
+ .../e8-provers/e8-low-orbit.json                   |  1211 ++
+ .../e8-provers/e8-mare-claim.json                  |  1193 ++
+ .../rider-parity-grammar/gate/attended-e2e.txt     |    85 +
+ .../gate/attended-node-guards.txt                  |  2621 +++
+ .../gate/stage3-a0-node-guards.txt                 |  2676 +++
+ .../gate/stage3-c-node-guards.txt                  |  2704 +++
+ artifacts/rider-parity-grammar/gate/stage3-e2e.txt |   867 +
+ .../hashes-base-af767e318.json                     |   743 +
+ artifacts/rider-parity-grammar/hashes-stage1.json  |   703 +
+ artifacts/rider-parity-grammar/hashes-stage2.json  |   663 +
+ .../rider-parity-grammar/live-board-reassay.md     |    67 +
+ artifacts/rider-parity-grammar/replay-panel.mjs    |    73 +
+ .../rider-parity-grammar/retirement-ledger.json    |  2000 +++
+ .../rider-parity-grammar/retirement-ledger.mjs     |   111 +
+ .../stage1-hash-attribution.json                   |   676 +
+ .../stage2-hash-attribution.json                   |   657 +
+ artifacts/rider-parity-grammar/stage3-owed.md      |   102 +
+ .../rider-parity-grammar/stage3-removal.patch      |   103 +
+ artifacts/rider-parity-grammar/tape-inventory.json |  2419 +++
+ artifacts/rider-parity-grammar/tape-inventory.mjs  |   108 +
+ artifacts/s2533-fire/backup-after-handoff.txt      |     2 +
+ artifacts/s2533-fire/closing-ledger.txt            |  2547 +++
+ artifacts/s2533-fire/completion.json               |    17 +
+ artifacts/s2533-fire/current-desk-state.txt        |    59 +
+ artifacts/s2533-fire/final-gazette.txt             |   123 +
+ artifacts/s2533-fire/final-health.txt              |    15 +
+ artifacts/s2533-fire/master-header-repair.txt      |    14 +
+ artifacts/s2533-fire/report.md                     |     6 +
+ artifacts/s2533-fire/runner-start.json             |    15 +
+ artifacts/s2534-fire/authorable.txt                |    86 +
+ artifacts/s2534-fire/base-controls.txt             |   174 +
+ artifacts/s2534-fire/candidate.patch               |    56 +
+ artifacts/s2534-fire/closing-ledger.txt            |  1438 ++
+ artifacts/s2534-fire/context.json                  |     7 +
+ artifacts/s2534-fire/desk-final.txt                |    61 +
+ artifacts/s2534-fire/desk-state.txt                |    61 +
+ artifacts/s2534-fire/drain-permission.txt          |     3 +
+ artifacts/s2534-fire/gazette-final.txt             |   126 +
+ artifacts/s2534-fire/gazette.txt                   |   133 +
+ .../s2534-fire/inherited-gate-equivalence.txt      |     5 +
+ artifacts/s2534-fire/mirror-exposure.txt           |    69 +
+ artifacts/s2534-fire/mirror-freshness.txt          |    10 +
+ artifacts/s2534-fire/node-guards.txt               |  2051 +++
+ artifacts/s2534-fire/power-budget.txt              |    12 +
+ artifacts/s2534-fire/quiet-evidence-blobs.json     | 11624 +++++++++++++
+ artifacts/s2534-fire/report.md                     |    43 +
+ artifacts/s2534-fire/review-retention.txt          |    10 +
+ artifacts/s2534-fire/runtime.json                  |     8 +
+ artifacts/s2534-fire/selected-guards.txt           |     6 +
+ artifacts/s2534-fire/selector-probe-abort.json     |    33 +
+ .../s2534-fire/source-and-registry-candidate.patch |    82 +
+ artifacts/s2534-fire/withheld-evidence.txt         |    25 +
+ artifacts/s2534-fire/worktree-retention.json       |  7928 +++++++++
+ artifacts/s2535-fire/authorable.txt                |    84 +
+ artifacts/s2535-fire/base-control-state.txt        |     1 +
+ artifacts/s2535-fire/base-controls.txt             |   113 +
+ artifacts/s2535-fire/base-delta.txt                |     7 +
+ .../s2535-fire/boot/desktop-chrome-default.png     |   Bin 0 -> 1181593 bytes
+ .../s2535-fire/boot/mobile-chrome-default.png      |   Bin 0 -> 1697003 bytes
+ .../error-context.md                               |   200 +
+ .../test-failed-1.png                              |   Bin 0 -> 1168049 bytes
+ .../trace-records.zip                              |   Bin 0 -> 223840 bytes
+ .../error-context.md                               |   204 +
+ .../test-failed-1.png                              |   Bin 0 -> 1671743 bytes
+ .../trace-records.zip                              |   Bin 0 -> 220909 bytes
+ .../error-context.md                               |   200 +
+ .../test-failed-1.png                              |   Bin 0 -> 1167973 bytes
+ .../trace-records.zip                              |   Bin 0 -> 302082 bytes
+ .../error-context.md                               |   204 +
+ .../test-failed-1.png                              |   Bin 0 -> 1672741 bytes
+ .../trace-records.zip                              |   Bin 0 -> 221708 bytes
+ artifacts/s2535-fire/browser-gates.txt             |   173 +
+ artifacts/s2535-fire/candidate.patch               |    56 +
+ artifacts/s2535-fire/citation-gates.txt            |  2428 +++
+ artifacts/s2535-fire/closing-ledger.txt            |  1502 ++
+ artifacts/s2535-fire/drains-final.txt              |    40 +
+ artifacts/s2535-fire/engine-provenance.json        |     6 +
+ artifacts/s2535-fire/entry-status.txt              |   157 +
+ artifacts/s2535-fire/failure-fingerprint.txt       |     1 +
+ artifacts/s2535-fire/fixture-corpus.json           |   131 +
+ artifacts/s2535-fire/gazette-after.txt             |   125 +
+ artifacts/s2535-fire/gazette-before.txt            |   133 +
+ artifacts/s2535-fire/gazette-final.txt             |   126 +
+ artifacts/s2535-fire/health-final.txt              |    16 +
+ artifacts/s2535-fire/inherited-desk.txt            |    59 +
+ artifacts/s2535-fire/lane-state.txt                |   445 +
+ artifacts/s2535-fire/ledger-exposure.txt           |    67 +
+ artifacts/s2535-fire/ledger-freshness.txt          |     8 +
+ artifacts/s2535-fire/m1-baseline-equivalence.json  |    15 +
+ artifacts/s2535-fire/m1-inventory.txt              |     4 +
+ artifacts/s2535-fire/node-guards.txt               |  2363 +++
+ artifacts/s2535-fire/node-progress.jsonl           |     2 +
+ artifacts/s2535-fire/pre-gate-processes.txt        |     3 +
+ artifacts/s2535-fire/recurring-duties.md           |     7 +
+ artifacts/s2535-fire/remaining-guards.txt          |    38 +
+ artifacts/s2535-fire/report.md                     |    23 +
+ artifacts/s2535-fire/retention-blobs.json          |   242 +
+ artifacts/s2535-fire/retention-judgment.md         |     7 +
+ artifacts/s2535-fire/rotation-check.txt            |     1 +
+ .../s2535-fire/source-and-registry-candidate.patch |    82 +
+ artifacts/s2535-fire/trace-retention.json          |    54 +
+ artifacts/s2535-fire/worktree-retention.json       | 14603 ++++++++++++++++
+ artifacts/s2536-fire/archive-desk.txt              |    79 +
+ artifacts/s2536-fire/backup.md                     |     5 +
+ artifacts/s2536-fire/browser-inventory.txt         |    26 +
+ artifacts/s2536-fire/candidate-final-status.txt    |     1 +
+ artifacts/s2536-fire/checkout-space-note.md        |     1 +
+ artifacts/s2536-fire/checkout.json                 |    15 +
+ artifacts/s2536-fire/closing-ledger.txt            |  2995 ++++
+ artifacts/s2536-fire/closing-triage.txt            |   172 +
+ artifacts/s2536-fire/default-preservation.json     |     5 +
+ artifacts/s2536-fire/desk-resolution.json          |     7 +
+ artifacts/s2536-fire/gate-context.json             |    10 +
+ artifacts/s2536-fire/gazette-follow-up.txt         |   149 +
+ artifacts/s2536-fire/node-controls.txt             |    38 +
+ artifacts/s2536-fire/node-gates.txt                |  2403 +++
+ artifacts/s2536-fire/node-process-progress.txt     |     3 +
+ artifacts/s2536-fire/power-control.txt             |    48 +
+ artifacts/s2536-fire/power-source-identity.json    |     6 +
+ artifacts/s2536-fire/pre-gate-processes.json       |   107 +
+ artifacts/s2536-fire/preliminary.txt               |  2378 +++
+ artifacts/s2536-fire/recurring-duties.md           |    11 +
+ artifacts/s2536-fire/report.md                     |    19 +
+ artifacts/s2536-fire/retained-before.json          |    53 +
+ artifacts/s2536-fire/retained-final.json           |    57 +
+ artifacts/s2536-fire/retention-blobs.json          |  1001 ++
+ artifacts/s2536-fire/retention-blobs.py            |    24 +
+ artifacts/s2536-fire/retention-judgment.md         |     7 +
+ artifacts/s2536-fire/retention-read.py             |    26 +
+ artifacts/s2536-fire/runner-report.md              |    52 +
+ artifacts/s2536-fire/source-review.json            |    31 +
+ artifacts/s2536-fire/triage.txt                    |   930 +
+ artifacts/s2536-fire/worktree-retention.json       | 14780 ++++++++++++++++
+ .../desktop-build-menu-icons-blurb.png             |   Bin 0 -> 1114384 bytes
+ .../desktop-build-menu-palisade.png                |   Bin 0 -> 1083868 bytes
+ .../mobile-390-build-menu-icons-blurb.png          |   Bin 0 -> 1432104 bytes
+ artifacts/s2537-fire/archive-check.txt             |     1 +
+ artifacts/s2537-fire/art-triage.txt                |    57 +
+ artifacts/s2537-fire/backup-and-dispatch.json      |    11 +
+ artifacts/s2537-fire/base-controls.log             |    44 +
+ artifacts/s2537-fire/base-e7/.last-run.json        |     4 +
+ artifacts/s2537-fire/base-m2/.last-run.json        |     4 +
+ .../error-context.md                               |   213 +
+ .../test-failed-1.png                              |   Bin 0 -> 1179362 bytes
+ .../error-context.md                               |   217 +
+ .../test-failed-1.png                              |   Bin 0 -> 1715554 bytes
+ .../error-context.md                               |   286 +
+ .../test-failed-1.png                              |   Bin 0 -> 1198182 bytes
+ artifacts/s2537-fire/browser.log                   |   428 +
+ artifacts/s2537-fire/candidate-backup.txt          |     2 +
+ artifacts/s2537-fire/candidate-final-status.txt    |     2 +
+ artifacts/s2537-fire/candidate.txt                 |     1 +
+ artifacts/s2537-fire/classification.json           |    52 +
+ artifacts/s2537-fire/closing-gates.log             |  1449 ++
+ artifacts/s2537-fire/desk-final.txt                |    58 +
+ artifacts/s2537-fire/desk-outgoing.txt             |    58 +
+ artifacts/s2537-fire/desk-triage.txt               |    58 +
+ artifacts/s2537-fire/followups.log                 |   107 +
+ artifacts/s2537-fire/gazette-final.txt             |   131 +
+ artifacts/s2537-fire/gazette-triage.txt            |   131 +
+ artifacts/s2537-fire/lanes-triage.txt              |   444 +
+ artifacts/s2537-fire/m2-inventory.txt              |     4 +
+ artifacts/s2537-fire/moth-preservation.json        |     9 +
+ artifacts/s2537-fire/preflight.log                 |  2344 +++
+ artifacts/s2537-fire/prior-review-verbatim.md      |    41 +
+ artifacts/s2537-fire/provenance.txt                |     6 +
+ artifacts/s2537-fire/repeat-e7/.last-run.json      |     4 +
+ artifacts/s2537-fire/repeat-m2/.last-run.json      |     4 +
+ artifacts/s2537-fire/report.md                     |    13 +
+ artifacts/s2537-fire/resume.md                     |    17 +
+ artifacts/s2537-fire/retained-after-browser.json   |     5 +
+ artifacts/s2537-fire/retained-before.json          |    53 +
+ artifacts/s2537-fire/retention-blobs.json          |   973 ++
+ artifacts/s2537-fire/retention-blobs.py            |    24 +
+ artifacts/s2537-fire/retention-judgment.md         |     7 +
+ artifacts/s2537-fire/retention-read.py             |    26 +
+ artifacts/s2537-fire/review-evidence-audit.txt     |    14 +
+ .../scratch-observed-during-chapters.json          |    56 +
+ artifacts/s2537-fire/withheld-triage.txt           |    23 +
+ artifacts/s2537-fire/worktree-retention.json       | 14601 ++++++++++++++++
+ artifacts/s2537-fire/youngster-closure.json        |    43 +
+ .../s2538-fire/adjacent-results/.last-run.json     |     8 +
+ .../error-context.md                               |   213 +
+ .../test-failed-1.png                              |   Bin 0 -> 1182189 bytes
+ .../error-context.md                               |   217 +
+ .../test-failed-1.png                              |   Bin 0 -> 1764843 bytes
+ .../error-context.md                               |   290 +
+ .../test-failed-1.png                              |   Bin 0 -> 1625757 bytes
+ artifacts/s2538-fire/art-triage.txt                |    57 +
+ artifacts/s2538-fire/authorable.txt                |    83 +
+ artifacts/s2538-fire/backup-and-dispatch.json      |    35 +
+ artifacts/s2538-fire/base-control-state.json       |     5 +
+ artifacts/s2538-fire/base-controls.log             |   121 +
+ .../desktop-build-menu-icons-blurb.png             |   Bin 0 -> 1113845 bytes
+ .../base-generated/desktop-build-menu-palisade.png |   Bin 0 -> 1083820 bytes
+ .../mobile-390-build-menu-icons-blurb.png          |   Bin 0 -> 1432136 bytes
+ artifacts/s2538-fire/base-results/.last-run.json   |     7 +
+ .../error-context.md                               |   213 +
+ .../test-failed-1.png                              |   Bin 0 -> 1190966 bytes
+ .../error-context.md                               |   211 +
+ .../test-failed-1.png                              |   Bin 0 -> 1699329 bytes
+ artifacts/s2538-fire/browser-gates.log             |   283 +
+ artifacts/s2538-fire/candidate-backup.txt          |     6 +
+ artifacts/s2538-fire/candidate-guard-stats.jsonl   |     5 +
+ artifacts/s2538-fire/candidate.json                |    13 +
+ artifacts/s2538-fire/closing-gates.log             |  1449 ++
+ artifacts/s2538-fire/core-gates.log                |  2359 +++
+ artifacts/s2538-fire/county-news-evidence.txt      |    17 +
+ artifacts/s2538-fire/desk-outgoing.txt             |    58 +
+ artifacts/s2538-fire/desk-recheck.txt              |    58 +
+ artifacts/s2538-fire/desk-triage.txt               |    58 +
+ artifacts/s2538-fire/gate-scope.md                 |     9 +
+ artifacts/s2538-fire/gazette-after-news.txt        |   131 +
+ artifacts/s2538-fire/gazette-final.txt             |   131 +
+ artifacts/s2538-fire/handoff-backup.txt            |     2 +
+ artifacts/s2538-fire/health-final.txt              |    16 +
+ artifacts/s2538-fire/health-triage.txt             |    17 +
+ artifacts/s2538-fire/lanes-triage.txt              |   444 +
+ artifacts/s2538-fire/ledger-exposure.txt           |    67 +
+ artifacts/s2538-fire/ledger-freshness.txt          |     8 +
+ artifacts/s2538-fire/m1-inventory.txt              |     4 +
+ artifacts/s2538-fire/m2-inventory.txt              |     4 +
+ artifacts/s2538-fire/npm-ci.log                    |    21 +
+ artifacts/s2538-fire/own-results/.last-run.json    |     4 +
+ artifacts/s2538-fire/provenance.json               |     9 +
+ artifacts/s2538-fire/readiness-collection.txt      |    14 +
+ artifacts/s2538-fire/readiness.patch               |    72 +
+ artifacts/s2538-fire/repeat-results/.last-run.json |     4 +
+ artifacts/s2538-fire/report.md                     |    15 +
+ artifacts/s2538-fire/resume.md                     |    13 +
+ artifacts/s2538-fire/retention-blobs.json          |  1099 ++
+ artifacts/s2538-fire/retention-judgment.md         |     9 +
+ .../s2538-fire/review-evidence-audit-final.txt     |     3 +
+ artifacts/s2538-fire/review-evidence-audit.txt     |     3 +
+ artifacts/s2538-fire/server-stop.txt               |     1 +
+ artifacts/s2538-fire/standing-duties.md            |    11 +
+ artifacts/s2538-fire/weekly-lane-backup-check.json |    30 +
+ artifacts/s2538-fire/weekly-lane-backup.txt        |     3 +
+ artifacts/s2538-fire/withheld-triage.txt           |    23 +
+ artifacts/s2538-fire/worktree-retention.json       | 14728 ++++++++++++++++
+ .../s2538-fire/wrapper-timeout-processes.json      |     1 +
+ artifacts/s2539-fire/adjacency.txt                 |   138 +
+ artifacts/s2539-fire/art-staging-audit.txt         |    57 +
+ artifacts/s2539-fire/backup-origin-default.txt     |     4 +
+ artifacts/s2539-fire/backup.json                   |    11 +
+ artifacts/s2539-fire/base-m1.txt                   |    97 +
+ .../browser-evidence/adjacency/.last-run.json      |     4 +
+ .../browser-evidence/base-m1/.last-run.json        |     7 +
+ .../error-context.md                               |   213 +
+ .../test-failed-1.png                              |   Bin 0 -> 1191841 bytes
+ .../error-context.md                               |   217 +
+ .../test-failed-1.png                              |   Bin 0 -> 1702130 bytes
+ .../browser-evidence/controlled/.last-run.json     |     6 +
+ .../error-context.md                               |   300 +
+ .../test-failed-1.png                              |   Bin 0 -> 1198428 bytes
+ .../browser-evidence/full-adjacency/.last-run.json |     7 +
+ .../error-context.md                               |   213 +
+ .../test-failed-1.png                              |   Bin 0 -> 1167237 bytes
+ .../error-context.md                               |   217 +
+ .../test-failed-1.png                              |   Bin 0 -> 1673295 bytes
+ .../input-sample-results/.last-run.json            |     4 +
+ .../sample-controls/desktop-chrome-2.json          |    21 +
+ .../sample-controls/desktop-chrome-3.json          |    26 +
+ .../sample-controls/mobile-chrome-2.json           |    21 +
+ .../sample-controls/mobile-chrome-3.json           |    26 +
+ artifacts/s2539-fire/candidate.json                |     9 +
+ artifacts/s2539-fire/candidate.patch               |    22 +
+ artifacts/s2539-fire/causal-and-boot.txt           |    74 +
+ artifacts/s2539-fire/chapter-next-drain.txt        |     1 +
+ artifacts/s2539-fire/checkout.json                 |    19 +
+ artifacts/s2539-fire/closing-authorable.txt        |    82 +
+ artifacts/s2539-fire/closing-drains.txt            |    41 +
+ artifacts/s2539-fire/closing-gates.txt             |  1445 ++
+ artifacts/s2539-fire/closing-health.txt            |    17 +
+ artifacts/s2539-fire/codex-review.txt              |  1970 +++
+ artifacts/s2539-fire/controlled-reproduction.md    |     7 +
+ artifacts/s2539-fire/controlled-reproduction.patch |    50 +
+ artifacts/s2539-fire/drain-clearance.txt           |     1 +
+ artifacts/s2539-fire/gate-scope.md                 |     5 +
+ artifacts/s2539-fire/gates.txt                     |  2403 +++
+ artifacts/s2539-fire/incoming-desk.txt             |    58 +
+ artifacts/s2539-fire/input-sample-control.patch    |    66 +
+ artifacts/s2539-fire/input-sample-controls.txt     |    30 +
+ artifacts/s2539-fire/m1-inventory.txt              |     4 +
+ artifacts/s2539-fire/main-task-guard.txt           |     2 +
+ artifacts/s2539-fire/outgoing-desk.txt             |    58 +
+ artifacts/s2539-fire/power-control.txt             |    62 +
+ artifacts/s2539-fire/report.md                     |    17 +
+ artifacts/s2539-fire/retention-blobs.json          |  1666 ++
+ artifacts/s2539-fire/retention-judgment.md         |     7 +
+ artifacts/s2539-fire/review-audit.txt              |     3 +
+ artifacts/s2539-fire/runner-custody-tty.txt        |    30 +
+ .../desktop-build-menu-icons-blurb.png             |   Bin 0 -> 1113735 bytes
+ .../desktop-build-menu-palisade.png                |   Bin 0 -> 1082390 bytes
+ .../mobile-390-build-menu-icons-blurb.png          |   Bin 0 -> 1430401 bytes
+ artifacts/s2539-fire/triage.md                     |     7 +
+ .../desktop-build-menu-icons-blurb.png             |   Bin 0 -> 1113411 bytes
+ .../desktop-build-menu-palisade.png                |   Bin 0 -> 1082077 bytes
+ .../mobile-390-build-menu-icons-blurb.png          |   Bin 0 -> 1431728 bytes
+ artifacts/s2539-fire/worktree-retention.json       | 15304 ++++++++++++++++
+ artifacts/s2540-fire/backup.json                   |     9 +
+ artifacts/s2540-fire/base-control.json             |    13 +
+ .../browser-evidence/adjacent/.last-run.json       |     7 +
+ .../error-context.md                               |   213 +
+ .../test-failed-1.png                              |   Bin 0 -> 1167825 bytes
+ .../error-context.md                               |   217 +
+ .../test-failed-1.png                              |   Bin 0 -> 1708824 bytes
+ .../browser-evidence/base-m1/.last-run.json        |     7 +
+ .../error-context.md                               |   213 +
+ .../test-failed-1.png                              |   Bin 0 -> 1186522 bytes
+ .../error-context.md                               |   217 +
+ .../test-failed-1.png                              |   Bin 0 -> 1742250 bytes
+ .../browser-evidence/readiness/.last-run.json      |     4 +
+ .../browser-evidence/repeat/.last-run.json         |     4 +
+ artifacts/s2540-fire/candidate.patch               |    72 +
+ artifacts/s2540-fire/classification.json           |    32 +
+ artifacts/s2540-fire/cleanup.txt                   |     1 +
+ artifacts/s2540-fire/closing.txt                   |  1438 ++
+ artifacts/s2540-fire/collection.txt                |    16 +
+ artifacts/s2540-fire/desk-final.txt                |    58 +
+ artifacts/s2540-fire/duties.txt                    |   794 +
+ artifacts/s2540-fire/followups.txt                 |   162 +
+ artifacts/s2540-fire/gate-scope.md                 |     3 +
+ artifacts/s2540-fire/gates.txt                     |  2584 +++
+ artifacts/s2540-fire/gazette-judgment.txt          |     1 +
+ .../desktop-build-menu-icons-blurb.png             |   Bin 0 -> 1113990 bytes
+ .../generated-m2/desktop-build-menu-palisade.png   |   Bin 0 -> 1083443 bytes
+ .../mobile-390-build-menu-icons-blurb.png          |   Bin 0 -> 1430621 bytes
+ artifacts/s2540-fire/handoff-control.json          |     7 +
+ artifacts/s2540-fire/main-checks.txt               |    72 +
+ artifacts/s2540-fire/merge.txt                     |     1 +
+ artifacts/s2540-fire/npm-ci.txt                    |     2 +
+ artifacts/s2540-fire/ordering-initial.mjs          |    18 +
+ artifacts/s2540-fire/ordering.mjs                  |    16 +
+ artifacts/s2540-fire/ordering.txt                  |    23 +
+ artifacts/s2540-fire/post-drain.txt                |   229 +
+ artifacts/s2540-fire/retention-blobs.json          |  2082 +++
+ artifacts/s2540-fire/retention-judgment.md         |    11 +
+ artifacts/s2540-fire/retention-push.txt            |     8 +
+ artifacts/s2540-fire/retention-save.json           |     9 +
+ artifacts/s2540-fire/runner-custody-tty.txt        |    30 +
+ artifacts/s2540-fire/salvage-lifecycle.txt         |     6 +
+ artifacts/s2540-fire/withheld-list.txt             |   131 +
+ artifacts/s2540-fire/worktree-retention.json       | 15875 +++++++++++++++++
+ artifacts/s2541-fire/authorable.txt                |    82 +
+ artifacts/s2541-fire/backup-and-close.json         |    24 +
+ artifacts/s2541-fire/base-board-gold-wrapper.txt   |    31 +
+ artifacts/s2541-fire/base-board-gold.txt           |   100 +
+ artifacts/s2541-fire/bookkeeping-gates.txt         |    82 +
+ artifacts/s2541-fire/bookkeeping-wrapper.txt       |    68 +
+ artifacts/s2541-fire/candidate-backup.txt          |     6 +
+ artifacts/s2541-fire/candidate.patch               |    95 +
+ artifacts/s2541-fire/classification.json           |    17 +
+ artifacts/s2541-fire/cleanup.json                  |    10 +
+ artifacts/s2541-fire/closing-ledger.txt            |  1424 ++
+ artifacts/s2541-fire/compile-wrapper.txt           |    34 +
+ artifacts/s2541-fire/compile.txt                   |  2320 +++
+ artifacts/s2541-fire/corrective-clearance.txt      |     1 +
+ artifacts/s2541-fire/explicit-moth-wrapper.txt     |    19 +
+ artifacts/s2541-fire/explicit-moth.txt             |    26 +
+ artifacts/s2541-fire/file-classification.json      |    58 +
+ artifacts/s2541-fire/full-node-progress.jsonl      |    11 +
+ artifacts/s2541-fire/full-node-wrapper.txt         |    31 +
+ artifacts/s2541-fire/full-node.log                 |  2425 +++
+ artifacts/s2541-fire/gate-scope.md                 |     9 +
+ artifacts/s2541-fire/gazette.txt                   |   131 +
+ artifacts/s2541-fire/handoff-control.json          |     9 +
+ artifacts/s2541-fire/health.txt                    |    18 +
+ artifacts/s2541-fire/lane-usable.txt               |   444 +
+ artifacts/s2541-fire/ledger-exposure.txt           |    67 +
+ artifacts/s2541-fire/ledger-freshness.txt          |     8 +
+ artifacts/s2541-fire/main-push.txt                 |     2 +
+ artifacts/s2541-fire/policy.txt                    |     3 +
+ artifacts/s2541-fire/resume.md                     |    11 +
+ artifacts/s2541-fire/retained-before.json          |   257 +
+ artifacts/s2541-fire/retention-blobs.json          |  2163 +++
+ artifacts/s2541-fire/retention-blobs.txt           |     3 +
+ artifacts/s2541-fire/retention-judgment.md         |    11 +
+ artifacts/s2541-fire/retention-read.txt            |     1 +
+ artifacts/s2541-fire/review-audit-after.txt        |     3 +
+ artifacts/s2541-fire/review-audit.txt              |    13 +
+ artifacts/s2541-fire/setup.txt                     |     5 +
+ artifacts/s2541-fire/tape-diagnosis.json           |    32 +
+ artifacts/s2541-fire/tape-diagnosis.txt            |    32 +
+ artifacts/s2541-fire/withheld.txt                  |    23 +
+ artifacts/s2541-fire/worktree-retention.json       | 15966 +++++++++++++++++
+ artifacts/s2541-fire/writer-proof.json             |   316 +
+ .../desktop-build-menu-icons-blurb.png             |   Bin 0 -> 1114370 bytes
+ .../adjacent-shots/desktop-build-menu-palisade.png |   Bin 0 -> 1083488 bytes
+ .../mobile-390-build-menu-icons-blurb.png          |   Bin 0 -> 1429908 bytes
+ artifacts/s2542-fire/authorable.txt                |    85 +
+ artifacts/s2542-fire/backup-and-close.json         |    26 +
+ .../s2542-fire/base-browser-results/.last-run.json |     4 +
+ .../base-repeat-browser-results/.last-run.json     |     4 +
+ artifacts/s2542-fire/classification.json           |    16 +
+ artifacts/s2542-fire/cleanup.json                  |     8 +
+ artifacts/s2542-fire/closing-ledger.txt            |  1437 ++
+ artifacts/s2542-fire/desk-state.json               |   461 +
+ artifacts/s2542-fire/dry-final.txt                 |    41 +
+ artifacts/s2542-fire/duties.md                     |    15 +
+ artifacts/s2542-fire/gate-scope.md                 |    11 +
+ artifacts/s2542-fire/gates.txt                     |  2621 +++
+ artifacts/s2542-fire/gazette.txt                   |   133 +
+ artifacts/s2542-fire/handoff-control.json          |     7 +
+ artifacts/s2542-fire/health-final.txt              |    18 +
+ .../initial-browser-results/.last-run.json         |     6 +
+ .../error-context.md                               |   206 +
+ .../test-failed-1.png                              |   Bin 0 -> 1190560 bytes
+ artifacts/s2542-fire/lane-a-final.txt              |    21 +
+ artifacts/s2542-fire/merge.txt                     |     2 +
+ artifacts/s2542-fire/mirror-exposure.txt           |    69 +
+ artifacts/s2542-fire/mirror-freshness.txt          |    10 +
+ artifacts/s2542-fire/policy-main.txt               |     3 +
+ artifacts/s2542-fire/retention-blobs.json          |  2541 +++
+ artifacts/s2542-fire/retention-judgment.md         |     7 +
+ .../stable-browser-results/.last-run.json          |     4 +
+ artifacts/s2542-fire/withheld.txt                  |    25 +
+ artifacts/s2542-fire/worktree-retention.json       | 16344 ++++++++++++++++++
+ artifacts/s2543-fire/art-audit.txt                 |    57 +
+ artifacts/s2543-fire/authorable.txt                |    82 +
+ artifacts/s2543-fire/backup-handoff.txt            |     2 +
+ artifacts/s2543-fire/closing-ledger.json           |    20 +
+ artifacts/s2543-fire/closing-ledger.txt            |  1424 ++
+ artifacts/s2543-fire/daily-state.json              |    52 +
+ artifacts/s2543-fire/desk-state.txt                |    58 +
+ artifacts/s2543-fire/gazette.txt                   |   131 +
+ artifacts/s2543-fire/handoff-control.json          |     7 +
+ artifacts/s2543-fire/health.txt                    |    16 +
+ artifacts/s2543-fire/ledger-exposure.txt           |    67 +
+ artifacts/s2543-fire/ledger-freshness.txt          |     8 +
+ artifacts/s2543-fire/main-node-observed.json       |    39 +
+ artifacts/s2543-fire/main-node-observed.txt        |  2438 +++
+ artifacts/s2543-fire/report.md                     |    29 +
+ artifacts/s2543-fire/retention-blobs.json          |  2660 +++
+ artifacts/s2543-fire/retention-blobs.txt           |     3 +
+ artifacts/s2543-fire/retention-judgment.md         |     7 +
+ artifacts/s2543-fire/retention-read.txt            |     1 +
+ artifacts/s2543-fire/withheld.txt                  |    23 +
+ artifacts/s2543-fire/worktree-retention.json       | 16452 ++++++++++++++++++
+ artifacts/s2544-fire/archive-check.txt             |     3 +
+ artifacts/s2544-fire/art-audit.txt                 |    57 +
+ artifacts/s2544-fire/authorable.txt                |    82 +
+ artifacts/s2544-fire/backup-handoff.txt            |     2 +
+ artifacts/s2544-fire/closing-ledger.json           |    36 +
+ artifacts/s2544-fire/closing-ledger.txt            |  1424 ++
+ artifacts/s2544-fire/daily-state.json              |    12 +
+ artifacts/s2544-fire/desk.txt                      |    58 +
+ artifacts/s2544-fire/drain-block-chapter.txt       |     1 +
+ artifacts/s2544-fire/drain-block-main.txt          |     1 +
+ artifacts/s2544-fire/dry.txt                       |    39 +
+ artifacts/s2544-fire/gazette.txt                   |   131 +
+ artifacts/s2544-fire/handoff-control.json          |     7 +
+ artifacts/s2544-fire/health.txt                    |    15 +
+ artifacts/s2544-fire/lanes.txt                     |   432 +
+ artifacts/s2544-fire/ledger-exposure.txt           |    67 +
+ artifacts/s2544-fire/ledger-freshness.txt          |     8 +
+ artifacts/s2544-fire/main-observation.json         |     8 +
+ artifacts/s2544-fire/report.md                     |    25 +
+ artifacts/s2544-fire/retention-blobs.json          |  2856 +++
+ artifacts/s2544-fire/retention-blobs.txt           |     3 +
+ artifacts/s2544-fire/retention-judgment.md         |     7 +
+ artifacts/s2544-fire/retention-read.txt            |     1 +
+ artifacts/s2544-fire/runner-report-observed.md     |    27 +
+ artifacts/s2544-fire/withheld.txt                  |    23 +
+ artifacts/s2544-fire/worktree-retention.json       | 16648 ++++++++++++++++++
+ artifacts/s2545-fire/archive-check.txt             |     5 +
+ artifacts/s2545-fire/archive-unbounded-attempt.txt |     4 +
+ artifacts/s2545-fire/art-audit.txt                 |    57 +
+ artifacts/s2545-fire/authorable.txt                |    82 +
+ artifacts/s2545-fire/backup-failure-note.txt       |     4 +
+ artifacts/s2545-fire/backup-handoff-update.txt     |     4 +
+ artifacts/s2545-fire/backup-handoff.txt            |     4 +
+ artifacts/s2545-fire/closing-ledger-overlap.json   |    12 +
+ artifacts/s2545-fire/closing-ledger-overlap.txt    |  1126 ++
+ artifacts/s2545-fire/closing-ledger.json           |    40 +
+ artifacts/s2545-fire/closing-ledger.txt            |  1424 ++
+ .../s2545-fire/contention-process-census.json      |     5 +
+ artifacts/s2545-fire/daily-state.json              |    20 +
+ artifacts/s2545-fire/desk.txt                      |    58 +
+ artifacts/s2545-fire/drain-block-chapter.txt       |     1 +
+ artifacts/s2545-fire/drain-block-main.txt          |     1 +
+ artifacts/s2545-fire/dry.txt                       |    39 +
+ artifacts/s2545-fire/edge-recheck.json             |     7 +
+ artifacts/s2545-fire/gazette.txt                   |   131 +
+ artifacts/s2545-fire/handoff-control.json          |     6 +
+ artifacts/s2545-fire/health.txt                    |    16 +
+ artifacts/s2545-fire/lanes.txt                     |   432 +
+ artifacts/s2545-fire/ledger-exposure.txt           |    67 +
+ artifacts/s2545-fire/ledger-freshness.txt          |     8 +
+ artifacts/s2545-fire/main-node-observed.json       |    12 +
+ artifacts/s2545-fire/main-node-observed.txt        |  1648 ++
+ .../s2545-fire/main-node-terminal-observed.json    |    26 +
+ .../s2545-fire/main-node-terminal-observed.txt     |  2367 +++
+ artifacts/s2545-fire/main-observation.json         |    12 +
+ artifacts/s2545-fire/report.md                     |    33 +
+ artifacts/s2545-fire/retention-blobs.json          |  3073 ++++
+ artifacts/s2545-fire/retention-blobs.txt           |     3 +
+ artifacts/s2545-fire/retention-judgment.md         |     7 +
+ artifacts/s2545-fire/retention-read.txt            |     1 +
+ artifacts/s2545-fire/runner-report-observed.md     |    27 +
+ artifacts/s2545-fire/withheld.txt                  |    23 +
+ artifacts/s2545-fire/worktree-retention.json       | 16865 ++++++++++++++++++
+ artifacts/s2546-fire/archive-check.txt             |     2 +
+ artifacts/s2546-fire/art-staging.txt               |    57 +
+ artifacts/s2546-fire/authorable.txt                |    82 +
+ artifacts/s2546-fire/contention-direct.txt         |    11 +
+ .../s2546-fire/contention-parent-context.json      |    39 +
+ artifacts/s2546-fire/contention-under-harness.txt  |    36 +
+ artifacts/s2546-fire/desk.txt                      |    58 +
+ artifacts/s2546-fire/gazette.txt                   |   131 +
+ artifacts/s2546-fire/health.txt                    |    15 +
+ artifacts/s2546-fire/lanes.txt                     |   432 +
+ artifacts/s2546-fire/ledger-exposure.txt           |    67 +
+ artifacts/s2546-fire/ledger-freshness.txt          |     8 +
+ .../s2546-fire/main-harness-classification.json    |    26 +
+ artifacts/s2546-fire/main-node-interim.json        |     9 +
+ artifacts/s2546-fire/main-node-interim.txt         |  1649 ++
+ artifacts/s2546-fire/main-node-terminal.json       |     9 +
+ artifacts/s2546-fire/main-node-terminal.txt        |  2367 +++
+ artifacts/s2546-fire/main-process-progress.json    |     4 +
+ artifacts/s2546-fire/parent-context-probe.mjs      |    28 +
+ artifacts/s2546-fire/process-capture.json          |    21 +
+ artifacts/s2546-fire/ps-capture-probe.json         |    64 +
+ artifacts/s2546-fire/ps-capture-probe.mjs          |    55 +
+ artifacts/s2546-fire/report.md                     |    27 +
+ artifacts/s2546-fire/retention-blobs.json          |  3472 ++++
+ artifacts/s2546-fire/retention-blobs.py            |    24 +
+ artifacts/s2546-fire/retention-judgment.md         |     7 +
+ artifacts/s2546-fire/retention-read.py             |    26 +
+ artifacts/s2546-fire/withheld.txt                  |    23 +
+ artifacts/s2546-fire/worktree-retention.json       | 17264 +++++++++++++++++++
+ artifacts/youngsters-rechain/batch.mjs             |    66 +
+ artifacts/youngsters-rechain/card.mjs              |    65 +
+ artifacts/youngsters-rechain/contact.mjs           |    41 +
+ artifacts/youngsters-rechain/faces.mjs             |    50 +
+ artifacts/youngsters-rechain/generation.jsonl      |    24 +
+ artifacts/youngsters-rechain/plate-tool.mjs        |   113 +
+ .../playwright.yr-scratch.config.ts.txt            |    19 +
+ artifacts/youngsters-rechain/probe-transcript.txt  |    20 +
+ artifacts/youngsters-rechain/uploads.json          |     7 +
+ .../yr-youngsters-probe.spec.ts.txt                |   149 +
+ assets/LEDGER.md                                   |     5 +-
+ assets/engine-era.json                             |    38 +-
+ assets/first-town-payload.json                     |    17 +-
+ .../production-elder-woman/RUN-NOTE.md             |   145 +
+ .../char-elder-woman-sheet-walk8.png               |   Bin 0 -> 2095571 bytes
+ .../elder-woman-start-down-contact.png             |   Bin 0 -> 561105 bytes
+ .../elder-woman-start-down-take1-contact.png       |   Bin 0 -> 572202 bytes
+ .../elder-woman-start-down-take2-contact.png       |   Bin 0 -> 565395 bytes
+ .../elder-woman-start-down-take3-contact.png       |   Bin 0 -> 561105 bytes
+ .../elder-woman-start-down-takes123-contact.png    |   Bin 0 -> 1698675 bytes
+ .../elder-woman-start-left-contact.png             |   Bin 0 -> 490168 bytes
+ .../elder-woman-start-left-take1-contact.png       |   Bin 0 -> 554595 bytes
+ .../elder-woman-start-left-take2-contact.png       |   Bin 0 -> 528302 bytes
+ .../elder-woman-start-left-take3-contact.png       |   Bin 0 -> 532303 bytes
+ .../elder-woman-start-left-takes123-contact.png    |   Bin 0 -> 1615333 bytes
+ .../elder-woman-start-right-contact.png            |   Bin 0 -> 501185 bytes
+ .../elder-woman-start-right-take1-contact.png      |   Bin 0 -> 550960 bytes
+ .../elder-woman-start-right-take2-contact.png      |   Bin 0 -> 536670 bytes
+ .../elder-woman-start-right-take3-contact.png      |   Bin 0 -> 545455 bytes
+ .../elder-woman-start-right-takes123-contact.png   |   Bin 0 -> 1633134 bytes
+ .../elder-woman-start-stills-contact.png           |   Bin 0 -> 934337 bytes
+ .../elder-woman-start-up-contact.png               |   Bin 0 -> 543060 bytes
+ .../elder-woman-start-up-take1-contact.png         |   Bin 0 -> 572042 bytes
+ .../elder-woman-start-up-take2-contact.png         |   Bin 0 -> 563405 bytes
+ .../elder-woman-start-up-take3-contact.png         |   Bin 0 -> 593912 bytes
+ .../elder-woman-start-up-takes123-contact.png      |   Bin 0 -> 1729178 bytes
+ .../elder-woman-start-down-take1-raw/frame-01.png  |   Bin 0 -> 1142872 bytes
+ .../elder-woman-start-down-take1-raw/frame-02.png  |   Bin 0 -> 1152955 bytes
+ .../elder-woman-start-down-take1-raw/frame-03.png  |   Bin 0 -> 1151970 bytes
+ .../elder-woman-start-down-take1-raw/frame-04.png  |   Bin 0 -> 1153185 bytes
+ .../elder-woman-start-down-take1-raw/frame-05.png  |   Bin 0 -> 1156323 bytes
+ .../elder-woman-start-down-take1-raw/frame-06.png  |   Bin 0 -> 1167653 bytes
+ .../elder-woman-start-down-take1-raw/frame-07.png  |   Bin 0 -> 1159744 bytes
+ .../elder-woman-start-down-take1-raw/frame-08.png  |   Bin 0 -> 1162939 bytes
+ .../elder-woman-start-down-take2-raw/frame-01.png  |   Bin 0 -> 1139830 bytes
+ .../elder-woman-start-down-take2-raw/frame-02.png  |   Bin 0 -> 1120785 bytes
+ .../elder-woman-start-down-take2-raw/frame-03.png  |   Bin 0 -> 1111506 bytes
+ .../elder-woman-start-down-take2-raw/frame-04.png  |   Bin 0 -> 1135221 bytes
+ .../elder-woman-start-down-take2-raw/frame-05.png  |   Bin 0 -> 1131043 bytes
+ .../elder-woman-start-down-take2-raw/frame-06.png  |   Bin 0 -> 1121516 bytes
+ .../elder-woman-start-down-take2-raw/frame-07.png  |   Bin 0 -> 1115019 bytes
+ .../elder-woman-start-down-take2-raw/frame-08.png  |   Bin 0 -> 1114984 bytes
+ .../elder-woman-start-down-take3-raw/frame-01.png  |   Bin 0 -> 1058633 bytes
+ .../elder-woman-start-down-take3-raw/frame-02.png  |   Bin 0 -> 1064852 bytes
+ .../elder-woman-start-down-take3-raw/frame-03.png  |   Bin 0 -> 1055985 bytes
+ .../elder-woman-start-down-take3-raw/frame-04.png  |   Bin 0 -> 1068913 bytes
+ .../elder-woman-start-down-take3-raw/frame-05.png  |   Bin 0 -> 1078238 bytes
+ .../elder-woman-start-down-take3-raw/frame-06.png  |   Bin 0 -> 1008392 bytes
+ .../elder-woman-start-down-take3-raw/frame-07.png  |   Bin 0 -> 1013643 bytes
+ .../elder-woman-start-down-take3-raw/frame-08.png  |   Bin 0 -> 1018980 bytes
+ .../elder-woman-start-left-take1-raw/frame-01.png  |   Bin 0 -> 1459004 bytes
+ .../elder-woman-start-left-take1-raw/frame-02.png  |   Bin 0 -> 1441723 bytes
+ .../elder-woman-start-left-take1-raw/frame-03.png  |   Bin 0 -> 1456737 bytes
+ .../elder-woman-start-left-take1-raw/frame-04.png  |   Bin 0 -> 1461531 bytes
+ .../elder-woman-start-left-take1-raw/frame-05.png  |   Bin 0 -> 1446886 bytes
+ .../elder-woman-start-left-take1-raw/frame-06.png  |   Bin 0 -> 1446182 bytes
+ .../elder-woman-start-left-take1-raw/frame-07.png  |   Bin 0 -> 1462586 bytes
+ .../elder-woman-start-left-take1-raw/frame-08.png  |   Bin 0 -> 1457124 bytes
+ .../elder-woman-start-left-take2-raw/frame-01.png  |   Bin 0 -> 1435383 bytes
+ .../elder-woman-start-left-take2-raw/frame-02.png  |   Bin 0 -> 1428606 bytes
+ .../elder-woman-start-left-take2-raw/frame-03.png  |   Bin 0 -> 1425469 bytes
+ .../elder-woman-start-left-take2-raw/frame-04.png  |   Bin 0 -> 1454546 bytes
+ .../elder-woman-start-left-take2-raw/frame-05.png  |   Bin 0 -> 1421193 bytes
+ .../elder-woman-start-left-take2-raw/frame-06.png  |   Bin 0 -> 1449096 bytes
+ .../elder-woman-start-left-take2-raw/frame-07.png  |   Bin 0 -> 1425814 bytes
+ .../elder-woman-start-left-take2-raw/frame-08.png  |   Bin 0 -> 1431271 bytes
+ .../elder-woman-start-left-take3-raw/frame-01.png  |   Bin 0 -> 1430701 bytes
+ .../elder-woman-start-left-take3-raw/frame-02.png  |   Bin 0 -> 1413846 bytes
+ .../elder-woman-start-left-take3-raw/frame-03.png  |   Bin 0 -> 1438287 bytes
+ .../elder-woman-start-left-take3-raw/frame-04.png  |   Bin 0 -> 1422027 bytes
+ .../elder-woman-start-left-take3-raw/frame-05.png  |   Bin 0 -> 1438174 bytes
+ .../elder-woman-start-left-take3-raw/frame-06.png  |   Bin 0 -> 1436017 bytes
+ .../elder-woman-start-left-take3-raw/frame-07.png  |   Bin 0 -> 1407924 bytes
+ .../elder-woman-start-left-take3-raw/frame-08.png  |   Bin 0 -> 1428152 bytes
+ .../elder-woman-start-right-take1-raw/frame-01.png |   Bin 0 -> 1475606 bytes
+ .../elder-woman-start-right-take1-raw/frame-02.png |   Bin 0 -> 1445165 bytes
+ .../elder-woman-start-right-take1-raw/frame-03.png |   Bin 0 -> 1465608 bytes
+ .../elder-woman-start-right-take1-raw/frame-04.png |   Bin 0 -> 1456177 bytes
+ .../elder-woman-start-right-take1-raw/frame-05.png |   Bin 0 -> 1471141 bytes
+ .../elder-woman-start-right-take1-raw/frame-06.png |   Bin 0 -> 1465737 bytes
+ .../elder-woman-start-right-take1-raw/frame-07.png |   Bin 0 -> 1453015 bytes
+ .../elder-woman-start-right-take1-raw/frame-08.png |   Bin 0 -> 1465049 bytes
+ .../elder-woman-start-right-take2-raw/frame-01.png |   Bin 0 -> 1492382 bytes
+ .../elder-woman-start-right-take2-raw/frame-02.png |   Bin 0 -> 1488891 bytes
+ .../elder-woman-start-right-take2-raw/frame-03.png |   Bin 0 -> 1475786 bytes
+ .../elder-woman-start-right-take2-raw/frame-04.png |   Bin 0 -> 1483747 bytes
+ .../elder-woman-start-right-take2-raw/frame-05.png |   Bin 0 -> 1487853 bytes
+ .../elder-woman-start-right-take2-raw/frame-06.png |   Bin 0 -> 1478170 bytes
+ .../elder-woman-start-right-take2-raw/frame-07.png |   Bin 0 -> 1463276 bytes
+ .../elder-woman-start-right-take2-raw/frame-08.png |   Bin 0 -> 1454448 bytes
+ .../elder-woman-start-right-take3-raw/frame-01.png |   Bin 0 -> 1462909 bytes
+ .../elder-woman-start-right-take3-raw/frame-02.png |   Bin 0 -> 1456588 bytes
+ .../elder-woman-start-right-take3-raw/frame-03.png |   Bin 0 -> 1446920 bytes
+ .../elder-woman-start-right-take3-raw/frame-04.png |   Bin 0 -> 1445739 bytes
+ .../elder-woman-start-right-take3-raw/frame-05.png |   Bin 0 -> 1451889 bytes
+ .../elder-woman-start-right-take3-raw/frame-06.png |   Bin 0 -> 1458681 bytes
+ .../elder-woman-start-right-take3-raw/frame-07.png |   Bin 0 -> 1430380 bytes
+ .../elder-woman-start-right-take3-raw/frame-08.png |   Bin 0 -> 1439328 bytes
+ .../elder-woman-start-up-take1-raw/frame-01.png    |   Bin 0 -> 1406813 bytes
+ .../elder-woman-start-up-take1-raw/frame-02.png    |   Bin 0 -> 1409367 bytes
+ .../elder-woman-start-up-take1-raw/frame-03.png    |   Bin 0 -> 1406468 bytes
+ .../elder-woman-start-up-take1-raw/frame-04.png    |   Bin 0 -> 1409172 bytes
+ .../elder-woman-start-up-take1-raw/frame-05.png    |   Bin 0 -> 1407654 bytes
+ .../elder-woman-start-up-take1-raw/frame-06.png    |   Bin 0 -> 1394653 bytes
+ .../elder-woman-start-up-take1-raw/frame-07.png    |   Bin 0 -> 1394734 bytes
+ .../elder-woman-start-up-take1-raw/frame-08.png    |   Bin 0 -> 1391129 bytes
+ .../elder-woman-start-up-take2-raw/frame-01.png    |   Bin 0 -> 1415868 bytes
+ .../elder-woman-start-up-take2-raw/frame-02.png    |   Bin 0 -> 1403475 bytes
+ .../elder-woman-start-up-take2-raw/frame-03.png    |   Bin 0 -> 1404024 bytes
+ .../elder-woman-start-up-take2-raw/frame-04.png    |   Bin 0 -> 1405369 bytes
+ .../elder-woman-start-up-take2-raw/frame-05.png    |   Bin 0 -> 1397409 bytes
+ .../elder-woman-start-up-take2-raw/frame-06.png    |   Bin 0 -> 1400334 bytes
+ .../elder-woman-start-up-take2-raw/frame-07.png    |   Bin 0 -> 1399218 bytes
+ .../elder-woman-start-up-take2-raw/frame-08.png    |   Bin 0 -> 1387879 bytes
+ .../elder-woman-start-up-take3-raw/frame-01.png    |   Bin 0 -> 1401930 bytes
+ .../elder-woman-start-up-take3-raw/frame-02.png    |   Bin 0 -> 1386418 bytes
+ .../elder-woman-start-up-take3-raw/frame-03.png    |   Bin 0 -> 1388335 bytes
+ .../elder-woman-start-up-take3-raw/frame-04.png    |   Bin 0 -> 1384879 bytes
+ .../elder-woman-start-up-take3-raw/frame-05.png    |   Bin 0 -> 1395118 bytes
+ .../elder-woman-start-up-take3-raw/frame-06.png    |   Bin 0 -> 1384548 bytes
+ .../elder-woman-start-up-take3-raw/frame-07.png    |   Bin 0 -> 1388511 bytes
+ .../elder-woman-start-up-take3-raw/frame-08.png    |   Bin 0 -> 1381972 bytes
+ ...elder-woman-start-down-ORPHAN-double-spend.json |    46 +
+ .../logs/elder-woman-start-down-take1-create.json  |    46 +
+ .../elder-woman-start-down-take1-generate.json     |    46 +
+ .../elder-woman-start-down-video-take1-create.json |     3 +
+ ...lder-woman-start-down-video-take1-generate.json |    55 +
+ .../elder-woman-start-down-video-take2-create.json |     3 +
+ ...lder-woman-start-down-video-take2-generate.json |    55 +
+ .../elder-woman-start-down-video-take3-create.json |     3 +
+ ...lder-woman-start-down-video-take3-generate.json |    55 +
+ .../logs/elder-woman-start-left-take1-create.json  |     3 +
+ .../elder-woman-start-left-take1-generate.json     |    46 +
+ .../elder-woman-start-left-video-take1-create.json |     3 +
+ ...lder-woman-start-left-video-take1-generate.json |    55 +
+ .../elder-woman-start-left-video-take2-create.json |     3 +
+ ...lder-woman-start-left-video-take2-generate.json |    55 +
+ .../elder-woman-start-left-video-take3-create.json |     3 +
+ ...lder-woman-start-left-video-take3-generate.json |    55 +
+ .../logs/elder-woman-start-right-take1-create.json |     3 +
+ .../elder-woman-start-right-take1-generate.json    |    46 +
+ ...elder-woman-start-right-video-take1-create.json |     3 +
+ ...der-woman-start-right-video-take1-generate.json |    55 +
+ ...elder-woman-start-right-video-take2-create.json |     3 +
+ ...der-woman-start-right-video-take2-generate.json |    55 +
+ ...elder-woman-start-right-video-take3-create.json |     3 +
+ ...der-woman-start-right-video-take3-generate.json |    55 +
+ .../logs/elder-woman-start-up-take1-create.json    |     3 +
+ .../logs/elder-woman-start-up-take1-generate.json  |    46 +
+ .../elder-woman-start-up-video-take1-create.json   |     3 +
+ .../elder-woman-start-up-video-take1-generate.json |    55 +
+ .../elder-woman-start-up-video-take2-create.json   |     3 +
+ .../elder-woman-start-up-video-take2-generate.json |    55 +
+ .../elder-woman-start-up-video-take3-create.json   |     3 +
+ .../elder-woman-start-up-video-take3-generate.json |    55 +
+ .../logs/elder-woman-start-walk8-summary.json      |    50 +
+ .../higgsfield-account-status-after-stills.txt     |     1 +
+ .../higgsfield-account-status-after-turnaround.txt |     1 +
+ .../higgsfield-account-status-after-videos.txt     |     1 +
+ .../higgsfield-account-status-before-stills.txt    |     1 +
+ ...higgsfield-account-status-before-turnaround.txt |     1 +
+ .../higgsfield-account-status-before-videos.txt    |     1 +
+ .../logs/higgsfield-transactions-post-stills.json  |   125 +
+ .../higgsfield-transactions-post-turnaround.json   |   125 +
+ .../logs/higgsfield-transactions-post-videos.json  |   605 +
+ .../production-elder-woman/logs/still-jobs.json    |    22 +
+ .../logs/turn-elder-woman-take1-create.json        |    48 +
+ .../logs/turn-elder-woman-take1-generate.json      |    46 +
+ .../production-elder-woman/logs/uploads.json       |    10 +
+ .../logs/video-jobs-created.json                   |    62 +
+ .../production-elder-woman/produce-elder-woman.mjs |   977 ++
+ .../stills/elder-woman-start-down-ORPHAN.png       |   Bin 0 -> 7079917 bytes
+ .../stills/elder-woman-start-down-take1.png        |   Bin 0 -> 6220900 bytes
+ .../stills/elder-woman-start-left-take1.png        |   Bin 0 -> 7313647 bytes
+ .../stills/elder-woman-start-right-take1.png       |   Bin 0 -> 8065100 bytes
+ .../stills/elder-woman-start-up-take1.png          |   Bin 0 -> 7173893 bytes
+ .../stills/turn-elder-woman-take1.png              |   Bin 0 -> 8443356 bytes
+ .../videos/elder-woman-start-down-take1.mp4        |   Bin 0 -> 3280199 bytes
+ .../videos/elder-woman-start-down-take2.mp4        |   Bin 0 -> 3484730 bytes
+ .../videos/elder-woman-start-down-take3.mp4        |   Bin 0 -> 3496063 bytes
+ .../videos/elder-woman-start-left-take1.mp4        |   Bin 0 -> 3602529 bytes
+ .../videos/elder-woman-start-left-take2.mp4        |   Bin 0 -> 3466878 bytes
+ .../videos/elder-woman-start-left-take3.mp4        |   Bin 0 -> 3283187 bytes
+ .../videos/elder-woman-start-right-take1.mp4       |   Bin 0 -> 3810069 bytes
+ .../videos/elder-woman-start-right-take2.mp4       |   Bin 0 -> 3776245 bytes
+ .../videos/elder-woman-start-right-take3.mp4       |   Bin 0 -> 3949627 bytes
+ .../videos/elder-woman-start-up-take1.mp4          |   Bin 0 -> 3520809 bytes
+ .../videos/elder-woman-start-up-take2.mp4          |   Bin 0 -> 3579044 bytes
+ .../videos/elder-woman-start-up-take3.mp4          |   Bin 0 -> 3729045 bytes
+ assets/processed/char-elder-sheet-walk8-r0c0.png   |   Bin 68569 -> 138764 bytes
+ assets/processed/char-elder-sheet-walk8-r0c1.png   |   Bin 70834 -> 142264 bytes
+ assets/processed/char-elder-sheet-walk8-r0c2.png   |   Bin 65299 -> 133771 bytes
+ assets/processed/char-elder-sheet-walk8-r0c3.png   |   Bin 69425 -> 136681 bytes
+ assets/processed/char-elder-sheet-walk8-r0c4.png   |   Bin 69004 -> 137878 bytes
+ assets/processed/char-elder-sheet-walk8-r0c5.png   |   Bin 69533 -> 128050 bytes
+ assets/processed/char-elder-sheet-walk8-r0c6.png   |   Bin 70038 -> 141558 bytes
+ assets/processed/char-elder-sheet-walk8-r0c7.png   |   Bin 71179 -> 127417 bytes
+ assets/processed/char-elder-sheet-walk8-r1c0.png   |   Bin 64860 -> 134949 bytes
+ assets/processed/char-elder-sheet-walk8-r1c1.png   |   Bin 60453 -> 110855 bytes
+ assets/processed/char-elder-sheet-walk8-r1c2.png   |   Bin 63560 -> 125303 bytes
+ assets/processed/char-elder-sheet-walk8-r1c3.png   |   Bin 57924 -> 135483 bytes
+ assets/processed/char-elder-sheet-walk8-r1c4.png   |   Bin 62297 -> 120217 bytes
+ assets/processed/char-elder-sheet-walk8-r1c5.png   |   Bin 58451 -> 106524 bytes
+ assets/processed/char-elder-sheet-walk8-r1c6.png   |   Bin 63447 -> 136147 bytes
+ assets/processed/char-elder-sheet-walk8-r1c7.png   |   Bin 56277 -> 134236 bytes
+ assets/processed/char-elder-sheet-walk8-r2c0.png   |   Bin 53712 -> 135910 bytes
+ assets/processed/char-elder-sheet-walk8-r2c1.png   |   Bin 56252 -> 106552 bytes
+ assets/processed/char-elder-sheet-walk8-r2c2.png   |   Bin 56299 -> 135032 bytes
+ assets/processed/char-elder-sheet-walk8-r2c3.png   |   Bin 56648 -> 114844 bytes
+ assets/processed/char-elder-sheet-walk8-r2c4.png   |   Bin 52708 -> 134507 bytes
+ assets/processed/char-elder-sheet-walk8-r2c5.png   |   Bin 57226 -> 126533 bytes
+ assets/processed/char-elder-sheet-walk8-r2c6.png   |   Bin 52451 -> 113697 bytes
+ assets/processed/char-elder-sheet-walk8-r2c7.png   |   Bin 57847 -> 132264 bytes
+ assets/processed/char-elder-sheet-walk8-r3c0.png   |   Bin 66403 -> 120677 bytes
+ assets/processed/char-elder-sheet-walk8-r3c1.png   |   Bin 62661 -> 124320 bytes
+ assets/processed/char-elder-sheet-walk8-r3c2.png   |   Bin 62317 -> 128482 bytes
+ assets/processed/char-elder-sheet-walk8-r3c3.png   |   Bin 66612 -> 126923 bytes
+ assets/processed/char-elder-sheet-walk8-r3c4.png   |   Bin 61478 -> 118651 bytes
+ assets/processed/char-elder-sheet-walk8-r3c5.png   |   Bin 65903 -> 123436 bytes
+ assets/processed/char-elder-sheet-walk8-r3c6.png   |   Bin 66538 -> 127476 bytes
+ assets/processed/char-elder-sheet-walk8-r3c7.png   |   Bin 59658 -> 123953 bytes
+ .../processed/char-elder-sheet-walk8.frames.json   |   246 +-
+ assets/processed/townsfolk-elder-e2.png            |   Bin 311686 -> 317967 bytes
+ assets/processed/townsfolk-elder.png               |   Bin 275600 -> 336185 bytes
+ assets/processed/townsfolk-old-digger.png          |   Bin 0 -> 324763 bytes
+ assets/processed/townsfolk-youngster-a-e2.png      |   Bin 0 -> 316820 bytes
+ assets/processed/townsfolk-youngster-a-e4.png      |   Bin 0 -> 312537 bytes
+ assets/processed/townsfolk-youngster-a-e8.png      |   Bin 0 -> 315808 bytes
+ assets/processed/townsfolk-youngster-b-e2.png      |   Bin 0 -> 296535 bytes
+ assets/processed/townsfolk-youngster-b-e4.png      |   Bin 0 -> 292437 bytes
+ assets/raw/char-elder-woman-sheet-walk8.png        |   Bin 0 -> 2095571 bytes
+ assets/raw/elder-woman-start-down.png              |   Bin 0 -> 6220900 bytes
+ assets/raw/elder-woman-start-left.png              |   Bin 0 -> 7313647 bytes
+ assets/raw/elder-woman-start-right.png             |   Bin 0 -> 8065100 bytes
+ assets/raw/elder-woman-start-up.png                |   Bin 0 -> 7173893 bytes
+ assets/raw/tf-elder-woman-e1.png                   |   Bin 0 -> 2715224 bytes
+ assets/raw/tf-elder-woman-e2.png                   |   Bin 0 -> 2579945 bytes
+ assets/raw/tf-youngster-a-e2b.png                  |   Bin 0 -> 2551799 bytes
+ assets/raw/tf-youngster-a-e4b.png                  |   Bin 0 -> 2429508 bytes
+ assets/raw/tf-youngster-a-e8b.png                  |   Bin 0 -> 2456907 bytes
+ assets/raw/tf-youngster-b-e2b.png                  |   Bin 0 -> 2294036 bytes
+ assets/raw/tf-youngster-b-e4b.png                  |   Bin 0 -> 2252064 bytes
+ assets/raw/turn-elder-woman.png                    |   Bin 0 -> 3520654 bytes
+ docs/HANDOVER-2026-09-06-attended.md               |    11 +-
+ docs/OWNER-DESK-2026-09-06.md                      |    31 +
+ docs/bench/rider-parity-audit.md                   |   116 +-
+ docs/bench/same-game-audit.md                      |  2611 ++-
+ e2e/agent-view.spec.ts                             |     2 +-
+ e2e/ap-standing-orders.spec.ts                     |    19 +-
+ e2e/ap16-8-admission-probe.mjs                     |     2 +-
+ e2e/ap16-8b-capture-loop-probe.mjs                 |    10 +-
+ e2e/e4-roads-and-convoys.spec.ts                   |     2 +-
+ e2e/e5-flotilla-hulls.spec.ts                      |    16 +-
+ e2e/e5-regatta-race.spec.ts                        |    38 +-
+ e2e/e7-playbook-rows.spec.ts                       |     6 +-
+ e2e/elder-walk8-woman.spec.ts                      |   176 +
+ e2e/er01-e2-census.spec.ts                         |     6 +-
+ e2e/front-door-parity.spec.ts                      |    21 +-
+ e2e/m2-01-build-menu.spec.ts                       |     7 +-
+ e2e/rider-parity-context-press.spec.ts             |   100 +
+ e2e/rider-parity-grammar.spec.ts                   |   123 +
+ e2e/ss-06-e5-beats.spec.ts                         |     1 +
+ e2e/ss-07-e6-beats.spec.ts                         |     1 +
+ e2e/ss-08-e7-beats.spec.ts                         |     1 +
+ e2e/ss-09-e8-beats.spec.ts                         |     1 +
+ e2e/ss-10-e9-beats.spec.ts                         |     1 +
+ e2e/ss-11-e10-beats.spec.ts                        |     1 +
+ functions/api/standings.ts                         |    53 +-
+ lore/STORYBOOK.md                                  |     3 +-
+ lore/characters.md                                 |     1 +
+ marketing/outbox/gazette-queue.md                  |    32 +
+ package.json                                       |     2 +-
+ public/skill.md                                    |    17 +-
+ reviews/beat-citation-refresh.md                   |    42 +-
+ reviews/canon-calls-a8-batch.md                    |    32 +
+ reviews/chapter-evidence-opt-in.md                 |    80 +
+ reviews/elder-walk8-regeneration.md                |    34 +
+ reviews/low-orbit-second-build-line.md             |    23 +
+ reviews/m1-debug-spawn-contract.md                 |    39 +
+ reviews/main-chapter-story-readiness.md            |    38 +
+ reviews/main-m2-palisade-placement-diagnosis.md    |    45 +
+ reviews/node-guards-ps-capture.md                  |    17 +
+ reviews/rider-parity-grammar.md                    |    57 +-
+ reviews/shots-canon-calls-a8/elder-at-120px.png    |   Bin 0 -> 142770 bytes
+ .../elder-card-crop-74x90-at-4x.png                |   Bin 0 -> 1024311 bytes
+ .../elder-identity-chain-e1-e2.png                 |   Bin 0 -> 1338904 bytes
+ .../old-digger-machine-plate.png                   |   Bin 0 -> 1190816 bytes
+ .../plain-boot-elder-card-crop-desktop-chrome.png  |   Bin 0 -> 70438 bytes
+ .../plain-boot-elder-card-crop-mobile-chrome.png   |   Bin 0 -> 255642 bytes
+ .../plain-boot-elder-card-desktop-chrome.png       |   Bin 0 -> 1532301 bytes
+ .../plain-boot-elder-card-mobile-chrome.png        |   Bin 0 -> 2247505 bytes
+ .../desktop-chrome.png                             |   Bin 0 -> 1199179 bytes
+ .../mobile-chrome.png                              |   Bin 0 -> 1785378 bytes
+ .../card-e8-low-orbit-390.png                      |   Bin 0 -> 222703 bytes
+ .../drill-yard-confirm-desktop-chrome.png          |   Bin 0 -> 1133066 bytes
+ .../drill-yard-confirm-mobile-chrome.png           |   Bin 0 -> 1544856 bytes
+ .../deck-anchor-desktop-chrome.png                 |   Bin 0 -> 1235161 bytes
+ .../deck-anchor-mobile-chrome.png                  |   Bin 0 -> 1688628 bytes
+ .../deck-build-desktop-chrome.png                  |   Bin 0 -> 1179015 bytes
+ .../deck-build-mobile-chrome.png                   |   Bin 0 -> 1588721 bytes
+ .../plain-boot-desktop-chrome.png                  |   Bin 0 -> 1169555 bytes
+ .../plain-boot-mobile-chrome.png                   |   Bin 0 -> 1699685 bytes
+ .../shots-youngsters-rechain/card-a-desktop-1x.png |   Bin 0 -> 66482 bytes
+ .../shots-youngsters-rechain/card-a-desktop-4x.png |   Bin 0 -> 89489 bytes
+ .../shots-youngsters-rechain/card-b-desktop-1x.png |   Bin 0 -> 46611 bytes
+ .../shots-youngsters-rechain/card-b-desktop-4x.png |   Bin 0 -> 63889 bytes
+ .../shots-youngsters-rechain/card-mobile-4x.png    |   Bin 0 -> 83232 bytes
+ reviews/shots-youngsters-rechain/chain-a-384.png   |   Bin 0 -> 1260674 bytes
+ reviews/shots-youngsters-rechain/chain-b-384.png   |   Bin 0 -> 859899 bytes
+ reviews/shots-youngsters-rechain/faces-a-2x.png    |   Bin 0 -> 291115 bytes
+ reviews/shots-youngsters-rechain/faces-b-2x.png    |   Bin 0 -> 217025 bytes
+ .../plain-boot-card-crop-desktop-chrome.png        |   Bin 0 -> 64465 bytes
+ .../plain-boot-card-crop-mobile-chrome.png         |   Bin 0 -> 153930 bytes
+ .../plain-boot-card-desktop-chrome.png             |   Bin 0 -> 1525663 bytes
+ .../plain-boot-card-mobile-chrome.png              |   Bin 0 -> 2177094 bytes
+ reviews/shots-youngsters-rechain/props-3x.png      |   Bin 0 -> 97597 bytes
+ .../repair-e2-old-vs-new.png                       |   Bin 0 -> 1131555 bytes
+ reviews/shots-youngsters-rechain/sheet-120.png     |   Bin 0 -> 226594 bytes
+ reviews/youngsters-rechain-batch.md                |    29 +
+ scripts/agent-reels.test.mjs                       |    15 +-
+ scripts/agent-seat-room.mjs                        |     4 +-
+ scripts/agent-seat.test.mjs                        |    10 +-
+ scripts/assay-replay.test.mjs                      |    83 +-
+ scripts/deploy-budget.test.mjs                     |    12 +-
+ scripts/deploy.sh                                  |     7 +-
+ scripts/e10-preserve-objective.test.mjs            |    16 +-
+ scripts/e4-motor-digest.mjs                        |    14 +-
+ scripts/e4-motor-floor.mjs                         |    72 +-
+ scripts/e4-roads-and-convoys.test.mjs              |   118 +-
+ scripts/e5-stillwater-front-crew.test.mjs          |     8 +-
+ scripts/e7-playbook-digest.mjs                     |     6 +-
+ scripts/e7-playbook-rows.test.mjs                  |     8 +-
+ scripts/e8-mare-claim-physics.test.mjs             |     4 +-
+ scripts/f2086-canyon-census-player.mjs             |     6 +-
+ scripts/f2127-stdin-rejection-probe.mjs            |     2 +-
+ scripts/f2135-canyon-census-player.mjs             |     6 +-
+ scripts/fire.md                                    |     2 +-
+ scripts/fixtures/moth-season-orders.json           |  1884 +-
+ scripts/gr-sim.test.mjs                            |    70 +-
+ scripts/halo-reextraction-check.mjs                |    44 +-
+ scripts/law-pointer-baseline.json                  |     4 +-
+ scripts/moth-season-pressure.test.mjs              |    85 +-
+ scripts/repair-under-radius.test.mjs               |   135 +
+ scripts/rider-parity-context-press.test.mjs        |   133 +
+ scripts/rider-parity-reach.test.mjs                |   166 +
+ scripts/rider-parity-retirement.test.mjs           |   125 +
+ scripts/same-game-audit.mjs                        |   132 +-
+ scripts/same-game-audit.test.mjs                   |    14 +-
+ scripts/secure-choice-refusal.test.mjs             |     4 +-
+ scripts/seed-ladder.mjs                            |     9 +-
+ scripts/standing-orders-module-split.test.mjs      |     4 +-
+ scripts/test-standings.mjs                         |    66 +-
+ src/agent/StandingOrders.ts                        |   131 +-
+ src/agent/View.ts                                  |    63 +
+ src/game/Game.ts                                   |   142 +-
+ src/sim/HeadlessContractSim.ts                     |   120 +-
+ src/story/beats.ts                                 |    18 +-
+ src/story/speakers.ts                              |   178 +-
+ src/town/TownScene.ts                              |     8 +
+ src/ui/BuildingContextPrompt.ts                    |   110 +-
+ src/vite-env.d.ts                                  |     6 +
+ tasks/BACKLOG.md                                   |    86 +-
+ tasks/canon-calls-a8-batch.md                      |    24 +
+ tasks/e4-motor-reels-rerecord.md                   |    21 +
+ tasks/elder-walk8-regeneration.md                  |    24 +
+ tasks/gauntlet-heat13-parity.md                    |    14 +
+ tasks/goals.json                                   |   103 +-
+ tasks/lane-a-m1-debug-spawn-contract.md            |     4 +-
+ tasks/lane-a-node-guards-ps-capture.md             |    46 +
+ tasks/low-orbit-second-build-line.md               |    23 +
+ tasks/main-board-gold-current-grammar.md           |    25 +
+ tasks/main-chapter-story-readiness.md              |    18 +
+ tasks/main-m2-palisade-placement-diagnosis.md      |    19 +
+ tasks/youngsters-rechain-batch.md                  |    22 +
+ 1016 files changed, 498749 insertions(+), 2298 deletions(-)
+ create mode 100644 artifacts/canon-calls-a8/a8-canon-probe.spec.ts.txt
+ create mode 100644 artifacts/canon-calls-a8/batch.mjs
+ create mode 100644 artifacts/canon-calls-a8/contact.mjs
+ create mode 100644 artifacts/canon-calls-a8/e2e-ss01-reverted-to-HEAD.txt
+ create mode 100644 artifacts/canon-calls-a8/e2e-ss01-ss10-with-changes.txt
+ create mode 100644 artifacts/canon-calls-a8/generation.jsonl
+ create mode 100644 artifacts/canon-calls-a8/plate-tool.mjs
+ create mode 100644 artifacts/canon-calls-a8/playwright.a8canon-scratch.config.ts.txt
+ create mode 100644 artifacts/canon-calls-a8/probe-transcript.txt
+ create mode 100644 artifacts/canon-calls-a8/uploads.json
+ create mode 100644 artifacts/chapter-story-readiness/report.md
+ create mode 100644 artifacts/elder-walk8-regeneration/char-elder-sheet-walk8.png
+ create mode 100644 artifacts/low-orbit-second-build-line/CARD.log
+ create mode 100644 artifacts/low-orbit-second-build-line/E2E.log
+ create mode 100644 artifacts/low-orbit-second-build-line/GATES.log
+ create mode 100644 artifacts/low-orbit-second-build-line/GUARDS.log
+ create mode 100644 artifacts/low-orbit-second-build-line/LADDER.log
+ create mode 100644 artifacts/low-orbit-second-build-line/LADDER.progress
+ create mode 100644 artifacts/low-orbit-second-build-line/MEASUREMENT.md
+ create mode 100644 artifacts/low-orbit-second-build-line/RUNS.log
+ create mode 100644 artifacts/low-orbit-second-build-line/ZONE-PRINT.before.txt
+ create mode 100644 artifacts/low-orbit-second-build-line/arm-apron-01-twice.json
+ create mode 100644 artifacts/low-orbit-second-build-line/arm-apron-02-twice.json
+ create mode 100644 artifacts/low-orbit-second-build-line/arm-apron-beacon-north.json
+ create mode 100644 artifacts/low-orbit-second-build-line/arm-apron-no-sortie.json
+ create mode 100644 artifacts/low-orbit-second-build-line/arm-apron-no-zone.json
+ create mode 100644 artifacts/low-orbit-second-build-line/arm-apron-turret-last.json
+ create mode 100644 artifacts/low-orbit-second-build-line/arm-north-apron.json
+ create mode 100644 artifacts/low-orbit-second-build-line/arm-north-beacons-shallow.json
+ create mode 100644 artifacts/low-orbit-second-build-line/arm-north-gantry.json
+ create mode 100644 artifacts/low-orbit-second-build-line/arm-north-turret-1.json
+ create mode 100644 artifacts/low-orbit-second-build-line/arm-north-turret-2.json
+ create mode 100644 artifacts/low-orbit-second-build-line/arm-nt-z16.json
+ create mode 100644 artifacts/low-orbit-second-build-line/arm-nt-z19.json
+ create mode 100644 artifacts/low-orbit-second-build-line/arm-nt-z22-west.json
+ create mode 100644 artifacts/low-orbit-second-build-line/arm-nt-z24.json
+ create mode 100644 artifacts/low-orbit-second-build-line/arm-nt-z25.json
+ create mode 100644 artifacts/low-orbit-second-build-line/arm-spine-gantry-4out.json
+ create mode 100644 artifacts/low-orbit-second-build-line/arm-spine-gantry.json
+ create mode 100644 artifacts/low-orbit-second-build-line/arm-spine-one-out.json
+ create mode 100644 artifacts/low-orbit-second-build-line/arm-zone-only-apron.json
+ create mode 100644 artifacts/low-orbit-second-build-line/arm-zone-only-spine.json
+ create mode 100644 artifacts/low-orbit-second-build-line/arm.mjs
+ create mode 100644 artifacts/low-orbit-second-build-line/baseline-e8-low-orbit-01.err
+ create mode 100644 artifacts/low-orbit-second-build-line/baseline-e8-low-orbit-01.json
+ create mode 100644 artifacts/low-orbit-second-build-line/baseline-e8-low-orbit-02.err
+ create mode 100644 artifacts/low-orbit-second-build-line/baseline-e8-low-orbit-02.json
+ create mode 100644 artifacts/low-orbit-second-build-line/control-ignore-air-01.err
+ create mode 100644 artifacts/low-orbit-second-build-line/control-ignore-air-01.json
+ create mode 100644 artifacts/low-orbit-second-build-line/control-no-sortie-01.err
+ create mode 100644 artifacts/low-orbit-second-build-line/control-no-sortie-01.json
+ create mode 100644 artifacts/low-orbit-second-build-line/defence-apron-beacon-north.json
+ create mode 100644 artifacts/low-orbit-second-build-line/defence-apron-turret-last.json
+ create mode 100644 artifacts/low-orbit-second-build-line/defence-apron.json
+ create mode 100644 artifacts/low-orbit-second-build-line/defence-deck-turrets-outer.json
+ create mode 100644 artifacts/low-orbit-second-build-line/defence-deck-turrets.json
+ create mode 100644 artifacts/low-orbit-second-build-line/defence-north-apron.json
+ create mode 100644 artifacts/low-orbit-second-build-line/defence-north-beacons-shallow.json
+ create mode 100644 artifacts/low-orbit-second-build-line/defence-north-gantry.json
+ create mode 100644 artifacts/low-orbit-second-build-line/defence-north-turret-1.json
+ create mode 100644 artifacts/low-orbit-second-build-line/defence-north-turret-2.json
+ create mode 100644 artifacts/low-orbit-second-build-line/defence-nt-z16.json
+ create mode 100644 artifacts/low-orbit-second-build-line/defence-nt-z19.json
+ create mode 100644 artifacts/low-orbit-second-build-line/defence-nt-z22-west.json
+ create mode 100644 artifacts/low-orbit-second-build-line/defence-nt-z24.json
+ create mode 100644 artifacts/low-orbit-second-build-line/defence-nt-z25.json
+ create mode 100644 artifacts/low-orbit-second-build-line/defence-spine-gantry-4out.json
+ create mode 100644 artifacts/low-orbit-second-build-line/defence-spine-gantry.json
+ create mode 100644 artifacts/low-orbit-second-build-line/defence-spine-one-out.json
+ create mode 100644 artifacts/low-orbit-second-build-line/probe-deck-turrets-outer.err
+ create mode 100644 artifacts/low-orbit-second-build-line/probe-deck-turrets-outer.json
+ create mode 100644 artifacts/low-orbit-second-build-line/probe-deck-turrets.err
+ create mode 100644 artifacts/low-orbit-second-build-line/probe-deck-turrets.json
+ create mode 100644 artifacts/low-orbit-second-build-line/prover.mjs
+ create mode 100644 artifacts/low-orbit-second-build-line/shoot-card.mjs
+ create mode 100644 artifacts/low-orbit-second-build-line/tile-north-apron.json
+ create mode 100644 artifacts/low-orbit-second-build-line/tile-north-gantry.json
+ create mode 100644 artifacts/low-orbit-second-build-line/tile-spine-gantry.json
+ create mode 100644 artifacts/low-orbit-second-build-line/zone-print.err
+ create mode 100644 artifacts/low-orbit-second-build-line/zone-print.mjs
+ create mode 100644 artifacts/m2-palisade-placement-diagnosis/REPORT.md
+ create mode 100644 artifacts/m2-palisade-placement-diagnosis/adjacent-results/.last-run.json
+ create mode 100644 artifacts/m2-palisade-placement-diagnosis/adjacent-results/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-desktop-chrome/error-context.md
+ create mode 100644 artifacts/m2-palisade-placement-diagnosis/adjacent-results/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-desktop-chrome/test-failed-1.png
+ create mode 100644 artifacts/m2-palisade-placement-diagnosis/adjacent-results/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-mobile-chrome/error-context.md
+ create mode 100644 artifacts/m2-palisade-placement-diagnosis/adjacent-results/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-mobile-chrome/test-failed-1.png
+ create mode 100644 artifacts/m2-palisade-placement-diagnosis/controlled-desktop-chrome.json
+ create mode 100644 artifacts/m2-palisade-placement-diagnosis/controlled-mobile-chrome.json
+ create mode 100644 artifacts/m2-palisade-placement-diagnosis/controlled-results/.last-run.json
+ create mode 100644 artifacts/m2-palisade-placement-diagnosis/corrected-focused-results/.last-run.json
+ create mode 100644 artifacts/m2-palisade-placement-diagnosis/m2-results/.last-run.json
+ create mode 100644 artifacts/m2-palisade-placement-diagnosis/vite.config.mjs
+ create mode 100644 artifacts/rider-parity-grammar/compare-panels.mjs
+ create mode 100644 artifacts/rider-parity-grammar/e8-prover-1to1.mjs
+ create mode 100644 artifacts/rider-parity-grammar/e8-provers/e8-eclipse.json
+ create mode 100644 artifacts/rider-parity-grammar/e8-provers/e8-far-side.json
+ create mode 100644 artifacts/rider-parity-grammar/e8-provers/e8-low-orbit.json
+ create mode 100644 artifacts/rider-parity-grammar/e8-provers/e8-mare-claim.json
+ create mode 100644 artifacts/rider-parity-grammar/gate/attended-e2e.txt
+ create mode 100644 artifacts/rider-parity-grammar/gate/attended-node-guards.txt
+ create mode 100644 artifacts/rider-parity-grammar/gate/stage3-a0-node-guards.txt
+ create mode 100644 artifacts/rider-parity-grammar/gate/stage3-c-node-guards.txt
+ create mode 100644 artifacts/rider-parity-grammar/gate/stage3-e2e.txt
+ create mode 100644 artifacts/rider-parity-grammar/hashes-base-af767e318.json
+ create mode 100644 artifacts/rider-parity-grammar/hashes-stage1.json
+ create mode 100644 artifacts/rider-parity-grammar/hashes-stage2.json
+ create mode 100644 artifacts/rider-parity-grammar/live-board-reassay.md
+ create mode 100644 artifacts/rider-parity-grammar/replay-panel.mjs
+ create mode 100644 artifacts/rider-parity-grammar/retirement-ledger.json
+ create mode 100644 artifacts/rider-parity-grammar/retirement-ledger.mjs
+ create mode 100644 artifacts/rider-parity-grammar/stage1-hash-attribution.json
+ create mode 100644 artifacts/rider-parity-grammar/stage2-hash-attribution.json
+ create mode 100644 artifacts/rider-parity-grammar/stage3-owed.md
+ create mode 100644 artifacts/rider-parity-grammar/stage3-removal.patch
+ create mode 100644 artifacts/rider-parity-grammar/tape-inventory.json
+ create mode 100644 artifacts/rider-parity-grammar/tape-inventory.mjs
+ create mode 100644 artifacts/s2533-fire/backup-after-handoff.txt
+ create mode 100644 artifacts/s2533-fire/closing-ledger.txt
+ create mode 100644 artifacts/s2533-fire/completion.json
+ create mode 100644 artifacts/s2533-fire/current-desk-state.txt
+ create mode 100644 artifacts/s2533-fire/final-gazette.txt
+ create mode 100644 artifacts/s2533-fire/final-health.txt
+ create mode 100644 artifacts/s2533-fire/master-header-repair.txt
+ create mode 100644 artifacts/s2533-fire/runner-start.json
+ create mode 100644 artifacts/s2534-fire/authorable.txt
+ create mode 100644 artifacts/s2534-fire/base-controls.txt
+ create mode 100644 artifacts/s2534-fire/candidate.patch
+ create mode 100644 artifacts/s2534-fire/closing-ledger.txt
+ create mode 100644 artifacts/s2534-fire/context.json
+ create mode 100644 artifacts/s2534-fire/desk-final.txt
+ create mode 100644 artifacts/s2534-fire/desk-state.txt
+ create mode 100644 artifacts/s2534-fire/drain-permission.txt
+ create mode 100644 artifacts/s2534-fire/gazette-final.txt
+ create mode 100644 artifacts/s2534-fire/gazette.txt
+ create mode 100644 artifacts/s2534-fire/inherited-gate-equivalence.txt
+ create mode 100644 artifacts/s2534-fire/mirror-exposure.txt
+ create mode 100644 artifacts/s2534-fire/mirror-freshness.txt
+ create mode 100644 artifacts/s2534-fire/node-guards.txt
+ create mode 100644 artifacts/s2534-fire/power-budget.txt
+ create mode 100644 artifacts/s2534-fire/quiet-evidence-blobs.json
+ create mode 100644 artifacts/s2534-fire/report.md
+ create mode 100644 artifacts/s2534-fire/review-retention.txt
+ create mode 100644 artifacts/s2534-fire/runtime.json
+ create mode 100644 artifacts/s2534-fire/selected-guards.txt
+ create mode 100644 artifacts/s2534-fire/selector-probe-abort.json
+ create mode 100644 artifacts/s2534-fire/source-and-registry-candidate.patch
+ create mode 100644 artifacts/s2534-fire/withheld-evidence.txt
+ create mode 100644 artifacts/s2534-fire/worktree-retention.json
+ create mode 100644 artifacts/s2535-fire/authorable.txt
+ create mode 100644 artifacts/s2535-fire/base-control-state.txt
+ create mode 100644 artifacts/s2535-fire/base-controls.txt
+ create mode 100644 artifacts/s2535-fire/base-delta.txt
+ create mode 100644 artifacts/s2535-fire/boot/desktop-chrome-default.png
+ create mode 100644 artifacts/s2535-fire/boot/mobile-chrome-default.png
+ create mode 100644 artifacts/s2535-fire/browser-evidence/s2535-adjacent/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-desktop-chrome/error-context.md
+ create mode 100644 artifacts/s2535-fire/browser-evidence/s2535-adjacent/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-desktop-chrome/test-failed-1.png
+ create mode 100644 artifacts/s2535-fire/browser-evidence/s2535-adjacent/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-desktop-chrome/trace-records.zip
+ create mode 100644 artifacts/s2535-fire/browser-evidence/s2535-adjacent/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-mobile-chrome/error-context.md
+ create mode 100644 artifacts/s2535-fire/browser-evidence/s2535-adjacent/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-mobile-chrome/test-failed-1.png
+ create mode 100644 artifacts/s2535-fire/browser-evidence/s2535-adjacent/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-mobile-chrome/trace-records.zip
+ create mode 100644 artifacts/s2535-fire/browser-evidence/s2535-m1-base/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-desktop-chrome/error-context.md
+ create mode 100644 artifacts/s2535-fire/browser-evidence/s2535-m1-base/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-desktop-chrome/test-failed-1.png
+ create mode 100644 artifacts/s2535-fire/browser-evidence/s2535-m1-base/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-desktop-chrome/trace-records.zip
+ create mode 100644 artifacts/s2535-fire/browser-evidence/s2535-m1-base/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-mobile-chrome/error-context.md
+ create mode 100644 artifacts/s2535-fire/browser-evidence/s2535-m1-base/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-mobile-chrome/test-failed-1.png
+ create mode 100644 artifacts/s2535-fire/browser-evidence/s2535-m1-base/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-mobile-chrome/trace-records.zip
+ create mode 100644 artifacts/s2535-fire/browser-gates.txt
+ create mode 100644 artifacts/s2535-fire/candidate.patch
+ create mode 100644 artifacts/s2535-fire/citation-gates.txt
+ create mode 100644 artifacts/s2535-fire/closing-ledger.txt
+ create mode 100644 artifacts/s2535-fire/drains-final.txt
+ create mode 100644 artifacts/s2535-fire/engine-provenance.json
+ create mode 100644 artifacts/s2535-fire/entry-status.txt
+ create mode 100644 artifacts/s2535-fire/failure-fingerprint.txt
+ create mode 100644 artifacts/s2535-fire/fixture-corpus.json
+ create mode 100644 artifacts/s2535-fire/gazette-after.txt
+ create mode 100644 artifacts/s2535-fire/gazette-before.txt
+ create mode 100644 artifacts/s2535-fire/gazette-final.txt
+ create mode 100644 artifacts/s2535-fire/health-final.txt
+ create mode 100644 artifacts/s2535-fire/inherited-desk.txt
+ create mode 100644 artifacts/s2535-fire/lane-state.txt
+ create mode 100644 artifacts/s2535-fire/ledger-exposure.txt
+ create mode 100644 artifacts/s2535-fire/ledger-freshness.txt
+ create mode 100644 artifacts/s2535-fire/m1-baseline-equivalence.json
+ create mode 100644 artifacts/s2535-fire/m1-inventory.txt
+ create mode 100644 artifacts/s2535-fire/node-guards.txt
+ create mode 100644 artifacts/s2535-fire/node-progress.jsonl
+ create mode 100644 artifacts/s2535-fire/pre-gate-processes.txt
+ create mode 100644 artifacts/s2535-fire/recurring-duties.md
+ create mode 100644 artifacts/s2535-fire/remaining-guards.txt
+ create mode 100644 artifacts/s2535-fire/report.md
+ create mode 100644 artifacts/s2535-fire/retention-blobs.json
+ create mode 100644 artifacts/s2535-fire/retention-judgment.md
+ create mode 100644 artifacts/s2535-fire/rotation-check.txt
+ create mode 100644 artifacts/s2535-fire/source-and-registry-candidate.patch
+ create mode 100644 artifacts/s2535-fire/trace-retention.json
+ create mode 100644 artifacts/s2535-fire/worktree-retention.json
+ create mode 100644 artifacts/s2536-fire/archive-desk.txt
+ create mode 100644 artifacts/s2536-fire/backup.md
+ create mode 100644 artifacts/s2536-fire/browser-inventory.txt
+ create mode 100644 artifacts/s2536-fire/candidate-final-status.txt
+ create mode 100644 artifacts/s2536-fire/checkout-space-note.md
+ create mode 100644 artifacts/s2536-fire/checkout.json
+ create mode 100644 artifacts/s2536-fire/closing-ledger.txt
+ create mode 100644 artifacts/s2536-fire/closing-triage.txt
+ create mode 100644 artifacts/s2536-fire/default-preservation.json
+ create mode 100644 artifacts/s2536-fire/desk-resolution.json
+ create mode 100644 artifacts/s2536-fire/gate-context.json
+ create mode 100644 artifacts/s2536-fire/gazette-follow-up.txt
+ create mode 100644 artifacts/s2536-fire/node-controls.txt
+ create mode 100644 artifacts/s2536-fire/node-gates.txt
+ create mode 100644 artifacts/s2536-fire/node-process-progress.txt
+ create mode 100644 artifacts/s2536-fire/power-control.txt
+ create mode 100644 artifacts/s2536-fire/power-source-identity.json
+ create mode 100644 artifacts/s2536-fire/pre-gate-processes.json
+ create mode 100644 artifacts/s2536-fire/preliminary.txt
+ create mode 100644 artifacts/s2536-fire/recurring-duties.md
+ create mode 100644 artifacts/s2536-fire/report.md
+ create mode 100644 artifacts/s2536-fire/retained-before.json
+ create mode 100644 artifacts/s2536-fire/retained-final.json
+ create mode 100644 artifacts/s2536-fire/retention-blobs.json
+ create mode 100644 artifacts/s2536-fire/retention-blobs.py
+ create mode 100644 artifacts/s2536-fire/retention-judgment.md
+ create mode 100644 artifacts/s2536-fire/retention-read.py
+ create mode 100644 artifacts/s2536-fire/runner-report.md
+ create mode 100644 artifacts/s2536-fire/source-review.json
+ create mode 100644 artifacts/s2536-fire/triage.txt
+ create mode 100644 artifacts/s2536-fire/worktree-retention.json
+ create mode 100644 artifacts/s2537-fire/adjacent-generated/desktop-build-menu-icons-blurb.png
+ create mode 100644 artifacts/s2537-fire/adjacent-generated/desktop-build-menu-palisade.png
+ create mode 100644 artifacts/s2537-fire/adjacent-generated/mobile-390-build-menu-icons-blurb.png
+ create mode 100644 artifacts/s2537-fire/archive-check.txt
+ create mode 100644 artifacts/s2537-fire/art-triage.txt
+ create mode 100644 artifacts/s2537-fire/backup-and-dispatch.json
+ create mode 100644 artifacts/s2537-fire/base-controls.log
+ create mode 100644 artifacts/s2537-fire/base-e7/.last-run.json
+ create mode 100644 artifacts/s2537-fire/base-m2/.last-run.json
+ create mode 100644 artifacts/s2537-fire/browser-evidence/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-desktop-chrome/error-context.md
+ create mode 100644 artifacts/s2537-fire/browser-evidence/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-desktop-chrome/test-failed-1.png
+ create mode 100644 artifacts/s2537-fire/browser-evidence/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-mobile-chrome/error-context.md
+ create mode 100644 artifacts/s2537-fire/browser-evidence/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-mobile-chrome/test-failed-1.png
+ create mode 100644 artifacts/s2537-fire/browser-evidence/m2-01-build-menu-palisade--49d2a-llowing-edge-touch-chaining-desktop-chrome/error-context.md
+ create mode 100644 artifacts/s2537-fire/browser-evidence/m2-01-build-menu-palisade--49d2a-llowing-edge-touch-chaining-desktop-chrome/test-failed-1.png
+ create mode 100644 artifacts/s2537-fire/browser.log
+ create mode 100644 artifacts/s2537-fire/candidate-backup.txt
+ create mode 100644 artifacts/s2537-fire/candidate-final-status.txt
+ create mode 100644 artifacts/s2537-fire/candidate.txt
+ create mode 100644 artifacts/s2537-fire/classification.json
+ create mode 100644 artifacts/s2537-fire/closing-gates.log
+ create mode 100644 artifacts/s2537-fire/desk-final.txt
+ create mode 100644 artifacts/s2537-fire/desk-outgoing.txt
+ create mode 100644 artifacts/s2537-fire/desk-triage.txt
+ create mode 100644 artifacts/s2537-fire/followups.log
+ create mode 100644 artifacts/s2537-fire/gazette-final.txt
+ create mode 100644 artifacts/s2537-fire/gazette-triage.txt
+ create mode 100644 artifacts/s2537-fire/lanes-triage.txt
+ create mode 100644 artifacts/s2537-fire/m2-inventory.txt
+ create mode 100644 artifacts/s2537-fire/moth-preservation.json
+ create mode 100644 artifacts/s2537-fire/preflight.log
+ create mode 100644 artifacts/s2537-fire/prior-review-verbatim.md
+ create mode 100644 artifacts/s2537-fire/provenance.txt
+ create mode 100644 artifacts/s2537-fire/repeat-e7/.last-run.json
+ create mode 100644 artifacts/s2537-fire/repeat-m2/.last-run.json
+ create mode 100644 artifacts/s2537-fire/report.md
+ create mode 100644 artifacts/s2537-fire/resume.md
+ create mode 100644 artifacts/s2537-fire/retained-after-browser.json
+ create mode 100644 artifacts/s2537-fire/retained-before.json
+ create mode 100644 artifacts/s2537-fire/retention-blobs.json
+ create mode 100644 artifacts/s2537-fire/retention-blobs.py
+ create mode 100644 artifacts/s2537-fire/retention-judgment.md
+ create mode 100644 artifacts/s2537-fire/retention-read.py
+ create mode 100644 artifacts/s2537-fire/review-evidence-audit.txt
+ create mode 100644 artifacts/s2537-fire/scratch-observed-during-chapters.json
+ create mode 100644 artifacts/s2537-fire/withheld-triage.txt
+ create mode 100644 artifacts/s2537-fire/worktree-retention.json
+ create mode 100644 artifacts/s2537-fire/youngster-closure.json
+ create mode 100644 artifacts/s2538-fire/adjacent-results/.last-run.json
+ create mode 100644 artifacts/s2538-fire/adjacent-results/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-desktop-chrome/error-context.md
+ create mode 100644 artifacts/s2538-fire/adjacent-results/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-desktop-chrome/test-failed-1.png
+ create mode 100644 artifacts/s2538-fire/adjacent-results/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-mobile-chrome/error-context.md
+ create mode 100644 artifacts/s2538-fire/adjacent-results/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-mobile-chrome/test-failed-1.png
+ create mode 100644 artifacts/s2538-fire/adjacent-results/m2-01-build-menu-palisade--49d2a-llowing-edge-touch-chaining-mobile-chrome/error-context.md
+ create mode 100644 artifacts/s2538-fire/adjacent-results/m2-01-build-menu-palisade--49d2a-llowing-edge-touch-chaining-mobile-chrome/test-failed-1.png
+ create mode 100644 artifacts/s2538-fire/art-triage.txt
+ create mode 100644 artifacts/s2538-fire/authorable.txt
+ create mode 100644 artifacts/s2538-fire/backup-and-dispatch.json
+ create mode 100644 artifacts/s2538-fire/base-control-state.json
+ create mode 100644 artifacts/s2538-fire/base-controls.log
+ create mode 100644 artifacts/s2538-fire/base-generated/desktop-build-menu-icons-blurb.png
+ create mode 100644 artifacts/s2538-fire/base-generated/desktop-build-menu-palisade.png
+ create mode 100644 artifacts/s2538-fire/base-generated/mobile-390-build-menu-icons-blurb.png
+ create mode 100644 artifacts/s2538-fire/base-results/.last-run.json
+ create mode 100644 artifacts/s2538-fire/base-results/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-desktop-chrome/error-context.md
+ create mode 100644 artifacts/s2538-fire/base-results/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-desktop-chrome/test-failed-1.png
+ create mode 100644 artifacts/s2538-fire/base-results/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-mobile-chrome/error-context.md
+ create mode 100644 artifacts/s2538-fire/base-results/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-mobile-chrome/test-failed-1.png
+ create mode 100644 artifacts/s2538-fire/browser-gates.log
+ create mode 100644 artifacts/s2538-fire/candidate-backup.txt
+ create mode 100644 artifacts/s2538-fire/candidate-guard-stats.jsonl
+ create mode 100644 artifacts/s2538-fire/candidate.json
+ create mode 100644 artifacts/s2538-fire/closing-gates.log
+ create mode 100644 artifacts/s2538-fire/core-gates.log
+ create mode 100644 artifacts/s2538-fire/county-news-evidence.txt
+ create mode 100644 artifacts/s2538-fire/desk-outgoing.txt
+ create mode 100644 artifacts/s2538-fire/desk-recheck.txt
+ create mode 100644 artifacts/s2538-fire/desk-triage.txt
+ create mode 100644 artifacts/s2538-fire/gate-scope.md
+ create mode 100644 artifacts/s2538-fire/gazette-after-news.txt
+ create mode 100644 artifacts/s2538-fire/gazette-final.txt
+ create mode 100644 artifacts/s2538-fire/handoff-backup.txt
+ create mode 100644 artifacts/s2538-fire/health-final.txt
+ create mode 100644 artifacts/s2538-fire/health-triage.txt
+ create mode 100644 artifacts/s2538-fire/lanes-triage.txt
+ create mode 100644 artifacts/s2538-fire/ledger-exposure.txt
+ create mode 100644 artifacts/s2538-fire/ledger-freshness.txt
+ create mode 100644 artifacts/s2538-fire/m1-inventory.txt
+ create mode 100644 artifacts/s2538-fire/m2-inventory.txt
+ create mode 100644 artifacts/s2538-fire/npm-ci.log
+ create mode 100644 artifacts/s2538-fire/own-results/.last-run.json
+ create mode 100644 artifacts/s2538-fire/provenance.json
+ create mode 100644 artifacts/s2538-fire/readiness-collection.txt
+ create mode 100644 artifacts/s2538-fire/readiness.patch
+ create mode 100644 artifacts/s2538-fire/repeat-results/.last-run.json
+ create mode 100644 artifacts/s2538-fire/report.md
+ create mode 100644 artifacts/s2538-fire/resume.md
+ create mode 100644 artifacts/s2538-fire/retention-blobs.json
+ create mode 100644 artifacts/s2538-fire/retention-judgment.md
+ create mode 100644 artifacts/s2538-fire/review-evidence-audit-final.txt
+ create mode 100644 artifacts/s2538-fire/review-evidence-audit.txt
+ create mode 100644 artifacts/s2538-fire/server-stop.txt
+ create mode 100644 artifacts/s2538-fire/standing-duties.md
+ create mode 100644 artifacts/s2538-fire/weekly-lane-backup-check.json
+ create mode 100644 artifacts/s2538-fire/weekly-lane-backup.txt
+ create mode 100644 artifacts/s2538-fire/withheld-triage.txt
+ create mode 100644 artifacts/s2538-fire/worktree-retention.json
+ create mode 100644 artifacts/s2538-fire/wrapper-timeout-processes.json
+ create mode 100644 artifacts/s2539-fire/adjacency.txt
+ create mode 100644 artifacts/s2539-fire/art-staging-audit.txt
+ create mode 100644 artifacts/s2539-fire/backup-origin-default.txt
+ create mode 100644 artifacts/s2539-fire/backup.json
+ create mode 100644 artifacts/s2539-fire/base-m1.txt
+ create mode 100644 artifacts/s2539-fire/browser-evidence/adjacency/.last-run.json
+ create mode 100644 artifacts/s2539-fire/browser-evidence/base-m1/.last-run.json
+ create mode 100644 artifacts/s2539-fire/browser-evidence/base-m1/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-desktop-chrome/error-context.md
+ create mode 100644 artifacts/s2539-fire/browser-evidence/base-m1/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-desktop-chrome/test-failed-1.png
+ create mode 100644 artifacts/s2539-fire/browser-evidence/base-m1/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-mobile-chrome/error-context.md
+ create mode 100644 artifacts/s2539-fire/browser-evidence/base-m1/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-mobile-chrome/test-failed-1.png
+ create mode 100644 artifacts/s2539-fire/browser-evidence/controlled/.last-run.json
+ create mode 100644 artifacts/s2539-fire/browser-evidence/controlled/m2-01-build-menu-palisade--49d2a-llowing-edge-touch-chaining-desktop-chrome/error-context.md
+ create mode 100644 artifacts/s2539-fire/browser-evidence/controlled/m2-01-build-menu-palisade--49d2a-llowing-edge-touch-chaining-desktop-chrome/test-failed-1.png
+ create mode 100644 artifacts/s2539-fire/browser-evidence/full-adjacency/.last-run.json
+ create mode 100644 artifacts/s2539-fire/browser-evidence/full-adjacency/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-desktop-chrome/error-context.md
+ create mode 100644 artifacts/s2539-fire/browser-evidence/full-adjacency/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-desktop-chrome/test-failed-1.png
+ create mode 100644 artifacts/s2539-fire/browser-evidence/full-adjacency/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-mobile-chrome/error-context.md
+ create mode 100644 artifacts/s2539-fire/browser-evidence/full-adjacency/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-mobile-chrome/test-failed-1.png
+ create mode 100644 artifacts/s2539-fire/browser-evidence/input-sample-results/.last-run.json
+ create mode 100644 artifacts/s2539-fire/browser-evidence/sample-controls/desktop-chrome-2.json
+ create mode 100644 artifacts/s2539-fire/browser-evidence/sample-controls/desktop-chrome-3.json
+ create mode 100644 artifacts/s2539-fire/browser-evidence/sample-controls/mobile-chrome-2.json
+ create mode 100644 artifacts/s2539-fire/browser-evidence/sample-controls/mobile-chrome-3.json
+ create mode 100644 artifacts/s2539-fire/candidate.json
+ create mode 100644 artifacts/s2539-fire/candidate.patch
+ create mode 100644 artifacts/s2539-fire/causal-and-boot.txt
+ create mode 100644 artifacts/s2539-fire/chapter-next-drain.txt
+ create mode 100644 artifacts/s2539-fire/checkout.json
+ create mode 100644 artifacts/s2539-fire/closing-authorable.txt
+ create mode 100644 artifacts/s2539-fire/closing-drains.txt
+ create mode 100644 artifacts/s2539-fire/closing-gates.txt
+ create mode 100644 artifacts/s2539-fire/closing-health.txt
+ create mode 100644 artifacts/s2539-fire/codex-review.txt
+ create mode 100644 artifacts/s2539-fire/controlled-reproduction.md
+ create mode 100644 artifacts/s2539-fire/controlled-reproduction.patch
+ create mode 100644 artifacts/s2539-fire/drain-clearance.txt
+ create mode 100644 artifacts/s2539-fire/gate-scope.md
+ create mode 100644 artifacts/s2539-fire/gates.txt
+ create mode 100644 artifacts/s2539-fire/incoming-desk.txt
+ create mode 100644 artifacts/s2539-fire/input-sample-control.patch
+ create mode 100644 artifacts/s2539-fire/input-sample-controls.txt
+ create mode 100644 artifacts/s2539-fire/m1-inventory.txt
+ create mode 100644 artifacts/s2539-fire/main-task-guard.txt
+ create mode 100644 artifacts/s2539-fire/outgoing-desk.txt
+ create mode 100644 artifacts/s2539-fire/power-control.txt
+ create mode 100644 artifacts/s2539-fire/report.md
+ create mode 100644 artifacts/s2539-fire/retention-blobs.json
+ create mode 100644 artifacts/s2539-fire/retention-judgment.md
+ create mode 100644 artifacts/s2539-fire/review-audit.txt
+ create mode 100644 artifacts/s2539-fire/runner-custody-tty.txt
+ create mode 100644 artifacts/s2539-fire/runner-generated/desktop-build-menu-icons-blurb.png
+ create mode 100644 artifacts/s2539-fire/runner-generated/desktop-build-menu-palisade.png
+ create mode 100644 artifacts/s2539-fire/runner-generated/mobile-390-build-menu-icons-blurb.png
+ create mode 100644 artifacts/s2539-fire/triage.md
+ create mode 100644 artifacts/s2539-fire/verification-screenshots/desktop-build-menu-icons-blurb.png
+ create mode 100644 artifacts/s2539-fire/verification-screenshots/desktop-build-menu-palisade.png
+ create mode 100644 artifacts/s2539-fire/verification-screenshots/mobile-390-build-menu-icons-blurb.png
+ create mode 100644 artifacts/s2539-fire/worktree-retention.json
+ create mode 100644 artifacts/s2540-fire/backup.json
+ create mode 100644 artifacts/s2540-fire/base-control.json
+ create mode 100644 artifacts/s2540-fire/browser-evidence/adjacent/.last-run.json
+ create mode 100644 artifacts/s2540-fire/browser-evidence/adjacent/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-desktop-chrome/error-context.md
+ create mode 100644 artifacts/s2540-fire/browser-evidence/adjacent/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-desktop-chrome/test-failed-1.png
+ create mode 100644 artifacts/s2540-fire/browser-evidence/adjacent/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-mobile-chrome/error-context.md
+ create mode 100644 artifacts/s2540-fire/browser-evidence/adjacent/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-mobile-chrome/test-failed-1.png
+ create mode 100644 artifacts/s2540-fire/browser-evidence/base-m1/.last-run.json
+ create mode 100644 artifacts/s2540-fire/browser-evidence/base-m1/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-desktop-chrome/error-context.md
+ create mode 100644 artifacts/s2540-fire/browser-evidence/base-m1/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-desktop-chrome/test-failed-1.png
+ create mode 100644 artifacts/s2540-fire/browser-evidence/base-m1/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-mobile-chrome/error-context.md
+ create mode 100644 artifacts/s2540-fire/browser-evidence/base-m1/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-mobile-chrome/test-failed-1.png
+ create mode 100644 artifacts/s2540-fire/browser-evidence/readiness/.last-run.json
+ create mode 100644 artifacts/s2540-fire/browser-evidence/repeat/.last-run.json
+ create mode 100644 artifacts/s2540-fire/candidate.patch
+ create mode 100644 artifacts/s2540-fire/classification.json
+ create mode 100644 artifacts/s2540-fire/cleanup.txt
+ create mode 100644 artifacts/s2540-fire/closing.txt
+ create mode 100644 artifacts/s2540-fire/collection.txt
+ create mode 100644 artifacts/s2540-fire/desk-final.txt
+ create mode 100644 artifacts/s2540-fire/duties.txt
+ create mode 100644 artifacts/s2540-fire/followups.txt
+ create mode 100644 artifacts/s2540-fire/gate-scope.md
+ create mode 100644 artifacts/s2540-fire/gates.txt
+ create mode 100644 artifacts/s2540-fire/gazette-judgment.txt
+ create mode 100644 artifacts/s2540-fire/generated-m2/desktop-build-menu-icons-blurb.png
+ create mode 100644 artifacts/s2540-fire/generated-m2/desktop-build-menu-palisade.png
+ create mode 100644 artifacts/s2540-fire/generated-m2/mobile-390-build-menu-icons-blurb.png
+ create mode 100644 artifacts/s2540-fire/handoff-control.json
+ create mode 100644 artifacts/s2540-fire/main-checks.txt
+ create mode 100644 artifacts/s2540-fire/merge.txt
+ create mode 100644 artifacts/s2540-fire/npm-ci.txt
+ create mode 100644 artifacts/s2540-fire/ordering-initial.mjs
+ create mode 100644 artifacts/s2540-fire/ordering.mjs
+ create mode 100644 artifacts/s2540-fire/ordering.txt
+ create mode 100644 artifacts/s2540-fire/post-drain.txt
+ create mode 100644 artifacts/s2540-fire/retention-blobs.json
+ create mode 100644 artifacts/s2540-fire/retention-judgment.md
+ create mode 100644 artifacts/s2540-fire/retention-push.txt
+ create mode 100644 artifacts/s2540-fire/retention-save.json
+ create mode 100644 artifacts/s2540-fire/runner-custody-tty.txt
+ create mode 100644 artifacts/s2540-fire/salvage-lifecycle.txt
+ create mode 100644 artifacts/s2540-fire/withheld-list.txt
+ create mode 100644 artifacts/s2540-fire/worktree-retention.json
+ create mode 100644 artifacts/s2541-fire/authorable.txt
+ create mode 100644 artifacts/s2541-fire/backup-and-close.json
+ create mode 100644 artifacts/s2541-fire/base-board-gold-wrapper.txt
+ create mode 100644 artifacts/s2541-fire/base-board-gold.txt
+ create mode 100644 artifacts/s2541-fire/bookkeeping-gates.txt
+ create mode 100644 artifacts/s2541-fire/bookkeeping-wrapper.txt
+ create mode 100644 artifacts/s2541-fire/candidate-backup.txt
+ create mode 100644 artifacts/s2541-fire/candidate.patch
+ create mode 100644 artifacts/s2541-fire/classification.json
+ create mode 100644 artifacts/s2541-fire/cleanup.json
+ create mode 100644 artifacts/s2541-fire/closing-ledger.txt
+ create mode 100644 artifacts/s2541-fire/compile-wrapper.txt
+ create mode 100644 artifacts/s2541-fire/compile.txt
+ create mode 100644 artifacts/s2541-fire/corrective-clearance.txt
+ create mode 100644 artifacts/s2541-fire/explicit-moth-wrapper.txt
+ create mode 100644 artifacts/s2541-fire/explicit-moth.txt
+ create mode 100644 artifacts/s2541-fire/file-classification.json
+ create mode 100644 artifacts/s2541-fire/full-node-progress.jsonl
+ create mode 100644 artifacts/s2541-fire/full-node-wrapper.txt
+ create mode 100644 artifacts/s2541-fire/full-node.log
+ create mode 100644 artifacts/s2541-fire/gate-scope.md
+ create mode 100644 artifacts/s2541-fire/gazette.txt
+ create mode 100644 artifacts/s2541-fire/handoff-control.json
+ create mode 100644 artifacts/s2541-fire/health.txt
+ create mode 100644 artifacts/s2541-fire/lane-usable.txt
+ create mode 100644 artifacts/s2541-fire/ledger-exposure.txt
+ create mode 100644 artifacts/s2541-fire/ledger-freshness.txt
+ create mode 100644 artifacts/s2541-fire/main-push.txt
+ create mode 100644 artifacts/s2541-fire/policy.txt
+ create mode 100644 artifacts/s2541-fire/resume.md
+ create mode 100644 artifacts/s2541-fire/retained-before.json
+ create mode 100644 artifacts/s2541-fire/retention-blobs.json
+ create mode 100644 artifacts/s2541-fire/retention-blobs.txt
+ create mode 100644 artifacts/s2541-fire/retention-judgment.md
+ create mode 100644 artifacts/s2541-fire/retention-read.txt
+ create mode 100644 artifacts/s2541-fire/review-audit-after.txt
+ create mode 100644 artifacts/s2541-fire/review-audit.txt
+ create mode 100644 artifacts/s2541-fire/setup.txt
+ create mode 100644 artifacts/s2541-fire/tape-diagnosis.json
+ create mode 100644 artifacts/s2541-fire/tape-diagnosis.txt
+ create mode 100644 artifacts/s2541-fire/withheld.txt
+ create mode 100644 artifacts/s2541-fire/worktree-retention.json
+ create mode 100644 artifacts/s2541-fire/writer-proof.json
+ create mode 100644 artifacts/s2542-fire/adjacent-shots/desktop-build-menu-icons-blurb.png
+ create mode 100644 artifacts/s2542-fire/adjacent-shots/desktop-build-menu-palisade.png
+ create mode 100644 artifacts/s2542-fire/adjacent-shots/mobile-390-build-menu-icons-blurb.png
+ create mode 100644 artifacts/s2542-fire/authorable.txt
+ create mode 100644 artifacts/s2542-fire/backup-and-close.json
+ create mode 100644 artifacts/s2542-fire/base-browser-results/.last-run.json
+ create mode 100644 artifacts/s2542-fire/base-repeat-browser-results/.last-run.json
+ create mode 100644 artifacts/s2542-fire/classification.json
+ create mode 100644 artifacts/s2542-fire/cleanup.json
+ create mode 100644 artifacts/s2542-fire/closing-ledger.txt
+ create mode 100644 artifacts/s2542-fire/desk-state.json
+ create mode 100644 artifacts/s2542-fire/dry-final.txt
+ create mode 100644 artifacts/s2542-fire/duties.md
+ create mode 100644 artifacts/s2542-fire/gate-scope.md
+ create mode 100644 artifacts/s2542-fire/gates.txt
+ create mode 100644 artifacts/s2542-fire/gazette.txt
+ create mode 100644 artifacts/s2542-fire/handoff-control.json
+ create mode 100644 artifacts/s2542-fire/health-final.txt
+ create mode 100644 artifacts/s2542-fire/initial-browser-results/.last-run.json
+ create mode 100644 artifacts/s2542-fire/initial-browser-results/m1-01-claim-jumpers-death--f5452-ies-without-geometry-growth-desktop-chrome/error-context.md
+ create mode 100644 artifacts/s2542-fire/initial-browser-results/m1-01-claim-jumpers-death--f5452-ies-without-geometry-growth-desktop-chrome/test-failed-1.png
+ create mode 100644 artifacts/s2542-fire/lane-a-final.txt
+ create mode 100644 artifacts/s2542-fire/merge.txt
+ create mode 100644 artifacts/s2542-fire/mirror-exposure.txt
+ create mode 100644 artifacts/s2542-fire/mirror-freshness.txt
+ create mode 100644 artifacts/s2542-fire/policy-main.txt
+ create mode 100644 artifacts/s2542-fire/retention-blobs.json
+ create mode 100644 artifacts/s2542-fire/retention-judgment.md
+ create mode 100644 artifacts/s2542-fire/stable-browser-results/.last-run.json
+ create mode 100644 artifacts/s2542-fire/withheld.txt
+ create mode 100644 artifacts/s2542-fire/worktree-retention.json
+ create mode 100644 artifacts/s2543-fire/art-audit.txt
+ create mode 100644 artifacts/s2543-fire/authorable.txt
+ create mode 100644 artifacts/s2543-fire/backup-handoff.txt
+ create mode 100644 artifacts/s2543-fire/closing-ledger.json
+ create mode 100644 artifacts/s2543-fire/closing-ledger.txt
+ create mode 100644 artifacts/s2543-fire/daily-state.json
+ create mode 100644 artifacts/s2543-fire/desk-state.txt
+ create mode 100644 artifacts/s2543-fire/gazette.txt
+ create mode 100644 artifacts/s2543-fire/handoff-control.json
+ create mode 100644 artifacts/s2543-fire/health.txt
+ create mode 100644 artifacts/s2543-fire/ledger-exposure.txt
+ create mode 100644 artifacts/s2543-fire/ledger-freshness.txt
+ create mode 100644 artifacts/s2543-fire/main-node-observed.json
+ create mode 100644 artifacts/s2543-fire/main-node-observed.txt
+ create mode 100644 artifacts/s2543-fire/report.md
+ create mode 100644 artifacts/s2543-fire/retention-blobs.json
+ create mode 100644 artifacts/s2543-fire/retention-blobs.txt
+ create mode 100644 artifacts/s2543-fire/retention-judgment.md
+ create mode 100644 artifacts/s2543-fire/retention-read.txt
+ create mode 100644 artifacts/s2543-fire/withheld.txt
+ create mode 100644 artifacts/s2543-fire/worktree-retention.json
+ create mode 100644 artifacts/s2544-fire/archive-check.txt
+ create mode 100644 artifacts/s2544-fire/art-audit.txt
+ create mode 100644 artifacts/s2544-fire/authorable.txt
+ create mode 100644 artifacts/s2544-fire/backup-handoff.txt
+ create mode 100644 artifacts/s2544-fire/closing-ledger.json
+ create mode 100644 artifacts/s2544-fire/closing-ledger.txt
+ create mode 100644 artifacts/s2544-fire/daily-state.json
+ create mode 100644 artifacts/s2544-fire/desk.txt
+ create mode 100644 artifacts/s2544-fire/drain-block-chapter.txt
+ create mode 100644 artifacts/s2544-fire/drain-block-main.txt
+ create mode 100644 artifacts/s2544-fire/dry.txt
+ create mode 100644 artifacts/s2544-fire/gazette.txt
+ create mode 100644 artifacts/s2544-fire/handoff-control.json
+ create mode 100644 artifacts/s2544-fire/health.txt
+ create mode 100644 artifacts/s2544-fire/lanes.txt
+ create mode 100644 artifacts/s2544-fire/ledger-exposure.txt
+ create mode 100644 artifacts/s2544-fire/ledger-freshness.txt
+ create mode 100644 artifacts/s2544-fire/main-observation.json
+ create mode 100644 artifacts/s2544-fire/report.md
+ create mode 100644 artifacts/s2544-fire/retention-blobs.json
+ create mode 100644 artifacts/s2544-fire/retention-blobs.txt
+ create mode 100644 artifacts/s2544-fire/retention-judgment.md
+ create mode 100644 artifacts/s2544-fire/retention-read.txt
+ create mode 100644 artifacts/s2544-fire/runner-report-observed.md
+ create mode 100644 artifacts/s2544-fire/withheld.txt
+ create mode 100644 artifacts/s2544-fire/worktree-retention.json
+ create mode 100644 artifacts/s2545-fire/archive-check.txt
+ create mode 100644 artifacts/s2545-fire/archive-unbounded-attempt.txt
+ create mode 100644 artifacts/s2545-fire/art-audit.txt
+ create mode 100644 artifacts/s2545-fire/authorable.txt
+ create mode 100644 artifacts/s2545-fire/backup-failure-note.txt
+ create mode 100644 artifacts/s2545-fire/backup-handoff-update.txt
+ create mode 100644 artifacts/s2545-fire/backup-handoff.txt
+ create mode 100644 artifacts/s2545-fire/closing-ledger-overlap.json
+ create mode 100644 artifacts/s2545-fire/closing-ledger-overlap.txt
+ create mode 100644 artifacts/s2545-fire/closing-ledger.json
+ create mode 100644 artifacts/s2545-fire/closing-ledger.txt
+ create mode 100644 artifacts/s2545-fire/contention-process-census.json
+ create mode 100644 artifacts/s2545-fire/daily-state.json
+ create mode 100644 artifacts/s2545-fire/desk.txt
+ create mode 100644 artifacts/s2545-fire/drain-block-chapter.txt
+ create mode 100644 artifacts/s2545-fire/drain-block-main.txt
+ create mode 100644 artifacts/s2545-fire/dry.txt
+ create mode 100644 artifacts/s2545-fire/edge-recheck.json
+ create mode 100644 artifacts/s2545-fire/gazette.txt
+ create mode 100644 artifacts/s2545-fire/handoff-control.json
+ create mode 100644 artifacts/s2545-fire/health.txt
+ create mode 100644 artifacts/s2545-fire/lanes.txt
+ create mode 100644 artifacts/s2545-fire/ledger-exposure.txt
+ create mode 100644 artifacts/s2545-fire/ledger-freshness.txt
+ create mode 100644 artifacts/s2545-fire/main-node-observed.json
+ create mode 100644 artifacts/s2545-fire/main-node-observed.txt
+ create mode 100644 artifacts/s2545-fire/main-node-terminal-observed.json
+ create mode 100644 artifacts/s2545-fire/main-node-terminal-observed.txt
+ create mode 100644 artifacts/s2545-fire/main-observation.json
+ create mode 100644 artifacts/s2545-fire/report.md
+ create mode 100644 artifacts/s2545-fire/retention-blobs.json
+ create mode 100644 artifacts/s2545-fire/retention-blobs.txt
+ create mode 100644 artifacts/s2545-fire/retention-judgment.md
+ create mode 100644 artifacts/s2545-fire/retention-read.txt
+ create mode 100644 artifacts/s2545-fire/runner-report-observed.md
+ create mode 100644 artifacts/s2545-fire/withheld.txt
+ create mode 100644 artifacts/s2545-fire/worktree-retention.json
+ create mode 100644 artifacts/s2546-fire/archive-check.txt
+ create mode 100644 artifacts/s2546-fire/art-staging.txt
+ create mode 100644 artifacts/s2546-fire/authorable.txt
+ create mode 100644 artifacts/s2546-fire/contention-direct.txt
+ create mode 100644 artifacts/s2546-fire/contention-parent-context.json
+ create mode 100644 artifacts/s2546-fire/contention-under-harness.txt
+ create mode 100644 artifacts/s2546-fire/desk.txt
+ create mode 100644 artifacts/s2546-fire/gazette.txt
+ create mode 100644 artifacts/s2546-fire/health.txt
+ create mode 100644 artifacts/s2546-fire/lanes.txt
+ create mode 100644 artifacts/s2546-fire/ledger-exposure.txt
+ create mode 100644 artifacts/s2546-fire/ledger-freshness.txt
+ create mode 100644 artifacts/s2546-fire/main-harness-classification.json
+ create mode 100644 artifacts/s2546-fire/main-node-interim.json
+ create mode 100644 artifacts/s2546-fire/main-node-interim.txt
+ create mode 100644 artifacts/s2546-fire/main-node-terminal.json
+ create mode 100644 artifacts/s2546-fire/main-node-terminal.txt
+ create mode 100644 artifacts/s2546-fire/main-process-progress.json
+ create mode 100644 artifacts/s2546-fire/parent-context-probe.mjs
+ create mode 100644 artifacts/s2546-fire/process-capture.json
+ create mode 100644 artifacts/s2546-fire/ps-capture-probe.json
+ create mode 100644 artifacts/s2546-fire/ps-capture-probe.mjs
+ create mode 100644 artifacts/s2546-fire/report.md
+ create mode 100644 artifacts/s2546-fire/retention-blobs.json
+ create mode 100644 artifacts/s2546-fire/retention-blobs.py
+ create mode 100644 artifacts/s2546-fire/retention-judgment.md
+ create mode 100644 artifacts/s2546-fire/retention-read.py
+ create mode 100644 artifacts/s2546-fire/withheld.txt
+ create mode 100644 artifacts/s2546-fire/worktree-retention.json
+ create mode 100644 artifacts/youngsters-rechain/batch.mjs
+ create mode 100644 artifacts/youngsters-rechain/card.mjs
+ create mode 100644 artifacts/youngsters-rechain/contact.mjs
+ create mode 100644 artifacts/youngsters-rechain/faces.mjs
+ create mode 100644 artifacts/youngsters-rechain/generation.jsonl
+ create mode 100644 artifacts/youngsters-rechain/plate-tool.mjs
+ create mode 100644 artifacts/youngsters-rechain/playwright.yr-scratch.config.ts.txt
+ create mode 100644 artifacts/youngsters-rechain/probe-transcript.txt
+ create mode 100644 artifacts/youngsters-rechain/uploads.json
+ create mode 100644 artifacts/youngsters-rechain/yr-youngsters-probe.spec.ts.txt
+ create mode 100644 assets/motion-pilot/production-elder-woman/RUN-NOTE.md
+ create mode 100644 assets/motion-pilot/production-elder-woman/char-elder-woman-sheet-walk8.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/contact-sheets/elder-woman-start-down-contact.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/contact-sheets/elder-woman-start-down-take1-contact.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/contact-sheets/elder-woman-start-down-take2-contact.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/contact-sheets/elder-woman-start-down-take3-contact.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/contact-sheets/elder-woman-start-down-takes123-contact.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/contact-sheets/elder-woman-start-left-contact.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/contact-sheets/elder-woman-start-left-take1-contact.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/contact-sheets/elder-woman-start-left-take2-contact.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/contact-sheets/elder-woman-start-left-take3-contact.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/contact-sheets/elder-woman-start-left-takes123-contact.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/contact-sheets/elder-woman-start-right-contact.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/contact-sheets/elder-woman-start-right-take1-contact.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/contact-sheets/elder-woman-start-right-take2-contact.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/contact-sheets/elder-woman-start-right-take3-contact.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/contact-sheets/elder-woman-start-right-takes123-contact.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/contact-sheets/elder-woman-start-stills-contact.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/contact-sheets/elder-woman-start-up-contact.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/contact-sheets/elder-woman-start-up-take1-contact.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/contact-sheets/elder-woman-start-up-take2-contact.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/contact-sheets/elder-woman-start-up-take3-contact.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/contact-sheets/elder-woman-start-up-takes123-contact.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-down-take1-raw/frame-01.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-down-take1-raw/frame-02.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-down-take1-raw/frame-03.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-down-take1-raw/frame-04.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-down-take1-raw/frame-05.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-down-take1-raw/frame-06.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-down-take1-raw/frame-07.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-down-take1-raw/frame-08.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-down-take2-raw/frame-01.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-down-take2-raw/frame-02.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-down-take2-raw/frame-03.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-down-take2-raw/frame-04.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-down-take2-raw/frame-05.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-down-take2-raw/frame-06.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-down-take2-raw/frame-07.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-down-take2-raw/frame-08.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-down-take3-raw/frame-01.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-down-take3-raw/frame-02.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-down-take3-raw/frame-03.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-down-take3-raw/frame-04.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-down-take3-raw/frame-05.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-down-take3-raw/frame-06.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-down-take3-raw/frame-07.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-down-take3-raw/frame-08.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-left-take1-raw/frame-01.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-left-take1-raw/frame-02.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-left-take1-raw/frame-03.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-left-take1-raw/frame-04.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-left-take1-raw/frame-05.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-left-take1-raw/frame-06.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-left-take1-raw/frame-07.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-left-take1-raw/frame-08.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-left-take2-raw/frame-01.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-left-take2-raw/frame-02.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-left-take2-raw/frame-03.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-left-take2-raw/frame-04.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-left-take2-raw/frame-05.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-left-take2-raw/frame-06.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-left-take2-raw/frame-07.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-left-take2-raw/frame-08.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-left-take3-raw/frame-01.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-left-take3-raw/frame-02.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-left-take3-raw/frame-03.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-left-take3-raw/frame-04.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-left-take3-raw/frame-05.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-left-take3-raw/frame-06.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-left-take3-raw/frame-07.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-left-take3-raw/frame-08.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-right-take1-raw/frame-01.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-right-take1-raw/frame-02.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-right-take1-raw/frame-03.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-right-take1-raw/frame-04.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-right-take1-raw/frame-05.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-right-take1-raw/frame-06.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-right-take1-raw/frame-07.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-right-take1-raw/frame-08.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-right-take2-raw/frame-01.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-right-take2-raw/frame-02.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-right-take2-raw/frame-03.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-right-take2-raw/frame-04.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-right-take2-raw/frame-05.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-right-take2-raw/frame-06.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-right-take2-raw/frame-07.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-right-take2-raw/frame-08.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-right-take3-raw/frame-01.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-right-take3-raw/frame-02.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-right-take3-raw/frame-03.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-right-take3-raw/frame-04.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-right-take3-raw/frame-05.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-right-take3-raw/frame-06.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-right-take3-raw/frame-07.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-right-take3-raw/frame-08.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-up-take1-raw/frame-01.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-up-take1-raw/frame-02.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-up-take1-raw/frame-03.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-up-take1-raw/frame-04.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-up-take1-raw/frame-05.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-up-take1-raw/frame-06.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-up-take1-raw/frame-07.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-up-take1-raw/frame-08.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-up-take2-raw/frame-01.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-up-take2-raw/frame-02.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-up-take2-raw/frame-03.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-up-take2-raw/frame-04.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-up-take2-raw/frame-05.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-up-take2-raw/frame-06.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-up-take2-raw/frame-07.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-up-take2-raw/frame-08.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-up-take3-raw/frame-01.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-up-take3-raw/frame-02.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-up-take3-raw/frame-03.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-up-take3-raw/frame-04.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-up-take3-raw/frame-05.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-up-take3-raw/frame-06.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-up-take3-raw/frame-07.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/frames/elder-woman-start-up-take3-raw/frame-08.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/logs/elder-woman-start-down-ORPHAN-double-spend.json
+ create mode 100644 assets/motion-pilot/production-elder-woman/logs/elder-woman-start-down-take1-create.json
+ create mode 100644 assets/motion-pilot/production-elder-woman/logs/elder-woman-start-down-take1-generate.json
+ create mode 100644 assets/motion-pilot/production-elder-woman/logs/elder-woman-start-down-video-take1-create.json
+ create mode 100644 assets/motion-pilot/production-elder-woman/logs/elder-woman-start-down-video-take1-generate.json
+ create mode 100644 assets/motion-pilot/production-elder-woman/logs/elder-woman-start-down-video-take2-create.json
+ create mode 100644 assets/motion-pilot/production-elder-woman/logs/elder-woman-start-down-video-take2-generate.json
+ create mode 100644 assets/motion-pilot/production-elder-woman/logs/elder-woman-start-down-video-take3-create.json
+ create mode 100644 assets/motion-pilot/production-elder-woman/logs/elder-woman-start-down-video-take3-generate.json
+ create mode 100644 assets/motion-pilot/production-elder-woman/logs/elder-woman-start-left-take1-create.json
+ create mode 100644 assets/motion-pilot/production-elder-woman/logs/elder-woman-start-left-take1-generate.json
+ create mode 100644 assets/motion-pilot/production-elder-woman/logs/elder-woman-start-left-video-take1-create.json
+ create mode 100644 assets/motion-pilot/production-elder-woman/logs/elder-woman-start-left-video-take1-generate.json
+ create mode 100644 assets/motion-pilot/production-elder-woman/logs/elder-woman-start-left-video-take2-create.json
+ create mode 100644 assets/motion-pilot/production-elder-woman/logs/elder-woman-start-left-video-take2-generate.json
+ create mode 100644 assets/motion-pilot/production-elder-woman/logs/elder-woman-start-left-video-take3-create.json
+ create mode 100644 assets/motion-pilot/production-elder-woman/logs/elder-woman-start-left-video-take3-generate.json
+ create mode 100644 assets/motion-pilot/production-elder-woman/logs/elder-woman-start-right-take1-create.json
+ create mode 100644 assets/motion-pilot/production-elder-woman/logs/elder-woman-start-right-take1-generate.json
+ create mode 100644 assets/motion-pilot/production-elder-woman/logs/elder-woman-start-right-video-take1-create.json
+ create mode 100644 assets/motion-pilot/production-elder-woman/logs/elder-woman-start-right-video-take1-generate.json
+ create mode 100644 assets/motion-pilot/production-elder-woman/logs/elder-woman-start-right-video-take2-create.json
+ create mode 100644 assets/motion-pilot/production-elder-woman/logs/elder-woman-start-right-video-take2-generate.json
+ create mode 100644 assets/motion-pilot/production-elder-woman/logs/elder-woman-start-right-video-take3-create.json
+ create mode 100644 assets/motion-pilot/production-elder-woman/logs/elder-woman-start-right-video-take3-generate.json
+ create mode 100644 assets/motion-pilot/production-elder-woman/logs/elder-woman-start-up-take1-create.json
+ create mode 100644 assets/motion-pilot/production-elder-woman/logs/elder-woman-start-up-take1-generate.json
+ create mode 100644 assets/motion-pilot/production-elder-woman/logs/elder-woman-start-up-video-take1-create.json
+ create mode 100644 assets/motion-pilot/production-elder-woman/logs/elder-woman-start-up-video-take1-generate.json
+ create mode 100644 assets/motion-pilot/production-elder-woman/logs/elder-woman-start-up-video-take2-create.json
+ create mode 100644 assets/motion-pilot/production-elder-woman/logs/elder-woman-start-up-video-take2-generate.json
+ create mode 100644 assets/motion-pilot/production-elder-woman/logs/elder-woman-start-up-video-take3-create.json
+ create mode 100644 assets/motion-pilot/production-elder-woman/logs/elder-woman-start-up-video-take3-generate.json
+ create mode 100644 assets/motion-pilot/production-elder-woman/logs/elder-woman-start-walk8-summary.json
+ create mode 100644 assets/motion-pilot/production-elder-woman/logs/higgsfield-account-status-after-stills.txt
+ create mode 100644 assets/motion-pilot/production-elder-woman/logs/higgsfield-account-status-after-turnaround.txt
+ create mode 100644 assets/motion-pilot/production-elder-woman/logs/higgsfield-account-status-after-videos.txt
+ create mode 100644 assets/motion-pilot/production-elder-woman/logs/higgsfield-account-status-before-stills.txt
+ create mode 100644 assets/motion-pilot/production-elder-woman/logs/higgsfield-account-status-before-turnaround.txt
+ create mode 100644 assets/motion-pilot/production-elder-woman/logs/higgsfield-account-status-before-videos.txt
+ create mode 100644 assets/motion-pilot/production-elder-woman/logs/higgsfield-transactions-post-stills.json
+ create mode 100644 assets/motion-pilot/production-elder-woman/logs/higgsfield-transactions-post-turnaround.json
+ create mode 100644 assets/motion-pilot/production-elder-woman/logs/higgsfield-transactions-post-videos.json
+ create mode 100644 assets/motion-pilot/production-elder-woman/logs/still-jobs.json
+ create mode 100644 assets/motion-pilot/production-elder-woman/logs/turn-elder-woman-take1-create.json
+ create mode 100644 assets/motion-pilot/production-elder-woman/logs/turn-elder-woman-take1-generate.json
+ create mode 100644 assets/motion-pilot/production-elder-woman/logs/uploads.json
+ create mode 100644 assets/motion-pilot/production-elder-woman/logs/video-jobs-created.json
+ create mode 100644 assets/motion-pilot/production-elder-woman/produce-elder-woman.mjs
+ create mode 100644 assets/motion-pilot/production-elder-woman/stills/elder-woman-start-down-ORPHAN.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/stills/elder-woman-start-down-take1.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/stills/elder-woman-start-left-take1.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/stills/elder-woman-start-right-take1.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/stills/elder-woman-start-up-take1.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/stills/turn-elder-woman-take1.png
+ create mode 100644 assets/motion-pilot/production-elder-woman/videos/elder-woman-start-down-take1.mp4
+ create mode 100644 assets/motion-pilot/production-elder-woman/videos/elder-woman-start-down-take2.mp4
+ create mode 100644 assets/motion-pilot/production-elder-woman/videos/elder-woman-start-down-take3.mp4
+ create mode 100644 assets/motion-pilot/production-elder-woman/videos/elder-woman-start-left-take1.mp4
+ create mode 100644 assets/motion-pilot/production-elder-woman/videos/elder-woman-start-left-take2.mp4
+ create mode 100644 assets/motion-pilot/production-elder-woman/videos/elder-woman-start-left-take3.mp4
+ create mode 100644 assets/motion-pilot/production-elder-woman/videos/elder-woman-start-right-take1.mp4
+ create mode 100644 assets/motion-pilot/production-elder-woman/videos/elder-woman-start-right-take2.mp4
+ create mode 100644 assets/motion-pilot/production-elder-woman/videos/elder-woman-start-right-take3.mp4
+ create mode 100644 assets/motion-pilot/production-elder-woman/videos/elder-woman-start-up-take1.mp4
+ create mode 100644 assets/motion-pilot/production-elder-woman/videos/elder-woman-start-up-take2.mp4
+ create mode 100644 assets/motion-pilot/production-elder-woman/videos/elder-woman-start-up-take3.mp4
+ create mode 100644 assets/processed/townsfolk-old-digger.png
+ create mode 100644 assets/processed/townsfolk-youngster-a-e2.png
+ create mode 100644 assets/processed/townsfolk-youngster-a-e4.png
+ create mode 100644 assets/processed/townsfolk-youngster-a-e8.png
+ create mode 100644 assets/processed/townsfolk-youngster-b-e2.png
+ create mode 100644 assets/processed/townsfolk-youngster-b-e4.png
+ create mode 100644 assets/raw/char-elder-woman-sheet-walk8.png
+ create mode 100644 assets/raw/elder-woman-start-down.png
+ create mode 100644 assets/raw/elder-woman-start-left.png
+ create mode 100644 assets/raw/elder-woman-start-right.png
+ create mode 100644 assets/raw/elder-woman-start-up.png
+ create mode 100644 assets/raw/tf-elder-woman-e1.png
+ create mode 100644 assets/raw/tf-elder-woman-e2.png
+ create mode 100644 assets/raw/tf-youngster-a-e2b.png
+ create mode 100644 assets/raw/tf-youngster-a-e4b.png
+ create mode 100644 assets/raw/tf-youngster-a-e8b.png
+ create mode 100644 assets/raw/tf-youngster-b-e2b.png
+ create mode 100644 assets/raw/tf-youngster-b-e4b.png
+ create mode 100644 assets/raw/turn-elder-woman.png
+ create mode 100644 e2e/elder-walk8-woman.spec.ts
+ create mode 100644 e2e/rider-parity-context-press.spec.ts
+ create mode 100644 e2e/rider-parity-grammar.spec.ts
+ create mode 100644 reviews/canon-calls-a8-batch.md
+ create mode 100644 reviews/chapter-evidence-opt-in.md
+ create mode 100644 reviews/elder-walk8-regeneration.md
+ create mode 100644 reviews/low-orbit-second-build-line.md
+ create mode 100644 reviews/m1-debug-spawn-contract.md
+ create mode 100644 reviews/main-chapter-story-readiness.md
+ create mode 100644 reviews/main-m2-palisade-placement-diagnosis.md
+ create mode 100644 reviews/node-guards-ps-capture.md
+ create mode 100644 reviews/shots-canon-calls-a8/elder-at-120px.png
+ create mode 100644 reviews/shots-canon-calls-a8/elder-card-crop-74x90-at-4x.png
+ create mode 100644 reviews/shots-canon-calls-a8/elder-identity-chain-e1-e2.png
+ create mode 100644 reviews/shots-canon-calls-a8/old-digger-machine-plate.png
+ create mode 100644 reviews/shots-canon-calls-a8/plain-boot-elder-card-crop-desktop-chrome.png
+ create mode 100644 reviews/shots-canon-calls-a8/plain-boot-elder-card-crop-mobile-chrome.png
+ create mode 100644 reviews/shots-canon-calls-a8/plain-boot-elder-card-desktop-chrome.png
+ create mode 100644 reviews/shots-canon-calls-a8/plain-boot-elder-card-mobile-chrome.png
+ create mode 100644 reviews/shots-elder-walk8-regeneration/desktop-chrome.png
+ create mode 100644 reviews/shots-elder-walk8-regeneration/mobile-chrome.png
+ create mode 100644 reviews/shots-low-orbit-second-build-line/card-e8-low-orbit-390.png
+ create mode 100644 reviews/shots-rider-parity-context-press/drill-yard-confirm-desktop-chrome.png
+ create mode 100644 reviews/shots-rider-parity-context-press/drill-yard-confirm-mobile-chrome.png
+ create mode 100644 reviews/shots-rider-parity-grammar/deck-anchor-desktop-chrome.png
+ create mode 100644 reviews/shots-rider-parity-grammar/deck-anchor-mobile-chrome.png
+ create mode 100644 reviews/shots-rider-parity-grammar/deck-build-desktop-chrome.png
+ create mode 100644 reviews/shots-rider-parity-grammar/deck-build-mobile-chrome.png
+ create mode 100644 reviews/shots-rider-parity-grammar/plain-boot-desktop-chrome.png
+ create mode 100644 reviews/shots-rider-parity-grammar/plain-boot-mobile-chrome.png
+ create mode 100644 reviews/shots-youngsters-rechain/card-a-desktop-1x.png
+ create mode 100644 reviews/shots-youngsters-rechain/card-a-desktop-4x.png
+ create mode 100644 reviews/shots-youngsters-rechain/card-b-desktop-1x.png
+ create mode 100644 reviews/shots-youngsters-rechain/card-b-desktop-4x.png
+ create mode 100644 reviews/shots-youngsters-rechain/card-mobile-4x.png
+ create mode 100644 reviews/shots-youngsters-rechain/chain-a-384.png
+ create mode 100644 reviews/shots-youngsters-rechain/chain-b-384.png
+ create mode 100644 reviews/shots-youngsters-rechain/faces-a-2x.png
+ create mode 100644 reviews/shots-youngsters-rechain/faces-b-2x.png
+ create mode 100644 reviews/shots-youngsters-rechain/plain-boot-card-crop-desktop-chrome.png
+ create mode 100644 reviews/shots-youngsters-rechain/plain-boot-card-crop-mobile-chrome.png
+ create mode 100644 reviews/shots-youngsters-rechain/plain-boot-card-desktop-chrome.png
+ create mode 100644 reviews/shots-youngsters-rechain/plain-boot-card-mobile-chrome.png
+ create mode 100644 reviews/shots-youngsters-rechain/props-3x.png
+ create mode 100644 reviews/shots-youngsters-rechain/repair-e2-old-vs-new.png
+ create mode 100644 reviews/shots-youngsters-rechain/sheet-120.png
+ create mode 100644 reviews/youngsters-rechain-batch.md
+ create mode 100644 scripts/repair-under-radius.test.mjs
+ create mode 100644 scripts/rider-parity-context-press.test.mjs
+ create mode 100644 scripts/rider-parity-reach.test.mjs
+ create mode 100644 scripts/rider-parity-retirement.test.mjs
+ create mode 100644 tasks/canon-calls-a8-batch.md
+ create mode 100644 tasks/e4-motor-reels-rerecord.md
+ create mode 100644 tasks/elder-walk8-regeneration.md
+ create mode 100644 tasks/gauntlet-heat13-parity.md
+ create mode 100644 tasks/lane-a-node-guards-ps-capture.md
+ create mode 100644 tasks/low-orbit-second-build-line.md
+ create mode 100644 tasks/main-board-gold-current-grammar.md
+ create mode 100644 tasks/main-chapter-story-readiness.md
+ create mode 100644 tasks/main-m2-palisade-placement-diagnosis.md
+ create mode 100644 tasks/youngsters-rechain-batch.md
+Updating files:  84% (822/968)
+Updating files:  85% (823/968)
+Updating files:  86% (833/968)
+Updating files:  87% (843/968)
+Updating files:  88% (852/968)
+Updating files:  89% (862/968)
+Updating files:  90% (872/968)
+Updating files:  91% (881/968)
+Updating files:  92% (891/968)
+Updating files:  93% (901/968)
+Updating files:  94% (910/968)
+Updating files:  95% (920/968)
+Updating files:  96% (930/968)
+Updating files:  97% (939/968)
+Updating files:  98% (949/968)
+Updating files:  99% (959/968)
+Updating files: 100% (968/968)
+Updating files: 100% (968/968), done.

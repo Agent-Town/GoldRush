@@ -1,0 +1,1424 @@
+[
+  {
+    "map": "e3-fairground",
+    "pack": "fairground",
+    "viewport": "desktop",
+    "boot": "plain",
+    "shot": "fairground-plain-desktop.png",
+    "errors": [],
+    "hudRects": [
+      {
+        "tag": "div",
+        "cls": "hud__wave",
+        "announcement": true,
+        "x": 480,
+        "y": 16,
+        "w": 320,
+        "h": 56
+      },
+      {
+        "tag": "span",
+        "cls": "",
+        "announcement": true,
+        "x": 502,
+        "y": 25,
+        "w": 276,
+        "h": 38
+      },
+      {
+        "tag": "section",
+        "cls": "hud-panel hud-panel--vitals",
+        "announcement": false,
+        "x": 16,
+        "y": 16,
+        "w": 188,
+        "h": 117
+      },
+      {
+        "tag": "span",
+        "cls": "hud-label",
+        "announcement": false,
+        "x": 30,
+        "y": 32,
+        "w": 19.640625,
+        "h": 14
+      },
+      {
+        "tag": "strong",
+        "cls": "hud-value",
+        "announcement": false,
+        "x": 111.46875,
+        "y": 28,
+        "w": 78.53125,
+        "h": 19
+      },
+      {
+        "tag": "div",
+        "cls": "hud-bar",
+        "announcement": false,
+        "x": 30,
+        "y": 55,
+        "w": 160,
+        "h": 10
+      },
+      {
+        "tag": "span",
+        "cls": "hud-label",
+        "announcement": false,
+        "x": 30,
+        "y": 77,
+        "w": 34.96875,
+        "h": 14
+      },
+      {
+        "tag": "strong",
+        "cls": "hud-value",
+        "announcement": false,
+        "x": 111.46875,
+        "y": 73,
+        "w": 78.53125,
+        "h": 19
+      },
+      {
+        "tag": "span",
+        "cls": "hud-label",
+        "announcement": false,
+        "x": 30,
+        "y": 105,
+        "w": 40.96875,
+        "h": 14
+      },
+      {
+        "tag": "strong",
+        "cls": "hud-value",
+        "announcement": false,
+        "x": 111.46875,
+        "y": 101,
+        "w": 78.53125,
+        "h": 19
+      },
+      {
+        "tag": "section",
+        "cls": "hud-panel hud-panel--gold",
+        "announcement": false,
+        "x": 1095,
+        "y": 16,
+        "w": 169,
+        "h": 43
+      },
+      {
+        "tag": "span",
+        "cls": "hud-coin",
+        "announcement": false,
+        "x": 1109,
+        "y": 29.5,
+        "w": 16,
+        "h": 16
+      },
+      {
+        "tag": "span",
+        "cls": "hud-label",
+        "announcement": false,
+        "x": 1135,
+        "y": 30.5,
+        "w": 38.265625,
+        "h": 14
+      },
+      {
+        "tag": "strong",
+        "cls": "hud-value",
+        "announcement": false,
+        "x": 1181.265625,
+        "y": 28,
+        "w": 68.734375,
+        "h": 19
+      },
+      {
+        "tag": "section",
+        "cls": "hud-panel hud-panel--resource hud-panel--power",
+        "announcement": false,
+        "x": 503.015625,
+        "y": 16,
+        "w": 580.984375,
+        "h": 43
+      },
+      {
+        "tag": "span",
+        "cls": "hud-gauge",
+        "announcement": false,
+        "x": 517.015625,
+        "y": 29.5,
+        "w": 16,
+        "h": 16
+      },
+      {
+        "tag": "span",
+        "cls": "hud-label",
+        "announcement": false,
+        "x": 543.015625,
+        "y": 30.5,
+        "w": 35.078125,
+        "h": 14
+      },
+      {
+        "tag": "strong",
+        "cls": "hud-value",
+        "announcement": false,
+        "x": 586.09375,
+        "y": 28,
+        "w": 397.34375,
+        "h": 19
+      },
+      {
+        "tag": "section",
+        "cls": "hud-panel hud-panel--weapon",
+        "announcement": false,
+        "x": 1055.421875,
+        "y": 74,
+        "w": 208.578125,
+        "h": 91
+      },
+      {
+        "tag": "span",
+        "cls": "hud-label",
+        "announcement": false,
+        "x": 1069.421875,
+        "y": 90,
+        "w": 60.390625,
+        "h": 14
+      },
+      {
+        "tag": "strong",
+        "cls": "hud-value",
+        "announcement": false,
+        "x": 1137.8125,
+        "y": 86,
+        "w": 112.1875,
+        "h": 19
+      },
+      {
+        "tag": "img",
+        "cls": "hud-agent-chip__portrait",
+        "announcement": false,
+        "x": 1069.421875,
+        "y": 117,
+        "w": 34,
+        "h": 34
+      },
+      {
+        "tag": "span",
+        "cls": "",
+        "announcement": false,
+        "x": 1111.421875,
+        "y": 116,
+        "w": 116.59375,
+        "h": 14
+      },
+      {
+        "tag": "strong",
+        "cls": "",
+        "announcement": false,
+        "x": 1234.015625,
+        "y": 116,
+        "w": 15.984375,
+        "h": 14
+      },
+      {
+        "tag": "span",
+        "cls": "",
+        "announcement": false,
+        "x": 1111.421875,
+        "y": 132,
+        "w": 138.578125,
+        "h": 14
+      },
+      {
+        "tag": "section",
+        "cls": "hud-panel hud-panel--xp",
+        "announcement": false,
+        "x": 380,
+        "y": 721,
+        "w": 520,
+        "h": 61
+      },
+      {
+        "tag": "strong",
+        "cls": "",
+        "announcement": false,
+        "x": 440.578125,
+        "y": 737,
+        "w": 5.96875,
+        "h": 14
+      },
+      {
+        "tag": "strong",
+        "cls": "hud-value",
+        "announcement": false,
+        "x": 807.46875,
+        "y": 733,
+        "w": 78.53125,
+        "h": 19
+      },
+      {
+        "tag": "div",
+        "cls": "hud-bar",
+        "announcement": false,
+        "x": 394,
+        "y": 760,
+        "w": 492,
+        "h": 10
+      },
+      {
+        "tag": "section",
+        "cls": "hud-panel hud-panel--build",
+        "announcement": false,
+        "x": 18,
+        "y": 714,
+        "w": 340,
+        "h": 68
+      },
+      {
+        "tag": "button",
+        "cls": "hud-build-button",
+        "announcement": false,
+        "x": 32,
+        "y": 726,
+        "w": 312,
+        "h": 44
+      },
+      {
+        "tag": "button",
+        "cls": "hud-pause",
+        "announcement": false,
+        "x": 1111,
+        "y": 747,
+        "w": 153,
+        "h": 35
+      },
+      {
+        "tag": "span",
+        "cls": "hud-pause__key",
+        "announcement": false,
+        "x": 1127.203125,
+        "y": 757,
+        "w": 19.25,
+        "h": 15
+      },
+      {
+        "tag": "details",
+        "cls": "world-info-note",
+        "announcement": false,
+        "x": 410,
+        "y": 637.46875,
+        "w": 460,
+        "h": 56.53125
+      },
+      {
+        "tag": "summary",
+        "cls": "world-info-note__title",
+        "announcement": false,
+        "x": 424,
+        "y": 647.46875,
+        "w": 432,
+        "h": 14.78125
+      },
+      {
+        "tag": "p",
+        "cls": "world-info-note__body",
+        "announcement": false,
+        "x": 424,
+        "y": 668.25,
+        "w": 432,
+        "h": 15.75
+      }
+    ],
+    "info": {
+      "activeId": "e3-fairground",
+      "fallback": null,
+      "wheel": {
+        "active": true,
+        "spinning": true,
+        "hp": 240,
+        "maxHp": 240,
+        "outputWatts": 24,
+        "configuredWatts": 24,
+        "viewRadius": 18,
+        "x": 0,
+        "z": 8
+      },
+      "testHook": "undefined"
+    },
+    "dataset": {
+      "landmarks": "5",
+      "expected": "5",
+      "skipped": "0",
+      "state": "ready",
+      "loadState": "mounted",
+      "skirtBlend": "opaque-sculpt-edge"
+    }
+  },
+  {
+    "map": "e3-fairground",
+    "pack": "fairground",
+    "viewport": "desktop",
+    "boot": "debug",
+    "errors": [],
+    "wheel": {
+      "active": true,
+      "spinning": true,
+      "hp": 240,
+      "maxHp": 240,
+      "outputWatts": 24,
+      "configuredWatts": 24,
+      "viewRadius": 18,
+      "x": 0,
+      "z": 8
+    },
+    "stations": [
+      {
+        "id": "south-midway-admission-arch",
+        "file": "fairground-station-south-midway-admission-arch-desktop.png",
+        "top": 6.3802,
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "base": {
+          "x": 640,
+          "y": 198.67635874107546,
+          "z": 0.9970961503550814,
+          "inView": true
+        },
+        "apex": {
+          "x": 640,
+          "y": 52.237892501605245,
+          "z": 0.9964291182632167,
+          "inView": true
+        },
+        "left": {
+          "x": 532.0380528071757,
+          "y": 130.11795313867722,
+          "z": 0.9967838645337516,
+          "inView": true
+        },
+        "right": {
+          "x": 747.9619471928243,
+          "y": 130.11795313867722,
+          "z": 0.9967838645337516,
+          "inView": true
+        },
+        "box": {
+          "x": 640,
+          "y": 52.237892501605245,
+          "w": 0,
+          "h": 146.43846623947022
+        },
+        "overlapPlain": 0.1406,
+        "overlapPersistent": 0.0469,
+        "wide": {
+          "box": {
+            "x": 532.0380528071757,
+            "y": 52.237892501605245,
+            "w": 215.9238943856485,
+            "h": 146.43846623947022
+          },
+          "overlapPlain": 0.1406,
+          "overlapPersistent": 0.0469
+        }
+      },
+      {
+        "id": "west-current-calliope-wagon",
+        "file": "fairground-station-west-current-calliope-wagon-desktop.png",
+        "top": 5.54,
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "base": {
+          "x": 642.4235481347155,
+          "y": 266.18131076484815,
+          "z": 0.9973910492633971,
+          "inView": true
+        },
+        "apex": {
+          "x": 642.6871698689673,
+          "y": 157.3619919626267,
+          "z": 0.9968894923353163,
+          "inView": true
+        },
+        "left": {
+          "x": 564.4753256952418,
+          "y": 214.09325572051182,
+          "z": 0.9971554091093289,
+          "inView": true
+        },
+        "right": {
+          "x": 720.6927899945281,
+          "y": 215.06362054948633,
+          "z": 0.9971510018624518,
+          "inView": true
+        },
+        "box": {
+          "x": 642.4235481347155,
+          "y": 157.3619919626267,
+          "w": 0.2636217342518421,
+          "h": 108.81931880222146
+        },
+        "overlapPlain": 0,
+        "overlapPersistent": 0,
+        "wide": {
+          "box": {
+            "x": 564.4753256952418,
+            "y": 157.3619919626267,
+            "w": 156.21746429928623,
+            "h": 108.81931880222146
+          },
+          "overlapPlain": 0,
+          "overlapPersistent": 0
+        }
+      },
+      {
+        "id": "east-mothglass-prize-cage",
+        "file": "fairground-station-east-mothglass-prize-cage-desktop.png",
+        "top": 5.3929,
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "base": {
+          "x": 635.2687932777844,
+          "y": 275.88103565670576,
+          "z": 0.9974478702848858,
+          "inView": true
+        },
+        "apex": {
+          "x": 634.7785570078422,
+          "y": 172.21663884633597,
+          "z": 0.9969759821014036,
+          "inView": true
+        },
+        "left": {
+          "x": 578.5467433515915,
+          "y": 227.2988648978611,
+          "z": 0.9972204230103946,
+          "inView": true
+        },
+        "right": {
+          "x": 691.4509647740131,
+          "y": 225.90590263177637,
+          "z": 0.9972266690237673,
+          "inView": true
+        },
+        "box": {
+          "x": 634.7785570078422,
+          "y": 172.21663884633597,
+          "w": 0.4902362699422156,
+          "h": 103.6643968103698
+        },
+        "overlapPlain": 0,
+        "overlapPersistent": 0,
+        "wide": {
+          "box": {
+            "x": 578.5467433515915,
+            "y": 172.21663884633597,
+            "w": 112.90422142242153,
+            "h": 103.6643968103698
+          },
+          "overlapPlain": 0,
+          "overlapPersistent": 0
+        }
+      },
+      {
+        "id": "north-crowd-counting-rostrum",
+        "file": "fairground-station-north-crowd-counting-rostrum-desktop.png",
+        "top": 5.29,
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "base": {
+          "x": 641.4554879459,
+          "y": 317.3661116923172,
+          "z": 0.9969258376457301,
+          "inView": true
+        },
+        "apex": {
+          "x": 641.6223399632095,
+          "y": 207.88675130151893,
+          "z": 0.9963439240232747,
+          "inView": true
+        },
+        "left": {
+          "x": 539.928985630694,
+          "y": 264.97141314806817,
+          "z": 0.9966536542655563,
+          "inView": true
+        },
+        "right": {
+          "x": 743.25386075911,
+          "y": 266.2171303245899,
+          "z": 0.9966476501334878,
+          "inView": true
+        },
+        "box": {
+          "x": 641.4554879459,
+          "y": 207.88675130151893,
+          "w": 0.1668520173094521,
+          "h": 109.47936039079826
+        },
+        "overlapPlain": 0,
+        "overlapPersistent": 0,
+        "wide": {
+          "box": {
+            "x": 539.928985630694,
+            "y": 207.88675130151893,
+            "w": 203.324875128416,
+            "h": 109.47936039079826
+          },
+          "overlapPlain": 0,
+          "overlapPersistent": 0
+        }
+      },
+      {
+        "id": "fair-bell-battery-kiosk",
+        "file": "fairground-station-fair-bell-battery-kiosk-desktop.png",
+        "top": 6.205,
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "base": {
+          "x": 639.7170887153437,
+          "y": 330.54892250765147,
+          "z": 0.9970001569889138,
+          "inView": true
+        },
+        "apex": {
+          "x": 639.6790051859172,
+          "y": 203.22118234067452,
+          "z": 0.9963268437558486,
+          "inView": true
+        },
+        "left": {
+          "x": 567.7354938186775,
+          "y": 270.9869968570075,
+          "z": 0.9966843129627962,
+          "inView": true
+        },
+        "right": {
+          "x": 711.651698540377,
+          "y": 270.812664272172,
+          "z": 0.996685148198846,
+          "inView": true
+        },
+        "box": {
+          "x": 639.6790051859172,
+          "y": 203.22118234067452,
+          "w": 0.038083529426558016,
+          "h": 127.32774016697695
+        },
+        "overlapPlain": 0,
+        "overlapPersistent": 0,
+        "wide": {
+          "box": {
+            "x": 567.7354938186775,
+            "y": 203.22118234067452,
+            "w": 143.9162047216995,
+            "h": 127.32774016697695
+          },
+          "overlapPlain": 0,
+          "overlapPersistent": 0
+        }
+      },
+      {
+        "id": "ferris-wheel",
+        "file": "fairground-station-ferris-wheel-desktop.png",
+        "wheelLevers": {
+          "s": 0.74,
+          "hub": 3.49,
+          "r": 3.515
+        },
+        "apex": {
+          "x": 640.7546790339425,
+          "y": 10.882238426503399,
+          "z": 0.9971495014041248,
+          "inView": true
+        },
+        "hub": {
+          "x": 640.7199799469422,
+          "y": 69.18050702850631,
+          "z": 0.997372612598211,
+          "inView": true
+        },
+        "foot": {
+          "x": 640.6885466987981,
+          "y": 121.99180847050815,
+          "z": 0.9975747248188398,
+          "inView": true
+        },
+        "left": {
+          "x": 578.0487455396252,
+          "y": 69.11755174860983,
+          "z": 0.9973729347301852,
+          "inView": true
+        },
+        "right": {
+          "x": 703.3999374132541,
+          "y": 69.24347107099744,
+          "z": 0.9973722904214,
+          "inView": true
+        },
+        "box": {
+          "x": 578.0487455396252,
+          "y": 10.882238426503399,
+          "w": 125.35119187362886,
+          "h": 111.10957004400476
+        },
+        "overlapPlain": 0.5,
+        "overlapPersistent": 0.3906
+      }
+    ],
+    "renderer": {
+      "calls": 90,
+      "triangles": 142176,
+      "programs": 48,
+      "geometries": 104,
+      "textures": 21
+    },
+    "scene": {
+      "singletonMeshes": 68,
+      "instancedMeshes": 50
+    },
+    "p95": [
+      10,
+      10.2,
+      10.1,
+      10.1
+    ]
+  },
+  {
+    "map": "e3-fairground",
+    "pack": "fairground",
+    "viewport": "mobile",
+    "boot": "plain",
+    "shot": "fairground-plain-mobile.png",
+    "errors": [],
+    "hudRects": [
+      {
+        "tag": "div",
+        "cls": "hud__wave",
+        "announcement": true,
+        "x": 12,
+        "y": 278,
+        "w": 366,
+        "h": 52.8125
+      },
+      {
+        "tag": "span",
+        "cls": "",
+        "announcement": true,
+        "x": 24,
+        "y": 288,
+        "w": 342,
+        "h": 32.8125
+      },
+      {
+        "tag": "section",
+        "cls": "hud-panel hud-panel--vitals",
+        "announcement": false,
+        "x": 12,
+        "y": 12,
+        "w": 162,
+        "h": 94
+      },
+      {
+        "tag": "span",
+        "cls": "hud-label",
+        "announcement": false,
+        "x": 24,
+        "y": 26,
+        "w": 19.640625,
+        "h": 14
+      },
+      {
+        "tag": "strong",
+        "cls": "hud-value",
+        "announcement": false,
+        "x": 83.46875,
+        "y": 22,
+        "w": 78.53125,
+        "h": 19
+      },
+      {
+        "tag": "div",
+        "cls": "hud-bar",
+        "announcement": false,
+        "x": 24,
+        "y": 55,
+        "w": 138,
+        "h": 10
+      },
+      {
+        "tag": "span",
+        "cls": "hud-label",
+        "announcement": false,
+        "x": 24,
+        "y": 71,
+        "w": 27.609375,
+        "h": 11
+      },
+      {
+        "tag": "strong",
+        "cls": "hud-value",
+        "announcement": false,
+        "x": 24,
+        "y": 82,
+        "w": 36.671875,
+        "h": 14
+      },
+      {
+        "tag": "span",
+        "cls": "hud-label",
+        "announcement": false,
+        "x": 96,
+        "y": 71,
+        "w": 32.34375,
+        "h": 11
+      },
+      {
+        "tag": "strong",
+        "cls": "hud-value",
+        "announcement": false,
+        "x": 96,
+        "y": 82,
+        "w": 8.3125,
+        "h": 14
+      },
+      {
+        "tag": "section",
+        "cls": "hud-panel hud-panel--gold",
+        "announcement": false,
+        "x": 216,
+        "y": 12,
+        "w": 162,
+        "h": 39
+      },
+      {
+        "tag": "span",
+        "cls": "hud-coin",
+        "announcement": false,
+        "x": 228,
+        "y": 23.5,
+        "w": 16,
+        "h": 16
+      },
+      {
+        "tag": "span",
+        "cls": "hud-label",
+        "announcement": false,
+        "x": 250,
+        "y": 24.5,
+        "w": 38.265625,
+        "h": 14
+      },
+      {
+        "tag": "strong",
+        "cls": "hud-value",
+        "announcement": false,
+        "x": 294.265625,
+        "y": 22,
+        "w": 71.734375,
+        "h": 19
+      },
+      {
+        "tag": "section",
+        "cls": "hud-panel hud-panel--resource hud-panel--power",
+        "announcement": false,
+        "x": 216,
+        "y": 60,
+        "w": 162,
+        "h": 69
+      },
+      {
+        "tag": "span",
+        "cls": "hud-label",
+        "announcement": false,
+        "x": 228,
+        "y": 68,
+        "w": 135,
+        "h": 14
+      },
+      {
+        "tag": "strong",
+        "cls": "hud-value",
+        "announcement": false,
+        "x": 228,
+        "y": 85,
+        "w": 138,
+        "h": 36
+      },
+      {
+        "tag": "section",
+        "cls": "hud-panel hud-panel--weapon",
+        "announcement": false,
+        "x": 216,
+        "y": 140,
+        "w": 162,
+        "h": 115
+      },
+      {
+        "tag": "span",
+        "cls": "hud-label",
+        "announcement": false,
+        "x": 228,
+        "y": 150,
+        "w": 138,
+        "h": 14
+      },
+      {
+        "tag": "strong",
+        "cls": "hud-value",
+        "announcement": false,
+        "x": 228,
+        "y": 166,
+        "w": 138,
+        "h": 19
+      },
+      {
+        "tag": "img",
+        "cls": "hud-agent-chip__portrait",
+        "announcement": false,
+        "x": 228,
+        "y": 215,
+        "w": 30,
+        "h": 30
+      },
+      {
+        "tag": "span",
+        "cls": "",
+        "announcement": false,
+        "x": 228,
+        "y": 197,
+        "w": 138,
+        "h": 14
+      },
+      {
+        "tag": "strong",
+        "cls": "",
+        "announcement": false,
+        "x": 266,
+        "y": 216,
+        "w": 100,
+        "h": 11
+      },
+      {
+        "tag": "span",
+        "cls": "",
+        "announcement": false,
+        "x": 266,
+        "y": 233,
+        "w": 100,
+        "h": 11
+      },
+      {
+        "tag": "section",
+        "cls": "hud-panel hud-panel--xp",
+        "announcement": false,
+        "x": 12,
+        "y": 120,
+        "w": 162,
+        "h": 57
+      },
+      {
+        "tag": "strong",
+        "cls": "",
+        "announcement": false,
+        "x": 63.828125,
+        "y": 131,
+        "w": 5.09375,
+        "h": 12
+      },
+      {
+        "tag": "strong",
+        "cls": "hud-value",
+        "announcement": false,
+        "x": 107.265625,
+        "y": 130,
+        "w": 54.734375,
+        "h": 14
+      },
+      {
+        "tag": "div",
+        "cls": "hud-bar",
+        "announcement": false,
+        "x": 24,
+        "y": 157,
+        "w": 138,
+        "h": 10
+      },
+      {
+        "tag": "button",
+        "cls": "hud-build-button",
+        "announcement": false,
+        "x": 296,
+        "y": 594,
+        "w": 76,
+        "h": 76
+      },
+      {
+        "tag": "button",
+        "cls": "hud-pause",
+        "announcement": false,
+        "x": 296,
+        "y": 528.71875,
+        "w": 76,
+        "h": 59.28125
+      },
+      {
+        "tag": "div",
+        "cls": "prompt-stack",
+        "announcement": false,
+        "x": 14,
+        "y": 542.046875,
+        "w": 162,
+        "h": 127.953125
+      },
+      {
+        "tag": "summary",
+        "cls": "world-info-note__title",
+        "announcement": false,
+        "x": 24,
+        "y": 561.046875,
+        "w": 142,
+        "h": 45.703125
+      },
+      {
+        "tag": "p",
+        "cls": "world-info-note__body",
+        "announcement": false,
+        "x": 24,
+        "y": 612.75,
+        "w": 142,
+        "h": 47.25
+      },
+      {
+        "tag": "div",
+        "cls": "",
+        "announcement": false,
+        "x": 18,
+        "y": 716.8125,
+        "w": 109.1875,
+        "h": 109.1875
+      },
+      {
+        "tag": "div",
+        "cls": "",
+        "announcement": false,
+        "x": 50.0859375,
+        "y": 748.8984375,
+        "w": 45.015625,
+        "h": 45.015625
+      },
+      {
+        "tag": "button",
+        "cls": "",
+        "announcement": false,
+        "x": 216,
+        "y": 758,
+        "w": 58,
+        "h": 58
+      },
+      {
+        "tag": "button",
+        "cls": "",
+        "announcement": false,
+        "x": 264,
+        "y": 690,
+        "w": 58,
+        "h": 58
+      },
+      {
+        "tag": "button",
+        "cls": "",
+        "announcement": false,
+        "x": 296,
+        "y": 750,
+        "w": 76,
+        "h": 76
+      }
+    ],
+    "info": {
+      "activeId": "e3-fairground",
+      "fallback": null,
+      "wheel": {
+        "active": true,
+        "spinning": true,
+        "hp": 240,
+        "maxHp": 240,
+        "outputWatts": 24,
+        "configuredWatts": 24,
+        "viewRadius": 18,
+        "x": 0,
+        "z": 8
+      },
+      "testHook": "undefined"
+    },
+    "dataset": {
+      "landmarks": "5",
+      "expected": "5",
+      "skipped": "0",
+      "state": "ready",
+      "loadState": "mounted",
+      "skirtBlend": "opaque-sculpt-edge"
+    }
+  },
+  {
+    "map": "e3-fairground",
+    "pack": "fairground",
+    "viewport": "mobile",
+    "boot": "debug",
+    "errors": [],
+    "wheel": {
+      "active": true,
+      "spinning": true,
+      "hp": 240,
+      "maxHp": 240,
+      "outputWatts": 24,
+      "configuredWatts": 24,
+      "viewRadius": 18,
+      "x": 0,
+      "z": 8
+    },
+    "stations": [
+      {
+        "id": "south-midway-admission-arch",
+        "file": "fairground-station-south-midway-admission-arch-mobile.png",
+        "top": 6.3802,
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "base": {
+          "x": 195,
+          "y": 209.60330450921595,
+          "z": 0.9970961523747939,
+          "inView": true
+        },
+        "apex": {
+          "x": 195,
+          "y": 55.11095040231134,
+          "z": 0.9964291197442777,
+          "inView": true
+        },
+        "left": {
+          "x": 81.10018482170939,
+          "y": 137.27429885046024,
+          "z": 0.9967838663255192,
+          "inView": true
+        },
+        "right": {
+          "x": 308.89981517829057,
+          "y": 137.27429885046024,
+          "z": 0.9967838663255192,
+          "inView": true
+        },
+        "box": {
+          "x": 195,
+          "y": 55.11095040231134,
+          "w": 0,
+          "h": 154.4923541069046
+        },
+        "overlapPlain": 0,
+        "overlapPersistent": 0,
+        "wide": {
+          "box": {
+            "x": 81.10018482170939,
+            "y": 55.11095040231134,
+            "w": 227.7996303565812,
+            "h": 154.4923541069046
+          },
+          "overlapPlain": 0.6475,
+          "overlapPersistent": 0.6475
+        }
+      },
+      {
+        "id": "west-current-calliope-wagon",
+        "file": "fairground-station-west-current-calliope-wagon-mobile.png",
+        "top": 5.54,
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "base": {
+          "x": 197.55511428504,
+          "y": 280.8224647958956,
+          "z": 0.9973910623874062,
+          "inView": true
+        },
+        "apex": {
+          "x": 197.83304545940578,
+          "y": 166.01827096651314,
+          "z": 0.996889509924756,
+          "inView": true
+        },
+        "left": {
+          "x": 115.31987880492916,
+          "y": 225.86998593676662,
+          "z": 0.9971554227886069,
+          "inView": true
+        },
+        "right": {
+          "x": 280.12879475007514,
+          "y": 226.8930255944413,
+          "z": 0.9971510185203704,
+          "inView": true
+        },
+        "box": {
+          "x": 197.55511428504,
+          "y": 166.01827096651314,
+          "w": 0.27793117436578996,
+          "h": 114.80419382938246
+        },
+        "overlapPlain": 0.0313,
+        "overlapPersistent": 0,
+        "wide": {
+          "box": {
+            "x": 115.31987880492916,
+            "y": 166.01827096651314,
+            "w": 164.808915945146,
+            "h": 114.80419382938246
+          },
+          "overlapPlain": 0.3701,
+          "overlapPersistent": 0.3389
+        }
+      },
+      {
+        "id": "east-mothglass-prize-cage",
+        "file": "fairground-station-east-mothglass-prize-cage-mobile.png",
+        "top": 5.3929,
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "base": {
+          "x": 190.04223660177294,
+          "y": 291.0504728413075,
+          "z": 0.9974478356865798,
+          "inView": true
+        },
+        "apex": {
+          "x": 189.52851606696413,
+          "y": 181.68411709920088,
+          "z": 0.9969759356447176,
+          "inView": true
+        },
+        "left": {
+          "x": 130.2017969130011,
+          "y": 239.79117409029428,
+          "z": 0.9972204040641103,
+          "inView": true
+        },
+        "right": {
+          "x": 249.31693739177322,
+          "y": 238.33149642188775,
+          "z": 0.9972266079415449,
+          "inView": true
+        },
+        "box": {
+          "x": 189.52851606696413,
+          "y": 181.68411709920088,
+          "w": 0.5137205348088116,
+          "h": 109.36635574210663
+        },
+        "overlapPlain": 0.125,
+        "overlapPersistent": 0,
+        "wide": {
+          "box": {
+            "x": 130.2017969130011,
+            "y": 181.68411709920088,
+            "w": 119.11514047877213,
+            "h": 109.36635574210663
+          },
+          "overlapPlain": 0.314,
+          "overlapPersistent": 0.189
+        }
+      },
+      {
+        "id": "north-crowd-counting-rostrum",
+        "file": "fairground-station-north-crowd-counting-rostrum-mobile.png",
+        "top": 5.29,
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "base": {
+          "x": 196.61980285422138,
+          "y": 334.7873476979214,
+          "z": 0.9969253032208263,
+          "inView": true
+        },
+        "apex": {
+          "x": 196.8055400717099,
+          "y": 219.2857447396981,
+          "z": 0.9963431756469764,
+          "inView": true
+        },
+        "left": {
+          "x": 89.50494857633572,
+          "y": 279.47517899780945,
+          "z": 0.996653186955453,
+          "inView": true
+        },
+        "right": {
+          "x": 304.037256169904,
+          "y": 280.86174072406953,
+          "z": 0.9966468536924628,
+          "inView": true
+        },
+        "box": {
+          "x": 196.61980285422138,
+          "y": 219.2857447396981,
+          "w": 0.185737217488537,
+          "h": 115.50160295822332
+        },
+        "overlapPlain": 0.4531,
+        "overlapPersistent": 0,
+        "wide": {
+          "box": {
+            "x": 89.50494857633572,
+            "y": 219.2857447396981,
+            "w": 214.5323075935683,
+            "h": 115.50160295822332
+          },
+          "overlapPlain": 0.5801,
+          "overlapPersistent": 0.127
+        }
+      },
+      {
+        "id": "fair-bell-battery-kiosk",
+        "file": "fairground-station-fair-bell-battery-kiosk-mobile.png",
+        "top": 6.205,
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "base": {
+          "x": 194.70375021890732,
+          "y": 348.71983182515515,
+          "z": 0.9970000063820185,
+          "inView": true
+        },
+        "apex": {
+          "x": 194.66386825717393,
+          "y": 214.38824911747818,
+          "z": 0.9963266239505748,
+          "inView": true
+        },
+        "left": {
+          "x": 118.76075704534044,
+          "y": 285.8812249596146,
+          "z": 0.9966841344970823,
+          "inView": true
+        },
+        "right": {
+          "x": 270.59754067452786,
+          "y": 285.69866586014433,
+          "z": 0.9966849635080799,
+          "inView": true
+        },
+        "box": {
+          "x": 194.66386825717393,
+          "y": 214.38824911747818,
+          "w": 0.03988196173338565,
+          "h": 134.33158270767697
+        },
+        "overlapPlain": 0.3906,
+        "overlapPersistent": 0,
+        "wide": {
+          "box": {
+            "x": 118.76075704534044,
+            "y": 214.38824911747818,
+            "w": 151.83678362918744,
+            "h": 134.33158270767697
+          },
+          "overlapPlain": 0.4973,
+          "overlapPersistent": 0.1067
+        }
+      },
+      {
+        "id": "ferris-wheel",
+        "file": "fairground-station-ferris-wheel-mobile.png",
+        "wheelLevers": {
+          "s": 0.74,
+          "hub": 3.49,
+          "r": 3.515
+        },
+        "apex": {
+          "x": 195.78116459598604,
+          "y": 11.4618268170333,
+          "z": 0.9971493394761936,
+          "inView": true
+        },
+        "hub": {
+          "x": 195.74524584810774,
+          "y": 72.9683703965055,
+          "z": 0.9973724698672773,
+          "inView": true
+        },
+        "foot": {
+          "x": 195.71270788960655,
+          "y": 128.68571804235611,
+          "z": 0.9975745985002137,
+          "inView": true
+        },
+        "left": {
+          "x": 129.6249660638663,
+          "y": 72.90320426225782,
+          "z": 0.9973727859211858,
+          "inView": true
+        },
+        "right": {
+          "x": 261.8745548067684,
+          "y": 73.0335454296326,
+          "z": 0.9973721537702095,
+          "inView": true
+        },
+        "box": {
+          "x": 129.6249660638663,
+          "y": 11.4618268170333,
+          "w": 132.2495887429021,
+          "h": 117.22389122532282
+        },
+        "overlapPlain": 0.6091,
+        "overlapPersistent": 0.6091
+      }
+    ],
+    "renderer": {
+      "calls": 72,
+      "triangles": 141112,
+      "programs": 46,
+      "geometries": 99,
+      "textures": 19
+    },
+    "scene": {
+      "singletonMeshes": 68,
+      "instancedMeshes": 50
+    },
+    "p95": [
+      9.2,
+      10.2,
+      10.1,
+      9.8
+    ]
+  }
+]

@@ -1,0 +1,98 @@
+[
+  {
+    "pack": "blackout-ridge",
+    "command": [
+      "/Applications/Blender.app/Contents/MacOS/Blender",
+      "--background",
+      "--python-exit-code",
+      "1",
+      "--python",
+      "assets/pilots/map-rebuild-spike/build_landmark_packs.py",
+      "--",
+      "--atlas-only",
+      "blackout-ridge",
+      "--out",
+      "artifacts/sol/map-art-campaign-2/_raw/run-2/e3-recipes/rebuilt"
+    ],
+    "exit": 0,
+    "seconds": 1.0082180500030518,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-2/e3-recipes/blackout-ridge.log",
+    "shippedSha256": "dc090249aa8337a4eac43bf45480b577917466fa961e6b36700afd4c5ab6a1d7",
+    "rebuiltSha256": "dc090249aa8337a4eac43bf45480b577917466fa961e6b36700afd4c5ab6a1d7",
+    "reproducedBytes": true,
+    "sameDimensions": true,
+    "pixelMaxDelta8bit": 0
+  },
+  {
+    "pack": "canyon-works",
+    "command": [
+      "/Applications/Blender.app/Contents/MacOS/Blender",
+      "--background",
+      "--python-exit-code",
+      "1",
+      "--python",
+      "assets/pilots/map-rebuild-spike/build_landmark_packs.py",
+      "--",
+      "--atlas-only",
+      "canyon-works",
+      "--out",
+      "artifacts/sol/map-art-campaign-2/_raw/run-2/e3-recipes/rebuilt"
+    ],
+    "exit": 0,
+    "seconds": 0.9777560234069824,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-2/e3-recipes/canyon-works.log",
+    "shippedSha256": "5819f8eec12371756a0b2b36342bdbf8560ee3c4e99c16f35fe2cae28c1bbd5b",
+    "rebuiltSha256": "5819f8eec12371756a0b2b36342bdbf8560ee3c4e99c16f35fe2cae28c1bbd5b",
+    "reproducedBytes": true,
+    "sameDimensions": true,
+    "pixelMaxDelta8bit": 0
+  },
+  {
+    "pack": "fairground",
+    "command": [
+      "/Applications/Blender.app/Contents/MacOS/Blender",
+      "--background",
+      "--python-exit-code",
+      "1",
+      "--python",
+      "assets/pilots/map-rebuild-spike/build_landmark_packs.py",
+      "--",
+      "--atlas-only",
+      "fairground",
+      "--out",
+      "artifacts/sol/map-art-campaign-2/_raw/run-2/e3-recipes/rebuilt"
+    ],
+    "exit": 0,
+    "seconds": 0.9739260673522949,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-2/e3-recipes/fairground.log",
+    "shippedSha256": "3573fb688b1ae37ff45b00f7be6dbc6b3e08e797c0b84e875c9edda1be560f40",
+    "rebuiltSha256": "3573fb688b1ae37ff45b00f7be6dbc6b3e08e797c0b84e875c9edda1be560f40",
+    "reproducedBytes": true,
+    "sameDimensions": true,
+    "pixelMaxDelta8bit": 0
+  },
+  {
+    "pack": "moth-season",
+    "command": [
+      "/Applications/Blender.app/Contents/MacOS/Blender",
+      "--background",
+      "--python-exit-code",
+      "1",
+      "--python",
+      "assets/pilots/map-rebuild-spike/build_landmark_packs.py",
+      "--",
+      "--atlas-only",
+      "moth-season",
+      "--out",
+      "artifacts/sol/map-art-campaign-2/_raw/run-2/e3-recipes/rebuilt"
+    ],
+    "exit": 0,
+    "seconds": 1.0849449634552002,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-2/e3-recipes/moth-season.log",
+    "shippedSha256": "1875cfcfacc69ea7ebc872225861f04a0ef754cfd412d94ee445d06b89e146c3",
+    "rebuiltSha256": "1875cfcfacc69ea7ebc872225861f04a0ef754cfd412d94ee445d06b89e146c3",
+    "reproducedBytes": true,
+    "sameDimensions": true,
+    "pixelMaxDelta8bit": 0
+  }
+]

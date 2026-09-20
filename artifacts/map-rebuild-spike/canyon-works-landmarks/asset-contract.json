@@ -1,0 +1,105 @@
+{
+  "law": "reuse > derive > build-new; era-stamped; grit-dressed",
+  "packs": {
+    "canyon-works": {
+      "era": 3,
+      "atlasSha256": "5819f8eec12371756a0b2b36342bdbf8560ee3c4e99c16f35fe2cae28c1bbd5b",
+      "assets": {
+        "sub-hall-dynamo-house": {
+          "sourceTier": "derive",
+          "triangles": 1768,
+          "sha256": "7b8bdf46b93e23dbb44e29564ee94eb24e40f764db9052c260814361d137e92a",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "west-switchback-line-house": {
+          "sourceTier": "reuse",
+          "triangles": 1616,
+          "sha256": "357caf27edb7b5378b00f50ea3c53ccea250733bd5a216e2a6b048f56e220b1b",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "east-switchback-line-house": {
+          "sourceTier": "reuse",
+          "triangles": 1616,
+          "sha256": "7e682de1033858ab8dbc42dbd0e7623c7e4cfa7aefd1229531a8f2fee64efeb8",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "dam-crest-gate-house": {
+          "sourceTier": "derive",
+          "triangles": 1872,
+          "sha256": "e6d65c2c3c64fc5424873300a3e83773fdc87602cd553cb4294e25926cbc55e1",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "downriver-tram-lamp": {
+          "sourceTier": "reuse",
+          "triangles": 820,
+          "sha256": "7a62f392dea9531eb6a5e3f27eef7003b8f801f1edf3c84340847fea7b3823c1",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        }
+      }
+    }
+  },
+  "totals": {
+    "packs": 1,
+    "assets": 5,
+    "sourceTiers": {
+      "reuse": 3,
+      "derive": 2,
+      "build-new": 0
+    }
+  },
+  "boards": {
+    "canyon-works-landmarks-turntable.png": {
+      "size": [
+        1920,
+        1160
+      ],
+      "sha256": "f803a547f252f0fcf68dc8e2ee5d50553472b1f693f1f1650e7c272651a7123f"
+    },
+    "canyon-works-landmarks-verdict.png": {
+      "size": [
+        1920,
+        1008
+      ],
+      "sha256": "86e8e41029efbea4e5ee87e4a38093736a7dfd140c3266083c6bf14b7b550cfe"
+    },
+    "canyon-works-landmarks-pack.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "334141c03975fba2d505d09f10098e3629e33533b57d147d64f7241e15b5c78b"
+    },
+    "canyon-works-landmarks-proposed.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "352b6f2ccea76d31c5a7a7944fd19de5c329f2e118d216c878779f756d005b2f"
+    },
+    "canyon-works-landmarks-proposed-overview.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "673d3469fda9d2ce5e212aa439be1a50f4ade64b1ebb66bb5ba1cef896e97b27"
+    },
+    "canyon-works-landmarks-clearance-overlay.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "a76ee5e592b8e0682877be93d842f0cfd64214e1226d37153e50a185299442a3"
+    }
+  },
+  "simulation": "unchanged; every landmark is a separate render-only GLB mounted by contract"
+}

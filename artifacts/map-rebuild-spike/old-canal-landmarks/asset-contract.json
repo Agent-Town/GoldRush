@@ -1,0 +1,105 @@
+{
+  "law": "reuse > derive > build-new; era-stamped; grit-dressed",
+  "packs": {
+    "old-canal": {
+      "era": 9,
+      "atlasSha256": "2522b65a4aa152f0c4f9278204ebb46e035c2d95d221f5ed49da372bc146a1b7",
+      "assets": {
+        "south-survey-rig": {
+          "sourceTier": "reuse",
+          "triangles": 672,
+          "sha256": "5a3db26c48191a4d2d55be181786e6c2f9118c3fe75d3471af93b9860ea5e412",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "canal-segment-a-marker": {
+          "sourceTier": "derive",
+          "triangles": 744,
+          "sha256": "3ef7d85461c909f58156daae0a7e2315ca6e0efc048c19c08497c710b94a4a85",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "canal-segment-b-marker": {
+          "sourceTier": "derive",
+          "triangles": 756,
+          "sha256": "91cf57b609b28b0081e9b9bfe68272de317b161d6679712af360437acdfba858",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "canal-segment-c-marker": {
+          "sourceTier": "derive",
+          "triangles": 768,
+          "sha256": "47168dab6061401423e80a3b8994fb6ffd7813adfdbdea62de85d0b875401832",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "north-outflow-gate": {
+          "sourceTier": "reuse",
+          "triangles": 848,
+          "sha256": "33afcbfbb1800998bc1d709d8af361b3f128984f117854772ccded1fc7d4dfda",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        }
+      }
+    }
+  },
+  "totals": {
+    "packs": 1,
+    "assets": 5,
+    "sourceTiers": {
+      "reuse": 2,
+      "derive": 3,
+      "build-new": 0
+    }
+  },
+  "boards": {
+    "old-canal-landmarks-turntable.png": {
+      "size": [
+        1920,
+        1160
+      ],
+      "sha256": "a22589e6b89f45487682372414d866ef76f72855cc22c6554792f8eaefa2b47e"
+    },
+    "old-canal-landmarks-verdict.png": {
+      "size": [
+        1920,
+        1008
+      ],
+      "sha256": "3d6eea6e883df2b09f1d50ee6b08f62c3f61dd2c6da2cd5a106f4dce6078c83f"
+    },
+    "old-canal-landmarks-pack.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "d271eccc654f711d67b5da454564618a6b234718b433be863fc042a3bb775e14"
+    },
+    "old-canal-landmarks-mounted.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "6204a6b980168d74554a50c8006e73bad12897ba36a1a36b92713d7e8bfbb87f"
+    },
+    "old-canal-landmarks-mounted-overview.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "2ae4aff8b0e2c1ec405d9c300e158738fc7c6370588746a504a599bc369bcb65"
+    },
+    "old-canal-landmarks-clearance-overlay.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "2b2faf362e29e42791841bcb224b43888158d2a2bd081c43b0ab5347a7dbb06d"
+    }
+  },
+  "simulation": "unchanged; every landmark is a separate render-only GLB mounted by contract"
+}

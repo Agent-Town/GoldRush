@@ -1,0 +1,3 @@
+UNACCEPTED: the trestle span and canyon depth are not readable at entry; intersecting/abruptly ending rails, muddy ground detail and cropped near machinery dominate, with weak landmark contrast and restricted portrait framing.
+
+The rendered railway vocabulary is present, but the plain spawn frames the yard rather than the bridge-and-river relationship in the plate. This is an entry-view verdict, not a claim that no bridge exists elsewhere on the map. Repair needs authored rail joins, structural presentation and a reviewed sightline; a palette-only edit would not settle it. No production change was made.

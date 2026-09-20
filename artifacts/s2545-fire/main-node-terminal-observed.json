@@ -1,0 +1,26 @@
+{
+  "observedAt": "2026-09-07T22:09:44.440303+07:00",
+  "source": "artifacts/board-tape-gold/current-grammar/node-guards.txt",
+  "observedAfterGroupExit": 31302,
+  "sourceMtime": "2026-09-07T22:09:41.653622+07:00",
+  "bytes": 120100,
+  "sha256": "187e3855358cbebf2deb21d0004a7182d4da02b457e98cb462ff26e3452a0099",
+  "failures": [
+    "\u2716 all 128 scripts/*.test.mjs fixture owners remove their temp directories (710783.153583ms)",
+    "\u2716 contention is advisory, correctly counted, and absent when alone (98.103458ms)",
+    "\u2716 failing tests:",
+    "\u2716 all 128 scripts/*.test.mjs fixture owners remove their temp directories (710783.153583ms)",
+    "\u2716 contention is advisory, correctly counted, and absent when alone (98.103458ms)"
+  ],
+  "note": "Captured immediately after the observed process group exited; no direct child exit status claimed.",
+  "nodeTests": {
+    "tests": 742,
+    "pass": 735,
+    "fail": 2,
+    "skipped": 5
+  },
+  "durationSeconds": 1623.299557875,
+  "observedFailure": "spawnSync ps ENOBUFS at waitForQuietBoard in scripts/node-guards-contention.test.mjs:50, both directly and under fixture-teardown",
+  "fixtureSweepComplete": false,
+  "chainedTailRan": false
+}

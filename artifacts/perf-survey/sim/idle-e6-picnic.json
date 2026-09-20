@@ -1,0 +1,197 @@
+{
+  "key": "idle-e6-picnic",
+  "tapePath": "tapes/idle-e6-picnic.json",
+  "contract": "e6-picnic",
+  "kind": "null-floor",
+  "node": "v26.4.0",
+  "before": {
+    "at": "2026-09-05T15:19:12.026Z",
+    "load": [
+      17.37353515625,
+      24.6435546875,
+      26.904296875
+    ],
+    "freeMemory": 12760514560
+  },
+  "after": {
+    "at": "2026-09-05T15:19:14.334Z",
+    "load": [
+      17.37353515625,
+      24.6435546875,
+      26.904296875
+    ],
+    "freeMemory": 12132646912
+  },
+  "declaredDurationTicks": 1957,
+  "simulatedSeconds": 65.23333333333333,
+  "bootMs": 41.26091599999995,
+  "replayMs": 630.507541,
+  "ticksPerSecond": 3103.8486818034744,
+  "realtimeMultiple": 103.46162272678248,
+  "estimateTenMinuteSeconds": 5.799251782319877,
+  "estimateFormula": "600 seconds / measured realtimeMultiple; extrapolation, not an actual 10-minute tape when duration differs",
+  "tickMs": {
+    "n": 1957,
+    "min": 0.19487500000013824,
+    "p50": 0.2611669999996593,
+    "p95": 0.6005000000000109,
+    "p99": 0.9842079999998532,
+    "max": 10.316708000000062
+  },
+  "tickPath": "sim/idle-e6-picnic-ticks.json",
+  "result": {
+    "eventLogHash": "fnv1a32:a45ba9ac",
+    "outcome": {
+      "secured": false,
+      "waves": 2,
+      "gold": 0,
+      "timeAlive": 65.233
+    },
+    "ticks": 1957,
+    "engine": "headless-contract-sim"
+  },
+  "expectedHash": "fnv1a32:a45ba9ac",
+  "hashMatches": true,
+  "top20": [
+    {
+      "name": "dispatch",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 160.283
+    },
+    {
+      "name": "terrainSeed",
+      "url": "",
+      "line": 1469,
+      "column": 21,
+      "selfMs": 33.982
+    },
+    {
+      "name": "multiplyMatrices",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 10385,
+      "column": 18,
+      "selfMs": 28.676
+    },
+    {
+      "name": "terrainHash",
+      "url": "",
+      "line": 1486,
+      "column": 21,
+      "selfMs": 28.053
+    },
+    {
+      "name": "hpBarDiagnostics",
+      "url": "",
+      "line": 1663,
+      "column": 18,
+      "selfMs": 25.326999999999998
+    },
+    {
+      "name": "toArray",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 11099,
+      "column": 9,
+      "selfMs": 24.824
+    },
+    {
+      "name": "maxHpForInstance",
+      "url": "",
+      "line": 1619,
+      "column": 18,
+      "selfMs": 24.565
+    },
+    {
+      "name": "get diagnostics",
+      "url": "",
+      "line": 484,
+      "column": 17,
+      "selfMs": 20.660999999999998
+    },
+    {
+      "name": "diagnostics",
+      "url": "",
+      "line": 1795,
+      "column": 13,
+      "selfMs": 17.477
+    },
+    {
+      "name": "currentTrickleInterval",
+      "url": "",
+      "line": 641,
+      "column": 24,
+      "selfMs": 17.404
+    },
+    {
+      "name": "syncEnemyInstance",
+      "url": "",
+      "line": 1343,
+      "column": 19,
+      "selfMs": 16.325
+    },
+    {
+      "name": "(program)",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 16.054
+    },
+    {
+      "name": "(anonymous)",
+      "url": "",
+      "line": 3,
+      "column": 49,
+      "selfMs": 13.594
+    },
+    {
+      "name": "activePositions",
+      "url": "",
+      "line": 1533,
+      "column": 17,
+      "selfMs": 13.187999999999999
+    },
+    {
+      "name": "maxHpForPlacement",
+      "url": "",
+      "line": 1622,
+      "column": 19,
+      "selfMs": 12.801
+    },
+    {
+      "name": "update",
+      "url": "",
+      "line": 809,
+      "column": 8,
+      "selfMs": 12.11
+    },
+    {
+      "name": "rubbleDiagnostics",
+      "url": "",
+      "line": 2052,
+      "column": 19,
+      "selfMs": 10.383000000000001
+    },
+    {
+      "name": "(garbage collector)",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 10.116
+    },
+    {
+      "name": "terrainFeatures",
+      "url": "",
+      "line": 1193,
+      "column": 25,
+      "selfMs": 9.669
+    },
+    {
+      "name": "stableProbeMask",
+      "url": "",
+      "line": 1266,
+      "column": 25,
+      "selfMs": 8.858
+    }
+  ]
+}

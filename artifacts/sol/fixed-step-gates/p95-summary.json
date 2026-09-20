@@ -1,0 +1,28 @@
+{
+  "gate": "wave-20 FULL-tier p95 <= baseline * 1.05",
+  "baselineCommit": "2cdcf210b51bb265661c7a232d49e43c54948bba",
+  "baselinePreview": "http://127.0.0.1:5290",
+  "branchPreview": "http://127.0.0.1:5291",
+  "project": "desktop-webkit",
+  "baseline": {
+    "fullP95Ms": [30, 30, 29],
+    "fullMedianMs": 30,
+    "liteP95Ms": [30, 29, 29],
+    "liteMedianMs": 29
+  },
+  "branch": {
+    "fullP95Ms": [25, 25, 25],
+    "fullMedianMs": 25,
+    "liteP95Ms": [27, 27, 25],
+    "liteMedianMs": 27
+  },
+  "fullMedianRatio": 0.8333333333,
+  "fullMedianChangePercent": -16.6666666667,
+  "allowedBranchMedianMs": 31.5,
+  "result": "pass",
+  "notes": [
+    "All six FULL/LITE captures reported zero console and page errors.",
+    "The existing LITE <=25ms assertion failed in all baseline runs and branch runs 1-2; branch run 3 passed it.",
+    "The fixed-step spec gate compares the FULL-tier branch median with the baseline median."
+  ]
+}

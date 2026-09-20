@@ -1,0 +1,103 @@
+diff --git a/src/agent/StandingOrders.ts b/src/agent/StandingOrders.ts
+index 112046988..dc80406a1 100644
+--- a/src/agent/StandingOrders.ts
++++ b/src/agent/StandingOrders.ts
+@@ -15,8 +15,6 @@ export type StandingOrder =
+       rotationSteps?: 0 | 1 | 2 | 3;
+     }
+   | { verb: 'REPAIR_UNDER'; pct: number }
+-  | { verb: 'MOVE_TO'; pos: AgentVec2 }
+-  | { verb: 'HOLD'; pos: AgentVec2 }
+   // hero-move-verb (owner ruling 2026-09-06, verbatim: "yes! please! rider has to be able to move,
+   // I did not know that was not possible before"). MOVE_TO and HOLD above steer the PROSPECTOR
+   // (`src/agent/Embodiment.ts:131` feeds their target to `assignWork`); nothing in this union ever
+@@ -95,8 +93,7 @@ export type StandingOrder =
+   // Like `CAPTURE`/`GRADE`/`HAUL` it executes through an optional handler and fails honestly
+   // ("unavailable in this engine") wherever none is bound — the browser binds none today, which is
+   // the human-parity gap this slice's guard pins rather than papers over.
+-  | { verb: 'PLAYBOOK_USE'; name: string }
+-  | { verb: 'FALLBACK_IF'; threat: { enemiesGte: number }; pos: AgentVec2 };
++  | { verb: 'PLAYBOOK_USE'; name: string };
+ 
+ export type StandingOrderStatus = 'pending' | 'active' | 'done' | 'failed';
+ 
+@@ -530,20 +527,6 @@ export class StandingOrdersExecutor {
+       return this.finishAction(record, receipt, target.position, at);
+     }
+ 
+-    if (order.verb === 'MOVE_TO') {
+-      if (distance(actor, order.pos) <= Balance.agent.arriveRadius) {
+-        this.status(record, 'done', at);
+-        return {};
+-      }
+-      this.status(record, 'active', at);
+-      return { movement: order.pos };
+-    }
+-
+-    if (order.verb === 'HOLD') {
+-      this.status(record, 'active', at);
+-      return { movement: order.pos };
+-    }
+-
+     // hero-move-verb. Shaped on BUILD's travel clause above rather than on MOVE_TO's, because the
+     // hero can be BLOCKED in ways the Prospector cannot: it has no pathfinder, it collides with
+     // terrain, and a target behind a wall would otherwise pin the executor forever on an order that
+@@ -669,13 +652,7 @@ export class StandingOrdersExecutor {
+       return {};
+     }
+ 
+-    if (state.enemiesAlive < order.threat.enemiesGte) return null;
+-    this.status(record, 'active', at);
+-    if (distance(actor, order.pos) <= Balance.agent.arriveRadius) {
+-      this.status(record, 'done', at);
+-      return {};
+-    }
+-    return { movement: order.pos };
++    return null;
+   }
+ 
+   private finishAction(
+@@ -883,7 +860,7 @@ function validateOrder(value: Record<string, unknown>, index: number): StandingO
+     if (!exactKeys(value, ['verb', 'pct']) || !finiteInRange(value.pct, 0, 100)) return schemaError(index, 'REPAIR_UNDER');
+     return { verb: 'REPAIR_UNDER', pct: value.pct };
+   }
+-  if (value.verb === 'MOVE_TO' || value.verb === 'HOLD' || value.verb === 'MOVE_HERO') {
++  if (value.verb === 'MOVE_HERO') {
+     // hero-move-verb rides the same two-key shape on purpose: a point is a point, and a rider that
+     // can write MOVE_TO can write MOVE_HERO without learning a second grammar. The bodies differ,
+     // the schema does not.
+@@ -958,15 +935,6 @@ function validateOrder(value: Record<string, unknown>, index: number): StandingO
+     if (!exactKeys(value, ['verb', 'name']) || !validId(value.name)) return schemaError(index, 'PLAYBOOK_USE');
+     return { verb: 'PLAYBOOK_USE', name: value.name };
+   }
+-  if (value.verb === 'FALLBACK_IF') {
+-    if (!exactKeys(value, ['verb', 'threat', 'pos']) || !validPos(value.pos) || !isRecord(value.threat)) {
+-      return schemaError(index, 'FALLBACK_IF');
+-    }
+-    if (!exactKeys(value.threat, ['enemiesGte']) || !finiteInRange(value.threat.enemiesGte, 1, 10_000)) {
+-      return schemaError(index, 'FALLBACK_IF');
+-    }
+-    return { verb: 'FALLBACK_IF', threat: { enemiesGte: value.threat.enemiesGte }, pos: value.pos };
+-  }
+   return `orders[${index}].verb "${value.verb}" is unknown.`;
+ }
+ 
+@@ -1154,7 +1122,7 @@ export function standingOrderIdentity(order: StandingOrder): string {
+       ...(order.rotationSteps ? ['rotationSteps', order.rotationSteps] : [])]);
+   }
+   if (order.verb === 'REPAIR_UNDER') return JSON.stringify([order.verb, order.pct]);
+-  if (order.verb === 'MOVE_TO' || order.verb === 'HOLD' || order.verb === 'MOVE_HERO' || order.verb === 'BLAST_AT') {
++  if (order.verb === 'MOVE_HERO' || order.verb === 'BLAST_AT') {
+     return JSON.stringify([order.verb, order.pos.x, order.pos.z]);
+   }
+   if (order.verb === 'HARVEST') return JSON.stringify([order.verb, 'seam' in order ? order.seam : order.sluice]);
+@@ -1167,8 +1135,7 @@ export function standingOrderIdentity(order: StandingOrder): string {
+   if (order.verb === 'BOAT_BUILD') return JSON.stringify([order.verb, order.padId, order.buildingId]);
+   if (order.verb === 'REANCHOR') return JSON.stringify([order.verb, order.anchorId]);
+   if (order.verb === 'GRADE' || order.verb === 'HAUL') return JSON.stringify([order.verb]);
+-  if (order.verb === 'PLAYBOOK_USE') return JSON.stringify([order.verb, order.name]);
+-  return JSON.stringify([order.verb, order.threat.enemiesGte, order.pos.x, order.pos.z]);
++  return JSON.stringify([order.verb, order.name]);
+ }
+ 
+ function validId(value: unknown): value is string {

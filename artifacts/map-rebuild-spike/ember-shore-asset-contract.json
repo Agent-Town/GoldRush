@@ -1,0 +1,433 @@
+{
+  "blender": "5.1.2",
+  "maskTables": [
+    "assets/contracts/epoch-10-deepsky/mask-tables/e10-ember-shore.json"
+  ],
+  "terrains": {
+    "ember-shore": {
+      "asset": "ember-shore-terrain.glb",
+      "checked": {
+        "sha256": "1b688f841923409756218449950401bf59d8b66d65cf4d5c7979ee7cdfc4dcac",
+        "bytes": 6136000,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 32768,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -64,
+            -2.1732,
+            -64
+          ],
+          "max": [
+            64,
+            2.082192,
+            64
+          ],
+          "size": [
+            128,
+            4.255392,
+            128
+          ],
+          "center": [
+            0.0,
+            -0.045504,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.8999999761581421,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "reexported": {
+        "sha256": "1b688f841923409756218449950401bf59d8b66d65cf4d5c7979ee7cdfc4dcac",
+        "bytes": 6136000,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 32768,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -64,
+            -2.1732,
+            -64
+          ],
+          "max": [
+            64,
+            2.082192,
+            64
+          ],
+          "size": [
+            128,
+            4.255392,
+            128
+          ],
+          "center": [
+            0.0,
+            -0.045504,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.8999999761581421,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "byteIdenticalReexport": true,
+      "semanticIdenticalReexport": true,
+      "embeddedTexture": {
+        "bytes": 5405119,
+        "sha256": "2afd2cd7861ae29263f2ea66d4d6845ad9bc0c7921f00cbba1d61308d0945c38",
+        "width": 2048,
+        "height": 2048
+      },
+      "extras": {
+        "render_only": true,
+        "sim_authority": "published mask table and planar simulation; unchanged",
+        "height_socket": "Terrain.visualY",
+        "contract_id": "e10-ember-shore",
+        "tile_id": "e10-ember-shore",
+        "mask_table": "assets/contracts/epoch-10-deepsky/mask-tables/e10-ember-shore.json",
+        "load_bearing_sites_flat": true,
+        "landmarks_frozen": false
+      },
+      "geometryProbes": [
+        {
+          "requested": [
+            3,
+            -10
+          ],
+          "sampled": [
+            3.0,
+            -10.0
+          ],
+          "height": 0.18
+        },
+        {
+          "requested": [
+            26,
+            34
+          ],
+          "sampled": [
+            26.0,
+            34.0
+          ],
+          "height": 0.82
+        },
+        {
+          "requested": [
+            -46,
+            10
+          ],
+          "sampled": [
+            -46.0,
+            10.0
+          ],
+          "height": -2.1437
+        },
+        {
+          "requested": [
+            -13,
+            -30
+          ],
+          "sampled": [
+            -13.0,
+            -30.0
+          ],
+          "height": -1.626
+        },
+        {
+          "requested": [
+            49,
+            18
+          ],
+          "sampled": [
+            49.0,
+            18.0
+          ],
+          "height": -1.938
+        },
+        {
+          "requested": [
+            0,
+            48
+          ],
+          "sampled": [
+            0.0,
+            48.0
+          ],
+          "height": 0.7019
+        }
+      ],
+      "pylonSurfaceFlatness": [],
+      "capacitorSurfaceFlatness": [],
+      "fixtureSurfaceFlatness": [
+        {
+          "id": "last-warm-vent-site",
+          "sampledSurfacePoints": 2145,
+          "maxDeviationMeters": 0.0
+        }
+      ],
+      "buildZoneSurfaceFlatness": [
+        {
+          "id": "last-warm-vent-site",
+          "sampledSurfacePoints": 2145,
+          "maxDeviationMeters": 0.0
+        },
+        {
+          "id": "cooled-titan-machine-mount",
+          "sampledSurfacePoints": 2145,
+          "maxDeviationMeters": 0.0
+        }
+      ],
+      "coolingBandSurfaceAgreement": [
+        {
+          "id": "cooling-lava-vein-west",
+          "sampledCrossSections": 65,
+          "meanDepressionMeters": 2.6922,
+          "visiblyRecessedCrossSections": 65
+        },
+        {
+          "id": "cooling-lava-vein-center",
+          "sampledCrossSections": 65,
+          "meanDepressionMeters": 2.0463,
+          "visiblyRecessedCrossSections": 65
+        },
+        {
+          "id": "cooling-lava-vein-east",
+          "sampledCrossSections": 65,
+          "meanDepressionMeters": 2.4807,
+          "visiblyRecessedCrossSections": 65
+        }
+      ],
+      "maskSource": "assets/contracts/epoch-10-deepsky/mask-tables/e10-ember-shore.json"
+    }
+  },
+  "panoramas": {
+    "ember-shore": {
+      "asset": "ember-shore-panorama.glb",
+      "checked": {
+        "sha256": "20e9b61acfdc33045350b5db40e450132e2692b4dfa313ddbbb5ab30bf7c62fa",
+        "bytes": 872468,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 3072,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -193,
+            -10,
+            -193
+          ],
+          "max": [
+            193,
+            130,
+            193
+          ],
+          "size": [
+            386,
+            140,
+            386
+          ],
+          "center": [
+            0.0,
+            60.0,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 1,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": true,
+            "emissiveFactor": [
+              1,
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "reexported": {
+        "sha256": "20e9b61acfdc33045350b5db40e450132e2692b4dfa313ddbbb5ab30bf7c62fa",
+        "bytes": 872468,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 3072,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -193,
+            -10,
+            -193
+          ],
+          "max": [
+            193,
+            130,
+            193
+          ],
+          "size": [
+            386,
+            140,
+            386
+          ],
+          "center": [
+            0.0,
+            60.0,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 1,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": true,
+            "emissiveFactor": [
+              1,
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "byteIdenticalReexport": true,
+      "semanticIdenticalReexport": true,
+      "embeddedTexture": {
+        "bytes": 754485,
+        "sha256": "1d46b44785153a19e2614e3165ed9c269cb5ee5585252f1f2cc9a15a6ad6b8d9",
+        "width": 2048,
+        "height": 2048
+      },
+      "extras": {
+        "render_only": true,
+        "panorama": true,
+        "affects_playfield": false,
+        "affects_masks": false,
+        "affects_spawn_edges": false,
+        "affects_fog_gating": false,
+        "mount_space": "game X/Y/Z at county origin",
+        "panorama_law": "v2"
+      },
+      "mount": {
+        "id": "ember-shore-panorama",
+        "asset": "ember-shore-panorama.glb",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "renderOnly": true,
+        "ownership": "separate mounted scenery; never terrain or gameplay bounds"
+      }
+    }
+  },
+  "boards": {
+    "ember-shore-mood-ab.png": {
+      "size": [
+        1920,
+        684
+      ],
+      "bytes": 1548980,
+      "sha256": "b964fc12d6162f80e4dc8e1b28ab2cb3b75513704628336651e0e9c57e4cb6a7"
+    },
+    "ember-shore-flat-vs-sculpted-ab.png": {
+      "size": [
+        1920,
+        684
+      ],
+      "bytes": 626231,
+      "sha256": "7ff006cf9885fe6a1217686ec0ca3cf5609af5f68435d8f7c291acd26eafc931"
+    },
+    "ember-shore-owner-verdict.png": {
+      "size": [
+        1920,
+        504
+      ],
+      "bytes": 518676,
+      "sha256": "114d0842f38c1a8d449d0088f6274d60ed723b82dbd51d9a9ae7de8e2aaa49bd"
+    },
+    "ember-shore-panorama-mood-ab.png": {
+      "size": [
+        1920,
+        504
+      ],
+      "bytes": 377268,
+      "sha256": "710b5caaf47050a85325d62178b14c2299b0d33231a3430b606adc38d6855914"
+    },
+    "ember-shore-panorama-distance-gate.png": {
+      "size": [
+        1920,
+        684
+      ],
+      "bytes": 726781,
+      "sha256": "ec00e86930b1dd0dace2869c796af566d9b18bae283f522de8f1b7154a0d7298"
+    },
+    "ember-shore-mask-agreement-board.png": {
+      "size": [
+        1600,
+        1260
+      ],
+      "bytes": 689985,
+      "sha256": "447c759fc43424c2086b2ede419f39f9b8b437965e028f8485de3d011807cfc7"
+    }
+  },
+  "verdict": {
+    "grit": "deep-ink preserve world with parchment-gold cooling scars and restrained salvage teal; pressure, never postcard",
+    "panorama": "distance; quiet deep-ink zenith, unequal parchment-gold veils, no Earth",
+    "masks": "published and unchanged",
+    "loadBearingSites": "two preserve rectangles independently sampled buildable-flat; three cooling bands sampled as recessed exported landforms",
+    "landmarks": "freeze lifted; verdict-only titan and vent cues excluded; no asset or mount authored"
+  },
+  "freshReferenceBaseSha": "e6c0656183d7355a357ee57abeb9b2e0b661ed47"
+}

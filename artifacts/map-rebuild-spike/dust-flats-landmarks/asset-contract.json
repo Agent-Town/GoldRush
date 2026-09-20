@@ -1,0 +1,126 @@
+{
+  "law": "reuse > derive > build-new; era-stamped; grit-dressed",
+  "packs": {
+    "dust-flats": {
+      "era": 4,
+      "atlasSha256": "5f5545a1824c3cd3a0cbd5ea155c3f3ddbacd25552347c30bcd1d36331b9f5e9",
+      "assets": {
+        "north-railhead-storm-tower": {
+          "sourceTier": "derive",
+          "triangles": 628,
+          "sha256": "65e905b780d209cfe97d9ea45c9ade7bca145dda6929da5ddbb648350a86ef14",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "west-road-wrecker-shed": {
+          "sourceTier": "reuse",
+          "triangles": 2044,
+          "sha256": "7d2870c0474d959efe7ad2f1d2ad64ad01ffb9bbf3502acf17c5cb60b2cbc918",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "east-horizon-fuel-reserve": {
+          "sourceTier": "reuse",
+          "triangles": 2380,
+          "sha256": "e5efcee5a9a27d883b18712810b9b7a8472984765f0c171d094b0d41ffc68770",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "south-grade-charting-post": {
+          "sourceTier": "derive",
+          "triangles": 348,
+          "sha256": "fba0d59191ccceded3847b889af77ed59691d87418a175feed7d1d6730a3e30c",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "dry-wash-recovery-gantry": {
+          "sourceTier": "reuse",
+          "triangles": 2084,
+          "sha256": "f106ab7f82b02f0c0a2a2fb71fea936636bc48d78e19fb81de7a64173a6fd01b",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        }
+      }
+    }
+  },
+  "totals": {
+    "packs": 1,
+    "assets": 5,
+    "sourceTiers": {
+      "reuse": 3,
+      "derive": 2,
+      "build-new": 0
+    }
+  },
+  "boards": {
+    "dust-flats-landmarks-turntable.png": {
+      "size": [
+        1920,
+        1160
+      ],
+      "sha256": "bb7b13b16a405e4a423795b6fd69d91be6c495c0c3cf67109a90cbed77379bcd"
+    },
+    "dust-flats-landmarks-verdict.png": {
+      "size": [
+        1920,
+        1008
+      ],
+      "sha256": "26bba8e2e0436969e8a28938477418ef69146b9587cfd391e1abc81ef70b0610"
+    },
+    "dust-flats-landmarks-pack.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "95a89a045525b23aafd6c846202ed3fe913ced943ab66b4008f26f1e5cc8f4fb"
+    },
+    "dust-flats-landmarks-bare-reference.png": {
+      "size": [
+        1600,
+        900
+      ],
+      "sha256": "02714a5107667f4c76611564242042720e11c956f7561ab568ac3dcb1872e0ef"
+    },
+    "dust-flats-landmarks-proposed.png": {
+      "size": [
+        1600,
+        900
+      ],
+      "sha256": "256b622b35d42217348bd4049da54416fa176d7d3552b330815e28c629d9a44a"
+    },
+    "dust-flats-landmarks-proposed-overview.png": {
+      "size": [
+        1600,
+        900
+      ],
+      "sha256": "496d1b7b616ae8def5c0502be45f50f4d5534b567b80ea223bb6539675cc251d"
+    },
+    "dust-flats-landmarks-clearance-overlay.png": {
+      "size": [
+        1200,
+        1200
+      ],
+      "sha256": "cdf827254b539f7a64705ee99d5dade6f2f59d9353bd9a4d82d2b03f54d7d1ab"
+    },
+    "dust-flats-landmarks-comparison-labelled.png": {
+      "size": [
+        1920,
+        620
+      ],
+      "sha256": "708ae7fc333646506609a9adddac21455829a8180089161c8fa74cbae6a3d576"
+    },
+    "dust-flats-landmarks-clearance-board.png": {
+      "size": [
+        1920,
+        1240
+      ],
+      "sha256": "e9c6e690c25a7ceddb364d9ac7df22bf9d669a66f98225704e81eb7b6fcf2a78"
+    }
+  },
+  "simulation": "unchanged; every landmark is a separate render-only GLB mounted by contract"
+}

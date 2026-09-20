@@ -1,0 +1,202 @@
+{
+  "key": "county-e4-gusher-county",
+  "tapePath": "tapes/county-e4-gusher-county.json",
+  "contract": "e4-gusher-county",
+  "kind": "county-played",
+  "node": "v26.4.0",
+  "before": {
+    "at": "2026-09-05T15:18:48.615Z",
+    "load": [
+      18.50341796875,
+      25.51123046875,
+      27.27099609375
+    ],
+    "freeMemory": 8952889344
+  },
+  "after": {
+    "at": "2026-09-05T15:18:59.136Z",
+    "load": [
+      16.7216796875,
+      24.900390625,
+      27.03369140625
+    ],
+    "freeMemory": 7498317824
+  },
+  "declaredDurationTicks": 10801,
+  "simulatedSeconds": 360.03333333333336,
+  "bootMs": 55.84495899999979,
+  "replayMs": 8876.247166000001,
+  "ticksPerSecond": 1216.8430867239326,
+  "realtimeMultiple": 40.56143622413109,
+  "estimateTenMinuteSeconds": 14.792375612258123,
+  "estimateFormula": "600 seconds / measured realtimeMultiple; extrapolation, not an actual 10-minute tape when duration differs",
+  "tickMs": {
+    "n": 10801,
+    "min": 0.32129200000008495,
+    "p50": 0.7530420000002778,
+    "p95": 1.4562079999996058,
+    "p99": 2.050250000000233,
+    "max": 12.15908300000001
+  },
+  "tickPath": "sim/county-e4-gusher-county-ticks.json",
+  "result": {
+    "eventLogHash": "fnv1a32:296fe859",
+    "outcome": {
+      "secured": true,
+      "waves": 12,
+      "gold": 80,
+      "timeAlive": 360
+    },
+    "securedSnapshot": {
+      "waves": 12,
+      "gold": 480,
+      "timeAlive": 360.00000000007077
+    },
+    "ticks": 10801,
+    "engine": "headless-contract-sim"
+  },
+  "expectedHash": "fnv1a32:296fe859",
+  "hashMatches": true,
+  "top20": [
+    {
+      "name": "structuredClone",
+      "url": "node:internal/worker/js_transferable",
+      "line": 113,
+      "column": 25,
+      "selfMs": 2378.3100000000004
+    },
+    {
+      "name": "structuredClone",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 760.376
+    },
+    {
+      "name": "terrainSeed",
+      "url": "",
+      "line": 1469,
+      "column": 21,
+      "selfMs": 552.238
+    },
+    {
+      "name": "terrainHash",
+      "url": "",
+      "line": 1486,
+      "column": 21,
+      "selfMs": 402.0299999999999
+    },
+    {
+      "name": "clone",
+      "url": "",
+      "line": 320,
+      "column": 15,
+      "selfMs": 289.70900000000006
+    },
+    {
+      "name": "get diagnostics",
+      "url": "",
+      "line": 484,
+      "column": 17,
+      "selfMs": 221.312
+    },
+    {
+      "name": "multiplyMatrices",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 10385,
+      "column": 18,
+      "selfMs": 179.74099999999999
+    },
+    {
+      "name": "stableProbeMask",
+      "url": "",
+      "line": 1266,
+      "column": 25,
+      "selfMs": 170.148
+    },
+    {
+      "name": "diagnostics",
+      "url": "",
+      "line": 1795,
+      "column": 13,
+      "selfMs": 157.779
+    },
+    {
+      "name": "snapshot",
+      "url": "",
+      "line": 189,
+      "column": 10,
+      "selfMs": 154.65699999999998
+    },
+    {
+      "name": "(anonymous)",
+      "url": "",
+      "line": 193,
+      "column": 26,
+      "selfMs": 125.67300000000002
+    },
+    {
+      "name": "maxHpForInstance",
+      "url": "",
+      "line": 1619,
+      "column": 18,
+      "selfMs": 118.30099999999999
+    },
+    {
+      "name": "toArray",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 11099,
+      "column": 9,
+      "selfMs": 112.78299999999999
+    },
+    {
+      "name": "dispatch",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 105.237
+    },
+    {
+      "name": "currentTrickleInterval",
+      "url": "",
+      "line": 641,
+      "column": 24,
+      "selfMs": 92.65400000000001
+    },
+    {
+      "name": "activePositions",
+      "url": "",
+      "line": 1533,
+      "column": 17,
+      "selfMs": 87.214
+    },
+    {
+      "name": "channelMask",
+      "url": "",
+      "line": 1247,
+      "column": 21,
+      "selfMs": 78.05399999999999
+    },
+    {
+      "name": "syncEnemyInstance",
+      "url": "",
+      "line": 1343,
+      "column": 19,
+      "selfMs": 77.10900000000001
+    },
+    {
+      "name": "hpDiagnostics",
+      "url": "",
+      "line": 1631,
+      "column": 15,
+      "selfMs": 70.52499999999999
+    },
+    {
+      "name": "maxHpForPlacement",
+      "url": "",
+      "line": 1622,
+      "column": 19,
+      "selfMs": 66.148
+    }
+  ]
+}

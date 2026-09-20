@@ -1,0 +1,43 @@
+✔ isoWeekOf: ISO-8601 week boundaries, including the year boundary (0.504666ms)
+✔ isoWeekOf: the year-boundary rule, where naive week arithmetic goes wrong (0.116417ms)
+✔ isBatchedItem recognises BOTH live batching forms, and no others (0.224542ms)
+✔ weeklyItemCensus counts a standalone item in the target week (0.246292ms)
+✔ weeklyItemCensus excludes items from other weeks (0.187667ms)
+✔ a batched item is counted apart and spends NO headline slot (0.156375ms)
+✔ an undatable item is declared apart by CAUSE, never silently counted in the week (0.117666ms)
+✔ an EMPTY corpus REFUSES rather than reporting a clean week (0.1805ms)
+✔ CLI: the budget declaration prints on the HAPPY path (under budget) (714.574333ms)
+✔ CLI: going over budget prints the warning AND names what already stands (748.903167ms)
+✔ CLI: batched items do NOT trip the warning (837.051375ms)
+✔ CLI: items citing a CONTAINED commit still count — the census is not a floor (551.547166ms)
+✔ CLI: the pre-existing sweep numbers are untouched by this addition (535.459625ms)
+✔ a correctly-pointed law passes once baselined (132.094333ms)
+✔ CODE-SIDE ROT: the cited line moves under a fixed coordinate -> POINTER DRIFT (the fire.md :315 shape) (145.982875ms)
+✔ LAW-SIDE ROT: the law is edited to a stale coordinate -> red until re-verified (the F-1276-2 shape) (129.462792ms)
+✔ a pointer past EOF is caught as OUT OF RANGE, not silently skipped (73.962833ms)
+✔ a pointer to a file that does not exist fails rather than being ignored (64.046583ms)
+✔ prose that is not a file:line is not mistaken for a pointer (67.128958ms)
+✔ a MISSING law surface is itself a red — the law cannot be checked if it is gone (65.569ms)
+✔ THE REAL TREE: every law-surface pointer in this repo currently holds (457.632208ms)
+✔ MARKDOWN TARGET: a law surface citing another .md by coordinate is checked, not skipped (F-1278-2) (232.152208ms)
+✔ BOUNDARY: a NEW law surface outside the closed SURFACES list is NAMED (pre-cure it is invisible) (367.550416ms)
+✔ BOUNDARY: a DECLARED exclusion prints its reason instead of the undeclared prompt (155.086958ms)
+✔ BOUNDARY: the live/frozen split is DERIVED from the file, so a new handoff cannot rot it (321.408292ms)
+✔ BOUNDARY: a law-surface-shaped file with NO citations is reported as costless, not as a problem (112.108333ms)
+✔ BOUNDARY: a file already IN SURFACES is never named as unscanned, and a red still reds (154.944791ms)
+✔ GOAL LEDGER ROT: a live non-terminal blockedReason pointer moves -> red names the leaf (159.443334ms)
+✔ BACKLOG COORDINATE BAN: live leaves red, --update cannot bury it, terminal history stays out (301.949542ms)
+✔ DEAD INSTRUMENT: a law ordering fires to run a tool that does not exist is a red (F-2198-1) (48.833042ms)
+✔ a bare citation to a tool that EXISTS resolves and does not red (52.800458ms)
+✔ a citation WITH a coordinate stays POINTER-owned and is not counted as an instrument (95.652584ms)
+✔ SCAN SPACE: declared on the HAPPY path too — a declaration that appears only on failure re-creates the ambiguity it removes (F-2208-1) (131.56525ms)
+✔ SCAN SPACE: DERIVED from the families it enumerates, never transcribed (185.758958ms)
+✔ SCAN SPACE (reverse control): the edge is DECLARED, not widened — a law-shaped .md outside the families stays unscanned (87.501541ms)
+ℹ tests 35
+ℹ suites 0
+ℹ pass 35
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3616.670459

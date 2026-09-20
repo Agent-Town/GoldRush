@@ -1,0 +1,118 @@
+▶ closed account gate preserves saves, sessions, identity and retry code
+  ✔ unconfigured routes retain baseline status and body (51.183584ms)
+  ✖ verifyCode: missing binding and scope (19.041708ms)
+  ✔ deleteAccount: missing binding and scope (2.352458ms)
+  ✖ verifyCode: missing binding (4.213792ms)
+  ✔ deleteAccount: missing binding (1.185333ms)
+  ✖ verifyCode: missing scope (2.236542ms)
+  ✔ deleteAccount: missing scope (1.519708ms)
+  ✖ verifyCode: unreachable registry (1.934ms)
+  ✔ deleteAccount: unreachable registry (1.045083ms)
+  ✖ verifyCode: unopened real registry (1.914917ms)
+  ✔ deleteAccount: unopened real registry (7.697333ms)
+✖ closed account gate preserves saves, sessions, identity and retry code (4300.937084ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 6
+ℹ fail 6
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5129.155042
+
+✖ failing tests:
+
+test at artifacts/sol/account-registry-land/closed-gate.test.mjs:69:68
+✖ verifyCode: missing binding and scope (19.041708ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  200 !== 503
+  
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/artifacts/sol/account-registry-land/closed-gate.test.mjs:84:14)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/artifacts/sol/account-registry-land/closed-gate.test.mjs:69:60)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 200,
+    expected: 503,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at artifacts/sol/account-registry-land/closed-gate.test.mjs:69:68
+✖ verifyCode: missing binding (4.213792ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  200 !== 503
+  
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/artifacts/sol/account-registry-land/closed-gate.test.mjs:84:14)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/artifacts/sol/account-registry-land/closed-gate.test.mjs:69:60)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 200,
+    expected: 503,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at artifacts/sol/account-registry-land/closed-gate.test.mjs:69:68
+✖ verifyCode: missing scope (2.236542ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  200 !== 503
+  
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/artifacts/sol/account-registry-land/closed-gate.test.mjs:84:14)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/artifacts/sol/account-registry-land/closed-gate.test.mjs:69:60)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 200,
+    expected: 503,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at artifacts/sol/account-registry-land/closed-gate.test.mjs:69:68
+✖ verifyCode: unreachable registry (1.934ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  200 !== 503
+  
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/artifacts/sol/account-registry-land/closed-gate.test.mjs:84:14)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/artifacts/sol/account-registry-land/closed-gate.test.mjs:69:60)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 200,
+    expected: 503,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at artifacts/sol/account-registry-land/closed-gate.test.mjs:69:68
+✖ verifyCode: unopened real registry (1.914917ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  200 !== 503
+  
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/artifacts/sol/account-registry-land/closed-gate.test.mjs:84:14)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/artifacts/sol/account-registry-land/closed-gate.test.mjs:69:60)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 200,
+    expected: 503,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

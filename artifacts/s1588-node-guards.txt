@@ -1,0 +1,902 @@
+✔ agent consent keeps the ruled pan and build rungs plus shipped repair rung (0.732625ms)
+✔ tool surface keeps auto-pan and place-building at their ruled rungs (0.386167ms)
+✔ standing orders keep harvest at rung 2 and build at rung 3 (0.146041ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ a wire act crosses into the sim and changes it (1105.31675ms)
+✔ agent_orders validates the standing-order grammar and wire bounds (1873.830375ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ two independently booted sims agree tick for tick (940.261708ms)
+✔ the seat carries BUILD and refuses to stretch for the rest (86.018667ms)
+✔ the throttle ceiling is the relay rate limit, not a taste (1215.517708ms)
+✔ a missing dist/ is refused, not cleared (30.5755ms)
+✔ CONTROL: the same fixture with one benign dist file passes — it is the emptiness, not the fixture (33.938041ms)
+✔ an empty later-asset blacklist is refused — the leak check would otherwise pass vacuously (28.930791ms)
+✔ the success line reports the denominator, so a vacuous clearance would be legible (29.696542ms)
+✔ POSITIVE CONTROL: a later-epoch manifest id in dist still fails (28.469791ms)
+✔ POSITIVE CONTROL: a leaked later-epoch plate asset in dist still fails (30.187084ms)
+✔ POSITIVE CONTROL: the GR_RELEASE=e1 precondition still refuses a bare invocation (28.088917ms)
+✔ an E1 asset whose content hash reads like an era tag is NOT a leak (33.122083ms)
+✔ POSITIVE CONTROL: a genuine later-era asset in dist still fails (32.218083ms)
+✔ POSITIVE CONTROL: a later-era tag ENDING the module name still fails (the `$` anchor) (31.701833ms)
+✔ contract ids are globally unique across the ten epoch bundles (0.5735ms)
+✔ bench seed sets cover Frontier and contain only valid known-contract seeds (0.153ms)
+✔ reds on the pre-strike ledger that manufactured the owner directive, greens on the struck one (269.857041ms)
+✔ a closure APPENDED below the panel row does not clear the panel — which is the whole defect (38.398167ms)
+✔ striking the ORIGINAL line clears the panel — the fix the guard prescribes actually works (36.523292ms)
+✔ an open finding on the panel is left alone (41.123625ms)
+✔ REFUSES rather than passes when the panel moves out from under it (31.892792ms)
+✔ the wide closure vocabulary is opt-in and does not leak into the default census (0.366084ms)
+✔ contract direction files exist under assets/processed (0.937875ms)
+✔ contract direction aliases do not overwrite explicit directions (0.428625ms)
+✔ a bare spec:line citation fails the guard (116.051041ms)
+✔ a citation carrying an exact test title passes (103.854292ms)
+✔ a short code span cannot consume the following quoted title (104.057875ms)
+✔ a bare apostrophe cannot consume the following quoted title (100.384959ms)
+✔ an odd same-kind delimiter cannot consume the following quoted title (106.947208ms)
+✔ a test helper string is not harvested as a title (115.50975ms)
+✔ chained describe modifiers remain title declarations (106.703625ms)
+✔ a citation carrying an ELIDED test title passes (102.234833ms)
+✔ a quoted title that does not exist in the spec still fails (116.770292ms)
+✔ a grandfathered bare citation passes, and a second copy of it does not (212.947792ms)
+✔ --report never gates (104.385125ms)
+✔ REFUSES when no tracked task markdown exists (denominator 0 docs) (95.335042ms)
+✔ REFUSES when task docs exist but carry zero citations (101.828416ms)
+✔ REFUSES when the baseline it ratchets against is missing (150.795958ms)
+✔ a citation quoting a real NON-TEST source line is carried, not a violation (107.924291ms)
+✔ a quote matching NEITHER a title nor any source line still fails (103.823042ms)
+✔ the verdict names the citations it did NOT gate (105.461208ms)
+✔ --report still never gates, even on a denominator it could not read (106.959875ms)
+✔ the claimed-spec -> owning-config map is DERIVED, not tabulated (1.405916ms)
+✔ derivation REFUSES rather than silently measuring nothing if the array is renamed (0.86675ms)
+✔ MANUFACTURED: a bare playwright command naming a claimed spec FAILS the guard (29.119333ms)
+✔ MANUFACTURED: a CHECKLIST-form adjacent-suite line FAILS the guard (why arm (b), not (a)) (28.788292ms)
+✔ MANUFACTURED: a mention inside the SELF-CHECK region FAILS the guard (28.748417ms)
+✔ a DESCRIPTIVE mention outside any gate region is NOT an offender (why not arm (c)) (28.325ms)
+✔ naming the owning CONFIG clears the master (28.327958ms)
+✔ naming the npm ALIAS clears the master (29.362667ms)
+✔ the guard actually RUNS when invoked as a script (entrypoint is not a silent no-op) (85.756958ms)
+✔ the live board has no LIVE offender (80.328709ms)
+✔ every grandfathered file is still a real offender (no stale excuses) (77.981708ms)
+✔ whole-suite collection guard is cwd-invariant (5051.841459ms)
+✔ town-spec collection guard is cwd-invariant (595.866833ms)
+✔ E2 default railcar group secures only when its last component dies (0.480667ms)
+✔ E2 default railcar group rejects a wrong group id (0.076917ms)
+✔ E3 variant uses the component-boss group suffix, not railcar (0.062083ms)
+✔ E1 plain Baron accepts no group id and rejects a defined one (0.056459ms)
+✔ elite kind must match even when the component group is fully down (0.051667ms)
+✔ console error watching stays in one literal-prefix source (5ms)
+✔ fire shell SKIPS the cross-engine guard, with a reason a reader can act on (0.452833ms)
+✔ lane and attended shells RUN the cross-engine guard (0.070625ms)
+✔ a missing second interpreter still outranks the shell question (0.055375ms)
+✔ the SELECTOR admits an owner ACT and refuses a gate that merely says the word (1.120041ms)
+✔ a NEGATED owner gate is a disclaimer and must NOT flag (F-1551-4) (0.250542ms)
+✔ negation handling does not disarm the guard — every positive still flags (0.080334ms)
+✔ a negation is scoped to its own sentence, so a mixed gate keeps its owner half (0.058459ms)
+✔ the selector reads the other real owner-gate phrasings on the board (0.071542ms)
+✔ and refuses the fire-actionable phrasings that sit beside them (0.068667ms)
+✔ a row is keyed by the id it INTRODUCES, not one its prose cites (0.13875ms)
+✔ gateOf takes the LAST gate clause, since row prose quotes earlier ones (0.058458ms)
+✔ MANUFACTURED DEFECT — an owner-gated row filed with no desk mention is named (0.491625ms)
+✔ THE REAL s1540->s1541 EVENT: both undesked owner rows are caught, the six others are not (0.1595ms)
+✔ ...and once they are ON the desk, the same window passes (0.080167ms)
+✔ the desk is the LAST desk word, so an upstream PROSE mention does not satisfy it (0.422416ms)
+✔ DESK-NOT-OWED excuses an id, and is scoped so it cannot cover an unrelated one (0.169166ms)
+✔ SKIPS mid-fire on an ACTIVE lock, so drain batteries are unaffected (0.059166ms)
+✔ REFUSES rather than greening when line-1 carries no desk at all (0.047833ms)
+✔ the backtick header is readable here too — the three desk parsers stay in step (0.07625ms)
+✔ addedRows reads the ledger glyphs and ignores diff noise (0.125459ms)
+✔ a desk item WITH a declaring row passes (34.92075ms)
+✔ MANUFACTURED: a desk item with NO row anywhere exits 1 and names the id (34.248917ms)
+✔ MANUFACTURED: the F-1328-3 shape — MENTIONED inside another finding row is NOT declared (33.981125ms)
+✔ a row whose id sits past the 90-char subject zone does NOT declare it (33.558834ms)
+✔ the leading GLYPH is irrelevant — F-1334-1 refuted marker equality (135.185792ms)
+✔ the markdown list bullet is stripped: bulleted and unbulleted rows read alike (71.132375ms)
+✔ GROUND TRUTH — the real s1529 backtick header must NOT read as "no desk" (33.31175ms)
+✔ REFUSES (exit 2) rather than greening when there is no OWNER DESK segment (31.2005ms)
+✔ REFUSES (exit 2) when the desk segment holds zero keyed items (32.317167ms)
+✔ REFUSES (exit 2) when BACKLOG.md is missing (31.447875ms)
+✔ the entrypoint actually RUNS — a space in the repo path must not no-op it (33.799833ms)
+✔ the live board is green under this guard (baseline is honest) (46.413208ms)
+✔ MANUFACTURED F-1471-3: an ARCHIVED desk never satisfies the guard (33.081666ms)
+✔ MANUFACTURED F-1471-3: an archived desk must not MASK an undeclared LIVE item (33.349334ms)
+✔ all five desk spellings are read — the majority form was invisible (178.911292ms)
+✔ an ACTIVE lock line SKIPs (exit 0) — the desk is written at handoff time (31.212167ms)
+✔ a lock line that MENTIONS the desk in prose is still a lock, not a desk (31.94175ms)
+✔ MANUFACTURED: a prose mention upstream loses to the REAL desk in the tail (31.381792ms)
+✔ a handoff whose desk header has no F-IDs after it REFUSES (exit 2) (30.671625ms)
+✔ a SLUG-keyed desk item WITH a declaring row passes (31.528917ms)
+✔ MANUFACTURED F-1534-2: a SLUG desk item with NO row exits 1 and names the slug (34.113167ms)
+✔ the F-1328-3 shape on the SLUG axis: a slug CITED in another row is not declared (32.986417ms)
+✔ F-1535-1: a backtick in an item's PROSE is not a desk item (the flat-scan trap) (31.064916ms)
+✔ F-1535-1: an item keyed by an F-ID that also cites its slug is ONE F-keyed item (33.336542ms)
+✔ a desk of ONLY slug items does not trip the zero-keyed-items refusal (34.822875ms)
+✔ the live desk carries BOTH shapes — the slug axis is not vacuously green (12.199ms)
+✔ the grandfather list may only SHRINK — never grows past the s1334 baseline (0.280417ms)
+✔ every grandfathered id is still on the desk — the list must not rot (11.062917ms)
+✔ MANUFACTURED: with the list EMPTY the guard is strict — no id is excused (30.785584ms)
+✔ drain path REFUSES a terminal-closed leaf (F-1248-1) — and clears the same fixture when live (63.813167ms)
+✔ every TERMINAL_CLOSED word is refused on the drain path, and no other word is (309.57725ms)
+✔ an owner BLOCK still outranks everything and still names the owner (unchanged by F-1248-1) (31.482916ms)
+✔ --queue keeps its own wording and its own reason line (31.587084ms)
+✔ F-1311-2: --queue refuses a fresh bare citation and names the repair (108.267208ms)
+✔ F-1311-2: --queue accepts the same citation with its test title (108.20525ms)
+✔ F-1311-2: --queue respects the grandfathered baseline (110.353042ms)
+✔ F-1311-2: the drain arm remains unchanged for a fresh bare citation (32.075167ms)
+✔ a closed leaf whose reason sits under a session-stamped key is still explained (59.879375ms)
+✔ F-1249-1: a session-stamped reason key that varies the STEM is explained, and non-reason keys are not (96.409167ms)
+✔ F-1249-1: a stale blockedReason is never printed as the CLOSURE cause (64.851958ms)
+✔ F-1249-1: the leaf TITLE is printed on both refusal arms, even when a reason key exists (99.863167ms)
+✔ --all reports terminal-closed leaves but its exit code still tracks BLOCKED alone (66.261ms)
+✔ F-1250-1: an EXACT taskFile match outranks a longer-named sibling (no false CLEAR) (114.29275ms)
+✔ F-1250-1: the reverse — a lawful merged drain is not reddened by a longer closed predecessor (68.92325ms)
+✔ F-1250-1: with NO exact match, longest-wins still decides (the tie-break is kept, not replaced) (36.026292ms)
+✔ F-1250-1 rider: a blocked SIBLING still refuses, but now says which leaf you actually named (65.718042ms)
+✔ a missing leaf is still UNKNOWN-not-a-clearance, and --strict still escalates it (69.377083ms)
+✔ --queue REFUSES a master a runner already holds (F-1322-1) — and clears it once the slot frees (160.545667ms)
+✔ the live-run match is the runner's exact shape, not a name suffix (157.606709ms)
+✔ an UNDRAINED done-move WARNS but never refuses — s1320's lawful §7.5 re-dispatch must pass (366.601334ms)
+✔ the DRAIN path is untouched by both arms — a done-move is what a drain is FOR (32.063791ms)
+✔ published mask tables exactly track authored contract data (8.488542ms)
+✔ published Moth Season mask stays inside bounds and agrees with authored water (0.536917ms)
+✔ e2-trestle mask stays inside bounds and agrees with authored water (0.301375ms)
+✔ e2-pressure-garden mask stays inside bounds and agrees with authored water (0.215458ms)
+✔ e2-incline mask stays inside bounds and agrees with authored water (0.250542ms)
+✔ e3-canyon-works mask stays inside bounds and agrees with authored water (0.247875ms)
+✔ e3-blackout-ridge mask stays inside bounds and agrees with authored water (0.232958ms)
+✔ e3-moth-season mask stays inside bounds and agrees with authored water (0.202958ms)
+✔ e3-fairground mask stays inside bounds and agrees with authored water (0.23625ms)
+✔ e4-dust-flats mask stays inside bounds and agrees with authored water (0.378417ms)
+✔ e4-long-road mask stays inside bounds and agrees with authored water (0.227666ms)
+✔ e4-gusher-county mask stays inside bounds and agrees with authored water (0.235917ms)
+✔ e4-boneyard mask stays inside bounds and agrees with authored water (0.202125ms)
+✔ e5-regatta mask stays inside bounds and agrees with authored water (0.255ms)
+✔ e5-stillwater mask stays inside bounds and agrees with authored water (0.4625ms)
+✔ e5-flotilla mask stays inside bounds and agrees with authored water (0.194167ms)
+✔ e6-glow-mesa mask stays inside bounds and agrees with authored water (0.205458ms)
+✔ e6-showroom mask stays inside bounds and agrees with authored water (0.176167ms)
+✔ e6-half-life-hollow mask stays inside bounds and agrees with authored water (0.166667ms)
+✔ e6-picnic mask stays inside bounds and agrees with authored water (0.159375ms)
+✔ e7-relay-valley mask stays inside bounds and agrees with authored water (0.224ms)
+✔ e7-echo-canyon mask stays inside bounds and agrees with authored water (0.226875ms)
+✔ e7-dead-band mask stays inside bounds and agrees with authored water (0.199334ms)
+✔ e7-relay-rush mask stays inside bounds and agrees with authored water (0.155667ms)
+✔ e8-mare-claim mask stays inside bounds and agrees with authored water (0.194ms)
+✔ e9-dome-basin mask stays inside bounds and agrees with authored water (0.189541ms)
+✔ e9-seed-run mask stays inside bounds and agrees with authored water (0.191958ms)
+✔ e9-devils-alley mask stays inside bounds and agrees with authored water (0.2335ms)
+✔ e9-old-canal mask stays inside bounds and agrees with authored water (0.225292ms)
+✔ e10-ember-shore mask stays inside bounds and agrees with authored water (0.446125ms)
+✔ entry damage tables include both E1 contracts (0.410125ms)
+✔ night shift wave 3 has reduced entry damage (0.068417ms)
+✔ night shift wave 12 has no entry damage scale (0.061458ms)
+✔ entry damage scaling ends after wave 10 (0.111875ms)
+✔ entry damage scales are finite reductions (0.089083ms)
+✔ E1 entry damage tables agree (0.345083ms)
+✔ a dev server classifies as dev (15.228917ms)
+✔ a preview server classifies as not-dev — status 200 must NOT exonerate it (2.597958ms)
+✔ a dead port classifies as unreachable (1.538917ms)
+✔ a trailing slash on baseURL does not break the probe (1.035042ms)
+✔ the not-dev message names the actual fix, not just the fault (0.129125ms)
+✔ globalSetup THROWS on a preview server — the violation path actually runs (2.243208ms)
+✔ globalSetup RESOLVES on a dev server — the guard is not one that always fires (0.876208ms)
+✔ globalSetup is INERT when the flag is unset — lanes and ordinary runs pay nothing (0.10075ms)
+✔ real history has exactly the four former double-state findings and current BACKLOG has none (108.909375ms)
+✔ prose citations are not declarations, only struck declarations close, and duplicate opens stay open (37.008292ms)
+✔ regression arm: narrow open vocabulary is byte-identical when explicitly selected (0.338334ms)
+✔ wide open vocabulary admits an explicit 🟠 OPEN declaration (0.099167ms)
+✔ 🟢 RULING without a state word is not an open declaration (0.073583ms)
+✔ wide open vocabulary exposes a ✅ plus separate 🔬 OPEN conflict without reddening narrow (31.185541ms)
+✔ wide-open advisory reports skipped rows, hidden open IDs, and narrow closed-only IDs (30.837083ms)
+✔ fire shell (CLAUDE_CONFIG_DIR present) resolves playwright workers to 1 (243.197791ms)
+✔ non-fire shell (CLAUDE_CONFIG_DIR absent) keeps playwright parallelism (242.092667ms)
+✔ all 28 scripts/*.test.mjs fixture owners remove their temp directories (54988.002917ms)
+✔ a second battery APPENDS — it never destroys the first arm evidence (135.105583ms)
+✔ playwright jobs get --workers=1 injected (0.404542ms)
+✔ an explicit --workers is respected, so a deliberate parallelism control is not overridden (0.10075ms)
+✔ non-playwright jobs are left exactly as given (0.050625ms)
+✔ a failing job produces a non-zero overall verdict (94.254167ms)
+✔ a command that cannot spawn is recorded as a failure, not a pass (35.43ms)
+✔ misuse exits 2 rather than reporting a vacuous green (97.22ms)
+✔ --cwd actually runs the job in that directory (36.676875ms)
+✔ --env reaches the child process (68.503708ms)
+✔ --env is merged over the inherited environment, not a replacement (68.912667ms)
+✔ a non-existent --cwd exits 2 rather than falling back to the repo root (33.584541ms)
+✔ a malformed --env exits 2 rather than dropping the variable silently (59.24475ms)
+✔ the jobs spec is still found when the new flags precede it (57.629625ms)
+✔ a gate nothing calls is reported as a NEW orphan and exits 1 (109.30025ms)
+✔ grandfathering that orphan with a reason turns the gate green (106.617583ms)
+✔ a gate whose only caller is a *.config.ts webServer command counts as REACHED (99.072ms)
+✔ a guard named only in a COMMENT is not reached — prose is not a caller (112.688583ms)
+✔ putting it in the GUARDS array clears it — the control for the arm above (111.044416ms)
+✔ a non-gate script (dev, preview, census) is never ratcheted on (110.20775ms)
+✔ an orphan that GAINED a caller is reported so the baseline can tighten (110.524125ms)
+✔ --report never gates, even with a fresh orphan present (113.459083ms)
+✔ REGRESSION: an untracked guard-shaped file is byte-invisible by default (150.071584ms)
+✔ --include-untracked reports an untracked guard-shaped file as NEW with no caller (107.837417ms)
+✔ a tracked baselined orphan stays known under --include-untracked (120.819542ms)
+✔ --include-untracked still excludes untracked SCRATCH_FILE probes (107.8655ms)
+✔ --include-untracked excludes gitignored guard-shaped files (103.522875ms)
+✔ --update-baseline --include-untracked REFUSES without writing baseline bytes (81.895ms)
+✔ REFUSES (rc=2) when package.json has no scripts block (88.803916ms)
+✔ REFUSES (rc=2) when no scripts/*.mjs is tracked (88.123083ms)
+✔ REFUSES (rc=2) when the resolver cannot reach its own anchors (90.463417ms)
+✔ REFUSES (rc=2) when the baseline file is missing — not read as {} (93.3095ms)
+✔ REFUSES (rc=2) when the baseline is unreadable (100.76575ms)
+✔ REFUSES (rc=2) when no subject matches the gate patterns (241.655375ms)
+✔ an owner escalation whose cited F-ID has no ledger row exits 1 (106.198375ms)
+✔ the SAME escalation goes green once the F-ID has a ledger row -- the control (107.43ms)
+✔ escalating with NO F-ID cited at all exits 1 -- it can never be found (106.091833ms)
+✔ all five desk spellings are matched, so the check cannot be dodged by an apostrophe (530.351292ms)
+✔ POSITIVE CONTROL: the real repo passes, with a non-empty measured subject (61.343125ms)
+fallbackTownEraPropManifests: 7 fallback keys = 7 static imports = 7 files
+fallbackManifests (non-release): 10 fallback keys = 10 files
+fallbackFamilyBundles: 1 fallback keys = 1 files
+fallbackCapsBundles: 1 fallback keys = 1 files
+fallbackContractBundles (non-release): 10 fallback keys = 10 files
+✔ node glob fallbacks match every on-disk manifest (non-release branches) (3.007416ms)
+✔ every terminal-closed goal leaf can state why it closed (0.853125ms)
+✔ the mirrored resolver vocabulary still matches drain-block-check.mjs (0.182917ms)
+✔ goal tree schema is valid (1.804791ms)
+✔ ten sampled merged leaves have a done receipt and ancestral merge (13331.4805ms)
+✔ gr-sim replays the same contract, seed, and orders byte-for-byte (7612.096875ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ a distant HARVEST walks before it pays (1242.181875ms)
+✔ gr-sim keeps standing orders through free blank and null turns (2394.88775ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ gr-sim hashes a fractional-yield run identically twice (4127.131583ms)
+✔ gr-sim deterministically runs the Claim objective (3875.667709ms)
+✔ overtime banks the Claim secure and measures the homestead on both Node engines (153269.741375ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ gr-sim boots escort mode from data instead of URL state (12465.644292ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ the Claim driver consumes declared water and posts RunManager secure at wave 10 (7636.143875ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ Twin Banks consumes its declared crossings and build zones before securing at wave 20 (25192.461125ms)
+✔ the frozen Claim environment rows equal the five pinned bench seeds (0.400667ms)
+✔ gr-sim places Night Shift fixtures from the contract (16385.014834ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ Night Shift wreckers outrun lantern light headlessly (879.431333ms)
+✔ gr-sim ends an idle Baron run at its grace ceiling (7083.41925ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ the Baron driver runs the declared fight and keeps medal writes off headless (19661.146167ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ the E2 Baron fights keep their pinned outcomes (25697.77125ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ identical order failures coalesce across submissions without hiding a new failure (2881.2685ms)
+✔ all added lines present in main are absorbed (1.367625ms)
+✔ one absent line is returned as residue (0.2375ms)
+✔ token-rich lane lines can be absorbed by a main superset line (0.10625ms)
+✔ token-poor lane lines are not absorbed by unrelated main text (0.0775ms)
+✔ token fallback starts at exactly eight qualifying tokens (0.088625ms)
+✔ binary diffs are never counted (0.104416ms)
+✔ blank and whitespace-only additions are ignored (0.079042ms)
+✔ missing text is undecidable and never counted (0.084125ms)
+✔ a lane-only new file reports every added line absent from main (0.2585ms)
+✔ a lane-only new binary file remains binary and uncounted (0.143417ms)
+✔ an unreadable lane-tip path remains undecidable (0.434917ms)
+✔ zero residue remains HELD rather than changing the verdict (0.124292ms)
+✔ absorbed-lines counts a lane-created text file missing in main (0.136ms)
+✔ absorbed-lines keeps a lane-created binary file binary (0.092166ms)
+✔ absorbed-lines narrows undecidable to an unreadable lane tip (0.075958ms)
+Preparing worktree (checking out 'tmp-ledger-drift')
+Preparing worktree (checking out 'tmp-no-ledger-drift')
+✔ no pidfile: the slot is free (0.427125ms)
+✔ our OWN dispatcher does not count as busy (the F-1418-1 cure) (26.013375ms)
+✔ a FOREIGN runner IS busy — the direction that must never regress (12.960875ms)
+✔ pid 1 is an ancestor of EVERY process and must still read busy (9.457584ms)
+✔ fail safe: anything we cannot establish reads busy (0.149625ms)
+✔ an unrelated pid that is merely NUMERIC is not trusted (9.117167ms)
+✔ bookkeeping reassurance narrows only when tasks are behind (744.763875ms)
+✔ the FIRST line keeps its leading space — no character is eaten (F-1416-1) (1.303542ms)
+✔ a churn path on the FIRST line is still recognised as churn (the false DIRTY) (0.074917ms)
+✔ every CHURN constant is recognised in first position (0.075125ms)
+✔ a churn DIRECTORY matches by prefix, not by equality (0.062292ms)
+✔ untracked debris and tracked dirt stay in separate buckets (s1299) (0.065333ms)
+✔ staged and staged+unstaged prefixes parse identically (0.061917ms)
+✔ a trailing newline produces no phantom entry (0.0575ms)
+✔ empty porcelain is a clean tree (0.051584ms)
+✔ a correctly-pointed law passes once baselined (113.89775ms)
+✔ CODE-SIDE ROT: the cited line moves under a fixed coordinate -> POINTER DRIFT (the fire.md :315 shape) (93.186ms)
+✔ LAW-SIDE ROT: the law is edited to a stale coordinate -> red until re-verified (the F-1276-2 shape) (87.058666ms)
+✔ a pointer past EOF is caught as OUT OF RANGE, not silently skipped (51.023541ms)
+✔ a pointer to a file that does not exist fails rather than being ignored (55.684916ms)
+✔ prose that is not a file:line is not mistaken for a pointer (55.004ms)
+✔ a MISSING law surface is itself a red — the law cannot be checked if it is gone (50.835708ms)
+✔ THE REAL TREE: every law-surface pointer in this repo currently holds (64.6695ms)
+✔ MARKDOWN TARGET: a law surface citing another .md by coordinate is checked, not skipped (F-1278-2) (146.951ms)
+✔ GOAL LEDGER ROT: a live non-terminal blockedReason pointer moves -> red names the leaf (141.365166ms)
+✔ BACKLOG COORDINATE BAN: live leaves red, --update cannot bury it, terminal history stays out (224.639083ms)
+moth-season idle {"secured":false,"waves":4,"timeMs":129333,"gold":0,"kills":61,"calls":0,"eventLogHash":"fnv1a32:e9acca00"}
+moth-season competent {"secured":true,"waves":12,"timeMs":360000,"gold":25,"kills":433,"calls":12,"eventLogHash":"fnv1a32:6b983cf6"}
+✔ Moth Season rejects idle darkness while lantern, turret, and harvest play secures (10352.330166ms)
+✔ fire shell bounds node-guard file concurrency and explains the reduced run (0.567084ms)
+✔ lane and attended shells keep Node's default file concurrency (0.08325ms)
+✔ launcher propagates a non-zero node:test child exit code exactly (147.423625ms)
+MANUFACTURED_DETECTION: shell + node sibling collapsed to 1 battery; reported 2 total
+EXIT_CODES: passing alone=0 sibling=0; failing alone=1 sibling=1
+✔ contention is advisory, correctly counted, and absent when alone (1210.034708ms)
+✔ the harness gives the battery a finite default per-test timeout (153.935458ms)
+✔ a per-test timeout still overrides the default, so declared budgets are untouched (4174.042334ms)
+✔ rejects an unset PROBE_BASE before launching a browser (164.849625ms)
+✔ rejects an unset PROBE_BASE before checking the browser executable (161.882417ms)
+✔ rejects a positional base URL with a PROBE_BASE directive (156.677333ms)
+✔ title lookup finds a red even when its recorded coordinate has rotted (30.420375ms)
+✔ matching file:line never substitutes for an exact title match (28.827667ms)
+✔ clean and absent specs have distinct words and exit codes (89.031375ms)
+✔ json output still names the outcome and denominator (29.463917ms)
+✔ strict mode makes a known red actionable without changing its word (31.631958ms)
+✔ skipped-only tests are not called clean (29.712209ms)
+✔ literal backslashes survive markdown parsing (31.468458ms)
+✔ absent and malformed inventories fail loudly (85.372083ms)
+✔ bare names are misuse and verdict dates track the compact snapshot (116.876875ms)
+✔ rejects an unset base before probing ownership (0.912ms)
+✔ accepts a listener owned by this checkout (0.0905ms)
+✔ rejects a listener owned by another checkout (0.384792ms)
+✔ rejects a port with no listener (0.133333ms)
+✔ rejects an unusable ownership probe (0.102ms)
+✔ a review citing a tracked file is TRACKED (153.049416ms)
+✔ 274-vs-13 regression: a review citing a tracked directory is TRACKED (123.638ms)
+✔ an ignored on-disk log is ON-DISK-UNTRACKED and strict exits non-zero (112.96525ms)
+✔ a brace range is SKIPPED rather than a violation (93.456ms)
+✔ a line suffix resolves against the tracked file without it (96.302792ms)
+✔ default mode exits zero with ON-DISK-UNTRACKED evidence (90.333292ms)
+✔ a blocked leaf citing a RULED finding is stale (0.859875ms)
+✔ a blocked leaf citing an UNRULED finding is not stale (0.081042ms)
+✔ "RULING REQUIRED" prose does not count as a ruling — only "<id> RULED" does (0.051875ms)
+✔ terminal-closed statuses refuse work too, so their reasons are checked (0.063958ms)
+✔ a merged leaf is not a refusal, however its reason reads (0.0655ms)
+✔ a leaf is any node carrying taskFile — NOT a childless node (0.054125ms)
+✔ denominator agrees with drain-block-check on the live tree (2.953334ms)
+✔ the live tree carries no stale refusal (8.333834ms)
+✔ runner exit follows guard exit codes (2656.204542ms)
+✔ --only rejects unknown guards and runs one known guard (169.536541ms)
+✔ --only accepts a comma-separated subset in canonical order (534.630417ms)
+✔ --only rejects a list containing an unknown guard rather than narrowing (29.1855ms)
+✔ power-budget rows include p95 only when printed (280.224542ms)
+✔ --changed-since runs the base gate when no path rule matches (670.001667ms)
+✔ --changed-since adds the worker guards when functions/ moved (2105.619792ms)
+✔ --changed-since exits 2 on a bad ref rather than narrowing to the base gate (275.934041ms)
+✔ --changed-since exits 2 when the untracked listing fails rather than reporting a green (1830.892584ms)
+✔ guards run with GR_GUARD_NO_ARTIFACT so a gate cannot dirty its own tree (187.104083ms)
+✔ a signal-killed guard is never a pass (169.662042ms)
+AT RISK (archive files absent from git ls-files; informational): 500 files, 1455.24 MB
+Task-stats high-water: subject 499 rows, baseline 498
+Run log retention: 499 entries checked, 0 unrecoverable
+✔ every recorded run log remains recoverable (298.040416ms)
+✔ every scripts/**/*.mjs parses (1635.804417ms)
+✔ every scripts/**/*.sh parses (12.619209ms)
+✔ every rehearsal/**/*.mjs parses (378.796583ms)
+✔ every foundry/**/*.mjs parses (38.069458ms)
+✔ every foundry/**/*.sh parses (3.433291ms)
+✔ site: every local <script src> the pages load actually exists (1.411083ms)
+✔ site: each loaded script parses under the grammar its tag requests (46.526792ms)
+✔ site: each inline <script> parses under the grammar its tag requests (49.038167ms)
+✔ site: every local href/src resolves to a file that exists (1.787042ms)
+✔ site: the denominator still contains a data-* reference and an escaping path (0.518ms)
+✔ site: every in-page anchor targets an element that exists (0.571791ms)
+✔ site: assay-office duration vocabulary matches functions/api/stats.ts (0.956791ms)
+✔ skill.md grammar matches every StandingOrder source form (1.683958ms)
+✔ skill.md buildables match BuildableId (0.282291ms)
+✔ skill.md bench seeds match the source registry (0.231208ms)
+✔ skill.md door-contracts match SUPPORTED_CONTRACTS in HeadlessContractSim (0.377875ms)
+✔ the guard BITES a drifted skill.md (positive control, manufactured defect) (309.454708ms)
+✔ reds on the s1461 incident row that motivated the finding (0.865708ms)
+✔ reds on the live e3-moth-socket ghost line (0.182334ms)
+✔ stays silent on a leaf mentioned in the body as an aside (0.085375ms)
+✔ does not red on an open 🟡 finding whose slice merged (arm (a) is rejected) (0.084542ms)
+✔ treats a backticked mention as a quotation, not a claim (0.084375ms)
+✔ stays silent on a row already marked closed (0.065542ms)
+✔ stays silent while the leaf has not landed (0.081125ms)
+✔ reports a claim it cannot resolve rather than guessing (0.069917ms)
+✔ rows without the claim are not classified at all (0.081542ms)
+✔ resolves a leaf by taskFile as well as by id (0.137916ms)
+✔ headline is the leading bold span, and falls back when there is none (0.111ms)
+✔ the guard RUNS when invoked as a script (entrypoint is not a silent no-op) (56.160791ms)
+✔ the live ledger carries no stale READY-FOR-GATES claim (57.374708ms)
+✔ a shipped leaf counts as landed, not only a merged one (0.168084ms)
+✔ curation is deterministic, interleaved, and never repeats thin-pool items (2.10075ms)
+✔ intake rejects headless captures and explicit banned files (3.438708ms)
+✔ OBS v5 authentication, scene discovery, and switch request use one websocket (2.412333ms)
+✔ failed preconditions are silent no-ops (0.151375ms)
+✔ missing spec, websocket, or required scenes never enter FACTORY (3.188166ms)
+✔ offline stream leaves FACTORY untouched (0.566167ms)
+✔ green showcase switches FACTORY, dwells, and always restores AUTOPILOT (0.60775ms)
+✔ red showcase skips dwell and restores AUTOPILOT (0.637ms)
+✔ append is hash-idempotent and keeps one JSON line per entry (6.519042ms)
+✔ downtime accumulates and catch-up shows oldest first without double-show (6.725708ms)
+✔ concurrent appenders preserve every entry and concurrent consumers show once (245.250166ms)
+✔ missing subject directory fires the actionable existence message (2.281625ms)
+✔ subject below its floor reports expected and walked counts (0.969875ms)
+✔ subject exactly at its floor passes (0.941ms)
+✔ empty present subject fires the floor instead of passing silently (0.570375ms)
+✔ ignoreReadErrors returns only readable paths (1.313708ms)
+✔ default walk fails closed on an unreadable subtree (0.997709ms)
+✔ floor catches files hidden by an ignored read error (1.362834ms)
+✔ reducer output is cwd-invariant (358.749ms)
+✔ reducer reports configured and actual workers distinctly (180.7025ms)
+✔ reducer reports absent harness config as unrecorded (186.342958ms)
+✔ reducer reports the captured revision (189.332583ms)
+✔ reducer reports an absent revision as unrecorded (157.1135ms)
+✔ reducer reports a dirty captured revision (154.948041ms)
+✔ reducer output is script-root-invariant (328.784083ms)
+✔ reducer renders absolute raw paths relative to the recorded tree (161.770834ms)
+✔ reducer refuses body statistics when the recorded tree is unavailable (326.798125ms)
+✔ an unresolved masking row never outranks a resolved row (183.845667ms)
+✔ townEraProps resolves its manifests under plain node, not only under Vite (76.159292ms)
+✔ town specs collect without loading Vite-only modules (699.056ms)
+﹣ e1-dry-gulch hash is identical across installed Node engines (0.381833ms) # FIRE SHELL — cross-engine guard NOT RUN HERE, so this green is NOT coverage (F-1408-2): the e1-night-shift probe costs ~36 s per engine in a fire shell and goes red on its own timeout under the F-1269-1 CPU ceiling. It runs in lane/attended shells, where sim changes are authored.
+﹣ the-claim hash is identical across installed Node engines (0.050875ms) # FIRE SHELL — cross-engine guard NOT RUN HERE, so this green is NOT coverage (F-1408-2): the e1-night-shift probe costs ~36 s per engine in a fire shell and goes red on its own timeout under the F-1269-1 CPU ceiling. It runs in lane/attended shells, where sim changes are authored.
+﹣ e1-night-shift hash is identical across installed Node engines (0.041875ms) # FIRE SHELL — cross-engine guard NOT RUN HERE, so this green is NOT coverage (F-1408-2): the e1-night-shift probe costs ~36 s per engine in a fire shell and goes red on its own timeout under the F-1269-1 CPU ceiling. It runs in lane/attended shells, where sim changes are authored.
+✔ whole suite collects without loading Vite-only modules (1756.578917ms)
+✔ every functions/**/*.ts is type-checked (6180.343292ms)
+✔ positive arm accepts the expected Wrangler version (0.598459ms)
+✔ violation arm rejects Wrangler version drift (44.798417ms)
+✔ missing arm reports Wrangler absent from PATH (0.166125ms)
+✔ escape arm warns loudly and permits explicit drift (2.161458ms)
+ℹ tests 410
+ℹ suites 0
+ℹ pass 407
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 3
+ℹ todo 0
+ℹ duration_ms 427706.535916
+
+FIRE SHELL — test:node-guards ran with reduced file concurrency 1 (F-1409-1/F-1410-1); this is the conservative default pending fire-side measurement.

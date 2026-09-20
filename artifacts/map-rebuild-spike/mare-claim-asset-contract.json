@@ -1,0 +1,440 @@
+{
+  "blender": "5.1.2",
+  "maskTables": [
+    "assets/contracts/epoch-8-orbital/mask-tables/e8-mare-claim.json"
+  ],
+  "terrains": {
+    "mare-claim": {
+      "asset": "mare-claim-terrain.glb",
+      "checked": {
+        "sha256": "02bb786ee96f8bf361f19ca1fc51dd02273ec9beeb485060d648bff30522f66e",
+        "bytes": 5256548,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 32768,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -64,
+            -3.10736,
+            -64
+          ],
+          "max": [
+            64,
+            6,
+            64
+          ],
+          "size": [
+            128,
+            9.10736,
+            128
+          ],
+          "center": [
+            0.0,
+            1.44632,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.8999999761581421,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "reexported": {
+        "sha256": "02bb786ee96f8bf361f19ca1fc51dd02273ec9beeb485060d648bff30522f66e",
+        "bytes": 5256548,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 32768,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -64,
+            -3.10736,
+            -64
+          ],
+          "max": [
+            64,
+            6,
+            64
+          ],
+          "size": [
+            128,
+            9.10736,
+            128
+          ],
+          "center": [
+            0.0,
+            1.44632,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.8999999761581421,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "byteIdenticalReexport": true,
+      "semanticIdenticalReexport": true,
+      "embeddedTexture": {
+        "bytes": 4525700,
+        "sha256": "b4e36e0d815ff5c723400ed424fd8678a8c326ba1b6b6bfc5efa1e125569496d",
+        "width": 2048,
+        "height": 2048
+      },
+      "extras": {
+        "render_only": true,
+        "sim_authority": "published mask table and planar simulation; unchanged",
+        "height_socket": "Terrain.visualY",
+        "contract_id": "e8-mare-claim",
+        "tile_id": "e8-mare-claim",
+        "mask_table": "assets/contracts/epoch-8-orbital/mask-tables/e8-mare-claim.json",
+        "load_bearing_sites_flat": true,
+        "landmarks_frozen": true
+      },
+      "geometryProbes": [
+        {
+          "requested": [
+            0,
+            0
+          ],
+          "sampled": [
+            0.0,
+            0.0
+          ],
+          "height": 0.0
+        },
+        {
+          "requested": [
+            -31,
+            25
+          ],
+          "sampled": [
+            -31.0,
+            25.0
+          ],
+          "height": -3.06
+        },
+        {
+          "requested": [
+            -44,
+            47
+          ],
+          "sampled": [
+            -44.0,
+            47.0
+          ],
+          "height": 6.0
+        },
+        {
+          "requested": [
+            44,
+            -47
+          ],
+          "sampled": [
+            44.0,
+            -47.0
+          ],
+          "height": 6.0
+        },
+        {
+          "requested": [
+            -30,
+            -31
+          ],
+          "sampled": [
+            -30.0,
+            -31.0
+          ],
+          "height": 0.0
+        },
+        {
+          "requested": [
+            24,
+            -34
+          ],
+          "sampled": [
+            24.0,
+            -34.0
+          ],
+          "height": 0.0
+        }
+      ],
+      "pylonSurfaceFlatness": [],
+      "capacitorSurfaceFlatness": [],
+      "fixtureSurfaceFlatness": [],
+      "buildZoneSurfaceFlatness": [
+        {
+          "id": "rim-premium-pad-west",
+          "sampledSurfacePoints": 2145,
+          "maxDeviationMeters": 0.0
+        },
+        {
+          "id": "rim-premium-pad-east",
+          "sampledSurfacePoints": 2145,
+          "maxDeviationMeters": 0.0
+        },
+        {
+          "id": "dome-cluster-pad-west",
+          "sampledSurfacePoints": 2145,
+          "maxDeviationMeters": 0.0
+        },
+        {
+          "id": "dome-cluster-pad-center",
+          "sampledSurfacePoints": 2145,
+          "maxDeviationMeters": 0.0
+        },
+        {
+          "id": "dome-cluster-pad-east",
+          "sampledSurfacePoints": 2145,
+          "maxDeviationMeters": 0.0
+        },
+        {
+          "id": "launch-pad",
+          "sampledSurfacePoints": 2145,
+          "maxDeviationMeters": 0.0
+        },
+        {
+          "id": "mass-driver-rail-footing",
+          "sampledSurfacePoints": 2145,
+          "maxDeviationMeters": 0.0
+        }
+      ],
+      "maskSource": "assets/contracts/epoch-8-orbital/mask-tables/e8-mare-claim.json"
+    }
+  },
+  "panoramas": {
+    "mare-claim": {
+      "asset": "mare-claim-panorama.glb",
+      "checked": {
+        "sha256": "c69e707956ac112c378df6de933f5150f0901122ecf0ed270ad2217d4ab546f3",
+        "bytes": 545988,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 3072,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -193,
+            -10,
+            -193
+          ],
+          "max": [
+            193,
+            130,
+            193
+          ],
+          "size": [
+            386,
+            140,
+            386
+          ],
+          "center": [
+            0.0,
+            60.0,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 1,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": true,
+            "emissiveFactor": [
+              1,
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "reexported": {
+        "sha256": "c69e707956ac112c378df6de933f5150f0901122ecf0ed270ad2217d4ab546f3",
+        "bytes": 545988,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 3072,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -193,
+            -10,
+            -193
+          ],
+          "max": [
+            193,
+            130,
+            193
+          ],
+          "size": [
+            386,
+            140,
+            386
+          ],
+          "center": [
+            0.0,
+            60.0,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 1,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": true,
+            "emissiveFactor": [
+              1,
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "byteIdenticalReexport": true,
+      "semanticIdenticalReexport": true,
+      "embeddedTexture": {
+        "bytes": 428011,
+        "sha256": "b8c8b8a3a8b17c06eb72a8d20ea94641600f981dc8376d229f80a75bcbd45874",
+        "width": 2048,
+        "height": 2048
+      },
+      "extras": {
+        "render_only": true,
+        "panorama": true,
+        "affects_playfield": false,
+        "affects_masks": false,
+        "affects_spawn_edges": false,
+        "affects_fog_gating": false,
+        "mount_space": "game X/Y/Z at county origin",
+        "panorama_law": "v2"
+      },
+      "mount": {
+        "id": "mare-claim-panorama",
+        "asset": "mare-claim-panorama.glb",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "renderOnly": true,
+        "ownership": "separate mounted scenery; never terrain or gameplay bounds"
+      }
+    }
+  },
+  "boards": {
+    "mare-claim-mood-ab.png": {
+      "size": [
+        1920,
+        684
+      ],
+      "bytes": 1789130,
+      "sha256": "2cb637994a4ec368ef49e1529be6579a7289f0199e4d1b44f043ec32f4da2ee5"
+    },
+    "mare-claim-flat-vs-sculpted-ab.png": {
+      "size": [
+        1920,
+        684
+      ],
+      "bytes": 526659,
+      "sha256": "0aa7d5bb4602b52f93ae3fee12c9ee6209c09824ede9a9927f98b972b022d718"
+    },
+    "mare-claim-owner-verdict.png": {
+      "size": [
+        1920,
+        504
+      ],
+      "bytes": 613041,
+      "sha256": "f28dd763a5a21afdb23896738bde23bb98a2e77f714b76e82bf4e390be9c6396"
+    },
+    "mare-claim-panorama-mood-ab.png": {
+      "size": [
+        1920,
+        504
+      ],
+      "bytes": 391432,
+      "sha256": "1d26ef611faeff6b561b3570d768cbfb3090654e8b61eca1c69a49d5776ecaae"
+    },
+    "mare-claim-panorama-distance-gate.png": {
+      "size": [
+        1920,
+        684
+      ],
+      "bytes": 765815,
+      "sha256": "0c574b8c616bc297748109582c02f24015a4346dc8572bb82e6782540967a64a"
+    },
+    "mare-claim-earth-side-gate.png": {
+      "size": [
+        1920,
+        684
+      ],
+      "bytes": 689220,
+      "sha256": "45d2c4fbdda961049e5e7f05f709688d0e291a6c641bbf1d8faa4795633768b8"
+    },
+    "mare-claim-mask-agreement-board.png": {
+      "size": [
+        1600,
+        1260
+      ],
+      "bytes": 826068,
+      "sha256": "06248b3583f3b2483048f8a90439e5d9becd9fd770512f2cccb0d55a84e8f46d"
+    }
+  },
+  "verdict": {
+    "grit": "warm-grey stippled engraving; silver-and-teal over parchment; honey habitat warmth; never cold photoreal",
+    "panorama": "distance; one Earth cameo on the Mare near side and none on the opposite Far Side",
+    "masks": "published and unchanged",
+    "loadBearingSites": "seven build rectangles independently sampled buildable-flat; four h6 rim bands and h0 mare retained",
+    "landmarks": "frozen; no assets or mounts authored"
+  },
+  "freshReferenceBaseSha": "faad507b45ebccd4b6a403edc909eab81157934d"
+}

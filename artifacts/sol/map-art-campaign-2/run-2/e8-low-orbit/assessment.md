@@ -1,0 +1,3 @@
+UNACCEPTED: suspended salvage-station architecture and debris depth are not communicated; a sparse claw rig sits on a conspicuous dark rectangular base amid dim ground, and portrait HUD hides much of the rig.
+
+The plate combines a central mechanical station, extended ring platforms, suspended debris nets and a rich orbital background. The entry provides one simplified claw silhouette on a black base, a broad angular brown route edge and little depth context. Phone retains only pieces of the rig behind its upper HUD. Increasing overall brightness would not supply the missing station structure or suspended composition; those require authored geometry/material work and a framing review. No production change was made.

@@ -1,0 +1,70 @@
+{
+  "version": 2,
+  "id": "agent-1feb6b5f-2cd32a03-880c-49fa-8ac0-40c231e94e5f",
+  "createdAt": 0,
+  "kept": true,
+  "contract": "e3-blackout-ridge",
+  "seed": "perf-survey-20260905",
+  "difficulty": "trail",
+  "simVersion": 1,
+  "meta": {
+    "buildId": "a3ba9af82",
+    "engineHash": "17943318aff7d1081a502fc2d31b0223139c0e8188ad48c1cafee31b87482761",
+    "era": 5,
+    "viewVersion": 2
+  },
+  "runStart": {
+    "meta": {
+      "version": 1,
+      "tracks": {
+        "territory": 0,
+        "science": 0,
+        "hero": 0,
+        "agent": 0
+      }
+    },
+    "research": {
+      "version": 1,
+      "epochId": "epoch-1-frontier",
+      "metaScienceCursor": 0,
+      "progress": {
+        "version": 1,
+        "tracks": {
+          "territory": 0,
+          "science": 0,
+          "hero": 0,
+          "agent": 0
+        }
+      },
+      "taken": [],
+      "proposalSalt": 0,
+      "pinnedTarget": null,
+      "unlocks": {}
+    }
+  },
+  "inputLog": {
+    "version": 1,
+    "name": "agent-1feb6b5f",
+    "contractId": "e3-blackout-ridge",
+    "seed": "perf-survey-20260905",
+    "difficultyPreset": "trail",
+    "stepSeconds": 0.03333333333333333,
+    "start": {
+      "x": 24,
+      "z": 30
+    },
+    "durationTicks": 4694,
+    "entries": [],
+    "truncated": null,
+    "primarySlot": 0,
+    "streams": []
+  },
+  "eventLogHash": "fnv1a32:a45ba9ac",
+  "outcome": {
+    "reason": "death",
+    "secured": false,
+    "waves": 5,
+    "timeAlive": 156.467,
+    "gold": 0
+  }
+}

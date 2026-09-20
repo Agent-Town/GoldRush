@@ -1,0 +1,98 @@
+s1497 — milk/twin-sockets CONFLICT MAP (measured, then the drain was DEFERRED)
+==============================================================================
+Purpose: the next fire should not re-derive this. The merge was attempted in the detached
+worktree gate-s1497 (§3.0b), measured, and ABORTED cleanly. Main was never touched
+(verified: main HEAD b08293dcd before and after; `git merge --abort` left the gate clean).
+
+WHY THIS IS FILED AS A FINDING — F-1497-1
+------------------------------------------
+`reviews/milk-twin-sockets.md` states, under MERGE CLASSIFICATION:
+
+    "Base 18b2ef276. All six paths LANE-TOUCHED only — main moved none of them during the shift."
+    "No conflicts."
+
+That was TRUE when written. It is FALSE now, and the review could not have known, because
+**the two milk drains that landed since then moved four of its six paths**:
+  - s1496 `milk/deepwater-surgery`  (7bfd62ee) amended  docs/bench/e5-readiness-census.md
+  - s1497 `milk/saga-surgeon`       (325241e2) amended  docs/bench/e6-readiness-census.md
+                                                        e2e/er01-e6-census.spec.ts
+  - main also moved src/sim/HeadlessContractSim.ts and src/agent/MechanicsManifest.ts
+    (the s1496 motor-socket E4 land_yacht manifest block, and a progression block).
+
+GENERAL LESSON (same family as the s1496 "a review's adjacent-suite list is perishable"):
+**a review's MERGE CLASSIFICATION is perishable in exactly the same way, and it decays FASTER
+when the pile is being drained in order — because the earlier drains in that very order are
+what move the later branch's paths.** Draining a pile cheapest-first makes each remaining
+branch progressively MORE conflicted, not less. Re-measure; never inherit "no conflicts".
+
+MEASURED CONFLICT MAP  (git merge --no-ff milk/twin-sockets onto main @ b08293dcd)
+----------------------------------------------------------------------------------
+6 conflicted files · 13 hunks · ~280 conflicted lines.
+
+  docs/bench/e5-readiness-census.md   4 hunks   main 31/4/24/21  vs  branch 21/4/13/7
+  docs/bench/e6-readiness-census.md   4 hunks   main  6/3/3/32   vs  branch  6/1/4/19
+  e2e/er01-e5-census.spec.ts          2 hunks   main 18/21       vs  branch  2/63
+  src/agent/MechanicsManifest.ts      1 hunk    main 49          vs  branch 98
+  src/sim/HeadlessContractSim.ts      1 hunk    main  2          vs  branch  1
+  tasks/BACKLOG.md                    1 hunk    main  6          vs  branch  2
+
+  AUTO-MERGED, and it auto-merged CORRECTLY — verified, do not re-check blindly:
+  e2e/er01-e6-census.spec.ts kept saga-surgeon's new assertion
+  (`expect(contract.tileParams.engineDependencies).toEqual([...])`), i.e. twin-sockets did
+  NOT retain the superseded `expect('engineDependencies' in contract.tileParams).toBe(false)`.
+  A silent semantic contradiction there was the first thing checked and it is absent.
+
+TRIAGE PER FILE — how hard each one actually is
+------------------------------------------------
+MECHANICAL (pure append-adjacency, union both sides, low risk):
+
+  src/sim/HeadlessContractSim.ts @553 — main added two progression lines after combat.update;
+  the branch added `this.deepwater?.resolveTreatments();` at the same point. UNION.
+  Ordering constraint from the review: the browser order is
+  `... waveSystem.update -> recycleCorsairsAtExit -> combat.update -> resolveTreatments`,
+  so resolveTreatments must follow combat.update. Both orderings vs progression satisfy that;
+  progression consumes combat.xpCount and is independent of treatments. Recommend placing
+  `resolveTreatments()` immediately after `combat.update(...)`, then the two progression lines.
+
+  src/agent/MechanicsManifest.ts @204 — main appended the E4 land_yacht block (5 rules);
+  the branch appended the E5 deepwater block (6 rules) + the E6 atomic/wrangle block.
+  Both are pure appends at the same insertion point. UNION, main's E4 block first.
+  ⚠️ The hunk boundary is RAGGED: both sides end mid-`rule(` and SHARE the trailing
+  `    }));\n  }` at the hunk's close. Reconstruct each side's closing braces explicitly;
+  do not just concatenate the two conflict bodies.
+
+  tasks/BACKLOG.md @44 — append surface, UNION as always (the s1495 precedent).
+
+CAREFUL (competing prose claims about the SAME rows — this is the real cost):
+
+  docs/bench/e6-readiness-census.md — the branch REWROTE this census to record that the
+  Atomic socket now exists; s1497's saga-surgeon drain amended the same census to record the
+  four engineDependencies declarations. Both are true and they are about the same four rows.
+  The union has to say: the declarations landed (saga-surgeon) AND the consumer now runs
+  headlessly (twin-sockets) AND admission is still refused — for the NEW reason twin-sockets
+  measured (the wrangle deadlock / missing capture verb), not the old one.
+
+  docs/bench/e5-readiness-census.md — same shape against s1496's deepwater-surgery cure.
+
+DANGEROUS (do not rush; this is why the drain was deferred):
+
+  e2e/er01-e5-census.spec.ts @90 — main 21 lines vs branch 63 lines, BOTH SIDES REWROTE THE
+  SAME TEST BODY. Picking wrong yields a spec that PASSES while asserting the wrong premise —
+  the F-1496-1 class (a green over a wrong count/claim is worse than a red). Read both bodies
+  in full and decide assertion by assertion; do not take either side wholesale.
+
+RECOMMENDED APPROACH FOR THE NEXT FIRE
+---------------------------------------
+Budget the WHOLE shift for this one drain. Order: the three mechanical files first (they are
+5 minutes and they de-risk the tsc/build signal), then the two censuses, then the e5 spec last
+with both bodies read side by side. Battery afterwards is MANDATORY and includes
+`test:node-guards` — the diff touches src/sim/ and src/agent/, so the F-1460-1 path rule fires,
+and this slice's own control is `node --test scripts/gr-sim.test.mjs` (the review pins 9/9,
+which is the number that proves the twelve ALREADY-admitted contracts' ticks did not move —
+every socket call site is null-guarded, so `atomic` and `deepwater` must be null for all of them).
+
+The slice itself is high quality and its verdict is honest: TWO SOCKETS SHIPPED, ZERO
+ADMISSIONS, and the zero is the finding (e6-showroom's wave-20 "secure" is a false green —
+60 exhausted-but-alive machines saturate `Balance.waves.aliveCap`, and the agent has no
+capture verb to clear them). Nothing here argues against merging it; this file argues only
+against merging it in the last ten minutes of a fire.

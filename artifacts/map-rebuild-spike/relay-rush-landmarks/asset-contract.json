@@ -1,0 +1,105 @@
+{
+  "law": "reuse > derive > build-new; era-stamped; grit-dressed",
+  "packs": {
+    "relay-rush": {
+      "era": 7,
+      "atlasSha256": "b969eb572631b847f04bbc06abbeab930c315a0e3c41b9e02efd1ceb00b79568",
+      "assets": {
+        "rush-start-horn": {
+          "sourceTier": "derive",
+          "triangles": 552,
+          "sha256": "39ba0f439cb3c1c4b8bc93dc29ff74e10d42d3f085e2de246f4df3c92612d5b5",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "rush-relay-r1-frame": {
+          "sourceTier": "derive",
+          "triangles": 244,
+          "sha256": "503b3a93bb9324a041140b9ed292557094332339a518201559943a1e87f0c5d5",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "rush-relay-r2-frame": {
+          "sourceTier": "derive",
+          "triangles": 292,
+          "sha256": "79d308bad21f893f8b0a971e939ff3cd7ad484fa56481a087c31a456f15936a3",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "rush-relay-r3-frame": {
+          "sourceTier": "derive",
+          "triangles": 340,
+          "sha256": "bfe34fcd8d10b1d2948ba35f648bffb5b688e8149c1dd7f2bfa190d6169e16cb",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "rush-relay-r4-frame": {
+          "sourceTier": "derive",
+          "triangles": 388,
+          "sha256": "9ab0954ad4c6a8f839063f51f935bae63d4b99511a9a6b23eece16c301437efc",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        }
+      }
+    }
+  },
+  "totals": {
+    "packs": 1,
+    "assets": 5,
+    "sourceTiers": {
+      "reuse": 0,
+      "derive": 5,
+      "build-new": 0
+    }
+  },
+  "boards": {
+    "relay-rush-landmarks-turntable.png": {
+      "size": [
+        1920,
+        1160
+      ],
+      "sha256": "c8bd4720b3d9126389c981c8eeb9d1d68c58c014ef2d30d29cb335d35c87cfbb"
+    },
+    "relay-rush-landmarks-verdict.png": {
+      "size": [
+        1920,
+        1008
+      ],
+      "sha256": "04e481fc806470b8db2ce4dfca752e733096d0cfee529a1c382cb7261c13c648"
+    },
+    "relay-rush-landmarks-pack.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "b34bcc706dc8b664094296a2eda3dae9962349f1b3ae766f8dce6c69173421e2"
+    },
+    "relay-rush-landmarks-mounted.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "b51016f125ea94331c0a920a88141c9ebd480725dbf59100d2569d0fdb306d85"
+    },
+    "relay-rush-landmarks-mounted-overview.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "2b1bb6eb3325d15d9d95061f3b3330173cafe22c56b5d14cb070d8c982ef053e"
+    },
+    "relay-rush-landmarks-clearance-overlay.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "8125fcf90e124b5dc1e68b86c3f0fff9fc09eeb464a53e59bcf4875f0d6b0fd8"
+    }
+  },
+  "simulation": "unchanged; every landmark is a separate render-only GLB mounted by contract"
+}

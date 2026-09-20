@@ -1,0 +1,52 @@
+{
+  "time": "2026-09-07T20:58Z",
+  "node": "v26.4.0",
+  "head": "926867d2d0a3e998fbc7f1a12187c3203152f439",
+  "mainRunLog": "tasks/runs/20260907-200747-main-main-board-gold-current-grammar.md.log",
+  "runAgeSeconds": 29.17,
+  "runBanner": [
+    "Reading additional input from stdin...",
+    "OpenAI Codex v0.153.4",
+    "--------",
+    "workdir: /Users/robin/Claude/Projects/Gold Rush",
+    "model: gpt-5.6-sol",
+    "provider: openai",
+    "approval: never",
+    "sandbox: danger-full-access",
+    "reasoning effort: high",
+    "reasoning summaries: none",
+    "session id: 01a07bfb-644e-75f1-9f26-75808d9cc063",
+    "--------",
+    "user"
+  ],
+  "running": [
+    "main--20260907-200747-main-board-gold-current-grammar.md",
+    "main.pid"
+  ],
+  "wall": false,
+  "assayerPending": [],
+  "tickerYesterday": "marketing/outbox/ticker-digest-2026-09-06.md",
+  "tickerTracked": true,
+  "rotationData": {
+    "rotations": [
+      {
+        "id": "r2026w37",
+        "opensAt": "2026-09-07T00:00:00.000Z",
+        "closesAt": "2026-09-14T00:00:00.000Z",
+        "seeds": {
+          "the-claim": "e1-the-claim-r2026w37-78c18ea52f17",
+          "e1-dry-gulch": "e1-dry-gulch-r2026w37-b60b6acd03d2",
+          "e1-twin-banks": "e1-twin-banks-r2026w37-9a654e7c7601",
+          "e1-night-shift": "e1-night-shift-r2026w37-4aecec4d856e",
+          "e2-hill-mine": "e2-hill-mine-r2026w37-96665bd39eee",
+          "e1-baron": "e1-baron-r2026w37-49de99c8e4bc"
+        }
+      }
+    ]
+  },
+  "rotationCurrent": [
+    "const CURRENT_ROTATION_ID = 'r2026w37';",
+    "  return `https://agenttown.app/api/standings?board=transfer&rotation=${CURRENT_ROTATION_ID}`;"
+  ],
+  "rotationSkillMatch": true
+}

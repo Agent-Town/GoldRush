@@ -1,0 +1,434 @@
+{
+  "at": "2026-09-05T15:31:59.433Z",
+  "method": "Same build, same map, one browser. debug-profile arm boots the seams the census uses; plain arm boots none. 6 s CDP CPU profile at 1 ms sampling, then a 5 s frame sample.",
+  "rows": [
+    {
+      "map": "the-claim",
+      "arm": "debug-profile",
+      "query": "debug=&profile=&tier=full&seed=perf-survey-20260905&nopause=&nolevel=&nokill=&contract=the-claim",
+      "before": {
+        "at": "2026-09-05T15:30:38.943Z",
+        "load": [
+          24.95458984375,
+          33.35888671875,
+          29.49755859375
+        ],
+        "freeMemory": 16652500992
+      },
+      "errors": {
+        "console": [],
+        "page": [],
+        "network": []
+      },
+      "status": "measured",
+      "clientWidthSelfMs": 322.30800000000005,
+      "updateMatrixWorldSelfMs": 213.75199999999998,
+      "idleSelfMs": 3041.498,
+      "gcSelfMs": 0,
+      "framesIn5s": 601,
+      "renderMsP50": 1.2999999523162842,
+      "top10": [
+        {
+          "name": "(idle)",
+          "url": "",
+          "line": 0,
+          "column": 0,
+          "selfMs": 3041.498
+        },
+        {
+          "name": "(program)",
+          "url": "",
+          "line": 0,
+          "column": 0,
+          "selfMs": 331.218
+        },
+        {
+          "name": "get clientWidth",
+          "url": "",
+          "line": 0,
+          "column": 0,
+          "selfMs": 322.30800000000005
+        },
+        {
+          "name": "multiplyMatrices",
+          "url": "http://127.0.0.1:5326/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+          "line": 2,
+          "column": 46516,
+          "selfMs": 232.936
+        },
+        {
+          "name": "updateMatrixWorld",
+          "url": "http://127.0.0.1:5326/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+          "line": 2,
+          "column": 60509,
+          "selfMs": 213.75199999999998
+        },
+        {
+          "name": "syncEnemySprite",
+          "url": "http://127.0.0.1:5326/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+          "line": 82,
+          "column": 188068,
+          "selfMs": 152.927
+        },
+        {
+          "name": "traverse",
+          "url": "http://127.0.0.1:5326/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+          "line": 2,
+          "column": 59929,
+          "selfMs": 117.049
+        },
+        {
+          "name": "get motion",
+          "url": "http://127.0.0.1:5326/assets/SpriteAnimator-DmoBYZnV-diet-1408f6b4.js",
+          "line": 554,
+          "column": 222615,
+          "selfMs": 101.64399999999999
+        },
+        {
+          "name": "set",
+          "url": "http://127.0.0.1:5326/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+          "line": 4161,
+          "column": 2342,
+          "selfMs": 98.706
+        },
+        {
+          "name": "getObjectByProperty",
+          "url": "http://127.0.0.1:5326/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+          "line": 2,
+          "column": 59198,
+          "selfMs": 51.239
+        }
+      ],
+      "after": {
+        "at": "2026-09-05T15:30:58.692Z",
+        "load": [
+          22.95703125,
+          32.34912109375,
+          29.22412109375
+        ],
+        "freeMemory": 14607597568
+      }
+    },
+    {
+      "map": "the-claim",
+      "arm": "plain",
+      "query": "tier=full&seed=perf-survey-20260905&contract=the-claim",
+      "before": {
+        "at": "2026-09-05T15:30:58.833Z",
+        "load": [
+          22.95703125,
+          32.34912109375,
+          29.22412109375
+        ],
+        "freeMemory": 15472361472
+      },
+      "errors": {
+        "console": [],
+        "page": [],
+        "network": []
+      },
+      "status": "measured",
+      "clientWidthSelfMs": 0,
+      "updateMatrixWorldSelfMs": 252.78600000000003,
+      "idleSelfMs": 2704.561,
+      "gcSelfMs": 0,
+      "framesIn5s": 600,
+      "renderMsP50": 1.399999976158142,
+      "top10": [
+        {
+          "name": "(idle)",
+          "url": "",
+          "line": 0,
+          "column": 0,
+          "selfMs": 2704.561
+        },
+        {
+          "name": "(program)",
+          "url": "",
+          "line": 0,
+          "column": 0,
+          "selfMs": 375.334
+        },
+        {
+          "name": "publishDiagnostics",
+          "url": "http://127.0.0.1:5326/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+          "line": 914,
+          "column": 29834,
+          "selfMs": 295.019
+        },
+        {
+          "name": "updateMatrixWorld",
+          "url": "http://127.0.0.1:5326/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+          "line": 2,
+          "column": 60509,
+          "selfMs": 252.78600000000003
+        },
+        {
+          "name": "multiplyMatrices",
+          "url": "http://127.0.0.1:5326/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+          "line": 2,
+          "column": 46516,
+          "selfMs": 231.77499999999998
+        },
+        {
+          "name": "syncEnemySprite",
+          "url": "http://127.0.0.1:5326/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+          "line": 82,
+          "column": 188068,
+          "selfMs": 165.476
+        },
+        {
+          "name": "set",
+          "url": "http://127.0.0.1:5326/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+          "line": 4161,
+          "column": 2342,
+          "selfMs": 128.38
+        },
+        {
+          "name": "get motion",
+          "url": "http://127.0.0.1:5326/assets/SpriteAnimator-DmoBYZnV-diet-1408f6b4.js",
+          "line": 554,
+          "column": 222615,
+          "selfMs": 97.8
+        },
+        {
+          "name": "traverse",
+          "url": "http://127.0.0.1:5326/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+          "line": 2,
+          "column": 59929,
+          "selfMs": 89.806
+        },
+        {
+          "name": "applySpriteBob",
+          "url": "http://127.0.0.1:5326/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+          "line": 82,
+          "column": 192631,
+          "selfMs": 67.119
+        }
+      ],
+      "after": {
+        "at": "2026-09-05T15:31:18.770Z",
+        "load": [
+          22.96826171875,
+          31.76904296875,
+          29.0888671875
+        ],
+        "freeMemory": 11110809600
+      }
+    },
+    {
+      "map": "e9-seed-run",
+      "arm": "debug-profile",
+      "query": "debug=&profile=&tier=full&seed=perf-survey-20260905&nopause=&nolevel=&nokill=&contract=e9-seed-run",
+      "before": {
+        "at": "2026-09-05T15:31:18.885Z",
+        "load": [
+          22.96826171875,
+          31.76904296875,
+          29.0888671875
+        ],
+        "freeMemory": 12052480000
+      },
+      "errors": {
+        "console": [],
+        "page": [],
+        "network": []
+      },
+      "status": "measured",
+      "clientWidthSelfMs": 353.43399999999997,
+      "updateMatrixWorldSelfMs": 334.22600000000006,
+      "idleSelfMs": 2621.896,
+      "gcSelfMs": 0,
+      "framesIn5s": 600,
+      "renderMsP50": 1.5,
+      "top10": [
+        {
+          "name": "(idle)",
+          "url": "",
+          "line": 0,
+          "column": 0,
+          "selfMs": 2621.896
+        },
+        {
+          "name": "(program)",
+          "url": "",
+          "line": 0,
+          "column": 0,
+          "selfMs": 409.315
+        },
+        {
+          "name": "get clientWidth",
+          "url": "",
+          "line": 0,
+          "column": 0,
+          "selfMs": 353.43399999999997
+        },
+        {
+          "name": "updateMatrixWorld",
+          "url": "http://127.0.0.1:5326/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+          "line": 2,
+          "column": 60509,
+          "selfMs": 334.22600000000006
+        },
+        {
+          "name": "multiplyMatrices",
+          "url": "http://127.0.0.1:5326/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+          "line": 2,
+          "column": 46516,
+          "selfMs": 215.702
+        },
+        {
+          "name": "syncEnemySprite",
+          "url": "http://127.0.0.1:5326/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+          "line": 82,
+          "column": 188068,
+          "selfMs": 130.756
+        },
+        {
+          "name": "set",
+          "url": "http://127.0.0.1:5326/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+          "line": 4161,
+          "column": 2342,
+          "selfMs": 119.541
+        },
+        {
+          "name": "get motion",
+          "url": "http://127.0.0.1:5326/assets/SpriteAnimator-DmoBYZnV-diet-1408f6b4.js",
+          "line": 554,
+          "column": 222615,
+          "selfMs": 109.59700000000001
+        },
+        {
+          "name": "traverse",
+          "url": "http://127.0.0.1:5326/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+          "line": 2,
+          "column": 59929,
+          "selfMs": 100.28699999999999
+        },
+        {
+          "name": "h",
+          "url": "http://127.0.0.1:5326/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+          "line": 4054,
+          "column": 2358,
+          "selfMs": 66.933
+        }
+      ],
+      "after": {
+        "at": "2026-09-05T15:31:38.895Z",
+        "load": [
+          22.60693359375,
+          31.1826171875,
+          28.9443359375
+        ],
+        "freeMemory": 13243203584
+      }
+    },
+    {
+      "map": "e9-seed-run",
+      "arm": "plain",
+      "query": "tier=full&seed=perf-survey-20260905&contract=e9-seed-run",
+      "before": {
+        "at": "2026-09-05T15:31:39.083Z",
+        "load": [
+          22.60693359375,
+          31.1826171875,
+          28.9443359375
+        ],
+        "freeMemory": 14101741568
+      },
+      "errors": {
+        "console": [],
+        "page": [],
+        "network": []
+      },
+      "status": "measured",
+      "clientWidthSelfMs": 0,
+      "updateMatrixWorldSelfMs": 259.673,
+      "idleSelfMs": 2778.748,
+      "gcSelfMs": 0,
+      "framesIn5s": 600,
+      "renderMsP50": 1.2999999523162842,
+      "top10": [
+        {
+          "name": "(idle)",
+          "url": "",
+          "line": 0,
+          "column": 0,
+          "selfMs": 2778.748
+        },
+        {
+          "name": "(program)",
+          "url": "",
+          "line": 0,
+          "column": 0,
+          "selfMs": 439.474
+        },
+        {
+          "name": "publishDiagnostics",
+          "url": "http://127.0.0.1:5326/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+          "line": 914,
+          "column": 29834,
+          "selfMs": 286.18600000000004
+        },
+        {
+          "name": "syncEnemySprite",
+          "url": "http://127.0.0.1:5326/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+          "line": 82,
+          "column": 188068,
+          "selfMs": 264.98
+        },
+        {
+          "name": "updateMatrixWorld",
+          "url": "http://127.0.0.1:5326/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+          "line": 2,
+          "column": 60509,
+          "selfMs": 259.673
+        },
+        {
+          "name": "multiplyMatrices",
+          "url": "http://127.0.0.1:5326/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+          "line": 2,
+          "column": 46516,
+          "selfMs": 158.88600000000005
+        },
+        {
+          "name": "traverse",
+          "url": "http://127.0.0.1:5326/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+          "line": 2,
+          "column": 59929,
+          "selfMs": 115.81299999999999
+        },
+        {
+          "name": "set",
+          "url": "http://127.0.0.1:5326/assets/index-1ZXVlOQo-diet-1408f6b4.js",
+          "line": 4161,
+          "column": 2342,
+          "selfMs": 71.18100000000001
+        },
+        {
+          "name": "update",
+          "url": "http://127.0.0.1:5326/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+          "line": 801,
+          "column": 2323,
+          "selfMs": 61.427
+        },
+        {
+          "name": "get diagnostics",
+          "url": "http://127.0.0.1:5326/assets/Game-Dx1W1GjU-diet-1408f6b4.js",
+          "line": 82,
+          "column": 233533,
+          "selfMs": 52.157999999999994
+        }
+      ],
+      "after": {
+        "at": "2026-09-05T15:31:59.433Z",
+        "load": [
+          22.0068359375,
+          30.48974609375,
+          28.7470703125
+        ],
+        "freeMemory": 12443713536
+      }
+    }
+  ]
+}

@@ -1,0 +1,92 @@
+diff --git a/scripts/board-tape-gold.test.mjs b/scripts/board-tape-gold.test.mjs
+index aa1f8cbd4..d19a0ae0d 100644
+--- a/scripts/board-tape-gold.test.mjs
++++ b/scripts/board-tape-gold.test.mjs
+@@ -24,9 +24,9 @@
+ // instead would move every pinned hash in the repo. Panned could never be the agreed number; held
+ // can be, and now is.
+ //
+-// WHAT THIS GUARD PINS. Each reel is replayed through the seam the assay worker actually spawns
++// WHAT THIS GUARD PINS. Each current-grammar recording is replayed through the seam the assay worker actually spawns
+ // (`scripts/assay-replay.mjs`, which routes an `agent_orders` tape to the headless engine that
+-// wrote it). All three banked at the secure tick, so the secure tick IS the terminal tick and the
++// wrote it). All three local recordings banked at the secure tick, so the secure tick IS the terminal tick and the
+ // snapshot must equal the declared score EXACTLY — the condition that lets the county's
+ // score-equals-snapshot comparator be load-bearing instead of decorative.
+ //
+@@ -66,47 +66,28 @@ import { chromium } from 'playwright';
+ import { createServer } from 'vite';
+ 
+ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+-const rides = path.join(root, 'artifacts/gauntlet-heat12-20260905/rides');
++const currentGrammarDir = path.join(root, 'artifacts/board-tape-gold/current-grammar');
++const fixtureManifest = JSON.parse(readFileSync(path.join(currentGrammarDir, 'manifest.json'), 'utf8'));
+ 
+ /**
+- * The three heat-12 reels F-HEAT12-5 named. `pannedAtSecure` is what the snapshot reported BEFORE
+- * this cure — the run's lifetime panning at the secure tick — and is here only so a revert reds.
++ * Fresh local recordings made after ADR-005 removed positioning verbs. `pannedAtSecure` is the
++ * run's measured lifetime panning at the secure tick and is here only so a revert reds.
+  */
+-const FIXTURES = [
+-  // RE-POINTED 2026-09-06 (attended drain of mare-claim-air-prevalent, owner ruling "no, this has to be
+-  // more prevalent"): heat 12's Mare Claim reel no longer SECURES under `twist.atmosphere { 4, 4 }`
+-  // (it works three of the four required grounds and dies at 620.6 s; the county retired its row under
+-  // ADR-004 at 11:18Z), so it has no secure tick for this guard to measure. The securing Mare Claim
+-  // reel is the air-wall prover (`artifacts/mare-claim-air-prevalent/prover-01.tape.json`, w20, 600 s,
+-  // held 20, fnv1a32:41ae7f17), copied as a submission-shaped fixture under `artifacts/board-tape-gold/`.
+-  // Its `pannedAtSecure` is the run's lifetime panning read from `gr-sim --resume` on that tape.
+-  // RE-POINTED AGAIN 2026-09-07 (attended, F-EAL-6): once `e8-air-logical` (94f642279, owner A1 "humans in
+-  // space need air") made an empty suit kill the hero, the air-wall prover dies before tick 2701 of its
+-  // own order stream and this guard reddened on main for two hours. The securing reel is now the
+-  // logical-air prover (`artifacts/e8-air-logical/prover-e8-mare-claim-01.tape.json`, w20, 600 s, purse 80,
+-  // fnv1a32:968ff4a3, replaying to its own hash on the pin-79 engine), copied the same way under
+-  // `e8-mare-claim-air-logical/`; the old fixture directory stays on disk (Retention Law). Lifetime panning
+-  // read from `gr-sim --resume`: `now.score.goldPanned` 900 against a purse of 80.
+-  { ride: 'e8-mare-claim', dir: 'artifacts/board-tape-gold/e8-mare-claim-air-logical', pannedAtSecure: 900 },
+-  { ride: 'e3-moth-season', pannedAtSecure: 530 },
+-  { ride: 'e7-relay-rush', pannedAtSecure: 870 },
+-];
++const FIXTURES = fixtureManifest.fixtures;
+ 
+-for (const { ride, dir, pannedAtSecure } of FIXTURES) {
++for (const { ride, tape: tapeFile, declared, pannedAtSecure } of FIXTURES) {
+   test(`${ride}: the standing's gold is the purse held at the secure tick`, { timeout: 240_000 }, () => {
+-    const fixtureDir = dir ? path.join(root, dir) : path.join(rides, ride);
+-    const submission = JSON.parse(readFileSync(path.join(fixtureDir, 'submission.json'), 'utf8'));
+-    const declared = {
+-      secured: submission.score.secured,
+-      waves: submission.score.waves,
+-      gold: submission.score.gold,
+-      timeAlive: submission.score.timeAlive,
+-    };
+-    const replay = seam(submission.tape);
++    const tape = JSON.parse(readFileSync(path.join(currentGrammarDir, tapeFile), 'utf8'));
++    const replay = seam(tape);
+ 
+     // The reel still replays: this guard measures gold, never whether a tape verifies.
+-    assert.equal(replay.eventLogHash, submission.tape.eventLogHash, 'the reel no longer replays to its own hash');
++    assert.equal(replay.eventLogHash, tape.eventLogHash, 'the reel no longer replays to its own hash');
+     assert.equal(replay.engine, 'headless-contract-sim', 'an agent reel must be assayed by the engine that wrote it');
++    assert.deepEqual(
++      { secured: tape.outcome.secured, waves: tape.outcome.waves, gold: tape.outcome.gold, timeAlive: tape.outcome.timeAlive },
++      declared,
++      'the recording no longer carries the declared score',
++    );
+     assert.deepEqual(replay.outcome, declared, 'the replayed outcome no longer matches the declared score');
+ 
+     // THE FINDING. All three banked, so the secure tick and the terminal tick are one instant and
+@@ -116,12 +97,7 @@ for (const { ride, dir, pannedAtSecure } of FIXTURES) {
+     assert.notEqual(replay.securedSnapshot.gold, pannedAtSecure,
+       `the snapshot is reporting lifetime panning (${pannedAtSecure}) again, not the purse held at the secure tick`);
+ 
+-    // Where the county issued a slip, the hash this guard replayed is the hash the county assayed,
+-    // so the numbers above are about the live row and not about a lookalike.
+-    const slip = JSON.parse(readFileSync(path.join(fixtureDir, 'verdict-slip.json'), 'utf8'));
+-    if (slip.assay === 'verified') {
+-      assert.equal(slip.assayHash, replay.eventLogHash, 'the live slip assayed a different reel than this fixture');
+-    }
++    assert.equal(fixtureManifest.liveVerifiedSlip, null, 'local fixtures must not pretend to have a live county verdict');
+   });
+ }
+ 

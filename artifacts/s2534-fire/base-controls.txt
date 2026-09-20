@@ -1,0 +1,174 @@
+gate battery transcript (append-only — see scripts/gate-battery.mjs)
+
+
+######## BATTERY 2026-09-07T06:49:18.610Z — s2534 unchanged-base runtime fingerprints ########
+cwd=/private/tmp/gr-s2534-citation-base
+env+ CLAUDE_CONFIG_DIR=/Users/robin/.claude
+
+===== Node 23 unchanged-base failures =====
+$ /Users/robin/.nvm/versions/node/v23.11.1/bin/node scripts/run-node-guards.mjs scripts/fixture-teardown.test.mjs scripts/gr-sim.test.mjs scripts/node-guards-timeout.test.mjs
+rc=1 610.6s
+✖ scripts/fixture-teardown.test.mjs (300002.852875ms)
+✔ harness digest pins all three rider-side inputs (204.455167ms)
+✔ gr-sim replays the same contract, seed, and orders byte-for-byte (15038.5955ms)
+[tape-resume] straight=fnv1a32:feed2f7c resumed=fnv1a32:feed2f7c assay=fnv1a32:feed2f7c door=accepted
+✔ gr-sim resumes at a recorded mid-ride tick as one byte-identical tape (31928.100292ms)
+✔ a reactive client can recover from rejected orders (3025.561333ms)
+✔ headless landmark starts release before enemies can stall at the perimeter (26525.349916ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/23',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ a distant HARVEST walks before it pays (1992.956ms)
+✔ BUILD walks, confirms from the ordering body, and cannot wedge on unreachable terrain (56.672ms)
+✔ the gr-sim door walks to a remote BUILD and its tape assay-replays (13676.269125ms)
+✔ gr-sim keeps standing orders through free blank and null turns (5364.597542ms)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/23',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ gr-sim hashes a fractional-yield run identically twice (7374.234583ms)
+✔ gr-sim deterministically runs the Claim objective (5878.7965ms)
+✔ overtime banks the Claim secure and measures the homestead on both Node engines (105565.318083ms)
+✖ scripts/gr-sim.test.mjs (300257.454208ms)
+✔ the harness gives the battery a finite default per-test timeout (6943.149791ms)
+✖ a per-test timeout still overrides the default, so declared budgets are untouched (1148.948541ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 13
+ℹ fail 1
+ℹ cancelled 2
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 610529.608583
+
+✖ failing tests:
+
+test at scripts/fixture-teardown.test.mjs:1:1
+✖ scripts/fixture-teardown.test.mjs (300002.852875ms)
+  'test timed out after 300000ms'
+
+test at scripts/gr-sim.test.mjs:1:1
+✖ scripts/gr-sim.test.mjs (300257.454208ms)
+  'test timed out after 300000ms'
+
+test at scripts/node-guards-timeout.test.mjs:94:1
+✖ a per-test timeout still overrides the default, so declared budgets are untouched (1148.948541ms)
+  AssertionError [ERR_ASSERTION]: the declared budget should have won:
+  ✖ /var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/s1479-node-guards-timeout-O1Xoxp/override.test.mjs (1006.35525ms)
+  ℹ tests 1
+  ℹ suites 0
+  ℹ pass 0
+  ℹ fail 0
+  ℹ cancelled 1
+  ℹ skipped 0
+  ℹ todo 0
+  ℹ duration_ms 1019.282375
+  
+  ✖ failing tests:
+  
+  test at ../../../var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/s1479-node-guards-timeout-O1Xoxp/override.test.mjs:1:1
+  ✖ /var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/s1479-node-guards-timeout-O1Xoxp/override.test.mjs (1006.35525ms)
+    'test timed out after 1000ms'
+  
+  
+  DIAGNOSIS: this node (v23.11.1) bounds --test-timeout at FILE granularity, so the fixture was cancelled whole and no per-test budget was consulted. This is NOT a timing flake and must NOT be cured by loosening the assertion — on such a node the battery's declared budgets (the escort test's 120 s, protected by F-1410-2) are not honoured per-test at all. Cure the NODE, not the test: .nvmrc pins 26.4.0. See F-1507-1.
+      at file:///private/tmp/gr-s2534-citation-base/scripts/node-guards-timeout.test.mjs:132:12
+      at withFixture (file:///private/tmp/gr-s2534-citation-base/scripts/node-guards-timeout.test.mjs:43:12)
+      at TestContext.<anonymous> (file:///private/tmp/gr-s2534-citation-base/scripts/node-guards-timeout.test.mjs:105:3)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1047:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+      at Test.postRun (node:internal/test_runner/test:1173:19)
+      at Test.run (node:internal/test_runner/test:1101:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:297:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: "✖ /var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/s1479-node-guards-timeout-O1Xoxp/override.test.mjs (1006.35525ms)\nℹ tests 1\nℹ suites 0\nℹ pass 0\nℹ fail 0\nℹ cancelled 1\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 1019.282375\n\n✖ failing tests:\n\ntest at ../../../var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/s1479-node-guards-timeout-O1Xoxp/override.test.mjs:1:1\n✖ /var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/s1479-node-guards-timeout-O1Xoxp/override.test.mjs (1006.35525ms)\n  'test timed out after 1000ms'\n",
+    expected: /✔ explicitly bounded sibling/,
+    operator: 'match'
+  }
+FIRE SHELL — test:node-guards ran with reduced file concurrency 1 (F-1409-1/F-1410-1); this is the conservative default pending fire-side measurement.
+
+
+===== Node 26 timeout-override control =====
+$ /opt/homebrew/bin/node --test --test-timeout=300000 scripts/node-guards-timeout.test.mjs
+rc=0 5.0s
+✔ the harness gives the battery a finite default per-test timeout (640.222417ms)
+✔ a per-test timeout still overrides the default, so declared budgets are untouched (4248.946791ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4977.477375
+
+
+SUMMARY {"Node 23 unchanged-base failures":1,"Node 26 timeout-override control":0}
+OVERALL rc=1

@@ -1,0 +1,36 @@
+{
+  "pond": {
+    "simRadius": 1.4,
+    "visualRadii": [
+      1.4
+    ],
+    "dampGroundRadii": [
+      3.3369999999999997
+    ],
+    "inside": "shallows",
+    "outside": "bank",
+    "firstBuildCenter": {
+      "x": -18,
+      "z": -15,
+      "zone": "bank",
+      "adjacent": true
+    }
+  },
+  "claim": {
+    "simHalfWidth": 6.25,
+    "visualHalfWidth": 6.25,
+    "inside": "shallows",
+    "outside": "bank"
+  },
+  "twinBanks": {
+    "simHalfWidth": 7.8,
+    "visualHalfWidths": [
+      1.5,
+      1.5
+    ],
+    "maskHalfWidths": [
+      1.5,
+      1.5
+    ]
+  }
+}

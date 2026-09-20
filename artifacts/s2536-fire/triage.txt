@@ -1,0 +1,930 @@
+gate battery transcript (append-only — see scripts/gate-battery.mjs)
+
+
+######## BATTERY 2026-09-07T08:29:15.939Z — s2536 recurring triage reads ########
+cwd=/Users/robin/Claude/Projects/Gold Rush
+
+===== health =====
+$ bash scripts/health-watch.sh status
+rc=0 11.7s
+=== Gold Rush factory — 2026-09-07 15:29:16 ===
+edge   : landing=200 game=200 api=200   (200 = up; 2xx-slow = answered but missed the budget; anything else is dark — F-OUT-0829)
+runner : ALIVE
+fire   : between-fires
+agents :
+  com.goldrush.dashboard:LOADED
+  com.goldrush.health:LOADED
+  com.goldrush.fire:LOADED
+lock   : ACTIVE 2026-09-07T15:22Z (s2536 fire) — gate chapter evidence opt-in on a detached tree; serial drain and evidence-fir
+queued : 0 task(s)   in-flight: 0   pending-orders: 0
+lanes ahead of main (commit count — may be squash-merged dupes, verify by content):
+  feat/e10s-4-door: 1 commit(s) ahead
+  feat/hero-move-verb: 1 commit(s) ahead
+art staged, in NO commit: 0 file(s)  (detail: node scripts/art-staging-audit.mjs)
+failed tail: superseded-s239-bt-00-demolish.md
+last fire log line: 
+
+
+===== done-moves =====
+$ node scripts/dry-board-probe.mjs
+rc=0 10.4s
+dry-board-probe — scripts/fire.md §2F, in one command (F-2207-1)
+
+  corpus tasks/done/      : read
+  done-moves (.md)        : 1410
+  prefix convention start : 20260725  [DERIVED, not pinned]
+  skipped, legacy         : 644  (bare-dated before the convention existed)
+  skipped, terminal prefix: 706
+  SUBJECTS to classify    : 60
+
+  non-terminal prefixes in the subject set (F-2207-1 — invisible to §2F's prose filter):
+       7 · held
+       2 · blocked
+       1 · OWNER
+       1 · partial
+       1 · ready
+       1 · terminal
+
+  REAL DRAINS — work you were about to walk past: 2
+      20260907-115228-lane-c-chapter-evidence-opt-in.md
+      20260907-130829-lane-a-m1-debug-spawn-contract.md
+  UNKNOWN — the ledger declines to answer; each owes the s1061 FILE PROBE: 0
+  CLOSED / BLOCKED — do not drain: 12
+      20260812-062406-lane-d-ap16-6b-final-verbs-reland.md
+      20260813-214436-fix-e2-railcar-arsenal-floor.md
+      20260814-064304-fix-e2-railcar-arsenal-floor-v2.md
+      20260905-083833-e5-stillwater-front-crew.md
+      20260905-103053-asset-diet-explicit-manifest.md
+      20260905-104752-lantern-true-world-reel.md
+      OWNER-GATED-F-1096-2-do-not-drain-20260727-011937-lane-hero-y-restore-roundtrip.md
+      blocked-firewall-s1380-reauthored-as-lift-20260802-064330-lane-seam-yield-single-source.md
+      blocked-s1217-F1217-1-20260729-165229-ap-orders-adapter-wiring.md
+      held-s1403-F1403-1-hash-divergence-20260802-204650-f1400-1-twin-banks-rebase-and-repin.md
+      held-s2376-gate-f2376-1-f2376-2-v2-authored-20260830-204724-reel-era-projection.md
+      ready-for-gates-s1330-UNDRAINED-7c4f132f-leaf-blocked-20260801-122335-f1328-1-drill-yard-census-debt.md
+  MERGED (shipped-but-unrenamed ghost — cosmetic): 46
+
+  ⛔ NOT DRY — 2 undrained done-move(s). Do not declare §2F.
+
+  Advisory: this reads tasks/done/ only. A lane branch can hold unabsorbed
+  content with no done-move at all — ask `node scripts/lane-usable.mjs --all` too.
+
+
+===== authorable =====
+$ node scripts/authorable-candidates.mjs
+rc=0 0.1s
+=== authorable-candidates ===
+
+OWNER-GATED  rf-04-bounty
+  RF-04 The bounty (owner copy + prizes)
+  cited: F-1664-1 · s1664 2026-08-11 (re-verified at source; first measured s1373 as F-1373-1)
+  NOT fire-authorable, and the owner has taken the DELIVERABLE ITSELF in hand -- this is not a gate a fire can satisfy by building anything. OWNER VERBATIM, dated 2026-08-04 in the morning rulings session (tasks/BACKLOG.md
+
+OWNER-GATED  avo-harness-experiment
+  The AVO direction - a search-native harness as calibration instrument (PARKED post-launch; owner dee
+  cited: owner ruling 2026-08-24 · attended 2026-08-24
+  Owner verbatim: lets put this in the backlog for now, I am deeply interested, but I want to first secure and publish + announce the first version now. Theory distilled in the spec doc; the unpause spawns a real spec (gen
+
+OWNER-GATED  engine-era-browser-stamp
+  The browser half of the engine-era law: let a WATCH reel carry its era
+  cited: F-2308-1 · fire s2308 2026-08-25
+  Whether a PUBLIC reel should announce its engine era is an owner design question, not a defect. The current { buildId } projection is correct, tested and player-safe, so nothing is broken while this waits; the slice only
+
+PROSE-ONLY  e10-bank-secured-claim-regression
+  F-E10-1: bisect and fix (or re-pin per the ratified spec) the missing bank-secured-claim beat after 
+  (prose only, key "note" — class unreadable)
+  Wave 2 for the Claude Opus implementers (Codex out of quota): dispatch when its lane is free and drained; the master ignores its lane pre-flight for a Claude agent (the attended session resets the worktree onto main befo
+
+ATTENDED-OWED  homemaker-readiness-error-diagnostic
+  F-HKS-2: show captured runtime errors when Homemaker readiness fails
+  cited: F-HKS-2 / OPUS WAVE 2 dispatch ruling · s2522 2026-09-05
+  Master is authored and banked. Attended owns Opus dispatch/drains while Codex queues are parked under F-CODEX-1; no spec or owner choice is owed. Dispatch this test-only follow-up after the current lane-a work is drained
+
+OWNER-GATED  stream-live
+  Owner starts the YouTube loop
+  cited: F-1664-1 · s1664 2026-08-11 (re-measured at the goal tree; agrees with F-1373-1, s1373)
+  NOT fire-authorable, and the machinery it waits on is ALREADY BUILT -- the only missing act is the owner pressing go on an external service. THE PROGRAM IS COMPLETE: all four sibling leaves under stream>stream-program ar
+
+NEEDS-SPEC  ap-04-teach
+  AP-04 Teach Mode (playbook tapes as priors; trust ladder) — SAME CONJUNCTIVE GATE AS AP-03, SAME DRO
+  cited: F-1661-2 · s1661 2026-08-11
+  NOT fire-authorable: NO SPEC SLICE EXISTS, and half the named deliverable already shipped under another slice. (1) NO SLICE: grep -rln for "Teach Mode|TEACH MODE|teach-mode" across specs/ docs/ src/ e2e/ matches exactly 
+
+OWNER-GATED  ap-05-publish
+  AP-05 Publish (owner-gated; OpenClaw/Hermes/Milady adapters) — RE-GREENLIT (owner 2026-08-09: "Green
+  cited: F-1661-3 · s1661 2026-08-11
+  NOT fire-authorable: both remaining gates sit outside a fire, and the leaf's own "may be authored but not published" reading has no buildable scope behind it today. (1) PUBLICATION IS OWNER LAW TWICE OVER: specs/agent-pl
+
+OWNER-GATED  ap-15-assay-of-minds
+  AP-15: the assay of minds — null-floor/frontier anchors + seven axes (owner metrics question, spec D
+  cited: F-1653-2 · s1653 2026-08-11
+  Slice 2 (frontier registry) NOT fire-authorable: specs/agent-play/ap-15-assay-of-minds.md is Status DRAFT 2026-08-08 with 3 ratification questions open at its foot. Q2 (do frontier dethronements belong in the Herald?) be
+
+OWNER-GATED  foundry-first-real-game
+  The first REAL second game — the owner's own concept through the kit (owner brings the seed)
+  cited: F-1664-1 · s1664 2026-08-11 (re-measured at the goal tree; agrees with F-1373-1, s1373)
+  NOT fire-authorable: the deliverable IS the owner's own creative seed, and a fire may not invent one. The leaf's title states the gate in its own words -- the owner's own concept through the kit (owner brings the seed) -
+
+10 planned leaf/leaves — 10 priced, 0 unpriced (owner-gated 7, prose-only 1, attended-owed 1, needs-spec 1).
+Advisory: a priced leaf is not a closed one, and UNPRICED is a cost estimate, not a verdict.
+
+--- RESIDUE: 24 leaf/leaves in 3 status(es) NO instrument resolves ---
+Neither this tool (`planned`) nor drain-block-check (blocked/terminal) has an opinion on these.
+  verified-by-owner  12
+    · e4-town
+    · rf-05-fixed-version
+    · marketing-owner-approval
+    · style-anchor
+    · brand-book
+    · grit-law
+    · operating-manual
+    · gate-authorship
+    · accretion-v2
+    · planar-law
+    · storybook-e1-e3
+    · fever-mythology
+  building  10
+    · roster-wiring-e6-e10
+    · era-art-owner-gated
+    · rider-parity-grammar
+    · rider-parity-grammar-stage3
+    · elder-walk8-regeneration
+    · low-orbit-second-build-line
+    · youngsters-rechain-batch
+    · map-campaign-27
+    · mp-07c-agent-rides-browser-world
+    · upstream-fixes-prime-pi
+  queued  2
+    · lane-c-chapter-evidence-opt-in
+    · lane-a-m1-debug-spawn-contract
+Advisory only — a residue status is not authoring debt, and this does NOT trip --strict.
+
+
+===== lane fleet =====
+$ node scripts/lane-usable.mjs --all
+rc=0 17.5s
+run surface: 9 base + gate leaves from main:package.json (+6: foundry ops playwright.preview.config.ts playwright.release-base.config.ts playwright.release.config.ts server)
+agent-a074ca5aabe748fbe  worktree-agent-a074ca5aabe748fbe  ahead=0  behind=3075  paths=0  tracked-dirt=58  untracked=0
+    TRACKED-DIRT artifacts/056/desktop-build-menu-icons-blurb.png
+    TRACKED-DIRT artifacts/056/desktop-build-menu-palisade.png
+    TRACKED-DIRT artifacts/056/mobile-390-build-menu-icons-blurb.png
+    TRACKED-DIRT artifacts/accounts-worker/test-accounts.json
+    TRACKED-DIRT artifacts/assay-ledger-page/desktop-chrome-records.png
+    TRACKED-DIRT artifacts/assay-ledger-page/mobile-chrome-records.png
+    TRACKED-DIRT artifacts/assay-ledger/mobile-chrome.png
+    TRACKED-DIRT artifacts/county-standings/desktop-chrome.png
+    TRACKED-DIRT artifacts/county-standings/mobile-chrome.png
+    TRACKED-DIRT artifacts/drill-yard-affordances/desktop-chrome-after-board.png
+  => DIRTY: TRACKED dirt in the worktree — find its owner before touching this lane
+agent-a126dacac7d095de0  worktree-agent-a126dacac7d095de0  ahead=0  behind=2464  paths=0  tracked-dirt=0  untracked=0
+  => USABLE: refill freely — a master pre-flight will find main..branch empty
+     ⚠️  but worktree-agent-a126dacac7d095de0 is 2464 commit(s) BEHIND main. USABLE does not mean CURRENT.
+     Before queueing, name the commit your task depends on and prove the lane has it:
+       git merge-base --is-ancestor <sha> worktree-agent-a126dacac7d095de0
+     If it does not, request a refresh (tasks/janitor/<name>.req: refresh-lane agent-a126dacac7d095de0) — F-1320-2.
+     📋 run-surface drift: 519 file(s) main has moved that this lane lacks:
+          e2e/044-start-screen.spec.ts
+          e2e/057-baron-rocket-cart.spec.ts
+          e2e/advance-stream-bounded.spec.ts
+          e2e/advance-stream.spec.ts
+          e2e/agent-reels.spec.ts
+          e2e/agent-view.spec.ts
+          e2e/ap16-8b-capture-loop-probe.mjs
+          e2e/assay-auto-tape.spec.ts
+          … and 511 more
+        ⚠️  package.json is among them — this lane's npm GATES may be a strict SUBSET of
+        main's, so a green here can mean less than a green on main. Diff it before trusting a gate.
+agent-a177c1e22ed14fe03  worktree-agent-a177c1e22ed14fe03  ahead=0  behind=2738  paths=0  tracked-dirt=0  untracked=0
+  => USABLE: refill freely — a master pre-flight will find main..branch empty
+     ⚠️  but worktree-agent-a177c1e22ed14fe03 is 2738 commit(s) BEHIND main. USABLE does not mean CURRENT.
+     Before queueing, name the commit your task depends on and prove the lane has it:
+       git merge-base --is-ancestor <sha> worktree-agent-a177c1e22ed14fe03
+     If it does not, request a refresh (tasks/janitor/<name>.req: refresh-lane agent-a177c1e22ed14fe03) — F-1320-2.
+     📋 run-surface drift: 544 file(s) main has moved that this lane lacks:
+          e2e/044-start-screen.spec.ts
+          e2e/057-baron-rocket-cart.spec.ts
+          e2e/advance-stream-bounded.spec.ts
+          e2e/advance-stream.spec.ts
+          e2e/agent-reels.spec.ts
+          e2e/agent-view.spec.ts
+          e2e/ap16-4-contract-admission.spec.ts
+          e2e/ap16-8b-capture-loop-probe.mjs
+          … and 536 more
+        ⚠️  package.json is among them — this lane's npm GATES may be a strict SUBSET of
+        main's, so a green here can mean less than a green on main. Diff it before trusting a gate.
+agent-a195235f7799aa9e2  worktree-agent-a195235f7799aa9e2  ahead=0  behind=3090  paths=0  tracked-dirt=0  untracked=0
+  => USABLE: refill freely — a master pre-flight will find main..branch empty
+     ⚠️  but worktree-agent-a195235f7799aa9e2 is 3090 commit(s) BEHIND main. USABLE does not mean CURRENT.
+     Before queueing, name the commit your task depends on and prove the lane has it:
+       git merge-base --is-ancestor <sha> worktree-agent-a195235f7799aa9e2
+     If it does not, request a refresh (tasks/janitor/<name>.req: refresh-lane agent-a195235f7799aa9e2) — F-1320-2.
+     📋 run-surface drift: 600 file(s) main has moved that this lane lacks:
+          e2e/044-start-screen.spec.ts
+          e2e/057-baron-rocket-cart.spec.ts
+          e2e/_s2080-f1742-1-boot-probe.spec.ts
+          e2e/advance-stream-bounded.spec.ts
+          e2e/advance-stream.spec.ts
+          e2e/agent-reels.spec.ts
+          e2e/agent-view.spec.ts
+          e2e/ap16-4-contract-admission.spec.ts
+          … and 592 more
+        ⚠️  package.json is among them — this lane's npm GATES may be a strict SUBSET of
+        main's, so a green here can mean less than a green on main. Diff it before trusting a gate.
+agent-a383c2ed5dd452ebd  worktree-agent-a383c2ed5dd452ebd  ahead=0  behind=2509  paths=0  tracked-dirt=20  untracked=0
+    TRACKED-DIRT artifacts/e2-arsenal/desktop-chrome-boiler-lance-steam-jet.png
+    TRACKED-DIRT artifacts/e2-arsenal/desktop-chrome-pressure-mortar-arc.png
+    TRACKED-DIRT artifacts/e2-arsenal/desktop-chrome-sky-rocket-gold-teal-salvo.png
+    TRACKED-DIRT artifacts/e2-hill-mine/desktop-chrome-flooded-gallery.png
+    TRACKED-DIRT artifacts/e2-hill-mine/desktop-chrome-high-turret-firing-long.png
+    TRACKED-DIRT artifacts/e2-hill-mine/desktop-chrome-mine-mouth.png
+    TRACKED-DIRT artifacts/e2-hill-mine/desktop-chrome-terrace-face-blocks-west.png
+    TRACKED-DIRT artifacts/e2-hill-mine/desktop-chrome-terraces-wide.png
+    TRACKED-DIRT artifacts/e2-hill-mine/stress-report.json
+    TRACKED-DIRT artifacts/e2-pressure-garden/desktop-chrome-board.png
+  => DIRTY: TRACKED dirt in the worktree — find its owner before touching this lane
+agent-a448136106935d471  worktree-agent-a448136106935d471  ahead=0  behind=2933  paths=0  tracked-dirt=32  untracked=1
+    TRACKED-DIRT artifacts/065/desktop-chrome-after-hill-mine-turret-shot.png
+    TRACKED-DIRT artifacts/065/desktop-chrome-hill-report.json
+    TRACKED-DIRT artifacts/065/mobile-chrome-after-hill-mine-turret-shot.png
+    TRACKED-DIRT artifacts/065/mobile-chrome-hill-report.json
+    TRACKED-DIRT artifacts/e1-dry-gulch/desktop-chrome-gulch-overview.png
+    TRACKED-DIRT artifacts/e1-dry-gulch/desktop-chrome-pond-sluice.png
+    TRACKED-DIRT artifacts/e1-dry-gulch/desktop-chrome-rejection-feedback.png
+    TRACKED-DIRT artifacts/e1-dry-gulch/mobile-chrome-gulch-overview.png
+    TRACKED-DIRT artifacts/e1-dry-gulch/mobile-chrome-pond-sluice.png
+    TRACKED-DIRT artifacts/e1-dry-gulch/mobile-chrome-rejection-feedback.png
+    untracked (clean -fd) node_modules
+  => DIRTY: TRACKED dirt in the worktree — find its owner before touching this lane
+agent-a6513377b3cf5b143  worktree-agent-a6513377b3cf5b143  ahead=0  behind=3107  paths=0  tracked-dirt=6  untracked=0
+    TRACKED-DIRT artifacts/056/desktop-build-menu-icons-blurb.png
+    TRACKED-DIRT artifacts/056/desktop-build-menu-palisade.png
+    TRACKED-DIRT artifacts/056/mobile-390-build-menu-icons-blurb.png
+    TRACKED-DIRT reviews/shots-homemaker/act1-unbuild.png
+    TRACKED-DIRT reviews/shots-homemaker/act3-chair.png
+    TRACKED-DIRT reviews/shots-wrangle/exhausted-capture.png
+  => DIRTY: TRACKED dirt in the worktree — find its owner before touching this lane
+agent-a688e4a408c5fa62f  worktree-agent-a688e4a408c5fa62f  ahead=0  behind=2497  paths=0  tracked-dirt=0  untracked=18
+    untracked (clean -fd) artifacts/assay-e2e-20260822/build-submission.mjs
+    untracked (clean -fd) artifacts/assay-e2e-20260822/claim-prover.mjs
+    untracked (clean -fd) artifacts/assay-e2e-20260822/make-v2-control.mjs
+    untracked (clean -fd) artifacts/assay-e2e-20260822/poll-assay.mjs
+    untracked (clean -fd) artifacts/assay-e2e-20260822/poll.log
+    untracked (clean -fd) artifacts/assay-e2e-20260822/replay-v2-control.err
+    untracked (clean -fd) artifacts/assay-e2e-20260822/replay-v2-control.json
+    untracked (clean -fd) artifacts/assay-e2e-20260822/run-secure-verb.out
+    untracked (clean -fd) artifacts/assay-e2e-20260822/run1.err
+    untracked (clean -fd) artifacts/assay-e2e-20260822/run1.out
+  => USABLE: refill freely — a master pre-flight will find main..branch empty
+     ⚠️  but worktree-agent-a688e4a408c5fa62f is 2497 commit(s) BEHIND main. USABLE does not mean CURRENT.
+     Before queueing, name the commit your task depends on and prove the lane has it:
+       git merge-base --is-ancestor <sha> worktree-agent-a688e4a408c5fa62f
+     If it does not, request a refresh (tasks/janitor/<name>.req: refresh-lane agent-a688e4a408c5fa62f) — F-1320-2.
+     📋 run-surface drift: 523 file(s) main has moved that this lane lacks:
+          e2e/044-start-screen.spec.ts
+          e2e/057-baron-rocket-cart.spec.ts
+          e2e/advance-stream-bounded.spec.ts
+          e2e/advance-stream.spec.ts
+          e2e/agent-reels.spec.ts
+          e2e/agent-view.spec.ts
+          e2e/ap16-4-contract-admission.spec.ts
+          e2e/ap16-8b-capture-loop-probe.mjs
+          … and 515 more
+        ⚠️  package.json is among them — this lane's npm GATES may be a strict SUBSET of
+        main's, so a green here can mean less than a green on main. Diff it before trusting a gate.
+agent-a6b1bbd373315d0c0  worktree-agent-a6b1bbd373315d0c0  ahead=0  behind=3108  paths=0  tracked-dirt=50  untracked=0
+    TRACKED-DIRT artifacts/056/desktop-build-menu-icons-blurb.png
+    TRACKED-DIRT artifacts/056/desktop-build-menu-palisade.png
+    TRACKED-DIRT artifacts/056/mobile-390-build-menu-icons-blurb.png
+    TRACKED-DIRT artifacts/accounts-worker/test-accounts.json
+    TRACKED-DIRT artifacts/assay-season-roll/current-season-mobile-chrome.png
+    TRACKED-DIRT artifacts/assay-season-roll/first-ledger-mobile-chrome.png
+    TRACKED-DIRT artifacts/county-standings/desktop-chrome.png
+    TRACKED-DIRT artifacts/county-standings/mobile-chrome.png
+    TRACKED-DIRT artifacts/drill-yard-affordances/desktop-chrome-after-board.png
+    TRACKED-DIRT artifacts/drill-yard-affordances/desktop-chrome-bell-prompt.png
+  => DIRTY: TRACKED dirt in the worktree — find its owner before touching this lane
+agent-a6farside  worktree-agent-a6-far-side  ahead=0  behind=3033  paths=0  tracked-dirt=0  untracked=0
+  => USABLE: refill freely — a master pre-flight will find main..branch empty
+     ⚠️  but worktree-agent-a6-far-side is 3033 commit(s) BEHIND main. USABLE does not mean CURRENT.
+     Before queueing, name the commit your task depends on and prove the lane has it:
+       git merge-base --is-ancestor <sha> worktree-agent-a6-far-side
+     If it does not, request a refresh (tasks/janitor/<name>.req: refresh-lane agent-a6farside) — F-1320-2.
+     📋 run-surface drift: 589 file(s) main has moved that this lane lacks:
+          e2e/044-start-screen.spec.ts
+          e2e/057-baron-rocket-cart.spec.ts
+          e2e/advance-stream-bounded.spec.ts
+          e2e/advance-stream.spec.ts
+          e2e/agent-reels.spec.ts
+          e2e/agent-view.spec.ts
+          e2e/ap16-4-contract-admission.spec.ts
+          e2e/ap16-8b-capture-loop-probe.mjs
+          … and 581 more
+        ⚠️  package.json is among them — this lane's npm GATES may be a strict SUBSET of
+        main's, so a green here can mean less than a green on main. Diff it before trusting a gate.
+agent-a7loworbit  worktree-agent-a7-low-orbit  ahead=0  behind=3033  paths=0  tracked-dirt=0  untracked=0
+  => USABLE: refill freely — a master pre-flight will find main..branch empty
+     ⚠️  but worktree-agent-a7-low-orbit is 3033 commit(s) BEHIND main. USABLE does not mean CURRENT.
+     Before queueing, name the commit your task depends on and prove the lane has it:
+       git merge-base --is-ancestor <sha> worktree-agent-a7-low-orbit
+     If it does not, request a refresh (tasks/janitor/<name>.req: refresh-lane agent-a7loworbit) — F-1320-2.
+     📋 run-surface drift: 587 file(s) main has moved that this lane lacks:
+          e2e/044-start-screen.spec.ts
+          e2e/057-baron-rocket-cart.spec.ts
+          e2e/advance-stream-bounded.spec.ts
+          e2e/advance-stream.spec.ts
+          e2e/agent-reels.spec.ts
+          e2e/agent-view.spec.ts
+          e2e/ap16-4-contract-admission.spec.ts
+          e2e/ap16-8b-capture-loop-probe.mjs
+          … and 579 more
+        ⚠️  package.json is among them — this lane's npm GATES may be a strict SUBSET of
+        main's, so a green here can mean less than a green on main. Diff it before trusting a gate.
+agent-a92ce8965ad80a2a3  worktree-agent-a92ce8965ad80a2a3  ahead=0  behind=3117  paths=0  tracked-dirt=3  untracked=0
+    TRACKED-DIRT artifacts/056/desktop-build-menu-icons-blurb.png
+    TRACKED-DIRT artifacts/056/desktop-build-menu-palisade.png
+    TRACKED-DIRT artifacts/056/mobile-390-build-menu-icons-blurb.png
+  => DIRTY: TRACKED dirt in the worktree — find its owner before touching this lane
+agent-a932151866f4f456e  worktree-agent-a932151866f4f456e  ahead=0  behind=2972  paths=0  tracked-dirt=0  untracked=0
+  => USABLE: refill freely — a master pre-flight will find main..branch empty
+     ⚠️  but worktree-agent-a932151866f4f456e is 2972 commit(s) BEHIND main. USABLE does not mean CURRENT.
+     Before queueing, name the commit your task depends on and prove the lane has it:
+       git merge-base --is-ancestor <sha> worktree-agent-a932151866f4f456e
+     If it does not, request a refresh (tasks/janitor/<name>.req: refresh-lane agent-a932151866f4f456e) — F-1320-2.
+     📋 run-surface drift: 580 file(s) main has moved that this lane lacks:
+          e2e/044-start-screen.spec.ts
+          e2e/057-baron-rocket-cart.spec.ts
+          e2e/advance-stream-bounded.spec.ts
+          e2e/advance-stream.spec.ts
+          e2e/agent-reels.spec.ts
+          e2e/agent-view.spec.ts
+          e2e/ap16-4-contract-admission.spec.ts
+          e2e/ap16-8b-capture-loop-probe.mjs
+          … and 572 more
+        ⚠️  package.json is among them — this lane's npm GATES may be a strict SUBSET of
+        main's, so a green here can mean less than a green on main. Diff it before trusting a gate.
+agent-a98eb66014d0d4afc  worktree-agent-a98eb66014d0d4afc  ahead=0  behind=2920  paths=0  tracked-dirt=16  untracked=0
+    TRACKED-DIRT artifacts/board-gating/desktop-chrome-fresh-secrets-kept.png
+    TRACKED-DIRT artifacts/board-gating/desktop-chrome-steamworks-profiles.png
+    TRACKED-DIRT artifacts/board-gating/mobile-chrome-fresh-secrets-kept.png
+    TRACKED-DIRT artifacts/board-gating/mobile-chrome-steamworks-profiles.png
+    TRACKED-DIRT artifacts/lane-roster-wiring-e9-01/desktop-chrome-placeholders.png
+    TRACKED-DIRT artifacts/lane-roster-wiring-e9-01/mobile-chrome-placeholders.png
+    TRACKED-DIRT artifacts/survive-copy/desktop-chrome-card-e1-baron.png
+    TRACKED-DIRT artifacts/survive-copy/desktop-chrome-card-e1-dry-gulch.png
+    TRACKED-DIRT artifacts/survive-copy/desktop-chrome-mobile-390-card.png
+    TRACKED-DIRT artifacts/survive-copy/desktop-chrome-mobile-390-pause.png
+  => DIRTY: TRACKED dirt in the worktree — find its owner before touching this lane
+agent-a9e7d8321e70f7a1f  worktree-agent-a9e7d8321e70f7a1f  ahead=0  behind=2639  paths=0  tracked-dirt=0  untracked=0
+  => USABLE: refill freely — a master pre-flight will find main..branch empty
+     ⚠️  but worktree-agent-a9e7d8321e70f7a1f is 2639 commit(s) BEHIND main. USABLE does not mean CURRENT.
+     Before queueing, name the commit your task depends on and prove the lane has it:
+       git merge-base --is-ancestor <sha> worktree-agent-a9e7d8321e70f7a1f
+     If it does not, request a refresh (tasks/janitor/<name>.req: refresh-lane agent-a9e7d8321e70f7a1f) — F-1320-2.
+     📋 run-surface drift: 536 file(s) main has moved that this lane lacks:
+          e2e/044-start-screen.spec.ts
+          e2e/057-baron-rocket-cart.spec.ts
+          e2e/advance-stream-bounded.spec.ts
+          e2e/advance-stream.spec.ts
+          e2e/agent-reels.spec.ts
+          e2e/agent-view.spec.ts
+          e2e/ap16-4-contract-admission.spec.ts
+          e2e/ap16-8b-capture-loop-probe.mjs
+          … and 528 more
+        ⚠️  package.json is among them — this lane's npm GATES may be a strict SUBSET of
+        main's, so a green here can mean less than a green on main. Diff it before trusting a gate.
+agent-a9ef6c846b5a10e64  worktree-agent-a9ef6c846b5a10e64  ahead=0  behind=3046  paths=0  tracked-dirt=22  untracked=0
+    TRACKED-DIRT artifacts/e3-day-night/desktop-chrome-dawn.png
+    TRACKED-DIRT artifacts/e3-day-night/desktop-chrome-dusk-midnight-dawn-strip.png
+    TRACKED-DIRT artifacts/e3-day-night/desktop-chrome-dusk.png
+    TRACKED-DIRT artifacts/e3-day-night/desktop-chrome-midnight.png
+    TRACKED-DIRT artifacts/e3-day-night/mobile-chrome-dawn.png
+    TRACKED-DIRT artifacts/e3-day-night/mobile-chrome-dusk-midnight-dawn-strip.png
+    TRACKED-DIRT artifacts/e3-day-night/mobile-chrome-dusk.png
+    TRACKED-DIRT artifacts/e3-day-night/mobile-chrome-midnight.png
+    TRACKED-DIRT artifacts/e3-fairground-flocks/desktop-chrome-crowds-at-the-gate.png
+    TRACKED-DIRT artifacts/e3-fairground-flocks/desktop-chrome-fright-scatter.png
+  => DIRTY: TRACKED dirt in the worktree — find its owner before touching this lane
+agent-aa7ccb79d2d03ada8  worktree-agent-aa7ccb79d2d03ada8  ahead=0  behind=3075  paths=0  tracked-dirt=46  untracked=0
+    TRACKED-DIRT artifacts/056/desktop-build-menu-icons-blurb.png
+    TRACKED-DIRT artifacts/056/desktop-build-menu-palisade.png
+    TRACKED-DIRT artifacts/056/mobile-390-build-menu-icons-blurb.png
+    TRACKED-DIRT artifacts/e2-arsenal/desktop-chrome-boiler-lance-steam-jet.png
+    TRACKED-DIRT artifacts/e2-arsenal/desktop-chrome-pressure-mortar-arc.png
+    TRACKED-DIRT artifacts/e2-arsenal/desktop-chrome-sky-rocket-gold-teal-salvo.png
+    TRACKED-DIRT artifacts/e2-arsenal/mobile-chrome-boiler-lance-steam-jet.png
+    TRACKED-DIRT artifacts/e2-arsenal/mobile-chrome-pressure-mortar-arc.png
+    TRACKED-DIRT artifacts/e2-arsenal/mobile-chrome-sky-rocket-gold-teal-salvo.png
+    TRACKED-DIRT artifacts/e2-escort-mode/desktop-chrome-arrival.png
+  => DIRTY: TRACKED dirt in the worktree — find its owner before touching this lane
+agent-ab5c2b2f3528ad4c3  worktree-agent-ab5c2b2f3528ad4c3  ahead=0  behind=3012  paths=0  tracked-dirt=0  untracked=0
+  => USABLE: refill freely — a master pre-flight will find main..branch empty
+     ⚠️  but worktree-agent-ab5c2b2f3528ad4c3 is 3012 commit(s) BEHIND main. USABLE does not mean CURRENT.
+     Before queueing, name the commit your task depends on and prove the lane has it:
+       git merge-base --is-ancestor <sha> worktree-agent-ab5c2b2f3528ad4c3
+     If it does not, request a refresh (tasks/janitor/<name>.req: refresh-lane agent-ab5c2b2f3528ad4c3) — F-1320-2.
+     📋 run-surface drift: 588 file(s) main has moved that this lane lacks:
+          e2e/044-start-screen.spec.ts
+          e2e/057-baron-rocket-cart.spec.ts
+          e2e/advance-stream-bounded.spec.ts
+          e2e/advance-stream.spec.ts
+          e2e/agent-reels.spec.ts
+          e2e/agent-view.spec.ts
+          e2e/ap16-4-contract-admission.spec.ts
+          e2e/ap16-8b-capture-loop-probe.mjs
+          … and 580 more
+        ⚠️  package.json is among them — this lane's npm GATES may be a strict SUBSET of
+        main's, so a green here can mean less than a green on main. Diff it before trusting a gate.
+agent-ac6a4904ef7986cff  worktree-agent-ac6a4904ef7986cff  ahead=0  behind=2791  paths=0  tracked-dirt=3  untracked=0
+    TRACKED-DIRT artifacts/056/desktop-build-menu-icons-blurb.png
+    TRACKED-DIRT artifacts/056/desktop-build-menu-palisade.png
+    TRACKED-DIRT artifacts/056/mobile-390-build-menu-icons-blurb.png
+  => DIRTY: TRACKED dirt in the worktree — find its owner before touching this lane
+agent-acb0d58c05ef3464e  worktree-agent-acb0d58c05ef3464e  ahead=0  behind=3048  paths=0  tracked-dirt=3  untracked=0
+    TRACKED-DIRT artifacts/056/desktop-build-menu-icons-blurb.png
+    TRACKED-DIRT artifacts/056/desktop-build-menu-palisade.png
+    TRACKED-DIRT artifacts/056/mobile-390-build-menu-icons-blurb.png
+  => DIRTY: TRACKED dirt in the worktree — find its owner before touching this lane
+agent-ad297088098a5a90d  worktree-agent-ad297088098a5a90d  ahead=0  behind=3020  paths=0  tracked-dirt=0  untracked=0
+  => USABLE: refill freely — a master pre-flight will find main..branch empty
+     ⚠️  but worktree-agent-ad297088098a5a90d is 3020 commit(s) BEHIND main. USABLE does not mean CURRENT.
+     Before queueing, name the commit your task depends on and prove the lane has it:
+       git merge-base --is-ancestor <sha> worktree-agent-ad297088098a5a90d
+     If it does not, request a refresh (tasks/janitor/<name>.req: refresh-lane agent-ad297088098a5a90d) — F-1320-2.
+     📋 run-surface drift: 591 file(s) main has moved that this lane lacks:
+          e2e/044-start-screen.spec.ts
+          e2e/057-baron-rocket-cart.spec.ts
+          e2e/advance-stream-bounded.spec.ts
+          e2e/advance-stream.spec.ts
+          e2e/agent-reels.spec.ts
+          e2e/agent-view.spec.ts
+          e2e/ap16-4-contract-admission.spec.ts
+          e2e/ap16-8b-capture-loop-probe.mjs
+          … and 583 more
+        ⚠️  package.json is among them — this lane's npm GATES may be a strict SUBSET of
+        main's, so a green here can mean less than a green on main. Diff it before trusting a gate.
+agent-ad90f0a8eb7716664  worktree-agent-ad90f0a8eb7716664  ahead=0  behind=2506  paths=0  tracked-dirt=0  untracked=0
+  => USABLE: refill freely — a master pre-flight will find main..branch empty
+     ⚠️  but worktree-agent-ad90f0a8eb7716664 is 2506 commit(s) BEHIND main. USABLE does not mean CURRENT.
+     Before queueing, name the commit your task depends on and prove the lane has it:
+       git merge-base --is-ancestor <sha> worktree-agent-ad90f0a8eb7716664
+     If it does not, request a refresh (tasks/janitor/<name>.req: refresh-lane agent-ad90f0a8eb7716664) — F-1320-2.
+     📋 run-surface drift: 522 file(s) main has moved that this lane lacks:
+          e2e/044-start-screen.spec.ts
+          e2e/057-baron-rocket-cart.spec.ts
+          e2e/advance-stream-bounded.spec.ts
+          e2e/advance-stream.spec.ts
+          e2e/agent-reels.spec.ts
+          e2e/agent-view.spec.ts
+          e2e/ap16-4-contract-admission.spec.ts
+          e2e/ap16-8b-capture-loop-probe.mjs
+          … and 514 more
+        ⚠️  package.json is among them — this lane's npm GATES may be a strict SUBSET of
+        main's, so a green here can mean less than a green on main. Diff it before trusting a gate.
+agent-ada3202c7f5b8074b  worktree-agent-ada3202c7f5b8074b  ahead=0  behind=2980  paths=0  tracked-dirt=3  untracked=0
+    TRACKED-DIRT artifacts/056/desktop-build-menu-icons-blurb.png
+    TRACKED-DIRT artifacts/056/desktop-build-menu-palisade.png
+    TRACKED-DIRT artifacts/056/mobile-390-build-menu-icons-blurb.png
+  => DIRTY: TRACKED dirt in the worktree — find its owner before touching this lane
+agent-ae099afce3741d363  worktree-agent-ae099afce3741d363  ahead=0  behind=3090  paths=0  tracked-dirt=3  untracked=0
+    TRACKED-DIRT artifacts/056/desktop-build-menu-icons-blurb.png
+    TRACKED-DIRT artifacts/056/desktop-build-menu-palisade.png
+    TRACKED-DIRT artifacts/056/mobile-390-build-menu-icons-blurb.png
+  => DIRTY: TRACKED dirt in the worktree — find its owner before touching this lane
+agent-aec0c52b1d3e82294  worktree-agent-aec0c52b1d3e82294  ahead=0  behind=3068  paths=0  tracked-dirt=0  untracked=0
+  => USABLE: refill freely — a master pre-flight will find main..branch empty
+     ⚠️  but worktree-agent-aec0c52b1d3e82294 is 3068 commit(s) BEHIND main. USABLE does not mean CURRENT.
+     Before queueing, name the commit your task depends on and prove the lane has it:
+       git merge-base --is-ancestor <sha> worktree-agent-aec0c52b1d3e82294
+     If it does not, request a refresh (tasks/janitor/<name>.req: refresh-lane agent-aec0c52b1d3e82294) — F-1320-2.
+     📋 run-surface drift: 597 file(s) main has moved that this lane lacks:
+          e2e/044-start-screen.spec.ts
+          e2e/057-baron-rocket-cart.spec.ts
+          e2e/_s2080-f1742-1-boot-probe.spec.ts
+          e2e/advance-stream-bounded.spec.ts
+          e2e/advance-stream.spec.ts
+          e2e/agent-reels.spec.ts
+          e2e/agent-view.spec.ts
+          e2e/ap16-4-contract-admission.spec.ts
+          … and 589 more
+        ⚠️  package.json is among them — this lane's npm GATES may be a strict SUBSET of
+        main's, so a green here can mean less than a green on main. Diff it before trusting a gate.
+agent-afb0b4a8ee24d0d5f  worktree-agent-afb0b4a8ee24d0d5f  ahead=0  behind=2796  paths=0  tracked-dirt=3  untracked=0
+    TRACKED-DIRT artifacts/056/desktop-build-menu-icons-blurb.png
+    TRACKED-DIRT artifacts/056/desktop-build-menu-palisade.png
+    TRACKED-DIRT artifacts/056/mobile-390-build-menu-icons-blurb.png
+  => DIRTY: TRACKED dirt in the worktree — find its owner before touching this lane
+lane-a  feat/e10s-4-door  ahead=1  behind=19  paths=7  tracked-dirt=0  untracked=0
+    HELD LANE-ONLY  artifacts/m1-debug-spawn-contract/after-browser-gates.txt  (18 of 18 added lines absent from main)
+      "[WebServer] (node:89776) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being …"
+      "[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)"
+      "Running 10 tests using 1 worker"
+    HELD LANE-ONLY  artifacts/m1-debug-spawn-contract/before-desktop.txt  (31 of 31 added lines absent from main)
+      "[WebServer] (node:74196) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being …"
+      "[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)"
+      "Running 1 test using 1 worker"
+    HELD LANE-ONLY  artifacts/m1-debug-spawn-contract/build.txt  (2247 of 2247 added lines absent from main)
+      "> gold-rush@0.1.0 build"
+      "> tsc && vite build && node scripts/asset-diet.mjs"
+      "vite v8.0.13 building client environment for production..."
+    HELD LANE-ONLY  artifacts/m1-debug-spawn-contract/report.md  (18 of 18 added lines absent from main)
+      "# M1 debug spawn contract"
+      "Base: `cec0e113c5bc3a84b33b62d84656b40824940cc9`"
+      "## Before"
+    HELD LANE-ONLY  artifacts/m1-debug-spawn-contract/scope-checks.txt  (10 of 10 added lines absent from main)
+      "base=cec0e113c5bc3a84b33b62d84656b40824940cc9"
+      "branch=feat/e10s-4-door"
+      "git diff --check"
+    HELD LANE-ONLY  artifacts/m1-debug-spawn-contract/tsc.txt  (3 of 3 added lines absent from main)
+      "npx tsc --noEmit"
+      "exit: 0"
+      "stdout/stderr: empty"
+    HELD LANE-ONLY  e2e/m1-01-claim-jumpers-death.spec.ts  (8 of 13 added lines absent from main)
+      "async function waitForGame(page: Page, url: string): Promise<void> {"
+      "  await page.goto(url);"
+      "  await waitForGame(page, '/?debug&nowaves&nolevel');"
+  => HOLDS: drain or rule on the held paths first — never auto-reset over them
+lane-b  fix/browser-door-held-gold  ahead=0  behind=179  paths=0  tracked-dirt=0  untracked=119
+    untracked (clean -fd) artifacts/perf-survey/profiles/county-e1-dry-gulch-node.cpuprofile
+    untracked (clean -fd) artifacts/perf-survey/profiles/county-e1-dry-gulch-ticks.cpuprofile
+    untracked (clean -fd) artifacts/perf-survey/profiles/county-e1-night-shift-node.cpuprofile
+    untracked (clean -fd) artifacts/perf-survey/profiles/county-e1-night-shift-ticks.cpuprofile
+    untracked (clean -fd) artifacts/perf-survey/profiles/county-e1-twin-banks-node.cpuprofile
+    untracked (clean -fd) artifacts/perf-survey/profiles/county-e1-twin-banks-ticks.cpuprofile
+    untracked (clean -fd) artifacts/perf-survey/profiles/county-e10-last-claim-node.cpuprofile
+    untracked (clean -fd) artifacts/perf-survey/profiles/county-e10-last-claim-ticks.cpuprofile
+    untracked (clean -fd) artifacts/perf-survey/profiles/county-e2-hill-mine-node.cpuprofile
+    untracked (clean -fd) artifacts/perf-survey/profiles/county-e2-hill-mine-ticks.cpuprofile
+  => USABLE: refill freely — a master pre-flight will find main..branch empty
+     ⚠️  but fix/browser-door-held-gold is 179 commit(s) BEHIND main. USABLE does not mean CURRENT.
+     Before queueing, name the commit your task depends on and prove the lane has it:
+       git merge-base --is-ancestor <sha> fix/browser-door-held-gold
+     If it does not, request a refresh (tasks/janitor/<name>.req: refresh-lane lane-b) — F-1320-2.
+     📋 run-surface drift: 99 file(s) main has moved that this lane lacks:
+          e2e/agent-view.spec.ts
+          e2e/asset-diet.spec.ts
+          e2e/contract-briefings.spec.ts
+          e2e/drill-yard-manifest.spec.ts
+          e2e/e10-ember-shore-preserve.spec.ts
+          e2e/e10-ember-shore-squall.spec.ts
+          e2e/e6-picnic-opening.spec.ts
+          e2e/e8-mare-claim-physics-parity.spec.ts
+          … and 91 more
+        ⚠️  package.json is among them — this lane's npm GATES may be a strict SUBSET of
+        main's, so a green here can mean less than a green on main. Diff it before trusting a gate.
+lane-c  feat/hero-move-verb  ahead=1  behind=30  paths=9  tracked-dirt=0  untracked=0
+    HELD LANE-ONLY  artifacts/chapter-evidence-opt-in/report.md  (35 of 35 added lines absent from main)
+      "# Chapter evidence opt-in report"
+      "Date: 2026-09-07"
+      "## Provenance"
+    HELD LANE-ONLY  artifacts/e3-moth-season/ride-e3-moth-season-01.json  (2 of 22 added lines absent from main)
+      "    \"eventLogHash\": \"fnv1a32:5872d6c4\""
+      "      \"turn\": 93,"
+    HELD LANE-ONLY  e2e/ss-06-e5-beats.spec.ts  (1 of 1 added lines absent from main)
+      "const SHOTS = process.env.GR_REFRESH_EVIDENCE === '1' ? 'reviews/shots-ss-06-e5-beats' : 'test-resu…"
+    HELD LANE-ONLY  e2e/ss-07-e6-beats.spec.ts  (1 of 1 added lines absent from main)
+      "const SHOTS = process.env.GR_REFRESH_EVIDENCE === '1' ? 'reviews/shots-ss-07-e6-beats' : 'test-resu…"
+    HELD LANE-ONLY  e2e/ss-08-e7-beats.spec.ts  (1 of 1 added lines absent from main)
+      "const SHOTS = process.env.GR_REFRESH_EVIDENCE === '1' ? 'reviews/shots-ss-08-e7-beats' : 'test-resu…"
+    HELD LANE-ONLY  e2e/ss-09-e8-beats.spec.ts  (1 of 1 added lines absent from main)
+      "const SHOTS = process.env.GR_REFRESH_EVIDENCE === '1' ? 'reviews/shots-ss-09-e8-beats' : 'test-resu…"
+    HELD LANE-ONLY  e2e/ss-10-e9-beats.spec.ts  (1 of 1 added lines absent from main)
+      "const SHOTS = process.env.GR_REFRESH_EVIDENCE === '1' ? 'reviews/shots-ss-10-e9-beats' : 'test-resu…"
+    HELD LANE-ONLY  e2e/ss-11-e10-beats.spec.ts  (1 of 1 added lines absent from main)
+      "const SHOTS = process.env.GR_REFRESH_EVIDENCE === '1' ? 'reviews/shots-ss-11-e10-beats' : 'test-res…"
+    HELD LANE-ONLY  scripts/moth-season-pressure.test.mjs  (3 of 3 added lines absent from main)
+      "  const evidenceDir = path.join(ROOT, process.env.GR_REFRESH_EVIDENCE === '1' ? 'artifacts/e3-moth-…"
+      "  mkdirSync(evidenceDir, { recursive: true });"
+      "    path.join(evidenceDir, `ride-${SEED}.json`),"
+  => HOLDS: drain or rule on the held paths first — never auto-reset over them
+lane-d  art/portraits-e5-e10-generated  ahead=0  behind=149  paths=0  tracked-dirt=26  untracked=0
+    TRACKED-DIRT reviews/shots-ss-06-e5-beats/desktop-chrome-arrival.png
+    TRACKED-DIRT reviews/shots-ss-06-e5-beats/desktop-chrome-deepwater-ride.png
+    TRACKED-DIRT reviews/shots-ss-06-e5-beats/desktop-chrome-manifest.png
+    TRACKED-DIRT reviews/shots-ss-06-e5-beats/desktop-chrome-rebuild.png
+    TRACKED-DIRT reviews/shots-ss-06-e5-beats/desktop-chrome-tide-teller.png
+    TRACKED-DIRT reviews/shots-ss-06-e5-beats/mobile-chrome-arrival.png
+    TRACKED-DIRT reviews/shots-ss-06-e5-beats/mobile-chrome-deepwater-ride.png
+    TRACKED-DIRT reviews/shots-ss-06-e5-beats/mobile-chrome-manifest.png
+    TRACKED-DIRT reviews/shots-ss-06-e5-beats/mobile-chrome-rebuild.png
+    TRACKED-DIRT reviews/shots-ss-06-e5-beats/mobile-chrome-tide-teller.png
+  => DIRTY: TRACKED dirt in the worktree — find its owner before touching this lane
+
+
+===== desk =====
+$ node scripts/desk-state-audit.mjs
+rc=0 0.2s
+SKIP — line-1 is a lock line, no desk to audit
+
+
+===== owed =====
+$ node scripts/attended-owed-audit.mjs
+rc=0 0.4s
+  anchor targets read from: the main worktree.
+  ⏳ OPEN  001-drain-skill-custody-rule.md  (36d)  → .claude/skills/drain/SKILL.md
+      F-1295-1's custody cure is law in scripts/fire.md §3.0b but absent from the surface a drainer actually reads. RE-TESTED s1349 (F-1349-1): still denied, and NO settings change can lift it — .claude/settings.json already grants bare Edit+Write. Do NOT shell around it.
+      opened s1343 2026-08-01 · anchor: "CUSTODY — NEVER PLACE CONTENT YOU HAVE NOT"
+  ⏳ OPEN  002-transfer-board-spec-registry-path.md  (4d)  → specs/transfer-board.md
+      F-2472-3 (s2472, control-proven): the registry path this RATIFIED spec names at :15 and :19 puts a new .json inside the engine identity corpus, which rotates computeEngineHash and refuses every existing verified reel — violating the spec's OWN law L1 ADDITIVE ("existing tapes, seeds, eras and ranking are untouched"). The fix is a path, not a ruling, but a fire may not edit a ratified spec (CLAUDE.md §2, §7.7).
+      opened s2472 2026-09-03 · anchor: "assets/rotations/rotation-seeds.json"
+attended-owed: OPEN ITEMS (attended-side) — 2 item(s): 2 open, 0 landed-not-archived, 0 stale-tree-open, 0 uncross-checked, 0 malformed/bad-target
+  (OPEN is not a defect: only the attended side can clear it. --strict to enforce.)
+
+
+===== ledger freshness =====
+$ node scripts/ledger-mirror-freshness.mjs
+rc=0 0.0s
+LEDGER MIRROR FRESHNESS — artifacts/ledger-backups/ (LB-01, advisory)
+
+  corpus                  : read (15 entries, 15 dated)
+  newest                  : ledger-2026-09-07.db  (today)
+  span                    : 2026-08-24 -> 2026-09-07  (15/15 day(s) present)
+
+  ✅ WHOLE AND CURRENT — every calendar day between the oldest and newest
+     mirror is present, and the newest is not behind. Nothing owed.
+
+
+===== ledger exposure =====
+$ node scripts/ledger-mirror-exposure.mjs
+rc=0 0.1s
+LEDGER MIRROR EXPOSURE — LB-01 standing encryption gate
+
+  corpus                  : read (15 mirror(s), 15 read, 0 unreadable)
+  dir                     : /Users/robin/Claude/Projects/Gold Rush/artifacts/ledger-backups/
+  tables inspected        : ledger-2026-08-24.db:kv[key]; ledger-2026-08-25.db:kv[key]; ledger-2026-08-26.db:kv[key]; ledger-2026-08-27.db:kv[key]; ledger-2026-08-28.db:kv[key]; ledger-2026-08-29.db:kv[key]; ledger-2026-08-30.db:kv[key]; ledger-2026-08-31.db:kv[key]; ledger-2026-09-01.db:kv[key]; ledger-2026-09-02.db:kv[key]; ledger-2026-09-03.db:kv[key]; ledger-2026-09-04.db:kv[key]; ledger-2026-09-04.db:refusals[anon_id,profile_name]; ledger-2026-09-04.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-09-05.db:kv[key]; ledger-2026-09-05.db:refusals[anon_id,profile_name]; ledger-2026-09-05.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-09-06.db:kv[key]; ledger-2026-09-06.db:refusals[anon_id,profile_name]; ledger-2026-09-06.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-09-07.db:kv[key]; ledger-2026-09-07.db:refusals[anon_id,profile_name]; ledger-2026-09-07.db:sqlite_sequence[SKIPPED: no declared columns]
+  keys inspected          : 238
+  account-class rows      : 0
+  unrecognised rows       : 54
+
+⚠️  UNRECOGNISED KEY CLASS(ES) — not known-account, not known-safe.
+   Not a refusal by default: the county adding a standings-class key is
+   lawful and routine. Read them, then either add the prefix to
+   SAFE_PREFIXES or treat them as account data.
+     ledger-2026-09-05.db  9677a7e7ba4a1704cafa3f083b74e935
+     ledger-2026-09-05.db  9677a7e7ba4a1704cafa3f083b74e935
+     ledger-2026-09-05.db  9677a7e7ba4a1704cafa3f083b74e935
+     ledger-2026-09-05.db  Claude Opus 5
+     ledger-2026-09-05.db  Claude Opus 5
+     ledger-2026-09-05.db  Claude Opus 5
+     ledger-2026-09-06.db  9677a7e7ba4a1704cafa3f083b74e935
+     ledger-2026-09-06.db  9677a7e7ba4a1704cafa3f083b74e935
+     ledger-2026-09-06.db  9677a7e7ba4a1704cafa3f083b74e935
+     ledger-2026-09-06.db  9677a7e7ba4a1704cafa3f083b74e935
+     ledger-2026-09-06.db  9677a7e7ba4a1704cafa3f083b74e935
+     ledger-2026-09-06.db  9677a7e7ba4a1704cafa3f083b74e935
+     ledger-2026-09-06.db  9677a7e7ba4a1704cafa3f083b74e935
+     ledger-2026-09-06.db  9677a7e7ba4a1704cafa3f083b74e935
+     ledger-2026-09-06.db  9677a7e7ba4a1704cafa3f083b74e935
+     ledger-2026-09-06.db  9677a7e7ba4a1704cafa3f083b74e935
+     ledger-2026-09-06.db  9677a7e7ba4a1704cafa3f083b74e935
+     ledger-2026-09-06.db  9677a7e7ba4a1704cafa3f083b74e935
+     ledger-2026-09-06.db  Claude Opus 5
+     ledger-2026-09-06.db  Claude Opus 5
+     ledger-2026-09-06.db  Claude Opus 5
+     ledger-2026-09-06.db  Claude Opus 5
+     ledger-2026-09-06.db  Claude Opus 5
+     ledger-2026-09-06.db  Claude Opus 5
+     ledger-2026-09-06.db  Claude Opus 5
+     ledger-2026-09-06.db  Claude Opus 5
+     ledger-2026-09-06.db  Claude Opus 5
+     ledger-2026-09-06.db  Claude Opus 5
+     ledger-2026-09-06.db  Claude Opus 5
+     ledger-2026-09-06.db  Claude Opus 5
+     ledger-2026-09-07.db  9677a7e7ba4a1704cafa3f083b74e935
+     ledger-2026-09-07.db  9677a7e7ba4a1704cafa3f083b74e935
+     ledger-2026-09-07.db  9677a7e7ba4a1704cafa3f083b74e935
+     ledger-2026-09-07.db  9677a7e7ba4a1704cafa3f083b74e935
+     ledger-2026-09-07.db  9677a7e7ba4a1704cafa3f083b74e935
+     ledger-2026-09-07.db  9677a7e7ba4a1704cafa3f083b74e935
+     ledger-2026-09-07.db  9677a7e7ba4a1704cafa3f083b74e935
+     ledger-2026-09-07.db  9677a7e7ba4a1704cafa3f083b74e935
+     ledger-2026-09-07.db  9677a7e7ba4a1704cafa3f083b74e935
+     ledger-2026-09-07.db  9677a7e7ba4a1704cafa3f083b74e935
+     ledger-2026-09-07.db  9677a7e7ba4a1704cafa3f083b74e935
+     ledger-2026-09-07.db  9677a7e7ba4a1704cafa3f083b74e935
+     ledger-2026-09-07.db  Claude Opus 5
+     ledger-2026-09-07.db  Claude Opus 5
+     ledger-2026-09-07.db  Claude Opus 5
+     ledger-2026-09-07.db  Claude Opus 5
+     ledger-2026-09-07.db  Claude Opus 5
+     ledger-2026-09-07.db  Claude Opus 5
+     ledger-2026-09-07.db  Claude Opus 5
+     ledger-2026-09-07.db  Claude Opus 5
+     ledger-2026-09-07.db  Claude Opus 5
+     ledger-2026-09-07.db  Claude Opus 5
+     ledger-2026-09-07.db  Claude Opus 5
+     ledger-2026-09-07.db  Claude Opus 5
+
+
+===== gazette =====
+$ node scripts/gazette-backfill-sweep.mjs
+rc=0 113.4s
+=== GZ-01 BACKFILL SWEEP (since 2026-08-05T00:00:00) ===
+scan space: src/ assets/ public/ functions/ site/ index.html
+  (a merge touching NONE of these is never examined — widen the list, not the verdict)
+examined 5406 first-parent merge(s) in the window
+player-path-touching first-parent merges: 353
+  already cited in marketing/outbox/ (either sink): 352
+    ...of which cited only via a CONTAINED commit:  0
+  reported:                                          245
+  dismissed (NOT PLAYER-VISIBLE):                  107
+  NOT cited anywhere — candidates to judge:         1
+
+weekly headline budget (2026-W37): 2 standalone, 1 batched
+  GZ-01 allows <=3 standalone item(s) per week; the rest batch into a ROUNDUP.
+  (counted in NO week: 117 item(s) carry no merge citation this parser
+   resolves — the pre-2026-08 house format — and 0 cite a hash on no ref.)
+
+--- dismissed (newest first; available to re-judge) ---
+  8d2080102  2026-09-07  docs(story): refresh nine beat citations; preserve runtime tokens and append era-5 pin
+  e0f1880ed  2026-09-07  s-att: canon-calls-a8-batch bookkeeping — goal leaf merged, SHIPPED row, review with the plate a
+  3d498ac07  2026-09-07  art: the Elder as a woman — two raws from Higgsfield batch 3 (E1 attempt 2 TL 139.6 / TR 137.5 /
+  f88843ade  2026-09-07  fix: two main reds the full battery found after the fast-forward — the payload gate's named JSON
+  c1aeb58be  2026-09-07  s-att: portraits-era-aging-2-batch bookkeeping — goal leaf merged, SHIPPED row with the plate an
+  fc47e1bf0  2026-09-07  merge: first-town-payload-gate — the deploy's first-town verdict judges the declared payload com
+  f8f1c2132  2026-09-07  art: portrait batch 2 — the five trades across E5-E10 by chained reference (thirty plates), the 
+  9e1d8a2e3  2026-09-07  fix: F-RPA-4 — the T debug spawn key requires isDebugEnabled() like every other debug key (it wa
+  81eca5828  2026-09-07  merge: spec-hygiene-batch — evidence writers write tracked artifacts only under GR_REFRESH_EVIDE
+  6619d0cc6  2026-09-06  art: the era-aging plates — the E1 cast thirteen, twenty-six and thirty-nine years on (Mei the e
+  f165a08d3  2026-09-06  art: ten townsfolk plates generated on Higgsfield (GPT Image 2; the E5 cast, the He-3 assayer, t
+  5fc223c1a  2026-09-06  s-att: county null floors re-recorded under the current engine (owner ruling 2026-09-06 (1)) — t
+  a1cda780f  2026-09-06  s-att: era-5 pin 583c7743 — the E7+E8+E9 story tree re-hashed on the merged tree (F-2460-1: pin 
+  ddbd978e0  2026-09-06  s-att: ss-09-e8-beats + perf-optimization-survey bookkeeping — era-5 pin 1052ba1a for the E8 tre
+  df24419f9  2026-09-05  drain bookkeeping: ss-06-e5-beats SHIPPED eb7529a11 — leaf, review, era-5 pin 97add828 (three-ch
+  ac7c89813  2026-09-05  drain bookkeeping: ss-05-e4-beats + ss-07-e6-beats SHIPPED — leaves, reviews, era-5 pin ff52a6e3
+  a5f9f7ab9  2026-09-05  drain bookkeeping: landmark-lighting-calibration SHIPPED ab3704716 (Opus) — leaf, review, era-5 
+  c0e1ccf58  2026-09-05  drain bookkeeping: bounded-prefetch-town-halls SHIPPED 55ac2976f (Opus) — leaf, review, era-5 pi
+  67ec836c7  2026-09-05  drain bookkeeping: homemaker-kept-state-init-order SHIPPED c3e16ae93 (Opus) — leaf, review, era-
+  53c555d8b  2026-09-05  drain bookkeeping: terrain-height-triangle-sampler SHIPPED cf91fe5e9 (Opus) — leaf, review, era-
+  f9006774b  2026-09-05  drain bookkeeping: glb-export-contract-and-validator SHIPPED 3e32f3e09 (Opus) — leaf, review, er
+  3e32f3e09  2026-09-05  merge: glb-export-contract-and-validator — per-asset export profiles (the terrain profile reprod
+  c641fc859  2026-09-05  ledger: re-point every cited hash after the trace rewrite (F-PUSH-1; 19 shas, map recorded in BA
+  30bab24b2  2026-09-05  drain bookkeeping: asset-diet-explicit-manifest v1+v2 SHIPPED 3ef81a3a0 — leaf, review, era-5 pi
+  4fe0d568e  2026-09-05  drain bookkeeping: lantern-true-world-reel-2 SHIPPED 6faf890df — leaf, review, era-5 pin b395ee1
+  acb9295cc  2026-09-05  drain bookkeeping: shared-atlas-texture-dedupe SHIPPED b7fdb9796 — leaf, review, era-5 pin 9254f
+  65f9459f5  2026-09-05  drain bookkeeping: prefetch-bounded-warming SHIPPED dfbed9491 (era pin 8afae55f); lantern-true-w
+  e48d9e119  2026-09-05  drain bookkeeping: e7-player-playbook-parity SHIPPED 6abcaf1bb — leaf, review, era-5 pin 1ecca47
+  0ad02751b  2026-09-05  drain bookkeeping: e5-storm-predicate-split SHIPPED 036cb6037 — leaf, review, era-5 pin b061540c
+  036cb6037  2026-09-05  merge: e5-storm-predicate-split — storm cargo split from schedule suppression in both engines; e
+  29df0dabf  2026-09-05  drain bookkeeping: e3-moth-season-grid SHIPPED de21da4f5 — leaf, review, era-5 pin 324bb3cd; F-E
+  4620d4d31  2026-09-05  drain bookkeeping: e7-playbook-rows SHIPPED b38d60295 — leaf, review, era-5 pin 82ea9af6; F-E7PB
+  da78de0d3  2026-09-04  fix: make every contract clock explicit
+  528363bdc  2026-09-04  s2505: drain standing formula dependency unit
+  89b12c799  2026-09-04  fix: move winnability receipts outside engine corpus
+  d64574aaf  2026-09-04  chore: era 5 pin for the receipts re-hash + F-RCPT-1 corrective queued (receipts ledger out of t
+  08458d164  2026-09-04  chore: era 5 pin 737a979a — the four overnight drains left main's corpus unrecorded; pinned befo
+  79053ddaf  2026-09-04  s2497: drain bookkeeping for e4-vehicles-plain-boot — engine era 5 pin 20 (41583818, measured on
+  a55581eed  2026-09-04  s2493 drain bookkeeping: reel-contract-routing-hazard merged 22b9538e5
+  22b9538e5  2026-09-04  drain: reel-contract-routing-hazard (lane-c) — a reel routes by its own tape, not by page locati
+  f43e30ecb  2026-09-04  drain bookkeeping: e4-roads-and-convoys SHIPPED 48ef7df8d — leaf, review, era-5 pin 49c34f8b; co
+  b5a535c14  2026-09-04  drain bookkeeping: e8-mare-claim-physics SHIPPED a121c7f14 — leaf, review, era-5 pin 5d2fc156; F
+  5e7a7c0ba  2026-09-03  rt: the first real rotation r2026w37 minted with the owner-held salt (opens 2026-09-07); rotatio
+  3361e7b91  2026-09-03  s2462: engine pin ac138d0f (era 5, pins 12 -> 13) — e10-preserve-ranking drain duty
+  fc45ed645  2026-09-03  fix: human-tape-true-reel-stamp drain reconciliation — viewVersion union, era-5 pin, law pointer
+  bbf5e3912  2026-09-03  s2460 drain bookkeeping: ss-04-e3-beats MERGED 9342d17f4 — leaf, review, engine pin, gazette, F-
+  970093721  2026-09-02  merge: view-schema-versioning (viewVersion 1 + additive-only view guard)
+  b5850417a  2026-09-02  feat: merge lane/a winnability-receipts-and-kit-guard — every door contract carries a winnabilit
+  e62f30ae9  2026-09-02  drain bookkeeping: same-laws-harvest-parity SHIPPED 9e5d0636d — leaf, ledger, review, era-5 pin 
+  69d0a75ec  2026-09-02  chore: era 5 pin 93c80710 carries its aliases array (the narrowed-basis guard requires one on ev
+  415a0a953  2026-09-02  chore: era 5 pin 93c80710 — content re-hash after the lantern-true-terrain drain and the lantern
+  c3cda119c  2026-09-02  art: drain art-batch-announcement-v2 — three gpt-image-2 panels (the same door, the board today,
+  b4226e786  2026-09-02  s2445 drain bookkeeping: deploy-mirror-allowlist SHIPPED 1aeb17b72 — leaf, review, rows, law poi
+  1462c6874  2026-09-02  s2440: re-base the law-pointer baseline for the gazette coordinate (1599 -> 1601), eye-checked a
+  c13b4c24d  2026-09-01  fix: pay era 5's owed pin lineage — the fencepost rotation (drain-missed) and the package.json g
+  b3d3bac7d  2026-08-31  fix: pay the owed era-4 re-pin (registry 64e9468e vs computed 7fdaef69 since the v2 merge; its d
+  b4f247c93  2026-08-31  s2382: drain bookkeeping for toolsurface-terrain-edge — leaf merged at 0d718cead, engine re-pinn
+  0d718cead  2026-08-31  drain: toolsurface-terrain-edge — the whole Playwright suite collects again
+  1d41d4763  2026-08-30  EH-3b: re-pin the engine hash at drain (d5b04061 -> c306f1c0), era deliberately NOT bumped
+  4350ab711  2026-08-30  fix: re-pin the era-4 engine hash at drain and regenerate the EH-3 fixture the re-pin staled
+  b4b65f0ef  2026-08-30  drain(s2371): em-dash player copy + guard scan-space widening (f2367-1)
+  8c5684def  2026-08-30  merge(lane-d): true-reel-harness (EH-2) — the county's own replay reproduces its event-log hash 
+  d79f50eb1  2026-08-29  feat: $AGENTTOWN footer link on the landing (owner-directed, Dexscreener)
+  d96dacb15  2026-08-25  fix: veto the engine-era public projection ruling; re-seed the era-3 hash on the merged tree
+  d67608bb3  2026-08-25  gate probe: engine-era-law-v3
+  c756c7e71  2026-08-24  s2261: two honest stops closed with re-derived evidence — bt-04 firewall unsatisfiable (F-2261-1
+  e4101ac0a  2026-08-24  feat: jumper rotation ruled LEGACY (owner verbatim) — LEDGER closed, old wiring master bannered,
+  9eb74cc81  2026-08-24  fix: the Ember Shore lands INERT — twist schema + data, admission parked with the door (e10s-1b 
+  e27c4ebb4  2026-08-23  s2249 retention: salvage the 3 rejected jumper-rotation3 takes into git (6.44 MB)
+  0008f457d  2026-08-23  s2249 drain: art-jumper-rotation-retake — a CORRECT STOP, no failing sheet handed forward
+  7b7f616df  2026-08-23  gate: L1 ledger-service-core (s2233 detached gate)
+  d0a7562bc  2026-08-22  s2187: lock ACTIVE — eighteenth dry board: standing duties + measure the 55 ABSORBED salvage ref
+  9340d346c  2026-08-22  docs+feat: the agenttown server runbook + mirrored configs (retention law), AEO surfaces both or
+  bf015c251  2026-08-22  chore: bank the null-floors re-stamp (floors byte-identical, eraStamp d775fca71 -> db24b437e)
+  1968127f5  2026-08-21  fe2cs2-2: give DEFAULT_COAL_SEAMS a node-safe home so the agent view stops dragging Vite into pl
+  cd59fb273  2026-08-21  feat: publish canyonConnect onto the headless agent view (f2138-1)
+  52c48fce7  2026-08-21  fix: f2131-1 — the picnic hold gets a contract-scoped enable key (drain s2133)
+  8cf19eae0  2026-08-21  docs: the door-completion program closes — A9/A10/A2 bookkept, the five-map fork table on the de
+  11256af3c  2026-08-21  fix: F-2122-1 — re-base the HeadlessContractSim citation that the f2120-1 merge just rotted
+  e2b9399a2  2026-08-21  docs+feat: the fairground rests — deliberate-fort session (pressure-map plan, x2 both seeds, no 
+  2f8d4b2b7  2026-08-20  feat: the fairground fund-the-fort prover + the lane-shift A/B — seed 01 secures pure-public x2 
+  d931958b3  2026-08-20  drain: regenerate null-floors on the Dead-Band-merged tree (53, --check clean)
+  9071811d3  2026-08-20  fix: F-CAP-1 — strike the 'hold spawn slots' clause the cap exemption made false (coordinated wi
+  39f141cab  2026-08-20  docs: E6 capture truth-pass (fire-authored f2081-1) — manifest rule truthful, census aligned — d
+  95781c2fe  2026-08-20  drain: regenerate null-floors (51, --check clean) + same-game audit on the four-merge tree
+  6d367fc83  2026-08-20  test: F-1742-1 cured-confirmed (causal re-break) — E4 DOOR-COMPLETE, both maps seeded, census mo
+  082340dd0  2026-08-20  fsr6: skill.md documents the LEDGER SEASON axis — the dimension every rig read/write rides
+  e86e9d8e3  2026-08-20  fix: E6 Homemaker headless socket — glow-mesa re-admitted (exemptions 7->6; core-only secure rul
+  d0d6daa44  2026-08-20  f2078-1: the deepwater manifest tells the truth after re-admission (drain, s2080)
+  a86d454b9  2026-08-20  site: commit the #pillars anchor (built in the working tree but missed from a1e8bc63c — caught b
+  a1e8bc63c  2026-08-20  drain: E5 admission completion bookkeeping — leaf merged @26a364bf, season-roll unblocked, hold 
+  479009d81  2026-08-20  site: restore #teaser anchor target on the landing (news.html:30 links index.html#teaser; id los
+  3a4a5d15d  2026-08-15  fix: replay tapes carry run-start progression
+  ad429a117  2026-08-15  feat: drain assay replay door — deterministic instrument, fidelity held
+  9849623b6  2026-08-14  feat: add E1 profile-threading campaign harness
+  22a0c62f5  2026-08-14  fix: release headless heroes from landmark starts
+  dca7ca81f  2026-08-13  chore: bank six idle-safe benchmark floors
+  27a8efe8e  2026-08-12  fix: re-probe all eight AP-16 admission exemptions (tsc, build, node guards, 50/50 browser)
+  58afad35d  2026-08-12  f1662-2: derive the AP-16-4 admission counts from the data they describe (drain, s1690)
+  f8a704249  2026-08-11  fix: F-1662-1 — drop the three de-listed railcars from the pinned null-floor artifact
+  961043c77  2026-08-11  s1656: batch-007 jumper rotation extracted + measured — scale debt NOT cleared, not wired (F-165
+  909c0d7cd  2026-08-11  ap15-1: pin the AP-15 null floor — 35 idle anchors across 12 door-servable contracts
+  726398e76  2026-08-10  feat: SEA-1 — the county names its seasons, and every standings row learns which one it rode in
+  6c780b621  2026-08-10  runner(art): f1608-1-eight-winds-two-row-composite.md
+  fc284845d  2026-08-09  THE DESK WALKTHROUGH: twelve owner rulings executed — 9 closed + 3 ruled-open + 3 leaves unblock
+  f33380c92  2026-08-06  fix: F-PG-5 — pressure-garden mounts 0 -> 5 in the E2 verifier; sweep proves 4/4 profiles clean
+  1a2871fd3  2026-08-06  f1465-1: encode Game.ts composite-key delimiters as \u0000 escapes (restores grep for Claude-she
+
+--- candidates (newest first; judge each for player-visibility) ---
+  7ac49dcf3  2026-09-07  files=3  fix: first-town budget 25,000,000 → 35,000,000 B and the cast sheets gated (owner A11, 2026-09-0
+
+    to DISCHARGE a candidate, write its verdict where THIS TOOL reads:
+      - news      -> a gazette item in marketing/outbox/ citing the hash
+      - not news  -> a paragraph in marketing/outbox/ containing "NOT PLAYER-VISIBLE" AND the hash
+    a verdict written only into a STATUS.md handoff is INVISIBLE here and
+    the candidate returns next fire. Blank lines scope the marker paragraph:
+    never cite a REPORTED hash inside one (F-1613-1).
+
+
+===== archive =====
+$ node scripts/status-archive-audit.mjs
+rc=null 62.0s
+
+<--- Last few GCs --->
+
+[25665:0xc0b800000]    61817 ms: Mark-Compact (reduce) 4119.1 (4125.2) -> 4090.8 (4093.9) MB, pooled: 0 MB, 2.67 / 0.00 ms  (+ 0.1 ms in 0 steps since start of marking, biggest step 0.0 ms, walltime since start of marking 83 ms) (average mu = 0.992, curre[25665:0xc0b800000]    61942 ms: Mark-Compact 4118.9 (4122.0) -> 4118.8 (4125.0) MB, pooled: 0 MB, 1.54 / 0.00 ms  (average mu = 0.990, current mu = 0.988) allocation failure; scavenge might not succeed
+
+
+<--- JS stacktrace --->
+
+FATAL ERROR: Reached heap limit Allocation failed - JavaScript heap out of memory
+----- Native stack trace -----
+
+ 1: 0x1042739c0 node::OOMErrorHandler(char const*, v8::OOMDetails const&) [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+ 2: 0x10444b020 v8::internal::V8::FatalProcessOutOfMemory(v8::internal::Isolate*, char const*, v8::OOMDetails const&) [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+ 3: 0x10467465c v8::internal::Heap::stack() [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+ 4: 0x1046728bc v8::internal::Heap::CollectGarbage(v8::internal::AllocationSpace, v8::internal::GarbageCollectionReason, v8::GCCallbackFlags) [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+ 5: 0x104668550 v8::internal::HeapAllocator::AllocateRawWithLightRetrySlowPath(int, v8::internal::AllocationType, v8::internal::AllocationOrigin, v8::internal::AllocationAlignment) [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+ 6: 0x104668f1c v8::internal::HeapAllocator::AllocateRawWithRetryOrFailSlowPath(int, v8::internal::AllocationType, v8::internal::AllocationOrigin, v8::internal::AllocationAlignment) [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+ 7: 0x10463b974 v8::internal::FactoryBase<v8::internal::Factory>::NewRawTwoByteString(int, v8::internal::AllocationType) [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+ 8: 0x10464c934 v8::internal::Factory::NewStringFromUtf8(v8::base::Vector<unsigned char const>, unibrow::Utf8Variant, v8::internal::AllocationType) [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+ 9: 0x104468f1c v8::String::NewFromUtf8(v8::Isolate*, char const*, v8::NewStringType, int) [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+10: 0x1043a9aec node::StringBytes::Encode(v8::Isolate*, char const*, unsigned long, node::encoding, v8::Local<v8::Value>*) [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+11: 0x104245394 void node::Buffer::(anonymous namespace)::StringSlice<(node::encoding)1>(v8::FunctionCallbackInfo<v8::Value> const&) [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+12: 0x105096aac Builtins_CallApiCallbackOptimizedNoProfiling [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+13: 0x10fba0e38 
+14: 0x10fb9fa94 
+15: 0x10fb8fe50 
+16: 0x10fb9d784 
+17: 0x10fb93ea4 
+18: 0x10fb9e2b4 
+19: 0x10fb9494c 
+20: 0x10fb9897c 
+21: 0x1050d42c4 Builtins_GeneratorPrototypeNext [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+22: 0x10509250c Builtins_JSEntryTrampoline [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+23: 0x1050921b0 Builtins_JSEntry [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+24: 0x1045c804c v8::internal::(anonymous namespace)::Invoke(v8::internal::Isolate*, v8::internal::(anonymous namespace)::InvokeParams const&) [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+25: 0x1045c88ac v8::internal::(anonymous namespace)::InvokeWithTryCatch(v8::internal::Isolate*, v8::internal::(anonymous namespace)::InvokeParams const&) [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+26: 0x1045c8978 v8::internal::Execution::TryCall(v8::internal::Isolate*, v8::internal::Handle<v8::internal::Object>, v8::internal::Handle<v8::internal::Object>, int, v8::internal::Handle<v8::internal::Object>*, v8::internal::Execution::MessageHandling, v8::internal::MaybeHandle<v8::internal::Object>*) [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+27: 0x10497dc3c v8::internal::SourceTextModule::ExecuteModule(v8::internal::Isolate*, v8::internal::Handle<v8::internal::SourceTextModule>, v8::internal::MaybeHandle<v8::internal::Object>*) [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+28: 0x10497d590 v8::internal::SourceTextModule::InnerModuleEvaluation(v8::internal::Isolate*, v8::internal::Handle<v8::internal::SourceTextModule>, v8::internal::ZoneForwardList<v8::internal::Handle<v8::internal::SourceTextModule>>*, unsigned int*) [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+29: 0x10497d0ac v8::internal::SourceTextModule::Evaluate(v8::internal::Isolate*, v8::internal::Handle<v8::internal::SourceTextModule>) [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+30: 0x104938e5c v8::internal::Module::Evaluate(v8::internal::Isolate*, v8::internal::Handle<v8::internal::Module>) [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+31: 0x1044526c0 v8::Module::Evaluate(v8::Local<v8::Context>) [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+32: 0x104226d64 node::loader::ModuleWrap::Evaluate(v8::FunctionCallbackInfo<v8::Value> const&) [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+33: 0x105096978 Builtins_CallApiCallbackGeneric [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+34: 0x105094838 Builtins_InterpreterEntryTrampoline [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+35: 0x1050d1e20 Builtins_AsyncFunctionAwaitResolveClosure [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+36: 0x10519f298 Builtins_PromiseFulfillReactionJob [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+37: 0x1050c1214 Builtins_RunMicrotasks [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+38: 0x1050923f0 Builtins_JSRunMicrotasksEntry [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+39: 0x1045c800c v8::internal::(anonymous namespace)::Invoke(v8::internal::Isolate*, v8::internal::(anonymous namespace)::InvokeParams const&) [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+40: 0x1045c88ac v8::internal::(anonymous namespace)::InvokeWithTryCatch(v8::internal::Isolate*, v8::internal::(anonymous namespace)::InvokeParams const&) [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+41: 0x1045c89e4 v8::internal::Execution::TryRunMicrotasks(v8::internal::Isolate*, v8::internal::MicrotaskQueue*) [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+42: 0x1045f7408 v8::internal::MicrotaskQueue::RunMicrotasks(v8::internal::Isolate*) [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+43: 0x1045f7cac v8::internal::MicrotaskQueue::PerformCheckpoint(v8::Isolate*) [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+44: 0x1041759a8 node::InternalCallbackScope::Close() [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+45: 0x104175474 node::InternalCallbackScope::~InternalCallbackScope() [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+46: 0x104277974 node::fs::FileHandle::CloseReq::Resolve() [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+47: 0x104292788 node::fs::FileHandle::ClosePromise()::$_0::__invoke(uv_fs_s*) [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+48: 0x10426bf0c node::MakeLibuvRequestCallback<uv_fs_s, void (*)(uv_fs_s*)>::Wrapper(uv_fs_s*) [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+49: 0x10506d760 uv__work_done [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+50: 0x105071478 uv__async_io [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+51: 0x10508524c uv__io_poll [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+52: 0x1050719e0 uv_run [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+53: 0x104176508 node::SpinEventLoopInternal(node::Environment*) [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+54: 0x1042bd250 node::NodeMainInstance::Run() [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+55: 0x10422f5f4 node::Start(int, char**) [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+56: 0x1808904e4 start [/usr/lib/dyld]
+
+
+SUMMARY {"health":0,"done-moves":0,"authorable":0,"lane fleet":0,"desk":0,"owed":0,"ledger freshness":0,"ledger exposure":0,"gazette":0,"archive":null}
+OVERALL rc=1

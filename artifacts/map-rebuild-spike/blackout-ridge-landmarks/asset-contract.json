@@ -1,0 +1,105 @@
+{
+  "law": "reuse > derive > build-new; era-stamped; grit-dressed",
+  "packs": {
+    "blackout-ridge": {
+      "era": 3,
+      "atlasSha256": "8ba525bd84d042a7b54e434d8560d91d0be27a0aecf99a2fe5b85a946be9a3c5",
+      "assets": {
+        "off-map-current-receiver": {
+          "sourceTier": "derive",
+          "triangles": 1316,
+          "sha256": "1009de1daa4bdafd1cefca6de82724df42d7b0700ecb1331e7e55971ae845c0e",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "trunk-line-breaker-shelter": {
+          "sourceTier": "reuse",
+          "triangles": 1456,
+          "sha256": "969cb3e0579c50dca659248c2001390d2560475fcf5f4023148cfe3c881d58cc",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "breath-bank-service-rack": {
+          "sourceTier": "reuse",
+          "triangles": 1044,
+          "sha256": "c03bbab275da0502e427952ac6541b8104a081a4cf348e94e17c2bf128b56d76",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "ridge-switch-house": {
+          "sourceTier": "derive",
+          "triangles": 856,
+          "sha256": "07d221d21e062210ddfc55288a73f1ecf1880da10c31d83a6ecd0a0feff689d0",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        },
+        "blackout-watch-lamp": {
+          "sourceTier": "reuse",
+          "triangles": 956,
+          "sha256": "8cc781f2c9b8b3e6c40a14a2966620b3deba6cffc5541915881af699281438bb",
+          "byteIdenticalReexport": true,
+          "semanticIdenticalReexport": true,
+          "baseCentered": true
+        }
+      }
+    }
+  },
+  "totals": {
+    "packs": 1,
+    "assets": 5,
+    "sourceTiers": {
+      "reuse": 3,
+      "derive": 2,
+      "build-new": 0
+    }
+  },
+  "boards": {
+    "blackout-ridge-landmarks-turntable.png": {
+      "size": [
+        1920,
+        1160
+      ],
+      "sha256": "9107d019178019c2af1b1f8b41c1bf8e163444972c4964999aa8e2d8f12df660"
+    },
+    "blackout-ridge-landmarks-verdict.png": {
+      "size": [
+        1920,
+        1008
+      ],
+      "sha256": "8a6cb86669f173c5488362aa0fc515260d20d5eafed23722168d256020b163be"
+    },
+    "blackout-ridge-landmarks-pack.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "5d2b5467b3f62cd72a69e36975c3b5f31587b51a18a95f23e3e1d25bbe77957d"
+    },
+    "blackout-ridge-landmarks-proposed.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "7e6e373d1c9adf58388367c5a0115f4e618f3f9e2a3496fab61c502b36238381"
+    },
+    "blackout-ridge-landmarks-proposed-overview.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "3fc14abefdabd6e80f9fb8d92ef775ee1fcc7eeedaaa99493b5354b4f6351320"
+    },
+    "blackout-ridge-landmarks-clearance-overlay.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "03a7a46f213e4435b049da5e46813b86b3aeeda27410d0ca3d95f39ce0de50ea"
+    }
+  },
+  "simulation": "unchanged; every landmark is a separate render-only GLB mounted by contract"
+}

@@ -1,0 +1,161 @@
+{
+  "blender": "5.1.2",
+  "freshReferenceBaseSha": "0faabaa29fc0ea92a1614a782f2258f8e698a89a",
+  "maskTable": "assets/contracts/epoch-5-deepwater/mask-tables/e5-regatta.json",
+  "terrain": {
+    "sha256": "66ad4fe9edee65b512984be599fcf1919c587084b71018fc2a59086ddea045b3",
+    "bytes": 9471464,
+    "meshes": 1,
+    "primitives": 1,
+    "triangles": 32768,
+    "materials": 1,
+    "images": 1,
+    "embeddedImages": 1,
+    "cameras": 0,
+    "lights": 0,
+    "animations": 0,
+    "bounds": {
+      "min": [
+        -64,
+        -5.645776,
+        -64
+      ],
+      "max": [
+        64,
+        -1.657622,
+        64
+      ],
+      "size": [
+        128,
+        3.988154,
+        128
+      ],
+      "center": [
+        0.0,
+        -3.651699,
+        0.0
+      ]
+    },
+    "materialContract": [
+      {
+        "metallicFactor": 0,
+        "roughnessFactor": 0.8999999761581421,
+        "hasBaseColorTexture": true,
+        "hasEmissiveTexture": false,
+        "emissiveFactor": [
+          0,
+          0,
+          0
+        ]
+      }
+    ]
+  },
+  "panorama": {
+    "sha256": "50f7c28128b87a7853d3dd20b1ddcb942f2b09374310e23592462f1a2f26c391",
+    "bytes": 737052,
+    "meshes": 1,
+    "primitives": 1,
+    "triangles": 2704,
+    "materials": 1,
+    "images": 1,
+    "embeddedImages": 1,
+    "cameras": 0,
+    "lights": 0,
+    "animations": 0,
+    "bounds": {
+      "min": [
+        -190,
+        -160,
+        -190
+      ],
+      "max": [
+        190,
+        130,
+        190
+      ],
+      "size": [
+        380,
+        290,
+        380
+      ],
+      "center": [
+        0.0,
+        -15.0,
+        0.0
+      ]
+    },
+    "materialContract": [
+      {
+        "metallicFactor": 0,
+        "roughnessFactor": 1,
+        "hasBaseColorTexture": true,
+        "hasEmissiveTexture": true,
+        "emissiveFactor": [
+          1,
+          1,
+          1
+        ]
+      }
+    ]
+  },
+  "bathymetryProbes": {
+    "startBeacon": -2.3773,
+    "midcourseBeacon": -2.1988,
+    "fastWaterFloor": -5.58,
+    "openWaterFloor": -3.3899
+  },
+  "boards": {
+    "regatta-mood-ab.png": {
+      "size": [
+        1920,
+        684
+      ],
+      "bytes": 2014203,
+      "sha256": "62c1f14de10487576d427a25785713037f6ce8e02172a96d81a765469204b522"
+    },
+    "regatta-flat-vs-sculpted-ab.png": {
+      "size": [
+        1920,
+        684
+      ],
+      "bytes": 1372559,
+      "sha256": "11832eda1092997c413ad8f3e994de6069d393993539851a94e52c08256d3bd8"
+    },
+    "regatta-owner-verdict.png": {
+      "size": [
+        1920,
+        504
+      ],
+      "bytes": 733883,
+      "sha256": "dc2081c2e7e78b509457a96b7606663d5ee591e7bc3bca09fb4df4f2de39d51e"
+    },
+    "regatta-panorama-mood-ab.png": {
+      "size": [
+        1920,
+        504
+      ],
+      "bytes": 511905,
+      "sha256": "7c962f6b2af786e37af34b1675d7858220c5f3e2b22dbeaa7c78b511a146b937"
+    },
+    "regatta-panorama-distance-gate.png": {
+      "size": [
+        1920,
+        684
+      ],
+      "bytes": 1040895,
+      "sha256": "c28ebd8a32c512e8cb736fc4d23b4330c5ab680f94676b23f8fcb1e2f3bc1357"
+    },
+    "regatta-mask-agreement-board.png": {
+      "size": [
+        1280,
+        1260
+      ],
+      "bytes": 951887,
+      "sha256": "091b352749bb60d90a303ae74eb438c6cea37ea6fdbfe2a2c6474d93a9515a5d"
+    }
+  },
+  "variantReuse": {
+    "e5-flotilla": "reuses tileId e5-deepwater-claim; no new sculpt",
+    "e5-stillwater": "reuses tileId e5-deepwater-claim; no new sculpt"
+  }
+}

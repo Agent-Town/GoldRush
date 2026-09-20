@@ -1,0 +1,836 @@
+[
+  {
+    "width": 1280,
+    "instancing": false,
+    "errors": [],
+    "cases": [
+      {
+        "name": "base",
+        "slot": "char.bandit_base",
+        "opposing": [
+          {
+            "direction": "e",
+            "clip": "walk",
+            "source": "char-bandit-base-sheet-walk8-r2c3.png",
+            "frame": 3,
+            "material": "17c75701-1e10-4367-97f3-7baa38c4d460",
+            "atlas": "f9c94cd5-b11a-4771-8d34-c296e471eb57"
+          },
+          {
+            "direction": "w",
+            "clip": "walk",
+            "source": "char-bandit-base-sheet-walk8-r1c3.png",
+            "frame": 3,
+            "material": "f350ecf7-7a7f-402c-abc2-a32e7625ed5d",
+            "atlas": "6a29692a-61bc-43cb-b839-377bf4c6526c"
+          }
+        ],
+        "drawCalls": 22,
+        "immutableUv": true,
+        "independentClip": true,
+        "recycled": true,
+        "directionalArt": true
+      },
+      {
+        "name": "thief",
+        "slot": "char.bandit_thief",
+        "opposing": [
+          {
+            "direction": "e",
+            "clip": "walk",
+            "source": "char-bandit-thief-sheet-walk8-r2c3.png",
+            "frame": 3,
+            "material": "c4da50d2-e752-485b-bcd3-44896debd856",
+            "atlas": "4cdedf76-4ec9-4935-9fba-f44e78267456"
+          },
+          {
+            "direction": "w",
+            "clip": "walk",
+            "source": "char-bandit-thief-sheet-walk8-r1c3.png",
+            "frame": 3,
+            "material": "605ee6ff-bf4a-4923-93ce-321952066d1e",
+            "atlas": "bd029230-d2a2-4a5f-a361-ae80d35694b7"
+          }
+        ],
+        "drawCalls": 22,
+        "immutableUv": true,
+        "independentClip": true,
+        "recycled": true,
+        "directionalArt": true
+      },
+      {
+        "name": "rail_tough",
+        "slot": "char.e2.rail_tough",
+        "opposing": [
+          {
+            "direction": "e",
+            "clip": "walk",
+            "source": "char-railtough-sheet-walk4-a-r2c1.png",
+            "frame": 1,
+            "material": "16d01c07-c1fe-4e11-9dd0-461dbb66e0ee",
+            "atlas": "e3847e45-1e18-4389-b974-83a383d0bc57"
+          },
+          {
+            "direction": "w",
+            "clip": "walk",
+            "source": "char-railtough-sheet-walk4-a-r1c1.png",
+            "frame": 1,
+            "material": "58b949d8-a2a4-46fb-8ac7-84860217800b",
+            "atlas": "122a0fa7-b684-49c6-9e50-696e4a9aa4c0"
+          }
+        ],
+        "drawCalls": 22,
+        "immutableUv": true,
+        "independentClip": true,
+        "recycled": true,
+        "directionalArt": true
+      },
+      {
+        "name": "steam_wrecker",
+        "slot": "char.e2.steam_wrecker",
+        "opposing": [
+          {
+            "direction": "e",
+            "clip": "walk",
+            "source": "char-steamwrecker-sheet-walk4-a-r2c1.png",
+            "frame": 1,
+            "material": "22dd8448-9070-4b89-9c3f-55ae9dd554f2",
+            "atlas": "f2b182f5-ef69-44f1-b372-10c2fce06552"
+          },
+          {
+            "direction": "w",
+            "clip": "walk",
+            "source": "char-steamwrecker-sheet-walk4-a-r1c1.png",
+            "frame": 1,
+            "material": "91fcd1f4-d9a6-4d95-840e-35a7aa162678",
+            "atlas": "c2188dfb-baca-457b-bb78-bd599d4a4e0d"
+          }
+        ],
+        "drawCalls": 22,
+        "immutableUv": true,
+        "independentClip": true,
+        "recycled": true,
+        "directionalArt": true
+      },
+      {
+        "name": "coal_thief",
+        "slot": "char.e2.coal_thief",
+        "opposing": [
+          {
+            "direction": "e",
+            "clip": "walk",
+            "source": "char-coalthief-sheet-walk4-a-r2c1.png",
+            "frame": 1,
+            "material": "86124100-29a0-4573-99ae-a4e6d30f014c",
+            "atlas": "1b105223-b734-41e0-ad9f-bbc8c4839576"
+          },
+          {
+            "direction": "w",
+            "clip": "walk",
+            "source": "char-coalthief-sheet-walk4-a-r1c1.png",
+            "frame": 1,
+            "material": "d6f02285-dd74-40c7-b24d-e4f73aefe092",
+            "atlas": "a13c6dbf-3f6f-4ae3-9c62-cbae35834772"
+          }
+        ],
+        "drawCalls": 22,
+        "immutableUv": true,
+        "independentClip": true,
+        "recycled": true,
+        "directionalArt": true
+      },
+      {
+        "name": "baron",
+        "slot": "char.baron",
+        "opposing": [
+          {
+            "direction": "e",
+            "clip": "walk",
+            "source": "char-baron-east8-v1-r1c0.png",
+            "frame": 4,
+            "material": "acfc1861-c2b8-40e9-bf72-fd47266741cb",
+            "atlas": "2829e04c-be61-4c40-a21d-8d421e4a9c13"
+          },
+          {
+            "direction": "w",
+            "clip": "walk",
+            "source": "char-baron-w-clean-v2-r1c0.png",
+            "frame": 4,
+            "material": "7b23829c-872f-4ac4-add1-a302868fee7a",
+            "atlas": "949cab7e-2968-45d9-8c9d-1d110b3f8bbd"
+          }
+        ],
+        "drawCalls": 33,
+        "immutableUv": true,
+        "independentClip": true,
+        "recycled": true,
+        "directionalArt": true
+      },
+      {
+        "name": "feral_toaster",
+        "slot": "char.e6.feral_toaster",
+        "opposing": [
+          {
+            "direction": "e",
+            "clip": "walk",
+            "source": "char-e6-feral_toaster-sheet-walk8-b-r3c3.png",
+            "frame": 3,
+            "material": "67a3af7c-de88-4d29-a35d-f57e1b53e1c6",
+            "atlas": "6835b0f9-628e-4a6d-9298-896908839479"
+          },
+          {
+            "direction": "w",
+            "clip": "walk",
+            "source": "char-e6-feral_toaster-sheet-walk8-b-r0c3.png",
+            "frame": 3,
+            "material": "335b41ca-42a7-4afd-bcbe-06153979d164",
+            "atlas": "67a33e3e-a4ab-4782-b06b-c39cdc5ff023"
+          }
+        ],
+        "drawCalls": 22,
+        "immutableUv": true,
+        "independentClip": true,
+        "recycled": true,
+        "directionalArt": true
+      },
+      {
+        "name": "lawn_shepherd",
+        "slot": "char.e6.lawn_shepherd",
+        "opposing": [
+          {
+            "direction": "e",
+            "clip": "walk",
+            "source": "char-e6-lawn_shepherd-sheet-walk8-b-r3c3.png",
+            "frame": 3,
+            "material": "4dcca50a-1abf-4688-bf7c-6b3d0cbcbab3",
+            "atlas": "9774f1f4-7a20-498e-82e7-0c1bb939dcc0"
+          },
+          {
+            "direction": "w",
+            "clip": "walk",
+            "source": "char-e6-lawn_shepherd-sheet-walk8-b-r0c3.png",
+            "frame": 3,
+            "material": "b591ac90-a960-4156-959f-17b24caa9195",
+            "atlas": "3f9d6a14-d994-4c85-950f-8e954f9ffe77"
+          }
+        ],
+        "drawCalls": 22,
+        "immutableUv": true,
+        "independentClip": true,
+        "recycled": true,
+        "directionalArt": true
+      },
+      {
+        "name": "glowjack",
+        "slot": "char.e6.glowjack",
+        "opposing": [
+          {
+            "direction": "e",
+            "clip": "walk",
+            "source": "char-e6-glowjack-sheet-walk8-e-r0c3.png",
+            "frame": 3,
+            "material": "717a819d-1f64-4315-86b8-5a9ba8c17170",
+            "atlas": "1c8f2e28-84da-4a37-8db1-8306d9fa9d6e"
+          },
+          {
+            "direction": "w",
+            "clip": "walk",
+            "source": "char-e6-glowjack-sheet-walk8-w-r0c3.png",
+            "frame": 3,
+            "material": "4a5ec82c-96e7-41c3-8e33-e9ce1f3b21db",
+            "atlas": "7db022fc-a862-4b05-bf9f-3829fb9edea9"
+          }
+        ],
+        "drawCalls": 22,
+        "immutableUv": true,
+        "independentClip": true,
+        "recycled": true,
+        "directionalArt": true
+      },
+      {
+        "name": "rogue_automaton",
+        "slot": "char.e7.rogue_automaton",
+        "opposing": [
+          {
+            "direction": "e",
+            "clip": "walk",
+            "source": "char-e7-rogue_automaton-sheet-walk8-b-r2c3.png",
+            "frame": 3,
+            "material": "fc2bd72c-ac93-4b8a-9a53-bde91bd314cd",
+            "atlas": "b822d99d-beb4-4790-b07c-6839e59fc2a3"
+          },
+          {
+            "direction": "w",
+            "clip": "walk",
+            "source": "char-e7-rogue_automaton-sheet-walk8-a-r2c3.png",
+            "frame": 3,
+            "material": "17511d22-71ec-406d-b02b-6f68d9a7ffec",
+            "atlas": "7a3e2446-8bed-4ebe-b3dd-8c7965eb170c"
+          }
+        ],
+        "drawCalls": 22,
+        "immutableUv": true,
+        "independentClip": true,
+        "recycled": true,
+        "directionalArt": true
+      },
+      {
+        "name": "data_rustler",
+        "slot": "char.e7.data_rustler",
+        "opposing": [
+          {
+            "direction": "e",
+            "clip": "walk",
+            "source": "char-e7-data_rustler-sheet-walk8-e-r0c3.png",
+            "frame": 3,
+            "material": "e5129924-3eb1-429d-b52d-c073057f655b",
+            "atlas": "201de488-04dd-4ad9-9c1e-009fe20757d4"
+          },
+          {
+            "direction": "w",
+            "clip": "walk",
+            "source": "char-e7-data_rustler-sheet-walk8-w-r0c3.png",
+            "frame": 3,
+            "material": "ec7a8652-7c0d-4fa7-afd8-9a4df508d81f",
+            "atlas": "6d4a9eb6-5f1c-44ba-8018-c3e0e72e069a"
+          }
+        ],
+        "drawCalls": 22,
+        "immutableUv": true,
+        "independentClip": true,
+        "recycled": true,
+        "directionalArt": true
+      },
+      {
+        "name": "scrap_corsair",
+        "slot": "char.e8.scrap_corsair",
+        "opposing": [
+          {
+            "direction": "e",
+            "clip": "walk",
+            "source": "char-e8-scrap_corsair-sheet-walk8-e-r0c3.png",
+            "frame": 3,
+            "material": "97a31b9f-bb7e-465e-aae0-0225a6a4ce1a",
+            "atlas": "91428a1e-b07c-4d17-bc38-1e9c46241b62"
+          },
+          {
+            "direction": "w",
+            "clip": "walk",
+            "source": "char-e8-scrap_corsair-sheet-walk8-w-r0c3.png",
+            "frame": 3,
+            "material": "61d2839d-bcd9-47cf-b2b3-84d78f687c50",
+            "atlas": "5293ab9a-dcd4-4fb0-9a1b-0c63404f8457"
+          }
+        ],
+        "drawCalls": 22,
+        "immutableUv": true,
+        "independentClip": true,
+        "recycled": true,
+        "directionalArt": true
+      },
+      {
+        "name": "sun_glare_shambler",
+        "slot": "char.e8.sun_glare_shambler",
+        "opposing": [
+          {
+            "direction": "e",
+            "clip": "walk",
+            "source": "char-e8-sun_glare_shambler-sheet-walk8-e-r0c3.png",
+            "frame": 3,
+            "material": "a022c4c4-b3f4-44d8-8607-03bf9bbff097",
+            "atlas": "a489df63-0000-4f7b-b289-b56d936ec42b"
+          },
+          {
+            "direction": "w",
+            "clip": "walk",
+            "source": "char-e8-sun_glare_shambler-sheet-walk8-w-r0c3.png",
+            "frame": 3,
+            "material": "a5a6e2e2-48ed-4646-9639-af775a8b519e",
+            "atlas": "ff666876-eb69-45cf-bd48-f3b700c6dce7"
+          }
+        ],
+        "drawCalls": 22,
+        "immutableUv": true,
+        "independentClip": true,
+        "recycled": true,
+        "directionalArt": true
+      },
+      {
+        "name": "feral_terraformer",
+        "slot": "char.e9.feral_terraformer",
+        "opposing": [
+          {
+            "direction": "e",
+            "clip": "walk",
+            "source": "char-e9-feral_terraformer-sheet-walk8-e-r0c3.png",
+            "frame": 3,
+            "material": "d974c75e-fa1c-4e7a-a892-7527bc978c8f",
+            "atlas": "bba85b38-1f81-4f45-9a01-05db69b74b4e"
+          },
+          {
+            "direction": "w",
+            "clip": "walk",
+            "source": "char-e9-feral_terraformer-sheet-walk8-w-r0c3.png",
+            "frame": 3,
+            "material": "22bbedc7-46d8-4553-99b1-eb57ef4d4ffc",
+            "atlas": "0bfa20e6-853f-4651-b877-dc272076af85"
+          }
+        ],
+        "drawCalls": 22,
+        "immutableUv": true,
+        "independentClip": true,
+        "recycled": true,
+        "directionalArt": true
+      },
+      {
+        "name": "claim_jump_prospect_drone",
+        "slot": "char.e9.claim_jump_prospect_drone",
+        "opposing": [
+          {
+            "direction": "e",
+            "clip": "walk",
+            "source": "char-e9-claim_jump_prospect_drone-sheet-walk8-e-r0c3.png",
+            "frame": 3,
+            "material": "1e332817-89b1-46a1-9a5c-8098b6243e4c",
+            "atlas": "ca61689a-0078-4e6d-9433-31c702c61c57"
+          },
+          {
+            "direction": "w",
+            "clip": "walk",
+            "source": "char-e9-claim_jump_prospect_drone-sheet-walk8-w-r0c3.png",
+            "frame": 3,
+            "material": "14522489-678b-4c9a-91c9-cb3c42552e80",
+            "atlas": "dad52b43-aa8e-4372-974e-7028ec345eb0"
+          }
+        ],
+        "drawCalls": 22,
+        "immutableUv": true,
+        "independentClip": true,
+        "recycled": true,
+        "directionalArt": true
+      }
+    ],
+    "textures": {
+      "warm": 37,
+      "final": 37
+    },
+    "emptyPoolOwners": 0
+  },
+  {
+    "width": 390,
+    "instancing": true,
+    "errors": [],
+    "cases": [
+      {
+        "name": "base",
+        "slot": "char.bandit_base",
+        "opposing": [
+          {
+            "direction": "e",
+            "clip": "walk",
+            "source": "char-bandit-base-sheet-walk8-r2c3.png",
+            "frame": 3,
+            "material": "3f7cb509-275f-4f63-b24f-e9b7d70847d7",
+            "atlas": "bdef9cb2-674a-4708-96e2-7c2030496c30"
+          },
+          {
+            "direction": "w",
+            "clip": "walk",
+            "source": "char-bandit-base-sheet-walk8-r1c3.png",
+            "frame": 3,
+            "material": "1b26ec2c-2b6f-4530-aac1-d34d522d4a59",
+            "atlas": "fe29085b-122f-4a0d-aebf-691a6dc8e7c4"
+          }
+        ],
+        "drawCalls": 22,
+        "immutableUv": true,
+        "independentClip": true,
+        "recycled": true,
+        "directionalArt": true
+      },
+      {
+        "name": "thief",
+        "slot": "char.bandit_thief",
+        "opposing": [
+          {
+            "direction": "e",
+            "clip": "walk",
+            "source": "char-bandit-thief-sheet-walk8-r2c3.png",
+            "frame": 3,
+            "material": "917067d8-470b-4260-8a24-b382e79fce16",
+            "atlas": "5591a394-d2e7-40bd-b47d-b0030168fe45"
+          },
+          {
+            "direction": "w",
+            "clip": "walk",
+            "source": "char-bandit-thief-sheet-walk8-r1c3.png",
+            "frame": 3,
+            "material": "c89fd4a8-85b6-4757-8483-957bebde4c9e",
+            "atlas": "e97a0a27-66e6-4f13-9c87-dd3da38cbbfc"
+          }
+        ],
+        "drawCalls": 22,
+        "immutableUv": true,
+        "independentClip": true,
+        "recycled": true,
+        "directionalArt": true
+      },
+      {
+        "name": "rail_tough",
+        "slot": "char.e2.rail_tough",
+        "opposing": [
+          {
+            "direction": "e",
+            "clip": "walk",
+            "source": "char-railtough-sheet-walk4-a-r2c1.png",
+            "frame": 1,
+            "material": "5f86d70e-19e9-490a-a3f5-11cdc17af51f",
+            "atlas": "1bfa89d3-00a0-417f-a054-a95b2aad478e"
+          },
+          {
+            "direction": "w",
+            "clip": "walk",
+            "source": "char-railtough-sheet-walk4-a-r1c1.png",
+            "frame": 1,
+            "material": "26232029-4e35-48cc-bf89-08445494ea3c",
+            "atlas": "f937aa18-8772-46b4-98a1-49a937c89048"
+          }
+        ],
+        "drawCalls": 22,
+        "immutableUv": true,
+        "independentClip": true,
+        "recycled": true,
+        "directionalArt": true
+      },
+      {
+        "name": "steam_wrecker",
+        "slot": "char.e2.steam_wrecker",
+        "opposing": [
+          {
+            "direction": "e",
+            "clip": "walk",
+            "source": "char-steamwrecker-sheet-walk4-a-r2c1.png",
+            "frame": 1,
+            "material": "2c64376a-ac70-480e-ab78-ce592af931e7",
+            "atlas": "966f776f-2b1d-424d-9869-f80a1a8d614c"
+          },
+          {
+            "direction": "w",
+            "clip": "walk",
+            "source": "char-steamwrecker-sheet-walk4-a-r1c1.png",
+            "frame": 1,
+            "material": "7dc3da1c-29f3-4b6d-8a64-eee53a79d6d6",
+            "atlas": "8dbcf0c3-e2a2-4187-845b-7242e456cd45"
+          }
+        ],
+        "drawCalls": 22,
+        "immutableUv": true,
+        "independentClip": true,
+        "recycled": true,
+        "directionalArt": true
+      },
+      {
+        "name": "coal_thief",
+        "slot": "char.e2.coal_thief",
+        "opposing": [
+          {
+            "direction": "e",
+            "clip": "walk",
+            "source": "char-coalthief-sheet-walk4-a-r2c1.png",
+            "frame": 1,
+            "material": "83ad0a6b-d878-4cf0-a9f3-03cf5800fb93",
+            "atlas": "b11aa45f-3953-4557-869f-5aa3c5031e5f"
+          },
+          {
+            "direction": "w",
+            "clip": "walk",
+            "source": "char-coalthief-sheet-walk4-a-r1c1.png",
+            "frame": 1,
+            "material": "66494d73-9646-4c48-84a8-f8f707fd3b1b",
+            "atlas": "31f7a20f-67f9-42ba-8eeb-ab9399d4e3a9"
+          }
+        ],
+        "drawCalls": 22,
+        "immutableUv": true,
+        "independentClip": true,
+        "recycled": true,
+        "directionalArt": true
+      },
+      {
+        "name": "baron",
+        "slot": "char.baron",
+        "opposing": [
+          {
+            "direction": "e",
+            "clip": "walk",
+            "source": "char-baron-east8-v1-r1c0.png",
+            "frame": 4,
+            "material": "6c7055bf-5ada-48e4-be86-ee7bdf521127",
+            "atlas": "6b5892a0-5b4b-4b7c-8379-a22254f417ba"
+          },
+          {
+            "direction": "w",
+            "clip": "walk",
+            "source": "char-baron-w-clean-v2-r1c0.png",
+            "frame": 4,
+            "material": "efa0ffa1-a81f-4f3f-b5a8-1d24e283aff3",
+            "atlas": "d05b0bc3-9dbf-488a-b6e9-c3e31f971409"
+          }
+        ],
+        "drawCalls": 33,
+        "immutableUv": true,
+        "independentClip": true,
+        "recycled": true,
+        "directionalArt": true
+      },
+      {
+        "name": "feral_toaster",
+        "slot": "char.e6.feral_toaster",
+        "opposing": [
+          {
+            "direction": "e",
+            "clip": "walk",
+            "source": "char-e6-feral_toaster-sheet-walk8-b-r3c3.png",
+            "frame": 3,
+            "material": "f71220ee-da87-4ee2-9876-f5a2f42907bc",
+            "atlas": "019af41d-0c8a-4da5-a051-547c9a66a58a"
+          },
+          {
+            "direction": "w",
+            "clip": "walk",
+            "source": "char-e6-feral_toaster-sheet-walk8-b-r0c3.png",
+            "frame": 3,
+            "material": "66e0acb9-9ccc-471f-82be-4364708863fb",
+            "atlas": "614ad023-5c27-41ad-a8d6-0d9f96d192a6"
+          }
+        ],
+        "drawCalls": 22,
+        "immutableUv": true,
+        "independentClip": true,
+        "recycled": true,
+        "directionalArt": true
+      },
+      {
+        "name": "lawn_shepherd",
+        "slot": "char.e6.lawn_shepherd",
+        "opposing": [
+          {
+            "direction": "e",
+            "clip": "walk",
+            "source": "char-e6-lawn_shepherd-sheet-walk8-b-r3c3.png",
+            "frame": 3,
+            "material": "56eab8cc-165c-4529-8f5e-ce67c829c028",
+            "atlas": "dd109732-3adb-4b39-8cda-2a318de81e53"
+          },
+          {
+            "direction": "w",
+            "clip": "walk",
+            "source": "char-e6-lawn_shepherd-sheet-walk8-b-r0c3.png",
+            "frame": 3,
+            "material": "0ee6969b-cdc2-4302-a073-83b7f740ca50",
+            "atlas": "a18d3bc8-031f-4f3b-8333-1bba7d42b43f"
+          }
+        ],
+        "drawCalls": 22,
+        "immutableUv": true,
+        "independentClip": true,
+        "recycled": true,
+        "directionalArt": true
+      },
+      {
+        "name": "glowjack",
+        "slot": "char.e6.glowjack",
+        "opposing": [
+          {
+            "direction": "e",
+            "clip": "walk",
+            "source": "char-e6-glowjack-sheet-walk8-e-r0c3.png",
+            "frame": 3,
+            "material": "d4774540-e87c-4076-b22e-d8efdf8adae8",
+            "atlas": "e409d2f6-eccf-455f-8db9-723f2c7bfcc6"
+          },
+          {
+            "direction": "w",
+            "clip": "walk",
+            "source": "char-e6-glowjack-sheet-walk8-w-r0c3.png",
+            "frame": 3,
+            "material": "6f943fff-dc6f-4520-9a91-b331a96fca57",
+            "atlas": "014d3476-8fde-4fd3-9994-41cad24934f1"
+          }
+        ],
+        "drawCalls": 22,
+        "immutableUv": true,
+        "independentClip": true,
+        "recycled": true,
+        "directionalArt": true
+      },
+      {
+        "name": "rogue_automaton",
+        "slot": "char.e7.rogue_automaton",
+        "opposing": [
+          {
+            "direction": "e",
+            "clip": "walk",
+            "source": "char-e7-rogue_automaton-sheet-walk8-b-r2c3.png",
+            "frame": 3,
+            "material": "ce47cee2-e51e-4fbd-8aec-dfdb956dd24b",
+            "atlas": "23eb9250-a62e-4edb-a6c1-1e0077b4abe7"
+          },
+          {
+            "direction": "w",
+            "clip": "walk",
+            "source": "char-e7-rogue_automaton-sheet-walk8-a-r2c3.png",
+            "frame": 3,
+            "material": "f3312dcc-e75a-46e3-bcff-41175ad74a05",
+            "atlas": "47e14c24-d8fc-4d68-bad3-f8280f18b1c6"
+          }
+        ],
+        "drawCalls": 22,
+        "immutableUv": true,
+        "independentClip": true,
+        "recycled": true,
+        "directionalArt": true
+      },
+      {
+        "name": "data_rustler",
+        "slot": "char.e7.data_rustler",
+        "opposing": [
+          {
+            "direction": "e",
+            "clip": "walk",
+            "source": "char-e7-data_rustler-sheet-walk8-e-r0c3.png",
+            "frame": 3,
+            "material": "a9dc23cb-2d99-4be4-b944-0c9ada7142a4",
+            "atlas": "fa176f98-cb00-4983-8dec-ead2c66b9712"
+          },
+          {
+            "direction": "w",
+            "clip": "walk",
+            "source": "char-e7-data_rustler-sheet-walk8-w-r0c3.png",
+            "frame": 3,
+            "material": "622215da-cd4d-4cc3-b301-82bf4acd74d5",
+            "atlas": "1bc5b4fb-30a4-418b-878a-36e48fccfc20"
+          }
+        ],
+        "drawCalls": 22,
+        "immutableUv": true,
+        "independentClip": true,
+        "recycled": true,
+        "directionalArt": true
+      },
+      {
+        "name": "scrap_corsair",
+        "slot": "char.e8.scrap_corsair",
+        "opposing": [
+          {
+            "direction": "e",
+            "clip": "walk",
+            "source": "char-e8-scrap_corsair-sheet-walk8-e-r0c3.png",
+            "frame": 3,
+            "material": "c56b8586-b0a7-4c79-9ca0-2364b6f05348",
+            "atlas": "df5808d9-17f9-4073-895c-175b43085906"
+          },
+          {
+            "direction": "w",
+            "clip": "walk",
+            "source": "char-e8-scrap_corsair-sheet-walk8-w-r0c3.png",
+            "frame": 3,
+            "material": "5d61dffa-d3d3-4550-b246-ef9b0be59ccd",
+            "atlas": "de1dde34-72db-4afb-af4e-817e215ec174"
+          }
+        ],
+        "drawCalls": 22,
+        "immutableUv": true,
+        "independentClip": true,
+        "recycled": true,
+        "directionalArt": true
+      },
+      {
+        "name": "sun_glare_shambler",
+        "slot": "char.e8.sun_glare_shambler",
+        "opposing": [
+          {
+            "direction": "e",
+            "clip": "walk",
+            "source": "char-e8-sun_glare_shambler-sheet-walk8-e-r0c3.png",
+            "frame": 3,
+            "material": "c7054e6b-521b-4ff4-a82e-0c9dedd345b0",
+            "atlas": "4456c852-5c7c-43dc-a0f0-3c7a703597d5"
+          },
+          {
+            "direction": "w",
+            "clip": "walk",
+            "source": "char-e8-sun_glare_shambler-sheet-walk8-w-r0c3.png",
+            "frame": 3,
+            "material": "55cfe8f0-34dc-47c9-94a5-f8be0dffb96c",
+            "atlas": "cc1d0095-205b-4f7a-89ea-027cb536a59e"
+          }
+        ],
+        "drawCalls": 22,
+        "immutableUv": true,
+        "independentClip": true,
+        "recycled": true,
+        "directionalArt": true
+      },
+      {
+        "name": "feral_terraformer",
+        "slot": "char.e9.feral_terraformer",
+        "opposing": [
+          {
+            "direction": "e",
+            "clip": "walk",
+            "source": "char-e9-feral_terraformer-sheet-walk8-e-r0c3.png",
+            "frame": 3,
+            "material": "774dd6cd-1e98-4748-a5a2-7e2d9f86edb4",
+            "atlas": "942f9e3f-5238-47f4-93cc-febe36ea4c2e"
+          },
+          {
+            "direction": "w",
+            "clip": "walk",
+            "source": "char-e9-feral_terraformer-sheet-walk8-w-r0c3.png",
+            "frame": 3,
+            "material": "f80a5551-146b-43d8-b070-5e1f4d34795f",
+            "atlas": "5a69d7ad-1ba1-43c1-9177-b37a647ea387"
+          }
+        ],
+        "drawCalls": 22,
+        "immutableUv": true,
+        "independentClip": true,
+        "recycled": true,
+        "directionalArt": true
+      },
+      {
+        "name": "claim_jump_prospect_drone",
+        "slot": "char.e9.claim_jump_prospect_drone",
+        "opposing": [
+          {
+            "direction": "e",
+            "clip": "walk",
+            "source": "char-e9-claim_jump_prospect_drone-sheet-walk8-e-r0c3.png",
+            "frame": 3,
+            "material": "e9e65f53-9c65-493e-8dc8-2325cec0f93c",
+            "atlas": "f57a7c8a-e003-4f2a-91a1-282916ccf504"
+          },
+          {
+            "direction": "w",
+            "clip": "walk",
+            "source": "char-e9-claim_jump_prospect_drone-sheet-walk8-w-r0c3.png",
+            "frame": 3,
+            "material": "6e4988e2-264b-4fc4-aead-7da9074ec3eb",
+            "atlas": "fc951dfd-b099-4903-a422-857ceced0381"
+          }
+        ],
+        "drawCalls": 22,
+        "immutableUv": true,
+        "independentClip": true,
+        "recycled": true,
+        "directionalArt": true
+      }
+    ],
+    "textures": {
+      "warm": 37,
+      "final": 37
+    },
+    "emptyPoolOwners": 0
+  }
+]

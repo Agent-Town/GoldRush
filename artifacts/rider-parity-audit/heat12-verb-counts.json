@@ -1,0 +1,529 @@
+{
+  "source": "artifacts/gauntlet-heat12-20260905/rides",
+  "generatedFrom": "artifacts/rider-parity-audit/count-heat12-verbs.mjs",
+  "tapes": 89,
+  "scoredTapes": 24,
+  "submissions": 4840,
+  "orders": 118049,
+  "ridesWithTapes": 25,
+  "allTapes": {
+    "HARVEST": {
+      "orders": 104090,
+      "submissions": 4239,
+      "rides": 24,
+      "tapes": 67
+    },
+    "HOLD": {
+      "orders": 3962,
+      "submissions": 3960,
+      "rides": 22,
+      "tapes": 57
+    },
+    "BUILD": {
+      "orders": 2870,
+      "submissions": 1730,
+      "rides": 22,
+      "tapes": 57
+    },
+    "BLAST_AT": {
+      "orders": 2832,
+      "submissions": 2832,
+      "rides": 19,
+      "tapes": 52
+    },
+    "REPAIR_UNDER": {
+      "orders": 2561,
+      "submissions": 1374,
+      "rides": 6,
+      "tapes": 14
+    },
+    "PICK_UPGRADE": {
+      "orders": 1086,
+      "submissions": 1086,
+      "rides": 23,
+      "tapes": 64
+    },
+    "MOVE_TO": {
+      "orders": 372,
+      "submissions": 193,
+      "rides": 10,
+      "tapes": 24
+    },
+    "CONTEXT_ACTION": {
+      "orders": 169,
+      "submissions": 169,
+      "rides": 6,
+      "tapes": 14
+    },
+    "HAUL": {
+      "orders": 52,
+      "submissions": 20,
+      "rides": 3,
+      "tapes": 8
+    },
+    "PLAYBOOK_USE": {
+      "orders": 22,
+      "submissions": 22,
+      "rides": 5,
+      "tapes": 12
+    },
+    "BOAT_BUILD": {
+      "orders": 16,
+      "submissions": 10,
+      "rides": 1,
+      "tapes": 2
+    },
+    "GRADE": {
+      "orders": 12,
+      "submissions": 8,
+      "rides": 3,
+      "tapes": 8
+    },
+    "SECURE_CHOICE": {
+      "orders": 3,
+      "submissions": 3,
+      "rides": 2,
+      "tapes": 3
+    },
+    "REANCHOR": {
+      "orders": 2,
+      "submissions": 2,
+      "rides": 1,
+      "tapes": 2
+    }
+  },
+  "scoredTapesOnly": {
+    "HARVEST": {
+      "orders": 45723,
+      "submissions": 1821,
+      "rides": 24,
+      "tapes": 24
+    },
+    "HOLD": {
+      "orders": 1772,
+      "submissions": 1771,
+      "rides": 22,
+      "tapes": 22
+    },
+    "BLAST_AT": {
+      "orders": 1286,
+      "submissions": 1286,
+      "rides": 19,
+      "tapes": 19
+    },
+    "BUILD": {
+      "orders": 1244,
+      "submissions": 801,
+      "rides": 21,
+      "tapes": 21
+    },
+    "REPAIR_UNDER": {
+      "orders": 1092,
+      "submissions": 427,
+      "rides": 5,
+      "tapes": 5
+    },
+    "PICK_UPGRADE": {
+      "orders": 433,
+      "submissions": 433,
+      "rides": 23,
+      "tapes": 23
+    },
+    "MOVE_TO": {
+      "orders": 138,
+      "submissions": 76,
+      "rides": 10,
+      "tapes": 10
+    },
+    "CONTEXT_ACTION": {
+      "orders": 67,
+      "submissions": 67,
+      "rides": 6,
+      "tapes": 6
+    },
+    "HAUL": {
+      "orders": 23,
+      "submissions": 8,
+      "rides": 3,
+      "tapes": 3
+    },
+    "BOAT_BUILD": {
+      "orders": 8,
+      "submissions": 5,
+      "rides": 1,
+      "tapes": 1
+    },
+    "GRADE": {
+      "orders": 5,
+      "submissions": 3,
+      "rides": 3,
+      "tapes": 3
+    },
+    "PLAYBOOK_USE": {
+      "orders": 5,
+      "submissions": 5,
+      "rides": 5,
+      "tapes": 5
+    },
+    "SECURE_CHOICE": {
+      "orders": 2,
+      "submissions": 2,
+      "rides": 2,
+      "tapes": 2
+    },
+    "REANCHOR": {
+      "orders": 1,
+      "submissions": 1,
+      "rides": 1,
+      "tapes": 1
+    }
+  },
+  "perRide": [
+    {
+      "ride": "e1-baron",
+      "tapes": 2,
+      "orders": 7657,
+      "scoredTape": "tune-1.json",
+      "verbs": {
+        "HARVEST": 6604,
+        "HOLD": 282,
+        "BUILD": 236,
+        "BLAST_AT": 174,
+        "MOVE_TO": 114,
+        "CONTEXT_ACTION": 114,
+        "REPAIR_UNDER": 79,
+        "PICK_UPGRADE": 54
+      }
+    },
+    {
+      "ride": "e1-drill-yard",
+      "tapes": 4,
+      "orders": 578,
+      "scoredTape": "attempt-1-tape.json",
+      "verbs": {
+        "HARVEST": 557,
+        "HOLD": 18,
+        "PICK_UPGRADE": 3
+      }
+    },
+    {
+      "ride": "e1-night-shift",
+      "tapes": 3,
+      "orders": 6773,
+      "scoredTape": "attempt-1-tape.json",
+      "verbs": {
+        "HARVEST": 6161,
+        "HOLD": 240,
+        "BLAST_AT": 179,
+        "REPAIR_UNDER": 105,
+        "PICK_UPGRADE": 57,
+        "BUILD": 31
+      }
+    },
+    {
+      "ride": "e2-hill-mine",
+      "tapes": 3,
+      "orders": 10511,
+      "scoredTape": "attempt-1-tape.json",
+      "verbs": {
+        "HARVEST": 9547,
+        "HOLD": 438,
+        "REPAIR_UNDER": 204,
+        "BLAST_AT": 200,
+        "BUILD": 64,
+        "PICK_UPGRADE": 58
+      }
+    },
+    {
+      "ride": "e3-canyon-works",
+      "tapes": 4,
+      "orders": 2331,
+      "scoredTape": "attempt-1-tape.json",
+      "verbs": {
+        "HARVEST": 2007,
+        "BUILD": 144,
+        "HOLD": 94,
+        "BLAST_AT": 74,
+        "PICK_UPGRADE": 12
+      }
+    },
+    {
+      "ride": "e3-canyon-works.attempt-1",
+      "tapes": 6,
+      "orders": 1390,
+      "scoredTape": "attempt-1-tape.json",
+      "verbs": {
+        "HARVEST": 1368,
+        "BUILD": 12,
+        "PICK_UPGRADE": 10
+      }
+    },
+    {
+      "ride": "e3-moth-season",
+      "tapes": 5,
+      "orders": 6237,
+      "scoredTape": "attempt-1-tape.json",
+      "verbs": {
+        "HARVEST": 5946,
+        "REPAIR_UNDER": 107,
+        "BLAST_AT": 92,
+        "PICK_UPGRADE": 50,
+        "BUILD": 34,
+        "HOLD": 6,
+        "SECURE_CHOICE": 2
+      }
+    },
+    {
+      "ride": "e3-moth-season.DNF-operator-halt",
+      "tapes": 1,
+      "orders": 0,
+      "scoredTape": null,
+      "verbs": {}
+    },
+    {
+      "ride": "e4-boneyard",
+      "tapes": 3,
+      "orders": 2530,
+      "scoredTape": "attempt-1-tape.json",
+      "verbs": {
+        "HARVEST": 2230,
+        "HOLD": 92,
+        "BLAST_AT": 78,
+        "BUILD": 58,
+        "MOVE_TO": 38,
+        "PICK_UPGRADE": 30,
+        "HAUL": 4
+      }
+    },
+    {
+      "ride": "e4-dust-flats",
+      "tapes": 5,
+      "orders": 4653,
+      "scoredTape": "attempt-2-tape.json",
+      "verbs": {
+        "HARVEST": 3953,
+        "BUILD": 315,
+        "HOLD": 152,
+        "BLAST_AT": 108,
+        "PICK_UPGRADE": 56,
+        "MOVE_TO": 52,
+        "HAUL": 12,
+        "GRADE": 4,
+        "SECURE_CHOICE": 1
+      }
+    },
+    {
+      "ride": "e4-gusher-county",
+      "tapes": 3,
+      "orders": 1818,
+      "scoredTape": "attempt-1-tape.json",
+      "verbs": {
+        "HARVEST": 1514,
+        "HOLD": 78,
+        "MOVE_TO": 70,
+        "BLAST_AT": 64,
+        "HAUL": 36,
+        "PICK_UPGRADE": 34,
+        "BUILD": 16,
+        "GRADE": 6
+      }
+    },
+    {
+      "ride": "e4-long-road",
+      "tapes": 3,
+      "orders": 519,
+      "scoredTape": "tune-2-tape.json",
+      "verbs": {
+        "HARVEST": 399,
+        "MOVE_TO": 34,
+        "HOLD": 29,
+        "BUILD": 27,
+        "BLAST_AT": 22,
+        "PICK_UPGRADE": 6,
+        "GRADE": 2
+      }
+    },
+    {
+      "ride": "e5-stillwater",
+      "tapes": 3,
+      "orders": 340,
+      "scoredTape": "attempt-1-tape.json",
+      "verbs": {
+        "HARVEST": 300,
+        "HOLD": 22,
+        "BOAT_BUILD": 16,
+        "REANCHOR": 2
+      }
+    },
+    {
+      "ride": "e7-dead-band",
+      "tapes": 3,
+      "orders": 4804,
+      "scoredTape": "attempt-1-tape.json",
+      "verbs": {
+        "HARVEST": 4426,
+        "HOLD": 152,
+        "BLAST_AT": 130,
+        "PICK_UPGRADE": 54,
+        "BUILD": 26,
+        "MOVE_TO": 7,
+        "CONTEXT_ACTION": 7,
+        "PLAYBOOK_USE": 2
+      }
+    },
+    {
+      "ride": "e7-echo-canyon",
+      "tapes": 3,
+      "orders": 4092,
+      "scoredTape": "tune-1-tape.json",
+      "verbs": {
+        "HARVEST": 3718,
+        "BUILD": 190,
+        "HOLD": 130,
+        "PICK_UPGRADE": 52,
+        "PLAYBOOK_USE": 2
+      }
+    },
+    {
+      "ride": "e7-relay-rush",
+      "tapes": 4,
+      "orders": 3182,
+      "scoredTape": "attempt-1-tape.json",
+      "verbs": {
+        "HARVEST": 2915,
+        "HOLD": 108,
+        "BLAST_AT": 87,
+        "PICK_UPGRADE": 42,
+        "BUILD": 27,
+        "PLAYBOOK_USE": 3
+      }
+    },
+    {
+      "ride": "e7-relay-valley",
+      "tapes": 2,
+      "orders": 8306,
+      "scoredTape": "attempt-1-tape.json",
+      "verbs": {
+        "HARVEST": 7717,
+        "BLAST_AT": 262,
+        "HOLD": 262,
+        "BUILD": 33,
+        "PICK_UPGRADE": 20,
+        "PLAYBOOK_USE": 12
+      }
+    },
+    {
+      "ride": "e7-relay-valley.attempt-1",
+      "tapes": 4,
+      "orders": 2805,
+      "scoredTape": "tune-3-tape.json",
+      "verbs": {
+        "HARVEST": 2485,
+        "BLAST_AT": 122,
+        "HOLD": 72,
+        "BUILD": 65,
+        "PICK_UPGRADE": 58,
+        "PLAYBOOK_USE": 3
+      }
+    },
+    {
+      "ride": "e8-eclipse",
+      "tapes": 4,
+      "orders": 4688,
+      "scoredTape": "attempt-1-tape.json",
+      "verbs": {
+        "HARVEST": 4048,
+        "HOLD": 252,
+        "BLAST_AT": 216,
+        "PICK_UPGRADE": 81,
+        "BUILD": 69,
+        "MOVE_TO": 11,
+        "CONTEXT_ACTION": 11
+      }
+    },
+    {
+      "ride": "e8-far-side",
+      "tapes": 4,
+      "orders": 5337,
+      "scoredTape": "attempt-1-tape.json",
+      "verbs": {
+        "HARVEST": 4470,
+        "BUILD": 335,
+        "HOLD": 219,
+        "BLAST_AT": 189,
+        "PICK_UPGRADE": 81,
+        "MOVE_TO": 26,
+        "CONTEXT_ACTION": 17
+      }
+    },
+    {
+      "ride": "e8-low-orbit",
+      "tapes": 3,
+      "orders": 2430,
+      "scoredTape": "attempt-1-tape.json",
+      "verbs": {
+        "HARVEST": 2026,
+        "HOLD": 190,
+        "BLAST_AT": 110,
+        "PICK_UPGRADE": 56,
+        "BUILD": 24,
+        "MOVE_TO": 12,
+        "CONTEXT_ACTION": 12
+      }
+    },
+    {
+      "ride": "e8-mare-claim",
+      "tapes": 5,
+      "orders": 6404,
+      "scoredTape": "attempt-1-tape.json",
+      "verbs": {
+        "HARVEST": 5642,
+        "BUILD": 312,
+        "BLAST_AT": 243,
+        "PICK_UPGRADE": 106,
+        "HOLD": 85,
+        "MOVE_TO": 8,
+        "CONTEXT_ACTION": 8
+      }
+    },
+    {
+      "ride": "e9-dome-basin",
+      "tapes": 4,
+      "orders": 7478,
+      "scoredTape": "tune-1-tape.json",
+      "verbs": {
+        "HARVEST": 6785,
+        "BUILD": 232,
+        "REPAIR_UNDER": 230,
+        "BLAST_AT": 172,
+        "PICK_UPGRADE": 59
+      }
+    },
+    {
+      "ride": "e9-dome-basin.attempt-1",
+      "tapes": 5,
+      "orders": 19052,
+      "scoredTape": "tune-3-tape.json",
+      "verbs": {
+        "HARVEST": 15480,
+        "REPAIR_UNDER": 1836,
+        "HOLD": 907,
+        "BUILD": 440,
+        "BLAST_AT": 310,
+        "PICK_UPGRADE": 79
+      }
+    },
+    {
+      "ride": "the-claim",
+      "tapes": 3,
+      "orders": 4134,
+      "scoredTape": "attempt-1-tape.json",
+      "verbs": {
+        "HARVEST": 3792,
+        "BUILD": 180,
+        "HOLD": 134,
+        "PICK_UPGRADE": 28
+      }
+    }
+  ]
+}

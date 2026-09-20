@@ -1,0 +1,493 @@
+{
+  "blender": "5.1.2",
+  "maskTables": [
+    "assets/contracts/epoch-9-redfields/mask-tables/e9-dome-basin.json"
+  ],
+  "terrains": {
+    "dome-basin": {
+      "asset": "dome-basin-terrain.glb",
+      "checked": {
+        "sha256": "73de020c9247de4e69fc045ee0aaba833ca86ff3bed1d19e122d60a33867f8b0",
+        "bytes": 9264576,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 32768,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -64,
+            -2,
+            -64
+          ],
+          "max": [
+            64,
+            4,
+            64
+          ],
+          "size": [
+            128,
+            6,
+            128
+          ],
+          "center": [
+            0.0,
+            1.0,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.8999999761581421,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "reexported": {
+        "sha256": "73de020c9247de4e69fc045ee0aaba833ca86ff3bed1d19e122d60a33867f8b0",
+        "bytes": 9264576,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 32768,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -64,
+            -2,
+            -64
+          ],
+          "max": [
+            64,
+            4,
+            64
+          ],
+          "size": [
+            128,
+            6,
+            128
+          ],
+          "center": [
+            0.0,
+            1.0,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.8999999761581421,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "byteIdenticalReexport": true,
+      "semanticIdenticalReexport": true,
+      "embeddedTexture": {
+        "bytes": 8533739,
+        "sha256": "4b53f0ae95cd24ece9931229454eddc3691e830c2e913bbb87543f2b8db48937",
+        "width": 2048,
+        "height": 2048
+      },
+      "extras": {
+        "render_only": true,
+        "sim_authority": "published mask table and planar simulation; unchanged",
+        "height_socket": "Terrain.visualY",
+        "contract_id": "e9-dome-basin",
+        "tile_id": "e9-dome-basin",
+        "mask_table": "assets/contracts/epoch-9-redfields/mask-tables/e9-dome-basin.json",
+        "load_bearing_sites_flat": true,
+        "landmarks_frozen": false
+      },
+      "geometryProbes": [
+        {
+          "requested": [
+            -50,
+            50
+          ],
+          "sampled": [
+            -50.0,
+            50.0
+          ],
+          "height": 4.0
+        },
+        {
+          "requested": [
+            10,
+            0
+          ],
+          "sampled": [
+            10.0,
+            0.0
+          ],
+          "height": -2.0
+        },
+        {
+          "requested": [
+            -28,
+            34
+          ],
+          "sampled": [
+            -28.0,
+            34.0
+          ],
+          "height": 0.4228
+        },
+        {
+          "requested": [
+            -12,
+            10
+          ],
+          "sampled": [
+            -12.0,
+            10.0
+          ],
+          "height": -2.0
+        },
+        {
+          "requested": [
+            4,
+            -24
+          ],
+          "sampled": [
+            4.0,
+            -24.0
+          ],
+          "height": -2.0
+        },
+        {
+          "requested": [
+            -34,
+            -44
+          ],
+          "sampled": [
+            -34.0,
+            -44.0
+          ],
+          "height": 0.36
+        }
+      ],
+      "pylonSurfaceFlatness": [],
+      "capacitorSurfaceFlatness": [],
+      "fixtureSurfaceFlatness": [],
+      "buildZoneSurfaceFlatness": [
+        {
+          "id": "rim-dome-pad-west",
+          "sampledSurfacePoints": 2145,
+          "maxDeviationMeters": 0.0
+        },
+        {
+          "id": "rim-dome-pad-east",
+          "sampledSurfacePoints": 2145,
+          "maxDeviationMeters": 0.0
+        },
+        {
+          "id": "weather-spire-footing",
+          "sampledSurfacePoints": 2145,
+          "maxDeviationMeters": 0.0
+        },
+        {
+          "id": "seed-rows-footing",
+          "sampledSurfacePoints": 2145,
+          "maxDeviationMeters": 0.0
+        },
+        {
+          "id": "ark-yards",
+          "sampledSurfacePoints": 2145,
+          "maxDeviationMeters": 0.0
+        }
+      ],
+      "domeBasinSurfaceAgreement": {
+        "quarryScarp": {
+          "targetMeters": 4.0,
+          "verifiedSurfacePoints": 6463,
+          "precedenceSurfacePoints": 2946,
+          "maxVerifiedDeviationMeters": 0.0,
+          "precedenceRangeMeters": [
+            2.4742,
+            4.0
+          ]
+        },
+        "basinDepression": {
+          "targetMeters": -2.0,
+          "verifiedSurfacePoints": 7792,
+          "precedenceSurfacePoints": 1617,
+          "maxVerifiedDeviationMeters": 0.0,
+          "precedenceRangeMeters": [
+            -2.0,
+            0.28
+          ]
+        },
+        "precedenceLaw": "dry canal cuts the scarp; dry C2/C3 gate berms and the triangle-safe build-flat guard win inside the basin",
+        "canalStageGateMeters": [
+          0.4228,
+          -2.0,
+          -2.0
+        ],
+        "waterSources": []
+      },
+      "literalE1GreenSamples": [
+        {
+          "position": [
+            22,
+            -28
+          ],
+          "candidatePixels": [
+            "B85D3AFF",
+            "50674CFF"
+          ]
+        },
+        {
+          "position": [
+            28,
+            -22
+          ],
+          "candidatePixels": [
+            "9C3D26FF",
+            "50674CFF"
+          ]
+        },
+        {
+          "position": [
+            34,
+            -28
+          ],
+          "candidatePixels": [
+            "B85F3BFF",
+            "50674CFF"
+          ]
+        },
+        {
+          "position": [
+            40,
+            -22
+          ],
+          "candidatePixels": [
+            "AA432AFF",
+            "50674CFF"
+          ]
+        }
+      ],
+      "maskSource": "assets/contracts/epoch-9-redfields/mask-tables/e9-dome-basin.json"
+    }
+  },
+  "panoramas": {
+    "dome-basin": {
+      "asset": "dome-basin-panorama.glb",
+      "checked": {
+        "sha256": "1330d01f9bddda187a1498d7eb967fdba61a036b6be2cd98edef1a63ea1eca85",
+        "bytes": 977736,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 3072,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -193,
+            -10,
+            -193
+          ],
+          "max": [
+            193,
+            130,
+            193
+          ],
+          "size": [
+            386,
+            140,
+            386
+          ],
+          "center": [
+            0.0,
+            60.0,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 1,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": true,
+            "emissiveFactor": [
+              1,
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "reexported": {
+        "sha256": "1330d01f9bddda187a1498d7eb967fdba61a036b6be2cd98edef1a63ea1eca85",
+        "bytes": 977736,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 3072,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -193,
+            -10,
+            -193
+          ],
+          "max": [
+            193,
+            130,
+            193
+          ],
+          "size": [
+            386,
+            140,
+            386
+          ],
+          "center": [
+            0.0,
+            60.0,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 1,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": true,
+            "emissiveFactor": [
+              1,
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "byteIdenticalReexport": true,
+      "semanticIdenticalReexport": true,
+      "embeddedTexture": {
+        "bytes": 859758,
+        "sha256": "d4e1234365d9e4012ddaf65376a64e9b9974544e1eecbc9214f74d8239eaade6",
+        "width": 2048,
+        "height": 2048
+      },
+      "extras": {
+        "render_only": true,
+        "panorama": true,
+        "affects_playfield": false,
+        "affects_masks": false,
+        "affects_spawn_edges": false,
+        "affects_fog_gating": false,
+        "mount_space": "game X/Y/Z at county origin",
+        "panorama_law": "v2"
+      },
+      "mount": {
+        "id": "dome-basin-panorama",
+        "asset": "dome-basin-panorama.glb",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "renderOnly": true,
+        "ownership": "separate mounted scenery; never terrain or gameplay bounds"
+      }
+    }
+  },
+  "boards": {
+    "dome-basin-mood-ab.png": {
+      "size": [
+        1920,
+        684
+      ],
+      "bytes": 1846662,
+      "sha256": "ba5ecc10637553a6a454bf65e356baaf7b96fd53fa5c1e2d6af572fee2902ca3"
+    },
+    "dome-basin-flat-vs-sculpted-ab.png": {
+      "size": [
+        1920,
+        684
+      ],
+      "bytes": 963661,
+      "sha256": "b47f798dde8ffeafdf899945738760ed5c4dd9820eea64c6329bf1e8792f25e1"
+    },
+    "dome-basin-owner-verdict.png": {
+      "size": [
+        1920,
+        504
+      ],
+      "bytes": 780181,
+      "sha256": "2d4ae3e258ab92ca9da73accaafc66e8093604ef0b73b94b10655e144342df29"
+    },
+    "dome-basin-panorama-mood-ab.png": {
+      "size": [
+        1920,
+        504
+      ],
+      "bytes": 550375,
+      "sha256": "08ea843807c65daa224c04c552ce99e5dac82827c806cf680b1e899ae26324c8"
+    },
+    "dome-basin-panorama-distance-gate.png": {
+      "size": [
+        1920,
+        684
+      ],
+      "bytes": 1012174,
+      "sha256": "020305b311a46a51e779307602fd21d6608a11803eb8e5f96ccfdff663dda6ea"
+    },
+    "dome-basin-mask-agreement-board.png": {
+      "size": [
+        1600,
+        1260
+      ],
+      "bytes": 1031551,
+      "sha256": "f8a1d94f34beed482bf5482f74d716522deb11e8644e0f1d134cb5a6748c13f8"
+    }
+  },
+  "verdict": {
+    "grit": "rust-red engraved labor, literal E1 green only at landing zones, dry channel promise; fight, never holiday",
+    "panorama": "distance; rust-red ridges and unequal hatch-spiral dust columns, never wall or ceiling",
+    "masks": "published and unchanged",
+    "loadBearingSites": "five build rectangles sampled buildable-flat; whole h4 quarry and h-2 basin sampled outside documented canal, dry-gate, and build-guard precedence footprints",
+    "landmarks": "freeze lifted; existing era-stamped bodies used only in verdict renders, no assets or mounts authored"
+  },
+  "freshReferenceBaseSha": "c5b6c86d9848b70d4d60a79556d30c884707265e"
+}

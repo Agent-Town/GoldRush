@@ -1,0 +1,19 @@
+CONFLICT (content): Merge conflict in scripts/fire.md
+CONFLICT (content): Merge conflict in scripts/halo-reextraction-check.mjs
+union scripts/fire.md
+ours (re-pin later) scripts/halo-reextraction-check.mjs
+merged 73f150c69
+edits applied: 8
+tsc rc=0
+ncs5 e2e rc=1   10 failed   1 skipped   27 passed (7.9m) 
+  1) [desktop-chrome] › e2e/e1-baron.spec.ts:411:1 › Baron manifest loads and taunts fire at waves 5, 12, and 18 
+  2) [desktop-chrome] › e2e/e2-enemies.spec.ts:113:1 › wave pulses spawn Rail Toughs, Steam Wreckers, and Coal Thieves f
+  3) [desktop-chrome] › e2e/e2-enemies.spec.ts:314:1 › same seed keeps the E2 roster wave deterministic 
+  4) [desktop-chrome] › e2e/eight-winds-enemies.spec.ts:19:1 › plain boot sends an outlaw runner southwest on walkdiag r
+  5) [desktop-chrome] › e2e/eight-winds-enemies.spec.ts:39:1 › diagnostics drive thief northeast and Baron southwest on 
+  6) [mobile-chrome] › e2e/e1-baron.spec.ts:411:1 › Baron manifest loads and taunts fire at waves 5, 12, and 18 
+  7) [mobile-chrome] › e2e/e2-enemies.spec.ts:113:1 › wave pulses spawn Rail Toughs, Steam Wreckers, and Coal Thieves fr
+  8) [mobile-chrome] › e2e/e2-enemies.spec.ts:314:1 › same seed keeps the E2 roster wave deterministic 
+  9) [mobile-chrome] › e2e/eight-winds-enemies.spec.ts:19:1 › plain boot sends an outlaw runner southwest on walkdiag ro
+  10) [mobile-chrome] › e2e/eight-winds-enemies.spec.ts:39:1 › diagnostics drive thief northeast and Baron southwest on 
+PLAY-PREP-DONE

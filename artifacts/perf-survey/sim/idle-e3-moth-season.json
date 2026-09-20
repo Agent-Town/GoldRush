@@ -1,0 +1,197 @@
+{
+  "key": "idle-e3-moth-season",
+  "tapePath": "tapes/idle-e3-moth-season.json",
+  "contract": "e3-moth-season",
+  "kind": "null-floor",
+  "node": "v26.4.0",
+  "before": {
+    "at": "2026-09-05T16:03:18.382Z",
+    "load": [
+      60.9375,
+      21.4052734375,
+      16.4580078125
+    ],
+    "freeMemory": 4650844160
+  },
+  "after": {
+    "at": "2026-09-05T16:03:20.857Z",
+    "load": [
+      60.9375,
+      21.4052734375,
+      16.4580078125
+    ],
+    "freeMemory": 4469211136
+  },
+  "declaredDurationTicks": 3965,
+  "simulatedSeconds": 132.16666666666666,
+  "bootMs": 34.85420900000008,
+  "replayMs": 1223.212875,
+  "ticksPerSecond": 3241.463592344873,
+  "realtimeMultiple": 108.04878641149575,
+  "estimateTenMinuteSeconds": 5.55304709962169,
+  "estimateFormula": "600 seconds / measured realtimeMultiple; extrapolation, not an actual 10-minute tape when duration differs",
+  "tickMs": {
+    "n": 3965,
+    "min": 0.20070799999984956,
+    "p50": 0.28404200000022684,
+    "p95": 0.5299169999998412,
+    "p99": 0.7636659999998301,
+    "max": 7.226292000000058
+  },
+  "tickPath": "sim/idle-e3-moth-season-ticks.json",
+  "result": {
+    "eventLogHash": "fnv1a32:a45ba9ac",
+    "outcome": {
+      "secured": false,
+      "waves": 4,
+      "gold": 0,
+      "timeAlive": 132.167
+    },
+    "ticks": 3965,
+    "engine": "headless-contract-sim"
+  },
+  "expectedHash": "fnv1a32:a45ba9ac",
+  "hashMatches": true,
+  "top20": [
+    {
+      "name": "dispatch",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 124.519
+    },
+    {
+      "name": "terrainSeed",
+      "url": "",
+      "line": 1469,
+      "column": 21,
+      "selfMs": 110.695
+    },
+    {
+      "name": "get diagnostics",
+      "url": "",
+      "line": 484,
+      "column": 17,
+      "selfMs": 67.779
+    },
+    {
+      "name": "terrainHash",
+      "url": "",
+      "line": 1486,
+      "column": 21,
+      "selfMs": 64.188
+    },
+    {
+      "name": "multiplyMatrices",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 10385,
+      "column": 18,
+      "selfMs": 48.591
+    },
+    {
+      "name": "maxHpForInstance",
+      "url": "",
+      "line": 1619,
+      "column": 18,
+      "selfMs": 45.371
+    },
+    {
+      "name": "hpBarDiagnostics",
+      "url": "",
+      "line": 1663,
+      "column": 18,
+      "selfMs": 36.404
+    },
+    {
+      "name": "activePositions",
+      "url": "",
+      "line": 1533,
+      "column": 17,
+      "selfMs": 33.343999999999994
+    },
+    {
+      "name": "maxHpForPlacement",
+      "url": "",
+      "line": 1622,
+      "column": 19,
+      "selfMs": 31.92
+    },
+    {
+      "name": "currentTrickleInterval",
+      "url": "",
+      "line": 641,
+      "column": 24,
+      "selfMs": 29.684000000000005
+    },
+    {
+      "name": "(program)",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 26.334
+    },
+    {
+      "name": "(anonymous)",
+      "url": "",
+      "line": 3,
+      "column": 49,
+      "selfMs": 25.761000000000003
+    },
+    {
+      "name": "hpDiagnostics",
+      "url": "",
+      "line": 1631,
+      "column": 15,
+      "selfMs": 24.378999999999998
+    },
+    {
+      "name": "setFromEuler",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 4167,
+      "column": 14,
+      "selfMs": 24.298000000000002
+    },
+    {
+      "name": "syncEnemyInstance",
+      "url": "",
+      "line": 1343,
+      "column": 19,
+      "selfMs": 22.253
+    },
+    {
+      "name": "stableProbeMask",
+      "url": "",
+      "line": 1266,
+      "column": 25,
+      "selfMs": 22.209000000000003
+    },
+    {
+      "name": "diagnostics",
+      "url": "",
+      "line": 1795,
+      "column": 13,
+      "selfMs": 21.975
+    },
+    {
+      "name": "rubbleDiagnostics",
+      "url": "",
+      "line": 2052,
+      "column": 19,
+      "selfMs": 20.729
+    },
+    {
+      "name": "palisadeRoute",
+      "url": "",
+      "line": 356,
+      "column": 15,
+      "selfMs": 20.577
+    },
+    {
+      "name": "update",
+      "url": "",
+      "line": 809,
+      "column": 8,
+      "selfMs": 19.772
+    }
+  ]
+}

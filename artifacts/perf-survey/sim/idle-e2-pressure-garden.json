@@ -1,0 +1,197 @@
+{
+  "key": "idle-e2-pressure-garden",
+  "tapePath": "tapes/idle-e2-pressure-garden.json",
+  "contract": "e2-pressure-garden",
+  "kind": "null-floor",
+  "node": "v26.4.0",
+  "before": {
+    "at": "2026-09-05T16:01:14.252Z",
+    "load": [
+      4.17626953125,
+      6.70166015625,
+      11.7255859375
+    ],
+    "freeMemory": 7069433856
+  },
+  "after": {
+    "at": "2026-09-05T16:01:15.886Z",
+    "load": [
+      4.17626953125,
+      6.70166015625,
+      11.7255859375
+    ],
+    "freeMemory": 6717440000
+  },
+  "declaredDurationTicks": 2167,
+  "simulatedSeconds": 72.23333333333333,
+  "bootMs": 29.133959000000004,
+  "replayMs": 447.317458,
+  "ticksPerSecond": 4844.434218348795,
+  "realtimeMultiple": 161.4811406116265,
+  "estimateTenMinuteSeconds": 3.7156041735117675,
+  "estimateFormula": "600 seconds / measured realtimeMultiple; extrapolation, not an actual 10-minute tape when duration differs",
+  "tickMs": {
+    "n": 2167,
+    "min": 0.15029200000003584,
+    "p50": 0.17824999999993452,
+    "p95": 0.3267089999999371,
+    "p99": 0.635665999999901,
+    "max": 6.398124999999936
+  },
+  "tickPath": "sim/idle-e2-pressure-garden-ticks.json",
+  "result": {
+    "eventLogHash": "fnv1a32:a45ba9ac",
+    "outcome": {
+      "secured": false,
+      "waves": 2,
+      "gold": 0,
+      "timeAlive": 72.233
+    },
+    "ticks": 2167,
+    "engine": "headless-contract-sim"
+  },
+  "expectedHash": "fnv1a32:a45ba9ac",
+  "hashMatches": true,
+  "top20": [
+    {
+      "name": "dispatch",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 117.51
+    },
+    {
+      "name": "multiplyMatrices",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 10385,
+      "column": 18,
+      "selfMs": 26.34
+    },
+    {
+      "name": "currentTrickleInterval",
+      "url": "",
+      "line": 641,
+      "column": 24,
+      "selfMs": 22.483
+    },
+    {
+      "name": "hpBarDiagnostics",
+      "url": "",
+      "line": 1663,
+      "column": 18,
+      "selfMs": 20.380000000000003
+    },
+    {
+      "name": "activePositions",
+      "url": "",
+      "line": 1533,
+      "column": 17,
+      "selfMs": 15.703
+    },
+    {
+      "name": "(anonymous)",
+      "url": "",
+      "line": 1534,
+      "column": 32,
+      "selfMs": 13.555
+    },
+    {
+      "name": "maxHpForPlacement",
+      "url": "",
+      "line": 1622,
+      "column": 19,
+      "selfMs": 12.077
+    },
+    {
+      "name": "diagnostics",
+      "url": "",
+      "line": 1795,
+      "column": 13,
+      "selfMs": 11.495000000000001
+    },
+    {
+      "name": "(anonymous)",
+      "url": "",
+      "line": 3,
+      "column": 49,
+      "selfMs": 11.466000000000001
+    },
+    {
+      "name": "update",
+      "url": "",
+      "line": 809,
+      "column": 8,
+      "selfMs": 11.111
+    },
+    {
+      "name": "get diagnostics",
+      "url": "",
+      "line": 484,
+      "column": 17,
+      "selfMs": 10.871
+    },
+    {
+      "name": "(program)",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 10.53
+    },
+    {
+      "name": "step",
+      "url": "",
+      "line": 1318,
+      "column": 6,
+      "selfMs": 10.112
+    },
+    {
+      "name": "setInstanceColor",
+      "url": "",
+      "line": 1743,
+      "column": 18,
+      "selfMs": 8.142
+    },
+    {
+      "name": "syncWatchPaint",
+      "url": "",
+      "line": 1545,
+      "column": 16,
+      "selfMs": 7.513
+    },
+    {
+      "name": "toArray",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 11099,
+      "column": 9,
+      "selfMs": 7.508
+    },
+    {
+      "name": "syncEnemyInstance",
+      "url": "",
+      "line": 1343,
+      "column": 19,
+      "selfMs": 7.501
+    },
+    {
+      "name": "palisadeRoute",
+      "url": "",
+      "line": 356,
+      "column": 15,
+      "selfMs": 7.288
+    },
+    {
+      "name": "update",
+      "url": "",
+      "line": 485,
+      "column": 8,
+      "selfMs": 6.703
+    },
+    {
+      "name": "maxHpForInstance",
+      "url": "",
+      "line": 1619,
+      "column": 18,
+      "selfMs": 6.0729999999999995
+    }
+  ]
+}

@@ -1,0 +1,197 @@
+{
+  "key": "idle-e6-half-life-hollow",
+  "tapePath": "tapes/idle-e6-half-life-hollow.json",
+  "contract": "e6-half-life-hollow",
+  "kind": "null-floor",
+  "node": "v26.4.0",
+  "before": {
+    "at": "2026-09-05T16:11:49.604Z",
+    "load": [
+      12.0703125,
+      20.98828125,
+      20.65673828125
+    ],
+    "freeMemory": 7687503872
+  },
+  "after": {
+    "at": "2026-09-05T16:11:52.344Z",
+    "load": [
+      12.9453125,
+      21.021484375,
+      20.67041015625
+    ],
+    "freeMemory": 7531315200
+  },
+  "declaredDurationTicks": 3064,
+  "simulatedSeconds": 102.13333333333334,
+  "bootMs": 46.07491700000014,
+  "replayMs": 921.7610839999998,
+  "ticksPerSecond": 3324.071772159998,
+  "realtimeMultiple": 110.80239240533326,
+  "estimateTenMinuteSeconds": 5.415045532637074,
+  "estimateFormula": "600 seconds / measured realtimeMultiple; extrapolation, not an actual 10-minute tape when duration differs",
+  "tickMs": {
+    "n": 3064,
+    "min": 0.19729099999995015,
+    "p50": 0.2543749999999818,
+    "p95": 0.4940000000001419,
+    "p99": 0.8290830000000824,
+    "max": 10.242375000000266
+  },
+  "tickPath": "sim/idle-e6-half-life-hollow-ticks.json",
+  "result": {
+    "eventLogHash": "fnv1a32:a45ba9ac",
+    "outcome": {
+      "secured": false,
+      "waves": 3,
+      "gold": 0,
+      "timeAlive": 102.133
+    },
+    "ticks": 3064,
+    "engine": "headless-contract-sim"
+  },
+  "expectedHash": "fnv1a32:a45ba9ac",
+  "hashMatches": true,
+  "top20": [
+    {
+      "name": "dispatch",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 182.339
+    },
+    {
+      "name": "multiplyMatrices",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 10385,
+      "column": 18,
+      "selfMs": 62.345000000000006
+    },
+    {
+      "name": "get diagnostics",
+      "url": "",
+      "line": 484,
+      "column": 17,
+      "selfMs": 62.262
+    },
+    {
+      "name": "terrainSeed",
+      "url": "",
+      "line": 1469,
+      "column": 21,
+      "selfMs": 45.378
+    },
+    {
+      "name": "terrainHash",
+      "url": "",
+      "line": 1486,
+      "column": 21,
+      "selfMs": 40.317
+    },
+    {
+      "name": "maxHpForInstance",
+      "url": "",
+      "line": 1619,
+      "column": 18,
+      "selfMs": 27.045
+    },
+    {
+      "name": "maxHpForPlacement",
+      "url": "",
+      "line": 1622,
+      "column": 19,
+      "selfMs": 24.929000000000002
+    },
+    {
+      "name": "syncEnemyInstance",
+      "url": "",
+      "line": 1343,
+      "column": 19,
+      "selfMs": 24.866
+    },
+    {
+      "name": "currentTrickleInterval",
+      "url": "",
+      "line": 641,
+      "column": 24,
+      "selfMs": 23.941000000000003
+    },
+    {
+      "name": "diagnostics",
+      "url": "",
+      "line": 1795,
+      "column": 13,
+      "selfMs": 23.1
+    },
+    {
+      "name": "stableProbeMask",
+      "url": "",
+      "line": 1266,
+      "column": 25,
+      "selfMs": 20.336
+    },
+    {
+      "name": "toArray",
+      "url": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/node_modules/three/build/three.core.js",
+      "line": 11099,
+      "column": 9,
+      "selfMs": 20.121000000000002
+    },
+    {
+      "name": "terrainFeatures",
+      "url": "",
+      "line": 1193,
+      "column": 25,
+      "selfMs": 19.955
+    },
+    {
+      "name": "activePositions",
+      "url": "",
+      "line": 1533,
+      "column": 17,
+      "selfMs": 19.729999999999997
+    },
+    {
+      "name": "syncWatchPaint",
+      "url": "",
+      "line": 1545,
+      "column": 16,
+      "selfMs": 16.538
+    },
+    {
+      "name": "rubbleDiagnostics",
+      "url": "",
+      "line": 2052,
+      "column": 19,
+      "selfMs": 15.711
+    },
+    {
+      "name": "(program)",
+      "url": "",
+      "line": 0,
+      "column": 0,
+      "selfMs": 15.662
+    },
+    {
+      "name": "(anonymous)",
+      "url": "",
+      "line": 1534,
+      "column": 32,
+      "selfMs": 15.049
+    },
+    {
+      "name": "step",
+      "url": "",
+      "line": 1318,
+      "column": 6,
+      "selfMs": 12.122
+    },
+    {
+      "name": "(anonymous)",
+      "url": "",
+      "line": 3,
+      "column": 49,
+      "selfMs": 11.687000000000001
+    }
+  ]
+}

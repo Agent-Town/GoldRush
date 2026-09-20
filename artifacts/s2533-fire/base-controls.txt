@@ -1,0 +1,126 @@
+gate battery transcript (append-only — see scripts/gate-battery.mjs)
+
+
+######## BATTERY 2026-09-07T06:01:06.902Z — s2533 unchanged-base controls ########
+cwd=/private/tmp/gr-s2533-citation-gate
+env+ PATH=/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin GR_CAPTURE_EXTERNAL_SERVER=1 GR_CAPTURE_BASE_URL=http://127.0.0.1:5234
+
+===== m1 original source both projects =====
+$ npx playwright test e2e/m1-01-claim-jumpers-death.spec.ts --grep T spawns Claim Jumpers --project=desktop-chrome --project=mobile-chrome --workers=1 --reporter=line --output=test-results/s2533-base-m1
+rc=1 29.8s
+
+Running 2 tests using 1 worker
+
+
+
+[1/2] [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:29:1 › T spawns Claim Jumpers, contact kills hero, R restarts in place
+  1) [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:29:1 › T spawns Claim Jumpers, contact kills hero, R restarts in place 
+
+    Error: expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      34 |   // damage outpaces the rig (iframes cap intake at ~16 dmg/s -> death ~6.5s).
+      35 |   await spawnDebugPack(page);
+    > 36 |   await expect.poll(async () => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.enemiesAlive)).toBeGreaterThan(0);
+         |                                                                                                       ^
+      37 |   for (let i = 0; i < 5; i += 1) {
+      38 |     await spawnDebugPack(page);
+      39 |   }
+        at /private/tmp/gr-s2533-citation-gate/e2e/m1-01-claim-jumpers-death.spec.ts:36:103
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/s2533-base-m1/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/s2533-base-m1/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/s2533-base-m1/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/s2533-base-m1/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+[2/2] [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:29:1 › T spawns Claim Jumpers, contact kills hero, R restarts in place
+  2) [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:29:1 › T spawns Claim Jumpers, contact kills hero, R restarts in place 
+
+    Error: expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      34 |   // damage outpaces the rig (iframes cap intake at ~16 dmg/s -> death ~6.5s).
+      35 |   await spawnDebugPack(page);
+    > 36 |   await expect.poll(async () => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.enemiesAlive)).toBeGreaterThan(0);
+         |                                                                                                       ^
+      37 |   for (let i = 0; i < 5; i += 1) {
+      38 |     await spawnDebugPack(page);
+      39 |   }
+        at /private/tmp/gr-s2533-citation-gate/e2e/m1-01-claim-jumpers-death.spec.ts:36:103
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/s2533-base-m1/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/s2533-base-m1/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/s2533-base-m1/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/s2533-base-m1/m1-01-claim-jumpers-death--78a95-ls-hero-R-restarts-in-place-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  2 failed
+    [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:29:1 › T spawns Claim Jumpers, contact kills hero, R restarts in place 
+    [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:29:1 › T spawns Claim Jumpers, contact kills hero, R restarts in place 
+(node:98716) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:98798) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+===== power original source =====
+$ npm run test:power-budget
+rc=1 0.4s
+
+> gold-rush@0.1.0 test:power-budget
+> node --experimental-strip-types scripts/check-power-graph-budget.mjs
+
+power-graph-budget: p95=0.744ms cap=0.500ms samples=160 verdict=FAIL
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: power graph fixed-step p95 0.744ms exceeded 0.500ms
+    at file:///private/tmp/gr-s2533-citation-gate/scripts/check-power-graph-budget.mjs:44:8
+    at ModuleJob.run (node:internal/modules/esm/module_job:447:25)
+    at async node:internal/modules/esm/loader:646:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v26.4.0
+
+
+SUMMARY {"m1 original source both projects":1,"power original source":1}
+OVERALL rc=1

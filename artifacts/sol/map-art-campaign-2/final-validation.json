@@ -1,0 +1,44 @@
+[
+  {
+    "name": "deepwater-retry",
+    "command": [
+      "npx",
+      "playwright",
+      "test",
+      "e2e/e5-deepwater-claim.spec.ts",
+      "--project=desktop-chrome",
+      "--project=mobile-chrome",
+      "--workers=1",
+      "--reporter=line",
+      "--trace=off"
+    ],
+    "exitCode": 1,
+    "seconds": 96.9753909111023,
+    "log": "_raw/deepwater-retry.log",
+    "serialNodeGuards": false
+  },
+  {
+    "name": "deepwater-performance-repeat",
+    "command": [
+      "node",
+      "artifacts/sol/map-art-campaign-2/performance-interleaved.mjs"
+    ],
+    "exitCode": 0,
+    "seconds": 203.6261739730835,
+    "log": "_raw/deepwater-performance-repeat.log",
+    "serialNodeGuards": false
+  },
+  {
+    "name": "final-changed-guards",
+    "command": [
+      "node",
+      "scripts/run-guards.mjs",
+      "--changed-since",
+      "821bff7e915bef5c774193e2611b4726317b45ca"
+    ],
+    "exitCode": 1,
+    "seconds": 1002.9651598930359,
+    "log": "_raw/final-changed-guards.log",
+    "serialNodeGuards": true
+  }
+]

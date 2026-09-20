@@ -1,0 +1,27 @@
+{
+  "file": "artifacts/ledger-backups/ledger-2026-09-08.db",
+  "bytes": 5996544,
+  "sha256": "1987ceb4608dd6dabe3d402359582a78042ade6eabd40451206ec62b4d32916b",
+  "integrity": "ok",
+  "tables": [
+    "kv",
+    "refusals",
+    "sqlite_sequence"
+  ],
+  "rowCounts": {
+    "kv": 36,
+    "refusals": 14,
+    "sqlite_sequence": 1
+  },
+  "kvKeys": 36,
+  "nonStandingsAssayKvKeys": 0,
+  "refusalColumns": [
+    "id",
+    "reason",
+    "contract_id",
+    "anon_id",
+    "profile_name",
+    "refused_at"
+  ],
+  "judgement": "Refusals contain anonymous rider/profile identifiers and refusal metadata, no account credentials; no account-class keys. Safe under LB-01 standing plaintext standings allowance."
+}

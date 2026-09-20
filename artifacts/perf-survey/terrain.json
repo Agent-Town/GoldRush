@@ -1,0 +1,1694 @@
+{
+  "at": "2026-09-05T15:08:22.276Z",
+  "rows": [
+    {
+      "source": "assets/pilots/map-rebuild-spike/the-claim-terrain.glb",
+      "maps": [
+        "the-claim"
+      ],
+      "vertices": 16641,
+      "triangles": 32768,
+      "segments": 128,
+      "diagonal": "00-11",
+      "coarseSegments": 64,
+      "coarseTriangles": 8192,
+      "vertexHeightError": {
+        "n": 16641,
+        "min": 0,
+        "p50": 0.0006272196769714355,
+        "p95": 0.0234382301568985,
+        "p99": 0.03682452440261841,
+        "max": 0.20526903867721558
+      },
+      "triangleCentroidHeightError": {
+        "n": 32768,
+        "min": 0,
+        "p50": 0.0017679731051125636,
+        "p95": 0.0159226258595786,
+        "p99": 0.024803121884664048,
+        "max": 0.07564357916513975
+      },
+      "steepTriangleCentroidError": {
+        "n": 949,
+        "min": 0.0000016242265703063363,
+        "p50": 0.0015667627255119831,
+        "p95": 0.009371320406595662,
+        "p99": 0.02394685149192821,
+        "max": 0.03197445472081517
+      },
+      "above005": 24,
+      "above025": 0,
+      "method": "every second X/Z vertex retained; exported diagonal retained; compare coarse triangle interpolation against every original vertex and original triangle centroid. Steep = original triangle height span > 0.25 world units. No mesh or runtime contract changed."
+    },
+    {
+      "source": "assets/pilots/map-rebuild-spike/dry-gulch-terrain.glb",
+      "maps": [
+        "e1-dry-gulch"
+      ],
+      "vertices": 16641,
+      "triangles": 32768,
+      "segments": 128,
+      "diagonal": "00-11",
+      "coarseSegments": 64,
+      "coarseTriangles": 8192,
+      "vertexHeightError": {
+        "n": 16641,
+        "min": 0,
+        "p50": 0.0003482699394226074,
+        "p95": 0.006941437721252441,
+        "p99": 0.06423865258693695,
+        "max": 0.19838429242372513
+      },
+      "triangleCentroidHeightError": {
+        "n": 32768,
+        "min": 2.220446049250313e-16,
+        "p50": 0.0010296901067099462,
+        "p95": 0.013924082120258918,
+        "p99": 0.03804705043633788,
+        "max": 0.12412274380524968
+      },
+      "steepTriangleCentroidError": {
+        "n": 250,
+        "min": 0.0003013908863073178,
+        "p50": 0.02733961741129598,
+        "p95": 0.07397044698397304,
+        "p99": 0.08606292307376875,
+        "max": 0.12091735998789452
+      },
+      "above005": 233,
+      "above025": 0,
+      "method": "every second X/Z vertex retained; exported diagonal retained; compare coarse triangle interpolation against every original vertex and original triangle centroid. Steep = original triangle height span > 0.25 world units. No mesh or runtime contract changed."
+    },
+    {
+      "source": "assets/pilots/map-rebuild-spike/night-shift-terrain.glb",
+      "maps": [
+        "e1-night-shift"
+      ],
+      "vertices": 16641,
+      "triangles": 32768,
+      "segments": 128,
+      "diagonal": "00-11",
+      "coarseSegments": 64,
+      "coarseTriangles": 8192,
+      "vertexHeightError": {
+        "n": 16641,
+        "min": 0,
+        "p50": 0.0005549192428588867,
+        "p95": 0.0182381272315979,
+        "p99": 0.09132657945156097,
+        "max": 0.1876375675201416
+      },
+      "triangleCentroidHeightError": {
+        "n": 32768,
+        "min": 0,
+        "p50": 0.0013162493705749512,
+        "p95": 0.01748291651407874,
+        "p99": 0.062092284361521255,
+        "max": 0.12505722045898438
+      },
+      "steepTriangleCentroidError": {
+        "n": 1088,
+        "min": 2.7567148297436006e-7,
+        "p50": 0.004530948897203624,
+        "p95": 0.046578407287597656,
+        "p99": 0.09577107429504395,
+        "max": 0.1249538262685137
+      },
+      "above005": 313,
+      "above025": 0,
+      "method": "every second X/Z vertex retained; exported diagonal retained; compare coarse triangle interpolation against every original vertex and original triangle centroid. Steep = original triangle height span > 0.25 world units. No mesh or runtime contract changed."
+    },
+    {
+      "source": "assets/pilots/map-rebuild-spike/twin-banks-terrain.glb",
+      "maps": [
+        "e1-twin-banks"
+      ],
+      "vertices": 25921,
+      "triangles": 51200,
+      "segments": 160,
+      "diagonal": "00-11",
+      "coarseSegments": 80,
+      "coarseTriangles": 12800,
+      "vertexHeightError": {
+        "n": 25921,
+        "min": 0,
+        "p50": 0.0008857846260070801,
+        "p95": 0.02270893592679657,
+        "p99": 0.07527691125869751,
+        "max": 0.31445928011068425
+      },
+      "triangleCentroidHeightError": {
+        "n": 51200,
+        "min": 1.9496553926856564e-8,
+        "p50": 0.0013962101083102585,
+        "p95": 0.020744900695154223,
+        "p99": 0.04933566766486766,
+        "max": 0.1856864436217727
+      },
+      "steepTriangleCentroidError": {
+        "n": 776,
+        "min": 0.00008654044605943545,
+        "p50": 0.03025044189009568,
+        "p95": 0.07704350600639984,
+        "p99": 0.11009719471136731,
+        "max": 0.15933979710757754
+      },
+      "above005": 502,
+      "above025": 1,
+      "method": "every second X/Z vertex retained; exported diagonal retained; compare coarse triangle interpolation against every original vertex and original triangle centroid. Steep = original triangle height span > 0.25 world units. No mesh or runtime contract changed."
+    },
+    {
+      "source": "assets/pilots/map-rebuild-spike/baron-terrain.glb",
+      "maps": [
+        "e1-baron"
+      ],
+      "vertices": 16641,
+      "triangles": 32768,
+      "segments": 128,
+      "diagonal": "00-11",
+      "coarseSegments": 64,
+      "coarseTriangles": 8192,
+      "vertexHeightError": {
+        "n": 16641,
+        "min": 0,
+        "p50": 0.00015985965728759766,
+        "p95": 0.02376413345336914,
+        "p99": 0.03740507364273071,
+        "max": 0.06883281841874123
+      },
+      "triangleCentroidHeightError": {
+        "n": 32768,
+        "min": 0,
+        "p50": 0.0007168799638748169,
+        "p95": 0.016231675942738832,
+        "p99": 0.025063832600911606,
+        "max": 0.03914401928583783
+      },
+      "steepTriangleCentroidError": {
+        "n": 984,
+        "min": 0.0000057717164355514106,
+        "p50": 0.0020953565835950677,
+        "p95": 0.017160256703694435,
+        "p99": 0.02978149925669049,
+        "max": 0.03913776949048037
+      },
+      "above005": 13,
+      "above025": 0,
+      "method": "every second X/Z vertex retained; exported diagonal retained; compare coarse triangle interpolation against every original vertex and original triangle centroid. Steep = original triangle height span > 0.25 world units. No mesh or runtime contract changed."
+    },
+    {
+      "source": "assets/pilots/map-rebuild-spike/hill-mine-terrain.glb",
+      "maps": [
+        "e2-hill-mine"
+      ],
+      "vertices": 16641,
+      "triangles": 32768,
+      "segments": 128,
+      "diagonal": "00-11",
+      "coarseSegments": 64,
+      "coarseTriangles": 8192,
+      "vertexHeightError": {
+        "n": 16641,
+        "min": 0,
+        "p50": 0.0006907433271408081,
+        "p95": 0.025832056999206543,
+        "p99": 0.06649192422628403,
+        "max": 1.3162238597869873
+      },
+      "triangleCentroidHeightError": {
+        "n": 32768,
+        "min": 0,
+        "p50": 0.0011973182360330847,
+        "p95": 0.018858949343363296,
+        "p99": 0.25403934717178345,
+        "max": 0.8780314127604165
+      },
+      "steepTriangleCentroidError": {
+        "n": 325,
+        "min": 0.05048640569051077,
+        "p50": 0.25786050160725926,
+        "p95": 0.5133109887441001,
+        "p99": 0.5675119558970132,
+        "max": 0.695070743560791
+      },
+      "above005": 246,
+      "above025": 119,
+      "method": "every second X/Z vertex retained; exported diagonal retained; compare coarse triangle interpolation against every original vertex and original triangle centroid. Steep = original triangle height span > 0.25 world units. No mesh or runtime contract changed."
+    },
+    {
+      "source": "assets/pilots/map-rebuild-spike/trestle-terrain.glb",
+      "maps": [
+        "e2-trestle"
+      ],
+      "vertices": 16641,
+      "triangles": 32768,
+      "segments": 128,
+      "diagonal": "00-11",
+      "coarseSegments": 64,
+      "coarseTriangles": 8192,
+      "vertexHeightError": {
+        "n": 16641,
+        "min": 0,
+        "p50": 0.0005671009421348572,
+        "p95": 0.005831724964082241,
+        "p99": 0.10344655811786652,
+        "max": 0.2360757365822792
+      },
+      "triangleCentroidHeightError": {
+        "n": 32768,
+        "min": 4.967053732207738e-8,
+        "p50": 0.0007711549599965506,
+        "p95": 0.004647577802340208,
+        "p99": 0.07842117299636206,
+        "max": 0.15703540047009787
+      },
+      "steepTriangleCentroidError": {
+        "n": 367,
+        "min": 0.019629030177990614,
+        "p50": 0.0743759001294772,
+        "p95": 0.14876143137613926,
+        "p99": 0.15507587790489197,
+        "max": 0.15703540047009784
+      },
+      "above005": 200,
+      "above025": 0,
+      "method": "every second X/Z vertex retained; exported diagonal retained; compare coarse triangle interpolation against every original vertex and original triangle centroid. Steep = original triangle height span > 0.25 world units. No mesh or runtime contract changed."
+    },
+    {
+      "source": "assets/pilots/map-rebuild-spike/pressure-garden-terrain.glb",
+      "maps": [
+        "e2-pressure-garden"
+      ],
+      "vertices": 16641,
+      "triangles": 32768,
+      "segments": 128,
+      "diagonal": "00-11",
+      "coarseSegments": 64,
+      "coarseTriangles": 8192,
+      "vertexHeightError": {
+        "n": 16641,
+        "min": 0,
+        "p50": 0.0003406703472137451,
+        "p95": 0.03138419985771179,
+        "p99": 0.05029310565441847,
+        "max": 0.06827449798583984
+      },
+      "triangleCentroidHeightError": {
+        "n": 32768,
+        "min": 0,
+        "p50": 0.000668803850809585,
+        "p95": 0.02130800485610962,
+        "p99": 0.03350325301289557,
+        "max": 0.04502811034520471
+      },
+      "steepTriangleCentroidError": {
+        "n": 0,
+        "min": null,
+        "p50": null,
+        "p95": null,
+        "p99": null,
+        "max": null
+      },
+      "above005": 172,
+      "above025": 0,
+      "method": "every second X/Z vertex retained; exported diagonal retained; compare coarse triangle interpolation against every original vertex and original triangle centroid. Steep = original triangle height span > 0.25 world units. No mesh or runtime contract changed."
+    },
+    {
+      "source": "assets/pilots/map-rebuild-spike/incline-terrain.glb",
+      "maps": [
+        "e2-incline"
+      ],
+      "vertices": 16641,
+      "triangles": 32768,
+      "segments": 128,
+      "diagonal": "00-11",
+      "coarseSegments": 64,
+      "coarseTriangles": 8192,
+      "vertexHeightError": {
+        "n": 16641,
+        "min": 0,
+        "p50": 0.00021600723266601562,
+        "p95": 0.019621580839157104,
+        "p99": 0.030735479667782784,
+        "max": 0.05867029167711735
+      },
+      "triangleCentroidHeightError": {
+        "n": 32768,
+        "min": 0,
+        "p50": 0.0008937915166219446,
+        "p95": 0.014053583145141602,
+        "p99": 0.020331729824344336,
+        "max": 0.038842897862195955
+      },
+      "steepTriangleCentroidError": {
+        "n": 0,
+        "min": null,
+        "p50": null,
+        "p95": null,
+        "p99": null,
+        "max": null
+      },
+      "above005": 22,
+      "above025": 0,
+      "method": "every second X/Z vertex retained; exported diagonal retained; compare coarse triangle interpolation against every original vertex and original triangle centroid. Steep = original triangle height span > 0.25 world units. No mesh or runtime contract changed."
+    },
+    {
+      "source": "assets/pilots/map-rebuild-spike/blackout-ridge-terrain.glb",
+      "maps": [
+        "e3-blackout-ridge"
+      ],
+      "vertices": 16641,
+      "triangles": 32768,
+      "segments": 128,
+      "diagonal": "00-11",
+      "coarseSegments": 64,
+      "coarseTriangles": 8192,
+      "vertexHeightError": {
+        "n": 16641,
+        "min": 0,
+        "p50": 0.001028299331665039,
+        "p95": 0.09637629985809326,
+        "p99": 0.22607970237731934,
+        "max": 0.6051609516143799
+      },
+      "triangleCentroidHeightError": {
+        "n": 32768,
+        "min": 0,
+        "p50": 0.0018747647603349904,
+        "p95": 0.07973368962605853,
+        "p99": 0.15137124061584473,
+        "max": 0.40012296040852924
+      },
+      "steepTriangleCentroidError": {
+        "n": 4995,
+        "min": 0.00005070368448878426,
+        "p50": 0.03936711947123217,
+        "p95": 0.1492292881011954,
+        "p99": 0.20633824666341027,
+        "max": 0.40012296040852924
+      },
+      "above005": 1631,
+      "above025": 110,
+      "method": "every second X/Z vertex retained; exported diagonal retained; compare coarse triangle interpolation against every original vertex and original triangle centroid. Steep = original triangle height span > 0.25 world units. No mesh or runtime contract changed."
+    },
+    {
+      "source": "assets/pilots/map-rebuild-spike/moth-season-terrain.glb",
+      "maps": [
+        "e3-moth-season"
+      ],
+      "vertices": 16641,
+      "triangles": 32768,
+      "segments": 128,
+      "diagonal": "00-11",
+      "coarseSegments": 64,
+      "coarseTriangles": 8192,
+      "vertexHeightError": {
+        "n": 16641,
+        "min": 0,
+        "p50": 0.0009145811200141907,
+        "p95": 0.015008363872766495,
+        "p99": 0.0874071717262268,
+        "max": 0.21167004108428955
+      },
+      "triangleCentroidHeightError": {
+        "n": 32768,
+        "min": 1.9868215073159945e-8,
+        "p50": 0.0014539503802855347,
+        "p95": 0.0176676114400236,
+        "p99": 0.05922349294026663,
+        "max": 0.13682862122853723
+      },
+      "steepTriangleCentroidError": {
+        "n": 757,
+        "min": 0.0007334351539605155,
+        "p50": 0.024609764417014235,
+        "p95": 0.07875533898671416,
+        "p99": 0.09544936815897587,
+        "max": 0.13682862122853723
+      },
+      "above005": 304,
+      "above025": 0,
+      "method": "every second X/Z vertex retained; exported diagonal retained; compare coarse triangle interpolation against every original vertex and original triangle centroid. Steep = original triangle height span > 0.25 world units. No mesh or runtime contract changed."
+    },
+    {
+      "source": "assets/pilots/map-rebuild-spike/canyon-works-terrain.glb",
+      "maps": [
+        "e3-canyon-works"
+      ],
+      "vertices": 16641,
+      "triangles": 32768,
+      "segments": 128,
+      "diagonal": "00-11",
+      "coarseSegments": 64,
+      "coarseTriangles": 8192,
+      "vertexHeightError": {
+        "n": 16641,
+        "min": 0,
+        "p50": 0.0005747973918914795,
+        "p95": 0.05473625659942627,
+        "p99": 0.2647770792245865,
+        "max": 0.5754086673259735
+      },
+      "triangleCentroidHeightError": {
+        "n": 32768,
+        "min": 0,
+        "p50": 0.0012791951497392873,
+        "p95": 0.05393240849177061,
+        "p99": 0.18369662761688244,
+        "max": 0.3678282499313352
+      },
+      "steepTriangleCentroidError": {
+        "n": 3650,
+        "min": 0.000012364238500761626,
+        "p50": 0.021875222524008198,
+        "p95": 0.18902616699536623,
+        "p99": 0.3203245898087822,
+        "max": 0.3674108982086184
+      },
+      "above005": 929,
+      "above025": 181,
+      "method": "every second X/Z vertex retained; exported diagonal retained; compare coarse triangle interpolation against every original vertex and original triangle centroid. Steep = original triangle height span > 0.25 world units. No mesh or runtime contract changed."
+    },
+    {
+      "source": "assets/pilots/map-rebuild-spike/fairground-terrain.glb",
+      "maps": [
+        "e3-fairground"
+      ],
+      "vertices": 16641,
+      "triangles": 32768,
+      "segments": 128,
+      "diagonal": "00-11",
+      "coarseSegments": 64,
+      "coarseTriangles": 8192,
+      "vertexHeightError": {
+        "n": 16641,
+        "min": 0,
+        "p50": 0.0018082857131958008,
+        "p95": 0.028701692819595337,
+        "p99": 0.050718292593955994,
+        "max": 0.2651682123541832
+      },
+      "triangleCentroidHeightError": {
+        "n": 32768,
+        "min": 0,
+        "p50": 0.0027947425842285156,
+        "p95": 0.020922631025314553,
+        "p99": 0.03572710789740112,
+        "max": 0.1455244819323222
+      },
+      "steepTriangleCentroidError": {
+        "n": 472,
+        "min": 0.0000015497207632719778,
+        "p50": 0.008051753044128418,
+        "p95": 0.04711532592773393,
+        "p99": 0.10091761499643334,
+        "max": 0.1386986598372461
+      },
+      "above005": 183,
+      "above025": 1,
+      "method": "every second X/Z vertex retained; exported diagonal retained; compare coarse triangle interpolation against every original vertex and original triangle centroid. Steep = original triangle height span > 0.25 world units. No mesh or runtime contract changed."
+    },
+    {
+      "source": "assets/pilots/map-rebuild-spike/dust-flats-terrain.glb",
+      "maps": [
+        "e4-dust-flats"
+      ],
+      "vertices": 16641,
+      "triangles": 32768,
+      "segments": 128,
+      "diagonal": "00-11",
+      "coarseSegments": 64,
+      "coarseTriangles": 8192,
+      "vertexHeightError": {
+        "n": 16641,
+        "min": 0,
+        "p50": 0.00037926435470581055,
+        "p95": 0.10949105024337769,
+        "p99": 0.28995823860168457,
+        "max": 0.7769194543361664
+      },
+      "triangleCentroidHeightError": {
+        "n": 32768,
+        "min": 0,
+        "p50": 0.0012524127960203968,
+        "p95": 0.08122337857882178,
+        "p99": 0.19283310572306334,
+        "max": 0.39596198002497274
+      },
+      "steepTriangleCentroidError": {
+        "n": 1988,
+        "min": 0.00011910994847630363,
+        "p50": 0.0754108230272933,
+        "p95": 0.2764287143945695,
+        "p99": 0.3288102447986602,
+        "max": 0.39596198002497274
+      },
+      "above005": 2031,
+      "above025": 228,
+      "method": "every second X/Z vertex retained; exported diagonal retained; compare coarse triangle interpolation against every original vertex and original triangle centroid. Steep = original triangle height span > 0.25 world units. No mesh or runtime contract changed."
+    },
+    {
+      "source": "assets/pilots/map-rebuild-spike/long-road-terrain.glb",
+      "maps": [
+        "e4-long-road"
+      ],
+      "vertices": 16641,
+      "triangles": 32768,
+      "segments": 128,
+      "diagonal": "00-11",
+      "coarseSegments": 64,
+      "coarseTriangles": 8192,
+      "vertexHeightError": {
+        "n": 16641,
+        "min": 0,
+        "p50": 0.0018076300621032715,
+        "p95": 0.07403653860092163,
+        "p99": 0.12278694286942482,
+        "max": 0.28111326694488525
+      },
+      "triangleCentroidHeightError": {
+        "n": 32768,
+        "min": 0,
+        "p50": 0.0036330918471018103,
+        "p95": 0.051419248183568245,
+        "p99": 0.08359068135420485,
+        "max": 0.18811140457789172
+      },
+      "steepTriangleCentroidError": {
+        "n": 1169,
+        "min": 0.00042614930619778546,
+        "p50": 0.05149749666452407,
+        "p95": 0.10864438613255811,
+        "p99": 0.12180832773446976,
+        "max": 0.16123096148172944
+      },
+      "above005": 1389,
+      "above025": 2,
+      "method": "every second X/Z vertex retained; exported diagonal retained; compare coarse triangle interpolation against every original vertex and original triangle centroid. Steep = original triangle height span > 0.25 world units. No mesh or runtime contract changed."
+    },
+    {
+      "source": "assets/pilots/map-rebuild-spike/gusher-county-terrain.glb",
+      "maps": [
+        "e4-gusher-county"
+      ],
+      "vertices": 16641,
+      "triangles": 32768,
+      "segments": 128,
+      "diagonal": "00-11",
+      "coarseSegments": 64,
+      "coarseTriangles": 8192,
+      "vertexHeightError": {
+        "n": 16641,
+        "min": 0,
+        "p50": 0,
+        "p95": 0.16419678926467896,
+        "p99": 0.30301352590322495,
+        "max": 1.2025434970855713
+      },
+      "triangleCentroidHeightError": {
+        "n": 32768,
+        "min": 0,
+        "p50": 0.0011652509371439246,
+        "p95": 0.12632419168949321,
+        "p99": 0.20772896210352698,
+        "max": 0.8016956647237115
+      },
+      "steepTriangleCentroidError": {
+        "n": 3885,
+        "min": 0.000113209088643762,
+        "p50": 0.09321240087350352,
+        "p95": 0.20975999534130407,
+        "p99": 0.3540744185447713,
+        "max": 0.6040701568126708
+      },
+      "above005": 1436,
+      "above025": 372,
+      "method": "every second X/Z vertex retained; exported diagonal retained; compare coarse triangle interpolation against every original vertex and original triangle centroid. Steep = original triangle height span > 0.25 world units. No mesh or runtime contract changed."
+    },
+    {
+      "source": "assets/pilots/map-rebuild-spike/boneyard-terrain.glb",
+      "maps": [
+        "e4-boneyard"
+      ],
+      "vertices": 16641,
+      "triangles": 32768,
+      "segments": 128,
+      "diagonal": "00-11",
+      "coarseSegments": 64,
+      "coarseTriangles": 8192,
+      "vertexHeightError": {
+        "n": 16641,
+        "min": 0,
+        "p50": 0.000035762786865234375,
+        "p95": 0.11590731889009476,
+        "p99": 0.37852513790130615,
+        "max": 1.0194183886051178
+      },
+      "triangleCentroidHeightError": {
+        "n": 32768,
+        "min": 0,
+        "p50": 0.001020958026250185,
+        "p95": 0.10777956247329801,
+        "p99": 0.255640904108682,
+        "max": 0.6796122590700779
+      },
+      "steepTriangleCentroidError": {
+        "n": 2891,
+        "min": 0.00006014108657881323,
+        "p50": 0.08892615636189863,
+        "p95": 0.26496116320292296,
+        "p99": 0.41023230552673473,
+        "max": 0.5170618444681173
+      },
+      "above005": 1304,
+      "above025": 320,
+      "method": "every second X/Z vertex retained; exported diagonal retained; compare coarse triangle interpolation against every original vertex and original triangle centroid. Steep = original triangle height span > 0.25 world units. No mesh or runtime contract changed."
+    },
+    {
+      "source": "assets/pilots/map-rebuild-spike/deepwater-claim-terrain.glb",
+      "maps": [
+        "e5-deepwater-claim",
+        "e5-stillwater",
+        "e5-flotilla"
+      ],
+      "vertices": 16641,
+      "triangles": 32768,
+      "segments": 128,
+      "diagonal": "00-11",
+      "coarseSegments": 64,
+      "coarseTriangles": 8192,
+      "vertexHeightError": {
+        "n": 16641,
+        "min": 0,
+        "p50": 0.0018166899681091309,
+        "p95": 0.1729271411895752,
+        "p99": 0.45339691638946533,
+        "max": 1.2111456394195557
+      },
+      "triangleCentroidHeightError": {
+        "n": 32768,
+        "min": 2.384185791015625e-7,
+        "p50": 0.0044876734415693065,
+        "p95": 0.14074480533599498,
+        "p99": 0.3032757838567117,
+        "max": 0.6905269622802672
+      },
+      "steepTriangleCentroidError": {
+        "n": 7058,
+        "min": 0.0000015894571947505653,
+        "p50": 0.03884758551915479,
+        "p95": 0.2739111582438136,
+        "p99": 0.4040497144063302,
+        "max": 0.6905269622802672
+      },
+      "above005": 2070,
+      "above025": 466,
+      "method": "every second X/Z vertex retained; exported diagonal retained; compare coarse triangle interpolation against every original vertex and original triangle centroid. Steep = original triangle height span > 0.25 world units. No mesh or runtime contract changed."
+    },
+    {
+      "source": "assets/pilots/map-rebuild-spike/regatta-terrain.glb",
+      "maps": [
+        "e5-regatta"
+      ],
+      "vertices": 16641,
+      "triangles": 32768,
+      "segments": 128,
+      "diagonal": "00-11",
+      "coarseSegments": 64,
+      "coarseTriangles": 8192,
+      "vertexHeightError": {
+        "n": 16641,
+        "min": 0,
+        "p50": 0.002135753631591797,
+        "p95": 0.07046771049499512,
+        "p99": 0.21296656131744385,
+        "max": 0.5127625465393066
+      },
+      "triangleCentroidHeightError": {
+        "n": 32768,
+        "min": 3.973642970223068e-8,
+        "p50": 0.0027121702829999705,
+        "p95": 0.05224903424580862,
+        "p99": 0.11510213216145848,
+        "max": 0.29137380917866995
+      },
+      "steepTriangleCentroidError": {
+        "n": 3149,
+        "min": 0.000009854634601680345,
+        "p50": 0.028127193450926846,
+        "p95": 0.12231798966725638,
+        "p99": 0.17858207225799605,
+        "max": 0.29137380917866995
+      },
+      "above005": 1436,
+      "above025": 40,
+      "method": "every second X/Z vertex retained; exported diagonal retained; compare coarse triangle interpolation against every original vertex and original triangle centroid. Steep = original triangle height span > 0.25 world units. No mesh or runtime contract changed."
+    },
+    {
+      "source": "assets/pilots/map-rebuild-spike/glow-mesa-terrain.glb",
+      "maps": [
+        "e6-glow-mesa",
+        "e6-picnic"
+      ],
+      "vertices": 16641,
+      "triangles": 32768,
+      "segments": 128,
+      "diagonal": "00-11",
+      "coarseSegments": 64,
+      "coarseTriangles": 8192,
+      "vertexHeightError": {
+        "n": 16641,
+        "min": 0,
+        "p50": 0,
+        "p95": 0.05443161725997925,
+        "p99": 0.6839314103126526,
+        "max": 2.7672765254974365
+      },
+      "triangleCentroidHeightError": {
+        "n": 32768,
+        "min": 0,
+        "p50": 0.0004680554072065135,
+        "p95": 0.11593985557555975,
+        "p99": 0.4696144262949642,
+        "max": 1.8448510169982844
+      },
+      "steepTriangleCentroidError": {
+        "n": 2360,
+        "min": 0.000022570292154355798,
+        "p50": 0.1152598857879652,
+        "p95": 0.5960933764775564,
+        "p99": 0.8685397307078073,
+        "max": 1.3849933147430487
+      },
+      "above005": 974,
+      "above025": 415,
+      "method": "every second X/Z vertex retained; exported diagonal retained; compare coarse triangle interpolation against every original vertex and original triangle centroid. Steep = original triangle height span > 0.25 world units. No mesh or runtime contract changed."
+    },
+    {
+      "source": "assets/pilots/map-rebuild-spike/showroom-terrain.glb",
+      "maps": [
+        "e6-showroom"
+      ],
+      "vertices": 16641,
+      "triangles": 32768,
+      "segments": 128,
+      "diagonal": "00-11",
+      "coarseSegments": 64,
+      "coarseTriangles": 8192,
+      "vertexHeightError": {
+        "n": 16641,
+        "min": 0,
+        "p50": 0,
+        "p95": 0.038559675216674805,
+        "p99": 0.17854484915733337,
+        "max": 0.5682780742645264
+      },
+      "triangleCentroidHeightError": {
+        "n": 32768,
+        "min": 0,
+        "p50": 0,
+        "p95": 0.056261062622070424,
+        "p99": 0.13278367122014245,
+        "max": 0.3741854975620906
+      },
+      "steepTriangleCentroidError": {
+        "n": 1767,
+        "min": 0.00001482168833466524,
+        "p50": 0.014606823523839574,
+        "p95": 0.24711458509167114,
+        "p99": 0.26913444697857025,
+        "max": 0.31605268269777287
+      },
+      "above005": 766,
+      "above025": 109,
+      "method": "every second X/Z vertex retained; exported diagonal retained; compare coarse triangle interpolation against every original vertex and original triangle centroid. Steep = original triangle height span > 0.25 world units. No mesh or runtime contract changed."
+    },
+    {
+      "source": "assets/pilots/map-rebuild-spike/half-life-hollow-terrain.glb",
+      "maps": [
+        "e6-half-life-hollow"
+      ],
+      "vertices": 16641,
+      "triangles": 32768,
+      "segments": 128,
+      "diagonal": "00-11",
+      "coarseSegments": 64,
+      "coarseTriangles": 8192,
+      "vertexHeightError": {
+        "n": 16641,
+        "min": 0,
+        "p50": 0.0004589557647705078,
+        "p95": 0.07934042811393738,
+        "p99": 0.37089261412620544,
+        "max": 0.9874540865421295
+      },
+      "triangleCentroidHeightError": {
+        "n": 32768,
+        "min": 0,
+        "p50": 0.0014313720457722612,
+        "p95": 0.08826499183972625,
+        "p99": 0.24983330567677997,
+        "max": 0.5217517217000287
+      },
+      "steepTriangleCentroidError": {
+        "n": 2165,
+        "min": 0.0012125174204506983,
+        "p50": 0.11467223117748993,
+        "p95": 0.34247321387132246,
+        "p99": 0.46799586216608335,
+        "max": 0.5217517217000287
+      },
+      "above005": 1035,
+      "above025": 274,
+      "method": "every second X/Z vertex retained; exported diagonal retained; compare coarse triangle interpolation against every original vertex and original triangle centroid. Steep = original triangle height span > 0.25 world units. No mesh or runtime contract changed."
+    },
+    {
+      "source": "assets/pilots/map-rebuild-spike/relay-valley-terrain.glb",
+      "maps": [
+        "e7-relay-valley",
+        "e7-dead-band",
+        "e7-relay-rush"
+      ],
+      "vertices": 16641,
+      "triangles": 32768,
+      "segments": 128,
+      "diagonal": "00-11",
+      "coarseSegments": 64,
+      "coarseTriangles": 8192,
+      "vertexHeightError": {
+        "n": 16641,
+        "min": 0,
+        "p50": 0.0008181259036064148,
+        "p95": 0.1646873950958252,
+        "p99": 0.2589998245239258,
+        "max": 0.579389214515686
+      },
+      "triangleCentroidHeightError": {
+        "n": 32768,
+        "min": 0,
+        "p50": 0.0013854404290517541,
+        "p95": 0.11797817548115841,
+        "p99": 0.17412316799163657,
+        "max": 0.3836483160654707
+      },
+      "steepTriangleCentroidError": {
+        "n": 4863,
+        "min": 0.000009099642434673427,
+        "p50": 0.07581130663553903,
+        "p95": 0.1751561015844329,
+        "p99": 0.2401447296142578,
+        "max": 0.38112664222717285
+      },
+      "above005": 1089,
+      "above025": 211,
+      "method": "every second X/Z vertex retained; exported diagonal retained; compare coarse triangle interpolation against every original vertex and original triangle centroid. Steep = original triangle height span > 0.25 world units. No mesh or runtime contract changed."
+    },
+    {
+      "source": "assets/pilots/map-rebuild-spike/echo-canyon-terrain.glb",
+      "maps": [
+        "e7-echo-canyon"
+      ],
+      "vertices": 16641,
+      "triangles": 32768,
+      "segments": 128,
+      "diagonal": "00-11",
+      "coarseSegments": 64,
+      "coarseTriangles": 8192,
+      "vertexHeightError": {
+        "n": 16641,
+        "min": 0,
+        "p50": 0,
+        "p95": 0.10274434089660645,
+        "p99": 2.5,
+        "max": 2.752887010574341
+      },
+      "triangleCentroidHeightError": {
+        "n": 32768,
+        "min": 0,
+        "p50": 0,
+        "p95": 0.1516571044921875,
+        "p99": 1.6666666666666696,
+        "max": 1.8352395693461045
+      },
+      "steepTriangleCentroidError": {
+        "n": 5092,
+        "min": 0.000026742617290853588,
+        "p50": 0.03587951883673618,
+        "p95": 1.6666666666666636,
+        "p99": 1.7856818834940538,
+        "max": 1.8352395693461045
+      },
+      "above005": 1298,
+      "above025": 455,
+      "method": "every second X/Z vertex retained; exported diagonal retained; compare coarse triangle interpolation against every original vertex and original triangle centroid. Steep = original triangle height span > 0.25 world units. No mesh or runtime contract changed."
+    },
+    {
+      "source": "assets/pilots/map-rebuild-spike/mare-claim-terrain.glb",
+      "maps": [
+        "e8-mare-claim",
+        "e8-far-side",
+        "e8-eclipse"
+      ],
+      "vertices": 16641,
+      "triangles": 32768,
+      "segments": 128,
+      "diagonal": "00-11",
+      "coarseSegments": 64,
+      "coarseTriangles": 8192,
+      "vertexHeightError": {
+        "n": 16641,
+        "min": 0,
+        "p50": 0,
+        "p95": 0.34241561591625214,
+        "p99": 3,
+        "max": 5.538701295852661
+      },
+      "triangleCentroidHeightError": {
+        "n": 32768,
+        "min": 0,
+        "p50": 0,
+        "p95": 0.4902345339457215,
+        "p99": 2.0000000000000036,
+        "max": 3.692467530568427
+      },
+      "steepTriangleCentroidError": {
+        "n": 6742,
+        "min": 7.105427357601002e-15,
+        "p50": 0.11349834998448483,
+        "p95": 1.9916695753733324,
+        "p99": 2.000000000000007,
+        "max": 2.846233765284233
+      },
+      "above005": 2232,
+      "above025": 1561,
+      "method": "every second X/Z vertex retained; exported diagonal retained; compare coarse triangle interpolation against every original vertex and original triangle centroid. Steep = original triangle height span > 0.25 world units. No mesh or runtime contract changed."
+    },
+    {
+      "source": "assets/pilots/map-rebuild-spike/low-orbit-terrain.glb",
+      "maps": [
+        "e8-low-orbit"
+      ],
+      "vertices": 16641,
+      "triangles": 32768,
+      "segments": 128,
+      "diagonal": "00-11",
+      "coarseSegments": 64,
+      "coarseTriangles": 8192,
+      "vertexHeightError": {
+        "n": 16641,
+        "min": 0,
+        "p50": 0.0017676353454589844,
+        "p95": 0.019540786743164062,
+        "p99": 0.7137945592403412,
+        "max": 2.7862524539232254
+      },
+      "triangleCentroidHeightError": {
+        "n": 32768,
+        "min": 0,
+        "p50": 0.002713600794475468,
+        "p95": 0.20507867137591096,
+        "p99": 0.4857376615206386,
+        "max": 1.8449662576119112
+      },
+      "steepTriangleCentroidError": {
+        "n": 2019,
+        "min": 0.001736501852664496,
+        "p50": 0.24254441261291504,
+        "p95": 0.5683533151944458,
+        "p99": 0.9021678368250496,
+        "max": 1.8449662576119112
+      },
+      "above005": 694,
+      "above025": 660,
+      "method": "every second X/Z vertex retained; exported diagonal retained; compare coarse triangle interpolation against every original vertex and original triangle centroid. Steep = original triangle height span > 0.25 world units. No mesh or runtime contract changed."
+    },
+    {
+      "source": "assets/pilots/map-rebuild-spike/dome-basin-terrain.glb",
+      "maps": [
+        "e9-dome-basin"
+      ],
+      "vertices": 16641,
+      "triangles": 32768,
+      "segments": 128,
+      "diagonal": "00-11",
+      "coarseSegments": 64,
+      "coarseTriangles": 8192,
+      "vertexHeightError": {
+        "n": 16641,
+        "min": 0,
+        "p50": 0.0001951456069946289,
+        "p95": 0.10302487760782242,
+        "p99": 1.00054588355124,
+        "max": 2.280000001192093
+      },
+      "triangleCentroidHeightError": {
+        "n": 32768,
+        "min": 0,
+        "p50": 0.0006922880808512555,
+        "p95": 0.11988837520281437,
+        "p99": 0.6671873745896555,
+        "max": 1.5200000007947314
+      },
+      "steepTriangleCentroidError": {
+        "n": 2649,
+        "min": 0.00005040566126357504,
+        "p50": 0.08101785679658374,
+        "p95": 0.6759490855038153,
+        "p99": 0.7850434283415484,
+        "max": 1.1400000005960438
+      },
+      "above005": 1195,
+      "above025": 356,
+      "method": "every second X/Z vertex retained; exported diagonal retained; compare coarse triangle interpolation against every original vertex and original triangle centroid. Steep = original triangle height span > 0.25 world units. No mesh or runtime contract changed."
+    },
+    {
+      "source": "assets/pilots/map-rebuild-spike/seed-run-terrain.glb",
+      "maps": [
+        "e9-seed-run"
+      ],
+      "vertices": 16641,
+      "triangles": 32768,
+      "segments": 128,
+      "diagonal": "00-11",
+      "coarseSegments": 64,
+      "coarseTriangles": 8192,
+      "vertexHeightError": {
+        "n": 16641,
+        "min": 0,
+        "p50": 0.0010004043579101562,
+        "p95": 0.15913593769073486,
+        "p99": 0.367054283618927,
+        "max": 2.0320969223976135
+      },
+      "triangleCentroidHeightError": {
+        "n": 32768,
+        "min": 0,
+        "p50": 0.002029160658518492,
+        "p95": 0.1215377847353607,
+        "p99": 0.27417653799056985,
+        "max": 1.354731281598406
+      },
+      "steepTriangleCentroidError": {
+        "n": 3684,
+        "min": 0.00007142623265554704,
+        "p50": 0.0895660370588311,
+        "p95": 0.25970589121182575,
+        "p99": 0.4979928731918353,
+        "max": 1.0203537046909361
+      },
+      "above005": 1573,
+      "above025": 322,
+      "method": "every second X/Z vertex retained; exported diagonal retained; compare coarse triangle interpolation against every original vertex and original triangle centroid. Steep = original triangle height span > 0.25 world units. No mesh or runtime contract changed."
+    },
+    {
+      "source": "assets/pilots/map-rebuild-spike/devils-alley-terrain.glb",
+      "maps": [
+        "e9-devils-alley"
+      ],
+      "vertices": 16641,
+      "triangles": 32768,
+      "segments": 128,
+      "diagonal": "00-11",
+      "coarseSegments": 64,
+      "coarseTriangles": 8192,
+      "vertexHeightError": {
+        "n": 16641,
+        "min": 0,
+        "p50": 0.0015031099319458008,
+        "p95": 0.11074890941381454,
+        "p99": 1.0231541693210602,
+        "max": 3.2087455093860626
+      },
+      "triangleCentroidHeightError": {
+        "n": 32768,
+        "min": 0,
+        "p50": 0.010028203328450669,
+        "p95": 0.12205676237741914,
+        "p99": 0.704237123330433,
+        "max": 2.13916367292404
+      },
+      "steepTriangleCentroidError": {
+        "n": 9226,
+        "min": 0.000004172325135165522,
+        "p50": 0.02754835287729862,
+        "p95": 0.3048488597075123,
+        "p99": 0.8193931778272,
+        "max": 1.6326992462078749
+      },
+      "above005": 2806,
+      "above025": 425,
+      "method": "every second X/Z vertex retained; exported diagonal retained; compare coarse triangle interpolation against every original vertex and original triangle centroid. Steep = original triangle height span > 0.25 world units. No mesh or runtime contract changed."
+    },
+    {
+      "source": "assets/pilots/map-rebuild-spike/old-canal-terrain.glb",
+      "maps": [
+        "e9-old-canal"
+      ],
+      "vertices": 16641,
+      "triangles": 32768,
+      "segments": 128,
+      "diagonal": "00-11",
+      "coarseSegments": 64,
+      "coarseTriangles": 8192,
+      "vertexHeightError": {
+        "n": 16641,
+        "min": 0,
+        "p50": 0.0009264051914215088,
+        "p95": 0.14991486072540283,
+        "p99": 0.9096707701683044,
+        "max": 3.083129644393921
+      },
+      "triangleCentroidHeightError": {
+        "n": 32768,
+        "min": 0,
+        "p50": 0.0018815497557324035,
+        "p95": 0.17225134372711082,
+        "p99": 0.616333444913229,
+        "max": 2.0554197629292763
+      },
+      "steepTriangleCentroidError": {
+        "n": 3949,
+        "min": 0.00005903840064980237,
+        "p50": 0.08396571874618441,
+        "p95": 0.5650478998819992,
+        "p99": 0.9355949560801221,
+        "max": 1.5495188037554466
+      },
+      "above005": 1915,
+      "above025": 512,
+      "method": "every second X/Z vertex retained; exported diagonal retained; compare coarse triangle interpolation against every original vertex and original triangle centroid. Steep = original triangle height span > 0.25 world units. No mesh or runtime contract changed."
+    },
+    {
+      "source": "assets/pilots/map-rebuild-spike/ember-shore-terrain.glb",
+      "maps": [
+        "e10-ember-shore"
+      ],
+      "vertices": 16641,
+      "triangles": 32768,
+      "segments": 128,
+      "diagonal": "00-11",
+      "coarseSegments": 64,
+      "coarseTriangles": 8192,
+      "vertexHeightError": {
+        "n": 16641,
+        "min": 0,
+        "p50": 0.0007517188787460327,
+        "p95": 0.2422555023804307,
+        "p99": 0.49675506353378296,
+        "max": 1.4222567597171292
+      },
+      "triangleCentroidHeightError": {
+        "n": 32768,
+        "min": 0,
+        "p50": 0.0026131073633830493,
+        "p95": 0.1817217767238591,
+        "p99": 0.3334563175837225,
+        "max": 0.9488045321001325
+      },
+      "steepTriangleCentroidError": {
+        "n": 3480,
+        "min": 0.0001924435297657734,
+        "p50": 0.15998921791712672,
+        "p95": 0.35888437430063624,
+        "p99": 0.6140597296568276,
+        "max": 0.7971589809749312
+      },
+      "above005": 1729,
+      "above025": 797,
+      "method": "every second X/Z vertex retained; exported diagonal retained; compare coarse triangle interpolation against every original vertex and original triangle centroid. Steep = original triangle height span > 0.25 world units. No mesh or runtime contract changed."
+    },
+    {
+      "source": "assets/pilots/map-rebuild-spike/archive-world-terrain.glb",
+      "maps": [
+        "e10-archive-world"
+      ],
+      "vertices": 16641,
+      "triangles": 32768,
+      "segments": 128,
+      "diagonal": "00-11",
+      "coarseSegments": 64,
+      "coarseTriangles": 8192,
+      "vertexHeightError": {
+        "n": 16641,
+        "min": 0,
+        "p50": 0,
+        "p95": 0.16967585682868958,
+        "p99": 0.2845967598259449,
+        "max": 0.8852267265319824
+      },
+      "triangleCentroidHeightError": {
+        "n": 32768,
+        "min": 0,
+        "p50": 0.0015540818373360743,
+        "p95": 0.12283311535914831,
+        "p99": 0.1925558249155681,
+        "max": 0.5901511510213197
+      },
+      "steepTriangleCentroidError": {
+        "n": 4886,
+        "min": 0.000012874603271484375,
+        "p50": 0.0691672762235025,
+        "p95": 0.18378595511118756,
+        "p99": 0.3106086254119884,
+        "max": 0.44325930873553165
+      },
+      "above005": 1886,
+      "above025": 244,
+      "method": "every second X/Z vertex retained; exported diagonal retained; compare coarse triangle interpolation against every original vertex and original triangle centroid. Steep = original triangle height span > 0.25 world units. No mesh or runtime contract changed."
+    }
+  ],
+  "culling": [
+    {
+      "file": "src/world/HaulSteam.ts",
+      "line": 65,
+      "code": "mesh.frustumCulled = false;",
+      "context": "    opacity: 0.78,\n  });\n  const mesh = new THREE.InstancedMesh(geometry, material, Math.max(1, capacity));\n  mesh.name = 'InclineHaulSteam';\n  mesh.frustumCulled = false;\n  mesh.renderOrder = RenderLayers.impactVfx;\n  mesh.userData.renderOnly = true;"
+    },
+    {
+      "file": "src/world/LightRig.ts",
+      "line": 256,
+      "code": "this.lanternBulbs.frustumCulled = false;",
+      "context": "    this.sun.shadow.normalBias = 0.018;\n    this.sun.shadow.radius = 2.5;\n    this.group.add(this.fill, this.sun, this.sun.target);\n    this.lanternBulbs.name = 'EnemyHandLanternBulbs';\n    this.lanternBulbs.frustumCulled = false;\n    this.lanternBulbs.count = 0;\n    this.lanternCones.name = 'EnemyHandLanternCones';"
+    },
+    {
+      "file": "src/world/LightRig.ts",
+      "line": 259,
+      "code": "this.lanternCones.frustumCulled = false;",
+      "context": "    this.lanternBulbs.name = 'EnemyHandLanternBulbs';\n    this.lanternBulbs.frustumCulled = false;\n    this.lanternBulbs.count = 0;\n    this.lanternCones.name = 'EnemyHandLanternCones';\n    this.lanternCones.frustumCulled = false;\n    this.lanternCones.count = 0;\n    this.lanternCones.renderOrder = RenderLayers.gameplayFade;"
+    },
+    {
+      "file": "src/world/LightRig.ts",
+      "line": 635,
+      "code": "mesh.frustumCulled = false;",
+      "context": "  constructor() {\n    this.group.name = 'GeneratedSpriteBlobShadows';\n    for (const mesh of Object.values(this.meshes)) {\n      mesh.name = `${this.group.name}.${mesh.uuid}`;\n      mesh.frustumCulled = false;\n      mesh.renderOrder = RenderLayers.groundShadows;\n      mesh.count = 0;"
+    },
+    {
+      "file": "src/world/LightRig.ts",
+      "line": 748,
+      "code": "this.quad.frustumCulled = false;",
+      "context": "  });\n  private readonly quad = new THREE.Mesh(this.geometry, this.material);\n\n  constructor(profile?: LightRigHeatProfile) {\n    this.quad.frustumCulled = false;\n    this.scene.add(this.quad);\n    this.heat = profile ? new HeatShimmerBand(profile) : undefined;"
+    },
+    {
+      "file": "src/world/LightRig.ts",
+      "line": 849,
+      "code": "this.quad.frustumCulled = false;",
+      "context": "  gl_FragColor = vec4(texture2D(frame, shifted).rgb, band);\n}`,\n    });\n    this.quad = new THREE.Mesh(this.geometry, this.material);\n    this.quad.frustumCulled = false;\n    this.scene.add(this.quad);\n  }"
+    },
+    {
+      "file": "src/world/LightRig.ts",
+      "line": 934,
+      "code": "this.mesh.frustumCulled = false;",
+      "context": "  constructor(private readonly devils: number) {\n    this.group.name = 'DryGulchDustDevils';\n    this.mesh = new THREE.InstancedMesh(this.geometry, this.material, Math.max(1, devils * DustDevils.QUADS_PER_DEVIL));\n    this.mesh.name = 'DryGulchDustDevilQuads';\n    this.mesh.frustumCulled = false;\n    this.mesh.castShadow = false;\n    this.mesh.receiveShadow = false;"
+    },
+    {
+      "file": "src/world/PowerWireView.ts",
+      "line": 141,
+      "code": "mesh.frustumCulled = false;",
+      "context": "    segments.length,\n  );\n  mesh.name = name;\n  mesh.renderOrder = RenderLayers.gameplay;\n  mesh.frustumCulled = false;\n\n  const matrix = new THREE.Matrix4();"
+    },
+    {
+      "file": "src/world/RailPath.ts",
+      "line": 182,
+      "code": "mesh.frustumCulled = false;",
+      "context": "    segments.length,\n  );\n  mesh.name = 'RailPath.Rails';\n  mesh.renderOrder = RenderLayers.groundDecals;\n  mesh.frustumCulled = false;\n  mesh.receiveShadow = true;\n"
+    },
+    {
+      "file": "src/world/RailPath.ts",
+      "line": 212,
+      "code": "mesh.frustumCulled = false;",
+      "context": "    ties.length,\n  );\n  mesh.name = 'RailPath.Sleepers';\n  mesh.renderOrder = RenderLayers.groundDecals;\n  mesh.frustumCulled = false;\n  mesh.receiveShadow = true;\n"
+    },
+    {
+      "file": "src/world/Scatter.ts",
+      "line": 225,
+      "code": "mesh.frustumCulled = false;",
+      "context": "    const mesh = new THREE.InstancedMesh(profile.geometry, profile.material, Math.max(1, count));\n    mesh.name = `DetailScatter.${profile.id}`;\n    mesh.userData.detailProfile = profile;\n    mesh.count = count;\n    mesh.frustumCulled = false;\n    mesh.castShadow = false;\n    mesh.receiveShadow = true;"
+    },
+    {
+      "file": "src/world/Scatter.ts",
+      "line": 473,
+      "code": "mesh.frustumCulled = false;",
+      "context": "    }),\n    Math.max(1, shadowed.length),\n  );\n  mesh.name = 'DetailScatter.contactShadows';\n  mesh.frustumCulled = false;\n  mesh.castShadow = false;\n  mesh.receiveShadow = false;"
+    },
+    {
+      "file": "src/world/Scatter.ts",
+      "line": 714,
+      "code": "mesh.frustumCulled = false;",
+      "context": "  if (!contact || tufts.length === 0) return null;\n  const mesh = new THREE.InstancedMesh(new THREE.CircleGeometry(contact.radius, 12), contactMaterial(), tufts.length);\n  mesh.name = `DetailScatter.${profile.id}.contact`;\n  mesh.renderOrder = RenderLayers.groundDecals;\n  mesh.frustumCulled = false;\n  mesh.castShadow = false;\n  mesh.receiveShadow = false;"
+    },
+    {
+      "file": "src/world/SteamPlume.ts",
+      "line": 152,
+      "code": "points.frustumCulled = false;",
+      "context": "  const points = new THREE.Points(geometry, material);\n  points.name = 'SteamPlume';\n  points.userData.renderOnly = true;\n  points.renderOrder = RenderLayers.impactVfx;\n  points.frustumCulled = false;\n  return {\n    points,"
+    },
+    {
+      "file": "src/world/SunMotes.ts",
+      "line": 120,
+      "code": "points.frustumCulled = false;",
+      "context": "  const points = new THREE.Points(geometry, material);\n  points.name = 'SunMotes';\n  points.userData.renderOnly = true;\n  points.renderOrder = RenderLayers.impactVfx;\n  points.frustumCulled = false;\n  return {\n    points,"
+    },
+    {
+      "file": "src/world/Terrain3dClaimPilot.ts",
+      "line": 623,
+      "code": "mesh.frustumCulled = false;",
+      "context": "  const materials = new Set<THREE.Material>();\n  model.traverse((node) => {\n    const mesh = node as THREE.Mesh;\n    if (!mesh.isMesh) return;\n    mesh.frustumCulled = false;\n    mesh.renderOrder = -100;\n    for (const material of Array.isArray(mesh.material) ? mesh.material : [mesh.material]) materials.add(material);"
+    },
+    {
+      "file": "src/world/Terrain3dClaimPilot.ts",
+      "line": 751,
+      "code": "contacts.frustumCulled = false;",
+      "context": "  });\n  const contacts = new THREE.InstancedMesh(geometry, material, mounts.length);\n  contacts.name = 'Terrain3dLandmarkContacts';\n  contacts.userData.renderOnly = true;\n  contacts.frustumCulled = false;\n  contacts.renderOrder = RenderLayers.groundShadows;\n  const box = new THREE.Box3();"
+    },
+    {
+      "file": "src/world/Terrain3dClaimPilot.ts",
+      "line": 889,
+      "code": "mesh.frustumCulled = false;",
+      "context": "    side: THREE.DoubleSide,\n  }));\n  mesh.name = 'Terrain3dSpanShadow';\n  mesh.userData.renderOnly = true;\n  mesh.frustumCulled = false;\n  mesh.renderOrder = RenderLayers.groundDecals + 0.05;\n  return mesh;"
+    },
+    {
+      "file": "src/world/Terrain3dClaimPilot.ts",
+      "line": 1022,
+      "code": "ring.frustumCulled = false;",
+      "context": "  });\n  const ring = new THREE.InstancedMesh(geometry, material, collars.length);\n  ring.name = 'Terrain3dWaterCollars';\n  ring.userData.renderOnly = true;\n  ring.frustumCulled = false;\n  ring.renderOrder = RenderLayers.groundDecals;\n  const placer = new THREE.Object3D();"
+    },
+    {
+      "file": "src/world/Terrain3dClaimPilot.ts",
+      "line": 1795,
+      "code": "continuation.frustumCulled = false;",
+      "context": "  const apron = horizonApronProfile(contractId);\n  if (apron) paintHorizonApron(material, apron);\n  const continuation = new THREE.Mesh(geometry, material);\n  continuation.userData.horizonApron = apron ? 'painted' : 'plain';\n  continuation.frustumCulled = false;\n  continuation.renderOrder = -50;\n  continuation.name = 'Terrain3dSculptContinuation';"
+    },
+    {
+      "file": "src/world/Water.ts",
+      "line": 378,
+      "code": "mesh.frustumCulled = false;",
+      "context": "  mesh.position.set(0, config.surfaceY, config.centerZ);\n  mesh.renderOrder = RenderLayers.groundDecals;\n  mesh.receiveShadow = false;\n  mesh.castShadow = false;\n  mesh.frustumCulled = false;\n  mesh.userData.renderOnly = true;\n  mesh.userData.visualHalfWidth = config.visualHalfWidth;"
+    },
+    {
+      "file": "src/world/Water.ts",
+      "line": 751,
+      "code": "water.frustumCulled = false;",
+      "context": "  water.position.set(config.x, config.surfaceY + POND_SURFACE_LIFT, config.z);\n  water.renderOrder = RenderLayers.groundDecals;\n  water.receiveShadow = false;\n  water.castShadow = false;\n  water.frustumCulled = false;\n  group.add(water);\n"
+    },
+    {
+      "file": "src/world/Water.ts",
+      "line": 764,
+      "code": "dampGround.frustumCulled = false;",
+      "context": "  dampGround.position.set(config.x, config.surfaceY + POND_SURFACE_LIFT - 0.002, config.z);\n  dampGround.renderOrder = RenderLayers.groundDecals;\n  dampGround.receiveShadow = true;\n  dampGround.castShadow = false;\n  dampGround.frustumCulled = false;\n  group.add(dampGround);\n"
+    },
+    {
+      "file": "src/world/Water.ts",
+      "line": 822,
+      "code": "mesh.frustumCulled = false;",
+      "context": "  );\n  mesh.name = 'SpringPondLiveReeds';\n  mesh.castShadow = false;\n  mesh.receiveShadow = true;\n  mesh.frustumCulled = false;\n  const anchor = new THREE.Object3D();\n  blades.forEach(({ angle, distance, scale }, index) => {"
+    },
+    {
+      "file": "src/world/Water.ts",
+      "line": 977,
+      "code": "mesh.frustumCulled = false;",
+      "context": "  mesh.userData.visualHalfWidth = config.halfWidth;\n  mesh.renderOrder = RenderLayers.groundDecals;\n  mesh.receiveShadow = false;\n  mesh.castShadow = false;\n  mesh.frustumCulled = false;\n  return mesh;\n}"
+    },
+    {
+      "file": "src/world/Water.ts",
+      "line": 1016,
+      "code": "mesh.frustumCulled = false;",
+      "context": "  mesh.userData.renderOnly = true;\n  mesh.renderOrder = RenderLayers.groundDecals;\n  mesh.receiveShadow = false;\n  mesh.castShadow = false;\n  mesh.frustumCulled = false;\n  return mesh;\n}"
+    },
+    {
+      "file": "src/world/Water.ts",
+      "line": 1069,
+      "code": "mesh.frustumCulled = false;",
+      "context": "  mesh.userData.renderOnly = true;\n  mesh.renderOrder = RenderLayers.groundDecals;\n  mesh.receiveShadow = false;\n  mesh.castShadow = false;\n  mesh.frustumCulled = false;\n  return mesh;\n}"
+    },
+    {
+      "file": "src/town/TownScene.ts",
+      "line": 3097,
+      "code": "this.mesh.frustumCulled = false;",
+      "context": "      polygonOffsetUnits: -1,\n    });\n    this.mesh = new THREE.InstancedMesh(new THREE.CircleGeometry(1, 24), material, Math.max(1, capacity));\n    this.mesh.name = 'TownCastBlobShadows';\n    this.mesh.frustumCulled = false;\n    this.mesh.renderOrder = RenderLayers.groundShadows;\n    this.mesh.count = 0;"
+    },
+    {
+      "file": "src/town/TownScene.ts",
+      "line": 4965,
+      "code": "mesh.frustumCulled = false;",
+      "context": "    count,\n  );\n  mesh.name = 'TownAmbientDust';\n  mesh.count = count;\n  mesh.frustumCulled = false;\n  mesh.renderOrder = RenderLayers.worldUi;\n  return mesh;"
+    },
+    {
+      "file": "src/town/TownSky.ts",
+      "line": 250,
+      "code": "mesh.frustumCulled = false;",
+      "context": "  mesh.castShadow = false;\n  // No shadow either way: the belt sits outside the sun's +/-17 frustum, where a shadow-map\n  // lookup samples the clamped border texel and can shade a whole apron for no reason.\n  mesh.receiveShadow = false;\n  mesh.frustumCulled = false;\n  mesh.renderOrder = RenderLayers.terrainBackdrop;\n  return mesh;"
+    },
+    {
+      "file": "src/town/TownSky.ts",
+      "line": 312,
+      "code": "mesh.frustumCulled = false;",
+      "context": "    );\n  };\n  const mesh = new THREE.Mesh(geometry, material);\n  mesh.name = 'TownSkyPaintedRing';\n  mesh.frustumCulled = false;\n  mesh.renderOrder = RenderLayers.backdrop;\n  return mesh;"
+    },
+    {
+      "file": "src/town/TownTavernPilot.ts",
+      "line": 102,
+      "code": "this.mesh.frustumCulled = false;",
+      "context": "    private readonly emitter: AnchorEmitter,\n  ) {\n    this.mesh = createAnchorEmitterMesh(emitter.kind);\n    this.mesh.name = emitter.meshName;\n    this.mesh.frustumCulled = false;\n    scene.add(this.mesh);\n    this.frame = requestAnimationFrame(this.update);"
+    },
+    {
+      "file": "src/systems/BaronVolleyVfx.ts",
+      "line": 142,
+      "code": "mesh.frustumCulled = false;",
+      "context": "    this.rockets = new THREE.InstancedMesh(this.rocketGeometry, this.rocketMaterial, this.caps.tracers);\n    this.rings = new THREE.InstancedMesh(this.ringGeometry, this.ringMaterial, this.caps.rings);\n    this.wisps = new THREE.InstancedMesh(this.wispGeometry, this.wispMaterial, this.caps.wisps);\n    for (const mesh of [this.tracers, this.rockets, this.rings, this.wisps]) {\n      mesh.frustumCulled = false;\n      mesh.renderOrder = RenderLayers.impactVfx;\n      mesh.visible = false;"
+    },
+    {
+      "file": "src/systems/BuildSystem.ts",
+      "line": 511,
+      "code": "this.buildingVisuals.frustumCulled = false;",
+      "context": "    this.repairRing.renderOrder = RenderLayers.groundDecals;\n    this.repairRing.visible = false;\n    this.repairRingIndexCount = this.repairRing.geometry.index?.count ?? this.repairRing.geometry.attributes.position.count;\n    this.repairRing.geometry.setDrawRange(0, 0);\n    this.buildingVisuals.frustumCulled = false;\n    this.buildingVisuals.renderOrder = RenderLayers.groundDecals;\n    this.buildingVisuals.visible = false;"
+    },
+    {
+      "file": "src/systems/BuildSystem.ts",
+      "line": 514,
+      "code": "this.hpVisuals.frustumCulled = false;",
+      "context": "    this.repairRing.geometry.setDrawRange(0, 0);\n    this.buildingVisuals.frustumCulled = false;\n    this.buildingVisuals.renderOrder = RenderLayers.groundDecals;\n    this.buildingVisuals.visible = false;\n    this.hpVisuals.frustumCulled = false;\n    this.hpVisuals.renderOrder = RenderLayers.worldUi;\n    this.hpVisuals.visible = false;"
+    },
+    {
+      "file": "src/systems/BuildSystem.ts",
+      "line": 2903,
+      "code": "mesh.frustumCulled = false;",
+      "context": "      this.postMaterial.emissive.set('#39756f');\n      this.postMaterial.emissiveIntensity = 0.28;\n    }\n    for (const mesh of [this.postMesh, this.armMesh, this.lanternMesh, this.haloMesh]) {\n      mesh.frustumCulled = false;\n      mesh.castShadow = false;\n      this.group.add(mesh);"
+    },
+    {
+      "file": "src/systems/CombatVfx.ts",
+      "line": 66,
+      "code": "this.puffs.frustumCulled = false;",
+      "context": "  private ringAlive = 0;\n\n  constructor() {\n    this.group.name = 'CombatVfx';\n    this.puffs.frustumCulled = false;\n    this.ticks.frustumCulled = false;\n    this.rings.frustumCulled = false;"
+    },
+    {
+      "file": "src/systems/CombatVfx.ts",
+      "line": 67,
+      "code": "this.ticks.frustumCulled = false;",
+      "context": "\n  constructor() {\n    this.group.name = 'CombatVfx';\n    this.puffs.frustumCulled = false;\n    this.ticks.frustumCulled = false;\n    this.rings.frustumCulled = false;\n    this.puffs.renderOrder = RenderLayers.impactVfx;"
+    },
+    {
+      "file": "src/systems/CombatVfx.ts",
+      "line": 68,
+      "code": "this.rings.frustumCulled = false;",
+      "context": "  constructor() {\n    this.group.name = 'CombatVfx';\n    this.puffs.frustumCulled = false;\n    this.ticks.frustumCulled = false;\n    this.rings.frustumCulled = false;\n    this.puffs.renderOrder = RenderLayers.impactVfx;\n    this.ticks.renderOrder = RenderLayers.impactVfx;"
+    },
+    {
+      "file": "src/systems/FreedWalkerVfx.ts",
+      "line": 165,
+      "code": "this.mothMesh.frustumCulled = false;",
+      "context": "      }\n      this.group.add(sprites.group);\n      return { key, sprites, animator };\n    });\n    this.mothMesh.frustumCulled = false;\n    this.mothMesh.renderOrder = RenderLayers.gameplay;\n    this.mothMesh.visible = false;"
+    },
+    {
+      "file": "src/systems/FreedWalkerVfx.ts",
+      "line": 169,
+      "code": "this.runDustMesh.frustumCulled = false;",
+      "context": "    this.mothMesh.frustumCulled = false;\n    this.mothMesh.renderOrder = RenderLayers.gameplay;\n    this.mothMesh.visible = false;\n    this.group.add(this.mothMesh);\n    this.runDustMesh.frustumCulled = false;\n    this.runDustMesh.renderOrder = RenderLayers.gameplay;\n    this.runDustMesh.visible = false;"
+    },
+    {
+      "file": "src/systems/FreedWalkerVfx.ts",
+      "line": 173,
+      "code": "this.shutdownSmokeMesh.frustumCulled = false;",
+      "context": "    this.runDustMesh.frustumCulled = false;\n    this.runDustMesh.renderOrder = RenderLayers.gameplay;\n    this.runDustMesh.visible = false;\n    this.group.add(this.runDustMesh);\n    this.shutdownSmokeMesh.frustumCulled = false;\n    this.shutdownSmokeMesh.renderOrder = RenderLayers.gameplay;\n    this.shutdownSmokeMesh.visible = false;"
+    },
+    {
+      "file": "src/systems/FreedWalkerVfx.ts",
+      "line": 177,
+      "code": "this.freedAccentMesh.frustumCulled = false;",
+      "context": "    this.shutdownSmokeMesh.frustumCulled = false;\n    this.shutdownSmokeMesh.renderOrder = RenderLayers.gameplay;\n    this.shutdownSmokeMesh.visible = false;\n    this.group.add(this.shutdownSmokeMesh);\n    this.freedAccentMesh.frustumCulled = false;\n    this.freedAccentMesh.renderOrder = RenderLayers.gameplay + 0.02;\n    this.freedAccentMesh.visible = false;"
+    },
+    {
+      "file": "src/systems/MothSwarm.ts",
+      "line": 52,
+      "code": "this.mesh.frustumCulled = false;",
+      "context": "  ) {\n    this.group.name = 'MothSwarmPool';\n    this.group.visible = enabled;\n    this.mesh = new THREE.InstancedMesh(this.geometry, this.material, capacity * MAX_MOTES_PER_SWARM);\n    this.mesh.frustumCulled = false;\n    this.group.add(this.mesh);\n    this.hideUnused();"
+    },
+    {
+      "file": "src/game/Run3dPilot.ts",
+      "line": 194,
+      "code": "railElements.frustumCulled = false;",
+      "context": "        railElements = new THREE.InstancedMesh(source.geometry, source.material, Math.max(1, ties.length));\n        railElements.name = 'Run3dPilot.RailElements';\n        railElements.count = ties.length;\n        railElements.renderOrder = RenderLayers.groundDecals;\n        railElements.frustumCulled = false;\n        railElements.receiveShadow = true;\n        group.add(railElements);"
+    },
+    {
+      "file": "src/entities/BlastCharge.ts",
+      "line": 94,
+      "code": "this.chargeMesh.frustumCulled = false;",
+      "context": "  private alive = 0;\n\n  constructor() {\n    this.group.name = 'BlastChargePool';\n    this.chargeMesh.frustumCulled = false;\n    this.lines.frustumCulled = false;\n    this.chargeMesh.renderOrder = RenderLayers.impactVfx;"
+    },
+    {
+      "file": "src/entities/BlastCharge.ts",
+      "line": 95,
+      "code": "this.lines.frustumCulled = false;",
+      "context": "\n  constructor() {\n    this.group.name = 'BlastChargePool';\n    this.chargeMesh.frustumCulled = false;\n    this.lines.frustumCulled = false;\n    this.chargeMesh.renderOrder = RenderLayers.impactVfx;\n    this.lines.renderOrder = RenderLayers.impactVfx;"
+    },
+    {
+      "file": "src/entities/BoilerHouse.ts",
+      "line": 55,
+      "code": "mesh.frustumCulled = false;",
+      "context": "    this.stacks.name = 'BoilerHouseStack';\n    this.signs.name = 'BoilerHouseSign';\n    this.steam.name = 'BoilerHouseSteamPlume';\n    for (const mesh of [this.bodies, this.drums, this.stacks, this.signs, this.steam]) {\n      mesh.frustumCulled = false;\n      this.group.add(mesh);\n    }"
+    },
+    {
+      "file": "src/entities/BuildingSign.ts",
+      "line": 58,
+      "code": "mesh.frustumCulled = false;",
+      "context": "    side: THREE.DoubleSide,\n  });\n  const mesh = new THREE.InstancedMesh(new THREE.PlaneGeometry(1, 1), material, capacity);\n  mesh.name = name;\n  mesh.frustumCulled = false;\n  mesh.castShadow = false;\n  mesh.receiveShadow = true;"
+    },
+    {
+      "file": "src/entities/E6Arsenal.ts",
+      "line": 94,
+      "code": "this.mirrors.frustumCulled = false;",
+      "context": "    this.beam.name = 'SunlineBeamFocusedLight';\n    this.beamGeometry.setAttribute('position', new THREE.BufferAttribute(this.beamPositions, 3));\n    this.beam.visible = false;\n    this.mirrors.name = 'SunlineMountTrackingMirrorHeads';\n    this.mirrors.frustumCulled = false;\n    for (let i = 0; i < Balance.turret.maxCount; i += 1) this.mirrors.setMatrixAt(i, this.hiddenMatrix);\n    this.mirrors.instanceMatrix.needsUpdate = true;"
+    },
+    {
+      "file": "src/entities/E7Arsenal.ts",
+      "line": 37,
+      "code": "this.relays.frustumCulled = false;",
+      "context": "  constructor() {\n    this.group.name = 'E7Arsenal';\n    this.relays.name = 'BeamRelayTurretTransforms';\n    this.jammer.name = 'SignalJammerDeployable';\n    this.relays.frustumCulled = false;\n    this.jammer.castShadow = false;\n    this.group.add(this.relays, this.jammer);"
+    },
+    {
+      "file": "src/entities/E9Arsenal.ts",
+      "line": 60,
+      "code": "this.lances.frustumCulled = false;",
+      "context": "    this.beam.name = 'StormDrawWeatherBeam';\n    this.beamGeometry.setAttribute('position', new THREE.BufferAttribute(this.beamPositions, 3));\n    this.beam.visible = false;\n    this.lances.name = 'StormLanceWeatherLenses';\n    this.lances.frustumCulled = false;\n    for (let index = 0; index < Balance.turret.maxCount; index += 1) this.lances.setMatrixAt(index, this.hiddenMatrix);\n    this.lances.instanceMatrix.needsUpdate = true;"
+    },
+    {
+      "file": "src/entities/GoldPickup.ts",
+      "line": 63,
+      "code": "this.mesh.frustumCulled = false;",
+      "context": "\n  constructor() {\n    this.group.name = 'GoldPickupPool';\n    this.mesh.count = Balance.steal.pickupCap;\n    this.mesh.frustumCulled = false;\n    this.group.add(this.mesh);\n"
+    },
+    {
+      "file": "src/entities/Palisade.ts",
+      "line": 82,
+      "code": "mesh.frustumCulled = false;",
+      "context": "    this.posts.name = 'PalisadePosts';\n    this.rails.name = 'PalisadeRails';\n    this.braces.name = 'PalisadeBraces';\n    for (const mesh of [this.posts, this.rails, this.braces, this.signs]) {\n      mesh.frustumCulled = false;\n      mesh.castShadow = false;\n      mesh.receiveShadow = true;"
+    },
+    {
+      "file": "src/entities/Projectile.ts",
+      "line": 87,
+      "code": "this.boltMesh.frustumCulled = false;",
+      "context": "  constructor() {\n    this.group.name = 'SparkRigBoltPool';\n    this.boltMesh.count = Balance.projectile.pool;\n    this.tracerMesh.count = Balance.projectile.pool;\n    this.boltMesh.frustumCulled = false;\n    this.tracerMesh.frustumCulled = false;\n    this.boltMesh.renderOrder = RenderLayers.impactVfx;"
+    },
+    {
+      "file": "src/entities/Projectile.ts",
+      "line": 88,
+      "code": "this.tracerMesh.frustumCulled = false;",
+      "context": "    this.group.name = 'SparkRigBoltPool';\n    this.boltMesh.count = Balance.projectile.pool;\n    this.tracerMesh.count = Balance.projectile.pool;\n    this.boltMesh.frustumCulled = false;\n    this.tracerMesh.frustumCulled = false;\n    this.boltMesh.renderOrder = RenderLayers.impactVfx;\n    this.tracerMesh.renderOrder = RenderLayers.impactVfx;"
+    },
+    {
+      "file": "src/entities/SentryBeacon.ts",
+      "line": 62,
+      "code": "this.legMesh.frustumCulled = false;",
+      "context": "  constructor() {\n    this.group.name = 'SentryBeaconPool';\n    // Art slot: bld.sentry_beacon\n    this.legMesh.name = 'SentryBeaconLegs';\n    this.legMesh.frustumCulled = false;\n    this.legMesh.castShadow = false;\n    this.group.add(this.legMesh);"
+    },
+    {
+      "file": "src/entities/SentryBeacon.ts",
+      "line": 66,
+      "code": "mesh.frustumCulled = false;",
+      "context": "    this.legMesh.frustumCulled = false;\n    this.legMesh.castShadow = false;\n    this.group.add(this.legMesh);\n    for (const mesh of [this.capMesh, this.glassMesh, this.coreMesh]) {\n      mesh.frustumCulled = false;\n      mesh.castShadow = false;\n      this.group.add(mesh);"
+    },
+    {
+      "file": "src/entities/Sluice.ts",
+      "line": 106,
+      "code": "mesh.frustumCulled = false;",
+      "context": "    this.wheelRims.name = 'SluiceWheelRims';\n    this.wheelSpokesA.name = 'SluiceWheelSpokesA';\n    this.wheelSpokesB.name = 'SluiceWheelSpokesB';\n    for (const mesh of [this.troughs, this.waters, this.frames, this.legs, this.wheelRims, this.wheelSpokesA, this.wheelSpokesB, this.signs]) {\n      mesh.frustumCulled = false;\n      mesh.castShadow = false;\n      mesh.receiveShadow = true;"
+    },
+    {
+      "file": "src/entities/Stockpile.ts",
+      "line": 63,
+      "code": "mesh.frustumCulled = false;",
+      "context": "    this.mesh.name = 'StockpileGoldNuggets';\n    this.cribs.name = 'StockpileTimberCribs';\n    this.strongboxes.name = 'StockpileStrongboxes';\n    for (const mesh of [this.cribs, this.strongboxes, this.mesh, this.signs]) {\n      mesh.frustumCulled = false;\n      mesh.castShadow = false;\n      mesh.receiveShadow = true;"
+    },
+    {
+      "file": "src/entities/Turret.ts",
+      "line": 63,
+      "code": "mesh.frustumCulled = false;",
+      "context": "    this.baseMesh.name = 'TurretTimberBases';\n    this.legMesh.name = 'TurretTripodLegs';\n    this.mesh.name = 'TurretSignalMasts';\n    for (const mesh of [this.baseMesh, this.legMesh, this.mesh, this.signs]) {\n      mesh.frustumCulled = false;\n      mesh.castShadow = false;\n      mesh.receiveShadow = true;"
+    },
+    {
+      "file": "src/entities/XpMote.ts",
+      "line": 46,
+      "code": "this.mesh.frustumCulled = false;",
+      "context": "\n  constructor() {\n    this.group.name = 'XpMotePool';\n    this.mesh.count = Balance.xp.motePool;\n    this.mesh.frustumCulled = false;\n    this.group.add(this.mesh);\n"
+    },
+    {
+      "file": "src/entities/pools.ts",
+      "line": 1252,
+      "code": "part.frustumCulled = false;",
+      "context": "    for (const part of this.renderParts) {\n      part.count = Balance.enemy.poolSize;\n      part.castShadow = false;\n      part.receiveShadow = false;\n      part.frustumCulled = false;\n      tagPlaceholder(part, assetSlots.charClaimJumper);\n      this.group.add(part);"
+    },
+    {
+      "file": "src/entities/pools.ts",
+      "line": 1260,
+      "code": "part.frustumCulled = false;",
+      "context": "    this.renderParts[0].renderOrder = RenderLayers.groundShadows;\n    for (const part of this.watchPaintMeshes) {\n      part.count = Balance.enemy.poolSize;\n      part.castShadow = false;\n      part.frustumCulled = false;\n      part.renderOrder = RenderLayers.gameplay + 0.01;\n      this.group.add(part);"
+    },
+    {
+      "file": "src/entities/pools.ts",
+      "line": 1283,
+      "code": "mesh.frustumCulled = false;",
+      "context": "        const texture = loader.load(url);\n        texture.colorSpace = THREE.SRGBColorSpace;\n        const mesh = new THREE.InstancedMesh(geometry, new THREE.MeshBasicMaterial({ map: texture, transparent: true, alphaTest: 0.04, side: THREE.DoubleSide }), Balance.enemy.poolSize);\n        mesh.count = Balance.enemy.poolSize;\n        mesh.frustumCulled = false;\n        mesh.renderOrder = RenderLayers.gameplay;\n        this.group.add(mesh);"
+    },
+    {
+      "file": "src/entities/pools.ts",
+      "line": 1298,
+      "code": "this.sackMesh.frustumCulled = false;",
+      "context": "\n  private createSackMesh(): void {\n    this.sackLocalMatrix.copy(this.createLocalMatrix(new THREE.Vector3(-0.38, 0.66, 0.12), new THREE.Euler(0.2, 0.1, -0.38)));\n    this.sackMesh.count = Balance.enemy.poolSize;\n    this.sackMesh.frustumCulled = false;\n    this.sackMesh.renderOrder = RenderLayers.gameplay;\n    tagPlaceholder(this.sackMesh, assetSlots.charClaimJumper);"
+    },
+    {
+      "file": "src/entities/pools.ts",
+      "line": 1310,
+      "code": "this.hitFlashes.frustumCulled = false;",
+      "context": "  }\n\n  private createHitFlashMesh(): void {\n    this.hitFlashes.count = Balance.enemy.poolSize;\n    this.hitFlashes.frustumCulled = false;\n    this.hitFlashes.renderOrder = RenderLayers.impactVfx;\n    this.hitFlashes.visible = false;"
+    },
+    {
+      "file": "src/entities/pools.ts",
+      "line": 1326,
+      "code": "mesh.frustumCulled = false;",
+      "context": "    this.bannerPoleLocalMatrix.copy(this.createLocalMatrix(new THREE.Vector3(0.45, 1.08, 0.05), new THREE.Euler(0.08, 0, -0.12)));\n    this.bannerClothLocalMatrix.copy(this.createLocalMatrix(new THREE.Vector3(0.69, 1.48, 0.05), new THREE.Euler(0, 0.04, -0.12)));\n    for (const mesh of [this.bannerPoleMesh, this.bannerClothMesh]) {\n      mesh.count = Balance.enemy.poolSize;\n      mesh.frustumCulled = false;\n      mesh.renderOrder = RenderLayers.gameplay;\n      tagPlaceholder(mesh, assetSlots.propBaronBanner);"
+    },
+    {
+      "file": "src/entities/pools.ts",
+      "line": 1338,
+      "code": "this.bossHpGroup.frustumCulled = false;",
+      "context": "\n  private createBossHpBar(): void {\n    this.bossHpGroup.name = 'BossHpBar';\n    this.bossHpGroup.visible = false;\n    this.bossHpGroup.frustumCulled = false;\n    for (const mesh of [this.bossHpBack, this.bossHpFill]) {\n      mesh.frustumCulled = false;"
+    },
+    {
+      "file": "src/entities/pools.ts",
+      "line": 1340,
+      "code": "mesh.frustumCulled = false;",
+      "context": "    this.bossHpGroup.name = 'BossHpBar';\n    this.bossHpGroup.visible = false;\n    this.bossHpGroup.frustumCulled = false;\n    for (const mesh of [this.bossHpBack, this.bossHpFill]) {\n      mesh.frustumCulled = false;\n      mesh.renderOrder = RenderLayers.worldUi + 0.02;\n    }"
+    },
+    {
+      "file": "src/entities/pools.ts",
+      "line": 1349,
+      "code": "segment.frustumCulled = false;",
+      "context": "    for (let i = 1; i < BOSS_HP_MAX_SEGMENTS; i += 1) {\n      const segment = new THREE.Mesh(this.bossHpSegmentGeometry, this.bossHpSegmentMaterial);\n      segment.position.x = -BOSS_HP_FILL_WIDTH / 2 + (BOSS_HP_FILL_WIDTH * i) / BOSS_HP_MAX_SEGMENTS;\n      segment.position.z = 0.02;\n      segment.frustumCulled = false;\n      segment.renderOrder = RenderLayers.worldUi + 0.03;\n      this.bossHpSegments.add(segment);"
+    },
+    {
+      "file": "src/assets/generated.ts",
+      "line": 438,
+      "code": "mesh.frustumCulled = false;",
+      "context": "      // ANY SpriteMaterial, but `center` is a property of THREE.Sprite, not of Mesh. Without this\n      // the uniform is undefined and the first frame throws. 0.5/0.5 is Sprite's own default.\n      Object.assign(mesh, { center: new THREE.Vector2(0.5, 0.5) });\n      // Each instance sits at its own world position, so the mesh's own bounds mean nothing.\n      mesh.frustumCulled = false;\n      mesh.instanceColor = new THREE.InstancedBufferAttribute(new Float32Array(Math.max(1, capacity) * 3).fill(1), 3);\n      mesh.instanceMatrix.setUsage(THREE.DynamicDrawUsage);"
+    }
+  ]
+}

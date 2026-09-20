@@ -1,0 +1,63 @@
+[
+  [
+    "remaining diff guards",
+    "node",
+    "scripts/run-guards.mjs",
+    "--only",
+    "test:power-budget,test:task-guards,test:citations,test:gate-callers"
+  ],
+  [
+    "npm tail 1",
+    "node",
+    "scripts/test-ticker-stats.mjs"
+  ],
+  [
+    "npm tail 2",
+    "npm",
+    "run",
+    "test:findings-state"
+  ],
+  [
+    "npm tail 3",
+    "npm",
+    "run",
+    "test:blocker-panel"
+  ],
+  [
+    "npm tail 4",
+    "npm",
+    "run",
+    "test:ruling-propagation"
+  ],
+  [
+    "npm tail 5",
+    "npm",
+    "run",
+    "test:desk-declaration",
+    "scripts/e10-squall-scheduler.test.mjs",
+    "scripts/board-tape-gold.test.mjs",
+    "scripts/contract-hero-grit-override.test.mjs",
+    "scripts/run-tape-envelope-budget.test.mjs",
+    "scripts/e10-preserve-consumer.test.mjs",
+    "scripts/hero-move-verb.test.mjs",
+    "scripts/e8-regolith-gate-override.test.mjs",
+    "scripts/first-town-request-families.test.mjs",
+    "scripts/relay-rush-reel.test.mjs",
+    "scripts/e8-crossing-gate-override.test.mjs",
+    "scripts/sprite-cell-url-inlining.test.mjs",
+    "scripts/eclipse-winnable.test.mjs",
+    "scripts/profile-data-key-sweep.test.mjs",
+    "scripts/gr-sim-resume-tape-safety.test.mjs",
+    "scripts/hero-clip-groups.test.mjs",
+    "scripts/e8-air-suit-human.test.mjs",
+    "scripts/rider-parity-reach.test.mjs",
+    "scripts/repair-under-radius.test.mjs",
+    "scripts/rider-parity-retirement.test.mjs",
+    "scripts/rider-parity-context-press.test.mjs"
+  ],
+  [
+    "npm tail 6",
+    "node",
+    "scripts/nul-audit.mjs"
+  ]
+]

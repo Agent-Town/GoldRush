@@ -1,0 +1,32 @@
+[
+  {
+    "file": "artifacts/board-tape-gold/e8-mare-claim-air-logical/submission.json",
+    "sha256": "6b8ab5c187676da6dc454e53d2d7e76df0a1c6a0edf4f85efe39f9fc9003d822",
+    "validTape": false,
+    "firstRefusal": {
+      "tick": 0,
+      "message": "orders[30].verb \"MOVE_TO\" is unknown."
+    },
+    "refusedSubmissions": 78
+  },
+  {
+    "file": "artifacts/gauntlet-heat12-20260905/rides/e3-moth-season/submission.json",
+    "sha256": "0f5b07df49fefe284417630a9355b1608d7302af479fbcc712cf035747d8d55b",
+    "validTape": false,
+    "firstRefusal": {
+      "tick": 1820,
+      "message": "orders[0].verb \"HOLD\" is unknown."
+    },
+    "refusedSubmissions": 3
+  },
+  {
+    "file": "artifacts/gauntlet-heat12-20260905/rides/e7-relay-rush/submission.json",
+    "sha256": "a476ab95779cb546c4734c3b0b1c30a17ab4c425d1e261858bb39563948e2988",
+    "validTape": false,
+    "firstRefusal": {
+      "tick": 0,
+      "message": "orders[30].verb \"HOLD\" is unknown."
+    },
+    "refusedSubmissions": 68
+  }
+]

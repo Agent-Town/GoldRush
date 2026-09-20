@@ -1,0 +1,130 @@
+s1496 DRAIN GATE TRANSCRIPT — milk/deepwater-surgery -> main 7bfd62ee0427eaf5a31bb30266a3b538b08be5d0
+Gated on the MERGED tree in detached worktree gate-s1496 (section 3.0b custody).
+Node v26.4.0 (matches .nvmrc). All playwright runs --workers=1 (section 3.1).
+
+SECTION 3.0 — drain-block-check.mjs milk/deepwater-surgery --strict
+  -> rc=2 UNKNOWN (no goal leaf matches the branch).
+     NOT a clearance: this is the F-1495-2 unregistered-pile bookkeeping finding.
+     Leaf registered retroactively in the drain bookkeeping commit.
+
+MERGE SHAPE
+  merge-base main milk/deepwater-surgery = 565a145a50bfcd0d726c869e0f42db869fbba1fb
+  git merge-tree --write-tree main milk/deepwater-surgery -> rc=0 CLEAN (tree 1a77aa08)
+     Re-run at the LIVE tip, as the review explicitly demanded; the review's own
+     trial merge was evidence about a tip that had already moved.
+  gate worktree merge --no-ff -> rc=0, "Auto-merging tasks/BACKLOG.md", ort strategy
+     5 files changed, 363 insertions(+), 11 deletions(-)
+
+BATTERY (all run on the MERGED tree, never on the branch)
+  npx tsc --noEmit ............................ rc=0, ZERO output lines
+  npm run build ............................... rc=0, built in 2.61s
+  e2e/er01-e5-census.spec.ts --workers=1 ...... 8 passed (6.6s)   [the slice's own spec]
+  adjacent suites --workers=1 ................. 74 passed (5.4m), ZERO failed
+      er01-e2 + e3 + e4 + e5 + e6 + e7 + e8 + e9 + e10 census, + contract-bundle-validation
+      NOTE: the review gated 42/42 over FIVE census specs. That set has GROWN to NINE
+      since it was written (s1480 drained the E7-E10 censuses in the meantime), so the
+      adjacent set was RE-ENUMERATED rather than inherited from the review.
+  npm run test:node-guards .................... rc=0, ZERO "not ok" lines
+      (fire shell ran at reduced file concurrency 1 — the F-1409-1/F-1410-1 default)
+
+CONTAMINATION HYGIENE (Mistake #12)
+  lsof -nP -iTCP:5188 -sTCP:LISTEN -> rc=1, PORT FREE at gate time.
+  Spec transport verified directly rather than taken from the review's prose:
+      page.goto = 0   baseURL = 0   createServer = 2
+  => the census specs stand up their own in-process Vite server and SSR-load the
+     modules; they are structurally incapable of measuring a sibling worktree.
+
+SUBSTANCE RE-DERIVED (VERIFY-DON'T-INHERIT)
+  contracts.json -> raceCourse.beacons = 5
+      start-beacon, northwest-checkpoint, midcourse-checkpoint, northeast-checkpoint, finish-beacon
+  mask-tables/e5-regatta.json -> maskTruth.raceCourse.beacons = 5, THE SAME FIVE IDS
+  engineDependencies present on ALL FOUR E5 contracts (exactly 1 entry each)
+  => the cured prose ("Five beacon gates mark the out-and-back course") now agrees
+     with its data on both surfaces. The cure is correct as landed.
+
+DIFF SHAPE
+  git diff --stat main...milk/deepwater-surgery -- src/  -> EMPTY (src/ byte-unchanged)
+  git diff --name-only --diff-filter=D main...HEAD       -> EMPTY (zero deletions)
+  5 files: assets/contracts/epoch-5-deepwater/contracts.json
+           docs/bench/e5-readiness-census.md
+           e2e/er01-e5-census.spec.ts
+           reviews/milk-deepwater-surgery.md   (new)
+           tasks/BACKLOG.md                    (BOTH-MOVED, auto-merged)
+
+GZ-01 / DEPLOY
+  No gazette item: src/ is byte-unchanged and E5 is locked (manifest scienceThreshold 14),
+  so nothing a player can see moved. DEPLOY correctly skipped for the same reason.
+  This is a ruling, not an omission.
+
+CARRIED FORWARD (open, non-blocking)
+  F-ER01-E5-6  AP-11 never DEMANDED the Claim's declaration: DECLARED_INERT_PATHS omits
+               tileParams.deepwater, so the flagship was structurally invisible and the
+               three siblings' honesty was an accident of which fields they carried.
+               Sweep already done: deepwater occurs in exactly 4 contracts, all E5,
+               all now declaring. Adding the path reds nothing today.
+  F-ER01-E5-5  E5 socket shape banked; the Regatta's empty harvestAnchors must be filled
+               LAST, since while the consumer is missing that emptiness is what stops a
+               false contract booting.
+  F-MILK-DW-1  the shift order's premise ("two BROKEN") was wrong; the census marks one.
+               Corrected in a census banner so no later reader re-inherits it.
+  VETO WINDOW  the five-beacon ruling is an unarbitrated authoring call. One owner word reverses it.
+
+
+================================================================================
+DRAIN 2 — milk/motor-socket -> main d66bdbe35b6c700ad70a97bd8490a545aa451a0b
+================================================================================
+
+SECTION 3.0 — drain-block-check.mjs milk/motor-socket --strict
+  -> rc=2 UNKNOWN (no leaf). Same F-1495-2 unregistered-pile finding, not a clearance.
+  Leaf milk-motor-socket registered retroactively in the bookkeeping commit.
+
+CONTROL RUN ON CLEAN MAIN — ordered by the s1495 drain ladder, run BEFORE the merge
+  tree = main 6f8deccbe (motor-socket NOT merged), gate-s1496 reset --hard main
+  npx playwright test e2e/agent-view.spec.ts --workers=1
+    -> 4 failed / 4 passed (34.6s)
+    FAILING, per-test:
+      desktop-chrome agent-view.spec.ts:264  all five E1 mechanics manifests ... fixture
+      desktop-chrome agent-view.spec.ts:297  the derived manifest rides THE VIEW ...
+      mobile-chrome  agent-view.spec.ts:264  (same)
+      mobile-chrome  agent-view.spec.ts:297  (same)
+    PASSING: :253 and :356 on both projects.
+
+MERGED TREE — same command after merging milk/motor-socket into the gate worktree
+  npx playwright test e2e/er01-e4-census.spec.ts e2e/agent-view.spec.ts --workers=1
+    -> 4 failed / 12 passed (40.2s)
+    FAILING: THE SAME FOUR (:264 and :297, desktop + mobile). No others.
+    er01-e4-census (the slice own spec): 8/8 PASSED.
+
+  VERDICT: fingerprint identical on both sides of the merge. The agent-view reds are
+  MAIN-SIDE and PRE-EXISTING; the slice introduces no red. F-MOTOR-1 root cause
+  confirmed: e1-drill-yard became the SIXTH E1 contract in 74df35dcf while
+  agent-view.spec.ts:269 and e2e/fixtures/e1-mechanics-manifests.json still expect five.
+
+F-1496-1 — FILED AGAINST THE REVIEW COUNT (substance right, count wrong)
+  The review reports 2 desktop reds and says the same TWO tests failed on the
+  pristine tree. Measured on clean main it is FOUR, across BOTH projects.
+  Its control arm ran one project while its first battery ran both — which is why
+  the review says 4 failures in one sentence and two tests in another.
+  Consequence if uncorrected: an author fixing the fixture off this review would
+  gate on 2 greens and leave 2 red.
+  Lesson: a control arm must match the ORIGINAL run in COMPOSITION, not just flags.
+
+REST OF BATTERY (merged tree)
+  npx tsc --noEmit ............................ rc=0, ZERO output
+  npm run build ............................... rc=0, built in 1.17s
+  adjacent --workers=1 ........................ 68 passed, ZERO failed (3.6m)
+      er01-e2 e3 e5 e6 e7 e8 e9 e10 census + drill-yard-manifest + contract-bundle-validation
+  npm run test:node-guards .................... rc=0, ZERO not-ok
+      MANDATORY here: the slice touches src/agent/.
+      NOTE: the F-1460-1 Baron pin red that older drains expected is GONE (cured s1462).
+      Confirmed independently — do not go hunting for it.
+
+MERGE SHAPE
+  git merge-tree --write-tree main milk/motor-socket -> rc=0 CLEAN (tree 1a2fba78)
+  merge --no-ff rc=0, Auto-merging tasks/BACKLOG.md
+  5 files, 204 insertions(+), 5 deletions(-)
+  src/agent/MechanicsManifest.ts is the only src/ file; SUPPORTED_CONTRACTS untouched,
+  no contract admitted, census headline AGENT-READY 0 of 4 deliberately unchanged.
+
+GZ-01 / DEPLOY: no gazette item, DEPLOY skipped — a derived-JSON manifest surface;
+  no browser gameplay moved. Both rulings, not omissions.

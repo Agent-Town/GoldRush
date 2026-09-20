@@ -1,0 +1,389 @@
+{
+  "blender": "5.1.2",
+  "maskTables": [
+    "assets/contracts/epoch-3-voltage/mask-tables/e3-fairground.json"
+  ],
+  "terrains": {
+    "fairground": {
+      "asset": "fairground-terrain.glb",
+      "checked": {
+        "sha256": "382f54d31d5d17a34df311fca555c3646935937579678a79a87f551038916af4",
+        "bytes": 8563268,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 32768,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -44,
+            -0.52062,
+            -44
+          ],
+          "max": [
+            44,
+            4.425464,
+            44
+          ],
+          "size": [
+            88,
+            4.946083,
+            88
+          ],
+          "center": [
+            0.0,
+            1.952422,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.8999999761581421,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "reexported": {
+        "sha256": "382f54d31d5d17a34df311fca555c3646935937579678a79a87f551038916af4",
+        "bytes": 8563268,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 32768,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -44,
+            -0.52062,
+            -44
+          ],
+          "max": [
+            44,
+            4.425464,
+            44
+          ],
+          "size": [
+            88,
+            4.946083,
+            88
+          ],
+          "center": [
+            0.0,
+            1.952422,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 0.8999999761581421,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": false,
+            "emissiveFactor": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "byteIdenticalReexport": true,
+      "semanticIdenticalReexport": true,
+      "embeddedTexture": {
+        "bytes": 7832399,
+        "sha256": "a84186b5aa4200f137785ac9da7debaa1dc5ea6a2835808885f5c237fb8ee8d8",
+        "width": 2048,
+        "height": 2048
+      },
+      "extras": {
+        "render_only": true,
+        "sim_authority": "published mask table and planar simulation; unchanged",
+        "height_socket": "Terrain.visualY",
+        "contract_id": "e3-fairground",
+        "tile_id": "e3-fairground",
+        "mask_table": "assets/contracts/epoch-3-voltage/mask-tables/e3-fairground.json",
+        "load_bearing_sites_flat": true,
+        "landmarks_frozen": false
+      },
+      "geometryProbes": [
+        {
+          "requested": [
+            0,
+            -30
+          ],
+          "sampled": [
+            0.0,
+            -30.25
+          ],
+          "height": 0.0998
+        },
+        {
+          "requested": [
+            -20,
+            10
+          ],
+          "sampled": [
+            -19.9375,
+            10.3125
+          ],
+          "height": 1.1543
+        },
+        {
+          "requested": [
+            0,
+            8
+          ],
+          "sampled": [
+            0.0,
+            8.25
+          ],
+          "height": -0.4346
+        },
+        {
+          "requested": [
+            20,
+            10
+          ],
+          "sampled": [
+            19.9375,
+            10.3125
+          ],
+          "height": 1.3796
+        },
+        {
+          "requested": [
+            0,
+            40
+          ],
+          "sampled": [
+            0.0,
+            39.875
+          ],
+          "height": 2.2749
+        }
+      ],
+      "pylonSurfaceFlatness": [],
+      "capacitorSurfaceFlatness": [],
+      "fixtureSurfaceFlatness": [
+        {
+          "id": "ferris-wheel",
+          "sampledSurfacePoints": 2145,
+          "maxDeviationMeters": 0.0
+        }
+      ],
+      "maskSource": "assets/contracts/epoch-3-voltage/mask-tables/e3-fairground.json"
+    }
+  },
+  "panoramas": {
+    "fairground": {
+      "asset": "fairground-panorama.glb",
+      "checked": {
+        "sha256": "d75ee84842186df7caaab3ed0e4bb3ecd32e83bdb6183244687ef8ada0f6da93",
+        "bytes": 1177912,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 3072,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -193,
+            -10,
+            -193
+          ],
+          "max": [
+            193,
+            130,
+            193
+          ],
+          "size": [
+            386,
+            140,
+            386
+          ],
+          "center": [
+            0.0,
+            60.0,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 1,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": true,
+            "emissiveFactor": [
+              1,
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "reexported": {
+        "sha256": "d75ee84842186df7caaab3ed0e4bb3ecd32e83bdb6183244687ef8ada0f6da93",
+        "bytes": 1177912,
+        "meshes": 1,
+        "primitives": 1,
+        "triangles": 3072,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": 1,
+        "cameras": 0,
+        "lights": 0,
+        "animations": 0,
+        "bounds": {
+          "min": [
+            -193,
+            -10,
+            -193
+          ],
+          "max": [
+            193,
+            130,
+            193
+          ],
+          "size": [
+            386,
+            140,
+            386
+          ],
+          "center": [
+            0.0,
+            60.0,
+            0.0
+          ]
+        },
+        "materialContract": [
+          {
+            "metallicFactor": 0,
+            "roughnessFactor": 1,
+            "hasBaseColorTexture": true,
+            "hasEmissiveTexture": true,
+            "emissiveFactor": [
+              1,
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "byteIdenticalReexport": true,
+      "semanticIdenticalReexport": true,
+      "embeddedTexture": {
+        "bytes": 1059930,
+        "sha256": "75c0956cfcd7fe5be06fd52857f85d1845964e55c7909c8413e08e423a17c690",
+        "width": 2048,
+        "height": 2048
+      },
+      "extras": {
+        "render_only": true,
+        "panorama": true,
+        "affects_playfield": false,
+        "affects_masks": false,
+        "affects_spawn_edges": false,
+        "affects_fog_gating": false,
+        "mount_space": "game X/Y/Z at county origin",
+        "panorama_law": "v2"
+      },
+      "mount": {
+        "id": "fairground-panorama",
+        "asset": "fairground-panorama.glb",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "renderOnly": true,
+        "ownership": "separate mounted scenery; never terrain or gameplay bounds"
+      }
+    }
+  },
+  "boards": {
+    "fairground-mood-ab.png": {
+      "size": [
+        1920,
+        684
+      ],
+      "bytes": 1970392,
+      "sha256": "9ff7a77f2ef4b05dac7415d46c57e44d38a34332b889dcdb0a01b2a7912ed746"
+    },
+    "fairground-flat-vs-sculpted-ab.png": {
+      "size": [
+        1920,
+        684
+      ],
+      "bytes": 1355761,
+      "sha256": "5923f2cfff09d591b58735349b9f24f91c7dc4eb4dcd2bf66a0e8ce648e68cc4"
+    },
+    "fairground-owner-verdict.png": {
+      "size": [
+        1920,
+        504
+      ],
+      "bytes": 933693,
+      "sha256": "c2d65e43da50097453e09b0e0bbe03bb374051a3617f2e603ef691633439eb34"
+    },
+    "fairground-panorama-mood-ab.png": {
+      "size": [
+        1920,
+        504
+      ],
+      "bytes": 531584,
+      "sha256": "015f8cea2be31af17d3c8d6e274a3924cb60775687260f1efe1264c7953e704b"
+    },
+    "fairground-panorama-distance-gate.png": {
+      "size": [
+        1920,
+        684
+      ],
+      "bytes": 1103747,
+      "sha256": "b2306b145516cfb50e54506c42f229c341b114f4878b07ee97cf33242a0bfc78"
+    },
+    "fairground-mask-agreement-board.png": {
+      "size": [
+        1280,
+        1260
+      ],
+      "bytes": 952452,
+      "sha256": "fd6af27c3285de9c712d2de69f03fba9f2f9fd65f5dc9d5ad59da4edf5c34ca7"
+    }
+  },
+  "verdict": {
+    "grit": "fight inside a worn working fair, never holiday",
+    "panorama": "distance",
+    "masks": "published and unchanged",
+    "loadBearingSites": "Ferris fixture independently sampled buildable-flat",
+    "landmarks": "freeze lifted; no assets or mounts authored in this pair"
+  }
+}

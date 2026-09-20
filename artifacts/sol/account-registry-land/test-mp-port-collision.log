@@ -1,0 +1,21 @@
+
+> gold-rush@0.1.0 test:mp
+> node scripts/test-multiplayer.mjs
+
+file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/scripts/test-multiplayer.mjs:342
+    if (child.exitCode !== null) throw new Error(`${child.label} exited early:\n${child.logs()}`);
+                                       ^
+
+Error: pages dev exited early:
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mAddress already in use (127.0.0.1:9229). Please check that you are not already running a server on this address or specify a different port with --port.[0m
+
+
+
+    at waitForServer (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/scripts/test-multiplayer.mjs:342:40)
+    at async startPages (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/scripts/test-multiplayer.mjs:288:3)
+    at async startRelayEnv (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/scripts/test-multiplayer.mjs:200:19)
+    at async checkRateLimits (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/scripts/test-multiplayer.mjs:152:17)
+    at async main (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/scripts/test-multiplayer.mjs:41:5)
+    at async file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/scripts/test-multiplayer.mjs:31:1
+
+Node.js v26.4.0

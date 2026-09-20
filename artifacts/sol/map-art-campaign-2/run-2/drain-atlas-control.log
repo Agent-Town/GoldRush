@@ -1,0 +1,26 @@
+=== census group files
+active_headframe-DFnjayGK-diet-a9d5c9a0.glb
+claim_stake-DlQCz6m--diet-a9d5c9a0.glb
+maintained_claim_house-CHFZbLoB-diet-a9d5c9a0.glb
+riparian_dressing_pack-93xutUyz-diet-a9d5c9a0.glb
+working_camp-D0I4uygC-diet-a9d5c9a0.glb
+=== dist/assets after the e1 build (the prep's last build)
+active_headframe-DesxPCzn-diet-c2bea0ac.glb
+active_headframe-VWt8nXDs-diet-c2bea0ac.js
+seized_headframe-CvJuU13l-diet-c2bea0ac.js
+seized_headframe-mYsm1fuj-diet-c2bea0ac.glb
+dist files: 1117
+
+=== default build
+rc=0
+active_headframe-DesxPCzn-diet-c2bea0ac.glb
+active_headframe-VWt8nXDs-diet-c2bea0ac.js
+mine-mouth-and-ruined-headframe-DQ9yzT-I-diet-c2bea0ac.glb
+mine-mouth-and-ruined-headframe-WSrb72uW-diet-c2bea0ac.js
+seized_headframe-CvJuU13l-diet-c2bea0ac.js
+seized_headframe-mYsm1fuj-diet-c2bea0ac.glb
+dist files: 3133
+=== rerun on the default build: rc=1   2 failed   6 passed (1.1m) 
+  1) [desktop-chrome] › e2e/shared-atlas-dedupe.spec.ts:84:1 › production WebP atlas load-dispose-load returns to the renderer baseline 
+  2) [mobile-chrome] › e2e/shared-atlas-dedupe.spec.ts:84:1 › production WebP atlas load-dispose-load returns to the renderer baseline 
+ATLAS-CONTROL-DONE
