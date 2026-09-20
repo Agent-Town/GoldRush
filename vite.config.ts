@@ -1,3 +1,5 @@
+import path from 'node:path';
+import fs from 'node:fs';
 import { defineConfig } from 'vite';
 import type { Plugin } from 'vite';
 import { createHash } from 'node:crypto';
@@ -17,6 +19,14 @@ import {
   type CraftingQueueRequest,
 } from './src/crafting/CraftingQueueContract';
 
+function artStoreRoots(): string[] {
+  const roots = new Set<string>();
+  for (const d of ['pilots', 'motion-pilot', 'raw', 'processed-full']) {
+    try { roots.add(path.dirname(fs.realpathSync(path.resolve(process.cwd(), 'assets', d)))); } catch { /* store not cloned */ }
+  }
+  return [...roots];
+}
+
 export default defineConfig(() => {
   const releaseE1 = process.env.GR_RELEASE === 'e1';
   const buildVariant = process.env.GR_BUILD_VARIANT ?? (releaseE1 ? 'e1-preview' : 'dev');
@@ -35,6 +45,8 @@ export default defineConfig(() => {
   },
   plugins: [releaseE1ContentPlugin(releaseE1), craftingQueuePlugin()],
   server: {
+    // A3: the four art directories are symlinks into the sibling checkout of Agent-Town/GoldRush-assets (clone it next to this repo); Vite serves files by their real path, so the store's real location is allowed explicitly.
+    fs: { allow: [process.cwd(), ...artStoreRoots()] },
     host: '127.0.0.1',
     port: 5188,
     strictPort: true,
