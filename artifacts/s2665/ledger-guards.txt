@@ -1451,7 +1451,7 @@ nul-audit: excluded 6246 known-binary, 104 UNCLASSIFIED of 29080 tracked file(s)
 nul-audit: 1 file(s) carry raw NUL bytes — grep is BLIND to these files.
 
   scripts/worktree-registry-ledger.mjs  (1 NUL byte(s))
-    :188  x1  const nul = line.indexOf(' ');
+    :188  x1  const nul = line.indexOf('\u0000');
 
 Cure: replace each raw 0x00 with the six-character escape \u0000.
 The parsed string is identical, so runtime behaviour does not change.
