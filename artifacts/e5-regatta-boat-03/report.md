@@ -245,6 +245,55 @@ an OBSERVATION surface plus one published vocabulary, the null floors are byte-i
 | `hero-move-verb` | `6/6` |
 | `same-game-audit.test.mjs` summary pin | `0 / 511 / 1252 / 0` over 1763 rows, 3 exemptions — matched exactly |
 | physics, re-measured on this tree | full turn **2.001 s**, 98 m crossing at top speed **59.394 s**, fast water **x1.500** |
+| `node scripts/null-floor-anchors.mjs --check`, final re-run on the branch tip | **`83 of 83 null floors match assets/contracts/null-floors.json (639.8s)`** |
+| `GR_GUARD_NO_ARTIFACT=1 node scripts/run-guards.mjs --changed-since 45607635a` | **4 of 5 PASS** — `test:power-budget` (p95 0.370 ms), `test:task-guards`, `test:citations`, `test:gate-callers` all rc 0; `test:node-guards` rc 1 on `law-pointer-guard` alone, attributed below |
+
+### `run-guards` red: `law-pointer-guard`, attributed by revert-and-reproduce
+
+`run-guards --changed-since` matched no path rule and fell to the base gate, so it ran the full
+node-guards battery. One guard reds: `law-pointer-guard`, "THE REAL TREE: every law-surface pointer
+in this repo currently holds", with **5 problems**. Re-run alone on a quiet box it reds the same
+way, so this is not the contention advisory.
+
+**Attributed by revert-and-reproduce, not by arithmetic.** With `public/skill.md` checked out at the
+base `45607635a` and every other line of this slice in place, the guard reports **3** problems:
+
+```
+POINTER DRIFT scripts/fire.md -> fire.md:26                            (x2)
+POINTER DRIFT scripts/fire.md -> marketing/outbox/gazette-queue.md:2116
+```
+
+Those three are **PRE-EXISTING on the base** — neither `scripts/fire.md`, `fire.md` nor
+`marketing/outbox/gazette-queue.md` is touched by this branch, and their `was:`/`now:` previews are
+identical, so the drift is below the 100-character preview. They are not this slice's.
+
+With my `public/skill.md` the count is **5**: the same three, plus
+
+```
+POINTER DRIFT scripts/fire.md -> public/skill.md:367   (x2)
+    was: ""
+    now: "<!-- skillmd-guard:seeds:end -->"
+```
+
+**That pair IS mine**, and it is the routine, predicted lifecycle `CLAUDE.md` §4.10b describes and
+that slice 2 already hit once (F-RB2-5, "`scripts/fire.md → src/game/Game.ts` rotted by +3 with the
+race handoff; re-based by measurement", cured at the drain). Measured, by re-grepping the cited
+CONTENT rather than by carrying a delta:
+
+| | line |
+| --- | --- |
+| the sentence `fire.md` actually cites — *"closed rotations remain public history"* — at base `45607635a` | `public/skill.md:368` |
+| the same sentence on this branch tip | `public/skill.md:371` |
+| the coordinate `scripts/fire.md` carries | `public/skill.md:367` (the blank line above the sentence at base; the citation was already one line high before this slice) |
+| my delta | **+3** exactly: one version-table row, plus the Regatta paragraph and its blank separator |
+
+**The cure, for the drain:** re-point `scripts/fire.md`'s two `public/skill.md:367` citations to
+**`public/skill.md:371`**, which is the sentence the claim is about rather than the blank line above
+it, then `--update` the baseline. `scripts/fire.md` is outside this master's firewall, and slice 2
+cured the identical class at the drain, so it is reported rather than edited here (F-RB3-8).
+
+One untracked file appears as a side effect of `run-guards`: `logs/guard-stats.jsonl`, which the
+runner appends to on every invocation. It is untracked at my base too and is not committed here.
 
 ### The e2e battery, both projects, `--workers=1`, `GR_CAPTURE_EXTERNAL_SERVER=1` on port 5336
 
@@ -352,6 +401,16 @@ numbers would have corrupted that review's evidence trail. Nothing else under `a
 - **F-RB3-7 (non-blocking, firewall).** `e2e/e5-regatta-race.spec.ts` holds the `regatta_race`
   manifest pin and its own comment names slice 3 as the fixer, but the master's firewall named
   `MechanicsManifest.ts` without it. It was the only e2e red and it is re-pointed with cause.
+- **F-RB3-8 (non-blocking, the one guard red, cure measured and handed over).**
+  `law-pointer-guard` reds on the real tree with 5 problems. THREE are pre-existing on the base,
+  proved by revert-and-reproduce (`fire.md:26` twice and `gazette-queue.md:2116`, in files this
+  branch never touches). TWO are mine: `scripts/fire.md`'s citation of `public/skill.md:367` rotted
+  by exactly +3 when the door document gained its version-3 table row and the Regatta paragraph.
+  The cited sentence, *"closed rotations remain public history"*, sat at `:368` at the base and sits
+  at `:371` now, so the cure is to re-point both citations to `public/skill.md:371` and `--update`
+  the baseline. `scripts/fire.md` is outside this master's firewall and slice 2 cured the identical
+  class at the drain (F-RB2-5), so it is measured and handed over rather than edited here. Full
+  working in §8.
 - **Not this slice, as instructed:** F-RB2-2 (disembark by key near a rim, on the owner's desk), the
   slice-4 heat, and any physics or race-rule change.
 

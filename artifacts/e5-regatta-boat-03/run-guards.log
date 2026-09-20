@@ -2,3 +2,33 @@ run-guards: 49 file(s) changed since 45607635ac06140e69b4388d7b7f83d5f4e3197d
   base gate: test:node-guards, test:power-budget, test:task-guards, test:citations, test:gate-callers
   (no path rule matched -- base gate only)
 
+FAIL  rc=1  721s  test:node-guards
+PASS  rc=0  0s  test:power-budget  p95=0.370ms
+PASS  rc=0  0s  test:task-guards
+PASS  rc=0  3s  test:citations
+PASS  rc=0  0s  test:gate-callers
+
+--- test:node-guards (rc=1) last 20 lines ---
+  A rotted pointer does not condemn its claim — but in a law it manufactures a false accusation. Re-read, then re-base.
+  
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-regatta3/scripts/law-pointer-guard.test.mjs:137:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+ℹ TAP-QUIET MAX: 360.1s of 2700s bound (F-POC-8 watchdog)
+
+guards: 4/5 passed -- RED: test:node-guards
+guard-stats: appended 5 record(s) to /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-regatta3/logs/guard-stats.jsonl
