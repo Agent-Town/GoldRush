@@ -185,7 +185,7 @@ export function unlandedTrees(root = repoRoot(), mainRef = 'main') {
       const out = git(['log', '--no-walk', '--format=%H%x00%s', ...trees.map((t) => t.head)]);
       const subjects = new Map();
       for (const line of out.split('\n')) {
-        const nul = line.indexOf(' ');
+        const nul = line.indexOf('\u0000');
         if (nul > 0) subjects.set(line.slice(0, nul), line.slice(nul + 1));
       }
       for (const t of trees) if (subjects.has(t.head)) t.subject = subjects.get(t.head);
