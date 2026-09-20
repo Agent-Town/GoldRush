@@ -26,7 +26,7 @@
 ### A14 — the Regatta boat spec: four questions
 **What.** `specs/agent-play/e5-regatta-steerable-boat.md` (DRAFT): the boat is the racing body, both species steer it with the same move intent, the beacons become buoys. Astra is refreshing the boat's look in lane-c right now (art only); the steering is sim work that waits on this.
 **Questions and recommendations.** Q1 feel: turns in about 2 s, crosses the course in about 60 s, fast water ×1.5 (recommended) — or slower and heavier. Q2 leaving the boat mid-race forfeits the race (recommended) — or the hero may walk the shore. Q3 the buoys stay at Astra's five beacons (recommended) — or hug the fast-water zone. Q4 the name stays "the Claim-Boat" (recommended) — or a Regatta name.
-**RULED 2026-09-20, verbatim: "A14 - do it"** (the four recommendations ratified 2026-09-19). Slice 1 launched as `e5-regatta-boat-01` (Opus, scratch worktree, port 5321). *Source: the spec's foot.*
+**RULED 2026-09-20, verbatim: "A14 - do it"** (the four recommendations ratified 2026-09-19). Slice 1 LANDED 2026-09-20 as `fd8f765e3` (`reviews/e5-regatta-boat-01.md`): the boat sails under both species, one tape hash on both engines; slice 2 is authorable. *Source: the spec's foot.*
 
 ### A1 — the Orbital air wall on the Eclipse
 **What.** The Mare Claim's cure (a regolith count in a window) is measured to fit the Eclipse (`regolithRequired: 4, regolithWindowWaves: 4`); the Far Side and Low Orbit are gated by crossings instead and would need their own lever and prover.
