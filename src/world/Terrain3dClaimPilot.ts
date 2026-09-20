@@ -2043,7 +2043,7 @@ diffuseColor.rgb = mix(diffuseColor.rgb, trestleWorkedPigment, 0.23 * trestleBan
 }
 
 /** Quiet desert pigment and wheel cuts follow the published Motor masks, never new roads. */
-function clarifyMotorGround(model: THREE.Object3D, truth: MotorGroundTruth, panorama = false): void {
+function clarifyMotorGround(model: THREE.Object3D, truth: MotorGroundTruth, panorama = false, paintMix = 0.78): void {
   if (isMapBeautyDisabled()) return;
   const roads = truth.roadCorridors ?? [];
   const seams = truth.tarSeams ?? [];
@@ -2056,6 +2056,7 @@ function clarifyMotorGround(model: THREE.Object3D, truth: MotorGroundTruth, pano
     const compile = material.onBeforeCompile.bind(material);
     material.onBeforeCompile = (shader, renderer) => {
       compile(shader, renderer);
+      shader.uniforms.motorPaintMix = { value: paintMix };
       shader.uniforms.motorEarth = { value: new THREE.Color('#9f8564') };
       shader.uniforms.motorRoad = { value: new THREE.Color('#c5a274') };
       shader.uniforms.motorRoads = { value: roads.map(r => new THREE.Vector4(r.start.x, r.start.z, r.end.x, r.end.z)) };
@@ -2072,13 +2073,13 @@ uniform vec3 motorEarth, motorRoad;
 uniform vec4 motorRoads[${roads.length}];
 uniform vec3 motorTar[${Math.max(1, seams.length)}];
 uniform vec2 motorHalfSize;
-uniform float motorOrbit;`)
+uniform float motorOrbit, motorPaintMix;`)
         .replace('#include <map_fragment>', `#include <map_fragment>
 vec2 motorP = vMotorGround.xz;
 vec3 motorOriginal = diffuseColor.rgb;
 float motorGrain = fract(sin(dot(floor(motorP * 18.0), vec2(12.9898,78.233))) * 43758.5453);
 float motorMottle = sin(motorP.x * 0.37 + sin(motorP.y * 0.21)) * sin(motorP.y * 0.43);
-diffuseColor.rgb = mix(diffuseColor.rgb, motorEarth * (0.94 + motorGrain * 0.06 + motorMottle * 0.035), motorHalfSize.x > 100.0 ? 0.95 : 0.78);
+diffuseColor.rgb = mix(diffuseColor.rgb, motorEarth * (0.94 + motorGrain * 0.06 + motorMottle * 0.035), motorHalfSize.x > 100.0 ? 0.95 : motorPaintMix);
 float motorDistance = 10000.0;
 float motorRut = 0.0;
 for (int i = 0; i < ${roads.length}; i++) {
@@ -2654,7 +2655,7 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       if (host.contractId === 'e2-pressure-garden') clarifyPressureGardenTerraces(nextTerrain);
       if (host.contractId === 'e2-incline') clarifyInclineYards(nextTerrain);
       if (host.contractId === 'e3-canyon-works') clarifyCanyonGround(nextTerrain);
-      if ((host.contractId === 'e4-dust-flats' || host.contractId === 'e4-long-road') && selected.contract.maskTruth) clarifyMotorGround(nextTerrain, selected.contract.maskTruth);
+      if ((host.contractId === 'e4-dust-flats' || host.contractId === 'e4-long-road' || host.contractId === 'e4-gusher-county') && selected.contract.maskTruth) clarifyMotorGround(nextTerrain, selected.contract.maskTruth, false, host.contractId === 'e4-gusher-county' ? 0.30 : 0.78);
       if (host.nightMode) applyNightTerrainPools(nextTerrain, host);
       else {
         host.canvas.dataset.terrain3dPilotNightPools = 'off';
