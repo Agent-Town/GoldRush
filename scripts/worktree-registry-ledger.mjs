@@ -99,28 +99,48 @@ export function readBaseline(file) {
 // unlanded work is LAWFUL, routine attended work, and a red there would be excused into
 // uselessness inside a week (F-1460-1). It is the same restraint F-2366-1 took for BUSY.
 //
-// Containment is asked BY VALUE (`rev-list --count`), never by `merge-base --is-ancestor`:
-// that command uses exit 1 as a legitimate VERDICT, and F-2561-1 measured that the
-// "exit 1 with empty stderr" discriminator is UNAVAILABLE through a wrapper that collapses
-// a failure to `err.message` — node supplies "Command failed:", so a real verdict reads as
-// a crash and three genuinely-unlanded trees get misfiled as unanswerable.
+// THE SHAPE IS O(1) GIT CALLS, NOT O(N TREES), AND THAT IS A MEASURED CHOICE RATHER THAN
+// a style one. In this clone EVERY commit-graph traversal costs a FLAT ~1.2 s whatever it
+// walks — measured s2664: `rev-parse` and `worktree list` are 22 ms, while `rev-list
+// --count main..<head>`, `merge-base --is-ancestor` and `rev-list --count --max-count=1`
+// are 1,220 / 1,205 / 1,105 ms respectively, i.e. the cost is per-INVOCATION and does not
+// fall when the answer is cheap. My first draft asked one such question PER TREE and took
+// the tool from 206 ms to 14,654 ms (71x, interleaved A/B, load named) on a 9-tree
+// registry — and this factory has repeatedly run registries of 119-137 trees, where the
+// same draft would have cost ~3 MINUTES on a read that §2E prescribes before every drain.
+//
+// So containment is resolved by ONE traversal (`rev-list main` -> a Set, 12,963 commits /
+// 1,391 ms) plus O(1) set lookups, and the subjects by ONE batched `log --no-walk` over
+// only the heads that survived. Total ~1.4 s on a clean board (the subject call is skipped
+// when nothing is in flight) and ~2.6 s when something is.
+//
+// ⓘ The exact "N commits ahead" is deliberately NOT computed: it is per-PAIR by
+// construction, so it would reintroduce the O(N) cost for a number that does not change
+// the STOP decision. The HEAD and its SUBJECT are what prove a subject; the count only
+// decorates it.
+//
+// The porcelain already carries FULL head shas, so no per-tree `rev-parse` is needed
+// either — reading them from the output we already have removes another O(N) family.
 export function unlandedTrees(root = repoRoot(), mainRef = 'main') {
-  const git = (args) => execFileSync('git', args, { cwd: root, encoding: 'utf8', maxBuffer: 64 << 20 }).trim();
-
-  let mainSha;
-  try {
-    mainSha = git(['rev-parse', '--verify', mainRef]);
-  } catch (err) {
-    // A STRING state, never an empty list: an unresolvable main must fail toward NOTICING
-    // rather than toward "nothing is in flight" (F-2212-1's polarity).
-    return { state: 'unverifiable', detail: `could not resolve ${mainRef}: ${err.message}`, trees: [] };
-  }
+  const git = (args) => execFileSync('git', args, { cwd: root, encoding: 'utf8', maxBuffer: 256 << 20 }).trim();
 
   let porcelain;
   try {
     porcelain = git(['worktree', 'list', '--porcelain']);
   } catch (err) {
+    // A STRING state, never an empty list: a failed read must fail toward NOTICING rather
+    // than toward "nothing is in flight" (F-2212-1's polarity).
     return { state: 'unverifiable', detail: `git worktree list failed: ${err.message}`, trees: [] };
+  }
+
+  let mainCommits;
+  try {
+    mainCommits = new Set(git(['rev-list', mainRef]).split('\n').filter(Boolean));
+  } catch (err) {
+    return { state: 'unverifiable', detail: `could not walk ${mainRef}: ${err.message}`, trees: [] };
+  }
+  if (!mainCommits.size) {
+    return { state: 'unverifiable', detail: `${mainRef} resolved to no commits`, trees: [] };
   }
 
   const entries = [];
@@ -145,7 +165,7 @@ export function unlandedTrees(root = repoRoot(), mainRef = 'main') {
 
   const trees = [];
   for (const e of entries) {
-    if (!e.head) continue;
+    if (!e.head) continue; // a bare entry has no HEAD line; it holds no checkout to contend with.
     let same = false;
     try {
       same = realpathSync(e.path) === rootReal;
@@ -153,24 +173,25 @@ export function unlandedTrees(root = repoRoot(), mainRef = 'main') {
       same = resolve(e.path) === rootReal;
     }
     if (same) continue; // the repo root is where a drain LANDS; it is never a contender.
+    if (mainCommits.has(e.head)) continue; // contained in main: already landed.
+    trees.push({ path: e.path, head: e.head, branch: e.branch || '(detached)', subject: null, state: 'unlanded' });
+  }
 
-    let ahead;
+  // ONE batched call for every surviving head, and only when there are any. A failure here
+  // costs the SUBJECTS, never the TREES: the list is already correct and a tree we could
+  // not label is the one most worth naming, so it is kept with `subject: null`.
+  if (trees.length) {
     try {
-      ahead = Number(git(['rev-list', '--count', `${mainSha}..${e.head}`]));
-    } catch (err) {
-      // Declared, never dropped: a tree we could not judge is the one most worth naming.
-      trees.push({ path: e.path, head: e.head, branch: e.branch || '(detached)', ahead: null, subject: null, state: 'unverifiable', detail: err.message });
-      continue;
-    }
-    if (!Number.isFinite(ahead) || ahead === 0) continue; // contained in main: already landed.
-
-    let subject = null;
-    try {
-      subject = git(['log', '-1', '--format=%s', e.head]);
+      const out = git(['log', '--no-walk', '--format=%H%x00%s', ...trees.map((t) => t.head)]);
+      const subjects = new Map();
+      for (const line of out.split('\n')) {
+        const nul = line.indexOf(' ');
+        if (nul > 0) subjects.set(line.slice(0, nul), line.slice(nul + 1));
+      }
+      for (const t of trees) if (subjects.has(t.head)) t.subject = subjects.get(t.head);
     } catch {
-      subject = null;
+      /* subjects stay null; the declaration below prints the tree either way */
     }
-    trees.push({ path: e.path, head: e.head, branch: e.branch || '(detached)', ahead, subject, state: 'unlanded' });
   }
 
   return { state: 'read', trees };
@@ -275,8 +296,8 @@ function main() {
           continue;
         }
         say(`      • ${t.path}`);
-        say(`          ${t.head.slice(0, 9)} · ${t.branch} · ${t.ahead} commit(s) ahead of main`);
-        if (t.subject) say(`          "${t.subject.slice(0, 96)}"`);
+        say(`          ${t.head.slice(0, 9)} · ${t.branch} · NOT on main`);
+        say(`          ${t.subject ? `"${t.subject.slice(0, 96)}"` : '(subject unavailable — read the HEAD by hand before you gate)'}`);
       }
       say('');
       say('     ⓘ  Match your drain candidate against the HEADs above BEFORE you gate it. A');

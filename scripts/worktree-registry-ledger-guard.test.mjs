@@ -269,7 +269,8 @@ test('16. the named entry carries its HEAD subject — a path suggests, a HEAD p
   baseline(dir, liveSet(dir));
   const r = cli(dir);
   assert.match(r.out, /a subject only the HEAD knows/, 'the HEAD subject is printed');
-  assert.match(r.out, /1 commit\(s\) ahead of main/, 'the ahead count is printed');
+  assert.match(r.out, /NOT on main/, 'the containment verdict is printed');
+  assert.match(r.out, /contender/, 'the branch is named');
 });
 
 // Reverse control for the over-general cure: printing the SECTION unconditionally.
