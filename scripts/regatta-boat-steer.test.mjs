@@ -55,6 +55,9 @@ const TAPE_PATH = fileURLToPath(new URL('../artifacts/e5-regatta-boat/boat-tape.
 const ARTIFACT_DIR = fileURLToPath(new URL('../artifacts/e5-regatta-boat/', import.meta.url));
 /** Slice 2's own evidence directory; slice 1's stays exactly where it is. */
 const RACE_ARTIFACT_DIR = fileURLToPath(new URL('../artifacts/e5-regatta-boat-02/', import.meta.url));
+/** Slice 3's: the winning rider tape as the VIEW publishes it (`now.regatta`). */
+const VIEW_ARTIFACT_DIR = fileURLToPath(new URL('../artifacts/e5-regatta-boat-03/', import.meta.url));
+const VIEW_TAPE_PATH = fileURLToPath(new URL('../artifacts/e5-regatta-boat-03/view-tape.json', import.meta.url));
 const CONTRACT = 'e5-regatta';
 const SEED = 'e5-regatta-01';
 const STEP = 1 / 30;
@@ -559,6 +562,157 @@ test('a ride that never boards is the idle ride it always was', async () => {
     assert.equal(first.motion.z, 0, 'an idle ride leaves the boat on its anchor');
     assert.equal(first.motion.speed, 0, 'an idle ride leaves the boat moored');
   });
+});
+
+/**
+ * SLICE 3 — **THE RIDER TAPE THAT WINS THE COURSE, AND THE VIEW THAT TELLS ITS STORY**
+ * (`specs/agent-play/e5-regatta-steerable-boat.md` law 5; F-RB2-4; owner 2026-09-20 "A14 - do it").
+ *
+ * Slice 2 proved a rider can WIN by `MOVE_HERO` alone. What it could not prove is that the rider
+ * can SEE the win, because the view published nothing of the boat, the buoys or the forfeit. This
+ * rides slice 2's own winning orders and hashes **the published view beside the hull**, so the
+ * evidence of the slice is one number rather than a description: if `now.regatta` stops mirroring
+ * the race, this hash moves.
+ *
+ * The bench-seed registry (`assets/contracts/bench-seeds.json`) is a contract-to-seed-id map and
+ * takes no tape, so the hash is pinned HERE, beside the slice-1 tape it sits next to, and recorded
+ * in the report. `e5-regatta` is already seeded (`e5-regatta-01`, `-02`).
+ *
+ * MINTING: `GR_BOAT_TAPE_MINT=1 node --test scripts/regatta-boat-steer.test.mjs`, the same
+ * deliberate, reviewed act slice 1's tape uses.
+ */
+test('SLICE 3 — the winning rider tape replays to its hash, and the view tells the same story', async () => {
+  await withVite(async (vite) => {
+    const { HeadlessContractSim } = await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts');
+    const { loadContract } = await vite.ssrLoadModule('/src/meta/ContractFamilies.ts');
+    const { stableHash } = await vite.ssrLoadModule('/src/mp/LockstepClient.ts');
+    const course = loadContract(CONTRACT).tileParams.raceCourse;
+
+    /**
+     * One ride of the whole course, sampling the HULL and the PUBLISHED VIEW together every second.
+     * `view` rounds to two decimals where the hull does not, which is exactly the point: the tape
+     * pins what a rider can actually read, not what the engine holds.
+     */
+    const ride = () => {
+      const sim = new HeadlessContractSim({ contractId: CONTRACT, seed: SEED });
+      boardByWalkingAboard(sim);
+      const samples = [];
+      let ordered = null;
+      let ticks = 0;
+      while (!sim.isTerminal && ticks < 12_000) {
+        const published = sim.currentTurn().view.now.regatta;
+        const next = published.nextBuoy;
+        if (!next) break;
+        if (ordered !== next.id) {
+          assert.equal(sim.submitOrders([{ verb: 'MOVE_HERO', pos: { x: next.x, z: next.z + GATE_APPROACH } }]).outcome.ok, true);
+          ordered = next.id;
+        }
+        sim.advanceOneTick();
+        ticks += 1;
+        if (ticks % 30 === 0) {
+          const view = sim.currentTurn().view.now.regatta;
+          const m = motionOf(sim);
+          samples.push([
+            ticks,
+            view.boat.x, view.boat.z, view.boat.heading, view.boat.speed, view.boat.aboard ? 1 : 0,
+            view.nextBuoy?.id ?? '', view.buoysPassed.length, view.state,
+            // The hull's own numbers beside the published ones, so a rounding change shows here.
+            Number(m.x.toFixed(6)), Number(m.z.toFixed(6)),
+          ]);
+        }
+      }
+      return { samples, ticks, view: sim.currentTurn().view.now.regatta, race: raceOf(sim) };
+    };
+
+    const first = ride();
+    assert.deepEqual(ride().samples, first.samples, 'two identical winning rides must produce the identical tape');
+    const hash = stableHash(first.samples);
+
+    // THE COURSE WAS WON, and the VIEW says so in the human's own words.
+    assert.equal(first.race.finished, true, `the course ended ${JSON.stringify(first.race)}`);
+    assert.equal(first.view.state, 'finished');
+    assert.equal(first.view.finished, true);
+    assert.equal(first.view.forfeited, false);
+    assert.equal(first.view.nextBuoy, null, 'a finished course colours no mark next, for either species');
+    assert.equal(first.view.boat.aboard, true, 'the finish requires the boat WITH the hero aboard');
+    // Six gates: the five authored beacons, then the `heroStart` stake as the finish line.
+    assert.deepEqual(
+      first.view.buoysPassed.map(({ id }) => id),
+      course.beacons.map(({ id }) => id),
+      'the published list is the authored marks, in their authored order',
+    );
+    assert.equal(first.view.fastWaterMultiplier, loadContract(CONTRACT).tileParams.deepwater.claimBoat.physics.fastWaterMultiplier);
+
+    const measured = {
+      note: 'E5 Regatta slice 3 — the winning rider tape as the VIEW publishes it. Minted by '
+        + 'scripts/regatta-boat-steer.test.mjs with GR_BOAT_TAPE_MINT=1.',
+      contract: CONTRACT,
+      seed: SEED,
+      stepSeconds: STEP,
+      orders: 'MOVE_HERO to each published nextBuoy, GATE_APPROACH metres off the mark',
+      hash,
+      samples: first.samples.length,
+      ticks: first.ticks,
+      seconds: Number((first.ticks * STEP).toFixed(3)),
+      finishedAtSeconds: Number(first.race.finishedAt.toFixed(3)),
+      finalView: first.view,
+      // The whole track, as slice 1's tape does: when the hash moves, the diff has to be able to
+      // say WHERE. Each row is [tick, view.x, view.z, view.heading, view.speed, aboard,
+      // nextBuoy.id, buoysPassed.length, state, hull.x, hull.z].
+      track: first.samples,
+    };
+    console.log(`[regatta-view] tape hash ${hash} over ${first.samples.length} samples, won in ${measured.seconds} s`);
+    mkdirSync(VIEW_ARTIFACT_DIR, { recursive: true });
+    if (MINT) writeFileSync(VIEW_TAPE_PATH, `${JSON.stringify(measured, null, 2)}\n`);
+    const pinned = JSON.parse(readFileSync(VIEW_TAPE_PATH, 'utf8'));
+    assert.equal(hash, pinned.hash, 'the winning ride must reach the pinned view-tape hash');
+    assert.equal(first.samples.length, pinned.samples);
+    assert.deepEqual(first.samples, pinned.track, 'the winning ride must reach the pinned track');
+    assert.deepEqual(first.view, pinned.finalView, 'the published view at the finish must match the pin');
+  });
+});
+
+/**
+ * SLICE 3 — **ONE KEY, ONE SHAPE, BOTH ENGINES**, pinned by SOURCE TEXT because no headless test
+ * can boot the browser. `Game.regattaDiagnostics` and `HeadlessContractSim.regattaDiagnostics`
+ * publish the `regatta` key `View.readRegatta` reads; the compiler already forces both to satisfy
+ * `AgentRegattaSource`, but a type cannot stop one engine from filling a field with a DIFFERENT
+ * expression. The `boat` literal is where that could happen, so the two are compared byte for byte.
+ *
+ * The same idiom the NOT_ABOARD test above uses on `Game.ts`'s `riderPiloted: () => false`: a law
+ * that lives in one file and is relied on by another, asserted rather than assumed.
+ */
+test('SLICE 3 — both engines publish the regatta key from the same expression', async () => {
+  const game = readFileSync(new URL('../src/game/Game.ts', import.meta.url), 'utf8');
+  const headless = readFileSync(new URL('../src/sim/HeadlessContractSim.ts', import.meta.url), 'utf8');
+  const boatLiteral = (source, label) => {
+    const from = source.indexOf('private regattaDiagnostics(): AgentRegattaSource | null {');
+    assert.ok(from > 0, `${label} must publish the regatta key through regattaDiagnostics`);
+    const body = source.slice(from, source.indexOf('\n  }\n', from));
+    const start = body.indexOf('      boat: {');
+    const end = body.indexOf('      },', start);
+    assert.ok(start > 0 && end > start, `${label}'s regattaDiagnostics must build a boat literal`);
+    return body.slice(start, end);
+  };
+  assert.equal(boatLiteral(game, 'Game.ts'), boatLiteral(headless, 'HeadlessContractSim.ts'),
+    'the two engines must read the hull through the identical expression, or the views can drift');
+  for (const [source, label] of [[game, 'Game.ts'], [headless, 'HeadlessContractSim.ts']]) {
+    const from = source.indexOf('private regattaDiagnostics(): AgentRegattaSource | null {');
+    const body = source.slice(from, source.indexOf('\n  }\n', from));
+    assert.match(body, /declared: true,/, `${label} must gate the key on declared`);
+    assert.match(body, /\n      race[,:]/, `${label} must publish the race diagnostics under race`);
+  }
+  // The published gate-radius fallback and the engine's own default are the same number. The
+  // engine keeps a private copy (slice 3's firewall forbids editing `RegattaRaceSystem.ts`), so
+  // this is what stops the two drifting until a later slice can export one constant.
+  const raceSystem = readFileSync(new URL('../src/systems/RegattaRaceSystem.ts', import.meta.url), 'utf8');
+  const engineDefault = /const DEFAULT_GATE_RADIUS = (\d+(?:\.\d+)?);/.exec(raceSystem);
+  assert.ok(engineDefault, 'RegattaRaceSystem must declare DEFAULT_GATE_RADIUS');
+  const manifest = readFileSync(new URL('../src/agent/MechanicsManifest.ts', import.meta.url), 'utf8');
+  const published = /export const REGATTA_GATE_RADIUS_FALLBACK = (\d+(?:\.\d+)?);/.exec(manifest);
+  assert.ok(published, 'MechanicsManifest must export REGATTA_GATE_RADIUS_FALLBACK');
+  assert.equal(published[1], engineDefault[1],
+    'the published gate-radius fallback drifted from the engine default the race actually applies');
 });
 
 /**
