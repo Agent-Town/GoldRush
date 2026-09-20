@@ -1,0 +1,48 @@
+{
+  "storeBase": "068c0dbdbe99f474e099b5eff69da13b0f55851f",
+  "base": "19421c655efc2cf830f92d76bb7c3637e3a6861b",
+  "paths": {
+    "src/world/Terrain3dClaimPilot.ts": {
+      "candidateSha256": "716dd1955caec339e18d98eab829d856a24b1858967f050e6441f286b500d249",
+      "baseSha256": "6ffd15932b4cb82439cf020c59b0a46d26314c3c952ed57e26bf94e38d2027c9"
+    },
+    "assets/pilots/map-rebuild-spike/dust-flats-terrain-contract.json": {
+      "candidateSha256": "a7588376cd4e21bfe10d00744fda069235305969e3b5278135d3ca6ba3c091dd",
+      "baseSha256": "0796664a638ce7601b506a9174685cf8abb65bdf0b0adbf26064fe117b93cb3b"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/dust-flats/dust-flats-landmark-pack-contract.json": {
+      "candidateSha256": "fb8bbb4e34839e07167f77f0ab6360549aef0326a773bf118e1135ce9d68f791",
+      "baseSha256": "b8c55ad66c596d29c6948f4570219a480f9486b03c486e9c65fabbd61df2842e"
+    }
+  },
+  "pattern": "fires the authored storm|offers road grading|every Motor reel|player-selected Motor town|production WebP atlas",
+  "specs": [
+    "e2e/e4-dust-flats.spec.ts",
+    "e2e/e4-roads-and-convoys.spec.ts",
+    "e2e/ss-05-e4-beats.spec.ts",
+    "e2e/shared-atlas-dedupe.spec.ts"
+  ],
+  "candidateEngine": "f314eba93a1f7304139063ecef8cad5ab46806bce335058cefa4abcfb1ef00f3",
+  "baseEngine": "fd5fb81fed8b9a783e33d43b7fce6068b74179c9c7c815bb774d830a0f01d2c9",
+  "command": [
+    "npx",
+    "playwright",
+    "test",
+    "--workers=1",
+    "--project=desktop-chrome",
+    "--project=mobile-chrome",
+    "--trace=off",
+    "--reporter=line",
+    "--output=artifacts/sol/map-art-campaign-2/_raw/run-5/e4-dust-flats-base-own/test-results",
+    "--grep",
+    "fires the authored storm|offers road grading|every Motor reel|player-selected Motor town|production WebP atlas",
+    "e2e/e4-dust-flats.spec.ts",
+    "e2e/e4-roads-and-convoys.spec.ts",
+    "e2e/ss-05-e4-beats.spec.ts",
+    "e2e/shared-atlas-dedupe.spec.ts"
+  ],
+  "exit": 1,
+  "restoredEngine": "f314eba93a1f7304139063ecef8cad5ab46806bce335058cefa4abcfb1ef00f3",
+  "candidateRestoredExactly": true,
+  "log": "artifacts/sol/map-art-campaign-2/_raw/run-5/e4-dust-flats-base-own/tests.log"
+}

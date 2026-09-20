@@ -387,3 +387,34 @@ Four runs per arm/viewport: p95 9.75→9.80 ms desktop / 9.85→9.75 phone, draw
 ### Capped stop — 2026-09-21 run 4
 
 Three maps completed in order; no fourth map started. All remain improved/held for full concept fidelity. The Last Claim remains unaccepted in my judgment: the fallback does not communicate the plate's circular deck, central orrery, ornate rim or three preserve stations; portrait has no architectural context. Its sculpt-pack correction is still on the remaining list. [Ordered continuation, HUD handoff, engine pairs and gate exceptions](run-4/handoff.md).
+
+
+## Fifth run — 2026-09-20 (task sol-map-art-corrections-3)
+
+Capped at three maps, in order: Dust Flats, Long Road, Gusher County. Code base `19421c655efc2cf830f92d76bb7c3637e3a6861b`; store base `068c0dbdbe99f474e099b5eff69da13b0f55851f`. No ahead commits or unowned work; only permitted `logs/guard-stats.jsonl`. No evidence discarded. Install and initial build passed; both required store symlink probes resolve. Store work is isolated on `astra/corrections-3`; engine pins and full node battery remain drain-owned. [Preflight](run-5/preflight.json).
+
+The Last Claim verdict remains mine and remains UNACCEPTED: the plain fallback lacks the circular deck, orrery, ornate rim and preserve-station architecture; the phone has no architectural context. This run does not revisit its art.
+
+Three bounded correction passes completed in order; full concept acceptance remains held where each receipt says so. No fourth map started.
+
+### Dust Flats correction — 2026-09-20 run 5
+
+**IMPROVED / HELD.** Ground RMS -79.89% desktop / -73.89% phone, no new geometry/draws; road paint follows the existing 24 m ring and four corridors. The declared 5 m charting-post station reduces phone persistent HUD 31.57% → 0.006% (desktop 0%). Entry landmark context and central-derrick concept remain held for camera/layout and art owners; no full concept acceptance. [Every clause, final boards and gate attribution](run-5/e4-dust-flats/review.md).
+
+Builds, final plain captures, shared lighting/collision, loading/repeat and scoped guards pass. Six own failures reproduce on exact base; the initial story flake passes its final 2/2 retry. Atlas-census base failure and changed-since/full-battery scope conflict remain attributed. Four-run p95 9.30→9.25 / 9.50→9.20 ms; draws 77/52 unchanged. Engine `fd5fb81fed8b9a783e33d43b7fce6068b74179c9c7c815bb774d830a0f01d2c9` → `f314eba93a1f7304139063ecef8cad5ab46806bce335058cefa4abcfb1ef00f3`. Store `d316da20c98b0f8bce1022bfdf9b3a25e212933a`.
+
+### Long Road correction — 2026-09-20 run 5
+
+**IMPROVED / HELD.** Ground RMS -85.41% desktop / -54.02% phone; apron RMS -61.72%. Same road truth, quieter ground, 97-vertex panorama join underlap with no extra triangles. Wagon 5 m inspection station reduces phone HUD 27.35% → 0.011%; west stop 0.016%. Entry wagon still 12.369%, with horizon/stop vista and remaining body art held. [Every clause, boards and evidence](run-5/e4-long-road/review.md).
+
+Builds, four Long Road checks, shared lighting/collision, loading/repeat and scoped guards pass. Four-run p95 8.80→8.85 / 9.00→8.90 ms; draws 59/49 unchanged. Changed-since/full-battery remains drain-owned. Engine `f314eba93a1f7304139063ecef8cad5ab46806bce335058cefa4abcfb1ef00f3` → `d9771424552e194e198257098a5c4e235d0101c5c9f063adf030d42fcd2ef0eb`. Store `0f6ef32c9ebb7652c6796b8ccda622a282e8ffca` pushed.
+
+### Gusher County correction — 2026-09-20 run 5
+
+**IMPROVED / HELD.** Actor occlusion falls 100% → 2.00% desktop / 2.27% phone. The tall cabin narrows within unchanged overall bounds, heights and footprint (126 vertices); rust-sheet UVs reuse existing iron paint, reducing camp red-body share 57.6% → 0%. Ground RMS -44.27% / -38.98%. Camp 5 m station reduces phone HUD 60.135% → 0.010%; phone entry still crops and has 19.097% persistent coverage. Oil-channel/lease vista and connected pipe art remain held. [Every clause and final boards](run-5/e4-gusher-county/review.md).
+
+Builds, final scoped checks, shared lighting/collision, loading/repeat and guards pass across the final receipts. Our initial ground-detail regression passed on exact base and was corrected to satisfy the unchanged panorama matrix. Final own batch 9 pass / one navigation failure; isolated errand retry 2/2. Four-run p95 9.35→9.25 / 8.80→8.75 ms; draws 73/54 unchanged. Engine `d9771424552e194e198257098a5c4e235d0101c5c9f063adf030d42fcd2ef0eb` → `491f2a917b0e360fcaa1e0eda3ee5eb7ba840cc1cd9bf852e3d574d34350725d`. Store `b9597680a8c6eff78526b0c2af2cdc3f05b86f85` pushed.
+
+### Capped stop — 2026-09-20 run 5
+
+Three maps completed and committed in order: Dust Flats, Long Road, Gusher County. Boneyard was not started. The Last Claim remains UNACCEPTED in my judgment: its retained plain-entry evidence lacks the circular deck, orrery, ornate rim and preserve-station architecture, and portrait supplies no architectural context. Its sculpt-pack correction remains on the continuation list. [Ordered remaining work, HUD handoff, engine pairs and gate exceptions](run-5/handoff.md).

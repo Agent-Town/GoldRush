@@ -83,6 +83,9 @@ import { installVisualHeightSource, waterSources } from './Terrain';
 import { createLandmarkWalkSurfaces, type LandmarkWalkSurface } from './LandmarkWalkSurfaces';
 import { createSpringPondSurface, type SpringPondSurface } from './Water';
 import { createFordSheet, createWaterConfluence, createWaterRibbon, updateWaterMaterial } from './Water';
+import type { ContractManifest } from '../meta/ContractFamilies';
+
+type MotorGroundTruth = Pick<ContractManifest['tileParams'], 'dimensions' | 'roadCorridors' | 'tarSeams' | 'orbitSpawn'>;
 
 type Contract = {
   tileId: string;
@@ -93,7 +96,7 @@ type Contract = {
   boundsMeters: { min: [number, number, number]; max: [number, number, number] };
   panoramaMount: Mount;
   landmarkMounts?: LandmarkMount[];
-  maskTruth?: { waterMask?: { id: string; regions: MaskRegion[] } };
+  maskTruth?: MotorGroundTruth & { waterMask?: { id: string; regions: MaskRegion[] } };
   maskAgreement?: { waterPlaneY?: number };
   waterSurface?: { owner: string; includedInTerrainGLB: boolean };
 };
@@ -2039,6 +2042,78 @@ diffuseColor.rgb = mix(diffuseColor.rgb, trestleWorkedPigment, 0.23 * trestleBan
   }
 }
 
+/** Quiet desert pigment and wheel cuts follow the published Motor masks, never new roads. */
+function clarifyMotorGround(model: THREE.Object3D, truth: MotorGroundTruth, panorama = false, paintMix = 0.78): void {
+  if (isMapBeautyDisabled()) return;
+  const roads = truth.roadCorridors ?? [];
+  const seams = truth.tarSeams ?? [];
+  const materials = new Set<THREE.MeshStandardMaterial>();
+  model.traverse(node => {
+    const mesh = node as THREE.Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>;
+    if (mesh.isMesh && !Array.isArray(mesh.material) && mesh.material.isMeshStandardMaterial && mesh.material.map) materials.add(mesh.material);
+  });
+  for (const material of materials) {
+    const compile = material.onBeforeCompile.bind(material);
+    material.onBeforeCompile = (shader, renderer) => {
+      compile(shader, renderer);
+      shader.uniforms.motorPaintMix = { value: paintMix };
+      shader.uniforms.motorEarth = { value: new THREE.Color('#9f8564') };
+      shader.uniforms.motorRoad = { value: new THREE.Color('#c5a274') };
+      shader.uniforms.motorRoads = { value: roads.map(r => new THREE.Vector4(r.start.x, r.start.z, r.end.x, r.end.z)) };
+      shader.uniforms.motorTar = { value: seams.length ? seams.map(s => new THREE.Vector3(s.x, s.z, s.radius)) : [new THREE.Vector3()] };
+      shader.uniforms.motorOrbit = { value: truth.orbitSpawn?.radius ?? 0 };
+      shader.uniforms.motorHalfSize = { value: new THREE.Vector2(truth.dimensions!.width / 2, truth.dimensions!.height / 2) };
+      shader.vertexShader = shader.vertexShader
+        .replace('#include <common>', '#include <common>\nvarying vec3 vMotorGround;')
+        .replace('#include <begin_vertex>', '#include <begin_vertex>\nvMotorGround = (modelMatrix * vec4(position, 1.0)).xyz;');
+      shader.fragmentShader = shader.fragmentShader
+        .replace('#include <common>', `#include <common>
+varying vec3 vMotorGround;
+uniform vec3 motorEarth, motorRoad;
+uniform vec4 motorRoads[${roads.length}];
+uniform vec3 motorTar[${Math.max(1, seams.length)}];
+uniform vec2 motorHalfSize;
+uniform float motorOrbit, motorPaintMix;`)
+        .replace('#include <map_fragment>', `#include <map_fragment>
+vec2 motorP = vMotorGround.xz;
+vec3 motorOriginal = diffuseColor.rgb;
+float motorGrain = fract(sin(dot(floor(motorP * 18.0), vec2(12.9898,78.233))) * 43758.5453);
+float motorMottle = sin(motorP.x * 0.37 + sin(motorP.y * 0.21)) * sin(motorP.y * 0.43);
+diffuseColor.rgb = mix(diffuseColor.rgb, motorEarth * (0.94 + motorGrain * 0.06 + motorMottle * 0.035), motorHalfSize.x > 100.0 ? 0.95 : motorPaintMix);
+float motorDistance = 10000.0;
+float motorRut = 0.0;
+for (int i = 0; i < ${roads.length}; i++) {
+  vec2 a = motorRoads[i].xy, b = motorRoads[i].zw, ab = b - a;
+  float along = dot(motorP - a, ab) / dot(ab, ab);
+  float distance = length(motorP - a - ab * clamp(along, 0.0, 1.0));
+  motorDistance = min(motorDistance, distance);
+  motorRut = max(motorRut, (1.0 - smoothstep(0.12, 0.28 + fwidth(distance), abs(distance - 1.55))) * smoothstep(0.0, 0.06, along) * (1.0 - smoothstep(0.94, 1.0, along)));
+}
+if (motorOrbit > 0.0) {
+  float angle = atan(motorP.y, motorP.x);
+  float wobble = sin(angle * 3.0 + 0.4) * 0.62 + sin(angle * 7.0 - 0.8) * 0.28;
+  float distance = abs(length(motorP) - motorOrbit - wobble);
+  motorDistance = min(motorDistance, distance);
+  motorRut = max(motorRut, 1.0 - smoothstep(0.12, 0.28 + fwidth(distance), abs(distance - 1.55)));
+}
+float motorRoadMask = 1.0 - smoothstep(2.8, 4.8, motorDistance);
+diffuseColor.rgb = mix(diffuseColor.rgb, motorRoad * (0.96 + motorGrain * 0.04), motorRoadMask * 0.62);
+diffuseColor.rgb *= 1.0 - motorRut * 0.16;
+for (int i = 0; i < ${seams.length}; i++) {
+  float radius = length(motorP - motorTar[i].xy) / motorTar[i].z;
+  float tar = 1.0 - smoothstep(0.65, 1.05 + motorMottle * 0.12, radius);
+  diffuseColor.rgb = mix(diffuseColor.rgb, motorEarth * 0.28, tar * 0.62);
+}
+float motorInterior = 1.0 - smoothstep(0.72, 1.0, max(abs(motorP.x) / motorHalfSize.x, abs(motorP.y) / motorHalfSize.y));
+if (motorHalfSize.x > 100.0) motorInterior = (1.0 - smoothstep(205.0, 260.0, abs(motorP.x))) * (1.0 - smoothstep(0.72, 1.0, abs(motorP.y) / motorHalfSize.y)) * (1.0 - smoothstep(1.0, 12.0, vMotorGround.y));
+diffuseColor.rgb = mix(motorOriginal, diffuseColor.rgb, motorInterior);`);
+      if (panorama) shader.fragmentShader = shader.fragmentShader.replace('#include <emissivemap_fragment>', '#include <emissivemap_fragment>\ntotalEmissiveRadiance *= 1.0 - motorInterior;');
+    };
+    material.customProgramCacheKey = () => `motor-ground-${roads.length}-${seams.length}-${panorama}-v2`;
+    material.needsUpdate = true;
+  }
+}
+
 /** Prepared boiler aprons and combed earth follow the existing terrace/bed coordinates. */
 function clarifyPressureGardenTerraces(model: THREE.Object3D): void {
   if (isMapBeautyDisabled()) return;
@@ -2580,6 +2655,7 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       if (host.contractId === 'e2-pressure-garden') clarifyPressureGardenTerraces(nextTerrain);
       if (host.contractId === 'e2-incline') clarifyInclineYards(nextTerrain);
       if (host.contractId === 'e3-canyon-works') clarifyCanyonGround(nextTerrain);
+      if ((host.contractId === 'e4-dust-flats' || host.contractId === 'e4-long-road' || host.contractId === 'e4-gusher-county') && selected.contract.maskTruth) clarifyMotorGround(nextTerrain, selected.contract.maskTruth, false, host.contractId === 'e4-gusher-county' ? 0.30 : 0.78);
       if (host.nightMode) applyNightTerrainPools(nextTerrain, host);
       else {
         host.canvas.dataset.terrain3dPilotNightPools = 'off';
@@ -2592,6 +2668,7 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       nextPanorama.scale.fromArray(mount.scale);
       preparePanorama(nextPanorama);
       if (host.contractId === 'e3-canyon-works') clarifyCanyonGround(nextPanorama, true);
+      if (host.contractId === 'e4-long-road' && selected.contract.maskTruth) clarifyMotorGround(nextPanorama, selected.contract.maskTruth, true);
       if (selected.contract.waterSurface?.owner === 'runtime DeepwaterClaimTile') {
         host.canvas.dataset.terrain3dPilotSeaApronTriangles = String(routeSeaApron(nextTerrain, nextPanorama, terrainMetrics.bounds));
       }
