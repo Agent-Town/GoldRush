@@ -2,7 +2,7 @@
 
 **Slice:** `f1401-1-bound-the-headless-driver-and-rule-the-escort-bench`
 **Slot:** main (working-tree output + done-move `20260803-005456-…`)
-**Base:** `1ea51415` (s1410 lock) · **Drained by:** s1410 fire, 2026-08-03
+**Base:** `9ac74f3a` (s1410 lock) · **Drained by:** s1410 fire, 2026-08-03
 **§3.0 block-check:** `--strict` → ✅ **CLEAR**, read as the WORD (`status="queued"`).
 
 ## VERDICT: MERGE
@@ -36,7 +36,7 @@ to `cli.signal === null` — *"the driver terminated on its own"* — which is t
 | `node --test scripts/gr-sim.test.mjs` isolated | 6/6 pass; see the flake note below |
 | Adjacent suites | derived by grep, not from the runner's list: only `HeadlessContractSim.ts` (string id), `twin-banks-hash-probe.mjs` (URL host only) and `package.json` reference `gr-sim`. **No `e2e/` or browser surface consumes the driver**, so no boot probe or screenshots are owed. |
 
-The 3 skips are the s1409 fire-shell cross-engine cure (`9b3961f6`) doing its job, with the
+The 3 skips are the s1409 fire-shell cross-engine cure (`a1c7bab0`) doing its job, with the
 reason printed — not lost coverage.
 
 ### Scope 3 — the ruling, verified by reading, not adopted from the master's preference
@@ -77,7 +77,7 @@ bench still proves escort-boots-from-data after `lane/e2-arsenal` lands. Scope 4
 
 The master demanded the clean-main canary still yield `fnv1a32:b3706fdc`, and warned that a
 changed hash means the bound is too tight. The runner reported `fnv1a32:14d45400` and claimed
-the master's value predates `eaefdb24`. **That claim is correct, and I did not take its word
+the master's value predates `a05171ce`. **That claim is correct, and I did not take its word
 for it** — I materialised HEAD's driver (no ceiling) and ran both arms back to back:
 
 | Arm | rc | waves | secured | eventLogHash |
@@ -86,7 +86,7 @@ for it** — I materialised HEAD's driver (no ceiling) and ran both arms back to
 | ARM — bounded driver | 0 | 12 | true | `fnv1a32:14d45400` |
 
 Byte-identical. The bound did not move behaviour; `b3706fdc` was measured before the
-s1406 wave-scaling cure `eaefdb24` re-based every hash in this family. The master's own
+s1406 wave-scaling cure `a05171ce` re-based every hash in this family. The master's own
 scope 5 forbade pasting its hashes for exactly this reason, and the trap it was guarding
 against duly sprang — on its own canary line.
 

@@ -8,8 +8,8 @@ const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const DEFAULT_ARTIFACT = path.join(ROOT, 'assets/contracts/frontier-registry.json');
 const ERAS = [
   { startsAt: 0, stamp: 'pre-walk' },
-  { startsAt: 1_786_167_061_000, stamp: '3dd7790d' },
-  { startsAt: 1_786_376_727_000, stamp: 'b8cf2332d' },
+  { startsAt: 1_786_167_061_000, stamp: '55ce6f7d' },
+  { startsAt: 1_786_376_727_000, stamp: '89e97e293' },
 ];
 
 export function deriveRegistry(boardExport, previous = null, sourceBackend = 'exported-board') {

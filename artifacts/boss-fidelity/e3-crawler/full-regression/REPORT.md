@@ -1,6 +1,6 @@
 # E3 full regression evidence
 
-Status: full default collection, direct serial controls, and complete infrastructure recovery finished. Source freeze released at 2026-09-08 10:53 UTC after all output restoration and hash verification. No tests, source, assets, pins, or tolerances were edited by this runner. Verification used the recorded working-tree hashes against base `d41ab98ce0d7fbc48bb01e8e87c92c61f148de2d`.
+Status: full default collection, direct serial controls, and complete infrastructure recovery finished. Source freeze released at 2026-09-08 10:53 UTC after all output restoration and hash verification. No tests, source, assets, pins, or tolerances were edited by this runner. Verification used the recorded working-tree hashes against base `d41ab98ce0d7fbc48bb01e8e87c92c61f148de2d (archive: pruned by the A3 rewrite)`.
 
 The full run is red. After replacing only the exactly selected outage executions with their completed recovery results, latest coverage is **2,819 passed, 331 failed, 198 skipped**. This is combined coverage, not a single green full run. Remaining failures are not all demonstrated pre-existing; unresolved mechanisms and mixed outcomes below are preserved as such. Exact residual identities/errors are in `remaining-failures-after-recovery.json`.
 

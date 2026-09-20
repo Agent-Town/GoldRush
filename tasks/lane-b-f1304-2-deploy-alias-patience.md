@@ -14,9 +14,9 @@
 
 **s1304 ran the deploy path and it printed a false alarm.** From the F-1304-2 row: the script printed `DEPLOYED ok https://3fc7d940.gold-rush-3in.pages.dev` and then
 
-> `UNVERIFIED: uploaded 0de66a0a but https://gold-rush-3in.pages.dev/version.json says 75a62169`
+> `UNVERIFIED: uploaded 6cb88379 but https://gold-rush-3in.pages.dev/version.json says 76ff88f4`
 
-s1304 then **asked the service instead of trusting the script**: `wrangler pages deployment list` returned the new deployment as `Environment: Production · Branch: main · Source 0de66a0`, and an out-of-band re-probe minutes later returned `{"build":"0de66a0a"}`. **The deploy had succeeded; only the check was impatient.** The review that built the check says the retry exists *"so Cloudflare's async alias promotion is not mis-reported as staleness"* — which is exactly the failure it produced.
+s1304 then **asked the service instead of trusting the script**: `wrangler pages deployment list` returned the new deployment as `Environment: Production · Branch: main · Source 0de66a0`, and an out-of-band re-probe minutes later returned `{"build":"6cb88379"}`. **The deploy had succeeded; only the check was impatient.** The review that built the check says the retry exists *"so Cloudflare's async alias promotion is not mis-reported as staleness"* — which is exactly the failure it produced.
 
 **s1307 re-verified the premise by reading the code before authoring this:** `deploy.sh:116` is `for ATTEMPT in 1 2 3` with `sleep 15` at `:131` between attempts, so total patience is **~30 s of sleep**. That is the whole defect.
 

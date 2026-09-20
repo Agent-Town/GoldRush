@@ -1,6 +1,6 @@
 # f1318-1 — float-fit class-wide guard + ellipsis fallback
 
-**Slice:** `f1318-1-float-fit-class-wide` · **branch:** `lane/m3` @ `d8ff6bd0` (lane base `4cf7da4b`) · **merged to main:** `5d5929e4` · **drained:** s1319, 2026-08-01.
+**Slice:** `f1318-1-float-fit-class-wide` · **branch:** `lane/m3` @ `d8ff6bd0` (lane base `da0c32d2`) · **merged to main:** `5d5929e4 (archive: pruned by the A3 rewrite)` · **drained:** s1319, 2026-08-01.
 
 ## Verdict
 
@@ -76,11 +76,11 @@ Read the shipped `drawTextTexture`: the shrink loop exits on `measureText(text).
 
 ## Merge classification
 
-⚠️ **The two-dot diff was a trap here and a blind `git merge` would have destroyed a day of work.** `main..lane/m3` reports **59 files / 2311 deletions**, because the lane's base `4cf7da4b` **predates** main: it renders main's newer commits as deletions. A branch merge would have deleted s1318's four review files, `marketing/outbox/ticker-digest-2026-07-31.md`, `reviews/shots-f1316-1/`, this fire's own freshly-authored `tasks/lane-b-ap07-night-shift-fixtures.md`, and **reverted `src/sim/HeadlessContractSim.ts`**, un-shipping the AP-07 pin lift.
+⚠️ **The two-dot diff was a trap here and a blind `git merge` would have destroyed a day of work.** `main..lane/m3` reports **59 files / 2311 deletions**, because the lane's base `da0c32d2` **predates** main: it renders main's newer commits as deletions. A branch merge would have deleted s1318's four review files, `marketing/outbox/ticker-digest-2026-07-31.md`, `reviews/shots-f1316-1/`, this fire's own freshly-authored `tasks/lane-b-ap07-night-shift-fixtures.md`, and **reverted `src/sim/HeadlessContractSim.ts`**, un-shipping the AP-07 pin lift.
 
 `node scripts/lane-usable.mjs lane-a` gave the correct denominator — **`ahead=1 paths=6`, all six `HELD LANE-ONLY`** — and those six are the whole drain unit. Merged **path-scoped** (`git checkout lane/m3 -- <6 paths>`), producing exactly 6 changed paths and zero collateral.
 
-ⓘ The lane holds f1316-1's *content* through the runner's own commit, not through main's merge commit `b1dc3306` — so `git merge-base --is-ancestor b1dc3306 lane/m3` is **false** while the file contents agree. That is the false-ahead shape; the per-path classifier saw it correctly and the two-dot diff did not.
+ⓘ The lane holds f1316-1's *content* through the runner's own commit, not through main's merge commit `efa3b252` — so `git merge-base --is-ancestor efa3b252 lane/m3` is **false** while the file contents agree. That is the false-ahead shape; the per-path classifier saw it correctly and the two-dot diff did not.
 
 | File | Class |
 | --- | --- |

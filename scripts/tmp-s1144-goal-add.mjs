@@ -12,13 +12,13 @@ if (tasks.some((t) => t.id === 'lane-vp-02b-jumper-slot-repair')) {
   tasks.splice(prevIdx + 1, 0, {
     id: 'lane-vp-02b-jumper-slot-repair',
     title:
-      'Retire the dead char.claim_jumper runtime lookup across the seven stranded e2e specs (rename propagation left half-done by 82543f27).',
+      'Retire the dead char.claim_jumper runtime lookup across the seven stranded e2e specs (rename propagation left half-done by 0f5fb77e).',
     status: 'queued',
     taskFile: 'lane-vp-02b-jumper-slot-repair.md',
     lane: 'lane-b',
     spec:
       'reviews/vp-02b-jumper-slot-red-stop.md (F-1144-1 stranded class, F-1144-2 two classes + masking); ' +
-      'root cause 82543f27 src/entities/pools.ts:337/:355; reviews/vp-02d.md:26; reviews/vp-02e.md:60; reviews/vp-02e-runner-report.md:81,:108',
+      'root cause 0f5fb77e src/entities/pools.ts:337/:355; reviews/vp-02d.md:26; reviews/vp-02e.md:60; reviews/vp-02e-runner-report.md:81,:108',
     authoredBy: 's1144 (fire-authored, attended review welcome)',
     mergeHash: null,
     authorNotes:

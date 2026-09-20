@@ -1,9 +1,9 @@
 # Review — f1581-1: a build confirm carries the position it was issued at
 
 - **Slice:** `f1581-1-build-confirm-position` (LANE-C, fire-authored s1581)
-- **Branch / tip:** `lane/c` @ `3c89944d7` (`runner(lane-c): lane-c-f1581-1-build-confirm-position.md`)
-- **Merge-base:** `5528cab9e` · **Base at merge:** `main` @ `64342d4eb` (9 commits ahead of the merge-base)
-- **Merge commit:** `5e32bcc5c187ea95e8c23d8944e028b91d0666dd`
+- **Branch / tip:** `lane/c` @ `c5e80ea48` (`runner(lane-c): lane-c-f1581-1-build-confirm-position.md`)
+- **Merge-base:** `a3c35a636` · **Base at merge:** `main` @ `ccda8f4fe` (9 commits ahead of the merge-base)
+- **Merge commit:** `b363953e3c82c99bb4e3ef6ab4c4b1b2446f0c42`
 - **Gated in:** detached worktree `worktrees/gate-s1583` (§3.0b custody — see "Custody" below)
 - **Gated by:** s1583 fire, 2026-08-09
 
@@ -87,7 +87,7 @@ A live attended session (`claude --resume … --dangerously-skip-permissions`, p
 root as its cwd** for the whole gate. That is exactly the F-1295-1 hazard — a concurrent broad `git add`
 can commit undecided content out from under a HOLD verdict, and no probe the gating fire holds can
 detect it. So the merge was built and gated in detached worktree `worktrees/gate-s1583`, and `main`'s
-working tree was never touched with undecided content. `main` was verified unmoved (`64342d4eb`) and the
+working tree was never touched with undecided content. `main` was verified unmoved (`ccda8f4fe`) and the
 gate branch's first parent verified identical to it immediately before a **`--ff-only`** fast-forward, so
 the merged tree is byte-for-byte the tree that was gated.
 

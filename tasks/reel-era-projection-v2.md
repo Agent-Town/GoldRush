@@ -32,7 +32,7 @@ EH-3 shipped the honest projectionist but the public board strips a reel's era p
 
 ## Scope
 
-1. **The projection** (as v1): the `?reel=` WATCH response carries the stored tape's `meta.buildId`, `meta.engineHash`, `meta.era`. Read-side only; nothing else about the projection changes; reel handles on board rows stay handles. Retire the s2308 veto comment and **replace it with one naming `af85497537` as what retired its premise**, so the next reader does not re-litigate it.
+1. **The projection** (as v1): the `?reel=` WATCH response carries the stored tape's `meta.buildId`, `meta.engineHash`, `meta.era`. Read-side only; nothing else about the projection changes; reel handles on board rows stay handles. Retire the s2308 veto comment and **replace it with one naming `ed0d3c5389` as what retired its premise**, so the next reader does not re-litigate it.
 2. **The half-stamped reel keeps its honest refusal (F-2376-2).** After your change, ALL THREE of these must reach the show rather than `reason:'unavailable'`:
    - `{buildId, engineHash, era}` → plays (or refuses on era MISMATCH, as today)
    - `{buildId, engineHash}` → reaches the **unstamped-era refusal**, naming the build

@@ -2,7 +2,7 @@
 
 **Slice:** `lane-d-ap16-6-verbs`  
 **Lane tip:** `6f92826659e14261e83963aab30baceef7038b64`  
-**Lane base:** `5bcea8b537936d0fab250eda8630271171750bbc`  
+**Lane base:** `5d38fb9c859222d19203a8daf1cd1eba37a3524c`  
 **Gate candidate:** `cc5da5cd00918afbeb538af7c024278bad3f883e` in detached worktree `gate-s1694`  
 **Salvage ref:** `save/ap16-6-s1694-6f928266`
 
@@ -60,7 +60,7 @@ The pending-secure branch freezes sim time but calls `prospector.updateSimulatio
 | AP-16-6 + blast + water + death + build-menu + desktop/390px boot, `--workers=1` | **40/40**, rc 0, 222.4 s |
 | fresh `codex review --commit cc5da5cd` using Codex 0.147.0 | **6 findings**: four P1, two P2 |
 | `e2e/agent-view.spec.ts`, candidate | **4 pass / 1 fail** |
-| same `agent-view` suite on clean main `9a57975c9` | **4 pass / 1 fail**, proving the large manifest/snapshot drift predates AP-16-6; candidate additionally adds its required `weapon` and works-entry fields |
+| same `agent-view` suite on clean main `9a57975c9 (archive: pruned by the A3 rewrite)` | **4 pass / 1 fail**, proving the large manifest/snapshot drift predates AP-16-6; candidate additionally adds its required `weapon` and works-entry fields |
 
 Full gate transcript: `artifacts/ap16-6-gate-s1694.txt`.
 

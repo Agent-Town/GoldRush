@@ -65,4 +65,4 @@ Fresh unprimed visual QA returned **SHIP** for the exact final renders. The fixe
 
 - `npm run build`: pass on the exact exported bytes.
 - This wave replaces the already mounted Town plate GLB at its stable path; no runtime source was changed.
-- Branch base is `e21dc4aa`; main was observed at `1da7bfb6`. None of the plate's canonical source inputs or the Wave 2 queue/recipe changed between those commits.
+- Branch base is `294a915a`; main was observed at `0cec4a83`. None of the plate's canonical source inputs or the Wave 2 queue/recipe changed between those commits.

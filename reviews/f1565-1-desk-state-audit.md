@@ -2,7 +2,7 @@
 
 **Slice:** `tasks/lane-b-f1565-1-desk-state-audit.md` (FIRE-AUTHORED s1565, from F-1561-5 with a corrected cause)
 **Branch/tip:** `lane/b` @ `6df0f110c` — runner commit `runner(lane-b): lane-b-f1565-1-desk-state-audit.md`, 2026-08-08T18:23:31+07
-**Drained by:** s1566 fire · **Base:** `e44dc56ab` (merge-base main↔lane/b)
+**Drained by:** s1566 fire · **Base:** `2599c7936` (merge-base main↔lane/b)
 
 ## VERDICT: MERGE — gates green, scope exact, and the tool answers the question it was built for on the live board.
 
@@ -43,7 +43,7 @@ CLOSED=0 · OPEN=5 · BOTH=0 · OPEN-DESK-ONLY=17 · UNRECORDED=0
 
 ## Merge classification
 
-Base `e44dc56ab`. **Main moved on ZERO of the lane's five paths** (`git diff --stat <base> main -- <paths>` empty), so every file is LANE-TOUCHED / MAIN-UNMOVED — no 3-way graft needed, no conflicts to resolve.
+Base `2599c7936`. **Main moved on ZERO of the lane's five paths** (`git diff --stat <base> main -- <paths>` empty), so every file is LANE-TOUCHED / MAIN-UNMOVED — no 3-way graft needed, no conflicts to resolve.
 
 | Path | Class | Note |
 |---|---|---|

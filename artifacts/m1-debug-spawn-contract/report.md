@@ -1,6 +1,6 @@
 # M1 debug spawn contract
 
-Base: `cec0e113c5bc3a84b33b62d84656b40824940cc9`
+Base: `1498270e4005f366b13189bbf29b9aba27780217`
 
 ## Before
 

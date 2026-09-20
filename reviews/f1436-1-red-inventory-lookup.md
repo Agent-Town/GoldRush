@@ -1,7 +1,7 @@
 # f1436-1-red-inventory-lookup — drain review (s1447)
 
-**Slice:** `f1436-1-red-inventory-lookup` · **branch:** `lane/perf` (lane-d) · **tip:** `63febc9b`
-**Merge-base:** `f0151de9` · **Merged as:** `1e3e67e108ce8c3c7712f97a66d5bb43de69c117`
+**Slice:** `f1436-1-red-inventory-lookup` · **branch:** `lane/perf` (lane-d) · **tip:** `e7011955`
+**Merge-base:** `8eb04081` · **Merged as:** `4070ace526aa82525b8a73e5439ac44f9d685b87`
 **Gated in:** detached worktree `gate-s1447` (§3.0b), removed after.
 
 ## VERDICT: ACCEPT — MERGED.
@@ -19,7 +19,7 @@ point: F-1444-2's hazard is inventory membership being read as exoneration, and 
 answered "clean" for an unrecorded spec would have industrialised exactly that mistake.
 
 ## Merge classification
-Base `f0151de9`; **main never moved any of the three files since** (`git log f0151de9..main --
+Base `8eb04081`; **main never moved any of the three files since** (`git log 8eb04081..main --
 <path>` empty for `package.json`; both scripts absent from main entirely).
 
 | file | classification | note |
@@ -33,8 +33,8 @@ by `git rev-parse HEAD:<path>` vs `refs/heads/lane/perf:<path>`.
 
 ⚠️ **A two-dot `git diff main..lane/perf` reported six extra files including a 142-line
 "deletion" of `tasks/art-drill-yard-stations-keyed.md` and an 8-line cut to `tasks/goals.json`.
-Those are stale-base phantoms, not deletes** — the lane branched at `f0151de9`, before this same
-fire committed those files at `9d89770b`. The three-dot diff and the runner's own commit stat both
+Those are stale-base phantoms, not deletes** — the lane branched at `8eb04081`, before this same
+fire committed those files at `d2dc14cc`. The three-dot diff and the runner's own commit stat both
 report the true content: **3 files, +330/-1.** Recorded because the phantom set named files this
 fire had just written, which is the most convincing possible version of that illusion.
 

@@ -69,11 +69,11 @@ The independent `codex review` second-opinion command was attempted three times.
 
 ## Verdict
 
-**MERGED** `8efbb0eac51ad961f8fc476d0b3934a7f0cc9570`. Slice branch `lane/c` @ `985a7f892`, base `b1a607e59`.
+**MERGED** `924e59711cf1ee1d1f38310644ce7b6a31c7b96b`. Slice branch `lane/c` @ `985a7f892`, base `6da5bfbf8`.
 
 ## Merge classification
 
-Base `b1a607e59`; 6 paths, **all LANE-TOUCHED / MAIN-UNMOVED** — `lane-usable.mjs` reported every path `HELD LANE-ONLY` and main had moved none of them, so `ort` merged clean with no conflicts and no graft. Custody per §3.0b: the whole gate ran in a **detached worktree `gate-s1570`**, never in main's tree, until the verdict was MERGE.
+Base `6da5bfbf8`; 6 paths, **all LANE-TOUCHED / MAIN-UNMOVED** — `lane-usable.mjs` reported every path `HELD LANE-ONLY` and main had moved none of them, so `ort` merged clean with no conflicts and no graft. Custody per §3.0b: the whole gate ran in a **detached worktree `gate-s1570`**, never in main's tree, until the verdict was MERGE.
 
 | Path | Class |
 |---|---|
@@ -94,7 +94,7 @@ Base `b1a607e59`; 6 paths, **all LANE-TOUCHED / MAIN-UNMOVED** — `lane-usable.
 | `npm run test:ledger-guards` | **132 tests / 132 pass / 0 fail (8.3 s)**; findings-state, blocker-panel, ruling-propagation, citations all PASS |
 | Playwright / `test:node-guards` | **not owed** — no `src/**`, `e2e/**`, `src/sim/**`, `src/systems/**`, `src/entities/**` in the diff |
 
-`status-archive-audit` was red at gate time **by construction and not attributable to the slice**: it named `465f1533`, my own lock commit, for dropping s1569's line-1 — which §4 calls *"normal, not a defect"* when the fire's own handoff restores it. Cured in the handoff commit; re-run green as the fire's last act.
+`status-archive-audit` was red at gate time **by construction and not attributable to the slice**: it named `2c17470f`, my own lock commit, for dropping s1569's line-1 — which §4 calls *"normal, not a defect"* when the fire's own handoff restores it. Cured in the handoff commit; re-run green as the fire's last act.
 
 **Manufactured RED, re-derived rather than inherited.** I collapsed `const bare = byName[bareStem(fullStem)]` to `const bare = full` **by file edit** (not a shell-quoted probe — F-1569's own stub lesson) and got exactly the runner's claim: 5 tests / 4 pass / 1 fail, `a slot-stripped review ships the master and manufactures F-1569-1`, `actual: 'TRULY-BANKED'` vs `expected: 'SHIPPED'`. Restored and proved **byte-identical to the lane blob by sha256** (`5a0dd69e11281ead8946de27480ea1dac5095a9a51923dde753b712876402b63`).
 

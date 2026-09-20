@@ -8,7 +8,7 @@ READ FIRST: `AGENTS.md`; `reviews/calib-suite-workers.md` §"F-1107-2" (the find
 
 Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead is NORMAL — the runner auto-commits. For each ahead commit: if its content is already merged to main (verify via git log/diff), it is a SAFE DUPE → `git checkout -B lane/m3 main && git clean -fd` and PROCEED. STOP-and-report ONLY if an ahead commit's content is NOT on main (undrained work — resetting would DESTROY it), or the worktree holds uncommitted edits you did not make. Then `npm install --no-audit --no-fund`; `npm run build` green before touching anything.
 
-*(s1121 pre-measured this for you and you must still re-verify it yourself: `lane/m3` was 1 ahead at `c6d520d6`, whose two files are blob-identical to main — `reviews/queue-guard-ancestry-union.md` = `f2496894`, `scripts/drain-block-check.mjs` = `e7a56cd4` — a SAFE DUPE, so the reset is loss-free. The worktree was CLEAN, 0 dirt lines. main was `071434d4`.)*
+*(s1121 pre-measured this for you and you must still re-verify it yourself: `lane/m3` was 1 ahead at `c6d520d6`, whose two files are blob-identical to main — `reviews/queue-guard-ancestry-union.md` = `f2496894`, `scripts/drain-block-check.mjs` = `e7a56cd4` — a SAFE DUPE, so the reset is loss-free. The worktree was CLEAN, 0 dirt lines. main was `f6dc4b33`.)*
 
 ## Why (F-1107-2, drained `9614b7eb` on 2026-07-27; plus source facts re-verified by s1121)
 

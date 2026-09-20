@@ -19,7 +19,7 @@ const bridge = [
   '> substance and they agree on every number they share — **with one exception, resolved in favour of the surgery**',
   '> **pass because it is strictly newer.** `milk/twin-sockets` was authored against a base where the Regatta',
   '> briefing still promised six beacon gates, so its own rows below read **BROKEN: 1 of 4**. That defect was cured',
-  '> at `7bfd62ee` before this branch merged. ➡️ **BROKEN IS 0 of 4.** Every twin-sockets sentence asserting',
+  '> at `45f54b88` before this branch merged. ➡️ **BROKEN IS 0 of 4.** Every twin-sockets sentence asserting',
   '> otherwise is struck in place below, never deleted — F-1497-1: a review’s claims about a shared document are',
   '> perishable, and draining a pile in order is what perishes them.',
 ];

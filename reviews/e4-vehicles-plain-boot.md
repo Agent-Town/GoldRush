@@ -1,9 +1,9 @@
 # Review — e4-vehicles-plain-boot
 
 **Slice:** `e4-vehicles-plain-boot` (F-E4-3 corrective; CAPABILITY-LADDER L7)
-**Branch:** `lane/c` · **Lane tip:** `686e3c65c` · **Base:** `a55581eed995539cf166051bc1a1c58c4c66d5a2`
-**Merge:** `98cc0fc2f2f8e2d26ad46b4eb7ca4a1005f7dab6` (s2497 drain, 2026-09-04)
-**Gated in:** detached worktree `gate-s2497` at main `4bcb42dc6` (§3.0b — main's tree held live attended heat-11 dirt)
+**Branch:** `lane/c` · **Lane tip:** `5823eaad6` · **Base:** `9b2ebf912db6984c4414f38d008bfce6f78c4afe`
+**Merge:** `49370319bed06dd1f2a7901b99f15a3a9699ded0` (s2497 drain, 2026-09-04)
+**Gated in:** detached worktree `gate-s2497` at main `c9c37d3f1` (§3.0b — main's tree held live attended heat-11 dirt)
 
 ## Verdict
 
@@ -100,7 +100,7 @@ write is stable (no fixed point; the master's second honesty clause does not fir
 
 ## Merge classification
 
-Base `a55581ee`, 8 paths, `main..lane/c` now empty.
+Base `9b2ebf91`, 8 paths, `main..lane/c` now empty.
 
 - **LANE-ONLY (6)** — main never moved them: `src/game/Game.ts`, `src/game/RunTape.ts`,
   `src/story/trailGuide.ts`, `src/encyclopedia/registry.ts`, and the two new screenshots.

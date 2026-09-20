@@ -9,7 +9,7 @@ The attended session runs it after the deploy that carries this slice.**
 `e3-moth-season`'s composition changed on 2026-09-05. Era-5 pin `324bb3cd0e32f2b7…` records it in its
 own words:
 
-> content re-hash: e3-moth-season drain (de21da4f5) rewrites the Moth Season contract row
+> content re-hash: e3-moth-season drain (d07a0e2e7) rewrites the Moth Season contract row
 > (assets/contracts/epoch-3-voltage/contracts.json) — the sabotageable light circuit as contract data,
 > zero src/ edits; every other contract replays byte-identical …
 

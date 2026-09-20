@@ -2,8 +2,8 @@
 
 - **Slice:** `tasks/lane-d-collection-guards-root-invariance.md` (FIRE-AUTHORED s1201)
 - **Branch / tip:** `lane/perf` @ `278ad24c095372b0b67cd85a4759ab5938b8c68e`
-- **Merge base:** `8c398bdc` (stale by 3 main commits — see Merge classification)
-- **Merged at:** `fbefb903` ⚠️ **not by a drain commit of mine — see F-1202-2**
+- **Merge base:** `a5f632f3` (stale by 3 main commits — see Merge classification)
+- **Merged at:** `46d4931e` ⚠️ **not by a drain commit of mine — see F-1202-2**
 - **Drained by:** s1202 fire, 2026-07-29
 - **§3.0 drain-block-check:** ✅ CLEAR (`status="queued"`), run FIRST, before classification and before I formed an opinion.
 
@@ -47,7 +47,7 @@ The run reported battery wall-time 5.35s → 5.53s; I measure 14–21s. Not a de
 
 ## Merge classification
 
-Base `8c398bdc` is 3 commits stale (`cf00ad73`, `4247c383`, `be2c9657`). The two-dot diff therefore showed **4 phantom deletions**, which I verified are exactly the set of files main moved since the base — not deletions at all:
+Base `a5f632f3` is 3 commits stale (`2713ad78`, `8e3568f0`, `6e085464`). The two-dot diff therefore showed **4 phantom deletions**, which I verified are exactly the set of files main moved since the base — not deletions at all:
 
 | File | Class | Action |
 |---|---|---|
@@ -58,7 +58,7 @@ Base `8c398bdc` is 3 commits stale (`cf00ad73`, `4247c383`, `be2c9657`). The two
 | `scripts/whole-suite-collection.test.mjs` | LANE-TOUCHED | taken from lane |
 | `STATUS.md`, `tasks/BACKLOG.md`, `tasks/goals.json`, `tasks/lane-d-collection-guards-root-invariance.md` | **MAIN-MOVED-ONLY — phantom deletions from the stale base** | left alone |
 
-Collision check: the lane-touched set and the main-moved set are **disjoint**, so no 3-way graft was needed. Post-merge `git diff fbefb903 lane/perf --` over the 5 paths is **empty — the merge landed byte-exact**.
+Collision check: the lane-touched set and the main-moved set are **disjoint**, so no 3-way graft was needed. Post-merge `git diff 46d4931e lane/perf --` over the 5 paths is **empty — the merge landed byte-exact**.
 
 Zero `src/` and zero `e2e/` bytes ⇒ no browser probe and no screenshots required (m3-05e/m3-05f precedent), stated here rather than silently omitted.
 
@@ -86,7 +86,7 @@ Two *different* truncation points ⇒ a **race**, not a buffer boundary. And it 
 
 ⚠️ **This defect was always in the guard.** The new meta-guard did not create it; it raised process load enough to expose it. The pre-merge 0/6 green was a **false green** — a racy capture that happened not to lose the race under lighter load. Reverting this slice would restore that comfortable false green and re-hide the bug, which is why I did not revert.
 
-**Cure measured, not guessed** (memory: *a finding's recommendation is an untested second hypothesis*). Replacing the synchronous capture with promisified `execFile` — preserving the run's `{status, stdout, stderr}` shape so the scope-3 diagnostic and all three assertions survive unchanged — gives **0/8 red**, and is *faster* (12–15s vs 16–21s, because the async child no longer blocks the test runner's event loop). Prototyped on disk **unstaged**, measured, and reverted; the tree is back to `fbefb903` byte-for-byte.
+**Cure measured, not guessed** (memory: *a finding's recommendation is an untested second hypothesis*). Replacing the synchronous capture with promisified `execFile` — preserving the run's `{status, stdout, stderr}` shape so the scope-3 diagnostic and all three assertions survive unchanged — gives **0/8 red**, and is *faster* (12–15s vs 16–21s, because the async child no longer blocks the test runner's event loop). Prototyped on disk **unstaged**, measured, and reverted; the tree is back to `46d4931e` byte-for-byte.
 
 ➡️ **Corrective authored + queued: `lane-d-collection-guards-spawnsync-truncation`.** Not hand-applied: fires gate and author, Codex implements.
 
@@ -94,13 +94,13 @@ Two *different* truncation points ⇒ a **race**, not a buffer boundary. And it 
 
 ### 🔻 F-1202-2 — a concurrent writer committed my staged merge under its own unrelated message, through an ACTIVE lock
 
-At 07:20:43 I took the line-1 lock (`be2c9657`). At **07:25:43**, while my gate battery was running, commit **`fbefb903` — "goals: tree updated — Chalk ruling unblocks era-art, rf-05 public URL live, e10 Static warm w/ 3 Qs pending"** (author `Claude (Cowork orchestrator)`) landed carrying **its own** `logs/.goal-tree.html`, `logs/dashboard.html`, `tasks/goals.json` edits **plus all five of my staged merge paths**.
+At 07:20:43 I took the line-1 lock (`6e085464`). At **07:25:43**, while my gate battery was running, commit **`46d4931e` — "goals: tree updated — Chalk ruling unblocks era-art, rf-05 public URL live, e10 Static warm w/ 3 Qs pending"** (author `Claude (Cowork orchestrator)`) landed carrying **its own** `logs/.goal-tree.html`, `logs/dashboard.html`, `tasks/goals.json` edits **plus all five of my staged merge paths**.
 
 It used a **non-path-scoped `git commit`**, which commits the whole index — so it swept my staged drain into a commit whose message describes something else entirely. Consequences, all real:
 
-1. The slice's merge hash is `fbefb903`, a commit whose message never mentions it. Anyone auditing this slice by commit message finds nothing (**Mistake #16 shape, from the other direction**).
+1. The slice's merge hash is `46d4931e`, a commit whose message never mentions it. Anyone auditing this slice by commit message finds nothing (**Mistake #16 shape, from the other direction**).
 2. One commit now mixes two unrelated concerns, violating "one concern per commit" and "path-scoped adds ONLY".
-3. My in-flight measurement was corrupted: a control I intended as "clean main" silently ran against the merged tree (it reported 74 tests where 72 were expected — which is how I caught it). I re-ran the control against `4247c383`'s file contents explicitly and got the true 0/6.
+3. My in-flight measurement was corrupted: a control I intended as "clean main" silently ran against the merged tree (it reported 74 tests where 72 were expected — which is how I caught it). I re-ran the control against `8e3568f0`'s file contents explicitly and got the true 0/6.
 
 **Mitigation I adopted for the rest of the session, and recommend as practice while any concurrent writer is live:** stage nothing you are not about to commit; make experimental edits **on disk, unstaged**, since a plain `git commit` sweeps the *index* but not the working tree. Both my control and my cure prototype were run that way and survived untouched.
 
@@ -108,7 +108,7 @@ Not raised as a defect against the slice. Raised because the lock convention is 
 
 ## Bookkeeping
 
-- Goal leaf `factory-collection-guards-root-invariance` → `status: "merged"`, `mergeHash: fbefb903`, this review, drain notes (Goal Registration Law).
+- Goal leaf `factory-collection-guards-root-invariance` → `status: "merged"`, `mergeHash: 46d4931e`, this review, drain notes (Goal Registration Law).
 - Done-move prefixed `shipped-fbefb903-…`.
 - Corrective `lane-d-collection-guards-spawnsync-truncation` authored, goal leaf registered, queued to `tasks/queue/lane-d/`.
 - GZ-01: **not owed** — zero `src/` and zero `e2e/` bytes, no player-visible change (m3-05e/f precedent).

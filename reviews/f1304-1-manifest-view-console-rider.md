@@ -2,8 +2,8 @@
 
 - **Slice:** `lane-a-f1304-1-manifest-view-console-rider` (FIRE-AUTHORED by s1304)
 - **Branch / tip:** `lane/m3` @ `4cd3310e979f623951acfcdb0602a242a3f8d33d`
-- **Base:** `ab52c3957829e8b0e915f9300a4c29275d782e53`
-- **Merged at:** `babedc32e417cf8ad58ed26e4c06691975f81b44`
+- **Base:** `73564f686982669b4f26e46b012a0fcf9d627e53`
+- **Merged at:** `7d92fe5a88b25972062b0f9a5cdc6bc6677e4a37`
 - **Verdict:** ✅ **MERGE** — the cure is correct and proven, **but not by the evidence its own acceptance bar asked for.** One finding raised (F-1305-1), one class observation banked (F-1305-2).
 
 ## What it does
@@ -29,11 +29,11 @@ else errors.push(text);
 
 | File | Class | Evidence |
 |---|---|---|
-| `e2e/agent-view.spec.ts` | **LANE-TOUCHED only** | `git diff --stat ab52c395 main -- e2e/agent-view.spec.ts` **EMPTY** — main never moved it since the lane base |
+| `e2e/agent-view.spec.ts` | **LANE-TOUCHED only** | `git diff --stat 73564f68 main -- e2e/agent-view.spec.ts` **EMPTY** — main never moved it since the lane base |
 
-Single file, no 3-way graft needed. The only main commits since base (`0de66a0a`,
-`33609823`, `f727cb75`) touch `tasks/`, `scripts/` and `STATUS.md` — verified by
-`git show --stat`; `0de66a0a`'s headline mentions `agent-view.spec.ts:283` but it edits
+Single file, no 3-way graft needed. The only main commits since base (`6cb88379`,
+`88e70e37`, `51365174`) touch `tasks/`, `scripts/` and `STATUS.md` — verified by
+`git show --stat`; `6cb88379`'s headline mentions `agent-view.spec.ts:283` but it edits
 only *citation titles* in `tasks/BACKLOG.md` and the master, not the spec. **The spec was
 byte-identical to the tree s1304 measured**, which is what makes the control arm below valid.
 

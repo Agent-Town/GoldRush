@@ -1,39 +1,39 @@
 running '/tmp/s1396-bisect.sh'
 Bisecting: 1495 revisions left to test after this (roughly 11 steps)
-[6be7b61355baf53032b7dc099e45402c26fb32c0] s1073: lock ACTIVE — content-classify the four ahead lane branches behind the three-fire dry claim
+[e5a20b93ed5d2de64c5e5dfbc2e69252ca010c2c] s1073: lock ACTIVE — content-classify the four ahead lane branches behind the three-fire dry claim
 running '/tmp/s1396-bisect.sh'
 Bisecting: 747 revisions left to test after this (roughly 10 steps)
-[9595f48cb193bf3c78ee4ca224ff4494c28d8e00] s831: lock ACTIVE — CODEX-WALL hold (probe gated; re-verify board dry + ghost; anti-spam closed; bookkeeping)
+[d899512746c28187eb22f8eb8742298ba04f2159] s831: lock ACTIVE — CODEX-WALL hold (probe gated; re-verify board dry + ghost; anti-spam closed; bookkeeping)
 running '/tmp/s1396-bisect.sh'
 Bisecting: 373 revisions left to test after this (roughly 9 steps)
-[4d844354e113fa4a561d6fb7d801fdc90b9f187e] s992 handoff: NO-OP — board re-proven idle ~11min after s991, all claims re-verified live (queues empty, tree clean, lanes m3/m4/perf 0-ahead, e2-arsenal false-ahead unchanged, CODEX-WALL zombie, attended live accounts/MP+lane-b); condensed s991/s989 archive bullets
+[62dd8ca5241b4b728debed04481c99b84f0e04c7] s992 handoff: NO-OP — board re-proven idle ~11min after s991, all claims re-verified live (queues empty, tree clean, lanes m3/m4/perf 0-ahead, e2-arsenal false-ahead unchanged, CODEX-WALL zombie, attended live accounts/MP+lane-b); condensed s991/s989 archive bullets
 running '/tmp/s1396-bisect.sh'
 Bisecting: 186 revisions left to test after this (roughly 8 steps)
-[b6106f278ec1c3ba5bc0f71a7d80daff4ab58c0c] s901 handoff: DRAINED RF-01 frontier @bbcba57d + RF-03a bug-office-api @4c6ed653; desk false-doned x2 (stale lane) -> refresh-lane-d.req + re-queue next fire; trail-guide rerouted lane-c->lane-b (live)
+[c70c503000eaa0742939508fa64b76d8b163cb76] s901 handoff: DRAINED RF-01 frontier @d889b2c1 + RF-03a bug-office-api @6fb77f85; desk false-doned x2 (stale lane) -> refresh-lane-d.req + re-queue next fire; trail-guide rerouted lane-c->lane-b (live)
 running '/tmp/s1396-bisect.sh'
 Bisecting: 93 revisions left to test after this (roughly 7 steps)
-[2a386fca176e55353e2d8d2b36a74c36172a9ab0] s933 handoff: NO-OP verified fresh — false-aheads git-proven (0-line diffs), m3/polish merged-ancestors, RF-05b/T10/census/deploy/wall-rm all owner-desk; lock CLEARED
+[4c423d0bba83982f70a04167aa8be56302b68887] s933 handoff: NO-OP verified fresh — false-aheads git-proven (0-line diffs), m3/polish merged-ancestors, RF-05b/T10/census/deploy/wall-rm all owner-desk; lock CLEARED
 running '/tmp/s1396-bisect.sh'
 Bisecting: 47 revisions left to test after this (roughly 6 steps)
-[1d82bc42ee6e5f597161b1e99cbe42b8a4a8630e] s957: lock ACTIVE — drain lane-a census landmark-brightness
+[9c62b18800e3014cca1a0b6face74474b83c647c] s957: lock ACTIVE — drain lane-a census landmark-brightness
 running '/tmp/s1396-bisect.sh'
 Bisecting: 22 revisions left to test after this (roughly 5 steps)
-[96e31202a312d4ed88eec67e88b25c16f449f8bd] runner(art): art-batch-interview-cartoons.md
+[96e31202a312d4ed88eec67e88b25c16f449f8bd (archive: pruned by the A3 rewrite)] runner(art): art-batch-interview-cartoons.md
 running '/tmp/s1396-bisect.sh'
 Bisecting: 11 revisions left to test after this (roughly 4 steps)
-[d20ab91b74d78f3cf7bd0275c0e0b5a489887585] chore: consume town-scale-zoom queue file (done-move landed, s954 drain)
+[74c44477bc75ea30b3eb38538cb5dd8e885ec098] chore: consume town-scale-zoom queue file (done-move landed, s954 drain)
 running '/tmp/s1396-bisect.sh'
 Bisecting: 5 revisions left to test after this (roughly 3 steps)
-[a47db28ac0ddb0eb9c880f3fcd2ccfb0a05c3535] s955 handoff: NO-OP — board re-proven fresh (queues empty, tree clean, runner idle, attended still live pre-launch); lanes git-reverified unchanged; ticker digest due after 06:00 Jul-24; lock CLEARED
+[b5d9857b28652f610fedda188bf583250dc2b97a] s955 handoff: NO-OP — board re-proven fresh (queues empty, tree clean, runner idle, attended still live pre-launch); lanes git-reverified unchanged; ticker digest due after 06:00 Jul-24; lock CLEARED
 running '/tmp/s1396-bisect.sh'
 Bisecting: 3 revisions left to test after this (roughly 2 steps)
-[5fc2c645ae6d9bcc1e4f6ca561e5ac3220b1763c] drain: RF-05b THE PHYSICAL FRONTIER — E1 release build (E2+ excluded, debug stripped, imports clamp, boot re-check)
+[63a0311f008f5719971246220beab202233d71ab] drain: RF-05b THE PHYSICAL FRONTIER — E1 release build (E2+ excluded, debug stripped, imports clamp, boot re-check)
 running '/tmp/s1396-bisect.sh'
 Bisecting: 0 revisions left to test after this (roughly 0 steps)
-[6c009cb8119241f79f1926926b15a63672449bdf] feat: add physical E1 release build
+[776cd64a217251fec50a79eb26151eed4be7f604] feat: add physical E1 release build
 running '/tmp/s1396-bisect.sh'
-6c009cb8119241f79f1926926b15a63672449bdf is the first bad commit
-commit 6c009cb8119241f79f1926926b15a63672449bdf
+776cd64a217251fec50a79eb26151eed4be7f604 is the first bad commit
+commit 776cd64a217251fec50a79eb26151eed4be7f604
 Author: Claude (Cowork orchestrator) <<owner-email>>
 Date:   Thu Jul 23 06:22:13 2026 +0700
 

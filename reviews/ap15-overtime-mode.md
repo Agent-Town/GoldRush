@@ -1,8 +1,8 @@
 # ap15-overtime-mode — the Homesteader's door (gr-sim plays past the secure)
 
 **Slice:** `tasks/lane-ap15-overtime-mode.md` (AP-15 axis 8, THE HOMESTEAD)
-**Branch/tip:** `lane/d` @ `fd8856f47` — `runner(lane-d): lane-ap15-overtime-mode.md`
-**Merged to main:** `d18d1765a7f11b49c9f638137e7576da1aef0dcb` (2026-08-08T13:22+07, **attended-side**)
+**Branch/tip:** `lane/d` @ `820ef9490` — `runner(lane-d): lane-ap15-overtime-mode.md`
+**Merged to main:** `21695d101500b47c5c289e0d44df79d9333026b3` (2026-08-08T13:22+07, **attended-side**)
 **Reviewer:** s1555 fire
 
 ## VERDICT: PASS — evidence independently re-measured on the merged content, post-merge
@@ -46,7 +46,7 @@ line is structurally unchanged rather than merely observed to be unchanged. The 
 | `npx tsc --noEmit` | **rc=0**, 5.9 s |
 | `npm run build` | **rc=0**, 30.1 s — `✓ built in 2.19s`, asset-diet ceilings respected (Herald 1,158,214 / 1,500,000 bytes) |
 | `node scripts/gr-sim.test.mjs` | **rc=0 — 16 tests, 16 pass, 0 fail, 0 skipped**, 316.5 s |
-| Merge classification | **pure LANE-TOUCHED across all 4 files, ZERO MAIN-MOVED** (merge-base `d5b3f768f`); clean `ort`, no graft, no conflicts |
+| Merge classification | **pure LANE-TOUCHED across all 4 files, ZERO MAIN-MOVED** (merge-base `8bdf270af`); clean `ort`, no graft, no conflicts |
 | Diff size | 4 files, +144 / −16 |
 
 **THE CONTROL THAT MATTERS — the default-mode pins did not move, and the slice did not re-pin them.**
@@ -69,7 +69,7 @@ requires it for any slice touching `src/sim/`, and this slice does. I did not ru
 session held a concurrent battery for the whole of my window (F-1554-1: the battery cannot be run alone
 on a busy board, and s1554 was starved past 35 minutes attempting exactly this). What exists instead:
 the **runner** reports `388/388` on the lane, and the attended session's own bookkeeping commit
-`f7b6e16e1` cites `391/391` — but that figure is for **mp-07c-3**, a different slice, and I have not
+`378c8b3d5` cites `391/391` — but that figure is for **mp-07c-3**, a different slice, and I have not
 verified either number. Treat node-guards for ap15 as **UNVERIFIED fire-side**.
 
 `gr-sim.test.mjs` took 316.5 s against the ~80 s F-1537-1 baseline — the fire-shell CPU ceiling

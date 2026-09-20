@@ -25,8 +25,8 @@ const permission = decideToolPermission(level, true);
 ```
 
 **What HAS moved since v1 was written — v1's own NO list and MEASURED PREMISE are now stale, which is exactly what stopped the last run. Re-derive all of it, but know what you are looking for:**
-- `auto_pan` is declared **2**, not 3 (`src/agent/ToolSurface.ts:380`, landed `85bb1938`). v1's NO list still said *"auto_pan stays 3"*.
-- `place_building` **now has a declared capability, at level 3** (`src/agent/ToolSurface.ts:386`, landed `12b0011e`). v1's MEASURED PREMISE still said it had none.
+- `auto_pan` is declared **2**, not 3 (`src/agent/ToolSurface.ts:380`, landed `21985788`). v1's NO list still said *"auto_pan stays 3"*.
+- `place_building` **now has a declared capability, at level 3** (`src/agent/ToolSurface.ts:386`, landed `e4336ba8`). v1's MEASURED PREMISE still said it had none.
 
 ## THE RUNG TABLE — RULED vs UNRULED. This distinction governs the whole task.
 
@@ -74,13 +74,13 @@ NO: **the declared rung VALUES** (`auto_pan` 2, `place_building` 3, `auto_collec
 
 PRE-FLIGHT (LANE-SAFETY invariant): any dirty tracked blob must be reachable in git, else STOP.
 
-READ-FIRST: `reviews/agent-rung-honest-gate-s1292.md` (**the re-derivation this master is built on — the ruled/unruled split and the five-site blast radius**) · `src/agent/PermissionLadder.ts` (whole, 32 lines — THE SUBJECT) · `src/agent/ToolSurface.ts:140-270` (the tool table + `runSideEffect`) · `src/agent/ToolSurface.ts:351-390` (the capability declarations) · `src/agent/StandingOrders.ts:341-414` (**your reference implementation**) · `specs/m4-agent-ux/README.md:6-15` (the ratified ladder, amended by the ruling in `85bb1938`).
+READ-FIRST: `reviews/agent-rung-honest-gate-s1292.md` (**the re-derivation this master is built on — the ruled/unruled split and the five-site blast radius**) · `src/agent/PermissionLadder.ts` (whole, 32 lines — THE SUBJECT) · `src/agent/ToolSurface.ts:140-270` (the tool table + `runSideEffect`) · `src/agent/ToolSurface.ts:351-390` (the capability declarations) · `src/agent/StandingOrders.ts:341-414` (**your reference implementation**) · `specs/m4-agent-ux/README.md:6-15` (the ratified ladder, amended by the ruling in `21985788`).
 
 SELF-CHECK: `npm run test:node-guards` **FIRST** (**196/196, rc=0** on current main, measured s1291 — v1's run reported 190/190 only because its lane sat 17 commits behind; if you see 190 you did not refresh, stop and refresh) · `npx tsc --noEmit` clean · `npm run build` green · **every playwright run at `--workers=1`** (fire.md §3.1 — a correctness requirement of the instrument in this shell, not an optimisation; report the literal `Running X tests using M worker(s)` line every time) · `npx playwright test --list` reports **2484 tests in 347 files** as its baseline (measured s1291): the FILE count must not move (you add no spec file) and the TEST count must move by exactly (tests you added × 2 projects) — **state both numbers** · battery: `e2e/m4-01 m4-05 m4-06 m4-09 m4-10 ap-standing-orders 066-walk8 polish-03 trail-guide-beat-priority` · zero console/page errors · plain boot desktop + 390px.
 
 🔴 KNOWN REDS — NOT yours, do not "fix" (automatic reject):
   - `m4-06-embodiment.spec.ts:395` — known **~45% flake** (F-1212-2). Re-measure as a rate before blaming yourself.
   - `m4-06:196`, `m4-07:113`, `locked-win:65` — load/concurrency-class reds (F-1216-1, F-1214-1). Report counts, do not chase.
-  - `ap-standing-orders.spec.ts` is **NOT** a known red any more (cured s1222, `a0aae876`) — a failure there is a real regression, report it.
+  - `ap-standing-orders.spec.ts` is **NOT** a known red any more (cured s1222, `855f4d74`) — a failure there is a real regression, report it.
 
 READY-FOR-GATES + report: the re-derived item-1 table; **which of item 3's five sites you actually changed and how each preserved its test's intent**; the item-7 mutation proof with its output; the literal worker counts and `Running X tests` lines of every battery; item 6's measured result for `polish-03` and `trail-guide`; and any item-4 STOP with full coordinates.

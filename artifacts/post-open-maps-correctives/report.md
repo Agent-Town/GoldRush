@@ -1,7 +1,7 @@
 # post-open-maps-correctives — six correctives, six landed; one of them against half of its own prescription
 
 Task: `tasks/post-open-maps-correctives.md` · branch `feat/post-open-maps-correctives`
-cut from main `7ff3e1b27` (task commit `90ca0cfab`) · scratch worktree · 2026-09-18
+cut from main `d853af7cc` (task commit `4b38d9a50`) · scratch worktree · 2026-09-18
 Node 26.4.0 (`/opt/homebrew/bin` first on PATH), Playwright 1.61.1, three 0.184.0.
 Every browser measurement in this report used this worktree's own `npx vite --port 5312
 --strictPort --host 127.0.0.1`, `--workers=1`, both projects unless a line says otherwise.
@@ -380,7 +380,7 @@ state.
 | `GR_RELEASE=e1 npm run build` | rc=0 (`work/build-e1-final.log`) |
 | plain boots, no `?debug`, `e3-blackout-ridge` / `e3-fairground` / `e4-long-road` / `e5-deepwater-claim` at 1280 and 390 | **8 of 8 boots, 0 console errors, 0 page errors**, each on its own contract (`after/plain-boots/plain-boots.json`) |
 | e2e, both projects, `--workers=1`, port 5312 | `e3-blackout-ridge` 4/4 · `landmark-brightness` 4 passed / 4 skipped · `e3-fairground` + `e3-fairground-flocks` 6/6 · `er01-e4-census` 8/8 · `e5-boss-dredge-queen` 8/8 · `e4-roads-and-convoys` 4 reds, all attributed (F-POC-5) |
-| `GR_GUARD_NO_ARTIFACT=1 node scripts/run-guards.mjs --changed-since 7ff3e1b27` | selects the base gate only (`test:node-guards`, `test:power-budget`, `test:task-guards`, `test:citations`, `test:gate-callers`); no path rule matched, so it was run as the full battery below |
+| `GR_GUARD_NO_ARTIFACT=1 node scripts/run-guards.mjs --changed-since d853af7cc` | selects the base gate only (`test:node-guards`, `test:power-budget`, `test:task-guards`, `test:citations`, `test:gate-callers`); no path rule matched, so it was run as the full battery below |
 | full `npm run test:node-guards`, Node 26 | 918 tests, 906 pass, 7 fail, 5 skipped — every red attributed in the section below (3 x the drain-owned engine pin, 1 x the linked-worktree refusal, 3 x contention, each green alone) |
 | engine era | hash reported, `assets/engine-era.json` untouched — the pin is the drain's; `engine-era-guard` is red by design until it lands |
 | artifact churn | tracked `.png` files the e2e runs rewrote under `artifacts/**` and `reviews/shots-*` were restored with a path-scoped `git checkout --` before every commit; only files this task created are committed |

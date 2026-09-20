@@ -7,7 +7,7 @@ import { createInterface } from 'node:readline';
 const CONTRACT = 'e1-baron';
 const SEED = 'e1-baron-01';
 const MAX_RUNS = 6;
-const ERA = 'd599cd3e';
+const ERA = 'dbcbf312';
 
 const TURRET_SLOTS = [
   { x: -3, z: 12 },

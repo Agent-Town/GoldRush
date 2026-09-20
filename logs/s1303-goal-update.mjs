@@ -3,11 +3,11 @@ import { readFileSync, writeFileSync } from 'node:fs';
 const P = 'tasks/goals.json';
 const doc = JSON.parse(readFileSync(P, 'utf8'));
 
-const MERGE = 'b366421059c18b9bf936bbef8adf72cefdbe8957';
+const MERGE = 'fbc2f07a76efbf66db630f6960675aa806ac99ae';
 const ID = '066-jumper-cadence-realign';
 
 const NOTE = [
-  's1303 DRAINED at b3664210. Gates re-run by the drain, not inherited: tsc clean, build green,',
+  's1303 DRAINED at fbc2f07a. Gates re-run by the drain, not inherited: tsc clean, build green,',
   'slice 6/6 (3 desktop + 3 mobile) at --workers=1 — the standing 066-walk8-engine known-red is CLOSED,',
   'green for the first time since 2026-07-12. Adjacent set DERIVED BY GREP (walk8|strideUnitsPerCycle|',
   'walkFpsPerSpeed|walkMinFps|RUN_CAST_SCALE) rather than inherited from the runner\'s list of four:',

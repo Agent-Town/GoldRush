@@ -1,8 +1,8 @@
 # reel-era-projection-v2 (EH-3b re-land) — the WATCH reel's era papers, and the half-stamp's honest refusal
 
 - **Slice:** `reel-era-projection-v2` (EH-3b re-land), lane-d
-- **Branch / tip:** `lane/d` @ `05d04af50` (`runner(lane-d): reel-era-projection-v2.md`)
-- **Base:** `main` @ `20511acb8` (merge-base `f567890c1`)
+- **Branch / tip:** `lane/d` @ `c1c6a93f4` (`runner(lane-d): reel-era-projection-v2.md`)
+- **Base:** `main` @ `a9364342e` (merge-base `2bc5af92f`)
 - **Gated by:** s2379, in a detached worktree (`gate-s2379`) per fire.md §3.0b — **the merge never touched main's tree**
 - **Predecessor:** `reviews/reel-era-projection.md` (v1, HELD by s2376 — this slice lifts that hold)
 
@@ -13,7 +13,7 @@ not by a broader battery that could have passed for unrelated reasons.
 
 ## What it does
 
-EH-3 (`af854975`) shipped the honest projectionist: an agent reel replays through the county's own
+EH-3 (`ed0d3c53`) shipped the honest projectionist: an agent reel replays through the county's own
 engine and re-verifies its event-log hash in the viewer's own browser. But a reel fetched from the
 **public** board arrived stripped of its era papers, so the show refused *everything* fail-closed.
 
@@ -30,7 +30,7 @@ accepts any subset of the three public keys, normalises **down to `{ buildId }`*
 allowlist is load-bearing for stored/local tapes and is a wider blast radius than this slice needs.
 `src/game/RunTape.ts` is untouched by the diff, which is the master's stated preference, honoured.
 
-The s2308 veto comment is retired and replaced by one naming `af85497537` as what killed its premise,
+The s2308 veto comment is retired and replaced by one naming `ed0d3c5389` as what killed its premise,
 so the next reader does not re-litigate it.
 
 ## Evidence (merged tree, `gate-s2379`)
@@ -78,14 +78,14 @@ the s2374 precedent verbatim. Two independent reasons:
 
 ## Merge classification
 
-Base `f567890c1`; `git merge --no-ff lane/d` applied by the `ort` strategy with **no conflicts**.
+Base `2bc5af92f`; `git merge --no-ff lane/d` applied by the `ort` strategy with **no conflicts**.
 Main moved **2** paths since the lane branched (`STATUS.md`, `tasks/reel-era-projection-v2.md`), and
 **neither is in the lane's set** — so all **9** lane paths are LANE-TOUCHED with zero BOTH-MOVED, and
 no 3-way graft was required.
 
 | File | Class | Note |
 |---|---|---|
-| `functions/api/standings.ts` | LANE-TOUCHED | the projection; retires the s2308 veto comment at `:383` naming `af85497537` |
+| `functions/api/standings.ts` | LANE-TOUCHED | the projection; retires the s2308 veto comment at `:383` naming `ed0d3c5389` |
 | `src/ui/LanternShow.ts` | LANE-TOUCHED | `validateAgentRunTape` — the F-2376-2 cure; forces the engine re-pin |
 | `scripts/agent-reels.test.mjs` | LANE-TOUCHED | the F-2376-1 half of the mirrored contract; cross-links its pair at `:58` |
 | `scripts/test-standings.mjs` | LANE-TOUCHED | the other half; cross-links its pair at `:112` |
@@ -124,7 +124,7 @@ decisive arms on its own merged tree rather than inheriting them** (Mistake #4).
 recorded above"*. That is **circular — the result is stated nowhere in this file**, so it was not
 inheritable, and it was the one arm this drain owed a real number.
 
-### Re-verified independently by s2380 (merged tree: main @ `b24bcf679` + drain re-pin `1d41d4763`)
+### Re-verified independently by s2380 (merged tree: main @ `958c103bc` + drain re-pin `e2d5d231f`)
 
 | Arm | s2380 result |
 |---|---|
@@ -153,7 +153,7 @@ burning `gr-sim` throughout. Recorded so the next fire reads the duration as loa
 `TypeError: Module ".../assets/layer-contracts/m1-core.layer-contract.v1.json?raw" needs an import attribute of "type: json"`.
 
 **CONTROL — this is what makes it reportable rather than a guess.** A detached worktree at the
-**pre-merge** commit `144a316d4` reproduces the break **identically**: same rc=1, same
+**pre-merge** commit `6c45a3f56` reproduces the break **identically**: same rc=1, same
 `Total: 0 tests in 0 files`, same module, same TypeError. **The red is on main already and the merge
 did not cause it**, so this drain is clean on the differential (fire.md §3 — *gate a drain on a
 differential when the battery is already red*).
@@ -161,7 +161,7 @@ differential when the battery is already red*).
 - The importer is `src/world/Terrain.ts:2` — **not among this slice's 9 paths**, and untouched by the merge.
 - It is **broad and long-standing, not a fresh regression**: ten-plus e2e specs pull that chain
   (`terrain3d-claim-pilot`, `water-mask-engine`, `map-census`, `e2-incline`, `terrain3d-default`, …),
-  and `src/world/Terrain.ts` last moved at `5c27a1b5c`.
+  and `src/world/Terrain.ts` last moved at `a26454d4c`.
 - ⚠️ **Why it matters more than its severity first suggests:** *targeted* spec runs still work — s2379's
   own `agent-reels.spec.ts` run was 8/8 — so **every drain that gates only its own spec reads green
   while the full collection is empty.** That is precisely the *"a targeted gate cannot see a collection

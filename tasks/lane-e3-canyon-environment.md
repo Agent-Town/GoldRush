@@ -2,7 +2,7 @@ CODEX: model=gpt-5.6-sol effort=xhigh
 
 # lane-e3-canyon-environment — socket Canyon Works' wave-driven darkness + connect objective (narrows F-ER01-E3-3)
 
-**FIRE-AUTHORED s1470 (attended review welcome).** Fourth instance of the ERA-SOCKET class. Templates: `tasks/lane-e3-moth-socket.md` (drained `47dd309f`) and `tasks/lane-e3-voltage-socket.md` (drained `3ac90dd8`); the class opener was `tasks/lane-e2-pressure-socket.md` (`24c6600f`). **Read `reviews/e3-moth-socket.md` before you start.**
+**FIRE-AUTHORED s1470 (attended review welcome).** Fourth instance of the ERA-SOCKET class. Templates: `tasks/lane-e3-moth-socket.md` (drained `bfeca043`) and `tasks/lane-e3-voltage-socket.md` (drained `9af152ab`); the class opener was `tasks/lane-e2-pressure-socket.md` (`6fd24a3b`). **Read `reviews/e3-moth-socket.md` before you start.**
 
 ⚠️ **THIS SLICE DELIBERATELY DOES NOT ADMIT `e3-canyon-works`, AND THAT IS THE POINT.** s1470 measured the contract's consumers one by one and found them to be **two slices, not one**: an environment half that is a clean socket (yours) and a Crawler-boss half that is a *refactor* of render-coupled code (NOT yours — measured note 6). Admitting the contract before the Crawler runs would be exactly the vocabulary stretch the ERA-SOCKET LAW forbids. **Your census row stays DATA-GAP and the headline arithmetic stays `AGENT-READY: 2 of 4`.** Success here is a *narrowed, honest* gap, not a promotion.
 
@@ -40,7 +40,7 @@ Expect **0**. If **≥1**, a wave-darkness path is already socketed — STOP and
 
 > The shared component-Baron machinery can represent a grouped kill, but the browser's Canyon Works also runs `PowerGraphSystem`, `MothSwarm`, the tram, and `CrawlerBossSystem` power effects; GR-SIM runs none of those contract-defining consumers. Its partial manifest names darkness and the Baron but offers no power/moth action path. The attended fix master must compose the Voltage socket with the Crawler/tram objective before deciding whether the existing generic boss driver can be reused.
 
-**That finding asks a question, and s1470 answered half of it by measurement.** Of Canyon Works' twist keys — `dayNightCycle` (with `waveSchedule`), `lightRamp`, `mothSeason`, `powerGrid` (with `connect`), `baron`, `enemyRoster` — **three consumers are already socketed** (`PowerGraphSystem` by `3ac90dd8`, `MothSwarm`+`LightField` by `47dd309f`, `DayNightCycle` by both). What is genuinely missing splits cleanly:
+**That finding asks a question, and s1470 answered half of it by measurement.** Of Canyon Works' twist keys — `dayNightCycle` (with `waveSchedule`), `lightRamp`, `mothSeason`, `powerGrid` (with `connect`), `baron`, `enemyRoster` — **three consumers are already socketed** (`PowerGraphSystem` by `9af152ab`, `MothSwarm`+`LightField` by `bfeca043`, `DayNightCycle` by both). What is genuinely missing splits cleanly:
 
 | Twist key | Class | Owner |
 |---|---|---|
@@ -49,7 +49,7 @@ Expect **0**. If **≥1**, a wave-darkness path is already socketed — STOP and
 | `lightRamp` | **RENDER-ONLY under this contract's config** (measured note 1) | **nobody — do not socket** |
 | `baron` / `CrawlerBossSystem` | refactor, not a socket (measured note 6) | **the NEXT master** |
 
-ⓘ *On "the attended fix master": the E2 census used that identical phrasing and fire s1460 authored `lane-e2-pressure-socket` against it anyway, which drained at `24c6600f`; s1466 and s1468 did the same for E3-1 and E3-2, which drained at `3ac90dd8` and `47dd309f`. The phrase is census boilerplate meaning "not ER-01's job", **not** an owner gate. Verified again s1470 by re-reading the census.*
+ⓘ *On "the attended fix master": the E2 census used that identical phrasing and fire s1460 authored `lane-e2-pressure-socket` against it anyway, which drained at `6fd24a3b`; s1466 and s1468 did the same for E3-1 and E3-2, which drained at `9af152ab` and `bfeca043`. The phrase is census boilerplate meaning "not ER-01's job", **not** an owner gate. Verified again s1470 by re-reading the census.*
 
 ## READ-FIRST
 

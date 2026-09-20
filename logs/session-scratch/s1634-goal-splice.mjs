@@ -2,7 +2,7 @@ import fs from 'node:fs';
 
 const p = 'tasks/goals.json';
 let s = fs.readFileSync(p, 'utf8');
-const H = '7f9340baf056e228bae8c1ca11c2d836e38a2a26';
+const H = 'e43e0223c76a8709c1918cae2533981255033253';
 
 const anchor = '"id": "f1631-1-asset-diet-fallback-provenance",';
 const i = s.indexOf(anchor);
@@ -23,7 +23,7 @@ const note = [
   'i.e. 594084 bytes of headroom the build does not have.',
   'Firewall exact: one file +33/-5, literal 25_000_000 count 1 on both sides,',
   'TOWN_TRANSFER_CEILING_BYTES count 4 unchanged, cue test :241 assertion intact, artifacts untouched.',
-  'Classification LANE-TOUCHED / MAIN-UNTOUCHED off base 4ce0dad4a, no graft needed.',
+  'Classification LANE-TOUCHED / MAIN-UNTOUCHED off base 1321f9fc6, no graft needed.',
   'Findings: F-1634-1 (maxBuffer 1MB silent-mislabel ceiling, non-blocking, 7.8x headroom today);',
   'F-1634-2 (the runner third label is load-bearing and is the path most real fallbacks take);',
   'F-1634-3 (gpt-5.5 effort=high is merge-quality, s1632 priority B answered, section 2E refills unblocked).',

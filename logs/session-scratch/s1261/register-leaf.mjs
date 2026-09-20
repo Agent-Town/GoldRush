@@ -28,7 +28,7 @@ parent.tasks.push({
     'Make the newsie-release assertion observe a STATE, not a 50 ms wall-clock window — ' +
     'e2e/gazette-welcome.spec.ts:84-88 infers "the newsie stopped following" from a displacement ' +
     'sampled after waitForTimeout(50), while TownWelcome.followsPlayer (:44) is the property itself. ' +
-    'Test hygiene only: the assertion measures 0 failures in 48 executions (987df988), so the flake ' +
+    'Test hygiene only: the assertion measures 0 failures in 48 executions (d71f6ea8), so the flake ' +
     'premise is dead (F-1261-6) and scope 1 is a mandatory observe-first STOP.',
   taskFile: 'lane-b-gazette-welcome-release-state-probe.md',
   mergeHash: null,
@@ -47,7 +47,7 @@ const row =
   '`gazette-welcome-newsie-drift-window` as `superseded`. ⚠️ **Authored explicitly as TEST HYGIENE WITH NO FLAKE PREMISE:** ' +
   'the assertion at `e2e/gazette-welcome.spec.ts:84-88` ("the Gazette welcome fires once, walks skippably, and retriggers ' +
   'through the newsie") measures **0 failures in 48 executions** across workers {1,2,4} per the merged rate table ' +
-  '`987df9889da24857bf1472121b249f4d8621b20f` (`logs/suite-red-inventory.md:626-627`), so the master forbids re-opening ' +
+  '`d71f6ea83cabc3cea16c3a900e07da9fd6ae34a8` (`logs/suite-red-inventory.md:626-627`), so the master forbids re-opening ' +
   'the concurrency question its predecessor died on. **The subject is that the test infers a state property from a ' +
   'displacement measured over wall clock**, while `src/town/TownWelcome.ts:44` `get followsPlayer()` *is* that property ' +
   'and `src/town/TownScene.ts:556` already reads it every frame. Scope 2 exposes it as one `TownDiagnostics` field ' +

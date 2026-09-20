@@ -27,7 +27,7 @@ reachable in git, else STOP.
 
 ## WHY (measured s1314 at the bt-02b drain, verified at source)
 
-bt-02b (`5528331e`) made the Stockpile Yard the **fourth** upgradeable buildable by adding it to
+bt-02b (`07f0bcad`) made the Stockpile Yard the **fourth** upgradeable buildable by adding it to
 `upgradeableBuildableIds` and `isUpgradeableBuildable`. That was correct and its cap maths is proven. But
 three sibling helpers encode "which buildable is this?" as a **hand-maintained branch list with a turret
 fallback**, and none of them gained a fourth branch. So today, on main:

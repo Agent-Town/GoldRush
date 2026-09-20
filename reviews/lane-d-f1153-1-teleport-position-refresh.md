@@ -1,7 +1,7 @@
 # Review — lane-d-f1153-1-teleport-position-refresh
 
 **Slice:** F-1153-1 — the CURE for F-1152-1 (harness `teleport()` left `actionActorPosition` one placement stale)
-**Branch:** `lane/perf` · **Tip:** `892116c1` · **Base:** `fe35b8f1` · **Drained:** s1156, 2026-07-28
+**Branch:** `lane/perf` · **Tip:** `892116c1` · **Base:** `988e367e` · **Drained:** s1156, 2026-07-28
 **Merge:** path-scoped onto main (see hash in the drain commit)
 
 ## Verdict
@@ -71,7 +71,7 @@ What the cure *does* do is let tests that previously died at the placement step 
 
 | File | Class | Resolution |
 |---|---|---|
-| `src/game/Game.ts` | LANE-TOUCHED, main never moved it since `fe35b8f1` | clean apply |
+| `src/game/Game.ts` | LANE-TOUCHED, main never moved it since `988e367e` | clean apply |
 | `scripts/probe-s1152b-confirmbuild-cause.mjs` | LANE-TOUCHED, main never moved it | clean apply |
 | `artifacts/f1153-1-teleport-refresh{,.md}` (97 files) | pure add | clean apply |
 | `e2e/f1148-1-trajectory-probe.spec.ts` | **MAIN-MOVED only** (s1155) — lane did not touch it | left at main's version; see below |
@@ -87,6 +87,6 @@ What the cure *does* do is let tests that previously died at the placement step 
 
 ## Firewall
 
-**PASS.** Scope forbade touching `e2e/m2-04-gold-stealing.spec.ts`, widening `:226`, adding a `confirmBuild` retry loop or a sleep, refactoring the 22 duplicate `placeBuildableAt` helpers (F-1150-2), and changing `confirm()`/`computeValid()`/`BuildSystem`. Verified by `git diff --name-status fe35b8f1 lane/perf`: the only non-artifact files touched are `src/game/Game.ts` (two added lines, inside the `teleport()` body) and `scripts/probe-s1152b-confirmbuild-cause.mjs` (one line, making the artifact directory environment-selectable so four arms could keep their raw records). **No `e2e/` file was modified.**
+**PASS.** Scope forbade touching `e2e/m2-04-gold-stealing.spec.ts`, widening `:226`, adding a `confirmBuild` retry loop or a sleep, refactoring the 22 duplicate `placeBuildableAt` helpers (F-1150-2), and changing `confirm()`/`computeValid()`/`BuildSystem`. Verified by `git diff --name-status 988e367e lane/perf`: the only non-artifact files touched are `src/game/Game.ts` (two added lines, inside the `teleport()` body) and `scripts/probe-s1152b-confirmbuild-cause.mjs` (one line, making the artifact directory environment-selectable so four arms could keep their raw records). **No `e2e/` file was modified.**
 
 Scope item 3 — the identity check that the master called "the single most likely way this task ships a no-op that looks like a cure" — was answered with source evidence (`Game.ts:373-374`, `:912-918`, `:2636-2643`, `:3241-3243`) rather than assumed, and produced the multiplayer fallback.

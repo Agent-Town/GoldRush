@@ -1,7 +1,7 @@
 # gate-s1455 — full content audit and salvage (s1494)
 
 **Subject:** the leftover gate worktree `gate-s1455/` (~14 GB), registered in `git worktree list` at
-detached `7c8331970`, left in place by s1480 → s1493.
+detached `b16e39b30`, left in place by s1480 → s1493.
 **Why this exists:** s1493's handoff offered it to the next fire as *"its `run-gate.mjs` was already
 salvaged (F-1480-3). Removing it is a disk win, not a history loss — but it is a deletion, so I left
 it."* That read is **correct about `run-gate.mjs` and incomplete about the worktree**, and the
@@ -54,7 +54,7 @@ copies** in the index, so F-1480-3's salvage genuinely happened and s1493's clai
 ```
 
 Read in the direction that matters: **main has the `&& route.blocker` gate; this worktree has it
-removed.** That is the pre-`4ab48743` state — `4ab48743` is f1452-1 fort-solidity, the commit that
+removed.** That is the pre-`e788002c` state — `e788002c` is f1452-1 fort-solidity, the commit that
 *added* the gate and, through it, moved routing → engagement → 8 fewer kills over 20 waves (the cause
 named at the `e1-baron` pin site in `scripts/gr-sim.test.mjs`, F-1460-1).
 
@@ -67,8 +67,8 @@ not unfinished work — and the diff above reconstructs it in five seconds.
 **With this file committed, removing `gate-s1455/` is provably lossless.** Every unique byte it held
 is now either on main already (six paths, by hash), tracked elsewhere (`run-gate.mjs`), regenerable
 churn (the ten artifacts), or reproduced verbatim above (the one-line revert). The commit
-`7c8331970` it is detached at stays in the object database regardless, so the worktree can be
-recreated with a single `git worktree add --detach 7c8331970 <path>`.
+`b16e39b30` it is detached at stays in the object database regardless, so the worktree can be
+recreated with a single `git worktree add --detach b16e39b30 <path>`.
 
 **NOT REMOVED BY s1494, deliberately.** A 14 GB `rm -rf` is a deletion, CLAUDE.md §4.10 and §7 both
 route deletions to the owner rather than to a fire's judgement, and nothing is blocked by the disk

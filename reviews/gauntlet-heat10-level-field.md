@@ -1,7 +1,7 @@
 # Review — gauntlet-heat10-level-field (heat 10, the controller-parity field)
 
-- **Slice:** `gauntlet-heat10-level-field` · **branch:** `lane/b` · **tip:** `f2d8665e1`
-- **Base:** `09a829079` (merge-base with main at drain time) · **merge:** `814b5a8b8`
+- **Slice:** `gauntlet-heat10-level-field` · **branch:** `lane/b` · **tip:** `f2d8665e1 (archive: pruned by the A3 rewrite)`
+- **Base:** `91bfd41b3` (merge-base with main at drain time) · **merge:** `814b5a8b8 (archive: pruned by the A3 rewrite)`
 - **Drained:** s2432, 2026-09-01
 
 ## Verdict
@@ -64,17 +64,17 @@ arena. Those two readings owe completely different correctives — one is a
 re-run, the other is a production era-pin emergency — so the drain measured it
 rather than accepting the runner's account of its own failure.
 
-**Method.** Detached worktree at `c13b4c24d` (the deployed build), clean tree,
+**Method.** Detached worktree at `ec71f9234` (the deployed build), clean tree,
 `computeEngineHash()` imported from that build's own `scripts/assay-replay-agent.mjs`
 so the input list is the build's own:
 
 ```
-clean tree at c13b4c24d = 25040ad58451125adfa7d1d6c19c70f40ce17cd8cc6d377134e0a545922ca2ca
+clean tree at ec71f9234 = 25040ad58451125adfa7d1d6c19c70f40ce17cd8cc6d377134e0a545922ca2ca
 registered era-5 pin    = 25040ad58451125adfa7d1d6c19c70f40ce17cd8cc6d377134e0a545922ca2ca
 probe (contaminated)    = 1934d6e52b9a93cc25ecf55451c3f74a3b595c6eaca45d73a92812e6b91f8cc1
 ```
 
-**Byte-equal to the registered pin. The c13b4c24 pin-lineage cure is INTACT.**
+**Byte-equal to the registered pin. The ec71f923 pin-lineage cure is INTACT.**
 `package-lock.json` is confirmed as member #1 of `ENGINE_SOURCE_INPUTS`
 (`assay-replay-agent.mjs:36-48`), so an `npm install --prefix` that rewrites it
 changes the engine identity exactly as the runner described. The skew was local
@@ -96,7 +96,7 @@ drain's bookkeeping commit. Recorded so the absence is not read as an omission.
 
 ## Merge classification
 
-Base `09a829079`; all 20 files **LANE-TOUCHED, MAIN-UNTOUCHED** — every one a
+Base `91bfd41b3`; all 20 files **LANE-TOUCHED, MAIN-UNTOUCHED** — every one a
 new path under a date-stamped evidence directory that exists on no other
 branch. `lane-usable` classified all 20 `HELD LANE-ONLY` before the merge and
 `main..lane/b` is empty after it. **No conflicts, and none were possible.**

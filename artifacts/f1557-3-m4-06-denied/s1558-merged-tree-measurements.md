@@ -1,6 +1,6 @@
 # s1558 — f1557-3 merged-tree measurements (M4-06 permission-denied)
 
-Taken by the s1558 fire in detached worktree `gate-s1558` (main `f9178c521` + `lane/b`),
+Taken by the s1558 fire in detached worktree `gate-s1558` (main `f9178c521 (archive: pruned by the A3 rewrite)` + `lane/b`),
 `--workers=1` per §3.1, machine otherwise idle (no playwright, no `run-node-guards`,
 no lane runner — `tasks/running/` empty throughout).
 

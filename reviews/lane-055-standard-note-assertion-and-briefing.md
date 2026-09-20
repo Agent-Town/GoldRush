@@ -2,7 +2,7 @@
 
 - Slice: `lane-055-standard-note-assertion-and-briefing`
 - Branch: `lane/m3`
-- Base: `0d0873bd`
+- Base: `26447bb4`
 - Verdict: READY-FOR-GATES; slice gates pass, with unrelated current-main adjacent reds recorded below.
 
 ## What changed
@@ -60,7 +60,7 @@ reviews/lane-055-standard-note-assertion-and-briefing.md
 ## Drain verdict — s1123 (supervisor)
 
 - **Verdict: MERGED.** Accepted on the scope-4 **direct proof**, per the master's own acceptance clause — **not** on the 10-run green.
-- Merge classification: base `0d0873bd`. `git log 0d0873bd..main -- <both paths>` was **empty**, i.e. main never moved either file, so this landed as a clean two-path `git checkout` plus a path-scoped commit. No 3-way graft, no conflict resolved.
+- Merge classification: base `26447bb4`. `git log 26447bb4..main -- <both paths>` was **empty**, i.e. main never moved either file, so this landed as a clean two-path `git checkout` plus a path-scoped commit. No 3-way graft, no conflict resolved.
 
 ### Gates re-run by me on the merged tree (not inherited from the report)
 
@@ -76,7 +76,7 @@ reviews/lane-055-standard-note-assertion-and-briefing.md
 
 ### Why the adjacent red does not block
 
-I did **not** accept the report's structural argument ("the diff touches no shared file"). I ran `world-info-notes.spec.ts` on **clean main at `452af90c`, before merging**, and got a **byte-identical failure set** to the runner's post-change run — same three tests, same both-project pattern. Fingerprint matched ⇒ pre-existing, and a 055-only diff cannot have moved it. Those three remain an unrelated open red on main.
+I did **not** accept the report's structural argument ("the diff touches no shared file"). I ran `world-info-notes.spec.ts` on **clean main at `c432e041`, before merging**, and got a **byte-identical failure set** to the runner's post-change run — same three tests, same both-project pattern. Fingerprint matched ⇒ pre-existing, and a 055-only diff cannot have moved it. Those three remain an unrelated open red on main.
 
 ### What this slice does and does not establish
 

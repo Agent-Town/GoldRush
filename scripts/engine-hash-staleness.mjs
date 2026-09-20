@@ -14,7 +14,7 @@
  * predicate reports EMPTY, i.e. "still current". That is a FALSE-CURRENT: it fails
  * toward TRUSTING a figure that has already moved.
  *
- * MEASURED s2439 over 800 first-parent commits (5a984f954..816c193c2 window and
+ * MEASURED s2439 over 800 first-parent commits (a41c2504a..e28a45b63 window and
  * wider): 54 commits rotated the corpus; the one-file predicate is blind to 11 of
  * them — 20.4% FALSE-CURRENT — and all 11 are `src/` code drains, i.e. the
  * factory's most common real work. On a dry board the predicate is right; on a

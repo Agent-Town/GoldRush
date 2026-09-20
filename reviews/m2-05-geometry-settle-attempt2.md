@@ -1,7 +1,7 @@
 # m2-05-geometry-settle (attempt 2) — drain review, MERGED (s1040, 2026-07-25)
 
 **Slice:** `tasks/lane-m2-05-geometry-settle.md` (FIRE-AUTHORED s1035, refreshed s1036 — attempt 2)
-**Branch:** `lane/e2-arsenal` · **Tip:** `f992ebab` · **Base:** `69f0cd80` · **Workdir:** `worktrees/lane-c`
+**Branch:** `lane/e2-arsenal` · **Tip:** `f992ebab` · **Base:** `d72188f3` · **Workdir:** `worktrees/lane-c`
 **Run:** `tasks/runs/20260725-164725-lane-c-lane-m2-05-geometry-settle.md.log` · rc=0, `READY-FOR-GATES`
 **Predecessor review:** `reviews/m2-05-geometry-settle.md` (attempt 1, s1036 — NOT MERGED, retained)
 
@@ -45,9 +45,9 @@ temporary post-baseline palisade is **not** in the merged content — verified b
 
 ## Classification
 
-`git log 69f0cd80..main -- e2e/m2-05-base-damage-repair.spec.ts` → **empty**. All content is
+`git log d72188f3..main -- e2e/m2-05-base-damage-repair.spec.ts` → **empty**. All content is
 **LANE-TOUCHED-only**; main has not moved this file since the base. Clean checkout, **no 3-way graft**.
-Main's only commits since base are bookkeeping plus the perf-05 drain (`63161278`, zero `src/` bytes).
+Main's only commits since base are bookkeeping plus the perf-05 drain (`c5dfbad7`, zero `src/` bytes).
 
 ## Evidence
 

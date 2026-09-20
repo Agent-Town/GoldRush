@@ -21,7 +21,7 @@ WHY (F-1406-2, s1406 — measured, and the row has waited five fires for its own
   📐 **THE ONE THING THIS MASTER MOST NEEDS YOU TO UNDERSTAND — READ IT BEFORE WRITING A SINGLE PIN.**
   🚫 **DO NOT PASTE A HASH FROM THIS MASTER, FROM A LEDGER ROW, OR FROM A REVIEW FILE. There are no hashes in
   this master, on purpose.** Every hash quoted above is a *historical* observation and at least one of them is
-  already stale by construction (`c832307e`/`ed5d8203` are PRE-cure values; `eaefdb24` changed them). This is
+  already stale by construction (`c832307e`/`ed5d8203` are PRE-cure values; `a05171ce` changed them). This is
   not a hypothetical: s1410 gated a slice whose master demanded `fnv1a32:b3706fdc` and warned that a changed
   hash meant the bound was too tight — the real tree produced `14d45400`, the master's value predated the
   s1406 cure, and **a fire that had trusted the master over the tree would have refused a correct slice.**
@@ -42,7 +42,7 @@ READ-FIRST (paths, read them, do not skim):
    the shape of the existing pin at `:155-163`: a `deepEqual` on the WHOLE outcome object, not a bare hash.
    Match that shape — it is strictly more informative on failure, because it tells you *which field* moved.
  · `scripts/gr-sim.mjs` — the driver you will invoke. Note it now carries a `secureWave + 2` ceiling (s1410,
-   `e45cf7c5`) and exits non-zero with a diagnostic rather than spinning. A non-zero exit is a real result.
+   `38f456d3`) and exits non-zero with a diagnostic rather than spinning. A non-zero exit is a real result.
  · `assets/contracts/epoch-1-frontier/contracts.json` — the three E1 contracts. `e1-night-shift` is the one
    that discriminates; it is also the longest, so it is the slowest to run. Budget for that.
  · `reviews/f1410-1-bound-the-guard-battery-concurrency.md` — the battery's per-child budget is **30 s**
@@ -99,7 +99,7 @@ SELF-CHECK (name the exact commands and paste real numbers):
  · `npm run test:node-guards` — rc and the pass/fail/skipped counts.
  · The scope-1 derivation transcripts: 3 runs per contract, hash identical each time.
  · ⚠️ **BROADCAST, so a red you did not cause is not mistaken for one you did:** `scripts/gr-sim.test.mjs` was
-   flaky in a FIRE shell under the full battery (F-1409-1). **That is CURED as of `95950ce6` (s1411)** — the
+   flaky in a FIRE shell under the full battery (F-1409-1). **That is CURED as of `ada8f48d` (s1411)** — the
    battery now bounds file concurrency to 1 in fire shells — and **you are on the lane engine, where it was
    always green**. You should see nothing. If you DO see a red in a file you did not touch, report it with its
    duration and move on; do not fix it, and do not conclude your change caused it without a control run.

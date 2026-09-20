@@ -33,7 +33,7 @@
  * passes `--config playwright.preview.config.ts`, a different config that this globalSetup never
  * runs for." ❌ `playwright.preview.config.ts` is `{ ...baseConfig, webServer: <its own> }` — the
  * spread CARRIES `globalSetup` across. A different config file is NOT a different globalSetup, and
- * overriding `webServer` does not override this. So the exemption never existed: from 2474c51ac
+ * overriding `webServer` does not override this. So the exemption never existed: from f9efa3020
  * onward every deploy armed a probe of :5188 while the preview server was on :5189, the guard
  * refused in globalSetup, and the budget gate — which only WARNs — measured nothing at all while
  * still looking like it had run. The same paragraph names the exact damage it was ruling out

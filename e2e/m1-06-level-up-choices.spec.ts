@@ -186,7 +186,7 @@ test('investment weighting prefers owned families without losing discovery', asy
     pages.map((page) => openGame(page, `?debug&timescale=3&nowaves&seed=${seed}`)),
   );
 
-  // Double-Tap Coil caps at Balance.upgrades.doubleTapCoilMaxStacks (3 since d2279d325); "invested" must stay below it or the upgrade leaves the offer pool.
+  // Double-Tap Coil caps at Balance.upgrades.doubleTapCoilMaxStacks (3 since 4154da9eb); "invested" must stay below it or the upgrade leaves the offer pool.
   await investedPage.evaluate(() => window.__GR_TEST__?.setUpgradeStacks({ double_tap_coil: 2 }));
   await repeatedPage.evaluate(() => window.__GR_TEST__?.setUpgradeStacks({ double_tap_coil: 2 }));
   await maxedPage.evaluate(() =>
@@ -211,7 +211,7 @@ test('investment weighting prefers owned families without losing discovery', asy
 
 test('owned-family cards show a compact stack pip', async ({ page }) => {
   const errors = await openGame(page, '?debug&timescale=3&nowaves&seed=m1-06-pip-1');
-  // Double-Tap Coil caps at Balance.upgrades.doubleTapCoilMaxStacks (3 since d2279d325); this fixture must stay below it so its card renders.
+  // Double-Tap Coil caps at Balance.upgrades.doubleTapCoilMaxStacks (3 since 4154da9eb); this fixture must stay below it so its card renders.
   await page.evaluate(() => window.__GR_TEST__?.setUpgradeStacks({ double_tap_coil: 2 }));
   await debugLevel(page);
 
@@ -241,7 +241,7 @@ test('maxed upgrades leave the offer pool', async ({ page }) => {
   test.setTimeout(45_000);
   const errors = await openGame(page, '?debug&timescale=3&nowaves&seed=m1-06-maxed');
 
-  // Double-Tap Coil caps at Balance.upgrades.doubleTapCoilMaxStacks (3 since d2279d325); reaching it must remove the upgrade from the offer pool.
+  // Double-Tap Coil caps at Balance.upgrades.doubleTapCoilMaxStacks (3 since 4154da9eb); reaching it must remove the upgrade from the offer pool.
   for (let guard = 0; guard < 30; guard += 1) {
     const stacks = (await diagnostics(page)).progression.stacks.double_tap_coil ?? 0;
     if (stacks >= 3) break;

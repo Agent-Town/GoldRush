@@ -10,7 +10,7 @@ const p = resolve(repo, 'tasks/goals.json');
 const raw = readFileSync(p, 'utf8');
 const data = JSON.parse(raw);
 
-const MERGE = '74ef8c66d2065fa59ccaab8abfb2c6cf2b4e02b7';
+const MERGE = '616f82c67886ba5abc74ce6c4a055dd319f54cd3';
 let hit = null;
 (function walk(n) {
   if (!n || typeof n !== 'object') return;

@@ -1,7 +1,7 @@
 # concurrency-class failure-rate instrument
 
 **Slice:** `concurrency-class-failure-rate` (lane-d)
-**Branch/tip:** `lane/perf` @ `534c7d28` (base `a4575fed`, 1 commit, 29 files / +16,942)
+**Branch/tip:** `lane/perf` @ `854a5612` (base `593f998b`, 1 commit, 29 files / +16,942)
 **Merged:** see the drain commit on `main`
 **Gated by:** s1218 fire, 2026-07-29
 **Verdict:** ✅ **MERGED.** The instrument is sound, its arms are genuinely distinct, and **it corrected the premise it was gated on** — the calibration target two fires ordered was a misread statistic. The runner refused to bend its measurement to fit it and said so plainly. That is the behaviour the master asked for.
@@ -56,7 +56,7 @@ s1217's gate: *"check the literal worker count of every arm and confirm `M` actu
 - F-1217-2's cap does not bite here because the subject set is **four spec files** (`ap-standing-orders`, `gazette-welcome`, `locked-win`, `tl-01-run-telemetry`), so 4 workers is genuinely reachable.
 - Guard coverage already existed and passed: *"reducer reports configured and actual workers distinctly"*.
 
-Also verified: **single `head` (`a4575fed`) across all 24 runs** — no mid-measurement drift — and **execution order `1,2,4 × 8`**, genuinely interleaved as the master required, so order cannot alias onto the variable.
+Also verified: **single `head` (`593f998b`) across all 24 runs** — no mid-measurement drift — and **execution order `1,2,4 × 8`**, genuinely interleaved as the master required, so order cannot alias onto the variable.
 
 ## Evidence
 
@@ -70,7 +70,7 @@ Also verified: **single `head` (`a4575fed`) across all 24 runs** — no mid-meas
 | `playwright test --list` | **2460 tests / 344 files** — main's bar, unmoved, correct for a slice adding no spec file |
 | `src/` + `e2e/` bytes changed | **0** — verified by `git diff --name-only main...lane/perf` |
 
-**Merge classification: pure LANE-TOUCHED.** Base `a4575fed` is an ancestor of main; the two intervening main commits (`c9140326`, `8d97da92`) touch `STATUS.md` and `logs/{dashboard,goal-tree,task-stats}` only — disjoint from this branch's `logs/suite-red-inventory.md` + `logs/session-scratch/**` + `scripts/`. No graft, no conflict.
+**Merge classification: pure LANE-TOUCHED.** Base `593f998b` is an ancestor of main; the two intervening main commits (`e4f57d55`, `8d97da92 (archive: pruned by the A3 rewrite)`) touch `STATUS.md` and `logs/{dashboard,goal-tree,task-stats}` only — disjoint from this branch's `logs/suite-red-inventory.md` + `logs/session-scratch/**` + `scripts/`. No graft, no conflict.
 
 **E2E battery deliberately narrowed, with justification** — not skipped. The slice changes **zero `src/` and zero `e2e/` bytes**, so no runtime surface exists to regress; the release config (`playwright.release.config.ts`) is likewise unreachable from a logs/scripts-only diff. The slice's *own* gate is the node-guard reducer suite, which ran and includes the two guards covering exactly this harness's outputs.
 

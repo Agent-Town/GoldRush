@@ -1,10 +1,10 @@
 # e1-claim-geometry-declared-reland — s1393 gate
 
-**Slice:** `e1-claim-geometry-declared-reland` (the second half of the F-1381-3/F-1381-4 pair; sibling `e1-headless-the-claim-reland` shipped `8e20d8ca` at s1392)
-**Branch:** `lane/e2-arsenal` (lane-c) · **Tip:** `e676addf` · **Base (merge-base with main):** `b8acac28`
+**Slice:** `e1-claim-geometry-declared-reland` (the second half of the F-1381-3/F-1381-4 pair; sibling `e1-headless-the-claim-reland` shipped `1352ef45` at s1392)
+**Branch:** `lane/e2-arsenal` (lane-c) · **Tip:** `e676addf` · **Base (merge-base with main):** `dcb63103`
 **Gated by:** s1393 fire, in a detached worktree `gate-s1393/` per §3.0b — the lane content was never placed in main's working tree.
 
-## VERDICT (s1393): ⛔ **SUPERSEDED by the s1394 re-gate at the bottom of this file — the hold was discharged and the slice MERGED at `a3e199f4`.** The original s1393 verdict is preserved verbatim below for the record.
+## VERDICT (s1393): ⛔ **SUPERSEDED by the s1394 re-gate at the bottom of this file — the hold was discharged and the slice MERGED at `f2aa4d2c`.** The original s1393 verdict is preserved verbatim below for the record.
 
 ## VERDICT (s1393, as written): 🟡 **HOLD — NOT MERGED.** The re-land itself is correct and faithful; it reds one adjacent suite that the master never named. Cure measured, one word. Corrective queued to lane-c as `e1-claim-geometry-reland-gt05-shape`.
 
@@ -29,8 +29,8 @@ a fire-side readiness hold, no owner word owed. Both stated conditions were disc
 
 | # | Condition (from `blockedReason`) | Measurement |
 |---|---|---|
-| 1 | `lane/m4` is founded on owner-BLOCKED `7c4f132f`; a branch-level merge sweeps blocked content into main | `7c4f132f` **NOT an ancestor** of `e676addf`; salvage-ref `c876f675` **NOT an ancestor** either. The re-land was applied as a **per-commit patch**, never a merge. `46033151` *is* an ancestor — but it is an ancestor of `main` too (ordinary old history), so it is benign. |
-| 2 | lane/m4's base predates `69984c6a` (`lossCondition` → `heroStart`); lifting onto clean main fails tsc with TS2339 | **`npx tsc --noEmit` rc 0** on the merged tree — the exact gate F-1381-4 predicted would fail. |
+| 1 | `lane/m4` is founded on owner-BLOCKED `7c4f132f`; a branch-level merge sweeps blocked content into main | `7c4f132f` **NOT an ancestor** of `e676addf`; salvage-ref `c876f675` **NOT an ancestor** either. The re-land was applied as a **per-commit patch**, never a merge. `74f95634` *is* an ancestor — but it is an ancestor of `main` too (ordinary old history), so it is benign. |
+| 2 | lane/m4's base predates `8efae704` (`lossCondition` → `heroStart`); lifting onto clean main fails tsc with TS2339 | **`npx tsc --noEmit` rc 0** on the merged tree — the exact gate F-1381-4 predicted would fail. |
 
 **Scope proof.** `e676addf` touches exactly its six declared paths. The three paths `7c4f132f`
 touches that this slice must not (`e2e/072-era-activation.spec.ts`, `e2e/e1-baron.spec.ts`,
@@ -40,7 +40,7 @@ since the base, and the patch applies to current main clean.
 **Faithfulness.** The re-land is not merely *plausible*, it is **identical**: comparing the `+`/`-`
 lines each commit introduces, `e676addf` and the salvage-ref `c876f675` produce the **same change on
 all six paths**, including `src/meta/ContractFamilies.ts`, the one the master scoped as a hand 3-way
-lift because main had moved ~355 lines at `cbf0e143`. The runner re-expressed the hunk against
+lift because main had moved ~355 lines at `9a95f99d`. The runner re-expressed the hunk against
 main's current function rather than pasting the salvage-ref's context, and landed on the same result.
 
 ## Evidence
@@ -94,7 +94,7 @@ behaviour is intact — but the repair had to be run to know that, not assumed.
 
 ## Merge classification
 
-Base `b8acac28`; all six paths **LANE-TOUCHED / LANE-ONLY** (main moved none of them since the base);
+Base `dcb63103`; all six paths **LANE-TOUCHED / LANE-ONLY** (main moved none of them since the base);
 no conflicts; no 3-way needed at drain time. The `main..tip` two-dot path list additionally shows
 `STATUS.md`, `tasks/BACKLOG.md`, `tasks/goals.json` and the master file — those are **main-moved**
 (s1392's bookkeeping and this fire's lock), not lane content, and are correctly absent from
@@ -116,10 +116,10 @@ code commit first, leaf commit immediately after (F-1384-1: a commit cannot cont
 
 ---
 
-# s1394 RE-GATE — VERDICT: ✅ **MERGED `a3e199f4`**
+# s1394 RE-GATE — VERDICT: ✅ **MERGED `f2aa4d2c`**
 
 **Slice:** `e1-claim-geometry-declared-reland` + its corrective `e1-claim-geometry-reland-gt05-shape`
-**Branch:** `lane/e2-arsenal` · **Tip gated:** `cc79feb1` (two commits: `e676addf` declare + `cc79feb1` tolerate) · **Base:** `b8acac28`
+**Branch:** `lane/e2-arsenal` · **Tip gated:** `cc79feb1` (two commits: `e676addf` declare + `cc79feb1` tolerate) · **Base:** `dcb63103`
 **Gated by:** s1394 fire in a detached worktree `gate-s1394/` per §3.0b — lane content never entered main's working tree until the merge decision was taken.
 
 ## Block-check (§3.0)
@@ -145,7 +145,7 @@ Lane base is **10 commits behind main**; main moved **only bookkeeping paths** i
 (`STATUS.md`, `tasks/*`, `reviews/*`, `logs/_s1393_*`, `goals.json`). Intersection with the slice's
 7 paths: **empty**. So all 7 are **LANE-TOUCHED, zero MAIN-MOVED, no 3-way graft required** — the
 one lift the master had scoped by hand (`ContractFamilies.ts`, because main moved it ~355 lines at
-`cbf0e143`) was already resolved by the runner, and `cbf0e143` predates the lane base.
+`9a95f99d`) was already resolved by the runner, and `9a95f99d` predates the lane base.
 
 | Path | Class |
 |---|---|
@@ -155,8 +155,8 @@ one lift the master had scoped by hand (`ContractFamilies.ts`, because main move
 | `e2e/agent-view.spec.ts` · `e2e/fixtures/e1-mechanics-manifests.json` | LANE-TOUCHED |
 | `e2e/tile-identity-pass.spec.ts` · `e2e/gt-05-water-depth.spec.ts` | LANE-TOUCHED |
 
-Landed as a single path-scoped graft (house practice — recent drains `8e20d8ca`, `cbf0e143`,
-`32cfc878` are all single-parent), citing both lane shas.
+Landed as a single path-scoped graft (house practice — recent drains `1352ef45`, `9a95f99d`,
+`34800b22` are all single-parent), citing both lane shas.
 
 ## Adjacent suites — RE-DERIVED, not inherited
 

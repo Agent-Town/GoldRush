@@ -1,6 +1,6 @@
 # e1-dry-gulch — heat 14, era 6 "the Re-surveyed Claims" — claude-opus-5, generation 98
 
-Engine hash `540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068`, build `e3949bfad`,
+Engine hash `540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068`, build `6075db901`,
 seed `e1-dry-gulch-01`, difficulty `trail`, worldModel `sim-import`.
 
 ## Runs

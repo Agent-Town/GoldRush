@@ -6,9 +6,9 @@ cwd=/private/tmp/gr-s2533-citation-gate
 env+ PATH=/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin
 
 ===== diff-selected guards =====
-$ node scripts/run-guards.mjs --changed-since 047c1e6e61db2928501b3f15b6ee4708a3fcc24d
+$ node scripts/run-guards.mjs --changed-since 22ba0282b624bd28b06bcd2ffedf3639f69ed147
 rc=1 906.0s
-run-guards: 15 file(s) changed since 047c1e6e61db2928501b3f15b6ee4708a3fcc24d
+run-guards: 15 file(s) changed since 22ba0282b624bd28b06bcd2ffedf3639f69ed147
   base gate: test:node-guards, test:power-budget, test:task-guards, test:citations, test:gate-callers
   (no path rule matched -- base gate only)
 

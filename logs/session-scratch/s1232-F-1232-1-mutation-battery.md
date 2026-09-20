@@ -125,8 +125,8 @@ as "1 file" and is in fact 1 `.mjs` + 5 `.sh`.
 Arm A replanted, cure in place:
 
 ```
-node scripts/run-guards.mjs --changed-since 21eee40a
-  run-guards: 5 file(s) changed since 21eee40a
+node scripts/run-guards.mjs --changed-since d434ced8
+  run-guards: 5 file(s) changed since d434ced8
   FAIL  rc=1  16s  test:node-guards
   PASS  rc=0   0s  test:power-budget  p95=0.316ms
   PASS  rc=0   0s  test:task-guards

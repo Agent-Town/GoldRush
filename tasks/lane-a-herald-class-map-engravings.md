@@ -7,7 +7,7 @@ CODEX: model=gpt-5.6-sol effort=high
 
 The lane branch being ahead is NORMAL — the runner auto-commits. For each ahead commit: if its content is already merged to main (verify via git log/diff), it is a SAFE DUPE → `git checkout -B lane/m3 main && git clean -fd` and PROCEED. STOP-and-report ONLY if an ahead commit's content is NOT on main (undrained work — resetting would DESTROY it), or the worktree holds uncommitted edits you did not make. Then `npm install --no-audit --no-fund`; `npm run build` green before touching anything.
 
-> ℹ️ Authoring-time note (s1255 — **verify it yourself anyway**): `lane/m3` was 1 ahead at `fbde25e5` (`ret-02-retention-floor-ratchet`), drained by s1245 as `07822d90` with `reviews/` present on main — a safe dupe by content. The lane holds nothing unique.
+> ℹ️ Authoring-time note (s1255 — **verify it yourself anyway**): `lane/m3` was 1 ahead at `fbde25e5` (`ret-02-retention-floor-ratchet`), drained by s1245 as `3675e7e6` with `reviews/` present on main — a safe dupe by content. The lane holds nothing unique.
 
 ## Why — the art landed, the map is already written, and it currently resolves to nothing
 
@@ -36,7 +36,7 @@ Two facts you must not discover the hard way:
 
 **TOUCH-ONLY:** `assets/processed/herald-engraving-*.webp` (new) · `src/news/heraldReader.ts` (map entries only, if a name or the ceremony entry needs it) · `src/news/herald.ts` (ONLY for scope 4's union member, ONLY if scope 4 proceeds) · `e2e/gazette-art-wiring.spec.ts` (or a new sibling spec) · `assets/LEDGER.md` row 224 · `scripts/asset-diet.mjs` ONLY if a new file must be added to an explicit list (never to change a budget constant).
 
-**NO:** do not touch the eight `assets/raw/gazette-class-*.png` masters · do not change either byte ceiling · do not touch the first-issue `FIRST_ISSUE_PANELS` content or the `gazette-panel-*` set (that is GG-03's shipped work) · do not touch `TownWelcome`/profile/welcome code (GG-04 just landed there, `c5a00849`) · do not edit `logs/suite-red-inventory.md` · no new dependencies.
+**NO:** do not touch the eight `assets/raw/gazette-class-*.png` masters · do not change either byte ceiling · do not touch the first-issue `FIRST_ISSUE_PANELS` content or the `gazette-panel-*` set (that is GG-03's shipped work) · do not touch `TownWelcome`/profile/welcome code (GG-04 just landed there, `bd4c5c18`) · do not edit `logs/suite-red-inventory.md` · no new dependencies.
 
 ## Self-check (name the exact commands and both projects)
 

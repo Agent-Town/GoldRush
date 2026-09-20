@@ -7,7 +7,7 @@ WHY (F-1428-2, measured s1428 while draining `lane-era-true-lights`; every numbe
 
 The owner's directive of 2026-08-03 (F-BW-3, verbatim in the era-true-lights master) is: *"E1 town must read FLAME, never electric — audit all glow elements, era light grammar via townEraAccents (flame E1-E2, arc earns E3+), gentle flicker, day = unlit."*
 
-That slice shipped at `5214f340b3f4ea58da8901a552ebc6d679408a50` and **the visual grammar is real** — the drain proved it by manufactured red, giving E1 an electric cool-white lantern glass and watching the day test go red on `fixtureColor`. This task does not touch that work.
+That slice shipped at `56b390ff4a05a4e619367a93c02a699a7a2a2302` and **the visual grammar is real** — the drain proved it by manufactured red, giving E1 an electric cool-white lantern glass and watching the day test go red on `fixtureColor`. This task does not touch that work.
 
 **What it does touch is the one assertion a reader maps straight onto the owner's words, which turns out to defend nothing.** `src/town/TownScene.ts` reports a `coolWhiteEmissiveFixtures` count in its `lightGrammar` diagnostics, and `e2e/beauty-town.spec.ts` asserts it is `0` in the day test. That is the *"audit all glow elements / never electric"* clause in executable form.
 

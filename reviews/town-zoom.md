@@ -2,7 +2,7 @@
 
 - **Slice:** `lane-town-zoom` (owner morning triple, 2026-07-29, item 1)
 - **Branch / tip:** `lane/m3` @ `e834860a` ("runner(lane-a): lane-town-zoom.md")
-- **Merge base:** `0bd46e55` (2026-07-29T04:01+07, ~4 h stale)
+- **Merge base:** `654515e3` (2026-07-29T04:01+07, ~4 h stale)
 - **Merged to main as:** see the drain commit that carries this file
 - **Drained by:** s1203 fire
 - **Verdict:** ✅ **ACCEPT** — merged.
@@ -98,7 +98,7 @@ merge, and the control reverted the **subject** — `TownScene.ts` — not the t
 
 ## Merge classification
 
-Base `0bd46e55`; main tip at merge `4408aaae`. The tip commit's own diff is 10 paths:
+Base `654515e3`; main tip at merge `e51599aa`. The tip commit's own diff is 10 paths:
 
 | File | Class | Resolution |
 |---|---|---|
@@ -107,7 +107,7 @@ Base `0bd46e55`; main tip at merge `4408aaae`. The tip commit's own diff is 10 p
 | `artifacts/town-zoom/*.png` (8) | **NEW** | free — the run's own screenshots, committed from the index as the runner produced them |
 
 ⚠️ **Merged path-scoped, deliberately NOT `git merge --no-ff`.** `lane/m3` was **3 ahead**: the
-tip plus `fce4e7d4` (m3-05f, already shipped as `9bde2802`) and `b39edde1`. A branch merge would
+tip plus `fce4e7d4` (m3-05f, already shipped as `407b0e01`) and `b39edde1`. A branch merge would
 have re-landed shipped work and dragged the 4 deliberately-unmerged PNGs the lane is known to
 hold. Only the tip's 10 paths were taken. `lane/m3` therefore stays **falsely ahead** — a
 tip-graft safe-dupe, loss-free to reset.

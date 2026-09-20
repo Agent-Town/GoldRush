@@ -1,6 +1,6 @@
 // Tests for scripts/ruling-propagation-guard.mjs (s1279, F-1279-1).
 //
-// Fixture-driven on purpose: guard-fx-01 (ac12332c) established that structural assertions are
+// Fixture-driven on purpose: guard-fx-01 (47538c08) established that structural assertions are
 // proved with a fixture harness rather than by mutating real files. The live tree is asserted on
 // only where the assertion is about the live tree (the denominator agreement below).
 import test from 'node:test';

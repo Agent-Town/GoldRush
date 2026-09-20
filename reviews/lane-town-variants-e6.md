@@ -1,7 +1,7 @@
 ---
 task: lane-town-variants-e6
 branch: lane/m3
-base: ce5f0906357b
+base: 5cf156265aef
 date: 2026-07-21
 status: READY-FOR-GATES
 ---

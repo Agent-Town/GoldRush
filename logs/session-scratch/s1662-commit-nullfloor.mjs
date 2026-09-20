@@ -18,7 +18,7 @@ const msg = [
   '',
   'Surgical splice, not regeneration: a full regen re-runs 35 idle sims and also rewrites',
   'eraStamp (= git merge-base HEAD main, F-1653-3). Verified 312 -> 258 lines, 12 -> 9',
-  'contracts, all 9 survivors byte-identical, eraStamp untouched at 7556adb01.',
+  'contracts, all 9 survivors byte-identical, eraStamp untouched at d279d4b0a.',
   'null-floor-anchors: RED before ("floors must equal bench seeds intersected with',
   'supported contracts") -> GREEN after, on main.',
 ].join('\n');

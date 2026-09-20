@@ -2,7 +2,7 @@
 
 **Slice:** fire-side corrective, landed directly on `main` (no lane, no done-move — the subject
 is the runner script itself, which no lane task may edit while it is executing).
-**Tip:** `9852bcbe6` · **Author:** fire s2319, 2026-08-26 · **Discharges:** F-2316-1
+**Tip:** `5c4cc696e` · **Author:** fire s2319, 2026-08-26 · **Discharges:** F-2316-1
 (deferred by s2316, s2317 and s2318, each for the same stated reason: a live runner).
 **Files:** `scripts/lane-runner-v3.sh` (+28/-1) · `scripts/runner-commit-decoupling-guard.test.sh` (+72)
 
@@ -36,7 +36,7 @@ Measured over **all 701 `runner(` commits**:
 | top-level `logs/` paths seen | `dashboard.html` 105 · `.goal-tree.html` 36 · `task-stats.jsonl` 21 · `.blocked-seen` 15 · `lane-runner.out` 13 · `factory-usage.json` 11 · `usage-history.jsonl` 9 · `suite-red-inventory*` 6 · `guard-stats.jsonl` 1 · `_s*` debris 4 |
 
 Those 136 files are lane **evidence** — probe specs, raw per-run JSON, rate tables, tsc and build
-output (`28d03c9e7`, `107208877`, `6999e57a4`). A wholesale exclusion stops that class ever
+output (`ec6976bcd`, `107208877`, `6999e57a4`). A wholesale exclusion stops that class ever
 reaching git again, silently, in every future lane commit: **a RETENTION LAW hole opened to close
 a hygiene one.** The finding's own GATE guarded the wrong boundary — it asked whether a cure
 reached *outside* `logs/`, never whether `logs/` itself carries lane output.

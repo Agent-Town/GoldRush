@@ -36,7 +36,7 @@ under partial asset failure, introduced by the mixed-source files list. Fix in `
 (previously only when clips.size === 0). Re-run green.
 
 ## Retroactive note — vp-02 lane evidence debt
-The 004 relay output was committed in `a674606` (s9d dead-lock takeover) without its own recorded gate run or
+The 004 relay output was committed in `aaab881` (s9d dead-lock takeover) without its own recorded gate run or
 review file (s12's 65/65 predates the lane; only screenshots existed). Robin's playtest ("the sheets are
 walking") confirmed function, not gates. This session closes that debt: the vp-02 suite now has a recorded
 4/4 green run (below) and this file serves as the lane's review of record. Corrective process note: a dead-lock

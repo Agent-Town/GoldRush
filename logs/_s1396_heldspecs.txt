@@ -91,7 +91,7 @@ seeded rider watchErrors suppressed 0 known GLTFLoader blob error(s)
 
 
       348 |   await openBoard(page);
-      349 |   // 330ba7bb: the Frontier chapter renders all five E1 cards together.
+      349 |   // 209c1a51: the Frontier chapter renders all five E1 cards together.
     > 350 |   await expect(page.getByTestId('contract-card-list').locator('[data-contract-id]')).toHaveCount(5);
           |                                                                                      ^
       351 |   await openBaronBoardPage(page);
@@ -165,7 +165,7 @@ seeded rider watchErrors suppressed 0 known GLTFLoader blob error(s)
 
 
       348 |   await openBoard(page);
-      349 |   // 330ba7bb: the Frontier chapter renders all five E1 cards together.
+      349 |   // 209c1a51: the Frontier chapter renders all five E1 cards together.
     > 350 |   await expect(page.getByTestId('contract-card-list').locator('[data-contract-id]')).toHaveCount(5);
           |                                                                                      ^
       351 |   await openBaronBoardPage(page);

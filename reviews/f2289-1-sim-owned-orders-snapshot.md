@@ -1,8 +1,8 @@
 # Review — f2289-1-sim-owned-orders-snapshot
 
 **Slice:** `f2289-1-sim-owned-orders-snapshot` (lane-a, FIRE-AUTHORED s2291, cure for F-2289-1)
-**Branch:** `lane/a` · **Tip:** `1a723b940 runner(lane-a): f2289-1-sim-owned-orders-snapshot.md`
-**Base (merge-base with main):** `d79627ea4` (s2291's authoring commit)
+**Branch:** `lane/a` · **Tip:** `cda3d0884 runner(lane-a): f2289-1-sim-owned-orders-snapshot.md`
+**Base (merge-base with main):** `4fe6445a3` (s2291's authoring commit)
 **Gated by:** fire s2293, 2026-08-25, in detached worktree `.gate-s2293` on the MERGED tree (§3.0b)
 
 ## Verdict
@@ -24,7 +24,7 @@ The cure removes the singleton ambiguity **at the hashing boundary only**: `Head
 | Merge | **clean, `ort`, zero conflicts** — merged-tree diff vs main is byte-identical to the lane diff (6 files, +83/−6) |
 | `npm run test:node-guards` (merged tree) | see the baseline comparison below |
 
-**Merge classification** — merge-base `d79627ea4`, one commit `1a723b940`, six files, **all LANE-TOUCHED · zero MAIN-MOVED · zero BOTH-MOVED**. No graft or three-way resolution was required, and none was performed.
+**Merge classification** — merge-base `4fe6445a3`, one commit `cda3d0884`, six files, **all LANE-TOUCHED · zero MAIN-MOVED · zero BOTH-MOVED**. No graft or three-way resolution was required, and none was performed.
 
 ## The battery: a red board, and why this slice is not the cause
 

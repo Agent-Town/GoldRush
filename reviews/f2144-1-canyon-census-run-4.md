@@ -1,7 +1,7 @@
 # f2144-1 — Canyon Works census attempt 4
 
-**Slice:** `f2144-1-canyon-census-run-4` · **Branch:** `lane/d` · **Tip:** `5fafc7fcb` · **Merge:** `59de9467f1e87a72d2b0f9205020f1ceb64d6002`
-**Drained:** s2145, 2026-08-21 · **Base:** `5409a0c3e` (42 min old at merge)
+**Slice:** `f2144-1-canyon-census-run-4` · **Branch:** `lane/d` · **Tip:** `5fafc7fcb (archive: pruned by the A3 rewrite)` · **Merge:** `59de9467f1e87a72d2b0f9205020f1ceb64d6002 (archive: pruned by the A3 rewrite)`
+**Drained:** s2145, 2026-08-21 · **Base:** `c1b2dccd9` (42 min old at merge)
 
 ## Verdict
 
@@ -9,7 +9,7 @@
 
 ## What it does
 
-Runs the sanctioned campaign harness twice on one tree, on the terrain binding cured by `f2142-1` (`8656ca1f1`), and writes the three things the banked s2143 discriminator never wrote: a **determinism pair** on one base, a **report**, and the **supersession** of attempt 3 (`attempt-3-superseded/` + NOTE — moved, never deleted, per the Retention Law). Attempt 3's `wave 2` headline is retired with its artifacts retained.
+Runs the sanctioned campaign harness twice on one tree, on the terrain binding cured by `f2142-1` (`f9b8d02f5`), and writes the three things the banked s2143 discriminator never wrote: a **determinism pair** on one base, a **report**, and the **supersession** of attempt 3 (`attempt-3-superseded/` + NOTE — moved, never deleted, per the Retention Law). Attempt 3's `wave 2` headline is retired with its artifacts retained.
 
 The result: power rises 0 → 1 during **wave 4** and never rises again; `failed` latches on the first turn of **wave 7** (exactly `wave > byWave` for `byWave: 6`) at **1 powered / 2 required**; both runs terminate `Error: e3-canyon-works ended unsecured at wave 8.` — four waves before the contract's `twist.secureWave: 12`.
 
@@ -45,7 +45,7 @@ The drain's own re-read of `artifacts/f2135-canyon-census/census.json` (the free
 
 ## Merge classification
 
-Base `5409a0c3e`; all six paths **LANE-TOUCHED**, main moved none of them (`git log base..main -- <path>` empty for each). No conflicts, no graft, `ort` clean in both the gate worktree and on main.
+Base `c1b2dccd9`; all six paths **LANE-TOUCHED**, main moved none of them (`git log base..main -- <path>` empty for each). No conflicts, no graft, `ort` clean in both the gate worktree and on main.
 
 - `artifacts/f2135-canyon-census/REPORT.md` — LANE-TOUCHED (rewritten: attempt-4 result supersedes the wave-2 headline)
 - `artifacts/f2135-canyon-census/census.json` — LANE-TOUCHED

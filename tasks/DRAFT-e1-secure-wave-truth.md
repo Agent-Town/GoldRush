@@ -1,4 +1,4 @@
-> ⛔ **SHIPPED — DO NOT QUEUE (Mistake #8 guard, verified s1074 2026-07-26).** Landed as `12bc9099` *"e1: SECURE-WAVE TRUTH — Dry Gulch and Twin Banks state how they are won"*, verified `git merge-base --is-ancestor 12bc9099 main` = true. Retained per the RETENTION LAW as the authoring record; the "run it" line below is HISTORY, not an instruction.
+> ⛔ **SHIPPED — DO NOT QUEUE (Mistake #8 guard, verified s1074 2026-07-26).** Landed as `79de56f4` *"e1: SECURE-WAVE TRUTH — Dry Gulch and Twin Banks state how they are won"*, verified `git merge-base --is-ancestor 79de56f4 main` = true. Retained per the RETENTION LAW as the authoring record; the "run it" line below is HISTORY, not an instruction.
 
 # DRAFT — E1 SECURE-WAVE TRUTH: two release maps must state how they are won
 STATUS: DRAFT (authored by the E1-depth review session, 2026-07-25). Not queued. RATIFIED-SCOPED by the owner ruling below — run it.

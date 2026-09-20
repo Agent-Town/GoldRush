@@ -1,7 +1,7 @@
 # c6-tape-build-id — tapes carry their build, the assayer names skew honestly
 
-**Slice**: `c6-tape-build-id` · **branch**: `lane/d` · **lane tip**: `57194d8e5` · **merge**: `3a2ebfd0ceea737a0393900b12310a4cf4827790` (main)
-**Drained by**: s2238 (fire) · **Gated**: detached worktree `gate-s2238` off `9d21ce4ce` (§3.0b — undecided content never entered main's working tree)
+**Slice**: `c6-tape-build-id` · **branch**: `lane/d` · **lane tip**: `9b4a4f8c2` · **merge**: `eec0399c486a62ff87cf399547464ce61cc3c6f2` (main)
+**Drained by**: s2238 (fire) · **Gated**: detached worktree `gate-s2238` off `821db56fe` (§3.0b — undecided content never entered main's working tree)
 
 ## VERDICT: MERGE
 
@@ -46,7 +46,7 @@ witnesses: the new pin `the round-2 corpus hash remains byte-for-byte pinned` as
 `artifacts/assay-e2e-20260822/round2/tape-secure-verb.json` is still `fnv1a32:ba8fdc3e`, and `gr-sim.test.mjs`'s
 determinism suite is unmoved at 18/0/2.
 
-**Merge classification.** Base `9d21ce4ce`. Nine files, all LANE-TOUCHED; `src/game/Game.ts` and
+**Merge classification.** Base `821db56fe`. Nine files, all LANE-TOUCHED; `src/game/Game.ts` and
 `tasks/BACKLOG.md` were also MAIN-MOVED and auto-merged by ort with no conflict. Proof the merge on main IS
 the tree that was gated: all nine blob hashes are byte-identical between the detached gate worktree and main
 after the merge (`functions/api/standings.ts cbe2495a3` · `scripts/assay-replay.test.mjs cbf1cbb31` ·

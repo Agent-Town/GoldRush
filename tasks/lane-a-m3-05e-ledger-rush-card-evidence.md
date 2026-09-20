@@ -15,7 +15,7 @@ CODEX: gpt-5.6-sol effort=low
 
 Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead is NORMAL — the runner auto-commits. For each ahead commit: if its content is already merged to main (verify via git log/diff), it is a SAFE DUPE → `git checkout -B lane/m3 main && git clean -fd` and PROCEED. STOP-and-report ONLY if an ahead commit's content is NOT on main (undrained work — resetting would DESTROY it), or the worktree holds uncommitted edits you did not make. Then `npm install --no-audit --no-fund`; `npm run build` green before touching anything.
 
-*(Measured by the authoring fire at 2026-07-29T03:2xZ: `lane/m3` was **1 ahead at `439429c2`** ("runner(lane-a): lane-a-m3-05d-run-ledger-earned-truth.md"), and **every one of the 5 files in that commit hashes byte-identical to its `main` counterpart** — a FALSE-AHEAD SAFE DUPE, its content having landed as `5027c211`. Re-derive it anyway; the board moves.)*
+*(Measured by the authoring fire at 2026-07-29T03:2xZ: `lane/m3` was **1 ahead at `439429c2`** ("runner(lane-a): lane-a-m3-05d-run-ledger-earned-truth.md"), and **every one of the 5 files in that commit hashes byte-identical to its `main` counterpart** — a FALSE-AHEAD SAFE DUPE, its content having landed as `aff16268`. Re-derive it anyway; the board moves.)*
 
 ## Why (F-1192-2, raised by s1192's own drain — and its recommended cure was MEASURED WRONG by s1193 before this master was written)
 

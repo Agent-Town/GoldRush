@@ -16,7 +16,7 @@
 # Usage: bash scripts/test-deploy-site-contract.sh [script-under-test]
 #   The optional path runs the suite against ANOTHER copy of the script — which is how you prove the
 #   suite has teeth rather than assuming it. Mutation control (must FAIL; that is the pass condition):
-#     git show d9897a26:scripts/deploy-site.sh > /tmp/prefix-deploy-site.sh
+#     git show 23e70590:scripts/deploy-site.sh > /tmp/prefix-deploy-site.sh
 #     bash scripts/test-deploy-site-contract.sh /tmp/prefix-deploy-site.sh
 #
 # No network is possible: wrangler is stubbed onto PATH, so no upload can occur and no real Pages

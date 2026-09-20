@@ -15,11 +15,11 @@ grep -c '!artifacts/\*\*/\*.log' .gitignore
 grep -c '^\*\*Slice:\*\* `f1572-1-lane-arm-uncensored-drift`' reviews/f1572-1-lane-arm-uncensored-drift.md
 ```
 
-Both must print `1`. **If either prints `0`, STOP and report "lane drifted or predecessor absent" — do NOT improvise.** The first proves the s1573 `.gitignore` cure (`cc2ad93f5`) is present, and because it is the newest of the three relevant commits it also proves the f1572-1 merge (`452f1f66c`) and its drain (`479b9fa6a`) are in the lane. The second proves the review file you must read is actually here.
+Both must print `1`. **If either prints `0`, STOP and report "lane drifted or predecessor absent" — do NOT improvise.** The first proves the s1573 `.gitignore` cure (`76ba6b970`) is present, and because it is the newest of the three relevant commits it also proves the f1572-1 merge (`d4380c4aa`) and its drain (`87b538276`) are in the lane. The second proves the review file you must read is actually here.
 
 ## Why (F-1573-1 residue, and a predicate I ran before specifying it)
 
-F-1573-1 found the f1572-1 runner's **24 `run-NN.log` files** — the raw per-test detail its review cites by path — being silently swallowed by the repo-wide `*.log` rule at `.gitignore:7`. The logs were rescued by hand at the drain (`git add -f`), and `cc2ad93f5` narrowed the ignore rule going forward. **Neither of those is the durable fix, and the finding says so:**
+F-1573-1 found the f1572-1 runner's **24 `run-NN.log` files** — the raw per-test detail its review cites by path — being silently swallowed by the repo-wide `*.log` rule at `.gitignore:7`. The logs were rescued by hand at the drain (`git add -f`), and `76ba6b970` narrowed the ignore rule going forward. **Neither of those is the durable fix, and the finding says so:**
 
 > "the DURABLE fix is not the ignore line, it is the DRAIN DUTY. This cost nothing only because the drain happened to open the artifact directory by hand; nothing yet makes a drain *notice* that a review cites evidence the repo does not contain."
 
@@ -69,7 +69,7 @@ F-1573-1 found the f1572-1 runner's **24 `run-NN.log` files** — the raw per-te
 
 **Touch ONLY:** `scripts/review-evidence-audit.mjs` (new) · `scripts/review-evidence-audit.test.mjs` (new) · `package.json` — **the `test:node-guards` line ONLY, adding exactly one filename; no dependency changes, no version bump, no other script** · `.claude/skills/drain/SKILL.md` — **the single duty step of item 8, plus any coordinate re-base item 8 forces** · `artifacts/f1574-1-review-evidence/live-corpus.txt` (new) · `reviews/f1574-1-review-evidence-audit.md` (new, your report).
 
-**NO changes to:** `.gitignore` — ⛔ **the s1573 cure `cc2ad93f5` is deliberately narrow; widening it is not yours and a blanket `!**/*.log` is the F-1027-2 black-hole shape** · `scripts/citation-title-guard.mjs` and its baseline — the nearest neighbour, read-only; **do not merge your check into it** · `scripts/desk-state-audit.mjs` — the precedent you copy, not edit · `scripts/art-staging-audit.mjs` · any existing `reviews/*.md` — ⛔ **especially `reviews/f1572-1-lane-arm-uncensored-drift.md`: it is the EVIDENCE for F-1573-1 and must stay byte-identical; your tool READS reviews and never writes them** · `artifacts/f1572-1-lane-arm/**` — the 24 rescued logs, leave byte-identical · `tasks/**` · `tasks/goals.json` · `tasks/BACKLOG.md` · `STATUS.md` · `CLAUDE.md` · `scripts/fire.md` · any `src/**`, `e2e/**`, `specs/**`.
+**NO changes to:** `.gitignore` — ⛔ **the s1573 cure `76ba6b970` is deliberately narrow; widening it is not yours and a blanket `!**/*.log` is the F-1027-2 black-hole shape** · `scripts/citation-title-guard.mjs` and its baseline — the nearest neighbour, read-only; **do not merge your check into it** · `scripts/desk-state-audit.mjs` — the precedent you copy, not edit · `scripts/art-staging-audit.mjs` · any existing `reviews/*.md` — ⛔ **especially `reviews/f1572-1-lane-arm-uncensored-drift.md`: it is the EVIDENCE for F-1573-1 and must stay byte-identical; your tool READS reviews and never writes them** · `artifacts/f1572-1-lane-arm/**` — the 24 rescued logs, leave byte-identical · `tasks/**` · `tasks/goals.json` · `tasks/BACKLOG.md` · `STATUS.md` · `CLAUDE.md` · `scripts/fire.md` · any `src/**`, `e2e/**`, `specs/**`.
 
 🔓 **No firewall lift is granted.** If you find an adjacent defect, **report it in your review file — do not fix it** (CLAUDE.md §4.5).
 

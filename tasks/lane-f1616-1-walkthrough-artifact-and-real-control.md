@@ -18,7 +18,7 @@ All three must return **1** (verified `=1` on main at dispatch, s1616). If any r
 
 The one test in that file is titled **"measures warm assets across menu, town, and two contracts"**. Every scope item below is about that test; cite it by that title, not by a line number, when you report.
 
-## Why (F-1616-1 + F-1616-2, both measured at the s1616 drain of f1614-1, merge `1e2172f45`)
+## Why (F-1616-1 + F-1616-2, both measured at the s1616 drain of f1614-1, merge `21b473464`)
 
 **F-1616-2 — the spec dirties a tracked `reviews/*.md` on every run.** `.claude/skills/author-task/SKILL.md` ends BOTH pre-flight templates with the same sentence, verbatim: *"What still STOPs: modified tracked `src/**`, `scripts/**`, `e2e/**`, `tasks/**`, `specs/**`, `reviews/*.md`."* The factory-churn and evidence-artifact exceptions cover `artifacts/**`, `reviews/shots-*` and `.png`; **`reviews/*.md` is deliberately excluded from both.** The drain confirmed this by manufacturing it — a desktop-only run of the spec on the merged tree, then `git status --short`:
 

@@ -1,8 +1,8 @@
 # reviews/er01-e7-census.md — ER-01 E7 Signal readiness census
 
 - **Slice:** `lane-er01-e7-census.md` (ER-01 ladder, E7 Signal)
-- **Branch / tip:** `lane/a` @ `566d37358` (single runner commit, `runner(lane-a): lane-er01-e7-census.md`)
-- **Merged to main:** `41f40c61e94b386a0480794126c3ceda3e6a85d5`
+- **Branch / tip:** `lane/a` @ `8d4525a0e` (single runner commit, `runner(lane-a): lane-er01-e7-census.md`)
+- **Merged to main:** `20c1ea6b6574578d751d1b7697b3a0dda05ed99d`
 - **Drained by:** s1480 fire, 2026-08-06
 - **Verdict:** ✅ **MERGE** — census is honest, additive, and refuses rather than stretches.
 
@@ -37,7 +37,7 @@ Four attended fix-master stubs (F-ER01-E7-1..4) are written into the census doc.
 
 ## Merge classification
 
-Base: `main` @ `2ed76b05b`. Per-file:
+Base: `main` @ `11b163941`. Per-file:
 
 | File | Class | Resolution |
 |---|---|---|

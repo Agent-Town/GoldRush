@@ -2767,8 +2767,8 @@ test at scripts/stale-ready-for-gates-guard.test.mjs:148:1
   FAIL: 1 ledger row(s) still claim a landed slice awaits its drain.
   
     tasks/BACKLOG.md:1
-      🎨 **portraits-era-aging-2-batch SELF-QA PASS, READY-FOR-GATES (implementer 2026-09-07; Claude Opus 5 on scratch worktree `wt-aging2`, branch `art/portraits-era-aging-2`, base `f8f1c2132`, port 5303) 
-      -> goal leaf "portraits-era-aging-2-batch" is status="merged" merged 9b3da574.
+      🎨 **portraits-era-aging-2-batch SELF-QA PASS, READY-FOR-GATES (implementer 2026-09-07; Claude Opus 5 on scratch worktree `wt-aging2`, branch `art/portraits-era-aging-2`, base `3888cacf3`, port 5303) 
+      -> goal leaf "portraits-era-aging-2-batch" is status="merged" merged 8480f762.
          The slice landed; the row still says it is waiting. This is the Ghost Line
          (Mistake #5) — a stale claim that rode a clean auto-merge.
          CURE: retire the row in the SAME commit as the event, marking what landed and

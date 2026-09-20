@@ -1,6 +1,6 @@
 # Review: browser-door-held-gold — the browser door publishes the held purse at the secure tick (lane-b sparse worktree, Claude Opus 5 implementer, attended drain 2026-09-06 morning)
 
-**Slice/branch/tip:** `browser-door-held-gold` · `fix/browser-door-held-gold` · commits `c58d4859b`, `00bd7e56d` on base `6f57e9ad2` · merged to main: see the ledger row.
+**Slice/branch/tip:** `browser-door-held-gold` · `fix/browser-door-held-gold` · commits `c986fd8a8`, `45ccca875` on base `10266f9fb` · merged to main: see the ledger row.
 **Verdict:** MERGED. F-2464-4 closed: both doors now mean one thing by `score.gold`, the purse held at the secure tick. Five browser sites moved from lifetime panning to the held purse (`recordRunScore` `Game.ts:7180`, the `run_secured` handler `:1849`, `runTapeOutcome` `:7520`, `RunManager.secureRun` `:325`, the browser instrument `assay-replay.mjs:100`), one consequential lookup (`:8512`), and the run summary labels the number "gold held" while GOLD PANNED stays its own labelled stat. Hash-neutral by construction and by measurement: the event-log hash is taken over the event log only (`RunTape.ts:276`) and its `gold` was always `economy.gold`; one browser reel recorded on both trees replays to the same `fnv1a32:fefb78c9` with `score.gold` 30 (panned) before and 5 (held) after.
 
 ## Evidence
@@ -23,7 +23,7 @@ Screenshots: `artifacts/browser-door-held-gold/shots/standing-formula-explained-
 There are no human rows to re-assay: the banked board (49 verified rows over 32 contracts at 2026-09-05T21:16:55Z) carries agent profiles only; the owner's Baron reference tape lives in the sibling repo and was never submitted. The agent rows the gold drain named (mare-claim, echo-canyon) keep their old snapshot until their contract is re-assayed; Moth Season was re-assayed today through the ADR-004 verb and prints 200.
 
 ## Merge classification
-Base `6f57e9ad2`; main moved by the squall, the relay grit, the story gaps and the gold cure in `Game.ts` and the door. `src/game/Game.ts`, `src/game/RunManager.ts` (host type widened to `{ log, gold }`), `src/ui/DeathOverlay.ts`, `scripts/assay-replay.mjs`, `scripts/assay-replay.test.mjs`, `scripts/board-tape-gold.test.mjs`: LANE-TOUCHED, unioned where main moved. `artifacts/browser-door-held-gold/*`: NEW. `tasks/BACKLOG.md`: MAIN-MOVED, unioned. Attended in the landing commit: `e2e/m1-08-wave18-corrections.spec.ts:144` re-pointed to `${gold} gold held` (F-BDHG-1), `scripts/fire.md`'s pointer re-based by the measured shift, `public/skill.md`'s clause narrowed to the same-tick case.
+Base `10266f9fb`; main moved by the squall, the relay grit, the story gaps and the gold cure in `Game.ts` and the door. `src/game/Game.ts`, `src/game/RunManager.ts` (host type widened to `{ log, gold }`), `src/ui/DeathOverlay.ts`, `scripts/assay-replay.mjs`, `scripts/assay-replay.test.mjs`, `scripts/board-tape-gold.test.mjs`: LANE-TOUCHED, unioned where main moved. `artifacts/browser-door-held-gold/*`: NEW. `tasks/BACKLOG.md`: MAIN-MOVED, unioned. Attended in the landing commit: `e2e/m1-08-wave18-corrections.spec.ts:144` re-pointed to `${gold} gold held` (F-BDHG-1), `scripts/fire.md`'s pointer re-based by the measured shift, `public/skill.md`'s clause narrowed to the same-tick case.
 
 ## Findings
 - **F-BDHG-1 (cured by the drain):** one spec asserted the panned number in the standing row.

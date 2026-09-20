@@ -10,7 +10,7 @@ instructions.** (§2E stale-check: refresh, never blind-queue.)
 ## ⚠️ WHAT MAIN NOW OWNS — read this before scope 2 (measured s1446, not inferred)
 
 This master was authored at s1441. **Main has since moved `src/entities/Enemy.ts` twice**:
-`e4ea0993` (s1444, baron-siege) and **`531bd923` (s1445, night-stuck-census, F-BW-10 — the owner's
+`b87f154b` (s1444, baron-siege) and **`70eb5b50` (s1445, night-stuck-census, F-BW-10 — the owner's
 "opponents get stuck on objects")**. Measured with `lane-absorbed-lines.mjs`: **6 of `9236e9ba`'s 55
 added `Enemy.ts` lines are now ON MAIN**; 49 are still absent. The 6 are the overlap, and they are
 the ones the original scope 2 told you to restore.
@@ -18,7 +18,7 @@ the ones the original scope 2 told you to restore.
 **`blockerSlideDirection` and the `moveTarget` threading are now MAIN'S, and main's version is
 DIFFERENT from the archive's:**
 
-| | archive `9236e9ba` | **main `531bd923` (shipped, gated, control-proven)** |
+| | archive `9236e9ba` | **main `70eb5b50` (shipped, gated, control-proven)** |
 |---|---|---|
 | signature | `(axis, moveTarget, blocker)` | `(axis, moveTarget)` |
 | return | `Math.sign(moveTarget[axis] - blocker[axis])` | `Math.sign(moveTarget[axis] - this.group.position[axis])` |
@@ -77,7 +77,7 @@ main before being written here, and each sits on one line, so a `0` really does 
 
 ⚠️ **Keys 4 and 5 are the F-BW-10 guard added by the s1446 refresh.** They assert that main's
 enemy-relative `blockerSlideDirection` is present in your tree. If either returns `0`, your lane
-predates `531bd923` and **any salvage you do from the archive will revert a shipped owner fix** —
+predates `70eb5b50` and **any salvage you do from the archive will revert a shipped owner fix** —
 that is a STOP, not something to work around.
 
 **LANE-SAFETY (safe-dupe, runner-auto-commit aware):** the lane branch being ahead is NORMAL — the
@@ -130,7 +130,7 @@ reading the inner assertion line told them apart.
 2. **Keep `goalSideCrossing` — but NOT the archive's `blockerSlideDirection` (REVISED s1446).**
    The goal-side bias and the commit-to-one-crossing behaviour are the good part of `9236e9ba`, they
    are why the stalls clear, and they are still absent from main — **restore those.**
-   🚫 **The `moveTarget` threading is NO LONGER YOURS TO RESTORE: main owns it as of `531bd923`, in a
+   🚫 **The `moveTarget` threading is NO LONGER YOURS TO RESTORE: main owns it as of `70eb5b50`, in a
    different and control-proven form.** Thread your crossing work through **main's existing**
    `resolveBlocker(blocker, stepDistance, moveTarget)` / `blockerSlideDirection(axis, moveTarget)`
    signatures. **Do not re-add the `blocker` parameter and do not change what
@@ -159,7 +159,7 @@ Water sim classification · ford/bar POSITIONS or geometry · the `e1-twin-banks
 the judge — **do not edit the thing measuring you**, and do not touch `:213`) · `logs/suite-red-inventory.md` ·
 night-census scope · Balance tuning · anything on another lane.
 🚫 **ADDED s1446: `blockerSlideDirection`'s signature and return expression are OFF LIMITS** — they
-are main's F-BW-10 fix (`531bd923`), not your salvage surface. Call it; do not reshape it.
+are main's F-BW-10 fix (`70eb5b50`), not your salvage surface. Call it; do not reshape it.
 
 ## Self-check
 
@@ -171,7 +171,7 @@ are main's F-BW-10 fix (`531bd923`), not your salvage surface. Call it; do not r
 - `e2e/twin-banks-never-wedged.spec.ts` — green both projects.
 - **`e2e/never-trap.spec.ts` — green both projects, and call it out explicitly in your report
   (ADDED s1446).** `:88` is the manufactured-defect witness for main's F-BW-10 fix: it reds on a tree
-  without it. If it goes red, you have reverted `531bd923` — stop and say so rather than adjusting it.
+  without it. If it goes red, you have reverted `70eb5b50` — stop and say so rather than adjusting it.
 - Adjacent by grep, not from a list: `e2e/e2-enemies.spec.ts`, `e2e/never-trap.spec.ts`,
   `e2e/enemy-gap-flow.spec.ts`, `e2e/run3d-palisade.spec.ts`, `e2e/task-048-funnel-formation-spread.spec.ts`,
   `e2e/064-river-continues.spec.ts`, `e2e/gt-05-water-depth.spec.ts`, `e2e/shore-truth.spec.ts`.

@@ -3,7 +3,7 @@
 **FIRE-AUTHORED s1312 · v2 RE-AUTHORED s1313 WITH A LIFTED FIREWALL (attended review welcome).** Role: lane-b runner. Workdir: `worktrees/lane-b` (branch `lane/m4`).
 
 ## ⚠️ READ THIS FIRST — v1 STOPPED LAWFULLY, AND IT WAS RIGHT
-v1 of this master ran and **STOPPED at scope 4 without writing product code**, because its firewall permitted changes to the `TierStat` union and the two `addCapSource` calls **and nothing else** — and that set cannot make a stockpile tier purchasable. **That STOP was correct and is preserved at `artifacts/bt-02b-stockpile-tiers/report.md` (merged to main s1313, `734657df`).** Read it. You are not repeating v1; you are running it with the three sites it correctly identified as missing now **explicitly in scope**.
+v1 of this master ran and **STOPPED at scope 4 without writing product code**, because its firewall permitted changes to the `TierStat` union and the two `addCapSource` calls **and nothing else** — and that set cannot make a stockpile tier purchasable. **That STOP was correct and is preserved at `artifacts/bt-02b-stockpile-tiers/report.md` (merged to main s1313, `734657df (archive: pruned by the A3 rewrite)`).** Read it. You are not repeating v1; you are running it with the three sites it correctly identified as missing now **explicitly in scope**.
 
 s1313 re-verified all three of v1's blocking claims at source before lifting the firewall. **All three hold**, and one of them corrects the WHY below:
 

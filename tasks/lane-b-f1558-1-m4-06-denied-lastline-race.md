@@ -21,7 +21,7 @@ Both must return **1**. If either returns 0, the lane has drifted from the main 
 
 ## Why (F-1558-1, s1558 — measured on the merged tree, then explained by reading)
 
-f1557-3 merged at `beddce2fa` and did what it was authored to do: the three assertions that encode the permission rule now run before any numeric proxy, and they passed **100/100**. But the test **still flakes**, and s1558 re-measured it on the merged tree at `--workers=1` on an idle machine:
+f1557-3 merged at `88b3ea977` and did what it was authored to do: the three assertions that encode the permission rule now run before any numeric proxy, and they passed **100/100**. But the test **still flakes**, and s1558 re-measured it on the merged tree at `--workers=1` on an idle machine:
 
 | batch | result |
 |---|---|

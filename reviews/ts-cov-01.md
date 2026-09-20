@@ -1,8 +1,8 @@
 # ts-cov-01 — worker type coverage
 
 **Slice:** `ts-cov-01-worker-type-coverage` (FIRE-AUTHORED s1233 from F-1233-1)
-**Branch:** `lane/m3` (lane-a slot) · **Tip:** `e9d848a7` · **Base:** `e88de542`
-**Merged to main:** `d606946d` (s1235 fire, 2026-07-30)
+**Branch:** `lane/m3` (lane-a slot) · **Tip:** `e9d848a7` · **Base:** `2d4692f5`
+**Merged to main:** `f8eddce8` (s1235 fire, 2026-07-30)
 
 ## VERDICT: MERGED — scope met, gate is real, one drain-side finding fixed in the same commit.
 
@@ -39,7 +39,7 @@ Plus `scripts/worker-type-coverage.test.mjs`, wired into `test:node-guards`.
 |---|---|
 | `npx tsc --noEmit` | **rc=0** |
 | `npm run build` | **rc=0**, 16.3 s |
-| `node scripts/run-guards.mjs --changed-since e88de542` | **rc=0 — 6/6 passed** (node-guards, power-budget, stats, accounts, mp, task-guards) |
+| `node scripts/run-guards.mjs --changed-since 2d4692f5` | **rc=0 — 6/6 passed** (node-guards, power-budget, stats, accounts, mp, task-guards) |
 | Re-run after the `run-guards.mjs` edit below | **rc=0 — 6/6** |
 | Boot probe `_s106-prospector-boot-probe`, desktop-chrome + mobile-chrome (390px) | **rc=0, 2/2**, zero console/page errors, plain boot (no `?debug`) |
 | Coverage, **re-derived by the drain** | walked `functions/**/*.ts` = **22**; `tsc --noEmit --listFiles` ∩ functions/ = **22** |
@@ -67,8 +67,8 @@ inside `--listFiles` and still be checking nothing.
 
 ## Merge classification
 
-Base `e88de542` is an ancestor of main. Main moved 4 commits since (`16077732`,
-`f611c1ea`, `acc448ae`, `6b673f19`).
+Base `2d4692f5` is an ancestor of main. Main moved 4 commits since (`9b237c63`,
+`567ee14e`, `7ac2de56`, `1b4f79ec`).
 
 - **LANE-TOUCHED:** `functions/api/_accounts.ts`, `functions/api/_multiplayer.ts`,
   `functions/api/redeem.ts`, `tsconfig.json`, `package.json`,

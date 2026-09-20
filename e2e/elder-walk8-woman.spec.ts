@@ -26,7 +26,7 @@ const shotDir = path.resolve('reviews/shots-elder-walk8-regeneration');
 // `char-elder-sheet-walk8-r*c*.png` is still the bearded man. Pinned the way
 // scripts/halo-reextraction-check.mjs pins its own BASE (:8), for the same reason: the comparison
 // has to name a fixed tree, not "whatever main is today".
-const BASE = 'e0f1880ed74475545c421316f5592f65e5636579';
+const BASE = 'de208bbfea05aec8fb806059e90552e9baf52463';
 const SHEET = 'char-elder-sheet-walk8';
 const ELDER = { x: -6.65, z: 7.35 };
 // The town clamps zoom to TOWN_ZOOM_MIN..MAX; this is a value inside it that frames one actor.

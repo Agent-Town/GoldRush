@@ -1,6 +1,6 @@
 # Task lane-vp02-capture-error-surface: let the west/east capture timeout message actually REACH the report (lane-b, commit prefix "test:")
 
-**FIRE-AUTHORED s1141 (attended review welcome).** From **F-1141-1** (`tasks/BACKLOG.md`, this fire), which was found while draining vp-02g at `ef3731b8`. It invents no scope: vp-02g already built the enriched message and its content is already merged — this task only stops the caller from throwing it away. **No new assertion, no changed expectation, no product code.**
+**FIRE-AUTHORED s1141 (attended review welcome).** From **F-1141-1** (`tasks/BACKLOG.md`, this fire), which was found while draining vp-02g at `45dee34a`. It invents no scope: vp-02g already built the enriched message and its content is already merged — this task only stops the caller from throwing it away. **No new assertion, no changed expectation, no product code.**
 
 CODEX: model=gpt-5.6-sol effort=high
 
@@ -8,7 +8,7 @@ You are Codex, implementer for Gold Rush, running natively on Robin's Mac in `wo
 
 Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead is NORMAL — the runner auto-commits. **Do not compare this worktree against a list of files I wrote; I do not have one, and an exhaustive dirt list is the wrong instrument (it is what stopped a runner needlessly at s1132).** Check the **invariant** instead: **no dirty blob in this worktree may be UNIQUE — every modified/deleted/untracked file's content must already exist somewhere in git** (main's history, any branch, or this lane's own commits). If every dirty blob is reachable, the reset destroys nothing → `git checkout -B lane/m4 main && git clean -fd` and PROCEED. If **any** blob exists nowhere else, **STOP and report that file by name** — that one is real unmerged work and resetting it would be the Mistake #2 shape. (`git hash-object <file>` then `git cat-file -e <hash>` is enough; `.wrangler/tmp/**` is build scratch and is exempt.) Then `npm install --no-audit --no-fund`; `npm run build` green before touching anything.
 
-*(s1141 pre-measured the branch and you must still re-verify it: `lane/m4` is **1 ahead** at `43d72990`, the vp-02g runner commit, **already drained to main at `ef3731b8`** by this fire. Confirmed by content, not by message: `e2e/vp-02-sprite-animation.spec.ts` is **absent from `git diff --name-only main..lane/m4`**, i.e. byte-identical to main — the slice's content is fully merged and this is a false-ahead tip. Nothing is lost by the reset.)*
+*(s1141 pre-measured the branch and you must still re-verify it: `lane/m4` is **1 ahead** at `43d72990`, the vp-02g runner commit, **already drained to main at `45dee34a`** by this fire. Confirmed by content, not by message: `e2e/vp-02-sprite-animation.spec.ts` is **absent from `git diff --name-only main..lane/m4`**, i.e. byte-identical to main — the slice's content is fully merged and this is a false-ahead tip. Nothing is lost by the reset.)*
 
 ## READ FIRST (paths, in this order)
 
@@ -19,7 +19,7 @@ Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead 
 
 ## WHY (quoting the evidence, dated)
 
-vp-02g (merged `ef3731b8`, 2026-07-27) made the capture helper record the distinct observed
+vp-02g (merged `45dee34a`, 2026-07-27) made the capture helper record the distinct observed
 `{direction, frameKey, fadeActive}` tuples and `framesPolled`, and put them in its timeout throw.
 That was the right fix and it delivered the diagnosis — classification **(c), the crossfade gate**.
 

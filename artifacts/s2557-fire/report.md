@@ -1,6 +1,6 @@
 # s2557 — retain quiet evidence and verify the dry board
 
-Preserved s2556's stranded report correction and its cited gazette receipt verbatim in `72475bfb9ba52e7dd4f33983188792efb9336962`. Its missing closing-ledger receipt remains unverified; this fire does not infer a predecessor pass. The s2556 handoff was archived verbatim in the s2557 lock commit, `9e80acd61`.
+Preserved s2556's stranded report correction and its cited gazette receipt verbatim in `72475bfb9ba52e7dd4f33983188792efb9336962 (archive: pruned by the A3 rewrite)`. Its missing closing-ledger receipt remains unverified; this fire does not infer a predecessor pass. The s2556 handoff was archived verbatim in the s2557 lock commit, `4944dd9f7`.
 
 Retained 39 quiet boss-review evidence files (35,391,000 bytes) on parentless `save/attended-worktree-evidence-s2557` at `ac2d9188edd3e736bb340a977ec49f4e5027b9e4`. The exact ref was pushed and verified against live origin; all 39 blobs are now remote-safe. Source hashes and source/main status were unchanged. This backup does not approve or merge the art. See `retention-salvage-conclusion.md`.
 
@@ -18,6 +18,6 @@ GZ-01: 247 reported, 115 dismissed, zero candidates. Week 37 has three standalon
 
 The 55-item owner's desk was checked against the inherited handoff (CLOSED 0, OPEN 2, BOTH 0, OPEN-DESK-ONLY 53, UNRECORDED 0) and carried verbatim. No new owner decision was created. Runtime-written dashboards/statistics, local caches, guard-stats, historical trace originals, paused queue entry and foreign probe artifacts remain with their writers.
 
-Closing ledger validation **PASS** after handoff `8f68f540d5ebb30cbc0fc87b5b0df58c2b0a35ec`: `npm run test:ledger-guards`, Node v26.4.0, PTY stdin, exit 0 in 154.171 s. All 1,050 Node assertions passed with zero skips; desk declaration, birth and carryforward each PASS; both live runner-custody arms executed; the foundry tail reports 83 passed, zero failed. Terminal receipt: `closing-ledger.json`; full output: `closing-ledger.txt`. Main backup is verified through `892c6ed7d5f7c3770a0d6bef365098565400abfc` against live origin; the exact push receipt is `main-backup.json`. This fire changes no runtime source, so no build or browser regression is required.
+Closing ledger validation **PASS** after handoff `78310459158f31aa24b232fefca20d63b18cf1a9`: `npm run test:ledger-guards`, Node v26.4.0, PTY stdin, exit 0 in 154.171 s. All 1,050 Node assertions passed with zero skips; desk declaration, birth and carryforward each PASS; both live runner-custody arms executed; the foundry tail reports 83 passed, zero failed. Terminal receipt: `closing-ledger.json`; full output: `closing-ledger.txt`. Main backup is verified through `892c6ed7d5f7c3770a0d6bef365098565400abfc (archive: pruned by the A3 rewrite)` against live origin; the exact push receipt is `main-backup.json`. This fire changes no runtime source, so no build or browser regression is required.
 
 NEXT: triage new done-moves first; preserve attended ownership and parked gates; retry the September 8 ledger pull after the box makes it available.

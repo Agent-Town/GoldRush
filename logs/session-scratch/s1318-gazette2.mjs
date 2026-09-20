@@ -9,8 +9,8 @@ const item = `
 No change a player can see: the button that keeps a run's tape has always been there after a death, in ordinary play, with no switches thrown.
 What changed is that we can now prove it. Every check we had on that button ran with the workshop doors open — a boot with debug flags set — so the button could have quietly vanished from the ordinary game and no test in the house would have said a word.
 There is now a check that boots the game the way you boot it and waits for the button to appear, and it was proven by breaking the button on purpose and watching the new check catch it.
-merge ae2a60f3ba1439d9515b73a5fb81b72805030355 · reviews/f1297-2-plain-boot-tape-button.md · artifacts/f1297-2-plain-boot-tape-button/ (desktop 1280 + mobile 390, no debug flags)
+merge 2871c1276d7321cd60a4dd87831c8d003df3140f · reviews/f1297-2-plain-boot-tape-button.md · artifacts/f1297-2-plain-boot-tape-button/ (desktop 1280 + mobile 390, no debug flags)
 `;
 
 appendFileSync('marketing/outbox/gazette-queue.md', item);
-console.log('roundup item appended for ae2a60f3 (no headline — no player-visible change)');
+console.log('roundup item appended for 2871c127 (no headline — no player-visible change)');

@@ -1,8 +1,8 @@
 # ER-01 E4 Motor readiness census — drain review (s1461)
 
 - **Slice:** `lane-er01-e4-census` (E4 Motor, on the E2/E3 template + the ERA-SOCKET LAW)
-- **Branch / tip:** `lane/c` @ `87bda317`
-- **Merged to main:** `4fc7b96c5e5b82ba39aa1617d5230247ebe4ae7b`
+- **Branch / tip:** `lane/c` @ `b1e98e49`
+- **Merged to main:** `3e68c7e0d88618fb690eccdf510b83aecc2dcf3c`
 - **Gated in:** detached worktree `gate-s1461/` (§3.0b)
 - **Drain-block check:** `? UNKNOWN` — no leaf; searched by leaf id, genuinely absent (F-1461-2). Registered in the bookkeeping commit. Not a block.
 
@@ -50,7 +50,7 @@ No screenshots: headless bench infrastructure, no player-visible surface.
 
 ## Merge classification
 
-Base `3445d479`. `docs/bench/e4-readiness-census.md` and `e2e/er01-e4-census.spec.ts` are
+Base `91962d70`. `docs/bench/e4-readiness-census.md` and `e2e/er01-e4-census.spec.ts` are
 **LANE-ONLY pure-add** (main never held either path — `create mode 100644` both).
 `tasks/BACKLOG.md` **BOTH-MOVED, auto-merged cleanly.**
 

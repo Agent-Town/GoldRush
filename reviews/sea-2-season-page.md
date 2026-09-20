@@ -1,9 +1,9 @@
 # Review — SEA-2: the Season Page
 
 - **Slice**: `sea-2-season-page` (task master `tasks/done/20260810-195615-lane-b-sea-2-season-page.md`, FIRE-AUTHORED s1637)
-- **Branch / tip**: `lane/b` @ `605dcd08a7ff9cb917b66bc1d273fb51cdcea079`
-- **Base**: `6894a533ae8a4a9532f23bf1096a73b9d1bdf748`
-- **Merge**: `39c036580c9b8bc58752231ebc410c27c7089f50` (s1639, `--no-ff`, one act)
+- **Branch / tip**: `lane/b` @ `bf77b1c44dc3f45d38c65869f006a15d7119427f`
+- **Base**: `1f0dc8423e7d8f46cf0d26a8ce768834be700bf3`
+- **Merge**: `68171076a58a5a26b73ae17e6ca0e67060e828c7` (s1639, `--no-ff`, one act)
 - **Gated in**: detached worktree `gate-s1639` (§3.0b), scratch, `node_modules` symlinked
 - **Verdict**: ✅ **MERGE**
 
@@ -81,7 +81,7 @@ and still present in County Standings (`county-standings-row-2`).
 
 ## Merge classification
 
-Base `6894a533`, 7 paths, **ALL LANE-ONLY**, `DUPLICATE 0 · MAIN-ONLY 0 · BOTH-MOVED 0`.
+Base `1f0dc842`, 7 paths, **ALL LANE-ONLY**, `DUPLICATE 0 · MAIN-ONLY 0 · BOTH-MOVED 0`.
 
 | Path | Class |
 |---|---|

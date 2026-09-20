@@ -14,4 +14,4 @@ while [ $((HI - LO)) -gt 1 ]; do
     *) HI=$MID ;;
   esac
 done
-echo "RESULT: last green index $LO = $(sed -n "$((LO+1))p" "$DIR/range.txt" 2>/dev/null || echo '(base 032ccd392)'), first red index $HI = $(sed -n "$((HI+1))p" "$DIR/range.txt")"
+echo "RESULT: last green index $LO = $(sed -n "$((LO+1))p" "$DIR/range.txt" 2>/dev/null || echo '(base 6c7b11184)'), first red index $HI = $(sed -n "$((HI+1))p" "$DIR/range.txt")"

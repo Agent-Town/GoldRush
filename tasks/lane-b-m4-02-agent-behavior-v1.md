@@ -2,7 +2,7 @@
 
 # Lane B / M4-02: agent behavior v1 — the Prospector acts (worktree lane-b, branch lane/m4, prefix "m4:")
 
-PRE-FLIGHT (binding): verify worktree lane-b is REGISTERED (`git worktree list` shows it) and fresh against main (m4-01 merged as `b7a4e9c`). If unregistered or stale → STOP, report, change nothing (s36/s41 rule).
+PRE-FLIGHT (binding): verify worktree lane-b is REGISTERED (`git worktree list` shows it) and fresh against main (m4-01 merged as `0793261`). If unregistered or stale → STOP, report, change nothing (s36/s41 rule).
 
 READ: AGENTS.md, docs/decisions/ADR-002, brief §6–7 (Foreman pattern: approvals/receipts), your landed m4-01 (`src/agent/ToolSurface.ts`, `PermissionLadder.ts`, `AgentStub.ts`), `reviews/m4-01-tool-surface.md` findings 1–3 (all three are MANDATORY correctives in this slice), north star: teen-grade clarity.
 

@@ -1,7 +1,7 @@
 # f1615-1 — prefetch wins, mount laziness (HELD)
 
 **Slice:** `f1615-1-prefetch-wins-mount-laziness` · **branch:** `lane/a` · **tip:** `914a7e93b`
-**Gated by:** s1617 · **Base at gate:** `9dd5ef6af` (main)
+**Gated by:** s1617 · **Base at gate:** `e42fdd635` (main)
 
 ## Verdict
 
@@ -33,7 +33,7 @@ expect(prefetched.some((url) => /stamp-mill|dynamo-hall/.test(url))).toBe(false)
 
 | Arm | Result |
 |---|---|
-| main **without** the slice (`9dd5ef6af` + f1616-1), same fire, same shell | **10/10 passed**, 32.2 s |
+| main **without** the slice (`e42fdd635` + f1616-1), same fire, same shell | **10/10 passed**, 32.2 s |
 | main **with** the slice merged | **8 passed / 2 failed**, 36.4 s |
 
 Both failures are the same test, on **both projects**, failing on that one line: `Expected: false · Received: true`.

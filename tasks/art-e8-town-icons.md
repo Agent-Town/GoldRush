@@ -7,8 +7,8 @@ CODEX: model=gpt-5.6-sol effort=high
 **Unshipped proof (F-1044-4 art gate — cite the BACKLOG line):** `tasks/BACKLOG.md:791` reads verbatim **"E8 town-icons still owner-blocked on the portrait convention"**, and that text is the F-1044-4 record of *why it was blocked*, not a live gate. ✓ **File-probe s1161:** `git ls-files | grep -E "tf-.*-e8|icons-e8"` returns **zero**, and no `tasks/art-e8-*town-icons*.md` master exists. So the work is genuinely unshipped.
 
 **The blocker is retired class-wide by the OWNER, not by me.** `BACKLOG:979` (the OWNER'S DESK block, item ②) verbatim: *"✅ CLOSED — ANSWERED BY THE OWNER 2026-07-27 … **This unblocks the whole town-icons class E6–E10.**"* ✓ line number re-verified s1161 by grep, not inherited from the E7 master, which cited the pre-edit `:977`. Two rungs have since shipped against it and the convention held both times:
-- **E6** — `art-e6-town-icons` DRAINED `c7601082`, `assets/LEDGER.md` **row 61**.
-- **E7** — `art-e7-town-icons` DRAINED `7873eaee17e1f4f9e9fcf4575e7aec3e33910f83`, **row 62**, review `reviews/art-e7-town-icons.md` (s1161). Its instrument control passed, its five portraits measured 127.5–144.4, and its sheet order was proven 5/5 bijective.
+- **E6** — `art-e6-town-icons` DRAINED `a5c4a942`, `assets/LEDGER.md` **row 61**.
+- **E7** — `art-e7-town-icons` DRAINED `46d29c958b166d8c2d6cdad5822ec7f49187457f`, **row 62**, review `reviews/art-e7-town-icons.md` (s1161). Its instrument control passed, its five portraits measured 127.5–144.4, and its sheet order was proven 5/5 bijective.
 
 **You are E8, the third rung** of `reviews/era-art-audit.md` **§E8 item 4** (`:147`).
 
@@ -49,7 +49,7 @@ A townsfolk portrait is a small illustrated **BUST** in the engraved-sepia plate
 | `tf-schoolteacher.png` | ≈140.4 | pass |
 | `tf-storekeeper.png` | ≈143.9 | pass |
 
-**Your instrument is correct only if it reproduces all six within ~±1 AND flags exactly one (`tf-mei`).** If it flags two, or none, it is wrong — fix it before measuring a single E8 file, and report the full control table in the run file. **This control has already earned its keep once: it blocked E7 attempt 1 (`49d49007`) at pre-flight, before a single `image_gen` call, because the task's band was wrong.**
+**Your instrument is correct only if it reproduces all six within ~±1 AND flags exactly one (`tf-mei`).** If it flags two, or none, it is wrong — fix it before measuring a single E8 file, and report the full control table in the run file. **This control has already earned its keep once: it blocked E7 attempt 1 (`49d49007 (archive: pruned by the A3 rewrite)`) at pre-flight, before a single `image_gen` call, because the task's band was wrong.**
 
 ## THE BATCH — 5 files EXACT (4 portraits + 1 sheet)
 Identities are `specs/epoch-saga/e8-orbital-bundle.md:11` verbatim: *"launch master · dome gardener (green things under glass — warmth in vacuum) · suit fitter · the He-3 assayer (assay lineage) · a child born ON the Moon (the first townsfolk who has never seen the river — the tavern tale that aches; E9's motivation seeded)."*

@@ -1,7 +1,7 @@
 # f1311-2 — the citation gate moves before the queue copy
 
-**Slice:** `lane-a-f1311-2-citation-gate-before-queue` · **branch:** `lane/m3` · **lane tip:** `817622e3` · **base:** `0b06a62e`
-**Merged to main at:** `98272a1b40a93aed45469f0856395223a78594db` · **drained by:** s1312 · **date:** 2026-08-01
+**Slice:** `lane-a-f1311-2-citation-gate-before-queue` · **branch:** `lane/m3` · **lane tip:** `817622e3` · **base:** `db1705a0`
+**Merged to main at:** `434b52a895fb3f39c65ed42e32cce9f61d13fff9` · **drained by:** s1312 · **date:** 2026-08-01
 
 ## Verdict
 
@@ -54,7 +54,7 @@ Master restored: sha256 `eb4e3a0b…f063` **byte-identical** before and after; `
 
 ## Merge classification
 
-**Base `0b06a62e`.** Both LANE-TOUCHED paths are disjoint from everything main moved:
+**Base `db1705a0`.** Both LANE-TOUCHED paths are disjoint from everything main moved:
 
 | Path | Class |
 |---|---|
@@ -62,7 +62,7 @@ Master restored: sha256 `eb4e3a0b…f063` **byte-identical** before and after; `
 | `scripts/drain-block-check.test.mjs` (+60, new) | LANE-TOUCHED only |
 | `STATUS.md`, `tasks/BACKLOG.md`, `tasks/goals.json`, `tasks/lane-a-f1311-2-…md` | MAIN-MOVED only |
 
-**Zero overlap → no 3-way graft.** ⚠️ The two-dot `main..lane/m3` diff shows those four bookkeeping files as *deletions*; that is the stale-base phantom, not content loss — the lane branched at `0b06a62e`, before s1311's bookkeeping and my own lock. Applied with `git checkout lane/m3 -- <2 paths>`; `git diff lane/m3 --` over both is **0 lines** (graft byte-identical to the lane tip).
+**Zero overlap → no 3-way graft.** ⚠️ The two-dot `main..lane/m3` diff shows those four bookkeeping files as *deletions*; that is the stale-base phantom, not content loss — the lane branched at `db1705a0`, before s1311's bookkeeping and my own lock. Applied with `git checkout lane/m3 -- <2 paths>`; `git diff lane/m3 --` over both is **0 lines** (graft byte-identical to the lane tip).
 
 ## Findings
 

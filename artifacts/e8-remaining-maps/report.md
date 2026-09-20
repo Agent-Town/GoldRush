@@ -1,6 +1,6 @@
 # e8-remaining-maps — implementer report (lane/d, Claude, 2026-09-05)
 
-**Task master:** `tasks/e8-remaining-maps.md`. **Base:** `main` @ `57330ebfd`. **Branch:** `lane/d`.
+**Task master:** `tasks/e8-remaining-maps.md`. **Base:** `main` @ `7dc8672f0`. **Branch:** `lane/d`.
 **Verdict: READY-FOR-GATES.** All three maps shipped; nothing deferred by the honesty guard.
 
 ---
@@ -75,7 +75,7 @@ and `e8-far-side` never arm `E8AtmosphereSystem`.
 
 One seed, idle policy, 400-decision bound. **node** = `artifacts/e8-remaining-maps/armed.json` on
 this lane. **chromium** = a module worker running the same module, `e2e/e8-remaining-maps-parity.spec.ts`.
-**control** = the same probe on a DETACHED WORKTREE OF MAIN at `57330ebfd`
+**control** = the same probe on a DETACHED WORKTREE OF MAIN at `7dc8672f0`
 (`artifacts/e8-remaining-maps/control.json`), never `git stash`.
 
 | contract / seed | control (main) | node (lane) | chromium worker (lane) | agree? |
@@ -235,7 +235,7 @@ show the three maps still boot clean for a human on desktop and at 390px.
   field reads `'attended-evidence-commits-2026-09-04'` where a 40-hex sha is required
   (`goal-tracker.test.mjs:80`), and `scripts/fixture-teardown.test.mjs` fails ONLY because it runs
   goal-tracker as a child and propagates that one failure. **Control: the identical failure, same
-  input string, on a DETACHED WORKTREE OF MAIN at `57330ebfd` (`CONTROL_GOALTRACKER_EXIT=1`).**
+  input string, on a DETACHED WORKTREE OF MAIN at `7dc8672f0` (`CONTROL_GOALTRACKER_EXIT=1`).**
   `git diff --name-only main...HEAD` contains no `tasks/goals.json`. This is **F-2499-2**, already
   on the BACKLOG as a known red on main from an attended goal leaf, and it is not this diff's.
 - **Fire-shell note:** the battery ran at node's default file concurrency (this is a lane shell, so

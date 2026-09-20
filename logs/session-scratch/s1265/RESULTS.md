@@ -1,6 +1,6 @@
 # s1265 — F-1264-3's node-version lead, run: REFUTED. And the near-miss that matters more.
 
-Fire s1265, 2026-07-30, main at `986434c3`. Subject: `e2e/gazette-welcome.spec.ts:88`,
+Fire s1265, 2026-07-30, main at `118d5b73`. Subject: `e2e/gazette-welcome.spec.ts:88`,
 the unmodified shipped drift assertion. Every number below is a run I executed this fire.
 
 s1264 ended with a verified premise (the fire shell runs node v26.4.0; the runner's

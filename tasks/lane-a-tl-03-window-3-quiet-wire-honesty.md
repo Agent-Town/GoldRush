@@ -1,4 +1,4 @@
-> ⛔ **SHIPPED — DO NOT QUEUE (Mistake #8 guard, verified s1130 2026-07-27).** Drained s1043: lane/m3 `428c01d5` → main **`64f50507`** (`git merge-base --is-ancestor` = true), review `reviews/tl-03-window-3-quiet-wire-honesty.md`. Content probe on main today confirms **both** of its scopes landed: `scripts/ticker-stats.mjs:7` `const EMPTY_LINE = 'the office opens with the first assay.'` (the F-1043-2(a) split, byte-matching shipped Window 2) and `:169` `class StatsEndpointReadError` (the F-1043-1 stderr diagnostic). This master had **no done-move and no goal leaf**, so it read as live lane-a work; see F-1130-4. Retained per the RETENTION LAW as the authoring record.
+> ⛔ **SHIPPED — DO NOT QUEUE (Mistake #8 guard, verified s1130 2026-07-27).** Drained s1043: lane/m3 `428c01d5` → main **`e46793b8`** (`git merge-base --is-ancestor` = true), review `reviews/tl-03-window-3-quiet-wire-honesty.md`. Content probe on main today confirms **both** of its scopes landed: `scripts/ticker-stats.mjs:7` `const EMPTY_LINE = 'the office opens with the first assay.'` (the F-1043-2(a) split, byte-matching shipped Window 2) and `:169` `class StatsEndpointReadError` (the F-1043-1 stderr diagnostic). This master had **no done-move and no goal leaf**, so it read as live lane-a work; see F-1130-4. Retained per the RETENTION LAW as the authoring record.
 
 # lane-a: TL-03 Window 3 corrective — "the wire is quiet" must mean the wire IS quiet
 
@@ -8,7 +8,7 @@ fire earlier, closing F-1043-2(a) + F-1043-1 from its own drain review.
 **Role:** Codex runner, lane-a. **Workdir:** `worktrees/lane-a` (branch `lane/m3`). **Commit prefix:** `tl:`
 
 ## Why (evidence, quoted, dated — and MEASURED, not inferred)
-Window 3 shipped s1043 (`5227409f`, review `reviews/tl-03-window-3-ticker-stats.md`). Its drain probed the
+Window 3 shipped s1043 (`a30661bf`, review `reviews/tl-03-window-3-ticker-stats.md`). Its drain probed the
 live endpoint directly and found the tool telling a **false** story:
 
 > `GET https://gold-rush-3in.pages.dev/api/stats` → **HTTP 200**, `application/json`,
@@ -58,7 +58,7 @@ edits you did not make. Then `npm install --no-audit --no-fund`; `npm run build`
 
 **Pre-proved for you (s1043, measured at authoring time):** `git log main..lane/m3` shows exactly one commit,
 `46146b0b` (`runner(lane-a): lane-a-tl-03-window-3-ticker-stats.md`), and its content **is** on main — I
-drained it myself this fire as `5227409f`, byte-exact path-scoped, both files identical. **Nothing can be
+drained it myself this fire as `a30661bf`, byte-exact path-scoped, both files identical. **Nothing can be
 lost by the reset; proceed.** *(Honest limit: the worktree's uncommitted-dirt state is NOT independently
 probed — `git -C` on a worktree is permission-gated for fires. `git clean -fd` covers residue; treat anything
 else you find there as a finding worth reporting, not as expected.)*

@@ -2,7 +2,7 @@
 
 **Slice:** `DRAFT-e1-depth-instrument-ghostvalid.md` (done-move `20260726-064537`)
 **Source:** `save/lane-m3-2d0739f5` (`runner(lane-a)`, 2026-07-26T07:24:20+07:00), lane `lane/m3`
-**Merged to main:** `fa645b6c` (s1069 fire, 2026-07-26)
+**Merged to main:** `f8812586` (s1069 fire, 2026-07-26)
 **Verdict:** ✅ **MERGE — all four of the master's HOW-TO-VERIFY criteria met, and the causal hunk isolated by a mutation control.**
 
 ## What it does
@@ -58,7 +58,7 @@ vs 20) — panning uses the same world→screen path.
 ## Merge classification
 
 - **Base:** the lane branched at `2d0739f5^`, which predates the instrument's creation
-  on main (`b702ebf5`, 2026-07-25T23:52) — an 11.5h-stale base (F-1067-3).
+  on main (`a45cdd47`, 2026-07-25T23:52) — an 11.5h-stale base (F-1067-3).
 - **File:** `rehearsal/segments/e1-depth-play.mjs` — **the lane's content is main-current
   plus exactly these three hunks**: `git diff main 2d0739f5 -- <file>` = 5 insertions /
   8 deletions, read in full before grafting. So a path-scoped graft reproduces main's

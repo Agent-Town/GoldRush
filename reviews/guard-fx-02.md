@@ -1,12 +1,12 @@
 # guard-fx-02 — the fail-open branch proof (F-1237-1 closed)
 
-**Slice:** guard-fx-02-fail-open-branch-proof · **Branch:** `lane/m3` · **Tip:** `4b1638a6` · **Merge-base:** `81208e21`
+**Slice:** guard-fx-02-fail-open-branch-proof · **Branch:** `lane/m3` · **Tip:** `4b1638a6` · **Merge-base:** `90a89740`
 **Authored AND drained:** s1238, 2026-07-30 · **Verdict: ✅ MERGE — ACCEPTED.**
 **Disclosure: I authored this master earlier in the same fire.** So the gate was run with that bias in mind: every claim in the runner's report was re-derived by command on the merged tree, and the one thing I did *not* re-derive on the first attempt turned out to be wrong — see §Instrument failure. The report survived independent checking; my own first checking tool did not.
 
 ## What it does
 
-`guard-fx-01` (`ac12332c`) extracted both tree-walking guards onto `scripts/lib/subject-tree.mjs` and proved 11 structural assertions by routing them through one mutated path. Its own drain then found F-1237-1: the module's `ignoreReadErrors` fail-open branch — the thing preserving `script-tree-parse`'s legacy unreadable-subtree verdict — was covered by **nothing**. This slice adds three fixture cases to `scripts/subject-tree.test.mjs`, taking it from **4 → 7**, using a `chmod 0o000` subdirectory built under `os.tmpdir()`. **The module itself is unchanged** (hash `93012a5c…` on main before and after) — the gap was in what tested it, and the master forbade "fixing" a branch that was already correct.
+`guard-fx-01` (`47538c08`) extracted both tree-walking guards onto `scripts/lib/subject-tree.mjs` and proved 11 structural assertions by routing them through one mutated path. Its own drain then found F-1237-1: the module's `ignoreReadErrors` fail-open branch — the thing preserving `script-tree-parse`'s legacy unreadable-subtree verdict — was covered by **nothing**. This slice adds three fixture cases to `scripts/subject-tree.test.mjs`, taking it from **4 → 7**, using a `chmod 0o000` subdirectory built under `os.tmpdir()`. **The module itself is unchanged** (hash `93012a5c…` on main before and after) — the gap was in what tested it, and the master forbade "fixing" a branch that was already correct.
 
 The three cases are the two arms of the branch plus the interaction nobody had written down: **the fail-open path silently lowers the file count, so the floor is its only backstop.**
 
@@ -43,7 +43,7 @@ Module restored **byte-identically after every arm** — `git hash-object` = `93
 
 ## Merge classification
 
-Base `81208e21` (this fire's own authoring commit); lane carried **exactly one** commit, `4b1638a6`. The SAFE-DUPE pre-flight worked as written: the runner reset `lane/m3` onto fresh main, so the stale-base phantoms that made the branch read "+2" before are **gone** — `main..lane/m3` is now one real commit.
+Base `90a89740` (this fire's own authoring commit); lane carried **exactly one** commit, `4b1638a6`. The SAFE-DUPE pre-flight worked as written: the runner reset `lane/m3` onto fresh main, so the stale-base phantoms that made the branch read "+2" before are **gone** — `main..lane/m3` is now one real commit.
 
 - **LANE-TOUCHED-ONLY (plain checkout):** `scripts/subject-tree.test.mjs` (+58/−2). **This is the entire diff — one file.**
 - **Firewall audit:** `scripts/lib/subject-tree.mjs` is **absent from the diff** and its blob on main is unchanged (`93012a5c…`) — the master required the module be untouched in the final commit, and it is. `scripts/script-tree-parse.test.mjs`, `scripts/worker-type-coverage.test.mjs`, `scripts/run-guards.mjs`, `package.json`: **all untouched** (the last two were explicit NO items; `subject-tree.test.mjs` was already registered in `test:node-guards`, so no `package.json` edit was needed — and none was made).

@@ -11,24 +11,24 @@ WHY (the block on this work was a HASH DIVERGENCE, and that divergence has since
   OWNER GATE — no owner word lifts this; a fire lifts it by landing the cure."* Nobody is waiting on Robin
   here. Three fires have each refused it for a reason that no longer applies:
 
-  · **s1400 (F-1400-1)** — the lane branched before `372808f0`, so its two new `.mjs` call sites used the old
+  · **s1400 (F-1400-1)** — the lane branched before `b6a6b613`, so its two new `.mjs` call sites used the old
     positional `HeadlessContractSim` constructor. ✅ **Already fixed in the graft you are re-landing** — it
     calls `new HeadlessContractSim({ contractId, seed })`. Verify, do not redo.
   · **s1400 (F-1400-2) / s1403 (F-1403-1)** — the pinned secure hash `fnv1a32:5f57f7be` would not reproduce;
     every process outside the Codex runner measured `fnv1a32:bfd79d2a`, **eight times**, with eight hypotheses
     eliminated and a positive control reproducing exactly. That was refused as unexplained, correctly.
-  · **s1404 `76f7e565` diagnosed it and s1406 `eaefdb24` CURED it**: the sim was inheriting V8's `Math.pow`,
+  · **s1404 `dd53e63b` diagnosed it and s1406 `a05171ce` CURED it**: the sim was inheriting V8's `Math.pow`,
     which differs by up to 3 ULP between Node 23.11.1 and Node 26.4.0. All five sim-reachable
     `Math.pow(base, wave)` sites in `WaveSystem.ts` now use repeated multiplication. **The two hashes were
     never in conflict — they were the same tree read by two interpreters.**
 
   ➡️ **So the reason this slice was refused is gone, and the graft itself was always correct.** It is preserved
   intact at **`save/f1400-1-twin-banks-reland-s1403` (`2a54c386`)**, verified present s1412. It is **one commit,
-  four files, +98/−4**, and its merge-base with main is `91a4473e` — **43 commits behind**.
+  four files, +98/−4**, and its merge-base with main is `3c8cf39a` — **43 commits behind**.
 
   🚫 **THE ONE THING THIS MASTER MOST NEEDS YOU TO UNDERSTAND: EVERY HASH IN THAT GRAFT IS STALE BY
   CONSTRUCTION, AND YOU MUST NOT CARRY ONE FORWARD.** The graft pins `fnv1a32:bdd90123` (CLI idle) and
-  `fnv1a32:5f57f7be` with `kills: 189` (secure run). **Both were derived BEFORE `eaefdb24`**, which changed the
+  `fnv1a32:5f57f7be` with `kills: 189` (secure run). **Both were derived BEFORE `a05171ce`**, which changed the
   wave-scaling arithmetic and therefore changes kill counts — measured on `the-claim`, the same cure moved
   `kills` 140 → 137 (2.1%) and moved its pinned hash. A 20-wave contract will move at least as much.
   **Expect both twin-banks values to be different, and treat a match as the surprise, not the default.**
@@ -37,11 +37,11 @@ WHY (the block on this work was a HASH DIVERGENCE, and that divergence has since
   hash over the tree; s1412 landed `f1406-2` cleanly by deriving every value instead. Do the second thing.
 
 READ-FIRST (paths — read them, do not skim):
- · `save/f1400-1-twin-banks-reland-s1403` (`2a54c386`) — the graft. Read the whole diff against `91a4473e`
-   before you touch anything: `git diff 91a4473e save/f1400-1-twin-banks-reland-s1403`.
+ · `save/f1400-1-twin-banks-reland-s1403` (`2a54c386`) — the graft. Read the whole diff against `3c8cf39a`
+   before you touch anything: `git diff 3c8cf39a save/f1400-1-twin-banks-reland-s1403`.
  · `scripts/gr-sim.test.mjs` on **current main** — the file has moved TWICE since the graft's base, and this is
-   where your care is needed. `f1401-1` (`e45cf7c5`) added the escort-mode test at `:89`; `f1406-2`
-   (`e5a1d545`) added the F-1406-2 comment at `:19`, a full-outcome `deepEqual` inside the Dry Gulch test at
+   where your care is needed. `f1401-1` (`38f456d3`) added the escort-mode test at `:89`; `f1406-2`
+   (`c3331f6c`) added the F-1406-2 comment at `:19`, a full-outcome `deepEqual` inside the Dry Gulch test at
    `:37`, and rewrote the Night Shift test at `:196` to run twice. **The graft's own edit to an existing line
    is the supported-contracts assertion, which now lives at `:56`, not `:41`.**
  · `reviews/e1-headless-bench-twin-banks-baron-s1400.md` and `reviews/e1-twin-banks-reland-s1403.md` — the two
@@ -66,7 +66,7 @@ If tracked dirt exists that belongs to no task, STOP and report.
 SCOPE (numbered, each testable):
  1. **Graft the four files — never raw-checkout `scripts/gr-sim.test.mjs`.** Three of the four have not moved
     on main since the graft's base and may be taken as-is after you verify that with
-    `git diff 91a4473e main -- <path>` returning empty: `src/sim/HeadlessContractSim.ts` (one line — add
+    `git diff 3c8cf39a main -- <path>` returning empty: `src/sim/HeadlessContractSim.ts` (one line — add
     `'e1-twin-banks'` to `SUPPORTED_CONTRACTS`), `assets/contracts/bench-seeds.json` (adds seeds `-04` and
     `-05`), `env/goldrush-verifiers/README.md`. **If any of them HAS moved, graft it too and say so.**
     `scripts/gr-sim.test.mjs` has definitely moved and must be grafted hunk by hunk: append the new
@@ -81,11 +81,11 @@ SCOPE (numbered, each testable):
     engine, **STOP and report**: that is a determinism finding worth more than this slice, and pinning a
     flapping value hands every future drain a red nobody can act on.
  4. **Report the deltas against the graft's stale pins explicitly** — old vs new `eventLogHash`, and old vs new
-    `kills` (the graft says 189). This is the evidence that `eaefdb24` reached this contract, and it is the
+    `kills` (the graft says 189). This is the evidence that `a05171ce` reached this contract, and it is the
     single most useful line in your report. If a value is UNCHANGED, say so and flag it as unexpected.
  5. **Check the second engine, because this contract is the one that exposed the divergence.** Re-derive both
     values under `~/.nvm/versions/node/v23.11.1/bin/node` as well as your own, and report whether they agree.
-    ⚠️ **If they DISAGREE, STOP and report** — that means `eaefdb24` did not fully reach this path, which is a
+    ⚠️ **If they DISAGREE, STOP and report** — that means `a05171ce` did not fully reach this path, which is a
     live cure defect and is worth far more than landing this slice. Do not pin a value that differs per engine.
  6. **State the cost, and do not bury it.** This adds the longest test in the file: a 20-wave secure run plus a
     vite SSR server. Report the per-test duration and the before/after wall time of
@@ -100,7 +100,7 @@ SCOPE (numbered, each testable):
 
 TOUCH-ONLY: `scripts/gr-sim.test.mjs` · `src/sim/HeadlessContractSim.ts` · `assets/contracts/bench-seeds.json` ·
 `env/goldrush-verifiers/README.md`.
-NO: `src/systems/WaveSystem.ts` (the `eaefdb24` cure is merged and correct; a hash that does not match is a
+NO: `src/systems/WaveSystem.ts` (the `a05171ce` cure is merged and correct; a hash that does not match is a
 FINDING, and changing the sim to match a hash is the precise failure this whole thread exists to detect —
 it is also HELD by `lane/e2-arsenal`, so an edit here creates a graft collision for the baron) ·
 `scripts/gr-sim.mjs` (the driver is correct; if you think otherwise that is a finding, not an edit) ·

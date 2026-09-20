@@ -748,7 +748,7 @@ const LANDMARK_EMISSIVE: Record<string, number> = { 'the-claim': 1.45, 'e2-hill-
  *
  * The reference rig (`e2e/landmark-brightness.spec.ts`, "reference rig") measures the three
  * families that share this rig in one frame — terrain (no emissive, the reference), landmark, and
- * the unlit hero sprite (the ceiling). Measured on `25a3b25a7`, desktop, landmark/terrain median
+ * the unlit hero sprite (the ceiling). Measured on `dc74e3075`, desktop, landmark/terrain median
  * luminance:
  *
  *   Mare Claim (emissive 3)      4.72   <- the finding, quantified
@@ -1017,11 +1017,11 @@ function dressLandmark(model: THREE.Object3D, contractId: string, mountId: strin
 }
 
 /**
- * CALL THIS ONCE PER BODY. F-BHM-1 (found by this shift, 2026-08-04): between `10586b90` — the
+ * CALL THIS ONCE PER BODY. F-BHM-1 (found by this shift, 2026-08-04): between `d67095eb` — the
  * baron drain, whose merge resolution kept both the new per-contract block and the old single-line
  * call it replaced — and this commit, the pilot called it TWICE, the second time with the default
  * paint. Every per-contract intensity on main was therefore silently reset to 3: the-claim's 1.45
- * (shipped `59655724`), the baron's 1.7/1.9/2.1/3.4 AND its emissive grade, and dry gulch's
+ * (shipped `22fd2fd7`), the baron's 1.7/1.9/2.1/3.4 AND its emissive grade, and dry gulch's
  * isolated_spring 2.1. Three signed-off upgrades were defeated and every gate stayed green, because
  * the dataset published the TABLE's number rather than the material's. It now publishes the
  * material's (see terrain3dPilotLandmarkMaterials).

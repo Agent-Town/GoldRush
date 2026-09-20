@@ -23,7 +23,7 @@ look at this spec.** The row itself is honest — it states its tree, its denomi
 count. What was not honest is what got copied out of it: a rate stripped of its denominator and its
 load, re-quoted as a *property of the test*.
 
-**The subject is now CURED** — s1222, \`a0aae876\`, **test-only** (\`git show --name-only\` over \`src/\`,
+**The subject is now CURED** — s1222, \`855f4d74\`, **test-only** (\`git show --name-only\` over \`src/\`,
 \`functions/\`, \`assets/\` is empty). The spec let the wave countdown EXPIRE before forcing wave 1, so
 the \`:121\` assertion was correctly rejecting the transition. It was a deterministic sequencing bug
 whose *visibility* was load-dependent — not a concurrency victim, and \`StandingOrders.ts\` was never

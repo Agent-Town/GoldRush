@@ -64,7 +64,7 @@ const ADMITTED = new Set(['e6-glow-mesa', 'e6-half-life-hollow', 'e6-picnic']);
 // Each refused Atomic contract declares the era socket it is missing (AP-11 engineDependencies
 // mandate). An ADMITTED contract must declare NONE — a shipped "missing consumer" on a map the door
 // serves is an agent-facing lie, which is why the Picnic's row left this table on admission
-// (its consumer, `PicnicHoldSystem`, has been live in both engines since `52c48fce7`).
+// (its consumer, `PicnicHoldSystem`, has been live in both engines since `afbda29bc`).
 const EXPECTED_DEPENDENCY: Record<string, string> = {
   'e6-glow-mesa': 'glow-mesa-contract-consumers',
   'e6-showroom': 'atomic-wrangle-consumer',

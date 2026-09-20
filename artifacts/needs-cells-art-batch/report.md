@@ -1,6 +1,6 @@
 # needs-cells-art-batch — the cells the sprite roster still lacked, generated on the owner's Higgsfield credits
 
-**Task:** `tasks/needs-cells-art-batch.md` · **Branch:** `art/needs-cells-art-batch`, cut from main `ba5ffb6a2` · **Implementer:** Claude Opus 5 on the Anthropic subscription, scratch worktree, 2026-09-18.
+**Task:** `tasks/needs-cells-art-batch.md` · **Branch:** `art/needs-cells-art-batch`, cut from main `133f80804` · **Implementer:** Claude Opus 5 on the Anthropic subscription, scratch worktree, 2026-09-18.
 **Owner, verbatim (2026-09-18):** "yes! lets go for the cells" — offered the needs-cells list against the expiring credits. Prior word, 2026-09-15: "I care mostly about the quality of the animations and I had the impression that Astra really understood and nailed that."
 
 ## VERDICT: eleven of the twelve rows landed. 44 new cells wired, one row parked with its evidence. 70.15 of 600 credits spent.
@@ -57,14 +57,14 @@ The STYLE ANCHOR from `specs/epoch-saga/e2-steamworks-bundle.md:6-8` appears **v
 | `npx tsc --noEmit` | **rc=0** |
 | `npm run build` | **rc=0** |
 | `GR_RELEASE=e1 npm run build` | **rc=0** |
-| `node scripts/first-town-payload.mjs` | **34,641,290 B of 52,000,000** (base `ba5ffb6a2`: 34,509,068 B — **+132,222 B**). Verified the new cells really ship: `dist/assets` holds all 8 `char-baron-east8-v1-*-diet-*.png`, and the eight `char-jumper-sheet-walk4-b-r{0,2}c*` cells this batch de-referenced have LEFT the bundle |
+| `node scripts/first-town-payload.mjs` | **34,641,290 B of 52,000,000** (base `133f80804`: 34,509,068 B — **+132,222 B**). Verified the new cells really ship: `dist/assets` holds all 8 `char-baron-east8-v1-*-diet-*.png`, and the eight `char-jumper-sheet-walk4-b-r{0,2}c*` cells this batch de-referenced have LEFT the bundle |
 | `node scripts/halo-reextraction-check.mjs` | **PASS — 379 cured / 0 held / 696 regenerated-and-cured / 2103 scanned**; alpha and opaque RGB unchanged. Re-pinned from 395/0/680/2059 with a dated cause (§5) |
 | `node --test scripts/character-direction-assets.test.mjs` | **2 pass / 0 fail** |
 | `node --test scripts/hero-clip-groups.test.mjs` | **7 pass / 0 fail** |
 | e2e, both projects, `--workers=1`: `eight-winds-enemies`, `town-cast-wiring`, `elder-walk8-woman`, `e2-enemies`, `e1-baron`, `e2-hill-mine`, `cast-motion-wiring` | **47 passed, 14 failed, 3 skipped (7.8 m)** — all 14 attributed to main, §3 |
 | `scripts/review-enemy-sprites.mjs` | **rc=0** (15 cases × 2 widths, 37/37 textures, 0 errors) |
 | `scripts/review-sprite-idle.mjs` | **rc=0** |
-| `scripts/review-town-walk.mjs` | **rc=1 — PRE-EXISTING harness rot, not this branch.** `ReferenceError: isPlazaPatrolActor is not defined` inside the TownScene source slice the probe evals. `git diff --stat ba5ffb6a2..HEAD -- src/` is **EMPTY** — this branch does not touch a line of `src/`, so it cannot have caused a ReferenceError in `src/town/TownScene.ts`'s own code. F-NCB-5 |
+| `scripts/review-town-walk.mjs` | **rc=1 — PRE-EXISTING harness rot, not this branch.** `ReferenceError: isPlazaPatrolActor is not defined` inside the TownScene source slice the probe evals. `git diff --stat 133f80804..HEAD -- src/` is **EMPTY** — this branch does not touch a line of `src/`, so it cannot have caused a ReferenceError in `src/town/TownScene.ts`'s own code. F-NCB-5 |
 | plain boot, zero console/page/request errors, desktop 1280 + mobile 390 | **town 0/0, `?contract=e1-baron` 0/0, `?contract=e2-hill-mine` 0/0** at both widths (`boot-probe.mjs`, shots in `boot/`) |
 | eight-heading resolution probe, live `EnemyPool` | **0 console/page errors**, table in §4 (`direction-probe.mjs` / `direction-probe.json`) |
 | `npm run build` / `GR_RELEASE=e1` / payload, RE-RUN on the committed tree | **rc=0 / rc=0 / 34,641,290 B** — the same numbers the working tree gave |
@@ -75,7 +75,7 @@ The STYLE ANCHOR from `specs/epoch-saga/e2-steamworks-bundle.md:6-8` appears **v
 Two independent controls, both run on this box against the same dev server:
 
 1. **Contract control** for `eight-winds-enemies.spec.ts:39` ("diagnostics drive thief northeast and Baron southwest on their correct rows"), the only red that touches a family I changed: I removed `char.baron.walk8.directions.e` from the working tree — i.e. put the Baron's east back on the grid row — and re-ran it. **It fails identically.** It is also row 196 of `logs/suite-red-inventory.md` (desktop-chrome, 60 s timeout).
-2. **Base-tree control**: detached the worktree to `ba5ffb6a2` and re-ran `e2-hill-mine`, `e1-baron` and `e2-enemies` in both projects. **12 of 12 reproduce**, including the three `e2-hill-mine` titles that are NOT yet in the red inventory.
+2. **Base-tree control**: detached the worktree to `133f80804` and re-ran `e2-hill-mine`, `e1-baron` and `e2-enemies` in both projects. **12 of 12 reproduce**, including the three `e2-hill-mine` titles that are NOT yet in the red inventory.
 
 | failing test | project(s) | control |
 |---|---|---|
@@ -86,7 +86,7 @@ Two independent controls, both run on this box against the same dev server:
 | `e2-hill-mine:75 / :184 / :250` | desktop + mobile | base control reproduces; **not in the inventory** — F-NCB-6 |
 | `e2-hill-mine:318` seeded route determinism | mobile | base control reproduces; inventory row 157 (mobile) |
 
-**F-NCB-6 (pre-existing on main, fire-authorable):** `e2-hill-mine.spec.ts:75` ("loads the locked Steamworks poster contract and ships the Hill Mine elevation table"), `:184` ("T2 high ground out-ranges the rail cut…") and `:250` ("bandits route switchbacks…") are red on clean `ba5ffb6a2` in both projects and have no row in `logs/suite-red-inventory.md`. Not sprite-related; they want attributing to whichever land moved the Hill Mine elevation table.
+**F-NCB-6 (pre-existing on main, fire-authorable):** `e2-hill-mine.spec.ts:75` ("loads the locked Steamworks poster contract and ships the Hill Mine elevation table"), `:184` ("T2 high ground out-ranges the rail cut…") and `:250` ("bandits route switchbacks…") are red on clean `133f80804` in both projects and have no row in `logs/suite-red-inventory.md`. Not sprite-related; they want attributing to whichever land moved the Hill Mine elevation table.
 
 ## 4. What each heading resolves to now — the live proof
 
@@ -121,7 +121,7 @@ Boards, before and after, one per family, in `after/`: `baron-before-after.png` 
 
 `assets/processed/**` — 44 new cells across ten new stems, plus the schoolteacher's four row-2 cells **replaced in place** and her `.frames.json` bboxes re-measured (`TownScene.ts:3428` anchors her billboard's foot on `bbox[3]-bbox[1]+1`, so a stale bbox would float or sink her; 337→308 px, and rows 0/1/3 verified **byte-identical to base, 12 of 12**). `assets/raw/char-{baron,jumper,steamwrecker,coalthief,schoolteacher}-needs-cells-2026-09-18-<dir>.png` — eleven swept plates, 41,401,833 B; one per accepted generation rather than one per family, because one family here holds up to four separate generations and merging them would fake a single sheet that was never generated. `assets/layer-contracts/characters.v2.json` — the registrations and four dated notes. `scripts/halo-reextraction-check.mjs` — declarations and re-pins. `assets/LEDGER.md` — one batch row. `artifacts/needs-cells-art-batch/**` — this report, the boards, the probes, every attempt and the credit ledger.
 
-**Untouched, verified:** `git diff --stat ba5ffb6a2..HEAD -- src/` is **empty** — `src/assets/{slots,generated}.ts`, `src/assets/character-runtime-frames.json` and `src/town/town-actor-sheets.json` needed no edit at all, because `src/assets/generated.ts:55` globs `assets/processed/char-*.png` and the schoolteacher's row landed in her sheet's own filenames. Also untouched: the sim, `Balance.ts`, `assets/first-town-payload.json`, `assets/engine-era.json`, `STATUS.md`, `tasks/BACKLOG.md`, `tasks/goals.json`, and every existing cell of every other row.
+**Untouched, verified:** `git diff --stat 133f80804..HEAD -- src/` is **empty** — `src/assets/{slots,generated}.ts`, `src/assets/character-runtime-frames.json` and `src/town/town-actor-sheets.json` needed no edit at all, because `src/assets/generated.ts:55` globs `assets/processed/char-*.png` and the schoolteacher's row landed in her sheet's own filenames. Also untouched: the sim, `Balance.ts`, `assets/first-town-payload.json`, `assets/engine-era.json`, `STATUS.md`, `tasks/BACKLOG.md`, `tasks/goals.json`, and every existing cell of every other row.
 
 **Halo guard, re-pinned by measurement.** Ten new stems declared in `REGENERATED_SHEETS` with their cause; they do not exist at BASE, so the three partition pins do not move for them — only the denominator, **2059 → 2103**, `find assets/processed -name '*.png' | wc -l` on this tree, and all 44 are this batch's. The eleventh declaration, `char-schoolteacher-sheet-walk8-a`, is an EXISTING stem and moves 16 cells out of `cured` (**395 → 379**) into `regenerated` (**680 → 696**): stage 2 of ruling A19 deliberately left that stem out so its cells would keep satisfying the byte-for-byte invariant, and this batch replaces four of them, so it has to move. The declaration is stem-wide; the change is not, and the comment says so with the 12/12 byte-identity measurement beside it. `expectedResidual` stays **0** — the guard still asserts the sweep finds zero halo suspects anywhere in `assets/processed`, with the 44 new cells inside it.
 
@@ -139,7 +139,7 @@ Boards, before and after, one per family, in `after/`: `baron-before-after.png` 
 
 **F-NCB-7 — 2.00 credits bought a picture nobody will ever see, and the cause is worth writing down.** While the first full batch was running I killed it (`pkill`) to fix the reference design before it burned credits on eleven rows with the wrong premise. A job had already been submitted; it charged, and the runner died before it could write its ledger row. The ledger's own balance-continuity check found the hole (`balanceBefore` of `jumper-n` attempt 2 is 829.84 where the previous row's `balanceAfter` is 831.84). This is the same class as the skill's *"a request failed (no response received) has ALREADY charged"* rule, arriving from the other direction: **do not kill a batch mid-call; let the in-flight request land and stop the loop after it.** The harness records `balanceBefore`/`balanceAfter` on every row precisely so a gap like this cannot hide.
 
-**F-NCB-8 — the guard's declarations were committed once, lost, and re-committed; the lesson is the restore, not the edit.** The e2e run churns 32 tracked screenshots under `artifacts/**`, and the task's own rule is to restore them with `git checkout --` before every commit. `scripts/halo-reextraction-check.mjs` had been edited BEFORE that sweep, so it was sitting in the same ` M` list and the restore reverted it — and the bookkeeping commit that named the declarations carried none of them. Caught by re-running the gate on the COMMITTED tree instead of trusting the working-tree green, and re-applied in `2f5b092d9`, which was verified green after the commit, not before it. A churn restore must be filtered to the churn, not to everything modified.
+**F-NCB-8 — the guard's declarations were committed once, lost, and re-committed; the lesson is the restore, not the edit.** The e2e run churns 32 tracked screenshots under `artifacts/**`, and the task's own rule is to restore them with `git checkout --` before every commit. `scripts/halo-reextraction-check.mjs` had been edited BEFORE that sweep, so it was sitting in the same ` M` list and the restore reverted it — and the bookkeeping commit that named the declarations carried none of them. Caught by re-running the gate on the COMMITTED tree instead of trusting the working-tree green, and re-applied in `6c74f3f2e`, which was verified green after the commit, not before it. A churn restore must be filtered to the churn, not to everything modified.
 
 ## 7. Files in this directory
 

@@ -1,7 +1,7 @@
 # E7 PB-00 determinism audit
 
 - Audit date: 2026-07-17
-- Audited base: `f1a4b5a3`
+- Audited base: `5c2ab2a1`
 - Scope: production simulation paths under `src/systems/`, `src/game/`, `src/entities/`, and `src/world/`; UI, town, and diagnostic-only implementation were excluded from the static sweep.
 - Replay proof: bare `?debug&determinism&seed=<seed>` (the harness adds its own `nolevel` guard), 600 simulated seconds / 18,000 fixed ticks per run.
 

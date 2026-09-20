@@ -1,7 +1,7 @@
 # gauntlet-heat3a-codex-backend-shim — drain review (s2272)
 
-**Slice:** `gauntlet-heat3a-codex-backend-shim` · **Branch:** `lane/b` · **Lane tip:** `1c63de950` · **Merge:** `2d779a3e6`
-**Base:** `main` at `d795b3679` (the s2272 lock commit) · **Gated in:** detached worktree `gate-s2272/` (§3.0b), merged tree `6ea404d45`
+**Slice:** `gauntlet-heat3a-codex-backend-shim` · **Branch:** `lane/b` · **Lane tip:** `4dea86459` · **Merge:** `16f347fb2`
+**Base:** `main` at `9f9ea97c1` (the s2272 lock commit) · **Gated in:** detached worktree `gate-s2272/` (§3.0b), merged tree `6ea404d45`
 
 ## VERDICT: MERGE — the honest version of what the owner asked for, gated on the merged tree, with two findings neither of which blocks.
 
@@ -39,7 +39,7 @@ merged tree and it genuinely rode the subscription, reproducing the runner's rep
 
 ## Merge classification
 
-Base `d795b3679`; lane/b was **1 ahead, 8 behind**. Purely additive: **406 insertions, 0 deletions, 0 renames.**
+Base `9f9ea97c1`; lane/b was **1 ahead, 8 behind**. Purely additive: **406 insertions, 0 deletions, 0 renames.**
 
 | Path | Class | Resolution |
 |---|---|---|

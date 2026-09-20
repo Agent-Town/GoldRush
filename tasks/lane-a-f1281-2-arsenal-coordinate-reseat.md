@@ -23,11 +23,11 @@ projects at `--workers=1`, and has since **2026-07-19**.
 
 **Why it is false, and since when:** `(0, 10)` sits inside the authored landmark
 `hill-mine:boiler-house-site` — centre `(0, 12)`, half-extents `3.35875` (radius `2.687` × scale
-`1.25`, per `LandmarkCollision.ts:41`), `containsUnpadded: true`. Commit `d1f549d5` (2026-07-19)
+`1.25`, per `LandmarkCollision.ts:41`), `containsUnpadded: true`. Commit `5e527a28` (2026-07-19)
 changed `isBuildable` from `if (sample(x, z).zone !== 'bank')` to
 `if (!terrain.walkable || terrain.zone !== 'bank')`, and made landmark footprints non-walkable. The
 probe measures `zone: 'bank'` but `walkable: false` — **that one clause is the entire flip.** The
-spec is unchanged since `90e7cc68` (2026-07-12), i.e. the world moved under a fixed coordinate.
+spec is unchanged since `562edc36` (2026-07-12), i.e. the world moved under a fixed coordinate.
 
 🛑 **THE RULE IS NOT THE BUG — DO NOT "FIX" IT.** `reviews/lane-m4-collision-landmark.md` records
 landmark solidity closing a **P0** ("never-trap": actors frozen inside repaired structures), shipped

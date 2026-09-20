@@ -14,7 +14,7 @@ READ FIRST (open them, do not skim):
 
 The lane branch being ahead is NORMAL — the runner auto-commits. For each ahead commit: if its content is already merged to main (verify via git log/diff), it is a SAFE DUPE → `git checkout -B lane/e2-arsenal main && git clean -fd` and PROCEED. STOP-and-report ONLY if an ahead commit's content is NOT on main (undrained work — resetting would DESTROY it), or the worktree holds uncommitted edits you did not make. Then `npm install --no-audit --no-fund`; `npm run build` green before touching anything.
 
-> ℹ️ Authoring-time note (s1183, verify it yourself anyway): `lane/e2-arsenal` was 2 ahead, and both commits — `84905654` (`lane-wardrobe-preview`) and `70db5602` (`lane-c-066-walk8-hero-expectation-realign`) — correspond to slices s1181 drained to main as `bcaddba7` and `639df50b`. Expected to be a clean SAFE DUPE.
+> ℹ️ Authoring-time note (s1183, verify it yourself anyway): `lane/e2-arsenal` was 2 ahead, and both commits — `84905654` (`lane-wardrobe-preview`) and `70db5602` (`lane-c-066-walk8-hero-expectation-realign`) — correspond to slices s1181 drained to main as `bbe54d3e` and `983fd4da`. Expected to be a clean SAFE DUPE.
 
 ## Why (spec + owner directive, dated; every premise below re-verified at source on 2026-07-28)
 
@@ -74,7 +74,7 @@ node scripts/anim-pass-reextract.mjs --like char-baron-sheet-walk8        char-b
 - For each sheet assert its new `frames.json` reports **grid 8×4, 32 cells, 0 empty**. A non-zero `empty` means the key or grid is wrong — **STOP** rather than bind transparent cells.
 
 **Control (mandatory, paste the output):** `node scripts/anim-pass-reextract.mjs --verify-downscale char-baron-sheet-walk8` must **exit 0**.
-⚠️ The guard is **provenance-aware** (`8159fe6b`): the number that must be zero is **`unexplained`**, *not* the count of non-identical cells — `master-divergent` entries listed in `assets/master-divergent.json` are expected to differ. An earlier slice-1 run STOPPED on the *old* guard's wording; that blocker is cured, do not STOP on it again. A non-zero `unexplained` IS a real regression from your extraction — STOP and report it.
+⚠️ The guard is **provenance-aware** (`01a40f9a`): the number that must be zero is **`unexplained`**, *not* the count of non-identical cells — `master-divergent` entries listed in `assets/master-divergent.json` are expected to differ. An earlier slice-1 run STOPPED on the *old* guard's wording; that blocker is cured, do not STOP on it again. A non-zero `unexplained` IS a real regression from your extraction — STOP and report it.
 
 ⛔ **Do not pass `--refresh-full` and do not run `scripts/optimize-assets.mjs` globally** — its own header (`:8-19`) explains a global run overwrites 462 masters with today's 256 px cells. That is a loss, not a refresh.
 

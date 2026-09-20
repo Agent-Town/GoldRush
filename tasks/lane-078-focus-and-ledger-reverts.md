@@ -18,17 +18,17 @@ CODEX: model=gpt-5.6-sol effort=high
 | `:130` ledger Escape … restores schoolhouse focus | ✘ 40.2s |
 | `:151` contract board focuses Launch on open | ✘ 43.5s |
 
-**s1101 guessed "same family ⇒ likely one cause, not three". That guess was wrong, and the truth is more useful:** it is **three reverted fixes across TWO commits**, both landed **2026-07-11**, each silently undoing work done **2026-07-10**. `e2e/078-ux-hygiene.spec.ts` has exactly **one** commit in its whole life (`cd76c7f0`, 2026-07-10) and has never been touched since — the spec froze on the 10th while the product moved on the 11th. Nobody saw it because the suite was collecting **0 tests for nine days** (F-1094-1 / rf-33).
+**s1101 guessed "same family ⇒ likely one cause, not three". That guess was wrong, and the truth is more useful:** it is **three reverted fixes across TWO commits**, both landed **2026-07-11**, each silently undoing work done **2026-07-10**. `e2e/078-ux-hygiene.spec.ts` has exactly **one** commit in its whole life (`ede70427`, 2026-07-10) and has never been touched since — the spec froze on the 10th while the product moved on the 11th. Nobody saw it because the suite was collecting **0 tests for nine days** (F-1094-1 / rf-33).
 
 **THE THREE REVERTS — verified by reading each diff:**
 
 | # | test | culprit commit (2026-07-11) | what it undid | fix landed |
 |---|---|---|---|---|
-| 1 | `:151` | `93632a94` *"audio: MU-02 wave 1 — full-length title…"* | collapsed a two-query `??` into ONE grouped selector in `TownScene.openBoard()` | `cd76c7f0` 2026-07-10 *"fix: focus board launch on open"* |
-| 2 | `:130` | `9b567437` *"feat: en-03 epoch pages"* | deleted `currentRestoreFocus`, the focus restore on close, the `Tab` branch, and `trapLedgerFocus()` from `reader.ts` | `acf1c476` 2026-07-10 *"fix: trap claim ledger modal focus"* |
-| 3 | `:111` | `9b567437` **(same commit)** | reverted `discoverLedgerEntry` from the unfiltered `readStoredDiscoveryValues` back to the filtering `readStoredDiscovered` | `e1f243f4` 2026-07-10 *"fix: preserve unknown ledger discovery ids"* |
+| 1 | `:151` | `baee520d` *"audio: MU-02 wave 1 — full-length title…"* | collapsed a two-query `??` into ONE grouped selector in `TownScene.openBoard()` | `ede70427` 2026-07-10 *"fix: focus board launch on open"* |
+| 2 | `:130` | `2ab0367d` *"feat: en-03 epoch pages"* | deleted `currentRestoreFocus`, the focus restore on close, the `Tab` branch, and `trapLedgerFocus()` from `reader.ts` | `8e437e23` 2026-07-10 *"fix: trap claim ledger modal focus"* |
+| 3 | `:111` | `2ab0367d` **(same commit)** | reverted `discoverLedgerEntry` from the unfiltered `readStoredDiscoveryValues` back to the filtering `readStoredDiscovered` | `ef72f7b5` 2026-07-10 *"fix: preserve unknown ledger discovery ids"* |
 
-Note #2 and #3 are **one commit doing two reverts in two files** — `9b567437` touched `reader.ts` (−34 lines) and `state.ts` in the same landing. An audio commit and an encyclopedia feature commit each carried a stale base and quietly took accessibility and data-integrity work down with them.
+Note #2 and #3 are **one commit doing two reverts in two files** — `2ab0367d` touched `reader.ts` (−34 lines) and `state.ts` in the same landing. An audio commit and an encyclopedia feature commit each carried a stale base and quietly took accessibility and data-integrity work down with them.
 
 ## PRE-FLIGHT — verify by CONTENT, never by counting, and run the premise checks AFTER the reset
 
@@ -48,10 +48,10 @@ s1102 verified the reset is **loss-free by content, not by counting**: `git diff
 ## READ FIRST (in your worktree, after the reset, before writing anything)
 
 - `e2e/078-ux-hygiene.spec.ts` — the whole file (159 lines). Note `seedProfile` (`:18-43`) seeds the **profile-scoped** ledger key at `:39` while test `:111` reads the **raw unscoped** key at `:124`. **That asymmetry is CORRECT and is not your bug:** `src/encyclopedia/` never uses `profileDataKey` (verified: `git grep -n profileDataKey -- src/encyclopedia/` returns nothing), so production really does use the raw `gr.claimLedger.discovered.v1`. The seed line is harmless noise. **Do not "fix" it.**
-- `git show cd76c7f0 -- src/town/TownScene.ts` — 3 lines. The entire product change of the commit that created this spec.
-- `git show 93632a94 -- src/town/TownScene.ts` — find the hunk that reverted it.
-- `git show acf1c476 -- src/encyclopedia/reader.ts` — **the exact block you must reinstate for #2.**
-- `git show e1f243f4 -- src/encyclopedia/state.ts` — **the exact shape you must reinstate for #3.**
+- `git show ede70427 -- src/town/TownScene.ts` — 3 lines. The entire product change of the commit that created this spec.
+- `git show baee520d -- src/town/TownScene.ts` — find the hunk that reverted it.
+- `git show 8e437e23 -- src/encyclopedia/reader.ts` — **the exact block you must reinstate for #2.**
+- `git show ef72f7b5 -- src/encyclopedia/state.ts` — **the exact shape you must reinstate for #3.**
 - `src/encyclopedia/reader.ts:30-64` (open/close) and `:330-338` (`onLedgerKeyDown`).
 - `src/encyclopedia/state.ts:36-55` (`discoverLedgerEntry`) and `:116-127` (`readStoredDiscovered`).
 
@@ -64,7 +64,7 @@ All three fixes existed, were reviewed, and were green. Reinstating them is a re
 `querySelector('[data-contract-launch]:not(:disabled), [data-contract-close]')` returns the first match **in document order across the whole group** — it does *not* prefer the first branch. `data-contract-close` lives in the board **header** (`TownScene.ts` ~`:1785`), before every contract card (`data-contract-launch` ~`:1886`), so the close button always wins. The `??` form asks the two questions **in priority order**, which is the actual intent ("focus Launch, else fall back to Back").
 
 **RULING 3 — for #2, KEEP the unconditional `event.stopPropagation()` at `reader.ts:334`. This is the trap in this task.**
-`acf1c476` put `stopPropagation()` *inside* the Escape branch. The current code has it as the **first statement**, unconditional, with a deliberate three-line comment about multiplayer (the sim keeps running, so leaked keys would move the hero or turn Escape into a shared pause). That comment post-dates `acf1c476` and is **correct**. A literal `git revert`-style restore would re-delete it and regress multiplayer input. **Insert the `Tab` branch AFTER line 334's `stopPropagation()`**, so Tab is both trapped in the modal and withheld from the global InputController. Result:
+`8e437e23` put `stopPropagation()` *inside* the Escape branch. The current code has it as the **first statement**, unconditional, with a deliberate three-line comment about multiplayer (the sim keeps running, so leaked keys would move the hero or turn Escape into a shared pause). That comment post-dates `8e437e23` and is **correct**. A literal `git revert`-style restore would re-delete it and regress multiplayer input. **Insert the `Tab` branch AFTER line 334's `stopPropagation()`**, so Tab is both trapped in the modal and withheld from the global InputController. Result:
 ```
 event.stopPropagation();          // keep, unconditional, keep the comment
 if (event.key === 'Tab') { trapLedgerFocus(event); return; }   // re-added
@@ -77,16 +77,16 @@ closeClaimLedger();
 `openClaimLedger` now begins `backfillReachedWorldOutsideEntries(); closeClaimLedger(false);` (`:31-32`). The capture goes **after** that call — capturing before it can latch an element the close is about to remove. Restore on close must stay guarded by `notify && restoreFocus?.isConnected`, so the silent `closeClaimLedger(false)` re-open path does not move focus.
 
 **RULING 5 — for #3, reinstate the two-function split; do not simply drop the filter.**
-`e1f243f4` split one reader into two on purpose: `readStoredDiscoveryValues()` returns **all** stored strings unfiltered (used by the **write** path, so unknown ids survive a round-trip), while `readStoredDiscovered()` keeps filtering to valid ids (used by the **read** path, so unknown ids never reach the UI). Deleting the filter outright would leak `future-ledger-id` into `readLedgerDiscovered()` and into the ledger UI. Both functions must exist, and `discoverLedgerEntry` must call the **unfiltered** one — including the `new Set<string>([...])` widening for `known`, since the values are no longer narrowed to `LedgerDiscoveryId`.
+`ef72f7b5` split one reader into two on purpose: `readStoredDiscoveryValues()` returns **all** stored strings unfiltered (used by the **write** path, so unknown ids survive a round-trip), while `readStoredDiscovered()` keeps filtering to valid ids (used by the **read** path, so unknown ids never reach the UI). Deleting the filter outright would leak `future-ledger-id` into `readLedgerDiscovered()` and into the ledger UI. Both functions must exist, and `discoverLedgerEntry` must call the **unfiltered** one — including the `new Set<string>([...])` widening for `known`, since the values are no longer narrowed to `LedgerDiscoveryId`.
 
 **RULING 6 — the `aria-modal` / `inert` question is OWNER-GATED. Do not touch it.**
 The ledger declares `role="dialog" aria-modal="true"` yet the town UI behind it stays tabbable; the herald (`TownScene.ts:945`) and E10 finale (`:1630`) paths instead set `this.ui.inert = true`. Switching the ledger to `inert` is arguably cleaner than a JS focus trap — **and it is a product decision with a multiplayer interaction, not a repair.** Restore the trap as it was. **REPORT the `inert` alternative as a finding**; do not implement it.
 
 ## SCOPE (numbered; each item is testable)
 
-1. **`src/town/TownScene.ts:1421`** — restore `cd76c7f0`'s two-query `??` form per RULING 2. One line becomes two.
-2. **`src/encyclopedia/reader.ts`** — reinstate `acf1c476` per RULINGS 3 + 4: module-level `currentRestoreFocus` (near `:24-28`), capture in `openClaimLedger` after `closeClaimLedger(false)`, restore in `closeClaimLedger` after `root.remove()` guarded by `notify && restoreFocus?.isConnected`, the `Tab` branch in `onLedgerKeyDown` **after** the existing `stopPropagation()`, and the `trapLedgerFocus()` helper.
-3. **`src/encyclopedia/state.ts`** — reinstate `e1f243f4` per RULING 5: add `readStoredDiscoveryValues()` (unfiltered, deduped), keep `readStoredDiscovered()` as the filtered wrapper, and point `discoverLedgerEntry` at the unfiltered one with the `Set<string>` widening.
+1. **`src/town/TownScene.ts:1421`** — restore `ede70427`'s two-query `??` form per RULING 2. One line becomes two.
+2. **`src/encyclopedia/reader.ts`** — reinstate `8e437e23` per RULINGS 3 + 4: module-level `currentRestoreFocus` (near `:24-28`), capture in `openClaimLedger` after `closeClaimLedger(false)`, restore in `closeClaimLedger` after `root.remove()` guarded by `notify && restoreFocus?.isConnected`, the `Tab` branch in `onLedgerKeyDown` **after** the existing `stopPropagation()`, and the `trapLedgerFocus()` helper.
+3. **`src/encyclopedia/state.ts`** — reinstate `ef72f7b5` per RULING 5: add `readStoredDiscoveryValues()` (unfiltered, deduped), keep `readStoredDiscovered()` as the filtered wrapper, and point `discoverLedgerEntry` at the unfiltered one with the `Set<string>` widening.
 4. **MANDATORY MUTATION CONTROL — aim it at each defect's own branch, and run the guard BEFORE you edit it.** You already have the "before" from the pre-flight (1 passed / 3 failed). After all three fixes, `078` must be **4/4 green**. Then, one at a time, **re-apply each original defect** and show the matching test go **RED**, then restore byte-exact:
    - (a) collapse `TownScene.ts:1421` back to the grouped selector → **only `:151` reds**.
    - (b) remove the `Tab` branch from `onLedgerKeyDown` → **`:130` reds**.

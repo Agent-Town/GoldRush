@@ -7,7 +7,7 @@ const g = JSON.parse(readFileSync(p, 'utf8'))
 let found = 0
 
 const NOTES = [
-  's1590: MERGED as evidence 12190838aaf3415ad4c4b03e5c377c06af9c9919.',
+  's1590: MERGED as evidence f9160a0c370125724baf6338796388bd936ed645.',
   'Verdict COULD-NOT-ARM, and that was the only reachable verdict.',
   'F-1590-1: both levers the master prescribed are structurally incapable of printing',
   "vite's re-optimization line - deleting node_modules/.vite removes the cachedMetadata",
@@ -26,7 +26,7 @@ const walk = (n) => {
   if (n && typeof n === 'object') {
     if (n.id === 'f1589-4-dep-reoptimize-stall') {
       n.status = 'merged'
-      n.mergeHash = '12190838aaf3415ad4c4b03e5c377c06af9c9919'
+      n.mergeHash = 'f9160a0c370125724baf6338796388bd936ed645'
       n.drainNotes = NOTES
       found++
     }

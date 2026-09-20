@@ -1,10 +1,10 @@
 # Review — lantern-show-agent-honesty
 
 - **Slice:** `lantern-show-agent-honesty` (owner playtest 2026-08-25 → the Lantern Show's false theater)
-- **Branch / tip:** `lane/d` @ `982926333`
-- **Base:** `858baeb81`
+- **Branch / tip:** `lane/d` @ `f0b4b801c`
+- **Base:** `81fa3386d`
 - **Gated in:** detached worktree `gate-s2318` at main (§3.0b — undecided content never entered main's tree)
-- **Merge commit:** `0a2dbdeaac76faada134e28d15b49e0e1fbdbb6d`
+- **Merge commit:** `87be08e05625574d0aa52dcfed3b7d2b936eb5bc`
 - **Drained by:** s2318, 2026-08-25
 
 ## VERDICT: MERGED
@@ -81,7 +81,7 @@ Two further desktop reds (`:194`, `:282`) appeared only in the first combined 28
 
 ## Merge classification
 
-Base `858baeb81`.
+Base `81fa3386d`.
 
 | File | Class | Resolution |
 |---|---|---|

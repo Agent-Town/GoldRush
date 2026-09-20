@@ -13,7 +13,7 @@ The commission for this book, in the owner's words (2026-07-17): *"extract our l
 
 Everything below was measured from the factory's own git history and ledgers on 2026-07-17, the day this book was written. Where a number comes from a ledger claim rather than a direct git count, it is marked *ledgered* — meaning it was recorded by an attended session at merge time under the factory's evidence laws.
 
-**Timeline: 15 days.** First commit 2026-07-03 (`e4394243`, repo skeleton). This book written 2026-07-17. Every number below happened inside that window.
+**Timeline: 15 days.** First commit 2026-07-03 (`8f726a46`, repo skeleton). This book written 2026-07-17. Every number below happened inside that window.
 
 **Throughput:**
 - **2,907 commits** on main, sustained at roughly 200 per day for two weeks (peak day: 289).

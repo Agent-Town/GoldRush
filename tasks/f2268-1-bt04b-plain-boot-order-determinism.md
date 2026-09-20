@@ -23,8 +23,8 @@ EXPECTED-HOLDS: src/game/Game.ts
 EXPECTED-HOLDS: src/game/RunSuspend.ts
 EXPECTED-HOLDS: src/ui/ProspectorPanel.ts
 
-lane/a is DELIBERATELY ahead by exactly **two** commits — `8dc4ff173`
-(`runner(lane-a): bt-04b-automation-two-params.md`) and `fa9a757f0`
+lane/a is DELIBERATELY ahead by exactly **two** commits — `d02ff4148`
+(`runner(lane-a): bt-04b-automation-two-params.md`) and `431367d10`
 (`runner(lane-a): f2265-2-bt04b-mobile-spec-determinism.md`) — 8 paths, undrained BY
 DESIGN: the gate hold (F-2268-1) holds them, and **the file you are fixing lives ON that
 second commit.** **Do NOT reset or refresh the lane; build ON that tip.** Verify first:

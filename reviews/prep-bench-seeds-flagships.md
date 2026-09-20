@@ -2,7 +2,7 @@
 
 ## Verdict — PASS
 
-Main-slot output landed on `main` as `dca7ca81ff024ed772ae3e1e3e556132066f3cd4`.
+Main-slot output landed on `main` as `e33af94ef524196a0671b371453f312a054f1718`.
 
 ## What changed
 
@@ -28,9 +28,9 @@ The runner's full Node-23 battery reported 455 pass / 3 fail. Two failures were 
 
 ## Merge classification
 
-The main-slot runner wrote directly onto author base `a6ab2e8d3`; s1742's only concurrent main move was the STATUS-only lock `6e9057fe0`. All seven committed paths were runner-owned and matched the master firewall. Five screenshots changed only as Playwright churn and were restored from `HEAD`. Logs remain separate bookkeeping; the untracked attended railcar-v2 master and `.claude/cache/` were not touched.
+The main-slot runner wrote directly onto author base `647703b83`; s1742's only concurrent main move was the STATUS-only lock `564627206`. All seven committed paths were runner-owned and matched the master firewall. Five screenshots changed only as Playwright churn and were restored from `HEAD`. Logs remain separate bookkeeping; the untracked attended railcar-v2 master and `.claude/cache/` were not touched.
 
-The generated `eraStamp` is `6e9057fe0`, the exact generation/check base. The commit that records the artifact necessarily advances `HEAD`; F-1653-3 already tracks replacing commit-keyed stamps with a sim-content key.
+The generated `eraStamp` is `564627206`, the exact generation/check base. The commit that records the artifact necessarily advances `HEAD`; F-1653-3 already tracks replacing commit-keyed stamps with a sim-content key.
 
 ## Findings
 

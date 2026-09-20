@@ -1,8 +1,8 @@
 # e3-crawler-socket — Crawler simulation socketed headlessly
 
 - **Slice:** `e3-crawler-socket` (ER-01 census ladder, epoch-3 Voltage)
-- **Branch / tip:** `lane/a` @ `94c0b76bb` ("crawl: socket Crawler simulation headlessly")
-- **Merge-base:** `3e22423a` · **Merged to main as:** `a172eed0`
+- **Branch / tip:** `lane/a` @ `717afe8a4` ("crawl: socket Crawler simulation headlessly")
+- **Merge-base:** `e5ddfa7b` · **Merged to main as:** `682f632f`
 - **Drained by:** s1473 fire, 2026-08-06
 - **Task master:** `tasks/done/20260806-035053-lane-e3-crawler-socket.md`
 
@@ -48,7 +48,7 @@ than an assertion.
 
 **F-1460-1 duty discharged.** The diff touches `src/sim/` and `src/systems/`, so `test:node-guards`
 was mandatory rather than optional. It was run and it is green — `gr-sim.test.mjs` (the Baron pin
-that went stale under `4ab48743`) passed, so this routing-adjacent change moved no pinned number.
+that went stale under `e788002c`) passed, so this routing-adjacent change moved no pinned number.
 No re-pin was made or needed (F-1441-3).
 
 **`e3-canyon-works` verified to actually contribute tests**, not collect zero: `--list` reports
@@ -65,7 +65,7 @@ question is what the lane's single commit touched, and what main did to those pa
 
 - **Lane commit content:** 4 files — `docs/bench/e3-readiness-census.md`,
   `e2e/er01-e3-census.spec.ts`, `src/sim/HeadlessContractSim.ts`, `src/systems/CrawlerBossSystem.ts`.
-- **Main-side movement on those 4 paths since `3e22423a`:** `git diff --stat 3e22423a main -- <the four>`
+- **Main-side movement on those 4 paths since `e5ddfa7b`:** `git diff --stat e5ddfa7b main -- <the four>`
   returned **empty**. All four are **LANE-TOUCHED only**; zero MAIN-MOVED, zero BOTH-MOVED.
 - **Conflicts:** none. `ort` merged clean, +152/−48 across exactly those 4 files.
 - **Custody:** gated in a **detached worktree** (`gate-s1473`) per §3.0b — undecided content never

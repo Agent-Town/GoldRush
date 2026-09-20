@@ -8,7 +8,7 @@ const before = await board(); writeFileSync(`${S}/${contractId}-before.json`, JS
 const log = (l) => writeFileSync(`${S}/${contractId}-progress.log`, `${new Date().toISOString()} ${l}\n`, { flag: 'a' });
 log(`before: retired ${before.retiredCount} rows ${JSON.stringify(rows(before))}`);
 const secret = process.env.SECRET; if (!secret) { log('NO SECRET'); process.exit(2); }
-const res = await fetch('https://agenttown.app/api/standings/reassay', { method: 'POST', headers: { 'content-type': 'application/json', 'x-assay-key': secret }, body: JSON.stringify({ epochId, contractId, reason: 'e8-air-wall-all-maps 3a9bab9c8: ADR-004 composition change (the same air wall on every Orbital contract)' }), signal: AbortSignal.timeout(30000) });
+const res = await fetch('https://agenttown.app/api/standings/reassay', { method: 'POST', headers: { 'content-type': 'application/json', 'x-assay-key': secret }, body: JSON.stringify({ epochId, contractId, reason: 'e8-air-wall-all-maps 816506479: ADR-004 composition change (the same air wall on every Orbital contract)' }), signal: AbortSignal.timeout(30000) });
 log(`POST ${res.status} ${(await res.text()).slice(0, 300)}`);
 const started = Date.now();
 for (let poll = 0; poll < 120; poll += 1) {

@@ -22,7 +22,7 @@ Two defects, both verified by reading the files:
 
 Defect 2 is the more serious of the two, and it is not hypothetical — it is a **repeat of a named
 family**. `tasks/goals.json:1871` records F-1052-1 in these words: the contract test *"has been RED
-since 00f5d464 added publishedBuild… two consecutive deploy correctives shipped without their own
+since 445ba24d added publishedBuild… two consecutive deploy correctives shipped without their own
 contract test ever being run: the same unrun-guard family as F-1049-1 / F-1047-1 / F-1044-1."* A guard
 nothing invokes rots silently, and this one already had.
 
@@ -44,7 +44,7 @@ The suite takes an **optional script-under-test path**, which is what makes the 
 repeatable by the next fire instead of being a one-time performance:
 
 ```
-git show d9897a26:scripts/deploy-site.sh > /tmp/prefix-deploy-site.sh
+git show 23e70590:scripts/deploy-site.sh > /tmp/prefix-deploy-site.sh
 bash scripts/test-deploy-site-contract.sh /tmp/prefix-deploy-site.sh   # MUST fail
 ```
 
@@ -65,7 +65,7 @@ ran skip-no-wrangler / skip-no-token
 deploy-site contract PASS
 ```
 
-**② THE MUTATION CONTROL — the same suite against the pre-fix script (`d9897a26`), rc=1:**
+**② THE MUTATION CONTROL — the same suite against the pre-fix script (`23e70590`), rc=1:**
 
 ```
 FAIL no-url: claimed 'DEPLOYED ok' for a run that published nothing

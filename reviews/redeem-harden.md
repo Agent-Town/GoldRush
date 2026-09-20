@@ -2,7 +2,7 @@
 
 - **Slice:** `redeem-harden` (MAIN slot, fire-authored s1079 as the corrective for its own drain's findings)
 - **Branch/tip:** main slot — uncommitted working-tree output from run `20260726-172905-main-redeem-harden.md.log`
-- **Merge:** `2962577194e4c1d8d8362198925ae30ae4384cb7`
+- **Merge:** `6f6345c1de3f3729b0541de236f264e5f040b763`
 - **Drained:** s1080, 2026-07-26
 
 ## Verdict
@@ -14,7 +14,7 @@ process finding against the authoring fire (F-1080-3), none blocking the merge.
 ## What it does
 
 `functions/api/redeem.ts` shipped 30 minutes before this task was written, in the `cosmetic-grants` merge
-(`52fa15ad`). The s1079 gate read it as a security surface and found three real defects. This slice closes
+(`2dfa0b4d`). The s1079 gate read it as a security surface and found three real defects. This slice closes
 all three plus a fourth latent one, in the one file, before the owner mints a single real prize stub.
 
 The player-facing shape of the change: **a prize stub can no longer be destroyed by a dropped network

@@ -14,7 +14,7 @@ CODEX: model=gpt-5.6-sol effort=high
 
 **Both prior runs were RIGHT to stop. Neither was a failure; both were the firewall working.**
 
-- **Attempt 1** (`20260727-065051`) stopped because `stamp-mill` had no runtime-published approach point at all. s1109 paid that lift and merged it at **`425d2a9a`**, verified by captured payload.
+- **Attempt 1** (`20260727-065051`) stopped because `stamp-mill` had no runtime-published approach point at all. s1109 paid that lift and merged it at **`ed15bb17`**, verified by captured payload.
 - **Attempt 2** (`20260727-073534`) was re-queued **byte-unchanged** on the strength of that merge — and stopped again, in its own words: *"`stamp-mill` is absent from `diagnostics.buildings`; it only exists in `diagnostics.plaza.slots`. The task explicitly requires `buildings` and says to stop if that hook is absent."* It discarded its partial seven-file patch and left `lane/m3` clean.
 
 **The payload was real; the ADDRESS was wrong.** s1109's lift published the slot on the **`plaza`** object, while this master told you to read **`buildings`**.
@@ -96,13 +96,13 @@ The loop re-aims every iteration and exits **on the condition**, not on a clock.
 2. **Sites 7 and 8** (`town-t1-square:53`, `town-t2-naming:48`) — these take a caller-supplied `[key, ms][]` route, so there is no single target coordinate inside the helper. Change them to steer toward **the prompt they are already given as an argument**: resolve that prompt id against **`plaza.slots`** and steer to its `approach`, ignoring the `ms` values. Keep the parameter list source-compatible so callers need no edit. **All four ids these callers pass today (`tavern`, `claim_office`, `schoolhouse`, `assay_office`) resolve in `plaza.slots` — s1111 verified this, so you should NOT expect to stop here.** If a caller nonetheless passes a prompt id absent from **both** `plaza.slots` **and** `buildings`, **STOP and report that caller** rather than inventing a fallback.
 3. **Every loop is bounded and fails loudly.** Cap iterations (48 is the proven figure) and, on exhaustion, let the existing `expect.poll` produce the failure — do **not** swallow a non-arrival into a silent pass. A helper that returns successfully without the prompt being active is a worse bug than the one you are fixing.
 4. **Do not modify `src/`.** Every hook you need already ships and s1111 verified each one by reading the file (see the table above). **The "a needed field is absent → STOP" clause has now been invoked twice and is satisfied: `plaza.slots` ships `id`+`position`+`approach` for all seven ids.** If some *other* field is genuinely absent, STOP and report — extending the diagnostics surface is its own slice.
-5. **Do not touch `e2e/board-card-images.spec.ts`.** It carries the same `hold(page,'KeyA',850)` shape and is a real member of this class — **site 10, deliberately deferred.** (Its original reason, "lane-c is editing it concurrently", has **expired**: `lane-contract-art-key-adoption` merged at `a659020a`. It stays out of scope anyway, to keep this third attempt's surface byte-identical to the nine sites that were measured. Name it in your report as **owed as its own corrective, now unblocked**.)
+5. **Do not touch `e2e/board-card-images.spec.ts`.** It carries the same `hold(page,'KeyA',850)` shape and is a real member of this class — **site 10, deliberately deferred.** (Its original reason, "lane-c is editing it concurrently", has **expired**: `lane-contract-art-key-adoption` merged at `2fd1390c`. It stays out of scope anyway, to keep this third attempt's surface byte-identical to the nine sites that were measured. Name it in your report as **owed as its own corrective, now unblocked**.)
 
 ## FIREWALL
 
 **TOUCH-ONLY:** `e2e/en-01-claim-ledger.spec.ts` · `e2e/en-02-e1-coverage.spec.ts` · `e2e/072-era-activation.spec.ts` · `e2e/gz-h1-newsie.spec.ts` · `e2e/town-t1-square.spec.ts` · `e2e/town-t2-naming.spec.ts` · `e2e/wd02-barks.spec.ts`
 
-**NO:** `src/**` · `e2e/board-card-images.spec.ts` (see scope 5) · `e2e/restore-validation.spec.ts` (see WHY — not this class) · any `*-research-tree.spec.ts` (they are the reference implementation, already correct) · `playwright.config.ts` (**F-1101-1's calibration has LANDED at `642c5d5d` and its report closed VOID — the config is settled and re-tuning it is a different slice, so still do not touch it**) · `tasks/**` · `STATUS.md` · `reviews/**`
+**NO:** `src/**` · `e2e/board-card-images.spec.ts` (see scope 5) · `e2e/restore-validation.spec.ts` (see WHY — not this class) · any `*-research-tree.spec.ts` (they are the reference implementation, already correct) · `playwright.config.ts` (**F-1101-1's calibration has LANDED at `7954ce66` and its report closed VOID — the config is settled and re-tuning it is a different slice, so still do not touch it**) · `tasks/**` · `STATUS.md` · `reviews/**`
 
 Reporting an adjacent problem is good and welcome. Fixing one outside TOUCH-ONLY is a violation.
 

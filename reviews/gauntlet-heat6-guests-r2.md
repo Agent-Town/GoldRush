@@ -1,12 +1,12 @@
 # Review — gauntlet-heat6-guests-r2
 
-**Slice:** `gauntlet-heat6-guests-r2` · **Branch:** `lane/b` · **Tip:** `6e3ba9374`
-**Base:** `main` @ `cae84d37adb5e1c87489e9a2771cf0a7575f8eb5` · **Drained:** s2309 (fire), 2026-08-25
+**Slice:** `gauntlet-heat6-guests-r2` · **Branch:** `lane/b` · **Tip:** `ee595475d`
+**Base:** `main` @ `f5dfab0ac9f1a8bc5f3bc267deddab48c1ec1b08` · **Drained:** s2309 (fire), 2026-08-25
 **Verdict:** **MERGED** — evidence-only (338 artifacts + one BACKLOG row, ZERO `src/`/`e2e/`/`scripts/`/`functions/`). One battery leg red; proven environmental with a **zero differential** (F-2309-1).
 
 ## What it does
 
-Re-rides the Heat 6 guest field on the cured-parity premise. Lane-b re-derived live build `61681a77` (`61681a776470d583886fa18161215d85e544f321`), passed a detached production build, and proved a fresh Claim parity probe publicly `verified` **before** riding — the gate that stopped the r1 field at attempt 0. The streaming shim then passed SSE, survived one deliberate mid-stream abort, and stayed alive across the probe plus 46 guest launches without repeating Heat 4's EPIPE death. Under concurrent load it exposed a retryable `HTTP 429: Too many concurrent completions`; serialising OpenClaw removed 429s entirely and exposed rider context/decision latency as the real ceiling instead. **One guest secured: OMP 18.0.4 took The Claim at wave 10 / 11g, stored rank 7, publicly verified.** The other 15 rider/map cells were truthful deaths, wall partials, or exact no-reel DNFs; no guest met the wave-20 Baron. Eliza stable CLI 1.7.2 repeated its bounded 60 s no-output DNF.
+Re-rides the Heat 6 guest field on the cured-parity premise. Lane-b re-derived live build `2701f6b5` (`2701f6b56c088f247da9ed5914520a17e480325d`), passed a detached production build, and proved a fresh Claim parity probe publicly `verified` **before** riding — the gate that stopped the r1 field at attempt 0. The streaming shim then passed SSE, survived one deliberate mid-stream abort, and stayed alive across the probe plus 46 guest launches without repeating Heat 4's EPIPE death. Under concurrent load it exposed a retryable `HTTP 429: Too many concurrent completions`; serialising OpenClaw removed 429s entirely and exposed rider context/decision latency as the real ceiling instead. **One guest secured: OMP 18.0.4 took The Claim at wave 10 / 11g, stored rank 7, publicly verified.** The other 15 rider/map cells were truthful deaths, wall partials, or exact no-reel DNFs; no guest met the wave-20 Baron. Eliza stable CLI 1.7.2 repeated its bounded 60 s no-output DNF.
 
 ## Evidence
 
@@ -15,7 +15,7 @@ Re-rides the Heat 6 guest field on the cured-parity premise. Lane-b re-derived l
 | `drain-block-check` (pre-merge, and re-asserted on the merged tree) | ✅ CLEAR, `status="queued"`, exact name beat the `gauntlet-heat6-guests[merged]` sibling |
 | `npx tsc --noEmit` (merged tree) | **rc=0** |
 | `npm run build` (merged tree) | **rc=0** |
-| `run-guards --changed-since cae84d37` | **7/8** — 497 files changed; base gate + `test:stats`/`test:accounts`/`test:mp` auto-added (1 file in `functions/**`) |
+| `run-guards --changed-since f5dfab0a` | **7/8** — 497 files changed; base gate + `test:stats`/`test:accounts`/`test:mp` auto-added (1 file in `functions/**`) |
 | ├ `test:node-guards` | PASS rc=0, **706 s** |
 | ├ `test:stats` · `test:accounts` · `test:mp` | PASS rc=0 — 19 s · 6 s · 6 s |
 | ├ `test:task-guards` · `test:citations` · `test:gate-callers` | PASS rc=0 |
@@ -31,7 +31,7 @@ Run log: `tasks/runs/20260825-121216-lane-b-gauntlet-heat6-guests-r2.md.log` —
 
 ## Merge classification
 
-Base `cae84d37adb5e1c87489e9a2771cf0a7575f8eb5`. Merged `--no-ff` in a **detached gate worktree** (`gate-s2309`) per fire.md §3.0b — undecided content never entered main's working tree, and the merge was committed as one act rather than left staged.
+Base `f5dfab0ac9f1a8bc5f3bc267deddab48c1ec1b08`. Merged `--no-ff` in a **detached gate worktree** (`gate-s2309`) per fire.md §3.0b — undecided content never entered main's working tree, and the merge was committed as one act rather than left staged.
 
 | Class | Count | Resolution |
 |---|---|---|
@@ -72,4 +72,4 @@ Proven rather than asserted — a set-difference of the merged file against main
 
 ## Ledger
 
-Goal leaf `gauntlet-heat6-guests-r2` → `status:"merged"` + 40-char `mergeHash`, in the drain commit. BACKLOG row marked ✅ SHIPPED in the same commit. GZ-01 item filed for the merge (prior heats are gazetted — `7dab6bde` heat-4, `b31ecbc5` heat-e1).
+Goal leaf `gauntlet-heat6-guests-r2` → `status:"merged"` + 40-char `mergeHash`, in the drain commit. BACKLOG row marked ✅ SHIPPED in the same commit. GZ-01 item filed for the merge (prior heats are gazetted — `7ecd2817` heat-4, `6eedc0d8` heat-e1).

@@ -1,7 +1,7 @@
 # m3-05c — Run Ledger `metaEarned` column
 
 - **Slice:** `lane-a-m3-05c-run-ledger-meta-earned`
-- **Branch / tip:** `lane/m3` @ `b70f4db1` (base `afd18fe1`)
+- **Branch / tip:** `lane/m3` @ `b70f4db1` (base `421ac950`)
 - **Drained by:** s1190 fire, 2026-07-29
 - **Verdict:** ✅ **ACCEPTED**
 
@@ -70,7 +70,7 @@ Ledger*, on any previously-secured run. Confirmed by eye in the desktop screensh
 
 ## Merge classification
 
-Base `afd18fe1`. `git diff --name-only afd18fe1 main` and the lane's file set are **disjoint** —
+Base `421ac950`. `git diff --name-only 421ac950 main` and the lane's file set are **disjoint** —
 main moved none of the three real files, so every file is LANE-TOUCHED-ONLY and the merge is a
 clean checkout with no 3-way graft. Four files: `src/ui/RunLedger.ts`, `src/game/RunManager.ts`,
 `e2e/m3-05b-run-ledger.spec.ts`, and the runner's report under `tasks/runs/`. All inside

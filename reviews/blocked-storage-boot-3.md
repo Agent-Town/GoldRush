@@ -1,9 +1,9 @@
 # Review — blocked-storage-boot-3 (rf-22): the exported guard, and the seven sites that did not need it
 
 **Slice:** `lane-blocked-storage-boot-3` · goal leaf `rf-22-blocked-storage-boot-3`
-**Branch/tip:** `lane/m3 be020fc7` (single commit, parent `93c494f3` = clean main at authoring)
+**Branch/tip:** `lane/m3 be020fc7` (single commit, parent `4ae73571` = clean main at authoring)
 **Drained by:** s1084 fire, 2026-07-26
-**Merge base:** `93c494f3` · **Merged to main at:** see drain commit (registered in `tasks/goals.json`)
+**Merge base:** `4ae73571` · **Merged to main at:** see drain commit (registered in `tasks/goals.json`)
 
 ## VERDICT: MERGE — with the honest note that this round is far smaller than its master expected, and the reason is a *good* one.
 
@@ -27,7 +27,7 @@ Net diff: **3 insertions / 2 deletions across 2 files.**
 | `src/game/ProfileStorage.ts` | **LANE-TOUCHED only** | straight graft |
 | `e2e/task-024-blast-aim-presets.spec.ts` | **LANE-TOUCHED only** | straight graft |
 
-`git diff 93c494f3 main -- <both files>` is **EMPTY** — main never moved either file since the base (main moved only `STATUS.md`, `logs/*`, `tasks/BACKLOG.md`). No MAIN-MOVED side, no 3-way. Graft verified **byte-identical to `be020fc7`** *after* application, and re-verified again after the mutation control below (F-1080-B discipline: the tree measured is the tree that merged).
+`git diff 4ae73571 main -- <both files>` is **EMPTY** — main never moved either file since the base (main moved only `STATUS.md`, `logs/*`, `tasks/BACKLOG.md`). No MAIN-MOVED side, no 3-way. Graft verified **byte-identical to `be020fc7`** *after* application, and re-verified again after the mutation control below (F-1080-B discipline: the tree measured is the tree that merged).
 
 ## Evidence
 
@@ -40,7 +40,7 @@ Net diff: **3 insertions / 2 deletions across 2 files.**
 | Plain-boot console probe, no `?debug` | **0 errors · 0 warnings · 0 pageErrors · 0 "Tile state read failed" warns**, desktop 1280×800 **and** 390×844 — `PROBE CLEAN` |
 | Server provenance (F-1077-3) | scratch vite :5253, listener **pid 71696 cwd proven** `= /Users/robin/Claude/Projects/Gold Rush` via `lsof -d cwd` before any number was trusted |
 
-Battery = `task-024-blast-aim-presets` + `profile-first-boot` + `m3-06-demo-profiles` + `board-gating-and-profiles` + `tp00-tile-persistence` + `e6-tile-consumers`. 52/0 matches the master's stated `2cd221d1` baseline exactly.
+Battery = `task-024-blast-aim-presets` + `profile-first-boot` + `m3-06-demo-profiles` + `board-gating-and-profiles` + `tp00-tile-persistence` + `e6-tile-consumers`. 52/0 matches the master's stated `7aec8369` baseline exactly.
 
 ## F-1084-1 — THE 52/0 BASELINE IS ONLY TRUE AT `--workers=1`. THREE MORE TESTS ARE LOAD-SENSITIVE.
 

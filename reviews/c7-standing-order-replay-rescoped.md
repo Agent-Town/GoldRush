@@ -1,14 +1,14 @@
 # c7-standing-order-replay-rescoped — the browser replays a standing order
 
 **Slice**: `c7-standing-order-replay-rescoped` · **branch**: `lane/b` · **lane tip**: runner commit on `lane/b`
-**merge**: `6b6f52a7ba42632748058f895b2447096bd08cfc` (main) · **Drained by**: s2238 (fire)
-**Gated**: detached worktree `gate2-s2238` off `12d5efdf5` (§3.0b)
+**merge**: `2de0ab94dc3f54c60dcbb7922a32f6ab20dea8c8` (main) · **Drained by**: s2238 (fire)
+**Gated**: detached worktree `gate2-s2238` off `f10ae7b76` (§3.0b)
 
 ## VERDICT: MERGE
 
 ## What it does
 
-The c2 STOP measured the defect exactly (`796e0d15d`): `installAgentDoor` never called
+The c2 STOP measured the defect exactly (`bbb9ff57c`): `installAgentDoor` never called
 `bindStandingUpgradePicker`, so an accepted `PICK_UPGRADE` order reached a null handler. This slice closes
 that and the two clocks around it — three seams, `src/game/Game.ts` +30/-6 plus a new 150-line spec:
 
@@ -81,5 +81,5 @@ free control on the runner's headline; here it was skipped on purpose, and the n
 independently confirm.
 
 **Inherited, not introduced**: `null-floor-anchors --check` reports only the pre-existing era-stamp drift
-(`pinned 26e9a9d9f` vs `derived 47091bae6`); no floor row or headless outcome moved. The c6 runner reported
+(`pinned 016ede509` vs `derived 5de9984d7`); no floor row or headless outcome moved. The c6 runner reported
 the identical drift, and the c7 firewall forbade touching that pin.

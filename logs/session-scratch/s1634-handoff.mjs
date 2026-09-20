@@ -7,7 +7,7 @@ if (!lock.startsWith('ACTIVE 2026-08-10T16:58Z (s1634 fire)')) {
   throw new Error('line-1 is not my lock: ' + lock.slice(0, 80));
 }
 
-const H = '7f9340baf056e228bae8c1ca11c2d836e38a2a26';
+const H = 'e43e0223c76a8709c1918cae2533981255033253';
 
 const desk = [
   '🔺 **OWNER\'S DESK — 17 awaiting a word.**',
@@ -21,7 +21,7 @@ const line1 = [
   'Last updated: 2026-08-10T17:34Z s1634 handoff, lock CLEARED —',
   '✅ **f1631-1 DRAINED AND MERGED — `' + H.slice(0, 9) + '` — AND THE ANSWER THE BOARD WAS WAITING FOR IS YES: `gpt-5.5` AT `effort=high` IS MERGE-QUALITY (F-1634-3).**',
   's1632 deliberately dispatched ONE master rather than four because nobody had ever gated `gpt-5.5` output here. **That verdict is now in.** Scope complete on all four numbered items; firewall exactly respected (**one** file +33/-5, literal `25_000_000` count **1 on both sides**, `TOWN_TRANSFER_CEILING_BYTES` count **4 unchanged**, the cue test\'s own `:241` assertion intact, `artifacts/**` untouched); honest report; and its ONE deviation from literal scope was an **improvement it surfaced itself**.',
-  '📊 **GATES:** `tsc` clean · `build` green · **`test:asset-diet` 6/6 both projects, 7.3 m, exit 0**, zero console/page errors · gated in detached worktree `gate-s1634` (§3.0b custody) and merged as **one act** (§3/F-1589-5) · classification **LANE-TOUCHED / MAIN-UNTOUCHED** off base `4ce0dad4a`, no graft · post-merge `main..lane/c` **empty**, `lane-usable lane-c` **USABLE ahead=0**.',
+  '📊 **GATES:** `tsc` clean · `build` green · **`test:asset-diet` 6/6 both projects, 7.3 m, exit 0**, zero console/page errors · gated in detached worktree `gate-s1634` (§3.0b custody) and merged as **one act** (§3/F-1589-5) · classification **LANE-TOUCHED / MAIN-UNTOUCHED** off base `1321f9fc6`, no graft · post-merge `main..lane/c` **empty**, `lane-usable lane-c` **USABLE ahead=0**.',
   '🔬 **I PROVED ALL THREE PROVENANCE PATHS MYSELF RATHER THAN INHERITING THE RUNNER\'S REPORT — and the third one is the interesting one.** map-HIT → `measured in this run` **22,497,140** (both projects); map-MISS with artifact **≠** HEAD → `read from the on-disk fallback artifact (not measured in this run)` (1 passed 3.6 m); map-MISS with artifact **==** HEAD → `read from the committed artifact` **21,903,056** (1 passed 3.5 m, after restoring both artifacts from HEAD and verifying byte-equality).',
   '🔑 **THE SUBSTANCE, QUANTIFIED: the vacuous path reported 3,096,944 bytes of headroom where the same build measures 2,502,860 — 594,084 bytes the build does not have.** That gap is exactly what the assertion now names.',
   '⭐ **F-1634-2 — THE RUNNER\'S OUT-OF-SCOPE THIRD LABEL IS LOAD-BEARING, AND I CAN SHOW IT.** The master asked for two labels; `gpt-5.5` shipped three, after its own `codex review --uncommitted` noticed that *"committed artifact"* becomes false once the artifact is rewritten on disk. **Mid-gate my own suite run had already rewritten `town-transfer-desktop-chrome.json` (127,023 on disk vs 127,971 at HEAD) while `mobile-chrome` still matched** — a suite run leaves the artifact ≠ HEAD as a matter of course. **So the REAL F-1627-3 fallback — a timeout part-way through a suite, then a solo re-run in the same worktree — lands on the THIRD label, and `read from the committed artifact` appears only on a genuinely clean tree.** Implemented literally, the common fallback case would have claimed `read from the committed artifact` while gating bytes that were not it: a new false statement inside the very cure written to remove one.',

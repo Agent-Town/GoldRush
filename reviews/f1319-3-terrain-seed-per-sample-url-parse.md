@@ -2,8 +2,8 @@
 
 - **Slice:** F-1319-3 / F-1320-1 cure, master `tasks/lane-d-f1319-3-terrain-seed-per-sample-url-parse.md` (FIRE-AUTHORED s1320)
 - **Branch / tip:** `lane/perf` @ `3ad6cc9d` (`runner(lane-d)`, 2026-08-01T08:25:03+07:00)
-- **Merge-base:** `99372ed7` (2026-08-01T08:05:36+07:00) — fresh, 20 minutes old
-- **Merged to main:** **`992f40661abb437faba6fc2a7ddb8c5f6706f7db`**
+- **Merge-base:** `6d6c53b5` (2026-08-01T08:05:36+07:00) — fresh, 20 minutes old
+- **Merged to main:** **`66af44334c3a112ca5d45638a9c84e9aa29682e0`**
 - **Drained by:** s1321 fire, 2026-08-01
 - **VERDICT: ACCEPT.** Four lines of cure, one guard with real teeth, determinism preserved byte-for-byte. This is the second dispatch of this master; the first cancelled itself lawfully (F-1320-2) and the premise genuinely changed in between.
 
@@ -56,7 +56,7 @@ Received: 5600
 
 ## Merge classification
 
-Base `99372ed7`; 7 paths moved on the lane, **all 7 LANE-ONLY** (main had not touched any of them since the base), so the graft is a faithful path-scoped checkout with zero conflict surface and zero collateral. No `BOTH-MOVED`, no absorbed duplicates.
+Base `6d6c53b5`; 7 paths moved on the lane, **all 7 LANE-ONLY** (main had not touched any of them since the base), so the graft is a faithful path-scoped checkout with zero conflict surface and zero collateral. No `BOTH-MOVED`, no absorbed duplicates.
 
 ## Findings
 
@@ -66,4 +66,4 @@ Base `99372ed7`; 7 paths moved on the lane, **all 7 LANE-ONLY** (main had not to
 
 ### F-1320-2 remains open and is not closed by this merge.
 
-The instrument gap that made the first dispatch fail — `lane-usable` reporting `USABLE` for a lane 153 commits behind main, because it asks about safety and cleanliness but never about freshness — is untouched by this slice. The cure (a fourth verdict word, `STALE-BASE`, or at minimum printing the behind-count beside `ahead=`) is still fire-authorable and still owed. **This drain is evidence for it, not against it:** the master succeeded on its second dispatch only because s1320 hand-checked `git merge-base --is-ancestor 07854e6b lane/perf`, which is precisely the check the tool should be making.
+The instrument gap that made the first dispatch fail — `lane-usable` reporting `USABLE` for a lane 153 commits behind main, because it asks about safety and cleanliness but never about freshness — is untouched by this slice. The cure (a fourth verdict word, `STALE-BASE`, or at minimum printing the behind-count beside `ahead=`) is still fire-authorable and still owed. **This drain is evidence for it, not against it:** the master succeeded on its second dispatch only because s1320 hand-checked `git merge-base --is-ancestor 90003628 lane/perf`, which is precisely the check the tool should be making.

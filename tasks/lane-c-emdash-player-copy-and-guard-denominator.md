@@ -1,6 +1,6 @@
 # Task lane-c-emdash-player-copy-and-guard-denominator: the em-dash law reaches the strings a player actually reads, and the guard stops certifying a corpus it never scans (lane-c, prefix "fix:")
 
-**FIRE-AUTHORED s2367 (attended review welcome).** Discharges the one fire-authorable item filed by the attended F-SHOW-0830 triage (`tasks/BACKLOG.md:1`, 2026-08-30, commit `03ef4af44`), and cures the mechanism that let it happen.
+**FIRE-AUTHORED s2367 (attended review welcome).** Discharges the one fire-authorable item filed by the attended F-SHOW-0830 triage (`tasks/BACKLOG.md:1`, 2026-08-30, commit `e57787457`), and cures the mechanism that let it happen.
 
 You are Codex, implementer for Gold Rush, running natively on Robin's Mac in `worktrees/lane-c`.
 
@@ -15,8 +15,8 @@ READ FIRST: `AGENTS.md`; `CLAUDE.md` §4 (evidence-first), §6 (quality bars), �
 > "Minor: the banner copy carries an em-dash (LanternShow.ts:228/:253) against the owner's no-em-dash law - fire-authorable one-liner with its e2e string assertions checked."
 
 **Why it is not merely a typo — the timeline, measured s2367, not inherited:**
-- The `c5-emdash-sweep` swept the game surfaces and merged **2026-08-23T15:39** (`ddcde57f0`).
-- The em-dash was **re-introduced two days later**, **2026-08-25T22:09**, by `982926333` `runner(lane-d): lantern-show-agent-honesty.md`, into the flagship reel's honesty banner.
+- The `c5-emdash-sweep` swept the game surfaces and merged **2026-08-23T15:39** (`a51e1a279`).
+- The em-dash was **re-introduced two days later**, **2026-08-25T22:09**, by `f0b4b801c` `runner(lane-d): lantern-show-agent-honesty.md`, into the flagship reel's honesty banner.
 - `scripts/no-emdash-guard.test.mjs` was **green the entire time**, and is green today.
 
 **The mechanism — the guard's denominator is narrower than the law it enforces.** Read the file: it scans exactly two corpora — `public/*.{md,txt}` (line 33) and `assets/contracts/*/contracts.json` restricted to the `HUMAN_TEXT_KEYS` allowlist (lines 8–12, 37–42). **It does not read one line of `src/`.** But the c5 sweep it was built to protect *did* cover `src/` ("src/news templates (37 lines), UI/playbook/blurb strings" — `tasks/BACKLOG.md:358`). So the sweep cleaned a corpus the guard never watches, and the very next slice to touch player copy silently regressed it. This is the house shape: a guard that asserts a principle where it holds and never where it fails certifies its own blind spot.
@@ -37,7 +37,7 @@ House style is set by c5 and is binding here: *"Rewrites are editorial (colon/co
 
 ### 2. Move the pins in the SAME commit as the copy.
 
-- ⚰️ **CITATION RETIRED s2374 — the cited test NO LONGER EXISTS, and its coordinate is deliberately written as prose so it can no longer be read as a live claim.** This master (SHIPPED s2371) cited `e2e/agent-reels.spec.ts` at line 36 — "the verified Dry Gulch agent reel is labeled as an approximation and ends honestly" — a full literal `toContainText` carrying the em-dash, to be updated to match 1a byte-for-byte. **The EH-3 `true-reel-show` merge (`af85497537fb973b8798089794498ff9b2974110`) RETIRED that test outright: it removed the agent-reel approximation path the test described, so there is no approximation left to label.** Text retained verbatim above per the RETENTION LAW — superseded, never erased.
+- ⚰️ **CITATION RETIRED s2374 — the cited test NO LONGER EXISTS, and its coordinate is deliberately written as prose so it can no longer be read as a live claim.** This master (SHIPPED s2371) cited `e2e/agent-reels.spec.ts` at line 36 — "the verified Dry Gulch agent reel is labeled as an approximation and ends honestly" — a full literal `toContainText` carrying the em-dash, to be updated to match 1a byte-for-byte. **The EH-3 `true-reel-show` merge (`ed0d3c5389c337074d9758536a7ccc0ce858a8ed`) RETIRED that test outright: it removed the agent-reel approximation path the test described, so there is no approximation left to label.** Text retained verbatim above per the RETENTION LAW — superseded, never erased.
 - ⚰️ **CITATION RETIRED s2374, same cause.** This master cited the same spec at line 49 — the same test title — as a **regex** carrying the em-dash, to be updated to match 1b; both citations lived inside that one test, so one red named both. **Retired by the same EH-3 merge.** ⓘ These two lines are why `citation-title-guard` reddened in the s2374 closing battery: a SHIPPED master citing a spec that a later slice rewrote. That is ordinary historical decay of a completed master, not debt — but a coordinate that cannot resolve manufactures a false accusation in a ledger, so it is retired rather than left to accuse.
 - `e2e/restore-validation.spec.ts:799` **imports the constant** (`RUN_SUSPEND_REJECTION_LINE`) rather than duplicating the string, so it moves for free. **Verify this rather than assuming it** — re-run that spec.
 
@@ -107,10 +107,10 @@ The owner's law says "the page, game and everything". Whether an **agent-facing 
 2. When safe: `git checkout -B lane/c main && git clean -fd && npm install --no-audit --no-fund && npm run build` green before touching anything.
 3. Cleanliness: `git -C worktrees/lane-c status --short` → must be clean, **with the FACTORY-CHURN EXCEPTION — always expected, never a STOP; list them and proceed (F-1407-1):** (a) `logs/**` — the fire/runner accounting, rewritten every cycle by the factory itself; (b) `artifacts/**`, `reviews/shots-*` and any `.png` — regenerated evidence, which is never byte-identity gated and so differs from main forever (F-1266-1). ⓘ **What still STOPs, unchanged and load-bearing: modified tracked `src/**`, `scripts/**`, `e2e/**`, `tasks/**`, `specs/**`, `reviews/*.md`** — anything a live drain or a concurrent task could actually own. (Retro-fitted s2369: the master was banked without this line, and `scripts/banked-master-preflight-guard.test.mjs` in `test:ledger-guards` REDS on any `queued` master that declares a PRE-FLIGHT without matching `/F-1407-1|FACTORY-CHURN EXCEPTION/`. Caught by running the battery as the fire's last act — F-1300-4 — because a guard that reads a ledger row runs *before* the row exists.)
 
-⚠️ **`lane/c` is 210 commits behind main and USABLE does not mean CURRENT.** This task depends on `982926333` (2026-08-25, `lantern-show-agent-honesty`), which introduced the copy you are fixing. s2367 proved `lane/c` HAS it and that the two subject files carry **2 em-dashes each**, identical to main. After the reset in step 2 you are on main anyway, so the dependency is satisfied — but if you skip the reset, prove it:
+⚠️ **`lane/c` is 210 commits behind main and USABLE does not mean CURRENT.** This task depends on `f0b4b801c` (2026-08-25, `lantern-show-agent-honesty`), which introduced the copy you are fixing. s2367 proved `lane/c` HAS it and that the two subject files carry **2 em-dashes each**, identical to main. After the reset in step 2 you are on main anyway, so the dependency is satisfied — but if you skip the reset, prove it:
 
 ```
-git merge-base --is-ancestor 982926333 HEAD    # expect rc=0
+git merge-base --is-ancestor f0b4b801c HEAD    # expect rc=0
 grep -c "This is a browser APPROXIMATION of a machine ride." src/ui/LanternShow.ts   # expect 1
 ```
 

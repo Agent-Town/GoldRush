@@ -1,8 +1,8 @@
 # Review — m3-05b-run-ledger
 
-**Slice:** `lane-m3-05b-run-ledger` (attended-authored `f75f4e4e`, owner "yes" 2026-07-28 on F-1131-1)
-**Branch/tip:** `lane/e2-arsenal` @ `d35edc72` (base `f3b5cc17`)
-**Merged to main:** `d9c86768`
+**Slice:** `lane-m3-05b-run-ledger` (attended-authored `fadfc7a5`, owner "yes" 2026-07-28 on F-1131-1)
+**Branch/tip:** `lane/e2-arsenal` @ `d35edc72` (base `2c56d6fb`)
+**Merged to main:** `f68a6215`
 **Drained by:** s1180 fire, 2026-07-28
 **§3.0 drain-block-check:** `? UNKNOWN — no goal leaf matches` → **a bookkeeping finding, not a clearance** (F-1180-1 below). Not a block; the master is owner-approved in its own WHY line.
 
@@ -16,11 +16,11 @@
 
 ## Merge classification
 
-Base `f3b5cc17`. **All five files LANE-TOUCHED only — no graft needed, and this was verified, not assumed:**
+Base `2c56d6fb`. **All five files LANE-TOUCHED only — no graft needed, and this was verified, not assumed:**
 
 | file | classification | proof |
 |---|---|---|
-| `src/game/RunManager.ts` | LANE-TOUCHED (+24) | `git log f3b5cc17..main -- src/game/RunManager.ts` **EMPTY** — main never moved it since the base |
+| `src/game/RunManager.ts` | LANE-TOUCHED (+24) | `git log 2c56d6fb..main -- src/game/RunManager.ts` **EMPTY** — main never moved it since the base |
 | `src/ui/RunLedger.ts` | pure add (+166) | absent from main |
 | `e2e/m3-05b-run-ledger.spec.ts` | pure add (+237) | absent from main |
 | `artifacts/m3-05b-run-ledger/{desktop,mobile}-chrome.png` | pure add | absent from main |

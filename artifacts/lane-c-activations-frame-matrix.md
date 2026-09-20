@@ -1,6 +1,6 @@
 # Assay-office frame matrix — contract-derived repair
 
-Base: `5ec1a0dc95e354ca62f4018523d76c924ad8c6fb` (`main` at lane reset)
+Base: `c041e49a978dfcd535387ec8b3d067ab9dd5b3cc` (`main` at lane reset)
 
 ## Before
 

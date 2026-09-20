@@ -8,7 +8,7 @@
 testing".** That lifts the Mistake-14 bar for this one dial — not by argument, but because the
 owner explicitly accepted balancing later. **`e5-stillwater` is now an ADMITTED contract.**
 
-**Base:** merged current `main` (`d775fca71`) FIRST. One conflict, `docs/bench/same-game-audit.md`
+**Base:** merged current `main` (`4ab4981de`) FIRST. One conflict, `docs/bench/same-game-audit.md`
 — a **generated** file, so it was resolved by taking main's copy and regenerating at the end
 rather than hand-merging two machine outputs.
 
@@ -73,7 +73,7 @@ with `e5-stillwater` present, summary `agent-lacks 446 · equal 1112 · not-offe
 verbatim from the regenerated output; **never by editing two sides' arithmetic into agreement**,
 which is the F-2084-1 failure the pin block warns about and which git would auto-merge silently.
 (The coordinator quoted main's live as 464/1056/4 over 1524 with 6 exemptions — my base is main
-`d775fca71` merged in, and the drain re-measures.)
+`4ab4981de` merged in, and the drain re-measures.)
 
 **F-A2-8 — the SAME staleness class, in a second test, found by the battery.**
 `gr-sim-campaign.test.mjs` used `e5-stillwater` as its "unseeded contract" example. Seeding it did
@@ -130,8 +130,8 @@ day that table empties, which is an event this suite should announce rather than
 `e5-stillwater` that recommendation was **F-A2-3** below: *"one more `claimBoat.anchors` entry
 outside both quiet zones and away from (0,30)"*. Built as **`shelf-watch` (36,30)**.
 
-**Base:** merged current `main` first (`bda894776`) — a **clean fast-forward**, because the first
-pass had already been drained to main as `c3fa244ab`. This addendum sits on top of that.
+**Base:** merged current `main` first (`d41cc867a`) — a **clean fast-forward**, because the first
+pass had already been drained to main as `adf327caf`. This addendum sits on top of that.
 
 ### The anchor, and why there
 
@@ -231,7 +231,7 @@ difficulty ruling, which is why it is on the desk and not in this commit.
 ## FIRST PASS (2026-08-21) — unchanged below
 
 **Slice:** door-completion sheet item **A2** (RATIFIED 2026-08-20, owner: *"Group 1: approved (with any tweaks)"*)
-**Branch:** agent worktree `agent-a9e7d8321e70f7a1f` · **Base:** `b9fd6fecb`
+**Branch:** agent worktree `agent-a9e7d8321e70f7a1f` · **Base:** `4d2491587`
 **Date:** 2026-08-21
 
 ## VERDICT
@@ -450,8 +450,8 @@ coordinates rotting because this branch adds lines to `Game.ts`, `HeadlessContra
 **`node scripts/null-floor-anchors.mjs --check` → 1 difference, and it is NOT mine.** Every one
 of the **65 contract × seed rows re-derived identical**, including all deepwater / regatta /
 flotilla rows — so this branch causes **zero** gameplay drift for the 27 admitted contracts. The
-single difference is the envelope's `eraStamp`: `pinned="1817cb273" derived="b9fd6fecb"`.
-`1817cb273` is the **A3 echo-canyon drain**, a verified ancestor of this branch's base, and three
+single difference is the envelope's `eraStamp`: `pinned="72da08d6a" derived="4d2491587"`.
+`72da08d6a` is the **A3 echo-canyon drain**, a verified ancestor of this branch's base, and three
 later main commits touched `null-floors.json` without refreshing the stamp. The stamp is computed
 from `git merge-base` **alone** and is independent of every source edit here, so `--check` was
 already red for it on main before this branch existed. **Not regenerated on purpose**: writing
@@ -463,7 +463,7 @@ for main. → **F-A2-1**.
 ## 5. Findings
 
 **F-A2-1 (non-blocking, ops).** `assets/contracts/null-floors.json`'s `eraStamp` is stale on
-**main** (`1817cb273`, the A3 drain), so `null-floor-anchors.mjs --check` reports one difference
+**main** (`72da08d6a`, the A3 drain), so `null-floor-anchors.mjs --check` reports one difference
 on any tree at a later base, unrelated to that tree's changes. Every data row is correct. The
 next drain that legitimately regenerates the floors clears it; regenerating it from an agent
 worktree would pin a branch-local base and is the wrong cure. No corrective task — it self-heals
@@ -530,7 +530,7 @@ explicitly *no balance edits to existing values*.
 
 ## 6. Merge classification
 
-Base `b9fd6fecb`. **All files LANE-TOUCHED; no MAIN-MOVED file, no conflicts.**
+Base `4d2491587`. **All files LANE-TOUCHED; no MAIN-MOVED file, no conflicts.**
 
 | File | Change |
 |---|---|

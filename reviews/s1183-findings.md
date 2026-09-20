@@ -139,7 +139,7 @@ narrow, obviously-correct half of the sweep over the broad one.
 gate — that is the standing precedent from the DEPLOY LAW finding and it holds here. This
 needs either one owner command or a main-slot Codex task.
 
-**Root cause is already on the desk.** The file entered git via `680775c3 runner(art):
+**Root cause is already on the desk.** The file entered git via `9caf1e2a runner(art):
 art-batch-008` — an *art* commit that swept a source file. That is **F-1162-1**, the broad-add
 family, now at its 18th recorded instance. Untracking these five files treats the symptom; the
 runner's `git add` scope is the disease.
@@ -152,7 +152,7 @@ runner's `git add` scope is the disease.
 were made for him by a `git add`, and the drain must now review content it did not choose.
 
 **What happened.** The art slot works in the repo root, so when `art-gazette-engravings` exited at
-`22:23:09` the runner auto-committed **`94ca2400 runner(art): art-gazette-engravings.md`
+`22:23:09` the runner auto-committed **`af82d579 runner(art): art-gazette-engravings.md`
 directly onto main** — below my handoff commit, and inside the push I had already sent to origin.
 A batch whose entire legitimate deliverable is **7 PNGs + a run report** landed as:
 
@@ -181,7 +181,7 @@ resolution of an owner-desk question.
 **Recommendation for the gating fire.**
 - Gate the **seven cuts** on their own merits as planned; do not let the 73 churn files ride along
   into the review's evidence table as if they were part of the batch.
-- **Classify the churn explicitly in `reviews/gazette-art-engravings.md`**: state that `94ca2400`
+- **Classify the churn explicitly in `reviews/gazette-art-engravings.md`**: state that `af82d579`
   committed it, that it was not this batch's work, and either ratify it (*"the churn is now on
   main; the desk item is closed as KEEP"*) or revert it path-scoped. **Either is fine — silence
   is not**, because the desk item will otherwise be carried forever against a state that no
@@ -227,7 +227,7 @@ git branch -f archive/suite-red-inventory-raw-171mb 8f1264de   # the lane TIP, n
 Verified after: `git branch --contains e2838ce3` lists the archive ref, and
 `git cat-file -s e5ea5932` still returns 171,333,533. **`lane/perf` may now be reset and refilled
 with nothing orphaned** — the lane's tip commit (`8f1264de` boss-detail-adoption, drained by
-s1181 as `a226e5f7`) is preserved too, because I pointed the ref at the tip rather than at the
+s1181 as `308cb0a4`) is preserved too, because I pointed the ref at the tip rather than at the
 raw's own commit. A mid-stack ref would have preserved the blob and dropped the tip.
 
 **⚠️ CORRECTION TO MY OWN FIRST DRAFT — I nearly shipped an overclaim, and `BACKLOG:43` caught
@@ -266,7 +266,7 @@ carries a second, older commit, and two of them hold content main does not have:
 - `lane/m3` `65041a9c` — a **72-line task report** at timestamp `...183927...` where main only has
   `...182840...`. A different report, not on main.
 - `lane/m4` `c97062be` — `cp04-charter-name-composition`, done-moved **`stopped-lawful-s1180`**.
-- `lane/e2-arsenal` — both commits correspond to slices s1181 drained (`bcaddba7`, `639df50b`).
+- `lane/e2-arsenal` — both commits correspond to slices s1181 drained (`bbe54d3e`, `983fd4da`).
 
 Before refilling **a** or **b**, either graft those reports to main or give them an archive ref
 too. This is the same class of loss the Reset Massacre law was written for, and it is why I

@@ -1,7 +1,7 @@
 # Review — e5/e6/e7 extra-maps contracts (coordinated 3-lane combine)
 
-**Slices/branches:** lane/m4 `3ea683e7` (e5) · lane/perf `850ad643` (e6) · lane/m3 `37cb762a` (e7) — all forked from base `cb7fc3cd`
-**Merge commit:** `33ab650d` (single coordinated combine onto clean main `946c8c6a`)
+**Slices/branches:** lane/m4 `7dc30d8b` (e5) · lane/perf `850ad643` (e6) · lane/m3 `37cb762a` (e7) — all forked from base `a45c392d`
+**Merge commit:** `8c264454` (single coordinated combine onto clean main `ebc69ab8`)
 **Drained by:** s719 fire, 2026-07-17
 **Verdict:** ✅ MERGED — clean 3-lane combine, all gates green desktop+mobile.
 
@@ -14,7 +14,7 @@ Adds **9 new "extra" maps** to the epoch contract catalog — 3 per epoch for E5
 Each map ships an authored contract entry + a published mask-table JSON. Extra maps are **gated/locked** in the current board (future-era), so this is display-only content — no gameplay wiring until each epoch's play slice. On the board carousel, E5/E6 extra maps appear as **locked-visible** cards (page-dot navigable, `data-contract-locked=true`, launch disabled); E7 extra maps assert absent from the current page (`toHaveCount(0)`) — both coherent on the paginated board (RUN-confirmed both viewports).
 
 ## Merge classification
-All three lanes forked from the SAME base `cb7fc3cd` (17+ behind main). Two-dot `git diff main lane/X` showed ~11k phantom deletions = pure stale-base noise (main's 3D-C capstone art/pilots/goals.json that the lanes never touched); a 3-way combine preserves them (Mistake #15 mechanics — `git diff cb7fc3cd main` was EMPTY for all 3 epoch contracts.json and both shared test files, so lane changes are clean 3-way with no divergence).
+All three lanes forked from the SAME base `a45c392d` (17+ behind main). Two-dot `git diff main lane/X` showed ~11k phantom deletions = pure stale-base noise (main's 3D-C capstone art/pilots/goals.json that the lanes never touched); a 3-way combine preserves them (Mistake #15 mechanics — `git diff a45c392d main` was EMPTY for all 3 epoch contracts.json and both shared test files, so lane changes are clean 3-way with no divergence).
 
 - **Disjoint per-epoch files (12) — LANE-TOUCHED, taken as-is** via `git checkout <lane> -- <path>`: `assets/contracts/epoch-{5-deepwater,6-atomic,7-signal}/contracts.json` (each += 3 maps) + 9 new `mask-tables/*.json`. No cross-lane overlap.
 - **2 shared test files — MAIN==BASE, hand-combined** (all 3 lanes edit these at overlapping regions):

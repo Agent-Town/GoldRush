@@ -1,9 +1,9 @@
 # c1-assay-fairness — the county stops charging riders for its own crashes
 
 - **Slice:** `c1-assay-fairness` (F-ASSAY-E2E-9 + F-ASSAY-E2E-10)
-- **Branch / tip:** `lane/d` @ `de2c3b1f9` (single runner commit)
-- **Base:** `8a4cdb96fe80dee21e82bcd43a43715b8ad5fdc5`
-- **Merge:** `2f4a0fe7ba24f391cb85a45be798ee1ded993711` (main)
+- **Branch / tip:** `lane/d` @ `eaff1ee97` (single runner commit)
+- **Base:** `8a4cdb96fe80dee21e82bcd43a43715b8ad5fdc5 (archive: pruned by the A3 rewrite)`
+- **Merge:** `72c73905c1acc7186431f0bf5d018920c45a39f1` (main)
 - **Drained by:** s2166 fire, 2026-08-22
 - **Verdict:** ✅ **MERGED** — gates green on the merged tree, including the full `test:node-guards` the runner could not make green.
 
@@ -37,7 +37,7 @@ Nothing undecided ever entered main's working tree or index; main's tree carried
 
 ## Merge classification
 
-Main moved **none** of the six code files since the base — `git log 8a4cdb96f..main -- <the six>` is empty — so all six are **LANE-TOUCHED**, no graft required. `tasks/BACKLOG.md` is **BOTH-MOVED** (main gained the s2165 F-2165-1 row and the lane-b `796e0d15d` merge; the lane prepended its own delivery row). Both sides prepend at line 1; git's `ort` auto-merged cleanly, keeping both, verified in the gate worktree before the real merge.
+Main moved **none** of the six code files since the base — `git log 8a4cdb96f (archive: pruned by the A3 rewrite)..main -- <the six>` is empty — so all six are **LANE-TOUCHED**, no graft required. `tasks/BACKLOG.md` is **BOTH-MOVED** (main gained the s2165 F-2165-1 row and the lane-b `bbb9ff57c` merge; the lane prepended its own delivery row). Both sides prepend at line 1; git's `ort` auto-merged cleanly, keeping both, verified in the gate worktree before the real merge.
 
 ## Findings
 

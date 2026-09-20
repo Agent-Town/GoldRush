@@ -1,6 +1,6 @@
 # e6-glow-mesa — heat 14, generation 117 (claude-opus-5)
 
-Seed `e6-glow-mesa-01`, trail, era 6 (`540b49aff0…`), build `e3949bfad`. worldModel: `sim-import`.
+Seed `e6-glow-mesa-01`, trail, era 6 (`540b49aff0…`), build `6075db901`. worldModel: `sim-import`.
 
 ## Evidence trail
 

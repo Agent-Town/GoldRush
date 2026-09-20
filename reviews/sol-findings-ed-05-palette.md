@@ -1,7 +1,7 @@
 # Sol finding — ED-05 palette
 
 Branch: `sol/ed-05-palette`  
-Base: `origin/main@4231c0be`  
+Base: `origin/main@4baa06f6`  
 Scope: descriptor-backed color/material identity in the contract editor
 
 ## F-ED05-01 — water and scatter colors are not descriptor fields

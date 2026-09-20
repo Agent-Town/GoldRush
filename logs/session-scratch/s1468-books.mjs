@@ -1,7 +1,7 @@
 // s1468 drain bookkeeping: flip the leaf to merged + 40-hex mergeHash, rename the done-move.
 import { readFileSync, writeFileSync, renameSync, existsSync } from 'node:fs';
 
-const MERGE = '8e3c149177fd00bca7dda4356d49d2b580663e7e';
+const MERGE = 'c42d653a0f7ea057b99da84bbc035c96eafd6ed2';
 const SHORT = MERGE.slice(0, 8);
 const ID = 'f1467-1-alpha-recipe-ab';
 

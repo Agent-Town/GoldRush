@@ -17,10 +17,10 @@
 // ⚠️ PARAGRAPH SCOPE IS BLUNT, AND ONE RETRO-MARK'S BLANK LINE IS LOAD-BEARING (F-1613-1,
 // measured s1613). The marker in marketing/outbox/gazette-queue.md sits after a blank line
 // that SEVERS A SENTENCE mid-clause — on sight a typo in published prose, and it is not.
-// That roundup's own two REPORTED hashes (ba78dad5e, 88530e3ef) share a contiguous run of
+// That roundup's own two REPORTED hashes (603c9e5d2, 312b443f1) share a contiguous run of
 // prose with the four dismissed ones, so the blank line is the ONLY thing scoping the
 // marker to the four. The tidy repair (un-split the sentence, marker at the paragraph end)
-// was tested s1613 and reads reported 62 / dismissed 9 — it sweeps 88530e3ef, which that
+// was tested s1613 and reads reported 62 / dismissed 9 — it sweeps 312b443f1, which that
 // same roundup PUBLISHES AS NEWS, into dismissed. DO NOT TIDY THAT PROSE without re-running
 // this sweep: nothing will red at you, because this tool is advisory and exits 0 always and
 // the classifier's test is fixture-driven and cannot see the live board.
@@ -241,7 +241,7 @@ const main = () => {
   // are merges (7%) and 5442 are single-parent. The old label read "first-parent merge(s)" and
   // under-described the corpus 13x. It was never a coverage defect — the sweep is WIDER than its label —
   // but a fire reasoning from the label concludes direct commits are invisible to GZ-01 and spends a
-  // budget hunting a blind spot that does not exist. This fire's own candidate `71aff6e19` (era pin #8)
+  // budget hunting a blind spot that does not exist. This fire's own candidate `a57f0934e` (era pin #8)
   // is single-parent and WAS examined, which is the live counter-example.
   console.log(`examined ${log.length} first-parent commit(s) in the window — merges AND single-parent alike; this walks the WHOLE first-parent chain (F-2613-1)`)
   console.log(`player-path-touching first-parent commit(s): ${rows.length}`)
@@ -305,7 +305,7 @@ const main = () => {
   if (absent.length) {
     console.log('')
     // F-2157-1: a judgement recorded ONLY in a STATUS.md handoff does not reach this tool,
-    // which reads marketing/outbox/ and nothing else. 1968127f5 was judged NOT PLAYER-VISIBLE
+    // which reads marketing/outbox/ and nothing else. 7b07256cc was judged NOT PLAYER-VISIBLE
     // in ELEVEN consecutive handoffs (s2144..s2155) while cited ZERO times in the outbox, so
     // it came back as a live candidate every fire and each one re-paid the judgement cost --
     // several while telling their successor "do NOT re-judge it". State the discharge here,

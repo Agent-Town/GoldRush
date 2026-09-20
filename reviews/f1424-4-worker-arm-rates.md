@@ -4,7 +4,7 @@
 - **Branch:** `lane/a` → orphaned, rescued as `save/f1424-4-worker-arm-rates-s1522`
 - **Tip gated:** `ee61f25ee4dd0a4f7bb1bb4fb741ef4a1756988a` (runner auto-commit, 2026-08-07T12:39:32+07)
 - **Drained:** s1522, 2026-08-07
-- **Measurement tree (runner's own):** `3c06cc21353735813c053b01dce8926b3fa582a4`
+- **Measurement tree (runner's own):** `e6cebf846c2f54d97ad2a42211d84e960871dea0`
 
 ## VERDICT: MERGE — and it is only merge-able because the commit was rescued from deletion first.
 
@@ -58,7 +58,7 @@ Replaces a one-observation-per-arm **anecdote** about lane-shell test flakiness 
 
 **Boot probe — deliberately not run, with the reason stated rather than the gate quietly thinned.** The firewall diff proves `src/` and `e2e/` are **byte-identical to main**, so this merge cannot change any runtime behaviour; a boot probe would be measuring main, not this slice. Build green is the meaningful sanity check and it passed.
 
-### The measurement itself (runner's, on `3c06cc213`)
+### The measurement itself (runner's, on `e6cebf846`)
 
 **Scope 1 — the sweep was priced before it was run**, as the master required: direct timing probes of **204 s / 157 s / 142 s** for arms w=1/2/6, projecting `8 × (204+157+142)` = **4,024 s ≈ 67 min**, below the ~3 h pre-licensed STOP. So scope 3 ran rather than stopping.
 
@@ -78,13 +78,13 @@ Per project: desktop 3/8, 1/8, 5/8 · mobile 3/8, 5/8, 7/8.
 
 **The new assertion held on all 24 runs** — every run obtained exactly the M it requested. It therefore never fired in production, which is why the manufactured-defect self-test arm matters: the s1299/s1300 standard, met. The runner pasted both states — `ReferenceError: assertActualWorkers is not defined` before, the passing rejection arm after.
 
-**`actualWorkers` survived `f1510-3`'s metadata change** — the hazard the master flagged. Printed object: `{"revision":"3c06cc213…","dirty":true,"actualWorkers":6}`. All three keys coexist; no fallback to `configuredWorkers` was needed or taken.
+**`actualWorkers` survived `f1510-3`'s metadata change** — the hazard the master flagged. Printed object: `{"revision":"e6cebf846…","dirty":true,"actualWorkers":6}`. All three keys coexist; no fallback to `configuredWorkers` was needed or taken.
 
 **Inventory neighbours genuinely ran** rather than being silently skipped: `town-t3-board` 12 explicit `ok:true` records, `town-t6-surfaces` 10.
 
 ## Merge classification
 
-- **Base:** `9808f294` (the F-1519-2 dispatch commit). Main moved **20 commits** during the run.
+- **Base:** `48fa2aeb` (the F-1519-2 dispatch commit). Main moved **20 commits** during the run.
 - **Method:** cherry-pick onto current main in detached worktree `gate-s1522` (§3.0b custody — undecided content never entered main's working tree). **Zero conflicts.**
 - **Per-file:** all 28 paths **LANE-TOUCHED only**; 27 are new files under a session-scratch directory main has never had, and `scripts/concurrency-class-rate.mjs` was **MAIN-UNMOVED** since the base (verified: the cherry-pick applied clean).
 - **Gated on the MERGED tree**, not the lane tip.
@@ -92,7 +92,7 @@ Per project: desktop 3/8, 1/8, 5/8 · mobile 3/8, 5/8, 7/8.
 ## Findings
 
 **F-1522-1 — A LANE'S SAFE-DUPE PRE-FLIGHT PROTECTS ONLY ITS OWN DISPATCH; THE NEXT TASK INTO THAT LANE RESETS IT ANYWAY. [BLOCKING-CLASS, corrective owed]**
-Measured above. The pre-flight that STOPPED at 12:39:43 and the pre-flight that reset the lane at 12:41:13 were reading the same branch 90 seconds apart and reached opposite conclusions, because **the protection is a clause in each master, not a property of the lane.** Any master whose pre-flight text is older, weaker, or simply differently worded re-opens Mistake #2 in full. `lane-fd1-front-desk-card` was authored 2026-08-05 (`44b1a7cf1`), before several of the current pre-flight hardenings — and its wording guards *dirt* where the current template guards *undrained commits*.
+Measured above. The pre-flight that STOPPED at 12:39:43 and the pre-flight that reset the lane at 12:41:13 were reading the same branch 90 seconds apart and reached opposite conclusions, because **the protection is a clause in each master, not a property of the lane.** Any master whose pre-flight text is older, weaker, or simply differently worded re-opens Mistake #2 in full. `lane-fd1-front-desk-card` was authored 2026-08-05 (`bd6c228da`), before several of the current pre-flight hardenings — and its wording guards *dirt* where the current template guards *undrained commits*.
 
 **This is not curable by editing `lane-fd1-front-desk-card.md`** — that is the instance, not the class. Roughly 190+ lane masters each carry their own copy of this wording; the lane's safety is only ever as strong as whichever one is dispatched next. **The cure must live outside the masters, in the one place every dispatch passes through: `scripts/lane-runner-v3.sh`** — refuse to dispatch into a lane whose branch holds commits absent from main, regardless of what the task file says.
 

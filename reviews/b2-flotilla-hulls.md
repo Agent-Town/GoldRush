@@ -1,7 +1,7 @@
 # b2-flotilla-hulls — drain review (s2087)
 
-**Slice:** B2 Flotilla Hulls (`e5-flotilla`) · **Branch:** `lane/c` · **Lane tip:** `fdd8996ec`
-**Base:** `97159c462` (main at lock time) · **Merge:** `00c2d7bfd` (two parents: `97159c462` + `fdd8996ec`)
+**Slice:** B2 Flotilla Hulls (`e5-flotilla`) · **Branch:** `lane/c` · **Lane tip:** `f63a66ad0`
+**Base:** `ed577f17d` (main at lock time) · **Merge:** `19e778135` (two parents: `ed577f17d` + `f63a66ad0`)
 **Gate worktree:** `gate-s2087` (detached, §3.0b — undecided content never entered main's tree)
 
 ## VERDICT: MERGED — gates green on the merged tree, all four conflicts resolved by measurement.
@@ -52,7 +52,7 @@ overlapping suite: **0 fail**.
    `SeedCaravanSystem`, `TileStateStore`; the lane added `FLOTILLA_HULL_RULES`. Neither removed
    anything. **Resolution: union of both import sets.**
 2. `assets/contracts/null-floors.json` — only the `eraStamp` line conflicted (the lane's new
-   `e5-flotilla` floors auto-merged). **Resolution: kept main's `179c8dcb2`.** Per the attended
+   `e5-flotilla` floors auto-merged). **Resolution: kept main's `2d71949de`.** Per the attended
    handoff, pinned-vs-derived eraStamp drift is the benign convention — do not churn on it.
 3. `scripts/same-game-audit.test.mjs` — the corpus-count pins. **Resolution: both admission
    comment blocks kept in full, and every pin re-measured on the merged tree** (see below).

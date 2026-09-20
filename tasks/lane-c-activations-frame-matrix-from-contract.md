@@ -8,7 +8,7 @@ You are Codex, implementer for Gold Rush, running natively on Robin's Mac in `wo
 
 Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead is NORMAL — the runner auto-commits. **Do not compare this worktree against a list of files I wrote; I do not have one, and an exhaustive dirt list is the wrong instrument (it is what stopped a runner needlessly at s1132).** Check the **invariant** instead: **no dirty blob in this worktree may be UNIQUE** — every modified/deleted/untracked file's content must already exist somewhere in git (main's history, any branch, or this lane's own commits). If every dirty blob is reachable, the reset destroys nothing → `git checkout -B lane/e2-arsenal main && git clean -fd` and PROCEED. If **any** blob exists nowhere else, **STOP and report that file by name** — that one is real unmerged work and resetting it would be the Mistake #2 shape. (`git hash-object <file>` then `git cat-file -e <hash>` is enough; `.wrangler/tmp/**` is build scratch and is exempt.) Then `npm install --no-audit --no-fund`; `npm run build` green before touching anything.
 
-*(s1148 measured this lane at close and you must still re-verify it: `git log main..lane/e2-arsenal` was **1 ahead** at `d57f3335`, and that commit is **FALSE-AHEAD** — its content merged to main at `bb7f14c3`. Proven by the unique-blob invariant, not by the commit message: after the merge, `git diff --numstat main lane/e2-arsenal` no longer lists `artifacts/f-1147-1-bisect.md` or `scripts/tmp-f-1147-1-bisect.sh` at all — byte-identical — and every remaining line in that diff is main being NEWER than the lane, not the lane holding anything unique. If that is no longer true, apply the invariant above.)*
+*(s1148 measured this lane at close and you must still re-verify it: `git log main..lane/e2-arsenal` was **1 ahead** at `d57f3335`, and that commit is **FALSE-AHEAD** — its content merged to main at `8d73f79a`. Proven by the unique-blob invariant, not by the commit message: after the merge, `git diff --numstat main lane/e2-arsenal` no longer lists `artifacts/f-1147-1-bisect.md` or `scripts/tmp-f-1147-1-bisect.sh` at all — byte-identical — and every remaining line in that diff is main being NEWER than the lane, not the lane holding anything unique. If that is no longer true, apply the invariant above.)*
 
 ## READ FIRST (paths, in this order)
 
@@ -20,7 +20,7 @@ Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead 
 
 ## WHY (quoting the evidence, dated)
 
-`lane-vp-02b-jumper-slot-repair` (drained s1146 at `d6ce86dc`) completed the 2026-07-12 rename across seven stranded specs. Its headline finding, verbatim from `reviews/vp-02b-jumper-slot-repair.md`:
+`lane-vp-02b-jumper-slot-repair` (drained s1146 at `c15d856d`) completed the 2026-07-12 rename across seven stranded specs. Its headline finding, verbatim from `reviews/vp-02b-jumper-slot-repair.md`:
 
 > **F-1146-4 — the 2026-07-12 rename is stale one layer deeper than the slot key: the FRAME MATRIX.** `lane-c-activations-assay-office:99` now fails with `Expected value: "char-bandit-base-sheet-walk8-r0c7.png"` against `Received array: ["char-jumper-sheet-rotation-r0c0.png", "char-jumper-sheet-rotation-r0c1.png"]`. The spec's hard-coded expected frame-filename list is still the **old jumper art**, while the runtime now correctly emits the **bandit-base walk8 sheet**.
 

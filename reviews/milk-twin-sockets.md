@@ -1,9 +1,9 @@
 # THE TWIN SOCKETS — E5 Deepwater + E6 Atomic era-sockets
 
-**Slice:** era-socket class, E5 + E6 · **Branch:** `milk/twin-sockets` · **Base:** `18b2ef276` (main, s1482)
+**Slice:** era-socket class, E5 + E6 · **Branch:** `milk/twin-sockets` · **Base:** `18b2ef276 (archive: pruned by the A3 rewrite)` (main, s1482)
 **Date:** 2026-08-06 · **Shift:** final-milk fleet
 
-> ## ✅ DRAINED s1498 — MERGED `c41ba89d`
+> ## ✅ DRAINED s1498 — MERGED `09ff7a19`
 >
 > Gated on the merged tree in detached `gate-s1498` (§3.0b), `--workers=1`, both projects: **tsc rc=0 ·
 > build green 994ms · `er01-e5` + `er01-e6` 16/16 · adjacent `er01` e2/e3/e4/e7/e8/e9/e10 56/56 ·
@@ -13,7 +13,7 @@
 > gave **10** — main added the F-1493-2 Baron drift pin since; the count grew and nothing redded.
 >
 > ⚠️ **THIS REVIEW'S MERGE CLASSIFICATION WAS FALSE BY THE TIME IT WAS DRAINED, EXACTLY AS F-1497-1
-> PREDICTED.** It records *"Base `18b2ef276`. All six paths LANE-TOUCHED only — main moved none of them"*
+> PREDICTED.** It records *"Base `18b2ef276 (archive: pruned by the A3 rewrite)`. All six paths LANE-TOUCHED only — main moved none of them"*
 > and *"No conflicts."* True when written; **13 hunks across all 6 files** at drain time, because the two
 > milk drains ahead of this one in the queue are what moved four of its six paths. s1497 mapped it
 > (`artifacts/s1497-twin-sockets-conflict-map.txt`) and this fire re-measured before trusting the map —
@@ -30,7 +30,7 @@
 >    name for all four contracts; this branch pinned only `status` for three), so the two lines were
 >    superseded rather than merged. **Keeping them would have redded.** The reasoning is at the call site.
 > 3. **`BROKEN: 1 of 4` struck, not deleted.** This branch's E5 rows carry the Regatta six-vs-five beacon
->    defect that `7bfd62ee` had already cured. Resolved to **0 of 4**, the stale claim struck in place
+>    defect that `45f54b88` had already cured. Resolved to **0 of 4**, the stale claim struck in place
 >    under a bridging banner that names why it was stale.
 >
 > The E6 census was rebuilt deliberately from both blobs rather than untangling git's interleaving: this
@@ -113,7 +113,7 @@ Admitting it would have pinned a determinism hash on a deadlock and reported it 
 
 ## MERGE CLASSIFICATION
 
-Base `18b2ef276`. All six paths **LANE-TOUCHED only** — main moved none of them during the shift.
+Base `18b2ef276 (archive: pruned by the A3 rewrite)`. All six paths **LANE-TOUCHED only** — main moved none of them during the shift.
 
 | Path | Class |
 |---|---|

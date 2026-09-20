@@ -8,12 +8,12 @@ at a time under `nice -n 5` (other implementers and a fire share this host tonig
 
 | fact | value |
 |---|---|
-| live build | `569a41f9`, builtAt `2026-09-07T09:23:37Z` (`https://agenttown.app/goldrush/version.json`) |
-| arena | `/tmp/heat13-569a41f9`, `git worktree add --detach 569a41f96`, `npm ci` (57 packages), branch `heat13/parity-sweep` |
+| live build | `92358832`, builtAt `2026-09-07T09:23:37Z` (`https://agenttown.app/goldrush/version.json`) |
+| arena | `/tmp/heat13-569a41f9`, `git worktree add --detach 923588327`, `npm ci` (57 packages), branch `heat13/parity-sweep` |
 | arena `computeEngineHash` | `09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4` — **identical to the era-5 pin on main** |
 | gate proof 1 (the refusal) | heat 12's VERIFIED probe reel, byte-identical, re-POSTed to the live door → **HTTP 400 `{"ok":false,"error":"bad_payload","message":"Standing not accepted."}`** |
 | gate proof 2 (the predicate) | the arena's own `validateStandingOrders` refuses **64 of that reel's 65 order arrays**, first at `orders[26].verb "HOLD" is unknown.` |
-| gate proof 3 (the fresh probe) | the same orders with the three retired verbs dropped, replayed in this arena → SECURED w10 / 300.000 s / 335 g → **`assay: verified`, `ranked: false`, `assayHash fnv1a32:b131e18e`**, papers `buildId 569a41f96 · engineHash 09838c35… · era 5 · viewVersion 2` |
+| gate proof 3 (the fresh probe) | the same orders with the three retired verbs dropped, replayed in this arena → SECURED w10 / 300.000 s / 335 g → **`assay: verified`, `ranked: false`, `assayHash fnv1a32:b131e18e`**, papers `buildId 923588327 · engineHash 09838c35… · era 5 · viewVersion 2` |
 
 ## Rides
 

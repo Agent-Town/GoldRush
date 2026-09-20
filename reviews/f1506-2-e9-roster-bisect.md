@@ -1,8 +1,8 @@
 # f1506-2-e9-roster-bisect
 
 **Slice:** `tasks/lane-f1506-2-e9-roster-bisect.md` (FIRE-AUTHORED s1506)
-**Branch/tip:** `lane/a` @ `cb7a09e79`
-**Base:** `e36052976` · **Merged to main:** `39987a4252dad31fb8ba3d267dde1c288dc6dc42` (s1507)
+**Branch/tip:** `lane/a` @ `8e1dadd41`
+**Base:** `2d8872dda` · **Merged to main:** `e304157887ee45fb02789c01fec82072dc6bd8a6` (s1507)
 **Gated in:** detached `gate-s1507` worktree (§3.0b), all playwright `--workers=1` (§3.1)
 
 ## Verdict
@@ -13,8 +13,8 @@ were run down individually; **none is attributable to this merge**.
 
 ## What it does
 
-`e2e/e9-roster.spec.ts` was 6 passed at `b66905c64` and 4 failed / 2 passed on main. The runner
-bisected the window to first-bad `f3e2d102694d1c6f1c20a3fa3fcdcca1784d3962`
+`e2e/e9-roster.spec.ts` was 6 passed at `eb3a8a012` and 4 failed / 2 passed on main. The runner
+bisected the window to first-bad `9146212fc36dd751d2c5b952bd23e8ff967eb75b`
 (`runner(lane-c): lane-tape-02-lantern-show.md`, 15 files / +841 / −41).
 
 That commit made `Game.activeEpoch` derive from whichever epoch owns `activeContract`. Seed Run is
@@ -70,7 +70,7 @@ radius), `e6-arsenal` (`:45`), `e2-t2-dynamo-ceremony` (`:89`, `dynamo-hall` vs 
 `ui-era-dressing` (`:65`, 90 s timeout), `wire-era-anchor-emitters` (`:95`, `5` vs `25`).
 
 **CLEAN-IN-INVENTORY yet red — so NOT excused, and controlled instead.** `072-era-activation:226`
-and `landmark-collision:68` (both projects). A control arm at pre-merge `a4556dca5`, same worktree,
+and `landmark-collision:68` (both projects). A control arm at pre-merge `edda5d3de`, same worktree,
 same composition, same shell, reds them **identically**. Pre-existing, not this merge. They are
 `CLEAN-IN-INVENTORY`, which means *ran and passed* — so they are live regressions from some other
 window. Filed as **F-1507-2**.
@@ -97,8 +97,8 @@ parse.
 
 ## Merge classification
 
-Three-way `git merge --no-ff`, never a two-dot diff. Base `e36052976`; main had advanced by three
-s1507 commits (`690fa990d`, `a4556dca5`, plus the lock). **Merged by the `ort` strategy with zero
+Three-way `git merge --no-ff`, never a two-dot diff. Base `2d8872dda`; main had advanced by three
+s1507 commits (`ca3e5ffd4`, `edda5d3de`, plus the lock). **Merged by the `ort` strategy with zero
 conflicts**: both files are LANE-TOUCHED only — `src/game/Game.ts` was not moved by main in the
 window, and `docs/bench/e9-roster-regression.md` is a new file. Nothing MAIN-MOVED, nothing
 BOTH-MOVED, so no graft was required.

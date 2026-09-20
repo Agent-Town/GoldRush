@@ -1,8 +1,8 @@
 # f1465-1 — NUL delimiters encoded as `\u0000` escapes
 
 **Slice:** `f1465-1-nul-delimiters` (F-1465-1's cure)
-**Branch / tip:** `lane/a` @ `79826160` ("nulfix: encode composite key delimiters as escapes")
-**Base:** `582d6a4e` · **Merged to main:** `1a2871fd310b5bfd1f6ea085ce9d8a7a4b36272d` (s1466, `--no-ff`)
+**Branch / tip:** `lane/a` @ `37ce774c` ("nulfix: encode composite key delimiters as escapes")
+**Base:** `fd224847` · **Merged to main:** `206d6cffb4726405157b77f592ea7594365ad456` (s1466, `--no-ff`)
 **Gated in:** detached worktree `gate-s1466` (§3.0b custody — undecided content never entered main's tree)
 
 ## Verdict
@@ -22,8 +22,8 @@ gate-caller grandfathering s1465 recorded in `scripts/gate-caller-baseline.json`
 
 ## Merge classification
 
-Base `582d6a4e` was main's tip when the lane branched. Between base and merge, main moved **only
-`STATUS.md`** (s1466's own lock commit `8bc17f51`). The lane's four paths are therefore all
+Base `fd224847` was main's tip when the lane branched. Between base and merge, main moved **only
+`STATUS.md`** (s1466's own lock commit `0f8ed69f`). The lane's four paths are therefore all
 **LANE-TOUCHED**, none MAIN-MOVED, and the sets are disjoint — `ort` merged with no conflicts and no
 3-way graft was needed.
 

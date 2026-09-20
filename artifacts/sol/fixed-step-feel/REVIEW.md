@@ -2,7 +2,7 @@
 
 Verdict: **ACCEPT — materially feel-equivalent.**
 
-The owner-facing capture uses the same seed, targets, viewport, and absolute-time 30-second input choreography on current main (`e374f47`) and the fixed-step implementation tip (`1b575fd`). Both runs have zero page and console errors.
+The owner-facing capture uses the same seed, targets, viewport, and absolute-time 30-second input choreography on current main (`32c362c`) and the fixed-step implementation tip (`c6fdfce`). Both runs have zero page and console errors.
 
 Blind reviewer evidence:
 

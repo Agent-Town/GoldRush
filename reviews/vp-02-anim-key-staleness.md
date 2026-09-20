@@ -2,7 +2,7 @@
 
 - **Slice**: `lane-vp-02-anim-key-staleness` (lane-a)
 - **Branch / tip**: `lane/m3` @ `b9f1d184` — `runner(lane-a): lane-vp-02-anim-key-staleness.md`
-- **Base**: `a3a73654` (merge-base with main)
+- **Base**: `e94ea5bd` (merge-base with main)
 - **§3.0 drain-block-check**: ✅ CLEAR — `[vp-02-anim-key-staleness] status="queued"` (run before forming any opinion, per F-1104-7)
 
 ## VERDICT: ACCEPT — merged
@@ -25,7 +25,7 @@ asserted pre-`-f-` names in three places. This slice repairs them, and only them
   expectation `hero-homesteader.png` → `hero-homesteader-f.png`
 - the east-pixels test's two capture keys (`:560`, `:565`) and their assertions
 
-One file, +20/-14. **LANE-TOUCHED, clean** — `git log a3a73654..main -- e2e/vp-02-sprite-animation.spec.ts`
+One file, +20/-14. **LANE-TOUCHED, clean** — `git log e94ea5bd..main -- e2e/vp-02-sprite-animation.spec.ts`
 is empty, so main never moved this file since the base. No graft, no 3-way.
 
 ### The runner earned a note
@@ -130,7 +130,7 @@ F-1135-1: `w` is a pure side with its own explicit block
 apply to it.
 
 **? INFERRED (not verified — handed on deliberately):** the likely interaction is vp-02d
-(`07eed37b`), which merged ~15 min before this run and made the west idle cell **live** for
+(`925353fe`), which merged ~15 min before this run and made the west idle cell **live** for
 the first time. The contract's own note said that cell was *"wired but RUNTIME-DORMANT ...
 needs a resolver rider (src change, separate task) before it is real"* — vp-02d was that
 rider. `canvasCaptureAtHeroFrame(page, 'w', <walk cell>)` may now be catching the hero on
@@ -143,8 +143,8 @@ instance this week of the same lesson, so it goes in the ledger rather than a fi
 
 ## Merge classification
 
-- Base `a3a73654`; one file, `e2e/vp-02-sprite-animation.spec.ts`.
-- **LANE-TOUCHED only.** `git log a3a73654..main` for that path: **empty**. No MAIN-MOVED
+- Base `e94ea5bd`; one file, `e2e/vp-02-sprite-animation.spec.ts`.
+- **LANE-TOUCHED only.** `git log e94ea5bd..main` for that path: **empty**. No MAIN-MOVED
   files, no conflicts, no graft.
 - The three-dot diff is the whole change (+20/−14). The two-dot diff against main shows large
   deletions — those are main's *newer* commits absent from the stale lane base, the classic

@@ -1,4 +1,4 @@
-> ⛔ SHIPPED — DO NOT QUEUE (merged to main as `6eb64526d`, attended drain; the BACKLOG row "mare-claim-air-prevalent SHIPPED 6eb64526d" is the proof; `git merge-base --is-ancestor 6eb64526d main` = yes. Banner added 2026-09-07 for the task-guard audit: this master had no goal leaf.)
+> ⛔ SHIPPED — DO NOT QUEUE (merged to main as `f7b96673e`, attended drain; the BACKLOG row "mare-claim-air-prevalent SHIPPED f7b96673e" is the proof; `git merge-base --is-ancestor f7b96673e main` = yes. Banner added 2026-09-07 for the task-guard audit: this master had no goal leaf.)
 
 # Task mare-claim-air-prevalent: the Mare Claim's air wall must matter all run, not for one order (SCRATCH worktree, Claude Opus 5 implementer; commit prefix "fix:")
 

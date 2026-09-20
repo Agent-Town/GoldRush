@@ -1,8 +1,8 @@
 # ap15-frontier-registry — the county keeps frontiers
 
 **Slice:** `ap15-frontier-registry` (AP-15 "The Assay of Minds", ships-first items 2–4)
-**Branch:** `lane/d` · **tip** `2a102749f` · **base** `e49c36ba3`
-**Merged:** `d87b9097001dab29dabb79fff8f18820d5c70ee1` (main, `--no-ff`)
+**Branch:** `lane/d` · **tip** `e3af50804` · **base** `2916abdcf`
+**Merged:** `241ba0301b854154c325b423f0ff3fab1a81d1ed` (main, `--no-ff`)
 **Drained:** s2251, 2026-08-24 — *takeover drain*: s2250 built the gate worktrees and died mid-attribution.
 
 ## VERDICT: MERGED — the adjacent red is main's, proven by control, not this slice's.
@@ -49,8 +49,8 @@ run back-to-back in the same shell; the **only** variable is the merge:
 
 | Arm | Tree | Result |
 |---|---|---|
-| Merged | `gate-s2250` = merge(`e49c36ba3`, `2a102749f`) | 12 failed / 30 passed (7.0m) |
-| **Control** | `gate-s2250-ctl` = `e49c36ba3` (clean main) | **12 failed / 30 passed (6.9m)** |
+| Merged | `gate-s2250` = merge(`2916abdcf`, `e3af50804`) | 12 failed / 30 passed (7.0m) |
+| **Control** | `gate-s2250-ctl` = `2916abdcf` (clean main) | **12 failed / 30 passed (6.9m)** |
 
 The failing set is **identical test-for-test, both projects** — the same 3 `lb-01` tests (`:247`, `:630`,
 `:730`) and the same 3 `milk-county-board` tests (`:374`, `:400`, `:442`), each on desktop and mobile.
@@ -73,12 +73,12 @@ somewhere in the 145 commits since 2026-08-11.
 
 **F-2251-2 — inherited null-floor `--check` era-stamp mismatch.** NON-BLOCKING, reported by the runner
 rather than fixed, which is the correct firewall behaviour. The mismatch is the era stamp alone
-(`26e9a9d9f` vs `8f16b97c6`); the protected floors themselves are untouched. It arrived with the L4
+(`016ede509` vs `3e7426e73`); the protected floors themselves are untouched. It arrived with the L4
 merge, not with this slice.
 
 ## Merge classification
 
-Base `e49c36ba3`; main moved by **exactly one commit** between gate and merge (`28f34976f`, this fire's
+Base `2916abdcf`; main moved by **exactly one commit** between gate and merge (`042661fec`, this fire's
 lock line, `STATUS.md` only), so the gated tree still describes the merged tree. `git merge-tree`
 proved the three-way clean (0 conflict lines) before anything was touched. Every path is LANE-TOUCHED;
 the single MAIN-MOVED file is `tasks/BACKLOG.md`, auto-merged on disjoint lines. The 17 `.png` changes

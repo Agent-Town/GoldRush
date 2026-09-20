@@ -1,6 +1,6 @@
 # Review — THE POOL EXPOSURE TREATMENT (F-BEAUTY-2, `beauty2/pools`)
 
-**Slice/branch/tip:** beauty2/pools · worktree `gr-task-beauty2-pools` · solo-writer Fable session, 2026-08-03 · rig `9d922d1c`, seam `0ebd218d` (review + probe scripts land in the commit after this file)
+**Slice/branch/tip:** beauty2/pools · worktree `gr-task-beauty2-pools` · solo-writer Fable session, 2026-08-03 · rig `ebb9e93a`, seam `541b3cbe` (review + probe scripts land in the commit after this file)
 **Task:** `TASK.md` (F-BEAUTY-2) — "design and implement the pool-local exposure/grading seam that keeps luminance-law satisfied while the core reads AMBER … choose by MEASUREMENT, not preference."
 **Verdict:** ✅ **SHIPPED on branch** — Route C implemented as THE POOL GRADE: a pre-tonemap chroma re-anchor + hue-preserving exposure shoulder in the terrain pool shader, flag-guarded, measured on every axis the task names. Branch-only; nothing merged to main.
 
@@ -73,7 +73,7 @@ Complete per-point JSON transects for every arm, both projects: `shots-beauty-po
 | `night-mode-truth.spec.ts` — the pixel samplers the task names, UNMODIFIED | **4/4 green desktop+mobile.** Its hero-pool sample points carry warm-pool mask 0 → pixels untouched by construction, and measured so |
 | `e3-day-night.spec.ts` | **2/2 green** |
 | `night-light-doctrine.spec.ts` | **2/2 green** |
-| `e1-night-shift.spec.ts` | 12 passed; **6 red = the exact three pre-existing lines (:271/:372/:435) × both projects** — control-proven: a detached worktree at pristine main (`9dd5baa3`, own vite :5262, same box, minutes apart) fails the identical six. `:435` desktop values are **bit-identical** on both trees: inside 0.09376705882352941 / outside 0.045056470588235295 — the treatment moved the gated sampler by zero bytes |
+| `e1-night-shift.spec.ts` | 12 passed; **6 red = the exact three pre-existing lines (:271/:372/:435) × both projects** — control-proven: a detached worktree at pristine main (`216a19c3`, own vite :5262, same box, minutes apart) fails the identical six. `:435` desktop values are **bit-identical** on both trees: inside 0.09376705882352941 / outside 0.045056470588235295 — the treatment moved the gated sampler by zero bytes |
 | `night3d-perf.spec.ts` | Ratio assert red **at the-claim, a daylight contract where the seam is structurally zero**: treated 1.788/2.441 (d/m); **pristine-main control fails WORSE, 2.284, and its sticky-tier test flaked too (4/4 red vs my 2/2 green)**. Same shape the night-shift review recorded (control 1.8148 > branch 1.7019). Box-conditioned pre-existing red, not this seam's |
 | cross-map compile | night3d-perf's matrix booted `the-claim`, `e5-deepwater-claim`, `e9-dome-basin` + LITE fallback path with the new shader — all reached `terrain3dPilotState=ready`, zero console/page errors |
 | day no-regression | `scripts/beauty-pools-day-probe.mjs`: 6 ground points at wave 1, grade ON vs `?nopoolgrade`, same browser — worst channel delta **1 of 255** (animation-residue quantisation; grade branch is skipped at darkness 0) |
@@ -104,8 +104,8 @@ Complete per-point JSON transects for every arm, both projects: `shots-beauty-po
 
 Branch-only; **nothing merged to main; main's working tree never touched** (solo-writer worktree, own vite on :5261, control on :5262 in `/tmp`, since removed). Path-scoped commits:
 
-- `9d922d1c` rig — `e2e/beauty-pools.spec.ts`, `playwright.beauty2-pools.config.ts`, `reviews/shots-beauty-pools/**` (baseline + graded evidence, route-a note)
-- `0ebd218d` seam — `src/core/DebugParams.ts` (+`isPoolGradeDisabled`), `src/game/Balance.ts` (3 keys), `src/world/Terrain3dClaimPilot.ts` (uniforms + injections)
+- `ebb9e93a` rig — `e2e/beauty-pools.spec.ts`, `playwright.beauty2-pools.config.ts`, `reviews/shots-beauty-pools/**` (baseline + graded evidence, route-a note)
+- `541b3cbe` seam — `src/core/DebugParams.ts` (+`isPoolGradeDisabled`), `src/game/Balance.ts` (3 keys), `src/world/Terrain3dClaimPilot.ts` (uniforms + injections)
 - (this commit) review — `reviews/beauty-pools.md`, `reviews/shots-beauty-pools/contact-sheet-before-after.png`, `scripts/beauty-pools-{tune,perf-ab,day-probe}.mjs`, BACKLOG line
 
 No sim byte moved: every `darkness`, radius, `minLight`, falloff and coverage rule is byte-identical to main (§4.6 rendering-only; the rig's `setBalance` probes are capture-session-local). No assets, no contracts, no LITE path, no light-budget change (32-pool cap and `maxDynamicLights 8` untouched). The drain should run its standard battery; expect the two known pre-existing reds with the fingerprints recorded above.

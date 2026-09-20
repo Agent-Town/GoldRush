@@ -1,7 +1,7 @@
 # e2-rail-tough-only-bind — drain review (s1224)
 
 **Slice:** `tasks/lane-a-e2-rail-tough-only-bind.md` (FIRE-AUTHORED s1221)
-**Branch:** `lane/m3` · **lane tip:** `785e5091` · **lane base (merge-base):** `dddbb7e7`
+**Branch:** `lane/m3` · **lane tip:** `785e5091` · **lane base (merge-base):** `896a79c4`
 **Merged to main:** see the drain commit for this file
 **Drained by:** s1224 fire, 2026-07-29
 
@@ -42,7 +42,7 @@ survived the `package.json` 3-way graft; neither list entry was dropped.
 
 ## Merge classification
 
-Lane base `dddbb7e7` predates the s1222/s1223/s1224 merges, so the two-dot `main..lane/m3` diff
+Lane base `896a79c4` predates the s1222/s1223/s1224 merges, so the two-dot `main..lane/m3` diff
 displays **~29,000 deletions** — `bench-seeds.json`, `standings.ts`, two review files, the whole
 `logs/session-scratch/` tree, the s1223 sweep edits. **Every one of those is a phantom of the
 stale base, not a deletion the lane made.** Classified against the merge-base instead:
@@ -69,7 +69,7 @@ widening the `src/` guard, which is the surgical and reversible move the master 
 
 The runner ran only three adjacent specs and **never ran `e2e/e2-enemies.spec.ts` at all**, which
 is the most obviously adjacent spec on the board. The drain ran all eight and found seven reds.
-A control was then built on **pre-merge main** (detached worktree at `79fb8fa2`, served on scratch
+A control was then built on **pre-merge main** (detached worktree at `b9918410`, served on scratch
 port **5236** — port 5188 is shared with the live lane worktrees) and **validated before use**:
 the control server serves the old contract with no `walkdiag4` cells, confirmed over HTTP.
 

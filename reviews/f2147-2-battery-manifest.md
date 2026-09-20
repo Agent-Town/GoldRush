@@ -1,6 +1,6 @@
 # Review — f2147-2: a deterministic manifest for the guard battery
 
-**Slice/branch/tip:** `lane/b` @ `e6b6c9f5c` (`runner(lane-b): f2147-2-battery-manifest.md`) · base `36b0fae09210b0f22a016858957e8973399cfee3` · merged to main at **`47fda66c1aa9a3f89beadcb64eb0c1493dc09481`** · drained s2153, 2026-08-22.
+**Slice/branch/tip:** `lane/b` @ `1653e0343` (`runner(lane-b): f2147-2-battery-manifest.md`) · base `02633824a2c9876194abb2b5229ac832d466c220` · merged to main at **`649b9be588a2882502a2fb6250e5ee263ebd3603`** · drained s2153, 2026-08-22.
 
 **Verdict: MERGED.** Gated on the merged tree in a detached worktree (§3.0b), including a **full `test:node-guards` run** — the first drain in a while able to take that arm honestly, because both lanes went idle and nothing else was holding the battery.
 
@@ -28,7 +28,7 @@ Running the merged `battery-manifest.mjs --from-log` against the log of the very
 
 ```
 490  s2147 baseline (recorded in the master)
-  +4  scripts/f2135-canyon-census-player.test.mjs   (f2152-1, merged f2b870e6d this same fire)
+  +4  scripts/f2135-canyon-census-player.test.mjs   (f2152-1, merged c44dc1f1c this same fire)
   +5  scripts/battery-manifest.test.mjs             (this slice)
  ---
  499  measured on the merged tree
@@ -40,7 +40,7 @@ Both new guards are accounted for to the test, which is the strongest available 
 
 ## Merge classification
 
-Base `36b0fae09`. Four of the five paths are **NEW** (free). `package.json` is **BOTH-MOVED** — and that was **predicted in writing 12 minutes earlier**, as F-2153-2 in `reviews/f2152-1-census-player-safe-default.md`.
+Base `02633824a`. Four of the five paths are **NEW** (free). `package.json` is **BOTH-MOVED** — and that was **predicted in writing 12 minutes earlier**, as F-2153-2 in `reviews/f2152-1-census-player-safe-default.md`.
 
 | File | Class | Note |
 |---|---|---|

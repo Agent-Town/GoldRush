@@ -1,8 +1,8 @@
 # f1435-1 — ring hints for a ring that is gone
 
 **Slice:** `f1435-1-ring-hints-for-a-ring-that-is-gone` (corrective for **F-1433-3**)
-**Branch/tip:** `lane/e2-arsenal` @ `00eeb60e` (runner-committed 2026-08-03 ~16:49, done-move **un-prefixed** = clean run)
-**Base:** `ea046813` · **Merge:** `08e317d7f405686d4657b968ebb38a2cec5ce51e`
+**Branch/tip:** `lane/e2-arsenal` @ `c0f73e8a` (runner-committed 2026-08-03 ~16:49, done-move **un-prefixed** = clean run)
+**Base:** `3fdc21ab` · **Merge:** `c363e90f5bd82a362182c2125a64fd889344539b`
 **Drained by:** s1436 fire, 2026-08-03, in detached worktree `gate-s1436` (§3.0b — main's working tree never held undecided content)
 
 ## VERDICT: MERGED
@@ -16,7 +16,7 @@ carries no `controls` key — the legacy (v1) save shape. That fallback derived 
 territoryRingPresent: meta.tracks.territory >= Balance.meta.territoryTier1,
 ```
 
-That rule was correct until `af463bd9`, where Territory I stopped spawning a palisade ring and became a
+That rule was correct until `865a7b19`, where Territory I stopped spawning a palisade ring and became a
 **placement kit** instead. After the kit merge, `Game.ts` only ever assigns the flag `false` — so the legacy
 restore path was the one surviving writer that could set it `true`, resurrecting a ring that no longer exists
 and, with it, the `territory_ring_gap` world-info hint that points at a gap in nothing.
@@ -93,7 +93,7 @@ re-running until convenient.
 
 ## Merge classification
 
-Base `ea046813`. Two paths, and `git log ea046813..main -- <both paths>` is **EMPTY** — main never moved
+Base `3fdc21ab`. Two paths, and `git log 3fdc21ab..main -- <both paths>` is **EMPTY** — main never moved
 either file since the base, so both are **LANE-TOUCHED only**; no graft, no 3-way, no invariant re-count
 needed. Main's four commits since the base are all bookkeeping (`STATUS.md`, `tasks/**`, `tasks/goals.json`).
 The merge is a real `--no-ff` merge commit, so shipped-ness is testable by **ancestry**, not by this file.

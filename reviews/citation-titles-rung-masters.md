@@ -1,7 +1,7 @@
 # citation-titles-rung-masters — drain review (s1299)
 
 **Slice:** `lane-b-citation-titles-rung-masters` · **branch:** `lane/m4` · **lane tip:** `af61e16d`
-**Merged at:** `0bb729f1` (content) + the s1299 bookkeeping commit that follows it
+**Merged at:** `733b4cb6` (content) + the s1299 bookkeeping commit that follows it
 **Verdict:** ✅ **MERGED — and the guard it targets went further than the master asked: 12 → 0, not 12 → 1.**
 
 ## What it does

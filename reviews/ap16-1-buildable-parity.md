@@ -1,9 +1,9 @@
 # Review — ap16-1: buildable parity (Same-Game law, slice 1 of 3)
 
 - **Slice:** `tasks/done/20260810-181709-lane-a-ap16-1-buildable-parity.md`
-- **Branch:** `lane/a` · **tip** `0dda53a5b` (`runner(lane-a): lane-a-ap16-1-buildable-parity.md`)
-- **Base:** `145d841962adc57614d15ab9a580bb2246b79bb4`
-- **Merged to main:** `8465f6b3313fb7e4ca2c4cad538b715994660cab` (s1636 fire, 2026-08-10T19:0xZ)
+- **Branch:** `lane/a` · **tip** `ff390bcf2` (`runner(lane-a): lane-a-ap16-1-buildable-parity.md`)
+- **Base:** `82c8cb18f41cc9a8ee726e2f0aee12e015f95549`
+- **Merged to main:** `760990fda5d91559202dbf5a3020de90f694aa7c` (s1636 fire, 2026-08-10T19:0xZ)
 - **Gated in:** detached worktree `gate-s1636` (§3.0b custody), merged as ONE act (F-1589-5)
 
 ## VERDICT: MERGED — the code fix is real and correct. One finding raised (F-1636-1) against the slice's *measuring instrument*, not its behaviour; corrective queued in the same bookkeeping commit.
@@ -50,7 +50,7 @@ Headline divergences `1,324 → 804`; the 520-row delta is exactly the buildable
 
 ## Merge classification
 
-7 paths, off base `145d8419`. `git diff --stat <base> main` for all 7 paths was **empty** — main moved none of them. All **LANE-TOUCHED / MAIN-UNTOUCHED**, clean `ort` merge, **no graft required**. Post-merge `main..lane/a` is **empty**.
+7 paths, off base `82c8cb18`. `git diff --stat <base> main` for all 7 paths was **empty** — main moved none of them. All **LANE-TOUCHED / MAIN-UNTOUCHED**, clean `ort` merge, **no graft required**. Post-merge `main..lane/a` is **empty**.
 
 | path | class |
 |---|---|

@@ -1,8 +1,8 @@
 # Review — f2253-1-mp07c-inspect-mock
 
 **Slice:** `f2253-1-mp07c-inspect-mock` (fire-authored s2253 from F-2253-1)
-**Branch:** `lane/b` · **Gated tip:** `05ca5df2f` · **Base:** `79127008c`
-**Merge:** `b4730ea3d8fb949116ce1917d842b55f92502611` (main, `--no-ff`)
+**Branch:** `lane/b` · **Gated tip:** `ec926950c` · **Base:** `25ab25181`
+**Merge:** `54c113365a8f55ea383a73efa14856c5fa931b5e` (main, `--no-ff`)
 **Drained by:** s2254 fire, 2026-08-24
 **Gate worktree:** `worktrees/gate-s2254` (detached, §3.0b)
 
@@ -49,7 +49,7 @@ moved — proven by the deletion count, not asserted.
 
 ## Merge classification
 
-- **Base:** `79127008c`. Main moved exactly 2 files since: `STATUS.md` and
+- **Base:** `25ab25181`. Main moved exactly 2 files since: `STATUS.md` and
   `artifacts/s2253-mp07c.log` — both bookkeeping.
 - **Intersection with the lane's 3 paths: ZERO.**
 - Therefore all 3 paths are **LANE-TOUCHED**; none MAIN-MOVED. Three-way merge, **zero conflicts**.

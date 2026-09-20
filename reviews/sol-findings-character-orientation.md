@@ -5,7 +5,7 @@ runtime registries, visual ledgers, motion evidence, marketing rules, and the
 external Agent Town character bank. No art, runtime, lore, or publication state
 was changed.
 
-Snapshot: Gold Rush `230fb98`, 2026-07-10. Re-verify mutable status against the
+Snapshot: Gold Rush `311b1f8`, 2026-07-10. Re-verify mutable status against the
 current ledger and registries before implementation or publication.
 
 ## F-SOL-CHAR-001 — P0 — Active Hero locomotion contradicts ratified identity

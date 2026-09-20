@@ -1,8 +1,8 @@
 # Review — f2058-1-restart-guard-capability-probe
 
 **Slice:** `f2058-1-restart-guard-capability-probe` (lane-d, fire-authored s2058 from F-2058-1)
-**Branch:** `lane/lane-d` @ `ecfca7886` (base `35a83577e`)
-**Merged to main:** `f58af9fff8d6ea89611c0582f330d8817f17dc9a`
+**Branch:** `lane/lane-d` @ `1f914e5ba` (base `af1d35668`)
+**Merged to main:** `4d20af3089caef3cdcdcfeb66e804e0f1768ebb6`
 **Drained by:** s2059, 2026-08-18
 
 ## VERDICT: MERGED — the gate condition was met exactly, and I measured it myself rather than reading the runner's table.
@@ -11,7 +11,7 @@
 
 `scripts/runner-restart-recipe.test.sh` guards the sanctioned runner-restart recipe — the
 cure for the ~5h03m F-1652-1 outage. Two of its arms drive the real helper through
-`/usr/bin/script`, and s2058's predecessor (`f2057-2`, `d4a8594ea`) wrapped them in
+`/usr/bin/script`, and s2058's predecessor (`f2057-2`, `9cc9ba9e4`) wrapped them in
 `[ ! -t 0 ]` to stop them failing in a headless fire.
 
 That predicate asks *"is fd 0 a terminal?"*. The condition that actually breaks
@@ -25,8 +25,8 @@ inserted lines, three removed, in one test-only file.
 
 ## Merge classification
 
-**Base:** `35a83577e` (this fire's own lock commit).
-**Pure LANE-TOUCHED, one file** — `git show --stat ecfca7886` lists
+**Base:** `af1d35668` (this fire's own lock commit).
+**Pure LANE-TOUCHED, one file** — `git show --stat 1f914e5ba` lists
 `scripts/runner-restart-recipe.test.sh` and nothing else. `git merge --no-ff` resolved by
 the `ort` strategy with no conflict and no three-way work.
 

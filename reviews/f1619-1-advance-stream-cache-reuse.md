@@ -1,6 +1,6 @@
 # f1619-1 — advance-stream cache reuse: is the WARM re-request a `page.route` artifact?
 
-**Slice:** `f1619-1-advance-stream-cache-reuse` · **branch:** `lane/c` · **tip:** `540c13912` · **drained:** s1620, 2026-08-10
+**Slice:** `f1619-1-advance-stream-cache-reuse` · **branch:** `lane/c` · **tip:** `edd808a4b` · **drained:** s1620, 2026-08-10
 
 **VERDICT: MERGE.** The probe answers F-1616-3 on its own terms — the re-request is **NOT** a `page.route` artifact — but the drain narrows the headline number and adds a scope limit the finding must carry. See F-1620-1 and F-1620-2.
 
@@ -95,7 +95,7 @@ Visible in the `Prefetch bytes` column throughout: `7904347<br>7904347`, `121982
 
 ## Merge classification
 
-Base: `main` at `075e69f59`. Lane 1 ahead, 4 behind at gate time.
+Base: `main` at `b8cdc72e8`. Lane 1 ahead, 4 behind at gate time.
 
 | Path | Class | Resolution |
 |---|---|---|

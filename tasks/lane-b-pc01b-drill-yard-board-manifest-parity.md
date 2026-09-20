@@ -42,8 +42,8 @@ CODEX: model=gpt-5.6-sol effort=high
 
 Run these three and STOP with a report if any fails. **Do not `git reset --hard`.**
 
-1. `git log -1 --format=%H` on `lane/m4` **contains** commit `f0bf5251`
-   (`git merge-base --is-ancestor f0bf5251 HEAD` must pass). If absent → STOP: your predecessor's
+1. `git log -1 --format=%H` on `lane/m4` **contains** commit `f86b28b3`
+   (`git merge-base --is-ancestor f86b28b3 HEAD` must pass). If absent → STOP: your predecessor's
    work is missing and this task's premise is void.
 2. `src/game/DrillYard.ts` and `e2e/drill-yard.spec.ts` both exist in the worktree. If not → STOP.
 3. `git status --porcelain` shows no **tracked** dirt other than files you are about to edit.

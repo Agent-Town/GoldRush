@@ -2,7 +2,7 @@
 
 - **Slice:** F-1169-1 — realign `world-info-notes.spec.ts`'s build fixture to the world as it is now, or report that the world is what broke.
 - **Branch / tip:** `lane/m3` @ `818e995c` (`runner(lane-a): lane-a-world-info-build-fixture-realign.md`)
-- **Base:** `ae7fbb7f` (merge-base with main)
+- **Base:** `1a139a24` (merge-base with main)
 - **Drained:** s1170, 2026-07-28
 - **§3.0 `drain-block-check`:** **CLEAR** — `[factory-world-info-build-fixture] status="queued"`, run as the first command of the drain, before classification.
 
@@ -41,7 +41,7 @@ The runner reported *"STOPPED AT FIREWALL — not READY-FOR-GATES"*. That self-a
 |---|---|
 | `npx tsc --noEmit` | **clean** (tsconfig includes `e2e`, so the gate covers both changed files) |
 | `npm run build` | **green, 1.78 s** |
-| `world-info-notes.spec.ts`, both projects | **6 failed / 8 passed (3.3 m)** — byte-matching clean main's known fingerprint (s1123 drainNote: 6 failed / 8 passed at `:193`/`:286`/`:318` on `452af90c`), lines shifted `+1` by the added comment |
+| `world-info-notes.spec.ts`, both projects | **6 failed / 8 passed (3.3 m)** — byte-matching clean main's known fingerprint (s1123 drainNote: 6 failed / 8 passed at `:193`/`:286`/`:318` on `c432e041`), lines shifted `+1` by the added comment |
 | **Target test failure LINE** | **MOVED `:111` → `:218`** — verified by me in isolation: `expect(getByTestId('building-context-prompt')).toBeVisible()` → `unexpected value "hidden"` |
 | `run-guards.mjs` (all 8) | **7/8**, sole red `test:power-budget` — **F-1160-2, discriminated below** |
 | Zero console/page errors | the 8 passing tests call `assertNoErrors` on both desktop and 390px mobile |
@@ -56,7 +56,7 @@ The runner reported *"STOPPED AT FIREWALL — not READY-FOR-GATES"*. That self-a
 - `e2e/world-info-notes.spec.ts` — **LANE-TOUCHED** (3 lines)
 - `e2e/f1169-world-info-build-fixture-probe.spec.ts` — **LANE-TOUCHED**, new file
 
-`git diff ae7fbb7f..main` for both paths is **EMPTY** — main never moved either file since the base, so **no MAIN-MOVED file, no 3-way graft, no conflict**. Path-scoped `git checkout lane/m3 --` of the two files, then a path-scoped commit.
+`git diff 1a139a24..main` for both paths is **EMPTY** — main never moved either file since the base, so **no MAIN-MOVED file, no 3-way graft, no conflict**. Path-scoped `git checkout lane/m3 --` of the two files, then a path-scoped commit.
 
 **Firewall verified at source, not taken on report:**
 - Zero `src/**`. ✓
@@ -73,8 +73,8 @@ The new failure at `:218` is **not** noise, and I verified its mechanism at sour
 
 - `Game.ts:5651-5652`: `const demolish = canInteract && this.buildSystem.isBuildMode && !fund ? this.demolishCandidate : null;` and `const upgrade = demolish ? this.upgradeCandidate : null;` — **the demolish/upgrade context prompt requires build mode to be ON.**
 - The test teleports to the palisade with build mode **off** and expects that prompt visible. It cannot pass.
-- `git log -L5651,5651` dates that condition to **`50977ab6`, 2026-07-12, `runner(lane-b): fix-building-prompt-flicker.md`**.
-- **`git show --stat 50977ab6`: it changed `src/game/Game.ts` and `src/ui/BuildingContextPrompt.ts`, and added its OWN new spec `e2e/building-prompt-flicker.spec.ts` — and updated NONE of the five other specs that assert on `building-context-prompt`.**
+- `git log -L5651,5651` dates that condition to **`3e23a12a`, 2026-07-12, `runner(lane-b): fix-building-prompt-flicker.md`**.
+- **`git show --stat 3e23a12a`: it changed `src/game/Game.ts` and `src/ui/BuildingContextPrompt.ts`, and added its OWN new spec `e2e/building-prompt-flicker.spec.ts` — and updated NONE of the five other specs that assert on `building-context-prompt`.**
 
 Those five are `bt-00-demolish.spec.ts`, `bt-01-tiers.spec.ts`, `e2-stamp-mill.spec.ts`, `night-light-doctrine.spec.ts`, `world-info-notes.spec.ts`.
 
@@ -84,7 +84,7 @@ Those five are `bt-00-demolish.spec.ts`, `bt-01-tiers.spec.ts`, `e2-stamp-mill.s
 
 🔑 **AND I FRAMED THIS AS AN OWNER FORK, THEN MEASURED THE FORK AWAY. IT IS FIRE-AUTHORABLE.** My first draft of this finding posed (a) stale specs vs (b) a regressed player capability and sent it to the owner's desk. Two commands refuted (b):
 
-- **The change is an INVERSION, not a tightening.** `git show 50977ab6 -- src/game/Game.ts`: `demolish` went from `canShowPrompt && !fund` — where `canShowPrompt` *included* `!this.buildSystem.isBuildMode` — to `canInteract && this.buildSystem.isBuildMode && !fund`. The condition was **flipped**, which is exactly why a spec that sets build mode *off* used to be right.
+- **The change is an INVERSION, not a tightening.** `git show 3e23a12a -- src/game/Game.ts`: `demolish` went from `canShowPrompt && !fund` — where `canShowPrompt` *included* `!this.buildSystem.isBuildMode` — to `canInteract && this.buildSystem.isBuildMode && !fund`. The condition was **flipped**, which is exactly why a spec that sets build mode *off* used to be right.
 - **The owner ordered that flip, verbatim, and it is quoted in the task master.** `tasks/fix-building-prompt-flicker.md:5` — *"this flickers a lot, with each shot I think? I shoot quite fast with max upgrades. This is annoying. **And maybe just activate it if I am in Build mode/with B**."* (owner, 2026-07-12). `:8` is the explicit **RULING**: *"the card shows ONLY in build mode (B / build button active) — outside build mode, proximity to a building shows nothing (combat stays clean)."*
 
 ⇒ **(b) is REFUTED. The runtime is correct and ratified; the five specs encode the pre-07-12 contract the owner replaced.** So this is **not an owner decision at all** — it is a mechanical realign of stale specs to a ruling that already exists, which any fire may author. *Had I left the fork on the desk, a fire-authorable cure for a double-digit block of the board would have sat behind a decision Robin already made 16 days ago.*

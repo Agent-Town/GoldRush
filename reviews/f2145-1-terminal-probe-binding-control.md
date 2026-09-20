@@ -1,7 +1,7 @@
 # f2145-1 — the terminal probe's terrain control stops lying
 
-**Slice:** `f2145-1-terminal-probe-binding-control` · **branch:** `lane/b` · **lane tip:** `1a9f35183`
-**Base:** `cddff2050` · **merge:** `fe1bbeaa4b07a753b8607df96ac03f70ddb1eacd` · **drained:** s2146, 2026-08-22
+**Slice:** `f2145-1-terminal-probe-binding-control` · **branch:** `lane/b` · **lane tip:** `64fc3254f`
+**Base:** `2a35ff60c` · **merge:** `d15ebcf1eace8b310493e005822394048fa78d26` · **drained:** s2146, 2026-08-22
 **Master:** `tasks/f2145-1-terminal-probe-binding-control.md` (authored s2145 from F-2145-2)
 
 ## VERDICT: MERGED
@@ -57,7 +57,7 @@ in the same commit, so `gate-caller-audit` does not red it as an un-rooted gate.
 - **Structure:** the guard reads only `docs/bench/same-game-audit.md` and
   `CONTRACT_ADMISSION_EXEMPTIONS`. This merge touches **neither** — its three paths are
   `package.json` and two `scripts/*.mjs`.
-- **Control:** a separate detached worktree `ctl-s2146` at **pre-merge** `7b2e2a698` ran the guard
+- **Control:** a separate detached worktree `ctl-s2146` at **pre-merge** `816ded4e1` ran the guard
   standing alone → **2 pass / 1 fail**, same test, same message verbatim. That control was taken
   *before* this merge was created, so it cannot be an artifact of it.
 - **Not cured here**, deliberately: see F-2146-1 below. The regeneration already exists,
@@ -99,7 +99,7 @@ confirmation.
 
 ## Merge classification
 
-Base `cddff2050`. `main..lane/b` = 1 commit (`1a9f35183`). All three paths **LANE-ONLY** —
+Base `2a35ff60c`. `main..lane/b` = 1 commit (`64fc3254f`). All three paths **LANE-ONLY** —
 `lane-usable.mjs` reported `paths=3`, every one of them `HELD LANE-ONLY`, main had moved none.
 **No conflicts, no graft.** `main..lane/b` empty after the merge.
 

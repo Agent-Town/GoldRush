@@ -1,8 +1,8 @@
 # f1397-1-e1-release-door-drill-yard — drain review (s1398)
 
 - **Slice:** `f1397-1-e1-release-door-drill-yard` (F-1397-2, the roster-shaped half of F-1396-3)
-- **Branch:** `lane/e2-arsenal` (lane-c) · **tip** `67d28607` · **base** `59dacbd3`
-- **Merge commit:** `2daeb68908a4c0e764d148ee382c82a63bbac908`
+- **Branch:** `lane/e2-arsenal` (lane-c) · **tip** `fbcaa7a4` · **base** `bb66753c`
+- **Merge commit:** `f9d7fae86bc48364dabd92de33d5bfcaaf8e9556`
 - **Block-check (§3.0, first command, `--strict`):** ✅ **CLEAR** — leaf `status="queued"`, not blocked. Read the WORD, not the exit code.
 
 ## Verdict
@@ -13,7 +13,7 @@
 ## What it does
 
 `e2e/release-build.spec.ts:18` held a five-name `CONTRACTS` roster that predated the
-owner-ratified sixth E1 contract (`e1-drill-yard`, landed `f0bf5251`, 2026-08-01). That roster
+owner-ratified sixth E1 contract (`e1-drill-yard`, landed `f86b28b3`, 2026-08-01). That roster
 drives a parameterised loop, so the release gate — the door a vE1.0 tag is measured through —
 had **never booted one of the six contracts it is meant to certify**. The slice adds the name at
 index 1. One file, `+1/−1`.
@@ -45,15 +45,15 @@ node-side references (`assert-release-build`, `console-watch-single-source`, `ci
 
 | File | Class | Proof |
 |---|---|---|
-| `e2e/release-build.spec.ts` | **LANE-TOUCHED** | `git log 59dacbd3..main -- e2e/release-build.spec.ts` → **empty**; main never moved it |
+| `e2e/release-build.spec.ts` | **LANE-TOUCHED** | `git log bb66753c..main -- e2e/release-build.spec.ts` → **empty**; main never moved it |
 
 Clean merge, no conflicts, no 3-way graft needed. `main..lane/e2-arsenal` now empty (properly
 merged, not falsely ahead).
 
 ⚠️ **The two-dot diff was alarming and meaningless** — `git diff main..lane/e2-arsenal` reported
 **23 files / 1,197 deletions**. Every one is a phantom of a stale base (the lane forked at
-`59dacbd3`, before s1397's handoff commits, so main's newer files read as lane-side "deletions").
-`git show 67d28607` is the fact: **one file, +1/−1.** This is the second consecutive fire to meet
+`bb66753c`, before s1397's handoff commits, so main's newer files read as lane-side "deletions").
+`git show fbcaa7a4` is the fact: **one file, +1/−1.** This is the second consecutive fire to meet
 this shape on this lane; read the commit, never the two-dot.
 
 ## Red debt

@@ -2,8 +2,8 @@
 
 **Slice:** `f1584-1-banked-master-banner-vocabulary`  
 **Branch:** `lane/c`  
-**Base:** `721493f63` (`main` at implementation start)  
-**Tip at report time:** `721493f63` plus the three-file working-tree diff (runner auto-commit pending)  
+**Base:** `1a41ab975` (`main` at implementation start)  
+**Tip at report time:** `1a41ab975` plus the three-file working-tree diff (runner auto-commit pending)  
 **Verdict:** READY-FOR-GATES — the classifier now recognises the three refusal spellings already present in the corpus without matching queue-positive prose.
 
 ## What changed
@@ -95,11 +95,11 @@ Lane-touched paths are limited to:
 - `scripts/master-shipped-classifier.test.mjs`
 - `reviews/f1584-1-banked-master-banner-vocabulary.md`
 
-Main advanced to `f5397843f` after the lane reset, but changed none of these three paths: each is LANE-TOUCHED and none is MAIN-MOVED. No conflicts were resolved and no out-of-firewall path was changed.
+Main advanced to `f5397843f (archive: pruned by the A3 rewrite)` after the lane reset, but changed none of these three paths: each is LANE-TOUCHED and none is MAIN-MOVED. No conflicts were resolved and no out-of-firewall path was changed.
 
 ---
 
-> ## ✅ DRAINED s1585 — MERGED `706fb82395f9bb463fe4816341d2476df3801d66`
+> ## ✅ DRAINED s1585 — MERGED `5795cd836d6ceb0fcce998c3c3a87079c03dc72d`
 >
 > **Custody (§3.0b):** gated in a detached worktree `gate-s1585`, never in main's working tree. The three
 > lane blobs were installed by `git show lane/c:<path>` and **verified by `hash-object` against
@@ -134,7 +134,7 @@ Main advanced to `f5397843f` after the lane reset, but changed none of these thr
 >
 > **Merge classification re-verified at drain time** (a review's classification is perishable):
 > `lane-freeze-classify lane/c` → `paths=3 · DUPLICATE 0 · LANE-ONLY 3 · MAIN-ONLY 0 · BOTH-MOVED 0`. Main
-> advanced past the review's `f5397843f` to `1963f8dc7` during this fire and still moved none of the three.
+> advanced past the review's `f5397843f (archive: pruned by the A3 rewrite)` to `1963f8dc7 (archive: pruned by the A3 rewrite)` during this fire and still moved none of the three.
 > **No conflicts.**
 >
 > **One environmental difference from the runner's report, stated rather than smoothed over:** the runner

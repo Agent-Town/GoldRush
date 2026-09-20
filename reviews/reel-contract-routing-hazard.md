@@ -1,8 +1,8 @@
 # reel-contract-routing-hazard — drain review (s2493)
 
 **Slice:** `reel-contract-routing-hazard` (F-E8MC-3 corrective)
-**Branch / tip:** `lane/c` @ `61ec740cf1a2fea3b97430f2814a980df580796d`
-**Merge:** `22b9538e5b9660c2c1ef401313c1d4b4e7d34ff6`
+**Branch / tip:** `lane/c` @ `b86f0202866d3b5d2018c923146e15331f741e87`
+**Merge:** `a671486e281c835f77668faae300d9cb1921f633`
 **Drained by:** s2493 fire, 2026-09-04
 
 ## Verdict
@@ -55,8 +55,8 @@ git-object replica of `computeEngineHash` reproduces main's declared
 | Tree | engine files | hash |
 |---|---|---|
 | `main` | 488 | `49c34f8b…` (matches the declared `engineHash` — control) |
-| `lane/c` @ `61ec740cf` | 486 | **`024d2587…`** — exactly what the runner reported |
-| merged (`22b9538e5`) | 488 | **`5442360305b6…`** ← pinned |
+| `lane/c` @ `b86f02028` | 486 | **`024d2587…`** — exactly what the runner reported |
+| merged (`a671486e2`) | 488 | **`5442360305b6…`** ← pinned |
 
 The runner was **entirely honest**: `024d2587…` is precisely its own lane tree's
 identity. But that tree is 135 commits behind main and carries two fewer engine
@@ -109,7 +109,7 @@ that does not depend on inter-measurement load.
 
 ## Merge classification
 
-Base `main` @ `2e802a5f6`. Trial-merged in a detached worktree (§3.0b);
+Base `main` @ `483dad17c`. Trial-merged in a detached worktree (§3.0b);
 undecided content never entered main's working tree, and the merge was committed
 as one act (F-1589-5).
 
@@ -126,7 +126,7 @@ earlier, plus 135 commits of main movement the lane could not see.
 could not have produced the result: **0** rows from main absent from the merge,
 and **1** lane row absent. That one was read rather than assumed, and it is a
 **lawful retirement**: `F-2470-1` exists on main in its *cured* form
-(`CURED s2474, merge 07d8c6d3d`) while the 135-commit-stale lane still carried
+(`CURED s2474, merge 51e598947`) while the 135-commit-stale lane still carried
 the open `🔴` version. Keeping main's cured row is correct; a naive row-count
 check would have scored it as a loss (the known failure mode of union checks).
 

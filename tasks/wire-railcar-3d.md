@@ -4,7 +4,7 @@ ATTENDED-AUTHORED 2026-07-14 — Sol wave-4 model MERGED (assets/pilots/railcar-
 
 Pre-flight (LANE-SAFETY): standard safe-dupe rules; LADDER-STALL protocol stands. Then npm install; build green.
 
-## READ-FIRST: assets/pilots/railcar-3d/README.md (Sol's handoff: component/morph names, axes, scale) · the current railcar presentation (fc581ab5 + the patrol fix on its lane — build on BOTH) · the boss component model (WaveSystem spawnComponentBossWave: wheels/boiler/cabin components with own HP + bossDegradeSpeedMult) · the run3d pilot loader pattern (contract checks, disposal law) · plate-e2-boss-component (the art truth the model matches).
+## READ-FIRST: assets/pilots/railcar-3d/README.md (Sol's handoff: component/morph names, axes, scale) · the current railcar presentation (a7e7bdeb + the patrol fix on its lane — build on BOTH) · the boss component model (WaveSystem spawnComponentBossWave: wheels/boiler/cabin components with own HP + bossDegradeSpeedMult) · the run3d pilot loader pattern (contract checks, disposal law) · plate-e2-boss-component (the art truth the model matches).
 
 ## SCOPE:
 1. MOUNT: the GLB replaces the billboard presentation for the railcar boss group — ONE loaded model, seated on the rail (y from rail line), oriented along travel; components map to the THREE named sub-meshes.

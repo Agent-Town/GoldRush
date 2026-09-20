@@ -1,6 +1,6 @@
 # Gate-worktree salvage — s2148
 
-**Slice:** fire-side ops corrective (no lane, no drain). **Tree:** main at `7622369f3`.
+**Slice:** fire-side ops corrective (no lane, no drain). **Tree:** main at `91e4d6396`.
 **Verdict:** SALVAGED 2 files · DISCARDED 16 as churn/already-preserved · 4 gate worktrees removed.
 
 ## What this does
@@ -25,7 +25,7 @@ Measured with `git hash-object` on the disk file, then `git cat-file -e` against
 
 **14 of 18 files were in no object database, not 5.** The worktree s2147 flagged as the risky one
 (`gate-s2091`) was in fact the **safest**: 4 of its 5 untracked files are byte-identical to blobs already
-committed at `2dae21ed5` (the s2091 drain itself), so `??` there meant "already preserved under another
+committed at `c2d965a06` (the s2091 drain itself), so `??` there meant "already preserved under another
 commit", while ` M` in the other three meant "dies with the disk".
 
 This is F-1054-1's shape recurring at a different site. That finding fixed `art-staging-audit.mjs` to classify
@@ -49,7 +49,7 @@ probe from 2026-08-19T22:13:30Z: `status=passed`, **43 named checks** (dev-code 
 token width, revoke semantics, save push/pull, version ordering, profile index). Those bytes were in no
 object database and had sat on the disk for 3 days.
 
-**Salvaged in place**, per the precedent set by the last commit to touch this very path — `c08a80f8e` (s1558):
+**Salvaged in place**, per the precedent set by the last commit to touch this very path — `c08a80f8e (archive: pruned by the A3 rewrite)` (s1558):
 *"commit inherited artifact re-run churn rather than discard it … this is newer evidence, not the sub-pixel
 noise the discard precedent was written for; retention law prefers keeping bytes git has never seen."*
 The file is self-dating (`generatedAt`), so an in-place supersession stays legible.
@@ -68,7 +68,7 @@ The spec is drain evidence for b3-half-life-hollow-crossing and existed nowhere 
 it to `e2e/` would have silently enlarged the live suite and moved the board's test count. It is preserved
 beside the screenshots it generates instead, where it is readable, citable and collected by nothing.
 
-**ALREADY PRESERVED (4)** — gate-s2091's four PNGs; disk blobs identical to `main:reviews/shots-b3-half-life-hollow-crossing/*`, committed at `2dae21ed5`. No action.
+**ALREADY PRESERVED (4)** — gate-s2091's four PNGs; disk blobs identical to `main:reviews/shots-b3-half-life-hollow-crossing/*`, committed at `c2d965a06`. No action.
 
 **DISCARDED AS CHURN (12)** — recorded here so the record survives the bytes:
 
@@ -97,7 +97,7 @@ artifact whose result changed; these are *frozen citations* whose result did not
 | measured against | **main**, not each worktree's stale detached HEAD (gate-s1689 sat at `af3de1466`) |
 | accounts salvage verified | `status=passed checks=43 generatedAt=2026-08-19T22:13:30.073Z` after copy |
 | spec salvage verified | 1676 B at `reviews/shots-b3-half-life-hollow-crossing/` |
-| s2091 PNG identity | disk blob `b8c72b1c9884` = `main:…/desktop-chrome-crossing.png`, held by `2dae21ed5` |
+| s2091 PNG identity | disk blob `b8c72b1c9884` = `main:…/desktop-chrome-crossing.png`, held by `c2d965a06` |
 | worktree removal | after the salvage commit, never before |
 
 Disk reclaimed: 4 worktrees × ~13 GB ≈ 52 GB. Per s2147's measurement the bulk is an ordinary full

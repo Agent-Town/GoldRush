@@ -11,7 +11,7 @@ Role: implementer. Workdir: `worktrees/lane-c` (slot lane-c, branch `lane/e2-ars
 - `e2e/drill-yard.spec.ts` and `e2e/drill-yard-manifest.spec.ts` — proof the contract itself is playable and green today.
 
 ## WHY (evidence, dated, measured — not inherited)
-`f0bf5251` (`runner(lane-b): lane-drill-yard.md`, 2026-08-01) added `e1-drill-yard` as E1's **sixth** contract, per the owner's ratification that morning (*"Drill Yard sounds good to me"*). s1396 found that roster-shaped assertions were not updated with it and filed **F-1396-3**: six *iteration-list* sites that name a contract roster and silently skip the new one. s1396 deliberately left all six **UNMEASURED** and firewalled them out of `f1396-1`, on the correct ground that adding a contract to an iteration list is a **behaviour change that can legitimately red things** — not a free edit.
+`f86b28b3` (`runner(lane-b): lane-drill-yard.md`, 2026-08-01) added `e1-drill-yard` as E1's **sixth** contract, per the owner's ratification that morning (*"Drill Yard sounds good to me"*). s1396 found that roster-shaped assertions were not updated with it and filed **F-1396-3**: six *iteration-list* sites that name a contract roster and silently skip the new one. s1396 deliberately left all six **UNMEASURED** and firewalled them out of `f1396-1`, on the correct ground that adding a contract to an iteration list is a **behaviour change that can legitimately red things** — not a free edit.
 
 s1397 re-read all six sites and their constant definitions rather than inheriting the list, and found they are **not one class**:
 
@@ -31,7 +31,7 @@ s1397 re-read all six sites and their constant definitions rather than inheritin
 ## PRE-FLIGHT (LANE-SAFETY invariant)
 1. `git status --short` in the lane worktree: dirty tracked blobs must be reachable in git, else **STOP** and report.
 2. `git log main..HEAD --oneline` must be **empty**. If it is not, **STOP** — an undrained predecessor lives here and a reset would destroy it.
-3. **Premise check, AFTER any reset:** count the contracts in `assets/contracts/epoch-1-frontier/contracts.json`. It must be **6** and include `e1-drill-yard`. If it is 5, this lane predates `f0bf5251`: the task is **not applicable here — STOP and report the number you got.** ⓘ s1397 verified `git merge-base --is-ancestor f0bf5251 lane/e2-arsenal` = **YES** at authoring time (lane-c is 17 commits behind main but with **zero run-surface drift** — `node scripts/lane-usable.mjs lane-c`); re-check rather than trusting this line.
+3. **Premise check, AFTER any reset:** count the contracts in `assets/contracts/epoch-1-frontier/contracts.json`. It must be **6** and include `e1-drill-yard`. If it is 5, this lane predates `f86b28b3`: the task is **not applicable here — STOP and report the number you got.** ⓘ s1397 verified `git merge-base --is-ancestor f86b28b3 lane/e2-arsenal` = **YES** at authoring time (lane-c is 17 commits behind main but with **zero run-surface drift** — `node scripts/lane-usable.mjs lane-c`); re-check rather than trusting this line.
 
 ## SCOPE (numbered, each testable)
 1. **MEASURE FIRST, BEFORE EDITING ANYTHING.** Add `'e1-drill-yard'` to the `CONTRACTS` array at `e2e/release-build.spec.ts:18` — the one consumed at `:100` by `for (const contractId of CONTRACTS) {`. Order: index **1**, immediately after the-claim, matching `contracts.json`. Then run **only** the release-door test:
@@ -48,7 +48,7 @@ s1397 re-read all six sites and their constant definitions rather than inheritin
 ## NO (firewall — violations fail the gate)
 - **NO** touching the five **sampled** sites: `e2e/panorama-framing.spec.ts`, `e2e/terrain-seamless.spec.ts`, `e2e/tr-02-splat-ground.spec.ts`, `e2e/contract-briefings.spec.ts`, `scripts/stream-capture.mjs`. Their lists deliberately span epochs or encode unlock rulings (see the WHY table). Widening them is an unmeasured behaviour change and a **separate** slice.
 - **NO** touching `e2e/072-era-activation.spec.ts`, `e2e/agent-view.spec.ts`, `e2e/e1-baron.spec.ts`, `e2e/fixtures/e1-mechanics-manifests.json`, `src/town/TownScene.ts`. **Those five are HELD, undrained, on `lane/m4` behind an OWNER BLOCK** (`7c4f132f`). A fire may not lift a block (§3.0), and editing them here manufactures a collision with finished work.
-- **NO** touching `e2e/cp03-press-loop.spec.ts`. Its red is a different cause (`6c009cb8`, F-1396-2) and an **unresolved attended fork**.
+- **NO** touching `e2e/cp03-press-loop.spec.ts`. Its red is a different cause (`776cd64a`, F-1396-2) and an **unresolved attended fork**.
 - **NO** change to `src/**`, `assets/contracts/**`, or anything that alters what contracts exist or how they boot. **If the release door genuinely fails for drill-yard, that is a finding to REPORT, not a bug to fix in this task.** Fixing product code here would silently convert a measurement task into an unreviewed gameplay change.
 - **NO** weakening: do not add a skip, a conditional, a longer timeout, or a `try/catch` to make drill-yard pass. If it needs special handling, that IS the finding.
 - **NO** touching `logs/suite-red-inventory.md` (standing order: never hand-edit it).
@@ -59,7 +59,7 @@ s1397 re-read all six sites and their constant definitions rather than inheritin
 - `npx tsc --noEmit` — clean.
 - `npm run build` — green.
 - `npx playwright test e2e/release-build.spec.ts --workers=1` — the **full** suite, not just the `-g` slice. Report pass/fail per project. (`--workers=1` is a correctness requirement of the fire/lane gate, not an optimisation — F-1270-1.)
-- `npx playwright test e2e/drill-yard.spec.ts e2e/drill-yard-manifest.spec.ts e2e/cp01-charter-roundtrip.spec.ts --workers=1` — adjacent, derived by grep (all three read the E1 roster or the drill-yard contract). s1397 measured all three **green on main** at the `0195da9f` drain; report any change.
+- `npx playwright test e2e/drill-yard.spec.ts e2e/drill-yard-manifest.spec.ts e2e/cp01-charter-roundtrip.spec.ts --workers=1` — adjacent, derived by grep (all three read the E1 roster or the drill-yard contract). s1397 measured all three **green on main** at the `7f5b8017` drain; report any change.
 - `npm run test:node-guards` — report the count. (s1397 measured the drain-time battery green; a change here is a finding.)
 - ⚠️ **Report, do not commit, any tracked PNG under `artifacts/` or `reviews/` that your runs modify** (F-1328-3/F-1329-3: gate runs rewrite shipped evidence in place). `release-build.spec.ts` is screenshot-heavy — expect this to fire. Restore with `git checkout --` before committing.
 
@@ -70,11 +70,11 @@ READY-FOR-GATES + report: the contract count your pre-flight measured and whethe
 **CORRECTION APPENDED s1482 (F-1398-1 — do not edit the lines above; citations quote them).**
 The commands at `:38` and `:61` name `e2e/release-build.spec.ts` without naming a config, so they
 run under the DEFAULT harness — and `playwright.config.ts` `testIgnore`s that spec (it sits in the
-`claimedByAnotherConfig` array, landed `c8ed271c4` 2026-07-31, the F-1296-3 cure). Measured s1482:
+`claimedByAnotherConfig` array, landed `395bc04be` 2026-07-31, the F-1296-3 cure). Measured s1482:
 `npx playwright test e2e/release-build.spec.ts --list` prints **"No tests found" / "Total: 0 tests in
 0 files"** and exits rc=1. It fails loudly rather than falsely green, so nothing shipped on a false
 pass — the cost was a runner cycle spent diagnosing a harness error. This master postdates
-`c8ed271c4` by two days, so it was wrong when written; that is why it is not grandfathered.
+`395bc04be` by two days, so it was wrong when written; that is why it is not grandfathered.
 **The correct invocation names the owning config:**
 `npx playwright test --config playwright.release.config.ts --workers=1` (or `npm run test:release`).
 Guarded since s1482 by `scripts/claimed-spec-harness-guard.mjs`.

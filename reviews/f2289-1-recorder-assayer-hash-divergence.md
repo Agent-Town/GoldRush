@@ -1,6 +1,6 @@
 # f2289-1 — recorder/assayer hash divergence (diagnostic)
 
-**Slice:** `f2289-1-recorder-assayer-hash-divergence` · **Branch:** `lane/a` · **Base:** `7f77ccb61` · **Lane tip:** `4fd3c9c6d` · **Merge:** `8f545d60b` · **Drained by:** s2291, 2026-08-25
+**Slice:** `f2289-1-recorder-assayer-hash-divergence` · **Branch:** `lane/a` · **Base:** `59ae9f80a` · **Lane tip:** `8cbff5140` · **Merge:** `11016a24d` · **Drained by:** s2291, 2026-08-25
 
 ## Verdict
 
@@ -50,7 +50,7 @@ The honest part of this table is the restraint: of the 8 divergent tapes, **seve
 
 ## Merge classification
 
-Base `7f77ccb61` (the master's own authoring commit).
+Base `59ae9f80a` (the master's own authoring commit).
 
 | files | class | resolution |
 |---|---|---|

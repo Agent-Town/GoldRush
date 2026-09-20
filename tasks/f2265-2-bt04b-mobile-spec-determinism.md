@@ -14,7 +14,7 @@
      read prose. The declaration IS the safety argument (held must be a subset of
      declared): every held path is named. VERIFIED AGAINST THE LIVE LANE THIS FIRE,
      NOT REMEMBERED — `lane-usable lane-a` reports paths=8 and `git diff --name-only
-     main...lane/a` (tip 8dc4ff173) lists exactly these 8. -->
+     main...lane/a` (tip d02ff4148) lists exactly these 8. -->
 LANE-SAFETY-OPT-IN: BUILD-ON-PREDECESSOR
 EXPECTED-HOLDS: e2e/bt-04b-automation.spec.ts
 EXPECTED-HOLDS: reviews/shots-bt04b/desktop-chrome.png
@@ -25,11 +25,11 @@ EXPECTED-HOLDS: src/game/Game.ts
 EXPECTED-HOLDS: src/game/RunSuspend.ts
 EXPECTED-HOLDS: src/ui/ProspectorPanel.ts
 
-lane/a is DELIBERATELY ahead by exactly one commit: `8dc4ff173`
+lane/a is DELIBERATELY ahead by exactly one commit: `d02ff4148`
 (`runner(lane-a): bt-04b-automation-two-params.md`), 8 paths, undrained BY DESIGN —
 the gate hold (F-2265-2) holds it, and **the file you are fixing lives ON that commit**.
 **Do NOT reset or refresh the lane; build ON that commit.** Verify first:
-`git log --oneline main..lane/a` shows exactly `8dc4ff173` and nothing else, and
+`git log --oneline main..lane/a` shows exactly `d02ff4148` and nothing else, and
 `git status` is clean apart from the FACTORY-CHURN EXCEPTION classes (F-1407-1:
 `logs/**`, `artifacts/**`, `reviews/shots-*`, `.png` — list them and proceed).
 Anything ELSE ahead or dirty: **STOP and report.** Then `npm install --no-audit --no-fund`

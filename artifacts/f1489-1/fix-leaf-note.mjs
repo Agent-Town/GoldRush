@@ -9,7 +9,7 @@ if (!raw.includes(stale)) throw new Error('stale note not found verbatim; inspec
 
 const fixed =
   'F-1489-1 (CLOSED s1491: premise REFUTED -- the quiet-GREEN discriminator was never lost. ' +
-  'F-1146-6 recipe verbatim on 720035960 gives 3/3 both projects, 18/20 quiet instances pass, ' +
+  'F-1146-6 recipe verbatim on 2895ab088 gives 3/3 both projects, 18/20 quiet instances pass, ' +
   'and the battery arm reds 2/2, so the fingerprint is intact in both directions. No bisect was ' +
   'possible: the predicate is non-deterministic quiet and all-BAD contended. See ' +
   'artifacts/f1489-1/measurements.md)';

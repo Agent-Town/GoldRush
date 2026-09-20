@@ -1,8 +1,8 @@
 # Review — lane-d-f1152-1-confirmbuild-cause (F-1152-1 ANSWERED)
 
 **Slice:** `lane-d-f1152-1-confirmbuild-cause` (attempt 3, diagnosis-only)
-**Branch/tip:** `lane/perf` @ `f386f27e` · base `cb0682c9`
-**Merged:** `4f3223f8` (real `git merge --no-ff`)
+**Branch/tip:** `lane/perf` @ `f09c66c8` · base `0c7d89ad`
+**Merged:** `1f563455` (real `git merge --no-ff`)
 **Drained by:** s1153 fire, 2026-07-28
 
 ## VERDICT: **ACCEPT.** The five-fire flake hunt has an answer, and it is a **TEST-HARNESS race, not a gameplay bug.**
@@ -33,7 +33,7 @@ Adds a read-only `BuildSystem.confirmDiagnostics` getter plus a `lastConfirmFail
 | Re-run of the slice's own probe on main (`probe-s1152b… 5`) | **5/15 scenarios failed = 33.3%** |
 | `git status --porcelain -- src/ e2e/ scripts/` before merge | **clean** (only the known `artifacts/` churn, F-1136-3) |
 
-**m2-04 classified by ASSERTION, never by the spec's name (F-1152-4 is explicit that the name absorbs two different faults):** the single failure is at **`:226`**, `expect(timeAlive - spawnedAt).toBeLessThan(20)` receiving **20.999…** — the **known budget red** of the F-1147-1 ladder (bisected at `bb7f14c3`). **It is NOT a placement failure**; no `resolves.toBe(true)` assertion failed in this run. Pre-existing and documented since s1148; this slice cannot affect thief routing time.
+**m2-04 classified by ASSERTION, never by the spec's name (F-1152-4 is explicit that the name absorbs two different faults):** the single failure is at **`:226`**, `expect(timeAlive - spawnedAt).toBeLessThan(20)` receiving **20.999…** — the **known budget red** of the F-1147-1 ladder (bisected at `8d73f79a`). **It is NOT a placement failure**; no `resolves.toBe(true)` assertion failed in this run. Pre-existing and documented since s1148; this slice cannot affect thief routing time.
 
 **The probe re-measurement is the strongest evidence and it confirms the mechanism from the data alone.** Every failure carried `overlapOk:false` with `economyOk/placementOk/rangeOk` all true, `distanceSq:4`, `placeRadius:6` — and critically **`playerPos:{x:2,z:11}` while the requested placement was `(0,13)`**. The actor position the BuildSystem reads is literally the *previous* placement's. My 33.3% sits inside the runner's 38.1% and s1152's interleaved 27–40%.
 
@@ -43,7 +43,7 @@ The diff is **1419 insertions / 4 deletions**. I read all four deletions: they a
 **Return values identical, control flow identical, no branch added or removed.** The getter is invoked only from the debug hook, which is gated behind `?debug` (`Game.ts:1646`). This meets "must not change return value, control flow or timing".
 
 ## Merge classification
-Base `cb0682c9`; `git log cb0682c9..main -- src/ scripts/ artifacts/` is **empty**, so all 14 files are **LANE-TOUCHED** with **no MAIN-MOVED collision and no graft required**. Merged onto clean main.
+Base `0c7d89ad`; `git log 0c7d89ad..main -- src/ scripts/ artifacts/` is **empty**, so all 14 files are **LANE-TOUCHED** with **no MAIN-MOVED collision and no graft required**. Merged onto clean main.
 
 ## Findings
 - **F-1153-1 (the answer, non-blocking, cure OWED as its own slice).** The harness's positioning promise is not atomic: `teleport()` updates the actor but not `actionActorPosition`. **Recommended cure (the runner's, and I concur): make `__GR_TEST__.teleport()` refresh `actionActorPosition` synchronously**, so *every* immediate harness action inherits an honest position — strictly better than the narrower alternative of patching only `confirmBuild()`, because the same staleness must affect any other harness call that reads the action-actor. ⛔ **Explicitly NOT warranted: a `confirmBuild` retry loop, or the briefing-card dismissal s1152 refuted.**

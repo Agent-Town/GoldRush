@@ -1,4 +1,4 @@
-> **DRAIN RECEIPT — s1495, merged `aaecce624fb3331c30736aeabe5460fc7aa82ded`.** This shift's own verdict below is preserved
+> **DRAIN RECEIPT — s1495, merged `4597f02bf5c895ef381e61b6bc279d533ea42ed6`.** This shift's own verdict below is preserved
 > verbatim (retention law: supersede, never delete). The drain verified its central merge claim rather
 > than inheriting it: `git diff --name-status main...milk/surveyors-dossier` returns **35 A and exactly one M
 > (`tasks/BACKLOG.md`)** — so "no file that existed before this shift was modified" is true of every file
@@ -8,7 +8,7 @@
 
 # Review — THE SURVEYOR'S DOSSIER (milk shift, 2026-08-06)
 
-**Slice:** `milk/surveyors-dossier` (worktree `gr-milk-surveyors-dossier`), tip `0e9d85a1e` + this review
+**Slice:** `milk/surveyors-dossier` (worktree `gr-milk-surveyors-dossier`), tip `72e3cf02a` + this review
 **Shift:** final-milk fleet, F-1368-1 — *"the last column is yours — verdict in one word, I file the rest"*
 **Verdict:** **DELIVERED — and the deliverable found that the ask it was built to serve is 52% impossible.**
 

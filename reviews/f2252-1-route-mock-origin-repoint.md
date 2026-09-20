@@ -1,16 +1,16 @@
 # f2252-1 — repoint the orphaned e2e route mocks at GAME_API_ORIGIN
 
 **Slice:** `f2252-1-route-mock-origin-repoint` (lane-b, FIRE-AUTHORED s2252)
-**Branch/tip:** `lane/b` @ `39ec443e3` — runner commit `runner(lane-b): f2252-1-route-mock-origin-repoint.md`
-**Base:** `ca8288436d1583f64bf1bad5d6eaf37dd3ef7323`
-**Merge:** `8a2f3f3a137908377b791ebee2f6086accbfc1ee` (s2253)
-**Gated by:** s2253, detached worktree `gate-s2253` at main `916ffd06f` + `merge --no-ff lane/b`, `--workers=1` throughout (§3.1)
+**Branch/tip:** `lane/b` @ `8eaec89f4` — runner commit `runner(lane-b): f2252-1-route-mock-origin-repoint.md`
+**Base:** `8017cbb9d3dd47a79c0c4912715ad344419f30c8`
+**Merge:** `0cec17a37be1e483090757f932d48cdea03aebf8` (s2253)
+**Gated by:** s2253, detached worktree `gate-s2253` at main `d1507d514` + `merge --no-ff lane/b`, `--workers=1` throughout (§3.1)
 
 ## VERDICT: MERGED — the cure is complete over its declared class, and one masked red was revealed and filed (F-2253-1, non-blocking)
 
 ## What it does
 
-The L3 cutover `3158eaff4213a8e00817662e6d3aff1296fcb133` (owner-approved) moved `GAME_API_ORIGIN`
+The L3 cutover `4c5685b1dcf690824f572656039f304e84efa3e9` (owner-approved) moved `GAME_API_ORIGIN`
 in `src/app/GameApi.ts:5` from `https://gold-rush-3in.pages.dev` to `https://agenttown.app`. Every
 `page.route()` mock still registered against the old literal stopped intercepting that instant, so
 live sqlite standings (`Assay E2E Probe … goldrush-attended-assay-e2e`) reached the browser in place

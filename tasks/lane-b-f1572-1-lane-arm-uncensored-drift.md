@@ -1,6 +1,6 @@
 # Task f1572-1: the lane arm, measured UNCENSORED for the first time — is F-1564-1's "0 breaches in 24" a property of the lane, or of the censoring? (LANE-B, commit prefix "fix:")
 
-**FIRE-AUTHORED (attended review welcome)** — s1572, from **F-1572-1**, whose fire arm s1572 ran itself the same fire (`artifacts/f1572-1-fire-shell-drift/measurement.md`). I did not inherit the premise: I merged the cure (`14b3c927c`), ran the fire arm, and read F-1564-1's closure before writing this scope.
+**FIRE-AUTHORED (attended review welcome)** — s1572, from **F-1572-1**, whose fire arm s1572 ran itself the same fire (`artifacts/f1572-1-fire-shell-drift/measurement.md`). I did not inherit the premise: I merged the cure (`9bfecb997`), ran the fire arm, and read F-1564-1's closure before writing this scope.
 
 You are Codex, implementer for Gold Rush, running natively on Robin's Mac in `worktrees/lane-b`.
 
@@ -15,13 +15,13 @@ grep -c "F-1565-2: assertions follow the drift log so receipt or bark failures c
 grep -c "console.log(\`\[m4-06-denied\] driftAbs=" e2e/m4-06-embodiment.spec.ts
 ```
 
-Both must print `1`. **If either prints `0`, STOP and report "lane drifted or predecessor absent" — do NOT improvise.** The first proves the f1571-1 reorder (merge `14b3c927c`) is present in this lane. **Without it you would be measuring the CENSORED arrangement and would reproduce F-1564-1's bias exactly** — which is the one outcome this task exists to avoid.
+Both must print `1`. **If either prints `0`, STOP and report "lane drifted or predecessor absent" — do NOT improvise.** The first proves the f1571-1 reorder (merge `9bfecb997`) is present in this lane. **Without it you would be measuring the CENSORED arrangement and would reproduce F-1564-1's bias exactly** — which is the one outcome this task exists to avoid.
 
 ## Why (F-1572-1, and a re-reading of F-1564-1's closure)
 
 F-1564-1 closed F-1563-3 with **24 lane-shell observations, 0 breaches of `0.4`, max `0.3722002149381437`**, and the ladder has treated that as the lane's clean bill of health ever since.
 
-⚠️ **That measurement was taken through the censoring.** F-1565-2 states the mechanism and s1572 merged its cure: before `14b3c927c`, the bark assertion executed **before** the drift log, so **every run that lost the bark race yielded no drift sample at all** — and, in F-1565-2's own words, *"the runs most starved of CPU are exactly the ones most likely to both lose that race and drift furthest. A mean over surviving samples is not the mean."*
+⚠️ **That measurement was taken through the censoring.** F-1565-2 states the mechanism and s1572 merged its cure: before `9bfecb997`, the bark assertion executed **before** the drift log, so **every run that lost the bark race yielded no drift sample at all** — and, in F-1565-2's own words, *"the runs most starved of CPU are exactly the ones most likely to both lose that race and drift furthest. A mean over surviving samples is not the mean."*
 
 🔑 **So F-1564-1's "0 breaches in 24" is not yet known to be a property of the LANE. It may be a property of the CENSORING.** Those two hypotheses have never been distinguished, because until this week no uncensored lane measurement existed.
 

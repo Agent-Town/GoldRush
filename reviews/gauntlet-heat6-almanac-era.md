@@ -1,9 +1,9 @@
 # gauntlet-heat6-almanac-era — drain review (s2296)
 
 - **Slice:** `gauntlet-heat6-almanac-era` (HEAT 6, the first commons-armed heat)
-- **Branch / tip:** `lane/c` @ `920a590f6` (`runner(lane-c): gauntlet-heat6-almanac-era.md`)
-- **Merge-base:** `8703f90f3`
-- **Merged to main at:** `ecb70b45718e2084d4aa4322ad2b75cc911813f8`
+- **Branch / tip:** `lane/c` @ `920a590f6 (archive: pruned by the A3 rewrite)` (`runner(lane-c): gauntlet-heat6-almanac-era.md`)
+- **Merge-base:** `90bb8376f`
+- **Merged to main at:** `ecb70b45718e2084d4aa4322ad2b75cc911813f8 (archive: pruned by the A3 rewrite)`
 - **Verdict:** ✅ **MERGE — a lawful STOP with complete evidence.** The runner did not
   deliver the heat, and that is the correct outcome: its master's binding rule is
   `skew -> STOP`, the mandatory early probe came back `unassayable: engine-skew`, and the
@@ -15,7 +15,7 @@
 ## What it does
 
 Banks the complete evidence chain of an aborted heat. The rider built and rode the live
-advertised build (`730046c8f`, `version.json` built 2026-08-25T02:40:00Z) from a detached
+advertised build (`5109241a8`, `version.json` built 2026-08-25T02:40:00Z) from a detached
 worktree, secured `the-claim` on `e1-the-claim-01` locally at wave 10 / 45 gold, and
 submitted from the canonical origin. The submission was **accepted as rank 5 but not
 verified**: the live assayer removed it from ranking with `assay:"unassayable"`,
@@ -55,15 +55,15 @@ run against materialised worktrees, 11 source inputs each):
 
 | Tree | Engine hash |
 |---|---|
-| `730046c8f` — the **live advertised build** | `d48987df2d50c643e854a2bf8a23b7f34b81c3de1cfd2e54999129b5660f7494` |
-| `ecb70b457` — **main HEAD** after this merge | `d48987df…` (identical — no engine input has moved since the deploy) |
+| `5109241a8` — the **live advertised build** | `d48987df2d50c643e854a2bf8a23b7f34b81c3de1cfd2e54999129b5660f7494` |
+| `ecb70b457 (archive: pruned by the A3 rewrite)` — **main HEAD** after this merge | `d48987df…` (identical — no engine input has moved since the deploy) |
 | The **tape** the rider submitted | `d48987df…` |
 | The **live assayer** (per its own slip) | `0be37691327931e7a3230f10fa5f65105cfc4b69af13845f84e05dfb281f3b0a` |
 
 **So the tape is honest and the assayer is the divergent side.** The rider really did ride
 the build the county advertises; its hash reproduces exactly from that commit's tree. The
-assayer's hash reproduces from **none** of the recent main trees I tested — `fa3c6a4e8`
-(`587001a9…`), `08bbb64ed` (`d6cebb3a…`), `9eb74cc81` (`360cdf56…`), `d87b90970`
+assayer's hash reproduces from **none** of the recent main trees I tested — `0cceb7d13`
+(`587001a9…`), `0b8e8d378` (`d6cebb3a…`), `22d0e1cc7` (`360cdf56…`), `241ba0301`
 (`32c798bb…`) — so it is not merely one merge behind; it is on a tree not identified.
 
 **Severity, stated honestly and not inflated.** The direction is **conservative**: the

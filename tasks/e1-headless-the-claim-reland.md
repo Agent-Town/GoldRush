@@ -13,20 +13,20 @@
 1. `git -C worktrees/lane-c rev-parse --abbrev-ref HEAD` → must print `lane/e2-arsenal`. If not, **STOP**.
 2. `git -C worktrees/lane-c log main..HEAD --oneline` → must print **nothing**. If it prints anything, **STOP and report** — the lane may hold undrained work (Mistake #2). Do not reset.
 3. `git -C worktrees/lane-c status --short` → expect clean. If tracked source files are dirty, **STOP and report**.
-4. `git -C worktrees/lane-c merge-base --is-ancestor 69984c6a HEAD` → must exit **0**. This is the `stakeMarkers.lossCondition` → `heroStart` repo-wide rename (drained s1329). The whole point of this re-land is to land the slice on the *post*-rename vocabulary; if the lane predates it, **STOP and report**.
+4. `git -C worktrees/lane-c merge-base --is-ancestor 8efae704 HEAD` → must exit **0**. This is the `stakeMarkers.lossCondition` → `heroStart` repo-wide rename (drained s1329). The whole point of this re-land is to land the slice on the *post*-rename vocabulary; if the lane predates it, **STOP and report**.
 5. `git -C worktrees/lane-c cat-file -e cce99524` → must exit **0** (the salvage-ref is reachable). If not, **STOP and report**.
 
 ## WHY (evidence, quoted and dated — every number below was re-measured by s1391 on 2026-08-02)
 
 `tasks/goals.json` holds `e1-headless-the-claim` as **`status: "blocked"`, `blockClass: "gate-side"`** — a fire-side readiness hold, **not** an owner design fork. Its stated reason gives two conditions, and this master exists to discharge both:
 
-> (1) lane/m4 is founded on the owner-BLOCKED commit 7c4f132f (f1328-1-drill-yard-census-debt), so any branch-level merge or main..lane/m4 diff sweeps blocked content into main. (2) lane/m4 base 46033151 is 270 commits behind main and PREDATES 69984c6a (stakeMarkers.lossCondition -> heroStart, repo-wide, drained s1329); lifting the slice onto clean main fails tsc with TS2339 on lossCondition.
+> (1) lane/m4 is founded on the owner-BLOCKED commit 7c4f132f (f1328-1-drill-yard-census-debt), so any branch-level merge or main..lane/m4 diff sweeps blocked content into main. (2) lane/m4 base 74f95634 is 270 commits behind main and PREDATES 8efae704 (stakeMarkers.lossCondition -> heroStart, repo-wide, drained s1329); lifting the slice onto clean main fails tsc with TS2339 on lossCondition.
 
 **Condition (1) does not apply to THIS slice.** `reviews/lane-m4-claim-geometry-and-headless.md:36` measured it and s1391 re-verified it: `cce99524` touches **5 files, none of which `7c4f132f` touched**, and none of which `c876f675` touched either. It is textually disjoint from the blocked content in both directions.
 
 **Condition (2) is real, and it is exactly ONE identifier.** s1391 measured both sides:
 
-- `git show cce99524 | git apply --check -` against current main (`32cfc878`) → **applies cleanly**, 270 commits later. The patch itself has not rotted.
+- `git show cce99524 | git apply --check -` against current main (`34800b22`) → **applies cleanly**, 270 commits later. The patch itself has not rotted.
 - `lossCondition` appears in the `cce99524` versions of the five slice files exactly **once**, in `src/sim/HeadlessContractSim.ts`. The other four files contain it **zero** times.
 - Main's own `src/sim/HeadlessContractSim.ts` contains `heroStart` exactly **once** and `lossCondition` **zero** times — i.e. the destination already holds the renamed field in the same place.
 
@@ -37,7 +37,7 @@ The s1381 review's recommendation — *"re-author both masters against current m
 1. **Apply the salvage-ref patch.** From `worktrees/lane-c`, apply `cce99524`'s five paths onto current main:
    `assets/contracts/bench-seeds.json` · `env/goldrush-verifiers/README.md` · `scripts/gr-sim.test.mjs` · `src/game/RunManager.ts` · `src/sim/HeadlessContractSim.ts`.
    Use the commit as a **patch**, not a merge (`git show cce99524 | git apply -` or a path-scoped `git checkout cce99524 -- <the five paths>`; either is fine, but **do not** `git merge`, `cherry-pick`, `rebase` or otherwise make `lane/m4` an ancestor). Nothing from `7c4f132f` or `c876f675` may enter the tree — verify with scope item 3.
-2. **Translate the one stale identifier.** In `src/sim/HeadlessContractSim.ts`, the applied version references `stakeMarkers.lossCondition`; main renamed that field to `heroStart` at `69984c6a`. Change that single reference to `heroStart`. ⚠️ **Read main's own use of `heroStart` in that same file first and match its shape** — if the rename turns out to be more than a field name (a type change, a different accessor), **STOP and report** rather than inventing an adapter. Do not rename anything else, and do not "tidy" adjacent code.
+2. **Translate the one stale identifier.** In `src/sim/HeadlessContractSim.ts`, the applied version references `stakeMarkers.lossCondition`; main renamed that field to `heroStart` at `8efae704`. Change that single reference to `heroStart`. ⚠️ **Read main's own use of `heroStart` in that same file first and match its shape** — if the rename turns out to be more than a field name (a type change, a different accessor), **STOP and report** rather than inventing an adapter. Do not rename anything else, and do not "tidy" adjacent code.
 3. **Prove no blocked content came along.** Report the output of `git diff --name-only main...HEAD` — it must list **exactly the five files above and nothing else**. In particular `e2e/fixtures/e1-mechanics-manifests.json`, `e2e/agent-view.spec.ts`, `e2e/072-era-activation.spec.ts`, `e2e/e1-baron.spec.ts`, `src/town/TownScene.ts`, `src/meta/ContractFamilies.ts`, `src/world/Terrain.ts` and `assets/contracts/epoch-1-frontier/contracts.json` **must NOT appear**. If any does, **STOP and report** — that is the F-1381-3 failure this master exists to avoid.
 4. Report the numbers below. **Do not "fix" anything outside items 1–3** — if you find another problem, report it, do not repair it.
 

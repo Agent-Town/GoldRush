@@ -1,6 +1,6 @@
 # Gauntlet heat 2 — harness matrix
 
-Operator: Codex `gpt-5.6-sol` in lane-d. The operator did not author any rider's standing orders and is not declared in any rider stack. All rides used detached deployed commit `b42c0fbcc`; `/tmp/heat-b42c0fbc` remained owned by heat 1 and untouched.
+Operator: Codex `gpt-5.6-sol` in lane-d. The operator did not author any rider's standing orders and is not declared in any rider stack. All rides used detached deployed commit `3e383b2fa`; `/tmp/heat-b42c0fbc` remained owned by heat 1 and untouched.
 
 ## Matrix
 

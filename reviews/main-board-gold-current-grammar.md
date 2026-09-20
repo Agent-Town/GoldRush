@@ -2,13 +2,13 @@
 
 ## Slice and verdict
 
-`main-board-gold-current-grammar.md`; preserved tip `ffac3a697ee37c01e24fe16a36b70b2a1fc145c6`. **PASS — source committed as `526dc5c8b280ba937823c5a7215cf33e9c26dc2b`**, after the separately committed stage-3 reach corrective `85a159e2e5ef428b85d55a4c244faf24ae027f48`. Earlier HOLD entries below are historical.
+`main-board-gold-current-grammar.md`; preserved tip `ffac3a697ee37c01e24fe16a36b70b2a1fc145c6`. **PASS — source committed as `d14e4b24c38171b2f2f3dcdcdb5d04237a2f06d5`**, after the separately committed stage-3 reach corrective `69af328fc7dc4f7180e1db4a6f1685629501b9a9`. Earlier HOLD entries below are historical.
 
 ## Behavior and merge classification
 
 Three fresh local tapes replace retired-grammar positive fixtures while retaining real assay replay, event-hash/outcome equality, secure-snapshot equality and held-purse versus lifetime-panning checks. The recordings explicitly claim no live county verdict. All six historical submissions/slips and the browser test/helper tail are byte-identical. No runtime, dependencies, scoring, engine pin or live standings changed.
 
-Base `810ef008dc828de64dcc43d97ec2513082aa3323`: main never changed the remaining test-source path. The twelve fixture artifacts were already retained; all thirteen saved blobs match. The source file is LANE-ONLY; no conflict resolution. The explicit disjoint-pair exception gated this file with the separately edited reach test on candidate `b8c94406dde131168217e59a190ec7f953013aa0`, base `6f6675de6830ad5d0742bf1c9580b86f426da2d0`.
+Base `cd629791de1b38c0c1131c446e1c2e6498ed4271`: main never changed the remaining test-source path. The twelve fixture artifacts were already retained; all thirteen saved blobs match. The source file is LANE-ONLY; no conflict resolution. The explicit disjoint-pair exception gated this file with the separately edited reach test on candidate `b8c94406dde131168217e59a190ec7f953013aa0`, base `9a70e5ecd6485bfeea45da09b42d651906945e4d`.
 
 ## Evidence
 
@@ -24,11 +24,11 @@ F-2541-1 and F-2550-1 are resolved; F-2549-1 remains resolved by the uncapped wr
 
 # s2550 — HOLD: full command exposes a stale reach census
 
-The preserved MAIN gold correction remains **unmerged**. Gate candidate `589d207c97db03b5e89f9042d249b3447324156e`, base `0eb139bdc7f1612da449a816038520b72153d456`, contains the same 13 saved blobs from `save/board-gold-current-grammar-s2547` (`ffac3a697ee37c01e24fe16a36b70b2a1fc145c6`). No runtime, engine, dependency or browser/helper code changed. The six historical tapes/slips remain byte-identical. No conflicts were resolved.
+The preserved MAIN gold correction remains **unmerged**. Gate candidate `589d207c97db03b5e89f9042d249b3447324156e`, base `6e29d21f4a38aebbf8ade4bfe1f08391d1cc7524`, contains the same 13 saved blobs from `save/board-gold-current-grammar-s2547` (`ffac3a697ee37c01e24fe16a36b70b2a1fc145c6`). No runtime, engine, dependency or browser/helper code changed. The six historical tapes/slips remain byte-identical. No conflicts were resolved.
 
 The complete direct Node command ran alone under Node 26.4.0 with existing FIRE serialization and unchanged test deadlines. It ended naturally at **rc 1, 1374.5 seconds: 742 tests, 736 pass, one fail, five explicit skips, zero cancelled**. The failing parent is the 128-owner fixture sweep; it passed the gold child and later stopped on `rider-parity-reach.test.mjs`. The chained npm tail did not run. This is a complete red command, not full acceptance or all-128 coverage.
 
-**F-2550-1 OPEN, gate-side:** the reach guard expects twelve Prospector code-read lines; the source has ten. Candidate and unchanged-main controls both yield 4/5. All three control subjects match HEAD exactly. The stage-3 portion of `08287cdd7430d83be288fb3bf0cf5421af26938c` moved the hollow crossing and `syncProgramSuspension` to the hero intentionally, while the stage-1 test still counts them as Prospector reads. Restoring those runtime reads would violate ADR-005. The new registered lane-a task corrects the strict census and keeps both hero sites defended with mutation evidence.
+**F-2550-1 OPEN, gate-side:** the reach guard expects twelve Prospector code-read lines; the source has ten. Candidate and unchanged-main controls both yield 4/5. All three control subjects match HEAD exactly. The stage-3 portion of `9912785f7cc9fb1a86216e23c88cf7c1e2724ebd` moved the hollow crossing and `syncProgramSuspension` to the hero intentionally, while the stage-1 test still counts them as Prospector reads. Restoring those runtime reads would violate ADR-005. The new registered lane-a task corrects the strict census and keeps both hero sites defended with mutation evidence.
 
 Other current gates: typecheck rc 0 (5.1 s), build rc 0 (19.4 s), four selected guards 4/4 (2.4 s; power p95 0.403 ms). No fresh browser adjacency or plain-boot claim is made this fire after the reproduced integration red; the preceding s2549 results remain historical and retained. The candidate and s2549 gate have no runtime/test/dependency differences, recorded explicitly, but that comparison does not waive the new full-command failure.
 
@@ -42,7 +42,7 @@ Evidence: `artifacts/s2550-fire/full-node.txt`, `artifacts/s2550-fire/remaining-
 
 ## Slice and verdict
 
-`main-board-gold-current-grammar.md`; saved tip `ffac3a697ee37c01e24fe16a36b70b2a1fc145c6` on `save/board-gold-current-grammar-s2547`. Current-base gate candidate `77ef114f9bc0c9d2bbfc79e977f62bb139c59c45` combines it with base `5e20fa91f7bbcd433061cbf1b3c4ed4240498dc4`, including the already-landed bounded process-capture cure.
+`main-board-gold-current-grammar.md`; saved tip `ffac3a697ee37c01e24fe16a36b70b2a1fc145c6` on `save/board-gold-current-grammar-s2547`. Current-base gate candidate `77ef114f9bc0c9d2bbfc79e977f62bb139c59c45` combines it with base `86d9a9f2e642e958b9d9befe87023efa1166db54`, including the already-landed bounded process-capture cure.
 
 **HOLD. No source commit or main merge.** The four positive gold cases and retirement checks pass, but the full Node command was stopped by the guard wrapper's 15-minute timeout. This is not complete acceptance evidence.
 
@@ -79,7 +79,7 @@ The s2547 record below is historical; its pending capture-cure wording predates 
 
 ## Slice and verdict
 
-MAIN task `main-board-gold-current-grammar.md`, completed receipt `20260907-200747-main-board-gold-current-grammar.md`. Candidate `ffac3a697ee37c01e24fe16a36b70b2a1fc145c6` is pushed to `save/board-gold-current-grammar-s2547`, parent `810ef008dc828de64dcc43d97ec2513082aa3323`.
+MAIN task `main-board-gold-current-grammar.md`, completed receipt `20260907-200747-main-board-gold-current-grammar.md`. Candidate `ffac3a697ee37c01e24fe16a36b70b2a1fc145c6` is pushed to `save/board-gold-current-grammar-s2547`, parent `cd629791de1b38c0c1131c446e1c2e6498ed4271`.
 
 **HOLD; test change not accepted or committed to main.** The runner finished its scoped work, but the full Node command failed and did not execute its chained tail. Lane-a's registered F-2546-1 corrective is still in flight. Preserve this candidate and the completed receipt; do not redispatch it.
 
@@ -105,7 +105,7 @@ The two full-command failures are the direct contention guard and its nested fix
 
 ## Merge classification
 
-Runner base: `48628dd094342e323072a95de5bf85f618bf8d7f`. No committed changes to src, functions, the board-gold test, package.json or package-lock.json occurred between that base and the saved candidate's parent.
+Runner base: `cdc3bcfe80d00617c89c1408805673e63cb8d16c`. No committed changes to src, functions, the board-gold test, package.json or package-lock.json occurred between that base and the saved candidate's parent.
 
 | Paths | Classification and disposition |
 |---|---|

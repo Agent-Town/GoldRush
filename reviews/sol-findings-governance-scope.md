@@ -1,7 +1,7 @@
 # Sol findings — governance, scope, and truth
 
 - **Branch:** `sol/repository-audit-findings`
-- **Base:** `7802ed6`
+- **Base:** `8510b61`
 - **State:** UNTRIAGED — no implementation authorized.
 - **Scope:** product-gate design, epoch sequencing, spec status, ledger scale, lore authority, and canon ontology.
 

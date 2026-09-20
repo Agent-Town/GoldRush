@@ -1,6 +1,6 @@
 # Review — board-card-images-steer (rf-37 site 10, the last one)
 
-**Slice:** `lane-board-card-images-steer` · **Branch:** `lane/m3` · **Tip:** `aaecbbbe` · **Base:** `b29d1f70`
+**Slice:** `lane-board-card-images-steer` · **Branch:** `lane/m3` · **Tip:** `aaecbbbe` · **Base:** `83567adb`
 **Drained:** s1114, 2026-07-27 · **§3.0 drain-block-check:** ✅ CLEAR (`status="authored"`, no block)
 
 ## VERDICT: ✅ MERGE — the bar was "still green", and it is green 3/3 plus mobile, on a quiet box at `--workers=1`.
@@ -13,14 +13,14 @@ so by the time the `expect.poll(...).toBe('tavern')` at `:19` started looking, n
 could only ever observe a hero who had *already* arrived; under load fewer frames render inside the fixed
 wait, less ground is covered, and the poll times out against a hero standing still.
 
-This slice replaces both calls with the closed-loop steer already merged at `e52b4fde`
+This slice replaces both calls with the closed-loop steer already merged at `d927924c`
 (`e2e/town-t1-square.spec.ts:47-64`): resolve `tavern` from `plaza.slots` (`approach ?? position`),
 then up to 48 × 160 ms nudges, re-reading the player's live position each iteration and breaking the moment
 `activePrompt === 'tavern'`. The arrival assertion at `:19` is untouched — it remains the proof.
 The now-unused `hold()` helper is deleted; ✓ VERIFIED it was file-local with exactly three references on
 main (`:17`, `:18`, `:59`), all three removed by this diff.
 
-**This completes rf-37.** Nine sites shipped `e52b4fde`; this is the tenth and last.
+**This completes rf-37.** Nine sites shipped `d927924c`; this is the tenth and last.
 
 ## Evidence
 
@@ -48,7 +48,7 @@ firewall required.
 
 ## Merge classification
 
-Base `b29d1f70`; main advanced 3 commits since (`67e6e462` BACKLOG, `082c4a9f` + `f3b7323f` STATUS line-1).
+Base `83567adb`; main advanced 3 commits since (`65f80d5c` BACKLOG, `fce29af2` + `e75558c5` STATUS line-1).
 
 | File | Class | Resolution |
 |---|---|---|

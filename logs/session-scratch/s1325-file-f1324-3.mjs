@@ -16,7 +16,7 @@ const row = [
   ' reorder the menu and those literals silently re-point, leaving a green test that asserts nothing about the composition it was written for;',
   ' ⑵ `fixedRng = () => 0` pins every internal selection to index 0 and uses only the first Frontier template, so the guard proves **structural** totality, not **value-space** totality.',
   ' ⓘ **Neither blocks, and the review said so** — both are strictly stronger than what existed before (nothing), and the defect class that took the whole suite down (one arm destroying state another reads) is fully covered.',
-  ' GATE: none owed — the review said *fold into the next touch of this rig*, and s1325 did: `tasks/lane-c-f1324-3-charter-fuzz-label-addressing.md`, queued to lane-c after refreshing the lane and proving `d640dc31` present.',
+  ' GATE: none owed — the review said *fold into the next touch of this rig*, and s1325 did: `tasks/lane-c-f1324-3-charter-fuzz-label-addressing.md`, queued to lane-c after refreshing the lane and proving `04438027` present.',
   ' The master asks for a derived label→index map that goes **RED naming the label** if it ever becomes ambiguous or absent, keeps the bidirectional assertion at full strength,',
   ' widens the sweep over three rng draws × every Frontier template, and **pre-declares a STOP if the widening uncovers a real throw** — a discovered throw is that task’s success, not its failure.',
 ].join('');
@@ -39,7 +39,7 @@ fi.tasks.push({
   authoredBy: 's1325 fire',
   spec: 'reviews/f1324-1-charter-fuzz-composition-totality.md:57 (F-1324-3, filed by the s1324 drain as OPEN/NON-BLOCKING with GATE: fold into the next touch of this rig); subject e2e/charter-press-totality.spec.ts:26,31,32; rig e2e/charter-press.rig.ts:54-121',
   authorNotes:
-    'FIRE-AUTHORED s1325. Premises re-derived at source, not inherited: the arms[3]/arms[9] literals were read in the file, and the rig was read to confirm 13 arms each returning a distinct label with four noop-guard paths (:63,:70,:77,:92) — which is precisely what makes a label->index map derivable without touching the rig. F-1324-3 also had NO BACKLOG row of its own until this fire filed one: findings-state-guard.mjs:10 counts only declarations at the start of a BACKLOG line, so it was invisible to the census while sitting inside F-1324-1 closed row and in a review file. Lane-c was ABSENT of d640dc31 (the very commit that created the file under edit) and was refreshed directly before queueing — the F-1324-2 trap, which has now caught two fires in a row.',
+    'FIRE-AUTHORED s1325. Premises re-derived at source, not inherited: the arms[3]/arms[9] literals were read in the file, and the rig was read to confirm 13 arms each returning a distinct label with four noop-guard paths (:63,:70,:77,:92) — which is precisely what makes a label->index map derivable without touching the rig. F-1324-3 also had NO BACKLOG row of its own until this fire filed one: findings-state-guard.mjs:10 counts only declarations at the start of a BACKLOG line, so it was invisible to the census while sitting inside F-1324-1 closed row and in a review file. Lane-c was ABSENT of 04438027 (the very commit that created the file under edit) and was refreshed directly before queueing — the F-1324-2 trap, which has now caught two fires in a row.',
 });
 
 fs.writeFileSync(gp, JSON.stringify(g, null, 2) + '\n');

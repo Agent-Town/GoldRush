@@ -23,17 +23,17 @@ own tools and nets. **255 were bookkeeping** — the ledger talking to itself.
 
 ⚠️ **The instrument used to write this digest has a blind spot, found while using it, and it is worth more
 than any single headline.** `git log --name-only` prints **no paths at all** for a merge commit. Twelve of
-yesterday's 322 commits are merges — including `7e93be3d` (The Drill Yard, 964 insertions) and `5528331e`
+yesterday's 322 commits are merges — including `199f7f60` (The Drill Yard, 964 insertions) and `07f0bcad`
 (stockpile tiers) — so a path classifier reads the day's **biggest landings as empty**. They were only
 recovered by re-reading each against its first parent. Content is never lost, because the lane-side
 `runner(...)` commit carries it, but **the landing event and its content are in different commits**, and a
 classifier that trusts `--name-only` will silently score a merge-heavy day as a quiet one.
 
 ⚠️ **And yesterday produced a textbook instance of the exact hazard the 07-31 digest described — one day
-later, and running in the opposite direction.** `8ea01715` is titled *"THE DRILL YARD ratified + PC-01
+later, and running in the opposite direction.** `73710a72` is titled *"THE DRILL YARD ratified + PC-01
 authored/queued (owner pick)"* — a pure bookkeeping headline. Its `--stat` contains **the entire F-1318-1
 float-fit work**: `src/systems/Vfx.ts` +14, `e2e/vfx-float-legibility.spec.ts` +50, and the whole
-`artifacts/f1318-1-float-fit-class-wide/` report and screenshots. Meanwhile `5d5929e4`, titled
+`artifacts/f1318-1-float-fit-class-wide/` report and screenshots. Meanwhile `5d5929e4 (archive: pruned by the A3 rewrite)`, titled
 *"merge(lane-a): f1318-1 float-fit class-wide"*, contains **two refreshed PNGs and nothing else — zero
 insertions, zero deletions.** The headline and its content are not merely apart, they are **swapped**.
 Classifying by message would have credited F-1318-1 to a commit holding none of it and lost the
@@ -48,64 +48,64 @@ Prospector's own sim, and a day whose remaining two-thirds was the factory harde
 
 ## What the family can see
 
-**The Drill Yard opens — the forty-second claim, and the first that records nothing.** `7e93be3d`
+**The Drill Yard opens — the forty-second claim, and the first that records nothing.** `199f7f60`
 A practice ground: bells call waves of dummies, you build and fight, and when you leave the county ledger
 is exactly as you found it. 334 new lines of yard, a contract card of its own, and the wave system taught
 to run a claim that keeps no score.
 
-**The Drill Yard got its plate.** `d6949115`
+**The Drill Yard got its plate.** `26906c98`
 The 42nd contract no longer borrows another claim's face on the board — it has its own painted plate, card
 and board art, and the board-card image census flips two reds to green.
 
-**Stockpiles are now something you buy your way up.** `5528331e`
+**Stockpiles are now something you buy your way up.** `07f0bcad`
 Purchasable rungs instead of one fixed capacity, with the tier-aware cap enforced at all four places that
 write it — and save, restore and demolish each proven to carry the tier rather than quietly reset it.
 
-**The Stockpile Yard learned to say which rung it is on.** `de3c68d5`
+**The Stockpile Yard learned to say which rung it is on.** `8c8d6139`
 The upgrade float and the build-menu capacity line now name the tier out loud, so the number on the yard
 and the number in the menu can no longer disagree.
 
-**Upgrade sentences fit their sign.** `b1dc3306` · `8ea01715`
+**Upgrade sentences fit their sign.** `efa3b252` · `73710a72`
 Long upgrade text used to render as a mid-word fragment hanging off the edge of the float. It now fits —
 and the guard behind it derives all eight sentences from the tier table, so a new rung cannot reintroduce
 the overflow unseen.
 
-**The Frontier's cards say "survive" where survive is the truth.** `06ce6241`
+**The Frontier's cards say "survive" where survive is the truth.** `ef1db83c`
 An owner ruling of 08-01, landed in the copy the player actually reads: briefings, cards, the pause panel
 and the wave-13 line all now describe the claim you are on rather than one you are not.
 
-**The ground reads faster under the same seed.** `992f4066`
+**The ground reads faster under the same seed.** `66af4433`
 Twenty-eight URL-parameter constructions per height sample became one. Nothing looks different; the map
 just stops paying a toll it never needed to.
 
 ## What the Prospector's own sim learned
 
-**The Claim's pin comes off, with the door named rather than left ajar.** `38b20154`
+**The Claim's pin comes off, with the door named rather than left ajar.** `f05fd161`
 The headless sim now carries an explicit supported-contract set and throws by enumeration when asked for
 one outside it, plus a determinism case — so an unsupported claim fails loudly instead of drifting.
 
-**Night shift places its fixtures before it admits the claim.** `07854e6b`
+**Night shift places its fixtures before it admits the claim.** `90003628`
 Pre-placed buildables are set generically ahead of e1-night-shift, so the sim stops special-casing one
 contract's furniture.
 
-**`lossCondition` is now `heroStart`, everywhere at once.** `69984c6a`
+**`lossCondition` is now `heroStart`, everywhere at once.** `8efae704`
 A repo-wide rename across all ten epochs' contracts and mask tables — 43 files, no behaviour change. The
 field had stopped meaning what it was called, which is how vocabulary quietly starts lying.
 
 ## What the factory did to itself (39 merges, no player surface)
 
-The keep-run-tape button gained a **plain-boot** guard (`ae2a60f3`) — the Mistake #10 shape, proving a
+The keep-run-tape button gained a **plain-boot** guard (`2871c127`) — the Mistake #10 shape, proving a
 player-facing control exists without `?debug` rather than trusting that it does. The charter fuzz rig was
-made **total** over its mutation space and then taught to address arms by label (`d640dc31`, `3566520f`),
+made **total** over its mutation space and then taught to address arms by label (`04438027`, `d961bcd3`),
 restoring whole-suite collection from 0 to 2,476 tests. Three separate nets were tightened around the
 ledger's own coordinates: the citation gate moved to the queue copy rather than after dispatch
-(`98272a1b`), `law-pointer-guard` began watching the goal ledger's live owner gates (`a180b468`), and
-BACKLOG line-coordinates were banned from non-terminal blocked reasons (`d430c897`) — after all four
-pointers guarding live owner gates were found rotted (`f3b6a5fa`). Lane **usability** was separated from
-lane **safety** on every verdict (`f7f5c1d2`), and a queue copy of a master a runner already holds is now
-refused outright (`97e7b1a2`). Deploy survived two of its own bugs: a whitespace-only env var that slipped
-`${VAR:-default}` and aborted a successful run (`836fa835`), and a verify window too short for a slow alias
-(`669cb046`). Sixteen specs stopped defining their own console watcher and now import one (`d596f912`).
+(`434b52a8`), `law-pointer-guard` began watching the goal ledger's live owner gates (`996202dc`), and
+BACKLOG line-coordinates were banned from non-terminal blocked reasons (`c68cae0b`) — after all four
+pointers guarding live owner gates were found rotted (`b0c697a5`). Lane **usability** was separated from
+lane **safety** on every verdict (`d3349fc0`), and a queue copy of a master a runner already holds is now
+refused outright (`e95ab2cd`). Deploy survived two of its own bugs: a whitespace-only env var that slipped
+`${VAR:-default}` and aborted a successful run (`ded31e64`), and a verify window too short for a slow alias
+(`2f629f52`). Sixteen specs stopped defining their own console watcher and now import one (`892026d2`).
 
 **The through-line, and it is the third day running:** the factory keeps finding that its instruments
 describe themselves inaccurately — rotted pointers, a headline swapped with its content, and a path

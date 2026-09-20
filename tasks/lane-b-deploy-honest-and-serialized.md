@@ -1,7 +1,7 @@
 # Task lane-b-deploy-honest-and-serialized: the deploy must report WHY it failed, and must not upload a `dist/` another process is rewriting (LANE-B, commit prefix "fix:")
 
 **FIRE-AUTHORED s1048, 2026-07-25 (attended review welcome).** Closes **F-1048-4** and **F-1048-5**, both
-measured by this fire while gating `e718b7cc` — not inherited, not reasoned about.
+measured by this fire while gating `dca123b6` — not inherited, not reasoned about.
 
 You are Codex, implementer for Gold Rush, running natively on Robin's Mac in `worktrees/lane-b` (branch `lane/m4`).
 CODEX: model=gpt-5.6-sol effort=high
@@ -15,7 +15,7 @@ READ FIRST (paths, not memory):
 
 > Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead is NORMAL — the runner auto-commits. For each ahead commit: if its content is already merged to main (verify via git log/diff), it is a SAFE DUPE → `git checkout -B lane/m4 main && git clean -fd` and PROCEED. STOP-and-report ONLY if an ahead commit's content is NOT on main (undrained work — resetting would DESTROY it), or the worktree holds uncommitted edits you did not make. Then `npm install --no-audit --no-fund`; `npm run build` green before touching anything.
 >
-> (Sanity-check rather than trust me: at authoring time `lane/m4`'s only ahead commit was `e37a1d67`, which merged to main as **`e718b7cc`** — a safe dupe.)
+> (Sanity-check rather than trust me: at authoring time `lane/m4`'s only ahead commit was `6a53a95b`, which merged to main as **`dca123b6`** — a safe dupe.)
 
 ## Why (measured by the s1048 fire while gating the asset-diet budget slice)
 
@@ -81,7 +81,7 @@ reaching the deploy path.
 
 **Touch ONLY:** `scripts/deploy.sh`.
 
-**NO changes to:** the asset-budget leg merged as `e718b7cc` (its threshold, its `--grep`, its `sed`, its
+**NO changes to:** the asset-budget leg merged as `dca123b6` (its threshold, its `--grep`, its `sed`, its
 temp-cwd isolation — all of it is load-bearing and was just gated) · `:3-4`'s never-block law or `finish()`'s
 `exit 0` default · the `.env.local` / `CLOUDFLARE_API_TOKEN` auth path (a fire cannot re-auth — F-1024-4) ·
 anything under `src/` or `e2e/` · `package.json` · new dependencies (`flock` is NOT on macOS by default —

@@ -67,7 +67,7 @@ Break link 1 and the loop cannot close. **Nothing else in the chain needs to cha
 - `src/agent/StandingOrders.ts` — read `fail`, `status`, `surprise`, `detectSurprises` and the
   `finishAction` call site **in full**. This is the only file you will change in `src/`.
 - `reviews/f1527-1-gr-sim-noop-submission.md` — the sibling ER-02 repair merged minutes before this
-  task was written (`b55e6ac5`), so you know what "a free turn" now means on the solo path.
+  task was written (`b022727e`), so you know what "a free turn" now means on the solo path.
 
 CITE BY CONTENT, NOT BY LINE (F-1310-1). **Each key below was measured to return exactly `1` on main
 at authoring time (F-1425-2), and each was chosen to sit visibly on ONE line so no prose wrap can
@@ -79,7 +79,7 @@ make the grep match nowhere.** Verify each returns **1** in the lane before star
 - **LANE-CURRENCY KEY** — `grep -c "    if (orders === null) return;" scripts/gr-sim.mjs` → 1
 
 **If any returns 0, STOP and report which one and what it returned.** The last key is deliberately
-the content of the `f1527-1` merge (`b55e6ac5`) that landed minutes before this task was written: a
+the content of the `f1527-1` merge (`b022727e`) that landed minutes before this task was written: a
 **0 there means the lane is behind main**, not that the file is wrong. Do not "fix" any of them by
 editing the citation, and do not proceed on a premise you could not confirm.
 

@@ -13,7 +13,7 @@ A lane's safe-dupe protection lives in **each master's PRE-FLIGHT prose**, so a 
 | 12:39:43 | runner **re-dispatches the same master**; its safe-dupe pre-flight **works perfectly** and STOPs, naming that exact commit as undrained |
 | 12:41:13 | runner dispatches a **different** master (`lane-fd1-front-desk-card`, authored 2026-08-05) into the same lane; Codex prints `## lane/a...origin/main [ahead 1, behind 20]` and then runs `git checkout -B lane/a origin/main`, orphaning the commit onto the reflog alone |
 
-The work survived only because s1522 rescued it (`archive/f1424-4-worker-arm-rates-s1522`, drained `28d03c9e7`). This is `CLAUDE.md` **Mistake #2 (the Reset Massacre)** in its exact original shape.
+The work survived only because s1522 rescued it (`archive/f1424-4-worker-arm-rates-s1522`, drained `ec6976bcd`). This is `CLAUDE.md` **Mistake #2 (the Reset Massacre)** in its exact original shape.
 
 **Read from the logs, so the cure is aimed correctly:** the runner does **not** reset lanes at dispatch — the only `git reset --hard main` in `scripts/lane-runner-v3.sh` is at `:154`, inside the janitor `refresh-lane)` branch, and no janitor request was involved. The reset was performed by **Codex executing the fd1 master's own pre-flight**, which guards *uncommitted dirt* and says nothing about *committed-but-undrained* commits. Codex obeyed correctly. **It had `ahead 1` on screen and was never asked about it.** (F-1422-2 independently verified this same mechanism: *"dispatch does not refresh a lane — only the janitor does."*)
 

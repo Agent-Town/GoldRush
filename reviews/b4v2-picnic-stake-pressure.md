@@ -1,6 +1,6 @@
 # b4v2-picnic-stake-pressure — the ruled pressure works; the hero pins its own stake
 
-**Slice:** `b4v2-picnic-stake-pressure` · **branch:** `lane/b` · **tip:** `1731de225026ba6f0fc8fcf8a42e3586315a1a08`
+**Slice:** `b4v2-picnic-stake-pressure` · **branch:** `lane/b` · **tip:** `d379657ae60a8774c3aa8977b2d487184f944606`
 **Run log:** `tasks/runs/20260820-205454-lane-b-b4v2-picnic-stake-pressure.md.log` (3.1 MB, 288,359 tokens)
 **Evaluated by:** s2090, read-only (`git show lane/b:<path>`) — no checkout, no merge, main's tree never touched (§3.0b)
 **Merged to main:** **NO — Law-2 STOP by the runner, upheld.**
@@ -114,7 +114,7 @@ ruling on (a)/(b)/(c) above.
 
 ## What is preserved
 
-`lane/b` is `ahead=2`, HOLDS 7 paths (`lane-usable lane-b`), tip `1731de225026ba6f0fc8fcf8a42e3586315a1a08`:
+`lane/b` is `ahead=2`, HOLDS 7 paths (`lane-usable lane-b`), tip `d379657ae60a8774c3aa8977b2d487184f944606`:
 `PicnicHoldSystem.ts` (+pressure), the e2e spec, `er01-e6-census`, `MechanicsManifest`, `pools.ts`,
 `Game.ts`, `HeadlessContractSim.ts`. Admission changes were reverted by the runner, so **the Picnic
 stays honestly refused on main** and the WIP is inert where it sits (picnic-gated by contract id).

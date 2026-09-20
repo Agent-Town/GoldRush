@@ -16,9 +16,9 @@ CODEX: gpt-5.6-sol effort=high
 
 Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead is NORMAL — the runner auto-commits. For each ahead commit: if its content is already merged to main (verify via git log/diff), it is a SAFE DUPE → `git checkout -B lane/e2-arsenal main && git clean -fd` and PROCEED. STOP-and-report ONLY if an ahead commit's content is NOT on main (undrained work — resetting would DESTROY it), or the worktree holds uncommitted edits you did not make. Then `npm install --no-audit --no-fund`; `npm run build` green before touching anything.
 
-*(Measured by the authoring fire at 2026-07-29T01:58Z: `lane/e2-arsenal` was **1 ahead at `7a840663`** but `git diff --name-only --diff-filter=A main..lane/e2-arsenal` was **EMPTY** — its content landed on main as `b8ccf36c`, i.e. a FALSE-AHEAD SAFE DUPE. Re-derive it anyway; the board moves.)*
+*(Measured by the authoring fire at 2026-07-29T01:58Z: `lane/e2-arsenal` was **1 ahead at `7a840663`** but `git diff --name-only --diff-filter=A main..lane/e2-arsenal` was **EMPTY** — its content landed on main as `dae48b8b`, i.e. a FALSE-AHEAD SAFE DUPE. Re-derive it anyway; the board moves.)*
 
-## Why (`reviews/eight-winds-e2-row-order-survey.md`, drained `b8ccf36c` 2026-07-29)
+## Why (`reviews/eight-winds-e2-row-order-survey.md`, drained `dae48b8b` 2026-07-29)
 
 The survey did its job: it sized the E2 diagonal art batch for two of three sheets **exactly**, and it did so by validating each discriminator before using it. What it could not close is one specific conflict, and it stopped there honestly — which is why this task is narrow.
 

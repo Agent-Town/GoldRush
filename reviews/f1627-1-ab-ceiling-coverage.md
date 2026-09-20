@@ -1,7 +1,7 @@
 # Review — f1627-1-ab-ceiling-coverage
 
-**Slice:** `f1627-1-ab-ceiling-coverage` (FIRE-AUTHORED s1627, from F-1627-1 at the `f1625-1` drain `bc35fa79c`)
-**Branch:** `lane/c` · **lane tip:** `53b113b5d` · **merge:** `0fa484763ff7008fd38babff2b5e1dfd07dd026f`
+**Slice:** `f1627-1-ab-ceiling-coverage` (FIRE-AUTHORED s1627, from F-1627-1 at the `f1625-1` drain `eafa978e2`)
+**Branch:** `lane/c` · **lane tip:** `40a75f5a2` · **merge:** `082c98bf17377fc16362a5cc800b32e194f17e6e`
 **Drained by:** s1629 · **Gated in:** detached worktree `gate-s1629` (§3.0b)
 
 ## Verdict
@@ -56,7 +56,7 @@ the full budget was run rather than rationed on a load-average headline.
 
 ## Merge classification
 
-Base `8db2cc4eb`. All **9** files **LANE-TOUCHED / MAIN-UNMOVED** — measured per file with
+Base `59de52a38`. All **9** files **LANE-TOUCHED / MAIN-UNMOVED** — measured per file with
 `git log <base>..main -- <path>` (zero commits on main for every one). Clean `ort` merge, no conflicts, no graft.
 
 `e2e/asset-diet.spec.ts` (+6/-1) · `artifacts/asset-diet/town-budget-{desktop,mobile}-chrome.md` ·
@@ -115,7 +115,7 @@ The desktop `town byte budget` arm completed inside the full 6/6 pass with no ti
 
 `tasks/done/` held **two** done-moves of this task. s1628's handoff advised draining "the LATER one"; that is
 **wrong and would have drained an empty run**. The 13:05 run (78 KB log, 38,199 tokens) is a lane-safety
-pre-flight **STOP**: it correctly refused because the 12:32 run's own output (`53b113b5d`) was still undrained,
+pre-flight **STOP**: it correctly refused because the 12:32 run's own output (`40a75f5a2`) was still undrained,
 and it made no edits, ran no gates and produced no commit. The work is entirely in the 12:32 run.
 
 This is the known `false-done-from-preflight-stop-behind-undrained-predecessor` shape, and the general rule it

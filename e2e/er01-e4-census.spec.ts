@@ -32,13 +32,13 @@ for (const contract of motor.contracts) {
         expect.objectContaining({ status: 'missing' }),
       ]);
       // F-1742-1 (2026-08-20). This line read `.toBeUndefined()` and was RED ON MAIN from
-      // `dca7ca81f` ("bank six idle-safe benchmark floors") onward: that commit bench-seeded
+      // `e33af94ef` ("bank six idle-safe benchmark floors") onward: that commit bench-seeded
       // e4-dust-flats + e4-boneyard and taught the e7/e8/e9 censuses the seeded shape, but left
       // this one asserting the pre-door rule, so er01-e4-census sat 4-of-8 red (dust-flats +
       // boneyard, both projects) unnoticed. All four Motor contracts are door-servable today —
       // `skillmd-guard` pins them into skill.md's door-contracts fence against
       // SUPPORTED_CONTRACTS — and each now carries the standard two-seed bench set with an
-      // honest, unsecured null floor. This is `dca7ca81f`'s own pattern applied here, and it is
+      // honest, unsecured null floor. This is `e33af94ef`'s own pattern applied here, and it is
       // STRICTER than what it replaces: the exact seed list is pinned, not merely forbidden.
       expect((benchSeeds as Record<string, string[]>)[contract.id])
         .toEqual([`${contract.id}-01`, `${contract.id}-02`]);

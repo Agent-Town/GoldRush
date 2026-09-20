@@ -87,7 +87,7 @@ async function withClock(startMs, body) {
 }
 
 /**
- * The PRE-CURE body, copied from `git show 7bec53556:functions/api/_ratelimit.ts` (the base this
+ * The PRE-CURE body, copied from `git show 797052233:functions/api/_ratelimit.ts` (the base this
  * branch was cut from). It is here as a control: an arm that only exercises the new code cannot say
  * whether the old code would have passed too.
  */

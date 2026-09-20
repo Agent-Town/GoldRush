@@ -2,7 +2,7 @@
 
 - **Slice:** `lane-a-m3-05f-ledger-remaining-card-evidence` (FIRE-AUTHORED s1194)
 - **Branch / tip:** `lane/m3` @ `fce4e7d4` (Codex's own commit `b39edde1`; `fce4e7d4` is the runner's auto-commit)
-- **Base:** `0bd46e55`
+- **Base:** `654515e3`
 - **Drained by:** s1195 fire, 2026-07-29
 - **Verdict:** ✅ **ACCEPTED** — merged as a 6-path graft, the 4 churn PNGs deliberately excluded.
 
@@ -52,7 +52,7 @@ the F-1193-5 mechanism reproducing itself exactly where theory says it should, a
 
 ## Merge classification
 
-Base `0bd46e55`; `git diff --name-only 0bd46e55 main` = **`STATUS.md` alone** ⇒ **collisions NONE**, no
+Base `654515e3`; `git diff --name-only 654515e3 main` = **`STATUS.md` alone** ⇒ **collisions NONE**, no
 3-way graft needed. Of the lane's 10 changed paths:
 
 | Path | Class | Action |

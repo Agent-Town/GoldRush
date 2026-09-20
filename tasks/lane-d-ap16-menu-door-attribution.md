@@ -13,7 +13,7 @@ Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead 
 AP-16-6C must be present. AP-16-7 must remain unmerged and gate-side blocked; this task is independent of its held candidate and must not absorb any lane-b bytes.
 
 ```sh
-git merge-base --is-ancestor d599cd3ea030a1e6d699f106115b1d3fdf54d775 HEAD
+git merge-base --is-ancestor dbcbf31220e2dc332f7e809c3ab00572f7fe88bb HEAD
 grep -Fc "THE 29 DIVERGENT MENU ROWS ARE NOT A SECOND INDEPENDENT DEBT" tasks/BACKLOG.md
 grep -Fc "Browser-menu versus door" scripts/same-game-audit.mjs
 grep -Fc "same-game audit follows the door grammar through the final AP-16 verbs" scripts/same-game-audit.test.mjs

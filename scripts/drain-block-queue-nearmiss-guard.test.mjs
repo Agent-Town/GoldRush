@@ -79,7 +79,7 @@ const SHIPPED_LEAF = {
   id: 'toolsurface-terrain-edge',
   taskFile: 'lane-d-toolsurface-terrain-edge.md',
   status: 'merged',
-  mergeHash: '0d718cead13908c1f9277e7335d19e75ddf37d90',
+  mergeHash: '0331c2b472cf7440ccea1611f0bcb82702d8ebea',
 };
 const PARKED = 's2382-PARKED-armed-duplicate-dispatch-lane-d-toolsurface-terrain-edge.md';
 const FIXTURE = { leaves: [SHIPPED_LEAF], masters: ['lane-d-toolsurface-terrain-edge.md'] };
@@ -100,7 +100,7 @@ test('2. the declaration names the leaf, its status and its merge hash', () => {
   const { out } = run(SOURCE, root, ['--queue', PARKED]);
   assert.match(out, /toolsurface-terrain-edge/, 'must name the leaf a fire has to go ask about');
   assert.match(out, /status="merged"/, 'a bare name is not actionable — the STATUS is the warning');
-  assert.match(out, /0d718cea/, 'the merge hash is what proves the work already landed');
+  assert.match(out, /0331c2b4/, 'the merge hash is what proves the work already landed');
 });
 
 test('3. it DECLARES and does not refuse — verdict and rc are unchanged', () => {

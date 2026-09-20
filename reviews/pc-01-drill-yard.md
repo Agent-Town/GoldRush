@@ -7,8 +7,8 @@
 
 - **Slice:** PC-01, `specs/practice-claim/README.md` (RATIFIED as THE DRILL YARD, owner 2026-08-01)
 - **Master:** `tasks/done/20260801-072250-lane-drill-yard.md` (attended-authored; **not** queued by s1319 or s1320)
-- **Branch / tip:** `lane/m4` @ `f0bf5251` (`runner(lane-b): lane-drill-yard.md`, 2026-08-01T08:14:09+07:00)
-- **Merge-base:** `f911e6cc` (2026-08-01T07:14:03+07:00)
+- **Branch / tip:** `lane/m4` @ `f86b28b3` (`runner(lane-b): lane-drill-yard.md`, 2026-08-01T08:14:09+07:00)
+- **Merge-base:** `62760ec0` (2026-08-01T07:14:03+07:00)
 - **Drained by:** s1321 fire, 2026-08-01
 - **VERDICT: REJECT — do not merge.** The slice is good work and its own spec is strong, but it lands a **sixth E1 contract** whose card is filtered out of the rendered board, which reds **4 tests across 2 adjacent suites** that the runner's own gate battery never ran. Corrective queued to lane-b as `lane-b-pc01b-drill-yard-board-manifest-parity.md`. **Nothing is lost — the work stays on `lane/m4`; main was restored byte-clean.**
 
@@ -58,9 +58,9 @@ graft  E1 contracts: 6  the-claim, e1-drill-yard, e1-dry-gulch, e1-night-shift, 
 
 ## Merge classification (performed, then reverted)
 
-Base `f911e6cc`; 22 paths moved on the lane. Per-path merge-base classification, run independently of `lane-usable`:
+Base `62760ec0`; 22 paths moved on the lane. Per-path merge-base classification, run independently of `lane-usable`:
 
-- **4 ABSORBED-IDENTICAL** — `docs/bench/agent-playability-census.md`, `env/goldrush-verifiers/README.md`, `scripts/gr-sim.test.mjs`, `src/sim/HeadlessContractSim.ts`. These are s1319's ap-07 drain (`07854e6b`) reaching the lane; lane content is byte-identical to main, so there was nothing to graft.
+- **4 ABSORBED-IDENTICAL** — `docs/bench/agent-playability-census.md`, `env/goldrush-verifiers/README.md`, `scripts/gr-sim.test.mjs`, `src/sim/HeadlessContractSim.ts`. These are s1319's ap-07 drain (`90003628`) reaching the lane; lane content is byte-identical to main, so there was nothing to graft.
 - **18 LANE-ONLY** — main has not touched any of them since the base, so a path-scoped checkout is a faithful graft. Grafted, gated, then reverted on the REJECT.
 
 ⚠️ A blind `git merge` here would have been the s1319 shape again: the lane base is ~1h stale, so a two-dot diff renders main's newer commits as deletions. The per-path classifier is what makes this safe.

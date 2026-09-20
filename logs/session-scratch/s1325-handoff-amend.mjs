@@ -5,7 +5,7 @@ const lines = fs.readFileSync(p, 'utf8').split('\n');
 
 const OLD = '**`test:ledger-guards` run as my LAST act**, after the rows existed — see §H for the result. ';
 const NEW = [
-  '🧪 **(F2) `test:ledger-guards` RUN AS MY LAST ACT — AND IT CAUGHT THREE DEFECTS, ALL THREE MINE (`b5853adf`).** ',
+  '🧪 **(F2) `test:ledger-guards` RUN AS MY LAST ACT — AND IT CAUGHT THREE DEFECTS, ALL THREE MINE (`da7d9808`).** ',
   'This is the F-1300-4 class doing exactly what it was written for, and it landed in **all three of the subjects a fire mutates late**: ',
   '⑴ **LAW SURFACE** — my own janitor fix inserted **15 lines directly above the RETENTION LAW epitaph**, rotting `CLAUDE.md`’s pointer `lane-runner-v3.sh:139` → **`:154`** (and the `.git` sweep `:137` → **`:152`**). ',
   '**Substance re-verified BY READING the file, not by trusting the guard:** the prune is still present only as a commented DO-NOT-RESTORE epitaph — the law is INTACT and was never violated. ',

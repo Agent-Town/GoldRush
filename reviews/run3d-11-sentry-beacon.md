@@ -2,7 +2,7 @@
 
 **Slice:** run3d-11-sentry-beacon — RUN-3D sentry-beacon pilot (registry sibling `sentry_beacon`)
 **Branch/tip:** lane/m4 @ `93d574af` (runner(lane-b))
-**Base:** `87296920` (s448 palisade drain — registry {palisade,sluice,turret,stockpile} + refactored body)
+**Base:** `a239363b` (s448 palisade drain — registry {palisade,sluice,turret,stockpile} + refactored body)
 **Merged to main:** s450 fire, drain 1/2
 **Verdict:** PASS — merged.
 
@@ -24,7 +24,7 @@ Adds a fifth `?run3dPilot`-gated 3D building pilot: `sentry_beacon` (444 tri GLB
 Perf note: recipe's 12-instance probe unreachable (sim caps beacons at 4 via `Balance.beacon.maxCount`); slice firewall forbids changing sim capacity, so max-capacity (4) is the legal ceiling probed.
 
 ## Merge classification
-- `src/game/Run3dPilot.ts` — **MAIN-MOVED-ONLY / registry union**: main == lane base (no main-side edit since `87296920`), so the single additive registry line (`sentry_beacon` after `stockpile`) applied cleanly via Edit; merged file byte-identical to `lane/m4:src/game/Run3dPilot.ts` (verified `git diff --no-index`, empty).
+- `src/game/Run3dPilot.ts` — **MAIN-MOVED-ONLY / registry union**: main == lane base (no main-side edit since `a239363b`), so the single additive registry line (`sentry_beacon` after `stockpile`) applied cleanly via Edit; merged file byte-identical to `lane/m4:src/game/Run3dPilot.ts` (verified `git diff --no-index`, empty).
 - `assets/pilots/run3d/sentry-beacon.{glb,blend}`, `e2e/run3d-sentry-beacon.spec.ts`, `artifacts/run3d-sentry-beacon/*` — **LANE-TOUCHED / all-new**, cp'd from worktrees/lane-b, no main-side collision.
 
 ## Findings

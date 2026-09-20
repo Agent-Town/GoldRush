@@ -11,7 +11,7 @@ You are Codex on the **lane-c** slot = `worktrees/lane-c` (branch `lane/polish`)
 - `scripts/extract-alpha.mjs` (the magenta-key + `--grid CxR` extraction command surface)
 
 ## PRE-FLIGHT (LANE-SAFETY — safe-dupe reset, s233-verified loss-free)
-`lane/polish` tip `197ac37` (night-shift) is a **content-merged safe-dupe** — its content is on main as `c2d8062` (VERIFIED s233: `git merge-base --is-ancestor c2d8062 main` = true). So bringing the lane current is loss-free:
+`lane/polish` tip `197ac37` (night-shift) is a **content-merged safe-dupe** — its content is on main as `9ab57f7` (VERIFIED s233: `git merge-base --is-ancestor c2d8062 main` = true). So bringing the lane current is loss-free:
 1. Run `git checkout -B lane/polish main` to reset the lane worktree to current main (drops only the `197ac37` night-shift dupe, whose content is already on main).
 2. GUARD: if `git rev-list --count main..lane/polish` is > 1 BEFORE the reset, STOP and report — do NOT reset (an undrained predecessor may be present). As of authoring it is exactly 1 (safe).
 

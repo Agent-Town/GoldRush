@@ -13,11 +13,11 @@ READ FIRST:
 
 Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead is NORMAL — the runner auto-commits. For each ahead commit: if its content is already merged to main (verify via git log/diff), it is a SAFE DUPE → `git checkout -B lane/d main && git clean -fd` and PROCEED. STOP-and-report ONLY if an ahead commit's content is NOT on main (undrained work — resetting would DESTROY it), or the worktree holds uncommitted edits you did not make. **EVIDENCE-ARTIFACT EXCEPTION (F-1266-1, s1266): changes confined to regenerated evidence — `artifacts/**`, `reviews/shots-*`, and any `.png` screenshot — are NEVER "work" and NEVER a STOP, whether they sit as uncommitted dirt or as the entire content of an ahead commit. Screenshots are never byte-identity gated, so their bytes differ from main forever. Discard them (`git checkout -- <paths>` / reset) and PROCEED, listing what you discarded.** Then `npm install --no-audit --no-fund`; `npm run build` green before touching anything. **THEN A CLEANLINESS LINE: `git -C worktrees/lane-d status --short` → must be clean, with the FACTORY-CHURN EXCEPTION — always expected, never a STOP; list them and proceed (F-1407-1): (a) `logs/**`; (b) `artifacts/**`, `reviews/shots-*` and any `.png`. What still STOPs: modified tracked `src/**`, `scripts/**`, `e2e/**`, `tasks/**`, `specs/**`, `reviews/*.md`.**
 
-⚠️ At authoring time `node scripts/lane-usable.mjs lane-d` read **USABLE**, `ahead=0 behind=25`, no tracked dirt. Re-run it yourself; if it does NOT say `USABLE`, **STOP** and report. The reset above makes the lane current — you need it, because main gained `scripts/picnic-hold-contract-scope.test.mjs` and its `package.json` rooting at `52c48fce7`, so an un-refreshed lane's `test:node-guards` is a strict SUBSET of main's.
+⚠️ At authoring time `node scripts/lane-usable.mjs lane-d` read **USABLE**, `ahead=0 behind=25`, no tracked dirt. Re-run it yourself; if it does NOT say `USABLE`, **STOP** and report. The reset above makes the lane current — you need it, because main gained `scripts/picnic-hold-contract-scope.test.mjs` and its `package.json` rooting at `afbda29bc`, so an un-refreshed lane's `test:node-guards` is a strict SUBSET of main's.
 
 ## WHY — one predicate, asked twice, legible in neither place
 
-`f2124-1` (`789dc39a7`) gave the agent view live seam positions. It shipped with the seam predicate
+`f2124-1` (`b253af85c`) gave the agent view live seam positions. It shipped with the seam predicate
 written **once, collapsed**, and left the audit half unbuilt. Both are recorded and both are cheap.
 
 **F-2127-2** — verified at source by the s2133 drain, not inherited. `e2e/agent-view.spec.ts:557-559`

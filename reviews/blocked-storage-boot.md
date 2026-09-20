@@ -2,7 +2,7 @@
 
 **Slice:** `lane-blocked-storage-boot.md` + `lane-blocked-storage-boot-2.md` (lane-a, one stack)
 **Branch / tip:** `lane/m3` `76ded07bdfe0d3e1d541ab878f1e1fd41d356d3b`
-**Merge-base:** `fce1660032edb6eaa2ffd74ff8be16c381569c06`
+**Merge-base:** `4afd174a21bce9bf55080bed2d5b2ddba71c83a1`
 **Drained by:** s1083 fire, 2026-07-26
 **Goal leaves:** `rf-19-blocked-storage-boot` · `rf-20-blocked-storage-boot-2`
 
@@ -38,7 +38,7 @@ invented: it is the ordinary "no tile state saved yet" first-boot state every ca
 | `src/game/ProfileStorage.ts` | **LANE-TOUCHED only** | byte-identical graft |
 | `src/game/TileStateStore.ts` | **LANE-TOUCHED only** | byte-identical graft |
 
-`git diff fce16600 main -- <both files>` is **EMPTY** — main never moved either file since the
+`git diff 4afd174a main -- <both files>` is **EMPTY** — main never moved either file since the
 merge-base, so there was no MAIN-MOVED side and no 3-way was needed. Post-graft
 `git diff 76ded07b -- <both files>` is **EMPTY**: the merged tree is byte-identical to the lane tip.
 Both lane commits were taken (`a86bc334` + `76ded07b`); the stack is drained whole, which is why

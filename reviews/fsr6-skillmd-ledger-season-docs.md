@@ -2,9 +2,9 @@
 
 **Slice:** `fsr6-skillmd-ledger-season-docs` (F-SR-6 cure)
 **Branch:** `lane/b`
-**Lane tip:** `3df12969b` — `runner(lane-b): fsr6-skillmd-ledger-season-docs.md`
-**Base:** `7bf77fce3` (s2080's dispatch commit)
-**Merge:** `082340dd0d82255b13c0147ee0f3cb94e71ba974` (`--no-ff`, main was `5329a9b5b`)
+**Lane tip:** `a17efce96` — `runner(lane-b): fsr6-skillmd-ledger-season-docs.md`
+**Base:** `980616ff1` (s2080's dispatch commit)
+**Merge:** `8b69d821e3755af00b52f60a58811e25594e0ad3` (`--no-ff`, main was `c7d8c1e4f`)
 **Authored by:** s2080, FIRE-AUTHORED (attended review welcome)
 
 ## VERDICT: MERGED — clean three-way, own spec green, single red proved pre-existing by control.
@@ -32,7 +32,7 @@ reader's missing `season` field) is deliberately NOT made — see Findings.
 |---|---|---|
 | `public/skill.md` | **BOTH-MOVED** | three-way, zero conflicts — both sides survive |
 
-Main moved `skill.md` at `ae1311eac` (E6 Homemaker: `e6-glow-mesa` added to the guarded
+Main moved `skill.md` at `a4bbf00f6` (E6 Homemaker: `e6-glow-mesa` added to the guarded
 `skillmd-guard:door-contracts` block). The lane appended a new section *after* that block's
 `:end` marker. `git merge --no-ff` resolved with **zero conflicts**; verified post-merge that
 main's `"e6-glow-mesa",` survives at `:283` and the lane's `## LEDGER SEASONS` at `:293`.
@@ -41,7 +41,7 @@ main's `"e6-glow-mesa",` survives at `:283` and the lane's `## LEDGER SEASONS` a
 `git diff --stat main lane/b` reads **27 files / 685 insertions / 7269 deletions** — the E6
 artifacts, the capture-loop probe, the door-completion sheet and `HeadlessContractSim.ts` all
 apparently destroyed. **Every one is a stale-base phantom:** main had moved 10 commits under a
-lane based at `7bf77fce3`. The real change, `base..lane/b`, is **1 file / +6 / −0**. This is
+lane based at `980616ff1`. The real change, `base..lane/b`, is **1 file / +6 / −0**. This is
 the identical shape s2080 recorded for the previous lane-b drain; measure `base..tip`.
 
 ## Evidence (merged tree, detached worktree `gate-s2081` per §3.0b, `--workers=1` per §3.1)

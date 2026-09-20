@@ -4,7 +4,7 @@ const R = '/Users/robin/Claude/Projects/Gold Rush';
 execFileSync('git', ['add', 'STATUS.md'], { cwd: R });
 
 const msg = [
-  's1630 handoff: f1628-3 DRAINED 1197a9612 — six reds cured by one fixture-only file; the >= 22 threshold two ledgers told me to protect is a RUNTIME value, not source text; F-1630-1 filed AND its corrective dispatched to lane-a',
+  's1630 handoff: f1628-3 DRAINED 6f47e538e — six reds cured by one fixture-only file; the >= 22 threshold two ledgers told me to protect is a RUNTIME value, not source text; F-1630-1 filed AND its corrective dispatched to lane-a',
   '',
   'Drain: 1 (f1628-3). Authored: 1 (f1630-1, dispatched lane-a — cap was ONE because I drained).',
   'Duties all VERIFIED not assumed: GZ-01 sweep 67/67 cited, 0 uncited; TK-01 not owed (read the',

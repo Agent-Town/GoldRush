@@ -8,7 +8,7 @@ You are Codex, implementer for Gold Rush, running natively on Robin's Mac in `wo
 
 Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead is NORMAL — the runner auto-commits. **Do not compare this worktree against a list of files I wrote; I do not have one, and an exhaustive dirt list is the wrong instrument (it is what stopped a runner needlessly at s1132).** Check the **invariant** instead: **no dirty blob in this worktree may be UNIQUE — every modified/deleted/untracked file's content must already exist somewhere in git** (main's history, any branch, or this lane's own commits). If every dirty blob is reachable, the reset destroys nothing → `git checkout -B lane/m4 main && git clean -fd` and PROCEED. If **any** blob exists nowhere else, **STOP and report that file by name** — that one is real unmerged work and resetting it would be the Mistake #2 shape. (`git hash-object <file>` then `git cat-file -e <hash>` is enough; `.wrangler/tmp/**` is build scratch and is exempt.) Then `npm install --no-audit --no-fund`; `npm run build` green before touching anything.
 
-*(s1137 pre-measured the branch and you must still re-verify it: `lane/m4` is **1 ahead** at `6683a2d7`, the vp-02e runner commit. **It was drained this fire at `e6961aee`, verbatim** — I checked every file in that commit against main with `git diff lane/m4 main -- <those paths>` and the diff is **empty**, so every blob is byte-identical on main. The invariant holds and the reset loses nothing.)*
+*(s1137 pre-measured the branch and you must still re-verify it: `lane/m4` is **1 ahead** at `6683a2d7`, the vp-02e runner commit. **It was drained this fire at `1a3f1421`, verbatim** — I checked every file in that commit against main with `git diff lane/m4 main -- <those paths>` and the diff is **empty**, so every blob is byte-identical on main. The invariant holds and the reset loses nothing.)*
 
 ## READ FIRST (paths, in this order)
 
@@ -20,7 +20,7 @@ Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead 
 
 ## WHY (evidence, quoted)
 
-**F-1137-1** (`reviews/vp-02e.md`, s1137, measured this fire): `vp-02b:292` waits for **NE** to emit `char-hero-sheet-rotation2-f-r0c2.png` / `…r0c3.png` — the **east** keys. vp-02e (`e6961aee`) made the hero's explicit contract cells win over walk-sheet aliases, so NE now correctly emits its **own** cells. The old expectation was satisfiable **only while the alias bug was present**. Proven cure-caused by an A/B under identical conditions: **control PASS/PASS → treatment FAIL/FAIL** on desktop and mobile. `:113` in the same file already asserts the correct contract and is green.
+**F-1137-1** (`reviews/vp-02e.md`, s1137, measured this fire): `vp-02b:292` waits for **NE** to emit `char-hero-sheet-rotation2-f-r0c2.png` / `…r0c3.png` — the **east** keys. vp-02e (`1a3f1421`) made the hero's explicit contract cells win over walk-sheet aliases, so NE now correctly emits its **own** cells. The old expectation was satisfiable **only while the alias bug was present**. Proven cure-caused by an A/B under identical conditions: **control PASS/PASS → treatment FAIL/FAIL** on desktop and mobile. `:113` in the same file already asserts the correct contract and is green.
 
 vp-02e's runner reported this rather than rewriting it, because its firewall excluded the file. That was the **right** call and this task is the follow-through.
 

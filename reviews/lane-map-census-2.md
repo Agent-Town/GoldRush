@@ -1,7 +1,7 @@
 # Review — map-census referee (lane-map-census-2)
 
-**Slice/branch/tip:** `lane/e2-arsenal` `5bb8a1fb` ("feat: add 41-map quality census referee")
-**Merge:** `77ab5d8f62f874bca404b7a42a9c9d4311cf8406` — `git merge --no-ff lane/e2-arsenal` onto clean main `c4868128`, merge-base `574458e3` (disjoint 3-way, main touched none of the tip files).
+**Slice/branch/tip:** `lane/e2-arsenal` `c34e21c3` ("feat: add 41-map quality census referee")
+**Merge:** `3e91af145e0f3ff489602f17a1757a53f6e042f6` — `git merge --no-ff lane/e2-arsenal` onto clean main `aa545097`, merge-base `9c433162` (disjoint 3-way, main touched none of the tip files).
 **Verdict:** MERGED — clean, test-only, firewall-honoured.
 
 ## What it does
@@ -24,4 +24,4 @@ The committed table captures genuine referee findings (surfaced, not blockers �
 ## Findings
 - **F-1 (non-blocking, owner note):** the census surfaces two content bugs worth a look — `e5-regatta` and `e5-flotilla` doors both open `the-claim` (wrong-map routing), and E6 `glow-mesa` renders painted instead of its glb + runs 12.5s (over the 10s budget). These are register findings, not gate failures; carry to the OWNER DESK / a future map-quality slice. The referee doing exactly what it was built to do is the point.
 
-Goal `map-quality-register` (was queued) → **merged** `77ab5d8f62f874bca404b7a42a9c9d4311cf8406` in this drain commit.
+Goal `map-quality-register` (was queued) → **merged** `3e91af145e0f3ff489602f17a1757a53f6e042f6` in this drain commit.

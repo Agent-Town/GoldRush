@@ -8,12 +8,12 @@ READ FIRST: `AGENTS.md`; the review — ⚠️ **it is NOT in your worktree. `re
 
 ## ⚠️ PRE-FLIGHT — BUILD-ON-PREDECESSOR, NOT SAFE-DUPE. READ THIS FIRST.
 
-**`lane/c` is `ahead=1` of main and that commit is `6a7bafb26`, the em-dash sweep. It is UNDRAINED and it is the thing you are building ON. DO NOT reset, DO NOT `checkout -B lane/c main`, DO NOT `clean -fd`.** The ordinary lane pre-flight would destroy it (Mistake #2: w1-03 and polish-02 were lost exactly this way).
+**`lane/c` is `ahead=1` of main and that commit is `eb62124c1`, the em-dash sweep. It is UNDRAINED and it is the thing you are building ON. DO NOT reset, DO NOT `checkout -B lane/c main`, DO NOT `clean -fd`.** The ordinary lane pre-flight would destroy it (Mistake #2: w1-03 and polish-02 were lost exactly this way).
 
 Verify the predecessor is present before you touch anything, and STOP if it is not:
 
 ```
-git -C worktrees/lane-c log --oneline -1        # expect: 6a7bafb26 runner(lane-c): c5-emdash-sweep.md
+git -C worktrees/lane-c log --oneline -1        # expect: eb62124c1 runner(lane-c): c5-emdash-sweep.md
 grep -c "The Rocket Cart, captured" assets/contracts/epoch-1-frontier/contracts.json   # expect: 1
 ```
 
@@ -144,7 +144,7 @@ Touch ONLY: `scripts/gr-sim-campaign.test.mjs` (the one pin), `scripts/gr-sim.te
 ## Self-check (evidence, not vibes)
 `npx tsc --noEmit` + `npm run build` green. `npm run test:node-guards` run **ALONE** (it is ~9 minutes and contends badly): expect **rc=1 with exactly the 2 INHERITED failures** — `blocker-panel-closed-guard` (*"reds on the pre-strike ledger…"*) and the `fixture-teardown` cascade it causes. **Those two are NOT yours and must NOT be cured here** (F-2234-3 is deliberately open and wants an owner of the guard's intent). If you see a third failure, report it — do not chase it.
 
-⚠️ **YOUR LANE IS 23 COMMITS BEHIND MAIN AND THAT CHANGES HOW TO READ THE BATTERY (measured s2236, so you do not have to discover it in a red).** The two failure counts above were measured by s2235 on the MERGED tree; you are running on `lane/c`, which lacks main's last 23 commits — including **four that moved `package.json`** (`f435136b7`, `6b94416e8`, `7b7f616df`, `6a1e959d9`). Your `test:node-guards` leg roster is therefore a strict SUBSET of main's, and the two inherited failures are ledger-state-dependent, so **your list may legitimately differ from the master's expectation in either direction.** That is staleness, not your work. ✅ **What is NOT stale, and is the reason this dispatch is safe: all four files you touch or read are BYTE-UNCHANGED on main since your lane branched — `scripts/gr-sim.test.mjs`, `scripts/gr-sim-campaign.test.mjs`, `src/meta/ContractUnlock.ts`, `src/sim/HeadlessContractSim.ts` (verified s2236 by `git log lane/c..main -- <each>`, all empty).** So the fix itself cannot be made wrong by the staleness; only the battery's ambient noise can. **Report what you see and do not chase it.** The one signal that is entirely yours and must be clean: the two pins you moved, and the Baron outcome fields.
+⚠️ **YOUR LANE IS 23 COMMITS BEHIND MAIN AND THAT CHANGES HOW TO READ THE BATTERY (measured s2236, so you do not have to discover it in a red).** The two failure counts above were measured by s2235 on the MERGED tree; you are running on `lane/c`, which lacks main's last 23 commits — including **four that moved `package.json`** (`d21ac01af`, `61f5d93f3`, `ca09d084e`, `b0e430ebc`). Your `test:node-guards` leg roster is therefore a strict SUBSET of main's, and the two inherited failures are ledger-state-dependent, so **your list may legitimately differ from the master's expectation in either direction.** That is staleness, not your work. ✅ **What is NOT stale, and is the reason this dispatch is safe: all four files you touch or read are BYTE-UNCHANGED on main since your lane branched — `scripts/gr-sim.test.mjs`, `scripts/gr-sim-campaign.test.mjs`, `src/meta/ContractUnlock.ts`, `src/sim/HeadlessContractSim.ts` (verified s2236 by `git log lane/c..main -- <each>`, all empty).** So the fix itself cannot be made wrong by the staleness; only the battery's ambient noise can. **Report what you see and do not chase it.** The one signal that is entirely yours and must be clean: the two pins you moved, and the Baron outcome fields.
 
 Report the before/after failure count and name every failure you see.
 

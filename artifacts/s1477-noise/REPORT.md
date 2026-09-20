@@ -6,7 +6,7 @@ predicate was non-monotonic and a back-to-back control at one commit returned tw
 (n=2). This fire supplies the missing statistic: **n runs at ONE commit, instrument pinned, subject
 fixed** — the only thing varying between samples is the run itself, so any spread IS the noise band.
 
-- Commit under test: `659f4efe0` (main at s1477 lock).
+- Commit under test: `2822069b5` (main at s1477 lock).
 - Worktree: detached `gate-s1477` (§3.0b custody — main's tree never held undecided content).
 - Instrument: `npx playwright test --project=desktop-chrome --workers=1` (§3.1), same shell, serial.
 - Harnesses: `measure.mjs` (crawler, n=12), `measure2.mjs` (railcar, n=10), `common-mode.mjs`.
@@ -98,7 +98,7 @@ the churn ends — while a value leaving its band becomes a real, visible signal
 indistinguishable from drift.
 
 ⚠️ **Two standing cautions this measurement does NOT lift.** The bands above are measured for
-`desktop-chrome` at `659f4efe0` on this machine; `mobile-chrome` was not sampled, and neither was any
+`desktop-chrome` at `2822069b5` on this machine; `mobile-chrome` was not sampled, and neither was any
 other host. And per F-1476-1's own closing sentence, **do not "refresh" the committed baselines as a
 drive-by** — that blesses one sample of a jittery quantity as truth, which is the misreading the
 finding exists to stop.

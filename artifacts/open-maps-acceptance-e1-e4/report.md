@@ -1,7 +1,7 @@
 # open-maps-acceptance-e1-e4 — the six maps Astra left OPEN or PARTIAL on the playability half
 
 **Implementer:** Claude Opus 5 on the owner's Anthropic subscription, in the scratch worktree
-`wt-openmaps`, branch `feat/open-maps-acceptance-e1-e4`, cut from main `3548b5757`.
+`wt-openmaps`, branch `feat/open-maps-acceptance-e1-e4`, cut from main `2ad3b51f0`.
 **Master:** `tasks/open-maps-acceptance-e1-e4.md`. **Owner, 2026-09-18:** "We have about 18 hours
 left and about 50% of the subscription - what can we do to use it?"
 **Date:** 2026-09-18. Fires were live on main throughout; nothing here was posted to the county.
@@ -82,7 +82,7 @@ building goes and presses Space. That is also the cheapest honest input on a 390
 
 ## 2. BEFORE — the instrument's first full pass on main, desktop, six maps, 10.7 min wall
 
-Tree `3548b5757`, contract data untouched. Transcript: `secure-rows-BEFORE-desktop.jsonl`.
+Tree `2ad3b51f0`, contract data untouched. Transcript: `secure-rows-BEFORE-desktop.jsonl`.
 
 | map | secure wave | which question failed, at what wave and sim second | why, from the run's own diagnostics |
 |---|---|---|---|
@@ -101,7 +101,7 @@ Tree `3548b5757`, contract data untouched. Transcript: `secure-rows-BEFORE-deskt
 
 | map | key | old | new | reason |
 |---|---|---|---|---|
-| **e1-twin-banks** | *(made, measured, then **REVERTED** — see §5c)* | `["north","south","east","west"]` | *(unchanged on the branch tip)* | The cure was landed as `025381a42`, measured (+1 wave; a harsher no-orders floor on three of five bench seeds), and reverted as `251014ad0` because it reds `e2e/e1-twin-banks.spec.ts:160`, which this task's firewall does not allow me to re-point. Filed as a proposal with its evidence in §5c. |
+| **e1-twin-banks** | *(made, measured, then **REVERTED** — see §5c)* | `["north","south","east","west"]` | *(unchanged on the branch tip)* | The cure was landed as `196c811d1`, measured (+1 wave; a harsher no-orders floor on three of five bench seeds), and reverted as `742a53898` because it reds `e2e/e1-twin-banks.spec.ts:160`, which this task's firewall does not allow me to re-point. Filed as a proposal with its evidence in §5c. |
 | **e2-hill-mine** | `twist.waveCadenceMult` | *(absent, i.e. 1.0)* | `0.75` | The wave interval becomes 40 s (`WaveSystem.waveInterval()` = `Balance.waves.waveInterval` / cadence), which is the climb up a switchback to the T2 seams plus the climb back down to the base terrace to build. Not a new idea: the owner's 2026-08-22 cadence ladder already gave the Trestle 0.7 and the Incline 0.75 and skipped this map. 0.75 is the Incline's exact rung — same secure wave 12, same three-variant roster. |
 | **e4-long-road** | `tileParams.harvestAnchors` | `(-150,14) (-90,-14) (-30,14) (30,-14) (90,14) (150,-14)` | `(-140,-10) (-130,-16) (-6,10) (6,16) (130,-10) (140,-16)` | Same six anchors, now two inside each of the three way-station `buildZones` the card sends the player to. `HarvestSystem` keeps only 2-3 seams live at once (`Balance.goldSeam.activeMin/activeMax`), so on the old layout the nearest live seam from a station was routinely 200 units away and the run could not fund its first turret. The road between stations keeps no seams, which is the card's own "Three surveyed station grounds divide the route". |
 | **e1-night-shift** | *(none — the cure was in the instrument)* | | | The map goes dark at `twist.lightRamp.darkWave` 10 and authors seven `prePlacedBuildables` lantern posts, every one `wrecked: true` with `relightCost: 8`. Its card already tells the player what to do — "Relight cold lanterns or build new posts to see threats" — so the instrument now carries two `lantern_post` into the kit on any contract that declares a `lightRamp`. That is a card verb, not a balance change. |
@@ -288,7 +288,7 @@ Re-recorded TWICE: once with the Twin Banks fords cure in place, and again after
 
 `node scripts/null-floor-anchors.mjs` on the final tree: 83 floors in 305.1 s.
 `node scripts/null-floor-anchors.mjs --check`: **rc=0, 83 of 83 match, 300.8 s**, `eraStamp: pinned
-and tree agree at "3548b5757"`.
+and tree agree at "2ad3b51f0"`.
 
 **1 of 36 contract groups moved — the Hill Mine, the only map whose cadence this branch changed — and
 NOTHING SECURES WITH NO ORDERS anywhere in the artifact** (checked explicitly across all 83 pairs:
@@ -316,7 +316,7 @@ which is the right direction.
 
 ### 5c. e1-twin-banks — the fords cure, made, measured, reverted, and filed
 
-**Landed** as `025381a42`, **reverted** as `251014ad0`. Both the change and the reason for pulling it
+**Landed** as `196c811d1`, **reverted** as `742a53898`. Both the change and the reason for pulling it
 are evidence, so both are here.
 
 ```diff
@@ -375,7 +375,7 @@ and assertion with this cause.
 | `er01-e2-census` + `er01-e4-census` | `npx playwright test … --project=desktop-chrome` | **8 passed (1.3 min)** |
 | `skillmd-guard` + `skillmd-contracts-guard` | `node scripts/render-skillmd-contracts.mjs` then `node --test …` | render rc=0, `public/skill.md` **unchanged**, guards **20 pass / 0 fail** |
 | null floors, re-record | `node scripts/null-floor-anchors.mjs` | 83 floors, 293.2 s |
-| null floors, check | `node scripts/null-floor-anchors.mjs --check` | **rc=0, 83 of 83 match, 299.3 s**, eraStamp agrees at `3548b5757` |
+| null floors, check | `node scripts/null-floor-anchors.mjs --check` | **rc=0, 83 of 83 match, 299.3 s**, eraStamp agrees at `2ad3b51f0` |
 | adjacent map suites | `e1-twin-banks` + `e2-hill-mine` + `e1-baron` + `e4-roads-and-convoys`, desktop | **19 passed / 8 failed — all 8 attributed as PRE-EXISTING, see below** |
 
 ### 8a. The eight adjacent reds, attributed with proof
@@ -395,7 +395,7 @@ e2e/e4-roads-and-convoys.spec.ts:69  every Motor reel replays to its claimed has
 
 1. With `e2-hill-mine`'s `waveCadenceMult` removed from the working tree and everything else this
    branch changed left in place: **the same 4 failed, the same 7 passed.**
-2. With `git checkout 3548b5757 -- assets/contracts/` — i.e. main's contract data, none of this
+2. With `git checkout 2ad3b51f0 -- assets/contracts/` — i.e. main's contract data, none of this
    branch's data at all: **the same 4 failed, the same 7 passed.**
 
 They are pre-existing on main and none of them is this branch's. The `e4-dust-flats-floor.tape.json`
@@ -410,7 +410,7 @@ branch moves the engine hash and the drain pins it.
 
 | tree | `computeEngineHash()` |
 |---|---|
-| main `3548b5757`, before any edit | `540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068` |
+| main `2ad3b51f0`, before any edit | `540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068` |
 | **this branch's tip** | `34b30c44ef98f0f7262ebc1545f93440fe39c375e58a0cbf17743b3e54ccb99f` |
 
 ---

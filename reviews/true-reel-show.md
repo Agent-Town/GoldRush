@@ -1,7 +1,7 @@
 # Review — true-reel-show (EH-3): the Lantern Show plays the truth
 
-**Slice:** `true-reel-show` (EH-3) · **branch:** `lane/d` · **lane tip:** `ecc2a1a1b989de5b5c02f2c4b5e0702d53dbb9d7`
-**Base:** `e55a11726ddec4c1a7d0115d45a14f757a6772d5` · **merge:** `af85497537fb973b8798089794498ff9b2974110` · **drain re-pin:** `4350ab7113d903b0a595ad706809de3c9385c632`
+**Slice:** `true-reel-show` (EH-3) · **branch:** `lane/d` · **lane tip:** `795c5c4a312bfa2fd2d1a8b480f95c3111c28d99`
+**Base:** `d540d4e99bff8b4172eb059d577203a8a0f3618b` · **merge:** `ed0d3c5389c337074d9758536a7ccc0ce858a8ed` · **drain re-pin:** `10b68b5cdc06a2b23d68f3bce4d4e5ad0096dbe3`
 **Drained:** s2374, 2026-08-30 · **Verdict:** ✅ **MERGED**
 
 ## What it does
@@ -38,14 +38,14 @@ on the merged tree is 30/30.** The drain's own re-run is the free control on the
 
 ## Merge classification
 
-Base `e55a11726`; clean three-way merge, **no conflicts**. All 15 paths classified `LANE-ONLY` by
+Base `d540d4e99`; clean three-way merge, **no conflicts**. All 15 paths classified `LANE-ONLY` by
 `lane-usable` except `tasks/BACKLOG.md` (`BOTH-MOVED`, auto-merged — the lane appended one row while
 main appended elsewhere). New files: `src/replay/BrowserAgentTapeReplay.ts`, the `artifacts/eh3-fixture/`
 set, four screenshots.
 
 ## Findings
 
-### F-2374-1 — the engine hash had to move, and the era deliberately did NOT bump (resolved in `4350ab711`)
+### F-2374-1 — the engine hash had to move, and the era deliberately did NOT bump (resolved in `10b68b5cd`)
 
 `ENGINE_SOURCE_INPUTS` includes the whole of `src`, so **any** merge touching `src/**` moves the engine
 hash. This one moved it `dbf8b14e… → d5b04061…`, which reddened `engine-era-guard.test.mjs` on the
@@ -81,7 +81,7 @@ I did not author it, because editing the slice's test is authoring, not draining
 The runner's own STOP: `functions/api/standings.ts:383-395` projects public reels as `{ buildId }`,
 stripping both `engineHash` and `era` — so no public reel carries an era claim and every one meets the
 honest unstamped-era refusal. That projection was ruled otherwise by `engine-era-law-v3` and then
-**vetoed** (`d96dacb15`), so this is a standing owner-side state, not a regression. **The runner
+**vetoed** (`ef9038425`), so this is a standing owner-side state, not a regression. **The runner
 reporting it instead of reaching outside its firewall is a firewall success** (§4.5). The follow-up is
 already named: `engine-era-browser-stamp`. Nothing here blocks this merge — the slice's behaviour on a
 public reel is an *honest refusal*, which is strictly better than the fake playback it replaces.

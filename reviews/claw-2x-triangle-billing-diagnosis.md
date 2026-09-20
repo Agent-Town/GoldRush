@@ -2,7 +2,7 @@
 
 **Slice:** `lane-b-claw-2x-triangle-billing-diagnosis`
 **Branch/tip:** `lane/m4` @ `f4cb37bf` (runner auto-commit)
-**Merge base:** `535185dd55baf975a6df3765d80124b57de5cdfa`
+**Merge base:** `4c13d0bb8997e838fcd7c82f744c3d4d54296c20`
 **Drained:** s1196 fire, 2026-07-29
 **Verdict:** ✅ **ACCEPTED** — the deliverable is a named verdict with the discriminator actually run, on both arms, in both scenes.
 
@@ -61,7 +61,7 @@ The published anomaly compares a **fully-visible** boss against an **off-camera*
 
 ### Merge classification
 
-Base `535185dd`. Lane's own changed paths: **3**, all three differing from main, **all pure additions** (310 insertions, 0 deletions). `git diff --name-only 535185dd main -- <the 3 paths>` = **empty** ⇒ main never moved them ⇒ **collisions NONE, no 3-way graft**. Path-scoped `git checkout lane/m4 -- <3 paths>`; the standing `logs/` churn was left untouched and uncommitted.
+Base `4c13d0bb`. Lane's own changed paths: **3**, all three differing from main, **all pure additions** (310 insertions, 0 deletions). `git diff --name-only 4c13d0bb main -- <the 3 paths>` = **empty** ⇒ main never moved them ⇒ **collisions NONE, no 3-way graft**. Path-scoped `git checkout lane/m4 -- <3 paths>`; the standing `logs/` churn was left untouched and uncommitted.
 
 ## Findings
 

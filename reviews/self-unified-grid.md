@@ -1,9 +1,9 @@
 # Review — self-unified-grid (lane-d)
 
 - **Slice:** `tasks/self-unified-grid.md` (HarnessDev ladder item D, analysis)
-- **Branch / tip:** `lane/d` @ `88d25503c5a555bcf084956a0b3299a6c7a8bf0a` (runner auto-commit)
-- **Merged:** `d4505253cc077673d735207b34e09b4c9e299fbd` (s2472, `--no-ff`)
-- **Gated in:** detached worktree `gate-s2472` off `2170ec2a5` (§3.0b)
+- **Branch / tip:** `lane/d` @ `bba48f983d7fdf0be8fd60938b8aa50f5a6c6ab6` (runner auto-commit)
+- **Merged:** `1c06afaf404168c208f6627494ab2bc0df3783f0` (s2472, `--no-ff`)
+- **Gated in:** detached worktree `gate-s2472` off `6bbadb818` (§3.0b)
 
 ## Verdict
 

@@ -1,7 +1,7 @@
 # THE e2-trestle BEAUTY SHIFT — review
 
 **Slice:** `docs/beauty/e2-trestle-brief.md` (E2 beauty night, map 2 of 4)
-**Branch:** `beauty2/e2-trestle` · **base:** `8f65062e` · **tip:** see `git log --oneline -1`
+**Branch:** `beauty2/e2-trestle` · **base:** `8f65062e (archive: pruned by the A3 rewrite)` · **tip:** see `git log --oneline -1`
 **Session:** dedicated Opus 5, solo writer, 2026-08-04
 **VERDICT: SHIP — five upgrades landed, two of them partial, and two pre-existing defects found and reported (one P1).**
 
@@ -153,7 +153,7 @@ the losses are all local and all deliberate.
 
 Run with `GR_CAPTURE_EXTERNAL_SERVER=1` against this worktree's own vite on 5344,
 `--workers=1`, both projects. **Every red was control-proven** against a detached
-worktree at the base sha `8f65062e` with its own vite on 5345 — same command, same
+worktree at the base sha `8f65062e (archive: pruned by the A3 rewrite)` with its own vite on 5345 — same command, same
 flags, same box, minutes apart.
 
 | Suite | project | result |
@@ -220,7 +220,7 @@ world regions).
 
 ## 5. MERGE CLASSIFICATION
 
-Base `8f65062e`, no rebase, no conflicts — this branch is the only writer to every
+Base `8f65062e (archive: pruned by the A3 rewrite)`, no rebase, no conflicts — this branch is the only writer to every
 file it touches.
 
 | File | change | class |
@@ -306,7 +306,7 @@ segment index never advances if that height exceeds one frame of travel
 (2.4 m/s ÷ 60 fps = **0.040 m**), and the cart converges on the waypoint forever
 while `travelled` keeps accumulating until `progress` reports a fully-delivered 1.
 
-**Measured, on `main` at `8f65062e`, 45 s of real play per map:**
+**Measured, on `main` at `8f65062e (archive: pruned by the A3 rewrite)`, 45 s of real play per map:**
 
 | map | stalls at | waypoint `visualY` | state after 45 s |
 |---|---|---|---|
@@ -337,15 +337,15 @@ waypoint heights and the per-second trace).
 
 > ⚠️ **DRAIN INSTRUCTION, verified before writing it.** `beauty2/e2-hill-mine` hit the identical wall
 > as its own **F-BHM-1** and **already deletes the duplicate call outright** in
-> **`bc14d54c`** (*"beauty(e2-hill-mine) U3+U4+U5a, and F-BHM-1: the per-contract landmark paint was
+> **`07eab045`** (*"beauty(e2-hill-mine) U3+U4+U5a, and F-BHM-1: the per-contract landmark paint was
 > dead on main"*, 2026-08-04 07:13) — ✓ verified by `git show`, the commit is on
 > `origin/beauty2/e2-hill-mine`. `beauty2/e2-pressure-garden` filed the same defect as **F-PG-2**.
 > Three shifts, one file, one day. **Whichever branch drains second must NOT re-delete the line:
 > take the hill-mine deletion, then delete `LANDMARK_PAINT_IS_FINAL` from this branch entirely — the
 > Set is only referenced by the guard on that call, so once the call is gone the Set is dead code.**
-> `bc14d54c` is also strictly better than this branch's dataset: it publishes the MEASURED per-mount
+> `07eab045` is also strictly better than this branch's dataset: it publishes the MEASURED per-mount
 > `emissiveIntensity` range inside `terrain3dPilotLandmarkMaterials[]`, so the attribute can no
-> longer echo the table. Keep that. Root cause named there: the duplicate arrived in `10586b90`
+> longer echo the table. Keep that. Root cause named there: the duplicate arrived in `d67095eb`
 > (the baron drain), whose merge resolution kept both the new per-contract block and the single-line
 > call that block replaced.
 >
@@ -374,13 +374,13 @@ E1 maps changes three shipped looks on the eve of the E1 release door, and
 so it is a corrective task with its own before/after boards, not a drive-by from a
 one-contract shift.
 
-**Corrective task — SUPERSEDED by `bc14d54c` above.** What remains owed is not the
+**Corrective task — SUPERSEDED by `07eab045` above.** What remains owed is not the
 code fix but its consequence: with the duplicate gone, the-claim, e1-baron and
 e1-dry-gulch will start rendering the intensities their reviews claim they already
 shipped. That is three shipped looks changing at once, and
 `e2e/landmark-brightness.spec.ts` gates the Claim on
 `renderedLuminance / atlasLuminance > 0.25` measured with the intensity stuck at 3.
-**The drain that lands `bc14d54c` owns re-running `landmark-brightness` +
+**The drain that lands `07eab045` owns re-running `landmark-brightness` +
 `map-census` + each map's own spec, and boarding those three before/afters.** The
 intended looks are already written down in their reviews.
 
@@ -427,7 +427,7 @@ a sim-advance harness.
 
 ## Re-land on moved world — 2026-08-05
 
-Ported from `beauty2/e2-trestle` onto `origin/main` at `5a6e58c7`, preserving the landed Hill Mine, far-ground, and perf-r2 code. The Hill Mine row is now exactly:
+Ported from `beauty2/e2-trestle` onto `origin/main` at `c65e1773`, preserving the landed Hill Mine, far-ground, and perf-r2 code. The Hill Mine row is now exactly:
 
 ```ts
 'e2-hill-mine': { surface: { kind: 'channel-fill', fill: 0.42 }, color: '#8a8177', opacity: 0.72, fordSkim: 0.11, deepMeters: 0.12, shoreMeters: 0.05, visualHalfWidth: 5.9, glints: [{ x: -27, z: -5.1 }, { x: 13, z: 5.1 }, { x: 33, z: -5.1 }], rippleStrength: 1.15, textureBlend: 0, },

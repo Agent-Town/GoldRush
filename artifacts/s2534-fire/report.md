@@ -1,6 +1,6 @@
 # s2534 — citation drain held; runtime controls retained
 
-The fire took the MAIN semaphore in `354c62b643824432f0b7fe3c1df95893165045e2`, archiving s2533 verbatim at lock time. The runner is alive; no Codex wall exists. The three completed units are the MAIN citation correction, lane-c chapter evidence opt-in, and lane-a M1 debug-spawn contract corrective. Only the MAIN unit is being gated here.
+The fire took the MAIN semaphore in `37e217b1553e48ea579daa905c1f6544da4b8398`, archiving s2533 verbatim at lock time. The runner is alive; no Codex wall exists. The three completed units are the MAIN citation correction, lane-c chapter evidence opt-in, and lane-a M1 debug-spawn contract corrective. Only the MAIN unit is being gated here.
 
 ## Candidate and custody
 
@@ -28,7 +28,7 @@ The sweep answered all 112 registered trees, with a positive tracked-file contro
 
 The repository pins Node **26.4.0** in `.nvmrc`, available at `/opt/homebrew/bin/node`. The default login shell selected 23.11.1. This fire therefore records the node run as the **wrong interpreter arrangement**, not as an accepted native drain gate. The law already describes this distinction (F-2076-1/F-2166-2): Node 23 applies file-level timeout behavior and does not honor the sibling override as Node 26 does. A base run is testing the three observed fingerprints, followed by the same override guard under the pinned interpreter. No timeout is raised and no cleanup coverage is removed.
 
-GZ-01: the one unreported candidate, `3d498ac07`, is now dismissed in the gazette queue as retained raw portraits with no runtime wiring. The paragraph was appended, so existing cited line coordinates did not move. No public publication or deploy is owed by this bookkeeping-only fire.
+GZ-01: the one unreported candidate, `3d498ac07 (archive: pruned by the A3 rewrite)`, is now dismissed in the gazette queue as retained raw portraits with no runtime wiring. The paragraph was appended, so existing cited line coordinates did not move. No public publication or deploy is owed by this bookkeeping-only fire.
 
 The unchanged-base worktree was materialized while the candidate node run was still executing. That disk activity and the earlier stopped duplicate are load caveats; their effect on the simulation file failure is unmeasured. They are not grounds to call a source regression or to excuse an unaccepted gate. The base control and the later pinned-interpreter checks run serially.
 

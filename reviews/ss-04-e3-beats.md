@@ -1,6 +1,6 @@
 # ss-04-e3-beats — drain review (fire s2460, 2026-09-03)
 
-**Slice:** `ss-04-e3-beats` (lane-c) · **branch:** `lane/c` · **tip:** `9fb24ca19` · **base:** `e30f9d2d`
+**Slice:** `ss-04-e3-beats` (lane-c) · **branch:** `lane/c` · **tip:** `c762c6bd2` · **base:** `87fd9a3f`
 **Gate worktree:** detached `gate-s2460` (§3.0b — undecided content never entered main's working tree)
 **Gated tree:** `e0f92041e` (merge) + `250718b11` (engine pin) — the pin is inside the gated tree, so the evidence below covers exactly the tree that lands.
 
@@ -32,7 +32,7 @@ The Voltage Age gets its chapter. `src/story/beats.ts` gains `E3_STORY_BEATS` �
 **Canon (ADR-001 / brief §9):** no firearms; frontier-tech only. Copy is LEXICON-clean and em-dash-free (guard-verified). Both `artKey`s name plates that exist: `assets/raw/plate-contract-e3-canyon-works.png` (3,485,651 B) and `assets/raw/plate-contract-e3-moth-season.png` (3,043,049 B). `StoryRuntime.ts:189` degrades to no art when `artKey` is absent, so the eight unkeyed beats are safe.
 
 ## Merge classification
-Base `e30f9d2d`, 10 paths, classified by `lane-freeze-classify`:
+Base `87fd9a3f`, 10 paths, classified by `lane-freeze-classify`:
 
 - **LANE-ONLY (9)** — main never touched them, taken as-is: `e2e/ss-04-e3-beats.spec.ts` (new, +175), `src/story/beats.ts` (+107), `src/story/StoryRuntime.ts` (+9/-2), and the 6 screenshots under `reviews/shots-ss-04-e3-beats/`.
 - **BOTH-MOVED (1)** — `tasks/BACKLOG.md`, the ordinary ledger-append conflict.
@@ -55,7 +55,7 @@ Base `e30f9d2d`, 10 paths, classified by `lane-freeze-classify`:
 These are a real open defect on main (three red story specs) and are fire-authorable as a corrective; they do not block this merge, whose own suite is 8/8 and whose control proves it changes none of them.
 
 **F-2460-3 — `fixture-teardown` is still red on the merged tree, and it is F-2459-3, fingerprint-matched with proof (pre-existing, NON-BLOCKING).**
-After the F-2460-1 pin turned `engine-era-guard` green, I re-ran `fixture-teardown` alone (610.8s) rather than inferring it. It still reds — but at a **different assertion** (`:50`, the survivor check) than in the battery (`:40`, the child-status check), because a failing child aborts the test before it ever reaches the survivor sweep. **So the pin did not break it; the pin UNMASKED it.** The survivor report names `scripts/art-staging-gitdir-link-guard.test.mjs: 11 [art-gitdir-…]` — exactly F-2459-3, which s2459 proved pre-existing by running `fixture-teardown` on an unmerged main (`be7b5933e`, 681.5s, identical failure). Same file, same count of 11, same `art-gitdir-` prefix; the suffixes differ only because they are `mkdtemp` randoms. Nothing this slice touches goes near that guard.
+After the F-2460-1 pin turned `engine-era-guard` green, I re-ran `fixture-teardown` alone (610.8s) rather than inferring it. It still reds — but at a **different assertion** (`:50`, the survivor check) than in the battery (`:40`, the child-status check), because a failing child aborts the test before it ever reaches the survivor sweep. **So the pin did not break it; the pin UNMASKED it.** The survivor report names `scripts/art-staging-gitdir-link-guard.test.mjs: 11 [art-gitdir-…]` — exactly F-2459-3, which s2459 proved pre-existing by running `fixture-teardown` on an unmerged main (`57890458f`, 681.5s, identical failure). Same file, same count of 11, same `art-gitdir-` prefix; the suffixes differ only because they are `mkdtemp` randoms. Nothing this slice touches goes near that guard.
 
 **Net state of the mandated battery on the merged tree: one red, pre-existing and already recorded (F-2459-3); zero caused by this slice.**
 

@@ -6,7 +6,7 @@
 
 ## ⚠️ THIS LANE IS NOT CLEAN AND MUST NOT BE RESET — READ THIS FIRST
 
-Your lane sits at `5c27a1b5` and **holds the whole of f1441-2**, which is **gated, reviewed and
+Your lane sits at `a26454d4` and **holds the whole of f1441-2**, which is **gated, reviewed and
 deliberately WITHHELD from main** pending exactly the defect you are about to fix. This is **not** a
 stale lane and **not** debris.
 

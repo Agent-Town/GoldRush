@@ -1,6 +1,6 @@
 # Lane D — Night mode truth
 
-Verdict: **READY-FOR-GATES**, with three inherited night-test failures fingerprint-matched against clean `origin/main` (`22814074`). The new feature gate, production build, 3D performance gate, dusk/day-night coverage, and lantern-post coverage are green on desktop and mobile.
+Verdict: **READY-FOR-GATES**, with three inherited night-test failures fingerprint-matched against clean `origin/main` (`e684337c`). The new feature gate, production build, 3D performance gate, dusk/day-night coverage, and lantern-post coverage are green on desktop and mobile.
 
 ## Assault-gating root cause
 

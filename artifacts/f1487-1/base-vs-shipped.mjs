@@ -5,7 +5,7 @@
  * F-1486-1 measured its opaque-preserving composite against the SHIPPED bytes on disk
  * (`assets/processed/<cell>.png` as they are today). The gate that will judge the merge —
  * `scripts/halo-reextraction-check.mjs:64-91` — compares each newly-cured cell against the
- * BASE bytes (`git show 89bfc10c:<file>`), NOT against the shipped bytes.
+ * BASE bytes (`git show 0d989bdc:<file>`), NOT against the shipped bytes.
  *
  * Those are the same object ONLY IF the held cells have never been rewritten since BASE.
  * That is plausible (they are held precisely because they were never re-extracted) but it
@@ -20,7 +20,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 
-const BASE = '89bfc10cda7e208589c7ad6304eb4c6aeae727bf';
+const BASE = '0d989bdc2096213e6775a5978cb6fe56fa8ea988';
 const SWEEP = 'artifacts/f1450-4/halo-class-sweep.json';
 
 // the 6 sheets F-1486-1 found OUT OF the pocket detector's scope (37 cells)

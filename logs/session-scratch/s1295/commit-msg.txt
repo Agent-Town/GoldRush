@@ -21,7 +21,7 @@ red, two depths. The control's raw output carries the inventory's reason verbati
 observed value verbatim. The red inventory is keyed by file:line, so its rows rot silently
 whenever a spec gains a line above a test — one-directional, always known-red -> mystery-red.
 
-F-1295-1: the slice has been on main since b37c1fc6 (16:59:12), thirteen minutes before the
+F-1295-1: the slice has been on main since 3058fca5 (16:59:12), thirteen minutes before the
 handoff that said "main was never modified". That commit is titled "rehearsal round 2 launched
 (shipped pipeline, vein-hunter card)" and its stat is EXACTLY the four slice paths plus one
 BACKLOG line — a concurrent attended session's broad `git add` swept up the paths s1294 had
@@ -29,14 +29,14 @@ checked out into main's tree in order to gate them. s1294's revert (`git checkou
 then restored FROM the contaminated HEAD, and the clean `git status` it verified was CAUSED by
 the contamination. A sweep's signature is the ABSENCE of dirt, so no probe s1294 had could see
 it; only a blob-hash comparison against a pre-sweep ref discriminates.
-Scope proven bounded: every main commit since s1294's lock audited, b37c1fc6 is the only one
+Scope proven bounded: every main commit since s1294's lock audited, 3058fca5 is the only one
 carrying src/ or e2e/ content.
 The class is known (an -A commit swallows a live fire's work) but this member inverts the harm:
 it is about POLICY, not authorship. Work a fire deliberately REFUSED to merge got merged anyway.
 A HOLD verdict has no enforcement surface in git; an owner-BLOCKED slice would ship the same way.
 
 BOOKKEEPING (Goal Registration Law):
-- goals.json leaf agent-rung-honest-gate-v2 -> status "merged", mergeHash b37c1fc6, with the
+- goals.json leaf agent-rung-honest-gate-v2 -> status "merged", mergeHash 3058fca5, with the
   irregular provenance stated on the leaf rather than laundered into a normal-looking drain.
 - done-move retired against that hash.
 - reviews/agent-rung-honest-gate-v2.md: s1294's HOLD text left intact (its reasoning was sound;

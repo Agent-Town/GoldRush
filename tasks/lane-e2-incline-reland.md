@@ -22,7 +22,7 @@ Expected **0** → proceed. **1 or more** → the dressing row already landed; S
 Either returns 0 → the lane is stale or the reset did not take. **STOP and report the lane's base — do not work around it.** (Both keys were verified to return exactly 1 on main at authoring time, so a 0 here means the LANE drifted, not that the key is wrong.)
 
 ## WHY
-The four E2 beauty shifts launched in PARALLEL from base `8f65062e` (2026-08-04). Hill-mine drained first. Each of the other three independently reworked the shared water/pilot surfaces, so each carries double-digit conflict hunks against today's main — hand-grafting a subsystem refactor across that much drift is CLAUDE.md **Mistake #15**. They re-land instead. **Trestle re-landed as ladder ① (`7e5fae14`), Pressure Garden as ladder ② (`25890bae`).** You are ladder ③, the last one, and you have the easiest substrate of the three because both predecessors' shared machinery is now ON MAIN.
+The four E2 beauty shifts launched in PARALLEL from base `8f65062e (archive: pruned by the A3 rewrite)` (2026-08-04). Hill-mine drained first. Each of the other three independently reworked the shared water/pilot surfaces, so each carries double-digit conflict hunks against today's main — hand-grafting a subsystem refactor across that much drift is CLAUDE.md **Mistake #15**. They re-land instead. **Trestle re-landed as ladder ① (`eaf8fb2b`), Pressure Garden as ladder ② (`a721d01a`).** You are ladder ③, the last one, and you have the easiest substrate of the three because both predecessors' shared machinery is now ON MAIN.
 
 Its own review, verbatim, on what shipped: *"4 of 5 upgrades KEPT and one cross-map defect cured. U1, U2, U3 and U4 all ship; U5 ships as motes plus the graduation frame but without the staged defeat beat."* The map's central lie is *"a band the sim calls water and the render drew as a void"*.
 
@@ -30,7 +30,7 @@ Its own review, verbatim, on what shipped: *"4 of 5 upgrades KEPT and one cross-
 
 ## READ-FIRST
 1. `git diff main...beauty2/e2-incline --stat` and its review `reviews/beauty-e2-incline.md` — **THE BRANCH IS THE DESIGN.** Your job is PORTING it onto the moved world, not re-deriving it. Its §"Merge classification" table names every file and why.
-2. `src/world/Terrain3dClaimPilot.ts` on MAIN — what moved under it since `8f65062e`: hill-mine's `SCULPT_WATER` rows with flat `fill`, its SunMote row and `LANDMARK_CONTACT` membership, trestle's and pressure-garden's dressing rows, far-ground's repaint hooks, perf-r2's buffer reuse. **All of that STAYS.**
+2. `src/world/Terrain3dClaimPilot.ts` on MAIN — what moved under it since `8f65062e (archive: pruned by the A3 rewrite)`: hill-mine's `SCULPT_WATER` rows with flat `fill`, its SunMote row and `LANDMARK_CONTACT` membership, trestle's and pressure-garden's dressing rows, far-ground's repaint hooks, perf-r2's buffer reuse. **All of that STAYS.**
 3. `reviews/beauty-e2-pressure-garden.md` §DRAIN VERDICT and `reviews/beauty-e2-trestle.md` — how the two predecessors translated branch-shape values into the landed `surface` union. Do exactly that.
 4. `vite.config.ts` release transform (~:170) — **F-RB-1 THE SINGLE-LINE LAW**: every `'e2-…'` table entry in the pilot MUST be single-line or the release build beheads it.
 

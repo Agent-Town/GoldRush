@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // s1205 — scope-6 check: the collection guards must still pass from a NON-ROOT cwd.
-// That root-invariance is the whole point of the predecessor slice (fbefb903); this
+// That root-invariance is the whole point of the predecessor slice (46d4931e); this
 // slice rewrote the capture inside both guards, so it is exactly the property most at
 // risk of silent regression. Run from scripts/ AND from a tmp dir outside the repo.
 import { spawnSync } from 'node:child_process';

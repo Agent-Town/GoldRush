@@ -48,7 +48,7 @@ isolated or `-g`-scoped run could never have surfaced it.)*
 
 **A ~150 ms window sampled by a ~100 ms poller is a coin flip by construction.** The guard is not
 detecting a defect; it is racing one — the *same class* as the geometry race the sibling slice just
-closed (`99bd76fd`). Fix it the same way: **change the moment/observability, never the assertion.**
+closed (`94ce3888`). Fix it the same way: **change the moment/observability, never the assertion.**
 
 **Measured, not inherited** — the class fails **roughly 1 in 3 full-file desktop invocations**, and
 **which site it lands on varies**: s1040's unmodified-main control failed at `:233`; your attempt-1
@@ -147,7 +147,7 @@ re-key is cheap and cannot blow the timeout.
 - **Do not let `:263`/`:264` go vacuous** — see F-1041-1 and scope 4. A guard that cannot fail is worse
   than the flake it replaced, because it is silent.
 - **Do not touch the geometry guard or its helper** (`waitForRendererSettle` at `:93-116`, the adaptive
-  warm-up at `:350-363`, the assertions at `:388-390`). Merged `99bd76fd` with a mutation-control
+  warm-up at `:350-363`, the assertions at `:388-390`). Merged `94ce3888` with a mutation-control
   proof. Build beside it, not over it.
 - **No `src/` changes.** Changing `Balance.repairSeconds` globally would alter **gameplay feel** for a
   test's convenience — an owner decision, not a test fix. Use the per-test `setBalance` helper. If your

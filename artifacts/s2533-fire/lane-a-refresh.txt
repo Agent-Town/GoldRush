@@ -1,4 +1,4 @@
-Updating cb7e68360..79037634e
+Updating 7649ac504..1d07caaf3
 Fast-forward
  STATUS.md                                          |     6 +-
  .../asset-diet/town-transfer-desktop-chrome.json   |     2 +-
@@ -154,12 +154,12 @@ Fast-forward
  .../swing/run3-desktop-chrome.json                 |     1 +
  .../swing/run3-mobile-chrome.json                  |     1 +
  artifacts/first-town-payload-gate/swing/run3.log   |    20 +
- artifacts/first-town-transfer-bisect/1119a4e9.json |   862 +
- artifacts/first-town-transfer-bisect/220886ab.json |   862 +
- artifacts/first-town-transfer-bisect/3691960c.json |   862 +
- artifacts/first-town-transfer-bisect/85900872.json |   862 +
- artifacts/first-town-transfer-bisect/87abff83.json |   862 +
- artifacts/first-town-transfer-bisect/b31adf7b.json |   862 +
+ artifacts/first-town-transfer-bisect/89c40ad6.json |   862 +
+ artifacts/first-town-transfer-bisect/a957928d.json |   862 +
+ artifacts/first-town-transfer-bisect/a2a86c37.json |   862 +
+ artifacts/first-town-transfer-bisect/ac865608.json |   862 +
+ artifacts/first-town-transfer-bisect/24259db0.json |   862 +
+ artifacts/first-town-transfer-bisect/2c47b966.json |   862 +
  .../first-town-transfer-bisect/composition.json    |   116 +
  artifacts/first-town-transfer-bisect/cure.json     |   862 +
  .../first-town-transfer-bisect/main-e5f3ac82.json  |   862 +
@@ -311,18 +311,18 @@ Fast-forward
  .../reassay-mare-claim-2026-09-06/progress.log     |     6 +
  artifacts/relay-rush-replays-again/MEASUREMENT.md  |   156 +
  artifacts/relay-rush-replays-again/bisect.sh       |    25 +
- .../relay-rush-replays-again/bisect/032ccd392.json |     1 +
- .../relay-rush-replays-again/bisect/0958456a4.json |     1 +
- .../relay-rush-replays-again/bisect/2fb1f6151.json |     1 +
- .../relay-rush-replays-again/bisect/41b1e63cf.json |     1 +
- .../relay-rush-replays-again/bisect/502a398d9.json |     1 +
- .../relay-rush-replays-again/bisect/55ac2976f.json |     1 +
- .../relay-rush-replays-again/bisect/78fe8e586.json |     1 +
- .../relay-rush-replays-again/bisect/a65ea2c17.json |     1 +
- .../relay-rush-replays-again/bisect/b38d60295.json |     1 +
- .../relay-rush-replays-again/bisect/de21da4f5.json |     1 +
- .../relay-rush-replays-again/bisect/e5f3ac820.json |     1 +
- .../relay-rush-replays-again/bisect/f429f19c6.json |     1 +
+ .../relay-rush-replays-again/bisect/6c7b11184.json |     1 +
+ .../relay-rush-replays-again/bisect/a8498c181.json |     1 +
+ .../relay-rush-replays-again/bisect/eb45482fd.json |     1 +
+ .../relay-rush-replays-again/bisect/0a120edd3.json |     1 +
+ .../relay-rush-replays-again/bisect/22cf98cfe.json |     1 +
+ .../relay-rush-replays-again/bisect/22bb1b29c.json |     1 +
+ .../relay-rush-replays-again/bisect/590181c9f.json |     1 +
+ .../relay-rush-replays-again/bisect/c4aaf0126.json |     1 +
+ .../relay-rush-replays-again/bisect/0a2a6fdcf.json |     1 +
+ .../relay-rush-replays-again/bisect/d07a0e2e7.json |     1 +
+ .../relay-rush-replays-again/bisect/37c8beda6.json |     1 +
+ .../relay-rush-replays-again/bisect/e82bf4869.json |     1 +
  .../relay-rush-replays-again/bisect/ledger.txt     |    12 +
  .../head-full-ceiling.json                         |     1 +
  artifacts/relay-rush-replays-again/probe.mjs       |   122 +
@@ -992,12 +992,12 @@ Fast-forward
  create mode 100644 artifacts/first-town-payload-gate/swing/run3-desktop-chrome.json
  create mode 100644 artifacts/first-town-payload-gate/swing/run3-mobile-chrome.json
  create mode 100644 artifacts/first-town-payload-gate/swing/run3.log
- create mode 100644 artifacts/first-town-transfer-bisect/1119a4e9.json
- create mode 100644 artifacts/first-town-transfer-bisect/220886ab.json
- create mode 100644 artifacts/first-town-transfer-bisect/3691960c.json
- create mode 100644 artifacts/first-town-transfer-bisect/85900872.json
- create mode 100644 artifacts/first-town-transfer-bisect/87abff83.json
- create mode 100644 artifacts/first-town-transfer-bisect/b31adf7b.json
+ create mode 100644 artifacts/first-town-transfer-bisect/89c40ad6.json
+ create mode 100644 artifacts/first-town-transfer-bisect/a957928d.json
+ create mode 100644 artifacts/first-town-transfer-bisect/a2a86c37.json
+ create mode 100644 artifacts/first-town-transfer-bisect/ac865608.json
+ create mode 100644 artifacts/first-town-transfer-bisect/24259db0.json
+ create mode 100644 artifacts/first-town-transfer-bisect/2c47b966.json
  create mode 100644 artifacts/first-town-transfer-bisect/composition.json
  create mode 100644 artifacts/first-town-transfer-bisect/cure.json
  create mode 100644 artifacts/first-town-transfer-bisect/main-e5f3ac82.json
@@ -1149,18 +1149,18 @@ Fast-forward
  create mode 100644 artifacts/reassay-mare-claim-2026-09-06/progress.log
  create mode 100644 artifacts/relay-rush-replays-again/MEASUREMENT.md
  create mode 100755 artifacts/relay-rush-replays-again/bisect.sh
- create mode 100644 artifacts/relay-rush-replays-again/bisect/032ccd392.json
- create mode 100644 artifacts/relay-rush-replays-again/bisect/0958456a4.json
- create mode 100644 artifacts/relay-rush-replays-again/bisect/2fb1f6151.json
- create mode 100644 artifacts/relay-rush-replays-again/bisect/41b1e63cf.json
- create mode 100644 artifacts/relay-rush-replays-again/bisect/502a398d9.json
- create mode 100644 artifacts/relay-rush-replays-again/bisect/55ac2976f.json
- create mode 100644 artifacts/relay-rush-replays-again/bisect/78fe8e586.json
- create mode 100644 artifacts/relay-rush-replays-again/bisect/a65ea2c17.json
- create mode 100644 artifacts/relay-rush-replays-again/bisect/b38d60295.json
- create mode 100644 artifacts/relay-rush-replays-again/bisect/de21da4f5.json
- create mode 100644 artifacts/relay-rush-replays-again/bisect/e5f3ac820.json
- create mode 100644 artifacts/relay-rush-replays-again/bisect/f429f19c6.json
+ create mode 100644 artifacts/relay-rush-replays-again/bisect/6c7b11184.json
+ create mode 100644 artifacts/relay-rush-replays-again/bisect/a8498c181.json
+ create mode 100644 artifacts/relay-rush-replays-again/bisect/eb45482fd.json
+ create mode 100644 artifacts/relay-rush-replays-again/bisect/0a120edd3.json
+ create mode 100644 artifacts/relay-rush-replays-again/bisect/22cf98cfe.json
+ create mode 100644 artifacts/relay-rush-replays-again/bisect/22bb1b29c.json
+ create mode 100644 artifacts/relay-rush-replays-again/bisect/590181c9f.json
+ create mode 100644 artifacts/relay-rush-replays-again/bisect/c4aaf0126.json
+ create mode 100644 artifacts/relay-rush-replays-again/bisect/0a2a6fdcf.json
+ create mode 100644 artifacts/relay-rush-replays-again/bisect/d07a0e2e7.json
+ create mode 100644 artifacts/relay-rush-replays-again/bisect/37c8beda6.json
+ create mode 100644 artifacts/relay-rush-replays-again/bisect/e82bf4869.json
  create mode 100644 artifacts/relay-rush-replays-again/bisect/ledger.txt
  create mode 100644 artifacts/relay-rush-replays-again/head-full-ceiling.json
  create mode 100644 artifacts/relay-rush-replays-again/probe.mjs

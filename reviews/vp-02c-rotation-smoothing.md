@@ -5,7 +5,7 @@
 ## Scope check
 Diff: `src/entities/Hero.ts` (+32), `src/assets/SpriteAnimator.ts` (+124/−16), `e2e/vp-02-sprite-animation.spec.ts` (+232, extend-only — existing tests untouched). In scope per tasks/010.
 
-**Bookkeeping finding:** 010's `Balance.sprite` section (turnRateDegPerS 540, orientationFadeMs 100) and the DebugTools "Sprite" knob folder were committed inside `6ed24fc` (the 009 slice commit) — the mid-gate leak s25 warned about; s25 pinned only the 3 files it knew. Outcome-harmless (additive knobs, defaults match tasks/010 spec, s25's full sweep ran with them present), but `6ed24fc`'s message doesn't own them. No history rewrite; recorded here.
+**Bookkeeping finding:** 010's `Balance.sprite` section (turnRateDegPerS 540, orientationFadeMs 100) and the DebugTools "Sprite" knob folder were committed inside `63a5ea7` (the 009 slice commit) — the mid-gate leak s25 warned about; s25 pinned only the 3 files it knew. Outcome-harmless (additive knobs, defaults match tasks/010 spec, s25's full sweep ran with them present), but `63a5ea7`'s message doesn't own them. No history rewrite; recorded here.
 
 ## Code review
 - **Damped heading (Hero):** rate-limited turn (`Balance.sprite.turnRateDegPerS`, per-frame step clamped ≤30° against dt spikes), `signedAngleDelta` with deterministic ±180 tie-break, state reset on `reset()`. Heading source prefers INPUT INTENT (`targetVelocity`) over physics velocity, and `moving` includes intent — pushing a wall now walks-in-place facing the push instead of idling. **Design call, judged in-intent** (responsive feel, avoids wall-slide facing artifacts) — m2-07 flag list.

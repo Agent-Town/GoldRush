@@ -1,7 +1,7 @@
 # f2069 — the frame-supply knee, measured below it at last
 
 **Slice:** F-1591-1 Arm C (evidence-only; no product bytes)
-**Branch/tip:** main @ `2f8f165ac` (probe + first six arms), this file and the last two arms following
+**Branch/tip:** main @ `2f8f165ac (archive: pruned by the A3 rewrite)` (probe + first six arms), this file and the last two arms following
 **Fire:** s2069, 2026-08-19
 **Verdict:** ✅ **CONFIRMED — the clamp law holds at the regime that matters, and the timeout class reproduces.**
 
@@ -12,7 +12,7 @@ the `beauty-town` predicate `elapsed > 4` costs **at least 81 presented frames**
 and below ~2.7 fps it must breach the spec's 30 s cap — the class of the single historical **41.8 s** red
 that F-1587-2 chased through three non-reproductions.
 
-Arm 0 (merged `c213694c0`, s1592) confirmed only the **upper bound**, taken entirely **above** the 20 fps
+Arm 0 (merged `5936ec48e`, s1592) confirmed only the **upper bound**, taken entirely **above** the 20 fps
 knee where the derivation itself says the ratio cannot move. Arm A tried to get below the knee with
 N=2/4/8/16 parallel loads and **could not arm** — every run stayed ~120 fps. The row has read
 *"unrefuted and still unconfirmed at the only regime that matters"* for ten days.
@@ -27,7 +27,7 @@ does not depend on winning that fight. Predictions were registered in
 ## Evidence
 
 Server: scratch port **5236** (`vite preview` on `dist/`, verified current — `Loop.ts` last changed
-`f3e2d1026` 2026-08-04, `TownScene.ts` `e719d813d` 2026-08-15T09:09+07, dist built 2026-08-15T13:50Z).
+`9146212fc` 2026-08-04, `TownScene.ts` `a5b1a6eb8` 2026-08-15T09:09+07, dist built 2026-08-15T13:50Z).
 Arms run **serially**, one browser at a time (§3.1: concurrency in a fire shell is what manufactures
 depressed frame supply, and frame supply is this probe's subject).
 

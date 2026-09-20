@@ -1,8 +1,8 @@
 # f2265-2 — bt-04b's mobile spec determinism (and the bt-04b stack behind it)
 
 - **Slice:** `f2265-2-bt04b-mobile-spec-determinism` riding on `bt-04b-automation-two-params`
-- **Branch / tip:** `lane/a` @ `fa9a757f0` — a two-commit stack (`8dc4ff173` bt-04b, `fa9a757f0` f2265-2)
-- **Base:** `main` @ `8a3dc50db` (lane was `ahead=2 behind=22`, `tracked-dirt=0`, `untracked=0`)
+- **Branch / tip:** `lane/a` @ `431367d10` — a two-commit stack (`d02ff4148` bt-04b, `431367d10` f2265-2)
+- **Base:** `main` @ `e7397787d` (lane was `ahead=2 behind=22`, `tracked-dirt=0`, `untracked=0`)
 - **Gated by:** s2268, in a detached worktree (`.gate-s2268`, §3.0b — undecided content never entered main's tree)
 - **Predecessor review:** `reviews/bt-04b-automation-two-params.md` (s2265 HOLD, s2266 node-guards discharge)
 
@@ -21,7 +21,7 @@ its spec is green.
 dismisses the contract briefing and asserts it is hidden (with a named failure message)
 before the boundary assertions, replaces a raw `evaluate`+`dispatchEvent` input write with
 an actionability-aware `fill()`, and adds console/page-error watching to all three tests.
-**It respected its firewall exactly** — `git show fa9a757f0` touches `e2e/bt-04b-automation.spec.ts`
+**It respected its firewall exactly** — `git show 431367d10` touches `e2e/bt-04b-automation.spec.ts`
 and nothing else — and **it did not weaken a single assertion**: both `toBe(false)` boundary
 cases the slice exists to pin are intact, verified by reading the diff rather than by trusting
 the report.
@@ -90,8 +90,8 @@ Not merged, so no per-file resolution was committed. For the landing fire: the m
 is clean and was performed in `.gate-s2268` — 8 paths, all **LANE-TOUCHED**, main has moved
 none of them since the lane branched (`lane-usable lane-a` reports all 8 as `HELD LANE-ONLY`).
 `e2e/bt-04b-automation.spec.ts` and both `reviews/shots-bt04b/*.png` are new files; the five
-`src/` files are additive. The stack must be merged at its **tip** (`fa9a757f0`) — merging
-`8dc4ff173` alone would land the pre-cure spec.
+`src/` files are additive. The stack must be merged at its **tip** (`431367d10`) — merging
+`d02ff4148` alone would land the pre-cure spec.
 
 ## Battery attribution
 
@@ -99,7 +99,7 @@ none of them since the lane branched (`lane-usable lane-a` reports all 8 as `HEL
 rather than by omission.** s2266 ran it on bt-04b's merged tree (rc=1, three failures, all
 three attributed away from the slice — two pre-existing on main with a control run on clean
 main, one routine law-pointer rot). The only delta this fire adds on top of that tree is
-`fa9a757f0`, which touches **`e2e/` alone**; `test:node-guards` runs `scripts/*.test.mjs`
+`431367d10`, which touches **`e2e/` alone**; `test:node-guards` runs `scripts/*.test.mjs`
 plus `gr-sim` and reads nothing under `e2e/`, so the f2265-2 delta is structurally incapable
 of moving it. **The ~530 s battery was not worth spending to re-derive a result its own
 inputs cannot have changed** — but that is an argument, not a measurement, and a fire that

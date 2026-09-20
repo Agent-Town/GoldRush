@@ -5,8 +5,8 @@
 ## PRE-FLIGHT (STOP conditions — run these before you touch anything)
 
 1. The lane must carry this fire's evidence commit, which is the freshness proof:
-   `git merge-base --is-ancestor 62312c365 HEAD`
-   → **non-zero = STOP.** Report `LANE STALE — missing 62312c365` and do nothing else.
+   `git merge-base --is-ancestor 6706dba05 HEAD`
+   → **non-zero = STOP.** Report `LANE STALE — missing 6706dba05` and do nothing else.
 2. Prove the subject region is present and unmoved, scoped to the one file so this master's own
    prose cannot rot the key (F-1310-1 / F-1425-2):
    `grep -c "const QUOTED_BY_KIND = " scripts/citation-title-guard.mjs`
@@ -20,9 +20,9 @@
 
 - `scripts/citation-title-guard.mjs` — **the only script this task may change.** Read, in order:
   `TITLE_DECL` (`:65`-ish), `QUOTED` and `QUOTED_BY_KIND` below it, `matchesATitle()`, and
-  `matchingQuote()` — the helper merged at `790a66f5` that **both** scan loops now call.
+  `matchingQuote()` — the helper merged at `122db2c0` that **both** scan loops now call.
 - `scripts/citation-title-guard.test.mjs` — you extend this; do not add a file. Read the two arms
-  added at `790a66f5` (`a short code span cannot consume…`, `a bare apostrophe cannot consume…`) —
+  added at `122db2c0` (`a short code span cannot consume…`, `a bare apostrophe cannot consume…`) —
   they are the shape your new arms must follow.
 - `reviews/f1501-5-citation-quote-pairing.md` — the drain that filed both findings, with the measured
   three-window table.
@@ -33,7 +33,7 @@
 
 Two findings, **same file, interacting cures**, which is why they are one task.
 
-**F-1515-1 (s1515)** — `790a66f5` fixed the reported mis-pairing with a **union** (loose ∪ by-kind),
+**F-1515-1 (s1515)** — `122db2c0` fixed the reported mis-pairing with a **union** (loose ∪ by-kind),
 which the f1501-5 master itself offered as *"a PROVEN-SAFE FLOOR, not the required implementation"*.
 It is a **backstop, not a cure**: both scanners still walk the window with a **global `lastIndex`** and
 consume delimiters, so an **odd count of same-kind quotes before the title defeats BOTH arms**.
@@ -90,7 +90,7 @@ inflated by F-1515-2's pollution.** Curing F-1515-2 first makes F-1515-1's measu
 3. **Do not regress the corpus. Hard acceptance bar, not advice.**
    ⚠️ **THE BAR IS RELATIVE TO YOUR OWN BASELINE, NOT TO A NUMBER WRITTEN HERE — read why before you
    start, because the first version of this master STOPPED a run on exactly this.** Attempt 1 fixed
-   the denominator at `511`; but the authoring commit `edbbb8f0a` *itself* added four citations (two
+   the denominator at `511`; but the authoring commit `3013d09b8` *itself* added four citations (two
    in `tasks/goals.json`, two in this master), so the corpus was `515` before any code changed and
    **the bar was unsatisfiable the moment it was written.** The runner measured it, refused to
    implement against an impossible gate, and was correct to do so (report:
@@ -167,4 +167,4 @@ untouched · the `test:node-guards` raw tally **with your Node version**.
 for instance if the loose scanner's recoveries turn out to depend on precisely the mis-pairing that
 causes the bug — **say so with the arms you measured and STOP.** That is a real finding about the
 guard's design (it would mean the 400-char window, not the regex, is the wrong abstraction) and it is
-worth more than a cure that trades recoveries for a fix. The precedent is `8134ec30`.
+worth more than a cure that trades recoveries for a fix. The precedent is `e47354c6`.

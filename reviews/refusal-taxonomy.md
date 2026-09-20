@@ -1,9 +1,9 @@
 # Review — refusal-taxonomy
 
 **Slice:** `refusal-taxonomy` (lane-d) — HarnessDev §3 F, owner-approved 2026-09-03
-**Branch:** `lane/d` — runner commit `d9b46e435`
-**Gated tip:** `75e86f1c3934f4aaf2258df13b7f948f3e3d0c2f`
-**Merged to main:** `75e86f1c3934f4aaf2258df13b7f948f3e3d0c2f` — fast-forward of the gated commit itself
+**Branch:** `lane/d` — runner commit `f09349659`
+**Gated tip:** `8cc82be613bf6431657e62b0ac5ee98060895b5f`
+**Merged to main:** `8cc82be613bf6431657e62b0ac5ee98060895b5f` — fast-forward of the gated commit itself
 **Drained by:** s2470
 
 ## Verdict

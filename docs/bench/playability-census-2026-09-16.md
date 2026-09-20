@@ -2,11 +2,11 @@
 
 > ⏱️ **SUPERSEDED ON THREE OF ITS FOUR ROWS, SEVEN HOURS AFTER IT WAS WRITTEN — READ THIS BEFORE THE RESULT
 > LINE (F-2588-1, appended s2588; the census below is UNCHANGED and was honest when written).** This file is
-> named for the DAY and measures an INSTANT: its subject is main `e55c1aee1` at 01:26, and at **08:09** the
-> attended session merged `2d053781c` (`reviews/playability-first-wave-e2-e6.md`), which cures three of the
+> named for the DAY and measures an INSTANT: its subject is main `dbbeb4da8` at 01:26, and at **08:09** the
+> attended session merged `1802fbe63` (`reviews/playability-first-wave-e2-e6.md`), which cures three of the
 > exact four rows below. **Applying THIS DOCUMENT'S OWN staleness predicate** — the `src/ assets/ public/
 > functions/ site/ index.html e2e/` diff it uses further down to argue nothing observable had moved —
-> `e55c1aee1..HEAD` is **NOT empty: 6 files, +386/−61**, including both failing contracts' data *and the
+> `dbbeb4da8..HEAD` is **NOT empty: 6 files, +386/−61**, including both failing contracts' data *and the
 > census harness itself* (`e2e/playability-smoke.spec.ts` +102, which declares the Drill Yard exemption).
 > 📊 **MEASURED, not inferred — the drain re-ran this same smoke over these same four contracts on the merged
 > tree, both projects: `6 passed / 2 failed`.** e2-trestle wave 2 at 86.3–87.1 s (3/3 × 2) · e2-incline wave 2
@@ -21,7 +21,7 @@
 
 **Method:** `npm run test:playability` (`e2e/playability-smoke.spec.ts`: every board contract booted the way a
 human boots it — no `?debug`, no test seam — and asked six questions: boots, briefing, HUD, moves, reaches
-wave 2, no console/page errors) on a **detached worktree** (`gate-census-s2583`) at main `e55c1aee1`, both
+wave 2, no console/page errors) on a **detached worktree** (`gate-census-s2583`) at main `dbbeb4da8`, both
 projects, one worker, **28.7 min wall**, board dry, machine otherwise idle (load 1.60 at launch; nothing else
 running — checked before launch, and deliberately nothing was run beside it, per F-2462-1). Transcript:
 `artifacts/playability-census-2026-09-16/census-desktop-and-mobile.log`.
@@ -39,7 +39,7 @@ running — checked before launch, and deliberately nothing was run beside it, p
 
 ## This run was a reproducibility control, and that is its whole value
 
-The census subject was **byte-identical** to the 2026-09-15 run: `git diff 585719e1d..e55c1aee1` over
+The census subject was **byte-identical** to the 2026-09-15 run: `git diff b957a966a..dbbeb4da8` over
 `src/ assets/ public/ functions/ site/ index.html e2e/` is **empty**, and the whole-tree diff is 9 files, all
 of them ledger, law and marketing. Nothing the census can observe had moved. So this run could not discover a
 regression — what it could do is tell us whether yesterday's four rows are **real defects or load artifacts**,
@@ -99,5 +99,5 @@ All four ids already exist from the 2026-09-15 census and are **re-confirmed, no
 Per the standing duty, **nothing was fixed in this fire.**
 
 ---
-*s2583 fire, 2026-09-16. Detached worktree `gate-census-s2583` at `e55c1aee1`, removed after the run.
+*s2583 fire, 2026-09-16. Detached worktree `gate-census-s2583` at `dbbeb4da8`, removed after the run.
 84 runs, 76 pass, 8 fail, 28.7 min. Subject byte-identical to the 2026-09-15 census tree.*

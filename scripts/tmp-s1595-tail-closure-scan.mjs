@@ -32,7 +32,7 @@ const CLOSURE_VERBS = [
 
 // "the body says it was cured AT this hash" — the verb must sit within 60 chars
 // before the hash, so a hash merely cited as EVIDENCE (F-1364-1's body cites
-// 4d04e3b8 as the rehearsal verdict) does not match.
+// 8229d6e0 as the rehearsal verdict) does not match.
 const CURE_AT_HASH = /\b(CURED|PATCHED|FIXED|LANDED|MERGED|SHIPPED|CLOSED|RETIRED)\b[^.!?]{0,60}?\b([0-9a-f]{7,40})\b/gi
 
 const ancestorCache = new Map()

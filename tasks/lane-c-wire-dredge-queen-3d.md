@@ -9,7 +9,7 @@ Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead 
 GROUND-TRUTH pre-flight: grep `dredge-queen-3d` in src/ — absent = wire in full. Present = STOP, report SHIPPED.
 
 ## Why (drain follow-up 2026-07-17)
-The Dredge-Queen boss system shipped with placeholder primitives (55ee01d6); 3D-C's model merged (sol/dredge-queen-3d-v2: 11,832 tris, one material, four independent damage components). The railcar/crawler law: the model wires in; the sim never notices.
+The Dredge-Queen boss system shipped with placeholder primitives (2867d230); 3D-C's model merged (sol/dredge-queen-3d-v2: 11,832 tris, one material, four independent damage components). The railcar/crawler law: the model wires in; the sim never notices.
 
 ## Scope
 1. Load the GLB in DredgeQueenBossSystem's presentation layer (the crawler pattern: async load, primitive fallback if load fails); bind the four component sub-meshes to the four damage zones by node name from the asset contract.

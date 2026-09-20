@@ -2,7 +2,7 @@ CODEX: model=gpt-5.6-sol effort=xhigh
 
 # lane-e3-moth-socket — make Moth Season's light trade visible to agents (cures F-ER01-E3-2)
 
-**FIRE-AUTHORED s1468 (attended review welcome).** Third instance of the ERA-SOCKET class. The template is `tasks/lane-e3-voltage-socket.md` (s1466-authored, drained clean at `3ac90dd8`); its predecessor `tasks/lane-e2-pressure-socket.md` drained at `24c6600f`. **Read `reviews/e3-voltage-socket.md` before you start** — it is the same sim, one slice earlier, and it already socketed half of your dependencies.
+**FIRE-AUTHORED s1468 (attended review welcome).** Third instance of the ERA-SOCKET class. The template is `tasks/lane-e3-voltage-socket.md` (s1466-authored, drained clean at `9af152ab`); its predecessor `tasks/lane-e2-pressure-socket.md` drained at `6fd24a3b`. **Read `reviews/e3-voltage-socket.md` before you start** — it is the same sim, one slice earlier, and it already socketed half of your dependencies.
 
 ROLE: implementer on lane-a. WORKDIR: `worktrees/lane-a` (branch `lane/a`). Commit prefix `msock:`. Never touch STATUS.md, reviews/, tasks/queue/, other lanes.
 
@@ -38,9 +38,9 @@ Expect **0**. If **≥1**, a moth consumer is already socketed — STOP and repo
 
 > The browser runs `MothSwarm` against live light sources under the locked night cycle; GR-SIM runs neither the swarm behavior nor the light-state consumer. The manifest consequently exposes only generic build zones, so an agent cannot observe or choose the decoy-versus-radius trade the contract is about. The attended fix master must socket those production rules and derive their vocabulary/actions rather than treating generic combat as Moth Season.
 
-The census records **AGENT-READY: 1 of 4** for E3. Blackout Ridge got there via the Voltage socket; Moth Season is the next and it is the **cheapest of the three remaining**, because its twist is `secureWave, dayNightCycle, mothSeason, enemyRoster` and **`dayNightCycle` is already socketed** by `3ac90dd8`. Only the `mothSeason` half is missing.
+The census records **AGENT-READY: 1 of 4** for E3. Blackout Ridge got there via the Voltage socket; Moth Season is the next and it is the **cheapest of the three remaining**, because its twist is `secureWave, dayNightCycle, mothSeason, enemyRoster` and **`dayNightCycle` is already socketed** by `9af152ab`. Only the `mothSeason` half is missing.
 
-ⓘ *On "the attended fix master": the E2 census used that identical phrasing and fire s1460 authored `lane-e2-pressure-socket` against it anyway, which drained at `24c6600f`; s1466 did the same for E3-1, which drained at `3ac90dd8`. The phrase is census boilerplate meaning "not ER-01's job", **not** an owner gate. Verified again s1468 by re-reading the census.*
+ⓘ *On "the attended fix master": the E2 census used that identical phrasing and fire s1460 authored `lane-e2-pressure-socket` against it anyway, which drained at `6fd24a3b`; s1466 did the same for E3-1, which drained at `9af152ab`. The phrase is census boilerplate meaning "not ER-01's job", **not** an owner gate. Verified again s1468 by re-reading the census.*
 
 ## READ-FIRST
 

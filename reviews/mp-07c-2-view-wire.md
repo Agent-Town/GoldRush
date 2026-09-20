@@ -1,6 +1,6 @@
 # Review — mp-07c-2: the view wire + the thin seat
 
-**Slice/branch/tip:** mp-07c-2 (`tasks/lane-mp07c2-view-wire.md`) · `lane/b` · tip `8bb10d99f` · merged `6e203aaad687` (attended merge + gate; leaf flipped by s1552; this review completes the drain's paperwork).
+**Slice/branch/tip:** mp-07c-2 (`tasks/lane-mp07c2-view-wire.md`) · `lane/b` · tip `8e71c74ec` · merged `85807714a8a6` (attended merge + gate; leaf flipped by s1552; this review completes the drain's paperwork).
 
 **Verdict: MERGED — gate green on the merged tree.**
 

@@ -1,7 +1,7 @@
 # rf-23 — the OTHER throw: guarding the bare `localStorage` ACCESS on the boot path
 
 Slice: `lane-blocked-storage-access-throw` (goal leaf `rf-23`)
-Branch: `lane/m3` · tip `f231b073` · merge-base `1bffcdbe`
+Branch: `lane/m3` · tip `f231b073` · merge-base `dfec3858`
 Drained: s1085, 2026-07-26
 
 **Verdict: MERGED.** All gates green, and the fix is proven by a mutation control I re-ran myself.
@@ -59,7 +59,7 @@ The mutation was reverted and the tree re-verified **byte-identical to `f231b073
 
 ## Merge classification
 
-Merge-base `1bffcdbe`. All three files **LANE-TOUCHED only, zero MAIN-MOVED**, so this was a byte-identical graft with no 3-way and no conflict resolution:
+Merge-base `dfec3858`. All three files **LANE-TOUCHED only, zero MAIN-MOVED**, so this was a byte-identical graft with no 3-way and no conflict resolution:
 
 | File | Lane | Main | Resolution |
 |---|---|---|---|

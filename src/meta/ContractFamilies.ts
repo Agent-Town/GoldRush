@@ -2587,7 +2587,7 @@ function validateMotorFrontier(contract: ContractManifest, reasons: ContractDesc
  *     wrong for a map that is deliberately inert for the benchmark and perfectly walkable for a
  *     human.
  * `tasks/e10s-1c-ember-shore-inert-landing.md:27` (F-2165-1, measured in a detached control, landed
- * as `14dbb496a`) proves the collision is real: the Ember Shore's four authored anchors were
+ * as `d08cfe31b`) proves the collision is real: the Ember Shore's four authored anchors were
  * REMOVED again because "the four `harvestAnchors` + `benchSeeds` + two null-floors rows constitute
  * ADMISSION ... The e6-picnic shape is the house answer: the data lands with empty anchors, and the
  * E10S-4 door slice earns the admission later on evidence." So the three Deep Sky maps could not

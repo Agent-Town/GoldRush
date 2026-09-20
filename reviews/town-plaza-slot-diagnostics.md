@@ -2,7 +2,7 @@
 
 - **Slice:** `lane-town-plaza-slot-diagnostics` (s1108-authored named lift for rf-37's firewall STOP)
 - **Branch / tip:** `lane/m3` @ `93d55f55` — `runner(lane-a): lane-town-plaza-slot-diagnostics.md`
-- **Landed as:** `425d2a9a` — **path-scoped, NOT a branch merge** (see F-1109-3)
+- **Landed as:** `ed15bb17` — **path-scoped, NOT a branch merge** (see F-1109-3)
 - **Verdict:** ✅ **MERGED** — the lift does exactly what it was authored to do, and it is proven by payload, not by a green test.
 
 ## What it does
@@ -80,7 +80,7 @@ would have imported all of it onto main.
 
 **Landing method:** `git checkout lane/m3 -- src/town/TownScene.ts e2e/town-t1-square.spec.ts`,
 then a path-scoped commit. Verified loss-free before committing:
-`git log fa63dc7c..HEAD -- <both paths>` is **EMPTY**, so main had not moved either file since the
+`git log d97c1973..HEAD -- <both paths>` is **EMPTY**, so main had not moved either file since the
 lane base and the checkout clobbered nothing. Staged diff was exactly `2 files, +15/−1`.
 
 ⚠️ **CONSEQUENCE FOR THE NEXT FIRE — `lane/m3` NOW READS "1 AHEAD" AND IS NOT DRAINABLE.**

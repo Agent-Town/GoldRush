@@ -1,6 +1,6 @@
 # Review — locked-win (THE LOCKED-WIN LAW, owner-P1)
 
-**Slice:** lane-locked-win · **Branch:** lane/m3 · **Tip:** 0b0aa8e3 · **Merged:** c21d1839 (--no-ff) · **Base:** 1a477b66 (fresh, ~3 commits back)
+**Slice:** lane-locked-win · **Branch:** lane/m3 · **Tip:** 07248387 · **Merged:** 48e75b77 (--no-ff) · **Base:** 7d8e2de2 (fresh, ~3 commits back)
 **Drained by:** s888 fire · 2026-07-22T09:xxZ · **Verdict:** ✅ PASS — merged to main.
 
 ## What it does (one paragraph)
@@ -25,7 +25,7 @@ Key guard cases proven green:
 Screenshots (shipped with the slice): `artifacts/locked-win/{desktop,mobile}-chrome-secured-chip-mid-rush.png`, `artifacts/locked-win/{desktop,mobile}-chrome-summary-after-rush-death.png`.
 
 ## Merge classification
-Base `1a477b66` (the alt-shift WALL-LIFTED commit). Main's commits since base (rehearsal ledger cc296891, gitignore 67798e3d, s888 STATUS/queue bookkeeping) touch **no src/e2e/assets** the slice touches → every file is **LANE-TOUCHED only**, clean `git merge --no-ff`, zero conflicts. 20 files, +449/-97.
+Base `7d8e2de2` (the alt-shift WALL-LIFTED commit). Main's commits since base (rehearsal ledger a772a622, gitignore afc1e7a2, s888 STATUS/queue bookkeeping) touch **no src/e2e/assets** the slice touches → every file is **LANE-TOUCHED only**, clean `git merge --no-ff`, zero conflicts. 20 files, +449/-97.
 
 | File | Class |
 |------|-------|

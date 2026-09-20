@@ -83,7 +83,7 @@ if (!line || !line.startsWith('{')) {
 const out = JSON.parse(line);
 
 console.log('Driving the REAL entry point: StandingOrdersExecutor.submit()');
-console.log('All rungs granted, all abilities granted, auto_pan declared level 2 (main, s1281 85bb1938).\n');
+console.log('All rungs granted, all abilities granted, auto_pan declared level 2 (main, s1281 21985788).\n');
 for (const [verb, rows] of Object.entries(out)) {
   console.log(`${verb}  (requiredLevel per StandingOrders.ts:345-348)`);
   for (const [lvl, verdict] of Object.entries(rows)) console.log(`    ${lvl}: ${verdict}`);

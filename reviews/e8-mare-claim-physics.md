@@ -1,6 +1,6 @@
 # e8-mare-claim-physics — drain review (attended, 2026-09-04)
 
-**Slice/branch/tip:** `e8-mare-claim-physics` · `lane/d` · tip `7be55f66e` · base `e1e66d397` · merge `a121c7f14`
+**Slice/branch/tip:** `e8-mare-claim-physics` · `lane/d` · tip `7be55f66e (archive: pruned by the A3 rewrite)` · base `83d274a24` · merge `5c82f05bb`
 **Verdict: MERGED.** Claude implementer (Opus, attended-dispatched after the Fable endpoint overloaded); twelve commits; READY-FOR-GATES with every red attributed.
 
 ## What it does
@@ -22,7 +22,7 @@ The Mare Claim stops being the Claim in silver. `HeadlessContractSim` composes `
 | known red | `agent-view.spec.ts:512` (inventory KNOWN-RED; missing `viewVersion`/`coalSeams`, both from ancestors, not this diff) |
 
 ## Merge classification
-Base `e1e66d397`. LANE-TOUCHED: `src/sim/HeadlessContractSim.ts` (+119), `src/systems/E8PhysicsSystem.ts` (+229), `src/agent/View.ts` (+84), `public/skill.md`, `scripts/e8-mare-claim-physics.test.mjs` (new), `e2e/e8-mare-claim-physics-parity.spec.ts` (new), evidence. MAIN-MOVED: `package.json` (auto-merged: one battery entry beside main's own), `tasks/BACKLOG.md` (union: the lane's one row prepended; zero markers).
+Base `83d274a24`. LANE-TOUCHED: `src/sim/HeadlessContractSim.ts` (+119), `src/systems/E8PhysicsSystem.ts` (+229), `src/agent/View.ts` (+84), `public/skill.md`, `scripts/e8-mare-claim-physics.test.mjs` (new), `e2e/e8-mare-claim-physics-parity.spec.ts` (new), evidence. MAIN-MOVED: `package.json` (auto-merged: one battery entry beside main's own), `tasks/BACKLOG.md` (union: the lane's one row prepended; zero markers).
 
 ## Findings (the implementer's F-E8MC-1..5, disposition attended)
 - **F-E8MC-1 no view-version bump (accepted, documented):** `viewVersion` lives in the era registry the master firewalled, and `view-schema-guard` deep-equals the registry against the canonical Claim view, so contract-scoped fields (`now.preserve` precedent) are unregistered by design; skill.md states the rule. FOLLOW-UP for the view-schema law: contract-scoped extensions need their own registry shape (fire-authorable).

@@ -1,6 +1,6 @@
 # Gauntlet Heat 6 R2 — almanac-era re-ride
 
-Live game build: `61681a776` (`version.json` prefix `61681a77`, built 2026-08-25T04:58:26Z). Detached ride tree: `/tmp/heat6-61681a77`. `npm install --no-audit --no-fund` and `npm run build` passed there before riding.
+Live game build: `2701f6b56` (`version.json` prefix `2701f6b5`, built 2026-08-25T04:58:26Z). Detached ride tree: `/tmp/heat6-61681a77`. `npm install --no-audit --no-fund` and `npm run build` passed there before riding.
 
 The required `the-claim` probe secured wave 10 / 45g and verified end-to-end. Its tape and assayer hashes both equal `fnv1a32:e7c3d0c0`, so the earlier production/assayer skew is cured for this build.
 

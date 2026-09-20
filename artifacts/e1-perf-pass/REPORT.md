@@ -1,7 +1,7 @@
 # E1 performance pass
 
 Date: 2026-08-03  
-Branch/base: `lane/perf` at `d9235027`  
+Branch/base: `lane/perf` at `82399952`  
 Host: Apple M4 Max via ANGLE Metal  
 Shed line: 33.4 ms p95  
 Draw-call gate: 200
@@ -69,7 +69,7 @@ Normal and 60-enemy pressure screenshots were compared for all five maps in both
 | Scoped E1 perf/census, final tree | PASS: desktop 1.0 min; mobile 1.0 min |
 | TypeScript + diff check | PASS |
 | Release suite, both projects, serial | PASS: 28/28, including release build and asset-diet checks |
-| Full E1 suites, both projects, serial | BASE-DEBT RED: 51/64 passed; Baron card-count expectation, Night brightness assertions, Twin build/ford cases, Dry seeded-height mobile case, and the earlier superseded perf-pixel assertion accounted for the reds. The two Night brightness failures were reproduced on untouched `d9235027`. |
+| Full E1 suites, both projects, serial | BASE-DEBT RED: 51/64 passed; Baron card-count expectation, Night brightness assertions, Twin build/ford cases, Dry seeded-height mobile case, and the earlier superseded perf-pixel assertion accounted for the reds. The two Night brightness failures were reproduced on untouched `82399952`. |
 | `night3d-perf`, both projects | BASE-DEBT RED: watchdog/tier cases pass; terrain-vs-painted ratio fails on base (1.778846 desktop, 1.696078 mobile) and final (1.769231 desktop, 1.647059 mobile). Ratios improved slightly but remain above the existing 1.15 assertion. |
 | Console/page errors in scoped census | PASS: zero |
 

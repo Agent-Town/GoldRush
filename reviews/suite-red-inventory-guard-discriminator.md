@@ -1,8 +1,8 @@
 # Review — suite-red-inventory-guard-discriminator
 
 - **Slice:** `lane-d-suite-red-inventory-guard-discriminator` (F-1200-3 + F-1200-2)
-- **Branch / tip:** `lane/perf` @ `d3d5ce6c` (runner commit), base `c4aa5ad1`
-- **Master:** `c4aa5ad1` (authored s1200) · **Run log:** `tasks/runs/20260729-064849-lane-d-lane-d-suite-red-inventory-guard-discriminator.md.log`
+- **Branch / tip:** `lane/perf` @ `d3d5ce6c` (runner commit), base `45e2c934`
+- **Master:** `45e2c934` (authored s1200) · **Run log:** `tasks/runs/20260729-064849-lane-d-lane-d-suite-red-inventory-guard-discriminator.md.log`
 - **Drained by:** s1201 fire, 2026-07-29
 - **§3.0 `drain-block-check`:** ✅ CLEAR — run FIRST, before classification and before I formed an opinion (`factory-suite-red-inventory-guard-discriminator`, status `queued`; 2 leaves matched, longest wins).
 
@@ -43,10 +43,10 @@ Two-dot `main..lane/perf` shows 4 files, but the lane's **own commit** (`d3d5ce6
 |---|---|
 | `scripts/suite-red-inventory.mjs` | **LANE-TOUCHED** — applied |
 | `scripts/suite-red-inventory.test.mjs` | **LANE-TOUCHED** — applied |
-| `STATUS.md` | **MAIN-MOVED-ONLY** — stale base (`c4aa5ad1`), not applied |
+| `STATUS.md` | **MAIN-MOVED-ONLY** — stale base (`45e2c934`), not applied |
 | `logs/session-scratch/s1200-handoff.mjs` | **MAIN-MOVED-ONLY** — stale base, not applied |
 
-`git diff --name-only c4aa5ad1..main` = `STATUS.md`, `logs/session-scratch/s1200-handoff.mjs` — **zero overlap** with the lane's two files, so no 3-way graft was needed and no conflict existed. Firewall respected: exactly the two permitted files changed.
+`git diff --name-only 45e2c934..main` = `STATUS.md`, `logs/session-scratch/s1200-handoff.mjs` — **zero overlap** with the lane's two files, so no 3-way graft was needed and no conflict existed. Firewall respected: exactly the two permitted files changed.
 
 ### The mutation controls — mine, not the run's
 

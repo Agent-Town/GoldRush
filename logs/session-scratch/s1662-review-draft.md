@@ -1,6 +1,6 @@
 # f1660-1 — restore the F-E2S-3 de-list as a cited exemption, and assert both directions of the AP-16 mode rule
 
-**Slice:** `f1660-1-door-readmission-repair` · **Branch:** `lane/b` @ `a923f241d` (runner commit) · **Base:** `b458dba15`
+**Slice:** `f1660-1-door-readmission-repair` · **Branch:** `lane/b` @ `244253143` (runner commit) · **Base:** `51d5313bf`
 **Merged to main:** `<MERGE_HASH>` · **Drained by:** s1662 fire, 2026-08-11
 **Master:** `tasks/f1660-1-door-readmission-repair.md` (authored + dispatched s1660) · **Goal leaf:** `f1660-1-door-readmission-repair`
 
@@ -10,14 +10,14 @@
 
 An owner ruling that shipped on 2026-08-09 had been silently reversed on main for ~15 hours. F-E2S-3
 (*"de-list now, socket later"*) removed `e2-hill-mine`, `e2-trestle` and `e2-incline` from the AP-07 headless
-door; `f1605-1` landed it at `88530e3ef`. Then `48a0d41ab` replaced the hand-maintained `SUPPORTED_CONTRACTS`
+door; `f1605-1` landed it at `312b443f1`. Then `6f74bf510` replaced the hand-maintained `SUPPORTED_CONTRACTS`
 literal with a derivation over a new `CONTRACT_ADMISSION_EXEMPTIONS` table, carried the E5/E6 refusals and
 `e3-fairground` across as cited entries, and **did not carry the three railcars** — so the derivation swept them
 back in. The prior policy had lived in a **code comment inside the literal**, and a comment does not survive a
 derivation.
 
 This slice restores the three as **cited exemptions** (`citation: F-E2S-3`), restores the three
-`e2e/er01-e2-census.spec.ts` refusal arms that `48a0d41ab` had inverted into admission assertions, re-derives the
+`e2e/er01-e2-census.spec.ts` refusal arms that `6f74bf510` had inverted into admission assertions, re-derives the
 `public/skill.md` public door fence (22 → 19), regenerates `docs/bench/same-game-audit.md`, and adds the durable
 half: a registry-derived assertion that **every mode-declaring contract is refused modelessly and admitted with
 its declared mode**, plus a **baseline ratchet** (`scripts/door-admission-baseline.json` +
@@ -99,7 +99,7 @@ handoff as an owed act for the first fire that finds lane-a finished.
 
 ## Merge classification
 
-Base `b458dba15`; `git merge --no-ff lane/b`, **ort strategy, zero conflicts**.
+Base `51d5313bf`; `git merge --no-ff lane/b`, **ort strategy, zero conflicts**.
 
 | file | class | note |
 |---|---|---|

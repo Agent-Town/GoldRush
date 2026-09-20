@@ -95,7 +95,7 @@ HERO ASSET: `marketing/raw/wave-break-at-the-gaps-16x9-2026-07-07.webm` (real ga
 **(e) Posts:** covered by R1–R3 (no separate pair — one voice, no double-announcing the same door).
 
 ---
-### E2 — THE STEAMWORKS *(gate imminent: pressure `cd82c106` + escort `7f851d22` landed 2026-07-12)*
+### E2 — THE STEAMWORKS *(gate imminent: pressure `8e5a0930` + escort `c8189eb5` landed 2026-07-12)*
 **(a) Hook:** the claim learns PRESSURE — *what you can make the ground DO* — and you can't hold it in a pan; you can only keep it or lose it.
 **(b) Worth showing:** the Hill Mine — the saga's first HIGH GROUND (terraces, switchbacks, the rail cut); boilers and the gauge-needle economy (over-pressure VENTS, magnificently, never hurts anyone); the ore-cart escort; sky-rockets CAPTURED from the Baron's science; the town getting its printing press by rail (the Baron's rail brought the town its voice — say this: our Gazette channel is canon). Boss tease = the whistle only ("a note the tavern piano can't make").
 **(c) Beat:** TEASE — now (era in completion). SHIP — the moment the E2 era gate passes + Pages deploy (BUILD-PLAN calls E2 the calibration era; first proof the cadence works).

@@ -2,7 +2,7 @@
 
 **Slice:** `lane-actor-building-clip` (owner playtest complaint, 2026-08-03)
 **Branch / tip:** `lane/m3` @ `722b7685c4dd852c26f614e615a8215ee54bc802`
-**Base:** `c8577fb6292ea47a2035f80e593d49577865726d`
+**Base:** `053b2500b3554b6a0769aecab963793fa02c9616`
 **Drained:** s1424, 2026-08-03
 **Gated in:** detached scratch worktree `worktrees/gate2-s1424` on scratch port **5234** (§3.0b custody + Mistake #12 attribution hygiene — a lane runner was live on lane-c throughout)
 
@@ -36,7 +36,7 @@ complaint was about.
 | Own spec, **mobile-chrome** (390px), `--workers=1` | **2 passed (41.7s)**, rc 0 |
 | Adjacent suites (derived by grep on the changed symbols: `assay_clerk`, `portraitPost`, `actorOffsets`, `TOWN_ACTORS`) — `town-t5-townsfolk`, `en-02-e1-coverage`, `town-inhabitant-zoom` | **11 passed (55.6s) desktop, rc 0** · **11 passed (58.2s) mobile, rc 0** |
 | Console / page errors | zero — the plaza spec asserts `expect(errors).toEqual([])` and it passed on both projects |
-| Merge classification | `src/town/townsfolk.ts` + `e2e/cast-motion-wiring.spec.ts` + 8 PNGs, **all LANE-TOUCHED**; `git log c8577fb6..main -- <both code paths>` is **empty**, so main never moved either — no graft, no conflict |
+| Merge classification | `src/town/townsfolk.ts` + `e2e/cast-motion-wiring.spec.ts` + 8 PNGs, **all LANE-TOUCHED**; `git log 053b2500..main -- <both code paths>` is **empty**, so main never moved either — no graft, no conflict |
 
 ### The invariant was proved RED against the pre-fix posts
 

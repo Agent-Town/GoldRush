@@ -5,7 +5,7 @@ CODEX: model=gpt-5.6-sol effort=high
 
 ROLE: lane implementer. WORKDIR: this lane worktree (`worktrees/lane-a`, branch `lane/a`). Commit prefix `f1527-1:`. One task, firewalled. Never touch STATUS.md, reviews/, tasks/queue/, other lanes.
 
-## WHY (F-ER02-2, from the ER-02 Steamworks rehearsal, `reviews/standing-orders-rehearsal-e2.md`, merged `bb969fb3`)
+## WHY (F-ER02-2, from the ER-02 Steamworks rehearsal, `reviews/standing-orders-rehearsal-e2.md`, merged `4839c2ad`)
 
 The rehearsal's §5 recommendation **1**, verbatim:
 
@@ -70,7 +70,7 @@ the grep match nowhere.** Verify each returns **1** in the lane before starting:
 - **LANE-CURRENCY KEY** — `grep -c "const DIFFICULTY_VALUES = \['greenhorn', 'trail', 'vein-hunter', 'vein_hunter', 'hard'\];" scripts/gr-sim.mjs` → 1
 
 **If any returns 0, STOP and report which one.** The last key is deliberately the content of the
-`f1525-1` merge (`c65e6b6d`) that landed minutes before this task was written: a 0 there means the
+`f1525-1` merge (`66dceab9`) that landed minutes before this task was written: a 0 there means the
 lane is behind main, not that the file is wrong. **Do not "fix" any of them by editing the citation.**
 
 PRE-FLIGHT (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead is NORMAL — the runner auto-commits. For each ahead commit: if its content is already merged to main (verify via git log/diff), it is a SAFE DUPE → `git checkout -B lane/a main && git clean -fd` and PROCEED. STOP-and-report ONLY if an ahead commit's content is NOT on main (undrained work — resetting would DESTROY it), or the worktree holds uncommitted edits you did not make. **EVIDENCE-ARTIFACT EXCEPTION (F-1266-1): changes confined to regenerated evidence — `artifacts/**`, `reviews/shots-*`, any `.png` — are NEVER "work" and NEVER a STOP. Discard them and PROCEED, listing what you discarded.**

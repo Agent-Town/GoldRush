@@ -2,7 +2,7 @@
 
 **Slice:** lane-b-e7-relay-valley-contract — the E7 signature tile as DATA (contract + mask table, feeds 3D-D)
 **Branch/tip:** `lane/m4` @ `2ac97c33f558092ba6d2744797b0076f29db362d` (`runner(lane-b): lane-b-e7-relay-valley-contract.md`)
-**Base:** `c52d24f6` (fork point; main moved 1 commit — `f743876e` goal-tree reconciliation — since)
+**Base:** `716bbc22` (fork point; main moved 1 commit — `c54dcf2f` goal-tree reconciliation — since)
 **Drain:** s691 fire, surgical 4-file graft onto clean main.
 
 ## Verdict: MERGED — data-only, locked-era INERT, all gates green.
@@ -26,8 +26,8 @@ Adds the E7 Relay Valley as authored DATA, mirroring the shipped e6-glow-mesa pa
 
 ## Merge classification
 Surgical 4-file graft (`git checkout 2ac97c33 -- <4 files>`), NOT a full branch merge.
-- **Why graft, not `git merge`:** the lane forked at `c52d24f6`, before main's `f743876e` goal-tree reconciliation. Both moved `tasks/goals.json`; a full merge would have reverted main's reconciliation (stale-base trap, Mistake #15 territory). Verified the lane's *own* goals.json change (base→lane diff) is **empty** — the `e7-relay-valley-contract` leaf was already queued at `c52d24f6`, the runner never re-touched goals.json. So the lane contributes only the 4 real files.
-- **The 4 grafted files are MAIN-untouched since base:** `git diff --name-only c52d24f6 f743876e` = `tasks/goals.json` only → zero-conflict, fast-forward-equivalent graft for contracts.json / mask-table / e3-mask-tables.test.mjs / board-gating spec.
+- **Why graft, not `git merge`:** the lane forked at `716bbc22`, before main's `c54dcf2f` goal-tree reconciliation. Both moved `tasks/goals.json`; a full merge would have reverted main's reconciliation (stale-base trap, Mistake #15 territory). Verified the lane's *own* goals.json change (base→lane diff) is **empty** — the `e7-relay-valley-contract` leaf was already queued at `716bbc22`, the runner never re-touched goals.json. So the lane contributes only the 4 real files.
+- **The 4 grafted files are MAIN-untouched since base:** `git diff --name-only 716bbc22 c54dcf2f` = `tasks/goals.json` only → zero-conflict, fast-forward-equivalent graft for contracts.json / mask-table / e3-mask-tables.test.mjs / board-gating spec.
 - **goals.json** handled on main's version: flipped the `e7-relay-valley-contract` leaf `queued → merged` + `mergeHash: 2ac97c33…` (40-char lane-tip, ancestral convention per s689 wire-dq-3d), keeping main's reconciliation intact.
 
 ## Report-don't-invent / findings

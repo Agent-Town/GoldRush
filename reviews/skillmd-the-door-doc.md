@@ -1,8 +1,8 @@
 # skillmd-the-door-doc — drain review (s1492)
 
 **Slice:** `lane-skillmd-the-door-doc` (THE SUFFICIENCY GATE — make the public agents' door an actual door)
-**Branch:** `lane/b` · **Tip:** `6a38b51c1` "door: publish source-locked agent door"
-**Base:** `7e1482c39` · **Merged to main as:** `4cdedebe9`
+**Branch:** `lane/b` · **Tip:** `e69998f13` "door: publish source-locked agent door"
+**Base:** `595dd1db9` · **Merged to main as:** `addba4a1d`
 **Gate tree:** detached worktree `gate-s1492b` (§3.0b — an attended session was committing to main throughout)
 **Date:** 2026-08-06T18:05Z
 
@@ -60,12 +60,12 @@ It reds on exactly the drifted block and leaves the other two green — precise,
 
 ## Merge classification
 
-Measured `7e1482c39..main` across the five touched paths:
+Measured `595dd1db9..main` across the five touched paths:
 
 - `public/skill.md`, `e2e/skillmd-door.spec.ts`, `scripts/skillmd-guard.test.mjs`, `package.json` — **LANE-TOUCHED only** (main never moved them)
 - `tasks/BACKLOG.md` — **BOTH-MOVED**. The lane rewrote only its own Harness Bench status span; main had added two newer rows (QM tiered, gauntlet roster) plus my own s1492 HOLD edit. Grafted: lane's rewritten row + main's newer rows verbatim.
 
-Landed as a fast-forward of the exact commit that was gated (`4cdedebe9`) — main had not moved off the gate's base, so what was tested is byte-for-byte what shipped.
+Landed as a fast-forward of the exact commit that was gated (`addba4a1d`) — main had not moved off the gate's base, so what was tested is byte-for-byte what shipped.
 
 ## Not a gazette item
 

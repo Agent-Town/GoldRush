@@ -2,9 +2,9 @@
 
 **Slice:** `lane-d-ap16-6c-terminal-receipt-reland`
 **Branch:** `lane/d`
-**Tip:** `6172526628593845d0c1201a4286e69656d65047`
-**Base:** `dc5f6c84d9afeda662497205905f816c901efee0`
-**Merge:** `d599cd3ea030a1e6d699f106115b1d3fdf54d775`
+**Tip:** `6a7ef31dec45aeb3c8ff8fd8d610066dc60961ea`
+**Base:** `ab75eadcbb2487274a03bdddeb66ac280e1e3539`
+**Merge:** `dbcbf31220e2dc332f7e809c3ab00572f7fe88bb`
 
 ## Verdict
 

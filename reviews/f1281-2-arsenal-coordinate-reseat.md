@@ -5,7 +5,7 @@
 **READY-FOR-GATES.** The stale turret coordinate in **“Auto-Pan upkeep and boiler battery bands consume the fixed-step pressure store”** moved from `(0, 10)` to measured open point `(10, 12)`. The placement and landmark-collision rules are unchanged.
 
 - Branch: `lane/m3`
-- Main base: `2c602052`
+- Main base: `cf4dddb9`
 - Product source changed: none
 - Downstream pressure assertions changed: none; they read turret fire-rate diagnostics, not position.
 

@@ -200,7 +200,7 @@ The strict verifier reopens and byte-identically re-exports all five panorama au
 
 ### F-3D-D-19 — E2 terrain begins at the factory mask table, not at the manifest promise
 
-The granted E2 family names four contracts, but the current factory source `assets/contracts/epoch-2-steamworks/contracts.json` authors complete coordinate tables for only `e2-hill-mine` and `e2-trestle`. `e2-pressure-garden` and `e2-incline` remain manifest/ladder promises; their factory reports stopped before contract and mask authoring. `artifacts/map-rebuild-spike/e2-mask-availability.json` records a fresh probe of main at `dd308192`.
+The granted E2 family names four contracts, but the current factory source `assets/contracts/epoch-2-steamworks/contracts.json` authors complete coordinate tables for only `e2-hill-mine` and `e2-trestle`. `e2-pressure-garden` and `e2-incline` remain manifest/ladder promises; their factory reports stopped before contract and mask authoring. `artifacts/map-rebuild-spike/e2-mask-availability.json` records a fresh probe of main at `4a0f34de`.
 
 The spike therefore builds Hill Mine and Trestle and deliberately does not invent the other two. This is a gate, not a reduced ambition: terrain authored before water, build, rail, fixture, spawn, and elevation truth would force gameplay to conform to Blender. The next wave starts by re-probing the factory table and adds Pressure Garden or Incline only after each id exists there.
 
@@ -484,9 +484,9 @@ READY-FOR-GATES
 
 ### F-3D-D-116 — Every published unique campaign mask now has a sculpt delivery; the ledger's sculpt column is stale
 
-The post-E4 boundary sweep re-read `docs/SOL-3D-D-QUEUE.md` and `docs/MAP-CAMPAIGN-LEDGER.md` from fresh `origin/main` at `78b6f2ce984d3dd6ac4df69292cad0d5a5abd3b8`, then compared every published campaign mask's `maskTruth.tileId` with accepted assets on main and the pushed era branches. The remaining apparent gaps are authored reuse or non-terrain contracts: E5 Flotilla/Stillwater reuse Deepwater Claim; E6 Picnic reuses Glow Mesa; E7 Dead Band/Relay Rush reuse Relay Valley; E8 Far Side/Eclipse reuse Mare Claim; E10 River reuses the frontier river claim; E10 Last Claim is the Ark-plaza class. The unique deliveries are Regatta; Showroom and Half-Life Hollow; Echo Canyon; Low Orbit; Seed Run, Devil's Alley, and Old Canal; Archive World; and this E4 Long Road/Gusher County/Boneyard wave. E2/E3 campaign names already point at accepted unique sculpts on main.
+The post-E4 boundary sweep re-read `docs/SOL-3D-D-QUEUE.md` and `docs/MAP-CAMPAIGN-LEDGER.md` from fresh `origin/main` at `0bc2a3f52f07b051b543ee04c4e7cf00733bf630`, then compared every published campaign mask's `maskTruth.tileId` with accepted assets on main and the pushed era branches. The remaining apparent gaps are authored reuse or non-terrain contracts: E5 Flotilla/Stillwater reuse Deepwater Claim; E6 Picnic reuses Glow Mesa; E7 Dead Band/Relay Rush reuse Relay Valley; E8 Far Side/Eclipse reuse Mare Claim; E10 River reuses the frontier river claim; E10 Last Claim is the Ark-plaza class. The unique deliveries are Regatta; Showroom and Half-Life Hollow; Echo Canyon; Low Orbit; Seed Run, Devil's Alley, and Old Canal; Archive World; and this E4 Long Road/Gusher County/Boneyard wave. E2/E3 campaign names already point at accepted unique sculpts on main.
 
-The sweep also found that the remote `sol/e7-extra-map-campaign` ref had been repointed to unrelated goal-tree bookkeeping after the sculpt delivery. The intact Echo Canyon commit `233b139a9f3deb9eb766761face197c529d86c28` was therefore republished non-destructively as `sol/e7-extra-map-campaign-restored`; no force-push or foreign-history rewrite was used. Regatta's eight-mount debt is carried by the E6 delivery branch. There is no additional unique published mask to sculpt at this boundary.
+The sweep also found that the remote `sol/e7-extra-map-campaign` ref had been repointed to unrelated goal-tree bookkeeping after the sculpt delivery. The intact Echo Canyon commit `63491a3cba28170a9b4e84c2556857e692c920ca` was therefore republished non-destructively as `sol/e7-extra-map-campaign-restored`; no force-push or foreign-history rewrite was used. Regatta's eight-mount debt is carried by the E6 delivery branch. There is no additional unique published mask to sculpt at this boundary.
 
 READY-FOR-GATES
 
@@ -559,7 +559,7 @@ Five canonical mount records ship beside the terrain: south broadcast gate, west
 
 ## E7 extra-map gate state
 
-- Fresh reference base: `9e324ce111d27550fddf63ce1401b4262a1b30e3`
+- Fresh reference base: `5d9e87254803720cc42fb180419835502e2df94d`
 - Echo Canyon terrain: one mesh, one primitive, one material, one embedded 2048² atlas, 32,768 triangles: PASS
 - Echo Canyon Panorama v2: separate one-mesh GLB, one material, one embedded 2048² atlas, 3,084 triangles: PASS
 - Whole-file byte-identical and semantic-identical reopen/re-export for both GLBs: PASS
@@ -608,7 +608,7 @@ The terrain contract includes five era-stamped empty-asset landmark mount record
 
 ## E8 extra-map gate state
 
-- Fresh reference base: `545f8c499095f68cd2c105d0bc298d3303df4262`
+- Fresh reference base: `24f89fa993a3eee8c16b100b90beefedc72ccf9c`
 - Low Orbit terrain: one mesh, one primitive, one material, one embedded 2048² atlas, 32,768 triangles: PASS
 - Low Orbit Panorama v2: separate one-mesh GLB, one material, one embedded 2048² atlas, 2,688 triangles: PASS
 - Whole-file byte-identical and semantic-identical reopen/re-export for both GLBs: PASS
@@ -726,7 +726,7 @@ The terrain GLB contains no sea surface, Claim Boat, beacon body, course trace, 
 
 ## E5 extra-map gate state
 
-- Fresh reference base: `0faabaa29fc0ea92a1614a782f2258f8e698a89a`
+- Fresh reference base: `fd111f5102e2a5ebc8f684799dca438f76754994`
 - Regatta terrain: one mesh, one primitive, one material, one embedded 2048² atlas, 32,768 triangles: PASS
 - Regatta Panorama v2: separate one-mesh GLB, one material, one embedded 2048² atlas, 2,704 triangles: PASS
 - Whole-file byte-identical and semantic-identical reopen/re-export for both GLBs: PASS
@@ -749,7 +749,7 @@ The terrain GLB contains no sea surface, Claim Boat, beacon body, course trace, 
 
 ### F-3D-D-88 — The campaign identity gate creates two sculpts and one deliberate reuse
 
-The fresh reference base for this wave is `5e40ae6d123a3865353c91d8d82f95cac34e0e7b`. `e6-showroom` and `e6-half-life-hollow` publish unique `tileId` values, so each receives its own terrain/panorama pair. `e6-picnic` instead publishes `tileParams.tileId: e6-glow-mesa`, and its authored mask table repeats that tile id. Under the 27-map campaign law it therefore remains a contract variant on the ratified Glow Mesa landform; manufacturing another mesh would be duplication, not uniqueness.
+The fresh reference base for this wave is `2b4e430f0f0e0be67dff3f3c7b358abb08f79f19`. `e6-showroom` and `e6-half-life-hollow` publish unique `tileId` values, so each receives its own terrain/panorama pair. `e6-picnic` instead publishes `tileParams.tileId: e6-glow-mesa`, and its authored mask table repeats that tile id. Under the 27-map campaign law it therefore remains a contract variant on the ratified Glow Mesa landform; manufacturing another mesh would be duplication, not uniqueness.
 
 ### F-3D-D-89 — Showroom and Hollow need different permanent-earth stories
 
@@ -1041,7 +1041,7 @@ READY-FOR-GATES
 
 ### F-3D-D-58 — Painted-wrap quality is a body-and-material contract, not an atlas swap
 
-Fresh references were regenerated from `origin/main@8d974f11` before any replacement. The neutral boards at `artifacts/map-rebuild-spike/landmark-bar-unification/hill-mine-blind-ab.png` and `trestle-blind-ab.png` preserve the same terrain, real run camera, mount ids, mount transforms, and asset paths on both sides. The withheld side key is recorded separately. Blind review chose the candidate for both maps at 97–98% confidence and answered “fight.”
+Fresh references were regenerated from `origin/main@a5e2dd0c` before any replacement. The neutral boards at `artifacts/map-rebuild-spike/landmark-bar-unification/hill-mine-blind-ab.png` and `trestle-blind-ab.png` preserve the same terrain, real run camera, mount ids, mount transforms, and asset paths on both sides. The withheld side key is recorded separately. Blind review chose the candidate for both maps at 97–98% confidence and answered “fight.”
 
 The winning difference is structural. Hill Mine replaces its flat headframe icon with a four-legged ruined frame, mine mouth, pulley, rope, tailings, fallen timber, and repair sign; its boiler house becomes an articulated shed/drum/stack/valve/pipe worksite; its flooded gallery gains a pump, tram rails, sleepers, sump, portal, and broken supports; and its switchback and tailings packs gain visible route and dumping logic. Trestle gains repeated bridge bents, X-bracing, deck beams, repair plates, fallen members, distinct north/south boiler and approach damage, tar scars, rubble, drums, a broken gate, and an ore-working mine spur. These silhouettes remain readable at the gameplay camera instead of relying on close inspection.
 

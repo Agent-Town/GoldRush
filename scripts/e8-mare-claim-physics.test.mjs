@@ -241,7 +241,7 @@ test('the ride the audit measured, now carrying its air — and the un-composed 
   // RE-POINTED 2026-09-06 (`tasks/mare-claim-air-prevalent.md`) from `IDLE_HASH_UNCOMPOSED`, and
   // this line was ALREADY RED before that slice: the sentence was written when the pinned floor
   // still held the audit's un-composed value, and the floors were regenerated to the composed one
-  // when `e8-mare-claim-physics` landed. Verified against a pristine `main` (502a398d9), where
+  // when `e8-mare-claim-physics` landed. Verified against a pristine `main` (22cf98cfe), where
   // `floors[e8-mare-claim][e8-mare-claim-01].eventLogHash` is `fnv1a32:1a62757f` and
   // `IDLE_HASH_UNCOMPOSED` is `fnv1a32:ee2f7c14` — the assertion could not have passed. F-MCAP-3.
   const floors = JSON.parse(read('assets/contracts/null-floors.json')).floors[CONTRACT];

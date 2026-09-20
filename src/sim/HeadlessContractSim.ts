@@ -969,7 +969,7 @@ export class HeadlessContractSim {
    * E4 — THE MOTOR FRONTIER SOCKET (`./MotorSocket.ts`), and the honest note about the other
    * engine. It is sim-affecting in three places: the Hauler's position (the objective), the
    * storm's movement multiplier on every outlaw, and the tar nodes' harvest from BOTH bodies'
-   * positions. All three mirror the composition `731373d4d` shipped in `Game.ts`; none of it is
+   * positions. All three mirror the composition `392d20d35` shipped in `Game.ts`; none of it is
    * mounted by today's browser boot (`DustFlatsTile` has no importer; `Vehicle`/`FuelSystem` mount
    * only under `?debug&vehicles`, `Game.ts:4585`), so a browser player on this contract meets none
    * of these rules until that boot composes the same socket. Null on every contract that declares
@@ -2099,7 +2099,7 @@ export class HeadlessContractSim {
         : this.waves.preferredEscortTarget(from) ?? this.targeting.nearestBuilding(from),
       hitBuilding: (enemy, target, amount) => this.combat.handleBuildingHit(enemy, target, amount),
       palisadeRoute: (from, to, clearance) => this.build.palisadeRoute(from, to, clearance),
-    // E4: the storm slows every outlaw, as `731373d4d`'s `Game.ts:1749` composed it
+    // E4: the storm slows every outlaw, as `392d20d35`'s `Game.ts:1749` composed it
     // (`dustFlats.enemyMovementMultiplier`); 1 on every contract without the motor twist.
     }, (enemy) => this.nightSpeedMultiplier(enemy) * (this.atomic?.movementMultiplier(enemy) ?? 1)
       * (this.motor?.enemyMovementMultiplier(this.timeAlive) ?? 1), this.archive ? actorTargets : undefined);

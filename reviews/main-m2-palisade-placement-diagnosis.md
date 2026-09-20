@@ -2,11 +2,11 @@
 
 ## Slice / branch / tip
 
-MAIN task `tasks/main-m2-palisade-placement-diagnosis.md`; completed done-move `20260907-181923-main-m2-palisade-placement-diagnosis.md`. Independent gate base `ade08230ab71cb1452c75ee8ef04cf084e44db3c`, candidate file blob `983d301fb71ba44adf79d781b460ed56ec6a06dc`. The complete detached checkout was verified against HEAD before applying the one-file candidate.
+MAIN task `tasks/main-m2-palisade-placement-diagnosis.md`; completed done-move `20260907-181923-main-m2-palisade-placement-diagnosis.md`. Independent gate base `6c523f8d415088064a0b85770c69b1212b601b46`, candidate file blob `983d301fb71ba44adf79d781b460ed56ec6a06dc`. The complete detached checkout was verified against HEAD before applying the one-file candidate.
 
 ## Verdict
 
-MERGED as `0eac2a9bec302665ab3483ec0413eca2e7469992`. F-2537-2 is an input-readiness race in the test. Capture the simulation tick in the same browser evaluation that dispatches the rejected tap, then wait for consumption and a released-input sample before the next tap. Exact count, gold, rejection, edge-touch, and error assertions are unchanged; runtime code is untouched.
+MERGED as `c7bf3f66c5f8a41487ca5ba37953dbfcfc588e3c`. F-2537-2 is an input-readiness race in the test. Capture the simulation tick in the same browser evaluation that dispatches the rejected tap, then wait for consumption and a released-input sample before the next tap. Exact count, gold, rejection, edge-touch, and error assertions are unchanged; runtime code is untouched.
 
 ## Evidence
 

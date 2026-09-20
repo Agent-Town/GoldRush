@@ -1,6 +1,6 @@
 # Review — sci-03 assay contract tiers + schooling offers
 
-**Drain:** s106 fire, drain 3 of PILE MODE. Source `lane/m3` (lane-a, content `f96397f`).
+**Drain:** s106 fire, drain 3 of PILE MODE. Source `lane/m3` (lane-a, content `a75147a`).
 **Verdict:** PASS — 3-way merged to main (merge commit).
 
 ## What it does (SCI-03 slice)

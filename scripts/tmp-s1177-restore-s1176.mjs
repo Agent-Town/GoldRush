@@ -3,8 +3,8 @@ import { execFileSync } from 'child_process';
 
 // §4 requires the previous line-1 to be archived as a bullet. When s1177 took the
 // lock it overwrote s1176's handoff line without archiving it. Recover it from the
-// commit that wrote it (306cde23) and insert it after this fire's lock archive.
-const prev = execFileSync('git', ['show', '306cde23:STATUS.md'], { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 })
+// commit that wrote it (75c0a463) and insert it after this fire's lock archive.
+const prev = execFileSync('git', ['show', '75c0a463:STATUS.md'], { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 })
   .split('\n')[0];
 
 if (!prev.startsWith('Last updated: 2026-07-28T17:42Z s1176')) {

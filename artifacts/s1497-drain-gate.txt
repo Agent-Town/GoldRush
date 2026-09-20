@@ -1,8 +1,8 @@
 s1497 DRAIN GATE TRANSCRIPT — milk/saga-surgeon
 ================================================
-Merged: 325241e233bf9af5949654171885f85693d1a142 (fast-forward from the gated commit)
+Merged: ea6f2efbcf8e8d442546e75faa78785e5436b210 (fast-forward from the gated commit)
 Gate worktree: gate-s1497 (detached, §3.0b — undecided content never entered main's working tree)
-Base of the shift: 18b2ef276 · review's merged-main: bab80361 · main at drain time: 21a307f5f (97 commits later)
+Base of the shift: 18b2ef276 (archive: pruned by the A3 rewrite) · review's merged-main: bab80361 (archive: pruned by the A3 rewrite) · main at drain time: 5f81cb61d (97 commits later)
 
 §3.0 BLOCK CHECK
 ----------------
@@ -22,11 +22,11 @@ CONFLICT (content): Merge conflict in docs/bench/e4-readiness-census.md
 Auto-merging tasks/BACKLOG.md
 Automatic merge failed; fix conflicts and then commit the result.
 
-  --> THE REVIEW SAYS "Conflicts: none — zero file overlap". That was true of base bab80361.
+  --> THE REVIEW SAYS "Conflicts: none — zero file overlap". That was true of base bab80361 (archive: pruned by the A3 rewrite).
       The s1496 milk/motor-socket drain amended THE SAME e4 census file. Three conflicts:
       (1) executive summary  (2) the e4-dust-flats table row  (3) the appended findings block.
       All resolved as a UNION; resolution documented inside the census file itself.
-      Resolved commit: 325241e23 "gate-s1497: merge milk/saga-surgeon (e4 census conflict resolved as a union)"
+      Resolved commit: ea6f2efbc "gate-s1497: merge milk/saga-surgeon (e4 census conflict resolved as a union)"
 
 MERGED-TREE DIFF vs main (7 files, zero deletions)
 --------------------------------------------------
@@ -100,5 +100,5 @@ Zero-runtime-effect claim, read from the code:
 
 POST-MERGE
 ----------
-$ git diff 325241e23 HEAD --stat        (empty)  -- the evidence describes exactly what shipped
+$ git diff ea6f2efbc HEAD --stat        (empty)  -- the evidence describes exactly what shipped
 $ git log --oneline main..milk/saga-surgeon      (empty)  -- fully absorbed

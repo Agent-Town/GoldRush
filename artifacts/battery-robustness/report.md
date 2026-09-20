@@ -1,6 +1,6 @@
 # battery-robustness-f-poc-8 — report
 
-Branch `fix/battery-robustness` in a scratch worktree cut from main `de7eacd17`. Node v26.4.0
+Branch `fix/battery-robustness` in a scratch worktree cut from main `21648cdcf`. Node v26.4.0
 (`/opt/homebrew/bin` first). This worktree's `node_modules` is its own `npm ci`, never the
 primary's symlink; the primary checkout was verified untouched at the end (`vite 8.0.13`, 46
 entries, no files of mine in its `git status`).
@@ -14,10 +14,10 @@ named rather than excused.
 
 | commit | scope item | what |
 |---|---|---|
-| `d2493b3c1` | 1 + 4 | the TAP-progress watchdog; `scripts/node-guards-watchdog.test.mjs` joins stage 1 |
-| `c15682845` | 1 | pid-reuse hardening; N re-pinned against a first-hand 1085.3 s |
-| `4f0b28357` | 3 | `server.watch: null` across 62 files / 76 call sites |
-| `13179a27e` | 2 | vite 8.0.13 -> 8.3.0, rolldown binding 1.0.1 -> 1.2.9 |
+| `49c978305` | 1 + 4 | the TAP-progress watchdog; `scripts/node-guards-watchdog.test.mjs` joins stage 1 |
+| `acf4e317a` | 1 | pid-reuse hardening; N re-pinned against a first-hand 1085.3 s |
+| `b6c4273fc` | 3 | `server.watch: null` across 62 files / 76 call sites |
+| `683708d5f` | 2 | vite 8.0.13 -> 8.3.0, rolldown binding 1.0.1 -> 1.2.9 |
 
 ## 1. The crash counts (scope 2)
 
@@ -112,7 +112,7 @@ the retry arm reads carries `signal: 'SIGKILL'`.
 PID REUSE is fast on this box — pid 11025 was two unrelated processes four minutes apart while four
 batteries shared the machine. A stale entry in the "alive since the stall began" map could make a
 freshly spawned sibling look old enough to blame, so dead children are now forgotten each tick and
-a returning pid is timed from now (errs toward sparing an innocent file). `c15682845`.
+a returning pid is timed from now (errs toward sparing an innocent file). `acf4e317a`.
 
 ### Sampling also tells the two classes apart
 
@@ -123,7 +123,7 @@ F-POC-8 could not make ("the stack was not sampled before the kill"), and it is 
 
 ## 3. `server.watch: null` (scope 3)
 
-62 files, 76 call sites, every changed line a `server:` line and nothing else (`git show 4f0b28357`).
+62 files, 76 call sites, every changed line a `server:` line and nothing else (`git show b6c4273fc`).
 Accounting that reconciles the finding's "64 of the 71": 71 files call a `createServer`, 7 already
 set `watch: null` (9 call sites), and 2 of the remaining 64 use **node:http's** createServer
 (`assay-worker`, `external-server-is-dev`), leaving 62 vite files / 76 sites. After the sweep, 0

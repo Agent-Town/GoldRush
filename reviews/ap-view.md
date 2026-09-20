@@ -19,7 +19,7 @@ The slice is *good work* — it is faithful to its firewall, it reuses `StatSimH
 
 | Arm | `scripts/whole-suite-collection.test.mjs` | `npx playwright test --list` |
 |---|---|---|
-| clean main (`70e244f2`) | **pass 1 / fail 0** | **Total: 2458 tests in 343 files** |
+| clean main (`d27c0f37`) | **pass 1 / fail 0** | **Total: 2458 tests in 343 files** |
 | main + this slice (grafted) | pass 0 / **fail 1** | **Total: 0 tests in 0 files** |
 | grafted, new spec removed | pass 0 / **fail 1** | Total: 0 tests in 0 files |
 | main restored | **pass 1 / fail 0** | Total: 2458 tests in 343 files |
@@ -76,7 +76,7 @@ The battery stopped where it stopped honestly: with zero tests collectable, no s
 
 ## Merge classification
 
-Base `2fb016e7`; real delta is 3 files (+958) — `main..c502f9cc` shows ~17.5k deletions which are **stale-base phantoms**, not real removals. `src/agent/View.ts` and `e2e/agent-view.spec.ts` are **pure adds** (LANE-TOUCHED, no main movement). `src/agent/ToolSurface.ts` is the only **both-moved** file — main gained AP-06's orders+view, the lane gained view+View import — hand-merged as the wrap above. **Nothing merged to main. Main's `src/` and `e2e/` are byte-identical to `70e244f2`.**
+Base `2fb016e7`; real delta is 3 files (+958) — `main..c502f9cc` shows ~17.5k deletions which are **stale-base phantoms**, not real removals. `src/agent/View.ts` and `e2e/agent-view.spec.ts` are **pure adds** (LANE-TOUCHED, no main movement). `src/agent/ToolSurface.ts` is the only **both-moved** file — main gained AP-06's orders+view, the lane gained view+View import — hand-merged as the wrap above. **Nothing merged to main. Main's `src/` and `e2e/` are byte-identical to `d27c0f37`.**
 
 ## The cure (for the corrective — options, with the gate that decides it)
 

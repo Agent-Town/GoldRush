@@ -1,7 +1,7 @@
 # GG-01b corrective — the welcome owns the prompt, so the release test must skip it
 
-**Slice:** `lane-gg-01b-welcome-release-gate.md` · **Branch:** `lane/perf` · **Tip:** `3b340bbd` · **Base:** `2abbe743`
-**Merged at:** `e5d3c26c` · **Drained by:** s1211 fire, 2026-07-29 · **Verdict: ✅ ACCEPTED — F-1210-5 IS CURED**
+**Slice:** `lane-gg-01b-welcome-release-gate.md` · **Branch:** `lane/perf` · **Tip:** `3b340bbd` · **Base:** `44d2f012`
+**Merged at:** `feb0a3d7` · **Drained by:** s1211 fire, 2026-07-29 · **Verdict: ✅ ACCEPTED — F-1210-5 IS CURED**
 
 ## What it does
 
@@ -28,9 +28,9 @@ visible, clickable, and opens the contract board afterwards with no console or p
 **The baseline is what makes this evidence rather than a claim.** I had measured this exact suite on this exact tree
 an hour earlier while gating GG-03c, so I was not comparing against a remembered number.
 
-**Merge classification:** base `2abbe743` **is** `git merge-base(main, lane/perf)`, and main never moved
+**Merge classification:** base `44d2f012` **is** `git merge-base(main, lane/perf)`, and main never moved
 `e2e/release-build.spec.ts` since it. **Zero MAIN-MOVED files, no 3-way.** Applied delta verified byte-identical to
-`git diff 2abbe743 3b340bbd`. ⓘ `lane/perf` no longer carries the rejected GG-03 `06eeac68` — the runner's pre-flight
+`git diff 44d2f012 3b340bbd`. ⓘ `lane/perf` no longer carries the rejected GG-03 `06eeac68` — the runner's pre-flight
 reset it away, and it survives only because s1210 pinned `archive/lane-perf-gg03-06eeac68`. The pin did its job.
 
 ## Findings
@@ -75,16 +75,16 @@ bisect and an inventory row.** It does not block this corrective, which cannot t
 
 ### ⚠️ F-1211-7 — s1210's F-1210-6 self-disclosure is factually wrong, and a guard input pointed at the wrong commit
 
-s1210 confessed that the lane-b convergence cure "landed as an UNLABELLED SWEEP inside `0b8db8f9`". It did not.
-`git show --name-only 0b8db8f9` is **three doc files**; their other commit `2abbe743` is **four more docs**. Neither
-carries a line of the cure. The code reached main in the **attended session's `79be48db`** (12:53–12:58,
+s1210 confessed that the lane-b convergence cure "landed as an UNLABELLED SWEEP inside `0114f5bb`". It did not.
+`git show --name-only 0114f5bb` is **three doc files**; their other commit `44d2f012` is **four more docs**. Neither
+carries a line of the cure. The code reached main in the **attended session's `81bf94ac`** (12:53–12:58,
 *"spec: standing-orders/almanac/replay-truth doctrine"*), which carries `e2e/release-build.spec.ts` **+73/−22** —
 confirmed by grepping for the cure's own mechanism rather than by reading a commit message: `hypot(dx, dz) <= 0.12`,
 in-page `keydown`/`keyup` dispatch, `setTimeout(sample, 16)`.
 
-**Why this is not trivia:** the leaf `lane-b-approach-convergence-class` recorded `mergeHash: "0b8db8f9"`, and
+**Why this is not trivia:** the leaf `lane-b-approach-convergence-class` recorded `mergeHash: "0114f5bb"`, and
 `mergeHash` is a **guard input** — `drain-block-check.mjs` reads it for ancestry. A pointer at a docs-only commit
-would have told a future probe the cure shipped in a commit containing none of it. Corrected to `79be48db…` this fire.
+would have told a future probe the cure shipped in a commit containing none of it. Corrected to `81bf94ac…` this fire.
 
 **And I nearly missed it the same way s1210 did.** Curing F-1211-2 earlier this fire, I expanded that very hash from
 8 chars to 40 to satisfy the schema — treating it as a *format* problem and never asking whether it pointed at the

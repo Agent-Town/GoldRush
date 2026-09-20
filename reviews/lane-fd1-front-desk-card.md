@@ -2,7 +2,7 @@
 
 - **Slice:** `fd1-front-desk-card` (FD-1 / AP-14 THE FRONT DESK)
 - **Branch / tip:** `lane/a` @ `abf13b4a2` (`fd1: add the Front Desk and Herald door`) — one runner auto-commit, 11 files
-- **Base:** `44b1a7cf1`
+- **Base:** `bd6c228da`
 - **Gated in:** detached worktree `gate-s1523`, `git merge --no-ff lane/a` → `4e9be2699`, on scratch port **5234** with an external dev server (Mistake #12 attribution hygiene), every playwright command `--workers=1` (§3.1)
 - **Drain:** s1523, 2026-08-07
 
@@ -35,7 +35,7 @@ The `/skill.md` link is **same-origin** (asserted by `toHaveAttribute('href', '/
 
 `milk-county-board.spec.ts:281` and `:305`, both projects, both `expect(locator).toHaveText(expected) failed`.
 
-**CONTROL ARM, built on this same tree with the slice verified absent** (`gate-s1523` checked out at main `276819be4`; `grep renderFrontDesk src/encyclopedia/reader.ts` → **absent**, printed before the run): **4 failed / 10 passed — the same four titles, the same error type, on both projects.** Treatment fails the same 4. The failing **set** is identical, not merely the count.
+**CONTROL ARM, built on this same tree with the slice verified absent** (`gate-s1523` checked out at main `7f7a4faa7`; `grep renderFrontDesk src/encyclopedia/reader.ts` → **absent**, printed before the run): **4 failed / 10 passed — the same four titles, the same error type, on both projects.** Treatment fails the same 4. The failing **set** is identical, not merely the count.
 
 Two things make this stronger than the usual two-arm comparison, which s1522 correctly warned is confounded by time on stateful subjects (F-1522-6): (1) the assertion is a **deterministic `toHaveText` on a plain boot**, not a stateful rate-limited endpoint, so there is no drifting state between arms; and (2) **s1522 independently measured this same pair as pre-existing on a different tree** — an independent replication beats a third same-session arm. This is **F-1522-7**, still `NOT-IN-INVENTORY`, so this drain paid the control price exactly as F-1521-2 predicted the next one would.
 
@@ -45,7 +45,7 @@ Two things make this stronger than the usual two-arm comparison, which s1522 cor
 
 ## Merge classification
 
-Base `44b1a7cf1`; the gate merge was `ort` with **one** conflict.
+Base `bd6c228da`; the gate merge was `ort` with **one** conflict.
 
 | File | Class | Resolution |
 |---|---|---|

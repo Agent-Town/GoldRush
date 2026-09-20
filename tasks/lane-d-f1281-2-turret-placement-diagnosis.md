@@ -14,7 +14,7 @@ Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead 
 
 The test *"Auto-Pan upkeep and boiler battery bands consume the fixed-step pressure store"* (`e2e/e2-arsenal.spec.ts:87`) fails on **both** projects at **line 100**, where `window.__GR_TEST__?.placeFree('turret', 0, 10)` resolves **`false`** and the assertion requires `true`.
 
-s1281 proved it is **pre-existing, not a regression from the rung work**: a control arm on clean main (`62dc6380`) in a detached worktree, same shell, same hour, `--workers=1`, reproduced the identical failure at the identical line on both projects. It also established the red is **not** the `auto_pan` assertion at `:98` — that one passes, and this spec's `auto_pan` is the *upgrade* id (`src/game/Upgrades.ts:100`), an unrelated namespace from the consent ability. The spec itself is **unchanged since `90e7cc68` (2026-07-12)**, so something on the product side moved under it.
+s1281 proved it is **pre-existing, not a regression from the rung work**: a control arm on clean main (`45b2ed1a`) in a detached worktree, same shell, same hour, `--workers=1`, reproduced the identical failure at the identical line on both projects. It also established the red is **not** the `auto_pan` assertion at `:98` — that one passes, and this spec's `auto_pan` is the *upgrade* id (`src/game/Upgrades.ts:100`), an unrelated namespace from the consent ability. The spec itself is **unchanged since `562edc36` (2026-07-12)**, so something on the product side moved under it.
 
 **F-1281-2's stated gate is the whole job:** *"reproduce at `--workers=1`, then decide whether the coordinate went stale or placement regressed — do not 'fix' it by moving the coordinate until that question is answered."*
 

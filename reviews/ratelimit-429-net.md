@@ -2,8 +2,8 @@
 
 **Slice:** `tasks/lane-ratelimit-429-net.md` (goal leaf `rf-24`), FIRE-AUTHORED s1085
 **Branch / tip:** `lane/e2-arsenal` (lane-c) @ `0a4f791a`
-**Base:** `9d22f289`
-**Merged to main:** `d16000a9c9b3a8690ee8a48d3b1b23a4a4faea0d`
+**Base:** `f4bec9d4`
+**Merged to main:** `5ed2e21069d7eead32b1507fa6926ed37beddde8`
 **Drained by:** s1086, 2026-07-26
 **Verdict: ✅ MERGE — gates green on the slice, firewall held, one pre-existing red proved not-ours.**
 
@@ -50,8 +50,8 @@ this slice's evidence I am taking on report rather than measuring.** The tests t
 
 ## Merge classification
 
-Base `9d22f289`. Branch diff vs main lists 12 files, but only **one** is LANE-TOUCHED —
-`git diff --name-only 9d22f289 0a4f791a` returns exactly `e2e/ratelimit-429-net.spec.ts`.
+Base `f4bec9d4`. Branch diff vs main lists 12 files, but only **one** is LANE-TOUCHED —
+`git diff --name-only f4bec9d4 0a4f791a` returns exactly `e2e/ratelimit-429-net.spec.ts`.
 Every other file (`STATUS.md`, `src/game/Game.ts`, `src/game/ProfileStorage.ts`,
 `reviews/blocked-storage-access-throw.md`, `tasks/BACKLOG.md`, `tasks/goals.json`,
 `logs/*`, `marketing/outbox/gazette-queue.md`, `e2e/task-024-blast-aim-presets.spec.ts`)

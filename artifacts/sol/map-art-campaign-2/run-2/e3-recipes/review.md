@@ -5,9 +5,9 @@ F-OMB-5's atlas reproducibility gap is FIXED. The tracked `assets/pilots/map-reb
 | Pack | Current recipe | Rebuilt SHA256 |
 | --- | --- | --- |
 | Blackout Ridge | Pylon plate, lifted E3 palette with current stone (0.115,0.098,0.078) and brass (0.78,0.5,0.12) repair | dc090249aa8337a4eac43bf45480b577917466fa961e6b36700afd4c5ab6a1d7 |
-| Canyon Works | Canyon plate and distinct 07bcf8834 palette | 5819f8eec12371756a0b2b36342bdbf8560ee3c4e99c16f35fe2cae28c1bbd5b |
-| Fairground | Arc-lamp plate, lifted palette from 7b930acc1 | 3573fb688b1ae37ff45b00f7be6dbc6b3e08e797c0b84e875c9edda1be560f40 |
-| Moth Season | Mothswarm plate, lifted palette from 75beb002c | 1875cfcfacc69ea7ebc872225861f04a0ef754cfd412d94ee445d06b89e146c3 |
+| Canyon Works | Canyon plate and distinct 8cb3b92d8 palette | 5819f8eec12371756a0b2b36342bdbf8560ee3c4e99c16f35fe2cae28c1bbd5b |
+| Fairground | Arc-lamp plate, lifted palette from af2ea0e4f | 3573fb688b1ae37ff45b00f7be6dbc6b3e08e797c0b84e875c9edda1be560f40 |
+| Moth Season | Mothswarm plate, lifted palette from 4927656c5 | 1875cfcfacc69ea7ebc872225861f04a0ef754cfd412d94ee445d06b89e146c3 |
 
 All use the existing era-3 kit and unchanged grain/ink/hatch construction. The public command is:
 

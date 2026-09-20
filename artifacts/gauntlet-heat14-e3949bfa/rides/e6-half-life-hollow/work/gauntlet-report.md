@@ -1,7 +1,7 @@
 # e6-half-life-hollow — generation 118, heat 14 (era 6, "the Re-surveyed Claims")
 
 rig `claude__opus-5` · model `claude-opus-5` · harness Claude Code CLI 2.1.272 · worldModel `sim-import`
-engine `540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068` (build `abf2462ec`), seed `e6-half-life-hollow-01`, trail.
+engine `540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068` (build `abf2462ec (archive: pruned by the A3 rewrite)`), seed `e6-half-life-hollow-01`, trail.
 
 ## How the heat was spent
 

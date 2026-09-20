@@ -1,7 +1,7 @@
 # assay-office-claim-ledger — county tallies in the Claim Ledger
 
-**Slice:** `assay-office-claim-ledger` · **Branch:** `lane/lane-a` · **Tip:** `86b97a8106357e4f925448f81105889856cc62fc` · **Base:** `00e648bd1a8e29ef43357b101891d7300acd43cb`
-**Merged to main:** `da2997b3e1b0e2fe9b2e4e954d938864dbd2f17a` · **Drained:** s1787, 2026-08-15
+**Slice:** `assay-office-claim-ledger` · **Branch:** `lane/lane-a` · **Tip:** `58dcba57dab8d7bbd9b877965cf4eb80c3ecea30` · **Base:** `6973b6d41cf0c1c56c8109875cab0b2ba9edbb25`
+**Merged to main:** `cda163054497199a79b9651de293ee141cb46e90` · **Drained:** s1787, 2026-08-15
 **Gated in:** detached worktree `/tmp/gr-s1787-assay.YCT6oh`; merged to main as one act
 
 ## VERDICT: MERGE — the county's anonymous tallies now have their owner-ruled home inside the Claim Ledger.
@@ -32,7 +32,7 @@ Visual target: the Assay Office remains a first-class Claim Ledger page, all six
 
 ## Merge classification
 
-Main moved none of the six touched paths after base `00e648bd1`; the final main merge was a clean `ort` merge with no conflict or graft.
+Main moved none of the six touched paths after base `6973b6d41`; the final main merge was a clean `ort` merge with no conflict or graft.
 
 | Path | Classification |
 |---|---|

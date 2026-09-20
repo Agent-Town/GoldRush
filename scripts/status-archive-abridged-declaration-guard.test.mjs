@@ -6,7 +6,7 @@
 // ("kept only a prefix", glossed in the subject as "the older line is on the board in truncated
 // form") asserts a truncation the test cannot establish.
 //
-// MEASURED s2587 on the live board: the only ABRIDGED entry in a --limit 40 walk, `347e7359`, grew
+// MEASURED s2587 on the live board: the only ABRIDGED entry in a --limit 40 walk, `71b4bcaa`, grew
 // its line from 904 -> 4646 chars, lost ZERO load-bearing tokens and gained SIX. Nothing was
 // truncated. The remedy an unqualified "kept only a prefix" implies -- restore the missing tail --
 // would have rolled back the F-2586-2 desk recovery, taking three OPEN owner items off the board.
@@ -55,7 +55,7 @@ function boardWithExtension({ truncateInstead = false } = {}) {
   // ⚠️ THE EXTENSION MUST BE A **MID-LINE INSERTION**, NOT AN APPEND, AND THIS COST AN ITERATION:
   // a pure append leaves the older line WHOLLY CONTAINED in the child, so `childBlob.includes(before)`
   // short-circuits at :207 as "properly archived, verbatim" and the ABRIDGED arm is never reached --
-  // the fixture went green-adjacent while testing nothing. The live case (`347e7359`) inserts into
+  // the fixture went green-adjacent while testing nothing. The live case (`71b4bcaa`) inserts into
   // the MIDDLE (s2586 raised a desk count 4 -> 7 and added a note), which is what breaks containment.
   const SPLIT = "🔺 **OWNER'S DESK";
   const newer = truncateInstead

@@ -1,6 +1,6 @@
 # e1-baron — claude-opus-5, generation 3 (era 5, "the Replayed Board")
 
-Era: 5 · engineHash `c0a015aed8285ebf05228ff1165395b86b9496d66af45e7c5b9c41d6bffc237b` · build `4675cfd7b`
+Era: 5 · engineHash `c0a015aed8285ebf05228ff1165395b86b9496d66af45e7c5b9c41d6bffc237b` · build `c9d86db11`
 Contract `e1-baron` · seed `e1-baron-01` · difficulty `trail` · seedMode bench
 Diet: open-book (almanac + baron-campaign war-room + era-5 source read before riding). worldModel: `sim-import`.
 

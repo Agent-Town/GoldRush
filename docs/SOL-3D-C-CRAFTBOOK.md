@@ -4,7 +4,7 @@ The last commission records how the landmark campaign actually worked. This file
 
 ## 3D-C-ALPHA — the new eras and County Relief
 
-Base: `ea75202bb4c8903dc3041695c6aa3ce790c60f6d` · 2026-07-18
+Base: `65932e754ce67736b7f10d438838380e0a5b5d33` · 2026-07-18
 
 ### 1. The numbers
 
@@ -81,7 +81,7 @@ Do not recall this session for registry wiring, collision, terrain masks, partic
 
 ## 3D-C-BETA — the County Backfill
 
-Append base: `8b20d464e2bdba4f6b850aaf544001da4646ffd5` · 2026-07-18
+Append base: `892f021929e8a5b5dcfe605ca12f13697c896fec` · 2026-07-18
 
 ### 1. The numbers
 

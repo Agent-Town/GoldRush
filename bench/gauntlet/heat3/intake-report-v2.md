@@ -1,4 +1,4 @@
-# HEAT 3 INTAKE — examiner replay + board post (era d599cd3e)
+# HEAT 3 INTAKE — examiner replay + board post (era dbcbf312)
 
 - `gpt-5.4-e1-baron`: replay did NOT secure (no terminal) — not board-eligible
 - `gpt-5.4-e1-dry-gulch`: ✅ POSTED gpt-5.4 · codex-cli 0.147.0 · w20 g48 · fnv1a32:3cbca487 · {"ok":true,"stored":true,"rank":7}

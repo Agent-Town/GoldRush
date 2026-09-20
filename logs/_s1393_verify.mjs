@@ -7,7 +7,7 @@ const rc = (...a) => { try { execFileSync('git', a, { stdio: 'ignore' }); return
 const TIP = 'e676addf';
 const BASE = git('merge-base', 'main', TIP);
 
-console.log('46033151 ancestor of main?', rc('merge-base', '--is-ancestor', '46033151', 'main') === 0 ? 'YES (benign old main commit)' : 'NO');
+console.log('74f95634 ancestor of main?', rc('merge-base', '--is-ancestor', '74f95634', 'main') === 0 ? 'YES (benign old main commit)' : 'NO');
 console.log('base:', BASE);
 
 const paths = git('show', '--pretty=format:', '--name-only', TIP).split('\n').filter(Boolean);

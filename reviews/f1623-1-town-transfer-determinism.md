@@ -1,7 +1,7 @@
 # f1623-1 — town-transfer determinism (settled, cap-bounded meter)
 
 **Slice:** `tasks/lane-f1623-1-town-transfer-determinism.md` (lane-a, FIRE-AUTHORED s1623 from F-1623-1)
-**Branch/tip:** `lane/a` @ `cb97570b5` · **base** `63d5425651` · **merge** `9e4b09c09875b50fe410b1b11cb10b3e671983ee`
+**Branch/tip:** `lane/a` @ `86fa1f3dd` · **base** `a5441e00df` · **merge** `1ed9c093575ef8bf8d5200003b7d18bf1b9906e1`
 **Drained:** s1625 fire, 2026-08-10, in detached worktree `gate-s1625` (§3.0b — undecided content never entered main's tree)
 
 ## Verdict
@@ -37,7 +37,7 @@ released quantity is *bytes transferred in 20 seconds*, not *bytes to quiescence
 | Failure fingerprint | **4/4 are `expect(…).toBeLessThan(TOWN_TRANSFER_CEILING_BYTES)`** at `:226` (cue) and `:399` (normal arm). **Zero behavioural failures.** |
 | Behavioural assertions in the same tests | **passed** — the cue-visibility expectations sit above `:226` and were reached and satisfied |
 | Console/page errors | **zero**; `expectNoConsoleErrors` still called at **6** sites, unweakened |
-| Merge classification | base `63d5425651`; **all 8 files LANE-TOUCHED / MAIN-UNMOVED**; clean `ort` merge, no graft |
+| Merge classification | base `a5441e00df`; **all 8 files LANE-TOUCHED / MAIN-UNMOVED**; clean `ort` merge, no graft |
 | Firewall | respected — only `e2e/asset-diet.spec.ts` + `artifacts/asset-diet/**`. No `src/`, no `scripts/deploy.sh`, no config, no `package.json` |
 | Master invariants | currency warning `DO NOT QUOTE A SINGLE RUN…` **1**; deploy-gate string `townResponses: ` **1** |
 | `test:node-guards` | **correctly out of battery** (F-1460-1): the diff touches no `src/sim/`, `src/systems/`, `src/entities/` path |
@@ -91,7 +91,7 @@ tolerance or a dropped run — neither was taken here.
 
 ## Merge classification
 
-Base `63d5425651` (the s1623 authoring commit). All eight paths LANE-TOUCHED with main unmoved on every
+Base `a5441e00df` (the s1623 authoring commit). All eight paths LANE-TOUCHED with main unmoved on every
 one, verified per-file by `git diff --name-only <base> main -- <path>` returning empty. No conflicts,
 no three-way graft required.
 

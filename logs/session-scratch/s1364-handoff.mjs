@@ -12,32 +12,32 @@ const carried = s1363.slice(a, b).trim();
 const desk =
   '🔺 **OWNER DESK — board DRY on all four lanes; unblocking it remains entirely owner-side.** ' +
   '⭐ **RE-RAISED AFTER AN 8-DAY ABSENCE, and it is the cheapest item on this desk: AP-03 RE-GREENLIGHT — ONE WORD, THREE LEAVES.** ' +
-  'The AGENT-PLAY gate is *"the rehearsal verdict AND the owner re-greenlight"*; the rehearsal half closed on **2026-07-25** (`4d04e3b8`, ancestor of main) and **your word is the only thing left**, holding `ap-03-protocol` + `ap-04-teach` + `ap-05-publish`. ' +
+  'The AGENT-PLAY gate is *"the rehearsal verdict AND the owner re-greenlight"*; the rehearsal half closed on **2026-07-25** (`8229d6e0`, ancestor of main) and **your word is the only thing left**, holding `ap-03-protocol` + `ap-04-teach` + `ap-05-publish`. ' +
   'It sat on this desk at **s1049 as item ① of five** with *"recommend: greenlight, the technical gate is closed"*, and **has not been carried in any handoff since** — it did not get answered, it got forgotten. **Recommendation UNCHANGED: greenlight.** *(Found only because F-1364-1 sent me to read the gate.)* ' +
-  'Carried: 🟡 **F-1364-1 (new — SELF-CLOSING, cured `6d7f888f`, no owner action)** · ' + carried;
+  'Carried: 🟡 **F-1364-1 (new — SELF-CLOSING, cured `d7b54167`, no owner action)** · ' + carried;
 
 const handoff =
   'Last updated: 2026-08-02T02:20Z s1364 handoff, lock CLEARED — ' +
   '🎯 **(A) I RAN THE PROBE MY PREDECESSOR NAMED AS UNRUN, AND THE DEFECT IT PREDICTED WAS THERE — ONE LEAF SET OVER, ONE TURN HARDER.** ' +
   "Board dry a **twenty-fifth** consecutive fire (**RE-DERIVED**: `find tasks/queue -name '*.md'` = **0** across all six slots, no `tasks/CODEX-WALL`, `assets/crafting-queue/pending/` **0** counted at start and end, newest done-move Aug 1 14:34, lane counts re-measured). " +
-  "Lock taken lawfully (s1363 had **CLEARED** it); **s1363's handoff archived in the LOCK commit** `5b5e5c0c` per F-1341-1, after §2A bookkeeping (`403e7636`, credited to the launchd job per F-1362-1). **No drain (nothing to drain), no master authored, no scope invented.** " +
-  '📋 **(B) F-1364-1 IS THE FIRE** (row `0216ae8a`, cure `6d7f888f`). ' +
+  "Lock taken lawfully (s1363 had **CLEARED** it); **s1363's handoff archived in the LOCK commit** `506d5802` per F-1341-1, after §2A bookkeeping (`403e7636`, credited to the launchd job per F-1362-1). **No drain (nothing to drain), no master authored, no scope invented.** " +
+  '📋 **(B) F-1364-1 IS THE FIRE** (row `c66b2a60`, cure `d7b54167`). ' +
   '⚠️ **(C) THE DEFECT: A CONJUNCTIVE OWNER GATE THAT LOST A CONJUNCT — AND KEPT THE SATISFIED ONE.** ' +
   'The owner gated AGENT PLAY with **two** conditions, verbatim (`specs/agent-play/README.md:2` + BACKLOG, grep *AGENT PLAY pace set*): *"AP-03/04/05 may not be authored or queued until the Saga Rehearsal delivers its verdict **AND** the owner re-greenlights."* ' +
-  '✓ **Conjunct 1 is MET** — verdict merged `4d04e3b8` (2026-07-25), proven an ancestor of main, and this ledger says so itself (grep *UNBLOCKED ON ITS TECHNICAL GATE*). ' +
+  '✓ **Conjunct 1 is MET** — verdict merged `8229d6e0` (2026-07-25), proven an ancestor of main, and this ledger says so itself (grep *UNBLOCKED ON ITS TECHNICAL GATE*). ' +
   '✗ **Conjunct 2 is NOT** — no greenlight in `specs/`, `BACKLOG` or `STATUS`, and the newest AP-03 mention (2026-07-29) still reads *"AP-03 publish remains owner-gated"*. ' +
   '⚠️ **The leaves `ap-03-protocol` and `ap-04-teach` carried only `[REHEARSAL-GATED]` — the half already met.** ' +
   '🔑 **(D) WHY THIS IS WORSE THAN F-1363-1 EVEN THOUGH IT LOOKS MILDER. It inverts diligence into permission.** ' +
   'F-1363-1’s leaf said *"authorable"* — an invitation any careful reader would distrust. This one names a **gate**, so it *looks* like a warning; but a fire that does the correct thing and **verifies the gate it was told about** finds it **CLEARED**, with the unmet half nowhere in the surface it read. **A partial gate that verifies clean is worse than no gate at all.** ' +
   '🔍 **(E) THE SIGNATURE THAT MAKES IT A DEFECT AND NOT DELIBERATE ABBREVIATION: the sibling `ap-05-publish` carries `(owner-gated; …)` AND `[REHEARSAL-GATED]` — the full pair.** ' +
-  'Same author, same commit `c20d04e2`, same sibling set, three leaves gated identically at source: the owner half survived on one and died on two. **Compression applied to two of three siblings is transcription loss.** ' +
+  'Same author, same commit `26d311b6`, same sibling set, three leaves gated identically at source: the owner half survived on one and died on two. **Compression applied to two of three siblings is transcription loss.** ' +
   "✓ **(F) NO BACKSTOP ON THE EXPOSED PATH, CHECKED NOT ASSUMED** — all three leaves are `status:\"planned\"` with no `blockedReason` and no `taskFile`, and `drain-block-check.mjs:229/:259` keys strictly on `status==='blocked'`, so §3.0 is silent; it is a DRAIN-time guard anyway while the hazard is §2E **authoring**, and no master exists for ap-03/04/05. " +
   "ⓘ **SEVERITY STATED HONESTLY AND BELOW F-1363-1: one guard still stands** — §2E permits authoring only from a spec slice, and the spec's own STATUS line (the author's first read) carries the full conjunction. **Latent trap, not an unguarded invitation.** Filed because that guard is a reader's diligence rather than a mechanism, and because **the shape recurred one fire later in a different leaf set** — which is what promotes it from incident to class. " +
   "➡️ **(G) CURED, AND NO OWNER ACTION IS CONSUMED.** Both leaves now carry the owner's verbatim conjunction, both citations as **content anchors** (F-1310-1 — I did not add a rotting line coordinate), which half is met, which is not, and an explicit DO-NOT-AUTHOR naming the trap. **Restoring a conjunct toward the owner's recorded words is transcription repair (CLAUDE.md §4.7), not a new decision.** " +
   "✅ **(H) WHAT THE PROBE REFUTED, recorded per s1361's rule that refutations earn their keep.** " +
   '**18 open leaves diffed against source** (6 blocked · 3 building · 7 planned · 2 stopped — re-derived; the other 25 non-merged leaves are `superseded`/`verified-by-owner`, i.e. closed). **15 of the 18 titles survived.** ' +
-  'In particular the `8a4de2c1` **DEFEAT-FORK** title — *the other ruling in the very commit that produced F-1363-1*, and my prime suspect going in — is **faithful**: verbatim quote, both queued masters, (A)/(B) banked. ' +
-  'And that commit’s self-declared *"GOAL-LEAF DEBT (both masters + drill-yard) next fire"* was **PAID** — `e1-defeat-fork-survive-copy` (`06ce6241…`), `e1-defeat-fork-herostart-rename` (`69984c6a…`), `pc-01-drill-yard` (`7e93be3d…`), all `shipped`, all 40-char hashes. **The obvious suspect was clean and the quiet one was not.** ' +
+  'In particular the `6108a519` **DEFEAT-FORK** title — *the other ruling in the very commit that produced F-1363-1*, and my prime suspect going in — is **faithful**: verbatim quote, both queued masters, (A)/(B) banked. ' +
+  'And that commit’s self-declared *"GOAL-LEAF DEBT (both masters + drill-yard) next fire"* was **PAID** — `e1-defeat-fork-survive-copy` (`ef1db83c…`), `e1-defeat-fork-herostart-rename` (`8efae704…`), `pc-01-drill-yard` (`199f7f60…`), all `shipped`, all 40-char hashes. **The obvious suspect was clean and the quiet one was not.** ' +
   '✅ **(I) DUTIES, each checked at its own source.** **TICKER 0 owed** — newest digest on disk re-confirmed `ticker-digest-2026-08-01.md`; **the 2026-08-02 digest is NOT compilable until that day closes (from 2026-08-03 00:00 local)** and it is 02:20 +07 on 08-02 as I write. Do NOT re-compile 08-01. ' +
   '**ASSAYER 0** (`pending/` counted twice, start and end). **GAZETTE 0, correctly** — I merged no player-visible code. **DEPLOY skipped LAWFULLY** (no gameplay code merged). ' +
   '**ART-SLOT audit NOT triggered and deliberately NOT re-run** — I did not refill, drain or process the slot (last measured s1361: AT RISK 602 / 556.81 MB · LOCAL-ONLY 0). ' +

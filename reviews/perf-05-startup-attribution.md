@@ -1,15 +1,15 @@
 # perf-05-startup-attribution — review (s1038)
 
 **Slice:** `lane-a-perf-05-startup-attribution` (F-1034-3, perf-05 half)
-**Branch:** `lane/m3` · **Tip:** `cec50777` · **Base:** `69f0cd80`
+**Branch:** `lane/m3` · **Tip:** `cec50777` · **Base:** `d72188f3`
 **Run:** `20260725-164910-lane-a` → **rc1**, `tasks/failed/rc1-20260725-164910-lane-a-perf-05-startup-attribution.md`
 
 ## VERDICT: **HELD — not merged.** The deliverable is PROVEN; the slice's own spec cannot be taken green while another lane saturates the CPU.
 
 > ⚠️ **SUPERSEDED s1454 (F-1454-2) — STALE VERDICT LINE.** The hold lasted exactly one fire: **s1039
-> drained it at `6316127857`** (*"s1039: drain perf-05-startup-attribution — the hold falls to an A/B,
+> drained it at `c5dfbad77e`** (*"s1039: drain perf-05-startup-attribution — the hold falls to an A/B,
 > because main fails …"*), verified **IN-MAIN by ancestry** s1454; leaf `perf-05-startup-attribution`
-> carries `status: shipped`, `mergeHash 6316127857`.
+> carries `status: shipped`, `mergeHash c5dfbad77e`.
 > ⭐ **The hold fell the right way — by a better instrument, not by waiting for an idle box.** This
 > review asked for "one clean re-run on an idle machine"; s1039 instead ran an **A/B** and found the
 > `ttiMs < 3000` red reproduces on **clean main**, which is decisive at any load: a red on the control
@@ -102,7 +102,7 @@ and invisibly false. Non-blocking, but exactly why an rc1 lane output must never
 **F-1038-4 (product-adjacent, for the record) — defect 2 reading 3 is REFUTED, and the real cause is
 the 250-entry cap again.**
 s1037 flagged that empty `prefetchedBeforeWaveSpawn` might mean *"the wave-1 prefetch stopped happening
-= a regression against `8bd9eca`"*. It did not. With the buffer raised, all five buildings appear every
+= a regression against `4afb57f`"*. It did not. With the buffer raised, all five buildings appear every
 run (`bld-{palisade,sentry-beacon,signal-turret,sluice-works,stockpile-yard}.png`, script-initiated at
 ~2996ms, img-initiated at ~3062ms). The prefetch was **always** firing; the browser's default
 250-entry resource-timing buffer overflowed during boot and silently dropped it — **the same root
@@ -138,7 +138,7 @@ and no number of single-variant re-runs could ever have found it.
 ## The instrument: a paired, alternating A/B
 `main`'s spec and `cec50777`'s spec were swapped into the *same* worktree and run **alternately**
 against the *same* dev server, so machine load — the suspected confounder — cancels. The page under
-test is **byte-identical** between variants (`git diff 69f0cd80 main -- src/ public/ index.html` is
+test is **byte-identical** between variants (`git diff d72188f3 main -- src/ public/ index.html` is
 **empty**; the only delta is the spec's own bookkeeping), so `ttiMs` *should* be statistically
 indistinguishable, and any consistent gap would indict the change.
 
@@ -181,7 +181,7 @@ Both merged-tree gate runs were served from a scratch port (5199) per Mistake #1
 `src/`, `public/` and `index.html` are byte-identical to main's — verified empty diff, not assumed.
 
 ## Merge classification (re-verified at drain time)
-`git log 69f0cd80..main -- e2e/perf-05-startup.spec.ts artifacts/perf-05/` is **empty** → main never
+`git log d72188f3..main -- e2e/perf-05-startup.spec.ts artifacts/perf-05/` is **empty** → main never
 moved on these paths since the lane's base. All 5 files **LANE-TOUCHED-only**; clean checkout, no
 3-way, no conflicts.
 

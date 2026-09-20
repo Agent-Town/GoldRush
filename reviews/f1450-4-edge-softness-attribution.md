@@ -10,8 +10,8 @@
 ## What it does
 
 F-1450-4 recorded that `assets/processed/prop-baron-banner.png` measured `partial=1845`
-when produced 2026-07-08 (`a1b3f4b0`) and `partial=121` when re-extracted 2026-08-04
-(`eea41d6e`), and credited the difference to *"accumulated extractor drift across
+when produced 2026-07-08 (`778cb197`) and `partial=121` when re-extracted 2026-08-04
+(`77a22fc5`), and credited the difference to *"accumulated extractor drift across
 [weeks and] many extractor revisions"*. Its gate: **"closes when a same-extractor
 control attributes the `partial` delta, or an attended eye rules the edge-softness
 change a non-issue at play scale."**
@@ -22,11 +22,11 @@ This is that control. It runs the arm the finding asked for, and three more.
 
 | question | measured |
 |---|---|
-| extractor revisions between the two extractions | **exactly ONE** — `c29040e7` |
-| what `c29040e7` changes | **pure addition** of `bleedEdges` + 2 call sites + log strings |
+| extractor revisions between the two extractions | **exactly ONE** — `d2e69801` |
+| what `d2e69801` changes | **pure addition** of `bleedEdges` + 2 call sites + log strings |
 | alpha-affecting code changed in it | **none** |
 
-`git log a1b3f4b0..eea41d6e -- scripts/extract-alpha.mjs` returns one commit, and it is
+`git log 778cb197..77a22fc5 -- scripts/extract-alpha.mjs` returns one commit, and it is
 the bleed cure itself. So *"many revisions"* is false, and the two extractions were
 produced by an extractor that is **alpha-identical**. The delta cannot be extractor
 drift — which means it had to be something the finding never considered.
@@ -37,8 +37,8 @@ All arms extract from `assets/raw/prop-baron-banner.png`; nothing writes to `ass
 
 | arm | recipe | transparent | **partial** | opaque | key-RGB under α0 |
 |---|---|---|---|---|---|
-| shipped OLD (`a1b3f4b0`) | *unknown, 2026-07-08* | 85900 | **1845** | 59711 | 84770 |
-| shipped NEW (`eea41d6e`) | current, `--size 384` | 86725 | **121** | 60610 | 0 |
+| shipped OLD (`778cb197`) | *unknown, 2026-07-08* | 85900 | **1845** | 59711 | 84770 |
+| shipped NEW (`77a22fc5`) | current, `--size 384` | 86725 | **121** | 60610 | 0 |
 | **A** | current extractor `--size 384` | 86725 | **121** | 60610 | 0 |
 | **B** | pre-bleed extractor `--size 384` | 86725 | **121** | 60610 | 85609 |
 | **C** | current, `bleedEdges` **stubbed** | 86725 | **121** | 60610 | 85609 |
@@ -101,8 +101,8 @@ partial pixels (60,296), composited over a checker (top row) and as raw alpha (b
   provably-loaded examples are bad: `char-baron-sheet-walk4-a-r0c0.png` — **the Baron
   portrait in the HUD** — at **55.63%** with **447** key texels touching visible art, and
   `ui-title-emblem.png` at **99.17%** with **1307**. Instrument validated by four negative
-  controls (the four sprites extracted after `c29040e7`), all reading exactly **0.00% / 0**.
-  **The cure at `c29040e7` fixed the extractor, which cures FUTURE extractions only —
+  controls (the four sprites extracted after `d2e69801`), all reading exactly **0.00% / 0**.
+  **The cure at `d2e69801` fixed the extractor, which cures FUTURE extractions only —
   already-shipped sprites were never re-extracted.** The ledger currently records the class
   as closed, which is what would stop the next reader looking. Not a drive-by fix: a
   roster-wide re-extraction is a batch art operation with visual consequences, and it is

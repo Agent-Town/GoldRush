@@ -200,7 +200,7 @@ test('Stamp Mill manifest builds to the door without switching epochs', async ({
   await expect(page.getByTestId('story-beat-card')).toHaveAttribute('data-beat-id', 'stamp-site-found');
   await expect(page.getByTestId('story-beat-card')).toHaveAttribute('data-speaker', 'elder');
   // F-1158-2: this asserted "The survey's done." — the beat's first line as authored by
-  // 734f269e (07-08 08:45). ss-02 (e3019343, 07-08 17:47) re-authored the whole 21-beat table
+  // ffcf2c8d (07-08 08:45). ss-02 (1511fcb2, 07-08 17:47) re-authored the whole 21-beat table
   // and gave stamp-site-found new lines; this expectation was never updated, so the test has
   // been red for 20 days. Both lines below are read from src/story/beats.ts:173 (the shipped,
   // reviewed copy). The assertion's intent — both authored lines render on the card — is intact.

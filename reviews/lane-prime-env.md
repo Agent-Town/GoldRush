@@ -2,8 +2,8 @@
 
 - **Slice:** `lane-prime-env` (AP-07's Python side; GR-SIM was its merged prerequisite)
 - **Branch / tip:** `lane/m3` @ `8eee3956` (runner commit `runner(lane-a): lane-prime-env.md`)
-- **Base:** `706e077c`
-- **Merged to main:** `5a17d1d9` (s1298)
+- **Base:** `079c3cc6`
+- **Merged to main:** `96e7b58b` (s1298)
 - **Goal leaf:** `ap-07-prime-env`, registered in this drain (was UNKNOWN — see F-1298-3)
 
 ## Verdict

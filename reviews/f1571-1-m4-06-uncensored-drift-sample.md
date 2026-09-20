@@ -82,7 +82,7 @@ The normal desktop run demonstrates that a lane-shell sample can breach the unch
 
 ---
 
-## DRAIN — s1572, MERGED `14b3c927c5d1d2d2bf96584d0f7731b72c816c66`
+## DRAIN — s1572, MERGED `9bfecb997a892889ee65e4c4e595ce16ebafe745`
 
 **Verdict: MERGE.** Gated in a detached worktree (`gate-s1572`) per §3.0b — the lane's content was never placed in main's working tree until the verdict was MERGE. Worktree removed after; the `node_modules` symlink unlinked behind an `lstat` guard so removal could not follow it into main's real tree.
 
@@ -90,7 +90,7 @@ The normal desktop run demonstrates that a lane-shell sample can breach the unch
 
 ### Merge classification
 
-Base `3e47f632222e5f326d7fa75d1117303a44e9374b`. **Main moved on ZERO of the ten paths** — the only three commits on `main` since the base are bookkeeping (`STATUS.md`, `tasks/BACKLOG.md`, `logs/**`). All ten are **LANE-TOUCHED / MAIN-UNMOVED**; `ort` clean, no graft.
+Base `2a1a9bd8f5313deff848ff36e630d55dab0f0a68`. **Main moved on ZERO of the ten paths** — the only three commits on `main` since the base are bookkeeping (`STATUS.md`, `tasks/BACKLOG.md`, `logs/**`). All ten are **LANE-TOUCHED / MAIN-UNMOVED**; `ort` clean, no graft.
 
 ### Evidence (fire shell, all `--workers=1` per §3.1, projects run SERIALLY)
 

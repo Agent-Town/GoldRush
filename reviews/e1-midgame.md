@@ -1,8 +1,8 @@
 # e1-midgame — THE MIDGAME GETS ITS PRESSURE BACK (Double-Tap Coil capped at three)
 
 **Slice:** `lane-e1-midgame` (attended-authored DRAFT, E1-depth review leg 2, 2026-07-26)
-**Branch / tip:** `lane/m4` @ `1e603005` — `runner(lane-b): lane-e1-midgame.md`, committed 2026-07-26T15:07:41+07
-**Drained by:** s1077 fire · **Merge base:** `286c2f48`
+**Branch / tip:** `lane/m4` @ `908f9dc3` — `runner(lane-b): lane-e1-midgame.md`, committed 2026-07-26T15:07:41+07
+**Drained by:** s1077 fire · **Merge base:** `e762dcdc`
 **VERDICT: MERGED** — path-scoped to `src/game/Balance.ts` only, plus one coupled test repair (F-1077-2). Two findings go to the OWNER'S DESK; one is a trap for every future fire.
 
 ## What it does
@@ -13,8 +13,8 @@ Optimisation **#1 of four** from the midgame master, which explicitly authorised
 
 | File | Commit | Classification | Action |
 |---|---|---|---|
-| `src/game/Balance.ts` | `1e603005` | **LANE-TOUCHED only** — `git diff 286c2f48 main -- <file>` **empty**, i.e. main never moved it since the merge-base | Grafted from the pinned commit; result verified **byte-identical** to `1e603005` |
-| `scripts/deploy.sh` | `793c9f2f` | **MAIN-MOVED past it** — the F-1073-1 trap | **EXCLUDED.** Not merged |
+| `src/game/Balance.ts` | `908f9dc3` | **LANE-TOUCHED only** — `git diff e762dcdc main -- <file>` **empty**, i.e. main never moved it since the merge-base | Grafted from the pinned commit; result verified **byte-identical** to `908f9dc3` |
+| `scripts/deploy.sh` | `72d72f34` | **MAIN-MOVED past it** — the F-1073-1 trap | **EXCLUDED.** Not merged |
 
 `scripts/deploy.sh` was deliberately left behind: F-1073-1 (twice-recorded, s1066 + s1073) establishes that main carries `PAGES_PRODUCTION_URL` + a 3-attempt retry loop, while `793f...`'s version checks the ephemeral per-deploy URL once with no retry. Merging it would regress the deploy chain. Because the lane's two commits touch **disjoint files**, a path-scoped graft of `Balance.ts` alone threads the needle exactly — no 3-way was needed and none was invented.
 
@@ -30,7 +30,7 @@ Optimisation **#1 of four** from the midgame master, which explicitly authorised
 | Rehearsal (master's named check) | `e1-dry-gulch`, timescale 2 — died **wave 7**, 172 kills, HP moved 100→76→52 |
 | Artifacts | `reviews/shots-e1-depth/s1077-cap3-maintree-*` (6 shots + `-report.json`) |
 
-**Pre-existing red, proven not inherited (the cp-revert fingerprint).** I reverted `Balance.ts` to clean `HEAD` and re-ran the two failures. Result: `task-024:130` **failed identically on clean main** (both projects, same 30s timeout at `openGame`/`:19`, same stack), while `meta-presence:114` **passed** — which is what exposed F-1077-2 as mine. Graft then restored and re-verified byte-identical to `1e603005`.
+**Pre-existing red, proven not inherited (the cp-revert fingerprint).** I reverted `Balance.ts` to clean `HEAD` and re-ran the two failures. Result: `task-024:130` **failed identically on clean main** (both projects, same 30s timeout at `openGame`/`:19`, same stack), while `meta-presence:114` **passed** — which is what exposed F-1077-2 as mine. Graft then restored and re-verified byte-identical to `908f9dc3`.
 
 **Honest limit on the balance verdict.** My run ended at **wave 7**, so it does **not** independently reproduce the master's stated check (*"at least one wave where hp falls between waves 10 and 19"*); the runner's own run did (HP 159→135→127→31 across w10–13, died w13). Three runs of this rig produced **w7 / w12 / w13**, and the two on main-tree code ran at very different frame rates (33 fps under load vs 104 fps). **Run-to-run variance is large enough that no single run settles a balance question** — I am reporting corroboration (pressure is restored; the cap binds; HP moves in the midgame) and explicitly **not** claiming the wave-7 death is the new expected outcome. Whether this *overshoots* — the cited baseline secured wave 20 taking zero damage w3→w19 — is a design call, folded into F-1077-1 below.
 
@@ -58,7 +58,7 @@ This is a precondition/derivation repair, **not a bent expectation** — the ass
 That output reads exactly like *"the cap is not enforced, so this slice is inert in real play"* — a false P0 I was one commit from filing. Caught by `lsof -nP -iTCP:5247` + the listener's `cwd`, then re-measured on a scratch port (5251, verified free **and** verified serving main) where the cap binds at 3. This is textbook **Mistake #12**, and the rig's default makes it the *easy* path. **Recommendation:** the rig should either fail closed when `E1_BASE` is unset, or assert the served tree's identity before playing (a build stamp / sentinel fetch). Until then: **any fire running this rig must verify the listener's `cwd` first.** Contaminated evidence retained, not deleted, under the RETENTION LAW: `reviews/shots-e1-depth/s1077-midgame-cap3-*` — **those seven files are the FOREIGN-TREE run; do not cite them as this slice's evidence.**
 
 ### F-1077-4 — `src/game/Balance.ts.orig` is tracked merge debris in main (hygiene, PRE-EXISTING)
-`git ls-files` matches it; it landed **2026-07-06 at `680775c3`, `runner(art): art-batch-008-prospector-companion.md`** — i.e. an **art** run swept a merge `.orig` into main, which is precisely what the path-scoped-`git add` law (§4.2) exists to prevent. It holds a stale duplicate of `applyDifficultyPreset` / `applyStoredDifficultyPreset` (at `.orig:305`/`:329`), is not importable (the extension does not resolve) and so is dead weight — but it **already polluted this investigation's greps**, surfacing alongside the real `Balance.ts` and offering a second, wrong set of line numbers for the exact functions I was reading. Fires cannot `rm`/`git rm` (gated), so this needs an attended or owner hand. 20 days tracked.
+`git ls-files` matches it; it landed **2026-07-06 at `9caf1e2a`, `runner(art): art-batch-008-prospector-companion.md`** — i.e. an **art** run swept a merge `.orig` into main, which is precisely what the path-scoped-`git add` law (§4.2) exists to prevent. It holds a stale duplicate of `applyDifficultyPreset` / `applyStoredDifficultyPreset` (at `.orig:305`/`:329`), is not importable (the extension does not resolve) and so is dead weight — but it **already polluted this investigation's greps**, surfacing alongside the real `Balance.ts` and offering a second, wrong set of line numbers for the exact functions I was reading. Fires cannot `rm`/`git rm` (gated), so this needs an attended or owner hand. 20 days tracked.
 
 ### F-1077-5 — the blocked-storage boot path may hang the game for real players (PRE-EXISTING, wants triage)
 The one red I merged past is not merely a test artifact and should not be filed as one. `task-024:130` times out because frames never start, and the dev-server log shows the cause: **`[Unhandled rejection] Error: blocked storage`** thrown from `rawGet` (`ProfileStorage.ts:475`) via `readLegacyDifficulty` (`:369`) → `ensureProfileState` (`:103`) → `activeProfile` (`:138`) → `new TileStateStore` (`TileStateStore.ts:44`) → `new Game` (`Game.ts:1189`) → `startGame` (`main.ts:122`). The test's own name is *"falls back to default when profile storage is blocked"* — the fallback it asserts is **not happening**; the rejection escapes during construction. If that reproduces in a browser with storage blocked (private mode, strict privacy settings), **the game does not boot for that player**. Pre-existing to this slice and proven so, therefore not a gate blocker — but it deserves an attended triage rung, not another fire's shrug. Unverified in a real browser profile; I did not chase it inside this drain's scope.

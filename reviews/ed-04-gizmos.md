@@ -1,7 +1,7 @@
 # ED-04 — four editor guards were vacuous; they now reach their assertions
 
 **Slice:** `lane-c-ed-04-gizmo-guards-vacuous` (the F-1026-5 class, acting on **F-1034-3**)
-**Branch:** `lane/e2-arsenal` · **Tip:** `f63c4a0b` · **Base:** `81fa1c78` · **Drained by:** s1046 fire (ALT), 2026-07-25
+**Branch:** `lane/e2-arsenal` · **Tip:** `f63c4a0b` · **Base:** `25aae3d7` · **Drained by:** s1046 fire (ALT), 2026-07-25
 
 ## VERDICT: MERGE — with one finding against the factory, not the slice (F-1046-1, below)
 
@@ -88,7 +88,7 @@ and corroborated by mine, from a different operator on a different tree.
 
 ## Merge classification
 
-Base `81fa1c78`; `git diff --stat 81fa1c78 main` on both touched paths is **empty** — main never moved
+Base `25aae3d7`; `git diff --stat 25aae3d7 main` on both touched paths is **empty** — main never moved
 on `e2e/ed-04-gizmos.spec.ts` or `reviews/shots-ed-04-gizmos/`. Both files are **LANE-TOUCHED,
 MAIN-UNMOVED** → exact path-scoped graft, no 3-way, nothing of main's overwritten.
 

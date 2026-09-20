@@ -5,7 +5,7 @@ opened to the box, `scripts/deploy.sh` was NOT edited.**
 
 ## 0. Why this fire looked here at all
 
-`1325cda49` (attended, 12:21:18, **five minutes before this fire started**) landed a 14-line
+`3ff1eb606` (attended, 12:21:18, **five minutes before this fire started**) landed a 14-line
 assayer leg in `scripts/deploy.sh` — the F-2297-1(b) cure, "automate the worker deploy so
 staleness self-heals". It is **one commit old and has never been executed by anything**.
 DEPLOY LAW makes it run automatically after the next gameplay-affecting merge, and two
@@ -144,5 +144,5 @@ Local, read-only, ~3 s. Scripts were written to `/tmp` per F-1665-1:
 ```sh
 node /tmp/s2298-payload.mjs     # tracked/ignored status of the payload
 # the size table: du -sk each top-level entry not in the runbook allowlist,
-# with the exclude set taken verbatim from `git show 1325cda49 -- scripts/deploy.sh`
+# with the exclude set taken verbatim from `git show 3ff1eb606 -- scripts/deploy.sh`
 ```

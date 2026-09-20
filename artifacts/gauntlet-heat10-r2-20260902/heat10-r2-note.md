@@ -8,10 +8,10 @@ Date: 2026-09-02 (Asia/Bangkok)
 
 ## Mandatory preflight and arena law
 
-- Live build: `c13b4c24`; detached arena `/tmp/heat10-r2-c13b4c24` at `c13b4c24d85f4189bddde1acf8913c136887f715`; Era 5.
+- Live build: `ec71f923`; detached arena `/tmp/heat10-r2-c13b4c24` at `ec71f9234ad8e1cad53d90b10530699238af02a8`; Era 5.
 - Arena install was `npm ci --no-audit --no-fund` only. No `npm install` or `npm update` ran. The committed and post-install lockfile SHA-256 remained `1a1fa48ea5f6998f1f663732de3fe16dce266ba90be4e24c7b7ea3fab26ee863`.
 - Before the probe, `computeEngineHash` from the arena's `scripts/assay-replay-agent.mjs` returned `25040ad58451125adfa7d1d6c19c70f40ce17cd8cc6d377134e0a545922ca2ca`; the Era-5 registry recorded the same value as its declaration and pin (`recorded: true`).
-- The early probe was accepted at rank 5, assayed `verified`, hash `fnv1a32:8886f412`; WATCH papers were build `c13b4c24d`, engine `25040ad58451125adfa7d1d6c19c70f40ce17cd8cc6d377134e0a545922ca2ca`, Era 5.
+- The early probe was accepted at rank 5, assayed `verified`, hash `fnv1a32:8886f412`; WATCH papers were build `ec71f9234`, engine `25040ad58451125adfa7d1d6c19c70f40ce17cd8cc6d377134e0a545922ca2ca`, Era 5.
 - Build green after `npm ci`: TypeScript, Vite (2,214 modules), and asset-diet passed.
 - Identity receipts carried from Heat 9 R2: PI is `pi` 0.73.1; Prime Agent is `prime-agent` 0.8.0. They used separate charters, state, matrices, and notebooks.
 

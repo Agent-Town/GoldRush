@@ -1,8 +1,8 @@
 # Review — cold-anchor-rule (one era breathes at a time)
 
 - **Slice:** cold-anchor-rule (lane-a #2, "fix:") — ACCRETION LAW v2 / COLD-ANCHOR RULE
-- **Branch/tip:** lane/m3 @ `17a8c017` (`runner(lane-a): cold-anchor-rule.md`)
-- **Merged as:** `21e6ee2b` (`Merge branch 'lane/m3'`) onto main `b4bbf436`; base (merge-base) `0fa91dc4`
+- **Branch/tip:** lane/m3 @ `b4887a82` (`runner(lane-a): cold-anchor-rule.md`)
+- **Merged as:** `b901270a` (`Merge branch 'lane/m3'`) onto main `6843713a`; base (merge-base) `3b1d89e0`
 - **Drain:** s642 fire, 2026-07-16
 - **Verdict:** ✅ SHIPPED — gates green, on-firewall, owner-ruled behavior implemented.
 
@@ -28,10 +28,10 @@ Six visual artifacts land under `artifacts/cold-anchor-rule/` — `{desktop,mobi
 | E3 Voltage | arc flicker | steam |
 | E4 Motor | dust puffs | arc + steam |
 
-## Merge classification (base `0fa91dc4`)
+## Merge classification (base `3b1d89e0`)
 | File | Class | Note |
 |------|-------|------|
-| `src/town/TownTavernPilot.ts` | LANE-TOUCHED | main == base (`f492397a`); emitter filter + 3 call sites; no MAIN-MOVED, clean apply |
+| `src/town/TownTavernPilot.ts` | LANE-TOUCHED | main == base (`4f311fe8`); emitter filter + 3 call sites; no MAIN-MOVED, clean apply |
 | `e2e/wire-era-anchor-emitters.spec.ts` | LANE-TOUCHED | prior-slice spec co-updated: E4 scenario now asserts arc anchors dormant (34/68 → 0/0) under the new rule — a *necessary* update, the old assertion is invalidated by the ruling |
 | `e2e/cold-anchor-rule.spec.ts` | NEW | cycles E2/E3/E4, asserts only active era breathes |
 | `artifacts/cold-anchor-rule/*.png` (6) | NEW | visual matrix |
@@ -39,5 +39,5 @@ Six visual artifacts land under `artifacts/cold-anchor-rule/` — `{desktop,mobi
 No conflicts; `ort` merge, clean. Firewall respected: only the emitter-mount era filter + spec + artifacts touched; no removals outside scope (diff read line-by-line — the only src change is the `era?` → `activeEra` filter and its 3 call sites).
 
 ## Findings
-- **F-1 (non-blocking, informational):** the master carried no `tasks/goals.json` leaf (author did not register one per the Goal Registration Law). The drain added `world-cold-anchor` under `world-buildings` in the same drain bookkeeping and flipped it `merged` @ `21e6ee2b...`. No corrective needed.
+- **F-1 (non-blocking, informational):** the master carried no `tasks/goals.json` leaf (author did not register one per the Goal Registration Law). The drain added `world-cold-anchor` under `world-buildings` in the same drain bookkeeping and flipped it `merged` @ `b901270a...`. No corrective needed.
 - No blocking findings.

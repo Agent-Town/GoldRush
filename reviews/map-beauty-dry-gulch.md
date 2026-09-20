@@ -1,6 +1,6 @@
 # Review — map-beauty-dry-gulch
 
-**Slice/branch/tip:** map-beauty-dry-gulch · lane-polish-ts04 · tip `0e051103` (runner lane-c) → landed on main as `c505ee7a`
+**Slice/branch/tip:** map-beauty-dry-gulch · lane-polish-ts04 · tip `0e051103` (runner lane-c) → landed on main as `577222c6`
 **Drained by:** s378 fire, 2026-07-12 (idle-attended wave drain #2 of 3)
 **Verdict:** ✅ MERGED (tip-graft, not branch-merge)
 
@@ -18,7 +18,7 @@ Dry Gulch was rendering on the flat fallback ground instead of its authored mesa
 | boot errors | zero (specs' error buckets clean both viewports) |
 
 ## Merge classification
-- **Base:** merge-base with main = `835c8108` (lane/polish); branch sits over 086 `d5d0bb97` + 2 fixes → NOT branch-merged (would drag 086). 
+- **Base:** merge-base with main = `756de17c` (lane/polish); branch sits over 086 `d5d0bb97` + 2 fixes → NOT branch-merged (would drag 086). 
 - **assets/contracts/epoch-1-frontier/contracts.json** — MAIN-MOVED-check: main's pre-image byte-matched the branch (no `render` line between biome/river; `antiTile` 0.72 at the dry-gulch splat). Applied the two hunks **surgically via Edit**; `git diff 0e051103 -- contracts.json` == EMPTY (byte-match confirmed). Other tiles' antiTile (0.56/0.64) untouched.
 - **e2e/map-beauty-dry-gulch.spec.ts, artifacts/dry-gulch-relief/** — LANE-TOUCHED new files → `git checkout 0e051103 -- <paths>`.
 

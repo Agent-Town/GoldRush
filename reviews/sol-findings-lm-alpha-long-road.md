@@ -1,6 +1,6 @@
 # 3D-C-ALPHA — The Long Road landmark pack
 
-Reference base: `e5f67d08cf94ff7dce0caf4f06a969cb782d8cee`
+Reference base: `eb174861bbd78def3a6d993f282d69e1cd34686b`
 
 ## ID list
 

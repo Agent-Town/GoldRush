@@ -22,7 +22,7 @@ const out = [
   ...mainE52,
   '',
   '> ⛔ **The `milk/twin-sockets` copy of this finding opened *"Unchanged … the briefing promises six beacon gates"* and was',
-  '> **STALE ON ARRIVAL** — the surgery pass had already cured it at `7bfd62ee`. Struck rather than merged; the banner above is',
+  '> **STALE ON ARRIVAL** — the surgery pass had already cured it at `45f54b88`. Struck rather than merged; the banner above is',
   '> the live text. The branch\'s remaining sentences about the missing consumer, the manifest and selectability are identical',
   '> in substance to the body above and add nothing, so nothing else was lost (F-1497-1).',
 ];

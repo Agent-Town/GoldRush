@@ -1,7 +1,7 @@
 # fix-party-pot-orphan — SHARED POT belongs to the party HUD
 
-**Slice:** `fix-party-pot-orphan` · **Branch:** `lane/lane-c` · **Tip:** `bbaee3cf65a384559702f5b152353f1ff0700397` · **Base:** `6a53003ec0b2a25769ff6a4c125df9e362e77943`
-**Merged to main:** `add18f30b78f38fae19cabda3d82b4b204c9e9e5` · **Drained:** s1788, 2026-08-15
+**Slice:** `fix-party-pot-orphan` · **Branch:** `lane/lane-c` · **Tip:** `a220c69ee0b07ce4570343577a69201b3eecb7e7` · **Base:** `0caeb33a1b30b88734246c8da201fb5b43d95551`
+**Merged to main:** `c9b35f07be7d7e54082a1ce6bb199afe0f839668` · **Drained:** s1788, 2026-08-15
 **Gated in:** detached worktree `/tmp/gr-s1788-party-pot.5VfGv2`; merged to main as one act
 
 ## VERDICT: MERGE — the shared pot now reads as part of the riders panel at both breakpoints.
@@ -37,7 +37,7 @@ The power red was load contamination, not a candidate regression: the candidate 
 
 ## Merge classification
 
-Main moved none of the touched source/spec paths after base `6a53003e`. Detached custody and the final main merge were clean `ort` merges with no conflict or graft.
+Main moved none of the touched source/spec paths after base `0caeb33a`. Detached custody and the final main merge were clean `ort` merges with no conflict or graft.
 
 | Path | Classification |
 |---|---|

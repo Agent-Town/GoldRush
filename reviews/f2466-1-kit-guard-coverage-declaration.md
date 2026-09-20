@@ -1,9 +1,9 @@
 # Review — f2466-1-kit-guard-coverage-declaration
 
 **Slice:** `f2466-1-kit-guard-coverage-declaration` (lane-a, fire-authored s2466 from its own drain review of `kit-guard-generic-damage`)
-**Branch:** `lane/a` — runner commit `bdbb55b1e`
-**Gated tip:** `8d4447816686849c78d39d5f843e81ae52e60b21` (merge commit; parent1 `69764079e` = main at gate time)
-**Merged to main:** `8d4447816686849c78d39d5f843e81ae52e60b21` — fast-forward, so **what shipped is byte-identical to what was gated**
+**Branch:** `lane/a` — runner commit `cd7ef8d86`
+**Gated tip:** `a7d63a4c1fee2e7f1d959df61ebf82c55de699ef` (merge commit; parent1 `c4752174b` = main at gate time)
+**Merged to main:** `a7d63a4c1fee2e7f1d959df61ebf82c55de699ef` — fast-forward, so **what shipped is byte-identical to what was gated**
 **Drained by:** s2470
 
 ## Verdict
@@ -54,7 +54,7 @@ The scope-2 declaration is verified on the **happy path**, which is the half tha
 
 ## Merge classification
 
-Base `94d3fd2333f3f9a6f7f255ac8d02e1adf8f5dc08`; lane 1 commit ahead, 32 behind.
+Base `49b5965ab60cc83df890630b6f29848c7cfbb3ac`; lane 1 commit ahead, 32 behind.
 
 | File | Class | Resolution |
 |---|---|---|

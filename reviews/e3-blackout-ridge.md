@@ -1,13 +1,13 @@
 # Review — e3-blackout-ridge ("stored breath") — drained by s564
 
-**Slice/branch/tip:** e3-blackout-ridge · lane/e2-arsenal (lane-c) tip `7495278a` · base `1fa33b67` · landed by s564 fire onto main `c96a7a42`.
+**Slice/branch/tip:** e3-blackout-ridge · lane/e2-arsenal (lane-c) tip `7495278a` · base `1fa33b67 (archive: pruned by the A3 rewrite)` · landed by s564 fire onto main `4b48f5d7`.
 **Verdict:** PASS.
 
 ## What it does
 E3 (Voltage era) contract #2, from the STORYBOOK spec verbatim: *"no generator on this map — current arrives from OFF-MAP down one trunk line… You build capacitor banks to buffer the cuts: the map is played in STORED BREATH."* Adds ONE power-graph system extension — a **STORAGE node** (capacitor bank) that charges from surplus flow and discharges to its component when generation drops — plus the `capacitor_bank` buildable, the `e3-blackout-ridge` contract (off-map trunk chain to the map edge, saboteur waves target the trunk, ridge-glow render-only backdrop, unlock after canyon-works win), and its e2e.
 
 ## Storage numbers (Balance.e3Power.storage)
-`capacityWh: 0.05 · chargeWatts: 18 · dischargeWatts: 12 · cost: 75 · maxCount: 4 · hp: 70 · overlapRadius: 0.9 · placeRadius: 3` · buildable HP `capacitor_bank: 70`. Mask table: `assets/contracts/epoch-3-voltage/mask-tables/` (published + validated separately by publish-e3-mask-tables → `c96a7a42`).
+`capacityWh: 0.05 · chargeWatts: 18 · dischargeWatts: 12 · cost: 75 · maxCount: 4 · hp: 70 · overlapRadius: 0.9 · placeRadius: 3` · buildable HP `capacitor_bank: 70`. Mask table: `assets/contracts/epoch-3-voltage/mask-tables/` (published + validated separately by publish-e3-mask-tables → `4b48f5d7`).
 
 ## Evidence
 | Gate | Result |
@@ -25,7 +25,7 @@ E3 (Voltage era) contract #2, from the STORYBOOK spec verbatim: *"no generator o
 The blackout-ridge contract is a normal player contract (unlocks after the canyon-works win, no `?debug`); the storage engine is flag-gated — `e3-power-graph` asserts a flag-off boot does zero graph work and `e3-power-prototype` asserts no-debug dormancy, so the extension adds no cost to a plain boot. The stored-breath countdown is the player-visible payoff (lights survive a trunk cut proportional to stored charge, recharge on repair) — exercised end-to-end by the new spec.
 
 ## Merge classification
-Base `1fa33b67`, ~6 commits behind current main. `git diff base..main --name-only` ∩ slice-touched src = **∅** — main only advanced `src/world/Terrain3dClaimPilot.ts` (wire-landmark-mounts) + `assets/contracts/epoch-3-voltage/mask-tables/*` (a sibling dir, not `contracts.json`); none of the slice's 8 src files, `contracts.json`, or the new spec were touched on main since the base. Therefore a path-restricted checkout of `7495278a`'s versions == a conflict-free 3-way graft (MAIN-version == BASE-version for every LANE-TOUCHED file). No both-moved files. Path-scoped `git add`, `feat:` prefix per task. lane/e2-arsenal remains ahead by `7495278a`; its content is now on main → falsely-ahead=merged (do not re-drain).
+Base `1fa33b67 (archive: pruned by the A3 rewrite)`, ~6 commits behind current main. `git diff base..main --name-only` ∩ slice-touched src = **∅** — main only advanced `src/world/Terrain3dClaimPilot.ts` (wire-landmark-mounts) + `assets/contracts/epoch-3-voltage/mask-tables/*` (a sibling dir, not `contracts.json`); none of the slice's 8 src files, `contracts.json`, or the new spec were touched on main since the base. Therefore a path-restricted checkout of `7495278a`'s versions == a conflict-free 3-way graft (MAIN-version == BASE-version for every LANE-TOUCHED file). No both-moved files. Path-scoped `git add`, `feat:` prefix per task. lane/e2-arsenal remains ahead by `7495278a`; its content is now on main → falsely-ahead=merged (do not re-drain).
 
 ## Findings
 None blocking. Firewall respected (storage extension + buildable + contract data/tile + spec + artifacts only; no other systems, no E1/E2, no boss).

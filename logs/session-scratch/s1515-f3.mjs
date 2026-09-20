@@ -9,14 +9,14 @@ const row =
   '🟡 **F-1515-3 (s1515 — AN AUTHORED MASTER\'S OWN COMMIT CAN MOVE THE MEASUREMENT ITS GATE FIXES, MAKING THE GATE ' +
   'UNSATISFIABLE BEFORE ANY CODE IS WRITTEN. CAUGHT BY THE RUNNER, ON MY OWN MASTER, WITHIN MINUTES.** Non-blocking; the ' +
   'instance is cured, the CLASS is what this row is for.) 🎯 **THE INCIDENT:** `f1515-1`\'s scope 3 fixed a hard bar of ' +
-  '*"`citations scanned` must stay **511**"*, measured true on main at authoring time. But the authoring commit `edbbb8f0a` ' +
+  '*"`citations scanned` must stay **511**"*, measured true on main at authoring time. But the authoring commit `3013d09b8` ' +
   '**itself added four citations** — two in `tasks/goals.json` (the leaf quotes the two priced subjects) and two in the master ' +
   'body — so the corpus read **515 before any code changed**. The runner ran the pre-flight clean, took the required "before" ' +
   'table, did the arithmetic (**515 != 511, surplus 4**), noted that the firewall forbids rewording `tasks/**` or touching ' +
   '`CITE`/`WINDOW`, concluded *"there is no lawful implementation that can restore the required denominator"*, and **STOPPED ' +
   'without writing code** — declining to manufacture defect arms for a change that could not pass, because that *"would create ' +
   'undrainable code rather than evidence"*. **That is exactly right, and it is the second consecutive fire in which a runner\'s ' +
-  'refusal was the most valuable thing in the run** (the first: `8134ec30`). Report salvaged to ' +
+  'refusal was the most valuable thing in the run** (the first: `e47354c6`). Report salvaged to ' +
   '`docs/bench/f1515-1-citation-scan-nondestructive-stop.md`. ' +
   '📐 **WHY IT IS A CLASS AND NOT A SLIP:** the numeric sibling of the citation-rot law. Coordinates rot when a merge shifts ' +
   'code; **counts rot when a commit shifts the CORPUS** — and a fire\'s authoring commit is *guaranteed* to touch the ledger ' +

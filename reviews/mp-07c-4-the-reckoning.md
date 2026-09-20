@@ -1,6 +1,6 @@
 # MP-07c-4 — THE RECKONING
 
-**Slice:** `build-mp07c4-the-reckoning.md` · **Corrective:** `lane-b-mp07c4-attribution-corrective.md` · **Lane:** `lane/b` · **Merge:** `6b194e6b674260643863dcb6110d609db288a2cb`
+**Slice:** `build-mp07c4-the-reckoning.md` · **Corrective:** `lane-b-mp07c4-attribution-corrective.md` · **Lane:** `lane/b` · **Merge:** `1db41847c82665b6a2f899f0cfce439a687de905`
 
 > **GATE VERDICT: PASS — MERGED. F-1773-1..3 are closed by the attribution corrective.**
 
@@ -53,4 +53,4 @@ Closed by electing the first active browser in roster order; the next browser be
 | Plain boot, desktop + 390px, `--workers=1` | 2/2; zero console/page errors |
 | Runner mutation control | inverted submit-authority predicate failed both browser projects, then restored byte-identically |
 
-The corrected source merged at `6b194e6b674260643863dcb6110d609db288a2cb`. The pre-corrective tip remains at `archive/mp07c4-reckoning-s1773-attribution-hold` as retained evidence.
+The corrected source merged at `1db41847c82665b6a2f899f0cfce439a687de905`. The pre-corrective tip remains at `archive/mp07c4-reckoning-s1773-attribution-hold` as retained evidence.

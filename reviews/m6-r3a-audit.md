@@ -8,7 +8,7 @@ Worktree: `worktrees/lane-d`
 | Branch | Commit | Purpose |
 |---|---:|---|
 | `lane/m6-partial-salvage` | `6f4aca6` | Local salvage commit of the parked attempt-2/3 partial. Pushed nowhere. |
-| `lane/perf` | `e738424` | Clean current-main baseline after `git reset --hard main`. |
+| `lane/perf` | `fdbf64b` | Clean current-main baseline after `git reset --hard main`. |
 | `lane/m6-r3a-apply` | `72db71b` | Scratch cherry-pick of `6f4aca6` onto current main. |
 
 ## What Was Audited
@@ -40,7 +40,7 @@ Kept current main and routed it through `primaryActor`:
 
 ## Verification
 
-### Baseline: `lane/perf` at `e738424`
+### Baseline: `lane/perf` at `fdbf64b`
 
 | Check | Result |
 |---|---:|

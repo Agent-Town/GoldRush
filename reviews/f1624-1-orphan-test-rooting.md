@@ -1,8 +1,8 @@
 # Review — f1624-1 orphan-test rooting
 
 **Slice:** `f1624-1-orphan-test-rooting` (FIRE-AUTHORED s1624, from F-1624-1 recorded at the `stack-directory` drain)
-**Branch:** `lane/b` · **Tip:** `6183abf02d52ccd01fbf3c4817933e54c505c640` · **Base:** `8e09b9daa7e43dc33e19b6a47e729d5aaa4d07c9`
-**Merged:** `a7025f60109f42f117ee6a493f893810d9bac8c7` (s1626, 2026-08-10)
+**Branch:** `lane/b` · **Tip:** `e32166b77d3dc53d688a13842e120a6a0c322ef9` · **Base:** `abd84847b4c8935d81f20961cc01a1b47ca466d6`
+**Merged:** `3f330d8bb67c68ab834a09c822ad7adcefa25e47` (s1626, 2026-08-10)
 
 ## VERDICT: MERGED — gate green, no unpredicted orphan, teeth proven by a manufactured defect.
 
@@ -38,7 +38,7 @@ as a NEW orphan at rc=1.
 | `gate-caller-audit` AFTER (merged) | `117 subjects / 19 orphans / 19 grandfathered` — PASS |
 | `npm run test:node-guards` (merged tree, run ALONE) | **rc=0, 402.1s, ZERO failing tests, ZERO contention stamps** |
 | the 2 rooted files + `gate-caller-audit.test.mjs` | **40/40 pass** (12 + 2 + 26) |
-| merge classification | base `8e09b9daa`; all 4 files LANE-TOUCHED / MAIN-UNMOVED; clean `ort` merge, no conflicts |
+| merge classification | base `abd84847b`; all 4 files LANE-TOUCHED / MAIN-UNMOVED; clean `ort` merge, no conflicts |
 
 **The delta was checked by arithmetic, not taken on trust.** Subjects rose by exactly **+67**, the number of
 tracked `*.test.mjs` files, and orphans by exactly **+7**. 58 reached + 7 grandfathered + 2 rooted = 67.

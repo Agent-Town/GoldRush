@@ -29,7 +29,7 @@ function offenders(output) {
 }
 
 test('real history has exactly the four former double-state findings and current BACKLOG has none', (t) => {
-  const before = execFileSync('git', ['show', 'eb82969f^:tasks/BACKLOG.md'], {
+  const before = execFileSync('git', ['show', 'b4dea8ae^:tasks/BACKLOG.md'], {
     cwd: ROOT,
     encoding: 'utf8',
     maxBuffer: 4 * 1024 * 1024,

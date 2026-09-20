@@ -1,8 +1,8 @@
 # Review — `lane-a-town-info-note-dead-reckoning`
 
 **Slice:** F-1174-2, the `world-info-notes` town dead-reckoning realign (authored s1174, run `20260728-164306`)
-**Branch / tip:** `lane/m3` @ `ced4484f` (`runner(lane-a): lane-a-town-info-note-dead-reckoning.md`), base `781acfe0`
-**Merged to main:** `011e85fc`, path-scoped, 5 files
+**Branch / tip:** `lane/m3` @ `ced4484f` (`runner(lane-a): lane-a-town-info-note-dead-reckoning.md`), base `a08e900b`
+**Merged to main:** `6e1113c7`, path-scoped, 5 files
 **Drained by:** s1175 fire, 2026-07-28
 **§3.0 `drain-block-check`:** `✅ CLEAR — lane-a-town-info-note-dead-reckoning.md [factory-town-info-note-dead-reckoning] status="queued"` — run as the first command of the drain, before classification.
 
@@ -12,9 +12,9 @@
 
 ## What it does
 
-`e2e/world-info-notes.spec.ts`'s town test walked to four buildings by holding movement keys for fixed wall-clock durations — timings authored 2026-07-08 (`66bb9f46`) and never retimed. `d1f549d5` (07-19) put `townPropAt` into `sampleTown`'s `walkable` term eleven days later, so the plaza grew colliders under a route that assumed it was empty. The slice replaces all four timed legs with one local helper, `approachTownBuilding(page, id)`, which reads the target's `approach` from `__GR_TOWN_DIAGNOSTICS__.plaza.slots` **by id**, teleports via the town's own `teleport(x, z)`, and polls `activePrompt` until it equals that id. The wall-clock `hold` helper is deleted (no remaining callers — verified by grep and by a clean `tsc`).
+`e2e/world-info-notes.spec.ts`'s town test walked to four buildings by holding movement keys for fixed wall-clock durations — timings authored 2026-07-08 (`26e8d115`) and never retimed. `5e527a28` (07-19) put `townPropAt` into `sampleTown`'s `walkable` term eleven days later, so the plaza grew colliders under a route that assumed it was empty. The slice replaces all four timed legs with one local helper, `approachTownBuilding(page, id)`, which reads the target's `approach` from `__GR_TOWN_DIAGNOSTICS__.plaza.slots` **by id**, teleports via the town's own `teleport(x, z)`, and polls `activePrompt` until it equals that id. The wall-clock `hold` helper is deleted (no remaining callers — verified by grep and by a clean `tsc`).
 
-**Zero `src/`.** The slice consumes the diagnostics seam s1109 shipped (`425d2a9a`, *"town-t1-square asserts shape not literals"*); it adds none. **No coordinate literal** survives in the test — which is the whole point, and an improvement on `ceremony-framework.spec.ts:119`, which hardcodes a copied `approach`.
+**Zero `src/`.** The slice consumes the diagnostics seam s1109 shipped (`ed15bb17`, *"town-t1-square asserts shape not literals"*); it adds none. **No coordinate literal** survives in the test — which is the whole point, and an improvement on `ceremony-framework.spec.ts:119`, which hardcodes a copied `approach`.
 
 ## Scope 1 — the observation that earned the (a) verdict
 
@@ -49,11 +49,11 @@ Verdict sentence as written: *"**(a) NAVIGATION / FIXTURE FAULT.** … When an a
 **Worker count is stated deliberately** (F-1173-5): this file reads a different red count under default parallel workers, so any comparison against these numbers that omits `--workers=1` is comparing two instruments.
 
 ### The adjacent red is pre-existing, and here is the proof rather than the assertion
-`town-t1-square.spec.ts:74` *"menu enters town square, prompts at four shells, exits, then starts normal run"* fails on both projects. Fingerprint: `getByTestId('town-approach-prompt')` expected `"order status"`, received `"Assay Office ... the clerk takes complaint"` — a **content** mismatch, with the prompt present and firing. It is listed at that exact file **and line `74`, for both projects**, in `logs/suite-red-inventory-compact.json`, the shared inventory measured on main (shipped `7a457025`) **before** this slice existed. The merged diff touches one spec file plus artifacts and **no `src/`**, so it has no mechanism to reach another spec's prompt text.
+`town-t1-square.spec.ts:74` *"menu enters town square, prompts at four shells, exits, then starts normal run"* fails on both projects. Fingerprint: `getByTestId('town-approach-prompt')` expected `"order status"`, received `"Assay Office ... the clerk takes complaint"` — a **content** mismatch, with the prompt present and firing. It is listed at that exact file **and line `74`, for both projects**, in `logs/suite-red-inventory-compact.json`, the shared inventory measured on main (shipped `55fc5a31`) **before** this slice existed. The merged diff touches one spec file plus artifacts and **no `src/`**, so it has no mechanism to reach another spec's prompt text.
 
 ## Merge classification
 
-Base `781acfe0`; five files, all path-scoped:
+Base `a08e900b`; five files, all path-scoped:
 
 | file | classification |
 |---|---|
@@ -82,4 +82,4 @@ No conflicts. Main had moved only in `tasks/` and `STATUS.md` (this fire's own a
 
 ## Gazette (GZ-01 filter law)
 
-**No item.** The merge moves **zero `src/`** — `git show --name-only 011e85fc` lists one spec file, two artifacts, one scratch note and one run report. Nothing a player can see changed, so the filter correctly withholds.
+**No item.** The merge moves **zero `src/`** — `git show --name-only 6e1113c7` lists one spec file, two artifacts, one scratch note and one run report. Nothing a player can see changed, so the filter correctly withholds.

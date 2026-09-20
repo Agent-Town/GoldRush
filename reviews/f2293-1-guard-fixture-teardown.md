@@ -1,11 +1,11 @@
 # f2293-1-guard-fixture-teardown — drain review (s2294)
 
 **Slice:** `f2293-1-guard-fixture-teardown` (FIRE-AUTHORED s2293, cure for F-2293-1)
-**Branch:** `lane/b` · **tip:** `93de6a6d71f8c1d4cb69e4c84184e2d24ce97209`
-**Merge-base:** `12a883df56460e22e52bef0b0854da8d21e2dba4`
+**Branch:** `lane/b` · **tip:** `2a2077c04f721856ca77fc0668b7ef54a980abb2`
+**Merge-base:** `ce4245f1167614603c0ec5036a2666203b887098`
 **Gated in:** detached worktree `.gate-s2294` (§3.0b — undecided content never entered main's tree)
 **Gate merge probe:** `de6a7d1570c3e07591e5da7ecff224364574daa0`
-**Merged to main:** `da32563682cf8086d1f7b4ba6d579e74d5141b85`
+**Merged to main:** `8a25d74ddac16cd53ab33ee4fb0cf077c8c52485`
 
 ## VERDICT: MERGE — all pins held, leak count 0/40, zero regressions.
 

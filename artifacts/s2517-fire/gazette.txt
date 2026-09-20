@@ -23,94 +23,94 @@ weekly headline budget (2026-W36): 18 standalone, 14 batched
         ... and 13 more
 
 --- dismissed (newest first; available to re-judge) ---
-  da78de0d3  2026-09-04  fix: make every contract clock explicit
-  528363bdc  2026-09-04  s2505: drain standing formula dependency unit
-  89b12c799  2026-09-04  fix: move winnability receipts outside engine corpus
-  d64574aaf  2026-09-04  chore: era 5 pin for the receipts re-hash + F-RCPT-1 corrective queued (receipts ledger out of t
-  08458d164  2026-09-04  chore: era 5 pin 737a979a — the four overnight drains left main's corpus unrecorded; pinned befo
-  79053ddaf  2026-09-04  s2497: drain bookkeeping for e4-vehicles-plain-boot — engine era 5 pin 20 (41583818, measured on
-  a55581eed  2026-09-04  s2493 drain bookkeeping: reel-contract-routing-hazard merged 22b9538e5
-  22b9538e5  2026-09-04  drain: reel-contract-routing-hazard (lane-c) — a reel routes by its own tape, not by page locati
-  f43e30ecb  2026-09-04  drain bookkeeping: e4-roads-and-convoys SHIPPED 48ef7df8d — leaf, review, era-5 pin 49c34f8b; co
-  b5a535c14  2026-09-04  drain bookkeeping: e8-mare-claim-physics SHIPPED a121c7f14 — leaf, review, era-5 pin 5d2fc156; F
-  5e7a7c0ba  2026-09-03  rt: the first real rotation r2026w37 minted with the owner-held salt (opens 2026-09-07); rotatio
-  3361e7b91  2026-09-03  s2462: engine pin ac138d0f (era 5, pins 12 -> 13) — e10-preserve-ranking drain duty
-  fc45ed645  2026-09-03  fix: human-tape-true-reel-stamp drain reconciliation — viewVersion union, era-5 pin, law pointer
-  bbf5e3912  2026-09-03  s2460 drain bookkeeping: ss-04-e3-beats MERGED 9342d17f4 — leaf, review, engine pin, gazette, F-
-  970093721  2026-09-02  merge: view-schema-versioning (viewVersion 1 + additive-only view guard)
-  b5850417a  2026-09-02  feat: merge lane/a winnability-receipts-and-kit-guard — every door contract carries a winnabilit
-  e62f30ae9  2026-09-02  drain bookkeeping: same-laws-harvest-parity SHIPPED 9e5d0636d — leaf, ledger, review, era-5 pin 
-  69d0a75ec  2026-09-02  chore: era 5 pin 93c80710 carries its aliases array (the narrowed-basis guard requires one on ev
-  415a0a953  2026-09-02  chore: era 5 pin 93c80710 — content re-hash after the lantern-true-terrain drain and the lantern
-  c3cda119c  2026-09-02  art: drain art-batch-announcement-v2 — three gpt-image-2 panels (the same door, the board today,
-  b4226e786  2026-09-02  s2445 drain bookkeeping: deploy-mirror-allowlist SHIPPED 1aeb17b72 — leaf, review, rows, law poi
-  1462c6874  2026-09-02  s2440: re-base the law-pointer baseline for the gazette coordinate (1599 -> 1601), eye-checked a
-  c13b4c24d  2026-09-01  fix: pay era 5's owed pin lineage — the fencepost rotation (drain-missed) and the package.json g
-  b3d3bac7d  2026-08-31  fix: pay the owed era-4 re-pin (registry 64e9468e vs computed 7fdaef69 since the v2 merge; its d
-  b4f247c93  2026-08-31  s2382: drain bookkeeping for toolsurface-terrain-edge — leaf merged at 0d718cead, engine re-pinn
-  0d718cead  2026-08-31  drain: toolsurface-terrain-edge — the whole Playwright suite collects again
-  1d41d4763  2026-08-30  EH-3b: re-pin the engine hash at drain (d5b04061 -> c306f1c0), era deliberately NOT bumped
-  4350ab711  2026-08-30  fix: re-pin the era-4 engine hash at drain and regenerate the EH-3 fixture the re-pin staled
-  b4b65f0ef  2026-08-30  drain(s2371): em-dash player copy + guard scan-space widening (f2367-1)
-  8c5684def  2026-08-30  merge(lane-d): true-reel-harness (EH-2) — the county's own replay reproduces its event-log hash 
-  d79f50eb1  2026-08-29  feat: $AGENTTOWN footer link on the landing (owner-directed, Dexscreener)
-  d96dacb15  2026-08-25  fix: veto the engine-era public projection ruling; re-seed the era-3 hash on the merged tree
-  d67608bb3  2026-08-25  gate probe: engine-era-law-v3
-  c756c7e71  2026-08-24  s2261: two honest stops closed with re-derived evidence — bt-04 firewall unsatisfiable (F-2261-1
-  e4101ac0a  2026-08-24  feat: jumper rotation ruled LEGACY (owner verbatim) — LEDGER closed, old wiring master bannered,
-  9eb74cc81  2026-08-24  fix: the Ember Shore lands INERT — twist schema + data, admission parked with the door (e10s-1b 
-  e27c4ebb4  2026-08-23  s2249 retention: salvage the 3 rejected jumper-rotation3 takes into git (6.44 MB)
-  0008f457d  2026-08-23  s2249 drain: art-jumper-rotation-retake — a CORRECT STOP, no failing sheet handed forward
-  7b7f616df  2026-08-23  gate: L1 ledger-service-core (s2233 detached gate)
-  d0a7562bc  2026-08-22  s2187: lock ACTIVE — eighteenth dry board: standing duties + measure the 55 ABSORBED salvage ref
-  9340d346c  2026-08-22  docs+feat: the agenttown server runbook + mirrored configs (retention law), AEO surfaces both or
-  bf015c251  2026-08-22  chore: bank the null-floors re-stamp (floors byte-identical, eraStamp d775fca71 -> db24b437e)
-  1968127f5  2026-08-21  fe2cs2-2: give DEFAULT_COAL_SEAMS a node-safe home so the agent view stops dragging Vite into pl
-  cd59fb273  2026-08-21  feat: publish canyonConnect onto the headless agent view (f2138-1)
-  52c48fce7  2026-08-21  fix: f2131-1 — the picnic hold gets a contract-scoped enable key (drain s2133)
-  8cf19eae0  2026-08-21  docs: the door-completion program closes — A9/A10/A2 bookkept, the five-map fork table on the de
-  11256af3c  2026-08-21  fix: F-2122-1 — re-base the HeadlessContractSim citation that the f2120-1 merge just rotted
-  e2b9399a2  2026-08-21  docs+feat: the fairground rests — deliberate-fort session (pressure-map plan, x2 both seeds, no 
-  2f8d4b2b7  2026-08-20  feat: the fairground fund-the-fort prover + the lane-shift A/B — seed 01 secures pure-public x2 
-  d931958b3  2026-08-20  drain: regenerate null-floors on the Dead-Band-merged tree (53, --check clean)
-  9071811d3  2026-08-20  fix: F-CAP-1 — strike the 'hold spawn slots' clause the cap exemption made false (coordinated wi
-  39f141cab  2026-08-20  docs: E6 capture truth-pass (fire-authored f2081-1) — manifest rule truthful, census aligned — d
-  95781c2fe  2026-08-20  drain: regenerate null-floors (51, --check clean) + same-game audit on the four-merge tree
-  6d367fc83  2026-08-20  test: F-1742-1 cured-confirmed (causal re-break) — E4 DOOR-COMPLETE, both maps seeded, census mo
-  082340dd0  2026-08-20  fsr6: skill.md documents the LEDGER SEASON axis — the dimension every rig read/write rides
-  e86e9d8e3  2026-08-20  fix: E6 Homemaker headless socket — glow-mesa re-admitted (exemptions 7->6; core-only secure rul
-  d0d6daa44  2026-08-20  f2078-1: the deepwater manifest tells the truth after re-admission (drain, s2080)
-  a86d454b9  2026-08-20  site: commit the #pillars anchor (built in the working tree but missed from a1e8bc63c — caught b
-  a1e8bc63c  2026-08-20  drain: E5 admission completion bookkeeping — leaf merged @26a364bf, season-roll unblocked, hold 
-  479009d81  2026-08-20  site: restore #teaser anchor target on the landing (news.html:30 links index.html#teaser; id los
-  3a4a5d15d  2026-08-15  fix: replay tapes carry run-start progression
-  ad429a117  2026-08-15  feat: drain assay replay door — deterministic instrument, fidelity held
-  9849623b6  2026-08-14  feat: add E1 profile-threading campaign harness
-  22a0c62f5  2026-08-14  fix: release headless heroes from landmark starts
-  dca7ca81f  2026-08-13  chore: bank six idle-safe benchmark floors
-  27a8efe8e  2026-08-12  fix: re-probe all eight AP-16 admission exemptions (tsc, build, node guards, 50/50 browser)
-  58afad35d  2026-08-12  f1662-2: derive the AP-16-4 admission counts from the data they describe (drain, s1690)
-  f8a704249  2026-08-11  fix: F-1662-1 — drop the three de-listed railcars from the pinned null-floor artifact
-  961043c77  2026-08-11  s1656: batch-007 jumper rotation extracted + measured — scale debt NOT cleared, not wired (F-165
-  909c0d7cd  2026-08-11  ap15-1: pin the AP-15 null floor — 35 idle anchors across 12 door-servable contracts
-  726398e76  2026-08-10  feat: SEA-1 — the county names its seasons, and every standings row learns which one it rode in
-  6c780b621  2026-08-10  runner(art): f1608-1-eight-winds-two-row-composite.md
-  fc284845d  2026-08-09  THE DESK WALKTHROUGH: twelve owner rulings executed — 9 closed + 3 ruled-open + 3 leaves unblock
-  f33380c92  2026-08-06  fix: F-PG-5 — pressure-garden mounts 0 -> 5 in the E2 verifier; sweep proves 4/4 profiles clean
-  1a2871fd3  2026-08-06  f1465-1: encode Game.ts composite-key delimiters as \u0000 escapes (restores grep for Claude-she
+  fa0ba0bf4  2026-09-04  fix: make every contract clock explicit
+  cead6d2d6  2026-09-04  s2505: drain standing formula dependency unit
+  65b07c671  2026-09-04  fix: move winnability receipts outside engine corpus
+  20948fe83  2026-09-04  chore: era 5 pin for the receipts re-hash + F-RCPT-1 corrective queued (receipts ledger out of t
+  339398cee  2026-09-04  chore: era 5 pin 737a979a — the four overnight drains left main's corpus unrecorded; pinned befo
+  c9726b8d5  2026-09-04  s2497: drain bookkeeping for e4-vehicles-plain-boot — engine era 5 pin 20 (41583818, measured on
+  9b2ebf912  2026-09-04  s2493 drain bookkeeping: reel-contract-routing-hazard merged a671486e2
+  a671486e2  2026-09-04  drain: reel-contract-routing-hazard (lane-c) — a reel routes by its own tape, not by page locati
+  a8179ff03  2026-09-04  drain bookkeeping: e4-roads-and-convoys SHIPPED 7f5c590a1 — leaf, review, era-5 pin 49c34f8b; co
+  20ddca0f2  2026-09-04  drain bookkeeping: e8-mare-claim-physics SHIPPED 5c82f05bb — leaf, review, era-5 pin 5d2fc156; F
+  163813505  2026-09-03  rt: the first real rotation r2026w37 minted with the owner-held salt (opens 2026-09-07); rotatio
+  12c541b88  2026-09-03  s2462: engine pin ac138d0f (era 5, pins 12 -> 13) — e10-preserve-ranking drain duty
+  3ec02adba  2026-09-03  fix: human-tape-true-reel-stamp drain reconciliation — viewVersion union, era-5 pin, law pointer
+  59d0f8d40  2026-09-03  s2460 drain bookkeeping: ss-04-e3-beats MERGED e736c0c75 — leaf, review, engine pin, gazette, F-
+  cfb6c4d48  2026-09-02  merge: view-schema-versioning (viewVersion 1 + additive-only view guard)
+  714d68198  2026-09-02  feat: merge lane/a winnability-receipts-and-kit-guard — every door contract carries a winnabilit
+  1cc048aec  2026-09-02  drain bookkeeping: same-laws-harvest-parity SHIPPED 2049d654c — leaf, ledger, review, era-5 pin 
+  89921972f  2026-09-02  chore: era 5 pin 93c80710 carries its aliases array (the narrowed-basis guard requires one on ev
+  0a1ecea97  2026-09-02  chore: era 5 pin 93c80710 — content re-hash after the lantern-true-terrain drain and the lantern
+  9d3223d1c  2026-09-02  art: drain art-batch-announcement-v2 — three gpt-image-2 panels (the same door, the board today,
+  12151e1a7  2026-09-02  s2445 drain bookkeeping: deploy-mirror-allowlist SHIPPED 395e98747 — leaf, review, rows, law poi
+  6099fd4dd  2026-09-02  s2440: re-base the law-pointer baseline for the gazette coordinate (1599 -> 1601), eye-checked a
+  ec71f9234  2026-09-01  fix: pay era 5's owed pin lineage — the fencepost rotation (drain-missed) and the package.json g
+  30de2653f  2026-08-31  fix: pay the owed era-4 re-pin (registry 64e9468e vs computed 7fdaef69 since the v2 merge; its d
+  13c18f0b3  2026-08-31  s2382: drain bookkeeping for toolsurface-terrain-edge — leaf merged at 0331c2b47, engine re-pinn
+  0331c2b47  2026-08-31  drain: toolsurface-terrain-edge — the whole Playwright suite collects again
+  e2d5d231f  2026-08-30  EH-3b: re-pin the engine hash at drain (d5b04061 -> c306f1c0), era deliberately NOT bumped
+  10b68b5cd  2026-08-30  fix: re-pin the era-4 engine hash at drain and regenerate the EH-3 fixture the re-pin staled
+  62e9515ba  2026-08-30  drain(s2371): em-dash player copy + guard scan-space widening (f2367-1)
+  c845e6724  2026-08-30  merge(lane-d): true-reel-harness (EH-2) — the county's own replay reproduces its event-log hash 
+  9eaf91d02  2026-08-29  feat: $AGENTTOWN footer link on the landing (owner-directed, Dexscreener)
+  ef9038425  2026-08-25  fix: veto the engine-era public projection ruling; re-seed the era-3 hash on the merged tree
+  8017afecb  2026-08-25  gate probe: engine-era-law-v3
+  56633f64c  2026-08-24  s2261: two honest stops closed with re-derived evidence — bt-04 firewall unsatisfiable (F-2261-1
+  a232b679a  2026-08-24  feat: jumper rotation ruled LEGACY (owner verbatim) — LEDGER closed, old wiring master bannered,
+  22d0e1cc7  2026-08-24  fix: the Ember Shore lands INERT — twist schema + data, admission parked with the door (e10s-1b 
+  e27c4ebb4 (archive: pruned by the A3 rewrite)  2026-08-23  s2249 retention: salvage the 3 rejected jumper-rotation3 takes into git (6.44 MB)
+  2e41bbcd9  2026-08-23  s2249 drain: art-jumper-rotation-retake — a CORRECT STOP, no failing sheet handed forward
+  ca09d084e  2026-08-23  gate: L1 ledger-service-core (s2233 detached gate)
+  cb79473c0  2026-08-22  s2187: lock ACTIVE — eighteenth dry board: standing duties + measure the 55 ABSORBED salvage ref
+  4fbcdccf8  2026-08-22  docs+feat: the agenttown server runbook + mirrored configs (retention law), AEO surfaces both or
+  c2ccf6385  2026-08-22  chore: bank the null-floors re-stamp (floors byte-identical, eraStamp 4ab4981de -> c02482084)
+  7b07256cc  2026-08-21  fe2cs2-2: give DEFAULT_COAL_SEAMS a node-safe home so the agent view stops dragging Vite into pl
+  2b81cc104  2026-08-21  feat: publish canyonConnect onto the headless agent view (f2138-1)
+  afbda29bc  2026-08-21  fix: f2131-1 — the picnic hold gets a contract-scoped enable key (drain s2133)
+  f9a184e6d  2026-08-21  docs: the door-completion program closes — A9/A10/A2 bookkept, the five-map fork table on the de
+  1d9115499  2026-08-21  fix: F-2122-1 — re-base the HeadlessContractSim citation that the f2120-1 merge just rotted
+  cb93328d1  2026-08-21  docs+feat: the fairground rests — deliberate-fort session (pressure-map plan, x2 both seeds, no 
+  953d8f029  2026-08-20  feat: the fairground fund-the-fort prover + the lane-shift A/B — seed 01 secures pure-public x2 
+  c7b280d2f  2026-08-20  drain: regenerate null-floors on the Dead-Band-merged tree (53, --check clean)
+  589dff649  2026-08-20  fix: F-CAP-1 — strike the 'hold spawn slots' clause the cap exemption made false (coordinated wi
+  9d902829a  2026-08-20  docs: E6 capture truth-pass (fire-authored f2081-1) — manifest rule truthful, census aligned — d
+  d56cf93a0  2026-08-20  drain: regenerate null-floors (51, --check clean) + same-game audit on the four-merge tree
+  c06eba69c  2026-08-20  test: F-1742-1 cured-confirmed (causal re-break) — E4 DOOR-COMPLETE, both maps seeded, census mo
+  8b69d821e  2026-08-20  fsr6: skill.md documents the LEDGER SEASON axis — the dimension every rig read/write rides
+  fd6b6952c  2026-08-20  fix: E6 Homemaker headless socket — glow-mesa re-admitted (exemptions 7->6; core-only secure rul
+  5ca1c00c9  2026-08-20  f2078-1: the deepwater manifest tells the truth after re-admission (drain, s2080)
+  6e61749d5  2026-08-20  site: commit the #pillars anchor (built in the working tree but missed from d077b36a6 — caught b
+  d077b36a6  2026-08-20  drain: E5 admission completion bookkeeping — leaf merged @9dca8508, season-roll unblocked, hold 
+  06e869cb2  2026-08-20  site: restore #teaser anchor target on the landing (news.html:30 links index.html#teaser; id los
+  5279e64ee  2026-08-15  fix: replay tapes carry run-start progression
+  45a6ce927  2026-08-15  feat: drain assay replay door — deterministic instrument, fidelity held
+  0a342bffc  2026-08-14  feat: add E1 profile-threading campaign harness
+  08c7ffcf8  2026-08-14  fix: release headless heroes from landmark starts
+  e33af94ef  2026-08-13  chore: bank six idle-safe benchmark floors
+  13f5881f0  2026-08-12  fix: re-probe all eight AP-16 admission exemptions (tsc, build, node guards, 50/50 browser)
+  c52aef205  2026-08-12  f1662-2: derive the AP-16-4 admission counts from the data they describe (drain, s1690)
+  161d42774  2026-08-11  fix: F-1662-1 — drop the three de-listed railcars from the pinned null-floor artifact
+  a1400d4a7  2026-08-11  s1656: batch-007 jumper rotation extracted + measured — scale debt NOT cleared, not wired (F-165
+  126ddaa5c  2026-08-11  ap15-1: pin the AP-15 null floor — 35 idle anchors across 12 door-servable contracts
+  c94983206  2026-08-10  feat: SEA-1 — the county names its seasons, and every standings row learns which one it rode in
+  5bbdc9182  2026-08-10  runner(art): f1608-1-eight-winds-two-row-composite.md
+  9264046eb  2026-08-09  THE DESK WALKTHROUGH: twelve owner rulings executed — 9 closed + 3 ruled-open + 3 leaves unblock
+  5626f3883  2026-08-06  fix: F-PG-5 — pressure-garden mounts 0 -> 5 in the E2 verifier; sweep proves 4/4 profiles clean
+  206d6cffb  2026-08-06  f1465-1: encode Game.ts composite-key delimiters as \u0000 escapes (restores grep for Claude-she
 
 --- candidates (newest first; judge each for player-visibility) ---
-  69080c3cd  2026-09-05  files=12  merge: e5-stillwater-front-crew-2 — the Stillwater's first crewed front (corsairWaveSize 1, 32 s
-  e48d9e119  2026-09-05  files=4  drain bookkeeping: e7-player-playbook-parity SHIPPED 6abcaf1bb — leaf, review, era-5 pin 1ecca47
-  6abcaf1bb  2026-09-05  files=7  merge: e7-player-playbook-parity — E7PlaybookLatch is the one four-rule secure decision for both
-  0ad02751b  2026-09-05  files=4  drain bookkeeping: e5-storm-predicate-split SHIPPED 036cb6037 — leaf, review, era-5 pin b061540c
-  036cb6037  2026-09-05  files=7  merge: e5-storm-predicate-split — storm cargo split from schedule suppression in both engines; e
-  29df0dabf  2026-09-05  files=6  drain bookkeeping: e3-moth-season-grid SHIPPED de21da4f5 — leaf, review, era-5 pin 324bb3cd; F-E
-  de21da4f5  2026-09-05  files=22  merge: e3-moth-season — the sabotageable light circuit lands as contract data (lane/a, 7 commits
-  4620d4d31  2026-09-05  files=5  drain bookkeeping: e7-playbook-rows SHIPPED b38d60295 — leaf, review, era-5 pin 82ea9af6; F-E7PB
-  b38d60295  2026-09-05  files=20  feat: merge lane/b e7-playbook-rows — the four Signal Era maps expose PLAYBOOK_USE through the s
-  a65ea2c17  2026-09-05  files=33  feat: merge lane/d e8-remaining-maps — Far Side, Low Orbit and the Eclipse compose the shipped E
-  032ccd392  2026-09-05  files=22  feat: gauntlet-heat11 — the F-HEAT11-1 fix admits three refused reels unchanged; 32 unclaimed → 
+  af0425c67  2026-09-05  files=12  merge: e5-stillwater-front-crew-2 — the Stillwater's first crewed front (corsairWaveSize 1, 32 s
+  696e42225  2026-09-05  files=4  drain bookkeeping: e7-player-playbook-parity SHIPPED 1b1effae7 — leaf, review, era-5 pin 1ecca47
+  1b1effae7  2026-09-05  files=7  merge: e7-player-playbook-parity — E7PlaybookLatch is the one four-rule secure decision for both
+  1c4cfff0d  2026-09-05  files=4  drain bookkeeping: e5-storm-predicate-split SHIPPED 002a480c3 — leaf, review, era-5 pin b061540c
+  002a480c3  2026-09-05  files=7  merge: e5-storm-predicate-split — storm cargo split from schedule suppression in both engines; e
+  c7a63b908  2026-09-05  files=6  drain bookkeeping: e3-moth-season-grid SHIPPED d07a0e2e7 — leaf, review, era-5 pin 324bb3cd; F-E
+  d07a0e2e7  2026-09-05  files=22  merge: e3-moth-season — the sabotageable light circuit lands as contract data (lane/a, 7 commits
+  0ebcc8651  2026-09-05  files=5  drain bookkeeping: e7-playbook-rows SHIPPED 0a2a6fdcf — leaf, review, era-5 pin 82ea9af6; F-E7PB
+  0a2a6fdcf  2026-09-05  files=20  feat: merge lane/b e7-playbook-rows — the four Signal Era maps expose PLAYBOOK_USE through the s
+  c4aaf0126  2026-09-05  files=33  feat: merge lane/d e8-remaining-maps — Far Side, Low Orbit and the Eclipse compose the shipped E
+  6c7b11184  2026-09-05  files=22  feat: gauntlet-heat11 — the F-HEAT11-1 fix admits three refused reels unchanged; 32 unclaimed → 
 
     to DISCHARGE a candidate, write its verdict where THIS TOOL reads:
       - news      -> a gazette item in marketing/outbox/ citing the hash

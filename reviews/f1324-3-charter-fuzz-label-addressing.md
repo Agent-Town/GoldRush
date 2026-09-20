@@ -1,7 +1,7 @@
 # F-1324-3 — charter fuzz totality: address arms by LABEL, widen the sweep
 
 - **Slice:** `lane-c-f1324-3-charter-fuzz-label-addressing.md` (authored s1325, FIRE-AUTHORED)
-- **Branch / tip:** `lane/e2-arsenal` @ `0ae711c9` · base `9198e78c` · merged to main as `3566520f` (s1326)
+- **Branch / tip:** `lane/e2-arsenal` @ `9d6e66c3` · base `3146eec6` · merged to main as `d961bcd3` (s1326)
 - **Run:** `20260801-105916-lane-c-…` — dispatched 10:59:16, READY-FOR-GATES 11:04, 125,780 tokens
 - **Verdict: ACCEPTED — merged.** The cure does what the master asked, and I proved it by manufacturing the defect rather than by reading a green.
 
@@ -29,7 +29,7 @@ One file changed. No `src/`. The rig itself is on the NO list — it is the subj
 | console/page errors | zero across both projects |
 
 Boot surface: `cp02-charter-boot` is green in both projects, and the three-dot diff is **one e2e file with zero
-`src/` bytes**, so runtime behaviour is bit-identical to `7d255a53` by construction.
+`src/` bytes**, so runtime behaviour is bit-identical to `2047781d` by construction.
 
 ## The cure was proven by manufacturing its failure, not by its green
 
@@ -50,7 +50,7 @@ below.
 ## F-1326-1 (NEW, non-blocking) — the finding's verb was wrong, but the finding was right
 
 F-1324-3 said a menu reorder would leave the old test *"passing while asserting nothing"*. I ran the control:
-old spec (`git show 7d255a53:…`) against the probe-C reordered rig. It went **RED, loudly** —
+old spec (`git show 2047781d:…`) against the probe-C reordered rig. It went **RED, loudly** —
 `Expected "blank:briefing.goal" / Received "illegal:spawn-edges-empty"`. So for *that* reorder the claim is
 false; the old test would have caught it.
 
@@ -80,13 +80,13 @@ the next touch of this rig.
 
 ## Merge classification
 
-- Base `9198e78c` = `git merge-base main lane/e2-arsenal`.
+- Base `3146eec6` = `git merge-base main lane/e2-arsenal`.
 - Three-dot diff: **`e2e/charter-press-totality.spec.ts` only** (+47 / −16). LANE-TOUCHED.
-- `git log 9198e78c..main -- e2e/charter-press-totality.spec.ts` → **empty**: main never moved the file. No
+- `git log 3146eec6..main -- e2e/charter-press-totality.spec.ts` → **empty**: main never moved the file. No
   MAIN-MOVED bucket, no BOTH-MOVED, no graft needed.
 - Two-dot noise (CLAUDE.md, STATUS.md, goals.json, scratch files) is main moving ahead of the lane, not lane
   content — it does not travel with a merge of the lane into main.
-- `--no-ff` merge commit `3566520f`, parents `7d255a53` + `0ae711c9`.
+- `--no-ff` merge commit `d961bcd3`, parents `2047781d` + `9d6e66c3`.
 
 ## §3.0
 

@@ -5,7 +5,7 @@
 // sits there, because the act of merging the successor touches the successor's leaf and nobody
 // else's. s1519 found `tb-stall-census` in exactly that state: the leaf had recorded
 // `Successor: f1441-2-crossings-keep-their-z.md` in the RIGHT field, that successor merged at
-// 65e3aaec on 2026-08-04, and the leaf still read `stopped` three days later. It was the second
+// 42d0b2b1 on 2026-08-04, and the leaf still read `stopped` three days later. It was the second
 // stale stopped leaf found in two fires, and s1519's handoff asked for precisely this guard.
 //
 // A named forward reference is only as good as the pass that follows it. This file is that pass.
@@ -27,7 +27,7 @@
 //
 // A red here is NOT "go re-queue the stopped master". It means: walk the pointer, and if the
 // successor genuinely did the job, retire the leaf as `superseded` with its supersededBy recorded
-// (the s1519 cure, 1c511237). If it did not, the pointer is wrong and the prose should be fixed.
+// (the s1519 cure, f39cc18f). If it did not, the pointer is wrong and the prose should be fixed.
 import test from 'node:test';
 import assert from 'node:assert';
 import { readFileSync } from 'node:fs';
@@ -102,7 +102,7 @@ test('no stopped leaf names a successor that has already shipped', () => {
     [],
     'These leaves are still `stopped` while the successor they name has shipped. Walk the pointer: ' +
       'if the successor did the job, retire the leaf as `superseded` and record supersededBy ' +
-      '(precedent 1c511237, F-1519-1). If it did not, the pointer is wrong — fix the prose.'
+      '(precedent f39cc18f, F-1519-1). If it did not, the pointer is wrong — fix the prose.'
   );
 });
 

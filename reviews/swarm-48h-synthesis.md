@@ -2,7 +2,7 @@ All citations verified at current HEAD. Producing the synthesis.
 
 # Gold Rush — Synthesis Review: `1166e86..HEAD` (src/ + functions/)
 
-**HEAD at review time:** `8e40723` — all `file:line` cites verified at this commit.
+**HEAD at review time:** `336587b` — all `file:line` cites verified at this commit.
 **Scope:** 32 findings, all survived 3-lens adversarial verification (2+ non-refuted votes). Severities below are the synthesis verdicts (a few were re-calibrated from the filed value; each such move is noted).
 **House-law scoreboard:** Law 1 (sim determinism) — 8 violations, all in the new multiplayer surface. Law 5 (additive saves) — 6 violations across the new account-sync/save-slot surface. Law 2 (Economy sole gold writer) — grazed twice by the MP restore path. Law 3 (zero identifiers in telemetry) — **satisfied**, verified. Law 6 (render-only must not change gameplay) — held everywhere except the tier-sync finding (render config leaks across devices, still render-only).
 

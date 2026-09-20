@@ -10,7 +10,7 @@ Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead 
 
 *(s1117 pre-measured this for you and you must still re-verify it yourself: `lane/m3` was 1 ahead at `5ad1b22b`, whose single added file `reviews/lane-cw-02-tram-span-preference-diagnosis.md` is blob `27fab4cc`, byte-identical to main's copy — a SAFE DUPE, so the reset is loss-free. The worktree was CLEAN.)*
 
-## Why (F-1116-3, drained `2bd19809` on 2026-07-27; plus source facts re-verified by s1117)
+## Why (F-1116-3, drained `eb463798` on 2026-07-27; plus source facts re-verified by s1117)
 
 Three fires have now chased `cw-02-escort.spec.ts:134`. The question has moved **down a layer twice**, and each move was earned by a measurement that disproved the previous fire's favourite idea. **Do not re-open the closed layers.**
 

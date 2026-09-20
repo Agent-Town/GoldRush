@@ -1,4 +1,4 @@
-> ⛔ **SHIPPED — DO NOT QUEUE (Mistake #8 guard, content-probed s1132 2026-07-27).** Done-move `tasks/failed/drained-s138-heritage-mine.md`. Both named outputs are tracked on main: `assets/reference/agent-town-heritage/CATALOG.md` and `docs/heritage-notes.md`; `BACKLOG:71` confirms the content reached main via `bc3540c` **before** the s140 w1-05 lane reset. See F-1132-1.
+> ⛔ **SHIPPED — DO NOT QUEUE (Mistake #8 guard, content-probed s1132 2026-07-27).** Done-move `tasks/failed/drained-s138-heritage-mine.md`. Both named outputs are tracked on main: `assets/reference/agent-town-heritage/CATALOG.md` and `docs/heritage-notes.md`; `BACKLOG:71` confirms the content reached main via `5ebe84c` **before** the s140 w1-05 lane reset. See F-1132-1.
 
 # Task heritage-mine: the Portal expedition — catalog and import Agent Town's original art & brand (LANE-C, branch lane/polish, commit prefix "mkt:")
 

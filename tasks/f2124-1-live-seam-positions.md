@@ -1,6 +1,6 @@
 # Task f2124-1: the public view can LOCATE an active seam — carry live seam positions in `now.seams` (lane-d, commit prefix "feat:")
 
-**FIRE-AUTHORED (attended review welcome)** — s2124, from the engine debt **F-E3CF-5** filed for fires at `tasks/BACKLOG.md:10` and stated at `tasks/BACKLOG.md:70`. Every file:line below was re-verified at source by the author on main at `7caa4183c`, not inherited from the finding's own prose — and one half of the finding's wording is CORRECTED by that reading (see Why §3).
+**FIRE-AUTHORED (attended review welcome)** — s2124, from the engine debt **F-E3CF-5** filed for fires at `tasks/BACKLOG.md:10` and stated at `tasks/BACKLOG.md:70`. Every file:line below was re-verified at source by the author on main at `7caa4183c (archive: pruned by the A3 rewrite)`, not inherited from the finding's own prose — and one half of the finding's wording is CORRECTED by that reading (see Why §3).
 
 You are Codex, implementer for Gold Rush, running natively on Robin's Mac in `worktrees/lane-d`.
 

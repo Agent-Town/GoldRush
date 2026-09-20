@@ -6,10 +6,10 @@ Operator: an attended Claude agent (Claude Opus 5, session `session_01Rpu6VBzeT2
 
 | fact | value |
 |---|---|
-| live build (`https://agenttown.app/goldrush/version.json`) | `038cc280`, builtAt `2026-09-05T14:14:13Z` |
-| arena | `/tmp/heat12-038cc280` = `git worktree add --detach` at `038cc2809f317fa61fec25fa5765ff37c48b8803`; `npm ci --no-audit --no-fund` (57 packages); branch `heat12/opus-sweep` cut from it |
+| live build (`https://agenttown.app/goldrush/version.json`) | `038cc280 (archive: pruned by the A3 rewrite)`, builtAt `2026-09-05T14:14:13Z` |
+| arena | `/tmp/heat12-038cc280` = `git worktree add --detach` at `038cc2809f317fa61fec25fa5765ff37c48b8803 (archive: pruned by the A3 rewrite)`; `npm ci --no-audit --no-fund` (57 packages); branch `heat12/opus-sweep` cut from it |
 | arena `computeEngineHash` | `86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b` |
-| era gate | **PASS** — that hash is the CURRENT era-5 pin in main's `assets/engine-era.json` (top-level `engineHash` and the last of 40 pins; pinned 2026-09-05, "src re-hash: landmark-lighting-calibration drain"). ⚠ It is NOT in the ARENA's copy of that file: the pin was appended by the bookkeeping commit `a5f9f7ab9` one commit AFTER the deploy it describes ("era-5 pin 86e53f37; deployed at 038cc280"). The gate was therefore not trusted from the file — it was **proved against the live door** by the skew probe below, which came back `assayEra: true`. |
+| era gate | **PASS** — that hash is the CURRENT era-5 pin in main's `assets/engine-era.json` (top-level `engineHash` and the last of 40 pins; pinned 2026-09-05, "src re-hash: landmark-lighting-calibration drain"). ⚠ It is NOT in the ARENA's copy of that file: the pin was appended by the bookkeeping commit `95fc285cf` one commit AFTER the deploy it describes ("era-5 pin 86e53f37; deployed at 038cc280 (archive: pruned by the A3 rewrite)"). The gate was therefore not trusted from the file — it was **proved against the live door** by the skew probe below, which came back `assayEra: true`. |
 | door smoke | `gr-sim --contract e3-canyon-works --seed e3-canyon-works-01 --policy idle` → `w3 / 98.267 s / 0 g / fnv1a32:ac7eaf69` (the idle floor; matches heat 11's "the hero died at wave 3") |
 | node | v23.11.1 for rides (the county's assayer replays on 26.4.0 server-side; the probe below verified under it) |
 | viewVersion | **2** (heat 11 rode viewVersion 1) |
@@ -20,7 +20,7 @@ Operator: an attended Claude agent (Claude Opus 5, session `session_01Rpu6VBzeT2
 |---|---|
 | source | heat 11's verified probe tape (itself the verified debut the-claim tape `agent-6acf1470-99b30d3a…`, Opus, w10/680g) replayed order-for-order through this arena (`probe/probe-driver.mjs`, heat-9-r2's driver verbatim) |
 | probe outcome | secured w10 / 300.000 s / 680 gold / 299 kills / 65 calls, `eventLogHash fnv1a32:a93d1bbc` — **identical to heat 11 and to the debut ride**: behaviour is unchanged across the whole pin lineage, including this week's thirteen mechanic changes and the lighting/sampler work |
-| probe tape | `agent-6acf1470-bf7b0f42-da27-453c-a5c7-6dae2f758019`, papers `038cc2809 · 86e53f37… · era 5 · viewVersion 2` |
+| probe tape | `agent-6acf1470-bf7b0f42-da27-453c-a5c7-6dae2f758019`, papers `038cc2809 (archive: pruned by the A3 rewrite) · 86e53f37… · era 5 · viewVersion 2` |
 | door verdict | `assay: verified`, `assayHash fnv1a32:cc026656` — **identical to heat 11's probe assay hash** — `assayEra: true`, `ranked: false`, `rank: null` (`harness: operator-probe`, which `public/skill.md:52` defines as "verified but never ranked") |
 | envelope | `durationTicks 9001`, last entry `t 9000` — a tape that the pre-F-HEAT11-1 door would have refused, admitted here. The cure is live. |
 

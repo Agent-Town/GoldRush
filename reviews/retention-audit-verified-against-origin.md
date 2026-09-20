@@ -1,6 +1,6 @@
 # retention audit — verified against the REAL remote (s1058)
 
-**Slice:** none (audit / null result) · **Branch:** main · **Tip:** `5bdd37a2`
+**Slice:** none (audit / null result) · **Branch:** main · **Tip:** `3ec73c91`
 **Verdict:** ✅ **NO THIRD GAP.** `art-staging-audit.mjs`'s green is genuine — re-derived from origin itself, not from origin's local mirror.
 
 ## Why this was asked at all
@@ -30,7 +30,7 @@ Run via `node -e` (the bash gate denies `git ls-remote`; s1053 precedent — nod
 | 2 | Do the tracking refs correspond to real origin branches? | `git ls-remote --heads origin` vs `for-each-ref refs/remotes/origin` | origin really has **19 heads**; **NO GHOST REFS** |
 | 3 | Do they point at the **same commits**? (the actual false-green risk) | SHA-compare each tracking ref against origin's real SHA | **ALL 19 MATCH ORIGIN EXACTLY** — zero drift |
 | 4 | Is `--remotes` actually offsite? | `git remote -v` | exactly one remote: `origin` → `git@github.com:Agent-Town/GoldRush.git`. No second/local remote inflating the offsite set |
-| 5 | Is main itself backed up? (BACKUP LAW) | `rev-parse main` vs `refs/remotes/origin/main` | **IN SYNC** at `78ea49c7` (s1057's handoff) |
+| 5 | Is main itself backed up? (BACKUP LAW) | `rev-parse main` vs `refs/remotes/origin/main` | **IN SYNC** at `a913a157` (s1057's handoff) |
 
 Checks 2+3 are the ones that matter: they upgrade "LOCAL-ONLY 0" from *this disk believes the bytes are offsite* to **origin was asked and agrees.** The two salvage branches carrying the once-at-risk 36.54 MB — `save/art-staging-20260725` and `save/art-diverged-20260726` — are both present on origin at the exact SHAs tracked here.
 

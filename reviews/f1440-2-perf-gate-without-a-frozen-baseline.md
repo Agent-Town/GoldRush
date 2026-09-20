@@ -1,7 +1,7 @@
 # f1440-2 — re-land the E1 perf gate without a frozen foreign baseline
 
-**Slice:** `f1440-2-perf-gate-baseline` · **Branch:** `lane/perf` · **Tip:** `284c6e3d` · **Base:** `8f3b0474`
-**Merge:** `e21fa3d38760403d0161ea47deeb300554837429` (main, `--no-ff`, `ort` clean)
+**Slice:** `f1440-2-perf-gate-baseline` · **Branch:** `lane/perf` · **Tip:** `c5593748` · **Base:** `cd22396b`
+**Merge:** `67b31523de7121481ddca1283ece62e870b17a59` (main, `--no-ff`, `ort` clean)
 **Drained:** s1451, 2026-08-04 · fire shell, `--workers=1`, scratch port 5241, detached gate worktree
 
 ## VERDICT: MERGED
@@ -12,7 +12,7 @@ runner's own scope-5 answer (F-1451-2).
 
 ## What it does
 
-The E1 perf spec merged its optimization as `d60adf88` at the s1440 drain with **the spec itself
+The E1 perf spec merged its optimization as `08b3ecb2` at the s1440 drain with **the spec itself
 withheld**. F-1440-2 was the reason: the spec never measured its `before` arm in-run. It read it from
 a committed artifact (`census-before-<project>.json`) while `STAGE` defaulted to `'after'`, so every
 ordinary run on every machine compared its own wall-clock, draw calls and pixels against numbers one
@@ -40,7 +40,7 @@ assertions on both the census page and the snapshot page.
 | `npm run test:ledger-guards` | **RC=0** |
 | adjacent suites | **none** — `grep -rl e1-perf-pass e2e scripts src` returns only the spec itself |
 | console/page errors | zero, asserted by the spec across 5 contracts × 2 projects, both pages |
-| firewall | held — `git diff --name-only 8f3b0474 lane/perf` is exactly `e2e/e1-perf-pass.spec.ts` + `artifacts/f1440-2/**`. No `src/**`, no `playwright.config.ts`, no baseline artifact regenerated. |
+| firewall | held — `git diff --name-only cd22396b lane/perf` is exactly `e2e/e1-perf-pass.spec.ts` + `artifacts/f1440-2/**`. No `src/**`, no `playwright.config.ts`, no baseline artifact regenerated. |
 
 **Merge classification:** pure **LANE-TOUCHED**. `e2e/e1-perf-pass.spec.ts` is absent from main
 (verified by `ls`, not grep — it is a re-land, not an edit); `artifacts/f1440-2/**` is new. Main moved
@@ -113,7 +113,7 @@ died before reaching it.
 
 Two contracts, both projects, all +1, and both of them are exactly the maps that have received
 terrain/water work since the baseline was recorded (`f1441-2` crossings, gt-05 water depth,
-tb-water-look — `65e3aaec` landed hours ago). That is not noise; it is legitimate feature work moving
+tb-water-look — `42d0b2b1` landed hours ago). That is not noise; it is legitimate feature work moving
 a number that was frozen. Which is the strongest possible argument *for* this slice: an equality gate
 against a frozen draw count would have gone red for every one of those merges.
 

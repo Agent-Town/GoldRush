@@ -5,7 +5,7 @@ import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { PNG } from 'pngjs';
 
-const BASE = '89bfc10cda7e208589c7ad6304eb4c6aeae727bf';
+const BASE = '0d989bdc2096213e6775a5978cb6fe56fa8ea988';
 const SWEEP = 'artifacts/f1450-4/halo-class-sweep.json';
 const HELD_SHEETS = new Set([
   'char-bandit-thief-sheet-walk8',
@@ -127,7 +127,7 @@ const REGENERATED_SHEETS = new Set([
   // art Astra cut on `sol/code-review-20260908` and left referenced by nothing (F-SPRDR-4b); this task
   // registers them in assets/layer-contracts/characters.v2.json, so they arrive with their wiring.
   // They are DECLARED here for provenance, not for arithmetic: none of them exists at BASE
-  // (89bfc10cda7e), so none appears in `baseline.suspects`, and the three partition pins below
+  // (0d989bdc2096), so none appears in `baseline.suspects`, and the three partition pins below
   // (0 / 680 / 395) DO NOT MOVE — verified on this tree. What does move is the denominator; see the
   // re-pin note at the `current.scanned` assertion.
   // MEASURED on this tree over all 612 new cells: 0 visible violet-key px, 0 key px under fully
@@ -154,7 +154,7 @@ const REGENERATED_SHEETS = new Set([
   // lets go for the cells"). Ten NEW stems, 44 cells, generated on the owner's Higgsfield credits and
   // extracted here by scripts/extract-alpha.mjs --key ff00ff, so they arrive with extract-alpha's own
   // bleedEdges field under the alpha - the halo cure itself - and every one of them is new: none
-  // exists at BASE (89bfc10cda7e), so none appears in `baseline.suspects` and the three partition
+  // exists at BASE (0d989bdc2096), so none appears in `baseline.suspects` and the three partition
   // pins below DO NOT MOVE for them. What they move is the denominator, 2059 -> 2103; see the re-pin
   // note at the `current.scanned` assertion.
   // MEASURED on this tree over all 44 new cells: 0 visible violet-key px (alpha >= 16, R-G >= 40,
@@ -203,10 +203,10 @@ const REGENERATED_SHEETS = new Set([
   // denominator does not move: every file is a REPLACEMENT under its own name (2127 on this tree,
   // pinned at `current.scanned`).
   //
-  // LANDED TWICE (F-ATT-4, attended 2026-09-20): the play-rulings drain (73f150c69) resolved this
+  // LANDED TWICE (F-ATT-4, attended 2026-09-20): the play-rulings drain (e4766971b) resolved this
   // file's merge conflict by taking main's side and re-measured only the denominator, so the
-  // declaration the branch carried (935211219) was dropped and main's battery carried this guard
-  // RED from 2c2fc9538 until this commit - the review's halo row quoted the branch's numbers for a
+  // declaration the branch carried (b279bcaf6) was dropped and main's battery carried this guard
+  // RED from 1ccce1ed1 until this commit - the review's halo row quoted the branch's numbers for a
   // verdict the merged tree never gave. A shared-baseline conflict is re-measured in EVERY
   // partition, not only the denominator.
   'char-prospector-complainant-sheet-hover8',
@@ -215,7 +215,7 @@ const REGENERATED_SHEETS = new Set([
   // please use Codex to generate these strips."). Six NEW stems, 24 cells, generated on Codex's native
   // `image_gen` and extracted here by scripts/extract-alpha.mjs --key ff00ff from the NATIVE 1254x1254
   // renders, so they too arrive with extract-alpha's own bleedEdges field under the alpha. None exists
-  // at BASE (89bfc10cda7e), so none appears in `baseline.suspects` and the three partition pins below
+  // at BASE (0d989bdc2096), so none appears in `baseline.suspects` and the three partition pins below
   // DO NOT MOVE for them. What they move is the denominator; see the re-pin note at `current.scanned`.
   // MEASURED on this tree over all 24 cells: 1,343,175 px carry alpha < 250 and 0 of them carry
   // magenta-dominant RGB (r >= 180 && b >= 180 && g <= 90); worst single cell 0 px. The sweep below
@@ -266,7 +266,7 @@ assert.equal(expectedResidual.length, 0);
 // RE-PINNED 2026-09-19 by tasks/rulings-play-2026-09-19.md (F-SSL-3, owner "I agree with all your
 // recommendations on the decisions - good work"): 696 + 64 = 760, the 32 + 32 cells of the two
 // prospector coats declared above. Every one of those 64 is a BASE suspect (96 prospector cells are
-// suspects at 89bfc10cda7e, across three stems; the third, `char-prospector-sheet-hover8`, is NOT
+// suspects at 0d989bdc2096, across three stems; the third, `char-prospector-sheet-hover8`, is NOT
 // taken here and stays in `cured` with main's bytes), so they move from `cured` to `regenerated`
 // and the three-way sum below is unchanged at 1075.
 assert.equal(regenerated.length, 760);
@@ -334,7 +334,7 @@ try {
 //     F-SPR-06 and the 36 cells that cure F-SPR-07 (Baron NE/W, the three E2 norths, the thief's SE),
 //     all declared in REGENERATED_SHEETS above and all referenced by characters.v2.json in the same
 //     commit. 1447 + 612 = 2059, measured with `find assets/processed -name '*.png' | wc -l`.
-//   * THE OTHER 46 ARE NOT MINE, AND THE PIN WAS ALREADY WRONG WITHOUT THEM. main at f431b878c holds
+//   * THE OTHER 46 ARE NOT MINE, AND THE PIN WAS ALREADY WRONG WITHOUT THEM. main at b70ef3b31 holds
 //     1447 PNGs under assets/processed (`git ls-tree -r --name-only HEAD -- assets/processed | grep -c
 //     '\.png$'`) against a pin of 1401, so this guard was RED on clean main before this task touched it
 //     — 46 PNGs landed since the 2026-09-14 re-pin without moving the denominator with them. Recorded
@@ -352,10 +352,10 @@ try {
 // RE-PINNED 2026-09-19 by tasks/needs-cells-codex-strips-land.md: 2103 -> 2127, +24, and the split
 // matters because only 4 of the 24 are mine. THE OTHER 20 WERE ALREADY UNCOUNTED AND THIS GUARD WAS
 // ALREADY RED ON MAIN. Measured with `git ls-tree -r <sha> --name-only assets/processed | grep -c
-// '\.png$'`: 498a64a8f^ = 2103 against a pin of 2103, and 498a64a8f = 2123 against the same pin --
+// '\.png$'`: 4550c3ae9^ = 2103 against a pin of 2103, and 4550c3ae9 = 2123 against the same pin --
 // the s2627 codex-strips drain landed twenty cells (char-jumper-{s,e,sw,ne,nw}4-codex-v1) on
 // 2026-09-18 without moving the denominator with them, so `npm run test:node-guards` has carried this
-// red on clean main ever since; my own base de7eacd17 measures 2123. This task adds the sixth row,
+// red on clean main ever since; my own base 21648cdcf measures 2123. This task adds the sixth row,
 // char-jumper-se4-codex-v1 (4 cells), for 2127 -- measured on this tree. Recorded as F-NCS-2 in
 // artifacts/needs-cells-codex-strips/land-report.md, on F-SRR-3's rule: a re-pin that quietly absorbs
 // someone else's red is how a guard stops being a guard, so it is named rather than swallowed.

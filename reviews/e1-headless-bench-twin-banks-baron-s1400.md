@@ -1,8 +1,8 @@
 # e1-headless-twin-banks + e1-headless-baron — s1400 drain gate
 
 **Slices:** `lane-headless-twin-banks` (lane-a, `lane/m3`, tip `e1bff1e8`) · `lane-headless-baron` (lane-c, `lane/e2-arsenal`, tip `9a9fb2bb`)
-**Base (both):** pre-escort — `96fb9059` (m3) / `67d28607` (e2-arsenal)
-**Gated at:** main `b79b9235`, detached scratch worktree (§3.0b), `--workers=1` (§3.1)
+**Base (both):** pre-escort — `514a81f9` (m3) / `fbcaa7a4` (e2-arsenal)
+**Gated at:** main `90836f59`, detached scratch worktree (§3.0b), `--workers=1` (§3.1)
 
 ## VERDICT: NEITHER MERGED — both refused on control-proven evidence.
 
@@ -22,7 +22,7 @@ Read as the WORD, not the exit code. Both leaves exist (s1398 registered them), 
 Both add a real contract driver to `HeadlessContractSim` so an E1 map runs headless through production systems: twin-banks (two-bank water, two fords, gravel bars, buildZone enforcement, secure at wave 20) and the baron (first BOSS driver — cadence, spawn/volleys/defeat from the data block, medal side-effects asserted OFF headless). Together they would have taken the E1 bench to 5/5.
 
 ## Merge classification (never blind-copy; the two-dot diff lies)
-Both lanes branched **before** s1399's escort merge (`372808f0`), so both are stale-based.
+Both lanes branched **before** s1399's escort merge (`b6a6b613`), so both are stale-based.
 
 | File | Class | Resolution |
 |---|---|---|
@@ -65,7 +65,7 @@ Error: Unknown contract: undefined
 ```
 Reproduced on both merged trees (baron: fails in 766ms under `--test-name-pattern="Baron"`).
 
-**This is graft work, not a lane failure** — adapting a caller to a signature main changed is exactly what a 3-way graft is for. It is filed as a CLASS because it will hit *every* lane still based before `372808f0`, and because no pre-execution gate can see it.
+**This is graft work, not a lane failure** — adapting a caller to a signature main changed is exactly what a 3-way graft is for. It is filed as a CLASS because it will hit *every* lane still based before `b6a6b613`, and because no pre-execution gate can see it.
 
 **Proven curable:** applying only the 2-line call-site rewrite in the scratch tree, the baron's headline test **passes and its pinned hashes reproduce** — `✔ the Baron driver runs the declared fight and keeps medal writes off headless (12.4s)`. So the baron's *own* measurements are sound.
 
@@ -107,7 +107,7 @@ Process forensics named the culprit precisely:
 
 So the baron slice regresses `e2-hill-mine` escort mode — the slice s1399 landed one fire earlier. It is **not** a consequence of F-1400-1: the loop reproduces with the call sites already fixed.
 
-**Why the runner could not have seen it:** its base `67d28607` predates `372808f0`, so escort-mode-as-data did not exist in its tree — there was no escort run to break. Its "GR-SIM 6/6" was true of its base and is false of main.
+**Why the runner could not have seen it:** its base `fbcaa7a4` predates `b6a6b613`, so escort-mode-as-data did not exist in its tree — there was no escort run to break. Its "GR-SIM 6/6" was true of its base and is false of main.
 
 **Suspected mechanism (UNVERIFIED — stated as a hypothesis, not a finding):** the baron threads a new `escortsSpawned` count through `spawnBaronWave` → `spawnComponentBossWave`/`onBaronSpawned`, and `e2-hill-mine` declares **both** a `baron` block (`escortCount:6`) and an `escort` mode. The interaction of the two escort concepts is the obvious place to look first. The next fire should confirm by reading, not by assuming.
 

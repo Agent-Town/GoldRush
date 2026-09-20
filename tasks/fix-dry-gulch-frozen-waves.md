@@ -3,7 +3,7 @@ ROLE: sleuth-style investigator+fixer. WORKDIR: repo root (main slot) or lane-c.
 CODEX: model=gpt-5.6-sol effort=medium
 
 ## WHY (owner playtest, 2026-07-11 ~22:30, verbatim): "the waves stopped moving at some point and just stayed stuck this is Dry Gulch"
-Evidence (owner screenshot, deployed build ~94babcea): `?contract=e1-dry-gulch`, HUD alive (HP 84/100, TIME 08:22, WAVE 16), FIVE bandit rushers frozen mid-field in a horizontal line, hero mobile. Enemies alive + motionless → wave can never clear → run soft-locked (no win/lose exit; the new pause Back-to-Town button is the escape hatch but the bug remains).
+Evidence (owner screenshot, deployed build ~1bbb08e8): `?contract=e1-dry-gulch`, HUD alive (HP 84/100, TIME 08:22, WAVE 16), FIVE bandit rushers frozen mid-field in a horizontal line, hero mobile. Enemies alive + motionless → wave can never clear → run soft-locked (no win/lose exit; the new pause Back-to-Town button is the escape hatch but the bug remains).
 
 ## READ-FIRST
 - src/entities/Enemy.ts (think/targeting; the scripted-step arrival fix landed recently — check for sibling wedges in NON-scripted paths)

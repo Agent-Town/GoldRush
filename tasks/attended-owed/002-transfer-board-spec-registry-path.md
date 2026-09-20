@@ -37,7 +37,7 @@ Single variable — exactly 1 of lane/b's 13 files falls inside `ENGINE_SOURCE_I
 
 | tree | `computeEngineHash()` |
 |---|---|
-| main @ `aa3304354` (control; equals `assets/engine-era.json`'s declared era-5 hash) | `2a06eb51…` |
+| main @ `677135a87` (control; equals `assets/engine-era.json`'s declared era-5 hash) | `2a06eb51…` |
 | + only `assets/contracts/rotation-seeds.json` | `43f54a20…` |
 | + the same file at `assets/rotations/rotation-seeds.json` | `2a06eb51…` — byte-identical to base |
 
@@ -47,7 +47,7 @@ Full working: `reviews/transfer-board.md`, finding F-2472-3.
 
 The lane-b runner's own suggested resolution was to exclude the file from `computeEngineHash` by
 editing `ENGINE_SOURCE_INPUTS`. That is a judgement about what "the engine" is, it has
-owner-dispatched precedent (`dbb42b97d`), and it is a live desk question. **It is not needed** —
+owner-dispatched precedent (`e6d904e20`), and it is a live desk question. **It is not needed** —
 relocation costs nothing and touches no law. Narrowing the corpus to accommodate a file that simply
 sat in the wrong folder would be paying an expensive, irreversible price for a free fix.
 

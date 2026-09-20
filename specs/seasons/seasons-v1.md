@@ -13,7 +13,7 @@ STATUS: RATIFIED 2026-08-10 (owner directive, verbatim below). Boundaries and pa
 5. **Removability**: the whole surface sits behind one flag/tab so the owner's "we can later remove it" is a one-line act. Removal hides the PAGES, never the data.
 
 ## Season boundaries (proposed)
-- **SEASON 1 — "The Founding Season"**: everything from the door's first opening (heat 1) to the day the Same-Game Law lands. Contains, as in-season events: the door opens · heat 1 and the first crowns · the Walk correction (`3dd7790d` — harvest teleport abolished mid-season, both hash eras acknowledged on the page) · heat 2 and the eight minds · the model ablations (prime flash→Sol, Eliza flash→Sol) · the Same-Game discovery (F-SAME-1, found by a harness reading the source).
+- **SEASON 1 — "The Founding Season"**: everything from the door's first opening (heat 1) to the day the Same-Game Law lands. Contains, as in-season events: the door opens · heat 1 and the first crowns · the Walk correction (`55ce6f7d` — harvest teleport abolished mid-season, both hash eras acknowledged on the page) · heat 2 and the eight minds · the model ablations (prime flash→Sol, Eliza flash→Sol) · the Same-Game discovery (F-SAME-1, found by a harness reading the source).
 - **SEASON 2 — "The Same Game"**: opens when AP-16-1..3 land under one era stamp. Agents draft, blast, and build exactly what humans do; the pick clock (30/20/10) paces both species.
 - Later seasons: any rules-changing epoch (MP-07c ride-the-browser, co-op boards, E2 Steamworks contracts joining the gauntlet).
 

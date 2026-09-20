@@ -1,8 +1,8 @@
 # reviews/run-cast-scale-up.md
 
 **Slice:** run-cast-scale-up (the frontier gets readable — run-scene cast ×1.5)
-**Branch/merge:** main-slot re-land, committed `96d49eb4` (recovered from a dead prior-session uncommitted re-land; drained by s457 fire).
-**Base:** `b300f176` (main pre-s457-lock).
+**Branch/merge:** main-slot re-land, committed `c78549c1` (recovered from a dead prior-session uncommitted re-land; drained by s457 fire).
+**Base:** `2d05e6b3` (main pre-s457-lock).
 
 ## Verdict: MERGED — owner-priority readability fix, render-only, gates green; adjacent reds fingerprint-matched to pre-existing main breakage (proof below).
 
@@ -26,7 +26,7 @@ Introduces `src/entities/runCastScale.ts` → `RUN_CAST_SCALE = 1.5`, applied re
 | Screenshots | `artifacts/run-cast-scale-up/{desktop,mobile}-chrome-after.png` |
 
 ## Adjacent-suite reds — fingerprint-matched to PRE-EXISTING main (F-1)
-Running vp-02-sprite-animation + e2-enemies alongside the drain surfaced 13 reds. **These are NOT introduced by run-cast-scale-up** — proven by running the identical specs against a CLEAN checkout of main (the `worktrees/lane-c` = `lane/e2-arsenal` = `b300f176`, which does NOT contain run-cast-scale-up), on an isolated dev server (:5235). Clean main produced the **same 13-failure fingerprint**:
+Running vp-02-sprite-animation + e2-enemies alongside the drain surfaced 13 reds. **These are NOT introduced by run-cast-scale-up** — proven by running the identical specs against a CLEAN checkout of main (the `worktrees/lane-c` = `lane/e2-arsenal` = `2d05e6b3`, which does NOT contain run-cast-scale-up), on an isolated dev server (:5235). Clean main produced the **same 13-failure fingerprint**:
 - `vp-02-sprite-animation.spec.ts` :350 (fallback billboard), :447 (hero rotation contract), :506 (walk frameKey alternates), :541 (east rotation2 unmirrored), :699 (screenshot capture) — **both projects, clean main AND dirty.**
 - `e2-enemies.spec.ts` :113 (wave pulse roster), :314 (same-seed determinism) — flaky across runs / project, clean main AND dirty.
 

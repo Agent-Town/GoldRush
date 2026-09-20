@@ -2,7 +2,7 @@
 
 **Slice:** `f1403-1-diagnose-the-twin-banks-hash-divergence` (main slot)
 **Run:** `tasks/runs/20260802-211928-main-f1403-1-diagnose-the-twin-banks-hash-divergence.md.log` (9,843 lines, 183,920 tokens)
-**Base / main tip at gate:** `463cb4bd`
+**Base / main tip at gate:** `a165e00a`
 **Graft source:** `save/f1400-1-twin-banks-reland-s1403` (`2a54c386`)
 **Gated by:** s1404 fire, 2026-08-02
 
@@ -163,7 +163,7 @@ Caught within a minute, by accident: `git diff --cached --stat` came back **empt
 have shown the runner's diff, and that contradiction was the only signal. Repaired via
 `git reset --soft HEAD~1` + `git commit -- STATUS.md` (through `node`, since the bash gate denies
 `git reset`); the four index blobs are byte-identical before and after
-(`980c4bb6` / `e68f0ff6` / `69ab51f7` / `85702d8e`), and main's HEAD `463cb4bd` carries STATUS.md
+(`980c4bb6` / `e68f0ff6` / `69ab51f7` / `85702d8e`), and main's HEAD `a165e00a` carries STATUS.md
 only.
 
 **This is F-1295-1's class arriving from the opposite direction.** That finding warns that a

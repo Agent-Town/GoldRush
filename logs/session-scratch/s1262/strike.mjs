@@ -41,7 +41,7 @@ const STRIKE = {
     seeLine: 1260,
     evidence:
       'struck s1262 after RE-DERIVATION AT SOURCE (not inherited — s1261 warned these 9 were unmeasured): ' +
-      'cure `022c842e` is ANCESTOR-OF-MAIN, and all four negative-assertion specs this row names now raise the buffer ' +
+      'cure `46f31b9e` is ANCESTOR-OF-MAIN, and all four negative-assertion specs this row names now raise the buffer ' +
       'at source — `e2e/mu-02-music.spec.ts:8`, `e2e/mu-03-era-audio.spec.ts:5`, `e2e/e5-water-spike.spec.ts:85`, ' +
       '`e2e/e5-deepwater-claim.spec.ts:10`, each calling `performance.setResourceTimingBufferSize(10_000)` ' +
       '(`e2e/perf-05-startup.spec.ts:92` carries 5_000 as a fifth). The board-wide trap this row opened is closed at every site it counted. ' +
@@ -53,7 +53,7 @@ const STRIKE = {
       'struck s1262 — THIS ROW IS ITS OWN CLOSURE WEARING AN OPEN GLYPH (🚨), which is why the probe kept flagging it. ' +
       '✓ RE-DERIVED AT SOURCE: `scripts/fire.md:22` carries the **ART-SLOT LAW** inside §2E verbatim, and ' +
       '`scripts/art-staging-audit.mjs` is present at **15,786 bytes** — grown from the 4.2 KB this row cites, because it has since been ' +
-      'fixed TWICE (F-1054-1 `4051bf31` blob-hash classification, F-1055-1 `c8034384` remote-tracking check). ' +
+      'fixed TWICE (F-1054-1 `81b6ac54` blob-hash classification, F-1055-1 `4c897f9c` remote-tracking check). ' +
       'The gate this finding ordered exists and has been hardened beyond its own ask. ' +
       '⚠️ The POLICY half (adopt-vs-reject the diverged staging files) stays OWNER-GATED under F-1044-2/-3 and F-1242-1/F-1193-2 — ' +
       'those ids are untouched by this strike. Reasoning retained per the Retention Law.',
@@ -62,9 +62,9 @@ const STRIKE = {
     seeLine: 1396,
     evidence:
       'struck s1262 after RE-DERIVATION BY EXECUTION: `node scripts/goal-tracker.test.mjs` → **fail 0**, and both leaves now carry ' +
-      'the field this row said was missing — `e9-art` `295a190d487b133f8b9f3d3125b25528e555e123`, ' +
-      '`e10-art` `6c98a4286dc07fe0159492468119b43b306e6caa`; cure `bb57af63` is ANCESTOR-OF-MAIN. ' +
-      'ⓘ Worth recording: the E9 hash finally chosen is **NOT** the `5e993443…` this row proposed — the attended writer picked a different ' +
+      'the field this row said was missing — `e9-art` `20e9862241836880b2564a049ec274901372dec5`, ' +
+      '`e10-art` `846a9b0068b07a0afa8150c0ed3fc1eb6c355a68`; cure `150fa9b7` is ANCESTOR-OF-MAIN. ' +
+      'ⓘ Worth recording: the E9 hash finally chosen is **NOT** the `9f3590c7…` this row proposed — the attended writer picked a different ' +
       'representative commit, which is exactly the judgement the row said to leave to attended rather than fill mechanically. ' +
       'Reasoning retained per the Retention Law.',
   },
@@ -72,8 +72,8 @@ const STRIKE = {
     seeLine: 1688,
     evidence:
       'struck s1262 — A COMPLETION ROW WEARING 🟢, not an open finding: its own subject reads "IS DRAINED". ' +
-      '✓ BOTH cited merges verified ANCESTOR-OF-MAIN this fire — `5ec26bce` (078-focus: ledger focus-restore + Tab trap) and ' +
-      '`a659020a` (the rider, contract-art-key-adoption, closed at L1688). The 🟢 glyph is house voice for *green*, but the probe\'s ' +
+      '✓ BOTH cited merges verified ANCESTOR-OF-MAIN this fire — `7f066ecc` (078-focus: ledger focus-restore + Tab trap) and ' +
+      '`2fd1390c` (the rider, contract-art-key-adoption, closed at L1688). The 🟢 glyph is house voice for *green*, but the probe\'s ' +
       'vocabulary classifies every non-✅ glyph as OPEN — this row is one of the four data behind F-1262-1. ' +
       'Reasoning retained per the Retention Law.',
   },

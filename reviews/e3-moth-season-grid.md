@@ -1,12 +1,12 @@
 # Review: e3-moth-season-grid — the Moth Season lights its own corridor (lane-a, Claude implementer, attended drain 2026-09-05)
 
-**Slice/branch/tip:** `e3-moth-season-grid` · `lane/a` · tip `eb79d0c12` (7 commits over base `57330ebfd`) · merge `de21da4f5` (no-ff).
+**Slice/branch/tip:** `e3-moth-season-grid` · `lane/a` · tip `eb79d0c12 (archive: pruned by the A3 rewrite)` (7 commits over base `7dc8672f0`) · merge `d07a0e2e7` (no-ff).
 **Verdict:** MERGED. Reskin ladder row e3-moth-season cured as CONTRACT DATA: zero `src/` edits; the honesty STOP the master reserved did not fire.
 
 ## What it does
 `e3-moth-season` now declares `twist.powerGrid` (the Canyon Works seams, contract-gated): a relay span from the pylon site to the gallery lamp, dark at turn 0, lit by a BUILD on the beacon, cut by a `fevered_saboteur` row at wave 4, relit by REPAIR_UNDER; the cycle repeats waves 4–7 and the map secures at wave 12 only if the corridor carried current by then (no relay → cannot secure at any wave). A third `moth_swarm` row keeps the roster's dangerous share at 33% (50% killed the floor ride at wave 4). Floor fixture re-recorded for the new offer set (declaring `powerGrid` withdraws `turret` and buildable `lantern_post`, the same rule `e3-blackout-ridge` lives under); L7 holds: a plain boot lists the identical offer both engines read.
 
-## Evidence (merged tree `de21da4f5` + the era pin)
+## Evidence (merged tree `d07a0e2e7` + the era pin)
 | Gate | Result |
 |---|---|
 | `npx tsc --noEmit` | rc 0 |
@@ -15,11 +15,11 @@
 | `scripts/e3-mask-tables.test.mjs` | 30/30 |
 | `scripts/engine-era-guard.test.mjs` (after pin `324bb3cd`) | 5/5 |
 | `e2e/e3-moth-season.spec.ts` (drain port 5273, workers=1) | 8/8 desktop + 390px |
-| `e2e/er01-e3-census.spec.ts` | 6/8 — the two reds are `e3-canyon-works census support is explicit and deterministic` (both projects), reproduced by the implementer on a detached control of `main@57330ebfd`; `red-inventory-lookup` lists the spec KNOWN-RED (snapshot 2026-08-11, sibling row e3-blackout-ridge) |
-| `run-guards.mjs --changed-since 57330ebfd` | see drain commit message for the final battery line |
+| `e2e/er01-e3-census.spec.ts` | 6/8 — the two reds are `e3-canyon-works census support is explicit and deterministic` (both projects), reproduced by the implementer on a detached control of `main@7dc8672f0`; `red-inventory-lookup` lists the spec KNOWN-RED (snapshot 2026-08-11, sibling row e3-blackout-ridge) |
+| `run-guards.mjs --changed-since 7dc8672f0` | see drain commit message for the final battery line |
 | Both-engine hash (lane tables) | floor ride `fnv1a32:e16244f9` node = in-process; reel `fnv1a32:b391d689` node replay = chromium 1280×800 = chromium 390×844 |
 
-## Merge classification (base `57330ebfd`)
+## Merge classification (base `7dc8672f0`)
 | File | Class | Resolution |
 |---|---|---|
 | `assets/contracts/epoch-3-voltage/contracts.json` | LANE-TOUCHED | clean |

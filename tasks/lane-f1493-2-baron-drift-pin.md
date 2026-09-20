@@ -5,7 +5,7 @@ CODEX: model=gpt-5.6-sol effort=xhigh
 **FIRE-AUTHORED s1494 (attended review welcome).** Authored from a finding that was **declared by its
 own author before it shipped** (F-1493-2, `tasks/goals.json` leaf `f1493-1-parity-repin`,
 `authorNotesSuccessor`) and **confirmed on the merged tree by this fire**
-(`reviews/f-seed-1-plus-f1493-1-landing.md`, merge `ff628a132`). No spec slice is needed and none is
+(`reviews/f-seed-1-plus-f1493-1-landing.md`, merge `335408077`). No spec slice is needed and none is
 invented: this is test-instrument hygiene inside an existing, precedented pattern. No design fork, no
 canon, no owner word.
 
@@ -26,7 +26,7 @@ git -C worktrees/lane-a fetch origin main
 git -C worktrees/lane-a checkout -B lane/a origin/main
 ```
 This is safe and authorized: `node scripts/lane-usable.mjs lane-a` read **USABLE** (`ahead=0`,
-`tracked-dirt=0`) at authoring time — the branch's entire former content is on main at `ff628a132`.
+`tracked-dirt=0`) at authoring time — the branch's entire former content is on main at `335408077`.
 
 **STEP 2 — CURRENCY PROBE (only after step 1). Must print `1`:**
 ```
@@ -107,7 +107,7 @@ The pin goes in **`scripts/gr-sim.test.mjs`**, NOT back into the census spec. Tw
    `{ secured, waves, timeMs, gold, kills, calls, eventLogHash }` — for each contract.
 4. **Write a named cause at the call site**, in the `e1-baron` block's voice: one comment naming
    **F-1493-2**, this task, the date, and the one-sentence reason ("the census equality that used to
-   catch baron-map drift was unsound and was correctly relaxed at `ff628a132`; this is its
+   catch baron-map drift was unsound and was correctly relaxed at `335408077`; this is its
    replacement"). A future reader who sees this red must be able to learn, without leaving the file,
    that **a blind re-pin is forbidden and a named cause is required** (F-1441-3).
 5. **Assert `waves >= contract.twist.secureWave` inside the new test too**, with a one-line comment

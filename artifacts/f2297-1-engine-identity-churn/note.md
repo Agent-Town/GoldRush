@@ -37,18 +37,18 @@ the real hash was computed once per distinct state.
 from 12 commits:**
 
 ```
-db58b3955  2026-08-25T06:29:55+07  runner(lane-c): gauntlet-heat5b-reearn.md
-1258f8439  2026-08-25T06:19:10+07  s2288: TK-01 ticker digest for the 2026-08-24 coverage day
-15e642f76  2026-08-25T06:12:17+07  s2288: factory churn
-f032acd66  2026-08-25T06:12:09+07  s2288: lock ACTIVE
-946b57b74  2026-08-25T06:06:38+07  feat: the re-earn — skew law honestly applied to our own heat
-72433ea49  2026-08-25T05:17:04+07  s2287 handoff: F-2287-1
-b5062fc2d  2026-08-25T05:15:33+07  s2287: F-2287-1 ledger row
-a74c16735  2026-08-25T05:14:23+07  f2287-1: the raw hypot surface has 100x less headroom
-fc8b3fb88  2026-08-25T04:58:45+07  s2287: lock ACTIVE
-47082fd11  2026-08-25T03:53:34+07  s2286 handoff: F-2286-1
-ca68bda90  2026-08-25T03:52:01+07  s2286: F-2286-1 ledger row
-c3b169607  2026-08-25T03:51:05+07  f2286-1: pin the comparator margin
+e48c2fdf8  2026-08-25T06:29:55+07  runner(lane-c): gauntlet-heat5b-reearn.md
+1258f8439 (archive: pruned by the A3 rewrite)  2026-08-25T06:19:10+07  s2288: TK-01 ticker digest for the 2026-08-24 coverage day
+15e642f76 (archive: pruned by the A3 rewrite)  2026-08-25T06:12:17+07  s2288: factory churn
+4694e4179  2026-08-25T06:12:09+07  s2288: lock ACTIVE
+fe61e1a5b  2026-08-25T06:06:38+07  feat: the re-earn — skew law honestly applied to our own heat
+bd09497eb  2026-08-25T05:17:04+07  s2287 handoff: F-2287-1
+0b8b327b3  2026-08-25T05:15:33+07  s2287: F-2287-1 ledger row
+7738cc270  2026-08-25T05:14:23+07  f2287-1: the raw hypot surface has 100x less headroom
+8be8ac0f2  2026-08-25T04:58:45+07  s2287: lock ACTIVE
+fbf948396  2026-08-25T03:53:34+07  s2286 handoff: F-2286-1
+fe6e1dd93  2026-08-25T03:52:01+07  s2286: F-2286-1 ledger row
+9958fefbc  2026-08-25T03:51:05+07  f2286-1: pin the comparator margin
 ```
 
 **ALL TWELVE ARE ANCESTORS OF MAIN** (`git merge-base --is-ancestor` — verified individually).
@@ -69,7 +69,7 @@ destroyed by re-deploying, because there is nothing on that box that is not alre
 
 ## 2. What ended the assayer's state — and it is the finding
 
-The engine state ended at **`bbb39da55`** (2026-08-25T06:29:37+07),
+The engine state ended at **`d7f4f38cb`** (2026-08-25T06:29:37+07),
 *"f2288-1: close F-2287-1's declared residue — guard the REACHING contracts' extent"*.
 
 That commit touched four files. **Exactly one is an engine input: `package.json`, changed by one
@@ -120,12 +120,12 @@ Measured directly from the script's own history rather than paraphrased from the
 
 | | |
 |---|---|
-| legs on 2026-08-01 (`73329e15e`) | 5 |
-| legs on 2026-08-25 (`bbb39da55`) | **65** |
+| legs on 2026-08-01 (`46d0ea17d`) | 5 |
+| legs on 2026-08-25 (`d7f4f38cb`) | **65** |
 | growth events | **60 in 24 days ≈ 2.5/day** |
 | monotone non-decreasing | **true** — it has never once shrunk |
 
-**The final growth event in that series IS `bbb39da55` — the commit that invalidated the assayer.**
+**The final growth event in that series IS `d7f4f38cb` — the commit that invalidated the assayer.**
 
 So the county's assay identity is coupled by construction to a set the factory is under standing
 orders to expand, and which has in fact expanded 2.5×/day for 24 days without a single decrease.

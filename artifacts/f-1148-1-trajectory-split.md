@@ -51,7 +51,7 @@ a third variation of the same idea.” I stopped after the second `confirmBuild`
 |---|---|---|---|---|
 | A — current main | none | none | none | fixture blocked twice before sampling |
 | B — main, `lateralOffset = 0` | not run | not run | not run | throwaway mutation was not made |
-| C — parent `4da134a9` | not run | not run | not run | detached worktree was not created |
+| C — parent `a26eca02` | not run | not run | not run | detached worktree was not created |
 
 **Classification: UNMEASURED.** The requested B-vs-A-vs-C route comparison cannot be made from
 these attempts. In particular, this report neither confirms nor contradicts F-1148-1 and does not

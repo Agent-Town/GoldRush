@@ -6,7 +6,7 @@ You are Codex, implementer for Gold Rush, running natively on Robin's Mac in `wo
 READ FIRST: `AGENTS.md`; `reviews/perf-04.md` (the finding F-perf04-6 you are closing — read it verbatim); `e2e/perf-04-determinism.spec.ts` (the only file you edit).
 
 ## PRE-FLIGHT — safe-dupe reset (RESET AUTHORIZED — loss-free)
-The lane-d worktree branch `lane/perf` currently sits at `f01e9f2` ("perf: defer startup asset loads" = **perf-05**). perf-05's CONTENT is already SHIPPED on main as `8bd9eca` (VERIFIED s218: `git merge-base --is-ancestor 8bd9eca main` = true) — so `f01e9f2` is a drained-content **safe-dupe**, and resetting `lane/perf` to main is **LOSS-FREE**. This is the RESET AUTHORIZATION.
+The lane-d worktree branch `lane/perf` currently sits at `f01e9f2` ("perf: defer startup asset loads" = **perf-05**). perf-05's CONTENT is already SHIPPED on main as `4afb57f` (VERIFIED s218: `git merge-base --is-ancestor 8bd9eca main` = true) — so `f01e9f2` is a drained-content **safe-dupe**, and resetting `lane/perf` to main is **LOSS-FREE**. This is the RESET AUTHORIZATION.
 1. `git rev-parse HEAD` — expect `f01e9f2...` (perf-05 safe-dupe) or already-`main`. If HEAD holds any commit whose content is NOT on main (check `git log --oneline main..HEAD` — every line must be a known safe-dupe: `f01e9f2` perf-05 only), **STOP and report** "lane/perf holds undrained content — do not reset".
 2. Reset onto fresh main: `git fetch` not needed (local); run `git checkout -B lane/perf main` (loss-free per the authorization above), then `git status --short` must be clean (untracked scratch fine).
 3. `npm install --no-audit --no-fund` if needed; `npm run build` green before you touch anything.

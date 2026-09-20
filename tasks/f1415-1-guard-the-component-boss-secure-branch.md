@@ -1,6 +1,6 @@
 # f1415-1 — guard the component-boss branch of the headless secure predicate
 
-**FIRE-AUTHORED (attended review welcome)** — s1416, from F-1415-1 (`tasks/BACKLOG.md`, filed s1415) plus the merged cure it describes (`1a4831df`, `reviews/f1414-1.md`).
+**FIRE-AUTHORED (attended review welcome)** — s1416, from F-1415-1 (`tasks/BACKLOG.md`, filed s1415) plus the merged cure it describes (`653c7fef`, `reviews/f1414-1.md`).
 
 **Role / workdir:** main slot — repo ROOT (`/Users/robin/Claude/Projects/Gold Rush`). Not a lane.
 
@@ -33,7 +33,7 @@ s1415 verified the predicate BY READING (`WaveSystem.ts:854-855` builds the same
 1. **Extract the predicate as a pure, exported function** in `src/sim/HeadlessContractSim.ts` — e.g. `export function bossGroupDown(baron, contractId, event)` (name it as you judge best; keep it in this file). It must be a *pure move*: the expression is copied, not rewritten. `bindEventLog()` then calls it. **Prove the move is behaviour-neutral, do not assert it** — see self-check 3.
    ⓘ Extraction is the point, not a convenience: the predicate lives inside an event-handler closure, so today the only way to reach it is to run a whole contract to a boss kill, and F-1415-2 has ruled that the escort run *cannot* kill this boss under `--policy=idle`. A unit-reachable surface is what makes the guard affordable at all.
 
-2. **New guard file `scripts/component-boss-secure.test.mjs`**, rooted in `test:node-guards` in `package.json` (insert alphabetically; the roster is **42** files as of `56908b0f` — count it yourself and report the number you found, per F-1411-3). Cases, at minimum:
+2. **New guard file `scripts/component-boss-secure.test.mjs`**, rooted in `test:node-guards` in `package.json` (insert alphabetically; the roster is **42** files as of `c8aa0c3e` — count it yourself and report the number you found, per F-1411-3). Cases, at minimum:
    - `e2-hill-mine` (components, NO variantId): matching `bossGroupId` + `bossRemaining === 0` → **true**.
    - Same contract, matching `bossGroupId` + `bossRemaining === 1` → **false**. *(this is the assertion the whole finding is about)*
    - Same contract, **wrong** `bossGroupId` + `bossRemaining === 0` → **false**.
@@ -47,7 +47,7 @@ s1415 verified the predicate BY READING (`WaveSystem.ts:854-855` builds the same
 
 ## FIREWALL
 **TOUCH-ONLY:** `src/sim/HeadlessContractSim.ts` (extraction + call site ONLY), `scripts/component-boss-secure.test.mjs` (new), `package.json` (the `test:node-guards` roster line only).
-**NO:** `src/systems/WaveSystem.ts` (read it, never edit it — the s1406 cure `eaefdb24` lives there) · `src/game/Game.ts` · `scripts/gr-sim.mjs` · `scripts/gr-sim.test.mjs` (F-1412-1's dead-weight line is NOT yours to fold) · any `assets/contracts/**` (if a contract looks wrong, report it) · any pinned hash anywhere · `tasks/**` · `reviews/**` · `STATUS.md`.
+**NO:** `src/systems/WaveSystem.ts` (read it, never edit it — the s1406 cure `a05171ce` lives there) · `src/game/Game.ts` · `scripts/gr-sim.mjs` · `scripts/gr-sim.test.mjs` (F-1412-1's dead-weight line is NOT yours to fold) · any `assets/contracts/**` (if a contract looks wrong, report it) · any pinned hash anywhere · `tasks/**` · `reviews/**` · `STATUS.md`.
 🚫 **Do NOT touch the escort probe.** `node scripts/gr-sim.mjs --contract e2-hill-mine --mode escort --policy=idle` returning **rc 1** is EXPECTED and RETIRED as an acceptance test (F-1415-2, s1415). Two fires have already STOPPED on it. It appears in no test file; `scripts/gr-sim.test.mjs:89` asserts `cli.signal === null` (which rc 1 satisfies) and `modes[0].id === "escort"` — never `rc 0`, never `secured`. **If you find yourself trying to make that probe green, you have left this slice.**
 
 ## SELF-CHECK (name the exact commands; both projects; zero console)

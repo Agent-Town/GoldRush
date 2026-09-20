@@ -19,9 +19,9 @@ economics**. It is a provenance claim, so git can answer it directly — no sim 
 | # | Question | Answer | Evidence |
 |---|---|---|---|
 | 1 | What IS the deadline? | `connect: { required: 2, byWave: 6 }` | `assets/contracts/epoch-3-voltage/contracts.json` |
-| 2 | When was it introduced? | **2026-07-15T01:38:27+07:00** | `dafe9b633` `runner(lane-b): canyon-works-01.md` (`git log -S '"byWave": 6'`) |
-| 3 | When was the headless sim born? | **2026-07-30T15:40:33+07:00** | `b33afb047` — first commit adding `src/sim/HeadlessContractSim.ts` |
-| 4 | What did the Walk Era touch? | headless sim + docs + tests ONLY | `3dd7790d6`, 5 files, **zero** browser gameplay source |
+| 2 | When was it introduced? | **2026-07-15T01:38:27+07:00** | `dcaad5a9b` `runner(lane-b): canyon-works-01.md` (`git log -S '"byWave": 6'`) |
+| 3 | When was the headless sim born? | **2026-07-30T15:40:33+07:00** | `d705cf9c8` — first commit adding `src/sim/HeadlessContractSim.ts` |
+| 4 | What did the Walk Era touch? | headless sim + docs + tests ONLY | `55ce6f7d2`, 5 files, **zero** browser gameplay source |
 | 5 | Where did "wave 6" come from? | a spec PROSE line | `specs/epoch-saga/e3-voltage-bundle.md:75` |
 | 6 | Was the deadline ever timed? | **NO** | `e2e/e3-canyon-works.spec.ts:34` ("strings the gorge, holds the night, and restores a cut span") |
 

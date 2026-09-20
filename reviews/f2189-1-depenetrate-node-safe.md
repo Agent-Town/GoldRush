@@ -1,9 +1,9 @@
 # f2189-1-depenetrate-node-safe — drain review (s2191 gated, s2192 finished + merged)
 
 **Slice:** `f2189-1-depenetrate-node-safe` (corrective for F-2189-1/F-2189-2) — drained together with its predecessor `c3-hero-move-pin`
-**Branch:** `lane/c` · **tip:** `2d1317b6d` · **base:** `main` @ `480520208`
+**Branch:** `lane/c` · **tip:** `d36f5e24b` · **base:** `main` @ `af1d410cb`
 **Gated in:** detached `gate-s2191/` (§3.0b — undecided content never entered main's tree or index)
-**Merge under test:** `d623526ac` · **merged to main as:** `eddb903f729e174ec7f61abb81fee6a671e95e55`
+**Merge under test:** `66891f18f` · **merged to main as:** `0e827f9e5c69a56c8d4e4ca610f39aa2e51901ee`
 
 ## Provenance — this review has two authors, and the second one says so
 
@@ -28,7 +28,7 @@ blocking findings. This corrective cures both without touching the movement cure
 - **F-2189-2 (a shipped cure was deleted).** `restoreHero` now handles `y` *conditionally* rather than by
   deletion: `RunSuspend.ts:926` constructs the position **with** the saved `snapshot.hero.position.y`, and
   `:929` recomputes `y` from terrain **only if** depenetration actually moved `x` or `z`. That preserves the
-  shipped `f56c0ea36` y-restore cure AND the new relocation cure — the two are not in conflict once the
+  shipped `afbee591f` y-restore cure AND the new relocation cure — the two are not in conflict once the
   condition is made explicit. This is a better resolution than either restoring or deleting the line.
 
 ## Evidence (all re-run by me on the merged tree, `--workers=1` per §3.1)
@@ -81,7 +81,7 @@ read an equal count as a failed measurement or as evidence the clause rotted.
 
 ## Merge classification
 
-Base `main` @ `480520208`; `main..lane/c` = 2 commits (c3 + f2189-1). Per-file, from `lane-freeze-classify`:
+Base `main` @ `af1d410cb`; `main..lane/c` = 2 commits (c3 + f2189-1). Per-file, from `lane-freeze-classify`:
 all `src/**` and `e2e/**` paths are **LANE-ONLY** (main never moved them). The single **BOTH-MOVED** path is
 `tasks/BACKLOG.md`, which conflicted at row 1 exactly as s2190 predicted.
 
@@ -90,15 +90,15 @@ order, and the lane's `🟡 F-2189-1 + F-2189-2 — lane/c READY-FOR-GATES` stat
 `🔺 F-PT15-1 + F-PT15-2` intake row it reports on. Both sides survive (Retention Law); no row was dropped or rewritten.
 — *s2192: true on content, false on line structure; see F-2192-1 above. Cured before the bookkeeping commit.*
 
-**How the merge was performed (s2192), and why this way.** s2191's gate merge `d623526ac` had parents `480520208`
-(main-at-the-time) + `2d1317b6d` (lane/c). By the time s2192 merged, main was one commit further along at `57b3c8473`
+**How the merge was performed (s2192), and why this way.** s2191's gate merge `66891f18f` had parents `af1d410cb`
+(main-at-the-time) + `d36f5e24b` (lane/c). By the time s2192 merged, main was one commit further along at `6dcc35dae`
 — and that commit changes **`STATUS.md` line-1 only** (the s2192 lock), measured, not assumed. So rather than
 re-resolving the BACKLOG conflict by hand and risking a *different* resolution from the one the battery ran against,
-s2192 merged **the gated commit `d623526ac` itself** into main. That makes the shipped tree provably the gated tree:
+s2192 merged **the gated commit `66891f18f` itself** into main. That makes the shipped tree provably the gated tree:
 
 | Check | Result |
 |---|---|
-| `git diff --stat d623526ac HEAD` (post-merge) | ✅ **`STATUS.md` only** — the merged tree is byte-identical to the gated tree everywhere else |
+| `git diff --stat 66891f18f HEAD` (post-merge) | ✅ **`STATUS.md` only** — the merged tree is byte-identical to the gated tree everywhere else |
 | `git rev-list --count main..lane/c` | ✅ **0** — the lane is fully absorbed, no false-ahead residue |
 | per-line BACKLOG row audit vs both sides | ✅ **0 / 0 / 0** after the F-2192-1 cure |
 
@@ -106,8 +106,8 @@ Merge and commit were **one act** (§3.0b / F-1589-5) — nothing was ever left 
 
 ## Disposition
 
-- `f2189-1-depenetrate-node-safe` → `merged` @ `eddb903f729e174ec7f61abb81fee6a671e95e55`
-- `c3-hero-move-pin` → `merged` @ `eddb903f729e174ec7f61abb81fee6a671e95e55` — its `blocked` / `blockClass=gate-side`
+- `f2189-1-depenetrate-node-safe` → `merged` @ `0e827f9e5c69a56c8d4e4ca610f39aa2e51901ee`
+- `c3-hero-move-pin` → `merged` @ `0e827f9e5c69a56c8d4e4ca610f39aa2e51901ee` — its `blocked` / `blockClass=gate-side`
   hold is lifted by this merge, which is the stated lift condition in its own `blockedReason`. No owner word was
   required or used (F-1383-1). s2192 re-ran `drain-block-check` on both task files rather than inheriting s2191's
   reading: `f2189-1` **CLEAR**, `c3` **rc=1 gate-side** with the lift condition printed verbatim.

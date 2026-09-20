@@ -2,7 +2,7 @@
 
 # Task a8-seed-run-caravan: plant the future — e9-seed-run mechanic (door-completion sheet item A8)
 
-Executed 2026-08-20 by an attended-dispatched Opus agent (branch `worktree-agent-ad297088098a5a90d` @ `35c65879e`, 10 path-scoped commits), authorized by `specs/agent-play/door-completion-sheet.md` (RATIFIED — A8) — drained to main by the attended session.
+Executed 2026-08-20 by an attended-dispatched Opus agent (branch `worktree-agent-ad297088098a5a90d` @ `10eeddee1`, 10 path-scoped commits), authorized by `specs/agent-play/door-completion-sheet.md` (RATIFIED — A8) — drained to main by the attended session.
 
 ## What shipped
 - `src/systems/SeedCaravanSystem.ts` — one consumer both engines construct and tick, `create()` off the CONTRACT. Route = the five authored buildZone centres (byte-identical to the mask table's published `caravanRoute`); grounds = the three authored stakes. Speed 1.6 wu/s, 40 s dwell, contact damage r 3.6 / 3 dps / 3-attacker cap.

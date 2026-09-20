@@ -1,6 +1,6 @@
 # Review — safari-swap (MQ-11, first external tester's Safari bug)
 
-**Slice:** lane-safari-swap · **Branch:** lane/m4 · **Tip:** a830c0f5 · **Merged:** 086c9bfd (--no-ff) · **Base:** be391cf6 (2026-07-21 17:24, ~16h — but no hot-file conflict, see classification)
+**Slice:** lane-safari-swap · **Branch:** lane/m4 · **Tip:** 424c05f7 · **Merged:** 368077cf (--no-ff) · **Base:** 2dda8e48 (2026-07-21 17:24, ~16h — but no hot-file conflict, see classification)
 **Drained by:** s888 fire · 2026-07-22T09:xxZ · **Verdict:** ✅ PASS — merged to main.
 
 ## What it does (one paragraph)
@@ -16,7 +16,7 @@ Fixes MQ-11, reported by the game's first external tester (FrankieTown, on Safar
 | Console/page errors | zero (spec collects page errors and asserts none; "plain boot error-free" green all 3 browsers) |
 
 ## Merge classification
-Base `be391cf6` (~16h stale) but main moved **none** of the 4 touched files since base (`git log be391cf6..main -- src/core/Renderer.ts src/main.ts playwright.scratch.config.ts docs/MAP-QUALITY-REGISTER.md` → empty), and the same-fire locked-win merge (c21d1839) touched neither main.ts nor Renderer.ts → every file **LANE-TOUCHED only**, clean `git merge --no-ff`, zero conflicts. The base-staleness RE-LAND rule (Mistake #15) only triggers on hot-file conflicts; there were none. 5 files, +168/-32.
+Base `2dda8e48` (~16h stale) but main moved **none** of the 4 touched files since base (`git log 2dda8e48..main -- src/core/Renderer.ts src/main.ts playwright.scratch.config.ts docs/MAP-QUALITY-REGISTER.md` → empty), and the same-fire locked-win merge (48e75b77) touched neither main.ts nor Renderer.ts → every file **LANE-TOUCHED only**, clean `git merge --no-ff`, zero conflicts. The base-staleness RE-LAND rule (Mistake #15) only triggers on hot-file conflicts; there were none. 5 files, +168/-32.
 
 | File | Class |
 |------|-------|

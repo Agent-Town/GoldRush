@@ -13,7 +13,7 @@ const msg = [
   'fix: f1660-1 — restore the F-E2S-3 de-list as cited exemptions and ratchet the door',
   '',
   'An owner ruling of 2026-08-09 (F-E2S-3, "de-list now, socket later", shipped as',
-  'f1605-1 at 88530e3ef) was silently reversed on main for ~15 hours: 48a0d41ab replaced',
+  'f1605-1 at 312b443f1) was silently reversed on main for ~15 hours: 6f74bf510 replaced',
   'the SUPPORTED_CONTRACTS literal with a derivation and did not carry the three E2',
   'railcars into the new CONTRACT_ADMISSION_EXEMPTIONS table, so the door re-admitted',
   'e2-hill-mine/e2-trestle/e2-incline modelessly. The prior policy lived in a code',

@@ -59,7 +59,7 @@ test('The Incline boots shipped data: upper cart, lower boss rail, and legal slu
   await hold(page, 'KeyW', 850);
   await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.activePrompt), { timeout: 8_000 }).toBe('tavern');
   await page.getByTestId('town-open-board').click();
-  // Chapter tabs since 6822607f; chapter derived from the manifest so no literal can freeze again.
+  // Chapter tabs since ceddb7ea; chapter derived from the manifest so no literal can freeze again.
   await goToContractPage(page, 'e2-incline');
 
   const card = page.getByTestId('contract-card-e2-incline');

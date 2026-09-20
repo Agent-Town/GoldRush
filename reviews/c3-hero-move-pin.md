@@ -1,7 +1,7 @@
 # Review — c3-hero-move-pin (lane/c)
 
 **Slice:** `c3-hero-move-pin` — the hero can be pinned unable to move (owner playtest 15, 2026-08-22)
-**Branch:** `lane/c` · **Tip:** `9aa942ee6` (`runner(lane-c): c3-hero-move-pin.md`) · **Base:** `51ba8814e3f0f4ce705b7a5124f483f3ad410c5d`
+**Branch:** `lane/c` · **Tip:** `ed5d58df9` (`runner(lane-c): c3-hero-move-pin.md`) · **Base:** `d6250ab2775fc5484105b12a0ad532ef7ef5bb93`
 **Gated by:** s2189 fire, 2026-08-22, in detached worktree `gate-s2189/` (§3.0b — undecided content never entered main's tree or index)
 **§3.0 block check:** `✅ CLEAR — c3-hero-move-pin.md [c3-hero-move-pin] status="queued"`
 
@@ -9,8 +9,8 @@
 
 ## VERDICT: 🛑 HOLD — DO NOT MERGE. One blocking defect, cured by a ~5-line move.
 
-> ✅ **SUPERSEDED — THIS HOLD IS DISCHARGED. THE SLICE SHIPPED at `eddb903f729e174ec7f61abb81fee6a671e95e55`**
-> (s2192, 2026-08-22). Ancestry verified: `git merge-base --is-ancestor eddb903f7 main` → **true**.
+> ✅ **SUPERSEDED — THIS HOLD IS DISCHARGED. THE SLICE SHIPPED at `0e827f9e5c69a56c8d4e4ca610f39aa2e51901ee`**
+> (s2192, 2026-08-22). Ancestry verified: `git merge-base --is-ancestor 0e827f9e5 main` → **true**.
 > The verdict above is **kept verbatim** (Retention Law: supersede, never delete) and was correct when written.
 > The blocking defect it names — the `?raw` specifier dragging Vite into plain node, taking whole-suite e2e
 > collection from `2958 tests in 425 files` to **0 in 0** — was cured by the corrective
@@ -71,7 +71,7 @@ import registryText from '../../assets/pilots/map-rebuild-spike/landmark-collisi
 
 | tree | `playwright test --list` | rc |
 |---|---|---|
-| `main` (`f0f6bca61`) | `Total: 2958 tests in 425 files` | 0 |
+| `main` (`063b26b23`) | `Total: 2958 tests in 425 files` | 0 |
 | merged (`main` + `lane/c`) | `Total: 0 tests in 0 files`, 8 × import-attribute TypeError | 1 |
 
 ✅ **INDEPENDENTLY CONFIRMED BY THE HOUSE'S OWN GUARD, WHICH EXISTS BECAUSE THIS EXACT CLASS HAS HAPPENED BEFORE.** `scripts/whole-suite-collection.test.mjs` — *"whole suite collects without loading Vite-only modules"* — was created by the `fe2cs2-1` drain after the identical `?raw`-reaches-node defect. Run here in both directions: **main PASS (1.9 s) · merged FAIL**, the failure printing `Total: 0 tests in 0 files`. The guard is not broken and the red is not mine to interpret — it is the mechanism the factory already built for this, firing correctly the second time.
@@ -94,7 +94,7 @@ import registryText from '../../assets/pilots/map-rebuild-spike/landmark-collisi
 if (hero?.group?.position) hero.group.position.y = snapshot.hero.position.y;
 ```
 
-`git log -S` attributes that line to **`f56c0ea36` — `runner(lane-a): lane-hero-y-restore-roundtrip.md`**, a task whose entire purpose was curing `e2e/restore-validation.spec.ts:658` (*"active megaproject wrecker references survive strict normalization and restore"*), whose failure was **exactly one** difference: `root.hero.position.y: 0.14559222393281415 != 0.2763519114255905`.
+`git log -S` attributes that line to **`afbee591f` — `runner(lane-a): lane-hero-y-restore-roundtrip.md`**, a task whose entire purpose was curing `e2e/restore-validation.spec.ts:658` (*"active megaproject wrecker references survive strict normalization and restore"*), whose failure was **exactly one** difference: `root.hero.position.y: 0.14559222393281415 != 0.2763519114255905`.
 
 The deletion is *plausibly* correct — the new relocate recomputes height via `heroVisualYAt`, and re-applying the saved `y` afterwards would undo it. **But it is unverified, and it cannot be verified on this tree**, because F-2189-1 prevents `restore-validation.spec.ts` from collecting at all. ✓ VERIFIED: `run-suspend.spec.ts` contains **zero** assertions on hero `y` (grepped), so its 42/42 does not cover this.
 
@@ -128,7 +128,7 @@ Red once inside the 4-suite battery; **passes alone at 37.6s against its 90s bud
 
 ## Merge classification (for the fire that lands this after the corrective)
 
-Base `51ba8814e`, tip `9aa942ee6`, 1 commit, 7 paths, `ahead=1 behind=5`.
+Base `d6250ab27`, tip `ed5d58df9`, 1 commit, 7 paths, `ahead=1 behind=5`.
 
 | path | class | note |
 |---|---|---|

@@ -1,7 +1,7 @@
 // s1275 — F-1275-2: the drain skill carried a STALE PROHIBITION.
 //
 // It stated `playwright.config.ts` sets no `workers` key and ended "Never move this into
-// playwright.config.ts". Both were false as of d1a0846d (s1270): line 30 carries
+// playwright.config.ts". Both were false as of 20fda8a5 (s1270): line 30 carries
 // `workers: isFireShell ? 1 : undefined`. The prohibition existed to keep lanes at full
 // parallelism, and the shipped mechanism SATISFIES that — so read literally it condemned
 // its own cure, and a session obeying it would delete line 30 and re-open F-1270-1.
@@ -29,7 +29,7 @@ const NEW =
   'reproduces at `--workers=1`.**\n' +
   "  - ✅ **THE LAW NOW HAS A MECHANISM — THIS BULLET'S OLD PROHIBITION WAS STALE AND IS " +
   'CORRECTED (F-1275-2, s1275).** It used to end *"Never move this into `playwright.config.ts`"* ' +
-  'and to state that the config sets no `workers` key. Both were **false as of `d1a0846d` ' +
+  'and to state that the config sets no `workers` key. Both were **false as of `20fda8a5` ' +
   '(s1270)**: `playwright.config.ts:30` carries `workers: isFireShell ? 1 : undefined`, keyed on ' +
   '`CLAUDE_CONFIG_DIR` being PRESENT (launchd and `fire-runner.sh:81` set it; lanes and attended ' +
   'sessions never do). The prohibition existed to stop lanes paying for a fire-only defect — and ' +

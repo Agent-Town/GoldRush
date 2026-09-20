@@ -1,9 +1,9 @@
 # Review — skillmd-contract-list-generator (lane-a)
 
 - **Slice:** `tasks/skillmd-contract-list-generator.md` (HarnessDev batch; supersedes the honest stop `stopped-s2464-honesty-guard-skillmd-list-has-no-generator-…-unclaimed-contracts-public`)
-- **Branch / tip:** `lane/a` @ `cd6119072` (runner auto-commit)
-- **Merged:** `24352d079c666413df8ccf9087dc4c5d76a07854` (s2472, `--no-ff`)
-- **Gated in:** detached worktree `gate-s2472` off `de29aa0cc` (§3.0b — nothing undecided entered main's tree)
+- **Branch / tip:** `lane/a` @ `a0cf10640` (runner auto-commit)
+- **Merged:** `9b9397c8ec1836038402788286b47f8acf396b8e` (s2472, `--no-ff`)
+- **Gated in:** detached worktree `gate-s2472` off `f8f08ea22` (§3.0b — nothing undecided entered main's tree)
 
 ## Verdict
 
@@ -33,7 +33,7 @@ Nothing renders, so no screenshots: the slice touches a served markdown document
 
 ## Merge classification
 
-Base `de29aa0cc`; lane was `behind=10`. Clean auto-merge, **zero conflicts**.
+Base `f8f08ea22`; lane was `behind=10`. Clean auto-merge, **zero conflicts**.
 
 | File | Class | Resolution |
 |---|---|---|

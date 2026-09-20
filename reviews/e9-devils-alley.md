@@ -1,6 +1,6 @@
 # e9-devils-alley — A9, "the wind replans"
 
-**Slice:** door-completion-sheet §A9 (RATIFIED 2026-08-20, owner verbatim: "Group 1: approved (with any tweaks)") · **Branch:** `worktree-agent-afb0b4a8ee24d0d5f` · **Base:** `b9fd6fecb`
+**Slice:** door-completion-sheet §A9 (RATIFIED 2026-08-20, owner verbatim: "Group 1: approved (with any tweaks)") · **Branch:** `worktree-agent-afb0b4a8ee24d0d5f` · **Base:** `4d2491587`
 
 ## Verdict
 
@@ -149,7 +149,7 @@ manufacture reds on any spec that runtime-imports `/src/*.ts`).
 | `npm run build` | **rc=0**, `✓ built in 2.68s` |
 | `npx playwright test --list` | **2932 tests / 422 files**, against a MEASURED base of **2928 / 421** (`--grep-invert "A9 (plain boot\|the wind)"` on the same tree) — **exactly the +4/+1 this slice's two tests across two projects add, and not one test lost anywhere else.** This is F-A8-7's own instrument: a both-engines module that imports render code collapses it to `Total: 0 tests in 0 files`, so the number is checked by subtraction rather than by eye. |
 | battery determinism | **12 runs, every repeat byte-identical** |
-| `null-floor-anchors` regen + `--check` | **67 floors match, rc=0** (65 before + this contract's 2). ⭐ **The whole regen diff is 19 insertions / 1 deletion = the git-derived `eraStamp` (`1817cb273` → `b9fd6fecb`, my own merge-base) plus the 18 lines of the new block. EVERY other contract's floor is byte-unmoved, which is the strongest available proof that this consumer changes nothing off its own map.** Law 2 asserted by the guard: both new rows `secured: false`. |
+| `null-floor-anchors` regen + `--check` | **67 floors match, rc=0** (65 before + this contract's 2). ⭐ **The whole regen diff is 19 insertions / 1 deletion = the git-derived `eraStamp` (`72da08d6a` → `4d2491587`, my own merge-base) plus the 18 lines of the new block. EVERY other contract's floor is byte-unmoved, which is the strongest available proof that this consumer changes nothing off its own map.** Law 2 asserted by the guard: both new rows `secured: false`. |
 | door guards (`same-game-audit` ×3, `same-game-report-guard` ×3, `door-admission-ratchet`, `bench-seeds`, `null-floor-anchors`, `e3-mask-tables`, `skillmd-guard` incl. its positive control) | **45 tests / 45 pass / 0 fail**, 352.8 s |
 | `e9-devils-alley-relocation`, both projects | **4/4** |
 | `er01-e9-census`, both projects | **8/8** |
@@ -187,7 +187,7 @@ does. Deriving half a rule is worse than listing it, because it looks derived.
 
 ## Merge classification
 
-Base `b9fd6fecb`. Every file below is LANE-TOUCHED only.
+Base `4d2491587`. Every file below is LANE-TOUCHED only.
 
 - **New:** `src/systems/ScheduledRelocationSystem.ts`, `src/systems/DevilsAlleyPresentation.ts`,
   `e2e/e9-devils-alley-relocation.spec.ts`, `artifacts/e9-devils-alley/*`,

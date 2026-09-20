@@ -4,7 +4,7 @@ Date: 2026-09-01 (Asia/Bangkok)
 
 ## Verdict
 
-**FIELD STOPPED AT THE MANDATORY EARLY SKEW PROBE.** Live production and the detached arena were build `325b7398`, Era 5. The probe's honest current-build reel carried engine hash `417ac150318346d52acf9658a6578bc1cc9d54d484c922e80fb6cb8965c3c864`; the Era 5 registry records only `c0a015aed8285ebf05228ff1165395b86b9496d66af45e7c5b9c41d6bffc237b`. The public door returned HTTP 400:
+**FIELD STOPPED AT THE MANDATORY EARLY SKEW PROBE.** Live production and the detached arena were build `085ad8ac`, Era 5. The probe's honest current-build reel carried engine hash `417ac150318346d52acf9658a6578bc1cc9d54d484c922e80fb6cb8965c3c864`; the Era 5 registry records only `c0a015aed8285ebf05228ff1165395b86b9496d66af45e7c5b9c41d6bffc237b`. The public door returned HTTP 400:
 
 `{"ok":false,"error":"reel_not_current","message":"This reel's engine pin is not recorded in era 5 'the Replayed Board'."}`
 
@@ -12,7 +12,7 @@ The task's skew law says `early probe, skew → STOP`. Neither rider launched, n
 
 ## Gate and shim receipts
 
-- Detached arena: `/tmp/heat9-325b7398` at `325b73987eb6051a8fed0a41ec9f77f4a3989102`.
+- Detached arena: `/tmp/heat9-325b7398` at `085ad8acda5c9bf3d14a8d87d96c7b81a3466345`.
 - Arena install/build: green after correcting the recorded working-directory mistake; Vite built 2,214 modules and asset-diet passed.
 - Era gate: Era 5, **the Replayed Board**.
 - SSE: `"content":"OK"`, `"finish_reason":"stop"`, `data: [DONE]`.

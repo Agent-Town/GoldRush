@@ -1,7 +1,7 @@
 # f1523-1-dispatch-guard-residue — the dispatch guard refuses on RESIDUE, not on the coarse `HOLDS` word
 
 **Slice:** `f1523-1-dispatch-guard-residue` (F-1523-6 corrective)
-**Branch:** `lane/c` · **tip:** `441e14a14` · **base:** `main` at gate time `bfeaf4398`
+**Branch:** `lane/c` · **tip:** `441e14a14` · **base:** `main` at gate time `353b2bd35`
 **Gated in:** detached worktree `worktrees/gate-s1525` (§3.0b custody), three-way merge commit `36a60028`
 **Drained by:** s1525 · **Verdict:** ✅ **MERGE**
 
@@ -70,7 +70,7 @@ they earn their keep against future edits, not against this one.
 
 ## Merge classification
 
-Base `bfeaf4398`. Three-way `git merge --no-ff lane/c` in the gate worktree: **merged by the `ort`
+Base `353b2bd35`. Three-way `git merge --no-ff lane/c` in the gate worktree: **merged by the `ort`
 strategy, zero conflicts**; merged-tree diff vs main is exactly the two firewalled files, +125/−4.
 
 | File | Class | Resolution |

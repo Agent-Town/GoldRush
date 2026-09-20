@@ -125,7 +125,7 @@ before touching anything.
 
 **Pre-proved for you (s1033 re-verified this from scratch — the s1032 edition described a tip that
 attempt 1 has since replaced):** attempt 1 already refreshed the lane, so `lane/e2-arsenal` now sits
-at **`d9eb4253`** with **zero commits ahead of main** (`git log main..lane/e2-arsenal` = empty) and
+at **`011f959e`** with **zero commits ahead of main** (`git log main..lane/e2-arsenal` = empty) and
 its tip is a **strict ancestor of main** (`git merge-base --is-ancestor` = true). There is no
 undrained lane work to destroy and nothing to classify — the pre-flight is trivially safe. Proceed.
 *(Honest limit: the lane worktree's uncommitted-dirt state was NOT independently probed this fire —

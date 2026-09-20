@@ -1,6 +1,6 @@
 # gt-03b — goal-side steer (GT-03 scope 2)
 
-**Slice:** `lane-gt-03b-goal-side-steer` · **branch:** `lane/m3` · **tip:** `c49f42be` · **base:** `831a8ea5`
+**Slice:** `lane-gt-03b-goal-side-steer` · **branch:** `lane/m3` · **tip:** `c49f42be` · **base:** `c33b3387`
 **Drained:** s1181 fire, 2026-07-28 · **Verdict: MERGE**
 
 ## What it does
@@ -29,7 +29,7 @@ side and latched (F-1130-5: 8 of 29 Hill Mine Rail Toughs). Both resolver sites 
 | Slice gate `gt-03:155` (widened, 4-case goal-side table) | **PASS desktop + mobile (390px)** |
 | Zero console/page errors | asserted inside the passing `:155` test, both projects |
 | Adjacent `gt-02-slope.spec.ts` | 4 passed / `:254` red — **fingerprinted pre-existing** (below) |
-| Merge classification | both files **LANE-TOUCHED only** — `git log 831a8ea5..main -- src/entities/Enemy.ts e2e/gt-03-enemy-elevation.spec.ts` **EMPTY** |
+| Merge classification | both files **LANE-TOUCHED only** — `git log c33b3387..main -- src/entities/Enemy.ts e2e/gt-03-enemy-elevation.spec.ts` **EMPTY** |
 
 Gated on **scratch port 5234 with an external server** — lane-c was LIVE (`wardrobe-preview`,
 started 20:29) and lane worktrees share 5188 (Mistake #12).

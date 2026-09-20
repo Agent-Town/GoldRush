@@ -6,10 +6,10 @@ READ FIRST: AGENTS.md; src/world/Terrain3dClaimPilot.ts (REGISTRY + the blackout
 
 Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead is NORMAL — the runner auto-commits. For each ahead commit: if its content is already merged to main (verify via git log/diff), it is a SAFE DUPE → `git checkout -B lane/e2-arsenal main && git clean -fd` and PROCEED. STOP-and-report ONLY if an ahead commit's content is NOT on main (undrained work), or the worktree holds uncommitted edits you did not make. Then `npm install --no-audit --no-fund`; `npm run build` green before touching anything.
 
-GROUND-TRUTH pre-flight: `assets/pilots/map-rebuild-spike/deepwater-claim-terrain-contract.json` + `deepwater-claim-panorama-contract.json` + both GLBs must exist on your base (merged 2026-07-16, 54c52af7 ancestry). If absent, STOP and report "E5 wave not on base". If REGISTRY already has `e5-deepwater-claim`, STOP and report SHIPPED.
+GROUND-TRUTH pre-flight: `assets/pilots/map-rebuild-spike/deepwater-claim-terrain-contract.json` + `deepwater-claim-panorama-contract.json` + both GLBs must exist on your base (merged 2026-07-16, 13793f6e ancestry). If absent, STOP and report "E5 wave not on base". If REGISTRY already has `e5-deepwater-claim`, STOP and report SHIPPED.
 
 ## Why (drain follow-up, 2026-07-16)
-3D-D's E5 Deepwater Claim pair merged (54c52af7) — chain-2's first map, carrying the owner-directed drowned E4 town as four reuse-only landmarkMounts (F-3D-D-48: seabed contacts −5.98..−5.74 m). The registry has no e5-deepwater-claim entry, so none of it is visitable. Same gap-class as wire-blackout-dust (now shipped — follow its exact landed pattern).
+3D-D's E5 Deepwater Claim pair merged (13793f6e) — chain-2's first map, carrying the owner-directed drowned E4 town as four reuse-only landmarkMounts (F-3D-D-48: seabed contacts −5.98..−5.74 m). The registry has no e5-deepwater-claim entry, so none of it is visitable. Same gap-class as wire-blackout-dust (now shipped — follow its exact landed pattern).
 
 ## Scope
 1. Add the `e5-deepwater-claim` REGISTRY entry in src/world/Terrain3dClaimPilot.ts wiring deepwater-claim-terrain-contract.json + deepwater-claim-panorama-contract.json via the `?raw` import pattern. Data entry only — the four drowned-town mounts load through the EXISTING landmarkMounts path (assets are pre-filled); do not add mount logic.

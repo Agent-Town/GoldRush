@@ -1,7 +1,7 @@
 # f1428-1 — guard the two unguarded harness decisions
 
 - **Slice:** `f1428-1-guard-the-two-unguarded-harness-decisions` (ladders F-1428-1)
-- **Branch / tip:** `lane/m3` @ `61676832` (base `ef800339`)
+- **Branch / tip:** `lane/m3` @ `61676832` (base `df6b346d`)
 - **Drained by:** s1430 fire, 2026-08-03
 - **Verdict:** ✅ **MERGE** — both manufactured red/green pairs reproduced independently, and the control run on clean main proves the arms are aimed at the right thing.
 
@@ -29,7 +29,7 @@ Gates run in a detached worktree `worktrees/gate-s1430` (§3.0b — no undecided
 | `--self-test`, clean main | rc 0, **4 arm lines** |
 | Adjacent suites | **none** — `grep -rln "concurrency-class-rate" src e2e scripts package.json` matches only the script itself and `tasks/goals.json`. Zero code consumers, no runtime surface, no player surface. |
 | Firewall | three-dot diff = 1 file, 22 insertions, 0 deletions; `exactCountMismatch` and `labelFor` byte-unchanged |
-| Merge classification | `scripts/concurrency-class-rate.mjs` **LANE-TOUCHED only** — `git log ef800339..main -- <file>` is empty, main never moved it. Clean copy, no graft. |
+| Merge classification | `scripts/concurrency-class-rate.mjs` **LANE-TOUCHED only** — `git log df6b346d..main -- <file>` is empty, main never moved it. Clean copy, no graft. |
 
 ### The acceptance: two manufactured red/green pairs
 
@@ -89,4 +89,4 @@ Two things worth separating:
 
 ## Custody
 
-Gate worktree `worktrees/gate-s1430` (detached at `5901d910`), `node_modules` symlinked. No undecided content entered main's working tree; main received only the decided file, path-scoped, after every gate was green. All probe mutations were applied to the worktree copy and reverted byte-identically (verified by string comparison, not by `git status`).
+Gate worktree `worktrees/gate-s1430` (detached at `d033d6e4`), `node_modules` symlinked. No undecided content entered main's working tree; main received only the decided file, path-scoped, after every gate was green. All probe mutations were applied to the worktree copy and reverted byte-identically (verified by string comparison, not by `git status`).

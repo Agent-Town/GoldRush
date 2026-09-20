@@ -10,7 +10,7 @@ Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead 
 
 ## Why (F-2315-1, measured by fire s2315 2026-08-25 — controlled experiment, both arms banked)
 
-`29c674b02` (drained s2314) landed the guard-stats append. Its commit headline reads *"persist the guard runner per-leg rows to a **tracked** JSONL"*, `reviews/f2313-1.md:129` records tracking as *"the master's stated intent"*, and the s2314 handoff invites the next fire to `git add` it *"when convenient"*.
+`c4b33670b` (drained s2314) landed the guard-stats append. Its commit headline reads *"persist the guard runner per-leg rows to a **tracked** JSONL"*, `reviews/f2313-1.md:129` records tracking as *"the master's stated intent"*, and the s2314 handoff invites the next fire to `git add` it *"when convenient"*.
 
 **Tracking it breaks a documented, guarded invariant.** `.claude/skills/drain/SKILL.md:46` states as verified: *"a gate can no longer dirty its own tree (verified: a full eight-guard run leaves `git status` clean)"*. `scripts/test-accounts.mjs:307` gives the reason verbatim: *"harmless by hand and fatal in a gate, because a drain's own precondition is a clean tree"*.
 

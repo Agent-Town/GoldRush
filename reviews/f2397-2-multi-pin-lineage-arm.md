@@ -1,6 +1,6 @@
 # f2397-2-multi-pin-lineage-arm — drain review (s2408)
 
-**Slice:** `lane-d-f2397-2-multi-pin-lineage-arm` · **branch:** `lane/d` · **lane tip:** `3e0f3988b` · **merge:** `8a2ff0df3` · **base:** `cec9f0c50`
+**Slice:** `lane-d-f2397-2-multi-pin-lineage-arm` · **branch:** `lane/d` · **lane tip:** `04df6d7a0` · **merge:** `6a88887d9` · **base:** `011e2063d`
 
 ## VERDICT: MERGED — the restored arm has teeth, re-proven drain-side rather than inherited
 
@@ -37,7 +37,7 @@ Single file, `scripts/assay-worker.test.mjs`, **LANE-TOUCHED only** — `git dif
 
 `engine-era-guard.test.mjs` is **red on unmodified main**, computed `386f971d…` against declared `c0a015ae…`. **Not caused by this slice** — verified: the merge touches one test file and leaves the registry and both worker files byte-identical.
 
-**Cause proven by bisecting the corpus, not guessed.** `ENGINE_SOURCE_INPUTS` (`assay-replay-agent.mjs:36–48`) includes **`package.json`**. Exactly one first-parent commit has touched any corpus path since the era-5 pin was blessed: `daae36dc7` (s2406, 21:41:03), and its *entire* `package.json` delta is **one guard filename** appended to the `test:ledger-guards` chain:
+**Cause proven by bisecting the corpus, not guessed.** `ENGINE_SOURCE_INPUTS` (`assay-replay-agent.mjs:36–48`) includes **`package.json`**. Exactly one first-parent commit has touched any corpus path since the era-5 pin was blessed: `e27259c67` (s2406, 21:41:03), and its *entire* `package.json` delta is **one guard filename** appended to the `test:ledger-guards` chain:
 
 ```
 + scripts/art-staging-gitdir-link-guard.test.mjs

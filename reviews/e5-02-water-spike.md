@@ -2,8 +2,8 @@
 
 - **Slice:** e5-02-water-spike (E5 Deepwater dimension — prototype/spike)
 - **Lane branch / tip:** lane/perf → `2f65b55a runner(lane-d): e5-02-water-spike.md`
-- **Base:** `f066289b` (lane reset to main by s590; runner ran e5-02 on it)
-- **Landed on main across two commits (see Merge classification):** `ceaf90fd` (17 new files, comingled with the s592 lock commit) + this commit (3 shared wiring hunks).
+- **Base:** `e3339d0f` (lane reset to main by s590; runner ran e5-02 on it)
+- **Landed on main across two commits (see Merge classification):** `b8ffe75d` (17 new files, comingled with the s592 lock commit) + this commit (3 shared wiring hunks).
 - **Verdict:** PASS — merged. Additive, debug-gated diagnostic harness. NOT player-visible in normal play → **no GZ item** (consistent with a spike, per the news-filter law: no player-visible change).
 
 ## What it does
@@ -24,9 +24,9 @@ Stands up the E5 "Deepwater" prototype behind `?debug&deepwater`, so the depth/t
 | Artifacts | `artifacts/e5-water-spike/{desktop,mobile}-chrome-{water-tile,boat-pads,storm-waves}.{json,png}` |
 
 ## Merge classification
-Lane base `f066289b` == current main for every touched file (`git diff --stat f066289b dff73e12` empty on all 20 paths) → the slice applied **cleanly, no 3-way graft needed**. All files are either brand-new (16) or additive-only hunks to shared files (Balance.ts/main.ts/vite-env.d.ts), all guarded by the `?debug&deepwater` flag.
+Lane base `e3339d0f` == current main for every touched file (`git diff --stat e3339d0f b9b04d8f` empty on all 20 paths) → the slice applied **cleanly, no 3-way graft needed**. All files are either brand-new (16) or additive-only hunks to shared files (Balance.ts/main.ts/vite-env.d.ts), all guarded by the `?debug&deepwater` flag.
 
-**Two-commit split (recovery artifact, F-1):** the s591 fire died mid-drain having staged only the 16/17 new files (not the 3 shared hunks). The s592 recovery lock commit used a plain `git commit` which swept those already-staged files into `ceaf90fd` alongside STATUS.md. A `git reset --soft` to un-comingle is sandbox-gated for headless fires, so the split was left in place — the content is correct and complete; only the commit boundary is imperfect. This commit lands the remaining 3 shared wiring hunks + this review.
+**Two-commit split (recovery artifact, F-1):** the s591 fire died mid-drain having staged only the 16/17 new files (not the 3 shared hunks). The s592 recovery lock commit used a plain `git commit` which swept those already-staged files into `b8ffe75d` alongside STATUS.md. A `git reset --soft` to un-comingle is sandbox-gated for headless fires, so the split was left in place — the content is correct and complete; only the commit boundary is imperfect. This commit lands the remaining 3 shared wiring hunks + this review.
 
 ## Findings
-- **F-1 (non-blocking, cosmetic):** e5-02's 17 new files are comingled into lock commit `ceaf90fd` rather than a single path-scoped drain commit. Content is correct and fully gated; no corrective task warranted (reset is gated; rewriting history for a cosmetic boundary is not worth the risk). Documented here for the ledger. Lesson recorded: after taking over a dead fire with a dirty index, `git reset` the pre-staged files before the lock commit, or commit with an explicit pathspec (`git commit STATUS.md`).
+- **F-1 (non-blocking, cosmetic):** e5-02's 17 new files are comingled into lock commit `b8ffe75d` rather than a single path-scoped drain commit. Content is correct and fully gated; no corrective task warranted (reset is gated; rewriting history for a cosmetic boundary is not worth the risk). Documented here for the ledger. Lesson recorded: after taking over a dead fire with a dirty index, `git reset` the pre-staged files before the lock commit, or commit with an explicit pathspec (`git commit STATUS.md`).

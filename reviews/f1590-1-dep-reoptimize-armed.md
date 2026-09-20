@@ -52,7 +52,7 @@ The pre-flight build passed, and all seven measured subject invocations returned
 
 ## Drain verdict — s1590, 2026-08-09 (same fire that authored it)
 
-**MERGED as evidence: `1dab43b6f3af05757b015c28527b5b309f28a809`.** Slice: `lane/b` @ `8e24c29b7`, one runner commit, 24 files, **+367 / −0, zero executable bytes**.
+**MERGED as evidence: `c4115d4e5c98182ea5479696110b80c4c1531455`.** Slice: `lane/b` @ `47b72dffb`, one runner commit, 24 files, **+367 / −0, zero executable bytes**.
 
 ### This is a REFUTATION, not another "could not tell"
 

@@ -7,7 +7,7 @@ WHY: slice 3 (`reviews/eight-winds-wiring-e2-enemies.md`, `fe3ae8cb`) tried to b
 
 > **Do not art-correct Coal Thief alone and re-queue.** The row-order premise must be established for **all three** sheets first, by an instrument that can actually see heading. A wrong mapping ships silently — the master says so, and that is precisely why this slice stopped.
 
-Since then the ladder settled **one** of the three. `f61843c0` (`reviews/eight-winds-e2-row-repairs.md`) shipped as an explicit **PARTIAL — 2 rows landed, 2 rows parked**: Rail Tough row 1 and Steam Wrecker row 2 landed; **Coal Thief row 0 and Steam Wrecker row 1 remain wrong on main** (F-1193-3, still open). ➡️ **So the three-sheet slice stays blocked and this task does not touch it.** What *is* newly possible is the single sheet whose four rows have all been addressed: **Rail Tough, and Rail Tough only.**
+Since then the ladder settled **one** of the three. `305af1f4` (`reviews/eight-winds-e2-row-repairs.md`) shipped as an explicit **PARTIAL — 2 rows landed, 2 rows parked**: Rail Tough row 1 and Steam Wrecker row 2 landed; **Coal Thief row 0 and Steam Wrecker row 1 remain wrong on main** (F-1193-3, still open). ➡️ **So the three-sheet slice stays blocked and this task does not touch it.** What *is* newly possible is the single sheet whose four rows have all been addressed: **Rail Tough, and Rail Tough only.**
 
 ---
 
@@ -15,15 +15,15 @@ Since then the ladder settled **one** of the three. `f61843c0` (`reviews/eight-w
 
 ### F-1221-1 — the committed instrument is RED on main, and its `probe-results.json` provenance is VOID
 
-`logs/s1190-rail-tough-wrench-probe.mjs` is the hash-proven instrument that settled rows 2/3 (s1191, `8b9e8af2`). **Run it on main today and it throws before writing anything:**
+`logs/s1190-rail-tough-wrench-probe.mjs` is the hash-proven instrument that settled rows 2/3 (s1191, `8c0f5c0a`). **Run it on main today and it throws before writing anything:**
 
 ```
 Error: Mirror-floor control drifted: 0.4585250692698196     (line 246 pins '0.452')
 ```
 
-The authoring fire built the decisive control — **the same instrument, one argv parameter for the sheet path, assertions truncated** (`logs/s1221-rail-tough-row1-repair-control.mjs`, committed with this master) — and ran it against the pre-batch sheet (`git show f61843c0^:assets/raw/char-railtough-sheet-walkdiag4-a.png`) and today's:
+The authoring fire built the decisive control — **the same instrument, one argv parameter for the sheet path, assertions truncated** (`logs/s1221-rail-tough-row1-repair-control.mjs`, committed with this master) — and ran it against the pre-batch sheet (`git show 305af1f4^:assets/raw/char-railtough-sheet-walkdiag4-a.png`) and today's:
 
-| | pre-batch (`f61843c0^`) | today (repaired) |
+| | pre-batch (`305af1f4^`) | today (repaired) |
 |---|---|---|
 | `mirrorFloor` (mean self-mirror IoU, all 16 frames) | **0.45249519682907424** | **0.4585250692698196** |
 | row 0 wrench offsets | −69.5 −63.5 −52.8 −56.5 | **identical, to the last digit** |
@@ -51,7 +51,7 @@ The E2 slots have **no `walk8` block at all** (verified: `assets/layer-contracts
 | fact | status |
 |---|---|
 | rows 0,1 = front hemisphere; rows 2,3 = back | ✅ settled (wrench root screen-left vs screen-right, all 16 frames, reproduced by the authoring fire this hour) |
-| rows 2/3 are a lawful mirror pair, not a duplicate | ✅ settled by s1191's decisive masked experiment (`8b9e8af2`) — 2v3 flips +0.250 → −0.127, one-sided, 9/9 sensitivity |
+| rows 2/3 are a lawful mirror pair, not a duplicate | ✅ settled by s1191's decisive masked experiment (`8c0f5c0a`) — 2v3 flips +0.250 → −0.127, one-sided, 9/9 sensitivity |
 | **which** of rows 2/3 is `nw` and which is `ne` | ⚠️ **NOT settled by silhouette.** F-1191-1, verbatim: *"the `nw`/`ne` LABELS are one tier below the PAIR — the masking that settles the pair is what removes the information distinguishing the labels."* The surviving evidence is the **body** read (survey: row 2 head/boots screen-left, row 3 screen-right), which s1191 left unopposed once the wrench confound was removed. **Treat it as a hypothesis to confirm, not a fact.** |
 | **rows 0/1 are a lawful `sw`/`se` pair** | ❌ **NOT MEASURED SINCE THE REPAIR — THIS IS THE WHOLE POINT OF SCOPE 1.** F-1188-2 measured `0v1` as **direct**-dominant **+0.119** (i.e. the two front rows read as the *same* heading) — the defect the art batch was meant to cure by regenerating row 1. **The batch's review contains no post-repair heading measurement of Rail Tough at all**: its pixel gates are Steam Wrecker cyan clusters and 12-row byte-exactness; row 1 appears only as *"it moved"*. The wrench control that DOES still pass is a **front/back** tell and carries no east/west information. |
 
@@ -59,7 +59,7 @@ The E2 slots have **no `walk8` block at all** (verified: `assets/layer-contracts
 
 READ-FIRST: `reviews/eight-winds-wiring-spec.md` — **all of it**, especially §2.2 (the 1252×1252 / 4×4 / cell-313 convention and the **do-not-fix-the-dimension** rule), §3.1 (the two binding surfaces; the `aliases` override), §4.1 (extraction, the pinned-scale rule), §6 (the anti-mirror law), §7 (the wiring gate) · `reviews/eight-winds-wiring-e2-enemies.md` (the STOP you are NOT reversing, and F-1188-2) · `reviews/eight-winds-rail-tough-row-settle.md` + `logs/s1190-rail-tough-wrench-probe.mjs` (the instrument — **reuse it, do not write a third one**) · `reviews/eight-winds-e2-row-repairs.md` (what landed, what parked, F-1193-3) · `assets/layer-contracts/characters.v2.json:196-211` (THE SUBJECT SLOT) · `src/assets/SpriteAnimator.ts:979-1035` (`selectWalkSheet`, `walkSheetHasProcessedCells`, `expandWalkSheetSources`) and `:843` (the hero-only alias guard).
 
-PRE-FLIGHT (LANE-SAFETY invariant): any dirty tracked blob in this worktree must be reachable in git, else STOP and report. The lane was verified a **SAFE DUPE** at authoring time (`git diff --diff-filter=A main..lane/m3` **EMPTY**; its 2 commits are the already-shipped `94dd863b` + `b5be7ab3`) — **re-verify that yourself before you reset.**
+PRE-FLIGHT (LANE-SAFETY invariant): any dirty tracked blob in this worktree must be reachable in git, else STOP and report. The lane was verified a **SAFE DUPE** at authoring time (`git diff --diff-filter=A main..lane/m3` **EMPTY**; its 2 commits are the already-shipped `960edc38` + `15e00755`) — **re-verify that yourself before you reset.**
 
 ## SCOPE
 
@@ -98,6 +98,6 @@ SELF-CHECK: `npm run test:node-guards` **FIRST** — baseline on main at authori
 🔴 KNOWN REDS — NOT yours, do not "fix" them (automatic reject):
   - `locked-win.spec.ts:65` and `tl-01-run-telemetry.spec.ts:229` — **100% deterministic at every worker count** (F-1218-3). Report if seen; never chase.
   - `m4-06-embodiment.spec.ts:395` — known ~45% flake (F-1212-2). Re-measure as a rate before blaming yourself.
-  - ✅ `ap-standing-orders.spec.ts` — **CURED s1222 (`a0aae876`, test-only). NO LONGER A KNOWN RED: a failure here is a real regression, report it.** The old *"25% mobile-only at w4"* was a low-load SAMPLE, not a property (F-1222-3, refined by F-1223-1): pre-cure it failed in **both** projects at a load-dependent rate — 12.5% quiet (s1216), **50%/50% at loadavg ~15** (s1223), **100%/100% at loadavg ~25** (s1222). Post-cure **64/64 green** across two fires, at loadavg up to 29.
+  - ✅ `ap-standing-orders.spec.ts` — **CURED s1222 (`855f4d74`, test-only). NO LONGER A KNOWN RED: a failure here is a real regression, report it.** The old *"25% mobile-only at w4"* was a low-load SAMPLE, not a property (F-1222-3, refined by F-1223-1): pre-cure it failed in **both** projects at a load-dependent rate — 12.5% quiet (s1216), **50%/50% at loadavg ~15** (s1223), **100%/100% at loadavg ~25** (s1222). Post-cure **64/64 green** across two fires, at loadavg up to 29.
 
 READY-FOR-GATES + report: **scope 1's verdict FIRST and in plain words — PASS or STOP** — with the `0v1` direct/mirrored figures, the noise band you used and how you derived it, your positive-control result on 2v3, and the locator overlay proving the row-1 landmarks sit on the wrench · which row→heading mapping you bound and **what evidence fixed `nw` vs `ne`** (F-1191-1 says silhouette cannot) · the scope-2 re-pins, each classified art-moved vs instrument-drifted · the scope-5 mutation proofs, both directions · the bundle delta · the literal guard count and `--list` numbers · and the answer to **"where does the PLAYER see this, in a plain boot?"** in one sentence. If scope 1 stopped you: **that is the deliverable, ship it and stop** — and name which row needs art and what the ART batch must change.

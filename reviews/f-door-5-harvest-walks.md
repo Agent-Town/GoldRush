@@ -1,6 +1,6 @@
 # Review — f-door-5: the harvest walks
 
-**Slice/branch/tip:** f-door-5 (`tasks/lane-fdoor5-harvest-walks.md`, with the granted executor lift) · `lane/d` · merged `3dd7790d64114f42ed66fa8cb5346f79e3c54f6c` · drained attended 2026-08-08 ~12:45. Owner ruling verbatim: "Yes, fix that - this is why we have the agents play now."
+**Slice/branch/tip:** f-door-5 (`tasks/lane-fdoor5-harvest-walks.md`, with the granted executor lift) · `lane/d` · merged `55ce6f7d29d96e5368e1d8dd13d4274d4514e50e` · drained attended 2026-08-08 ~12:45. Owner ruling verbatim: "Yes, fix that - this is why we have the agents play now."
 
 **Verdict: MERGED — THE WALK ERA BEGINS HERE.**
 

@@ -16,7 +16,7 @@ async function tile(p) {
 }
 async function sheet(name, cols) {
   const width = cols.length * TILE, height = LABEL * 2 + TILE * 2;
-  const layers = [{ input: svgLabel(`${name}  —  row 1 = main (27227acdc), row 2 = merged (Astra)`, width), top: 0, left: 0 }];
+  const layers = [{ input: svgLabel(`${name}  —  row 1 = main (403c996cd), row 2 = merged (Astra)`, width), top: 0, left: 0 }];
   for (let i = 0; i < cols.length; i++) {
     layers.push({ input: svgLabel(cols[i].label, TILE), top: LABEL, left: i * TILE });
     layers.push({ input: await tile(`${CONTROL}/${cols[i].path}`), top: LABEL * 2, left: i * TILE });

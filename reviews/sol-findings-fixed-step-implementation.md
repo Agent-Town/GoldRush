@@ -2,8 +2,8 @@
 
 Branch: `sol/fixed-step-unification`
 
-Initial implementation base: `2cdcf210b51bb265661c7a232d49e43c54948bba`
-Final merged main comparison: `e374f47`
+Initial implementation base: `2b9532cb9011712a912be9537d03b732b8e710ae`
+Final merged main comparison: `32c362c`
 
 Status: **PARKED — NOT READY-FOR-GATES**
 
@@ -27,7 +27,7 @@ No gameplay assertion or `Balance.ts` value was changed. The corrected fixtures 
 
 `advanceSimForTest()` accepts duration only, rounds to complete 30 Hz ticks, never runs a partial final tick, and batches presentation by the production five-tick catch-up cap. The independent review caught and caused correction of a temporary 5:1 timeline downsample and inflated fractional polling windows before commit.
 
-Current-tip non-MP observations: fixed-step 6/6, perf-04 2/2 with unchanged hash, Night Shift 2/2, authorized driver battery 42 pass / 1 project-skip, and build/TypeScript green. Their current-tip reporter output, plus the later p95 and full-desktop output, was not retained; all are recorded as non-gate observations in `FINAL-EVIDENCE.md`, not presented as checksummed proof. The checksummed focused logs predate `23cd01d`.
+Current-tip non-MP observations: fixed-step 6/6, perf-04 2/2 with unchanged hash, Night Shift 2/2, authorized driver battery 42 pass / 1 project-skip, and build/TypeScript green. Their current-tip reporter output, plus the later p95 and full-desktop output, was not retained; all are recorded as non-gate observations in `FINAL-EVIDENCE.md`, not presented as checksummed proof. The checksummed focused logs predate `069ba5e`.
 
 ## F-SOL-SIM-IMPL-001 — a legacy accelerated test encodes the removed render-driven cadence
 
@@ -46,8 +46,8 @@ Current-tip non-MP observations: fixed-step 6/6, perf-04 2/2 with unchanged hash
 
 1. The new suite is green: **6/6 passed**. At 30, 60, and 144 fps it produced exactly 300 ticks, identical tick timelines, identical Economy hash `fnv1a32:0f6f2150`, seven Economy entries, and zero dropped time. See `artifacts/sol/fixed-step-gates/sim-fixed-step-desktop.log`.
 2. The required full desktop command enumerated 528 cases; **524 produced outcomes: 495 passed, 25 failed, 4 skipped; 4 did not run**. See `artifacts/sol/fixed-step-gates/full-desktop.log`.
-3. A controlled six-case comparison against clean base `2cdcf21` narrowed the change: the branch failed all six while the base failed four. The initial branch-only reds were Night Shift and GT-03. Subsequent diagnostic runs made the distinction precise: Night Shift remained stable while GT-03 changed outcomes across runs. GT-03 is therefore polling-flaky evidence, not a stable blocker. See `artifacts/sol/fixed-step-gates/suspicious-branch.log`, `suspicious-baseline.log`, and `night-shift-repeat-comparison.md`.
-4. Night Shift is stable and branch-specific in the controlled check: the current branch failed **2/2** repeated isolated runs with the death overlay intercepting the restored briefing; clean base `2cdcf21` passed **2/2**. Fixed-tick catch-up advances the accelerated restored run far enough for the death overlay to win the setup race.
+3. A controlled six-case comparison against clean base `2b9532c` narrowed the change: the branch failed all six while the base failed four. The initial branch-only reds were Night Shift and GT-03. Subsequent diagnostic runs made the distinction precise: Night Shift remained stable while GT-03 changed outcomes across runs. GT-03 is therefore polling-flaky evidence, not a stable blocker. See `artifacts/sol/fixed-step-gates/suspicious-branch.log`, `suspicious-baseline.log`, and `night-shift-repeat-comparison.md`.
+4. Night Shift is stable and branch-specific in the controlled check: the current branch failed **2/2** repeated isolated runs with the death overlay intercepting the restored briefing; clean base `2b9532c` passed **2/2**. Fixed-tick catch-up advances the accelerated restored run far enough for the death overlay to win the setup race.
 5. The GT-03 fixture samples a moving enemy at browser-poll boundaries (`e2e/gt-03-enemy-elevation.spec.ts:78-99`). Its changing diagnostic outcomes show that those boundaries are unstable at accelerated cadence. It should be hardened when the harness policy is corrected, but it is not required to establish this blocker.
 6. The legacy `advanceSimForTest()` seam itself remains a second, test-only cadence owner (`src/game/Game.ts:3589-3616`): it bypasses `Loop` and accepts arbitrary caller steps. The new Baron test now uses `driveRenderSchedule()` and the authoritative 30 Hz loop, but changing every legacy caller is an orchestrator-authorized harness correction, not a stealth expansion of this slice.
 7. Two compatibility experiments were rejected and removed before parking: a variable/rAF debug exception recreated the original dual-cadence defect; a fixed 60 Hz, one-step-per-render debug path contradicted the decided 30 Hz cadence and became render-dependent when frames were missed. Query-specific exclusions also made gates exercise a different path from the fixtures they purported to protect. An unrelated scripted-enemy target clamp explored during diagnosis was also removed because it crossed the slice firewall.
@@ -65,13 +65,13 @@ Authorize test-only corrections that preserve the 30 Hz ruling: remove or constr
 **Locations.**
 
 - `e2e/mp-02-lockstep.spec.ts:67-95` — hash-mismatch resync must unpause both riders.
-- Main commit `dab8112` — queues the task 067 MP resync corrective; it is a task/master commit, not a landed fix.
+- Main commit `ee7aee8` — queues the task 067 MP resync corrective; it is a task/master commit, not a landed fix.
 - `tasks/done/` — contains no task 067 completion marker at the time of this note.
 
 **Evidence.**
 
 - Branch required-suite run: identity passed, resync timed out waiting for the restored peer, and the serial third case did not run. The third case passes independently. See `artifacts/sol/fixed-step-gates/mp-02-desktop.log` and `mp-02-third-case.log`.
-- Clean base `2cdcf21` fails the same resync case with the rider still paused. See `artifacts/sol/fixed-step-gates/mp-02-baseline-resync.log`.
+- Clean base `2b9532c` fails the same resync case with the rider still paused. See `artifacts/sol/fixed-step-gates/mp-02-baseline-resync.log`.
 
 **Dependency.** Land task 067 on main, update this branch through the orchestrator's normal drain flow, then rerun `mp-02` 3/3. F-SOL-PERSIST-002 remains untouched.
 
@@ -90,7 +90,7 @@ Authorize test-only corrections that preserve the 30 Hz ruling: remove or constr
 1. Exact isolated command, repeated twice on the branch: **0/2**, both timing out at Bob's wait. See `artifacts/sol/fixed-step-gates/mp-02-isolated-repeat-final.txt`.
 2. Temporary read-only diagnostic instrumentation captured Alice `tick=714, desyncs=22, resyncs=22` and Bob `tick=713, desyncs=0, resyncs=0`; both were unpaused, both remained connected, and every post-injection hash differed. The instrumentation was removed and `git diff --exit-code -- e2e/mp-02-lockstep.spec.ts` returned zero. See `artifacts/sol/fixed-step-gates/MP-BLOCKER-EVIDENCE.md`.
 3. The checked-in green artifact has Alice/Bob tick-90 hashes `fnv1a32:88f71e9f` / `fnv1a32:a35ea391` and tick-120 hashes `fnv1a32:d90e03ca` / `fnv1a32:cb359b78`; task 067's stated “hash-identical within 30 ticks” condition was not enforced by its gate.
-4. An independent fresh detached `1b575fd` checkout with fresh dependencies and Vite on port 5294 reproduced the isolated failure; `--repeat-each=5` produced 1 pass / 4 failures. `LockstepClient.ts` is byte-identical to `e374f47`, ruling out a stale merge or branch-local MP edit.
+4. An independent fresh detached `c6fdfce` checkout with fresh dependencies and Vite on port 5294 reproduced the isolated failure; `--repeat-each=5` produced 1 pass / 4 failures. `LockstepClient.ts` is byte-identical to `32c362c`, ruling out a stale merge or branch-local MP edit.
 
 **Decision required.** One of these must be explicitly authorized: (a) permit the MP hash-order correction on this branch, (b) re-sequence F-SOL-PERSIST-002 ahead of the fixed-step READY tail and then merge it back, or (c) amend the branch-1 gate. Sol will not change MP protocol/test semantics or claim READY without that ruling.
 

@@ -107,10 +107,10 @@ It would prove nothing. (s1059 precedent, and named rather than padded into the 
   **eight review files** (`F-1` in `e3-fairground-mask-table.md`, `F-2` in
   `freed-walkers.md`, `F-e7-1`, `F-e8-1` ×2, `F-tp00-1`, `F-tp03-2`, and
   `e10-ember-shore.md`) — the hardcoded top-level category list at `:17`.
-  **It is GREEN and has been since 2026-07-18.** Fixed by `6d7b107f`
+  **It is GREEN and has been since 2026-07-18.** Fixed by `ceb2fe9e`
   *("goal-tracker expects the owner-ordered eleven goals — expectation predated the
-  2026-07-16 expansion")*, then maintained three more times: `5b5f40ec` (07-19, 10→12
-  subgoals), `b638d687` (07-22, 12→13), `6d6fc7f4` (07-22, E1 tree).
+  2026-07-16 expansion")*, then maintained three more times: `94753fb3` (07-19, 10→12
+  subgoals), `fbe75708` (07-22, 12→13), `ab0931af` (07-22, E1 tree).
   **This is NOT a ghost line and I am not reporting it as one.** Every one of those
   reviews was written 07-16/07-17, *before* the fix — they were **correct when written**,
   and reviews are archival documents, not a live ledger. The live ledgers

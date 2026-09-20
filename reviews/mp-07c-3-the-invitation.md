@@ -1,6 +1,6 @@
 # Review — mp-07c-3: THE INVITATION
 
-**Slice/branch/tip:** mp-07c-3 (fire-authored `tasks/lane-mp07c3-the-invitation.md`) · `lane/b` · merged `64ea699a3042c911e830886e9c83b2ca75c96084` · drained attended 2026-08-08 ~13:15. **The road the owner ratified this morning is COMPLETE: body (07c-1) → eyes (07c-2) → invitation (07c-3).**
+**Slice/branch/tip:** mp-07c-3 (fire-authored `tasks/lane-mp07c3-the-invitation.md`) · `lane/b` · merged `63cdf11376d10b122c2411f7d16fa2cc2fd1d6e4` · drained attended 2026-08-08 ~13:15. **The road the owner ratified this morning is COMPLETE: body (07c-1) → eyes (07c-2) → invitation (07c-3).**
 
 **Verdict: MERGED — the cleanest gate of the day.**
 

@@ -1,7 +1,7 @@
 # LB-01 — County Standings: the county records prospectors
 
 **Slice:** `lane-county-standings.md` (attended-authored, owner directive 2026-07-29, `specs/agent-play/README.md` §AP-06)
-**Branch:** `lane/m4` · **Tip:** `d7edcd3b` · **Base:** `4fdbc950` · **Drained:** s1212
+**Branch:** `lane/m4` · **Tip:** `d7edcd3b` · **Base:** `058762f9` · **Drained:** s1212
 **Verdict:** ✅ **MERGE** — READY-FOR-GATES honoured, firewall respected, zero MAIN-MOVED, and the endpoint matches the house security pattern.
 
 ## What it does
@@ -40,7 +40,7 @@ Matches the `_bugs.ts` / `telemetry.ts` sibling discipline the task named. No fi
 
 ## Merge classification
 
-Base `4fdbc950`. `lane/m4` carried two commits; `c162bd1a` is the **already-merged approach-convergence safe dupe** (landed in the attended `79be48db`). Only the tip's own delta was grafted.
+Base `058762f9`. `lane/m4` carried two commits; `c162bd1a` is the **already-merged approach-convergence safe dupe** (landed in the attended `81bf94ac`). Only the tip's own delta was grafted.
 
 | File | Class | Resolution |
 |---|---|---|
@@ -51,7 +51,7 @@ Base `4fdbc950`. `lane/m4` carried two commits; `c162bd1a` is the **already-merg
 | `src/encyclopedia/reader.ts` | LANE-TOUCHED only | clean apply (+184) |
 | `src/encyclopedia/reader.css` | LANE-TOUCHED only | clean apply (+122) |
 
-`git diff 4fdbc950 main` over all five source paths is **empty** — main never moved them. **Zero MAIN-MOVED, zero conflicts.**
+`git diff 058762f9 main` over all five source paths is **empty** — main never moved them. **Zero MAIN-MOVED, zero conflicts.**
 
 **Firewall probe:** the task's NO list forbids Economy and sim. Grepping the `Game.ts` delta for `this.economy` / `spend` / `addGold` / `Balance.` / `sim.` returns **nothing** — the +155 lines are action-recording and the submit hook only. Firewall respected.
 

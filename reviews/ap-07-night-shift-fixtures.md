@@ -1,6 +1,6 @@
 # ap-07-night-shift-fixtures — admit `e1-night-shift` to GR-SIM, fixtures first
 
-**Slice:** `ap-07-night-shift-fixtures` · **branch:** `lane/m4` @ `467ed904` · **merged to main:** `07854e6b` · **authored and drained:** s1319, 2026-08-01 (same fire).
+**Slice:** `ap-07-night-shift-fixtures` · **branch:** `lane/m4` @ `02249254` · **merged to main:** `90003628` · **authored and drained:** s1319, 2026-08-01 (same fire).
 
 ## Verdict
 
@@ -71,7 +71,7 @@ This is not a cosmetic regression. `specs/agent-play/README.md` states AP-07's p
 
 ## Merge classification
 
-Base `main`; lane `lane/m4` one commit ahead (`467ed904`), **4 paths, all LANE-ONLY** per `scripts/lane-usable.mjs`. Merged path-scoped; no conflicts, no MAIN-MOVED file.
+Base `main`; lane `lane/m4` one commit ahead (`02249254`), **4 paths, all LANE-ONLY** per `scripts/lane-usable.mjs`. Merged path-scoped; no conflicts, no MAIN-MOVED file.
 
 | File | Class |
 | --- | --- |

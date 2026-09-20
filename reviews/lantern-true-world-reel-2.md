@@ -1,6 +1,6 @@
 # Review: lantern-true-world-reel-2 — the reel shows the world without booting the game (lane-c, codex runner on gpt-6-astra xhigh; output salvaged and committed attended; attended drain 2026-09-05)
 
-**Slice/branch/tip:** `lantern-true-world-reel-2` · `lane/c` · salvage commit `ae7c467ad` (the runner exited rc1 without committing; the attended session committed its worktree, salvage ref `save/lantern-true-world-reel-2-attended`) over base `33999b560` · merge `e8319998d` (no-ff, no conflicts, no MAIN-MOVED file).
+**Slice/branch/tip:** `lantern-true-world-reel-2` · `lane/c` · salvage commit `106f9d262` (the runner exited rc1 without committing; the attended session committed its worktree, salvage ref `save/lantern-true-world-reel-2-attended`) over base `33999b560 (archive: pruned by the A3 rewrite)` · merge `6f8e4d435` (no-ff, no conflicts, no MAIN-MOVED file).
 **Verdict:** MERGED. F-ASTRA-11 cured for the featured reel: the plain watch URL opens the game's world stage driven by the verified replay, not a schematic; the SVG survives only as the labelled tactical reel.
 
 ## What it does
@@ -9,7 +9,7 @@
 - `src/world/LanternWorldStage.ts` (303 lines): the game's renderer, painted bank/river/fords, a minimal terrain-pilot `Host`, `LightRig` (with Night Shift via `setNightShift`), `CameraRig` framing the contract bounds, `GeneratedSpriteBatch` pools, `GoldPickupPool` and float texts; sprites interpolate between authoritative snapshots at `Terrain.visualY`; works are keyed by family+index (the review's P2 fix); missing kinds keep an explicit placeholder disclosure.
 - Fallbacks: lite → the labelled tactical SVG while the painted fallback constructs (no GLB load); no WebGL → the labelled SVG with no renderer (v1's characterization table became assertions); `reel=tactical` survives both URL rebuilds. 390px: the canvas is 62% of the viewport height, the framing disclosure starts closed.
 
-## Evidence (merged tree `e8319998d` + era pin `b395ee1f`)
+## Evidence (merged tree `6f8e4d435` + era pin `b395ee1f`)
 | Gate | Result |
 |---|---|
 | `npx tsc --noEmit` / `npm run build` | rc 0 / rc 0 |

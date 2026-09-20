@@ -1,8 +1,8 @@
 # ap16-4 — SAME-GAME ADMISSION: the door derives its contracts
 
 - **Slice**: AP-16-4 (`specs/agent-play/ap-16-same-game-law.md:33`), master `tasks/lane-a-ap16-4-same-game-admission.md`
-- **Branch/tip**: `lane/a` @ `48a0d41ab` · base `43bb3d8e30a659f2a6b11818fdee754c5b7950a8`
-- **Merge**: `d4fcc3542fd92f768c1a9840c0c4d5b3fb7fa1ab` (main, `--no-ff`)
+- **Branch/tip**: `lane/a` @ `6f74bf510` · base `38fc39906304cea79f7e58b5fa7166536b4cd206`
+- **Merge**: `effe1057fbc55acbb13b216037ed0692bdf5a126` (main, `--no-ff`)
 - **Drained**: s1643 fire, 2026-08-11
 - **Verdict**: ✅ **MERGED.** All gates green on the merged tree; the one red in the battery is proven PRE-EXISTING by a main-side control.
 
@@ -55,7 +55,7 @@ Final derived door (22): `e1-baron`, `e1-drill-yard`, `e1-dry-gulch`, `e1-night-
 
 ## Merge classification
 
-9 paths, **ALL LANE-ONLY**. Main moved 16 paths since base `43bb3d8e3` (`STATUS.md`, `src/seasons/registry.ts`, `scripts/season-registry.test.mjs`, `tasks/goals.json`, `tasks/BACKLOG.md`, the mint-season-2 review + shots, `logs/*`, `marketing/outbox/gazette-queue.md`, two e2e specs). **The intersection with the lane's 9 paths is EMPTY**, so no graft was required and none was performed. `main..lane/a` is empty after the merge.
+9 paths, **ALL LANE-ONLY**. Main moved 16 paths since base `38fc39906` (`STATUS.md`, `src/seasons/registry.ts`, `scripts/season-registry.test.mjs`, `tasks/goals.json`, `tasks/BACKLOG.md`, the mint-season-2 review + shots, `logs/*`, `marketing/outbox/gazette-queue.md`, two e2e specs). **The intersection with the lane's 9 paths is EMPTY**, so no graft was required and none was performed. `main..lane/a` is empty after the merge.
 
 ## Findings
 
@@ -70,7 +70,7 @@ e2e/front-door-parity.spec.ts:72
 expect(terminalView.now.hero).toMatchObject({ hp: 0, level: 3, upgradesTaken: { heavy_spark: 2 } })
 ```
 
-So the red is inherited, not introduced, and this slice is exonerated. The likely author is the AP-16-2/2b pick-clock work (`PICK_UPGRADE` + the silence default changed which upgrades a deterministic idle run ends up holding), which would make this spec stale from `b8cf2332d` onward. **That attribution is INFERRED, not verified** — the control proves only that main was already red.
+So the red is inherited, not introduced, and this slice is exonerated. The likely author is the AP-16-2/2b pick-clock work (`PICK_UPGRADE` + the silence default changed which upgrades a deterministic idle run ends up holding), which would make this spec stale from `89e97e293` onward. **That attribution is INFERRED, not verified** — the control proves only that main was already red.
 
 **Owed**: a corrective that re-baselines `front-door-parity`'s progression expectations against the post-pick-clock door, or retires the assertion if the pick clock made it meaningless. It is a stale-expectation repair, not a behaviour bug, and it is fire-authorable once a lane is free. Filed to the ladder, not the owner's desk.
 

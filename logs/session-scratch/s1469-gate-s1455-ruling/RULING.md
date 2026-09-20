@@ -8,8 +8,8 @@ s1468 left `gate-s1455` in place deliberately and asked a fire to rule on whethe
 
 | Path | Verdict |
 |---|---|
-| `artifacts/f1453-1/*` (5 files) + `e2e/f1453-crossings-hygiene.spec.ts` | **IDENTICAL-ON-MAIN** by sha256 (drained `3ff007ad`) |
-| `src/entities/Enemy.ts` | **STALE, not unlanded** — differs by exactly ONE line, and the worktree holds the *pre-*`4ab48743` watchdog condition (`>= stuckWatchdogSeconds` without `&& route.blocker`). Main is AHEAD. |
+| `artifacts/f1453-1/*` (5 files) + `e2e/f1453-crossings-hygiene.spec.ts` | **IDENTICAL-ON-MAIN** by sha256 (drained `b3a226ab`) |
+| `src/entities/Enemy.ts` | **STALE, not unlanded** — differs by exactly ONE line, and the worktree holds the *pre-*`e788002c` watchdog condition (`>= stuckWatchdogSeconds` without `&& route.blocker`). Main is AHEAD. |
 | 8 PNG re-renders (gt-05, e1-twin-banks) | screenshot nondeterminism; ±4–13 KB against main's tracked copies |
 | 2 wade-speed JSONs | **the only numeric content — and it is sampling noise** (retained here, both sides) |
 
@@ -26,7 +26,7 @@ The re-render vs main, `wade-speed-desktop-chrome.json`:
 Every speed is unchanged to 7 significant figures. `seconds` moves because the sample
 lands on a different frame, and `ratio` moves in the fourth decimal. **The assertion the
 artifact exists to support — the ford is slower than the bank, ratio ~0.85 — is
-identical.** These are the same measurement re-taken, at a HEAD (`7c833197`, 2026-08-04)
+identical.** These are the same measurement re-taken, at a HEAD (`b16e39b3`, 2026-08-04)
 two days behind main.
 
 ## The disposition

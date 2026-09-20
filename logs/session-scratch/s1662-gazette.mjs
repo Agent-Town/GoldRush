@@ -16,7 +16,7 @@ const item = [
   '- Three railcar claims sat on the public door where any hired hand could take one up alone.',
   '- Nothing the county builds reaches an ore cart, so a rider who took one could not finish it.',
   '- They are named refused-with-cause again, and open only to a rider who declares the escort.',
-  `- merge: \`${short}\` (f1660-1 door readmission repair) · review: \`reviews/f1660-1-door-readmission-repair.md\` · restores \`88530e3ef\``,
+  `- merge: \`${short}\` (f1660-1 door readmission repair) · review: \`reviews/f1660-1-door-readmission-repair.md\` · restores \`312b443f1\``,
   '',
 ].join('\n');
 

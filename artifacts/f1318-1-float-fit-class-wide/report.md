@@ -92,9 +92,9 @@ The whole 37-file command from `package.json` was run at both slice ends, includ
 
 | Tree | Result |
 | --- | --- |
-| lane base `4cf7da4b` in a detached control worktree | 203 passed, 0 failed |
+| lane base `da0c32d2` in a detached control worktree | 203 passed, 0 failed |
 | final lane working tree | 203 passed, 0 failed |
-| current `main` detached control (`5772127e`) | 204 passed, 0 failed |
+| current `main` detached control (`18012308`) | 204 passed, 0 failed |
 
 This is not the known omitted-file 203 signature. The lane branch predates main's added test `gr-sim deterministically runs the Claim objective` in `scripts/gr-sim.test.mjs`; `git diff HEAD..main -- scripts/gr-sim.test.mjs` accounts for the exact +1. The slice changes no node-guard file, so its lane-base delta is zero and the merged-tree denominator is 204.
 

@@ -1,8 +1,8 @@
 # perf-05 — startup-pass (defer non-critical startup asset loads)
 
-- **Slice/branch/tip:** perf-05 startup-pass · `lane/perf` `f01e9f2` "perf: defer startup asset loads" · lane base `c4ed066`
-- **Drained onto:** main `e10532f` (s216 lock) → merge commit this drain
-- **Verdict:** SHIP ✅ (drain #2 of s216; drain #1 = night-shift-bite `c2d8062`/`67da924` by s215)
+- **Slice/branch/tip:** perf-05 startup-pass · `lane/perf` `f01e9f2` "perf: defer startup asset loads" · lane base `91b1c19`
+- **Drained onto:** main `ddac830` (s216 lock) → merge commit this drain
+- **Verdict:** SHIP ✅ (drain #2 of s216; drain #1 = night-shift-bite `9ab57f7`/`5efe20b` by s215)
 
 ## What it does
 Splits generated sprite/texture loading into a **critical** set (hero, claim-jumper, gold-seam, bank/river terrain) that still loads eagerly, and a **non-critical** set (Baron sheet + banner, all townsfolk, building portraits) that is now loaded via lazy `import('...png?url')` chunks and deferred until after the first rendered frame (`markStartupFrameReady()` / `afterStartupFrame()`), then prefetched before the first wave spawns. Net effect: boot payload drops ~35% and TTI/first-frame improve, with no visible-asset regression (non-critical art streams in immediately after paint).
@@ -28,7 +28,7 @@ Boot-payload numbers (from `artifacts/perf-05/summary.md`, CPU 1.25×, 20 MB/s):
 | desktop-chrome | 2693→2625 ms | 2518→2464 ms | 5,949,428→3,860,316 (−35%) |
 | mobile-chrome | 1516→1459 ms | 1356→1324 ms | 5,952,840→3,867,510 (−35%) |
 
-## Merge classification (base `c4ed066` → main `e10532f`)
+## Merge classification (base `91b1c19` → main `ddac830`)
 20 files. Main advanced past the lane base (night-shift-bite + adjacents), so 3 files were touched by BOTH sides:
 - **LANE-TOUCHED-only (17):** `artifacts/perf-05/*` (9), `e2e/perf-05-startup.spec.ts`, `src/assets/SpriteAnimator.ts`, `src/entities/BuildingSign.ts`, `src/main.ts`, `src/ui/BuildButton.ts`, `src/ui/Hud.ts`, `src/ui/ProspectorPanel.ts`, `src/world/Terrain.ts` — taken wholesale via `git checkout lane/perf --` (verified byte-identical to lane, empty diff).
 - **MAIN-MOVED + LANE-TOUCHED (3), 3-way merged (hunks non-overlapping, verified both sides land):**

@@ -1,6 +1,6 @@
 # Review — `sol-map-art-campaign-2` (E5 water pass, HELD at verification)
 
-**Slice:** `sol-map-art-campaign-2` · **branch:** `sol/map-art-campaign-2` · **tip:** `7bd4b250b` · **base:** `821bff7e915bef5c774193e2611b4726317b45ca` · **merge:** `5c6cef321` · **drained:** s2643, 2026-09-19
+**Slice:** `sol-map-art-campaign-2` · **branch:** `sol/map-art-campaign-2` · **tip:** `7bd4b250b (archive: pruned by the A3 rewrite)` · **base:** `2fbae0611befc25465a279e70be4310ca1c21b80` · **merge:** `5c6cef321 (archive: pruned by the A3 rewrite)` · **drained:** s2643, 2026-09-19
 
 ## VERDICT: MERGED AS EVIDENCE — no map completed, no code landed, no owner word owed
 
@@ -59,7 +59,7 @@ each config, then measured by running the tools.**
 
 ## Merge classification
 
-Base `821bff7e9`; lane 2 commits ahead, 33 behind. Per-file: **LANE-ONLY 49 / 49**, MAIN-MOVED 0,
+Base `2fbae0611`; lane 2 commits ahead, 33 behind. Per-file: **LANE-ONLY 49 / 49**, MAIN-MOVED 0,
 BOTH-MOVED 0 — every path is a new file under this slice's own artifact directory, so there was
 nothing to three-way. `git merge --no-ff` reported *"Merge made by the 'ort' strategy"* with **zero
 conflicts**, and `main..sol/map-art-campaign-2` is **empty** after the merge, which is the
@@ -81,7 +81,7 @@ candidate at `_raw/final-candidate-20260919/`, the partial guard TAP and 77 unse
 files all live under an **ignored** directory (`artifacts/sol/map-art-campaign-2/.gitignore` = `_raw/`,
 plus a local `info/exclude` entry the runner added so it survives branch switches). The three files
 that matter most were *also* copied into the tracked tree at `candidate-e5-20260919/` — `Water.ts`,
-`Terrain3dClaimPilot.ts` and `e5-sea-contact.spec.ts`, which is what tip `7bd4b250b` exists to do —
+`Terrain3dClaimPilot.ts` and `e5-sea-contact.spec.ts`, which is what tip `7bd4b250b (archive: pruned by the A3 rewrite)` exists to do —
 so the candidate itself is durable. **The patch and the raw measurement attempts are not.** Non-blocking,
 and deliberately not "cured" by force-adding them: `_raw/` is 77+ files of superseded experiments and
 the RETENTION LAW's own owner amendment of 2026-08-26 already exempts a bulk local evidence class.
@@ -119,7 +119,7 @@ on baseline gate failures that predate it.
 
 
 ## Attended addendum (2026-09-19, after the s2643 drain)
-- The three candidate files Astra preserved under the untracked `_raw/` were copied into tracked evidence at `artifacts/sol/map-art-campaign-2/candidate-e5-20260919/` (`7bd4b250b`, in this merge): `src/world/Water.ts`, the render edit of `src/world/Terrain3dClaimPilot.ts`, `e2e/e5-sea-contact.spec.ts`.
+- The three candidate files Astra preserved under the untracked `_raw/` were copied into tracked evidence at `artifacts/sol/map-art-campaign-2/candidate-e5-20260919/` (`7bd4b250b (archive: pruned by the A3 rewrite)`, in this merge): `src/world/Water.ts`, the render edit of `src/world/Terrain3dClaimPilot.ts`, `e2e/e5-sea-contact.spec.ts`.
 - **F-MAC2-1 (inventory):** the seven E5 fixture assertions that reproduce on the exact base (Astra's own attribution table) are recorded in `logs/suite-red-inventory.md`; era-6 pin rot in `e5-flotilla-hulls`, `e5-regatta-race`, `e5-stillwater-noise`; re-point with cause owed, fire-authorable.
 - **F-MAC2-2 (master defect, cured):** the first master's stop rule plus "the map's own spec(s) green" made a stale pin a wall. The second run `tasks/sol-map-art-campaign-2b.md` (queued lane-c) states the known-red law, makes the full node-guard battery the drain's, hydrates the two raw atlases the lane worktree lacked (**F-MAC2-3**), and orders the preserved candidate re-applied and committed on the bar it already met (the new spec 8/8, ordinary water 4/4, plain boots 0/0, tsc/build/full).
 - **F-MAC2-4 (box):** load 156 with 127 of 128 GB used during the run, four batteries at once — the day's parallelism has a ceiling here.

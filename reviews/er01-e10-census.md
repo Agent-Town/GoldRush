@@ -1,8 +1,8 @@
 # reviews/er01-e10-census.md — ER-01 E10 Deep Sky readiness census
 
 - **Slice:** `lane-er01-e10-census.md` (ER-01 ladder, E10 Deep Sky — the last rung)
-- **Branch / tip:** `lane/d` @ `100d7b843` (single runner commit)
-- **Merged to main:** `22e092c0606ce0e29c1dbd1c0867004fcd5d1fe5`
+- **Branch / tip:** `lane/d` @ `31ea5f7dc` (single runner commit)
+- **Merged to main:** `1f5383ad3ee7d7afb6ef5bbf36b1a4127047fae9`
 - **Drained by:** s1480 fire, 2026-08-06
 - **Verdict:** ✅ **MERGE** — and it completes the ER-01 census ladder E2..E10.
 
@@ -46,7 +46,7 @@ applied where it costs the most.
 
 ## Merge classification
 
-Base `main` @ `ca096ccd` (post-E9). Both new files pure LANE-ONLY adds (38 / 79 lines).
+Base `main` @ `7b043b01` (post-E9). Both new files pure LANE-ONLY adds (38 / 79 lines).
 `tasks/BACKLOG.md` BOTH-MOVED add/add — union-resolved, lane's `READY-FOR-GATES on lane/d`
 retired to `✅ MERGED s1480` in the merge commit (F-1461-4). `SUPPORTED_CONTRACTS` and
 `bench-seeds.json` unchanged; zero `src/` bytes, so F-1460-1 does not engage.

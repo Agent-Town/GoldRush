@@ -1,9 +1,9 @@
 # f1630-1 — m1-06 investment-weighting gets the 45 s budget its lighter sibling already has
 
 - **Slice:** `f1630-1-m1-06-weighting-timeout` (fire-authored s1630 from F-1630-1, measured s1630 at the f1628-3 drain)
-- **Branch / tip:** `lane/a` @ `e62c2d7c8` (runner commit, 15:30, 108,373 tokens)
-- **Base:** `8ee24e530`; merged onto main at `b0cd16413`
-- **Merge:** `9af64d42be1df662a5cae6ced5834ce0d8d1fcbc` (`--no-ff`, `ort`, one atomic act per F-1589-5)
+- **Branch / tip:** `lane/a` @ `6f83b2a2e` (runner commit, 15:30, 108,373 tokens)
+- **Base:** `8ee24e530 (archive: pruned by the A3 rewrite)`; merged onto main at `a445f98fb`
+- **Merge:** `026f0ceb798ed44741a17a62eaf0bf91d5e8e916` (`--no-ff`, `ort`, one atomic act per F-1589-5)
 - **Gated by:** s1631, fire shell, `--workers=1` throughout, detached worktree `gate-s1631` per §3.0b (removed after, `node_modules` symlink unlinked first)
 - **Verdict:** ✅ **MERGED.** The cure is correct and proven red→green on a pre-cure control **in the shell where the red lives**. The acceptance measurement the runner could not make is now on the record — and it revises F-1630-1's own headline number upward.
 
@@ -88,6 +88,6 @@ Single file, single hunk, additive only.
 
 | File | Class | Resolution |
 |---|---|---|
-| `e2e/m1-06-level-up-choices.spec.ts` | **LANE-TOUCHED** (+2/−0) | Main had not moved this file since the lane's base `8ee24e530`; `ort` merged with no conflict. Verified post-merge: exactly two `setTimeout` hits, ratio assertion at `:203` unchanged. |
+| `e2e/m1-06-level-up-choices.spec.ts` | **LANE-TOUCHED** (+2/−0) | Main had not moved this file since the lane's base `8ee24e530 (archive: pruned by the A3 rewrite)`; `ort` merged with no conflict. Verified post-merge: exactly two `setTimeout` hits, ratio assertion at `:203` unchanged. |
 
 `git log main..lane/a` is now **empty** and `lane-usable lane-a` reads `ahead=0` **USABLE** — the lane is drained and free to refill.

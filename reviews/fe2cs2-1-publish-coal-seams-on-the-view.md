@@ -1,7 +1,7 @@
 # fe2cs2-1 — publish coal seams on the agent view
 
 **Slice:** `fe2cs2-1-publish-coal-seams-on-the-view`
-**Branch:** `lane/c` · **Tip:** `98ffc1507` · **Base:** `6c665725ff5eb5aa6d39bedb20d49252fad863c6`
+**Branch:** `lane/c` · **Tip:** `cdc29b717` · **Base:** `bbceb43a55ab6d98e47962cb099dd899adfcc1bc`
 
 ## Verdict
 
@@ -12,7 +12,7 @@ import that delivers it drags a **Vite-only module into the plain-node collectio
 
 Corrective master authored and queued in the same commit as this review:
 `tasks/fe2cs2-2-coal-seam-defaults-node-safe.md` → lane-c, BUILD-ON-PREDECESSOR over
-`98ffc1507`.
+`cdc29b717`.
 
 ## What it does
 
@@ -76,7 +76,7 @@ node-safe leaf module and have **both** import it from there — one definition,
 | `whole suite collects without loading Vite-only modules` | **THIS SLICE** | passes ALONE on main (rc 0); fails ALONE on the merged tree; cured by reverting `View.ts` only |
 | `whole-suite collection guard is cwd-invariant` | same cause | its child is the test above |
 | `all 34 scripts/*.test.mjs fixture owners remove their temp directories` | same cause | its child is the test above |
-| `same-game report exemption reasons and citations match source` | **INHERITED — NOT THIS SLICE** | fails ALONE on main at `21425bf1d`: `stale exemption reason for 'e2-incline' — regenerate with node scripts/same-game-audit.mjs --write-report` |
+| `same-game report exemption reasons and citations match source` | **INHERITED — NOT THIS SLICE** | fails ALONE on main at `21425bf1d (archive: pruned by the A3 rewrite)`: `stale exemption reason for 'e2-incline' — regenerate with node scripts/same-game-audit.mjs --write-report` |
 
 Three of the four reds are one defect wearing three names, which is why the count was resolved to
 subjects before any verdict was formed.
@@ -85,7 +85,7 @@ subjects before any verdict was formed.
 
 `docs/bench/same-game-audit.md` is stale against `assets/contracts/**` on main **before** this
 merge, and `scripts/same-game-report-guard.test.mjs` reds on it standing alone. It arrived with the
-attended e5-stillwater admission (`983d1cb2e`), whose own working tree still held an uncommitted
+attended e5-stillwater admission (`508d37de0`), whose own working tree still held an uncommitted
 edit to that file at the time this fire read it — i.e. the regeneration was in flight, not skipped.
 **Not this slice's to fix and deliberately not fixed here** (regenerating a generated file inside an
 unrelated drain is how attribution gets lost). Whoever next touches the bench regenerates it with
@@ -102,7 +102,7 @@ answers the question its consumer actually asks.
 
 ## Merge classification (recorded for the corrective's drain; nothing merged)
 
-Base `6c665725`.
+Base `bbceb43a`.
 
 | Path | Class |
 |---|---|

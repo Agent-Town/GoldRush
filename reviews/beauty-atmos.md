@@ -1,6 +1,6 @@
 # Review — THE ATMOSPHERICS SHIFT (skies as OPTIONS, panoramas as second attempts)
 
-**Slice/branch/tip:** `beauty2/atmos`, base `60563f4b` (origin/main at pre-flight, fast-forwarded 2026-08-03) · dedicated Opus-5 solo-writer shift
+**Slice/branch/tip:** `beauty2/atmos`, base `cbaad8bb` (origin/main at pre-flight, fast-forwarded 2026-08-03) · dedicated Opus-5 solo-writer shift
 **Brief:** `TASK.md` · the three U-specs it names (`docs/beauty/town-brief.md` U6, `e1-baron-brief.md` U5, `e1-dry-gulch-brief.md` U5) · program laws `docs/beauty/README.md`
 **Verdict:** ✅ **THREE SKIES BUILT AND BOARDED FOR THE OWNER · TWO HORIZONS SHIPPED · ONE PREMISE OVERTURNED WITH A MEASUREMENT.**
 Rendering only, zero sim bytes. Frame p95 flat inside noise on all 32 town frames. Every red control-proven pre-existing.
@@ -38,7 +38,7 @@ Full-size single frames: `reviews/shots-beauty-atmos/{off,a,b,c}/<moment>.png`.
 
 **My recommendation, stated so it can be overruled:** **c** for the default boot and **a** for the dusk/marketing frame. c is one texture and no geometry, it works on lite, and it is the change that does the most per byte — the town stops being a tabletop the moment the void stops being the colour of dirt. a is the better *picture* at dusk (`board/5-dusk-north.png`, bottom-right) and the worse *world* in daylight, because its dunes are too close to be distance. b is the most technically correct and the least interesting to look at: it reads as painted scenery, which is exactly what it is.
 
-**Nothing is shipped by default.** `?townSky=a|b|c` is menu-safe; with no flag the town is byte-identical to `60563f4b`. One word from the owner turns one of them on.
+**Nothing is shipped by default.** `?townSky=a|b|c` is menu-safe; with no flag the town is byte-identical to `cbaad8bb`. One word from the owner turns one of them on.
 
 ---
 
@@ -130,9 +130,9 @@ TASK.md asks for *"DRY GULCH U5 re-scoped per its parked note"*. **U5 was KEPT; 
 
 ### The town family's 13 reds are 11 pre-existing + 2 that do not reproduce
 
-Control: a **detached worktree at `60563f4b`** (`/tmp/gr-atmos-control`), its own vite on port 5311, `--workers=1` on both arms, never sharing a server.
+Control: a **detached worktree at `cbaad8bb`** (`/tmp/gr-atmos-control`), its own vite on port 5311, `--workers=1` on both arms, never sharing a server.
 
-| Failure | Control at `60563f4b` | This branch | Verdict |
+| Failure | Control at `cbaad8bb` | This branch | Verdict |
 |---------|----------------------|-------------|---------|
 | `town-plate-blender:59` ×2 projects | fails | fails | pre-existing |
 | `town-plate-blender:114` ×2 | fails | fails | pre-existing |
@@ -187,7 +187,7 @@ The two reds are **`e1-baron.spec.ts:343`** — *contract board requires science
 
 ## 6. Merge classification
 
-- **Base:** `60563f4b`, fast-forwarded at pre-flight. Five commits, each pushed and verified with `git ls-remote`.
+- **Base:** `cbaad8bb`, fast-forwarded at pre-flight. Five commits, each pushed and verified with `git ls-remote`.
 - **`src/town/TownSky.ts`** — NEW. The three variants and the cone arithmetic that sizes them.
 - **`src/town/TownScene.ts`** — LANE-TOUCHED. A field, a build call in `dressScene`, one `follow()` in `render`, a `dispose`, the `sky` diagnostics block, and one defect fix: `publishDiagnostics` cast `scene.background` to `THREE.Color` unconditionally and threw the moment a variant replaced it with a texture. The default path still publishes the same hex string.
 - **`src/main.ts`** — one word in `MENU_SAFE_PARAMS` (`townSky`), the same six-word class of change F-BT-1 made for `townDusk`.

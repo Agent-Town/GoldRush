@@ -1,6 +1,6 @@
 # Task lane-d-f1153-1-teleport-position-refresh: make `__GR_TEST__.teleport()` refresh the action-actor position, then PROVE the flake rate falls (lane-d, commit prefix "fix:")
 
-**FIRE-AUTHORED s1154 (attended review welcome).** F-1152-1 is **already diagnosed** — s1153 merged the diagnosis at `4f3223f8` and this fire re-verified the mechanism at source, all five sites, before authoring. This task is the **CURE**, and its deliverable is **a measured before/after rate**, not a green run.
+**FIRE-AUTHORED s1154 (attended review welcome).** F-1152-1 is **already diagnosed** — s1153 merged the diagnosis at `1f563455` and this fire re-verified the mechanism at source, all five sites, before authoring. This task is the **CURE**, and its deliverable is **a measured before/after rate**, not a green run.
 
 CODEX: model=gpt-5.6-sol effort=high
 
@@ -8,7 +8,7 @@ You are Codex, implementer for Gold Rush, running natively on Robin's Mac in `wo
 
 Pre-flight (LANE-SAFETY, runner-auto-commit aware): `lane/perf` is **0 commits ahead** of main and its three-dot diff against main is **empty** — s1154 verified that by content (`git rev-list --count main..lane/perf` = 0, `git diff --name-only main...lane/perf` = empty), not by the ahead-count. **Nothing unique dies on a reset.** Re-verify that yourself with the **unique-blob invariant** rather than a file list: no dirty/modified blob in this worktree may exist *nowhere else* in git (`git hash-object <file>` then `git cat-file -e <hash>`; `.wrangler/tmp/**` is build scratch and is exempt). If every blob is reachable → `git checkout -B lane/perf main && git clean -fd` and PROCEED. If **any** blob exists nowhere else, **STOP and name that file** — that is the Mistake #2 shape. Then `npm install --no-audit --no-fund`; `npm run build` green before touching anything.
 
-⚠️ **Your two-dot diff against main will look enormous (~440 files) and that is EXPECTED, not a conflict.** Main absorbed a 428-file commit (`c7601082`) carrying `.wrangler/tmp/**` and `artifacts/**`; your lane simply predates it. **Judge this lane by the three-dot diff only.**
+⚠️ **Your two-dot diff against main will look enormous (~440 files) and that is EXPECTED, not a conflict.** Main absorbed a 428-file commit (`a5c4a942`) carrying `.wrangler/tmp/**` and `artifacts/**`; your lane simply predates it. **Judge this lane by the three-dot diff only.**
 
 ⛔ **`lane-calibrate-suite-workers-v2` is OWNER-BLOCKED and is NOT your task.** The block attaches to that *task*, not to this *slot* (F-1151-3).
 
@@ -24,7 +24,7 @@ Pre-flight (LANE-SAFETY, runner-auto-commit aware): `lane/perf` is **0 commits a
 
 ## WHY (quoting the evidence, dated)
 
-**The cause is established and was verified at source twice.** s1153's drain (`4f3223f8`, review `reviews/lane-d-f1152-1-confirmbuild-cause.md`) found that **all 8/21 observed failures took `confirm()`'s `!valid` exit → `computeValid()`'s overlap check, with state one placement stale.** s1154 re-read all five sites and confirms:
+**The cause is established and was verified at source twice.** s1153's drain (`1f563455`, review `reviews/lane-d-f1152-1-confirmbuild-cause.md`) found that **all 8/21 observed failures took `confirm()`'s `!valid` exit → `computeValid()`'s overlap check, with state one placement stale.** s1154 re-read all five sites and confirms:
 
 - `__GR_TEST__.teleport()` (`Game.ts:1649-1655`) sets `this.localActor.group.position`, syncs visual height, zeroes velocity, resets physics and snaps render state — and **never refreshes `actionActorPosition`.**
 - `BuildSystem` reads that separate vector, handed to it at `Game.ts:1211`.

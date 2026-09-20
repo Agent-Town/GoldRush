@@ -1,7 +1,7 @@
 # engine-surface-narrowing — drain review (s2443)
 
-**Slice:** `engine-surface-narrowing` · **branch:** `lane/d` · **lane tip:** `d1a07f399` · **base:** `8c1054704` (2026-09-02T05:43:17+07:00, ~2 h stale)
-**Merge:** `dbb42b97d5e44d0366280184ae195fe6f088a438` (gated commit fast-forwarded onto main — the tree that was measured is the tree that landed)
+**Slice:** `engine-surface-narrowing` · **branch:** `lane/d` · **lane tip:** `a8e909ceb` · **base:** `d2a2179f8` (2026-09-02T05:43:17+07:00, ~2 h stale)
+**Merge:** `e6d904e20888f647c4104fbb8331419dfe63d6a0` (gated commit fast-forwarded onto main — the tree that was measured is the tree that landed)
 
 ## Verdict
 
@@ -18,7 +18,7 @@ Engine identity stops hashing the whole repo and hashes only what a replay actua
 | `npx tsc --noEmit` | **rc=0** |
 | `npm run build` | **rc=0**, built in 1.80 s |
 | `engine-era-guard.test.mjs` + `assay-worker.test.mjs` | **15 pass / 0 fail / 0 cancelled**, 6.82 s |
-| `run-guards --changed-since 8c1054704` | 6/8 — see the two reds below |
+| `run-guards --changed-since d2a2179f8` | 6/8 — see the two reds below |
 | `git diff --check` | clean |
 | Registry after resolution | head `eaadcc383d`, **5 pins**, all four old-basis pins carry 1 alias, lineage append-only |
 
@@ -27,7 +27,7 @@ Engine identity stops hashing the whole repo and hashes only what a replay actua
 - **`test:power-budget` — PRE-EXISTING ON MAIN, and the slice measures BETTER.** Control run alone on unmerged main: `p95=3.252 ms cap=0.500 ms`. Merged tree in the battery: `p95=2.663 ms`. Both fail the 0.500 ms cap; main is the worse of the two. This slice touches no `src/systems/PowerGraph.ts`. A 5–6× overshoot against a 0.5 ms cap on a machine that had just run a 16-minute battery is a **load ceiling, not a line** — gated here on the **differential**, which is favourable.
 - **`test:node-guards` — NOT A FAILING ASSERTION.** `rc=signal:SIGTERM`: the harness killed it on time, and every test visible in its tail is a ✔. F-2166-2 prices this battery at **529.8 s and growing** (284 → 363 → 424 → 472 → 503 tests), so a SIGTERM under concurrent load is the arrangement, not the slice. **Stated honestly per F-2428-1: the aggregate did not complete, and I am not reporting a green I did not get.** The two guards this slice actually modifies were therefore run directly and are 15/15.
 
-## Merge classification (base `8c1054704`; main moved 23 files since)
+## Merge classification (base `d2a2179f8`; main moved 23 files since)
 
 | File | Class | Resolution |
 |---|---|---|
@@ -39,7 +39,7 @@ Engine identity stops hashing the whole repo and hashes only what a replay actua
 
 ### The registry conflict, resolved by field (nothing synthesised)
 
-Both sides edited the same `d47f32f6…` pin. **Main** wrote a richer `cause` naming the three rotating commits by F-ID (`8dbb5122a` F-2424-1, `b116a45be` F-2433-1, `3d9484a61` F-2435-1) and already anticipating this narrowing; **the lane** added the `aliases` array that keeps old-basis reels verifiable under the new basis. Each field was taken **verbatim from the side that owns it** — the lane wins on its feature intent (the alias is the whole compatibility mechanism), main wins on provenance. The head `engineHash` goes to the lane's narrowed `eaadcc383d…`, and the lane's new pin is appended. `assay-worker`/`engine-era` guards then assert exactly this shape and pass, including *"a new-basis alias keeps its old-basis pin in the current era"* and *"removing an earlier pin reds"*.
+Both sides edited the same `d47f32f6…` pin. **Main** wrote a richer `cause` naming the three rotating commits by F-ID (`7047eb7dc` F-2424-1, `93eda4022` F-2433-1, `709b5f9cc` F-2435-1) and already anticipating this narrowing; **the lane** added the `aliases` array that keeps old-basis reels verifiable under the new basis. Each field was taken **verbatim from the side that owns it** — the lane wins on its feature intent (the alias is the whole compatibility mechanism), main wins on provenance. The head `engineHash` goes to the lane's narrowed `eaadcc383d…`, and the lane's new pin is appended. `assay-worker`/`engine-era` guards then assert exactly this shape and pass, including *"a new-basis alias keeps its old-basis pin in the current era"* and *"removing an earlier pin reds"*.
 
 `scripts/fire.md` gains exactly one line — §2H, the heat-arena law (`npm ci`, never `npm install`; prove the arena clean before minting an engine probe). Verified as the *only* delta the merge introduces to that surface.
 

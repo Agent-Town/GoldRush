@@ -1,8 +1,8 @@
 # ER-01 E6 Atomic readiness census — drain review (s1461)
 
 - **Slice:** `lane-er01-e6-census` (E6 Atomic, on the E2/E3 template + the ERA-SOCKET LAW)
-- **Branch / tip:** `lane/b` @ `de15831b` (Codex's own commit; **no runner wrapper commit**, so the F-1461-5 deletion class does not apply here — checked with `git show --stat` before merging)
-- **Merged to main:** `47040343cacd9712f70a09e5256f61f37d9e6eb0`
+- **Branch / tip:** `lane/b` @ `d09d07aa` (Codex's own commit; **no runner wrapper commit**, so the F-1461-5 deletion class does not apply here — checked with `git show --stat` before merging)
+- **Merged to main:** `0a5a38997ce096daf8a8fe7d854a21d302390706`
 - **Gated in:** detached worktree `gate-s1461/` (§3.0b)
 - **Drain-block check:** `? UNKNOWN` — no leaf; searched by leaf id, genuinely absent (F-1461-2). Registered in the bookkeeping commit. Not a block.
 
@@ -62,7 +62,7 @@ No screenshots: headless bench infrastructure, no player-visible surface.
 
 ## Merge classification
 
-Base `3445d479`. `docs/bench/e6-readiness-census.md` and `e2e/er01-e6-census.spec.ts` are
+Base `91962d70`. `docs/bench/e6-readiness-census.md` and `e2e/er01-e6-census.spec.ts` are
 **LANE-ONLY pure-add**. Two **BOTH-MOVED** files, both conflicting:
 
 - **`assets/contracts/bench-seeds.json` — resolved as a UNION, which is the load-bearing decision

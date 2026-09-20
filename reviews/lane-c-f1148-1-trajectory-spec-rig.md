@@ -1,6 +1,6 @@
 # Review — lane-c-f1148-1-trajectory-spec-rig (F-1148-1, attempt 2)
 
-**Slice:** `lane-c-f1148-1-trajectory-spec-rig` · **branch:** `lane/e2-arsenal` · **runner tip:** `b9035a65` · **base (merge-base):** `3fa3b85f`
+**Slice:** `lane-c-f1148-1-trajectory-spec-rig` · **branch:** `lane/e2-arsenal` · **runner tip:** `b9035a65` · **base (merge-base):** `ceadd5cd`
 **Drained by:** s1152 fire, 2026-07-28 · **Review file:** this · **Report:** `artifacts/f1148-1-trajectory-split-v2.md`
 
 ## Verdict
@@ -15,7 +15,7 @@ The merge is **11 pure additions, zero `src/`, zero `e2e/` modifications** — t
 
 ## What it does
 
-Answers F-1148-1: *on today's main, does removing the lateral bias restore the parent revision's route, or only part of it?* It ports the retained rAF trajectory sampler into `e2e/f1148-1-trajectory-probe.spec.ts` — an **opt-in** Playwright spec gated on `GR_F1148_PROBE` — and runs three arms × 3 runs: **A** today's main, **B** main with `lateralOffset = 0`, **C** parent revision `4da134a9`.
+Answers F-1148-1: *on today's main, does removing the lateral bias restore the parent revision's route, or only part of it?* It ports the retained rAF trajectory sampler into `e2e/f1148-1-trajectory-probe.spec.ts` — an **opt-in** Playwright spec gated on `GR_F1148_PROBE` — and runs three arms × 3 runs: **A** today's main, **B** main with `lateralOffset = 0`, **C** parent revision `a26eca02`.
 
 **Classification: B sits between A and C ⇒ a REAL REMAINDER.** The sharp part is that the two measures separate: the **X floor is fully cured** by arm B (`-0.662 → 0.000`, the S-bend gone) while **~1.9 s of route cost survives**. Route *shape* is restored; route *cost* is not. The lateral bias is a confirmed contributor and provably **not the whole regression** — so an eventual owner-gated repair scoped to `lateralOffset` alone would be insufficient. The runner names the closest remainder without repairing it: with `lateralOffset = 0` the block still computes `spreadBiasX`/`spreadBiasZ`, i.e. centre-seeking formation steering that the parent revision had no equivalent of.
 
@@ -49,7 +49,7 @@ identical to every digit of `artifacts/f1148-1-trajectory/arm-a-main-run1.json`.
 - **LANE-TOUCHED (11 files, pure adds):** `artifacts/f1148-1-trajectory-split-v2.md` · `artifacts/f1148-1-trajectory/*.json` (9) · `e2e/f1148-1-trajectory-probe.spec.ts`
 - **MAIN-MOVED-ONLY (4 files):** `STATUS.md` · `tasks/BACKLOG.md` · `tasks/goals.json` · `tasks/lane-c-f1148-1-trajectory-spec-rig.md`
 
-The two-dot diff shows those four as lane-side *deletions*; they are **stale-base phantoms**, not real deletes. Proof by commit ancestry rather than by eye: `git log 3fa3b85f..lane/e2-arsenal -- STATUS.md tasks/` is **empty** (the lane never touched them) while `git log 3fa3b85f..main` on the same paths shows `d653bcd4`, `5ab9e697`, `47aac696`. Grafted with `git checkout lane/e2-arsenal -- <the 11 paths>`; no 3-way needed, no conflict possible.
+The two-dot diff shows those four as lane-side *deletions*; they are **stale-base phantoms**, not real deletes. Proof by commit ancestry rather than by eye: `git log ceadd5cd..lane/e2-arsenal -- STATUS.md tasks/` is **empty** (the lane never touched them) while `git log ceadd5cd..main` on the same paths shows `c64d049b`, `9dc8b253`, `078f5112`. Grafted with `git checkout lane/e2-arsenal -- <the 11 paths>`; no 3-way needed, no conflict possible.
 
 ## Findings
 

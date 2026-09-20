@@ -1,10 +1,10 @@
 # s2529 — Factory checks completed after transient disk exhaustion
 
-No eligible runner output was drained. Attended story, heat and performance work retains its custody; no reset, refill or retry was issued. The Orbital Frontier merge `642f0ae9e` was recorded as a ROUNDUP-CLASS draft in the gazette, citing the committed arrival and breach-drill screenshots. Publication remains owner-only.
+No eligible runner output was drained. Attended story, heat and performance work retains its custody; no reset, refill or retry was issued. The Orbital Frontier merge `9ba1c34b6` was recorded as a ROUNDUP-CLASS draft in the gazette, citing the committed arrival and breach-drill screenshots. Publication remains owner-only.
 
 ## Disk observation
 
-The first ordinary `git status --short` failed with `index.lock` write error, `Out of diskspace`; `df -h .` showed 117 MiB available. Read-only status with `GIT_OPTIONAL_LOCKS=0` worked. Available space subsequently rose to 6.9 GiB, then measured 6.4 GiB and 7.5 GiB. This fire deleted nothing and did not prune worktrees or alter caches. The cause of the recovered space is unverified. This was a real failed write, followed by successful lock commit `74542e974`; it is not a claimed cleanup fix. Re-check space before a large gate or evidence write.
+The first ordinary `git status --short` failed with `index.lock` write error, `Out of diskspace`; `df -h .` showed 117 MiB available. Read-only status with `GIT_OPTIONAL_LOCKS=0` worked. Available space subsequently rose to 6.9 GiB, then measured 6.4 GiB and 7.5 GiB. This fire deleted nothing and did not prune worktrees or alter caches. The cause of the recovered space is unverified. This was a real failed write, followed by successful lock commit `65549309e`; it is not a claimed cleanup fix. Re-check space before a large gate or evidence write.
 
 ## Recorded checks
 
@@ -16,7 +16,7 @@ The first ordinary `git status --short` failed with `index.lock` write error, `O
 - Withheld audit: 369 run logs, 5 withholding runs, 58 distinct paths; 3 tracked, zero recoverable on disk, 55 historically missing. No new recovered evidence.
 - LB-01: all 13 coverage days August 24 through September 5 present, zero account rows across 124 keys in 13 mirrors. Six unrecognized anonymous refusal keys remain declared. Today's mirror was already retained; no pull or account publication. TK-01 September 4 digest exists. RT-01 r2026w37 already minted for September 7; no Sunday mint owed during this Saturday fire.
 - GZ-01: the initial sweep found one candidate, the attended E8 story merge. It is now cited in an appended roundup; appending preserves the existing law-pointer coordinates. The initial weekly budget was 18 standalone and 18 batched, so no standalone headline was added.
-- s2528's exact line was archived in lock commit `74542e974`, once. The inherited desk audit reports CLOSED 0, OPEN 2, OPEN-DESK-ONLY 51, BOTH 0 and UNRECORDED 0; all 53 items are carried verbatim.
+- s2528's exact line was archived in lock commit `65549309e`, once. The inherited desk audit reports CLOSED 0, OPEN 2, OPEN-DESK-ONLY 51, BOTH 0 and UNRECORDED 0; all 53 items are carried verbatim.
 
 ## Closing evidence
 

@@ -1,7 +1,7 @@
 # 3D-C-BETA — Moth Season landmark pack
 
 - Branch: `sol/lm-beta-moth-season`
-- Fresh reference: `c965f00003ba57a978e88705351307ce3c2cf741`
+- Fresh reference: `a5ad2637c3e3953674b2e113a9b25599cddaa000`
 - Verdict: **READY-FOR-GATES**
 - Scope: Moth Season only. No E6–E10 pack functions, assets, contracts, or map-specific ledger entries may change.
 - Interlock: production bodies are mount-agnostic; canonical `landmarkMounts` remain empty and owned by 3D-D.

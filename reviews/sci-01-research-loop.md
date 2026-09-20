@@ -4,7 +4,7 @@
 Slice: `specs/science-dimension/` SCI-01. Implementer: Codex (worktrees/lane-a, branch `lane/m3`, commit `18e8021`). Drained by s84.
 
 ## Merge mechanics
-- Lane base: `9a6909c` (s82 end — already contains profiles + m4 embodiment + agent globals). Main at drain time: `b1d5af2`→bookkeeping.
+- Lane base: `63a3fee` (s82 end — already contains profiles + m4 embodiment + agent globals). Main at drain time: `a4cb677`→bookkeeping.
 - **Clean drain, no 3-way graft.** `git diff --name-only 9a6909c main` shows main touched only assets/tasks/reviews/STATUS since the lane's base — **zero source files moved on main**. Every lane-touched `src/` file was MAIN-MOVED-ONLY=NO, so the lane versions grafted directly (`git checkout lane/m3 -- <files>`) with no conflict.
 - Files landed: `src/meta/ResearchTree.ts` (new), `src/ui/DeathOverlay.ts`, `src/ui/theme.css`, `src/game/{Balance,Game,Progression,Upgrades,ProfileStorage}.ts`, `src/vite-env.d.ts`, `e2e/sci-01-research-loop.spec.ts` (new), `artifacts/sci-01/*` (impl screenshots).
 

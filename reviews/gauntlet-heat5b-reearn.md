@@ -1,13 +1,13 @@
 # gauntlet-heat5b-reearn — night-shift and hill-mine re-earned on the cured engine
 
-**Slice:** `gauntlet-heat5b-reearn` · **branch:** `lane/c` · **tip:** `db58b3955` · **gated:** s2289
-**Merge:** ✅ **MERGED s2290 at `77c85566ac364a95742eec0f545cabefe2e4467d`** (the contention below cleared).
+**Slice:** `gauntlet-heat5b-reearn` · **branch:** `lane/c` · **tip:** `e48c2fdf8` · **gated:** s2289
+**Merge:** ✅ **MERGED s2290 at `81729ab9bc1a237032d918cb787cecc251a1deeb`** (the contention below cleared).
 
 ## VERDICT: MERGED — both standings independently reproduced; two non-blocking findings filed.
 
 ✅ **MERGED WITHOUT RE-GATING, AND THAT WAS VERIFIED RATHER THAN ASSUMED.** s2290 took the merge the
-moment the attended session committed `tasks/BACKLOG.md` (its two rows landed at `cf6d6e042` +
-`80761b2b5`, ~5 min before this fire's lock). Because main had moved under the gate, the drain did
+moment the attended session committed `tasks/BACKLOG.md` (its two rows landed at `2ef337b21` +
+`6438a8358`, ~5 min before this fire's lock). Because main had moved under the gate, the drain did
 **not** take the gated evidence on trust — it compared every artifact blob the merge lands against
 the preserved gated tree (tag `s2289-gate-merge` → `1672a0cc2`):
 
@@ -60,7 +60,7 @@ run-surface count is 0. It costs the next fire about two minutes once `tasks/BAC
 Heat-5 secured `e1-night-shift` (w25) and `e2-hill-mine` (w15) on the **pre-cure** engine. The
 determinism cure (`assayer-environment-honesty`) changed trajectories, so those exact input streams
 now die at w12/w2 and their tapes are honest `build-skew`. This slice re-rides both maps on the
-**cured** engine at the live deploy `72433ea49`, carrying the predecessor's *strategy* rather than
+**cured** engine at the live deploy `bd09497eb`, carrying the predecessor's *strategy* rather than
 its streams, and asks the question that is the actual science: **which strategy knowledge survives
 an engine patch?**
 
@@ -110,7 +110,7 @@ narrow deliberately: this slice cannot change what any test executes, because it
 
 ## Merge classification
 
-Base `db58b3955`, 69 paths. **All 69 LANE-TOUCHED, zero MAIN-MOVED, zero BOTH-MOVED** — 68 files
+Base `e48c2fdf8`, 69 paths. **All 69 LANE-TOUCHED, zero MAIN-MOVED, zero BOTH-MOVED** — 68 files
 under `artifacts/gauntlet-heat5b-20260825/**` are new, and `tasks/BACKLOG.md`'s single row flip is
 the lane's own. No 3-way resolution was needed.
 

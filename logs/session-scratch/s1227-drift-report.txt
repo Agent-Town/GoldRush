@@ -1,6 +1,6 @@
 
 === s1224 citation-drift audit ===
-main HEAD           : 68ed1002cd040bf6200b435f577277df2ca77c48
+main HEAD           : 25def98677f00fe7fcafb662e9eb4a28311a6701
 master files scanned: 1728
 citations found     : 517
   of which in a known-reds context: 8
@@ -32,97 +32,97 @@ verdicts:
 
 [DRIFTED] e2e/vp-02b-rotation-resolver.spec.ts:112
    master: tasks/008-vp-02b-rotation-resolver.md
-   intro : b829807be30f
+   intro : 46ca3300526c
    then  : "hero locomotion resolves all 8 contract directions"
    now   : null
 
 [DRIFTED] e2e/mp-02-lockstep.spec.ts:67
    master: tasks/067-mp-resync-two-actors.md
-   intro : dab81127af75
+   intro : ee7aee80792f
    then  : "hash mismatch pauses, shows the wire card, and restores from relay snapshot"
    now   : "consecutive action pulses survive the filled input-delay window exactly once"
 
 [DRIFTED] e2e/044-start-screen.spec.ts:120
    master: tasks/081-continue-button-regression.md
-   intro : 4143db5ffd30
+   intro : 49ea09145545
    then  : "Continue appears only for an existing suspend slot and enters the run path"
    now   : "Settings volume writes through"
 
 [DRIFTED] e2e/trail-guide.spec.ts:113
    master: tasks/BACKLOG.md
-   intro : 9e97be2b6321
+   intro : 2524a5afab00
    then  : "first boot asks the greenhorn question once and sets the preset"
    now   : "fresh profile sees the first three trail beats once, in order, and reload stays quiet"
 
 [DRIFTED] e2e/044-start-screen.spec.ts:120
    master: tasks/BACKLOG.md
-   intro : f9ebd5ce34a2
+   intro : 507ecf238476
    then  : "Continue appears only for an existing suspend slot and enters the run path"
    now   : "Settings volume writes through"
 
 [DRIFTED] e2e/town-t6-surfaces.spec.ts:89
    master: tasks/BACKLOG.md
-   intro : f9ebd5ce34a2
+   intro : 507ecf238476
    then  : "plain menu thins to town, profile, settings"
    now   : null
 
 [DRIFTED] e2e/mp-02-lockstep.spec.ts:67
    master: tasks/BACKLOG.md
-   intro : 9be2c9aa1d2b
+   intro : cd388c6a3f8b
    then  : "two clients advance 500 ticks with identical lockstep hashes"
    now   : "consecutive action pulses survive the filled input-delay window exactly once"
 
 [DRIFTED] e2e/e5-deepwater-claim.spec.ts:29
    master: tasks/BACKLOG.md
-   intro : e06e7c8aa4c2
+   intro : 2451f2fc6cea
    then  : "boots the Deepwater contract with deck pads, depth gates, and a storm-scheduled corsair wave"
    now   : null
 
 [DRIFTED] e2e/m2-05-base-damage-repair.spec.ts:328
    master: tasks/BACKLOG.md
-   intro : d9eb4253635c
+   intro : 011f959eed1b
    then  : "wreck and repair cycles leave shooter and renderer counts at baseline"
    now   : "real waves spawn zero wreckers without buildables and nowreck disables them with buildables present"
 
 [DRIFTED] e2e/release-build.spec.ts:165
    master: tasks/BACKLOG.md
-   intro : 816593b221d7
+   intro : c9bf326bfb42
    then  : "later flagship URLs decline to the Claim"
    now   : "an imported later ledger heals to the frontier and plays"
 
 [DRIFTED] e2e/m3-05b-run-ledger.spec.ts:82
    master: tasks/BACKLOG.md
-   intro : 9b739d8dadc7
+   intro : 6bb1e48b0030
    then  : "Claim Office opens a responsive Run Ledger and a profile reset returns its warm empty state"
    now   : "a secured run records its payout and sanitizes optional meta on read"
 
 [DRIFTED] e2e/vp-02b-rotation-resolver.spec.ts:149
    master: tasks/BACKLOG.md
-   intro : 7c012e2e573b
+   intro : ea00ad9fc02a
    then  : "idle snaps to rotation idle hemispheres after movement"
    now   : "resolver hysteresis holds across small boundary oscillation"
 
 [DRIFTED] e2e/vp-02-sprite-animation.spec.ts:560
    master: tasks/BACKLOG.md
-   intro : f015c911a399
+   intro : 8342fb1b7aa8
    then  : "east heading uses explicit rotation2 files with unmirrored pixels"
    now   : "hero walk frameKey alternates while each 8-way heading is held"
 
 [DRIFTED] e2e/trail-guide.spec.ts:113
    master: tasks/DRAFT-e1-trail-guide-plain-boot-proof.md
-   intro : 2a8e6e3cdab3
+   intro : cd84fed1bf8f
    then  : "first boot asks the greenhorn question once and sets the preset"
    now   : "fresh profile sees the first three trail beats once, in order, and reload stays quiet"
 
 [DRIFTED] e2e/task-025-bandits-dont-swim.spec.ts:145
    master: tasks/done/20260708-080611-fix-task-025-wet-powder-announcement-race.md
-   intro : bfadfc206d98
+   intro : 19627959325c
    then  : "hero still wades but wet powder disables and then restores weapons"
    now   : "hero stops in the shallows and keeps weapons armed at the deep channel"
 
 [DRIFTED] e2e/task-025-bandits-dont-swim.spec.ts:145
    master: tasks/done/20260708-080611-fix-task-025-wet-powder-announcement-race.md
-   intro : bfadfc206d98
+   intro : 19627959325c
    then  : "hero still wades but wet powder disables and then restores weapons"
    now   : "hero stops in the shallows and keeps weapons armed at the deep channel"
 
@@ -1370,7 +1370,7 @@ verdicts:
 
 [DRIFTED] e2e/contract-briefings.spec.ts:356
    master: tasks/e1-briefing-truth-unmasked.md
-   intro : 12bc90999189
+   intro : 79de56f4b8be
    then  : "plain no-debug board launch still briefs The Claim"
    now   : "pause panel repeats the active contract briefing"
 
@@ -1400,133 +1400,133 @@ verdicts:
 
 [DRIFTED] e2e/task-025-bandits-dont-swim.spec.ts:185
    master: tasks/fix-task-025-wet-powder-announcement-race.md
-   intro : 9c76a55ab32e
+   intro : 9b55ca4260e9
    then  : "hero still wades but wet powder disables and then restores weapons"
    now   : "xp from a residual deep-water death is auto-banked with no mote"
 
 [DRIFTED] e2e/task-025-bandits-dont-swim.spec.ts:145
    master: tasks/fix-task-025-wet-powder-announcement-race.md
-   intro : 096654735c35
+   intro : a8b619ecaf32
    then  : "hero still wades but wet powder disables and then restores weapons"
    now   : "hero stops in the shallows and keeps weapons armed at the deep channel"
 
 [DRIFTED] e2e/task-025-bandits-dont-swim.spec.ts:145
    master: tasks/fix-task-025-wet-powder-announcement-race.md
-   intro : 096654735c35
+   intro : a8b619ecaf32
    then  : "hero still wades but wet powder disables and then restores weapons"
    now   : "hero stops in the shallows and keeps weapons armed at the deep channel"
 
 [DRIFTED] e2e/release-build.spec.ts:202
    master: tasks/lane-a-cp04-lever-unlock-seed-realign.md
-   intro : 831a8ea5e7c0
+   intro : c33b33873e99
    then  : "dist has no later manifest ids or plate/GLB assets"
    now   : "a forged locked launch declines to the Claim"
 
 [DRIFTED] e2e/m3-05b-run-ledger.spec.ts:82
    master: tasks/lane-a-m3-05-run-history.md
-   intro : 9b739d8dadc7
+   intro : 6bb1e48b0030
    then  : "Claim Office opens a responsive Run Ledger and a profile reset returns its warm empty state"
    now   : "a secured run records its payout and sanitizes optional meta on read"
 
 [DRIFTED] e2e/world-info-notes.spec.ts:289
    master: tasks/lane-a-town-info-note-dead-reckoning.md
-   intro : 781acfe02a66
+   intro : a08e900bd025
    then  : "town shells use info notes beside opens-soon prompts"
    now   : "megaproject site registers a note without replacing the signboard readout"
 
 [DRIFTED] e2e/world-info-notes.spec.ts:195
    master: tasks/lane-a-town-info-note-dead-reckoning.md
-   intro : 781acfe02a66
+   intro : a08e900bd025
    then  : "building notes sit with existing assay and upgrade prompts"
    now   : "run-world notes explain seams, stake, ford, prospector, and soften after two approaches"
 
 [DRIFTED] e2e/world-info-notes.spec.ts:286
    master: tasks/lane-a-world-info-build-fixture-realign.md
-   intro : ae7fbb7fc552
+   intro : 1a139a2477ff
    then  : "town shells use info notes beside opens-soon prompts"
    now   : "megaproject site registers a note without replacing the signboard readout"
 
 [DRIFTED] e2e/066-walk8-engine.spec.ts:194
    master: tasks/lane-c-066-walk8-hero-expectation-realign.md
-   intro : aceed90e10f5
+   intro : 5cb42a50e501
    then  : "hero stays on walk4 while walk8 cells are registered"
    now   : "hero walks on the activated walk8 sheet at the ratified cadence"
 
 [DRIFTED] e2e/lane-c-activations-assay-office.spec.ts:106
    master: tasks/lane-c-activations-derivation-hardening.md
-   intro : 1f9d956ff99a
+   intro : a64ef83fb7e3
    then  : "claim jumpers walk through the 8-way rotation matrix"
    now   : null
 
 [DRIFTED] e2e/lane-c-activations-assay-office.spec.ts:88
    master: tasks/lane-c-activations-frame-matrix-from-contract.md
-   intro : 5ec1a0dc95e3
+   intro : c041e49a978d
    then  : "claim jumpers walk through the 8-way rotation matrix"
    now   : null
 
 [DRIFTED] e2e/task-037-assay-bench-ungate.spec.ts:142
    master: tasks/lane-d-rf-03b-specs-supersession.md
-   intro : b94c2f6759a0
+   intro : befc764efc22
    then  : "normal play shows the Assay Office prompt and opens the bench without debug"
    now   : null
 
 [DRIFTED] e2e/e5-deepwater-claim.spec.ts:29
    master: tasks/lane-e5-deepwater-resource-guard.md
-   intro : e06e7c8aa4c2
+   intro : 2451f2fc6cea
    then  : "boots the Deepwater contract with deck pads, depth gates, and a storm-scheduled corsair wave"
    now   : null
 
 [DRIFTED] e2e/m2-05-base-damage-repair.spec.ts:319
    master: tasks/lane-m2-05-readiness-seam.md
-   intro : d9eb4253635c
+   intro : 011f959eed1b
    then  : "wreck and repair cycles leave shooter and renderer counts at baseline"
    now   : "real waves spawn zero wreckers without buildables and nowreck disables them with buildables present"
 
 [DRIFTED] e2e/m2-05-base-damage-repair.spec.ts:319
    master: tasks/lane-m2-05-wreck-repair-drift.md
-   intro : 3039bc5c648b
+   intro : 4e31aaf8b0fa
    then  : "wreck and repair cycles leave shooter and renderer counts at baseline"
    now   : "real waves spawn zero wreckers without buildables and nowreck disables them with buildables present"
 
 [DRIFTED] e2e/mu-02-music.spec.ts:45
    master: tasks/lane-resource-timing-false-greens.md
-   intro : 6542f3b22d76
+   intro : 82e4472ec3a2
    then  : "E1 music is lazy and active in-run on desktop and mobile"
    now   : "title music waits for a gesture and music volume persists"
 
 [DRIFTED] e2e/never-trap.spec.ts:107
    master: tasks/lane-town-glob-collection.md
-   intro : afcd322f100b
+   intro : 1849ef3ceede
    then  : "town building and Pan Monument centers always release movement input"
    now   : "hero and enemies escape a run landmark center within bounded ticks"
 
 [DRIFTED] e2e/vp-02b-rotation-resolver.spec.ts:149
    master: tasks/lane-vp-02d-side-idle-resolver.md
-   intro : d0869fbb62c4
+   intro : 30044341cc00
    then  : "idle snaps to rotation idle hemispheres after movement"
    now   : "resolver hysteresis holds across small boundary oscillation"
 
 [DRIFTED] e2e/vp-02-sprite-animation.spec.ts:388
    master: tasks/lane-vp-02f-stale-and-flaky-assertions.md
-   intro : 5279f5698175
+   intro : 1e07eb02828b
    then  : "warmed test clip swaps do not grow renderer memory or draw calls"
    now   : "missing sheet cells fall back to the existing one-frame billboard without drift"
 
 [DRIFTED] e2e/vp-02-sprite-animation.spec.ts:705
    master: tasks/lane-vp-02f-stale-and-flaky-assertions.md
-   intro : 5279f5698175
+   intro : 1e07eb02828b
    then  : "captures VP-02 desktop and narrow screenshots"
    now   : "orientation swap crossfades once and adds no draw call at rest"
 
 [DRIFTED] e2e/vp-02-sprite-animation.spec.ts:547
    master: tasks/lane-vp-02f-stale-and-flaky-assertions.md
-   intro : 5279f5698175
+   intro : 1e07eb02828b
    then  : "east heading uses explicit rotation2 files with unmirrored pixels"
    now   : "hero walk frameKey alternates while each 8-way heading is held"
 
 [DRIFTED] e2e/vp-02-sprite-animation.spec.ts:549
    master: tasks/lane-vp-02g-west-capture-null-rate.md
-   intro : 486cd3ce6e3c
+   intro : efe6be5fd510
    then  : "east heading uses explicit rotation2 files with unmirrored pixels"
    now   : "hero walk frameKey alternates while each 8-way heading is held"
 

@@ -13,7 +13,7 @@ const entry = [
   '`tasks/goals.json` states "Tree, spec, worker count, **and working directory** are all ELIMINATED as the variable", and the master quotes it forward as "the identical command, in the identical worktree" —',
   'yet `logs/session-scratch/s1264/` holds only `RESULTS.md` + `handoff-line1.txt`, with **zero occurrences of `lane-b`, `cwd`, or `worktree`**, and s1265 says outright "I did not measure the lane shell."',
   '**Every fire-side reading was taken in the repo ROOT and every lane-side reading in `worktrees/lane-b`: for five fires SHELL and DIRECTORY moved together and were never separated.**',
-  '✅ **THREE ARMS, SAME HOUR, SAME SUBJECT BYTES** (`git diff 924e98c9 7f3b13ac` on the spec + `TownScene.ts` + `playwright.config.ts` + `package.json` = **empty**; same `@playwright/test` 1.61.1 and chromium **1228** in both `node_modules`):',
+  '✅ **THREE ARMS, SAME HOUR, SAME SUBJECT BYTES** (`git diff 9744f6b9 328b1bed` on the spec + `TownScene.ts` + `playwright.config.ts` + `package.json` = **empty**; same `@playwright/test` 1.61.1 and chromium **1228** in both `node_modules`):',
   '**L** lane shell / lane dir **0/24** · **F** fire shell / repo root **22/24** · **D** fire shell / **lane dir 21/24**.',
   '➡️ **DIRECTORY REFUTED BY MEASUREMENT** — the asserted claim turns out to be true, and is now evidence instead of assertion. **F-1264-3 stands at n=24 on both sides** and the lane-green half is no longer n=1 (F-1265-2 discharged).',
   'Also refuted this fire: the **SwiftShader** lead (the lane software-rasterises too, so it is not a discriminator), **fd/proc limits** (`ulimit -n` 1048576 / `-u` 10666 identical in both shells), and **memory pressure** (128 GiB, **80% free** during the arms).',
@@ -25,7 +25,7 @@ const entry = [
   '⚖️ **THE RULE THIS EARNS:** *when two environments are compared, every property that differs between them moves together until someone deliberately crosses them — so a list of "eliminated variables" is a list of hypotheses unless each entry names the run that crossed it.*',
   'ⓘ Adjacent, reported and untouched (**F-1267-2**): `e2e/gazette-welcome.spec.ts:42` (`approachNewsie`) is a **second** latency-sensitive assertion in the same spec, **2/24** in arm F (`Expected: "newsie" / Received: "tavernkeeper"`, 8 s predicate timeout). The lane never saw it; fold it into whatever cure lands for `:88` rather than spawning its own task.',
   'ⓘ Not a finding: the **four-vs-six screenshot** discrepancy is a red/green signature, not a stale inventory — `shot(page, testInfo, \'retrigger-prompt\')` sits at `:109`, **after** the assertion at `:88`, so red runs write four and green runs write six (this fire own red arms wrote exactly four).',
-  'Review: `reviews/newsie-drift-shell-divergence-rate.md`. Merged `a17307e6`..; evidence `logs/session-scratch/s1267/RESULTS.md`.',
+  'Review: `reviews/newsie-drift-shell-divergence-rate.md`. Merged `0f9c19c2`..; evidence `logs/session-scratch/s1267/RESULTS.md`.',
 ].join(' ');
 
 const retention = [

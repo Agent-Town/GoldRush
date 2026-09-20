@@ -6,7 +6,7 @@ const P = `${ROOT}/STATUS.md`;
 const lines = readFileSync(P, 'utf8').split('\n');
 
 // s1509's line-1 was dropped when this fire took the lock; recover it VERBATIM from git.
-const prev = execFileSync('git', ['show', 'f1531fb42:STATUS.md'],
+const prev = execFileSync('git', ['show', '1d5153d73:STATUS.md'],
   { cwd: ROOT, encoding: 'utf8', maxBuffer: 256 * 1024 * 1024 }).split('\n')[0];
 if (!/s1509 handoff/.test(prev)) throw new Error('recovered line is not the s1509 handoff');
 
@@ -36,15 +36,15 @@ const desk = [
 const body = [
   `Last updated: ${process.argv[2]} s1510 handoff, lock CLEARED —`,
   '🟩 **ONE DRAIN, AND THE BISECT IT STOPPED ON FINISHED FIRE-SIDE IN TWO PROBES.**',
-  '🔬 **DRAINED f1507-2 → `ccd26fc8b`** (docs-only, 66 lines; tsc rc0; three-dot diff touches no run surface —',
+  '🔬 **DRAINED f1507-2 → `bc482de1a`** (docs-only, 66 lines; tsc rc0; three-dot diff touches no run surface —',
   '`build` and a browser battery were not run and are **not owed**, said out loud rather than silently skipped).',
-  "**The runner was RIGHT to stop.** The master's proposed GOOD endpoint `c063b5e59` is **itself red**, so",
-  '**`4ab487437` (fort-solidity) is EXONERATED** — the hypothesis this row carried for three fires. It refused to',
+  "**The runner was RIGHT to stop.** The master's proposed GOOD endpoint `f449dd65b` is **itself red**, so",
+  '**`e788002cf` (fort-solidity) is EXONERATED** — the hypothesis this row carried for three fires. It refused to',
   'bisect, refused to touch `Enemy.ts`, and wrote a 180-sample read-only probe instead.',
   '🎯 **THAT PROBE IS WHY I COULD FINISH THE JOB IN TWO RUNS RATHER THAN ELEVEN — CULPRIT NAMED:',
-  '`531bd923adc97d9c288310f7f94f549e994c3f29`** (*drain(s1445) lane-night-stuck-census, F-BW-10*, 2026-08-04).',
+  '`70eb5b50d3bb6852b8cd6b6646dec9a2b2af6577`** (*drain(s1445) lane-night-stuck-census, F-BW-10*, 2026-08-04).',
   'Arms, `--workers=1` both projects in detached `gate-s1510` on scratch port 5234: `1761da401` **GREEN 10/10** ·',
-  '`7bb054510` (culprit parent) **GREEN 2/2** · `531bd923a` **RED 2/2** · main RED.',
+  '`e2a6a5641` (culprit parent) **GREEN 2/2** · `70eb5b50d` **RED 2/2** · main RED.',
   "⚠️ **I DID NOT INHERIT THE GREEN ENDPOINT FROM `CLEAN-IN-INVENTORY`, AND THAT IS THE REUSABLE HALF.** The",
   "inventory's markdown lists **failures only**, so its silence about a spec cannot distinguish *ran and passed*",
   'from *never ran* — the exact ambiguity F-1224-3 already documents. Resolved instead from',
@@ -58,7 +58,7 @@ const body = [
   'directly north of `ruined_mining_operation`, so goal-x == blocker-x and the slide points back at the centre from',
   'both sides: 180 samples pinned at `z=-8.652`, `1.845 ≤ x ≤ 2.061`, max x-deviation **0.175** vs `halfX=3.176`.',
   '📮 **AUTHORED + DISPATCHED `lane-f1510-1-blocker-slide-deadband.md` → lane-a** (now BUSY) in the F-1424-3 order:',
-  'master+leaf+BACKLOG committed **first** (`00e57167`), lane cured **second** (tip archived to',
+  'master+leaf+BACKLOG committed **first** (`e0f48db9`), lane cured **second** (tip archived to',
   '`archive/lane-a-fire-absorbed-9e38976c`), citation key grepped **1 on main and 1 in the lane**, `cp` **third**.',
   'It **FORBIDS** reverting the culprit (it cured a real owner complaint), **FORBIDS** editing either e2e spec (both',
   'are the judges), and **explicitly licenses a NEGATIVE result** — if no deadband greens both, that is a finding,',
@@ -72,9 +72,9 @@ const body = [
   '`artifacts/tk-2026-08-06/classify.mjs`) — **253 commits / 24 merges / 17 player-visible / 207 bookkeeping**. Written',
   'eight minutes before the 06:00 trigger on an already-complete day, noted in the digest rather than done quietly.',
   '⚠️ **Its caveat inverts yesterday\'s:** the day\'s biggest event — *the county\'s first standing*, an agent securing',
-  'The Claim through the **public door** (`3b2b33c2`) — lands in the FACTORY bucket because its diff touched',
+  'The Claim through the **public door** (`c8315de9`) — lands in the FACTORY bucket because its diff touched',
   '`scripts/` and not `src/`. A path-counter cannot see that a tool run was the point.',
-  '🗄️ **s1509\'s handoff was DROPPED at lock time and I restored it verbatim from `f1531fb42`** — it was missing from',
+  '🗄️ **s1509\'s handoff was DROPPED at lock time and I restored it verbatim from `1d5153d73`** — it was missing from',
   'the archive when I arrived (line 2 held s1508). Exactly the §4 trap; `grep -c` verified 1.',
   '**NEXT: (A)** **refill lanes b/c/d** — all three `ahead=0` USABLE, idle since s1509, and I was at the',
   'one-authored-master cap; this is the third consecutive handoff to name it. **(B)** F-1508-2 (red-inventory-lookup\'s',

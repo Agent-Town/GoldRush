@@ -1,13 +1,13 @@
 # reviews/ceremony-stage-wiring.md — the ceremony stages wear their paintings + the house dress
 
-- **Slice / branch / tip:** lane-ceremony-stage-wiring · lane/m4 · `f914d8df` (runner) → merged `d88db42a` (--no-ff onto main)
-- **Base:** `bfeed77e` (s897 handoff, ancestor of main). Main had moved 2 commits past base (`c2d1c98d` spec THE TWO CLOCKS + `91ad874b` s898 bookkeeping) — both disjoint from the ceremony files, so an `ort` merge with zero conflicts.
+- **Slice / branch / tip:** lane-ceremony-stage-wiring · lane/m4 · `f858b05b` (runner) → merged `dcfd051b` (--no-ff onto main)
+- **Base:** `4469151f` (s897 handoff, ancestor of main). Main had moved 2 commits past base (`3316a99d` spec THE TWO CLOCKS + `4e9f5b9c` s898 bookkeeping) — both disjoint from the ceremony files, so an `ort` merge with zero conflicts.
 - **Verdict:** MERGED — gate GREEN. Firewall clean (stage render layer + spec only; no script/phase/arming changes).
 
 ## What it does
 Two owner complaints from the T6 ceremony screenshot, both closed in one costume change:
 
-1. **Stages wear their paintings.** Each ceremony stage now binds `assets/raw/ceremony-stage-t<N>.png` as its backdrop, glob-bound by tier via `import.meta.glob` (`ceremonyStageBackdropUrl(scriptId)` parses the `tN-` prefix, matches the file by name) — **zero code per future stage file**. The 10 commissioned plates (`art-batch-ceremony-stages`, on main @`cf88b50a`) light up in-game. The primitive canvas compositions stay as the **no-file fallback** AND as the interactive layer painted on top (hands/dials/hotspots unchanged); T6's procedural town-row + elders-tree are suppressed (`!dressed`) only when a real plate dresses the stage. Canvas carries `data-stage-src` + `data-asset-state` (loading→ready / fallback) for probing.
+1. **Stages wear their paintings.** Each ceremony stage now binds `assets/raw/ceremony-stage-t<N>.png` as its backdrop, glob-bound by tier via `import.meta.glob` (`ceremonyStageBackdropUrl(scriptId)` parses the `tN-` prefix, matches the file by name) — **zero code per future stage file**. The 10 commissioned plates (`art-batch-ceremony-stages`, on main @`aba92f0a`) light up in-game. The primitive canvas compositions stay as the **no-file fallback** AND as the interactive layer painted on top (hands/dials/hotspots unchanged); T6's procedural town-row + elders-tree are suppressed (`!dressed`) only when a real plate dresses the stage. Canvas carries `data-stage-src` + `data-asset-state` (loading→ready / fallback) for probing.
 
 2. **The house dress.** The overlay chrome adopts the game's design system: the frame becomes a `town-ui__board-shell` parchment panel with brass-pip corners, serif display type (Smokum/Wellfleet), and the `death-overlay__button` family for the hand + Step-back (secondary) buttons. The dark-modal look is gone. Layout, hotspots, and phase behavior unchanged.
 
@@ -28,4 +28,4 @@ Two owner complaints from the T6 ceremony screenshot, both closed in one costume
 - `reviews/shots-ceremony-stage/one-hand-contract-card.png` — the contract card before entering the ceremony.
 
 ## Merge classification
-Single lane commit `f914d8df` on ancestor base `bfeed77e`; 6 files, all firewall-allowed (2 src ceremony files, 1 spec, 2 review PNGs, ceremony.css). Main's 2 post-base commits touched only `specs/` + `tasks/` — disjoint. Merged `--no-ff`, no conflicts, no 3-way needed. Path scope respected: nothing outside `src/ceremony/`, `e2e/ceremony-framework.spec.ts`, `reviews/shots-ceremony-stage/`.
+Single lane commit `f858b05b` on ancestor base `4469151f`; 6 files, all firewall-allowed (2 src ceremony files, 1 spec, 2 review PNGs, ceremony.css). Main's 2 post-base commits touched only `specs/` + `tasks/` — disjoint. Merged `--no-ff`, no conflicts, no 3-way needed. Path scope respected: nothing outside `src/ceremony/`, `e2e/ceremony-framework.spec.ts`, `reviews/shots-ceremony-stage/`.

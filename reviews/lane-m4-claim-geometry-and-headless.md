@@ -1,6 +1,6 @@
 # lane/m4 — `claim-geometry-declared` + `headless-the-claim` — s1381 gate
 
-**Branch:** `lane/m4` · **tip** `cce99524` · **merge-base with main** `46033151`
+**Branch:** `lane/m4` · **tip** `cce99524` · **merge-base with main** `74f95634`
 **Done-moves:** `tasks/done/20260802-064330-lane-claim-geometry-declared.md` · `tasks/done/20260802-072041-lane-headless-the-claim.md`
 **Gated in:** detached scratch worktree `/tmp/gate-s1381` (§3.0b custody)
 
@@ -48,8 +48,8 @@ src/sim/HeadlessContractSim.ts(125,82): error TS2339:
 ```
 
 **F-1381-4 — `lane/m4` predates a repo-wide rename that main absorbed on 2026-08-01.** Commit
-`69984c6a` (*"lane-herostart-rename: stakeMarkers.lossCondition -> heroStart, repo-wide"*, drained s1329)
-renamed the field. `git merge-base --is-ancestor 69984c6a $(git merge-base main lane/m4)` → **false**:
+`8efae704` (*"lane-herostart-rename: stakeMarkers.lossCondition -> heroStart, repo-wide"*, drained s1329)
+renamed the field. `git merge-base --is-ancestor 8efae704 $(git merge-base main lane/m4)` → **false**:
 the lane's base **predates** it, and main is **270 commits ahead** of that base. Both slices were
 authored against the old vocabulary; `lossCondition` appears in seven files at `cce99524`, including
 `ContractFamilies.ts:410` where main now reads `heroStart: boolean`.
@@ -75,7 +75,7 @@ the blocked `7c4f132f` and both undrained slices (LANE-SAFETY LAW).
 | 2 | `git log main..lane/m4` | 3 commits, blocked one at the **base** |
 | 3 | per-commit `--stat` overlap | `cce99524` disjoint from blocked · `c876f675` shares **2 files** with it |
 | 4 | lift `cce99524` 5 paths → clean main, `tsc` | ❌ **TS2339 `lossCondition`** |
-| 5 | `git merge-base --is-ancestor 69984c6a <base>` | **false** — base predates the rename |
+| 5 | `git merge-base --is-ancestor 8efae704 <base>` | **false** — base predates the rename |
 | 6 | `git rev-list --count <base>..main` | **270** |
 
 ## Custody note (§3.0b)

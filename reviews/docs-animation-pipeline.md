@@ -1,8 +1,8 @@
 # Review — lane-c docs: animation-pipeline (DOCS-ONLY)
 
 - **Slice:** lane-c-docs-animation-pipeline (FIRE-AUTHORED s233, drained s234)
-- **Branch/tip:** `lane/polish` runner commit `bb35479` ("runner(lane-c): lane-c-docs-animation-pipeline.md")
-- **Base:** lane/polish reset to `f489f86` (safe-dupe of main at author time); merged onto main `c22ffe2` → `9dcc0d4` (lock).
+- **Branch/tip:** `lane/polish` runner commit `7985912` ("runner(lane-c): lane-c-docs-animation-pipeline.md")
+- **Base:** lane/polish reset to `88cd17b` (safe-dupe of main at author time); merged onto main `a38c6d6` → `e2602ca` (lock).
 - **Verdict:** PASS — clean single-file add, merged.
 
 ## What it does
@@ -21,8 +21,8 @@ Adds `docs/pipelines/animation-pipeline.md` (272 lines / ~2004 words): the stand
 No e2e/spec gate — DOCS-ONLY task (master §SELF-CHECK: "docs task, no build/e2e needed"); tsc+build run anyway to prove the tree stays green.
 
 ## Merge classification
-- `docs/pipelines/animation-pipeline.md` — **LANE-TOUCHED** (new file, added by `bb35479`); absent on main → clean `git checkout lane/polish -- <path>` add, byte-verified.
-- `STATUS.md`, `tasks/BACKLOG.md` — appeared in `git diff --name-only main lane/polish` as **MAIN-MOVED-ONLY** (lane base `f489f86` is behind main `c22ffe2`; s233's later commits advanced them). **NOT copied** — copying would revert s233's handoff/BACKLOG edits. Only the docs file grafted.
+- `docs/pipelines/animation-pipeline.md` — **LANE-TOUCHED** (new file, added by `7985912`); absent on main → clean `git checkout lane/polish -- <path>` add, byte-verified.
+- `STATUS.md`, `tasks/BACKLOG.md` — appeared in `git diff --name-only main lane/polish` as **MAIN-MOVED-ONLY** (lane base `88cd17b` is behind main `a38c6d6`; s233's later commits advanced them). **NOT copied** — copying would revert s233's handoff/BACKLOG edits. Only the docs file grafted.
 
 ## Findings
 None blocking. The doc self-marks any unknowns as "UNVERIFIED — confirm with <source>" per its firewall; no such markers were needed — all referenced sources exist in-repo.

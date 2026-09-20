@@ -18,7 +18,7 @@ No mechanism code or guard arms remain in the lane. This is a docs-only negative
 The lane was current and clean before the probe:
 
 ```text
-git merge-base --is-ancestor 0d0a55d20 HEAD
+git merge-base --is-ancestor 17556e86f HEAD
 rc=0
 
 grep -c "configured workers \*\*" scripts/suite-red-inventory.mjs

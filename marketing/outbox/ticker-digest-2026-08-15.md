@@ -4,18 +4,18 @@ Yesterday's first-parent walk held **151 commits**: **6** merges, **6** touching
 
 ## The day in micro-headlines
 
-**The tavern ledger now names every browser and hired hand before a ride begins.** `aaf434fb`
+**The tavern ledger now names every browser and hired hand before a ride begins.** `8685c38f`
 
-**The Claim Ledger opens an Assay Office tab with six anonymous county tallies.** `da2997b3`
+**The Claim Ledger opens an Assay Office tab with six anonymous county tallies.** `cda16305`
 
-**Every rider keeps panning at the seam they are actually harvesting.** `b89c2567`
+**Every rider keeps panning at the seam they are actually harvesting.** `0c4acd6f`
 
-**The posse's shared pot now sits beside the riders it belongs to.** `add18f30`
+**The posse's shared pot now sits beside the riders it belongs to.** `c9b35f07`
 
-**Taped standings wait for assay; tapeless or refused rides stay visible but unranked.** `49aab8f1`
+**Taped standings wait for assay; tapeless or refused rides stay visible but unranked.** `d2eab0c2`
 
 ## Not for the ticker
 
-The path classifier also found the debug-only replay door (`ad429a11`) and run-start replay fidelity (`3a4a5d15`); both changed proof machinery without changing live play or a rendered surface. The automatic tape pin (`c5134f50`) was test-only. The assay lifecycle is included above even though its Cloudflare/API paths place it in the classifier's factory bucket: it changes what the public standings rank.
+The path classifier also found the debug-only replay door (`45a6ce92`) and run-start replay fidelity (`5279e64e`); both changed proof machinery without changing live play or a rendered surface. The automatic tape pin (`46e51cfe`) was test-only. The assay lifecycle is included above even though its Cloudflare/API paths place it in the classifier's factory bucket: it changes what the public standings rank.
 
 GZ-01 independently reports **108/108 cited · 93 reported · 15 dismissed · 0 candidates**.

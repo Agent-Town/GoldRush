@@ -58,7 +58,7 @@ errors.
 
 ## Evidence and gates
 
-- predecessor split on main: PASS (`036cb6037`)
+- predecessor split on main: PASS (`002a480c3`)
 - clean reset to current `main`, install, untouched baseline build: PASS
 - `npx tsc --noEmit`: PASS
 - `npm run build`: PASS

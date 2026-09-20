@@ -66,7 +66,7 @@ test('board-selected Canyon escort delivers one capacitor crate through a repair
   await page.waitForFunction(() => (window.__GR_TOWN_DIAGNOSTICS__?.frame ?? 0) > 24);
   await walkToTavern(page);
   await page.getByTestId('town-open-board').click();
-  // Chapter tabs since 6822607f; chapter derived from the manifest so no literal can freeze again.
+  // Chapter tabs since ceddb7ea; chapter derived from the manifest so no literal can freeze again.
   await goToContractPage(page, 'e3-canyon-works');
   await expect(page.getByTestId('contract-launch-e3-canyon-works')).toHaveAttribute('data-contract-mode', 'escort');
   await page.evaluate(() => history.replaceState(null, '', '/?debug&nowaves&nolevel&nopause&seed=cw-02'));

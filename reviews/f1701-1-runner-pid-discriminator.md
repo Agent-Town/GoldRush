@@ -1,8 +1,8 @@
 # Review — F-1701-1 actual runner PID discriminator
 
-**Slice:** `lane/d` at `71069881f0904e00adab1b485985a70852e965f9`
-**Base:** `a587598ede6b0c9853105c4c3f1e8d68d7f887cb`
-**Merge:** `85ce8f22054fa51bb1e81cbb8eee28b2c45f8d8c`
+**Slice:** `lane/d` at `15c6e85c8a143e829e14b39919167639c06260c3`
+**Base:** `3e5f395d220dcb65f9dcd6e10383ef8ac1e7400e`
+**Merge:** `b47079cb1361b78599402eae0da57cd93c3a8a2b`
 **Fire:** s1704, 2026-08-12
 **Verdict:** PASS — merged atomically.
 

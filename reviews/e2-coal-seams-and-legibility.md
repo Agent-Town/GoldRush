@@ -1,6 +1,6 @@
 # Review — the coal moves onto its own claim, and the reason the owner never found it
 
-**Slice/branch/tip:** `worktree-agent-a383c2ed5dd452ebd`, base `d775fca71`. Headless Opus-5 agent.
+**Slice/branch/tip:** `worktree-agent-a383c2ed5dd452ebd`, base `4ab4981de`. Headless Opus-5 agent.
 **Verdict: PROPOSED — GREEN. Two owner items, both executed and both measured; the ruling's lever
 works and does not admit either map, and the playtest report is fully explained with a shipped cure.**
 

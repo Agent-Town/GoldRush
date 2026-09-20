@@ -1,8 +1,8 @@
-# BT-01 Tier system core — drain review (s101) — VERDICT: PASS (merged `2897a45`)
+# BT-01 Tier system core — drain review (s101) — VERDICT: PASS (merged `0de3b87`)
 
 **Date:** 2026-07-06 (s101 fire)
-**Source:** lane/polish `62649c7` (runner: `lane-c-bt-01-tier-core.md`), forked at `eaa73aa`.
-**Merge:** CLEAN disjoint. Main moved only bookkeeping since the fork (`STATUS.md`, `tasks/BACKLOG.md`, `tasks/fix-037-pangold-flake.md`, queue copy) — zero overlap with BT-01's product/test files; combat-readability (`3947d6a`) already in the merge-base. Applied via path-scoped `git checkout lane/polish -- <11 files>` (excludes the 4 `artifacts/combat-readability/*.png` playwright regen-noise the lane commit also carried). No 3-way graft needed.
+**Source:** lane/polish `62649c7` (runner: `lane-c-bt-01-tier-core.md`), forked at `d46421f`.
+**Merge:** CLEAN disjoint. Main moved only bookkeeping since the fork (`STATUS.md`, `tasks/BACKLOG.md`, `tasks/fix-037-pangold-flake.md`, queue copy) — zero overlap with BT-01's product/test files; combat-readability (`c4955a7`) already in the merge-base. Applied via path-scoped `git checkout lane/polish -- <11 files>` (excludes the 4 `artifacts/combat-readability/*.png` playwright regen-noise the lane commit also carried). No 3-way graft needed.
 
 ## Files merged (11, all in-firewall, additive 747+/35−)
 `src/systems/BuildSystem.ts`, `src/game/Balance.ts`, `src/game/Economy.ts`, `src/game/Game.ts`, `src/entities/{Palisade,Sluice,Turret}.ts`, `src/ui/UpgradePrompt.ts`, `src/styles.css`, `src/vite-env.d.ts`, NEW `e2e/bt-01-tiers.spec.ts`. No out-of-firewall files touched (footprint/overlap math, CombatSystem, placement/confirm untouched — verified by file set + green regression).

@@ -2,7 +2,7 @@
 
 **Slice 2 of `specs/agent-play/e5-regatta-steerable-boat.md`** (owner 2026-09-20: "A14 - do it"; the
 parity law, 2026-09-07: "no, AI and human users have to have the same options and tools, otherwise it
-is unfair. fairness is crucial."). Branch `feat/e5-regatta-boat-02`, cut from `24dad56f0`, worktree
+is unfair. fairness is crucial."). Branch `feat/e5-regatta-boat-02`, cut from `05232a3a0`, worktree
 `…/scratchpad/wt-regatta2`, dev server port **5325** only. Implementer: Claude Opus 5, attended-scratch
 worktree.
 
@@ -169,7 +169,7 @@ untouched and green. All three green on BOTH projects (51.4 s).
 | | `e5-regatta/e5-regatta-02 eventLogHash: pinned="fnv1a32:1676f150" derived="fnv1a32:18093696"` |
 | **Re-record** | 342.8 s, `Wrote 83 null floors` |
 | **After** (`--check`) | rc=0, 298.3 s — **83 of 83 null floors match** |
-| **Whole-file diff** | exactly three lines: the two hashes above, plus `eraStamp` `37f2e19f6` → `24dad56f0`, which is PROVENANCE (the recorder names the tree it measured on) and not a floor |
+| **Whole-file diff** | exactly three lines: the two hashes above, plus `eraStamp` `72cddd04f` → `05232a3a0`, which is PROVENANCE (the recorder names the tree it measured on) and not a floor |
 
 **The cause, one line and owner-ruled (A14):** an idle run used to pass the START BEACON **for free**.
 The mark stands on the Claim-Boat's mooring and the mooring was in the racer list, so a run that did
@@ -196,7 +196,7 @@ RACES must list the guards that encode the old racer.**
 | **F-RB2-1b** | `scripts/e5-stillwater-front-crew.test.mjs:76-77` | the pre-slice Regatta idle hashes `d461683d` / `1676f150` | `…/e5-stillwater-front-crew.cure.mjs` — the same two-line re-pin item 7 made to the floors, with the cause. **Green, 3 of 3.** |
 | **F-RB2-1c** | `scripts/deck-movement.test.mjs:92-119` | (a) a **swimming** hero passes the first beacon on the movement tick; (b) four `race.advance(…, [nextGate])` calls pass an **array**, the old signature — which now reads `racer.x === undefined` and silently scores nothing, the worst failure shape there is | `…/deck-movement.cure.mjs` — board first and watch the SECOND mark; pass the point itself; plus two new lines asserting the forfeit clause. **Green, 3 of 3.** |
 
-`deepwater-rider-parity` was measured **GREEN on the exact base** (`24dad56f0`): 1 pass / 0 fail in
+`deepwater-rider-parity` was measured **GREEN on the exact base** (`05232a3a0`): 1 pass / 0 fail in
 14.0 s (`baseline-rider-parity.log`); red here with `false !== true` at `:52`
 (`after-rider-parity.log`). The other two fail on values this slice changed by hand, so the causal
 chain is direct.
@@ -253,7 +253,7 @@ same lifecycle slice 1's drain executed (`Game.ts:2671 -> :2692, +21`).
 | `npm run build` | **green** (`built in 1.81s`) |
 | `node scripts/null-floor-anchors.mjs --check` (after) | **rc=0 — 83 of 83 null floors match** (298.3 s) |
 | Named guards (`regatta-boat-steer`, `deepwater-rider-parity`, `gr-sim`, `same-game-audit`, `e3-mask-tables`, `claim-boat-asset`) | rc=1 — **ℹ tests 72 · pass 69 · fail 1**; the one red is `deepwater-rider-parity` (F-RB2-1). `regatta-boat-steer` 9 of 9; `e3-mask-tables` + `claim-boat-asset` 32 of 32 after the mirror and pin re-point |
-| `node scripts/run-guards.mjs --changed-since 24dad56f0` | **4/5** — `test:power-budget` / `test:task-guards` / `test:citations` / `test:gate-callers` PASS; `test:node-guards` RED, enumerated below |
+| `node scripts/run-guards.mjs --changed-since 05232a3a0` | **4/5** — `test:power-budget` / `test:task-guards` / `test:citations` / `test:gate-callers` PASS; `test:node-guards` RED, enumerated below |
 | Full `npm run test:node-guards` | rc=1 — **ℹ tests 938 · pass 925 · fail 8 · skipped 5** (`node-guards-full.log`) |
 | e2e `e5-regatta-boat` (3 tests) | **6 of 6 both projects** — desktop 10.2 / 4.8 / 28.5 s, mobile 10.4 / 4.8 / 29.8 s (1.5 m), zero console/page errors |
 | e2e `e5-regatta-race` (3 tests) | **6 of 6 both projects** (51.4 s) — the two F-MAC2-1 reds cured |
@@ -304,8 +304,8 @@ the control arm's one-line edit was reverted and `git status src/` is clean.
 
 | | `computeEngineHash` (`scripts/assay-replay-agent.mjs`, the guard's own function) |
 | --- | --- |
-| **Before** (`24dad56f0`, the base) | `8eb7e135ef6c707d1ac62414755c65237768332c9cdbda045871d2e3945aa71d` |
-| **After** (`a93aa6230`, the branch tip before this report) | `e482aab58b6aa7ef29571fc4edd5f86a43ef5a9ade9307f3155269a5c5b0fde8` |
+| **Before** (`05232a3a0`, the base) | `8eb7e135ef6c707d1ac62414755c65237768332c9cdbda045871d2e3945aa71d` |
+| **After** (`a93aa6230 (archive: pruned by the A3 rewrite)`, the branch tip before this report) | `e482aab58b6aa7ef29571fc4edd5f86a43ef5a9ade9307f3155269a5c5b0fde8` |
 
 The BEFORE value equals `assets/engine-era.json`'s pin `#17` exactly, which is how the method was
 verified. `assets/engine-era.json` was NOT touched.

@@ -45,7 +45,7 @@ if (!banditWalk8) throw new Error('characters.v2.json is missing char.bandit_bas
 const frameStem = path.basename(banditWalk8.grid.file, path.extname(banditWalk8.grid.file));
 const jumperDirections = directionSpawns.map(([direction, spawn]) => {
   const rowDirection = (banditWalk8.aliases[direction] ?? direction).toLowerCase();
-  // s1185: since c3d8470e the diagonals are explicit-FILE direction entries on a separate
+  // s1185: since 26a84c0b the diagonals are explicit-FILE direction entries on a separate
   // walkdiag8 sheet (aliases emptied), so they carry no grid row. Prefer the declared files;
   // the row path below still guards the cardinal rows and still fails loudly on a bad contract.
   const explicitFiles = banditWalk8.directions?.[rowDirection]?.frames?.files;

@@ -1,8 +1,8 @@
 # m2-05-readiness-seam — drain review (s1035, 2026-07-25)
 
 **Slice:** `lane-m2-05-readiness-seam.md` (FIRE-AUTHORED s1032, REFRESHED s1033 — attempt 2)
-**Branch:** `lane/e2-arsenal` · **Tip:** `ff770d32` · **Base:** `fea5e885` (strict ancestor of main)
-**Merged onto:** main `17ef6f7c`
+**Branch:** `lane/e2-arsenal` · **Tip:** `ff770d32` · **Base:** `4018fda8` (strict ancestor of main)
+**Merged onto:** main `85a38fca`
 
 ## VERDICT: MERGED — **PARTIAL CLOSE, NOT A CLOSE.** The fix is real and halves the flake, but F-1030-1 is still alive at 3/12 on the merged tree, and the lane's "3/3 in all four shapes" does not reproduce here.
 
@@ -63,8 +63,8 @@ than contradicting it.
 
 ## Merge classification
 
-Single file, `git diff --stat fea5e885 ff770d32` = `e2e/m2-05-base-damage-repair.spec.ts` only
-(+19/−6). `git diff fea5e885 main -- <that file>` was **empty** → main never moved it since the lane's
+Single file, `git diff --stat 4018fda8 ff770d32` = `e2e/m2-05-base-damage-repair.spec.ts` only
+(+19/−6). `git diff 4018fda8 main -- <that file>` was **empty** → main never moved it since the lane's
 base, so this is **LANE-TOUCHED only, zero MAIN-MOVED, no conflict, no graft**. Adopted by content
 (`git show ff770d32:<path>`), verified byte-diff before and after the pre-merge control swap.
 Zero `src/` bytes → the shipped bundle is byte-identical to pre-merge main → **no deploy, no gazette

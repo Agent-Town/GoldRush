@@ -7,7 +7,7 @@ The task's firewall forbids changing those tests, height consumers or render-bud
 controls, so implementation stopped at that boundary. No commits were made.
 
 Task: `lane-d--20260905-103054-shared-atlas-texture-dedupe.md`.
-Baseline: `a16b19354e1a6a1ec431bce22801e39c8d91257d`, branch `lane/d`.
+Baseline: `3dba120ec0fb1951632d03f97c095b8cb39ce5c4`, branch `lane/d`.
 
 ## Measured residency
 

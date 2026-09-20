@@ -57,9 +57,9 @@ of F-2497-1; it is the same defect seen without the masking default.
 The capability was not lost — it was **rebuilt along a different path**, and the old one was left
 orphaned rather than deleted:
 
-- `e4-roads-and-convoys` (`48ef7df8d`) put the era's composition in `src/sim/MotorSocket.ts`
+- `e4-roads-and-convoys` (`7f5c590a1`) put the era's composition in `src/sim/MotorSocket.ts`
   (verbs `GRADE`/`HAUL`, view `now.motor`, schema 1 -> 2).
-- `e4-vehicles-plain-boot` (`98cc0fc2f`, s2497) mounted it in a plain boot.
+- `e4-vehicles-plain-boot` (`49370319b`, s2497) mounted it in a plain boot.
 - `src/game/Game.ts:9262 motorGrade()` calls `motorSocket.gradeAt(...)`, adds a `RoadSegment` to
   `this.motorRoadViews`, and floats "Road graded".
 

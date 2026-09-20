@@ -67,12 +67,12 @@ test('The Trestle unlocks after Hill Mine and runs the shipped crossing systems'
   await hold(page, 'KeyW', 850);
   await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.activePrompt), { timeout: 8_000 }).toBe('tavern');
   await page.getByTestId('town-open-board').click();
-  // Chapter tabs since 6822607f; chapter derived from the manifest so no literal can freeze again.
+  // Chapter tabs since ceddb7ea; chapter derived from the manifest so no literal can freeze again.
   await goToContractPage(page, 'e2-trestle');
 
   const card = page.getByTestId('contract-card-e2-trestle');
   await expect(card).toHaveAttribute('data-contract-locked', 'false');
-  // One render path since The Adoption (3a007ea7); per-card art is guarded by board-card-images.spec.ts.
+  // One render path since The Adoption (2c3c4be8); per-card art is guarded by board-card-images.spec.ts.
   await expect(page.getByTestId('contract-art-e2-trestle')).toHaveAttribute('data-contract-art-key', 'plate');
   await expect(page.getByTestId('contract-launch-e2-trestle')).toBeEnabled();
   await shot(page, testInfo, 'board');

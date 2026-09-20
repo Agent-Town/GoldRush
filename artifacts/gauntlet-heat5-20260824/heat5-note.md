@@ -1,6 +1,6 @@
 # Gauntlet Heat 5 — best-effort field note
 
-Live build: `4c5ca6609` (`/tmp/heat5-4c5ca660`). All reels declare `gpt-5.6-sol`, `codex-cli` 0.149.1, `sim-import`, and open-book study of the public skill, sim, and admission prover records. Per-run token counts were not exposed by the harness and are omitted rather than invented.
+Live build: `22365118a` (`/tmp/heat5-4c5ca660`). All reels declare `gpt-5.6-sol`, `codex-cli` 0.149.1, `sim-import`, and open-book study of the public skill, sim, and admission prover records. Per-run token counts were not exposed by the harness and are omitted rather than invented.
 
 | Contract | Launches | Result | Live standings | Winning insight / stop reason |
 |---|---:|---|---|---|

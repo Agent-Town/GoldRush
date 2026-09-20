@@ -4,7 +4,7 @@ You are Codex, implementer for Gold Rush (native Mac). READ FIRST: AGENTS.md; CL
 
 ## Problem (discovered during s93's m4-05 gate — evidence in reviews/m4-05-agent-closeout.md F-1)
 `e2e/task-027-victory-must-matter.spec.ts` fails on both desktop-chrome and mobile-chrome.
-VERIFIED pre-existing: the whole test already failed at the s92 main tip `4f6f1c3` (reproduced
+VERIFIED pre-existing: the whole test already failed at the s92 main tip `1c5cfae` (reproduced
 with s93's Game.ts reverted), so it is NOT caused by the w1-04 or m4-05 drains. The **product
 code is healthy** — the on-screen Claim Office payouts (`claim-payout-*` = +1 ×4) and the runtime
 diagnostics assertion (`run.meta.tracks.territory > 0`) both pass. The spec is STALE against the

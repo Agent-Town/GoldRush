@@ -1,8 +1,8 @@
 # Review — 054 THE BARON, EPIC (lane/m4)
 
-**Slice/branch/tip:** 054-baron-epic · `lane/m4` · `493d251` "balance: make Baron an epic boss"
-**Merge base:** `ecc3155` (33 commits behind main at drain time)
-**Merged onto:** main `795909c` (s186 lock) via 3-way `--no-ff`
+**Slice/branch/tip:** 054-baron-epic · `lane/m4` · `598f0db` "balance: make Baron an epic boss"
+**Merge base:** `8f64451` (33 commits behind main at drain time)
+**Merged onto:** main `5cc081d` (s186 lock) via 3-way `--no-ff`
 **Drained:** s186 fire, 2026-07-08
 **Verdict:** ✅ PASS — merge clean, full battery green, firewall honored.
 
@@ -32,7 +32,7 @@ Turns the wave-20 Baron from an unremarkable elite into an epic first boss per t
 | screenshots | `artifacts/054/` (baron scale-bar, rampage, kite-gap, kite-chip-60s, kite-chip-win) desktop+mobile |
 
 ## Merge classification
-Base `ecc3155` IS an ancestor of main (`merge-base --is-ancestor 493d251^ main` = true); 493d251 is a single commit on top. `git merge --no-ff` auto-merged with **zero conflicts**. Files needing 3-way (both lane and main moved since base) and resolved automatically: `contracts.json`, `Enemy.ts`, `Game.ts`, `ContractFamilies.ts`, `vite-env.d.ts`. Staged set == 493d251's 33 files exactly (10 new 054 shots + 10 re-rendered baron-presence shots + 13 src/e2e/assets). No conflict markers. The misleading `git diff main..lane/m4` two-way (158 files, -3845) is an artifact of the 33-commit-stale base, NOT deletions this merge makes — verified via single-commit `git show --stat`.
+Base `8f64451` IS an ancestor of main (`merge-base --is-ancestor 493d251^ main` = true); 493d251 is a single commit on top. `git merge --no-ff` auto-merged with **zero conflicts**. Files needing 3-way (both lane and main moved since base) and resolved automatically: `contracts.json`, `Enemy.ts`, `Game.ts`, `ContractFamilies.ts`, `vite-env.d.ts`. Staged set == 493d251's 33 files exactly (10 new 054 shots + 10 re-rendered baron-presence shots + 13 src/e2e/assets). No conflict markers. The misleading `git diff main..lane/m4` two-way (158 files, -3845) is an artifact of the 33-commit-stale base, NOT deletions this merge makes — verified via single-commit `git show --stat`.
 
 ## Findings
 - **F-054-1 (non-blocking, owner FYI):** `CombatSystem` generalized enemy hit detection from global constants (`Balance.enemy.touchRadius`, `sparkRig.boltRadius+touchRadius`) to per-enemy `enemy.hitRadius`. This is the correct enabler for the ×4 collider accepting edge hits, but it touches hit detection for ALL enemies, not just the Baron. Covered green by `m1-01` stress-120, `m2-01` draw-call budgets, and `task-025`. Extension, not a fork — one-writer/damage-resolver law preserved.

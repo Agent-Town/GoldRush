@@ -1,6 +1,6 @@
 # Review — M6 attempt-4: actors foundation integrated (attended drain, s61, 2026-07-07 ~12:50)
 
-**Slice:** `save/m6-attempt4-integrate` (cb0b00e, lane-d) → merged to main `5de1c85`.
+**Slice:** `save/m6-attempt4-integrate` (cb0b00e, lane-d) → merged to main `c06ee22`.
 **Verdict: PASS — merged.** The foundation the town, recruited agents, and the whole second half of the saga stand on. Behavior-frozen: `Balance.actors.enabled = false`; zero gameplay change, proven.
 
 ## What it does

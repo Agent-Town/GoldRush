@@ -48,7 +48,7 @@ The master requires the E2 suites, full node guards, and three named adjacent su
 
 ### F-1741-5 — PROCESS: the attended master was not registered in `tasks/BACKLOG.md`
 
-Commit `b7044a5dad7adee1c78c48552602b96877db7508` added the ratified spec, master, and goal leaf, but no BACKLOG row. The Goal Registration Law requires the authored master, evidence, and ledger row together. s1741 records the omission; it does not rewrite that historical commit.
+Commit `ade8e6333e3e2c2867b3c471eac3640cd66d1eea` added the ratified spec, master, and goal leaf, but no BACKLOG row. The Goal Registration Law requires the authored master, evidence, and ledger row together. s1741 records the omission; it does not rewrite that historical commit.
 
 ## Next lawful slice
 

@@ -1,7 +1,7 @@
 # b7-showroom-capture-quota — drain review (s2091)
 
-**Slice:** B7 Showroom capture quota (`e6-showroom`) · **Branch:** `lane/a` · **Lane tip:** `7fd7d44fc`
-**Base:** `ac8ba21e7` (main at lock time) · **Merge:** `68784f782` (two parents: `ac8ba21e7` + `7fd7d44fc`)
+**Slice:** B7 Showroom capture quota (`e6-showroom`) · **Branch:** `lane/a` · **Lane tip:** `df939da99`
+**Base:** `3d949c4e2` (main at lock time) · **Merge:** `64e446f7c` (two parents: `3d949c4e2` + `df939da99`)
 **Gate worktree:** `gate-s2091` (detached, §3.0b — undecided content never entered main's tree; the
 merge was landed on main as ONE atomic ref update, never staged, per F-1589-5)
 
@@ -57,7 +57,7 @@ itself, which the plain-boot test exercises with no `?debug` gate (Mistake #10).
 
 ## Merge classification
 
-Base `ac8ba21e7`; lane/a was **30 behind**, so main had genuinely moved. Per-file:
+Base `3d949c4e2`; lane/a was **30 behind**, so main had genuinely moved. Per-file:
 
 **Auto-merged, LANE-TOUCHED only** (main had not moved these): `assets/contracts/epoch-6-atomic/contracts.json`,
 `e2e/e6-showroom-capture-quota.spec.ts` (new), `e2e/er01-e6-census.spec.ts`, `src/agent/MechanicsManifest.ts`,
@@ -77,7 +77,7 @@ Base `ac8ba21e7`; lane/a was **30 behind**, so main had genuinely moved. Per-fil
    *Verified, not assumed:* the four sibling objective suites (24/24) are the control — a wrong graft
    here would have broken relay-rush, echo-canyon, far-side or seed-run, and none moved.
 
-3. **`assets/contracts/null-floors.json`** — resolved to **main's** `eraStamp` (`1817cb273`).
+3. **`assets/contracts/null-floors.json`** — resolved to **main's** `eraStamp` (`72da08d6a`).
    Measured first: `git diff main...lane/a` on this file is **one line, the `eraStamp` alone**, and
    that stamp is *derived* (`null-floor-anchors.mjs` computes it from `git merge-base HEAD main`).
    This is exactly the drift the attended session of 2026-08-20 ruled benign — "do NOT churn on it".
@@ -111,4 +111,4 @@ machine's, not the slice's — and this battery discharges the debt its report l
 
 ## Goal leaf
 
-`b7-showroom-capture-quota` → `status: "merged"`, `mergeHash: 68784f78238bcf625891d9c970ce152749fdf6fa`.
+`b7-showroom-capture-quota` → `status: "merged"`, `mergeHash: 64e446f7cfa1ce90808fee0c79cc1438f2fcf0bd`.

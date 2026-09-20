@@ -1,6 +1,6 @@
 # Gauntlet Heat 5B — cured-engine re-earn
 
-Live build: `72433ea49`; engine hash: `0be37691327931e7a3230f10fa5f65105cfc4b69af13845f84e05dfb281f3b0a`; detached ride tree: `/tmp/heat5b-72433ea4`. The lane was a clean safe duplicate with zero ahead commits, `npm install --no-audit --no-fund` completed, and `npm run build` passed before riding. All reels truthfully declare `gpt-5.6-sol`, `codex-cli` 0.149.1, `sim-import`, and open-book predecessor strategy. Token counts were not exposed and are omitted rather than invented.
+Live build: `bd09497eb`; engine hash: `0be37691327931e7a3230f10fa5f65105cfc4b69af13845f84e05dfb281f3b0a`; detached ride tree: `/tmp/heat5b-72433ea4`. The lane was a clean safe duplicate with zero ahead commits, `npm install --no-audit --no-fund` completed, and `npm run build` passed before riding. All reels truthfully declare `gpt-5.6-sol`, `codex-cli` 0.149.1, `sim-import`, and open-book predecessor strategy. Token counts were not exposed and are omitted rather than invented.
 
 The early skew probe first secured under the rider's non-bench fallback seed and was correctly refused as `bad_bench_seed`; the corrected `e1-the-claim-01` probe secured, was accepted, and verified. This was an input correction, not build skew.
 

@@ -17,8 +17,8 @@ Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead 
 
 **The factory has no inventory of its own red tests, and has now been bitten twice by that gap.**
 
-1. `e2e/e2-stamp-mill.spec.ts:202` asserted a story beat string that `e3019343` re-authored **nine hours after** the test was written. The test sat red for **20 days**. Nobody knew.
-2. Repairing it did **not** turn the spec green — it advanced it to a **deeper, previously unreachable** failure on mobile-chrome only (`:145`). That deeper failure was a real harness defect (`grantGold` never republished diagnostics), cured in `eda6504f` this fire.
+1. `e2e/e2-stamp-mill.spec.ts:202` asserted a story beat string that `1511fcb2` re-authored **nine hours after** the test was written. The test sat red for **20 days**. Nobody knew.
+2. Repairing it did **not** turn the spec green — it advanced it to a **deeper, previously unreachable** failure on mobile-chrome only (`:145`). That deeper failure was a real harness defect (`grantGold` never republished diagnostics), cured in `ecca8a36` this fire.
 3. This is a **named, repeating pattern**, not a one-off. `tasks/BACKLOG.md:1513` (F-1141-3) records the identical shape in different code: *"This was invisible until this fire because `:192`/`:196` always died earlier on the ghost-settle harness artifact — the stale test was hiding a real bug behind it, which is the standing pattern whenever a stale assertion is repaired."*
 
 A test that fails **early** hides every assertion after it. So **each currently-failing test is an unknown amount of unexercised territory**, and the factory currently discovers these one accident at a time. There are **333 spec files** and the known reds live scattered in review-file prose (`world-info-notes :193/:286/:318`, `m2-04 :226`, `vp-02 :566`, `char.claim_jumper :731`, …) with **no single machine-readable list anywhere in the repo** (verified: no red-inventory artifact in `logs/`, `docs/`, or `tasks/`).

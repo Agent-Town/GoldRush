@@ -24,7 +24,7 @@
 | m2-01-build-menu | 6×2 = 12 | ✅ |
 
 ## Merge classification
-- **Base:** merge-base(main, lane/perf) = `9c6b693`. Lane = 2 commits (d106a43 rail, 3749f12 stamp).
+- **Base:** merge-base(main, lane/perf) = `bfd2a3f`. Lane = 2 commits (d106a43 rail, 3749f12 stamp).
 - **Main moved since base:** the s176 drain of ② (a21821a) landed pressure-economy, which overlaps lane/perf on `src/game/Game.ts`, `src/meta/ContractFamilies.ts`, `src/vite-env.d.ts`.
 - **Per-file 3-way:**
   - `src/game/Game.ts` — **CONFLICT (content), resolved.** Single both-add region in the ContractFamilies import block (lines 14–21): HEAD/② added `activeEpoch as selectActiveEpoch`; lane/perf added `activeTileDescriptor` + `type RailPathDescriptor`; both add `type ContractManifest`. Resolution = **union** (keep all, dedupe ContractManifest). Rest of Game.ts auto-merged (disjoint body regions). tsc + pressure-regression spec confirm correctness.

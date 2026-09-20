@@ -1,9 +1,9 @@
 # Review — lane-research-copy-truth (Twin Banks playtest corrective, MQ-7)
 
 - **Slice:** lane-research-copy-truth — research nodes tell the truth: no meta-copy, no purchasable stubs
-- **Branch/tip:** lane/e2-arsenal @ `a6488a68` "runner(lane-c): lane-research-copy-truth.md"
-- **Base:** `87452497` (2026-07-19 21:19, ~8h stale)
-- **Drained by:** s748 fire → main merge `39a6dfb0` (parents `fbb29235` main, `a6488a68` lane)
+- **Branch/tip:** lane/e2-arsenal @ `e09379b0` "runner(lane-c): lane-research-copy-truth.md"
+- **Base:** `fe331f24` (2026-07-19 21:19, ~8h stale)
+- **Drained by:** s748 fire → main merge `c8cb26cc` (parents `3ea51955` main, `e09379b0` lane)
 
 ## Verdict
 **MERGE — clean 3-way (ort auto-merge, no conflicts).** Despite the 8h-stale base, the merge-base 3-way resolved every file with no conflict markers; the one Game.ts hunk (line 3894) is disjoint from this fire's two prior Game.ts drains (pause-goal ~6924, crossing-armed ~1129–6330). All 8 research specs green both projects.
@@ -23,7 +23,7 @@ Answers the owner's Twin Banks note — a research node leaked meta-copy *"Arriv
 | Battery total | **30 passed / 0 failed** (1.5m) |
 | src grep `future Frontier update` / `Arrives with a future` | zero hits (meta-copy fully removed) |
 
-## Merge classification (base `87452497`, 3-way)
+## Merge classification (base `fe331f24`, 3-way)
 - **Game.ts** — MAIN-MOVED this fire (pause-goal + crossing-armed) + LANE-TOUCHED; single lane hunk @ 3894 disjoint → ort auto.
 - **ResearchChart.ts / ResearchTree.ts / Voice.ts / CharterSchema.ts / BuildSystem.ts** — main did not move them since base → clean lane apply.
 - **6 epoch manifest.json + 8 research specs** — clean lane apply (main untouched since base).

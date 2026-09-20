@@ -4,7 +4,7 @@ Status: `LADDER-STALL: waiting on Pressure Garden`
 
 The required predecessor is not drained into this lane:
 
-- Freshly fetched `origin/main` is `30045b27`, whose subject explicitly re-queues
+- Freshly fetched `origin/main` is `2f2697ea`, whose subject explicitly re-queues
   Garden before Incline.
 - `origin/main` has no `e2-pressure-garden` contract entry or
   `e2e/e2-pressure-garden.spec.ts`.

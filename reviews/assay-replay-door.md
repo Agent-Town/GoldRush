@@ -1,9 +1,9 @@
 ---
 verdict: MERGE-INSTRUMENT-FIDELITY-HELD
 slice: assay-replay-door
-base: 1f6415ab306d957993775e2b4f78ab0ad62d525d
-tip: 6afb2601563eaf14bb0e6ab18755fe3f681e6a58
-merge: ad429a117099550ae97eaf0a117c152e69162e08
+base: 4cf734e21dbe42eeaa6541d137327092a16121c8
+tip: b5af1bf1db913ed716cef8ca6007562cb764469b
+merge: 45a6ce92726e1525eb1f854aa2614e7d4a94cb8c
 date: 2026-08-15
 ---
 

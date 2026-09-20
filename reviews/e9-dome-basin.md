@@ -2,7 +2,7 @@
 
 **Slice:** E9 Red Fields — Dome Basin contract + published mask table (data-only; feeds 3D-D sculpt grants)
 **Branch/tip:** `lane/m4` @ `b034cbbc0d4f601d1e47464dbced383c316fb91e` (`runner(lane-b): lane-b-e9-redfields-contract.md`)
-**Base:** parent `660bc3f5`, verified an ancestor of `main`; **no main commit since the base touched any of the four files** → clean re-land, not a conflict graft.
+**Base:** parent `ec2afbe8`, verified an ancestor of `main`; **no main commit since the base touched any of the four files** → clean re-land, not a conflict graft.
 **Drained by:** s705 fire, 2026-07-17. **Verdict: MERGE (clean re-land).**
 
 ## What it does
@@ -29,7 +29,7 @@ Adds the epoch-9 "Dome Basin" contract data and its published mask table — the
 Clean re-land onto clean main. Per-file:
 - `assets/contracts/epoch-9-redfields/contracts.json` — MAIN-untouched-since-base → applied `+201` cleanly.
 - `assets/contracts/epoch-9-redfields/mask-tables/e9-dome-basin.json` — new file, pure add.
-- `scripts/e3-mask-tables.test.mjs`, `e2e/board-gating-and-profiles.spec.ts` — MAIN-untouched-since-base (`git log 660bc3f5..main -- <files>` empty) → applied additive hunks cleanly.
+- `scripts/e3-mask-tables.test.mjs`, `e2e/board-gating-and-profiles.spec.ts` — MAIN-untouched-since-base (`git log ec2afbe8..main -- <files>` empty) → applied additive hunks cleanly.
 Landed via `git checkout b034cbbc -- <4 files>` on clean main; committed path-scoped with the goal leaf flip in the same commit.
 
 ## Findings

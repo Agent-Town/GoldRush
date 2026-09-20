@@ -1,6 +1,6 @@
 # dome-basin-winnable — the reel budget (F-HEAT12-2) and the first wave-20 secure on Dome Basin
 
-Worktree `fix/dome-basin-winnable`, base `41b1e63cf`, engine hash
+Worktree `fix/dome-basin-winnable`, base `0a120edd3`, engine hash
 `c8d16b36c8bad21955caa51ab8c2d6d3bd85bb9f0cb519dd8dd7f9b6a707ca4d`, seed `e9-dome-basin-01`,
 difficulty `trail`, gate wave 20 / 600 s.
 

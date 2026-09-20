@@ -1,6 +1,6 @@
 # Review: story-signal-emitters — the four story signals nobody emitted (scratch worktree `smoke-36`, Claude Opus 5 implementer, attended drain 2026-09-06 early)
 
-**Slice/branch/tip:** `story-signal-emitters` · `fix/story-signal-emitters` · commits `f71125f3c`, `a16b53edb`, `d50e49979`, `1bdeadafb`, `ef62aa680`, `8913a9cde` on base `0a389637f` · merged to main: see the ledger row (first-parent merge; no `src/` collision with the night's other merges, the ledger unioned).
+**Slice/branch/tip:** `story-signal-emitters` · `fix/story-signal-emitters` · commits `b39fd4822`, `3d9ee4411`, `0ba8501c2`, `f24292141`, `c7bf87287`, `fec436092` on base `79c7d2c57` · merged to main: see the ledger row (first-parent merge; no `src/` collision with the night's other merges, the ledger unioned).
 **Verdict:** MERGED. `wave-complete`, `rung-promotion`, `science-threshold` and `first-boot` now fire in a plain boot, so all six orphaned E1 beats appear as cards without `?debug` on desktop and at 390px. Presentation signals only: the E1 null floors are 21/21 byte-identical and a played tape replays to its banked hash in both engines.
 
 ## What it does

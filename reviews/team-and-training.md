@@ -1,9 +1,9 @@
 # team-and-training — "Team of N" replaces "Posse", and the Drill Yard leaves the ladder
 
-- **Slice:** `tasks/lane-team-and-training.md` (attended-authored 2026-08-09 11:39, `7a564d8ad`)
-- **Branch / tip:** `lane/a` @ `8c50f9245` (runner auto-commit, 11:50:36)
-- **Base (merge-base):** `7a564d8ad` — the authoring commit itself; the lane was dispatched off a fresh main
-- **Merged to main:** `f18879c9ee1bbc1f79439d48cec9b45b4798152d` (s1596 fire)
+- **Slice:** `tasks/lane-team-and-training.md` (attended-authored 2026-08-09 11:39, `e91b4fb4f`)
+- **Branch / tip:** `lane/a` @ `acb38a195` (runner auto-commit, 11:50:36)
+- **Base (merge-base):** `e91b4fb4f` — the authoring commit itself; the lane was dispatched off a fresh main
+- **Merged to main:** `7123f2d566d2cf5da063273831d1bb2396e901d0` (s1596 fire)
 - **Gated in:** detached worktree `worktrees/gate-s1596` (§3.0b — undecided content never entered main's tree)
 
 ## VERDICT: MERGED — green on every gate, firewall respected exactly, one non-blocking finding.
@@ -58,7 +58,7 @@ is null), and that the **GET path also refuses**. Both halves of scope 2, not ju
 
 ## Merge classification
 
-Base `7a564d8ad`; main had moved one commit (`13efef0d4`, this fire's own lock + `logs` churn).
+Base `e91b4fb4f`; main had moved one commit (`e8077fd96`, this fire's own lock + `logs` churn).
 
 - **LANE-TOUCHED (10 files, all merged):** `src/encyclopedia/reader.ts`, `functions/api/standings.ts`,
   `e2e/field-book.spec.ts`, `e2e/milk-county-board.spec.ts`, and 6 PNGs under
@@ -68,7 +68,7 @@ Base `7a564d8ad`; main had moved one commit (`13efef0d4`, this fire's own lock +
   fire's own lock commit — the classic false signal. The three-way `merge --ort` left them at main's
   version; a two-dot copy would have reverted the lock. **Conflicts: none.**
 
-`git show --stat 8c50f9245` confirms the runner touched exactly the firewall's TOUCH-ONLY set and
+`git show --stat acb38a195` confirms the runner touched exactly the firewall's TOUCH-ONLY set and
 nothing else — no out-of-scope file, no ranking/scoring logic, no contract JSON, no wire-format
 change.
 

@@ -23,9 +23,9 @@ const NEW_LEAF = `,
               "taskFile": "lane-e3-voltage-socket.md",
               "status": "queued",
               "notes": ${JSON.stringify(
-    'FIRE-AUTHORED s1466 from merged evidence: docs/bench/e3-readiness-census.md F-ER01-E3-1 (merged 0c4168a2) ' +
+    'FIRE-AUTHORED s1466 from merged evidence: docs/bench/e3-readiness-census.md F-ER01-E3-1 (merged 9753ae46) ' +
     'plus the ERA-SOCKET template tasks/lane-e2-pressure-socket.md, authored by fire s1460 and drained clean at ' +
-    '24c6600f (review reviews/e2-pressure-socket.md). Scoped to e3-blackout-ridge ONLY — its twist is ' +
+    '6fd24a3b (review reviews/e2-pressure-socket.md). Scoped to e3-blackout-ridge ONLY — its twist is ' +
     'secureWave/dayNightCycle/powerGrid/enemyRoster (verified s1466), so F-ER01-E3-2 (MothSwarm), -E3-3 ' +
     '(Canyon Works crawler/tram/baron/lightRamp) and -E3-4 (Fairground + its missing crowd objective) firewall ' +
     'out cleanly. Paths verified before authoring: the class is PowerGraphSystem at src/systems/PowerGraph.ts:193 ' +

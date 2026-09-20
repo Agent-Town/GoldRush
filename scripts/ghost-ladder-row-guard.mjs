@@ -191,8 +191,8 @@ function main() {
   // DELIBERATELY NOT A REFUSAL, and the restraint is MEASURED rather than stylistic (F-2218-1).
   // An empty subject set is the LAWFUL RESTING STATE OF A DRY BOARD: a fire ladders a master (the
   // set rises) and the drain retires the row (it returns to 0). Measured s2336 over every
-  // BACKLOG.md revision since this guard was born at 7cfa8bb7 -- 37 transitions, oscillating
-  // constantly, e.g. d79627ea 0->1 when s2291 authored and 46e20af7 1->0 when s2293 drained.
+  // BACKLOG.md revision since this guard was born at f94055da -- 37 transitions, oscillating
+  // constantly, e.g. 4fe6445a 0->1 when s2291 authored and b2332c00 1->0 when s2293 drained.
   // So `rows === 0` would red this gate on most dry boards, i.e. most of the time, and would be
   // excused into uselessness inside a week (F-1460-1, the `cross-engine` fate).
   console.log(`ladder corpus: ${rows} master row(s) selected from ${clipboard} clipboard-lead row(s).`);

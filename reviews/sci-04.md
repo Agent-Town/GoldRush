@@ -1,6 +1,6 @@
 # Review — SCI-04 contract-family registry (the epoch socket)
 
-**Slice:** lane-a SCI-04 (branch `lane/m3`, tip `1a32a79`) → merged to main
+**Slice:** lane-a SCI-04 (branch `lane/m3`, tip `3372840`) → merged to main
 **Fire:** s91 (2026-07-06T17:xxZ)
 **Verdict:** PASS — merged.
 
@@ -15,7 +15,7 @@ Builds the epoch **socket**: a versioned bundle folder shape (`assets/contracts/
   - Regression byte-identical: `sci-02-families-mastery` (proves epoch-1 routing unchanged), `sci-01-research-loop`, `m1-06-level-up-choices` (offer pool), `m1-01-claim-jumpers-death`, `m2-01-build-menu`.
 
 ## Merge classification
-Base `702e623`. Of the 8 lane files, only `src/vite-env.d.ts` also moved on main since base (known additive-collision file) — git auto-merged it cleanly (both hunks additive: `GrContractEpochMeta/Bundle` types + `__GR_CONTRACT_REGISTRY__` debug hook). All other files LANE-TOUCHED only → clean apply. Firewall respected: touches only `assets/contracts/**`, `src/meta/ContractFamilies.ts`, `src/meta/ResearchTree.ts` (reads Steamworks threshold from manifest), `src/game/Upgrades.ts` (routes through loadEpoch), `src/vite-env.d.ts`, `e2e/`, `specs/science-dimension/README.md`. No epoch-1 content change; epoch-2 stub is data-only/locked/empty.
+Base `17f9cf4`. Of the 8 lane files, only `src/vite-env.d.ts` also moved on main since base (known additive-collision file) — git auto-merged it cleanly (both hunks additive: `GrContractEpochMeta/Bundle` types + `__GR_CONTRACT_REGISTRY__` debug hook). All other files LANE-TOUCHED only → clean apply. Firewall respected: touches only `assets/contracts/**`, `src/meta/ContractFamilies.ts`, `src/meta/ResearchTree.ts` (reads Steamworks threshold from manifest), `src/game/Upgrades.ts` (routes through loadEpoch), `src/vite-env.d.ts`, `e2e/`, `specs/science-dimension/README.md`. No epoch-1 content change; epoch-2 stub is data-only/locked/empty.
 
 ## Findings
 None blocking. Socket proof confirmed: adding epoch-2 required data + registry only, zero engine-code edits.

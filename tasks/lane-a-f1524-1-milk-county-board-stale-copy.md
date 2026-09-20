@@ -17,7 +17,7 @@ Any of them returning 0 means **the lane is stale, not that the premise is wrong
 
 ## Why (F-1523-7, filed s1523; re-measured at runtime s1524)
 
-s1521's `lane-fd3-boards-pass` merge (`9b7c530a`) deliberately rewrote the boards' empty states into the county's voice — exactly what its own gazette item advertised — and left its neighbour's six full-text `toHaveText` assertions behind. **The test went stale; the product is correct.** Two fires (s1522, s1523) labelled these reds "pre-existing" and each paid for a control run without asking what they were.
+s1521's `lane-fd3-boards-pass` merge (`7abee977`) deliberately rewrote the boards' empty states into the county's voice — exactly what its own gazette item advertised — and left its neighbour's six full-text `toHaveText` assertions behind. **The test went stale; the product is correct.** Two fires (s1522, s1523) labelled these reds "pre-existing" and each paid for a control run without asking what they were.
 
 **Verified on main s1524 — the strings the spec expects exist nowhere in the application:**
 `grep -rn "waits for its first name\|signed the county book\|signed the field book" src/ functions/` returns **zero hits**; the only hits in the repo are the spec's own six assertions plus prose in `tasks/`, `STATUS.md` and `marketing/`.

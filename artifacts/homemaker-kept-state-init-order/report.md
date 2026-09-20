@@ -1,6 +1,6 @@
 # homemaker-kept-state-init-order — the kept chair no longer restores before the wave system exists
 
-**Slice:** `homemaker-kept-state-init-order` (lane-a, Claude Opus 5, wave 2) · **base** `3e32f3e09` · **cures** F-ADM-1 / AD2-B1 (`reviews/asset-diet-explicit-manifest.md`)
+**Slice:** `homemaker-kept-state-init-order` (lane-a, Claude Opus 5, wave 2) · **base** `1e63b52ee` · **cures** F-ADM-1 / AD2-B1 (`reviews/asset-diet-explicit-manifest.md`)
 **Verdict:** READY-FOR-GATES.
 
 ## What it does
@@ -44,7 +44,7 @@ Homemaker's behaviour, `WaveSystem`, and the other bosses are untouched.
 | `node-guards-contention.test.mjs:116` "contention is advisory, correctly counted, and absent when alone" | `spawnSync ps ENOBUFS` at `:50` on a busy host | no — environmental, already fire-authorable as F-GLB-3 (give that `ps` call a `maxBuffer`) |
 
 Two greens worth naming, because they were RED on this branch's base: `engine-era-guard.test.mjs` and
-the bench-seed legs. Main at `3e32f3e09` carries live engine hash
+the bench-seed legs. Main at `1e63b52ee` carries live engine hash
 `3c38c993fda488a95045297e012476484cbce9a62567a6ffbf0d9a524b7b4885`, which appears **nowhere** in
 `assets/engine-era.json` (grep count 0 at HEAD) — the ENGINE-PIN-OWED item on the
 `glb-export-contract-and-validator` BACKLOG row. This slice rotates the hash again and pins the
@@ -61,7 +61,7 @@ state, two trees:
 
 | | booted after reload | errors | homemaker after reload |
 |---|---|---|---|
-| HEAD `3e32f3e09` (unfixed) | **false** | `pageerror: Cannot read properties of undefined (reading 'suppressBaronForRun')` | — (no diagnostics; boot died) |
+| HEAD `1e63b52ee` (unfixed) | **false** | `pageerror: Cannot read properties of undefined (reading 'suppressBaronForRun')` | — (no diagnostics; boot died) |
 | this lane | **true** | none | `persistentKept: true`, `chairPlaced: true`, `act: 3`, `poweredDown: true`, `position: {x: 3, z: -8}` |
 
 Persisted kept state → reload → no page error → still kept, at the position it was kept at.
@@ -80,7 +80,7 @@ probe, which is the only thing on this tree that prints it.
 
 ### Determinism — the sim is byte-identical (`hashes.json`)
 
-| Ride | Before (HEAD `3e32f3e09`) | After (this lane) | Pinned in `assets/contracts/null-floors.json` |
+| Ride | Before (HEAD `1e63b52ee`) | After (this lane) | Pinned in `assets/contracts/null-floors.json` |
 |---|---|---|---|
 | `e6-glow-mesa` / `e6-glow-mesa-01`, `--policy=idle` | `fnv1a32:0ae65b8e` | `fnv1a32:0ae65b8e` | `fnv1a32:0ae65b8e` |
 | `e6-glow-mesa` / `e6-glow-mesa-02`, `--policy=idle` | `fnv1a32:004ae8d7` | `fnv1a32:004ae8d7` | `fnv1a32:004ae8d7` |
@@ -98,7 +98,7 @@ files differ in exactly two places: `id` (a fresh `randomUUID` every run, by des
 
 | | sha256 |
 |---|---|
-| before, HEAD `3e32f3e09` | `3c38c993fda488a95045297e012476484cbce9a62567a6ffbf0d9a524b7b4885` |
+| before, HEAD `1e63b52ee` | `3c38c993fda488a95045297e012476484cbce9a62567a6ffbf0d9a524b7b4885` |
 | after, this lane | `6e27423b60157b3661a1d822d90e4ec47eb65952fe6568544dade163a17e223f` |
 
 `assets/engine-era.json` gains a same-era pin (era 5, `the Replayed Board`) for the new hash with its

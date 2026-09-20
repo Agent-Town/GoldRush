@@ -36,20 +36,20 @@ const notebookSha = createHash('sha256').update(notebook).digest('hex');
 // their heat-12 line appended after it.
 const GRAMMAR_PIN = 'rider-parity-grammar, all stages (ADR-005; owner A2 + D1 "fairness is crucial" + D2 "re-ride it yes", 2026-09-07): "the nine ACTION reach tests read the hero, REPAIR_UNDER bounded to the human radius, the E5 deck a plain-boot human control, MOVE_TO/HOLD/FALLBACK_IF removed with 57 tapes / 22 scored heat-12 rows retired in the ledger, CONTEXT_ACTION\u2019s four human-only targets given to the rider, syncProgramSuspension and the E8 crossing chip re-based to the hero; the controls table reads 15 equal / 0 agent-only / 0 human-richer".';
 const CHANGED = {
-  'e3-moth-season': 'Also: the e3-moth-season drain (de21da4f5) "rewrites the Moth Season contract row \u2014 the sabotageable light circuit as contract data".',
-  'e7-relay-valley': 'Also: e7-playbook-rows (b38d60295) "adds PLAYBOOK_USE and the signal-system composition on the four Signal Era maps"; E7PlaybookLatch.ts is the one four-rule secure decision.',
-  'e7-relay-rush': 'Also: e7-playbook-rows (b38d60295) "adds PLAYBOOK_USE and the signal-system composition on the four Signal Era maps"; E7PlaybookLatch.ts is the one four-rule secure decision.',
-  'e7-echo-canyon': 'Also: e7-playbook-rows (b38d60295) "adds PLAYBOOK_USE and the signal-system composition on the four Signal Era maps"; E7PlaybookLatch.ts is the one four-rule secure decision.',
-  'e7-dead-band': 'Also: e7-playbook-rows (b38d60295) "adds PLAYBOOK_USE and the signal-system composition on the four Signal Era maps"; E7PlaybookLatch.ts is the one four-rule secure decision.',
+  'e3-moth-season': 'Also: the e3-moth-season drain (d07a0e2e7) "rewrites the Moth Season contract row \u2014 the sabotageable light circuit as contract data".',
+  'e7-relay-valley': 'Also: e7-playbook-rows (0a2a6fdcf) "adds PLAYBOOK_USE and the signal-system composition on the four Signal Era maps"; E7PlaybookLatch.ts is the one four-rule secure decision.',
+  'e7-relay-rush': 'Also: e7-playbook-rows (0a2a6fdcf) "adds PLAYBOOK_USE and the signal-system composition on the four Signal Era maps"; E7PlaybookLatch.ts is the one four-rule secure decision.',
+  'e7-echo-canyon': 'Also: e7-playbook-rows (0a2a6fdcf) "adds PLAYBOOK_USE and the signal-system composition on the four Signal Era maps"; E7PlaybookLatch.ts is the one four-rule secure decision.',
+  'e7-dead-band': 'Also: e7-playbook-rows (0a2a6fdcf) "adds PLAYBOOK_USE and the signal-system composition on the four Signal Era maps"; E7PlaybookLatch.ts is the one four-rule secure decision.',
   'e5-stillwater': 'Also: e5-stillwater-front-crew-2 "crews Stillwater\u2019s 32-second storm with one existing corsair skiff".',
-  'e8-mare-claim': 'Also: e8-mare-claim-physics (a121c7f14) "composes E8PhysicsSystem headless for contracts declaring gravity/atmosphere".',
+  'e8-mare-claim': 'Also: e8-mare-claim-physics (5c82f05bb) "composes E8PhysicsSystem headless for contracts declaring gravity/atmosphere".',
   'e8-far-side': 'Also: e8-remaining-maps "composes E8SuitAirSystem into the headless door for e8-far-side, e8-low-orbit and e8-eclipse".',
   'e8-low-orbit': 'Also: e8-remaining-maps "composes E8SuitAirSystem into the headless door for e8-far-side, e8-low-orbit and e8-eclipse"; and low-orbit-second-build-line landed on this same evening chain.',
   'e8-eclipse': 'Also: e8-remaining-maps "composes E8SuitAirSystem into the headless door for e8-far-side, e8-low-orbit and e8-eclipse".',
-  'e4-long-road': 'Also: e4-roads-and-convoys (48ef7df8d) + e4-vehicles-plain-boot (98cc0fc2f) compose MotorSocket and Vehicle/FuelSystem for every twist.motorFrontier contract.',
-  'e4-dust-flats': 'Also: e4-roads-and-convoys (48ef7df8d) + e4-vehicles-plain-boot (98cc0fc2f) compose MotorSocket and Vehicle/FuelSystem for every twist.motorFrontier contract.',
-  'e4-boneyard': 'Also: e4-roads-and-convoys (48ef7df8d) + e4-vehicles-plain-boot (98cc0fc2f) compose MotorSocket and Vehicle/FuelSystem for every twist.motorFrontier contract.',
-  'e4-gusher-county': 'Also: e4-roads-and-convoys (48ef7df8d) + e4-vehicles-plain-boot (98cc0fc2f) compose MotorSocket and Vehicle/FuelSystem for every twist.motorFrontier contract.',
+  'e4-long-road': 'Also: e4-roads-and-convoys (7f5c590a1) + e4-vehicles-plain-boot (49370319b) compose MotorSocket and Vehicle/FuelSystem for every twist.motorFrontier contract.',
+  'e4-dust-flats': 'Also: e4-roads-and-convoys (7f5c590a1) + e4-vehicles-plain-boot (49370319b) compose MotorSocket and Vehicle/FuelSystem for every twist.motorFrontier contract.',
+  'e4-boneyard': 'Also: e4-roads-and-convoys (7f5c590a1) + e4-vehicles-plain-boot (49370319b) compose MotorSocket and Vehicle/FuelSystem for every twist.motorFrontier contract.',
+  'e4-gusher-county': 'Also: e4-roads-and-convoys (7f5c590a1) + e4-vehicles-plain-boot (49370319b) compose MotorSocket and Vehicle/FuelSystem for every twist.motorFrontier contract.',
 };
 const ERA_MECHANIC = {
   1: 'E1 survival and the bank cap (the county’s opening economy)', 2: 'E2 pressure with hazard (vent-or-boom resource management)',

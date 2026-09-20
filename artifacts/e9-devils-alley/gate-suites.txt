@@ -1,4 +1,4 @@
-A9 — e9-devils-alley — GATE LOG (2026-08-21, Node 26.4.0, base b9fd6fecb)
+A9 — e9-devils-alley — GATE LOG (2026-08-21, Node 26.4.0, base 4d2491587)
 =========================================================================
 Every playwright command below used playwright.a9-scratch.config.ts: a self-booting vite DEV
 server on 127.0.0.1:5276. Port 5279 was already listening (a neighbour), 5188 is never touched,
@@ -36,7 +36,7 @@ and a vite PREVIEW server would 404 the runtime `/src/*.ts` imports the census s
    idle       e9-devils-alley-02 run2: secured=false waves=3  kills=53  sweeps=2  moved=0 held=0   hash=fnv1a32:aa33adf0
 
 5. node scripts/null-floor-anchors.mjs          (regen)
-   Diff: 19 insertions, 1 deletion — the git-derived eraStamp (1817cb273 -> b9fd6fecb, this
+   Diff: 19 insertions, 1 deletion — the git-derived eraStamp (72da08d6a -> 4d2491587, this
    branch's own merge-base) plus the 18 lines of the e9-devils-alley block. EVERY other
    contract's floor rows are byte-unmoved.
    node scripts/null-floor-anchors.mjs --check

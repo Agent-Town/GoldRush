@@ -1,15 +1,15 @@
 # bt-04b — automation two params (repair-under / idle-seconds)
 
 - **Slice:** `bt-04b-automation-two-params`
-- **Branch / tip:** `lane/a` @ `8dc4ff173` — `runner(lane-a): bt-04b-automation-two-params.md`
-- **Base:** `main` @ `1163f8013`
+- **Branch / tip:** `lane/a` @ `d02ff4148` — `runner(lane-a): bt-04b-automation-two-params.md`
+- **Base:** `main` @ `2e492fcff`
 - **Gated by:** s2265, in a detached worktree (`gate-s2265`, §3.0b — undecided content never entered main's tree)
 - **Master:** attended-dispatched at 10:47, re-authored to F-2261-1's measured width (forks (1)+(2) only, persistence seam inside the firewall)
 
 ## VERDICT: HOLD — NOT MERGED
 
-> ⏭️ **SUPERSEDED s2269 — THIS HOLD IS DISCHARGED. The slice MERGED at `fa00605bac5e165adae3c6ce3210ccd5128ab659`,
-> verified BY ANCESTRY (`git merge-base --is-ancestor fa00605ba main` → yes).** The verdict above is kept VERBATIM
+> ⏭️ **SUPERSEDED s2269 — THIS HOLD IS DISCHARGED. The slice MERGED at `0d1f0b8cc838fb110537563ca5120d48e6672718`,
+> verified BY ANCESTRY (`git merge-base --is-ancestor 0d1f0b8cc main` → yes).** The verdict above is kept VERBATIM
 > under the Retention Law: it was correct when written, and the reasoning is the provenance. What changed is the
 > evidence, not the judgement — the hold rested on the slice's own spec being uncertifiable on mobile-390, and it
 > was lifted by s2268's pre-registered condition being met: 5/5 clean full-file mobile-chrome runs in a fire-shell
@@ -104,7 +104,7 @@ merge**; do not read this review's greens as covering it.
 ## s2266 — the owed battery, DISCHARGED (and the hold stands on its own merits)
 
 **`npm run test:node-guards` was run on the MERGED tree** (detached worktree
-`worktrees/gate-s2266`, base `b0ba2b178`, `git merge --no-ff lane/a` clean — 8 files,
+`worktrees/gate-s2266`, base `70e336756`, `git merge --no-ff lane/a` clean — 8 files,
 +214/-10, zero conflicts), fire shell, node **v26.4.0** matching `.nvmrc` (F-2166-2: a
 red here is a question about WHICH INTERPRETER ran it before it is a question about the
 slice). **rc=1, 3 failing tests — and NONE of them is a product objection to this slice.**

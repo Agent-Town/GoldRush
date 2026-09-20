@@ -27,7 +27,7 @@ const leaf = {
   id: 'f1510-3-inventory-names-its-commit',
   title:
     'F-1510-3 residue: logs/suite-red-inventory.md still does not NAME the commit it was taken at. '
-    + 'f1508-2 (2c495181) added --snapshot, which DERIVES the commit at query time and cured the '
+    + 'f1508-2 (c7284596) added --snapshot, which DERIVES the commit at query time and cured the '
     + 'archaeology cost, but the gate says the inventory names its own commit and it does not. Teach '
     + 'the generator header array in scripts/suite-red-inventory.mjs to emit a Snapshot commit line '
     + 'from git rev-parse HEAD at generation time, degrading to "unrecorded" (never empty), plus a '

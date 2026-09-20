@@ -26,7 +26,7 @@ s1414 verified that cause at source rather than inheriting it (chain of four lin
 F-1414-1). It is correct. **`e2-hill-mine` declares `bossKind: "railcar"` and a five-part `components` array;
 `WaveSystem.ts:866` spawns every part with `eliteKind: baron.bossKind ?? 'railcar'`, so the string `'baron'`
 that `:392` waits for is never emitted, `baronBeaten` never flips, auto-secure is withheld forever, and the
-run overruns `secureWave: 12` into the `e45cf7c5` ceiling at wave 15.**
+run overruns `secureWave: 12` into the `38f456d3` ceiling at wave 15.**
 
 This is the E1 bench's 5th and last driver. Landing it closes the bench at 5/5.
 
@@ -38,7 +38,7 @@ Apply it to current main **as a patch, never a branch merge**. Do not re-derive 
 
 **2. Do NOT raw-checkout `WaveSystem.ts` (carried from the predecessor, unchanged and still binding).** The
 lane's only legitimate change to that file is the `escortsSpawned` threading. A raw checkout would silently
-discard the `Math.pow` cure from `eaefdb24` and re-open the cross-engine divergence that cost this thread
+discard the `Math.pow` cure from `a05171ce` and re-open the cross-engine divergence that cost this thread
 four fires. **Prove no `Math.pow` reappears**: grep the merged file and report the result.
 
 **3. Cure the gate — and RULE, do not guess.** Make a component boss's full destruction flip `baronBeaten`.

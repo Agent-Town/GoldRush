@@ -1,9 +1,9 @@
 # f1429-1 — the uninspectable-fixture signal becomes test-visible instead of player-fatal
 
 - **Slice:** `f1429-1-uninspectable-fixture-signal` (ladders F-1429-1, filed s1429 while draining `f1428-2`)
-- **Branch / tip:** `lane/m3` @ `b925d706` (runner auto-commit), lane base `4983ce03`
+- **Branch / tip:** `lane/m3` @ `b925d706` (runner auto-commit), lane base `7dc69e36`
 - **Drained by:** s1431 fire, 2026-08-03
-- **Gate tree:** detached worktree `gate-s1431` at main `7a177a47` (§3.0b — undecided content never entered main's working tree)
+- **Gate tree:** detached worktree `gate-s1431` at main `3469946e` (§3.0b — undecided content never entered main's working tree)
 
 ## Verdict
 
@@ -41,7 +41,7 @@ the player.
 | `e2e/beauty-town.spec.ts` (own spec) | **6/6**, desktop + mobile |
 | Adjacent suites (derived by grep, not from the master's list) | see below |
 | Firewall | 2 files, **+9/−1**; `git diff` vs `lane/m3` **byte-identical** after all probes reverted |
-| Merge classification | **LANE-TOUCHED only** — `git log 4983ce03..main -- <both files>` **empty**; clean copy, no graft |
+| Merge classification | **LANE-TOUCHED only** — `git log 7dc69e36..main -- <both files>` **empty**; clean copy, no graft |
 
 Every playwright command ran `--workers=1` per §3.1.
 

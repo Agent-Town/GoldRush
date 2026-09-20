@@ -10,7 +10,7 @@ CODEX: model=gpt-5.6-sol effort=high
 > `scripts/lane-runner-v3.sh:65-66` greps `^CODEX:`, so an inline copy is silently ignored and the run
 > quietly falls back to the default effort.
 
-READ FIRST: `AGENTS.md`; `scripts/drain-block-check.mjs` **in full** (187 lines — you are changing two of them, but the file's header comment is the contract you must not break); `reviews/queue-shipped-guard.md` (the predecessor that built `--queue`, merged `d39e831a`); `tasks/goals.json` (data only — **do not edit it**).
+READ FIRST: `AGENTS.md`; `scripts/drain-block-check.mjs` **in full** (187 lines — you are changing two of them, but the file's header comment is the contract you must not break); `reviews/queue-shipped-guard.md` (the predecessor that built `--queue`, merged `16b6c46e`); `tasks/goals.json` (data only — **do not edit it**).
 
 Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead is NORMAL — the runner auto-commits. For each ahead commit: if its content is already merged to main (verify via git log/diff), it is a SAFE DUPE → `git checkout -B lane/m3 main && git clean -fd` and PROCEED. STOP-and-report ONLY if an ahead commit's content is NOT on main (undrained work — resetting would DESTROY it), or the worktree holds uncommitted edits you did not make. Then `npm install --no-audit --no-fund`; `npm run build` green before touching anything.
 
@@ -23,7 +23,7 @@ Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead 
 **That whitelist has been wrong three times in two days**, and each time the missing word was only discovered by a victim:
 
 - built with `{'merged'}` — s1116's runner found a second live word, `shipped` (8 leaves), and added it;
-- s1117 ran the guard on a master **drained 20 minutes earlier** and got **`✅ CLEAR … status="diagnosed"`, exit 0** — because three drains had written the lifecycle as `diagnosed`. Two of those were verified ancestors of main, i.e. **two live Mistake-#8 landmines reading CLEAR.** s1117 defused both by hand (`c81f57e1`).
+- s1117 ran the guard on a master **drained 20 minutes earlier** and got **`✅ CLEAR … status="diagnosed"`, exit 0** — because three drains had written the lifecycle as `diagnosed`. Two of those were verified ancestors of main, i.e. **two live Mistake-#8 landmines reading CLEAR.** s1117 defused both by hand (`e4a4d685`).
 
 A whitelist of English words is the wrong **shape** for the question "is this work already on main?", because that question has an exact, string-independent answer: **`mergeHash` present AND `git merge-base --is-ancestor <mergeHash> main`.**
 
@@ -37,7 +37,7 @@ s1117 proposed ancestry as a **replacement** for the whitelist. **Do not do that
 | Terminal-status leaves whose `mergeHash` is **NOT** an ancestor of main (orphans) | **2** — `m1-m2-resource-guards`, `factory-diet-gate-honesty` |
 | Terminal-status leaves with **no `mergeHash` at all** | **3** — `town-plaza-slot-diagnostics`, `m2-05-geometry-settle`, `contract-art-key-adoption` |
 
-So **replacing** the whitelist with ancestry would refuse **5 fewer** already-shipped masters than today while catching **zero** new ones — it would *mint five fresh Mistake-#8 landmines in the name of fixing one.* These are not hypothetical: `m1-m2-resource-guards` records `d93b1505`, which is **not** an ancestor, while its real shipping commit `f7cd0103` ✓ **is** (s1118 verified both with `git merge-base --is-ancestor`). The work is genuinely on main; only the recorded hash is wrong (F-1116-2's pre-amend-orphan shape).
+So **replacing** the whitelist with ancestry would refuse **5 fewer** already-shipped masters than today while catching **zero** new ones — it would *mint five fresh Mistake-#8 landmines in the name of fixing one.* These are not hypothetical: `m1-m2-resource-guards` records `d93b1505`, which is **not** an ancestor, while its real shipping commit `bebc1b1f` ✓ **is** (s1118 verified both with `git merge-base --is-ancestor`). The work is genuinely on main; only the recorded hash is wrong (F-1116-2's pre-amend-orphan shape).
 
 ➡️ **THEREFORE THE DESIGN IS A UNION (LOGICAL OR), NOT A REPLACEMENT.** Refuse to queue when **either** test fires. That keeps all 123 of today's refusals, costs nothing today, and buys the real prize: the **next** unknown status word — a fourth one *will* be invented — is refused automatically by the ancestry arm, without anyone having to notice it first.
 

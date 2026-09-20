@@ -12,7 +12,7 @@ Watts are instantaneous graph capacity, not an `EconomyResourceId` or banked bal
 
 Use persisted, monotonic building instance IDs as wire endpoints. Do not use pool indexes, display names, or coordinates. Coordinate-derived IDs were considered and rejected: demolishing and rebuilding on the same footprint could inherit an old endpoint, while pool indexes are reused after restore.
 
-Do not begin product integration until Session A's lockstep-action and snapshot-v2 branches have landed. Their current branch contracts still identify buildings as `{id,index}` (`origin/sol/lockstep-actions@b351fd4a:src/mp/LockstepClient.ts:7-23,684-712`; `origin/sol/mp-snapshot-completeness@7186984c:src/game/RunSuspend.ts:179-193`). The first integration slice must replace that external identity everywhere, not add a second address space.
+Do not begin product integration until Session A's lockstep-action and snapshot-v2 branches have landed. Their current branch contracts still identify buildings as `{id,index}` (`origin/sol/lockstep-actions@f425306c:src/mp/LockstepClient.ts:7-23,684-712`; `origin/sol/mp-snapshot-completeness@9aee218b:src/game/RunSuspend.ts:179-193`). The first integration slice must replace that external identity everywhere, not add a second address space.
 
 The epoch ladder is a separate hard gate: only this proposal and dormant PG-01 solver hardening may land early. PG-02 and every player-facing or state-bearing E3 slice wait until the E2 transition is shipped and owner-played (`tasks/BACKLOG.md:95-105`).
 

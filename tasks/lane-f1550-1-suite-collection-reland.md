@@ -17,7 +17,7 @@ If any returns 0, the lane is stale relative to the master — **STOP and report
 
 ## Why (F-1550-1, measured by s1550 on 2026-08-08, every number re-derivable)
 
-`npm test` — `package.json`'s `"test": "playwright test"` — **collects zero tests**. Measured on main at `bc9629bfb`: `npx playwright test --list` → **`Total: 0 tests in 0 files`**. `npm run test:node-guards` is rc=1 with **3 failures cascading from one root**: `whole suite collects without loading Vite-only modules`, and through it `whole-suite collection guard is cwd-invariant` and `all 23 scripts/*.test.mjs fixture owners remove their temp directories` (both run it as a child).
+`npm test` — `package.json`'s `"test": "playwright test"` — **collects zero tests**. Measured on main at `5226fce2c`: `npx playwright test --list` → **`Total: 0 tests in 0 files`**. `npm run test:node-guards` is rc=1 with **3 failures cascading from one root**: `whole suite collects without loading Vite-only modules`, and through it `whole-suite collection guard is cwd-invariant` and `all 23 scripts/*.test.mjs fixture owners remove their temp directories` (both run it as a child).
 
 The error is unchanged from the 2026-07-18 incident:
 
@@ -26,7 +26,7 @@ TypeError: Module ".../assets/layer-contracts/m1-core.layer-contract.v1.json?raw
            needs an import attribute of "type: json"
 ```
 
-i.e. the `?raw` JSON import at `src/world/Terrain.ts:2`, which Node cannot parse during Playwright's Node-side collection. rf-33 (`e3db39ae`, s1095) cured this exact class by cutting the ONE value-import edge that dragged `Terrain` into a spec's static import graph, taking the suite `0 → 2378 tests`.
+i.e. the `?raw` JSON import at `src/world/Terrain.ts:2`, which Node cannot parse during Playwright's Node-side collection. rf-33 (`1ff2257e`, s1095) cured this exact class by cutting the ONE value-import edge that dragged `Terrain` into a spec's static import graph, taking the suite `0 → 2378 tests`.
 
 **s1550 bisected the corpus and the culprit is a single spec, and a single edge.** Chunk probe over 393 specs → chunk 3 fails; binary search → **`e2e/task-026-prospector-collects-xp.spec.ts`** alone. Proof it is the *only* one: `--list` over all specs **except** that one exits 0 with **`Total: 2738 tests in 388 files`**. The chain is three hops, walked statically:
 
@@ -37,7 +37,7 @@ e2e/task-026-prospector-collects-xp.spec.ts
   -> src/world/Terrain.ts            (:2   ?raw JSON)
 ```
 
-**Dated to one commit: `6d6dc5e8d`, 2026-08-08T08:41:03+07:00, `runner(lane-b): lane-fdoor2-rejection-reasons.md`** — the f-door-2 slice that merged this morning. It added `takeBuildRejectionDetail` to `BuildSystem` and imported it into `ToolSurface`. The regression is **~2 hours old, not nine days**; the whole point of acting now is that last time nobody noticed for nine days, because *every gate in this repo runs NAMED specs and `npm test` is the only caller of the unfiltered suite.*
+**Dated to one commit: `5e44af0f5`, 2026-08-08T08:41:03+07:00, `runner(lane-b): lane-fdoor2-rejection-reasons.md`** — the f-door-2 slice that merged this morning. It added `takeBuildRejectionDetail` to `BuildSystem` and imported it into `ToolSurface`. The regression is **~2 hours old, not nine days**; the whole point of acting now is that last time nobody noticed for nine days, because *every gate in this repo runs NAMED specs and `npm test` is the only caller of the unfiltered suite.*
 
 ⚠️ **THE LOAD-BEARING TRAP, and it is the same one F-1094-1 names.** `takeBuildRejectionDetail` is used as a **runtime value** at `ToolSurface.ts:248` and `:250`, so an `import type` back-reference is **unavailable** — the symbol must **MOVE**. Importing it back would re-drag `Terrain`, leave collection broken, **and leave `tsc` and `build` both green** — a silent no-op that reads as a fix.
 

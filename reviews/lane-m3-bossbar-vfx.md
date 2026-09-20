@@ -1,6 +1,6 @@
 # Review — lane/m3 drain: boss health-bar semantics + terrain-anchored world VFX
 
-**Slice/branch/tip:** `lane/m3` @ `06f0e1b5` (2 commits: `d46e1c34` lane-boss-healthbar, `06f0e1b5` lane-vfx-visualy) · base `257e72fd` (07-19 15:18) · merged onto main `4caa128d`.
+**Slice/branch/tip:** `lane/m3` @ `06f0e1b5` (2 commits: `d46e1c34` lane-boss-healthbar, `06f0e1b5` lane-vfx-visualy) · base `809cb2ca` (07-19 15:18) · merged onto main `6a2df461`.
 **Drained by:** s746 fire (recovered s745's DEAD mid-graft — see F-2).
 **Verdict:** ✅ MERGE — both owner-directed playtest fixes; tsc+build green, both slice specs green ×2 projects, adjacent battery 24 green, boot probe zero-error ×2. One pre-existing main red (065, F-1) proven graft-independent — non-blocking.
 
@@ -9,7 +9,7 @@ Two owner playtest fixes, both landed on lane-a:
 1. **Boss health-bar semantics** (owner verbatim 2026-07-19: *"can we make it green and when he takes damage that part of the bar gets red? that is really easy to understand."*). The shared boss bar (`EnemyPool` in `src/entities/pools.ts`) now renders REMAINING = green, DEPLETED = warm red via `BOSS_HP_STYLE` tokens (health: `#6bb36b`/`#a0522d`; edge `#f5e6c8`). Bars carry a `semantic: 'health' | 'resistance'` — the Old Digger's no-kill **resistance** bar keeps its distinct dark-red read (`variantId === 'old_digger' → 'resistance'`), every other boss + the Baron = health. A `publishBossHpBar()` seam writes `data-boss-bar-*` datasets (visible/semantic/remaining/depleted/colors) on `#game-canvas` for the spec. Materials gain `toneMapped:false, fog:false` for stable warm color.
 2. **Terrain-anchored world VFX** (owner, Twin Banks 2026-07-19: *"the animation from collecting seems is swallowed by the terrain"*). New `Terrain.visualAnchorY(pos, lift)` wrapper over `visualY`; float texts, gold floats, xp motes, seam-collect bursts, combat puffs/rings/ticks, and the blast-aim reticle now ride `visualAnchorY` + a small lift instead of the flat y-plane, so they float above raised sculpt. Harvest gold float also gains a 1.7× scale. `lastFloatText` diagnostics seam added for the spec.
 
-## Merge classification (base 257e72fd → main; stale-base 3-way graft)
+## Merge classification (base 809cb2ca → main; stale-base 3-way graft)
 | File | Class | How resolved |
 |------|-------|--------------|
 | e2e/lane-boss-healthbar.spec.ts, e2e/vfx-visualy.spec.ts | LANE-NEW | direct from lane |

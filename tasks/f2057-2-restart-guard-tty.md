@@ -49,7 +49,7 @@ script: tcgetattr/ioctl: Operation not supported on socket
 
 ⚠️ **THE HELPER ITSELF IS HEALTHY — DO NOT "FIX" IT.** Verified the same fire: `bash scripts/start-lane-runner.sh --check` → **rc=0**, `codex 0.147.0 at ~/.nvm/versions/node/v23.11.1/bin/codex`, child node `v23.11.1`, `CLAUDE_CONFIG_DIR/CLAUDECODE scrubbed`, `environment is READY`, and it correctly **REFUSED** because the live runner (pid 451) was alive. §2.0b's sanctioned restart path is intact. **The defect is in the GUARD's fixture, nowhere else.**
 
-The PTY arm landed in `12383d95f` (s1816, 2026-08-15T23:33) as part of the F-1815-3 custody cure — which was correct work, validated where a tty exists. What it did not carry is an environment discriminator.
+The PTY arm landed in `ae598e4d7` (s1816, 2026-08-15T23:33) as part of the F-1815-3 custody cure — which was correct work, validated where a tty exists. What it did not carry is an environment discriminator.
 
 **WHY THIS IS WORTH A TASK RATHER THAN A SHRUG:** a battery that is permanently rc=1 in the one shell that is required to run it teaches every fire to discount it. That is precisely how F-1460-1's `cross-engine` label decayed — a red nobody investigates is worse than no test — and here it would mask the ledger/law/desk guards that share the chain, which are the ones that actually protect the board.
 

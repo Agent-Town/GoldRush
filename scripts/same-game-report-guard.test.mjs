@@ -42,7 +42,7 @@ test('same-game report exemption table matches source', async () => {
 
 // F-2096-1 (s2096). The id-set check above was written to catch "a report nobody regenerated",
 // and it cannot: it compares only the KEY SET, so every VALUE in the table is unguarded. Proven
-// live on main, not argued — `e2b9399a2` rewrote the `e3-fairground` reason to record F-E3CF-4 as
+// live on main, not argued — `cb93328d1` rewrote the `e3-fairground` reason to record F-E3CF-4 as
 // CLOSED while the committed report kept saying "Admission HELD pending", and both tests above
 // stayed green for the whole window because the seven ids never moved. A row asserting a finding
 // is pending when source declares it closed is worse than a missing row: it is read as current.

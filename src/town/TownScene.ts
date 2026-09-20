@@ -5141,7 +5141,7 @@ function createSurveyPlot(building: TownBuilding): THREE.Group {
  *
  * THE ELDER JOINS IT 2026-09-17 on owner ruling A13 (2026-09-14, verbatim: "A13 - sounds good"),
  * with the tavernkeeper's cycle exactly — 8 s of walking, a 3 s pause at her schoolhouse post and a
- * 30 s pause at the approach. Her 32-cell walk sheet shipped in `374b0154f` and no loop reached it,
+ * 30 s pause at the approach. Her 32-cell walk sheet shipped in `6eb8a8093` and no loop reached it,
  * so a player never saw her move (`docs/OWNER-DESK-2026-09-06.md` §A13).
  */
 const TOWN_PLAZA_PATROL_CYCLES: Partial<Record<TownActorId, Omit<NonNullable<TownActorDefinition['loop']>, 'trailId' | 'points'>>> = {

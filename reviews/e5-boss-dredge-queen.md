@@ -1,9 +1,9 @@
 # Review — e5-boss-dredge-queen (the Dredge-Queen, E5's competing boss)
 
 - **Slice:** lane-b-e5-boss-dredge-queen — the Dredge-Queen boss, acts 0-3, two-front Act 1, W6 persistence
-- **Branch / tip:** lane/m4 @ `20747ed8` (runner auto-commit)
-- **Merge commit:** `55ee01d63e24fdd9efa9195a75a8366ff3fd5ca9` (`--no-ff` onto main `804914ff`)
-- **Base:** `567e69f9` (2h stale — the task's own author commit; main moved NONE of the shared files since → clean merge)
+- **Branch / tip:** lane/m4 @ `80001e6d` (runner auto-commit)
+- **Merge commit:** `2867d230d88f207d79caf4dc0ae9a9f1de7564c8` (`--no-ff` onto main `219693f2`)
+- **Base:** `068480f4` (2h stale — the task's own author commit; main moved NONE of the shared files since → clean merge)
 - **Drained by:** s665 fire, 2026-07-16
 
 ## Verdict
@@ -28,7 +28,7 @@ Adds `DredgeQueenBossSystem` — a component boss (CLAW / PADDLES×2 / HOLD) on 
 Key spec assertions verified: Act 2 unreachable while any paddle lives + both-paddle destruction transitions to Act 2 (the owner's correction made testable, `:124`); claw mid-cycle interrupt cancels loot transfer (`:175`); defensive-claw arc damages only inside telegraph (`:198`); Act 3 spill + skiff exit + hulk prop persists; W6 second-boot mounts wreck under same profile, fresh profile does not; perf (`:220`).
 
 ## Merge classification (per-file)
-Base `567e69f9`; main moved none of the shared files since base → all files clean-apply, no 3-way judgment required.
+Base `068480f4`; main moved none of the shared files since base → all files clean-apply, no 3-way judgment required.
 
 | File | Class | Note |
 |---|---|---|

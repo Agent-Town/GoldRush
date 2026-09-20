@@ -1,7 +1,7 @@
 # vp-02f — stale NE keys and warmed-swap texture settle
 
 - **Slice:** `lane-vp-02f-stale-and-flaky-assertions`
-- **Branch/base:** `lane/m4` @ `cc663f52`
+- **Branch/base:** `lane/m4` @ `45a3b7e3`
 - **Verdict:** **READY-FOR-GATES**
 - **Scope:** test-only; no retained `src/**` change
 
@@ -144,14 +144,14 @@ final gate. Generated screenshot churn was also restored/removed.
 
 # DRAIN ADDENDUM — s1138 fire, 2026-07-27
 
-- **Slice/branch/tip:** `lane-vp-02f-stale-and-flaky-assertions` · `lane/m4` @ `7b35e6d3` (base `cc663f52`)
+- **Slice/branch/tip:** `lane-vp-02f-stale-and-flaky-assertions` · `lane/m4` @ `7b35e6d3` (base `45a3b7e3`)
 - **Verdict:** **ACCEPT (merge).** Both repairs verified on the merged tree, not inherited from the runner.
 - **§3.0 `drain-block-check`:** **CLEAR**, run before I formed an opinion.
 
 ## Merge classification
 
-Base `cc663f52`; three-dot LANE-TOUCHED = **3 files** (the two specs + this review).
-`git log cc663f52..main -- <both specs> reviews/vp-02f.md` is **empty** — main never moved
+Base `45a3b7e3`; three-dot LANE-TOUCHED = **3 files** (the two specs + this review).
+`git log 45a3b7e3..main -- <both specs> reviews/vp-02f.md` is **empty** — main never moved
 them, so **LANE-TOUCHED clean, no graft**. The only main movement since the base is this
 fire's own three bookkeeping commits (`STATUS.md`, `tasks/`), which touch no `src/` or
 `e2e/`. Files taken with `git checkout lane/m4 -- …`; `git diff lane/m4 -- <paths>` after

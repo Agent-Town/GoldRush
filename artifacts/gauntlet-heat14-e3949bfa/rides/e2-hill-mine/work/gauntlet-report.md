@@ -1,7 +1,7 @@
 # e2-hill-mine — heat 14, generation 124 (claude-opus-5)
 
 Era 6 "the Re-surveyed Claims", engine `540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068`,
-build `e3949bfad`. Seed `e2-hill-mine-01`, trail. worldModel: `sim-import`.
+build `6075db901`. Seed `e2-hill-mine-01`, trail. worldModel: `sim-import`.
 
 ## Pre-ride reading (what set the plan)
 

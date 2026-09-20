@@ -11,8 +11,8 @@
 
 ## WHY (evidence, quoted and dated)
 **F-1506-2 (s1506, 2026-08-07) — measured this fire, both endpoints, same worktree / same shell / same `--workers=1`:**
-- At `b66905c64c0f30cbb1b018128288c19ebca5fa79` (2026-07-28T09:25+07, the commit the suite-red-inventory run measured): **`e2e/e9-roster.spec.ts` → 6 passed.**
-- At current `main` (post-`efb5465dc`): **4 failed / 2 passed** — titles `E9 placeholders preserve siege/thief flags and cure-arms exits` (`:113`) and `plain Red Fields boot stays error-free without the debug harness` (`:167`), **both projects**.
+- At `eb3a8a01200b57cbbfce73ddc44898361669b391` (2026-07-28T09:25+07, the commit the suite-red-inventory run measured): **`e2e/e9-roster.spec.ts` → 6 passed.**
+- At current `main` (post-`4efc59645`): **4 failed / 2 passed** — titles `E9 placeholders preserve siege/thief flags and cure-arms exits` (`:113`) and `plain Red Fields boot stays error-free without the debug harness` (`:167`), **both projects**.
 
 ⇒ This is a **REGRESSION inside a bounded window**, not a ledger gap. `red-inventory-lookup` returns
 `CLEAN-IN-INVENTORY`, and that verdict is **CORRECT** — it means the spec *ran and passed* in the
@@ -30,11 +30,11 @@ known-red, laundering a findable bug into an excused one.** Do not refresh the i
 ## SCOPE (each item testable)
 1. **Validate the predicate on BOTH known outcomes before bisecting anything** (a bisect predicate
    that has not been shown to distinguish the endpoints is not a predicate). Run
-   `npx playwright test e2e/e9-roster.spec.ts --workers=1` at `b66905c64` → expect **6 passed**, and
+   `npx playwright test e2e/e9-roster.spec.ts --workers=1` at `eb3a8a012` → expect **6 passed**, and
    at `main` → expect **4 failed / 2 passed**. Report both raw tallies. If either endpoint
    disagrees with the numbers above, **STOP and report** — the window has moved and the rest of
    this task is void.
-2. **Bisect `b66905c64..main`** using that predicate. Report the bisect log (each commit tested and
+2. **Bisect `eb3a8a012..main`** using that predicate. Report the bisect log (each commit tested and
    its verdict) and name the **culprit commit** with its hash, subject and `--stat`.
 3. **Diagnose from the failing assertions, not from the suspicion in READ FIRST.** For each of the
    two failing titles, report the assertion, its **expected vs received values**, and how the

@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 
-const MERGE = '3ac90dd8884593701bf865240cb254db133ab4de';
+const MERGE = '9af152ab4c25802a649c1147fd013ed540f306cb';
 const SHORT = MERGE.slice(0, 8);
 
 // ---- 1. goal leaf ----------------------------------------------------------

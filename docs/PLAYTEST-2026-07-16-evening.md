@@ -5,7 +5,7 @@ Attended session runs the deploy on his return; this list is the play script. Fe
 ## PART 0 — THE DEPLOY (attended, before he plays)
 1. Verify the in-flight trio LANDED (fires should have drained them): freed-walkers (lane-c) · wire-blackout-dust-terrain (lane-c, chained) · e3-fairground mask table (lane-d). `git log --oneline -15` + goals leaves flipped merged. If freed-walkers is still mid-gate, deploy without it and SAY SO — never call it live undrained.
 2. tsc + build green on deploy tip (fresh, not inherited).
-3. `bash scripts/deploy.sh` → gold-rush-3in.pages.dev. Player-visible debt riding this deploy: research-impact-law (a639c40e) · era-anchor emitters (561281a3) · cold-anchor rule (21e6ee2b) · e5-03 deepwater tile (inert until E5 arms) · freed-walkers + blackout/dust wiring when landed.
+3. `bash scripts/deploy.sh` → gold-rush-3in.pages.dev. Player-visible debt riding this deploy: research-impact-law (e83db6b6) · era-anchor emitters (2b7e6e46) · cold-anchor rule (b901270a) · e5-03 deepwater tile (inert until E5 arms) · freed-walkers + blackout/dust wiring when landed.
 4. Post-deploy boot probe on the LIVE url: plain boot, zero console errors, one run started. Then hand over.
 
 ## PART 1 — NEW THIS DEPLOY (plain boot, no flags — Mistake #10 discipline)

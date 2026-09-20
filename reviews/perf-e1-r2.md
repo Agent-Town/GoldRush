@@ -1,7 +1,7 @@
 # perf-e1-r2 — the E1 optimization, extended
 
-**Slice:** PERF R2 (`TASK.md`), items 1–2 of 4 · **Branch:** `perf2/e1-extend` · **Base:** `7c833197`
-**Tip:** `501332b6` · **Sessions:** 2026-08-04 07:14–07:51 (s1), 10:15– (s2, this one)
+**Slice:** PERF R2 (`TASK.md`), items 1–2 of 4 · **Branch:** `perf2/e1-extend` · **Base:** `b16e39b3`
+**Tip:** `98d8e787` · **Sessions:** 2026-08-04 07:14–07:51 (s1), 10:15– (s2, this one)
 
 ## VERDICT
 
@@ -33,13 +33,13 @@ below (mobile census + mobile pixel arm) but the tier-demotion-under-synthetic-l
 
 ## WHAT IT DOES
 
-Three commits sit on this branch. `100c2d57` adds `drawCallCensus()`, which renders one extra
+Three commits sit on this branch. `a067150d` adds `drawCallCensus()`, which renders one extra
 attributed frame with an `onBeforeRender` tap on every visible renderable, so each buffer render —
-exactly one WebGL draw call — is charged to the object that issued it. `ac07ff0b` added enemy-sprite
-instancing (default-on), a census attribution fix, and the shadow-pass parking. `501332b6` (this
+exactly one WebGL draw call — is charged to the object that issued it. `8503186e` added enemy-sprite
+instancing (default-on), a census attribution fix, and the shadow-pass parking. `98d8e787` (this
 session) demotes instancing to opt-in after the mobile pixel gate failed.
 
-Net effect on a shipped boot versus base `7c833197`: **the shadow-pass parking, and nothing else.**
+Net effect on a shipped boot versus base `b16e39b3`: **the shadow-pass parking, and nothing else.**
 The instancing machinery remains in the tree but is inert unless `?spriteinstancing` is passed.
 
 ---
@@ -137,7 +137,7 @@ kept running through the dark phase for a sun the night palette had already lerp
 
 Measured, Night Shift, full tier, desktop (`artifacts/perf-e1-r2/tools/shadowprobe.mjs`):
 
-| Phase | base `7c833197` | branch | delta |
+| Phase | base `b16e39b3` | branch | delta |
 |---|---|---|---|
 | true dark (darkness 1) | 85 calls / 156,238 tris | **72 calls / 155,912 tris** | **−13 calls (−15%)** |
 | full day (darkness 0) | 84 calls / 156,236 tris | 84 calls / 156,236 tris | **identical** |
@@ -153,9 +153,9 @@ shadow-count program key changes and nothing recompiles at the dusk boundary.
 ### 5. Adjacent suites — 9 reds, ALL control-proven pre-existing
 
 Run `--workers=1`, scratch port 5251 (branch) / 5252 (control), external servers, both projects.
-Control = detached worktree at base **`7c833197`**, `/tmp/gr-ctl`, port 5252.
+Control = detached worktree at base **`b16e39b3`**, `/tmp/gr-ctl`, port 5252.
 
-| | branch | control @ `7c833197` |
+| | branch | control @ `b16e39b3` |
 |---|---|---|
 | passed | 24 | 19 (3 specs only) |
 | failed | **9** | **9 — the identical set** |
@@ -199,7 +199,7 @@ Plain boot with no `?debug`, desktop 1280×800 and mobile 390×844: canvas prese
 
 ## MERGE CLASSIFICATION
 
-Base `7c833197`; branch is a strict fast-forward, **no conflicts, no MAIN-MOVED files** — no commit
+Base `b16e39b3`; branch is a strict fast-forward, **no conflicts, no MAIN-MOVED files** — no commit
 landed on `main` under these paths during the shift.
 
 | File | Class | Note |
@@ -241,7 +241,7 @@ variance — but the rig currently cannot fail a desktop scene that sits inside 
 rig is a `.rig.ts`, opt-in, gating nothing). Corrective option for whoever resumes: make the floor
 DPR-aware, or assert against control alone once a scene's control is established as near-zero.
 
-**F-R2-5 — 9 adjacent reds pre-exist at base `7c833197`.** Control-proven (§5), identical set. Not
+**F-R2-5 — 9 adjacent reds pre-exist at base `b16e39b3`.** Control-proven (§5), identical set. Not
 this branch's to fix and **not this branch's to hide**: `e1-night-shift` is red on three tests on
 main, one of them on contract data (`spriteTint #34405a` vs `#44516b`), and `night3d-perf`'s 115%
 gate is red on both projects on a machine whose p95 swings ±65% (F-R2-2). Someone owns these; this

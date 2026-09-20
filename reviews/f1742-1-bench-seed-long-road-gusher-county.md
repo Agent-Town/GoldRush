@@ -1,22 +1,22 @@
 # F-1742-1 — bench-seeding Long Road + Gusher County, and the census red that blocked it
 
 - **Slice:** F-1742-1 follow-through (bench seeds + null floors for `e4-long-road`, `e4-gusher-county`)
-- **Branch:** `worktree-agent-ae099afce3741d363`, base `74ecab993` (= `main` tip at session start)
+- **Branch:** `worktree-agent-ae099afce3741d363`, base `9e6c63197` (= `main` tip at session start)
 - **Verdict:** PASS — with one adjacent pre-existing red CURED, declared below for attended veto.
 
 ## The finding did not reproduce — it was already cured, and that is now proven, not assumed
 
 The task described an idle hero taking zero damage for 360 sim-seconds and "securing" at wave 12 on
-these two tiles. **It does not reproduce at `74ecab993`.** All four E4 idle runs end in honest
+these two tiles. **It does not reproduce at `9e6c63197`.** All four E4 idle runs end in honest
 unsecured deaths with `defaultedSecure: 0`.
 
-The cure is `22a0c62f5` (s1745), which wired the browser's existing depenetration seam into the
+The cure is `08c7ffcf8` (s1745), which wired the browser's existing depenetration seam into the
 headless hero update. Rather than infer that, causality was **measured** by temporarily disabling
 that one option at `src/sim/HeadlessContractSim.ts:789-798` and re-running:
 
 | `e4-long-road-01`, `--policy=idle` | secured | waves | timeMs | kills | defaultedSecure |
 | --- | --- | --- | --- | --- | --- |
-| depenetration DISABLED (pre-`22a0c62f5` behaviour) | **true** | **12** | **360000** | 190 | **1** |
+| depenetration DISABLED (pre-`08c7ffcf8` behaviour) | **true** | **12** | **360000** | 190 | **1** |
 | depenetration enabled (current main) | false | 4 | 128767 | 41 | 0 |
 
 The disabled row reproduces the reported symptom exactly — 360 sim-seconds, wave 12, secured via the
@@ -43,7 +43,7 @@ an independent re-derivation a week later on a different machine.
 | `npm run build` | green, 1.89s |
 | `null-floor-anchors.mjs` regenerate | 47 floors written |
 | `null-floor-anchors.mjs --check` | **47/47 match**, run twice (145s, 96s) — deterministic |
-| Pre-existing floor hashes moved | **NONE.** Only `eraStamp` `5dd670aa8` → `74ecab993` (commit-keyed by design, F-1653-3) |
+| Pre-existing floor hashes moved | **NONE.** Only `eraStamp` `5dd670aa8 (archive: pruned by the A3 rewrite)` → `9e6c63197` (commit-keyed by design, F-1653-3) |
 | New floors all `secured:false` | yes — AP-15 Law 2 satisfied |
 | Full `npm run test:node-guards` — **final, on the committed tree, quiet board** | **466 pass / 0 fail / 2 skipped** of 468 |
 | Full `npm run test:node-guards` (intermediate runs, board busy) | 464/2/2 and 465/1/2 — contention-class only, each red attributed below |
@@ -66,10 +66,10 @@ touches no engine code):
 | `e4-dust-flats-01` | false | 2 | 76567 | 33 | `fnv1a32:5d4aeff2` (= pinned floor, UNCHANGED) |
 | `e4-boneyard-01` | false | 4 | 130567 | 41 | `fnv1a32:717f1001` (= pinned floor, UNCHANGED) |
 
-## F-2080-1 — `er01-e4-census` has been RED ON MAIN since `dca7ca81f` (CURED here)
+## F-2080-1 — `er01-e4-census` has been RED ON MAIN since `e33af94ef` (CURED here)
 
 `e2e/er01-e4-census.spec.ts:34` asserted `benchSeeds[contract.id]).toBeUndefined()` for every Motor
-contract. But `dca7ca81f` ("bank six idle-safe benchmark floors") bench-seeded `e4-dust-flats` and
+contract. But `e33af94ef` ("bank six idle-safe benchmark floors") bench-seeded `e4-dust-flats` and
 `e4-boneyard`, so that assertion has been false on main ever since.
 
 Attribution is measured, not argued: with `assets/contracts/bench-seeds.json` reverted to main's
@@ -78,7 +78,7 @@ boneyard on both projects. That commit updated the **e7, e8 and e9** censuses fo
 situation and simply missed e4; its message claims "Playwright 62/62", so e4's census was not in
 that count.
 
-The fix here is `dca7ca81f`'s **own** pattern, and it is **stricter** than what it replaces — the
+The fix here is `e33af94ef`'s **own** pattern, and it is **stricter** than what it replaces — the
 exact seed list is pinned rather than merely forbidden. Net effect: **-4 pre-existing reds, +0 new.**
 
 ## Findings for attended
@@ -102,7 +102,7 @@ exact seed list is pinned rather than merely forbidden. Net effect: **-4 pre-exi
 
 ## Merge classification
 
-Base `74ecab993`; main has not moved. All five paths are LANE-TOUCHED, no MAIN-MOVED files, no
+Base `9e6c63197`; main has not moved. All five paths are LANE-TOUCHED, no MAIN-MOVED files, no
 conflicts. `artifacts/056/*.png` were rewritten by the `m2-01-build-menu` gate run as ordinary
 screenshot churn and are deliberately **not** staged. The gate used scratch port 5240 via a
 gitignored `playwright.s2080.config.ts`, because a concurrent battery held the default 5188 —
@@ -138,5 +138,5 @@ with both new/edited spec files present, and every one of them passed.
 ## Ledger
 
 Not written here — `tasks/BACKLOG.md` is heavily concurrent and a worktree edit would conflict. The
-drain should record: F-1742-1 confirmed cured by `22a0c62f5` with a measured causal probe; both
+drain should record: F-1742-1 confirmed cured by `08c7ffcf8` with a measured causal probe; both
 contracts bench-seeded; F-2080-1 opened-and-closed; F-2080-2 opened.

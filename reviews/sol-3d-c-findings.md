@@ -4,7 +4,7 @@
 
 Branch: `sol/campaign-landmarks-e6-glow-mesa`
 
-Base: `9e324ce111d27550fddf63ce1401b4262a1b30e3`
+Base: `5d9e87254803720cc42fb180419835502e2df94d`
 
 Verdict: **READY-FOR-GATES — five mount-agnostic Glow Mesa bodies are production-complete. The exact IDs below are ready for 3D-D's mount interlock; the merged terrain contract remains untouched.**
 
@@ -25,7 +25,7 @@ Verdict: **READY-FOR-GATES — five mount-agnostic Glow Mesa bodies are producti
 
 Branch: `sol/campaign-landmarks-e7-relay-valley`
 
-Base: `545f8c499095f68cd2c105d0bc298d3303df4262`
+Base: `24f89fa993a3eee8c16b100b90beefedc72ccf9c`
 
 Verdict: **READY-FOR-GATES — five mount-agnostic Relay Valley landmark bodies are production-complete; the four gameplay relay pads, teaching patrol rectangle, three fog pockets, and north dead gap remain untouched.**
 
@@ -46,7 +46,7 @@ Verdict: **READY-FOR-GATES — five mount-agnostic Relay Valley landmark bodies 
 
 Branch: `sol/campaign-landmarks-e8-mare-claim`
 
-Base: `2c4080816553bbcb4b7ef74430686598a2d1176e`
+Base: `ccd6913f11dcd35e79b682e21f529bb940ccf5f9`
 
 Verdict: **READY-FOR-GATES — five mount-agnostic Mare Claim landmark bodies are production-complete; seven build zones, the lava-tube mouth, mass-driver footing, six harvest anchors, and north debris arc remain untouched.**
 
@@ -74,7 +74,7 @@ Verdict: **READY-FOR-GATES — five mount-agnostic Mare Claim landmark bodies ar
 | Origins | every body base-centered; zero cameras, lights, animations, people, or simulation authority |
 | Determinism | 5/5 saved-BLEND re-exports byte-identical and semantic-identical |
 | Source tiers | reuse 2, derive 3, build-new 0 |
-| Fresh-reference law | verdict board records `origin/main@9e324ce111d2…` |
+| Fresh-reference law | verdict board records `origin/main@5d9e87254803…` |
 | Repo gates | `npm run build` and `npx tsc --noEmit` green |
 | Visual QA | final fresh-eyes verdict ACCEPT; gameplay-camera silhouettes and four-angle wraps pass |
 
@@ -84,7 +84,7 @@ Independent critique rejected the first pass because dark slab gates, hard black
 | Origins | every body base-centered; zero cameras, lights, animations, people, or simulation authority |
 | Determinism | 5/5 saved-BLEND re-exports byte-identical and semantic-identical |
 | Source tiers | reuse 2, derive 3, build-new 0 |
-| Fresh-reference law | all boards record `origin/main@545f8c499095…` |
+| Fresh-reference law | all boards record `origin/main@24f89fa993a3…` |
 | Repo gates | `npx tsc --noEmit` and `npm run build` green |
 | Visual QA | brightened run-camera evidence keeps ridge relief and all five silhouettes legible; four-angle inspection shows complete wrap and grounding |
 
@@ -94,7 +94,7 @@ The initial evidence rig let the blue-hour terrain collapse toward black. The pr
 | Origins | every body base-centered; zero cameras, lights, animations, people, or simulation authority |
 | Determinism | 5/5 saved-BLEND re-exports byte-identical and semantic-identical |
 | Source tiers | reuse 3, derive 2, build-new 0 |
-| Fresh-reference law | all boards record `origin/main@2c4080816553…` |
+| Fresh-reference law | all boards record `origin/main@ccd6913f11dc…` |
 | Repo gates | `npx tsc --noEmit` and `npm run build` green |
 | Visual QA | silver-teal/brass silhouettes remain distinct at the real Mare camera; the four-angle board proves complete backs, supports, working attachments, and ground contact |
 
@@ -104,7 +104,7 @@ The evidence rig stays a verdict-only vacuum rake. No light, camera, mask, terra
 
 Branch: `sol/campaign-landmarks-e10-ember-shore`
 
-Base: `60da054aceb48ce28cc20d507ccdc029b80ccc60`
+Base: `9ac96527ac7b4e46cfae665942efb0832d375f43`
 
 Verdict: **READY-FOR-GATES — five mount-agnostic Ember Shore landmark bodies are production-complete; the vent site, titan machine pad, and three lava-vein bands remain source-truth in the sculpt contract.**
 
@@ -132,7 +132,7 @@ Verdict: **READY-FOR-GATES — five mount-agnostic Ember Shore landmark bodies a
 | Origins | every body base-centered; zero cameras, lights, animations, people, or simulation authority |
 | Determinism | 5/5 saved-BLEND re-exports byte-identical and semantic-identical |
 | Source tiers | reuse 4, derive 1, build-new 0 |
-| Fresh-reference law | all boards record `origin/main@60da054aceb4…` |
+| Fresh-reference law | all boards record `origin/main@9ac96527ac7b…` |
 | Repo gate | `npm run build` green |
 | Visual QA | final fresh-eyes verdict ACCEPT; five-body identity/readability pass and west marker clears the lava-band rectangle |
 
@@ -140,7 +140,7 @@ Verdict: **READY-FOR-GATES — five mount-agnostic Ember Shore landmark bodies a
 
 Branch: `sol/lm-alpha-mare-claim`
 
-Base: `eeb1c11c72ebd75a5286fd5c6e01feb8fcfa42fb`
+Base: `32e3004be262a43d242af7ea5f72c0f372ba8f4c`
 
 Verdict: **READY-FOR-GATES — five mount-agnostic Mare Claim landmark bodies are production-complete for 3D-C-ALPHA. No BETA maps or E2-E5 campaign packs are touched.**
 
@@ -168,14 +168,14 @@ Verdict: **READY-FOR-GATES — five mount-agnostic Mare Claim landmark bodies ar
 | Origins | every body base-centered; zero cameras, lights, animations, people, or simulation authority |
 | Determinism | 5/5 saved-BLEND re-exports byte-identical and semantic-identical |
 | Source tiers | reuse 3, derive 2, build-new 0 |
-| Fresh-reference law | all boards record `origin/main@eeb1c11c72eb…` |
+| Fresh-reference law | all boards record `origin/main@32e3004be262…` |
 | Repo gate | `npm run build` green |
 
 ## Campaign landmark pack 01 — E5 Regatta body handoff
 
 Branch: `sol/campaign-landmarks-e5-regatta`
 
-Base: `ce7c3843611286e5158f50cc2f7949e88100621e`
+Base: `dd81d6ea2960de583e23c00c61b99721164ef7c9`
 
 Verdict: **READY-FOR-GATES — eight mount-agnostic Regatta landmark bodies are production-complete; 3D-D can backfill these exact IDs without any terrain-contract rewrite from this branch.**
 
@@ -206,7 +206,7 @@ Verdict: **READY-FOR-GATES — eight mount-agnostic Regatta landmark bodies are 
 | Origins | every body base-centered; zero cameras, lights, animations, people, or simulation authority |
 | Determinism | 8/8 saved-BLEND re-exports byte-identical and semantic-identical |
 | Source tiers | reuse 7, derive 1, build-new 0 |
-| Fresh-reference law | all boards record `origin/main@ce7c38436112…` |
+| Fresh-reference law | all boards record `origin/main@dd81d6ea2960…` |
 | Repo gates | `npx tsc --noEmit` and `npm run build` green |
 | Visual QA | revised labeled four-angle and run-camera evidence pass; no visible holes, tearing, floating parts, broken joins, or unfinished wrap |
 
@@ -216,11 +216,11 @@ The first evidence pass was too dark and its camera-orbit layout occluded the re
 
 Branch: `sol/pale-wagon-lighting-fix`
 
-Base: `4180433c298ff1a7105c9875f68121a5837a359d`
+Base: `1aa719a60e9de3881ea7a924dac8813c64681444`
 
 Verdict: **READY-FOR-GATES — the pale canvas now retains visible rib and timber contrast at the gameplay camera through a single Town-lighting correction; no wagon, building, plate, atlas, era state, or night light changed.**
 
-The target was a warm parchment canvas with readable structure, not a dark wagon. The smallest owning-surface fix lowers only the daytime `TownSun` intensity from `2.2` to `1.85`; the `0.82` night value and `TownFill` remain unchanged. Fresh E1 and E4 runtime captures carry the exact `origin/main@4180433c…` base SHA.
+The target was a warm parchment canvas with readable structure, not a dark wagon. The smallest owning-surface fix lowers only the daytime `TownSun` intensity from `2.2` to `1.85`; the `0.82` night value and `TownFill` remain unchanged. Fresh E1 and E4 runtime captures carry the exact `origin/main@1aa719a6…` base SHA.
 
 | Check | Result |
 | --- | --- |
@@ -236,7 +236,7 @@ At this boundary, `origin/main` contains only the older `plate-e8-boss-salvage-k
 
 Branch: `sol/salvage-claw-3d`
 
-Base: `32715b4d2f54a84bffd8d42925a3c0c0c531cb07`
+Base: `bdf22b613eab28b8f9471ae0aa2fe54eba67932c`
 
 Tip: exact Salvage Claw SHA is reported in the attended handoff
 
@@ -255,13 +255,13 @@ Verdict: **READY-FOR-GATES — the E8 Claw now has a real descending city-crown 
 - One shared, double-sided, non-emissive material with one embedded 1024 x 1024 PNG; zero cameras, lights, animations, helper nodes, or people.
 - Base-center origin; 11.4 x 11.4 footprint and 10.031203 height. The intentionally boss-scale body remains readable at the E8 production camera.
 - Saved-BLEND re-export is byte-identical and every parsed semantic key matches. GLB SHA-256 `b01495d72e1d2f2152f6299e7392707561d18004d2871937a0551e9c76cb0575`.
-- The fresh-reference, turntable, isolated-state, and Mare Claim run-camera boards are rendered from base `32715b4d2f54…`; no older artifact render is a source.
+- The fresh-reference, turntable, isolated-state, and Mare Claim run-camera boards are rendered from base `bdf22b613eab…`; no older artifact render is a source.
 - The first visual pass read too much like a warm toy saucer. Before delivery, the body grew to boss scale, the atlas returned to the plate's cold silver-teal values, the crown gained a tall gothic gable/rib silhouette, and the anchor feet became heavier curved claws.
 ## Old Digger production boss model
 
 Branch: `sol/old-digger-3d`
 
-Base: `32715b4d2f54a84bffd8d42925a3c0c0c531cb07`
+Base: `bdf22b613eab28b8f9471ae0aa2fe54eba67932c`
 
 Tip: exact Old Digger SHA is reported in the attended handoff
 
@@ -281,12 +281,12 @@ Verdict: **READY-FOR-GATES — the E9 Old Digger now has a real unequal-bucket-w
 - Base-center origin; 12.4 long x 3.16317 deep x 6.603573 high. The unequal wheels, open gantry, lifting tower, crawler base, and tape heart preserve the plate silhouette.
 - The crossed-pickaxes crest is unchanged between states: redemption corrects the work, not the machine's history.
 - Saved-BLEND re-export is byte-identical and every parsed semantic key matches. GLB SHA-256 `4152727d1866d203a80a735a83525c26c263aef663261e146a616d727ab940df`.
-- Fresh plate A/B, turntable, isolated-redemption, and Basin Rim production-camera boards are rendered from base `32715b4d2f54…`; no older artifact render is an input.
+- Fresh plate A/B, turntable, isolated-redemption, and Basin Rim production-camera boards are rendered from base `bdf22b613eab…`; no older artifact render is an input.
 ## E8 Dome Commons orbital accessory pass
 
 Branch: `sol/e8-orbital-era-props`
 
-Base: `00200c722be8ec618a156b775f2f35f035bc5158`
+Base: `10e78f4fd19caedcce4bbd701ce52a37ce8ec48d`
 
 Tip: exact E8 accessory SHA is reported in the attended handoff
 
@@ -310,7 +310,7 @@ Verdict: **READY-FOR-GATES — Dome Commons now has the E8 bundle's complete wor
 
 Branch: `sol/e9-redfields-era-props`
 
-Base: `51319bf7ebceaaad9df4fdc4da0dcf96033b91e1`
+Base: `56a120b11aca6873da57b52064d34c1ca33d6ab5`
 
 Tip: exact E9 prop-pack SHA is reported in the attended handoff
 
@@ -356,7 +356,7 @@ The first placement draft put canal tiles directly into the ordinary era-prop ma
 
 Branch: `sol/e10-ark-era-props`
 
-Base: `d7e429d16e24b88e4e65114752b3b12a96280e3b`
+Base: `a69be36d6e85f98501404849ccf63d57ebedc5aa`
 
 Tip: exact E10 prop-pack SHA is reported in the attended handoff
 
@@ -395,7 +395,7 @@ The fresh-reference board was rendered directly from tracked E1/E4/E5/E6/E7/E8/E
 
 Branch: `sol/ark-deck-era-dressing`
 
-Base: `d46554ffde058afca2eb7966e48ac5629300ff98`
+Base: `c9130690330aa0b59786bba32f36a96bb9eca00c`
 
 Tip: exact Ark-deck dressing SHA is reported in the attended handoff
 
@@ -429,13 +429,13 @@ Fresh E1/E4/E5/E6/E7/E8/E9/E10/Long Table references were rendered directly from
 
 Branch: `sol/basin-rim-e9-plate`
 
-Base: `c272d3a8ba9c36ee2550c7bb55c3fb05edab087e`
+Base: `c2428a82dbcb59f0c732cc36a5876d69b2bac062`
 
 Tip: exact Basin Rim SHA is reported in the attended handoff
 
 Verdict: **READY-FOR-GATES — E9 now has a fresh red-world site with canonical town paths, ten production-flat pads, relief confined to unused ground, an ice-quarry scarp, a cut canal, and the first short E1-green return.**
 
-The working reference board was freshly rendered from tracked files on `c272d3a8…`. It shows the merged E4 southern boulevard and motor caravan, E5 submerged square, E6/E7 Mesa states, and E8 Dome Commons. No old artifact render was used as a source.
+The working reference board was freshly rendered from tracked files on `c2428a82…`. It shows the merged E4 southern boulevard and motor caravan, E5 submerged square, E6/E7 Mesa states, and E8 Dome Commons. No old artifact render was used as a source.
 
 | Surface | E9 verdict | Result |
 | --- | --- | --- |
@@ -460,7 +460,7 @@ The working reference board was freshly rendered from tracked files on `c272d3a8
 
 Branch: `sol/land-yacht-3d`
 
-Base: `de21f043a8c3b4c69950afbca0c7a612c6826e88`
+Base: `2f535b0395d3029340eef5046298605f1321b7e8`
 
 Tip: exact Land-Yacht SHA is reported in the attended handoff
 
@@ -479,7 +479,7 @@ Verdict: **READY-FOR-GATES — the E4 boss now has a real six-wheel iron landshi
 - Base-center origin; 9.4 long x 4.732414 wide x 6.76943 high. GLB SHA-256 `902191310b8cf604a1196902696ff14de78811f81bb30dd4bb5a3011f5ce7a01`.
 - Saved-BLEND re-export is byte-identical and every parsed semantic key matches.
 - Same-camera full wreck changes 8.4477% of pixels above 16/255 while retaining the Land-Yacht silhouette.
-- Current intact/damage plates and `LandYachtBossSystem.ts` are hash-recorded at base `de21f043…`; the reference boards are fresh direct renders and contain no older render input.
+- Current intact/damage plates and `LandYachtBossSystem.ts` are hash-recorded at base `2f535b03…`; the reference boards are fresh direct renders and contain no older render input.
 - Gameplay evidence now uses the exact production 42-degree camera, `(0, 26.2, 18.3)` offset, and `-3.35` down-screen target shift.
 - Independent review found and closed two defects before commit: all three damage rotations now derive pivots from normalized production geometry, and the prior presentation-only diagonal camera was replaced with the production rig.
 - Dust, terrain, lights, camera, and context belong only to evidence. No source, live boss system, balance, contract, or map file is changed.
@@ -487,7 +487,7 @@ Verdict: **READY-FOR-GATES — the E4 boss now has a real six-wheel iron landshi
 
 Branch: `sol/homemaker-9000-3d`
 
-Base: `f50cc240618ddc23b88efee1f27d4cf2035a04ab`
+Base: `3bfad85332f499c87b0e2c8463bece3c365deefb`
 
 Tip: exact Homemaker-9000 SHA is reported in the attended handoff
 
@@ -512,7 +512,7 @@ Fresh town references were rendered directly from tracked GLBs at the full base 
 
 Branch: `sol/dome-commons-e8-population`
 
-Base: `a9be388a3fe95a3228c638ed4afaf8a6ec6a7f5a`
+Base: `aa222d69db533180062c490a13f473e175c9d15d`
 
 Tip: exact E8 Dome population SHA is reported in the attended handoff
 
@@ -531,9 +531,9 @@ The first geometry pass inherited the Dredge-Queen helper's storm-dark boss pale
 
 Branch: `sol/basin-rim-e9-population`
 
-Base: `b9df7e2127dadc1ea74859026459e32a2405af34`
+Base: `14ea3f95f973a35b4ed8b4ee8384c300b75c1268`
 
-Plate dependency: `sol/basin-rim-e9-plate@440bb19e4058eded9be82b1faf4292e73808cb0a`
+Plate dependency: `sol/basin-rim-e9-plate@7886c47988daa1210a75ea7e5d1d74af62c5264e`
 
 Tip: exact E9 population SHA is reported in the attended handoff
 
@@ -564,7 +564,7 @@ Verdict: **READY-FOR-GATES — five grounded, full-wrap production assets turn t
 - Fresh E1-E7 references were rerendered from current GLBs at the full base SHA above; the E4 board contains the motor boulevard/caravan and the E5 board contains the submerged square. No prior PNG was used as model guidance.
 - `npm run build` and independent Codex review are recorded at the final boundary. No `src/`, runtime, simulation, queue, spec, status, layout, plate, Pan, or prior-era asset changes ride this wave.
 | Five E9 identities | NEW | each belongs to the persistent water-and-green economy of the Red Fields |
-| Basin Rim plate | DEPENDENCY, UNCHANGED | this branch mounts pushed plate tip `440bb19e…` for evidence only and duplicates none of its production bytes |
+| Basin Rim plate | DEPENDENCY, UNCHANGED | this branch mounts pushed plate tip `7886c479…` for evidence only and duplicates none of its production bytes |
 | Pan Monument | PERSIST, UNCHANGED | independent heritage GLB stays at the open canonical stage |
 | E1 green | PERSIST AS LIVING CALLBACK | the greenkeeper's beds use exact `#50674c`; later field spread remains tile-persistence-owned |
 | E8 Dome and earlier sites | GONE, NAMED SITE BREAK | E9 is a fresh red-world settlement, not an accretion layer on the Moon |
@@ -580,7 +580,7 @@ Verdict: **READY-FOR-GATES — five grounded, full-wrap production assets turn t
 
 Branch: `sol/ark-plaza-e10-plate`
 
-Base: `d944dc7ebd690141d52f363d38aa6dc1a83f4343`
+Base: `ea7da8ff394ad41e03e9ed54b23ffe6cc9010160`
 
 Tip: exact Ark Plaza SHA is reported in the attended handoff
 
@@ -609,15 +609,15 @@ The working target was established from `kit-the-ark.png`, `kit-era-10.png`, the
 
 Branch: `sol/ark-long-table-hall-e10`
 
-Base: `101c0d97e9527b26cc5c94fdafab5b4f77aa33c0`
+Base: `96152f63b7300f3a24eb62c23c592015a9e64224`
 
-Dependency: pushed Ark plaza wave `e8128c260a3ee62ef836ec33e92b1d8459cecce1` (not merged into this base; no file copied)
+Dependency: pushed Ark plaza wave `6d0a9c3f1d4dbaba7f116b3d4bfa7e3d2de34547` (not merged into this base; no file copied)
 
 Tip: exact Long Table Hall SHA is reported in the attended handoff
 
 Verdict: **READY-FOR-GATES — the Ark's final room is a warm working mess hall built around the long table, ten profile-owned generation portraits, the original handled E1 pan, and the Elder's Tree in its tin.**
 
-Fresh references were rerendered from the current files on `origin/main@101c0d97…`; the board carries the actual E4 motor boulevard, E5 submerged square, E6 Atomic Mesa, E7 Signal Mesa, and E8 Dome Commons plate. The unmerged E8/E9 population and Ark waves are declared rather than presented as main state.
+Fresh references were rerendered from the current files on `origin/main@96152f63…`; the board carries the actual E4 motor boulevard, E5 submerged square, E6 Atomic Mesa, E7 Signal Mesa, and E8 Dome Commons plate. The unmerged E8/E9 population and Ark waves are declared rather than presented as main state.
 
 | Hall identity | Production answer | Evidence |
 | --- | --- | --- |
@@ -641,7 +641,7 @@ Fresh references were rerendered from the current files on `origin/main@101c0d97
 
 Branch: `sol/dredge-queen-3d-v2`
 
-Base: `5b3cd16f2dbe170fabb70a65362e6d4938e68153`
+Base: `e1717949ee50119b81ad7c9e52b7cf59afd793a7`
 
 Tip: exact Dredge-Queen v2 SHA is reported in the attended handoff
 
@@ -676,13 +676,13 @@ The prior deterministic component/morph machinery was salvaged from `sol/dredge-
 
 Branch: `sol/dome-commons-e8-plate-v2`
 
-Base: `2736e176d69226d40603889ee3e1aa07db623784`
+Base: `4a56291f57a614e35f1a3e30771cbda877c5288e`
 
 Tip: exact Dome Commons plate SHA is reported in the attended handoff
 
 Verdict: **READY-FOR-GATES — the E8 town now has a fresh under-glass site: a readable brass/silver air wall, sealed orbital floor, canonical flat pads and cast routes, and the Pan Monument's first walkable reclaimed-water ring.**
 
-The stale initialized E8 artifact board from `5e97e170` was parked and never reused. The working board was rerendered from tracked files after fetching the fully merged Mesa arc; it contains the current E4 motor boulevard, E5 submerged square, complete E6 Atomic Mesa, and complete E7 Signal Mesa at base `2736e176…`.
+The stale initialized E8 artifact board from `9816891d` was parked and never reused. The working board was rerendered from tracked files after fetching the fully merged Mesa arc; it contains the current E4 motor boulevard, E5 submerged square, complete E6 Atomic Mesa, and complete E7 Signal Mesa at base `4a56291f…`.
 
 | Plate question | Final E8 answer | Evidence |
 | --- | --- | --- |
@@ -704,7 +704,7 @@ The stale initialized E8 artifact board from `5e97e170` was parked and never reu
 
 Branches: `sol/town-plate` (Wave 1), `sol/town-cozy-pack` (Wave 2), `sol/tavern-full-wrap` (Wave 3), `sol/railcar-3d` (Wave 4), `sol/town-e2-variants` (Wave 7), `sol/town-e3-pilot` (Wave 8 pilot), `sol/town-e3-wide` (Wave 8 wide), `sol/town-e4-pilot` (Wave 9 pilot), `sol/town-e4-wide` (Wave 9 wide), `sol/town-e3-wagon-lights` (scoped E3 follow-up), `sol/town-e5-harbor-rebuild` (Wave 10), `sol/mesa-town-plate` (Mesa Town plate)
 
-Bases: Wave 1 `bacb5717`; Wave 2 `e21dc4aa`; Wave 3 `1281a8f1`; Wave 4 `99d06e91`; Wave 7a `12f6306e`; Wave 7b `91ee55b5`; Wave 8 pilot `e582f3cc`; Wave 8 wide `9f6fe2de`; Wave 9 pilot `56b1efc3`; Wave 9 wide `7e01c14f`; E3 wagon lights `9812edb2`; Wave 10 `54067137`; Mesa Town plate `8d974f11`
+Bases: Wave 1 `38a22171`; Wave 2 `294a915a`; Wave 3 `509f0511`; Wave 4 `81988348`; Wave 7a `d0b9a473`; Wave 7b `d1500052`; Wave 8 pilot `235087fc`; Wave 8 wide `6cd313fd`; Wave 9 pilot `41477f52`; Wave 9 wide `16c2e958`; E3 wagon lights `ae980bc7`; Wave 10 `7a418dea`; Mesa Town plate `a5e2dd0c`
 
 Tip: exact Mesa Town plate SHA is reported in the attended handoff
 
@@ -712,7 +712,7 @@ Verdict: **READY-FOR-GATES — the Mesa Town plate is a deterministic fresh E6-E
 
 ## Mesa Town plate — E6-E7 fresh site
 
-Fresh references were rendered from base `8d974f11911187136469fbd017c9598e5b2faf28` before modeling. The board shows the current E4 southern boulevard and motor caravan and the E5 submerged square; no plaza-wheel-era artifact board was used. The Mesa is a dry-site rebuild sourced from `ter-mesa-seamless.png` and the E6 bundle: ochre caprock, a rear shelf, dry wash, restrained teal starstone seams, broken cliff edge, and scree apron. It contains no drowned-square mesh, water surface, pre-flood street hardware, buildings, props, or people.
+Fresh references were rendered from base `a5e2dd0c21cd803219fc7e653349b48053f17e20` before modeling. The board shows the current E4 southern boulevard and motor caravan and the E5 submerged square; no plaza-wheel-era artifact board was used. The Mesa is a dry-site rebuild sourced from `ter-mesa-seamless.png` and the E6 bundle: ochre caprock, a rear shelf, dry wash, restrained teal starstone seams, broken cliff edge, and scree apron. It contains no drowned-square mesh, water surface, pre-flood street hardware, buildings, props, or people.
 
 ### Layout and cadence
 
@@ -729,7 +729,7 @@ Fresh references were rendered from base `8d974f11911187136469fbd017c9598e5b2faf
 The two premium pads are surfaced for the attended plate verdict before E6 building production. They are written as candidates in the layout contract and are not claimed as a runtime mount. E1 buildings in evidence are scale/footprint proxies only.
 Branches: `sol/town-plate` (Wave 1), `sol/town-cozy-pack` (Wave 2), `sol/tavern-full-wrap` (Wave 3), `sol/railcar-3d` (Wave 4), `sol/town-e2-variants` (Wave 7), `sol/town-e3-pilot` (Wave 8 pilot), `sol/town-e3-wide` (Wave 8 wide), `sol/town-e4-pilot` (Wave 9 pilot), `sol/town-e4-wide` (Wave 9 wide), `sol/town-e3-wagon-lights` (scoped E3 follow-up), `sol/town-e5-harbor-rebuild` (Wave 10), `sol/mesa-town-e6-pilot` (Wave 11 E6 pilot)
 
-Bases: Wave 1 `bacb5717`; Wave 2 `e21dc4aa`; Wave 3 `1281a8f1`; Wave 4 `99d06e91`; Wave 7a `12f6306e`; Wave 7b `91ee55b5`; Wave 8 pilot `e582f3cc`; Wave 8 wide `9f6fe2de`; Wave 9 pilot `56b1efc3`; Wave 9 wide `7e01c14f`; E3 wagon lights `9812edb2`; Wave 10 `54067137`; Wave 11 E6 pilot `8d974f11`
+Bases: Wave 1 `38a22171`; Wave 2 `294a915a`; Wave 3 `509f0511`; Wave 4 `81988348`; Wave 7a `d0b9a473`; Wave 7b `d1500052`; Wave 8 pilot `235087fc`; Wave 8 wide `6cd313fd`; Wave 9 pilot `41477f52`; Wave 9 wide `16c2e958`; E3 wagon lights `ae980bc7`; Wave 10 `7a418dea`; Wave 11 E6 pilot `a5e2dd0c`
 
 Tip: exact Wave 11 E6 pilot SHA is reported in the attended handoff
 
@@ -739,7 +739,7 @@ Verdict: **READY-FOR-GATES — the first three E6 Mesa buildings pass production
 
 This verdict pilot is the first building batch on the ratified E6–E7 Mesa site. It does not accrete drowned E5 harbor geometry. The Atomic Diner edits the Tavern's social identity forward from the clean two-storey false-front shell; Reactor Dome and Isotope Kitchen are new §A1 identities. The Pan Monument remains an independently mounted heritage survivor and is only shown as context.
 
-Fresh reference boards were rerendered from tracked files on `origin/main@8d974f11911187136469fbd017c9598e5b2faf28`. They show the current E4 southern boulevard and motor caravan and the current E5 submerged square; no prior PNG was used as an input. The gameplay evidence uses the exact accepted Mesa plate GLB from `sol/mesa-town-plate@60242186e7bd7e72050146d06533d56922e2fc4e` (SHA `067c8c652134…`) without duplicating those bytes into this branch.
+Fresh reference boards were rerendered from tracked files on `origin/main@a5e2dd0c21cd803219fc7e653349b48053f17e20`. They show the current E4 southern boulevard and motor caravan and the current E5 submerged square; no prior PNG was used as an input. The gameplay evidence uses the exact accepted Mesa plate GLB from `sol/mesa-town-plate@16953d6bfa929ad4cd485d66c88b475571ff5d31` (SHA `067c8c652134…`) without duplicating those bytes into this branch.
 
 ### Per-building findings
 
@@ -763,7 +763,7 @@ All three use one mesh, one primitive, one non-emissive material, one embedded 1
 | Undelivered E6 identities | CARRIED AS MASSING ONLY | Appliance Pen, Decay Clock, Catalog Warehouse, and remaining A2 transforms wait for attended pilot verdict before the wide batch |
 Branches: `sol/town-plate` (Wave 1), `sol/town-cozy-pack` (Wave 2), `sol/tavern-full-wrap` (Wave 3), `sol/railcar-3d` (Wave 4), `sol/town-e2-variants` (Wave 7), `sol/town-e3-pilot` (Wave 8 pilot), `sol/town-e3-wide` (Wave 8 wide), `sol/town-e4-pilot` (Wave 9 pilot), `sol/town-e4-wide` (Wave 9 wide), `sol/town-e3-wagon-lights` (scoped E3 follow-up), `sol/town-e5-harbor-rebuild` (Wave 10), `sol/mesa-town-e6-wide` (Wave 12 wide)
 
-Bases: Wave 1 `bacb5717`; Wave 2 `e21dc4aa`; Wave 3 `1281a8f1`; Wave 4 `99d06e91`; Wave 7a `12f6306e`; Wave 7b `91ee55b5`; Wave 8 pilot `e582f3cc`; Wave 8 wide `9f6fe2de`; Wave 9 pilot `56b1efc3`; Wave 9 wide `7e01c14f`; E3 wagon lights `9812edb2`; Wave 10 `54067137`; Wave 12 wide `1a58335f`
+Bases: Wave 1 `38a22171`; Wave 2 `294a915a`; Wave 3 `509f0511`; Wave 4 `81988348`; Wave 7a `d0b9a473`; Wave 7b `d1500052`; Wave 8 pilot `235087fc`; Wave 8 wide `6cd313fd`; Wave 9 pilot `41477f52`; Wave 9 wide `16c2e958`; E3 wagon lights `ae980bc7`; Wave 10 `7a418dea`; Wave 12 wide `5d04789d`
 
 Tip: exact Wave 12 SHA is reported in the attended handoff
 
@@ -771,7 +771,7 @@ Verdict: **READY-FOR-GATES — the E6 wide complement completes the Atomic Homes
 
 ## Wave 12 wide — complete E6 Mesa civic set
 
-This wave completes the unbuilt half of E6 §A1 and §A2: Appliance Pen, Decay Clock, Catalog Warehouse, Sunline Mount, Glow Fence, and Isotope Institute. The accepted Atomic Diner / Reactor Dome / Isotope Kitchen pilot and the Mesa plate are evidence-only dependencies; their bytes are not duplicated here. Every working reference was rerendered from tracked files at full base `1a58335f65645b8491e50763e10a32d12d8696f1`. The pre-merge plaza-wheel screenshot is historical evidence only and was not used as an input.
+This wave completes the unbuilt half of E6 §A1 and §A2: Appliance Pen, Decay Clock, Catalog Warehouse, Sunline Mount, Glow Fence, and Isotope Institute. The accepted Atomic Diner / Reactor Dome / Isotope Kitchen pilot and the Mesa plate are evidence-only dependencies; their bytes are not duplicated here. Every working reference was rerendered from tracked files at full base `5d04789dcceee81122205b077a3c9fda7b0b5be1`. The pre-merge plaza-wheel screenshot is historical evidence only and was not used as an input.
 
 ### Per-asset findings
 
@@ -816,14 +816,14 @@ E6 defines no live emitter-anchor family, so no speculative anchor nodes were in
 Sunline Mount and Glow Fence are shown as compact context transforms; the factory owns their final runtime mounts. No `src/`, layout, spec, status, backlog, or test file changes ride this asset wave.
 Branches: `sol/town-plate` (Wave 1), `sol/town-cozy-pack` (Wave 2), `sol/tavern-full-wrap` (Wave 3), `sol/railcar-3d` (Wave 4), `sol/town-e2-variants` (Wave 7), `sol/town-e3-pilot` (Wave 8 pilot), `sol/town-e3-wide` (Wave 8 wide), `sol/town-e4-pilot` (Wave 9 pilot), `sol/town-e4-wide` (Wave 9 wide), `sol/town-e3-wagon-lights` (scoped E3 follow-up), `sol/town-e5-harbor-rebuild` (Wave 10), `sol/mesa-town-e7-pilot` (Wave 13 pilot)
 
-Bases: Wave 1 `bacb5717`; Wave 2 `e21dc4aa`; Wave 3 `1281a8f1`; Wave 4 `99d06e91`; Wave 7a `12f6306e`; Wave 7b `91ee55b5`; Wave 8 pilot `e582f3cc`; Wave 8 wide `9f6fe2de`; Wave 9 pilot `56b1efc3`; Wave 9 wide `7e01c14f`; E3 wagon lights `9812edb2`; Wave 10 `54067137`; Wave 13 pilot `88ea5d9b`
+Bases: Wave 1 `38a22171`; Wave 2 `294a915a`; Wave 3 `509f0511`; Wave 4 `81988348`; Wave 7a `d0b9a473`; Wave 7b `d1500052`; Wave 8 pilot `235087fc`; Wave 8 wide `6cd313fd`; Wave 9 pilot `41477f52`; Wave 9 wide `16c2e958`; E3 wagon lights `ae980bc7`; Wave 10 `7a418dea`; Wave 13 pilot `642f4336`
 
 Tip: exact Wave 13 pilot SHA is reported in the attended handoff
 
 Verdict: **READY-FOR-GATES — the E7 Signal Mesa pilot is a gameplay-distance transformation: the Relay Tower and Exchange establish the new broadcast skyline, while the Net Cafe preserves every E6 Atomic Diner polygon and grows a clearly legible signal crown inside its exact inherited footprint.**
 Branches: `sol/town-plate` (Wave 1), `sol/town-cozy-pack` (Wave 2), `sol/tavern-full-wrap` (Wave 3), `sol/railcar-3d` (Wave 4), `sol/town-e2-variants` (Wave 7), `sol/town-e3-pilot` (Wave 8 pilot), `sol/town-e3-wide` (Wave 8 wide), `sol/town-e4-pilot` (Wave 9 pilot), `sol/town-e4-wide` (Wave 9 wide), `sol/town-e3-wagon-lights` (scoped E3 follow-up), `sol/town-e5-harbor-rebuild` (Wave 10), `sol/mesa-town-e7-pilot` (Wave 13 pilot), `sol/mesa-town-e7-wide` (Wave 14 wide)
 
-Bases: Wave 1 `bacb5717`; Wave 2 `e21dc4aa`; Wave 3 `1281a8f1`; Wave 4 `99d06e91`; Wave 7a `12f6306e`; Wave 7b `91ee55b5`; Wave 8 pilot `e582f3cc`; Wave 8 wide `9f6fe2de`; Wave 9 pilot `56b1efc3`; Wave 9 wide `7e01c14f`; E3 wagon lights `9812edb2`; Wave 10 `54067137`; Wave 13 pilot `88ea5d9b`; Wave 14 wide `3fe1e493`
+Bases: Wave 1 `38a22171`; Wave 2 `294a915a`; Wave 3 `509f0511`; Wave 4 `81988348`; Wave 7a `d0b9a473`; Wave 7b `d1500052`; Wave 8 pilot `235087fc`; Wave 8 wide `6cd313fd`; Wave 9 pilot `41477f52`; Wave 9 wide `16c2e958`; E3 wagon lights `ae980bc7`; Wave 10 `7a418dea`; Wave 13 pilot `642f4336`; Wave 14 wide `a0757c4e`
 
 Tip: exact Wave 14 wide SHA is reported in the attended handoff
 
@@ -867,7 +867,7 @@ The wide wave completes §A with three new civic identities and three strict E6 
 No fixture is silently retired, and no E7 emitter-anchor family is defined in the bundle or queue, so none is invented. Every production GLB contains exactly one mesh node, one primitive, one non-emissive material, one embedded atlas at or below 1024², and zero helpers, lights, cameras, or animations.
 Branches: `sol/town-plate` (Wave 1), `sol/town-cozy-pack` (Wave 2), `sol/tavern-full-wrap` (Wave 3), `sol/railcar-3d` (Wave 4), `sol/town-e2-variants` (Wave 7), `sol/town-e3-pilot` (Wave 8 pilot), `sol/town-e3-wide` (Wave 8 wide), `sol/town-e4-pilot` (Wave 9 pilot), `sol/town-e4-wide` (Wave 9 wide), `sol/town-e3-wagon-lights` (scoped E3 follow-up), `sol/town-e5-harbor-rebuild` (Wave 10), `sol/town-road-wear-v2` (F-3DC-04)
 
-Bases: Wave 1 `bacb5717`; Wave 2 `e21dc4aa`; Wave 3 `1281a8f1`; Wave 4 `99d06e91`; Wave 7a `12f6306e`; Wave 7b `91ee55b5`; Wave 8 pilot `e582f3cc`; Wave 8 wide `9f6fe2de`; Wave 9 pilot `56b1efc3`; Wave 9 wide `7e01c14f`; E3 wagon lights `9812edb2`; Wave 10 `54067137`; F-3DC-04 `dc46019a`
+Bases: Wave 1 `38a22171`; Wave 2 `294a915a`; Wave 3 `509f0511`; Wave 4 `81988348`; Wave 7a `d0b9a473`; Wave 7b `d1500052`; Wave 8 pilot `235087fc`; Wave 8 wide `6cd313fd`; Wave 9 pilot `41477f52`; Wave 9 wide `16c2e958`; E3 wagon lights `ae980bc7`; Wave 10 `7a418dea`; F-3DC-04 `42385907`
 
 Tip: exact F-3DC-04 SHA is reported in the attended handoff
 
@@ -875,7 +875,7 @@ Verdict: **READY-FOR-GATES — F-3DC-04 replaces the regular inherited road draw
 
 ## F-3DC-04 — current-state road-wear pass
 
-The pass was restarted from current `origin/main` after rejecting the old Wave-2 PNG as a design reference. Fresh references were rendered from base `dc46019af763ff13d5e9ea8fc99d91cbe689e332` directly from the tracked E1, E4, and E5 GLBs and manifests. The E4 frame includes the shipped southern twin-lane boulevard and motor caravans; the E5 frame is the submerged square on the seabed. No prior PNG is an input to the reference generator.
+The pass was restarted from current `origin/main` after rejecting the old Wave-2 PNG as a design reference. Fresh references were rendered from base `42385907f5c1b2893dad65f3036866870632ebe9` directly from the tracked E1, E4, and E5 GLBs and manifests. The E4 frame includes the shipped southern twin-lane boulevard and motor caravans; the E5 frame is the submerged square on the seabed. No prior PNG is an input to the reference generator.
 
 Only the Town plate's embedded 2048-square atlas changes. The inherited ring gains modest width variation; secondary approaches receive distinct strengths and surface breakup; selected spokes fade; and three traffic points receive localized wagon scuffing. The E4 boulevard GLB (`301c1f65f53c…`) and E4 motor-caravan GLB (`10a1383c3b57…`) are byte-untouched.
 
@@ -883,7 +883,7 @@ Only the Town plate's embedded 2048-square atlas changes. The inherited ring gai
 
 | Check | Result |
 | --- | --- |
-| Fresh reference base | E1, E4 boulevard + motor caravan, E5 submerged square, and combined board rerendered after fetch from `origin/main@3fe1e493fb11b6685f1ffc76b65dd81ebff8dd6b`; only `STATUS.md` differed from the prior model base |
+| Fresh reference base | E1, E4 boulevard + motor caravan, E5 submerged square, and combined board rerendered after fetch from `origin/main@a0757c4ef94889a7b3a0dd73854493b1b3ff7443`; only `STATUS.md` differed from the prior model base |
 | Geometry / materials | 7,190 / 6,986 / 5,882 / 1,998 / 8,244 / 6,390 tris against 15,000 each; one mesh, primitive, material, and embedded atlas per asset |
 | Grounding / footprint | all six minimum Y values are 0; new sites fit proposed maxima; all three transforms match their E6 XZ footprint exactly |
 | Accretion proof | Beam Relay 685/685, Signal Works 3,994/3,994, Tape Post 3,080/3,080 source polygon signatures retained; 0 missing across all three |
@@ -895,7 +895,7 @@ Only the Town plate's embedded 2048-square atlas changes. The inherited ring gai
 
 ### Evidence index
 
-- Fresh current-main board: [`town-e1-e4-e5-current.png`](../artifacts/town-e7-wide/current-references/3fe1e493fb11-main/town-e1-e4-e5-current.png)
+- Fresh current-main board: [`town-e1-e4-e5-current.png`](../artifacts/town-e7-wide/current-references/a0757c4ef948-main/town-e1-e4-e5-current.png)
 - Locked ensemble: [`mesa-e7-wide-across-plaza-ab.png`](../artifacts/town-e7-wide/mesa-e7-wide-across-plaza-ab.png), feature crop [`mesa-e7-wide-key-feature-crop.png`](../artifacts/town-e7-wide/mesa-e7-wide-key-feature-crop.png)
 - Six four-angle audits: [`playbook-library-e7.png`](../artifacts/town-e7-wide/turntables/playbook-library-e7.png), [`drone-coop-e7.png`](../artifacts/town-e7-wide/turntables/drone-coop-e7.png), [`signal-refinery-e7.png`](../artifacts/town-e7-wide/turntables/signal-refinery-e7.png), [`beam-relay-e7.png`](../artifacts/town-e7-wide/turntables/beam-relay-e7.png), [`signal-works-e7.png`](../artifacts/town-e7-wide/turntables/signal-works-e7.png), [`tape-post-e7.png`](../artifacts/town-e7-wide/turntables/tape-post-e7.png)
 - Exact inheritance A/Bs: [`beam-relay-identity-e6-e7-ab.png`](../artifacts/town-e7-wide/identity/beam-relay-identity-e6-e7-ab.png), [`signal-works-identity-e6-e7-ab.png`](../artifacts/town-e7-wide/identity/signal-works-identity-e6-e7-ab.png), [`tape-post-identity-e6-e7-ab.png`](../artifacts/town-e7-wide/identity/tape-post-identity-e6-e7-ab.png)
@@ -906,7 +906,7 @@ Only the Town plate's embedded 2048-square atlas changes. The inherited ring gai
 - Add three new E7 building pairs plus the Sunline Mount, Schoolhouse, and Catalog Warehouse `.e7` siblings; add deterministic build/render/verifier scripts, fresh evidence, the complete cadence table, and this cumulative pilot+wide findings entry.
 - Use Wave 12 E6 and Wave 13 pilot bytes only as read-only dependencies. Do not alter those branches' assets, any E1-E5 siblings, runtime source, layout, manifests, specs, status, backlog, or tests.
 - New-site evidence proposes Playbook Library `[-14.2, -6.4, 0.12]`, Drone Coop `[14.2, -6.0, -0.10]`, and Signal Refinery `[0.0, 16.2, π]`; accepted pilot sites remain unchanged. Runtime mount ratification stays factory-owned.
-- Branch base: `origin/main@3fe1e493fb11b6685f1ffc76b65dd81ebff8dd6b`; dependency tips are Wave 12 `bcc9764b…` and Wave 13 pilot `3947af49…`.
+- Branch base: `origin/main@a0757c4ef94889a7b3a0dd73854493b1b3ff7443`; dependency tips are Wave 12 `22a8defc…` and Wave 13 pilot `e961a45e…`.
 
 ## Wave 13 pilot — E7 Signal Mesa
 
@@ -943,11 +943,11 @@ The E7 bundle and queue define no emitter-anchor family, so the pilot invents no
 | Flat-walk law | route and plaza max absolute height `0.012002`; worst inherited pad `0.017547`; all below `0.05` |
 | Proposed upper sites | both pad deviations below `0.013`; both ramp grades below `0.18` |
 | Determinism | saved-BLEND re-export is byte-identical at SHA-256 `067c8c652134…` |
-| Fresh-reference law | every working board records base `8d974f11911187136469fbd017c9598e5b2faf28`; current tracked GLBs/manifests are its only inputs |
+| Fresh-reference law | every working board records base `a5e2dd0c21cd803219fc7e653349b48053f17e20`; current tracked GLBs/manifests are its only inputs |
 
 ### Evidence index
 
-- Fresh current-file E1/E4/E5 board: [`town-e1-e4-e5-current.png`](../artifacts/mesa-town-3d/current-references/8d974f119111-main/town-e1-e4-e5-current.png), with [`reference-contract.json`](../artifacts/mesa-town-3d/current-references/8d974f119111-main/reference-contract.json)
+- Fresh current-file E1/E4/E5 board: [`town-e1-e4-e5-current.png`](../artifacts/mesa-town-3d/current-references/a5e2dd0c21cd-main/town-e1-e4-e5-current.png), with [`reference-contract.json`](../artifacts/mesa-town-3d/current-references/a5e2dd0c21cd-main/reference-contract.json)
 - Current square / Mesa same-camera A/B: [`mesa-town-current-vs-pilot-ab.png`](../assets/pilots/mesa-town-3d/renders/mesa-town-current-vs-pilot-ab.png)
 - Four-angle landform review: [`mesa-town-turntable.png`](../assets/pilots/mesa-town-3d/renders/mesa-town-turntable.png)
 - Flat routes, inherited pads, proposed upper sites, and ramps: [`mesa-town-flat-walk-overlay.png`](../assets/pilots/mesa-town-3d/renders/mesa-town-flat-walk-overlay.png)
@@ -966,14 +966,14 @@ The first all-angle pass read as a vertical tabletop rim and painted its starsto
 | Footprint | Diner `5.130185 x 3.3925` inside `5.2 x 3.4`; Dome `6.0 x 6.0` inside `6.2`; Kitchen `4.75 x 3.30` inside `4.8 x 3.3` |
 | Export hygiene | zero helpers, anchors, cameras, lights, animations, emissive textures, or readable letters |
 | Determinism | all three saved-BLEND exports reproduce the production GLBs byte-identically after the repository's canonical `reexport-pilot.sh` |
-| Fresh references | E1/E4/E5 boards rerendered from base `8d974f11911187136469fbd017c9598e5b2faf28`; E4 visibly includes the current boulevard/caravan; E5 is the current submerged square |
+| Fresh references | E1/E4/E5 boards rerendered from base `a5e2dd0c21cd803219fc7e653349b48053f17e20`; E4 visibly includes the current boulevard/caravan; E5 is the current submerged square |
 | Across-the-plaza movement | same-camera massing/E6 comparison: `diffRatio16 = 4.0231%`; edge-energy ratio `1.2072`; visual judgment confirms three distinct silhouettes |
 | All-angle QA | Diner's sign reads on both faces; Dome panes form a ring rather than fins; Kitchen front, sides, roof, and rear carry attached authored structure |
 | Independent review limitation | local full-frame/crop/turntable review completed; no sub-agent review claimed because this session explicitly forbids delegation |
 
 ### Evidence index
 
-- Current-file reference: [`town-e1-e4-e5-current.png`](../artifacts/town-e6-pilot/current-references/8d974f119111-main/town-e1-e4-e5-current.png)
+- Current-file reference: [`town-e1-e4-e5-current.png`](../artifacts/town-e6-pilot/current-references/a5e2dd0c21cd-main/town-e1-e4-e5-current.png)
 - Gameplay verdict: [`mesa-e6-pilot-across-plaza-ab.png`](../artifacts/town-e6-pilot/mesa-e6-pilot-across-plaza-ab.png) and [`mesa-e6-pilot-key-feature-crop.png`](../artifacts/town-e6-pilot/mesa-e6-pilot-key-feature-crop.png)
 - Diner identity: [`atomic-diner-identity-ab.png`](../artifacts/town-e6-pilot/atomic-diner-identity-ab.png)
 - Four angles: [`atomic-diner-e6.png`](../artifacts/town-e6-pilot/turntables/atomic-diner-e6.png), [`reactor-dome-e6.png`](../artifacts/town-e6-pilot/turntables/reactor-dome-e6.png), [`isotope-kitchen-e6.png`](../artifacts/town-e6-pilot/turntables/isotope-kitchen-e6.png)
@@ -992,13 +992,13 @@ The first all-angle pass read as a vertical tabletop rim and painted its starsto
 | Determinism | canonical `scripts/reexport-pilot.sh` and the dedicated verifier reproduce all six GLBs byte-identically |
 | Across-the-plaza | `diffRatio16 = 9.3706%`; candidate edge energy is `1.3513x` baseline; average luminance delta is `-1.1861` |
 | All-angle review | six four-angle turntables plus three transform identity A/Bs reviewed; rear/side attachment and wrap corrections applied before final export |
-| Fresh-reference law | E1, E4 boulevard + motor caravan, and submerged E5 references rerendered from base `1a58335f6564`; no prior PNG used as guidance |
+| Fresh-reference law | E1, E4 boulevard + motor caravan, and submerged E5 references rerendered from base `5d04789dccee`; no prior PNG used as guidance |
 | App regression | `npm run build` passes on the final production bytes |
 | Independent review | not run because this session explicitly forbids sub-agent delegation; local full-frame, crop, identity A/B, and all-angle review completed |
 
 ### Evidence index
 
-- Current-file reference board: [`town-e1-e4-e5-current.png`](../artifacts/town-e6-wide/current-references/1a58335f6564-main/town-e1-e4-e5-current.png)
+- Current-file reference board: [`town-e1-e4-e5-current.png`](../artifacts/town-e6-wide/current-references/5d04789dccee-main/town-e1-e4-e5-current.png)
 - Locked ensemble A/B: [`mesa-e6-wide-across-plaza-ab.png`](../artifacts/town-e6-wide/mesa-e6-wide-across-plaza-ab.png)
 - Feature crop: [`mesa-e6-wide-key-feature-crop.png`](../artifacts/town-e6-wide/mesa-e6-wide-key-feature-crop.png)
 - Six four-angle audits: [`turntables/`](../artifacts/town-e6-wide/turntables/)
@@ -1010,8 +1010,8 @@ The first all-angle pass read as a vertical tabletop rim and painted its starsto
 - Add six production `.blend` / `.glb` pairs, the deterministic builder/renderer/verifier, fresh reference boards, visual evidence, and this findings entry.
 - The accepted E6 pilot trio and Mesa plate remain exact evidence-only dependencies; attended integration may land the branches independently without file collision.
 - Existing E1-E5 assets, the Pan Monument, runtime source, layout, specs, status, backlog, and e2e files remain untouched.
-- Branch base: full `origin/main` SHA `1a58335f65645b8491e50763e10a32d12d8696f1`.
-| Fresh reference base | all boards rerendered from `origin/main@88ea5d9bca59dca64f35766b466cc2755751dcbb`; the supplied old plaza-wheel screenshot was excluded |
+- Branch base: full `origin/main` SHA `5d04789dcceee81122205b077a3c9fda7b0b5be1`.
+| Fresh reference base | all boards rerendered from `origin/main@642f4336df9cc6d27b0fbc51658e240434898546`; the supplied old plaza-wheel screenshot was excluded |
 | Geometry / materials | 9,174 / 10,466 / 14,704 tris against 15,000 each; one mesh, primitive, non-emissive material, and embedded 1024 atlas per GLB |
 | Grounding / footprint | all three assets have minimum Y = 0; new sites fit their proposed maxima; Net Cafe matches the E6 XZ envelope exactly |
 | Accretion proof | all 7,391 E6 source polygon signatures survive in the Net Cafe; 0 missing; source and candidate footprint values are identical |
@@ -1023,7 +1023,7 @@ The first all-angle pass read as a vertical tabletop rim and painted its starsto
 
 ### Evidence index
 
-- Current-main reference board: [`town-e1-e4-e5-current.png`](../artifacts/town-e7-pilot/current-references/88ea5d9bca59-main/town-e1-e4-e5-current.png)
+- Current-main reference board: [`town-e1-e4-e5-current.png`](../artifacts/town-e7-pilot/current-references/642f4336df9c-main/town-e1-e4-e5-current.png)
 - Locked Mesa A/B: [`mesa-e7-pilot-across-plaza-ab.png`](../artifacts/town-e7-pilot/mesa-e7-pilot-across-plaza-ab.png), key-feature crop [`mesa-e7-pilot-key-feature-crop.png`](../artifacts/town-e7-pilot/mesa-e7-pilot-key-feature-crop.png)
 - Four-angle audits: [`relay-tower-e7.png`](../artifacts/town-e7-pilot/turntables/relay-tower-e7.png), [`exchange-e7.png`](../artifacts/town-e7-pilot/turntables/exchange-e7.png), [`net-cafe-e7.png`](../artifacts/town-e7-pilot/turntables/net-cafe-e7.png)
 - Exact identity A/B: [`net-cafe-identity-e6-e7-ab.png`](../artifacts/town-e7-pilot/identity/net-cafe-identity-e6-e7-ab.png)
@@ -1034,8 +1034,8 @@ The first all-angle pass read as a vertical tabletop rim and painted its starsto
 - Add production Relay Tower and Exchange BLEND/GLB pairs; add only the Tavern's `.e7` sibling for the Net Cafe transform; add deterministic build/render/verification scripts, fresh evidence, and this findings entry.
 - Do not change the inherited E6 production bytes, any E1-E5 siblings, runtime source, layout, manifests, specs, status, backlog, or tests.
 - The new Relay Tower and Exchange mount transforms are proposals in evidence, not runtime edits. The factory ratifies and mounts new sites after the pilot verdict.
-- Wave 12 E6 assets are read-only evidence dependencies from the published `sol/mesa-town-e6-wide` / `sol/mesa-town-e6-pilot` tips; this branch is based cleanly on `origin/main@88ea5d9bca59dca64f35766b466cc2755751dcbb`.
-| Texture-only proof | exported mesh attributes + canonicalized topology are byte-identical to `dc46019a`; only the embedded PNG hash changes |
+- Wave 12 E6 assets are read-only evidence dependencies from the published `sol/mesa-town-e6-wide` / `sol/mesa-town-e6-pilot` tips; this branch is based cleanly on `origin/main@642f4336df9cc6d27b0fbc51658e240434898546`.
+| Texture-only proof | exported mesh attributes + canonicalized topology are byte-identical to `42385907`; only the embedded PNG hash changes |
 | Canon routes | `centerlinesIdentical = true`; ring and all eight radial coordinate arrays are exact |
 | Flat-walk law | unchanged layout contract: route max `0.037230`, plaza max `0.037210`; saved-mesh raycast recheck: route `0.037101`, plaza `0.034182`, every pad under `0.000136` |
 | Asset contract | 17,596 tris; one mesh / primitive / material / embedded 2048 PNG; zero cameras, lights, animations, or anchors |
@@ -1045,8 +1045,8 @@ The first all-angle pass read as a vertical tabletop rim and painted its starsto
 
 ### Evidence index
 
-- Fresh current-state contract and E1/E4/E5 renders: [`dc46019af763-main`](../artifacts/town-plate-3d/current-references/dc46019af763-main/reference-contract.json)
-- Fresh E4 before/after and focus A/B: [`road-wear-e4-before-after.png`](../artifacts/town-plate-3d/current-references/dc46019af763-road-wear-after/road-wear-e4-before-after.png), [`road-wear-e4-focus-before-after.png`](../artifacts/town-plate-3d/current-references/dc46019af763-road-wear-after/road-wear-e4-focus-before-after.png)
+- Fresh current-state contract and E1/E4/E5 renders: [`42385907f5c1-main`](../artifacts/town-plate-3d/current-references/42385907f5c1-main/reference-contract.json)
+- Fresh E4 before/after and focus A/B: [`road-wear-e4-before-after.png`](../artifacts/town-plate-3d/current-references/42385907f5c1-road-wear-after/road-wear-e4-before-after.png), [`road-wear-e4-focus-before-after.png`](../artifacts/town-plate-3d/current-references/42385907f5c1-road-wear-after/road-wear-e4-focus-before-after.png)
 - Geometry / centerline proof: [`road-wear-contract.json`](../artifacts/town-plate-3d/road-wear-contract.json)
 
 ### Integration boundary
@@ -1160,7 +1160,7 @@ The six prop GLBs embed byte-identical copies of the shared 1024 x 1024 E5 atlas
 - Add eight `.e5.blend` / `.e5.glb` building siblings, E5 dinghy/cistern siblings, four accessory GLBs, the shared atlas/manifest, deterministic builders/verifier, evidence, and this findings entry.
 - E1–E4 production siblings, all landmark GLBs, the Pan Monument bytes, runtime source, layout, specs, status, backlog, and e2e files remain untouched.
 - The existing sibling loader discovers `.e5.glb` files automatically. The attended factory must implement F-3DC-34's narrow `floodReset` mount behavior before live qualification.
-- Branch base: `54067137`; origin/main observed at `6b871ba8` after the branch was cut. Main moved in unrelated factory/terrain ledgers; no Wave 10 asset path was changed.
+- Branch base: `7a418dea`; origin/main observed at `409eb3b8` after the branch was cut. Main moved in unrelated factory/terrain ledgers; no Wave 10 asset path was changed.
 
 ## Scoped E3 follow-up — wagon filament lights
 
@@ -1198,7 +1198,7 @@ The old roof terminal remains present with the same voltage-era role and `arc_an
 - Replace only `covered_wagon.e3.blend` / `covered_wagon.e3.glb` and its deterministic builder; add the two review images and this findings entry.
 - All other E1-E4 assets, era manifests, runtime source, tests, specs, status, and the Pan Monument remain untouched.
 - E5 Harbor Rebuild is intentionally not started until this ordered wave receives its attended verdict.
-- Branch base: `9812edb2`; publication is session-branch-only for attended gates, never `main`.
+- Branch base: `ae980bc7`; publication is session-branch-only for attended gates, never `main`.
 
 ## Wave 9 wide — complete E4 Motor Town
 
@@ -1338,7 +1338,7 @@ Production comparisons are **E3 on the left, E4 on the right**. Blind boards ret
 - E1, E2, and E3 production siblings remain untouched. The Pan Monument remains heritage content and is excluded from era keying.
 - No runtime source, layout, spec, backlog, status, e2e, or exporter file changed. The existing era loader owns sibling discovery; the factory owns dust emitters and accessory manifest ratification/mounting.
 - Production inventory remains eight real buildings. No ninth identity is fabricated.
-- Branch base: `7e01c14f`; publication is session-branch-only for attended gates, never `main`.
+- Branch base: `16c2e958`; publication is session-branch-only for attended gates, never `main`.
 
 ## Wave 9 pilot — E4 Motor building faces
 
@@ -1399,7 +1399,7 @@ Production comparisons are **E3 on the left, E4 on the right**. Blind boards ret
 - Do not start the other six real buildings, wagon/trough variants, filling shed, fuel racks, road markers, or `era-props.e4.json` until the attended pilot verdict.
 - No runtime source, layout, spec, backlog, status, or e2e file changed. The existing era loader owns building discovery; the factory owns dust emitters and later accessory ratification/mounting.
 - Production inventory remains eight real buildings. No ninth identity is fabricated.
-- Branch base: `56b1efc3`; no push or main merge performed.
+- Branch base: `41477f52`; no push or main merge performed.
 
 ## Wave 8 wide — complete E3 Voltage Town
 
@@ -1498,7 +1498,7 @@ Production comparisons are **E2 on the left, E3 on the right**. Blind boards ret
 - No runtime source or e2e file changed. The existing building loader discovers building siblings; the factory still owns prop-variant and manifest mounting.
 - Production inventory is eight real buildings. No ninth shell is fabricated.
 - The transferred Crawler grant remains closed and untouched.
-- Branch base: `9f6fe2de`; no push or main merge performed.
+- Branch base: `6cd313fd`; no push or main merge performed.
 
 ## Wave 8 pilot — E3 Voltage building faces
 
@@ -1567,7 +1567,7 @@ The production comparisons are **E2 on the left, E3 on the right**. Blind pair b
 - Generalize the existing official exporter and verifier only enough to retain `arc_anchor_*` alongside `steam_anchor_*`; no runtime source changes.
 - Do not start the remaining five real building faces, wagon/trough variants, or `era-props.e3.json` until the attended pilot verdict. The established eight-building inventory finding still applies; no ninth identity is fabricated.
 - The transferred Crawler grant remains closed and untouched.
-- Branch base: `e582f3cc`; main observed during final review: `e3bb874c`. Main advanced through unrelated runner/research work with no overlap in the pilot asset, evidence, exporter, or findings paths.
+- Branch base: `235087fc`; main observed during final review: `0c79a98a`. Main advanced through unrelated runner/research work with no overlap in the pilot asset, evidence, exporter, or findings paths.
 
 ## Wave 7 — E2 epoch style variants
 
@@ -1663,12 +1663,12 @@ Every committed comparison is **E1 on the left, E2 on the right**.
 - Add sibling `.e2.blend` and `.e2.glb` files beside every real E1 building; no E1 production asset moves or changes.
 - Add the two existing-prop E2 siblings, five accessory pairs, shared atlas, and `era-props.e2.json` under `assets/pilots/plaza-props-3d/`.
 - No runtime source changed. Era selection, manifest mounting, and live steam plumes remain factory-owned.
-- Branch base: `91ee55b5`; main observed during final gates: `dd308192`. Main advanced only through unrelated factory work during this asset pass.
+- Branch base: `d1500052`; main observed during final gates: `4a0f34de`. Main advanced only through unrelated factory work during this asset pass.
 - Pan Monument remains permanently excluded from era keying.
 
 ### 7a correction target
 
-The returned pilot at `42607059` passed asset correctness but failed its purpose: its evidence used a close focus camera and the edits were below silhouette scale at the real TS-04 gameplay camera. This correction starts from the player test instead: with camera, light, plaza, and surrounding buildings held constant, a blind reviewer must identify E2 across the plaza without relying on a turntable, labels, live steam, or texture inspection.
+The returned pilot at `bf3250f7` passed asset correctness but failed its purpose: its evidence used a close focus camera and the edits were below silhouette scale at the real TS-04 gameplay camera. This correction starts from the player test instead: with camera, light, plaza, and surrounding buildings held constant, a blind reviewer must identify E2 across the plaza without relying on a turntable, labels, live steam, or texture inspection.
 
 - **Tavern / Saloon:** the bundle's §A2 list is fully present: a more explicit covered porch, two hanging oil lamps with one teal, and half-height swing doors. A large attached kitchen boiler and flanged service vent put the steam-era change on the service side seen by the locked camera. The accepted shell, footprint, roofline, facade, and maximum envelope remain unchanged.
 - **Claim Office / Town Hall lineage:** a civic service boiler, tall banded relief stack, rear pressure dial, paired facade gauges, and porch ironwork make the public steamworks read visible while retaining the accepted flag, frontage, roofline, footprint, and maximum envelope.
@@ -1725,7 +1725,7 @@ Every comparison is **E1 on the left, E2 on the right**.
 - Corrected sibling assets only: `tavern.e2.glb` and `claim-office.e2.glb`, each with its deterministic `.blend`, builder, and named steam anchors.
 - The E1 production GLBs remain byte-for-byte untouched and at their current paths.
 - No runtime source changed. Era switching remains factory-owned and is intentionally not part of this asset verdict branch.
-- Branch base: `12f6306e`; returned pilot tip: `42607059`; main observed during final audit: `e1de526d`. Main advanced through unrelated factory handoff commits with no overlap in the Wave 7 asset, evidence, or findings paths.
+- Branch base: `d0b9a473`; returned pilot tip: `bf3250f7`; main observed during final audit: `e0ae7056`. Main advanced through unrelated factory handoff commits with no overlap in the Wave 7 asset, evidence, or findings paths.
 - Path-scoped integration should add the sibling assets, evidence, scripts, and this Wave 7 findings section.
 - Wave 7b was pending at this checkpoint and is now superseded by the completed 7b section above. The Pan Monument remains permanently excluded from era-keying.
 
@@ -1776,8 +1776,8 @@ Every comparison is **E1 on the left, E2 on the right**.
 
 ## Wave 4 merge classification
 
-- Branch base: `99d06e91`.
-- Main observed during final gates: `2776ca52`; it advanced after this branch was cut.
+- Branch base: `81988348`.
+- Main observed during final gates: `fb6edf4e`; it advanced after this branch was cut.
 - LANE-TOUCHED: new files under `assets/pilots/railcar-3d/` plus this findings file.
 - MAIN-MOVED-ONLY: unrelated attended-session changes; no Wave 4 pilot path existed at branch cut.
 - Expected integration: path-scoped add of the pilot and findings update; no runtime source or conflict resolution is part of this branch.
@@ -1785,7 +1785,7 @@ Every comparison is **E1 on the left, E2 on the right**.
 ## Great landmark backlog 04 — E9 Dome Basin body handoff
 
 **Branch:** `sol/campaign-landmarks-e9-dome-basin`  
-**Base:** `60da054aceb48ce28cc20d507ccdc029b80ccc60`  
+**Base:** `9ac96527ac7b4e46cfae665942efb0832d375f43`  
 **Verdict:** READY-FOR-GATES
 
 ### ID list for 3D-D mounts
@@ -1841,7 +1841,7 @@ Four bodies reuse or recombine shipped E9 kit pieces (`canal-segment-dry.e9`, `i
 | Export hygiene | production Tavern GLB | 0 cameras, 0 lights, 0 animations |
 | Footprint and silhouette envelope | parsed production bounds | exact former size `4.229571 x 3.960802 x 3.349`; grounded and base-centered |
 | Determinism | checked versus recipe re-export | byte-identical SHA-256 `edec4934d6d956170078b521fe526ccadcde015567094aec59001e2d4b71b90d` |
-| App build | exact final GLB on latest observed main `fd38b44f` | `npm run build` pass |
+| App build | exact final GLB on latest observed main `88c22e56` | `npm run build` pass |
 | Tavern seam | unmodified spec, desktop and mobile | 6/6 pass; exact bounds, prompt, Board, LITE/load-failure fallbacks, and disposal preserved |
 | Frame-time ceiling | desktop/mobile Tavern spec on exact final GLB | p95 `-2.11%` / `0%`; pass under 15% |
 | Locked-camera localization | actual-game TS-04 A/B | `0.515%` of pixels differ above 32 grayscale; luminance `+0.015`; edge energy `+0.853%` |
@@ -1986,26 +1986,26 @@ The pilot intentionally contains no runtime mount. The permanent painted ground 
 
 ### Wave 1 merge classification
 
-- Branch base: `bacb5717`.
-- Main observed during final review: `f70a97ab3c2c`; it advanced after the branch was cut.
+- Branch base: `38a22171`.
+- Main observed during final review: `428003141d12`; it advanced after the branch was cut.
 - LANE-TOUCHED: every delivered file is new and confined to `assets/pilots/town-plate-3d/`, `artifacts/town-plate-3d/`, or this findings file.
-- MAIN-MOVED-ONLY: unrelated canon/story work after `bacb5717`; none of the builder's four input sources (`townLayout.ts`, `TownScene.ts`, the Dynamo manifest, or `ter-plaza-ground.png`) changed between the branch base and observed main.
+- MAIN-MOVED-ONLY: unrelated canon/story work after `38a22171`; none of the builder's four input sources (`townLayout.ts`, `TownScene.ts`, the Dynamo manifest, or `ter-plaza-ground.png`) changed between the branch base and observed main.
 - Expected integration: path-scoped add of new files; no textual conflict resolution required. The attended session should still rerun the SHA/source checks if main advances those inputs before landing.
 
 ## Wave 2 merge classification
 
-- Branch base: `e21dc4aa`.
-- Main observed during final review: `1da7bfb6`; it advanced after the branch was cut.
+- Branch base: `294a915a`.
+- Main observed during final review: `0cec4a83`; it advanced after the branch was cut.
 - LANE-TOUCHED: the existing Town plate asset/artifact paths, the independent Pan Monument build and binary at its existing plaza-prop path, and this findings file.
 - MAIN-MOVED-ONLY: unrelated handoff/coordination work; none of `townLayout.ts`, `TownScene.ts`, the Dynamo manifest, the Wave 2 queue, or the Town recipe changed between the branch base and observed main.
 - Expected integration: path-scoped merge of the listed asset and evidence files; no runtime source or queue/spec edit is part of this branch.
 
 ## Wave 3 merge classification
 
-- Branch base: `1281a8f1`.
-- Main observed during final review: `fd38b44f`; it advanced after the branch was cut and records Wave 3 as accepted at tip `6929c16e`.
+- Branch base: `509f0511`.
+- Main observed during final review: `88c22e56`; it advanced after the branch was cut and records Wave 3 as accepted at tip `59c31b2a`.
 - LANE-TOUCHED: the production Tavern `.blend`/GLB, new Tavern-local builder/verifier/render evidence, and this findings file.
-- MAIN-MOVED-ONLY: `TownScene.ts` changed to suppress duplicate primitive props when the independent props pilot mounts. The Tavern production path, Tavern loader/spec, and Town recipe are unchanged; the queue only records accepted Wave 3. The final 6/6 Tavern gate and build passed with GLB SHA `edec4934…` on `fd38b44f`.
+- MAIN-MOVED-ONLY: `TownScene.ts` changed to suppress duplicate primitive props when the independent props pilot mounts. The Tavern production path, Tavern loader/spec, and Town recipe are unchanged; the queue only records accepted Wave 3. The final 6/6 Tavern gate and build passed with GLB SHA `edec4934…` on `88c22e56`.
 - Expected integration: path-scoped replacement/add under `assets/pilots/tavern-3d/` plus this findings file; no runtime source or conflict resolution is required.
 
 ## Atlas-hash reconciliation — 2026-07-18
@@ -2014,6 +2014,6 @@ The pilot intentionally contains no runtime mount. The permanent painted ground 
 
 **Severity:** medium, newly unmasked follow-up
 
-**Evidence:** the five accepted E1 atlases (`the-claim`, `dry-gulch`, `twin-banks`, `night-shift`, `baron`) and all 25 GLB-embedded textures agree byte-for-byte. Their pack contracts and aggregate evidence retained the pre-swap atlas hashes; this wave corrects those ten records. The full verifier now advances past the atlas assertion and stops on missing node extras in the replacement GLBs. Commit `d8603c90` replaced the 25 GLBs, five atlases, and added per-asset `.blend` files without updating the old pack contracts, so their GLB hashes and triangle records also describe the retired bodies.
+**Evidence:** the five accepted E1 atlases (`the-claim`, `dry-gulch`, `twin-banks`, `night-shift`, `baron`) and all 25 GLB-embedded textures agree byte-for-byte. Their pack contracts and aggregate evidence retained the pre-swap atlas hashes; this wave corrects those ten records. The full verifier now advances past the atlas assertion and stops on missing node extras in the replacement GLBs. Commit `d8603c90 (archive: pruned by the A3 rewrite)` replaced the 25 GLBs, five atlases, and added per-asset `.blend` files without updating the old pack contracts, so their GLB hashes and triangle records also describe the retired bodies.
 
 **Decision:** do not weaken the verifier or regenerate accepted owner-selected models inside the atlas-only repair. A separate metadata migration should make the per-asset source blends authoritative (or consolidate them without visual changes), restore required node extras, and refresh the remaining GLB/triangle records under an attended visual-preservation gate.

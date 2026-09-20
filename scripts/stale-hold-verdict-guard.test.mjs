@@ -7,8 +7,8 @@
 // refusal stays on disk, in the present tense, forever. s1454 found three such rows and banner'd
 // them; s1455 re-derived the class independently and found TWO MORE that a sample of nine had
 // missed (`gg-03-gazette-panel-swap`, blocked 2026-07-29 and discharged by the GG-03c ladder at
-// `b5be7ab3`; `m2-05-geometry-settle`, whose "The leaf does NOT close" outlived its own closure at
-// `99bd76fd` by fifteen fires). The cost of the class is Mistake #8 — re-queueing shipped work —
+// `15e00755`; `m2-05-geometry-settle`, whose "The leaf does NOT close" outlived its own closure at
+// `94ce3888` by fifteen fires). The cost of the class is Mistake #8 — re-queueing shipped work —
 // and it is paid by the next reader, not by the fire that left the row.
 //
 // ⚠️ THE HARD PART IS THE CLASSIFIER, NOT THE LOOKUP, AND THIS GUARD IS SHAPED BY ITS OWN FIRST

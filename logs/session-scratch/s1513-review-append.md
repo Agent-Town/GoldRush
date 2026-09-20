@@ -1,7 +1,7 @@
 
 ---
 
-## DRAIN SUPERVISION — s1513, 2026-08-07 (merged `27782fda`)
+## DRAIN SUPERVISION — s1513, 2026-08-07 (merged `da540bfb`)
 
 **Verdict: MERGED.** The runner's `CONDITIONAL GREEN` named exactly one precondition — a rerun of
 `test:node-guards` on the repository's `.nvmrc` Node — and it is discharged below. The condition was
@@ -44,7 +44,7 @@ before starting — not the `vite preview` scratch-port path the config comments
 
 ### Merge classification
 
-Base `7c7d178c`; lane `ahead=1 behind=10`. `git diff <base>..main` over both lane paths
+Base `70903ae8`; lane `ahead=1 behind=10`. `git diff <base>..main` over both lane paths
 (`src/entities/Enemy.ts`, the review file) is **empty** — main moved neither. Both files are
 **LANE-TOUCHED only**: no MAIN-MOVED file, no 3-way graft, no conflicts. The gate tree was synced to
 current main before the battery, so the numbers above are from the true post-merge tree, not the

@@ -1,7 +1,7 @@
 # f1330-1 — the two COUNT-shaped E1 censuses assert 42, not 41
 
-**Slice:** `f1330-1-count-shaped-censuses` · **branch:** `lane/e2-arsenal` · **lane tip:** `50a7c27c`
-**Merge commit:** `4cb09307d63e79b344aaa63d638b5dfa75c83e1e` (main) · **drained by:** s1331, 2026-08-01
+**Slice:** `f1330-1-count-shaped-censuses` · **branch:** `lane/e2-arsenal` · **lane tip:** `23a9a9af`
+**Merge commit:** `68deb90a3554df4d9d633a2b8098ed9b9d73a938` (main) · **drained by:** s1331, 2026-08-01
 
 ## Verdict
 
@@ -18,7 +18,7 @@ Two E2E specs assert the total contract count against a **live-derived** array
 - `e2e/map-census.spec.ts:63` — `expect(CONTRACTS).toHaveLength(41)` (inside `test.afterAll`)
 
 Both literals now read **42**. The `41` predates `e1-drill-yard`, which landed today at
-**08:14** (`f0bf5251`, `runner(lane-b): lane-drill-yard.md`).
+**08:14** (`f86b28b3`, `runner(lane-b): lane-drill-yard.md`).
 
 **The count was re-derived on main, not inherited.** s1331 read every
 `assets/contracts/*/contracts.json` and summed: **42** across ten epochs, **E1 = 6**. This
@@ -29,9 +29,9 @@ sets, so the per-epoch breakdown is recorded here: E1 6 · E2–E10 4 each.
 
 | | |
 |---|---|
-| merge-base | `c922d39e` |
-| lane commits ahead | **1** (`50a7c27c`, 2 files / 2 lines) |
-| `git log c922d39e..main -- <both files>` | **empty — main moved NEITHER file** |
+| merge-base | `67282ffa` |
+| lane commits ahead | **1** (`23a9a9af`, 2 files / 2 lines) |
+| `git log 67282ffa..main -- <both files>` | **empty — main moved NEITHER file** |
 | classification | both files **pure LANE-TOUCHED**; no MAIN-MOVED, no 3-way conflict |
 | strategy | real `git merge --no-ff` (not a file checkout) so the lane records ancestry |
 | post-merge `main..lane/e2-arsenal` | **empty** — lane absorbed, not falsely ahead |
@@ -122,7 +122,7 @@ per-map tests store a row and assert nothing, and `probe()` catches every throw 
 `expect` sits **before** the `mkdir`/write in the same `afterAll`, so while the count was
 stale the artifact **could not be written at all**. Verified by reading the source, and
 bounded by measurement rather than asserted dramatically: `table.md` was last committed
-2026-07-27 (`8bfa549c`), but Drill Yard only landed **08:14 today**, so the freeze this merge
+2026-07-27 (`3629d0ac`), but Drill Yard only landed **08:14 today**, so the freeze this merge
 ends is **~5.5 hours**, not five days.
 
 Two cells also flipped **FAIL → PASS** in this regeneration — `e3-moth-season` (was

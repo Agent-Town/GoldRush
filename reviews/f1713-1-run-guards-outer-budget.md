@@ -1,8 +1,8 @@
 # F-1713-1 — run-guards outer child budget
 
 **Slice:** `lane-d-f1713-1-run-guards-outer-budget.md`
-**Branch / tip:** `lane/d` / `49617974f48f47131691cf784396654d90076b60`
-**Merge:** `aaab5ef01d5a09f543d5ffecd95ba90d5552d2e6`
+**Branch / tip:** `lane/d` / `9f5903a0701eb009d56e2f148733d2e09745307d`
+**Merge:** `b49ec5cf07ef4e85e8b0a58417c4d59f25c43b81`
 **Verdict:** **MERGED — each guard may now use up to 15 minutes without changing any per-test budget or guard behavior.**
 
 ## What it does
@@ -25,7 +25,7 @@ The first detached `test:ledger-guards` arm reached only the expected live-fire 
 
 ## Merge classification
 
-Base `bba80fd46934c13a74935e9c6aee3feab522a339`. Both files were LANE-TOUCHED only; main moved neither path. The branch merged without conflict after the detached battery.
+Base `2f246864e3d7ef87b5ef649d3767a980a8b537de`. Both files were LANE-TOUCHED only; main moved neither path. The branch merged without conflict after the detached battery.
 
 | Path | Classification | Decision |
 |---|---|---|

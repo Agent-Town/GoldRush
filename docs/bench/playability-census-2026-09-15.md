@@ -1,6 +1,6 @@
 # Playability census — 2026-09-15 (owner: "how do we go from epoch1 to all epochs?")
 
-**Method:** `npm run test:playability` (`e2e/playability-smoke.spec.ts`: every board contract booted the way a human boots it — no `?debug`, no test seam — and asked six questions: boots, briefing, HUD, moves, reaches wave 2, no console/page errors) on a detached worktree at main `585719e1d` (the tree the all-epochs preview alias serves), both projects, one worker, 27.9 min wall, fires dry. Transcript: `artifacts/playability-census-2026-09-15/census-desktop-and-mobile.log`.
+**Method:** `npm run test:playability` (`e2e/playability-smoke.spec.ts`: every board contract booted the way a human boots it — no `?debug`, no test seam — and asked six questions: boots, briefing, HUD, moves, reaches wave 2, no console/page errors) on a detached worktree at main `b957a966a` (the tree the all-epochs preview alias serves), both projects, one worker, 27.9 min wall, fires dry. Transcript: `artifacts/playability-census-2026-09-15/census-desktop-and-mobile.log`.
 
 **Result: 76 of 84 runs pass; 4 contracts fail on both projects, all at the same question ("reaches wave 2").** The other 38 contracts boot plainly, brief, show their HUD, move and reach wave 2 on desktop and at 390 px.
 

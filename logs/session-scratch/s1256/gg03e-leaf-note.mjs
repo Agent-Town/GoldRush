@@ -26,7 +26,7 @@ hit.note_s1256 = [
   'so the two have to be judged separately. The master (and this leaf\'s authorNotes) state that heraldReader\'s',
   'class map "resolves to nothing" because "NO file of that name exists". s1256 re-ran it: all SEVEN',
   'assets/processed/herald-engraving-{board,trail,river,schoolhouse,ledger,boss,town-growth}.webp existed on disk',
-  'with mtime 2026-07-29T06:18-06:20Z AND are tracked on main (git ls-tree main), landed by b5be7ab3 — a day',
+  'with mtime 2026-07-29T06:18-06:20Z AND are tracked on main (git ls-tree main), landed by 15e00755 — a day',
   'before the claim was written. The published proof command was `ls assets/processed/ | grep gazette`, i.e. a grep',
   'for "gazette" used to answer a question about "herald-engraving": the absence was an artefact of the search',
   'string, not of the tree. So the Herald was NOT silently text-only for every class, and "the missing thing is the',

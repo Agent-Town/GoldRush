@@ -1,6 +1,6 @@
 # sprite-roster-remainder — implementer's report
 
-**Task:** `tasks/sprite-roster-remainder.md` · **Branch:** `feat/sprite-roster-remainder`, cut from main `f431b878c` in the scratch worktree `wt-roster` · **Implementer:** Claude Opus 5 on the owner's Anthropic subscription · **Date:** 2026-09-17.
+**Task:** `tasks/sprite-roster-remainder.md` · **Branch:** `feat/sprite-roster-remainder`, cut from main `b70ef3b31` in the scratch worktree `wt-roster` · **Implementer:** Claude Opus 5 on the owner's Anthropic subscription · **Date:** 2026-09-17.
 **Owner, verbatim (2026-09-15/17):** "I care mostly about the quality of the animations and I had the impression that Astra really understood and nailed that." · "I think what Astra started is worth it" · "Lets do them all." · "All on the Anthropic subscription".
 Main was never written. `STATUS.md`, `tasks/BACKLOG.md`, `tasks/goals.json` were never touched. Nothing was pushed, nothing merged, no image was generated. The sibling worktree `wt-boss-models` was never read or written.
 
@@ -46,7 +46,7 @@ Main was never written. `STATUS.md`, `tasks/BACKLOG.md`, `tasks/goals.json` were
 | `char.hero` | 8 / 8 | 8 / 8 | unchanged — already reconciled, see §4 |
 | `char.bandit_base` | 8 / 8 | 8 / 8 | not in scope, measured as a control |
 
-**F-SPR-06's count re-measured today:** Astra wrote "nine E6–E9 slots" on 2026-09-08 and the number is still exactly nine on main at `f431b878c`. None of the nine had a single direction registration; all nine now have eight.
+**F-SPR-06's count re-measured today:** Astra wrote "nine E6–E9 slots" on 2026-09-08 and the number is still exactly nine on main at `b70ef3b31`. None of the nine had a single direction registration; all nine now have eight.
 
 ---
 
@@ -58,7 +58,7 @@ Main was never written. `STATUS.md`, `tasks/BACKLOG.md`, `tasks/goals.json` were
 
 The per-direction art is real and finished — 576 cells, authored by Astra between 2026-09-08 and 2026-09-12 and written up slot by slot in `reviews/sol-findings-sprite-roster-fixes-20260908.md` ("Glowjack — eight directional loops integrated … 64 distinct frames across eight headings"; "Rogue Automaton — directional glitch poses integrated"; the Corsair S/N/NE/NW/W/E/SW/SE staging notes; "Data Rustler eight-direction integration"). It sits on `sol/code-review-20260908` referenced by nothing, which is the F-SPRDR-4b class this master exists to close.
 
-**The judgement made here:** take it, with the prescribed `git checkout sol/code-review-20260908 -- assets/processed/<family>*`, and register it. Reporting nine slots as "needs cells / needs an art batch" while 576 finished cells sit in git would have been the false answer, and scope item 2 asks for a registration wherever the per-direction cells exist. It is isolated in **its own commit** (`3928b6862`) so a drainer can take or drop it independently of the F-SPR-07 half.
+**The judgement made here:** take it, with the prescribed `git checkout sol/code-review-20260908 -- assets/processed/<family>*`, and register it. Reporting nine slots as "needs cells / needs an art batch" while 576 finished cells sit in git would have been the false answer, and scope item 2 asks for a registration wherever the per-direction cells exist. It is isolated in **its own commit** (`f726a1391`) so a drainer can take or drop it independently of the F-SPR-07 half.
 
 ### 2.2 The cells wired
 
@@ -232,16 +232,16 @@ A note on the boot probe: the FIRST page load after 612 new files arrive costs a
 
 ## 8. Findings
 
-**F-SRR-1 (scope, for the drainer's eye).** The master's premise that the E6–E9 per-direction sheets "landed at stage 1" is false; they were on `sol/code-review-20260908` only. Without them F-SPR-06 is not curable at all. They were taken by the prescribed command and isolated in commit `3928b6862`. §2.1.
+**F-SRR-1 (scope, for the drainer's eye).** The master's premise that the E6–E9 per-direction sheets "landed at stage 1" is false; they were on `sol/code-review-20260908` only. Without them F-SPR-06 is not curable at all. They were taken by the prescribed command and isolated in commit `f726a1391`. §2.1.
 
 **F-SRR-2 (Baron east, needs cells).** F-SPR-07's "east row differs visibly in style" is measured and real (80.66 % of the cell against 75–77 % for the other seven; the darkest of the eight) and has no staged plate. Astra cut a WEST plate, not an east one. §3.3.
 
-**F-SRR-3 (a guard that was already red on main).** `scripts/halo-reextraction-check.mjs` pins `current.scanned` at 1401. Main at `f431b878c` holds **1447** PNGs under `assets/processed` (`git ls-tree -r --name-only HEAD -- assets/processed | grep -c '\.png$'`), so this guard was **RED on clean main before this task touched it** — 46 PNGs landed since the 2026-09-14 re-pin without moving the denominator with them. The re-pin to 2,059 here cures the stale number and its cause comment names both terms (612 mine, 46 not), so the absorption is written down rather than silent. **Somebody should find the 46 and the land that skipped its line.**
+**F-SRR-3 (a guard that was already red on main).** `scripts/halo-reextraction-check.mjs` pins `current.scanned` at 1401. Main at `b70ef3b31` holds **1447** PNGs under `assets/processed` (`git ls-tree -r --name-only HEAD -- assets/processed | grep -c '\.png$'`), so this guard was **RED on clean main before this task touched it** — 46 PNGs landed since the 2026-09-14 re-pin without moving the denominator with them. The re-pin to 2,059 here cures the stale number and its cause comment names both terms (612 mine, 46 not), so the absorption is written down rather than silent. **Somebody should find the 46 and the land that skipped its line.**
 
 **F-SRR-4 (six pre-existing e2e reds, ATTRIBUTED, not inherited).** `e2e/e7-roster.spec.ts:175`, `e8-roster.spec.ts:183`, `e9-roster.spec.ts:184` — "plain <era> boot stays error-free without the debug harness" — fail on `e7Arsenal.enabled` / `e8Arsenal.available` / `e9Arsenal.eraActive` being `false`, on desktop and on mobile. Attributed by two controls on the same harness and the same server:
 
 1. **main's contract, this task's PNGs present** → 3 failed (`logs/e2e-control-contract.log`).
-2. **main's contract, all 672 added files moved out of the tree** — i.e. `f431b878c` exactly → **3 failed** (`logs/e2e-control-main.log`).
+2. **main's contract, all 672 added files moved out of the tree** — i.e. `b70ef3b31` exactly → **3 failed** (`logs/e2e-control-main.log`).
 
 So the reds are main's, not this task's, and not the extra modules in the dev-server glob either. The assertions are era-arsenal availability flags read after `frame > 10` on a plain boot; nothing in them touches sprite art. The tree was fully restored afterwards and verified clean.
 
@@ -253,9 +253,9 @@ So the reds are main's, not this task's, and not the extra modules in the dev-se
 
 Three commits on `feat/sprite-roster-remainder`:
 
-1. `8bb7d8cd3` — **F-SPR-07**: 36 cells + 6 `.frames.json` sidecars (Baron NE/W, the three E2 norths, the thief's SE) and their registrations in `assets/layer-contracts/characters.v2.json`. 43 files.
-2. `3928b6862` — **F-SPR-06**: 576 cells + 54 sidecars for the nine E6–E9 slots and their nine `walk8` blocks in the same contract. 631 files.
-3. `7a6c2c24c` — **the halo guard**: 60 stems declared in `REGENERATED_SHEETS` with a dated cause, `current.scanned` re-pinned 1401 → 2059 with both terms named.
+1. `61e09267c` — **F-SPR-07**: 36 cells + 6 `.frames.json` sidecars (Baron NE/W, the three E2 norths, the thief's SE) and their registrations in `assets/layer-contracts/characters.v2.json`. 43 files.
+2. `f726a1391` — **F-SPR-06**: 576 cells + 54 sidecars for the nine E6–E9 slots and their nine `walk8` blocks in the same contract. 631 files.
+3. `32d1c1c1e` — **the halo guard**: 60 stems declared in `REGENERATED_SHEETS` with a dated cause, `current.scanned` re-pinned 1401 → 2059 with both terms named.
 
 Plus this report and its instruments under `artifacts/sprite-roster-remainder/` (`board.mjs`, `contact.mjs`, `census.mjs`, `boot.mjs`, `_register-e69.mjs`, the before/after boards, the contact sheets, the boot screenshots, every gate log).
 

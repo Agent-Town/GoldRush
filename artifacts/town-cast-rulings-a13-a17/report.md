@@ -1,6 +1,6 @@
 # town-cast-rulings-a13-a17 — the Elder patrols, the newsie's loop is clear, the youngsters wear their names
 
-READY-FOR-GATES. Branch `feat/town-cast-rulings-and-picnic`, scratch worktree cut from main `54bbaa91e`, Node 26.4.0,
+READY-FOR-GATES. Branch `feat/town-cast-rulings-and-picnic`, scratch worktree cut from main `09c997489`, Node 26.4.0,
 own dev server on 127.0.0.1:5420, Playwright one worker, `--trace=off`, both projects (desktop-chrome 1280x800 and
 mobile-chrome 390x844). Implemented on the Anthropic subscription while `tasks/CODEX-WALL` stands; never Codex.
 
@@ -54,7 +54,7 @@ storekeeper by name, so the Elder stops facing south at her post exactly as they
 **F-SSL-1 IS NOT RED ON THIS TREE AND WAS NOT RED ON MAIN TODAY.** Verify-don't-inherit (CLAUDE.md mistake #4): the
 first thing this task did was run the guard, and it passed — 1 pass / 0 fail, 0.30 s, on the untouched cut of main.
 
-The cure landed in **`c7f284ad4`** (2026-09-15, *"retain: Astra's uncommitted source half of the sprite campaign ...
+The cure landed in **`033f69c61`** (2026-09-15, *"retain: Astra's uncommitted source half of the sprite campaign ...
 committed as found by the attended session ... never gated"*), which re-wrote the newsie's loop from
 `[...reverseTrail('tavern'), ...townTrail('tavern').points.slice(1)]` at 19 s to
 `[...reverseTrail('tavern').slice(0, -1), ...townTrail('tavern').points.slice(2, -1)]` at 16 s, with its own comment
@@ -157,7 +157,7 @@ Measured here, both projects, and **attributed by reading rather than assumed**:
    `townPlazaLayout.actorOffsets.assay_clerk` `(-1.05, 3.4)` from the assay-office anchor `(9.4, 3.4)`, and the
    `portraitPost` offset `(-2.4, 0)` the expectation encodes is only consulted for actors WITHOUT a full body.
    `git diff main -- src/town/townsfolk.ts` is empty and this task's TownScene diff never touches that branch, so main
-   produces the same number. **This may be a real regression rather than a stale test**: `3987c8f7b` deliberately moved
+   produces the same number. **This may be a real regression rather than a stale test**: `ac87d1714` deliberately moved
    the clerk's post *"clear of the building's visual footprint"* through `portraitPost`, and the full-body wiring has
    since made that offset unreachable. Re-pointing the test would launder it, so nothing was changed. Corrective owed.
 2. `:99` `char-preacher-sheet-walk8-a-r\d+c\d+\.png` — receives **`char-preacher-idle-r0c0.png`**. Same class as the
@@ -173,7 +173,7 @@ Neither red is in `logs/suite-red-inventory.md`; both are filed here so a draine
 ### F-TCR-3 — the inventory row was RETIRED BY APPENDING, not by deletion
 The master says *"Remove the row from `logs/suite-red-inventory.md`"*. That file's own law, three lines above the
 table, is **"ADDITIVE ONLY. The tables below ... are never rewritten — overwriting an observation that was true when
-taken launders history"**, and the precedent for a cure (`F-CELL-2`, `64b32ff22`) is a `+1`-line appended correction.
+taken launders history"**, and the precedent for a cure (`F-CELL-2`, `2c6468ef5`) is a `+1`-line appended correction.
 So the cure is recorded as a new dated correction row that outranks the 2026-09-14 one, and the old row stands as the
 observation it was. Net effect for a reader is the same; the history is intact. Reverse with one word if the master
 meant the letter.

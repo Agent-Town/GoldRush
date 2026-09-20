@@ -20,7 +20,7 @@ const closer = ` ✅ **CLOSED s1039 — MERGED (\`${mergeHash}\`), and the gate 
   + ` so the noise belongs to the machine, not the diff. On mobile at load ~2.2 the lane is **green 2/2 with a 1ms spread**`
   + ` (1694/1695) while main is **red 2/2** on the favicon collision. Merged-tree gate **GREEN both projects**: desktop`
   + ` \`ttiMs\` **2621**, mobile **1714**, \`beforeFirstFrame\` **[]**, prefetch **5/5**, console/page/asset errors **0/0/0**;`
-  + ` tsc clean, build green; all 5 files LANE-TOUCHED-only (\`git log 69f0cd80..main -- <paths>\` empty), zero \`src/\` bytes,`
+  + ` tsc clean, build green; all 5 files LANE-TOUCHED-only (\`git log d72188f3..main -- <paths>\` empty), zero \`src/\` bytes,`
   + ` so no gazette item and no deploy. Review addendum: \`reviews/perf-05-startup-attribution.md\`.`;
 
 s = s.slice(0, end) + closer + s.slice(end);

@@ -1,7 +1,7 @@
 # Task gz-02-news-page: agenttown.app/news — the Gazette's public window (lane-d; commit prefix "feat:")
 
 ⛔ **DO NOT QUEUE — ALREADY SHIPPED. Verified by file-probe s1042 (2026-07-25).** `site/news.html` exists
-on main (4753 bytes, Jul 11) and `git log -- site/news.html` returns **`d9897a26` "gz-02: Gazette news
+on main (4753 bytes, Jul 11) and `git log -- site/news.html` returns **`23e70590` "gz-02: Gazette news
 page (site/news.html + nav + styles) — tsc/build green, 6/6 e2e desktop+390, herald.json kept from
 main"** — scope 1 + 2 landed under this master's own name. **This file was INVISIBLE to the ledger:
 `grep -c "gz-02-news-page" tasks/BACKLOG.md` returned 0**, so no fire reading BACKLOG could know it was

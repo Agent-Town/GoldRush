@@ -1,7 +1,7 @@
 # perf-correctives-batch — the four measurements
 
 Scratch worktree, Claude Opus 5 implementer, 2026-09-07. Branch `feat/perf-correctives-batch`,
-base `e6c52b296` (current main). Ports: dev/playwright 5306, preview 5293. Node v26.4.0 for the
+base `0a34e34cb` (current main). Ports: dev/playwright 5306, preview 5293. Node v26.4.0 for the
 guards, playwright `--workers=1 --trace=off --reporter=line`, both projects.
 
 Engine hash: base `3f86a89c6f2eb1df83007465cbe43e39a41971593e6ee8b7ddee45637cc67d0f` (which is

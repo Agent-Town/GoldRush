@@ -1,7 +1,7 @@
 # f1501-5 — citation quote pairing
 
 **Slice:** `f1501-5-citation-quote-pairing` · **branch:** `lane/a` · **tip:** `477fb7f9`-successor, lane tip at drain time
-**Merge:** `790a66f579c64944ad12dedc6a8ef011c4ca7f0d` (s1515, `--no-ff`)
+**Merge:** `122db2c060e7e079164facca18c159510299fdac` (s1515, `--no-ff`)
 **Drained by:** s1515 (fire), 2026-08-07
 
 ## Verdict
@@ -88,7 +88,7 @@ now a supervisor rerun in **four consecutive drains** — see the desk item.
 
 ## Merge classification
 
-Base `2ca902742`. Main gained exactly two commits since (`398901b05` s1514 handoff, `acc147aa5` s1515
+Base `9983be3f3`. Main gained exactly two commits since (`41068b6da` s1514 handoff, `07aaeaf0d` s1515
 lock), **neither touching any path in this slice**.
 
 | Path | Class |
@@ -160,7 +160,7 @@ why nothing was lost. Not a defect.
 
 ## Bookkeeping
 
-- Goal leaf `f1501-5-citation-quote-pairing` → `status: merged`, `mergeHash: 790a66f5…` (drain commit).
+- Goal leaf `f1501-5-citation-quote-pairing` → `status: merged`, `mergeHash: 122db2c0…` (drain commit).
 - BACKLOG **F-1501-5** row closed; **F-1515-1** filed open in the same commit.
 - Done-move renamed `drained-790a66f5-…`.
 - No gazette item — scripts-only guard change, not player-visible (filter law).

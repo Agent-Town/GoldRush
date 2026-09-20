@@ -1,6 +1,6 @@
 # e5-regatta — heat 14, generation 116
 
-rig `claude__opus-5` · Claude Code CLI 2.1.272 · engine `540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068` (era 6, build `5c54970c3`, viewVersion 2) · worldModel `sim-import`
+rig `claude__opus-5` · Claude Code CLI 2.1.272 · engine `540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068` (era 6, build `5c54970c3 (archive: pruned by the A3 rewrite)`, viewVersion 2) · worldModel `sim-import`
 
 ## The ride, in order
 

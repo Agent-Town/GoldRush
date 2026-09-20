@@ -1,7 +1,7 @@
 # Drain review — lane-town-variants-e8 (E8 Orbital town wardrobe)
 
 - **Slice/branch/tip:** `lane-town-variants-e8` · `lane/m3` (lane-a) · tip `2427838c`
-- **Drain:** s786 fire, 2026-07-21 · base clean main `12ee946a`
+- **Drain:** s786 fire, 2026-07-21 · base clean main `257037c5`
 - **Verdict:** ✅ PASS — merge.
 
 ## What it does

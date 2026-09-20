@@ -45,23 +45,23 @@ falsified the first two by reading all 42 contracts and `CharterSchema.ts`, and 
 ### THREE CORRECTIONS to the superseded master — each measured, each changes what you should do
 
 **⚠️ CORRECTION 1 — IT IS NOT "PRE-EXISTING". IT IS MERGE-CAUSED, AND THE MERGE WAS s1323's OWN DRAIN 1.**
-The old master and the goal leaf both state *"Pre-existing, proven by a detached-worktree control at `5f81a36d`
+The old master and the goal leaf both state *"Pre-existing, proven by a detached-worktree control at `1d0236c0`
 before either s1323 merge."* **That control does not support the claim.** s1324 re-ran it at exactly
-`5f81a36d`, unpatched, in a detached worktree:
+`1d0236c0`, unpatched, in a detached worktree:
 
 | tree | `npx playwright test --list` | exit |
 |---|---|---|
-| `5f81a36d` (before the Drill Yard merge) | **`Total: 2462 tests in 348 files`** | **0** |
-| current `main` (after `7e93be3d`) | **`Total: 0 tests in 0 files`** | **1** |
+| `1d0236c0` (before the Drill Yard merge) | **`Total: 2462 tests in 348 files`** | **0** |
+| current `main` (after `199f7f60`) | **`Total: 0 tests in 0 files`** | **1** |
 
 The crash does **not** reproduce at the control. `git log -S"e1-drill-yard"` puts the contract's arrival at
-`f0bf5251` — the lane-b Drill Yard runner commit, which reached main inside `7e93be3d`.
+`f86b28b3` — the lane-b Drill Yard runner commit, which reached main inside `199f7f60`.
 
 **The mechanism is the interesting part, and it is why this will happen again.** Template selection is
 `templates[Math.floor(rng() * templates.length)]`. Adding `e1-drill-yard` to `epoch-1-frontier` changed
 `templates.length`, which **re-rolled the entire seeded stream from the first draw onward**. The observable
-signature is in the collected test names: at `5f81a36d` mutant 12 is `[e1-night-shift]`, on main it is
-`[e1-dry-gulch]`. The rig's latent composition bug is old (the file was last touched `2ce1a2ca`, 2026-07-17);
+signature is in the collected test names: at `1d0236c0` mutant 12 is `[e1-night-shift]`, on main it is
+`[e1-dry-gulch]`. The rig's latent composition bug is old (the file was last touched `d8395e4d`, 2026-07-17);
 the **red** is eight hours old. ➡️ **Therefore any future merge that adds or removes a contract from any epoch
 can resurrect this crash at a new index. Curing index 41 alone is not a cure — see scope 2.**
 
@@ -159,7 +159,7 @@ crash waiting to produce another STOP.** Do not spend a run re-finding this.
 
 6. **Report the numbers honestly, and DERIVE every denominator.**
    - `npx playwright test --list --workers=1` → report the exact `Total: N tests in M files` line. **Expect it
-     to be back in the thousands** (s1324 measured 2462/348 at `5f81a36d`; main has moved since, so a different
+     to be back in the thousands** (s1324 measured 2462/348 at `1d0236c0`; main has moved since, so a different
      number is not a defect — *an unexplained one is*, and **0 is a failure**).
    - `cp02-charter-boot.spec.ts --list` → expect **18 tests in 1 file**.
    - Full `test:node-guards`: read the file list out of `package.json` → `scripts["test:node-guards"]`

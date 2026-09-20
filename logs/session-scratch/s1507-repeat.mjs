@@ -15,7 +15,7 @@ delete env.NODE_TEST_CONTEXT;
 
 const SPEC = 'e2e/town-dynamo-hall-blender.spec.ts';
 const MERGED = '75903bf48';
-const PREMERGE = 'a4556dca5';
+const PREMERGE = 'edda5d3de';
 const N = 3;
 
 const git = (...a) => {

@@ -2,8 +2,8 @@
 
 **Slice:** opus5-3d-night ARC 1 (the braid)
 **Branch:** `sculpt/opus5-3d-night`
-**Tip at review:** `0b35eb08` + this commit
-**Base:** `1914950b` (main at commission)
+**Tip at review:** `07046f1b` + this commit
+**Base:** `e298b605` (main at commission)
 **Author:** dedicated Opus 5 session, solo-writer commission of 2026-07-25
 
 ## Verdict
@@ -65,7 +65,7 @@ Boards in `artifacts/map-rebuild-spike/`:
 
 ## Merge classification
 
-Base `1914950b`. All files LANE-TOUCHED only; no MAIN-MOVED file in this slice,
+Base `e298b605`. All files LANE-TOUCHED only; no MAIN-MOVED file in this slice,
 so no conflicts to resolve.
 
 - `assets/pilots/map-rebuild-spike/twin-banks-terrain.{glb,blend}` + `-atlas.png` — regenerated.

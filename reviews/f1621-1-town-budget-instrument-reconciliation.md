@@ -1,9 +1,9 @@
 # f1621-1 — three instruments, one 25 MB ceiling: attribute the gap and rename so it cannot recur
 
 - **Slice**: `tasks/lane-f1621-1-town-budget-instrument-reconciliation.md`
-- **Branch / tip**: `lane/a` @ `75632a7e3` (runner auto-commit)
-- **Merged**: `181e1835b` (main), gated s1623 2026-08-10
-- **Base**: `c87ca6b4f`; gated in detached worktree `gate-s1623` per `scripts/fire.md` §3.0b (a concurrent attended session was committing to main throughout)
+- **Branch / tip**: `lane/a` @ `fb1bdf72d` (runner auto-commit)
+- **Merged**: `7e2f03497` (main), gated s1623 2026-08-10
+- **Base**: `8d02c928f`; gated in detached worktree `gate-s1623` per `scripts/fire.md` §3.0b (a concurrent attended session was committing to main throughout)
 
 ## VERDICT: MERGED — the BACKLOG gate is closed, and the headline red is REFUTED as a regression
 
@@ -66,7 +66,7 @@ real change but is NOT what produced the red** — see F-1623-2.
 
 Consequence: `expect(normalBytes).toBeLessThan(TOWN_TRANSFER_CEILING_BYTES)` is **presently a
 coin-flip**, red for the runner and green for the drain. This assertion is *inherited* from
-f1619-2 (`79782c6b4`), not introduced here, so the slice does not add the flake — it makes it
+f1619-2 (`56c2dcfec`), not introduced here, so the slice does not add the flake — it makes it
 visible. It is confined to the A/B test, which **no deploy and no ordinary drain runs**: the
 whole file is `test.skip`ped unless `GR_ASSET_DIET_BUNDLE=1`, and `scripts/deploy.sh` greps
 `--grep "honest town and claim cues"`, the cue-window test only. So main is not left red.
@@ -110,7 +110,7 @@ sound and only the prose message was wrong. **Any attribution reasoning built on
 table is invalid.** Caught by reading the artifacts rather than the report — the drain-side
 instance of "never trust a claim you inherited" (CLAUDE.md Mistake #4).
 
-### F-1623-5 (drain fix, applied in `181e1835b`'s follow-up) — the reconciliation comment quoted one unreplicated draw as fact
+### F-1623-5 (drain fix, applied in `7e2f03497`'s follow-up) — the reconciliation comment quoted one unreplicated draw as fact
 
 Scope 4 asked for "the artifact a future reader needs in order to not re-litigate F-1620-7".
 As merged it stated ten point figures from a single run of an instrument that varies 3×,

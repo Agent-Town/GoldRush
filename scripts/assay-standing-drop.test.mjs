@@ -16,7 +16,7 @@
  *   • the live board blob for e2-incline holds exactly two rows today, neither of them heat 14's.
  *
  * THE REAL MECHANISM, and it is a deliberate line of code: `functions/api/standings.ts:368-375`
- * AS IT STOOD BEFORE THIS CURE (landed by `fa8b096f3`, 2026-09-04; on the curing branch the site
+ * AS IT STOOD BEFORE THIS CURE (landed by `53450564a`, 2026-09-04; on the curing branch the site
  * is :368-395, and the deleted coordinates are recoverable from that commit, not from today's
  * file). When the assayer returns `verified`, the door looks
  * for another VERIFIED row with the same `standingOwnerKey` and, if that incumbent wins

@@ -1,6 +1,6 @@
 # Task f1579-1: sweep the denied-receipt drift in the LIVE regime, deterministically, and find which clock predicts the breach (LANE-C, commit prefix "test:")
 
-**FIRE-AUTHORED (attended review welcome)** — s1579, from **F-1579-1**, filed by the drain gate that merged f1577-3 (`bc64e04895add67e0525a1382b54443c40489d59`). f1577-3 is answered: pinning `simulation.tick` produced **no breach at any start phase across 1,680 samples** — but it measured a regime the live loop never enters. This task takes the same measurement in the regime where the breach actually happens.
+**FIRE-AUTHORED (attended review welcome)** — s1579, from **F-1579-1**, filed by the drain gate that merged f1577-3 (`3dd3dea3f26de5a5ddf0a21e7820b1d8682cde9b`). f1577-3 is answered: pinning `simulation.tick` produced **no breach at any start phase across 1,680 samples** — but it measured a regime the live loop never enters. This task takes the same measurement in the regime where the breach actually happens.
 
 You are Codex, implementer for Gold Rush, running natively on Robin's Mac in `worktrees/lane-c`.
 

@@ -6,7 +6,7 @@ const i = 9; // 0-based index of BACKLOG line 10
 if (!L[i].startsWith('🟡 **F-1337-1')) throw new Error('anchor moved: ' + L[i].slice(0, 60));
 
 const closure = [
-  ' ✅ **CLOSED-BY-REPAIR s1338 — `7abb7b27`. THE MECHANISM IS NOT STARVATION, AND THAT MATTERS, BECAUSE THIS ROW’S OWN GATE FORBADE THE FIX THAT WAS CORRECT.**',
+  ' ✅ **CLOSED-BY-REPAIR s1338 — `8c771615`. THE MECHANISM IS NOT STARVATION, AND THAT MATTERS, BECAUSE THIS ROW’S OWN GATE FORBADE THE FIX THAT WAS CORRECT.**',
   '🔬 **Diagnosed from control flow, then measured.** The failing predicate is `expect.poll(() => storyHintCount(...)).toBe(1)` at `:406` — *“Timeout 5000ms exceeded while waiting on the predicate”* is `expect.poll`’s own wording, and `:406`/`:421` were the only two polls in this test left at the **5000ms default** while every neighbour waiting on the same async game loop was given **8_000 or 12_000**.',
   '`storyHintCount` reads persisted `hintsSeen`; that key is written **only inside `StoryRuntime.show()`** (`src/story/StoryRuntime.ts:134`, `markStoryBeatSeen`), so the write is gated behind the story-card **queue**, whose constants are `CARD_MS = 6000` and `GAP_MS = 3000` (`src/story/StoryRuntime.ts:9-10`).',
   '➡️ **The wait therefore has a structural floor of residual-card + gap — up to 9s — and the deadline was set BELOW it.**',

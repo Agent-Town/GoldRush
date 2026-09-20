@@ -2,8 +2,8 @@
 
 - **Slice:** `lane-e1-perf-pass` (master `tasks/lane-e1-perf-pass.md`)
 - **Branch / tip:** `lane/perf` @ `452eb7475592ff68d7109dee338bde048147e846`
-- **Base:** `d92350272f154a68ab1783a4b223974662ce9e7a` (a genuine merge-base — `main..lane/perf` was exactly one commit)
-- **Merged as:** `d60adf88d6683def6bc8aee139dfa477809cf01b`
+- **Base:** `823999527279053f214ccf93f8aafd6b0565bd79` (a genuine merge-base — `main..lane/perf` was exactly one commit)
+- **Merged as:** `08b3ecb263551d06304e194e4e592d004542b175`
 - **Drained by:** s1440 fire, 2026-08-03T20:45Z
 - **Archive ref:** `archive/lane-perf-s1440-452eb747` (taken before any refill could reset the lane)
 
@@ -40,7 +40,7 @@ which does not justify moving the shed line.
 
 ## Merge classification
 
-Base `d9235027` is an ancestor of main, so this was a real 3-way merge, not a graft.
+Base `82399952` is an ancestor of main, so this was a real 3-way merge, not a graft.
 
 | File | Class | Handling |
 |---|---|---|

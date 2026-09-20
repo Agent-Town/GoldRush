@@ -1,7 +1,7 @@
 CODEX: model=gpt-5.6-sol effort=high
 # f1433-1 — the kit grant stops writing a row on runs that earned no kit
 > ⚠️ **FIRE-AUTHORED (attended review welcome).**
-> 🚨 **DISPATCH HAZARD — READ BEFORE QUEUEING. This master's subject exists ONLY on `lane/perf` @ `44eda5bd`, which is UNDRAINED and NOT on main.** It must run in **lane-d on top of that tip**, never on a lane reset to main and never in a fresh lane: `BuildSystem.setPalisadeKitCredits` does not exist on main, so a reset lane would hit the subject-absent STOP that has now cost the factory three runs (s1298 26,940 · s1424 44,007 · s1432 74,724 tokens). Do NOT queue this via a normal lane refill. Either dispatch it into lane-d with the reset suppressed, or merge F-BW-6 first and then run this against main.
+> 🚨 **DISPATCH HAZARD — READ BEFORE QUEUEING. This master's subject exists ONLY on `lane/perf` @ `f6f72f86`, which is UNDRAINED and NOT on main.** It must run in **lane-d on top of that tip**, never on a lane reset to main and never in a fresh lane: `BuildSystem.setPalisadeKitCredits` does not exist on main, so a reset lane would hit the subject-absent STOP that has now cost the factory three runs (s1298 26,940 · s1424 44,007 · s1432 74,724 tokens). Do NOT queue this via a normal lane refill. Either dispatch it into lane-d with the reset suppressed, or merge F-BW-6 first and then run this against main.
 
 ROLE: lane implementer. WORKDIR: this lane worktree. One task, firewalled.
 

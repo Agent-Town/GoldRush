@@ -1,6 +1,6 @@
 # ts-cov-02-worker-suppression-directives — review (s1241 drain)
 
-**Slice:** `ts-cov-02-worker-suppression-directives` · **Branch:** `lane/m3` (slot lane-a) · **Tip:** `e0f92a48` · **Base:** `2820da95` · **Merge:** path-scoped checkout onto clean main
+**Slice:** `ts-cov-02-worker-suppression-directives` · **Branch:** `lane/m3` (slot lane-a) · **Tip:** `e0f92a48` · **Base:** `8b5c33c0` · **Merge:** path-scoped checkout onto clean main
 **Task master:** `tasks/ts-cov-02-worker-suppression-directives.md` — **FIRE-AUTHORED (s1240), one fire before this drain. Declared, per the guard-fx-03 precedent: I am gating a master my predecessor wrote, so every premise below was re-derived on my own tree rather than read.**
 **Run log:** `tasks/runs/20260730-042604-lane-a-ts-cov-02-worker-suppression-directives.md.log` (8,018 lines, 169,349 tokens)
 **§3.0 block-check:** `node scripts/drain-block-check.mjs 20260730-042604-ts-cov-02-worker-suppression-directives.md` → **✅ CLEAR** `[factory-worker-suppression-directives] status="queued"` — run **before** classification, per F-1104-7.
@@ -20,7 +20,7 @@
 | file | numstat | classification |
 |---|---|---|
 | `scripts/worker-type-coverage.test.mjs` | **+6 / −3** | **LANE-TOUCHED** — the slice, and the whole of it |
-| `STATUS.md` | 1/4 | MAIN-MOVED-ONLY (base `2820da95` predates s1240's handoff) |
+| `STATUS.md` | 1/4 | MAIN-MOVED-ONLY (base `8b5c33c0` predates s1240's handoff) |
 | `logs/.goal-tree.html`, `logs/dashboard.html`, `logs/task-stats.jsonl` | 1/1, 17/17, 0/1 | MAIN-MOVED-ONLY (generated churn) |
 | `logs/session-scratch/s1240-fix.mjs`, `…/s1240-line1.txt` | 0/25, 0/1 | MAIN-MOVED-ONLY — **main has them, lane does not; the "deletions" are main's newer content** |
 
@@ -36,7 +36,7 @@
 | `npm run test:node-guards` | **rc=0**, **`tests 111 · pass 111 · fail 0 · skipped 0 · cancelled 0 · todo 0`**, ×2 runs, **no failure text anywhere** (30.4 s / 31.5 s) — identical to main's s1240 baseline |
 | `node scripts/run-guards.mjs` | **rc=0**, **`guards: 8/8 passed`** (123.7 s) — `test:node-guards` 31 s · `test:deploy-contract` 82 s · **`test:mp` PASS** |
 | adjacent, **GREP-DERIVED** (`grep -rl subject-tree.mjs scripts package.json`) | `scripts/subject-tree.test.mjs` **7/7** and `scripts/script-tree-parse.test.mjs` — the **only** two other importers of the shared walker; both inside `test:node-guards`, both green. Four subject-tree cases observed passing by name (existence / floor / at-floor / empty-subject). |
-| `scripts/fixture-teardown.test.mjs` | green inside the battery — it runs this guard as a child, so **no temp-dir leak was introduced** (`dc3aecc8`'s tripwire doing its job on the very next slice) |
+| `scripts/fixture-teardown.test.mjs` | green inside the battery — it runs this guard as a child, so **no temp-dir leak was introduced** (`89e3d9c2`'s tripwire doing its job on the very next slice) |
 | player-visible bytes | **0 files under `src/ e2e/ assets/ public/`** → **no boot probe and no screenshots owed; none fabricated** |
 | registration | the guard was **already** in `test:node-guards` — `package.json` correctly absent from the diff, as the master predicted |
 

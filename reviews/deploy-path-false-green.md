@@ -1,21 +1,21 @@
 # Deploy path — the false green (s1049 diagnosis)
 
-**Slice:** none (no merge). This is a **diagnosis of `scripts/deploy.sh` on main @ `691c5274`**, opened because s1048's F-1048-4 asked the next fire to *"confirm the `Error: {}` cause before anyone touches auth."*
+**Slice:** none (no merge). This is a **diagnosis of `scripts/deploy.sh` on main @ `f923ca1c`**, opened because s1048's F-1048-4 asked the next fire to *"confirm the `Error: {}` cause before anyone touches auth."*
 **Verdict:** ⛔ **THE DEPLOY PATH HAS BEEN REPORTING SUCCESS WHILE PUBLISHING NOTHING FOR ~23.5 HOURS.** The cause is confirmed and it is **not auth**. Three findings below; all VERIFIED by file/log/network probe, none inferred.
 
 ---
 
 ## The one-line owner answer
 
-**The family is playing build `49dbce7a`, built `2026-07-24T17:20Z` — 174 commits ago.** The whole Opus-5 3D night (E9 + E10 town wardrobes, the Twin Banks braid, the deepwater wave counter) has never reached them, **even though `logs/deploy.log` says `DEPLOYED ok` at 21:47:08 yesterday evening.**
+**The family is playing build `9fa96680`, built `2026-07-24T17:20Z` — 174 commits ago.** The whole Opus-5 3D night (E9 + E10 town wardrobes, the Twin Banks braid, the deepwater wave counter) has never reached them, **even though `logs/deploy.log` says `DEPLOYED ok` at 21:47:08 yesterday evening.**
 
 Probed, not assumed:
 
 ```
 $ node -e fetch('https://gold-rush-3in.pages.dev/version.json')
-HTTP 200: {"build":"49dbce7a","builtAt":"2026-07-24T17:20:23Z"}
+HTTP 200: {"build":"9fa96680","builtAt":"2026-07-24T17:20:23Z"}
 
-local dist/version.json: {"build":"dec695a7","builtAt":"2026-07-25T16:03:40Z"}
+local dist/version.json: {"build":"1ab1f6b4","builtAt":"2026-07-25T16:03:40Z"}
 ```
 
 `deploy.sh:32` writes that file into `dist/` immediately before upload, so it is a direct read of *what actually got published*. If the 21:47:08 run had published, the live value would be its build id. It is not.

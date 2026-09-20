@@ -341,7 +341,7 @@ test('a frontier dethronement becomes one stable Herald item', () => {
     id: 'frontier-b8cf2332d-the-claim-seed-hash',
     contractId: 'the-claim',
     seed: 'e1-the-claim-01',
-    eraStamp: 'b8cf2332d',
+    eraStamp: '89e97e293',
     previous: { profileName: 'Old Hand', decisions: 10 },
     current: { profileName: 'New Hand', decisions: 8 },
   }, 4);

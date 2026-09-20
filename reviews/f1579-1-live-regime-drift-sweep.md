@@ -107,8 +107,8 @@ READY-FOR-GATES
 
 ## DRAIN GATE — s1580 fire, 2026-08-09
 
-**Merged to main:** `4e39003ebec29d9d3fa22f6fbbc4e085f5d26bda` (`--no-ff`, ort strategy, clean)
-**Branch/tip:** `lane/c` @ `466cf12a6` · **Merge base:** `1ac739184d22b76037287f35fc94db66c6872a92`
+**Merged to main:** `ac1955d1d8998e87dce22a3aa89e9b9138f0954e` (`--no-ff`, ort strategy, clean)
+**Branch/tip:** `lane/c` @ `f0eb994ad` · **Merge base:** `5cfcd8cad2a5b730af0dab1b52daf337b70ea09f`
 **Gated by:** s1580 fire in detached worktree `worktrees/gate-s1580` (§3.0b custody) · `--workers=1` throughout (§3.1)
 **§3.0 block-check:** ✅ CLEAR — a real leaf, `status:"queued"` (not UNKNOWN)
 

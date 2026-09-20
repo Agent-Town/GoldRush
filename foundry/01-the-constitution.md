@@ -33,7 +33,7 @@ Each law below follows the same form: the general statement, the incident class 
 
 **Why.** The failure class is *cross-contamination*: an agent committing `-A` sweeps up another agent's half-finished work, host-side debris, or an orchestrator's in-progress bookkeeping, and now the history lies about who did what — and reverting one worker's mistake reverts another's success.
 
-**Gold Rush.** `git add -A` at repo root is constitutionally banned (§4.2), a lesson from a retro-gate incident (commit `a674606`) where a blanket add entangled unrelated work. Every task master's firewall lists exactly which paths it may touch; every drain commits path-scoped; fire bookkeeping carries an `sNN:` prefix so factory noise is separable from product signal at a glance. (1,506 of the repo's 2,907 commits are prefixed factory bookkeeping — greppable, ignorable, auditable.)
+**Gold Rush.** `git add -A` at repo root is constitutionally banned (§4.2), a lesson from a retro-gate incident (commit `aaab881`) where a blanket add entangled unrelated work. Every task master's firewall lists exactly which paths it may touch; every drain commits path-scoped; fire bookkeeping carries an `sNN:` prefix so factory noise is separable from product signal at a glance. (1,506 of the repo's 2,907 commits are prefixed factory bookkeeping — greppable, ignorable, auditable.)
 
 ---
 

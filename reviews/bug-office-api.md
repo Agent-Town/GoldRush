@@ -1,8 +1,8 @@
 # reviews/bug-office-api.md — RF-03a THE BUG OFFICE (api half)
 
-**Slice:** RF-03a (lane-b / lane/m4, tip `d02a7dc031d09133207dbe08f6cc1ef782f9d668` `runner(lane-b): lane-bug-office-api.md`)
+**Slice:** RF-03a (lane-b / lane/m4, tip `619aeb3f78fa0f71a3c38b21f3c3f1b481230ed5` `runner(lane-b): lane-bug-office-api.md`)
 **Drained:** s901 fire, 2026-07-22
-**Verdict:** PASS — merged to main (3-way `--no-ff`, base `6d6fc7f4`).
+**Verdict:** PASS — merged to main (3-way `--no-ff`, base `ab0931af`).
 
 ## What it does
 The server half of THE BUG OFFICE (owner pivot: the unused Assay Office becomes an in-game bug-report desk for
@@ -35,7 +35,7 @@ The spec exercises the function through a live wrangler worker with a KV binding
 token-gate assertions cannot pass without the real code path running, so this is genuine round-trip proof.
 
 ## Merge classification
-Base `6d6fc7f4`; main at `bbcba57d` (s901's RF-01 drain + lock). Clean 3-way, **zero conflicts** — all 6 files
+Base `ab0931af`; main at `d889b2c1` (s901's RF-01 drain + lock). Clean 3-way, **zero conflicts** — all 6 files
 NEW/additive, disjoint from RF-01's touch-set. LANE-TOUCHED: `functions/api/_bugs.ts`,
 `functions/api/bug-report.ts`, `functions/api/bugs.ts`, `functions/api/bugs/[id].ts`, `scripts/fetch-bugs.mjs`,
 `e2e/bug-office-api.spec.ts`. tasks/ churn in the two-dot diff = MAIN-MOVED (lane never touched it).

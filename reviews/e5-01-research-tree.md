@@ -2,8 +2,8 @@
 
 **Slice:** e5-01-research-tree  
 **Branch:** lane/m4  
-**Tip:** def6e877 feat: bank E5 Deepwater research tree  
-**Merge commit:** a3f682cd  
+**Tip:** 719e39ff feat: bank E5 Deepwater research tree  
+**Merge commit:** e851f7f0  
 **Drained by:** s562 fire, 2026-07-15  
 
 ## Verdict: PASS

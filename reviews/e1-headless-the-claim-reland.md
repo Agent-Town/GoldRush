@@ -1,6 +1,6 @@
 # e1-headless-the-claim-reland — RE-LAND of the headless Claim contract sim
 
-**Slice:** `e1-headless-the-claim-reland` (FIRE-AUTHORED s1391) · **Branch:** `lane/e2-arsenal` · **Tip gated:** `66f12233` · **Base:** `f3a50f0b` · **Gated by:** s1392 fire, 2026-08-02
+**Slice:** `e1-headless-the-claim-reland` (FIRE-AUTHORED s1391) · **Branch:** `lane/e2-arsenal` · **Tip gated:** `66f12233` · **Base:** `4e5195a7` · **Gated by:** s1392 fire, 2026-08-02
 
 ## VERDICT: MERGED — and the gate-side block it was authored to lift is DISCHARGED BY MEASUREMENT, not by argument.
 
@@ -25,7 +25,7 @@ All gates ran in a **detached worktree** (`gate-s1392`) per §3.0b — the conte
 
 ## Merge classification
 
-Base `f3a50f0b`. Main moved **5 files** since that base (`STATUS.md`, `logs/dashboard.html`, `tasks/BACKLOG.md`, `tasks/e1-headless-the-claim-reland.md`, `tasks/goals.json`) — all bookkeeping, **zero overlap** with the slice's 5 source paths. Every slice path is LANE-ONLY. Pure add; no conflicts, no 3-way graft needed.
+Base `4e5195a7`. Main moved **5 files** since that base (`STATUS.md`, `logs/dashboard.html`, `tasks/BACKLOG.md`, `tasks/e1-headless-the-claim-reland.md`, `tasks/goals.json`) — all bookkeeping, **zero overlap** with the slice's 5 source paths. Every slice path is LANE-ONLY. Pure add; no conflicts, no 3-way graft needed.
 
 ⚠️ **Note for future readers of the two-dot diff:** `git diff main..lane/e2-arsenal` shows 10 files including `tasks/e1-headless-the-claim-reland.md | 66 ------`. That is **not** a deletion by the lane — it is main-moved content the stale base lacks, the classic phantom-deletion shape. The commit's own `--stat` is the content: 5 files, 154 insertions.
 

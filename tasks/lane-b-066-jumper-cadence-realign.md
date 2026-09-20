@@ -28,7 +28,7 @@ Then `npm install --no-audit --no-fund`; `npm run build` green before touching a
 
 ## Why (the defect, dated, measured, and reconciled against source)
 
-On **2026-07-12**, commit `82543f27` rewired the mounted enemy animators (`src/entities/pools.ts`) from `assetSlots.charClaimJumper` to `charBanditBase`/`charBanditThief`. **The runtime half was correct and complete** (F-1144-1); only the e2e layer was stranded. A later repair migrated *part* of this test — `:220` and `:222` now query `char.bandit_base` — **but stopped before the assertions**, which is why this looked for 19 days like a one-line string fix.
+On **2026-07-12**, commit `0f5fb77e` rewired the mounted enemy animators (`src/entities/pools.ts`) from `assetSlots.charClaimJumper` to `charBanditBase`/`charBanditThief`. **The runtime half was correct and complete** (F-1144-1); only the e2e layer was stranded. A later repair migrated *part* of this test — `:220` and `:222` now query `char.bandit_base` — **but stopped before the assertions**, which is why this looked for 19 days like a one-line string fix.
 
 It is not one line. I ran it, then I corrected only the string and ran it again. **Of the five assertions below the migrated lookups, four are stale and one is already correct:**
 

@@ -10,7 +10,7 @@ CDP `Emulation.setCPUThrottlingRate` arms the clamp that 16 external CPU hogs pr
 
 ## Method
 
-`probe.mjs` here is `artifacts/f1591-1-frame-supply-cliff/probe.mjs` (merged `c213694c0`) with **one change of substance**: the lever. Instead of spawning external CPU hogs it opens a CDP session and calls `Emulation.setCPUThrottlingRate`, which throttles the **renderer main thread** directly.
+`probe.mjs` here is `artifacts/f1591-1-frame-supply-cliff/probe.mjs` (merged `5936ec48e`) with **one change of substance**: the lever. Instead of spawning external CPU hogs it opens a CDP session and calls `Emulation.setCPUThrottlingRate`, which throttles the **renderer main thread** directly.
 
 It also fixes F-1592-2 on itself: **the artifact records the lever's own state** — rate, whether the CDP call was applied, and an independent liveness measurement (a fixed 3M-iteration busy loop timed inside the page). The busy loop is what proves the throttle was live *during* the run, rather than asserted in prose.
 

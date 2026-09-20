@@ -5,7 +5,7 @@ FIRE-AUTHORED s2541, 2026-09-07. One fixture corrective for F-2541-1. Read AGENT
 
 ## Measured defect
 
-On unchanged main c03903e3a1905e26d91914532154fc014b699781, all three headless cases fail at the assay seam with `assay replay failed: malformed tape` (0/3, 4.06 s). The current grammar correctly refuses their historical orders: Mare Claim MOVE_TO at tick 0; Moth Season HOLD at tick 1820; Relay Rush HOLD at tick 0. The chapter writer candidate changes none of this and fails identically. The browser gold arm passes in the full fixture sweep. The complete Node command stops at its first group (742 tests: 736 pass, one fixture-sweep failure, five explicit skips), so its chained tail is not covered. This is not a timeout, contention excuse, or runtime gold regression.
+On unchanged main e53a12082daac6317e20da1ba9c85788021f0226, all three headless cases fail at the assay seam with `assay replay failed: malformed tape` (0/3, 4.06 s). The current grammar correctly refuses their historical orders: Mare Claim MOVE_TO at tick 0; Moth Season HOLD at tick 1820; Relay Rush HOLD at tick 0. The chapter writer candidate changes none of this and fails identically. The browser gold arm passes in the full fixture sweep. The complete Node command stops at its first group (742 tests: 736 pass, one fixture-sweep failure, five explicit skips), so its chained tail is not covered. This is not a timeout, contention excuse, or runtime gold regression.
 
 ## Implement
 

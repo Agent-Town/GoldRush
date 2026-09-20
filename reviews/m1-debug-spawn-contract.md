@@ -2,7 +2,7 @@
 
 ## Slice / branch / tip
 
-`tasks/lane-a-m1-debug-spawn-contract.md`; lane-a branch `feat/e10s-4-door`, tip `e5de72e8d9b8c90db52e35ef1ab4fbd9670d5247`. Merged as `fa135c9bcceb81469dce39d5d6dc14da2efb9c52`.
+`tasks/lane-a-m1-debug-spawn-contract.md`; lane-a branch `feat/e10s-4-door`, tip `b2dfb1d6cbbf1debd555adc66a04c59d70f329e0`. Merged as `fc395aae3ed9f6b96973aaee9c6406c78bfd2d0a`.
 
 ## Verdict
 
@@ -20,7 +20,7 @@ Native Node 26.4.0; detached current-main candidate `b9dd606ac910754a26b6e7381f4
 
 ## Merge classification
 
-Lane base `cec0e113c5bc3a84b33b62d84656b40824940cc9`; gate main `cb7204853`. Main changed none of these paths since lane base. No conflicts; ordinary no-ff merge. Live main runner edits to board-gold fixtures stayed outside this commit.
+Lane base `1498270e4005f366b13189bbf29b9aba27780217`; gate main `588ceab0b`. Main changed none of these paths since lane base. No conflicts; ordinary no-ff merge. Live main runner edits to board-gold fixtures stayed outside this commit.
 
 | Path | Classification |
 | --- | --- |

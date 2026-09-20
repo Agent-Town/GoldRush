@@ -16,9 +16,9 @@ Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead 
 
 *(Measured by the authoring fire at 2026-07-29T00:2xZ: `git log --oneline main..lane/e2-arsenal` was EMPTY — the lane was exactly at main. Re-derive it anyway; the board moves.)*
 
-## Why (spec `reviews/eight-winds-wiring-spec.md` §2.2; ladder release `tasks/BACKLOG.md:1643` "EIGHT-WINDS-WIRING is now FIRE-AUTHORABLE"; slice 2 shipped `c3d8470e`)
+## Why (spec `reviews/eight-winds-wiring-spec.md` §2.2; ladder release `tasks/BACKLOG.md:1643` "EIGHT-WINDS-WIRING is now FIRE-AUTHORABLE"; slice 2 shipped `26a84c0b`)
 
-`OrientationResolver.ts:1` already computes all eight winds and **collapses the diagonals to 4 rows at `:52`**. Eight-winds-wiring means: stop collapsing where a diagonal sheet exists. Slice 1 did the hero (`29bac3d9`), slice 2 did the three outlaws (`c3d8470e`). **These three E2 enemies are the last unbound rung whose art is already on disk and whose slots are not owner-gated.**
+`OrientationResolver.ts:1` already computes all eight winds and **collapses the diagonals to 4 rows at `:52`**. Eight-winds-wiring means: stop collapsing where a diagonal sheet exists. Slice 1 did the hero (`1b6bc748`), slice 2 did the three outlaws (`26a84c0b`). **These three E2 enemies are the last unbound rung whose art is already on disk and whose slots are not owner-gated.**
 
 Every premise below was re-verified at source by the authoring fire — **re-derive them anyway, and STOP if any is false:**
 

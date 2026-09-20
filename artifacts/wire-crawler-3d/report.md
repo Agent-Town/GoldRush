@@ -7,9 +7,9 @@ type: reference
 
 # Renderer-count re-record under the shared atlas (both 3D boss specs)
 
-Task `tasks/renderer-count-artifacts-under-shared-atlas.md` (F-SAD-3). `src/assets/SharedAtlasPlugin.ts`, merged as `3a47f1800`, registers a GLTFLoader plugin on the shared loader that returns ONE texture per image content hash across every GLB loaded through the same tracker. Four artifacts pin exact `renderer.info.memory.textures` values recorded before it; three of them read high afterwards and are re-measured here. Nothing else moved: no `calls`, `triangles` or `geometries` value, no measured tolerance band, and no assertion in either spec (morphs, wreckage, rail ride, dispose-on-kill, geometry deltas) was touched.
+Task `tasks/renderer-count-artifacts-under-shared-atlas.md` (F-SAD-3). `src/assets/SharedAtlasPlugin.ts`, merged as `bbf1c3832`, registers a GLTFLoader plugin on the shared loader that returns ONE texture per image content hash across every GLB loaded through the same tracker. Four artifacts pin exact `renderer.info.memory.textures` values recorded before it; three of them read high afterwards and are re-measured here. Nothing else moved: no `calls`, `triangles` or `geometries` value, no measured tolerance band, and no assertion in either spec (morphs, wreckage, rail ride, dispose-on-kill, geometry deltas) was touched.
 
-Measured on `cf91fe5e9` (lane/d), whose `src/` and `e2e/` trees are identical to main `bf934d54f` (main's only extra commit touches `STATUS.md`, `artifacts/s2520-fire/**` and `marketing/`). Dev server `npx vite --host 127.0.0.1 --port 5304`, specs run with `GR_CAPTURE_EXTERNAL_SERVER=1 GR_CAPTURE_BASE_URL=http://127.0.0.1:5304 ... --workers=1`.
+Measured on `c3884d89d` (lane/d), whose `src/` and `e2e/` trees are identical to main `8316edf72` (main's only extra commit touches `STATUS.md`, `artifacts/s2520-fire/**` and `marketing/`). Dev server `npx vite --host 127.0.0.1 --port 5304`, specs run with `GR_CAPTURE_EXTERNAL_SERVER=1 GR_CAPTURE_BASE_URL=http://127.0.0.1:5304 ... --workers=1`.
 
 ## Phase counts, old to new (`textures` only)
 

@@ -1,20 +1,20 @@
 {
  "task": "tasks/first-town-transfer-bisect.md",
  "measuredAt": "2026-09-06",
- "base": "e5f3ac8209c4b296ab2bb850a9d42d76b0493d65",
+ "base": "37c8beda67c49376eff81d738b94ca8eea9c14ca",
  "branch": "fix/first-town-transfer-bisect",
  "instrument": "scripts/deploy.sh:95-:110 reproduced command-for-command on scratch preview ports 5298+ (GR_RELEASE=e1 release build; GR_ASSET_DIET_BUNDLE=1 GR_ASSET_DIET_REUSE_BUILD=1; playwright.preview.config.ts; e2e/asset-diet.spec.ts --grep 'town cue-window budget through player entry$'; both projects, --workers=1, --trace=off). scripts/deploy.sh itself was NOT run: it takes the deploy lock and port 5297.",
 
  "bisect": {
-  "verdict": "NONE OF THE FOUR CANDIDATE MERGES MOVED THE NUMBER. The 'before' build 220886ab measures 21,609,438 bytes on both projects, not the 12.0 / 15.6 MB F-BUDGET-2 attributes to it. Normalised URL-by-URL, 220886ab and current main differ by exactly one response: townsfolk-assay-clerk.png (256,713 B) out, townsfolk-tavernkeeper.png (285,300 B) in - the town's random townsfolk pick. Net +28,587 B across all four merges.",
+  "verdict": "NONE OF THE FOUR CANDIDATE MERGES MOVED THE NUMBER. The 'before' build a957928d measures 21,609,438 bytes on both projects, not the 12.0 / 15.6 MB F-BUDGET-2 attributes to it. Normalised URL-by-URL, a957928d and current main differ by exactly one response: townsfolk-assay-clerk.png (256,713 B) out, townsfolk-tavernkeeper.png (285,300 B) in - the town's random townsfolk pick. Net +28,587 B across all four merges.",
   "rows": [
-   { "build": "220886ab", "what": "before (F-BUDGET-2's 12.0 / 15.6 MB build)", "desktopBytes": 21609438, "mobileBytes": 21609438, "desktopResponses": 482, "mobileResponses": 482, "extraRequestsVsBefore": "-" },
-   { "build": "b31adf7b1", "what": "merge e10-empty-harvest-anchors-unlaunchable", "desktopBytes": 21609438, "mobileBytes": 21609438, "desktopResponses": 482, "mobileResponses": 482, "extraRequestsVsBefore": "none" },
-   { "build": "1119a4e90", "what": "merge preview-unlock-all", "desktopBytes": 21609438, "mobileBytes": 21609438, "desktopResponses": 482, "mobileResponses": 482, "extraRequestsVsBefore": "none" },
-   { "build": "87abff832", "what": "merge e6-picnic-thirty-second-death", "desktopBytes": 21609438, "mobileBytes": 21560625, "desktopResponses": 482, "mobileResponses": 480, "extraRequestsVsBefore": "none" },
-   { "build": "85900872f", "what": "merge story-signal-emitters", "desktopBytes": 21560625, "mobileBytes": 21609438, "desktopResponses": 480, "mobileResponses": 482, "extraRequestsVsBefore": "none" },
-   { "build": "3691960c", "what": "after (F-BUDGET-2's 21.6 / 21.6 MB build)", "desktopBytes": 21609438, "mobileBytes": 21609438, "desktopResponses": 482, "mobileResponses": 482, "extraRequestsVsBefore": "none" },
-   { "build": "e5f3ac820", "what": "current main at task start", "desktopBytes": 21638025, "mobileBytes": 21638025, "desktopResponses": 482, "mobileResponses": 482, "extraRequestsVsBefore": "one townsfolk portrait swapped" },
+   { "build": "a957928d", "what": "before (F-BUDGET-2's 12.0 / 15.6 MB build)", "desktopBytes": 21609438, "mobileBytes": 21609438, "desktopResponses": 482, "mobileResponses": 482, "extraRequestsVsBefore": "-" },
+   { "build": "2c47b9664", "what": "merge e10-empty-harvest-anchors-unlaunchable", "desktopBytes": 21609438, "mobileBytes": 21609438, "desktopResponses": 482, "mobileResponses": 482, "extraRequestsVsBefore": "none" },
+   { "build": "89c40ad6d", "what": "merge preview-unlock-all", "desktopBytes": 21609438, "mobileBytes": 21609438, "desktopResponses": 482, "mobileResponses": 482, "extraRequestsVsBefore": "none" },
+   { "build": "24259db03", "what": "merge e6-picnic-thirty-second-death", "desktopBytes": 21609438, "mobileBytes": 21560625, "desktopResponses": 482, "mobileResponses": 480, "extraRequestsVsBefore": "none" },
+   { "build": "ac8656080", "what": "merge story-signal-emitters", "desktopBytes": 21560625, "mobileBytes": 21609438, "desktopResponses": 480, "mobileResponses": 482, "extraRequestsVsBefore": "none" },
+   { "build": "a2a86c37", "what": "after (F-BUDGET-2's 21.6 / 21.6 MB build)", "desktopBytes": 21609438, "mobileBytes": 21609438, "desktopResponses": 482, "mobileResponses": 482, "extraRequestsVsBefore": "none" },
+   { "build": "37c8beda6", "what": "current main at task start", "desktopBytes": 21638025, "mobileBytes": 21638025, "desktopResponses": 482, "mobileResponses": 482, "extraRequestsVsBefore": "one townsfolk portrait swapped" },
    { "build": "cure", "what": "main + the F-BUDGET-3 scene hold", "desktopBytes": 21638025, "mobileBytes": 21638025, "desktopResponses": 482, "mobileResponses": 482, "extraRequestsVsBefore": "none" }
   ]
  },
@@ -26,9 +26,9 @@
    { "run": 2, "desktopBytes": 10540927, "mobileBytes": 21638025 },
    { "run": 3, "desktopBytes": 21638025, "mobileBytes": 21638025 }
   ],
-  "swing": "2.05x on an identical bundle (10,540,927 to 21,638,025 desktop). The low reading sits beside the 12.0 MB the deploy recorded at 220886ab.",
+  "swing": "2.05x on an identical bundle (10,540,927 to 21,638,025 desktop). The low reading sits beside the 12.0 MB the deploy recorded at a957928d.",
   "sameBuildDifferentPipe": { "loopbackBytes": 21638025, "emulated8MbpsBytes": 6411798 },
-  "repoOwnEvidence": "The two 2026-08-10 revisions of artifacts/asset-diet/town-transfer-*.json read 15,557,580 / 16,638,442 B (39fce97d9) and 21,903,056 / 22,497,140 B (53b113b5d) - the full 'growth' F-BUDGET-2 attributes to four September merges, a month before any of them existed.",
+  "repoOwnEvidence": "The two 2026-08-10 revisions of artifacts/asset-diet/town-transfer-*.json read 15,557,580 / 16,638,442 B (83ac68b71) and 21,903,056 / 22,497,140 B (40a75f5a2) - the full 'growth' F-BUDGET-2 attributes to four September merges, a month before any of them existed.",
   "priorArt": "e2e/asset-diet.spec.ts:9-19 already records a 3.08x observed swing and calls the gate known-unreliable (F-1625-4, F-1627-2).",
   "consequence": "F-BUDGET-2's premise is falsified: there was no unexplained growth to find. Its row at tasks/BACKLOG.md:62 names four innocent merges and should be struck by the drain (outside this task's firewall)."
  },

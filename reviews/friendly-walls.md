@@ -1,6 +1,6 @@
 # Review — friendly-walls (own-palisade passability corrective)
 
-**Slice:** lane-friendly-walls (LANE-D) · **Branch:** lane/perf @`072b35f2` · **Base:** `94e5ba4e` · **Merged to main:** `f82f7a99` (drain, s807)
+**Slice:** lane-friendly-walls (LANE-D) · **Branch:** lane/perf @`29112805` · **Base:** `41f94d4b` · **Merged to main:** `fae5c2ec` (drain, s807)
 **Verdict:** ✅ MERGE — clean additive corrective; full gate battery green; enemy-side collision provably unchanged.
 
 ## What it does
@@ -26,7 +26,7 @@ Enemies are **unchanged**: their collision set stays `[...palisadeBlockers, ...h
 | `perf-04-determinism` (desktop) | pass — **same-seed future-state / economy / entity-timeline hashes identical** (mp determinism unaffected) |
 
 ## Merge classification
-Base `94e5ba4e`, 4 commits behind main at drain. Main's 4 newer commits touched only STATUS.md / docs / BACKLOG / task files — **disjoint from the lane's two files** (`src/game/Game.ts`, new `e2e/friendly-walls.spec.ts`). Clean 3-way `--no-commit` merge, no conflicts; committed path-scoped (code only; review + churn kept out).
+Base `41f94d4b`, 4 commits behind main at drain. Main's 4 newer commits touched only STATUS.md / docs / BACKLOG / task files — **disjoint from the lane's two files** (`src/game/Game.ts`, new `e2e/friendly-walls.spec.ts`). Clean 3-way `--no-commit` merge, no conflicts; committed path-scoped (code only; review + churn kept out).
 
 ## Findings
 - **F-1 (non-blocking, no corrective):** master scope item 3 asked for **two** named helpers (`heroBlockers()` *and* `enemyBlockers()`); the implementation named only `heroBlockers()` and the enemy site composes `[...palisadeBlockers, ...heroBlockers()]` inline. The divergence-prevention intent is substantially met — the shared subset now has a single source of truth — but a named `enemyBlockers()` would fully close the scope. Optional future cleanup; no behavior risk.

@@ -1,7 +1,7 @@
 # Review — sci-ceiling-ux (lane-a, s110 drain)
 
 **Slice:** SCI ceiling / "Continued Study" — make the science ceiling read forward instead of a dead-end.
-**Lane commit:** `542371a` (lane/m3) "sci: make science ceiling promise forward"
+**Lane commit:** `5c19723` (lane/m3) "sci: make science ceiling promise forward"
 **Merged:** onto clean main (s110 fire), `--no-commit` gated then committed.
 **Verdict:** ✅ PASS — merged.
 

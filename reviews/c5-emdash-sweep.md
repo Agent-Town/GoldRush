@@ -1,12 +1,12 @@
 # c5-emdash-sweep — no em-dashes in anything a player or visitor reads
 
-**Slice:** `c5-emdash-sweep` (lane-c) · **branch:** `lane/c` · **tip:** `6a7bafb26` · **base:** `baa00a12d`
+**Slice:** `c5-emdash-sweep` (lane-c) · **branch:** `lane/c` · **tip:** `eb62124c1` · **base:** `c9f3019ee`
 **Gated:** s2235, 2026-08-23 · **Merge:** NONE — see verdict
 **Gated in:** detached worktree `gate-s2235`, checked out at the **real merge commit** `d6e42a32f` (§3.0b custody). Checking out the merge — rather than materialising lane blobs with `git show` — keeps every file TRACKED in the gate, which avoids the vacuous-green class where a tracked-subject guard reads nothing about the slice it is gating.
 
 ## VERDICT: HOLD — NOT MERGED
 
-> ✅ **SUPERSEDED s2237 — THE HOLD IS DISCHARGED AND BOTH COMMITS ARE MERGED AT `ddcde57f0613fde99d986e884e0c471d02de18af`.** The verdict below is kept verbatim as the record of what was measured at s2235; it was correct when written. The corrective `c5b-emdash-pin-and-determinism` cured F-2235-4 and F-2235-5 exactly as this file prescribed, and both were re-gated together on the merged tree — see **`reviews/c5b-emdash-pin-and-determinism.md`** for the re-drain's evidence, the four-failure attribution, and the updated merge classification (main had moved 33 commits, not 18, by the time of the re-drain).
+> ✅ **SUPERSEDED s2237 — THE HOLD IS DISCHARGED AND BOTH COMMITS ARE MERGED AT `a51e1a279ff446914e051b441dcc8b8a95e11265`.** The verdict below is kept verbatim as the record of what was measured at s2235; it was correct when written. The corrective `c5b-emdash-pin-and-determinism` cured F-2235-4 and F-2235-5 exactly as this file prescribed, and both were re-gated together on the merged tree — see **`reviews/c5b-emdash-pin-and-determinism.md`** for the re-drain's evidence, the four-failure attribution, and the updated merge classification (main had moved 33 commits, not 18, by the time of the re-drain).
 
 The slice is 95% good work and its player-facing intent is exactly the owner's ruling. It is held for **one measured defect and one design question it exposes**, both in `assets/contracts/*/contracts.json`, both invisible to the gates the runner ran. `src/**` and `public/**` are clean and are not the problem.
 
@@ -68,7 +68,7 @@ Merged 20 failed / 22 passed · Control 20 failed / 22 passed · compared **elem
 
 ⚖️ **Priced honestly, because the direction matters and I do not want this over-read: gameplay outcome did NOT change.** Every scalar in the assertion is byte-identical across arms — `kills: 862`, `waves: 20`, `timeMs: 528400`, `gold: 0`, `secured: true`, `defaultedPicks: 21`, `defaultedSecure: 1`. **Only the log hash moved.** So this is not a sim regression; it is prose entering a hash that exists to detect sim regressions.
 
-**Why that is still a HOLD and not a re-pin-and-merge.** Re-pinning a determinism hash is lawful *only with a named cause* (F-1441-3), and I have one. But the history says this is a **new category**: `git log -S` shows the current pin was last set by `94921076a` (`ap16-2b-draft-reaches-door`), a functional slice. This pin has tracked behaviour, never copy. Accepting a prose-driven move silently establishes that **every future copy edit is a determinism event** — a real design question about whether player-facing prose belongs inside `eventLogHash` at all. Deciding that inside a drain, under time pressure, would launder a judgement into a green. That is the same call s2234 made on F-2234-3, and for the same reason.
+**Why that is still a HOLD and not a re-pin-and-merge.** Re-pinning a determinism hash is lawful *only with a named cause* (F-1441-3), and I have one. But the history says this is a **new category**: `git log -S` shows the current pin was last set by `3f2ed7927` (`ap16-2b-draft-reaches-door`), a functional slice. This pin has tracked behaviour, never copy. Accepting a prose-driven move silently establishes that **every future copy edit is a determinism event** — a real design question about whether player-facing prose belongs inside `eventLogHash` at all. Deciding that inside a drain, under time pressure, would launder a judgement into a green. That is the same call s2234 made on F-2234-3, and for the same reason.
 
 ## F-2235-4 — a missed pin, unambiguous and in scope
 
@@ -96,7 +96,7 @@ This one is a one-line fix with no judgement in it.
 
 ## Merge classification (recorded for the re-drain)
 
-Base `baa00a12d`, 18 commits of main movement. `lane-usable`: `ahead=1 behind=18`, 84 paths, **all HELD LANE-ONLY** — main had moved none. The `ort` merge produced **no conflicts**.
+Base `c9f3019ee`, 18 commits of main movement. `lane-usable`: `ahead=1 behind=18`, 84 paths, **all HELD LANE-ONLY** — main had moved none. The `ort` merge produced **no conflicts**.
 
 The one file both sides touched is `package.json`. Verified rather than trusted: main's `test:node-guards` roster and the lane's base roster are byte-identical, and the merged value differs from main by exactly one inserted token (`scripts/no-emdash-guard.test.mjs`). No main-side roster addition was lost.
 

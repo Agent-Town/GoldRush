@@ -171,8 +171,8 @@ test('north marker is not the run loss stake, south overrun still ends the run, 
   // `WaveSystem.planWave` sizes a wave from `waveBudget(wave)` rather than from the edge count.
   //
   // The cure was made, measured and reverted once already, on 2026-09-18, for exactly this
-  // assertion: `artifacts/open-maps-acceptance-e1-e4/report.md` §5c landed it as `025381a42` and
-  // pulled it as `251014ad0` because re-pointing this line was outside that task's firewall, and
+  // assertion: `artifacts/open-maps-acceptance-e1-e4/report.md` §5c landed it as `196c811d1` and
+  // pulled it as `742a53898` because re-pointing this line was outside that task's firewall, and
   // filed the two-edit commit a drainer would need. This is that commit's second edit.
   expect(edges).toEqual(['north', 'south']);
   expectClean(errors);

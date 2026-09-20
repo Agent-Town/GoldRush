@@ -1,4 +1,4 @@
-> ⛔ **SHIPPED — DO NOT QUEUE (Mistake #8 guard, verified s1074 2026-07-26).** Landed as `fa645b6c` *"e1: depth instrument plays honestly — projection fix unblocks the build loop"*, verified `git merge-base --is-ancestor fa645b6c main` = true. Retained per the RETENTION LAW as the authoring record.
+> ⛔ **SHIPPED — DO NOT QUEUE (Mistake #8 guard, verified s1074 2026-07-26).** Landed as `f8812586` *"e1: depth instrument plays honestly — projection fix unblocks the build loop"*, verified `git merge-base --is-ancestor f8812586 main` = true. Retained per the RETENTION LAW as the authoring record.
 
 # DRAFT — CLOSE THE HONEST-PLAY INSTRUMENT'S BUILD DEFECT (`ghostValid` never true)
 STATUS: **CLOSED 2026-07-26** (E1-depth review leg 2). Kept for the trail — the diagnosis below was right about the method (probe, don't guess) and wrong about all three suspects.
@@ -7,7 +7,7 @@ STATUS: **CLOSED 2026-07-26** (E1-depth review leg 2). Kept for the trail — th
 1. `screenPoint` is `(x, z, y)`, not `(x, y, z)` — the driver's first-tried shape aimed every build at the world **z = 0 line**, which on the-claim is the river. Not one of the five gates; the aim itself.
 2. `Enter` places a building, not `Space`. Even a legal ghost was never confirmed.
 The listed suspects were all innocent: `canAfford` is honest (`BuildSystem.ts:494` uses `costCurve(count)`, the same number the flat `cost` field carries), `matchesPlacement` was rejecting correctly (the aim really was in the river), and `snap()` never moved anything out of radius.
-Fix + proof: commit `14466c8f` — the-claim SECURED at wave 10 with 8 real builds, `reviews/shots-e1-depth/ghostfix2-report.json`. See `reviews/e1-gameplay-depth.md` §4.
+Fix + proof: commit `0c7f3a43` — the-claim SECURED at wave 10 with 8 real builds, `reviews/shots-e1-depth/ghostfix2-report.json`. See `reviews/e1-gameplay-depth.md` §4.
 
 ---
 *Original draft, unchanged, below.*

@@ -1,6 +1,6 @@
 # Review: e5-stillwater-front-crew-2 — the Stillwater's first crewed front (lane-c, codex runner on gpt-6-astra, attended drain 2026-09-05)
 
-**Slice/branch/tip:** `e5-stillwater-front-crew-2` · `lane/c` · runner commit `23272e783` over base `908be18e6` · merge `69080c3cd` (no-ff; BACKLOG union only).
+**Slice/branch/tip:** `e5-stillwater-front-crew-2` · `lane/c` · runner commit `427c627e7` over base `d2c092384` · merge `af0425c67` (no-ff; BACKLOG union only).
 **Verdict:** MERGED. The last uncured RESKIN row of the 2026-09-02 audit besides Dome Basin: `e5-stillwater` now EXERCISES its mechanic (a storm front that carries a crew through the fog while the noise hunt stays live).
 
 ## What it does
@@ -16,7 +16,7 @@ Contract data only (`assets/contracts/epoch-5-deepwater/contracts.json`, the `e5
 | audit null floor | `59ec4f5c` w3 | `f3da3f08` w3 |
 Both Chromium projects assert the same door laws (16/16 task-suite tests each); every other E5 map's pins preserved (report §"Other E5 pins preserved"). The v1 honest STOP's isolation clause was dropped by the v2 master (F-E5FC-1): Stillwater has no Claim-Boat loss seam; the hero falling to the front IS the loss route.
 
-## Merge classification (base `908be18e6`)
+## Merge classification (base `d2c092384`)
 | File | Class | Resolution |
 |---|---|---|
 | contracts.json (`e5-stillwater` row), mask table, null-floors.json, engine-era.json, the two specs, package.json, the new test, artifacts | LANE-TOUCHED / NEW | clean (main moved no corpus file since the base: only `scripts/fire-runner.sh`, tasks and docs) |

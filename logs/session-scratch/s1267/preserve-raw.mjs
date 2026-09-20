@@ -9,7 +9,7 @@ const arms = [
   { key: 'lanedir-concurrent', shell: 'fire (launchd headless claude, node v26.4.0)', cwd: 'worktrees/lane-b' },
 ];
 
-const out = { subject: 'e2e/gazette-welcome.spec.ts:88 toBeLessThan(1)', mainAt: 'a17307e6', arms: [] };
+const out = { subject: 'e2e/gazette-welcome.spec.ts:88 toBeLessThan(1)', mainAt: '0f9c19c2', arms: [] };
 for (const a of arms) {
   const meta = JSON.parse(readFileSync(`${OUT}/${a.key}-meta.json`, 'utf8'));
   const runs = [];

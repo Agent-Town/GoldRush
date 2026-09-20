@@ -1,6 +1,6 @@
 // s1608 — pre-flight facts for the f1608-1 art master: hash + PNG dimensions of the two
 // target sheets, so the master can pin the CURRENT state rather than "the shipped originals"
-// (Steam Wrecker's sheet was already touched by the s1193 partial repair, f61843c07).
+// (Steam Wrecker's sheet was already touched by the s1193 partial repair, 305af1f4a).
 import { createHash } from 'node:crypto'
 import { readFileSync } from 'node:fs'
 

@@ -108,7 +108,7 @@ test('same-game audit runs over every contract and keeps its row schema', () => 
   // ⚠️ NINTH STACK — ADMISSION MOVE (2026-08-21, `e9-devils-alley` A9 scheduled relocation):
   // four authored `harvestAnchors` move Devil's Alley out of not-offered by the same one that
   // moved relay-rush and the Hollow, 6 -> 5. UNLIKE the eighth stack this one had NO competing
-  // side: the branch is based on `b9fd6fecb` with nothing else in flight against this file, and
+  // side: the branch is based on `4d2491587` with nothing else in flight against this file, and
   // the pin below is this tree's own `--json` regen output, verbatim. ATTRIBUTED BY
   // REVERT-AND-REPRODUCE, not by arithmetic: emptying `harvestAnchors` in BOTH the contract and
   // the published mask table — and changing nothing else in the slice — reproduced 6/463/977/7/10
@@ -362,7 +362,7 @@ test('same-game audit runs over every contract and keeps its row schema', () => 
   // own 483/1037/7 was measured pre-fairground; the merged tree measures below, verbatim.
   // ⚠️ FOURTEENTH STACK — the `e5-stillwater` admission (2026-08-21, owner-authorised strike-cost
   // dial: "ok, lets do it, we can balance later during testing"). Exemptions 6 -> 5 and the door
-  // 32 -> 33. The numbers below were measured on the MERGED tree (main `d775fca71` merged into
+  // 32 -> 33. The numbers below were measured on the MERGED tree (main `4ab4981de` merged into
   // the branch BEFORE the audit was re-run), never by editing two sides' arithmetic into
   // agreement — which is the F-2084-1 failure this comment block exists to prevent, and which
   // git would happily auto-merge because both sides write the same-shaped digits.
@@ -475,7 +475,7 @@ test('same-game audit follows the door grammar through the final AP-16 verbs', (
   assert.equal(rows.filter((row) => row.contract === 'the-claim' && row.surface === 'choice'
     && row.direction === 'equal' && `${row['humans-get']} ${row['agents-get']}`.includes('PICK_UPGRADE')).length, 2,
   'ap16-2b pick must be reachable without a contradictory tape row');
-  assert.ok(has('the-claim', 'ability', 'BLAST_AT', 'equal'), 'eba8d15ea blast must be reachable');
+  assert.ok(has('the-claim', 'ability', 'BLAST_AT', 'equal'), '507c4a679 blast must be reachable');
   assert.ok(has('the-claim', 'ability', 'SET_WEAPON', 'equal'), 'weapon selection must reach the door as an idempotent SET');
   assert.ok(has('the-claim', 'choice', 'SECURE_CHOICE', 'equal'), 'the secure window must reach the door');
   assert.ok(has('the-claim', 'verb', 'CONTEXT_ACTION', 'equal'), 'building context actions must reach the door');

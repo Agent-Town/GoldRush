@@ -12,7 +12,7 @@
  */
 import fs from 'node:fs';
 
-const HASH = '0f9a798b261df5b66f26d1ee1af510ba358adc7d';
+const HASH = '21b22c39f79abf79a7e448b259ae713844e78111';
 const g = JSON.parse(fs.readFileSync('tasks/goals.json', 'utf8'));
 const sg = g.goals.find((x) => x.id === 'factory-infra').subgoals.find((s) => s.id === 'factory-truth');
 

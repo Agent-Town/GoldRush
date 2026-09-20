@@ -37,9 +37,9 @@ Expect the summary to report **1075 suspects of 1314 scanned**. If it reports **
 
 `tasks/BACKLOG.md` F-1464-1, verbatim (the row is 🔺 and open):
 
-> **F-1464-1 — THE F-1449-1 HALO IS NOT CURED ACROSS THE SHIPPED ROSTER: 1075 OF 1314 PROCESSED SPRITES STILL CARRY IT, AND THE LEDGER RECORDS THE CLASS AS CLOSED.** … `artifacts/f1450-4/halo-class-sweep.mjs` reads every PNG under `assets/processed/` and finds **1075 of 1314** carrying **>5%** key-magenta under transparency. ⚠️ **The runtime loads that tree DIRECTLY — there is no `public/`** … **THE MECHANISM, WHICH IS THE REUSABLE HALF: `c29040e7` fixed the EXTRACTOR, so it cures FUTURE extractions only — every sprite already on disk was never re-extracted, and nothing re-ran them.** … **GATE: closes when the loaded roster is re-extracted against the cured extractor, or an attended eye rules the residual halo acceptable per sprite class.**
+> **F-1464-1 — THE F-1449-1 HALO IS NOT CURED ACROSS THE SHIPPED ROSTER: 1075 OF 1314 PROCESSED SPRITES STILL CARRY IT, AND THE LEDGER RECORDS THE CLASS AS CLOSED.** … `artifacts/f1450-4/halo-class-sweep.mjs` reads every PNG under `assets/processed/` and finds **1075 of 1314** carrying **>5%** key-magenta under transparency. ⚠️ **The runtime loads that tree DIRECTLY — there is no `public/`** … **THE MECHANISM, WHICH IS THE REUSABLE HALF: `d2e69801` fixed the EXTRACTOR, so it cures FUTURE extractions only — every sprite already on disk was never re-extracted, and nothing re-ran them.** … **GATE: closes when the loaded roster is re-extracted against the cured extractor, or an attended eye rules the residual halo acceptable per sprite class.**
 
-This is a **live visual defect on the shipped roster**, including the Baron portrait drawn in the HUD (55.63% key-magenta) and `ui-title-emblem.png` (99.17%). It was gated on F-1464-2, which **closed by measurement** at `8e3c1491`. You are the first disjunct of that gate: re-extract, do not ask an owner.
+This is a **live visual defect on the shipped roster**, including the Baron portrait drawn in the HUD (55.63% key-magenta) and `ui-title-emblem.png` (99.17%). It was gated on F-1464-2, which **closed by measurement** at `c42d653a`. You are the first disjunct of that gate: re-extract, do not ask an owner.
 
 ## READ-FIRST
 

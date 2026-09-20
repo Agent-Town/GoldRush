@@ -1,4 +1,4 @@
-> **DRAIN RECEIPT — s1496, merged `7bfd62ee0427eaf5a31bb30266a3b538b08be5d0`.** This shift's verdict below is preserved
+> **DRAIN RECEIPT — s1496, merged `45f54b88f7ec6153cc8f92ff05125ef1255c31ad`.** This shift's verdict below is preserved
 > verbatim (retention law: supersede, never delete). Gated on the MERGED tree in a detached worktree
 > (`gate-s1496`, §3.0b custody — undecided content never entered main's working tree), not on the branch.
 > **Battery:** `tsc` rc=0 (zero output) · `build` rc=0, 2.61s · own spec `er01-e5-census` **8/8** ·
@@ -30,7 +30,7 @@
 # DEEPWATER SURGERY — cure E5's BROKEN contracts (milk shift, 2026-08-06)
 
 - **Slice:** `milk/deepwater-surgery` — the deepwater-surgery milk shift
-- **Branch / tip:** `milk/deepwater-surgery`, forked from `main` @ `565a145a5` (merge-base verified with `git merge-base`, not assumed — branch held **0** commits ahead at start)
+- **Branch / tip:** `milk/deepwater-surgery`, forked from `main` @ `f38638438` (merge-base verified with `git merge-base`, not assumed — branch held **0** commits ahead at start)
 - **Worktree:** `/Users/robin/Claude/Projects/gr-milk-deepwater-surgery` (solo-writer; `main` was held ACTIVE by the s1479 fire for this whole shift and was never touched)
 - **Files:** `assets/contracts/epoch-5-deepwater/contracts.json` (+8/−1) · `docs/bench/e5-readiness-census.md` (+68/−7) · `e2e/er01-e5-census.spec.ts` (+42/−2). **3 files, +118/−10.**
 
@@ -178,12 +178,12 @@ any. `gr-sim` against `e5-deepwater-claim` still throws `AP-07 supports only …
 
 ## Merge classification
 
-Merge base `565a145a5`, verified with `git merge-base`. Branch was **0 commits ahead** at fork, so every hunk
+Merge base `f38638438`, verified with `git merge-base`. Branch was **0 commits ahead** at fork, so every hunk
 here is this shift's.
 
 ⚠️ **`main` MOVED UNDER THIS SHIFT — measure three-dot, or you will read phantom deletions.** The s1480 fire
-drained the E7/E8/E9/E10 censuses while this work was in flight (~14 commits; tip went `565a145a5` →
-`bf758302e` and was still moving at write time). **`git diff main --stat` therefore reports ~844 deletions —
+drained the E7/E8/E9/E10 censuses while this work was in flight (~14 commits; tip went `f38638438` →
+`d65e06813` and was still moving at write time). **`git diff main --stat` therefore reports ~844 deletions —
 `e7`/`e8`/`e9`/`e10` census docs, specs, reviews, `goals.json`, `STATUS.md` — none of which this branch
 touches.** They are main's *newer* content read backwards through a stale base (Mistake #15 / the
 phantom-deletion class). The three-dot truth:
@@ -225,7 +225,7 @@ is left exactly as found.
 The order states the census *"marks `e5-deepwater-claim` and `e5-regatta` BROKEN (the census's worst
 verdict)"*. **It marks one.** `docs/bench/e5-readiness-census.md` line 9 reads **"BROKEN: 1 of 4"**, and the
 Claim's row verdict was **DATA-GAP**; its undeclared-dependency defect lived as *prose inside* F-ER01-E5-1,
-never as a BROKEN verdict. The census has exactly one commit (`76c049cb0`), so there is no earlier version
+never as a BROKEN verdict. The census has exactly one commit (`65d905d11`), so there is no earlier version
 that said otherwise — this was not staleness, it was a misread.
 
 **No harm to the deliverable:** both defects were real, both were named by the census, both are cured. But

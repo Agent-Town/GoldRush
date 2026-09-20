@@ -2,15 +2,15 @@
 
 **Slice:** `lane-b-fire-serialisation-lane-safety-control` (attempt 2, re-authored s1271)
 **Branch/tip:** `lane/m4` @ `5eedb159` — `runner(lane-b): lane-b-fire-serialisation-lane-safety-control.md`
-**Base:** `82a84a7d` (lane sat exactly at main at dispatch; `HEAD..main` = 0)
+**Base:** `8c616442` (lane sat exactly at main at dispatch; `HEAD..main` = 0)
 **Drained:** s1271, 2026-07-30
 
 ## Verdict
 
 **MERGE — and it lands the pre-registered SAFE row.** `worktrees/lane-b` obtained **6 workers** on
-the unflagged arm, so the `isFireShell` predicate shipped in `d1a0846d` is **lane-blind**:
+the unflagged arm, so the `isFireShell` predicate shipped in `20fda8a5` is **lane-blind**:
 s1270's `playwright.config.ts` change did **not** tax the lanes. **F-1270-3's stated limitation is
-now closed by measurement rather than by an absence argument, and the standing "revert `d1a0846d`
+now closed by measurement rather than by an absence argument, and the standing "revert `20fda8a5`
 on sight" contingency is DISCHARGED — do not revert it.**
 
 ## What it does
@@ -81,7 +81,7 @@ classification, not on taste**:
 **F-1271-4 — the lane is measurably ~3.8× faster in parallel, which re-confirms F-1267-1
 independently and on a different subject.** Arm A mean **14.97 s** vs arm B mean **56.88 s** =
 **3.80×**. F-1267-1 put the lane's parallel advantage at ~3.5×; this run reproduces it without
-being designed to. *Non-blocking — it corroborates the reason `d1a0846d` was deliberately scoped to
+being designed to. *Non-blocking — it corroborates the reason `20fda8a5` was deliberately scoped to
 the fire shell instead of set globally.*
 
 **F-1271-5 — the serial arm costs the same in both shells, which is the sharpest available support

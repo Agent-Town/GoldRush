@@ -1,8 +1,8 @@
 # Version rigor — declared harnesses name their version
 
 **Slice:** `lane-d-version-rigor.md`
-**Branch / tip:** `lane/d` / `16c050a20abf6558dd89ad5336d8b680589a9f23`
-**Merge:** `b78a67967d3c6d25abd87a733b3d8d5a6dc9570b`
+**Branch / tip:** `lane/d` / `8e53834ff39252170f457e8e48dcf7b10818e21b`
+**Merge:** `a41ae5be8eb688878c846f4d7cb28e097025b092`
 **Verdict:** **MERGED — new standings cannot declare a harness without a non-blank version; stored Season-1 rows remain valid history.**
 
 ## What it does
@@ -25,7 +25,7 @@ Full append-only transcript: `artifacts/version-rigor-gate-s1714.txt`.
 
 ## Merge classification
 
-Base `a53af33ba02f4e2042a465e27e6f2be5543c444b`. Before merge, each candidate path had the same blob on main as at the lane base, so all three were LANE-TOUCHED only. The branch merged without conflict after the complete detached battery.
+Base `0b5c2fe914d3d3f89c9d6978de3b115782849c00`. Before merge, each candidate path had the same blob on main as at the lane base, so all three were LANE-TOUCHED only. The branch merged without conflict after the complete detached battery.
 
 | Path | Classification | Decision |
 |---|---|---|

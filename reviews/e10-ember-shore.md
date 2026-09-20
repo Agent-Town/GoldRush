@@ -1,14 +1,14 @@
 # Review — e10-ember-shore contract + mask (drain)
 
-**Slice:** lane-b-e10-ember-shore-contract · **Source branch/tip:** lane/m4 `5e86441518175e7d03bb585dcac130046f2bd411` (`runner(lane-b): lane-b-e10-ember-shore-contract.md`) · **Drained-onto:** main `9b421c85` (s708) · **Fire:** s708 2026-07-17
+**Slice:** lane-b-e10-ember-shore-contract · **Source branch/tip:** lane/m4 `5e86441518175e7d03bb585dcac130046f2bd411` (`runner(lane-b): lane-b-e10-ember-shore-contract.md`) · **Drained-onto:** main `e3ca2f46` (s708) · **Fire:** s708 2026-07-17
 
 ## Verdict
-**MERGE — clean additive future-epoch data slice.** Surgical 4-file re-land (lane base `4180433c` was stale; lane touched only these 4 files, main had not touched any → 3-way is a no-conflict additive graft, done as a path-scoped checkout of the lane tip's version of each file).
+**MERGE — clean additive future-epoch data slice.** Surgical 4-file re-land (lane base `1aa719a6` was stale; lane touched only these 4 files, main had not touched any → 3-way is a no-conflict additive graft, done as a path-scoped checkout of the lane tip's version of each file).
 
 ## What it does
 Populates the final run-tile contract for Epoch 10 (Deepsky), "The Ember Shore" — a preserve/hold tile (keep the last warm vent alight beneath a cooled titan machine; no river/ford/water). Adds the authored contract entry, its published mask-truth table (cooling lava-vein hazard bands + fixture zone + water-agreement), and extends the mask-table conformance test + the board-gating spec to cover e10. **Zero player surface:** E10 is a locked future era — the board gates it (asserts the card renders count 0), and there is no `e10-ember-shore` reference anywhere in `src/`, so no card is ever built in normal play. Same class as e9-dome-basin (drained s705): inert data feeding future-epoch mask/build work, display-safe now.
 
-## Merge classification (per file, vs main `9b421c85`)
+## Merge classification (per file, vs main `e3ca2f46`)
 | File | Class | Resolution |
 |------|-------|-----------|
 | `assets/contracts/epoch-10-deepsky/contracts.json` | LANE-TOUCHED | main was `contracts: []`; lane adds the single `e10-ember-shore` entry → additive, no conflict |

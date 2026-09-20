@@ -9,7 +9,7 @@ Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead 
 GROUND-TRUTH pre-flight: grep `floodReset` in src/town/ — absent (verified 2026-07-16) = BUILD. If the loader already honors it, STOP and report SHIPPED.
 
 ## Why (3D-C factory gate, recorded at its E5 harbor delivery 2026-07-16, verbatim)
-"One factory gate is explicitly recorded: the runtime must honor floodReset: true so E2–E4 street props are removed rather than mounted underneath E5 replacements." The E5 submerged-harbor town merged (77502243 ancestry); its manifest sets `floodReset: true`; the loader accretes regardless — at E5 the drowned square would wrongly show four eras of street furniture stacked under the water. THE FLOOD BREAK law (owner 2026-07-16) requires the chain to break.
+"One factory gate is explicitly recorded: the runtime must honor floodReset: true so E2–E4 street props are removed rather than mounted underneath E5 replacements." The E5 submerged-harbor town merged (3d13cb61 ancestry); its manifest sets `floodReset: true`; the loader accretes regardless — at E5 the drowned square would wrongly show four eras of street furniture stacked under the water. THE FLOOD BREAK law (owner 2026-07-16) requires the chain to break.
 
 ## Scope
 1. In the era-prop manifest composition (TownTavernPilot.ts ~531): when building the manifest list for the active era, find the LATEST manifest ≤ active era with `floodReset === true`; if found, include only manifests FROM that era onward (chain 2). Earlier manifests (chain 1) are excluded entirely. No flag anywhere → behavior byte-identical to today.

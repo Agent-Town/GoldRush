@@ -2,7 +2,7 @@
 
 - **Slice:** `f1309-1-goal-ledger-pointer-guard` (master `tasks/lane-a-f1309-1-goal-ledger-pointer-guard.md`, FIRE-AUTHORED s1309)
 - **Branch / tip:** `lane/m3` @ `157e47c7` — one runner commit
-- **Merge base:** `d19a6f7b`
+- **Merge base:** `3fb8bc8d`
 - **Drained by:** s1310, 2026-08-01
 - **§3.0 drain-block-check:** ✅ CLEAR under `--strict`, matched BY NAME (`f1309-1-goal-ledger-pointer-guard`, status `queued`)
 
@@ -86,7 +86,7 @@ EXIT CODE (drifted tree): 1
 
 ## Merge classification
 
-`git diff --stat d19a6f7b main` over the firewall paths is **empty** — **zero MAIN-MOVED**. Both files are
+`git diff --stat 3fb8bc8d main` over the firewall paths is **empty** — **zero MAIN-MOVED**. Both files are
 **LANE-TOUCHED only**, so the graft is a clean path-scoped checkout, proved **byte-identical to the lane tip**
 (`git diff lane/m3 -- <both files>` empty). 108 insertions / 29 deletions in the guard, 37 / 1 in its test.
 `tasks/goals.json` and `scripts/law-pointer-baseline.json` are **fire-side additions in the drain commit**,
@@ -100,8 +100,8 @@ The runner's stop reason, **verified at source rather than inherited**:
 
 - `tasks/BACKLOG.md:1709` — the coordinate s1309 wrote for the owner's banking quote — resolves to a
   **blank line**. The quote is at `:1711`.
-- Cause, established by reading the commits rather than guessing: at `1cd97769` (s1309's parent) the quote
-  **was** at `:1709`. s1309's cure commit `f3b6a5fa` wrote `:1709` into `goals.json` **and in the same
+- Cause, established by reading the commits rather than guessing: at `db8a72b8` (s1309's parent) the quote
+  **was** at `:1709`. s1309's cure commit `b0c697a5` wrote `:1709` into `goals.json` **and in the same
   commit prepended a 2-line F-1309-1 finding row at BACKLOG line ~21**, pushing the quote to `:1711`.
   BACKLOG went 2238 → 2240 lines. **The pointer was wrong before the commit that created it had landed.**
 

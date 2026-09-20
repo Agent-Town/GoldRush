@@ -1,7 +1,7 @@
 # AP-06b corrective — panel ladder and voice
 
 **Slice:** `ap-06b-panel-ladder-and-voice` (lane-c)
-**Branch/tip:** `lane/e2-arsenal` @ `6c44c6f3` (base `e3355002`, delta = 2 files / +192, byte-identical to the salvage `save/ap-06b-adapter-wiring` @ `2f216af0`)
+**Branch/tip:** `lane/e2-arsenal` @ `6c44c6f3` (base `bd3804f4`, delta = 2 files / +192, byte-identical to the salvage `save/ap-06b-adapter-wiring` @ `2f216af0`)
 **Run:** `tasks/runs/20260729-181305-lane-c-lane-c-ap-06b-panel-ladder-and-voice.md.log`
 **Gated by:** s1218 fire, 2026-07-29
 **Verdict:** ⛔ **NOT MERGED — LAWFUL STOP ACCEPTED.** The runner declared case (b), a permission-ladder breach, and stopped exactly where its master told it to. **I verified its mechanism at source, end-to-end, and it is correct.** I also established a scope limit the runner did not claim, which changes what the cure must be.
@@ -38,7 +38,7 @@ So the runner proved a real breach of a declared rung on a path whose only produ
 
 ## F-1218-2 — SPEC/CODE RUNG DIVERGENCE ON `auto_repair` (owner ruling, informational, nothing to fix today)
 
-`specs/m4-agent-ux/README.md:14` places repair at **L2** ("L2 tend & repair (walls, buildings)"). The code declares `auto_repair` at **`level: 1`** (`ToolSurface.ts:370`), and `e2e/m4-09-agent-rung-clarity.spec.ts:106` **asserts** `'needs approval-required (rung 1)'`. Shipped `3c851cd3`, 2026-07-07 — three weeks green.
+`specs/m4-agent-ux/README.md:14` places repair at **L2** ("L2 tend & repair (walls, buildings)"). The code declares `auto_repair` at **`level: 1`** (`ToolSurface.ts:370`), and `e2e/m4-09-agent-rung-clarity.spec.ts:106` **asserts** `'needs approval-required (rung 1)'`. Shipped `6dae6d95`, 2026-07-07 — three weeks green.
 
 Either the spec's ladder line was superseded in practice or a rung slipped and its test encoded the slip. **I am not ruling on it and I did not touch either side.** It is recorded here because any cure for F-1218-1 will build a tool→rung table, and a table "derived from the capability declarations" would silently ratify rung 1 for repair against a spec that says 2. **Measure before you table.**
 

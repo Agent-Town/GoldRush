@@ -27,9 +27,9 @@ TargetingSystem (nearest-XZ + sticky target until dead/out-of-range+1m), CombatS
 - Screenshots: `m1-02-combat-moment.png` (ring of Claim Jumpers, dust-puff kill, XP HUD), `m1-02-bolt-flight.png` (teal bolt + tracer airborne).
 - §9.2/§9.4: no firearm language anywhere (`Spark Rig`, bolt, arc; `ShooterHandle` is spec-canon); deaths are dust-puffs; HUD copy stays charming ("P — catch your breath").
 
-## Mid-flight merge with `0a4cf2f` (feedback session)
+## Mid-flight merge with `1c0f857` (feedback session)
 
-A parallel session committed `fix(feedback)` (transient banner, gold float text, frame pacing, 57° camera) *while this slice was in flight* — it landed after this session's `~/gr` baseline was cut. Resolved by 3-way merge (base `e1164ec`): their UI `Vfx` kept at `systems/Vfx.ts`; this slice's combat vfx renamed to `systems/CombatVfx.ts` (class `CombatVfx`); `Game.ts` unions both (their float-text on gold gain + our combat update), `Balance.ts`/`UiBridge.ts`/`vite-env.d.ts` merged clean. Full post-merge re-verification: build ✓, tsc ✓, **e2e desktop 18/18** (incl. their `feedback-fx.spec.ts` 2/2). Process fix adopted: sessions must announce themselves in STATUS.md (ACTIVE lock) — the feedback session didn't, and its STATUS.md write-back also reverted this session's lock mid-run.
+A parallel session committed `fix(feedback)` (transient banner, gold float text, frame pacing, 57° camera) *while this slice was in flight* — it landed after this session's `~/gr` baseline was cut. Resolved by 3-way merge (base `285db06`): their UI `Vfx` kept at `systems/Vfx.ts`; this slice's combat vfx renamed to `systems/CombatVfx.ts` (class `CombatVfx`); `Game.ts` unions both (their float-text on gold gain + our combat update), `Balance.ts`/`UiBridge.ts`/`vite-env.d.ts` merged clean. Full post-merge re-verification: build ✓, tsc ✓, **e2e desktop 18/18** (incl. their `feedback-fx.spec.ts` 2/2). Process fix adopted: sessions must announce themselves in STATUS.md (ACTIVE lock) — the feedback session didn't, and its STATUS.md write-back also reverted this session's lock mid-run.
 
 ## Carried minors (→ m1-07 unless noted)
 

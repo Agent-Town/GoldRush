@@ -1,6 +1,6 @@
 # Task lane-board-chapter-seed-scope: FOUR E2E FIXTURES SEED THE ACTIVE EPOCH AT THE UNSCOPED KEY, SO PROFILE BOOT FALLS BACK TO FRONTIER AND THE CHAPTER TAB THEY CLICK NEVER RENDERS
 
-**FIRE-AUTHORED (attended review welcome) — s1112, 2026-07-27. This is the corrective that F-1112-1 ordered.** It is the direct successor to `lane-board-chapter-tab-adoption`, merged this fire at **`5f7e43e6`** as *correct but incomplete*: that slice moved these four specs onto the live chapter-tab control exactly as ordered, and their runner then closed **NOT-READY-FOR-GATES** because the navigation is still red — for a reason in a **different line** that its firewall forbade it to touch. See `reviews/board-chapter-tab-adoption.md`.
+**FIRE-AUTHORED (attended review welcome) — s1112, 2026-07-27. This is the corrective that F-1112-1 ordered.** It is the direct successor to `lane-board-chapter-tab-adoption`, merged this fire at **`77fdb6b9`** as *correct but incomplete*: that slice moved these four specs onto the live chapter-tab control exactly as ordered, and their runner then closed **NOT-READY-FOR-GATES** because the navigation is still red — for a reason in a **different line** that its firewall forbade it to touch. See `reviews/board-chapter-tab-adoption.md`.
 
 **READ THIS FIRST: `src/**` IS NOT THE DEFECT AND IS FIREWALLED.** The predecessor's runner searched for a src-side chapter-filtering bug and found none — *"No `src/` defect found or touched; its chapter filtering behaves correctly."* The defect is four fixture lines.
 
@@ -12,7 +12,7 @@ CODEX: model=gpt-5.6-sol effort=medium
 
 ## WHY (every claim below was read at source s1112, not grepped and not inherited)
 
-**THE SYMPTOM.** After `5f7e43e6`, all four specs call `goToContractPage(page, '<contract-id>')`, which clicks `contract-chapter-tab-<epochId>`. All four time out there. Runner-measured: desktop **3/7 before → 3/7 after**, `4 failed / 3 passed (6.4m)`, and the `Missing chapter` throw **never fired** (so the manifest lookup is fine — the tab simply is not in the DOM).
+**THE SYMPTOM.** After `77fdb6b9`, all four specs call `goToContractPage(page, '<contract-id>')`, which clicks `contract-chapter-tab-<epochId>`. All four time out there. Runner-measured: desktop **3/7 before → 3/7 after**, `4 failed / 3 passed (6.4m)`, and the `Missing chapter` throw **never fired** (so the manifest lookup is fine — the tab simply is not in the DOM).
 
 **THE CAUSE.** The fixtures seed the active epoch at the **raw** key while the runtime reads it **profile-scoped**:
 
@@ -43,7 +43,7 @@ There **is** a migration that looks like it should already rescue the raw seed: 
 1. `git log --oneline main..lane/e2-arsenal` → **must be EMPTY.** s1112 measured `lane/e2-arsenal` at **0 ahead / 21 behind main**, worktree clean. **Any** commit means undrained work: **STOP and report** (LANE-SAFETY LAW — a pre-flight `reset --hard` over unmerged output is how w1-03 and polish-02 were destroyed).
 2. Start from fresh main: `git checkout -B lane/e2-arsenal main`.
 3. **NOW, and only now, the premise checks** — a stale lane answers for its own tree, not for main (F-1090-2):
-   - `grep -c 'goToContractPage' e2e/e2-incline.spec.ts` → **must be ≥1.** If 0, `5f7e43e6` is not in your base and this task's premise is dead: **STOP and report.**
+   - `grep -c 'goToContractPage' e2e/e2-incline.spec.ts` → **must be ≥1.** If 0, `77fdb6b9` is not in your base and this task's premise is dead: **STOP and report.**
    - `grep -rc 'contract-page-dot' e2e/` → **must be 0.** Non-zero means the predecessor was reverted: **STOP and report.**
    - `grep -c 'profileDataKey' e2e/board-era-chapters.spec.ts` → **must be ≥1** (the reference idiom still exists). If 0: **STOP and report.**
 
@@ -68,7 +68,7 @@ The profile id is `'robin'` in all four, matching each fixture's own `town` / `s
 
 **NO:** any file under `src/**` · any other `e2e/**` spec · `playwright.config.ts` · `tasks/**` · `STATUS.md` · `reviews/**` · `.wrangler/**` · `artifacts/**` (see the note below) · any shared helper module · any new dependency.
 
-> **Artifact/`.wrangler` note:** the runner's lane commit currently sweeps `.wrangler/tmp` scratch and artifact churn into the commit (F-1108-2 — the fix `019e943a` is **inert** until Robin restarts the runner). That is not yours to fix and not a violation on your part; just do not *author* changes there. The draining fire will land your work path-scoped.
+> **Artifact/`.wrangler` note:** the runner's lane commit currently sweeps `.wrangler/tmp` scratch and artifact churn into the commit (F-1108-2 — the fix `bdd22640` is **inert** until Robin restarts the runner). That is not yours to fix and not a violation on your part; just do not *author* changes there. The draining fire will land your work path-scoped.
 
 ## SELF-CHECK — and note what success is NOT
 

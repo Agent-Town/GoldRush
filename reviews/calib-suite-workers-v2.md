@@ -20,7 +20,7 @@ instrument therefore did not run.
 - `grep -n "workers" playwright.config.ts` printed nothing.
 - `node -e "console.log(require('os').cpus().length)"` printed `16`.
 - The prior VOID report's latest commit is
-  `642c5d5d drain: F-1101-1 calibration report lands VOID — the 17.88% drift was one flaky test, not an unstable box (F-1107-1/2)`.
+  `7954ce66 drain: F-1101-1 calibration report lands VOID — the 17.88% drift was one flaky test, not an unstable box (F-1107-1/2)`.
 
 ## Quiescence evidence
 
@@ -66,7 +66,7 @@ consequences"). Merged **path-scoped to this file alone**.
 
 **Merge classification.** Three-dot vs merge-base = `reviews/calib-suite-workers-v2.md` **only** —
 a clean single-file docs diff. `scripts/ticker-stats.mjs` appears in the *two-dot* diff only because
-**main moved under the lane** (F-1125-1, committed `109a11ba` at 14:55:58, after this run reset at
+**main moved under the lane** (F-1125-1, committed `6d332aa5` at 14:55:58, after this run reset at
 ~14:51); it is **MAIN-MOVED-ONLY** and main's version was kept. Zero `src/`, zero `e2e/`.
 
 ✅ **F-1124-2 DID NOT RECUR.** The previous attempt's runner commit swept two unrelated

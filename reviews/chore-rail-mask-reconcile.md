@@ -1,9 +1,9 @@
 # reviews/chore-rail-mask-reconcile.md
 
 - **Slice:** chore-rail-mask-reconcile (lane-d two small debts)
-- **Branch/tip:** lane/perf @ 3d820074 (runner(lane-d) commit)
-- **Base:** 270a96af (= main pre-s636 lock; lock commit 396a5714 touched STATUS.md only → disjoint)
-- **Merge commit:** de9cbcc2
+- **Branch/tip:** lane/perf @ 1c73b23e (runner(lane-d) commit)
+- **Base:** 17894144 (= main pre-s636 lock; lock commit fcb8b54f touched STATUS.md only → disjoint)
+- **Merge commit:** 64faec0f
 - **Verdict:** ✅ SHIPPED — clean additive data/test drain, no runtime src.
 
 ## What it does
@@ -18,7 +18,7 @@ Reconciles three E3-mask-table debts. (1) **Canyon Works (F-3DD-rail):** the pub
 | src/*.ts touched | **none** — data/config/test only; no runtime, no render, no adjacent playwright suite affected |
 | Player visibility | none — mask tables are contract data, unwired until their terrain slice (display-safe) |
 
-## Merge classification (base 270a96af)
+## Merge classification (base 17894144)
 | File | Class | Resolution |
 |------|-------|-----------|
 | `artifacts/chore-rail-mask-reconcile/report.md` | NEW | free |

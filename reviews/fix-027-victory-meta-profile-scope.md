@@ -5,7 +5,7 @@
 
 ## Context
 `task-027-victory-must-matter` was RED on main (both projects). VERIFIED pre-existing by
-the s93 corrective author: reproduced at s92 tip `4f6f1c3` with s93's Game.ts reverted, so
+the s93 corrective author: reproduced at s92 tip `1c5cfae` with s93's Game.ts reverted, so
 it was NOT introduced by the w1-04 or m4-05 drains. Root cause: the demo-profiles-v2 storage
 refactor moved `META_PROGRESS_KEY` and `SCOREBOARD_KEY` into `PROFILE_DATA_KEYS`, so those
 values now persist to the profile-scoped key (`profileDataKey('robin', KEY)` =

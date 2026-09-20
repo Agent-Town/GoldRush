@@ -2,7 +2,7 @@
 
 Branch: `sol/town-blender-v3`
 
-Wave-1 parent: `416bffaa6e34063c7603a887b5a69be347e72195`
+Wave-1 parent: `cefcc50b974e5b7b9efc8b9aaba31a0ea5595bcf`
 
 Scope: Tavern variant B only. The plaza/horizon commit was not started.
 
@@ -51,7 +51,7 @@ Scope: Tavern variant B only. The plaza/horizon commit was not started.
 - All `ts-01` through `ts-04` cases are green. The four reds are the same two pre-existing assertions repeated on desktop/mobile:
   1. `town-t4-growth.spec.ts` expects `town-growth-general-store`; the parent queues `ledger-page:the_claim` first.
   2. `town-t6-surfaces.spec.ts` expects three menu actions; the parent also renders `Claim Ledger`.
-- A detached parent-baseline run at `22824e0d` reproduced those same four failures. They were not changed inside this visual-only territory.
+- A detached parent-baseline run at `36995e6d` reproduced those same four failures. They were not changed inside this visual-only territory.
 
 ## Scope proof
 

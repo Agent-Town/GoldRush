@@ -1,8 +1,8 @@
 # art-herald-class-engravings — the ongoing Herald's reusable class engravings (GG-03d)
 
-- **Slice:** GG-03d, `tasks/art-herald-class-engravings.md` (owner-authored, `4ee9c12f` 2026-07-30)
+- **Slice:** GG-03d, `tasks/art-herald-class-engravings.md` (owner-authored, `2370f8bf` 2026-07-30)
 - **Slot:** ART. Codex `image_gen`, native run `019fb103-5aac-7b02-83e6-3845851b9213`
-- **Bytes landed in:** `9f8d11c9` — **the art runner's own commit**, not a fire's (see the contamination note)
+- **Bytes landed in:** `b00194fa` — **the art runner's own commit**, not a fire's (see the contamination note)
 - **Drained by:** s1255 fire, 2026-07-30
 - **Goal leaf:** `gg-03d-herald-class-engravings`
 
@@ -93,7 +93,7 @@ agent-tech teal, illustrated and never photoreal.
 | SHIPPED (blob-identical to main) | 197 | — |
 
 **LOCAL-ONLY has gone 19 files / 67.79 MB → 0.** s1253 measured those 19 as owing a push and
-s1254 cited the figure unchanged; s1254's backup push (`020373c1..b28129b5`) evidently cleared
+s1254 cited the figure unchanged; s1254's backup push (`be9d9457..d93d1619`) evidently cleared
 them. Worth stating because it is the one bucket a fire can actually discharge on its own.
 
 **AT RISK is unchanged at 748 / 566.47 MB and is NOT this batch's doing** — these eight
@@ -102,7 +102,7 @@ worktree, so its output is untracked by default), owner-gated on F-1193-2 / F-12
 
 ### The batch's own commit is contaminated — F-1253-3, confirmed
 
-`9f8d11c9` is titled for this art task but was made with a **repo-root broad `add`**, so
+`b00194fa` is titled for this art task but was made with a **repo-root broad `add`**, so
 besides these 8 plates and the run note it also swallowed the entire s1253 fire (guard
 scripts, `package.json`, session scratch, regenerated `artifacts/asset-diet/*.png`). That is
 why this review classifies **per file** and cites blob hashes rather than the commit: the

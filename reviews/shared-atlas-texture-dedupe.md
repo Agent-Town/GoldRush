@@ -1,6 +1,6 @@
 # Review: shared-atlas-texture-dedupe — one atlas resident per landmark pack (lane-d, codex runner on gpt-6-astra xhigh, attended drain 2026-09-05)
 
-**Slice/branch/tip:** `shared-atlas-texture-dedupe` · `lane/d` · runner commit `79683d859` over base `a16b19354` · merge `3a47f1800` (no-ff; package.json + BACKLOG unions).
+**Slice/branch/tip:** `shared-atlas-texture-dedupe` · `lane/d` · runner commit `4ddc4986c` over base `3dba120ec` · merge `bbf1c3832` (no-ff; package.json + BACKLOG unions).
 **Verdict:** MERGED. F-ASTRA-4 cured. The runner declared "acceptance BLOCKED" on three adjacent reds it proved with a native-loader control were not its own; the attended re-gate on a quiet host confirms two of them were load and the third is the pre-existing F-T3D-1.
 
 ## What it does
@@ -16,7 +16,7 @@
 | `npm run test:node-guards` | see the drain commit message |
 | Residency (runner, `renderer.info.memory.textures`, full tier) | The Claim desktop 58 → 54, 390px 56 → 52; Hill Mine 58 → 54 / 56 → 53; Mare Claim 54 → 50 / 52 → 48; landmark-atlas estimate 26.67 → 5.33 MiB per pack (five decoded images → one, 21.33 MiB saved per pack) |
 
-## Merge classification (base `a16b19354`)
+## Merge classification (base `3dba120ec`)
 | File | Class | Resolution |
 |---|---|---|
 | `src/assets/SharedAtlasPlugin.ts`, `scripts/shared-atlas-plugin.test.mjs`, `e2e/shared-atlas-dedupe.spec.ts` | NEW | clean |

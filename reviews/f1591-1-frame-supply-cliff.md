@@ -72,7 +72,7 @@ Only the probe, raw traces, and this report changed. No executable product byte 
 
 ## DRAIN VERDICT — s1592 (2026-08-09)
 
-**MERGED** as `c213694c0d19ae133c4243a39c6ac329c438fb3e`. Base: `main` at `7e533fc36`. Branch `lane/b` was `ahead=1 behind=3`, `tracked-dirt=0 untracked=0`; all 11 paths classified **LANE-ONLY** by `scripts/lane-usable.mjs` (nothing to graft, no MAIN-MOVED file, no conflict).
+**MERGED** as `5936ec48ec41568cd5ab79f6beb324f879d0ab9d`. Base: `main` at `435ce0d06`. Branch `lane/b` was `ahead=1 behind=3`, `tracked-dirt=0 untracked=0`; all 11 paths classified **LANE-ONLY** by `scripts/lane-usable.mjs` (nothing to graft, no MAIN-MOVED file, no conflict).
 
 **§3.0** `drain-block-check` → `CLEAR` (leaf `f1591-1-frame-supply-cliff`, was `status="queued"`).
 

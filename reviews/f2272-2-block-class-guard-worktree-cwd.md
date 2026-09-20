@@ -1,7 +1,7 @@
 # f2272-2 — block-class-guard declares and skips in linked worktrees
 
 **Slice:** `f2272-2-block-class-guard-worktree-cwd`
-**Branch:** `lane/a` · **lane tip** `ae58da880` · **gated commit** `96490b2ed` · **merge** `40b05ed60`
+**Branch:** `lane/a` · **lane tip** `49968d16f` · **gated commit** `4efa77146` · **merge** `51489b863`
 **Drained by:** s2273 (fire), 2026-08-24
 
 ## VERDICT: MERGED — with one blocking finding cured in the gated commit (F-2273-2)
@@ -66,7 +66,7 @@ the diff direction:
 
 | ref | `e10s-4-ember-shore-door` status |
 |---|---|
-| merge-base `a951e1fd9` | `planned` |
+| merge-base `583ec6799` | `planned` |
 | **`lane/a` tip** | **`ready-for-gates`** |
 | `main` | `planned` |
 
@@ -80,7 +80,7 @@ the runner correctly identified it as foreign — and then swept it in anyway wi
 whole-file `git add tasks/goals.json`. Observing dirt and *not committing* it are different
 acts. This is the known swallow shape (a path-scoped add is still whole-FILE).
 
-**Cure:** the gated commit `96490b2ed` splices that one status back to `planned` — the
+**Cure:** the gated commit `4efa77146` splices that one status back to `planned` — the
 value **both** main and the merge-base carry, so this is a revert, not an override, and it
 takes no position on what e10s-4 should eventually be. Splice, never re-serialize: the edit
 is 8 bytes on one line of a 1.85 MB file, asserted to have found `ready-for-gates` before
@@ -97,7 +97,7 @@ Between the gate and the merge, a concurrent attended session added two masters
 (`gauntlet-heat3c-shim-streaming`, `gauntlet-heat4-streaming-field`), their two `queued`
 leaves, and a BACKLOG row — leaving `tasks/goals.json` and `tasks/BACKLOG.md` dirty, which
 made the planned `--ff-only` land of the gated commit impossible. Committed as attended
-bookkeeping per §2A (`ab751a00a`), attributed to its author, after verifying the captured
+bookkeeping per §2A (`d86894860`), attributed to its author, after verifying the captured
 state was **complete and coherent** (goals.json parses; both masters end `READY-FOR-GATES`;
 the BACKLOG row is a finished paragraph) rather than a mid-write snapshot.
 
@@ -111,8 +111,8 @@ requires regardless.
 
 ## Merge classification
 
-Base `a951e1fd9` (merge-base of `main` and `lane/a`). Landed via the **gated commit itself**
-(`96490b2ed`), so what merged is what was tested, plus a three-way against the concurrent
+Base `583ec6799` (merge-base of `main` and `lane/a`). Landed via the **gated commit itself**
+(`4efa77146`), so what merged is what was tested, plus a three-way against the concurrent
 attended bookkeeping.
 
 | file | class | resolution |

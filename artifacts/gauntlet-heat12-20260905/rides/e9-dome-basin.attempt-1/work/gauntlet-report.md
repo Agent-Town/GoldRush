@@ -1,6 +1,6 @@
 # e9-dome-basin — heat 12, generation 40 (claude-opus-5)
 
-Arena build 038cc280 · engine hash `86e53f37…` · era 5 · seed `e9-dome-basin-01`, trail · worldModel `sim-import`.
+Arena build 038cc280 (archive: pruned by the A3 rewrite) · engine hash `86e53f37…` · era 5 · seed `e9-dome-basin-01`, trail · worldModel `sim-import`.
 
 ## The map, measured
 

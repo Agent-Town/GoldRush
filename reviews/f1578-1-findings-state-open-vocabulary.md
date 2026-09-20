@@ -1,7 +1,7 @@
 # F-1578-1 findings-state open vocabulary
 
 **Slice:** `f1578-1-findings-state-open-vocabulary`  
-**Branch/base:** `lane/b` at `7f465889cebf9bbfaefb5b6b1b17ab78cf2a9804`  
+**Branch/base:** `lane/b` at `7f7db6476fe7dc66079817c7bb45ef4687175e7a`  
 **Verdict:** READY FOR GATES — narrow remains the gate; wide-open visibility is advisory. One pre-existing, out-of-firewall law-pointer red is attributed below.
 
 ## What changed
@@ -117,7 +117,7 @@ NEW POINTER   .claude/skills/author-task/SKILL.md -> playwright.config.ts:46 -> 
 
 The first ambient-Node-23 node battery was 410 / 407 pass / 3 fail / 0 skip; its third failure explicitly diagnosed file-level timeout semantics and named `.nvmrc`'s Node 26.4.0 as the cure. The full pinned rerun removed that failure. Its remaining two failures are `law-pointer-guard` directly and `fixture-teardown` reporting that same child failure.
 
-**Re-based in this lane:** nothing. The cited `.claude/skills/**` law surface and the law-pointer baseline are outside this task's TOUCH-ONLY firewall, and this slice did not move `playwright.config.ts`. During this run the orchestrator independently landed the verified rebase on `origin/main` at `a8d7b4e19`; this lane deliberately did not rewrite its history around a moving main.
+**Re-based in this lane:** nothing. The cited `.claude/skills/**` law surface and the law-pointer baseline are outside this task's TOUCH-ONLY firewall, and this slice did not move `playwright.config.ts`. During this run the orchestrator independently landed the verified rebase on `origin/main` at `08537ee6a`; this lane deliberately did not rewrite its history around a moving main.
 
 ## Adjacent finding, deliberately not fixed
 
@@ -127,19 +127,19 @@ The task's quoted narrow baseline (`411 / 261 / 150 / 0`) does not survive its o
 
 ## Independent review
 
-`codex review --uncommitted` found that the first advisory counted all 165 non-desk marker rows as skipped even though narrow already admits four struck closures. Confirmed by executing `scan()` per row, then fixed by sharing `rowState()` between the census and advisory; final wording is 161 skipped. The reviewer also found the orchestrator's concurrent `a8d7b4e19` law-pointer rebase on `origin/main`. No other actionable code finding was produced before the reviewer recursively invoked its own review workflow; those spawned read-only reviewers were stopped.
+`codex review --uncommitted` found that the first advisory counted all 165 non-desk marker rows as skipped even though narrow already admits four struck closures. Confirmed by executing `scan()` per row, then fixed by sharing `rowState()` between the census and advisory; final wording is 161 skipped. The reviewer also found the orchestrator's concurrent `08537ee6a` law-pointer rebase on `origin/main`. No other actionable code finding was produced before the reviewer recursively invoked its own review workflow; those spawned read-only reviewers were stopped.
 
 ---
 
 ## DRAIN GATE — s1579
 
-**VERDICT: MERGED** at `5524fed8f51f84acde63901c11bf57b6fc22880f`. Base clean main `d5d0e7b57`; gated in a detached scratch worktree (`worktrees/gate2-s1579`, §3.0b custody).
+**VERDICT: MERGED** at `3e2c4b6e3b4cc940e46ca613742b5587b9df0080`. Base clean main `13dc4c39d`; gated in a detached scratch worktree (`worktrees/gate2-s1579`, §3.0b custody).
 
 `drain-block-check`: **CLEAR** — leaf `f1578-1-findings-state-open-vocabulary` matched with `status="queued"`.
 
 ### Merge classification
 
-Merge-base `7f465889c`. Lane touched **4** files; main moved **48** since that base (this fire's own f1577-3 drain plus its ledger rows). **`tasks/BACKLOG.md` is genuinely BOTH-MOVED** — the lane retired one state word in the 🟠 F-1563-3 row while this fire prepended F-1579-1 at line 1 and closed F-1577-3. The regions are disjoint, `git merge --no-ff` auto-merged cleanly (`tasks/BACKLOG.md | 2 +-`), and **both sides were verified present after the merge**: F-1579-1 still at line 1, the retirement still at line 30, the F-1577-3 closure still at line 5. The other three lane paths are LANE-TOUCHED with no main-side counterpart.
+Merge-base `7f7db6476`. Lane touched **4** files; main moved **48** since that base (this fire's own f1577-3 drain plus its ledger rows). **`tasks/BACKLOG.md` is genuinely BOTH-MOVED** — the lane retired one state word in the 🟠 F-1563-3 row while this fire prepended F-1579-1 at line 1 and closed F-1577-3. The regions are disjoint, `git merge --no-ff` auto-merged cleanly (`tasks/BACKLOG.md | 2 +-`), and **both sides were verified present after the merge**: F-1579-1 still at line 1, the retirement still at line 30, the F-1577-3 closure still at line 5. The other three lane paths are LANE-TOUCHED with no main-side counterpart.
 
 ### Gate battery (merged tree)
 
@@ -169,11 +169,11 @@ That is the property in both directions: the wide axis **sees** a conflict narro
 The slice changed one word of a ledger row it did not author, which is the kind of edit that can quietly launder a live defect, so it was checked rather than accepted:
 
 - **Exactly one word moved**: the 🟠 F-1563-3 row grew by **+3 characters** (`OPEN` → `RETIRED`), first difference at char 33, and **everything after the word is byte-identical**. All prose retained, per the Retention Law's "retire, don't delete".
-- **The retirement is substantively correct**: F-1563-3 has **two** rows, and the other one — its own ✅ row — records **`CLOSED s1565 — MEASURED AND MERGED at fcc53a1a3`** (24 observations, 0 breaches of `0.4`, 0 censored, max `0.3722002149381437`). The 🟠 row is the superseded duplicate that was never updated, and live tracking of the underlying drift concern moved long ago to F-1572-1 / F-1575-1 / F-1577-3 / now F-1579-1. **Honest bookkeeping.**
+- **The retirement is substantively correct**: F-1563-3 has **two** rows, and the other one — its own ✅ row — records **`CLOSED s1565 — MEASURED AND MERGED at fcc53a1a3 (archive: pruned by the A3 rewrite)`** (24 observations, 0 breaches of `0.4`, 0 censored, max `0.3722002149381437`). The 🟠 row is the superseded duplicate that was never updated, and live tracking of the underlying drift concern moved long ago to F-1572-1 / F-1575-1 / F-1577-3 / now F-1579-1. **Honest bookkeeping.**
 
 ### Attribution of the runner's reported red
 
-The runner reported `law-pointer-guard` red in both of its batteries and correctly declined to re-base around a moving main. ✓ **Confirmed at the gate to be LANE-STALENESS, not a defect in this slice**: the lane's base `7f465889c` predates s1578's `a8d7b4e19` re-base of that pointer, and the guard is **green on the merged tree**. Nothing was owed and nothing was re-based for it.
+The runner reported `law-pointer-guard` red in both of its batteries and correctly declined to re-base around a moving main. ✓ **Confirmed at the gate to be LANE-STALENESS, not a defect in this slice**: the lane's base `7f7db6476` predates s1578's `08537ee6a` re-base of that pointer, and the guard is **green on the merged tree**. Nothing was owed and nothing was re-based for it.
 
 ### Findings
 

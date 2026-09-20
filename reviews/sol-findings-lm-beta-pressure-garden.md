@@ -1,7 +1,7 @@
 # 3D-C-BETA — Pressure Garden landmark pack
 
 - Branch: `sol/lm-beta-pressure-garden`
-- Fresh reference: `44741af1e44f5becfa1f09665a88b3b33d4ce092`
+- Fresh reference: `1b7ff397f7942de873b43e3bc8f44e7e4d934831`
 - Verdict: **READY-FOR-GATES**
 - Scope: Pressure Garden only. No E6–E10 pack functions, assets, or ledger entries changed.
 - Interlock: body exports are complete; canonical `landmarkMounts` remain 3D-D's responsibility.

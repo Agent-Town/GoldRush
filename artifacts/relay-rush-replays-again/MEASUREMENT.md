@@ -1,6 +1,6 @@
 # relay-rush-replays-again — the measurement
 
-Claude Opus 5 implementer, scratch worktree, branch `fix/relay-rush-replays-again`, base `e5f3ac820`,
+Claude Opus 5 implementer, scratch worktree, branch `fix/relay-rush-replays-again`, base `37c8beda6`,
 2026-09-06. Every number below was produced by the instruments in this directory; nothing is quoted
 from a predecessor's note without being re-measured.
 
@@ -19,7 +19,7 @@ panned 870 over its life and *held* 200 at the secure tick (`artifacts/board-tap
 
 ## 1. The failure, reproduced
 
-`node artifacts/relay-rush-replays-again/probe.mjs . <retired reel>` on `e5f3ac820`:
+`node artifacts/relay-rush-replays-again/probe.mjs . <retired reel>` on `37c8beda6`:
 
 ```
 tape ran out after 36001 steps with the run still alive
@@ -42,23 +42,23 @@ be mistaken for a red one. First-parent commits of `main`, oldest first.
 
 | # | commit | when (local) | replay outcome |
 |---|---|---|---|
-| — | `032ccd392` | 09-05 06:27 | **SECURES** w20 / 600 s / 200 g / `fnv1a32:f0fbaa92` |
-| 4 | `0958456a4` | 09-05 07:22 | **SECURES** w20 / 600 s / 200 g / `fnv1a32:f0fbaa92` |
-| 5 | `b38d60295` | 09-05 07:24 | **ALIVE AT CAP** — w22 / 680 s, never terminal |
-| 8 | `de21da4f5` | 09-05 07:42 | ALIVE AT CAP |
-| 18 | `f429f19c6` | 09-05 10:23 | ALIVE AT CAP |
-| 38 | `2fb1f6151` | 09-05 11:44 | ALIVE AT CAP |
-| 78 | `55ac2976f` | 09-05 20:20 | ALIVE AT CAP |
-| — | `41b1e63cf` | 09-06 08:27 | ALIVE AT CAP |
-| — | `78fe8e586` | 09-06 11:52 | ALIVE AT CAP |
-| — | `502a398d9` | 09-06 15:45 | ALIVE AT CAP |
-| — | `e5f3ac820` | 09-06 21:14 | ALIVE AT CAP (HEAD) |
+| — | `6c7b11184` | 09-05 06:27 | **SECURES** w20 / 600 s / 200 g / `fnv1a32:f0fbaa92` |
+| 4 | `a8498c181` | 09-05 07:22 | **SECURES** w20 / 600 s / 200 g / `fnv1a32:f0fbaa92` |
+| 5 | `0a2a6fdcf` | 09-05 07:24 | **ALIVE AT CAP** — w22 / 680 s, never terminal |
+| 8 | `d07a0e2e7` | 09-05 07:42 | ALIVE AT CAP |
+| 18 | `e82bf4869` | 09-05 10:23 | ALIVE AT CAP |
+| 38 | `eb45482fd` | 09-05 11:44 | ALIVE AT CAP |
+| 78 | `22bb1b29c` | 09-05 20:20 | ALIVE AT CAP |
+| — | `0a120edd3` | 09-06 08:27 | ALIVE AT CAP |
+| — | `590181c9f` | 09-06 11:52 | ALIVE AT CAP |
+| — | `22cf98cfe` | 09-06 15:45 | ALIVE AT CAP |
+| — | `37c8beda6` | 09-06 21:14 | ALIVE AT CAP (HEAD) |
 
-**The named commit is `b38d60295`** — `merge: lane/b e7-playbook-rows`, landed 2026-09-05 07:24
-local, **one hour and seven minutes after the reel was verified**. Its parent `0958456a4` is green.
+**The named commit is `0a2a6fdcf`** — `merge: lane/b e7-playbook-rows`, landed 2026-09-05 07:24
+local, **one hour and seven minutes after the reel was verified**. Its parent `a8498c181` is green.
 
-Note the master's stated search window, `502a398d9..main`, was too narrow by 150 commits: the reel
-was verified 2026-09-04T23:17Z, not at `502a398d9`. The bracket was re-derived from the reel's own
+Note the master's stated search window, `22cf98cfe..main`, was too narrow by 150 commits: the reel
+was verified 2026-09-04T23:17Z, not at `22cf98cfe`. The bracket was re-derived from the reel's own
 `date` field before the search ran (F-RRR-3).
 
 ## 3. Why that commit changed Relay Rush — one paragraph

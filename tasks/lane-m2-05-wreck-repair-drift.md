@@ -28,7 +28,7 @@ test order — **94 isolated vs 89 in-suite** — so which assertion trips depen
 
 Both modes reproduce on **clean main** with s1030's change reverted, so neither belongs to any
 recent slice. This is old, real, and it is the last red on the M1/M2 guard pair
-(F-1026-5's other half closed in `df51d877`).
+(F-1026-5's other half closed in `1ee47bbd`).
 
 **The through-line: three wreck/repair cycles do not return the renderer to where they found it.**
 One cycle appears to keep a geometry alive on desktop, and to leave draw calls elevated on mobile.
@@ -61,18 +61,18 @@ the building-visual path in `Game.ts`) — plus `e2e/m2-05-base-damage-repair.sp
 add a diagnostic assertion; its two existing assertions and all baseline arithmetic are frozen.
 **NO:** the `:348`/`:349` assertions or the `+2` tolerance · `Balance.ts` · repair cost/economy
 semantics (Economy is the sole gold writer) · combat or damage resolution · `m1-01` / `m2-01`
-guards and their expected numbers (both green as of `df51d877` — they are load-bearing) ·
-any other spec · the `warmVfx` hook (`f7cd0103`, freshly landed and relied on by this very test at
+guards and their expected numbers (both green as of `1ee47bbd` — they are load-bearing) ·
+any other spec · the `warmVfx` hook (`bebc1b1f`, freshly landed and relied on by this very test at
 spec:321).
 
 ## Pre-flight (LANE-SAFETY, runner-auto-commit aware)
 The lane branch being ahead is NORMAL — the runner auto-commits. For each ahead commit: if its content is already merged to main (verify via git log/diff), it is a SAFE DUPE → `git checkout -B lane/e2-arsenal main && git clean -fd` and PROCEED. STOP-and-report ONLY if an ahead commit's content is NOT on main (undrained work — resetting would DESTROY it), or the worktree holds uncommitted edits you did not make. Then `npm install --no-audit --no-fund`; `npm run build` green before touching anything.
 
 **Pre-proved for you (s1030, so you need not spend budget on it):** `lane/e2-arsenal`'s tip
-`e3d81fb6` is the asset-diet-gate-honesty slice, which s1029 merged to main as `9ba65911`.
+`e3d81fb6` is the asset-diet-gate-honesty slice, which s1029 merged to main as `386cce80`.
 `git diff main lane/e2-arsenal --stat -- src e2e` shows **pure main-ahead deletions with zero
-lane-unique additions** (the lane simply lacks `f7cd0103`'s `Game.ts` warmVfx work and
-`df51d877`'s `m2-01` fixture line). It is therefore a **SAFE DUPE** — confirm, then proceed.
+lane-unique additions** (the lane simply lacks `bebc1b1f`'s `Game.ts` warmVfx work and
+`1ee47bbd`'s `m2-01` fixture line). It is therefore a **SAFE DUPE** — confirm, then proceed.
 
 ## No-op guard
 If you find yourself about to exit without changes, WRITE WHY into your report first — a silent no-op wastes a queue slot and a gate.

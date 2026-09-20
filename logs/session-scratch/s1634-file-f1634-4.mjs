@@ -16,7 +16,7 @@ const row = [
   'A drain therefore cannot conclude from a green code battery that the board is green; the citation guard must run **after** the merge, which is exactly what the F-1300-4 law already orders and why it caught this.',
   '⚠️ **The trap for the next fire: this red accuses a row that is already ✅ RETIRED and whose defect was cured two fires ago, so it reads as someone else\'s stale bookkeeping rather than as a consequence of the merge you just made.**',
   'Cured the way the guard itself prescribes — the citation now carries its **test title** (`"town byte budget reports normal and saveData arms by URL"`) plus a note that the coordinates are s1627-era and the surviving assertion now sits at `:465`.',
-  '`test:citations` CARRIES-TITLE **297 → 298**, NUMBER-ONLY **261 → 260**, exit **0**. Merge: `7f9340baf056e228bae8c1ca11c2d836e38a2a26`.',
+  '`test:citations` CARRIES-TITLE **297 → 298**, NUMBER-ONLY **261 → 260**, exit **0**. Merge: `e43e0223c76a8709c1918cae2533981255033253`.',
 ].join(' ');
 
 L.splice(idx + 1, 0, row);

@@ -1,6 +1,6 @@
 # agent-reels-2 — standing-order actions ride the run tape
 
-**Slice:** `lane-d-agent-reels-2` · **branch:** `lane/d` · **lane tip:** `b7b3ea2ae` · **merge:** `1578a2298`
+**Slice:** `lane-d-agent-reels-2` · **branch:** `lane/d` · **lane tip:** `b58d26cc9` · **merge:** `d686a4fc1`
 **Drained:** s1657, 2026-08-11 · **Gated in:** detached worktree `gate-s1657` (§3.0b), control worktree `gate-s1657-control` at plain main
 
 ## Verdict
@@ -15,7 +15,7 @@ with every gate green and then failed to commit a line of it: its auto-commit `g
 gitignored `.wrangler` path, exited 1 *advisorily* with all 15 files correctly staged, and the `&&` before
 `git commit` read that as failure. `lane/d` therefore read **`ahead=0`** while holding **14,542 staged
 insertions** — one refill away from `reset --hard` and Mistake #2, with no trace in any reflog anyone
-thinks to check. Rescued byte-for-byte as `b7b3ea2ae` (0 files changed in the rescue, proven by
+thinks to check. Rescued byte-for-byte as `b58d26cc9` (0 files changed in the rescue, proven by
 blob-hash comparison before and after). This was the **third** occurrence in one day and the first caught
 while the work was still on the floor.
 
@@ -68,7 +68,7 @@ evidence** — which is the same shape as s1656's control that "failed for the w
 
 ## Merge classification
 
-Base `d490a0484`. All 15 paths are **LANE-TOUCHED only** — `git merge --no-ff` completed automatically with
+Base `3896bf7a5`. All 15 paths are **LANE-TOUCHED only** — `git merge --no-ff` completed automatically with
 zero conflicts, and the merged diffstat is byte-identical to the lane's own (15 files, +14,542 −26), so main
 had moved none of them. No 3-way graft was needed and none was performed.
 

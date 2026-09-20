@@ -1,8 +1,8 @@
 # f1612-1 — the GZ-01 sweep learns the difference between "reported" and "dismissed"
 
 - **Slice:** `f1612-1-gazette-sweep-purpose-split` (fire-authored s1612, drained s1613)
-- **Branch / tip:** `lane/b` @ `a89c87a6a` — base `3d778bfeca52ed987b67a433e6e5903a5bf2df2e`
-- **Merge:** `5624e6a7ff9633a61ac49c299da116f61f5759f0`
+- **Branch / tip:** `lane/b` @ `79c82fcb1` — base `b35a932884d0c0799684e6338bac4e370c243df8`
+- **Merge:** `5d9cabc2ad5947f6d274cb372b488ef67156194f`
 - **Gated in:** detached worktree `worktrees/gate-s1613` (§3.0b — undecided content never entered main's working tree or index)
 - **VERDICT: MERGED.** All gates green, both controls re-run drain-side rather than inherited, and the one thing that looked like a defect turned out to be load-bearing — see F-1613-1.
 
@@ -31,7 +31,7 @@ The load-bearing design decision is the **default**: present-but-unmarked classi
 
 ## Merge classification
 
-Base `3d778bfec`. `git log 3d778bfec..main --name-only -- <the four paths>` returns **nothing** — main never moved any of them, so every path is **LANE-TOUCHED** and the `ort` merge is trivially correct rather than merely conflict-free. `main..lane/b` empty after merge.
+Base `b35a93288`. `git log b35a93288..main --name-only -- <the four paths>` returns **nothing** — main never moved any of them, so every path is **LANE-TOUCHED** and the `ort` merge is trivially correct rather than merely conflict-free. `main..lane/b` empty after merge.
 
 | File | Class |
 |---|---|
@@ -48,9 +48,9 @@ Firewall honoured exactly: no `src/**`, no `e2e/**`, no other script, no other p
 
 The marker landed at `marketing/outbox/gazette-queue.md:1266`, inserted with a **blank line above it**, which severs a sentence mid-clause. The published note now reads as two paragraphs — *"…the same pass turned up six"* / *"NOT PLAYER-VISIBLE uncited merges and four were judged NOT player-visible…"*. On sight this is a typo in owner-facing prose, and the master had explicitly said **do not re-flow that note**, so my first reading was that the runner had broken its own firewall.
 
-**That reading is wrong, and I only know because I tested the repair instead of applying it.** The roundup's own two *reported* merge hashes (`ba78dad5e`, `88530e3ef`) sit in the same contiguous run of prose as the four dismissed ones. Paragraph scope cannot tell them apart — so the blank line is the **only** thing scoping the marker to the four. I applied the tidy repair (un-split the sentence, marker appended at the end of the paragraph) in the gate worktree and re-ran the sweep:
+**That reading is wrong, and I only know because I tested the repair instead of applying it.** The roundup's own two *reported* merge hashes (`603c9e5d2`, `312b443f1`) sit in the same contiguous run of prose as the four dismissed ones. Paragraph scope cannot tell them apart — so the blank line is the **only** thing scoping the marker to the four. I applied the tidy repair (un-split the sentence, marker appended at the end of the paragraph) in the gate worktree and re-ran the sweep:
 
-> **reported 62 / dismissed 9 / candidates 0** — five extra merges swept into `dismissed`, including **`88530e3ef`**, which *that very roundup publishes as news*, plus `c742cd596`, `ba78dad5e` and two more.
+> **reported 62 / dismissed 9 / candidates 0** — five extra merges swept into `dismissed`, including **`312b443f1`**, which *that very roundup publishes as news*, plus `b22d05c88`, `603c9e5d2` and two more.
 
 So the runner's placement is correct and deliberate, the severed sentence is the price paragraph scope charges over prose that mixes reported and dismissed hashes in one block, and **the defect is that nothing says so.** The trap is well-shaped for this factory: the damage looks like a typo, the repair looks like tidying, the sweep is advisory and **exits 0 in every state** (F-1600-1 forbids a red guard here), and `classifyCitation`'s fixture test cannot see the live board by design. A future fire fixing the prose would corrupt the numbers with no red anywhere on the board.
 

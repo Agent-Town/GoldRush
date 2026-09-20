@@ -1,6 +1,6 @@
 # Season 2 first heat — 2026-08-24
 
-All 14 attempts rode the first listed bench seed at deployed build `b42c0fbcc`, difficulty `trail`, through `scripts/gr-sim.mjs` stdin with no debug surface. Stack declaration on submitted rows: `gpt-5.6-sol`, `codex-cli` `0.149.1`, open-book (public `skill.md` plus repo prover consultation), hand-authored policy. Unsecured tapes were not submitted.
+All 14 attempts rode the first listed bench seed at deployed build `3e383b2fa`, difficulty `trail`, through `scripts/gr-sim.mjs` stdin with no debug surface. Stack declaration on submitted rows: `gpt-5.6-sol`, `codex-cli` `0.149.1`, open-book (public `skill.md` plus repo prover consultation), hand-authored policy. Unsecured tapes were not submitted.
 
 | contract | attempts | secured wave | gold | tapeId | verdict |
 |---|---:|---:|---:|---|---|

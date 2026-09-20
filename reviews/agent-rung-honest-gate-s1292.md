@@ -1,7 +1,7 @@
 # agent-rung-honest-gate — second STOP, and why it was re-derivable in advance (s1292)
 
 **Slice:** `agent-rung-honest-gate` (cure for F-1218-1), **run 2 of 2**
-**Branch / tip:** lane-c worktree, `lane/e2-arsenal` @ `706e077c` — **no commit produced by this run**
+**Branch / tip:** lane-c worktree, `lane/e2-arsenal` @ `079c3cc6` — **no commit produced by this run**
 **Master:** `tasks/lane-c-agent-rung-honest-gate.md` (FIRE-AUTHORED s1218, re-queued unchanged s1291)
 **Run log:** `tasks/runs/20260731-153513-lane-c-lane-c-agent-rung-honest-gate.md.log` (160,694 tokens)
 **Predecessor review:** `reviews/agent-rung-honest-gate.md` (s1219, run 1)
@@ -50,7 +50,7 @@ distinction inexpressible — the exact structural blindness recorded in F-1219-
 memory note *green assertions may be unratified*. Assertions 1 and 3 additionally contradict a dated
 owner ruling that is quoted in the very spec the master cites as its ratified law
 (`specs/m4-agent-ux/README.md:14`, *"L2 tend, repair & work the claim (walls, buildings, pan…) · L3
-build (place buildings — spends gold)"*, landed `85bb1938`).
+build (place buildings — spends gold)"*, landed `21985788`).
 
 ## F-1292-1 — THE LEAF'S "DO NOT TOUCH" LIST CONTAINS ONE OF THE THREE BLOCKING ASSERTIONS, SO THE AUTHORIZED RE-AUTHOR WAS UNWRITEABLE
 
@@ -98,9 +98,9 @@ defect premise. Its own leaf note records this verbatim: *"Queued lane-c s1291."
 The master therefore still carried, into a run dated 2026-07-31 15:35:
 
 - **NO list:** *"`auto_pan` stays 3"* — but the owner ruled 2, and `ToolSurface.ts:380` has declared
-  **2** since `85bb1938` (09:02 today).
+  **2** since `21985788` (09:02 today).
 - **MEASURED PREMISE:** *"`place_building` and `chase_mark` have NO declared capability at all"* —
-  but `place_building` has been declared at **level 3** since `12b0011e` (11:18 today).
+  but `place_building` has been declared at **level 3** since `e4336ba8` (11:18 today).
 
 The runner caught both and reported them as premise drift, then stopped — the correct behaviour.
 **Cost: 160,694 tokens to re-derive a conclusion already in the ledger since s1219 and already

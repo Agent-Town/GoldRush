@@ -1,8 +1,8 @@
 # f1563-1 — standings `declared` compatibility (and the f-board-1 slice it unblocks)
 
 - **Slice:** `lane-b-f1563-1-standings-declared-compat` (corrective) **+** `lane-fboard1-named-minds` (the held predecessor)
-- **Branch:** `lane/b` · **tip** `e44dc56ab` · held predecessor tip `0a1fa333e`
-- **Base for the gate:** clean main `fa80218a6` · gate worktree `gate-s1564` (detached, §3.0b)
+- **Branch:** `lane/b` · **tip** `2599c7936` · held predecessor tip `1d822dea6`
+- **Base for the gate:** clean main `a2cd00e41` · gate worktree `gate-s1564` (detached, §3.0b)
 - **Verdict:** ✅ **MERGE** — the block's stated lifting condition is satisfied, measured, not asserted.
 
 ## What it does
@@ -27,7 +27,7 @@ normally *weakens* a validator; keying the invariant on `=== true` means a row c
 `model`/`harness`/`harnessVersion` with `declared` **absent** or **false** is still
 rejected. The cure widens exactly one door and leaves the others shut.
 
-## Evidence — merged tree `a4af8103d` (main `fa80218a6` + `lane/b`), fire shell, `--workers=1`
+## Evidence — merged tree `a4af8103d` (main `a2cd00e41` + `lane/b`), fire shell, `--workers=1`
 
 | Gate | Result |
 |---|---|
@@ -53,15 +53,15 @@ the seeded county board and its empty contract state"* must pass **UNMODIFIED**.
 that edits its own canary proves nothing — and this canary is the only thing standing between
 production and a blank board.
 
-- `git diff 0a1fa333e..HEAD -- e2e/lb-01-county-standings.spec.ts` on the **merged tree** → **empty**
-- blob hash `0a1fa333e:` = `d9d209b3c4a246e4003d44fc631c352b11c4e9b1`
+- `git diff 1d822dea6..HEAD -- e2e/lb-01-county-standings.spec.ts` on the **merged tree** → **empty**
+- blob hash `1d822dea6:` = `d9d209b3c4a246e4003d44fc631c352b11c4e9b1`
   blob hash merged `HEAD:` = `d9d209b3c4a246e4003d44fc631c352b11c4e9b1` → **byte-identical**
 - the test itself: **`:550` ✓ desktop (2.4s) · ✓ mobile (2.4s)** — the two instances that were
   red under the hold, green now, with the file untouched.
 
 ⚠️ **The diff you must not use here:** `git diff main lane/b` is contaminated — main moved under
 the lane (s1563's own bookkeeping commits), so the two-dot read shows f-board-1's original 16
-lb-01 lines and *looks like the canary was edited*. It was not. Compare against `0a1fa333e`.
+lb-01 lines and *looks like the canary was edited*. It was not. Compare against `1d822dea6`.
 s1563 flagged this trap in its handoff; I re-derived it independently and confirm it.
 
 ## The new strictness cases are real, not a rubber stamp

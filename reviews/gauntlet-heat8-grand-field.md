@@ -1,9 +1,9 @@
 # Review — gauntlet-heat8-grand-field (s2409 drain)
 
 - **Slice**: `gauntlet-heat8-grand-field` (master `tasks/gauntlet-heat8-grand-field.md`)
-- **Branch / tip**: `lane/b` @ `ec2ab4cf8fb967036ae7e829dbc7aeba75261daf` (`runner(lane-b): gauntlet-heat8-grand-field.md`)
-- **Merge**: `69f95a89f7db8a570a5cacd40ccd7f032535e663` (main, `--no-ff`)
-- **Base**: main @ `49b12a5fa` (the s2409 lock commit)
+- **Branch / tip**: `lane/b` @ `ec2ab4cf8fb967036ae7e829dbc7aeba75261daf (archive: pruned by the A3 rewrite)` (`runner(lane-b): gauntlet-heat8-grand-field.md`)
+- **Merge**: `69f95a89f7db8a570a5cacd40ccd7f032535e663 (archive: pruned by the A3 rewrite)` (main, `--no-ff`)
+- **Base**: main @ `3f4c6026b` (the s2409 lock commit)
 
 ## VERDICT: MERGED — evidence complete, firewall clean, and the headline independently confirmed against the live county API rather than taken on the runner's word.
 
@@ -35,8 +35,8 @@ This merge is **evidence only** — 419 files, all under `artifacts/gauntlet-hea
 | Secret scan (firewall: "no secrets echoed") | **CLEAN** — 0 of 8 credential patterns over all **71,679** added lines (`sk-`, `sk-or-v1-`, `sk-ant-`, AKIA, `gh[pousr]_`, non-placeholder Bearer, `re_`, PEM private key) |
 | Evidence completeness (self-check list) | `heat8-note.md`, `claude-invocations.md`, `eliza/install-retry.txt`, `charter.md` all **PRESENT**; 31 tapes, 62 logs, 31 reasoning files; all 9 rigs represented incl. both DNF'd Claude rigs |
 | **Honesty guard** ("no unsecured attempt was posted") | **HOLDS BY MEASUREMENT** — parsed all 31 tapes: **exactly 2** carry `secured=true`, and they are exactly the 2 claimed rider submissions. No secured tape withheld, no unsecured tape submitted |
-| Claimed verified tapes resolve | OMP `agent-76836aa3-…` → `omp/the-claim/attempt-1.tape.json`, `secured=true`, build `4675cfd7b`, era 5 · OpenClaw `agent-357d113b-…` → `openclaw/the-claim/attempt-2.tape.json`, same |
-| Operator probe chain | `probe/` holds tape + submission + `post-response.json` (`rank 1`) + `verdict-slip.json` (`assay:"verified"`, `ranked:true`, `fnv1a32:8886f412`) + `watch-reel.json` (`buildId 4675cfd7b`, `engineHash c0a015ae…`, `era 5`) — matching the note exactly |
+| Claimed verified tapes resolve | OMP `agent-76836aa3-…` → `omp/the-claim/attempt-1.tape.json`, `secured=true`, build `c9d86db11`, era 5 · OpenClaw `agent-357d113b-…` → `openclaw/the-claim/attempt-2.tape.json`, same |
+| Operator probe chain | `probe/` holds tape + submission + `post-response.json` (`rank 1`) + `verdict-slip.json` (`assay:"verified"`, `ranked:true`, `fnv1a32:8886f412`) + `watch-reel.json` (`buildId c9d86db11`, `engineHash c0a015ae…`, `era 5`) — matching the note exactly |
 | **Independent confirmation of the headline** | Live county API queried directly (see below) — **matches `heat8-note.md` row for row** |
 | `npx tsc --noEmit` | clean, pre-merge baseline **and** post-merge |
 | `npm run build` | green, 2.52s (pre-merge baseline; the merge adds no code, so the baseline carries by construction) |
@@ -111,7 +111,7 @@ ergonomics of that endpoint's parameter names.
   ETIMEDOUT` from the runner context is real, interesting work — **it is not this drain's**, and it wants its own
   slice rather than a drive-by.
 - **The era-5 engine hash in the arena** reads `c0a015ae…`, i.e. the blessed era-5 pin, because the field rode the
-  *deployed* build `4675cfd7b` — which predates `daae36dc7`. This is consistent with, and not contradicted by,
+  *deployed* build `c9d86db11` — which predates `e27259c67`. This is consistent with, and not contradicted by,
   **F-2408-1** (main's computed hash has since moved to `386f971d…` because `package.json` sits in the engine
   identity corpus). No cross-check failed.
 - **`retired 22` / `retired 1`** are the era-5 lineage retirement, ruled by the owner and open on the desk as

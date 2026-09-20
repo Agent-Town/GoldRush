@@ -1,8 +1,8 @@
 # f1426-2 — repair the concurrency harness contract
 
 - **Slice:** `f1426-2-repair-the-concurrency-harness-contract`
-- **Branch / tip:** `lane/m3` @ `0afddcec` (base `c40fd144`)
-- **Merged to main:** `08ec76b53b94e4bd3e20a7819335378c39e36d70` (s1428 fire)
+- **Branch / tip:** `lane/m3` @ `0b86ea4b` (base `f82c7156`)
+- **Merged to main:** `0c3e5aaa7c435b8626166b497707bff7db8decf2` (s1428 fire)
 - **Drained:** 2026-08-03, s1428
 
 ## Verdict
@@ -94,7 +94,7 @@ reaches the table. Do **not** cure by deleting either decision.
 
 ## Merge classification
 
-Base `c40fd144`; single file `scripts/concurrency-class-rate.mjs`, **LANE-TOUCHED only** — main
+Base `f82c7156`; single file `scripts/concurrency-class-rate.mjs`, **LANE-TOUCHED only** — main
 never moved it. Clean `ort` merge, no conflicts. Scope 4 (*measure nothing*) obeyed: the repaired
 instrument is reviewed on its own, not beside output produced by itself.
 

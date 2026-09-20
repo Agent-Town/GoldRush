@@ -1,8 +1,8 @@
 # Review — newsie-drift-shell-divergence-rate (lane-b)
 
 **Slice:** `tasks/lane-b-newsie-drift-shell-divergence-rate.md` (FIRE-AUTHORED s1265, amended s1266)
-**Branch / tip:** `lane/m4` @ `e8bd7f55` · base `7f3b13ac` · run `20260730-194426`
-**Drained by:** s1267 fire, 2026-07-30 · main at `a17307e6`
+**Branch / tip:** `lane/m4` @ `e8bd7f55` · base `328b1bed` · run `20260730-194426`
+**Drained by:** s1267 fire, 2026-07-30 · main at `0f9c19c2`
 
 ## Verdict
 
@@ -52,10 +52,10 @@ build are reported for the tree, not because the PNGs could break them. The slic
 run 14 times across both shells this hour, which is a far heavier exercise of the affected surface
 than the drain minimum asks for.
 
-**Merge classification:** base `7f3b13ac`; `main` had advanced 3 commits (`25fa7018`, `2318fc5c`,
-`8a24e482`) while the lane ran, so the two-dot `main..lane/m4` diff shows main's newer content as
+**Merge classification:** base `328b1bed`; `main` had advanced 3 commits (`108f0bed`, `2318fc5c (archive: pruned by the A3 rewrite)`,
+`f9a3ef5c`) while the lane ran, so the two-dot `main..lane/m4` diff shows main's newer content as
 16 files of phantom deletions. The **true** lane-touched set, from
-`git diff --name-status 7f3b13ac..lane/m4`, is exactly **6 `M` lines**, all
+`git diff --name-status 328b1bed..lane/m4`, is exactly **6 `M` lines**, all
 `artifacts/gazette-welcome/*.png`. LANE-TOUCHED: those 6. MAIN-MOVED-ONLY: everything else in the
 two-dot diff — not copied. Merged path-scoped with `git checkout lane/m4 -- artifacts/gazette-welcome/`;
 no conflicts, no 3-way needed.

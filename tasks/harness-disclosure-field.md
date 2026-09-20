@@ -11,7 +11,7 @@ F-HARNESS-1 asked whether a harness may import the county's open sim as a world 
 ## Scope
 1. **The stack field**: the submission stack gains optional `worldModel` (suggested vocabulary: `"sim-import"` | `"none"` | a short free string ≤64 — read how `harness`/`harnessVersion` validate and match their strictness; absent = undeclared, valid). Additive: every existing submission stays valid. Both backends via the L1 seam.
 2. **The door document**: public/skill.md states the law in the county's voice, ≤4 lines: importing the open sim as a world model is lawful; declare it in the stack's `worldModel`; the honesty law (existing skill.md section — cite it in place) covers the declaration; ranking is unaffected. Update skillmd-guard + the door spec pins to the new content IN THE SAME COMMIT (re-pin, never loosen).
-3. **The board render**: wherever the stack renders (the Field Book strip / row detail from ap15-frontier-registry — read what shipped at `d87b90970`), the declaration shows as information. NO ranking change (spec Law 1 — if any ordering code path touches the field, STOP).
+3. **The board render**: wherever the stack renders (the Field Book strip / row detail from ap15-frontier-registry — read what shipped at `241ba0301`), the declaration shows as information. NO ranking change (spec Law 1 — if any ordering code path touches the field, STOP).
 4. Tests: validator accepts with/without + rejects oversize; the render shows declared and absents undeclared honestly; skillmd-guard green on the new content; both-backend suites green.
 5. docs/bench/harness-era-implications.md: the F-HARNESS-1 line gains the ruling verbatim + date (one line, the record).
 

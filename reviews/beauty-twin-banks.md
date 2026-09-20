@@ -2,7 +2,7 @@
 
 **Slice/branch:** `beauty/twin-banks` (dedicated Opus-5 shift, worktree `gr-task-beauty-twin-banks`, solo writer)
 **Brief:** `docs/beauty/e1-twin-banks-brief.md` · **Program laws:** `docs/beauty/README.md`
-**Base:** `c708f27d` (origin/main at pre-flight, 2026-08-02) · **Date:** 2026-08-02 → 08-03
+**Base:** `551a1e73` (origin/main at pre-flight, 2026-08-02) · **Date:** 2026-08-02 → 08-03
 **Boards:** `artifacts/beauty-twin-banks/<stage>/` — stages `before`, `u1`, `u2`, `u3`, `u4`, `final`
 **Verdict:** ✅ **THREE UPGRADES KEPT, ONE PARTIAL, ONE NOT ATTEMPTED — and the two that did not land
 name a pipeline defect that no beauty shift on this map can route around.**

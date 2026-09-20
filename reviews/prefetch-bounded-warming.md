@@ -1,12 +1,12 @@
 # Review: prefetch-bounded-warming — the advance stream stops after the successor (lane-b, codex runner on gpt-6-astra xhigh, attended drain 2026-09-05)
 
-**Slice/branch/tip:** `prefetch-bounded-warming` · `lane/b` · runner commit `5b2ea6560` over base `49402d6bf` · merge `065252649` (no-ff, no conflicts; the fire's `save/prefetch-bounded-warming-s2519` backup is now redundant → archive).
+**Slice/branch/tip:** `prefetch-bounded-warming` · `lane/b` · runner commit `33cdb7c3f` over base `15dc51b89` · merge `c7856dca7` (no-ff, no conflicts; the fire's `save/prefetch-bounded-warming-s2519` backup is now redundant → archive).
 **Verdict:** MERGED. F-ASTRA-5 cured.
 
 ## What it does
 `src/assets/AdvanceStream.ts`: normal mode warms priorities 1–2 only (town + likely destination, or destination + successor); the `:73-74` sweeps are gone from the default plan; a per-session byte allowance (24 MB on desktop tiers, 12 MB on mobile-class or Balanced) stops scheduling once reached, published as `assetPrefetchAllowance`/`assetPrefetchBytes` in the canvas dataset; the old sweep survives only behind a persisted "Warm every map" opt-in in Start Menu → Settings (`src/ui/menu/StartMenu.ts`). Measured build bytes: Town 4,971,188; The Claim 2,939,704; Dry Gulch 3,679,340 — 12 MB covers the town plus either map.
 
-## Evidence (merged tree `065252649` + era pin `8afae55f`)
+## Evidence (merged tree `c7856dca7` + era pin `8afae55f`)
 | Gate | Result |
 |---|---|
 | `npx tsc --noEmit` / `npm run build` | rc 0 / rc 0 |
@@ -14,7 +14,7 @@
 | `scripts/engine-era-guard.test.mjs` after the pin | 5/5 |
 | `e2e/asset-diet.spec.ts` | NOT re-run attended: the main working tree carries the rejected `deploy-budget-hard-verdict` edit to that spec (Mistake #12); the runner's own asset-diet runs on the lane passed (its `asset-diet-final/` evidence) |
 
-## Merge classification (base `49402d6bf`)
+## Merge classification (base `15dc51b89`)
 | File | Class | Resolution |
 |---|---|---|
 | `src/assets/AdvanceStream.ts`, `src/ui/menu/StartMenu.ts`, `e2e/advance-stream.spec.ts`, `e2e/advance-stream-bounded.spec.ts` | LANE-TOUCHED | clean |

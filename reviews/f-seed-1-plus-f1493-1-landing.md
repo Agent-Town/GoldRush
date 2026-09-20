@@ -1,10 +1,10 @@
 # f-seed-1 + f1493-1 — gate review and LANDING (s1494)
 
 **Slice:** `lane-f-seed-1-front-door-parity` (F-SEED-1 parity cure) **+** `lane-f1493-1-parity-repin` (F-1493-1 adjacent-assertion repair), gated and merged as **ONE slice**
-**Branch:** `lane/a` · **Tip:** `472cce4d3` "test: repin front-door parity assertions" (over `1e19a7d58` "fdoor: align headless progression and panning")
-**Base (merge-base with main):** `22d73f2ec` · **Main at gate:** `84d2076f7`
+**Branch:** `lane/a` · **Tip:** `6dbb7eaf3` "test: repin front-door parity assertions" (over `23559d6e4` "fdoor: align headless progression and panning")
+**Base (merge-base with main):** `d0cb2ac57` · **Main at gate:** `f7cf4035c`
 **Gate tree:** detached worktree `gate-s1494` at merge commit `1711af799` (§3.0b — nothing undecided ever entered main's working tree)
-**Merged to main:** `ff628a132`
+**Merged to main:** `335408077`
 **Date:** 2026-08-06T19:20Z
 
 ## VERDICT: MERGED
@@ -20,13 +20,13 @@ This is route (a) of **F-1492-1**, executed exactly as that finding prescribed: 
 **F-1493-1 half** — repairs what the cure moved, and repairs it *correctly* rather than by re-pinning to make a red go away:
 
 - `e2e/er01-e2-census.spec.ts:109` asserted `waves === contract.twist.secureWave` unconditionally. s1493 measured `autoSecureWaveForRun()` in both engines (`src/game/Game.ts:4844`, `src/sim/HeadlessContractSim.ts:325-328`) and found it returns `Number.MAX_SAFE_INTEGER` while `twist.baron && !baronBeaten` — **a baron contract never secures at its declared `secureWave` at all; it secures when the Baron dies.** The equality was structurally guaranteed on exactly one of the four E2 contracts and a combat-speed coincidence on the other three. It is now `secured: true` + `calls: 0` unconditionally, strict equality **without** a baron, `waves >= secureWave` **with** one — the engine's actual guarantee, with the reason at the call site.
-- The six `gr-sim` pins moved with a **named cause** comment each (`F-1493-1: headless progression parity, s1493.`), per the standing prohibition F-1441-3. `git diff 1e19a7d58..472cce4d3 -- scripts/gr-sim.test.mjs` carries 7 such markers.
+- The six `gr-sim` pins moved with a **named cause** comment each (`F-1493-1: headless progression parity, s1493.`), per the standing prohibition F-1441-3. `git diff 23559d6e4..6dbb7eaf3 -- scripts/gr-sim.test.mjs` carries 7 such markers.
 
 **`contract.twist.secureWave` was NOT edited.** s1493 rejected the 12 → 14 change by name: the threshold is already bypassed on a baron map, so the edit would change no behaviour it appears to describe while widening the sim's tick budget and rewriting the player-facing "secured wave N" line. F-1492-2 is retired by that measurement; what is left of it is a non-blocking tuning question (F-1493-3, on the desk).
 
-## Evidence — merged tree `1711af799`, which is byte-identical to main at `ff628a132`
+## Evidence — merged tree `1711af799`, which is byte-identical to main at `335408077`
 
-`git diff --stat 1711af799 ff628a132` is **empty**, and `git log main..lane/a` is **0** — so this evidence is about exactly what is on main, not about a tree that resembles it.
+`git diff --stat 1711af799 335408077` is **empty**, and `git log main..lane/a` is **0** — so this evidence is about exactly what is on main, not about a tree that resembles it.
 
 | Gate | Result | Wall |
 |---|---|---|
@@ -43,7 +43,7 @@ All arms driven through `scripts/gate-battery.mjs` (`--cwd gate-s1494`), transcr
 
 ## Merge classification
 
-Base `22d73f2ec`; six paths touched by the lane.
+Base `d0cb2ac57`; six paths touched by the lane.
 
 | Path | Class | Resolution |
 |---|---|---|
@@ -52,7 +52,7 @@ Base `22d73f2ec`; six paths touched by the lane.
 | `e2e/er01-e2-census.spec.ts` | LANE-TOUCHED | taken from lane |
 | `scripts/gr-sim.test.mjs` | LANE-TOUCHED | taken from lane |
 | `docs/bench/e2-readiness-census.md` | LANE-TOUCHED | taken from lane |
-| `tasks/BACKLOG.md` | **BOTH-MOVED → resolved to MAIN** | the lane's F-SEED-1 row (1,800 chars) was written mid-run and predates s1492's HOLD; main's row (3,056 chars) already records `⛔ HELD s1492` and the review pointer. Main's is strictly newer and supersedes the lane's. Only the f-seed-1 commit touched this file; `472cce4d3` did not. Row updated to MERGED in the drain bookkeeping commit. |
+| `tasks/BACKLOG.md` | **BOTH-MOVED → resolved to MAIN** | the lane's F-SEED-1 row (1,800 chars) was written mid-run and predates s1492's HOLD; main's row (3,056 chars) already records `⛔ HELD s1492` and the review pointer. Main's is strictly newer and supersedes the lane's. Only the f-seed-1 commit touched this file; `6dbb7eaf3` did not. Row updated to MERGED in the drain bookkeeping commit. |
 
 ## Findings
 

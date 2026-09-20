@@ -2,8 +2,8 @@
 
 - **Slice:** e6-01-research-tree (lane-b, research-tree ladder — successor to e5-01 SHIPPED)
 - **Branch/tip:** `lane/m4` @ `c038a065`
-- **Base:** `731373d4` (stale — main advanced through the full E4/E5/drip/cw-02 wave since)
-- **Drained by:** s589 fire — clean 3-way graft onto main `a12f7a95`
+- **Base:** `392d20d3` (stale — main advanced through the full E4/E5/drip/cw-02 wave since)
+- **Drained by:** s589 fire — clean 3-way graft onto main `6652fb49`
 - **Verdict:** ✅ MERGE — additive epoch-6 registration; all gates green; epoch stays board-gated.
 
 ## What it does (player-visible)
@@ -22,7 +22,7 @@ Registers the **epoch-6 "Atomic Homestead"** research chart + contract stub. Onc
 | Screenshots | `artifacts/e6-research-tree/{desktop,mobile}-chrome-chart.png` |
 
 ## Merge classification
-Lane base `731373d4` is far behind main, but e6-01's own diff is purely additive (+322 / −0). Per-file vs current main:
+Lane base `392d20d3` is far behind main, but e6-01's own diff is purely additive (+322 / −0). Per-file vs current main:
 
 | File | Class | Resolution |
 |------|-------|-----------|

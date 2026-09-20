@@ -6,7 +6,7 @@
 
 Executed 2026-08-20 by an attended-dispatched Opus agent (worktree branch `worktree-agent-a9ef6c846b5a10e64`), authorized by `specs/agent-play/door-completion-sheet.md` (RATIFIED 2026-08-20 — owner verbatim: "Group 1: approved (with any tweaks)").
 
-## What shipped (slice `21928007d` + attribution `4c11f6ce7` + attended-gate surgery `86d6d20f3`)
+## What shipped (slice `e87e348fc` + attribution `0fa6cfae2` + attended-gate surgery `1ef241bca`)
 - `src/systems/CrowdFlockSystem.ts` + `src/entities/CrowdFlock.ts` — three festival flocks cross on the night cycle, fright radius 7 (declared), scatter home on fright; latch = all three crossed AND the wheel spinning at wave 12; both engines, socket pattern, keyed on `twist.fairground.crowdFlocks` (F-1471-1).
 - Headless era-socket half: the real FerrisWheel probed browser-free, registered damageable via the megaproject-resolver routing, `syncFerrisWheelPower`, pavilion coverage — **this consumed the full scope of the banked master `tasks/lane-e3-fairground-socket.md`** (leaf `e3-fairground-socket`), which now carries a DO-NOT-QUEUE banner.
 - **ADMISSION HELD at the attended gate (F-E3CF-4)**: the sheet's build law demands a public-verb secure ×2 per seed; the only securing runs (`artifacts/e3-fairground/fort-budget-probe.mjs` — radius-8 ring + 4 beacons + ~1.04 g/s repairs, both seeds w12, all three crossings) fund repairs through the `?debug` seam. Exemption row restored (reason: proof missing, not consumer missing); census refusal-first; floors 51 with fairground's rows out; audit 5/331/749/15 (post-prover arithmetic recorded: 4/312/768/15, 53 floors).

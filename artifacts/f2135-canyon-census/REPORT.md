@@ -71,7 +71,7 @@ The predecessor `artifacts/f2086-canyon-census/REPORT.md` established that:
 
 ## What attempt 3 said and why it was wrong
 
-Attempt 3 reported a deterministic unsecured terminal at wave 2 with 0/2 powered. Those artifacts are retained under `attempt-3-superseded/`, but that headline is not a census result. The campaign harness had fabricated `globalThis.location` without the selected contract, so `Terrain` bound at module evaluation to the fallback claim: the right manifest ran on the wrong ground. Commit `8656ca1f1` cured that terrain binding by including the contract in the harness URL. On the corrected terrain, the same player reaches wave 8 and powers one gallery.
+Attempt 3 reported a deterministic unsecured terminal at wave 2 with 0/2 powered. Those artifacts are retained under `attempt-3-superseded/`, but that headline is not a census result. The campaign harness had fabricated `globalThis.location` without the selected contract, so `Terrain` bound at module evaluation to the fallback claim: the right manifest ran on the wrong ground. Commit `f9b8d02f5` cured that terrain binding by including the contract in the harness URL. On the corrected terrain, the same player reaches wave 8 and powers one gallery.
 
 ## Player and contract integrity
 

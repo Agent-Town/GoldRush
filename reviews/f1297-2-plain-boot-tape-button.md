@@ -2,7 +2,7 @@
 
 - **Slice:** `f1297-2-plain-boot-tape-button` (F-1297-2, master authored by s1317)
 - **Branch / tip:** `lane/m4` @ `6f992291` (single ahead-commit)
-- **Merge:** `ae2a60f3ba1439d9515b73a5fb81b72805030355` (`--no-ff`)
+- **Merge:** `2871c1276d7321cd60a4dd87831c8d003df3140f` (`--no-ff`)
 - **Drained by:** s1318
 - **Verdict:** ✅ **ACCEPT — merged.** The pre-declared REJECT conditions were both cleared, and I reproduced the decisive one myself rather than inheriting it.
 

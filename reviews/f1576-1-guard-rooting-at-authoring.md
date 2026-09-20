@@ -77,7 +77,7 @@ The assertion was `assert.equal(r.status, 0, r.stdout + r.stderr)` in `--include
 
 ## Real-incident replay
 
-Constructible, without mutating this worktree. I cloned a scratch tree at the f1574 base `4ef1bcd02`, restored the real file from lane tip `20515bb9d` into the worktree only, and confirmed git saw:
+Constructible, without mutating this worktree. I cloned a scratch tree at the f1574 base `c4ebae65e`, restored the real file from lane tip `8a0f992db` into the worktree only, and confirmed git saw:
 
 ```text
 ?? scripts/review-evidence-audit.mjs
@@ -130,7 +130,7 @@ The firewall held: only the three declared existing files and this review were c
 
 # DRAIN GATE — s1577
 
-**Slice:** `f1576-1-guard-rooting-at-authoring` · **branch:** `lane/b` @ `f2f5b0f` · **base:** `3e9934f80` · **merge:** `--no-ff` onto main at **`234891aab6f9b2f2e3f3d79addbe893b96328026`**
+**Slice:** `f1576-1-guard-rooting-at-authoring` · **branch:** `lane/b` @ `f2f5b0f` · **base:** `a397b0bf1` · **merge:** `--no-ff` onto main at **`bda3ddd82af1b7bfbf2c407c25d7039622b4415d`**
 
 **VERDICT: MERGED.** Both of the slice's load-bearing promises were re-proved here rather than inherited — the default subject set is unchanged, and the opt-in has teeth — and the second was proved the way this factory requires, **by manufacturing the defect**.
 

@@ -2,16 +2,16 @@
 
 **Slice:** `f1441-2-crossings-keep-their-z`
 **Branch:** `lane/e2-arsenal` (lane-c)
-**Tip:** `5c27a1b5cedfe3ff64ba0bb3b5c130f8d4f4d44b` — `runner(lane-c): f1441-2-crossings-keep-their-z.md`
-**Base:** `b3d24dd804046370cc3196c09e54181a4459d28c`
+**Tip:** `a26454d4ce4a18ba71d334795d92a141e4a16c9c` — `runner(lane-c): f1441-2-crossings-keep-their-z.md`
+**Base:** `d2d88b2b60ea8a037703fed6d25456a01a56569d`
 **Gated by:** s1448 fire, 2026-08-04, detached worktree `gate-s1448` (§3.0b — removed after; nothing undecided ever entered main's working tree)
 
 ## VERDICT: HOLD — NOT MERGED
 
 > ⚠️ **SUPERSEDED s1454 (F-1454-1) — THIS VERDICT LINE IS STALE AND WAS ONLY EVER TRUE FOR ~2 HOURS.**
-> The slice **MERGED at `65e3aaec`** ("merge(lane-c): f1441-2 crossings-keep-their-z + f1448-1
-> hero-crossing cure"), verified by ancestry (`git merge-base --is-ancestor 65e3aaec main` rc=0), and
-> its goal leaf `f1441-2-crossings-keep-their-z` carries `mergeHash 65e3aaec16`. The one owed item —
+> The slice **MERGED at `42d0b2b1`** ("merge(lane-c): f1441-2 crossings-keep-their-z + f1448-1
+> hero-crossing cure"), verified by ancestry (`git merge-base --is-ancestor 42d0b2b1 main` rc=0), and
+> its goal leaf `f1441-2-crossings-keep-their-z` carries `mergeHash 42d0b2b145`. The one owed item —
 > **F-1448-1** — was cured by the successor slice `f1448-1-crossings-keep-the-hero-out-of-it`, whose
 > review records `VERDICT: MERGED — both slices` and holds the merged-tree evidence.
 > ➡️ **Read `reviews/f1448-1-crossings-keep-the-hero-out-of-it.md` for the shipped verdict.** The
@@ -102,7 +102,7 @@ version on every other map. This is what s1446's F-1446-3 refresh was designed t
 
 ### Merge classification
 
-Base `b3d24dd8`. `git diff --name-only b3d24dd8..main` intersected with the slice's four paths is
+Base `d2d88b2b`. `git diff --name-only d2d88b2b..main` intersected with the slice's four paths is
 **empty** — main moved none of them. All four are **LANE-TOUCHED only**; the merge applied by `ort`
 with no conflicts. `e2e/twin-banks-never-wedged.spec.ts` is a **pure add** (restored from the archive).
 
@@ -172,7 +172,7 @@ override discards them. Trivial; noted only so it is not mistaken for intent lat
 ## What is owed before this merges
 
 > ✅ **DISCHARGED s1450, recorded s1454 (F-1454-1).** All three items below were satisfied by
-> `f1448-1-crossings-keep-the-hero-out-of-it` and merged together in `65e3aaec`. Item 3 in particular
+> `f1448-1-crossings-keep-the-hero-out-of-it` and merged together in `42d0b2b1`. Item 3 in particular
 > was honoured: the successor's review carries the matched 6-spec battery on both arms
 > (clean main 4 reds → merged tree 2 reds, the survivors pre-existing on both). **Nothing is owed.**
 

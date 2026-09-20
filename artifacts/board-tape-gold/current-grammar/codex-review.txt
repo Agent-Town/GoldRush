@@ -542,7 +542,7 @@ exec
 --- fixture manifest/report ---
 {
   "schema": "goldrush.board-tape-gold.current-grammar.v1",
-  "recordedFrom": "48628dd094342e323072a95de5bf85f618bf8d7f",
+  "recordedFrom": "cdc3bcfe80d00617c89c1408805673e63cb8d16c",
   "node": "v26.4.0",
   "liveCountyContacted": false,
   "liveVerifiedSlip": null,
@@ -584,7 +584,7 @@ exec
 }
 # Board tape gold — current grammar recordings
 
-Recorded locally from main `48628dd094342e323072a95de5bf85f618bf8d7f` with Node v26.4.0. No live county request was made and these fixtures have no live verified slip.
+Recorded locally from main `cdc3bcfe80d00617c89c1408805673e63cb8d16c` with Node v26.4.0. No live county request was made and these fixtures have no live verified slip.
 
 ## Lineage
 
@@ -729,14 +729,14 @@ s2536 needed a full detached gate checkout with only about 13 GiB free. An ordin
 
 A fresh `git worktree add --detach --no-checkout` plus `git read-tree HEAD` created an independent index. macOS `clonefile` then copied each tracked file from main using APFS copy-on-write; symlinks were recreated. Any content differences were restored from the pinned commit, and `git diff --exit-code HEAD` verified the complete 30,759-file tracked tree before the candidate merge. Main and the lane were not reset or borrowed. This is a checkout technique, not a substitute for gates or a heat arena's required `npm ci`.
 
-Evidence: repo `artifacts/s2536-fire/checkout.json` and `checkout-space-note.md`, checkpoint `c589e0f83`. The candidate gates were still running when this note was written. Related: [[Gold Rush]].
+Evidence: repo `artifacts/s2536-fire/checkout.json` and `checkout-space-note.md`, checkpoint `c589e0f83 (archive: pruned by the A3 rewrite)`. The candidate gates were still running when this note was written. Related: [[Gold Rush]].
 
 exec
 /bin/zsh -lc "cat artifacts/board-tape-gold/current-grammar/manifest.json; cat artifacts/board-tape-gold/current-grammar/report.md; sed -n '291,360p' scripts/board-tape-gold.test.mjs; sed -n '4106,4147p' STATUS.md | cut -c1-1400; sed -n '37,100p' CLAUDE.md | cut -c1-2200; ls -lh artifacts/board-tape-gold/current-grammar; head -c 1100 STATUS.md" in /private/tmp/gr-board-gold-review
  succeeded in 0ms:
 {
   "schema": "goldrush.board-tape-gold.current-grammar.v1",
-  "recordedFrom": "48628dd094342e323072a95de5bf85f618bf8d7f",
+  "recordedFrom": "cdc3bcfe80d00617c89c1408805673e63cb8d16c",
   "node": "v26.4.0",
   "liveCountyContacted": false,
   "liveVerifiedSlip": null,
@@ -778,7 +778,7 @@ exec
 }
 # Board tape gold — current grammar recordings
 
-Recorded locally from main `48628dd094342e323072a95de5bf85f618bf8d7f` with Node v26.4.0. No live county request was made and these fixtures have no live verified slip.
+Recorded locally from main `cdc3bcfe80d00617c89c1408805673e63cb8d16c` with Node v26.4.0. No live county request was made and these fixtures have no live verified slip.
 
 ## Lineage
 
@@ -839,17 +839,17 @@ function seam(tape) {
 - **s26: asset-dependent e2e must be lazy-load-aware** — cell textures load sequentially over seconds; never assert frameKeys from an eager fixed sample window after a direction flip. Pattern: in-page rAF collector with early exit on evidence-complete + generous deadline (vp-02 probe test is the reference).
 - **s26 env (this VM era): HOME SHARES the 99% /sessions disk — `~/gr` won't fit; build in `/tmp/gr`** (root disk, 3.2G free). Bare `/tmp/<file>` writes are Permission-denied — put logs INSIDE /tmp/gr. `timeout 40 npx playwright ...` inside the 45s bash wall keeps died-call zombies from eating a run's verdict. captureScreenshot can fail outright on the degraded compositor (retry once; else defer shots to the healthy sweep).
 - **s25: pin non-gated lanes to HEAD in ~/gr.** When another lane's output lands mid-gate, every rsync silently builds a COMBINED tree — after each mount→gr rsync, `git show HEAD:<file> > ~/gr/<file>` for all files belonging to lanes you are NOT gating, and re-run anything that executed after the leak window. Check `git status` against your triage inventory before EVERY commit — new modified files = a live lane.
-- **s25 env recipe (degraded-VM hour + disk):** `TMPDIR=/tmp` + `--trace=off` on every playwright call (Chrome profile + traces on /sessions crash pages at 99% disk); `PLAYWRIGHT_BROWSERS_PATH=/tmp/pw-browsers` explicitly per call (the ~/.cache symlink VANISHED mid-session once); npm cache at `/tmp/npm-cache` survives wipes; `rm -rf ~/gr/test-results` between batches; rsync `--exclude worktrees` ALWAYS (1.2GB on the mount). At ~6fps a protocol round-trip spans ~2 frames: any "sampled N times" or two-evaluate consistency assert is a coin flip — atomic one-evaluate samples or poll-the-tracker first (m2-02/m2-06 modernized `40b674a`; A/B on pure HEAD before touching any canary, 4 A/Bs run this fire, all env).
+- **s25 env recipe (degraded-VM hour + disk):** `TMPDIR=/tmp` + `--trace=off` on every playwright call (Chrome profile + traces on /sessions crash pages at 99% disk); `PLAYWRIGHT_BROWSERS_PATH=/tmp/pw-browsers` explicitly per call (the ~/.cache symlink VANISHED mid-session once); npm cache at `/tmp/npm-cache` survives wipes; `rm -rf ~/gr/test-results` between batches; rsync `--exclude worktrees` ALWAYS (1.2GB on the mount). At ~6fps a protocol round-trip spans ~2 frames: any "sampled N times" or two-evaluate consistency assert is a coin flip — atomic one-evaluate samples or poll-the-tracker first (m2-02/m2-06 modernized `a20fe46`; A/B on pure HEAD before touching any canary, 4 A/Bs run this fire, all env).
 - **s25: `| head` eats tsc's exit code** — `npx tsc 2>&1 | head -3; echo $?` reports head's status. Run `npx tsc; echo TSC-EXIT:$?` bare, or check output emptiness, and run it AFTER any e2e-file edit (Playwright transpiles without typechecking — a type-broken canary edit still "passes").
 - **s23: diagnostics singletons need additive contracts once a slot gains a second writer** — two `GeneratedSpriteBatch` instances on one slot id zeroed the shared `renderedSprites` count last-writer-wins (thief batch, usually empty, always wrote last). Fix pattern: per-writer contribution tracking, adjust-by-delta. Suspect this family whenever a "count stays 0 while the thing is plainly alive" symptom appears after a pooled-renderer split.
 - **s23: HUD-vs-state consistency asserts must be atomic (one in-page evaluate)** — sample-then-assert (`gold()` → `toContainText`) races live income at high timescale, and `toContainText`'s retry loop retries a STALE expected string. Chain overhead widened the gap enough to expose it (m2-02). Same family: assert-what-you-sampled, delta-from-event (m2-04 pathing fixed to delta-from-spawn this fire).
 - **s23: when a spec SANCTIONS a surface change, its canaries' assumptions need re-examination at the gate** — vp-02's fallback test blocked only the sheets it knew about; 008's rotation cells legitimately intercepted the fallback. Amend the canary to preserve its INTENT (block more, still demand the last fallback layer), never weaken it. Document in-file + in the review.
 - **s23 45s-wall updates:** m1-03 and m1-05 full files now exceed one bash call — m1-03 splits ["grace holds|wave banner|spawn accounting" / "alive cap|resetRun mid-wave"], m1-05 ["keyboard-build|registers kills|river placement" / "cost escalates|owner kills|harvest channel"]; m2-02 splits fine 3+["bank cap"]+["R rotates|four tappable"]; vp-02b runs per-test (8-direction and hysteresis ~19s each) and its shots test carries `test.setTimeout(60_000)`.
 - **s10: git on the mount leaves STALE `.git/HEAD.lock`/`index.lock`** when the Cowork delete guard blocks git's own cleanup ("unable to unlink … Operation not permitted" warnings on an otherwise-successful commit; the NEXT commit then fails "cannot lock ref HEAD"). Recipe: load+call `allow_cowork_file_delete` at first delete failure, `rm -f .git/HEAD.lock .git/index.lock`, retry. Check for stale locks at session start. Same guard blocks `git checkout --` restores of binaries until enabled.
-- **s10: renderer-memory gates must warm pool DEPTH, not just first use** — m1-02 texture assert failed 20→21 on clean HEAD on this slow VM: concurrent floats reach deeper float-text pool slots first-time DURING cycles (retained canvas upload; geoms stable). m1-05's warm-cycle pattern is now applied in m1-02 too (`0abbab2`). Suspect this pattern for any future "±1 texture/geometry" flake before blaming a slice.
+- **s10: renderer-memory gates must warm pool DEPTH, not just first use** — m1-02 texture assert failed 20→21 on clean HEAD on this slow VM: concurrent floats reach deeper float-text pool slots first-time DURING cycles (retained canvas upload; geoms stable). m1-05's warm-cycle pattern is now applied in m1-02 too (`00864bd`). Suspect this pattern for any future "±1 texture/geometry" flake before blaming a slice.
 - **s10: this VM's /tmp SURVIVED re-provision** (chromium-1228 intact; only ~ was wiped) — check `/tmp/pw-browsers` before re-downloading. Heredoc gotcha: don't use `EOF` as delimiter in a bash call that also pipes another heredoc/multiline — a silent no-op patch resulted; use distinct delimiters (PYEOF) and assert-verify with grep after patching.
 - **s6 env variance:** VM home fully wiped (rebuild recipe worked; `.codex-auth/auth.json` on the mount is the auth seed); /sessions disk hit 100% (other tenants) → playwright browsers now live at `/tmp/pw-browsers` via `~/.cache/ms-playwright` symlink — RE-CHECK the symlink next session (/tmp wipes on VM restart); chromium fetched direct: `curl -C - https://cdn.playwright.dev/dbazure/download/playwright/builds/chromium/1228/chromium-linux-arm64.zip` (playwright install never fits the 45s wall). Background processes reaped ~60-90s (`setsid nohup` included): vite MUST start in the same bash call as its test batch — `fuser -k 5189/tcp; (npx vite --port 5189 --strictPort &) && sleep 3 && curl -s guard` then ONE batch <35s. This per-call kill+fresh-vite pattern also dodges s5's zombie-vite/stale-code hazard.
-- **Headless fps floor is a fiction under load: s6 saw 6fps** (vs s4's 17-22) — ALL throughput/visibility asserts must be in-page rAF trackers, never protocol polling (m1-02 hardened `93ddbae`; m1-06 was already right).
+- **Headless fps floor is a fiction under load: s6 saw 6fps** (vs s4's 17-22) — ALL throughput/visibility asserts must be in-page rAF trackers, never protocol polling (m1-02 hardened `f162169`; m1-06 was already right).
 - **Overlay `visible` lies:** hidden overlays are opacity-hidden → playwright counts them visible; `heroHp` is NOT a diagnostics key (`?? 100` guards made waits pass vacuously). Death waits: poll `state === 'dead'` or use the suite's `forceDeath`. Separation rings CAP contact DPS — huge point-blank packs form a donut and stall (~4 contacts/4s); overwhelm ≠ big pack, use forceDeath's repeated tight spawns.
 - **Probe-your-probe:** two s6 misdiagnoses (hit-pause "perma-freeze", "death never happens") came from polling nonexistent keys / protocol sampling. Verify the observable exists (`JSON.stringify` drops undefined silently) before trusting a 0.
 
@@ -938,7 +938,7 @@ FIRE-AUTHORED s2541, 2026-09-07. One fixture corrective for F-2541-1. Read AGENT
 
 ## Measured defect
 
-On unchanged main c03903e3a1905e26d91914532154fc014b699781, all three headless cases fail at the assay seam with `assay replay failed: malformed tape` (0/3, 4.06 s). The current grammar correctly refuses their historical orders: Mare Claim MOVE_TO at tick 0; Moth Season HOLD at tick 1820; Relay Rush HOLD at tick 0. The chapter writer candidate changes none of this and fails identically. The browser gold arm passes in the full fixture sweep. The complete Node command stops at its first group (742 tests: 736 pass, one fixture-sweep failure, five explicit skips), so its chained tail is not covered. This is not a timeout, contention excuse, or runtime gold regression.
+On unchanged main e53a12082daac6317e20da1ba9c85788021f0226, all three headless cases fail at the assay seam with `assay replay failed: malformed tape` (0/3, 4.06 s). The current grammar correctly refuses their historical orders: Mare Claim MOVE_TO at tick 0; Moth Season HOLD at tick 1820; Relay Rush HOLD at tick 0. The chapter writer candidate changes none of this and fails identically. The browser gold arm passes in the full fixture sweep. The complete Node command stops at its first group (742 tests: 736 pass, one fixture-sweep failure, five explicit skips), so its chained tail is not covered. This is not a timeout, contention excuse, or runtime gold regression.
 
 ## Implement
 
@@ -1195,7 +1195,7 @@ test('every retired tape in the ledger fails at submission with the message the 
     await close();
   }
 });
-48628dd094342e323072a95de5bf85f618bf8d7f
+cdc3bcfe80d00617c89c1408805673e63cb8d16c
 v23.11.1
 ls: node_modules: No such file or directory
 ✔ e8-mare-claim: the standing's gold is the purse held at the secure tick (30113.949584ms)
@@ -1308,7 +1308,7 @@ nodejs
     "difficulty": "trail",
     "simVersion": 1,
     "meta": {
-      "buildId": "54a35d57c",
+      "buildId": "54a35d57c (archive: pruned by the A3 rewrite)",
       "engineHash": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4",
       "era": 5,
       "viewVersion": 2
@@ -1391,7 +1391,7 @@ nodejs
     "difficulty": "trail",
     "simVersion": 1,
     "meta": {
-      "buildId": "54a35d57c",
+      "buildId": "54a35d57c (archive: pruned by the A3 rewrite)",
       "engineHash": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4",
       "era": 5,
       "viewVersion": 2
@@ -1474,7 +1474,7 @@ nodejs
     "difficulty": "trail",
     "simVersion": 1,
     "meta": {
-      "buildId": "48628dd09",
+      "buildId": "cdc3bcfe8",
       "engineHash": "09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4",
       "era": 5,
       "viewVersion": 2
@@ -1899,7 +1899,7 @@ type: digest
 ---
 # Gold Rush — Current-grammar board-gold fixtures preserve the regression checks
 
-Reviewed the uncommitted changes in "'`/private/tmp/gr-board-gold-review` at HEAD `48628dd094342e323072a95de5bf85f618bf8d7f`: `scripts/board-tape-gold.test.mjs` and the new `artifacts/board-tape-gold/current-grammar/` corpus. No actionable introduced defect found. The corrective task explicitly requires new local recordings after ADR-005 retired the historical positioning verbs; historical tapes and runtime code are unchanged.
+Reviewed the uncommitted changes in "'`/private/tmp/gr-board-gold-review` at HEAD `cdc3bcfe80d00617c89c1408805673e63cb8d16c`: `scripts/board-tape-gold.test.mjs` and the new `artifacts/board-tape-gold/current-grammar/` corpus. No actionable introduced defect found. The corrective task explicitly requires new local recordings after ADR-005 retired the historical positioning verbs; historical tapes and runtime code are unchanged.
 
 Verified all three fixture hashes against the report and declarations against tape outcomes; none contain MOVE_TO, HOLD, or FALLBACK_IF. The four board-gold cases passed on Node 26.4.0, including the locally intercepted browser submission (about 102.6 seconds for the combined command). The retirement test process initially failed without diagnostic detail when run concurrently with board-gold; its isolated rerun passed 2/2 in 0.282 seconds. Typechecking and `git diff --check` passed. Did not repeat the full Node battery or production build; retained evidence reports the broader battery'"'s two ps ENOBUFS failures and unexecuted chained tail.
 

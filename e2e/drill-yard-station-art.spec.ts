@@ -16,7 +16,7 @@ import { expectNoConsoleErrors, watchErrors } from './support/console-watch';
 /**
  * s1449 — the drill-yard station art must reach the PLAYER, in a plain boot (Mistake #10).
  *
- * The wiring merged at `a04ea810` and then sat DORMANT for two fires because the processed
+ * The wiring merged at `646e2d31` and then sat DORMANT for two fires because the processed
  * PNGs did not exist: `DrillYard.applyStationArt` looks the filename up in an eager
  * `import.meta.glob` and returns silently on a miss, so a missing or renamed file costs
  * nothing at build time, nothing at runtime, and shows the player procedural placeholder

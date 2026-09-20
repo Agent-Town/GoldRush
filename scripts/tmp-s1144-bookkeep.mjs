@@ -20,7 +20,7 @@ const walk = (node) => {
     node.status = 'stopped-lawful';
     node.drainNotes =
       'STOP, not a merge: the master scope-1 measure-first gate fired and the runner correctly refused to invent a cure (zero diff, main..lane/m4 empty). ' +
-      'Verified at source s1144: no spawn surface can EVER mount char.claim_jumper -- 82543f27 (2026-07-12, runner(lane-d) wire-e1-bandit-variants) rewired the enemy animators in src/entities/pools.ts:337/:355 to assetSlots.charBanditBase/charBanditThief and updated ZERO of the seven e2e specs naming the old slot. ' +
+      'Verified at source s1144: no spawn surface can EVER mount char.claim_jumper -- 0f5fb77e (2026-07-12, runner(lane-d) wire-e1-bandit-variants) rewired the enemy animators in src/entities/pools.ts:337/:355 to assetSlots.charBanditBase/charBanditThief and updated ZERO of the seven e2e specs naming the old slot. ' +
       'spriteAnimationDiagnostics() (SpriteAnimator.ts:208) is keyed per constructed animator, so the wait was unfalsifiable-by-construction. No art/gameplay regression: char.bandit_base has walk8 true and its processed PNGs are on disk. ' +
       'F-1144-1 (seven-spec stranded class, fingerprinted piecemeal for 15 days) + F-1144-2 (TWO stale classes; the hero walk4->walk8 class fails FIRST in 066:81, task-042:59, task-031:202 and masks three jumper asserts; hero.frameCount measured Expected 4 / Received 8). ' +
       'Evidence: reviews/vp-02b-jumper-slot-red-stop.md. Successor: lane-vp-02b-jumper-slot-repair. NO mergeHash -- unfinished work carries none.';

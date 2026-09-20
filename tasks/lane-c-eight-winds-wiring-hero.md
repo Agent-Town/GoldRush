@@ -20,7 +20,7 @@ READ FIRST (paths, not memory):
 ## Pre-flight (LANE-SAFETY, runner-auto-commit aware)
 The lane branch being ahead is NORMAL — the runner auto-commits. For each ahead commit: if its content is already merged to main (verify via `git log`/`git diff`), it is a SAFE DUPE → `git checkout -B lane/e2-arsenal main && git clean -fd` and PROCEED. STOP-and-report ONLY if an ahead commit's content is NOT on main (undrained work — resetting would DESTROY it), or the worktree holds uncommitted edits you did not make.
 
-**The dupe is PRE-PROVEN for you by CONTENT — do not spend budget re-deriving it.** s1175 verified at 2026-07-28T17:03Z: `lane/e2-arsenal` is 1 ahead at `319e6304` (`runner(lane-c): lane-c-power-budget-retry-policy.md`), which shipped to main as `d1b6545e` (s1173). All **five** files that commit touched resolve to **byte-identical blob hashes on main** (`git rev-parse lane/e2-arsenal:<f>` == `git rev-parse main:<f>` for all five), and the lane tree holds **zero** files absent from main. `git -C worktrees/lane-c status --porcelain` was empty. Textbook false-ahead SAFE DUPE → reset and proceed. Re-run the blob comparison to confirm nothing changed since, then move on.
+**The dupe is PRE-PROVEN for you by CONTENT — do not spend budget re-deriving it.** s1175 verified at 2026-07-28T17:03Z: `lane/e2-arsenal` is 1 ahead at `319e6304` (`runner(lane-c): lane-c-power-budget-retry-policy.md`), which shipped to main as `6640c89e` (s1173). All **five** files that commit touched resolve to **byte-identical blob hashes on main** (`git rev-parse lane/e2-arsenal:<f>` == `git rev-parse main:<f>` for all five), and the lane tree holds **zero** files absent from main. `git -C worktrees/lane-c status --porcelain` was empty. Textbook false-ahead SAFE DUPE → reset and proceed. Re-run the blob comparison to confirm nothing changed since, then move on.
 
 Then `npm install --no-audit --no-fund`; `npm run build` green before touching anything.
 
@@ -89,7 +89,7 @@ Expected result: 32 cells → `assets/processed-full/` at 512, 32 downscaled →
 
 **Controls (both mandatory, paste both outputs):**
 - `node scripts/anim-pass-reextract.mjs --verify-downscale char-hero-sheet-walk8` — must **exit 0**, proving your `--like` path did not disturb the shared downscale.
-  ⚠️ **The guard's output contract CHANGED on 2026-07-28 (`8159fe6b`) — read this before you judge the result.** It is now provenance-aware, so the correct green is:
+  ⚠️ **The guard's output contract CHANGED on 2026-07-28 (`01a40f9a`) — read this before you judge the result.** It is now provenance-aware, so the correct green is:
   ```text
   downscale replication: 23 byte-identical, 0 unexplained, 9 master-divergent by design (of 32 masters)
   ```

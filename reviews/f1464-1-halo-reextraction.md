@@ -1,8 +1,8 @@
 # f1464-1 halo re-extraction — drain review (s1470)
 
 - **Slice:** `lane-f1464-1-halo-reextraction` (authored s1469, executes the FIRST disjunct of F-1464-1's gate)
-- **Branch/tip:** `lane/b` @ `d54077059` — a single work commit
-- **Merge-base:** `89bfc10c`
+- **Branch/tip:** `lane/b` @ `a32d7c00f` — a single work commit
+- **Merge-base:** `0d989bdc`
 - **Merged to main:** see the merge commit recorded in `tasks/goals.json` leaf `f1464-1-halo-reextraction`
 - **Gated in:** detached worktree `gate-s1470/` on the MERGED tree (§3.0b custody), scratch port **5243** — lane-a was LIVE on `e3-canyon-environment` and 5188 is `strictPort`
 - **Drain-block check:** ✅ CLEAR, leaf matched (`--strict`, read the WORD not the exit code)
@@ -13,7 +13,7 @@ F-1464-1 stays **OPEN**. The runner deliberately did not banner it CURED, and th
 
 ## What it does
 
-Re-extracts the safe haloed sprite classes through the cured extractor using the recipe ruled at `8e3c1491` (key-before-final-resample). Cures **774** shipped files including every provably-loaded surface the finding named — HUD Baron portrait **55.63% → 0.00%**, title emblem **99.17% → 0.00%** — while the four negative controls stay at **0.00%**. Adds `scripts/halo-reextraction-check.mjs`, which re-runs the sweep without leaving tracked probe dirt, asserts the exact 774/301 split, and byte-compares every cured file against pre-batch `89bfc10c`.
+Re-extracts the safe haloed sprite classes through the cured extractor using the recipe ruled at `c42d653a` (key-before-final-resample). Cures **774** shipped files including every provably-loaded surface the finding named — HUD Baron portrait **55.63% → 0.00%**, title emblem **99.17% → 0.00%** — while the four negative controls stay at **0.00%**. Adds `scripts/halo-reextraction-check.mjs`, which re-runs the sweep without leaving tracked probe dirt, asserts the exact 774/301 split, and byte-compares every cured file against pre-batch `0d989bdc`.
 
 A touched-file-only lossless recompression cut the production-PNG growth from **+47.5 MiB to +14.9 MiB** with decoded pixels identical.
 
@@ -34,7 +34,7 @@ I re-ran the acceptance script myself rather than inheriting the runner's number
 
 ## Merge classification
 
-Base `89bfc10c`. Content is **1075 files / 99 insertions / 1 deletion** — 1054 `M`, 21 `A`; 774 `assets/processed`, 278 `assets/processed-full`, 20 new `reviews/shots-f1464-1-halo`, plus `scripts/halo-reextraction-check.mjs` (new), `tasks/BACKLOG.md`, `tasks/goals.json`. All asset paths **LANE-ONLY**; the two ledgers **BOTH-MOVED** and auto-merged clean.
+Base `0d989bdc`. Content is **1075 files / 99 insertions / 1 deletion** — 1054 `M`, 21 `A`; 774 `assets/processed`, 278 `assets/processed-full`, 20 new `reviews/shots-f1464-1-halo`, plus `scripts/halo-reextraction-check.mjs` (new), `tasks/BACKLOG.md`, `tasks/goals.json`. All asset paths **LANE-ONLY**; the two ledgers **BOTH-MOVED** and auto-merged clean.
 
 ⚠️ **THE TWO-DOT TRAP FIRED FOR THE FOURTH FIRE RUNNING.** `git diff main..lane/b` reads **1090 files / 554 deletions**; the true `main...lane/b` is **1075 files / 99 insertions / 1 deletion**, matching the lane commit's own `--stat` exactly. The phantom half is main's own six commits since the merge-base — s1469's drain plus this fire's authoring commit. Merged three-way with `merge --no-ff`. Four fires in a row is not a coincidence: **two-dot is structurally the wrong instrument for a lane that has fallen behind, which is every lane by drain time.**
 

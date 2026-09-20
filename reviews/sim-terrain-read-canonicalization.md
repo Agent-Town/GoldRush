@@ -1,9 +1,9 @@
 # sim-terrain-read-canonicalization — drain review (s2494)
 
 **Slice:** `tasks/sim-terrain-read-canonicalization.md` (lane-d)
-**Branch / tip:** `lane/d` @ `1f0a986c061d7b0690fcac24055cb1bbef21cf18`
-**Merged as:** `7d23e345efa4a60cca4cf4f3cd1e9fed95d9c268` (parents `af7695eef` main, `1f0a986c0` lane)
-**Base:** `ffaf9dd5f98f23019c37c97ad2a9d787f6763bdd`
+**Branch / tip:** `lane/d` @ `1ae47d6c6e0a2f5d5c8da8691dd4410da18737b7`
+**Merged as:** `1ce199744d2b24b31f1b726c20795808bd959ffc` (parents `ef51fefe8` main, `1ae47d6c6` lane)
+**Base:** `39d4883c31a6632ad481905a20deaffaed563b4f`
 **Gate worktree:** `gate-s2494` (detached, §3.0b), scratch port 5199 (5188 was held by lane-c's live run)
 
 ## VERDICT: MERGED — and it is a HONESTY-GUARD STOP, not a scope failure
@@ -28,7 +28,7 @@ lands here is the harness, not a fix.
 ## What it does, and why the timing matters
 
 The source fix the lane's own row points at — `reel-contract-routing-hazard`, F-E8MC-3 — **shipped
-one fire earlier as `22b9538e5`**. So this slice's four-reel whole-run gate, which was RED on the
+one fire earlier as `a671486e2`**. So this slice's four-reel whole-run gate, which was RED on the
 lane's own base by construction, is **GREEN on the merged tree**. It is now the standing regression
 gate for that cure.
 
@@ -101,7 +101,7 @@ said *"its two spec files were ALSO touched by drain 2"*; measured, only one was
 | file | class | resolution |
 |---|---|---|
 | `e2e/e4-roads-and-convoys.spec.ts` | **LANE-ONLY** — main did not move it since base (`git log base..main -- <path>` empty) | taken whole; verified byte-identical to `lane/d:` |
-| `e2e/true-reel-harness.spec.ts` | **BOTH-MOVED** — main moved it at `61ec740cf` (drain 2) | **UNION**, by hand |
+| `e2e/true-reel-harness.spec.ts` | **BOTH-MOVED** — main moved it at `b86f02028` (drain 2) | **UNION**, by hand |
 | `tasks/BACKLOG.md` | **BOTH-MOVED** — both sides appended one row | **UNION**, both rows verbatim |
 
 **The spec union, and why it loses nothing:** the lane rewrote test 1 into a loop over a `fixtures`
@@ -115,14 +115,14 @@ present). **Proven by execution, not by reading:** both tests ran and passed on 
 **The BACKLOG union, verified by set difference against both parents** (the s2493 method, because a
 naive row count scores a lawful retirement as a loss): **0 rows absent from main**; **1 row absent
 from lane/d**, and I READ it rather than assuming — it is the `e4-roads-and-convoys READY-FOR-GATES`
-row, which main carries in its **superseding** form `READY-FOR-GATES → ✅ SHIPPED 48ef7df8d`. A
+row, which main carries in its **superseding** form `READY-FOR-GATES → ✅ SHIPPED 7f5c590a1`. A
 lawful retirement, correctly kept in main's newer state.
 
 ## Findings
 
 **F-2494-1 — the harness that proves a cure can only be gated AFTER that cure ships, and this one was
 sequenced by luck rather than by design.** This slice's four-reel gate asserts an equality that was
-FALSE on its own lane base and became TRUE only when `22b9538e5` merged sixteen minutes earlier. Had
+FALSE on its own lane base and became TRUE only when `a671486e2` merged sixteen minutes earlier. Had
 this drain been taken first — and it was the older done-move, so the ordinary "oldest first" rule
 pointed that way — the gate would have redded honestly and a fire could have read that red as the
 slice's own defect. s2493 took the newer lane-c drain first for an unrelated reason (contention
@@ -144,7 +144,7 @@ raise-it-until-it-goes-green, and the test's zero-console arm is doing real work
 
 `tasks/sim-terrain-read-canonicalization.md`'s leaf flips `queued → merged` at the hash above. The
 lane's BACKLOG row stands verbatim as the record of the STOP, with a closing note added in the drain
-bookkeeping commit stating that the corrective it names has since shipped as `22b9538e5` — because
+bookkeeping commit stating that the corrective it names has since shipped as `a671486e2` — because
 read alone, that row points a future reader at work that is already done.
 
 **F-E4-2 is retired as an attribution.** The height-arithmetic story was wrong; the divergence was

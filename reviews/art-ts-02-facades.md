@@ -1,7 +1,7 @@
 # Review — art-ts-02-facades (Town v2 facade plates) · POST-HOC GATE
 
 **Slice:** art-ts-02-facades (TS-02 THE FACADE ART, spec `specs/town-v2-style/README.md`, RATIFIED 2026-07-10)
-**Landed on main:** `cb69802 runner(art): art-ts-02-facades.md` (ancestor of tip `a254575`) — **UNGATED at land time** (runner broad-add; see Findings).
+**Landed on main:** `cb69802 runner(art): art-ts-02-facades.md` (ancestor of tip `2188722`) — **UNGATED at land time** (runner broad-add; see Findings).
 **Gated:** s288 fire (post-hoc), 2026-07-10.
 **Verdict:** ✅ **SHIPPED (art PASS, retro-gated).** Six E1 facade plates are canon-clean and on-style. Buildability re-confirmed. Scene-mount is a separate slice (firewall: NO src/) — the plates are display-safe until then.
 
@@ -29,7 +29,7 @@ Six full-bleed portrait painted facade plates (2.5D billboard source) for the to
 - cb69802 touched **zero src/e2e/config/Balance/schema** — art + LEDGER + request + contact-sheet only (plus swept debris, below). s286 and s287 fires already ran full e2e batteries (gz-h1 4/4 + en-02 10/10 + town-t5 10/10 + task-025 12/12 + m1-01 8/8 + m2-01 12/12; ed-01 8/8 …) on a main that **already contained** cb69802 → the facades cannot have regressed any suite.
 
 ## Findings
-- **F-tsfac-1 (non-blocking, RECURRING RUNNER DEFECT — 4th+ instance of F-071-1/F-073-1):** the ART-slot runner committed cb69802 with a **repo-root broad `git add`**, sweeping unrelated files onto main alongside the legitimate art: `artifacts/057|058|060|ss-02/*` (test-screenshot churn from other tasks), `logs/_s285-gate.sh` · `logs/_s285-pw.config.ts` · `logs/_s285-serve.sh` (s285 fire's gate SCRATCH, wrongly tracked into `logs/`), `logs/dashboard.html`, `logs/lane-runner.out`. **Impact: none on build** (no src). But it is the same defect chain (058→e5 `91c4c3e`, mp-02 `ff46a53`, 071+073 `277c22b`, now facades `cb69802`). **ROOT FIX = per-slot path-scoped adds in the runner (runner-owner / attended).**
+- **F-tsfac-1 (non-blocking, RECURRING RUNNER DEFECT — 4th+ instance of F-071-1/F-073-1):** the ART-slot runner committed cb69802 with a **repo-root broad `git add`**, sweeping unrelated files onto main alongside the legitimate art: `artifacts/057|058|060|ss-02/*` (test-screenshot churn from other tasks), `logs/_s285-gate.sh` · `logs/_s285-pw.config.ts` · `logs/_s285-serve.sh` (s285 fire's gate SCRATCH, wrongly tracked into `logs/`), `logs/dashboard.html`, `logs/lane-runner.out`. **Impact: none on build** (no src). But it is the same defect chain (058→e5 `f9ef02d`, mp-02 `4a5278a`, 071+073 `110dc22`, now facades `18d5763`). **ROOT FIX = per-slot path-scoped adds in the runner (runner-owner / attended).**
 - **F-tsfac-2 (non-blocking, for the TS-02 scene-mount slice):** the plates carry a warm **parchment/cream background**, not a transparent or `#ff00ff` key — so there is **no extract-alpha step** here (correct: full-bleed billboard source). The scene slice that mounts these must **matte/cut the parchment ground** (or the plates get re-shot on transparent) before they read as clean depth billboards. Flag it in the wire task's WHY.
 - **F-tsfac-3 (debris, cleanup owed):** `logs/_s285-*.sh|ts` are now tracked in git (via the F-tsfac-1 sweep). Removal is a `git rm` (delete — deny-listed for fires). A permitted/attended session should `git rm logs/_s285-gate.sh logs/_s285-pw.config.ts logs/_s285-serve.sh`.
 

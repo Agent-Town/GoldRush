@@ -3,7 +3,7 @@
 - **Slice:** `lane-mill-horizon-copy` (master `tasks/done/20260803-205046-lane-mill-horizon-copy.md`)
 - **Branch/tip:** `lane/perf` @ `8aaa957c319b3098c0870fb799469d483f042833`
 - **Base (lane parent):** `8aaa957c^`
-- **Gated in:** detached worktree `worktrees/gate-s1444` at main `8344a204` (§3.0b — undecided content never entered main's working tree)
+- **Gated in:** detached worktree `worktrees/gate-s1444` at main `b82bdc22` (§3.0b — undecided content never entered main's working tree)
 - **Drained by:** s1444 fire, 2026-08-03
 
 ## VERDICT: MERGE — FULL

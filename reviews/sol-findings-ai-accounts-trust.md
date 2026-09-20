@@ -1,7 +1,7 @@
 # Sol findings — AI, accounts, and trust boundaries
 
 - **Branch:** `sol/repository-audit-findings`
-- **Base:** `7802ed6`
+- **Base:** `8510b61`
 - **State:** UNTRIAGED — no implementation authorized.
 - **Scope:** product AI promises, Assay production path, economy authority, account recovery, profile selection, KV concurrency, and telemetry consent/configuration.
 

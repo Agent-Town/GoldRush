@@ -3,7 +3,7 @@ CODEX: model=gpt-5.6-sol effort=medium
 
 FIRE-AUTHORED, s2533, 2026-09-07. Implement one test corrective, F-2533-1, natively in `worktrees/lane-a`; resolve the actual branch with `git worktree list`, never assume lane/a.
 READ FIRST: AGENTS.md; `reviews/beat-citation-refresh.md` F-2533-1; `specs/m1-core-loop/slices/01-claim-jumpers-death.md`; STATUS.md verification lessons; the current debugSpawn/isDebugEnabled branch in `src/game/Game.ts`.
-Dependency: confirm `9e1d8a2e30beee17f6c034180de2f5c8a2f31b44` (F-RPA-4) is an ancestor of main. Missing dependency: STOP and report, never rebuild it.
+Dependency: confirm `45043ffb52d7d97de85c4c81efd234e71e609c23` (F-RPA-4) is an ancestor of main. Missing dependency: STOP and report, never rebuild it.
 
 Pre-flight: main..HEAD must be empty, the slot must have no undrained done-move, and tracked source/test dirt means STOP. Never reset, clean, replace a branch or edit another worktree. If clean and behind, `git merge --ff-only main`. **FACTORY-CHURN EXCEPTION (F-1407-1):** disjoint `logs/**`, `artifacts/**`, `reviews/shots-*` and `.png` files are expected factory output, not a STOP; list and preserve them. Modified tracked `src/**`, `scripts/**`, `e2e/**`, `tasks/**`, `specs/**` or `reviews/*.md` still STOP. Report anything in this task's scope instead of overwriting it. Record the base before editing. Use the repo's native Node version. If dependencies are absent, `npm ci`, never npm install; do not share a Vite optimizer cache with another server.
 

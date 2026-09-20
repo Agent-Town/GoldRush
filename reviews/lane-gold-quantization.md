@@ -2,7 +2,7 @@
 
 **Slice:** `lane-gold-quantization` (master `tasks/done/20260803-173341-lane-gold-quantization.md`)
 **Branch:** `lane/e2-arsenal` · **Tip drained:** `ce12d8c9c6593912f0a4b26f317f0d2bd0b5a343` (bottom of a 3-commit stack)
-**Base:** `b73b88945da27b24dae66ccb65193e502e9b417b` — which is *also* `merge-base(main, lane/e2-arsenal)` and the commit's own parent
+**Base:** `3aa4d123652cc601d3e645d8aac5ed6e9fa26360` — which is *also* `merge-base(main, lane/e2-arsenal)` and the commit's own parent
 **Drained by:** s1439 fire · **Gate worktree:** detached `gate-s1439` (§3.0b), scratch port 5199 then 5231, every playwright run `--workers=1` (§3.1)
 
 ## VERDICT: MERGED
@@ -21,7 +21,7 @@ The HUD change is deliberately belt-and-braces: gold is already integral by the 
 
 ## Merge classification
 
-`git diff --name-only b73b8894 main` over the five slice paths is **EMPTY** — main never moved any of them since the lane's base. All five are **PURE LANE-TOUCHED**, zero conflicts, nothing to graft.
+`git diff --name-only 3aa4d123 main` over the five slice paths is **EMPTY** — main never moved any of them since the lane's base. All five are **PURE LANE-TOUCHED**, zero conflicts, nothing to graft.
 
 Applied as a **path-scoped blob copy from `ce12d8c9`, not a branch merge**: `lane/e2-arsenal` carries two further commits (`39cfef9d` fort-solidity STOP report, `9236e9ba` tb-stall-census) that are *not* part of this slice and are being drained separately. Every applied blob was hash-verified against `ce12d8c9` before and after landing.
 

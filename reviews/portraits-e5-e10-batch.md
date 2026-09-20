@@ -1,6 +1,6 @@
 # Review: portraits-e5-e10-batch — the E6–E9 townsfolk processed and registered as speakers (lane-c worktree, Claude Opus 5 implementer, attended drain 2026-09-06 morning)
 
-**Slice/branch/tip:** `portraits-e5-e10-batch` · `art/portraits-e5-e10` · commit `8b27115bb` on base `41b1e63cf` · merged to main: see the ledger row (first-parent merge; the only collision was the ledger).
+**Slice/branch/tip:** `portraits-e5-e10-batch` · `art/portraits-e5-e10` · commit `f4a5fd1dd` on base `0a120edd3` · merged to main: see the ledger row (first-parent merge; the only collision was the ledger).
 **Verdict:** MERGED. 21 raw plates (`assets/raw/tf-*-e{6,7,8,9}.png`) processed into `assets/processed/townsfolk-<slug>.png` and registered as 21 era-suffixed `StorySpeakerId`s with canon names (Chalk, `civic-agent-e7`, is the only personal name, per ruling #13). One beat honestly re-keyed (`e9-water-ledger-opened`, clerk → canal reeve: water law is the reeve's office while E9's clerk line poles the packet-boat, `lore/STORYBOOK.md:542`); nine more are blocked by their own copy (third-person pronouns) and stay with the registered speakers until a copy revision; E5 and E10 have NO raw plates at all, and E8's He-3 assayer has none, so those are an art GENERATION task, not processing.
 
 ## What it does, and the premise it corrected (F-PORT-1)
@@ -21,7 +21,7 @@ The master asked for "the same extraction as the existing seven". Measured: the 
 Screenshots: `reviews/shots-portraits-e5-e10-batch/{mobile-390-e9-water-ledger-rekeyed,speaker-card-proof-28,portrait-card-crop-grid-21}.png`.
 
 ## Merge classification
-Base `41b1e63cf`; main moved by the Canyon Works levers, the squall and bookkeeping, none touching these files. `assets/processed/townsfolk-*.png` (21), `reviews/shots-portraits-e5-e10-batch/*`: NEW. `src/story/speakers.ts`, `src/story/beats.ts` (one speaker id plus comment re-bases), `assets/LEDGER.md`: LANE-TOUCHED. `tasks/BACKLOG.md`: MAIN-MOVED, unioned. Attended in the drain commit: `scripts/halo-reextraction-check.mjs` denominator 1314 → 1335 (F-PORT-4).
+Base `0a120edd3`; main moved by the Canyon Works levers, the squall and bookkeeping, none touching these files. `assets/processed/townsfolk-*.png` (21), `reviews/shots-portraits-e5-e10-batch/*`: NEW. `src/story/speakers.ts`, `src/story/beats.ts` (one speaker id plus comment re-bases), `assets/LEDGER.md`: LANE-TOUCHED. `tasks/BACKLOG.md`: MAIN-MOVED, unioned. Attended in the drain commit: `scripts/halo-reextraction-check.mjs` denominator 1314 → 1335 (F-PORT-4).
 
 ## Findings
 - **F-PORT-2 (copy revision owed, fire-authorable):** nine beats name a cast member but speak of them in the third person (`e6-steward-doorless-dome` "She says", `e6-defector-catalog`, `e7-chalk-first-filing` "Its first filing", `e7-mission-sent-column`, `e7-starship-countdown`, `e8-breach-drill`, `e9-grass-square-planted`, `e9-greenkeeper-outside`, `e9-first-swim`); re-attributing them is a copy change the firewall forbade. Five are legitimately the elder's or tavernkeeper's reports and stay.

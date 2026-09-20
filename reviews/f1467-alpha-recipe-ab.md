@@ -1,6 +1,6 @@
 # F-1467-1 — extraction recipe A/B at play scale
 
-**Slice:** `f1467-1-alpha-recipe-ab` · **Branch:** `lane/b` · **Base:** `636e0eb2` · **Tip:** this lane commit
+**Slice:** `f1467-1-alpha-recipe-ab` · **Branch:** `lane/b` · **Base:** `b5e828af` · **Tip:** this lane commit
 
 **Verdict:** ✅ **F-1464-2 CLOSED-BY-MEASUREMENT. Use KEY-BEFORE-FINAL-RESAMPLE: standalone sprites key at 1024 then downsample; grids preserve native-sheet keying before cell resampling.**
 

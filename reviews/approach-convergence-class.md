@@ -1,7 +1,7 @@
 # approach-convergence-class — the F-1207-1/2 cure: `moveHeroTo` converges instead of guessing
 
-**Slice:** `lane-b-approach-convergence-class` · **Branch:** `lane/m4` · **Tip:** `c162bd1a` · **Merge-base:** `4fdbc950`
-**Drained by:** s1210 fire, 2026-07-29 · **Landed in:** `0b8db8f9` — ⚠️ **see F-1210-6, this was an unlabelled sweep, not a deliberate commit**
+**Slice:** `lane-b-approach-convergence-class` · **Branch:** `lane/m4` · **Tip:** `c162bd1a` · **Merge-base:** `058762f9`
+**Drained by:** s1210 fire, 2026-07-29 · **Landed in:** `0114f5bb` — ⚠️ **see F-1210-6, this was an unlabelled sweep, not a deliberate commit**
 
 ## Verdict
 
@@ -28,7 +28,7 @@ Runner's own numbers, retained: before **5/8 (62.5%)** approach failures → cur
 
 ## Merge classification
 
-Base `4fdbc950` (an ancestor of main; `lane/m4` was exactly **1 ahead**). `git diff 4fdbc950 main` on both paths is **empty** — main never moved them, so both applied clean with no 3-way judgment.
+Base `058762f9` (an ancestor of main; `lane/m4` was exactly **1 ahead**). `git diff 058762f9 main` on both paths is **empty** — main never moved them, so both applied clean with no 3-way judgment.
 
 | File | Class | Resolution |
 |---|---|---|
@@ -45,7 +45,7 @@ See `reviews/gg-01b-gazette-welcome.md` and the handoff. Summary of the control 
 
 | Arm | `release-build.spec.ts:21`, desktop + mobile |
 |---|---|
-| lane-b cure **+ GG-01b** (`8993da33`) | **2/2 FAILED** — `locator.click` timeout 150 s on `getByTestId('town-open-board')`, *"element is not visible"* |
+| lane-b cure **+ GG-01b** (`9825441f`) | **2/2 FAILED** — `locator.click` timeout 150 s on `getByTestId('town-open-board')`, *"element is not visible"* |
 | lane-b cure **− GG-01b** (reverted `TownScene.ts`/`ProfileStorage.ts`, `TownWelcome.ts` + welcome spec moved out, `grep -c TownWelcome src/town/TownScene.ts` → **0**) | **2/2 PASSED, 57.9 s** |
 
 The mechanism is coherent rather than coincidental: GG-01b's welcome takes over a **fresh profile's first town entry**, and its **first anchored beat is the Tavern board** — precisely the control `:21` cannot click. `release-build.spec.ts` creates exactly that fresh profile and knows nothing about the welcome.
@@ -58,4 +58,4 @@ I proved the config point the hard way and record it so the next fire does not: 
 
 ### F-1210-6 (MEDIUM, mine) — this slice merged as an unlabelled sweep
 
-`git checkout c162bd1a -- <paths>` **stages** what it writes. My later `git add tasks/... && git commit` was a **plain commit**, which commits the whole index — so this slice's two files rode into `0b8db8f9`, a commit whose message describes only GG-01b ledger work. The content is correct and fully gated, but the commit message does not name it, and a future `git log` reader would not find this slice where it landed. **This review and the ledger entries are the correction.** ➡️ *After any `git checkout <ref> -- <path>`, run `git status` before committing — the index is not empty just because you did not type `git add`.*
+`git checkout c162bd1a -- <paths>` **stages** what it writes. My later `git add tasks/... && git commit` was a **plain commit**, which commits the whole index — so this slice's two files rode into `0114f5bb`, a commit whose message describes only GG-01b ledger work. The content is correct and fully gated, but the commit message does not name it, and a future `git log` reader would not find this slice where it landed. **This review and the ledger entries are the correction.** ➡️ *After any `git checkout <ref> -- <path>`, run `git status` before committing — the index is not empty just because you did not type `git add`.*

@@ -1,6 +1,6 @@
 # true-reel-sprites — the placeholder show gets the game's real visuals
 
-**Slice:** `true-reel-sprites` · **branch:** `lane/c` · **tip:** `b792ca9ba` (over `87b5277d7`) · **base:** `d8c30eb88` · **merge:** `5cb2f2766` · **drained:** s2444, 2026-09-02
+**Slice:** `true-reel-sprites` · **branch:** `lane/c` · **tip:** `b792ca9ba (archive: pruned by the A3 rewrite)` (over `0530ce1f3`) · **base:** `c54c03ac5` · **merge:** `6aa547894` · **drained:** s2444, 2026-09-02
 
 ## VERDICT: MERGED.
 
@@ -45,7 +45,7 @@ evidence is the record and re-committing byte-different PNGs of a passing run ad
 
 ## Merge classification
 
-Base `d8c30eb88` (`probe-rows-unranked`). Main had moved since; the lane touched 25 paths and exactly
+Base `c54c03ac5` (`probe-rows-unranked`). Main had moved since; the lane touched 25 paths and exactly
 **one** — `tasks/BACKLOG.md` — was also MAIN-MOVED. Git auto-merged it, and the union was then verified
 **by content rather than by structure** (F-"both sides kept is a claim about content, not sets"): all
 three s2444 rows added to main this fire are present, and the lane's one added row is present. The other
@@ -58,7 +58,7 @@ three s2444 rows added to main this fire are present, and the lane's one added r
 The adjacent battery returned 6 failures. **None is this slice's**, established by control rather than
 by argument:
 
-| Test | merged tree | pre-merge control (`424f057d4`, detached worktree) |
+| Test | merged tree | pre-merge control (`2c4965e29`, detached worktree) |
 |---|---|---|
 | `assay-season-roll.spec.ts:103` the county board opens on the season now riding | ✘ both projects | ✘ both projects |
 | `assay-season-roll.spec.ts:147` the archive door serves season one read-only | ✘ both projects | ✘ both projects |

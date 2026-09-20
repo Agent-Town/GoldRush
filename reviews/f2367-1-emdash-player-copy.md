@@ -1,8 +1,8 @@
 # Review — f2367-1 em-dash player copy + guard scan-space widening
 
 **Slice:** `lane-c-emdash-player-copy-and-guard-denominator` (leaf `f2367-1-emdash-player-copy-and-guard-denominator`)
-**Branch/tip:** `lane/c` @ `937c301e1` · **base** `6a6c8b590`
-**Merge:** `b4b65f0efaa135eb1be34a31661028206f702444` (main, `--no-ff`)
+**Branch/tip:** `lane/c` @ `ada65e234` · **base** `9e3583112`
+**Merge:** `62e9515ba2e22edf21e2d86abc0d293232f9ccdf` (main, `--no-ff`)
 **Gated by:** s2371, detached worktree `gate-s2371/` at the merged tree, every playwright leg `--workers=1` (§3.1)
 
 ## VERDICT: MERGE
@@ -56,7 +56,7 @@ deliberate behaviour rather than an accident of the transpile.
 
 ## Merge classification
 
-Base `6a6c8b590` (s2370's lock commit, 35 minutes old at drain time). Main moved 3 files since
+Base `9e3583112` (s2370's lock commit, 35 minutes old at drain time). Main moved 3 files since
 base; the lane touched 6. **Intersection empty — all 6 LANE-ONLY, zero BOTH-MOVED.** No graft,
 no hand resolution: `ort` merged clean in the scratch worktree and again on main, and the
 commit merged is the gated commit itself.

@@ -1,7 +1,7 @@
 # vp-02d — side-idle resolver
 
 - **Slice:** `lane-vp-02d-side-idle-resolver`
-- **Branch / tip:** `lane/m4` @ `132e14e2` (runner(lane-b)), base `9b55c25f`
+- **Branch / tip:** `lane/m4` @ `132e14e2` (runner(lane-b)), base `3aff3436`
 - **Drained by:** s1135 fire, 2026-07-27
 - **Verdict:** **MERGE — PARTIAL ACCEPT.** Resolver rider + idle coverage accepted as authored. The runner's rewrite of the 8-direction walk table is **REJECTED and replaced with contract values**; doing so exposed a real runtime defect (F-1135-1) that the pre-existing staleness had been masking.
 
@@ -28,7 +28,7 @@ Src change is one line (`OrientationResolver.ts:52`). Everything else is test co
 
 ## Merge classification
 
-Base `9b55c25f`; `git log 9b55c25f..main` for both touched files is **empty** — main never moved them. Pure LANE-TOUCHED, no graft, no conflict resolution required. Landed file-by-file, path-scoped.
+Base `3aff3436`; `git log 3aff3436..main` for both touched files is **empty** — main never moved them. Pure LANE-TOUCHED, no graft, no conflict resolution required. Landed file-by-file, path-scoped.
 
 | File | Disposition |
 |---|---|

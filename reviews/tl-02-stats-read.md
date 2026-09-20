@@ -5,7 +5,7 @@
 - **Verdict:** ✅ MERGE (server-only additive completion of TL-02, which shipped its endpoint at s259)
 
 ## What it does
-The `GET /api/stats` endpoint itself was already SHIPPED at s259 (`functions/api/stats.ts` → main `47f13ae`). This task — queued deliberately by the attended s-night session (`898d083`) — completes the two things the s259 ship lacked, plus one small consistency fix:
+The `GET /api/stats` endpoint itself was already SHIPPED at s259 (`functions/api/stats.ts` → main `31ca68b`). This task — queued deliberately by the attended s-night session (`508d7cc`) — completes the two things the s259 ship lacked, plus one small consistency fix:
 
 1. **`docs/api-stats.md` (new, +85):** the public contract doc — response shapes (populated + empty), cache/CORS rules, the exact TL-01 aggregate keys consumed, and how to run the harness. Additive.
 2. **`scripts/test-stats.mjs` (new, +337):** a wrangler-pages-dev + local-KV harness (MP-01 pattern) that seeds fake tallies, GETs `/api/stats`, and asserts empty state, aggregation math (runs today/7d/all-time, median bucket, busiest-contract argmax, tier/device split, frame-p95 buckets, waves histogram, updatedAt passthrough), cache headers, CORS/method guards (403 bad-origin, 405 non-GET, 204 preflight), and that **no identifier-shaped keys** (email/profile/wallet/ip/nonce) and **no `telemetry:dedup:*` keys** ever escape. Additive dev tool (not wired into CI `npm test`).

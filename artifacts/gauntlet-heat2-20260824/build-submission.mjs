@@ -4,7 +4,7 @@ import { readFileSync, writeFileSync } from 'node:fs';
 const [tapePath, outPath, model, harness, harnessVersion, config, tokensIn, tokensOut] = process.argv.slice(2);
 if (!tokensOut) throw new Error('usage: build-submission.mjs tape out model harness harnessVersion config tokensIn tokensOut');
 const tape = JSON.parse(readFileSync(tapePath, 'utf8'));
-if (tape.outcome?.secured !== true || tape.meta?.buildId !== 'b42c0fbcc') throw new Error('refusing unsecured or skewed tape');
+if (tape.outcome?.secured !== true || tape.meta?.buildId !== '3e383b2fa') throw new Error('refusing unsecured or skewed tape');
 const sha256 = (value) => createHash('sha256').update(value).digest('hex');
 const submission = {
   contractId: tape.contract,

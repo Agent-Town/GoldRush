@@ -15,8 +15,8 @@
  *
  * ⚖️ SEVERITY STATED HONESTLY AND DELIBERATELY NOT INFLATED. This is NOT a broken guard and NOT a
  * missed ghost. Measured s2336 over every BACKLOG.md revision since the guard was born at
- * 7cfa8bb7 (2026-08-10): the subject set OSCILLATES -- 37 transitions, e.g. d79627ea 0->1 when
- * s2291 authored a master and 46e20af7 1->0 when s2293's drain retired the row. An empty subject
+ * f94055da (2026-08-10): the subject set OSCILLATES -- 37 transitions, e.g. 4fe6445a 0->1 when
+ * s2291 authored a master and b2332c00 1->0 when s2293's drain retired the row. An empty subject
  * set is the LAWFUL RESTING STATE OF A DRY BOARD, which is why it is 0 today. The defect is only
  * that the instrument could not TELL you which zero it was reporting.
  *

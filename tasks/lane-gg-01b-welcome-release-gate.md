@@ -2,11 +2,11 @@ CODEX: model=gpt-5.6-sol effort=high
 # lane-gg-01b-welcome-release-gate — GG-01b CORRECTIVE: the welcome blocks the release gate's board click
 ROLE: lane implementer. WORKDIR: this lane worktree. One task, firewalled. **FIRE-AUTHORED s1210 (attended review welcome).**
 
-WHY: **F-1210-5, measured by the s1210 drain that merged GG-01b and is therefore reporting its own regression.** GG-01b landed at `8993da33` (review `reviews/gg-01b-gazette-welcome.md`). It passed every gate it was given — tsc 0, build green, its own spec 8/8 both projects, `task-025`+`m1-01`+`m2-01` 32/32 — and it still turned the RELEASE gate suite red, because that suite runs under a **different playwright config** and no listed gate reaches it.
+WHY: **F-1210-5, measured by the s1210 drain that merged GG-01b and is therefore reporting its own regression.** GG-01b landed at `9825441f` (review `reviews/gg-01b-gazette-welcome.md`). It passed every gate it was given — tsc 0, build green, its own spec 8/8 both projects, `task-025`+`m1-01`+`m2-01` 32/32 — and it still turned the RELEASE gate suite red, because that suite runs under a **different playwright config** and no listed gate reaches it.
 
-MEASURED, ONE VARIABLE, SAME TREE (both arms carry lane-b's convergence cure `0b8db8f9`):
+MEASURED, ONE VARIABLE, SAME TREE (both arms carry lane-b's convergence cure `0114f5bb`):
 - **with GG-01b:** `e2e/release-build.spec.ts:21` **2/2 FAILED** desktop+mobile — `locator.click` timeout 150 s on `getByTestId('town-open-board')`, call log *"element is not visible"* (2× "waiting for element to be visible, enabled and stable", retried).
-- **with GG-01b reverted** (`TownScene.ts`/`ProfileStorage.ts` restored from `8993da33^`, `TownWelcome.ts` + `e2e/gazette-welcome.spec.ts` moved out, `grep -c TownWelcome src/town/TownScene.ts` → **0**): **2/2 PASSED, 57.9 s.**
+- **with GG-01b reverted** (`TownScene.ts`/`ProfileStorage.ts` restored from `9825441f^`, `TownWelcome.ts` + `e2e/gazette-welcome.spec.ts` moved out, `grep -c TownWelcome src/town/TownScene.ts` → **0**): **2/2 PASSED, 57.9 s.**
 
 The coherent mechanism — **which you must verify, not assume**: the welcome takes over a **fresh profile's first town entry**, and its first anchored beat is the **Tavern board**, exactly the control `:21` clicks. `release-build.spec.ts` creates precisely that fresh profile and knows nothing about the welcome.
 

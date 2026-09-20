@@ -1,6 +1,6 @@
 # f1567-2 — a refusal must not be overwritten by idle chatter
 
-**Slice:** f1567-2-refusal-bark-hold · **Branch:** `lane/b` · **Tip:** `8ba0cf9d941c732e76623932eab396ecc9b98aec` · **Base:** `main` at `e673bd13d` · **Drained:** s1568, 2026-08-08
+**Slice:** f1567-2-refusal-bark-hold · **Branch:** `lane/b` · **Tip:** `71b99bbb6f1b48c3e10d9484c094b9ab910e51d5` · **Base:** `main` at `510db5a8d` · **Drained:** s1568, 2026-08-08
 
 ## VERDICT: MERGED — the cure is the accepted shape, the firewall held, and I re-manufactured the red rather than inheriting it.
 
@@ -44,7 +44,7 @@ This matches the runner's claimed before-state (`2 failed`, desktop and mobile, 
 
 ### Merge classification
 
-Base `e673bd13d`; `git merge --no-ff lane/b` applied by the `ort` strategy with **no conflicts**. All six paths are **LANE-TOUCHED / MAIN-UNMOVED** — main moved on none of them, so there was no graft to perform.
+Base `510db5a8d`; `git merge --no-ff lane/b` applied by the `ort` strategy with **no conflicts**. All six paths are **LANE-TOUCHED / MAIN-UNMOVED** — main moved on none of them, so there was no graft to perform.
 
 ## Findings
 

@@ -1,7 +1,7 @@
 # Review — AP-16-5b: the seat learns the facing too (rotation parity on the second build path)
 
-**Slice:** `ap16-5b-seat-rotation-parity` · **Branch:** `lane/a` · **Tip:** `504eef7a8` · **Base:** `071e1d457`
-**Merge:** `57208ef8c53313fbbd855264258dbd3a0b72680e` · **Drained:** s1646, 2026-08-11
+**Slice:** `ap16-5b-seat-rotation-parity` · **Branch:** `lane/a` · **Tip:** `82362b663` · **Base:** `262a02f2d`
+**Merge:** `37dd8a6ad796fc35a387650fc3c5cf6a7fb44868` · **Drained:** s1646, 2026-08-11
 **Master:** `tasks/lane-a-ap16-5b-seat-rotation-parity.md` (FIRE-AUTHORED s1645 from F-1645-2)
 
 ## Verdict
@@ -12,7 +12,7 @@ same-hour control of main. No findings block; one advisory (F-1646-1) is recorde
 
 ## What it does
 
-AP-16-5 (`144b3291`) taught the **standing-orders** door that a `BUILD` order may carry
+AP-16-5 (`73de3dec`) taught the **standing-orders** door that a `BUILD` order may carry
 `rotationSteps: 0..3`, and published that grammar in `public/skill.md`. By its firewall it could
 not touch the **second** build path — the multiplayer seat at `src/sim/SeatOrders.ts`.
 
@@ -120,7 +120,7 @@ type-safety and not merely defensive.
 
 ## Merge classification
 
-Base `071e1d457`. Two paths, **both LANE-TOUCHED / LANE-ONLY**:
+Base `262a02f2d`. Two paths, **both LANE-TOUCHED / LANE-ONLY**:
 
 | file | class |
 |---|---|

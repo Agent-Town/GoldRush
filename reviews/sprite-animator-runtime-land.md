@@ -1,8 +1,8 @@
 # Drain review — `sol/sprite-animator-src-slim` landed as the sprite-animation runtime (Opus drainer, 2026-09-15)
 
-**Slice/branch/tip:** `sol/sprite-animator-src-slim` @ `c7f284ad4` — the uncommitted source half of Astra's sprite campaign (2026-09-08..12), re-based by the attended session onto `27227acdc` and committed as found, never gated. 35 files, +1,144/−456.
+**Slice/branch/tip:** `sol/sprite-animator-src-slim` @ `033f69c61` — the uncommitted source half of Astra's sprite campaign (2026-09-08..12), re-based by the attended session onto `403c996cd` and committed as found, never gated. 35 files, +1,144/−456.
 **Gated on:** `drain/sprite-animator`, the chain in the scratch worktree `wt-animator-land`. Every number below was measured on that chain; nothing is inherited from the branch's claims.
-**Control:** `wt-control-main`, a git worktree detached first at `0ad8eff59` (my merge base) and then at `0ab60c10f` (current `origin/main`), each with its own vite on a private optimizer cache and its served source verified before use.
+**Control:** `wt-control-main`, a git worktree detached first at `9cbf9d8fe` (my merge base) and then at `4f4165018` (current `origin/main`), each with its own vite on a private optimizer cache and its served source verified before use.
 **Master:** `tasks/sprite-animator-runtime-land.md`. **Owner, 2026-09-15, verbatim:** "I care mostly about the quality of the animations and I had the impression that Astra really understood and nailed that. If it needs a bit more download, then ok. It is a once download, then use it local action." · "go, do both".
 **Reviewer:** Claude Opus 5, drain reviewer. Main was never written, nothing was pushed, nothing was deployed, `STATUS.md` / `tasks/BACKLOG.md` / `tasks/goals.json` were never touched.
 
@@ -12,13 +12,13 @@
 
 The eleven conflicts are resolved and every resolution is written down below. tsc, both builds, the payload, stats, mp and the sixteen heat-13 tapes are green or attributed; the replay table is **byte-identical to the control on all 38 rows**, which is the proof the master asked for: an animation runtime moves no headless replay.
 
-**The precondition (F-SAR-1).** The branch's runtime reads 53 processed-art files — seven town idle clips and their cells, the newsie's era-1 portrait, and the hero's per-direction `pan` / `attack` pose sheets — that exist **only in commit `92f6cc115`** ("Astra's sprite roster and factory review work as found uncommitted on 2026-09-12", retained, never merged). The attended `town-cast-original-cells-restore` that landed at `0ab60c10f` while I worked restored the nine **walk8** families and **not** these. Without them `npx tsc --noEmit` fails at seven `TS2307` module-not-found lines in `src/town/TownScene.ts` and the hero's work and attack poses have no cells. `assets/processed/**` is outside this drain's firewall, so I did not commit them: every gate below was run with the 53 files materialised into the working tree, untracked, and the exact list is committed at `artifacts/sprite-animator-runtime-land/required-art-half.txt`. **One command lands them:** `git checkout 92f6cc115 -- $(cat artifacts/sprite-animator-runtime-land/required-art-half.txt)`.
+**The precondition (F-SAR-1).** The branch's runtime reads 53 processed-art files — seven town idle clips and their cells, the newsie's era-1 portrait, and the hero's per-direction `pan` / `attack` pose sheets — that exist **only in commit `92f6cc115`** ("Astra's sprite roster and factory review work as found uncommitted on 2026-09-12", retained, never merged). The attended `town-cast-original-cells-restore` that landed at `4f4165018` while I worked restored the nine **walk8** families and **not** these. Without them `npx tsc --noEmit` fails at seven `TS2307` module-not-found lines in `src/town/TownScene.ts` and the hero's work and attack poses have no cells. `assets/processed/**` is outside this drain's firewall, so I did not commit them: every gate below was run with the 53 files materialised into the working tree, untracked, and the exact list is committed at `artifacts/sprite-animator-runtime-land/required-art-half.txt`. **One command lands them:** `git checkout 92f6cc115 -- $(cat artifacts/sprite-animator-runtime-land/required-art-half.txt)`.
 
 ---
 
 ## 1. Merge classification — every conflict, resolved by reading both sides
 
-`git merge --no-ff sol/sprite-animator-src-slim` on `0ad8eff59` → **11 conflicted files, 31 conflict hunks**, exactly as the master measured. Merge base `27227acdc`. Merge commit `dca019e23`.
+`git merge --no-ff sol/sprite-animator-src-slim` on `9cbf9d8fe` → **11 conflicted files, 31 conflict hunks**, exactly as the master measured. Merge base `403c996cd`. Merge commit `d500bed70`.
 
 Every conflict is Astra against Astra: main carries the boss-fidelity land (2026-09-12) and era 6 (2026-09-14); the branch carries the sprite worktree's edits to the same files. The rule applied throughout: **take the branch's animation, keep main's boss-fidelity and era-6 substance, and where the branch carries an older form of something main already has, keep main's.**
 
@@ -136,13 +136,13 @@ Node 26.4.0 (`/opt/homebrew/bin` first on PATH) for every command. The dev serve
 
 | red (both projects) | this chain | control | attribution |
 |---|---|---|---|
-| `057-baron-rocket-cart.spec.ts:251` kited Baron | FAIL | **FAIL** on `0ad8eff59` | **PRE-EXISTING**, as `reviews/drain-review-boss-fidelity.md` §4 already records |
+| `057-baron-rocket-cart.spec.ts:251` kited Baron | FAIL | **FAIL** on `9cbf9d8fe` | **PRE-EXISTING**, as `reviews/drain-review-boss-fidelity.md` §4 already records |
 | `e7-roster.spec.ts:164` plain Signal-era boot | FAIL (`e7Arsenal.enabled` false) | **FAIL**, same assertion | **PRE-EXISTING** |
 | `e8-roster.spec.ts:172` plain Orbital-era boot | FAIL | **FAIL**, same assertion | **PRE-EXISTING** |
 | `e9-roster.spec.ts:173` plain Red Fields boot | FAIL | **FAIL**, same assertion | **PRE-EXISTING** |
-| `wire-crawler-3d.spec.ts:115` renderer counts | FAIL: `coldBaseline.triangles=149626 outside band [147704, 147710]` desktop, `146040 outside [144118, 144124]` mobile | **PASS 2/2** on `0ad8eff59` **and PASS 2/2 on current `origin/main` `0ab60c10f`** | **MINE — F-SAR-7** |
+| `wire-crawler-3d.spec.ts:115` renderer counts | FAIL: `coldBaseline.triangles=149626 outside band [147704, 147710]` desktop, `146040 outside [144118, 144124]` mobile | **PASS 2/2** on `9cbf9d8fe` **and PASS 2/2 on current `origin/main` `4f4165018`** | **MINE — F-SAR-7** |
 
-Control transcripts: `e2e-control-v2.log` (five distinct tests × two projects on `0ad8eff59`: 8 failed / 2 passed — the 2 passed are the crawler), `e2e-control-crawler-current.log` (the crawler alone on `0ab60c10f`: **2 passed**, 17.1 s).
+Control transcripts: `e2e-control-v2.log` (five distinct tests × two projects on `9cbf9d8fe`: 8 failed / 2 passed — the 2 passed are the crawler), `e2e-control-crawler-current.log` (the crawler alone on `4f4165018`: **2 passed**, 17.1 s).
 
 **Green, and worth naming:** the three roster specs' other five tests each (the re-pointed ownership assertions pass on both projects), `elder-walk8-woman` (the re-point), `town-cast-wiring`, `m1-01`, `m2-01`, `task-025` (10/10 both projects — the load flake the era-6 drain saw did not recur), `e3-crawler-boss`, `e5-boss-dredge-queen` **including `:237`, the mobile p95 coin flip F-DRB-10 names**, `e6-boss-homemaker`, `e9-boss-old-digger`, `e7-echo-canyon-mirror`. Zero console and page errors everywhere they are asserted — which is the plain-boot question §10 of the constitution asks, and the boss and town specs answer it on both viewports.
 
@@ -178,7 +178,7 @@ Run 1's log is kept beside the final one (`battery-node26.log`, 408.5 s, 791/3) 
 
 ### Blocking until one command runs
 
-**F-SAR-1 — the runtime's other half is in git and not on main. 53 files.** `src/town/TownScene.ts` imports seven `char-*-idle.frames.json` manifests; `src/assets/character-runtime-frames.json` names 35 per-direction hero `pan`/`attack` cells (`…-south-clean-v7-r0c0.png` and siblings); `src/story/speakers.ts` and `src/town/townsfolk.ts` name `townsfolk-newsie-e1.png`. **None of the 53 is on `origin/main`.** All 53 are in `92f6cc115` — "Astra's sprite roster and factory review work as found uncommitted on 2026-09-12 … no src changes; committed by the attended session for retention, not yet gated". The two halves of one campaign were committed to two places and only one has landed; `town-cast-original-cells-restore` (`0ab60c10f`) restored the nine **walk8** families, which is a different set.
+**F-SAR-1 — the runtime's other half is in git and not on main. 53 files.** `src/town/TownScene.ts` imports seven `char-*-idle.frames.json` manifests; `src/assets/character-runtime-frames.json` names 35 per-direction hero `pan`/`attack` cells (`…-south-clean-v7-r0c0.png` and siblings); `src/story/speakers.ts` and `src/town/townsfolk.ts` name `townsfolk-newsie-e1.png`. **None of the 53 is on `origin/main`.** All 53 are in `92f6cc115` — "Astra's sprite roster and factory review work as found uncommitted on 2026-09-12 … no src changes; committed by the attended session for retention, not yet gated". The two halves of one campaign were committed to two places and only one has landed; `town-cast-original-cells-restore` (`4f4165018`) restored the nine **walk8** families, which is a different set.
 Measured without them: `npx tsc --noEmit` → **7 × TS2307** in `TownScene.ts`; the hero's work and attack poses resolve to nothing.
 **This drain did not commit them** — `assets/processed/**` is on the master's NO list. Every gate in this review was run with them materialised untracked. The list is `artifacts/sprite-animator-runtime-land/required-art-half.txt`; the cure is one line, and it belongs in the same commit as the fast-forward:
 ```sh
@@ -223,7 +223,7 @@ Same value, read from the body that owns it. This is the one place where the two
 renderer count coldBaseline.triangles=149626 outside band [147704, 147710]   (desktop)
 renderer count coldBaseline.triangles=146040 outside band [144118, 144124]   (mobile)
 ```
-**+1,922 on both projects, exactly** — the signature of a constant amount of added scene geometry, not a per-viewport effect. Control: **2/2 PASS on `0ad8eff59`** and **2/2 PASS on current `origin/main` `0ab60c10f`** (`e2e-control-crawler-current.log`, 17.1 s), so it is neither pre-existing nor the town-cast restore's.
+**+1,922 on both projects, exactly** — the signature of a constant amount of added scene geometry, not a per-viewport effect. Control: **2/2 PASS on `9cbf9d8fe`** and **2/2 PASS on current `origin/main` `4f4165018`** (`e2e-control-crawler-current.log`, 17.1 s), so it is neither pre-existing nor the town-cast restore's.
 **I deliberately did not re-record it**, for the reason `e2e/renderer-count-artifact.ts:24-30` states and F-DRB-7 restated: the artifact is a REQUIRED INPUT, a re-record needs a `rerecorded` provenance block with all three triangle phases on both projects and confirming runs, and the spec aborts at the first mismatch — so this drain only ever learned the cold number. `artifacts/wire-crawler-3d/**` is also outside this drain's firewall.
 The two new geometries I can name (`Homemaker9000.ContactShadow`, a 28-triangle circle; the town-cast blob shadows' vertex-colour rebuild in `TownScene.ts`) do not account for 1,922 and the second is not in this map, so **the source hunk is not yet identified** — saying otherwise would be a guess. **Cure (fire-authorable, small):** a corrective that measures `coldBaseline` / `mounted` / `loadedBeforeKill` / `disposed` on a quiet board, both projects, with confirming runs, and re-records with provenance naming this land.
 
@@ -237,7 +237,7 @@ The two new geometries I can name (`Homemaker9000.ContactShadow`, a 28-triangle 
 
 | file | why |
 |---|---|
-| the merge commit `dca019e23` | scope 1: `sol/sprite-animator-src-slim` + the eleven resolutions |
+| the merge commit `d500bed70` | scope 1: `sol/sprite-animator-src-slim` + the eleven resolutions |
 | `e2e/e7-roster.spec.ts`, `e8-roster.spec.ts`, `e9-roster.spec.ts` | scope 3: the obsolete shared-animation source assertion replaced by three per-body-ownership assertions, with a dated cause |
 | `e2e/elder-walk8-woman.spec.ts` | the standing Elder plays an idle cell now; one assertion re-pointed with its cause (the branch had already re-pointed this spec's foot-contact formula) |
 | `assets/engine-era.json` | scope 5: same-era pin #3, `aliases: []`, top-level `engineHash` moved with it |

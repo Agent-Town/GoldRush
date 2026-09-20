@@ -1,6 +1,6 @@
 # s2554 — Dry board; standing duties checked
 
-No eligible drain or fire-authorable work was found. No implementation, refill, requeue, restart or deployment was performed. The predecessor's handoff was archived verbatim in lock commit `00c85d9bb`.
+No eligible drain or fire-authorable work was found. No implementation, refill, requeue, restart or deployment was performed. The predecessor's handoff was archived verbatim in lock commit `ce69447d5`.
 
 | Read | Result |
 | --- | --- |
@@ -23,7 +23,7 @@ Methods: reused the three retained `artifacts/s2552-fire/{retention-read,retenti
 
 RT-01 is discharged: `r2026w37` is minted, present in the public skill block, and selected by the landing. TK-01's Sep 7 digest is due on the first fire after 06:00 local; this fire ran before that trigger. LB-01's next coverage pull is due when the Sep 8 box backup is available. No salt was read and no new database was committed.
 
-The shell resolves Node 23.11.1; `/opt/homebrew/bin/node` was checked as 26.4.0, matching `.nvmrc`, and is selected explicitly for the closing ledger battery. No source change requires a build or browser regression. Closing ledger validation passed after handoff `5dcec32d0`: **1,050 Node assertions and 83 shell assertions, zero failures, 103.2 s**. All three desk legs evaluated PASS. Two runner custody arms initially skipped because pipe stdin is not a terminal; the targeted `runner-restart-recipe.test.sh` rerun under a PTY evaluated both and passed with zero skips. See `closing-ledger.txt`, `closing-ledger.json`, and `runner-restart-pty.txt`.
+The shell resolves Node 23.11.1; `/opt/homebrew/bin/node` was checked as 26.4.0, matching `.nvmrc`, and is selected explicitly for the closing ledger battery. No source change requires a build or browser regression. Closing ledger validation passed after handoff `1466b727d`: **1,050 Node assertions and 83 shell assertions, zero failures, 103.2 s**. All three desk legs evaluated PASS. Two runner custody arms initially skipped because pipe stdin is not a terminal; the targeted `runner-restart-recipe.test.sh` rerun under a PTY evaluated both and passed with zero skips. See `closing-ledger.txt`, `closing-ledger.json`, and `runner-restart-pty.txt`.
 
 Next: (A) re-triage any newly arrived done-move; (B) preserve attended dispatch and ownership holds; (C) perform the clock-triggered ticker and backup duties. Foreign lane dirt, arena files, telemetry and designed-untracked statistics were left with their writers.
 

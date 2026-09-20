@@ -2,7 +2,7 @@
 
 - **Slice:** `run3d-16-rail-elements` (FIRE-AUTHORED s1389)
 - **Branch / tip:** `lane/e2-arsenal` @ `47f71fdc9b0bfb338d21cddd2b47612f5c9e798e`
-- **Merged to main:** `32cfc878d9945ca1a0c60d35b2a8e0500e1c8530` (s1391, path-scoped graft, 16 files / 415 insertions)
+- **Merged to main:** `34800b2292db9f7230e519979d8efbe6290b5f44` (s1391, path-scoped graft, 16 files / 415 insertions)
 - **Gated in:** detached worktree `worktrees/gate-s1391` (§3.0b — main's working tree never held undecided content)
 
 ## VERDICT: MERGED
@@ -38,7 +38,7 @@ s1390 closed F-1389-1 by bisect, but the standing memory law is that *"pre-exist
 
 | Arm | ratio (desktop) | verdict |
 |---|---|---|
-| **Clean main** `5d6ef91b`, no slice | **1.6491** | FAIL |
+| **Clean main** `676d6947`, no slice | **1.6491** | FAIL |
 | Main + this slice | **1.4701** | FAIL |
 
 Same shell, same hour, same worker count. The slice's arm is **lower**, not higher. The red is F-1390-1, whose bar is crossed by the *denominator* improving.

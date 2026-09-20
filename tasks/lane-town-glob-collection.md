@@ -35,7 +35,7 @@ exactly this — a town battery printed nothing and only a raw-output read revea
 
 ### ✓ s1092 re-measured this per spec, and the recorded list was wrong in both directions
 
-s1081 recorded five specs. Measured on clean main at `b78234a3` with `npx playwright test --list`,
+s1081 recorded five specs. Measured on clean main at `a8e26fef` with `npx playwright test --list`,
 one spec at a time:
 
 | Spec | Measured | Why |
@@ -71,7 +71,7 @@ And everything the four broken specs actually need — `townTrail`, `townPlazaLa
 
 ## PRE-FLIGHT — verify by CONTENT, never by counting (SAFE-DUPE)
 
-⚠️ **`git log main..lane/m3` WILL PRINT ONE COMMIT (`1c68c68f runner(lane-a): lane-rehearsal-unset-guard.md`), AND THAT IS EXPECTED — IT IS *NOT* A REASON TO STOP.** That commit is rf-28, **drained to main as `8fb97691`**. ✓ s1092 re-verified it independently: `1c68c68f` changed exactly one file, `scripts/rehearsal-base.test.mjs`, and `git diff main lane/m3 -- scripts/rehearsal-base.test.mjs` is **empty** — byte-identical. The branch carries nothing main lacks. It is **FALSE-AHEAD**; an ahead-count is not a drain signal (F-1066-1 / F-1073-1, and s1091 caught this same illusion on three separate lanes in one week).
+⚠️ **`git log main..lane/m3` WILL PRINT ONE COMMIT (`1c68c68f runner(lane-a): lane-rehearsal-unset-guard.md`), AND THAT IS EXPECTED — IT IS *NOT* A REASON TO STOP.** That commit is rf-28, **drained to main as `b095fcbe`**. ✓ s1092 re-verified it independently: `1c68c68f` changed exactly one file, `scripts/rehearsal-base.test.mjs`, and `git diff main lane/m3 -- scripts/rehearsal-base.test.mjs` is **empty** — byte-identical. The branch carries nothing main lacks. It is **FALSE-AHEAD**; an ahead-count is not a drain signal (F-1066-1 / F-1073-1, and s1091 caught this same illusion on three separate lanes in one week).
 
 All four must hold before you touch a file:
 1. `git log --oneline main..lane/m3` prints **exactly `1c68c68f` and nothing else.** A **second** commit would be undrained work — **only then STOP and report.**

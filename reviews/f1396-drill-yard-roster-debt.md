@@ -14,13 +14,13 @@ Every run below used `--workers=1`, per §3.1 (F-1270-1: at default workers the 
 
 ---
 
-## (A) cp01 — CAUSED by `f0bf5251`, and it is one of FOUR
+## (A) cp01 — CAUSED by `f86b28b3`, and it is one of FOUR
 
-**Cause, control-proven.** `f0bf5251` (`runner(lane-b): lane-drill-yard.md`, 2026-08-01T08:14) added `e1-drill-yard` as E1's 6th contract. Specs that hard-code a five-name E1 roster went red by arithmetic.
+**Cause, control-proven.** `f86b28b3` (`runner(lane-b): lane-drill-yard.md`, 2026-08-01T08:14) added `e1-drill-yard` as E1's 6th contract. Specs that hard-code a five-name E1 roster went red by arithmetic.
 
-**The control run is what makes this a cause and not a correlation.** At `f0bf5251^` (`467ed904`), in a detached worktree (§3.0b), same harness, `--workers=1`:
+**The control run is what makes this a cause and not a correlation.** At `f86b28b3^` (`02249254`), in a detached worktree (§3.0b), same harness, `--workers=1`:
 
-| Spec | at `f0bf5251^` | on main today |
+| Spec | at `f86b28b3^` | on main today |
 |---|---|---|
 | `cp01-charter-roundtrip.spec.ts:28` | **GREEN** | **RED** both projects |
 | `072-era-activation.spec.ts:241` | **GREEN** | **RED** both projects |
@@ -49,24 +49,24 @@ So I stopped grepping and measured. `town-t3-board.spec.ts` and `contract-briefi
 - **Exhaustive (RED):** the four above.
 - **Iteration lists (SILENT COVERAGE HOLE, not red):** `panorama-framing:39,:72` · `release-build:100` · `terrain-seamless:128` · `tr-02-splat-ground:102` · `contract-briefings:258` (a `.has()` membership set, so drill-yard reads as locked) · `scripts/stream-capture.mjs:16`. **These are UNMEASURED as defects and I did not touch them.** Adding drill-yard to them is a behaviour question (does it have panorama art? terrain? release assets?) that can legitimately red things — it deserves its own measured slice, not a drive-by. Recorded as **F-1396-3**.
 
-📌 **Why this half was missed by the sweep that was supposed to catch it.** `f1330-1-count-shaped-censuses` (shipped `4cb09307`) swept the drill-yard census debt and its own master states the denominator it used: `grep "toHaveLength(41)\|toHaveCount(41)\|toBe(41)\|toEqual(41)\|all 41 \|41 contracts\|41 cards"`. That is a **count-shaped** denominator. It is correct and it was run honestly — and a roster-shaped literal contains no `41` at all, so it was invisible to it. The cure's denominator was narrower than the defect's class.
+📌 **Why this half was missed by the sweep that was supposed to catch it.** `f1330-1-count-shaped-censuses` (shipped `68deb90a`) swept the drill-yard census debt and its own master states the denominator it used: `grep "toHaveLength(41)\|toHaveCount(41)\|toBe(41)\|toEqual(41)\|all 41 \|41 contracts\|41 cards"`. That is a **count-shaped** denominator. It is correct and it was run honestly — and a roster-shaped literal contains no `41` at all, so it was invisible to it. The cure's denominator was narrower than the defect's class.
 
 ---
 
 ## (B) cp03 — NOT drill-yard. A deliberate behaviour change from RF-05b, never reconciled
 
-cp03 was **already red at `f0bf5251^`**, so drill-yard is exonerated. Two further measurements date it:
+cp03 was **already red at `f86b28b3^`**, so drill-yard is exonerated. Two further measurements date it:
 
-- **GREEN at its own birth commit** `31c51632` (2026-07-17), **6/6, rc=0** — so this is genuine rot, not a never-green guard.
-- **Bisect** over the 2,992-commit window `31c51632..f0bf5251^`, 15 automated steps, one spec per step at `--workers=1`:
+- **GREEN at its own birth commit** `d3d0a484` (2026-07-17), **6/6, rc=0** — so this is genuine rot, not a never-green guard.
+- **Bisect** over the 2,992-commit window `d3d0a484..f86b28b3^`, 15 automated steps, one spec per step at `--workers=1`:
 
-> **first bad commit: `6c009cb8` — "feat: add physical E1 release build"** (RF-05b, 2026-07-23T06:22)
+> **first bad commit: `776cd64a` — "feat: add physical E1 release build"** (RF-05b, 2026-07-23T06:22)
 
 ### The mechanism, read rather than blamed
 
 A bisect names a commit, not a cause. I traced the path:
 
-1. `6c009cb8` adds `src/meta/ContractUnlock.ts` (new file) and wires `reverifyStagedContractLaunch()` into boot at **`src/main.ts:114`**.
+1. `776cd64a` adds `src/meta/ContractUnlock.ts` (new file) and wires `reverifyStagedContractLaunch()` into boot at **`src/main.ts:114`**.
 2. `ContractUnlock.ts:77-90` reads the staged launch, and if the contract is **locked**, calls `clearPlayerContractLaunch()`.
 3. `ContractFamilies.ts:1245-1252` — that function removes **both** `PLAYER_CONTRACT_LAUNCH_KEY` **and `CHARTER_LAUNCH_KEY`**.
 4. With no staged launch, the run resolves to the default contract, so the guard at `ContractFamilies.ts:1331` (`launched && requestedId && contract.id === requestedId`) never fires and the charter document is never applied.
@@ -104,7 +104,7 @@ s1330 already established the pattern for exactly this situation, carving the ce
 
 ## Findings
 
-- **F-1396-1** — F-1394-1 is two defects. cp01 (+072, agent-view, e1-baron) ← `f0bf5251`; cp03 ← `6c009cb8`. Control-proven, dated, mechanisms read. **The cp01 half is fire-authorable and is authored this fire.**
+- **F-1396-1** — F-1394-1 is two defects. cp01 (+072, agent-view, e1-baron) ← `f86b28b3`; cp03 ← `776cd64a`. Control-proven, dated, mechanisms read. **The cp01 half is fire-authorable and is authored this fire.**
 - **F-1396-2** 🔺 — cp03 is a deliberate RF-05b behaviour change (unlock re-verification clears the charter). Needs an attended ruling; **rec (b)**, test-side precondition. Player-facing surface is limited to `?editor`.
 - **F-1396-3** 🟡 — six iteration-list roster sites silently skip drill-yard, including the **release-build gate** (`release-build.spec.ts:100`) and `scripts/stream-capture.mjs:16`. Coverage holes, not reds. **UNMEASURED — wants its own slice; do not drive-by fix.**
 - **F-1396-4** 🔺 — the owner block on `7c4f132f` freezes four uncontested files alongside the one contested fixture, holding 6 red project-results hostage. **Rec: carve out the four.**
@@ -118,13 +118,13 @@ Raw logs parked under `logs/_s1396_*` per the Retention Law: `cp01cp03_w1`, `072
 
 # DRAIN — s1397 (2026-08-02)
 
-**Slice:** `f1396-1-cp01-roster-census` · **branch:** `lane/e2-arsenal` · **lane tip:** `59dacbd3` · **merge:** `0195da9f`
+**Slice:** `f1396-1-cp01-roster-census` · **branch:** `lane/e2-arsenal` · **lane tip:** `bb66753c` · **merge:** `7f5b8017`
 
 **VERDICT: MERGED.** The cp01 half of F-1396-1 is closed.
 
 ## What it does
 
-`f0bf5251` landed `e1-drill-yard`, the owner-ratified 6th E1 contract. `cp01-charter-roundtrip.spec.ts:27` asserts the E1 roster **exhaustively** against live-derived data (`listContracts('epoch-1-frontier')`), so the new contract reddened it with a pure-arithmetic diff. The slice adds `'e1-drill-yard'` at index 1 and retitles the test five→six. **Two lines, one file, test-only — no product code touched.**
+`f86b28b3` landed `e1-drill-yard`, the owner-ratified 6th E1 contract. `cp01-charter-roundtrip.spec.ts:27` asserts the E1 roster **exhaustively** against live-derived data (`listContracts('epoch-1-frontier')`), so the new contract reddened it with a pure-arithmetic diff. The slice adds `'e1-drill-yard'` at index 1 and retitles the test five→six. **Two lines, one file, test-only — no product code touched.**
 
 Worth recording: the roster literal also drives a parameterised loop, so the fix does not merely silence an assertion — it **adds a genuinely executed case**, `round-trip: e1-drill-yard`, which passes. cp01 went 18→20 project-results.
 
@@ -161,10 +161,10 @@ No blocking findings. Nothing in this slice touches the owner-blocked files, the
 
 ### Two more findings, both surfaced by this fire's own bookkeeping (s1397)
 
-- **F-1397-2** 🟡 — **the E1 release door boots five of E1's six contracts.** `e2e/release-build.spec.ts:18` holds the array consumed at `:100` by "for (const contractId of CONTRACTS) {", and it is precisely the five E1 contracts that predate `f0bf5251` — so `e1-drill-yard`, a shipping E1 contract, **has never booted through the E1 release gate.** This is the roster-shaped member of F-1396-3; s1396 filed all six sites as one UNMEASURED class, and re-reading each site's *constant definition* shows they are not one class (three are deliberately **sampled** sets spanning E2/E4, one encodes an **unlock ruling**). Authored s1397 as `f1397-1-e1-release-door-drill-yard`, MEASURE-FIRST. Matters now because the owner's #1 ask is closing launch, and tagging vE1.0 with an untested shipping contract is a gap that is cheap to close beforehand.
+- **F-1397-2** 🟡 — **the E1 release door boots five of E1's six contracts.** `e2e/release-build.spec.ts:18` holds the array consumed at `:100` by "for (const contractId of CONTRACTS) {", and it is precisely the five E1 contracts that predate `f86b28b3` — so `e1-drill-yard`, a shipping E1 contract, **has never booted through the E1 release gate.** This is the roster-shaped member of F-1396-3; s1396 filed all six sites as one UNMEASURED class, and re-reading each site's *constant definition* shows they are not one class (three are deliberately **sampled** sets spanning E2/E4, one encodes an **unlock ruling**). Authored s1397 as `f1397-1-e1-release-door-drill-yard`, MEASURE-FIRST. Matters now because the owner's #1 ask is closing launch, and tagging vE1.0 with an untested shipping contract is a gap that is cheap to close beforehand.
 
 - **F-1397-3** 🟢 — **`citation-title-guard`'s quote extraction is sensitive to unrelated nearby markdown formatting.** `QUOTED` (`scripts/citation-title-guard.mjs:66`) treats every backtick as a delimiter and requires 12–160 chars between a pair. An inline-code span **shorter than 12 characters** is therefore skipped as an opener, which **desynchronises the pairing for everything after it** — the regex then extracts the prose *between* code spans instead of the spans themselves. Measured here: a correct, verbatim quote of a real source line sat in the window and was never extracted, because a nearby 9-char span had shifted the pairing. Two further consequences worth knowing: the window is `±400` chars from the citation, so **whether a citation passes can depend on where that window happens to start**; and a `MIN_PREFIX` of 20 means a quoted prefix of exactly 19 chars fails (`const CONTRACTS = [` truncates at the array's first `'`). **Not filed as a defect to fix** — the guard's purpose (recoverability) is served, and loosening the regex risks false greens. Recorded so the next fire that meets a "but I quoted it correctly" red spends one minute, not ten: **put the quote immediately after the citation, in double quotes, with no inline-code spans between them.**
 
 ### ⚠️ A note on how this fire's own merge reddened the guard
 
-`0195da9f` renamed the cp01 test five→six. That **invalidated every ledger citation quoting the old title** — two in `BACKLOG.md`, two in the shipped `f1396-1` master — none of which the drain battery could have caught, because it ran on the merged tree *before* the bookkeeping existed. This is exactly the s1301 law's class (*guards whose subject a fire mutates late in its own run*), with one addition worth naming: **a merge that renames a test is itself a late mutation of a guarded subject.** The renaming commit and the citations that quote the old name are always in different commits, so the red is structurally deferred to whoever writes the next ledger row. `test:ledger-guards` run after the bookkeeping is what caught it — 5 reds, cured to 0.
+`7f5b8017` renamed the cp01 test five→six. That **invalidated every ledger citation quoting the old title** — two in `BACKLOG.md`, two in the shipped `f1396-1` master — none of which the drain battery could have caught, because it ran on the merged tree *before* the bookkeeping existed. This is exactly the s1301 law's class (*guards whose subject a fire mutates late in its own run*), with one addition worth naming: **a merge that renames a test is itself a late mutation of a guarded subject.** The renaming commit and the citations that quote the old name are always in different commits, so the red is structurally deferred to whoever writes the next ledger row. `test:ledger-guards` run after the bookkeeping is what caught it — 5 reds, cured to 0.

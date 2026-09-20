@@ -1,7 +1,7 @@
 # Review — contract-board fixture refresh (e2-contract-board-172143e5-fixture-refresh)
 
-**Slice/branch/tip:** `lane/m3` `ce5f0906` ("test: refresh contract board registry fixtures")
-**Merge:** `2a44fda25f7112e5f48d54368518f9928d8844af` — `git merge --no-ff lane/m3` onto clean main, merge-base `574458e3` (disjoint 3-way, main touched neither tip file).
+**Slice/branch/tip:** `lane/m3` `5cf15626` ("test: refresh contract board registry fixtures")
+**Merge:** `06f180c72d78c719bb4b0b4bc54f356486722fb9` — `git merge --no-ff lane/m3` onto clean main, merge-base `9c433162` (disjoint 3-way, main touched neither tip file).
 **Verdict:** MERGED — legitimate re-baseline to the live 10-epoch registry + current debug-URL grammar; **NOT** a blind-bump (Mistake #13 checked).
 
 ## What it does

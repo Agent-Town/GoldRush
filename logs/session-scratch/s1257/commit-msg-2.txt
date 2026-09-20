@@ -4,10 +4,10 @@ Graft of lane/m4 c5fd71b2 onto main. Attempt 4 of a leaf that died three times
 and was §5-parked; s1256 discriminated F-1206-1 and authored this master, and
 the cure works.
 
-CLASSIFICATION. Base 34d78a8f. Two files are genuinely new (main has neither):
+CLASSIFICATION. Base 08b5db39. Two files are genuinely new (main has neither):
 e2e/helpers/hero-approach.ts, e2e/trail-guide-plain-boot.spec.ts. The 12
 artifacts/trail-guide-plain-boot/ PNGs were touched on BOTH sides -- s1256's
-47f5f0aa wrote them as instrumentation output, and this lane rewrote them --
+d04e3ba0 wrote them as instrumentation output, and this lane rewrote them --
 but they are regenerated screenshots, never byte-identity gated, and the
 committed set here is MY OWN gate run's output on the merged tree, which has
 strictly better provenance than either. ZERO src/ bytes (verified:

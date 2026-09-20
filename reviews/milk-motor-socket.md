@@ -1,4 +1,4 @@
-> **DRAIN RECEIPT — s1496, merged `d66bdbe35b6c700ad70a97bd8490a545aa451a0b`.** This shift's verdict below is
+> **DRAIN RECEIPT — s1496, merged `346ce0463e315fda20f93f91b23d2f8646a02f06`.** This shift's verdict below is
 > preserved verbatim (retention law: supersede, never delete). Gated on the MERGED tree in a detached
 > worktree (`gate-s1496`, §3.0b custody). **Battery:** `tsc` rc=0 · `build` rc=0, 1.17s · own spec
 > `er01-e4-census` **8/8** · adjacent **68/68** (the eight remaining `er01-e*-census` + `drill-yard-manifest`
@@ -7,7 +7,7 @@
 >
 > ✅ **THE CONTROL RUN WAS RE-DONE ON CLEAN MAIN, AND IT VINDICATES THIS REVIEW'S CONCLUSION.** The s1495
 > drain order named this slice as the one to *"CONTROL-RUN before blaming"*, and the answer is that the
-> `agent-view.spec.ts` reds are **main's, not this slice's**: at clean main `6f8deccbe`, **4 failed / 4
+> `agent-view.spec.ts` reds are **main's, not this slice's**: at clean main `4a67acc96`, **4 failed / 4
 > passed**; on the merged tree, **the same 4** — `:264` and `:297`, both projects — with **12 passed**.
 > Identical fingerprint on both sides, so the merge introduces no red. F-MOTOR-1's root cause is confirmed
 > as stated: `e1-drill-yard` became the sixth E1 contract while the spec and `e1-mechanics-manifests.json`
@@ -30,11 +30,11 @@
 # milk/motor-socket — THE MOTOR SOCKET
 
 **Slice:** E4's signature mechanic becomes visible to agents
-**Branch:** `milk/motor-socket` · **Base:** `565a145a5` · **Verdict:** **PARTIAL — shipped the half that was real, refused the half that was not**
+**Branch:** `milk/motor-socket` · **Base:** `f38638438` · **Verdict:** **PARTIAL — shipped the half that was real, refused the half that was not**
 
 ## What it does
 
-E4's Motor era had four contracts, all rejected, all declaring a `missing` signature consumer. The shift's premise was that a socket like E2's pressure socket (`24c6600f`) would admit them. **Measurement says otherwise, and the honest result is smaller and sharper than the brief assumed.**
+E4's Motor era had four contracts, all rejected, all declaring a `missing` signature consumer. The shift's premise was that a socket like E2's pressure socket (`6fd24a3b`) would admit them. **Measurement says otherwise, and the honest result is smaller and sharper than the brief assumed.**
 
 Three of the four mechanics have **no production consumer at all** — `convoyRoute`/`restStops`, `wildDerricks`/`outhouseGeyser`, and `salvageHulks`/`sleeper`/`unmarkedWagon` have zero readers in `src/` outside type declarations and two string registries. Socketing them into the headless sim would have meant *writing* the mechanic, which is the vocabulary stretch AP-11 and the mistake catalog (#14) forbid. They stay rejected, and their findings stand unchanged.
 
@@ -61,7 +61,7 @@ The headless socket that would complete the admission is blocked by one property
 
 The first battery showed 4 failures in `agent-view.spec.ts`. My change is confined to `deriveMechanicsManifest`, and the failing assertion reads `listContracts()` — but a merge can red a file it never touched, so I measured instead of arguing. I restored `src/agent/MechanicsManifest.ts` to its `HEAD` bytes (`git diff` empty, verified) and re-ran: **the same two tests failed on the pristine tree.**
 
-Root cause, for whoever fixes it: `e1-drill-yard` joined the E1 registry in merged commit `74df35dcf`, so `listContracts()` now returns **six** ids while `agent-view.spec.ts:269` still expects five, `e2e/fixtures/e1-mechanics-manifests.json` still holds five entries, and the contract board never renders `contract-board-mechanics-e1-drill-yard`. This is **not** in `logs/suite-red-inventory.md` — the only `agent-view` row there is a **retired**, mobile-only, `:268` GLTFLoader failure, a different fault. Filed as **F-MOTOR-1**; out of firewall, not fixed here.
+Root cause, for whoever fixes it: `e1-drill-yard` joined the E1 registry in merged commit `19f212b71`, so `listContracts()` now returns **six** ids while `agent-view.spec.ts:269` still expects five, `e2e/fixtures/e1-mechanics-manifests.json` still holds five entries, and the contract board never renders `contract-board-mechanics-e1-drill-yard`. This is **not** in `logs/suite-red-inventory.md` — the only `agent-view` row there is a **retired**, mobile-only, `:268` GLTFLoader failure, a different fault. Filed as **F-MOTOR-1**; out of firewall, not fixed here.
 
 ## The manifest vocabulary
 

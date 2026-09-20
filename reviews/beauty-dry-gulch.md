@@ -2,7 +2,7 @@
 
 Shift: dedicated Opus 5 session, worktree `gr-task-beauty-dry-gulch`, branch `beauty/dry-gulch`.
 Brief: `docs/beauty/e1-dry-gulch-brief.md` (law). Program: `docs/beauty/README.md`.
-Base: `c708f27d` (origin/main at pre-flight, fast-forwarded 2026-08-02).
+Base: `551a1e73` (origin/main at pre-flight, fast-forwarded 2026-08-02).
 Verdict: **4 of 5 upgrades KEPT, 1 PARKED with evidence.** Rendering-only, zero sim bytes.
 
 ---
@@ -224,10 +224,10 @@ five bodies and re-measures the spring pool. Either is a task, not a clause.
 
 Both arms ran `--workers=1` explicitly (the config's fire-shell heuristic keys on
 `CLAUDE_CONFIG_DIR`, which is set in this session). The control is a **detached worktree at the base
-commit `c708f27d`** (`/tmp/gr-control`) with its own vite on port 5242 — the treatment never shares a
+commit `551a1e73`** (`/tmp/gr-control`) with its own vite on port 5242 — the treatment never shares a
 server with it. Full lists: `reviews/beauty-dry-gulch-control-reds.txt`.
 
-| Suite | Base (`c708f27d`) | This branch | Verdict |
+| Suite | Base (`551a1e73`) | This branch | Verdict |
 |-------|-------------------|-------------|---------|
 | `map-beauty-dry-gulch.spec.ts` *(named by brief)* | green | **green** | ✅ untouched |
 | `fix-dry-gulch-frozen-waves.spec.ts` *(named by brief)* | green | **green** | ✅ untouched |

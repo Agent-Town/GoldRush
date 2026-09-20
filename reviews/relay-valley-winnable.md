@@ -1,6 +1,6 @@
 # Review: relay-valley-winnable — the claim grit; Relay Valley secures wave 20 (scratch worktree, Claude Opus 5 implementer, attended drain 2026-09-06 morning)
 
-**Slice/branch/tip:** `relay-valley-winnable` · `fix/relay-valley-winnable` · commits `7ffe1d419`, `45fae7d73`, `7a56b8171` on base `41b1e63cf` · merged to main: see the ledger row (first-parent merge).
+**Slice/branch/tip:** `relay-valley-winnable` · `fix/relay-valley-winnable` · commits `202ede238`, `af2d7b9ba`, `b2415c086` on base `0a120edd3` · merged to main: see the ledger row (first-parent merge).
 **Verdict:** MERGED. The master's preference order was worked in order and measured: (a) a heal reach and (b) an earlier heal card were built, measured and reverted (neither crosses wave 18); (c) a per-contract hero grit, `twist.hero.maxHpBonus = 300` on `e7-relay-valley` only, is the first lever that secures wave 20, and it is landed. The blocker's "80 seconds of HP" was wrong in kind: at wave 18 the board holds 57 live enemies, 37 of them thieves, against one welded hero and one turret, and the hero loses its whole pool inside one wave; three unrelated levers all stop at wave 18 and only hit points cross wave 19 (F-RVW-5).
 
 ## What it does
@@ -22,7 +22,7 @@
 Screenshots and the ladder: `artifacts/relay-valley-winnable/` (`MEASUREMENT.md`, `card-desktop-chrome.png`, `card-mobile-chrome.png`, `card-shots.log`).
 
 ## Merge classification
-Base `41b1e63cf`; main moved by the Canyon Works levers, the squall, the gold cure, the portraits and the story gaps, some touching `Game.ts`, `HeadlessContractSim.ts`, `ContractFamilies.ts`, `MechanicsManifest.ts`, `package.json` at other sites. `assets/contracts/epoch-7-signal/contracts.json` (four lines), `assets/contracts/null-floors.json` (two rows), the four engine files, `package.json`: LANE-TOUCHED, unioned where main moved. `scripts/contract-hero-grit-override.test.mjs`, `artifacts/relay-valley-winnable/*`: NEW. `tasks/BACKLOG.md`: MAIN-MOVED, unioned. Attended in the landing commit: `e2e/er01-e7-census.spec.ts:105` re-pointed (F-RVW-3).
+Base `0a120edd3`; main moved by the Canyon Works levers, the squall, the gold cure, the portraits and the story gaps, some touching `Game.ts`, `HeadlessContractSim.ts`, `ContractFamilies.ts`, `MechanicsManifest.ts`, `package.json` at other sites. `assets/contracts/epoch-7-signal/contracts.json` (four lines), `assets/contracts/null-floors.json` (two rows), the four engine files, `package.json`: LANE-TOUCHED, unioned where main moved. `scripts/contract-hero-grit-override.test.mjs`, `artifacts/relay-valley-winnable/*`: NEW. `tasks/BACKLOG.md`: MAIN-MOVED, unioned. Attended in the landing commit: `e2e/er01-e7-census.spec.ts:105` re-pointed (F-RVW-3).
 
 ## Findings
 - **F-RVW-5 (blocker corrected):** not attrition but a wave-18 wall of 57 enemies (37 thieves) on one welded hero; only hit points cross it.

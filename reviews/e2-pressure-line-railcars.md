@@ -1,7 +1,7 @@
 # Review — E2 pressure line on the last two railcars (the ruling executed; the maps still win)
 
-**Slice/branch/tip:** `worktree-agent-a383c2ed5dd452ebd`, built on `789dc39a7`, **re-derived on the
-merged tree after `main` advanced to `cef09f339` mid-build** (merge `7a03b4ce0`). Headless Opus-5 agent.
+**Slice/branch/tip:** `worktree-agent-a383c2ed5dd452ebd`, built on `b253af85c`, **re-derived on the
+merged tree after `main` advanced to `fb7a1abcc` mid-build** (merge `687876393`). Headless Opus-5 agent.
 **Verdict: PROPOSED — GREEN on what it claims, and what it claims is that the owner's ruling is now
 DATA, that the ruling's gift is real and measured, and that NEITHER map earns admission by it.**
 
@@ -103,7 +103,7 @@ option, not a force.**
 
 - `assets/contracts/null-floors.json`: **this slice's diff is EMPTY, and that is the measured
   result rather than an omission.** A `--check` on the untouched pre-merge tree reported exactly
-  `1 null-floor difference` and named it: `eraStamp` (`c3fa244ab` vs derived `789dc39a7`), already
+  `1 null-floor difference` and named it: `eraStamp` (`adf327caf` vs derived `b253af85c`), already
   stale on `main` before this branch existed (F-E2PL-4). A full regen then wrote **67 pairs, 0
   `secured:true`**, and that one field was the only byte that moved — **not one floor changed**,
   including the Hill Mine's and the Pressure Garden's, and the two newly-pressured contracts add no
@@ -121,7 +121,7 @@ option, not a force.**
   agent-lacks / 1035 equal / 4 not-offered` over 1524 rows with **7** exemptions, which is exactly
   what `main`'s own twelfth-stack pin already says after the fairground admission. So
   `scripts/same-game-audit.test.mjs` keeps main's numbers verbatim and gains only a note; nothing
-  was edited into agreement. (Pre-merge, on `789dc39a7`, the same regen measured 504/1016/4 with 8
+  was edited into agreement. (Pre-merge, on `b253af85c`, the same regen measured 504/1016/4 with 8
   exemptions and likewise did not move that base's numbers — the pressure line is summary-neutral on
   both bases.) Two rows per contract flip in place
   (`contract manifest does not advertise boiler_house` → `advertises BUILD boiler_house`, and the
@@ -167,9 +167,9 @@ refusal survived.
 
 ## Merge classification
 
-Built on `789dc39a7` (branch fast-forwarded onto `main` before any edit; 0 commits of its own
-beforehand), then **merged with `main` at `cef09f339`** when the attended window landed the
-`e3-fairground` admission mid-build (merge `7a03b4ce0`). Five files conflicted and each was resolved
+Built on `b253af85c` (branch fast-forwarded onto `main` before any edit; 0 commits of its own
+beforehand), then **merged with `main` at `fb7a1abcc`** when the attended window landed the
+`e3-fairground` admission mid-build (merge `687876393`). Five files conflicted and each was resolved
 by its own rule, none by hand-splitting a derived number:
 
 - **MAIN-MOVED, taken whole:** `assets/contracts/null-floors.json` (the fairground admission adds
@@ -203,8 +203,8 @@ by its own rule, none by hand-splitting a derived number:
 
 The census, admission, audit, report, skill.md, citation and door-ratchet guards were **re-run after
 the merge** and are green there (5 playwright + 30 node assertions). The browser suites below ran on
-`789dc39a7` + this slice and carry over unmodified, proven rather than assumed:
-`git diff --name-only 789dc39a7..cef09f339` matches **nothing** under `e2e/e2-*`, `src/systems/Pressure*`,
+`b253af85c` + this slice and carry over unmodified, proven rather than assumed:
+`git diff --name-only b253af85c..fb7a1abcc` matches **nothing** under `e2e/e2-*`, `src/systems/Pressure*`,
 `src/game/Game.ts`, `assets/contracts/epoch-2-*`, `e2e/m1-01*`, `e2e/m2-01*` or `e2e/task-025*`.
 
 | gate | result |
@@ -296,8 +296,8 @@ guard, which boots the default claim) are green on both projects.
   the compiler with `require.resolve('typescript')` instead of a path join, or have the guards skip
   with a stated reason when `ROOT/node_modules` is empty. Filed so the next worktree agent does not
   spend a gate cycle proving it again.
-- **F-E2PL-4 — `null-floors.json`'s `eraStamp` was already stale on `main`.** Pinned `c3fa244ab`
-  against a derived `789dc39a7`; a `--check` on the untouched tree fails on that one field and
+- **F-E2PL-4 — `null-floors.json`'s `eraStamp` was already stale on `main`.** Pinned `adf327caf`
+  against a derived `b253af85c`; a `--check` on the untouched tree fails on that one field and
   nothing else. Regenerated here as ordinary drain bookkeeping, and named so a drain does not
   mis-attribute the byte to this slice. Expect it to go stale again the moment `main` advances: the
   stamp is `git merge-base HEAD main`, which no mechanism refreshes.

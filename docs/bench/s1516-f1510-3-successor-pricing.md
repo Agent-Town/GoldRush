@@ -1,7 +1,7 @@
 # F-1510-3 successor — PRICING (s1516, 2026-08-07)
 
 > ⛔ **CORRECTION, SAME FIRE — §2's PRESCRIPTION OF `__dirname` IS REFUTED. DO NOT FOLLOW IT.**
-> The lane run this document priced STOPPED as a licensed negative result (`f9c0e498`, report
+> The lane run this document priced STOPPED as a licensed negative result (`eb301c3a`, report
 > `docs/bench/f1510-3-inventory-revision-metadata-negative-result.md`, review
 > `reviews/f1510-3-inventory-revision-metadata.md`). Playwright loads this repo's TS config as **ESM**
 > (`package.json:5` is `"type": "module"`), so **`__dirname` is undefined** and the mechanism
@@ -69,13 +69,13 @@ rc = 0
   1 passed (193ms)
 --- config.metadata as serialized by the json reporter ---
 {
-  "revision": "6e21f9831909b2e939b94561c90ffb3189a13cb8",
+  "revision": "e67840916ccc460081cff31696bd7f534096f54a",
   "s1516Probe": "threaded-from-config",
   "actualWorkers": 1
 }
 ```
 
-`6e21f9831…` is exactly this fire's lock commit — so the value is a real sha captured at
+`e67840916…` is exactly this fire's lock commit — so the value is a real sha captured at
 config-evaluation time, and Playwright's own `actualWorkers` coexists with it rather than
 overwriting it.
 
@@ -94,9 +94,9 @@ overwriting it.
 That is the deployment condition (the suite runs in `worktrees/lane-*`, per `configFile` above):
 
 ```
-worktrees/lane-d   sha=61892d1813f2 branch=lane/d   dirty=clean (0 entries)
-worktrees/lane-a   sha=199e13c9eb8c branch=lane/a   dirty=DIRTY (3 entries)
-.                  sha=6e21f9831909 branch=main     dirty=DIRTY (127 entries)
+worktrees/lane-d   sha=d2308dfa9c92 branch=lane/d   dirty=clean (0 entries)
+worktrees/lane-a   sha=a8ab8dfd212e branch=lane/a   dirty=DIRTY (3 entries)
+.                  sha=e67840916ccc branch=main     dirty=DIRTY (127 entries)
 ```
 
 ## 4. DESIGN CORRECTION, found by measuring: the dirty marker must be TRACKED-ONLY

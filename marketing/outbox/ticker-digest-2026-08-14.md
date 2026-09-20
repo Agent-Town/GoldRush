@@ -4,10 +4,10 @@ Yesterday's first-parent walk held **91 commits**: **2** merges, **3** touching 
 
 ## The day in micro-headlines
 
-**A fresh ride forgets riders who left, and one active rider signs the county book for the whole posse.** `6b194e6b`
+**A fresh ride forgets riders who left, and one active rider signs the county book for the whole posse.** `1db41847`
 
 ## Not for the ticker
 
-The path classifier also found the E1 campaign harness (`9849623b`) and headless landmark repair (`22a0c62f`). Both changed deterministic bench machinery without changing browser play or a rendered surface.
+The path classifier also found the E1 campaign harness (`0a342bff`) and headless landmark repair (`08c7ffcf`). Both changed deterministic bench machinery without changing browser play or a rendered surface.
 
 GZ-01 independently reports **101/101 cited · 88 reported · 13 dismissed · 0 candidates**.

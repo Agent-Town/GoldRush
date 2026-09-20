@@ -1,8 +1,8 @@
 # f1525-1 — gr-sim accepts `--preset` / `--difficulty` (F-ER02-3)
 
 **Slice:** `lane-a-f1525-1-gr-sim-preset-flag.md` (FIRE-AUTHORED s1525)
-**Branch:** `lane/a` · **tip:** `95cb16499` · **base:** `aaaf8d0f6`
-**Merged to main:** `c65e6b6d0aa6cc1809dd5d6f952b6568a6520f36` (s1527 drain, 2026-08-07)
+**Branch:** `lane/a` · **tip:** `95cb16499` · **base:** `ddd443a09`
+**Merged to main:** `66dceab9bf46229d6ff988f5b1ee3ff2fbe3e637` (s1527 drain, 2026-08-07)
 
 ## VERDICT: MERGED — all four required relationships re-derived by the drain, not inherited.
 
@@ -78,13 +78,13 @@ including `trail` itself as the canonical id.
 
 ## Merge classification
 
-- **Base:** `aaaf8d0f6` (the s1525 authoring commit). `main..lane/a` = exactly one commit, `95cb16499`.
+- **Base:** `ddd443a09` (the s1525 authoring commit). `main..lane/a` = exactly one commit, `95cb16499`.
 - **LANE-TOUCHED:** `scripts/gr-sim.mjs` — the only file the lane commit touches
   (`git log main..lane/a --name-only`).
 - **MAIN-MOVED:** `STATUS.md`, `logs/**`, `tasks/BACKLOG.md`, `tasks/goals.json`,
   `tasks/lane-b-f1526-1-*.md` — these appear in the two-dot diff as deletions because main
   advanced, not because the lane removed anything.
-- **Conflicts:** none. `git log aaaf8d0f6..main -- scripts/gr-sim.mjs` is **empty** — main never
+- **Conflicts:** none. `git log ddd443a09..main -- scripts/gr-sim.mjs` is **empty** — main never
   moved the file since the base, so this is a clean path-scoped application, not a graft.
 - Merged with `git checkout lane/a -- scripts/gr-sim.mjs`; `git add` path-scoped to that one file.
 

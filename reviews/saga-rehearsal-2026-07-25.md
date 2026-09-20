@@ -4,7 +4,7 @@
 
 **READY-FOR-GATES.** The repaired rig carried one fresh profile from the founding through the legitimate T6 → E7 door, then exercised the E7–E10 flagship legs and the post-credits River. Every accepted segment reports `console=0 page=0`; failed attempts stopped immediately, were diagnosed from their saved footage/profile, and were rerun on that same fresh profile.
 
-Game runtime: detached current `main` at `76635963`. Rig changes: `lane/m4` worktree, no game/source/assets/e2e edits and no commit. Direct contract boots and documented grinding controls are evidence seams, not claims of an unassisted playthrough.
+Game runtime: detached current `main` at `21185446`. Rig changes: `lane/m4` worktree, no game/source/assets/e2e edits and no commit. Direct contract boots and documented grinding controls are evidence seams, not claims of an unassisted playthrough.
 
 ## Gates passed
 

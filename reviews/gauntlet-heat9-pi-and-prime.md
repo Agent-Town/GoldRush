@@ -1,9 +1,9 @@
 # Review — gauntlet-heat9-pi-and-prime (heat 9, the de-conflation ride)
 
 - **Slice:** `tasks/gauntlet-heat9-pi-and-prime.md`
-- **Branch / tip:** `lane/b` @ `0ddcdb8e20243f484ce533fd4c155ed16c1e14ff` (runner commit, 2026-09-01T07:16:51+07:00)
-- **Merge:** `13750da625166b9152c3e21302de1b08230ffff1` (s2416)
-- **Base:** main @ `31b460c98` (s2416 lock commit)
+- **Branch / tip:** `lane/b` @ `0ddcdb8e20243f484ce533fd4c155ed16c1e14ff (archive: pruned by the A3 rewrite)` (runner commit, 2026-09-01T07:16:51+07:00)
+- **Merge:** `13750da625166b9152c3e21302de1b08230ffff1 (archive: pruned by the A3 rewrite)` (s2416)
+- **Base:** main @ `53aa09b6f` (s2416 lock commit)
 
 ## Verdict
 
@@ -32,12 +32,12 @@ The drain's own re-run is a free control, and it corroborates every load-bearing
 
 | Claim | Runner | Drain's independent measurement | Agrees |
 |---|---|---|---|
-| Live production build | `325b7398` | `curl .../version.json` → `{"build":"325b7398","builtAt":"2026-08-31T23:25:18Z"}` | ✓ |
+| Live production build | `085ad8ac` | `curl .../version.json` → `{"build":"085ad8ac","builtAt":"2026-08-31T23:25:18Z"}` | ✓ |
 | Arena engine hash | `417ac150…c3c864` | `computeEngineHash(main)` → `417ac150…c3c864` | ✓ |
 | Era-5 registry pin | only `c0a015ae…c237b` | `assets/engine-era.json` — era 5, **exactly one pin**, `c0a015ae…` | ✓ |
 | Door refusal | `400 reel_not_current` | `probe/post-response.json` verbatim; `standings.ts:700` is the emitting site | ✓ |
 
-Tape metadata read directly (not through a glob — F-2409-1's lesson): `probe/tape.json` stamps `engineHash 417ac150…`, `era 5`, `buildId 325b73987`, id `agent-0b91cbb4-4ff68392-…`, matching the note row for row. **One** tape in the slice; nothing secured was withheld and nothing unsecured was posted (the single submission was door-refused before storage, so no verified slip and no rank exist to claim).
+Tape metadata read directly (not through a glob — F-2409-1's lesson): `probe/tape.json` stamps `engineHash 417ac150…`, `era 5`, `buildId 085ad8acd`, id `agent-0b91cbb4-4ff68392-…`, matching the note row for row. **One** tape in the slice; nothing secured was withheld and nothing unsecured was posted (the single submission was door-refused before storage, so no verified slip and no rank exist to claim).
 
 ## Merge classification
 
@@ -47,9 +47,9 @@ Base main; all 13 files **LANE-ONLY** (`lane-usable` reported "HELD LANE-ONLY" f
 
 ### 🚨 F-2416-1 — F-2408-1'S SCOPING SENTENCE IS NOW STALE: THE ENGINE-PIN SKEW HAS REACHED THE **DEPLOY**, AND THIS HEAT IS ITS FIRST REALISED COST
 
-F-2409-1 scoped the defect precisely and correctly *when written*: *"The defect is invisible to anything riding the deploy and bites everything riding main."* Heat 8 rode deployed build `4675cfd7b`, which predated the divergence, and all three of its submissions verified cleanly.
+F-2409-1 scoped the defect precisely and correctly *when written*: *"The defect is invisible to anything riding the deploy and bites everything riding main."* Heat 8 rode deployed build `c9d86db11`, which predated the divergence, and all three of its submissions verified cleanly.
 
-**That is no longer true.** The live deploy is now `325b7398`, built 2026-08-31T23:25:18Z — which is **s2414's own handoff commit**, i.e. a fire's routine bookkeeping. It carries the divergent hash. Measured: the deployed arena stamps `417ac150…`, `computeEngineHash` on main returns the same `417ac150…`, and era 5 pins only `c0a015ae…`.
+**That is no longer true.** The live deploy is now `085ad8ac`, built 2026-08-31T23:25:18Z — which is **s2414's own handoff commit**, i.e. a fire's routine bookkeeping. It carries the divergent hash. Measured: the deployed arena stamps `417ac150…`, `computeEngineHash` on main returns the same `417ac150…`, and era 5 pins only `c0a015ae…`.
 
 **Realised cost, first instance:** an entire two-rig field abandoned before a single attempt — 0/3 on four maps × two rigs, both notebooks blank, on a heat the owner asked for by name ("But you skipped prime intellect's agent this time? I also don't see PI which took some high placements last time."). Nothing rideable can score while this stands, because production itself now produces unrankable reels.
 
@@ -61,15 +61,15 @@ Measured over every first-parent commit touching `ENGINE_SOURCE_INPUTS` since th
 
 | Commit | Corpus delta | Class |
 |---|---|---|
-| `daae36dc7` (s2406) | `package.json` +1/−1 — one guard filename | **False positive** — F-1300-4 *mandates* this edit |
-| `50a661cf3` (s2412) | `package.json` +1/−1 — one guard filename | **False positive** — same mechanism |
-| `b80253bff` | **`src/playbook/PlaybookFormat.ts` +4/−1** | **A real source change** |
+| `e27259c67` (s2406) | `package.json` +1/−1 — one guard filename | **False positive** — F-1300-4 *mandates* this edit |
+| `565b7d305` (s2412) | `package.json` +1/−1 — one guard filename | **False positive** — same mechanism |
+| `ea95ab545` | **`src/playbook/PlaybookFormat.ts` +4/−1** | **A real source change** |
 
 That third one is a genuine `src/` edit: `runTapeEnvelopeForContract`'s tick budget widened `+1` → `+2`, so a run that records a lawful accepted order at the terminal instant is no longer rejected by an exclusive end-bound. On reading, it changes what the **door accepts**, not what the **sim computes** — the same character as era 5's own declared note ("a board-law change… simulation behaviour did not change") — but that is a judgement, and it is the owner's, not a fire's.
 
 **Why it matters for the ruling:** a single appended pin blesses the false positive and the real source change in one row, laundering the twice-escalated `package.json` question into era 5's lineage and making the red vanish without the ruling F-2408-1 exists to obtain. This is exactly the restraint s2411 took (F-2411-1) and it is re-affirmed here with a sharper reason: the count of causes has gone from one to two, and they want different answers.
 
-⚠️ **Method note, paid for in this fire and worth more than the finding:** `git show --stat <merge> -- <paths>` returned **empty** for `b80253bff`, which reads exactly like "this commit touched no corpus path". It is a **merge commit**, and `--stat` is blind to merges by default. Had I stopped there I would have reported "both causes are `package.json`, append-a-pin is clean" — a confident wrong answer that would have made the owner's decision look easier than it is. The discriminator is `git diff <sha>^1 <sha> -- <paths>`.
+⚠️ **Method note, paid for in this fire and worth more than the finding:** `git show --stat <merge> -- <paths>` returned **empty** for `ea95ab545`, which reads exactly like "this commit touched no corpus path". It is a **merge commit**, and `--stat` is blind to merges by default. Had I stopped there I would have reported "both causes are `package.json`, append-a-pin is clean" — a confident wrong answer that would have made the owner's decision look easier than it is. The discriminator is `git diff <sha>^1 <sha> -- <paths>`.
 
 ### ⓘ Not findings, recorded so they are not re-chased
 

@@ -1,16 +1,16 @@
 # Heat 13 — the parity re-ride — operator's note (written by the attended drain on 2026-09-12 from the evidence; the operator was cut off before it could write this)
 
-Operator: an Opus operator agent hosting headless `claude -p` rides (Claude Opus 5 as the rider through the public door) from the detached arena `/tmp/heat13-569a41f9` at the deployed build `569a41f9` (the 1:1 grammar live, ADR-005 stage 3), 2026-09-07 from about 11:00Z. Owner ruling: D2 "re-ride it yes". Rig: heat 12's `*.mjs` adapted (`launch-queue`, `land-ride`, `wait-rides`, …). The run ENDED EARLY at 2026-09-07 16:48Z when the Opus weekly limit fired ("You've hit your weekly limit · resets Sep 12 at 1am Asia/Bangkok", HTTP 429) mid-queue: **27 of 36 boards were ridden; 9 never got a rider** (their matrix rows show 2 s walls and generation numbers with no tape). Full per-ride record: `matrix.md` (36 rows, the arena's final copy); rides under `rides/<contract>/` (charter, notebook entry, submission, land log) and the rig workspaces under `../heat13/opus/<contract>/` (tapes, reports); `queue2.log` is the second queue's driver log to its end.
+Operator: an Opus operator agent hosting headless `claude -p` rides (Claude Opus 5 as the rider through the public door) from the detached arena `/tmp/heat13-569a41f9` at the deployed build `92358832` (the 1:1 grammar live, ADR-005 stage 3), 2026-09-07 from about 11:00Z. Owner ruling: D2 "re-ride it yes". Rig: heat 12's `*.mjs` adapted (`launch-queue`, `land-ride`, `wait-rides`, …). The run ENDED EARLY at 2026-09-07 16:48Z when the Opus weekly limit fired ("You've hit your weekly limit · resets Sep 12 at 1am Asia/Bangkok", HTTP 429) mid-queue: **27 of 36 boards were ridden; 9 never got a rider** (their matrix rows show 2 s walls and generation numbers with no tape). Full per-ride record: `matrix.md` (36 rows, the arena's final copy); rides under `rides/<contract>/` (charter, notebook entry, submission, land log) and the rig workspaces under `../heat13/opus/<contract>/` (tapes, reports); `queue2.log` is the second queue's driver log to its end.
 
 ## 1. The arena and the era gate
-The arena was cut at `569a41f96` (the deployed commit); the skew probe (heat 12's verified probe tape replayed order-for-order) was REFUSED at submission by the new door, as the grammar demands, and a fresh probe under the new grammar verified unranked; block 1 then rode. (The probe records live under `probe/` where the operator wrote them.)
+The arena was cut at `923588327` (the deployed commit); the skew probe (heat 12's verified probe tape replayed order-for-order) was REFUSED at submission by the new door, as the grammar demands, and a fresh probe under the new grammar verified unranked; block 1 then rode. (The probe records live under `probe/` where the operator wrote them.)
 
 ## 2. The receipts delta — measured from the live API by the attended session
 | moment | claimed boards | retired reels counted |
 |---|---|---|
 | 2026-09-07 morning, before the grammar deploy | 30 of 32 | (not counted then) |
 | 17:58, after the grammar deploy (F-RPG-21: retired-verb reels vanished uncounted) | 5 | 0 |
-| 18:45, after the counting fix deployed (`03d9fe1a`) | 8 | 54 |
+| 18:45, after the counting fix deployed (`ac555e02`) | 8 | 54 |
 | **2026-09-12 11:50, after heat 13's rides** | **17 of 37** | **50** |
 
 Every one of the 17 verified rows is a heat-13 Claude Opus 5 ride under the 1:1 grammar: e8-mare-claim, e3-moth-season, e7-relay-rush, e7-echo-canyon, e7-dead-band, e5-stillwater, e8-eclipse, e4-dust-flats, e4-boneyard, e4-gusher-county, the-claim, e7-relay-valley, e9-dome-basin, e3-canyon-works, e1-dry-gulch, e1-twin-banks, e2-incline, e2-pressure-garden, e3-blackout-ridge secured on the board (the-claim, dry-gulch, twin-banks, incline, pressure-garden, blackout-ridge, canyon-works, moth-season, gusher-county, dead-band, echo-canyon, relay-rush, relay-valley, eclipse, mare-claim, devils-alley, dome-basin read verified now).
@@ -33,4 +33,4 @@ Never ridden (9, the weekly limit): e5-deepwater-claim, e5-flotilla, e5-regatta,
 - **F-HEAT13-4 (process):** the arena's git link was gone by 2026-09-12 (the worktree entry pruned during the disk cleanup); the evidence survived on disk and in fire s2549's parentless save branch `save/heat13-finished-evidence-s2549` (562 paths, 89 MB), which this drain landed. Keep that save pattern: a fire preserved an unfinished heat's evidence without touching its arena.
 
 ## 5. What the drain landed
-The operator's branch `heat13/parity-sweep` (25 rides, 750 files) merged as `b89f70c70`; the fire's save branch's rides 26-27 and the rig workspaces (`artifacts/heat13/opus/**`), the arena's final `matrix.md` (36 rows) and `queue2.log` added by the attended session. Nothing deleted.
+The operator's branch `heat13/parity-sweep` (25 rides, 750 files) merged as `b89f70c70 (archive: pruned by the A3 rewrite)`; the fire's save branch's rides 26-27 and the rig workspaces (`artifacts/heat13/opus/**`), the arena's final `matrix.md` (36 rows) and `queue2.log` added by the attended session. Nothing deleted.

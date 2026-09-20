@@ -11,7 +11,7 @@
   ],
   "deskLegs": {
     "desk-declaration-guard": "=== desk-declaration-guard ===\ncorpus tree       : main\ndesk F-IDs        : 76\ndesk slugs        : 1\n\ud83d\udd3a desk segments  : 55\nunexamined        : 0\nwith a BACKLOG row: 77\nundeclared        : 0 (grandfathered 0)\nPASS \u2014 every non-grandfathered desk item has a declaring row.",
-    "desk-birth-guard": "=== desk-birth-guard ===\ncorpus tree               : main\nwindow start              : 0135e088 (s2549 handoff)\nowner-gated rows filed    : 0\n  \u251c by an owner GATE clause : 0\n  \u2514 by an owner-ACT declaration, no gate clause : 0\nunexamined by the parser  : 0\nof those, undesked        : 0\nPASS \u2014 every owner-gated row filed this window reached the desk.",
+    "desk-birth-guard": "=== desk-birth-guard ===\ncorpus tree               : main\nwindow start              : 410ff6e3 (s2549 handoff)\nowner-gated rows filed    : 0\n  \u251c by an owner GATE clause : 0\n  \u2514 by an owner-ACT declaration, no gate clause : 0\nunexamined by the parser  : 0\nof those, undesked        : 0\nPASS \u2014 every owner-gated row filed this window reached the desk.",
     "desk-carryforward-guard": "=== desk-carryforward-guard ===\ncorpus tree               : main\nprevious desk (s2551): 55 items\nthis desk                 : 55 items\ndropped                   : 0 (0 accounted for)\nPASS \u2014 every item on the previous desk is carried, closed, or accounted for."
   },
   "bashTail": true

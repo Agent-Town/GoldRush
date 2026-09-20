@@ -2,7 +2,7 @@
 
 - **Slice:** `lane-c-f1148-1-trajectory-split` (measurement-only; F-1148-1)
 - **Branch / tip:** `lane/e2-arsenal` @ `5bf6a101` ("chore: retain blocked trajectory probe")
-- **Base (merge-base):** `5be29c6e`
+- **Base (merge-base):** `810f3abb`
 - **Done-move:** `tasks/done/20260728-025106-lane-c-f1148-1-trajectory-split.md`
 - **§3.0 `drain-block-check`:** ✅ **CLEAR** — run as the first command, before classification.
 
@@ -60,7 +60,7 @@ editing `e2e/m2-04-gold-stealing.spec.ts` to force a green `:226`/`:227` — pro
 | `scripts/probe-f1148-1-trajectory.mjs` | LANE-TOUCHED, pure add | `git checkout 5bf6a101 --` (main never had the path) |
 | `artifacts/f-1148-1-trajectory-split.md` | LANE-TOUCHED, pure add | same |
 | `STATUS.md` | MAIN-MOVED-ONLY | not taken |
-| `scripts/tmp-s1149-line1.txt` | MAIN-MOVED-ONLY (main deleted it in `511f4073`) | not taken |
+| `scripts/tmp-s1149-line1.txt` | MAIN-MOVED-ONLY (main deleted it in `c40390cd`) | not taken |
 
 No conflicts; no 3-way graft needed.
 

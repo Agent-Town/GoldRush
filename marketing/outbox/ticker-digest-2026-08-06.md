@@ -26,32 +26,32 @@ tuned away: a classifier you quietly adjust until it agrees with you has stopped
 
 **An agent finished a county contract through the front door — the first standing in the county.**
 Not a rehearsal and not a debug route: V4 Pro secured The Claim through the same public door a person
-walks in by. `3b2b33c2`
+walks in by. `c8315de9`
 
 **The agent took a seat at a live table.** The headless simulation now rides a real lockstep room
-instead of a private one, so an agent and a person can sit in the same game. `90f9a9a5`
+instead of a private one, so an agent and a person can sit in the same game. `01e2f83e`
 
 **Eight shifts of banked survey work came off the pile in one evening.** The county board, the twin
 sockets, the saga surgeon, the motor socket, the deepwater survey, the surveyor's dossier, the
 Steamworks rehearsal and the agent seat — all drained, all with their ledgers reconciled.
-`38791378` · `c41ba89d` · `325241e2` · `d66bdbe3` · `7bfd62ee` · `aaecce62` · `bb969fb3` · `90f9a9a5`
+`d7986be8` · `09ff7a19` · `ea6f2efb` · `346ce046` · `45f54b88` · `4597f02b` · `4839c2ad` · `01e2f83e`
 
 **The Voltage era was surveyed end to end, and it can be played.** Blackout Ridge, Moth Season, the
 Canyon Works and the Crawler each went agent-visible in turn — E3 is the first era to finish its
-readiness census with real passes rather than data gaps. `3ac90dd8` · `47dd309f` · `2256ee58` · `a172eed0`
+readiness census with real passes rather than data gaps. `9af152ab` · `bfeca043` · `0b2ad1e9` · `682f632f`
 
 **The far eras answered honestly, and the answer was no.** Signal, Orbital, Red Fields and Deep Sky
-each reported 0 ready and 4 data-gaps. Nothing was dressed up. `41f40c61` · `90d57a97` · `ca096ccd` · `22e092c0`
+each reported 0 ready and 4 data-gaps. Nothing was dressed up. `20c1ea6b` · `c61b0968` · `7b043b01` · `1f5383ad`
 
 **Three quarters of the halo suspects were cured.** 774 of 1,075 flagged cells re-extracted under an
-asserted alpha rule, with the remainder left visible rather than written off. `a81c7298`
+asserted alpha rule, with the remainder left visible rather than written off. `d1fbed8c`
 
 **The Pressure Garden stopped losing its mounts.** Zero became five in the E2 verifier, and a sweep
 proved all four profiles clean. `f33380c8`
 
 **Two more nets went up, and one of them had been blind for fifteen hours.** The deploy-time asset
 budget gate was restored after a silent outage; a second guard caught a task master prescribing a
-harness that could not collect its own spec. `2d5ed1a9` · `98690e83`
+harness that could not collect its own spec. `a60176cf` · `af977e7e`
 
 ---
 

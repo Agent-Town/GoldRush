@@ -58,9 +58,9 @@ No live-board verdict changed and no silent-drop id newly surfaced in this lane 
 - Post-change: `npx tsc --noEmit` rc 0; `npm run build` green; asset-diet green.
 - Focused guard file: 15 tests / 15 pass / 0 fail.
 - Auditor regression file: 9 tests / 9 pass / 0 fail.
-- `test:ledger-guards` merge candidate (current main `c9e50450b` plus this three-file diff): **15 files / 129 tests / 129 pass / 0 fail**, compared with the stated s1566 baseline **15 files / 124 tests / 124 pass / 0 fail**.
+- `test:ledger-guards` merge candidate (current main `5e820a61b` plus this three-file diff): **15 files / 129 tests / 129 pass / 0 fail**, compared with the stated s1566 baseline **15 files / 124 tests / 124 pass / 0 fail**.
 - All 12 chained leaves passed: findings-state; blocker-panel; ruling-propagation; citations; desk-declaration; desk-birth; status-archive-audit; attended-owed-audit; main-lock-gate-guard; janitor-request-rejection; lane-dispatch-safety-guard; nul-audit.
-- The stale lane alone produced 128/129 because pristine dispatched main independently failed `gate-caller-audit` on the newly merged `desk-state-audit.mjs` baseline. Current main commit `c9e50450b` repaired that baseline without touching this slice's three files; the detached merge-candidate run above is green.
+- The stale lane alone produced 128/129 because pristine dispatched main independently failed `gate-caller-audit` on the newly merged `desk-state-audit.mjs` baseline. Current main commit `5e820a61b` repaired that baseline without touching this slice's three files; the detached merge-candidate run above is green.
 - `git diff --check` clean.
 - No Playwright owed: no `src/**` or `e2e/**` changes.
 - No `test:node-guards` owed: no `src/sim/`, `src/systems/`, or `src/entities/` changes.

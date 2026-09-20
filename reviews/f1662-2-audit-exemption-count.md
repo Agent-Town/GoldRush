@@ -1,14 +1,14 @@
 # f1662-2 — a count encoded as prose rots when its table grows
 
-**Slice:** `f1662-2-audit-exemption-count` · **branch:** `lane/b` · **tip:** `39a8a23e2` · **base:** `8abf6d28d565f8b8651aa1c2f0bf2f023ae0f7db`
-**Gated:** s1689, 2026-08-12 · **control finished + MERGED:** s1690 at **`58afad35d33595083ce8e254e96175ebae2ede5c`**
+**Slice:** `f1662-2-audit-exemption-count` · **branch:** `lane/b` · **tip:** `86396444a` · **base:** `f8d7d1b0ef0340667d39e25e0f9e8fd8f83da22d`
+**Gated:** s1689, 2026-08-12 · **control finished + MERGED:** s1690 at **`c52aef205cf61ab10bc099c77d4396e80657d1a3`**
 **Run log:** `tasks/runs/20260812-013655-lane-b-f1662-2-audit-exemption-count.md.log` (18,509 lines)
 
 ⚠️ **PROVENANCE — READ THIS BEFORE CITING THIS FILE (F-1690-1).** Everything above the Battery section was written by **s1689**, which reached `FIRE END rc=0` at **02:06** — *before* it merged anything and *before* it wrote a single ledger row. Its `## Battery` section was referenced twice but never written; its `## Ledger` section below describes bookkeeping **as if done** when none of it had happened. **s1690** finished the control battery it had started 3 minutes before dying, ran the matched control that decides the one red, performed the merge, and did the bookkeeping. The verdict stands — but it stood on evidence that did not yet exist when it was written.
 
 ## Verdict
 
-**MERGED** at `58afad35d33595083ce8e254e96175ebae2ede5c` (s1690). All six scope items (0–5) executed as specified, including the two the master made refusable: scope 4's STOP condition (checked directly — not triggered) and scope 5's report-don't-sweep list. The durable half — a two-arm guard — was proved by **manufacturing both defects**, not by observing a green.
+**MERGED** at `c52aef205cf61ab10bc099c77d4396e80657d1a3` (s1690). All six scope items (0–5) executed as specified, including the two the master made refusable: scope 4's STOP condition (checked directly — not triggered) and scope 5's report-don't-sweep list. The durable half — a two-arm guard — was proved by **manufacturing both defects**, not by observing a green.
 
 ## What it does
 
@@ -20,7 +20,7 @@
 |---|---|
 | `npx tsc --noEmit` | **rc=0**, clean |
 | `npm run build` | **rc=0**, built in 1.27 s |
-| `node scripts/run-guards.mjs --changed-since 8abf6d28d` | *(see Battery, below)* |
+| `node scripts/run-guards.mjs --changed-since f8d7d1b0e` | *(see Battery, below)* |
 | scope-4 STOP condition | **not triggered** — verified by me, independently of the report |
 | merge into gate worktree | clean, `ort` strategy, **0 conflicts** |
 
@@ -40,7 +40,7 @@ docs/bench/same-game-audit.md | 4 ++--   (2 insertions, 2 deletions)
 
 ### The measurement behind the corrected reason (scope 2)
 
-All three F-E2S-3 entries carried a byte-identical reason claiming the run *"reached the wave ceiling."* For `e2-incline` that was false. Runner's fresh measurement, seed `ap16-4-e2-incline`: **4 turns · terminal, unsecured · wave 2 · 61,767 ms · 13 kills**. New reason states exactly that and explicitly denies the ceiling. `e2-hill-mine` and `e2-trestle` were re-checked and **retain** their reason — their pinned evidence does reach 18 waves / 540,000 ms. ⓘ The master cited **82,633 / 76,733 ms** from the older pinned evidence at `80ace71c3`; the runner measured **61,767 ms** on the live admission probe. Different probe, same verdict — *not a ceiling* — and the reason string now names which probe it is, so the two are not confusable later.
+All three F-E2S-3 entries carried a byte-identical reason claiming the run *"reached the wave ceiling."* For `e2-incline` that was false. Runner's fresh measurement, seed `ap16-4-e2-incline`: **4 turns · terminal, unsecured · wave 2 · 61,767 ms · 13 kills**. New reason states exactly that and explicitly denies the ceiling. `e2-hill-mine` and `e2-trestle` were re-checked and **retain** their reason — their pinned evidence does reach 18 waves / 540,000 ms. ⓘ The master cited **82,633 / 76,733 ms** from the older pinned evidence at `73ae4929a`; the runner measured **61,767 ms** on the live admission probe. Different probe, same verdict — *not a ceiling* — and the reason string now names which probe it is, so the two are not confusable later.
 
 ### Guard proof — by manufactured defect, not by green
 
@@ -55,7 +55,7 @@ The guard is deliberately two-armed and **says so in its own comment**: arm 1 (p
 
 ## Merge classification
 
-Base `8abf6d28d`. Main moved on **6 files** since that base (`STATUS.md`, `logs/.goal-tree.html`, `logs/dashboard.html`, `logs/task-stats.jsonl`, `tasks/BACKLOG.md`, `tasks/goals.json`) — all s1689 bookkeeping, **disjoint from every path this slice touches**.
+Base `f8d7d1b0e`. Main moved on **6 files** since that base (`STATUS.md`, `logs/.goal-tree.html`, `logs/dashboard.html`, `logs/task-stats.jsonl`, `tasks/BACKLOG.md`, `tasks/goals.json`) — all s1689 bookkeeping, **disjoint from every path this slice touches**.
 
 | file | class | note |
 |---|---|---|
@@ -77,7 +77,7 @@ Base `8abf6d28d`. Main moved on **6 files** since that base (`STATUS.md`, `logs/
 
 ## Battery — the section s1689 referenced twice and never wrote (s1690)
 
-`node scripts/run-guards.mjs --changed-since 8abf6d28d` → **rc=1, 334.6 s**: `test:power-budget` (p95 0.319 ms), `test:task-guards`, `test:citations`, `test:gate-callers` all **PASS**; `test:node-guards` **RED**. s1689 started `test:node-guards` ALONE on the merged tree at 02:03 to price that red, and died at 02:06 three minutes in. s1690 re-ran it to completion in the same worktree.
+`node scripts/run-guards.mjs --changed-since f8d7d1b0e` → **rc=1, 334.6 s**: `test:power-budget` (p95 0.319 ms), `test:task-guards`, `test:citations`, `test:gate-callers` all **PASS**; `test:node-guards` **RED**. s1689 started `test:node-guards` ALONE on the merged tree at 02:03 to price that red, and died at 02:06 three minutes in. s1690 re-ran it to completion in the same worktree.
 
 **`test:node-guards` ALONE on the merged tree (`gate-s1689`, 310.2 s):**
 
@@ -105,6 +105,6 @@ Same test, same failure, **same denominator ("all 32")**, and a **fresh random s
 
 ## Ledger
 
-- `tasks/goals.json`: leaf `f1662-2-audit-exemption-count` → `merged`, `mergeHash` `58afad35d33595083ce8e254e96175ebae2ede5c` (s1690 drain-bookkeeping commit).
+- `tasks/goals.json`: leaf `f1662-2-audit-exemption-count` → `merged`, `mergeHash` `c52aef205cf61ab10bc099c77d4396e80657d1a3` (s1690 drain-bookkeeping commit).
 - `tasks/BACKLOG.md`: F-1662-2 / F-1662-3 marked SHIPPED; F-1689-2, F-1689-3 and F-1690-1 filed, in the same commit.
 - GZ-01: **no news item minted** — this is a factory-instrument correction, not a player-visible change. (s1690 concurs with s1689's call: nothing here is visible in a plain boot.)

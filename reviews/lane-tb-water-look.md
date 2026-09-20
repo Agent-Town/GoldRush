@@ -1,7 +1,7 @@
 # lane-tb-water-look — F-BW-13: the braid learns to look like a river
 
 **Slice:** `lane-tb-water-look` · **branch:** `lane/m3` · **lane tip commit:** `4d4fc858`
-**Merge-base:** `4983ce0385df3bee69a79bee7486c626e3d0b8f6` · **merged to main as:** `4db6254d662d22532eea766d04b046cd8bb03fcc`
+**Merge-base:** `7dc69e36730208b3988b37226a48292c6dd0ed83` · **merged to main as:** `e72f2e546b0f4a4d082a1831f648e08882cda927`
 **Drained by:** s1442 fire, 2026-08-03
 
 ## VERDICT: MERGED (full) — every landed path gated, all adjacent reds proven pre-existing by a control run.
@@ -55,7 +55,7 @@ Suites gated: `e1-twin-banks` · `w1-02-living-water` · `shore-truth` · `water
 
 ## Merge classification
 
-Base `4983ce03`. Per-file:
+Base `7dc69e36`. Per-file:
 
 | File | Class | Resolution |
 |---|---|---|

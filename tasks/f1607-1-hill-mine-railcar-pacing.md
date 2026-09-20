@@ -20,7 +20,7 @@
    **EXPECTED and is NOT a reason to stop** (F-1407-1 FACTORY-CHURN). Tracked dirt = **STOP**.
 3. `git fetch origin` (ignore failure — may be offline) then **`git reset --hard main`**.
    This is a SAFE-DUPE reset: `lane/a` was measured `ahead=0` vs main at authoring time
-   (s1607, after the rf-34 drain merged at `65693574f`), so it holds nothing unmerged.
+   (s1607, after the rf-34 drain merged at `d8ba6da13`), so it holds nothing unmerged.
    If `git log main..HEAD` is **non-empty** before you reset, **STOP** — something landed after
    authoring and resetting would destroy it.
 4. **Only now** check the premises (the reset above is what makes them meaningful):
@@ -88,7 +88,7 @@ rig with 100,000 HP — acceptable tuning for Hill Mine?"* The fire's own recomm
 - Do **not** leave measurement scaffolding in the diff — the final `git status` shows only the
   TOUCH-ONLY files.
 - Do **not** touch `src/game/RunSuspend.ts` or `src/game/Game.ts` (rf-34 landed there at
-  `65693574f` this same night).
+  `d8ba6da13` this same night).
 - Do **not** re-pin `scripts/gr-sim.test.mjs`. Its two E2 railcar pins are **deliberately skipped**
   with named causes (f1605-1); if your change reddens something there, that is a **finding**.
 

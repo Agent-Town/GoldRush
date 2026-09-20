@@ -1,7 +1,7 @@
 # F-1700-1 — lane commits own only the run-created delta
 
-**Slice:** `f1700-1-runner-delta-autocommit` · **branch:** `lane/d` · **tip:** `4e0b97946f28790dee040c9dca77ca8efc96b14d` · **base:** `af8a7b9c9cd18f1606dc5028083e59cae10e4898`  
-**Verdict:** **MERGED** at `835dfee0fe4d8b19502082f13a08974a7b5fb596` (s1701)
+**Slice:** `f1700-1-runner-delta-autocommit` · **branch:** `lane/d` · **tip:** `d105c6c03f2fd988a63732bf3f99b680fca44aaf` · **base:** `6d8d2c3a6a8267b8bfd48a112691c365fadb78f0`  
+**Verdict:** **MERGED** at `54e0eec3c2461aa83ee37a9cc81f49b34f155aec` (s1701)
 
 ## What changed
 

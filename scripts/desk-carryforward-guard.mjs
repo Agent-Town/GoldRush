@@ -167,7 +167,7 @@ import { frozenTreeCheck } from './corpus-tree.mjs';
  * declaration site does: this guard's failure mode on a missed header is the
  * loudest one in the factory. deskTail() returns null, deskItems(null) returns
  * [], so `live` is empty and EVERY inherited item reads as silently dropped —
- * measured on the real s1529 handoff (aab5dfb3): "this desk: 0 items ·
+ * measured on the real s1529 handoff (62586985): "this desk: 0 items ·
  * dropped: 7", rc=1, against a fire that had in fact carried all 8 forward
  * correctly.
  *
@@ -306,7 +306,7 @@ export function previousDesk(statusText) {
  * subjectLedClosure keys a BACKLOG row — IS REFUTED BY MEASUREMENT: 21 of the 24
  * real acknowledgements sit at offset 14 (the `DESK-DROPPED: ` template), but
  * THREE do not, at offsets 51, 67 and 166, and all three are legitimate —
- * s1590's compound "F-1589-5** (cured `00ed63eff`) **and F-1589-4**" and s1593's
+ * s1590's compound "F-1589-5** (cured `39b28e245`) **and F-1589-4**" and s1593's
  * count-first "DESK-DROPPED: 2, both by discharge rather than by re-labelling**
  * — F-1590-1 … and F-1590-2". Narrowing would false-red 12.5% of real
  * acknowledgements, which is how a guard gets excused into uselessness

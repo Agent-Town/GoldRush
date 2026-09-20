@@ -8,7 +8,7 @@ READ FIRST: AGENTS.md · the salvage ref `origin/sol/mp-reconnect` (READ-ONLY lo
 Pre-flight (LANE-SAFETY): standard safe-dupe rules + the sequencing check above; npm install; tsc+build green.
 
 ## Why (owner 2026-07-18, verbatim: "we don't have to park... the co-op. We are fully in the process of finishing things up. So lets also work on that.")
-2,398 salvaged insertions of reconnect recovery: held-slot replay boundary, exact-tick snapshot recovery, authority self-recovery. Its park reason (snapshot prerequisite) SHIPPED (747832a0 snapshot v2); its second prerequisite (real riders) ships as MP-03.
+2,398 salvaged insertions of reconnect recovery: held-slot replay boundary, exact-tick snapshot recovery, authority self-recovery. Its park reason (snapshot prerequisite) SHIPPED (965155ad snapshot v2); its second prerequisite (real riders) ships as MP-03.
 
 ## Scope — RE-LAND LAW: read the salvage diff, re-apply each still-valid idea against current main; SKIP what main already does (name file:line evidence per item)
 1. Re-land the reconnect ladder in the salvage's own order: exact-tick snapshot recovery -> authority self-recovery -> held-slot replay boundary seal.

@@ -1,7 +1,7 @@
 # queue-shipped-guard — F-1115-1's cure: the refill pool gets a fail-loud gate
 
 **Slice:** `lane-queue-shipped-guard` · **Branch:** `lane/e2-arsenal` · **Tip:** `d222122748e87516a2621f1b7d3d0909980837a4`
-**Base:** `68b3030a` (s1115's authoring commit) · **Drained:** s1116, 2026-07-27
+**Base:** `0d48face` (s1115's authoring commit) · **Drained:** s1116, 2026-07-27
 **VERDICT: MERGE.** Default contract byte-identical across 260 invocations; the guard refuses 119/119 terminal leaves and stays non-vacuous on the 4 live ones. Two non-blocking findings (F-1116-1, F-1116-2).
 
 ## What it does
@@ -79,7 +79,7 @@ against a genuinely shipped master:
 
 ## Merge classification
 
-Base `68b3030a`. Per-file, by blob identity rather than by eyeball:
+Base `0d48face`. Per-file, by blob identity rather than by eyeball:
 
 | File | base==main | base==lane | Class | Action |
 |---|---|---|---|---|
@@ -116,11 +116,11 @@ about authoring friction, not a bug, so it is not fire-authorable as a silent ch
 **F-1116-2 (bookkeeping, low) — 3 of 118 recorded `mergeHash` values are not reachable from main.**
 `m1-m2-resource-guards`, `factory-diet-gate-honesty`, `calibrate-suite-workers` each name a commit that exists in
 the object database but is **not an ancestor of main** — the pre-amend orphan shape (a fire writes the hash into
-`goals.json`, then amends the commit, which changes the hash it just recorded; `git show 70ce6e50` shows the
+`goals.json`, then amends the commit, which changes the hash it just recorded; `git show b7fd359f` shows the
 precedent doing exactly this, and only a later correction saved that leaf). It matters slightly more now: the
 `--queue` refusal *prints `mergeHash` as its evidence*, so for those three the evidence line cannot be verified by
 the reader it is written for. Note `m1-m2-resource-guards` records `d93b1505…` while s1115's content probe put its
-shipping at `f7cd0103` — consistent with this, not a contradiction of s1115.
+shipping at `bebc1b1f` — consistent with this, not a contradiction of s1115.
 ➡️ **This drain avoids minting a fourth**: the leaf is flipped in a follow-on commit that names the real, already-
 written main hash, rather than guessing a hash that an amend would invalidate.
 

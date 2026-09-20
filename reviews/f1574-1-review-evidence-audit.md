@@ -65,7 +65,7 @@ No Playwright was owed or run: this slice touches no `src/**`, `e2e/**`, `src/si
 
 ## Drain (s1576, 2026-08-08T23:23Z) — MERGED
 
-**Merge:** `c751c579d4c525005a2d56df94be4f91db458eb8` (`--no-ff` of `lane/b` @ `20515bb9d`) · **base:** `4ef1bcd02` · **block-check:** CLEAR (`f1574-1-review-evidence-audit`, status "queued").
+**Merge:** `c44076267f3031e07501f7fc33302fd710ab8171` (`--no-ff` of `lane/b` @ `8a0f992db`) · **base:** `c4ebae65e` · **block-check:** CLEAR (`f1574-1-review-evidence-audit`, status "queued").
 
 **Merge classification — DISJOINT, no conflict, no graft.** Main moved 7 files since the base (`STATUS.md`, `tasks/BACKLOG.md`, `tasks/goals.json`, `tasks/lane-c-f1575-1-m4-06-drift-tick-budget.md`, three `logs/**` telemetry files) — all bookkeeping, and **not one of them is in the lane's 6-file set.** Every lane path is LANE-TOUCHED: 4 created (`scripts/review-evidence-audit.mjs`, `scripts/review-evidence-audit.test.mjs`, `reviews/f1574-1-review-evidence-audit.md`, `artifacts/f1574-1-review-evidence/live-corpus.txt`) and 2 edited within firewall (`package.json` +1 filename on the `test:node-guards` line only; `.claude/skills/drain/SKILL.md` +1 line at `:56`, below the `--workers=1` coordinate at `:33`, which is why `law-pointer-guard` stayed green).
 

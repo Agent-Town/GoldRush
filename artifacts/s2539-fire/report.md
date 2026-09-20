@@ -1,6 +1,6 @@
 # s2539 FIRE result
 
-Merged M2 input readiness as `0eac2a9bec302665ab3483ec0413eca2e7469992`. The test captures the simulation tick atomically with the rejected Enter and waits for an intervening released-input sample. All runtime source and existing placement, count, gold and error assertions are unchanged.
+Merged M2 input readiness as `c7bf3f66c5f8a41487ca5ba37953dbfcfc588e3c`. The test captures the simulation tick atomically with the rejected Enter and waits for an intervening released-input sample. All runtime source and existing placement, count, gold and error assertions are unchanged.
 
 Independent Node 26 checks: typecheck/build PASS, M2 14/14, complete adjacency 30/32 with the two M1 failures reproduced on fresh base (6/8), plain boots 2/2 clean, and independent review clear. The sample-level diagnostic and reverse control pass 4/4. The inherited frame-scheduled reproduction only triggered on mobile in this fire, so its scheduling limitation and the stronger proof are both retained. The additional power benchmark is RED on byte-identical runtime inputs: base 2.499 ms, candidate 0.894 ms; no green or underlying cause claimed.
 
@@ -14,4 +14,4 @@ Closing verification after the handoff edits: test:ledger-guards PASS in 109.7 s
 
 Closing triage: runner ALIVE; three real drains (the re-opened completed MAIN candidate plus the two lane outputs), 10 planned leaves all priced, zero unpriced. No queue refill or second drain.
 
-Backup: ordinary origin SSH succeeded in this fire. Main handoff `41746d38b71d8d0c30d2d109c7435024ff1ebd81` was pushed and independently matched by `git ls-remote`. No transport fallback or persistent configuration change was needed. The backup receipt is retained in backup.json and backup-origin-default.txt.
+Backup: ordinary origin SSH succeeded in this fire. Main handoff `8bb4e570b77520bce6572484e2ea05488f6f43fe` was pushed and independently matched by `git ls-remote`. No transport fallback or persistent configuration change was needed. The backup receipt is retained in backup.json and backup-origin-default.txt.

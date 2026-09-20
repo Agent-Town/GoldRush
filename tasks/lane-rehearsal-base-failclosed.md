@@ -21,12 +21,12 @@ port 5252: pid 42553  cwd=/Users/robin/Claude/Projects/Gold Rush             => 
 
 So this is **not a historical hazard** — `:5247`, the very port that produced s1077's false P0, is *still* answered by *that same worktree*, and any fire running the rig with defaults today repeats the mistake. **It is also wider than F-1077-3 knew** (see RULING 1).
 
-Secondary evidence, same week: rf-26 shipped (`dc483d74`) covering 3 of F-1081-3's 4 named risks, and the uncovered fourth — `spawnAt` parameter reordering — is uncoverable **because F-1081-3 itself bars building on this rig until F-1077-3 is fixed.** This task is the unblocker. It has findings queued behind it.
+Secondary evidence, same week: rf-26 shipped (`38795ba0`) covering 3 of F-1081-3's 4 named risks, and the uncovered fourth — `spawnAt` parameter reordering — is uncoverable **because F-1081-3 itself bars building on this rig until F-1077-3 is fixed.** This task is the unblocker. It has findings queued behind it.
 
 ## PRE-FLIGHT — verify by CONTENT, never by counting (SAFE-DUPE)
 
 ⚠️ **`git log main..lane/e2-arsenal` WILL PRINT ONE COMMIT (`03e52f90 runner(lane-c): lane-ratelimit-hoist.md`), AND THAT IS EXPECTED — IT IS *NOT* A REASON TO STOP.**
-s1088 verified the reset is **loss-free by content, not by counting**: that commit is rf-25, merged to main as `e4ec2a13f85c3bd7892f896ef083dc638fac0c5e`, and
+s1088 verified the reset is **loss-free by content, not by counting**: that commit is rf-25, merged to main as `48d0d90b34c6404acefc5181acf40af91fd8de69`, and
 `git diff main lane/e2-arsenal -- functions/` is **EMPTY** across all five of its files (`_accounts.ts`, `_bugs.ts`, `_ratelimit.ts`, `redeem.ts`, `telemetry.ts`). The branch is **FALSE-AHEAD**. An ahead-count is not a drain signal (F-1066-1 / F-1073-1).
 
 All four must hold before you touch a file:
@@ -42,7 +42,7 @@ If all four hold, start from fresh main (`git checkout -B lane/e2-arsenal main`)
 - `rehearsal/lib.mjs:1-35` — `ROOT` (`:8`, derived from the script's own location), **`export const BASE` (`:9`)**, `openSegment` (`:16`), and the console filter at **`:30`** which hardcodes the string `ws://127.0.0.1:5231`. Read all of it; `:30` is a trap described in RULING 4.
 - `rehearsal/segments/e1-depth-play.mjs:20-37` — its own `ROOT` (`:20`), the six-line comment `:21-26` that **warns of exactly the hazard the code does not enforce**, and `BASE` (`:27`). Uses: `:87`, `:515`.
 - `rehearsal/segments/e1-depth-rivercamp.mjs:30` — the same defaulted `BASE`. Uses: `:57`, `:59`, `:120`.
-- `scripts/entry-damage-table.test.mjs` — **the house pattern for a `node --test` guard, and the freshest one** (shipped `dc483d74` this same day). Mirror its shape (`node:test` + `node:assert/strict`).
+- `scripts/entry-damage-table.test.mjs` — **the house pattern for a `node --test` guard, and the freshest one** (shipped `38795ba0` this same day). Mirror its shape (`node:test` + `node:assert/strict`).
 - `package.json` — the `test:node-guards` line you will join (it currently lists **six** files).
 
 ## THE FOUR RULINGS (decided by measurement — do not revisit)

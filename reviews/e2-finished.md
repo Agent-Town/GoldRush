@@ -1,6 +1,6 @@
 # Review — E2 is finished: the railcar cut, the cadence ladder, and both maps through the door
 
-**Slice/branch/tip:** `worktree-agent-a383c2ed5dd452ebd`, base `4b7883cf0`. Headless Opus-5 agent.
+**Slice/branch/tip:** `worktree-agent-a383c2ed5dd452ebd`, base `0251deeb1`. Headless Opus-5 agent.
 **Verdict: PROPOSED — GREEN, and the claim is the one the owner asked for: E2 is 4/4 through the
 door, on a public-verb secure ×2 per seed on every play path.**
 

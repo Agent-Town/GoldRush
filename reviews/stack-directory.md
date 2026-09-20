@@ -1,7 +1,7 @@
 # stack-directory — county-curated "learn more" links on Minds + Rigs
 
-**Slice:** `lane-stack-directory` · **Branch:** `lane/b` · **Runner tip:** `6922eed5f` · **Base:** `30b23f355`
-**Merged to main:** `be33951b9f2087e9fd793ec2fef8f9dedd3b3c94` (s1624 fire, 2026-08-10)
+**Slice:** `lane-stack-directory` · **Branch:** `lane/b` · **Runner tip:** `24cf34dd6` · **Base:** `1a101f55d`
+**Merged to main:** `4fff07381b5a2b5ca7c727b67dcbc23036ffd580` (s1624 fire, 2026-08-10)
 **Gate arrangement:** detached worktree `gate-s1624` per §3.0b (undecided content never entered main's tree), every playwright command `--workers=1` per §3.1.
 
 ## VERDICT: MERGED — green on every named gate, one non-blocking finding (F-1624-1) and one observation (F-1624-2).
@@ -54,7 +54,7 @@ On the Field Book's Minds and Rigs tables, a matched row's name gains a quiet `�
 
 ## Merge classification
 
-Base `30b23f355`. Main moved **none** of the seven paths between base and merge — verified per file with `git log 30b23f355..main -- <path>`, all empty:
+Base `1a101f55d`. Main moved **none** of the seven paths between base and merge — verified per file with `git log 1a101f55d..main -- <path>`, all empty:
 
 | file | class |
 |---|---|
@@ -80,6 +80,6 @@ To get a known rig and an unknown rig on the same table, the runner changed the 
 
 ## Duties discharged at this drain
 
-- **GZ-01**: player-visible change → gazette item filed (`marketing/outbox/gazette-queue.md`), merge hash `be33951b9`, screenshot referenced.
+- **GZ-01**: player-visible change → gazette item filed (`marketing/outbox/gazette-queue.md`), merge hash `4fff07381`, screenshot referenced.
 - Goal leaf `stack-directory` flipped `queued` → `merged` with the full 40-char hash, in the commit following this merge (a commit cannot contain its own hash — F-1384-1).
 - `test:ledger-guards` run as the fire's last act, after the bookkeeping commit (F-1300-4).

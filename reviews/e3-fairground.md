@@ -2,8 +2,8 @@
 
 - **Slice:** e3-fairground (E3 "Voltage" era contract)
 - **Lane branch / tip:** lane/e2-arsenal → `da904e31 runner(lane-c): e3-fairground.md` (parent `369a013a`, same task — two runner passes, cumulative diff drained)
-- **Base:** `f066289b` (lane reset to main by s590)
-- **Merged onto main:** this commit. Base `f066289b` → tip; grafted onto main `32d72c69`.
+- **Base:** `e3339d0f` (lane reset to main by s590)
+- **Merged onto main:** this commit. Base `e3339d0f` → tip; grafted onto main `528fe959`.
 - **Verdict:** PASS — merged. Player-visible new E3 contract → **GZ item appended**.
 
 ## What it does

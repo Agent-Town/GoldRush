@@ -1,6 +1,6 @@
 # Review — f1564-1: MEASURE the m4-06 0.4 drift ceiling
 
-**Slice:** `f1564-1-m4-06-ceiling-measurement` · **Branch:** `lane/c` · **Tip:** `70826344d` · **Merge:** `fcc53a1a32a756648a90c1328f25fbe912b9ff47` · **Drained:** s1565, 2026-08-08
+**Slice:** `f1564-1-m4-06-ceiling-measurement` · **Branch:** `lane/c` · **Tip:** `70826344d (archive: pruned by the A3 rewrite)` · **Merge:** `fcc53a1a32a756648a90c1328f25fbe912b9ff47 (archive: pruned by the A3 rewrite)` · **Drained:** s1565, 2026-08-08
 
 ## VERDICT: MERGED — the measurement is sound, the non-reproduction is a real result, and the firewall held exactly.
 
@@ -37,7 +37,7 @@ s1564's handoff set the acceptance condition explicitly: the diff must be `artif
 
 ## Merge classification
 
-Base `e694fe65a`. Both paths **LANE-ONLY** (`scripts/lane-absorbed-lines.mjs`: 85 of 85 and 252 of 252 added lines absent from main). Both files are **new**; main has never touched either path. Merge by `--no-ff`, `ort` strategy, **zero conflicts**, purely additive. No 3-way graft was needed and none was performed.
+Base `1eb583277`. Both paths **LANE-ONLY** (`scripts/lane-absorbed-lines.mjs`: 85 of 85 and 252 of 252 added lines absent from main). Both files are **new**; main has never touched either path. Merge by `--no-ff`, `ort` strategy, **zero conflicts**, purely additive. No 3-way graft was needed and none was performed.
 
 ## Gates NOT run — stated so nobody inherits a false green
 
@@ -67,4 +67,4 @@ Zero breaches in 24 lane-shell observations, against a defect that reproduced re
 
 ## Ledger
 
-`tasks/goals.json` leaf `f1564-1-m4-06-ceiling-measurement` → `merged` + `fcc53a1a32a756648a90c1328f25fbe912b9ff47`. `tasks/BACKLOG.md`: **F-1563-3 CLOSED** (it asked for the ceiling to be measured; it has been), with F-1565-1 and F-1565-2 filed as its successors. Done-move prefixed `drained-`.
+`tasks/goals.json` leaf `f1564-1-m4-06-ceiling-measurement` → `merged` + `fcc53a1a32a756648a90c1328f25fbe912b9ff47 (archive: pruned by the A3 rewrite)`. `tasks/BACKLOG.md`: **F-1563-3 CLOSED** (it asked for the ceiling to be measured; it has been), with F-1565-1 and F-1565-2 filed as its successors. Done-move prefixed `drained-`.

@@ -25,7 +25,7 @@ import { WeatherSystem, type WeatherPhase, type WeatherSnapshot } from '../syste
  *   convoy   `ConvoyBehavior` (`src/systems/ConvoyBehavior.ts`) along `tileParams.convoyRoute`.
  *
  * WHICH COMPOSITION IT MIRRORS. The only browser composition of these systems that ever shipped is
- * `731373d4d` (`runner(lane-b): e4-05-dust-flats.md`, 2026-07-15), where `Game.ts` mounted
+ * `392d20d35` (`runner(lane-b): e4-05-dust-flats.md`, 2026-07-15), where `Game.ts` mounted
  * `DustFlatsTile` and drove the Hauler with `roadMovementAt(...)` (road x storm) and the enemies with
  * `enemyMovementMultiplier(...)` (storm). Today's `Game.ts` carries none of it: `DustFlatsTile` has
  * no importer, and `Vehicle`/`FuelSystem` mount only under `?debug&vehicles`

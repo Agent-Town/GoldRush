@@ -15,12 +15,12 @@ READ FIRST (paths, not memory):
 - `src/town/TownScene.ts:1258-1300` (`syncPrompt`'s render branches) — how `town-approach-prompt` gets its text, and the `promptKey` memo at `:1268`.
 - `src/town/TownLayout.ts:94-100` — the seven slots with their `position` and `approach` literals. **Read them to understand the shape; do NOT copy them into the test.**
 - `e2e/ceremony-framework.spec.ts:119` — the in-repo town-teleport idiom … and the thing to improve on: it hardcodes `(-6.6, 2.4)`, which is the schoolhouse `approach` literal from `TownLayout.ts:97`. Steer by the published value instead.
-- `e2e/town-t1-square.spec.ts` — the SIBLING that already made this move. Its drain (`425d2a9a`, s1109) says in its own commit message: *"TownDiagnostics.plaza publishes slots[] (id/position/approach) additively; town-t1-square asserts shape not literals."*
+- `e2e/town-t1-square.spec.ts` — the SIBLING that already made this move. Its drain (`ed15bb17`, s1109) says in its own commit message: *"TownDiagnostics.plaza publishes slots[] (id/position/approach) additively; town-t1-square asserts shape not literals."*
 
 ## Pre-flight (LANE-SAFETY, runner-auto-commit aware)
 The lane branch being ahead is NORMAL — the runner auto-commits. For each ahead commit: if its content is already merged to main (verify via `git log`/`git diff`), it is a SAFE DUPE → `git checkout -B lane/m3 main && git clean -fd` and PROCEED. STOP-and-report ONLY if an ahead commit's content is NOT on main (undrained work — resetting would DESTROY it), or the worktree holds uncommitted edits you did not make.
 
-**The dupe is PRE-PROVEN for you — do not spend budget re-deriving it.** s1174 verified at 2026-07-28T16:39Z: `lane/m3` is 1 ahead at `715669bf` (`runner(lane-a): lane-a-build-mode-prompt-spec-realign.md`), whose deliverable shipped to main as `e42ed4ef`. **`git diff main lane/m3 -- e2e/` is EMPTY** — all four spec edits are on main — and the only two-dot delta anywhere is `scripts/check-power-graph-budget.mjs` + `scripts/run-guards.mjs`, where **main is AHEAD** (the `d1b6545e` power-budget merge landed after the lane branched). `git -C worktrees/lane-a status --porcelain` was empty. Textbook SAFE DUPE → reset and proceed. Re-run those two `git diff`s to confirm nothing changed since, then move on.
+**The dupe is PRE-PROVEN for you — do not spend budget re-deriving it.** s1174 verified at 2026-07-28T16:39Z: `lane/m3` is 1 ahead at `715669bf` (`runner(lane-a): lane-a-build-mode-prompt-spec-realign.md`), whose deliverable shipped to main as `46d6308c`. **`git diff main lane/m3 -- e2e/` is EMPTY** — all four spec edits are on main — and the only two-dot delta anywhere is `scripts/check-power-graph-budget.mjs` + `scripts/run-guards.mjs`, where **main is AHEAD** (the `6640c89e` power-budget merge landed after the lane branched). `git -C worktrees/lane-a status --porcelain` was empty. Textbook SAFE DUPE → reset and proceed. Re-run those two `git diff`s to confirm nothing changed since, then move on.
 
 Then `npm install --no-audit --no-fund`; `npm run build` green before touching anything.
 
@@ -43,13 +43,13 @@ Read what that says: the prompt is not *wrong*, it is **absent** — `syncPrompt
 🔑 **THE FIRST LEG PASSES AND THE SECOND DOES NOT.** `:296-300` (`KeyA` 850 ms + `KeyW` 850 ms → tavern) asserts the prompt, the `town-open-board` button **and** the `town_tavern` note, and all three pass. The failure is at **`:304`**, after `:302-303` (`KeyD` 2 000 ms + `KeyS` 350 ms) tries to cross the plaza to the Claim Office. **Walking works; this particular crossing does not arrive.** That is the fact the whole task is built on, and it is why scope 1 is an observation and not a rewrite.
 
 **The dated premise — the walk was authored against a plaza that has since grown obstacles:**
-- The test's timings arrived **2026-07-08** in `66bb9f46` (`feat: add world info notes`) and have never been retimed.
-- **2026-07-19, `d1f549d5`** (`runner(lane-a): lane-landmark-collision.md`) introduced **`townPropAt` into `sampleTown`'s `walkable` term** (`git log -S townPropAt -- src/town/TownScene.ts` returns exactly that one commit). The plaza gained colliders **eleven days after** the straight-line crossing was timed.
+- The test's timings arrived **2026-07-08** in `26e8d115` (`feat: add world info notes`) and have never been retimed.
+- **2026-07-19, `5e527a28`** (`runner(lane-a): lane-landmark-collision.md`) introduced **`townPropAt` into `sampleTown`'s `walkable` term** (`git log -S townPropAt -- src/town/TownScene.ts` returns exactly that one commit). The plaza gained colliders **eleven days after** the straight-line crossing was timed.
 - Worse for a fixed-duration hold: one term of that predicate is `this.canvas.dataset.town3dPlazaPropsState === 'loaded'`, so **the walkable set changes when an async load lands** — a hold that cleared the plaza before the props arrived will not after.
 
-⚠️ **What was checked and is NOT the cause, so you do not spend budget there:** `9095bee9` (07-23, *"grow town and add spyglass zoom"*) sounds like the culprit and is not — `Balance.town.scale = 1.5` (`src/game/Balance.ts:916`) has exactly **one** consumer, `new CameraRig(this.camera, Balance.town.scale)` (`TownScene.ts:282`). It scales the CAMERA, not the world; the slot coordinates in `TownLayout.ts` are untouched. Verified at source by s1174.
+⚠️ **What was checked and is NOT the cause, so you do not spend budget there:** `7026019b` (07-23, *"grow town and add spyglass zoom"*) sounds like the culprit and is not — `Balance.town.scale = 1.5` (`src/game/Balance.ts:916`) has exactly **one** consumer, `new CameraRig(this.camera, Balance.town.scale)` (`TownScene.ts:282`). It scales the CAMERA, not the world; the slot coordinates in `TownLayout.ts` are untouched. Verified at source by s1174.
 
-**The shipped precedent for the cure is this file's own neighbourhood:** s1109 (`425d2a9a`) published `plaza.slots[]` *specifically* so town specs could stop asserting literals, and realigned `town-t1-square` onto it. This task extends the same move from *asserting* coordinates to *navigating* by them.
+**The shipped precedent for the cure is this file's own neighbourhood:** s1109 (`ed15bb17`) published `plaza.slots[]` *specifically* so town specs could stop asserting literals, and realigned `town-t1-square` onto it. This task extends the same move from *asserting* coordinates to *navigating* by them.
 
 ## Scope
 

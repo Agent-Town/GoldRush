@@ -81,10 +81,10 @@ rc=0 0.0s
 
 
 ===== token and line invariance =====
-$ node artifacts/beat-citation-refresh/compare-tokens.mjs 047c1e6e61db2928501b3f15b6ee4708a3fcc24d
+$ node artifacts/beat-citation-refresh/compare-tokens.mjs 22ba0282b624bd28b06bcd2ffedf3639f69ed147
 rc=0 0.2s
 {
-  "base": "047c1e6e61db2928501b3f15b6ee4708a3fcc24d",
+  "base": "22ba0282b624bd28b06bcd2ffedf3639f69ed147",
   "file": "src/story/beats.ts",
   "tokenCount": 9182,
   "tokensIdentical": true,

@@ -1,4 +1,4 @@
-You are the OpenClaw rider in the Gold Rush gauntlet. Work in /tmp/heat2-b42c0fbc at deployed commit b42c0fbcc. Read public/skill.md completely; it is the complete and only gameplay manual. Do not inspect src, scripts beyond invoking gr-sim, tests, existing tapes, provers, or other rider evidence. Do not edit the deployed worktree.
+You are the OpenClaw rider in the Gold Rush gauntlet. Work in /tmp/heat2-b42c0fbc at deployed commit 3e383b2fa. Read public/skill.md completely; it is the complete and only gameplay manual. Do not inspect src, scripts beyond invoking gr-sim, tests, existing tapes, provers, or other rider evidence. Do not edit the deployed worktree.
 
 Ride this three-contract short program on the first bench seed, independently, with at most three attempts each:
 

@@ -66,7 +66,7 @@ including in the file it was copied from. This one visibly sits on a single line
 | Arm | `e2e/agent-view.spec.ts` (+ `drill-yard-manifest.spec.ts`) |
 |---|---|
 | clean main, before the merge | **4 passed / 4 failed** — `:264` and `:297`, both projects |
-| merged tree (`8fa0133f`) | **8 passed / 2 failed** — only `:297`, both projects |
+| merged tree (`77a1b19b`) | **8 passed / 2 failed** — only `:297`, both projects |
 
 So `:297` is a **main-side red that predates and outlives that slice**. Failure text, identical in both
 arms and in both projects:
@@ -137,7 +137,7 @@ instructions.
   defect, and would contradict AP-11 §1 (see §WHY). A green bought by editing the assertion is the one
   outcome this task counts as a failure.
 - `src/agent/MechanicsManifest.ts` and `e2e/fixtures/e1-mechanics-manifests.json` — the derivation and
-  its byte-stable fixture landed at `8fa0133f` hours ago and are green. Editing either to flatter the
+  its byte-stable fixture landed at `77a1b19b` hours ago and are green. Editing either to flatter the
   card re-opens the owner question `f1328-1` reserves.
 - `assets/contracts/**` — the yard's briefing copy is already correct and already authored; your job is
   to render it, not to rewrite it. (Its wording is separately flagged for the owner's eye as F-1432-4 —
@@ -154,7 +154,7 @@ instructions.
 3. **`npx playwright test e2e/agent-view.spec.ts --workers=1`, BOTH projects, report per project.**
    **Expect 8/8 desktop-chrome and 8/8 mobile-chrome.** ⓘ *That number is DERIVED, not inherited, and
    here is the derivation so you can check it yourself:* the spec holds 4 tests × 2 projects = 8; as of
-   `8fa0133f` exactly one of them is red (`:297`) on each project; this task's cure addresses that
+   `77a1b19b` exactly one of them is red (`:297`) on each project; this task's cure addresses that
    test's only failure mode (the missing element). **This is the direct lesson of F-1501-2, in which the
    previous master inherited an "expect 8/8" from a finding that named two reds and cured one, and a
    perfectly good run therefore filed NOT READY-FOR-GATES.** If your numbers differ, **report them as

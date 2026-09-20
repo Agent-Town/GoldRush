@@ -1,7 +1,7 @@
 # pc-01c — the Drill Yard's practice mechanics are DERIVED, not invisible
 
-**Slice:** `pc-01c-drill-yard-practice-derivation` · **Branch:** `lane/m3` · **Lane tip:** `23868f4d`
-**Merge:** `eec90e2b79a0ae34c37406df4e0a259798ba09f6` (main, s1386 fire, 2026-08-02)
+**Slice:** `pc-01c-drill-yard-practice-derivation` · **Branch:** `lane/m3` · **Lane tip:** `6e4e728e`
+**Merge:** `81c18ee5bc3cf17f975b57bcae39b79887a98da0` (main, s1386 fire, 2026-08-02)
 **Gated in:** detached scratch worktree `worktrees/gate-s1386` at `0282d3fb` (§3.0b custody), pruned after.
 
 ## VERDICT: ACCEPT — merged.
@@ -81,7 +81,7 @@ on the tree that will actually ship.
 
 ## Merge classification
 
-Base: `main` at `40296b25`. Three-dot diff vs merge-base = **exactly the five firewall files**
+Base: `main` at `5e275e7c`. Three-dot diff vs merge-base = **exactly the five firewall files**
 (`contracts.json`, `MechanicsManifest.ts`, `DrillYard.ts`, `ContractFamilies.ts`, and the new
 `drill-yard-manifest.spec.ts`). Merge was clean under `ort`, **zero conflicts**. The two-dot diff's
 extra paths (`STATUS.md`, `logs/*`, `law-pointer-baseline.json`, `BACKLOG.md`) are all MAIN-MOVED —

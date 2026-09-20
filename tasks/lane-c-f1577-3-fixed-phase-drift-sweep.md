@@ -1,6 +1,6 @@
 # Task f1577-3: pin the start phase and separate the two axes, so the determinism cure knows where to land (LANE-C, commit prefix "test:")
 
-**FIRE-AUTHORED (attended review welcome)** — s1577, from **F-1577-3**, filed by the drain gate that merged f1575-1 (`7fbcd423d3fc818c8e651f708e292d1b7a7b9d65`). F-1575-1 is answered: the m4-06 denied-receipt window is a **race**, verdict (A) CONFIRMED. This task is the measurement that must happen **before** anyone acts on that answer, because the recommended cure is currently under-specified in a way that can make the suite permanently red.
+**FIRE-AUTHORED (attended review welcome)** — s1577, from **F-1577-3**, filed by the drain gate that merged f1575-1 (`f759cbe85ea7ea577ef4cf14d0f4a0a6838a52f0`). F-1575-1 is answered: the m4-06 denied-receipt window is a **race**, verdict (A) CONFIRMED. This task is the measurement that must happen **before** anyone acts on that answer, because the recommended cure is currently under-specified in a way that can make the suite permanently red.
 
 You are Codex, implementer for Gold Rush, running natively on Robin's Mac in `worktrees/lane-c`.
 

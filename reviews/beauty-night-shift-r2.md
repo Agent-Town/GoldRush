@@ -11,7 +11,7 @@ Round 1 stopped at "the builder no longer reproduces the shipped art" and left t
 
 And it answered a question round 1 could not: **where does the player see the sky?** Nowhere. That is the honest headline, it is measured three independent ways — and it is not mine: the *baron* beauty shift filed the same finding the same night (`F-BEAUTY-BARON-3`, in `tasks/BACKLOG.md`) and I did not read it before measuring. What this round adds is confirmation from two directions the baron shift did not use, and sharper numbers. It is why U4 ships labelled as art rather than as a beauty upgrade.
 
-Two more of the baron shift's findings turn out to be load-bearing here: its `landmarkMount` cure (`54296efc`) is the only reason U5's re-export kept its five landmarks, and its `F-BEAUTY-BARON-4` — *the shipped baron panorama predates its own builder* — is **cured by this shift's fix**, along with the-claim, dry-gulch and twin-banks.
+Two more of the baron shift's findings turn out to be load-bearing here: its `landmarkMount` cure (`c4ab1b49`) is the only reason U5's re-export kept its five landmarks, and its `F-BEAUTY-BARON-4` — *the shipped baron panorama predates its own builder* — is **cured by this shift's fix**, along with the-claim, dry-gulch and twin-banks.
 
 ## Verdict table
 
@@ -37,9 +37,9 @@ Two more of the baron shift's findings turn out to be load-bearing here: its `la
 
 ### It was never nondeterminism. It was unversioned drift of a shared generator. ✓ VERIFIED
 
-`build_contract_panoramas.py` began life as the five-map **E1 panorama builder** — its own first line said so: *"Build separate render-only panorama rings for the five Epoch 1 maps."* The five shipped E1 panoramas were built from it at **`9e0dcf98`** (2026-07-14, "art: correct E1 panorama projection"). It was then generalised **in place** into the all-epoch generator for E2–E10: **+1107 / −27 lines**, and **6 of its 13 functions rewritten** —
+`build_contract_panoramas.py` began life as the five-map **E1 panorama builder** — its own first line said so: *"Build separate render-only panorama rings for the five Epoch 1 maps."* The five shipped E1 panoramas were built from it at **`af51c78e`** (2026-07-14, "art: correct E1 panorama projection"). It was then generalised **in place** into the all-epoch generator for E2–E10: **+1107 / −27 lines**, and **6 of its 13 functions rewritten** —
 
-| function | 9e0dcf98 | today |
+| function | af51c78e | today |
 |---|---|---|
 | `make_atlas` | 140 lines | **415** |
 | `make_ring` | 64 lines | **439** |
@@ -52,9 +52,9 @@ Several of those edits retuned code the E1 keys flow through: the haze mix **0.5
 
 ### The decisive experiment
 
-The 9e0dcf98 builder was checked out into a mirror tree at the same depth (so `ROOT = parents[3]` and `OUT` resolve as they did), given **today's** `build_the_claim_terrain.py` helper and **today's** source plates, and run on Blender 5.1.2:
+The af51c78e builder was checked out into a mirror tree at the same depth (so `ROOT = parents[3]` and `OUT` resolve as they did), given **today's** `build_the_claim_terrain.py` helper and **today's** source plates, and run on Blender 5.1.2:
 
-| artefact | shipped | rebuilt from 9e0dcf98 |
+| artefact | shipped | rebuilt from af51c78e |
 |---|---|---|
 | `night-shift-panorama-atlas.png` | `e1e0b583240a7d04…` | **identical** |
 | `night-shift-panorama.glb` | `f59a156aec2001a4…` | **identical** |
@@ -63,7 +63,7 @@ The 9e0dcf98 builder was checked out into a mirror tree at the same depth (so `R
 
 **10 of 10 art artefacts byte for byte.** The only contract field that moves is `files.blend.{bytes,sha256}`, which is that path artefact and nothing else — verified by diffing the contract, which shows exactly those two lines.
 
-The three helper functions the E1 builder uses (`reset_scene`, `image_pixels`, `luminance`) are unchanged since 9e0dcf98, which is why re-homing the generation onto today's helper is safe — proven, not assumed: the byte-exact run above used it.
+The three helper functions the E1 builder uses (`reset_scene`, `image_pixels`, `luminance`) are unchanged since af51c78e, which is why re-homing the generation onto today's helper is safe — proven, not assumed: the byte-exact run above used it.
 
 *(A side finding, recorded because it will bite the next person: the current builder reads `OUT/{key}-terrain-atlas.png` and `OUT/{key}-terrain-contract.json`. Rebuild it into a scratch directory without those and you silently get different art — that is the 738,940 B vs round 1's 739,170 B discrepancy, not a determinism failure.)*
 
@@ -75,7 +75,7 @@ The three helper functions the E1 builder uses (`reset_scene`, `image_pixels`, `
 
 ### Round 1's F-3 (the terrain half) is resolved, and it was fixed by a sibling shift
 
-F-3 reported that rebuilding the terrain drops the `landmarkPack` key (5,480 B → 4,715 B). Measured today on main: **it does not.** The carry-over lives at `build_unique_contract_terrains.py:1434`, and `git log -S` dates it to **`54296efc`** — the *baron* beauty shift's U1, committed **2026-08-03 00:36:49**. Round 1's tip `cd5ba9ed` is 00:56:20 and `54296efc` is **not an ancestor of it**: the two beauty shifts were running concurrently, and the baron shift fixed the defect twenty minutes before the night-shift shift wrote it down, on a branch round 1 could not see. F-3 was true and is now moot.
+F-3 reported that rebuilding the terrain drops the `landmarkPack` key (5,480 B → 4,715 B). Measured today on main: **it does not.** The carry-over lives at `build_unique_contract_terrains.py:1434`, and `git log -S` dates it to **`c4ab1b49`** — the *baron* beauty shift's U1, committed **2026-08-03 00:36:49**. Round 1's tip `cd5ba9ed (archive: pruned by the A3 rewrite)` is 00:56:20 and `c4ab1b49` is **not an ancestor of it**: the two beauty shifts were running concurrently, and the baron shift fixed the defect twenty minutes before the night-shift shift wrote it down, on a branch round 1 could not see. F-3 was true and is now moot.
 
 What is left of it is cosmetic and worth knowing: the regenerated contract emits `landmarkPack` *before* `files` instead of after, so the key appears to move in a diff. Nothing reads it positionally.
 
@@ -191,7 +191,7 @@ Geometry untouched: **16641 vertices, 32768 triangles**, `boundsMeters`, `meshCo
 
 ### The reds are pre-existing, and one of them was worth the trouble to prove
 
-A detached control worktree at `34a4aaad` (this branch's pipeline-fix commit, art byte-identical to main) with its own dev server on a second port, same specs, `--workers=1` both arms:
+A detached control worktree at `34a4aaad (archive: pruned by the A3 rewrite)` (this branch's pipeline-fix commit, art byte-identical to main) with its own dev server on a second port, same specs, `--workers=1` both arms:
 
 | test | control | this branch |
 |---|---|---|
@@ -252,7 +252,7 @@ Contact sheet (top row before, bottom row after; day · dusk · dark · dawn):
 
 **F-7b — this shift CURES `F-BEAUTY-BARON-4`.** ✓ VERIFIED. The baron shift filed *"the shipped baron panorama predates its own builder (re-export = 1351→1836 verts; the added county ground skirt renders as a pale halo behind the fort, unjudged on this contract)"*. That is the same drift diagnosed in §1, and the pinned E1 builder fixes it for baron as well as for night-shift: `verify_e1_panoramas.py` reproduces `baron-panorama-atlas.png` (`1a3eb50e320015ce…`) and `baron-panorama.glb` (`82753d0923986d72…`) **byte for byte**, at the shipped 1351 vertices. The same is true for the-claim, dry-gulch and twin-banks. **Four other maps' panoramas were quietly un-rebuildable and now are not.**
 
-**F-7c — `F-BEAUTY-BARON-2`'s cure is what let U5 keep its landmarks.** ✓ VERIFIED. The baron shift found that a plain terrain re-export drops `asset`/`terrainConformOffsetY` from every `landmarkMount` — a silent zero-landmark fallback, Mistake #10 — and cured it in `build_unique_contract_terrains.py` (`54296efc`), which is the builder night-shift also uses. Because that cure was already on main, U5's re-export kept `landmarkMounts` **byte-identical** and the five mounted landmarks still load. Had this shift run one night earlier it would have shipped a map with no landmarks on it. Recorded so the value of that fix is on the record, and because the *other five* terrain builders the baron shift named still carry the defect.
+**F-7c — `F-BEAUTY-BARON-2`'s cure is what let U5 keep its landmarks.** ✓ VERIFIED. The baron shift found that a plain terrain re-export drops `asset`/`terrainConformOffsetY` from every `landmarkMount` — a silent zero-landmark fallback, Mistake #10 — and cured it in `build_unique_contract_terrains.py` (`c4ab1b49`), which is the builder night-shift also uses. Because that cure was already on main, U5's re-export kept `landmarkMounts` **byte-identical** and the five mounted landmarks still load. Had this shift run one night earlier it would have shipped a map with no landmarks on it. Recorded so the value of that fix is on the record, and because the *other five* terrain builders the baron shift named still carry the defect.
 
 **F-8 — the E1 panorama generation had no owner, no pin and no guard.** ✓ VERIFIED (§1). Fixed here for E1. The same shape of hazard is still live for every other family that rides `build_contract_panoramas.py`: nothing asserts that any shipped panorama still reproduces. `verify_e1_panoramas.py` is the pattern; generalising it to the other families is a small, obviously-worth-it task and is **not** done here (out of this shift's scope, and it needs a rebuild of ~29 more panoramas to establish the baseline).
 
@@ -288,12 +288,12 @@ Meanwhile the panorama art is pinned, guarded and reproducible, so whichever way
 
 ## Merge classification
 
-Branch-only; nothing merged to main. Base `60563f4b` (origin/main at session start, fast-forwarded before any work). Per-milestone path-scoped commits, each pushed and verified against `git ls-remote`:
+Branch-only; nothing merged to main. Base `cbaad8bb` (origin/main at session start, fast-forwarded before any work). Per-milestone path-scoped commits, each pushed and verified against `git ls-remote`:
 
-- `34a4aaad` — the pipeline fix: `build_e1_contract_panoramas.py` (new), `verify_e1_panoramas.py` (new), `build_contract_panoramas.py` (docstring + `E1_PANORAMAS` + `main()` refusal)
-- `335a987c` — U4: `build_e1_contract_panoramas.py`, the four `night-shift-panorama.*` files, `scripts/beauty-sky-visibility.mjs` (new), `scripts/beauty-night-sky-board.mjs` (new)
-- `adb47069` — U5: `build_unique_contract_terrains.py`, the four `night-shift-terrain.*` files, the regenerated `artifacts/map-rebuild-spike/night-shift-*` verdict boards and `artifacts/e3-day-night/*`
-- `3d979899` — the evidence boards
+- `34a4aaad (archive: pruned by the A3 rewrite)` — the pipeline fix: `build_e1_contract_panoramas.py` (new), `verify_e1_panoramas.py` (new), `build_contract_panoramas.py` (docstring + `E1_PANORAMAS` + `main()` refusal)
+- `6fc55a65` — U4: `build_e1_contract_panoramas.py`, the four `night-shift-panorama.*` files, `scripts/beauty-sky-visibility.mjs` (new), `scripts/beauty-night-sky-board.mjs` (new)
+- `adb47069 (archive: pruned by the A3 rewrite)` — U5: `build_unique_contract_terrains.py`, the four `night-shift-terrain.*` files, the regenerated `artifacts/map-rebuild-spike/night-shift-*` verdict boards and `artifacts/e3-day-night/*`
+- `3d979899 (archive: pruned by the A3 rewrite)` — the evidence boards
 - this review
 
 `artifacts/night-bite/*` and `artifacts/night3d-perf/*` were touched by gate runs and **restored to HEAD**: they are single samples of a flicker-dominated scene, and round 1 set that precedent for exactly this reason. The other four E1 panoramas, every other map's terrain and panorama, `src/`, and LITE are untouched — `verify_e1_panoramas.py` proves the first of those by rebuilding them.

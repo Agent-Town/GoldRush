@@ -4,7 +4,7 @@
 // THE DEFECT IT EXISTS FOR. An owner ruling is recorded in `tasks/BACKLOG.md` as prose, but the
 // thing that actually REFUSES work is `tasks/goals.json` — read by scripts/drain-block-check.mjs,
 // the §3.0 first-command-of-every-drain guard. Those two surfaces are joined by nothing but a
-// fire remembering to edit both. On 2026-07-30 commit 9c621751 recorded the owner's agent-verb-rung
+// fire remembering to edit both. On 2026-07-30 commit 27346d6d recorded the owner's agent-verb-rung
 // ruling ("F-1219-1 RULED") and, in the SAME commit, executed the ruling's other half as a real
 // permission change to .claude/settings.json — but never touched goals.json. The leaf
 // `ap-06b-adapter-wiring` therefore kept `status:"blocked"` with a blockedReason that asked for the

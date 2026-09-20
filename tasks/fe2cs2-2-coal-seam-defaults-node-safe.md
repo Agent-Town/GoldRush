@@ -50,7 +50,7 @@ RESOLUTION. THIS IS NOT THE BOARD MOVING UNDER YOU.** `git merge-tree --write-tr
 returns rc 1 with **exactly one** conflicted path: `package.json`. The cause is benign and known —
 two slices each prepended one new guard to the `test:node-guards` script:
 
-- main side: `scripts/campaign-harness-terrain.test.mjs` (landed `8656ca1f1…` earlier this fire)
+- main side: `scripts/campaign-harness-terrain.test.mjs` (landed `f9b8d02f5…` earlier this fire)
 - lane side: `scripts/coal-seams-on-the-view.test.mjs` (your predecessor)
 
 **Resolve by keeping BOTH, in that order, immediately after `scripts/run-node-guards.mjs`.** The

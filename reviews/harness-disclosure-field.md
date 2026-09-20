@@ -1,7 +1,7 @@
 # Review — harness-disclosure-field (s2270 drain 1)
 
-**Slice:** `harness-disclosure-field` · **Branch:** `lane/b` · **Tip:** `f21448853fd8622ff4392bc4ae8aef68eb6f02b3`
-**Base:** `8a3dc50db`-era lane base · **Merged to main at:** `08bbb64edda70fee35047152f9489c3a11d196c1`
+**Slice:** `harness-disclosure-field` · **Branch:** `lane/b` · **Tip:** `f8d9c5f43656d4613174e46d075d37cc60565b21`
+**Base:** `e7397787d`-era lane base · **Merged to main at:** `0b8e8d37896428b6d0a1180cc2fe9498a57ce420`
 **Gate worktree:** `.gate-s2270` (detached, §3.0b) · fire shell · `--workers=1` (§3.1)
 
 ## VERDICT: MERGE — every scope item shipped, the firewall held, and the ranking claim is provable rather than asserted.
@@ -61,12 +61,12 @@ construction, not by inspection of a shortlist.
 
 ## Merge classification
 
-Base `6a0141593` (my lock commit) + tip `f21448853`, three-way `ort`, **zero conflicts**; the single
+Base `d9e65d977` (my lock commit) + tip `f8d9c5f43`, three-way `ort`, **zero conflicts**; the single
 auto-merge was `tasks/BACKLOG.md`, where the lane rewrote the F-HARNESS-1 line and main had moved
 elsewhere in the file. 33 files, **+68 / −12** across 10 text files and 23 PNGs.
 
 All 10 text files are **LANE-TOUCHED / MAIN-UNMOVED** — verified after the merge by
-`git diff main f21448853`, which lists **none of them**: main now carries the lane's bytes exactly
+`git diff main f8d9c5f43`, which lists **none of them**: main now carries the lane's bytes exactly
 for every path the slice touched. `git log main..lane/b` is **empty** — fully absorbed.
 
 `server/ledger/serve.mjs` is untouched, as the firewall required. The master said *verify, don't

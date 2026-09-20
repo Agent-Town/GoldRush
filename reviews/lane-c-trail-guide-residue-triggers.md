@@ -2,7 +2,7 @@
 
 - **Slice:** the polish-04 Trail Guide residue — the two first-run triggers named as owed and never shipped: *first build-menu open* and *first confirmed theft*.
 - **Branch / runner tip:** `lane/e2-arsenal` @ `32824327` (`runner(lane-c)`, run `20260728-002215`, 303,634 tokens).
-- **Base:** `9b3778fd` (s1145). **Merged to main at `83f4c761`.**
+- **Base:** `64e7bb0d` (s1145). **Merged to main at `bc6e4fd5`.**
 - **Task master:** `tasks/done/shipped-83f4c761-20260728-002215-lane-c-trail-guide-residue-triggers.md` (FIRE-AUTHORED s1145).
 - **§3.0 `drain-block-check`:** ✅ **CLEAR** — run as the first command of the drain, before classification and before forming an opinion.
 
@@ -25,9 +25,9 @@ Bark copy ships fire-side under **F-903-1** ("tunable copy — owner wording rev
 
 | File | Class | Evidence |
 |---|---|---|
-| `e2e/trail-guide.spec.ts` | LANE-TOUCHED | `git log 9b3778fd..main --` **empty** |
-| `src/game/Game.ts` | LANE-TOUCHED | `git log 9b3778fd..main --` **empty** |
-| `src/story/trailGuide.ts` | LANE-TOUCHED | `git log 9b3778fd..main --` **empty** |
+| `e2e/trail-guide.spec.ts` | LANE-TOUCHED | `git log 64e7bb0d..main --` **empty** |
+| `src/game/Game.ts` | LANE-TOUCHED | `git log 64e7bb0d..main --` **empty** |
+| `src/story/trailGuide.ts` | LANE-TOUCHED | `git log 64e7bb0d..main --` **empty** |
 
 Main never moved any of the three since the merge-base, so a path-scoped `git checkout 32824327 -- <3 files>` is exactly the 3-way result: the staged diff came out **byte-identical to the lane commit's own diff — 3 files, +98/−4.**
 
@@ -84,9 +84,9 @@ The bar named `m2-04` as *"the adjacent suite that matters most"* because it exe
 - The real assertion is `:227`, `expect(timeAlive - spawnedAt).toBeLessThan(20)` — **desktop `20.333…`, mobile `20.999…`** against a budget of `20`. The thief's journey around the palisade line overruns by **1.7–5 %**.
 - `--repeat-each=3` in a quiet box returned **0/6**, so it is **deterministic, not contention.** Had I stopped at the two-run agreement I would have filed this as a flake.
 
-**This is a regression, not a chronically marginal test:** `reviews/evidence/mac-fullsuite-20260705-*.md` record `m2-04` at **7/0/0/0** twice, and the spec file itself is unchanged since `ea570a81`. So something in `src/` between 2026-07-05 and now slowed the thief's route around a finite palisade line past its budget.
+**This is a regression, not a chronically marginal test:** `reviews/evidence/mac-fullsuite-20260705-*.md` record `m2-04` at **7/0/0/0** twice, and the spec file itself is unchanged since `fb9e2c64`. So something in `src/` between 2026-07-05 and now slowed the thief's route around a finite palisade line past its budget.
 
-➡️ **Recommended next step:** this smells adjacent to the standing **E① pathing cure (F-1131-5)** on the owner's desk — a pathing change that makes thieves route less efficiently around obstacles is exactly what moves a 20 s budget to 20.3 s. **Do not simply raise the budget**: the assertion is a pathing-efficiency guard, and widening it to fit the data is the failure mode this factory has a law against. The honest next act is a `git bisect` over `src/` between `ea570a81`-era green and today, which is mechanical and fire-authorable.
+➡️ **Recommended next step:** this smells adjacent to the standing **E① pathing cure (F-1131-5)** on the owner's desk — a pathing change that makes thieves route less efficiently around obstacles is exactly what moves a 20 s budget to 20.3 s. **Do not simply raise the budget**: the assertion is a pathing-efficiency guard, and widening it to fit the data is the failure mode this factory has a law against. The honest next act is a `git bisect` over `src/` between `fb9e2c64`-era green and today, which is mechanical and fire-authorable.
 
 ### F-1147-2 — the back-to-back bark stomp is real, and deliberately unfixed (report-only, by order)
 
@@ -96,7 +96,7 @@ No queue, delay or priority rule was added; adding one was declared a firewall v
 
 ### F-1147-3 — the runner's `m2-04` numbers did not reproduce (process note, non-blocking)
 
-The runner reported `m2-04` desktop 7/7 (33.2 s) and mobile 7/7 (27.6 s); I got 6/7 both. The runner ran in `worktrees/lane-c` at base `9b3778fd` with `GR_CAPTURE_EXTERNAL_SERVER=1` on scratch ports; I ran on main's tip with the suite's own server. Since F-1147-1 reproduces on **clean main** too, the delta is environmental (worktree/base/ports), not a false report — but it is a reminder that **an adjacent-suite green from a lane worktree is not a green on main**, and the drain's own re-measurement is the one that counts.
+The runner reported `m2-04` desktop 7/7 (33.2 s) and mobile 7/7 (27.6 s); I got 6/7 both. The runner ran in `worktrees/lane-c` at base `64e7bb0d` with `GR_CAPTURE_EXTERNAL_SERVER=1` on scratch ports; I ran on main's tip with the suite's own server. Since F-1147-1 reproduces on **clean main** too, the delta is environmental (worktree/base/ports), not a false report — but it is a reminder that **an adjacent-suite green from a lane worktree is not a green on main**, and the drain's own re-measurement is the one that counts.
 
 ## Duties
 

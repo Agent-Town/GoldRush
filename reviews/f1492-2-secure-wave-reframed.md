@@ -1,7 +1,7 @@
 # F-1492-2 — REFRAMED BY MEASUREMENT: the Hill Mine row is a defective ASSERTION, not a content ruling
 
 **Fire:** s1493 · **Date:** 2026-08-06T18:15Z–18:50Z
-**Subject:** the two `e2e/er01-e2-census.spec.ts` reds that HOLD `f-seed-1-front-door-parity` (`lane/a` tip `1e19a7d58`)
+**Subject:** the two `e2e/er01-e2-census.spec.ts` reds that HOLD `f-seed-1-front-door-parity` (`lane/a` tip `23559d6e4`)
 **Gate tree:** detached worktree `gate-s1493` at merge commit `714de7ebb` (§3.0b — nothing entered main's working tree)
 **Status:** the owner question F-1492-2 asked is **unanswerable as posed**; a replacement finding **F-1493-1** is filed and a corrective master authored.
 

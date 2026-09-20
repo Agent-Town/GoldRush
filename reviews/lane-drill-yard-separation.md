@@ -1,7 +1,7 @@
 # lane-drill-yard-separation — F-BW-5: the drill yard leaves the claims
 
-**Slice:** `lane-drill-yard-separation` · **branch:** `lane/m3` · **tip:** `b295e2ab` · **base:** `4983ce03`
-**Merged:** `9240479cf1eb13759c58ad81fee668aebcdd3030` (s1432, 2026-08-03)
+**Slice:** `lane-drill-yard-separation` · **branch:** `lane/m3` · **tip:** `b295e2ab` · **base:** `7dc69e36`
+**Merged:** `9920d2828137b0067c2a936bf56953b5c53720d7` (s1432, 2026-08-03)
 
 ## VERDICT: ACCEPT — merged with one deliberate graft.
 
@@ -35,7 +35,7 @@ would have required one.
 
 ## Merge classification
 
-Main moved **two** of the slice's files since the lane base `4983ce03`, so this was not a blind copy.
+Main moved **two** of the slice's files since the lane base `7dc69e36`, so this was not a blind copy.
 
 | Bucket | Files |
 |---|---|
@@ -47,7 +47,7 @@ Main moved **two** of the slice's files since the lane base `4983ce03`, so this 
 `src/game/Game.ts` differed from main in **three** hunks. Only the third was accepted.
 
 - Hunks 1 (`:254`) and 2 (`:4607`) **REMOVE `reportRenderDemotion`** — its import and its call site. The
-  lane's base predates `e49fc4e3`, so the lane never had that code; its blob "removes" it only in the
+  lane's base predates `037f35f5`, so the lane never had that code; its blob "removes" it only in the
   sense that a stale base always does. **A wholesale copy would have silently reverted s1431's F-BW-4
   telemetry graft, landed twenty minutes earlier.** Rejected.
 - Hunk 3 (`:7471`) is the slice's own work — the `training:` flag and the practice-aware `save:` line.
@@ -55,7 +55,7 @@ Main moved **two** of the slice's files since the lane base `4983ce03`, so this 
   writing, and `reportRenderDemotion` was re-counted **after** the graft (2 occurrences, matching main).
 
 ### `TownScene.ts` is a clean copy — measured, not assumed
-Main moved this file too, via `f90d3c34` (the f1429-1 `uninspectableFixtures` cure). The obvious inference
+Main moved this file too, via `b11cdb88` (the f1429-1 `uninspectableFixtures` cure). The obvious inference
 is "both moved ⇒ graft". It is wrong here: `uninspectableFixtures` counts **4 on both sides**, because the
 lane already carries that same cure through its own commit `b925d706` — the very commit s1432's
 predecessor clean-copied onto main. `BOTH-MOVED` is a triage bucket, not a loss verdict (F-1081-9).
@@ -67,7 +67,7 @@ already-drained `f1429-1` commit, and leaves `lane/m3` **falsely ahead** — a s
 ## Findings
 
 **F-1432-3 (non-blocking) — `lane/m3` is left falsely ahead by two commits and must NOT be read as holding
-work.** After this merge, `b925d706` (drained s1431 as `f90d3c34`) and `b295e2ab` (drained here) are both
+work.** After this merge, `b925d706` (drained s1431 as `b11cdb88`) and `b295e2ab` (drained here) are both
 absorbed. `lane-usable` will report `AHEAD-BUT-ABSORBED`; cure with `--cure` (which archives the tip before
 resetting) once the lane is idle. 🚫 Do not `reset --hard` it by hand.
 

@@ -77,7 +77,7 @@ has ever succeeded since it landed, so `VERIFY attempt` has **never once appeare
 and **all three are sound**:
 
 1. **The build-id comparison is format-compatible.** `deploy.sh:127` compares `$LIVE_BUILD` to
-   `$PUBLISHED_BUILD`. Live production serves `{"build":"49dbce7a"}` — **8 chars**; `PUBLISHED_BUILD`
+   `$PUBLISHED_BUILD`. Live production serves `{"build":"9fa96680"}` — **8 chars**; `PUBLISHED_BUILD`
    derives from `git rev-parse --short=8 HEAD` — **8 chars**. A width mismatch here would have made
    *every* successful deploy report `deploy_unverified` forever. It is not present.
 2. **The asset-budget guard is NOT vacuous** — and this is proven by real logged output, not by reading:
@@ -98,4 +98,4 @@ re-deploy rather than a lie. Re-raising this as a defect would be inheriting a b
 settled; it is recorded here as a limit only.
 
 **Deploy staleness, refreshed by asking the live site:** `gold-rush-3in.pages.dev/version.json` still
-serves `49dbce7a`, `builtAt 2026-07-24T17:20:23Z` — now **220 commits** behind main (was 216 at s1056).
+serves `9fa96680`, `builtAt 2026-07-24T17:20:23Z` — now **220 commits** behind main (was 216 at s1056).

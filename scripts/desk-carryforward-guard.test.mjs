@@ -132,7 +132,7 @@ test('GROUND TRUTH — the real s1526 -> s1527 event reds, and names ten, not th
 });
 
 test('GROUND TRUTH — the real s1529 backtick header is read, not scored as a mass drop', () => {
-  // F-1542-1. s1529 (aab5dfb3) wrote "OWNER`S DESK" — a grave accent, U+0060,
+  // F-1542-1. s1529 (62586985) wrote "OWNER`S DESK" — a grave accent, U+0060,
   // where the apostrophe goes — over a perfectly well-formed desk of 8 items.
   // The four-spelling regex missed it, deskTail returned null, deskItems(null)
   // returned [], and the guard reported the ENTIRE inherited desk as silently

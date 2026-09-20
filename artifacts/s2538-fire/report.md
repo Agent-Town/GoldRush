@@ -1,6 +1,6 @@
 # s2538 fire handoff
 
-No implementation merged. The MAIN six-wait readiness candidate is held at `83f1429f6ff2dc26254f0c18225466991b6454ea`, based on `03d9fe1a1bcd6c771d085175b51bc6e02583b10d`, and backed up as `origin/save/main-chapter-readiness-s2538`. The corresponding MAIN edits were removed after exact-patch and saved-ref checks. The goal carries a gate-side hold, not an owner decision. The broader chapter writer patch and the M1 done-move remain separate.
+No implementation merged. The MAIN six-wait readiness candidate is held at `83f1429f6ff2dc26254f0c18225466991b6454ea`, based on `ac555e02ac6015a56a9b58693b65621535c6ac89`, and backed up as `origin/save/main-chapter-readiness-s2538`. The corresponding MAIN edits were removed after exact-patch and saved-ref checks. The goal carries a gate-side hold, not an owner decision. The broader chapter writer patch and the M1 done-move remain separate.
 
 On native Node 26.4.0: typecheck 5.5 s, build 23.1 s, twelve Frontier checks 80.9 s, three mobile E7 repeats 22.5 s and plain desktop/390px boot 8.5 s passed. Both boots reported zero warnings, console errors and page errors. Power passed at p95 0.428 ms; citation and gate-caller legs passed. The generic wrapper terminated the optional full Node attempt at 900 seconds, so there is no complete Node verdict. The explicit FIRE scope and this fire's over-broad initial gate choice are recorded in `gate-scope.md`.
 

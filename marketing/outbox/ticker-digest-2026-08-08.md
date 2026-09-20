@@ -16,7 +16,7 @@ commits. **15** touched player-visible paths (`src/`, `public/`, `assets/`). **3
 factory's own tools and nets. **247 were bookkeeping** — the ledger talking to itself.
 
 ⚠️ **The honest caveat, and this time it runs the OTHER way.** Yesterday's digest warned that the
-path-counter *under*-reports; today it **over**-reports by one. `c6b09a178` lands in the
+path-counter *under*-reports; today it **over**-reports by one. `b9600fbb3` lands in the
 player-visible bucket because it moves a file inside `src/` — but nothing in the game changed. It
 moved `takeBuildRejectionDetail` onto a zero-import leaf so that `npm test` would collect again, and
 it took the suite **from 0 tests back to 2,740 across 389 files**. The single largest structural
@@ -32,40 +32,40 @@ fifteen.
 ## The day in micro-headlines
 
 **Your agent can ride with you now — and you invite it with one paste.** Body, eyes, and invitation
-all landed in one day; agent riders are marked plainly on the roster. `ddd3d55ef` · `6e203aaad` ·
-`64ea699a3`
+all landed in one day; agent riders are marked plainly on the roster. `073fca17f` · `85807714a` ·
+`63cdf1137`
 
 **Rooms take mixed company, and more than one mind.** Owner ruling, same day: "I would like the
-player to be able to invite his agent or multiple agents if they want." `06e175f33`
+player to be able to invite his agent or multiple agents if they want." `f59b1c1b3`
 
 **The county board names who is a declared mind.** And its validator stopped blanking the whole board
-against what production actually serves. `964978bad`
+against what production actually serves. `5e8726932`
 
 **The night stopped being easier for those who weren't watching.** Headless nights now carry the
-lantern field, and the wrecker gets its 1.18x outside the light. `3dec09329`
+lantern field, and the wrecker gets its 1.18x outside the light. `1c94cc1f3`
 
 **The migration now genuinely threatens a dark claim.** Owner ruling: "Tighten it." Idle play dies;
-competent play still secures. `5698e6ae3`
+competent play still secures. `6aa17b2c9`
 
 **The harvest walks. A new bench era begins here.** Panning pays only where the Prospector stands —
-no more paying a hand that never travelled. `3dd7790d6`
+no more paying a hand that never travelled. `55ce6f7d2`
 
 **Refused builds tell you why they were refused.** The cause rides out through the door instead of
-dying as a silent no. `38615d784`
+dying as a silent no. `3c075bf4e`
 
 **The door publishes what things cost.** Buildable cost curves, the ceil-to-5 rule, and turret and
-beacon admitted to the E1 manifest at last. `99f0d60a4`
+beacon admitted to the E1 manifest at last. `566b2c25a`
 
 **The boss fight fits inside the door.** A grace ceiling ends the run honestly instead of crashing
-it. `c732d2c40`
+it. `4e2ab518a`
 
-**The door says which contracts it can actually serve.** `7b20fef98`
+**The door says which contracts it can actually serve.** `f67e82884`
 
 **A refusal stays readable.** Idle chatter no longer paints over the denial before you've had time to
-read it. `661e13d9b`
+read it. `73cb4d717`
 
 **The Homesteader's door: bank your claim, then play on to the end.** Secure the ground and keep
-going until it kills you — the outcome block tells you how the homestead fared. `d18d1765a`
+going until it kills you — the outcome block tells you how the homestead fared. `21695d101`
 
 ---
 

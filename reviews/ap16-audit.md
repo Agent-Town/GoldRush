@@ -1,8 +1,8 @@
 # Review — ap16-audit (AP-16-0, the same-game audit)
 
 **Slice:** `ap16-audit` — THE SAME-GAME AUDIT: enumerate every human/agent rules divergence
-**Branch:** `lane/a` · **tip** `4db06870be413a1000f578035d95868ccd865858`
-**Base:** `00451b334` (main at gate time) · **Merge:** `df05e62588d845ee409b404e31104a3ea54deb47`
+**Branch:** `lane/a` · **tip** `727eb88b9113a2c668adb55552904b60772d2d6c`
+**Base:** `1c7d89c3e` (main at gate time) · **Merge:** `857e888998d262977e1469278dbc618e93b2b7e0`
 **Drained:** s1628, 2026-08-10 · gated in detached worktree `gate-s1628` per §3.0b
 
 ## VERDICT: MERGED — green on every gate, numbers verified independently rather than inherited.
@@ -72,7 +72,7 @@ proof, and it is stronger than the probe would have been.
 
 ## Merge classification
 
-Base `00451b334`. Per-file:
+Base `1c7d89c3e`. Per-file:
 
 | File | Class | Resolution |
 |---|---|---|

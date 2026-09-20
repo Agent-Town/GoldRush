@@ -2,8 +2,8 @@
 
 - **Slice:** cw-02-escort (lane-c #2, "feat:")
 - **Branch/tip:** `lane/e2-arsenal` @ `17dba1ec`
-- **Base:** `af7eaa79` (runner reset lane-c to main before running, per s587)
-- **Drained by:** s589 fire — 3-way graft onto main `d2a886c9`
+- **Base:** `9c8068d7` (runner reset lane-c to main before running, per s587)
+- **Drained by:** s589 fire — 3-way graft onto main `503c7e7a`
 - **Verdict:** ✅ MERGE — all gates green; stale-base 3-way graft against the just-merged e4-06 Game.ts, verified complete.
 
 ## What it does (player-visible)
@@ -25,7 +25,7 @@ Extends escort mode with a **tram** vehicle (alongside the existing ore-cart) on
 Zero console/page errors across all playwright boots (harness fails on uncaught page errors; none observed).
 
 ## Merge classification
-Lane base `af7eaa79` predates main's e4-06 (LandYachtBoss) + e4-05 (DustFlats) + dust-flats typing merges. Per-file:
+Lane base `9c8068d7` predates main's e4-06 (LandYachtBoss) + e4-05 (DustFlats) + dust-flats typing merges. Per-file:
 
 | File | Class | Resolution |
 |------|-------|-----------|

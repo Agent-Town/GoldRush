@@ -2,7 +2,7 @@
 
 - Date: 2026-09-07
 - Branch: `main`
-- Base: `03d9fe1a1bcd6c771d085175b51bc6e02583b10d`
+- Base: `ac555e02ac6015a56a9b58693b65621535c6ac89`
 - Node: `v23.11.1` (`/Users/robin/.nvm/versions/node/v23.11.1/bin/node`)
 - Server: port 5315, private optimizer cache `/tmp/gr-chapter-story-readiness-vite.vTK8wV`; stopped after verification
 

@@ -1,6 +1,6 @@
 # wire-town-plate — the town stands on real ground (lane-c; commit prefix "feat:")
 ROLE: pilot wiring. WORKDIR: lane-c (worktrees/lane-c). CODEX: model=gpt-5.6-sol effort=medium
-ATTENDED-AUTHORED 2026-07-13 — Sol session 3D-C's wave-1 plate MERGED (2b81dd4f, owner: "the foundation is good"); this mounts it. Sol iterates DETAIL on the same GLB path — this wire must keep working when town-plate.glb is replaced (no geometry assumptions beyond the contract).
+ATTENDED-AUTHORED 2026-07-13 — Sol session 3D-C's wave-1 plate MERGED (41578ca3, owner: "the foundation is good"); this mounts it. Sol iterates DETAIL on the same GLB path — this wire must keep working when town-plate.glb is replaced (no geometry assumptions beyond the contract).
 
 Pre-flight (LANE-SAFETY): standard safe-dupe rules; LADDER-STALL protocol stands. Then npm install; build green.
 

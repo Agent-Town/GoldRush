@@ -1,6 +1,6 @@
 # f1401-1 — F-1400-3 diagnosed: the baron does not regress escort, it exposes a divergence and removes the accident that hid it
 
-**Slice/branch/tip:** diagnosis only — no merge. Subject: `lane/e2-arsenal` tip `9a9fb2bb` (held by s1400), against main `a1ec923b`.
+**Slice/branch/tip:** diagnosis only — no merge. Subject: `lane/e2-arsenal` tip `9a9fb2bb` (held by s1400), against main `265d585e`.
 **Verdict:** **F-1400-3 MECHANISM PROVEN. s1400's stated hypothesis REFUTED.** No code merged; corrective master authored (`f1401-1-bound-the-headless-driver-and-rule-the-escort-bench`).
 **Custody:** all work done in a detached scratch worktree (`.wt-s1401`, removed at the end). Main's working tree was never touched; `lane/e2-arsenal` is untouched and intact.
 
@@ -16,7 +16,7 @@ Same command, same seed, same shell, one detached worktree per arm:
 
 | Arm | Result |
 |---|---|
-| clean main (`a1ec923b`) | `rc=0` in **4.5s** — `{"secured":true,"waves":12,"timeMs":360000,"kills":100,"calls":0,"eventLogHash":"fnv1a32:b3706fdc"}` |
+| clean main (`265d585e`) | `rc=0` in **4.5s** — `{"secured":true,"waves":12,"timeMs":360000,"kills":100,"calls":0,"eventLogHash":"fnv1a32:b3706fdc"}` |
 | + `lane/e2-arsenal` merged | **never terminates** — alive past 150s under a 90s `spawnSync` timeout, reaped by hand |
 | + merged, `Number.MAX_SAFE_INTEGER` branch neutralised (one-line edit) | `rc=0` in **4.57s** — `{"secured":true,"waves":12,...,"eventLogHash":"fnv1a32:be31e9d2"}` |
 

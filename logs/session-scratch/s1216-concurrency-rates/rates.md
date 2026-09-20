@@ -1,6 +1,6 @@
 # Concurrency-class failure rates
 
-- Tree: `a4575fed922a81e902eb2896d788439bbeb29785`
+- Tree: `593f998b0f0d16160f1cc0a677d2a6934032e8f5`
 - External Vite: `http://127.0.0.1:5267` (one server reused; port checked free before binding and after close)
 - Schedule: [object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object] interleaved cycles × workers 1 → 2 → 4
 - Projects: desktop-chrome, mobile-chrome

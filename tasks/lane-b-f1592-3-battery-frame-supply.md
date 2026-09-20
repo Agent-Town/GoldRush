@@ -8,7 +8,7 @@ READ FIRST:
 - `AGENTS.md`.
 - `artifacts/f1592-1-cdp-throttle-lever/REPORT.md` — **the whole file.** It is the s1592 lever proof and it is why this task can be trusted to mean something. It contains the line `**LEVER PROVEN, AND THE F-1591-1 DERIVATION IS NOW DIRECTLY CONFIRMED AT THE REGIME THAT MATTERS.**` — **grep for that exact span; expect 1, STOP and report if 0** (do not proceed, do not "fix" it).
 - `artifacts/f1592-1-cdp-throttle-lever/probe.mjs` — **your starting point; copy it, do not re-derive it.** It contains the line `    await cdp.send('Emulation.setCPUThrottlingRate', { rate });` — **grep for it, expect 1, STOP if 0.**
-- `artifacts/f1591-1-frame-supply-cliff/probe.mjs` — its unthrottled parent, merged `c213694c0`.
+- `artifacts/f1591-1-frame-supply-cliff/probe.mjs` — its unthrottled parent, merged `5936ec48e`.
 - `src/core/Loop.ts` — **the whole file, it is 159 lines.** It contains `const MAX_PRESENTATION_DELTA_SECONDS = 0.05;` — **grep for that exact span, expect 1, STOP if 0.**
 - `reviews/f1591-1-frame-supply-cliff.md` — the drained predecessor plus the s1592 drain verdict that filed F-1592-1.
 

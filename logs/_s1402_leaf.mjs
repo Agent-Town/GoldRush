@@ -5,7 +5,7 @@ import { execFileSync } from 'node:child_process';
 
 const REPO = '/Users/robin/Claude/Projects/Gold Rush';
 const P = REPO + '/tasks/goals.json';
-const full = execFileSync('git', ['-C', REPO, 'rev-parse', '8f10884e'], { encoding: 'utf8' }).trim();
+const full = execFileSync('git', ['-C', REPO, 'rev-parse', '059d1f8f'], { encoding: 'utf8' }).trim();
 if (!/^[0-9a-f]{40}$/.test(full)) { console.error('bad hash ' + full); process.exit(2); }
 
 const g = JSON.parse(readFileSync(P, 'utf8'));

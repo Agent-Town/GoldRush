@@ -3,7 +3,7 @@ CODEX: model=gpt-5.6-sol effort=xhigh
 # lane-f1504-1-drill-yard-stale-absence — the yard's own spec still asserts the briefing is absent
 
 **FIRE-AUTHORED s1504 (attended review welcome).** Authored from a **merge-caused red measured this
-fire** while draining f1501-1-drill-yard-briefing (merge abcfffb88127640c1709d6ec37033e84f9106ced,
+fire** while draining f1501-1-drill-yard-briefing (merge ced0fc61b4c851cc991c273a213a72dadc00c1cc,
 review reviews/f1501-1-drill-yard-briefing.md, F-1504-1), against a **ratified spec slice** (AP-11 §1,
 specs/agent-play/README.md:149). No design fork, no canon, no owner word. The scope is small on purpose
 and the reasoning for its exact shape is in §WHY — read that before you widen it.
@@ -21,7 +21,7 @@ git -C worktrees/lane-a fetch origin main
 git -C worktrees/lane-a checkout -B lane/a origin/main
 ```
 Safe and authorized: lane-a's only unmerged commit was f1501-1's, and this fire merged it at
-abcfffb88127640c1709d6ec37033e84f9106ced before writing this master, so the branch holds nothing main
+ced0fc61b4c851cc991c273a213a72dadc00c1cc before writing this master, so the branch holds nothing main
 has not absorbed. Refresh FIRST, probe SECOND, always (F-1465-2).
 
 **STEP 2 — CURRENCY PROBE (only after step 1). Must print `1`:**
@@ -64,7 +64,7 @@ requires the derived manifest to ride the briefing; f1501-1 cured it with one li
 **"plain boot keeps the Drill Yard visible and launchable on both sides of the welcome"** asserts at
 `e2e/drill-yard.spec.ts:92` that the briefing element has count **0** — i.e. it pins the card to the
 pre-AP-11 behaviour. Measured at drain, both projects: `Expected: 0 / Received: 1`. A control run of the
-same spec at the pre-merge commit bef7788c8 returned **4 passed**, so this red is merge-caused and the
+same spec at the pre-merge commit 1466e681e returned **4 passed**, so this red is merge-caused and the
 assertion is stale by construction rather than by neglect.
 
 f1501-1 could not fix it: its firewall forbade editing `e2e/**`, and deliberately — in its own words,

@@ -2,7 +2,7 @@ import fs from 'node:fs';
 const P = 'tasks/goals.json';
 const raw = fs.readFileSync(P, 'utf8');
 const g = JSON.parse(raw);
-const HASH = '8134ec30762cde75a298edcec47629d6f25df19a';
+const HASH = 'e47354c62d102b08329ff60048e8be818b75f879';
 let hit = 0;
 function walk(n) {
   if (Array.isArray(n)) return n.forEach(walk);

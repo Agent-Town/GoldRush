@@ -140,7 +140,7 @@ async function openBoard(page: Page): Promise<void> {
 }
 
 async function openBaronBoardPage(page: Page): Promise<void> {
-  // 330ba7bb: The Book exposes contracts through era chapters, not per-contract page dots.
+  // 209c1a51: The Book exposes contracts through era chapters, not per-contract page dots.
   await page.getByTestId('contract-chapter-tab-epoch-1-frontier').click();
   await expect(page.getByTestId('contract-card-e1-baron')).toBeVisible();
 }
@@ -346,14 +346,14 @@ test('contract board requires science plus two secured claims and always shows a
 
   await seedStorage(page);
   await openBoard(page);
-  // 330ba7bb: the Frontier chapter renders all five E1 cards together.
+  // 209c1a51: the Frontier chapter renders all five E1 cards together.
   await expect(page.getByTestId('contract-card-list').locator('[data-contract-id]')).toHaveCount(5);
   await openBaronBoardPage(page);
   await expect(page.getByTestId('contract-card-e1-baron')).toHaveAttribute('data-contract-locked', 'true');
   await expect(page.getByTestId('contract-stakes-e1-baron')).toHaveCount(0);
   await expect(page.getByTestId('contract-launch-e1-baron')).toHaveText("Secure two claims; bank the science, then he'll come out");
 
-  // c505e3f9: Baron graduation requires completed science and two distinct secured claims.
+  // fd420471: Baron graduation requires completed science and two distinct secured claims.
   await seedStorage(page, { science: 6, securedContracts: ['the-claim', 'e1-dry-gulch'] });
   await openBoard(page);
   await openBaronBoardPage(page);
@@ -427,7 +427,7 @@ test('Baron manifest loads and taunts fire at waves 5, 12, and 18', async ({ pag
       waveCadenceMult: 1.15,
       baron: {
         wave: 20,
-        // b85eb38e: current Baron repair tuning.
+        // 57a0320c: current Baron repair tuning.
         hpScale: 240,
         speedScale: 0.75,
         scale: 4,
@@ -494,7 +494,7 @@ test('wave 20 spawns the Baron with elite stats, banner, escorts, and stable see
   expect(baron.edge).toBeTruthy();
   await expectBaronBanner(page, BARON_ARRIVAL_TITLE, undefined, baron.edge ?? null);
   await expectBaronArtLoaded(page);
-  // b85eb38e: current Baron repair tuning.
+  // 57a0320c: current Baron repair tuning.
   const expectedHp = Balance.enemy.hp * Math.pow(Balance.waves.hpScalePerWave, 20) * 240;
   const expectedSpeed = Balance.enemy.speed * Balance.waves.speedScaleCap * 0.75;
   expect(baron.maxHp).toBeCloseTo(expectedHp, 4);

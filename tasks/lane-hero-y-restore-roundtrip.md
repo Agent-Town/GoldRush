@@ -1,6 +1,6 @@
 # Task lane-hero-y-restore-roundtrip: THE HERO'S Y DOES NOT SURVIVE SUSPEND/RESTORE AT A MEGAPROJECT SITE (LANE-A, commit prefix "fix:")
 
-**FIRE-AUTHORED (attended review welcome) — s1095, 2026-07-27. This defect was invisible for nine days: its spec could not collect until rf-33 (`e3db39ae`) landed one hour ago. It is the first bug the restored suite caught.**
+**FIRE-AUTHORED (attended review welcome) — s1095, 2026-07-27. This defect was invisible for nine days: its spec could not collect until rf-33 (`1ff2257e`) landed one hour ago. It is the first bug the restored suite caught.**
 
 **♻️ RE-AUTHORED s1606, 2026-08-09 — BANKED THIRTEEN DAYS, STALE-CHECKED BEFORE RE-DISPATCH, NOT BLIND-QUEUED (§2E / Mistake #8, the 824k Flail).** The owner greenlit `rf-34` in the 2026-08-09 desk sweep (leaf `rf-34-hero-y-restore-roundtrip` → `planned`, no `blockClass`). Three things were then measured on today's main rather than assumed: **(1) the defect is ALIVE** — the named test still fails with floats byte-identical to July's (see PRE-FLIGHT step 3); **(2) every source coordinate this master cites had rotted** and all six are re-based below; **(3) the pre-flight was pointed at the wrong branch** (`lane/m3`, while `worktrees/lane-a` is on `lane/a`) and lacked the F-1407-1 churn clause — both were live reds in `test:ledger-guards`, and F-1605-1 ruled that they close **inside** this re-authoring and never by editing the pre-flight alone, precisely so a 13-day-stale master could not be laundered into looking queueable. **The diagnosis, scope, firewall and gates below are s1095's and are UNCHANGED — the narrowing was re-read against today's `restoreHero` and still holds.**
 
@@ -9,7 +9,7 @@ CODEX: model=gpt-5.6-sol effort=high
 
 > ⚠️ The `CODEX:` line above is at **column 0 on its own line** deliberately (F-1088-4). `scripts/lane-runner-v3.sh` greps `^CODEX:`, so an inline copy is silently ignored and the run falls back to `effort=medium`.
 
-## WHY (the evidence chain, dated — every number below was measured by s1095 on the merged tree at `e3db39ae`)
+## WHY (the evidence chain, dated — every number below was measured by s1095 on the merged tree at `1ff2257e`)
 
 rf-33 restored whole-suite collection (`npx playwright test --list`: **0 tests → 2378 tests in 330 files**). Its standing warning was that the three recovered specs had not *run* in nine days and might be rotted, and that any red was **a finding to attribute, never something to fix by editing `e2e/`**. Three reds appeared. Two are accounted for. **This one is a real bug.**
 

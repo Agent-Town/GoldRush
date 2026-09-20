@@ -1,9 +1,9 @@
 # f1508-1 — E1_CONTRACTS stale broadcast
 
 **Slice:** `lane-f1508-1-e1-contracts-stale-broadcast.md`
-**Branch:** `lane/a` · **tip** `daf19a203` · real content `6c95062ee` · **base** `244e13448`
+**Branch:** `lane/a` · **tip** `daf19a203` · real content `6c95062ee` · **base** `557a78c70`
 **Drained by:** s1509 fire, 2026-08-07
-**Gate worktree:** `gate-s1509` (detached at `e7f9199d6`, §3.0b custody — the lane content never entered main's working tree until the verdict was MERGE)
+**Gate worktree:** `gate-s1509` (detached at `86e49e5d8`, §3.0b custody — the lane content never entered main's working tree until the verdict was MERGE)
 
 ## Verdict
 
@@ -13,7 +13,7 @@
 
 `e2e/072-era-activation.spec.ts:23` pasted a five-id literal `E1_CONTRACTS`. The
 epoch-1 manifest legitimately grew a sixth contract (`e1-drill-yard`) on 2026-08-01 at
-`f0bf5251b`, three days after the red-inventory snapshot (2026-07-29) that recorded this
+`f86b28b34`, three days after the red-inventory snapshot (2026-07-29) that recorded this
 spec CLEAN. The literal therefore went stale and `:226` reddened on main — the
 "broadcast an expected value your merge changes" class, not a regression. This slice
 replaces the literal with `loadEpoch(FRONTIER).contracts.map(({ id }) => id)`, so the
@@ -30,8 +30,8 @@ expectation tracks the manifest. Two lines, one file.
 | Console/page errors | zero; only the known `render_demotion` warns for `e1-drill-yard` |
 | Determinism artifact | `absentKeyHash === explicitE1Hash === ef44d2c0…` — **independently reproduced the lane's value** on a clean tree |
 
-Merge classification: base `244e13448`; main moved **zero** of the lane's paths since
-that base (`git log 244e13448..main -- e2e/072-era-activation.spec.ts` empty), so
+Merge classification: base `557a78c70`; main moved **zero** of the lane's paths since
+that base (`git log 557a78c70..main -- e2e/072-era-activation.spec.ts` empty), so
 `e2e/072-era-activation.spec.ts` is LANE-TOUCHED / MAIN-UNMOVED — a clean apply, no graft.
 Merged path-scoped: the spec plus `artifacts/072-era-activation/preflip-determinism.json`.
 The lane's two PNG deltas were **not** merged (F-1330-3 evidence churn).

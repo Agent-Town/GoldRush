@@ -8,8 +8,8 @@ re-establish it or re-classify the red with a named cause."*
 
 ## Arrangement (held constant unless named)
 
-- Tree: detached worktree `gate-s1491` at **`720035960`** (current main; contains the halo-cure
-  merge `ed6dafbd8`). Main's own tree was never used — §3.0b custody + Mistake #12 attribution.
+- Tree: detached worktree `gate-s1491` at **`2895ab088`** (current main; contains the halo-cure
+  merge `b039739e1`). Main's own tree was never used — §3.0b custody + Mistake #12 attribution.
 - Server: external `vite --port 5234 --strictPort` (5188 deliberately avoided: `lane-a` was
   **BUSY** the whole session and holds 5188 under `strictPort`).
 - `--workers=1` on every run (§3.1, F-1270-1).

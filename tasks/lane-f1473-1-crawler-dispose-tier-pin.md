@@ -2,7 +2,7 @@ CODEX: model=gpt-5.6-sol effort=xhigh
 
 # lane-f1473-1-crawler-dispose-tier-pin — pin the post-death Crawler 3D state on the lite and failed tiers (closes F-1473-1)
 
-**FIRE-AUTHORED s1475 (attended review welcome).** TEST-ONLY corrective. It closes the GATE written into F-1473-1 by the s1473 drain of `e3-crawler-socket` (merged `a172eed0`, review `reviews/e3-crawler-socket.md`).
+**FIRE-AUTHORED s1475 (attended review welcome).** TEST-ONLY corrective. It closes the GATE written into F-1473-1 by the s1473 drain of `e3-crawler-socket` (merged `682f632f`, review `reviews/e3-crawler-socket.md`).
 
 🚫 **THIS SLICE CHANGES NO PRODUCTION CODE.** You are pinning behaviour that already shipped, not revising it. `src/systems/CrawlerBossSystem.ts` is on the NO list. If you finish and believe the *behaviour* is wrong, say so in your report — do not fix it here.
 

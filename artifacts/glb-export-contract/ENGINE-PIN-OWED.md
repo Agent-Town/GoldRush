@@ -3,7 +3,7 @@
 `assets/engine-era.json` is **outside this task's firewall** (TOUCH ONLY names
 `scripts/reexport-pilot.sh`, the sidecars, `scripts/glb-contract-guard.*`, `package.json`,
 `docs/3d/PIPELINE.md`, `artifacts/glb-export-contract/**`, `tasks/BACKLOG.md`). The re-pin is the
-drain's act here, exactly as `30bab24b2` did for the asset-diet drain the same day.
+drain's act here, exactly as `ee95cc88a` did for the asset-diet drain the same day.
 
 ## The coupling
 

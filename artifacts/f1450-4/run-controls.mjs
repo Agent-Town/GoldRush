@@ -3,12 +3,12 @@
  * run-controls.mjs — F-1450-4 control battery.
  *
  * QUESTION (F-1450-4): the Baron banner's shipped sprite measured partial=1845 when
- * extracted 2026-07-08 (a1b3f4b0) and partial=121 when re-extracted 2026-08-04
- * (eea41d6e). s1450 credited the delta to "accumulated extractor drift across many
+ * extracted 2026-07-08 (778cb197) and partial=121 when re-extracted 2026-08-04
+ * (77a22fc5). s1450 credited the delta to "accumulated extractor drift across many
  * revisions" and asked for a same-extractor control with `bleedEdges` stubbed.
  *
  * MEASURED FIRST (git, before any arm ran): exactly ONE extractor revision landed
- * between the two extractions — c29040e7, which is a PURE ADDITION of bleedEdges.
+ * between the two extractions — d2e69801, which is a PURE ADDITION of bleedEdges.
  * So "many revisions" is false and the code is alpha-identical across the gap.
  * These arms test that by execution rather than by reading.
  *
@@ -43,7 +43,7 @@ dir(path.join(WORK, 'variants'));
 
 // ---- shipped blobs, straight out of the object database -------------------
 fs.writeFileSync(path.join(WORK, 'blobs/shipped-OLD-a1b3f4b0.png'),
-  git('show', 'a1b3f4b0:assets/processed/prop-baron-banner.png'));
+  git('show', '778cb197:assets/processed/prop-baron-banner.png'));
 fs.writeFileSync(path.join(WORK, 'blobs/shipped-NEW-head.png'),
   git('show', 'HEAD:assets/processed/prop-baron-banner.png'));
 
@@ -115,8 +115,8 @@ console.log('=== extractor run logs ===');
 for (const [k, v] of Object.entries(log)) console.log(`${k}: ${v}`);
 
 const arms = [
-  ['shipped OLD (a1b3f4b0 2026-07-08)', path.join(WORK, 'blobs/shipped-OLD-a1b3f4b0.png')],
-  ['shipped NEW (eea41d6e 2026-08-04)', path.join(WORK, 'blobs/shipped-NEW-head.png')],
+  ['shipped OLD (778cb197 2026-07-08)', path.join(WORK, 'blobs/shipped-OLD-a1b3f4b0.png')],
+  ['shipped NEW (77a22fc5 2026-08-04)', path.join(WORK, 'blobs/shipped-NEW-head.png')],
   ['A current extractor @384', path.join(WORK, 'arms/A-current/prop-baron-banner.png')],
   ['B OLD extractor @384 (pre-bleed)', path.join(WORK, 'arms/B-old-pre-bleed/prop-baron-banner.png')],
   ['C bleedEdges STUBBED @384', path.join(WORK, 'arms/C-bleed-stubbed/prop-baron-banner.png')],

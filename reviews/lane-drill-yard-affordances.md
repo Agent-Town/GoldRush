@@ -1,8 +1,8 @@
 # lane-drill-yard-affordances — the yard says what it lends, its bell what it calls, and the straw men answer every time
 
 **Slice:** `lane-drill-yard-affordances` (F-BW-8, owner mystery-slab finding)
-**Branch:** `lane/e2-arsenal` · **Lane tip:** `b73b8894` · **Base:** `00eeb60e`
-**Merged to main:** `a04ea81070f7b5bc3bcfeb5e2506b3fc5c795786` (real `git merge --no-ff`, so shipped-ness is testable by ancestry)
+**Branch:** `lane/e2-arsenal` · **Lane tip:** `3aa4d123` · **Base:** `c0f73e8a`
+**Merged to main:** `646e2d31e4379e651c4492f38c4929541da9be9d` (real `git merge --no-ff`, so shipped-ness is testable by ancestry)
 **Drained by:** s1437 fire, 2026-08-03
 **Verdict: ACCEPT — MERGED.**
 
@@ -16,9 +16,9 @@ Also landed: a parchment-crate fallback for the station props, and **dormant** p
 
 ## Merge classification
 
-**Pure LANE-TOUCHED — no graft.** `git merge-base main lane/e2-arsenal` = `00eeb60e`, which is exactly this commit's parent, so the lane held exactly one commit.
+**Pure LANE-TOUCHED — no graft.** `git merge-base main lane/e2-arsenal` = `c0f73e8a`, which is exactly this commit's parent, so the lane held exactly one commit.
 
-`git diff --name-only ea046813 main -- src e2e` reports `e2e/run-suspend.spec.ts` + `src/game/RunSuspend.ts` as also-moved-on-main, which reads like BOTH-MOVED. It is not a collision: that is **main absorbing this lane's own merged predecessor** (`00eeb60e` → merged at `08e317d7` by s1436). The merge itself brought neither file. `BOTH-MOVED is a triage bucket, not a loss verdict` (F-1081-9) — asked and answered rather than assumed.
+`git diff --name-only 3fdc21ab main -- src e2e` reports `e2e/run-suspend.spec.ts` + `src/game/RunSuspend.ts` as also-moved-on-main, which reads like BOTH-MOVED. It is not a collision: that is **main absorbing this lane's own merged predecessor** (`c0f73e8a` → merged at `c363e90f` by s1436). The merge itself brought neither file. `BOTH-MOVED is a triage bucket, not a loss verdict` (F-1081-9) — asked and answered rather than assumed.
 
 Merge produced **zero conflicts**.
 
@@ -67,11 +67,11 @@ These sit in the suite this slice edits, so they were not waved through on the i
 | `run-suspend` isolation | **clean-main control** | red — but a **different test** (`pause overlay explains the ledger`), and wave-boundary **green** |
 | casualty alone | merged | **GREEN 2/2 both projects** |
 
-The control was taken by reverting the four code paths to `1bc134a8` inside the same worktree, same server, same port; `git diff --name-only 1bc134a8 -- src e2e` returned **empty**, proving the control tree was main-equivalent over the run surface.
+The control was taken by reverting the four code paths to `f057f6a6` inside the same worktree, same server, same port; `git diff --name-only f057f6a6 -- src e2e` returned **empty**, proving the control tree was main-equivalent over the run surface.
 
 Four runs, **three different casualty sets, on two trees, from one byte-identical suite** — `run-suspend.spec.ts` is not touched by this merge. That is the F-1180-2 signature verbatim (*"a real defect does not move between suites; a load ceiling does"*), and the inventory's own prescription is met: *"a casualty that is green in isolation is a known red, not a regression — say so with the isolated re-run as evidence."*
 
-The failure mode is named too: the received console error is `THREE.GLTFLoader: Couldn't load texture blob:` — the documented asset-load flake whose `suppressed[]` helper exists (`suite-red-inventory.md:728`, cured for `agent-view` at `babedc32`) but which `run-suspend`'s collector does not use. **That is F-1436-1's open class**, not this slice.
+The failure mode is named too: the received console error is `THREE.GLTFLoader: Couldn't load texture blob:` — the documented asset-load flake whose `suppressed[]` helper exists (`suite-red-inventory.md:728`, cured for `agent-view` at `7d92fe5a`) but which `run-suspend`'s collector does not use. **That is F-1436-1's open class**, not this slice.
 
 Causal disconnection was also checked at the code, not just statistically: `Game.ts`'s only hunk is guarded by `this.drillYard?.` (null outside the Drill Yard contract), and the three globbed PNGs **do not exist on disk**, so the eager glob resolves empty and the parchment-crate fallback runs. Neither can reach a seeded run-suspend boot.
 

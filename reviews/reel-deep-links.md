@@ -1,6 +1,6 @@
 # reel-deep-links — the landing's "watch ▷" opens THAT ride
 
-**Slice:** `reel-deep-links` (lane-b) · **branch:** `lane/b` · **lane tip:** `fe2d0c30d` · **merge:** `9f863ea06` · **base:** `a879a0d98`
+**Slice:** `reel-deep-links` (lane-b) · **branch:** `lane/b` · **lane tip:** `4b788f43e` · **merge:** `07e69bfcc` · **base:** `ccba4c91e`
 **Drained:** s2445, 2026-09-02 · **Gate worktree:** `gate-s2445` (detached, §3.0b)
 
 ## Verdict
@@ -33,7 +33,7 @@ All batteries run with `--workers=1` per F-1270-1 — a fire-shell playwright ru
 
 ## Merge classification
 
-Base `a879a0d98`; 8 paths.
+Base `ccba4c91e`; 8 paths.
 
 | Path | Class | Resolution |
 |---|---|---|
@@ -64,4 +64,4 @@ Two notes, neither actionable against this merge:
 
 ## Player-visible
 
-**Yes** — this is the landing page's most-clicked promise. GZ-01 item filed in `marketing/outbox/gazette-queue.md` against `9f863ea06`.
+**Yes** — this is the landing page's most-clicked promise. GZ-01 item filed in `marketing/outbox/gazette-queue.md` against `07e69bfcc`.

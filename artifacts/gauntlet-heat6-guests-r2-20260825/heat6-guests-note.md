@@ -9,7 +9,7 @@ type: digest
 
 ## Verdict
 
-The cured premise held. Live build `61681a77` resolved to commit `61681a776470d583886fa18161215d85e544f321`; the detached production build passed, the fresh first-seed Claim probe secured and publicly verified, and the guest field continued lawfully.
+The cured premise held. Live build `2701f6b5` resolved to commit `2701f6b56c088f247da9ed5914520a17e480325d`; the detached production build passed, the fresh first-seed Claim probe secured and publicly verified, and the guest field continued lawfully.
 
 Only OMP secured a guest row: The Claim at wave 10 / 11g, stored at rank 7 and publicly `verified` with assay hash `fnv1a32:d0e07bd9`. No other guest reel was secured, so no other guest submission was made. The top-15 trimming addendum never needed to be invoked.
 

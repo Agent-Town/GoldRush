@@ -55,7 +55,7 @@ The master made item 3 conditional on a claim it ordered the runner to re-verify
 
 ## Merge classification
 
-Base: `lane/m4` merge-base with main is `4fdbc950`, which is stale enough that the two-dot `main..lane/m4` diff shows **171 files / −32,507 lines** — almost all of it main's own later work reading backwards as deletions. **That diff is not the slice.** The three commits below the tip (`6c6ecd57` bench-fields, `d7edcd3b` county-standings, `c162bd1a` approach-convergence-class) are already-shipped tip-graft residue; the branch is falsely 4-ahead.
+Base: `lane/m4` merge-base with main is `058762f9`, which is stale enough that the two-dot `main..lane/m4` diff shows **171 files / −32,507 lines** — almost all of it main's own later work reading backwards as deletions. **That diff is not the slice.** The three commits below the tip (`6c6ecd57` bench-fields, `d7edcd3b` county-standings, `c162bd1a` approach-convergence-class) are already-shipped tip-graft residue; the branch is falsely 4-ahead.
 
 The slice is the tip commit `307eb766` alone, six files. Classified per file by blob identity — **for every one, the branch's parent blob is identical to main's blob**, i.e. main moved none of them:
 

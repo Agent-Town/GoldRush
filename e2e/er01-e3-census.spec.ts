@@ -48,7 +48,7 @@ for (const contract of voltage.contracts) {
         const rig = { ...Balance.sparkRig };
         restoreRig = () => Object.assign(Balance.sparkRig, rig);
         for (const seed of seeds) expect(() => new HeadlessContractSim({ contractId: contract.id, seed })).not.toThrow();
-        // re-pinned s2168 (F-2167-1/F-2168-1): ap16-1 8465f6b33 gave every admitted contract the core registry set.
+        // re-pinned s2168 (F-2167-1/F-2168-1): ap16-1 760990fda gave every admitted contract the core registry set.
         expect(mechanics.buildables.map(({ id, source }: { id: string; source: string }) => ({ id, source }))).toEqual([
           { id: 'sentry_beacon', source: 'buildables.registry' },
           { id: 'palisade', source: 'buildables.registry' },
@@ -195,7 +195,7 @@ for (const contract of voltage.contracts) {
         const { Balance } = await vite.ssrLoadModule('/src/game/Balance.ts');
         const rig = { ...Balance.sparkRig };
         restoreRig = () => Object.assign(Balance.sparkRig, rig);
-        // re-pinned s2168 (F-2167-1/F-2168-1): ap16-1 8465f6b33 gave every admitted contract the core registry set.
+        // re-pinned s2168 (F-2167-1/F-2168-1): ap16-1 760990fda gave every admitted contract the core registry set.
         expect(mechanics).toMatchObject({
           buildables: [
             { id: 'sentry_beacon', source: 'buildables.registry' },

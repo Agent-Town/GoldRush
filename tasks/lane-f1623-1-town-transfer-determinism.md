@@ -8,7 +8,7 @@ READ FIRST: `AGENTS.md`; `e2e/asset-diet.spec.ts` (the whole file — the header
 
 Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead is NORMAL — the runner auto-commits. For each ahead commit: if its content is already merged to main (verify via git log/diff), it is a SAFE DUPE → `git checkout -B lane/a main && git clean -fd` and PROCEED. STOP-and-report ONLY if an ahead commit's content is NOT on main (undrained work — resetting would DESTROY it), or the worktree holds uncommitted edits you did not make. **EVIDENCE-ARTIFACT EXCEPTION (F-1266-1): changes confined to regenerated evidence — `artifacts/**`, `reviews/shots-*`, and any `.png` — are NEVER "work" and NEVER a STOP, whether uncommitted dirt or the entire content of an ahead commit. Discard them and PROCEED, listing what you discarded.** Then `npm install --no-audit --no-fund`; `npm run build` green before touching anything. **THEN A CLEANLINESS LINE: `git -C worktrees/lane-a status --short` → must be clean, with the FACTORY-CHURN EXCEPTION — always expected, never a STOP; list them and proceed (F-1407-1): (a) `logs/**`; (b) `artifacts/**`, `reviews/shots-*` and any `.png`. What still STOPs: modified tracked `src/**`, `scripts/**`, `e2e/**`, `tasks/**`, `specs/**`, `reviews/*.md`.**
 
-CURRENCY CHECK: this task edits the file that landed in `181e1835b`. Verify the lane has it before starting — BOTH must succeed:
+CURRENCY CHECK: this task edits the file that landed in `7e2f03497`. Verify the lane has it before starting — BOTH must succeed:
 - `grep -c "export const TOWN_TRANSFER_CEILING_BYTES = 25_000_000;" e2e/asset-diet.spec.ts` must print `1`
 - `grep -c "DO NOT QUOTE A SINGLE RUN OF THIS INSTRUMENT AS A FACT" e2e/asset-diet.spec.ts` must print `1`
 

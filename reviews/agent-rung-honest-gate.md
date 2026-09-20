@@ -101,7 +101,7 @@ so the eventual cure does not silently invent a rung.
 ### F-1218-2 (carried, unchanged) — the repair rung.
 
 `specs/m4-agent-ux/README.md:14` places repair at **L2**; code declares `auto_repair` level **1**
-(`ToolSurface.ts:370`) and `m4-09:106` asserts 1. Shipped `3c851cd3`. Still an open owner ruling; the
+(`ToolSurface.ts:370`) and `m4-09:106` asserts 1. Shipped `6dae6d95`. Still an open owner ruling; the
 runner correctly carried it as **DISPUTED** and moved nothing. **Note it is the same class as F-1219-1** —
 one ruling on "is the ladder spec canon?" resolves both rows at once.
 

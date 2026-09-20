@@ -1,15 +1,15 @@
 # Task lane-deepwater-wave-counter: make the Deepwater HUD count the waves the player is actually fighting (LANE-B, commit prefix "fix:")
 
-**FIRE-AUTHORED (attended review welcome)** — s1025, 2026-07-25, promoted from `tasks/DRAFT-deepwater-hud-corsair-counter.md` (which the rig-repair runner filed) now that its evidence merged at `4d04e3b8`.
+**FIRE-AUTHORED (attended review welcome)** — s1025, 2026-07-25, promoted from `tasks/DRAFT-deepwater-hud-corsair-counter.md` (which the rig-repair runner filed) now that its evidence merged at `8229d6e0`.
 
 You are Codex, implementer for Gold Rush, running natively on Robin's Mac in `worktrees/lane-b`.
 
 READ FIRST: `AGENTS.md`; `reviews/saga-rehearsal-2026-07-25.md` (§Gates passed → the `F-REH-05` row, and §F-REH debt disposition); `tasks/DRAFT-deepwater-hud-corsair-counter.md`; `reviews/rig-repair.md` (F-1025-3); `src/world/DeepwaterClaimTile.ts`; `src/systems/UiBridge.ts`; `src/ui/Hud.ts`; `e2e/e5-deepwater-claim.spec.ts`.
 
 Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead is NORMAL — the runner auto-commits. For each ahead commit: if its content is already merged to main (verify via git log/diff), it is a SAFE DUPE → `git checkout -B lane/m4 main && git clean -fd` and PROCEED. STOP-and-report ONLY if an ahead commit's content is NOT on main (undrained work — resetting would DESTROY it), or the worktree holds uncommitted edits you did not make. Then `npm install --no-audit --no-fund`; `npm run build` green before touching anything.
-> Known state at authoring time: `lane/m4` sits 1 ahead at `1244914b runner(lane-b): lane-rig-repair.md`. That content was squash-merged to main as `4d04e3b8` — it IS a SAFE DUPE. Confirm it yourself (`git log --oneline main | grep -q 'HONEST SAGA REHEARSAL'` and file-probe `rehearsal/segments/e6-03-board-chapters-proof.mjs` on main) before resetting; if that probe fails, STOP and report.
+> Known state at authoring time: `lane/m4` sits 1 ahead at `1244914b runner(lane-b): lane-rig-repair.md`. That content was squash-merged to main as `8229d6e0` — it IS a SAFE DUPE. Confirm it yourself (`git log --oneline main | grep -q 'HONEST SAGA REHEARSAL'` and file-probe `rehearsal/segments/e6-03-board-chapters-proof.mjs` on main) before resetting; if that probe fails, STOP and report.
 
-## Why (evidence: `reviews/saga-rehearsal-2026-07-25.md`, dated 2026-07-25, merged `4d04e3b8`)
+## Why (evidence: `reviews/saga-rehearsal-2026-07-25.md`, dated 2026-07-25, merged `8229d6e0`)
 
 The repaired rehearsal rig ran a 40-simulated-minute Deepwater probe with a moving, damageable hero. Verbatim from the review's gates table:
 

@@ -396,7 +396,7 @@ test('the first town fetches no hero claim animation', async ({ page }, testInfo
 // F-BUDGET-3 (2026-09-06) — NOTHING OUTSIDE THE FIRST TOWN IS FETCHED BEFORE THE FIRST TOWN IS
 // PLAYABLE. In the `town` scene the advance stream's priority-1 target is a CONTRACT, so the
 // stream used to pull `the-claim-terrain.glb` + `the-claim-panorama.glb` (1,052,408 B, measured on
-// the built e1 bundle at main e5f3ac820) while the town the player had just entered was still
+// the built e1 bundle at main 37c8beda6) while the town the player had just entered was still
 // raising. AdvanceStream.ts now re-schedules a contract target while the scene's own loader
 // publishes `assetLoadingState=loading`. This asserts the ORDER, which is what the cure changes:
 // every prefetch issued while the town was raising is a TOWN asset, and a contract is warmed only
@@ -679,7 +679,7 @@ test('town byte budget reports normal and saveData arms by URL', async ({ browse
     `| normal | ${normalCueWindowBytes} | ${normalCueStats.uniqueBytes} | ${normalCueStats.duplicateBytes} |`,
     `| saveData | ${saveDataCueWindowBytes} | ${saveDataCueStats.uniqueBytes} | ${saveDataCueStats.duplicateBytes} |`,
     '',
-    'Desktop normal measured 24,604,025 bytes at f1621-1 (`75632a7e3`), 26,115,186 in the f1625-1 runner, and 23,259,297 at the f1625-1 drain: a 12.3% swing across the 25,000,000 ceiling.',
+    'Desktop normal measured 24,604,025 bytes at f1621-1 (`fb1bdf72d`), 26,115,186 in the f1625-1 runner, and 23,259,297 at the f1625-1 drain: a 12.3% swing across the 25,000,000 ceiling.',
     '',
     `Cue-window delta (normal - saveData): **${normalCueWindowBytes - saveDataCueWindowBytes} bytes**.`,
     '',

@@ -1,7 +1,7 @@
 # vp-02b-jumper-slot-red — LAWFUL STOP (no merge), s1144
 
 **Slice:** `lane-vp-02b-jumper-slot-red` · **Lane:** lane-b (`lane/m4`) · **Runner:** run `20260727-234321-lane-b-lane-vp-02b-jumper-slot-red.md.log`
-**Tip:** repo clean at `66c5890b`; `main..lane/m4` **empty** — zero diff, nothing to merge.
+**Tip:** repo clean at `341e3492`; `main..lane/m4` **empty** — zero diff, nothing to merge.
 
 ## Verdict
 
@@ -18,9 +18,9 @@
 - `src/entities/pools.ts:337` and `:355` construct the enemy `SpriteAnimator`s with `assetSlots.charBanditBase` / `assetSlots.charBanditThief`. The *batch names* still read `GeneratedClaimJumperThiefSprites` — a vestige that makes the rename easy to miss on a skim.
 - `spriteAnimationDiagnostics()` (`src/assets/SpriteAnimator.ts:208`) returns `animationDiagnostics`, populated per constructed animator ⇒ **`char.claim_jumper` can never be a key.** No spawn surface could have satisfied the wait; the master's scope-1 hypothesis (`spawnThief`) was unfalsifiable-by-construction.
 - `char.claim_jumper` now survives only as an asset URL (`src/assets/generated.ts:8`), placeholder tags (`src/entities/Enemy.ts:264`, `src/entities/pools.ts:1150/1196/1209`), an encyclopedia entry (`src/encyclopedia/registry.ts:199/201`) and a contract slot.
-- **Root cause: `82543f27` (2026-07-12T21:32, `runner(lane-d): wire-e1-bandit-variants.md`).** `git log -G"charBanditBase" -- src/entities/pools.ts` returns **exactly one** commit — this one. Its 12 touched files added `char.bandit_base`/`char.bandit_thief` to `assets/layer-contracts/characters.v2.json` and rewired `pools.ts`, **and updated zero of the seven e2e specs that name the old slot.** It added one new spec of its own.
+- **Root cause: `0f5fb77e` (2026-07-12T21:32, `runner(lane-d): wire-e1-bandit-variants.md`).** `git log -G"charBanditBase" -- src/entities/pools.ts` returns **exactly one** commit — this one. Its 12 touched files added `char.bandit_base`/`char.bandit_thief` to `assets/layer-contracts/characters.v2.json` and rewired `pools.ts`, **and updated zero of the seven e2e specs that name the old slot.** It added one new spec of its own.
 
-✓ **No gameplay or art regression — checked before saying so.** `char.bandit_base` carries `walk8: true` in `characters.v2.json` and maps to `assets/processed/char-bandit-base-sheet-walk8-*.png`, which are present on disk. The enemy got *new* art; `enemy-claim-jumper.png` is now the encyclopedia portrait only. The runtime half of `82543f27` was correct and complete. **The damage is confined to the e2e layer.**
+✓ **No gameplay or art regression — checked before saying so.** `char.bandit_base` carries `walk8: true` in `characters.v2.json` and maps to `assets/processed/char-bandit-base-sheet-walk8-*.png`, which are present on disk. The enemy got *new* art; `enemy-claim-jumper.png` is now the encyclopedia portrait only. The runtime half of `0f5fb77e` was correct and complete. **The damage is confined to the e2e layer.**
 
 ## F-1144-1 — the stranded set is SEVEN specs, and it was fingerprinted as separate "known reds" for 15 days
 
@@ -47,7 +47,7 @@ Measured this fire, `--project=desktop-chrome`, port 5188 verified free with all
 Batch run of the four unmeasured specs: **4 failed / 1 passed (1.0 m)**.
 
 - **Class A — hero walk4→walk8 staleness.** The runtime hero is **walk8** (`frameCount` 8); three specs still assert `4`, `fps ≈ 9.5`, `char-hero-sheet-walk4-`. Consistent with the standing note that the hero runtime is walk8.
-- **Class B — the `82543f27` slot rename.**
+- **Class B — the `0f5fb77e` slot rename.**
 - 🔑 **Class A fails FIRST in `066:219`, `task-042:76` and `task-031:209`, so those three never reach their jumper assertions at all.** Repairing Class B alone will not green them, and repairing Class A will *unmask* three more Class-B failures. A red at row 1 says nothing about rows 2..N.
 
 **Not fixed here, deliberately:** this STOP produced zero diff and one master per fire is the cap. The repair is authored as `lane-vp-02b-jumper-slot-repair` with the ordering above written into its scope.

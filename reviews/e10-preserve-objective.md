@@ -1,7 +1,7 @@
 # e10-preserve-objective — the Last Claim gets its preserve objective
 
 - **Slice:** `e10-preserve-objective` (lane-a)
-- **Branch/tip:** `lane/a` @ `1c57e5e68` (`runner(lane-a): e10-preserve-objective.md`)
+- **Branch/tip:** `lane/a` @ `fa26f170c` (`runner(lane-a): e10-preserve-objective.md`)
 - **Drained by:** s2459, 2026-09-02
 - **Verdict:** _(set below)_
 
@@ -42,7 +42,7 @@ red for five fires in F-1460-1's own incident.
 
 ## Merge classification
 
-Base: `main` @ `be7b5933e`. Merged `lane/a` into a detached gate worktree.
+Base: `main` @ `57890458f`. Merged `lane/a` into a detached gate worktree.
 
 | File | Class |
 |---|---|

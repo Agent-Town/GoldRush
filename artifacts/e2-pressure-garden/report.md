@@ -2,7 +2,7 @@
 
 Status: `BLOCKED: required pressure flow is not contract-data driven`
 
-Reverified 2026-07-15 against `main` at `4c7dcf05`; the prerequisite has not
+Reverified 2026-07-15 against `main` at `4c7dcf05 (archive: pruned by the A3 rewrite)`; the prerequisite has not
 landed, so this queued rerun remains blocked for the same engine reason.
 
 Lane safety now passes and the baseline is healthy:

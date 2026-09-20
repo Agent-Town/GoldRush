@@ -1,26 +1,26 @@
 gate battery transcript (append-only — see scripts/gate-battery.mjs)
 
 
-######## BATTERY 2026-08-06T22:43:13.214Z — s1510 landmark-routing proven-green endpoint probe @1761da401 ########
+######## BATTERY 2026-08-06T22:43:13.214Z — s1510 landmark-routing proven-green endpoint probe @1761da401 (archive: pruned by the A3 rewrite) ########
 cwd=/Users/robin/Claude/Projects/Gold Rush/gate-s1510
 env+ GR_CAPTURE_BASE_URL=http://127.0.0.1:5234
 
-===== landmark-collision @1761da401 =====
+===== landmark-collision @1761da401 (archive: pruned by the A3 rewrite) =====
 $ npx playwright test e2e/landmark-collision.spec.ts --reporter=line --workers=1
 rc=1 20.4s
 Error: Timed out waiting 20000ms from config.webServer.
 
 
 
-SUMMARY {"landmark-collision @1761da401":1}
+SUMMARY {"landmark-collision @1761da401 (archive: pruned by the A3 rewrite)":1}
 OVERALL rc=1
 
 
-######## BATTERY 2026-08-06T22:44:11.004Z — s1510 landmark proven-green endpoint @1761da401 ########
+######## BATTERY 2026-08-06T22:44:11.004Z — s1510 landmark proven-green endpoint @1761da401 (archive: pruned by the A3 rewrite) ########
 cwd=/Users/robin/Claude/Projects/Gold Rush/gate-s1510
 env+ GR_CAPTURE_EXTERNAL_SERVER=1 GR_CAPTURE_BASE_URL=http://127.0.0.1:5234
 
-===== landmark-collision @1761da401 =====
+===== landmark-collision @1761da401 (archive: pruned by the A3 rewrite) =====
 $ npx playwright test e2e/landmark-collision.spec.ts --reporter=line --workers=1
 rc=0 57.2s
 
@@ -47,5 +47,5 @@ Running 10 tests using 1 worker
 (Use `node --trace-warnings ...` to show where the warning was created)
 
 
-SUMMARY {"landmark-collision @1761da401":0}
+SUMMARY {"landmark-collision @1761da401 (archive: pruned by the A3 rewrite)":0}
 OVERALL rc=0

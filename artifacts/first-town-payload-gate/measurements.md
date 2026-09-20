@@ -1,6 +1,6 @@
 # first-town-payload-gate — what was measured, 2026-09-07
 
-Scratch worktree on `feat/first-town-payload-gate`, base `7c52a369` (main), Claude Opus 5 implementer,
+Scratch worktree on `feat/first-town-payload-gate`, base `e0600067` (main), Claude Opus 5 implementer,
 macOS, four implementers sharing the host. Preview port 5294 throughout; the deploy's own instrument,
 command for command (`GR_ASSET_DIET_BUNDLE=1 GR_ASSET_DIET_REUSE_BUILD=1 playwright test --config
 playwright.preview.config.ts e2e/asset-diet.spec.ts --grep "town cue-window budget through player entry$"`),

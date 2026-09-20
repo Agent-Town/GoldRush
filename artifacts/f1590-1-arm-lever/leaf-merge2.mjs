@@ -7,7 +7,7 @@ const g = JSON.parse(readFileSync(p, 'utf8'))
 let found = 0
 
 const NOTES = [
-  's1590: MERGED as evidence 1dab43b6f3af05757b015c28527b5b309f28a809.',
+  's1590: MERGED as evidence c4115d4e5c98182ea5479696110b80c4c1531455.',
   'Verdict NOT CONFIRMED, and this one is a REFUTATION rather than another absence of evidence:',
   'the trigger was ARMED and the stall still did not appear.',
   'Arm proofs verified by the drain, not inherited - arm-a-1/2/3-server.log each carry',
@@ -33,7 +33,7 @@ const walk = (n) => {
   if (n && typeof n === 'object') {
     if (n.id === 'f1590-1-dep-reoptimize-armed') {
       n.status = 'merged'
-      n.mergeHash = '1dab43b6f3af05757b015c28527b5b309f28a809'
+      n.mergeHash = 'c4115d4e5c98182ea5479696110b80c4c1531455'
       n.drainNotes = NOTES
       found++
     }

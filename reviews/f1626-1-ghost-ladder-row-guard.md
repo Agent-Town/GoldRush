@@ -1,8 +1,8 @@
 # Review — f1626-1 ghost-ladder-row-guard
 
 **Slice:** `f1626-1-ghost-ladder-row-guard` — a lead-📋 BACKLOG row naming an already-SHIPPED master must red
-**Branch:** `lane/b` · **tip** `7cfa8bb77`
-**Base:** `7d289e8e8` (main at gate time) · **Merge:** `f4022b8f8ea829a4d82b51386137441c02350444`
+**Branch:** `lane/b` · **tip** `f94055da3`
+**Base:** `ff965278c` (main at gate time) · **Merge:** `44ee9ddc8aee648126bee72b85934137e742e3a4`
 **Drained:** s1628, 2026-08-10 · gated in detached worktree `gate-s1628` per §3.0b
 
 ## VERDICT: MERGED — green on every gate, and its teeth proved by manufacturing the defect.
@@ -21,8 +21,8 @@ has shipped is an invitation to re-queue merged work — the 824k-flail shape.
 - `scripts/gate-caller-baseline.json` — two grandfather entries with stated reasons.
 - `tasks/BACKLOG.md` — retires the two live ghosts the guard found.
 
-The two real ghosts retired: row 7 `board-layout-full-picture` (shipped `87d1b052`) and row 8
-`map-beauty-dry-gulch` (shipped `c505ee7a`).
+The two real ghosts retired: row 7 `board-layout-full-picture` (shipped `2d6bd407`) and row 8
+`map-beauty-dry-gulch` (shipped `577222c6`).
 
 ## Evidence
 
@@ -66,7 +66,7 @@ rather than filed as a finding because the slice is correct and only my probe wa
 
 ## Merge classification
 
-Base `7d289e8e8`. Auto-merged clean by `ort`; no conflict resolution was required.
+Base `ff965278c`. Auto-merged clean by `ort`; no conflict resolution was required.
 
 | File | Class | Note |
 |---|---|---|

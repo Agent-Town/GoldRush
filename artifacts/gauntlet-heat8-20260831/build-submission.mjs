@@ -10,7 +10,7 @@ const entries = tape.inputLog?.entries;
 if (!Number.isInteger(duration) || duration < 0 || duration > (limits[tape.contract] ?? 18_000)) throw new Error(`invalid tape durationTicks: ${duration}`);
 if (!Array.isArray(entries) || entries.some(({ t }) => !Number.isInteger(t) || t < 0 || t >= duration)) throw new Error('invalid tape entry tick');
 if (tape.outcome?.secured !== true) throw new Error('refusing to submit an unsecured tape');
-if (tape.meta?.buildId !== '4675cfd7b' || tape.meta?.era !== 5) throw new Error(`wrong deployed build/era: ${tape.meta?.buildId}/${tape.meta?.era}`);
+if (tape.meta?.buildId !== 'c9d86db11' || tape.meta?.era !== 5) throw new Error(`wrong deployed build/era: ${tape.meta?.buildId}/${tape.meta?.era}`);
 const sha256 = (value) => createHash('sha256').update(value).digest('hex');
 const submission = {
   contractId: tape.contract,

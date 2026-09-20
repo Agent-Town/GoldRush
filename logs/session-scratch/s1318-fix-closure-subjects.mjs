@@ -9,8 +9,8 @@ const path = 'tasks/BACKLOG.md';
 let lines = readFileSync(path, 'utf8').split('\n');
 
 const fixes = [
-  { id: 'F-1316-1', from: '✅ **SHIPPED s1318 at `b1dc3306`,', to: '✅ **F-1316-1 CLOSED — SHIPPED s1318 at `b1dc3306`,' },
-  { id: 'F-1297-2', from: '✅ **SHIPPED s1318 at `ae2a60f3`,', to: '✅ **F-1297-2 CLOSED — SHIPPED s1318 at `ae2a60f3`,' },
+  { id: 'F-1316-1', from: '✅ **SHIPPED s1318 at `efa3b252`,', to: '✅ **F-1316-1 CLOSED — SHIPPED s1318 at `efa3b252`,' },
+  { id: 'F-1297-2', from: '✅ **SHIPPED s1318 at `2871c127`,', to: '✅ **F-1297-2 CLOSED — SHIPPED s1318 at `2871c127`,' },
 ];
 
 for (const { id, from, to } of fixes) {

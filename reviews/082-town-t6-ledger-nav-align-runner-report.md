@@ -1,7 +1,7 @@
 # 082 — Town T6 Claim Ledger nav alignment
 
 Branch: `lane/m3`  
-Base: `59d94c71`  
+Base: `2b6a2f32`  
 Scope: one assertion in `e2e/town-t6-surfaces.spec.ts`
 
 ## Runtime check

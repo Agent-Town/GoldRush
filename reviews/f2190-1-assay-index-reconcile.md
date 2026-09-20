@@ -1,8 +1,8 @@
 # Review — f2190-1-assay-index-reconcile (the assay index gets a clock; c4's KV-cap cure ships with it)
 
 **Slice:** `f2190-1-assay-index-reconcile` (+ its held predecessor `c4-assay-queue-index`) · **Branch:** `lane/d`
-**Tip:** `5a8b654e5 runner(lane-d): f2190-1-assay-index-reconcile.md` · **Predecessor:** `3d70625fd runner(lane-d): c4-assay-queue-index.md`
-**Base:** `ced8c2c1e` · **Main at gate:** `8d9852c3c` · **Merged at:** `9db6f52bd` · **Gated by:** s2193 fire, 2026-08-22
+**Tip:** `de785657d runner(lane-d): f2190-1-assay-index-reconcile.md` · **Predecessor:** `e1a1b81fe runner(lane-d): c4-assay-queue-index.md`
+**Base:** `c700cc824` · **Main at gate:** `e7110ee78` · **Merged at:** `8077b7ea7` · **Gated by:** s2193 fire, 2026-08-22
 **Gate site:** detached worktree `gate-s2193/` (§3.0b — undecided content never entered main's working tree or index; gated commit `35fcfea5b`, worktree removed after merge)
 
 ## VERDICT: ✅ MERGED. Both commits land together; the gate-side hold on c4 is lifted by the condition its own `blockedReason` named.
@@ -69,8 +69,8 @@ Free caps are 100 000 reads/day and 1 000 writes/day. The arithmetic reproduces 
 
 | File | Class | Notes |
 |---|---|---|
-| `functions/api/standings.ts` | **LANE-TOUCHED** | main has not moved it since `ced8c2c1e`; merged clean |
-| `scripts/test-standings.mjs` | **LANE-TOUCHED** | main has not moved it since `ced8c2c1e`; merged clean |
+| `functions/api/standings.ts` | **LANE-TOUCHED** | main has not moved it since `c700cc824`; merged clean |
+| `scripts/test-standings.mjs` | **LANE-TOUCHED** | main has not moved it since `c700cc824`; merged clean |
 | `tasks/BACKLOG.md` | **BOTH-MOVED** | conflict on row 1, hand-resolved — see below |
 
 **The BACKLOG resolution, audited per-line (F-2192-1).** Both sides had rewritten the KV-cap row. Kept: main's five drain-authored rows (`F-2190-2` desk row, the `F-2190-1` HOLD row, the `F-2189-1` row, `F-2189-5`, and main's KV-cap row) plus the lane's genuinely-new `↳ F-2190-1 corrective implemented` ladder row. Dropped: the lane's version of the KV-cap row, whose *"not safely fixable inside the single-key contract; serialize index ownership in a Durable Object … before merge"* framing s2190 explicitly refuted — the finding was right, its severity was not, and main's row is the successor that records both. Audit output: **every emitted row byte-identical to an input row, 0 fused, 0 invented, 1 deliberate supersede, 0 markers remaining.** The shipped tree was then proven equal to the gated tree (`git diff 35fcfea5b HEAD` → empty).
@@ -87,5 +87,5 @@ Recorded above in full: substituting c4's `standings.ts` under the new harness c
 
 ## Standing-order duties discharged
 
-- **GZ-01:** player-visible? The assay verdict pipeline is player-facing — a run that was raced away is never verified and never shown a verdict, so this is a real fix to something a player experiences. Item appended to `marketing/outbox/gazette-queue.md` for `9db6f52bd`.
-- **Goal Registration Law:** `c4-assay-queue-index` flipped `blocked` → `merged`, `f2190-1-assay-index-reconcile` flipped `queued` → `merged`, both carrying `9db6f52bd`, in the bookkeeping commit immediately following the merge.
+- **GZ-01:** player-visible? The assay verdict pipeline is player-facing — a run that was raced away is never verified and never shown a verdict, so this is a real fix to something a player experiences. Item appended to `marketing/outbox/gazette-queue.md` for `8077b7ea7`.
+- **Goal Registration Law:** `c4-assay-queue-index` flipped `blocked` → `merged`, `f2190-1-assay-index-reconcile` flipped `queued` → `merged`, both carrying `8077b7ea7`, in the bookkeeping commit immediately following the merge.

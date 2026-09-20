@@ -15,7 +15,7 @@ Verdict: **READY-FOR-GATES.** The repaired depth driver now survives past wave 1
 
 ## Before / after
 
-Both columns use Trail, timescale 2, the repaired `rehearsal/segments/e1-depth-play.mjs` policy, historical seeds (`nightshift`, `baron2`), fresh profiles, zero console/page errors, and the pending river-camp datum (`heroCanWadeDeep: false`) layered onto base `312fbd0a`. The river datum is measurement context only and is not part of this branch.
+Both columns use Trail, timescale 2, the repaired `rehearsal/segments/e1-depth-play.mjs` policy, historical seeds (`nightshift`, `baron2`), fresh profiles, zero console/page errors, and the pending river-camp datum (`heroCanWadeDeep: false`) layered onto base `4ec6e594`. The river datum is measurement context only and is not part of this branch.
 
 | Map | Before | After | Wave-10 HP |
 |---|---:|---:|---:|
@@ -26,7 +26,7 @@ Raw reports: `reviews/evidence-e1-ladder-tune/`.
 
 ## Combined-main check
 
-After the concurrent river-camp and Double Tap cap slices reached `main`, the same historical seeds were rerun on `68009f22` plus this tune:
+After the concurrent river-camp and Double Tap cap slices reached `main`, the same historical seeds were rerun on `25be6f3d` plus this tune:
 
 | Map | Combined outcome | Wave-10 HP |
 |---|---:|---:|
@@ -44,13 +44,13 @@ Running on base without the pending river fix reproduced F-E1-5 instead of measu
 - Pre-flight `npm run build`: PASS.
 - Final `npm run build`: PASS.
 - Baron debug-contact regression (`054-baron-epic`, desktop): PASS.
-- Focused Night Shift + Baron suites: 32/40 PASS. All 8 failures are the same four Night Shift lighting/suspend failures on desktop and mobile; the four desktop failures reproduce unchanged on clean base `312fbd0a` (same luminance values and suspend timeout), so no threshold was weakened.
+- Focused Night Shift + Baron suites: 32/40 PASS. All 8 failures are the same four Night Shift lighting/suspend failures on desktop and mobile; the four desktop failures reproduce unchanged on clean base `4ec6e594` (same luminance values and suspend timeout), so no threshold was weakened.
 
 ---
 
 # DRAIN VERDICT (s1081 fire, 2026-07-26)
 
-**Slice:** e1-ladder-tune · **branch:** `lane/e2-arsenal` · **tip:** `73aac654` · **base:** `312fbd0a` · **merged to main:** `eb7278ac063abef90f2e3f7b0bf4934295343403`
+**Slice:** e1-ladder-tune · **branch:** `lane/e2-arsenal` · **tip:** `73aac654` · **base:** `4ec6e594` · **merged to main:** `1dbd012003ae63de3f923f045da749e37235d6f4`
 
 **Verdict: MERGED.** The tune is correct, its wiring is load-bearing, and it introduces no regression. Two corrections to the report above are recorded as findings.
 
@@ -62,7 +62,7 @@ Running on base without the pending river fix reproduced F-E1-5 instead of measu
 
 ## Merge classification
 
-**Graft of the lane's own `312fbd0a..73aac654` delta only — NOT a branch merge.** Per-file:
+**Graft of the lane's own `4ec6e594..73aac654` delta only — NOT a branch merge.** Per-file:
 
 | File | Class | Handling |
 |---|---|---|
@@ -70,7 +70,7 @@ Running on base without the pending river fix reproduced F-E1-5 instead of measu
 | `src/systems/WaveSystem.ts` | LANE-TOUCHED only | 3-way apply of the lane delta (`+14/−2`). |
 | `reviews/e1-ladder-tune.md`, `reviews/evidence-e1-ladder-tune/**` (6 JSON), `reviews/shots-e1-depth/**` (24 files, 59 MB) | LANE-TOUCHED, additive | Landed verbatim from the tip. Kept on main deliberately: they exist only on a branch that refill will reset, so landing them is what keeps them reachable (RETENTION LAW). |
 
-⚠️ **A plain branch diff would have silently reverted s1077.** `git diff main 73aac654 -- src/game/Balance.ts` reads `+9/−2` and flips `doubleTapCoilMaxStacks` **3 → 6** at two literals. The lane is innocent: its own delta contains **zero** `doubleTapCoil` hits, and `git merge-base --is-ancestor d2279d32 312fbd0a` = **NO**, so the lane base simply predates `d2279d32` ("drain: e1-midgame — Double-Tap Coil capped 6->3 in both literals"). Stale base, not lane content. Traced with `-G`, not `-S` (F-1072-1).
+⚠️ **A plain branch diff would have silently reverted s1077.** `git diff main 73aac654 -- src/game/Balance.ts` reads `+9/−2` and flips `doubleTapCoilMaxStacks` **3 → 6** at two literals. The lane is innocent: its own delta contains **zero** `doubleTapCoil` hits, and `git merge-base --is-ancestor 4154da9e 4ec6e594` = **NO**, so the lane base simply predates `4154da9e` ("drain: e1-midgame — Double-Tap Coil capped 6->3 in both literals"). Stale base, not lane content. Traced with `-G`, not `-S` (F-1072-1).
 
 ## Evidence
 

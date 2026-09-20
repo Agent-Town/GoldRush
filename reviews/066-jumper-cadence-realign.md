@@ -2,8 +2,8 @@
 
 - **Slice:** `lane-b-066-jumper-cadence-realign` (F-1302-1)
 - **Branch / tip:** `lane/m4` @ `5f75bad0`
-- **Base:** `6a622e16` (merge-base with main — s1302's own authoring commit)
-- **Merged to main:** `b366421059c18b9bf936bbef8adf72cefdbe8957`
+- **Base:** `0a86951d` (merge-base with main — s1302's own authoring commit)
+- **Merged to main:** `fbc2f07a76efbf66db630f6960675aa806ac99ae`
 - **Drained by:** s1303 fire, 2026-07-31
 
 ## Verdict
@@ -87,7 +87,7 @@ and gated seven, which is how the `eight-winds-enemies` red surfaced at all.
 | `artifacts/066/*` (8 files) | LANE-TOUCHED — main has not moved them since base |
 | `STATUS.md`, `docs/bench/agent-playability-census.md`, `specs/agent-play/README.md`, `tasks/BACKLOG.md`, `logs/s1302-*.mjs` | MAIN-MOVED-ONLY — stale-base phantom deletions in the two-dot diff |
 
-`git log 6a622e16..main -- e2e/066-walk8-engine.spec.ts artifacts/066/` is **empty**, so no conflict
+`git log 0a86951d..main -- e2e/066-walk8-engine.spec.ts artifacts/066/` is **empty**, so no conflict
 was possible and no 3-way graft was needed. Merged as a path-scoped checkout of the two lane-touched
 path groups; the phantom deletions were never staged. Artifact churn from my own gate runs
 (`eight-winds-*`, `run-gait-stride`, `run-cast-scale-up`, `wire-e2-enemy-walk4`, `cast-metrology`,
@@ -106,8 +106,8 @@ southwest on their correct rows` failed during the adjacent battery with
 **This slice cannot be the cause:** the diff contains **zero `src/`**, does not touch
 `eight-winds-enemies.spec.ts`, and that spec does not import the 066 spec — it is not even collected
 in a run of it. The two census commits that landed on main immediately before this drain
-(`1078564b`, `ee1d050f`) also touched zero `src`/`e2e`, verified by `git show --stat … -- src e2e`
-returning empty. The spec has been in-tree since `29396f9c` (s1183) and appears in no ledger,
+(`8e2c9c2b`, `f31d4c70`) also touched zero `src`/`e2e`, verified by `git show --stat … -- src e2e`
+returning empty. The spec has been in-tree since `15d50fc0` (s1183) and appears in no ledger,
 `STATUS.md` or `tasks/BACKLOG.md` entry as a known red.
 
 **It is not a load flake, and I nearly recorded it as one.** Measured rather than assumed:

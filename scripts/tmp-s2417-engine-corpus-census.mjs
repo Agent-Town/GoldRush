@@ -4,7 +4,7 @@
 // re-run it; do not delete it (RETENTION LAW).
 //
 // Usage: node scripts/tmp-s2417-engine-corpus-census.mjs [<root>] [<since-rev>]
-// Default window starts at d67608bb3 — the 2026-08-25 gate probe that made engine-era
+// Default window starts at 8017afecb — the 2026-08-25 gate probe that made engine-era
 // declarations enforceable. Answers: of the commits that moved the engine IDENTITY hash,
 // what fraction touched nothing the headless replay executes?
 // NOT a gate: prints and exits 0 (2 only if it cannot read the corpus from the code).
@@ -13,7 +13,7 @@
 import { execFileSync } from 'node:child_process';
 
 const ROOT = process.argv[2] ?? process.cwd();
-const SINCE = process.argv[3] ?? 'd67608bb3'; // era-3 enforceability gate probe, 2026-08-25
+const SINCE = process.argv[3] ?? '8017afecb'; // era-3 enforceability gate probe, 2026-08-25
 const git = (...a) => execFileSync('git', ['-C', ROOT, ...a], { encoding: 'utf8', maxBuffer: 64 << 20 });
 
 // Read the corpus from the CODE, never transcribed (the list can change under us).

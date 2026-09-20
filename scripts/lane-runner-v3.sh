@@ -462,7 +462,7 @@ while true; do
             # ff46a53, ...). Scope to the surfaces art tasks legitimately write.
             # F-1154-1 (s1154): the `add` above was ALREADY correctly scoped — the leak was the
             # bare `git commit` after it, which publishes the whole STAGED INDEX regardless of
-            # what was just added. c7601082 shipped 75 files outside this pathspec, including
+            # what was just added. a5c4a942 shipped 75 files outside this pathspec, including
             # .wrangler/tmp bundles and logs/session-scratch/s1126-*, s1134-* staged DAYS earlier
             # by departed fires. Giving the commit its own pathspec makes it structurally unable
             # to publish anything this slot is not allowed to write.

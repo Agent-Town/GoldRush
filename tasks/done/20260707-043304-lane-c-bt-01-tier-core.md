@@ -1,11 +1,11 @@
 # Task: BT-01 Tier system core — upgrade the baseline trio (palisade / sluice / turret)
 
-**FIRE-AUTHORED (attended review welcome)** — s99, from `specs/building-tiers/README.md` §BT-01 (RATIFIED — "SPEC IS LAW") + the s99 integration read of the demolish (BT-00) interaction now on main. Sequenced deliberately AFTER combat-readability landed (s99 `3947d6a`) because both touch BuildSystem building visuals + palisade wear — your base (reset to main) already carries the readability work; build ON it, don't re-derive it.
+**FIRE-AUTHORED (attended review welcome)** — s99, from `specs/building-tiers/README.md` §BT-01 (RATIFIED — "SPEC IS LAW") + the s99 integration read of the demolish (BT-00) interaction now on main. Sequenced deliberately AFTER combat-readability landed (s99 `c4955a7`) because both touch BuildSystem building visuals + palisade wear — your base (reset to main) already carries the readability work; build ON it, don't re-derive it.
 
 You are Codex, implementer for Gold Rush (native Mac). READ FIRST: `AGENTS.md`; `CLAUDE.md` §5/§9; `specs/building-tiers/README.md` (Laws 1–6 + §BT-01 slice + Integration map). This is the **tier CORE** slice only — do NOT build BT-02 production semantics, BT-03 art, or BT-04 automation.
 
 ## Pre-flight (drain-gated per LANE-SAFETY)
-`lane/polish` currently sits at `a05805b` (combat-readability), which was DRAINED to main at s99 `3947d6a` — its content is fully merged (verified byte-identical), so this 1-ahead commit is a SAFE content-dupe, not undrained work. Force-reset the lane onto clean main: `git checkout -B lane/polish main && git clean -fd && npm install --no-audit --no-fund`; `npm run build` green first. STOP-and-report ONLY if you find a dirty worktree with UNCOMMITTED edits you did not make, or a lane commit whose content is NOT already on main — neither is the case as of s99.
+`lane/polish` currently sits at `a05805b` (combat-readability), which was DRAINED to main at s99 `c4955a7` — its content is fully merged (verified byte-identical), so this 1-ahead commit is a SAFE content-dupe, not undrained work. Force-reset the lane onto clean main: `git checkout -B lane/polish main && git clean -fd && npm install --no-audit --no-fund`; `npm run build` green first. STOP-and-report ONLY if you find a dirty worktree with UNCOMMITTED edits you did not make, or a lane commit whose content is NOT already on main — neither is the case as of s99.
 
 ## Goal
 Give built buildings a **tier**: the player upgrades an existing palisade / sluice / turret in place, pays gold through Economy, and the building gets meaningfully stronger AND visibly changes — **same footprint, always** (Law 1). This is the spine of the homestead loop; production/automation ride on top in BT-02/BT-04.

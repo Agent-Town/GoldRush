@@ -1,8 +1,8 @@
 # transfer-board-v2-registry-outside-engine-corpus — s2473 drain
 
 **Slice:** `tasks/transfer-board-v2-registry-outside-engine-corpus.md` (FIRE-AUTHORED s2472)
-**Branch/tip:** `lane/b` @ `4185b29bf` (built on its predecessor `a7dc8fdab`, BUILD-ON-PREDECESSOR opt-in honoured)
-**Merged:** `639933a3d149192c9f8d3dc3b18c27644d206378` (code) + `18e0a070a95379a2676fe86c7fb6196dceb3ff08` (F-2472-5 allowlist)
+**Branch/tip:** `lane/b` @ `b7a1d13a6` (built on its predecessor `19c2e9f12`, BUILD-ON-PREDECESSOR opt-in honoured)
+**Merged:** `e1753192fc561fb98a14456d7cf97eebd54d79e8` (code) + `5d9d5c5dd119a2f9baed27de7f30fc8557cd2da1` (F-2472-5 allowlist)
 **Gated in:** detached `gate-s2473` (§3.0b — undecided content never entered main's working tree)
 
 ## VERDICT: MERGED
@@ -66,7 +66,7 @@ silently orphan the guard. **Mutation proof (runner, re-read in the log):** regi
 
 ## Merge classification
 
-Base `cf8c63c04`. 15 files. Auto-merged clean except **`tasks/BACKLOG.md`** (`UU`), a pure ledger-append
+Base `d6751b1fb`. 15 files. Auto-merged clean except **`tasks/BACKLOG.md`** (`UU`), a pure ledger-append
 conflict — both sides prepended rows. Resolved as a **union verified by row count, not by a line diff**:
 main 6 rows ∪ lane 2 rows = 8, and each of the 8 asserted present in the result before the resolution was
 believed. Zero markers left.

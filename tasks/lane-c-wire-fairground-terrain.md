@@ -6,7 +6,7 @@ READ FIRST: AGENTS.md; src/world/Terrain3dClaimPilot.ts (REGISTRY — the e5-dee
 
 Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead is NORMAL — the runner auto-commits. For each ahead commit: if its content is already merged to main (verify via git log/diff), it is a SAFE DUPE → `git checkout -B lane/e2-arsenal main && git clean -fd` and PROCEED. STOP-and-report ONLY if an ahead commit's content is NOT on main (undrained work), or the worktree holds uncommitted edits you did not make. Then `npm install --no-audit --no-fund`; `npm run build` green before touching anything.
 
-GROUND-TRUTH pre-flight: the fairground contract JSONs + GLBs must exist on your base (merged 2026-07-16, e9078679 ancestry); if absent STOP "wave not on base". If REGISTRY already has `e3-fairground`, STOP and report SHIPPED.
+GROUND-TRUTH pre-flight: the fairground contract JSONs + GLBs must exist on your base (merged 2026-07-16, 96bc6284 ancestry); if absent STOP "wave not on base". If REGISTRY already has `e3-fairground`, STOP and report SHIPPED.
 
 ## Why (drain follow-up, 2026-07-16)
 The fairground sculpt merged (THE 15/15 SLATE COMPLETE) but has no registry entry — the last unwired map.

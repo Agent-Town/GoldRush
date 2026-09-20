@@ -2,7 +2,7 @@
 
 - **Slice:** `tasks/lane-gg-03b-gazette-panel-weight.md` (s1208-authored, FIRE-AUTHORED)
 - **Branch / tip:** `lane/m3` @ `a7c91fdc` (runner(lane-a), 2026-07-29 11:32→11:44)
-- **Merge-base:** `29fecc6a` · **true delta vs base: 1 file, +23** (`artifacts/gg-03b-gazette-panel-weight/report.md`)
+- **Merge-base:** `4e4acce5` · **true delta vs base: 1 file, +23** (`artifacts/gg-03b-gazette-panel-weight/report.md`)
 - **§3.0 `drain-block-check`:** ✅ CLEAR (`[gg-03-gazette-panel-swap] status="queued"`) — ran first, before classification.
 - **Verdict: MERGE the stop report. The STOP was lawful. But `PREMISE-NOT-REPRODUCED` must NOT be recorded as "F-1208-1 refuted" — pooled across three fires the treatment still fails 6/12 where the control fails 0/16.**
 
@@ -107,7 +107,7 @@ chosen after the fact). That is a second, milder weakness in the same guard.
 
 ## Merge classification
 
-Base `29fecc6a`. Single LANE-TOUCHED file, `artifacts/gg-03b-gazette-panel-weight/report.md`, pure add —
+Base `4e4acce5`. Single LANE-TOUCHED file, `artifacts/gg-03b-gazette-panel-weight/report.md`, pure add —
 grafted path-scoped with `git checkout lane/m3 -- <file>`. Every other entry in the `main..lane/m3` two-dot
 diff (the deletion of all five s1208 files, 7k lines of `goals.json`) is **stale-base phantom**: the branch
 forked at s1208's lock commit, before s1208's own handoff landed. Classified against the merge-base, never

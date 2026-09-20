@@ -287,7 +287,7 @@ SKIP — STATUS.md line-1 is a live ACTIVE lock, not a handoff.
 === desk-carryforward-guard ===
 SKIP — STATUS.md line-1 is a live ACTIVE lock, not a handoff.
   The desk is written at handoff time; test:ledger-guards gates it then.
-DROPPED 8f8bec2b  2026-08-12T19:36:59+07:00
+DROPPED c85da9bc  2026-08-12T19:36:59+07:00
   s1715 destroyed s1714's handoff line (2223 chars)
   commit: s1715: lock ACTIVE — drain outer-budget corrective
   lost  : Last updated: 2026-08-12T19:24Z s1714 handoff, lock CLEARED — ✅ **VERSION-RIGOR MERGED; ITS SMALLEST GATE-BUDGET CORRECT...
@@ -3780,9 +3780,9 @@ dist/assets/index-DsJ-Br94-diet-a9d5c9a0.js                                     
 
 
 ===== diff-selected guards =====
-$ node scripts/run-guards.mjs --changed-since bba80fd46934c13a74935e9c6aee3feab522a339
+$ node scripts/run-guards.mjs --changed-since 2f246864e3d7ef87b5ef649d3767a980a8b537de
 rc=0 486.1s
-run-guards: 4 file(s) changed since bba80fd46934c13a74935e9c6aee3feab522a339
+run-guards: 4 file(s) changed since 2f246864e3d7ef87b5ef649d3767a980a8b537de
   base gate: test:node-guards, test:power-budget, test:task-guards, test:citations, test:gate-callers
   (no path rule matched -- base gate only)
 
@@ -3796,7 +3796,7 @@ guards: 5/5 passed
 
 
 ===== diff check =====
-$ git diff --check bba80fd46934c13a74935e9c6aee3feab522a339
+$ git diff --check 2f246864e3d7ef87b5ef649d3767a980a8b537de
 rc=0 0.1s
 
 

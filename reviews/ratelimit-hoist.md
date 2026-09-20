@@ -2,7 +2,7 @@
 
 **Slice:** `tasks/lane-ratelimit-hoist.md` (rf-25) · goal leaf `rf-25-ratelimit-hoist`
 **Branch/tip:** `lane/e2-arsenal` @ `03e52f90` (`runner(lane-c): lane-ratelimit-hoist.md`)
-**Merged to main as:** `e4ec2a13f85c3bd7892f896ef083dc638fac0c5e`
+**Merged to main as:** `48d0d90b34c6404acefc5181acf40af91fd8de69`
 **Drained by:** s1087 fire, 2026-07-26
 
 ## Verdict
@@ -64,7 +64,7 @@ Gates run by s1087 on the **merged tree**, not the lane.
 | `npm run build` | **exit 0**, 14.4s |
 | `e2e/ratelimit-429-net.spec.ts` | **6/6**, desktop + mobile, 2.5s |
 | Battery: `ratelimit-429-net` + `bug-office-api` + `tl-01-run-telemetry`, `--workers=1` | **28 passed / 2 failed**, 2.0m, summary line present (F-1081-6) |
-| Pre-merge baseline off `d16000a9` (s1086) | **28 passed / 2 failed** — identical |
+| Pre-merge baseline off `5ed2e210` (s1086) | **28 passed / 2 failed** — identical |
 | `tl-01:391 › server route rate-limits bound telemetry by client IP` | **green** — live coverage of the hoisted call in `telemetry.ts` |
 
 **The 2 failures are F-1086-1, not this slice.** `tl-01-run-telemetry.spec.ts:229`
@@ -105,7 +105,7 @@ TTL is forwarded verbatim to `kv.put`; the limit boundary allows exactly N then 
 
 ## Merge classification
 
-Merge-base `3e7a2ecf` (s1086's own bookkeeping commit) — the lane branched from very fresh
+Merge-base `3e7a2ecf (archive: pruned by the A3 rewrite)` (s1086's own bookkeeping commit) — the lane branched from very fresh
 main. Main moved **only `STATUS.md`** since then (s1087's lock).
 
 | file | classification |

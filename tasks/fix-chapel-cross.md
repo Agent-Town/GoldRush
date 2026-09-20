@@ -6,7 +6,7 @@ Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead 
 
 ## WHY: owner playtest verdict 2026-07-13 verbatim: "just for the chapel the cross is floating over the building, that has to be fixed." (Same message: the other 3D houses are "great" — change NOTHING else about them.)
 
-## READ-FIRST: assets/pilots/chapel-3d/ (.blend + build script + GLB — the landed slice from town3d-04, drained ce0be549) · specs/town-3d/RECIPE.md §6 export laws · assets/processed/bld-chapel.png (the painting: where the cross sits relative to the steeple/roofline) · e2e/town-chapel-blender.spec.ts (must stay green, assertions UNCHANGED).
+## READ-FIRST: assets/pilots/chapel-3d/ (.blend + build script + GLB — the landed slice from town3d-04, drained 97a1b662) · specs/town-3d/RECIPE.md §6 export laws · assets/processed/bld-chapel.png (the painting: where the cross sits relative to the steeple/roofline) · e2e/town-chapel-blender.spec.ts (must stay green, assertions UNCHANGED).
 
 ## SCOPE:
 1. Open the chapel .blend: the cross mesh floats disconnected above the building. Anchor it to the steeple/roof apex per the painting — geometry contiguous or visually seated (base intersecting the steeple), matching the painted proportions. ONE mesh + ONE material law holds (merge the cross into the building mesh if it is currently separate).

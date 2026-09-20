@@ -1,6 +1,6 @@
 # ED-02 terrain brush v2 — implementation note
 
-**Status:** B6 implementation note for `sol/ed-02-brush-v2`, stacked on B5 `a0e49a96` by the 2026-07-11 unblock ruling.
+**Status:** B6 implementation note for `sol/ed-02-brush-v2`, stacked on B5 `73046da6` by the 2026-07-11 unblock ruling.
 
 ## Brush contract
 

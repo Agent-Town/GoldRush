@@ -3,7 +3,7 @@
 **Slice:** the two Playwright collection guards capture `--list` output with `spawnSync`, which
 silently returns TRUNCATED stdout under load while reporting `status` 0 → the node-guards battery
 had become ~36–75% red on a race that reports success.
-**Branch:** `lane/perf` · **tip** `641140f6` · **base** `98c62443` (ancestor of main, verified)
+**Branch:** `lane/perf` · **tip** `641140f6` · **base** `0de177eb` (ancestor of main, verified)
 **Merge:** grafted to main — see the drain commit for the hash.
 **Drained by:** s1205 fire, 2026-07-29.
 
@@ -61,11 +61,11 @@ message is the one the operator reads. Subject restored; `git diff lane/perf` em
 
 ## Merge classification
 
-Base `98c62443` is an ancestor of main. `git log 98c62443..main -- <the two files>` is **empty** —
+Base `0de177eb` is an ancestor of main. `git log 0de177eb..main -- <the two files>` is **empty** —
 main never moved either file — so both are **LANE-TOUCHED-ONLY** and the graft is a straight
 `git checkout lane/perf -- <paths>`. No 3-way merge, no conflict. Byte-identity vs the lane tip
 verified before gating and again after the mutation control. Nothing else on `lane/perf` (the one
-other ahead commit, `278ad24c`, was already merged as `fbefb903` — proved by the empty diff the
+other ahead commit, `278ad24c`, was already merged as `46d4931e` — proved by the empty diff the
 master itself recorded).
 
 ## Findings

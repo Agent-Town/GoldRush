@@ -1,6 +1,6 @@
 # Drain review — `rulings-county-2026-09-19`: five of the six county and factory rulings executed, the sixth corrected at source (attended drain, 2026-09-19)
 
-**Slice/branch/tip:** `fix/rulings-county-2026-09-19` @ `a29848f34` — eight commits by a Claude Opus 5 implementer on the owner's Anthropic subscription in a scratch worktree cut from main `7bec53556`; master `tasks/rulings-county-2026-09-19.md`; report `artifacts/rulings-county-2026-09-19/report.md`. **Merged as** `d3ed136e7`, null floors re-recorded, era-6 pin appended (`src/town/worldDispatches.ts` is in the engine corpus), fast-forwarded.
+**Slice/branch/tip:** `fix/rulings-county-2026-09-19` @ `a29848f34 (archive: pruned by the A3 rewrite)` — eight commits by a Claude Opus 5 implementer on the owner's Anthropic subscription in a scratch worktree cut from main `797052233`; master `tasks/rulings-county-2026-09-19.md`; report `artifacts/rulings-county-2026-09-19/report.md`. **Merged as** `8dd8c64ac`, null floors re-recorded, era-6 pin appended (`src/town/worldDispatches.ts` is in the engine corpus), fast-forwarded.
 **Owner words, verbatim (2026-09-19):** "I agree with all your recommendations on the decisions - good work".
 
 ## VERDICT: LANDED — the county's hour is a real hour with a cap of 60, the landing page derives its rotation, the public copy says five, the codex-shim gate no longer spends the owner's Codex allowance per drain, M8-5 is keyed to a secure; F-HYG-10 was a mis-transcription in the register and is corrected here, not executed

@@ -1,6 +1,6 @@
 # s1214 — F-1211-6 discriminated: the variable is CONCURRENT BROWSERS, not loadavg, and not any merge
 
-**Tree:** `main` @ `2e92339d` (src/e2e identical to `227116e8`) · **Server:** one external vite on scratch
+**Tree:** `main` @ `2e92339d (archive: pruned by the A3 rewrite)` (src/e2e identical to `8b13f34b`) · **Server:** one external vite on scratch
 port **5261**, started from this tree (`GR_CAPTURE_EXTERNAL_SERVER=1` + `GR_CAPTURE_BASE_URL`) and
 **reused by all four arms** — so the server is held constant and cannot be the variable.
 
@@ -51,7 +51,7 @@ broken: 36/36 of these executions pass whenever the window is not stretched.
 ## What this closes
 
 - **The bisect F-1211-6 asked for is unnecessary, and would have found nothing.** Only two commits
-  touched `src/` or `e2e/` after s1211's measurement (`4c72f2e7` county standings, `94dd863b` AP-06),
+  touched `src/` or `e2e/` after s1211's measurement (`ab801307` county standings, `960edc38` AP-06),
   and `git show --name-only` proves neither touches `src/town/**` or `src/news/**` — there is no
   candidate cure commit, which is consistent with "it never stopped failing; it fails only when run
   concurrently."

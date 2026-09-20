@@ -1,6 +1,6 @@
 # Sol findings — lockstep actions implementation
 
-Status: **PARKED WITH EVIDENCE** on `sol/lockstep-actions` (cut from the merged snapshot tip `4ef6bea`, because snapshot had not reached `origin/main`). Do not tail `READY-FOR-GATES` until the two owner/orchestrator rulings and the listener-backed gates below are resolved.
+Status: **PARKED WITH EVIDENCE** on `sol/lockstep-actions` (cut from the merged snapshot tip `4d303eb`, because snapshot had not reached `origin/main`). Do not tail `READY-FOR-GATES` until the two owner/orchestrator rulings and the listener-backed gates below are resolved.
 
 ## F-SOL-ACTION-001 — the late-join seal conflicts with the ratified reconnect grace
 

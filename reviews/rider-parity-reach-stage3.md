@@ -2,7 +2,7 @@
 
 ## Slice and verdict
 
-`lane-a-rider-parity-reach-stage3.md`, runner tip `7f6d4065926d8f3055db265ca114d5b602882a46` on `feat/e10s-4-door`. **PASS — merged as `85a159e2e5ef428b85d55a4c244faf24ae027f48`.**
+`lane-a-rider-parity-reach-stage3.md`, runner tip `8f4136ec77c276a2bf2c68049c01340687d047ec` on `feat/e10s-4-door`. **PASS — merged as `69af328fc7dc4f7180e1db4a6f1685629501b9a9`.**
 
 ## Behavior
 
@@ -16,7 +16,7 @@ Current receipts: `artifacts/s2551-fire/full-node.txt`, `artifacts/s2551-fire/fu
 
 ## Merge classification
 
-Base `3cf0b8f8a2c972c8b0ae1b3bcab568cf9a250a74`; neither changed path moved on main. `scripts/rider-parity-reach.test.mjs` and the runner report are LANE-ONLY. No conflict resolution. The explicit disjoint-pair exception shares the gate with the separately preserved gold test; neither edits runtime source exercised by the other. See `artifacts/s2551-fire/path-classification.json`.
+Base `25ca07af693ba8ecbd4255828653efbc7951975f`; neither changed path moved on main. `scripts/rider-parity-reach.test.mjs` and the runner report are LANE-ONLY. No conflict resolution. The explicit disjoint-pair exception shares the gate with the separately preserved gold test; neither edits runtime source exercised by the other. See `artifacts/s2551-fire/path-classification.json`.
 
 ## Findings
 

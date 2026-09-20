@@ -1,7 +1,7 @@
 {
   "wave": "F-3DC-05 pale-wagon lighting fix",
   "branch": "sol/pale-wagon-lighting-fix",
-  "baseSha": "4180433c298ff1a7105c9875f68121a5837a359d",
+  "baseSha": "1aa719a60e9de3881ea7a924dac8813c64681444",
   "target": "Keep the wagon canvas warm while preserving its ribs and timber silhouette at the gameplay camera without changing any model, material, night light, or era state.",
   "change": {
     "surface": "src/town/TownScene.ts daytime TownSun intensity",
@@ -16,8 +16,8 @@
     "e1WagonCrop": { "bounds": { "x": 535, "y": 205, "width": 90, "height": 70 }, "before": 139.778, "after": 135.868, "delta": -3.91 }
   },
   "evidence": [
-    "current-references/4180433c-main/town-e1-before.png",
-    "current-references/4180433c-main/town-e4-before.png",
+    "current-references/1aa719a6-main/town-e1-before.png",
+    "current-references/1aa719a6-main/town-e4-before.png",
     "town-e1-after.png",
     "town-e4-after.png",
     "town-e1-full-ab.png",

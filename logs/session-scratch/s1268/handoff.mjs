@@ -9,7 +9,7 @@ if (!lockLine.startsWith('Last updated: ACTIVE')) throw new Error('line-1 is not
 const h = [
   'Last updated: 2026-07-30T21:22Z s1268 handoff, lock CLEARED —',
   '**THE SWEEP s1267 PRESCRIBED RAN, AND UNDER THE CURVE WAS A CEILING NOBODY HAD LOOKED FOR: THE FIRE SHELL\'S SPAWNED CHILD PROCESSES GET ~3.5× OF A 16-CORE BOX — EIGHT CPU-BOUND CHILDREN EACH PINNED TO 54.5% OF A CORE WHILE 45% OF THE MACHINE SITS IDLE (F-1268-3). THAT IS NOT CONTENTION, AND IT PREDICTS THE WHOLE SIX-FIRE DIVERGENCE.**',
-  '🎯 **(A) WHAT LANDED.** `b97f515c` lock · **`7029e515`** the evidence, the authored master and its goal leaf (one commit, Goal Registration Law) · **`af3c3b14`** the ledger · this handoff.',
+  '🎯 **(A) WHAT LANDED.** `b1f1f515` lock · **`a0384a99`** the evidence, the authored master and its goal leaf (one commit, Goal Registration Law) · **`90d32c99`** the ledger · this handoff.',
   '**NO DRAINS — the board was dry and I verified it at the artefacts, not from the handoff:** all six queues empty (`tasks/queue/{main,lane-a,lane-b,lane-c,lane-d,art}` listed), every recent done-move already prefixed `drained-`/`stopped-`, no `tasks/CODEX-WALL`, `drain-block-check --all` = 239 leaves / 5 BLOCKED / every one an OWNER ruling, plus 16 terminal-closed.',
   '📈 **(B) THE SWEEP — A GRADED DOSE, NOT A BINARY SHELL PROPERTY (F-1268-1).** 12 runs, 3 cycles, arms **interleaved**, concurrency quoted from the reporter\'s own line every time (never the flag). **0/18 · 5/18 · 14/18 · 18/18 drift reds at 1 · 2 · 3 · 6 workers, n=72.**',
   '⭐ **The serial arm is the load control and it settles that question for good: w=1 ran at loadavg-before 2.46, 19.49 and 20.65 — an 8× spread including the two hottest moments of the fire — and read 0 reds every time.**',

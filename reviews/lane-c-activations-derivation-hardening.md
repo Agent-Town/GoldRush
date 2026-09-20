@@ -1,6 +1,6 @@
 # lane-c-activations-derivation-hardening
 
-**Slice:** lane-c-activations-derivation-hardening · **Branch:** `lane/e2-arsenal` · **Tip:** `fc5ba2b6` · **Base:** `1f9d956f`
+**Slice:** lane-c-activations-derivation-hardening · **Branch:** `lane/e2-arsenal` · **Tip:** `fc5ba2b6` · **Base:** `a64ef83f`
 **Drained:** s1151, 2026-07-28 · **Verdict:** ✅ **MERGE — every clause of the s1150 bar met, and I verified each one at source rather than reading it off the runner's report.**
 
 ## What it does
@@ -39,7 +39,7 @@ loudly at collection rather than silently skip a direction). Reasonable, declare
 | `git diff --name-status main...lane/e2-arsenal` | **exactly one file**, the intended spec |
 | `assets/layer-contracts/characters.v2.json` | **byte-unchanged** (absent from the branch diff entirely) |
 
-**Merge classification:** base `1f9d956f` (7 minutes stale at drain time). `git log 1f9d956f..main --` on both
+**Merge classification:** base `a64ef83f` (7 minutes stale at drain time). `git log a64ef83f..main --` on both
 the spec and the contract returns **empty** → **LANE-TOUCHED / MAIN-UNMOVED**, no 3-way graft needed.
 Landed by `git checkout lane/e2-arsenal -- <file>` + path-scoped add.
 

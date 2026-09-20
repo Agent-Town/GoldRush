@@ -1,7 +1,7 @@
 # Review — m4-07 Prospector Panel (lane-b, s110 drain)
 
 **Slice:** M4-07 — G-key/chip-tap ledger panel; ceiling-vs-consent split; readable stacked receipts.
-**Lane commit:** `24529c3` (lane/m4) "feat: add prospector panel consent controls".
+**Lane commit:** `1b8208e` (lane/m4) "feat: add prospector panel consent controls".
 **Merged:** onto clean main (s110 fire, after sci-ceiling), 3-way auto-resolve on `Game.ts`, `--no-commit` gated.
 **Verdict:** ✅ PASS — merged.
 

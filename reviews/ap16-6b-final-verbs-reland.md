@@ -2,7 +2,7 @@
 
 **Slice:** `lane-d-ap16-6b-final-verbs-reland`
 **Lane tip:** `9cf0bad00fd626c86fda3132d1a3696fc2e5ee66`
-**Lane base:** `effadd2a3c70ecb1978e316edcc90ca7994772bb`
+**Lane base:** `d30a23a3de0fc130c24fb87951c9f8456f38302d`
 **Detached gate candidate:** `4b17d6fd5b8d50a8791fa6b0677a7738ba78ca62`
 **Salvage ref:** `save/ap16-6b-s1697-9cf0bad0`
 

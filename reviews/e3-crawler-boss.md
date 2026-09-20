@@ -1,7 +1,7 @@
 # Review — cw-03-crawler-boss (the Rival Dynamo Crawler)
 
-**Slice/branch/tip:** cw-03-crawler-boss · lane/m3 (lane-a) · lane tip `2d05fc4c` (`runner(lane-a): cw-03-crawler-boss.md`)
-**Base:** merge-base `96411db` (stale — main advanced ~30 commits since: e3-blackout-ridge, e5-01, publish-e3-mask-tables, wire-landmark-mounts, terrain3d, etc.)
+**Slice/branch/tip:** cw-03-crawler-boss · lane/m3 (lane-a) · lane tip `25eebb07` (`runner(lane-a): cw-03-crawler-boss.md`)
+**Base:** merge-base `7f872ed` (stale — main advanced ~30 commits since: e3-blackout-ridge, e5-01, publish-e3-mask-tables, wire-landmark-mounts, terrain3d, etc.)
 **Merged to main:** s565 fire, drain commit below.
 **Verdict:** APPROVED — merged.
 

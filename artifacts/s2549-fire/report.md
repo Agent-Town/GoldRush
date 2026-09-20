@@ -32,6 +32,6 @@ Three modified gate screenshots are retained under `adjacency-shots/`, with hash
 
 ## Closing result
 
-Handoff `0135e0887dd09a83571ad980a97c186d72a7619f` was pushed to origin. The post-handoff `npm run test:ledger-guards` passed at rc 0 in 142.558 s: 1,050 Node tests, zero failures/skips/cancellations, followed by every chained command through the final foundry-kit result. Desk declaration, birth and carry-forward each printed PASS (none skipped). The final review audit found all 16 citations tracked, zero absent or disk-only. Receipts: `closing-ledger.json`, `closing-ledger.txt`, `handoff-push.txt`, `review-audit-final.txt`.
+Handoff `410ff6e3b722bc9a6be2d7ef64aeb8802b7c674d` was pushed to origin. The post-handoff `npm run test:ledger-guards` passed at rc 0 in 142.558 s: 1,050 Node tests, zero failures/skips/cancellations, followed by every chained command through the final foundry-kit result. Desk declaration, birth and carry-forward each printed PASS (none skipped). The final review audit found all 16 citations tracked, zero absent or disk-only. Receipts: `closing-ledger.json`, `closing-ledger.txt`, `handoff-push.txt`, `review-audit-final.txt`.
 
 This is a completed HOLD increment, not a green source drain: no gameplay code merged, no deployment, and no task was marked shipped. Full direct Node verification remains the next fire's concrete gate.

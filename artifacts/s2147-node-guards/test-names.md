@@ -4,7 +4,7 @@ Banked so a future fire can DIFF a count instead of guessing at one (F-2147-2).
 A tally cannot be diffed; these names can. s2146 reported 492 tests and s2147 490,
 both 0-fail — and nobody can say which two moved, because only tallies were ever kept.
 
-Commit gated: 0dde52f23 (detached worktree ctl-s2147, run ALONE, fire shell)
+Commit gated: cffed58e4 (detached worktree ctl-s2147, run ALONE, fire shell)
 Wall: 458.5s · EXIT=0 · node v26.4.0 · CLAUDE_CONFIG_DIR set · load avg ~4.0
 
 ## Tally

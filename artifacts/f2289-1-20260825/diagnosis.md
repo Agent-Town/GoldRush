@@ -26,7 +26,7 @@ npm install --no-audit --no-fund
 npm run build
 ```
 
-Result: dependency present at merge `77c85566a`; install up to date; build green.
+Result: dependency present at merge `81729ab9b`; install up to date; build green.
 
 Official replay:
 

@@ -1,6 +1,6 @@
 # Task f1625-1: give the settled and cue-window town transfers SEPARATE NAMES so the release gate stops comparing one against the other's ceiling (LANE-C, commit prefix "test:")
 
-**FIRE-AUTHORED (attended review welcome)** — s1625, from **F-1625-2** recorded at the `f1623-1` drain (`reviews/f1623-1-town-transfer-determinism.md`, merged `9e4b09c09875b50fe410b1b11cb10b3e671983ee`).
+**FIRE-AUTHORED (attended review welcome)** — s1625, from **F-1625-2** recorded at the `f1623-1` drain (`reviews/f1623-1-town-transfer-determinism.md`, merged `1ed9c093575ef8bf8d5200003b7d18bf1b9906e1`).
 
 You are Codex, implementer for Gold Rush, running natively on Robin's Mac in worktrees/lane-c.
 READ FIRST: AGENTS.md; `reviews/f1623-1-town-transfer-determinism.md` **in full** — it is the finding, the measurement and the explicit statement of what this task may NOT decide; `e2e/asset-diet.spec.ts` (the whole file, especially `startTownTransferMeter`, the cue measurement around `:226`, and the normal-arm assertions around `:399`); `scripts/deploy.sh` lines **50–92** — the release gate that consumes this spec's console line, including the `F-1489-3` comment explaining why a gate that measures nothing is not a pass.

@@ -8,7 +8,7 @@ const lines = fs.readFileSync(P, 'utf8').split('\n');
 const i = lines.findIndex((l) => l.startsWith('🟢 **F-1398-1 (s1398, MEASURED)'));
 if (i < 0) throw new Error('F-1398-1 filing row not found by its opening text');
 lines[i] =
-  '✅ **F-1398-1 CLOSED s1482 — `98690e837`, guard `scripts/claimed-spec-harness-guard.mjs`; full ruling and both arms priced at the row above (:286). Original filing retained verbatim below.** ' +
+  '✅ **F-1398-1 CLOSED s1482 — `af977e7e9`, guard `scripts/claimed-spec-harness-guard.mjs`; full ruling and both arms priced at the row above (:286). Original filing retained verbatim below.** ' +
   lines[i];
 fs.writeFileSync(P, lines.join('\n'));
 console.log('struck F-1398-1 filing row at :' + (i + 1));

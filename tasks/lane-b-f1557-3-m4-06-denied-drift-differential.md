@@ -18,7 +18,7 @@ F-1285-2 has sat open since s1285 with the gate **"re-run both arms idle"**. s15
 - batch 2: `--repeat-each=10` → **9 passed, 1 failed** (34.8 s)
 - **idle total: 14/15 pass, 1/15 fail.** The failure value was `Received: 0.4757520362541813` against `Expected: < 0.45`.
 
-Compare s1285's loaded measurement: merged tree **4/5 failed**, control on `0b87c662` **5/5 failed**.
+Compare s1285's loaded measurement: merged tree **4/5 failed**, control on `0b87c662 (archive: pruned by the A3 rewrite)` **5/5 failed**.
 
 ⇒ **The quantity STRADDLES the threshold.** Load is a strong amplifier (80% → ~7%) but is NOT the cause: the assertion is reachable on an idle machine. F-1285-2's gate offered only two outcomes — *"Green when idle ⇒ load ceiling"* or *"red ⇒ instrument finding"* — and the truth is a third the row did not anticipate.
 

@@ -15,15 +15,15 @@ const narrative =
   'Ref sweep run BEFORE accepting the dry verdict (memory law: a dry board can be an unregistered pile): **373 local refs, nothing ahead of main but `archive/*`, `save/*`, `sol/*`, `beauty2/*` and the two legacy `lane/m3`+`lane/m4`** — lanes a/b/c/d all `ahead=0` USABLE. ' +
   '⛔ **CODEX-WALL ACTIVE until 11:00 — no refills, and I did NOT run §2.0’s probe**, same reason as s1538–s1541: the wall is OWNER-WORDED with a fixed lift time, not the rolling-window kind a probe retires early. ' +
   '\u{1F464} **ATTENDED QUIET** since 04:40; the 5 dirty files (`artifacts/agent-seat/*`, 4 generated `logs/*`) are the same regeneration churn s1538–s1541 all declined to bank, and **I declined it too.** ' +
-  '✅ **F-1542-2 — s1541’s NEXT(D) DISCHARGED: F-1541-2 PRICED, THEN BUILT (`b59aad1d`).** Its GATE demanded the predicate be run over the corpus first and built only at zero false positives. ' +
+  '✅ **F-1542-2 — s1541’s NEXT(D) DISCHARGED: F-1541-2 PRICED, THEN BUILT (`0dd7a5d0`).** Its GATE demanded the predicate be run over the corpus first and built only at zero false positives. ' +
   '**25 handoff windows (s1517..s1541), 96 rows added to `tasks/BACKLOG.md`, 2 hits — `F-AH-1` and `F-BAL-1` — which are EXACTLY the two items s1541 had found BY HAND and desked. False positives: 0.** ' +
   'An independent instrument reproducing a hand count on the nose is the strongest evidence the predicate is aimed correctly. ' +
   '\u{1F52C} **I did not stop at “yes”: I measured the 2×2 the design left unstated, because a sloppy membership test hides a loose selector.** ' +
   '`loose/forgiving` 20 qualifying → 2 hits (0 FP) · `loose/STRICT` 20 → **4 hits (2 FP)** · `tight/forgiving` 15 → 2 (0 FP) · **`TIGHT/STRICT` 15 → 2 (0 FP) ← BUILT.** ' +
   'The two false positives (`F-FD3-1`, `F-ER02-11`) are rows gated on a DRAIN whose prose merely CONTAINS the word owner — so the selector matches an owner **ACT**, never the word. ' +
   '`scripts/desk-birth-guard.mjs` + 14 arms, rooted as `npm run test:desk-birth` in `test:ledger-guards` and `test:node-guards`, grandfathered with the F-1300-4 timing reason its three siblings carry. ' +
-  '\u{1F50E} **F-1542-1 — AND THE PRICING FOUND A LIVE DEFECT I WAS NOT LOOKING FOR: ONE BACKTICK BLINDED **BOTH** DESK GUARDS AT ONCE, IN OPPOSITE DIRECTIONS (`a4ba9b0e`).** ' +
-  's1529 wrote its desk as ``OWNER`S DESK — 8 awaiting a word.`` — a GRAVE ACCENT, **U+0060**, where the apostrophe goes. Replayed on the real commit (`aab5dfb3`) as a fixture, not argued: ' +
+  '\u{1F50E} **F-1542-1 — AND THE PRICING FOUND A LIVE DEFECT I WAS NOT LOOKING FOR: ONE BACKTICK BLINDED **BOTH** DESK GUARDS AT ONCE, IN OPPOSITE DIRECTIONS (`49aa6cfb`).** ' +
+  's1529 wrote its desk as ``OWNER`S DESK — 8 awaiting a word.`` — a GRAVE ACCENT, **U+0060**, where the apostrophe goes. Replayed on the real commit (`62586985`) as a fixture, not argued: ' +
   '`desk-declaration-guard` **rc=2 “line-1 is a handoff with no desk header”** (there was one, of 8 correctly-formed items) and `desk-carryforward-guard` **rc=1 “this desk: 0 items · dropped: 7”** — ' +
   '**the guard built to catch dropped items accusing a fire of dropping its entire desk.** ' +
   'ℹ **Sized honestly: both fail SAFE — nothing greened over, no owner item lost.** What was broken is the DIAGNOSIS: an investigator who believes either message never looks at the glyph. That is the false-first-blocker class. ' +

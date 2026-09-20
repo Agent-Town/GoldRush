@@ -15,7 +15,7 @@ ROLE: lane implementer. WORKDIR: this lane worktree. One task, firewalled.
 - `playwright.config.ts` — read `testDir`, `testIgnore`, `claimedByAnotherConfig`.
 
 ## WHY (drain finding F-1451-1, s1451, measured on the merged tree)
-`e2e/e1-perf-pass.spec.ts` merged into the shared default battery at `e21fa3d3`. It is correctly NOT
+`e2e/e1-perf-pass.spec.ts` merged into the shared default battery at `67b31523`. It is correctly NOT
 in `claimedByAnotherConfig`, so it now runs on every ordinary `npx playwright test`. But:
 
 ```

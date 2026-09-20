@@ -3594,9 +3594,9 @@ cwd=/private/tmp/gold-rush-gate-s1704.t6EsAf
 env+ PATH=/Users/robin/.nvm/versions/node/v26.4.0/bin:/opt/homebrew/bin:/usr/bin:/bin
 
 ===== diff-selected guards =====
-$ node scripts/run-guards.mjs --changed-since e3feac3be08f34ea1b61b7249c9fc3253eca1fc3
+$ node scripts/run-guards.mjs --changed-since 9db7988b12741fc41725b17020807ec0d0091e0b
 rc=1 617.8s
-run-guards: 27 file(s) changed since e3feac3be08f34ea1b61b7249c9fc3253eca1fc3
+run-guards: 27 file(s) changed since 9db7988b12741fc41725b17020807ec0d0091e0b
   base gate: test:node-guards, test:power-budget, test:task-guards, test:citations, test:gate-callers
   (no path rule matched -- base gate only)
 

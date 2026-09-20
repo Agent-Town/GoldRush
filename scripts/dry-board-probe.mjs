@@ -112,7 +112,7 @@ export const TERMINAL_TOKENS = new Set([
  * and the same position --
  *     shipped-09102598-20260727-133154-lane-055-standard-note-assertion...
  *     drained-s1243-15505222-20260730-051923-ret-01-run-log-recoverability...
- * -- so a naive /(\d{8})-\d{6}/ reads `09102598` as the year 0910 and drags the
+ * -- so a naive /(\d{8})-\d{6}/ reads `bdd28000` as the year 0910 and drags the
  * derived convention boundary back to prehistory. That is not hypothetical: it
  * is what this script did on its first live run, turning a 32-subject board into
  * a 562-subject one. Validate the calendar, not just the digit count.

@@ -3,7 +3,7 @@
 **FIRE-AUTHORED (attended review welcome).** Role: Codex runner, lane-a. Workdir: `worktrees/lane-a` (branch `lane/m3`).
 
 > ⛔ **DO NOT RESET THIS LANE. DO NOT `git checkout -B` IT FROM MAIN.** ⛔
-> This is **not** a fresh slice. `lane/m3` already carries your attempt-1 work at commit `d0a861a9`
+> This is **not** a fresh slice. `lane/m3` already carries your attempt-1 work at commit `9d61d6a9`
 > (`runner(lane-a): run3d-15-gold-nodes.md`) — the baked GLB, the blend, the new spec, the artifacts
 > and the registry wiring. **That work was gated and it is GOOD; it is being kept, not redone.**
 > It is **unmerged**, so the usual safe-dupe reset pre-flight would DESTROY it (Mistake #2, the Reset
@@ -12,11 +12,11 @@
 ## PRE-FLIGHT (run this exact sequence; STOP on any mismatch and report)
 
 1. `git -C worktrees/lane-a rev-parse --abbrev-ref HEAD` → must print `lane/m3`. If not, **STOP**.
-2. `git -C worktrees/lane-a log --oneline -1` → must print `d0a861a9 runner(lane-a): run3d-15-gold-nodes.md`. If the tip is anything else, **STOP and report** — do not reset, do not force anything.
+2. `git -C worktrees/lane-a log --oneline -1` → must print `9d61d6a9 runner(lane-a): run3d-15-gold-nodes.md`. If the tip is anything else, **STOP and report** — do not reset, do not force anything.
 3. `git -C worktrees/lane-a status --short` → expect clean, or only regenerated `artifacts/**` PNGs. If tracked **source** files are dirty, **STOP and report**.
 4. Confirm `src/game/Run3dPilot.ts` contains the string `if (!params.has('run3dPilot'))`. If it does not, the premise of this task is gone — **STOP and report**.
 
-**You are committing ON TOP of `d0a861a9`, on `lane/m3`. Nothing gets rebased, reset, or squashed.**
+**You are committing ON TOP of `9d61d6a9`, on `lane/m3`. Nothing gets rebased, reset, or squashed.**
 
 ## WHY (evidence, quoted)
 

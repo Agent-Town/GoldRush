@@ -10,7 +10,7 @@ Publishes the E3 (voltage era) contract **mask tables** — precomputed water/ma
 - `scripts/e3-mask-tables.test.mjs` (+71, node:test)
 
 ## ⚠ Why s564 landed this (Mistake #1/#13 — Silent Partial-Drain)
-s563's commit `516e6ef1` message reads `drain: wire-landmark-mounts ... + publish-e3-mask-tables — registry green, node tests green`, but its actual stat contained **only** the wire-landmark-mounts files + the deletion of `tasks/queue/lane-b/publish-e3-mask-tables.md`. The three mask-table deliverable files were **never staged onto main** (verified: absent from main's working tree; present only on lane/m4 tip `c405ff3d`). s563 then exited before writing a handoff (orphaned ACTIVE lock; only s564's `claude -p` alive). s564 took over the lock and completed the merge the message claimed.
+s563's commit `ba5d4243` message reads `drain: wire-landmark-mounts ... + publish-e3-mask-tables — registry green, node tests green`, but its actual stat contained **only** the wire-landmark-mounts files + the deletion of `tasks/queue/lane-b/publish-e3-mask-tables.md`. The three mask-table deliverable files were **never staged onto main** (verified: absent from main's working tree; present only on lane/m4 tip `c405ff3d`). s563 then exited before writing a handoff (orphaned ACTIVE lock; only s564's `claude -p` alive). s564 took over the lock and completed the merge the message claimed.
 
 ## Evidence
 | Gate | Result |

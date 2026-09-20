@@ -1,6 +1,6 @@
 # Review: ss-07-e6-beats — the Atomic Homestead chapter as data (lane-d, Claude Opus 5 implementer, attended drain 2026-09-05)
 
-**Slice/branch/tip:** `ss-07-e6-beats` · `lane/d` · commits `a0d2bc9db` + `8adb69d49` over `fccd17254` · merge `373638978` (no-ff; the E6 merge repaired beats.ts by hand: both chapters had appended before the same trailing export and git aligned their identical structural lines as context — base + E4 block + E6 block + one trailing export).
+**Slice/branch/tip:** `ss-07-e6-beats` · `lane/d` · commits `0b6e3f5d9` + `ffdd75aad` over `ae5332094` · merge `8788bc5f5` (no-ff; the E6 merge repaired beats.ts by hand: both chapters had appended before the same trailing export and git aligned their identical structural lines as context — base + E4 block + E6 block + one trailing export).
 **Verdict:** MERGED. E6, the lore keystone where agents begin (ADR-003), joins the human path: 12 beats loaded when the active epoch is `epoch-6-atomic`, each citing `lore/STORYBOOK.md` (lines 324–379 and ADR-003), tavern tales and Gazette headlines in the single-table shape, three `artKey`s verified on disk, the cast named inside the lines because the chapter's five new townsfolk have no processed portraits (F-SS07-2).
 
 ## Evidence

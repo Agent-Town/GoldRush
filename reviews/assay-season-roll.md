@@ -1,5 +1,5 @@
 # Review — the season roll (county board → assayed season 2; season one archived)
-**Slice/branch/tip:** `worktree-agent-a6b1bbd373315d0c0` @ `df6b0a7d1`, merged to main --no-ff (this drain). Built by a headless Opus-5 agent (owner engine directive 2026-08-20), drained attended. Implements the owner's 2026-08-15 ruling verbatim (`specs/agent-play/tape-contract.md` §SEASON ROLL).
+**Slice/branch/tip:** `worktree-agent-a6b1bbd373315d0c0` @ `206909333`, merged to main --no-ff (this drain). Built by a headless Opus-5 agent (owner engine directive 2026-08-20), drained attended. Implements the owner's 2026-08-15 ruling verbatim (`specs/agent-play/tape-contract.md` §SEASON ROLL).
 
 **Verdict: MERGED — GREEN (one environment-class battery note, below).**
 
@@ -7,7 +7,7 @@
 
 **Evidence:** four mutation proofs green in `scripts/test-standings.mjs::checkSeasonRoll` (empty current board beside the intact 17-row archive; labeled read-only archive with refused POST + byte-identical before/after; v2 POST → pending rank 1; v1 POST → stored, worker-rejected, unranked, row survives). Batteries: stats 87 · standings 57 (+26 new) · accounts 43 · tsc clean · build green · new `e2e/assay-season-roll.spec.ts` 4/4 (desktop+390px) · adjacent trio 32/32 both projects · zero console/page errors · screenshots in `artifacts/assay-season-roll/`. Honesty-guard finding honored: the chronicle's *name* seasons (`src/seasons/registry.ts`) are a WHEN-axis and deliberately not extended — the ledger season is an admission-law axis; both documented in code.
 
-**Drain-side cures in this batch:** the agent caught my uncommitted `#pillars` anchor (landed `a86d454b9`); the `law-pointer-guard` drift its merge caused (goals.json citation `standings.ts:887` → `:925`, `boardKey` gained the season param) re-based + `--update`d per the guard's own remedy — 29 pointers PASS.
+**Drain-side cures in this batch:** the agent caught my uncommitted `#pillars` anchor (landed `6e61749d5`); the `law-pointer-guard` drift its merge caused (goals.json citation `standings.ts:887` → `:925`, `boardKey` gained the season param) re-based + `--update`d per the guard's own remedy — 29 pointers PASS.
 
 **Battery on the merged tree:** 468 tests — all substantive guards pass; across three runs the only reds were load-class and each **passes solo** (`agent-reels` 1/1 in 2.9s vs 56s-killed under load; `gr-sim` replay 17/17; final run's single red is literally *"contention is advisory … and absent when alone"* while the sanctioned E6 Opus build runs on this box). Fingerprint: environment, not code — the E5 drain hit the identical class.
 

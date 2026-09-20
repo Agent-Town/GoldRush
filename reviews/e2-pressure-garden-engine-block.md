@@ -2,7 +2,7 @@
 
 **Slice:** e2-drip-02-pressure-garden (lane/e2-arsenal)  
 **Branch:** lane/e2-arsenal  
-**Tip:** 1fa33b67 runner(lane-c): 20260715-054828-e2-drip-02-pressure-garden.md  
+**Tip:** 1fa33b67 (archive: pruned by the A3 rewrite) runner(lane-c): 20260715-054828-e2-drip-02-pressure-garden.md  
 **Merge commit:** (pending)  
 **Drained by:** s562 fire, 2026-07-15
 
@@ -28,7 +28,7 @@ itself. The runner authored no contract, tile masks, board row, spec, or screens
 ## What lands on main
 
 `artifacts/e2-pressure-garden/report.md` updated with the engine block diagnosis
-(re-verification at `main` `4c7dcf05`, lane clean, build green).
+(re-verification at `main` `4c7dcf05 (archive: pruned by the A3 rewrite)`, lane clean, build green).
 
 ## Stall chain status
 

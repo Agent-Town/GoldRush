@@ -14,7 +14,7 @@ if (statusIdx < 0 || statusIdx > i + 4) throw new Error('status line not where e
 if (!L[statusIdx].includes('"queued"')) throw new Error('f1643-2 status is not "queued" — re-read before editing');
 
 const stopNote =
-  'STOPPED s1655, and this is BOOKKEEPING ON A RUN OUTCOME — it does NOT reverse the owner throttle ruling that attended executed at 19640717b, which stands. ' +
+  'STOPPED s1655, and this is BOOKKEEPING ON A RUN OUTCOME — it does NOT reverse the owner throttle ruling that attended executed at 2bc7197c6, which stands. ' +
   'The 11:42:59 dispatch ended in ~4 minutes without launching the day-scale suite: that was this master OWN STOP CONDITION firing correctly, not a failure, and it left zero diff. ' +
   'Its runner proved scripts/suite-red-inventory.mjs overwrites logs/suite-red-inventory.md without preserving the additive-only corrections section. ' +
   's1655 verified that independently (the reducer has ZERO occurrences of Corrections, readFileSync(output) or existsSync(output)) and re-measured the blast radius as TEN sections, 291 of 844 lines (34.5%), not one. ' +

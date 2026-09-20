@@ -15,11 +15,11 @@ grep -c "evidenceSummary: winning === 'TRULY-BANKED' ? 'empty set'" scripts/mast
 grep -c "const banner = /DO-NOT-QUEUE|SHIPPED|" scripts/tmp-s1046-unshipped.mjs
 ```
 
-Both must print `1`. **If either prints `0`, STOP and report "lane drifted or predecessor absent" — do NOT improvise.** The first proves f1569-1 (merge `8efbb0eac51ad961f8fc476d0b3934a7f0cc9570`) is present in this lane; the second proves the superseded instrument is present for you to read.
+Both must print `1`. **If either prints `0`, STOP and report "lane drifted or predecessor absent" — do NOT improvise.** The first proves f1569-1 (merge `924e59711cf1ee1d1f38310644ce7b6a31c7b96b`) is present in this lane; the second proves the superseded instrument is present for you to read.
 
 ## Why (F-1570-1, filed s1570 at the drain of f1569-1, measured on the merged tree)
 
-`scripts/master-shipped-classifier.mjs` shipped at `8efbb0eac` and answers shipped-ness by evidence rather than filename — a real advance. But its third verdict is the word **`TRULY-BANKED`** and its evidence column prints **`empty set`**, and both assert far more than the probe establishes.
+`scripts/master-shipped-classifier.mjs` shipped at `924e59711` and answers shipped-ness by evidence rather than filename — a real advance. But its third verdict is the word **`TRULY-BANKED`** and its evidence column prints **`empty set`**, and both assert far more than the probe establishes.
 
 The evidence model deliberately rejects, per the slice's own review, "BACKLOG banners, task prose, and source/e2e/spec content probes" as shipped evidence. **That exclusion is right for the SHIPPED verdict** — a declaration is not a merge — **and wrong in the NAME of the residual bucket**, which in truth means only "no trace in the named evidence directories".
 

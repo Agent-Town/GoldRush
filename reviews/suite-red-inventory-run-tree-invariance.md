@@ -2,7 +2,7 @@
 
 - **Slice:** `lane-d-suite-red-inventory-run-tree-invariance` (F-1198-2)
 - **Branch / tip:** `lane/perf` @ `b1d42540` (runner commit, 2026-07-29T06:34:51+07:00)
-- **Base (merge-base):** `b9e7e258`
+- **Base (merge-base):** `7df644d9`
 - **Drained by:** s1200 fire, 2026-07-29
 - **Master:** `tasks/lane-d-suite-red-inventory-run-tree-invariance.md` (FIRE-AUTHORED s1199)
 
@@ -70,7 +70,7 @@ cure has a guard that goes red when the cure is removed.
 
 ### Merge classification
 
-Base `b9e7e258`; `git diff --stat b9e7e258..main` = **`STATUS.md` + 2 `logs/session-scratch/` files only**
+Base `7df644d9`; `git diff --stat 7df644d9..main` = **`STATUS.md` + 2 `logs/session-scratch/` files only**
 ⇒ **collisions NONE**.
 
 | File | Class |
@@ -78,7 +78,7 @@ Base `b9e7e258`; `git diff --stat b9e7e258..main` = **`STATUS.md` + 2 `logs/sess
 | `scripts/suite-red-inventory.mjs` | **LANE-TOUCHED** — merged |
 | `scripts/suite-red-inventory.test.mjs` | **LANE-TOUCHED** — merged |
 | `STATUS.md` | **MAIN-MOVED-ONLY** — not copied |
-| `logs/session-scratch/s1199-handoff.mjs` | **MAIN-MOVED-ONLY** — reads as a phantom deletion in the two-dot diff; main gained it in `2af3471e` after the lane branched. **Not copied.** |
+| `logs/session-scratch/s1199-handoff.mjs` | **MAIN-MOVED-ONLY** — reads as a phantom deletion in the two-dot diff; main gained it in `0de39038` after the lane branched. **Not copied.** |
 | `logs/session-scratch/s1200-status-line1.mjs` | **MAIN-MOVED-ONLY** — same shape; main gained it in this fire's own lock commit. **Not copied.** |
 
 Firewall **exact at 2 paths**: zero `src/`, zero `e2e/`, `package.json` untouched (the guard

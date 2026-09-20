@@ -1,7 +1,7 @@
 # AP-ORDERS — Standing Orders: the plan the reflexes obey
 
 **Slice:** `lane-ap-orders.md` (attended-authored, owner greenlight 2026-07-29)
-**Branch:** `lane/m3` · **Tip:** `f44097b1` · **Base:** `a4524f9e` · **Drained:** s1212
+**Branch:** `lane/m3` · **Tip:** `f44097b1` · **Base:** `a88b9b24` · **Drained:** s1212
 **Verdict:** ✅ **MERGE — in-scope work complete and green; the runner's own NOT-READY is a FIREWALL STOP, not a defect.** Two of six verbs are inert in production, honestly and loudly; corrective queued with the firewall lifted.
 
 ## What it does
@@ -28,7 +28,7 @@ The first pass of the drain minimum ran at **default workers** and returned **5 
 
 ## Merge classification
 
-Base `a4524f9e`; `lane/m3` carried two commits, of which `8e265ee4` is the **already-merged GG-03c safe dupe** (landed as `b5be7ab3`). Only the tip's own delta was grafted.
+Base `a88b9b24`; `lane/m3` carried two commits, of which `8e265ee4` is the **already-merged GG-03c safe dupe** (landed as `15e00755`). Only the tip's own delta was grafted.
 
 | File | Class | Resolution |
 |---|---|---|
@@ -37,7 +37,7 @@ Base `a4524f9e`; `lane/m3` carried two commits, of which `8e265ee4` is the **alr
 | `src/agent/Embodiment.ts` | LANE-TOUCHED only | clean apply (+7) |
 | `src/agent/ToolSurface.ts` | LANE-TOUCHED only | clean apply (+63/−7) |
 
-`git diff a4524f9e main` on all four paths is **empty** — main never moved them. **Zero MAIN-MOVED, zero conflicts.**
+`git diff a88b9b24 main` on all four paths is **empty** — main never moved them. **Zero MAIN-MOVED, zero conflicts.**
 
 ## Findings
 

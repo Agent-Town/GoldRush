@@ -141,7 +141,7 @@ for (const contract of orbital.contracts) {
       //
       // WHAT THE MEASUREMENT FOUND, and why this is a pin rather than a change: the Eclipse ALREADY
       // rides `{ regolithRequired: 4, regolithWindowWaves: 4 }`. The engine half landed on
-      // 2026-09-06 as `e0c92bbb9` ("e8-air-wall-all-maps — the same air wall on every Orbital
+      // 2026-09-06 as `be14d1a8d` ("e8-air-wall-all-maps — the same air wall on every Orbital
       // contract, engine half", owner: "yes, same air for all space contracts"), which authored the
       // numbers on all four maps, and `E8SuitAirSystem.requiredGrounds` has read the contract's own
       // number ever since. `scripts/eclipse-winnable.test.mjs` already guards the two values

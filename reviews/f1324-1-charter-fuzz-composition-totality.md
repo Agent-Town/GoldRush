@@ -1,8 +1,8 @@
 # Review — F-1324-1: the charter fuzz rig is now TOTAL over its mutation space
 
 **Slice:** `lane-c-f1324-1-charter-fuzz-composition-totality.md` (FIRE-AUTHORED s1324)
-**Branch / tip:** `lane/e2-arsenal` @ `dafd70c3` · **Merge:** `d640dc31edcd9ec0e9aa699b965855d86caf2fa5` (main, `--no-ff`)
-**Drained by:** s1324, 2026-08-01 · **Base:** `245102b0`
+**Branch / tip:** `lane/e2-arsenal` @ `566dcb19` · **Merge:** `044380278f410fda035a3a4e290c7b7d8172dbb2` (main, `--no-ff`)
+**Drained by:** s1324, 2026-08-01 · **Base:** `9223fa70`
 
 ## VERDICT: ACCEPT
 
@@ -47,7 +47,7 @@ collected names still read mutant **6** `[e1-twin-banks]` (legal:rename), **10**
 **12** `[e1-dry-gulch]` (noop), **25** `[the-claim]` (perturb:tileParams.lanes.territoryRingBiasWaves +
 legal:rename). The cure did not move the stream.
 
-**Merge classification.** Base `245102b0`; one lane commit. The two-dot diff also lists `STATUS.md`,
+**Merge classification.** Base `9223fa70`; one lane commit. The two-dot diff also lists `STATUS.md`,
 `reviews/pc-01b-drill-yard-parity.md`, `tasks/BACKLOG.md` and `tasks/goals.json` — those are **MAIN-MOVED-ONLY**
 (this fire's own bookkeeping, landed after the lane branched), not lane content. Three-dot diff is the two e2e
 files only. No conflicts; nothing hand-resolved.

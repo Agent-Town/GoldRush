@@ -1,8 +1,8 @@
 # f1504-1-drill-yard-stale-absence — the corrective for a red the previous merge shipped on purpose
 
 - **Slice:** `lane-f1504-1-drill-yard-stale-absence.md` (authored + dispatched s1504)
-- **Branch / tip:** `lane/a` @ `7cf4c3b4d` (runner commit over Codex's `deaff8ce3`)
-- **Merge base:** `627359934` · **Merged to main:** `9559633aa136abb8c91b3293d4d1198ffc128172` (`--no-ff`, three-way)
+- **Branch / tip:** `lane/a` @ `7cf4c3b4d (archive: pruned by the A3 rewrite)` (runner commit over Codex's `81242c9ec`)
+- **Merge base:** `4401efc37` · **Merged to main:** `042fcdd4a26e1a01bd4a5b18933d5b61c9297cb3` (`--no-ff`, three-way)
 - **Drained by:** s1505 fire, 2026-08-07 — second drain of the fire
 - **§3.0 block-check:** ✅ CLEAR — a real leaf, `status:"queued"`
 
@@ -10,7 +10,7 @@
 
 ## What it does
 
-s1504 merged `f1501-1` (`abcfffb88`), which made the Drill Yard card render its own briefing. That merge
+s1504 merged `f1501-1` (`ced0fc61b`), which made the Drill Yard card render its own briefing. That merge
 **correctly** reddened `e2e/drill-yard.spec.ts:92`, which asserted the briefing had count **0** — the line
 pinned the card to its pre-AP-11 shape. `f1501-1`'s firewall forbade `e2e/**` in its own words (*"a green
 bought by editing the assertion is the one outcome this task counts as a failure"*), so the runner reported

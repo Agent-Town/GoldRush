@@ -30,7 +30,7 @@ control plus three arms, and **the control was wrong**.
 |---|-------|--------|
 | 1 | Toolchain verified live **before** trusting any red (`npx tsc --version` → 6.0.3) | ✅ — the control s1381 lacked |
 | 2 | Reproduce at lane tip `0f2544f2`, detached worktree | ❌ RED, `later era assets emitted: char-bandit-…-e4-RHTJh-…js` |
-| 3 | **CONTROL: clean main `009251c7`, identical command** | ❌ **RED — identical error, identical hash** |
+| 3 | **CONTROL: clean main `f029448c`, identical command** | ❌ **RED — identical error, identical hash** |
 | 4 | Regex match located | `-e4-` at index 33 = the `…-r2c6` **/** `e4-RHTJh` boundary |
 | 5 | Bundle name structure | **1869/1869** files are `<name>-<8-char base64url>-diet-<8hex>` |
 | 6 | Hashes containing a hyphen | **187 / 1869 (10%)** — e.g. `DS-hLfUM`, `D-L29rwl`, `Djmulw-f` |
@@ -61,7 +61,7 @@ is a **hypothesis**, not a finding.
 main, **the release suite could not start at all**. Any "release suite green" claim taken in that window
 is suspect — which is exactly what **F-1381-2** independently noticed from the other side.
 
-The fingerprint `a9d5c9a0` derives from `scripts/asset-diet.mjs`, last changed **2026-07-30 `5e129079`**.
+The fingerprint `a9d5c9a0` derives from `scripts/asset-diet.mjs`, last changed **2026-07-30 `8133dd91`**.
 That is the likely start of the window (**INFERRED — I did not bisect it**).
 
 ## Findings

@@ -1,17 +1,17 @@
 # reviews/lane-baron-truths.md — the Baron's body obeys the fort + his bar joins the book
 
 - **Slice:** lane-baron-truths (E1 Baron playtest corrective #2 — LANE-D)
-- **Branch / tip:** `lane/perf` @ `a56f0197`
-- **Merge commit:** `e847c468` (`git merge --no-ff lane/perf` onto clean main `799f95a6`)
-- **Base:** `bd27bd7f` (fresh — main moved ONLY `STATUS.md` since base → disjoint, clean merge, no 3-way)
-- **Drained by:** s759 fire (merge committed 2026-07-20 12:57 local), **review authored + gates re-confirmed by s760** (dead-fire recovery: s759 committed the merge then its `claude -p` process exited before writing this review, the gazette entry, and its handoff — `main..lane/perf` is EMPTY = fully merged and immutable; s760 finished the owed deliverables and re-ran the gate on HEAD `e847c468` to substantiate an honest evidence table).
+- **Branch / tip:** `lane/perf` @ `114259bd`
+- **Merge commit:** `c3d02e77` (`git merge --no-ff lane/perf` onto clean main `d8a3aa05`)
+- **Base:** `49fc1f02` (fresh — main moved ONLY `STATUS.md` since base → disjoint, clean merge, no 3-way)
+- **Drained by:** s759 fire (merge committed 2026-07-20 12:57 local), **review authored + gates re-confirmed by s760** (dead-fire recovery: s759 committed the merge then its `claude -p` process exited before writing this review, the gazette entry, and its handoff — `main..lane/perf` is EMPTY = fully merged and immutable; s760 finished the owed deliverables and re-ran the gate on HEAD `c3d02e77` to substantiate an honest evidence table).
 
 ## Verdict: PASS — merged (recovered).
 
 ## What it does (one paragraph)
 Closes OWNER PLAYTEST 2026-07-19 follow-ups on the Claim-Jumper Baron. (1) **The body now comes from the fort, not a compass string.** The previous slice threaded a `spawnEdge` datum so the *banner* announced the north; the owner then saw the Baron's *body* enter from the south — the announce and the physical spawn had diverged. baron-truths introduces a single source, `src/game/BaronFort.ts`: it reads the `fortified_far_bank` landmark mount's `(x,z)` from the e1-baron terrain contract and derives the edge **geometrically** — `|x|>|z| ? (x≥0?'east':'west') : (z≥0?'north':'south')`. Both the physical spawn (`WaveSystem.spawnBaron`) and the banner + boss-arrival story signal (`Game.ts`) now call `baronArrivalEdge(contract)`, so body and announcement agree **by construction** — no compass word that could flip between world-z and screen. (2) **The bar joins the book.** The Baron's bespoke 8-segment health bar (`BARON_HP_SEGMENTS`) is retired for the shared boss-bar component (`BOSS_HP_MAX_SEGMENTS`), object-anchored per the billboard law: the bar state now carries a `yaw`, and the renderer orients the bar to the Baron's `group.rotation.y` when yaw is present (camera-billboards only for the yaw-null grouped case). The canvas dataset exposes `bossBarComponent='shared'` + `bossBarAnchor='object'` for the spec. Bar height lifted +1.75→+2.45·visualScale so it clears the taller Baron model.
 
-## Evidence (re-confirmed by s760 on merged HEAD `e847c468`)
+## Evidence (re-confirmed by s760 on merged HEAD `c3d02e77`)
 | Gate | Result |
 |---|---|
 | `npx tsc --noEmit` | clean |
@@ -21,12 +21,12 @@ Closes OWNER PLAYTEST 2026-07-19 follow-ups on the Claim-Jumper Baron. (1) **The
 | adjacent `e2e/lane-baron-arrival.spec.ts:42` (boot economy, pre-existing) | contention-red in the concurrent 2-project batch (30s timeout), **GREEN isolated single-worker BOTH projects** (desktop 24.2s / mobile 23.1s — slow Baron-economy boot runs right up to the 30s cap, tips over only under concurrent load + the orphan vite :5207 / playwright.accounts pids loading the box). Fingerprint decisive: identical test, green alone, both viewports. |
 | boot probe | the slice specs boot the e1-baron contract plain across desktop 1280×800 + mobile 390×844 and assert zero console/page errors |
 | perf | no new entities; the bar swap reuses the shared boss-bar mesh (retires the bespoke Baron bar) — no draw-call/frame regression |
-| bar screenshot | `reviews/shots-bossbar/desktop-chrome-mid-fight.png` + `mobile-chrome-mid-fight.png` (committed in `e847c468`) |
+| bar screenshot | `reviews/shots-bossbar/desktop-chrome-mid-fight.png` + `mobile-chrome-mid-fight.png` (committed in `c3d02e77`) |
 
 **Fort-side derivation in one sentence (task END):** the Baron's edge is computed from the `fortified_far_bank` landmark's `(x,z)` — `|x|>|z| ? (x≥0?east:west) : (z≥0?north:south)` — via the single `baronArrivalEdge()` source that feeds BOTH the spawn and the banner, so the body and the announcement can never disagree.
 
-## Merge classification (base `bd27bd7f`)
-`git diff bd27bd7f main -- <touched files>` = disjoint (main moved only `STATUS.md` since base) → clean `--no-ff` merge, no conflicts.
+## Merge classification (base `49fc1f02`)
+`git diff 49fc1f02 main -- <touched files>` = disjoint (main moved only `STATUS.md` since base) → clean `--no-ff` merge, no conflicts.
 
 | File | Class | Note |
 |---|---|---|

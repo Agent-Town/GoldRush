@@ -1,7 +1,7 @@
 # Review — the agent door's tapes become verifiable (F-ASSAY-E2E-1/2/3 + the assay slip)
 
-**Slice:** launch-gating cure for the 2026-08-22 live probe (`artifacts/assay-e2e-20260822/`, main `a4a1b5a88`)
-**Branch:** `worktree-agent-a688e4a408c5fa62f` · **Tip:** `f21e6ba26` · **Base:** `82fb45cdc` (main was `82fb45cdc` at session start; it has since advanced to `b437d64a2` — trial merge clean, see Merge classification)
+**Slice:** launch-gating cure for the 2026-08-22 live probe (`artifacts/assay-e2e-20260822/`, main `cbc9f92a8`)
+**Branch:** `worktree-agent-a688e4a408c5fa62f` · **Tip:** `c9b944be3` · **Base:** `5ece4d6cc` (main was `5ece4d6cc` at session start; it has since advanced to `5173ea832` — trial merge clean, see Merge classification)
 **Verdict: READY TO DRAIN.** Three defects cured, a fourth surface added, one class closed by a test. Two browser-side defects pinned and deliberately NOT cured — they are named for the owner below.
 
 ## What it does
@@ -46,7 +46,7 @@ Gated on a scratch playwright config at port 5275 (5188 was held by another writ
 
 ## Merge classification
 
-Base `82fb45cdc`. Main has advanced 8 commits to `b437d64a2` (e6-picnic admission, the release-base harness, the F-ASSAY-E2E filing). **LANE-TOUCHED:** `src/sim/HeadlessContractSim.ts`, `scripts/gr-sim.mjs`, `scripts/assay-replay.mjs`, `scripts/assay-replay-agent.mjs` (new), `scripts/assay-replay.test.mjs`, `scripts/assay-worker.mjs`, `scripts/assay-worker.test.mjs`, `functions/api/standings.ts`, `scripts/test-standings.mjs`, `docs/assay-worker-runbook.md`, `specs/agent-play/tape-contract.md`, `artifacts/assay-e2e-cure/*`. **SHARED with main's advance:** `public/skill.md` only — main added `"e6-picnic"` to the door-contracts JSON block at ~:347, this slice adds prose at ~:38. `git merge-tree --write-tree HEAD main` returns a tree with no conflict. **NOT COMMITTED:** `playwright.s-assay-cure.config.ts` (matches the repo's `playwright.s*.config.ts` ignore) and the probe's own `artifacts/assay-e2e-20260822/` (already on main via `a4a1b5a88`; left untracked here so the two branches never race to add the same bytes).
+Base `5ece4d6cc`. Main has advanced 8 commits to `5173ea832` (e6-picnic admission, the release-base harness, the F-ASSAY-E2E filing). **LANE-TOUCHED:** `src/sim/HeadlessContractSim.ts`, `scripts/gr-sim.mjs`, `scripts/assay-replay.mjs`, `scripts/assay-replay-agent.mjs` (new), `scripts/assay-replay.test.mjs`, `scripts/assay-worker.mjs`, `scripts/assay-worker.test.mjs`, `functions/api/standings.ts`, `scripts/test-standings.mjs`, `docs/assay-worker-runbook.md`, `specs/agent-play/tape-contract.md`, `artifacts/assay-e2e-cure/*`. **SHARED with main's advance:** `public/skill.md` only — main added `"e6-picnic"` to the door-contracts JSON block at ~:347, this slice adds prose at ~:38. `git merge-tree --write-tree HEAD main` returns a tree with no conflict. **NOT COMMITTED:** `playwright.s-assay-cure.config.ts` (matches the repo's `playwright.s*.config.ts` ignore) and the probe's own `artifacts/assay-e2e-20260822/` (already on main via `cbc9f92a8`; left untracked here so the two branches never race to add the same bytes).
 
 ## Where does the PLAYER see this, in a plain boot?
 

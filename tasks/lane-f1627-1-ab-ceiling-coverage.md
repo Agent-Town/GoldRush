@@ -1,13 +1,13 @@
 # Task f1627-1: delete the duplicated ceiling assertion and say, at the site, which arms this test gates — WITHOUT gating the two that would flake (LANE-C, commit prefix "test:")
 
-**FIRE-AUTHORED (attended review welcome)** — s1627, from **F-1627-1** recorded at the `f1625-1` drain (`reviews/f1625-1-town-ceiling-recalibration.md`, merged `bc35fa79cd9e8509e16c8cc5a4857e60fae35447`).
+**FIRE-AUTHORED (attended review welcome)** — s1627, from **F-1627-1** recorded at the `f1625-1` drain (`reviews/f1625-1-town-ceiling-recalibration.md`, merged `eafa978e21ad67c8e3e2d3146beb21d3de74a8eb`).
 
 You are Codex, implementer for Gold Rush, running natively on Robin's Mac in worktrees/lane-c.
 
 READ FIRST: `AGENTS.md`; `reviews/f1625-1-town-ceiling-recalibration.md` **in full** — it is the finding, the three-run measurement behind it, and the explicit statement of the one fix you must NOT apply; `e2e/asset-diet.spec.ts` — the whole `town byte budget reports normal and saveData arms by URL` test, and the cue test's own ceiling assertion near `:241`.
 
 SEQUENCING: verify the f1625-1 merge is on main by **FILE PROBE, never by grepping commit messages** (Mistake #16 — a message grep matches every *announcement* of a thing, including the authoring commit that preceded the code): `git ls-files artifacts/asset-diet/town-transfer-desktop-chrome.json` must print that path; empty → **STOP and report "f1625-1 not landed"**. Then verify the subject is still what this master claims:
-`grep -c "cueTestStats.totalBytes" e2e/asset-diet.spec.ts` → **must be 3**, and `grep -c "expect(cueTestStats.totalBytes).toBeLessThan(TOWN_TRANSFER_CEILING_BYTES)" e2e/asset-diet.spec.ts` → **must be 2**. (Three lines: one artifact-table row carrying both the value and its headroom cell, plus the two duplicated assertions. `grep -c` counts *lines*, not occurrences — which is why the first number is 3 and not 4.) If either differs, the site has moved under this master; **STOP and report the drift** rather than guessing which line to delete. ⓘ Both counts were measured against `e2e/asset-diet.spec.ts` **on main at `bc35fa79c`** while this master was written, not recalled.
+`grep -c "cueTestStats.totalBytes" e2e/asset-diet.spec.ts` → **must be 3**, and `grep -c "expect(cueTestStats.totalBytes).toBeLessThan(TOWN_TRANSFER_CEILING_BYTES)" e2e/asset-diet.spec.ts` → **must be 2**. (Three lines: one artifact-table row carrying both the value and its headroom cell, plus the two duplicated assertions. `grep -c` counts *lines*, not occurrences — which is why the first number is 3 and not 4.) If either differs, the site has moved under this master; **STOP and report the drift** rather than guessing which line to delete. ⓘ Both counts were measured against `e2e/asset-diet.spec.ts` **on main at `eafa978e2`** while this master was written, not recalled.
 
 Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead is NORMAL — the runner auto-commits. For each ahead commit: if its content is already merged to main (verify via git log/diff), it is a SAFE DUPE → `git checkout -B lane/c main && git clean -fd` and PROCEED. STOP-and-report ONLY if an ahead commit's content is NOT on main (undrained work — resetting would DESTROY it), or the worktree holds uncommitted edits you did not make. **EVIDENCE-ARTIFACT EXCEPTION (F-1266-1): changes confined to regenerated evidence — `artifacts/**`, `reviews/shots-*`, and any `.png` screenshot — are NEVER "work" and NEVER a STOP, whether they sit as uncommitted dirt or as the entire content of an ahead commit. Discard them and PROCEED, listing what you discarded.** Then `npm install --no-audit --no-fund`; `npm run build` green before touching anything. **THEN A CLEANLINESS LINE: `git -C worktrees/lane-c status --short` → must be clean, with the FACTORY-CHURN EXCEPTION — always expected, never a STOP; list them and proceed (F-1407-1): (a) `logs/**`; (b) `artifacts/**`, `reviews/shots-*` and any `.png`. What still STOPs: modified tracked `src/**`, `scripts/**`, `e2e/**`, `tasks/**`, `specs/**`, `reviews/*.md`.**
 
@@ -25,7 +25,7 @@ where main had `expect(normalBytes)` and `expect(saveDataBytes)`. `cueTestStats`
 
 | A/B normal arm, desktop, cue-window bytes | run | vs 25,000,000 |
 |---|---|---|
-| 24,604,025 | `75632a7e3` (f1621-1 — last time it was gated) | under by 395,975 (1.6% headroom) |
+| 24,604,025 | `fb1bdf72d` (f1621-1 — last time it was gated) | under by 395,975 (1.6% headroom) |
 | **26,115,186** | the f1625-1 runner's own run | **OVER by 1,115,186** |
 | 23,259,297 | the f1625-1 drain's gate run, same tree | under by 1,740,703 |
 

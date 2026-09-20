@@ -2,12 +2,12 @@
 
 - **Task:** `tasks/fix-e5-dredge-queen-headless-socket.md`
 - **Done-move:** `tasks/done/20260815-201349-fix-e5-dredge-queen-headless-socket.md`
-- **Candidate:** `save/fix-e5-dredge-queen-headless-socket-s1815-admission-hold` at `4429ea26bbefedbc3b997f450cf9f5919d0cc188`
+- **Candidate:** `save/fix-e5-dredge-queen-headless-socket-s1815-admission-hold` at `3b5ff6e5c159c32e2da953bf34b6f2eef4f8eedd`
 - **Gated by:** s1815
 
 ## VERDICT: HOLD — NOT MERGED
 
-> ⚠️ **SUPERSEDED s2078 (2026-08-20) — THE HOLD IS DISCHARGED AND THE CANDIDATE LANDED.** The admission surfaces this verdict was waiting on were completed by the attended E5-admission drain: candidate `4429ea26` reached main at **`26a364bfee4907fac6f1a96449e93adabf1dce61`**, verified BY ANCESTRY (`git merge-base --is-ancestor 26a364bfee4907fac6f1a96449e93adabf1dce61 main` → rc=0, s2078), which re-admitted `e5-deepwater-claim` (`CONTRACT_ADMISSION_EXEMPTIONS` 8 → 7) and re-asserted the census/skill/floors/audit surfaces this task's firewall correctly forbade its runner from editing. Landing review: `reviews/e5-admission-completion.md`. **The HOLD verdict above is kept VERBATIM under the retention law — it was correct when written and is simply no longer current; it must not be edited or deleted.**
+> ⚠️ **SUPERSEDED s2078 (2026-08-20) — THE HOLD IS DISCHARGED AND THE CANDIDATE LANDED.** The admission surfaces this verdict was waiting on were completed by the attended E5-admission drain: candidate `3b5ff6e5` reached main at **`9dca85081fb5abdd160e91c0de19b2f75df2ab3a`**, verified BY ANCESTRY (`git merge-base --is-ancestor 9dca85081fb5abdd160e91c0de19b2f75df2ab3a main` → rc=0, s2078), which re-admitted `e5-deepwater-claim` (`CONTRACT_ADMISSION_EXEMPTIONS` 8 → 7) and re-asserted the census/skill/floors/audit surfaces this task's firewall correctly forbade its runner from editing. Landing review: `reviews/e5-admission-completion.md`. **The HOLD verdict above is kept VERBATIM under the retention law — it was correct when written and is simply no longer current; it must not be edited or deleted.**
 
 Attempt 3 closes the sim defects from F-1783-1..3. The headless Prospector uses the public Deepwater verbs to reach and defeat the Dredge Queen, the socket carries the authored escort multiplier, and the early-defeat path matches the browser. Both bench seeds secure deterministically at wave 12.
 

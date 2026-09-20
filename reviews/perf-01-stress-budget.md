@@ -1,6 +1,6 @@
 # Review: lane/perf — PERF-01 sprite stress budget diagnostics
 
-> **STATUS: MERGED (s34, 2026-07-05) — on main as `a0d2458`, cross-merged with 020/021 at `2254ff8` (post-merge smoke: tsc/build, perf-01, vp-02 mirroring+hit-pause, pip, xp-audit — all green).**
+> **STATUS: MERGED (s34, 2026-07-05) — on main as `44a94e2`, cross-merged with 020/021 at `fca88a3` (post-merge smoke: tsc/build, perf-01, vp-02 mirroring+hit-pause, pip, xp-audit — all green).**
 > All gates below ran green on the true merge candidate (main d801243 x lane 6c4d0f3, conflicts
 > resolved semantically). First land attempt aborted: the lane-runner was live-editing the main
 > tree (tasks/020/021) — integration order inverted, candidate re-lands after their per-slice
@@ -19,7 +19,7 @@
 > compensated with FULL vp-02 both projects + vp-02b instead of smoke. F2 dedupe: vite-env.d.ts
 > auto-merged clean, tsc confirms no duplicate identifiers.
 
-Lane: `lane/perf`, single commit `6c4d0f3` "perf: add sprite stress budget diagnostics" (2026-07-04 14:34Z), 5 files, +218/−4.
+Lane: `lane/perf`, single commit `78a593f` "perf: add sprite stress budget diagnostics" (2026-07-04 14:34Z), 5 files, +218/−4.
 Task: `tasks/lane-d-perf-01.md` — diagnostics + measurement ONLY; the one sanctioned fix is the frameKey cache.
 
 ## Scope verdict: CLEAN
@@ -35,7 +35,7 @@ No gameplay, sim, economy, or combat changes. Naming and diagnostics style match
 
 ## Findings (non-blocking, carry to gates)
 
-- **F1 (merge attention, the real risk):** all 4 src files overlap main-side changes since merge-base `0f875e0` — 016 touched `SpriteAnimator.ts`, m4-01 touched `Game.ts` (+ likely `vite-env.d.ts`), and `DebugParams.ts` has drifted. Expect textual conflicts in `Game.ts` (import block, `update()` head, `getDiagnostics()` object) and `vite-env.d.ts` (`ThreeGameDiagnostics`). Resolve with a real 3-way in the /tmp preview; the mount merge stays plumbing-path with md5-verified resolved blobs.
+- **F1 (merge attention, the real risk):** all 4 src files overlap main-side changes since merge-base `8397c44` — 016 touched `SpriteAnimator.ts`, m4-01 touched `Game.ts` (+ likely `vite-env.d.ts`), and `DebugParams.ts` has drifted. Expect textual conflicts in `Game.ts` (import block, `update()` head, `getDiagnostics()` object) and `vite-env.d.ts` (`ThreeGameDiagnostics`). Resolve with a real 3-way in the /tmp preview; the mount merge stays plumbing-path with md5-verified resolved blobs.
 - **F2:** `vite-env.d.ts` adds `direction?`/`mirrored?` to `spriteAnimations` entries — 016 may have already added these on main; dedupe rather than duplicate on merge.
 - **F3 (nit):** spriteStats counters reset in `update()`, so a `getDiagnostics()` poll landing mid-update reads a partial frame. The spec's rAF tracker reads post-update, so its numbers are consistent; fine for a max/budget test, would matter if anything ever asserts exact equality.
 - **F4 (nit):** `fadeOverlaysActive` is a coarse sum of three UI states (damage flash, dead, levelup) rather than a render-layer count. Matches the task's letter; note it so nobody treats it as an overlay-mesh census.

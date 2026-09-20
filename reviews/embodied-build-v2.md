@@ -1,8 +1,8 @@
 # embodied-build-v2 (EH-1b) — the Embodied Hand
 
-**Slice:** `embodied-build-v2` (EH-1b) · **branch:** `lane/b` · **lane tip:** `405efbbf6f581a3e951adba5f7c48214cc348952`
-**Merged to main:** `a73790d9a2616fb995751bca332315457fc04bda` (s2372)
-**Gated in:** detached worktree `gate-s2372` on merged main `034cbec05` (§3.0b), playwright `--workers=1` throughout (§3.1)
+**Slice:** `embodied-build-v2` (EH-1b) · **branch:** `lane/b` · **lane tip:** `272e56ba6623eb80dd6c593b5a989f24922ddffd`
+**Merged to main:** `db8de38a6fc39c03c0ef572c2eeb8ea963fe5338` (s2372)
+**Gated in:** detached worktree `gate-s2372` on merged main `196b28c0f` (§3.0b), playwright `--workers=1` throughout (§3.1)
 
 ## VERDICT: MERGED — gates green on the merged tree; the one banked blocker is cured with a named cause, and the drain additionally clears a standing main red.
 
@@ -79,7 +79,7 @@ Attributed with a **reverted-files control** (F-1444-2), not membership:
 
 ## Merge classification
 
-**Base:** `f0bf01138` (`git merge-base main lane/b`). Merge strategy `ort`, **no conflicts**.
+**Base:** `12710087e` (`git merge-base main lane/b`). Merge strategy `ort`, **no conflicts**.
 
 All 13 lane paths classify **LANE-ONLY** against main (`lane-usable` reports 13 HELD LANE-ONLY, 0 BOTH-MOVED, 0 MAIN-ONLY) — main had not moved any of them, so there was nothing to graft.
 

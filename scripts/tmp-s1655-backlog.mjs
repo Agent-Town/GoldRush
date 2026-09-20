@@ -24,7 +24,7 @@ const row = [
 const knockOn = [
   '⏳ **F-1655-2 (s1655 2026-08-11, the knock-on — bookkeeping, no action owed beyond the sequence).**',
   '`f1643-2-suite-red-inventory-refresh` is recorded `status: "blocked"`, **`blockClass: "gate-side"`** — a fire-recorded readiness hold, **NOT an owner fork**, so per F-1383-1 it must **never** be carried to the OWNER\'S DESK, where it would park forever.',
-  '⚖️ **It does NOT reverse the owner\'s THROTTLE LAW ruling** (line 1 of this file), which attended executed correctly at `19640717b`; the master\'s `nice -n 19 --workers=3` invocation is right and needs no edit. The run stopped for an unrelated technical reason discovered *during* its pre-flight.',
+  '⚖️ **It does NOT reverse the owner\'s THROTTLE LAW ruling** (line 1 of this file), which attended executed correctly at `2bc7197c6`; the master\'s `nice -n 19 --workers=3` invocation is right and needs no edit. The run stopped for an unrelated technical reason discovered *during* its pre-flight.',
   '**TO RESUME, once F-1655-1 merges:** `cp tasks/lane-a-f1643-2-suite-red-inventory-refresh.md tasks/queue/lane-a/` and flip the leaf back to `queued`.',
   '💡 The sequence is the point: the refresh would have **rewritten** the very file whose ten addenda are the factory\'s accumulated knowledge about its own reds. It is worth the wait.',
 ].join(' ');

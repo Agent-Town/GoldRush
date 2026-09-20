@@ -2,12 +2,12 @@
 
 Status: `LADDER-STALL: waiting on drain of e2-drip-02-pressure-garden`
 
-The Canyon Works prerequisite is now on `main` at `dafe9b63`, but lane safety
+The Canyon Works prerequisite is now on `main` at `dcaad5a9`, but lane safety
 stops this run before implementation. `lane/e2-arsenal` is one commit ahead of
 `main`:
 
-- undrained commit: `5dbef7a7 runner(lane-c): e2-drip-02-pressure-garden.md`
-- `git cherry main HEAD`: `+ 5dbef7a70e3e8a9eb5b3159a7e496e4b838c4f20`
+- undrained commit: `5dbef7a7 (archive: pruned by the A3 rewrite) runner(lane-c): e2-drip-02-pressure-garden.md`
+- `git cherry main HEAD`: `+ 5dbef7a70e3e8a9eb5b3159a7e496e4b838c4f20 (archive: pruned by the A3 rewrite)`
 - `git merge-base --is-ancestor HEAD main`: false
 - unique content: the newer dependency analysis in
   `artifacts/e2-pressure-garden/report.md`; `main` still contains the earlier

@@ -1,8 +1,8 @@
 # reviews/research-impact-law.md — every research choice states its consequence (v2 "Unlocks:")
 
 - **Slice:** research-impact-law (attended-authored, lane-b; broke the 23-fire dry streak s622)
-- **Branch:** lane/m4 · **tip drained:** `65037bd3` (v2) · base (merge-base w/ main): `3307f00a`
-- **Merge commit:** `a639c40e` (onto main tip `f40810ca`) · drained by s624 fire
+- **Branch:** lane/m4 · **tip drained:** `096db411` (v2) · base (merge-base w/ main): `f38f54ff`
+- **Merge commit:** `e83db6b6` (onto main tip `d0c8a71a`) · drained by s624 fire
 
 ## Verdict: **PASS — MERGED.** v2 (Unlocks:) end-state shipped; v1 (BANKED) tip superseded within the same lane.
 
@@ -22,8 +22,8 @@ Every research surface now states its consequence AT PICK TIME. Live nodes rende
 
 The spec is self-enforcing on the deliverable: it asserts every future node matches `^Unlocks: .+ — .+ Arrives with .+\.$` and that no impact line matches `\b(?:banks?|banked|staked)\b`, plus `playerFacingScienceCarryover('banked: …')` → `'carried forward: …'`. Green here = v2 wording proven, not v1.
 
-## Merge classification (base `3307f00a`; NO blind-copy)
-lane/m4 held **2 commits**: `810ed43f` (v1, BANKED wording) then `65037bd3` (v2, self-correcting "Unlocks:"). Merged the TIP (v2 end-state) — the v1 wording is fully superseded on the merged tree.
+## Merge classification (base `f38f54ff`; NO blind-copy)
+lane/m4 held **2 commits**: `d9583378` (v1, BANKED wording) then `096db411` (v2, self-correcting "Unlocks:"). Merged the TIP (v2 end-state) — the v1 wording is fully superseded on the merged tree.
 
 | File | Class | Resolution |
 |---|---|---|
@@ -33,7 +33,7 @@ lane/m4 held **2 commits**: `810ed43f` (v1, BANKED wording) then `65037bd3` (v2,
 | `e2e/research-impact-law.spec.ts` | NEW | free |
 | `artifacts/research-impact-law/{desktop,mobile}-chrome-{schoolhouse-unlock,elder-proposal}-impact.png` (×4) | NEW | free |
 
-**VERIFY-DON'T-INHERIT (Mistake #4):** s623 warned DeathOverlay/ResearchChart were "likely MAIN-MOVED" by intervening wording commits `5602b3fd` (STAKED) + `43779d64` (Unlocks:). Fresh probe this fire: `git diff --name-status 3307f00a main -- <those src files>` = **empty**; `5602b3fd`/`43779d64` touched **only the task-master files** (`tasks/queue/lane-b/research-impact-law.md`, `tasks/research-impact-law.md`), not game src. So no 3-way graft was needed — the feared stale-base collision did not exist. Clean `git merge --no-ff` via ort, exactly the 8 files, no conflicts.
+**VERIFY-DON'T-INHERIT (Mistake #4):** s623 warned DeathOverlay/ResearchChart were "likely MAIN-MOVED" by intervening wording commits `9944ffa9` (STAKED) + `d7f26ac3` (Unlocks:). Fresh probe this fire: `git diff --name-status f38f54ff main -- <those src files>` = **empty**; `9944ffa9`/`d7f26ac3` touched **only the task-master files** (`tasks/queue/lane-b/research-impact-law.md`, `tasks/research-impact-law.md`), not game src. So no 3-way graft was needed — the feared stale-base collision did not exist. Clean `git merge --no-ff` via ort, exactly the 8 files, no conflicts.
 
 ## Findings
 - **F-ril-1 (non-blocking, cosmetic-internal):** adjacent specs still use the phrase "banked overflow" in test names / the science-ceiling overflow surface (`research-chart.spec.ts:219`, `sci-01-research-loop.spec.ts:125`). This is a DIFFERENT concept (science-ceiling carry, predates this slice) and remains green — the retired term is only the *research-impact* pick wording. No action; noted so a future reader doesn't mistake it for a leak.

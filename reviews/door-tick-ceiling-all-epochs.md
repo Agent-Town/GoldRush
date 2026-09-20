@@ -1,16 +1,16 @@
 # Review — door-tick-ceiling-all-epochs (lane-c)
 
 - **Slice:** `door-tick-ceiling-all-epochs` — the per-contract ceiling read ONE bundle; the door admits TEN
-- **Branch / tip:** `lane/c` @ `ab4aab6794671687c8ea2761ed05f7c2c4943465`
-- **Base (merge-base with main):** `a1bc6646a83919fbf534667f31d061de479b47f8`
+- **Branch / tip:** `lane/c` @ `436f3bc15148af9796fef6ce6208dcbec2d097cd`
+- **Base (merge-base with main):** `dca3a5837c651e119c0ea139ea781a55fa5c35d0`
 - **Gated on:** detached worktree `gate-s2281/` (§3.0b), advanced to current main *after* drain 1 landed
 - **Drained by:** s2281 (second drain; fire-authored by s2280 from F-2280-1)
-- **Merged to main:** `8ed889f5438c30804de2fbdf777e5a3a92851e9b`
+- **Merged to main:** `16b0c071b78ff4544d79b66da85ddf58c94ffac5`
 - **Verdict:** ✅ **MERGED** — F-2280-1 cured; four contracts stop being structurally unwinnable, and the two-list drift that caused it is gone rather than widened.
 
 ## What it does
 
-`door-tick-ceiling-v2` (s2280, `d8cae3c3`) made the tape-duration ceiling per-contract, but built `DURATION_CONTRACTS` from `epoch-1-frontier` **alone** while the door assembles its roster from **ten** bundles. Every non-E1 contract therefore fell back to the flat 18,000 — and four of them need more, so they were unwinnable through the public door for exactly the F-2276-1 reason.
+`door-tick-ceiling-v2` (s2280, `db65524d`) made the tape-duration ceiling per-contract, but built `DURATION_CONTRACTS` from `epoch-1-frontier` **alone** while the door assembles its roster from **ten** bundles. Every non-E1 contract therefore fell back to the flat 18,000 — and four of them need more, so they were unwinnable through the public door for exactly the F-2276-1 reason.
 
 The cure does the thing the master asked for and not the easy thing next to it: rather than copying the ten-bundle list into `PlaybookFormat.ts`, it **makes one module own the list and the other import it**. `src/playbook/PlaybookFormat.ts` now exports `CONTRACT_BUNDLES`, and `functions/api/standings.ts:5` consumes that same export — so the door roster and the duration table are **structurally incapable of drifting apart**. That is the master's scope §1 (*"a hardcoded list of what the filesystem already knows is a defect awaiting a rename"*), satisfied by deletion: `standings.ts` sheds its own ten imports and list (−29 lines).
 
@@ -25,7 +25,7 @@ The cure does the thing the master asked for and not the easy thing next to it: 
 | `npx tsc --noEmit` | **rc=0**, clean |
 | `npm run build` | **green, 1.46 s** |
 | `scripts/test-standings.mjs` | **green BOTH arms — kv 153 / sqlite 153** |
-| `run-guards.mjs --changed-since a1bc6646a` (diff-driven) | **7/8 legs green**; the one red is my own bookkeeping — see below |
+| `run-guards.mjs --changed-since dca3a5837` (diff-driven) | **7/8 legs green**; the one red is my own bookkeeping — see below |
 | Pinned ceiling table | `[18000, 18000, 18001, 22501, 18001, 20349, **23144, 21601, 18001, 18001**]` — matches F-2280-1's independently measured table exactly |
 | No-decrease guarantee | new assertion: `maxRunTapeTicksForContract('unknown-contract') === MAX_PLAYBOOK_TICKS` |
 
@@ -39,11 +39,11 @@ I therefore ran the diff-driven `run-guards --changed-since` rather than the 9½
 
 `law-pointer-guard.test.mjs:105` reds with `NEW POINTER scripts/fire.md -> marketing/outbox/gazette-queue.md:1436`. That is **drain 1's own bookkeeping earlier in this fire** — filing a GZ-01 item pushed the cited line from 1430 to 1436. `scripts/fire.md` predicts this red explicitly and calls it a routine part of the GZ-01 lifecycle.
 
-Handled the prescribed way: the coordinate was re-based by **re-grepping the content, never by adding a remembered delta**, and line 1436 was then **verified by eye** to be genuinely the `e7bb88cf` upgrade-clock line the law cites. The baseline is re-pinned in this fire's closing `test:ledger-guards` pass (s1301 order — the battery runs *after* the bookkeeping commit).
+Handled the prescribed way: the coordinate was re-based by **re-grepping the content, never by adding a remembered delta**, and line 1436 was then **verified by eye** to be genuinely the `ac51296d` upgrade-clock line the law cites. The baseline is re-pinned in this fire's closing `test:ledger-guards` pass (s1301 order — the battery runs *after* the bookkeeping commit).
 
 ## Merge classification
 
-Base `a1bc6646a`. **This classification was re-taken, not inherited** — drain 1 landed 20 minutes earlier in this same fire and touched **two of this slice's four files**, so s2280's original classification had decayed before I reached it.
+Base `dca3a5837`. **This classification was re-taken, not inherited** — drain 1 landed 20 minutes earlier in this same fire and touched **two of this slice's four files**, so s2280's original classification had decayed before I reached it.
 
 | File | Class |
 |---|---|

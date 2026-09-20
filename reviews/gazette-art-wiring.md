@@ -1,7 +1,7 @@
 # Review — gazette-art-wiring (THE CLAIM HERALD renders its cuts)
 
 - **Slice:** `gazette-art-wiring` (lane-a), master `tasks/lane-gazette-art-wiring.md` (FIRE-AUTHORED s1184)
-- **Branch / tip:** `lane/m3` @ `2b8af246` · base `a8537f7f` · merged to main as `0167f958`
+- **Branch / tip:** `lane/m3` @ `52da3fec` · base `0b0a8540` · merged to main as `24c44ebe`
 - **Run report:** `tasks/runs/20260728-231215-lane-a-gazette-art-wiring.md`
 - **Drained by:** s1185 fire, 2026-07-28
 - **Block check:** `node scripts/drain-block-check.mjs 20260728-225945-lane-gazette-art-wiring.md` → ✅ CLEAR (run FIRST, before classification)
@@ -55,7 +55,7 @@ These screenshots are also the decisive proof that the WebP bytes actually **dec
 
 ## Merge classification
 
-- **Base:** `a8537f7f` (`git merge-base main lane/m3`).
+- **Base:** `0b0a8540` (`git merge-base main lane/m3`).
 - **LANE-TOUCHED (9):** `src/news/herald.ts`, `src/news/heraldReader.ts`, `src/news/heraldReader.css`, `news/herald.json`, `scripts/asset-diet.mjs`, `e2e/gazette-art-wiring.spec.ts` (new), 2 × `artifacts/gazette-art-wiring/*.png` (new), `tasks/runs/…` (new).
 - **MAIN-MOVED since base (29):** `STATUS.md`, `tasks/{BACKLOG.md,goals.json,lane-gazette-art-wiring.md}`, `scripts/art-staging-audit.mjs`, `logs/*`, 22 × `artifacts/{066,eight-winds-*}/*`.
 - **Overlap: NONE.** The two sets are fully disjoint; `git merge --no-ff` reported "Automatic merge went well" with no conflicts. Verified **before** merging, not discovered during it.
@@ -67,7 +67,7 @@ These screenshots are also the decisive proof that the WebP bytes actually **dec
 
 **Not blocking this slice** (it cannot reach the failing line) — but it is a bigger hole than "2/4 red" reads.
 
-`e2e/gz-h1-newsie.spec.ts:114` asserts `toHaveText('Pip Quick')`. `835c8108` (**2026-07-11**, `feat: make the town living pass follow its trails`) renamed the newsie to **`Chen Mei`** in `src/town/townsfolk.ts:194` and never updated the spec. Fingerprint reproduced this fire: *Expected `"Pip Quick"` / Received `"Chen Mei"`* at `:114`. Already inventoried in `logs/suite-red-inventory-compact.json` (received `"Juniper"` there — the bark speaker varies by which actor barks; same assertion, same cause). `835c8108` is an ancestor of main and predates this lane's base by 17 days; the slice touches **zero** `src/town/**`. Pre-existing, proven at source.
+`e2e/gz-h1-newsie.spec.ts:114` asserts `toHaveText('Pip Quick')`. `756de17c` (**2026-07-11**, `feat: make the town living pass follow its trails`) renamed the newsie to **`Chen Mei`** in `src/town/townsfolk.ts:194` and never updated the spec. Fingerprint reproduced this fire: *Expected `"Pip Quick"` / Received `"Chen Mei"`* at `:114`. Already inventoried in `logs/suite-red-inventory-compact.json` (received `"Juniper"` there — the bark speaker varies by which actor barks; same assertion, same cause). `756de17c` is an ancestor of main and predates this lane's base by 17 days; the slice touches **zero** `src/town/**`. Pre-existing, proven at source.
 
 **The consequence nobody had traced:** the failure at `:114` aborts the test, so **lines 118–125 have not executed since 2026-07-11** — `claim-herald` visible, the heading, `claim-herald-item` count 4, feed-line containment, `assertNoErrors`, and `expectNoInternalHeraldText(page)`. That last one is the **in-world voice guard** (no `123`-style ids, no `SHIPPED`/`repo`/`token`/`backend` leaking into player-facing news), and `:123` is its **only caller in the entire e2e tree** (grepped). The Herald's voice law has therefore been unguarded for 17 days.
 

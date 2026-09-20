@@ -1,8 +1,8 @@
 # f2078-1 — the deepwater manifest tells the truth after re-admission
 
 **Slice:** `f2078-1-deepwater-manifest-truth-pass` (cure for F-E5AC-1)
-**Branch:** `lane/b` · **Tip:** `44218855c` · **Base:** `449ee8ac7`
-**Merge:** `d0d6daa441b496a6d5ccfc5a88bff618069f08e4` (main, s2080, 2026-08-20)
+**Branch:** `lane/b` · **Tip:** `edd0aaca5` · **Base:** `b569e99e1`
+**Merge:** `5ca1c00c9d89b9c306bccd5ba2749786858bfd21` (main, s2080, 2026-08-20)
 **Task master:** `tasks/f2078-1-deepwater-manifest-truth-pass.md` (authored s2078, FIRE-AUTHORED)
 
 ## Verdict
@@ -13,7 +13,7 @@ fingerprint-matched to the known F-1606-1 and **reproduced on unmerged main as a
 
 ## What it does
 
-Merge `26a364bf` re-admitted `e5-deepwater-claim` through the ordinary door. The agent-facing
+Merge `9dca8508` re-admitted `e5-deepwater-claim` through the ordinary door. The agent-facing
 mechanics manifest did not notice: `MechanicsManifest.ts:293` still emitted a rule named
 `deepwater_boss_socket_absent`, carrying `blocker: 'labelSprite/counterSprite call
 document.createElement from instance field initializers'` and `consequence: 'the contract has no
@@ -73,13 +73,13 @@ unmerged main** reproduces the identical assertion (rc=1) — so it is not this 
 
 Worth noting what the merged tree *fixed*: the runner reported four reds (missing `index.html#pillars`
 ×2, two Node-26 `localStorage` CLI tests). None of them appear here. The `#pillars` pair was cured on
-main by `a86d454b9`, which the lane's base predates — the drain's own re-run on the merged tree was a
+main by `6e61749d5`, which the lane's base predates — the drain's own re-run on the merged tree was a
 free control, and it retired two thirds of the runner's red list without anyone touching a test.
 
 ## Merge classification
 
-Base `449ee8ac7`; `main..lane/b` **1 ahead** (`44218855c`). Main moved **10 commits** in the window
-(including the attended season roll `23c3ea982`), so the two-dot `main..lane/b` diff showed 24 files
+Base `b569e99e1`; `main..lane/b` **1 ahead** (`edd0aaca5`). Main moved **10 commits** in the window
+(including the attended season roll `8086ee597`), so the two-dot `main..lane/b` diff showed 24 files
 and 470 deletions — `e2e/assay-season-roll.spec.ts`, `reviews/assay-season-roll.md`, four screenshots
 and most of `functions/api/standings.ts`. **Every one of those was a stale-base phantom, not a
 deletion.** The runner's actual change, measured `base..lane/b`, is 4 files / +10 / −10.

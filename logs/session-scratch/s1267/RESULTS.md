@@ -1,6 +1,6 @@
 # s1267 — F-1264-3 settled: BOTH shells sampled as rates, and the DIRECTORY control finally run
 
-Fire s1267, 2026-07-30, main at `a17307e6`. Subject: `e2e/gazette-welcome.spec.ts:88`, the
+Fire s1267, 2026-07-30, main at `0f9c19c2`. Subject: `e2e/gazette-welcome.spec.ts:88`, the
 unmodified shipped drift assertion. Every number below is a run executed this fire or the
 drained lane run of the same hour, counted by the assertion's own `toBeLessThan(expected)`
 signature.
@@ -14,7 +14,7 @@ The master, and five fires of argument, rest on the sentence recorded in
 
 ✗ **That claim had no evidence behind it.** `logs/session-scratch/s1264/` contains exactly two
 files (`RESULTS.md`, `handoff-line1.txt`), no run logs, and **zero occurrences** of `lane-b`,
-`cwd`, or `worktree`. Its header states its own base as "main at `924e98c9`" — the repo root.
+`cwd`, or `worktree`. Its header states its own base as "main at `9744f6b9`" — the repo root.
 s1265 likewise records "Same cwd" for its arms and states plainly "**I did not measure the lane
 shell.**" So every fire-side reading was taken in the **repo root** and every lane-side reading
 in **`worktrees/lane-b`**: for five fires, SHELL and DIRECTORY moved together and were never
@@ -26,9 +26,9 @@ So this fire ran three arms, not one.
 ## 1. Preconditions, verified rather than inherited
 
 The subject is byte-identical across all three measurement bases —
-`git diff 924e98c9 7f3b13ac -- e2e/gazette-welcome.spec.ts src/town/TownScene.ts
+`git diff 9744f6b9 328b1bed -- e2e/gazette-welcome.spec.ts src/town/TownScene.ts
 playwright.config.ts package.json` is **empty**, and
-`git log 924e98c9..main --` on the same paths is **empty**. Same instrument content on s1264's
+`git log 9744f6b9..main --` on the same paths is **empty**. Same instrument content on s1264's
 base, the lane's base, and current main.
 
 Toolchain is identical in both directories: `@playwright/test` **1.61.1**, `playwright-core`

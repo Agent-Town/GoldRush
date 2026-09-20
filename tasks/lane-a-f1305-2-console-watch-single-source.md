@@ -3,7 +3,7 @@ CODEX: model=gpt-5.6-sol effort=high
 ROLE: lane implementer. WORKDIR: this lane worktree. One task, firewalled.
 
 WHY (quoted evidence, dated):
-- **F-1305-2**, raised by the s1305 drain of the F-1304-1 rider (`reviews/f1304-1-manifest-view-console-rider.md`, 2026-07-31, merge `babedc32`): *"`watchErrors` is copy-pasted into 21 specs (zero imports — verified), so the other 20 carry the same unfiltered rider and can red any adjacent battery; hoist ONE shared helper."*
+- **F-1305-2**, raised by the s1305 drain of the F-1304-1 rider (`reviews/f1304-1-manifest-view-console-rider.md`, 2026-07-31, merge `7d92fe5a`): *"`watchErrors` is copy-pasted into 21 specs (zero imports — verified), so the other 20 carry the same unfiltered rider and can red any adjacent battery; hoist ONE shared helper."*
 - **The duplication is re-verified this fire (s1306, 2026-08-01), and the inherited count is right while the inherited SHAPE is wrong.** There are indeed **21** local definitions and **zero** imports — but they are **not 21 copies of one function**. Normalised-body hashing gives **7 distinct bodies across 4 different return contracts**:
   | contract | n | files |
   |---|---|---|
@@ -18,7 +18,7 @@ WHY (quoted evidence, dated):
 - ⚠️ **THE ACCEPTANCE BAR IS DELIBERATELY NOT "N RUNS GREEN", AND THIS IS THE MOST IMPORTANT LINE IN THIS MASTER (F-1305-1, same drain).** The predecessor task gated on *"3 consecutive both-project runs green"*. s1305 measured the **unfixed** tree at **3 green / 1 red in 4 runs** and found the suppressed counter read `0/0` across **six** certifying runs in two sessions — the transient never fired, so *"every one of those greens would have been green with the fix reverted."* **A bar the broken tree passes ~75% of the time is not a bar.** Do not propose one here, and do not report a run-count as your evidence of correctness.
 
 READ-FIRST (paths):
-- `e2e/agent-view.spec.ts` — the **proven reference implementation** (merge `babedc32`): its local `watchErrors()` definition and the mutation-control test ("the zero-error rider suppresses only the known transient"). You are moving this, not inventing it. Find them by name — the coordinates decay.
+- `e2e/agent-view.spec.ts` — the **proven reference implementation** (merge `7d92fe5a`): its local `watchErrors()` definition and the mutation-control test ("the zero-error rider suppresses only the known transient"). You are moving this, not inventing it. Find them by name — the coordinates decay.
 - `reviews/f1304-1-manifest-view-console-rider.md` — F-1305-1/F-1305-2 as written, including why the mutation control (not the green runs) is what proved the cure sound.
 - `logs/suite-red-inventory.md:728-770` — the retired row and the mechanism paragraph (heavy preceding boot in the same worker starves the next town entry's texture blobs).
 - `tasks/BACKLOG.md:424` (F-1180-2) and `:1766` (F-1083-2) — the two rulings that bound this scope.
@@ -52,8 +52,8 @@ READY-FOR-GATES + report: the shared module's predicate verbatim · the count of
 The SELF-CHECK at `:45` orders "the 15 migrated specs green-or-fingerprint-matched", and
 `e2e/release-build.spec.ts` is one of those 15 (named at `:25` as the densest, 9 `watchErrors(`
 occurrences). Under the DEFAULT harness that spec collects **zero tests**: `playwright.config.ts`
-`testIgnore`s it via `claimedByAnotherConfig` (landed `c8ed271c4` 2026-07-31T21:34, the F-1296-3
-cure) — and this master was authored `187d26736` 2026-08-01T00:23, **under three hours later**, so
+`testIgnore`s it via `claimedByAnotherConfig` (landed `395bc04be` 2026-07-31T21:34, the F-1296-3
+cure) — and this master was authored `4aff1a7c6` 2026-08-01T00:23, **under three hours later**, so
 the instruction was already impossible when written. Measured s1482:
 `npx playwright test e2e/release-build.spec.ts --list` -> "No tests found" / "Total: 0 tests in 0
 files", rc=1. The cited red lines `:160/:107/:165/:199/:393` therefore cannot be reproduced under

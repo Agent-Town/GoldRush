@@ -8,7 +8,7 @@ READ FIRST: `AGENTS.md`; `reviews/ap16-1-buildable-parity.md` (the drain that ra
 
 Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead is NORMAL — the runner auto-commits. For each ahead commit: if its content is already merged to main (verify via `git log`/`git diff`), it is a SAFE DUPE → `git checkout -B lane/a main && git clean -fd` and PROCEED. STOP-and-report ONLY if an ahead commit's content is NOT on main (undrained work — resetting would DESTROY it), or the worktree holds uncommitted edits you did not make. EVIDENCE-ARTIFACT EXCEPTION (F-1266-1): changes confined to `artifacts/**`, `reviews/shots-*`, and any `.png` are NEVER "work" and NEVER a STOP — discard them and PROCEED, listing what you discarded. Then `npm install --no-audit --no-fund`; `npm run build` green before touching anything. THEN A CLEANLINESS LINE: `git -C worktrees/lane-a status --short` → must be clean, with the FACTORY-CHURN EXCEPTION (F-1407-1), always expected, never a STOP: (a) `logs/**`; (b) `artifacts/**`, `reviews/shots-*`, any `.png`. What still STOPs: modified tracked `src/**`, `scripts/**`, `e2e/**`, `tasks/**`, `specs/**`, `reviews/*.md`.
 
-ⓘ ap16-1 is MERGED to main at `8465f6b3313fb7e4ca2c4cad538b715994660cab`, so lane/a's ahead commit is a SAFE DUPE by construction. Expect the reset arm.
+ⓘ ap16-1 is MERGED to main at `760990fda5d91559202dbf5a3020de90f694aa7c`, so lane/a's ahead commit is a SAFE DUPE by construction. Expect the reset arm.
 
 ## Why (drain finding F-1636-1, s1636 — reproduced, not argued)
 

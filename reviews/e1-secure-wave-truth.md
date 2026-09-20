@@ -2,7 +2,7 @@
 
 **Slice:** `lane-e1-secure-wave-truth.md` (E1 release blocker: two maps must state how they are won)
 **Branch:** `lane/m3` · **Tip:** `4401778f3e17e4db5c800bed3c17523b48b2fdf8` (`runner(lane-a)`, 2026-07-26T07:31:35+07)
-**Lane base:** `ab7cba01` · **Merged onto:** `026fcb99` (clean main)
+**Lane base:** `2c5ad61f` · **Merged onto:** `13218055` (clean main)
 **Verdict: MERGE — and it repairs a red that was already live on main.**
 
 ## What it does
@@ -25,7 +25,7 @@ value — but it stops the number being an invisible inheritance. No `src/`, no 
 | `assets/contracts/epoch-1-frontier/contracts.json` | LANE-TOUCHED only | straight graft |
 | `e2e/contract-briefings.spec.ts` | LANE-TOUCHED only | straight graft |
 
-`git diff ab7cba01 main -- <both files>` is **empty** — main never moved either file after the lane's
+`git diff 2c5ad61f main -- <both files>` is **empty** — main never moved either file after the lane's
 base, so no 3-way was needed and no main-side hunk was at risk. TOUCH-ONLY was respected exactly:
 the commit is 2 files, +20/−8, and touches nothing on its NO list.
 

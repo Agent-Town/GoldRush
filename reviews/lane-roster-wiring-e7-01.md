@@ -1,8 +1,8 @@
 # Review — lane-roster-wiring-e7-01 (E7 Signal-era roster scaffold)
 
 - **Slice:** E7-01 enemy roster scaffold — `rogue_automaton` (plain lane) + `data_rustler` (lane+thief), placeholder-first.
-- **Branch/tip:** lane/perf `a4af3f4b` (`runner(lane-d): lane-roster-wiring-e7-01.md`), base `e67e266a` (author commit).
-- **Drain commit:** (this commit) — path-scoped onto clean main `0f06002a`.
+- **Branch/tip:** lane/perf `a4af3f4b` (`runner(lane-d): lane-roster-wiring-e7-01.md`), base `46c55eaf` (author commit).
+- **Drain commit:** (this commit) — path-scoped onto clean main `bc330bdb`.
 - **Fire:** s764, 2026-07-20.
 
 ## Verdict: MERGE ✅ (scaffold; placeholder-first, NO-BLOCKER law)
@@ -30,7 +30,7 @@ Wires the first two E7 (Signal-era) enemies into the game as **data-driven roste
 | Console/page errors | ✅ zero (e7-roster :158 plain-boot probe green both projects) |
 
 ## Merge classification
-Base `e67e266a`; main tip at drain `0f06002a`. Between base and main only **STATUS.md** moved (s763 handoff + s764 lock) — every content file is **LANE-TOUCHED-only**, no 3-way needed. STATUS.md = MAIN-MOVED, **not** merged (main's kept). Path-scoped `git checkout lane/perf -- <8 content files + 2 artifacts>`. The lane's stale STATUS.md hunk (captured pre-s763-handoff) was deliberately excluded.
+Base `46c55eaf`; main tip at drain `bc330bdb`. Between base and main only **STATUS.md** moved (s763 handoff + s764 lock) — every content file is **LANE-TOUCHED-only**, no 3-way needed. STATUS.md = MAIN-MOVED, **not** merged (main's kept). Path-scoped `git checkout lane/perf -- <8 content files + 2 artifacts>`. The lane's stale STATUS.md hunk (captured pre-s763-handoff) was deliberately excluded.
 
 ## Findings
 - **F-1 (non-blocking, adjacent-suite reds — PROVEN pre-existing).** `vp-02-sprite-animation.spec.ts` shows 10 failures on the merged tree. Fingerprinted against **clean main** (files restored to HEAD, full re-run): clean main = **13 failed / 9 passed**; merged = **10 failed / 12 passed**. The merged failing set `{350,447,506,541,699}×{desktop,mobile}` is a strict **subset** of the clean-main set `{303,350,382,447,506,541,699}×{...}` — E7-01 introduced **zero new failures** (:382 warmed-clip draw-calls and :303 hero-clip-on-sim-time are additionally flaky, passing on the merged run). All failures are hero-rotation / missing-sheet-fallback / screenshot-capture tests — none touch enemy-roster batches. Not caused by this slice; carried as a standing vp-02 hero-rotation baseline-red debt.

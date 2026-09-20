@@ -4,7 +4,7 @@
 **Verdict:** PASS — grafted to main.
 
 ## Graft method
-Main had NOT drifted on any of sci-copy's target files since its base `15f8116`
+Main had NOT drifted on any of sci-copy's target files since its base `8cec568`
 (verified: `git diff --name-only 15f8116 main -- ResearchTree.ts DeathOverlay.ts sci-01 spec` = empty).
 So a loss-free `git checkout save/sci-copy-clarity -- <files>` content-graft, NOT a blind merge.
 Files: `src/meta/ResearchTree.ts`, `src/ui/DeathOverlay.ts`, `e2e/sci-01-research-loop.spec.ts`, `artifacts/sci-copy/`.

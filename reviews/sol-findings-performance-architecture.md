@@ -1,7 +1,7 @@
 # Sol findings — performance, assets, and architecture
 
 - **Branch:** `sol/repository-audit-findings`
-- **Base:** `7802ed6`
+- **Base:** `8510b61`
 - **State:** UNTRIAGED — no implementation authorized.
 - **Scope:** runtime transfer/request shape, startup prefetch, sprite packaging, repository storage, structural ownership, and diagnostics hot path.
 

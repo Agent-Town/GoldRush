@@ -1,8 +1,8 @@
 # gauntlet-heat3c-shim-streaming — drain review (s2275)
 
 **Slice:** `gauntlet-heat3c-shim-streaming`
-**Branch:** `lane/b` · **Lane tip:** `b24861b5f` · **Merge base:** `693747c95`
-**Merged to main at:** `2e75540c1`
+**Branch:** `lane/b` · **Lane tip:** `dbdd13a41` · **Merge base:** `24a40d2d5`
+**Merged to main at:** `6e278471f`
 **Gated in:** detached `gate-s2275/` on the MERGED tree (§3.0b), worktree removed after.
 
 ## VERDICT: MERGE — the one wall four riders died on is gone, proven by a before/after control that spends zero owner allowance.
@@ -63,7 +63,7 @@ Raw wire bytes for both arms, and the probe source, are banked at
 
 ## Merge classification
 
-Base `693747c95`. Main moved **only `STATUS.md`** (the s2274 handoff and my own s2275 lock commit);
+Base `24a40d2d5`. Main moved **only `STATUS.md`** (the s2274 handoff and my own s2275 lock commit);
 the lane touched four files, none of them `STATUS.md`.
 
 | File | Class |
@@ -109,7 +109,7 @@ state is neither of those, and it is exactly the class of material the ART-SLOT 
 at-risk.
 
 **Priced honestly rather than inflated: nothing cited was lost.** heat3b's payload is intact — all
-**19** files under `artifacts/gauntlet-heat3-20260824/` are tracked on main, merged at `407f89f42`.
+**19** files under `artifacts/gauntlet-heat3-20260824/` are tracked on main, merged at `178ec7eea`.
 What died was un-mirrored runtime/cache state from the heat harnesses. **What it was, and whether any
 of it was worth keeping, is UNMEASURED and now unmeasurable** — which is the finding: the loss is
 silent and unbounded by construction, and this is the first run to report one out loud.

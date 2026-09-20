@@ -1,7 +1,7 @@
 # f1605-1 — de-list the three E2 railcar contracts from the AP-07 headless door
 
-**Slice:** `f1605-1-e2s3-door-delist` · **Branch:** `lane/b` @ `dd567d25b` (runner commit) · **Base:** `00805c437`
-**Merged to main:** `88530e3efc4ff1c2f5b13c936baa5c5f913cd60a` · **Drained by:** s1606 fire, 2026-08-09
+**Slice:** `f1605-1-e2s3-door-delist` · **Branch:** `lane/b` @ `7eb621945` (runner commit) · **Base:** `c218e7697`
+**Merged to main:** `312b443f12a91d56e6a20f37a537aa71166d41c6` · **Drained by:** s1606 fire, 2026-08-09
 **Master:** `tasks/f1605-1-e2s3-door-delist.md` (authored + dispatched s1605) · **Goal leaf:** `f1605-1-e2s3-door-delist`
 
 ## VERDICT: MERGED — full battery green on the merged tree, scope executed exactly as authored, no findings that block.
@@ -63,7 +63,7 @@ probe, which is deliberately not run in a fire shell and says so in its own skip
 
 ## Merge classification
 
-Base `00805c437`; `main..lane/b` was **1 ahead** (`dd567d25b`), `lane-usable` reporting **HOLDS** with four
+Base `c218e7697`; `main..lane/b` was **1 ahead** (`7eb621945`), `lane-usable` reporting **HOLDS** with four
 paths — correct, this was genuine undrained content, and `lane-absorbed-lines` showed 3 of 5 added lines in
 `er01-e2-census.spec.ts` absent from main.
 

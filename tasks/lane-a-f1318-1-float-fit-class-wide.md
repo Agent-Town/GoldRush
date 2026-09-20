@@ -17,7 +17,7 @@
 
 ## WHY (evidence, quoted and dated)
 
-s1318 shipped the F-1316-1 cure at `b1dc3306`: `drawTextTexture` measures the text, sizes the canvas
+s1318 shipped the F-1316-1 cure at `efa3b252`: `drawTextTexture` measures the text, sizes the canvas
 to a multiple of 192 up to a 4× cap (768), then shrinks the font one pixel at a time until it fits
 `canvas.width - 20`, **stopping at a 32 px floor whether or not it fits**. Below that floor the text
 is still drawn centred, so overflow is discarded from *both* ends — the player receives a *different

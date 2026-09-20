@@ -1,6 +1,6 @@
 # Trestle browser attribution
 
-Candidate engine `9582fb444b805f2a16b85b3720834fd7d12091e8cf48a96a6862c45b1afcad80`, exact base `ddfb210f5` / engine `e993b9ec062d5d02e2b503c2edf42ab8bf600c9074381e01d8634a4758b03d7b`. The base runner restored every changed tracked production byte and then restored the candidate byte-for-byte; [receipt](base-registry.json). Existing specs and assertions are untouched.
+Candidate engine `9582fb444b805f2a16b85b3720834fd7d12091e8cf48a96a6862c45b1afcad80`, exact base `0bcf87046` / engine `e993b9ec062d5d02e2b503c2edf42ab8bf600c9074381e01d8634a4758b03d7b`. The base runner restored every changed tracked production byte and then restored the candidate byte-for-byte; [receipt](base-registry.json). Existing specs and assertions are untouched.
 
 The first 44-test own/pack/registry round records **32 pass, 5 skip, 7 fail**. Both Trestle gameplay runs pass, as do applicable brightness/collision, fort routing, simulation parity and disposal checks. The separate Trestle census round passes **4/4**. Shared loading/repeat probes pass **8/8 and 2/2** on their existing generic fixtures.
 

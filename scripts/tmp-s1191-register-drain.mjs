@@ -1,6 +1,6 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 
-const MERGE = '8b9e8af2b3ee88decf6ef2d2098204c880422865';
+const MERGE = '8c0f5c0a99db658a12bb75363a7a5a8110203d63';
 const g = JSON.parse(readFileSync('tasks/goals.json', 'utf8'));
 
 let hit = null;

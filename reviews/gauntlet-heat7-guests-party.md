@@ -1,7 +1,7 @@
 # gauntlet-heat7-guests-party — the whole field rides era 4
 
-**Slice:** `gauntlet-heat7-guests-party` · **branch:** `lane/b` · **lane tip:** `0bd2267c0`
-**Gated merge:** `9e07a5df0` (parents `6d530c593` main, `0bd2267c0` lane) · **drained:** s2384, 2026-08-31
+**Slice:** `gauntlet-heat7-guests-party` · **branch:** `lane/b` · **lane tip:** `2f3ed2664`
+**Gated merge:** `563937a9a` (parents `874461427` main, `2f3ed2664` lane) · **drained:** s2384, 2026-08-31
 **Verdict: MERGED.** Evidence-only slice. Zero run-surface paths changed; the one non-artifact
 file (`tasks/BACKLOG.md`) is the row flip the master ordered.
 
@@ -11,7 +11,7 @@ The owner called a party (2026-08-30, verbatim: *"Ride some more harnesses - let
 party. Verify that the tapes now really work properly."*). Five harness families rode the live
 era-4 engine — **pi (Prime Agent) · omp · hermes · openclaw**, with **eliza** on its bounded
 retry — over the short set (the-claim, night-shift, hill-mine) plus one war-room Baron visit
-each, via the streaming shim, against live build `81caa6956`.
+each, via the streaming shim, against live build `4dd88e1b2`.
 
 **OMP and OpenClaw each secured The Claim.** Their tapes plus the operator probe verified
 against their original event-log hashes — three verified rows on the honest engine. **No guest
@@ -61,7 +61,7 @@ The runner's tape-proof duty found, **reproduced 3/3 on every verified row**, th
 WATCH response projected:
 
 ```
-.reel.meta = {"buildId":"81caa6956"}
+.reel.meta = {"buildId":"4dd88e1b2"}
 ```
 
 omitting both `meta.era` and `meta.engineHash` — *although the submitted tape carried all
@@ -75,8 +75,8 @@ which projects `{ buildId, engineHash, era }`. The timestamps settle it:
 
 | | commit | when |
 |---|---|---|
-| build under test (deployed) | `81caa6956` | 2026-08-30 **20:47:13** +07 |
-| the projection cure | `05d04af50` (`reel-era-projection-v2`) | 2026-08-30 **22:42:40** +07 |
+| build under test (deployed) | `4dd88e1b2` | 2026-08-30 **20:47:13** +07 |
+| the projection cure | `c1c6a93f4` (`reel-era-projection-v2`) | 2026-08-30 **22:42:40** +07 |
 
 The cure landed **1h55m after** the build the field rode. So the party measured production
 truthfully and the remaining act is a **DEPLOY**, which is publish-gated and belongs to the

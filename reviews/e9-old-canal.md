@@ -1,6 +1,6 @@
 # e9-old-canal — A10, "inheritance is edited"
 
-**Slice:** door-completion-sheet §A10 (RATIFIED 2026-08-20, owner verbatim: "Group 1: approved (with any tweaks)") · **Branch:** `worktree-agent-ac6a4904ef7986cff` · **Base:** `b9fd6fecb`
+**Slice:** door-completion-sheet §A10 (RATIFIED 2026-08-20, owner verbatim: "Group 1: approved (with any tweaks)") · **Branch:** `worktree-agent-ac6a4904ef7986cff` · **Base:** `4d2491587`
 
 ## Verdict
 
@@ -85,7 +85,7 @@ Screenshots: `artifacts/e9-old-canal/shots/{desktop-chrome,mobile-chrome}-*.png`
 | adjacent: `m2-01-build-menu` | **14/14** |
 | adjacent: `tp02-green-waypoint` | **5/6**, the sixth proven a FLAKE (below) |
 | node guards (targeted 7 files): same-game audit + report guard, door ratchet, bench seeds, skill.md fences, mask tables, null-floor anchors | **45/45** |
-| `null-floor-anchors --check` | **53 rows byte-identical**; the ONLY difference is the git-derived `eraStamp` (`1817cb273` → `b9fd6fecb`), which is the A8 convention's own proof that this slice moved no floor. Log: `artifacts/e9-old-canal/null-floors-check.log` |
+| `null-floor-anchors --check` | **53 rows byte-identical**; the ONLY difference is the git-derived `eraStamp` (`72da08d6a` → `4d2491587`), which is the A8 convention's own proof that this slice moved no floor. Log: `artifacts/e9-old-canal/null-floors-check.log` |
 | `npx playwright test --list` | **2936 tests in 422 files** — the suite still COLLECTS, which is the F-A8-7 check that matters for a slice whose consumer is reached by `MechanicsManifest` (a render import there once collapsed the whole list to `Total: 0`). Neither new module imports `world/Terrain`. |
 | battery determinism | 12 runs, every repeat byte-identical |
 
@@ -112,7 +112,7 @@ Row 2 reproduces the pre-slice pin EXACTLY, so the anchors own the whole +39/−
 
 ## Merge classification
 
-Base `b9fd6fecb`. Every file below is LANE-TOUCHED only.
+Base `4d2491587`. Every file below is LANE-TOUCHED only.
 
 - **New:** `src/systems/CanalChoiceSystem.ts`, `src/systems/CanalFlowPresentation.ts`, `e2e/e9-old-canal-choices.spec.ts`, `playwright.a10.config.ts`, `artifacts/e9-old-canal/*`, `reviews/e9-old-canal.md`
 - **Consumer seams:** `src/game/TileStateStore.ts` (one new sim id prefix + one `applyAtBirth` branch — no new entry kind), `src/systems/BuildSystem.ts` (one optional ctor predicate + one line in `matchesPlacement`), `src/game/Game.ts` (construct/mount/tick/reset/dispose, the two verdicts in `confirmAction` and `confirmUpgrade`, the rider dispatch, the latch in `autoSecureWaveForRun` + the baron expression, diagnostics), `src/sim/HeadlessContractSim.ts` (same, plus the view row, the two context actions and the exemption row), `src/agent/StandingOrders.ts` (two union members + two validator branches), `src/agent/MechanicsManifest.ts` (one rule, sourced from the consumer), `src/ui/BuildingContextPrompt.ts` (two buttons of its own), `src/vite-env.d.ts`

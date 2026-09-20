@@ -2,7 +2,7 @@
 
 **Slice:** lane-b-e8-orbital-contract — the E8 Mare Claim signature tile as DATA (contract + mask table, feeds 3D-D)
 **Branch/tip:** `lane/m4` @ `52d533f877d3e7d163f9bfa31929984ad15a5c29` (`runner(lane-b): lane-b-e8-orbital-contract.md`)
-**Base:** `01689e11` (fork point = the e7 drain; main moved 2 commits — `5c21c22d` e8-master authoring + goal leaf, `f50cc240` s691 handoff — since)
+**Base:** `f1e69629` (fork point = the e7 drain; main moved 2 commits — `6a09d8b1` e8-master authoring + goal leaf, `3bfad853` s691 handoff — since)
 **Drain:** s692 fire, surgical 4-file graft onto clean main.
 
 ## Verdict: MERGED — data-only, locked-era INERT, all gates green.
@@ -26,8 +26,8 @@ Adds the E8 Mare Claim as authored DATA, mirroring the shipped e6-glow-mesa / e7
 
 ## Merge classification
 Surgical 4-file graft (`git checkout 52d533f8 -- <4 files>`), NOT a full branch merge.
-- **Why graft, not `git merge`:** the lane forked at `01689e11` (the e7 drain), before main's `5c21c22d` which authored the e8 master + added the `e8-mare-claim-contract` goal leaf (queued). The lane's runner commit touched ONLY the 4 real content files — its `tasks/goals.json` base→lane diff is **empty** (the runner never touched goals.json; registration lived in `5c21c22d` on main). A full merge would have to reconcile main's post-fork additions (goals leaf, STATUS, the master file) — grafting the 4 files sidesteps that entirely.
-- **The 4 grafted files are MAIN-untouched since base:** `git diff --name-only 01689e11 HEAD -- <4 files>` = **empty** → zero-conflict, fast-forward-equivalent graft for contracts.json / mask-table / e3-mask-tables.test.mjs / board-gating spec.
+- **Why graft, not `git merge`:** the lane forked at `f1e69629` (the e7 drain), before main's `6a09d8b1` which authored the e8 master + added the `e8-mare-claim-contract` goal leaf (queued). The lane's runner commit touched ONLY the 4 real content files — its `tasks/goals.json` base→lane diff is **empty** (the runner never touched goals.json; registration lived in `6a09d8b1` on main). A full merge would have to reconcile main's post-fork additions (goals leaf, STATUS, the master file) — grafting the 4 files sidesteps that entirely.
+- **The 4 grafted files are MAIN-untouched since base:** `git diff --name-only f1e69629 HEAD -- <4 files>` = **empty** → zero-conflict, fast-forward-equivalent graft for contracts.json / mask-table / e3-mask-tables.test.mjs / board-gating spec.
 - **goals.json** handled on main's version: flipped the `e8-mare-claim-contract` leaf `queued → merged` + `mergeHash: 52d533f8…` (40-char lane-tip, ancestral convention per e7/wire-dq-3d), keeping main's tree intact.
 
 ## Report-don't-invent / findings

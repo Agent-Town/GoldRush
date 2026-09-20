@@ -1,6 +1,6 @@
 # Task e10s-1b: land the Ember Shore's data WITH the schema that admits it — twist key, declared-inert registration, engine dependency, pins (lane-a, commit prefix "feat:")
 
-**FIRE-AUTHORED (attended review welcome)** — s2123, as the named cure for the `gate-side` block on `e10s-1-ember-shore-data` (STOPPED s2122). Every file:line below was re-verified at source by the author on main at `8cf19eae0`, not inherited from the predecessor's report.
+**FIRE-AUTHORED (attended review welcome)** — s2123, as the named cure for the `gate-side` block on `e10s-1-ember-shore-data` (STOPPED s2122). Every file:line below was re-verified at source by the author on main at `f9a184e6d`, not inherited from the predecessor's report.
 
 You are Codex, implementer for Gold Rush, running natively on Robin's Mac in `worktrees/lane-a`.
 
@@ -24,7 +24,7 @@ Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead 
 
 **ROOT CAUSE IS THE MASTER, NOT THE RUN.** The s2121 master firewalled `src/**`, which is exactly where the twist allowlist lives, so the task could not satisfy its own acceptance condition by construction. **This master fixes that by landing the schema and the data together.**
 
-**Verified at source on main `8cf19eae0` (author, s2123 — the predecessor's report named two blockers; there are SIX coupled changes, and four of them were undiscovered):**
+**Verified at source on main `f9a184e6d` (author, s2123 — the predecessor's report named two blockers; there are SIX coupled changes, and four of them were undiscovered):**
 1. `AUTHORED_TWIST_KEYS` at `src/meta/ContractFamilies.ts:1542-1547` holds 23 keys and contains **no `emberShore`**. Enforced at `:1654` via `addUnknownFieldReasons(twist, AUTHORED_TWIST_KEYS, 'twist', reasons)`.
 2. `addUnknownFieldReasons` (`:1695`) iterates **top-level keys only** — it does not descend. So `twist.emberShore` produces exactly ONE `field_unknown` reason. ⓘ **The predecessor also reported "the negative `squallDecayPerSecond`" as a second rejection. That is NOT a separate blocker today** — no validator descends into an unknown key, and the author found no negative-value check for it. Treat it as scope item 6, not as a red.
 3. **The house pattern for data declared ahead of its consumer is a TWO-step registration**, and the two freshest precedents merged today: `twist.scheduledRelocation` (A9) and `twist.persistentCanalChoices` (A10) each appear in **both** `AUTHORED_TWIST_KEYS` **and** `DECLARED_INERT_PATHS` (`:1568-1613`). Follow that pattern exactly — do NOT write a bespoke validator.

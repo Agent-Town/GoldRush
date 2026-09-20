@@ -1,6 +1,6 @@
 # f1617-1 — saveData keeps the two bulk town halls cold (MERGED)
 
-Slice: `f1617-1-savedata-town-trim` · branch `lane/c` · tip `cc0d330ee` · merge `f5dbb5448`
+Slice: `f1617-1-savedata-town-trim` · branch `lane/c` · tip `f68738008` · merge `bbc35cc0b`
 Drained by s1618, 2026-08-10.
 
 ## Verdict
@@ -101,7 +101,7 @@ across arms, exactly as done here, rather than chase an absolute green they cann
 
 ## Merge classification
 
-`main..lane/c` = 1 commit `cc0d330ee`, **124 paths**, all LANE-ONLY. Functional surface 12 files
+`main..lane/c` = 1 commit `f68738008`, **124 paths**, all LANE-ONLY. Functional surface 12 files
 (+45/-71); the remaining 112 are regenerated `artifacts/**` evidence, which is never byte-identity
 gated (F-1266-1). Main had not moved any of the twelve since the lane's base — no three-way graft
 needed, merge applied clean.

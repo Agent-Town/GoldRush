@@ -1,8 +1,8 @@
 # f1314-3-stockpile-tier-voice — drain review (s1316)
 
 - **Slice:** F-1314-3 / F-1314-4 — Stockpile Yard tier voice
-- **Branch / tip:** `lane/m3` @ `03892979` (`fix: give Stockpile Yard its tier voice`)
-- **Merge:** `de3c68d5` (`de3c68d59405a72f5e6149a6e647ef22304eacb0`), merge-base `968efee6`
+- **Branch / tip:** `lane/m3` @ `1530557b` (`fix: give Stockpile Yard its tier voice`)
+- **Merge:** `8c8d6139` (`8c8d6139fb346594b5f65e66c640c31bcf4b63d8`), merge-base `e714d05f`
 - **Verdict:** ✅ **MERGED** — code correct, gates green, two known reds unchanged. **One HIGH finding filed (F-1316-1), pre-existing and out of this slice's firewall.**
 
 ## What it does
@@ -59,7 +59,7 @@ expectation exactly: **exactly two, named in advance.**
 
 ## Merge classification
 
-`git diff --name-only 968efee6..main -- src/ e2e/` → **empty**. Main moved **zero** source or spec files
+`git diff --name-only e714d05f..main -- src/ e2e/` → **empty**. Main moved **zero** source or spec files
 since the merge-base, so all eight paths are **LANE-TOUCHED**, none MAIN-MOVED, no graft needed.
 `--no-ff` merge, clean, no conflicts.
 

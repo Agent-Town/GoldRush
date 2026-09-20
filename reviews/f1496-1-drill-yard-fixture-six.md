@@ -1,13 +1,13 @@
 # f1496-1-drill-yard-fixture-six — the E1 mechanics fixture catches up to a registry that changed five days ago
 
-**Slice:** `lane-f1496-1-drill-yard-fixture-six.md` (FIRE-AUTHORED s1500) · **Branch:** `lane/a` · **Tip:** `5edfd4a6e` *"dyf: sync Drill Yard mechanics fixture"*
-**Drained by:** s1501 fire · **Merge:** `8fa0133f5ed14cbe7eb654b699aeaf4d6fd016e6`
+**Slice:** `lane-f1496-1-drill-yard-fixture-six.md` (FIRE-AUTHORED s1500) · **Branch:** `lane/a` · **Tip:** `e5ef11fd7` *"dyf: sync Drill Yard mechanics fixture"*
+**Drained by:** s1501 fire · **Merge:** `77a1b19bc39536908d4f0c03943d42da0e27a7a8`
 
 ## VERDICT: MERGED — the slice does exactly its job on both projects, and the residual red is main's, proved by a control run rather than asserted.
 
 ## What it does
 
-`e1-drill-yard` became the **sixth** E1 contract at `74df35dcf`. Two things in `e2e/agent-view.spec.ts` still
+`e1-drill-yard` became the **sixth** E1 contract at `19f212b71`. Two things in `e2e/agent-view.spec.ts` still
 said five: the id assertion at `:269` and the byte-stable fixture `e2e/fixtures/e1-mechanics-manifests.json`.
 This slice regenerates the fixture from `listContracts().map(deriveMechanicsManifest)` (six entries,
 `e1-drill-yard` second, registry order), updates the id list, and corrects the test title from *"all five"*
@@ -49,7 +49,7 @@ the `vite.ssrLoadModule` harness, arrived at by an independent path. And the spe
 
 ## Merge classification
 
-Base `06c5ee4cb`; `lane/a` one commit ahead, six behind. Three-way `git merge --no-ff` (never a two-dot
+Base `aa2fe3f14`; `lane/a` one commit ahead, six behind. Three-way `git merge --no-ff` (never a two-dot
 copy). Main had moved **neither** touched file since the merge-base, so both files are LANE-TOUCHED-only and
 the ort strategy reported no conflicts. The two-dot diff shows eleven other paths — all MAIN-MOVED
 (s1500's scratch cleanup, BACKLOG, goals.json, STATUS) and none of them the lane's.

@@ -1,6 +1,6 @@
 # Review: perf-optimization-survey — the county's first full performance survey (lane-b; Codex instruments salvaged, completed by Claude Opus 5; attended drain 2026-09-06 early)
 
-**Slice/branch/tip:** `perf-optimization-survey` · `lane/b` · salvage `b50676bd8` (the codex run's instruments, died at 41 min on "Selected model is at capacity") + `a3ba9af82`, `dfad06fd9`, `954d7de58` (Opus) · merged to main at `7e85c9e43` (first-parent merge; the only conflict was the ledger, unioned).
+**Slice/branch/tip:** `perf-optimization-survey` · `lane/b` · salvage `afc37ce35` (the codex run's instruments, died at 41 min on "Selected model is at capacity") + `9f53163cb`, `392df7b2f`, `954d7de58 (archive: pruned by the A3 rewrite)` (Opus) · merged to main at `5bba45fb6` (first-parent merge; the only conflict was the ledger, unioned).
 **Verdict:** MERGED as a measurement deliverable. No game code changed: `docs/reviews/2026-09-05-perf-survey.md` (8,600 words), `scripts/perf-survey/` (20 instrument files), `artifacts/perf-survey/**` (826 files, 126 MB, largest 4.5 MB; the 59 MB of `.cpuprofile` deliberately left untracked on disk), one ledger row.
 
 ## What it found
@@ -8,7 +8,7 @@
 - **Where the cost actually is:** the sim (`StandingOrders.snapshot()` deep-clones the whole growing history, 59% of the `county-e6-picnic` replay, `src/agent/StandingOrders.ts:290`+`:845`; 10 of 25 county tapes replay below 20× realtime and 6 more exceed the 60 s node ceiling), delivery (the town's first load 23.99 MB of a 25 MB budget, `e5-regatta` 31.49 MB; the Fast-3G first frame a fixed 7.25 s on 0.89 MB, latency-bound), and resident texture memory (89-215 MB per map after the shared atlas; six 1672×941 boss sheets are 50.3 MB of `the-claim`'s 166.8 MB). `EnemyPool` submits 39,360 triangles of empty pool at wave 1; 63% of submitted triangles carry `frustumCulled = false` (72 sites). The same-document town round trip leaks 0.62 MB of JS heap per cycle.
 - **Two master premises corrected:** the board holds 42 contracts, not 36 (the six `terrainMesh: off` boards), and every terrain grid is 128² = 32,768 triangles (a "64-grid" is a 4× cut, not 2×).
 - **F-PERF-14 (integrity, ahead of the whole ladder, owner desk):** `county-e3-moth-season` replays to `fnv1a32:9be0399e` against the tape's recorded `64e32dde` and runs 16,390 ticks against 10,801 declared, reproduced twice at loads 64 and 16; the repo's own `scripts/assay-replay-agent.mjs` produces the same divergent hash. All 24 other tapes match exactly. Stale reel or engine divergence is not resolved here; it is F-E8RM-8's contract-lineage question made concrete (Moth Season's composition changed today).
-- **Cross-reference with the Astra wave:** the asset-diet manifest, shared atlas, bounded prefetch, triangle sampler and Lantern stage are all in the measured build `5f1cc3cea` and not re-litigated; `landmark-lighting-calibration` (`ab3704716`) is NOT in the measured build.
+- **Cross-reference with the Astra wave:** the asset-diet manifest, shared atlas, bounded prefetch, triangle sampler and Lantern stage are all in the measured build `44efbf3d6` and not re-litigated; `landmark-lighting-calibration` (`a05abdf1d`) is NOT in the measured build.
 
 ## Evidence
 | Check | Result |
@@ -20,7 +20,7 @@
 | Attended on the merged tree | tsc clean; nothing under `src/` changed, so no era pin and no e2e beyond the node-guard battery run with the chapter drains |
 
 ## Merge classification
-Base `0a389637f` (the s2529 handoff). 847 files added (826 under `artifacts/perf-survey/`, 20 under `scripts/perf-survey/`, the report), 1 modified (`tasks/BACKLOG.md`, MAIN-MOVED, unioned: the lane's row prepended over main's). No `src/` file touched.
+Base `79c7d2c57` (the s2529 handoff). 847 files added (826 under `artifacts/perf-survey/`, 20 under `scripts/perf-survey/`, the report), 1 modified (`tasks/BACKLOG.md`, MAIN-MOVED, unioned: the lane's row prepended over main's). No `src/` file touched.
 
 ## Findings
 - **F-PERF-14** goes to the OWNER'S DESK as ladder rung 0 (`moth-season-replay-hash-divergence`) beside the contract-lineage row from F-E8RM-8; the assayer verifies standings by that hash, so this is correctness, not speed.

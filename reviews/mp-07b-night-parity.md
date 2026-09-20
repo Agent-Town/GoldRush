@@ -1,6 +1,6 @@
 # Review — mp-07b: headless night parity
 
-**Slice/branch/tip:** mp-07b (`tasks/lane-mp07b-night-parity.md`) · `lane/d` · tip `c24ae2200` · merged `3dec093294b95051b37a54ca94a60c8a4808f58b` · drained attended 2026-08-08.
+**Slice/branch/tip:** mp-07b (`tasks/lane-mp07b-night-parity.md`) · `lane/d` · tip `99e4bf8c0` · merged `1c94cc1f3c9aaa9a10fa2d90085d138dc7dfd30e` · drained attended 2026-08-08.
 
 **Verdict: MERGED — gate green (one known instrument class).**
 

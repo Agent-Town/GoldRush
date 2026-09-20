@@ -1,7 +1,7 @@
 # verifiers-gate-and-stderr — drain review (s1300)
 
 **Slice:** `lane-a-verifiers-gate-and-stderr` (FIRE-AUTHORED s1299)
-**Branch:** `lane/m3` @ `3747bc5c` · **Base:** `e74265db` · **Merge:** `818aa398` · **Corrective:** `abd174f0`
+**Branch:** `lane/m3` @ `3747bc5c` · **Base:** `bd6ce307` · **Merge:** `088a9138` · **Corrective:** `57c613dc`
 
 ## Verdict
 
@@ -9,7 +9,7 @@
 
 - **Scope 3–5 (regression test + `_read_sim_reply` fix): PASS, independently reproduced.**
 - **Scope 1–2 (the venv bootstrap): FAIL as delivered — `rc=1` in the fire shell.** Cured in the same
-  fire at `abd174f0` (F-1300-1), because the fire shell is the *only* shell that reproduces it.
+  fire at `57c613dc` (F-1300-1), because the fire shell is the *only* shell that reproduces it.
 
 Merging rather than withholding: the defective half is a brand-new script with **zero consumers**, so
 it regresses nothing, while the proven half closes a real fault. Withholding the whole slice would have
@@ -41,7 +41,7 @@ gate at all — F-1298-3's ask.
 | `npm run test:node-guards` | **rc=0** (findings-state PASS 175/137/38 double-state 0 · blocker-panel PASS · ruling-propagation PASS) |
 | python suite, **main's tree**, pyenv 3.11.13 | **Ran 4 tests — OK, rc=0** |
 | `scripts/verifiers-venv.sh` **as delivered** | ⛔ **rc=1**, twice |
-| `scripts/verifiers-venv.sh` **after `abd174f0`** | ✅ rc=0 cold (probes → clear → install → 4 tests OK); rc=0 warm (reused, no reinstall, **1.52 s**) |
+| `scripts/verifiers-venv.sh` **after `57c613dc`** | ✅ rc=0 cold (probes → clear → install → 4 tests OK); rc=0 warm (reused, no reinstall, **1.52 s**) |
 | playwright | **not run — stated, not skipped silently.** A python package plus a shell script; zero runtime surface. §3.1's `--workers=1` is moot here. |
 
 **Merge classification:** `ahead=1`, `paths=5`, **LANE-ONLY 5, BOTH-MOVED 0** — main moved only
@@ -66,7 +66,7 @@ PATH, so I re-ran the suite against **main's** tree and asserted
 
 ## Findings
 
-### F-1300-1 — the bootstrap meant to end "unreproducible greens" produced one, in three compounding ways · **CURED `abd174f0`**
+### F-1300-1 — the bootstrap meant to end "unreproducible greens" produced one, in three compounding ways · **CURED `57c613dc`**
 
 The irony is exact: F-1298-3 exists because this package once shipped a green nobody could reproduce.
 The script written to close that hole **failed in the fire shell**, which is the shell that gates.
@@ -87,7 +87,7 @@ Plus a label defect of the kind this factory keeps meeting: the header printed `
 the **probed** interpreter's version. On a first run that path does not exist yet — the label named one
 subject and the number another.
 
-**Cure (`abd174f0`)** checks both bounds with the ceiling's source named in a comment; probes pyenv and
+**Cure (`57c613dc`)** checks both bounds with the ceiling's source named in a comment; probes pyenv and
 homebrew install roots as well as PATH; gates reuse on the post-install marker *and* a re-checked window,
 rebuilding via `venv --clear` rather than `rm -rf`; and reports the interpreter actually selected.
 

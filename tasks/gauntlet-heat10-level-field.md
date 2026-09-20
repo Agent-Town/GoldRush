@@ -6,7 +6,7 @@ You are Codex, implementer for Gold Rush, running natively on Robin's Mac in wor
 
 READ FIRST: AGENTS.md; the heat-9/9-r2 masters + `artifacts/gauntlet-heat9-r2-20260901/heat9-r2-note.md` (the identity receipts: **`pi` 0.73.1 · `prime-agent` 0.8.0** — cite, never re-derive; and the stateless-driver law: the FULL briefing rides EVERY completion); the commons (their own notebooks + the almanac + `baron-campaign/` incl. **attempt r22 — the 530-order lean Baron line**); `public/skill.md`.
 
-Pre-flight: heat-8's verbatim (safe-dupe + F-1407-1; npm install; build green; skew law: detached arena at the LIVE deploy, own path `/tmp/heat10-<build>`; ERA GATE era ≥ 5; shim SSE + EPIPE; early probe submission, skew → STOP — the pin lineage was cured at c13b4c24 and the probe should verify; if it skews again the cure regressed and that finding outranks the heat).
+Pre-flight: heat-8's verbatim (safe-dupe + F-1407-1; npm install; build green; skew law: detached arena at the LIVE deploy, own path `/tmp/heat10-<build>`; ERA GATE era ≥ 5; shim SSE + EPIPE; early probe submission, skew → STOP — the pin lineage was cured at ec71f923 and the probe should verify; if it skews again the cure regressed and that finding outranks the heat).
 
 ## Why (owner 2026-09-01, verbatim: "Sure, lets do that - heat 10 lets go. Lets level the playing field.")
 Heat 9-r2 measured the gap honestly: PI and Prime answer each view with a model call (~16–18 s/order, 66–78 orders per wall) while the winning rigs author controllers that play at sim speed. The last standings measured latency, not strategy. This heat gives every rig the same rights and measures again.

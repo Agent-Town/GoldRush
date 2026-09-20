@@ -48,7 +48,7 @@ Screenshots include intact, each component-damage state, and post-kill baseline 
 
 ## 2026-09-05: renderer counts re-recorded under the shared atlas
 
-The "Renderer disposal evidence" table above is the 2026-07-14 recording. `src/assets/SharedAtlasPlugin.ts` (merged `3a47f1800`) shares one texture per image content hash across GLBs on the shared loader, which lowered this spec's exact `renderer.info.memory.textures` pins by design. Re-measured on `cf91fe5e9`:
+The "Renderer disposal evidence" table above is the 2026-07-14 recording. `src/assets/SharedAtlasPlugin.ts` (merged `bbf1c3832`) shares one texture per image content hash across GLBs on the shared loader, which lowered this spec's exact `renderer.info.memory.textures` pins by design. Re-measured on `c3884d89d`:
 
 | Project | Phase | Old textures | New textures |
 | --- | --- | ---: | ---: |

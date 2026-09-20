@@ -1,5 +1,5 @@
 // s1608 — replace the literal NUL my BACKLOG edit wrote with printable escape text.
-// Same defect class as 1a2871fd3 (Game.ts composite-key delimiters escaped to restore
+// Same defect class as 206d6cffb (Game.ts composite-key delimiters escaped to restore
 // grep), which is the very merge the sentence containing it describes.
 // The NUL is CONSTRUCTED, never typed, so this file cannot itself carry one.
 import { readFileSync, writeFileSync } from 'node:fs'

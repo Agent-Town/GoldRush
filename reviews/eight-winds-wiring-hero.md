@@ -1,7 +1,7 @@
 # EIGHT-WINDS-WIRING slice 1 (hero diagonals) — STOPPED LAWFULLY, report landed
 
 > **ACT 2 IS AT THE BOTTOM OF THIS FILE.** The same master was re-run after its blocker was
-> cured (`8159fe6b`) and **MERGED at `29bac3d9` by the s1179 fire**. Everything below this line
+> cured (`01a40f9a`) and **MERGED at `1b6bc748` by the s1179 fire**. Everything below this line
 > is the first attempt's lawful STOP, kept verbatim.
 
 **Slice:** `lane-c-eight-winds-wiring-hero`
@@ -64,8 +64,8 @@ I measured it two further ways before believing either:
      closed and complete.
 
 **Provenance accounts for all 26, and the runner's account of its 9 is exact:**
-`21dc8739` *"fix-walk-cutout-pockets"* (2026-07-13) changed **80** shipped cells and **zero**
-masters; `04732223` *"town-cast-metrology"* (2026-07-12) changed **3** shipped cells and
+`ad64b175` *"fix-walk-cutout-pockets"* (2026-07-13) changed **80** shipped cells and **zero**
+masters; `8b7b803a` *"town-cast-metrology"* (2026-07-12) changed **3** shipped cells and
 **zero** masters. Of those, the ones with a paired master are precisely our 26 (7 hero + 17
 baron from the first; 2 hero from the second).
 
@@ -141,9 +141,9 @@ needs a provenance-aware reference set. It must not guess between those.
 
 # ACT 2 (s1179, 2026-07-28) — THE SAME MASTER, RE-RUN AND MERGED
 
-**Slice:** `lane-c-eight-winds-wiring-hero` (second attempt, blocker cured by `8159fe6b`)
-**Branch / tip:** `lane/e2-arsenal` @ `46397ac5`, base `f3b5cc17`
-**Merged:** `29bac3d9` — 77 files, +707/−2
+**Slice:** `lane-c-eight-winds-wiring-hero` (second attempt, blocker cured by `01a40f9a`)
+**Branch / tip:** `lane/e2-arsenal` @ `46397ac5`, base `2c56d6fb`
+**Merged:** `1b6bc748` — 77 files, +707/−2
 **Drained by:** s1179 fire
 **§3.0 `drain-block-check`:** `✅ CLEAR — lane-c-eight-winds-wiring-hero.md [eight-winds-wiring-hero] status="queued"`, run as the **first command** of the drain, before classification and before I formed an opinion.
 
@@ -213,7 +213,7 @@ clean main, re-run, restore. That is a single-variable control aimed at the defe
 
 ## Merge classification
 
-Base `f3b5cc17`. `git diff --name-only f3b5cc17..main` = `STATUS.md`, three `scripts/tmp-s117*`
+Base `2c56d6fb`. `git diff --name-only 2c56d6fb..main` = `STATUS.md`, three `scripts/tmp-s117*`
 helpers, `specs/e10-static-mechanic-DRAFT.md`, `tasks/BACKLOG.md`, `tasks/goals.json`,
 `tasks/lane-a-cp04-lever-unlock-seed-realign.md`. **None of those is in the lane's 77-file set**,
 so every path is **LANE-TOUCHED, MAIN-MOVED nothing, no 3-way graft.** Applied with

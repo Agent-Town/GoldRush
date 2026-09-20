@@ -4,7 +4,7 @@
 
 ## Correction to the s73/s74 handoff mapping
 The prior handoffs called this a **5-task** pile (038+013+026+037+040). **Wrong.** Verified against actual diffs:
-- **013 (m2-07b building-incentive) is ALREADY COMMITTED** as `ea570a8` (landed with m2-07b 8/8, m2-04/05/05b green). Its signatures (`pressureBudgetShared`, `blast.dmgPerWave`, `repair.pctOfCost`, Powder Charge/Wide Ring/Quick Fuse) are in HEAD, not in the working-tree diff. s73/s74 counted 013's done-MARKER as uncommitted output. The real pile was **four** tasks.
+- **013 (m2-07b building-incentive) is ALREADY COMMITTED** as `fb9e2c6` (landed with m2-07b 8/8, m2-04/05/05b green). Its signatures (`pressureBudgetShared`, `blast.dmgPerWave`, `repair.pctOfCost`, Powder Charge/Wide Ring/Quick Fuse) are in HEAD, not in the working-tree diff. s73/s74 counted 013's done-MARKER as uncommitted output. The real pile was **four** tasks.
 - s74 also mis-mapped files (claimed Balance.ts = 038-anim/013-building; it is actually 026's `agent:` block; claimed Game.ts had 026 xp code; it is entirely 037's prompt wiring). Attribution below is from real diffs, per claim-verification rule.
 
 ## Gates (whole superimposed tree — full native runs)

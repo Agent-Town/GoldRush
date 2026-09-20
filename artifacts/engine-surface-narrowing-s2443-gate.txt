@@ -4733,9 +4733,9 @@ OVERALL rc=0
 cwd=/Users/robin/Claude/Projects/Gold Rush/gate-s2443
 
 ===== guards-from-diff =====
-$ node scripts/run-guards.mjs --changed-since 8c1054704
+$ node scripts/run-guards.mjs --changed-since d2a2179f8
 rc=1 953.8s
-run-guards: 31 file(s) changed since 8c1054704
+run-guards: 31 file(s) changed since d2a2179f8
   base gate: test:node-guards, test:power-budget, test:task-guards, test:citations, test:gate-callers
   + test:stats, test:accounts, test:mp <- 1 file(s) in functions/** (Cloudflare Pages Functions -- type-checked since s1235; these gate BEHAVIOUR)
 

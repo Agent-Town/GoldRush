@@ -1,7 +1,7 @@
 # TAPE-01 — every run leaves a tape
 
 **Slice:** `lane-run-tape` (TAPE-01, `specs/agent-play/README.md` §AP-09)
-**Branch:** `lane/perf` (lane-d slot) · **Tip:** `78c310db` · **Base:** `5bce2fbd` (ancestor of main, verified)
+**Branch:** `lane/perf` (lane-d slot) · **Tip:** `78c310db` · **Base:** `f978c619` (ancestor of main, verified)
 **Drained:** s1297, 2026-07-31 · **Gate custody:** detached worktree `worktrees/gate-s1297` (F-1295-1); main's tree held the arm only between the final apply and the commit.
 
 ## Verdict
@@ -19,7 +19,7 @@ Every ended run now writes a tape — `{contract, seed, difficulty, simVersion, 
 | `npx tsc --noEmit` | rc=0, clean |
 | `npm run build` | rc=0, built in 1.10s |
 | `e2e/tape-01-run-tape.spec.ts` (subject) | **8/8 passed**, desktop+mobile, `1 worker`, 14.5s |
-| `run-guards.mjs --changed-since 5bce2fbd` | **7/8** — `test:stats`, `test:accounts`, `test:mp`, `test:task-guards`, `test:gate-callers` + node-guards, power-budget all PASS; `test:citations` RED |
+| `run-guards.mjs --changed-since f978c619` | **7/8** — `test:stats`, `test:accounts`, `test:mp`, `test:task-guards`, `test:gate-callers` + node-guards, power-budget all PASS; `test:citations` RED |
 | `test:citations` on **clean main** | **RED, byte-identical 12 rows** → pre-existing (F-1296-2), merge touches **0** `.md` files |
 | Adjacent battery (10 specs, both projects) | **113 passed / 5 failed**, 8.8m, `--workers=1`, scratch port 5249 |
 | Plain-boot probe (no `?debug`) | **2/2 passed**, desktop + 390px, **zero console/page errors** |
@@ -43,7 +43,7 @@ Row 203 scopes that title DESKTOP-ONLY, so a mobile red was an unmatched fingerp
 
 | Arm | Full-file runs (`:186` instances) | Isolated `--repeat-each=4` | Pooled |
 |---|---|---|---|
-| PRE (main `a2204f39`) | 2/4 red | 1/8 red | **3/12** |
+| PRE (main `db0eff0a`) | 2/4 red | 1/8 red | **3/12** |
 | POST (lane `78c310db`) | 3/4 red | 0/8 red | **3/12** |
 
 **Identical.** `:186` is a ~25% flake living on **both** arms; the merge does not move it. Two independent facts fell out:
@@ -53,7 +53,7 @@ Row 203 scopes that title DESKTOP-ONLY, so a mobile red was an unmatched fingerp
 
 ## Merge classification
 
-Base `5bce2fbd`, confirmed an ancestor of main. `lane-freeze-classify lane/perf` → `ahead=1 paths=9`, **LANE-ONLY 9 · DUPLICATE 0 · MAIN-ONLY 0 · BOTH-MOVED 0**. Main's blob equals the base blob on all seven pre-existing paths; two are new files absent from both base and main. **No 3-way graft needed** — an exact path-scoped apply, every blob hash-asserted equal to the lane tip on landing.
+Base `f978c619`, confirmed an ancestor of main. `lane-freeze-classify lane/perf` → `ahead=1 paths=9`, **LANE-ONLY 9 · DUPLICATE 0 · MAIN-ONLY 0 · BOTH-MOVED 0**. Main's blob equals the base blob on all seven pre-existing paths; two are new files absent from both base and main. **No 3-way graft needed** — an exact path-scoped apply, every blob hash-asserted equal to the lane tip on landing.
 
 | Path | Class |
 |---|---|

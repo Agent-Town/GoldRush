@@ -16,7 +16,7 @@ OUT="artifacts/proto-pool-recycle/attribution.txt"
 # The pre-prototype tip this branch was cut from. Pinned by HASH, not by HEAD~n: later
 # evidence commits keep moving HEAD, and a relative pointer would silently measure the
 # wrong tree (the task-sequencing git-log-window trap).
-BASE="8b7371a4e"
+BASE="c3e3c856e"
 
 restore() {
   echo "--- restoring prototype tree" >&2

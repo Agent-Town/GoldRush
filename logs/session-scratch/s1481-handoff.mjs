@@ -49,7 +49,7 @@ const BODY =
   '**§3.0b’s detached gate worktree was unreachable through it with no workaround**, and it passed no `env`, so ' +
   'the scratch-port pair `GR_CAPTURE_BASE_URL`/`GR_CAPTURE_EXTERNAL_SERVER` could not be delivered (a fire cannot ' +
   'set those inline — the bash allowlist refuses that form). **Both gaps are load-bearing against laws written ' +
-  'AFTER s1275**, and three re-derivations post-date the home. ✅ **CURED BY WIDENING, NOT FORKING** (`36c8be0b1`): ' +
+  'AFTER s1275**, and three re-derivations post-date the home. ✅ **CURED BY WIDENING, NOT FORKING** (`b53444106`): ' +
   '`--cwd` + repeatable `--env`, both **failing CLOSED on rc=2** rather than falling back to the repo root or an ' +
   'empty env (a silent fallback returns a *real verdict about the wrong subject*), both **named in the transcript** ' +
   'so a battery can never claim a tree it did not measure, transcript still resolving against the REPO ROOT because ' +
@@ -63,7 +63,7 @@ const BODY =
   '`env: childEnv` left the env test **green**, because its `/marker-8842/` assertion was matched by the `env+` ' +
   'header **the driver writes itself** — the assertion was reading my bookkeeping, not the observation. Anchored on ' +
   '`SAW=` now. *A guard written and greened in the same minute has never executed its violation path.* ' +
-  '📎 **CITED IN LAW (`e2c3b9d6a`)** — `.claude/skills/drain/SKILL.md` now carries the invocation; a shipped cure is ' +
+  '📎 **CITED IN LAW (`b568000d6`)** — `.claude/skills/drain/SKILL.md` now carries the invocation; a shipped cure is ' +
   'inert until a law surface names it. (Skill writes are gated for fires; node fs is not.) ' +
   '⛔ **F-1481-2 FILED — I WAS SENT TO AUTHOR AN E7/E8/E9 ERA-SOCKET MASTER AND PROVED I MUST NOT.** Before writing ' +
   'scope I asked whether the harness is constructible — the lesson of the s1475 run that spent **124,606 tokens for ' +

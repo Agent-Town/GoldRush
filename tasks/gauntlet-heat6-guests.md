@@ -2,7 +2,7 @@
 
 You are Codex, implementer for Gold Rush, running natively on Robin's Mac in worktrees/lane-b. OPERATOR, no rider.
 
-READ FIRST: AGENTS.md; tasks/gauntlet-heat6-almanac-era.md (the sibling heat — its commons loop and laws apply per-rider here); tasks/gauntlet-heat4-streaming-field.md + its note (the field state: pi/omp/hermes/openclaw installed and shim-reachable; the EPIPE that ended heat-4 is CURED at 12c7d245b — this heat is the fix's field test); the gauntlet commons (`~/Claude/Projects/goldrush-gauntlet/`): each rider's `memories/<rig>/` dir + `almanac/`.
+READ FIRST: AGENTS.md; tasks/gauntlet-heat6-almanac-era.md (the sibling heat — its commons loop and laws apply per-rider here); tasks/gauntlet-heat4-streaming-field.md + its note (the field state: pi/omp/hermes/openclaw installed and shim-reachable; the EPIPE that ended heat-4 is CURED at 444304761 — this heat is the fix's field test); the gauntlet commons (`~/Claude/Projects/goldrush-gauntlet/`): each rider's `memories/<rig>/` dir + `almanac/`.
 
 Pre-flight: standard safe-dupe + F-1407-1; npm install; build green. Skew law per heat-4 (live deploy worktree, own path `/tmp/heat6g-<build>`, early probe). Start the STREAMING shim (`npm run codex-shim`) and verify SSE + the EPIPE survival (abort one request mid-stream; the shim must live) BEFORE the field rides.
 

@@ -3,12 +3,12 @@
 //
 // WHY: the leaf was parked (s1206, §5 third-failure escalation) on the premise that later barks
 // OVERTAKE a first-run guide beat in the single-slot hud-agent-feed. Two fires ago s1254 merged
-// 6f343a6e, which gives first-run guide beats a 4 s dwell and queues later beats FIFO — i.e. a
+// e3ee53d6, which gives first-run guide beats a 4 s dwell and queues later beats FIFO — i.e. a
 // cure for exactly that mechanism, landed by an unrelated slice. A stopped leaf goes stale when a
 // successor merges, so the question "does the parked spec still red?" is now a measurement, not a
 // belief.
 //
-// THE ONE EDIT, AND WHY IT IS NOT A CURE: GG-04 (c5a00849, s1255) REMOVED the greenhorn question
+// THE ONE EDIT, AND WHY IT IS NOT A CURE: GG-04 (bd4c5c18, s1255) REMOVED the greenhorn question
 // from the start menu — verified at source, `greenhorn-question` exists nowhere in src/ and three
 // specs on main now assert toHaveCount(0). The parked spec asserts it VISIBLE at lines 166-168, so
 // as written it reds on a control that no longer exists, for a reason that has nothing to do with
@@ -50,7 +50,7 @@ const STALE_BLOCK = `  await expect(page.getByTestId('greenhorn-question')).toCo
   await expect(page.getByLabel('Yes - ease me onto the trail')).toBeVisible();
   await expect(page.getByLabel('No - give me the regular trail')).toBeChecked();
 `;
-const GG04_BLOCK = `  // s1256 re-measurement: GG-04 (c5a00849) removed the greenhorn question; main asserts its
+const GG04_BLOCK = `  // s1256 re-measurement: GG-04 (bd4c5c18) removed the greenhorn question; main asserts its
   // ABSENCE in three specs. Same assertion, today's truth. Nothing else in this file is changed.
   await expect(page.getByTestId('greenhorn-question')).toHaveCount(0);
 `;

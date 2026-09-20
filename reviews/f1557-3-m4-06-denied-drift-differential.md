@@ -1,8 +1,8 @@
 # Review — f1557-3: M4-06 permission-denied drift differential
 
 **Slice:** `tasks/lane-b-f1557-3-m4-06-denied-drift-differential.md` (FIRE-AUTHORED s1557)
-**Branch:** `lane/b` · **tip:** `71f85ebce` · **merge-base:** `ff4c536f`-era main
-**Merged to main:** `beddce2fac143829d1574c0dd15ca000098cb4d0` (s1558, `--no-ff`, `ort`, no conflicts)
+**Branch:** `lane/b` · **tip:** `36b7c4e1d` · **merge-base:** `ff4c536f`-era main
+**Merged to main:** `88b3ea977cd32fdf090f14f475a58588b2661411` (s1558, `--no-ff`, `ort`, no conflicts)
 
 ## VERDICT: MERGED — the reorder is delivered and valuable; the metric change is not what it claimed, and the flake is NOT cured
 

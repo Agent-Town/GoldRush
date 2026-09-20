@@ -1,7 +1,7 @@
 # Task lane-cw-02-wrecker-target-premise: F-1109-1'S LAST RED — MEASURE THE GEOMETRY FIRST, THEN FIX WHAT IT SAYS
 
 **FIRE-AUTHORED (attended review welcome) — s1114, 2026-07-27.** This closes the last survivor of the
-F-1109-1 → F-1112-1 chain. Three of those four specs went green at `b43b31ad`; ✓ re-measured on current
+F-1109-1 → F-1112-1 chain. Three of those four specs went green at `5097b3e6`; ✓ re-measured on current
 main by s1114 at `--workers=1`: **3 passed / 1 failed**, the failure being `cw-02-escort.spec.ts:134`.
 
 You are Codex (worktrees/lane-a).
@@ -94,7 +94,7 @@ result, STOP and report — that is a lawful, valuable outcome.**
 
 Measured by s1114 at author time — **re-confirm, do not trust**:
 - `lane/m3` is **1 ahead of main and its content is fully merged** (`board-card-images-steer` landed
-  `70ce6e50`), so the reset below is loss-free. Re-verify before resetting:
+  `b7fd359f`), so the reset below is loss-free. Re-verify before resetting:
 
 ```
 git -C worktrees/lane-a fetch --all

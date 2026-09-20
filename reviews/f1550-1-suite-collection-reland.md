@@ -1,9 +1,9 @@
 # f1550-1 — the suite collects again: `takeBuildRejectionDetail` moves to a zero-import leaf
 
 Slice: `tasks/lane-f1550-1-suite-collection-reland.md` (FIRE-AUTHORED s1550)
-Branch: `lane/c` · tip `279b01c03` · base (merge-base) `b6c10a1115`
-Drained by: **s1551** · merged to main at **`c6b09a17871b5fbd440fff40e5a844eb86317afb`**
-Gate worktree: `gate-s1551` (detached at `279b01c03`, §3.0b custody — no undecided content ever entered main's working tree)
+Branch: `lane/c` · tip `7ce9e09de` · base (merge-base) `6567d8cc88`
+Drained by: **s1551** · merged to main at **`b9600fbb39db522118fd33f56880e16a7dda0cb0`**
+Gate worktree: `gate-s1551` (detached at `7ce9e09de`, §3.0b custody — no undecided content ever entered main's working tree)
 Transcript: `artifacts/f1550-1-gate.txt`
 
 ## VERDICT: MERGED — all gates green, and the decisive number moved from 0 to 2740.
@@ -21,7 +21,7 @@ This slice cuts the edge the only way it can be cut. Because the symbol is used 
 | Gate | Result |
 |---|---|
 | **`npx playwright test --list` (merged tree)** | **exit 0 — `Total: 2740 tests in 389 files`** |
-| **`npx playwright test --list` (CONTROL, main at `0ac57f63b`)** | **`Total: 0 tests in 0 files`** + `TypeError: Module ".../m1-core.layer-contract.v1.json?raw" needs an import attribute of "type: json"` |
+| **`npx playwright test --list` (CONTROL, main at `dd4811623`)** | **`Total: 0 tests in 0 files`** + `TypeError: Module ".../m1-core.layer-contract.v1.json?raw" needs an import attribute of "type: json"` |
 | `npx playwright test --list` (main AFTER merge) | exit 0 — `Total: 2740 tests in 389 files` |
 | `npx tsc --noEmit` | **0** |
 | `npm run build` | green (vite 1.04 s; asset-diet ran, 84% terrain cut, herald 1,158,214 / 1,500,000 ceiling) |
@@ -42,7 +42,7 @@ Performed by the runner and recorded in its report: re-pointing `ToolSurface` at
 
 ## Merge classification
 
-**Pure LANE-TOUCHED across all three files, ZERO MAIN-MOVED.** `git diff <merge-base b6c10a1115> main` over `src/agent/ToolSurface.ts`, `src/systems/BuildSystem.ts`, `src/systems/buildRejectionDetail.ts` is **empty** — main never moved any of them while the lane worked. Clean `ort` merge, no graft, no conflict resolution. Firewall held exactly: three files, +22 / −18, and `src/world/Terrain.ts` untouched (the `?raw` import is a Vite contract and a separate design question, correctly left alone). None of the forbidden greens were taken — no `e2e/` edit, no testIgnore entry, no alias re-import.
+**Pure LANE-TOUCHED across all three files, ZERO MAIN-MOVED.** `git diff <merge-base 6567d8cc88> main` over `src/agent/ToolSurface.ts`, `src/systems/BuildSystem.ts`, `src/systems/buildRejectionDetail.ts` is **empty** — main never moved any of them while the lane worked. Clean `ort` merge, no graft, no conflict resolution. Firewall held exactly: three files, +22 / −18, and `src/world/Terrain.ts` untouched (the `?raw` import is a Vite contract and a separate design question, correctly left alone). None of the forbidden greens were taken — no `e2e/` edit, no testIgnore entry, no alias re-import.
 
 ## Findings
 

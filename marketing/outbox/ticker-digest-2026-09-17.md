@@ -9,7 +9,7 @@ beside it as a control — both read **106**, so the day boundary is not a timez
 was asserted before any count was believed: **12,021** first-parent commits in the whole history, so a zero
 here would have been an answer and not a failed read. The player-path test is **imported** from
 `scripts/gazette-backfill-sweep.mjs` (`isPlayerPath`), never re-typed, per F-1261-1. The day was asked as a
-day — `git diff cac00799d^..028a783e0` — rather than commit by commit, because of the merge-direction
+day — `git diff c9cf4f78f^..a3fc5a78f` — rather than commit by commit, because of the merge-direction
 over-count F-2583-1 names.
 
 **The shape of the day: 106 first-parent commits, and the player-visible half is 691 files wide.** Four
@@ -24,7 +24,7 @@ it *looks*, and all of it arrived in the last ninety minutes of the day.
 **The county's two big machines were built again, and they cost less to carry.** Astra's rebuilt Dredge Queen
 and Old Digger landed with their loaders rewritten to demand the new shapes rather than hope for them.
 
-- `2a1de4eca` — **The Dredge Queen's claw now opens.** The model gains an `Cycle_OpenGrab` cycle and the
+- `acde76581` — **The Dredge Queen's claw now opens.** The model gains an `Cycle_OpenGrab` cycle and the
   loader drives it on the same curve as the fallback jaws, so the grab is one motion instead of a swap. The
   Old Digger's bucket wheels were **split into port and starboard** and now turn in place on measured pivots.
 - **Both bosses got smaller while getting better.** The Old Digger drops from 16,104 triangles to 7,192 and
@@ -37,7 +37,7 @@ and Old Digger landed with their loaders rewritten to demand the new shapes rath
 **Nine outlaws learn to face every way.** Nine of the county's E6–E9 machines and toughs had only ever been
 drawn facing one direction, and turned by cheating.
 
-- `dfb90fe68` — **612 fresh cells across 60 families, and every one of the nine now registers all eight
+- `a8b41aac4` — **612 fresh cells across 60 families, and every one of the nine now registers all eight
   headings.** The Baron gains clean north-east and west plates with the ground wedge under him cut from 739
   dark pixels to 380; the thief gets a real south-east; the rail tough, coal thief and steam wrecker get true
   back views instead of mirrored fronts.
@@ -46,7 +46,7 @@ drawn facing one direction, and turned by cheating.
   Jumper's north and west, and diagonals for the Steam Wrecker and Coal Thief all still need cells cut. That
   is a future art batch and waits on the owner's word.
 
-**The era seal was re-pinned twice — same era, not a new one.** `f88edd74a` and `bf893a71e` append pins #6 and
+**The era seal was re-pinned twice — same era, not a new one.** `6c46f1430` and `e75211c1d` append pins #6 and
 #7 to era 6, so the engine hash moves with the render-side code and the new cells. Nothing about the
 Re-surveyed Claims changed underneath a rider's existing reels.
 
@@ -74,6 +74,6 @@ slots were already spent; the two era pins were judged there and dismissed as sa
 repeated here because a digest reports the day, and this was the day.
 
 ---
-*Compiled by the s2612 fire. Day boundary `cac00799d^`..`028a783e0`. 106 first-parent commits, 4 player-path,
+*Compiled by the s2612 fire. Day boundary `c9cf4f78f^`..`a3fc5a78f`. 106 first-parent commits, 4 player-path,
 691 player-visible files net, 844 files in all, 17 fire sessions. No commit message was used to classify
 anything.*

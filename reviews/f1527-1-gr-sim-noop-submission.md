@@ -1,8 +1,8 @@
 # f1527-1 — GR-SIM gains a way to say NOTHING
 
 **Slice:** `f1527-1-gr-sim-noop-submission` (F-ER02-2, P0)
-**Branch / tip:** `lane/a` @ the runner's auto-commit on base `3985f42fe012568e325429527ab3a3fc3e9be315`
-**Merged to main:** `b55e6ac56b7b5737883f7f7079994903d1c11831`
+**Branch / tip:** `lane/a` @ the runner's auto-commit on base `968b62f4babd273e976b696c84eeb2e16f3c7991`
+**Merged to main:** `b022727e8802b86790e2dcb534a6336150bde533`
 **Gated by:** s1528 fire, 2026-08-07, in detached worktree `gate-s1528` (§3.0b custody)
 **Node:** 26.4.0 (the `.nvmrc` pin) on every arm — stated explicitly per F-1527-3, which found the
 previous lane run reporting reds that were a Node-major artifact rather than the slice.
@@ -89,7 +89,7 @@ browser probe would measure main and not this slice. Same reasoning s1527 record
 | `scripts/gr-sim.mjs` | **LANE-TOUCHED only** | direct application |
 | `scripts/gr-sim.test.mjs` | **LANE-TOUCHED only** | direct application (pure insertion) |
 
-`git log 3985f42fe..main` over both files is **EMPTY** — main never moved either since the lane's
+`git log 968b62f4b..main` over both files is **EMPTY** — main never moved either since the lane's
 base, so no MAIN-MOVED bucket and no graft. A real `git merge --no-ff lane/a` was performed in the
 detached gate worktree, and the blobs are identical across all three of main's working tree,
 `lane/a`, and the gate merge (`34ebe4cd`, `6dfa976a`) — the tree that landed is the tree that was

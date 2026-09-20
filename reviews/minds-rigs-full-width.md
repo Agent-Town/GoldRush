@@ -1,7 +1,7 @@
 # minds-rigs-full-width — F-1620-6 cure, owner ruling "B"
 
-**Slice:** `lane-b-minds-rigs-full-width` · **Branch:** `lane/b` · **Tip:** `df156fda7` · **Base:** `4ce0dad4a` (lane `behind=0` at dispatch)
-**Merged to main:** `c5687d423931cd57118bb9314482f3ed1b58b784` (`c5687d42`) · **Drained:** s1635, 2026-08-10
+**Slice:** `lane-b-minds-rigs-full-width` · **Branch:** `lane/b` · **Tip:** `5a18620d2` · **Base:** `1321f9fc6` (lane `behind=0` at dispatch)
+**Merged to main:** `80d3bda9b2492c840bcc858f8015d6dee98e2279` (`80d3bda9`) · **Drained:** s1635, 2026-08-10
 **Gated in:** detached worktree `gate-s1635` (§3.0b custody) · **Merged as one act** (§3 / F-1589-5)
 
 ## VERDICT: MERGE — scope complete, firewall exactly respected, and the new assertion is proven load-bearing by control.
@@ -43,7 +43,7 @@ capped it near ~690px.
 ### Control — the new assertion is NOT vacuous
 
 Per the house standard that a passing guard never executes its violation path, I reverted **only the two
-changed source files** to main (`git checkout 9d0ff27af -- src/encyclopedia/reader.css src/encyclopedia/reader.ts`)
+changed source files** to main (`git checkout 0f54dd528 -- src/encyclopedia/reader.css src/encyclopedia/reader.ts`)
 in the same gate tree, keeping the new spec, and re-ran desktop-chrome:
 
 **1 failed / 3 passed.** The failure is `field-book.spec.ts:292` —
@@ -58,7 +58,7 @@ measurement, and this review does not claim otherwise.
 
 ## Merge classification
 
-Base `4ce0dad4a`; lane `ahead=1 behind=0` at drain time. `lane-freeze-classify` reported **paths=5, all
+Base `1321f9fc6`; lane `ahead=1 behind=0` at drain time. `lane-freeze-classify` reported **paths=5, all
 HELD LANE-ONLY** — main had moved none of them — so the merge is a clean `ort` with **no graft and no
 conflicts**. Post-merge `git log main..lane/b` is **empty**.
 

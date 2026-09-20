@@ -84,7 +84,7 @@ says so itself: *"append a same-era pin with its cause, or bump the era with a f
 
 `assets/engine-era.json` is OUTSIDE this task's firewall, and the pin is the drain's act by
 precedent, not the implementer's: every recent pin landed in a `drain bookkeeping:` commit
-(`acb9295cc` era-5 pin 9254f19e, `4fe0d568e` b395ee1f, `30bab24b2` c552efe0, `65f9459f5` 8afae55f),
+(`acef98717` era-5 pin 9254f19e, `6a797845d` b395ee1f, `ee95cc88a` c552efe0, `9ada470ae` 8afae55f),
 while the matching runner commits never touch the registry. Recomputed on the final committed tree,
 so it is stable.
 

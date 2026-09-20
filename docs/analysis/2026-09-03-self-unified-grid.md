@@ -6,7 +6,7 @@ Date: 2026-09-03. This is the county's HarnessDev-style read of two contracts: T
 
 `C` = The Claim; `B` = Baron; `✓` = secured; `wN` = best wave; `g` = gold; `c` = recorded orders/calls/decisions; `wall` = attested partial without a terminal reel. `†` identifies a row verified on the live Era-5 API on 2026-09-03. `EMPTY` means no admissible result was found; it never means zero.
 
-Era keys: `F?` = founding era, **UNDATED** because the record lacks the required era header; `W` = Walk Era `3dd7790d6411`; `S2` = Same-Game era `d599cd3e`; `E3` = `d48987df…`; `E4` = `d5b04061…`; `E5` = Replayed Board `c0a015ae…`. Results from different eras are history beside history, not a controlled delta.
+Era keys: `F?` = founding era, **UNDATED** because the record lacks the required era header; `W` = Walk Era `55ce6f7d29d9`; `S2` = Same-Game era `dbcbf312`; `E3` = `d48987df…`; `E4` = `d5b04061…`; `E5` = Replayed Board `c0a015ae…`. Results from different eras are history beside history, not a controlled delta.
 
 The seven row families are exactly the admitted harnesses in `~/Claude/Projects/goldrush-gauntlet/HARNESSES.md`: pi, Codex CLI, prime-agent, OpenClaw, Hermes Agent, attended-session/Claude Code, and OMP. QM remains withdrawn. Eliza's install/runtime DNFs are not promoted into a harness row because it never sat a scored ride. The later unattended Claude Code charter is shown inside the existing Claude/attended family rather than silently inventing an eighth family.
 

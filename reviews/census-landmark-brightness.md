@@ -1,8 +1,8 @@
 # Review — census landmark brightness corrective (lane-a)
 
 **Slice:** corrective-census-landmark-brightness (LAUNCH-GATING, attended-promoted)
-**Branch/base/tip:** `lane/m3` — merge-base `9095bee9` (town-scale-zoom, already on main as `6c18f87a`) → lane tip `c88c1241` (`runner(lane-a): corrective-census-landmark-brightness.md`, 2026-07-23 21:27:58)
-**Merge:** `--no-ff` 3-way onto main tip `1d82bc42` (drained s957 fire, 2026-07-23 ~21:40Z)
+**Branch/base/tip:** `lane/m3` — merge-base `7026019b` (town-scale-zoom, already on main as `6b435886`) → lane tip `8ebd2916` (`runner(lane-a): corrective-census-landmark-brightness.md`, 2026-07-23 21:27:58)
+**Merge:** `--no-ff` 3-way onto main tip `9c62b188` (drained s957 fire, 2026-07-23 ~21:40Z)
 **Verdict:** MERGED — corrective goal met (5 named maps pass the census landmark-brightness floor); tsc+build independently green on the merged tree; the visual census spec was run by Codex in-lane (real run, committed artifact) but **could not be independently re-run by the fire** (the spec's `npm run dev` port-bind is gated for headless fires) — see F-2. Attended should re-run the full census on the live launch build as final launch confirmation.
 
 ## What it does
@@ -19,7 +19,7 @@ Landmark GLBs on daylight maps rendered below the census luminance floor (`>0.06
 | independent visual re-run (fire) | ⚠ not run | census `webServer: npm run dev` port-bind gated for headless fire (F-2) |
 
 ## Merge classification
-Stale-base lane (base `9095bee9` predates RF-05b `5fc2c645` / rf-03b `ceb41e23` / census-promo `5f88b2c4` on main). Two-dot `main...lane/m3` shows a large phantom net-deletion — the stale-base signature, NOT real deletions. The commit `c88c1241` touches exactly 3 files: `artifacts/map-census/table.md`, `e2e/map-census.spec.ts`, `src/world/Terrain3dClaimPilot.ts`. Main's only divergence on those since the merge-base is RF-05b's `__GR_RELEASE_E1__` registry wrap in `Terrain3dClaimPilot.ts` (lines ~115–155) — **disjoint** from the fix's hunks (276, 585–631). The 3-way auto-merged clean (`ort`, `Auto-merging src/world/Terrain3dClaimPilot.ts`, no conflict).
+Stale-base lane (base `7026019b` predates RF-05b `63a0311f` / rf-03b `edb69e4f` / census-promo `56bd7265` on main). Two-dot `main...lane/m3` shows a large phantom net-deletion — the stale-base signature, NOT real deletions. The commit `8ebd2916` touches exactly 3 files: `artifacts/map-census/table.md`, `e2e/map-census.spec.ts`, `src/world/Terrain3dClaimPilot.ts`. Main's only divergence on those since the merge-base is RF-05b's `__GR_RELEASE_E1__` registry wrap in `Terrain3dClaimPilot.ts` (lines ~115–155) — **disjoint** from the fix's hunks (276, 585–631). The 3-way auto-merged clean (`ort`, `Auto-merging src/world/Terrain3dClaimPilot.ts`, no conflict).
 
 ## Launch relevance
 Directly launch-beneficial: `keepLandmarkPaintReadable` brightens the E1 landmarks (`e1-twin-banks`, `e1-baron`) that the RF-05b **E1-only release build** actually ships — the two maps that were the residual launch-gate class.

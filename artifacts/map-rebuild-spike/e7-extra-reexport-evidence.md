@@ -1,6 +1,6 @@
 # E7 extra-map terrain and panorama re-export evidence
 
-- Fresh reference base: `9e324ce111d27550fddf63ce1401b4262a1b30e3`.
+- Fresh reference base: `5d9e87254803720cc42fb180419835502e2df94d`.
 - Authored pair: Echo Canyon.
 - Dead Band and Relay Rush: intentional `e7-relay-valley` tile reuse; no duplicate sculpt.
 - Terrain GLB: one mesh, one primitive, one material, one embedded 2048 atlas, 32,768 triangles.

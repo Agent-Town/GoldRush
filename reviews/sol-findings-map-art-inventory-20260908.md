@@ -2,7 +2,7 @@
 
 > Historical baseline audit. Current counts and repairs are summarized in [the current 42-map report](sol-map-art-current-status-20260909.md) and tracked in [the readiness ledger](../artifacts/map-art-repairs-20260908/readiness.json), [inventory13](../artifacts/map-art-repairs-20260908/current-inventory-13/inventory.json), and [repair evidence](sol-map-art-repairs-20260908.md). The original counts and findings below are retained as the starting snapshot.
 
-**Date:** 2026-09-08. **Source:** `e6c0656183d7355a357ee57abeb9b2e0b661ed47`. **Branch:** `sol/map-art-inventory-20260908`.
+**Date:** 2026-09-08. **Source:** `e6c0656183d7355a357ee57abeb9b2e0b661ed47 (archive: pruned by the A3 rewrite)`. **Branch:** `sol/map-art-inventory-20260908`.
 
 **Verdict: substantial artwork and model coverage; not a concept-fidelity sign-off.** All 42 requested map IDs opened on desktop and mobile emulation. Three maps omit their entire four-building landmark set. Five other maps reuse host-map landmarks despite having their own body packs. Twenty-five early body contracts describe obsolete binaries. These should be resolved or explicitly accounted for before the next art commission.
 

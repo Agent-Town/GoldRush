@@ -1,7 +1,7 @@
 # Review — art-gazette-engravings (THE CLAIM HERALD spot-cut tier)
 
 **Slice:** `art-gazette-engravings` · **slot:** ART · **run:** `tasks/runs/20260728-215214-art-gazette-engravings.md`
-**Content commit:** `94ca2400` (`runner(art): art-gazette-engravings.md`) — already on main when this drain began
+**Content commit:** `af82d579` (`runner(art): art-gazette-engravings.md`) — already on main when this drain began
 **Drain:** s1184 fire, 2026-07-28 · **done-move:** `tasks/done/20260728-215214-art-gazette-engravings.md`
 **§3.0 drain-block-check:** ✅ CLEAR (`gazette-art-engravings`, was `status:"queued"`)
 
@@ -41,7 +41,7 @@ Every number below was measured by this drain, not read from the run report.
 | provenance | perceptual match vs Codex cache natives | ✅ **verified, not asserted** (below) |
 | `npx tsc --noEmit` | run on main | ✅ clean, rc 0 |
 | `npm run build` | run on main | ✅ green, built in 1.33 s, asset-diet clean |
-| firewall | `git show --stat 94ca2400` | ✅ **zero `src/`, zero `news/herald.json`, zero `assets/processed*`** |
+| firewall | `git show --stat af82d579` | ✅ **zero `src/`, zero `news/herald.json`, zero `assets/processed*`** |
 | no consumer yet | `find dist -name "*herald-engraving*"` | ✅ **0 hits** of dist's 1193 PNGs |
 | LEDGER row 66 | read | ✅ present, and honestly discloses the resample |
 
@@ -151,7 +151,7 @@ engravings**, because the optimizer cannot see them. `gazette-art-wiring` must e
 
 ## RULING 3 — F-1183-4: the runner's 117-file sweep. Classified KEEP, explicitly.
 
-s1183 required this drain to rule rather than carry the question. `94ca2400` committed **117 files**
+s1183 required this drain to rule rather than carry the question. `af82d579` committed **117 files**
 where the legitimate deliverable was 8 art files + a LEDGER row + a run file. Classified:
 
 | class | files | ruling |

@@ -21,7 +21,7 @@ DRAINED BY CHERRY-PICK OF 40ea99a4 ALONE. The branch parent 6c44c6f3
 drain-block-check refuses with "CLOSED", so the branch could not be merged;
 only this commit's own delta was taken, verified byte-identical to
 `git diff 6c44c6f3 40ea99a4` (19,317 B, sha256 d5ae48dd03638dbb both sides).
-Zero MAIN-MOVED files: `git diff e3355002 main` over all ten code paths is
+Zero MAIN-MOVED files: `git diff bd3804f4 main` over all ten code paths is
 EMPTY, so no 3-way was needed.
 
 GATES (all on the merged tree): tsc rc=0 4.4s · build rc=0 26.6s · own specs

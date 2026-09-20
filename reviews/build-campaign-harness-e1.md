@@ -3,7 +3,7 @@
 - **Task:** `tasks/build-campaign-harness-e1.md`
 - **Main-slot runs:** `20260814-204651`, corrective `20260814-214944`
 - **Candidate archive:** `archive/build-campaign-harness-e1-s1771-hold` at `87d16e350b21a90d40d9b0d500c5b23a5d971caf`
-- **Merge:** `9849623b6e27d4d64e2c8b28b747c503de6c4b97`
+- **Merge:** `0a342bffc536a830a9664bb4098011a92b889e39`
 - **Gated by:** s1771–s1773 in detached custody
 
 ## VERDICT: PASS — MERGED

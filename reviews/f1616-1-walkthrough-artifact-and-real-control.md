@@ -1,7 +1,7 @@
 # f1616-1 — walkthrough artifact custody + a real prefetch control
 
-**Slice:** `f1616-1-walkthrough-artifact-and-real-control` · **branch:** `lane/c` · **tip:** `542ec15a4`
-**Base:** `825d8363b` (main) · **Merged:** `s1617` · **Review author:** s1617 fire
+**Slice:** `f1616-1-walkthrough-artifact-and-real-control` · **branch:** `lane/c` · **tip:** `31608faa0`
+**Base:** `33c50aea1` (main) · **Merged:** `s1617` · **Review author:** s1617 fire
 
 ## Verdict
 
@@ -68,7 +68,7 @@ manufactured rather than inferred — it was, both runner-side and here.
 
 ## Merge classification
 
-`main..lane/c` = 1 commit (`542ec15a4`), **3 paths, all LANE-TOUCHED**, main moved none of them since the base.
+`main..lane/c` = 1 commit (`31608faa0`), **3 paths, all LANE-TOUCHED**, main moved none of them since the base.
 ⚠️ The two-dot `main..lane/c` diff shows 11 files including apparent **deletions** of `logs/session-scratch/s1616-*`
 and hunks of `tasks/BACKLOG.md` — those are **phantom**: `lane/c` was `behind=2`, so they are main moving forward,
 not the lane touching them. Classified from the lane commit's own `--stat` and merged three-way (`ort`, clean), never

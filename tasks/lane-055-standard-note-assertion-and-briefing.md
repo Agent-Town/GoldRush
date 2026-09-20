@@ -8,9 +8,9 @@ READ FIRST: `AGENTS.md`; `reviews/lane-055-baron-standard-note-diagnosis.md` (th
 
 Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead is NORMAL — the runner auto-commits. For each ahead commit: if its content is already merged to main (verify via git log/diff), it is a SAFE DUPE → `git checkout -B lane/m3 main && git clean -fd` and PROCEED. STOP-and-report ONLY if an ahead commit's content is NOT on main (undrained work — resetting would DESTROY it), or the worktree holds uncommitted edits you did not make. Then `npm install --no-audit --no-fund`; `npm run build` green before touching anything.
 
-## Why (merged diagnosis `987e5f4d`, 2026-07-27, plus source facts re-verified at that drain)
+## Why (merged diagnosis `66d14f67`, 2026-07-27, plus source facts re-verified at that drain)
 
-The diagnosis for `055-baron-kill-stop.spec.ts:121` landed on main at `987e5f4d`. Two of its results are now evidence:
+The diagnosis for `055-baron-kill-stop.spec.ts:121` landed on main at `66d14f67`. Two of its results are now evidence:
 
 1. **The assertion at `:150` is unsound in the GREEN direction — proven at source, independent of any flake theory.** `WorldInfoNotePrompt.update(null)` (`src/ui/WorldInfoNotes.ts:182-188`) sets `root.hidden = true` and **returns without clearing `title.textContent`**, which is written only at `:199`. Playwright's `toHaveText` does not require visibility. So a run in which the note showed earlier and then vanished **passes anyway** — `:150` does not prove the thing its own test name claims ("then the note persists"). Every historical green on that line is unproven.
 2. **The `contract-briefing` clause is a real, measured blocker of world-info notes.** `Game.ts:5664` blocks on `[data-testid="contract-briefing"]:not([hidden])` and passes `null` at `:5665`. The briefing runs an 8,000 ms timer (`src/ui/Hud.ts:349`) that **the test itself restarts**: `resetRun()` (`Game.ts:5864`, exposed at `:1751`) calls `showContractBriefing()` at `:6007`, and the spec calls `resetRun()` at `055-baron-kill-stop.spec.ts:60`. In the diagnosis's five instrumented controls the briefing was still blocking for the first **2,115–3,074 ms** of the `:150` poll window in *every* run.

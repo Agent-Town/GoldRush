@@ -2,15 +2,15 @@
 
 **Role:** Codex runner, lane-b. **Workdir:** `worktrees/lane-b` (branch `lane/b`).
 
-This is the successor to `lane-f1510-3-inventory-revision-metadata.md`, which merged `f9c0e498` as a
+This is the successor to `lane-f1510-3-inventory-revision-metadata.md`, which merged `eb301c3a` as a
 **negative result**. That task was right about everything except one line. **The line is now measured
 and this master hands you the answer** — see READ FIRST. Your job is smaller than it looks.
 
 ## PRE-FLIGHT (STOP conditions — run these before you touch anything)
 
 1. The lane must carry this fire's evidence commit, which is the freshness proof:
-   `git merge-base --is-ancestor 263ee338c HEAD`
-   → **non-zero = STOP.** Report `LANE STALE — missing 263ee338c` and do nothing else.
+   `git merge-base --is-ancestor 207161747 HEAD`
+   → **non-zero = STOP.** Report `LANE STALE — missing 207161747` and do nothing else.
 2. Prove each subject region is present and unmoved. All three greps are **file-scoped**, so nothing
    written in `tasks/**` or `docs/**` — including this master — can move them (F-1310-1 / F-1425-2):
    - `grep -c "configured workers \*\*" scripts/suite-red-inventory.mjs` → must print exactly **1**
@@ -40,7 +40,7 @@ and this master hands you the answer** — see READ FIRST. Your job is smaller t
   Its "Manufactured reducer REDs" section already proved scope 3's three arms red-then-green; you are
   re-walking a path someone surveyed, not cutting a new one.
 - `docs/bench/s1516-f1510-3-successor-pricing.md` — the five-conjunct gate table. ⓘ It was corrected
-  in place after `f9c0e498`; read it for the conjuncts, not for the `__dirname` claim.
+  in place after `eb301c3a`; read it for the conjuncts, not for the `__dirname` claim.
 - `playwright.config.ts` — read `:45`–`:58` (the `defineConfig` head, `workers` at `:50`) and the
   comment block at `:5`–`:22` explaining why `workers` is load-bearing.
 - `scripts/suite-red-inventory.mjs` — read `:9`–`:17` (the generator is a **reducer of a report
@@ -62,10 +62,10 @@ disqualified by construction.*
 
 Two negative results stand behind this task and both are load-bearing:
 
-- **`8134ec30` (s1514):** `git rev-parse HEAD` **at generation time names the wrong tree by
+- **`e47354c6` (s1514):** `git rev-parse HEAD` **at generation time names the wrong tree by
   construction** — the generator reduces a raw report produced in a different checkout. Do not
   reintroduce a derive-while-reducing shortcut.
-- **`f9c0e498` (s1516):** Playwright loads this repo's TS config as **ESM**, so **`__dirname` is
+- **`eb301c3a` (s1516):** Playwright loads this repo's TS config as **ESM**, so **`__dirname` is
   undefined**; `captureRevision` threw and the fallback serialised `revision: "unrecorded"`. The
   runner correctly refused to ship guards around output it had proved false.
 
@@ -80,7 +80,7 @@ S1517_PROBE cwd=/Users/robin/Claude/Projects/Gold Rush        ← run from the r
 and, with the full mechanism in place, a real single-spec run:
 
 ```text
-config.metadata = {"revision":"cb276b780de1628e003b9178435e622d253c798b","dirty":true,"actualWorkers":1}
+config.metadata = {"revision":"f56843b5b51b6265aef49bb1872aa48539ec074b","dirty":true,"actualWorkers":1}
 ```
 
 **All five gate conjuncts are now proved, and the fifth was proved in the subject tree rather than
@@ -94,7 +94,7 @@ next to it** — that distinction is [F-1516-1], the finding that cost the last 
    - `dirty` — whether that tree had uncommitted **tracked** changes.
 
    ✅ **USE `import.meta.dirname`. Do NOT use `__dirname`** — it is undefined here and that is exactly
-   what stopped `f9c0e498`. It is available on the pinned Node 26.4.0 (`.nvmrc`) and was measured
+   what stopped `eb301c3a`. It is available on the pinned Node 26.4.0 (`.nvmrc`) and was measured
    resolving to the config's own directory under Playwright's TS loader.
    - If you prefer `fileURLToPath(import.meta.url)` it also works, but read the proof doc's §2 trap
      first: this repo's path contains a **space**, `import.meta.url` is percent-encoded
@@ -125,7 +125,7 @@ next to it** — that distinction is [F-1516-1], the finding that cost the last 
    `scripts/suite-red-inventory.mjs` (around `:262`) with the revision and dirty flag, following the
    **exact** shape of the adjacent `Harness:` line, including `?? 'unrecorded'` for absent values.
    - 🚫 **The reducer must COPY, never DERIVE.** Do not call `git` from
-     `scripts/suite-red-inventory.mjs` for any purpose. That is the precise thing `8134ec30` proved
+     `scripts/suite-red-inventory.mjs` for any purpose. That is the precise thing `e47354c6` proved
      wrong, and a derive would silently reintroduce the defect while looking correct.
    - Old snapshots have no `metadata.revision`; they must render `unrecorded`, not crash and not blank.
 
@@ -139,7 +139,7 @@ next to it** — that distinction is [F-1516-1], the finding that cost the last 
    - An arm proving `dirty: true` is visible in the output (a dirty run must not read as clean).
    - ⚠️ **A green on the fixed code is not evidence.** Per the s1299/s1301 standard, prove each arm can
      go red against the pre-change reducer and **quote the failure**. **Say how you proved it, not
-     merely that you did.** ⓘ `f9c0e498` already did this once and got
+     merely that you did.** ⓘ `eb301c3a` already did this once and got
      `tests 10 / pass 7 / fail 3`; you may cite that as corroboration but you must **re-run it
      yourself** — that tally was taken on a tree that no longer exists.
    - `scripts/suite-red-inventory.test.mjs` is **already rooted** in `test:node-guards` — verify by
@@ -202,7 +202,7 @@ next to it** — that distinction is [F-1516-1], the finding that cost the last 
       Playwright's `actualWorkers` alongside them.
       🎯 **This is the check s1517 explicitly did NOT run with `--untracked-files=no` and flagged as
       unproved** — it is your job, not a formality. s1517's capture with the bare flag was
-      `{"revision":"cb276b780de1628e003b9178435e622d253c798b","dirty":true,"actualWorkers":1}` at 4.0 s
+      `{"revision":"f56843b5b51b6265aef49bb1872aa48539ec074b","dirty":true,"actualWorkers":1}` at 4.0 s
       wall; yours should differ only in the sha and possibly `dirty`.
       Any Playwright command passes `--workers=1` (§3.1).
 - [ ] **`npm run build` is NOT owed** — this task touches no run surface under `src/`. Say so
@@ -218,7 +218,7 @@ nothing · the single-spec end-to-end `config.metadata` capture **with the track
 wall is measured and cured. But if `import.meta.dirname` behaves differently in the lane worktree than
 it did in `gate-s1517` — different Playwright cache state, a transpile path this fire did not
 exercise — **say so with the measurement and STOP.** Two negative results in a row on this row would
-itself be the finding. The precedent is `8134ec30` and `f9c0e498`: **hardening a defect behind a green
+itself be the finding. The precedent is `e47354c6` and `eb301c3a`: **hardening a defect behind a green
 test is strictly worse than shipping nothing.**
 
 ⓘ **Scope note on what "done" means here, so the drain does not over-claim.** This task ships the

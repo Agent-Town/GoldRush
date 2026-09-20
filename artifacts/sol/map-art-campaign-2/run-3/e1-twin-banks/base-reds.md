@@ -2,7 +2,7 @@
 
 The broad candidate suite reports **30 passed, 6 skipped, 10 failed** (exit 1). Exact-base controls report **3 passed, 9 failed** (exit 1). The four selected Town navigation retries on the candidate then pass **4/4**, including both originally timed-out mobile cases. The eight map-specific assertion failures remain base-attributed, not fixed or waived by this art task.
 
-Every changed tracked production file was temporarily replaced with `git show 43a73b54a:<path>` bytes. The engine matched the preceding Night Shift commit: `3a437c987c30b1738307197d4e0ebbe64520e8ddbfbbff947378930f8590a041`. All candidate bytes were restored exactly, yielding `011419f4873aebb9a8d9d6580844dbf02d116813898fdcc98579cfbf39a88ebe`. [File hashes, command and restoration receipt](base-initial.json).
+Every changed tracked production file was temporarily replaced with `git show 696e0c1e6:<path>` bytes. The engine matched the preceding Night Shift commit: `3a437c987c30b1738307197d4e0ebbe64520e8ddbfbbff947378930f8590a041`. All candidate bytes were restored exactly, yielding `011419f4873aebb9a8d9d6580844dbf02d116813898fdcc98579cfbf39a88ebe`. [File hashes, command and restoration receipt](base-initial.json).
 
 | Assertion / owner | Candidate | Exact base |
 | --- | --- | --- |

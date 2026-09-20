@@ -1,8 +1,8 @@
 # Review — town-music: the town plays its era song and reaches its audio settings
 
 **Slice:** `town-music` (`tasks/lane-town-music.md`)
-**Branch:** `lane/c` · **Lane tip:** `ea5a9ed51` · **Merge base:** `721493f63a4fb6d1b50fdaeaace3fed5553839be`
-**Merge commit:** `c0b80b314f185863b61af327bf9721ac5fff6ba2`
+**Branch:** `lane/c` · **Lane tip:** `590d688d8` · **Merge base:** `1a41ab9755c91719e432ee4c46a11fa2128c0584`
+**Merge commit:** `44860bab50a7e51d56b0a99a3048646705659f19`
 **Drained by:** s1587 fire, 2026-08-09
 **Gate transcript:** `artifacts/town-music-gate.txt` (append-only, every arm ISO-stamped)
 
@@ -32,7 +32,7 @@ movement — a defect the runner's own independent review found and fixed before
 | `drain-block-check` (twice: pre-merge + on merged tree) | ✅ CLEAR — `town-music`, no policy block |
 | `npx tsc --noEmit` | ✅ clean |
 | `npm run build` | ✅ green, 1.62 s |
-| `run-guards --changed-since 721493f6` (26 files) | ✅ **5/5** — `node-guards` 372 s, `power-budget` (p95 0.326 ms), `task-guards`, `citations`, `gate-callers` |
+| `run-guards --changed-since 1a41ab97` (26 files) | ✅ **5/5** — `node-guards` 372 s, `power-budget` (p95 0.326 ms), `task-guards`, `citations`, `gate-callers` |
 | Own spec `e2e/beauty-town.spec.ts` | ✅ **8/8** both projects (see cold-start note below) |
 | Adjacent: `town-era-switch`, `task-025`, `m1-01`, `m2-01` | ✅ **46/46** both projects, 3.7 m |
 | Run-side audio: `mu-02-music`, `mu-03-era-audio`, `music-survives-pause`, `050-audio-mix-and-access`, `051-audio-governor` | ✅ **all green** — the run's music path is untouched |
@@ -57,7 +57,7 @@ additionally pins Voltage town to `era-e3-voltage-loop`. The `__GR_AUDIO_DIAGNOS
 
 `red-inventory-lookup` returned **KNOWN-RED** for `audio-integration.spec.ts` with four of the five
 fingerprints matching exactly (test, assertion text and ~40 s / ~16 s timings). Membership is not
-exoneration, so a **control run on the pre-merge tree** (`c66d90f64`, its own worktree, own port
+exoneration, so a **control run on the pre-merge tree** (`6d1de0c74`, its own worktree, own port
 5231) was spent:
 
 | Test | Control (pre-merge) | Merged tree |
@@ -82,8 +82,8 @@ caught by a poll that reads a value still settling.
 
 ## Merge classification
 
-Base `721493f63a4fb6d1b50fdaeaace3fed5553839be`. `lane/c` was **2 ahead**: `ea5a9ed51` (this slice)
-and `fcbbee1ae` (f1584-1, already drained to main at `706fb8239`).
+Base `1a41ab9755c91719e432ee4c46a11fa2128c0584`. `lane/c` was **2 ahead**: `590d688d8` (this slice)
+and `40f93ee7e` (f1584-1, already drained to main at `5795cd836`).
 
 | File | Class | Resolution |
 |---|---|---|

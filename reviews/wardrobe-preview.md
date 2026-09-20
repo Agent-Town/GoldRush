@@ -1,6 +1,6 @@
 # wardrobe-preview — see the coat before you wear it
 
-**Slice:** `lane-wardrobe-preview` · **branch:** `lane/e2-arsenal` · **commit:** `84905654` · **base:** `ba4995eb`
+**Slice:** `lane-wardrobe-preview` · **branch:** `lane/e2-arsenal` · **commit:** `84905654` · **base:** `fd64744a`
 **Drained:** s1181 fire, 2026-07-28 · **Verdict: MERGE**
 
 ## What it does
@@ -27,7 +27,7 @@ Preview frame provenance, as reported and visible in the shots:
 | `npm run build` | **green, 1.44 s** |
 | `e2e/tailor-wagon.spec.ts` | **4/4 passed**, desktop + 390px mobile, 35.5 s |
 | Zero console/page errors | collected and asserted by the spec |
-| Merge classification | all three files **LANE-TOUCHED only** — `git log ba4995eb..main -- <spec, ProspectorSkin.ts, town.css>` **EMPTY** |
+| Merge classification | all three files **LANE-TOUCHED only** — `git log fd64744a..main -- <spec, ProspectorSkin.ts, town.css>` **EMPTY** |
 | Screenshots | `artifacts/wardrobe-preview/{desktop,mobile}-chrome-wardrobe-preview.png` |
 
 Gated on **scratch port 5234, external server** (Mistake #12).

@@ -1,5 +1,5 @@
 F-2065-1 — fire outcome census + cause attribution
-Captured s2065, 2026-08-19T15:4xZ, from logs/fire-2026081*.log on main @ 973f8f95a.
+Captured s2065, 2026-08-19T15:4xZ, from logs/fire-2026081*.log on main @ 151d1b7c1.
 Re-run: node artifacts/f2065-fire-outcome/fire-outcome-census.mjs 10
 
 === 1. CENSUS (anchored on the runner's own emitted marker lines) ===
@@ -47,7 +47,7 @@ All nine of today's starts log "(model claude-opus-5)".
 
 === 3. CONTROL B — the 08-18 engine switch is RULED OUT as the cause ===
 
-8891e09b5 2026-08-18T19:33:19+07:00 "ops: revert fires to claude engine"
+560d91968 2026-08-18T19:33:19+07:00 "ops: revert fires to claude engine"
 landed 2h33m BEFORE the first failure. Five consecutive claude-engine fires ran
 rc=0 in between (logs/fire-20260818.log):
   19:25:54 FIRE START (engine codex)  -> 19:33:04 FIRE END rc=0   <- last codex fire

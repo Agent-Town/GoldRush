@@ -1,6 +1,6 @@
 # Review — mp-07a: the invited scout
 
-**Slice/branch/tip:** mp-07a (`tasks/lane-mp07a-honest-door.md`) · `lane/b` · tip `23758d25d` · merged `06e175f3326380b28f5ec7e411ce34e9d660344c` · drained attended 2026-08-08. Owner ruling folded verbatim: "I would like the player to be able to invite his agent or multiple agents if they want."
+**Slice/branch/tip:** mp-07a (`tasks/lane-mp07a-honest-door.md`) · `lane/b` · tip `47d73d021` · merged `f59b1c1b32eb1555f5eb423b6b45279d89321ac4` · drained attended 2026-08-08. Owner ruling folded verbatim: "I would like the player to be able to invite his agent or multiple agents if they want."
 
 **Verdict: MERGED — gate green; two pre-existing reds documented with proof.**
 

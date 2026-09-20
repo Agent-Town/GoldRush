@@ -1,7 +1,7 @@
 # Sol findings — multiplayer balance harness
 
 - **Branch:** `sol/mp-balance-harness`
-- **Fresh base:** `origin/main@df5b227846f66e98b8ad5d0ad61a171d687a2778`
+- **Fresh base:** `origin/main@0f87f8cf410474cb089da72147abe64549aa4d7a`
 - **Scope:** deterministic measurement only; no rider multiplier table or live Balance changes
 - **State:** **STATIC READY — browser gates remain orchestrator-side**
 

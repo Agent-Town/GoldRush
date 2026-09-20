@@ -2,15 +2,15 @@
 
 - **Slice:** `lane-b-findings-state-vocabulary-triage.md` — diagnosis-only: classify the double-state candidates the merged findings-state guard's `🟡`-only vocabulary cannot see, and measure what widening would cost.
 - **Branch / tip:** `lane/m4` @ `d50e2887` (`runner(lane-b)`, auto-committed 15:35).
-- **Base:** main @ `65e0de4e`.
-- **Drained:** s1260 fire, 2026-07-30. **Merge `637e156e7acae8a2fa012b15f6366c6c1e400151`.**
+- **Base:** main @ `92c5a235`.
+- **Drained:** s1260 fire, 2026-07-30. **Merge `637e156e7acae8a2fa012b15f6366c6c1e400151 (archive: pruned by the A3 rewrite)`.**
 - **Verdict:** **ACCEPT — merged.** Scope met in full, and the run **refuted the drain-fire's own prediction on two of five candidates, correctly.**
 
 ## Attempt history (this matters — it is why the slice succeeded)
 
-**Attempt 1 (`20260730-150612`) STOPPED lawfully at scope 1 with no artifact**, ~3 min, 85,129 tokens: s1259 had pinned the gate to four scalars measured at `bd1889ff`, *before its own edits landed*, then struck three findings and wrote three new ones in `7acdaf07` four minutes before authoring. **F-1260-1** traces all four drifts to that one commit. Attempt 2 is a legitimate second attempt under `CLAUDE.md` §7.5 — **changed premise**: refreshed baseline, explicitly NAMED population, and a gate that STOPs only if a named F-ID cannot be located. It ran 208,630 tokens and delivered.
+**Attempt 1 (`20260730-150612`) STOPPED lawfully at scope 1 with no artifact**, ~3 min, 85,129 tokens: s1259 had pinned the gate to four scalars measured at `5bd228cc`, *before its own edits landed*, then struck three findings and wrote three new ones in `c65af42b` four minutes before authoring. **F-1260-1** traces all four drifts to that one commit. Attempt 2 is a legitimate second attempt under `CLAUDE.md` §7.5 — **changed premise**: refreshed baseline, explicitly NAMED population, and a gate that STOPs only if a named F-ID cannot be located. It ran 208,630 tokens and delivered.
 
-**The redesign was vindicated in flight.** The runner picks queue files off the filesystem, so it started at 15:25:16 against main `65e0de4e` — two minutes *before* my findings commit `0f248147` landed. It therefore measured **427 declarations** where my master said **429**, and did exactly what the new scope 1 instructs: **noted the −2 and carried on** (`report.md:8-10`). Under attempt 1's design that drift was the whole failure mode.
+**The redesign was vindicated in flight.** The runner picks queue files off the filesystem, so it started at 15:25:16 against main `92c5a235` — two minutes *before* my findings commit `b9e50a37` landed. It therefore measured **427 declarations** where my master said **429**, and did exactly what the new scope 1 instructs: **noted the −2 and carried on** (`report.md:8-10`). Under attempt 1's design that drift was the whole failure mode.
 
 ## What it does
 
@@ -35,7 +35,7 @@
 Three verdicts re-checked independently, all confirmed:
 - **F-1126-2 (c)** — claims `gate-caller-baseline.json` still records `npm:test:release` as NO CALLER. ✓ Confirmed twice: by grep, and because **my own `gate-caller-audit` run earlier this fire printed that exact line**.
 - **F-1201-1 (b)** — claims the correct `/Total: [1-9]\d* tests/` regex is still in source. ✓ Present at `scripts/town-spec-collection.test.mjs:46-47`.
-- **Four cited leaves** — `factory-build-mode-prompt-realign` `merged e42ed4ef`, `factory-run-guards-test-coverage` `merged 4499e696`, `factory-cp04-charter-name-composition` `superseded`, `factory-suite-red-inventory-run-tree-invariance` `merged e968557a`. ✓ All exactly as claimed.
+- **Four cited leaves** — `factory-build-mode-prompt-realign` `merged 46d6308c`, `factory-run-guards-test-coverage` `merged 0fae52bd`, `factory-cp04-charter-name-composition` `superseded`, `factory-suite-red-inventory-run-tree-invariance` `merged 1e351130`. ✓ All exactly as claimed.
 
 ## Scope 4 — the measured answer is NO, and that was an allowed answer
 

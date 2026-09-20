@@ -1,8 +1,8 @@
 # Review — MP-02 lockstep core (two sims, one truth)
 
 **Slice:** mp-02 (spec `specs/multiplayer/README.md`, MP-02; builds on MP-01 relay per `docs/api-multiplayer.md`)
-**Branch/tip:** `lane/perf` @ `bf33055` ("mp: add flagged lockstep core")
-**Base:** merge-base(main, lane/perf) = `9f9ab52` (bf33055's direct parent) → main advanced only STATUS.md + tasks/BACKLOG.md since, so a CLEAN 7-file graft (no 3-way).
+**Branch/tip:** `lane/perf` @ `5f23b80` ("mp: add flagged lockstep core")
+**Base:** merge-base(main, lane/perf) = `9f9ab52 (archive: pruned by the A3 rewrite)` (bf33055's direct parent) → main advanced only STATUS.md + tasks/BACKLOG.md since, so a CLEAN 7-file graft (no 3-way).
 **Merged to main:** s238 fire, drain commit below.
 **Verdict:** ✅ MERGE — flag-gated (`?mp=dev`), zero default-path impact, both mp-02 e2e proofs green on desktop, full regression + boot green.
 
@@ -14,7 +14,7 @@ Adds input-delay lockstep multiplayer as a **dev-flagged** overlay (`?mp=dev`), 
 - `RunSuspend.ts` gains two additive wrappers (`captureRunSuspendSnapshot`/`restoreRunSuspendSnapshot`) — the resync vehicle; existing capture/restore logic unchanged.
 
 ## Firewall compliance — VERIFIED
-`bf33055` touched exactly the 7 firewalled files, nothing else:
+`5f23b80` touched exactly the 7 firewalled files, nothing else:
 `src/mp/LockstepClient.ts` (new, 373L) · `src/game/Game.ts` (flag-gated tick seam) · `src/game/RunSuspend.ts` (additive wrappers) · `src/vite-env.d.ts` (additive flag types) · `e2e/mp-02-lockstep.spec.ts` (new) · `artifacts/mp-02/{identity,desync-resync}.json`.
 - **No sim logic changes on the default path:** `installMultiplayerDev()` early-returns when `multiplayerConfigFromSearch()` is null (`if (params.get('mp') !== 'dev') return null`), so `mpClient` stays `undefined`. With no client, `update()` collapses to the original two lines (`sampledIntents` → `intents`, unchanged `elapsed += delta`); `finishMultiplayerTick()` no-ops. Proven green by the regression suites below.
 - **No relay changes:** `LockstepClient` imports only `three` + the `Intents` type and speaks MP-01's protocol (`/api/multiplayer/create`, `…/connect` WS) — no `functions/` edits.

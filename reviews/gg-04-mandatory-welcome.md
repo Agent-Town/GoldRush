@@ -1,8 +1,8 @@
 # gg-04-mandatory-welcome — the town greets every new face, unasked
 
-- **Slice:** GG-04, `tasks/lane-mandatory-welcome.md` (owner-authored, `e398b8cb` 2026-07-30)
+- **Slice:** GG-04, `tasks/lane-mandatory-welcome.md` (owner-authored, `33fbc24b` 2026-07-30)
 - **Branch/tip:** `lane/e2-arsenal` `40ea99a4` (lane-c runner, 2026-07-30T10:41:52+07:00)
-- **Merged as:** `c5a00849ea0cfd38428abfccddf1d2c270fd8ecc` — **by cherry-pick of `40ea99a4` alone**
+- **Merged as:** `bd4c5c189ce4c412d5e4d148298c96fb47960994` — **by cherry-pick of `40ea99a4` alone**
 - **Drained by:** s1255 fire, 2026-07-30
 - **Goal leaf:** `gg-04-mandatory-welcome`
 
@@ -52,8 +52,8 @@ storage failure now suppresses the welcome instead of running it unpersisted. Re
 
 | item | finding |
 |---|---|
-| Base | `40ea99a4`'s parent is `6c44c6f3`; `merge-base(main, 6c44c6f3)` = `e3355002` |
-| MAIN-MOVED files | **ZERO** — `git diff e3355002 main` over all ten code paths is **empty** |
+| Base | `40ea99a4`'s parent is `6c44c6f3`; `merge-base(main, 6c44c6f3)` = `bd3804f4` |
+| MAIN-MOVED files | **ZERO** — `git diff bd3804f4 main` over all ten code paths is **empty** |
 | 3-way needed | No |
 | Applied delta | **byte-identical** to `git diff 6c44c6f3 40ea99a4`: 19,317 B, sha256 `d5ae48dd03638dbb` on both sides |
 | Conflicts | none (`cherry-pick -n` rc=0) |

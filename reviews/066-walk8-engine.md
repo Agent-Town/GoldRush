@@ -2,7 +2,7 @@
 
 - **Slice:** 066-walk8-engine (lane-c, RENDER-ONLY)
 - **Branch / source tip:** `lane/polish` @ `871c87b` (`runner(lane-c): 066-walk8-engine.md`)
-- **Grafted onto main:** base `5575e9c` (s279 lock) — landed s279
+- **Grafted onto main:** base `cbb05ba` (s279 lock) — landed s279
 - **Drained by:** s279 fire
 
 ## Verdict
@@ -29,7 +29,7 @@ Extends `SpriteAnimator` to read an 8-frame walk sheet (`walk8` contract block i
 Totals across the battery: **89 passed / 1 flaky (isolation-pass) / 0 deterministic-fail**, both projects.
 
 ## Merge classification
-- **Base of source commit:** `898d083` (pre-s-night) — the lane branch predates the s-night 059/060/061/063/064/065 merges, so the branch was NOT blind-merged. Grafted **871c87b's own diff only** (`git diff 898d083 871c87b`).
+- **Base of source commit:** `508d7cc` (pre-s-night) — the lane branch predates the s-night 059/060/061/063/064/065 merges, so the branch was NOT blind-merged. Grafted **871c87b's own diff only** (`git diff 898d083 871c87b`).
 - **Overlap check:** `git diff --name-only 898d083 5575e9c` intersected with 066's touched paths = **EMPTY** (s-night touched none of `src/assets/SpriteAnimator.ts`, the 5 e2e specs, `characters.v2.json`, `LEDGER.md`, `assets/processed*`, `artifacts/066/`). Therefore every 066 file is LANE-TOUCHED-only vs main; zero 3-way judgment required.
 - **Graft method:** path-scoped `git checkout 871c87b -- <066 paths>`; post-graft `git diff 871c87b -- <all 066 paths>` == empty (byte-identical). 276 files staged, all inside 066's firewall.
 

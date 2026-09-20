@@ -1,7 +1,7 @@
 # Review — f2138-1: publish `canyonConnect` onto the headless agent view
 
-**Slice:** `f2138-1-publish-canyon-connect-on-the-view` · **branch:** `lane/b` · **tip:** `56e3a882e9f62767223a60b67dd7181e6797be50`
-**Base:** `877c8a9d495d549a6a5ae68c812d0b80f527f262` · **Merged to main:** `cd59fb273ed34a3905ac32bb9d4907322ad33109` (s2140, 2026-08-21)
+**Slice:** `f2138-1-publish-canyon-connect-on-the-view` · **branch:** `lane/b` · **tip:** `648bc21d24e1e26747f63d59991a9cba941584ae`
+**Base:** `e43eb8da818a321963ccc6a3885e4179c4615b96` · **Merged to main:** `2b81cc10413bcebaa537395ff897254a550bb77f` (s2140, 2026-08-21)
 **Gated in:** detached worktree `gate-s2140` (§3.0b — undecided content never entered main's working tree)
 
 ## VERDICT: MERGE
@@ -45,7 +45,7 @@ A passing test never executes its violation path, so its green says nothing abou
 
 ### Merge classification
 
-All three paths are **LANE-ONLY**. `git diff 877c8a9d..main` over `src/sim/HeadlessContractSim.ts`, `scripts/canyon-connect-view.test.mjs` and `package.json` is **empty** — main moved none of them, so no 3-way graft was needed and no conflict was possible. `lane-freeze-classify` read `LANE-ONLY: 3, MAIN-ONLY: 0, BOTH-MOVED: 0`. After the merge, `main..lane/b` is empty.
+All three paths are **LANE-ONLY**. `git diff e43eb8da..main` over `src/sim/HeadlessContractSim.ts`, `scripts/canyon-connect-view.test.mjs` and `package.json` is **empty** — main moved none of them, so no 3-way graft was needed and no conflict was possible. `lane-freeze-classify` read `LANE-ONLY: 3, MAIN-ONLY: 0, BOTH-MOVED: 0`. After the merge, `main..lane/b` is empty.
 
 ---
 

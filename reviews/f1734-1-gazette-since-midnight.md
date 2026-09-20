@@ -2,7 +2,7 @@
 
 ## Verdict — CLOSED
 
-Direct fire-side instrument corrective on `main`, code commit `352071dc3ea87216370a68df3230cb8c1013b585`.
+Direct fire-side instrument corrective on `main`, code commit `e710eb19ee03bbd320a66ff86622c00f9c905eaa`.
 
 ## What changed
 
@@ -10,7 +10,7 @@ Direct fire-side instrument corrective on `main`, code commit `352071dc3ea872163
 
 ## Evidence
 
-Against the unchanged s1727 handoff tip `9fb235f70fd3264e814ac39b91be72897e59bf51`:
+Against the unchanged s1727 handoff tip `62a3901d003fc6b7d5f93713e7f14df70338baeb`:
 
 | Revision limit | Player-path merges |
 | --- | ---: |

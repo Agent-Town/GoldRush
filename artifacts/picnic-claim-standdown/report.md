@@ -1,6 +1,6 @@
 # picnic-claim-standdown — the three sandwiches fall in sequence, not together (A21, option (a))
 
-READY-FOR-GATES. Branch `feat/town-cast-rulings-and-picnic`, scratch worktree cut from main `54bbaa91e`, Node 26.4.0,
+READY-FOR-GATES. Branch `feat/town-cast-rulings-and-picnic`, scratch worktree cut from main `09c997489`, Node 26.4.0,
 own dev server on 127.0.0.1:5420, Playwright one worker, `--trace=off`, both projects (desktop-chrome 1280x800 and
 mobile-chrome 390x844). Second of two commits on this branch; the first is `tasks/town-cast-rulings-a13-a17.md`.
 
@@ -57,7 +57,7 @@ plates from this tree — the run that still loses.
 ## 3. The null floors — re-recorded, and ONLY the Picnic moved
 
 `node scripts/null-floor-anchors.mjs` (268.5 s, 83 floors across 36 contracts), then
-`node scripts/null-floor-anchors.mjs --check` (265.6 s): **"eraStamp: pinned and tree agree at \"54bbaa91e\". 83 of 83
+`node scripts/null-floor-anchors.mjs --check` (265.6 s): **"eraStamp: pinned and tree agree at \"09c997489\". 83 of 83
 null floors match assets/contracts/null-floors.json."** Deterministic on re-run.
 
 | Seed | | secured | waves | timeMs (the second the unbuilt run ends) | gold | kills | eventLogHash |
@@ -80,7 +80,7 @@ The predicted figure in the first-wave report was 82 s on ITS tree; this tree me
 the verdict are the ones the report promised (reaches wave 2, still loses); the exact second differs because the base
 differs — the report's probe ran before era 6's map campaign and the roster/boss work that landed since.
 
-`eraStamp` moved `894c88287` -> `54bbaa91e` as a mechanical consequence of re-recording on a branch:
+`eraStamp` moved `b9f452b67` -> `09c997489` as a mechanical consequence of re-recording on a branch:
 `null-floor-anchors.mjs` stamps `git merge-base HEAD main`, which is this worktree's cut point. See F-PCS-1.
 
 ## 4. Gates
@@ -105,7 +105,7 @@ green is a real adjacent-suite result rather than a re-pointed one.
 ### F-PCS-1 — the null-floor `eraStamp` is branch-relative, so a re-record on a scratch branch REWINDS it
 `scripts/null-floor-anchors.mjs` derives `eraStamp` from `git merge-base HEAD main`. On main that is main's own tip; on
 a branch it is the branch's cut point. Re-recording here therefore moved the stamp **backwards** relative to today's
-main (`894c88287` -> `54bbaa91e`), even though the floors themselves are fresher. `--check` passes on THIS tree because
+main (`b9f452b67` -> `09c997489`), even though the floors themselves are fresher. `--check` passes on THIS tree because
 it compares pinned-vs-tree on the same tree. **What the drainer should expect:** after merging to a main that has moved
 on, `--check` will report an eraStamp disagreement until the floors are re-recorded on the merged tree (~4.5 min), and
 the 81 unchanged rows make that re-record cheap to verify — only the two `e6-picnic` rows should differ from this file.

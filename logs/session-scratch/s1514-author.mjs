@@ -17,7 +17,7 @@ sg.tasks.push({
   attempts: 0,
   authoredBy: 's1514 (fire)',
   authorNotes:
-    'Authored s1514 after the f1510-3 negative-result drain (8134ec30). Premise RE-MEASURED, not inherited: the QUOTED line is present verbatim at scripts/citation-title-guard.mjs:66 and the mis-pairing was reproduced standalone on the window F-1501-5 describes (loose scanner captures " and is now titled " and never the title; by-kind captures both). The sibling apostrophe case F-1501-5 predicts was also reproduced. Then — per F-1514-1, filed the same fire — the proposed cure was run against the LIVE CORPUS before authoring, which is what caught the 38-citation regression. Citation key is scoped to the source file (grep -c "const TITLE_DECL = " scripts/citation-title-guard.mjs, measured 1 on main, 0 in BACKLOG) so neither this note nor the master can self-rot it.',
+    'Authored s1514 after the f1510-3 negative-result drain (e47354c6). Premise RE-MEASURED, not inherited: the QUOTED line is present verbatim at scripts/citation-title-guard.mjs:66 and the mis-pairing was reproduced standalone on the window F-1501-5 describes (loose scanner captures " and is now titled " and never the title; by-kind captures both). The sibling apostrophe case F-1501-5 predicts was also reproduced. Then — per F-1514-1, filed the same fire — the proposed cure was run against the LIVE CORPUS before authoring, which is what caught the 38-citation regression. Citation key is scoped to the source file (grep -c "const TITLE_DECL = " scripts/citation-title-guard.mjs, measured 1 on main, 0 in BACKLOG) so neither this note nor the master can self-rot it.',
 });
 fs.writeFileSync(GP, JSON.stringify(g, null, 2) + '\n', 'utf8');
 

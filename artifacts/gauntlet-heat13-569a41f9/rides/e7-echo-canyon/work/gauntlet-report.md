@@ -1,6 +1,6 @@
 # heat 13 — claude-opus-5 — `e7-echo-canyon` @ `e7-echo-canyon-01` (trail)
 
-Era 5, engine `09838c35…`, viewVersion 2, build `bf0bdddd6`. worldModel: **sim-import**.
+Era 5, engine `09838c35…`, viewVersion 2, build `bf0bdddd6 (archive: pruned by the A3 rewrite)`. worldModel: **sim-import**.
 
 ## How the ride went, in order
 

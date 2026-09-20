@@ -1,5 +1,5 @@
 # Review — E6 Homemaker headless socket (glow-mesa re-admitted)
-**Slice/branch/tip:** `worktree-agent-a6513377b3cf5b143` @ `1f16959f4` (2 commits: the slice `ae1311eac` + a secure-rule pin), base `a1e8bc63c`. Built by a headless Opus-5 agent, drained attended. **Verdict: MERGED — GREEN.**
+**Slice/branch/tip:** `worktree-agent-a6513377b3cf5b143` @ `821d0c617` (2 commits: the slice `a4bbf00f6` + a secure-rule pin), base `d077b36a6`. Built by a headless Opus-5 agent, drained attended. **Verdict: MERGED — GREEN.**
 
 **What it does:** the Homemaker 9000 constructs, ticks, and resolves headless: four DOM guards (the master named three; `renderPictogram()` needed a fourth — proven by revert-run-restore control), the REAL `GoldPickupPool` reused (probed constructor: pure THREE, no document — reused not reshaped, minted only for `homemaker_9000`), full socket/event/wave wiring, and the browser's core-only secure rule transcribed (`Game.ts:1710` — VAC+RACK dying must NOT secure while CORE stands; the generic component-boss path would have false-greened; now pinned in `scripts/component-boss-secure.test.mjs`, proven to bite). `e6-glow-mesa` leaves the exemption table (7→6; `e6-showroom` deliberately retained).
 

@@ -1,6 +1,6 @@
 # canyon-works-01 — E3's signature tile: string the gorge with light (lane-b; commit prefix "feat:")
 ROLE: content + tile + systems integration. WORKDIR: lane-b (worktrees/lane-b). CODEX: model=gpt-5.6-sol effort=high
-ATTENDED-AUTHORED 2026-07-14 — owner GO ("this sounds great"). THE ASSEMBLY: all six E3 spine systems exist (power graph a3c16809 · spans · day/night 022e5fd9 · tram · moths · dam surge 10dd7c44) — this tile makes them a GAME.
+ATTENDED-AUTHORED 2026-07-14 — owner GO ("this sounds great"). THE ASSEMBLY: all six E3 spine systems exist (power graph 6ccef390 · spans · day/night 56ab99d8 · tram · moths · dam surge 751882a1) — this tile makes them a GAME.
 
 **THIRD ATTEMPT AUTHORIZATION (attended, 2026-07-15 night): attempts 1+2 were INFRA casualties (a codex init-wedge killed at 4h40m/882-byte log; a credit-wall rc1) — ZERO content attempts have occurred; the §7.5 changed-premise bar is met by the wall lifting (probe-verified OK). If codex walls again mid-run, the failure is infra: fires re-queue once the wall probe passes, no escalation.**
 

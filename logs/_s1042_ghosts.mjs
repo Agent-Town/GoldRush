@@ -12,11 +12,11 @@ const edits = [
   ],
   [
     '**GO-LIVE BLOCKER (unchanged) = F-tl01-1',
-    '**[❌ FLATLY STALE — CORRECTED s1042: F-tl01-1 WAS FIXED 5 DAYS AGO. `functions/api/telemetry.ts:74` AND `functions/api/stats.ts:60` both now read `context.env.TELEMETRY ?? context.env.ACCOUNTS` (landed `41d8e1ae` + `47c5fb20`, recorded at BACKLOG:697). This header contradicted a dated entry 670 lines below it, and the word "unchanged" made it read as re-verified. NOT a go-live blocker — the text that follows is kept for history only.]** **GO-LIVE BLOCKER (unchanged) = F-tl01-1',
+    '**[❌ FLATLY STALE — CORRECTED s1042: F-tl01-1 WAS FIXED 5 DAYS AGO. `functions/api/telemetry.ts:74` AND `functions/api/stats.ts:60` both now read `context.env.TELEMETRY ?? context.env.ACCOUNTS` (landed `4c68cdca` + `acacbb39`, recorded at BACKLOG:697). This header contradicted a dated entry 670 lines below it, and the word "unchanged" made it read as re-verified. NOT a go-live blocker — the text that follows is kept for history only.]** **GO-LIVE BLOCKER (unchanged) = F-tl01-1',
   ],
   [
     'SCI-03-class meta still needs a spec/owner call',
-    'SCI-03-class meta still needs a spec/owner call **[⚠️ AMBIGUOUS, flagged s1042 rather than resolved: the ledger says SCI-03 assay-branch ✅ SHIPPED s106 `a01c27f`, while `specs/science-dimension/README.md:59` carries the slice UNMARKED with THREE parts ("contract tier, crafted-cards-into-pools, schooling offers") — whether parts 2 and 3 shipped with `a01c27f` is UNVERIFIED (nobody has traced the diff). The nearby PIPELINE-DRY line in this section is itself a ghost that should have retired at s106. This needs an attended reconciliation of spec-vs-ledger, NOT a fire authoring against a half-shipped slice.]**',
+    'SCI-03-class meta still needs a spec/owner call **[⚠️ AMBIGUOUS, flagged s1042 rather than resolved: the ledger says SCI-03 assay-branch ✅ SHIPPED s106 `db87f48`, while `specs/science-dimension/README.md:59` carries the slice UNMARKED with THREE parts ("contract tier, crafted-cards-into-pools, schooling offers") — whether parts 2 and 3 shipped with `db87f48` is UNVERIFIED (nobody has traced the diff). The nearby PIPELINE-DRY line in this section is itself a ghost that should have retired at s106. This needs an attended reconciliation of spec-vs-ledger, NOT a fire authoring against a half-shipped slice.]**',
   ],
 ]
 

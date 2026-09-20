@@ -4,7 +4,7 @@ import { createInterface } from 'node:readline';
 
 const contract = 'e1-night-shift';
 const seed = 'e1-night-shift-01';
-const era = 'd599cd3e';
+const era = 'dbcbf312';
 const claim = { x: 0, z: 12 };
 const sites = {
   sentry_beacon: [{ x: -5, z: 9 }, { x: 5, z: 9 }, { x: -5, z: 15 }, { x: 5, z: 15 }, { x: -9, z: 12 }, { x: 9, z: 12 }],

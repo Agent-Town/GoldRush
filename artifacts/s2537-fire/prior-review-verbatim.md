@@ -2,7 +2,7 @@
 
 ## Slice, branch and tip
 
-Task `tasks/lane-c-chapter-evidence-opt-in.md`, done-move `tasks/done/20260907-115228-lane-c-chapter-evidence-opt-in.md`, branch `feat/hero-move-verb`, tip `386e129f714e634d9a2a9a18f31f8afa9f08f0fd`. Lane base `b10b52514cbf7e460f0f22f69bda3c376d21bf9a`; integration base `ba13dc7bfad0c738813bb403504c23210bb84acd`; detached candidate `9d2352506c00db00f5a4bbe493af44c416612088` at `/private/tmp/gr-gate-s2536`.
+Task `tasks/lane-c-chapter-evidence-opt-in.md`, done-move `tasks/done/20260907-115228-lane-c-chapter-evidence-opt-in.md`, branch `feat/hero-move-verb`, tip `5b3c45754b5105fe5bc7d9eb86e2499a9d35e0ed`. Lane base `6b66fa46be7d177be9c188db00ecdcdddf23d3af`; integration base `3d66f8ed3058f9626c46527a4bc3bd550985f5c8`; detached candidate `9d2352506c00db00f5a4bbe493af44c416612088` at `/private/tmp/gr-gate-s2536`.
 
 ## Verdict
 
@@ -38,4 +38,4 @@ All eight existing paths are lane-only relative to the lane base; the report is 
 
 **F-2536-1 — gate incomplete.** The initial full-run failures did not reproduce in focused runs; their exact cause remains unproven. Attended tests and host contention were observed, but that is not an exemption. The power guard and its source/dependency blobs match base exactly and the final serial repeat passed. No test budget or assertion was changed.
 
-The attended evening chain reached main at `569a41f964d3d6b799cfaf195e55a2b3c3cbbc48` during closing. Its grammar merge `08287cdd7` changed runtime semantics, the Moth test and the retained Moth JSON. The detached candidate is now stale. Re-integrate the seven output-path changes on current main while preserving that newer Moth program, assertions and recording; do not restore the obsolete lane JSON. Then run the complete native node gate, six chapter suites, required task-025/M1/M2 adjacent suites and desktop/390px boot checks. No earlier runtime gate transfers to this new base. The separate completed `lane-a-m1-debug-spawn-contract` remains second priority. This fire does not prescribe a source corrective for an unreproduced failure.
+The attended evening chain reached main at `92358832708bcd8c534dac1857f71859a06b8c87` during closing. Its grammar merge `9912785f7` changed runtime semantics, the Moth test and the retained Moth JSON. The detached candidate is now stale. Re-integrate the seven output-path changes on current main while preserving that newer Moth program, assertions and recording; do not restore the obsolete lane JSON. Then run the complete native node gate, six chapter suites, required task-025/M1/M2 adjacent suites and desktop/390px boot checks. No earlier runtime gate transfers to this new base. The separate completed `lane-a-m1-debug-spawn-contract` remains second priority. This fire does not prescribe a source corrective for an unreproduced failure.

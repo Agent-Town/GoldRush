@@ -12,14 +12,14 @@ CODEX: model=gpt-5.6-sol effort=medium
 
 ## WHY (the evidence chain, dated — every number below was re-measured s1110, not inherited)
 
-**THE CHAPTER REORGANIZATION — `6822607f`, 2026-07-20T09:50:20+07:00**, *"feat: reorganize The Book into era chapters"*. The Book stopped being a flat dot-paginated list and became per-era chapters. Navigation is now a chapter tab, rendered at `src/town/TownScene.ts:1826`:
+**THE CHAPTER REORGANIZATION — `ceddb7ea`, 2026-07-20T09:50:20+07:00**, *"feat: reorganize The Book into era chapters"*. The Book stopped being a flat dot-paginated list and became per-era chapters. Navigation is now a chapter tab, rendered at `src/town/TownScene.ts:1826`:
 
 ```
 <button class="town-ui__chapter-tab" type="button" data-contract-page="${index}"
         data-testid="contract-chapter-tab-${escapeHtml(entry.id)}" ...>
 ```
 
-`6822607f` updated **exactly seven** e2e files (`git show --stat 6822607f | grep e2e`): `072-era-activation`, `board-card-images`, `board-gating-and-profiles`, `board-upcoming-surveys`, `contract-briefings`, `fresh-scene-render-state`, `town-t3-board`. **It left four behind**, and they have been red ever since — the same **"frozen spec + moved source"** class as F-1101-2 and the art-key adoption that preceded this one.
+`ceddb7ea` updated **exactly seven** e2e files (`git show --stat ceddb7ea | grep e2e`): `072-era-activation`, `board-card-images`, `board-gating-and-profiles`, `board-upcoming-surveys`, `contract-briefings`, `fresh-scene-render-state`, `town-t3-board`. **It left four behind**, and they have been red ever since — the same **"frozen spec + moved source"** class as F-1101-2 and the art-key adoption that preceded this one.
 
 **THE FOUR SITES — `grep -rn 'contract-page-dot' src/ e2e/` returns 0 hits in `src/` and exactly 4 in `e2e/`:**
 
@@ -51,7 +51,7 @@ It derives the chapter **from the manifest at runtime**, so it carries **no froz
 
 ## PRE-FLIGHT — verify by CONTENT, and run the premise checks AFTER the reset
 
-1. `git log --oneline main..lane/m4` → **must be EMPTY.** s1110 measured `lane/m4` at `bbc9b6db`, **0 ahead of main**. **Any** commit means undrained work: **STOP and report** (LANE-SAFETY LAW — a pre-flight `reset --hard` over unmerged output is how w1-03 and polish-02 were destroyed).
+1. `git log --oneline main..lane/m4` → **must be EMPTY.** s1110 measured `lane/m4` at `1fb406bc`, **0 ahead of main**. **Any** commit means undrained work: **STOP and report** (LANE-SAFETY LAW — a pre-flight `reset --hard` over unmerged output is how w1-03 and polish-02 were destroyed).
 2. Start from fresh main: `git checkout -B lane/m4 main`.
 3. **NOW, and only now, the premise checks** — a stale lane answers for its own tree, not for main (F-1090-2):
    - `grep -rc 'contract-page-dot' src/` → **must be 0.** If non-zero, the dot control is back and this task's premise is dead: **STOP and report.**
@@ -64,7 +64,7 @@ It derives the chapter **from the manifest at runtime**, so it carries **no froz
 2. **`e2e/e2-trestle.spec.ts`** — identical change at `:69`, id `e2-trestle`.
 3. **`e2e/e2-incline.spec.ts`** — identical change at `:61`, id `e2-incline`.
 4. **`e2e/cw-02-escort.spec.ts`** — identical change at `:68`, id `e3-canyon-works`. Note this file's next line asserts `contract-launch-e3-canyon-works` carries `data-contract-mode='escort'`; the helper's added card-visible assertion is a strict improvement and should sit before it.
-5. **Leave a one-line comment at each of the four sites** naming the retirement, e.g. *"chapter tabs since 6822607f; chapter derived from the manifest so no literal can freeze again"*. Four comments, one line each.
+5. **Leave a one-line comment at each of the four sites** naming the retirement, e.g. *"chapter tabs since ceddb7ea; chapter derived from the manifest so no literal can freeze again"*. Four comments, one line each.
 6. **Add NO new spec and NO new assertion beyond the helper's own.** `e2e/board-era-chapters.spec.ts` already guards chapter navigation across all epochs and is stronger than any spot-check added here. Duplicating it is a scope violation, not diligence.
 7. **Do not modify `src/`.** If you believe the board should still emit page dots, **STOP and report** — restoring a retired control is an owner decision (§7.3), not a lane's.
 

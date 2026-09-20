@@ -2,7 +2,7 @@
 
 Candidate broad suite: **51 passed, 4 skipped, 7 failed**, exit 1. The eight selected base controls produce **1 passed, the same 7 failed**, exit 1. These are newly measured base failures, not the task's previously named E5 fixture or shared-atlas census failures.
 
-All three changed production files were replaced temporarily with `git show fb48bbfdc:<path>` bytes. `computeEngineHash` equals the task base's `2ad0aa1e14a1b7f639bc9c797ae5e14839d11c7b34b70f3f7ac7ca9479fbf6f4`. The candidate bytes were restored exactly afterward; engine `3a437c987c30b1738307197d4e0ebbe64520e8ddbfbbff947378930f8590a041`. [Commands, file hashes and restoration receipt](base-initial.json).
+All three changed production files were replaced temporarily with `git show 282dcaaa6:<path>` bytes. `computeEngineHash` equals the task base's `2ad0aa1e14a1b7f639bc9c797ae5e14839d11c7b34b70f3f7ac7ca9479fbf6f4`. The candidate bytes were restored exactly afterward; engine `3a437c987c30b1738307197d4e0ebbe64520e8ddbfbbff947378930f8590a041`. [Commands, file hashes and restoration receipt](base-initial.json).
 
 | Failure and owner | Candidate | Exact base |
 | --- | --- | --- |

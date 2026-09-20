@@ -2,7 +2,7 @@
 
 - **Slice:** `lane-board-chapter-tab-adoption` (F-1109-1's four frozen page-dot sites)
 - **Branch / tip:** `lane/m4` @ `de8f9b00` `runner(lane-b): lane-board-chapter-tab-adoption.md`
-- **Merge base:** `c2de2e99`
+- **Merge base:** `fd84acc3`
 - **Drained by:** s1112 fire, 2026-07-27
 - **§3.0 block-check:** `node scripts/drain-block-check.mjs 20260727-075023-lane-board-chapter-tab-adoption.md` → **✅ CLEAR** (leaf `board-chapter-tab-adoption`, status `authored`)
 
@@ -20,13 +20,13 @@ This is **not** a "four greens" merge and must never be cited as one. See the pe
 
 ## What it does
 
-`6822607f` (2026-07-20, *"reorganize The Book into era chapters"*) retired the per-contract page dot in
+`ceddb7ea` (2026-07-20, *"reorganize The Book into era chapters"*) retired the per-contract page dot in
 favour of per-era chapter tabs, updating seven e2e files and leaving four frozen on the dead control.
 This slice moves those four onto the live control:
 
 ```
 - await page.getByTestId('contract-page-dot-e2-incline').click();
-+ // Chapter tabs since 6822607f; chapter derived from the manifest so no literal can freeze again.
++ // Chapter tabs since ceddb7ea; chapter derived from the manifest so no literal can freeze again.
 + await goToContractPage(page, 'e2-incline');
 ```
 
@@ -80,7 +80,7 @@ merged tree. The 3/7 → 3/7 battery is **the runner's**, cited as the runner's.
 
 ## Merge classification
 
-Merge base `c2de2e99`. Per-file, three buckets:
+Merge base `fd84acc3`. Per-file, three buckets:
 
 | Bucket | Files |
 |---|---|
@@ -91,7 +91,7 @@ Merge base `c2de2e99`. Per-file, three buckets:
 No 3-way graft was needed: no file moved on both sides. Landed path-scoped via `git show lane/m4:<file>`,
 then verified byte-identical to the branch.
 
-**The debris was predicted.** s1110(D) forecast it precisely: F-1108-2's fix (`019e943a`) is **inert**
+**The debris was predicted.** s1110(D) forecast it precisely: F-1108-2's fix (`bdd22640`) is **inert**
 because the runner parent (pid `35584`, up 16+ days) forked its lane subshell from the *old parsed*
 `git add -A`. This is the **third** drain forced to land path-scoped for that reason.
 **Robin still owes one clean runner restart.**

@@ -1,8 +1,8 @@
 # Review — e6-boss-homemaker (THE HOMEMAKER-9000, the boss that helps you to death)
 
 - **Slice:** lane-a-e6-boss-homemaker (E6 boss system)
-- **Branch/tip:** lane/m3 @ `c93fffd642e5a04f6fa14d82ccd50825366d55c1` (runner commit "runner(lane-a): lane-a-e6-boss-homemaker.md")
-- **Merge:** `0305ce26176a5bd20ce7ac117f59d4ccac346617` (`--no-ff` onto main, stale base `09ae22f3`, main +10)
+- **Branch/tip:** lane/m3 @ `f283c321b51889cfff7f1c0aa3109a815f85b9ac` (runner commit "runner(lane-a): lane-a-e6-boss-homemaker.md")
+- **Merge:** `761308de37126e94481159a6d37444910782d38b` (`--no-ff` onto main, stale base `30e82c5e`, main +10)
 - **Drained by:** s730 fire, 2026-07-18
 
 ## Verdict
@@ -24,7 +24,7 @@
 | zero console/page errors | asserted green in own spec, both viewports |
 
 ## Merge classification
-Base `09ae22f3` (main~10); main moved +10 since fork (e8-claw `77e5a80c`, e6-wrangle `8bdc8fb7`, tp bookkeeping). 3-way `--no-ff`, 6 content conflicts — **all additive keep-both**:
+Base `30e82c5e` (main~10); main moved +10 since fork (e8-claw `7f633f9b`, e6-wrangle `ffe551f5`, tp bookkeeping). 3-way `--no-ff`, 6 content conflicts — **all additive keep-both**:
 | File | Class | Resolution |
 |---|---|---|
 | `src/systems/HomemakerBossSystem.ts` | NEW | free (+ 1-line call-site fix, below) |

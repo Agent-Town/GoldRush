@@ -1,9 +1,9 @@
 # reviews/rf-03b-specs-supersession.md
 
 **Slice:** RF-03b-specs supersession corrective (test-only — realign the two specs that still asserted the pre-RF-03b bench-in-normal-play).
-**Branch/tip:** `lane/perf` (worktrees/lane-d), runner commit `3d1243f5` `runner(lane-d): lane-d-rf-03b-specs-supersession.md`.
-**Base:** `b94c2f67` (the s930 author commit — already an ancestor of main; only the runner's spec edits were ahead).
-**Drained onto main:** tip `0bd1f0a7` (s931 lock), path-scoped graft of 2 e2e files.
+**Branch/tip:** `lane/perf` (worktrees/lane-d), runner commit `f5645da3` `runner(lane-d): lane-d-rf-03b-specs-supersession.md`.
+**Base:** `befc764e` (the s930 author commit — already an ancestor of main; only the runner's spec edits were ahead).
+**Drained onto main:** tip `7f927d4a` (s931 lock), path-scoped graft of 2 e2e files.
 
 ## Verdict
 **PASS — MERGED.** tsc clean · build green · the rewritten `task-037:142` GREEN · full `town-assay-office-blender` 10/10 both projects · canonical `bug-office-desk` 4/4 both projects · the excluded `task-037:171/192` reds fingerprint-match F-902-2 EXACTLY (fail at `debugPlaceAssayOffice` placement, in code this diff never touches).
@@ -22,7 +22,7 @@ RF-03b (SHIPPED s902) reversed the Assay Office door: normal play now opens the 
 | `task-037-assay-bench-ungate`, both projects | **1 passed** (`:142` desktop) · 2 skipped (`:142` mobile `test.skip` by design + one) · **3 failed** (`:171` desktop+mobile, `:192` mobile) — all at `debugPlaceAssayOffice` |
 
 ## Merge classification
-Base `b94c2f67` is already an ancestor of main; main advanced (STATUS/BACKLOG/goals/logs/`tasks/lane-roster-wiring-e7.md`) but **never touched the two spec files** (`git diff --name-only b94c2f67 main -- <the 2 specs>` = empty). Given the stale-base drift on the lane, grafted the two LANE-TOUCHED files surgically path-scoped (`git checkout lane/perf -- <2 specs>`) rather than a `--no-ff` merge that would have dragged in the lane's stale copies of STATUS/BACKLOG/goals. No 3-way needed.
+Base `befc764e` is already an ancestor of main; main advanced (STATUS/BACKLOG/goals/logs/`tasks/lane-roster-wiring-e7.md`) but **never touched the two spec files** (`git diff --name-only befc764e main -- <the 2 specs>` = empty). Given the stale-base drift on the lane, grafted the two LANE-TOUCHED files surgically path-scoped (`git checkout lane/perf -- <2 specs>`) rather than a `--no-ff` merge that would have dragged in the lane's stale copies of STATUS/BACKLOG/goals. No 3-way needed.
 
 | File | Class | Resolution |
 |---|---|---|

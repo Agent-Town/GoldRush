@@ -1,8 +1,8 @@
 # lane-c-activations-frame-matrix-from-contract — drain review (s1149)
 
 - **Slice:** `lane-c-activations-frame-matrix-from-contract` (closes **F-1146-4**)
-- **Branch:** `lane/e2-arsenal` · runner commit `50949e71` ("test: derive assay frame matrix from contract")
-- **Merge:** `c727a5b7a63db24c62f9c8bccafb708d27175495` (merge-base `5ec1a0dc`, main 2 ahead — both docs-only)
+- **Branch:** `lane/e2-arsenal` · runner commit `fd2fe747` ("test: derive assay frame matrix from contract")
+- **Merge:** `27538e2b68fcf7e5a012e7582e1e6497ebc143dc` (merge-base `c041e49a`, main 2 ahead — both docs-only)
 - **Task master:** `tasks/lane-c-activations-frame-matrix-from-contract.md` (FIRE-AUTHORED s1148)
 - **§3.0 `drain-block-check`:** ✅ **CLEAR** — run as the first command of the drain, before classification.
 
@@ -23,7 +23,7 @@ assertions are untouched.
 | # | Bar clause | Result |
 |---|---|---|
 | 1 | **ZERO `src/` diff** | ✅ merged diff vs merge-base = `STATUS.md`, `artifacts/lane-c-activations-frame-matrix.md` (A), `e2e/…assay-office.spec.ts` (M), `scripts/tmp-s1148-line1.txt` (A). No `src/`. |
-| 2 | **`characters.v2.json` byte-unchanged** (editing the contract to match a test inverts the task) | ✅ `git diff 5ec1a0dc HEAD -- assets/layer-contracts/characters.v2.json` = **empty** |
+| 2 | **`characters.v2.json` byte-unchanged** (editing the contract to match a test inverts the task) | ✅ `git diff c041e49a HEAD -- assets/layer-contracts/characters.v2.json` = **empty** |
 | 3 | **Derivation checkable WITHOUT running anything** | ✅ report carries the full direction → alias → row → frame-keys → mirrored table. **I re-derived all 8 rows independently from the contract; every row matched** (rows `0,2,2,2,3,1,1,1`). |
 | 4 | **`mirrored` must be `false` for `nw`/`sw`** | ✅ both `false` — outcome correct. ⚠️ but see **F-1149-1**: it is false for the wrong *reason*. |
 | 5 | **Scope-5 runtime/contract disagreement REPORTED, not pasted; green-by-observation = REJECT** | ✅ the replacement is **structurally derived** — the spec reads and computes from the JSON; no observed value is pasted anywhere. Report's "Before" section records the observed `r0c3` explicitly as reproduction evidence only. |
@@ -98,8 +98,8 @@ Neither finding blocks. Both are recorded in `tasks/BACKLOG.md`; neither is fire
 
 ## Merge classification
 
-Merge-base `5ec1a0dc`; main 2 ahead (`574ce6ac` s1148 handoff, `5facc5f0` s1149 lock — **docs only**), lane 1 ahead
-(`50949e71`). Disjoint file sets: the lane touched only `e2e/` + a new `artifacts/` report, main touched only
+Merge-base `c041e49a`; main 2 ahead (`92268100` s1148 handoff, `746040f9` s1149 lock — **docs only**), lane 1 ahead
+(`fd2fe747`). Disjoint file sets: the lane touched only `e2e/` + a new `artifacts/` report, main touched only
 `STATUS.md`. **No conflicts, no 3-way graft required**, `--no-ff` merge by the `ort` strategy. Working-tree dirt at
 drain time was confined to `artifacts/`, `logs/`, `reviews/shots-*` (the known ~300-file F-1136-3 churn);
 `git status --porcelain -- src/ e2e/ specs/ tasks/ assets/ scripts/` was **empty**, so §2A dirt-ownership was

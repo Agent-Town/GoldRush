@@ -253,8 +253,8 @@ for (const sha of commits) {
   // over an empty subject set. Such a pair stays a DROP.
   //
   // ⓘ ORDERED DELIBERATELY LAST, AND THE ORDER WAS CHOSEN BY MEASUREMENT RATHER THAN BY TASTE.
-  // Placed before the ABRIDGED test it reclassified `869f6cbc`, a pre-existing ABRIDGED entry;
-  // placed before the permanence split it reclassified `0180b013`, a pre-existing TRANSIENT. Both
+  // Placed before the ABRIDGED test it reclassified `ef081c16`, a pre-existing ABRIDGED entry;
+  // placed before the permanence split it reclassified `d73f9397`, a pre-existing TRANSIENT. Both
   // of those classes are already correct and already benign, and both say something STRICTLY MORE
   // specific than "superseded" -- ABRIDGED says the older line is on the board in truncated form,
   // TRANSIENT says it was dropped at lock time and restored by the fire's own handoff commit.
@@ -269,7 +269,7 @@ for (const sha of commits) {
   // older line is on the board in truncated form".
   //
   // MEASURED s2587 on the live board, ground truth = the only ABRIDGED entry in a --limit 40 walk,
-  // `347e7359`: the older line is 904 chars, the newer 4646 (+3742), ZERO load-bearing tokens lost
+  // `71b4bcaa`: the older line is 904 chars, the newer 4646 (+3742), ZERO load-bearing tokens lost
   // and SIX gained (F-2569-2, F-2568-2, F-2563-2, F-2585-1, F-2584-1, F-2365-1). Nothing was
   // truncated; the line was EXTENDED -- and it was extended by the F-2586-2 desk RECOVERY the law
   // demanded, so the instrument reports the correct act as a defect.
@@ -326,8 +326,8 @@ for (const sha of commits) {
   // numbered one, not condemned for lacking a session number. `lostSession === null` used to
   // short-circuit straight to permanent, so an ATTENDED line-1 -- which carries "(attended)" and
   // no `s<N>` -- could NEVER be exonerated however correctly it had been archived. Measured s2088:
-  // `1cb47bdc^`'s line was present at HEAD *verbatim*, carried by a textbook bullet
-  // (`- **attended lock line (line-1 archive, RESTORED s2087 from \`1cb47bdc^\`):**`), and was still
+  // `217fb1a8^`'s line was present at HEAD *verbatim*, carried by a textbook bullet
+  // (`- **attended lock line (line-1 archive, RESTORED s2087 from \`217fb1a8^\`):**`), and was still
   // counted PERMANENTLY absent. That is the exact trap the F-1690-2 block above names: the remedy
   // the red implied was to invent an `s<N>` for a session that never had one, i.e. to write a
   // falsehood onto the board to satisfy a string match. As attended sessions took over the drain

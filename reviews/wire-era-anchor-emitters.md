@@ -1,8 +1,8 @@
 # reviews/wire-era-anchor-emitters.md
 
 - **Slice:** wire-era-anchor-emitters (lane-a; "feat:") — every age breathes its own way
-- **Branch/tip:** lane/m3 @ f492397a (runner(lane-a) commit)
-- **Base:** 270a96af; **Merge commit:** 561281a3
+- **Branch/tip:** lane/m3 @ 4f311fe8 (runner(lane-a) commit)
+- **Base:** 17894144; **Merge commit:** 2b7e6e46
 - **Verdict:** ✅ SHIPPED — player-visible render feature, full gate green.
 
 ## What it does
@@ -19,7 +19,7 @@ Generalizes the single steam-anchor emitter mount into an anchor-prefix → emit
 | Combined | **18/18 passed (40.8s)**, desktop-chrome + mobile-chrome |
 | Perf p95 (runner artifacts) | e3/e4 ratio **1.010 desktop / 1.021 mobile** (budget ≤1.15) |
 
-## Merge classification (base 270a96af)
+## Merge classification (base 17894144)
 | File | Class | Resolution |
 |------|-------|-----------|
 | `src/town/TownTavernPilot.ts` | LANE-TOUCHED | clean (main unchanged since base; s636 prior merges were data-only) |

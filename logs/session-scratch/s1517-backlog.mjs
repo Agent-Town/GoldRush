@@ -17,12 +17,12 @@ const addition =
   'applied to the row that finding was filed against.** s1517 built a detached `gate-s1517` inside the repo (§3.0b custody; removed at the end, ' +
   'node_modules symlink unlinked first) so the probe shared the subject’s COMPOSITION: same `package.json` `"type": "module"`, same Playwright 1.61.1, ' +
   'same pinned Node 26.4.0. **Four measurements, none inherited:** ' +
-  '**[1]** `typeof __dirname=undefined` reproduced independently — `f9c0e498`’s finding confirmed by a second hand — while `import.meta.dirname` resolves. ' +
+  '**[1]** `typeof __dirname=undefined` reproduced independently — `eb301c3a`’s finding confirmed by a second hand — while `import.meta.dirname` resolves. ' +
   '**[2]** THE DISCRIMINATING RUN, which is the one that actually earns the claim: invoked from the repo root against the worktree’s config, ' +
   '`dirname=/…/gate-s1517` while `cwd=/…/Gold Rush`. The value is **config-anchored, not cwd-shaped**, so it names the TESTED tree — and `process.cwd()`, ' +
   'the obvious substitute, is thereby **disqualified by measurement** rather than by taste. ' +
-  '**[3]** A **real** single-spec JSON-reporter run emitted `{"revision":"cb276b780de1628e003b9178435e622d253c798b","dirty":true,"actualWorkers":1}` in 4.0 s. ' +
-  'That settles the fifth conjunct with **live** values; `f9c0e498` had shown the same coexistence only with `unrecorded` fallbacks. ' +
+  '**[3]** A **real** single-spec JSON-reporter run emitted `{"revision":"f56843b5b51b6265aef49bb1872aa48539ec074b","dirty":true,"actualWorkers":1}` in 4.0 s. ' +
+  'That settles the fifth conjunct with **live** values; `eb301c3a` had shown the same coexistence only with `unrecorded` fallbacks. ' +
   '**[4]** Constraint (b) **DEMONSTRATED INSTEAD OF PREDICTED**: the obvious top-of-file placement pushed `workers:` from `:50` to `:69` and produced ' +
   '`FAIL — 3 pointer problem(s)` naming `scripts/fire.md`, `.claude/skills/drain/SKILL.md` and `tasks/goals.json[calibrate-suite-workers-v2]` — ' +
   'three surfaces a lane runner may not edit. The arrangement that holds puts the `metadata:` key BELOW `workers:` and the `import` plus a ' +

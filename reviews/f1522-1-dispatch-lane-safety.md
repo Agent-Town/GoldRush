@@ -2,8 +2,8 @@
 
 - **Slice:** `f1522-1-dispatch-lane-safety` (F-1522-4, the corrective the s1522 Reset Massacre demanded)
 - **Branch / tip:** `lane/d` @ `0b54eac38` — one runner auto-commit, 3 files, +143/-1
-- **Base:** `a15bdbb8` (`git merge-base main lane/d`)
-- **Gated in:** detached worktree `gate-s1523` at main `d20ada965`, `git merge --no-ff lane/d` → `6a0c1e6e8` (§3.0b custody: undecided content never entered main's working tree)
+- **Base:** `e6445595` (`git merge-base main lane/d`)
+- **Gated in:** detached worktree `gate-s1523` at main `d17889c8a`, `git merge --no-ff lane/d` → `6a0c1e6e8` (§3.0b custody: undecided content never entered main's working tree)
 - **Drain:** s1523, 2026-08-07
 
 ## VERDICT: MERGE — all five manufactured arms pass, both directions proved, firewall empty.
@@ -48,7 +48,7 @@ No playwright, no boot probe, no screenshots: the diff touches `scripts/**` and 
 
 | File | Class | Resolution |
 |---|---|---|
-| `scripts/lane-runner-v3.sh` | LANE-TOUCHED (+30) | clean — `git log a15bdbb8..main` on this path is **empty**, main never moved it |
+| `scripts/lane-runner-v3.sh` | LANE-TOUCHED (+30) | clean — `git log e6445595..main` on this path is **empty**, main never moved it |
 | `scripts/lane-dispatch-safety-guard.test.sh` | LANE-ONLY (new, 112 lines) | clean |
 | `package.json` | LANE-TOUCHED (+1/-1, the `test:ledger-guards` chain append) | clean, main never moved it |
 

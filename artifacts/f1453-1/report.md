@@ -48,9 +48,9 @@ Twin Banks has two fords and two gravel bars. `goalSideCrossing()` still chooses
 
 ## Gates
 
-The task branch was authored at `a7bc23c5`, one commit before main's `7dcae7cb` conflict repair. Its committed parent contains unrelated duplicate declarations in `TownScene.ts` and `Terrain3dClaimPilot.ts`, so lane-local `npx tsc --noEmit`, `npm run build`, and full app boots fail before reaching this slice. No forbidden file was edited or reverted.
+The task branch was authored at `91eff09f`, one commit before main's `52b2ac21` conflict repair. Its committed parent contains unrelated duplicate declarations in `TownScene.ts` and `Terrain3dClaimPilot.ts`, so lane-local `npx tsc --noEmit`, `npm run build`, and full app boots fail before reaching this slice. No forbidden file was edited or reverted.
 
-The exact patch was therefore gated in a detached worktree at repaired main `7dcae7cb`:
+The exact patch was therefore gated in a detached worktree at repaired main `52b2ac21`:
 
 - `npx tsc --noEmit`: green.
 - `npm run build`: green; asset diet green.
@@ -71,6 +71,6 @@ Because inventory membership is not exoneration, the nine unique red titles were
 
 ## Owner/orchestrator handoff
 
-- Drain this as a path-scoped patch onto `7dcae7cb` or later; do not interpret the stale task parent as a new TypeScript regression.
+- Drain this as a path-scoped patch onto `52b2ac21` or later; do not interpret the stale task parent as a new TypeScript regression.
 - No contract-swap call site was added. A future soft switch must call `resetCrossingData()` when it changes the import-time contract model.
 - F-1448-4 remains a behavior-changing successor, not hygiene.

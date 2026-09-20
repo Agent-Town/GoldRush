@@ -1,7 +1,7 @@
 # f1404-1 — make the wave scaling cross-engine deterministic
 
 **Slice:** `f1404-1-make-the-wave-scaling-cross-engine-deterministic`
-**Branch/tip:** main slot, run `20260802-214705-main-f1404-1-...` · gate on `abbdcc4c` (s1405)
+**Branch/tip:** main slot, run `20260802-214705-main-f1404-1-...` · gate on `915950b0` (s1405)
 **Verdict:** ⏹️ **RUN ACCEPTED — NO CODE TO MERGE. The run STOPPED correctly at its own scope 6(b) gate, and the gate itself is the defect (F-1405-1).**
 
 ## What happened
@@ -23,7 +23,7 @@ pre-existing `logs/*` churn remains. Mistake #1 is satisfied — the run wrote W
 
 | Probe | Node 26.4.0 (fire) | Node 23.11.1 (runner) |
 |---|---|---|
-| `node --test scripts/gr-sim.test.mjs` on `abbdcc4c` | **6 tests / 6 pass / 0 fail**, rc=0 | **6 tests / 6 pass / 0 fail**, rc=0 |
+| `node --test scripts/gr-sim.test.mjs` on `915950b0` | **6 tests / 6 pass / 0 fail**, rc=0 | **6 tests / 6 pass / 0 fail**, rc=0 |
 | Run's post-cure Claim outcome | `b1eeb320`, kills 137, events 545 | `b1eeb320`, kills 137, events 545 |
 | Run's baseline Claim outcome | `02561b7f`, kills 140, events 546 | `02561b7f`, kills 140, events 546 |
 

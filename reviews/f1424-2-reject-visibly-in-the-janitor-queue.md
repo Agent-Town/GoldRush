@@ -2,8 +2,8 @@
 
 **Slice:** `lane-c-f1424-2-reject-visibly-in-the-janitor-queue.md` (FIRE-AUTHORED s1424)
 **Branch / tip:** `lane/e2-arsenal` @ `a11d76cf`
-**Merge-base:** `8c4b3a3f`
-**Merged to main:** `2921d2ce7c056d1a64f46a1376e9941e677a68d2` (drained s1425)
+**Merge-base:** `0894c23f`
+**Merged to main:** `c84e6795f6c94e206f5aefa5afcc7c74cce97b20` (drained s1425)
 **Gated in:** detached worktree `gate-s1425` at the lane tip (§3.0b — undecided content never entered main's working tree)
 
 ## Verdict
@@ -99,7 +99,7 @@ fingerprints (`8c859fddc1a9`, `48544d0754ff`) unchanged.
 
 ## Merge classification
 
-Base `8c4b3a3f`. `git diff --stat 8c4b3a3f main` over the five paths is **empty** —
+Base `0894c23f`. `git diff --stat 0894c23f main` over the five paths is **empty** —
 main had not moved on any of them — so every path is **LANE-TOUCHED-only**, landed
 byte-identical to `a11d76cf`. No 3-way, no conflict surface.
 

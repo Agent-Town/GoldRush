@@ -1,6 +1,6 @@
 # Task lane-rehearsal-unset-guard: THE GUARD LEARNS TO FAIL (LANE-A, commit prefix "test:")
 
-**FIRE-AUTHORED (attended review welcome) — s1089, 2026-07-26. This is F-1089-1, found while draining rf-27 (`a9fccf755ab3bc7608110e62413d307db626a57e`). The gap below was proved by a mutation control s1089 actually ran, and the output is quoted so you inherit proof rather than opinion. This task is small on purpose. Do not grow it.**
+**FIRE-AUTHORED (attended review welcome) — s1089, 2026-07-26. This is F-1089-1, found while draining rf-27 (`b99681a1c402b7712974ce84d11ca86d7e5e5e9d`). The gap below was proved by a mutation control s1089 actually ran, and the output is quoted so you inherit proof rather than opinion. This task is small on purpose. Do not grow it.**
 
 You are Codex (worktrees/lane-a).
 CODEX: model=gpt-5.6-sol effort=high
@@ -28,7 +28,7 @@ Reverted; `rehearsal/base-url.mjs` verified byte-identical (`7cde854c`). **The r
 ## PRE-FLIGHT — verify by CONTENT, never by counting (SAFE-DUPE)
 
 ⚠️ **`git log main..lane/m3` WILL PRINT ONE COMMIT (`59e12d1f runner(lane-a): lane-entry-damage-net.md`), AND THAT IS EXPECTED — IT IS *NOT* A REASON TO STOP.**
-s1089 verified the reset is **loss-free by content, not by counting**: that commit is rf-26, merged to main as `dc483d74927bcdd694c9aeb4c61144ecd225acb5`, and the full-tree `git diff main lane/m3` shows the branch is **behind-only** — it carries nothing main lacks. The branch is **FALSE-AHEAD**. An ahead-count is not a drain signal (F-1066-1 / F-1073-1).
+s1089 verified the reset is **loss-free by content, not by counting**: that commit is rf-26, merged to main as `38795ba051a9678df6bc67e4261b75128ea3c941`, and the full-tree `git diff main lane/m3` shows the branch is **behind-only** — it carries nothing main lacks. The branch is **FALSE-AHEAD**. An ahead-count is not a drain signal (F-1066-1 / F-1073-1).
 
 All four must hold before you touch a file:
 1. `git log --oneline main..lane/m3` prints **exactly `59e12d1f` and nothing else.** A **second** commit would be undrained work — **only then STOP and report.**

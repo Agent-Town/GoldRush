@@ -2,8 +2,8 @@
 
 - **Slice:** e7-01-research-tree (lane-b, research-tree ladder — successor to e6-01 SHIPPED)
 - **Branch/tip:** `lane/m4` @ `15a82ec4`
-- **Base:** `f066289b` (main advanced only through PNG-refresh `ac959272` + task-refill `d5f164e8` since — no src overlap)
-- **Drained by:** s591 fire — pure additive graft onto main `d5f164e8`
+- **Base:** `e3339d0f` (main advanced only through PNG-refresh `ac959272 (archive: pruned by the A3 rewrite)` + task-refill `b34a1f7f` since — no src overlap)
+- **Drained by:** s591 fire — pure additive graft onto main `b34a1f7f`
 - **Verdict:** ✅ MERGE — additive epoch-7 registration; all gates green; epoch stays board-gated (no player leak → no GZ item).
 
 ## What it does (player-visible)
@@ -22,7 +22,7 @@ Registers the **epoch-7 "Signal Era"** research chart + contract stub (branches:
 | Screenshots | `artifacts/e7-research-tree/{desktop,mobile}-chrome-chart.png` |
 
 ## Merge classification
-Lane base `f066289b` == e7-01 base; main's two intervening commits (`ac959272` = screenshot/dashboard refresh, `d5f164e8` = BACKLOG + queue-file refill) touch **none** of e7-01's files. Verified `git diff f066289b main -- <all e7-01 paths>` = empty → main==base on every touched file. Purely additive (+320 / −0). Cleaner than e6-01 (no concurrent ContractFamilies mover this time).
+Lane base `e3339d0f` == e7-01 base; main's two intervening commits (`ac959272 (archive: pruned by the A3 rewrite)` = screenshot/dashboard refresh, `b34a1f7f` = BACKLOG + queue-file refill) touch **none** of e7-01's files. Verified `git diff e3339d0f main -- <all e7-01 paths>` = empty → main==base on every touched file. Purely additive (+320 / −0). Cleaner than e6-01 (no concurrent ContractFamilies mover this time).
 
 | File | Class | Resolution |
 |------|-------|-----------|

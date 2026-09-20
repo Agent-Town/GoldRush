@@ -1,6 +1,6 @@
 # gazette-unique — every edition its own ink, stale local news retired
 
-**Slice:** `lane-gazette-unique` · **Branch:** `lane/c` · **Tip:** `cd69ebe915d672a15f8dad81e699a35fcc51e1d5` · **Base:** `ea5a9ed517dc430751558cbfb165ef3cae7cecdd` · **Drained:** s1589, 2026-08-09
+**Slice:** `lane-gazette-unique` · **Branch:** `lane/c` · **Tip:** `8ad412fb3b2188e0e7fb2dbaad4147a5160f96c3` · **Base:** `590d688d833f29e17b1a3941872620ee90a5172d` · **Drained:** s1589, 2026-08-09
 
 ## Verdict
 
@@ -39,14 +39,14 @@ Gated on the **merged tree in a detached worktree** (§3.0b custody) — undecid
 Adjacent sweep = `gazette-first-issue`, `gazette-welcome`, `gz-02-news-page`, `gz-h1-newsie`, `ss-03-beats`, `wd02-barks`.
 
 - **`ss-03-beats.spec.ts:52`, both projects — KNOWN-RED, fingerprint matched.** `red-inventory-lookup` returns `KNOWN-RED` for this spec (snapshot 2026-07-28) with the same test name, the same both-projects blast radius and the same `expect(received).toEqual(expected) // deep equality` error at the same ~1–3 ms. Not this slice.
-- **`wd02-barks.spec.ts:104`, both projects — PRE-EXISTING, proved by control.** Run on **clean main** (`gate-s1589-control` at `57d2d13c0`) it fails identically on both projects. Not this slice. ⚠️ But the inventory says `CLEAN-IN-INVENTORY` for this spec — that is a stale exoneration, filed as **F-1589-2**.
+- **`wd02-barks.spec.ts:104`, both projects — PRE-EXISTING, proved by control.** Run on **clean main** (`gate-s1589-control` at `8d4ab6207`) it fails identically on both projects. Not this slice. ⚠️ But the inventory says `CLEAN-IN-INVENTORY` for this spec — that is a stale exoneration, filed as **F-1589-2**.
 - **`wd02-barks.spec.ts:139`, mobile only — ORDER/LOAD-SENSITIVE FLAKE, not a regression.** It reddened only inside the 6-spec, 7.0-minute batch. Run **alone on the merged tree** it passes on both projects (14.3s desktop / 11.5s mobile), matching the clean-main control exactly. Filed as **F-1589-3**.
 
 The isolated merged-tree run and the clean-main control produce **identical** fingerprints — `:104` red on both projects, `:139` green on both — which is what exonerates the merge.
 
 ## Merge classification
 
-Base `ea5a9ed5`; three-way merge, no conflicts, `ort` strategy.
+Base `590d688d`; three-way merge, no conflicts, `ort` strategy.
 
 | Path | Class | Note |
 |---|---|---|
@@ -56,7 +56,7 @@ Base `ea5a9ed5`; three-way merge, no conflicts, `ort` strategy.
 | `reviews/shots-gazette-unique/*.png` (10) | **LANE-ONLY** | new evidence, no main counterpart |
 | `e2e/gazette-art-wiring.spec.ts` | **DRAIN-REPAIRED** | not lane-touched; see F-1589-1 |
 
-`git diff --name-only ea5a9ed5 main -- <the three source paths>` returned empty, so no graft was owed.
+`git diff --name-only 590d688d main -- <the three source paths>` returned empty, so no graft was owed.
 
 ## Findings
 

@@ -2,7 +2,7 @@
 // F-1592-1 lever proof: can CDP Emulation.setCPUThrottlingRate inflate MAIN-THREAD
 // frame time past the 50 ms arm threshold, where external CPU hogs provably cannot?
 //
-// Derived from artifacts/f1591-1-frame-supply-cliff/probe.mjs (merged c213694c0).
+// Derived from artifacts/f1591-1-frame-supply-cliff/probe.mjs (merged 5936ec48e).
 // The ONLY change of substance is the lever: a CDP throttle instead of external hogs.
 // Unlike its parent, this probe records the LEVER'S OWN STATE in the artifact (F-1592-2).
 import { mkdir, writeFile } from 'node:fs/promises';

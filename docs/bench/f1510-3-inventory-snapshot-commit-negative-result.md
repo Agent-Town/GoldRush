@@ -9,7 +9,7 @@ Outcome: **STOP — `git rev-parse HEAD` at generation time does not identify th
 The prerequisite commit is present:
 
 ```text
-$ git merge-base --is-ancestor 2c49518192e338753482ec8188cd89bf1390cca9 HEAD
+$ git merge-base --is-ancestor c728459601d0b5316c73119d5a8a387add58ab1d HEAD
 rc=0
 ```
 
@@ -39,19 +39,19 @@ The three relevant revisions disagree:
 
 ```text
 generator tree (worktrees/lane-a) HEAD:
-432587889f143cd866c40f886b4f207c0a8a5973
+377ead4354cb12cf97156402e01d27c1ca9e1efd
 
 recorded test tree (worktrees/lane-d) current HEAD:
-61892d1813f265fcad2133c9ab84d29db40de39f
+d2308dfa9c92fad117ebd50d43ee0535abac4a16
 
 main revision at report.stats.startTime:
-b66905c64c0f30cbb1b018128288c19ebca5fa79
+eb3a8a01200b57cbbfce73ddc44898361669b391
 ```
 
 Therefore the requested implementation would emit:
 
 ```text
-- Snapshot commit: **432587889f143cd866c40f886b4f207c0a8a5973**
+- Snapshot commit: **377ead4354cb12cf97156402e01d27c1ca9e1efd**
 ```
 
 That line would name the reporting checkout, not the tree whose Playwright results are being reduced. A clean/dirty suffix cannot repair the wrong revision identity. This is the exact negative-result condition licensed by the task: a raw JSON report produced on a different tree makes generation-time `HEAD` misleading.

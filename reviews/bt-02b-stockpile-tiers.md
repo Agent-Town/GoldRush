@@ -1,8 +1,8 @@
 # bt-02b — stockpile tiers
 
 - **Slice:** `bt-02b-stockpile-tiers` (BT ladder, building-tiers)
-- **Branch / lane:** `lane/m4` (lane-b) · runner tip `2b4f1615` · merge-base `625831a8`
-- **Merged to main:** `5528331e50fa179cf0a42f1b3df57117a46de945` (s1314 fire)
+- **Branch / lane:** `lane/m4` (lane-b) · runner tip `465c8ac1` · merge-base `6bf3c39d`
+- **Merged to main:** `07f0bcad4d3f3ff6ecc75cec68c90ca434b2427b` (s1314 fire)
 - **Task master:** `tasks/lane-b-bt-02b-stockpile-tiers.md` (v2, re-authored s1313 after v1's lawful firewall STOP)
 - **§3.0 drain-block-check:** ✅ CLEAR under `--strict`, matched by name (`bt-02b-stockpile-tiers`, status `queued`)
 
@@ -51,7 +51,7 @@ All Playwright runs `--workers=1` per §3.1, both projects, on the merged tree.
 
 I did not accept the runner's "unchanged assertions" claim. Control method: revert the merge's
 three behavioural files (`src/systems/BuildSystem.ts`, `src/game/Balance.ts`,
-`e2e/bt-01-tiers.spec.ts`) to merge-base `625831a8`, re-run the named assertions, restore
+`e2e/bt-01-tiers.spec.ts`) to merge-base `6bf3c39d`, re-run the named assertions, restore
 byte-exact (sha256-verified, `MATCH = true` on both controls).
 
 1. **`bt-01-tiers` × 4** (`Enter tears down after clicking upgrade…` and `insufficient gold leaves
@@ -70,7 +70,7 @@ exactly one new test in two projects. Node guards `203 → 203`.
 
 ### Merge classification
 
-One commit (`2b4f1615`), six paths, **all LANE-ONLY** — `git diff --name-only` of each path
+One commit (`465c8ac1`), six paths, **all LANE-ONLY** — `git diff --name-only` of each path
 between merge-base and `main` is empty, so main never moved any of them since the fork. No
 3-way graft, no conflict, no MAIN-MOVED file. Merged `--no-ff` onto main with the working tree
 clean across every merge-relevant path.

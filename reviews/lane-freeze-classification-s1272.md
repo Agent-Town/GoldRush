@@ -47,7 +47,7 @@ Both of lane-c's ahead commits were already triaged; neither is waiting for a ga
 
 | Commit | Task | Disposition |
 |---|---|---|
-| `40ea99a4` | `lane-mandatory-welcome.md` | **DRAINED** s1255, merge `c5a00849` — hence `e2e/gazette-welcome.spec.ts` + `e2e/release-build.spec.ts` classify ABSORBED |
+| `40ea99a4` | `lane-mandatory-welcome.md` | **DRAINED** s1255, merge `bd4c5c18` — hence `e2e/gazette-welcome.spec.ts` + `e2e/release-build.spec.ts` classify ABSORBED |
 | `6c44c6f3` | `lane-c-ap-06b-panel-ladder-and-voice.md` | **STOPPED** s1218, case (b) permission-ladder breach — `reviews/ap-06b-panel-ladder-and-voice.md`, finding F-1218-1 |
 
 The AP-06b content is unmerged **on purpose**: the runner declared a ladder breach and stopped where its master told it to, and the cure is owner-gated (the F-1219-1 ruling standing on the desk). So lane-c must NOT be drained — there is nothing here a gate battery could approve.

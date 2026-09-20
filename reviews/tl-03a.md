@@ -1,6 +1,6 @@
 # Review — tl-03a: The Assay Office, Window 1 (live website section)
 
-- **Slice/branch/tip:** tl-03a-site-assay-office · lane/m3 · runner commit `32229b3` (grafted onto main as `<this drain>`)
+- **Slice/branch/tip:** tl-03a-site-assay-office · lane/m3 · runner commit `4473ebf` (grafted onto main as `<this drain>`)
 - **Drained by:** s261 fire, 2026-07-09
 - **Verdict:** ✅ SHIP — clean single-base additive graft, full gate battery green desktop+mobile, content canon+honesty verified.
 
@@ -19,7 +19,7 @@ Adds the first of the Assay Office's three windows: a live "The Assay Office is 
 Combined tl-03+tl-02 run: 18 passed (4.6s). m1-01: 4 passed (29.9s). Gate ran against a standalone fire config (`artifacts/tl-03/pw.config.mjs`) with no auto-webServer, to avoid colliding with the live 059/060 dev servers holding :5188 — the shared `playwright.config.ts` was NOT edited (firewall-clean). The tl-03 spec self-serves `site/` on an ephemeral `node:http` port; no `playwright.config.ts` change was needed or made.
 
 ## Merge classification
-Single base `9e01cf9`; main was UNTOUCHED on `site/` + `e2e/tl-03-*` since base (verified `git diff --stat 9e01cf9 main -- site e2e/tl-03-…` == EMPTY) → clean additive graft, no 3-way needed. Grafted `git checkout lane/m3 --` exactly 7 paths, all NEW or `site/`-only, NONE on the sim/src path:
+Single base `27689c1`; main was UNTOUCHED on `site/` + `e2e/tl-03-*` since base (verified `git diff --stat 9e01cf9 main -- site e2e/tl-03-…` == EMPTY) → clean additive graft, no 3-way needed. Grafted `git checkout lane/m3 --` exactly 7 paths, all NEW or `site/`-only, NONE on the sim/src path:
 - NEW: `site/assay-office.js`, `e2e/tl-03-assay-office-site.spec.ts`, `artifacts/tl-03/{desktop-chrome-empty,desktop-chrome-populated,mobile-chrome-populated}.png`
 - MODIFIED (additive): `site/index.html` (+45/-1: new section + nav anchor + footer honesty line), `site/styles.css` (+83: `.assay-office-section` rules reusing existing brass/teal custom props)
 

@@ -1,7 +1,7 @@
 # art-e7-town-icons — s1161 drain review
 
 **Slice:** `art-e7-town-icons` (E7 townsfolk portraits, portrait-only split)
-**Branch/tip:** none — the ART slot works in **main's own tree**; the runner auto-committed `7873eaee` (`runner(art): art-e7-town-icons.md`, 2026-07-28T10:18:26+07:00) directly onto main.
+**Branch/tip:** none — the ART slot works in **main's own tree**; the runner auto-committed `46d29c95` (`runner(art): art-e7-town-icons.md`, 2026-07-28T10:18:26+07:00) directly onto main.
 **Drain:** this is therefore a **gate-and-bless, not a merge.** Nothing was grafted; the question is only whether the committed content earns its place.
 
 ## VERDICT: QA PASS — reference-tier, extraction WITHHELD.
@@ -62,7 +62,7 @@ Re-run here with a **different resize kernel (`nearest`, not the default)**, whi
 
 ## Firewall — PASS
 
-`git show --numstat 7873eaee` : every art file is a **new** blob. **No existing `tf-*` was modified** — the six E1 control raws and `tf-combine-defector-e6.png` are untouched in the commit (so the run's byte-identical sha256 claim is verified structurally, not merely quoted). **Zero files under `src/`, `e2e/`, `assets/processed/`; no `icons-e7`; no CHALK/civic-agent portrait** (correctly withheld — see F-1160-1). The commit is exactly: 5 raws + 1 sheet + 1 QA strip + 1 run file + LEDGER row 62 + runner bookkeeping.
+`git show --numstat 46d29c95` : every art file is a **new** blob. **No existing `tf-*` was modified** — the six E1 control raws and `tf-combine-defector-e6.png` are untouched in the commit (so the run's byte-identical sha256 claim is verified structurally, not merely quoted). **Zero files under `src/`, `e2e/`, `assets/processed/`; no `icons-e7`; no CHALK/civic-agent portrait** (correctly withheld — see F-1160-1). The commit is exactly: 5 raws + 1 sheet + 1 QA strip + 1 run file + LEDGER row 62 + runner bookkeeping.
 
 ## Gates
 

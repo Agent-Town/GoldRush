@@ -1,7 +1,7 @@
 # f1625-1 — town-ceiling recalibration: name the settled and cue-window transfers apart
 
-**Slice:** f1625-1 (lane-c) · **branch:** `lane/c` · **tip:** `39fce97d9` · **base:** `0c73f65d431843ce4b345962ab5bba887e9ef910`
-**Merge:** `bc35fa79cd9e8509e16c8cc5a4857e60fae35447` (main, `--no-ff`, ort, no conflicts)
+**Slice:** f1625-1 (lane-c) · **branch:** `lane/c` · **tip:** `83ac68b71` · **base:** `7db285fd5d12f4584a5068f1e76d5f929f696e0f`
+**Merge:** `eafa978e21ad67c8e3e2d3146beb21d3de74a8eb` (main, `--no-ff`, ort, no conflicts)
 **Gated by:** s1627 fire, 2026-08-10, in detached worktree `gate-s1627` per §3.0b (removed after).
 **Policy:** `drain-block-check` → ✅ CLEAR.
 
@@ -53,7 +53,7 @@ did not time out either, which rules out "the slice made the test hang".
 
 ## Merge classification
 
-Base `0c73f65d4`. All **8** files **LANE-TOUCHED / MAIN-UNMOVED** — `git diff base..main` over
+Base `7db285fd5`. All **8** files **LANE-TOUCHED / MAIN-UNMOVED** — `git diff base..main` over
 `e2e/asset-diet.spec.ts` and `artifacts/asset-diet/` is **empty**, so no path needed a 3-way graft.
 Clean `ort` merge, no conflicts. Two `cue-window-*.json` artifacts deleted, two `town-transfer-*.json`
 created — the rename of the evidence to match the new names.
@@ -87,7 +87,7 @@ This is not a harmless copy-paste. Wiring the correct variables would not have b
 
 | A/B normal arm, desktop, cue-window bytes | run | vs 25 000 000 |
 |---|---|---|
-| **24 604 025** | `75632a7e3` (f1621-1, pre-f1623-1 — last time this arm was gated) | under by 395 975 (**1.6 % headroom**) |
+| **24 604 025** | `fb1bdf72d` (f1621-1, pre-f1623-1 — last time this arm was gated) | under by 395 975 (**1.6 % headroom**) |
 | **26 115 186** | the f1625-1 runner's own run | **OVER by 1 115 186** |
 | **23 259 297** | this drain's gate run, same tree | under by 1 740 703 |
 

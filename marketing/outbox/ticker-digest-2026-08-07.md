@@ -28,43 +28,43 @@ than tuned away.
 
 **The county desk learned to name who rode, and when.** The standings sheet now reads rank, name, what
 was taken and the hour it was taken — and your own claims sit plainly apart from the county's.
-`9b7c530a5` · `44d4321d7`
+`7abee977a` · `29044b24f`
 
 **The front desk got written down before it got built.** AP-14 sets out what a rider meets at the
-door: board instructions, a herald item, the boards pass, the assay office. `32f73ee96`
+door: board instructions, a herald item, the boards pass, the assay office. `4d7e854fb`
 
 **The Prospector has a body in the view.** The published world now carries the Prospector as a planar
-body beside the hero, so a rider reading the wire can actually find it. `fa9fbda1d`
+body beside the hero, so a rider reading the wire can actually find it. `1680220dd`
 
 **The Drill Yard reads its own manifest aloud, in plain English.** The briefing card speaks from the
-manifest instead of a hand-written copy, and it says "straw men" rather than "straw mans". `abcfffb88`
-· `efb5465dc`
+manifest instead of a hand-written copy, and it says "straw men" rather than "straw mans". `ced0fc61b`
+· `4efc59645`
 
 **Red Fields and the Dome Basin will now run without anyone watching.** The arsenal and the canal
-each got a headless socket, so E9 can be surveyed the same way the early eras were. `f315ecd2b` ·
-`716f3e298`
+each got a headless socket, so E9 can be surveyed the same way the early eras were. `e73c459cd` ·
+`79b6da0f2`
 
 **The Lantern Show stopped hijacking ordinary boots.** Every plain start had been landing in E1 by way
-of the roster; the contract now decides. `39987a425`
+of the roster; the contract now decides. `e30415788`
 
 **The Twin Banks fence came down, and the geometry took over.** Head-on blockers drive the slide on
-their own shape instead of being fenced away from it. `27782fdab`
+their own shape instead of being fenced away from it. `da540bfb0`
 
 **A rig that keeps asking the same impossible thing is told once, not forty times.** Identical order
 failures now coalesce on what the order actually *is*, so a stuck harness gets a clear answer instead
-of a wall. `51b0bc35c`
+of a wall. `ffdc12567`
 
 **The door learned to say nothing.** A blank line or a plain null now advances the turn without an
-order — a rider that wants to wait can wait, and say so. `b55e6ac56`
+order — a rider that wants to wait can wait, and say so. `b022727e8`
 
-**The ratified difficulty tiers are reachable from the door at last.** `c65e6b6d0`
+**The ratified difficulty tiers are reachable from the door at last.** `66dceab9b`
 
 **A net had been blind for seven days and nobody could have known.** The dry-board guard was checking
 lane names that no longer existed, so it passed every time without looking; the boards it watches are
-now resolved from the repository itself. `b580e1e4d`
+now resolved from the repository itself. `3826c31fb`
 
 **The boards stopped haunting themselves.** Ninety-one ghost rows on the blockers panel came down to
-eighteen, and the classifier now believes the ledger over a guess. `de38e119f` · `a662c5b0f`
+eighteen, and the classifier now believes the ledger over a guess. `a685d4f2a` · `e3a53dabc`
 
 ---
 
@@ -74,6 +74,6 @@ three that are gone — so the panel shows nothing, always.
 Un-blinding it is a **ledger ruling, not an edit**: made dynamic as-is it would drop 67 rows on your
 board overnight, most of them plainly historical. The recommendation on the desk is that an attended
 pass buckets the 66 and renames the landed ones to `archive/*` first, and only then the panel goes
-live. Nothing is blocked while it waits. `a0410da4d`
+live. Nothing is blocked while it waits. `bc1e7fe0f`
 
 Everything else above is a finding closed against evidence or an owner ruling already given.

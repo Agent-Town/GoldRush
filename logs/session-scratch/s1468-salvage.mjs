@@ -1,5 +1,5 @@
 // s1468: retain s1455's untracked run-gate.mjs (it dies with the worktree otherwise),
-// then remove ONLY my own gate worktree, whose content is 100% on main as 8e3c1491.
+// then remove ONLY my own gate worktree, whose content is 100% on main as c42d653a.
 // gate-s1455 is LEFT IN PLACE: it still holds 10 AT-RISK modified artifact blobs.
 import { copyFileSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';

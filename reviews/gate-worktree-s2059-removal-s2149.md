@@ -1,6 +1,6 @@
 # gate worktree `/private/tmp/gr-s2059-gate` — read, preserved, removed (s2149)
 
-**Slice/branch/tip:** no branch — factory hygiene on main · lock `bf216e2a6` · repo tip at start `7f0e49c8c`
+**Slice/branch/tip:** no branch — factory hygiene on main · lock `25d56e685` · repo tip at start `201296ef2`
 **Verdict:** ✅ **REMOVED — ~13 GB reclaimed, zero bytes at risk, provenance preserved on a ref.**
 
 ## What it does
@@ -59,7 +59,7 @@ because the worktree exists*. Remove the worktree and that commit becomes unreac
 `git status` the whole way, because a clean status is exactly what the file-level read is looking for.
 
 **Measured, not inferred:** `af3de1466` — the HEAD of `gate-s1689`, one of the four s2148 removed — is
-**on 0 refs and is not an ancestor of main** (its parents `39a8a23e2` and `02a8540f4` both are). It survives
+**on 0 refs and is not an ancestor of main** (its parents `86396444a` and `02a8540f4 (archive: pruned by the A3 rewrite)` both are). It survives
 today only as an unreachable object inside the gc grace window. s2148 salvaged that worktree's *files*
 correctly, including the F-2148-2 accounts-worker evidence; the *commit* went unrecorded.
 

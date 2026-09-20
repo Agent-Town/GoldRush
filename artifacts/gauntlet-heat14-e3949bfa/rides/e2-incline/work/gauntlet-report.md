@@ -49,7 +49,7 @@ the tape header's `eventLogHash fnv1a32:ccf9deef` and all four outcome fields, w
 `securedSnapshot {waves 12, gold 129, timeAlive 496.333}` equal to the declared score — no
 `score_mismatch` exposure. (That is the TAPE's hash; the stdout outcome line's `fnv1a32:78fe88df` is a
 different number by design.) The tape carries current-era papers: `era 6`, engine
-`540b49aff0…2ad1a068`, `viewVersion 2`, build `c7b6eecc8`.
+`540b49aff0…2ad1a068`, `viewVersion 2`, build `c7b6eecc8 (archive: pruned by the A3 rewrite)`.
 
 ## What the map asked
 

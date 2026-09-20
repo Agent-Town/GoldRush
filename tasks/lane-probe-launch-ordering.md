@@ -9,7 +9,7 @@ CODEX: model=gpt-5.6-sol effort=high
 
 ## WHY (the evidence chain, dated)
 
-**The class so far.** `F-1077-3` (s1077): a rehearsal driver defaulted to a fixed port, another worktree served it, and the run measured someone else's code. **rf-27** (`a9fccf75`) shipped the cure — `resolveBase()` in `rehearsal/base-url.mjs`, which throws unless the env var is set *and* an `lsof` pid→cwd probe proves the listener belongs to this checkout. **rf-28** (`8fb97691`) shipped the guard's missing half after a mutation control proved the cure's own suite stayed 4/4 green with the defect restored. **rf-29** (`46db455cbd4c13e4c31def7fed3f59f3130d90bc`, s1091) closed the last hardcoded port, in `scripts/probe-plain-boot-console.mjs`.
+**The class so far.** `F-1077-3` (s1077): a rehearsal driver defaulted to a fixed port, another worktree served it, and the run measured someone else's code. **rf-27** (`b99681a1`) shipped the cure — `resolveBase()` in `rehearsal/base-url.mjs`, which throws unless the env var is set *and* an `lsof` pid→cwd probe proves the listener belongs to this checkout. **rf-28** (`b095fcbe`) shipped the guard's missing half after a mutation control proved the cure's own suite stayed 4/4 green with the defect restored. **rf-29** (`0a504757e21b67c1371ab964a2737444aeb10899`, s1091) closed the last hardcoded port, in `scripts/probe-plain-boot-console.mjs`.
 
 **F-1091-1 (this task) — rf-29's guard proves fail-closed, but NOT the ordering it is cited for.** rf-29's master made resolve-before-launch a numbered deliverable, with a stated reason: an unset base must not leak a browser process. The goal leaf repeats it. And the test is *named* for it:
 
@@ -33,7 +33,7 @@ rc = 0
 
 ## PRE-FLIGHT — verify by CONTENT, never by counting (SAFE-DUPE)
 
-⚠️ **`git log main..lane/e2-arsenal` WILL PRINT ONE COMMIT (`71abbdf9 runner(lane-c): lane-probe-boot-ownership.md`), AND THAT IS EXPECTED — IT IS *NOT* A REASON TO STOP.** That commit is rf-29, **drained to main as `46db455c` by s1091, the same fire that authored this task** — the three files were verified byte-identical to the lane tip before committing. The branch carries nothing main lacks. It is **FALSE-AHEAD**; an ahead-count is not a drain signal (F-1066-1 / F-1073-1).
+⚠️ **`git log main..lane/e2-arsenal` WILL PRINT ONE COMMIT (`71abbdf9 runner(lane-c): lane-probe-boot-ownership.md`), AND THAT IS EXPECTED — IT IS *NOT* A REASON TO STOP.** That commit is rf-29, **drained to main as `0a504757` by s1091, the same fire that authored this task** — the three files were verified byte-identical to the lane tip before committing. The branch carries nothing main lacks. It is **FALSE-AHEAD**; an ahead-count is not a drain signal (F-1066-1 / F-1073-1).
 
 All four must hold before you touch a file:
 1. `git log --oneline main..lane/e2-arsenal` prints **exactly `71abbdf9` and nothing else.** A **second** commit would be undrained work — **only then STOP and report.**

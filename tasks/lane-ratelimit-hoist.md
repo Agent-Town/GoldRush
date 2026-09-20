@@ -1,5 +1,5 @@
 # Task lane-ratelimit-hoist: ONE RATE LIMITER, FOUR CALLERS — THE HOIST, NOW THAT THE NET IS UNDER IT (LANE-C, commit prefix "refactor:")
-**FIRE-AUTHORED (attended review welcome) — s1086, 2026-07-26. This IS F-1080-1, unblocked: its prerequisite `rf-24` merged this fire as `d16000a9c9b3a8690ee8a48d3b1b23a4a4faea0d`. Read the two RULINGS below before you write anything — they are decided, not open questions, and "harmonising" past them is the failure mode this master exists to prevent.**
+**FIRE-AUTHORED (attended review welcome) — s1086, 2026-07-26. This IS F-1080-1, unblocked: its prerequisite `rf-24` merged this fire as `5ed2e21069d7eead32b1507fa6926ed37beddde8`. Read the two RULINGS below before you write anything — they are decided, not open questions, and "harmonising" past them is the failure mode this master exists to prevent.**
 
 You are Codex (worktrees/lane-c). CODEX: model=gpt-5.6-sol effort=high
 

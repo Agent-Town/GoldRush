@@ -1,6 +1,6 @@
 # 3D-C-ALPHA — Boneyard landmark pack
 
-Reference base: `27587b7c6efbb804743f9f6aad192fd8df52bfd2`
+Reference base: `9e8e4662862b32508babbc7db71a42c0cdf940ba`
 
 ## ID list
 

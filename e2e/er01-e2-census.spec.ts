@@ -120,7 +120,7 @@ for (const contract of steamworks.contracts) {
             {
               id: 'pressure_generation',
               source: 'PressureSystem.update',
-              // maps-campaign-land-era6 (attended 2026-09-14, owner A20 "we can just keep going"): Astra's map campaign 883a3521e
+              // maps-campaign-land-era6 (attended 2026-09-14, owner A20 "we can just keep going"): Astra's map campaign 7c2744e5a
               // raised Balance.boilerHouse.coalSeconds 12 -> 36 (src/game/Balance.ts) as part of its playability pass; the
               // census pins the value the sim actually advertises. Reversible with one owner word (F-MAPL-1).
               data: { buildable: 'boiler_house', input: 'coal', coalSeconds: 36, tickSeconds: 1, pressurePerTick: 4 },
@@ -141,7 +141,7 @@ for (const contract of steamworks.contracts) {
             // no boiler fuel, while `boiler_house` sat on its price list at 70 gold x 3 — so it called
             // 210 gold of boiler "a strictly dominated purchase" and F-MAPL-1's `coalSeconds` 12 -> 36
             // "only triples the duration of a process I cannot observe" (`artifacts/gauntlet-heat14-
-            // e3949bfa/heat14-note.md` §5). The FOUR rules above were all published the whole time;
+            // 6075db90/heat14-note.md` §5). The FOUR rules above were all published the whole time;
             // what was missing was a reading. `pressure_reading` names the gauge that answers, and the
             // assertion below holds the gauge itself to the same numbers the human's HUD draws.
             {

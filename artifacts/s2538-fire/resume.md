@@ -2,7 +2,7 @@
 
 This is the six-wait corrective only. It does not contain the held chapter screenshot-writer patch or the M1 debug-consent corrective.
 
-Candidate: `83f1429f6ff2dc26254f0c18225466991b6454ea`, detached at `/private/tmp/gr-gate-s2538`. Base: `03d9fe1a1bcd6c771d085175b51bc6e02583b10d`. Exact patch and declared paths are beside this note. The original done-move is `tasks/done/20260907-172449-main-chapter-story-readiness.md`.
+Candidate: `83f1429f6ff2dc26254f0c18225466991b6454ea`, detached at `/private/tmp/gr-gate-s2538`. Base: `ac555e02ac6015a56a9b58693b65621535c6ac89`. Exact patch and declared paths are beside this note. The original done-move is `tasks/done/20260907-172449-main-chapter-story-readiness.md`.
 
 Before any continuation, run the policy check for `main-chapter-story-readiness.md`, compare current main with the base, and check whether the completed source diff still matches `readiness.patch`. A passing gate belongs only to the source tree it measured. Never reset main or a lane to recover this candidate.
 

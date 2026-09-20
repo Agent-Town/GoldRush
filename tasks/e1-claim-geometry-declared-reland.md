@@ -14,12 +14,12 @@
 1. `git -C worktrees/lane-c rev-parse --abbrev-ref HEAD` → must print `lane/e2-arsenal`. If not, **STOP**.
 2. `git -C worktrees/lane-c log main..HEAD --oneline` → must print **nothing**. If it prints anything, **STOP and report** — the lane may hold undrained work (Mistake #2). Do not reset.
 3. `git -C worktrees/lane-c status --short` → expect clean of tracked source. If tracked source files are dirty, **STOP and report**.
-4. `git -C worktrees/lane-c merge-base --is-ancestor cbf0e143 HEAD` → must exit **0**. `cbf0e143` is the authored-bundle-validation merge that added ~355 lines to `src/meta/ContractFamilies.ts`; **it is the reason scope item 2 is a 3-way lift and not a patch**. If the lane predates it, **STOP and report**.
+4. `git -C worktrees/lane-c merge-base --is-ancestor 9a95f99d HEAD` → must exit **0**. `9a95f99d` is the authored-bundle-validation merge that added ~355 lines to `src/meta/ContractFamilies.ts`; **it is the reason scope item 2 is a 3-way lift and not a patch**. If the lane predates it, **STOP and report**.
 5. `git -C worktrees/lane-c cat-file -e c876f675` → must exit **0** (the salvage-ref is reachable). If not, **STOP and report**.
 
 ## WHY (evidence, quoted and dated — every number below was re-measured by s1392 on 2026-08-02)
 
-`tasks/goals.json` holds `e1-claim-geometry-declared` as **`status: "blocked"`, `blockClass: "gate-side"`** — a fire-side readiness hold, **not** an owner design fork. Its sibling `e1-headless-the-claim` carried the same hold and was **discharged and MERGED at `8e20d8ca` by s1392**; this master finishes the pair.
+`tasks/goals.json` holds `e1-claim-geometry-declared` as **`status: "blocked"`, `blockClass: "gate-side"`** — a fire-side readiness hold, **not** an owner design fork. Its sibling `e1-headless-the-claim` carried the same hold and was **discharged and MERGED at `1352ef45` by s1392**; this master finishes the pair.
 
 F-1381-3 recorded the blocker for this half as follows, and it is worth quoting exactly because **s1392 measured it to be true of the wrong operation**:
 
@@ -38,7 +38,7 @@ F-1381-3 recorded the blocker for this half as follows, and it is worth quoting 
 
 And the two "contaminated" hunks were **read**, not merely applied: they add `"ids": ["center-ford"]`, a `"descriptor": "frontier-river-depth"` value, and a loop asserting `water_crossings` count 1 for three contracts. That is this slice's own subject (claim geometry). **Nothing in them concerns the drill-yard census**, which is `7c4f132f`'s subject. They apply clean precisely because their context lines already match main.
 
-`src/meta/ContractFamilies.ts` fails because main moved that file substantially at `cbf0e143` (authored-bundle validation, +355 lines). That is a genuine 3-way lift — see scope item 2.
+`src/meta/ContractFamilies.ts` fails because main moved that file substantially at `9a95f99d` (authored-bundle validation, +355 lines). That is a genuine 3-way lift — see scope item 2.
 
 ## SCOPE (numbered, each item testable)
 
@@ -66,7 +66,7 @@ And the two "contaminated" hunks were **read**, not merely applied: they add `"i
 2. `npm run build` → rc 0.
 3. `npx playwright test e2e/tile-identity-pass.spec.ts --workers=1` → this is the slice's **own** spec (item 1 adds ~40 lines to it). Report X/Y.
 4. `npx playwright test e2e/agent-view.spec.ts --workers=1` → the byte-stable-fixture guard, which this slice edits **together with its fixture**. Report X/Y. ⚠️ `agent-view.spec.ts:261` is recorded as a **known red on main** (F-1380-2). **Run it on clean main FIRST as a CONTROL and report both numbers** — a red here is only yours if the control is green. Do not fix it either way.
-5. `npx playwright test e2e/contract-bundle-validation.spec.ts --workers=1` → the suite that owns the `ContractFamilies.ts` region your 3-way lift touches (it arrived with `cbf0e143`). Report X/Y.
+5. `npx playwright test e2e/contract-bundle-validation.spec.ts --workers=1` → the suite that owns the `ContractFamilies.ts` region your 3-way lift touches (it arrived with `9a95f99d`). Report X/Y.
 6. `npm run test:node-guards` → rc 0, report X/Y.
 7. `git diff --name-only main...HEAD` → paste the **full** list (scope item 3).
 

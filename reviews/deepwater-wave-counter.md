@@ -1,9 +1,9 @@
 # Review — THE DEEPWATER WAVE COUNTER
 
 - **Slice:** `lane-deepwater-wave-counter` (FIRE-AUTHORED s1025 from the saga rehearsal's F-REH-05)
-- **Branch/tip:** `lane/m4`-slot lane-b @ `28676698` (runner)
-- **Base:** `4d04e3b8` (the rig-repair drain — already on main)
-- **Merged to main:** `3598b88c` (squash, path-scoped, 2 files / 43 insertions)
+- **Branch/tip:** `lane/m4`-slot lane-b @ `edaf879f` (runner)
+- **Base:** `8229d6e0` (the rig-repair drain — already on main)
+- **Merged to main:** `9a1454a4` (squash, path-scoped, 2 files / 43 insertions)
 - **Drained by:** s1026 fire, 2026-07-25
 
 ## VERDICT: PASS — merged.
@@ -30,7 +30,7 @@ the baron-defeat recording site that already knew the rule.
 
 ## Merge classification
 
-Base `4d04e3b8`. Both files **LANE-TOUCHED, zero MAIN-MOVED** — `git log 4d04e3b8..main --
+Base `8229d6e0`. Both files **LANE-TOUCHED, zero MAIN-MOVED** — `git log 8229d6e0..main --
 src/game/Game.ts e2e/e5-deepwater-claim.spec.ts` returned **empty**. No graft, no conflict.
 
 | File | Class | Change |
@@ -71,7 +71,7 @@ than by argument:
 |---|---|
 | merged (advance-stream + lane-b) | RED |
 | HEAD without lane-b | RED |
-| `4d75f675`, **pre-advance-stream** | RED |
+| `ae26e600`, **pre-advance-stream** | RED |
 
 So neither slice drained today is responsible — these were already red on main when this fire
 took the lock. M1/M2 are **signed-off milestones**, and these are their memory/draw-call

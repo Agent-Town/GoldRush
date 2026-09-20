@@ -2,7 +2,7 @@
 
 **Slice:** `lane-a-cp04-lever-unlock-seed-realign`
 **Branch / tip:** `lane/m3` @ `65041a9c` (one commit: the 72-line run report — zero `src/`, zero `e2e/`, zero assets)
-**Merged:** `556f0789`
+**Merged:** `556f0789 (archive: pruned by the A3 rewrite)`
 **Drained by:** s1179 fire, 2026-07-28
 **§3.0 `drain-block-check`:** `✅ CLEAR — lane-a-cp04-lever-unlock-seed-realign.md [factory-cp04-lever-unlock-seed-realign] status="queued"`, run as the first command of the drain.
 

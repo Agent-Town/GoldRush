@@ -1,6 +1,6 @@
 # Review — eight-winds E2 diagonal row-order survey
 
-**Slice:** `lane-c-eight-winds-e2-row-order-survey` (FIRE-AUTHORED s1188 `4ec1bbbb`)
+**Slice:** `lane-c-eight-winds-e2-row-order-survey` (FIRE-AUTHORED s1188 `2071e6d3`)
 **Branch/tip:** `lane/e2-arsenal` @ `7a840663` ("runner(lane-c): lane-c-eight-winds-e2-row-order-survey.md")
 **Drained by:** s1189 fire, 2026-07-29
 **Run report:** `tasks/runs/20260729-010959-lane-c-eight-winds-e2-row-order-survey.md`
@@ -36,7 +36,7 @@ No playwright run: the slice adds no test and touches no rendering code, and lan
 
 ## Merge classification
 
-Base: `4ec1bbbb`. `git diff --name-only --diff-filter=A main..lane/e2-arsenal` = **exactly 4 files**, all pure adds, all inside the master's TOUCH-ONLY list:
+Base: `2071e6d3`. `git diff --name-only --diff-filter=A main..lane/e2-arsenal` = **exactly 4 files**, all pure adds, all inside the master's TOUCH-ONLY list:
 
 - `artifacts/eight-winds-e2/rowsurvey-{rail-tough,steam-wrecker,coal-thief}.png`
 - `tasks/runs/20260729-010959-lane-c-eight-winds-e2-row-order-survey.md`
@@ -51,7 +51,7 @@ Applied to clean main by path-scoped `git checkout lane/e2-arsenal -- <2 paths>`
   - ⇒ **(b) The report read the LARGER left cluster as "the tank"** (87/107/102/102 px) and never mentions the 47-64 px right-hand cluster — 36% of the row's cyan mass, unreported.
   - ⇒ **(c) The verdict survives, the repair SPEC does not.** "Row 1 must be regenerated" is **correct**, and the 2-row Steam Wrecker count still holds. But an artist told *"put the tank on the other side"* would deliver a row that **still has two tanks**. The row-1 request must read: *one* cyan tank, on the lawful front-view side. **Row 2's verdict is untouched** (single cluster, cyan screen-right in a back view = the anti-mirror defect exactly as described).
 - ⓘ **F-1189-3 (corroboration, not a defect).** The runner's independently-implemented instrument reproduced my Rail Tough `2v3` conflict at **+0.248 direct-dominant** against my **+0.254**, and the Coal Thief `2v3` mirror pair exactly (`0.579 / 0.767`). Two different implementations agreeing on every dominance verdict raises confidence in F-1188-1 and F-1188-2 well above one fire's measurement.
-- ⓘ **F-1189-4 (bookkeeping).** The report's own "Lane safety" section independently re-derived the SAFE-DUPE proof the master pre-computed (`fe3ae8cb` byte-identical to main, landed in `fba9a446`) before resetting. The lane-safety pre-flight is working as s1179 built it.
+- ⓘ **F-1189-4 (bookkeeping).** The report's own "Lane safety" section independently re-derived the SAFE-DUPE proof the master pre-computed (`fe3ae8cb` byte-identical to main, landed in `e50e6937`) before resetting. The lane-safety pre-flight is working as s1179 built it.
 
 ## Where the owner acts
 

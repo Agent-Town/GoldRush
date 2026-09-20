@@ -1,6 +1,6 @@
 # e7-playbook-rows — drain review (attended, 2026-09-05)
 
-**Slice/branch/tip:** `e7-playbook-rows` · `lane/b` · tip `f4e6a9146` · base `5d8603982` · merge `b38d60295` (+ `package.json` chain repair)
+**Slice/branch/tip:** `e7-playbook-rows` · `lane/b` · tip `57045ef65` · base `5d8603982 (archive: pruned by the A3 rewrite)` · merge `0a2a6fdcf` (+ `package.json` chain repair)
 **Verdict: MERGED, with the human-parity gap pinned and its corrective queued.** Claude implementer (Opus), four commits, READY-FOR-GATES under the repo's node with every red attributed against a control.
 
 ## What it does
@@ -18,7 +18,7 @@ One additive rider verb, `PLAYBOOK_USE` (name only, rung 2): an unseen name reco
 | `test:node-guards` on the lane | 637 pass / 6 distinct fails, every one reproduced on a control of the lane base: the engine pin (drain's), desk-declaration from a linked worktree, the stale READY-FOR-GATES row (E8's, since retired), one self-inflicted concurrent run |
 
 ## Merge classification
-Base `5d8603982` (the E4 lane tip; the lane never merged main). MAIN-MOVED and resolved: `src/sim/HeadlessContractSim.ts` (both additive diagnostic spreads kept: E8's `suitAir`, E7's `playbookUse`), `package.json` (`test:node-guards` chain: the first merge doubled the `run-node-guards` invocation; repaired to one invocation with the union of both lanes' guard files), `public/skill.md` (lane prose + main's fenced contract list), `tasks/BACKLOG.md` (union), `assets/engine-era.json` (main's registry; the merged tree pinned attended). `src/agent/View.ts` auto-merged.
+Base `5d8603982 (archive: pruned by the A3 rewrite)` (the E4 lane tip; the lane never merged main). MAIN-MOVED and resolved: `src/sim/HeadlessContractSim.ts` (both additive diagnostic spreads kept: E8's `suitAir`, E7's `playbookUse`), `package.json` (`test:node-guards` chain: the first merge doubled the `run-node-guards` invocation; repaired to one invocation with the union of both lanes' guard files), `public/skill.md` (lane prose + main's fenced contract list), `tasks/BACKLOG.md` (union), `assets/engine-era.json` (main's registry; the merged tree pinned attended). `src/agent/View.ts` auto-merged.
 
 ## Findings
 - **F-E7PB-1 (BLOCKING for the L7 claim on E7; CORRECTIVE QUEUED):** the browser binds no rider verb and carries no playbook latch, so the four maps decide their secure differently in the two engines; a browser player has the whole record-name-delegate loop but not the latch. Pinned by the node guard and the e2e. Master: `tasks/e7-player-playbook-parity.md` (lane-b).
@@ -27,4 +27,4 @@ Base `5d8603982` (the E4 lane tip; the lane never merged main). MAIN-MOVED and r
 - **Engine pin:** appended in this drain.
 
 ## Post-drain finding (2026-09-05, attended)
-- **F-E7PB-4 (CURED in the e3-moth-season drain commit):** the E7 `public/skill.md` merge resolution (lane prose + main's fenced contract list) dropped two MAIN-side paragraphs the lane never had: the view-schema "additive-only" sentence under THE VIEW and the county ranking rule under SUBMITTING A STANDING. Caught by `scripts/standing-rule-surfaces.test.mjs` (the three-surfaces guard: actual 1 vs expected 2) on the next drain's battery; production build `4620d4d3` shipped without the rule for roughly one hour. Both restored verbatim from `46649a53`; guard 1/1, `view-schema-guard` 3/3. Lesson: a hand-resolved prose merge is judged by the guard battery, not by eye — run `standing-rule-surfaces` whenever `public/skill.md` is a MAIN-MOVED file.
+- **F-E7PB-4 (CURED in the e3-moth-season drain commit):** the E7 `public/skill.md` merge resolution (lane prose + main's fenced contract list) dropped two MAIN-side paragraphs the lane never had: the view-schema "additive-only" sentence under THE VIEW and the county ranking rule under SUBMITTING A STANDING. Caught by `scripts/standing-rule-surfaces.test.mjs` (the three-surfaces guard: actual 1 vs expected 2) on the next drain's battery; production build `0ebcc865` shipped without the rule for roughly one hour. Both restored verbatim from `2ba7a9f3`; guard 1/1, `view-schema-guard` 3/3. Lesson: a hand-resolved prose merge is judged by the guard battery, not by eye — run `standing-rule-surfaces` whenever `public/skill.md` is a MAIN-MOVED file.

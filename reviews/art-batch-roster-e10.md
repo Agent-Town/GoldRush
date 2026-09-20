@@ -1,6 +1,6 @@
 # Review — art-batch-roster-e10 (Deep Sky / The Static enemy sheets)
 
-**Slice:** `art-batch-roster-e10` (ART slot) · **Generated:** 2026-07-25 by runner commit `9545a301` · **Drained:** s1061, 2026-07-26
+**Slice:** `art-batch-roster-e10` (ART slot) · **Generated:** 2026-07-25 by runner commit `864684cb` · **Drained:** s1061, 2026-07-26
 **Branch/tip:** ART slot output — `worktrees/art/` is NOT a git worktree, so there is no lane branch; raws were copied from `worktrees/art/assets/raw/` onto main.
 **Done-move:** `tasks/done/20260725-005935-art-batch-roster-e10.md` (un-prefixed for 28h — this drain is what retires it)
 
@@ -30,7 +30,7 @@ not close the *wiring* half, and deliberately so — see F-1061-2.
 | Frames distinct, no mirrors | run note, measured | 8/8 unique hashes each; min mirrored RMSE 0.189 / 0.214 / 0.233 |
 | Canon (§9 / ADR-001) | **direct full-size visual inspection of all 5, this drain** | zero letters/numbers/watermarks · NO firearms · warm never gory · no peoples-as-enemies · blank portrait + resonator faces |
 | Retention | `node scripts/art-staging-audit.mjs` | **AT RISK 0 files / 0 KB · LOCAL-ONLY 0 files / 0 KB** |
-| Backup | `git ls-remote origin refs/heads/main` SHA-compare via node | origin `715dc427` == local `715dc427` |
+| Backup | `git ls-remote origin refs/heads/main` SHA-compare via node | origin `6c37d58b` == local `6c37d58b` |
 | tsc / build | **not run — and named rather than padded** | this commit adds only `assets/raw/` PNGs + a run note + docs; zero TypeScript, zero `src/`, zero glob inputs, so neither would exercise the change |
 
 Visual QA notes: **Unraveled Memory** — brass jointed automaton walking right, amber memory-lamp,
@@ -58,7 +58,7 @@ such scaffold:
 - `static_mote`, `unraveled_machine`, `static_squall` appear **nowhere in `src/` or `e2e/`** — only in `specs/enemy-rosters-e6-e10.md:99-101,145-147,192-194`.
 
 So extraction would write ~24 processed cells + 3 `.frames.json` that **no glob consumes** — dead
-weight in the bundle immediately after THE ASSET DIET (`0dfa1d3f`) cut dist 1.0 GB → 411 MB. Held
+weight in the bundle immediately after THE ASSET DIET (`436deb71`) cut dist 1.0 GB → 411 MB. Held
 as raws under the standing `static_hare` / `debris_rain` / `dust_devil` RAW-PENDING precedent.
 
 ## Findings

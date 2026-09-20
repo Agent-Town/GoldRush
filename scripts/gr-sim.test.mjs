@@ -266,7 +266,7 @@ test('headless landmark starts release before enemies can stall at the perimeter
   // `tasks/e4-roads-and-convoys.md` composes `MotorSocket` into every Motor contract, and the
   // Motor Frontier's storms now slow OUTLAWS as well as the Hauler
   // (`HeadlessContractSim` hands `motor.enemyMovementMultiplier` to the enemy speed lambda, the
-  // composition `731373d4d` shipped in `Game.ts:1749`). An idle ride therefore kills a slightly
+  // composition `392d20d35` shipped in `Game.ts:1749`). An idle ride therefore kills a slightly
   // different number of outlaws in the same number of waves, and its event log hashes differently.
   // Waves are UNCHANGED on all four rows, which is the shape a movement-only change should have.
   // The same four values were re-derived independently into `assets/contracts/null-floors.json`
@@ -1162,17 +1162,17 @@ test('the Baron driver runs the declared fight and keeps medal writes off headle
       const second = run();
       assert.deepEqual(second, first);
       // NAMED-CAUSE RE-PIN (F-1460-1, re-measured and landed s1462). kills/eventLogHash moved
-      // 869/b9566c6d -> 861/36004eab at 4ab48743 (runner output of f1452-1 fort-solidity), which
+      // 869/b9566c6d -> 861/36004eab at e788002c (runner output of f1452-1 fort-solidity), which
       // gates the stuck-watchdog on route.blocker in src/entities/Enemy.ts and rewrites +139/-31 of
       // src/systems/BuildSystem.ts. Different routing -> different engagement -> 8 fewer kills over
       // 20 waves. Deliberate and spec-green, merely unpinned; f1452-1 reached main via drain
-      // 07213c73, whose evidence was its own specs only, so nothing re-took this cross-cutting pin.
+      // 8e5b5608, whose evidence was its own specs only, so nothing re-took this cross-cutting pin.
       // This is NOT the F-1403-1/F-1404-2 cross-engine class: that class means two engines
       // DISAGREEING, and they do not. Measured s1462 on the pinned 26.4.0 AND the runner's 23.11.1
       // -- both return 861/36004eab byte-identical, and the determinism assert above (second ===
       // first) passes on both. Re-pin only ever with a named cause; a blind re-pin is forbidden
       // (F-1441-3).
-      // NAMED-CAUSE RE-PIN (F-2235-5, re-pinned s2237 from predecessor 6a7bafb26):
+      // NAMED-CAUSE RE-PIN (F-2235-5, re-pinned s2237 from predecessor eb62124c1):
       // assets/contracts/* prose is inside eventLogHash via canonicalReplayEvents. The wave-20
       // medal event carries medalBlurb, which the c5 em-dash sweep rewrote. Measured s2237:
       // gameplay outcome UNCHANGED: kills 862, waves 20, timeMs 528400, gold 0, secured true,
@@ -1295,7 +1295,7 @@ test('the E2 Baron fights keep their pinned outcomes', {
     }
     // NAMED-CAUSE PIN (F-1493-2, lane-f1493-2-baron-drift-pin, 2026-08-06): the census
     // equality that used to catch baron-map drift was unsound and was correctly relaxed at
-    // ff628a132; this is its replacement. A red requires a named cause; blind re-pinning is
+    // 335408077; this is its replacement. A red requires a named cause; blind re-pinning is
     // forbidden (F-1441-3).
     assert.deepEqual(outcomes, {
       'e2-hill-mine': {

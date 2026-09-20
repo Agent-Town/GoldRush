@@ -15,7 +15,7 @@ import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 
-const BASE = '89bfc10cda7e208589c7ad6304eb4c6aeae727bf';
+const BASE = '0d989bdc2096213e6775a5978cb6fe56fa8ea988';
 const SWEEP = 'artifacts/f1450-4/halo-class-sweep.json';
 const HELD = new Set([
   'char-bandit-thief-sheet-walk8', 'char-baron-sheet-walk8', 'char-e9-feral_terraformer-sheet-walk8',

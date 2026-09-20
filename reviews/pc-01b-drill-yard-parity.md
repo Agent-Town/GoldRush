@@ -1,8 +1,8 @@
 # pc-01b — The Drill Yard board/manifest parity (and the pc-01 stack it lands)
 
 - **Slice:** `pc-01b-drill-yard-board-manifest-parity`, landing its predecessor `pc-01-drill-yard` with it
-- **Branch:** `lane/m4` — tip `74df35dcfcd8d09a3f36a3ce8d01e3d9e6fb30da`
-- **Base at drain:** `5f81a36d` (main, s1323 lock commit)
+- **Branch:** `lane/m4` — tip `19f212b716cc68667551e540edfa5aadb42caf30`
+- **Base at drain:** `1d0236c0` (main, s1323 lock commit)
 - **Drained by:** s1323 fire, 2026-08-01
 - **VERDICT: ✅ ACCEPT — merged.** This **supersedes the REJECT in `reviews/pc-01-drill-yard.md`** (s1321), whose
   single blocking objection this corrective resolves. That review stays on disk as the record of why the slice
@@ -59,9 +59,9 @@ Yard card on the board with no `?debug` and no welcome seen.
 
 ## Merge classification
 
-`main..lane/m4` was 3 commits. `467ed904` (ap-07 night-shift fixtures) was **already absorbed into main** as
-`07854e6b` at s1319 — confirmed with `git merge-base --is-ancestor`, and none of its files appear in the two-dot
-diff. The two live commits are `f0bf5251` (Drill Yard) and `74df35dc` (parity corrective). All 31 merged paths
+`main..lane/m4` was 3 commits. `02249254` (ap-07 night-shift fixtures) was **already absorbed into main** as
+`90003628` at s1319 — confirmed with `git merge-base --is-ancestor`, and none of its files appear in the two-dot
+diff. The two live commits are `f86b28b3` (Drill Yard) and `19f212b7` (parity corrective). All 31 merged paths
 are **LANE-TOUCHED**; main had moved none of them, so no 3-way graft was required.
 
 ⚠️ **For the next reader:** the lane was **26 commits behind main**, so a raw `git diff main lane/m4` renders
@@ -107,7 +107,7 @@ two wrappers down with it — `collection-guards-cwd-invariance` and `fixture-te
 failure as their own. **Three reds, one root.**
 
 **Attribution is a control, not an argument:** the same failure reproduces at the same line on a detached
-worktree at clean main (`5f81a36d`); the rig is untouched by this merge and was last modified at `2ce1a2ca`
+worktree at clean main (`1d0236c0`); the rig is untouched by this merge and was last modified at `d8395e4d`
 (2026-07-17). I falsified the obvious hypothesis first — that the new contract lacked `briefing.goals` — by
 reading all six E1 contracts: the Drill Yard has `goals: 2`. Not the cause.
 
@@ -116,20 +116,20 @@ Left open deliberately: it is main's red, not this slice's, and diagnosing a fuz
 > ### ⚠️ CORRECTION — s1324, 2026-08-01. The attribution above is WRONG: this red is **caused by this merge**.
 >
 > The paragraph beginning *"Attribution is a control, not an argument"* does not hold. s1324 re-ran that exact
-> control — `git checkout -f 5f81a36d` in a clean detached worktree, rig unpatched — and the crash **does not
+> control — `git checkout -f 1d0236c0` in a clean detached worktree, rig unpatched — and the crash **does not
 > reproduce there**:
 >
 > | tree | `npx playwright test --list --workers=1` | exit |
 > |---|---|---|
-> | `5f81a36d` (this drain's own base) | `Total: 2462 tests in 348 files` | **0** |
-> | `main` after `7e93be3d` | `Total: 0 tests in 0 files` | **1** |
+> | `1d0236c0` (this drain's own base) | `Total: 2462 tests in 348 files` | **0** |
+> | `main` after `199f7f60` | `Total: 0 tests in 0 files` | **1** |
 >
 > The control tree is provably pre-merge: its collected mutant list contains **no `e1-drill-yard` mutants at
 > all**, while main's contains mutant 52 `[e1-drill-yard]`.
 >
-> **Mechanism.** The rig's latent composition bug is old (`2ce1a2ca`, 2026-07-17) — that part was right — but
+> **Mechanism.** The rig's latent composition bug is old (`d8395e4d`, 2026-07-17) — that part was right — but
 > the **red** is not. Template selection is `templates[Math.floor(rng() * templates.length)]`, so adding
-> `e1-drill-yard` to `epoch-1-frontier` (at `f0bf5251`, merged inside `7e93be3d`) **re-rolled the entire seeded
+> `e1-drill-yard` to `epoch-1-frontier` (at `f86b28b3`, merged inside `199f7f60`) **re-rolled the entire seeded
 > mutant stream**. Signature: mutant 12 is `[e1-night-shift]` at the control and `[e1-dry-gulch]` on main. The
 > new stream composes `illegal:missing-briefing` then `blank:briefing.goal` at index 41 and throws. **An old
 > latent defect plus a merge that changes a contract count is a NEW red, and "the rig is untouched by this

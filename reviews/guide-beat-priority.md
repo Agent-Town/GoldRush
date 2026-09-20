@@ -1,8 +1,8 @@
 # guide-beat-priority — teaching holds the floor
 
-**Slice:** `tasks/lane-guide-beat-priority.md` (owner-authored, `4ee9c12f` 2026-07-30)
+**Slice:** `tasks/lane-guide-beat-priority.md` (owner-authored, `2370f8bf` 2026-07-30)
 **Branch/tip:** `lane/perf` @ `f2a056c8` (lane-d runner, 2026-07-30T10:29+07)
-**Merged as:** `6f343a6e` (graft onto clean main, s1254 fire)
+**Merged as:** `e3ee53d6` (graft onto clean main, s1254 fire)
 **Base:** `f2a056c8`'s parent `6999e57a` — 176 commits behind main, so the two-dot
 `main..lane/perf` diff is 320 files / 53,897 deletions of pure stale-base phantom. Classification
 was done on the COMMIT, not the branch.

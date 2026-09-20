@@ -1,8 +1,8 @@
 # deploy-honest-and-serialized — drain review (s1049)
 
 **Slice:** `tasks/lane-b-deploy-honest-and-serialized.md` (FIRE-AUTHORED s1048)
-**Branch/tip:** `lane/m4` @ `286c2f48` (`runner(lane-b)`, 2026-07-25 23:55:44)
-**Merged to main:** `ab528c3f51c1f8db710953f76c3684bc92c7fcf9`
+**Branch/tip:** `lane/m4` @ `e762dcdc` (`runner(lane-b)`, 2026-07-25 23:55:44)
+**Merged to main:** `fa975d5352acf9b4ed0fc6744d826ff37872b225`
 **Verdict:** ✅ **MERGE.** Both findings closed, firewall held exactly, and the two claims that could only be settled by execution were executed by this drain. **It does not fix the outage** — see LIMIT.
 
 ## What it does

@@ -1,6 +1,6 @@
 # Task lane-vp-02b-jumper-slot-repair: retire the dead `char.claim_jumper` runtime lookup across the stranded spec class (lane-b, commit prefix "test:")
 
-**FIRE-AUTHORED s1144 (attended review welcome).** Successor to `lane-vp-02b-jumper-slot-red`, which **STOPPED lawfully at its own scope-1 gate** — see `reviews/vp-02b-jumper-slot-red-stop.md`. That STOP was correct and its finding is the lift: **no spawn surface can ever mount `char.claim_jumper`, because the slot was renamed 15 days ago and the specs were never updated.** This task invents no scope — it propagates a rename that `82543f27` left half-done. **No product code. `src/**` is barred.**
+**FIRE-AUTHORED s1144 (attended review welcome).** Successor to `lane-vp-02b-jumper-slot-red`, which **STOPPED lawfully at its own scope-1 gate** — see `reviews/vp-02b-jumper-slot-red-stop.md`. That STOP was correct and its finding is the lift: **no spawn surface can ever mount `char.claim_jumper`, because the slot was renamed 15 days ago and the specs were never updated.** This task invents no scope — it propagates a rename that `0f5fb77e` left half-done. **No product code. `src/**` is barred.**
 
 CODEX: model=gpt-5.6-sol effort=high
 
@@ -20,7 +20,7 @@ Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead 
 
 ## WHY (quoting the evidence, dated)
 
-**Root cause, verified at source s1144:** `82543f27` (2026-07-12T21:32, `runner(lane-d): wire-e1-bandit-variants.md`) rewired the enemy `SpriteAnimator`s from `charClaimJumper` to `charBanditBase`/`charBanditThief`, added both slots to `assets/layer-contracts/characters.v2.json`, **and updated zero of the seven e2e specs that name the old slot.** `git log -G"charBanditBase" -- src/entities/pools.ts` returns exactly one commit — that one.
+**Root cause, verified at source s1144:** `0f5fb77e` (2026-07-12T21:32, `runner(lane-d): wire-e1-bandit-variants.md`) rewired the enemy `SpriteAnimator`s from `charClaimJumper` to `charBanditBase`/`charBanditThief`, added both slots to `assets/layer-contracts/characters.v2.json`, **and updated zero of the seven e2e specs that name the old slot.** `git log -G"charBanditBase" -- src/entities/pools.ts` returns exactly one commit — that one.
 
 ✓ **The runtime half was correct and complete — checked before blaming it.** `char.bandit_base` carries `walk8: true` and its processed PNGs are on disk. **Do not "fix" `src/`.** The enemy got new art; only the specs were left behind.
 

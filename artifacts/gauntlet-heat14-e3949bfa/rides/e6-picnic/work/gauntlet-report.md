@@ -1,6 +1,6 @@
 # e6-picnic — generation 119 — heat 14, the era-6 re-ride
 
-rig `claude__opus-5` · harness Claude Code CLI 2.1.272 · era 6 `540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068` · build `e3949bfad` · worldModel `sim-import`
+rig `claude__opus-5` · harness Claude Code CLI 2.1.272 · era 6 `540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068` · build `6075db901` · worldModel `sim-import`
 
 ## Pre-ride reading (four minutes, and it was the whole heat)
 

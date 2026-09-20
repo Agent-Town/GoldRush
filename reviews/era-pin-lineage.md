@@ -1,7 +1,7 @@
 # Review — era-pin-lineage (lane-d)
 
 **Slice:** `era-pin-lineage` — an era is its lineage, not its latest pin
-**Branch / tip:** `lane/d` @ `39b86ce7b` (runner commit) · merge-base `f921152ac`
+**Branch / tip:** `lane/d` @ `2d85e421e` (runner commit) · merge-base `d42fe7e36`
 **Drained by:** s2393 fire, 2026-08-31
 **Master:** `tasks/done/20260831-103156-era-pin-lineage.md` (attended-authored)
 
@@ -43,20 +43,20 @@ This slice makes **era membership**, not hash identity, the law:
 
 ## Merge classification
 
-Base `f921152ac`. **Six files LANE-TOUCHED only** (`e2e/agent-reels.spec.ts`, `scripts/assay-worker.mjs`,
+Base `d42fe7e36`. **Six files LANE-TOUCHED only** (`e2e/agent-reels.spec.ts`, `scripts/assay-worker.mjs`,
 `scripts/assay-worker.test.mjs`, `scripts/engine-era-guard.test.mjs`, `src/game/Game.ts`,
 `src/ui/LanternShow.ts`) — main moved none of them since base.
 
 **One file BOTH-MOVED and genuinely conflicted: `assets/engine-era.json`.**
 
-- HEAD contributed only a newer `note`, documenting the attended catch-up re-pin `b3d3bac7d`
+- HEAD contributed only a newer `note`, documenting the attended catch-up re-pin `30de2653f`
   (registry `64e9468e` vs computed `7fdaef69` since the reel-era-projection-v2 merge, whose drain owed and
   missed the duty).
 - lane/d contributed the `pins[]` array (5 recovered pins, ending `64e9468e`) plus its now-stale note.
 - **Resolved by keeping BOTH: HEAD's note + lane's lineage**, then appending the two pins this drain owes.
 
 **Verified before resolving, not assumed:** `git log <base>..main -- <the 11 ENGINE_SOURCE_INPUTS paths>`
-returns **empty** — no main commit since the merge-base touched the hash corpus. So `b3d3bac7d` was a
+returns **empty** — no main commit since the merge-base touched the hash corpus. So `30de2653f` was a
 registry-only catch-up, and `7fdaef69` was the genuinely computed hash of the tree from the v2 merge onward.
 Tapes could carry it, so **dropping it would have orphaned exactly the class of reel this slice exists to
 rescue.** It is therefore a lineage member, not a bookkeeping artifact.
@@ -70,7 +70,7 @@ rescue.** It is therefore a lineage member, not a bookkeeping artifact.
 | 3 | `d5b04061` | EH-3 presentation/observability re-pin — **the owner's crown reel is stamped here** |
 | 4 | `c306f1c0` | EH-3b browser validation-boundary re-pin |
 | 5 | `64e9468e` | ToolSurface module-graph re-pin |
-| 6 | `7fdaef69` | Attended catch-up re-pin (`b3d3bac7d`), recovered by this drain |
+| 6 | `7fdaef69` | Attended catch-up re-pin (`30de2653f`), recovered by this drain |
 | 7 | `095d0dca` | **This drain's own re-pin** — the first live use of the append-only mechanism |
 
 Pin 7 is the mechanism's first exercise: this slice's `src/game/Game.ts` + `src/ui/LanternShow.ts` edits sit
@@ -89,7 +89,7 @@ directories per run and never removes them.
 
 **Control run on CLEAN MAIN (no merge): rc=1, identical fingerprint** — same subject file, same leaking file,
 same count of 10, same `s2390-nearmiss-` prefix; only the random `mkdtemp` suffixes differ, as they must.
-The leaking guard landed on main at `a141f329f` (2026-08-31T09:28, s2390) and is **not in this slice's diff**.
+The leaking guard landed on main at `fa87b7e39` (2026-08-31T09:28, s2390) and is **not in this slice's diff**.
 
 So the merged tree is no worse than the tree it merged into, and §6's "fingerprint-matched to known-reds with
 proof" is satisfied. Filed below as F-2393-3, because a standing red on the shared battery is exactly the
@@ -128,7 +128,7 @@ see the owner note below.
 pins. That is correct per the master and saves a full source walk per boot. But previously the worker verified
 itself against the actual tree it was running; now a deployed tree whose registry is stale would not be
 noticed by the worker — the invariant is enforced only by `engine-era-guard` in the gate battery.
-`b3d3bac7d` proves a stale registry is a real, recent occurrence, not a hypothetical. Recorded, not cured:
+`30de2653f` proves a stale registry is a real, recent occurrence, not a hypothetical. Recorded, not cured:
 the guard genuinely does hold the invariant in CI, and widening it is a separate decision.
 
 ## Gate-side change made by this drain (declared, not silent)
@@ -148,7 +148,7 @@ test goes red** and forces the restoration. It cannot rot into a forgotten skip.
 
 ### F-2393-3 — `drain-block-queue-nearmiss-guard.test.mjs` leaks 10 temp dirs, redding `test:node-guards` on main
 
-Landed `a141f329f` (s2390, 09:28 today). Ten `mkdtemp` fixtures per run are never removed, so
+Landed `fa87b7e39` (s2390, 09:28 today). Ten `mkdtemp` fixtures per run are never removed, so
 `fixture-teardown.test.mjs` reds and the whole `test:node-guards` battery exits 1 **on clean main**.
 
 This matters more than its size: `test:node-guards` is mandatory for every drain whose diff touches

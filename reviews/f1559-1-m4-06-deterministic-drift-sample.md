@@ -1,8 +1,8 @@
 # f1559-1 — M4-06 permission-denied: deterministic drift sample
 
 **Slice:** `f1559-1-m4-06-deterministic-drift-sample`
-**Branch:** `lane/b` · **Tip:** `fa2c180a5` · **Base:** `da7203e30`
-**Merge:** `93e13a8b7e93f7a7f758672c322705cc87c59be8` (main, `--no-ff`, `ort`, no conflicts)
+**Branch:** `lane/b` · **Tip:** `29eb4abbd` · **Base:** `1cd1793e8`
+**Merge:** `1e950a908e102ae49d3bef99e2329b1372fb2352` (main, `--no-ff`, `ort`, no conflicts)
 **Drained:** s1560, 2026-08-08
 
 ## VERDICT: MERGED — deliverable landed, and its own premise is refuted by the evidence it produced.
@@ -37,7 +37,7 @@ idle apart from a foreign-project `codex exec` (CIRCUIT3), measured not assumed.
 `e2e/` and `artifacts/` only — no `src/sim/`, `src/systems/`, `src/entities/` — so **F-1460-1 does not bind**.
 
 **Merge classification:** 2 files, both **LANE-ONLY**. Verified, not assumed:
-`git log da7203e30..main -- e2e/m4-06-embodiment.spec.ts artifacts/f1559-1-m4-06-deterministic-drift/`
+`git log 1cd1793e8..main -- e2e/m4-06-embodiment.spec.ts artifacts/f1559-1-m4-06-deterministic-drift/`
 returns empty; main moved only STATUS/logs bookkeeping since the base.
 
 **Firewall respected.** The master's FORBIDDEN GREENS were: widening any bound, restoring `waitForTimeout`

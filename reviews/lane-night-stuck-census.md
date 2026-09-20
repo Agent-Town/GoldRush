@@ -2,7 +2,7 @@
 
 - **Slice:** `lane-night-stuck-census` (master `tasks/done/20260803-171707-lane-night-stuck-census.md`)
 - **Branch / tip:** `lane/m4` — **per-commit patch of `a0412139` ONLY**
-- **Lane base (merge-base with main):** `46033151` — **735 commits behind**
+- **Lane base (merge-base with main):** `74f95634` — **735 commits behind**
 - **Gated in:** detached worktree `worktrees/gate-s1445` (§3.0b), removed after
 - **Drained by:** s1445
 
@@ -11,7 +11,7 @@
 ## What it does
 
 The owner's gate walk of 2026-08-03 said *"the opponents get stuck a lot on the different
-objects"*. The cliff-side cure (gt-03b, `fd4ee249`) had already taught enemies to pick their
+objects"*. The cliff-side cure (gt-03b, `33eaf580`) had already taught enemies to pick their
 **goal side** when steering around terrain; object footprints never got the same lesson.
 
 `ClaimJumperEnemy.resolveBlocker()` pins a blocked enemy to the outside face of a blocker and
@@ -95,11 +95,11 @@ that is precisely why this was gated on fresh main: **tsc clean, build green** h
 
 ## Merge classification
 
-Per-commit graft of `a0412139` onto clean main. Base `46033151`.
+Per-commit graft of `a0412139` onto clean main. Base `74f95634`.
 
 | Path | Class | Resolution |
 |---|---|---|
-| `src/entities/Enemy.ts` | **BOTH-MOVED** | 3-way. Main moved via `e4ea0993` (s1444 baron-siege). All **7** of main's substantive additions verified present line-by-line, **0 missing**; all 3 lane markers marker-probed PRESENT. Numstat 9/9 — identical to the lane's own. |
+| `src/entities/Enemy.ts` | **BOTH-MOVED** | 3-way. Main moved via `b87f154b` (s1444 baron-siege). All **7** of main's substantive additions verified present line-by-line, **0 missing**; all 3 lane markers marker-probed PRESENT. Numstat 9/9 — identical to the lane's own. |
 | `e2e/never-trap.spec.ts` | **LANE-TOUCHED only** | Main blob `6927b3ff` == lane parent blob; clean apply, 73/0, identical to the lane's own. |
 | `scripts/night-stall-census.mjs` | **PURE ADD** | Absent from main. 146/0. |
 

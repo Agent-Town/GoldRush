@@ -125,7 +125,7 @@ before touching anything.
 **Pre-proved for you (s1033 verified this directly, so you need not spend budget on it):** `lane/m3`
 is **exactly 1 commit ahead** — `7d1ac416 runner(lane-a): lane-e5-deepwater-resource-guard.md` — and
 **`git diff main lane/m3 -- src e2e` is EMPTY**, i.e. the lane holds **zero** code content that main
-does not already have (that work merged as `7a020e66` in s1032). The full `git diff main lane/m3` is
+does not already have (that work merged as `e67f55da` in s1032). The full `git diff main lane/m3` is
 pure main-ahead: reviews, scripts and ledgers the lane simply has not caught up to. It is therefore a
 **SAFE DUPE** — confirm, then proceed.
 

@@ -1,23 +1,23 @@
 # f1660-1 — restore the F-E2S-3 de-list as cited exemptions, and assert both directions of the AP-16 mode rule
 
-**Slice:** `f1660-1-door-readmission-repair` · **Branch:** `lane/b` @ `a923f241d` (runner commit) · **Base:** `b458dba15`
-**Merged to main:** `25499e0a1e99bf306d9430daee8b501ef3690b95` · **Drained by:** s1662 fire, 2026-08-11
+**Slice:** `f1660-1-door-readmission-repair` · **Branch:** `lane/b` @ `244253143` (runner commit) · **Base:** `51d5313bf`
+**Merged to main:** `7f006034a9558b1ff4fe5a6d89276ad1cc95fb2b` · **Drained by:** s1662 fire, 2026-08-11
 **Master:** `tasks/f1660-1-door-readmission-repair.md` (authored + dispatched s1660) · **Goal leaf:** `f1660-1-door-readmission-repair`
 
-## VERDICT: MERGED — scope executed exactly as authored; one firewall-blocked residue cured in this drain (`f8a704249`), two non-blocking findings filed.
+## VERDICT: MERGED — scope executed exactly as authored; one firewall-blocked residue cured in this drain (`161d42774`), two non-blocking findings filed.
 
 ## What it does
 
 An owner ruling that shipped on 2026-08-09 had been silently reversed on main for ~15 hours. F-E2S-3
 (*"de-list now, socket later"*) removed `e2-hill-mine`, `e2-trestle` and `e2-incline` from the AP-07 headless
-door; `f1605-1` landed it at `88530e3ef`. Then `48a0d41ab` replaced the hand-maintained `SUPPORTED_CONTRACTS`
+door; `f1605-1` landed it at `312b443f1`. Then `6f74bf510` replaced the hand-maintained `SUPPORTED_CONTRACTS`
 literal with a derivation over a new `CONTRACT_ADMISSION_EXEMPTIONS` table, carried the E5/E6 refusals and
 `e3-fairground` across as cited entries, and **did not carry the three railcars** — so the derivation swept them
 back in. The prior policy had lived in a **code comment inside the literal**, and a comment does not survive a
 derivation.
 
 This slice restores the three as **cited exemptions** (`citation: F-E2S-3`), restores the three
-`e2e/er01-e2-census.spec.ts` refusal arms that `48a0d41ab` had inverted into admission assertions, re-derives the
+`e2e/er01-e2-census.spec.ts` refusal arms that `6f74bf510` had inverted into admission assertions, re-derives the
 `public/skill.md` public door fence (22 → 19), regenerates `docs/bench/same-game-audit.md`, and adds the durable
 half: a registry-derived assertion that **every mode-declaring contract is refused modelessly and admitted with
 its declared mode**, plus a **baseline ratchet** (`scripts/door-admission-baseline.json` +
@@ -138,7 +138,7 @@ next reader can judge which was right — that is why both are on the record.
 
 ## Merge classification
 
-Base `b458dba15`; `git merge --no-ff lane/b`, **ort strategy, zero conflicts**.
+Base `51d5313bf`; `git merge --no-ff lane/b`, **ort strategy, zero conflicts**.
 
 | file | class | note |
 |---|---|---|
@@ -161,7 +161,7 @@ substantive deltas are the three new exemption rows and `Final derived door (22 
 
 ## Findings
 
-### F-1662-1 — the door change left a red guard behind a path-scoped firewall (CURED IN THIS DRAIN, `f8a704249`)
+### F-1662-1 — the door change left a red guard behind a path-scoped firewall (CURED IN THIS DRAIN, `161d42774`)
 
 `scripts/null-floor-anchors.test.mjs` asserts that `assets/contracts/null-floors.json`'s `floors` key set
 **exactly equals** bench seeds ∩ `supportedContractIds()`. Removing three ids from the door therefore reddened
@@ -181,7 +181,7 @@ rightly protected, and generated artifacts that must follow the code.
 **Cured by surgical splice, not regeneration**, deliberately: a full `node scripts/null-floor-anchors.mjs` re-runs
 35 idle sims *and* rewrites `eraStamp`, which is `git merge-base HEAD main` and therefore moves on any bookkeeping
 commit (F-1653-3, already open). Verified: **312 → 258 lines, 12 → 9 contracts, all 9 survivors byte-identical,
-`eraStamp` untouched at `7556adb01`**, and the guard **RED before / GREEN after** on main.
+`eraStamp` untouched at `d279d4b0a`**, and the guard **RED before / GREEN after** on main.
 
 ### F-1662-2 — this merge ships a self-contradicting sentence in a generated report (NON-BLOCKING, corrective owed)
 
@@ -207,7 +207,7 @@ population, which is a slice's decision, not a drainer's edit under load.
 All three new entries carry the same `reason`: *"Measured modeless idle run reached the wave ceiling without a
 lawful terminal because no weapon reaches the railcar."* The pinned null-floor evidence disagrees for
 `e2-incline`. Quoted here **for retention, because F-1662-1's cure deletes these rows** (git keeps them at
-`80ace71c3`):
+`73ae4929a`):
 
 | seed | secured | waves | timeMs | kills |
 |---|---|---:|---:|---:|
@@ -233,8 +233,8 @@ F-E2S-3's proof, which s1605 measured on **`e2-hill-mine`** and generalised to t
 - **F-1608-2's reassurance is un-VOIDed.** The F-1660-1 row recorded that F-1608-2's line — *"Both maps are
   currently door-de-listed per F-E2S-3, so nothing is blocked meanwhile"* — was **VOID while the reversal stood,
   and becomes true again when the corrective lands.** It has landed; the row now says so.
-- **A correction pointer on the ap16-4 SHIPPED row** (`d4fcc354`), so a reader of the row that *caused* the
+- **A correction pointer on the ap16-4 SHIPPED row** (`effe1057`), so a reader of the row that *caused* the
   reversal learns it carried one omission. Superseded, never deleted.
-- Goal leaf `f1660-1-door-readmission-repair`: `planned` → `merged` at `25499e0a1…`.
+- Goal leaf `f1660-1-door-readmission-repair`: `planned` → `merged` at `7f006034a…`.
 - GZ-01 news item appended for the public-door change (`public/skill.md` is the BYO-agent door doc). The copy
   deliberately says nothing about ceilings, so as not to repeat the over-generalisation filed as F-1662-3.

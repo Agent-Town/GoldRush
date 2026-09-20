@@ -4,8 +4,8 @@ Date: 2026-09-07
 
 ## Provenance
 
-- Base commit: `b10b52514cbf7e460f0f22f69bda3c376d21bf9a` (`main` and lane HEAD at pre-flight).
-- Required ancestors: `81eca582848186527e04a825786f1a10dfe2cbd9` and `9b3da574e939fcbf8ca590eabfaf119c7a923a49` both present on `main`.
+- Base commit: `6b66fa46be7d177be9c188db00ecdcdddf23d3af` (`main` and lane HEAD at pre-flight).
+- Required ancestors: `192ef98e208dc24a3eceb707001ae1829d345dc2` and `8480f7624cad832e084c14137cdf7dd62bfb8319` both present on `main`.
 - Engine era: 5, `the Replayed Board`.
 - Current engine-era pin: `32c940079ba3dd1921ca2be10a4a0d5a1de36f49c9199e1f99ecc02230f9f33d` (`assets/engine-era.json`, pinned 2026-09-07).
 - Pre-flight: clean tree, `main..HEAD` empty; `npm ci` and `npm run build` green before edits.
@@ -22,7 +22,7 @@ Seven existing writers now use `test-results/evidence/<existing-basename>/` by d
 | Trace array rows | 93 | 94 |
 | File SHA-256 | `e27aa13ae1aaa4692fde4e6f3131013594cc947ca372b8b512704257a572f105` | `754a51b4e6aa342bbdc9e7d944cea50c67c0b0b462bb6c13a600d98dc5f667e7` |
 
-`253927e1f` introduced the retained ride with the old hash and 93 trace records. F-AGE2-3 later identified that retained baseline as stale. The direct diff from `253927e1f` to this refresh changes the hash and appends exactly one terminal trace object (`turn: 93`, wave 12, dark/cut corridor). The review's historical “22 more trace rows” is the JSON line-diff size: the current structured count is 93 to 94, while the diff adds 22 textual lines (the hash line plus the multi-line object). Today's measured hash matches the review's `5872d6c4`; no simulation code was changed to chase historical evidence.
+`213fbc676` introduced the retained ride with the old hash and 93 trace records. F-AGE2-3 later identified that retained baseline as stale. The direct diff from `213fbc676` to this refresh changes the hash and appends exactly one terminal trace object (`turn: 93`, wave 12, dark/cut corridor). The review's historical “22 more trace rows” is the JSON line-diff size: the current structured count is 93 to 94, while the diff adds 22 textual lines (the hash line plus the multi-line object). Today's measured hash matches the review's `5872d6c4`; no simulation code was changed to chase historical evidence.
 
 Moth command evidence:
 

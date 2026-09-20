@@ -1,8 +1,8 @@
 # f1476-1 — renderer-count tolerance guard
 
 - **Slice:** `f1476-1-renderer-count-tolerance` (cure for F-1476-1, gate disjunct **(a) tolerance-not-byte**)
-- **Branch / tip:** `lane/a` @ `7b934b643` ("rct: guard renderer counts with measured tolerances")
-- **Merge base:** `14028bd8e` · **Merged to main:** `3ab612ed647f8e2fe7a697faa2213ba9cdbf433e` (`--no-ff`)
+- **Branch / tip:** `lane/a` @ `2c46e5776` ("rct: guard renderer counts with measured tolerances")
+- **Merge base:** `5a19d049b` · **Merged to main:** `0f19c226394721a966f13a9e4c8ecd9149628243` (`--no-ff`)
 - **Drained by:** s1478 fire, 2026-08-06
 - **VERDICT: MERGED — all gates green, and both acceptance tests the master demanded were reproduced on the merged tree rather than inherited from the runner's report.**
 
@@ -56,7 +56,7 @@ band branch's own message, and restored the file to a byte-identical state (`git
 
 ## Merge classification
 
-Base `14028bd8e`. Every one of the 12 changed paths is **LANE-TOUCHED only** — main moved 16
+Base `5a19d049b`. Every one of the 12 changed paths is **LANE-TOUCHED only** — main moved 16
 files since the base (STATUS.md, `logs/*`, `tasks/BACKLOG.md`, `assets/pilots/…`, s1477/s1478
 helper scripts) and the intersection with the lane's set is **empty**. No 3-way graft was
 needed and no conflict was resolved; `--no-ff` merge applied cleanly.

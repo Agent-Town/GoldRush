@@ -1,13 +1,13 @@
 # f1510-3-inventory-revision-metadata — drain review (s1516)
 
 **Slice:** `lane-f1510-3-inventory-revision-metadata` (F-1510-3, the revised s1514 gate)
-**Branch:** `lane/b` · **Tip:** `6c7f6cac9` · **Base:** `8c2189875` (main at drain time)
+**Branch:** `lane/b` · **Tip:** `6c7f6cac9` · **Base:** `5c1e4d450` (main at drain time)
 
 ## VERDICT: **MERGED — as a NEGATIVE RESULT.** F-1510-3 is NOT cured; its row stays OPEN with the residue reduced to one line.
 
 The licensed negative condition fired, and it fired on **the exact hazard the master named**. The
 runner refused to ship guards around an output it had proved false. That is the correct call and the
-`8134ec30` precedent: hardening a defect behind a green test is strictly worse than shipping nothing.
+`e47354c6` precedent: hardening a defect behind a green test is strictly worse than shipping nothing.
 
 Docs-only: **1 file, +101 lines**, no code, no guard arms, no config change left behind.
 

@@ -1,4 +1,4 @@
-# e10-archive-world — generation 133, heat 14 (era 6, `540b49af…`, build `e3949bfad`)
+# e10-archive-world — generation 133, heat 14 (era 6, `540b49af…`, build `6075db901`)
 
 rig `claude__opus-5` · harness Claude Code CLI 2.1.272 · worldModel `sim-import`
 seed `e10-archive-world-01`, trail difficulty.

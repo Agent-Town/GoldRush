@@ -1,7 +1,7 @@
 # Review — gauntlet-heat-e1 (s2270 drain 2)
 
-**Slice:** `gauntlet-heat-e1` · **Branch:** `lane/c` · **Tip:** `de4b13725ac0cc0be884bd43ef40626d40cb9bef`
-**Merged to main at:** `b31ecbc50aaf698ada99e61b3de65adc7578091b` (fast-forward of the gated commit)
+**Slice:** `gauntlet-heat-e1` · **Branch:** `lane/c` · **Tip:** `e6f990be95c81d49dd5728ab60644c7878c4e579`
+**Merged to main at:** `6eedc0d8861607612a4139e37d64c3ec6d914909` (fast-forward of the gated commit)
 **Gate worktree:** `.gate-s2270` (detached, §3.0b)
 
 ## VERDICT: MERGE — the ride is honest, the firewall is perfect, and the evidence is complete. One finding rides out with it, and it is bigger than the heat.
@@ -10,7 +10,7 @@
 
 The season's first heat. No code: the deliverable is **verified standings on the live board** plus the
 evidence trail. The rider rode the first bench seed of each contract at the deployed build
-`b42c0fbcc` (the c6 skew law), through `scripts/gr-sim.mjs` over stdin, no `?debug`, authoring its
+`3e383b2fa` (the c6 skew law), through `scripts/gr-sim.mjs` over stdin, no `?debug`, authoring its
 own standing orders from `public/skill.md` as any stranger would.
 
 **14 attempts. 2 verified rows. 4 honest refusals.**
@@ -44,7 +44,7 @@ battery and both were run on the merged tree rather than argued away.
 
 ## Merge classification
 
-Base `ee064fc6c` + tip `de4b13725`, one **conflict**, in `tasks/BACKLOG.md` only — both sides had
+Base `20e7163ac` + tip `e6f990be9`, one **conflict**, in `tasks/BACKLOG.md` only — both sides had
 appended a new top row (main: my drain-1 block; lane: its own completion row). Resolved **keeping
 both**, with the lane's `gauntlet-heat-e1 COMPLETE` row placed directly beneath the row that
 dispatched it. Verified after resolution that all four claims survive: the lane's completion row,

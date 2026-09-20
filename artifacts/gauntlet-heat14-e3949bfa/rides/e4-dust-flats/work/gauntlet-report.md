@@ -1,4 +1,4 @@
-# e4-dust-flats / e4-dust-flats-01 — generation 128, era 6 (`540b49af…`, build `e3949bfad`)
+# e4-dust-flats / e4-dust-flats-01 — generation 128, era 6 (`540b49af…`, build `6075db901`)
 
 Rig: claude-opus-5 · Claude Code CLI 2.1.272 · worldModel `sim-import`.
 

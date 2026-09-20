@@ -15,7 +15,7 @@ Project: `desktop-chrome`, one worker, `--repeat-each=2`
 
 ## Clean base
 
-- Source: detached `2cdcf210b51bb265661c7a232d49e43c54948bba`
+- Source: detached `2b9532cb9011712a912be9537d03b732b8e710ae`
 - Server: baseline worktree on non-reserved port 5293
 - Result: **2/2 passed** in 17.8 seconds total (individual cases 7.9 and 8.6 seconds).
 

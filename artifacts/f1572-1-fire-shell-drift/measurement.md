@@ -1,6 +1,6 @@
 # F-1571-1 — the fire-shell drift measurement, run s1572
 
-**Run by:** s1572 fire, immediately after `f1571-1` merged at `14b3c927c5d1d2d2bf96584d0f7731b72c816c66`.
+**Run by:** s1572 fire, immediately after `f1571-1` merged at `9bfecb997a892889ee65e4c4e595ce16ebafe745`.
 This measurement was impossible before that merge: the pre-reorder assertion order deletes the
 sample on exactly the runs most likely to be interesting (F-1565-2 censoring half).
 

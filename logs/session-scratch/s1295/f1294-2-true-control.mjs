@@ -3,13 +3,13 @@
 // WHY THIS REPLACES THE FIRST HARNESS: my first attempt applied the slice to main's tree and
 // aborted with ARM MISMATCH, because `git checkout lane/e2-arsenal -- <4 paths>` produced ZERO
 // change. Cause (F-1295-1): the slice content was ALREADY on main — swept there at 16:59 by
-// b37c1fc6 "rehearsal round 2 launched", a concurrent attended commit whose broad `git add`
+// 3058fca5 "rehearsal round 2 launched", a concurrent attended commit whose broad `git add`
 // swallowed the four paths s1294 had checked out into main's working tree in order to gate them.
 // So both of my arms were the same tree and there was no control at all.
 //
 // The correct arms are therefore PRE-SWEEP vs POST-SWEEP, not main vs lane:
 //   POST = current main (contains the slice)
-//   PRE  = current main with the four slice paths reverted to 00e4c074 (b37c1fc6's parent)
+//   PRE  = current main with the four slice paths reverted to 00e4c074 (3058fca5's parent)
 //
 // Run in a DETACHED WORKTREE, never main's tree: a concurrent writer is live on main right now
 // (spec commits at 17:20 and 17:26, after my lock), and dirtying main's tree is precisely what
@@ -23,7 +23,7 @@ const WT = '/Users/robin/Claude/Projects/gr-s1295-control'
 const PORT = 5241
 const BASE = `http://127.0.0.1:${PORT}`
 const OUT = '/Users/robin/Claude/Projects/Gold Rush/logs/session-scratch/s1295'
-const PRE_REF = '00e4c074' // b37c1fc6^ — main immediately before the sweep
+const PRE_REF = '00e4c074' // 3058fca5^ — main immediately before the sweep
 const SLICE_PATHS = [
   'src/agent/PermissionLadder.ts',
   'src/agent/ToolSurface.ts',

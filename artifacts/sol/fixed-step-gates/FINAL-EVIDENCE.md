@@ -2,9 +2,9 @@
 
 Branch: `sol/fixed-step-unification`
 
-Implementation tip before evidence tail: `1b575fd`
+Implementation tip before evidence tail: `c6fdfce`
 
-Compared main: `e374f47`
+Compared main: `32c362c`
 
 Status: **NOT READY-FOR-GATES.** The exact isolated MP resync gate is red 0/2. `MP-BLOCKER-EVIDENCE.md` records the hard evidence and the ruling needed.
 
@@ -21,7 +21,7 @@ Status: **NOT READY-FOR-GATES.** The exact isolated MP resync gate is red 0/2. `
 | Full desktop regression | `npx playwright test --project=desktop-chrome --workers=1 --reporter=line` | OBSERVED: 496 passed / 31 failed / 4 skipped / 6 did not run, 537 enumerated, 56.2 minutes; final reporter output was not retained, so this is not checksummed proof |
 | Five new aggregate reds | same five cases isolated on main and branch | OBSERVED PASS, 5/5 on main and 5/5 on branch; raw output not retained |
 
-The checksummed focused logs and `full-desktop.log` predate commit `23cd01d`; they are the original park-time artifacts. Current-tip reruns are recorded above only as observations because their reporter output was not retained. They are not presented as checksummed proof.
+The checksummed focused logs and `full-desktop.log` predate commit `069ba5e`; they are the original park-time artifacts. Current-tip reruns are recorded above only as observations because their reporter output was not retained. They are not presented as checksummed proof.
 
 ## Performance comparison
 

@@ -85,14 +85,14 @@ specific editor site you name in your report.
 (`src/meta/ContractFamilies.ts`, contract descriptors/templates — F-cp00-1 is attended-owned) ·
 `src/game/` sim, combat, or Economy · `Balance.ts` · any other spec file · the `m1-01` /
 `m2-01` / `m2-05` guards and their expected numbers (all load-bearing and green — `m2-05` was
-stabilised only this morning at `d79e8941`).
+stabilised only this morning at `901ea74a`).
 
 ## Pre-flight (LANE-SAFETY, runner-auto-commit aware)
 The lane branch being ahead is NORMAL — the runner auto-commits. For each ahead commit: if its content is already merged to main (verify via git log/diff), it is a SAFE DUPE → `git checkout -B lane/e2-arsenal main && git clean -fd` and PROCEED. STOP-and-report ONLY if an ahead commit's content is NOT on main (undrained work — resetting would DESTROY it), or the worktree holds uncommitted edits you did not make. Then `npm install --no-audit --no-fund`; `npm run build` green before touching anything.
 
 **Pre-proved for you (s1044, ~13:50Z, so you need not spend budget on it):** `git log main..lane/e2-arsenal`
 is **exactly one commit** — `7d951b76 runner(lane-c): lane-m2-05-repair-dwell-observable.md` — whose
-content s1042 merged to main as **`d79e8941`**. It is therefore a **SAFE DUPE**: confirm it yourself,
+content s1042 merged to main as **`901ea74a`**. It is therefore a **SAFE DUPE**: confirm it yourself,
 then proceed. (The only other difference is `reviews/shots-m2-05/*.png`, where main holds the drain's
 own regenerated screenshots — main is ahead there, nothing is lost.)
 
@@ -107,7 +107,7 @@ If you find yourself about to exit without changes, WRITE WHY into your report f
 run the full file **three separate times per project** and report all numbers.
 **Adjacent unmodified-green, both projects, `--workers=1`:** `e2e/m1-01-claim-jumpers-death.spec.ts`
 (8/8 — it is also the scope-3 control) and `e2e/m2-05-base-damage-repair.spec.ts` (7/7 — freshly
-stabilised at `d79e8941`; if it regresses, that is yours to report immediately).
+stabilised at `901ea74a`; if it regresses, that is yours to report immediately).
 **Known pre-existing red, NOT yours:** `ed-04:17` (**F-cp00-1**, scope 6).
 Zero console/page errors (these tests already assert `consoleErrors`/`pageErrors` `toEqual([])` —
 keep those assertions). Screenshot of the editor with a zone gesture applied to

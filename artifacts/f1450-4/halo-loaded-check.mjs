@@ -4,15 +4,15 @@
  *
  * The bulk sweep says 1075/1314. A bulk number is easy to wave away, so this checks
  * sprites that are PROVABLY loaded by the runtime (grepped out of src/), and includes
- * NEGATIVE CONTROLS — the four sprites cured after c29040e7 — which must read 0.00%.
+ * NEGATIVE CONTROLS — the four sprites cured after d2e69801 — which must read 0.00%.
  * If a control reads non-zero, the probe is wrong and the sweep means nothing.
  */
 import fs from 'node:fs';
 import { PNG } from 'pngjs';
 
 const CURED_CONTROLS = [
-  'assets/processed/prop-baron-banner.png',        // cured s1450 eea41d6e
-  'assets/processed/prop-drill-bell-post.png',     // extracted post-cure e212cc5c
+  'assets/processed/prop-baron-banner.png',        // cured s1450 77a22fc5
+  'assets/processed/prop-drill-bell-post.png',     // extracted post-cure a7b7eddb
   'assets/processed/prop-drill-faucet-station.png',
   'assets/processed/prop-straw-man-stand.png',
 ];
@@ -56,5 +56,5 @@ const show = (title, list) => {
   }
 };
 
-show('NEGATIVE CONTROLS — cured after c29040e7, MUST read 0.00% / 0 touching', CURED_CONTROLS);
+show('NEGATIVE CONTROLS — cured after d2e69801, MUST read 0.00% / 0 touching', CURED_CONTROLS);
 show('PROVABLY LOADED BY THE RUNTIME (paths grepped from src/)', LOADED_SAMPLES);

@@ -5,7 +5,7 @@
 
 ## What it does
 
-The braking-lead hero-approach algorithm — the thing whose *previous* incarnation silently missed its own `0.12` tolerance on 13/13 moves and let the E1 plain-boot proof pass by harvest-range luck for an unknown number of fires (s1256, F-1206-1) — existed in two byte-identical copies after `74ef8c66`. This slice deletes the inlined copy from `e2e/release-build.spec.ts` and imports the shared module instead. One file, `1 insertion(+), 57 deletions(-)`, **zero `src/` bytes, zero bytes in `e2e/helpers/hero-approach.ts`, zero regenerated artifacts**. No behaviour change anywhere: not the `0.12` tolerance, not the `speed / 28 + 0.08` lead, not the 16 ms sampler, not the 12-pass cap.
+The braking-lead hero-approach algorithm — the thing whose *previous* incarnation silently missed its own `0.12` tolerance on 13/13 moves and let the E1 plain-boot proof pass by harvest-range luck for an unknown number of fires (s1256, F-1206-1) — existed in two byte-identical copies after `616f82c6`. This slice deletes the inlined copy from `e2e/release-build.spec.ts` and imports the shared module instead. One file, `1 insertion(+), 57 deletions(-)`, **zero `src/` bytes, zero bytes in `e2e/helpers/hero-approach.ts`, zero regenerated artifacts**. No behaviour change anywhere: not the `0.12` tolerance, not the `speed / 28 + 0.08` lead, not the 16 ms sampler, not the 12-pass cap.
 
 ## Evidence (re-measured on merged main, not inherited from the run)
 
@@ -19,7 +19,7 @@ The braking-lead hero-approach algorithm — the thing whose *previous* incarnat
 | Console / page errors | zero | both suites assert it; assertions untouched |
 | Screenshots | **none owed, none regenerated** | the slice renders nothing; regenerating would be the churn that made this lane look permanently ahead |
 
-**Merge classification.** Lane base `80d2012c`; `git log 80d2012c..main -- e2e/release-build.spec.ts e2e/helpers/hero-approach.ts` is **empty** → both files are **MAIN-UNMOVED**, so the single LANE-TOUCHED file was taken directly. Every other path in `git diff main lane/m4` (STATUS.md, `logs/*`, `tasks/BACKLOG.md`, six `gg-03c` shots) is **MAIN-MOVED-ONLY** reverse-noise from main's four commits after the lane base — none merged.
+**Merge classification.** Lane base `f82069a7`; `git log f82069a7..main -- e2e/release-build.spec.ts e2e/helpers/hero-approach.ts` is **empty** → both files are **MAIN-UNMOVED**, so the single LANE-TOUCHED file was taken directly. Every other path in `git diff main lane/m4` (STATUS.md, `logs/*`, `tasks/BACKLOG.md`, six `gg-03c` shots) is **MAIN-MOVED-ONLY** reverse-noise from main's four commits after the lane base — none merged.
 
 ## What the drain verified for itself rather than trusting
 

@@ -1,7 +1,7 @@
 # vp-02e — diagonal clip resolution (the F-1135-1 cure)
 
 - **Slice:** `lane-vp-02e-diagonal-clip-resolution`
-- **Branch/tip:** `lane/m4` @ `6683a2d7` (base `ccdf0668`)
+- **Branch/tip:** `lane/m4` @ `6683a2d7` (base `f0a1ee6d`)
 - **Drained by:** s1137 fire, 2026-07-27
 - **Verdict:** **ACCEPT (merge) — with two test-side debts recorded as F-1137-1 / F-1137-2, both proven cure-caused by a controlled A/B.**
 
@@ -26,9 +26,9 @@ and **no** `idle` were exactly the four broken ones.
 
 ## Merge classification
 
-Base `ccdf0668`; three-dot LANE-TOUCHED = **6 files, +122 lines**:
+Base `f0a1ee6d`; three-dot LANE-TOUCHED = **6 files, +122 lines**:
 `src/assets/SpriteAnimator.ts` (**+1 line**), `reviews/vp-02e-runner-report.md`, and 4
-diagonal screenshots. `git log ccdf0668..main -- src/assets/SpriteAnimator.ts` is **empty**
+diagonal screenshots. `git log f0a1ee6d..main -- src/assets/SpriteAnimator.ts` is **empty**
 — main never moved the file since the base, so this is **LANE-TOUCHED clean, no graft**.
 The two-dot diff additionally lists `STATUS.md`, `e2e/vp-02-sprite-animation.spec.ts`,
 `tasks/*` — all **MAIN-MOVED-ONLY** (the s1136 merges), correctly not taken.
@@ -43,16 +43,16 @@ desktop-chrome + mobile-chrome (390px).
 | `npx tsc --noEmit` | **clean** |
 | `npm run build` | **green, 1.31s** |
 | `e2e/vp-02b-rotation-resolver.spec.ts` (own spec) | **10 passed / 4 failed** |
-| `e2e/vp-02-sprite-animation.spec.ts` (adjacent) | **19 passed / 3 failed** (was **13/9** on main at `96568621`) |
+| `e2e/vp-02-sprite-animation.spec.ts` (adjacent) | **19 passed / 3 failed** (was **13/9** on main at `616781f4`) |
 
 ### ⚠️ The runner's adjacent-suite baseline was stale — and re-measuring is what found the win
 
-The runner measured "before" in a detached worktree at base `ccdf0668` and reported the
-whole `-f-` cluster as **unchanged RED**. That base predates `96568621` (the s1136 `-f-`
+The runner measured "before" in a detached worktree at base `f0a1ee6d` and reported the
+whole `-f-` cluster as **unchanged RED**. That base predates `616781f4` (the s1136 `-f-`
 repair), which landed ~28 min *after* this lane started. Re-measured on **real main**, the
 picture is the opposite of the runner's report — the cluster *moves*:
 
-| Test | main @ `96568621` | + vp-02e |
+| Test | main @ `616781f4` | + vp-02e |
 |---|---|---|
 | `:453` hero rotation contract fires both stride cells, all 8 headings | RED ×2 | **PASS ×2** |
 | `:512` hero walk frameKey alternates while each heading is held | RED ×2 | **PASS ×2** |

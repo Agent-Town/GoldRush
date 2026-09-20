@@ -1,6 +1,6 @@
 # reviews/e3-power-graph — E3 dormant power graph engine
 
-**Slice:** e3-power-graph-core (lane-a) · **Branch:** lane/m3 tip `bce5c63` · **Merged:** `d0f4204` (s181 drain) · **Base:** `c15e250` (clean ancestor of main)
+**Slice:** e3-power-graph-core (lane-a) · **Branch:** lane/m3 tip `d1d0436` · **Merged:** `3f98c2d` (s181 drain) · **Base:** `0ace9ad` (clean ancestor of main)
 
 ## Verdict
 **MERGED — PASS.** Dormant, dev-gated engine; zero gameplay-visible surface in a plain boot. One adjacent red (`task-025:145`) proven PRE-EXISTING on clean main, not caused by this merge — corrective already queued (fix-025).
@@ -21,8 +21,8 @@ Adds `src/systems/PowerGraph.ts` (471 lines): a deterministic, id-sorted connect
 
 Scratch config: `playwright.s181.config.ts` (vite preview of the built bundle on 127.0.0.1:5241 — gates the production bundle, no live-lane port/working-tree contamination). `--workers=1`.
 
-## Merge classification (base `c15e250`)
-`c15e250` (the task-master authoring commit — its message "E3 power-graph engine early" was MISLEADING; the diff is only two `tasks/*.md` files) is a clean ancestor of main. Since base, main moved only `Game.ts` + `vite-env.d.ts`.
+## Merge classification (base `0ace9ad`)
+`0ace9ad` (the task-master authoring commit — its message "E3 power-graph engine early" was MISLEADING; the diff is only two `tasks/*.md` files) is a clean ancestor of main. Since base, main moved only `Game.ts` + `vite-env.d.ts`.
 
 | File | Class | Resolution |
 |------|-------|------------|
@@ -40,6 +40,6 @@ Scratch config: `playwright.s181.config.ts` (vite preview of the built bundle on
 ## Findings
 - **F-181-1 (non-blocking — corrective ALREADY QUEUED):** `task-025-bandits-dont-swim.spec.ts:186` (`expect(deep.announcement).toContain('Wet powder')`) fails on **desktop-chrome, now DETERMINISTICALLY** (3/3 isolated `--workers=1`; mobile 3/3 pass). Attributed to CLEAN MAIN, not this merge:
   - The transient `__THREE_GAME_DIAGNOSTICS__.ui.announcement` is overwritten at read time by the world-info-notes string `"the Prospector: follows and observes. Chip by weapon; claim wins grow it."` — that string lives on clean main HEAD (`f888a2e:src/game/Game.ts:3230`), predating this merge.
-  - `bce5c63` touches ZERO announcement code (`git show bce5c63 -- src | grep announce` = empty).
+  - `d1d0436` touches ZERO announcement code (`git show bce5c63 -- src | grep announce` = empty).
   - This is F-176-1 (fix-025's target). fix-025 (`tasks/queue/main/fix-task-025-wet-powder-announcement-race.md`) rewrites line 186 to poll the durable Wave-status DOM instead of the transient field — that fully covers this failure mode.
-  - **NOTE for the next fire / fix-025 author:** fix-025 was authored (pre-`075a6dc`) describing this as a ~⅔ FLAKE. Since then, attended's **world-info-notes** feature (merged `1612eab`) made the Prospector info-note win the announcement field DETERMINISTICALLY, so the red is now ~100% on desktop. fix-025's durable-DOM approach still fixes it; no scope change needed, but expect fix-025's `--repeat-each=5` proof to go from "recover the flake" to "flip a hard red green."
+  - **NOTE for the next fire / fix-025 author:** fix-025 was authored (pre-`6fdd67f`) describing this as a ~⅔ FLAKE. Since then, attended's **world-info-notes** feature (merged `1b26e60`) made the Prospector info-note win the announcement field DETERMINISTICALLY, so the red is now ~100% on desktop. fix-025's durable-DOM approach still fixes it; no scope change needed, but expect fix-025's `--repeat-each=5` proof to go from "recover the flake" to "flip a hard red green."

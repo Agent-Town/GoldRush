@@ -1,7 +1,7 @@
 # tl-03-window-3-ticker-stats — the Ticker/Gazette quotes the ONE endpoint
 
 **Slice:** `lane-a-tl-03-window-3-ticker-stats` (FIRE-AUTHORED s1042) · **Branch:** `lane/m3` ·
-**Tip:** `46146b0b` · **Base:** `d79e8941` (= merge-base; both files are NEW on main)
+**Tip:** `46146b0b` · **Base:** `901ea74a` (= merge-base; both files are NEW on main)
 **Drained:** s1043 fire, 2026-07-25 · **Merge:** path-scoped, no 3-way (see Classification)
 
 ## Verdict
@@ -65,8 +65,8 @@ No screenshots owed — no rendering surface (per the master).
 | `scripts/ticker-stats.mjs` | **LANE-TOUCHED**, new file (absent on main) | path-scoped checkout, byte-exact |
 | `scripts/test-ticker-stats.mjs` | **LANE-TOUCHED**, new file (absent on main) | path-scoped checkout, byte-exact |
 
-Base `d79e8941` is the merge-base and main had never held either path ⇒ **no MAIN-MOVED file, no 3-way graft,
-no conflict surface.** Merged onto clean main (`c2044591`), `git add` path-scoped to `scripts/` only.
+Base `901ea74a` is the merge-base and main had never held either path ⇒ **no MAIN-MOVED file, no 3-way graft,
+no conflict surface.** Merged onto clean main (`3407f1be`), `git add` path-scoped to `scripts/` only.
 `package.json` was deliberately **not** touched: the repo's convention has no `test:` entry for
 `scripts/test-stats.mjs` either, and the master said to add one only if the convention already existed.
 
@@ -94,7 +94,7 @@ Two things follow, and they are separate:
   the one endpoint; Window 3 currently collapses two states the other two windows keep apart, and reports the
   alarming one. **This is a master defect, not a runner defect** — worth a one-line corrective so a drafting
   fire is never told the wire is down when it is up.
-- **(b) The tallies are zero.** The binding fix (F-tl01-1, `41d8e1ae`/`47c5fb20`) did land, and the endpoint
+- **(b) The tallies are zero.** The binding fix (F-tl01-1, `4c68cdca`/`acacbb39`) did land, and the endpoint
   serves the correct shape — but `allTime: 0` means either nothing has been played against the deployed
   build since the fix, or run-end beacons are not being persisted/counted. I did **not** chase this: it
   crosses into `functions/` + deploy state and would be inventing scope. Flagged to the owner's desk with the

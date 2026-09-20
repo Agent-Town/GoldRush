@@ -10,7 +10,7 @@ const entries = tape.inputLog?.entries;
 if (!Number.isInteger(duration) || duration < 0 || duration > 18_000) throw new Error(`invalid tape durationTicks: ${duration}`);
 if (!Array.isArray(entries) || entries.some(({ t }) => !Number.isInteger(t) || t < 0 || t >= duration)) throw new Error('invalid tape entry tick');
 if (tape.outcome?.secured !== true) throw new Error('refusing to submit an unsecured tape');
-if (tape.meta?.buildId !== '4c5ca6609') throw new Error(`wrong deployed build: ${tape.meta?.buildId}`);
+if (tape.meta?.buildId !== '22365118a') throw new Error(`wrong deployed build: ${tape.meta?.buildId}`);
 
 const epochId = tape.contract === 'e2-hill-mine' ? 'epoch-2-steamworks' : 'epoch-1-frontier';
 const sha256 = (value) => createHash('sha256').update(value).digest('hex');

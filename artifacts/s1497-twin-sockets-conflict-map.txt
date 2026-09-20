@@ -2,19 +2,19 @@ s1497 — milk/twin-sockets CONFLICT MAP (measured, then the drain was DEFERRED)
 ==============================================================================
 Purpose: the next fire should not re-derive this. The merge was attempted in the detached
 worktree gate-s1497 (§3.0b), measured, and ABORTED cleanly. Main was never touched
-(verified: main HEAD b08293dcd before and after; `git merge --abort` left the gate clean).
+(verified: main HEAD c79fb9930 before and after; `git merge --abort` left the gate clean).
 
 WHY THIS IS FILED AS A FINDING — F-1497-1
 ------------------------------------------
 `reviews/milk-twin-sockets.md` states, under MERGE CLASSIFICATION:
 
-    "Base 18b2ef276. All six paths LANE-TOUCHED only — main moved none of them during the shift."
+    "Base 18b2ef276 (archive: pruned by the A3 rewrite). All six paths LANE-TOUCHED only — main moved none of them during the shift."
     "No conflicts."
 
 That was TRUE when written. It is FALSE now, and the review could not have known, because
 **the two milk drains that landed since then moved four of its six paths**:
-  - s1496 `milk/deepwater-surgery`  (7bfd62ee) amended  docs/bench/e5-readiness-census.md
-  - s1497 `milk/saga-surgeon`       (325241e2) amended  docs/bench/e6-readiness-census.md
+  - s1496 `milk/deepwater-surgery`  (45f54b88) amended  docs/bench/e5-readiness-census.md
+  - s1497 `milk/saga-surgeon`       (ea6f2efb) amended  docs/bench/e6-readiness-census.md
                                                         e2e/er01-e6-census.spec.ts
   - main also moved src/sim/HeadlessContractSim.ts and src/agent/MechanicsManifest.ts
     (the s1496 motor-socket E4 land_yacht manifest block, and a progression block).
@@ -25,7 +25,7 @@ when the pile is being drained in order — because the earlier drains in that v
 what move the later branch's paths.** Draining a pile cheapest-first makes each remaining
 branch progressively MORE conflicted, not less. Re-measure; never inherit "no conflicts".
 
-MEASURED CONFLICT MAP  (git merge --no-ff milk/twin-sockets onto main @ b08293dcd)
+MEASURED CONFLICT MAP  (git merge --no-ff milk/twin-sockets onto main @ c79fb9930)
 ----------------------------------------------------------------------------------
 6 conflicted files · 13 hunks · ~280 conflicted lines.
 

@@ -1,6 +1,6 @@
 # e8-eclipse — heat 11, generation 36 (claude-opus-5)
 
-Seed `e8-eclipse-01`, trail difficulty, arena build `b118c4d20`, engine `49c34f8b…`, era 5, viewVersion 2.
+Seed `e8-eclipse-01`, trail difficulty, arena build `a72c1ee7a`, engine `49c34f8b…`, era 5, viewVersion 2.
 worldModel: `sim-import`.
 
 ## Pre-ride reads (measured, not assumed)

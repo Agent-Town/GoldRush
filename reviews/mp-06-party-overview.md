@@ -1,8 +1,8 @@
 # mp-06-party-overview — THE RIDERS' ROSTER (party overview + rider glance)
 
 - **Slice:** `lane-mp-06-party-overview` (master `tasks/lane-mp-06-party-overview.md`)
-- **Branch / tip:** `lane/a` @ `348e71ae`
-- **Base:** `2d326350` (main at merge time; lane cut from db010c1c, fast-forward-clean)
+- **Branch / tip:** `lane/a` @ `61e9bc8f`
+- **Base:** `faf97925` (main at merge time; lane cut from ee777a1c, fast-forward-clean)
 - **Drained by:** attended, 2026-08-04 ~17:30 (owner-priority: "I want to try it")
 
 ## Verdict
@@ -18,7 +18,7 @@ Owner directive verbatim in the master. During a co-op run (2+ riders) a compact
 | `mp-06-party-overview.spec.ts` (merged tree, workers=1) | **4/4 green desktop** (lane run: 4/4 both projects) |
 | `mp-02-lockstep.spec.ts` (merged tree, workers=1) | 11 passed · 1 failed `:638` · 1 downstream skipped |
 | `:638` solo on merged tree | red (deterministic) |
-| `:638` solo on **clean main** (detached worktree `gr-mp06-base` @ 2d326350) | **red, identical** — `TimeoutError: page.waitForFunction 15000ms` |
+| `:638` solo on **clean main** (detached worktree `gr-mp06-base` @ faf97925) | **red, identical** — `TimeoutError: page.waitForFunction 15000ms` |
 | Zero console/page errors | asserted inside both suites' passing tests |
 | Screenshots | `reviews/shots-mp-06/desktop-chrome-roster-mid-glance.png` + `mobile-chrome-roster-mid-glance.png` (from the lane's gated run) |
 

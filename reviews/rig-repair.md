@@ -2,7 +2,7 @@
 
 **Slice:** `lane-rig-repair.md` (saga-rehearsal rig repair R1–R4 + honest full-traversal re-run)
 **Branch / tip:** `lane/m4` @ `1244914b` (`runner(lane-b): lane-rig-repair.md`, 2026-07-25 02:40 +07)
-**Base:** `fa9ed6b0` (merge-base with main) · **merged onto main** at `ae04f0a0` (s1025 lock)
+**Base:** `07dfca8e` (merge-base with main) · **merged onto main** at `d785f3fe` (s1025 lock)
 **Drained by:** s1025 fire, 2026-07-25 ~03:0xZ
 
 ## VERDICT: MERGE — gates green, firewall clean, evidence real.
@@ -28,9 +28,9 @@ new `reviews/shots-rehearsal/*.png`. Per the rig's own law the `.webm` footage s
 
 | | |
 |---|---|
-| Base | `fa9ed6b0` |
+| Base | `07dfca8e` |
 | Files changed | 118 (`rehearsal/**` 21 · `reviews/**` 96 · `tasks/DRAFT-*` 1) |
-| MAIN-MOVED-ONLY | **none** — `git log fa9ed6b0..main -- rehearsal reviews/shots-rehearsal reviews/saga-rehearsal-2026-07-25.md tasks/DRAFT-deepwater-hud-corsair-counter.md` = **empty** |
+| MAIN-MOVED-ONLY | **none** — `git log 07dfca8e..main -- rehearsal reviews/shots-rehearsal reviews/saga-rehearsal-2026-07-25.md tasks/DRAFT-deepwater-hud-corsair-counter.md` = **empty** |
 | LANE-TOUCHED | all 118 |
 | Conflicts | **none.** `git merge --squash lane/m4` → "Automatic merge went well" |
 | 3-way grafts needed | none |
@@ -41,7 +41,7 @@ new `reviews/shots-rehearsal/*.png`. Per the rig's own law the `.webm` footage s
 TOUCH-ONLY was `rehearsal/**`, `reviews/**`, `rehearsal-video/**` (local), `tasks/DRAFT-*`; NO src/,
 NO assets/, NO e2e/.
 
-`git diff --name-only fa9ed6b0 lane/m4 -- src e2e package.json package-lock.json vite.config.ts tsconfig.json`
+`git diff --name-only 07dfca8e lane/m4 -- src e2e package.json package-lock.json vite.config.ts tsconfig.json`
 → **empty**. ✓ VERIFIED. The buildable surface of the merged tree is byte-identical to pre-merge main,
 which is why the gate battery below is conclusive rather than merely reassuring.
 
@@ -55,7 +55,7 @@ which is why the gate battery below is conclusive rather than merely reassuring.
 | Rig module load | `rehearsal/lib.mjs` imports clean; 20 exports resolve (playwright graph OK) |
 | Rig orchestrator | `node rehearsal/run-all.mjs 99` runs and prints SEQUENCE SUMMARY (zero side effects) |
 | Boot probe `_s106-prospector-boot-probe` | **2/2 PASS** desktop-chrome + mobile-chrome (390px), 4.1s, zero console/page errors |
-| Adjacent suites | not re-run **by design** — the merge touches no `src/`, `e2e/` or config; nothing they cover can have moved. Pre-merge main was gated 12/12 zero-console at `0dfa1d3f` (s1024). |
+| Adjacent suites | not re-run **by design** — the merge touches no `src/`, `e2e/` or config; nothing they cover can have moved. Pre-merge main was gated 12/12 zero-console at `436deb71` (s1024). |
 
 ### Repair claims verified against the merged tree (not taken on the report's word)
 
@@ -69,11 +69,11 @@ which is why the gate battery below is conclusive rather than merely reassuring.
 ## Findings
 
 **F-1025-1 (non-blocking, note-for-owner) — the rehearsal evidence predates the asset diet.**
-The report states its runtime was "detached current `main` at `76635963`". Current main is 12 commits
-further on and those commits include **THE ASSET DIET** (`0dfa1d3f`), which re-encodes 235 terrain GLBs
+The report states its runtime was "detached current `main` at `21185446`". Current main is 12 commits
+further on and those commits include **THE ASSET DIET** (`436deb71`), which re-encodes 235 terrain GLBs
 and 53 plate PNGs. So the filmed footage shows the pre-diet asset set. This does **not** weaken the
 rig (the code merged here is runtime-agnostic) and the diet shipped with its own visual-parity gate on
-2 maps + town, but the honest statement is: *the saga was proven on `76635963`, not on today's tip*.
+2 maps + town, but the honest statement is: *the saga was proven on `21185446`, not on today's tip*.
 No corrective task — a re-run is hours of wall-clock and buys little; the next natural re-run picks it up.
 
 **F-1025-2 (non-blocking, deliberate) — I did not re-run a live rehearsal segment as a smoke test.**

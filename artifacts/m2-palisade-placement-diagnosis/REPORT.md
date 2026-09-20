@@ -11,7 +11,7 @@ type: solution
 
 F-2537-2 is a test-readiness defect. Runtime placement rules are unchanged.
 
-Base: `0da3255113d1819403d1051900c61e6c97c32a50` on `main`. Preflight found no foreign uncommitted `src/`, `e2e/`, or `scripts/` changes. Node was explicitly `/Users/robin/.nvm/versions/node/v26.4.0/bin/node` (`v26.4.0`). Vite used checked-free port 5317 and private cache `/tmp/gold-rush-m2-palisade-vite-cache` through `vite.config.mjs`.
+Base: `54a067be17260653df515419073baf095154cad7` on `main`. Preflight found no foreign uncommitted `src/`, `e2e/`, or `scripts/` changes. Node was explicitly `/Users/robin/.nvm/versions/node/v26.4.0/bin/node` (`v26.4.0`). Vite used checked-free port 5317 and private cache `/tmp/gold-rush-m2-palisade-vite-cache` through `vite.config.mjs`.
 
 The test sampled `frame` in one Playwright round trip, then dispatched the rejected Enter pair and teleport in another. Under load, the game could advance between those calls, so the returned frame was already stale when the Enter was issued. The subsequent frame wait could therefore return before the rejected tap was consumed and before an input sample observed Enter released. A following accepted Enter could arrive while `Game.lastConfirmIntent` still held the prior pulse and be ignored.
 

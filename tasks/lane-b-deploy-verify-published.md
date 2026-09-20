@@ -15,7 +15,7 @@
 
 ## WHY (quoted evidence, dated)
 s1049 probed the live site: `https://gold-rush-3in.pages.dev/version.json` returns
-`{"build":"49dbce7a","builtAt":"2026-07-24T17:20:23Z"}` while `logs/deploy.log` records
+`{"build":"9fa96680","builtAt":"2026-07-24T17:20:23Z"}` while `logs/deploy.log` records
 `2026-07-25 21:47:08 DEPLOYED ok`. **174 commits — including the entire Opus-5 3D night — never reached the players,
 and the deploy path called it a success.** Root cause, captured in the log: wrangler 4.107.0 hit a fatal upload
 error, then crashed in its own exit path (`process.exit('ENOENT')` →

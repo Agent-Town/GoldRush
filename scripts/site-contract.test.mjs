@@ -90,7 +90,7 @@ function htmlFiles() {
  * fragment. A reference is `path[?query][#fragment]`; only `path` names a file.
  *
  * F-2369-1 (measured s2370): this repo had no such helper, so every consumer
- * treated the raw attribute value as a filename. `1188a6d88` added the ordinary
+ * treated the raw attribute value as a filename. `eb152d4a7` added the ordinary
  * cache-busting query string to index.html's only script tag --
  * `assay-office.js?v=county-2` -- and THREE assertions in this file went red at
  * once against a file that exists and has never moved. The guard accused an

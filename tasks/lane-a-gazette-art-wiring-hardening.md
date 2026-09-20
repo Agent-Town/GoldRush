@@ -7,11 +7,11 @@ CODEX: model=gpt-5.6-sol effort=high
 
 The lane branch being ahead is NORMAL — the runner auto-commits. For each ahead commit: if its content is already merged to main (verify via git log/diff), it is a SAFE DUPE → `git checkout -B lane/m3 main && git clean -fd` and PROCEED. STOP-and-report ONLY if an ahead commit's content is NOT on main (undrained work — resetting would DESTROY it), or the worktree holds uncommitted edits you did not make. Then `npm install --no-audit --no-fund`; `npm run build` green before touching anything.
 
-> ℹ️ Authoring-time note (s1185 — **verify it yourself anyway**): `lane/m3`'s tip `2b8af246` was merged to main as `0167f958` this fire, so it is a safe dupe by content. The lane holds nothing unique.
+> ℹ️ Authoring-time note (s1185 — **verify it yourself anyway**): `lane/m3`'s tip `52da3fec` was merged to main as `24c44ebe` this fire, so it is a safe dupe by content. The lane holds nothing unique.
 
 ## Why — three findings from this slice's own drain, all measured, none inherited
 
-This task exists because `reviews/gazette-art-wiring.md` (s1185, drain of `0167f958`) recorded three defects **in the guards**, not in the shipped behaviour. The feature is correct and shipped; what is fragile is our ability to notice when it stops being correct.
+This task exists because `reviews/gazette-art-wiring.md` (s1185, drain of `24c44ebe`) recorded three defects **in the guards**, not in the shipped behaviour. The feature is correct and shipped; what is fragile is our ability to notice when it stops being correct.
 
 **F-1185-2 — the spec proves the image is *referenced*, not that it *decoded*.**
 `e2e/gazette-art-wiring.spec.ts:111-112` asserts `toBeVisible()` and that `node.src` contains the class name. A 404 or a missing derived file still yields a **visible** `<img>` with a **matching** `src`, so the guard stays green while the player sees a broken image. This is not theoretical here: the byte-budget route means **the production URL is a `.webp` that does not exist in dev**, so the two environments no longer serve the same file, and only one of them is covered by the assertion's real meaning.

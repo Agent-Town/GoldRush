@@ -1,8 +1,8 @@
 # human-tape-true-reel-stamp — drain review (s2461, 2026-09-03)
 
 **Slice:** `human-tape-true-reel-stamp` (F-SLHP-2)
-**Branch / tip:** `lane/d` @ `1df336ff1` (runner commit), base `1e2ad54730c411cbfb65340ad2763120acc7638f`
-**Merge:** `16ed9b2227b36b9a3b23aae0f047ed28b8cdce18` · reconciliation `fc45ed6456a15e12e31e3d8b954efe7aff505665`
+**Branch / tip:** `lane/d` @ `07720d504` (runner commit), base `4f960c21a42dd34cfde6f22f17fdddf0bf1974f8`
+**Merge:** `f75ecb765618fcd9c7f001aa29901348e74c3d17` · reconciliation `3ec02adba55fc62712d9e00fc76e1d5159ababdd`
 **Gated in:** detached worktree `gate-s2461` (§3.0b custody — undecided content never entered main's tree)
 
 ## Verdict
@@ -20,7 +20,7 @@ original stamp across a resume**, so suspending and continuing a run does not si
 with a newer engine. Stamped standing-order tapes route to true replay and watch to their own event
 hash; unstamped legacy tapes keep working and fall back to the ordinary tape show, so nothing already
 on a player's shelf is invalidated. This closes **F-SLHP-2** — human standing-order tapes could not be
-watched since `ecc2a1a1b`.
+watched since `795c5c4a3`.
 
 ## Evidence
 
@@ -43,7 +43,7 @@ Transcript: `artifacts/human-tape-true-reel-stamp-gate.txt`.
 
 ## Merge classification
 
-Base `1e2ad547`. `lane-freeze-classify` read **HOLDS 5 paths**; `lane-absorbed-lines` then asked the
+Base `4f960c21`. `lane-freeze-classify` read **HOLDS 5 paths**; `lane-absorbed-lines` then asked the
 one-directional question on the three BOTH-MOVED paths and returned **NOT ABSORBED** on all three, so
 this was a genuine 3-way merge and not a false-ahead.
 

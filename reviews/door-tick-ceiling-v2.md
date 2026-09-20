@@ -1,7 +1,7 @@
 # Review — door-tick-ceiling-v2 (the two-site ceiling)
 
-**Slice:** `door-tick-ceiling-v2` · **branch:** `lane/c` · **tip:** `0add68c96` · **base:** `main` @ `36e2004b3`
-**Drained by:** s2280 fire, 2026-08-24 · **merged at:** `d8cae3c3bed0707fba400fe9b068a0d2e34b9e31` · **gate worktree:** detached `gate-s2280/` (§3.0b — undecided content never entered main's working tree)
+**Slice:** `door-tick-ceiling-v2` · **branch:** `lane/c` · **tip:** `15974d4cf` · **base:** `main` @ `183c14f2c`
+**Drained by:** s2280 fire, 2026-08-24 · **merged at:** `db65524de81d500acfff99f1fa7c6f3998c06545` · **gate worktree:** detached `gate-s2280/` (§3.0b — undecided content never entered main's working tree)
 
 ## VERDICT: MERGE
 
@@ -82,7 +82,7 @@ Re-computed from `assets/contracts/**` + `Balance.waves.waveInterval = 30` rathe
 
 ## Merge classification
 
-Base `36e2004b3`; three-way `--no-ff` merge of the gated commit `0add68c96` itself. **No conflicts.**
+Base `183c14f2c`; three-way `--no-ff` merge of the gated commit `15974d4cf` itself. **No conflicts.**
 
 | file | class |
 |---|---|
@@ -120,7 +120,7 @@ if (this.tick >= MAX_PLAYBOOK_TICKS) return this.truncate('max-ticks');
 
 `grep` for `new RunTapeRecorder` matches exactly one construction site, `src/game/Game.ts:7128` — i.e. this is the **browser** recorder, and `src/playbook/PlaybookSession.ts:148` carries the same flat cap. The master ordered that bound preserved ("leave the browser recorder's DoS bound intact"), so **the runner did exactly what it was told and this is not a defect in the slice.** It is recorded because it bounds the claim the cure can make:
 
-- **MEASURED:** the heat-5 winning tape carries `durationTicks: 22501` with `truncated: null` and `meta.buildId 4c5ca6609` — a shape `RunTapeRecorder` cannot emit past tick 18,000, so it came from the headless harness. The agent path is the one heat-5 exercised and the one this drain proves end-to-end.
+- **MEASURED:** the heat-5 winning tape carries `durationTicks: 22501` with `truncated: null` and `meta.buildId 22365118a` — a shape `RunTapeRecorder` cannot emit past tick 18,000, so it came from the headless harness. The agent path is the one heat-5 exercised and the one this drain proves end-to-end.
 - **BY CODE READING (not executed):** a browser rider whose night-shift run passes tick 18,000 gets `truncation = {reason:'max-ticks', atTick:18000}`. `validTapeTruncation` (`functions/api/standings.ts:1081`) *accepts* that shape, so the door admits it — but the assayer then replays only 18,000 ticks and cannot reproduce a wave-25 secure, so the row would be refused on outcome mismatch rather than on `invalid-duration`.
 
 So F-2276-1 is cured **for the harnesses that actually ride the county gauntlet**, and for a browser-played night-shift the refusal moves rather than disappears. This is worth the owner's attention precisely because it is the argument for desk option **(c)** (change the secure condition), which would close both paths at once; options (a) and (b) close only the agent path.
@@ -136,7 +136,7 @@ Two fires and one runner have now seen this red and each recorded it as "the blo
 - `node scripts/blocker-panel-closed-guard.mjs` on the live board: **PASS** (`panel rows 33 · closed-on-panel 0`), and the `test:blocker-panel` leg passes in 0.2 s.
 - What reds is `blocker-panel-closed-guard.test.mjs:40`, the arm whose own comment reads: *"REAL HISTORY … A guard that cannot red here is decoration."* It asserts `historical.status === 1` with offender `F-1030-2`; it now gets **status 0, zero offenders**.
 
-**Mechanism:** the fixture at `:16` is **half-frozen and half-live** by deliberate design — it pairs the BACKLOG *frozen* at `2e02098f` with the **current** `scripts/dashboard-gen.sh`, on the stated grounds that "a hand-written stub would test nothing." That is a defensible choice, and it is exactly what disarmed the arm: the live panel's row-selection rule has since drifted, so it now draws only **7 panel rows** from that historical ledger and `F-1030-2` is no longer among them. Nothing is wrong with the ledger or the guard — the *coupling* rotted.
+**Mechanism:** the fixture at `:16` is **half-frozen and half-live** by deliberate design — it pairs the BACKLOG *frozen* at `87649873` with the **current** `scripts/dashboard-gen.sh`, on the stated grounds that "a hand-written stub would test nothing." That is a defensible choice, and it is exactly what disarmed the arm: the live panel's row-selection rule has since drifted, so it now draws only **7 panel rows** from that historical ledger and `F-1030-2` is no longer among them. Nothing is wrong with the ledger or the guard — the *coupling* rotted.
 
 **Why it matters more than a red line:** `blocker-panel-closed-guard` is chained in `test:node-guards`, and its red path is now **proven unexercised**. It passes on the live board, and nothing demonstrates it can still fail. By the arm's own standard it is decoration until the arm is re-anchored — pin the panel script alongside the BACKLOG at the same commit, or re-point the fixture at a historical pair that the current rule still reds on.
 

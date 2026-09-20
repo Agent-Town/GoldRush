@@ -2,24 +2,24 @@
 
 **Slice:** enforce the two RULED agent verb rungs (`auto_pan` L2, `place_building` L3) at the tool surface
 **Branch:** `lane/e2-arsenal` · **Tip:** `5bcbfa00 runner(lane-c): lane-c-agent-rung-honest-gate-v2.md`
-**Base (merge-base with main):** `01be00d7`
+**Base (merge-base with main):** `3e46cdbd`
 **Reviewed:** s1294 fire, 2026-07-31 · **Run log:** `tasks/runs/20260731-155804-lane-c-lane-c-agent-rung-honest-gate-v2.md.log` (1.9 MB, 351,941 tokens)
 
 ## VERDICT: **HOLD — NOT MERGED.** Code accepted on its own evidence; blocked only on adjacent-battery attribution, which needs an idle box.
 
 > ⚠️ **SUPERSEDED s1454 (F-1454-2) — STALE VERDICT LINE, AND THE MOST INSTRUCTIVE ONE ON THE BOARD.**
-> The content was **already in main when this HOLD was written** — swept in at **`b37c1fc6ca`**
+> The content was **already in main when this HOLD was written** — swept in at **`3058fca5cb`**
 > (*"rehearsal round 2 launched (shipped pipeline, vein-hunter card)"*, 2026-07-31 16:59:12) by a
 > concurrent attended session's broad `git add`, **thirteen minutes before** the handoff that said main
 > was never modified. That is **F-1295-1**, now written into `scripts/fire.md` §3.0b as the custody law
 > (*never check foreign content into MAIN's tree to gate it — gate in a detached worktree*).
 > ✅ **The hold's own condition was then DISCHARGED, not waived:** s1295 ran the attribution the arms of
-> which no longer existed by re-deriving them as **PRE-sweep (`00e4c074` blobs) vs POST-sweep (`HEAD`)**,
+> which no longer existed by re-deriving them as **PRE-sweep (`00e4c074 (archive: pruned by the A3 rewrite)` blobs) vs POST-sweep (`HEAD`)**,
 > arm identity asserted by blob hash before every run, detached worktree, `--workers=1`, port 5241,
 > interleaved with round 2 order-reversed — **12 runs, all three suites EQUAL on both arms**
 > (`ap-standing-orders` 0/2 vs 0/2 · `ss-01-beats` 2/2 vs 2/2 · `trail-guide-beat-priority` 0/2 vs 0/2).
 > **F-1294-2 CLOSED; the slice is clean.** Leaf `agent-rung-honest-gate-v2` → `merged`,
-> `mergeHash b37c1fc6ca`, with the irregular provenance stated **on the leaf** rather than laundered
+> `mergeHash 3058fca5cb`, with the irregular provenance stated **on the leaf** rather than laundered
 > into a normal-looking drain. Verified IN-MAIN by ancestry s1454.
 > ⚖️ **Why this one matters most:** a HOLD verdict has no enforcement surface. This slice was
 > exonerated *afterwards* — had the control gone the other way, a defect would have shipped past a
@@ -37,14 +37,14 @@ handoff). The next fire re-runs one battery and merges.
 
 > ## ⛔ s1295 CORRECTION — THE SENTENCE ABOVE IS FALSE, AND NOT THROUGH ANY FAULT OF ITS REASONING (F-1295-1)
 >
-> **The slice has been on `main` since `b37c1fc6`, 2026-07-31T16:59:12+07:00 — thirteen minutes
+> **The slice has been on `main` since `3058fca5`, 2026-07-31T16:59:12+07:00 — thirteen minutes
 > before the handoff that says it was not.** All four paths are byte-identical to the lane on main
 > *right now*; verified by blob hash, not by diff:
 > `PermissionLadder.ts 9451c000` · `ToolSurface.ts eb31d683` · `m4-01 5b674014` · `m4-05 b1cca7d1`.
 >
 > **How.** s1294 checked the four paths out into main's working tree in order to gate them — correct
 > procedure. At 16:59, *while they sat there*, a **concurrent attended session** committed
-> `b37c1fc6 "rehearsal round 2 launched (shipped pipeline, vein-hunter card)"` with a broad `git add`
+> `3058fca5 "rehearsal round 2 launched (shipped pipeline, vein-hunter card)"` with a broad `git add`
 > that swept them up. Its stat is exactly the four slice paths plus one `BACKLOG.md` line; its
 > message mentions none of them.
 >
@@ -57,12 +57,12 @@ handoff). The next fire re-runs one battery and merges.
 > the pre-sweep ref**, which is why this review now records blob hashes instead of "clean".
 >
 > **Scope: bounded.** Every `main` commit from s1294's lock to now was audited for `src/`+`e2e/`
-> content (`logs/session-scratch/s1295/sweep-audit.mjs`); `b37c1fc6` is the **only** one carrying
+> content (`logs/session-scratch/s1295/sweep-audit.mjs`); `3058fca5` is the **only** one carrying
 > code. Nothing else was swept.
 >
 > **Status of the HOLD.** The verdict below stands as *unfinished business*, not as a description of
 > the tree: the code is on main, but its gate is incomplete and no `mergeHash` was ever recorded.
-> s1295 is running the F-1294-2 control the honest way — **PRE-sweep vs POST-sweep** (`00e4c074`
+> s1295 is running the F-1294-2 control the honest way — **PRE-sweep vs POST-sweep** (`00e4c074 (archive: pruned by the A3 rewrite)`
 > blobs vs `HEAD` blobs), in a **detached worktree**, because a concurrent writer is still
 > committing to main and dirtying main's tree is what caused this in the first place.
 > See §"s1295 — the F-1294-2 control, and what actually shipped" at the end of this file.
@@ -70,8 +70,8 @@ handoff). The next fire re-runs one battery and merges.
 ## What it does
 
 `decideToolPermission` previously hardcoded `requiredLevel: 1` for every side-effect tool
-(`if (!sideEffect || level > 0)`). The two rungs the owner RULED — `auto_pan` = 2 (`85bb1938`) and
-`place_building` = 3 (`12b0011e`) — were declared in `AGENT_ABILITIES` but **no mechanism read
+(`if (!sideEffect || level > 0)`). The two rungs the owner RULED — `auto_pan` = 2 (`21985788`) and
+`place_building` = 3 (`e4336ba8`) — were declared in `AGENT_ABILITIES` but **no mechanism read
 them**, so the ladder advertised rungs it did not enforce. This slice makes the gate rung-aware:
 
 - `PermissionLadder.ts` — `decideToolPermission(level, sideEffect, requiredLevel)`; the gate becomes
@@ -93,7 +93,7 @@ the default of 1, which is how canon's silence survives contact with the cure.
 
 ## Merge classification
 
-**Base `01be00d7`; main is 7 commits ahead of it. Verified per-path rather than accepted from the
+**Base `3e46cdbd`; main is 7 commits ahead of it. Verified per-path rather than accepted from the
 runner's report** (which claimed "no diff on the four task paths" — true, but a claim to check):
 
 | Path | main moved since base | lane moved | class |
@@ -210,7 +210,7 @@ The counter-evidence worth weighing next fire: the runner's own 72-test owner ba
 ### The arms were not the ones s1294 specified, and could not have been
 
 s1294's gate says *"both arms (clean `main` and the merged tree)"*. That pairing **no longer exists**:
-the slice was swept onto main by `b37c1fc6` before this fire started (F-1295-1), so "clean main" and
+the slice was swept onto main by `3058fca5` before this fire started (F-1295-1), so "clean main" and
 "the merged tree" are now the **same tree**. My first harness discovered this the honest way — it
 aborted with `ARM MISMATCH: wanted MERGED, tree is CONTROL`, because
 `git checkout lane/e2-arsenal -- <4 paths>` produced **zero** change.
@@ -219,7 +219,7 @@ The arms that answer the same question today are **PRE-sweep vs POST-sweep**:
 
 | Arm | `PermissionLadder.ts` blob | Meaning |
 |---|---|---|
-| `PRE` | `d6941842` (at `00e4c074`, `b37c1fc6^`) | the tree **without** the slice |
+| `PRE` | `d6941842` (at `00e4c074 (archive: pruned by the A3 rewrite)`, `3058fca5^`) | the tree **without** the slice |
 | `POST` | `9451c000` (at `main` HEAD) | the tree **with** the slice |
 
 Arm identity is asserted by **blob hash before every single run**, not by dirtiness — the check that
@@ -298,8 +298,8 @@ whole battery from six paired runs would be the same over-reach the hold existed
 ### Disposition
 
 The gate is satisfied, so the slice **stays on main** — but it must be recorded for what it is.
-It did not arrive by a drain, and no amount of after-the-fact green makes `b37c1fc6` a drain commit.
-The goal leaf therefore carries `mergeHash: b37c1fc6` with the irregular provenance stated on it
+It did not arrive by a drain, and no amount of after-the-fact green makes `3058fca5` a drain commit.
+The goal leaf therefore carries `mergeHash: 3058fca5` with the irregular provenance stated on it
 rather than laundered into a normal-looking merge, and the done-move is retired against that hash.
 
 ⚠️ **The one thing a future fire must not conclude from this file: "the sweep turned out fine, so

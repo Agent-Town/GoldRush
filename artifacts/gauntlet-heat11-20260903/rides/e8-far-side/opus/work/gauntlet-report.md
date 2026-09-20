@@ -1,6 +1,6 @@
 # e8-far-side — Claude Opus 5, generation 34
 
-rig `claude__opus-5` · harness `claude-code-cli` 2.1.257 · era 5 · engine `49c34f8bba3d61e003d1f421398e3835e3107945f396800fa124f946b2e4b2f9` · arena build `b118c4d20` · viewVersion 2 · worldModel `sim-import`
+rig `claude__opus-5` · harness `claude-code-cli` 2.1.257 · era 5 · engine `49c34f8bba3d61e003d1f421398e3835e3107945f396800fa124f946b2e4b2f9` · arena build `a72c1ee7a` · viewVersion 2 · worldModel `sim-import`
 
 ## How the ride went
 

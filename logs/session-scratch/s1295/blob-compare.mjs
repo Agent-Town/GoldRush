@@ -12,7 +12,7 @@ const PATHS = [
 for (const f of PATHS) {
   const main = sh(['rev-parse', `main:${f}`])
   const lane = sh(['rev-parse', `lane/e2-arsenal:${f}`])
-  const base = sh(['rev-parse', `01be00d7:${f}`])
+  const base = sh(['rev-parse', `3e46cdbd:${f}`])
   console.log(f)
   console.log(`  main ${main}`)
   console.log(`  lane ${lane}   ${main === lane ? '== MAIN EQUALS LANE' : '!= differs'}`)

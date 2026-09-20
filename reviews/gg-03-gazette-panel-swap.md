@@ -2,7 +2,7 @@
 
 **Slice:** GG-03, the engravings meet the newsprint
 **Branch/tip:** `lane/perf` @ `06eeac68` (runner: `lane-d`, done-move `20260729-101734-lane-gg-03-gazette-panel-swap.md`)
-**Base:** `4f51bdbf` · **Salvage ref:** `archive/lane-perf-gg03-06eeac68` (pinned this fire — a lane pre-flight `reset --hard` would otherwise destroy it, Mistake #2)
+**Base:** `43ec76d9` · **Salvage ref:** `archive/lane-perf-gg03-06eeac68` (pinned this fire — a lane pre-flight `reset --hard` would otherwise destroy it, Mistake #2)
 **Reviewed:** s1208, 2026-07-29
 **§3.0 `drain-block-check`:** ✅ CLEAR (`gg-03-gazette-panel-swap`, status `queued`) — ran FIRST, before classification.
 
@@ -10,8 +10,8 @@
 
 > ⚠️ **SUPERSEDED s1455 (F-1455-1) — THE BLOCK WAS RIGHT AND IT HAS BEEN DISCHARGED; THE PANEL SWAP IS LIVE ON MAIN.**
 > The corrective this review's own title promised (*"REJECTED (corrective queued)"*) landed as the **GG-03b →
-> GG-03c** ladder: `5563bfc4` *"drain: GG-03c herald art dev-path weight — 9,443,241 B -> 962,188 B on a plain
-> boot"*, whose **code commit is `b5be7ab3`**. ⚠️ Read that commit by `--stat`, never by its subject line: it is
+> GG-03c** ladder: `5604776b` *"drain: GG-03c herald art dev-path weight — 9,443,241 B -> 962,188 B on a plain
+> boot"*, whose **code commit is `15e00755`**. ⚠️ Read that commit by `--stat`, never by its subject line: it is
 > headlined *"fix: goals.json schema — two violations turned test:node-guards red on main (F-1211-2)"* and in fact
 > carries the six `assets/processed/gazette-panel-*.webp` plates, the herald engravings and the dev-path report —
 > a commit headline names intent, `--stat` names content.
@@ -99,14 +99,14 @@ This also means the shipped game is very likely fine — it is the dev-served fl
 At 11:11 an attended session authored `tasks/lane-gazette-art-swap.md` (GG-03, "wire each panel's engraving …
 + the masthead vignette", seven images) and queued it to **lane-a**, ~54 min after this slice had already finished
 the six-panel half at 10:17. The lane-a run **STOPPED lawfully at its own pre-flight** — `lane/m3 @ e834860a`
-lacks the `d2fc1b06` + `ee54c438` ancestors — so it changed nothing and there is no collision to untangle
+lacks the `97c6a257` + `8dff01fb` ancestors — so it changed nothing and there is no collision to untangle
 (`tasks/runs/20260729-111057-lane-a-lane-gazette-art-swap.md.log`). Recorded because the two masters overlap and
 the next fire should not treat them as independent work. The attended master's **masthead vignette** is genuine
 new scope this slice does not cover.
 
 ## Merge classification (performed, then reverted)
 
-Base `4f51bdbf` is an ancestor of main. `git diff --stat 4f51bdbf main` over all four code files is **empty** —
+Base `43ec76d9` is an ancestor of main. `git diff --stat 43ec76d9 main` over all four code files is **empty** —
 main never moved them — so no 3-way graft was needed and the merge was a clean path-scoped checkout. The
 two-dot `main..lane/perf` diff *looks* alarming (7,214-line `goals.json` churn, deletions of every s1207 file)
 but that is pure stale-base artifact, not lane content: the true lane delta is **9 files, +29/−3**. Verified by

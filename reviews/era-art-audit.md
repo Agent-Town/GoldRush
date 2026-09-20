@@ -63,7 +63,7 @@ Bundle: `specs/epoch-saga/e7-signal-bundle.md:7-13`. The ten-file saga library s
 
 ## E8 — The Orbital Frontier
 
-Bundle: `specs/epoch-saga/e8-orbital-bundle.md:7-13`. `plate-e8-bld-set.png`, the enemy roster plate, and townsfolk plate are conditioning references (`assets/LEDGER.md:174-177`), not final sheets. The landed Sol branch `sol/e8-orbital-era-props@2f623b23` does close three exact prop atoms through `assets/pilots/plaza-props-3d/era-props.e8.json`.
+Bundle: `specs/epoch-saga/e8-orbital-bundle.md:7-13`. `plate-e8-bld-set.png`, the enemy roster plate, and townsfolk plate are conditioning references (`assets/LEDGER.md:174-177`), not final sheets. The landed Sol branch `sol/e8-orbital-era-props@63f6bbf4` does close three exact prop atoms through `assets/pilots/plaza-props-3d/era-props.e8.json`.
 
 | §A | Bundle atom(s) | Status | Evidence / exact debt |
 | --- | --- | --- | --- |
@@ -80,7 +80,7 @@ Bundle: `specs/epoch-saga/e8-orbital-bundle.md:7-13`. `plate-e8-bld-set.png`, th
 
 ## E9 — The Red Fields
 
-Bundle: `specs/epoch-saga/e9-redfields-bundle.md:7-13`. The E9 reference run was interrupted and explicitly left Dome Commons, Seed Vault, and townsfolk plates absent (`assets/LEDGER.md:185-187`, summary `assets/LEDGER.md:262`). `sol/e9-redfields-era-props@dda2e3ed` closes the progression props named below.
+Bundle: `specs/epoch-saga/e9-redfields-bundle.md:7-13`. The E9 reference run was interrupted and explicitly left Dome Commons, Seed Vault, and townsfolk plates absent (`assets/LEDGER.md:185-187`, summary `assets/LEDGER.md:262`). `sol/e9-redfields-era-props@b49ea527` closes the progression props named below.
 
 | §A | Bundle atom(s) | Status | Evidence / exact debt |
 | --- | --- | --- | --- |
@@ -99,7 +99,7 @@ Bundle: `specs/epoch-saga/e9-redfields-bundle.md:7-13`. The E9 reference run was
 
 ## E10 — The Deep Sky
 
-Bundle: `specs/epoch-saga/e10-deepsky-bundle.md:7-13`. The reference batch covers every major look (`assets/LEDGER.md:268`). Unlike earlier eras, several Ark requirements also have production 3D fulfillment. `sol/e10-ark-era-props@f2425759` closes the remaining civic fixtures and banks engine states.
+Bundle: `specs/epoch-saga/e10-deepsky-bundle.md:7-13`. The reference batch covers every major look (`assets/LEDGER.md:268`). Unlike earlier eras, several Ark requirements also have production 3D fulfillment. `sol/e10-ark-era-props@7e26214c` closes the remaining civic fixtures and banks engine states.
 
 | §A | Bundle atom(s) | Status | Evidence / exact debt |
 | --- | --- | --- | --- |

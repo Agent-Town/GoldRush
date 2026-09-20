@@ -1,9 +1,9 @@
 # Review — RF-03b bug-office desk (THE COMPLAINTS DESK)
 
 - **Slice:** RF-03b — the assay-office door opens the Complaints Desk (testing-era; crafting retreats behind `?debug`)
-- **Branch/tip:** lane/perf @85e9d7e6 (`feat: open the complaints desk at the Assay Office`)
-- **Base:** cacd9ab1 (current main; contains RF-03a `functions/api/bug-report.ts` — the SEQUENCED dependency, satisfied)
-- **Merge commit:** 49e5e3fb (`--no-ff`, clean, all lane-touched-only)
+- **Branch/tip:** lane/perf @cb5d0cff (`feat: open the complaints desk at the Assay Office`)
+- **Base:** 2562d905 (current main; contains RF-03a `functions/api/bug-report.ts` — the SEQUENCED dependency, satisfied)
+- **Merge commit:** 7e38aa2e (`--no-ff`, clean, all lane-touched-only)
 - **Drain:** s902 (attempt-3 — the first two false-doned on a STALE lane; refresh-lane-d.req refreshed lane-d before this real run)
 
 ## Verdict
@@ -23,7 +23,7 @@ In normal play the Assay Office door now opens THE COMPLAINTS DESK instead of th
 | canon | clean — frontier-office speak (the clerk / the county / THE BOUNTY / the trail); no firearms; NO token/price talk (bounty = a non-monetary prize notice) |
 
 ## Merge classification
-Base cacd9ab1. main advanced only by the s902 STATUS lock commit (b07a6678, STATUS.md only) since the base → every desk file is **LANE-TOUCHED-only** → clean `--no-ff`, zero conflicts.
+Base 2562d905. main advanced only by the s902 STATUS lock commit (ebaa0e2f, STATUS.md only) since the base → every desk file is **LANE-TOUCHED-only** → clean `--no-ff`, zero conflicts.
 | File | Class |
 |------|-------|
 | `src/ui/ComplaintDesk.ts` | NEW (242) |

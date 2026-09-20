@@ -1,6 +1,6 @@
 # s1268 — the worker-count sweep, and the cap underneath it
 
-Fire s1268, 2026-07-30, main at `b97f515c`. Subject: `e2e/gazette-welcome.spec.ts:88`, the
+Fire s1268, 2026-07-30, main at `b1f1f515`. Subject: `e2e/gazette-welcome.spec.ts:88`, the
 unmodified shipped drift assertion. Prescribed by `logs/session-scratch/s1267/RESULTS.md` §4.
 Every number below was executed this fire; raw logs are `.txt` (tracked) beside this file,
 because `.gitignore:7` swallows `*.log` and that is F-1267-3.

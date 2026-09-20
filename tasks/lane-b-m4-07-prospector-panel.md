@@ -2,7 +2,7 @@
 
 # Task M4-07: the Prospector Panel — how do I use my robot? (LANE-B, branch lane/m4, commit prefix "feat:")
 
-**FIRE-AUTHORED s109 (attended review welcome)** — from the ratified spec-lite `specs/m4-agent-ux/README.md` (owner's mid-playtest questions: "how do I interact with it? How do I change the permissions? What are the buttons?"). Gate satisfied: prospector-presence merged to main (`7e37c61`) — the chip/HUD surface this builds on is live.
+**FIRE-AUTHORED s109 (attended review welcome)** — from the ratified spec-lite `specs/m4-agent-ux/README.md` (owner's mid-playtest questions: "how do I interact with it? How do I change the permissions? What are the buttons?"). Gate satisfied: prospector-presence merged to main (`1fae40a`) — the chip/HUD surface this builds on is live.
 
 You are Codex, implementer for Gold Rush, running natively on Robin's Mac in worktrees/lane-b.
 
@@ -14,7 +14,7 @@ You are Codex, implementer for Gold Rush, running natively on Robin's Mac in wor
 - `src/systems/UiBridge.ts` (the snapshot shape the HUD renders from) + `docs/GOLD_RUSH_BRIEF.md` §6.2/§6.3 (Founders Plot ceiling-vs-consent) + §5 (ledger voice) + §3.2 (agent-as-partner — never commanded like a tool in UI copy).
 
 ## Pre-flight (LANE-SAFETY, runner-auto-commit aware)
-The runner auto-commits lane output, so the lane branch being ahead of main is NORMAL. For each ahead commit: if its content is already merged to main (verify by diffing its product files vs main), it is a SAFE DUPE. **Known: `de3cd6d` "fix: make prospector present and usable" is a VERIFIED loss-free content-dupe** — its core product (`src/entities/XpMote.ts`, `src/agent/Embodiment.ts`) is byte-identical to main via `7e37c61`; its other diffs are stale pre-images of files main has evolved past (task-037/sci-01/SpriteAnimator). So: `git checkout -B lane/m4 main && git clean -fd` and PROCEED. STOP only if the worktree holds uncommitted edits you did not make, or an ahead commit's PRODUCT is not on main. Then `npm install --no-audit --no-fund`; `npm run build` green.
+The runner auto-commits lane output, so the lane branch being ahead of main is NORMAL. For each ahead commit: if its content is already merged to main (verify by diffing its product files vs main), it is a SAFE DUPE. **Known: `de3cd6d` "fix: make prospector present and usable" is a VERIFIED loss-free content-dupe** — its core product (`src/entities/XpMote.ts`, `src/agent/Embodiment.ts`) is byte-identical to main via `1fae40a`; its other diffs are stale pre-images of files main has evolved past (task-037/sci-01/SpriteAnimator). So: `git checkout -B lane/m4 main && git clean -fd` and PROCEED. STOP only if the worktree holds uncommitted edits you did not make, or an ahead commit's PRODUCT is not on main. Then `npm install --no-audit --no-fund`; `npm run build` green.
 
 ## Design law (do not violate — brief §6.2/§6.3)
 - **Meta sets the CEILING**: `agentAutonomyLevel` (victory-fed, via `readAgentPermissionLevel`) is the hard cap. The panel NEVER raises it — earned, never bought mid-run.

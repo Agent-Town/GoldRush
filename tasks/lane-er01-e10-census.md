@@ -7,11 +7,11 @@ ROLE: implementer on lane-d. WORKDIR: worktrees/lane-d (branch lane/d). Commit p
 PRE-FLIGHT (LANE-SAFETY INVARIANT): `git branch --show-current` = `lane/d`; any dirty tracked blob not reachable in git → STOP and report. `git checkout -B lane/d origin/main` ONLY when clean. SAFE-DUPE: `ls docs/bench/e10-readiness-census.md` — exists → STOP and report.
 
 ## WHY (owner directives, verbatim)
-2026-08-05: "Maybe agents playing the contracts could surface issues already?" → "ok, lets go" → same evening: "Can you continue with more epochs?" — the census pattern generalizes per epoch; E2's ran at `96d40988` and its verdict format + probes are YOUR TEMPLATE (read it first). The spec is `specs/e2-readiness/README.md` (RATIFIED-BY-DIRECTIVE): agents own the mechanical layer so the owner's Steamworks first-ride is one evening of judgment, not a marathon of bug-hunting. ER-00's substrate is CONFIRMED ON MAIN: cross-engine determinism cured (`eaefdb24`, `scalePerWave` at `src/systems/WaveSystem.ts:74`) and all five E1 drivers live (`src/sim/HeadlessContractSim.ts:35` — the pattern you extend).
+2026-08-05: "Maybe agents playing the contracts could surface issues already?" → "ok, lets go" → same evening: "Can you continue with more epochs?" — the census pattern generalizes per epoch; E2's ran at `3b7abe4e` and its verdict format + probes are YOUR TEMPLATE (read it first). The spec is `specs/e2-readiness/README.md` (RATIFIED-BY-DIRECTIVE): agents own the mechanical layer so the owner's Steamworks first-ride is one evening of judgment, not a marathon of bug-hunting. ER-00's substrate is CONFIRMED ON MAIN: cross-engine determinism cured (`a05171ce`, `scalePerWave` at `src/systems/WaveSystem.ts:74`) and all five E1 drivers live (`src/sim/HeadlessContractSim.ts:35` — the pattern you extend).
 
 ## READ-FIRST
 1. `specs/e2-readiness/README.md` — ER-01's contract: boots clean, verbs respond per the mechanics manifest, engineDependencies declared, sim-only completability at trail.
-2. `src/sim/HeadlessContractSim.ts` — SUPPORTED_CONTRACTS and how the five E1 drivers admit a contract (f1412-1's twin-banks landing `2c22b2ab` and f1414-1's baron landing `1a4831df` are the two cleanest reference diffs — `git show` them).
+2. `src/sim/HeadlessContractSim.ts` — SUPPORTED_CONTRACTS and how the five E1 drivers admit a contract (f1412-1's twin-banks landing `f57bca04` and f1414-1's baron landing `653c7fef` are the two cleanest reference diffs — `git show` them).
 3. `assets/contracts/epoch-10-deepsky/contracts.json` — the E2 board contracts this census covers (training/drill-class maps excluded per spec default 1).
 4. `docs/bench/agent-playability-census.md` — the E1 census's table format and verdict vocabulary; ER-01 continues it, not reinvents it.
 5. `specs/agent-play/README.md` §AP-11 — the mechanics manifest: a verb the manifest can't express is a FINDING ("reject-don't-stretch"), never a stretch.
@@ -34,7 +34,7 @@ tsc clean · `npm run build` green · own spec green both projects · `gr-sim.te
 
 READY-FOR-GATES. Report: the census table verbatim, findings count, which reference diff patterns you reused.
 
-## ERA-SOCKET LAW (learned from E2, `96d40988`)
+## ERA-SOCKET LAW (learned from E2, `3b7abe4e`)
 An era's signature mechanic that only the browser runs is NOT yours to socket — it is a DATA-GAP row citing the missing consumer (E2's pressure precedent: F-ER01-1/-3 refused admission; the socket became its own attended-authored master, `lane-e2-pressure-socket`). If epoch-3's contracts gate on a voltage-class system `HeadlessContractSim` lacks, your census REFUSES those contracts with the same shape: name the system, the manifest hole, and the socket the fix master needs. Reject-don't-stretch.
 
 ## PARALLEL-CENSUS DRAIN NOTE (owner throughput call, 2026-08-05: "I think we can handle a lot of throughput")

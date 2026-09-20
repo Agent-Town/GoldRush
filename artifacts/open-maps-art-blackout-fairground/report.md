@@ -1,7 +1,7 @@
 # open-maps-art-blackout-fairground — Blackout Ridge re-lit, the Fairground wheel measured and held
 
 Task: `tasks/open-maps-art-blackout-fairground.md` · branch `art/open-maps-art-blackout-fairground`
-cut from main `ba5ffb6a2` · scratch worktree · 2026-09-18 · Blender 5.1.2, Node 26.4.0, Playwright 1.61.1.
+cut from main `133f80804` · scratch worktree · 2026-09-18 · Blender 5.1.2, Node 26.4.0, Playwright 1.61.1.
 Server for every browser measurement: this worktree's own `npx vite --port 5460 --strictPort`.
 
 ## Verdict in one paragraph
@@ -77,8 +77,8 @@ used to carry for era 3.
 atlas from the recovered palette and compares:
 
 ```
-blackout-ridge  reproduced_bytes=True  pixel_max_delta=0.0   (palette V1, f063fa403)
-fairground      reproduced_bytes=True  pixel_max_delta=0.0   (palette V2, 7b930acc1)
+blackout-ridge  reproduced_bytes=True  pixel_max_delta=0.0   (palette V1, 35686b8d0)
+fairground      reproduced_bytes=True  pixel_max_delta=0.0   (palette V2, af2ea0e4f)
 ```
 
 Both shipped atlases regenerate **byte-for-byte**. That is what pins the root cause: the two packs
@@ -121,7 +121,7 @@ keeps one material and one texture.
 also warns the snapshot is 37 days stale and that "membership is never exoneration (F-1444-2)". So a
 control was run: the pack was reverted with `git checkout --`, the server restarted on the pristine
 tree, and the same five titles re-run on both projects. Result: **the same 9 failures, same specs,
-same line numbers, same projects.** They are pre-existing on `ba5ffb6a2`. The pack was then
+same line numbers, same projects.** They are pre-existing on `133f80804`. The pack was then
 re-applied and re-verified against the contract hashes (`REAPPLIED-AND-CONSISTENT`).
 
 The headline failure is `terrain3d-registry.spec.ts:217` — `data-terrain3d-pilot-triangles` 51,200
@@ -183,8 +183,8 @@ src change — out of firewall, and it should be decided against the reference r
 
 **F-OMA-5 — the E3 pack recipes are no longer in the tracked builder.** `PACKS["blackout-ridge"]`,
 `PACKS["fairground"]`, their `SPECS` rows, `E3_ROLE_COLORS` and the `era == 3` branch of
-`make_atlas`'s colour ladder all existed at `f063fa403`/`7b930acc1` and are absent from
-`assets/pilots/map-rebuild-spike/build_landmark_packs.py` on main — already absent at `883a3521e^`,
+`make_atlas`'s colour ladder all existed at `35686b8d0`/`af2ea0e4f` and are absent from
+`assets/pilots/map-rebuild-spike/build_landmark_packs.py` on main — already absent at `7c2744e5a^`,
 so Astra's campaign commit is not the remover. Era 3 therefore falls through to the default
 near-black proxy palette today: **anyone who re-runs the tracked builder on these two packs will get
 a darker atlas than what shipped.** `rebuild_pack.py` documents and pins the recovered values;

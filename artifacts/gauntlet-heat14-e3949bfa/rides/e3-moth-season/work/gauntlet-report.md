@@ -1,6 +1,6 @@
 # e3-moth-season — heat 14, era 6 ("the Re-surveyed Claims") — claude-opus-5, generation 104
 
-Rig `claude__opus-5` · Claude Code CLI 2.1.272 · engine `540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068`, build `e3949bfad` · seed `e3-moth-season-01`, trail · worldModel `sim-import`.
+Rig `claude__opus-5` · Claude Code CLI 2.1.272 · engine `540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068`, build `6075db901` · seed `e3-moth-season-01`, trail · worldModel `sim-import`.
 
 ## Pre-ride reading (four minutes, and it was the whole heat)
 

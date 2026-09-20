@@ -10,7 +10,7 @@ Role: you are the lane-b runner. Workdir: `worktrees/lane-b` (branch `lane/m4`).
 - `assets/contracts/epoch-1-frontier/contracts.json` — the `e1-night-shift` entry (`briefing.goals`, `briefing.rules`, `twist`, `tileParams.prePlacedBuildables`).
 - `assets/contracts/bench-seeds.json` — night-shift's three frozen seeds already exist. **Do not author seeds.**
 - `scripts/gr-sim.mjs` + `scripts/gr-sim.test.mjs` — the CLI and its node test.
-- `reviews/ap-07-the-claim-pin-lift.md` — the predecessor drain (merge `38b20154`). Its firewall precedent is binding here (§Firewall).
+- `reviews/ap-07-the-claim-pin-lift.md` — the predecessor drain (merge `f05fd161`). Its firewall precedent is binding here (§Firewall).
 - `specs/agent-play/README.md` — the AP-07 slice. Read its `GATES:` line.
 
 ## Pre-flight (LANE-SAFETY, runner-auto-commit aware)
@@ -37,7 +37,7 @@ Night-shift's goal is `briefing.goals[0]` = *"Survive to DAWN at wave 25."* — 
 
 ➡️ **So a bare pin-lift would ship the F-1314-1 defect one layer up: the agent is briefed about seven objects, manifested seven objects, and dropped into a world containing none of them.** That is a scoring lie of exactly the kind the twin-banks reservation exists to prevent — and unlike twin-banks it needs no invented mechanic, because `Game.ts::placeContractFixtures()` is a five-line reference implementation that already does it correctly.
 
-ⓘ **Two ledger corrections this task rests on, both re-verified at source s1319** (do not re-derive them, but do not be surprised by them either): F-1313-1 claimed *"`e1-twin-banks` has zero bench seeds anywhere"* — **FALSE**, `assets/contracts/bench-seeds.json` has carried three seeds for every E1 contract since `af226e93` (2026-07-29), guarded by `scripts/bench-seeds.test.mjs`. F-1314-5 re-ratified that error. The word that failed was *anywhere*: there are **two** seed artifacts (the frozen bench set, and `env/goldrush-verifiers/goldrush/data/eval_dataset.jsonl`), and only the second one lacks night-shift rows.
+ⓘ **Two ledger corrections this task rests on, both re-verified at source s1319** (do not re-derive them, but do not be surprised by them either): F-1313-1 claimed *"`e1-twin-banks` has zero bench seeds anywhere"* — **FALSE**, `assets/contracts/bench-seeds.json` has carried three seeds for every E1 contract since `5c151ef2` (2026-07-29), guarded by `scripts/bench-seeds.test.mjs`. F-1314-5 re-ratified that error. The word that failed was *anywhere*: there are **two** seed artifacts (the frozen bench set, and `env/goldrush-verifiers/goldrush/data/eval_dataset.jsonl`), and only the second one lacks night-shift rows.
 
 ## Scope
 

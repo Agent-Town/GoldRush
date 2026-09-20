@@ -1,6 +1,6 @@
 # Review: youngsters-rechain-batch — the two youngsters descend from the children the game ships (scratch worktree, Claude Opus 5 implementer, attended drain 2026-09-07)
 
-**Slice/branch/tip:** `youngsters-rechain-batch` · `art/youngsters-rechain` · commits `ede49d0de`, `6fc9edabc` on base `503d7f283` · merged to main as `9bbece8cf`, made and gated in the slice's own worktree detached at main and landed with `git merge --ff-only`.
+**Slice/branch/tip:** `youngsters-rechain-batch` · `art/youngsters-rechain` · commits `3fd279546`, `caed4a0ff` on base `503d7f283 (archive: pruned by the A3 rewrite)` · merged to main as `9bbece8cf`, made and gated in the slice's own worktree detached at main and landed with `git merge --ff-only`.
 **Verdict:** MERGED. Owner A12 option (b) done: Higgsfield batch 4 re-prompted the two E2 youngsters against the shipped E1 portraits by upload id with the sexes as the art has them (A the boy with the shiny rock, B the girl with the slate of sums; the batch-2 pair had been minted with no reference and the sexes swapped, F-AGE2-1), then chained E4 from E2 and A's E8 from E4; five plates processed with the row-60 recipe (proved byte-identical on three shipped plates first) and registered as `youngster-a-e2`, `youngster-b-e2`, `youngster-a-e4`, `youngster-b-e4`, `youngster-a-e8` (93 speakers), each with no beat on row 74's precedent (THE CLERK LINE is A's future consumer). Eyes-on accepted all five against the E1 children at 384 px, the CSS-derived card crop and 120 px (the same flat cap, curls, freckles and smile on the boy; the same hat, braids and neckerchief on the girl); the old withheld raws stay on disk.
 
 ## Evidence
@@ -19,7 +19,7 @@
 Screenshots: `reviews/shots-youngsters-rechain/` (the repair sheet: E1 children, the withheld batch-2 pair, the new plates; the plain-boot cards). Tooling retained: `artifacts/youngsters-rechain/{plate-tool,contact,card,faces}.mjs`.
 
 ## Merge classification
-Base `503d7f283`; main moved by the A11 budget, the rulings and fire commits; no overlap but `tasks/BACKLOG.md` (merged cleanly). Five plates, the LEDGER row, `speakers.ts`, the halo denominator, the screenshots and tooling: LANE-TOUCHED / NEW. Attended additions: the pin, this review, the ledger rows, the goal flip.
+Base `503d7f283 (archive: pruned by the A3 rewrite)`; main moved by the A11 budget, the rulings and fire commits; no overlap but `tasks/BACKLOG.md` (merged cleanly). Five plates, the LEDGER row, `speakers.ts`, the halo denominator, the screenshots and tooling: LANE-TOUCHED / NEW. Attended additions: the pin, this review, the ledger rows, the goal flip.
 
 ## Findings
 - **F-YR-1 (OWNER'S DESK A17):** the youngsters have names in the town, Pip (`townsfolk.ts:156`) and Juniper (`:176`), and the lore uses them; the story cards say "Youngster A" / "Youngster B" as the shipped E1 entries do (the card takes the role where the town uses the name, the clerk's convention). One word puts the names on the cards.

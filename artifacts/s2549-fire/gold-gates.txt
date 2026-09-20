@@ -2454,9 +2454,9 @@ quantize: Skipping TEXCOORD_0; out of [0,1] range.
 
 
 ===== diff guards =====
-$ node scripts/run-guards.mjs --changed-since 5e20fa91f7bbcd433061cbf1b3c4ed4240498dc4
+$ node scripts/run-guards.mjs --changed-since 86d9a9f2e642e958b9d9befe87023efa1166db54
 rc=1 902.6s
-run-guards: 2 file(s) changed since 5e20fa91f7bbcd433061cbf1b3c4ed4240498dc4
+run-guards: 2 file(s) changed since 86d9a9f2e642e958b9d9befe87023efa1166db54
   base gate: test:node-guards, test:power-budget, test:task-guards, test:citations, test:gate-callers
   (no path rule matched -- base gate only)
 

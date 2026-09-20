@@ -5,7 +5,7 @@ import fs from 'node:fs';
 import crypto from 'node:crypto';
 import { execSync, spawnSync } from 'node:child_process';
 
-const BASE = '625831a875e3707695d734fdf06a2a26df5c512f';
+const BASE = '6bf3c39d72af6856106bc26056ce2988871cd8ec';
 const FILES = ['src/systems/BuildSystem.ts', 'src/game/Balance.ts', 'e2e/bt-01-tiers.spec.ts'];
 const sha = (p) => crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex');
 

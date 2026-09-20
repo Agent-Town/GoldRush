@@ -15,7 +15,7 @@ mutation control killed.
 ### (a) ✓ CONFIRMED at source and at runtime: the `.toBe(true)` polls are redundant
 
 `BuildSystem`'s `heroPosition` is not a copy — it is `Game.actionActorPosition` itself, passed by
-reference at `Game.ts:1211`. F-1153-1's cure (`6824ca94`) made `__GR_TEST__.teleport()` call
+reference at `Game.ts:1211`. F-1153-1's cure (`1db114dc`) made `__GR_TEST__.teleport()` call
 `updateActionActorPosition()` synchronously, so that vector is fresh the instant teleport returns.
 `confirm()` then **recomputes** validity from it (`BuildSystem.ts:902`, `this.valid =
 this.computeValid()`) rather than trusting the cache. So `confirmBuild()` no longer needs a tick.
@@ -95,14 +95,14 @@ asserted the story beat reads **"The survey's done."**. It has not said that sin
 
 | commit | when | what |
 |---|---|---|
-| `734f269e` | 07-08 **08:45** | "fix: make stamp site read as surveyed claim" — wrote the expectation |
-| `e3019343` | 07-08 **17:47** | "story: E1 beat table (ss-02)" — re-authored all 21 beats, giving `stamp-site-found` the lines `['Fund the first stage here.', "The Steamworks wants a founder's gold."]` (`src/story/beats.ts:173`) |
+| `ffcf2c8d` | 07-08 **08:45** | "fix: make stamp site read as surveyed claim" — wrote the expectation |
+| `1511fcb2` | 07-08 **17:47** | "story: E1 beat table (ss-02)" — re-authored all 21 beats, giving `stamp-site-found` the lines `['Fund the first stage here.', "The Steamworks wants a founder's gold."]` (`src/story/beats.ts:173`) |
 
 Nine hours apart, and the expectation was never updated — **red for 20 days**.
 
 It is a stale *test*, not a regression: `:200` asserts `data-beat-id === 'stamp-site-found'` and
 passes (the right beat fires), `:183` asserts the plaque still contains 'surveyed for the town' and
-passes (734f269e's substance is intact), and `e2e/ss-02-beats.spec.ts:375` independently asserts the
+passes (ffcf2c8d's substance is intact), and `e2e/ss-02-beats.spec.ts:375` independently asserts the
 shipped copy and is green. Only the one string literal was stale.
 
 **Fix:** the expectation now reads the shipped, reviewed copy. The assertion's intent — both

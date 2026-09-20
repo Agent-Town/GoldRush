@@ -13,7 +13,7 @@ const banner =
   '⛔ **CURED — DO NOT AUTHOR FROM THIS ROW (F-1557-1, verified s1557 by FILE-PROBE, never by message-grep — Mistake #16): ' +
   'the `e9-dome-basin` era-socket this row declares FIRE-AUTHORABLE is SHIPPED.** ' +
   '`src/sim/E9CanalSocket.ts:52` returns `new E9CanalSocket(contract, economy, enemies)` for `contract.id === \'e9-dome-basin\'`, ' +
-  'and goal leaf `e9-dome-basin-socket` reads `status:"merged"` at `716f3e2989`. ' +
+  'and goal leaf `e9-dome-basin-socket` reads `status:"merged"` at `79b6da0f24`. ' +
   'ⓘ **This row was structurally INVISIBLE to the s1556 audit that catalogued exactly this class**, because that audit filtered on ' +
   '`FIRE-AUTHORABLE` + `GATE: none` and this row\'s GATE is a prose conditional. ' +
   '⚠️ **And it would have read OPEN on BOTH of its halves**: the substantive half said dome-basin *is* authorable, and the deferring half — ' +
@@ -36,7 +36,7 @@ const row =
   '"count the CONJUNCTS / read a CLOSING gate\'s disjuncts" class). ' +
   '⚠️ **MATERIALITY PROVED, not asserted — the missed set contains a real member of the very class s1556 was cataloguing: `F-1495-1` (L199) ' +
   'advertises the `e9-dome-basin` era-socket as FIRE-AUTHORABLE, and it is SHIPPED** (`src/sim/E9CanalSocket.ts:52`; leaf `e9-dome-basin-socket` ' +
-  '`merged` `716f3e2989`) — so the true tally was never *"3 of 4 cured"*, and the miss was invisible by construction rather than by carelessness. ' +
+  '`merged` `79b6da0f24`) — so the true tally was never *"3 of 4 cured"*, and the miss was invisible by construction rather than by carelessness. ' +
   '**Bannered in this commit.** ' +
   '🟡 **ALSO MISSED, AND THIS ONE IS GENUINELY OPEN: `F-1285-2` (L1084)** — a drift red at `--workers=1` on `e2e/m4-06-embodiment.spec.ts:410` ' +
   '(0.4846 vs `< 0.45`), red in the fire shell and green in the lane shell, i.e. an INSTRUMENT finding that would amend §3.1 ' +

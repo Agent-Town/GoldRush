@@ -17,10 +17,10 @@ cd worktrees/lane-c
 git fetch origin 2>/dev/null || true
 git status --short                     # MUST be empty
 git log main..HEAD --oneline           # MUST be empty
-git merge-base --is-ancestor d640dc31 HEAD && echo SUBJECT-PRESENT
+git merge-base --is-ancestor 04438027 HEAD && echo SUBJECT-PRESENT
 ```
 If `git log main..HEAD` is NON-EMPTY, **STOP** and report — the lane holds undrained content and a reset would destroy it.
-If `SUBJECT-PRESENT` does not print, **STOP** and report — `d640dc31` is the commit that created the file you are editing; without it you are measuring a tree where the subject does not exist (this is F-1324-2's trap, which has now caught two fires).
+If `SUBJECT-PRESENT` does not print, **STOP** and report — `04438027` is the commit that created the file you are editing; without it you are measuring a tree where the subject does not exist (this is F-1324-2's trap, which has now caught two fires).
 
 ## WHY (quoted evidence, dated)
 `reviews/f1324-1-charter-fuzz-composition-totality.md:57` (s1324 drain, 2026-08-01), **F-1324-3, 🟡 OPEN, NON-BLOCKING**, verbatim:

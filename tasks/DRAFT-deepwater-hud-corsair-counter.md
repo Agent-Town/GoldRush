@@ -1,4 +1,4 @@
-> ⛔ **SHIPPED — DO NOT QUEUE (Mistake #8 guard, verified s1074 2026-07-26).** Promoted to `lane-deepwater-wave-counter` (s1025 refill) and landed as `3598b88c` *"fix: the Deepwater HUD counts the waves you are actually fighting"*, verified `git merge-base --is-ancestor 3598b88c main` = true. Retained per the RETENTION LAW as the authoring record.
+> ⛔ **SHIPPED — DO NOT QUEUE (Mistake #8 guard, verified s1074 2026-07-26).** Promoted to `lane-deepwater-wave-counter` (s1025 refill) and landed as `9a1454a4` *"fix: the Deepwater HUD counts the waves you are actually fighting"*, verified `git merge-base --is-ancestor 9a1454a4 main` = true. Retained per the RETENTION LAW as the authoring record.
 
 # DRAFT (UNQUEUED) — DEEPWATER HUD: show corsair-wave progression
 

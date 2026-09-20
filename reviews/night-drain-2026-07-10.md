@@ -1,5 +1,5 @@
 # Night drain 2026-07-10 — six owner-evening tasks, three lanes, one battery
-Drained by the attended night shift (owner order ~00:13: "make sure the pipe is ready and filled for the night"). Merges: `02f715a` (lane/m4) · `a0bdc48` (lane/polish) · `353730c` (lane/m3) · reconciliation `6894d82`.
+Drained by the attended night shift (owner order ~00:13: "make sure the pipe is ready and filled for the night"). Merges: `b01072f` (lane/m4) · `071c950` (lane/polish) · `5aab848` (lane/m3) · reconciliation `dfa0246`.
 
 ## Slices shipped
 | Task | Lane | What the player gets |

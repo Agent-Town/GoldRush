@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 const p = 'tasks/goals.json';
 const g = JSON.parse(fs.readFileSync(p, 'utf8'));
-const MERGE = 'abcfffb88127640c1709d6ec37033e84f9106ced';
+const MERGE = 'ced0fc61b4c851cc991c273a213a72dadc00c1cc';
 
 let found = null, parentArr = null, idx = -1;
 const walk = (node) => {
@@ -28,7 +28,7 @@ if (!already) {
     title:
       'F-1504-1: e2e/drill-yard.spec.ts:92 asserts the Drill Yard briefing is ABSENT (toHaveCount(0)) — the pre-AP-11 shape. f1501-1 merged at ' +
       MERGE +
-      ' makes the card render its briefing, so the assertion is stale by construction and red on both projects; a pre-merge control at bef7788c8 returned 4 passed, proving the red is merge-caused. Invert it into a positive check that the briefing is present and carries every authored rule (derived from loadEpoch, not hardcoded copy). f1501-1 could not do this: its firewall forbade e2e/**, deliberately.',
+      ' makes the card render its briefing, so the assertion is stale by construction and red on both projects; a pre-merge control at 1466e681e returned 4 passed, proving the red is merge-caused. Invert it into a positive check that the briefing is present and carries every authored rule (derived from loadEpoch, not hardcoded copy). f1501-1 could not do this: its firewall forbade e2e/**, deliberately.',
     taskFile: 'lane-f1504-1-drill-yard-stale-absence.md',
     lane: 'lane-a',
     status: 'planned',

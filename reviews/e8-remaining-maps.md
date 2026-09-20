@@ -1,6 +1,6 @@
 # e8-remaining-maps — drain review (attended, 2026-09-05)
 
-**Slice/branch/tip:** `e8-remaining-maps` · `lane/d` · tip `a16b19354` · base `57330ebfd` · merge `a65ea2c17`
+**Slice/branch/tip:** `e8-remaining-maps` · `lane/d` · tip `3dba120ec` · base `7dc8672f0` · merge `c4aaf0126`
 **Verdict: MERGED, one declared firewall deviation accepted, one board question desked.** Claude implementer (Opus), six commits, READY-FOR-GATES under the repo's node with every red attributed against a control.
 
 ## What it does
@@ -19,7 +19,7 @@ Far Side, Low Orbit and the Eclipse compose the shipped E8 physics and gain suit
 | hash table | far-side / low-orbit / eclipse: node = chromium worker on seed 01 (`5c30efd5`, `6e1931c2`, `466507ac`); mare-claim controls `1a62757f` / `dc8e828d` unchanged; waves/timeMs/kills identical to control on all eight rows |
 
 ## Merge classification
-Base `57330ebfd`. LANE-TOUCHED: `src/systems/E8SuitAirSystem.ts` (new), `src/sim/HeadlessContractSim.ts`, `src/agent/View.ts`, `assets/contracts/epoch-8-orbital/contracts.json` (three contracts), `scripts/e8-remaining-maps.test.mjs`, `e2e/e8-remaining-maps-parity.spec.ts`, `scripts/e8-remaining-maps-ride.mjs`, `public/skill.md` (E8 prose), evidence. MAIN-MOVED: `tasks/BACKLOG.md` (union), `public/skill.md` (auto-merged: main's fenced contract list vs the lane's E8 prose, non-overlapping). `assets/engine-era.json`: the merged tree re-pinned attended.
+Base `7dc8672f0`. LANE-TOUCHED: `src/systems/E8SuitAirSystem.ts` (new), `src/sim/HeadlessContractSim.ts`, `src/agent/View.ts`, `assets/contracts/epoch-8-orbital/contracts.json` (three contracts), `scripts/e8-remaining-maps.test.mjs`, `e2e/e8-remaining-maps-parity.spec.ts`, `scripts/e8-remaining-maps-ride.mjs`, `public/skill.md` (E8 prose), evidence. MAIN-MOVED: `tasks/BACKLOG.md` (union), `public/skill.md` (auto-merged: main's fenced contract list vs the lane's E8 prose, non-overlapping). `assets/engine-era.json`: the merged tree re-pinned attended.
 
 ## Findings
 - **F-E8RM-2 (accepted):** the new consumer file was outside the TOUCH-ONLY list; it follows the era-consumer pattern every other era uses and leaves the physics system untouched. Accepted as the honest shape.

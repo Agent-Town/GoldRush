@@ -2,7 +2,7 @@
 
 - **Slice:** `lane-night-visibility` (lane-a)
 - **Branch:** `lane/m3`, lane commit `8e3ed580`
-- **Base:** applied as a PATCH onto main `e7878bbd` (not a branch copy — see Merge classification)
+- **Base:** applied as a PATCH onto main `44a748dd` (not a branch copy — see Merge classification)
 - **Drained:** s1438, 2026-08-03
 - **Verdict:** ✅ **MERGED.** Answers the owner's gate-walk words with the second-smallest A/B arm; firewall respected; every red controlled or inventory-matched.
 
@@ -89,7 +89,7 @@ Gate is `ratio ≤ 1.15`. **Clean main fails it on both projects.** The distribu
 
 ## Merge classification
 
-- Applied as a **patch** (`git cherry-pick -n 8e3ed580`) onto main `e7878bbd`, **not** a branch merge. `lane/m3` sits 3 ahead of main, but its two lower commits — `b925d706` (f1429-1) and `b295e2ab` (drill-yard-separation) — were already absorbed by graft in s1431 (`f90d3c34`) and s1432 (`9240479c`). A branch-level merge would have re-imported two stale, already-shipped trees; the patch imports exactly the one new commit.
+- Applied as a **patch** (`git cherry-pick -n 8e3ed580`) onto main `44a748dd`, **not** a branch merge. `lane/m3` sits 3 ahead of main, but its two lower commits — `b925d706` (f1429-1) and `b295e2ab` (drill-yard-separation) — were already absorbed by graft in s1431 (`b11cdb88`) and s1432 (`9920d282`). A branch-level merge would have re-imported two stale, already-shipped trees; the patch imports exactly the one new commit.
 - **Zero conflicts.** All four code paths applied clean; main had not moved any of them.
 - Per-file: all **LANE-TOUCHED**. `artifacts/lane-night-visibility/**` is a pure add (20 files).
 - `lane/m3` is a **live lane** (running `tb-water-look` at drain time); its worktree was never touched.

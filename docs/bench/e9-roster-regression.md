@@ -7,8 +7,8 @@ Predicate: `npx playwright test e2e/e9-roster.spec.ts --workers=1` in this workt
 
 | Revision | Result | Verdict |
 |---|---:|---|
-| `b66905c64c0f30cbb1b018128288c19ebca5fa79` | 6 passed | GOOD |
-| `e3605297682776f8c726c8c91b704f78caf90bdd` (lane/main head at pre-flight) | 4 failed, 2 passed | BAD |
+| `eb3a8a01200b57cbbfce73ddc44898361669b391` | 6 passed | GOOD |
+| `2d8872dda1dfbc38bbf28346f53bff51a9bdef00` (lane/main head at pre-flight) | 4 failed, 2 passed | BAD |
 
 The predicate distinguished both endpoints exactly as required before the bisect began.
 
@@ -16,23 +16,23 @@ The predicate distinguished both endpoints exactly as required before the bisect
 
 | Revision | Result | Verdict | Subject |
 |---|---:|---|---|
-| `d2b089e8a16b` | 6 passed | GOOD | s1353: discharge F-1345-2's GATE by measurement |
-| `c12ad434562a` | 6 passed | GOOD | s1443: correct reviews/lane-boss-healthbar-steady.md |
-| `6a0752864820` | 5 failed, 1 passed | BAD | s1470 handoff: f1464-1 halo batch merged |
-| `2e3aba094ffb` | 4 failed, 2 passed | BAD | drain: the far ground |
-| `48258c07026e` | 6 passed | GOOD | s1452 handoff: f1451-1 merged |
-| `3b6f620e3ab6` | 6 passed | GOOD | s1455: mechanize the stale-HOLD-verdict class |
-| `b3b9604978ae` | 6 passed | GOOD | ops: bind MULTIPLAYER_RATE_LIMITS |
-| `4450a576d63b` | 4 failed, 2 passed | BAD | Merge branch `lane/c` into HEAD |
-| `a46e1bfb3ca1` | 6 passed | GOOD | gazette: GZ-L1 review |
-| `16dff1dc5964` | 6 passed | GOOD | Merge branch `beauty2/gazette-living` into HEAD |
-| `f3e2d102694d` | 4 failed, 2 passed | BAD | runner(lane-c): lane-tape-02-lantern-show.md |
+| `87b27cda37a3` | 6 passed | GOOD | s1353: discharge F-1345-2's GATE by measurement |
+| `928695addffb` | 6 passed | GOOD | s1443: correct reviews/lane-boss-healthbar-steady.md |
+| `84bf12a545cb` | 5 failed, 1 passed | BAD | s1470 handoff: f1464-1 halo batch merged |
+| `52664cf2c9d4` | 4 failed, 2 passed | BAD | drain: the far ground |
+| `5edec1c3e1ec` | 6 passed | GOOD | s1452 handoff: f1451-1 merged |
+| `519b9722ce33` | 6 passed | GOOD | s1455: mechanize the stale-HOLD-verdict class |
+| `e883ba1c7131` | 6 passed | GOOD | ops: bind MULTIPLAYER_RATE_LIMITS |
+| `290419c71935` | 4 failed, 2 passed | BAD | Merge branch `lane/c` into HEAD |
+| `d8c0a7c8ce9d` | 6 passed | GOOD | gazette: GZ-L1 review |
+| `a9250ba1d3f2` | 6 passed | GOOD | Merge branch `beauty2/gazette-living` into HEAD |
+| `9146212fc36d` | 4 failed, 2 passed | BAD | runner(lane-c): lane-tape-02-lantern-show.md |
 
-At `6a0752864820`, the two target titles failed in both projects with the same values as the bad endpoint; the fifth failure was the other roster title and did not change the target predicate.
+At `84bf12a545cb`, the two target titles failed in both projects with the same values as the bad endpoint; the fifth failure was the other roster title and did not change the target predicate.
 
 ## Culprit
 
-First bad commit: `f3e2d102694d1c6f1c20a3fa3fcdcca1784d3962` — `runner(lane-c): lane-tape-02-lantern-show.md`.
+First bad commit: `9146212fc36dd751d2c5b952bd23e8ff967eb75b` — `runner(lane-c): lane-tape-02-lantern-show.md`.
 
 `git show --stat`:
 

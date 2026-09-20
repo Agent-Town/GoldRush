@@ -18,7 +18,7 @@ import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
 import { PNG } from 'pngjs';
 
-const BEFORE = process.argv[2] ?? 'f61843c0^';
+const BEFORE = process.argv[2] ?? '305af1f4^';
 const CELL = 313;
 const GRID = 4;
 const SHEETS = [

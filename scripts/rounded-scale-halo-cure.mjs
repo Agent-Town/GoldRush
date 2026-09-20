@@ -6,7 +6,7 @@ import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { PNG } from 'pngjs';
 
-const BASE = '89bfc10cda7e208589c7ad6304eb4c6aeae727bf';
+const BASE = '0d989bdc2096213e6775a5978cb6fe56fa8ea988';
 const PROC = 'assets/processed';
 const FULL = 'assets/processed-full';
 const RAW = 'assets/raw';

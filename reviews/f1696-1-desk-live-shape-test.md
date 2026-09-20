@@ -1,7 +1,7 @@
 # F-1696-1 — live desk population is not a parser invariant
 
-**Slice:** `f1696-1-desk-live-shape-test` · **branch:** `lane/a` · **runner tip:** `b0caf31a138ced22c929e153a7ad40ae5d7dd824` · **base:** `1ce57d9b626eb85428c6190c48ce9121da7e945b`  
-**Verdict:** **MERGED** by path-scoped graft at `99a727c264c6def2d597d02b96f2240ba250565b` (s1700)
+**Slice:** `f1696-1-desk-live-shape-test` · **branch:** `lane/a` · **runner tip:** `b0caf31a138ced22c929e153a7ad40ae5d7dd824` · **base:** `2e5fa91a8bf32fd94775f71e1d1f02897d70d223`  
+**Verdict:** **MERGED** by path-scoped graft at `3aca182cf786d33861bc8c9dbd3bc61ca9e176f8` (s1700)
 
 ## What changed
 

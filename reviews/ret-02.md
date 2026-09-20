@@ -1,6 +1,6 @@
 # ret-02 — retention floor becomes a high-water ratchet
 
-**Slice:** `ret-02-retention-floor-ratchet` (lane-a) · **branch:** `lane/m3` · **tip:** `fbde25e5` · **base:** `6515ce63`
+**Slice:** `ret-02-retention-floor-ratchet` (lane-a) · **branch:** `lane/m3` · **tip:** `fbde25e5` · **base:** `6515ce63 (archive: pruned by the A3 rewrite)`
 **Drained:** s1245, 2026-07-30 · **Review by:** s1245 fire
 
 ## Verdict
@@ -26,7 +26,7 @@ Three design decisions, each load-bearing:
 1. **Not `HEAD` alone** (master premise 4 / F-1244-1). `HEAD` is whatever was committed last, and the ledger is
    committed by *fires, as bookkeeping, at fire start, before any gate runs* — so a truncation blessed by one
    ordinary lock commit would move the baseline down permanently. **I committed the ledger twice during this very
-   fire (`9c5c0f62`, `ca0a615e`), which is the mechanism live.** The 20-commit window survives a single blessing.
+   fire (`9c5c0f62 (archive: pruned by the A3 rewrite)`, `ca0a615e (archive: pruned by the A3 rewrite)`), which is the mechanism live.** The 20-commit window survives a single blessing.
 2. **`--first-parent`** — the runner's own review caught this and the master did not: a plain path-limited
    `git log` can *simplify away* the larger ledger version after a stale merge, losing the exact 500→230 case the
    ratchet exists to catch. Genuine catch, independently mutation-proved by the runner.
@@ -102,7 +102,7 @@ the env hook, so the real ledger was never written — verified `230 → 230` af
 
 ## Merge classification
 
-Base `6515ce63`, lane tip `fbde25e5`. Two-dot `main..lane/m3` showed **14 paths**, of which **exactly one is
+Base `6515ce63 (archive: pruned by the A3 rewrite)`, lane tip `fbde25e5`. Two-dot `main..lane/m3` showed **14 paths**, of which **exactly one is
 lane content**:
 
 - **LANE-TOUCHED (1):** `scripts/run-log-retention.test.mjs` — merged by **path-scoped checkout**, no graft

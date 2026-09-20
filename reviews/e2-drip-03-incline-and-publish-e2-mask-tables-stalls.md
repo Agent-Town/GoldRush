@@ -2,8 +2,8 @@
 
 **Slice:** e2-drip-03-incline + publish-e2-mask-tables (lane/perf)  
 **Branch:** lane/perf  
-**Tip:** 0b04cf13 runner(lane-d): publish-e2-mask-tables.md  
-**Merge commit:** 042c990b  
+**Tip:** 0b04cf13 (archive: pruned by the A3 rewrite) runner(lane-d): publish-e2-mask-tables.md  
+**Merge commit:** 042c990b (archive: pruned by the A3 rewrite)  
 **Drained by:** s562 fire, 2026-07-15  
 
 ## Verdict: STALL-DRAIN (no player-visible change)

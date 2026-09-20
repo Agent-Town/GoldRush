@@ -1,8 +1,8 @@
 # Review — e6-wrangle-verb (THE WRANGLE — win by patience)
 
-- **Slice / branch / tip:** lane-c-e6-wrangle-verb · lane/e2-arsenal · `65fe97c9`
-- **Drain merge:** `8bdc8fb70c6feaa32ec330c3fbe92782b7a8bfcd` (`--no-ff`, s729 fire)
-- **Base:** lane forked at `09ae22f3` (main~1 at lane-b drain time); 3-way onto main HEAD after the e8 merge — `Balance.ts` + `Game.ts` both moved (e8 `salvageClaw` block + e8 wiring) and both lane-touched → ort auto-merged additively, **no conflicts**.
+- **Slice / branch / tip:** lane-c-e6-wrangle-verb · lane/e2-arsenal · `d96c889c`
+- **Drain merge:** `ffe551f53535c88b7182160f351ab5c63479c5fb` (`--no-ff`, s729 fire)
+- **Base:** lane forked at `30e82c5e` (main~1 at lane-b drain time); 3-way onto main HEAD after the e8 merge — `Balance.ts` + `Game.ts` both moved (e8 `salvageClaw` block + e8 wiring) and both lane-touched → ort auto-merged additively, **no conflicts**.
 - **Verdict:** ✅ SHIPPED — clean drain, all gates green, firewall held, verb inert until E6 arms.
 
 ## What it does
@@ -14,7 +14,7 @@ Implements E6's thesis mechanic — the gentlest weapon, "you can win waves by p
 The therapeutic half is ruled canon ("the town that will one day refuse to destroy the Old Digger learns the habit here").
 
 ## Firewall — HELD (with one noted deviation)
-Lane authored exactly its 9 files (551 insertions, 7 deletions vs base `09ae22f3`), no bookkeeping (the two-dot `BACKLOG -1` was a MAIN-MOVED phantom; verified lane's own diff touched no STATUS/BACKLOG/goals/STORYBOOK):
+Lane authored exactly its 9 files (551 insertions, 7 deletions vs base `30e82c5e`), no bookkeeping (the two-dot `BACKLOG -1` was a MAIN-MOVED phantom; verified lane's own diff touched no STATUS/BACKLOG/goals/STORYBOOK):
 - `src/systems/WrangleSystem.ts` (277, new) · `e2e/e6-wrangle.spec.ts` (169, new) · `src/systems/CombatSystem.ts` (+24, enemy-state / freed grammar) · `src/game/Game.ts` (+29 wiring) · `src/game/RunSuspend.ts` (+44, pen persistence) · `src/game/Balance.ts` (+7, `wrangle`) · `src/game/Economy.ts` (+2, the trickle — Economy-legal single-writer) · `src/vite-env.d.ts` (+6) · screenshot `reviews/shots-wrangle/exhausted-capture.png`.
 - NO Homemaker (its own lane-a task), NO pen UI, NO era-arming changes.
 
@@ -34,7 +34,7 @@ Lane authored exactly its 9 files (551 insertions, 7 deletions vs base `09ae22f3
 | zero console | asserted in specs, both viewports |
 
 ## Bookkeeping (this drain)
-- goals leaf `e6-wrangle` → `status:"merged"`, `mergeHash:"8bdc8fb70c6feaa32ec330c3fbe92782b7a8bfcd"` (full 40-char).
+- goals leaf `e6-wrangle` → `status:"merged"`, `mergeHash:"ffe551f53535c88b7182160f351ab5c63479c5fb"` (full 40-char).
 - BACKLOG SHIPPED line appended.
 - Done master → `tasks/failed/shipped-s729-e6-wrangle-verb-SHIPPED-8bdc8fb7.md`.
 - **NO gazette** — verb inert until E6 arms; no plain-boot surface (GZ filter law). **NO deploy** — no plain-boot gameplay surface.

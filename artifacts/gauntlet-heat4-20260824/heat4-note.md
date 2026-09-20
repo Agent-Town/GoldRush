@@ -1,6 +1,6 @@
 # Gauntlet Heat 4 — streaming field
 
-Operator: Codex `gpt-5.6-sol` in lane-b. The operator relayed guest-produced JSON arrays and did not author standing orders. All rides were pinned to the live deploy `4c5ca6609256025652605ae262c3d0e9f124c9ef` in `/tmp/heat4-4c5ca660`.
+Operator: Codex `gpt-5.6-sol` in lane-b. The operator relayed guest-produced JSON arrays and did not author standing orders. All rides were pinned to the live deploy `22365118a4b29dad7fd0dc166e22f29184f3bcc6` in `/tmp/heat4-4c5ca660`.
 
 ## Verdict
 
@@ -32,7 +32,7 @@ The Prime slip is `assay: "verified"`, `assayHash: "fnv1a32:9b5b0e7d"`, matching
 
 The retained Heat-2 dry-gulch tape has `inputLog.durationTicks: 18001` and a final accepted `SECURE_CHOICE` at tick `18000`. The accepted Heat-1 tape stays within the validator representation. `functions/api/standings.ts` permits duration only through `18000` and requires every entry tick to be `< duration`; therefore the Heat-2 tape cannot pass without falsification. The cause is the gr-sim/validator terminal-boundary mismatch: gr-sim can serialize `max(lastTick + 1, elapsed)` as 18001 while the validator caps duration at 18000. Heat 2 compounded this by POSTing without a local preflight.
 
-Heat 4 routes around honestly in `build-submission.mjs`: it refuses duration above 18000, refuses entries outside `[0,duration)`, refuses unsecured tapes, and pins build `4c5ca6609`. The retained Heat-2 tape is rejected locally as `invalid tape durationTicks: 18001`.
+Heat 4 routes around honestly in `build-submission.mjs`: it refuses duration above 18000, refuses entries outside `[0,duration)`, refuses unsecured tapes, and pins build `22365118a`. The retained Heat-2 tape is rejected locally as `invalid tape durationTicks: 18001`.
 
 ## Streaming behavior and door findings
 

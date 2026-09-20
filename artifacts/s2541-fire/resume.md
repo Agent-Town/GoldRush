@@ -1,6 +1,6 @@
 # s2541 handoff — writer candidate held for current board-gold fixtures
 
-The saved candidate is `44fd2661f345f25c9d9099359ff405eabd6b641e`, on origin `save/chapter-evidence-s2541`, parent main `c03903e3a1905e26d91914532154fc014b699781`. Seven writer changes only; source lane tip `386e129f714e634d9a2a9a18f31f8afa9f08f0fd` and its done-move remain untouched. Do not copy the old lane's Moth JSON over main.
+The saved candidate is `44fd2661f345f25c9d9099359ff405eabd6b641e`, on origin `save/chapter-evidence-s2541`, parent main `e53a12082daac6317e20da1ba9c85788021f0226`. Seven writer changes only; source lane tip `5b3c45754b5105fe5bc7d9eb86e2499a9d35e0ed` and its done-move remain untouched. Do not copy the old lane's Moth JSON over main.
 
 The complete Node command ran alone on Node 26.4.0 and failed after 818.1 s: first group 742 tests / 736 pass / 1 fail / 5 explicit skips. Its chained tail did not run. The single top-level failure is the fixture sweep's board-gold child: three old tapes name retired positioning verbs. The unchanged candidate parent reproduces all three malformed-tape errors (0/3, 4.06 s). This is F-2541-1, not a writer regression and not an excuse to mark the command green.
 

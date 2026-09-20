@@ -1,6 +1,6 @@
 # The wave-8 terminal has a cause: the rider goes down
 
-**Fire:** s2145 · **Date:** 2026-08-21 · **Companion to:** `REPORT.md` (attempt 4, merged `59de9467f`)
+**Fire:** s2145 · **Date:** 2026-08-21 · **Companion to:** `REPORT.md` (attempt 4, merged `59de9467f (archive: pruned by the A3 rewrite)`)
 **Evidence:** `terminal-cause-s2145.json` (schema `goldrush.f2142.canyon-terminal.v1`, 0.72 MB, banked beside this note)
 
 ## What this supersedes

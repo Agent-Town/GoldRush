@@ -1,7 +1,7 @@
 # e1-river-camp — THE RIVER CAMP CLOSED (one boolean)
 
 **Slice:** `lane-e1-river-camp` · **branch:** `lane/m3` · **tip:** `cf02e0d3c1069bae6af5bd886551c8bede95769a`
-**Merge-base:** `ab7cba01` · **Drained:** s1078, 2026-07-26 · **Merge:** see drain commit
+**Merge-base:** `2c5ad61f` · **Drained:** s1078, 2026-07-26 · **Merge:** see drain commit
 **Verdict:** ✅ **MERGE** — the release-blocking passive-win exploit is closed by the datum the master named, the test rewrite is a genuine premise change (verified below, not assumed), and the only two reds are proven not mine.
 
 ## What it does
@@ -31,7 +31,7 @@ s1077 handed this over as the thing to prove, and it is the only judgement call 
 | Console / page errors | **0/0** — both specs assert `pageErrors === []` internally and passed |
 | Full battery | 42 passed / 9 failed (10.1m), both projects, `--workers=1` |
 
-**Merge classification:** merge-base `ab7cba01`. `git diff ab7cba01 main` over the three files is **EMPTY** ⇒ all three are **LANE-TOUCHED-ONLY**, main moved none of them. No 3-way graft, no conflict, no judgement call. Applied by `git checkout cf02e0d3 -- <3 files>` and verified **byte-identical to the lane tip**. `lane/m3`'s other four commits are false-ahead (re-verified s1077) and were **not** drained — only `cf02e0d3`'s three files.
+**Merge classification:** merge-base `2c5ad61f`. `git diff 2c5ad61f main` over the three files is **EMPTY** ⇒ all three are **LANE-TOUCHED-ONLY**, main moved none of them. No 3-way graft, no conflict, no judgement call. Applied by `git checkout cf02e0d3 -- <3 files>` and verified **byte-identical to the lane tip**. `lane/m3`'s other four commits are false-ahead (re-verified s1077) and were **not** drained — only `cf02e0d3`'s three files.
 
 ### The two reds, both proven not mine (cp-revert fingerprint on clean main)
 1. **`e1-night-shift` ×4 (`:271`, `:372`, `:435`, `:478`) — PRE-EXISTING.** Reverted the slice to clean main and re-ran the identical selection: **the same four fail, and `:271` returns a byte-identical payload** — `{"dayHero":0.17412235294117648,"darkHero":0.043672156862745094,"heroRatio":0.25081304108897956,"tintLuminance":0.05135041268560246}`. All four are **lighting/luminance** assertions (hero brightness ratio, lantern light-ring sources, inside/outside readability, a night-suspend save timeout). A water-walkability boolean cannot move a luminance ratio, and the control proves it did not. **→ F-1078-1.**

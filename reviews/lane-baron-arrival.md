@@ -1,9 +1,9 @@
 # reviews/lane-baron-arrival.md — the Baron comes from the NORTH + the palisade tax ends
 
 - **Slice:** lane-baron-arrival (E1 Baron playtest corrective)
-- **Branch / tip:** `lane/perf` @ `49679628`
-- **Merge commit:** `691bc9e0` (`git merge --no-ff lane/perf` onto clean main `1e9ffa1c`)
-- **Base:** `c988d704` (fresh — 3 main commits back; main moved NONE of the 7 touched files since base → clean apply, no 3-way)
+- **Branch / tip:** `lane/perf` @ `91a35597`
+- **Merge commit:** `39f96996` (`git merge --no-ff lane/perf` onto clean main `029c2252`)
+- **Base:** `3c1f3bab` (fresh — 3 main commits back; main moved NONE of the 7 touched files since base → clean apply, no 3-way)
 - **Drained by:** s744 fire, 2026-07-20 ~02:50 local
 
 ## Verdict: PASS — merged.
@@ -23,8 +23,8 @@ Implements OWNER PLAYTEST 2026-07-19 (verbatim): *"he should come from the north
 
 The two slice assertions are the player-facing proof (Mistake #10): "Baron boot has no palisade tax and spends no repair gold" + "Baron and his arrival card come from the north".
 
-## Merge classification (base `c988d704`)
-`git diff c988d704 main -- <all 7 files>` = EMPTY → main byte-identical to base for every touched file. Clean apply, no conflicts.
+## Merge classification (base `3c1f3bab`)
+`git diff 3c1f3bab main -- <all 7 files>` = EMPTY → main byte-identical to base for every touched file. Clean apply, no conflicts.
 
 | File | Class | Note |
 |---|---|---|
@@ -37,7 +37,7 @@ The two slice assertions are the player-facing proof (Mistake #10): "Baron boot 
 | `e2e/lane-baron-arrival.spec.ts` | NEW | +72, the arrival/tax coverage |
 
 ## Findings
-- **F-1 (non-blocking, PROVEN pre-existing):** `e2e/e1-baron.spec.ts` has 8 stale reds (4 cases × 2 projects): `:331` board-locks/profile-medal (board-copy), `:387` taunt-waves manifest (`toMatchObject` expects old `unlock:"science-complete"`, app returns `"science-complete+2-secured"`), `:464` wave-20 "stable seed data" (`toBeCloseTo` expects `35564.60`, app produces `53346.89`), `:617` art-fallback (art-readiness). **Fingerprint (decisive):** reverted all 6 changed src/data/spec files to pre-merge main `1e9ffa1c` in-tree and re-ran `:464` → **identical failure, identical received value `53346.89295292784`** → the palisade removal does NOT perturb the wave-20 seed; the reds are stale snapshots from older boss/board/art changes, unaffected by this slice. The runner's own log documented the same 14/22 baseline. Owner scope was e1-baron contract data only; these expectations were not rewritten (out of firewall). A future e1-baron snapshot-refresh corrective should re-bless the seed float + `+2-secured` unlock string + art-fallback + medal copy — NOT this fire.
+- **F-1 (non-blocking, PROVEN pre-existing):** `e2e/e1-baron.spec.ts` has 8 stale reds (4 cases × 2 projects): `:331` board-locks/profile-medal (board-copy), `:387` taunt-waves manifest (`toMatchObject` expects old `unlock:"science-complete"`, app returns `"science-complete+2-secured"`), `:464` wave-20 "stable seed data" (`toBeCloseTo` expects `35564.60`, app produces `53346.89`), `:617` art-fallback (art-readiness). **Fingerprint (decisive):** reverted all 6 changed src/data/spec files to pre-merge main `029c2252` in-tree and re-ran `:464` → **identical failure, identical received value `53346.89295292784`** → the palisade removal does NOT perturb the wave-20 seed; the reds are stale snapshots from older boss/board/art changes, unaffected by this slice. The runner's own log documented the same 14/22 baseline. Owner scope was e1-baron contract data only; these expectations were not rewritten (out of firewall). A future e1-baron snapshot-refresh corrective should re-bless the seed float + `+2-secured` unlock string + art-fallback + medal copy — NOT this fire.
 - **F-2 (audit, owner-visible — the prebuilt-palisade tax pattern across maps):** the runner audited every e1 contract's prebuilt palisades and changed ONLY the Baron per owner scope. The same repair-tax risk exists on the other maps if the Prospector auto-repairs them:
 
   | Contract | Prebuilts w/ Territory I | Decision |

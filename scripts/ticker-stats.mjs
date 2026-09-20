@@ -76,7 +76,7 @@ export async function statsEndpoint(
 ) {
   try {
     const source = await readSource();
-    // The endpoint used to be one string literal. Since 5b61349e ("release base path + API
+    // The endpoint used to be one string literal. Since 50acfeff ("release base path + API
     // split law") it is composed: `const STATS_ENDPOINT = gameApiUrl('/api/stats')`. Both
     // shapes are read from SHIPPED SOURCE on purpose — this reader exists so the ticker and
     // the game can never drift to different URLs, so never hardcode the answer here.

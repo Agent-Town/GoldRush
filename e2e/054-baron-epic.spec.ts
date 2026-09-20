@@ -181,7 +181,7 @@ test('wave 20 Baron spawns as epic-scale boss with anchored bar and one camera i
   });
   await setWave(page, 19);
   const spawned = await waitForBaron(page);
-  // b85eb38e: current Baron repair tuning.
+  // 57a0320c: current Baron repair tuning.
   const expectedHp = Balance.enemy.hp * Math.pow(Balance.waves.hpScalePerWave, 20) * 240;
   const expectedSpeed = Balance.enemy.speed * Balance.waves.speedScaleCap * 0.75;
 

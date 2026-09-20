@@ -4,7 +4,7 @@
 
 # Task a6-far-side-crossing: the crossing and the probe — e8-far-side door-ready (door-completion sheet item A6)
 
-Executed 2026-08-20 by an attended-dispatched Opus agent (branch `worktree-agent-a6-far-side` @ `38ac358cf`), authorized by `specs/agent-play/door-completion-sheet.md` (RATIFIED — A6) — drained to main by the attended session.
+Executed 2026-08-20 by an attended-dispatched Opus agent (branch `worktree-agent-a6-far-side` @ `d24a93c8b`), authorized by `specs/agent-play/door-completion-sheet.md` (RATIFIED — A6) — drained to main by the attended session.
 
 ## What shipped
 - `src/systems/ProbeRecovery.ts` (A4 socket shape: private ctor, create() off the contract, one-way latch, refusal counters; armed only when trigger AND ≥1 crater are declared — F-1471-1 guard, all four combinations pinned). Verb `CONTEXT_ACTION action:'recover'` (targetless, like `fund`).

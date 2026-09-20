@@ -1,7 +1,7 @@
 # Sol findings — verification, deployment, and operations
 
 - **Branch:** `sol/repository-audit-findings`
-- **Base:** `7802ed6`
+- **Base:** `8510b61`
 - **State:** UNTRIAGED — no implementation authorized.
 - **Scope:** release-gate coherence, Worker harnesses, preview fidelity, production coverage, browser matrix, deploy semantics, hosting documentation, and test-config sprawl.
 

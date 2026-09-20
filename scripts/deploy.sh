@@ -121,7 +121,7 @@ if (
   # NO GR_CAPTURE_EXTERNAL_SERVER here (F-1489-3, s1490). The preview config starts its OWN
   # server on :5189; the flag never suppressed it (preview overrides webServer) and there was
   # never anything listening on :5188 for it to mean. It was inert for 132 measurements, then
-  # 2474c51ac wired external-server-guard into the BASE config — which the preview config
+  # f9efa3020 wired external-server-guard into the BASE config — which the preview config
   # inherits via `...baseConfig` — and the flag started arming a :5188 probe that refuses.
   # This now matches `npm run test:asset-diet`, which has always run without the flag.
   # F-DEPLOY-1: the probe runs on its own scratch port (5297) so a lane playwright on 5189 cannot

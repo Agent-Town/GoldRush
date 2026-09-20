@@ -1,9 +1,9 @@
 # standing-formula-explained — accepted with F-2503-1
 
 **Dependency unit:** `tasks/standing-formula-explained.md` + `tasks/f2503-1-standing-goal-snapshot-source.md`
-**Branch/tips:** `lane/a` @ `d3814a1af` + `fa8b096f3`
-**Merge:** `a43ccfbe74fbb0fc0e4b769e18a63ab7cf04f64f`
-**Gate base:** `846b88625`
+**Branch/tips:** `lane/a` @ `6f57d08bc` + `53450564a`
+**Merge:** `3c646f6c753234142da9298647273a11c1624f7c`
+**Gate base:** `2ce018da0`
 
 ## Verdict
 
@@ -27,4 +27,4 @@ Merged-tree screenshots: `reviews/shots-standing-formula-explained/desktop-chrom
 
 ## Historical hold
 
-s2503 correctly held predecessor `d3814a1af`: it froze the first client score but did not derive the snapshot from replay and did not persist it through suspend. Corrective `fa8b096f3` closes both gaps without changing existing simulation outcomes; era 5 was therefore appended with merged-tree hash `e931ff6f682bfad77ae746d92488c259c7ee41440d803db5f8f79032282f0434`.
+s2503 correctly held predecessor `6f57d08bc`: it froze the first client score but did not derive the snapshot from replay and did not persist it through suspend. Corrective `53450564a` closes both gaps without changing existing simulation outcomes; era 5 was therefore appended with merged-tree hash `e931ff6f682bfad77ae746d92488c259c7ee41440d803db5f8f79032282f0434`.

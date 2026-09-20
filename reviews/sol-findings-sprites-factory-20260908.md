@@ -1,6 +1,6 @@
 # Gold Rush — sprite, animation and factory review
 
-Reviewed September 8, 2026 in `sol/code-review-20260908`, base `d41ab98ce0d7fbc48bb01e8e87c92c61f148de2d`, preserving the earlier six code repairs. The reviewed SpriteAnimator, orientation resolver, Hero, generated-asset loader and character contract are byte-identical to the live factory main checkout at inspection time. Factory main was `e6c065618` at `/Users/robin/Claude/Projects/Gold Rush`. Review evidence: `artifacts/sol/sprite-factory-review-20260908/`.
+Reviewed September 8, 2026 in `sol/code-review-20260908`, base `d41ab98ce0d7fbc48bb01e8e87c92c61f148de2d (archive: pruned by the A3 rewrite)`, preserving the earlier six code repairs. The reviewed SpriteAnimator, orientation resolver, Hero, generated-asset loader and character contract are byte-identical to the live factory main checkout at inspection time. Factory main was `e6c065618 (archive: pruned by the A3 rewrite)` at `/Users/robin/Claude/Projects/Gold Rush`. Review evidence: `artifacts/sol/sprite-factory-review-20260908/`.
 
 ## Confirmed sprite findings
 

@@ -1,9 +1,9 @@
 # half-stamped-reel-refusal — drain review (s2476)
 
 **Slice:** `half-stamped-reel-refusal` (F-2471-1)
-**Branch:** `lane/c` · **lane tip:** `12f8dd851698bd35c2f156938cb2bf1cc68ef701`
-**Gated as:** `40a724b13` (detached worktree `gate-s2476`, trial merge of `21d12e1d5` + `12f8dd851`)
-**Merged to main:** `01506cbde0fe2a384a96c73b46af34b783910785`
+**Branch:** `lane/c` · **lane tip:** `0bca58fbb99f5a24decf594842e3165477822f25`
+**Gated as:** `40a724b13` (detached worktree `gate-s2476`, trial merge of `11d876217` + `0bca58fbb`)
+**Merged to main:** `ea86b0c3f8d0da06ebb0ff2198b63d40e88fdd11`
 **Merged tree:** `66c4ce86bdd2937e8ac569eb8b7a639a8584c905` — **byte-identical to the gated tree**, so what shipped is the commit that was gated, not a fresh resolution.
 
 ## VERDICT: MERGED — the cure is proven by a control run, not by a green
@@ -78,7 +78,7 @@ was done, and it repaid the ~4 minutes twice over:
 
 ## Merge classification
 
-Base `21d12e1d5` (main at lock time). Main did **not** move during the gate.
+Base `11d876217` (main at lock time). Main did **not** move during the gate.
 
 | File | Class | Resolution |
 |---|---|---|
@@ -115,5 +115,5 @@ that sim behaviour did not move: `true-reel-harness` replays the assayer fixture
 
 ## Ledger
 
-Goal leaf `half-stamped-reel-refusal` → `status="merged"`, `mergeHash=01506cbde0fe2a384a96c73b46af34b783910785`.
+Goal leaf `half-stamped-reel-refusal` → `status="merged"`, `mergeHash=ea86b0c3f8d0da06ebb0ff2198b63d40e88fdd11`.
 Done-move renamed `drained-s2476-…`. BACKLOG row F-2471-1 closed. GZ-01 item filed.

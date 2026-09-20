@@ -1,7 +1,7 @@
 ---
 status: READY-FOR-GATES
 branch: sol/town-model-audit
-base: e0be535cf8e6d0a39148b5e929915bae299178e2
+base: f662223ce76df2feef2613d02932885f2abe8033
 scope: Wave 6 Town production buildings and plaza objects
 date: 2026-07-14
 ---

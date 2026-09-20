@@ -1,7 +1,7 @@
 # lane-fd3-boards-pass — FD-3 boards improvement pass
 
 **Slice:** FD-3 (AP-14 THE FRONT DESK) — boards improvement pass + the local/global answer's display half
-**Branch:** `lane/b`  **Tip:** `1a7e31837`  **Base:** `44b1a7cf1` (2026-08-07T11:34:08+07:00)
+**Branch:** `lane/b`  **Tip:** `b4994c6a2`  **Base:** `bd6c228da` (2026-08-07T11:34:08+07:00)
 **Merged:** `s1521` fire, merge commit recorded in the drain commit below
 **Drained by:** s1521 (fire)
 
@@ -42,7 +42,7 @@ port 5231/5234** (Mistake #12 — lane-a's runner was live throughout). Transcri
 |---|---|---|
 | `npx tsc --noEmit` | **rc=0** | |
 | `npm run build` | **rc=0** | |
-| `run-guards --changed-since 44b1a7cf1` | 3/5 | `test:node-guards` PASS (361 s), `test:citations` PASS, `test:gate-callers` PASS; two reds analysed below |
+| `run-guards --changed-since bd6c228da` | 3/5 | `test:node-guards` PASS (361 s), `test:citations` PASS, `test:gate-callers` PASS; two reds analysed below |
 | own specs — desktop-chrome | **8 passed / 3 failed** | lb-01 + field-book, 53.9 s |
 | own specs — mobile-chrome | **8 passed / 3 failed** | lb-01 + field-book, 59.3 s |
 | **CONTROL: pre-merge main, desktop** | **5 passed / 3 failed** | same three titles, same error |
@@ -55,7 +55,7 @@ port 5231/5234** (Mistake #12 — lane-a's runner was live throughout). Transcri
 **1. The three own-spec failures are PRE-EXISTING, proved by control — not argued.**
 All five console errors across both projects are one string: `"Failed to load resource: the server
 responded with a status of 429 ()"`. HTTP 429 is rate limiting, and the slice touches no
-`functions/` code at all. A detached worktree at pre-merge main (`02b55c4a0`), its own dev server on
+`functions/` code at all. A detached worktree at pre-merge main (`02b55c4a0 (archive: pruned by the A3 rewrite)`), its own dev server on
 5231, same hour, same machine, ran the **pre-merge** spec against **pre-merge** source and failed
 **the same three tests with the same 429**:
 
@@ -74,7 +74,7 @@ same battery in which `test:node-guards` consumed 361 s (against a ~55 s baselin
 live timing measurement. Load ceiling, not a line (F-1269-1 shape).
 
 **3. `test:task-guards` red is INHERITED, not caused.** It names one invisible master,
-`tasks/lane-fd1-front-desk-card.md`. `git log --diff-filter=A` puts that file in **`44b1a7cf1`** —
+`tasks/lane-fd1-front-desk-card.md`. `git log --diff-filter=A` puts that file in **`bd6c228da`** —
 the attended commit that is this merge's own base, already on main before the drain. Recorded as
 **F-1521-3** rather than fixed here (it is FD-1's bookkeeping, not FD-3's).
 
@@ -86,7 +86,7 @@ mobile-only) — so this was **not** treated as a fingerprint match and was meas
 
 ## Merge classification
 
-Base `44b1a7cf1`; lane **1 ahead, 8 behind**; merged with `git merge --no-ff`.
+Base `bd6c228da`; lane **1 ahead, 8 behind**; merged with `git merge --no-ff`.
 
 | File | Lane | Main | Class |
 |---|---|---|---|

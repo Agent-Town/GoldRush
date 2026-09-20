@@ -1,8 +1,8 @@
 # Review — gz-h1-newsie (The Claim Herald hits the plaza)
 
 - **Slice:** GZ-H1 (`specs/gazette-house/README.md`) — the newsie + the one-page paper
-- **Branch / tip:** `lane/m4` @ `acc2327` (`runner(lane-b): gz-h1-newsie.md`)
-- **Base:** `dbb59c2` (2026-07-10 16:26 +07, ~4h stale)
+- **Branch / tip:** `lane/m4` @ `129b123` (`runner(lane-b): gz-h1-newsie.md`)
+- **Base:** `5c0cbcc` (2026-07-10 16:26 +07, ~4h stale)
 - **Drained by:** s287 fire, 2026-07-10T20:22Z
 - **Verdict:** ✅ SHIPPED — path-scoped merge to main, full battery green, player-facing without `?debug`.
 
@@ -25,7 +25,7 @@ Adds the Claim Herald news surface to the town plaza. A newsie (youngster-sprite
 
 Player-visibility (Mistake #10): the newsie and Herald render in a plain boot — the own spec navigates `/` with no debug flag and finds the newsie + opens the page. PASS.
 
-## Merge classification (base `dbb59c2`, path-scoped single commit onto clean main)
+## Merge classification (base `5c0cbcc`, path-scoped single commit onto clean main)
 | File | Class | Resolution |
 |---|---|---|
 | `artifacts/gz-h1-newsie/*.png` (4) | NEW | free |

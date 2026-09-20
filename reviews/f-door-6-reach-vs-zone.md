@@ -1,7 +1,7 @@
 # f-door-6-reach-vs-zone — reach and zone get their honest words at the agent door
 
 **Slice:** `tasks/lane-fdoor6-reach-vs-zone.md` (F-DOOR-6 (a)+(b))
-**Branch:** `lane/b` · **Tip:** `96d51f60a` · **Merge:** `906ca396e3bf340c83668d2fc5c1bf5411f5feda`
+**Branch:** `lane/b` · **Tip:** `e54e47d75` · **Merge:** `ef1ac7c5ad7a8dcb3e522864e967a49217415048`
 **Gated by:** s1611 fire, detached worktree `gate-s1611` (§3.0b), `--workers=1` (§3.1)
 
 ## VERDICT: MERGED
@@ -36,7 +36,7 @@ Vocabulary after this slice: `insufficient_gold`, `out_of_reach`, `out_of_zone`,
 
 ## Merge classification
 
-Base `f2f11ec5e`. `lane-usable lane-b` → `ahead=1 behind=8 paths=4 tracked-dirt=0 untracked=0`,
+Base `f2f11ec5e (archive: pruned by the A3 rewrite)`. `lane-usable lane-b` → `ahead=1 behind=8 paths=4 tracked-dirt=0 untracked=0`,
 all four paths **HELD LANE-ONLY** — main had moved none of them. Merge by `ort`, **zero conflicts**,
 +51/−7 across exactly the four TOUCH-ONLY files. `main..lane/b` empty after merge.
 

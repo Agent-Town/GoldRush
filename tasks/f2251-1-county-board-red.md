@@ -18,14 +18,14 @@ Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead 
 `grep -Fc "The red is main's and predates this branch." reviews/ap15-frontier-registry.md`
 Expect **1**. A `0` means your lane is behind the commit carrying this task's evidence — do NOT proceed, do NOT guess; report the count and STOP.
 
-## Why (measured s2251, drain of `ap15-frontier-registry`, merge `d87b9097`)
+## Why (measured s2251, drain of `ap15-frontier-registry`, merge `241ba030`)
 
 While gating that slice, two identical detached worktrees were run back-to-back in the same shell at `--workers=1`, the only variable being the merge:
 
 | Arm | Tree | Result |
 |---|---|---|
-| Merged | merge(`e49c36ba3`, `2a102749f`) | 12 failed / 30 passed |
-| Control | `e49c36ba3` — **clean main** | **12 failed / 30 passed** |
+| Merged | merge(`2916abdcf`, `e3af50804`) | 12 failed / 30 passed |
+| Control | `2916abdcf` — **clean main** | **12 failed / 30 passed** |
 
 The failing set is **identical test-for-test on both projects**. The red is main's and predates that branch; it did not block the merge and must not be blamed on it.
 

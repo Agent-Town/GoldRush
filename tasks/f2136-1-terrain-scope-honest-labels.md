@@ -16,7 +16,7 @@ EXPECTED-HOLDS: scripts/terrain-contract-scope.mjs
 EXPECTED-HOLDS: scripts/terrain-contract-scope.test.mjs
 
 **SEQUENCING LAW — THIS SLICE EXTENDS UNMERGED WORK, SO THE LANE'S CONTENT IS YOUR BASE.**
-`lane/b` @ `56c37cf14` holds the four paths declared above; s2136 REFUSED that merge on the content
+`lane/b` @ `6076a93b2` holds the four paths declared above; s2136 REFUSED that merge on the content
 of two measurements, not on its structure, and this slice corrects those two measurements in place.
 Verify the base before building: `grep -Fc "result: buildable ? 'AGREE' : 'DIVERGE' }];" scripts/terrain-contract-scope.mjs`
 must return **1**, and `grep -Fc "return editorPreviewContract ?? ACTIVE_CONTRACT;" src/world/Terrain.ts`

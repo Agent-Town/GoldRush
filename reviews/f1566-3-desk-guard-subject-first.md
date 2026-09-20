@@ -1,8 +1,8 @@
 # f1566-3 — the desk guard's closure exit goes subject-first
 
 - **Slice:** `f1566-3-desk-guard-subject-first` (fire-authored s1566, drained s1567)
-- **Branch / tip:** `lane/b` @ `adedc86e3` · base `daf089427`
-- **Merge:** `3d4651f91175b30dc57d19db46e407b411e69abf` (`--no-ff`, `ort`, **zero conflicts**)
+- **Branch / tip:** `lane/b` @ `d23140ac2` · base `95b83d4cc`
+- **Merge:** `cc5b76945a7622863a2ee548afeadb9eeef21b01` (`--no-ff`, `ort`, **zero conflicts**)
 - **Verdict:** ✅ **MERGE**
 
 ## What it does
@@ -17,7 +17,7 @@ would have let that id leave the desk in silence. s1566 measured it: of 343 ids 
 census calls closed, **21 (6.1%) have no subject-led closure row at all**.
 
 This slice points the closure exit at the subject-first reader that shipped one fire
-earlier (`scripts/desk-state-audit.mjs`, merged `6001f3a57`): a row states the state of
+earlier (`scripts/desk-state-audit.mjs`, merged `1eb13cff1`): a row states the state of
 the **first** F-ID in its subject zone only. `scan()` itself is **not touched** — F-1261-1
 measured a re-implementation of "closed" disagreeing with the original on 4 of 14 rows,
 and there remains one implementation of that word in this repo.
@@ -37,9 +37,9 @@ Shape of the change (4 files, +143/−5):
 
 ## Merge classification
 
-Base `daf089427`. Four paths. **Main moved on ZERO of them** since the base — the only
-main-side commits in the window are `c9e50450b` (`STATUS.md`, `gate-caller-baseline.json`,
-`tasks/BACKLOG.md`), `50687c890` and `215ae0742` (telemetry + my lock). So all four files
+Base `95b83d4cc`. Four paths. **Main moved on ZERO of them** since the base — the only
+main-side commits in the window are `5e820a61b` (`STATUS.md`, `gate-caller-baseline.json`,
+`tasks/BACKLOG.md`), `50687c890 (archive: pruned by the A3 rewrite)` and `7044e0f58` (telemetry + my lock). So all four files
 are **LANE-TOUCHED / MAIN-UNMOVED**; no graft, no three-way resolution, nothing to
 classify BOTH-MOVED.
 
@@ -96,7 +96,7 @@ subjectLedClosure(backlog, 'F-1542-1') -> [91]    // the row's real subject stil
 s1566 required the live-board verdict on both sides, because *"a PASS→FAIL flip is a real
 silent drop surfacing, to be REPORTED, not tuned away."* The lane could only ever print
 `SKIP` (its line-1 is a lock line), and main's line-1 is my own ACTIVE lock — so I ran the
-guard against **s1566's real handoff board** (`git show fc7c38d96:STATUS.md`) with **main's**
+guard against **s1566's real handoff board** (`git show c885970f8:STATUS.md`) with **main's**
 current BACKLOG, under each predicate in turn:
 
 ```
@@ -130,7 +130,7 @@ worth memoising; recorded so nobody re-measures it.
 
 - `tasks/BACKLOG.md` — **F-1566-3 CLOSED**, original text preserved beneath the closure
   (retention law).
-- `tasks/goals.json` — leaf `f1566-3-desk-guard-subject-first` → `merged` @ `3d4651f911…`.
+- `tasks/goals.json` — leaf `f1566-3-desk-guard-subject-first` → `merged` @ `cc5b76945a…`.
 - done-move renamed `drained-3d4651f91-20260808-183918-lane-b-f1566-3-desk-guard-subject-first.md`.
 - **GZ-01 not owed:** this slice ships no player-visible change — it is factory
   bookkeeping machinery. Manufacturing a news item for it would be dishonest.

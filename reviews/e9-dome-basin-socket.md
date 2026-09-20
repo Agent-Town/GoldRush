@@ -1,7 +1,7 @@
 # e9-dome-basin-socket — E9CanalSystem socketed headlessly as `E9CanalSocket`
 
-**Slice:** `lane-e9-dome-basin-socket.md` (ERA-SOCKET class #6) · **branch:** `lane/b` · **tip:** `ae9371c6a` · **base:** `6f6d17b7b`
-**Merge:** `716f3e298` (`--no-ff`) · **drained by:** s1503 fire, 2026-08-07 · **authored by:** s1502 fire
+**Slice:** `lane-e9-dome-basin-socket.md` (ERA-SOCKET class #6) · **branch:** `lane/b` · **tip:** `2caec74b7` · **base:** `e1c6af8d9`
+**Merge:** `79b6da0f2` (`--no-ff`) · **drained by:** s1503 fire, 2026-08-07 · **authored by:** s1502 fire
 
 ## VERDICT: MERGED — all gates green, headline provably unmoved.
 
@@ -53,7 +53,7 @@ still mints exactly one `test(...)` per contract, so the 8/8 count is unchanged 
 
 ## Merge classification
 
-Base `6f6d17b7b`; the lane and main moved on **fully disjoint** path sets, so this was a clean `--no-ff`
+Base `e1c6af8d9`; the lane and main moved on **fully disjoint** path sets, so this was a clean `--no-ff`
 merge with **no graft and no conflict resolution**.
 
 | Path | Class |
@@ -79,7 +79,7 @@ All 6 failures are **pre-existing and not attributable to this slice**, establis
 - **`e9-roster.spec.ts` — ":113 E9 placeholders preserve siege/thief flags and cure-arms exits" and
   ":167 plain Red Fields boot stays error-free without the debug harness"** (4 failures, both projects).
   These are **CLEAN-IN-INVENTORY**, so the ledger could not exonerate them. **Proved pre-existing by CONTROL
-  RUN**: a detached worktree at the pre-merge commit `389f5181a` fails **identically** — same 4 tests, same
+  RUN**: a detached worktree at the pre-merge commit `8ef4294c8` fails **identically** — same 4 tests, same
   two titles, both projects. Both assertions are about the **arsenal** (`e9Arsenal.eraActive` false;
   `cure.fires.terraformCannon` 0), and this slice touches no arsenal code.
 
@@ -88,7 +88,7 @@ All 6 failures are **pre-existing and not attributable to this slice**, establis
 **F-1503-3 (NON-BLOCKING, needs no owner word) — `e9-roster.spec.ts` is red on main but CLEAN-IN-INVENTORY,
 so the known-reds ledger cannot exonerate it and the next drain will re-pay the control run.**
 `logs/suite-red-inventory.md` reports `CLEAN-IN-INVENTORY` for `e2e/e9-roster.spec.ts`, yet 4 of its tests
-fail on main at both `716f3e298` and the pre-merge `389f5181a`. The reds are therefore real, unattributed,
+fail on main at both `79b6da0f2` and the pre-merge `8ef4294c8`. The reds are therefore real, unattributed,
 and **invisible to the instrument built to answer exactly this question** — which cost this drain a full
 control worktree to settle something a lookup should have answered in one second. Both failing assertions
 concern `E9ArsenalSystem` (`eraActive` false under a plain boot; `terraformCannon` never fires), which is

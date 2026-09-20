@@ -1,7 +1,7 @@
 # F-1572-1 — lane arm, uncensored drift
 
 **Slice:** `f1572-1-lane-arm-uncensored-drift`  
-**Branch/tip measured:** `lane/b` at `210d4f5dbfe3ae941d53cf08421529899c673d02`  
+**Branch/tip measured:** `lane/b` at `cf2955d957d06c117e5f1044754a2a2b9e0331da`  
 **Verdict:** **DECLARED SUCCESS — the uncensored lane arm produced 24 observations, 0 CENSORED runs, and 0 breaches of `0.4`.**
 
 ## Arrangement and pre-measurement checks
@@ -79,13 +79,13 @@ The uncensored lane arm **does not breach `0.4`**: 0 of 24 observations breached
 
 ---
 
-## DRAIN — s1573, MERGED `452f1f66c18a0a2022d45de1ffaa0cbe2e8cccd8`
+## DRAIN — s1573, MERGED `d4380c4aad300b05ffacb35c7b429214e18d3303`
 
 **Verdict: MERGE.** §3.0 `drain-block-check` ran FIRST, before any classification or opinion: **CLEAR** (`status="queued"`).
 
 ### Classification
 
-Base `210d4f5db` (the master's own dispatch commit). The lane's single commit `e34e49785` touches **25 paths**: 24 `artifacts/f1572-1-lane-arm/**/*.rc` + `reviews/f1572-1-lane-arm-uncensored-drift.md`. Main moved since that base on **`STATUS.md`, `logs/.goal-tree.html`, `logs/dashboard.html`, `logs/task-stats.jsonl`** — **zero overlap**, so all 25 are LANE-TOUCHED / MAIN-UNMOVED. `--no-ff` merge, no conflicts, no graft required.
+Base `cf2955d95` (the master's own dispatch commit). The lane's single commit `ab735d456` touches **25 paths**: 24 `artifacts/f1572-1-lane-arm/**/*.rc` + `reviews/f1572-1-lane-arm-uncensored-drift.md`. Main moved since that base on **`STATUS.md`, `logs/.goal-tree.html`, `logs/dashboard.html`, `logs/task-stats.jsonl`** — **zero overlap**, so all 25 are LANE-TOUCHED / MAIN-UNMOVED. `--no-ff` merge, no conflicts, no graft required.
 
 ### The firewall's load-bearing clause, verified by hash rather than by report
 

@@ -2,7 +2,7 @@
 
 **Slice:** fix-town-spec-flow — "town blender specs learn the new create→enter flow" (attempt 2, fire-authored corrective after s751 rejected attempt-1 as a partial).
 **Branch/tip:** lane/e2-arsenal `5b12e916` (`runner(lane-c): fix-town-spec-flow.md`, 2026-07-20 06:04).
-**Base:** merge-base `b1f283da`; `git diff b1f283da main -- e2e/town-*-blender.spec.ts` = EMPTY → main untouched all 10 files since fork = **clean additive checkout-graft, no 3-way**.
+**Base:** merge-base `9fe497c5`; `git diff 9fe497c5 main -- e2e/town-*-blender.spec.ts` = EMPTY → main untouched all 10 files since fork = **clean additive checkout-graft, no 3-way**.
 **Verdict:** ✅ **MERGED — all 10 town-*-blender specs GREEN both projects (82/82). The attempt-1 defect (specs shipped READY-FOR-GATES while RED) is closed: this drain ran them green on the merged tree before merging.**
 
 ## What it does
@@ -29,7 +29,7 @@ Rewrites the shared `openTown()` helper AND the mid-test re-entry sequences acro
 - The definitive attempt-1 failures (`town-dynamo-hall :80/:107/:117/:124`, `walkToHall` activePrompt null, 8/12 red) are all GREEN here (dynamo-hall 6/6 both projects, "interaction walk and pre-T2 path verified").
 - Boot probe: each spec boots the game and several use `collectErrors`; the passing specs assert zero-error render + interaction, and the "stays inside the frame-time gate" assertions passed — boot/perf coverage is embedded in the battery.
 
-## Merge classification (base `b1f283da`)
+## Merge classification (base `9fe497c5`)
 | File | Class | Resolution |
 |---|---|---|
 | e2e/town-{assay-office,chapel,claim-office,dynamo-hall,general-store,plate,plaza-props,schoolhouse,stamp-mill,tavern}-blender.spec.ts (×10) | LANE-TOUCHED only | `git checkout 5b12e916 -- <files>` — main byte-identical to base for all 10 (diff empty), no 3-way. |

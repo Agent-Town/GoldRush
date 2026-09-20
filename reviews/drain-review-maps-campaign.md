@@ -1,7 +1,7 @@
 # Drain review — `sol/map-art-inventory-20260908` (Astra's map art + playability campaign), gated on a merged tree
 
-**Slice/branch/tip:** `sol/map-art-inventory-20260908` @ `883a3521e` (1,299 files; committed for retention 2026-09-12 from `~/.codex/worktrees/5b60/Gold Rush`, where its 96 GB evidence tree `artifacts/map-art-repairs-20260908` stays on disk, desk A18; pushed to origin).
-**Gated on:** `drain/maps-campaign` merge `fce340052` = main `65fc3af29` + `883a3521e`, `git merge --no-ff`, zero conflicts, no MAIN-MOVED ∩ LANE-TOUCHED file (`artifacts/drain-review-maps-campaign/main-moved-overlap.txt` is empty). **Control:** `wt-maps-control` detached at `65fc3af29`.
+**Slice/branch/tip:** `sol/map-art-inventory-20260908` @ `7c2744e5a` (1,299 files; committed for retention 2026-09-12 from `~/.codex/worktrees/5b60/Gold Rush`, where its 96 GB evidence tree `artifacts/map-art-repairs-20260908` stays on disk, desk A18; pushed to origin).
+**Gated on:** `drain/maps-campaign` merge `fce340052` = main `dbf1e8977` + `7c2744e5a`, `git merge --no-ff`, zero conflicts, no MAIN-MOVED ∩ LANE-TOUCHED file (`artifacts/drain-review-maps-campaign/main-moved-overlap.txt` is empty). **Control:** `wt-maps-control` detached at `dbf1e8977`.
 **Reviewers:** Claude Opus 5 ran the gates and the eyes-on captures in the scratch worktree `wt-maps` (port 5326) until the owner asked for a lean review and it was stopped; the attended session (Fable 5.1, 2026-09-12) ran the replay attribution and wrote the verdict. Every number below comes from a transcript in `artifacts/drain-review-maps-campaign/`.
 
 ## VERDICT: HOLD — the branch stays whole on `sol/map-art-inventory-20260908`; its contract-and-door layer goes to the OWNER'S DESK (A20)
@@ -16,7 +16,7 @@ Method: for every contract with a verified top row on the live board, the heat-1
 
 | tree | HOLDS | MOVES | NO REPLAY | rows |
 |---|---:|---:|---:|---:|
-| control (main `65fc3af29`, engine-identical) | 14 | 0 | 0 | 14 (+ e9-devils-alley: no heat-13 tape on disk) |
+| control (main `dbf1e8977`, engine-identical) | 14 | 0 | 0 | 14 (+ e9-devils-alley: no heat-13 tape on disk) |
 | merged (`fce340052`) | **2** (the-claim, e7-relay-valley) | **1** (e1-dry-gulch `e490fcd5` → `036a109a`, its `tileParams` changed) | **12** (`assay replay failed: declared runStart is not installable by this door`) | 15 |
 
 Every one of the twelve un-installable tapes is one whose declared `research.epochId` (`epoch-1-frontier`) differs from the contract's own epoch; both tapes that match their contract's epoch install and hold (`tape-epochids.txt`). The merged door therefore refuses a tape main accepts today — the `src/` site was not located in this lean pass (UNVERIFIED which file; the effect is measured). `e1-twin-banks` fetched no board row in the attended run (transient) and is covered by the reviewer's `live-recorded-hashes.txt` (`3104ad94`, verified, ranked).

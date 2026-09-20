@@ -62,7 +62,7 @@ Reported by the runner, from clean `main` (numbers are its own, reproduced acros
 **Merge-side gate note, stated honestly:** this merge adds **one PNG and no code**, so it cannot
 move `tsc`, the build, or any suite. I did not re-run the battery for it and I am not claiming to
 have. Main's `tsc --noEmit` and `npm run build` were both green minutes earlier in this same fire
-(the F-1029-3 drain, `7a020e66`) on a tree otherwise identical to this one.
+(the F-1029-3 drain, `e67f55da`) on a tree otherwise identical to this one.
 
 **The variance is why this took three fires to pin down:** these reds are 1-in-3 to 3-in-3 depending
 on project and run shape. F-1030-1's warning holds — a 1-in-3 red reads green two times out of

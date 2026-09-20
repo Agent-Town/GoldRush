@@ -7,7 +7,7 @@ candidate preserves the ordinary played and idle outcomes, but it cannot satisfy
 required unkillable-rider isolation. The task's no-op/honesty guard therefore applies.
 
 The candidate was applied, measured, and reverted. The tracked Stillwater contract and mask table
-are byte-identical to `main@32af81521`; `assets/engine-era.json` remains on `b061540c...`.
+are byte-identical to `main@d2d7a7948`; `assets/engine-era.json` remains on `b061540c...`.
 
 ## Candidate measurement: size 1, 32 second cycle, first front at 8 seconds
 
@@ -69,8 +69,8 @@ only after that exists can this contract-data candidate and its pins be landed t
 
 ## Gates and omissions
 
-- predecessor split on main: PASS (`036cb6037`)
-- clean fast-forward to `main@32af81521`: PASS
+- predecessor split on main: PASS (`002a480c3`)
+- clean fast-forward to `main@d2d7a7948`: PASS
 - `npm install --no-audit --no-fund`: PASS
 - untouched baseline `npm run build`: PASS
 - isolation grid probe: PASS as an instrument; 12/12 arms disqualify the candidate

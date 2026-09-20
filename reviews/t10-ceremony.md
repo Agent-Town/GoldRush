@@ -1,8 +1,8 @@
 # reviews/t10-ceremony.md — T10 THE CHARTER PRESS (saga-wall slice 5/5, closes F-REH-01)
 
 - **Slice:** lane-t10-ceremony — T10 the Charter Press, the E10 finale door reachable in plain play
-- **Branch/tip:** lane/m4 `fa9ed6b0` (runner(lane-b)), base `ceb41e23`
-- **Merged to main:** `be7625831f98567ca301f940b403c2d63f2da0d0` (`feat: T10 the Charter Press …`, `--no-ff`)
+- **Branch/tip:** lane/m4 `07dfca8e` (runner(lane-b)), base `edb69e4f`
+- **Merged to main:** `882a1f3bc9cca6e00ec43885abc32a993f9d899d` (`feat: T10 the Charter Press …`, `--no-ff`)
 - **Fire:** s958 · 2026-07-23
 
 ## Verdict
@@ -25,8 +25,8 @@ The T10 slice is **not** an inter-era transition (per the draft, line 19: E10 is
 Screenshots: `reviews/shots-t10-ceremony/` (desktop+mobile × door-ready + four-hands-one-lever).
 
 ## Merge classification
-- Base `ceb41e23`; main advanced to `8eec4e46` since base (census-landmark-brightness drain + s957/s958 bookkeeping).
-- `git diff --name-only ceb41e23 8eec4e46` (main-moved) vs `git diff --name-only main...lane/m4` (lane-touched): **zero overlap**. All lane files are LANE-TOUCHED-only / NEW:
+- Base `edb69e4f`; main advanced to `f075d8cf` since base (census-landmark-brightness drain + s957/s958 bookkeeping).
+- `git diff --name-only edb69e4f f075d8cf` (main-moved) vs `git diff --name-only main...lane/m4` (lane-touched): **zero overlap**. All lane files are LANE-TOUCHED-only / NEW:
   | File | Class |
   |------|-------|
   | `src/town/TownScene.ts` | LANE-TOUCHED (main untouched since base) |

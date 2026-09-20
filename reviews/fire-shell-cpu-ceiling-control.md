@@ -1,7 +1,7 @@
 # fire-shell-cpu-ceiling-control — the other arm
 
 **Slice:** `fire-shell-cpu-ceiling-control` (lane-b slot, branch `lane/m4`, runner tip `2f97eb14`)
-**Base:** `8a418a1a` · **Drained:** s1269, 2026-07-30 · **Merge:** path-scoped, JSON only
+**Base:** `8a418a1a (archive: pruned by the A3 rewrite)` · **Drained:** s1269, 2026-07-30 · **Merge:** path-scoped, JSON only
 
 ## Verdict
 

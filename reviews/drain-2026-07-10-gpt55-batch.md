@@ -1,5 +1,5 @@
 # Drain — the seven-task gpt-5.5 batch (2026-07-10)
-Merges: lane/m4 + lane/perf + lane/m3 → main (reconciliation `fb7a7eb`: restoreRunSuspendSnapshot routed through 069's normalization boundary — the dropped-guard conflict resolved INTO the better design). tsc clean · build green.
+Merges: lane/m4 + lane/perf + lane/m3 → main (reconciliation `2a854d2`: restoreRunSuspendSnapshot routed through 069's normalization boundary — the dropped-guard conflict resolved INTO the better design). tsc clean · build green.
 
 ## Verdicts (the first model-quality data points — ALL implemented by gpt-5.5 @ medium/low)
 | Task | Gate result | First-pass? |

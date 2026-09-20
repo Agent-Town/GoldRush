@@ -26,7 +26,7 @@ const OLD = 'all five E1 mechanics manifests match their byte-stable fixture';
 const NEW = 'all six E1 mechanics manifests match their byte-stable fixture';
 
 // the real shape: old title, a SHORT (8-char) backticked hash, then the new title
-const win = `cites "${OLD}") (that test was RENAMED at \`8fa0133f\` and is now titled "${NEW}")`;
+const win = `cites "${OLD}") (that test was RENAMED at \`77a1b19b\` and is now titled "${NEW}")`;
 
 console.log('=== WINDOW ===');
 console.log(win);

@@ -1,7 +1,7 @@
 # Security Review — ac-02 account sign-in + save-sync (client layer)
 
 - **Slice:** ac-02-signin-sync (the CLIENT layer atop the already-merged AC-01 Worker)
-- **Branch / tip:** `lane/m4` @ `1fc481f` (save-guarded `save/ac-02-signin-sync`), base `e6bb873`
+- **Branch / tip:** `lane/m4` @ `7e9def1` (save-guarded `save/ac-02-signin-sync`), base `7dc27aa`
 - **Reviewer:** s207 fire, security-reviewer agent (read-only, via `git show lane/m4:<path>` — code NOT on main)
 - **Date:** 2026-07-08
 - **Purpose:** gate (ii) of ac-02's two drain-gates. This pass decides whether the session/token/auth/external-service handling is safe to merge. It does NOT decide gate (i) — the owner surface-decision (§7.3 external-services/soft-publish) remains Robin's.
@@ -36,4 +36,4 @@ Adds a client-side account sign-in + cloud save-sync UI on top of the AC-01 Clou
 ## Merge guidance
 - **Gate (ii) = CLEARED** by this pass. ac-02 becomes drain-ready the instant Robin clears **gate (i)** the surface-decision (whether/when to show the sign-in card given F1's same-origin fact).
 - No corrective task authored — no blocking finding. F4 (assert https apiBase) + the F1 optional early-return are small hardenings best folded in by whoever drains, WITH the owner's surface intent known (they interact with the surface behavior). Do not add them blind.
-- Drain recipe unchanged from s206: LANE-TOUCHED graft from `lane/m4 1fc481f` base `e6bb873`, take ONLY the 10 real files, drift-check `main.ts`/`Hud.ts`/`StartMenu.ts` vs base first, ignore the stale-base MAIN-MOVED deletions.
+- Drain recipe unchanged from s206: LANE-TOUCHED graft from `lane/m4 1fc481f` base `7dc27aa`, take ONLY the 10 real files, drift-check `main.ts`/`Hud.ts`/`StartMenu.ts` vs base first, ignore the stale-base MAIN-MOVED deletions.

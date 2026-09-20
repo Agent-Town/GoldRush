@@ -19,7 +19,7 @@ All four must return **1** (each proved `=1` on main AND `=1` inside the refresh
 
 The one test in the walkthrough spec is titled **"measures warm assets across menu, town, and two contracts"**. Cite it by that title, never by a line number, when you report (F-1310-1: coordinates rot).
 
-## Why (F-1616-3, measured at the s1616 drain of f1614-1, merge `1e2172f45`, still OPEN)
+## Why (F-1616-3, measured at the s1616 drain of f1614-1, merge `21b473464`, still OPEN)
 
 The walkthrough table's WARM column is computed from `door.demands`, which by construction holds only requests **without** the prefetch header. So a URL is counted WARM **iff it was prefetched to completion and then demand-requested again anyway.** That is visible in the numbers, not inferred from the code: town shows 2 such URLs, contract1 shows 7. Meanwhile the prefetch runs with `cache: 'force-cache'`, so the prefetch's entire value proposition **is** a populated HTTP cache — and in that harness the cache is demonstrably not being reused.
 

@@ -2,7 +2,7 @@
 
 Task: lantern-true-world-reel-2. Implementation complete; adjacent-gate triage in progress, 2026-09-05.
 
-Preflight: lane/c at 33999b560, 0 ahead / 28 behind main, clean. No resets or evidence discards required. npm install --no-audit --no-fund and npm run build passed. Post-build git status --short was empty.
+Preflight: lane/c at 33999b560 (archive: pruned by the A3 rewrite), 0 ahead / 28 behind main, clean. No resets or evidence discards required. npm install --no-audit --no-fund and npm run build passed. Post-build git status --short was empty.
 
 Implementation reuses the worker's stageReplayContract-before-dynamic-import ordering. Terrain remains page-global; the watch route must enter a fresh page when coming from an already mounted scene. Legacy input tapes retain their Game replay path.
 

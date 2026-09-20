@@ -81,7 +81,7 @@ Art raws-only drain. No `src/`, no specs, no e2e, no extraction, no processing, 
 
 | Path | Class | Note |
 |---|---|---|
-| `assets/raw/prop-drill-bell-post.png` | LANE-TOUCHED (overwrite) | rejected pre-image preserved in git as blob `82a971c377486d9ad8fc6e871f6d1865996ceb87` (committed `e4359441`) — **RETENTION LAW satisfied by history, not by a second file** |
+| `assets/raw/prop-drill-bell-post.png` | LANE-TOUCHED (overwrite) | rejected pre-image preserved in git as blob `82a971c377486d9ad8fc6e871f6d1865996ceb87` (committed `0c71b5ba`) — **RETENTION LAW satisfied by history, not by a second file** |
 | `assets/raw/codex-art-run-art-drill-yard-stations.md` | LANE-TOUCHED | retake section appended: run dirs, self-QA table, gallows check, final prompt |
 | `assets/LEDGER.md` | MAIN-ONLY | row 70 retake note; main's ledger is a **different document** from `worktrees/art/assets/LEDGER.md` and was **not** copied across |
 

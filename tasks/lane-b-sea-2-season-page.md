@@ -8,7 +8,7 @@ READ FIRST:
 - `AGENTS.md`
 - `specs/seasons/seasons-v1.md` — **RATIFIED 2026-08-10**. Read ALL of it; it is short. Your slice is the **SEA-2** bullet under `## Slices`, and **Law 3** (the four owed things) and **Law 5** (removability) are the two that constrain you most. Prove you have the right file:
   `grep -c "each page renders the four owed things" specs/seasons/seasons-v1.md` → **must print 1**. If it prints 0, your lane is stale — STOP and report, do NOT improvise.
-- `src/seasons/registry.ts` — **SEA-1's output, merged to main `726398e767b48cd93c6573afd9bc934b5c1a652d` (s1637)**. This is the substrate you render. Prove the lane has it:
+- `src/seasons/registry.ts` — **SEA-1's output, merged to main `c94983206bb15c979c259f6fb61c674a7b181685` (s1637)**. This is the substrate you render. Prove the lane has it:
   `grep -c "export function resolveSeasonAt" src/seasons/registry.ts` → **must print 1**. **0 = your lane predates SEA-1 and everything below is unbuildable — STOP and report, do NOT re-implement the registry.**
 - `src/encyclopedia/reader.ts` — the Field Book / Claim Ledger reader. This is your surface. Prove it:
   `grep -c "^type CountyStanding = StandingStack & {" src/encyclopedia/reader.ts` → **must print 1**.

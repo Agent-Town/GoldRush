@@ -232,11 +232,11 @@ test('F-1249-1: a session-stamped reason key that varies the STEM is explained, 
 
   // CONTROL — the widened match must key off reason-ish NAMES, not "any string on the leaf". A hash
   // pointer is not a cause, and printing one would be a well-formed lie in place of the old silence.
-  const pointer = fixture(leafOf('superseded', { drainedBy: 'a0aae876', reportMergeHash: 'af226e93' }));
+  const pointer = fixture(leafOf('superseded', { drainedBy: '855f4d74', reportMergeHash: '5c151ef2' }));
   cleanup(t, pointer);
   const r3 = run(pointer, DONE_MOVE);
   assert.match(r3.stdout, /no reason-bearing key on this leaf/);
-  assert.doesNotMatch(r3.stdout, /a0aae876/);
+  assert.doesNotMatch(r3.stdout, /855f4d74/);
 });
 
 test('F-1249-1: a stale blockedReason is never printed as the CLOSURE cause', (t) => {

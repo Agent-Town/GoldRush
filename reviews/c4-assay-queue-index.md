@@ -1,13 +1,13 @@
 # Review — c4-assay-queue-index (the KV-cap cure: the assay poll costs ONE read, not the whole county)
 
-**Slice:** `c4-assay-queue-index` · **Branch:** `lane/d` · **Tip:** `3d70625fd runner(lane-d): c4-assay-queue-index.md`
-**Base:** `ced8c2c1e` · **Main at gate:** `b2a55db9f` · **Gated by:** s2190 fire, 2026-08-22
+**Slice:** `c4-assay-queue-index` · **Branch:** `lane/d` · **Tip:** `e1a1b81fe runner(lane-d): c4-assay-queue-index.md`
+**Base:** `c700cc824` · **Main at gate:** `ade1fd0ec` · **Gated by:** s2190 fire, 2026-08-22
 **Gate site:** detached worktree `gate-s2190/` (§3.0b — undecided content never entered main's tree or index; merge commit `b61e1982b`, worktree removed after gating)
 
 ## VERDICT: 🛑 HOLD — NOT MERGED. One blocking finding (F-2190-1), corrective `f2190-1-assay-index-reconcile` authored and dispatched to lane-d over this work.
 
 > ✅ **SUPERSEDED — THIS SLICE SHIPPED. The HOLD above is preserved verbatim as the record of why it waited; it is no longer the state of the board.**
-> Discharged by **`9db6f52bd`** (s2193 drain, 2026-08-22), which merged this slice together with the corrective it was held for. **Ancestry-verified:** `git merge-base --is-ancestor 9db6f52bd main` → true. The hold's own stated lift condition — *"it lifts when corrective f2190-1-assay-index-reconcile lands the sweptAt stamp + periodic reconcile on top of this lane"* — was satisfied, so this was a `gate-side` lift requiring no owner word (F-1383-1). F-2190-1 was reproduced **independently** at that drain against c4's own bare-array seed before the cure was accepted. See `reviews/f2190-1-assay-index-reconcile.md`.
+> Discharged by **`8077b7ea7`** (s2193 drain, 2026-08-22), which merged this slice together with the corrective it was held for. **Ancestry-verified:** `git merge-base --is-ancestor 8077b7ea7 main` → true. The hold's own stated lift condition — *"it lifts when corrective f2190-1-assay-index-reconcile lands the sweptAt stamp + periodic reconcile on top of this lane"* — was satisfied, so this was a `gate-side` lift requiring no owner word (F-1383-1). F-2190-1 was reproduced **independently** at that drain against c4's own bare-array seed before the cure was accepted. See `reviews/f2190-1-assay-index-reconcile.md`.
 > The sentence below about `lane/d` is likewise **spent**: the lane is fully absorbed (`main..lane/d` = 0) and is now safe to refresh.
 
 `lane/d` is left **untouched and undrained on purpose**: its content is the corrective's base. Do NOT refresh or reset this lane.
@@ -36,8 +36,8 @@ No `src/**`, `e2e/**`, `src/sim/`, `src/systems/` or `src/entities/` paths are t
 
 | File | Class | Notes |
 |---|---|---|
-| `functions/api/standings.ts` | **LANE-TOUCHED** | main has not moved it since `ced8c2c1e` |
-| `scripts/test-standings.mjs` | **LANE-TOUCHED** | main has not moved it since `ced8c2c1e` |
+| `functions/api/standings.ts` | **LANE-TOUCHED** | main has not moved it since `c700cc824` |
+| `scripts/test-standings.mjs` | **LANE-TOUCHED** | main has not moved it since `c700cc824` |
 | `tasks/BACKLOG.md` | **BOTH-MOVED** | conflict on row 1 — both sides rewrote the KV-cap row. Resolved `--ours` **for gating only**; nothing merged. A real drain must hand-resolve row 1. |
 
 ## Findings

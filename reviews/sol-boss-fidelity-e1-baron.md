@@ -1,6 +1,6 @@
 # Epoch 1 Baron — prop fidelity and presentation
 
-Branch: `sol/boss-art-fidelity-review`, base `d41ab98ce`. Reviewed 2026-09-08. No commit or deployment.
+Branch: `sol/boss-art-fidelity-review`, base `d41ab98ce (archive: pruned by the A3 rewrite)`. Reviewed 2026-09-08. No commit or deployment.
 
 **Verdict: READY-FOR-GATES for the E1 pass.** The approved illustrated Baron body remains the reference itself. His existing 3D props now fit its worked timber/brass/iron palette more closely, the launcher clears his face and points forward, and the warning/rocket release follows the visible rack. This is an improvement of the approved prop direction, not a claim that the raw character plate depicts these later-added objects.
 

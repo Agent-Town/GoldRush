@@ -1,8 +1,8 @@
 # findings-state-guard — drain review (s1259)
 
 - **Slice:** `lane-b-findings-state-guard` (FIRE-AUTHORED s1258, discharges **F-1258-4**)
-- **Branch/tip:** `lane/m4` @ `1b769c44fe015095ea7df62c7e7f1cbee4e87d56` (runner commit, lane base `d809d9703698`)
-- **Merged to main as:** `82f0b39404d78f339713a41370f39d282a41d623`
+- **Branch/tip:** `lane/m4` @ `1b769c44fe015095ea7df62c7e7f1cbee4e87d56` (runner commit, lane base `fe3a31043610`)
+- **Merged to main as:** `5443899120ff047c9193e674062df6f48d1b55dd`
 - **Verdict:** ✅ **ACCEPT.** Scope met in full, both re-derivations performed as ordered, and the one thing that could have made this guard dishonest — an unlabelled zero — is labelled in the code.
 
 ## What it does
@@ -11,12 +11,12 @@ Adds `scripts/findings-state-guard.mjs` + its `node --test` companion and wires 
 
 ## The scope-2 STOP did not fire, and I verified WHY rather than accepting it
 
-The master ordered: re-derive both numbers; **if current main ≠ 0, STOP and report rather than adding a baseline**. The run reported `eb82969f^` → 4 conflicts (exact authoring-table match) and main → 0, so no baseline file exists. I re-derived both myself on the merged tree:
+The master ordered: re-derive both numbers; **if current main ≠ 0, STOP and report rather than adding a baseline**. The run reported `b4dea8ae^` → 4 conflicts (exact authoring-table match) and main → 0, so no baseline file exists. I re-derived both myself on the merged tree:
 
 | Arm | Subjects | Closed | Open | Double-state | rc |
 |---|---|---|---|---|---|
-| `eb82969f^` (pre-strike, defective) | 77 | 61 | 20 | **4** — F-1149-1, F-1149-2, F-1152-2, F-1152-3 | **1** |
-| merged main `82f0b394` | 80 | 64 | 16 | **0** | 0 |
+| `b4dea8ae^` (pre-strike, defective) | 77 | 61 | 20 | **4** — F-1149-1, F-1149-2, F-1152-2, F-1152-3 | **1** |
+| merged main `54438991` | 80 | 64 | 16 | **0** | 0 |
 
 The defective-tree arm was run through a temp `--root` so the **exit code** was observed, not just the offender list — a green counter is not a green rc. It gates.
 
@@ -39,7 +39,7 @@ That is exactly the landing F-1259-1 asked for — ship the narrow guard with it
 | `test:node-guards` (28 files) | **158/158 pass, 0 fail** — derived, and exactly 156 + this slice's 2 |
 | `findings-state-guard.test.mjs` | 2/2 (real-history arm + synthetic refutation arm) |
 | `findings-state-guard` gate mode, merged main | PASS, double-state 0 |
-| same guard, `eb82969f^` via `--root` | **rc=1**, exactly the 4 known offenders |
+| same guard, `b4dea8ae^` via `--root` | **rc=1**, exactly the 4 known offenders |
 | `test:gate-callers` | PASS — the new guard is reached, not orphaned |
 | `test:citations` | PASS (313 scanned; see F-1259-4 below — it was RED when this drain began) |
 | Playwright | **not run, and not owed**: zero `src/`, zero `e2e/` bytes |
@@ -58,7 +58,7 @@ Firewall PASS: zero `src/`, zero `e2e/`, zero `tasks/` bytes from the slice.
 
 - 🔺 **F-1259-1** (above) — **answered inside the slice**, by documentation rather than by code. The widening remains an open rung; it is triage, not a one-liner.
 - 🔬 **F-1259-2** — **the guard cannot see the half of F-1258-4's class that actually costs authoring slots.** Measured on the pre-strike blob: of the three stale findings struck this fire, only F-1152-1 and F-1148-1 were visible as double-state; **F-1179-1 was not** — no line declared it closed, so the ledger was perfectly self-consistent while being wrong, and it was the one flagged `FIRE-AUTHORABLE`. A stale finding needs no contradicting closure to mislead; it only needs the code to have moved. Recommendation: a required "open the subject file" step in `/author-task` §0 with F-1179-1 as the worked example — not a second guard.
-- ⚠️ **F-1259-4 (process, and it is this slice's neighbour, not its fault)** — `test:citations` was **RED when this drain began**, and the run reported it honestly as "pre-existing". Cause: s1258's merge `af48a749` deleted the inlined `moveHeroTo` from `e2e/release-build.spec.ts`, so three citations quoting that function's signature at `:311` were left quoting a line that exists nowhere in the cited spec (`CARRIES-LINE` can no longer resolve). **A merge that deletes lines silently invalidates every citation into that file, and the s1258 drain did not re-run the ratchet.** Repaired s1259 (`7acdaf07`… follow-up commit): the pointers now follow the code to `e2e/helpers/hero-approach.ts:5`, each recording the retirement; claims unchanged. ➡️ **Drain duty worth adding: any merge with deletions in a cited spec re-runs `test:citations` before commit.**
+- ⚠️ **F-1259-4 (process, and it is this slice's neighbour, not its fault)** — `test:citations` was **RED when this drain began**, and the run reported it honestly as "pre-existing". Cause: s1258's merge `ca64bf26` deleted the inlined `moveHeroTo` from `e2e/release-build.spec.ts`, so three citations quoting that function's signature at `:311` were left quoting a line that exists nowhere in the cited spec (`CARRIES-LINE` can no longer resolve). **A merge that deletes lines silently invalidates every citation into that file, and the s1258 drain did not re-run the ratchet.** Repaired s1259 (`c65af42b`… follow-up commit): the pointers now follow the code to `e2e/helpers/hero-approach.ts:5`, each recording the retirement; claims unchanged. ➡️ **Drain duty worth adding: any merge with deletions in a cited spec re-runs `test:citations` before commit.**
 
 ## Gazette (GZ-01)
 

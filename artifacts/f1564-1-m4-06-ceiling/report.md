@@ -58,7 +58,7 @@ Failure rates, with run denominators:
 - `CLAUDE_CONFIG_DIR`: unset.
 - Requested workers: `--workers=1`.
 - Obtained workers: `1`; Playwright reported `Running 18 tests using 1 worker` in every Arm A run and `Running 2 tests using 1 worker` in every Arm B run.
-- Tree measured: clean `main` arrangement at `e694fe65a` after the safe lane refresh.
+- Tree measured: clean `main` arrangement at `1eb583277` after the safe lane refresh.
 - Arm A command: `npx playwright test e2e/m4-06-embodiment.spec.ts --workers=1`.
 - Arm B command: `npx playwright test e2e/m4-06-embodiment.spec.ts --workers=1 -g 'permission-denied receipts do not send the Prospector to the denied target'`.
 

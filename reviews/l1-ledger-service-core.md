@@ -1,7 +1,7 @@
 # l1-ledger-service-core — the county ledger runs as a node service on sqlite
 
 **Slice:** `l1-ledger-service-core` (L1 of the ratified `specs/ops/ledger-on-droplet.md` program)
-**Branch:** `lane/d` · **lane tip:** `6b94416e8` · **gated commit:** `7b7f616df` · **merge to main:** `7b7f616df` (fast-forward; main was `833330ce5`, the gate's own first parent, so the tree that landed is byte-identical to the tree that was gated — verified `main^{tree} == 7b7f616df^{tree}`)
+**Branch:** `lane/d` · **lane tip:** `61f5d93f3` · **gated commit:** `ca09d084e` · **merge to main:** `ca09d084e` (fast-forward; main was `da4af1a62`, the gate's own first parent, so the tree that landed is byte-identical to the tree that was gated — verified `main^{tree} == ca09d084e^{tree}`)
 **Drained:** s2233, 2026-08-23 · **gate:** detached worktree `gate-s2233/` (§3.0b — the attended session was live in main's tree this hour)
 
 **VERDICT: PASS — MERGED.** Two non-blocking findings, one of which is owed to L3 and is recorded below.
@@ -34,7 +34,7 @@ Per the master's firewall this touches no `src/**`, no droplet, no deploy, no cl
 
 ## Merge classification
 
-Base: `833330ce5` (main at gate time, and still main at merge time — verified, not assumed).
+Base: `da4af1a62` (main at gate time, and still main at merge time — verified, not assumed).
 
 | File | Class | Note |
 |---|---|---|

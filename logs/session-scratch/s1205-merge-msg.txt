@@ -25,7 +25,7 @@ test:node-guards PASS rc=0 · mutation m1 re-run by the drain (not inherited):
 slicing stdout to 150,000 chars fails with "stdout capture is truncated: Total
 summary is not the last non-empty line", subject restored byte-identical.
 
-Merge: base 98c62443 is an ancestor of main and `git log 98c62443..main` over
+Merge: base 0de177eb is an ancestor of main and `git log 0de177eb..main` over
 both paths is EMPTY — main never moved either file, so both are LANE-TOUCHED-ONLY
 and the graft is a straight checkout, verified byte-exact against lane/perf tip
 641140f6 before and after the control.

@@ -150,7 +150,7 @@ function assertNoErrors(errors: ErrorBucket): void {
 // priority-1 set on normal connections — they are the town — so the whole town warms before the
 // stream moves to its priority-2 destination, and Save Data alone trims them (asserted in
 // `advance-stream.spec.ts:75`). Two things changed from the pre-allowance version of this test:
-//   1. It no longer waits for `ready`. Since 065252649 the stream may also stop terminally at
+//   1. It no longer waits for `ready`. Since c7856dca7 the stream may also stop terminally at
 //      `allowance`, and waiting for one terminal state hangs whenever the other one happens.
 //   2. It stubs prefetch bodies. `AdvanceStream` accounts REAL response bytes, and the dev server
 //      ships the pre-diet source GLBs: the era-1 town alone is 18,049,588 B on the dev tree

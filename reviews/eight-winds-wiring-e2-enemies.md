@@ -1,7 +1,7 @@
 # Review — eight-winds-wiring-e2-enemies (E2 enemy diagonal wiring, slice 3)
 
-**Slice:** `tasks/lane-c-eight-winds-wiring-e2-enemies.md` (authored s1187, `89b7239c`)
-**Branch:** `lane/e2-arsenal` · **Tip:** `fe3ae8cb` · **Base:** `0b03545a`
+**Slice:** `tasks/lane-c-eight-winds-wiring-e2-enemies.md` (authored s1187, `585ab50e`)
+**Branch:** `lane/e2-arsenal` · **Tip:** `fe3ae8cb` · **Base:** `e189f6b6`
 **Drained:** s1188 fire, 2026-07-29
 **Verdict:** ✅ **ACCEPTED AS A LAWFUL SCOPE-3 STOP.** No code merged; evidence merged. The slice is
 **re-queue-blocked** pending an art correction — and the runner's own recommendation for that
@@ -31,7 +31,7 @@ stopped before binding. It shipped its reasoning plus one evidence board.
 
 ## Merge classification
 
-Base `0b03545a`; both files are **pure additions** on paths main has never held (`artifacts/eight-winds-e2/`
+Base `e189f6b6`; both files are **pure additions** on paths main has never held (`artifacts/eight-winds-e2/`
 did not exist on main). No LANE-TOUCHED/MAIN-MOVED conflict was possible. Grafted with
 `git checkout lane/e2-arsenal -- <2 paths>`; path-scoped add.
 

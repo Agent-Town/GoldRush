@@ -2,7 +2,7 @@
 
 The s2537 complete browser gates remain red: F-2537-1 E7 reader readiness and F-2537-2 M2 placement, alongside the known M1 failures. Focused base/candidate repeats passed, so the cause is not proved by those repeats. Complete the registered MAIN readiness corrective and classify M2 before accepting this drain. Any intervening source change requires re-integration and fresh affected gates.
 
-Candidate `fee574e47be6eb813c73fecd4a5357e973a34a29` is named by `save/chapter-evidence-s2537` and checked out at `/private/tmp/gr-gate-s2537`. Its integration base is `818223c97606423f0e08d2e95c7377ae5adc1302`. It carries only seven writer-path changes on the newer main grammar: all four Moth tests, the order fixture and the 138-row retained recording remain current.
+Candidate `fee574e47be6eb813c73fecd4a5357e973a34a29` is named by `save/chapter-evidence-s2537` and checked out at `/private/tmp/gr-gate-s2537`. Its integration base is `c61522a553a17cc885f7e827942a2890f85edd89`. It carries only seven writer-path changes on the newer main grammar: all four Moth tests, the order fixture and the 138-row retained recording remain current.
 
 Before using any gate evidence, run the policy check on `lane-c-chapter-evidence-opt-in.md`, compare current main against this integration base, and verify that the candidate's runtime and tested sources have not changed. If they have, re-integrate and gate that tree. Do not copy the obsolete lane JSON.
 

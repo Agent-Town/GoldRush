@@ -10,7 +10,7 @@ status: merged
 
 Companion to `reviews/ap-06b-adapter-reland.md` (the runner's READY-FOR-GATES report). That file is the implementer's account; this one is the fire-side gate, the merge classification, and the honest record of how the content actually reached main.
 
-**Verdict: MERGED.** Slice `ap-06b-adapter-reland` · branch `lane/e2-arsenal` · tip `0d6357bb` · landed in **`12b0011e`** — which is *not* a commit I authored, see **F-1285-1**.
+**Verdict: MERGED.** Slice `ap-06b-adapter-reland` · branch `lane/e2-arsenal` · tip `0d6357bb` · landed in **`e4336ba8`** — which is *not* a commit I authored, see **F-1285-1**.
 
 ## What it does
 
@@ -18,7 +18,7 @@ Production standing orders now reach the world. Before this, `Game.ts` installed
 
 ## Merge classification (re-derived, not inherited)
 
-`node scripts/lane-freeze-classify.mjs lane/e2-arsenal` at tip `0d6357bb`: base `9003d5e1`, **paths=11 — DUPLICATE 0 / LANE-ONLY 11 / MAIN-ONLY 0 / BOTH-MOVED 0**. Every one of the 11 had `main == base`, so a path-scoped checkout was exactly the lane's change with no main loss. Merged with `git checkout lane/e2-arsenal -- <the 11 paths>`; never a branch merge, never a file copy.
+`node scripts/lane-freeze-classify.mjs lane/e2-arsenal` at tip `0d6357bb`: base `9003d5e1 (archive: pruned by the A3 rewrite)`, **paths=11 — DUPLICATE 0 / LANE-ONLY 11 / MAIN-ONLY 0 / BOTH-MOVED 0**. Every one of the 11 had `main == base`, so a path-scoped checkout was exactly the lane's change with no main loss. Merged with `git checkout lane/e2-arsenal -- <the 11 paths>`; never a branch merge, never a file copy.
 
 ⚠️ The lane's two-dot diff **also** showed `STATUS.md`, `logs/*`, `tasks/BACKLOG.md`, `tasks/goals.json` and the lane-d master as changed. Those are **main-moved-since-base**, not lane work, and were deliberately not taken. A blind `git merge` or a whole-tree copy would have reverted four fires of bookkeeping.
 
@@ -28,7 +28,7 @@ Production standing orders now reach the world. Before this, `Game.ts` installed
 
 | token | count | cluster |
 |---|---|---|
-| `TRAIL_GUIDE_DWELL_MS` | 2 | Trail Guide (`6f343a6e`, main-only, NOT an ancestor of the salvage branch) |
+| `TRAIL_GUIDE_DWELL_MS` | 2 | Trail Guide (`e3ee53d6`, main-only, NOT an ancestor of the salvage branch) |
 | `pendingTrailGuideLines` | 3 | Trail Guide |
 | `trailGuideTimer` | 5 | Trail Guide |
 | `showTrailGuide` / `dismissTrailGuide` | 3 / 10 | Trail Guide |
@@ -60,7 +60,7 @@ Wiring the adapter removes the `NO_SYSTEM_API` branch, so the bark necessarily f
 
 ## Both reds fingerprint-matched to pre-existing causes
 
-**`e2-arsenal.spec.ts:87`, both projects** — fails at `:100`, `placeFree('turret', 0, 10)` → `false`. This is **F-1281-2** verbatim: already open, already control-armed by s1281 on clean main (`62dc6380`, detached worktree, `--workers=1`, identical failure on both projects). Structurally it cannot be this merge's: `placeFree` (`Game.ts:1878`) is a `__GR_TEST__` hook routing straight to `buildSystem.placeFree`, and never reads the agent adapter literal these 46 lines added. **lane-d is diagnosing it live** under the master s1284 authored.
+**`e2-arsenal.spec.ts:87`, both projects** — fails at `:100`, `placeFree('turret', 0, 10)` → `false`. This is **F-1281-2** verbatim: already open, already control-armed by s1281 on clean main (`45b2ed1a`, detached worktree, `--workers=1`, identical failure on both projects). Structurally it cannot be this merge's: `placeFree` (`Game.ts:1878`) is a `__GR_TEST__` hook routing straight to `buildSystem.placeFree`, and never reads the agent adapter literal these 46 lines added. **lane-d is diagnosing it live** under the master s1284 authored.
 
 **`m4-06-embodiment.spec.ts:395` mobile-chrome** — control-armed this fire, **not caused by this merge**. See F-1285-2.
 
@@ -68,11 +68,11 @@ Wiring the adapter removes the `NO_SYSTEM_API` branch, so the bark necessarily f
 
 ### F-1285-1 (s1285, CLOSED-AS-RECORDED — bookkeeping, no content lost)
 
-**A concurrent writer swept this drain's staged index into an unrelated commit.** At 11:18:45 a process authoring as `Claude (Cowork orchestrator)` committed `12b0011e` *"LB-03: standings learn difficulty (owner question exposed the blind row) + round-2 plays vein-hunter too"*. That commit contains **LB-03's three files and all eleven of this drain's staged paths** — `Game.ts` +46/−0, `AgentConsent.ts`, `ToolSurface.ts`, the four specs, the conformance guard, this slice's review and both screenshots.
+**A concurrent writer swept this drain's staged index into an unrelated commit.** At 11:18:45 a process authoring as `Claude (Cowork orchestrator)` committed `e4336ba8` *"LB-03: standings learn difficulty (owner question exposed the blind row) + round-2 plays vein-hunter too"*. That commit contains **LB-03's three files and all eleven of this drain's staged paths** — `Game.ts` +46/−0, `AgentConsent.ts`, `ToolSurface.ts`, the four specs, the conformance guard, this slice's review and both screenshots.
 
 ✓ **No content was lost and no gate was skipped** — every path had already passed the battery above; only the commit boundary is wrong. ⚠️ **But the ledger now lies in a specific, searchable way:** a future session running `git log --oneline --grep ap-06b` finds nothing, and the ap-06b merge appears under a standings-difficulty headline. That is Mistake #16's shape inverted — there, an announcement read like a completion; here, a completion hides under someone else's announcement.
 
-➡️ **Not repaired by rewriting history**, deliberately: another writer is active on main, and CLAUDE.md §7 forbids the irreversible move. The repair is this addendum plus the `goals.json` leaf, which both name `12b0011e` explicitly.
+➡️ **Not repaired by rewriting history**, deliberately: another writer is active on main, and CLAUDE.md §7 forbids the irreversible move. The repair is this addendum plus the `goals.json` leaf, which both name `e4336ba8` explicitly.
 
 ⚡ **The lesson is a law gap, not a mistake by either writer.** CLAUDE.md §4.2 says "path-scoped `git add` only" and §7.6 says "two writers might touch main's tree at once → serialize". Both were followed by me — I staged path-scoped and I held the STATUS lock. **The lock did not protect me, because the other writer never read it.** A staged-but-uncommitted index is a shared mutable resource that no lock in this factory covers, and the window between `git add` and `git commit` is exactly where a drain is most valuable and least defended. ➡️ **Recommendation for the next attended session: stage and commit in one action** (`git commit -o <paths> -m ...` or `git add && git commit` with nothing in between), and treat any gap as a hazard rather than a convenience.
 
@@ -85,7 +85,7 @@ Wiring the adapter removes the `NO_SYSTEM_API` branch, so the bark necessarily f
 | arm | tree | result |
 |---|---|---|
 | merged | main + this slice | **4/5 failed** |
-| control | `0b87c662`, pre-merge, detached worktree, external server on scratch port 5234 | **5/5 failed** |
+| control | `0b87c662 (archive: pruned by the A3 rewrite)`, pre-merge, detached worktree, external server on scratch port 5234 | **5/5 failed** |
 
 ➡️ **The merge is exonerated — the red is *more* frequent without it.** The control used a detached worktree on a scratch port precisely so it could not contend with lane-d's live run (Mistake #12).
 

@@ -1,4 +1,4 @@
-# HEAT 3 INTAKE — examiner replay + board post (era d599cd3e)
+# HEAT 3 INTAKE — examiner replay + board post (era dbcbf312)
 
 - `gpt-5.4-e1-baron`: replay did NOT secure (no terminal) — not board-eligible
 - `gpt-5.4-e1-dry-gulch`: replay did NOT secure (no terminal) — not board-eligible

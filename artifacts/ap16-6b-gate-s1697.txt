@@ -3516,9 +3516,9 @@ See https://rolldown.rs/options/checks#plugintimings for more details.
 
 
 ===== derived guards =====
-$ node scripts/run-guards.mjs --changed-since effadd2a3c70ecb1978e316edcc90ca7994772bb
+$ node scripts/run-guards.mjs --changed-since d30a23a3de0fc130c24fb87951c9f8456f38302d
 rc=1 489.7s
-run-guards: 26 file(s) changed since effadd2a3c70ecb1978e316edcc90ca7994772bb
+run-guards: 26 file(s) changed since d30a23a3de0fc130c24fb87951c9f8456f38302d
   base gate: test:node-guards, test:power-budget, test:task-guards, test:citations, test:gate-callers
   (no path rule matched -- base gate only)
 

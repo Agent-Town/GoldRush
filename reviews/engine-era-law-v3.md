@@ -1,7 +1,7 @@
 # engine-era-law-v3 — drained s2308, with the §7.4 projection ruling VETOED
 
-**Slice:** `engine-era-law-v3` · **branch:** `lane/a` · **lane tip:** `3a9dac338`
-**Base:** `main` @ `02975983b` · **Merge:** `d96dacb158a1d63886ebcf2cc25dd3906c2cd8ed`
+**Slice:** `engine-era-law-v3` · **branch:** `lane/a` · **lane tip:** `2715daf10`
+**Base:** `main` @ `749eb411c` · **Merge:** `ef9038425b8c10c038c9539f1d0b79c58edeca49`
 **Verdict:** **MERGED** — with one ruling reversed and three mechanical integration fixes (F-2308-1).
 
 ## What it does
@@ -22,7 +22,7 @@ under, and eras change only on purpose.
 
 The runner's report opens **`STOPPED LAWFULLY — not READY-FOR-GATES`** (556,123 tokens). Its diff
 exists only because the lane runner **auto-commits**, so the partial implementation was swept onto
-`lane/a` by machinery at `3a9dac338`. It stopped on its own honesty guard having found two validator
+`lane/a` by machinery at `2715daf10`. It stopped on its own honesty guard having found two validator
 surfaces outside its firewall — **the fourth consecutive firewall success in this lineage, and
 correct.** This drain did not override that judgement: both of its blockers were *dissolved* by
 reversing the single ruling that caused them.
@@ -118,7 +118,7 @@ change — the slice touches **zero `src/` files**, so nothing renders different
 
 ## Merge classification
 
-Base `02975983b`; three-way merge of `lane/a`, **no conflicts**, 11 files from the lane. Both
+Base `749eb411c`; three-way merge of `lane/a`, **no conflicts**, 11 files from the lane. Both
 `package.json` guard-leg additions verified present after the merge — the lane prepends
 `engine-era-guard.test.mjs` to `test:node-guards`, s2307 appended
 `bash-leg-misuse-code-guard.test.mjs` to `test:ledger-guards`; they touch different lines and both

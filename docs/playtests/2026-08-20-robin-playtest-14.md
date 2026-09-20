@@ -1,6 +1,6 @@
 # Robin playtest 14 — 2026-08-20 evening: the Seed Run session (preview-e9)
 
-Build context: preview-e9.gold-rush-3in.pages.dev @ 71b886b8 (full-content build; production concurrently re-pinned to E1-only per ruling below). Map: e9-seed-run via ?contract=&debug (unlock gate F-A8-5 bypassed for the owner's review).
+Build context: preview-e9.gold-rush-3in.pages.dev @ e561867e (full-content build; production concurrently re-pinned to E1-only per ruling below). Map: e9-seed-run via ?contract=&debug (unlock gate F-A8-5 bypassed for the owner's review).
 
 ## His words, verbatim, in order — and what each became
 1. "?contract=e9-seed-run leads me to 'The Claim' on https://agenttown.app/goldrush" — VERIFIED as two stacked truths: (a) his server's build is stale, (b) the bare ?contract= param is refused BY DESIGN for everyone (fallbackReason debug-disabled; the engine's own leak guard). Answer: the preview link + &debug.

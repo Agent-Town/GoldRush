@@ -19,7 +19,7 @@ READ FIRST:
 
 AP-15 exists because the county had no floor. Quoting the spec's own statement of the problem: **"It has no floor. F-BAL-1 proved a contract could be idle-securable — a 0-decision 'win' divides by zero and, worse, credits a mind for what the MAP gives away free."** The Goodhart clause (law 2) is written *against* that floor — *"decision economy is void where the null floor secures"* — so until the floor is a pinned artifact, law 2 is unenforceable and every efficiency number the Field Book prints is unanchored.
 
-**The run cost was MEASURED, not estimated (s1650), because the last fire to queue an unmeasured full-corpus run cost the factory a parked master and an owner escalation (F-1648-1, a ~9h saturating run).** Measured on main at `784e94f02`, one process at a time:
+**The run cost was MEASURED, not estimated (s1650), because the last fire to queue an unmeasured full-corpus run cost the factory a parked master and an owner escalation (F-1648-1, a ~9h saturating run).** Measured on main at `823517290`, one process at a time:
 
 - 17 bench contracts × 1 seed each, sequential: **63.2 s total**. Per-run range **1.4 s – 8.4 s**.
 - Of those 17, **exactly 12 are door-servable**; the other 5 (`e3-fairground`, `e6-glow-mesa`, `e6-showroom`, `e6-half-life-hollow`, `e6-picnic`) are refused by the `HeadlessContractSim` constructor at rc=1. This is **known and already cured as a documentation matter** — `public/skill.md` carries the `door-contracts` block and the sentence *"Not every bench contract is servable through the headless door yet"* (F-DOOR-4, 2026-08-08). **Do not treat the 5 as a bug and do not try to socket them** — they are out of scope and their era sockets are browser-side only.

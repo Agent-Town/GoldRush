@@ -3,7 +3,7 @@
 - **Slice:** `lane-baron-siege` (master `tasks/done/20260803-174243-lane-baron-siege.md`)
 - **Branch/tip:** `lane/m4` — the slice is commit `30eba6dfe464059d6213ea571bfda089e9ecff50`
 - **Base (lane parent):** `30eba6df^` (`lane/m4` is **735 behind** main)
-- **Gated in:** detached worktree `worktrees/gate-s1444` at main `60362857` (§3.0b)
+- **Gated in:** detached worktree `worktrees/gate-s1444` at main `f31c1a51` (§3.0b)
 - **Drained by:** s1444 fire, 2026-08-04
 
 ## VERDICT: MERGE — FULL

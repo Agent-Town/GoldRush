@@ -64,6 +64,6 @@ Keep the signature `moveHeroTo(page, x, z)` so all 9 call sites are untouched.
 - Both mutation arms from 3b reported.
 
 ## SEQUENCING / LANE SAFETY
-`lane/m4` is **4 ahead** of main: `45f78f6e`, `7b2d63f5`, `d7d8ba03` (the three parked trail-guide attempts, each pinned to `archive/lane-m4-trail-guide-*`) and `f4cb37bf` (claw-2x, content-merged as `b00319ea`). It is a **false-ahead SAFE DUPE**. **Re-verify that yourself before resetting** — confirm all three archive refs resolve (`git rev-parse archive/lane-m4-trail-guide-d7d8ba03` etc.) and that the worktree is clean vs main. If either check fails, **STOP and report**; do not reset. (w1-03 and polish-02 died exactly here.)
+`lane/m4` is **4 ahead** of main: `45f78f6e`, `7b2d63f5`, `d7d8ba03` (the three parked trail-guide attempts, each pinned to `archive/lane-m4-trail-guide-*`) and `f4cb37bf` (claw-2x, content-merged as `2affef09`). It is a **false-ahead SAFE DUPE**. **Re-verify that yourself before resetting** — confirm all three archive refs resolve (`git rev-parse archive/lane-m4-trail-guide-d7d8ba03` etc.) and that the worktree is clean vs main. If either check fails, **STOP and report**; do not reset. (w1-03 and polish-02 died exactly here.)
 
 **READY-FOR-GATES** — report: the before/after miss tables for all 9 call sites, both mutation arms, the failure-rate delta at 4 workers, and whether `release-build.spec.ts:297` is genuinely retired or still red.

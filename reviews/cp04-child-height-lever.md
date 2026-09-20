@@ -1,8 +1,8 @@
 # Review — CP-04 the child-height lever
 
 - **Slice:** CP-04 (charter-press spec, law 3 "THE CHILD-HEIGHT LEVER") — the kids' Press mode
-- **Branch/tip:** lane/perf @ `ba436d1b5b31faab07e4fb97d793055d3e1df876` (runner commit `ba436d1b`, done-move `20260717-200849-lane-d-cp04-child-height-lever.md`)
-- **Base:** clean descendant of `5e40ae6d` (pre-lock main) — verified `git merge-base --is-ancestor 5e40ae6d lane/perf` = YES
+- **Branch/tip:** lane/perf @ `ffe8ec47c328baddbd9065cfd0ebe150c68a8b6a` (runner commit `ffe8ec47`, done-move `20260717-200849-lane-d-cp04-child-height-lever.md`)
+- **Base:** clean descendant of `2b4e430f` (pre-lock main) — verified `git merge-base --is-ancestor 2b4e430f lane/perf` = YES
 - **Drained by:** s723 fire, 2026-07-17
 - **Verdict:** ✅ MERGE — gate clean; 13 initial adjacent failures all fingerprint-cleared as contention false-reds.
 
@@ -21,7 +21,7 @@ Adds a second face to the already-shipped Charter Press engine (CP-01..03) — *
 | Screenshots | `reviews/shots-cp04/{lever-mode,land-cards,stamped-launch}.png` |
 
 ## Merge classification
-Clean additive graft onto current main. cp04 = `5e40ae6d` + 7 files (2 modified, 5 new); main since only added the s723 STATUS lock (`d0db7610`, disjoint). Per-file:
+Clean additive graft onto current main. cp04 = `2b4e430f` + 7 files (2 modified, 5 new); main since only added the s723 STATUS lock (`764e04d8`, disjoint). Per-file:
 - **NEW (no conflict):** `e2e/cp04-lever.spec.ts`, `src/charter/templates/LeverTemplates.ts`, `src/charter/press-panel.css`, 3× `reviews/shots-cp04/*.png`
 - **MODIFIED (LANE-TOUCHED only, main untouched):** `src/charter/PressPanel.ts` (mode toggle + Lever face; +135/−20)
 

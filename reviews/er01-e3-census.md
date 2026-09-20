@@ -1,9 +1,9 @@
 # ER-01 E3 Voltage readiness census — drain review (s1461)
 
 - **Slice:** `lane-er01-e3-census` (E3 Voltage, on the E2 template + the ERA-SOCKET LAW)
-- **Origin commit:** `d0f52744` — **a reflog orphan when this fire found it** (see F-1461-1)
+- **Origin commit:** `a094c592` — **a reflog orphan when this fire found it** (see F-1461-1)
 - **Rescued to:** `archive/lane-b-s1461-orphan-er01-e3-d0f52744`
-- **Merged to main:** `0c4168a2d2d43214cf443fcd3252afc3aa27a905`
+- **Merged to main:** `9753ae46df5da227e584a93147a541f158106ee4`
 - **Gated in:** detached worktree `gate-s1461/` at merge `6ce41876` (§3.0b)
 - **Drain-block check:** `? UNKNOWN` — no leaf; searched by leaf id, genuinely absent. Registered in the bookkeeping commit. Not a block.
 
@@ -23,7 +23,7 @@ declared-but-unrepresented sources. Four attended fix-master stubs are written i
 the correct firewall.
 
 This is the ERA-SOCKET LAW behaving as designed one epoch on from the slice that named it: E2's
-pressure gap was cured by *building the socket* (`24c6600f`, drained earlier this fire), and E3's
+pressure gap was cured by *building the socket* (`6fd24a3b`, drained earlier this fire), and E3's
 five gaps are *named as DATA-GAP rows pointing at their missing sockets* rather than papered over.
 Generator proposes, contract disposes.
 
@@ -50,7 +50,7 @@ No screenshots: headless bench infrastructure, no player-visible surface.
 
 ## Merge classification
 
-Base `3445d479`. Per-file: `docs/bench/e3-readiness-census.md`, `e2e/er01-e3-census.spec.ts`,
+Base `91962d70`. Per-file: `docs/bench/e3-readiness-census.md`, `e2e/er01-e3-census.spec.ts`,
 `assets/contracts/bench-seeds.json` all **LANE-ONLY pure-add** (main has never held these paths, or
 holds them only as append-only union surfaces); `tasks/BACKLOG.md` **BOTH-MOVED**.
 
@@ -65,7 +65,7 @@ All epochs' members kept; E2's seeds untouched.
 ## Findings
 
 **F-1461-1 (filed in `reviews/e2-pressure-socket.md`, evidenced here) — this slice IS the
-casualty.** `lane/b` committed it at `d0f52744` (20:47:02) and was `reset --hard` to `origin/main`
+casualty.** `lane/b` committed it at `a094c592` (20:47:02) and was `reset --hard` to `origin/main`
 about **30 seconds later** when the runner dispatched the E6 census into the same slot. The
 done-move `20260805-203235-lane-er01-e3-census.md` sat un-prefixed — a completed-run claim — while
 112 lines of gated-quality work existed on **no branch and not on main**, recoverable only from

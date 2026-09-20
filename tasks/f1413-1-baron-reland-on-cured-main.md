@@ -11,7 +11,7 @@ WHY (this slice was refused for TWO defects; one is mechanically fixable and one
   owner word will lift this; a fire lifts it by landing the cure."* **Nobody is waiting on Robin here.** The
   two refusals:
 
-  · **F-1400-1 (mechanical)** — the lane branched at `67d28607`, which predates `372808f0`, so both of its new
+  · **F-1400-1 (mechanical)** — the lane branched at `fbcaa7a4`, which predates `b6a6b613`, so both of its new
     `HeadlessContractSim` call sites use the **old positional constructor** `new HeadlessContractSim('e1-baron',
     'e1-baron-01')`. `git` merges it clean and `tsc` is blind to it; it throws `Unknown contract: undefined` at
     runtime. s1400 proved this half curable: *with only the 2-line rewrite applied, the baron headline test
@@ -21,7 +21,7 @@ WHY (this slice was refused for TWO defects; one is mechanically fixable and one
     while the identical command on clean main exited in seconds. Control-proven merge-induced, and proven NOT a
     consequence of F-1400-1 (it reproduced with the call sites already fixed).
 
-  ✅ **F-1400-3's mechanism was cured on main by `e45cf7c5` (s1410, "bound the gr-sim driver with a secureWave+2
+  ✅ **F-1400-3's mechanism was cured on main by `38f456d3` (s1410, "bound the gr-sim driver with a secureWave+2
   ceiling").** The driver loop had no bound at all — `advanceToTurn`'s `maxTicks` returns early on every wave
   change — so any contract that never auto-secures spun forever and was immune to the caller's `spawnSync`
   timeout. It now throws a diagnostic naming contract/mode/seed/wave/ceiling and exits non-zero. That commit
@@ -34,15 +34,15 @@ WHY (this slice was refused for TWO defects; one is mechanically fixable and one
   was that *merging this slice changed what escort mode does on `e2-hill-mine`* — a contract that declares BOTH
   a baron block (`escortCount: 8` on `e1-baron`; `e2-hill-mine` declares its own) and an escort mode, while this
   slice threads a new `escortsSpawned` count through `spawnBaronWave` / `spawnComponentBossWave` /
-  `onBaronSpawned`. `e45cf7c5` did not touch any of those; it put a ceiling under the loop they were spinning.
+  `onBaronSpawned`. `38f456d3` did not touch any of those; it put a ceiling under the loop they were spinning.
   **So the honest state is: the SYMPTOM is bounded, the CAUSE is UNVERIFIED.** If the behaviour change is still
   present, this graft now turns a hang into a ceiling throw — which is a red in every future drain gate rather
   than a hang, i.e. better, but still a defect this slice introduced. **Scope 3 exists to answer that question
   with a control run, and it is a STOP condition, not a formality.** Do not report F-1400-3 as closed on the
-  strength of `e45cf7c5` existing; report it closed only if your own control run says so.
+  strength of `38f456d3` existing; report it closed only if your own control run says so.
 
   🚫 **EVERY PINNED VALUE IN THIS GRAFT IS STALE BY CONSTRUCTION, AND YOU MUST NOT CARRY ONE FORWARD.** The
-  grafted test pins `kills: 869` and `eventLogHash: 'fnv1a32:b9566c6d'`. **Both were derived before `eaefdb24`**
+  grafted test pins `kills: 869` and `eventLogHash: 'fnv1a32:b9566c6d'`. **Both were derived before `a05171ce`**
   (s1406, "make wave scaling cross-engine deterministic: `Math.pow` → repeated multiplication"), which changed
   the wave-scaling arithmetic and therefore changes kill counts. Measured on `the-claim`, that same cure moved
   `kills` 140 → 137 and moved its pinned hash. **This is a wave-20 boss contract with `escortCount: 8` and
@@ -53,7 +53,7 @@ WHY (this slice was refused for TWO defects; one is mechanically fixable and one
 
 READ-FIRST (paths — read them, do not skim):
  · `lane/e2-arsenal` tip `9a9fb2bb` — the graft. Read the whole diff before you touch anything:
-   `git diff 67d28607 lane/e2-arsenal`. It is **one commit, four files, +260/−10**.
+   `git diff fbcaa7a4 lane/e2-arsenal`. It is **one commit, four files, +260/−10**.
  · `reviews/e1-headless-bench-twin-banks-baron-s1400.md` — the refusal, in its own words. Read what it PROVED
    (the control runs) and not only what it concluded.
  · `reviews/f1401-1-bound-the-headless-driver.md` — the F-1400-3 cure and, crucially, **its escort canary**:
@@ -94,7 +94,7 @@ SCOPE (numbered, each testable):
     will not tell you.
 
  2. **Graft `src/systems/WaveSystem.ts` HUNK BY HUNK. A raw checkout of this file is an automatic rejection.**
-    Main has moved here since the graft's base: `eaefdb24` replaced all five sim-reachable `Math.pow(base, wave)`
+    Main has moved here since the graft's base: `a05171ce` replaced all five sim-reachable `Math.pow(base, wave)`
     sites with repeated multiplication, and **that cure is correct, merged, and load-bearing for the entire E1
     bench.** `git checkout lane/e2-arsenal -- src/systems/WaveSystem.ts` would silently discard it and re-open
     the exact cross-engine divergence that cost this thread four fires. The lane's own change to this file is
@@ -122,7 +122,7 @@ SCOPE (numbered, each testable):
 
  4. **Derive BOTH baron values on YOUR tree, before pinning either.** Run the grafted headline test's secure
     path exactly as the test runs it, and the CLI path for the seeds you add. Paste the commands and the raw
-    outcome lines. **Do not pin `kills: 869` or `fnv1a32:b9566c6d`** — those are the pre-`eaefdb24` values and
+    outcome lines. **Do not pin `kills: 869` or `fnv1a32:b9566c6d`** — those are the pre-`a05171ce` values and
     carrying either one forward is the precise failure this thread exists to detect.
 
  5. **Prove each value is stable before you pin it — an unreproducible pin is a broken instrument, not a
@@ -131,12 +131,12 @@ SCOPE (numbered, each testable):
     escorts a determinism defect is worth far more than this slice.
 
  6. **Report the deltas against the graft's stale pins explicitly** — old vs new `eventLogHash`, old vs new
-    `kills` (the graft says 869). This is the evidence that `eaefdb24` reached this contract, and it is the
+    `kills` (the graft says 869). This is the evidence that `a05171ce` reached this contract, and it is the
     single most useful line in your report. **If a value is UNCHANGED, say so and flag it as unexpected**, and
     do not hand-wave it: on a wave-20 contract an unmoved kill count needs a mechanism.
 
  7. **Check the second engine.** Re-derive both values under `~/.nvm/versions/node/v23.11.1/bin/node` as well as
-    your own, and report whether they agree. ⚠️ **If they DISAGREE, STOP and report** — that means `eaefdb24` did
+    your own, and report whether they agree. ⚠️ **If they DISAGREE, STOP and report** — that means `a05171ce` did
     not fully reach this path, which is a live cure defect on the boss path and is worth far more than landing
     this slice. Do not pin a value that differs per engine. ⓘ This is not ceremony: the cross-engine guard is
     deliberately SKIPPED in a fire shell (F-1408-2), so the drain that gates you **structurally cannot** produce

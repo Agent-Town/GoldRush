@@ -194,7 +194,7 @@ verb actually touched still hashes differently from one it did not.
 
 | | sha256 |
 |---|---|
-| lane base = `main` `5d8603982`, BEFORE any edit | `49c34f8bba3d61e003d1f421398e3835e3107945f396800fa124f946b2e4b2f9` |
+| lane base = `main` `5d8603982 (archive: pruned by the A3 rewrite)`, BEFORE any edit | `49c34f8bba3d61e003d1f421398e3835e3107945f396800fa124f946b2e4b2f9` |
 | this lane tip | `2e6af2be015c161d8f87b4a4ef3b586cdcdf68e822e78b5d58fc40af62952178` |
 | registry top-level `engineHash` | `5d2fc15616271e8c900824450ce803eb5145c1136dae0d9655c393724794b11b` |
 
@@ -239,16 +239,16 @@ attribute to a control.
 
 `npm run test:node-guards` under node 26.4.0, exit **1**: **637 pass / 6 distinct fail, and ZERO of
 the six is attributable to this slice.** Every one was re-run against a CONTROL — a detached
-worktree of this lane's own base commit `5d8603982`, created with `git worktree add --detach` and
+worktree of this lane's own base commit `5d8603982 (archive: pruned by the A3 rewrite)`, created with `git worktree add --detach` and
 never `git stash` — or reproduced as an instrument fault.
 
-| Guard | Failure | Cause | Control at `5d8603982` |
+| Guard | Failure | Cause | Control at `5d8603982 (archive: pruned by the A3 rewrite)` |
 |---|---|---|---|
 | `scripts/bench-seeds.test.mjs` | "rotation registry stays outside the engine identity corpus" | asserts `computeEngineHash() === registry.engineHash`; this is the engine pin the slice owes the DRAIN (section 5d) | **RED** (`49c34f8b...` != `5d2fc156...`) |
 | `scripts/engine-era-guard.test.mjs` | "the landed registry names the live engine..." | the same missing pin | **RED**, same reason |
 | `scripts/fixture-teardown.test.mjs` | "all 121 scripts/*.test.mjs fixture owners remove their temp directories" | its own message names the cause: "scripts/bench-seeds.test.mjs child failed" — it re-runs the guard above | derivative of the two above |
 | `scripts/desk-declaration-guard.test.mjs` | "the live board is green under this guard (baseline is honest)" | the guard REFUSES by design from a linked worktree: "this is a linked worktree and its STATUS.md line-1 is NOT the one main carries ... Re-run from the main worktree" | **RED**, identical refusal |
-| `scripts/stale-ready-for-gates-guard.test.mjs` | "the live ledger carries no stale READY-FOR-GATES claim" | names `tasks/BACKLOG.md:5`, the **e8-mare-claim-physics** row, whose leaf is `status="merged" a121c7f1` and whose row still says NOT drained. Someone else's Ghost Line (Mistake #5) | **RED**, same row |
+| `scripts/stale-ready-for-gates-guard.test.mjs` | "the live ledger carries no stale READY-FOR-GATES claim" | names `tasks/BACKLOG.md:5`, the **e8-mare-claim-physics** row, whose leaf is `status="merged" 5c82f05b` and whose row still says NOT drained. Someone else's Ghost Line (Mistake #5) | **RED**, same row |
 | `scripts/node-guards-contention.test.mjs` | "contention is advisory, correctly counted, and absent when alone" | INSTRUMENT FAULT, mine: I ran a single guard concurrently with the battery, and the battery's own tail says so ("CONTENDED - 2 concurrent batteries") | **GREEN** when re-run alone on this tree |
 
 The new `scripts/e7-playbook-rows.test.mjs` is inside that battery and passed 6/6.

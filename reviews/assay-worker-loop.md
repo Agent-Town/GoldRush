@@ -1,9 +1,9 @@
 # Review — assay-worker-loop (slice 2 of `specs/agent-play/assay-worker.md`)
 
 - **Slice**: `assay-worker-loop` — the assayer himself: poll, replay, verdict
-- **Branch / tip**: `lane/lane-d` @ `55c6454fd33f2810ec42b44f2a3d62de53f8a038`
-- **Base (merge-base with main)**: `328d3841bacf960afed8b56b46bc73848852bcb5`
-- **Merge commit on main**: `21b10389e2f1f7765ebfba57408cd3594e00ebc5`
+- **Branch / tip**: `lane/lane-d` @ `888a29672fb0b1e31e0fdcde83a373b6eef683b9`
+- **Base (merge-base with main)**: `9cb0aba4faf91b0d4fe6a2bc1153006e9bdf6bca`
+- **Merge commit on main**: `a8d5164db67ca5c177e3007478b65babd867f07e`
 - **Drained by**: s2057 fire, 2026-08-18
 - **Transcripts**: `artifacts/s2057-assay-worker-gate.txt` (gate) · `artifacts/s2057-assay-worker-control.txt` (control + isolation arms)
 
@@ -76,7 +76,7 @@ so **only the content varies** between arms.
 
 ## Merge classification
 
-Base `328d3841`; main moved **none** of the four paths between the base and the merge
+Base `9cb0aba4`; main moved **none** of the four paths between the base and the merge
 (`git diff --name-only <base> main -- <the four paths>` → empty), so there was no three-way work to
 do and the 'ort' merge reported no conflicts.
 

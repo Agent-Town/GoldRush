@@ -188,7 +188,7 @@ export const FIRST_TOWN_FAMILIES = [
 /**
  * THE ADVANCE-STREAM RESIDUE. These belong to a CONTRACT, not to the town, and are here only
  * because the committed corpus predates the F-BUDGET-3 hold (measured at 1,052,408 B on the built
- * e1 bundle at main e5f3ac820). They are tolerated so the guard is honest about today's corpus,
+ * e1 bundle at main 37c8beda6). They are tolerated so the guard is honest about today's corpus,
  * never extended: the second assertion below refuses any contract family that is not the board's
  * FIRST contract, so a second map cannot enter the first town through this door.
  *

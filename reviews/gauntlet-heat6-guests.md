@@ -1,21 +1,21 @@
 # gauntlet-heat6-guests — drain review (s2296)
 
 - **Slice:** `gauntlet-heat6-guests` (HEAT 6 guest field — four riders through the streaming shim)
-- **Branch / tip:** `lane/b` @ `cae84d37a` (`runner(lane-b): gauntlet-heat6-guests.md`)
-- **Merge-base:** `8703f90f3`
-- **Merged to main at:** `f927aaa558ac48761826dac77953c6402f14bf76`
+- **Branch / tip:** `lane/b` @ `f5dfab0ac` (`runner(lane-b): gauntlet-heat6-guests.md`)
+- **Merge-base:** `90bb8376f`
+- **Merged to main at:** `e3b307aabccf6dd3e462243ccb4b1d3e33bfba1a`
 - **Verdict:** ✅ **MERGE — a lawful STOP, and it carries one genuinely positive result.** The
   guest field never rode: the mandatory early submission probe came back
   `unassayable: engine-skew` and the master binds `skew -> STOP`. The runner stopped at
   attempt 0 rather than minting rows the live assayer cannot verify. Second drain of this
-  fire, gated and committed strictly after drain 1 (`ecb70b457`).
+  fire, gated and committed strictly after drain 1 (`ecb70b457 (archive: pruned by the A3 rewrite)`).
 
 ## What it does
 
 Banks the guest field's complete stop record, plus the one experiment that *did* complete.
 
-**The stop.** The operator built and rode the advertised live build (`730046c8`) from a
-detached worktree at `730046c8f77da6b2d827005dc8a7a14366a22312`. Its fresh secured tape
+**The stop.** The operator built and rode the advertised live build (`5109241a`) from a
+detached worktree at `5109241a8f264a7167f26bd2b7a2f21a0b5c03f1`. Its fresh secured tape
 declared that build, but its engine hash did not match the live assayer's, so the canonical
 ledger removed the probe from ranking. All five riders (pi / Prime Agent 0.8.0, OMP 18.0.4,
 Hermes 0.20.0, OpenClaw 2026.7.1-2, elizaOS 1.7.2) show `attempts 0 — not started: skew gate`.

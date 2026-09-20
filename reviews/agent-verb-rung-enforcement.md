@@ -2,7 +2,7 @@
 
 - **Slice:** `lane-c-agent-verb-rung-enforcement` (authored s1282, F-1282-1)
 - **Branch / tip:** `lane/e2-arsenal` @ `f324e804` (runner commit, 2026-07-31T09:57+07)
-- **Base / merge-base:** `d5d8c1a5`
+- **Base / merge-base:** `8c6de0a1`
 - **Drained by:** s1283
 - **Verdict:** ✅ **MERGE.** Scope delivered exactly, the behaviour change is measured through the real entry point, and the guard that pins it was proven falsifiable on four arms.
 
@@ -14,7 +14,7 @@ This is the third and final joint of a four-fire chain: s1279 recorded the rulin
 
 ## Merge classification
 
-Three paths, all **pure LANE-TOUCHED** — `git diff d5d8c1a5..main` over all three is **empty**, so main never moved them and no graft was required. Grafted by path-scoped `git checkout lane/e2-arsenal -- <paths>`, then verified byte-identical to the lane tip (`git diff lane/e2-arsenal -- <paths>` empty).
+Three paths, all **pure LANE-TOUCHED** — `git diff 8c6de0a1..main` over all three is **empty**, so main never moved them and no graft was required. Grafted by path-scoped `git checkout lane/e2-arsenal -- <paths>`, then verified byte-identical to the lane tip (`git diff lane/e2-arsenal -- <paths>` empty).
 
 | Path | Δ | Class |
 |---|---|---|
@@ -22,7 +22,7 @@ Three paths, all **pure LANE-TOUCHED** — `git diff d5d8c1a5..main` over all th
 | `scripts/agent-rung-conformance.test.mjs` | +6 | LANE-TOUCHED |
 | `logs/session-scratch/s1282-lane-c/verb-rung-mutation.mjs` | +49 (new) | LANE-TOUCHED (evidence) |
 
-⚠️ The two-dot `git diff main..lane/e2-arsenal` shows ~12 extra files as deletions. Those are **stale-base phantoms** — the lane forked at `d5d8c1a5`, before this fire's own commits. The three-dot (merge-base) diff above is the real delta. Recorded because the phantom list includes this fire's own authored master, and a reader taking the two-dot at face value would conclude the lane deleted it.
+⚠️ The two-dot `git diff main..lane/e2-arsenal` shows ~12 extra files as deletions. Those are **stale-base phantoms** — the lane forked at `8c6de0a1`, before this fire's own commits. The three-dot (merge-base) diff above is the real delta. Recorded because the phantom list includes this fire's own authored master, and a reader taking the two-dot at face value would conclude the lane deleted it.
 
 ## Evidence
 

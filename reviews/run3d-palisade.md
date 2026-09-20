@@ -1,6 +1,6 @@
 # Review — run3d-08-palisade (RUN-3D buildables ladder, slice 08)
 
-**Slice/branch/tip:** run3d-08-palisade · `lane/m3` `6cda5711` (`runner(lane-a): run3d-08-palisade.md`) → drained to main by s448.
+**Slice/branch/tip:** run3d-08-palisade · `lane/m3` `6d7fe1a7` (`runner(lane-a): run3d-08-palisade.md`) → drained to main by s448.
 **Verdict:** MERGE — sibling-union + a general refactor of the run3d module body, gates green (siblings unmodified-green).
 
 ## What it does
@@ -16,11 +16,11 @@ Adds a 3D Palisade model to the RUN-3D proving-ground (`?run3dPilot=`-gated infr
 | Sibling non-regression | turret + stockpile + sluice specs **unmodified-green** under the refactored body — the Map-based tri count uses `triangleCounts.get(id)`, populated for every loaded template, so no sibling depends on the removed scalar |
 
 ## Merge classification
-Base `6cda5711^` = `4e396d08` (sluice-only registry, old scalar tri logic — an ancestor of main). `git merge --no-ff 6cda5711` auto-merged **with no conflicts**:
+Base `6d7fe1a7^` = `4e396d08` (sluice-only registry, old scalar tri logic — an ancestor of main). `git merge --no-ff 6d7fe1a7` auto-merged **with no conflicts**:
 - **All-new (auto-merge):** `assets/pilots/run3d/palisade.{blend,glb}`, `e2e/run3d-palisade.spec.ts`, `artifacts/run3d-palisade/*`.
 - **`src/game/Run3dPilot.ts` (clean 3-way):** the registry block auto-unioned because 08 inserts `palisade` *before* `sluice` while turret/stockpile were appended *after* → no textual overlap; result `{ palisade, sluice, turret, stockpile }`. The body refactor applied cleanly because main's body was unchanged since base (turret/stockpile were registry-only additions), so ours==base for the body and git took theirs.
 
 ## Findings
 - No blocking findings. This is a shared-module refactor (broader than the "adjacent additive line" sibling-union), so it was gated with the FULL sibling battery single-worker to prove turret/stockpile/sluice stay green under the new body — they do (42/42).
-- 14-lantern-post is currently running on lane/m3 on top of `6cda5711`, so it inherits this refactored body and will drain as a clean sibling-union next.
+- 14-lantern-post is currently running on lane/m3 on top of `6d7fe1a7`, so it inherits this refactored body and will drain as a clean sibling-union next.
 - Infra slice, `?run3dPilot=`-gated → INVISIBLE in plain boot → **no gazette item** (correct per the GZ-01 filter law).

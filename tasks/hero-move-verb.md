@@ -1,4 +1,4 @@
-> ⛔ SHIPPED — DO NOT QUEUE (merged to main as `15f6fbb23`, attended drain; the BACKLOG row "hero-move-verb SHIPPED 15f6fbb23" is the proof; `git merge-base --is-ancestor 15f6fbb23 main` = yes. Banner added 2026-09-07 for the task-guard audit: this master had no goal leaf.)
+> ⛔ SHIPPED — DO NOT QUEUE (merged to main as `46a616df7`, attended drain; the BACKLOG row "hero-move-verb SHIPPED 46a616df7" is the proof; `git merge-base --is-ancestor 46a616df7 main` = yes. Banner added 2026-09-07 for the task-guard audit: this master had no goal leaf.)
 
 # Task hero-move-verb: riders can move the hero (SCRATCH worktree, Claude Opus 5 implementer; commit prefix "feat:")
 

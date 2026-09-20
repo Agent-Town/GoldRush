@@ -10,13 +10,13 @@ The admission evidence predates both AP-16 and the current `Math.hypot` environm
 
 | Date (Asia/Bangkok) | Commit / source | What it proves |
 |---|---|---|
-| 2026-08-02 22:48 | `eaefdb24308067d2ad28e6cc2e11cf86ed5469e1` | The older wave-scaling `Math.pow` cure landed before the Baron admission evidence. |
-| 2026-08-03 04:03 | `1a4831df70ad49aa8fae6e371cbd263ecbaa639b`; `reviews/f1414-1.md:1-44` | The Baron secure predicate landed and the E1 bench driver became 5/5. The cited focused test was green. |
+| 2026-08-02 22:48 | `a05171ce535da2280a5ad5c7ea7af3afdb3eb398` | The older wave-scaling `Math.pow` cure landed before the Baron admission evidence. |
+| 2026-08-03 04:03 | `653c7fef31ebff9e198062f37e28e43bbcbc2771`; `reviews/f1414-1.md:1-44` | The Baron secure predicate landed and the E1 bench driver became 5/5. The cited focused test was green. |
 | current test body | `scripts/gr-sim.test.mjs:790-890` | That proof mutates `Balance.sparkRig` to damage `1_000`, fire rate `60`, range `300`, and gives the hero `100_000` HP. It is a wiring/determinism proof, not door play. |
 | pre-law ride | `bench/gauntlet/heat2/prime-sol/e1-baron-report.md`; `specs/agent-play/ap-16-same-game-law.md:19` | The known near-run used a palisade the browser did not offer and still finished unsecured. |
-| 2026-08-10 19:08 | `8465f6b3313fb7e4ca2c4cad538b715994660cab`; `specs/agent-play/ap-16-same-game-law.md:10-32` | AP-16-1 replaced the unequal E1 vocabulary with one manifest-derived buildable set. AP-16 was ratified seven days after the admission proof. |
-| 2026-08-10 22:45 | `b8cf2332d3afe39adea64e2a273cdca8d55254cd`; same spec | AP-16-2b minted the Season 2 keystone after the admission proof. |
-| 2026-08-24 21:50 | `0a117cf9ad9c2e4c85e2c251023769b7a35a980e`; `tasks/BACKLOG.md:1` before this audit row | The current environment-honesty cure names the divergent `Math.hypot` surface. It landed three weeks after the admission proof. |
+| 2026-08-10 19:08 | `760990fda5d91559202dbf5a3020de90f694aa7c`; `specs/agent-play/ap-16-same-game-law.md:10-32` | AP-16-1 replaced the unequal E1 vocabulary with one manifest-derived buildable set. AP-16 was ratified seven days after the admission proof. |
+| 2026-08-10 22:45 | `89e97e2938aff518d1f4995472238f878a642758`; same spec | AP-16-2b minted the Season 2 keystone after the admission proof. |
+| 2026-08-24 21:50 | `d141861e65f3dd9804c41de49c28bb35a4822da5`; `tasks/BACKLOG.md:1` before this audit row | The current environment-honesty cure names the divergent `Math.hypot` surface. It landed three weeks after the admission proof. |
 
 ## Missing proof
 

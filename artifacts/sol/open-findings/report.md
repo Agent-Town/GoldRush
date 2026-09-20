@@ -1,11 +1,11 @@
 # F-ASTRA-6 and F-ASTRA-2 implementation evidence
 
 Task: `sol-open-findings-astra`; branch `sol/open-findings-astra`.
-Base: `de7eacd1714584ad73cb2d1245e5f907d213b9f1`.
+Base: `21648cdcff9cafc1a44a56eb94c15eb9bf5d2a14`.
 
 ## Final state
 
-**READY-FOR-GATES with recorded exceptions.** Runtime batching is committed in `99d1c8754`; the finished hero pilot is committed separately in `58fdd423c`. The final evidence commit also corrects the new plain-boot fixture and gives the culling guard a real census caller.
+**READY-FOR-GATES with recorded exceptions.** Runtime batching is committed in `2d485b5fe`; the finished hero pilot is committed separately in `58fdd423c (archive: pruned by the A3 rewrite)`. The final evidence commit also corrects the new plain-boot fixture and gives the culling guard a real census caller.
 
 - **F-ASTRA-6:** measured reductions of 2 / 2 / 3 / 2 draw calls for The Claim / town / Dry Gulch / Twin Banks. The 20-case original transparency matrix and both town comparisons pass. Four-run timing modes are similar or better in most cases, but the strict no-worse p95 condition remains **unproved**; every sample and qualification is retained. Do not mark this condition green from the draw-call result alone.
 - **F-ASTRA-2:** finished diffuse 1024-square pilot, complete side/back UVs, grounded exported walk and [eight-heading comparison board](hero-eight-heading-board.png). The runtime still uses the sprite. **Robin decides promotion.**
@@ -333,7 +333,7 @@ The serial node phase completed all **915 tests: 895 passed, 10 failed, 2 cancel
 | Uncaught `write EPIPE` | `e8-remaining-maps` | Infrastructure/pipe failure remains unresolved; not treated as a passing test. |
 | Signal-only `SIGBUS` | `open-sea-water` | Retried once as a single file under Node 26, concurrency 1. One assertion passed, then the file failed again without an assertion diagnostic; exit 1. The default spec reporter did not print a retry signal. Red retained; no further retry. |
 
-The required changed-since command ran against base `de7eacd1714584ad73cb2d1245e5f907d213b9f1` with `GR_GUARD_NO_ARTIFACT=1`. Power budget (p95 0.343 ms), task guards and citations passed. Caller audit passed after its repair. The node gate remains red for the reasons above. No baseline exemption, gate assertion, engine pin or unrelated runtime code was changed.
+The required changed-since command ran against base `21648cdcff9cafc1a44a56eb94c15eb9bf5d2a14` with `GR_GUARD_NO_ARTIFACT=1`. Power budget (p95 0.343 ms), task guards and citations passed. Caller audit passed after its repair. The node gate remains red for the reasons above. No baseline exemption, gate assertion, engine pin or unrelated runtime code was changed.
 
 The single native retry transcript is [node-native-retry.txt](node-native-retry.txt). Build and focused caller verification output is in [build-verification.txt](build-verification.txt). The successful caller recheck does not rewrite the historical whole-battery counts.
 
@@ -379,7 +379,7 @@ Do not set `GR_CAPTURE_RUN=1` for that `.spec.ts` command: it intentionally sele
 ```sh
 CLAUDE_CONFIG_DIR=/Users/robin/.claude-fires GR_GUARD_NO_ARTIFACT=1 \
 GR_GUARD_STATS_PATH=artifacts/sol/open-findings/_raw/guard-stats.jsonl \
-  node scripts/run-guards.mjs --changed-since de7eacd1714584ad73cb2d1245e5f907d213b9f1
+  node scripts/run-guards.mjs --changed-since 21648cdcff9cafc1a44a56eb94c15eb9bf5d2a14
 ```
 
 This required command was measured to hit its 900-second npm-wrapper ceiling. The full node phase then took about 40 minutes. For a future full battery run without that outer ceiling, the equivalent direct command is `CLAUDE_CONFIG_DIR=/Users/robin/.claude-fires npm run test:node-guards`; do not launch it alongside another owned battery. Hero rebuild, live comparison, capture and exported-walk validation commands are in `assets/pilots/hero-3d/README.md`.

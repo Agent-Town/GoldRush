@@ -2,7 +2,7 @@
 
 **Slice:** W1-02 (river shader, ford legibility, gold glints, mobile knob)
 **Gated by:** s63 fire (2026-07-06)
-**Lane commit:** `2178b5c w1: add living water shader` on base `6b05cb9` (worktrees/lane-c)
+**Lane commit:** `2178b5c w1: add living water shader` on base `a53ff91` (worktrees/lane-c)
 **Done-move:** tasks/done/20260706-122428-lane-c-w1-02-living-water.md
 **Verdict:** ✅ **PASS — merged** (path-scoped onto main d4bf1e3+bookkeeping; one test-harness corrective F-w1-02-1 applied)
 

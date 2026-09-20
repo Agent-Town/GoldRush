@@ -2,7 +2,7 @@
 
 **Slice:** dead-field sweep across contract vocabulary
 **Branch:** `lane/e2-arsenal` · **Tip:** `8292b3fc` "runner(lane-c): lane-dead-fields-sweep.md" (2026-08-02 07:04:08+07)
-**Base:** `5fb63bdb` (2026-08-01 14:34) · **Drained:** s1380 fire, 2026-08-02
+**Base:** `5fb63bdb (archive: pruned by the A3 rewrite)` (2026-08-01 14:34) · **Drained:** s1380 fire, 2026-08-02
 **VERDICT: MERGE** — tsc clean, build green, 30/30 mask tests, and every red reproduced identically on a clean-main control.
 
 ## What it does
@@ -25,7 +25,7 @@ is the lane's own commit**, and that is what was classified and landed.
 
 | Bucket | Count | Note |
 |---|---|---|
-| LANE-TOUCHED | **20** | main has not touched any of these since `5fb63bdb` |
+| LANE-TOUCHED | **20** | main has not touched any of these since `5fb63bdb (archive: pruned by the A3 rewrite)` |
 | MAIN-MOVED / BOTH-MOVED | **0** | no 3-way graft needed |
 
 Because BOTH-MOVED is zero, a path-scoped land is *exactly* equivalent to a merge. Verified rather

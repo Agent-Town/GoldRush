@@ -1,8 +1,8 @@
 # ER-01 E5 Deepwater readiness census — drain review (s1461)
 
 - **Slice:** `lane-er01-e5-census` (E5 Deepwater, on the E2/E3 template + the ERA-SOCKET LAW)
-- **Branch / tip:** `lane/d` @ `1455e18b` (runner bookkeeping) over `76c049cb` (the census itself)
-- **Merged to main:** `00f17d57ba80b22290d790f83deed6127de8a63f`, **plus a same-fire revert of four out-of-scope deletions** (see F-1461-5)
+- **Branch / tip:** `lane/d` @ `d2111e8b` (runner bookkeeping) over `65d905d1` (the census itself)
+- **Merged to main:** `e608adcd19d8589df37aa4063ad9b19b996805b0`, **plus a same-fire revert of four out-of-scope deletions** (see F-1461-5)
 - **Gated in:** detached worktree `gate-s1461/` (§3.0b)
 - **Drain-block check:** `? UNKNOWN` — no leaf; searched by leaf id, genuinely absent (F-1461-2). Registered in the bookkeeping commit. Not a block.
 
@@ -56,7 +56,7 @@ No screenshots: headless bench infrastructure, no player-visible surface.
 
 ## Merge classification
 
-Merge base `9f55b6c2` (verified with `git merge-base`, not assumed). `docs/bench/e5-readiness-census.md`
+Merge base `99616be5` (verified with `git merge-base`, not assumed). `docs/bench/e5-readiness-census.md`
 and `e2e/er01-e5-census.spec.ts` are **LANE-ONLY pure-add**. `tasks/BACKLOG.md` **BOTH-MOVED** —
 conflict resolved to HEAD, dropping the lane's `READY-FOR-GATES on lane/d` line, which this merge
 makes false (Mistake #5).
@@ -68,20 +68,20 @@ makes false (Mistake #5).
 ## Findings
 
 **F-1461-5 — 🟥 A LANE RUNNER'S BOOKKEEPING COMMIT DELETED FOUR TASK MASTERS AND ANOTHER LANE'S
-QUEUE FILE.** `1455e18b` (`runner(lane-d): lane-er01-e5-census.md`) contains **167 deletions and
+QUEUE FILE.** `d2111e8b` (`runner(lane-d): lane-er01-e5-census.md`) contains **167 deletions and
 nothing else**: the E3/E4/E5/E6 masters from `tasks/`, plus
 `tasks/queue/lane-b/lane-er01-e6-census.md` — **a file belonging to a different lane's slot.**
-Codex's own commit (`76c049cb`) is clean and inside its firewall; the damage is entirely in the
+Codex's own commit (`65d905d1`) is clean and inside its firewall; the damage is entirely in the
 runner's wrapper commit.
 
 **This was not a phantom of a stale base, and I checked rather than assumed.** The merge base is
-`9f55b6c2`, and that commit **contains all four masters** (`git cat-file -e` → YES), so these are
+`99616be5`, and that commit **contains all four masters** (`git cat-file -e` → YES), so these are
 real deletions relative to a base that held the files, not the stale-base artefact they resemble.
 
 Had they merged, main would have lost the **E6 master while the E6 drain is still pending** — the
 next fire would have found a done-move with no master to cite, and the RETENTION LAW's "no factory
 artifact is deleted from disk untracked" would have been violated by a drain, not by a hygiene
-pass. Reverted with `git checkout 00f17d57^1 -- <the four paths>`; all four verified present after.
+pass. Reverted with `git checkout e608adcd^1 -- <the four paths>`; all four verified present after.
 
 The `tasks/queue/lane-b/lane-er01-e6-census.md` deletion was deliberately **not** reverted: lane-b
 has already consumed and run E6, s1460 committed that consumption, and restoring the queue file

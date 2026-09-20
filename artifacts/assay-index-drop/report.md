@@ -1,10 +1,10 @@
 # F-HEAT14-6 — the county was deleting honest standings, not losing them
 
 Written 2026-09-19 by the implementer for `tasks/assay-index-drop-f-heat14-6.md`, branch
-`fix/assay-index-drop`, base `de7eacd1714584ad73cb2d1245e5f907d213b9f1`.
+`fix/assay-index-drop`, base `21648cdcff9cafc1a44a56eb94c15eb9bf5d2a14`.
 
 **The mechanism in one sentence:** the verdict path enforced "one standing per rider" by DELETING a
-row from storage — `functions/api/standings.ts:368-375` **as it stood at base `de7eacd1`**, which on a `verified` verdict
+row from storage — `functions/api/standings.ts:368-375` **as it stood at base `21648cdc`**, which on a `verified` verdict
 looked for another verified row with the same `standingOwnerKey` and wrote the board back as either
 `rows.filter((candidate) => candidate !== row)` (the row it had just verified, gone) or the mirror
 (the incumbent, gone) — so eleven of heat 14's accepted reels were verified by the assayer and
@@ -37,13 +37,13 @@ SWEEP, three accepted submissions (e4-boneyard, e4-dust-flats, e5-stillwater) dr
 index again"* (F-HEAT13-2). And heat 12's operator diagnosed it correctly the first time — its note
 records that the first write-up "blamed the one-standing-per-owner retention rule
 (`rankedRows` / `retainPartition`)" and then RETRACTED that in favour of the KV note. The retraction
-was the error. The delete branch landed in `fa8b096f3` on 2026-09-04, one day before heat 12: the
+was the error. The delete branch landed in `53450564a` on 2026-09-04, one day before heat 12: the
 whole chain F-HEAT12-4 -> F-HEAT13-2 -> F-HEAT14-6 is one bug with one birthday.
 
 ## 2. The mechanism, with the code
 
 ```ts
-// functions/api/standings.ts, the assay-verdict handler, AS IT STOOD AT BASE de7eacd1.
+// functions/api/standings.ts, the assay-verdict handler, AS IT STOOD AT BASE 21648cdc.
 // Every coordinate in this block is a BASE coordinate; on this branch the site is :368-395.
 const competing = verdictValue === 'verified'
   ? rows.find((c) => c !== row && sameStandingOwner(c, row) && c.assay === 'verified')   // :368-369
@@ -116,7 +116,7 @@ POST path (ranked survivors + up to `MAX_ROWS` others per partition), so nothing
 **Nothing published changes.** The board arm of the new guard is the control: it was GREEN on the
 base tree before the cure and is green after — one rider, one published standing, the best one.
 `npm run test:stats` (320 checks on the KV backend, 320 on sqlite) is green on both trees, including
-`checkVerdicts`, `checkAssayIndexRace`, `checkLineageReassay` and the `fa8b096f3` assertion "a worse
+`checkVerdicts`, `checkAssayIndexRace`, `checkLineageReassay` and the `53450564a` assertion "a worse
 verified snapshot cannot erase the prior personal best" — which now passes because the better row
 still RANKS first, not because the worse one was destroyed.
 
@@ -256,7 +256,7 @@ correct shape and can follow it.
 `scripts/assay-standing-drop.test.mjs`, joined to `test:node-guards` stage 1 in `package.json`
 (next to `scripts/assay-replay.test.mjs`).
 
-| arm | base `de7eacd1` | after the cure |
+| arm | base `21648cdc` | after the cure |
 | --- | --- | --- |
 | a verified standing the rider has already beaten is kept, not deleted | RED (1 stored row, expected 2; the slip 404s) | GREEN |
 | the published board still shows exactly one standing per rider | **GREEN** (the control: nothing published changes) | GREEN |
@@ -279,9 +279,9 @@ sweep restores all six. That is the honest statement of the race — it costs th
 | `npm run build` | green |
 | `npm run test:stats` (`test-stats` + `test-standings` + `test-ledger-worker`) | green — 87 / 320 kv / 320 sqlite / 26 |
 | `npm run test:mp` | green — 466 checks |
-| `npm run test:accounts` | **RED on the base tree and after, identically**: `The entry-point file at "../../../functions/api/_account-registry.ts" was not found.` That file has never been tracked in this repo (`git log -- functions/api/_account-registry.ts` is empty; `git cat-file -e de7eacd1:...` fails), so the red is pre-existing, environmental and untouched by this branch, exactly as the master predicted. |
+| `npm run test:accounts` | **RED on the base tree and after, identically**: `The entry-point file at "../../../functions/api/_account-registry.ts" was not found.` That file has never been tracked in this repo (`git log -- functions/api/_account-registry.ts` is empty; `git cat-file -e 21648cdc:...` fails), so the red is pre-existing, environmental and untouched by this branch, exactly as the master predicted. |
 | `scripts/assay-standing-drop.test.mjs` | RED 5/6 on base, GREEN 6/6 after |
-| `GR_GUARD_NO_ARTIFACT=1 node scripts/run-guards.mjs --changed-since de7eacd1` | selected `test:node-guards, test:power-budget, test:task-guards, test:citations, test:gate-callers` + `test:stats, test:accounts, test:mp` (1 file in `functions/**`). Two of its gates came back red; both are attributed below. |
+| `GR_GUARD_NO_ARTIFACT=1 node scripts/run-guards.mjs --changed-since 21648cdc` | selected `test:node-guards, test:power-budget, test:task-guards, test:citations, test:gate-callers` + `test:stats, test:accounts, test:mp` (1 file in `functions/**`). Two of its gates came back red; both are attributed below. |
 
 ### The two run-guards reds, attributed
 
@@ -291,7 +291,7 @@ the end `ps` counted **eight** concurrent `run-node-guards` roots. Neither red i
 branch.
 
 **`test:power-budget`, `rc=1`.** It asserts a wall-clock p95 for `PowerGraphSystem.step` against a
-0.500 ms cap, importing only `src/systems/PowerGraph.ts`. `git diff de7eacd1 --name-only -- src/`
+0.500 ms cap, importing only `src/systems/PowerGraph.ts`. `git diff 21648cdc --name-only -- src/`
 is **empty** — this branch touches no `src/` file, so the measured code is byte-identical to the
 base and the number cannot be a consequence of the change. Measured, all on the same branch tip:
 

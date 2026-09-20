@@ -11,11 +11,11 @@ READ FIRST:
 - The BACKLOG row for **F-2090-1**, which predicted this exact defect one slice early:
   *"`isEnabled` then needs a new key (`holdStake:true`) or `stakeMarkers.length >= 2`, since it
   currently *counts* `heroStart` markers."*
-- The reverted content itself: `git show e6aa6e073` (the merge) and `git show 6c5f8a7a2` (the revert).
+- The reverted content itself: `git show ccf8dc57d` (the merge) and `git show 75125b4da` (the revert).
 
 ## WHY — quoted evidence, not a hunch
 
-The b4v3 slice was merged at `e6aa6e073` on a complete green battery and **reverted at `6c5f8a7a2`**
+The b4v3 slice was merged at `ccf8dc57d` on a complete green battery and **reverted at `75125b4da`**
 the same fire, because its enable-key is not contract-scoped:
 
 ```ts
@@ -43,12 +43,12 @@ error: the key was inherited from the v1 WIP, which predates the ruling.
 ## Pre-flight — RE-LAND ON A REVERTED MERGE (read this, it is not the usual shape)
 
 `lane/b` is fully absorbed into main's history (`git log main..lane/b` is empty) and its tip is
-archived at `archive/lane-b-s2131-b4v3-absorbed-2cc5a1d4b` (`2cc5a1d4b`). **Because main carries a
+archived at `archive/lane-b-s2131-b4v3-absorbed-2cc5a1d4b` (`50feb6b2c`). **Because main carries a
 REVERT of that merge, re-merging the lane will bring back NOTHING** — git considers those commits
 already merged. You must **revert the revert**:
 
 ```
-git revert --no-commit 6c5f8a7a2      # restores the whole b4v3 stack onto your lane
+git revert --no-commit 75125b4da      # restores the whole b4v3 stack onto your lane
 ```
 
 **Refresh the lane first — this is SAFE-DUPE-verified and the reset is authorised.** At authoring
@@ -59,18 +59,18 @@ main has not absorbed. Re-run that command yourself; if it does NOT say `USABLE`
 
 ```
 node scripts/lane-usable.mjs lane-b        # must print USABLE; STOP if not
-git fetch origin && git reset --hard main  # lane now carries the revert 6c5f8a7a2
+git fetch origin && git reset --hard main  # lane now carries the revert 75125b4da
 # restore the CODE ONLY, from the merge commit that the revert undid:
-git checkout e6aa6e073 -- src/systems/PicnicHoldSystem.ts src/sim/HeadlessContractSim.ts \
+git checkout ccf8dc57d -- src/systems/PicnicHoldSystem.ts src/sim/HeadlessContractSim.ts \
     src/game/Game.ts src/entities/pools.ts src/agent/MechanicsManifest.ts \
     e2e/e6-picnic-hold.spec.ts e2e/er01-e6-census.spec.ts
 ```
 
-⛔ **DO NOT use `git revert --no-commit 6c5f8a7a2`. Attempt 1 of this task did exactly that, on my
+⛔ **DO NOT use `git revert --no-commit 75125b4da`. Attempt 1 of this task did exactly that, on my
 instruction, and it CONFLICTED — correctly — in `tasks/BACKLOG.md`** (run
 `20260821-151824-lane-b-f2131-1-picnic-enable-key.md.log`; the runner aborted and stopped per the
 honesty guard, 44,298 tokens, zero damage, lane left clean). **That was an authoring defect in this
-master, not a lane problem (F-2131-5):** `6c5f8a7a2` reverts eight paths *including* `tasks/BACKLOG.md`,
+master, not a lane problem (F-2131-5):** `75125b4da` reverts eight paths *including* `tasks/BACKLOG.md`,
 and s2131 rewrote that file afterwards (the picnic narrative row and the F-2131-1 desk row), so
 reverting it wholesale is guaranteed to collide with rows that must NOT be rolled back. The
 path-scoped `checkout` above restores byte-identical code and leaves every ledger row alone.
@@ -78,7 +78,7 @@ path-scoped `checkout` above restores byte-identical code and leaves every ledge
 Verify the restore before building — it must reproduce the merged tree exactly for those paths:
 
 ```
-git diff e6aa6e073 -- src/ e2e/    # MUST be empty; if not, STOP and report
+git diff ccf8dc57d -- src/ e2e/    # MUST be empty; if not, STOP and report
 ```
 
 Then fix the key on top. Verify before you build:
@@ -88,7 +88,7 @@ Then fix the key on top. Verify before you build:
 ## Scope
 
 1. **Re-land the b4v3 stack** by reverting the revert, as above. No content changes in this step —
-   prove it with `git diff 2cc5a1d4b -- src/systems/PicnicHoldSystem.ts` being empty.
+   prove it with `git diff 50feb6b2c -- src/systems/PicnicHoldSystem.ts` being empty.
 2. **Give the hold a contract-scoped enable key.** The shape is yours to choose and to justify in
    the report, but it MUST NOT be a property that any other contract can satisfy by coincidence.
    Two candidates, both pre-approved:

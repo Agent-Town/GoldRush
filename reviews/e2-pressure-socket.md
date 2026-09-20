@@ -1,8 +1,8 @@
 # e2-pressure-socket — drain review (s1461)
 
 - **Slice:** `lane-e2-pressure-socket` (the ERA-SOCKET template, first instance)
-- **Branch / tip:** `lane/a` @ `dcf02430` (runner commit), base `3445d479`
-- **Merged to main:** `24c6600fbf294f8ff1dff5e64db8268f045abff6` (`Merge branch 'lane/a'`)
+- **Branch / tip:** `lane/a` @ `76b41e7e` (runner commit), base `91962d70`
+- **Merged to main:** `6fd24a3b3c4b7b882c511c9215b7593ca671cd4e` (`Merge branch 'lane/a'`)
 - **Gated in:** detached worktree `gate-s1461/` at merge `0cd231cf` (§3.0b — main's tree never held undecided content)
 - **Drain-block check:** `? UNKNOWN` — no goal leaf matched. Per F-1457-3 this was NOT read as clearance: the goal tree was searched by leaf id (`agent-play ▸ er-01-*`) and only `er-01-e2-census` exists. Genuine Goal Registration Law debt, registered in the bookkeeping commit. **Not a block.**
 
@@ -13,7 +13,7 @@
 Closes the ERA-SOCKET class for E2's signature mechanic. Before this, pressure was a
 browser-only system: agents had no manifest vocabulary for it and the headless bench had no
 consumer, so `e2-hill-mine` and `e2-pressure-garden` were correctly **refused** admission to
-`HeadlessContractSim` under AP-11 reject-don't-stretch (the E2 census, `96d40988`).
+`HeadlessContractSim` under AP-11 reject-don't-stretch (the E2 census, `3b7abe4e`).
 
 The slice builds the socket rather than the stretch:
 
@@ -45,7 +45,7 @@ but its *separate* naive-terminal-outcome gap remains DATA-GAP — correctly lef
 | `npm run build` | **green, 1.04s** |
 | Own spec `er01-e2-census.spec.ts`, `--workers=1`, desktop + mobile | **8 passed (1.1m)** |
 | Adjacent (grep-derived): `agent-view.spec.ts` + `drill-yard-manifest.spec.ts` | **6 passed / 4 failed** — see control run |
-| **CONTROL ARM**, same worktree, same hour, clean main `067adff4` | **6 passed / 4 failed — IDENTICAL, same four test titles** |
+| **CONTROL ARM**, same worktree, same hour, clean main `2c61a3e7` | **6 passed / 4 failed — IDENTICAL, same four test titles** |
 | `npm run test:node-guards` | **rc=1** — F-1460-1 Baron pin only |
 | Gate ports 5188/5199/5231/5234 | probed free before gating; no live lane contended |
 
@@ -62,7 +62,7 @@ inherited under.
 
 **The `test:node-guards` red is F-1460-1**, and it matches s1460's clean-main measurement **to the
 digit**: received `kills: 861` / `fnv1a32:36004eab` against pinned `869` / `b9566c6d`, at
-`scripts/gr-sim.test.mjs:393`. Cause is NAMED (`4ab48743`, f1452-1 fort-solidity routing), not
+`scripts/gr-sim.test.mjs:393`. Cause is NAMED (`e788002c`, f1452-1 fort-solidity routing), not
 excused. This slice touches neither `src/entities` routing nor `BuildSystem`'s solidity path.
 
 No screenshots: the slice has **no player-visible surface** — it is headless agent-bench
@@ -71,7 +71,7 @@ Zero-console is asserted inside the census spec itself (the F-1458-1 narrow filt
 
 ## Merge classification
 
-Base `3445d479`; main had moved **4 commits** ahead. Per-file:
+Base `91962d70`; main had moved **4 commits** ahead. Per-file:
 
 | File | Class | Resolution |
 |---|---|---|
@@ -95,7 +95,7 @@ queued behind it must do the same.
 
 **F-1461-1 — 🟥 A LANE WAS RESET OVER UNDRAINED OUTPUT; 113 LINES SURVIVED ONLY IN THE REFLOG.**
 Found at this fire's triage, not by this slice. `lane-b` committed the ER-01 **E3 Voltage census**
-at `d0f52744` (20:47:02) and was `reset --hard` to `origin/main` roughly **30 seconds later** when
+at `a094c592` (20:47:02) and was `reset --hard` to `origin/main` roughly **30 seconds later** when
 the runner dispatched the E6 census into the same slot. The done-move
 `20260805-203235-lane-er01-e3-census.md` sat un-prefixed, claiming a completed run, while its
 content — `docs/bench/e3-readiness-census.md`, `e2e/er01-e3-census.spec.ts`, 16 lines of

@@ -1,7 +1,7 @@
 # vp-02e runner report — diagonal clip resolution
 
 - **Slice:** `lane-vp-02e-diagonal-clip-resolution`
-- **Branch / base:** `lane/m4` from `main` @ `ccdf0668`
+- **Branch / base:** `lane/m4` from `main` @ `f0a1ee6d`
 - **Status:** **READY-FOR-GATES**
 
 ## Pre-repair runtime measurement
@@ -90,7 +90,7 @@ was reported rather than rewritten.
 
 ### Adjacent `e2e/vp-02-sprite-animation.spec.ts`
 
-Measured before in a detached worktree at base `ccdf0668`, then after in this
+Measured before in a detached worktree at base `f0a1ee6d`, then after in this
 lane. Outcomes are unchanged on both desktop-chrome and mobile-chrome:
 
 | Test | Before | After |

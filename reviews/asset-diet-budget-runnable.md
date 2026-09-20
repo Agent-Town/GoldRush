@@ -1,7 +1,7 @@
 # Review — asset-diet budget runnable + wired pre-deploy
 
 **Slice:** `lane-b-asset-diet-budget-runnable` (FIRE-AUTHORED s1047)
-**Branch:** `lane/m4` · **Lane tip:** `e37a1d67` · **Base:** `625420ef` → merged onto main at `e718b7cc`
+**Branch:** `lane/m4` · **Lane tip:** `6a53a95b` · **Base:** `e2367b84` → merged onto main at `dca123b6`
 **Drained by:** s1048 fire, 2026-07-25
 **Verdict:** ✅ **MERGE — the guard executes, and I watched it fail before I believed it passed.**
 
@@ -72,7 +72,7 @@ the skip-reason string. `src/` untouched, `playwright.config.ts` untouched, no n
 
 ## Merge classification
 
-Base `625420ef`, four files, **all LANE-TOUCHED only** — main moved none of them between base and merge
+Base `e2367b84`, four files, **all LANE-TOUCHED only** — main moved none of them between base and merge
 (`git diff --name-status main...lane/m4` and the merge applied by `ort` with **zero conflicts**). No 3-way
 judgment was required. No `src/` file involved, so no interaction with the three attended territory claims
 live tonight (`anim/opus5-pass`, `sculpt/map-fix-early`, `sculpt/map-fix-late`).

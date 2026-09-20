@@ -1,7 +1,7 @@
 # f1405-1 — land the cross-engine wave-scaling cure
 
 **Slice:** `f1405-1-land-the-cross-engine-wave-scaling-cure`
-**Branch/tip:** main slot, run `20260802-220911-main-f1405-1-...` · gate on `c2981ad3` (s1406)
+**Branch/tip:** main slot, run `20260802-220911-main-f1405-1-...` · gate on `5ca084ab` (s1406)
 **Verdict:** ✅ **MERGED.** The cure is correct and is now proven against a subject that actually
 diverged — which the run itself never measured. Three findings, none blocking.
 
@@ -34,7 +34,7 @@ Adjacent suites derived by grepping the changed symbols (`hpScalePerWave`, `spee
 
 ## The cross-engine matrix — the evidence the run did not gather
 
-Pre-cure arm measured in a **detached scratch worktree** at `c2981ad3` (§3.0b custody: undecided
+Pre-cure arm measured in a **detached scratch worktree** at `5ca084ab` (§3.0b custody: undecided
 content never enters main's working tree). Every cell is `scripts/twin-banks-hash-probe.mjs`.
 
 | Contract | pre-cure Node 26 | pre-cure Node 23 | | cured Node 26 | cured Node 23 | |
@@ -48,7 +48,7 @@ unreproducible pin would be a broken instrument, not a finding.
 
 ⚠️ **This corrects an inherited claim.** `reviews/f1404-1-cross-engine-wave-scaling-stop.md:33`
 states *"Main is not currently cross-engine divergent; the divergence is only observable once a
-contract long enough to reach wave 13 is present."* ✗ **That is false as of `c2981ad3`.**
+contract long enough to reach wave 13 is present."* ✗ **That is false as of `5ca084ab`.**
 `e1-night-shift` is a main-side contract, needs no graft, and diverged across the two installed
 engines. The cure closes it. The twin-banks graft was never the only divergent subject — it was
 the only one anybody had pointed a hash at.

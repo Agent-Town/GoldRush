@@ -5,7 +5,7 @@ const note = `
 
 ---
 
-## SUPERSEDING NOTE — appended 2026-08-01 (s1316 drain of \`ap-07-the-claim-pin-lift\`, merge \`38b20154\`)
+## SUPERSEDING NOTE — appended 2026-08-01 (s1316 drain of \`ap-07-the-claim-pin-lift\`, merge \`f05fd161\`)
 
 The sentence at line 14 above — *"It fails closed for contracts other than \`e1-dry-gulch\`; adding another
 contract requires its real objective driver."* — was **true of this run** and is **left verbatim** per the

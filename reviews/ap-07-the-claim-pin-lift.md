@@ -1,8 +1,8 @@
 # ap-07-the-claim-pin-lift — drain review (s1316)
 
 - **Slice:** AP-07 — lift the GR-SIM contract pin from a constant to a set, admitting `the-claim`
-- **Branch / tip:** `lane/m4` @ `7c68c85f`
-- **Merge:** `38b20154` (`38b201542890afaab01531571485f7b17863145f`), merge-base `2b4f1615`
+- **Branch / tip:** `lane/m4` @ `f34b37ce`
+- **Merge:** `f05fd161` (`f05fd161e7f49aedc3b822de560fc591c442c137`), merge-base `465c8ac1`
 - **Verdict:** ✅ **MERGED** — and the specific trap s1315 pre-declared as a REJECT condition was **avoided**, which is the headline.
 
 ## What it does
@@ -82,7 +82,7 @@ on `e1-dry-gulch`. The new row is materially harder, which is a desirable eval p
 
 ## Merge classification
 
-`git diff --name-only 2b4f1615..main` restricted to the four touched paths → **empty**. Main moved none of
+`git diff --name-only 465c8ac1..main` restricted to the four touched paths → **empty**. Main moved none of
 them since the merge-base (drain 1 this fire touched `BuildSystem.ts` / `buildables.ts` / `bt-01-tiers` —
 disjoint). All four are **LANE-TOUCHED**, no MAIN-MOVED, no graft. Clean `--no-ff`.
 
@@ -104,7 +104,7 @@ truth"*: `env/goldrush-verifiers/README.md:13` **and** `artifacts/gr-sim/ap-07/r
 objective driver."*). The master then firewalled the second one **NO**, reasoning that an evidence artifact
 records a past merge and editing it falsifies the ledger.
 
-Both positions hold. Editing `:14` in place would rewrite what was true at `b33afb04`; leaving it bare
+Both positions hold. Editing `:14` in place would rewrite what was true at `d705cf9c`; leaving it bare
 lets the exact sentence that — by F-1314-2's own measurement — **mis-scoped three fires in two opposite
 directions** sit unqualified in the artifact a fourth fire will read.
 

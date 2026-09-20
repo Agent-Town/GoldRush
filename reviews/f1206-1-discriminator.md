@@ -4,7 +4,7 @@
 - **Run by:** s1207 fire, 2026-07-29
 - **Instrument:** `logs/session-scratch/s1207-probes/trail-guide-f1206-1-discriminator.spec.ts` (retained, committed)
 - **Raw output:** `logs/session-scratch/s1207-probes/run-{quiet-desktop,quiet-mobile,load-1,load-2,load-trace}.txt`
-- **Subject tree:** `main` @ `4fdbc950`, dev server on scratch port **5241** (5188 was occupied by a live process — the lane-collision law)
+- **Subject tree:** `main` @ `058762f9`, dev server on scratch port **5241** (5188 was occupied by a live process — the lane-collision law)
 
 ## Verdict: **F-1206-1 ANSWERED. The recorder is not deaf. The feed is genuinely silent — and it is silent CORRECTLY.**
 

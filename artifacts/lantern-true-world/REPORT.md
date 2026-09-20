@@ -1,7 +1,7 @@
 # Lantern world reel requires an independent replay boot
 
 Task: `tasks/running/lane-c--20260905-104752-lantern-true-world-reel.md`.
-Inspected lane head: `23272e78335fc1c0f47b19ce8ade337538834e5a` (`lane/c`), 2026-09-05.
+Inspected lane head: `427c627e72a0e0e94814a4adf36ca26150356fdc` (`lane/c`), 2026-09-05.
 
 **STOP — not READY-FOR-GATES.** Scope 3's no-WebGL fallback cannot be reached through the current boot path. Fixing that path requires changes outside this task's firewall. No runtime implementation was made. This is the task's explicit stop-and-report outcome, not a claim that the world reel shipped.
 

@@ -1,7 +1,7 @@
 # Sol findings — product, content, and accessibility
 
 - **Branch:** `sol/repository-audit-findings`
-- **Base:** `7802ed6`
+- **Base:** `8510b61`
 - **State:** UNTRIAGED — no implementation authorized.
 - **Scope:** progression/story correctness, identity/canon, onboarding, difficulty, controls, generational rules, narrative ownership, accessibility, and tone.
 

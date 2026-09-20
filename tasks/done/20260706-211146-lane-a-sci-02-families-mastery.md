@@ -3,7 +3,7 @@
 You are Codex, implementer for Gold Rush, running natively on Robin's Mac in worktrees/lane-a. READ FIRST: AGENTS.md; `specs/science-dimension/README.md` (LAWS + Vocabulary + "THE EPOCH-CONTRACT LAW" + Mechanics v1 are binding — this is slice **SCI-02**); `reviews/sci-01-research-loop.md` (what SCI-01 shipped and its F-SCI-01-1 note); `docs/GOLD_RUSH_BRIEF.md` §9.2 (frontier-tech, no firearms) + §9.4 (naming).
 
 ## ⚠️ Pre-flight — drain-gated (LANE-SAFETY LAW)
-SCI-01 is already merged to main (commit `6b6624c`, `sci-01: drain research loop v1`). Before you reset:
+SCI-01 is already merged to main (commit `bf20bb1`, `sci-01: drain research loop v1`). Before you reset:
 1. In this worktree run `git fetch` then compare `lane/m3` to `main`: if `git log --oneline main..lane/m3` shows **any commit that is NOT already in main** (i.e. unmerged lane output) — **STOP immediately and report "lane/m3 has undrained output; do NOT reset"**. Do not `reset --hard` over unmerged work.
 2. If clean (lane/m3 == main or only-behind): `git checkout lane/m3 && git reset --hard main && git clean -fd && npm install --no-audit --no-fund`; `npm run build` green before touching anything.
 3. Confirm SCI-01 is present on the base: `src/meta/ResearchTree.ts` exists, `e2e/sci-01-research-loop.spec.ts` passes. If absent — STOP and report.

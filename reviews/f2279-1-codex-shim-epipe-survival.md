@@ -1,7 +1,7 @@
 # f2279-1 — the codex shim survives a rider hanging up mid-stream
 
 **Slice:** `f2279-1-codex-shim-epipe-survival`
-**Branch:** `lane/b` · **Tip:** `cf1c43885` · **Merged at:** `12c7d245b6881ec4999cfaa27bbc935be5867e64`
+**Branch:** `lane/b` · **Tip:** `19b6143a0` · **Merged at:** `44430476102fdde071452c7a21c3f95682102e2f`
 **Drained by:** s2283 fire, 2026-08-25
 **Gate tree:** detached worktree `worktrees/gate-s2283` at `main + lane/b` (§3.0b)
 

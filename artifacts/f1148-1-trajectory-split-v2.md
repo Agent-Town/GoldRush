@@ -27,7 +27,7 @@ All arms ran serially with one desktop-chrome worker on the same Mac. Process
 checks before measurement found no competing Playwright, TypeScript, build, or
 asset-diet process. Long-lived idle Vite servers existed on other ports, but no
 other build or test ran with the measurement. Arm C used detached revision
-`4da134a9`, its own `npm install`, and scratch port **5234**. The spec copied
+`a26eca02`, its own `npm install`, and scratch port **5234**. The spec copied
 into that worktree matched the main-worktree spec at SHA-256
 `07c0983fe1b02d1a2087f1b5bf194929d3fe09ee912c3a87a200aa226cbf2991`.
 The detached worktree was removed after its three raw records were copied back.
@@ -48,9 +48,9 @@ After Arm B, `cmp` returned `0`, both hashes still matched, and
 | B — main, `lateralOffset = 0` | 1 | 5/5 | 10.333 | 20.313 | 0.000 | 3.230 | 123 |
 | B — main, `lateralOffset = 0` | 2 | 5/5 | 10.333 | 20.313 | 0.000 | 3.230 | 123 |
 | B — main, `lateralOffset = 0` | 3 | 5/5 | 10.333 | 20.313 | 0.000 | 3.230 | 121 |
-| C — parent `4da134a9` | 1 | 5/5 | 8.417 | 19.653 | 0.000 | 3.230 | 67 |
-| C — parent `4da134a9` | 2 | 5/5 | 8.511 | 20.043 | 0.000 | 3.256 | 67 |
-| C — parent `4da134a9` | 3 | 5/5 | 8.333 | 19.497 | 0.000 | 3.230 | 67 |
+| C — parent `a26eca02` | 1 | 5/5 | 8.417 | 19.653 | 0.000 | 3.230 | 67 |
+| C — parent `a26eca02` | 2 | 5/5 | 8.511 | 20.043 | 0.000 | 3.256 | 67 |
+| C — parent `a26eca02` | 3 | 5/5 | 8.333 | 19.497 | 0.000 | 3.230 | 67 |
 
 Every positive control is plausible: sample counts are 67–134 and path
 distances are 19.497–21.811 world units. No zero-valued or placement-failed run
@@ -80,7 +80,7 @@ cost; a lateral-offset-only patch is insufficient.
 
 The source read identifies the closest remainder without repairing it. With
 `lateralOffset = 0`, the current block still computes and adds
-`spreadBiasX`/`spreadBiasZ` from `moveTarget + 0`. Parent `4da134a9` had no
+`spreadBiasX`/`spreadBiasZ` from `moveTarget + 0`. Parent `a26eca02` had no
 formation-spread bias block at all. Thus the throwaway mutation removes the
 seeded lane but retains center-seeking formation steering. This is consistent
 with B's parent-shaped X floor but still-longer duration and distance. This is

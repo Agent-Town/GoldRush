@@ -1,6 +1,6 @@
 # s2546 FIRE — diagnose process capture and prepare its corrective
 
-No drain or runtime change landed. F-2546-1 reproduces both faces of a shared process-capture defect: an oversized ps response fails the quiet-board guard before classification and removes the launcher's advisory contention stamp. Commit 45bcdbc8b retains eight observations, a runnable isolated probe, a review, and the registered lane-a corrective. The task's strict preflight check passes. The repair itself remains unimplemented.
+No drain or runtime change landed. F-2546-1 reproduces both faces of a shared process-capture defect: an oversized ps response fails the quiet-board guard before classification and removes the launcher's advisory contention stamp. Commit e464d9d98 retains eight observations, a runnable isolated probe, a review, and the registered lane-a corrective. The task's strict preflight check passes. The repair itself remains unimplemented.
 
 ## Current work and next steps
 
@@ -26,6 +26,6 @@ Integration boundary: lane-a will refresh to committed main, which still has F-2
 
 Handoff written with lock CLEARED and the inherited desk byte-identical. The predecessor archive is verbatim exactly once below the law bullets. The required ledger battery runs after this handoff commit; no result is claimed until its terminal receipt exists. Lane-a queue copy is deliberately deferred until that gate finishes, preventing a new lane battery from racing the closing check.
 
-Closing ledger PASS: exit 0 in 128.333 seconds on Node v26.4.0, 1,050 Node assertions passed, zero failed/skipped; 83 shell checks passed, zero failed. Desk declaration, birth and carryforward all PASS. It started with zero genuine Node batteries and gates handoff a2498a2bceabc350621d9c99ea863c68d30fd1d4. Transcript SHA256 de224d68b83c8c29731aa9fb5302d17448518db4ab54062730d91ee3cb4ee97f; see closing-ledger.json. Handoff push succeeded (backup-handoff.txt).
+Closing ledger PASS: exit 0 in 128.333 seconds on Node v26.4.0, 1,050 Node assertions passed, zero failed/skipped; 83 shell checks passed, zero failed. Desk declaration, birth and carryforward all PASS. It started with zero genuine Node batteries and gates handoff 59e14ed5ef605e402124eadb50db1f26e1f3c2ed. Transcript SHA256 de224d68b83c8c29731aa9fb5302d17448518db4ab54062730d91ee3cb4ee97f; see closing-ledger.json. Handoff push succeeded (backup-handoff.txt).
 
 Dispatch complete at 22:54:18 local, after the closing gate. Lane-a was clean and ahead=0, fast-forwarded from its old tip to the handoff with no reset or discarded output, then rechecked clean. The strict master gate passed immediately before the queue copy. The runner claimed it at 22:54:28; runner-claim.json and runner-banner.txt retain the receipt. Repair implementation and acceptance remain pending. MAIN still owns its gold source and independent review; the chapter HOLD is unchanged. No gameplay code was merged and no deployment was attempted.

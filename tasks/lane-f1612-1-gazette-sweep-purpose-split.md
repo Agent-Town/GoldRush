@@ -28,7 +28,7 @@ F-1610-1 calls this a **one-way ratchet**: the dismissal is durable and greppabl
 
 > **have the sweep count a hash as *dismissed* only when it appears on a line matching a declared marker, and report two numbers — reported *N*, dismissed *M*, candidates *K* — so the dismissals stay visible and re-judgeable instead of vanishing into the cited total. DO NOT build it as a red guard.**
 
-**Re-measured at dispatch (s1612), so you know the live figures:** the sweep today reports **71 player-path-touching merges, 71 cited, 0 candidates** — a clean board that, per this finding, is *a weaker signal than it looks*. The four known dismissals sit in one contiguous prose block at `marketing/outbox/gazette-queue.md:1266–1269`: `6c780b621`, `fc284845d`, `f33380c92`, `1a2871fd3`. **The marker string does not exist anywhere in `marketing/` or `scripts/` yet** — grep confirmed zero hits at dispatch — so you are introducing it, not adopting it.
+**Re-measured at dispatch (s1612), so you know the live figures:** the sweep today reports **71 player-path-touching merges, 71 cited, 0 candidates** — a clean board that, per this finding, is *a weaker signal than it looks*. The four known dismissals sit in one contiguous prose block at `marketing/outbox/gazette-queue.md:1266–1269`: `5bbdc9182`, `9264046eb`, `5626f3883`, `206d6cffb`. **The marker string does not exist anywhere in `marketing/` or `scripts/` yet** — grep confirmed zero hits at dispatch — so you are introducing it, not adopting it.
 
 ## The trap this task exists to avoid
 

@@ -119,10 +119,10 @@ Fifth, on my own method: **the day and dusk p95 figures in this repo cannot be t
 
 Branch-only; nothing merged to main. Per-upgrade path-scoped commits, pushed and verified against `git ls-remote` after each:
 
-- `042173ee` rig — `scripts/beauty-shot-probe.mjs`, `e2e/beauty-night-shift.spec.ts` (new files)
-- `7118451f` U1 — `src/world/LightRig.ts`, `src/world/Terrain3dClaimPilot.ts`
-- `ad6c22df` U2 — `src/entities/pools.ts`, `e2e/beauty-night-shift.spec.ts`
-- `af8f2e4f` U3 + U1 tint correction — `src/world/LightRig.ts`, `src/world/Terrain3dClaimPilot.ts`, `assets/contracts/epoch-1-frontier/contracts.json`
+- `d5cc3db4` rig — `scripts/beauty-shot-probe.mjs`, `e2e/beauty-night-shift.spec.ts` (new files)
+- `ba503e9c` U1 — `src/world/LightRig.ts`, `src/world/Terrain3dClaimPilot.ts`
+- `cd39cf10` U2 — `src/entities/pools.ts`, `e2e/beauty-night-shift.spec.ts`
+- `af8f2e4f (archive: pruned by the A3 rewrite)` U3 + U1 tint correction — `src/world/LightRig.ts`, `src/world/Terrain3dClaimPilot.ts`, `assets/contracts/epoch-1-frontier/contracts.json`
 - evidence-board commits alongside each
 
 `assets/pilots/map-rebuild-spike/` is byte-identical to main (verified by sha256 after the two Blender probes). LITE untouched. No GLB, no atlas, no contract-equality surface was changed, so the regenerate-same-commit rule never came due.

@@ -18,14 +18,14 @@ THEN A CLEANLINESS LINE: `git -C worktrees/lane-c status --short` → must be cl
 
 ## CITATION CHECK (hard STOP if it fails)
 
-Before scope 1, run these four greps in the lane. Each must return **exactly 1** (all four verified `1` on main at `c1af4b0d7`, s1552, each chosen to sit visibly on one line per F-1425-2):
+Before scope 1, run these four greps in the lane. Each must return **exactly 1** (all four verified `1` on main at `c5f8b3c4f`, s1552, each chosen to sit visibly on one line per F-1425-2):
 
 - `grep -c "const child = spawn('wrangler', args, {" scripts/test-multiplayer.mjs`
 - `grep -c "const child = spawn('wrangler', args, { cwd: ROOT, env: cleanEnv(), stdio: \['ignore', 'pipe', 'pipe'\] });" scripts/agent-seat-room.mjs`
 - `grep -c 'function spawnWrangler(args, label) {' scripts/test-stats.mjs`
 - `grep -c "if (devAuth) args.push('--binding', 'DEV_AUTH=1');" scripts/test-accounts.mjs`
 
-If any returns 0, the lane is stale relative to the master — **STOP and report the counts**; do not adapt. ⓘ The second key is deliberately the whole single-line spawn call in `agent-seat-room.mjs`, which `mp-07c-2` (`6e203aaad`) moved from `:681` to `:731` this same morning — a coordinate would already be wrong, the content is not.
+If any returns 0, the lane is stale relative to the master — **STOP and report the counts**; do not adapt. ⓘ The second key is deliberately the whole single-line spawn call in `agent-seat-room.mjs`, which `mp-07c-2` (`85807714a`) moved from `:681` to `:731` this same morning — a coordinate would already be wrong, the content is not.
 
 ## Why
 

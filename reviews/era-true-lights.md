@@ -1,8 +1,8 @@
 # era-true-lights — E1 town reads FLAME, never electric
 
 - **Slice:** `lane-era-true-lights` (F-BW-3, owner playtest 2026-08-03)
-- **Branch / tip:** `lane/perf` @ `8f5862ad` (base `827c2fd1`)
-- **Merged to main:** `5214f340b3f4ea58da8901a552ebc6d679408a50` (s1428 fire)
+- **Branch / tip:** `lane/perf` @ `9c7f1c79` (base `eb87b137`)
+- **Merged to main:** `56b390ff4a05a4e619367a93c02a699a7a2a2302` (s1428 fire)
 - **Drained:** 2026-08-03, s1428
 
 ## Verdict
@@ -37,7 +37,7 @@ Gated in detached worktree `gate-s1428` (§3.0b), every playwright command `--wo
 | Console / page errors | asserted `[]` in-spec, both tests, both viewports |
 | Evidence | `artifacts/era-lights/{before,after,comparison}/` incl. contact sheets |
 
-Both claimed suite results reproduced exactly. Merge classification: base `827c2fd1`;
+Both claimed suite results reproduced exactly. Merge classification: base `eb87b137`;
 `src/town/TownScene.ts` and `e2e/beauty-town.spec.ts` both **LANE-TOUCHED only** — main moved
 neither since the base. Clean `ort` merge, no conflicts.
 

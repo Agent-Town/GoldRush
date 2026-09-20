@@ -5,7 +5,7 @@ ROLE: lane implementer. WORKDIR: this lane worktree (`worktrees/lane-c`, branch 
 
 ## WHY (F-1523-6, measured by the s1523 drain on the guard it merged one hour earlier — not inherited)
 
-s1523 merged `c81c15841`, the F-1522-1 pre-dispatch lane-safety guard: it refuses to dispatch into a lane whose `lane-usable.mjs` verdict word is exactly `HOLDS`. **The guard does precisely what its master specified and its five fixture arms all pass.** The defect is not in the guard's logic — it is that **`HOLDS` is computed at a coarser resolution than the question the guard asks it.**
+s1523 merged `d883927bd`, the F-1522-1 pre-dispatch lane-safety guard: it refuses to dispatch into a lane whose `lane-usable.mjs` verdict word is exactly `HOLDS`. **The guard does precisely what its master specified and its five fixture arms all pass.** The defect is not in the guard's logic — it is that **`HOLDS` is computed at a coarser resolution than the question the guard asks it.**
 
 **Read from `scripts/lane-usable.mjs`, not inferred:** `held` is built at **blob identity** — a path is HELD unless the lane blob equals main's blob (`if (l === m) continue`) or the lane never moved it (`if (l === b) continue`). The **line-level residue** — the `(N of M added lines absent from main)` text every fire reads — is computed by `residueForHeld`/`formatHeldResidue` **for DISPLAY ONLY** and never feeds back into the verdict.
 

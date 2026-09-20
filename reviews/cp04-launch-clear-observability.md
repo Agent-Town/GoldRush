@@ -1,7 +1,7 @@
 # Review — cp04-launch-clear-observability (CP-04 staged-launch clear instrument)
 
-**Slice:** `tasks/lane-b-cp04-launch-clear-observability.md` (authored s1186, `1a836c08`)
-**Branch:** `lane/m4` · **Tip:** `db322ee2` · **Base:** `0b03545a`
+**Slice:** `tasks/lane-b-cp04-launch-clear-observability.md` (authored s1186, `3dd9bcad`)
+**Branch:** `lane/m4` · **Tip:** `db322ee2` · **Base:** `e189f6b6`
 **Drained:** s1188 fire, 2026-07-29
 **Verdict:** ✅ **ACCEPTED.** Discharges **F-1180-4**. Observe-only; **no cure attempted**, which was
 the firewall's whole point.
@@ -70,7 +70,7 @@ condition as before. ✅
 
 ## Merge classification
 
-Base `0b03545a`. Four code files + one run report, all **LANE-TOUCHED only** — `git diff` of each path
+Base `e189f6b6`. Four code files + one run report, all **LANE-TOUCHED only** — `git diff` of each path
 between the base and current main is empty, so no file MAIN-MOVED and no 3-way graft was needed.
 Grafted with `git checkout lane/m4 -- <5 paths>`; path-scoped add.
 

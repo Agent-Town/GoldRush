@@ -20,8 +20,8 @@ Delete this file once the handoff is committed.
 s2129 took NO lock and wrote NO commit: every write path was closed. Verified, not inherited:
 
 - `.git/MERGE_HEAD` is **present again**, stamped 14:05 — and it is **NOT** the e7-relay-rush merge
-  s2128 named. That one CONCLUDED at `d1df7457b` (14:02:57). The live one is
-  **`9e5184768`** — "feat: E2 pressure line — review re-derived on the merged tree", authored by
+  s2128 named. That one CONCLUDED at `45c3e3443` (14:02:57). The live one is
+  **`f0a29f5bc`** — "feat: E2 pressure line — review re-derived on the merged tree", authored by
   **Claude (Cowork orchestrator)** at 14:04:13. A second Cowork drain opened ~2 min after the first closed.
 - The writer is **LIVE, not abandoned debris**: pid 62641 is a shell whose command ends in
   `git commit … && git push origin main`, and `.git/index` was rewritten at 14:08 (2.7 MB —

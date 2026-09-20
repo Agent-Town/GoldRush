@@ -1,6 +1,6 @@
 import { execFileSync } from 'node:child_process';
 import path from 'node:path';
-const BASE='89bfc10cda7e208589c7ad6304eb4c6aeae727bf';
+const BASE='0d989bdc2096213e6775a5978cb6fe56fa8ea988';
 const baseline=JSON.parse(execFileSync('git',['show',`${BASE}:artifacts/f1450-4/halo-class-sweep.json`],{maxBuffer:20*1024*1024}));
 const stem=(f)=>path.basename(f).replace(/-r\d+c\d+\.png$/,'').replace(/\.png$/,'');
 const HELD=new Set(['char-bandit-thief-sheet-walk8','char-baron-sheet-walk8','char-e9-feral_terraformer-sheet-walk8','char-elder-sheet-walk8','char-hero-sheet-walk8','char-newsie-mei-sheet-walk8','char-storekeeper-sheet-walk8','char-youngster-f-sheet-walk8','char-youngster-m-sheet-walk8']);

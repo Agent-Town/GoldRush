@@ -6,7 +6,7 @@ import { renameSync, existsSync, readdirSync } from 'node:fs'
 import { execFileSync } from 'node:child_process'
 
 const ROOT = '/Users/robin/Claude/Projects/Gold Rush'
-const SHORT = '0b062962e'
+const SHORT = 'cb7208e64'
 const src = `${ROOT}/tasks/done/20260810-002226-f1607-1-hill-mine-railcar-pacing.md`
 const dst = `${ROOT}/tasks/done/drained-${SHORT}-20260810-002226-f1607-1-hill-mine-railcar-pacing.md`
 

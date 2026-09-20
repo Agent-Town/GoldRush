@@ -1,6 +1,6 @@
 # Review — run3d-09-turret (RUN-3D buildables ladder, slice 09)
 
-**Slice/branch/tip:** run3d-09-turret · `lane/m4` `044749e3` (`runner(lane-b): run3d-09-turret.md`) → drained to main by s448.
+**Slice/branch/tip:** run3d-09-turret · `lane/m4` `ad02255d` (`runner(lane-b): run3d-09-turret.md`) → drained to main by s448.
 **Verdict:** MERGE — clean sibling-union graft, gates green, canon-safe.
 
 ## What it does
@@ -18,7 +18,7 @@ Adds a 3D Turret model to the RUN-3D proving-ground (`?run3dPilot=`-gated infras
 | Renderer p95 (gate re-render) | desktop ratio 0.863 · mobile ratio 1.144 — both under the 1.15 budget (4 instances = `Balance.turret.maxCount`, the legal capacity; the 12-instance ask is out of scope while maxCount=4) |
 
 ## Merge classification
-Base `044749e3^` = `fea8d0d5` (an ancestor of main; main advanced only via STATUS-only commits since). `git merge --no-ff lane/m4` auto-merged clean:
+Base `ad02255d^` = `fea8d0d5 (archive: pruned by the A3 rewrite)` (an ancestor of main; main advanced only via STATUS-only commits since). `git merge --no-ff lane/m4` auto-merged clean:
 - **All-new (auto-merge):** `assets/pilots/run3d/turret.{blend,glb}`, `e2e/run3d-turret.spec.ts`, `artifacts/run3d-turret/*`.
 - **Sibling-union (1 line, no conflict):** `src/game/Run3dPilot.ts` registry gained the `turret` entry after `sluice` (base==ours was sluice-only, theirs added turret). Registry now `{ sluice, turret }`.
 

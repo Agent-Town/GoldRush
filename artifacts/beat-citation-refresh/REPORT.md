@@ -1,12 +1,12 @@
 # Beat citation refresh
 
-Base: `c0fc424a0e89e07674e0d8e2451c093188f18c38`
+Base: `c0fc424a0e89e07674e0d8e2451c093188f18c38 (archive: pruned by the A3 rewrite)`
 
 Result: all **nine** live stale citation occurrences in `src/story/beats.ts` were re-derived from the dispatch tree and corrected. The review prose says ten, but its live-line inventory and the authoring probe both contain nine.
 
 ## Pre-flight
 
-- Dependencies `ae0df5b060474c064f5b70300189dd57aed9da13` and `9b3da574e939fcbf8ca590eabfaf119c7a923a49` are ancestors of the base.
+- Dependencies `a1be5ada70b3430de29d7dcb0e4c106bcb3b2f26` and `8480f7624cad832e084c14137cdf7dd62bfb8319` are ancestors of the base.
 - Tracked pre-existing dirt was confined to the allowed `logs/**` factory-churn class.
 - Preserved expected untracked host/factory debris under `.claude/`, `artifacts/deploy-budget-production-probe/`, `logs/`, `tasks/queue-paused/`, plus `skills-lock.json`.
 - `npm run build` passed before editing.

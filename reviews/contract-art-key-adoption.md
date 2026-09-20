@@ -1,14 +1,14 @@
 # contract-art-key-adoption — drain review (s1109)
 
 - **Slice:** `lane-contract-art-key-adoption` (F-1104-6 / s1105-authored corrective)
-- **Branch / tip:** `lane/e2-arsenal` @ `7f178acf` — `runner(lane-c): lane-contract-art-key-adoption.md`
-- **Merge-base:** `3314658c` · **Merge commit:** `a659020a`
+- **Branch / tip:** `lane/e2-arsenal` @ `efff21fa` — `runner(lane-c): lane-contract-art-key-adoption.md`
+- **Merge-base:** `4d40f308` · **Merge commit:** `2fd1390c`
 - **Verdict:** ✅ **MERGED** — test-only, renderer untouched, The Adoption preserved.
 
 ## What it does
 
 Three e2e specs had frozen assertions on a contract-art vocabulary that **The Adoption**
-(`3a007ea7`, owner 2026-07-20, quoted in-source at `TownScene.ts:2527`) retired. Since that
+(`2c3c4be8`, owner 2026-07-20, quoted in-source at `TownScene.ts:2527`) retired. Since that
 landing, `renderContractArt()` emits the single constant `data-contract-art-key="plate"` for
 all 41 cards. The specs still demanded per-card keys (`contract-the-claim`, `contract-dry-gulch`, …),
 so they were red on a correct renderer.
@@ -63,7 +63,7 @@ locator.click: Test timeout of 60000ms exceeded.
 ```
 
 `contract-page-dot-*` appears in **zero** files under `src/` and **four** under `e2e/`.
-`git log -G"contract-page-dot" -- src/` names the retirement: **`6822607f`**, *"feat: reorganize
+`git log -G"contract-page-dot" -- src/` names the retirement: **`ceddb7ea`**, *"feat: reorganize
 The Book into era chapters"* (2026-07-20, on main) — the same day as The Adoption. That landing
 updated **seven** e2e files and left four frozen on the retired control:
 

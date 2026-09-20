@@ -2,7 +2,7 @@
 
 - **Slice:** `lane-d-suite-red-inventory.md` (authored s1159 fire)
 - **Branch / tip:** `lane/perf` @ `e2838ce3` (runner commit 2026-07-28T12:48:01+07:00)
-- **Base:** merge-base `11c4d35c` — branch was **51 behind** main
+- **Base:** merge-base `c8e21301` — branch was **51 behind** main
 - **Merged to main:** see drain commit
 - **§3.0 `drain-block-check`:** ✅ **CLEAR** — `lane-d-suite-red-inventory.md [factory-suite-red-inventory] status="queued"`. Run as the first command of the drain, before I read the report or formed any opinion.
 
@@ -85,7 +85,7 @@ The inventory lists faults but does not **group** them. Clustering the 303 faili
 
 **(2) The mechanism, found at source.** `src/town/TownTavernPilot.ts:43` `townPrefetchUrls()` builds a speculative prefetch list of every pilot GLB — filtered at **`:49`** by `.filter(([id]) => id !== 'stamp-mill' && id !== 'dynamo_hall')`. **The two excluded ids are exactly the two green specs.** Its only caller is `src/assets/AdvanceStream.ts:30`, the idle-time asset warmer. So the eight specs are not a mysterious regression: **a prefetcher fetches those GLBs before the pilot mounts, which is precisely what their assertion forbids.**
 
-**(3) The dates settle authorship, and they are unambiguous.** All ten blender specs were added **2026-07-13**. The Advance Stream merged **2026-07-25T10:36 (`e109639f`)** — and `git log -S` proves **the exclusion filter was introduced in that same commit**. Whoever shipped the prefetch excluded two models so their specs stayed green, and left the other eight red.
+**(3) The dates settle authorship, and they are unambiguous.** All ten blender specs were added **2026-07-13**. The Advance Stream merged **2026-07-25T10:36 (`611b4558`)** — and `git log -S` proves **the exclusion filter was introduced in that same commit**. Whoever shipped the prefetch excluded two models so their specs stayed green, and left the other eight red.
 
 ⚠️ **THEREFORE THIS IS NOT A REPAIR TASK — IT IS AN OWNER FORK, AND I DID NOT AUTHOR IT (§2E hard limit).** The Advance Stream is a **ratified owner directive**, quoted verbatim at `tasks/BACKLOG.md:879`: *"Could we start downloading all the assets as soon as the player visits the start page? Basically streaming in advance?"* The eight assertions and that directive **cannot both be satisfied**:
 
@@ -114,7 +114,7 @@ GitHub hard-limits a single file at **100 MB**, so that blob could never reach o
 
 **Fix:** `scripts/suite-red-inventory-compact.mjs` strips the 1,061 attachment payloads (keeping each entry's `name`/`contentType` plus a `stripped: true` marker, so the file is self-describing) → **2,358,427 B, a 98.6% cut**. This is **compaction of a tracked file, which CLAUDE.md §4.10b expressly permits**, not deletion of untracked history.
 
-**Proven lossless, not assumed:** reducing the compacted file reproduces the committed report **byte-for-byte**. The drain commit was **amended rather than followed up** — it had never been pushed (the push is what failed), so this rewrote nothing shared. ✅ The retry then landed `a2141348..7a457025`.
+**Proven lossless, not assumed:** reducing the compacted file reproduces the committed report **byte-for-byte**. The drain commit was **amended rather than followed up** — it had never been pushed (the push is what failed), so this rewrote nothing shared. ✅ The retry then landed `d69007ff..55fc5a31`.
 
 **Retention:** the full 171 MB original is untouched — on disk at `worktrees/lane-d/logs/suite-red-inventory-raw.json` and committed on `lane/perf` @ `e2838ce3`. Only my own duplicate (created by my `git checkout` minutes earlier) was removed, and the removal script **asserted the original's existence and exact byte size first, aborting otherwise**.
 

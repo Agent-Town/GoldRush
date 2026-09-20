@@ -1,5 +1,5 @@
 # WAVE 4 — THE HARD MAPS (release-day wave, 2026-08-09)
-Owner's brief, verbatim: "Let the contenders play the hard levels that have been difficult to beat so far. I would like to have a fuller table for the release." Era `3dd7790d6411` (walk) · exam clones, ISOLATED arenas from mid-wave (F-GNT-4) · memory-armed all-roster (first wave under the all-harness notebook law) · effort accounting per the Effort Law.
+Owner's brief, verbatim: "Let the contenders play the hard levels that have been difficult to beat so far. I would like to have a fuller table for the release." Era `55ce6f7d29d9` (walk) · exam clones, ISOLATED arenas from mid-wave (F-GNT-4) · memory-armed all-roster (first wave under the all-harness notebook law) · effort accounting per the Effort Law.
 
 ## The hard-map matrix (flash roster, V4-Flash, 25-min windows)
 | contract | pi | codex | openclaw | hermes |

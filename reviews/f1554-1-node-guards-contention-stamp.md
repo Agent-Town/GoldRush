@@ -1,8 +1,8 @@
 # f1554-1 — node-guards contention stamp
 
 **Slice:** `f1554-1-node-guards-contention-stamp` (cure for F-1554-1)
-**Branch:** `lane/c` · **Tip:** `58117a5d7ceb32fc707bd397357a4f36d0f0fdc0`
-**Merge:** `82a4c15c4ed5981a95090f35dcf3da11c381147a` (`--no-ff`, three-way, onto clean main)
+**Branch:** `lane/c` · **Tip:** `80b5ef80bf8745c3c27a561399e45007882384fb`
+**Merge:** `892d69face4d5ce7ccdbb91ccc3b8de9c6950d6f` (`--no-ff`, three-way, onto clean main)
 **Drained:** s1557, 2026-08-08 · fire shell
 **Task master:** `tasks/lane-c-f1554-1-node-guards-contention-stamp.md` (authored s1556)
 
@@ -115,7 +115,7 @@ are the right sampling points, since a fire's own concurrent work brackets its b
 
 ## Ledger
 
-- Goal leaf `f1554-1-node-guards-contention-stamp` → `merged`, `mergeHash` `82a4c15c4ed5981a95090f35dcf3da11c381147a`.
+- Goal leaf `f1554-1-node-guards-contention-stamp` → `merged`, `mergeHash` `892d69face4d5ce7ccdbb91ccc3b8de9c6950d6f`.
 - `tasks/done/20260808-134850-lane-c-f1554-1-node-guards-contention-stamp.md` → `drained-82a4c15c4-…`.
 - F-1554-1 closed in `tasks/BACKLOG.md` in the drain commit.
 - GZ-01: **no news item owed** — no player-visible change (factory instrumentation only).

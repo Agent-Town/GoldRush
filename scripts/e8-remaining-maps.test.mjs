@@ -66,7 +66,7 @@ const IDLE = {
 // KNOWN RED IN THIS FILE, NOT THIS ROW AND NOT THIS SLICE (F-MCAP-4): the sibling test above
 // asserts each un-composed idle hash equals that map's PINNED NULL FLOOR while also asserting it
 // differs from the composed one, and the floors hold the composed value. Measured on a pristine
-// `main` (502a398d9) with every file of this slice reverted: the same test fails with the same
+// `main` (22cf98cfe) with every file of this slice reverted: the same test fails with the same
 // numbers, `e8-far-side` un-composed `fnv1a32:3fe83eca` against the pinned `fnv1a32:5c30efd5`.
 //
 // RE-POINTED AGAIN 2026-09-07 (`tasks/e8-air-logical.md`, owner directive 2026-09-07) from `fnv1a32:32f62335` / 81 233 ms / 32 kills. The Mare
@@ -482,7 +482,7 @@ test('the ride the audit measured, now carrying its air, and the un-composed has
     // rides when air was composed on these three maps, so the line this replaces (un-composed hash
     // equals the floor) asserted the pre-composition world and reddened `test:node-guards` on main
     // (e8-far-side un-composed fnv1a32:3fe83eca against the pinned fnv1a32:5c30efd5, verified by
-    // revert at 502a398d9). The same shape as the F-MCAP-3 cure in e8-mare-claim-physics.test.mjs.
+    // revert at 22cf98cfe). The same shape as the F-MCAP-3 cure in e8-mare-claim-physics.test.mjs.
     assert.equal(composed.outcome.eventLogHash, floors[contractId][pinned.seed].eventLogHash, `${contractId}: the pinned null floor is the composed idle ride`);
 
     // MUTATION PROOF. Remove the composition — `E8SuitAirSystem.create` answering `none()` is

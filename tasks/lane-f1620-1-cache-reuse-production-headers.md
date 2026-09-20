@@ -22,7 +22,7 @@ The **first four must return `1`** — the first two are the defect F-1620-1 nam
 
 Cite the existing test by its title — **"measures advance-stream cache reuse without route interception"** — never by a line number (F-1310-1: coordinates rot, and your own edit will rot them).
 
-## Why (F-1620-1 and F-1620-2, both measured at the s1620 drain of f1619-1, merge `beb926087`)
+## Why (F-1620-1 and F-1620-2, both measured at the s1620 drain of f1619-1, merge `3ef4c1dcc`)
 
 f1619-1 answered half of F-1616-3: the WARM re-request is **not** a `page.route` artifact — it reproduces with zero interception, identically, across four runs. **But the drain found the probe had inherited a second confound it could not see**, and that is what you are here to remove.
 

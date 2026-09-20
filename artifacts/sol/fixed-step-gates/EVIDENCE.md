@@ -11,4 +11,4 @@ Status: **PARKED — NOT READY-FOR-GATES.** See `FINAL-EVIDENCE.md` and `MP-BLOC
 - Multiplayer: identity and MP-03 pass isolated; the required desync-restore case fails 0/2 in exact isolation. Fixed scheduling exposes unilateral mismatch detection, while the checked-in task-067 green artifact itself contains unequal post-restore hashes.
 - Feel A/B: two exact 30-second captures, zero browser errors, contact sheet and side-by-side video under `artifacts/sol/fixed-step-feel/`.
 
-Older raw logs in this directory remain the original park-time evidence and predate `23cd01d`. The blocker files supersede the prior interpretation, not the raw outputs.
+Older raw logs in this directory remain the original park-time evidence and predate `069ba5e`. The blocker files supersede the prior interpretation, not the raw outputs.

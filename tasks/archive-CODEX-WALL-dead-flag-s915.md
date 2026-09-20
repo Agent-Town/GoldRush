@@ -1,4 +1,4 @@
-> ⛔ **NOT A WORK MASTER — NEVER QUEUE (Mistake #8 guard, content-probed s1132 2026-07-27).** This is the retired `tasks/CODEX-WALL` quota-wall flag, `git mv`'d into `tasks/` with an archive header by s1028 (2026-07-25) because `rm` and `git rm` are sandbox-gated for fires. Its own body reads *"RESUME NORMAL OPS… Treat this file's mere existence as a no-op."* It records both wall-class failures (locked-win `0b0aa8e3`, safari-swap `086cf9cd`) as already shipped, and carries its own veto line — `git mv` it back only to re-arm a real wall. See F-1132-15.
+> ⛔ **NOT A WORK MASTER — NEVER QUEUE (Mistake #8 guard, content-probed s1132 2026-07-27).** This is the retired `tasks/CODEX-WALL` quota-wall flag, `git mv`'d into `tasks/` with an archive header by s1028 (2026-07-25) because `rm` and `git rm` are sandbox-gated for fires. Its own body reads *"RESUME NORMAL OPS… Treat this file's mere existence as a no-op."* It records both wall-class failures (locked-win `07248387`, safari-swap `086cf9cd`) as already shipped, and carries its own veto line — `git mv` it back only to re-arm a real wall. See F-1132-15.
 
 # ⚰️ RETIRED FLAG — ARCHIVED by s1028, 2026-07-25. Quota is CONFIRMED FINE.
 #
@@ -16,8 +16,8 @@
 ## Authoritative resolution (s915, 2026-07-22)
 - **PROOF quota works:** the owner-P1 `lane-locked-win` task RAN TO COMPLETION today — a real multi-minute `codex exec` produced runner commit `3487fa2c` + a done-move, ZERO rc1 turn-interrupt. A completed codex run at the ceiling disproves exhaustion (rolling window shed usage; the s809 25M interrupts were turn-failures, per the lifted header below).
 - **The re-queue trap is CLOSED:** both wall-class "failures" were ALREADY-SHIPPED features, not quota casualties —
-  - `locked-win` shipped `0b0aa8e3` (feat: lock Claim wins at wave ten, the-claim secureWave already 10, e2e/locked-win.spec.ts on main) — also earlier at c21d1839 (s888).
-  - `safari-swap` shipped `086c9bfd` (s888; Desktop-Safari webkit project on main).
+  - `locked-win` shipped `07248387` (feat: lock Claim wins at wave ten, the-claim secureWave already 10, e2e/locked-win.spec.ts on main) — also earlier at 48e75b77 (s888).
+  - `safari-swap` shipped `368077cf` (s888; Desktop-Safari webkit project on main).
   The stale `tasks/failed/rc1-2026072*` masters that s914 re-queued from are renamed `shipped-s915-*` so no future fire re-queues them (Mistake #8 loop broken).
 
 ## Standing order for the NEXT fire

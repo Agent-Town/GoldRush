@@ -980,7 +980,7 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
       capturableState: 'exhausted',
     }));
     // The load-bearing one. Exhausted machines stop taking damage (and no longer count against the alive cap since the owner-ruled exemption), while the
-    // standing-order CAPTURE verb closes the agent-surface loop (9f920a2f6, 97–99% absorption).
+    // standing-order CAPTURE verb closes the agent-surface loop (c1e89a590, 97–99% absorption).
     // Stating it is the whole point; a silent omission would read as "nothing more to know here".
     rules.push(rule('wrangle_capture', 'AgentGameAdapter', {
       consumerLever: 'WrangleSystem.tryCapture',

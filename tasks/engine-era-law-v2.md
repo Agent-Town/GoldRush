@@ -8,7 +8,7 @@ READ FIRST (paths, in this order):
 - `tasks/engine-era-law.md` — the superseded master. Read it for the INTENT (the owner's puzzle, the shape of the law); do NOT follow its scope items 1 and 2 literally, they are the part that could not be satisfied.
 - `tasks/BACKLOG.md` → row **F-2301-1** (why this master exists and what changed) and row **F-2300-1** (the first STOP, its corpus census, and the forced resolution).
 - `tasks/runs/20260825-132944-lane-a-engine-era-law.md.log` — the first lawful STOP, last 60 lines: the file set and the reasoning. This is your predecessor's report and it is CORRECT; you are not repairing its work, you are executing a changed premise.
-- `scripts/assay-replay-agent.mjs` — `ENGINE_SOURCE_INPUTS` (`:36–48`) and `collectEngineFiles` (`:84–90`, the `/\.(?:json|mjs|ts)$/` predicate). This is the engineHash machinery from `assayer-environment-honesty` (merged `0a117cf9a`). **REUSE `computeEngineHash`; never write a second derivation.**
+- `scripts/assay-replay-agent.mjs` — `ENGINE_SOURCE_INPUTS` (`:36–48`) and `collectEngineFiles` (`:84–90`, the `/\.(?:json|mjs|ts)$/` predicate). This is the engineHash machinery from `assayer-environment-honesty` (merged `d141861e6`). **REUSE `computeEngineHash`; never write a second derivation.**
 - `specs/agent-play/ap-15-assay-of-minds.md` Law 3 (frontiers are era-scoped artifacts — this law is its engine-side sibling).
 - The **owner's puzzle this cures** (2026-08-25, verbatim): *"Should I create reference tapes again for the new deploy? this inconsistency leaves me puzzled"*.
 

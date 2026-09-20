@@ -1,7 +1,7 @@
 # investigate-seam-anim-mp — seam panning follows the harvesting rider
 
-**Slice:** `investigate-seam-anim-mp` · **Branch:** `lane/lane-c` · **Tip:** `c0774984f2d3e0980bcbea36bdb3be5271ca1525` · **Base:** `b77abea5a27d73d0e2781b052d46d7974e2aab2b`
-**Merged to main:** `b89c2567bc175be728d765127d9fc34962075746` · **Drained:** s1787, 2026-08-15
+**Slice:** `investigate-seam-anim-mp` · **Branch:** `lane/lane-c` · **Tip:** `2310f86036af6b7f6f4d4f061644c294b5e5b93d` · **Base:** `e3f3874d5f10ac6471cca3a3011026ee5b45417d`
+**Merged to main:** `0c4acd6f0550e86b293acb0c7de3085f4980f4dc` · **Drained:** s1787, 2026-08-15
 **Gated in:** detached worktree `/tmp/gr-s1787-seam.TL33OB`; merged to main as one act
 
 ## VERDICT: MERGE — multiplayer seam collection now animates the rider actually holding the harvest channel.
@@ -41,7 +41,7 @@ Visual comparison confirms the target actor is standing idle in the pre-fix mult
 
 ## Merge classification
 
-Main moved neither touched source/spec path after base `b77abea5`; the final main merge was a clean `ort` merge with no conflict or graft.
+Main moved neither touched source/spec path after base `e3f3874d`; the final main merge was a clean `ort` merge with no conflict or graft.
 
 | Path | Classification |
 |---|---|

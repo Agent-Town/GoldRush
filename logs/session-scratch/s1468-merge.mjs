@@ -1,5 +1,5 @@
 // s1468: merge the gated slice to main by cherry-picking the lane's OWN commit.
-// NOT a two-dot merge: lane/b's base (636e0eb2) predates s1467's drain, so a blind
+// NOT a two-dot merge: lane/b's base (b5e828af) predates s1467's drain, so a blind
 // merge would revert the NUL cure, the e3 review and src/sim as phantom deletions.
 import { spawnSync } from 'node:child_process';
 

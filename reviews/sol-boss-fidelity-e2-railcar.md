@@ -1,6 +1,6 @@
 # Epoch 2 Armored Railcar — fidelity and rail presentation
 
-Branch: `sol/boss-art-fidelity-review`, base `d41ab98ce`. Work dated 2026-09-08. No commit or deployment.
+Branch: `sol/boss-art-fidelity-review`, base `d41ab98ce (archive: pruned by the A3 rewrite)`. Work dated 2026-09-08. No commit or deployment.
 
 **Verdict: READY-FOR-GATES for the E2 pass.** The longer locomotive, exposed running gear, reservoirs, lanterns and armored cabin are visibly closer to the plate. Final desktop/mobile rendering, all three damage states, rail/proxy alignment, export reproducibility and lifecycle checks pass. This is a verified fidelity improvement, with the gameplay-scale limits below.
 

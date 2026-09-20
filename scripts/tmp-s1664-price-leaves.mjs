@@ -38,7 +38,7 @@ const BLOCKS = {
     reason:
       'NOT fire-authorable: every remaining act is the owner\'s, and he has explicitly DEFERRED the one that gates the rest. ' +
       'THE URL IS ALREADY LIVE -- the leaf\'s own title records PUBLIC URL LIVE 2026-07-28 (edge worker route agenttown.app/goldrush), and ' +
-      'tasks/BACKLOG.md (CITE BY CONTENT: grep "RELEASE ANNOUNCEMENT DEFERRED") records a97ff79c live at agenttown.app/goldrush with the walkthrough fixes. ' +
+      'tasks/BACKLOG.md (CITE BY CONTENT: grep "RELEASE ANNOUNCEMENT DEFERRED") records 5106e2d1 live at agenttown.app/goldrush with the walkthrough fixes. ' +
       'THE RESIDUAL IS TWO OWNER ACTS, named by the title itself: the vE1.0 tag and the final E1 walk blessing. Both are on record as his. ' +
       '(1) THE TAG: BACKLOG (grep "vE1.0 TAG ARMED") carries owner verbatim "(4) ok, if we are ready now and all the fixes have been made" -- armed, and conditioned on HIS readiness, not on a factory gate. ' +
       '(2) THE BLESSING WALK: the owner ruled ONE final blessing walk on round-4 AFTER the fix wave (not before) -- a playtest only he can perform. ' +
@@ -54,8 +54,8 @@ const BLOCKS = {
     measuredBy: 's1664 2026-08-11 (re-measured at the goal tree; agrees with F-1373-1, s1373)',
     reason:
       'NOT fire-authorable, and the machinery it waits on is ALREADY BUILT -- the only missing act is the owner pressing go on an external service. ' +
-      'THE PROGRAM IS COMPLETE: all four sibling leaves under stream>stream-program are `merged` -- stream-capture (capture rig, mkt-01-footage-rig.md, 80d26e20), ' +
-      'stream-runner (seeded stream runner, 0e0c2a19), stream-director (three-segment director, 60e834e6) and stream-curator (rotation curator, 7e5870a5). ' +
+      'THE PROGRAM IS COMPLETE: all four sibling leaves under stream>stream-program are `merged` -- stream-capture (capture rig, mkt-01-footage-rig.md, a91c33a3), ' +
+      'stream-runner (seeded stream runner, 0c98e509), stream-director (three-segment director, e27e9f53) and stream-curator (rotation curator, d61275f2). ' +
       'tasks/BACKLOG.md records the operator path end to end (CITE BY CONTENT: grep "YouTube-Loop profile"): YouTube-Loop profile -> AUTOPILOT scene -> Start Streaming, ' +
       'with the note that the 24/7 loop can go live today and the watchdog reports each fire. So there is NO BUILD LEFT TO AUTHOR; the leaf is the owner\'s hand on the switch. ' +
       'THIS IS OWNER LAW, NOT A JUDGEMENT CALL: fire.md 7.3 reserves external services, new subscriptions and publishing anything to the OWNER, and starting a 24h public ' +
@@ -72,9 +72,9 @@ const BLOCKS = {
       'The leaf\'s title states the gate in its own words -- the owner\'s own concept through the kit (owner brings the seed) -- so this is a DESIGN FORK, ' +
       'which fire.md 7.3 routes to the OWNER\'S DESK rather than to an authoring budget. ' +
       'THE KIT ITSELF IS DONE AND PROVEN, so the refusal is about the seed and nothing else: under foundry>foundry-extract both leaves are `merged` -- ' +
-      'foundry-book (THE FOUNDRY BOOK: constitution, gate patterns, mistake catalog, era-bundle template, masks-first pipeline, Sol protocols, canon-wiki method; bbd5de7f) ' +
-      'and foundry-seed (second-game seed test, the "Tidelight" cold-clone smoke, 0 broken steps, money gates held; ef4f6660); the root-level foundry-book-doc (043fe1aa) ' +
-      'and foundry-own-repo (bbd5de7f) are `merged` too. A second game has ALREADY been cold-cloned end to end as a smoke test, which is exactly why the remaining leaf says REAL: ' +
+      'foundry-book (THE FOUNDRY BOOK: constitution, gate patterns, mistake catalog, era-bundle template, masks-first pipeline, Sol protocols, canon-wiki method; 827e4825) ' +
+      'and foundry-seed (second-game seed test, the "Tidelight" cold-clone smoke, 0 broken steps, money gates held; 408b5494); the root-level foundry-book-doc (d64b54f4) ' +
+      'and foundry-own-repo (827e4825) are `merged` too. A second game has ALREADY been cold-cloned end to end as a smoke test, which is exactly why the remaining leaf says REAL: ' +
       'what is missing is a CONCEPT WORTH BUILDING, not a pipeline to build it with. ' +
       'DO NOT author a placeholder second game to fill an idle lane -- that is the invent-scope failure fire.md 2E forbids by name, and it would burn a lane on a domain the owner never chose. ' +
       'WHAT WOULD CHANGE THIS: the owner naming the second game\'s concept.',

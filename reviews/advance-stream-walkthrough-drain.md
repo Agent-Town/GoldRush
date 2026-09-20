@@ -1,6 +1,6 @@
 # Drain review — f1614-1 advance-stream walkthrough table (F-1532-2)
 
-**Slice:** `f1614-1-advance-stream-walkthrough-table` · **branch:** `lane/b` @ `504783d29` · **merge:** `1e2172f450004e4170403c95a0257b537c751869` (`1e2172f45`) · **drained:** s1616, 2026-08-10T05:05Z
+**Slice:** `f1614-1-advance-stream-walkthrough-table` · **branch:** `lane/b` @ `ec456981b` · **merge:** `21b473464e5d77781e7d133969f43be20881ba64` (`21b473464`) · **drained:** s1616, 2026-08-10T05:05Z
 
 ## Verdict
 
@@ -37,7 +37,7 @@ Mobile reproduced `0/0 · 2/8 · 7/8 · 2/8 · 2/8`, byte-identical to the commi
 
 ## Merge classification
 
-Base `224dcdf9c`. `main..lane/b` was exactly one commit. All three paths **LANE-ONLY, all-new files** — main had never seen any of them (`lane-freeze-classify` read `HELD LANE-ONLY 9/9, 152/152, 9/9`). **No conflicts, no 3-way graft, nothing MAIN-MOVED.** Main advanced by two attended commits (`e0ab1aa09`, `b9d9feaae`) mid-gate; both touch `tasks/**` only — no `src/`, `e2e/`, `scripts/` or `playwright.config.ts` — so the battery taken at `224dcdf9c` remains valid on the merged tree.
+Base `bd8aae1bd`. `main..lane/b` was exactly one commit. All three paths **LANE-ONLY, all-new files** — main had never seen any of them (`lane-freeze-classify` read `HELD LANE-ONLY 9/9, 152/152, 9/9`). **No conflicts, no 3-way graft, nothing MAIN-MOVED.** Main advanced by two attended commits (`f5e940f57`, `60d6a8e0b`) mid-gate; both touch `tasks/**` only — no `src/`, `e2e/`, `scripts/` or `playwright.config.ts` — so the battery taken at `bd8aae1bd` remains valid on the merged tree.
 
 ## Findings
 

@@ -2,7 +2,7 @@
 
 ## Why this exists (process violation, owned)
 
-`a674606` (s9d dead-lock takeover) used `git add -A` and unknowingly swept the ENTIRE tasks/004 VP-02 output (SpriteAnimator 423 LoC, Hero/Enemy/pools wiring, vp-02 e2e, extractor sheet-mode) onto main UNGATED. s14/s15 then treated the tree as clean and vp-02 as "not landed" while building on top of it. This file is the retroactive gate. **BINDING RULE going forward: NEVER `git add -A` in this repo — path-scoped adds only, per the active task/slice file scope.**
+`aaab881` (s9d dead-lock takeover) used `git add -A` and unknowingly swept the ENTIRE tasks/004 VP-02 output (SpriteAnimator 423 LoC, Hero/Enemy/pools wiring, vp-02 e2e, extractor sheet-mode) onto main UNGATED. s14/s15 then treated the tree as clean and vp-02 as "not landed" while building on top of it. This file is the retroactive gate. **BINDING RULE going forward: NEVER `git add -A` in this repo — path-scoped adds only, per the active task/slice file scope.**
 
 ## Gate result: PASS with 2 env-timing exceptions + 1 perf watch-item
 

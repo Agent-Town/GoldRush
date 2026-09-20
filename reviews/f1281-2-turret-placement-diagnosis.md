@@ -72,16 +72,16 @@ This also distinguishes the placement-rule door from the occupancy door: the lan
 
 ## When the coordinate became stale
 
-The test **“Auto-Pan upkeep and boiler battery bands consume the fixed-step pressure store”** was authored in `90e7cc6841cdbe514a3f3aa203135e652fd9b4fa` on **2026-07-12 10:46:03 +07:00** and has not changed since.
+The test **“Auto-Pan upkeep and boiler battery bands consume the fixed-step pressure store”** was authored in `562edc36d8bf773cb993f8bf4ff5821ade138ef6` on **2026-07-12 10:46:03 +07:00** and has not changed since.
 
-Commit `d1f549d5fd51d8b127eb83cdf658dce0e5db8374` — **`runner(lane-a): lane-landmark-collision.md`**, authored and committed **2026-07-19 11:07:13 +07:00** — made the coordinate invalid:
+Commit `5e527a28bb469a18765585674c1c3810bf008eea` — **`runner(lane-a): lane-landmark-collision.md`**, authored and committed **2026-07-19 11:07:13 +07:00** — made the coordinate invalid:
 
 1. It created the landmark-collision registry and authored `hill-mine:boiler-house-site` at `(0, 12)` with radius `2.687` and scale `1.25`.
 2. It added `LandmarkCollision.ts`.
 3. It changed `Terrain.sample` to mark points inside an authored landmark footprint non-walkable.
 4. It changed `Terrain.isBuildable` to require both `terrain.walkable` and `zone === 'bank'`.
 
-The parent of `d1f549d5` has no landmark-collision import, blocker registry, or walkability check in `Terrain.isBuildable`. The same commit’s report calls the Hill Mine boiler-house footprint “authored,” and its new browser test is titled **“authored footprints stop the hero on The Claim and a county map while an unfootprinted mount stays walkable”**. This was deliberate solidity, not an accidental placement-rule change.
+The parent of `5e527a28` has no landmark-collision import, blocker registry, or walkability check in `Terrain.isBuildable`. The same commit’s report calls the Hill Mine boiler-house footprint “authored,” and its new browser test is titled **“authored footprints stop the hero on The Claim and a county map while an unfootprinted mount stays walkable”**. This was deliberate solidity, not an accidental placement-rule change.
 
 Concise commit diff and blame evidence: `logs/session-scratch/s1284-lane-d/history-evidence.txt`.
 

@@ -2,7 +2,7 @@
 
 ## Slice and verdict
 
-**SHIPPED** at `696e2e713703247af3dd0bac75c74f57cdab7c56`. Master `tasks/lane-c-chapter-evidence-opt-in.md`; original lane `feat/hero-move-verb` at `386e129f714e634d9a2a9a18f31f8afa9f08f0fd`. Saved candidate `ca0fec7e361c2a5ed82e5a8598a93dc47a7cd281`, based on `d49604f87c18ed773b5fd8119256e737e8e7b734`, was gated in `/private/tmp/gr-gate-s2552`. Main moved only in bookkeeping before integration; the exact association is in `artifacts/s2553-fire/final-tree-association.json`.
+**SHIPPED** at `7b8c6a7114077ac81f14fc42f41d3db86618a745`. Master `tasks/lane-c-chapter-evidence-opt-in.md`; original lane `feat/hero-move-verb` at `5b3c45754b5105fe5bc7d9eb86e2499a9d35e0ed`. Saved candidate `5017bfa081b6faee03e3709073e842a741d072e6`, based on `6f7c5a4a7ccb6a2b5a6c1f000659fed700c1a063`, was gated in `/private/tmp/gr-gate-s2552`. Main moved only in bookkeeping before integration; the exact association is in `artifacts/s2553-fire/final-tree-association.json`.
 
 Seven existing writers now put ordinary output under ignored test-results/evidence paths. Only literal GR_REFRESH_EVIDENCE=1 writes the retained chapter screenshots or Moth recording. Assertions, triggers, current readiness waits, simulation and retained evidence stay unchanged.
 
@@ -25,7 +25,7 @@ The five Node skips are the two owner-ruled Baron cases and three fire-shell cro
 
 The integrated diff is seven files, nine insertions and eight deletions. Six chapter SHOTS constants and one Moth output-directory choice were grafted. Main's newer four-test Moth program, chapter readiness waits and current recording win over the older lane bytes. Per-path classification and patch: `artifacts/s2553-fire/classification.json`, `artifacts/s2553-fire/candidate.patch`.
 
-The lane's original report is preserved verbatim at `artifacts/s2536-fire/runner-report.md` (4,234 bytes, equality verified). Its old recording remains in git history. After the gated source merge, ancestry-only merge `d07c0692247757dc1ad740821c94e02b29803ea4` acknowledged all nine classified lane paths with an identical before/after tree. Lane main..tip is now empty; no lane reset was used. `artifacts/s2553-fire/merge.json` records that proof.
+The lane's original report is preserved verbatim at `artifacts/s2536-fire/runner-report.md` (4,234 bytes, equality verified). Its old recording remains in git history. After the gated source merge, ancestry-only merge `c0d43efe387bba5dcb861036969e1626d3208df7` acknowledged all nine classified lane paths with an identical before/after tree. Lane main..tip is now empty; no lane reset was used. `artifacts/s2553-fire/merge.json` records that proof.
 
 ## Findings and follow-through
 

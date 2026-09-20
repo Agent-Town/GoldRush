@@ -14,7 +14,7 @@ const OLD = `            {
             }`;
 
 const NOTES =
-  "Drained s1466. Lane tip 79826160. Gates on the merged tree (detached worktree gate-s1466, fire " +
+  "Drained s1466. Lane tip 37ce774c. Gates on the merged tree (detached worktree gate-s1466, fire " +
   "shell, --workers=1): tsc clean, build green, test:node-guards rc=0 with nul-audit CLEAN running " +
   "as the final leaf, and the slice's only consumer e2e/perf-r2-census.rig.ts 2 passed desktop + " +
   "390px at a 240s timeout (67.8s wall). THE RIG'S 2 FAILED AT THE CONFIG'S 30s DEFAULT IS THE FIRE " +
@@ -31,7 +31,7 @@ const NEW = `            {
               "title": "Raw NUL bytes make grep silently blind to src/game/Game.ts — re-encode the delimiters as \\\\u0000",
               "taskFile": "lane-f1465-1-nul-delimiters.md",
               "status": "merged",
-              "mergeHash": "1a2871fd310b5bfd1f6ea085ce9d8a7a4b36272d",
+              "mergeHash": "206d6cffb4726405157b77f592ea7594365ad456",
               "notes": ${JSON.stringify(NOTES)}
             }`;
 

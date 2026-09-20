@@ -1,8 +1,8 @@
 # Review — e10s-1c: the Ember Shore lands INERT (with its predecessor e10s-1b)
 
 **Slice:** `e10s-1c-ember-shore-inert-landing` + predecessor `e10s-1b-ember-shore-schema-and-data`
-**Branch / tip:** `lane/a` @ `14dbb496a` (two commits: `61358eb55` e10s-1b, `14dbb496a` e10s-1c)
-**Merge-base:** `bd435bd0a` · **Base main:** `2e9a92199` · **Merge commit:** `9eb74cc81`
+**Branch / tip:** `lane/a` @ `d08cfe31b` (two commits: `91dd6dd9d` e10s-1b, `d08cfe31b` e10s-1c)
+**Merge-base:** `cbb0a02cb` · **Base main:** `e8edbbaac` · **Merge commit:** `22d0e1cc7`
 **Gated in:** detached `gate-s2258` worktree (§3.0b — undecided content never entered main's tree)
 **Drained by:** s2258 fire, 2026-08-24
 **VERDICT: MERGED — with one defect found and resolved in the merge (F-2258-1, veto window open).**
@@ -68,7 +68,7 @@ red that s2165 recorded (`benchSeeds expected undefined`) is **gone**: that is t
 
 ## Merge classification
 
-Base `bd435bd0a`; main moved **999** files under the lane in that window.
+Base `cbb0a02cb`; main moved **999** files under the lane in that window.
 
 | File | Class | Resolution |
 |---|---|---|
@@ -113,7 +113,7 @@ actual = four anchors, expected = `[]`) while clean main passed 30/0.
 graft decision as any BOTH-MOVED hunk where the lane's value was authored for a state we are
 explicitly not landing. Both files are now **byte-identical to main**, which also shows the
 predecessor's entire mask-table contribution *was* the admission payload. `e3-mask-tables` returns to
-30/0. This is reversible: `git revert 9eb74cc81`, or re-land the anchors from `parkedPayload_e10s1c`.
+30/0. This is reversible: `git revert 22d0e1cc7`, or re-land the anchors from `parkedPayload_e10s1c`.
 
 **For the E10S-4 door slice:** admission must re-land **three** surfaces, not one — the contract's
 `tileParams.harvestAnchors`, the published `maskTruth.harvestAnchors`, and the `:399` pin — plus the

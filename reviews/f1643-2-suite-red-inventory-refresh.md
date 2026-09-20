@@ -2,7 +2,7 @@
 
 **Slice:** `tasks/lane-a-f1643-2-suite-red-inventory-refresh.md` (FIRE-AUTHORED s1646)
 **Branch:** `lane/a` · **Tip gated:** `a27f41f4c15f3bd09ef480e7fdc1f32567b1429a`
-**Merged to main:** `1981d2b3a86edc3d9872e3127ccb5369ab09cffc` (s1688, 2026-08-12)
+**Merged to main:** `1981d2b3a86edc3d9872e3127ccb5369ab09cffc (archive: pruned by the A3 rewrite)` (s1688, 2026-08-12)
 **Lane tip quarantined:** `archive/lane-a-s1688-f1643-2-raw-quarantine` (LOCAL-ONLY, never pushed)
 
 ## Verdict

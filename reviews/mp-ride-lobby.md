@@ -1,7 +1,7 @@
 # mp-ride-lobby — Ride Together lobby
 
-**Slice:** `mp-ride-lobby` · **Branch:** `lane/lane-c` · **Tip:** `e719d813d93651b91b357e581ed647923a2ea899` · **Base:** `52d12e21a1db76e6e9d3d2004fe65c98b5baa783`
-**Merged to main:** `aaf434fba0ca84a0513a4f849dea7da96e95ba0e` · **Drained:** s1786, 2026-08-15
+**Slice:** `mp-ride-lobby` · **Branch:** `lane/lane-c` · **Tip:** `a5b1a6eb84938aea0afdcac9b0d39aa9684615c1` · **Base:** `ea9f8ef1960690d2f9b5f4c5616a4269bac67f4e`
+**Merged to main:** `8685c38fbf7af4c4c6ccfa059b52abe476e862b3` · **Drained:** s1786, 2026-08-15
 **Gated in:** detached worktree `/tmp/gr-s1786-gate.msc8nh`; merged to main as one act
 
 ## VERDICT: MERGE — the host can see the room before starting, and the solo notice no longer sticks over play.
@@ -33,7 +33,7 @@ The contract display reads `ride.setup`, the same `RideTogetherConfig.setup` sta
 
 ## Merge classification
 
-Main moved none of the six touched paths after base `52d12e21a`; the detached merge and final main merge were clean `ort` merges with no conflict or graft.
+Main moved none of the six touched paths after base `ea9f8ef19`; the detached merge and final main merge were clean `ort` merges with no conflict or graft.
 
 | Path | Classification |
 |---|---|

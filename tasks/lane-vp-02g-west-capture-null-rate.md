@@ -8,7 +8,7 @@ You are Codex, implementer for Gold Rush, running natively on Robin's Mac in `wo
 
 Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead is NORMAL — the runner auto-commits. **Do not compare this worktree against a list of files I wrote; I do not have one, and an exhaustive dirt list is the wrong instrument (it is what stopped a runner needlessly at s1132).** Check the **invariant** instead: **no dirty blob in this worktree may be UNIQUE — every modified/deleted/untracked file's content must already exist somewhere in git** (main's history, any branch, or this lane's own commits). If every dirty blob is reachable, the reset destroys nothing → `git checkout -B lane/m4 main && git clean -fd` and PROCEED. If **any** blob exists nowhere else, **STOP and report that file by name** — that one is real unmerged work and resetting it would be the Mistake #2 shape. (`git hash-object <file>` then `git cat-file -e <hash>` is enough; `.wrangler/tmp/**` is build scratch and is exempt.) Then `npm install --no-audit --no-fund`; `npm run build` green before touching anything.
 
-*(s1139 pre-measured the branch and you must still re-verify it: `lane/m4` is **1 ahead** at `7b35e6d3`, the vp-02f runner commit, **already drained to main at `eb387ec4`** by s1138. Confirmed by content, not by message: `e2e/vp-02-sprite-animation.spec.ts` and `e2e/vp-02b-rotation-resolver.spec.ts` are **absent from `git diff --name-only main..lane/m4`**, i.e. byte-identical to main — the slice's content is fully merged and this is a false-ahead tip. Nothing is lost by the reset.)*
+*(s1139 pre-measured the branch and you must still re-verify it: `lane/m4` is **1 ahead** at `7b35e6d3`, the vp-02f runner commit, **already drained to main at `1cda95e4`** by s1138. Confirmed by content, not by message: `e2e/vp-02-sprite-animation.spec.ts` and `e2e/vp-02b-rotation-resolver.spec.ts` are **absent from `git diff --name-only main..lane/m4`**, i.e. byte-identical to main — the slice's content is fully merged and this is a false-ahead tip. Nothing is lost by the reset.)*
 
 ## READ FIRST (paths, in this order)
 
@@ -25,7 +25,7 @@ Two fires disagreed about this test and **both were sampling the same intermitte
 - s1137 (F-1137-2): *"reproducible, cure-caused, mobile-only"* — it observed failures.
 - s1138 (F-1138-7): *"did not reproduce"* — it observed passes, in two full batteries, contended and quiet.
 
-s1139 settled it by measuring a **rate** instead of hunting a reproduction. On **today's main** (the vp-02f cure merged at `eb387ec4`), a **quiet box**, scratch port, `--project=mobile-chrome -g "east heading uses explicit rotation2 files" --repeat-each=6 --workers=1`:
+s1139 settled it by measuring a **rate** instead of hunting a reproduction. On **today's main** (the vp-02f cure merged at `1cda95e4`), a **quiet box**, scratch port, `--project=mobile-chrome -g "east heading uses explicit rotation2 files" --repeat-each=6 --workers=1`:
 
 **2 failed / 4 passed — a ~33% mobile failure rate.**
 

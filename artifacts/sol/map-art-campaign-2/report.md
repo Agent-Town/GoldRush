@@ -8,8 +8,8 @@ The unfinished render source has been reverted and its exact candidate preserved
 
 - Task: `/Users/robin/Claude/Projects/Gold Rush/tasks/running/lane-c--20260919-185452-sol-map-art-campaign-2.md`.
 - Worktree: `/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c`; branch `sol/map-art-campaign-2`.
-- Base: `821bff7e915bef5c774193e2611b4726317b45ca`.
-- Preflight found a clean `feat/hero-move-verb` at `386e129f7`, contained in main with no ahead work. Created the task branch from main. Nothing discarded. Install and initial default build returned 0; post-build status was clean.
+- Base: `2fbae0611befc25465a279e70be4310ca1c21b80`.
+- Preflight found a clean `feat/hero-move-verb` at `5b3c45754`, contained in main with no ahead work. Created the task branch from main. Nothing discarded. Install and initial default build returned 0; post-build status was clean.
 - Node 26 via `/opt/homebrew/bin`; Vite only on port 5303. Browser tests use the external dev server, desktop/mobile Chrome, one worker, traces off.
 - Original 5b60 campaign tree was read-only. Its F42 panorama sampling correction and Claim Boat candidate 13 proportions remain authoritative. The rejected alpha-to-coverage sprite experiment was not repeated.
 - No asset pack, mount, gameplay contract, height sampler, sprite, character, HUD, or engine pin was edited. No still image was generated. Boards only compose the existing plates and unretouched browser captures.
@@ -115,11 +115,11 @@ Preserved all three candidate source/test files byte-for-byte at `_raw/final-can
 
 ## Second run — 2026-09-19 (task sol-map-art-campaign-2b)
 
-In progress. Exact base `0340775f852153e619e76ba00ce705323e5f19c2`. Preflight: clean `sol/map-art-campaign-2` at `7bd4b250b`, no ahead commits; advanced to main. `git clean -fd` removed only the empty `e5-flotilla/` and `e5-stillwater/` evidence directories. Raw evidence retained. Install and pre-edit build PASS; post-build `git status --short` empty. Hydrated `assets/raw` through sparse-checkout and confirmed both raw boat atlases exist. Node 26, port 5303 only.
+In progress. Exact base `401fb03da25e42c3f037b9b866579d7de77fb708`. Preflight: clean `sol/map-art-campaign-2` at `7bd4b250b (archive: pruned by the A3 rewrite)`, no ahead commits; advanced to main. `git clean -fd` removed only the empty `e5-flotilla/` and `e5-stillwater/` evidence directories. Raw evidence retained. Install and pre-edit build PASS; post-build `git status --short` empty. Hydrated `assets/raw` through sparse-checkout and confirmed both raw boat atlases exist. Node 26, port 5303 only.
 
 The first report above remains unchanged. This run follows the amended known-red gate and keeps the full node battery with the drain. Runtime source and existing tests remain subject to the original firewall.
 
-Completed landings, in order: `30c7664cd` shared E5 / Deepwater source; `1b24d5977` Regatta verdict; `c605057d6` Stillwater verdict; `82dd74e86` Flotilla verdict. All are bounded improvements with full concept acceptance withheld. Relay Valley subsequently passed its bounded lighting gate (details below).
+Completed landings, in order: `b2c196e73` shared E5 / Deepwater source; `f2daae7f4` Regatta verdict; `6d431fe38` Stillwater verdict; `11d6b5639` Flotilla verdict. All are bounded improvements with full concept acceptance withheld. Relay Valley subsequently passed its bounded lighting gate (details below).
 
 ### Shared E5 verification checkpoint (second run)
 
@@ -156,7 +156,7 @@ Final landmark and fort collision rigs: **12/12 PASS**, desktop and mobile. Gene
 
 **IMPROVED / full concept HELD.** [Desktop board](run-2/e5-regatta/board-1280.png), [phone board](run-2/e5-regatta/board-390.png); these use the unchanged existing plate and unretouched plain boots. IMPROVED: surface texture contribution 0.35→0.10 and opacity 0.72→0.56; 768 apron faces use seabed scale; 1,804 contact triangles follow the existing hull. HELD: broad wakes/currents; full submerged-course depth; crane/material identity; player contrast and boat-dominated portrait framing. Plain boot still does not show the concept’s fleet-and-buoy vista.
 
-No further source change after shared water commit `30c7664cd`. Boat sculpture/material owners (`assets/pilots/claim-boat-3d/**`, `src/world/ClaimBoatView.ts`, and Flotilla's separate pack) are outside the task firewall; HUD/camera/actor owners are also excluded. The surface pass is complete at its bounded bar; the listed HELD defects are the next campaign's work, not accepted art.
+No further source change after shared water commit `b2c196e73`. Boat sculpture/material owners (`assets/pilots/claim-boat-3d/**`, `src/world/ClaimBoatView.ts`, and Flotilla's separate pack) are outside the task firewall; HUD/camera/actor owners are also excluded. The surface pass is complete at its bounded bar; the listed HELD defects are the next campaign's work, not accepted art.
 
 Numbers: draws 70→73 / 57→60 desktop / phone; maximum comparable p95 mode increase 4.76%, four runs per arm ([mode evidence](run-2/performance-summary.json)). Terrain 32,768/60,000 triangles; panorama 2,704/4,000; zero console/page errors in both final plain boots. Existing own plain-boot tests pass both projects; existing simulation reds are attributed in the shared table above. Same validated source boundary: tsc/default/full builds PASS, new sea/order and ordinary-water checks PASS, collision 12/12 PASS. This verdict-only commit changes no runtime or asset bytes; those checks remain applicable.
 
@@ -166,7 +166,7 @@ Engine before = after `35db6dcf14954aa36cb232cde030c766e8a9cf21ef77c6e48375666a1
 
 **IMPROVED / full concept HELD.** [Desktop board](run-2/e5-stillwater/board-1280.png), [phone board](run-2/e5-stillwater/board-390.png); these use the unchanged existing plate and unretouched plain boots. IMPROVED: Stillwater texture contribution 0.25→0.06 and opacity 0.78→0.62; hull contact adds 1,804 triangles; 768 apron faces share seabed scale. HELD: full submerged wreck depth/reflection, crane/material identity, player silhouette and portrait framing. The tranquil mist survives, but the long empty deck does not match the compact inhabited vessel in the plate.
 
-No further source change after shared water commit `30c7664cd`. Boat sculpture/material owners (`assets/pilots/claim-boat-3d/**`, `src/world/ClaimBoatView.ts`, and Flotilla's separate pack) are outside the task firewall; HUD/camera/actor owners are also excluded. The surface pass is complete at its bounded bar; the listed HELD defects are the next campaign's work, not accepted art.
+No further source change after shared water commit `b2c196e73`. Boat sculpture/material owners (`assets/pilots/claim-boat-3d/**`, `src/world/ClaimBoatView.ts`, and Flotilla's separate pack) are outside the task firewall; HUD/camera/actor owners are also excluded. The surface pass is complete at its bounded bar; the listed HELD defects are the next campaign's work, not accepted art.
 
 Numbers: draws 75→78 / 57→60 desktop / phone; maximum comparable p95 mode increase 6.59%, four runs per arm ([mode evidence](run-2/performance-summary.json)). Terrain 32,768/60,000 triangles; panorama 2,704/4,000; zero console/page errors in both final plain boots. Existing own plain-boot tests pass both projects; existing simulation reds are attributed in the shared table above. Same validated source boundary: tsc/default/full builds PASS, new sea/order and ordinary-water checks PASS, collision 12/12 PASS. This verdict-only commit changes no runtime or asset bytes; those checks remain applicable.
 
@@ -176,7 +176,7 @@ Engine before = after `35db6dcf14954aa36cb232cde030c766e8a9cf21ef77c6e48375666a1
 
 **IMPROVED / full concept HELD.** [Desktop board](run-2/e5-flotilla/board-1280.png), [phone board](run-2/e5-flotilla/board-390.png); these use the unchanged existing plate and unretouched plain boots. IMPROVED: surface texture contribution 0.35→0.10, opacity 0.72→0.56, 768 apron faces share seabed scale; three mounted hulls gain 516 contact triangles each. HELD: broad wake motion, actor water contact, submerged settlement depth, fleet composition and mobile HUD. Plain boot still frames the hero in open water with the fleet offscreen, so full concept correspondence is rejected.
 
-No further source change after shared water commit `30c7664cd`. Boat sculpture/material owners (`assets/pilots/claim-boat-3d/**`, `src/world/ClaimBoatView.ts`, and Flotilla's separate pack) are outside the task firewall; HUD/camera/actor owners are also excluded. The surface pass is complete at its bounded bar; the listed HELD defects are the next campaign's work, not accepted art.
+No further source change after shared water commit `b2c196e73`. Boat sculpture/material owners (`assets/pilots/claim-boat-3d/**`, `src/world/ClaimBoatView.ts`, and Flotilla's separate pack) are outside the task firewall; HUD/camera/actor owners are also excluded. The surface pass is complete at its bounded bar; the listed HELD defects are the next campaign's work, not accepted art.
 
 Numbers: draws 84→87 / 57→60 desktop / phone; maximum comparable p95 mode increase 3.57%, four runs per arm ([mode evidence](run-2/performance-summary.json)). Terrain 32,768/60,000 triangles; panorama 2,704/4,000; zero console/page errors in both final plain boots. Existing own plain-boot tests pass both projects; existing simulation reds are attributed in the shared table above. Same validated source boundary: tsc/default/full builds PASS, new sea/order and ordinary-water checks PASS, collision 12/12 PASS. This verdict-only commit changes no runtime or asset bytes; those checks remain applicable.
 
@@ -194,17 +194,17 @@ Engine `35db6dcf14954aa36cb232cde030c766e8a9cf21ef77c6e48375666a1a73f809` → `1
 
 **IMPROVED / full concept HELD.** [Desktop](run-2/e7-echo-canyon/board-1280.png), [phone](run-2/e7-echo-canyon/board-390.png), [per-defect review](run-2/e7-echo-canyon/review.md). Calibrated grade0.45→0.6 improves masked visible-body luminance9.12%/8.35%; near-black pixel share falls41.02→37.48% /40.34→36.78%. Draws remain64/48; four-run p95 medians10.0→9.7 /10.0→9.55ms. Ground noise, black pedestal, base contact, architecture and full concept remain HELD. Both arrays fit full geometric bounds at a9m south diagnostic stand-off; real HUD coverage remains HELD.
 
-Builds PASS; plain captures0 errors; own mirror/control plus standard lighting8/8 PASS; production reference rig2/2 PASS; four optional census/calibration cases skipped in the standard run. Named guards PASS; no full battery. No pack rebake. Engine `14d0ca36b8474f5284c71733530de331e7bac33e87569539f07f4175743ab476` → `65225d736a53b97ca7b9793c810f3afee0c0da677aecba18944dfba28fefb484`; pin untouched. Relay Valley's preceding landing is `e8100fcf4`.
+Builds PASS; plain captures0 errors; own mirror/control plus standard lighting8/8 PASS; production reference rig2/2 PASS; four optional census/calibration cases skipped in the standard run. Named guards PASS; no full battery. No pack rebake. Engine `14d0ca36b8474f5284c71733530de331e7bac33e87569539f07f4175743ab476` → `65225d736a53b97ca7b9793c810f3afee0c0da677aecba18944dfba28fefb484`; pin untouched. Relay Valley's preceding landing is `a8267bbaf`.
 
 ### Mare Claim — 2026-09-19
 
 **IMPROVED / full concept HELD.** [Per-defect review and boards](run-2/e8-mare-claim/review.md). The shared dome adds five framed ports and six service panels, 32 triangles, reaching exactly 3,000/3,000 with unchanged atlas, materials, bounds and mounts. Old geometry stays within recorded export tolerances; UVs exact. Inhabited-drum detail improves modestly; glass richness, player contrast, full interior and map dressing remain HELD.
 
-Four paired runs: p95 medians 9.40→9.35 ms /9.85→9.75 ms, calls unchanged 85/60. Both shared maps meet the 15% bar. Builds PASS; four final plain captures 0 errors; repeated-mount and loading probes PASS; own physics + collision 14/14 PASS; global GLB audit zero live violations (six grandfathered); named guards PASS. No full node battery. Engine `65225d736a53b97ca7b9793c810f3afee0c0da677aecba18944dfba28fefb484` → `32e59def741b8d0ce673e54dfa4714a7d824a50d2b08fbe806c09c3515e768bb`; pin untouched. Echo's preceding landing: `c254a4975`.
+Four paired runs: p95 medians 9.40→9.35 ms /9.85→9.75 ms, calls unchanged 85/60. Both shared maps meet the 15% bar. Builds PASS; four final plain captures 0 errors; repeated-mount and loading probes PASS; own physics + collision 14/14 PASS; global GLB audit zero live violations (six grandfathered); named guards PASS. No full node battery. Engine `65225d736a53b97ca7b9793c810f3afee0c0da677aecba18944dfba28fefb484` → `32e59def741b8d0ce673e54dfa4714a7d824a50d2b08fbe806c09c3515e768bb`; pin untouched. Echo's preceding landing: `dff54bd1c`.
 
 ### Eclipse — 2026-09-19
 
-**IMPROVED / full concept HELD.** [Defect list, boards and numbers](run-2/e8-eclipse/review.md). Shared drum detail from Mare commit `f05fbfd4f`; no further asset/source change. Five ports and six service panels improve the blank wall; glass richness, player contrast, terrace/settlement dressing, eclipse vista and portrait HUD remain HELD. Four paired-run medians 9.20→9.60 ms /9.45→9.10 ms; draws unchanged 85/60. Final plain 1280/390 captures 0 errors; exact old-GLB routed baselines exclude the preserved invalid capture attempts. Shared builds, loading, repeated-mount, global GLB, 14 physics/collision and named gates pass. Engine before = after `32e59def741b8d0ce673e54dfa4714a7d824a50d2b08fbe806c09c3515e768bb`.
+**IMPROVED / full concept HELD.** [Defect list, boards and numbers](run-2/e8-eclipse/review.md). Shared drum detail from Mare commit `e28fa3c4e`; no further asset/source change. Five ports and six service panels improve the blank wall; glass richness, player contrast, terrace/settlement dressing, eclipse vista and portrait HUD remain HELD. Four paired-run medians 9.20→9.60 ms /9.45→9.10 ms; draws unchanged 85/60. Final plain 1280/390 captures 0 errors; exact old-GLB routed baselines exclude the preserved invalid capture attempts. Shared builds, loading, repeated-mount, global GLB, 14 physics/collision and named gates pass. Engine before = after `32e59def741b8d0ce673e54dfa4714a7d824a50d2b08fbe806c09c3515e768bb`.
 
 ### Archive World — 2026-09-19
 
@@ -222,7 +222,7 @@ UNACCEPTED / HELD: raw 128×128 River remains painted; finale uses the 64×64 Cl
 
 **F-OMB-5 atlas reproduction FIXED:** the tracked builder now has current per-pack E3 palettes/plate inputs and a safe `--atlas-only <pack> --out <destination>` path. All four packs reproduce byte-for-byte, maximum pixel delta 0. [Commands, proof and provenance](run-2/e3-recipes/review.md). Historical geometry recipes are deliberately not reintroduced over reviewed blend repairs; no production GLB/atlas/blend/mount changes. Builds and three named guards PASS.
 
-New measured follow-up: Moth's contract names native material art, but its shipped atlas and embedded GLB texture both match the old procedural atlas. The native resize differs by up to 172 channel levels. Current shipped pixels are reproduced exactly; native-art promotion versus metadata correction remains open. Engine before = after `32e59def741b8d0ce673e54dfa4714a7d824a50d2b08fbe806c09c3515e768bb`. Ember verdict `744789367`; River route verdict `eb084dd4e`.
+New measured follow-up: Moth's contract names native material art, but its shipped atlas and embedded GLB texture both match the old procedural atlas. The native resize differs by up to 172 channel levels. Current shipped pixels are reproduced exactly; native-art promotion versus metadata correction remains open. Engine before = after `32e59def741b8d0ce673e54dfa4714a7d824a50d2b08fbe806c09c3515e768bb`. Ember verdict `4d284d8df`; River route verdict `2d1a8ff54`.
 
 ### Night Shift — 2026-09-20
 
@@ -318,7 +318,7 @@ UNACCEPTED: the circular orbital deck, central orrery, ornate rim and three pres
 
 ## Third run — 2026-09-20 (task sol-map-art-corrections-1)
 
-Base `6b7f2e49a2cf37379525825f4b605482ee825562`, engine `2ad0aa1e14a1b7f639bc9c797ae5e14839d11c7b34b70f3f7ac7ca9479fbf6f4`. Lane had no ahead work and was advanced 124 commits to main; no evidence discarded. Install and default build passed. Cleanliness: only expected untracked `logs/guard-stats.jsonl`. Raw assets hydrated. The task's literal `plate-contract-e1-night-shift.png` does not exist in git; its canonical tracked plate is `assets/raw/plate-contract-night-shift.png`, the same prefix resolution used by the run-2 board helper. No substitute art is generated.
+Base `39a540827847eabed0824998b028e6163b202e09`, engine `2ad0aa1e14a1b7f639bc9c797ae5e14839d11c7b34b70f3f7ac7ca9479fbf6f4`. Lane had no ahead work and was advanced 124 commits to main; no evidence discarded. Install and default build passed. Cleanliness: only expected untracked `logs/guard-stats.jsonl`. Raw assets hydrated. The task's literal `plate-contract-e1-night-shift.png` does not exist in git; its canonical tracked plate is `assets/raw/plate-contract-night-shift.png`, the same prefix resolution used by the run-2 board helper. No substitute art is generated.
 
 Item 0: Astra inspected both retained Last Claim boards and replaced the drain-authored assessment above. UNACCEPTED: missing circular platform, orrery, rim and preserve-station architecture; fallback confirmed by diagnostics. No source/asset changes. Engine before = after `2ad0aa1e14a1b7f639bc9c797ae5e14839d11c7b34b70f3f7ac7ca9479fbf6f4`.
 

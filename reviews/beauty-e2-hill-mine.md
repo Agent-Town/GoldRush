@@ -1,7 +1,7 @@
 # THE HILL MINE BEAUTY SHIFT — review
 
 **Slice** `docs/beauty/e2-hill-mine-brief.md` (E2 map 1 of 4, the Steamworks poster)
-**Branch** `beauty2/e2-hill-mine` · **base** `8f65062e` · **tip** see the ledger line at the bottom
+**Branch** `beauty2/e2-hill-mine` · **base** `8f65062e (archive: pruned by the A3 rewrite)` · **tip** see the ledger line at the bottom
 **Session** dedicated Opus 5 solo-writer, 2026-08-04 · **Owner mandate** "The different maps should look beautiful." (2026-07-11)
 
 **VERDICT: SHIP U1, U3, U4, U5 and F-BHM-1. U2 SHIPS PARTIAL — its paint lands and is measurable, its central promise (bench faces that read as cut stone) does not survive this camera, and F-BHM-2 files that where it can actually be fixed.**
@@ -44,13 +44,13 @@ rails data, the harvest anchors and every pressure/escort/boss rule are byte-unt
 **`Terrain3dClaimPilot.ts` called `keepLandmarkPaintReadable` twice per body, the second time with the
 default paint, silently resetting every per-contract landmark intensity on main to 3.**
 
-Introduced by `10586b90` ("drain: beauty/baron"), whose merge resolution kept both the new
+Introduced by `d67095eb` ("drain: beauty/baron"), whose merge resolution kept both the new
 per-contract block and the single-line call that block replaced. Measured live on 2026-08-04, before
 the fix, by reading the material rather than the table:
 
 | contract | the table asks for | the material actually had |
 |---|---|---|
-| `the-claim` | 1.45 on all five (shipped `59655724`) | **3, 3, 3, 3, 3** |
+| `the-claim` | 1.45 on all five (shipped `22fd2fd7`) | **3, 3, 3, 3, 3** |
 | `e1-baron` | 1.7 / 1.9 / 2.1 / 3.4 by mount, plus an emissive grade | **3 on all four**, grade gone |
 | `e1-dry-gulch` | `isolated_spring` 2.1 | **3** |
 
@@ -111,7 +111,7 @@ one (`logs/session-scratch/glb-height-diff.mjs`).
 
 `validTerrain()` therefore cannot demote the map to painted. Two **pre-existing** builder drifts also
 move and are worth naming: `maskTruth.stakeMarkers[0]` gains `heroStart` and loses `lossCondition`
-(the factory contract was renamed by `9eaa1ed5` and this mirror had never been re-baked — the
+(the factory contract was renamed by `92464021` and this mirror had never been re-baked — the
 regenerated contract now *agrees* with the sim's source), and `waterAgreement.ruling` moves to a
 top-level `waterVisualRuling` key.
 
@@ -181,7 +181,7 @@ Mobile also honours the mote cap: **200 → 90** at 390px, unchanged from the cl
 ### 4.6 Suites
 
 Everything below ran `--workers=1`. **Every red is control-proven against a detached worktree at base
-main `8f65062e`, running the identical command against its own vite on a second port** — because the
+main `8f65062e (archive: pruned by the A3 rewrite)`, running the identical command against its own vite on a second port** — because the
 first sweep of these suites returned 22 reds on this branch and **16 reds on untouched main**, which
 is the box, not the change.
 
@@ -260,11 +260,11 @@ reds I lean on were all re-proven afterwards in isolation. It is in here because
 
 | F-ID | Severity | What | Disposition |
 |---|---|---|---|
-| **F-BHM-1** | HIGH | `Terrain3dClaimPilot` called `keepLandmarkPaintReadable` twice per body, the second time with the default paint, resetting every per-contract landmark intensity on main to 3 and defeating three signed-off upgrades (`the-claim` 1.45, `e1-baron` 1.7/1.9/2.1/3.4 + its emissive grade, `e1-dry-gulch` 2.1). Introduced by `10586b90`'s merge resolution. Every gate stayed green because the dataset published the table's number, not the material's. | **FIXED IN THIS BRANCH.** The duplicate call is gone and `terrain3dPilotLandmarkMaterials[].emissiveIntensity` now publishes the measured value per mount. Changes the render of three maps outside this brief, back to what their own reviews specified. Boards: `fbhm1-*.png`. **Owner veto window: reverse with one word.** |
+| **F-BHM-1** | HIGH | `Terrain3dClaimPilot` called `keepLandmarkPaintReadable` twice per body, the second time with the default paint, resetting every per-contract landmark intensity on main to 3 and defeating three signed-off upgrades (`the-claim` 1.45, `e1-baron` 1.7/1.9/2.1/3.4 + its emissive grade, `e1-dry-gulch` 2.1). Introduced by `d67095eb`'s merge resolution. Every gate stayed green because the dataset published the table's number, not the material's. | **FIXED IN THIS BRANCH.** The duplicate call is gone and `terrain3dPilotLandmarkMaterials[].emissiveIntensity` now publishes the measured value per mount. Changes the render of three maps outside this brief, back to what their own reviews specified. Boards: `fbhm1-*.png`. **Owner veto window: reverse with one word.** |
 | **F-BHM-2** | MED | The bench faces still read as gradients, not cut rock — the brief's headline for U2. A 1.5 m rise over a 9 m ramp at this camera is a handful of screen rows; texture cannot carry it. Needs the sculpt to carry a short steep riser at each bench lip. | **NOT FIXABLE UNDER THIS BRIEF** (rendering-only law, §4.6). Belongs to `specs/gameplay-terrain` as a GT slice: "the E2 benches earn a riser". Filed here; no corrective task authored, because the fix is a sim-adjacent design decision, not a defect. |
 | **F-BHM-3** | LOW | `e2e/e2-hill-mine.spec.ts:131` is racy: it asserts `terrainVisualY === terrainSim` to five decimals while waiting only for `frame > 16`, so it passes or fails depending on whether the 3D pilot's baked height source beat the frame counter. It fails deterministically on a loaded box, on untouched main. | **PRE-EXISTING, NOT FIXED HERE.** The fix is one line — wait for `terrain3dPilotState !== 'loading'` before sampling, and then assert the visual height against the *recipe's* height (analytic + grain), not the analytic alone. Left alone deliberately: changing a named suite's assertions inside a beauty shift is how a real regression gets hidden. |
 | **F-BHM-4** | MED | `RailPath` still renders `asset: 'procedural-placeholder'` boxes, and its `steamworks` and `mine-spur` styles render identically — on the map whose signature line is its rails (442 instances, 2 draw calls). | **FLAGGED, NOT FORKED**, per the brief's §3. A real rail body is a program-level slice all four E2 maps share. |
-| **F-BHM-5** | LOW | Two pre-existing drifts in `hill-mine-terrain-contract.json` were corrected as a side effect of the re-export: `maskTruth.stakeMarkers[0]` now says `heroStart` (matching the factory contract since `9eaa1ed5`) instead of the stale `lossCondition`, and `waterAgreement.ruling` moved to a top-level `waterVisualRuling`. | **CARRIED, NOT AUTHORED.** Both bring the contract's mirror back into agreement with its own source. Named here so a reader of the diff does not mistake them for this shift's opinion. |
+| **F-BHM-5** | LOW | Two pre-existing drifts in `hill-mine-terrain-contract.json` were corrected as a side effect of the re-export: `maskTruth.stakeMarkers[0]` now says `heroStart` (matching the factory contract since `92464021`) instead of the stale `lossCondition`, and `waterAgreement.ruling` moved to a top-level `waterVisualRuling`. | **CARRIED, NOT AUTHORED.** Both bring the contract's mirror back into agreement with its own source. Named here so a reader of the diff does not mistake them for this shift's opinion. |
 | **F-BHM-6** | LOW | The e2 terrain builder had no `carry_forward_mount_records()`; a faithful re-export dropped `asset` from all five mounts, the conformed Y, and the `landmarkPack` block — proven by control-running the unchanged recipe at base main. | **FIXED IN THIS BRANCH** for `build_e2_contract_terrains.py`, and the builder now raises rather than shipping such a contract. **The other four builders that write `landmarkMounts` still have the trap.** |
 
 ---
@@ -306,14 +306,14 @@ Every upgrade in this shift is visible in a plain boot, at both viewports, with 
 
 ## 8. Ledger
 
-Branch `beauty2/e2-hill-mine` off `8f65062e`. Commits:
+Branch `beauty2/e2-hill-mine` off `8f65062e (archive: pruned by the A3 rewrite)`. Commits:
 
 | commit | what |
 |---|---|
-| `86ed0db9` | U1 — the flooded gallery becomes murky working water |
-| `bc14d54c` | U3 + U4 + U5a, and F-BHM-1 |
-| `fb43408e` | U2 — the terraces read as cut ground, carry-forward ported first |
-| `8e202d06` | U5b, the review, and the shift's boards |
+| `34574ec9` | U1 — the flooded gallery becomes murky working water |
+| `07eab045` | U3 + U4 + U5a, and F-BHM-1 |
+| `fb43408e (archive: pruned by the A3 rewrite)` | U2 — the terraces read as cut ground, carry-forward ported first |
+| `a3c24148` | U5b, the review, and the shift's boards |
 | *this one* | the whole-shift board and this ledger |
 
 **The one number that answers the brief.** The gallery — the map's named story, its central band, and
@@ -324,7 +324,7 @@ base main   luma 18.82   greenExcess 0.68    colLumaSd 2.07    a painted hole
 tip         luma 37.30   greenExcess 6.21    colLumaSd 10.11   working water, moving
 ```
 
-**Note on `fb43408e`'s message:** it was committed through a shell that ate three backtick-quoted
+**Note on `fb43408e (archive: pruned by the A3 rewrite)`'s message:** it was committed through a shell that ate three backtick-quoted
 words (`files`, `heroStart`, `lossCondition`) as command substitutions. The commit's content is
 correct and unaffected; the three gaps in its prose are recorded here rather than repaired, because
 the branch is pushed and rewriting published history is not a hygiene fix. §4.2 above carries the

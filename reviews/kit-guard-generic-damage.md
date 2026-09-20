@@ -1,8 +1,8 @@
 # kit-guard-generic-damage — drain review (s2466)
 
 **Slice:** `kit-guard-generic-damage` (F-WIN-2 option (b), ruled attended 2026-09-03)
-**Branch:** `lane/a` · **lane tip:** `76b987a9a9b2bf98142f03660c3ba4681c774150` (`runner(lane-a): kit-guard-generic-damage.md`)
-**Base:** `412836942df3ebc6fb25544fc07be741fd4b5d09` · **Merge:** `adacf5e131fcec6df1496671129961e0468a1a46`
+**Branch:** `lane/a` · **lane tip:** `ae34347661adda731f69a8c04fcfc561b116156a` (`runner(lane-a): kit-guard-generic-damage.md`)
+**Base:** `fb57300c36fcf0f87b34eb090d93ea6b66a5244f` · **Merge:** `0e8fd990e5feca236b2f00904373e72cc16ab4e8`
 **Gated in:** detached worktree `gate-s2466` (§3.0b — undecided content never entered main's tree)
 **Tree identity:** the gate's trial-merge tree and main's merge tree are the same object,
 `b436a743aea78c3759a9b4ad459c3383af0c7915` — what shipped is byte-identical to what was measured.
@@ -68,7 +68,7 @@ F-2466-1.
 
 ## Merge classification
 
-Base `412836942`, one ahead-commit, three files. Merged with `git merge --no-ff` as a single act — never
+Base `fb57300c3`, one ahead-commit, three files. Merged with `git merge --no-ff` as a single act — never
 `--no-commit` (F-1589-5: a merge left staged on main is swept by concurrent writers).
 
 | File | Class | Resolution |
@@ -116,7 +116,7 @@ firewall violation the house law names. It is one small slice for whoever picks 
 ### F-2466-2 — the runner reported two battery failures; neither reproduces on the merged tree. NON-BLOCKING, informational.
 
 The run log's headline reads *"607 tests; 603 passed, 2 skipped, 2 unrelated failures"*, attributing one
-to a fix already on newer main (`abd341f84`, art-staging teardown) and one to a load-sensitive Moth
+to a fix already on newer main (`ce5e27b97`, art-staging teardown) and one to a load-sensitive Moth
 test. Re-run on the **merged** tree, **alone**: **607 tests, 602 pass, 0 fail, 5 skipped, rc=0.** Both
 reds were the lane's shell — one staleness (cured by merging onto current main), one contention.
 

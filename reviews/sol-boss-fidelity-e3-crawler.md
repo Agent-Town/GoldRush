@@ -1,6 +1,6 @@
 # Epoch 3 Dynamo Crawler — fidelity and presentation
 
-Branch `sol/boss-art-fidelity-review`, base `d41ab98ce`. Work dated 2026-09-08. No commit or deployment.
+Branch `sol/boss-art-fidelity-review`, base `d41ab98ce (archive: pruned by the A3 rewrite)`. Work dated 2026-09-08. No commit or deployment.
 
 **Fidelity implementation and focused verification complete; full regression has explicit exceptions.** E1 and E2 are verified; this report does not close the ten-epoch goal.
 

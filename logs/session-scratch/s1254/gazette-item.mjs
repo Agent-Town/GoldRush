@@ -9,7 +9,7 @@ appendFileSync(
 A first-timer's lessons used to talk over one another — take a level while the movement lesson is still on the board and the second line wiped the first before it could be read.
 Each lesson now holds the board for four seconds, or until you touch a key, and the ones behind it wait their turn in order.
 Old hands are unaffected; once the trail has taught you, the feed speaks as fast as the day does.
-merge 6f343a6e · artifacts/trail-guide-beat-priority/desktop-chrome-storm.png
+merge e3ee53d6 · artifacts/trail-guide-beat-priority/desktop-chrome-storm.png
 `,
 );
 console.log('appended');

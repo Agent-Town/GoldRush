@@ -68,7 +68,7 @@ The denied-receipt test body's exact diff is the existing log line only—no `ex
 
 # DRAIN GATE — s1577
 
-**Slice:** `f1575-1-m4-06-drift-tick-budget` · **branch:** `lane/c` @ `61951fce6` · **base:** `7fd3bc8a4` · **merge:** `--no-ff` onto main
+**Slice:** `f1575-1-m4-06-drift-tick-budget` · **branch:** `lane/c` @ `6781e6954` · **base:** `63453e7be` · **merge:** `--no-ff` onto main
 
 **VERDICT: MERGED.** The instrument is sound, the arrangement is provably unchanged, and verdict (A) reproduces independently on a differently-loaded shell. One red is carried and classified below; it is the ladder's own documented flake, and this slice is the first thing in nine rungs that can say *why* it happened.
 
@@ -139,4 +139,4 @@ The runner's banked mobile run-02 red (`Prospector floats above terrain...` at `
 
 ## Red disposition
 
-The desktop denied-drift red is **fingerprint-matched to a pre-existing class, with proof of pre-existence**: F-1563-3 banked `0.41504` and `0.4453` on `98a464438`, which the master establishes is **after** the `fa2c180a5` regime change — i.e. this exact assertion at this exact `0.4` bound breached **before this slice existed**. The slice changes neither the assertion, the bound, nor the round-trip count. `logs/suite-red-inventory.md` lists this test as known-red **mobile-only under a different assertion** (`toContain`, snapshot 2026-07-28), so the inventory does **not** cover this desktop breach and was not stretched to cover it.
+The desktop denied-drift red is **fingerprint-matched to a pre-existing class, with proof of pre-existence**: F-1563-3 banked `0.41504` and `0.4453` on `d85e68146`, which the master establishes is **after** the `29eb4abbd` regime change — i.e. this exact assertion at this exact `0.4` bound breached **before this slice existed**. The slice changes neither the assertion, the bound, nor the round-trip count. `logs/suite-red-inventory.md` lists this test as known-red **mobile-only under a different assertion** (`toContain`, snapshot 2026-07-28), so the inventory does **not** cover this desktop breach and was not stretched to cover it.

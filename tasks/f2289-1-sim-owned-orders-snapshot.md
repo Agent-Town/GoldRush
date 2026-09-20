@@ -2,14 +2,14 @@
 
 You are Codex, implementer for Gold Rush, running natively on Robin's Mac in `worktrees/lane-a`.
 
-READ FIRST: `AGENTS.md`; `artifacts/f2289-1-20260825/diagnosis.md` (the diagnostic this cures, merged `8f545d60b`); `reviews/f2289-1-recorder-assayer-hash-divergence.md`; `artifacts/f2291-3-lever-proof/lever-probe-module-split.mjs` and its `lever-proof-output.txt` (**the arm is already proven — see Scope 4**).
+READ FIRST: `AGENTS.md`; `artifacts/f2289-1-20260825/diagnosis.md` (the diagnostic this cures, merged `11016a24d`); `reviews/f2289-1-recorder-assayer-hash-divergence.md`; `artifacts/f2291-3-lever-proof/lever-probe-module-split.mjs` and its `lever-proof-output.txt` (**the arm is already proven — see Scope 4**).
 
 SEQUENCING LAW: this builds on the f2289-1 diagnostic. Verify it landed before touching anything:
 `git log --oneline | grep -q 'f2289-1-recorder-assayer-hash-divergence'` — search the WHOLE log, never `git log -N`. If absent: STOP and report "f2289-1 diagnostic not landed".
 
 Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead is NORMAL — the runner auto-commits. For each ahead commit: if its content is already merged to main (verify via git log/diff), it is a SAFE DUPE → `git checkout -B lane/a main && git clean -fd` and PROCEED. STOP-and-report ONLY if an ahead commit's content is NOT on main (undrained work — resetting would DESTROY it), or the worktree holds uncommitted edits you did not make. **EVIDENCE-ARTIFACT EXCEPTION (F-1266-1, s1266): changes confined to regenerated evidence — `artifacts/**`, `reviews/shots-*`, and any `.png` screenshot — are NEVER "work" and NEVER a STOP, whether they sit as uncommitted dirt or as the entire content of an ahead commit. Screenshots are never byte-identity gated, so their bytes differ from main forever. Discard them (`git checkout -- <paths>` / reset) and PROCEED, listing what you discarded.** Then `npm install --no-audit --no-fund`; `npm run build` green before touching anything. **THEN A CLEANLINESS LINE: `git -C worktrees/lane-a status --short` → must be clean, with the FACTORY-CHURN EXCEPTION — always expected, never a STOP; list them and proceed (F-1407-1): (a) `logs/**`; (b) `artifacts/**`, `reviews/shots-*` and any `.png`. What still STOPs: modified tracked `src/**`, `scripts/**`, `e2e/**`, `tasks/**`, `specs/**`, `reviews/*.md`.**
 
-## Why (F-2289-1, diagnosed lane-a 2026-08-25, drained s2291 at `8f545d60b`)
+## Why (F-2289-1, diagnosed lane-a 2026-08-25, drained s2291 at `11016a24d`)
 
 The recorder and the assayer hash the same run to different values, and the county **refused one honest standing** because of it (measured: 115 retained tapes / 96 agree / 8 diverge / 11 unreplayable; only the raw heat-5b Hill tape both diverges *and* replays its claimed secure outcome exactly).
 

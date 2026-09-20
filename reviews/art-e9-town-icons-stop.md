@@ -2,7 +2,7 @@
 
 **Slice:** `art-e9-town-icons` (E9 Red Fields townsfolk — 4 fresh + 1 aging edit + 1 five-up sheet)
 **Slot:** ART (commits into main's own tree — gate-and-bless, not a merge)
-**Runner commit:** `9ae877d9 runner(art): art-e9-town-icons.md`
+**Runner commit:** `9ae877d9 (archive: pruned by the A3 rewrite) runner(art): art-e9-town-icons.md`
 **Run report:** `tasks/runs/20260728-122506-art-e9-town-icons.md`
 **Drained:** s1166, 2026-07-28
 **§3.0 `drain-block-check`:** ✅ CLEAR — `art-e9-town-icons.md [e9-art-town-icons] status="queued"`, run as the first command, before classification.
@@ -52,7 +52,7 @@ F-1120-1 convention outlier. That is the correct control result for this statist
 | Check | Method | Result |
 |---|---|---|
 | No E9 portrait entered the repo | `git ls-files 'assets/**' \| grep -Ei 'tf-[a-z-]*-e9'` | **0** |
-| Runner commit touched no art | `git show --stat 9ae877d9` | only `logs/` ×4 + `tasks/runs/` ×1 — **zero `assets/`** |
+| Runner commit touched no art | `git show --stat 9ae877d9 (archive: pruned by the A3 rewrite)` | only `logs/` ×4 + `tasks/runs/` ×1 — **zero `assets/`** |
 | Moon-born edit source untouched | sha256 + byte size, recomputed | `daa76435…ddce6`, **3,503,908 B** — matches the report's pin **exactly** |
 | `assets/LEDGER.md` unchanged | runner commit file list | not present ⇒ unchanged |
 | No processing / no dev server / no playwright | run report + commit contents | consistent |
@@ -64,7 +64,7 @@ have been both pointless and load-contaminated (F-1160-2).
 
 ## Merge classification
 
-**Not a merge.** The ART slot commits into main's own tree; `9ae877d9` is already on main. No base
+**Not a merge.** The ART slot commits into main's own tree; `9ae877d9 (archive: pruned by the A3 rewrite)` is already on main. No base
 diff, no LANE-TOUCHED/MAIN-MOVED classification applies, no graft.
 
 ## Findings
@@ -102,9 +102,9 @@ backdrop pinned to **neutral aged parchment**, as a *binding clause in every pro
 
 ### F-1162-1 — RECURRED AGAIN (4th observed instance). No new fork; already on the owner's desk.
 
-`9ae877d9` — a run that produced **zero art** — nonetheless committed `logs/.goal-tree.html`,
+`9ae877d9 (archive: pruned by the A3 rewrite)` — a run that produced **zero art** — nonetheless committed `logs/.goal-tree.html`,
 `logs/dashboard.html`, `logs/task-stats.jsonl` **and `logs/session-scratch/s1165-handoff.txt`**,
-none of which is in any art task's TOUCH-ONLY list. The runner still predates `d10167f4`; the fix
+none of which is in any art task's TOUCH-ONLY list. The runner still predates `8af9d4f9`; the fix
 has now been inert **>7 h**. **The remedy is a runner RESTART and a fire cannot do it.**
 
 ### ART staging audit (law: any fire touching the ART slot reports both buckets)

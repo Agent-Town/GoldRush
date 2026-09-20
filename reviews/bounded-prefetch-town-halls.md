@@ -1,6 +1,6 @@
 # Review: bounded-prefetch-town-halls — the halls are the town, and the stream names its terminal state (lane-b, Claude Opus 5 implementer, attended drain 2026-09-05)
 
-**Slice/branch/tip:** `bounded-prefetch-town-halls` · `lane/b` · commit `5f1cc3cea` over base `cf91fe5e9` · merge `55ac2976f` (no-ff; BACKLOG union).
+**Slice/branch/tip:** `bounded-prefetch-town-halls` · `lane/b` · commit `44efbf3d6` over base `c3884d89d` · merge `22bb1b29c` (no-ff; BACKLOG union).
 **Verdict:** MERGED. F-PBW-2 cured, and a real ordering bug in the bounded stream (F-BPTH-1) with it.
 
 ## What it does

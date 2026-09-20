@@ -24,7 +24,7 @@ Then `npm install --no-audit --no-fund`; `npm run build` green.
 
 ## Why (measured s2058 during the drain of the very slice this corrects — evidence, not inference)
 
-`f2057-2-restart-guard-tty` (merged `d4a8594ea88f66d23d8fb59ed64d9cf6d01ac744`) cured a real red: with stdin on a **socket**, `/usr/bin/script` aborts with `tcgetattr/ioctl: Operation not supported on socket` and both custody arms fail. That cure is correct and must not be reverted.
+`f2057-2-restart-guard-tty` (merged `9cc9ba9e40c537bb98bb04eeb281285725b2d91b`) cured a real red: with stdin on a **socket**, `/usr/bin/script` aborts with `tcgetattr/ioctl: Operation not supported on socket` and both custody arms fail. That cure is correct and must not be reverted.
 
 But its predicate is `[ ! -t 0 ]` — *"stdin is not a terminal"* — and the actual failure condition is narrower. Measured across four stdin shapes, same root, only fd 0 varying:
 

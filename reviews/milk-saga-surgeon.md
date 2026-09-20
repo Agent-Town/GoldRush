@@ -1,11 +1,11 @@
 # THE SAGA SURGEON — E3/E4/E6 contract surgery
 
-> ## ✅ DRAINED s1497 — MERGED `325241e2` (fast-forward from the gated commit; `main..milk/saga-surgeon` is EMPTY)
+> ## ✅ DRAINED s1497 — MERGED `ea6f2efb` (fast-forward from the gated commit; `main..milk/saga-surgeon` is EMPTY)
 >
 > **Gated on the MERGED tree in the detached worktree `gate-s1497` (§3.0b), `--workers=1`, both Playwright projects:** `tsc --noEmit` **rc=0** · `npm run build` **green 1.04s** · the **whole census family re-enumerated from the tree** — nine `er01-e*-census` specs + `contract-bundle-validation` = **74 passed / 4.0m** · `test:node-guards` **341 tests / 338 pass / 0 fail / 3 skipped** (the documented F-1408-2 cross-engine skips; the F-1460-1 Baron pin red is gone, cured s1462) · plain boot probe **2/2 desktop + 390px mobile, zero console/page errors** · `src/` **byte-unchanged** (verified by `git diff --name-only main HEAD -- src/` returning empty), 7 files, zero deletions.
 >
 > ### ⚠️ THE MERGE WAS NOT CONFLICT-FREE, AND THIS REVIEW COULD NOT HAVE KNOWN
-> This review records **"Conflicts: none — zero file overlap"**, measured against base `bab80361`. Main then advanced **97 commits**, and the **s1496 `milk/motor-socket` drain amended the same file** — `docs/bench/e4-readiness-census.md`. Three conflicts, all resolved as a **UNION**, recorded in the census itself:
+> This review records **"Conflicts: none — zero file overlap"**, measured against base `bab80361 (archive: pruned by the A3 rewrite)`. Main then advanced **97 commits**, and the **s1496 `milk/motor-socket` drain amended the same file** — `docs/bench/e4-readiness-census.md`. Three conflicts, all resolved as a **UNION**, recorded in the census itself:
 > 1. **Executive summary** — the shift's struck `BROKEN: 0` → **`BROKEN: 1 of 4`** correction is kept; motor-socket's newer ORBIT amendment paragraphs are kept beneath it. One sentence the shift carried at its *pre-ORBIT* wording was dropped because main already holds the **same sentence at a later revision** — not a competing claim, and the census says so in place.
 > 2. **The `e4-dust-flats` table row** — main's row (Verbs **PARTIAL**, ORBIT vocabulary derived) is kept and its verdict cell merged to **DATA-GAP + BROKEN**, carrying **both** causes (the headless socket blocked by F-ER01-E4-5, *and* F-MILK-SS-3).
 > 3. **Findings** — both blocks retained in order: F-ER01-E4-5, F-ER01-E4-6 (main), then F-MILK-SS-3 (this shift).
@@ -16,7 +16,7 @@
 > ### 🔔 THE HANDOFF ASK WAS HONOURED
 > §HANDOFF below asks the next STATUS-lock holder to put **F-MILK-SS-3** on the owner's desk, because the shift was firewalled from `STATUS.md` and correctly refused to pretend a BACKLOG row was an escalation (the F-1473-2 / F-1334-2 class). **s1497 wrote the desk line into `STATUS.md` line 1.** The desk is now 10 items.
 
-**Slice:** `milk/saga-surgeon` (worktree `gr-milk-saga-surgeon`) · **base** `18b2ef276` · **merged main** `bab80361` · **tip** at review time `ab37981e3` + merge + this commit
+**Slice:** `milk/saga-surgeon` (worktree `gr-milk-saga-surgeon`) · **base** `18b2ef276 (archive: pruned by the A3 rewrite)` · **merged main** `bab80361 (archive: pruned by the A3 rewrite)` · **tip** at review time `514fb72dd` + merge + this commit
 **Verdict:** ✅ **READY-FOR-GATES** — one cure landed and gated; three findings filed; one owner decision raised.
 
 ---
@@ -72,7 +72,7 @@ The vocabulary was **derived from the census findings**, not invented, and the m
 
 ## MERGE CLASSIFICATION
 
-Base `18b2ef276`; main advanced to `bab80361` (7 commits) during the shift and was **merged in before the final gate**, per §3.0b (gate the merged tree).
+Base `18b2ef276 (archive: pruned by the A3 rewrite)`; main advanced to `bab80361 (archive: pruned by the A3 rewrite)` (7 commits) during the shift and was **merged in before the final gate**, per §3.0b (gate the merged tree).
 
 - **LANE-TOUCHED (5, all mine):** `assets/contracts/epoch-6-atomic/contracts.json` · `e2e/er01-e6-census.spec.ts` · `docs/bench/e{3,4,6}-readiness-census.md`
 - **MAIN-MOVED (10, none mine):** `STATUS.md` · `package.json` · `tasks/BACKLOG.md` · `scripts/stale-ready-for-gates-guard{,.test}.mjs` · `e2e/run3d-rail-elements.spec.ts` · artifacts/logs

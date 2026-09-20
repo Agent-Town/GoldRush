@@ -1,6 +1,6 @@
 # AP-11 — every contract declares its own language (`lane-mechanics-manifest`)
 
-**Slice:** `ap-11-mechanics-manifest` · **branch:** `lane/m3` · **tip:** `87b1a1cd5e514417225d22fc464683913e960892` · **base:** `3747bc5c` (= `818aa398` on main, the s1300 `verifiers-gate-and-stderr` graft)
+**Slice:** `ap-11-mechanics-manifest` · **branch:** `lane/m3` · **tip:** `87b1a1cd5e514417225d22fc464683913e960892` · **base:** `3747bc5c` (= `088a9138` on main, the s1300 `verifiers-gate-and-stderr` graft)
 **Drained by:** s1304 fire, 2026-07-31 · **Master:** `tasks/done/20260731-215132-lane-mechanics-manifest.md` (attended-authored)
 
 ## VERDICT: MERGE — with F-1304-1 filed and a corrective queued
@@ -43,7 +43,7 @@ Base `3747bc5c`; **all five files LANE-TOUCHED only**. Verified, not assumed:
 
 ## §3.0 block check
 
-`node scripts/drain-block-check.mjs 20260731-215132-lane-mechanics-manifest.md` → **`? UNKNOWN — no goal leaf matches`** at **rc=0** on arrival. That is F-1303-2, and it is why s1303 declined this drain. s1304 **registered the leaf first** (`069619f3`, `ap-11-mechanics-manifest` under `multiplayer/agent-play`, status `building`), then re-ran: **`✅ CLEAR — lane-mechanics-manifest.md [ap-11-mechanics-manifest] status="building"`**, matched by name.
+`node scripts/drain-block-check.mjs 20260731-215132-lane-mechanics-manifest.md` → **`? UNKNOWN — no goal leaf matches`** at **rc=0** on arrival. That is F-1303-2, and it is why s1303 declined this drain. s1304 **registered the leaf first** (`00e70f3d`, `ap-11-mechanics-manifest` under `multiplayer/agent-play`, status `building`), then re-ran: **`✅ CLEAR — lane-mechanics-manifest.md [ap-11-mechanics-manifest] status="building"`**, matched by name.
 
 ## Evidence
 
@@ -96,7 +96,7 @@ Arm B alone would have justified *"flaky, ignore"*. Arm C is the one that names 
 
 ### 🔵 F-1304-2 — the master shipped without a goal leaf (closed by this drain)
 
-Recorded for the pattern, not for blame: `lane-mechanics-manifest.md` was queued and run with no `tasks/goals.json` leaf, so §3.0's first command returned UNKNOWN at rc=0 — a word that means *bookkeeping is missing*, dressed in the exit code that means *cleared*. It cost one full fire of drain throughput (s1303 correctly declined). Registered at `069619f3`; **closed**.
+Recorded for the pattern, not for blame: `lane-mechanics-manifest.md` was queued and run with no `tasks/goals.json` leaf, so §3.0's first command returned UNKNOWN at rc=0 — a word that means *bookkeeping is missing*, dressed in the exit code that means *cleared*. It cost one full fire of drain throughput (s1303 correctly declined). Registered at `00e70f3d`; **closed**.
 
 ## Non-blocking notes
 

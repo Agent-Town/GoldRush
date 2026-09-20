@@ -2,7 +2,7 @@
 
 Status: READY-FOR-GATES for review of the scoped implementation; **full-battery acceptance is not green**. The individual required suites, build, mutation proof and independent review passed. Broad guard failures are recorded below and remain for the orchestrator.
 
-Task: `tasks/running/lane-b--20260919-190544-sol-account-registry-land.md` in the main worktree. Working branch: `sol/account-registry-land`. Base: `821bff7e915bef5c774193e2611b4726317b45ca`. Node: **26.4.0**, Wrangler: **4.107.0**. All application test requests stayed local; no Cloudflare deployment, secret operation, remote KV read/export, D1 operation or droplet access was performed. Commands in the operations document are instructions for a later owner-run migration.
+Task: `tasks/running/lane-b--20260919-190544-sol-account-registry-land.md` in the main worktree. Working branch: `sol/account-registry-land`. Base: `2fbae0611befc25465a279e70be4310ca1c21b80`. Node: **26.4.0**, Wrangler: **4.107.0**. All application test requests stayed local; no Cloudflare deployment, secret operation, remote KV read/export, D1 operation or droplet access was performed. Commands in the operations document are instructions for a later owner-run migration.
 
 ## Preflight and scope
 
@@ -58,7 +58,7 @@ All test commands use `/opt/homebrew/bin` first on PATH. Local Wrangler calls us
 | Closed gate + bootstrap dry-run | PASS, **13/13** tests | `closed-gate-final.log` (also initial `closed-gate.log`) |
 | Manufactured KV fallback | Expected FAIL, five verify assertions reject it | `mutant-kv-fallback.log` |
 | Manufactured early deletion | Expected FAIL, five snapshot assertions reject it | `mutant-delete-before-readiness.log` |
-| `run-guards.mjs --changed-since 821bff7e915bef5c774193e2611b4726317b45ca` | **FAIL, 4/8 guards; exit 1** | `run-guards.log`, `guard-stats-serial.jsonl` |
+| `run-guards.mjs --changed-since 2fbae0611befc25465a279e70be4310ca1c21b80` | **FAIL, 4/8 guards; exit 1** | `run-guards.log`, `guard-stats-serial.jsonl` |
 | Runbook shell + embedded Node syntax | PASS, parse only; no remote commands executed | `doc-command-check.log` |
 | Independent read-only review | PASS, no actionable material findings | `independent-review.md`, `independent-review.log` |
 

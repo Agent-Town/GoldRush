@@ -17,11 +17,11 @@ walk(g);
 if (!hit) throw new Error('goal leaf deploy-verify-production-alias not found');
 
 hit.status = 'merged';
-hit.mergeHash = 'e74230184cbb0204dd7fe9c391a12f9c69ee7c86';
+hit.mergeHash = '011b47f696840970186319b8bcbc8bf7848d1c28';
 hit.tip = '99baab74';
 hit.review = 'reviews/deploy-verify-production-alias.md';
 hit.outcome = [
-  's1053 DRAINED (lane-d tip 99baab74 -> main e7423018). Firewall held exactly:',
+  's1053 DRAINED (lane-d tip 99baab74 -> main 011b47f6). Firewall held exactly:',
   'scripts/deploy.sh + scripts/test-deploy-contract.sh ONLY, +117/-33, zero src/, zero asset-diet.mjs.',
   'F-1050-1 CLOSED - the confirmation now reads the PRODUCTION ALIAS via GR_PAGES_PRODUCTION_URL',
   '(default https://gold-rush-3in.pages.dev, the value second-rider.mjs:7 and fetch-bugs.mjs:9 already',
@@ -41,7 +41,7 @@ hit.outcome = [
   '127.0.0.1 node server (it previously reached the real internet to decide a unit result), adding 5',
   'cases each of which fails if scopes 1-3 are reverted. Gates: tsc clean, build green 1.46s,',
   'never-block law preserved (finish() still exits 0 unless --strict). Merge was an EXACT GRAFT, not a',
-  '3-way: merge-base 1cc8bce3, and git diff 1cc8bce3 main -- <the 2 files> is EMPTY, so main never',
+  '3-way: merge-base 4c2ebb12, and git diff 4c2ebb12 main -- <the 2 files> is EMPTY, so main never',
   'moved either file; working tree verified byte-identical to the lane tip before staging.',
   'LIMIT stated in the review and not softened: I did NOT execute the contract test itself -',
   'bash <script> and direct execution are both gated for fires and I attempted both - so its green',

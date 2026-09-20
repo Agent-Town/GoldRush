@@ -1,17 +1,17 @@
 # Control run — every red on `beauty2/far-ground`, re-proved on the untouched base commit
 
-Detached worktree at **`7c833197`** (this branch's base, `origin/main` at pre-flight), its own vite
+Detached worktree at **`b16e39b3`** (this branch's base, `origin/main` at pre-flight), its own vite
 on scratch port **5352**, `--workers=1`, `GR_CAPTURE_EXTERNAL_SERVER=1` so the control never shares
 the branch's dev server.
 
 ```
-git worktree add --detach /tmp/gr-fg-control 7c833197
+git worktree add --detach /tmp/gr-fg-control b16e39b3
 cd /tmp/gr-fg-control && npx vite --host 127.0.0.1 --port 5352 --strictPort
 GR_CAPTURE_EXTERNAL_SERVER=1 GR_CAPTURE_BASE_URL=http://127.0.0.1:5352 \
   npx playwright test <spec>:<line> --project=desktop-chrome --project=mobile-chrome --workers=1
 ```
 
-| Test | control at `7c833197` | branch | verdict |
+| Test | control at `b16e39b3` | branch | verdict |
 |---|---|---|---|
 | `e1-night-shift:271` x2 projects | ✘ ✘ | ✘ ✘ | pre-existing |
 | `e1-night-shift:372` x2 | ✘ ✘ | ✘ ✘ | pre-existing |

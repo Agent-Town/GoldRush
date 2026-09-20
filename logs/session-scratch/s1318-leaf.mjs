@@ -18,9 +18,9 @@ if (!leaf) throw new Error('leaf f1316-1-float-text-legibility not found');
 console.log('before:', leaf.status, leaf.mergeHash ?? '(no hash)');
 
 leaf.status = 'shipped';
-leaf.mergeHash = 'b1dc3306b73bb8c49ed591b069622c878ac3e6ef';
+leaf.mergeHash = 'efa3b25215220305154f92feadf6d6a3d50859e4';
 leaf.closureReason = [
-  's1318 drain: ACCEPT, merged b1dc3306.',
+  's1318 drain: ACCEPT, merged efa3b252.',
   'Upgrade sentences now fit the sign — the "the ya" fragment is gone and both merged-tree screenshots show the complete string.',
   "s1316's pre-declared REJECT bar was NOT triggered: lastFloatText.text appears only as a waitForFunction predicate, while every certifying assertion is on measured raster geometry (renderedWidthPx / canvasWidthPx / fontPx), verified at source to come from a real measureText on the drawing context.",
   'Gates on the merged tree: tsc clean; build green; own spec 2/2 desktop+390; adjacent (grep-derived, incl. lane-crossing-armed which the runner missed) 38 passed / 4 failed with all 4 fingerprinted pre-existing by reverting the slice source and reproducing them on main; plain-boot 14/14 zero console errors; node-guards 204/204.',

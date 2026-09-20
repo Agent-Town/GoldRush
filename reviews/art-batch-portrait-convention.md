@@ -1,7 +1,7 @@
 # art-batch-portrait-convention — the townsfolk portrait convention (ART slot)
 
 **Slice:** `art-batch-portrait-convention` (ART slot) · **run:** `tasks/runs/20260727-114224-art-art-batch-portrait-convention.md.log` (rc1)
-**Landed:** `1d85c6e6` (art salvage) · **drained by:** s1120 fire, 2026-07-27
+**Landed:** `2a49466c` (art salvage) · **drained by:** s1120 fire, 2026-07-27
 **Verdict:** ✅ **PASS — SALVAGE DRAIN.** Deliverables complete and on-convention; one non-blocking outlier (F-1120-1). Reference-tier, extraction withheld.
 
 ## What it does
@@ -16,7 +16,7 @@ The convention, stated so future batches can cite it verbatim:
 
 The runner **generated every deliverable at 11:58 and then died** — `ERROR: stream disconnected before completion` after 5 failed reconnects, 144,831 tokens — *during* its LEDGER write. So it produced complete art and zero bookkeeping, and never done-moved. The output was left **untracked in main's `assets/`** (not `worktrees/art/`), i.e. **22.58 MB in no object database**: the RETENTION LAW's largest live hole, open for ~20 minutes.
 
-Salvage was therefore the first act of this drain, before QA — bytes that don't exist can't be adjudicated. Committed `1d85c6e6`, pushed, and **verified at origin by `ls-remote` SHA-compare** (match), not by assuming the push succeeded.
+Salvage was therefore the first act of this drain, before QA — bytes that don't exist can't be adjudicated. Committed `2a49466c`, pushed, and **verified at origin by `ls-remote` SHA-compare** (match), not by assuming the push succeeded.
 
 ## Evidence
 
@@ -39,9 +39,9 @@ Ground warmth R−B **104** against the other five's tight **130–145** band; t
 
 ⚠️ **Recorded because the process matters more than the finding:** at contact-sheet scale I judged Mei to be in a visibly *different, smoother, cooler* style — and that was **wrong**. The 0.2-meanAbsDiff sheet-fidelity measurement proved the sheet is a faithful downscale of the raw, so what I "saw" was an artifact of viewing 1254px art at 384px. The real defect is a third the size of the eyeballed one. *An art QA done by eye at the wrong scale invents defects as readily as it misses them.*
 
-**F-1120-2 — the ART staging audit was blind to 566 MB (FIXED THIS FIRE, `677ca028`).** See that commit; summarised in the handoff. It is the third instance of the F-1054-1/F-1055-1 class and it is why this batch's exposure went unreported by the instrument built to report exactly it.
+**F-1120-2 — the ART staging audit was blind to 566 MB (FIXED THIS FIRE, `7a64d278`).** See that commit; summarised in the handoff. It is the third instance of the F-1054-1/F-1055-1 class and it is why this batch's exposure went unreported by the instrument built to report exactly it.
 
-**F-1120-3 — no goal leaf (Goal Registration Law).** `node scripts/drain-block-check.mjs art-batch-portrait-convention` returned **UNKNOWN — no goal leaf matches**, which per fire.md §3.0 is a bookkeeping finding and *not* a clearance. The master was also **untracked** — authored and queued without ever being committed. Leaf registered in the drain commit; the master is now in git at `1d85c6e6`.
+**F-1120-3 — no goal leaf (Goal Registration Law).** `node scripts/drain-block-check.mjs art-batch-portrait-convention` returned **UNKNOWN — no goal leaf matches**, which per fire.md §3.0 is a bookkeeping finding and *not* a clearance. The master was also **untracked** — authored and queued without ever being committed. Leaf registered in the drain commit; the master is now in git at `2a49466c`.
 
 ## Merge classification
 

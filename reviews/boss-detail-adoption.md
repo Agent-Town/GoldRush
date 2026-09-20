@@ -1,6 +1,6 @@
 # boss-detail-adoption — the duel winners take the field
 
-**Slice:** `lane-boss-detail-adoption` · **branch:** `lane/perf` · **tip:** `8f1264de` · **base:** `11c4d35c`
+**Slice:** `lane-boss-detail-adoption` · **branch:** `lane/perf` · **tip:** `8f1264de` · **base:** `c8e21301`
 **Drained:** s1181 fire, 2026-07-28 · **Verdict: MERGE**
 
 ## What it does
@@ -46,7 +46,7 @@ All four terms of both gates are satisfied by the assets on main. The models mou
 | `npm run build` | **green, 1.65 s** |
 | `e5-boss-dredge-queen.spec.ts` + `e8-boss-salvage-claw.spec.ts` | **12/12 passed**, desktop + 390px mobile, 2.3 m |
 | Frame p95 vs non-boss tile (the ≤15% envelope) | **desktop 1.0217 · mobile 1.0109** — ~3× the triangles cost ~1–2% |
-| Merge classification | both files **LANE-TOUCHED only** — `git log 11c4d35c..main -- <both systems>` **EMPTY** |
+| Merge classification | both files **LANE-TOUCHED only** — `git log c8e21301..main -- <both systems>` **EMPTY** |
 | Screenshots | `artifacts/boss-adoption/{dredge-queen,salvage-claw}-detail-opus5-mounted.png` |
 
 Gated on **scratch port 5234, external server** — lane-c was LIVE (Mistake #12).

@@ -3,7 +3,7 @@
 - **Slice:** `lane-c-m2-04-palisade-budget-bisect` (DIAGNOSIS-ONLY, F-1147-1)
 - **Branch / tip:** `lane/e2-arsenal` @ `d57f3335` ("chore: bisect palisade budget regression")
 - **Run:** `20260728-015037-lane-c-lane-c-m2-04-palisade-budget-bisect.md.log`
-- **Base:** `de8d9864`; merged onto main @ `d1f1b0d5`
+- **Base:** `385dea81`; merged onto main @ `afaa3d76`
 - **Drained by:** s1148 fire, 2026-07-28
 - **§3.0 `drain-block-check`:** ✅ CLEAR (`status="queued"`), run as the first command of the drain, before classification.
 
@@ -18,7 +18,7 @@ repair — it does not invalidate the diagnosis and does not block the merge.
 
 Nothing, to the game — deliberately. It answers F-1147-1 ("`m2-04-gold-stealing:211` has been
 deterministically red on main for ~3 weeks") with a bisect artifact and a retained bisect runner.
-It names `3c749607` as the first bad commit and the `spreadBiasX`/`spreadBiasZ` lateral lane
+It names `9f6ec59d` as the first bad commit and the `spreadBiasX`/`spreadBiasZ` lateral lane
 offset in `ClaimJumperEnemy.update()` as the mechanism: a seeded per-enemy formation offset is
 added to *every* non-rail enemy's heading, including a solitary thief, bending its route into an
 S-shape around the palisade and overrunning the `< 20` route-budget assertion.
@@ -34,7 +34,7 @@ S-shape around the palisade and overrunning the `< 20` route-budget assertion.
 | `e2e/m2-04-gold-stealing.spec.ts` byte-unchanged (a green `:211` ⇒ REJECT) | ✅ `git diff main lane/e2-arsenal -- <spec>` empty; the budget assertion was **not** widened |
 | Scope-1 reproduce table present | ✅ 5 failed / 1 passed, per-repeat, with `Received:` values |
 | Scope-2 failure-**line** split present | ✅ budget `:226` 4/6 · `placeBuildableAt:46` 1/6 · pass 1/6 — the two faults kept apart, not welded under one flake label |
-| Scope-4 parent/child confirmation, not just a bisect log | ✅ parent `4da134a9` passed (10.334) / child `3c749607` failed (20.596), plus an in-page rAF trajectory probe |
+| Scope-4 parent/child confirmation, not just a bisect log | ✅ parent `a26eca02` passed (10.334) / child `9f6ec59d` failed (20.596), plus an in-page rAF trajectory probe |
 
 ### Gates re-measured by me on the merged tree
 
@@ -55,19 +55,19 @@ investigation rather than as a gate on this merge.
 
 ### Verification at source — the report's headline claim
 
-The report names `3c749607` **"runner(art): art-batch-011-e1-contracts.md"** as the first bad
+The report names `9f6ec59d` **"runner(art): art-batch-011-e1-contracts.md"** as the first bad
 commit. An art-batch commit as the source of an enemy-steering regression is exactly the kind of
 claim worth distrusting, so I opened it:
 
-- `git show --name-only 3c749607` = **87 files**. It is a **catch-all commit**: alongside the art
+- `git show --name-only 9f6ec59d` = **87 files**. It is a **catch-all commit**: alongside the art
   raws and LEDGER it swept in `src/entities/Enemy.ts`, `src/entities/pools.ts`,
   `src/game/Balance.ts`, `src/game/Game.ts`, `src/vite-env.d.ts` and
   `e2e/task-048-funnel-formation-spread.spec.ts` — i.e. **task 048 "funnel formation spread"**,
   committed under an art message. The commit subject misnames its own diff; the report's naming
   is correct and its mechanism is coherent.
-- The hunk is real and was introduced there: `git show 3c749607 -- src/entities/Enemy.ts` shows
+- The hunk is real and was introduced there: `git show 9f6ec59d -- src/entities/Enemy.ts` shows
   `+ let spreadBiasX = 0;` / `+ let spreadBiasZ = 0;` and their addition into the velocity terms.
-- It is **still live on main today**: `src/entities/Enemy.ts:705-731`. `3c749607` is an ancestor
+- It is **still live on main today**: `src/entities/Enemy.ts:705-731`. `9f6ec59d` is an ancestor
   of `main` (`git merge-base --is-ancestor` ✓).
 - Reading the live code corroborates the report's own recommendation: `moveTarget` is computed
   through `terrainAwareTarget(routedTarget(...))` (the blocker-aware detour) at line 688, and the
@@ -116,7 +116,7 @@ measured `10.334`.
 
 So the lateral-bias term explains the **pass/fail flip in 4 of 6 runs**, but not the bulk of the
 `10.334 → 20.596` doubling the report attributes to that single commit. Either (a) further
-regressions stacked onto this route after `3c749607` — the bisect correctly stops at the *first*
+regressions stacked onto this route after `9f6ec59d` — the bisect correctly stops at the *first*
 bad commit and would not see them — or (b) the n=1 parent/child pair overstated one commit's
 share. Both are live; distinguishing them needs the same rAF trajectory probe re-run on today's
 main against the parent revision.
@@ -134,7 +134,7 @@ both the confirmed contributor and the unexplained remainder.
 
 ### F-1148-2 (process, non-blocking) — a `runner(art)` commit subject misnamed 87 files of gameplay code
 
-`3c749607` says "art-batch-011-e1-contracts" and carries `Enemy.ts`, `pools.ts`, `Balance.ts`,
+`9f6ec59d` says "art-batch-011-e1-contracts" and carries `Enemy.ts`, `pools.ts`, `Balance.ts`,
 `Game.ts` and a new e2e spec. This is the known "runner(art) commit message can misname its diff"
 shape, and here it cost real time: a regression in enemy steering has been invisible to `git log`
 readers for three weeks because it is filed under an art batch. No corrective is authored (the

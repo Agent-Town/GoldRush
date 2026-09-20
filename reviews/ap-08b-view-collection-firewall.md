@@ -1,7 +1,7 @@
 # ap-08b — THE VIEW + the Almanac, collection-firewalled
 
 **Slice:** `ap-08b-view-collection-firewall` (re-land of the s1213 F-1213-1 rejection)
-**Branch:** `lane/e2-arsenal` · **Tip:** `90c54abc` · **Base (merge-base w/ main):** `1cd2a9f6`
+**Branch:** `lane/e2-arsenal` · **Tip:** `57ddd8dd` · **Base (merge-base w/ main):** `d654710c`
 **Drained:** s1215 fire, 2026-07-29 · **Merge:** see commit below
 
 ## VERDICT: MERGED — gates green, one adjacent red exonerated by a matched control.
@@ -23,7 +23,7 @@ exposes a lazy `view` getter on `window.__GR_AGENT__`.
 ## Merge classification
 
 Real delta is 3 files off the merge-base; `main` has moved **none** of them since
-(`git diff --numstat 1cd2a9f6 main -- <the three>` is empty), so this is a pure
+(`git diff --numstat d654710c main -- <the three>` is empty), so this is a pure
 **LANE-TOUCHED** merge — no 3-way graft, no conflict resolution.
 
 | File | Delta | Class |
@@ -37,7 +37,7 @@ Real delta is 3 files off the merge-base; `main` has moved **none** of them sinc
 | Gate | Result |
 |---|---|
 | `test:node-guards` (**run first**) | **74/74 pass**, incl. `whole suite collects without loading Vite-only modules` |
-| `npx playwright test --list` | **2460 tests in 344 files** — exactly the corrected bar (`f0c912fc`) |
+| `npx playwright test --list` | **2460 tests in 344 files** — exactly the corrected bar (`6944f95a`) |
 | `npx tsc --noEmit` | clean, no output |
 | `npx vite build` | green, **1.43 s** |
 | `e2e/agent-view.spec.ts` (own spec) | PASS, desktop + mobile |
@@ -67,7 +67,7 @@ argument:
 | Arm | `ToolSurface.ts` | Battery (identical, `agent-view` excluded from **both** so a failing neighbour cannot be the load) | Result |
 |---|---|---|---|
 | A (treatment) | merged | `ap-standing-orders` + `m4-01` + `m4-05` + `m4-10`, `--workers=4 --repeat-each=2` | **4/4 executions of `:80` FAILED**, 36 passed |
-| B (control) | reverted to pre-merge `744c4633` | identical | **4/4 executions of `:80` FAILED**, 36 passed |
+| B (control) | reverted to pre-merge `97c232ae` | identical | **4/4 executions of `:80` FAILED**, 36 passed |
 
 Identical failure with the merge's only relevant file reverted ⇒ pre-existing on main.
 

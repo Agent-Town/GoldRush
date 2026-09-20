@@ -1,6 +1,6 @@
 # Review — fix-dry-gulch-frozen-waves
 
-**Slice/branch/tip:** fix-dry-gulch-frozen-waves · lane/perf · tip `8ba5f224` (runner lane-d) → landed on main as `074618e6`
+**Slice/branch/tip:** fix-dry-gulch-frozen-waves · lane/perf · tip `8ba5f224` (runner lane-d) → landed on main as `dbcaa154`
 **Drained by:** s378 fire, 2026-07-12 (idle-attended wave drain #1 of 3)
 **Verdict:** ✅ MERGED (tip-graft, not branch-merge)
 
@@ -17,7 +17,7 @@ Dry Gulch waves could leave living enemies frozen at the map edge because `WaveS
 | boot errors | zero (spec's error buckets empty on both viewports) |
 
 ## Merge classification
-- **Base:** lane/perf is 44 commits behind main (stale, over superseded Motor `42c4c87a`). NOT branch-merged (would drag Motor + others onto main). Merge-base with main = `46129d4d`.
+- **Base:** lane/perf is 44 commits behind main (stale, over superseded Motor `42c4c87a`). NOT branch-merged (would drag Motor + others onto main). Merge-base with main = `dae124eb`.
 - **src/systems/WaveSystem.ts** — MAIN-MOVED (main's file is newer than the branch's). Grafted **surgically via Edit**: main's `clampSpawn` body matched the branch pre-image byte-for-byte (`Math.max(-38, Math.min(38, value))`), and both `THREE` (L1) + `Terrain` (L14) imports + `Terrain.CLAIM_HALF` (Terrain.ts:75) already present on main → applied only the one-line hunk. No whole-file checkout (would have reverted main's evolution).
 - **e2e/fix-dry-gulch-frozen-waves.spec.ts, artifacts/fix-dry-gulch-frozen-waves/** — LANE-TOUCHED new files → `git checkout 8ba5f224 -- <paths>` (no main version to clobber).
 

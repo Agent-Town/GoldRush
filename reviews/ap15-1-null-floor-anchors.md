@@ -1,8 +1,8 @@
 # ap15-1 — THE NULL FLOOR (AP-15 slice 1)
 
 - **Slice**: `tasks/lane-a-ap15-1-null-floor-anchors.md` (fire-authored s1650, dispatched s1652)
-- **Branch / tip**: `lane/a` @ `80ace71c3` — *"assay: pin AP-15 null-floor anchors"* (single commit)
-- **Base**: `main` @ `d2d33ce34`
+- **Branch / tip**: `lane/a` @ `73ae4929a` — *"assay: pin AP-15 null-floor anchors"* (single commit)
+- **Base**: `main` @ `2350ff966`
 - **Run**: `tasks/runs/20260811-101203-lane-a-lane-a-ap15-1-null-floor-anchors.md.log` (2.19 MB, 10:12:03 → 10:39)
 - **Drained by**: s1653, 2026-08-11
 - **Gated in**: detached worktree `worktrees/s1653-gate` (§3.0b — undecided content never entered main's tree or index)
@@ -38,7 +38,7 @@ floor secures."* Until it existed, law 2 of the spec was unenforceable.
 against that path. It refused, and named the exact row. The pinned artifact was never touched.
 
 ## Merge classification
-Base `d2d33ce34`; four files, additive, one clean commit.
+Base `2350ff966`; four files, additive, one clean commit.
 
 | File | Class | Notes |
 |---|---|---|
@@ -59,8 +59,8 @@ evidence that both changes survived.
 **F-1653-3 (non-blocking, recorded for AP-15's successor slice — no corrective task spawned).**
 `eraStamp` is derived as `git merge-base HEAD main` (short hash), so it changes on **every commit to
 main**, whereas the spec defines an era as the **sim** era (*"e.g. pre/post f-door-5's harvest-walk"*).
-Proven during this drain: `--check` reported `eraStamp: pinned="7556adb01" derived="d2d33ce34"`, and
-`d2d33ce34` is a **pure bookkeeping commit touching only `tasks/BACKLOG.md` and `artifacts/`** — zero
+Proven during this drain: `--check` reported `eraStamp: pinned="d279d4b0a" derived="2350ff966"`, and
+`2350ff966` is a **pure bookkeeping commit touching only `tasks/BACKLOG.md` and `artifacts/`** — zero
 sim content, yet it advanced the "sim era". Consequence: any `--check` run on a tree whose main has
 moved reports a cross-era difference by construction, so the spec's *"cross-era comparisons are
 labeled, never silent"* labelling fires constantly and carries no information. That is the shape

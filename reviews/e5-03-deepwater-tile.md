@@ -1,8 +1,8 @@
 # reviews/e5-03-deepwater-tile.md
 
 - **Slice:** e5-03-deepwater-tile (lane-c; "feat:") — the Claim-Boat sails
-- **Branch/tip:** lane/e2-arsenal @ fb1da42d (runner(lane-c) commit)
-- **Base:** 270a96af; **Merge commit:** bb3b60b1
+- **Branch/tip:** lane/e2-arsenal @ a60cc21e (runner(lane-c) commit)
+- **Base:** 17894144; **Merge commit:** f0f85bbd
 - **Verdict:** ✅ SHIPPED — future-era (E5) content, inert in plain boot, full gate green + regression-proven.
 
 ## What it does
@@ -25,7 +25,7 @@ Lands the E5 Deepwater claim: a new `e5-deepwater-claim` contract + `DeepwaterCl
 
 The regression guards are the key evidence: building still works in E1 despite the gates — no Mistake #10 (invisible-in-normal-play) regression.
 
-## Merge classification (base 270a96af)
+## Merge classification (base 17894144)
 | File | Class | Resolution |
 |------|-------|-----------|
 | `src/world/DeepwaterClaimTile.ts` | NEW | free |
@@ -39,4 +39,4 @@ The regression guards are the key evidence: building still works in E1 despite t
 ## Findings
 - No blocking findings. Firewall honored: no engine internals beyond the spike's API (reuses `enemies.spawn/recycle`, `waveSystem` gate, `activeContract.twist.enemyRoster`).
 - Corsair art is placeholder per scope (vehicle chassis reuse); real skiff art rides a later art batch.
-- e5-maps goal leaf flipped building→merged (`bb3b60b1`) per the registration law.
+- e5-maps goal leaf flipped building→merged (`f0f85bbd`) per the registration law.

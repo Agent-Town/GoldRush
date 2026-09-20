@@ -1,7 +1,7 @@
 # release-base-path — THE GAME LEARNS TO LIVE AT agenttown.app/goldrush
 
-**Slice:** `lane-release-base-path` · **branch:** `lane/m4` · **tip:** `bbc9b6db19d54de88c669c6b60afb5c204a0d558`
-**Merge-base:** `286c2f48` · **Drained:** s1078, 2026-07-26 · **Verdict:** ✅ **MERGE** (one limitation recorded, proven pre-existing)
+**Slice:** `lane-release-base-path` · **branch:** `lane/m4` · **tip:** `1fb406bcb5a246463020fbadb50bb280a5b4f1c4`
+**Merge-base:** `e762dcdc` · **Drained:** s1078, 2026-07-26 · **Verdict:** ✅ **MERGE** (one limitation recorded, proven pre-existing)
 
 ## What it does
 Owner, 2026-07-26: *"agenttown.app/goldrush — would that be ok?"* — **YES**. This makes it true. Two halves:
@@ -22,7 +22,7 @@ Owner, 2026-07-26: *"agenttown.app/goldrush — would that be ok?"* — **YES**.
 
 The own-spec's two tests are exactly the ones that matter: *"release boots cleanly beneath /goldrush/ and keeps API traffic on the game project"* and *"every game function permits both agenttown origins"* — the second is a real assertion, not a stub: **the CORS allowlists already carry `https://agenttown.app` and `https://www.agenttown.app` on all five functions** (`stats.ts:22`, `telemetry.ts:43`, `_bugs.ts:48`, `_multiplayer.ts:92`, `_accounts.ts:79`) — ✓ VERIFIED by reading main, so scope item 2's CORS half had landed in an earlier merge and the runner correctly did **not** redo it. That is a non-finding worth recording, because its absence from the diff looks like a gap.
 
-**Merge classification:** merge-base `286c2f48`; per-file `git diff` shows **all 12 files LANE-TOUCHED-ONLY, main moved none** ⇒ no 3-way, applied byte-identical to the lane tip. `lane/m4`'s two other commits were **deliberately not drained**: `1e603005` (midgame) is already on main as `d2279d32` (s1077), and **`793c9f2f` is `scripts/deploy.sh`, which F-1073-1 standing-forbids.** `deploy.sh` is **not** among `bbc9b6db`'s files, so the path-scoped graft threads that trap with no judgement call.
+**Merge classification:** merge-base `e762dcdc`; per-file `git diff` shows **all 12 files LANE-TOUCHED-ONLY, main moved none** ⇒ no 3-way, applied byte-identical to the lane tip. `lane/m4`'s two other commits were **deliberately not drained**: `908f9dc3` (midgame) is already on main as `4154da9e` (s1077), and **`72d72f34` is `scripts/deploy.sh`, which F-1073-1 standing-forbids.** `deploy.sh` is **not** among `1fb406bc`'s files, so the path-scoped graft threads that trap with no judgement call.
 
 ## Findings
 - **F-1078-6 — `accounts-sync.spec.ts` cannot be gated under the default harness; this is pre-existing, not a regression.** `:14` times out waiting for `getByTestId('account-dev-code')`, which is served by the `/api/accounts` dev endpoint. It looked like a textbook regression from this very slice (AccountSync now targets an absolute origin, so a local `/api` would be bypassed) — **so it was fingerprinted rather than assumed.** With `src/game/AccountSync.ts` reverted to clean main and everything else identical, **the same test fails identically at the same locator with the same 30.2 s timeout.** ⇒ the suite needs its dedicated `playwright.accounts.config.ts` (which stands up a functions server); under plain vite there is no `/api/accounts` at all. ✓ VERIFIED not-mine. **Honest limitation: this drain therefore does NOT prove the account sign-in path still works end-to-end after the origin swap.** Design-level risk is low — at `gold-rush-3in.pages.dev` the absolute origin *is* the page origin (no behaviour change), and at `agenttown.app` the CORS allowlist already permits it — but **the accounts path wants one run under `playwright.accounts.config.ts` before the owner's Cloudflare session.**

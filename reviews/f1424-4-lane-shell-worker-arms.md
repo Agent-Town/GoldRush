@@ -1,7 +1,7 @@
 # f1424-4 — lane-shell worker arms (F-1424-4 measurement)
 
-**Slice:** `f1424-4-lane-shell-worker-arms` · **branch:** `lane/m3` · **tip:** `30921094` · **base:** `c40fd144`
-**Merged to main:** `c48861116e2afb6fd59ddffdf50ed61a133afbfb` (s1426 fire)
+**Slice:** `f1424-4-lane-shell-worker-arms` · **branch:** `lane/m3` · **tip:** `30921094` · **base:** `f82c7156`
+**Merged to main:** `c48861116e2afb6fd59ddffdf50ed61a133afbfb (archive: pruned by the A3 rewrite)` (s1426 fire)
 
 ## Verdict
 
@@ -39,7 +39,7 @@ Adds two evidence files and no behaviour:
 
 The two-dot diff `main lane/m3` also lists four `D` entries (`tasks/lane-era-true-lights.md`,
 `tasks/lane-gazette-controls.md`, and their two queue copies) plus `M STATUS.md` / `M tasks/BACKLOG.md`.
-**These are stale-base phantoms, not deletions** — main moved after base `c40fd144` via `f5afddf0`
+**These are stale-base phantoms, not deletions** — main moved after base `f82c7156` via `433c59c7`
 (GG-04) and the s1426 lock commit. `git show --name-only 30921094` proves the lane touched exactly
 two files.
 

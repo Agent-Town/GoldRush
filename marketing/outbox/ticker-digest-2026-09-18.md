@@ -10,7 +10,7 @@ ten-commit gap is F-2562-2's sliding-window trap firing live on this very day: g
 current time-of-day, so the window slides. A second control was asserted before any count was believed:
 **12,154** first-parent commits in the whole history, so a zero here would have been an answer and not a
 failed read. The player-path test is **imported** from `scripts/gazette-backfill-sweep.mjs` (`isPlayerPath`),
-never re-typed, per F-1261-1. The day was asked as a day — `git diff ba4623d64^..15c6d3e86` — rather than
+never re-typed, per F-1261-1. The day was asked as a day — `git diff ba4623d64 (archive: pruned by the A3 rewrite)^..7df174b69` — rather than
 commit by commit, because of the merge-direction over-count F-2583-1 names.
 
 **The shape of the day: 108 first-parent commits, and it is the biggest day the county has had.** Twelve
@@ -25,7 +25,7 @@ same day.
 
 ## The county's news
 
-**The pictures lost a quarter of their weight and not one pixel.** `c267705ec` re-encoded the sprite sheets
+**The pictures lost a quarter of their weight and not one pixel.** `fa48ea7e3` re-encoded the sprite sheets
 losslessly: 1,816 encoded, 1,505 shrank, **211,149,764 → 159,700,493 B (−24.4 %)**, every output verified
 identical on all four channels with the halo check PASS 395/0/680/2059.
 
@@ -35,7 +35,7 @@ identical on all four channels with the halo check PASS 395/0/680/2059.
 - **The release now weighs 34,509,068 B against a 52,000,000 B budget** — down 14,459,031 B (−29.5 %), back
   under even the old 35 MB rule, with 17,490,932 B of headroom.
 
-**The Elder walks her round, and the Picnic stops being a dead end.** `62e585bf5` landed four of the owner's
+**The Elder walks her round, and the Picnic stops being a dead end.** `4a6caaa63` landed four of the owner's
 town rulings.
 
 - **A21 — the Picnic reaches wave 2.** A twenty-second claim stand-down after a claim is taken: the map now
@@ -47,7 +47,7 @@ town rulings.
   commit.
 
 **Two of Astra's six unfinished maps measurably improved, and four were held with their reasons written
-down.** `e2969cb57` landed a plain-boot instrument that asks one question: can a player secure, bank, reload
+down.** `1c47ba975` landed a plain-boot instrument that asks one question: can a player secure, bank, reload
 and return?
 
 - **The Hill Mine went from dead at wave 3 to wave 9.** Its missing wave-cadence multiplier was set to 0.75.
@@ -58,7 +58,7 @@ and return?
   uncomfortable one: on **unchanged** Dry Gulch data the same instrument secured at wave 20 once and then died
   at waves 16–19 — *how the map is played spreads wider than anything the map data was changed to do.*
 
-**Blackout Ridge came out of the dark.** `220fbe472` and `13d7fef4c` re-baked its atlas and then fixed what
+**Blackout Ridge came out of the dark.** `220fbe472 (archive: pruned by the A3 rewrite)` and `219c2d7b9` re-baked its atlas and then fixed what
 the re-bake exposed.
 
 - **The pale plates are gone** — pad luma 37.2 → 27.8 (−25 %), all five down 14–30 % — and **the machinery is
@@ -71,20 +71,20 @@ the re-bake exposed.
 - **A proposed trim was refused by its own measurement.** Two 390 px HUD trims would have *raised* the
   covered fraction 54.7 → 68.8 % on a control arm, so they did not land.
 
-**Sixty-four new cells for the county's cast.** `237661254` brought 44 across ten stems plus the
-schoolteacher's second row for 70 of the owner's 600 credits; `498a64a8f` added 20 more from seven Codex
+**Sixty-four new cells for the county's cast.** `1b9dbc234` brought 44 across ten stems plus the
+schoolteacher's second row for 70 of the owner's 600 credits; `4550c3ae9` added 20 more from seven Codex
 strips — five of seven facings at the jumper family's measured band. **Two rows were parked with numbers
 rather than shipped thin:** the Steam Wrecker's south-east after four takes, and the jumper's south-east on
 spread.
 
-**The county board has honest receipts for the first time.** `ea367da9d` landed heat 14 — **37 boards ridden,
+**The county board has honest receipts for the first time.** `ea367da9d (archive: pruned by the A3 rewrite)` landed heat 14 — **37 boards ridden,
 31 secured, none unridden** — including the first-ever secures of **Ember Shore** (wave 12, 60 gold, the hero
 untouched) and **the Archive World** (wave 12, 200 gold). Five boards fell that heat 13 could not. **Ranked
 rows on the live board went from 0 to 18.** Every one of the six not-secured named *the rider's own budget*,
 never the map: no era-6 board was reported unwinnable.
 
-**The era seal was re-pinned four times — same era, not a new one.** Pins #8 through #11 (`71aff6e19`,
-`655674b13`, `66d70f125`, `fed83c58e`) append to era 6, verified by reading each pin's own `cause` field
+**The era seal was re-pinned four times — same era, not a new one.** Pins #8 through #11 (`a57f0934e`,
+`1d05615c6`, `ab657f206`, `a8c01f78a`) append to era 6, verified by reading each pin's own `cause` field
 rather than its subject line. Nothing about the Re-surveyed Claims changed underneath a rider's existing reels.
 
 ## Not player-visible
@@ -111,7 +111,7 @@ attended burst and the correctives as two further roundups, and all four era pin
 as same-era appends. It is repeated here because a digest reports the day, and this was the day.
 
 ---
-*Compiled by the s2633 fire. Day boundary `ba4623d64^`..`15c6d3e86`. 108 first-parent commits (two independent
+*Compiled by the s2633 fire. Day boundary `ba4623d64 (archive: pruned by the A3 rewrite)^`..`7df174b69`. 108 first-parent commits (two independent
 methods agree; the bare-date form reads 98), 12 player-path, 1,631 player-visible files net, 3,196 files in
 all, 13 fire sessions. `assets/processed` −45.44 MB (−20.0 %) while gaining 79 files. No commit message was
 used to classify anything.*

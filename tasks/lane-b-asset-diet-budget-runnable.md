@@ -17,12 +17,12 @@ READ FIRST (paths, not memory):
 
 > Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead is NORMAL — the runner auto-commits. For each ahead commit: if its content is already merged to main (verify via git log/diff), it is a SAFE DUPE → `git checkout -B lane/m4 main && git clean -fd` and PROCEED. STOP-and-report ONLY if an ahead commit's content is NOT on main (undrained work — resetting would DESTROY it), or the worktree holds uncommitted edits you did not make. Then `npm install --no-audit --no-fund`; `npm run build` green before touching anything.
 >
-> (Already checked for you at authoring time, but sanity-check it rather than trusting me: `git log main..lane/m4 --oneline` was **EMPTY** at `625420ef` — lane-b holds nothing undrained.)
+> (Already checked for you at authoring time, but sanity-check it rather than trusting me: `git log main..lane/m4 --oneline` was **EMPTY** at `e2367b84` — lane-b holds nothing undrained.)
 
 ## Why (measured by the s1047 fire, 2026-07-25 — do not re-litigate, but DO reproduce scope 1)
 
 The owner's slow line is the evidence chain behind this whole thread. He said the town *"seem[ed] quite big?"*
-on <10Mbit, the asset diet shipped to fix it (`0dfa1d3f`), and `e2e/asset-diet.spec.ts:102` holds the resulting
+on <10Mbit, the asset diet shipped to fix it (`436deb71`), and `e2e/asset-diet.spec.ts:102` holds the resulting
 product commitment: **`expect(townResponseBytes).toBeLessThan(25_000_000)`**. F-1026-1 then correctly made that
 spec **opt-in**, because Playwright's default `webServer` serves undieted originals and the guard was red by
 construction. `tasks/BACKLOG.md:819` (F-1029-4) recorded the debt that created: *"GATE: add the

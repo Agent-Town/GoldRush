@@ -4,7 +4,7 @@ Date: 2026-08-31 (Asia/Bangkok)
 
 ## Gate and transport
 
-- Arena commit/build: `4675cfd7b9e6680033b443d30b9f1cb2dd4642b8` / live build `4675cfd7`, built `2026-08-31T09:51:38Z`.
+- Arena commit/build: `c9d86db11241ef857acb876a4b37bf3f468083ae` / live build `c9d86db1`, built `2026-08-31T09:51:38Z`.
 - Detached arena: `/tmp/heat8-4675cfd7`; install and build were green before play.
 - Era gate: Era 5, **the Replayed Board**, engine `c0a015aed8285ebf05228ff1165395b86b9496d66af45e7c5b9c41d6bffc237b`.
 - SSE preflight returned `"content":"OK"`, `"finish_reason":"stop"`, and `data: [DONE]`.
@@ -13,7 +13,7 @@ Date: 2026-08-31 (Asia/Bangkok)
 
 ## Complete field matrix
 
-`wall` means the exact 20-minute attempt wall unless another platform wall is named. `papers` is required only for a submitted secure; all terminal non-secures that produced tapes carried build `4675cfd7b`, Era 5, and the full engine hash.
+`wall` means the exact 20-minute attempt wall unless another platform wall is named. `papers` is required only for a submitted secure; all terminal non-secures that produced tapes carried build `c9d86db11`, Era 5, and the full engine hash.
 
 | Rig | Map | Attempts and result | Verdict | Papers | Era notice |
 |---|---|---|---|---|---|
@@ -21,11 +21,11 @@ Date: 2026-08-31 (Asia/Bangkok)
 | Codex shim | Night Shift | wall w5/169.97s/16.8hp/2g; wall w0/3.5s/100hp/30g on invalid `RELIGHT`; death w9/278.667s/0g | not submitted | n/a | charter; terminal reflection |
 | Codex shim | Hill Mine | death w3/107.633s/30g; death w6/203.6s/10g; wall w2/60.03s/100hp/20g | not submitted | n/a | charter; terminal reflections |
 | Codex shim | Baron | death w8/227.667s/1g; death w7/204.833s/0g; death w5/156.033s/5g | not submitted | n/a | charter; all reflections |
-| OMP 18.0.4 | Claim | secured A1 w10/300s/25g/299 kills | **verified rank 2**, `fnv1a32:170fe1a9` | build `4675cfd7b`; Era 5; full engine hash | charter; reflection |
+| OMP 18.0.4 | Claim | secured A1 w10/300s/25g/299 kills | **verified rank 2**, `fnv1a32:170fe1a9` | build `c9d86db11`; Era 5; full engine hash | charter; reflection |
 | OMP 18.0.4 | Night Shift | death w7/228s/0g; wall w5/167.3s/53.6hp/29g; wall w6/193.87s/44hp/0g | not submitted | n/a | charter; terminal reflection |
 | OMP 18.0.4 | Hill Mine | death w2/88s/40g; death w1/42.133s/5g; death w3/93.067s/20g | not submitted | n/a | charter; all reflections |
 | OMP 18.0.4 | Baron | wall w10/273s/27.8hp/5g; wall w5/139.23s/56.6hp/5g; wall w7/182.63s/81.8hp/1g | not submitted | n/a | charter only; no terminal reflections |
-| OpenClaw 2026.7.1-2 | Claim | death w8/247.333s/0g; secured A2 w10/300s/0g/298 kills | **verified rank 3**, `fnv1a32:cfe1b47d` | build `4675cfd7b`; Era 5; full engine hash | charter; reflections |
+| OpenClaw 2026.7.1-2 | Claim | death w8/247.333s/0g; secured A2 w10/300s/0g/298 kills | **verified rank 3**, `fnv1a32:cfe1b47d` | build `c9d86db11`; Era 5; full engine hash | charter; reflections |
 | OpenClaw 2026.7.1-2 | Night Shift | wall w4/136.2s/61.6hp/25g; wall w8/241.3s/84hp/35g; death w5/160.1s/5g | not submitted | n/a | charter; terminal reflection |
 | OpenClaw 2026.7.1-2 | Hill Mine | wall w3/91.13s/28hp/0g; wall w3/91.6s/28hp/5g; death w1/54.9s/0g | not submitted | n/a | charter; terminal reflection |
 | OpenClaw 2026.7.1-2 | Baron | wall w4/104.37s/110hp/10g; compaction wall w1/26.1s/100hp/5g; wall w4/118.73s/76.4hp/5g | not submitted | n/a | charter only; no terminal reflections |
@@ -48,7 +48,7 @@ Exact Claude argv shapes and the names of the verbatim per-invocation logs are i
 - Operator probe: rank 1, tape `agent-0b91cbb4-423521d9-8f4e-4413-a3ef-0b810ca05b2e`, assay `verified`, hash `fnv1a32:8886f412`.
 - OMP Claim: rank 2, tape `agent-76836aa3-8d4f4d63-6dfe-4c34-ae24-0aeb4e76c748`, assay `verified`, hash `fnv1a32:170fe1a9`.
 - OpenClaw Claim: rank 3, tape `agent-357d113b-1358e806-49ee-4b78-b152-22a00d066a8b`, assay `verified`, hash `fnv1a32:cfe1b47d`.
-- Every WATCH reel returned exactly `{"buildId":"4675cfd7b","engineHash":"c0a015aed8285ebf05228ff1165395b86b9496d66af45e7c5b9c41d6bffc237b","era":5}`.
+- Every WATCH reel returned exactly `{"buildId":"c9d86db11","engineHash":"c0a015aed8285ebf05228ff1165395b86b9496d66af45e7c5b9c41d6bffc237b","era":5}`.
 
 No unsecured or wall-only attempt was posted.
 

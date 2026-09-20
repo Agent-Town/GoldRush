@@ -1,9 +1,9 @@
 # b1-regatta-race — drain review (s2084)
 
 - **Slice:** `b1-regatta-race` (ratified door-completion-sheet B1; owner 2026-08-20 overruled the deferral)
-- **Branch / tip:** `lane/lane-c` @ `f5d0305ac` (`runner(lane-c): b1-regatta-race.md`, committed 2026-08-20T12:53:12+07:00)
-- **Base:** `58b61d11f` — which is also, exactly, the `eraStamp` the lane wrote into `null-floors.json`. Useful confirmation that the lane stamped its own base and not something inherited.
-- **Merged to main:** `00bca99831cf9a1baaee0658e3398e65907c3fae` (17 files, +1072 / −709)
+- **Branch / tip:** `lane/lane-c` @ `c59841c63` (`runner(lane-c): b1-regatta-race.md`, committed 2026-08-20T12:53:12+07:00)
+- **Base:** `12507a20d` — which is also, exactly, the `eraStamp` the lane wrote into `null-floors.json`. Useful confirmation that the lane stamped its own base and not something inherited.
+- **Merged to main:** `d13a54e5c02efba17625ab1ed7ebab2ba120fbda` (17 files, +1072 / −709)
 - **Gate transcript:** `artifacts/b1-regatta-race-gate.txt`
 
 ## VERDICT: MERGED — green on every arm, with three conflicts resolved by re-derivation rather than by choosing a side.
@@ -45,7 +45,7 @@ the fleet still has **0 `secured:true`** floors.
 
 ## Merge classification
 
-Base `58b61d11f`; 17 files. Fourteen were LANE-TOUCHED or NEW and applied cleanly
+Base `12507a20d`; 17 files. Fourteen were LANE-TOUCHED or NEW and applied cleanly
 (`RegattaRaceSystem.ts` and `e5-regatta-race.spec.ts` are new; `Game.ts`, `MechanicsManifest.ts`,
 `HeadlessContractSim.ts`, `DeepwaterSocket.ts`, `DeepwaterClaimTile.ts`, the E5 contract/mask/seed
 assets, `skill.md`, `door-admission-baseline.json`, `er01-e5-census.spec.ts`, `BACKLOG.md`
@@ -56,7 +56,7 @@ the answer on the merged tree:**
 
 | File | Resolution |
 |---|---|
-| `assets/contracts/null-floors.json` | Conflict was the **`eraStamp` only** — the floors themselves unioned cleanly. Set to the derived value `480bab1aa` after the re-proof above, not hand-picked from either side. |
+| `assets/contracts/null-floors.json` | Conflict was the **`eraStamp` only** — the floors themselves unioned cleanly. Set to the derived value `480bab1aa (archive: pruned by the A3 rewrite)` after the re-proof above, not hand-picked from either side. |
 | `docs/bench/same-game-audit.md` | **Regenerated** with `same-game-audit.mjs --write-report`. A generated report is never hand-merged; the conflicted copy was discarded outright. |
 | `scripts/same-game-audit.test.mjs` | Both attribution comment blocks kept (both are true history); the pins take the re-measured merged output verbatim. |
 
@@ -85,7 +85,7 @@ next reader does not have to re-derive it.
 
 - **F-2084-1 (non-blocking, cured in this drain).** The `b1-regatta-race` BACKLOG row asserts
   `not-offered 15→14`, `exemptions unchanged at 6`, `agent-lacks 341 / equal 779`. All four figures
-  were true against the lane's base `58b61d11f` and are false on main as merged; the row is
+  were true against the lane's base `12507a20d` and are false on main as merged; the row is
   corrected in this commit to the measured `351 / 809 / 13` with exemptions `5`. **This is the
   generic hazard of a corpus-count pin authored on a lane: it is measured against a base that the
   merge, by definition, moves.** No mechanism proposed — the existing guard already re-derives the

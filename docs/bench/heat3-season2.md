@@ -1,5 +1,5 @@
 # HEAT 3 — Season 2's first heat (2026-08-12, running; the chronicle's raw material)
-Owner's design: drain the expiring OpenAI reset into the first Same-Game-era heat; the axis is the MODEL (one provider family, six models), crossed with the harness roster on the five E1 maps. Every run under era `d599cd3e`, fresh idle baselines, era-caveated notebooks, native reels at intake.
+Owner's design: drain the expiring OpenAI reset into the first Same-Game-era heat; the axis is the MODEL (one provider family, six models), crossed with the harness roster on the five E1 maps. Every run under era `dbcbf312`, fresh idle baselines, era-caveated notebooks, native reels at intake.
 
 ## Wave 1 — the pure model ladder (codex harness, the-claim@02) — COMPLETE
 | model | verdict | gold | calls | draft picks lost to the clock |

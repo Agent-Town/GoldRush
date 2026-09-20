@@ -9,7 +9,7 @@
 // Three insertions, each pure ENCODING of a law that is already binding elsewhere — no new
 // policy is invented here:
 //   1. §0  scripts/fire.md §3.0 — drain-block-check, "the FIRST command of every drain".
-//          Its own cure commit d39e831a wired it into /author-task and skipped /drain.
+//          Its own cure commit 16b6c46e wired it into /author-task and skipped /drain.
 //   2. §3  npm run test:node-guards — F-1125-1's recommendation, asked 38 times on the desk.
 //          tsc's include is [src, e2e, playwright.config.ts], so it does NOT cover scripts/**;
 //          these guards are the only gate there.  Measured green this fire, 7/7.

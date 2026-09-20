@@ -1,8 +1,8 @@
 # resource-timing-false-greens — four negative guards that were measuring buffer capacity, not the product
 
 **Slice:** `lane-resource-timing-false-greens` (F-1032-1 corrective, s1033 FIRE-AUTHORED)
-**Branch:** `lane/m3` · **Lane tip:** `86ae407b runner(lane-a): lane-resource-timing-false-greens.md`
-**Base:** `6542f3b2` · **Merge commit:** `022c842e` · **Drained by:** s1034 fire, 2026-07-25
+**Branch:** `lane/m3` · **Lane tip:** `b5d410b5 runner(lane-a): lane-resource-timing-false-greens.md`
+**Base:** `82e4472e` · **Merge commit:** `46f31b9e` · **Drained by:** s1034 fire, 2026-07-25
 
 ## Verdict
 
@@ -68,7 +68,7 @@ console/page-error conditions. No perf table: nothing renders differently, by co
 
 ## Merge classification
 
-Base `6542f3b2` (~1h stale — no RE-LAND risk). `git diff --name-only 6542f3b2 main` over the three
+Base `82e4472e` (~1h stale — no RE-LAND risk). `git diff --name-only 82e4472e main` over the three
 files is **EMPTY**, i.e. main did not move any of them since the lane branched.
 
 | File | Class | Resolution |

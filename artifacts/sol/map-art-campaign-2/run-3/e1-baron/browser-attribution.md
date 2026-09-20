@@ -2,7 +2,7 @@
 
 The existing 96-test candidate run ended with **83 passed, 5 skipped, 8 failed**. No protected assertion was changed. [Gate receipt](e2e-own-and-pack-gates.json) · [Failure text](browser-fingerprints.json).
 
-Five candidate failures reproduce on exact base `37921b5c9`, engine `011419f4873aebb9a8d9d6580844dbf02d116813898fdcc98579cfbf39a88ebe`:
+Five candidate failures reproduce on exact base `f31330e44`, engine `011419f4873aebb9a8d9d6580844dbf02d116813898fdcc98579cfbf39a88ebe`:
 
 - `057-baron-rocket-cart.spec.ts:257`, both projects: `blast-charge-arm` started count 0, expected >0.
 - `e1-baron.spec.ts:302`, both projects: `baronAnimationLoaded=false`, expected true, after the 10-second poll.

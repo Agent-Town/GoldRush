@@ -15,7 +15,7 @@ grep -c 's1576 F-1576-1: DELIBERATELY UNROOTED' scripts/gate-caller-baseline.jso
 grep -c 'review-evidence-audit' .claude/skills/drain/SKILL.md
 ```
 
-Both must print `1`. **If either prints `0`, STOP and report "lane drifted or predecessor absent" — do NOT improvise.** The first proves the s1576 drain commit (`0993eb407`) is present, and because it is the newest of the relevant commits it also proves the f1574-1 merge (`c751c579d`). The second proves the drain-duty line from that slice is here.
+Both must print `1`. **If either prints `0`, STOP and report "lane drifted or predecessor absent" — do NOT improvise.** The first proves the s1576 drain commit (`4cfde97ea`) is present, and because it is the newest of the relevant commits it also proves the f1574-1 merge (`c44076267`). The second proves the drain-duty line from that slice is here.
 
 ## Why (F-1576-1, measured s1576 at the f1574-1 drain)
 

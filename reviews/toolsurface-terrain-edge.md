@@ -2,8 +2,8 @@
 
 **Slice:** `toolsurface-terrain-edge` (F-2381-1's corrective)
 **Branch:** `lane/d`
-**Tip gated:** `c7bef93f0` — `runner(lane-d): lane-d-toolsurface-terrain-edge.md`
-**Gated on:** detached worktree `gate-s2382`, merged onto `8cbb90cde` (main at this fire's lock)
+**Tip gated:** `6e06ef5bd` — `runner(lane-d): lane-d-toolsurface-terrain-edge.md`
+**Gated on:** detached worktree `gate-s2382`, merged onto `7c8f376ec` (main at this fire's lock)
 **Drained by:** s2382
 
 ## VERDICT: MERGE
@@ -41,7 +41,7 @@ It also ships `scripts/vite-only-import-reachability-guard.test.mjs`, rooted in
 | Check | Result |
 |---|---|
 | **HEADLINE — `npx playwright test --list`, merged tree** | **`Total: 2996 tests in 431 files`** |
-| **CONTROL — same command on main (`8cbb90cde`), unmerged** | **`Total: 0 tests in 0 files`**, rc=1, `TypeError: … m1-core.layer-contract.v1.json?raw needs an import attribute of "type: json"` |
+| **CONTROL — same command on main (`7c8f376ec`), unmerged** | **`Total: 0 tests in 0 files`**, rc=1, `TypeError: … m1-core.layer-contract.v1.json?raw needs an import attribute of "type: json"` |
 | `npx tsc --noEmit` (merged tree) | clean, no output |
 | `npm run build` (merged tree) | green, built in 1.85s; asset-diet ceilings reported normally |
 | `npm run test:node-guards` (merged tree, `src/sim/` touched → mandatory) | see **Node guards** below |
@@ -77,7 +77,7 @@ bare surface, and no production path changes.
 
 ## Merge classification
 
-Base: `8cbb90cde` (main at lock). Merged `lane/d` @ `c7bef93f0`, **no conflicts**.
+Base: `7c8f376ec` (main at lock). Merged `lane/d` @ `6e06ef5bd`, **no conflicts**.
 
 | File | Class |
 |---|---|
@@ -92,7 +92,7 @@ Base: `8cbb90cde` (main at lock). Merged `lane/d` @ `c7bef93f0`, **no conflicts*
 
 ⚠️ **Method note worth carrying.** `git diff main..lane/d` — a **two-dot** diff — showed the lane
 "reverting" both MAIN-MOVED files: STATUS.md to s2381's stale lock line, and the master to its
-pre-`adc6d4721` pre-flight (i.e. undoing s2381's F-1407-1 retro-fit). **Neither is a real lane
+pre-`e3a8ca8fa` pre-flight (i.e. undoing s2381's F-1407-1 retro-fit). **Neither is a real lane
 change.** Both files differ only because *main* moved after the lane branched, and the
 **three-way merge kept main's version automatically, with no conflict**. The explicit
 `git checkout main -- <path>` this drain ran was a verified no-op. This is the standing

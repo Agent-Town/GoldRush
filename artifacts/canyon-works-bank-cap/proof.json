@@ -2,7 +2,7 @@
   "schema": "goldrush.canyonworks.bankcap.proof.v1",
   "task": "canyon-works-bank-cap-override",
   "branch": "fix/canyon-works-bank-cap",
-  "base": "ed57402e8",
+  "base": "3227f4ccc",
   "ruling": "owner 2026-09-06, verbatim: \"(2) a per-contract cap override\"",
   "override": {
     "field": "assets/contracts/epoch-3-voltage/contracts.json -> e3-canyon-works.twist.economy.bankCap",
@@ -70,7 +70,7 @@
     "command": "node scripts/null-floor-anchors.mjs --check",
     "differences": 11,
     "rows": [
-      "eraStamp: pinned 2e9a92199, derived ed57402e8",
+      "eraStamp: pinned e8edbbaac, derived 3227f4ccc",
       "e3-moth-season/e3-moth-season-01",
       "e3-moth-season/e3-moth-season-02",
       "e8-eclipse/e8-eclipse-01",

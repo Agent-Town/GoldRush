@@ -1,15 +1,15 @@
 # Review — gauntlet-heat5-best-effort
 
 **Slice:** `gauntlet-heat5-best-effort` (lane-c)
-**Branch/tip:** `lane/c` @ `979fbdd8f` — `runner(lane-c): gauntlet-heat5-best-effort.md`
-**Merge base:** `6b1c9b19d`
-**Merged to main:** `5ffb9bcb0223438ff6c9cca69e856d47bba1541a` (fire s2276, 2026-08-24)
+**Branch/tip:** `lane/c` @ `72b01774f` — `runner(lane-c): gauntlet-heat5-best-effort.md`
+**Merge base:** `5c14f6e17`
+**Merged to main:** `b3f34cce94642ef40992b29fceadd42c2d453064` (fire s2276, 2026-08-24)
 
 ## VERDICT: MERGED — evidence-complete, firewall-clean, and it produced two door findings worth more than the standings
 
 ## What it does
 
-The owner repealed heat-1's invented austerity (owner ruling 2026-08-24, verbatim: *"I really don't mind if the AI is doing more effort to beat it or has more decisions… I want it to genuinely try its best to beat it"*). This heat rode all six E1/E2 contracts at genuine full effort — no attempt caps, lawful open-book study, disclosed in every stack — through the **public door only**, at live build `4c5ca6609`.
+The owner repealed heat-1's invented austerity (owner ruling 2026-08-24, verbatim: *"I really don't mind if the AI is doing more effort to beat it or has more decisions… I want it to genuinely try its best to beat it"*). This heat rode all six E1/E2 contracts at genuine full effort — no attempt caps, lawful open-book study, disclosed in every stack — through the **public door only**, at live build `22365118a`.
 
 It secured **five of six**, put **four accepted and ranked** standings on the live board, and hit exactly one capability wall (the Baron) and one **door** wall. The door wall is the finding: an honest Night Shift win is structurally un-submittable, and that sits directly in front of an imminent launch.
 
@@ -69,4 +69,4 @@ The aggregate in the note is **honest** — 37 is the true launch count and the 
 
 ## Merge classification
 
-Base `6b1c9b19d`. **154 of 155 paths are LANE-ADDED files under `artifacts/gauntlet-heat5-20260824/`** — new paths, no main-side counterpart, nothing to graft. **One path, `tasks/BACKLOG.md`, is BOTH-MOVED**: main gained 7 rows (s2275's heat4 re-queue, heat3c/3b drains, F-2274-1/2, the heat-5 dispatch row) while the lane added its completion row, both at the top of the file. Resolved as a **union with the newest event first** — the heat-5 completion row (lane-c commit 18:20) above s2275's rows — and verified by row-set comparison against both parents rather than by reading the diff: 0 rows lost from either side. The resolution committed to main is **byte-identical to the one that passed the gate**.
+Base `5c14f6e17`. **154 of 155 paths are LANE-ADDED files under `artifacts/gauntlet-heat5-20260824/`** — new paths, no main-side counterpart, nothing to graft. **One path, `tasks/BACKLOG.md`, is BOTH-MOVED**: main gained 7 rows (s2275's heat4 re-queue, heat3c/3b drains, F-2274-1/2, the heat-5 dispatch row) while the lane added its completion row, both at the top of the file. Resolved as a **union with the newest event first** — the heat-5 completion row (lane-c commit 18:20) above s2275's rows — and verified by row-set comparison against both parents rather than by reading the diff: 0 rows lost from either side. The resolution committed to main is **byte-identical to the one that passed the gate**.

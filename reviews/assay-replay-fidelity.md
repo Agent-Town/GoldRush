@@ -1,9 +1,9 @@
 ---
 verdict: PASS-MERGED
 slice: assay-replay-fidelity
-base: 8f002fdaebc109fd79802fdbd290891a68409392
+base: 2135592b2c7c773c83c99604e1c325427c6cc0d6
 lane-tip: ebe038295063f13cd04c06162d399203c2d8e7fe
-merge: 3a4a5d15d95a40c275776c68802a605e24d7e619
+merge: 5279e64ee453b0520d236e261cc6f42af5b77142
 date: 2026-08-15
 ---
 
@@ -52,4 +52,4 @@ The sanctioned runner helper selected Node 23.11.1, while `.nvmrc` pins 26.4.0 a
 
 ## Retention
 
-The prior diagnostic save was retired to `archive/assay-replay-fidelity-s1796-hold-s1815`; the merge is `3a4a5d15d95a40c275776c68802a605e24d7e619`. No generated screenshots were admitted.
+The prior diagnostic save was retired to `archive/assay-replay-fidelity-s1796-hold-s1815`; the merge is `5279e64ee453b0520d236e261cc6f42af5b77142`. No generated screenshots were admitted.

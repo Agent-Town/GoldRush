@@ -13,7 +13,7 @@ had rotted from the s1591 row: 453→456, 679→686, 2537→2596; substance iden
 
 ## What is genuinely open, and what Arm A failed to establish
 
-Arm A (`n2/n4/n8/n16`, merged `c213694c0`) tried to depress frame supply with parallel CPU load and
+Arm A (`n2/n4/n8/n16`, merged `5936ec48e`) tried to depress frame supply with parallel CPU load and
 **could not arm** — every run stayed ~120fps. So the open question is not "does `Math.min` work" but:
 
 1. **Can frame supply be depressed below the 20fps knee at all** in this app, or does something

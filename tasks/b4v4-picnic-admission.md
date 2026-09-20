@@ -1,4 +1,4 @@
-> ⛔ SHIPPED — DO NOT QUEUE (attended-agent build record; merged 2026-08-22 — proof: goal leaf b4v4-picnic-admission + drain 780b2ab9b)
+> ⛔ SHIPPED — DO NOT QUEUE (attended-agent build record; merged 2026-08-22 — proof: goal leaf b4v4-picnic-admission + drain ee8defab8)
 
 # Task b4v4-picnic-admission: the flipped stakes — e6-picnic ADMITTED
 

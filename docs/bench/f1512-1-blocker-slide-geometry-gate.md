@@ -1,6 +1,6 @@
 # f1512-1 — the blocker-slide geometry gate generalises: measured green fire-side
 
-**Fire:** s1512 · **Date:** 2026-08-07 · **Base commit:** `6d1810dbd` · **Status:** POSITIVE RESULT,
+**Fire:** s1512 · **Date:** 2026-08-07 · **Base commit:** `72a0d86f2` · **Status:** POSITIVE RESULT,
 corrective authored and dispatched (`tasks/lane-f1511-2-blocker-slide-geometry-gate.md`).
 
 ## Question
@@ -35,7 +35,7 @@ lane-b was live). Every playwright command `--workers=1` (F-1270-1). Both projec
 
 | Arm | `landmark-collision:68`, isolated (`--grep`) | rc |
 |---|---|---|
-| baseline (`6d1810dbd`, unmodified) | **2 failed** (desktop + mobile) | 1 |
+| baseline (`72a0d86f2`, unmodified) | **2 failed** (desktop + mobile) | 1 |
 | treated | **2 passed** | 0 |
 | baseline, repeat | **2 failed** (desktop + mobile) | 1 |
 
@@ -60,7 +60,7 @@ one.
 `pad = Balance.palisade.avoidancePad + hitRadius - Balance.enemy.touchRadius`. When the goal lies
 inside `[blocker.x - halfX - pad, blocker.x + halfX + pad]` the approach is **head-on**, so
 `Math.sign(moveTarget.x - blocker.x)` is ~0 and the `|| this.avoidanceSide()` fallback restores the
-stable, position-derived go-around — the pre-`531bd923a` behaviour, but **scoped to the geometry that
+stable, position-derived go-around — the pre-`70eb5b50d` behaviour, but **scoped to the geometry that
 needs it**. Outside the span the enemy-relative sign from `blockerSlideDirection()` still applies, so
 the F-BW-10 cure is untouched.
 

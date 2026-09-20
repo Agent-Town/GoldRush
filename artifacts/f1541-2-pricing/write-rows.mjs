@@ -7,7 +7,7 @@ const lines = fs.readFileSync(P, 'utf8').split('\n');
 
 const R1 =
   '✅ **F-1542-1 (s1542 2026-08-08, FOUND WHILE PRICING F-1541-2, CURED THE SAME FIRE — ONE BACKTICK MADE **BOTH** DESK GUARDS BLIND TO A WELL-FORMED DESK, AND EACH FAILED WITH A DIFFERENT WRONG DIAGNOSIS).** ' +
-  's1529 (`aab5dfb3`) wrote its handoff desk as ``OWNER`S DESK — 8 awaiting a word.`` — a GRAVE ACCENT, **U+0060**, where the apostrophe goes. ' +
+  's1529 (`62586985`) wrote its handoff desk as ``OWNER`S DESK — 8 awaiting a word.`` — a GRAVE ACCENT, **U+0060**, where the apostrophe goes. ' +
   "The s1472 cure enumerated four spellings (`OWNER DESK` 243 · `OWNER'S DESK` 484 · curly `OWNER’S DESK` 15 · `OWNERS DESK` 9); this is a fifth. " +
   '⚠️ **BOTH consumers of that literal went blind at once, in OPPOSITE directions** — REPLAYED on the real commit as a fixture, not argued: ' +
   '`desk-declaration-guard` **rc=2, "line-1 is a handoff with no desk header"** (there was one, of 8 correctly-formed items), and ' +
@@ -19,7 +19,7 @@ const R1 =
   "🔍 **AND IT IS UNFINDABLE BY GREP, WHICH IS THE REUSABLE HALF: s1530 NORMALISED the character while archiving s1529's line-1**, so today's " +
   '`STATUS.md` contains **zero** backtick variants and the live file exonerates itself. It was recovered only by replaying the handoff commits. ' +
   '**A corpus that is rewritten as it is archived cannot be audited from its own latest state.** ' +
-  '✅ **CURE (`a4ba9b0e`): the spelling set is five at ALL THREE sites** — `desk-declaration-guard.mjs`, `desk-carryforward-guard.mjs`, and the sibling ' +
+  '✅ **CURE (`49aa6cfb`): the spelling set is five at ALL THREE sites** — `desk-declaration-guard.mjs`, `desk-carryforward-guard.mjs`, and the sibling ' +
   '`gate-caller-audit.mjs` `OWNER_ROUTE` (where a miss fails **OPEN** — an escalation simply not checked for a ledger row — which is why nothing ever ' +
   'complained; measured on the live baseline: widening matches **0 new entries**, so it is preventive and changes no verdict today). ' +
   '**Proved by MANUFACTURING the defect:** reverting both regexes reds exactly 3 arms (the two new GROUND-TRUTH replays + the widened spelling loop), ' +
@@ -45,7 +45,7 @@ const R2 =
   "ⓘ **s1533's REFUTATION MET, NOT IGNORED:** it rejected a ledger↔desk check at a 23% false-positive rate from KEY DRIFT across desks. This guard never " +
   're-keys an old item — it looks only at rows BORN in the window, which have no prior desk key to drift from — and s1533 measured **fire-authored** rows, ' +
   'while the population that actually leaks is **attended** sessions, who file rows and never compose a desk. ' +
-  '✅ **BUILT (`b59aad1d`): `scripts/desk-birth-guard.mjs` + 14 arms, rooted as `npm run test:desk-birth` in `test:ledger-guards` (gate) and ' +
+  '✅ **BUILT (`0dd7a5d0`): `scripts/desk-birth-guard.mjs` + 14 arms, rooted as `npm run test:desk-birth` in `test:ledger-guards` (gate) and ' +
   '`test:node-guards` (arms), grandfathered in `gate-caller-baseline.json` with the F-1300-4 timing reason its three siblings carry.** ' +
   'Teeth proven by manufacturing the defect on a real git tree (**rc=1** naming the row, **rc=0** once desked) and by replaying the real s1540→s1541 ' +
   'event: of the seven attended rows filed 2026-08-08 it qualifies **exactly the two** that carried an owner word and leaves the six fire-actionable ones ' +

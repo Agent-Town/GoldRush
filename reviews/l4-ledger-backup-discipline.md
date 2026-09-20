@@ -1,15 +1,15 @@
 # Review — l4-ledger-backup-discipline (the county book survives the box)
 
 **Slice:** `tasks/l4-ledger-backup-discipline.md` (attended-authored 2026-08-23, lane-d, prefix `ops:`)
-**Branch / tip:** `lane/d` @ `92ccd515f` — runner commit `runner(lane-d): l4-ledger-backup-discipline.md`
-**Gated commit:** `c3355a045` (merge of `main` + `lane/d`, BACKLOG resolved, plus this drain's one review fix), banked at `save/l4-gated-s2248`
+**Branch / tip:** `lane/d` @ `b41244ea9` — runner commit `runner(lane-d): l4-ledger-backup-discipline.md`
+**Gated commit:** `bea9a395a` (merge of `main` + `lane/d`, BACKLOG resolved, plus this drain's one review fix), banked at `save/l4-gated-s2248`
 **Drained by:** s2248 fire · **Gate worktree:** `worktrees/gate-s2248` (detached, §3.0b custody — an attended session was live and committing throughout)
 
 ## VERDICT: PASS — fully gated, **BANKED NOT YET MERGED**, with one drain fix (F-2248-1) and one non-blocking finding (F-2248-2)
 
 > ⚠️ **STATE, STATED PLAINLY: the gates below all passed and the merge did NOT land.** s2248 was ready to merge at 22:19 when main's working tree went dirty under a **live** attended session (`assets/LEDGER.md`, `tasks/BACKLOG.md`, `tasks/goals.json`, `tasks/lane-e3-fairground-socket.md`, all written 22:17:28, session alive on ttys036). My merge also touches `tasks/BACKLOG.md`, so landing it would have swept another writer's uncommitted work into my commit — the F-1295-1 / F-1589-5 failure. I waited two bounded windows (~7 min total); the dirt never cleared. Per §7.6 I serialized instead of untangling.
 >
-> **The whole drain is one merge away and nothing needs re-gating.** The gated commit is banked on branch **`save/l4-gated-s2248` (`c3355a045`)** — a merge of main + `lane/d` with the BACKLOG conflict already resolved and F-2248-1 already fixed. To land it once main's tree is clean:
+> **The whole drain is one merge away and nothing needs re-gating.** The gated commit is banked on branch **`save/l4-gated-s2248` (`bea9a395a`)** — a merge of main + `lane/d` with the BACKLOG conflict already resolved and F-2248-1 already fixed. To land it once main's tree is clean:
 >
 > 1. `git merge --no-ff save/l4-gated-s2248` (one act — never leave it staged, F-1589-5). If main has moved, this becomes a real 3-way; re-check `tasks/BACKLOG.md` only.
 > 2. Bookkeeping commit: flip the `l4-ledger-backup-discipline` leaf in `tasks/goals.json` to `status:"merged"` + the 40-char `mergeHash` (**splice, never re-serialise**); rewrite the `🟡 **L4 IMPLEMENTED ON lane-d**` BACKLOG row to DRAINED carrying the three attended follow-ups below; `git add` this review; rename `tasks/done/20260823-211353-l4-ledger-backup-discipline.md` to `drained-s2248-<hash>-…`.
@@ -63,7 +63,7 @@ Both real failure modes are caught. The prune test carries its own reverse contr
 
 ## Merge classification
 
-Base `7c64a9159`. Nine paths, all inside the master's firewall.
+Base `4ee6dd537`. Nine paths, all inside the master's firewall.
 
 | Path | Class | Resolution |
 |---|---|---|

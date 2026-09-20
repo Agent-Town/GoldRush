@@ -8,7 +8,7 @@ const lines = readFileSync(p, 'utf8').split('\n');
 
 const closeIdx = 4636; // 0-indexed: the "}," closing the f1590-1 leaf
 if (lines[closeIdx].trim() !== '},') throw new Error('unexpected close line: ' + JSON.stringify(lines[closeIdx]));
-if (!lines[closeIdx - 1].includes('1dab43b6f3af05757b015c28527b5b309f28a809')) throw new Error('wrong leaf anchor');
+if (!lines[closeIdx - 1].includes('c4115d4e5c98182ea5479696110b80c4c1531455')) throw new Error('wrong leaf anchor');
 
 const esc = (s) => JSON.stringify(s).replace(/[-￿]/g, (c) => '\\u' + c.charCodeAt(0).toString(16).padStart(4, '0'));
 const I = ' '.repeat(14);

@@ -1,7 +1,7 @@
 # Gate evidence — `sol-open-findings-astra` (s2644)
 
-**Slice/branch/tip:** `sol-open-findings-astra` · `sol/open-findings-astra` · `9af35a84c`
-**Base:** `de7eacd1714584ad73cb2d1245e5f907d213b9f1` · **trial merge gated on:** a detached `gate-s2644` worktree off `36cda7505` (§3.0b — undecided content never entered main's tree)
+**Slice/branch/tip:** `sol-open-findings-astra` · `sol/open-findings-astra` · `56b2c0cfc`
+**Base:** `21648cdcff9cafc1a44a56eb94c15eb9bf5d2a14` · **trial merge gated on:** a detached `gate-s2644` worktree off `48c23d92e` (§3.0b — undecided content never entered main's tree)
 
 ## Verdict
 

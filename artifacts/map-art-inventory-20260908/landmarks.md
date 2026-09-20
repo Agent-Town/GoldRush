@@ -1,6 +1,6 @@
 # Landmark inventory — 2026-09-08
 
-Revision: `e6c0656183d7355a357ee57abeb9b2e0b661ed47`. 196 named bodies in 36 packs. Sources below are the pack declarations, not a visual approval. 171 bodies are selected by the runtime terrain routes; five alias packs (25 bodies) are not selected. Four additional Deepwater town-building mount paths are listed in the map inventory and fail to load.
+Revision: `e6c0656183d7355a357ee57abeb9b2e0b661ed47 (archive: pruned by the A3 rewrite)`. 196 named bodies in 36 packs. Sources below are the pack declarations, not a visual approval. 171 bodies are selected by the runtime terrain routes; five alias packs (25 bodies) are not selected. Four additional Deepwater town-building mount paths are listed in the map inventory and fail to load.
 
 | Pack / body | Model | Source tier | Declared / actual triangles | Recorded hash matches | Used by contracts | Declared source references |
 |---|---|---|---:|---|---|---|

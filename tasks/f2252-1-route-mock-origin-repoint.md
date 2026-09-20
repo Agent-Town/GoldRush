@@ -15,7 +15,7 @@ Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead 
 
 ## Why (F-2251-1 diagnosed s2251; blast radius widened and measured s2252, 2026-08-24)
 
-The L3 cutover `3158eaff4213a8e00817662e6d3aff1296fcb133` (owner-approved "go") deliberately moved
+The L3 cutover `4c5685b1dcf690824f572656039f304e84efa3e9` (owner-approved "go") deliberately moved
 `GAME_API_ORIGIN` in `src/app/GameApi.ts:5` from `https://gold-rush-3in.pages.dev` to
 `https://agenttown.app`. **The product is correct. The e2e fixtures were never swept.**
 

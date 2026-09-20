@@ -12,7 +12,7 @@ if (tasks.some((t) => t && t.id === 'f1314-3-stockpile-tier-voice')) {
 tasks.push({
   id: 'f1314-3-stockpile-tier-voice',
   title:
-    'F-1314-3 + F-1314-4 — the stockpile became the 4th upgradeable buildable in bt-02b (5528331e) but three per-buildable branch lists never gained a 4th branch, so buying a Stockpile tier floats "Turret II - brass cadence quickens" (upgradeFloatText turret fallback, now reachable) and both menu surfaces (build card + encyclopedia) show no tier effect line. Fix the class: give the stockpile its branch, then make the turret fallback explicit so the NEXT archetype fails loudly instead of inheriting the turret voice.',
+    'F-1314-3 + F-1314-4 — the stockpile became the 4th upgradeable buildable in bt-02b (07f0bcad) but three per-buildable branch lists never gained a 4th branch, so buying a Stockpile tier floats "Turret II - brass cadence quickens" (upgradeFloatText turret fallback, now reachable) and both menu surfaces (build card + encyclopedia) show no tier effect line. Fix the class: give the stockpile its branch, then make the turret fallback explicit so the NEXT archetype fails loudly instead of inheriting the turret voice.',
   taskFile: 'lane-a-f1314-3-stockpile-tier-voice.md',
   status: 'queued',
   lane: 'lane-a',

@@ -1,7 +1,7 @@
 # e5-regatta-boat-01 — the Claim-Boat becomes the steerable body both species sail
 
 **Slice 1 of `specs/agent-play/e5-regatta-steerable-boat.md`** (RATIFIED; owner 2026-09-20: "A14 - do it").
-Branch `feat/e5-regatta-boat-01`, cut from `32524c8f6`. Worktree
+Branch `feat/e5-regatta-boat-01`, cut from `65f8efafe`. Worktree
 `/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-regatta`.
 Implementer: Claude Opus 5, attended-scratch worktree, dev server port 5321 only.
 
@@ -171,7 +171,7 @@ contract physics field or (forbidden) a `Balance` entry.
 | `npm run build` | **green** (`built in 1.75s`) |
 | `node scripts/null-floor-anchors.mjs --check` | **83 of 83 null floors match** in 311.5 s, rc=0 (`artifacts/e5-regatta-boat/null-floor-after.log`). Baseline on the exact base before any edit: the same 83 of 83 in 342.3 s (`null-floor-baseline.log`). The `eraStamp` line in both is PROVENANCE, not a floor difference. |
 | `GR_GUARD_NO_ARTIFACT=1 node --test regatta-boat-steer + deepwater-rider-parity + gr-sim + same-game-audit` | **rc=0**, all green — `artifacts/e5-regatta-boat/node-guards-adjacent.log` |
-| `GR_GUARD_NO_ARTIFACT=1 node scripts/run-guards.mjs --changed-since 32524c8f6` | 4/5 — the one red is attributed below; `artifacts/e5-regatta-boat/run-guards-changed.log` |
+| `GR_GUARD_NO_ARTIFACT=1 node scripts/run-guards.mjs --changed-since 65f8efafe` | 4/5 — the one red is attributed below; `artifacts/e5-regatta-boat/run-guards-changed.log` |
 | e2e `e5-regatta-boat` (new) | **desktop-chrome 2 passed (19.2 s), mobile-chrome 2 passed (15.9 s)**, zero console/page errors |
 | e2e `e5-regatta-race` + `e5-deepwater-claim` + `task-025-bandits-dont-swim` + `m2-01-build-menu` | **16 passed / 2 failed on each project** — both failures are the known F-MAC2-1 reds, attributed below |
 | Frame p95 on `e5-regatta` | **+3.0 %** — see below |
@@ -216,8 +216,8 @@ scratch); the control arm's contract edit was reverted and `git status` for `ass
 
 | | `computeEngineHash` (`scripts/engine-era-guard.test.mjs`'s own function) |
 | --- | --- |
-| Before (`32524c8f6`, main's tip at cut) | `2ad0aa1e14a1b7f639bc9c797ae5e14839d11c7b34b70f3f7ac7ca9479fbf6f4` |
-| After (`ab7f02447`, the branch tip) | `5770c93e2457f264a74870d1da3b4d07f72ffe64afe61f884456159009a06a24` |
+| Before (`65f8efafe`, main's tip at cut) | `2ad0aa1e14a1b7f639bc9c797ae5e14839d11c7b34b70f3f7ac7ca9479fbf6f4` |
+| After (`4d0e9faf5`, the branch tip) | `5770c93e2457f264a74870d1da3b4d07f72ffe64afe61f884456159009a06a24` |
 
 `assets/engine-era.json` was NOT touched.
 

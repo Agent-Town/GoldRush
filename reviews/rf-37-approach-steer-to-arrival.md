@@ -2,7 +2,7 @@
 
 **Slice:** `lane-approach-steer-to-arrival` (attempt 3)
 **Branch/tip:** `lane/m3` @ `2a31504c` (runner(lane-a), 2026-07-27T08:34:38+07)
-**Base:** `c12e4c61` (s1111 lock commit)
+**Base:** `f0ea0a5b` (s1111 lock commit)
 **Drained by:** s1113 fire, 2026-07-27
 **§3.0 drain-block-check:** ✅ CLEAR — `[rf-37-approach-steer-to-arrival] status="authored"`
 
@@ -33,7 +33,7 @@ All numbers below are **mine, on this box**, unless labelled as the runner's.
 
 | | |
 |---|---|
-| merge-base | `c12e4c61` |
+| merge-base | `f0ea0a5b` |
 | LANE-TOUCHED (`base..2a31504c`) | **7 files, all `e2e/`** |
 | MAIN-MOVED since base | 10 files |
 | **Overlap** | **NONE** — clean per-file takeover, no 3-way graft needed |

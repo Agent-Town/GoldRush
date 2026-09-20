@@ -2,8 +2,8 @@
 
 - **Slice:** LB-02, `specs/agent-play/README.md` §THE BENCH (owner directive 2026-07-29)
 - **Branch / tip:** `lane/m4` @ `6c6ecd57` (runner commit `runner(lane-b): lane-bench-fields.md`)
-- **Base for the delta:** `d7edcd3b` (the LB-01 lane commit already on main as `4c72f2e7`)
-- **Merged to main as:** `b5cb6c60`
+- **Base for the delta:** `d7edcd3b` (the LB-01 lane commit already on main as `ab801307`)
+- **Merged to main as:** `36e6c1b7`
 - **Drained:** s1216, 2026-07-29
 - **Task master:** `tasks/lane-bench-fields.md` (done-move `20260729-164041-lane-bench-fields.md`)
 
@@ -74,8 +74,8 @@ MAIN-MOVED component and no 3-way graft.
 | `src/game/Game.ts` | LANE-TOUCHED | +6/−1, entirely inside the standings submit block |
 
 The `lane/m4` two-dot diff against main is large and mostly phantom (stale base); the real
-delta is the tip commit alone, its two predecessors having already merged as `4c72f2e7`
-and `79be48db`.
+delta is the tip commit alone, its two predecessors having already merged as `ab801307`
+and `81bf94ac`.
 
 ## Findings
 
@@ -134,7 +134,7 @@ The consequence to name: **a client that predates this merge now gets `400 bad_p
 In-repo that is a non-issue — `Game.ts` is the only submitter (`grep` over `e2e/` and
 `src/` finds no other), and client and server ship in the same commit. It matters only if
 the standings endpoint is ever deployed ahead of the client bundle. Since DEPLOY is
-owner-gated and both halves are in `b5cb6c60`, there is nothing to fix today; it is
+owner-gated and both halves are in `36e6c1b7`, there is nothing to fix today; it is
 recorded so a future split deploy doesn't rediscover it as a mystery 400.
 
 Reads are *not* tightened: `validateStoredRow` treats the seed pair as all-or-nothing and

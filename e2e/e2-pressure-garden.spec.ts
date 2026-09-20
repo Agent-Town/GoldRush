@@ -67,12 +67,12 @@ test('Pressure Garden unlocks after Trestle and teaches the pressure loop', asyn
   await hold(page, 'KeyW', 850);
   await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.activePrompt), { timeout: 8_000 }).toBe('tavern');
   await page.getByTestId('town-open-board').click();
-  // Chapter tabs since 6822607f; chapter derived from the manifest so no literal can freeze again.
+  // Chapter tabs since ceddb7ea; chapter derived from the manifest so no literal can freeze again.
   await goToContractPage(page, 'e2-pressure-garden');
 
   const card = page.getByTestId('contract-card-e2-pressure-garden');
   await expect(card).toHaveAttribute('data-contract-locked', 'false');
-  // One render path since The Adoption (3a007ea7); per-card art is guarded by board-card-images.spec.ts.
+  // One render path since The Adoption (2c3c4be8); per-card art is guarded by board-card-images.spec.ts.
   await expect(page.getByTestId('contract-art-e2-pressure-garden')).toHaveAttribute('data-contract-art-key', 'plate');
   await expect(page.getByTestId('contract-launch-e2-pressure-garden')).toBeEnabled();
   await shot(page, testInfo, 'board');

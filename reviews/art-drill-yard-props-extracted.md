@@ -2,7 +2,7 @@
 
 **Slice:** extract the keyed drill-yard station props and wake the dormant sprite wiring
 **Branch:** main (fire-side art extraction — no lane involved)
-**Tip:** `e212cc5c7486eb455f5d47dccbb7566517efd025` (art landing), `c29040e7a3cc12dffea0e9c86e1fc624e71104c3` (keyer class-fix)
+**Tip:** `a7b7eddb596c884421e9ba43096f7b85abde7fcf` (art landing), `d2e69801ca53c1be03a22ac71f8c094db3ba0320` (keyer class-fix)
 **Goal leaf:** `e1-drill-yard-stations-keyed` · **Block check:** `✅ CLEAR` (exact-name match; the sibling `e1-drill-yard-stations-art[merged]` did NOT decide it — F-1437-2)
 **Gated:** scratch dev server on **5237**, never 5188 — lane-c ran `f1448-1` for the whole fire (Mistake #12)
 
@@ -12,13 +12,13 @@
 
 ## What it does
 
-`src/game/DrillYard.ts` has built its stations from art since `a04ea810`, and that art has been
+`src/game/DrillYard.ts` has built its stations from art since `646e2d31`, and that art has been
 **dormant the entire time**. `applyStationArt` resolves the filename through an eager
 `import.meta.glob` and **returns silently on a miss**, so three absent PNGs cost nothing at build
 time, nothing at runtime, and left the player looking at procedural placeholder geometry. That is
 F-1437-3 exactly as predicted, one layer deeper.
 
-This drain extracts the three keyed raws banked at `77260391` under the exact filenames the glob
+This drain extracts the three keyed raws banked at `009be407` under the exact filenames the glob
 lists, makes the dormant state observable, and gates it in a plain boot.
 
 ```
@@ -35,7 +35,7 @@ node scripts/extract-alpha.mjs --key ff00ff --size 384 \
 
 ## 🔺 F-1449-1 — THE FIRST EXTRACTION WAS CORRECT BY EVERY NUMBER I HAD, AND DREW A MAGENTA HALO IN GAME
 
-**Fixed in `c29040e7`. This is the finding of the fire.**
+**Fixed in `d2e69801`. This is the finding of the fire.**
 
 The numeric probe said the cut-out was perfect: corners `alpha=0`, transparent fraction matching
 each raw's own `#ff00ff` fraction to a tenth of a percent, subject bounded, **residual magenta 0**.
@@ -152,7 +152,7 @@ on a checkerboard.
 ## Findings
 
 - 🔺 **F-1449-1** — keyed extractions left the key colour in RGB under alpha 0 and haloed in-game.
-  **FIXED `c29040e7`**, class-level, with a before/after measurement and the shape proved unchanged.
+  **FIXED `d2e69801`**, class-level, with a before/after measurement and the shape proved unchanged.
 - 🟡 **F-1449-2** — **`assets/LEDGER.md` row 70 transposes two of its own measurements.** It records
   the `#ff00ff` counts as `949,360 / 1,222,187 / 1,174,778 px (60.37% / 77.72% / 74.71%)` in the file
   order faucet · bell-post · straw. Re-derived from the raws this fire: faucet **949,360 (60.37%)**,
@@ -176,7 +176,7 @@ on a checkerboard.
 Every probe used to reach these numbers is committed under `artifacts/drill-yard-props/`
 (`probe-cutout.mjs`, `probe-fringe.mjs`, `crop-zoom.mjs`, `build-board.mjs`, `run-gate.mjs`) — the
 instruments, not a summary of them, so every figure above is re-derivable. Superseded pre-bleed
-blobs live in history via `e212cc5c`'s parent.
+blobs live in history via `a7b7eddb`'s parent.
 
 **ART staging audit:** not run and not claimed — this drain added nothing to `worktrees/art/` and
 touched no staging. The standing `staging/motion-pilot` hole is unchanged.

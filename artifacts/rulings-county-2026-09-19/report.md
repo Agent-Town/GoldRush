@@ -1,6 +1,6 @@
 # rulings-county-2026-09-19 — implementer report
 
-**Branch** `fix/rulings-county-2026-09-19`, cut from main `7bec53556` in a scratch worktree.
+**Branch** `fix/rulings-county-2026-09-19`, cut from main `797052233` in a scratch worktree.
 **Implementer** Claude Opus 5 on the owner's Anthropic subscription (never Codex). Node 26.4.0, `/opt/homebrew/bin` first.
 **Owner ruling covering every item below, verbatim (2026-09-19):** "I agree with all your recommendations on the decisions - good work" — on `docs/OWNER-DESK-2026-09-19.md`.
 
@@ -8,11 +8,11 @@
 
 | # | Item | Verdict |
 |---|---|---|
-| 1 | F-HEAT14-7 — a real hour and a cap of 60 | **LANDED** `6cb67f91d` |
-| 2 | F-2568-2 — derive the rotation id | **LANDED** `e111d5d34` |
-| 3 | F-2270-3 — the copy says five | **LANDED** `2f455c338` |
-| 4 | F-2272-1 — split the codex-shim gate | **LANDED** `c75418e15` |
-| 5 | F-E8LO-3 — re-key M8-5 | **LANDED** `9d7068d05` |
+| 1 | F-HEAT14-7 — a real hour and a cap of 60 | **LANDED** `20d8e12dc` |
+| 2 | F-2568-2 — derive the rotation id | **LANDED** `bbf1ac22e` |
+| 3 | F-2270-3 — the copy says five | **LANDED** `62fce8d1f` |
+| 4 | F-2272-1 — split the codex-shim gate | **LANDED** `fe169dc15` |
+| 5 | F-E8LO-3 — re-key M8-5 | **LANDED** `704b497a7` |
 | 6 | F-HYG-10 — banner the never-ran masters | **PARKED** — the premise is a mis-transcription; measured, see §6 |
 
 ---
@@ -27,7 +27,7 @@
 
 **Tests — manufactured, and measured on both trees.** `scripts/ratelimit-window.test.mjs`, six arms, rooted in `test:node-guards`.
 
-| arm | base `7bec53556` | this branch |
+| arm | base `797052233` | this branch |
 |---|---|---|
 | the rider cap is 60 and the 61st inside one hour is refused | FAIL | pass |
 | an hour is an hour: the limit refills once the window passes | FAIL | pass |
@@ -61,7 +61,7 @@
 
 **Law pointers.** My own edits rotted five pointers in `scripts/fire.md`; all were re-based BY MEASUREMENT (each cited line read back by eye) before any `--update`: `skillmd-guard.test.mjs:102 -> :109` (two spellings), `:103` retired to prose plus a live pointer at `:100`, `functions/api/standings.ts:534 -> :541`, `:1230 -> :1237`. The commit-message quote that carried `:102-103` is rendered as prose ("lines 102-103") rather than re-written, which is the guard's own prescription for historical coordinates. `law-pointer-guard.mjs --update` was run only once **no DRIFT remained** — every residual entry was a NEW POINTER I had eye-verified — and the baseline was diffed afterwards: exactly those five entries moved, nothing else was blessed. `law-pointer-guard` now PASSES (94 pointers, 92 checked, 90 instruments resolved).
 
-**e2e.** `e2e/transfer-board.spec.ts` reaches its final assertion on both projects: 6 rotation rows, `r2026w37 closes …`, the registry seed for `the-claim`, and the generalization cell all pass. Its last line (`expect(errors).toEqual([])`) fails on a console error — **attributed to the base**: with `site/assay-office.js` restored to `7bec53556` the identical error appears (`Failed to resolve module specifier './standing-rule.js'. The base URL is about:blank because import() is called from a CORS-cross-origin script.`). Pre-existing, not mine. Run through a scratch config on port 5308 because 5188 was held by another agent's battery.
+**e2e.** `e2e/transfer-board.spec.ts` reaches its final assertion on both projects: 6 rotation rows, `r2026w37 closes …`, the registry seed for `the-claim`, and the generalization cell all pass. Its last line (`expect(errors).toEqual([])`) fails on a console error — **attributed to the base**: with `site/assay-office.js` restored to `797052233` the identical error appears (`Failed to resolve module specifier './standing-rule.js'. The base URL is about:blank because import() is called from a CORS-cross-origin script.`). Pre-existing, not mine. Run through a scratch config on port 5308 because 5188 was held by another agent's battery.
 
 ---
 
@@ -157,7 +157,7 @@ A blind banner pass would have stamped "ARCHIVE — never ran" on the master bei
 
 `src/town/worldDispatches.ts` is inside `ENGINE_SOURCE_INPUTS`, so ANY edit there rotates `computeEngineHash`. Item 5's re-key is the smallest possible src edit and it rotates the hash all the same. The master's TOUCH-ONLY list names that file and its NO list names `assets/engine-era.json` — the two are jointly unsatisfiable, exactly the shape F-2568-1 named for a duty and a gate.
 
-**Measured, attributed by revert-run-reapply** (with `worldDispatches.ts` restored to `7bec53556` both guards go green, so the red is mine and nothing else on this branch causes it):
+**Measured, attributed by revert-run-reapply** (with `worldDispatches.ts` restored to `797052233` both guards go green, so the red is mine and nothing else on this branch causes it):
 
 | guard | verdict | message |
 |---|---|---|
@@ -182,7 +182,7 @@ Everything else on this branch is outside the engine corpus (`functions/`, `site
 
 | class | count | attribution | evidence |
 |---|---|---|---|
-| **engine hash** — `bench-seeds.test.mjs :: rotation registry…`, `engine-era-guard.test.mjs :: the landed registry names the live engine` | 2 | **MINE — F-RUL-2**, item 5's src edit rotates the hash | revert-run-reapply: both green with `worldDispatches.ts` at `7bec53556` |
+| **engine hash** — `bench-seeds.test.mjs :: rotation registry…`, `engine-era-guard.test.mjs :: the landed registry names the live engine` | 2 | **MINE — F-RUL-2**, item 5's src edit rotates the hash | revert-run-reapply: both green with `worldDispatches.ts` at `797052233` |
 | `fixture-teardown.test.mjs :: all 151 fixture owners remove their temp directories` | 1 | **knock-on of the two above** — it runs every `scripts/*.test.mjs` as a child and reports `scripts/bench-seeds.test.mjs child failed` | re-run alone, 199 s: same single cause, no leaked directory |
 | `ERR_MODULE_NOT_FOUND` on `vite`, `three`, `three/examples/jsm/math/ConvexHull.js`, `@rolldown/binding-*` | 22 | **ENVIRONMENT, another agent** — a concurrent `npm install` in the PRIMARY checkout rewrote `node_modules` mid-battery; this scratch worktree's `node_modules` is a symlink into it | `node_modules/{three,vite}/package.json` and `.package-lock.json` all stamped **22:20**, inside the run window; all three specifiers import cleanly now; a sample of six of the failed files re-run **32/32 green** |
 | `assay-replay :: the hill-mine libm divergence tape`, `deepwater-rider-parity :: Regatta measures the rider`, `collection-guards-cwd-invariance :: town-spec-collection` + `whole-suite-collection` | 4 | **LOAD** | re-run together, single-worker: **15/15 green** |
@@ -190,9 +190,9 @@ Everything else on this branch is outside the engine corpus (`functions/`, `site
 
 The contention advisory guard itself passed (*"contention is advisory, correctly counted, and absent when alone"*), as did `no-emdash-guard`, `view-schema-guard`, `gate-caller-audit`, `law-pointer-guard`, `skillmd-guard`, `battery-manifest` and all three guards this branch adds.
 
-## `run-guards --changed-since 7bec53556` — 7 of 8 gates PASS
+## `run-guards --changed-since 797052233` — 7 of 8 gates PASS
 
-`GR_GUARD_NO_ARTIFACT=1 node scripts/run-guards.mjs --changed-since 7bec53556`, rc=1, 18 files changed, 8 gates selected (the `functions/**` edits correctly pull in the behaviour trio):
+`GR_GUARD_NO_ARTIFACT=1 node scripts/run-guards.mjs --changed-since 797052233`, rc=1, 18 files changed, 8 gates selected (the `functions/**` edits correctly pull in the behaviour trio):
 
 ```
 FAIL  rc=1  475s  test:node-guards

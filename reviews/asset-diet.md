@@ -1,8 +1,8 @@
 # Review — THE ASSET DIET + the honest loading cue
 
 - **Slice:** lane-asset-diet (owner-authored 2026-07-25, pre-launch)
-- **Branch / tip:** `lane/m3` @ `6be3964c` (base `a89178d8`)
-- **Merged to main:** `0dfa1d3f` (squash, path-scoped)
+- **Branch / tip:** `lane/m3` @ `6be3964c` (base `da3e8099`)
+- **Merged to main:** `436deb71` (squash, path-scoped)
 - **Gated by:** s1024 fire, 2026-07-25, native macOS
 
 ## Verdict
@@ -46,7 +46,7 @@ Screenshots: `artifacts/asset-diet/{desktop,mobile}-chrome-{town,claim}-throttle
 
 ## Merge classification
 
-Base `a89178d8`; main had moved 35 files since. Overlap with the lane's 22 was
+Base `da3e8099`; main had moved 35 files since. Overlap with the lane's 22 was
 exactly one file:
 
 - `vite.config.ts` — **both moved.** Main added `buildVariant` /

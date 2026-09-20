@@ -1,9 +1,9 @@
 # AP-16-8 — admission re-probe
 
 **Slice:** `lane-c-ap16-8-admission-reprobe.md`  
-**Branch / tip:** `lane/c` / `c118b98bb0797ecccf0bfcd80d639dda5b07b8e4`  
-**Base:** `64f2967248d163356fb9d7b1944fc84d567ad2aa`  
-**Merge:** `27a8efe8eaf314c2ab164653ea876fd3d7873c5b`  
+**Branch / tip:** `lane/c` / `43c7bbd3ded2ca7620a652323d0437b3793b480e`  
+**Base:** `2158148f99eb0abf8eeffb828b500b2339f35e41`  
+**Merge:** `13f5881f07e1e319cfc88682fc2afbe09520db23`  
 **Verdict:** **MERGED — all eight exemptions remain, now backed by the full verb-set re-probe.**
 
 ## What it does
@@ -28,7 +28,7 @@ Full transcript: `artifacts/ap16-8-gate-s1710.txt`.
 
 ## Merge classification
 
-All four paths were lane-touched only relative to base `64f296724`; main moved none of them before the merge. The branch merged without conflict. Factory-generated screenshot churn in the detached worktree was excluded.
+All four paths were lane-touched only relative to base `2158148f9`; main moved none of them before the merge. The branch merged without conflict. Factory-generated screenshot churn in the detached worktree was excluded.
 
 ## Findings
 

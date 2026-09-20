@@ -1,8 +1,8 @@
 # e3-voltage-socket — make Blackout Ridge's current agent-visible (cures F-ER01-E3-1)
 
-**Slice:** `lane-e3-voltage-socket` (era-socket class #2, after `lane-e2-pressure-socket` / `24c6600f`)
-**Branch / tip:** `lane/a` @ `3c7c72f2` ("vsock: make Blackout Ridge current agent-visible")
-**Merge:** `3ac90dd8884593701bf865240cb254db133ab4de` (`--no-ff` onto main @ `e7e414d7`)
+**Slice:** `lane-e3-voltage-socket` (era-socket class #2, after `lane-e2-pressure-socket` / `6fd24a3b`)
+**Branch / tip:** `lane/a` @ `fa131a8c` ("vsock: make Blackout Ridge current agent-visible")
+**Merge:** `9af152ab4c25802a649c1147fd013ed540f306cb` (`--no-ff` onto main @ `e7e414d7 (archive: pruned by the A3 rewrite)`)
 **Drained:** s1467 fire, 2026-08-06
 **Master:** `tasks/lane-e3-voltage-socket.md` (FIRE-AUTHORED s1466) · **Goal leaf:** `e3-voltage-socket`
 
@@ -47,7 +47,7 @@ instrument, not evidence).
 
 ## Merge classification
 
-Base `e7e414d7`; one lane commit; **no conflicts**, `ort` clean in both the gate worktree and main.
+Base `e7e414d7 (archive: pruned by the A3 rewrite)`; one lane commit; **no conflicts**, `ort` clean in both the gate worktree and main.
 
 | File | Class |
 |---|---|

@@ -4,13 +4,13 @@ Date: 2026-09-01 (Asia/Bangkok)
 
 ## Verdict
 
-**THE PIN CURE HELD, BOTH DISTINCT RIGS RODE, AND BOTH RE-EARNED AN ERA-5 CLAIM ROW.** The live build was `c13b4c24d`, Era 5, engine `25040ad58451125adfa7d1d6c19c70f40ce17cd8cc6d377134e0a545922ca2ca`. The early probe, PI, and Prime Agent submissions were all accepted, machine-verified, and returned exact WATCH papers. Neither rider secured Night Shift, Hill Mine, or Baron.
+**THE PIN CURE HELD, BOTH DISTINCT RIGS RODE, AND BOTH RE-EARNED AN ERA-5 CLAIM ROW.** The live build was `ec71f9234`, Era 5, engine `25040ad58451125adfa7d1d6c19c70f40ce17cd8cc6d377134e0a545922ca2ca`. The early probe, PI, and Prime Agent submissions were all accepted, machine-verified, and returned exact WATCH papers. Neither rider secured Night Shift, Hill Mine, or Baron.
 
 ## PI matrix — `pi` 0.73.1
 
 | Map | Attempts and result | Verdict | Papers | Era notice |
 |---|---|---|---|---|
-| The Claim | diagnostic driver attempt died w2/81.767s/20g after later stateless calls lost the manual; corrected first clean attempt secured w10/300s/2g | **verified rank 6**, `fnv1a32:490b83e3` | build `c13b4c24d`; Era 5; full current engine | charter + reflection |
+| The Claim | diagnostic driver attempt died w2/81.767s/20g after later stateless calls lost the manual; corrected first clean attempt secured w10/300s/2g | **verified rank 6**, `fnv1a32:490b83e3` | build `ec71f9234`; Era 5; full current engine | charter + reflection |
 | Night Shift | death w2/89.267s/0g; death w2/88.633s/0g; death w3/109.433s/5g | not submitted | n/a | charter + reflections |
 | Hill Mine | death w2/84.667s/10g; death w2/85.5s/5g; death w2/85.5s/15g | not submitted | n/a | charter + reflections |
 | Baron | 20m wall after 66 orders; death w12/327.567s/5g; 20m wall after 74 orders | not submitted; boss not reached | n/a | charter + available reflection |
@@ -21,7 +21,7 @@ The diagnostic Claim attempt is retained as transport evidence but is not counte
 
 | Map | Attempts and result | Verdict | Papers | Era notice |
 |---|---|---|---|---|
-| The Claim | death w4/126.733s/10g; death w4/129.5s/15g; secured w10/300s/0g | **verified rank 8**, `fnv1a32:904e9638` | build `c13b4c24d`; Era 5; full current engine | charter + reflections |
+| The Claim | death w4/126.733s/10g; death w4/129.5s/15g; secured w10/300s/0g | **verified rank 8**, `fnv1a32:904e9638` | build `ec71f9234`; Era 5; full current engine | charter + reflections |
 | Night Shift | 20m wall after 65 orders; death w3/113.967s/5g; death w5/161.067s/0g | not submitted | n/a | charter + available reflections |
 | Hill Mine | death w1/42.133s/10g; death w1/42.833s/0g; death w3/90.1s/0g | not submitted | n/a | charter + reflections |
 | Baron | 20m walls after 72, 71, and 78 orders | not submitted; boss not reached | n/a | charter; no terminal reflections |
@@ -31,7 +31,7 @@ The diagnostic Claim attempt is retained as transport evidence but is not counte
 - Operator probe: rank 4, tape `agent-0b91cbb4-6afad806-0dd6-4749-a0fe-c4834bd462de`, assay `verified`, hash `fnv1a32:8886f412`.
 - PI Claim: rank 6, tape `agent-f66211a9-72c59534-0b16-415e-8a86-b757e99df181`, assay `verified`, hash `fnv1a32:490b83e3`.
 - Prime Agent Claim: rank 8, tape `agent-5224920f-1f930e06-d367-4f67-8d20-2f7c03b5b32d`, assay `verified`, hash `fnv1a32:904e9638`.
-- Every WATCH response returned exactly `{"buildId":"c13b4c24d","engineHash":"25040ad58451125adfa7d1d6c19c70f40ce17cd8cc6d377134e0a545922ca2ca","era":5}`.
+- Every WATCH response returned exactly `{"buildId":"ec71f9234","engineHash":"25040ad58451125adfa7d1d6c19c70f40ce17cd8cc6d377134e0a545922ca2ca","era":5}`.
 
 No unsecured or wall-only attempt was posted.
 

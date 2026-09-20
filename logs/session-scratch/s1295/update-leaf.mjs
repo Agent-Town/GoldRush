@@ -1,7 +1,7 @@
 // s1295: flip the agent-rung-honest-gate-v2 leaf to reflect what is actually on main.
 // Goal Registration Law: the drain updates status + merge hash in the drain commit. The wrinkle
 // here is that the content reached main by an accidental sweep (F-1295-1), not by a drain, so the
-// mergeHash recorded is b37c1fc6 — the commit that ACTUALLY carries the bytes — with the irregular
+// mergeHash recorded is 3058fca5 — the commit that ACTUALLY carries the bytes — with the irregular
 // provenance stated on the leaf rather than laundered into a normal-looking drain.
 // Canonical 2-space formatting is preserved (the guard reads this file).
 import { readFileSync, writeFileSync } from 'node:fs'
@@ -21,7 +21,7 @@ if (!hit) throw new Error('leaf not found')
 
 const before = { status: hit.status, mergeHash: hit.mergeHash }
 hit.status = 'merged'
-hit.mergeHash = 'b37c1fc6'
+hit.mergeHash = '3058fca5'
 hit.drainNotes_s1295 = process.argv[2]
 
 writeFileSync(P, JSON.stringify(g, null, 2) + '\n')

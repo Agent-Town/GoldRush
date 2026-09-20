@@ -11,14 +11,14 @@ Both commands used the task-required `--workers=1` predicate.
 
 | Endpoint | Expected by task | Observed | Verdict |
 |---|---:|---:|---|
-| `c063b5e59b34345f61666b01a4662f8811e8a110` | 10 passed | **2 failed / 8 passed** | RED on desktop and mobile at `:91` |
-| `61892d1813f265fcad2133c9ab84d29db40de39f` (current `main`) | 2 failed / 8 passed | **2 failed / 8 passed** | RED on desktop and mobile at `:91` |
+| `f449dd65be4e83b2274d4e11c14093d344657c5f` | 10 passed | **2 failed / 8 passed** | RED on desktop and mobile at `:91` |
+| `d2308dfa9c92fad117ebd50d43ee0535abac4a16` (current `main`) | 2 failed / 8 passed | **2 failed / 8 passed** | RED on desktop and mobile at `:91` |
 
-The first endpoint does not distinguish the proposed window. Scope 1 therefore requires an immediate stop: the first-bad commit is earlier than `c063b5e59`, and `4ab487437` is exonerated as the first-bad candidate without running a bisect.
+The first endpoint does not distinguish the proposed window. Scope 1 therefore requires an immediate stop: the first-bad commit is earlier than `f449dd65b`, and `e788002cf` is exonerated as the first-bad candidate without running a bisect.
 
 ## Named candidate
 
-`4ab4874373f6f43dd6eb042c3e03d6e0645f7b6c` — `runner(lane-c): f1452-1-fort-solidity-routes-long-static-blockers.md`
+`e788002cf57acf8b6176eac94f82b706a15362c0` — `runner(lane-c): f1452-1-fort-solidity-routes-long-static-blockers.md`
 
 Candidate result: **not tested as a separate arm because the task says to stop when its parent is red. It cannot be the first-bad commit.**
 
@@ -61,6 +61,6 @@ The contract requires at least one sample outside the blocker on x (`x < -1.176`
 
 ## Bisect and cure decision
 
-No bisect table or culprit commit exists from this run: the required green endpoint was red. The next investigation must first recover and validate the exact tree used by the 2026-07-29 green inventory, then widen the window from that proven-green revision to `c063b5e59`.
+No bisect table or culprit commit exists from this run: the required green endpoint was red. The next investigation must first recover and validate the exact tree used by the 2026-07-29 green inventory, then widen the window from that proven-green revision to `f449dd65b`.
 
 Scope 6 did not run. Changing `Enemy.ts` or `BuildSystem.ts` here would choose a contested routing design without a named culprit and would violate the task's endpoint stop condition.

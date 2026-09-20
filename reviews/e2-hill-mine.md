@@ -1,6 +1,6 @@
 # Review: e2-hill-mine — THE HILL MINE (Epoch 2 flagship tile)
 
-- **Slice/branch/tip:** e2-hill-mine · lane/perf `c556b50` → grafted to main `fcfdcd7`
+- **Slice/branch/tip:** e2-hill-mine · lane/perf `c556b50` → grafted to main `2bafb62`
 - **Drained by:** s199 fire, 2026-07-08
 - **Verdict:** ✅ MERGED — clean graft, full gate green, one pre-existing adjacent red proven not-ours.
 
@@ -20,7 +20,7 @@ Ships Epoch 2's flagship terrain tile: a terraced hillside (switchback levels cl
 | Player-visibility (rule #10) | sci-04 "contract registry lists Frontier and **locked Steamworks** in order" + town-t3-board count-aware + contract-briefings plain-no-debug — all green in a normal boot |
 
 ## Merge classification
-- **Base:** merge-base `0235519`; main was +11 commits ahead but **disjoint** — `git diff --stat 0235519..main` on all 23 touched files = empty (none moved on main).
+- **Base:** merge-base `f762e35`; main was +11 commits ahead but **disjoint** — `git diff --stat 0235519..main` on all 23 touched files = empty (none moved on main).
 - **All 23 files LANE-TOUCHED-only, zero MAIN-MOVED.** Applied via `git checkout c556b50 -- <files>` (cherry-pick unavailable headless); post-graft `git diff --cached c556b50 -- src/ e2e/ assets/contracts/ artifacts/` = empty → staged tree byte-identical to c556b50. No 3-way needed.
 - The huge `main..lane/perf` file list (200+) was pure stale-base divergence (lane/perf branched before the bfadfc2 art broad-add etc.); the actual commit `c556b50` is a clean 23-file / +756-line change.
 

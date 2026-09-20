@@ -1,8 +1,8 @@
 # Review — lane-roster-wiring-e9-01 (E9 Red Fields enemy roster scaffold)
 
-**Slice:** lane-roster-wiring-e9-01 — wire the two data-shaped E9 "Red Fields" roster enemies (`feral_terraformer`, `claim_jump_prospect_drone`) as `twist.enemyRoster` rows across the 4 E9 contracts, mirroring the E8-01 scaffold id-for-id. FIRE-AUTHORED s768 (`24ae5175`), attended review welcome.
-**Branch / tip:** `lane/perf` @ `220fc182` (`runner(lane-d): lane-roster-wiring-e9-01.md`), base `24ae5175` (the s768 author commit on main).
-**Drained by:** s769 fire — `git merge --no-ff lane/perf` onto main @ `97e28e18` (after the R-E8 art drain this fire).
+**Slice:** lane-roster-wiring-e9-01 — wire the two data-shaped E9 "Red Fields" roster enemies (`feral_terraformer`, `claim_jump_prospect_drone`) as `twist.enemyRoster` rows across the 4 E9 contracts, mirroring the E8-01 scaffold id-for-id. FIRE-AUTHORED s768 (`57e1508b`), attended review welcome.
+**Branch / tip:** `lane/perf` @ `d3a14aff` (`runner(lane-d): lane-roster-wiring-e9-01.md`), base `57e1508b` (the s768 author commit on main).
+**Drained by:** s769 fire — `git merge --no-ff lane/perf` onto main @ `005abba7` (after the R-E8 art drain this fire).
 **Verdict:** ✅ MERGE — E9 Red Fields boots clean, roster enemies field with correct siege/thief flags + tints, E6/E7/E8 not regressed, boss/hazard/canal systems left byte-intact.
 
 ## What it does
@@ -13,12 +13,12 @@ Wires the two Red Fields non-boss roster enemies as data-only spawn-table rows:
 Roster distribution across the 4 E9 contracts: dome-basin + seed-run field both; devils-alley fields the drone only (spec omits terraformers there); old-canal fields both. Both slots point at the bandit walk8 placeholder in `generated.ts` — real art follows via Batch R-E9 (the scaffold pins the `char-e9-*-sheet-walk8` 2×4 convention).
 
 ## How it was done (merge classification)
-`--no-ff` merge, lane/perf base `24ae5175` is an ancestor of main → mostly clean 3-way (git ort). Per-file:
-- **`src/assets/generated.ts`** — CONFLICT (both moved): main's R-E8 art drain (`97e28e18`) flipped the e8 slots off the bandit placeholder to real art; the lane added e9 placeholder slots directly after. Resolved by KEEPING main's real e8 sprite URLs AND appending the lane's two e9 bandit-placeholder slots. Verified: no stray conflict markers.
+`--no-ff` merge, lane/perf base `57e1508b` is an ancestor of main → mostly clean 3-way (git ort). Per-file:
+- **`src/assets/generated.ts`** — CONFLICT (both moved): main's R-E8 art drain (`005abba7`) flipped the e8 slots off the bandit placeholder to real art; the lane added e9 placeholder slots directly after. Resolved by KEEPING main's real e8 sprite URLs AND appending the lane's two e9 bandit-placeholder slots. Verified: no stray conflict markers.
 - **`src/assets/slots.ts`, `src/entities/pools.ts`, `src/game/Balance.ts`, `src/systems/WaveSystem.ts`, `assets/contracts/epoch-9-redfields/contracts.json`, `assets/layer-contracts/characters.v2.json`** — LANE-TOUCHED, clean auto-merge (main untouched since base).
 - **`e2e/e9-roster.spec.ts`** — NEW (lane).
 - `artifacts/lane-roster-wiring-e9-01/*.png` — lane test screenshots (consistent with the tracked e6/e7/e8 artifact equivalents).
-- **DEFERRED byte-intact (verified `git diff 24ae5175 220fc182` EMPTY):** `src/game/systems/OldDiggerBossSystem.ts` + `src/systems/E9CanalSystem.ts` — the shipped `old_digger` boss + `maintenance_drone` crew were NOT touched.
+- **DEFERRED byte-intact (verified `git diff 57e1508b d3a14aff` EMPTY):** `src/game/systems/OldDiggerBossSystem.ts` + `src/systems/E9CanalSystem.ts` — the shipped `old_digger` boss + `maintenance_drone` crew were NOT touched.
 
 ## Evidence
 | Check | Result |

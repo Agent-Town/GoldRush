@@ -8,13 +8,13 @@
 
 > ⚠️ **SUPERSEDED s1455 (F-1455-1) — THE LEAF DID CLOSE, FIFTEEN FIRES LATER, AND THIS LINE IS THE LAST THING
 > SAYING OTHERWISE.** This review was attempt 1 and its refusal to close the leaf was correct at the time.
-> Attempt 2 shipped: **`99bd76fd`** *"s1040: drain m2-05-geometry-settle — F-1035-1's geometry race CLOSED by a
-> stability wait, proved twice over"*, established by **ancestry** (`git merge-base --is-ancestor 99bd76fd main`
+> Attempt 2 shipped: **`94ce3888`** *"s1040: drain m2-05-geometry-settle — F-1035-1's geometry race CLOSED by a
+> stability wait, proved twice over"*, established by **ancestry** (`git merge-base --is-ancestor 94ce3888 main`
 > rc=0), never by the leaf's own status field. The done-move sits in `tasks/failed/` as
 > `shipped-s1064-20260725-162316-m2-05-geometry-settle-99bd76fd.md` — a `shipped-` prefix inside `failed/`, which
 > is exactly the shape that makes this class invisible to a directory-level sweep.
 > ⓘ **Bookkeeping debt recorded, not silently repaired:** the leaf `m2-05-geometry-settle` is `status: "shipped"`
-> with **`mergeHash: undefined`**, so nothing in the goal tree points at `99bd76fd`. Fixing that is a
+> with **`mergeHash: undefined`**, so nothing in the goal tree points at `94ce3888`. Fixing that is a
 > `goal-tracker` schema question (`:80` requires `/^[0-9a-f]{40}$/`) and belongs to a fire that can run the full
 > battery around it, not to this banner.
 > ➡️ The measurement below — **the residue reproduces, 6/6 twice** — is KEPT verbatim and is still true and still

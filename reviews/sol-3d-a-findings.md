@@ -2,7 +2,7 @@
 
 Branch: `sol/town-blender-v3`
 
-Wave-1 tip: `416bffaa6e34063c7603a887b5a69be347e72195`
+Wave-1 tip: `cefcc50b974e5b7b9efc8b9aaba31a0ea5595bcf`
 
 Iteration-2 tip: `HEAD` (the single variant-B commit)
 
@@ -44,7 +44,7 @@ The exact old-B binary used by the comparison is preserved at `artifacts/town-bl
 
 ### F-3DA-06 — Four requested Town regressions pre-date this asset
 
-The full desktop/mobile battery is 58/62. The four failures are `town-t4-growth` expecting `town-growth-general-store` before the current Claim Ledger queue and `town-t6-surfaces` expecting three actions while Claim Ledger adds a fourth, each repeated in both projects. The exact fingerprints reproduce at the detached `22824e0d` parent baseline; all `ts-01` through `ts-04` cases are green.
+The full desktop/mobile battery is 58/62. The four failures are `town-t4-growth` expecting `town-growth-general-store` before the current Claim Ledger queue and `town-t6-surfaces` expecting three actions while Claim Ledger adds a fourth, each repeated in both projects. The exact fingerprints reproduce at the detached `36995e6d` parent baseline; all `ts-01` through `ts-04` cases are green.
 
 Evidence: `artifacts/town-blender-v3/gate-summary-variant-b.md`, `artifacts/town-blender-v3/gate-summary.md`.
 

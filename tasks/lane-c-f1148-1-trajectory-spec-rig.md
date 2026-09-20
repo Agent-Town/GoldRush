@@ -1,6 +1,6 @@
 # Task lane-c-f1148-1-trajectory-spec-rig: re-run the m2-04 trajectory split through the PLAYWRIGHT TEST RUNNER (lane-c, commit prefix "chore:")
 
-**FIRE-AUTHORED s1151 (attended review welcome).** This is **attempt 2** of the F-1148-1 measurement, and it is licensed by a **CHANGED PREMISE**, not by hope (§7.5 forbids an identical retry). Attempt 1 (`lane-c-f1148-1-trajectory-split`, landed as a lawful STOP at `83eab9b0`) was **blocked by its own instrument, not by the game.** That is measured, not assumed — see WHY. Your job is the same question with a rig that empirically works. This is a **MEASUREMENT** task: the deliverable is a **three-arm trajectory table and a classification**, **not a repair**. The cure is OWNER-GATED. Read scope 7 before you touch anything.
+**FIRE-AUTHORED s1151 (attended review welcome).** This is **attempt 2** of the F-1148-1 measurement, and it is licensed by a **CHANGED PREMISE**, not by hope (§7.5 forbids an identical retry). Attempt 1 (`lane-c-f1148-1-trajectory-split`, landed as a lawful STOP at `54709cec`) was **blocked by its own instrument, not by the game.** That is measured, not assumed — see WHY. Your job is the same question with a rig that empirically works. This is a **MEASUREMENT** task: the deliverable is a **three-arm trajectory table and a classification**, **not a repair**. The cure is OWNER-GATED. Read scope 7 before you touch anything.
 
 CODEX: model=gpt-5.6-sol effort=high
 
@@ -24,7 +24,7 @@ Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead 
 
 Attempt 1 rebuilt the trajectory probe as a **standalone bare-chromium script** (`scripts/probe-f1148-1-trajectory.mjs`, `chromium.launch()` at `:10`). It could not place its fifth palisade — `confirmBuild failed: palisade@2,9` — hit that twice, stopped under its own two-strike rule, and reported **UNMEASURED**. It invented no data. That was correct behaviour and F-1148-1 is still **OPEN and unclaimed**.
 
-Attempt 1 attributed the block to *"the separate `placeBuildableAt` fault already recorded by the predecessor"* — i.e. to the **game**. **s1150 measured that attribution and it is WRONG** (verbatim from the s1150 handoff, `fab3cede`/`83eab9b0`, instrument `scripts/probe-s1150-confirmbuild-rate.mjs`, 5 runs per arm, positive control green):
+Attempt 1 attributed the block to *"the separate `placeBuildableAt` fault already recorded by the predecessor"* — i.e. to the **game**. **s1150 measured that attribution and it is WRONG** (verbatim from the s1150 handoff, `191fd281`/`54709cec`, instrument `scripts/probe-s1150-confirmbuild-rate.mjs`, 5 runs per arm, positive control green):
 
 > the bare-chromium probe places **1/5 at `timescale=1` AND 1/5 at `timescale=10`**, while the m2-04 spec places all five palisades **4/4** through the Playwright test runner, failing only later at `:226` (`--repeat-each=3` → **3/3 fail at `:226`, never at placement**). Seven of eight probe failures are the **fifth** palisade, `palisade@2,9`.
 
@@ -50,14 +50,14 @@ Answer it with the trajectory probe, not with the pass/fail counter. `expect.pol
 4. **Run THREE arms, n≥3 each, same box, back to back.**
    - **Arm A — today's main, unmutated.**
    - **Arm B — today's main, `const lateralOffset = 0`** at `src/entities/Enemy.ts:704` (behaviourally = the recommended cure). **THROWAWAY — see scope 6.**
-   - **Arm C — parent revision `4da134a9`, unmutated.** The known-good baseline that produced `7.997` s.
+   - **Arm C — parent revision `a26eca02`, unmutated.** The known-good baseline that produced `7.997` s.
    ⚠️ **n=1 is what produced the finding you are correcting — do not repeat it.** Report **every individual run** plus median and spread per arm. Overlapping spreads are themselves the answer to scope 5 and must be reported as such, never hidden behind a mean.
    ⚠️ **Neither arm may be a contaminated control:** run all three the same way on a quiet box, nothing else building or testing. **The load measurement must exclude the measurer** (F-1150-3: `scripts/stream-showcase-queue.test.mjs:58` false-redded a whole battery under a competing scratch server). If you cannot get a quiet box, say so — a contaminated control can AGREE with a contaminated treatment and prove nothing.
-5. **Arm C must not disturb main, and the spec must travel to it.** Build `4da134a9` in a **detached worktree** (`git worktree add --detach <path> 4da134a9`) with its own `npm install`. ⚠️ **The new spec does not exist at that revision** — copy it in as an untracked file and run playwright from inside that worktree. ⚠️ **Use a scratch port, not the default** — lane worktrees share port `5188`, and a second server on it will either fail or, worse, silently measure the **wrong tree** (`5199`/`5231`/`5234` are the house scratch ports). **State the port you used**; a trajectory measured against a foreign tree is the most expensive way to be wrong here. Remove the worktree when done.
+5. **Arm C must not disturb main, and the spec must travel to it.** Build `a26eca02` in a **detached worktree** (`git worktree add --detach <path> a26eca02`) with its own `npm install`. ⚠️ **The new spec does not exist at that revision** — copy it in as an untracked file and run playwright from inside that worktree. ⚠️ **Use a scratch port, not the default** — lane worktrees share port `5188`, and a second server on it will either fail or, worse, silently measure the **wrong tree** (`5199`/`5231`/`5234` are the house scratch ports). **State the port you used**; a trajectory measured against a foreign tree is the most expensive way to be wrong here. Remove the worktree when done.
 6. **⛔ THE MUTATION IS A THROWAWAY AND MUST NOT SHIP.** Arm B edits `src/entities/Enemy.ts`. Take a byte backup first, restore after, and **verify `git status --porcelain -- src/` is EMPTY before you commit anything.** Paste that verification. A `src/` diff in this slice is a firewall violation and the drain will reject it.
 7. **Classify the split — this is the deliverable.** Compare arm B against A and C on **route shape**, not just duration:
    - **B ≈ C** (sim time back to ~`7.997` s *and* a non-negative X floor): the lateral bias is the **whole** regression; the residual `20.999`/`20.667` failures are **polling amplification** — a harness question, not a pathing one.
-   - **B between A and C**: a **real remainder** stacked after `3c749607`. Say so, and name where if you can — but see scope 8: identify, do not fix.
+   - **B between A and C**: a **real remainder** stacked after `9f6ec59d`. Say so, and name where if you can — but see scope 8: identify, do not fix.
    - **B ≈ A**: the mutation control's pass-rate improvement was distribution noise and the bisect's n=1 pair overstated the commit's share. **This would be the most important finding of the three.**
    The X floor is the sharpest discriminator the predecessor found (parent `0.000` vs child `-0.628`, the S-bend) — **report it for all three arms.**
 8. **⛔ DIAGNOSE, DO NOT REPAIR — AND DO NOT WIDEN THE BUDGET.**
@@ -77,7 +77,7 @@ Answer it with the trajectory probe, not with the pass/fail counter. `expect.pol
 2. `npm run build` → rc=0.
 3. `npx playwright test --list | grep -c f1148` **and** the same collection with `GR_F1148_PROBE` unset showing the spec **skipped** — scope 2's proof it did not join the default suite.
 4. `GR_F1148_PROBE=1 npx playwright test e2e/f1148-1-trajectory-probe.spec.ts --project=desktop-chrome --workers=1 --reporter=list` → the arm-A runs, with sample counts.
-5. `node scripts/run-guards.mjs` → **8/8** (it is 8/8 on main as of s1151 `3fa3b85f`; if you see 7/8, check whether you are running from the lane worktree — `test:task-guards` now SKIPs there by design, F-1151-1).
+5. `node scripts/run-guards.mjs` → **8/8** (it is 8/8 on main as of s1151 `ceadd5cd`; if you see 7/8, check whether you are running from the lane worktree — `test:task-guards` now SKIPs there by design, F-1151-1).
 6. `git status --porcelain -- src/` → **EMPTY** (scope 6).
 7. `git status --short` → only the TOUCH-ONLY new files.
 8. `npx playwright test e2e/m2-04-gold-stealing.spec.ts --project=desktop-chrome --workers=1 --reporter=list` on the **restored, unmutated** tree → expected **RED at `:226`**; paste it as confirmation you left the guard intact. **A green here is a red flag, not a success** — it would mean the mutation survived or the spec was edited.

@@ -1,6 +1,6 @@
 # era-five-replayed-board — era 5 "the Replayed Board"
 
-**Slice:** `era-five-replayed-board` (lane-d) · **branch tip:** `50dba41a1` · **merge:** `c5bc0245d4c23f0bd338b7d8fffc6c80e942fc12` · **gated by:** s2397, worktree `gate-s2395`
+**Slice:** `era-five-replayed-board` (lane-d) · **branch tip:** `12f301aba` · **merge:** `9b5603fd2b442c231ea525a3e521b9593b384a68` · **gated by:** s2397, worktree `gate-s2395`
 
 ## VERDICT: MERGED — every scope item delivered, every self-check leg green, three findings all non-blocking (one is owner-facing).
 
@@ -33,8 +33,8 @@ The **replay HUD** folds live gold and Keeper health into the playback status li
 **Both storage arms** were exercised for the retirement filter (kv and sqlite, 180 checks each), which is what scope 7(a) demanded.
 
 ## Merge classification
-- **Base:** the trial merge `b9067b2f0` = main `e95229211` × lane/d `50dba41a1`, built by s2395 before it died.
-- Between `e95229211` and my merge base, main moved by **STATUS.md only** (`git diff --stat e95229211 main` → 1 file, the lock/stamp lines). No lane-touched path moved on main, so the trial resolution and a fresh one are identical by construction — verified, not assumed.
+- **Base:** the trial merge `b9067b2f0` = main `16ac96702` × lane/d `12f301aba`, built by s2395 before it died.
+- Between `16ac96702` and my merge base, main moved by **STATUS.md only** (`git diff --stat 16ac96702 main` → 1 file, the lock/stamp lines). No lane-touched path moved on main, so the trial resolution and a fresh one are identical by construction — verified, not assumed.
 - **One conflict, `tasks/BACKLOG.md`:** main carried s2394's `F-2393-3 CURED` row (landed after lane/d branched); the lane carried its own updated era-5 row. Resolved by taking the **gated trial's** resolution, which is a proper **union** — both rows kept, nothing retired. This is the resolution the entire battery above ran against.
 - **Verification that I landed what I gated:** after resolution, `git diff b9067b2f0 -- assets/engine-era.json e2e functions public scripts src tasks/BACKLOG.md` was **EMPTY** — the merged tree is byte-identical to the gated tree across every lane-touched path.
 - All other files auto-merged clean. `main..lane/d` is now **0** — fully drained, no residue.
@@ -49,7 +49,7 @@ The master asked for the membership test to be *"reused from era-pin-lineage —
 All three agree **today** — verified by reading each. The defect is that nothing would tell us when they stop. This is the repo's own *"cured defect survives in the sibling script"* / *"fix the CLASS, not the instance"* pattern, and the correct cure is one extracted predicate plus a guard asserting all call sites use it.
 
 ### F-2397-2 (non-blocking, corrective owed) — era-pin-lineage's core multi-pin property is now asserted nowhere
-`scripts/assay-worker.test.mjs` **deleted** its `matching-round2-lineage` arm — the one asserting that a tape carrying an *earlier* pin of the *same* era still verifies. That is precisely the property `era-pin-lineage` (s2393, `c1bcc5807`) was built to deliver, one fire ago.
+`scripts/assay-worker.test.mjs` **deleted** its `matching-round2-lineage` arm — the one asserting that a tape carrying an *earlier* pin of the *same* era still verifies. That is precisely the property `era-pin-lineage` (s2393, `ab6c0c738`) was built to deliver, one fire ago.
 
 The deletion is **forced, not careless**: era 5 seeds a fresh single-pin array, so the old `pins.find(startsWith('d5b04061'))` lookup has nothing to find and its `assert.ok` would fail. But the right cure was to seed a second pin into a **fixture-local** registry and keep the arm, not to remove coverage of a mechanism that is now load-bearing for every board decision. The mechanism itself is intact and exercised indirectly (`pins.some` runs in all three consumers); what is gone is the guard.
 

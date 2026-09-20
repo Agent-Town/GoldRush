@@ -1,8 +1,8 @@
 # Review — f-e2s-1: the boss fight fits inside the door
 
 - **Slice:** f-e2s-1 boss-ceiling (`tasks/lane-fe2s1-boss-ceiling.md`, done-move `20260808-074109-lane-fe2s1-boss-ceiling.md`)
-- **Branch/tip:** `lane/d` @ `ed9a0398c` (runner auto-commit), base `866f6aaa4`
-- **Merged to main:** `c732d2c40568bfba48e702bc36057dfcd4418f5d` (s1544 fire, 2026-08-08)
+- **Branch/tip:** `lane/d` @ `a4fb08a59` (runner auto-commit), base `a176c9fc4`
+- **Merged to main:** `4e2ab518ab25f6686e261c1161691b98d717f7c5` (s1544 fire, 2026-08-08)
 - **Gated in:** detached worktree `gate-s1544` (§3.0b custody — a concurrent attended session was committing to main throughout this drain)
 
 ## Verdict
@@ -83,7 +83,7 @@ the v26.4.0 arm is the runner's evidence, not re-derived here.
 
 ## Merge classification
 
-Base `866f6aaa4`; main had moved **7 commits** by merge time. Four paths, all inside the firewall:
+Base `a176c9fc4`; main had moved **7 commits** by merge time. Four paths, all inside the firewall:
 
 | File | Class | Resolution |
 |---|---|---|
@@ -94,7 +94,7 @@ Base `866f6aaa4`; main had moved **7 commits** by merge time. Four paths, all in
 
 `public/skill.md` is the one that needed care. s1543's handoff warned that three lanes would land
 on this one doc file and ordered serial drains with per-diff section isolation confirmed. f-door-1
-merged first (`99f0d60a4`, attended, adding the cost-curve sentence); this slice rewrites the
+merged first (`566b2c25a`, attended, adding the cost-curve sentence); this slice rewrites the
 ceiling sentence at `:34`. Post-merge both are present and in their own sections — `:34` carries
 the `wave-ceiling` text, `:93` carries f-door-1's `costRule: "ceil-to-5"` text. Neither file was
 re-flowed. **The serial-drain concern is discharged with evidence, not assumed.**
@@ -112,7 +112,7 @@ re-flowed. **The serial-drain concern is discharged with evidence, not assumed.*
   `mp-07a` and `mp-07b` both STOPPED at their lane-safety pre-flights (88,105 tokens across the
   two, zero files touched) because `lane/b` held undrained f-door-1 and `lane/d` held undrained
   f-e2s-1. Both were done-moved into `tasks/done/` looking like completions — Mistake #1's shape.
-  f-door-1 merged at `99f0d60a4` and f-e2s-1 merges here, so **both blockers are now cleared** and
+  f-door-1 merged at `566b2c25a` and f-e2s-1 merges here, so **both blockers are now cleared** and
   both masters are re-queued by this fire. The guard behaved exactly as designed; it protected
   this slice's 41 lines from a `reset --hard`. No cure owed.
 

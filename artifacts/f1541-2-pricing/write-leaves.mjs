@@ -13,9 +13,9 @@ const leaves = [
   {
     id: 'f1542-1-desk-header-backtick-spelling',
     title:
-      'F-1542-1: a GRAVE ACCENT (U+0060) where the apostrophe goes made BOTH desk guards blind to a well-formed desk at once, in opposite directions — desk-declaration-guard rc=2 "no desk header" (there was one, of 8 items) and desk-carryforward-guard rc=1 "this desk: 0 items, dropped: 7" (the drop guard accusing a fire of dropping its entire desk). Real instance: s1529 aab5dfb3. Widen the spelling set from four to five at all three sites, including gate-caller-audit.mjs OWNER_ROUTE where the same miss fails OPEN.',
+      'F-1542-1: a GRAVE ACCENT (U+0060) where the apostrophe goes made BOTH desk guards blind to a well-formed desk at once, in opposite directions — desk-declaration-guard rc=2 "no desk header" (there was one, of 8 items) and desk-carryforward-guard rc=1 "this desk: 0 items, dropped: 7" (the drop guard accusing a fire of dropping its entire desk). Real instance: s1529 62586985. Widen the spelling set from four to five at all three sites, including gate-caller-audit.mjs OWNER_ROUTE where the same miss fails OPEN.',
     status: 'merged',
-    mergeHash: full('a4ba9b0e'),
+    mergeHash: full('49aa6cfb'),
     attempts: 1,
     authoredBy: 's1542 fire (FIRE-AUTHORED, direct corrective — no lane master)',
     drainNotes:
@@ -26,7 +26,7 @@ const leaves = [
     title:
       'F-1541-2 / F-1542-2: an owner fork filed by an ATTENDED session has no path onto a desk except the next fire noticing it, and desk-carryforward-guard is blind to that population by construction (it compares desk N to desk N+1, so an item that never reached a FIRST desk is missing from both sides forever). Price the proposed predicate over the live corpus, then build desk-birth-guard only if false positives are 0.',
     status: 'merged',
-    mergeHash: full('b59aad1d'),
+    mergeHash: full('0dd7a5d0'),
     attempts: 1,
     authoredBy: 's1542 fire (FIRE-AUTHORED, direct corrective — no lane master)',
     drainNotes:

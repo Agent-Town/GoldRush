@@ -2,7 +2,7 @@
 
 - **Slice:** `ret-01-run-log-recoverability-guard` (ELEVENTH RUNG of the "a promise nothing enforces" class)
 - **Branch / tip:** `lane/m3` @ `99a031af` — `runner(lane-a): ret-01-run-log-recoverability-guard.md`
-- **Base:** `43b652b4` (merge-base with main, verified via `git merge-base`)
+- **Base:** `25de9c13` (merge-base with main, verified via `git merge-base`)
 - **Drained by:** s1243 fire, 2026-07-30
 - **Verdict:** ✅ **ACCEPTED — merged.** Two gating branches, both mutation-proved by the drain independently of the runner. One non-blocking finding (F-1243-3) and two notes.
 
@@ -75,12 +75,12 @@ The 4.0-day wall holds in `tasks/runs/` and not in the archive. **F-1242-2 stand
 ## Merge classification
 
 - Two-dot `main..lane/m3` listed 10 files. **Exactly two are lane content**; both verified
-  `git diff 43b652b4..main -- <file>` **empty**, i.e. main never moved them, so a path-scoped
+  `git diff 25de9c13..main -- <file>` **empty**, i.e. main never moved them, so a path-scoped
   `git checkout lane/m3 -- <2 files>` is correct and no 3-way graft was needed.
   - `scripts/run-log-retention.test.mjs` — **new**, 54 lines. Post-checkout blob **`fdbd143d`**,
     byte-identical to the runner's own diff header.
   - `package.json` — **+1/−1**, roster insertion only.
-- The other eight are **MAIN-MOVED-ONLY** off base `43b652b4` — `STATUS.md`, `logs/dashboard.html`,
+- The other eight are **MAIN-MOVED-ONLY** off base `25de9c13` — `STATUS.md`, `logs/dashboard.html`,
   `logs/.goal-tree.html`, `logs/task-stats.jsonl`, `logs/session-scratch/s1242-line1.txt`,
   `tasks/BACKLOG.md`, `marketing/outbox/ticker-digest-2026-07-29.md` (this fire's own TK-01 artifact)
   and `tasks/queue/lane-a/ret-01-…md`. Their "deletions"/"additions" in the two-dot diff are main's

@@ -6,7 +6,7 @@ ROLE: lane implementer. WORKDIR: this lane worktree. One task, firewalled.
 WHY: the ratified law, verbatim (`specs/agent-play/README.md:61`):
 > **PINNED SEEDS: bench runs use a frozen seed set per contract (comparability); the live county ladder runs live seeds. Same door, two modes.**
 
-LB-02 (`b5cb6c60`, `reviews/lb-02-bench-fields.md`) shipped the **declaration** — a required `seed` + `seedMode:'live'|'bench'` on every submission — and BACKLOG:1775 closes with *"NEXT RUNG: the bench seed SETS … the seed-set rung is now unblocked by LB-02's `seedMode`."* **This task is that rung.** Today the word "bench" is asserted by a client with no set to assert it against, and accepted by a server with nothing to check it against.
+LB-02 (`36e6c1b7`, `reviews/lb-02-bench-fields.md`) shipped the **declaration** — a required `seed` + `seedMode:'live'|'bench'` on every submission — and BACKLOG:1775 closes with *"NEXT RUNG: the bench seed SETS … the seed-set rung is now unblocked by LB-02's `seedMode`."* **This task is that rung.** Today the word "bench" is asserted by a client with no set to assert it against, and accepted by a server with nothing to check it against.
 
 **THE MEASURED PREMISE — four facts, each read at source on main. Re-derive them before you build; do not take my word.**
 1. `src/game/Game.ts:5509-5510` + `:5536` — the entire bench/live decision:
@@ -51,6 +51,6 @@ SELF-CHECK: `npm run test:node-guards` **FIRST** (expect 74/74 **+ your new guar
 🔴 KNOWN REDS — NOT yours, do not "fix" them (automatic reject):
   - `locked-win.spec.ts:65` and `tl-01-run-telemetry.spec.ts:229` — **100% deterministic at every worker count** (measured s1218, F-1218-3). Report if seen; never chase.
   - `m4-06-embodiment.spec.ts:395` — known ~45% flake (F-1212-2). Re-measure as a rate before blaming yourself.
-  - ✅ `ap-standing-orders.spec.ts` — **CURED s1222 (`a0aae876`, test-only). NO LONGER A KNOWN RED: a failure here is a real regression, report it.** The old *"25% mobile-only at w4"* was a low-load SAMPLE, not a property (F-1222-3, refined by F-1223-1): pre-cure it failed in **both** projects at a load-dependent rate — 12.5% quiet (s1216), **50%/50% at loadavg ~15** (s1223), **100%/100% at loadavg ~25** (s1222). Post-cure **64/64 green** across two fires, at loadavg up to 29.
+  - ✅ `ap-standing-orders.spec.ts` — **CURED s1222 (`855f4d74`, test-only). NO LONGER A KNOWN RED: a failure here is a real regression, report it.** The old *"25% mobile-only at w4"* was a low-load SAMPLE, not a property (F-1222-3, refined by F-1223-1): pre-cure it failed in **both** projects at a load-dependent rate — 12.5% quiet (s1216), **50%/50% at loadavg ~15** (s1223), **100%/100% at loadavg ~25** (s1222). Post-cure **64/64 green** across two fires, at loadavg up to 29.
 
 READY-FOR-GATES + report: the seed-set artifact and which contracts it covers · your **own verification of fact 3** (that a release build cannot emit `bench`) and therefore whether item 3's rejection is safe · the item-5 mutation proofs · the literal node-guard count and the `--list` numbers before/after · and **explicitly flag the two things this task deliberately did NOT settle**: how a bench run is launched in a release build, and whether the item-2 non-member ruling ("do not submit") is what the owner wants.

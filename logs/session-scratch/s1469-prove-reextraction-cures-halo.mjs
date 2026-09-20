@@ -2,7 +2,7 @@
 /**
  * s1469-prove-reextraction-cures-halo.mjs — F-1464-1 PREMISE CHECK.
  *
- * F-1464-1 asserts a roster-wide re-extraction against the post-`c29040e7`
+ * F-1464-1 asserts a roster-wide re-extraction against the post-`d2e69801`
  * extractor cures the F-1449-1 halo. That is the premise the whole 1,075-file
  * master rests on, and NOBODY HAS EVER RUN IT ON A SUSPECT SHEET — the four
  * negative controls in the finding are sprites that were extracted after the

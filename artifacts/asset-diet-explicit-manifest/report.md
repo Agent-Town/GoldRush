@@ -4,7 +4,7 @@ Status: **STOPPED at the task firewall. Not READY-FOR-GATES.** Scoped implementa
 
 ## Preflight
 
-- Started on `lane/a` at `eb79d0c127d9c525508a6c4878041a370945069b`.
+- Started on `lane/a` at `eb79d0c127d9c525508a6c4878041a370945069b (archive: pruned by the A3 rewrite)`.
 - Initial status clean; `git log main..HEAD` empty. No reset or discarded evidence needed.
 - `npm install --no-audit --no-fund`: exit 0, lockfile unchanged.
 - Baseline `npm run build`: exit 0; post-build cleanliness check empty.

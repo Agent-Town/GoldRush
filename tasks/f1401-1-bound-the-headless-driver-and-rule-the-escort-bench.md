@@ -14,7 +14,7 @@ WHY (F-1401-1, s1401 diagnosis of F-1400-3 — reviews/f1401-1-baron-escort-nont
 
 READ-FIRST (paths, read them, do not skim):
  · `reviews/f1401-1-baron-escort-nontermination.md` — the three-arm control, the refutation, and the divergence argument.
- · `scripts/gr-sim.mjs:36-46` — the unbounded driver loop; the `while (true)` is at **`:41`** (s1408 re-verified by READING the file on main at `132095c4`; this master was authored citing `:40`, which is now `let turn = sim.currentTurn();` — cite the CODE, the coordinate drifts). Note there is no `await` on the `--policy=idle` path.
+ · `scripts/gr-sim.mjs:36-46` — the unbounded driver loop; the `while (true)` is at **`:41`** (s1408 re-verified by READING the file on main at `48833fc6`; this master was authored citing `:40`, which is now `let turn = sim.currentTurn();` — cite the CODE, the coordinate drifts). Note there is no `await` on the `--policy=idle` path.
  · `src/sim/HeadlessContractSim.ts:241-256` — `advanceToTurn()`, whose `maxTicks` bound never trips because it returns on wave change.
  · `src/game/Game.ts:4669-4715` — `secureWaveForRun` / `autoSecureWaveForRun` / `waitsForBaronDefeat`, the production semantics you are being asked to match.
  · `git show lane/e2-arsenal` — the slice this unblocks (4 files, 260+/10−). Do NOT merge it in this task.

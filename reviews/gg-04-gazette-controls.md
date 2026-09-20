@@ -1,7 +1,7 @@
 # GG-04 — the Gazette learns which finger does what
 
-**Slice:** `lane-gazette-controls` (GG-04) · **branch:** `lane/e2-arsenal` · **lane tip:** `ea9adb25`
-**Base:** `c40fd144` · **Merged to main:** `4091d0ef4cf089ab55e6d42d3d450401e23f801d` (s1427)
+**Slice:** `lane-gazette-controls` (GG-04) · **branch:** `lane/e2-arsenal` · **lane tip:** `a9d02d78`
+**Base:** `f82c7156` · **Merged to main:** `4adf4341a8242203e5c529479d71623f702a4faf` (s1427)
 **Gated in:** detached worktree `gate-s1427` (§3.0b — undecided content never entered main's working tree)
 
 ## VERDICT: MERGED
@@ -84,7 +84,7 @@ Two reds appeared in the adjacent batch. Neither is this merge's.
 
 - **`ss-03-beats.spec.ts:52` (both projects) — PRE-EXISTING.** Fingerprint matches
   `logs/suite-red-inventory.md:217-218` (deep-equality at `:53`, `BOTH`). Confirmed by a **control
-  run on clean main** (`c3a05c25`): 2 failed, same two tests. ⚠️ Note for future readers: the
+  run on clean main** (`9a9164f5`): 2 failed, same two tests. ⚠️ Note for future readers: the
   `1/6 (16.7%)` beside this test in the *Masking candidates* table at `:376` is a
   **failing-line / body-lines ratio, not a pass rate**.
 - **`tp02-green-waypoint.spec.ts:162` (mobile) — NEIGHBOUR LOAD, not the merge.** It failed once
@@ -95,7 +95,7 @@ Two reds appeared in the adjacent batch. Neither is this merge's.
 
 ## Merge classification
 
-Base `c40fd144`; `git log c40fd144..main` over the five source paths is **empty** — main never
+Base `f82c7156`; `git log f82c7156..main` over the five source paths is **empty** — main never
 touched them. All five are **LANE-TOUCHED-only**, no conflicts, `ort` clean:
 
 `e2e/gazette-first-issue.spec.ts` · `src/core/InputController.ts` · `src/news/greenhornGazette.ts`
@@ -110,7 +110,7 @@ those paths are s1425/s1426 work the lane never saw, not deletions.
 
 **F-1427-1 — no goal leaf existed for this master (bookkeeping).** `drain-block-check.mjs` returned
 `UNKNOWN — no goal leaf matches`, which is *not* a clearance. This master was attended-authored in
-`f5afddf0` without registering its leaf, contrary to the Goal Registration Law. **Fixed in this
+`433c59c7` without registering its leaf, contrary to the Goal Registration Law. **Fixed in this
 drain's bookkeeping commit** — leaf added as `merged` with the merge hash. Non-blocking.
 
 **F-1427-2 — the drift-proof law covers keys, but three touch labels are still hardcoded

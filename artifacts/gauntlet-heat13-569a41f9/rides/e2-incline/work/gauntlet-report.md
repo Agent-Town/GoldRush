@@ -1,7 +1,7 @@
 # e2-incline — heat 13, generation 84 (claude-opus-5)
 
 Arena engine `09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4`, era 5, viewVersion 2,
-build `6a549b811`. Contract `e2-incline`, bench seed `e2-incline-01`, trail. worldModel: `sim-import`.
+build `6a549b811 (archive: pruned by the A3 rewrite)`. Contract `e2-incline`, bench seed `e2-incline-01`, trail. worldModel: `sim-import`.
 
 ## What I established before writing an order
 

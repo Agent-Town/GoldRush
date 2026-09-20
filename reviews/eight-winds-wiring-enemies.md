@@ -1,7 +1,7 @@
 # Review — eight-winds-wiring-enemies (EIGHT WINDS slice 2: the three outlaw slots)
 
-**Slice:** `eight-winds-wiring-enemies` · **branch:** `lane/e2-arsenal` · **tip:** `29396f9c`
-**Base:** `784a2efe` (= merge-base with main) · **merge:** `c3d8470e` *(this drain, `--no-ff`)*
+**Slice:** `eight-winds-wiring-enemies` · **branch:** `lane/e2-arsenal` · **tip:** `15d50fc0`
+**Base:** `3aec2dcd` (= merge-base with main) · **merge:** `26a84c0b` *(this drain, `--no-ff`)*
 **Run report:** `tasks/runs/20260728-223409-lane-c-eight-winds-wiring-enemies.md`
 **Drain:** s1184 fire, 2026-07-28 · **§3.0 drain-block-check:** ✅ CLEAR (`eight-winds-wiring-enemies`)
 
@@ -26,7 +26,7 @@ decision": the aliases are **emptied**, not widened.
 
 ## Merge classification
 
-Merge-base is `784a2efe`, the lane's own base. Main advanced by four commits while the lane ran
+Merge-base is `3aec2dcd`, the lane's own base. Main advanced by four commits while the lane ran
 (the art batch, the s1183 handoff, this fire's lock, and this fire's art drain). Classified per file:
 
 - **LANE-TOUCHED only:** `assets/layer-contracts/characters.v2.json`, `assets/processed/**` (96 new
@@ -36,7 +36,7 @@ Merge-base is `784a2efe`, the lane's own base. Main advanced by four commits whi
 - **MAIN-MOVED only:** `STATUS.md`, `assets/LEDGER.md`, `assets/raw/**`, `logs/**`, `reviews/**`,
   `tasks/goals.json`, `tasks/art-gazette-engravings.md`.
 - **BOTH:** **none.** The two sets are fully disjoint, so this was a clean 3-way with no conflicts
-  and no hand-resolution. Verified by diffing `784a2efe..main` against the lane's own file list
+  and no hand-resolution. Verified by diffing `3aec2dcd..main` against the lane's own file list
   before merging, not discovered during it.
 
 ## Evidence — re-run by this drain on the merged tree
@@ -48,7 +48,7 @@ Merge-base is `784a2efe`, the lane's own base. Main advanced by four commits whi
 | `e2e/eight-winds-enemies.spec.ts` (own spec) + `eight-winds-hero.spec.ts` (extended guard) | ✅ **8/8 passed**, desktop + mobile 390 px, 12.5 s |
 | `e2e/066-walk8-engine.spec.ts` (adjacent) | ⚠️ **4 passed / 2 failed — pre-existing F-1166-1**, fingerprint matched (below) |
 | console / page errors | ✅ zero (the specs assert this and passed, incl. a no-`?debug` plain boot) |
-| frame p95 | ✅ −1.0 % median across three paired 180-frame windows vs untouched `784a2efe` (runner-measured; well inside the 15 % threshold) |
+| frame p95 | ✅ −1.0 % median across three paired 180-frame windows vs untouched `3aec2dcd` (runner-measured; well inside the 15 % threshold) |
 
 ### The two adjacent reds are F-1166-1, verified not inherited
 
@@ -66,7 +66,7 @@ Both the line and the received string match the recorded F-1166-1 signature exac
 jumper slot still falls back to bandit_base art. **It cannot be collateral from this slice:** the
 received cell is `r2c0`, a *cardinal* `walk8` cell, whereas this slice adds only diagonal rows and
 empties only diagonal aliases. The runner independently reproduced the identical failure in a
-detached control worktree at the lane's exact base `784a2efe`, on both projects. Pre-existing,
+detached control worktree at the lane's exact base `3aec2dcd`, on both projects. Pre-existing,
 unchanged, still on the owner's desk.
 
 ### The controls the runner built, and why they earn trust

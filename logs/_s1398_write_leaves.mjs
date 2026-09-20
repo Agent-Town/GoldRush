@@ -14,7 +14,7 @@ console.log('E2 subgoal =', e2.id, '|', e2.title.slice(0, 70));
 
 const NOTE_TAIL =
   ' LEAF REGISTERED s1398, NOT s1398-authored: the master was authored and queued by the live attended ' +
-  'session at 96fb9059, which committed it WITHOUT a leaf and wrote "GOAL-LEAF DEBT (3 masters) next fire." ' +
+  'session at 514a81f9, which committed it WITHOUT a leaf and wrote "GOAL-LEAF DEBT (3 masters) next fire." ' +
   'verbatim at tasks/BACKLOG.md:2590. Status is "building" and not "queued" because the runner had already ' +
   'consumed the queue copy when I measured it: tasks/running/ held the master plus a live .pid at 18:22. ' +
   'I did not author, re-queue or alter the master, and I did not gate it — this discharges the Goal ' +

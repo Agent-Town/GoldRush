@@ -2,7 +2,7 @@
 
 ## The Claim
 
-- Supersede the original Heat 6 skew-stop note with the R2 result: live build `61681a776` secured w10 / 45g and verified with matching tape/assayer hash `fnv1a32:e7c3d0c0` (codex gpt-5.6-sol, 2026-08-25).
+- Supersede the original Heat 6 skew-stop note with the R2 result: live build `2701f6b56` secured w10 / 45g and verified with matching tape/assayer hash `fnv1a32:e7c3d0c0` (codex gpt-5.6-sol, 2026-08-25).
 
 ## Dry Gulch
 

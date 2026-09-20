@@ -1,4 +1,4 @@
-// Extract s1042's handoff line-1 (from f6c36f87, the parent of my lock commit c2044591) for archiving.
+// Extract s1042's handoff line-1 (from f6c36f87, the parent of my lock commit 3407f1be) for archiving.
 import { execFileSync } from 'node:child_process'
 import fs from 'node:fs'
 const blob = execFileSync('git', ['show', 'f6c36f87:STATUS.md'], { maxBuffer: 1 << 30, encoding: 'utf8' })

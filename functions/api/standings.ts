@@ -209,7 +209,7 @@ const LINEAGE_KEYS = new Set(['reason', 'requeuedAt']);
 const MAX_LINEAGE_REASON_LENGTH = 256;
 const DRILL_YARD_CONTRACT_ID = 'e1-drill-yard';
 const WALK_ERA_START = 1_786_167_061_000;
-const WALK_ERA_STAMP = '3dd7790d';
+const WALK_ERA_STAMP = '55ce6f7d';
 const SAME_GAME_ERA = SEASONS.find((season) => season.id === 'same-game-season')!;
 const ROTATIONS = (rotationSeeds.rotations as Rotation[]);
 
@@ -378,7 +378,7 @@ export async function onRequestAssayVerdict(context: StandingsContext): Promise<
     // verdict came back `verified` it looked for another verified row with the same
     // `standingOwnerKey` and wrote the board back as either `rows.filter((c) => c !== row)` — the
     // row it had just verified, gone — or the mirror, the incumbent gone. Both arms landed in
-    // `fa8b096f3` (2026-09-04) alongside the owner dedupe in `rankedRows`.
+    // `53450564a` (2026-09-04) alongside the owner dedupe in `rankedRows`.
     //
     // WHAT IT COST. Heat 14 rode 37 boards, secured 31, and the county kept 18. Twelve accepted
     // submissions answered `{"ok":true,"stored":true,"rank":1,"decidedBy":"crown"}` and then
@@ -617,7 +617,7 @@ async function getBoard(context: StandingsContext, cors: Record<string, string>)
     if (!reel) return error(cors, 404, 'reel_not_found', 'That reel is not on the shelf.');
     // The archive keeps its reels: a season-1 tape stays fetchable as the artifact it is, and the
     // payload's own labels say which era's proof standards it was posted under.
-    // EH-3 af85497537 retired F-2308-1's validator premise. WATCH now carries only the stored
+    // EH-3 ed0d3c5389 retired F-2308-1's validator premise. WATCH now carries only the stored
     // reel's public era identity; no private controller state or additional metadata is exposed.
     const publicReel = isRecord(reel.meta) && reel.meta.engineHash !== undefined
       ? { ...reel, meta: { buildId: reel.meta.buildId, engineHash: reel.meta.engineHash, era: reel.meta.era, ...(reel.meta.viewVersion === undefined ? {} : { viewVersion: reel.meta.viewVersion }) } }

@@ -8,7 +8,7 @@ const b = fs.readFileSync(p, 'utf8').split('\n');
 
 // --- 1) Close F-1305-2 (drained this fire) ---
 if (!b[21].startsWith('\u{1F535} **F-1305-2')) throw new Error('row 22 moved: ' + b[21].slice(0, 80));
-b[21] = '✅ **F-1305-2 (s1305, OBSERVED — ✅ CURED s1307 at `d596f9120f84febbf21c4f82d56b6d5b840b9017`: the 16 uniform specs now import ONE `e2e/support/console-watch.ts` carrying the proven literal-prefix filter; the 5 divergent-contract specs remain local and are named in the review, per the master scope. Guarded by `scripts/console-watch-single-source.test.mjs`, rooted in `test:node-guards` and proven by manufacturing the defect. Evidence: `reviews/f1305-2-console-watch-single-source.md`.)** '
+b[21] = '✅ **F-1305-2 (s1305, OBSERVED — ✅ CURED s1307 at `892026d2988fe944db30b17bec29c0a8efdab7a6`: the 16 uniform specs now import ONE `e2e/support/console-watch.ts` carrying the proven literal-prefix filter; the 5 divergent-contract specs remain local and are named in the review, per the master scope. Guarded by `scripts/console-watch-single-source.test.mjs`, rooted in `test:node-guards` and proven by manufacturing the defect. Evidence: `reviews/f1305-2-console-watch-single-source.md`.)** '
   + b[21].slice(3);
 
 // --- 2) Disambiguate the F-1304-2 collision ---

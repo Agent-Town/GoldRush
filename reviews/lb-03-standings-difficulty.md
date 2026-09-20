@@ -1,13 +1,13 @@
 # Review — LB-03 standings learn difficulty (drain, s1286)
 
 **Slice/branch/tip:** `lane-standings-difficulty` on `lane/m4` (lane-b), tip `88db2677` → merged to main this commit.
-**Base:** merge-base `0db281e0`. Six paths LANE-ONLY (`main == base`, main never moved them); one path BOTH-MOVED (`src/game/Game.ts`) grafted line-by-line, never copied.
+**Base:** merge-base `adfa280a`. Six paths LANE-ONLY (`main == base`, main never moved them); one path BOTH-MOVED (`src/game/Game.ts`) grafted line-by-line, never copied.
 **Verdict:** ✅ MERGED.
 
 ## 🚨 The reason this drain exists — LB-03 was announced as drained and was not
 
-s1285's handoff recorded LB-03 as drained at `12b0011e`, and its F-1285-1 described that commit as
-carrying "LB-03's three files". **It carries none of LB-03's implementation.** `git show --stat 12b0011e`
+s1285's handoff recorded LB-03 as drained at `e4336ba8`, and its F-1285-1 described that commit as
+carrying "LB-03's three files". **It carries none of LB-03's implementation.** `git show --stat e4336ba8`
 holds ap-06b's eleven swept paths plus `tasks/lane-standings-difficulty.md`, its queue copy, and one
 BACKLOG line — i.e. **the task MASTER, not its output**. The headline *"LB-03: standings learn
 difficulty…"* describes what the task would do, not what the commit contained.

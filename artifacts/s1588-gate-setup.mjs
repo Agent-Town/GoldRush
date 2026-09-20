@@ -1,6 +1,6 @@
 // s1588 scratch: place lane/a's four slice paths into the detached gate worktree,
 // so the battery runs on the MERGED tree (main + slice), never on the lane's stale base.
-// Main was proved untouched on all four paths since merge-base ebc1cab1, so a checkout
+// Main was proved untouched on all four paths since merge-base b8336f85, so a checkout
 // of lane/a's blobs IS the merge result.
 import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';

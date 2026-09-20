@@ -19,9 +19,9 @@
 - `src/agent/MechanicsManifest.ts` and `src/agent/StandingOrders.ts` — the TWO existing consumers of this same declaration. Match their predicate; do not invent a third spelling.
 
 ## Why (evidence, quoted and dated)
-**Owner directive, 2026-09-15**, via `tasks/BACKLOG.md` (commit `c30c3de14`): *"how do we go from epoch1 to all epochs? … lets do 1. and 2."* — establishing the whole-board playability census as a standing duty, with failing contracts filed as `F-PLAY-<epoch>-<n>` and **never fixed in the same fire**.
+**Owner directive, 2026-09-15**, via `tasks/BACKLOG.md` (commit `a1f03d834`): *"how do we go from epoch1 to all epochs? … lets do 1. and 2."* — establishing the whole-board playability census as a standing duty, with failing contracts filed as `F-PLAY-<epoch>-<n>` and **never fixed in the same fire**.
 
-**The census row being cured, from `docs/bench/playability-census-2026-09-15.md` (attended, main `585719e1d`, 27.9 min, both projects):**
+**The census row being cured, from `docs/bench/playability-census-2026-09-15.md` (attended, main `b957a966a`, 27.9 min, both projects):**
 > `e1-drill-yard | 1 | ✗ | ✗ | reached wave 0 after 374 s sim (runState `playing`, HUD wave "0"): the Drill Yard has no waves to reach — a by-design exemption the smoke does not declare (F-PLAY-E1-1)`
 
 and its own reading: *"The Drill Yard row is a census defect, not a map defect."* The BACKLOG row scopes it: *"the smoke needs a declared per-contract exemption (corrective on `e2e/playability-smoke.spec.ts`, fire-authorable, no map change)."*

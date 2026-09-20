@@ -2,7 +2,7 @@
 
 - **Slice:** F-1170-1 — give `test:power-budget` an in-process reference loop so a descheduled process reports DEGRADED instead of a false PowerGraph regression.
 - **Branch / tip:** `lane/e2-arsenal` @ `18e132f8`
-- **Base:** main @ `4d564bf5`
+- **Base:** main @ `46d4457e`
 - **Authored + drained:** s1170, 2026-07-28 (authored 14:38, picked up 14:37:26, reported 14:41)
 - **§3.0 `drain-block-check`:** **CLEAR** — `[factory-power-budget-instrument-control] status="queued"`, run as the first command.
 

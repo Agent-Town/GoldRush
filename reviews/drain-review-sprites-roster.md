@@ -1,8 +1,8 @@
 # drain-review-sprites-roster — Astra's sprite roster branch, gated on a merged tree
 
 **Slice**: `sol/code-review-20260908` (one commit `92f6cc115`, Astra's sprite roster + factory review, committed for retention 2026-09-12 by the attended session from an uncommitted worktree, never gated).
-**Branch under review**: `drain/sprites-roster` in the scratch worktree `wt-sprites`; merge commit **`53ce2260c`** (`git merge --no-ff`, rc=0, 35 s, **zero conflicts**), first parent `27227acdc` (main at cut), merge base `d41ab98ce` (2026-09-08 06:33).
-**Control**: detached worktree `wt-sprites-control` at **`27227acdc`** — main exactly as this branch saw it, so the only difference between the two trees is Astra's content.
+**Branch under review**: `drain/sprites-roster` in the scratch worktree `wt-sprites`; merge commit **`53ce2260c`** (`git merge --no-ff`, rc=0, 35 s, **zero conflicts**), first parent `403c996cd` (main at cut), merge base `d41ab98ce (archive: pruned by the A3 rewrite)` (2026-09-08 06:33).
+**Control**: detached worktree `wt-sprites-control` at **`403c996cd`** — main exactly as this branch saw it, so the only difference between the two trees is Astra's content.
 **Reviewer**: Claude Opus 5, native, 2026-09-12. Every number below comes from a command run on one of those two trees; transcripts in `artifacts/drain-review-sprites-roster/transcripts/`.
 **Finalised attended** (Fable 5.1, 2026-09-12) after the owner asked for a lean review and the reviewer was stopped: §4 was filled from its transcripts; every other number is the reviewer's; the verdict is unchanged.
 **Owner ruling 2026-09-13, verbatim: "A19 - that is ok"** → option (b) of §5 F-SPRDR-2. Follow-on masters: `tasks/sprites-split-land.md` (stage 1) and `tasks/town-cast-walk8-hard-alpha-recut.md` (stage 2).
@@ -29,7 +29,7 @@ Splitting is cheap because the pieces are already separable: the tooling, the sc
 
 | class | paths | detail |
 | --- | ---: | --- |
-| **MAIN-MOVED ∩ LANE-TOUCHED** | **1** | `assets/LEDGER.md` only. Main edited line 403; Astra appended 326 lines after line 408. Auto-merged as a clean union: `git diff 27227acdc HEAD -- assets/LEDGER.md` is **+326 / -0**, so main's edit survives intact. |
+| **MAIN-MOVED ∩ LANE-TOUCHED** | **1** | `assets/LEDGER.md` only. Main edited line 403; Astra appended 326 lines after line 408. Auto-merged as a clean union: `git diff 403c996cd HEAD -- assets/LEDGER.md` is **+326 / -0**, so main's edit survives intact. |
 | LANE-TOUCHED, evidence | 43,732 | `artifacts/sol/**` (24.58 GB, 43,778 files) |
 | LANE-TOUCHED, shipped art | 2,515 | `assets/processed` 2,055 (1,292 M + 763 A; 1,273 modified PNGs + 682 added PNGs), `assets/processed-full` 460 modified PNGs |
 | LANE-TOUCHED, sources | 100 | `assets/raw` (83 A + 17 M) |
@@ -38,7 +38,7 @@ Splitting is cheap because the pieces are already separable: the tooling, the sc
 | LANE-TOUCHED, scripts | 43 | 24 modified + 19 new `*.test.mjs` + 8 new `review-*.mjs`, **plus `scripts/fire.md` and `scripts/law-pointer-baseline.json`** (out of scope; see F-SPRDR-5) |
 | LANE-TOUCHED, tracked evidence overwritten | 58 | `artifacts/{058,e3-crawler-boss,e4-landyacht-boss,eight-winds-hero,fevered-tell,hero-poses,lane-roster-wiring-e7-01,run-gait-stride,run-scene-animation-refresh,wire-crawler-3d}`, `reviews/shots-{town-cast,elder-walk8-regeneration}` — screenshots and perf tables from PAST drains, overwritten by Astra's runs (F-SPRDR-8) |
 | LANE-TOUCHED, prose | 5 | four `reviews/sol-findings-*.md`, one `tasks/PROPOSED-*.md` |
-| **`src/`, `e2e/`, `functions/`, `package.json`** | **0** | verified: `git diff --name-only 27227acdc HEAD -- src/ e2e/ functions/ package.json` is empty |
+| **`src/`, `e2e/`, `functions/`, `package.json`** | **0** | verified: `git diff --name-only 403c996cd HEAD -- src/ e2e/ functions/ package.json` is empty |
 
 ## 2. Gate table (merged tree + the three review fixes of §5)
 
@@ -102,7 +102,7 @@ Largest movers (dist bytes per declared family):
 | 2 | `engine-era-guard.test.mjs:65 the landed registry names the live engine` | `engine hash e0fcfefb… is absent from era 5` | same cause as #1 |
 | 3 | `fixture-teardown.test.mjs:24 all 139 fixture owners remove their temp directories` | its **child** `bench-seeds.test.mjs` failed for reason #1 | **KNOCK-ON of #1**, not a separate defect |
 | 4 | `gate-caller-audit.test.mjs:937 POSITIVE CONTROL` | **`FAIL — 24 gate(s) with no caller and no recorded reason`**: all 19 new `scripts/*.test.mjs` plus 5 copies of test files buried in `artifacts/sol/**` | **REGRESSION** (F-SPRDR-6) |
-| 5 | `goal-tracker.test.mjs:61 goal tree schema is valid` | `'b89f70c70'` does not match `/^[0-9a-f]{40}$/` in `tasks/goals.json` | **PRE-EXISTING** — control fails identically (main's own goal leaf carries a 9-char sha) |
+| 5 | `goal-tracker.test.mjs:61 goal tree schema is valid` | `'b89f70c70 (archive: pruned by the A3 rewrite)'` does not match `/^[0-9a-f]{40}$/` in `tasks/goals.json` | **PRE-EXISTING** — control fails identically (main's own goal leaf carries a 9-char sha) |
 | 6 | `law-pointer-guard.test.mjs:135 THE REAL TREE` | 2 POINTER DRIFTs from `scripts/fire.md` | **REGRESSION**, cured by fix 2 (F-SPRDR-5) |
 | 7 | `node-guards-contention.test.mjs:124 contention is advisory…` | `node-guards board did not stay quiet for 300ms`; the run's own banner reads **`CONTENDED — 2 concurrent batteries`** | **ENVIRONMENT** — a sibling drain review was running its battery on this host at the same time |
 
@@ -151,7 +151,7 @@ Four independent instruments, all measured:
 Twelve new replacement families (`char-hero-sheet-work8-{south-clean-v7,west-recovered-v1,north-clean-v1,east-clean-v1}`, `char-hero-sheet-attack8-r2-east-clean-v1`, `char-baron-{ne,w}-clean-v2`, `char-baron-walk4-diagonal-v2`, `char-{coalthief,railtough,steamwrecker}-north4-v2`, `char-thief-se-finish-v2`) plus the eight `char-thief-se-f*` frames have **zero references in `src/`** — 95 source cells, 16,079,100 B on disk. Because `vite.config.ts` globs `assets/processed/char-*.png` with era filters rather than importing each sheet, **40 of those cells (8,143,588 B) are nonetheless emitted into the release `dist/`**. They are outside the first town's gated groups so they do not move the budget, but they are bundle weight for art nothing renders — the same missing-src-half symptom, and the reason this material should travel with its wiring slice rather than ahead of it.
 
 ### F-SPRDR-5 — the branch edits the fires' law file, and the edit is wrong here (fixed here, 2 files)
-`scripts/fire.md` is out of a sprite roster's scope by any reading, and its two re-pointed citations are provably stale against this tree (F-SPRDR-4.3), so `scripts/law-pointer-guard.test.mjs` goes red — a law that manufactures a false accusation. **FIX APPLIED (fix 2): `git checkout 27227acdc -- scripts/fire.md scripts/law-pointer-baseline.json`.** The guard then passes 22/0. Reverse with one word if the src half ever lands and the coordinates become true.
+`scripts/fire.md` is out of a sprite roster's scope by any reading, and its two re-pointed citations are provably stale against this tree (F-SPRDR-4.3), so `scripts/law-pointer-guard.test.mjs` goes red — a law that manufactures a false accusation. **FIX APPLIED (fix 2): `git checkout 403c996cd -- scripts/fire.md scripts/law-pointer-baseline.json`.** The guard then passes 22/0. Reverse with one word if the src half ever lands and the coordinates become true.
 
 ### F-SPRDR-6 — nineteen new guards, and nothing calls any of them (BLOCKING for the tooling)
 `gate-caller-audit.test.mjs`: **`FAIL — 24 gate(s) with no caller and no recorded reason`**. Nineteen are the new `scripts/*.test.mjs` files (`anim-pass-gen`, `anim-pass-graft`, `anim-pass-grid`, `anim-pass-montage`, `deshadow-key`, `despill-cutout`, `dispose-skeleton`, `grid-centres`, `grid-origin`, `master-repair-check`, `review-account-creation`, `review-mixed-hashes`, `review-party-retention`, `review-save-names`, `review-terminal-views`, `review-wrecked-turrets`, `rgba-resample`, `sprite-clip-fallback`, `town-patrol-monument`). Five more are **copies of test files inside `artifacts/sol/**` evidence trees**, which the audit reads as real gates. The repo's own message on this is the right one: *"A gate nothing calls is an unread verdict"*. Cure: root them in `test:node-guards` (or `run-guards.mjs`), and keep test-shaped files out of evidence directories.
@@ -176,7 +176,7 @@ Astra appended 326 lines of `###` prose sections below the numbered table, which
 | # | file | change | guard that names it |
 | --- | --- | --- | --- |
 | 1 | `assets/first-town-payload.json:59` | removed `"townsfolk-newsie-e1.png"` (1 line) | `scripts/first-town-payload.mjs` (rc 1 → 0) |
-| 2 | `scripts/fire.md`, `scripts/law-pointer-baseline.json` | reverted to `27227acdc` (2 citations, 16 baseline leaves) | `scripts/law-pointer-guard.test.mjs` (RED → 22/0) |
+| 2 | `scripts/fire.md`, `scripts/law-pointer-baseline.json` | reverted to `403c996cd` (2 citations, 16 baseline leaves) | `scripts/law-pointer-guard.test.mjs` (RED → 22/0) |
 | 3 | `scripts/halo-reextraction-check.mjs:95` | denominator 1400 → 2082 with the measured cause written in (10 lines of comment + 1 of code) | `scripts/halo-reextraction-check.mjs` itself |
 
 **Fix 4 is OWED, not applied**: the merged tree's engine hash `e0fcfefbe14535dd6637966f0d940607024b7919783cce4abac3c09fc38abd1d` needs one appended era-5 pin with its cause. The firewall allows a measured pin "only if LAND"; this verdict is SPLIT, so the pin belongs to whoever lands whichever half. Note also that the merge brings **108 pins Astra minted for its own trees** (85 → 193) and grows `assets/engine-era.json` from 46,852 B to 83,085 B — and that file is bundled into the release JS, so those causes ship.

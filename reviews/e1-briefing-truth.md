@@ -2,7 +2,7 @@
 
 - **Slice:** `tasks/e1-briefing-truth-unmasked.md` (authored s1068, queued s1070)
 - **Branch/tip:** `lane/m3` @ `bd1b0044` — `runner(lane-a): e1-briefing-truth-unmasked.md`, 2026-07-26 09:23:11 +0700
-- **Merge-base:** `ab7cba012f53659c21c814260ac971d791fa4a83`
+- **Merge-base:** `2c5ad61fa7fdf200e512d8c5950dfbd597924d9b`
 - **Drained by:** s1071 fire
 - **Verdict:** ✅ **MERGE** — both defects are TEST-HARNESS artifacts, engine correct. The master's central demand (decide engine-vs-assertion with a quoted line *before* touching either) is satisfied, and I re-derived the decision from source rather than accepting the runner's conclusion.
 
@@ -41,7 +41,7 @@ Third hunk is bookkeeping: `ARTIFACT_DIR` moves from `artifacts/contract-briefin
 
 ## Merge classification
 
-Both sides had moved the file since the merge-base (main via s1068's `12bc9099` graft; the lane via `bd1b0044`), so a blind copy was not safe. Measured instead: **`git diff main lane/m3 -- e2e/contract-briefings.spec.ts` returned exactly the three `bd1b0044` hunks and nothing else** — main and lane agree on every other byte of the file, so no 3-way was required. Applied the three hunks path-scoped by hand, then proved the result byte-identical to the lane's version. The lane's other ~631 differing files are stale-base drift (base is 11.5 h behind, F-1067-3) and were **not** touched.
+Both sides had moved the file since the merge-base (main via s1068's `79de56f4` graft; the lane via `bd1b0044`), so a blind copy was not safe. Measured instead: **`git diff main lane/m3 -- e2e/contract-briefings.spec.ts` returned exactly the three `bd1b0044` hunks and nothing else** — main and lane agree on every other byte of the file, so no 3-way was required. Applied the three hunks path-scoped by hand, then proved the result byte-identical to the lane's version. The lane's other ~631 differing files are stale-base drift (base is 11.5 h behind, F-1067-3) and were **not** touched.
 
 ## Findings
 
@@ -50,6 +50,6 @@ Both sides had moved the file since the merge-base (main via s1068's `12bc9099` 
 
 ## Duties
 
-- **Gazette:** none owed — zero player-visible bytes. The change is a test fixture; the card copy a stranger reads shipped earlier at `12bc9099`.
+- **Gazette:** none owed — zero player-visible bytes. The change is a test fixture; the card copy a stranger reads shipped earlier at `79de56f4`.
 - **Deploy:** none — zero gameplay bytes, and deploy remains owner-gated on F-1051-3 option (2).
 - **`goals.json`:** leaf `rf-11-e1-briefing-truth` flipped `building` → `merged` with the full 40-char hash, in the drain commit.

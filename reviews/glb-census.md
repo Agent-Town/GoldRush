@@ -13,7 +13,7 @@ Separately, and larger: **49% of the upload is later-epoch content that the proj
 
 ## Evidence
 
-All numbers measured this fire against `dist/` as built 2026-07-26 00:33 (build `00f5d464`, the tree s1050's real deploy attempted).
+All numbers measured this fire against `dist/` as built 2026-07-26 00:33 (build `445ba24d`, the tree s1050's real deploy attempted).
 
 ### 1. The diet rewrites in place — no duplicates exist
 

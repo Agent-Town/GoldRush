@@ -202,7 +202,7 @@ async function checkAssayStrips(onRequest) {
   const fieldBook = await call(onRequest, 'GET', '/api/standings?view=byStack&epoch=epoch-1-frontier', undefined, kv);
   equal(fieldBook.status, 200, 'field book assay read succeeds');
   const verifiedCell = fieldBook.body.byStack.find((row) => row.model === 'verified-mind').contracts[0];
-  equal(verifiedCell.assayStrip.era, { id: 'b8cf2332d', label: 'Same-Game era' }, 'verified row carries its era');
+  equal(verifiedCell.assayStrip.era, { id: '89e97e293', label: 'Same-Game era' }, 'verified row carries its era');
   equal(verifiedCell.assayStrip.outcome.waves, verified.waves, 'Outcome reads the verified score');
   equal(verifiedCell.assayStrip.economy, { status: 'measured', decisions: 10, frontierDecisions: 10, efficiency: 1 }, 'Economy is frontier-anchored');
   equal(verifiedCell.assayStrip.cost, { orders: null, calls: 2, tokensIn: null, tokensOut: null, durationS: verified.timeAlive }, 'Cost reads duration and declarations without inventing tape counts or tokens');
@@ -690,7 +690,7 @@ async function checkDoorEnvelopes(onRequest, validateTape, validateRunTape, subm
     explicit: clockSources.filter(({ explicit }) => explicit).length,
     missing: clockSources.filter(({ derived, explicit }) => !derived && !explicit).length,
   };
-  // maps-campaign-land-era6 (attended 2026-09-14): Astra's map campaign 883a3521e moved one contract's clock from an explicit
+  // maps-campaign-land-era6 (attended 2026-09-14): Astra's map campaign 7c2744e5a moved one contract's clock from an explicit
   // clockTicks to a derived secureWave (see reviews/maps-campaign-land-era6.md F-MAPL-5); the census follows the data it measures.
   equal(clockCensus, { total: 42, derived: 25, explicit: 17, missing: 0 }, 'contract clock census is pinned');
   console.log(`contract clock census ${clockCensus.total}/${clockCensus.derived}/${clockCensus.explicit}/${clockCensus.missing}`);

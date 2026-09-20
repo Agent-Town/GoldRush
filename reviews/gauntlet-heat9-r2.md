@@ -1,6 +1,6 @@
 # gauntlet-heat9-r2 — the de-conflation field, re-run
 
-**Slice:** `gauntlet-heat9-r2` · **branch:** `lane/b` · **tip:** `ada738857` · **merge:** `4e0328e56`
+**Slice:** `gauntlet-heat9-r2` · **branch:** `lane/b` · **tip:** `ada738857 (archive: pruned by the A3 rewrite)` · **merge:** `4e0328e56 (archive: pruned by the A3 rewrite)`
 **Drained:** s2430, 2026-09-01 · **Master:** `tasks/done/20260901-152657-gauntlet-heat9-r2.md`
 
 ## Verdict
@@ -15,7 +15,7 @@ BACKLOG or e2e paths touched — verified mechanically, not taken on the self-ch
 Heat 9 originally **stopped correctly** at its early skew probe: production minted tapes at engine
 pin `417ac150…` while era 5's registry recorded only its declaration pin, so the door answered
 `400 reel_not_current` and the whole field DNF'd without an attempt. That premise was cured
-attended at `c13b4c24` (both owed era-5 pins appended with causes, era **unchanged**).
+attended at `ec71f923` (both owed era-5 pins appended with causes, era **unchanged**).
 
 This re-run confirms the cure **by riding**: the early probe verified instead of stopping, and both
 executable families completed the four-map field separately for the first time.
@@ -47,7 +47,7 @@ both** — that is the durable output of this heat.
 
 **The engine envelope is byte-identical across all three** `watch-reel.json` `reel.meta` blocks and
 matches the note exactly:
-`{"buildId":"c13b4c24d","engineHash":"25040ad58451125adfa7d1d6c19c70f40ce17cd8cc6d377134e0a545922ca2ca","era":5}`
+`{"buildId":"ec71f9234","engineHash":"25040ad58451125adfa7d1d6c19c70f40ce17cd8cc6d377134e0a545922ca2ca","era":5}`
 
 ### Field results (both rigs, verbatim from the matrices)
 
@@ -68,7 +68,7 @@ The engine-pin desk item reads *"Nothing rideable can score until this is ruled"
 realised cost *"the whole heat-9 field — PI and Prime Agent, the two rigs you asked for by name,
 both DNF'd without an attempt."* **Both rigs have now ridden and both hold verified era-5 rows on
 the live board.** s2424 and s2429 both flagged that text as stale on the strength of the attended
-`c13b4c24` commit; this slice supplies the positive evidence that the cure *works in production*,
+`ec71f923` commit; this slice supplies the positive evidence that the cure *works in production*,
 not merely that it landed. **NON-BLOCKING and the desk item is deliberately NOT retired here** —
 question (ii), whether `package.json` belongs in `ENGINE_SOURCE_INPUTS` at all, is untouched by
 this run and remains a genuine owner fork. Retiring another fire's desk item on my own reading is
@@ -83,7 +83,7 @@ gameplay result. Counting it as an attempt would have understated both rigs. **N
 
 ## Merge classification
 
-Base `main` at `40cd0b671`; lane tip `ada738857`, a single runner commit. Every one of the 81 paths
+Base `main` at `89ce6e60e`; lane tip `ada738857 (archive: pruned by the A3 rewrite)`, a single runner commit. Every one of the 81 paths
 is **LANE-TOUCHED and new**; there are **no MAIN-MOVED paths**, so no three-way graft was required
 and no conflict was possible. Merged `--no-ff` and committed as one act (F-1589-5 — never leave a
 merge staged on main).

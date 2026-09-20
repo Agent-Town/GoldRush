@@ -3,7 +3,7 @@ CODEX: model=gpt-5.6-sol effort=xhigh
 ROLE: lane implementer. WORKDIR: this lane worktree. One task, firewalled.
 **FIRE-AUTHORED (attended review welcome)** — authored s1219 from the s1218 rate table, which is the first time this defect has had a measured rate to be cured against.
 
-WHY: four fires (s1214→s1217) argued about this class from single samples; s1216 authored an instrument, s1218 merged it (`987df988`, `reviews/concurrency-class-failure-rate.md`), and the table it produced (`logs/session-scratch/s1216-concurrency-rates/rates.md`) settled the argument. **Two of the four suspects are not flakes at all** — `locked-win:65` and `tl-01:236` fail **100% at every worker count, both projects** (deterministic reds; do not touch them here). **The concurrency class has exactly ONE measured member**, and this task cures it.
+WHY: four fires (s1214→s1217) argued about this class from single samples; s1216 authored an instrument, s1218 merged it (`d71f6ea8`, `reviews/concurrency-class-failure-rate.md`), and the table it produced (`logs/session-scratch/s1216-concurrency-rates/rates.md`) settled the argument. **Two of the four suspects are not flakes at all** — `locked-win:65` and `tl-01:236` fail **100% at every worker count, both projects** (deterministic reds; do not touch them here). **The concurrency class has exactly ONE measured member**, and this task cures it.
 
 **THE SUBJECT, AND ITS MEASURED RATE (quote, do not re-derive from memory):**
 `e2e/ap-standing-orders.spec.ts:80` (the `seeded standing orders obey priority, gates, legal actions, surprises, and the live rung` test), failing at **line 121**:

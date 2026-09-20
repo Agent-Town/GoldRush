@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 
-const MERGE = '790a66f579c64944ad12dedc6a8ef011c4ca7f0d';
-const SHORT = '790a66f5';
+const MERGE = '122db2c060e7e079164facca18c159510299fdac';
+const SHORT = '122db2c0';
 
 // ---- 1. goal leaf -> merged ----
 const gp = 'tasks/goals.json';

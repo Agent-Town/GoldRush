@@ -12,7 +12,7 @@
 | `node --test scripts/deploy-budget.test.mjs` | 15/15 (attended re-run, node 26) |
 | `bash scripts/test-deploy-contract.sh` | PASS, 14 cases + the default schedule (attended re-run) |
 | `bash -n scripts/deploy.sh` / `npx tsc --noEmit` | ok / rc 0 |
-| Runner's real `bash scripts/deploy.sh --dry-run` on build `46e76d60` | exit 0; budget PASS: desktop 15,388,541 / mobile 16,980,887 of 25,000,000 bytes; top five URLs: the E1 loop mp3 1.80 MB, the title theme 1.20 MB, the Claim terrain 0.97 MB, the town plate 0.88 MB, the Claim panorama 0.52 MB; device verdict WARN (no verdict file) |
+| Runner's real `bash scripts/deploy.sh --dry-run` on build `93d4c6d4` | exit 0; budget PASS: desktop 15,388,541 / mobile 16,980,887 of 25,000,000 bytes; top five URLs: the E1 loop mp3 1.80 MB, the title theme 1.20 MB, the Claim terrain 0.97 MB, the town plate 0.88 MB, the Claim panorama 0.52 MB; device verdict WARN (no verdict file) |
 | Attended `--dry-run` at 12:3x | rc 5, `Budget: FAIL (probe rc=1; measured projects=0)` — the probe's preview port **5189** was held by the lane-c Lantern implementer's vite (`worktrees/lane-c`, 34 min); the fail-closed path worked exactly as designed, on an environmental cause → F-DEPLOY-1 |
 | `e2e/asset-diet.spec.ts` on the dev-server drain port | 10 skipped (the suite self-skips off the preview harness; the probe above is its real run) |
 

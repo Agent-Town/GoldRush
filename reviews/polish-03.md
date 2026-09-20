@@ -24,7 +24,7 @@
 **F-p03-vp02b (non-blocking, PROVEN pre-existing):** `vp-02b-rotation-resolver.spec.ts:149 "idle snaps to rotation idle hemispheres after movement"` fails desktop+mobile (2/10). **Proven not-ours by baseline**: ran vp-02b on current main BEFORE applying polish-03 → identical 2/10 failure (8 passed). polish-03 touches only styles/theme/BuildButton/ProspectorPanel — zero rotation-resolver/OrientationResolver code. This is a standing rotation-idle red for a future lane-d/vp corrective, not a polish-03 regression.
 
 ## Merge classification
-- **Base** = `704b9f0` (s200 refill, lane/polish reset point).
+- **Base** = `1e53b2b` (s200 refill, lane/polish reset point).
 - `git diff 704b9f0..main` over all 5 polish-03 files = **empty** → LANE-TOUCHED-only, zero MAIN-MOVED (town-T5 = town/*, perf-03 = vfx/pools — neither touched src/ui or styles). Clean `git checkout 0b55d3c -- …`, no 3-way.
 
 ## Firewall

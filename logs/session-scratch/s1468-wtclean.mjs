@@ -19,7 +19,7 @@ for (const wt of ['gate-s1455', 'gate-s1468']) {
   if (dirt.length) { console.log('  REFUSING — tracked dirt:', dirt.slice(0, 5)); continue; }
   if (unique) {
     console.log('  unique commits present:', unique.slice(0, 300));
-    // gate-s1468 holds my cherry-pick, whose content is already on main as 8e3c1491
+    // gate-s1468 holds my cherry-pick, whose content is already on main as c42d653a
     const eq = git(['diff', '--stat', `main..${head.out}`], wt).out;
     if (eq) { console.log('  REFUSING — content differs from main:', eq.slice(0, 300)); continue; }
     console.log('  content identical to main (diff empty) — safe to remove');

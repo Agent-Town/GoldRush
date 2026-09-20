@@ -2,12 +2,12 @@
 
 Micro-headlines from yesterday's ACTUAL merges (verified via `git log main`, not messages). Owner approves the whole digest in one action; publication owner-only.
 
-- The Editor opens its first floor — a descriptor inspector for the town's own hands. `d3dc15f` (ed-01)
-- Night trio drains clean: editor, stream runner, and the plaza newsboy, 11/11 green. `33dde6a5`
-- The Claim Herald comes to the plaza — a newsboy calls the day's headline. `bf8579d2` / `33dde6a5` (gz-h1)
-- Your ledger rides with you — claims file on exit, the desk greets you by name. `cefae8a7` (080b save surfaces)
-- Hygiene pass across the town's menus: focus traps, board launch focus, honored legacy keys. `ce1c8391` (078)
-- Perf sweep for the long haul — night palette hoisted, boss bars trimmed, walk8 atlases shared, projectile heights cached, enemy dark synced. `a1f62e06`
-- A new hand joins the Gazette — Mei the newsie, turnaround + walk8 sprites produced (unwired). `f69956ac` / `b60b8f78`
-- The reel is complete — nine segments, the E1 creek to the deep sky, the Departure and the Ark. `bc17cc92`
-- The town's E1 facades set their fronts (6 plates, retro-gated). `f8db26b3` (art-ts-02)
+- The Editor opens its first floor — a descriptor inspector for the town's own hands. `a6f4c4e` (ed-01)
+- Night trio drains clean: editor, stream runner, and the plaza newsboy, 11/11 green. `2e6ef0e3`
+- The Claim Herald comes to the plaza — a newsboy calls the day's headline. `01ea2f13` / `2e6ef0e3` (gz-h1)
+- Your ledger rides with you — claims file on exit, the desk greets you by name. `cab51581` (080b save surfaces)
+- Hygiene pass across the town's menus: focus traps, board launch focus, honored legacy keys. `65a16f58` (078)
+- Perf sweep for the long haul — night palette hoisted, boss bars trimmed, walk8 atlases shared, projectile heights cached, enemy dark synced. `7a7b6897`
+- A new hand joins the Gazette — Mei the newsie, turnaround + walk8 sprites produced (unwired). `9abb078d` / `2541ab0e`
+- The reel is complete — nine segments, the E1 creek to the deep sky, the Departure and the Ark. `bc17cc92 (archive: pruned by the A3 rewrite)`
+- The town's E1 facades set their fronts (6 plates, retro-gated). `38135c53` (art-ts-02)

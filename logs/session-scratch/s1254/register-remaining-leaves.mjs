@@ -20,7 +20,7 @@ const leaves = [
     taskFile: 'lane-mandatory-welcome.md',
     status: 'building',
     lane: 'lane-c',
-    authoredBy: 'owner (0db0e675 2026-07-30) — "owner: ongoing herald illustration begins + mandatory welcome ruled + practice claim specced"',
+    authoredBy: 'owner (5ffd80f7 2026-07-30) — "owner: ongoing herald illustration begins + mandatory welcome ruled + practice claim specced"',
     spec: 'specs/greenhorn-gazette/README.md §THE MANDATORY WELCOME (owner ruling 2026-07-30, verbatim therein)',
     registeredBy:
       's1254 fire — F-1254-1 repair. The master shipped with no leaf, so drain-block-check answered "? UNKNOWN", which is a bookkeeping finding and NOT a clearance.',
@@ -34,10 +34,10 @@ const leaves = [
     taskFile: 'art-herald-class-engravings.md',
     status: 'building',
     lane: 'art',
-    authoredBy: 'owner (0db0e675 2026-07-30) — "ongoing herald illustration begins"',
+    authoredBy: 'owner (5ffd80f7 2026-07-30) — "ongoing herald illustration begins"',
     registeredBy: 's1254 fire — F-1254-1 repair (same gap as gg-04 above).',
     note_s1254:
-      'AWAITING THE DRAIN CEREMONY, NOT THE BYTES. The 8 raws are ALREADY ON MAIN: the art runner committed them itself in 9f8d11c9 with a repo-root broad add (F-1253-3), which also swallowed the whole of the s1253 fire into that commit — so the art batch\'s drain diff is CONTAMINATED with a guard slice and must be classified per-file, never by the commit. Still owed: extract-alpha, contract wiring, in-game review, LEDGER entry, reviews/ file. Any fire touching this slot also owes `node scripts/art-staging-audit.mjs` and must report BOTH its AT RISK and LOCAL-ONLY counts (fire.md §2E ART-SLOT LAW).',
+      'AWAITING THE DRAIN CEREMONY, NOT THE BYTES. The 8 raws are ALREADY ON MAIN: the art runner committed them itself in b00194fa with a repo-root broad add (F-1253-3), which also swallowed the whole of the s1253 fire into that commit — so the art batch\'s drain diff is CONTAMINATED with a guard slice and must be classified per-file, never by the commit. Still owed: extract-alpha, contract wiring, in-game review, LEDGER entry, reviews/ file. Any fire touching this slot also owes `node scripts/art-staging-audit.mjs` and must report BOTH its AT RISK and LOCAL-ONLY counts (fire.md §2E ART-SLOT LAW).',
   },
 ];
 

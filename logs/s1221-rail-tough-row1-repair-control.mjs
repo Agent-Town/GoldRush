@@ -1,6 +1,6 @@
 // s1221 CONTROL — s1190 verbatim through its `results` object, with TWO changes and no others:
 //   (1) the diagonal sheet path is an argv parameter, so the same instrument can read the
-//       pre-batch sheet (`git show f61843c0^:...`) and today's repaired sheet;
+//       pre-batch sheet (`git show 305af1f4^:...`) and today's repaired sheet;
 //   (2) s1190's five assertions and its artifact writes are truncated away, because the
 //       question here is what the numbers ARE, not whether they still match s1190's pins.
 // Everything above the results object -- keying, body centroid, IoU, masking, landmarks --

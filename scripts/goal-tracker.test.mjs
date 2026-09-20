@@ -102,16 +102,16 @@ test('goal tree schema is valid', () => {
 
 test('ten sampled merged leaves have a done receipt and ancestral merge', () => {
   const samples = new Map([
-    ['e1-engine', '7af56d62392e5f9976075039d0b0a8d88eca7ca9'],
-    ['e1-contracts', '22af8fd9a3320145496dfbe8859f256b75e7972b'],
-    ['e1-boss', '0bb7c071460fbb82ff6105733328b982729d2ccc'],
-    ['e1-art', '3c749607d0e6e5668ee3232e62e875b8af9fac50'],
-    ['e1-town', '7eb62f41757f7034d46db26958e21eb2553ec2d6'],
-    ['e1-maps', 'e84997d689e214bf66f1c32e95442e0b924c62a4'],
-    ['e2-engine', '08b336fadb9faa0cc5d0e779814ff5321b042197'],
-    ['e2-contracts', 'a21821ada94448b6fe1a66047c1dfc46c502f92f'],
-    ['e2-town', '08b336fadb9faa0cc5d0e779814ff5321b042197'],
-    ['e2-maps', 'fcfdcd76304b69d85ab8c09e84cc140c1ca4e738'],
+    ['e1-engine', '8d35a1486c16cbc43c5daef3071c6ac157ae59b4'],
+    ['e1-contracts', 'c4331b6a3c3960a50180601cee184a9217ec02ba'],
+    ['e1-boss', '66ec59eb850189da609264a043b2515e70ecefbb'],
+    ['e1-art', '9f6ec59d412028bae9f983a1e63cfc9d15e1b39c'],
+    ['e1-town', '1916ea4c45475c36a8efdb11d4fc38ff5f9a7755'],
+    ['e1-maps', 'cfce932ca2e248b65a2aa6b2066d535de8847025'],
+    ['e2-engine', '6d8655f8cb8f68c3ade422bb7c0d65018758a494'],
+    ['e2-contracts', 'aa8192c0ed79b6d38d61c3083b278c059d86e751'],
+    ['e2-town', '6d8655f8cb8f68c3ade422bb7c0d65018758a494'],
+    ['e2-maps', '2bafb62096611c62a3058f64b0f419f3d96fd88b'],
   ]);
   const doneFiles = fs.readdirSync(path.join(root, 'tasks/done'));
 

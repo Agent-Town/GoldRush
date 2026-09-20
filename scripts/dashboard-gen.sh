@@ -171,7 +171,7 @@ DONE_TAIL=$(printf '%s' "$DONE_TAIL" | esc)
 # s1031 (F-1028-2): this block used to iterate tasks/runs/*.log — the very files lane-runner-v3.sh:117
 # prunes with "-mtime +3 -delete". The figure labelled ALL-TIME was therefore really "the last ~3 days
 # of logs that happened to survive pruning", and it would SHRINK over time. logs/task-stats.jsonl is the
-# durable, TRACKED ledger (upserted once per run since dc6c8196); it exists precisely to outlive that
+# durable, TRACKED ledger (upserted once per run since 70108e7d); it exists precisely to outlive that
 # prune, and it is what ALL-TIME has to mean. Same fields, same arithmetic — only the SOURCE moved.
 # A missing ledger says so loudly rather than quietly reporting a smaller number (F-1028-1's lesson:
 # a silently degraded figure is indistinguishable from a real one).

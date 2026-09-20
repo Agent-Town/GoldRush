@@ -1,7 +1,7 @@
 # agent-rung-conformance — drain review (s1281)
 
 **Slice:** `lane-c-agent-rung-conformance` · **branch:** `lane/e2-arsenal` · **tip:** `658dc86a`
-**Base:** `0db281e0` · **Merged onto:** `62dc6380` (clean main)
+**Base:** `adfa280a` · **Merged onto:** `45b2ed1a` (clean main)
 **Drained:** 2026-07-31, s1281 fire
 
 ## Verdict
@@ -66,7 +66,7 @@ assertion rather than passing vacuously.
 
 ## Merge classification
 
-Lane base `0db281e0`; lane 35 behind main at drain time, so the two-dot `main..lane` diff shows
+Lane base `adfa280a`; lane 35 behind main at drain time, so the two-dot `main..lane` diff shows
 ~50 phantom deletions (main's later additions). Those are **not** lane content. The lane's real
 content is its single ahead-commit `658dc86a`, 5 files.
 
@@ -133,7 +133,7 @@ pressure-sink assertion at :98 **passes**; the `auto_pan` in this spec is the *u
 (`src/game/Upgrades.ts:100`), an unrelated namespace from the consent ability, so the collision is
 cosmetic.
 
-**Fingerprinted, not assumed.** Control arm on clean main (`62dc6380`) in a detached worktree,
+**Fingerprinted, not assumed.** Control arm on clean main (`45b2ed1a`) in a detached worktree,
 same shell, same hour, `--workers=1`: **identical failure, identical line, both projects**
 (`logs/session-scratch/s1281/control-arm-clean-main.txt`, rc=1, 2 failed / 4 passed). The red is
 pre-existing.
@@ -143,7 +143,7 @@ on both projects from a 2026-07-28 capture. But that capture came from a lane wo
 workers, which §3.1 says is not evidence — this fire's control arm is the first `--workers=1`
 proof of it.
 
-The spec is unchanged since it landed (`90e7cc68`, 2026-07-12), so something *else* regressed it.
+The spec is unchanged since it landed (`562edc36`, 2026-07-12), so something *else* regressed it.
 The test teleports the player to a harvest seam and then places at fixed world coords `(0, 10)`;
 plausible causes are a build-range check against the moved player or a map/terrain change making
 that tile unplaceable — both speculative, and diagnosing it is outside this slice's firewall.

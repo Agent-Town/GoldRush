@@ -1,6 +1,6 @@
 # hero-move-verb: what the MOVE_HERO verb actually buys
 
-Measured 2026-09-06 on branch `feat/hero-move-verb`, base `502a398d9`, Node 26.4.0, no balance
+Measured 2026-09-06 on branch `feat/hero-move-verb`, base `22cf98cfe`, Node 26.4.0, no balance
 number changed. Every ride is `scripts/gr-sim.mjs` driven over stdin/stdout in the door's public
 vocabulary; no engine import, no private handle, no minted gold.
 
@@ -24,7 +24,7 @@ through `AgentTapeReplaySession` to `fnv1a32:335f880f`, which is the hash the ta
 twice (`kite-01.replay.json`, `replayIdempotent: true`).
 
 **Floors:** `node scripts/null-floor-anchors.mjs --check` on this tree reports exactly one
-difference, the `eraStamp` (`pinned="690a6bc40" derived="502a398d9"`). Every recorded floor is
+difference, the `eraStamp` (`pinned="44a7f506a" derived="22cf98cfe"`). Every recorded floor is
 byte-identical. The idle policy issues no orders, and `heroOrderIntents` returns the `IDLE_INTENTS`
 object itself when nothing is steering, so an idle run walks the object graph it walked before.
 

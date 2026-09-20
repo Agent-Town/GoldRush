@@ -1,6 +1,6 @@
 # E3 Dynamo Crawler — fidelity preflight
 
-Status: READ-ONLY PREFLIGHT, 2026-09-08. E3 implementation has not begun. Inspected checkout: `d41ab98ce`, with concurrent E1/E2 working changes left untouched. This document is the only file written for this subtask.
+Status: READ-ONLY PREFLIGHT, 2026-09-08. E3 implementation has not begun. Inspected checkout: `d41ab98ce (archive: pruned by the A3 rewrite)`, with concurrent E1/E2 working changes left untouched. This document is the only file written for this subtask.
 
 The target is the approved plate's recognizable electrical-machine silhouette: a tall segmented drain mast, substantial cylindrical dynamo with a framed teal window, two unequal exhaust stacks, and a bank of wound copper capacitors. Preserve the gameplay Crawler's tracked chassis and three component identities; improve those major forms before adding tiny engraved detail.
 

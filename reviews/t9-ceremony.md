@@ -2,7 +2,7 @@
 
 **Slice:** T9 — the Red Fields era door E9→E10 (THE GENERATION ARK), slice 4/5 of THE SAGA WALL (F-REH-01, P0 release-blocker).
 **Branch/tip:** `lane/e2-arsenal` (worktrees/lane-c), runner commit `401770d2` `runner(lane-c): lane-t9-ceremony.md`.
-**Base:** `82b74cdb` (the s-triage queue commit — an ancestor of main; main untouched T9's files since).
+**Base:** `602a2aa5` (the s-triage queue commit — an ancestor of main; main untouched T9's files since).
 **Drained onto main:** path-scoped graft of the 3 code/contract files (`src/ceremony/scripts.ts`, `e2e/ceremony-framework.spec.ts`, `assets/contracts/epoch-9-redfields/manifest.json`).
 
 ## Verdict
@@ -21,7 +21,7 @@ Adds the fourth saga-wall door: the E9 (Red Fields) → E10 ceremony, THE GENERA
 New T9 cases confirmed green both projects: `T9 THE GENERATION ARK: carrying the tree seed alone arms E10 and survives reload` (`ceremony-framework.spec.ts:702`). Precedent doors T3 (`:220`), T4 (`:306`), T5 (`:375`), T6 (`:436`), T7 (`:515`/`:529`), T8 (`:612`), the replay/derived-door invariant (`:782`), and the science-ceiling gate (`:805`) all remained green — no regression from the new script/manifest.
 
 ## Merge classification
-Base `82b74cdb` is an ancestor of main; `git diff --name-only 82b74cdb main -- <the 3 files>` = empty (main never touched T9's files since base). All LANE-TOUCHED → clean path-scoped graft, no 3-way needed. The runner's 6 `artifacts/ceremony-framework/*t9*.png` were left on the lane branch (test outputs, not merged to main); the 26/26 pass on the merged tree is the authoritative evidence.
+Base `602a2aa5` is an ancestor of main; `git diff --name-only 602a2aa5 main -- <the 3 files>` = empty (main never touched T9's files since base). All LANE-TOUCHED → clean path-scoped graft, no 3-way needed. The runner's 6 `artifacts/ceremony-framework/*t9*.png` were left on the lane branch (test outputs, not merged to main); the 26/26 pass on the merged tree is the authoritative evidence.
 
 | File | Class | Resolution |
 |---|---|---|

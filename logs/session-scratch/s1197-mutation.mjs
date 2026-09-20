@@ -11,7 +11,7 @@ const FIXTURE = path.join(REPO, 'logs/session-scratch/s1197-f1167-4-fixture.json
 const dir = fs.mkdtempSync(path.join(os.tmpdir(), 's1197-'));
 
 // ---------- (A) output-unchanged vs the PRE-FIX subject (main's blob before the merge) ----------
-const oldSource = execFileSync('git', ['show', 'd8f02e51:scripts/suite-red-inventory.mjs'], { cwd: REPO, encoding: 'utf8' });
+const oldSource = execFileSync('git', ['show', 'bfaabd1c:scripts/suite-red-inventory.mjs'], { cwd: REPO, encoding: 'utf8' });
 const oldPath = path.join(dir, 'old-subject.mjs');
 fs.writeFileSync(oldPath, oldSource);
 // NOTE: the old script must live at scripts/ depth for a fair comparison of the NEW one's ROOT logic;

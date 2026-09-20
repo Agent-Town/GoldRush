@@ -23,8 +23,8 @@ ABSENT before the Atomic epoch and PRESENT at epoch 6 (asserted by e6-arsenal + 
 | `_s106-prospector-boot-probe` (zero-console plain boot) | 2/2 — desktop + mobile-390 |
 
 ## Merge classification
-Base = merge-base `488d2e0b`. All 13 files: MAIN moved NONE of them since fork
-(`git diff 488d2e0b main -- <all 13>` EMPTY) → CLEAN ADDITIVE graft, no 3-way.
+Base = merge-base `a257270d`. All 13 files: MAIN moved NONE of them since fork
+(`git diff a257270d main -- <all 13>` EMPTY) → CLEAN ADDITIVE graft, no 3-way.
 `git checkout lane/perf -- <13 files>` reproduced the exact lane delta. Path-scoped commit.
 (Note: `e2e/e6-roster.spec.ts` was pre-staged in the main worktree from s753's partial drain —
 byte-identical to lane/perf; the checkout re-materialised it with its src, resolving the

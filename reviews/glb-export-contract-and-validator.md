@@ -1,6 +1,6 @@
 # Review: glb-export-contract-and-validator — every GLB keeps its contract, and a guard proves it (lane-a, Claude Opus 5 implementer, attended drain 2026-09-05)
 
-**Slice/branch/tip:** `glb-export-contract-and-validator` · `lane/a` · commit `b3972ad3d` (one path-scoped commit, 44 files) over base `25a3b25a7` · merge `3e32f3e09` (no-ff; BACKLOG union).
+**Slice/branch/tip:** `glb-export-contract-and-validator` · `lane/a` · commit `9f57ab0b6` (one path-scoped commit, 44 files) over base `dc74e3075` · merge `1e63b52ee` (no-ff; BACKLOG union).
 **Verdict:** MERGED. F-ASTRA-7 and F-ASTRA-8 cured: the export helper preserves each asset's contract through per-asset profiles, and a node guard validates all 412 production GLBs on every battery.
 
 ## What it does
@@ -8,7 +8,7 @@
 - `scripts/glb-contract-guard.mjs` (+ 20-test spec) parses every manifest GLB's JSON chunk: finite bounds, primitive/triangle counts against the pilot contracts (all 64 contracted assets agree with `Terrain3dClaimPilot.ts` exactly; all 32 terrains satisfy `bakeHeightGrid`'s lattice invariant), per-family texture caps (props 512², buildings 1024², terrain 2048²), material modes, required extras/anchors, external-resource policy. 69 violations grandfathered in `scripts/glb-contract-guard.baseline.json` (43 texture-over-cap, 26 missing-extra), 0 live; a stale baseline entry FAILS, so debt is paid by deleting lines. Added to the single `run-node-guards` list.
 - `docs/3d/PIPELINE.md`: the three reproducibility checks, the pinned Blender version, the profile fields, where each family's builder lives.
 
-## Evidence (merged tree `3e32f3e09` + era pin `3c38c993`)
+## Evidence (merged tree `1e63b52ee` + era pin `3c38c993`)
 | Gate | Result |
 |---|---|
 | `scripts/glb-contract-guard.test.mjs` | 20/20 (3.7 s) |

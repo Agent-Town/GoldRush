@@ -1,7 +1,7 @@
 # f1515-1-citation-scan-nondestructive — drain review (s1516)
 
 **Slice:** `lane-f1515-1-citation-scan-nondestructive` (F-1515-1 + F-1515-2, one task, same file)
-**Branch:** `lane/a` · **Tip:** `df8347545` · **Base:** `fb40b2584` (main at drain time)
+**Branch:** `lane/a` · **Tip:** `df8347545` · **Base:** `303b3c8f4` (main at drain time)
 **Gated in:** detached worktree `gate-s1516` (§3.0b custody — undecided content never entered main)
 
 ## VERDICT: **MERGED**
@@ -16,7 +16,7 @@ different tree. This is attempt 2; attempt 1 correctly STOPPED on an unsatisfiab
 `matchingQuote()` keeps the loose scanner as a compatibility source, then enumerates **every**
 same-kind opening/closing delimiter pair in the 400-char window **without consuming delimiters**,
 returning the first span that resolves through `matchesATitle()`. That is the actual cure for
-F-1515-1: the `790a66f5` union was a backstop that still lost to an odd count of same-kind quotes
+F-1515-1: the `122db2c0` union was a backstop that still lost to an odd count of same-kind quotes
 before the title, because both arms shared a greedy global `lastIndex` walk.
 
 `TITLE_DECL` is narrowed from `(?:\.\w+)*` — which harvested a title from **any** dotted helper — to
@@ -34,7 +34,7 @@ Both production paths still go through the one helper (`citation-title-guard.mjs
 | `npx tsc --noEmit` | **rc=0**, no output |
 | `npm run test:node-guards` | **rc=0 — 351 tests / 348 pass / 0 fail / 0 cancelled / 3 skipped** (206 s) |
 | `citation-title-guard.test.mjs` focused | 18 / 18 pass |
-| `--report` before (main `fb40b2584`) | `515 / 262 / 210 / 43` |
+| `--report` before (main `303b3c8f4`) | `515 / 262 / 210 / 43` |
 | `--report` after (merged) | `515 / 259 / 212 / 44` |
 | `npm run build` + browser | **NOT OWED** — no `src/**` or browser run surface in the diff. Stated, not silently skipped. |
 | [F-1460-1] sim-pin check | **CHECKED, not assumed** — diff touches no `src/sim`, `src/systems`, `src/entities` path |
@@ -45,8 +45,8 @@ sum to 515 (262+210+43 and 259+212+44).
 
 ⚠️ **I took my OWN baseline rather than reusing the runner's, because this fire authored two commits
 into `tasks/**` before the drain and F-1515-3 is precisely the hazard of a moved denominator.**
-Main at `fb40b2584` measured `515 / 262 / 210 / 43` — **identical** to the runner's baseline taken at
-`199e13c9e`. My commits added no *gated* citation because they cite `scripts/…` and
+Main at `303b3c8f4` measured `515 / 262 / 210 / 43` — **identical** to the runner's baseline taken at
+`a8ab8dfd2`. My commits added no *gated* citation because they cite `scripts/…` and
 `playwright.config.ts:50`, not `e2e/*.spec.ts:NN`. That is a verified non-event, not an assumption.
 
 ## The prediction that mattered, and how the runner discriminated it
@@ -83,8 +83,8 @@ defect arm would over-claim; it is 1 of the 3 added tests (351 − 348 = 3).
 
 ## Merge classification
 
-Base `fb40b2584`. Three files, **all LANE-TOUCHED, zero MAIN-MOVED** — main's only commits since the
-lane branched (`0d0a55d20`, `fb40b2584`) touch `docs/bench/s1516-*`, `tasks/BACKLOG.md`,
+Base `303b3c8f4`. Three files, **all LANE-TOUCHED, zero MAIN-MOVED** — main's only commits since the
+lane branched (`17556e86f`, `303b3c8f4`) touch `docs/bench/s1516-*`, `tasks/BACKLOG.md`,
 `tasks/goals.json` and the new master, none of which the lane touches. `git merge --no-ff lane/a` in
 the gate worktree returned **rc=0 with no conflicts**, and the resulting diff vs base is exactly the
 lane's three files (+162/−8).

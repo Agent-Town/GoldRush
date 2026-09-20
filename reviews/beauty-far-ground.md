@@ -1,6 +1,6 @@
 # Review — THE FAR GROUND (repaint the horizon where it actually lives, four E1 maps)
 
-**Slice/branch/tip:** `beauty2/far-ground`, base `7c833197` (origin/main at pre-flight) · worktree `gr-task-beauty2-far-ground` · solo-writer Opus-5 beauty shift, 2026-08-04
+**Slice/branch/tip:** `beauty2/far-ground`, base `b16e39b3` (origin/main at pre-flight) · worktree `gr-task-beauty2-far-ground` · solo-writer Opus-5 beauty shift, 2026-08-04
 **Brief:** `TASK.md` · `docs/beauty/README.md` (program laws) · the four maps' briefs · the two measurements that funded it (`reviews/beauty-atmos.md` §2–3, `reviews/beauty-night-shift-r2.md` F-7)
 **Verdict:** ✅ **THE RING FOOT IS MEASURED UNREACHABLE AND THEREFORE NOT PAINTED — 0 bytes spent, with the positive control neither prior measurement had** · ✅ **THE FAR TERRAIN EDGE SHIPPED ON THE TWO MAPS THAT HAD NOTHING** (`the-claim`, `e1-twin-banks`) · ✅ **THE INSTRUMENT IS IN THE TREE FOR THE FIRST TIME**
 Rendering only, zero sim bytes. +0 draw calls, +0 triangles, all four maps, both viewports. Every panorama atlas byte-identical.
@@ -19,7 +19,7 @@ The brief asked for the panorama's *foot* on the theory that the foot is the par
 
 ### 1a. The instrument two reviews cited did not exist
 
-`reviews/beauty-atmos.md` §3 and `src/world/HorizonApron.ts:10` both attribute their central number to **`?horizonProbe`**. That flag is not in the repo and never was: `git log -S horizonProbe -- src/` returns exactly one commit, `b701d891`, and the only thing it added is the docstring quoting it. The probe lived in the atmospherics shift's working tree and died with it. **The load-bearing measurement of two reviews and three shipped decisions was unreproducible until this commit.** (F-FG-1.)
+`reviews/beauty-atmos.md` §3 and `src/world/HorizonApron.ts:10` both attribute their central number to **`?horizonProbe`**. That flag is not in the repo and never was: `git log -S horizonProbe -- src/` returns exactly one commit, `c714b8e0`, and the only thing it added is the docstring quoting it. The probe lived in the atmospherics shift's working tree and died with it. **The load-bearing measurement of two reviews and three shipped decisions was unreproducible until this commit.** (F-FG-1.)
 
 ### 1b. Where the frame top actually is — measured in metres, at the ring's own radius
 
@@ -80,7 +80,7 @@ So no builder ran and no artefact moved. The download law is reported anyway, be
 | `twin-banks` | 319,625 B | **0.00%** | 469,768 B | `f163c1041426796c` |
 | `baron` | 377,631 B | **0.00%** | 527,688 B | `1a3eb50e320015ce` |
 
-Every atlas is byte-identical to `7c833197`, every contract's declared `files.atlas.bytes` matches the file on disk, and the pinned builder's guard was run to prove the tree still reproduces rather than merely to prove I did not touch it:
+Every atlas is byte-identical to `b16e39b3`, every contract's declared `files.atlas.bytes` matches the file on disk, and the pinned builder's guard was run to prove the tree still reproduces rather than merely to prove I did not touch it:
 
 ```
 Blender --background --python assets/pilots/map-rebuild-spike/verify_e1_panoramas.py -- \
@@ -227,12 +227,12 @@ Full frames: `reviews/shots-beauty-far-ground/{before,after}/`. Probe census fra
 
 ### The 10 reds are 10 pre-existing — control-proven, not inherited
 
-Detached worktree at **`7c833197`** (this branch's base), its own vite on scratch port **5352**,
+Detached worktree at **`b16e39b3`** (this branch's base), its own vite on scratch port **5352**,
 `GR_CAPTURE_EXTERNAL_SERVER=1` so it never shares the branch's server, `--workers=1`, each spec run
 **alone** rather than inside a 104-test battery. Full transcripts and every error context:
 `artifacts/beauty-far-ground/control-7c833197/`.
 
-| Test | control at `7c833197` | this branch | verdict |
+| Test | control at `b16e39b3` | this branch | verdict |
 |---|---|---|---|
 | `e1-night-shift:271` x2 projects | ✘ ✘ | ✘ ✘ | pre-existing |
 | `e1-night-shift:372` x2 | ✘ ✘ | ✘ ✘ | pre-existing |
@@ -275,14 +275,14 @@ The F-1440-2 cure is "machine-independent **by code path**, not by luck", so eve
 
 ## 6. Merge classification
 
-- **Base:** `7c833197`, verified as an ancestor at pre-flight; tracked tree clean before any edit.
+- **Base:** `b16e39b3`, verified as an ancestor at pre-flight; tracked tree clean before any edit.
 - **`src/world/HorizonApron.ts`** — LANE-TOUCHED. Two new `PROFILES` entries (`the-claim`, `e1-twin-banks`); the `?farGroundProbe` instrument and its `solo` control; `horizonApronProfile` returns `undefined` while probing, because the probe measures the surface and a ridged hazed apron is not a flat primary. **The shipped `e1-baron` and `e1-dry-gulch` profiles are byte-unchanged**, and the shader body is byte-unchanged — the ridged-haze experiment was reverted (§3).
 - **`src/world/Terrain3dClaimPilot.ts`** — LANE-TOUCHED, one import and one debug-gated block at the end of `installLoaded`, publishing `terrain3dPilotFarGroundProbe`. With no flag it writes the string `off` and does nothing else.
 - **`e2e/beauty-far-ground.spec.ts`** — NEW, this slice's own spec only.
 - **`scripts/beauty-far-ground{,-board,-sheet}.mjs`** — NEW, all under `scripts/beauty-*`.
 - **`docs/beauty/*-brief.md`** — four dated STATUS blocks recording the retarget where the next reader will look.
 - **Zero sim bytes.** No contract JSON, no GLB, no atlas, no terrain or panorama artefact, no `Balance`, no camera, no `townLayout`, no heightfield, ford, mount, spawn, lane or RNG. `Game.ts`, `Economy`, `CombatSystem` and every profile are untouched. The only runtime change with no flag set is a fragment-shader block on **one cloned material** on two more contracts.
-- Commits, each pushed and verified against `git ls-remote`: `84bed693` (instrument), `3d0a4f1a` (the paint + spec + board), and this review.
+- Commits, each pushed and verified against `git ls-remote`: `c614c07c` (instrument), `d947a792` (the paint + spec + board), and this review.
 
 ---
 

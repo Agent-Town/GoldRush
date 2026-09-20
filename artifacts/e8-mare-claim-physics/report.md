@@ -157,7 +157,7 @@ never exoneration (F-1444-2), it was attributed at source instead: the whole-vie
 exactly two fields, `viewVersion` and `coalSeams`, and **neither is in this slice's diff**
 (`git diff main..lane/d -- src/agent/View.ts | grep -E 'viewVersion|coalSeams'` is empty). Both
 entered `src/agent/View.ts` in commits that are **ancestors of this branch's point**
-(`98ffc1507` coal seams, `3eacc81c3` view versioning; `git merge-base --is-ancestor` confirms both).
+(`cdc29b717` coal seams, `14c4db20b` view versioning; `git merge-base --is-ancestor` confirms both).
 The red is on main and is not this slice's.
 
 ## 6. Findings

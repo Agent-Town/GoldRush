@@ -1,9 +1,9 @@
 # cost-column — HarnessDev C: the county board learns what a run COST
 
 - **Slice:** `cost-column` (HarnessDev ladder item C, owner-approved 2026-09-03)
-- **Branch / tip:** `lane/c` @ `bbcad2bc26ff15fa2f250e81362911a03ba05838`
-- **Gated commit / merged as:** `083a95ce1a8f7b4c023745dec5c053eafcfe3b63`
-- **Base:** `125e2faa3e62736222a255ed6384c459918e3e5c`
+- **Branch / tip:** `lane/c` @ `141cce04813ac122f76e11dfa282eaf368217fdc`
+- **Gated commit / merged as:** `62e1f0de630519ac9a392d74c610762c6e3dfe2a`
+- **Base:** `c6839b6496f2217272b2132fe8ba8d9f9c7e3ec9`
 - **Drained by:** s2468, 2026-09-03
 
 ## VERDICT: MERGED — gates green, one named measurement deliberately not taken (see Findings F-2468-2).
@@ -31,7 +31,7 @@ projects).
 
 Undecided content never entered main's working tree or index. Main was
 fast-forwarded to the exact gated commit, so **what shipped is byte-identical to
-what was measured** (`083a95ce1`, parents `125e2faa3` + `bbcad2bc2`).
+what was measured** (`62e1f0de6`, parents `c6839b649` + `141cce048`).
 
 | Gate | Result | Wall |
 |---|---|---|
@@ -60,7 +60,7 @@ test COUNT (2, not ~30), not the exit code. The real filename is
 ## Merge classification
 
 Clean 3-way merge, **zero conflicts**. 12 files, +213 / −18. Every path is
-LANE-TOUCHED; main moved none of them between `125e2faa3` and the merge, so no
+LANE-TOUCHED; main moved none of them between `c6839b649` and the merge, so no
 graft or hand-resolution was required. `tasks/BACKLOG.md` moves by exactly one
 line — the runner marking its own ladder row `🚧 lane-c implementation` — and
 s2468's `F-2468-1` row, filed earlier in the same fire, survives the merge
@@ -98,7 +98,7 @@ is not a gate that passed.
 
 ## Ledger
 
-- Goal leaf `cost-column` → `merged` @ `083a95ce1a8f7b4c023745dec5c053eafcfe3b63`
+- Goal leaf `cost-column` → `merged` @ `62e1f0de630519ac9a392d74c610762c6e3dfe2a`
 - Done-move renamed `drained-s2468-083a95ce1-…`
 - GZ-01: player-visible (the board gains a cost column, the landing a chart) →
   gazette item filed.

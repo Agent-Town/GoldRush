@@ -1,6 +1,6 @@
 # Review — f1552-1: the instrument declares itself
 
-**Slice/branch/tip:** f1552-1 (`tasks/lane-f1552-1-wrangler-version-assertion.md`, FIRE-AUTHORED s1552) · `lane/c` · tip `dda33a0b5` · merged `18847e938ef8731460feee354901743b05748956` · drained s1554 fire, 2026-08-08 ~13:20.
+**Slice/branch/tip:** f1552-1 (`tasks/lane-f1552-1-wrangler-version-assertion.md`, FIRE-AUTHORED s1552) · `lane/c` · tip `bd9625c04` · merged `5ca3a95b38553852b6a920361b754db7cf949e53` · drained s1554 fire, 2026-08-08 ~13:20.
 
 **Verdict: MERGED.**
 
@@ -8,7 +8,7 @@
 
 Why an assertion beat the obvious pin is recorded upstream and was not re-litigated here: a devDependency binds only npm entry points, because `node_modules/.bin` reaches PATH only when npm puts it there — and `agent-seat-room.mjs` has no npm script entry (it runs as plain `node`). The assertion reaches all four identically at zero bytes per worktree. The `4.108.0`+ pin remains a measured, unblocked option (F-1552-1), not a dead end.
 
-**Custody note (F-1295-1):** every gate below ran in a **detached worktree** (`gate-s1554`), never in main's working tree. This was not ceremony — an attended session was committing to main throughout this drain, landing `d5b3f768f` on top of this fire's own lock commit within two minutes of it. Undecided content was never placed where a broad `git add` could sweep it.
+**Custody note (F-1295-1):** every gate below ran in a **detached worktree** (`gate-s1554`), never in main's working tree. This was not ceremony — an attended session was committing to main throughout this drain, landing `8bdf270af` on top of this fire's own lock commit within two minutes of it. Undecided content was never placed where a broad `git add` could sweep it.
 
 **Evidence** (all on the MERGED tree unless stated):
 
@@ -32,7 +32,7 @@ Why an assertion beat the obvious pin is recorded upstream and was not re-litiga
 - The `wranglerVersion` field recorded in `artifacts/multiplayer-relay/test-multiplayer.json` is **unchanged in format** — `wrangler --version` on this host emits a bare `4.107.0`, so the switch from raw-output to parsed-version does not move a broadcast value. Single consumer, checked repo-wide.
 - `package.json` dependencies and `package-lock.json` untouched, as the firewall required.
 
-**Merge classification:** base `1626b53b5`. All 8 paths **LANE-TOUCHED**; main moved only `scripts/desk-birth-guard*`, `scripts/gr-sim.test.mjs`, `scripts/tmp-s1553-*` in the same window — **zero overlap**, confirmed by diffing base→main over the slice's path set. Merge clean by `ort`, no conflicts, no 3-way graft needed.
+**Merge classification:** base `4b2133f18`. All 8 paths **LANE-TOUCHED**; main moved only `scripts/desk-birth-guard*`, `scripts/gr-sim.test.mjs`, `scripts/tmp-s1553-*` in the same window — **zero overlap**, confirmed by diffing base→main over the slice's path set. Merge clean by `ort`, no conflicts, no 3-way graft needed.
 
 **Declared gap — read this rather than assume a full green:** the complete 77-file `test:node-guards` battery did **not** complete fire-side. Inherited from the lane run (11:59): 385/387, the two standing F-1507-1 Node-version reds (fire node v23.11.1 vs `.nvmrc` v26.4.0); the attended f-door-5 drain independently recorded the same class at 387/385/2 on v26.4.0. The slice-relevant members of that battery were extracted and run alone instead (48/48 above), which is the subset this slice can actually tax.
 
@@ -41,6 +41,6 @@ Why an assertion beat the obvious pin is recorded upstream and was not re-litiga
 **F-1554-1 — `test:node-guards` cannot be "run ALONE" on a busy board, and nothing tells you it isn't.** F-1537-1 orders the 181 s battery run alone because overlapping runs contaminate each other on shared fixtures. Measured this fire: **three concurrent `run-node-guards` processes** (pids 34453/69380/94888), only one of them this fire's; when two later exited, a **fresh pair appeared** (81257/81262). The fire's own run was starved past **35 minutes** without completing and was still alive at handoff. The other batteries belong to the lane-b Codex runner and the attended session — neither of which the fire can see, schedule against, or wait on.
 The important half: **contention manufactures reds, not greens**, so a contended green is sound and a contended red is worthless — but a fire that simply obeys "run it alone" has no way to know which it is holding, and no way to comply. Cheap cure, not authored here: have the drain (or `run-node-guards` itself) `pgrep -f run-node-guards` before starting and either wait or print a one-line CONTENDED warning that downgrades any red to unattributable. Non-blocking for this slice — the affected classes were run alone and are green.
 
-**F-1554-2 — the f-door-5 gate transcript was untracked, and its own review cited it.** `artifacts/f-door-5-gate.txt` (394 KB / 3560 lines), the evidence for the morning's most player-visible merge, sat in no object database while `reviews/f-door-5-harvest-walks.md` cited it by path. Same class as the mp-07c-2 transcript that `c2aa36222` tracked hours earlier, which makes it a recurring drain-side duty rather than one lapse. Closed in this fire at `701fc221d`. Non-blocking.
+**F-1554-2 — the f-door-5 gate transcript was untracked, and its own review cited it.** `artifacts/f-door-5-gate.txt` (394 KB / 3560 lines), the evidence for the morning's most player-visible merge, sat in no object database while `reviews/f-door-5-harvest-walks.md` cited it by path. Same class as the mp-07c-2 transcript that `c2aa36222 (archive: pruned by the A3 rewrite)` tracked hours earlier, which makes it a recurring drain-side duty rather than one lapse. Closed in this fire at `701fc221d (archive: pruned by the A3 rewrite)`. Non-blocking.
 
 **No blocking findings.** Nothing here spawns a corrective task.

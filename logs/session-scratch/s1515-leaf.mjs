@@ -5,7 +5,7 @@ const g = JSON.parse(fs.readFileSync(gp, 'utf8'));
 const leaf = {
   id: 'f1515-1-citation-scan-nondestructive',
   title:
-    'F-1515-1 + F-1515-2 (one task, same file, interacting cures): (1) the 790a66f5 union scan is a BACKSTOP not a cure — both ' +
+    'F-1515-1 + F-1515-2 (one task, same file, interacting cures): (1) the 122db2c0 union scan is a BACKSTOP not a cure — both ' +
     'scanners still walk the 400-char window with a global lastIndex, so an ODD count of same-kind quotes before the title ' +
     'defeats BOTH arms; replace it with a non-destructive all-pairs enumeration. Priced against the live corpus at 2 genuine ' +
     'citations (e2e/tl-01-run-telemetry.spec.ts:229, e2e/asset-diet.spec.ts:73), a LOWER BOUND since the probe matcher was ' +
@@ -21,7 +21,7 @@ const leaf = {
   attempts: 0,
   authoredBy: 's1515 (fire)',
   authorNotes:
-    'Authored s1515 immediately after draining f1501-5 (790a66f5), from findings this fire filed and PRICED rather than ' +
+    'Authored s1515 immediately after draining f1501-5 (122db2c0), from findings this fire filed and PRICED rather than ' +
     'inherited. Method, per F-1514-1 (run the proposed cure against the live corpus BEFORE authoring): copied the guard, ' +
     'dropped its CLI at :293, re-rooted it, widened rows.push to carry win+titles — with a CONTROL first, the copy reproducing ' +
     'the shipped tally 511/262/206/43 exactly, so the answer is about the corpus and not the copy. F-1515-2 was NOT looked for: ' +

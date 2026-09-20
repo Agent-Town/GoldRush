@@ -8,7 +8,7 @@ READ FIRST: AGENTS.md; `reviews/e2-pressure-garden-engine-block.md` (the finding
 Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead is NORMAL — the runner auto-commits. For each ahead commit: if its content is already merged to main (verify via git log/diff), it is a SAFE DUPE → `git checkout -B <lane-a branch> main && git clean -fd` and PROCEED. STOP-and-report ONLY if an ahead commit's content is NOT on main (undrained work — resetting would DESTROY it), or the worktree holds uncommitted edits you did not make. Then `npm install --no-audit --no-fund`; `npm run build` green before touching anything.
 
 ## Why (`reviews/e2-pressure-garden-engine-block.md`, 2026-07-15; OWNER'S DESK, BACKLOG)
-The e2-drip-02-pressure-garden runner self-blocked (2× — the second time is engine, not safety): the pressure play is hardcoded to `e2-hill-mine`, so no second contract can opt into it. Verified on current main (`ec7f3dd1`):
+The e2-drip-02-pressure-garden runner self-blocked (2× — the second time is engine, not safety): the pressure play is hardcoded to `e2-hill-mine`, so no second contract can opt into it. Verified on current main (`54571072`):
 - **`src/game/Game.ts:904`** — `PressureSystem` enabled predicate: `() => this.activeContract.id === 'e2-hill-mine' && !this.multiplayerActive(),`
 - **`src/game/Game.ts:3825`** — `boiler_house` buildable guard: `if (id === 'boiler_house') return this.activeContract.id === 'e2-hill-mine' && !this.multiplayerActive();`
 - **`src/game/Game.ts:3918`** — PRESSURIZE objective publish: `...(resource.id === 'pressure' && this.activeContract.id === 'e2-hill-mine' ? { objective: 'PRESSURIZE ...' } ...`

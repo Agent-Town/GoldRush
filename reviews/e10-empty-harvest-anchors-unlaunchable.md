@@ -1,6 +1,6 @@
 # Review: e10-empty-harvest-anchors-unlaunchable — the three Deep Sky maps open as themselves (scratch worktree, Claude Opus 5 implementer, attended drain 2026-09-06 early)
 
-**Slice/branch/tip:** `e10-empty-harvest-anchors-unlaunchable` · `fix/e10-harvest-anchors` · commit `8753a5e7b` on base `97add828`'s tree (cut before the E7/E8/E9 story merges) · merged to main: see the ledger row (first-parent merge; no `src/` collision with the story merges).
+**Slice/branch/tip:** `e10-empty-harvest-anchors-unlaunchable` · `fix/e10-harvest-anchors` · commit `a7b3cd09d` on base `97add828`'s tree (cut before the E7/E8/E9 story merges) · merged to main: see the ledger row (first-parent merge; no `src/` collision with the story merges).
 **Verdict:** MERGED, with two attended review fixes in the drain commit (F-E10L-2's audit pin and the boot-guard spec that pinned the old behaviour). `e10-ember-shore`, `e10-archive-world` and `e10-river` launch plain as themselves on both projects, with **zero harvest anchors authored**: no board contract is refused by the browser any more (F-SMOKE-1 closed).
 
 ## What it does
@@ -19,7 +19,7 @@ One array carried two meanings (F-E10L-1): `harvestAnchors: []` means "not admit
 Screenshots: `artifacts/e10-launchable/shots/` (6, 268 KB total), rows in `artifacts/e10-launchable/rows.jsonl`.
 
 ## Merge classification
-Base: the worktree's branch point before `642f0ae9e`. `assets/contracts/epoch-10-deepsky/contracts.json`, `src/meta/ContractFamilies.ts`, `package.json`: LANE-TOUCHED (main did not move them since the base). `scripts/board-launchable-guard.test.mjs`, `artifacts/e10-launchable/*`: NEW. `tasks/BACKLOG.md`: MAIN-MOVED, unioned. Attended review fixes in the same drain commit: `scripts/same-game-audit.test.mjs` not-offered pin 3 → 0 with the eleventh stack comment (F-E10L-2, attributed by the implementer's revert-and-reproduce), `e2e/e10-river-boot-guard.spec.ts` rewritten to assert the River opens as itself, `docs/bench/same-game-audit.md` regenerated.
+Base: the worktree's branch point before `9ba1c34b6`. `assets/contracts/epoch-10-deepsky/contracts.json`, `src/meta/ContractFamilies.ts`, `package.json`: LANE-TOUCHED (main did not move them since the base). `scripts/board-launchable-guard.test.mjs`, `artifacts/e10-launchable/*`: NEW. `tasks/BACKLOG.md`: MAIN-MOVED, unioned. Attended review fixes in the same drain commit: `scripts/same-game-audit.test.mjs` not-offered pin 3 → 0 with the eleventh stack comment (F-E10L-2, attributed by the implementer's revert-and-reproduce), `e2e/e10-river-boot-guard.spec.ts` rewritten to assert the River opens as itself, `docs/bench/same-game-audit.md` regenerated.
 
 ## Findings
 - **F-E10L-1 (root cause, cured):** one array, two meanings; the declaration field separates them.

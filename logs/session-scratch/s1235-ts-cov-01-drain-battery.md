@@ -1,7 +1,7 @@
 # s1235 — ts-cov-01 drain battery (mirrored per RETENTION LAW)
 
-Merge: `d606946d` (lane/m3 tip `e9d848a7`, base `e88de542`). Bookkeeping `c3376993`.
-Pushed `94d5703b`; deployed + VERIFIED at https://gold-rush-3in.pages.dev.
+Merge: `f8eddce8` (lane/m3 tip `e9d848a7`, base `2d4692f5`). Bookkeeping `b89dc692`.
+Pushed `4e46394e`; deployed + VERIFIED at https://gold-rush-3in.pages.dev.
 
 ## Independent re-derivation of the coverage claim (not read off the report)
 
@@ -16,7 +16,7 @@ walk functions/**/*.ts         -> 22
 |---|---|
 | `npx tsc --noEmit` | 0 (3.6 s) |
 | `npm run build` | 0 (16.3 s) |
-| `node scripts/run-guards.mjs --changed-since e88de542` | 0 — **6/6** |
+| `node scripts/run-guards.mjs --changed-since 2d4692f5` | 0 — **6/6** |
 | same, re-run after the `run-guards.mjs` edit | 0 — **6/6** |
 | `npx playwright test e2e/_s106-prospector-boot-probe.spec.ts --project desktop-chrome --project mobile-chrome` | 0 — 2/2, zero console/page errors |
 | `--only test:task-guards,test:node-guards` after each ledger edit | 0 — 2/2 |

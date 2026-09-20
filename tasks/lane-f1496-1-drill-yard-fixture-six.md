@@ -61,7 +61,7 @@ including in the file it was copied from. This one visibly sits on a single line
 **F-1496-1** (`tasks/BACKLOG.md:3`, filed s1496 against the `milk/motor-socket` review's own evidence):
 
 > *"`agent-view.spec.ts:264` + `:297` fail on **both** projects because `e1-drill-yard` became the
-> **sixth** E1 contract in `74df35dcf` while `:269` still expects five and
+> **sixth** E1 contract in `19f212b71` while `:269` still expects five and
 > `e2e/fixtures/e1-mechanics-manifests.json` still holds five entries — it is NOT in
 > `logs/suite-red-inventory.md`. GATE: fire-authorable — regenerate the fixture to six entries and
 > update the count, then confirm 8/8 both projects. Whoever takes it must gate BOTH projects, which
@@ -101,7 +101,7 @@ practice gold and buildables: the derivation ignores `practice`."*
 
 The bell, the dummies, the practice gold and the buildables — the four things the block named as
 missing — are **all present and all practice-sourced**. The derivation was cured by a dedicated slice,
-`23868f4d6` *"runner(lane-a): lane-a-drill-yard-practice-derivation.md"* (2026-08-02, on main), four
+`6e4e728ec` *"runner(lane-a): lane-a-drill-yard-practice-derivation.md"* (2026-08-02, on main), four
 days after the block was written. **There is no longer a wrong derivation to bless**, so the owner's
 question is vacuous and the fixture regeneration is ordinary hygiene. Probe retained at
 `logs/session-scratch/s1500-drill-yard-derive.mjs` — re-run it if you doubt any of the above.
@@ -120,7 +120,7 @@ license touching the separate census-count debt (`board-card-images.spec.ts:37`,
    existing file's JSON formatting exactly (same indentation, same trailing-newline convention) — a
    formatting-only diff on the five existing entries is acceptable **only** if their *semantic*
    content is unchanged; prove that (see self-check 4).
-2. **Update the id assertion at `e2e/agent-view.spec.ts:269`** ("all five E1 mechanics manifests match their byte-stable fixture") (that test was RENAMED at commit 8fa0133f and is now titled "all six E1 mechanics manifests match their byte-stable fixture" — the count in the old title was the defect) to the six ids in registry order.
+2. **Update the id assertion at `e2e/agent-view.spec.ts:269`** ("all five E1 mechanics manifests match their byte-stable fixture") (that test was RENAMED at commit 77a1b19b and is now titled "all six E1 mechanics manifests match their byte-stable fixture" — the count in the old title was the defect) to the six ids in registry order.
 3. **Update the test title at `:264`** — it says *"all five E1 mechanics manifests"*. Make the number
    match reality. **A title that lies is how this stayed invisible**: fires reading a passing-sounding
    name never asked whether the count was still true.

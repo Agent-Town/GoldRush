@@ -42,7 +42,7 @@ That is exactly the error s1635 saw and reported.
 
    | run | model banner | outcome |
    |---|---|---|
-   | `20260810-181709-lane-a-…-ap16-1-buildable-parity` | `gpt-5.6-sol` | 494,754 tokens, READY-FOR-GATES → **merged `8465f6b3`** |
+   | `20260810-181709-lane-a-…-ap16-1-buildable-parity` | `gpt-5.6-sol` | 494,754 tokens, READY-FOR-GATES → **merged `760990fd`** |
    | `20260810-181709-lane-d-…-ap16-2-draft-reaches-door` | `gpt-5.6-sol` | 438,317 tokens, complete implementation |
    | `20260810-181709-lane-c-…-ap16-3-blast-verb` | `gpt-5.6-sol` | 220,739 tokens, complete implementation |
 
@@ -65,7 +65,7 @@ This is the same shape s1635 named in its own handoff — *"a probe sharing a de
 ## Actions taken
 
 - `tasks/CODEX-WALL` **deleted** (§2.0: "on success delete the flag"). Archived first to `logs/runs-archive/wall-evidence/CODEX-WALL-s1631-to-s1636-LIFTED.md` per the RETENTION LAW — the wall file is factory history, not debris.
-- No wall-class failures remained to re-queue: the only one, `requeued-s1632-gpt55-rc1-…asset-diet-fallback-provenance`, was already re-queued and drained at `7f9340baf`.
+- No wall-class failures remained to re-queue: the only one, `requeued-s1632-gpt55-rc1-…asset-diet-fallback-provenance`, was already re-queued and drained at `e43e0223c`.
 - Refills resume unconditionally; masters no longer need the `CODEX: model=gpt-5.5 effort=high` header, though it remains harmless and `gpt-5.5` remains merge-quality per F-1634-3.
 
 ## Honest limits

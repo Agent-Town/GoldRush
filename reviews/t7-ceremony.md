@@ -1,7 +1,7 @@
 # Review — T7 THE STARSHIP (era door E7→E8), SAGA WALL slice 2/5
 
-**Slice/branch/tip:** lane-t7-ceremony · lane/m4 · tip `9d2d5e45` (runner(lane-b))
-**Base:** `8eccb2ea`. **Merged onto main after T6** (de956491) — real 3-way (both main-with-T6 and lane added to `src/ceremony/scripts.ts` + `e2e/ceremony-framework.spec.ts`).
+**Slice/branch/tip:** lane-t7-ceremony · lane/m4 · tip `eb37642f` (runner(lane-b))
+**Base:** `04393eef`. **Merged onto main after T6** (df89a191) — real 3-way (both main-with-T6 and lane added to `src/ceremony/scripts.ts` + `e2e/ceremony-framework.spec.ts`).
 **Verdict:** MERGED (s896), `git merge --no-ff lane/m4`, conflicts resolved by UNION.
 
 ## What it does

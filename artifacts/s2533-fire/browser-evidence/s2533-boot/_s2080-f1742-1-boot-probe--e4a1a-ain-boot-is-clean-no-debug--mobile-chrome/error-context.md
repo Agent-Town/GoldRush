@@ -31,7 +31,7 @@ TimeoutError: page.waitForFunction: Timeout 15000ms exceeded.
   3  | 
   4  | // F-1742-1 boot probe. The finding was that an IDLE hero took zero damage for 360 sim-seconds on
   5  | // e4-long-road / e4-gusher-county and "secured" at wave 12 — the headless hero started embedded in
-  6  | // a landmark blocker and nothing could reach it (cured by `22a0c62f5`, which wired the browser's
+  6  | // a landmark blocker and nothing could reach it (cured by `08c7ffcf8`, which wired the browser's
   7  | // own depenetration seam into HeadlessContractSim). Both contracts are bench-seeded now, so this
   8  | // pins the BROWSER half: the two newly seeded tiles actually build and run without errors.
   9  | //

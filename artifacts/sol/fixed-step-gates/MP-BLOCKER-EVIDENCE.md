@@ -4,13 +4,13 @@ Date: 2026-07-10
 
 Branch: `sol/fixed-step-unification`
 
-Implementation tip: `1b575fd`
+Implementation tip: `c6fdfce`
 
 ## Exact isolated result
 
 The exact task-067 case was run against the branch's fresh external dev server, once with `--repeat-each=2`: **0/2 passed**. Both attempts timed out at `e2e/mp-02-lockstep.spec.ts:82`, waiting for Bob to report at least one desync and resync. The retained output excerpt is `mp-02-isolated-repeat-final.txt`.
 
-An independent reviewer then repeated the test from a fresh detached `1b575fd` checkout with fresh dependencies and a fresh Vite server on port 5294. A single isolated run failed; `--repeat-each=5` produced **1 pass / 4 failures**. `src/mp/LockstepClient.ts` is identical to compared main `e374f47`, excluding a stale server, stale merge, or branch-local MP edit.
+An independent reviewer then repeated the test from a fresh detached `c6fdfce` checkout with fresh dependencies and a fresh Vite server on port 5294. A single isolated run failed; `--repeat-each=5` produced **1 pass / 4 failures**. `src/mp/LockstepClient.ts` is identical to compared main `32c362c`, excluding a stale server, stale merge, or branch-local MP edit.
 
 ## Focused diagnostic
 

@@ -1,7 +1,7 @@
 # bounded-prefetch-town-halls — the halls belong to the town, and the stream names its terminal state
 
 Slice `bounded-prefetch-town-halls` · lane `lane/b` · Claude Opus 5 · 2026-09-05.
-Corrects F-PBW-2 (`reviews/asset-diet-explicit-manifest.md`), opened by the bounded prefetch `065252649`
+Corrects F-PBW-2 (`reviews/asset-diet-explicit-manifest.md`), opened by the bounded prefetch `c7856dca7`
 (`reviews/prefetch-bounded-warming.md`).
 
 ## 1. The ruling (scope 1)
@@ -84,7 +84,7 @@ Documented in a comment at the top of `src/assets/AdvanceStream.ts`, and typed:
 ```
 
 **The terminal state's name is `allowance`.** Honest note for the drain: an allowance stop was ALREADY
-published by the slice this corrects — as `budget-exhausted` (`065252649`, `AdvanceStream.ts:176`). The
+published by the slice this corrects — as `budget-exhausted` (`c7856dca7`, `AdvanceStream.ts:176`). The
 master's READ-FIRST line did not list it. Two things changed here:
 
 1. **Renamed `budget-exhausted` → `allowance`.** Blast radius verified by grep before renaming: the
@@ -172,6 +172,6 @@ player sees it as the town being already warm when they walk in).
   has the number to check against rather than a re-derivation.
 - **Stale numbers corrected:** `reviews/prefetch-bounded-warming.md` records "Town 4,971,188; The Claim
   2,939,704; Dry Gulch 3,679,340". Those were measured before `asset-diet-explicit-manifest`
-  (`9b7d3eef6`) landed its 86% GLB cut. Post-diet, on this tree: Town 2,614,544 · The Claim 2,508,228 ·
+  (`e48bbd592`) landed its 86% GLB cut. Post-diet, on this tree: Town 2,614,544 · The Claim 2,508,228 ·
   Dry Gulch 3,248,396. The bounded slice's conclusion ("12 MB covers the town plus either map") holds
   with far more room than it claimed.

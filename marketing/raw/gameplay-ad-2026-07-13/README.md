@@ -2,7 +2,7 @@
 
 Status: **RAW — scripted development-build footage; not a publishable edit**
 
-These silent `1920x1080`, `25 fps` captures were recorded from `origin/main` at `b17da7a4` with the repository's existing Playwright/Factory Channel rigs. They show the current female Hero and the Prospector; no family profile names or debug GUI are visible.
+These silent `1920x1080`, `25 fps` captures were recorded from `origin/main` at `3f4bdb06` with the repository's existing Playwright/Factory Channel rigs. They show the current female Hero and the Prospector; no family profile names or debug GUI are visible.
 
 | File | Capture result | Use |
 |---|---|---|

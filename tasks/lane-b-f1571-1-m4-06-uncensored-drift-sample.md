@@ -15,7 +15,7 @@ grep -c "toContain(immediate.lastLine)" e2e/m4-06-embodiment.spec.ts
 grep -c "refusalHoldSeconds now keeps the denial bark readable" e2e/m4-06-embodiment.spec.ts
 ```
 
-Both must print `1`. **If either prints `0`, STOP and report "lane drifted or predecessor absent" — do NOT improvise.** The second proves f1567-2 (the `refusalHoldSeconds` hold, merge `661e13d9b`) is present in this lane; without it you are editing a different test from the one this task measured.
+Both must print `1`. **If either prints `0`, STOP and report "lane drifted or predecessor absent" — do NOT improvise.** The second proves f1567-2 (the `refusalHoldSeconds` hold, merge `73cb4d717`) is present in this lane; without it you are editing a different test from the one this task measured.
 
 ## Why (F-1565-2, mechanism re-verified s1571 by reading main)
 

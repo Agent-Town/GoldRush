@@ -7,10 +7,10 @@
 - `e2e/072-era-activation.spec.ts:226-241` — the failing test, `fresh E1 profile stays unchanged and the pre-flip determinism hash is identical`, whose `expect(...).toEqual(E1_CONTRACTS)` is the red.
 - `assets/contracts/epoch-1-frontier/contracts.json` — the manifest. It lists **six** ids, in order: `the-claim`, `e1-drill-yard`, `e1-dry-gulch`, `e1-night-shift`, `e1-twin-banks`, `e1-baron`.
 - `e2e/drill-yard.spec.ts:80-100` ("plain boot keeps the Drill Yard visible and launchable on both sides of the welcome", the test opening at `:68`) — the sibling spec. It boots **fresh** (`page.goto('/')`, no `?replay=`) and asserts the Drill Yard card **is visible**, carries `data-training-ground="true"`, and is **NOT** inside the `contract-chapter-epoch-1-frontier` chapter.
-- `reviews/f1504-1-drill-yard-stale-absence.md` — the shipped precedent for **exactly this class** of cure, merged `9559633aa136abb8c91b3293d4d1198ffc128172`.
+- `reviews/f1504-1-drill-yard-stale-absence.md` — the shipped precedent for **exactly this class** of cure, merged `042fcdd4a26e1a01bd4a5b18933d5b61c9297cb3`.
 - `logs/suite-red-inventory.md:577` — the inventory's provenance block. **Read the date.**
 
-## WHY (evidence, measured s1508 on `80c79324c`, all `--workers=1` per §3.1)
+## WHY (evidence, measured s1508 on `3bbff2ec1`, all `--workers=1` per §3.1)
 
 `npx playwright test e2e/072-era-activation.spec.ts --workers=1 --project=desktop-chrome` → **1 failed / 4 passed**:
 
@@ -32,13 +32,13 @@ has a date and the verdict does not carry it**:
 | Fact | Value | Measured by |
 |---|---|---|
 | Inventory snapshot date | **2026-07-29** | `logs/suite-red-inventory.md:577` |
-| `e1-drill-yard` added to the manifest | **2026-08-01**, `f0bf5251b` (`runner(lane-b): lane-drill-yard.md`) | `git log -S` on the manifest |
-| Last change to `listContracts()` | **2026-07-07**, `d56804ae3` | `git log -S"listContracts" -- src/meta/ContractFamilies.ts` |
+| `e1-drill-yard` added to the manifest | **2026-08-01**, `f86b28b34` (`runner(lane-b): lane-drill-yard.md`) | `git log -S` on the manifest |
+| Last change to `listContracts()` | **2026-07-07**, `f0f2a0b2c` | `git log -S"listContracts" -- src/meta/ContractFamilies.ts` |
 
 ⇒ The registry code has not moved in a month; the manifest legitimately grew a sixth contract three days
 **after** the inventory ran. So `CLEAN-IN-INVENTORY` is **correct and unhelpful**: it means *green on
 2026-07-29*, and the spec went stale on **2026-08-01**. The registry is right. **The pasted list is the
-defect** — the "broadcast an expected value your merge changes" class, and `f0bf5251b` did not update it.
+defect** — the "broadcast an expected value your merge changes" class, and `f86b28b34` did not update it.
 
 ✅ **Therefore editing this spec is the CURE, not laundering** — and unlike the f1506-2 case, no bisect is
 owed: the first-bad commit is already named above by `git log -S`, and its change was intended and shipped.

@@ -1,7 +1,7 @@
 # lane-herostart-rename — `stakeMarkers.lossCondition` → `heroStart`
 
-**Slice:** `lane-herostart-rename` · **branch:** `lane/perf` · **lane tip:** `9eaa1ed5` · **merge-base:** `f7f5c1d2`
-**Merged:** `69984c6a22baadb3943b6b7dbd3a3b77f20e36e5` (path-scoped) · **drained by:** s1329, 2026-08-01
+**Slice:** `lane-herostart-rename` · **branch:** `lane/perf` · **lane tip:** `92464021` · **merge-base:** `d3349fc0`
+**Merged:** `8efae704632c5b7fd581324ebe576aece9ddb2c6` (path-scoped) · **drained by:** s1329, 2026-08-01
 
 ## Verdict
 
@@ -10,7 +10,7 @@
 ## What it does
 
 The owner's 2026-08-01 defeat-fork ruling was option **(C) now** — *"keep it as it is for now and switch
-the word to survive"* — and it has two halves. s1328 landed the first (`lane-survive-copy`, `06ce6241`:
+the word to survive"* — and it has two halves. s1328 landed the first (`lane-survive-copy`, `ef1db83c`:
 the E1 cards now say *"Survive through wave N"*). This is the second: the contract field
 `tileParams.stakeMarkers[].lossCondition` is renamed **`heroStart`** everywhere it appears, because it
 triggered no loss anywhere — every consumer used it as a hero-start / ring-centre / prop anchor
@@ -70,7 +70,7 @@ All playwright runs `--workers=1` (§3.1 — a fire-shell red at default workers
 
 ### The reds are attributed by a CONTROL RUN, not by argument
 
-A detached worktree at clean main (`/tmp/gr-ctl-s1329`, main `dd0be075`) ran the same specs with the same
+A detached worktree at clean main (`/tmp/gr-ctl-s1329`, main `3f2bb1cc`) ran the same specs with the same
 instrument in the same hour.
 
 | Spec | merged tree (desktop) | **control, clean main (desktop)** |

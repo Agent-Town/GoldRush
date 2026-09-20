@@ -12,7 +12,7 @@ ROLE: lane implementer. WORKDIR: this lane worktree. One task, firewalled.
 - `playwright.config.ts` — read `claimedByAnotherConfig`, `testDir`, `testIgnore`. This is why the defect matters.
 
 ## WHY (drain finding F-1440-2, s1440, measured)
-The E1 perf pass merged as `d60adf88` with its own spec **withheld**. The spec does not measure its
+The E1 perf pass merged as `08b3ecb2` with its own spec **withheld**. The spec does not measure its
 `before` arm in-run: it reads it from a committed artifact (`census-before-<project>.json`, `:239`)
 and `STAGE` defaults to `'after'` (`:8`). So every ordinary run, on every machine, compares its own
 wall-clock and draw calls against numbers one lane shell recorded on an M4 Max on 2026-08-03.
@@ -60,7 +60,7 @@ in this repo.
 - `artifacts/f1440-2/` for your evidence
 
 ## NO
-- **NO** changes to `src/**`. The optimization already merged as `d60adf88` and is not under review here.
+- **NO** changes to `src/**`. The optimization already merged as `08b3ecb2` and is not under review here.
 - **NO** regenerating `artifacts/e1-perf-pass/census-*.json` or `before/`/`after/` screenshots. They are
   retained history (RETENTION LAW) and the corrective's own proof depends on them being untouched.
 - **NO** adding this spec to `claimedByAnotherConfig` — hiding it from the battery is not the cure, and

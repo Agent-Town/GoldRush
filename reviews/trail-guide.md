@@ -1,9 +1,9 @@
 # Review — RF-02 The Trail Guide
 
 **Slice:** RF-02 (E1 Frontier Edition — the greenhorn first-run teaching track)
-**Branch/tip:** lane/m4 @ `e5bd6260` (runner(lane-b): lane-trail-guide.md)
-**Base:** `d02a7dc0` · **Merge-base with main:** `d02a7dc0` (exact — clean 3-way)
-**Merge:** `9c2c30ea` (real 3-way `--no-ff` onto clean main @ `e703125c`)
+**Branch/tip:** lane/m4 @ `4ffa9752` (runner(lane-b): lane-trail-guide.md)
+**Base:** `619aeb3f` · **Merge-base with main:** `619aeb3f` (exact — clean 3-way)
+**Merge:** `35e64604` (real 3-way `--no-ff` onto clean main @ `dbf2adb8`)
 **Verdict:** ✅ MERGED — gates green, both overlapping features coexist, canon clean.
 
 ## What it does
@@ -19,7 +19,7 @@ Triggers wired: `first-run` (Game.ts:2049), `first-wave` on wave===1 (739), `fir
 (secureBarkForRun), `first-return` (TownScene.ts:552). All eight reachable in normal play.
 
 ## Merge classification (per file)
-Merge-base is exactly the lane base `d02a7dc0`, so this is a textbook 3-way. main moved
+Merge-base is exactly the lane base `619aeb3f`, so this is a textbook 3-way. main moved
 **Game.ts** (+5, RF-03b desk `openComplaintDesk`/AssayOffice) and **TownScene.ts** (+12, desk
 door) since the base; the lane added its trail-guide hooks in disjoint regions.
 

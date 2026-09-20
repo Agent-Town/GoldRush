@@ -1,6 +1,6 @@
 # Review — Town T1: walkable square scene
 
-**Slice:** Town v1 T1 (`specs/town-v1/README.md`) · **Branch:** lane/m4 · **Lane tip:** `2d9c438` · **Merged to main:** `7eb62f4` (s136 fire, hand-graft) · **Base:** `3c851cd` (m4-10, main ancestor)
+**Slice:** Town v1 T1 (`specs/town-v1/README.md`) · **Branch:** lane/m4 · **Lane tip:** `2d9c438` · **Merged to main:** `1916ea4` (s136 fire, hand-graft) · **Base:** `6dae6d9` (m4-10, main ancestor)
 
 ## Verdict: MERGED — GREEN
 
@@ -28,7 +28,7 @@ Ran single-worker (load-flake discipline from the gt-02 drain this fire). 16/16 
 
 ## Merge classification
 Cherry-pick not allowlisted headless → hand-grafted `2d9c438` onto CLEAN main. Parent
-`3c851cd` (m4-10) is a main ancestor; main drifted since only on `StartMenu.ts` (050 mute
+`6dae6d9` (m4-10) is a main ancestor; main drifted since only on `StartMenu.ts` (050 mute
 control) and `vite-env.d.ts` (050 audio + gt-02). town-t1's hunks on both are **disjoint**
 from that drift (StartMenu: menu-options type / button list / action handler; vite-env:
 Window `__GR_TOWN_DIAGNOSTICS__`@552) → clean additive 3-way via Edit. New files + `main.ts` +
@@ -37,5 +37,5 @@ Window `__GR_TOWN_DIAGNOSTICS__`@552) → clean additive 3-way via Edit. New fil
 ## Findings
 None blocking. **Next Town slice = T2 naming** — its master is preserved at
 `tasks/failed/noop-preflight-stop-lane-b-town-t2-naming.md` (+ rc1 copy); it STOPs correctly
-until T1 lands. Now that `src/town/TownScene.ts` is on main (`7eb62f4`), T2 can be re-queued
+until T1 lands. Now that `src/town/TownScene.ts` is on main (`1916ea4`), T2 can be re-queued
 to lane-b (owner-priority, gates E2).

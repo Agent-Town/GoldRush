@@ -3,7 +3,7 @@
 import { spawn } from 'node:child_process';
 import { readFile, writeFile, appendFile } from 'node:fs/promises';
 
-const ERA = 'd599cd3e';
+const ERA = 'dbcbf312';
 const CONTRACT = 'the-claim';
 const SEED = 'e1-the-claim-02';
 

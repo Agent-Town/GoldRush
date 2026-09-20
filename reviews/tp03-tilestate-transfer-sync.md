@@ -1,6 +1,6 @@
 # Review — tp03-tilestate-transfer-sync (F-TP-1 corrective)
 
-**Slice:** lane-d-tp03-tilestate-transfer-sync · **Branch:** lane/perf (worktrees/lane-d) tip `23645680` · **Merge:** `2504a5ca226168ff3b3ccdc5b08012537e96fde2` (clean `--no-ff` merge; lane base `582d3b23` == main HEAD, no graft needed)
+**Slice:** lane-d-tp03-tilestate-transfer-sync · **Branch:** lane/perf (worktrees/lane-d) tip `c0c08123` · **Merge:** `f3a81d61417e317b462303612c58da19cf262e62` (clean `--no-ff` merge; lane base `ed8ce4c3` == main HEAD, no graft needed)
 **Drain:** s728 fire, 2026-07-17
 **Verdict: MERGED.** tsc + build green; tp00/tp01/tp02 + task-025 = 34/36 in-battery; the 2 reds are a pre-existing snapshot-compose test (tp00:171) that cleared single-worker isolated (contention false-red); tp03's 2 new tests green both projects.
 
@@ -26,9 +26,9 @@ Closes **F-TP-1** (filed by the tp/01-02 shift, `reviews/tp01-02-session-notes.m
 | Render/perf | N/A — data-layer only, nothing renders (§3) |
 
 ## Merge classification
-lane/perf tip `23645680` (single `runner(lane-d)` commit) is based at `582d3b23`, which **is main HEAD** — so `git merge --no-ff lane/perf` was a conflict-free true merge (no stale-base graft, no phantom deletions). All four files: three `M` (ProfileStorage/ProfileTransfer/TileStateStore) applied clean, one `M` (the tp00 spec, additive append). Verified `main..lane/perf` empty post-merge.
+lane/perf tip `c0c08123` (single `runner(lane-d)` commit) is based at `ed8ce4c3`, which **is main HEAD** — so `git merge --no-ff lane/perf` was a conflict-free true merge (no stale-base graft, no phantom deletions). All four files: three `M` (ProfileStorage/ProfileTransfer/TileStateStore) applied clean, one `M` (the tp00 spec, additive append). Verified `main..lane/perf` empty post-merge.
 
 ## Findings
 - **F-tp03-1 (non-blocking, proven contention false-red):** the battery run reds `tp00-tile-persistence.spec.ts:171` "same seed composes with snapshots while the birth loader remains inert" on BOTH projects with a **30s timeout** (not an assertion). This test is **pre-existing** — it sits at L171, before tp03's additions at L227 — and it **passes in isolation single-worker** (10.9s / 10.2s, well under budget). tp03's data-layer changes (a window CustomEvent + key enumeration) have no path to a snapshot-compose/birth-loader timeout. Classic gate-battery contention (5 heavy specs × 2 projects × 2 workers, concurrent with the build). No corrective owed.
-- **F-tp03-2 (non-blocking, carried, attended-owned §7.6):** `goal-tracker.test.mjs:17` category-count is RED on main independent of this drain (standing F-1: 11 categories vs a hardcoded 5). Baseline before this drain = 1 pass / 1 fail; the tp03 goal-leaf flip to `merged`/`2504a5ca…` (full 40-char, ancestral) does not touch category structure, so the count stays unchanged.
+- **F-tp03-2 (non-blocking, carried, attended-owned §7.6):** `goal-tracker.test.mjs:17` category-count is RED on main independent of this drain (standing F-1: 11 categories vs a hardcoded 5). Baseline before this drain = 1 pass / 1 fail; the tp03 goal-leaf flip to `merged`/`f3a81d61…` (full 40-char, ancestral) does not touch category structure, so the count stays unchanged.
 - Firewall held: no store-API rework, no consumer changes, no sync-provider rework. The `TileStateStore` touch is exactly scope item 2's event emission on the existing commit path.

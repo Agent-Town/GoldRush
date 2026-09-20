@@ -1,8 +1,8 @@
 # s2528 — Story merge references match the shipped chapters
 
-Commit `fb58951c5` corrects E4 and E6 merge references in the goal leaves, review headers and live BACKLOG rows. E4 first landed at `4e58d637a`, E6 at `373638978`; the previously recorded `d8bbee797` changes only STATUS. The proof checks first-parent file additions and main ancestry, retained in `story-provenance.json`. No runtime files or prior gate verdicts changed.
+Commit `e185e1f33` corrects E4 and E6 merge references in the goal leaves, review headers and live BACKLOG rows. E4 first landed at `06b03dfe7`, E6 at `8788bc5f5`; the previously recorded `17a36b367` changes only STATUS. The proof checks first-parent file additions and main ancestry, retained in `story-provenance.json`. No runtime files or prior gate verdicts changed.
 
-The inherited s2527 handoff was already clear. Its exact line was archived in the s2528 lock commit `69d115697`, before other work. Attended finish-plan writers retain the smoke-36, heat12, story and performance worktrees; their outputs were neither drained nor reset.
+The inherited s2527 handoff was already clear. Its exact line was archived in the s2528 lock commit `803bf2a68`, before other work. Attended finish-plan writers retain the smoke-36, heat12, story and performance worktrees; their outputs were neither drained nor reset.
 
 ## Factory checks
 
@@ -21,6 +21,6 @@ The full `npm run test:ledger-guards` runs after the CLEARED handoff. Its unmodi
 
 A repo-wide whitespace check observed generated dashboard whitespace; the path-scoped check on this correction passed. That writer-owned output was left alone.
 
-Next fire: re-read the attended finish plan and current worktree ownership, drain only eligible output, and repeat recurring checks. The corrected references must not be restored from the earlier handoff. The prior remote-main divergence has been reconciled by attended commit `924d41496`, verified as the live origin main ancestor before backup; actual push results are recorded separately.
+Next fire: re-read the attended finish plan and current worktree ownership, drain only eligible output, and repeat recurring checks. The corrected references must not be restored from the earlier handoff. The prior remote-main divergence has been reconciled by attended commit `0c8c9259b`, verified as the live origin main ancestor before backup; actual push results are recorded separately.
 
-Completed: the closing battery exited **0 in 208.31 seconds**, with **1,050 node assertions and 83 shell assertions passed**. Desk declaration, birth and carry-forward evaluated on the cleared handoff and passed. The recorded HEAD interval includes attended BACKLOG-only commit `ca22398e0`; this is documented concurrent movement, not a runtime gate claim. The final Gazette sweep still reports zero candidates. Handoff backup to origin succeeded; this completed evidence bundle is included in the final backup push.
+Completed: the closing battery exited **0 in 208.31 seconds**, with **1,050 node assertions and 83 shell assertions passed**. Desk declaration, birth and carry-forward evaluated on the cleared handoff and passed. The recorded HEAD interval includes attended BACKLOG-only commit `99a524d7b`; this is documented concurrent movement, not a runtime gate claim. The final Gazette sweep still reports zero candidates. Handoff backup to origin succeeded; this completed evidence bundle is included in the final backup push.

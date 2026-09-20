@@ -1,6 +1,6 @@
 # minds-and-rigs — two fan pages: aggregate stats for MINDS (models) and RIGS (harnesses)
 
-**Slice:** `minds-and-rigs` · **branch:** `lane/b` · **tip:** `12fbc2e08` · **drained:** s1620, 2026-08-10 · **authored:** ATTENDED (Cowork orchestrator, `ac87deb31`), from an owner directive
+**Slice:** `minds-and-rigs` · **branch:** `lane/b` · **tip:** `d55312b06` · **drained:** s1620, 2026-08-10 · **authored:** ATTENDED (Cowork orchestrator, `0aba28806`), from an owner directive
 
 **VERDICT: MERGE.** Delivers the owner's ask in full, honesty-labelled, with the ranking contract proved untouched by 34 adjacent county assertions. One non-blocking layout observation (F-1620-6).
 
@@ -58,7 +58,7 @@ The runner's expected-vs-served JSON for one group matched exactly on every fiel
 
 ## Merge classification
 
-Base: `main` at `2c1426d99`. Lane 1 ahead, 28 behind at gate time; the merge brought main's 28 forward with **zero conflicts** and no overlap with the slice's six paths.
+Base: `main` at `f2551606f`. Lane 1 ahead, 28 behind at gate time; the merge brought main's 28 forward with **zero conflicts** and no overlap with the slice's six paths.
 
 | Path | Class | Resolution |
 |---|---|---|

@@ -2,7 +2,7 @@
 
 **Slice:** `lane-board-chapter-seed-scope` (fire-authored by s1112 from F-1112-1)
 **Branch/tip:** `lane/e2-arsenal` @ `10e1a24c` (runner(lane-c), 2026-07-27T08:41:58+07)
-**Base:** `4a3ee80b`
+**Base:** `82c368fb`
 **Drained by:** s1113 fire, 2026-07-27
 **§3.0 drain-block-check:** ✅ CLEAR — `[board-chapter-seed-scope] status="authored"`
 
@@ -26,7 +26,7 @@ No import added (`profileDataKey` was already in use on the adjacent `town`/`sco
 
 | | |
 |---|---|
-| merge-base | `4a3ee80b` |
+| merge-base | `82c368fb` |
 | LANE-TOUCHED | **4 files, all `e2e/`**, 4 insertions / 4 deletions |
 | Overlap with main's moves | **NONE** |
 | Debris | **ZERO** |

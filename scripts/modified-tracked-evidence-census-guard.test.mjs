@@ -110,7 +110,7 @@ function variantOf(find, replace) {
  * is removed in a `finally` — the form `scripts/fixture-teardown.test.mjs` uses for its own
  * scratch. Before this, the eleven fixture-owning tests below left eleven `mtec-*` trees in TMPDIR
  * on every run, so the sweep that runs each guard as a child and counts survivors was red on main
- * from `ba1cac4e0` (2026-09-17) on. The wrapper, rather than a `finally` typed out eleven times,
+ * from `1cd8dbbd3` (2026-09-17) on. The wrapper, rather than a `finally` typed out eleven times,
  * keeps each test body byte-identical: the fires iterate on this file.
  */
 function withFixture(make, run) {

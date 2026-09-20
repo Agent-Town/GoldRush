@@ -28,8 +28,8 @@ perf-03 committed `bb9b48d` to lane/perf at **15:06:02**; the very next lane-d t
 Absolute draw-call reduction is validated by the perf-02 spec's envelope assertions passing (they enforce the budget; perf-03 lowered usage further). All building-visual suites green = zero visual regression.
 
 ## Merge classification
-- **Orphan** `bb9b48d`, parent (base) = `704b9f0` (s200 refill = lane/perf's reset point before perf-03 committed).
-- `git diff 704b9f0..main` over perf-03's 5 src files → **only `generated.ts`** moved on main (town-T5 `5081312` added 8 townsfolk asset-map entries).
+- **Orphan** `bb9b48d`, parent (base) = `1e53b2b` (s200 refill = lane/perf's reset point before perf-03 committed).
+- `git diff 704b9f0..main` over perf-03's 5 src files → **only `generated.ts`** moved on main (town-T5 `435cda8` added 8 townsfolk asset-map entries).
 - **4 files LANE-TOUCHED-only** (`fullBaseBenchmark.ts`, `SentryBeacon.ts`, `pools.ts`, `Vfx.ts`) → clean `git checkout bb9b48d -- …`.
 - **`generated.ts` = disjoint 3-way**: perf-03's edit is in the `GeneratedSpriteBatch` class (lines ~219-265); town-T5's is the asset-URL map (lines ~6-14). Non-overlapping hunks. Applied perf-03's three hunks via Edit onto main's townsfolk version; verified `git diff bb9b48d -- generated.ts` = ONLY the 8 townsfolk lines → **both changes retained, neither reverted**.
 - Artifact churn in the orphan commit (26 PNGs under artifacts/056, correctives-0707, w1-05) was NOT brought over — screenshot noise, out of the perf firewall.

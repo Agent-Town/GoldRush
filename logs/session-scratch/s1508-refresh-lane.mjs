@@ -9,8 +9,8 @@ console.log('after :', head.slice(0, 9));
 console.log('ahead/behind vs main:', run('rev-list', '--left-right', '--count', 'main...HEAD'));
 // prove the lane contains the master's own commit
 try {
-  execFileSync('git', ['-C', wt, 'merge-base', '--is-ancestor', '244e13448', 'HEAD']);
-  console.log('CONTAINS 244e13448: yes');
+  execFileSync('git', ['-C', wt, 'merge-base', '--is-ancestor', '557a78c70', 'HEAD']);
+  console.log('CONTAINS 557a78c70: yes');
 } catch {
-  console.log('CONTAINS 244e13448: NO');
+  console.log('CONTAINS 557a78c70: NO');
 }

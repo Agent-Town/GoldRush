@@ -28,8 +28,8 @@ The EIGHT WINDS program binds 17 diagonal sprite sheets. Slice 1 (the hero) coul
 
 | commit | date | what | shipped cells changed | masters changed |
 |---|---|---|---|---|
-| `21dc8739` | 2026-07-13 | `fix-walk-cutout-pockets` | **80** | **0** |
-| `04732223` | 2026-07-12 | `town-cast-metrology` | **3** | **0** |
+| `ad64b175` | 2026-07-13 | `fix-walk-cutout-pockets` | **80** | **0** |
+| `8b7b803a` | 2026-07-12 | `town-cast-metrology` | **3** | **0** |
 
 Of those, the ones that have a paired master are exactly **26**, and they are the 26 the control fails on. Measured three independent ways by s1176 (git provenance; per-sheet pixel control; whole-tree pixel control), all agreeing exactly:
 
@@ -48,10 +48,10 @@ Of those, the ones that have a paired master are exactly **26**, and they are th
 ## Scope
 
 **1. MEASURE FIRST, AND REPORT — this scope changes no files.**
-Establish, with evidence, whether the 26 mends are reproducible at master resolution. `21dc8739` tracked its own tools: `artifacts/fix-walk-cutout-pockets/pockets.mjs` and `artifacts/fix-walk-cutout-pockets/feather-and-qa.mjs` are in git. Read them. Report, in the run report:
+Establish, with evidence, whether the 26 mends are reproducible at master resolution. `ad64b175` tracked its own tools: `artifacts/fix-walk-cutout-pockets/pockets.mjs` and `artifacts/fix-walk-cutout-pockets/feather-and-qa.mjs` are in git. Read them. Report, in the run report:
    - Are their operations resolution-independent, or do they assume 256 px (fixed pixel radii, thresholds, kernel sizes)? Quote the lines that decide it.
    - Consequently: could applying them to the 512 px masters yield a downscale that is **byte-identical** to today's shipped cells? State YES / NO / UNKNOWN **and the reason**.
-   - Do the same for `04732223`'s 2 metrology cells if it tracked a tool; if it did not, say so plainly.
+   - Do the same for `8b7b803a`'s 2 metrology cells if it tracked a tool; if it did not, say so plainly.
    This is a written finding, not a code change. **A well-evidenced "NO" is a full success** — it is exactly what tells a later attended session that the exclusion route below is the right one permanently rather than provisionally.
 
 **2. Give the control a provenance-aware reference set.**

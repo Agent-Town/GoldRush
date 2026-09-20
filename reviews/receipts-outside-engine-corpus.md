@@ -2,8 +2,8 @@
 
 **Slice:** `tasks/receipts-outside-engine-corpus.md`
 **Branch/tip:** main-slot runner output, gated as detached `gate-s2502` @ `16f82ae0a`
-**Base:** `2a9f3f906c9acda34bdb99dc0b3f572c35696b83`
-**Merged:** `89b12c79976a9bc8cf520c0030d5215b7de30a2b`
+**Base:** `be2d03f810da65d8ad16b6f66198918d899ce00a`
+**Merged:** `65b07c671beadcf5d22fb76eef88141cea6b80de`
 
 ## Verdict
 
@@ -24,7 +24,7 @@ The unchanged receipt artifact moves from `assets/contracts/` to `assets/rotatio
 | receipt regeneration identity | before = after = `e6f25014d9a6729bd93192d3f9fa14bb8735263b1c147a09fa3dfd22292382b9` |
 | generated skill.md fence | byte-identical; sha256 `9e8fdf8ec5394bc9e79eb654e77c917e29574781a3685bd4b700ee9c471e7cfd`; 5,525 bytes |
 | changed-surface full gate | **4/5** groups green; sole red is F-2499-2's pre-existing `gauntlet-heat11-unclaimed-sweep` prose merge hash, reproduced byte-identically on main |
-| independent `codex review --base 2a9f3f906` | no findings; it independently re-ran tsc/build and the 9 focused guards green |
+| independent `codex review --base be2d03f81` | no findings; it independently re-ran tsc/build and the 9 focused guards green |
 | browser/console gate | N/A: no `src/`, `site/`, `public/`, or `functions/` output changed; the generated public fence is byte-identical |
 
 ## Merge classification

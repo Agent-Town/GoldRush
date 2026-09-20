@@ -2,7 +2,7 @@
 
 - **Slice**: `tasks/lane-c-power-budget-retry-policy.md` (authored s1172, F-1170-4's remedy)
 - **Branch / tip**: `lane/e2-arsenal` @ `319e6304` — one commit ahead, `runner(lane-c): lane-c-power-budget-retry-policy.md`
-- **Merge base**: `e1c32005` (the s1172 handoff). Main moved by exactly one commit since (`0c4e92d9`, STATUS.md only).
+- **Merge base**: `88a7c5e3` (the s1172 handoff). Main moved by exactly one commit since (`21d71fe2`, STATUS.md only).
 - **Drained**: s1173 fire, 2026-07-28
 - **§3.0 drain-block-check**: `✅ CLEAR — lane-c-power-budget-retry-policy.md [factory-power-budget-retry-policy] status="queued"` — run first, before classification.
 

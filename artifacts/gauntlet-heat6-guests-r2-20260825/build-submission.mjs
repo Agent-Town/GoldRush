@@ -12,7 +12,7 @@ const entries = tape.inputLog?.entries;
 if (!Number.isInteger(duration) || duration < 0 || duration > limit) throw new Error(`invalid tape durationTicks: ${duration}`);
 if (!Array.isArray(entries) || entries.some(({ t }) => !Number.isInteger(t) || t < 0 || t >= duration)) throw new Error('invalid tape entry tick');
 if (tape.outcome?.secured !== true) throw new Error('refusing to submit an unsecured tape');
-if (tape.meta?.buildId !== '61681a776') throw new Error(`wrong deployed build: ${tape.meta?.buildId}`);
+if (tape.meta?.buildId !== '2701f6b56') throw new Error(`wrong deployed build: ${tape.meta?.buildId}`);
 
 const sha256 = (value) => createHash('sha256').update(value).digest('hex');
 const submission = {

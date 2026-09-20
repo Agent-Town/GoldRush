@@ -1,8 +1,8 @@
 # f1428-2 — make the never-electric guard able to fire
 
 **Slice:** `f1428-2-make-the-never-electric-guard-able-to-fire` (F-1428-2)
-**Branch:** `lane/perf` · **Lane tip:** `0f7f45fd` · **Base:** `9b755fca`
-**Merge:** `b09729e53ba5aa1b008807480c6e2eaaaa32b2e0`
+**Branch:** `lane/perf` · **Lane tip:** `ba8ad305` · **Base:** `a16cf0ba`
+**Merge:** `ffc18459e327455b16c72350502fa295310201a4`
 **Drained:** s1429, 2026-08-03
 
 ## VERDICT: MERGED — the acceptance was a manufactured red, and I reproduced both arms myself rather than reading the runner's quote of them.
@@ -118,4 +118,4 @@ no conflicts, no 3-way graft needed.
 
 **No gazette item.** This is a factory/test-instrument repair with zero player surface — the
 master explicitly forbade changing any visual value, and the firewall check confirms none moved.
-The player sees exactly the same town as before `b09729e5`.
+The player sees exactly the same town as before `ffc18459`.

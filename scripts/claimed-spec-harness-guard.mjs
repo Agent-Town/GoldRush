@@ -5,7 +5,7 @@
 // WHY (F-1398-1, filed s1398, priced s1399/s1479, predicate chosen and built s1482)
 //   Three e2e specs are claimed EXCLUSIVELY by another Playwright config and are `testIgnore`d
 //   by the default one (`playwright.config.ts`, the `claimedByAnotherConfig` array, landed
-//   `c8ed271c4` 2026-07-31T21:34 as the F-1296-3 cure). A master that tells a runner to run one
+//   `395bc04be` 2026-07-31T21:34 as the F-1296-3 cure). A master that tells a runner to run one
 //   of them WITHOUT naming its owning config prescribes a command that cannot execute.
 //
 //   Measured s1482, and it fails LOUDLY rather than falsely green:
@@ -37,16 +37,16 @@
 // THE TIME DIMENSION — the half nobody had measured, and it changes who is guilty.
 //   The inherited row named `lane-b-approach-convergence-class.md` as one of two canonical
 //   offenders and prescribed a correction note for it. Measured s1482: that master was authored
-//   `ec72d12bc` 2026-07-29, THREE DAYS BEFORE `c8ed271c4` made its command invalid. Its command
+//   `335020046` 2026-07-29, THREE DAYS BEFORE `395bc04be` made its command invalid. Its command
 //   was correct when written. Of the 6 arm-(b) offenders, only 2 postdate the config change —
 //   and they are NOT the 2 that arm (a) finds:
 //
-//       f1397-1-e1-release-door-drill-yard.md      a821ff629  2026-08-02  AFTER   <- live
-//       lane-a-f1305-2-console-watch-single-source a821..187d26736 2026-08-01  AFTER   <- live
-//       lane-a-cp04-lever-unlock-seed-realign.md   831a8ea5e  2026-07-28  BEFORE  <- grandfathered
-//       lane-b-approach-convergence-class.md       ec72d12bc  2026-07-29  BEFORE  <- grandfathered
-//       lane-b-cp04-charter-name-composition.md    839a0d7a8  2026-07-28  BEFORE  <- grandfathered
-//       lane-b-cp04-launch-clear-observability.md  1a836c08f  2026-07-29  BEFORE  <- grandfathered
+//       f1397-1-e1-release-door-drill-yard.md      55f4c9050  2026-08-02  AFTER   <- live
+//       lane-a-f1305-2-console-watch-single-source a821..4aff1a7c6 2026-08-01  AFTER   <- live
+//       lane-a-cp04-lever-unlock-seed-realign.md   c33b33873  2026-07-28  BEFORE  <- grandfathered
+//       lane-b-approach-convergence-class.md       335020046  2026-07-29  BEFORE  <- grandfathered
+//       lane-b-cp04-charter-name-composition.md    bcdbe98fb  2026-07-28  BEFORE  <- grandfathered
+//       lane-b-cp04-launch-clear-observability.md  3dd9bcade  2026-07-29  BEFORE  <- grandfathered
 //
 //   Reding on a master that was correct when authored is exactly the "reds on history nobody
 //   agreed was a defect" hazard the row warned about — but for a reason nobody had identified.
@@ -73,13 +73,13 @@ import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { execSync } from 'node:child_process';
 
-// Masters authored BEFORE c8ed271c4 (2026-07-31T21:34), when naming no config was correct.
+// Masters authored BEFORE 395bc04be (2026-07-31T21:34), when naming no config was correct.
 // Each entry must keep the commit that proves it. Deleting an entry is how the debt is paid.
 export const GRANDFATHERED = new Map([
-  ['tasks/lane-a-cp04-lever-unlock-seed-realign.md', 'added 831a8ea5e 2026-07-28, predates c8ed271c4'],
-  ['tasks/lane-b-approach-convergence-class.md', 'added ec72d12bc 2026-07-29, predates c8ed271c4'],
-  ['tasks/lane-b-cp04-charter-name-composition.md', 'added 839a0d7a8 2026-07-28, predates c8ed271c4'],
-  ['tasks/lane-b-cp04-launch-clear-observability.md', 'added 1a836c08f 2026-07-29, predates c8ed271c4'],
+  ['tasks/lane-a-cp04-lever-unlock-seed-realign.md', 'added c33b33873 2026-07-28, predates 395bc04be'],
+  ['tasks/lane-b-approach-convergence-class.md', 'added 335020046 2026-07-29, predates 395bc04be'],
+  ['tasks/lane-b-cp04-charter-name-composition.md', 'added bcdbe98fb 2026-07-28, predates 395bc04be'],
+  ['tasks/lane-b-cp04-launch-clear-observability.md', 'added 3dd9bcade 2026-07-29, predates 395bc04be'],
 ]);
 
 const SELFCHECK = /^\s*(#+\s*)?(\*\*)?(SELF-?CHECK|GATES?|SELF CHECK|ACCEPTANCE)/i;

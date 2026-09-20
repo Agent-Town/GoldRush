@@ -1,7 +1,7 @@
 # 3D-C-BETA — Fairground landmark pack
 
 - Branch: `sol/lm-beta-fairground`
-- Fresh reference: `30576b07f2d4a14a65ac5692068f1c1d94b9d388`
+- Fresh reference: `733722e25b42f88ab6a1860e2775109b1061edec`
 - Verdict: **READY-FOR-GATES**
 - Scope: Fairground only. No E6–E10 pack functions, assets, contracts, artifacts, or map-specific ledger entries may change.
 - Interlock: production bodies are mount-agnostic; canonical `landmarkMounts` remain empty and owned by 3D-D.

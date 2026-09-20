@@ -46,7 +46,7 @@ test('hero pans, fires, and returns to walk with curated pose frames', async ({ 
   expect(magentaPixels(attack)).toBe(0);
 
   // RE-POINTED 2026-09-07 (attended drain of hero-slot-clip-split, F-HCS-5). Measured per frame on the
-  // pre-hero-move tree (502a398d9) and on today's main, byte-identical timelines: holding D after the
+  // pre-hero-move tree (22cf98cfe) and on today's main, byte-identical timelines: holding D after the
   // swing, the hero walks east at 5.1 wu/s while the animator already shows `char-hero-sheet-walk8-`
   // SOURCE frames from ~0.9 s, but the `clip` label reads `attack` until the pose timer expires
   // (~1.4 s), and this seed's river bank at x ~ 2.94 stops the hero at ~1.1 s, so the old wait

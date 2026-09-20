@@ -25,7 +25,7 @@ must print **1**. If it prints 0 the lane is stale — STOP and report, do not r
 1. **Reproduced** on main: `TypeError: Module ".../m1-core.layer-contract.v1.json?raw" needs an import attribute of "type: json"`.
 2. **Bisected** the 432-file corpus to a single culprit spec: `e2e/ap16-6-browser-seat.spec.ts` reproduces `0 tests` **alone**.
 3. **Static chain:** `e2e/ap16-6-browser-seat.spec.ts` → `src/mp/AgentRiderBody.ts` → `src/agent/ToolSurface.ts` → `src/world/Terrain.ts`.
-4. **A/B by commit** (detached worktree): parent `f0bf01138` → **2988 tests in 431 files**; `405efbbf6` (`runner(lane-b): embodied-build-v2.md`, 2026-08-30T17:31:31+07:00) → **0 tests**. That commit added `ToolSurface.ts`'s Terrain import; the other three spec-reachable Terrain edges (`Embodiment.ts`, `WaveSystem.ts`, `FreedWalkerVfx.ts`) date from July and are NOT the cause.
+4. **A/B by commit** (detached worktree): parent `12710087e` → **2988 tests in 431 files**; `272e56ba6` (`runner(lane-b): embodied-build-v2.md`, 2026-08-30T17:31:31+07:00) → **0 tests**. That commit added `ToolSurface.ts`'s Terrain import; the other three spec-reachable Terrain edges (`Embodiment.ts`, `WaveSystem.ts`, `FreedWalkerVfx.ts`) date from July and are NOT the cause.
 5. **A/B by LINE** on main's tip, in a detached worktree: severing that one import (and stubbing `:164`) → **2996 tests in 431 files**. One line accounts for the entire outage.
 
 ⚖️ **Severity, stated honestly and not inflated: this is NOT a false green.** The listing exits **rc=1** and the `whole-suite-collection` guard reds correctly in `test:node-guards`. What it costs is **coverage**: the whole-suite gate is unrunnable, while **targeted spec runs still pass** — so a drain gating only its own spec reads green with the suite dark behind it. Nothing shipped is known-wrong because of this.
@@ -41,7 +41,7 @@ must print **1**. If it prints 0 the lane is stale — STOP and report, do not r
 
 ## Firewall
 Touch ONLY: `src/agent/ToolSurface.ts`, the minimum call sites needed to inject the predicate (`src/mp/AgentRiderBody.ts`, `src/agent/AgentStub.ts`, and the live composition root you identify), the new guard script, and `package.json`'s battery line if you root the guard there.
-NO: `src/world/Terrain.ts` (do not touch the `?raw` import — it is correct for the browser bundle and predates this defect by two months), NO changes to `Embodiment.ts` / `WaveSystem.ts` / `FreedWalkerVfx.ts`, NO edits to existing specs except where injection genuinely requires a call-site argument, NO `playwright.config.ts` changes, NO reverting `405efbbf6` (its other twelve files are wanted work — cure the edge, not the commit).
+NO: `src/world/Terrain.ts` (do not touch the `?raw` import — it is correct for the browser bundle and predates this defect by two months), NO changes to `Embodiment.ts` / `WaveSystem.ts` / `FreedWalkerVfx.ts`, NO edits to existing specs except where injection genuinely requires a call-site argument, NO `playwright.config.ts` changes, NO reverting `272e56ba6` (its other twelve files are wanted work — cure the edge, not the commit).
 
 ## Self-check (evidence, not vibes)
 - `npx tsc --noEmit` clean; `npm run build` green.

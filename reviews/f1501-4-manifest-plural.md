@@ -1,8 +1,8 @@
 # f1501-4-manifest-plural — drain review (s1506)
 
 **Slice:** `f1501-4-manifest-plural` (cures F-1501-4)
-**Branch / tip:** `lane/c` @ `3e2f36a37df990c2a710aaa63f0fc399c94748cf`
-**Base:** `57325c64a150c61a06a46318b9ea9e677099d51f` (the s1505 commit that authored the master)
+**Branch / tip:** `lane/c` @ `26b9d25e05042186d7e65bd0aff4665e9511f67b`
+**Base:** `7e29859ee3576a5f623077ca35b15da0259c4e4f` (the s1505 commit that authored the master)
 **Gated in:** detached worktree `gate-s1506` (§3.0b — main's working tree never held undecided content)
 **Verdict:** ✅ **MERGE.** One non-blocking finding (F-1506-1), not attributable to this slice.
 

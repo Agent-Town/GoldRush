@@ -1,7 +1,7 @@
 # 3D-C-BETA — Blackout Ridge landmark pack
 
 - Branch: `sol/lm-beta-blackout-ridge`
-- Fresh reference: `e91dc835a7a8f0e873dfee1c236e67860173eeb3`
+- Fresh reference: `7e716624496418b38b654d3780132feef115d1d2`
 - Verdict: **READY-FOR-GATES**
 - Scope: Blackout Ridge only. No E6–E10 pack functions, assets, contracts, or ledger entries changed.
 - Interlock: five production bodies are complete; canonical `landmarkMounts` remain empty and owned by 3D-D.

@@ -1,6 +1,6 @@
 # Review: preview-unlock-all — "Open every claim" on the town board, preview builds only (scratch worktree, Claude Opus 5 implementer, attended drain 2026-09-06 early)
 
-**Slice/branch/tip:** `preview-unlock-all` · `feat/preview-unlock-all` · commits `9113f8300`, `36d9be81b`, `c7392e313`, `7e38b4790` · merged to main: see the ledger row (first-parent merge; no `src/` collision).
+**Slice/branch/tip:** `preview-unlock-all` · `feat/preview-unlock-all` · commits `8d448229f`, `598e6b553`, `48a78be69`, `e2e1f3b2e` · merged to main: see the ledger row (first-parent merge; no `src/` collision).
 **Verdict:** MERGED. In a plain boot of a preview build the owner can open all 42 contracts and all ten chapters from the town board ("Open every claim" / "Lock the board again"), each opened card tagged "Opened for testing"; the E1 release bundle carries not one byte of it, proven on the built text rather than assumed.
 
 ## What it does
@@ -24,6 +24,6 @@ Screenshots: `artifacts/preview-unlock-all/*.jpg` (10 frames, 776 KB total).
 
 ## Findings
 - **F-UNLOCK-1 (measured, non-blocking):** the open count is 17, not 16: `e2-hill-mine`'s gate is the era predicate `epoch-2-steamworks` (`ContractUnlock.ts:149`), which a last-era profile satisfies without securing anything. Both arms assert the measured numbers.
-- **F-UNLOCK-2 (raised, then refuted by its own check):** the worktree's registry looked stale against main's hash; main was already pinned (`ddbd978e0`). Corrected in the ledger row rather than left standing (Mistake #4).
+- **F-UNLOCK-2 (raised, then refuted by its own check):** the worktree's registry looked stale against main's hash; main was already pinned (`76a0a27d8`). Corrected in the ledger row rather than left standing (Mistake #4).
 - **F-UNLOCK-3 (lesson, cured here):** the first e1 build leaked two preview strings because the guard was a runtime test; a release-only flag is compiled out because a define folds its branch, not because it is unreachable. Every existing preview surface guarded the first way deserves the same grep: fire-authorable sweep.
 - **F-UNLOCK-4 (disclosed, outside the firewall):** `src/assets/AdvanceStream.ts:124` follows board order rather than the player's real frontier while the flag is on; correct for a testing build, invisible in release.

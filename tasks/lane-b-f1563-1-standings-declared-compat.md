@@ -12,13 +12,13 @@ READ FIRST:
 
 ## ⛔ PRE-FLIGHT — THIS LANE IS NOT TO BE RESET. READ THIS FIRST; IT INVERTS THE USUAL RULE.
 
-`lane/b` holds **undrained** work: commit **`0a1fa333e050e9c7e1d0d553e57c835c53472268`** (f-board-1), which s1563 gated and **HELD, not merged**. Its content is **absent from main**. This task builds **ON TOP** of it.
+`lane/b` holds **undrained** work: commit **`1d822dea60ca6a7c27bff19f549217621b96a2b5`** (f-board-1), which s1563 gated and **HELD, not merged**. Its content is **absent from main**. This task builds **ON TOP** of it.
 
 The usual `git checkout -B lane/b main` pre-flight would **DESTROY that commit** — the exact shape that cost w1-03 and polish-02 (Mistake #2). **Do not run it. Do not reset. Do not `clean -fd`.**
 
 Run these four checks and **STOP-and-report on any mismatch** — do not "fix" a mismatch, report it:
 
-1. `git -C worktrees/lane-b rev-parse HEAD` → must print **`0a1fa333e050e9c7e1d0d553e57c835c53472268`**.
+1. `git -C worktrees/lane-b rev-parse HEAD` → must print **`1d822dea60ca6a7c27bff19f549217621b96a2b5`**.
 2. `grep -c "function isStandingStack" src/encyclopedia/reader.ts` → must print **`1`**. (It prints `0` on main; s1563 verified both. A `0` here means the lane was reset out from under this task — **STOP, and say so plainly: the f-board-1 work is recoverable from `archive/lane-b-s1563-fboard1-0a1fa333e`.**)
 3. `git -C worktrees/lane-b status --short` → clean, with the **FACTORY-CHURN EXCEPTION** (F-1407-1), always expected and never a STOP: `logs/**`, `artifacts/**`, `reviews/shots-*`, any `.png`. List what you discard. What still STOPs: modified tracked `src/**`, `scripts/**`, `e2e/**`, `tasks/**`, `specs/**`, `reviews/*.md`.
 4. `npm install --no-audit --no-fund`, then `npm run build` green **before touching anything**.

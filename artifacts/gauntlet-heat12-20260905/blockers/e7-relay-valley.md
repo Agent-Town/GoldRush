@@ -24,7 +24,7 @@ promoted as the scored attempt. The rig stopped itself at 919 s of a 1500 s wall
 **The E7 objective latch is discharged, reliably and cheaply.** On *every* controller ride:
 `now.playbookUse.objectiveMet: true`, `relaysLitByProgram: ['relay-site-r3']`, `programRuns: 1`, at
 **t = 11.6 s** on the cheap line. This is the direct consequence of the week's change — the
-`e7-playbook-rows` drain (`b38d60295`) added `PLAYBOOK_USE` and the signal-system composition to the
+`e7-playbook-rows` drain (`0a2a6fdcf`) added `PLAYBOOK_USE` and the signal-system composition to the
 four Signal Era maps, and `e7-player-playbook-parity` made `E7PlaybookLatch.ts` the single four-rule
 secure decision. **Heat 11 rode this map with no playbook verb at all and reached wave 4.** Heat 12
 reached wave 15 with the objective met in under twelve seconds.

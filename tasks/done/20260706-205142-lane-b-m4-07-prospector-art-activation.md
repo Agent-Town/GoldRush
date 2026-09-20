@@ -14,7 +14,7 @@ READ FIRST: AGENTS.md; docs/GOLD_RUSH_BRIEF.md §6–7 (agent) + §9.2/§9.4 (ca
 `src/assets/SpriteAnimator.ts`; `assets/layer-contracts/characters.v2.json`.
 
 ## Pre-flight (SAFE reset — drain-gated per LANE-SAFETY law)
-lane/m4 is MERGED into main as of s82 (`28a6165`). CONFIRM before resetting: run
+lane/m4 is MERGED into main as of s82 (`5417dd0`). CONFIRM before resetting: run
 `git checkout lane/m4 && git log --oneline main..lane/m4` — if that prints ANY commit, STOP
 and report (there is unmerged lane output; do NOT reset). If it is EMPTY (expected), proceed:
 `git reset --hard main && git clean -fd && npm install --no-audit --no-fund`, then `npm run build`

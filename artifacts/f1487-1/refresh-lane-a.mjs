@@ -2,7 +2,7 @@
 /**
  * s1487 — refresh lane-a to origin/main before dispatch.
  *
- * DISPATCH ORDER (F-1424-3): the master and its evidence are committed FIRST (9101fc31,
+ * DISPATCH ORDER (F-1424-3): the master and its evidence are committed FIRST (947f1330,
  * pushed), the lane is refreshed SECOND, the master's own citation grep runs BETWEEN 2 and
  * 3, and the `cp` into the queue is THIRD. s1424 refreshed before committing and the runner
  * claimed the slot one commit short of the evidence its master told it to grep — 44,007

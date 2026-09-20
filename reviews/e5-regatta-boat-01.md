@@ -1,6 +1,6 @@
 # Drain review — `e5-regatta-boat-01`: the Claim-Boat is the steerable body both species sail (A14 slice 1)
 
-**Slice/branch/tip:** `e5-regatta-boat-01` · `feat/e5-regatta-boat-01` @ `34257a71c` (four commits by a Claude Opus 5 implementer on the owner's Anthropic subscription, scratch worktree, port 5321) · **base** `32524c8f6` · **merge** `fd8f765e3` · **drained** attended 2026-09-20 · **master** `tasks/e5-regatta-boat-01.md` · **spec** `specs/agent-play/e5-regatta-steerable-boat.md` slice 1 · **owner** 2026-09-20 "A14 - do it" (the four recommendations ratified 2026-09-19).
+**Slice/branch/tip:** `e5-regatta-boat-01` · `feat/e5-regatta-boat-01` @ `34257a71c (archive: pruned by the A3 rewrite)` (four commits by a Claude Opus 5 implementer on the owner's Anthropic subscription, scratch worktree, port 5321) · **base** `65f8efafe` · **merge** `e417e71df` · **drained** attended 2026-09-20 · **master** `tasks/e5-regatta-boat-01.md` · **spec** `specs/agent-play/e5-regatta-steerable-boat.md` slice 1 · **owner** 2026-09-20 "A14 - do it" (the four recommendations ratified 2026-09-19).
 
 ## VERDICT: LANDED — all seven scope items, the null floors byte-identical, one tape hash on both engines
 
@@ -29,7 +29,7 @@ Where the player meets it: boot `e5-regatta`, walk onto the boat's port rail, an
 Transcripts: `artifacts/e5-regatta-boat/drain-gates-summary.txt`, `drain-e2e-merged-tree.log`, `drain-battery-merged-tree.log`; the implementer's report `artifacts/e5-regatta-boat/report.md`.
 
 ## Merge classification
-Base `32524c8f6`; every touched file is **LANE-TOUCHED only** (no main commit since the base): `src/entities/ClaimBoat.ts`, `src/sim/DeepwaterSocket.ts`, `src/sim/HeadlessContractSim.ts`, `src/game/Game.ts`, `src/world/ClaimBoatView.ts`, `src/world/DeepwaterClaimTile.ts`, `src/agent/StandingOrders.ts`, `assets/contracts/epoch-5-deepwater/contracts.json`, `package.json` (the guard's entry); NEW `e2e/e5-regatta-boat.spec.ts`, `scripts/regatta-boat-steer.test.mjs`, `artifacts/e5-regatta-boat/**`. Inside the master's firewall; `RegattaRaceSystem`, the view, `skill.md`, `Balance` untouched.
+Base `65f8efafe`; every touched file is **LANE-TOUCHED only** (no main commit since the base): `src/entities/ClaimBoat.ts`, `src/sim/DeepwaterSocket.ts`, `src/sim/HeadlessContractSim.ts`, `src/game/Game.ts`, `src/world/ClaimBoatView.ts`, `src/world/DeepwaterClaimTile.ts`, `src/agent/StandingOrders.ts`, `assets/contracts/epoch-5-deepwater/contracts.json`, `package.json` (the guard's entry); NEW `e2e/e5-regatta-boat.spec.ts`, `scripts/regatta-boat-steer.test.mjs`, `artifacts/e5-regatta-boat/**`. Inside the master's firewall; `RegattaRaceSystem`, the view, `skill.md`, `Balance` untouched.
 
 ## Findings
 - **F-RB1-1 (for slice 2):** `DeepwaterSocket.advanceRace` still passes `[hero, boat.anchor]`; the anchor is now the mooring and no longer follows the sailing hull (the live point is `boat.motion`). The course scores right for a sailing boat only because the hero rides the hull's point; a swimming hero still passes gates. Slice 2 makes the boat the racer and closes the swimming-hero path.

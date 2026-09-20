@@ -39,16 +39,16 @@ proceed and do NOT attempt a refresh yourself.
 ```
 
 The ledger's F-2280-4 row diagnoses this as the fixture's **coupling** having rotted — historical `BACKLOG.md`
-at `2e02098f` paired with a **live** `dashboard-gen.sh` whose row-selection rule has drifted, so that
+at `87649873` paired with a **live** `dashboard-gen.sh` whose row-selection rule has drifted, so that
 `F-1030-2` "is no longer among" the drawn rows — and prescribes: *pin the panel script alongside the BACKLOG at
 the same commit.* **s2282 measured that diagnosis and both of its halves are false.**
 
 | # | Question | Measured result |
 |---|---|---|
-| 1 | Does the LIVE panel rule still draw `F-1030-2` from the `2e02098f` ledger? | **YES** — it is among the 7 selected rows. The row (`BACKLOG:1459`) matches neither the live nor the historical exclusion vocabulary. |
-| 2 | Does the prescribed cure (pin BOTH at `2e02098f`) restore the red? | **NO** — 15 rows selected, **still 0 offenders, status 0.** |
+| 1 | Does the LIVE panel rule still draw `F-1030-2` from the `87649873` ledger? | **YES** — it is among the 7 selected rows. The row (`BACKLOG:1459`) matches neither the live nor the historical exclusion vocabulary. |
+| 2 | Does the prescribed cure (pin BOTH at `87649873`) restore the red? | **NO** — 15 rows selected, **still 0 offenders, status 0.** |
 | 3 | Then what disarmed it? | `subjectLedClosure(backlog,'F-1030-2')` → **`[]`**, while `subjectLedClosure(backlog,'F-1040-1')` → **`[1461]`**. |
-| 4 | When? | `subjectLedClosure` occurs **0×** in the guard before `020f62c0b` and **2×** after. That commit is *"fix: one F-ID pattern, correct at both ends … (F-2228-1)"*, 2026-08-23 — one day before the red was first logged. |
+| 4 | When? | `subjectLedClosure` occurs **0×** in the guard before `7f3b80f26` and **2×** after. That commit is *"fix: one F-ID pattern, correct at both ends … (F-2228-1)"*, 2026-08-23 — one day before the red was first logged. |
 
 **MECHANISM.** `F-1030-2`'s closure lives at `BACKLOG:1461`, on a row whose subject zone reads
 *"F-1040-1 / F-1030-2 UPDATE"*. F-2228-1 taught this guard **subject-first attribution**: a row states the state
@@ -65,7 +65,7 @@ property its own comment calls load-bearing (*"A guard that cannot red here is d
 
 **FEASIBILITY IS ESTABLISHED, so this task cannot dead-end.** s2282 replayed today's full rule (live selection +
 wide census + subject-first) across `tasks/BACKLOG.md` history, sampling every 25th commit: **64 historical
-commits still red.** Worked example — `d5407705` (2026-08-06): 17 rows, offenders
+commits still red.** Worked example — `a32d7c00` (2026-08-06): 17 rows, offenders
 `F-1310-1, F-1269-1, F-1270-1, F-1457-1`. You are **not** required to use that commit; you are required to
 justify whichever you pick.
 
@@ -75,13 +75,13 @@ justify whichever you pick.
    `tasks/BACKLOG.md` from git, the **live** `dashboard-gen.sh` (the `:14–15` comment's reason still holds — a
    stub would test nothing), an assertion that the guard exits **1** naming a specific offender, and the paired
    assertion that the **live root greens**. Pick the commit yourself and **verify it before you rely on it**;
-   do not paste `d5407705` on my word alone (Mistake #4 — my sample was 1-in-25 and is not a census).
+   do not paste `a32d7c00` on my word alone (Mistake #4 — my sample was 1-in-25 and is not a census).
 2. **Write down WHY that pair reds, in a comment, in terms of the mechanism** — the offender's own row is on the
    panel AND its closure is **subject-led by that same id**. The comment at `:37–39` currently narrates the
    2026-07-30 owner directive; whatever you replace it with must make the *next* reader able to tell a rotted
    fixture from a real regression without re-deriving what this task derived.
 3. **Pin the behaviour that disarmed the old pair, so it can never silently revert.** Add an arm asserting that
-   on the `2e02098f` ledger the guard does **NOT** flag `F-1030-2`, *because* its closure row is subject-led by
+   on the `87649873` ledger the guard does **NOT** flag `F-1030-2`, *because* its closure row is subject-led by
    `F-1040-1`. This converts a rotted assertion into a live regression pin for F-2228-1 and keeps the real
    incident in the suite rather than deleting it (Retention Law: supersede, never erase).
 4. **Do NOT edit `blocker-panel-closed-guard.mjs`, `desk-state-audit.mjs`, or `findings-state-guard.mjs`.**

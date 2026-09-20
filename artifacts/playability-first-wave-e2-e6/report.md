@@ -1,6 +1,6 @@
 # playability-first-wave-e2-e6 — the first minute, measured and cured
 
-**Task:** `tasks/playability-first-wave-e2-e6.md` · **Branch:** `feat/playability-first-wave-e2-e6`, cut from main `894c88287` · **Implementer:** Opus, scratch worktree, Anthropic subscription (`tasks/CODEX-WALL` stands) · **Date:** 2026-09-16
+**Task:** `tasks/playability-first-wave-e2-e6.md` · **Branch:** `feat/playability-first-wave-e2-e6`, cut from main `b9f452b67` · **Implementer:** Opus, scratch worktree, Anthropic subscription (`tasks/CODEX-WALL` stands) · **Date:** 2026-09-16
 **Owner, verbatim (2026-09-16):** *"yeah, we have tokens left - lets work on these failing contracts"*.
 
 ## VERDICT
@@ -301,7 +301,7 @@ Measured, six runs (3 passes x 2 projects): `practice objective reachable after 
 | `e2-incline-02` | `secured false, waves 1, 65933 ms, kills 15, fnv1a32:d00617e9` | `secured false, waves 5, 206133 ms, kills 96, fnv1a32:50ff0a9a` |
 
 `e6-picnic`'s two floors are **byte-identical to main's** (the experiment was reverted before the record).
-`eraStamp` moved `9382083d3 -> 894c88287`: that field is *derived* (`git merge-base HEAD main`, short), not authored,
+`eraStamp` moved `3b3f427a3 -> b9f452b67`: that field is *derived* (`git merge-base HEAD main`, short), not authored,
 so it follows the branch point and will follow main's on the drain.
 
 ### Census re-points: **none were needed, and that is a measured statement, not an omission**

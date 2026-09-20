@@ -1,6 +1,6 @@
 # Review — lane-c freed-walkers (turn-back ghosts replace the death poof)
 
-**Slice:** `lane-c-freed-walkers` · **Branch:** `lane/e2-arsenal` tip `2b08966b` · **Merge:** `21658b09` (no-ff onto main) · **Drained:** s659 fire, 2026-07-16
+**Slice:** `lane-c-freed-walkers` · **Branch:** `lane/e2-arsenal` tip `0626bc2d` · **Merge:** `e44fb04e` (no-ff onto main) · **Drained:** s659 fire, 2026-07-16
 **Verdict:** ✅ PASS — merged.
 
 ## What it does
@@ -12,7 +12,7 @@ On a non-boss/non-elite `enemy_killed`, a new **render-only, pooled** `FreedWalk
 Concurrency cap 10 (desktop/balanced) / 6 (lite/mobile) via `PerformanceTier`; deaths beyond the cap keep today's exact behavior (dust puff only). The sim path is untouched — `enemies.recycle` fires on the same tick; XP/gold/targeting/waves/audio unchanged.
 
 ## Merge classification
-Base = merge-base `fb1da42d` (2026-07-16 10:18 main). **Zero** main commits since base touch any lane file → all 8 files **LANE-TOUCHED-ONLY**, no MAIN-MOVED, no 3-way. New: `src/systems/FreedWalkerVfx.ts` (447), `e2e/freed-walkers.spec.ts` (200), 3 shots. Edited (all within firewall): `src/systems/CombatSystem.ts` (+9/-1 — import, field, ctor `new FreedWalkerVfx(vfx)`, reset/dispose delegates, one `freedWalkers.spawn(enemy)` after `dustPuff`), `src/game/PerformanceTier.ts` (+4, `freedWalkerCap` on all 3 tiers), `src/vite-env.d.ts` (+1 diagnostics type). Clean no-ff merge.
+Base = merge-base `a60cc21e` (2026-07-16 10:18 main). **Zero** main commits since base touch any lane file → all 8 files **LANE-TOUCHED-ONLY**, no MAIN-MOVED, no 3-way. New: `src/systems/FreedWalkerVfx.ts` (447), `e2e/freed-walkers.spec.ts` (200), 3 shots. Edited (all within firewall): `src/systems/CombatSystem.ts` (+9/-1 — import, field, ctor `new FreedWalkerVfx(vfx)`, reset/dispose delegates, one `freedWalkers.spawn(enemy)` after `dustPuff`), `src/game/PerformanceTier.ts` (+4, `freedWalkerCap` on all 3 tiers), `src/vite-env.d.ts` (+1 diagnostics type). Clean no-ff merge.
 
 ## Evidence (gates on the merged tree)
 | Gate | Result |
@@ -31,4 +31,4 @@ Base = merge-base `fb1da42d` (2026-07-16 10:18 main). **Zero** main commits sinc
 
 ## Findings
 - **F-1 (non-blocking, contention flake):** `task-025-bandits-dont-swim.spec.ts:111` (mobile-chrome, "enemy reaches hero through the ford only") failed once under the 30-test/2-worker adjacent battery; **passed in isolation single-worker (5.4s)**. Freed-walkers touches no enemy-movement/ford/wave code (disjoint), so this is the known gate-battery-contention false-red, not a regression. No corrective owed.
-- **F-2 (pre-existing, NOT this slice, attended-owned):** `scripts/goal-tracker.test.mjs` "goal tree schema is valid" is RED — it hardcodes 5 expected top-level categories but `tasks/goals.json` now has 11 (attended's goal-tree expansion). Red on main before this drain. Its OTHER assertion ("merged leaves have a done receipt + ancestral merge") **passes** with this slice's `freed-walkers` leaf flipped to merged/`21658b09`. Fix owned by attended (on OWNER'S DESK since s658); not touched here (§7.6).
+- **F-2 (pre-existing, NOT this slice, attended-owned):** `scripts/goal-tracker.test.mjs` "goal tree schema is valid" is RED — it hardcodes 5 expected top-level categories but `tasks/goals.json` now has 11 (attended's goal-tree expansion). Red on main before this drain. Its OTHER assertion ("merged leaves have a done receipt + ancestral merge") **passes** with this slice's `freed-walkers` leaf flipped to merged/`e44fb04e`. Fix owned by attended (on OWNER'S DESK since s658); not touched here (§7.6).

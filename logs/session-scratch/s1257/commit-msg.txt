@@ -1,13 +1,13 @@
 feat: GG-03e — the Herald's eighth class engraving (ceremony) + decode proof
 
 Graft of lane/m3 dd08bc1a onto clean main. Zero MAIN-MOVED files
-(git log dfed3765..main over all 15 paths = empty), applied byte-identical
+(git log 7307d588..main over all 15 paths = empty), applied byte-identical
 to the branch tree for all 15 (sha256-verified, logs/session-scratch/s1257/graft.mjs).
 
 WHAT IT ACTUALLY DOES — narrower than its master claimed (F-1256-2):
 the master's defining premise ("no herald-engraving-*.webp exists, the map
 resolves to nothing, the Herald is silently text-only for every class") was
-FALSE; s1256 measured all seven as tracked on main since b5be7ab3. So this
+FALSE; s1256 measured all seven as tracked on main since 15e00755. So this
 slice is NOT the wiring of the Herald's engravings — those already shipped.
 It is: +1 class (ceremony) on HeraldClass and in the map, +1 plate, a
 decode() assertion, the roster-count invariant 13->14, and a re-encode of

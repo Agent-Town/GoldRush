@@ -61,7 +61,7 @@ for the favicon exists at all, `:223` fails with certainty.** That is not a flak
 mis-classifies a browser-chrome icon on the deliberate critical path as a deferred game texture.
 
 **The open question this task must answer, because it decides whether anything else is wrong:** the
-favicon files are dated **Jul 5**, which is *before* perf-05 shipped 2/2 green (s216, `8bd9eca`,
+favicon files are dated **Jul 5**, which is *before* perf-05 shipped 2/2 green (s216, `4afb57f`,
 `reviews/perf-05.md`). Something changed between then and now. The two candidates worth one measurement
 each are (a) headless Chromium's favicon-fetch behaviour changed under a Playwright/browser bump, so the
 resource-timing entry now exists where it used to be absent, or (b) a favicon `<link>` / filename changed.
@@ -74,7 +74,7 @@ first frame and wave spawn. The measured window is **wide** — desktop 2592→6
 **nothing landed in it.** Three readings are open and they are not equally bad:
 1. the prefetch still runs but the resource names/URLs no longer contain those needles (measurement bug);
 2. the prefetch runs *earlier* than first frame, or *later* than wave spawn (window bug);
-3. **the wave-1 prefetch stopped happening** — a real regression against `8bd9eca`'s shipped behaviour.
+3. **the wave-1 prefetch stopped happening** — a real regression against `4afb57f`'s shipped behaviour.
 
 Reading 3 is a **product** finding and is out of your firewall. Diagnose which one it is; do not fix
 reading 3 (see FIREWALL).
@@ -169,7 +169,7 @@ BACKLOG:425) and running it only re-imports someone else's failure into your rep
 Zero console/page errors on both viewports.
 
 End: **READY-FOR-GATES** + report: the scope-1 attribution confirmation (which assertion, which string),
-the scope-2 icon row dump + browser version + which of (a)/(b) explains the drift since `8bd9eca`, the
+the scope-2 icon row dump + browser version + which of (a)/(b) explains the drift since `4afb57f`, the
 audit of every needle in both lists for collision, **the scope-4 two-halves control (the acceptance
 evidence)**, and the scope-5 classification of defect 2 with its evidence — naming plainly whether it is
 a measurement bug you fixed or a product regression you are handing to the owner.

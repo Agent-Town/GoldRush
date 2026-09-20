@@ -1,7 +1,7 @@
 # art-e7-chalk-portrait — DRAIN REVIEW (s1164)
 
 **Slice:** `art-e7-chalk-portrait` (ATTEMPT 2) · **Slot:** ART (commits into main's own tree — gate-and-bless, not a merge)
-**Tip:** `ad7f2a9cccfbb3e5b4f99574cdb50f12fdae96a8` `runner(art): art-e7-chalk-portrait.md`, 2026-07-28T11:54:59+07:00
+**Tip:** `8117dfde7cc35f776111a16ac0f12ef232c7ffdc` `runner(art): art-e7-chalk-portrait.md`, 2026-07-28T11:54:59+07:00
 **Run:** `tasks/runs/20260728-113706-art-e7-chalk-portrait.md` · **Done-move:** `20260728-113544-art-e7-chalk-portrait.md`
 **§3.0 `drain-block-check`:** ✅ **CLEAR** — `[e7-art-chalk-portrait] status="queued"`. Run as the first command, before classification and before I formed an opinion.
 
@@ -90,7 +90,7 @@ LEDGER row 60's convention, not just per-master boilerplate.
 
 ## Canon — checked by viewing the art at full size and at 120px, against `lore/characters.md` §CHALK
 
-Ruling #14 (owner, 2026-07-28, `e2be3177`): *"it is the first agent/made citizen and that should show. How should the
+Ruling #14 (owner, 2026-07-28, `56828e2a`): *"it is the first agent/made citizen and that should show. How should the
 town be an expert at making them when they are just starting out?"*
 
 | Canon clause | Verdict |
@@ -113,7 +113,7 @@ slate) separates cleanly at that size.
 
 ## Firewall — checked STRUCTURALLY, not quoted
 
-`git show --name-status ad7f2a9c`:
+`git show --name-status 8117dfde`:
 
 ```
 M  assets/LEDGER.md
@@ -143,7 +143,7 @@ forbidden); no extraction, no `assets/processed/` output, no contract wiring (re
   portrait in the ledger to date (previous max: `tf-storekeeper` 143.9). Legitimate: she is brass, and brass is warm.
   Recorded only so a future era-transform EDIT of this file (canon: every later Chalk is an image-edit of it) knows it
   has **no headroom above** and must not drift warmer.
-- ⓘ **F-1162-1 did NOT bite this run.** `ad7f2a9c` swept only its own output plus the two runner-generated `logs/`
+- ⓘ **F-1162-1 did NOT bite this run.** `8117dfde` swept only its own output plus the two runner-generated `logs/`
   files. The pending untracked set at 11:54 contained nothing foreign — I had committed my own work beforehand, and no
   attended file was uncommitted at repo root. **The defect is unfixed and the runner is still un-restarted**; this run
   was clean by luck of timing, not by cure. F-1162-1 stands on the owner's desk.

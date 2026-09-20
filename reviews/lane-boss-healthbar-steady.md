@@ -2,7 +2,7 @@
 
 **Slice:** `tasks/lane-boss-healthbar-steady.md`
 **Branch:** `lane/m3` (lane-a) · **Tip:** `183562b30f056b9aa0ad37e83df6ae11a17d56a7`
-**Merge-base:** `4983ce0385df3bee69a79bee7486c626e3d0b8f6`
+**Merge-base:** `7dc69e36730208b3988b37226a48292c6dd0ed83`
 **Drained by:** s1443 fire, 2026-08-03
 **Verdict:** ✅ **MERGED FULL** — every scope item satisfied, firewall held, all reds proven pre-existing by a clean-main control in the same worktree/server/port.
 
@@ -64,7 +64,7 @@ All four live in `e2e/e2-enemies.spec.ts` and **none** is in the boss-bar path.
 | `:113` "wave pulses spawn…" → asserts at **`:125`**, `maxHp` **34.02** vs **37.9323** | FAILS desktop + mobile | **FAILS desktop + mobile, byte-identical numbers** | `logs/suite-red-inventory.md:102-103` |
 | `:314` "same seed keeps the E2 roster wave deterministic" → asserts at **`:317`**, hash mismatch | FAILS desktop + mobile | **FAILS desktop + mobile** | `logs/suite-red-inventory.md:100-101` |
 
-The control was proven main-equivalent, not assumed: `HEAD == main` (`5c509edf`) with an **EMPTY** `git status --porcelain -- src e2e reviews`, run in the same worktree, against the same server, on the same port (5188 — see the correction above).
+The control was proven main-equivalent, not assumed: `HEAD == main` (`b072e984`) with an **EMPTY** `git status --porcelain -- src e2e reviews`, run in the same worktree, against the same server, on the same port (5188 — see the correction above).
 
 Per F-1441-2 / F-1440-3, the discriminator is the **inner assertion line**, and both match exactly (`:125`, `:317`). Per the F-1442-1 standing, the reporter was read **raw** — no filter was applied to any run that decided this merge. `:314`'s hashes differ between arms and between runs; that is the defect itself (it compares two fresh sessions to each other, so it has no pinned baseline), and its assertion line and failure mode match the inventory exactly.
 

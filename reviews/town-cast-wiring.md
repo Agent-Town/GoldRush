@@ -1,6 +1,6 @@
 # Review — town-cast-wiring (lane-c)
 
-Slice: `town-cast-wiring` · branch `lane/c` · tip `712dcc9f2` · base `main`
+Slice: `town-cast-wiring` · branch `lane/c` · tip `be3898c18` · base `main`
 Drained: s2249, 2026-08-23 · gated in detached worktree `worktrees/gate-s2249` (§3.0b)
 
 ## VERDICT: PASS — merged
@@ -43,7 +43,7 @@ one-time bbox read at fit time.
 
 ## Merge classification
 
-Base `main` at `7f67ab8db`. Seven paths, all inside the master's firewall.
+Base `main` at `32c90bbad`. Seven paths, all inside the master's firewall.
 `git merge-tree` proved the three-way clean before anything was touched.
 
 | Path | Class | Resolution |

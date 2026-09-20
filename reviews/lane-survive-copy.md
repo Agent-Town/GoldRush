@@ -1,6 +1,6 @@
 # lane-survive-copy — E1 cards say "survive" where survive is the truth
 
-Slice: `lane-survive-copy` · branch `lane/e2-arsenal` · lane tip `c922d39e` · merge-base `0ae711c9` · drained s1328
+Slice: `lane-survive-copy` · branch `lane/e2-arsenal` · lane tip `67282ffa` · merge-base `9d6e66c3` · drained s1328
 Verdict: **MERGED (path-scoped graft, 17 lane files + 2 drain-side propagation edits)**
 
 ## What it does
@@ -19,7 +19,7 @@ Three E1 contracts change one goal line each:
 
 ## Merge classification
 
-Base `0ae711c9`; main had **not** moved any of the three lane-touched files since the base (`git log base..main -- <files>` empty) → clean LANE-TOUCHED graft, no 3-way needed.
+Base `9d6e66c3`; main had **not** moved any of the three lane-touched files since the base (`git log base..main -- <files>` empty) → clean LANE-TOUCHED graft, no 3-way needed.
 
 ⚠️ **Stale-base trap avoided.** The two-dot diff (`main..lane`) showed a **fourth** file, `e2e/charter-press-totality.spec.ts` (`9 +--------`), absent from the three-dot diff: that is **MAIN-MOVED-ONLY** (s1326's F-1324-3 label-addressing fix, which the lane's base predates). A whole-branch merge or a blind copy would have **reverted** it. Taken files were enumerated explicitly; `charter-press-totality.spec.ts` was **not** taken.
 
@@ -57,7 +57,7 @@ All fire-side playwright runs `--workers=1` (§3.1). Both projects (desktop-chro
 ## Findings
 
 **F-1328-1 — the drill-yard merge broadcast a value it changed and left main red across three specs. 🟡 OPEN (corrective owed).**
-`f0bf5251` (`runner(lane-b): lane-drill-yard.md`, 2026-08-01 08:14) added `e1-drill-yard` as a **6th** E1 contract (42nd overall) without updating any spec that asserts an E1 **census**. Measured blast radius — 7 red assertions across 3 specs:
+`f86b28b3` (`runner(lane-b): lane-drill-yard.md`, 2026-08-01 08:14) added `e1-drill-yard` as a **6th** E1 contract (42nd overall) without updating any spec that asserts an E1 **census**. Measured blast radius — 7 red assertions across 3 specs:
 
 | Spec | assertion | status |
 |---|---|---|

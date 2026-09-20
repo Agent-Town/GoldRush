@@ -10,7 +10,7 @@ import { createServer } from 'vite';
 // county board. On 2026-09-06 the ADR-004 re-assay could not replay it: three instrument attempts
 // each said "tape ran out after 36001 steps with the run still alive", and the row was retired
 // with a lineage reason. Bisected by instrument (`artifacts/relay-rush-replays-again/bisect/`),
-// the first commit that changes that reel's outcome is `b38d60295` — the e7-playbook-rows merge,
+// the first commit that changes that reel's outcome is `0a2a6fdcf` — the e7-playbook-rows merge,
 // which landed one hour after the ride and made the era's own errand the price of the claim:
 // `autoSecureWaveForRun` gained `|| !this.playbookObjectiveAllowsSecure`
 // (`src/sim/HeadlessContractSim.ts:1473`), and on THIS map that clause reads
@@ -215,7 +215,7 @@ test('the retired reel is now refused one step earlier: its declared runStart is
   // RE-POINTED 2026-09-18 (F-DRB-11 item 1). This test was "the retired reel reaches wave 20 with
   // its purse and still cannot secure" and it replayed 18,101 steps to read `refusals.playbooks`
   // off the engine. The reel is a heat-11 ride, already retired under ADR-004 on 2026-09-06 for a
-  // DIFFERENT cause (the e7-playbook-rows composition change, `b38d60295`, the file header above).
+  // DIFFERENT cause (the e7-playbook-rows composition change, `0a2a6fdcf`, the file header above).
   // A second, later refusal now stands in front of that one, measured here rather than assumed:
   // the tape declares `runStart.research.epochId: "epoch-1-frontier"` while the door reconstructs
   // `epoch-7-signal` for this contract — both on a virgin sim and after installing the tape's own

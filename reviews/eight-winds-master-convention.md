@@ -1,7 +1,7 @@
 # eight-winds-master-convention — drain review (s1177)
 
 - **Slice:** EIGHT-WINDS master convention — provenance-aware downscale control
-- **Branch / tip:** `lane/e2-arsenal` @ `9a0bde4e` (base `b8ca4aca`)
+- **Branch / tip:** `lane/e2-arsenal` @ `9a0bde4e` (base `be1f9f23`)
 - **Run report:** `tasks/runs/20260728-174607-lane-c-eight-winds-master-convention.md`
 - **Verdict:** ✅ **ACCEPT — merged.** Scope 1 returned a well-evidenced **NO** (plus an honest
   **UNKNOWN** for the second provenance commit); per the s1176 handoff that is a full success,
@@ -21,8 +21,8 @@ and a reason) and makes the guard provenance-aware: it now classifies every mast
 
 | Provenance commit | Reproducible at 512px? | Evidence |
 |---|---|---|
-| `21dc8739` cutout-pocket mends | **NO** | The tracked tools are resolution-dependent: a 40-pixel component floor (`pockets.mjs:44`), 4-px search padding and 1-px alpha feather (`feather-and-qa.mjs:25-26,41-45`) are fixed pixel ops that do not scale. Read-only replay against all 24 paired masters: `CUTOUT_MASTER_REPLAY=0/24 byte-identical`. Clearest symptom: the 512px detector finds **zero** pockets in `char-hero-sheet-walk8-r0c4.png`, yet the 256px shipped cell is a committed mend. |
-| `04732223` metrology mends | **UNKNOWN (honest)** | The commit tracks changed cells + visual artifacts but **no repair script** under `artifacts/cast-metrology/`. Its task permitted re-extraction *or* an alpha patch without recording which. No tracked operation exists to replay, so reproduction cannot be established from repo evidence. |
+| `ad64b175` cutout-pocket mends | **NO** | The tracked tools are resolution-dependent: a 40-pixel component floor (`pockets.mjs:44`), 4-px search padding and 1-px alpha feather (`feather-and-qa.mjs:25-26,41-45`) are fixed pixel ops that do not scale. Read-only replay against all 24 paired masters: `CUTOUT_MASTER_REPLAY=0/24 byte-identical`. Clearest symptom: the 512px detector finds **zero** pockets in `char-hero-sheet-walk8-r0c4.png`, yet the 256px shipped cell is a committed mend. |
+| `8b7b803a` metrology mends | **UNKNOWN (honest)** | The commit tracks changed cells + visual artifacts but **no repair script** under `artifacts/cast-metrology/`. Its task permitted re-extraction *or* an alpha patch without recording which. No tracked operation exists to replay, so reproduction cannot be established from repo evidence. |
 
 ⇒ The exclusion route is **permanent, not provisional**. A later attended/owner session deciding
 the 26-cell data question now has that written down.
@@ -62,7 +62,7 @@ duplicate exclusion all exit 1.
 
 ## Merge classification
 
-Base `b8ca4aca`. `git log b8ca4aca..main` moved **only `STATUS.md`** (the s1176 handoff + this
+Base `be1f9f23`. `git log be1f9f23..main` moved **only `STATUS.md`** (the s1176 handoff + this
 fire's lock), so main touched none of the three paths. All **LANE-TOUCHED only — no graft, no
 conflict**:
 

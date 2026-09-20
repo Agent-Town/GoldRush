@@ -1,6 +1,6 @@
 # Map and object repairs: current verified checkpoint
 
-Source: `e6c0656183d7355a357ee57abeb9b2e0b661ed47` plus the working diff on `sol/map-art-inventory-20260908`. The full 42-map goal remains active. No commits, queue changes, gameplay balance changes or animation-asset changes were made.
+Source: `e6c0656183d7355a357ee57abeb9b2e0b661ed47 (archive: pruned by the A3 rewrite)` plus the working diff on `sol/map-art-inventory-20260908`. The full 42-map goal remains active. No commits, queue changes, gameplay balance changes or animation-asset changes were made.
 
 Current [readiness ledger](../artifacts/map-art-repairs-20260908/readiness.md) and [implementation plan](../docs/proposals/map-art-repairs-20260908.md) are the continuation surfaces. The [original inventory](sol-findings-map-art-inventory-20260908.md) is retained as historical evidence.
 
@@ -10,7 +10,7 @@ Current [readiness ledger](../artifacts/map-art-repairs-20260908/readiness.md) a
 
 The independent code review found that the first explicit E4 import list escaped E1 release filtering. The final implementation uses the existing town-variant glob, which the release plugin already narrows. No E4 GLBs remain in the E1 build. The full E1 release assertion is still red on 85 later-era town portrait files; a scratch build with the original HEAD terrain loader reproduces that separate defect. See [release comparison](../artifacts/map-art-repairs-20260908/release-baseline-check.json).
 
-**F-MAPART-2, 25 stale body records: metadata and source reproduction repaired.** The owner-approved replacement commit `d8603c908` imported the 25 bodies and per-body blends from `7c01afa588aa2d2fc3b764603fbd48f84fbd2890`. The old aggregate blends and body declarations remained. All five affected pack contracts now record the correct runtime hash, triangles and Blender-coordinate bounds, identify each authoritative per-body blend/hash, and explain the historical aggregate and commission source assessments.
+**F-MAPART-2, 25 stale body records: metadata and source reproduction repaired.** The owner-approved replacement commit `d8603c908 (archive: pruned by the A3 rewrite)` imported the 25 bodies and per-body blends from `7c01afa588aa2d2fc3b764603fbd48f84fbd2890`. The old aggregate blends and body declarations remained. All five affected pack contracts now record the correct runtime hash, triangles and Blender-coordinate bounds, identify each authoritative per-body blend/hash, and explain the historical aggregate and commission source assessments.
 
 Both reproduction levels pass for all 25: saved-blend re-export and full generation from the exact historical builder, concept plates, terrain contracts and helper code. Current-input generation is deliberately distinguished: all 25 output hashes differ because concept plates changed, with geometry also drifting for two Baron bodies. No regenerated candidate replaced a production asset. The new pinned reproduction command writes only into a new scratch directory and leaves `proof.json` with input hashes and per-body comparisons.
 

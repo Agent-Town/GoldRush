@@ -4,7 +4,7 @@
 
 The live Era 4 simulator mints deterministic, assay-verifiable tapes with full `meta.buildId`, `meta.era`, and `meta.engineHash`. Three submitted rows—the operator probe, OMP Claim, and OpenClaw Claim—verified against their original event-log hashes.
 
-The public WATCH projection does **not** carry the full Era 4 papers. For every verified row, `.reel.meta` was exactly `{"buildId":"81caa6956"}`: both `meta.era` and `meta.engineHash` were missing. This is the tape-proof finding the attended EH-3b playback session must take forward.
+The public WATCH projection does **not** carry the full Era 4 papers. For every verified row, `.reel.meta` was exactly `{"buildId":"4dd88e1b2"}`: both `meta.era` and `meta.engineHash` were missing. This is the tape-proof finding the attended EH-3b playback session must take forward.
 
 ## Field matrix
 
@@ -30,11 +30,11 @@ The public WATCH projection does **not** carry the full Era 4 papers. For every 
 
 ## Verified slips and WATCH duty
 
-- Operator probe: tape `agent-0b91cbb4-f4879d5c-fa40-4817-9537-72e63f0087cf`, `assay:"verified"`, `assayHash:"fnv1a32:8886f412"`; `.reel.meta = {"buildId":"81caa6956"}`.
-- OMP Claim: tape `agent-90ebe418-32a73f30-8ccb-4d35-a4d1-4d44dc293e57`, `assay:"verified"`, `assayHash:"fnv1a32:775ec7ed"`; `.reel.meta = {"buildId":"81caa6956"}`.
-- OpenClaw Claim: tape `agent-1caf920e-9df34c0c-3324-498e-93f3-f749e57d93a1`, `assay:"verified"`, `assayHash:"fnv1a32:8b91245f"`; `.reel.meta = {"buildId":"81caa6956"}`.
+- Operator probe: tape `agent-0b91cbb4-f4879d5c-fa40-4817-9537-72e63f0087cf`, `assay:"verified"`, `assayHash:"fnv1a32:8886f412"`; `.reel.meta = {"buildId":"4dd88e1b2"}`.
+- OMP Claim: tape `agent-90ebe418-32a73f30-8ccb-4d35-a4d1-4d44dc293e57`, `assay:"verified"`, `assayHash:"fnv1a32:775ec7ed"`; `.reel.meta = {"buildId":"4dd88e1b2"}`.
+- OpenClaw Claim: tape `agent-1caf920e-9df34c0c-3324-498e-93f3-f749e57d93a1`, `assay:"verified"`, `assayHash:"fnv1a32:8b91245f"`; `.reel.meta = {"buildId":"4dd88e1b2"}`.
 
-Exact finding: **a verified row's WATCH response carries `.reel.meta = {"buildId":"81caa6956"}` and omits both `meta.era` and `meta.engineHash`, although its submitted tape carries all three fields.** Reproduced 3/3 verified rows.
+Exact finding: **a verified row's WATCH response carries `.reel.meta = {"buildId":"4dd88e1b2"}` and omits both `meta.era` and `meta.engineHash`, although its submitted tape carries all three fields.** Reproduced 3/3 verified rows.
 
 ## Other findings
 

@@ -1,6 +1,6 @@
 # Review — THE TOWN BEAUTY SHIFT (docs/beauty/town-brief.md)
 
-**Slice/branch/tip:** beauty/town, base `c708f27d` (main at shift start) · one Opus-5 solo-writer shift, 2026-08-02/03
+**Slice/branch/tip:** beauty/town, base `551a1e73` (main at shift start) · one Opus-5 solo-writer shift, 2026-08-02/03
 **Brief:** `docs/beauty/town-brief.md` (Fable art-director pass) · program laws: `docs/beauty/README.md`
 **Verdict:** ✅ SEVEN UPGRADES SHIPPED, ONE REVERTED ON MEASUREMENT (U6 sky/vista) — rendering only, zero sim bytes, frame p95 flat inside noise on all ten frames, zero console/page errors.
 
@@ -77,7 +77,7 @@ Every upgrade was implemented → rendered through `e2e/beauty-town.rig.ts` → 
 **Frame p95 moves by at most 0.3ms on any frame, in both directions — the +15% law has an order of magnitude of room.** Two honest caveats on that number, both stated so nobody reads it as more than it is:
 
 1. **frame p95 is a ceiling here.** Headless chromium runs rAF at ~10ms; an idle scene cannot show a render cost below that. The number that actually moves is `renderMs` (CPU inside `renderer.render`, shadow pass included) — which fell or held on 8 of the 10 frames. Both are published on `__GR_TOWN_DIAGNOSTICS__` now, which is new.
-2. **This box also runs the factory's fires.** The same idle scene measured 2.2ms and 4.2ms p95 minutes apart on the first pass, so the rig now takes the least-contended of three consecutive windows. The whole BEFORE board was re-shot from a throwaway worktree at `c708f27d` with the identical instrument, so every pair above compares like with like.
+2. **This box also runs the factory's fires.** The same idle scene measured 2.2ms and 4.2ms p95 minutes apart on the first pass, so the rig now takes the least-contended of three consecutive windows. The whole BEFORE board was re-shot from a throwaway worktree at `551a1e73` with the identical instrument, so every pair above compares like with like.
 
 ### Lite tier — measured, and the call it produced
 
@@ -112,7 +112,7 @@ Per-upgrade boards live in `reviews/shots-beauty-town/u1…u8/`; they are partia
 
 **F-BT-2 — the town camera cannot show a horizon; the sky is an owner-desk item. OPEN.** `Balance.camera.offset` (0, 26.2, 18.3) over town scale 1.5 puts the camera 17.5u up and 12.2u back; at fov 42 the **top edge of the frame sits 34.1° below horizontal**, so the farthest ground any frame can contain is **25.8u from the camera** — about 15u past the hero at the widest allowed zoom. The plate ends at 15u. A vista ring at r30-45 is off-frame by construction, and so is the horizon itself; three framings (default, widest 1.1, mobile portrait) show ground running to every frame edge. The brief's own don'ts put zoom clamps and default framing on the owner's desk (F-1203-2), so I measured, reverted, and left the arithmetic in the code where the next reader will look. **Recommendation:** if a horizon is wanted, it is a camera-pitch ruling, not a scenery task — a shallower town pitch (or a "look up" framing for the dusk marketing frame) would make U6's sky worth building in an afternoon.
 
-**F-BT-3 — `town-t5-townsfolk:203` is FLAKY, and pre-existing. NOT MINE.** *approach barks identify sampled speakers and the Prospector greets by town name* went red on desktop **and** mobile in two runs on this branch (`activeBark.actorId` came back `"prospector"` where a specific speaker was expected — the Prospector's 6.5u bark radius wins the sample), then **passed** in the final full-family run. Control: the same test goes red the same way on the pre-shift base `c708f27d`, in a throwaway worktree with none of this shift's changes. So: pre-existing intermittent, not a shift regression, and worth a real fix by someone who owns bark radii — an assertion that depends on which of two overlapping barkers speaks first is a coin flip, not a gate.
+**F-BT-3 — `town-t5-townsfolk:203` is FLAKY, and pre-existing. NOT MINE.** *approach barks identify sampled speakers and the Prospector greets by town name* went red on desktop **and** mobile in two runs on this branch (`activeBark.actorId` came back `"prospector"` where a specific speaker was expected — the Prospector's 6.5u bark radius wins the sample), then **passed** in the final full-family run. Control: the same test goes red the same way on the pre-shift base `551a1e73`, in a throwaway worktree with none of this shift's changes. So: pre-existing intermittent, not a shift regression, and worth a real fix by someone who owns bark radii — an assertion that depends on which of two overlapping barkers speaks first is a coin flip, not a gate.
 
 **F-BT-4 — `TownScene` reads the FLAT meta key, and only a start-menu profile activation copies the profile-scoped one across. OPEN.** Any route that reaches the town directly (history state, a deep link) therefore shows a **territory-0 town**: four buildings, eight townsfolk, no store, no chapel. It cost this shift a whole BEFORE board before the rig seeded both keys. Harmless today because nothing ships a deep link into the town; it will not stay harmless.
 
@@ -130,7 +130,7 @@ Per-upgrade boards live in `reviews/shots-beauty-town/u1…u8/`; they are partia
 | `npm run build` | green (2.46s; asset-diet ran, no budget breach) |
 | `e2e/beauty-town.spec.ts` (new plain-boot door) | 4 passed, desktop + mobile, 6.7s |
 | town family, one run, both viewports: beauty-town + t1-square, t5-townsfolk, t6-surfaces, ts-02b-facades, ts-03-prop-ring, plate/tavern/plaza-props blender, scale-zoom, inhabitant-zoom, era-switch, cast-motion-wiring, fresh-boot-textures | **51 passed, 0 failed (13.7m)** |
-| earlier runs of the same family | 2 reds, both `town-t5-townsfolk:203`; control-proven identical on the pre-shift base `c708f27d` → pre-existing intermittent (F-BT-3), not a shift regression |
+| earlier runs of the same family | 2 reds, both `town-t5-townsfolk:203`; control-proven identical on the pre-shift base `551a1e73` → pre-existing intermittent (F-BT-3), not a shift regression |
 | Console/page errors | zero on all ten capture frames, both viewports, and in every spec's error bucket |
 | Screenshots | `reviews/shots-beauty-town/{before,u1…u8,after}/` — small PNGs, pushed |
 | Per-shot perf | `artifacts/beauty-town/perf-<phase>-<project>-<shot>.json` (frame/render stats, draw calls, triangles, contact + dressing counts, error buckets) |

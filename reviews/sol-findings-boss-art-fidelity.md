@@ -1,6 +1,6 @@
 # Boss models preserve identity but lose the art's defining shapes
 
-Date: 2026-09-08. Review base: `d41ab98ce`. Branch: `sol/boss-art-fidelity-review`.
+Date: 2026-09-08. Review base: `d41ab98ce (archive: pruned by the A3 rewrite)`. Branch: `sol/boss-art-fidelity-review`.
 Scope: read-only art, asset and runtime investigation requested by Robin. No models, source code, canon, specs, or game balance changed.
 
 **Verdict: substantial improvement is possible. The next pass should correct specific shapes and surface treatment, rather than uniformly increase polygon counts.**

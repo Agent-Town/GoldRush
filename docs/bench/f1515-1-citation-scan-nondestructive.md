@@ -7,14 +7,14 @@ Outcome: **READY-FOR-GATES**
 ## Pre-flight and baseline
 
 ```text
-$ git merge-base --is-ancestor 62312c365 HEAD
+$ git merge-base --is-ancestor 6706dba05 HEAD
 ancestor_rc=0
 
 $ grep -c "const QUOTED_BY_KIND = " scripts/citation-title-guard.mjs
 1
 ```
 
-`git status --porcelain` printed nothing at the original pre-flight. The orchestrator then committed the licensed attempt-1 stop and re-authored scope 3 with a relative bar at `199e13c9e`; the implementation baseline on that amended task was:
+`git status --porcelain` printed nothing at the original pre-flight. The orchestrator then committed the licensed attempt-1 stop and re-authored scope 3 with a relative bar at `a8ab8dfd2`; the implementation baseline on that amended task was:
 
 ```text
 $ node scripts/citation-title-guard.mjs --report

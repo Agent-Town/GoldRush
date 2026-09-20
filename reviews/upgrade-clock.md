@@ -1,8 +1,8 @@
 # Review — upgrade-clock (THE PICK CLOCK)
 
 **Slice:** `upgrade-clock` — the upgrade draft gets a 30/20/10 s timer by difficulty
-**Branch:** `lane/d` · **tip** `45b5c6bb3`
-**Base:** `005753fc1` · **Merge:** `e7bb88cf00925a964733321ad4fb45b40fb583d1`
+**Branch:** `lane/d` · **tip** `444b1d15e`
+**Base:** `22c1b79d6` · **Merge:** `ac51296d233381ca538623d4ac0f9506e08c7eff`
 **Drained:** s1628, 2026-08-10 · gated in detached worktree `gate-s1628` per §3.0b
 
 ## VERDICT: MERGED — every red attributed to a control before merging, none of them this slice's.
@@ -98,7 +98,7 @@ the main repo root before it is believed.** Owner's desk not required; this is f
 
 ## Merge classification
 
-Base `005753fc1`. Auto-merged clean by `ort`; **no conflict**, including `src/game/Game.ts` despite
+Base `22c1b79d6`. Auto-merged clean by `ort`; **no conflict**, including `src/game/Game.ts` despite
 `lane/d` sitting **365 commits behind** — so Mistake #15 (stale + conflicted = RE-LAND) was
 considered and did **not** apply; the merge was tested before being committed to.
 
@@ -112,10 +112,10 @@ considered and did **not** apply; the merge was tested before being committed to
 | `reviews/shots-upgrade-clock/*.png` ×2 | LANE-ONLY (new evidence) |
 
 **A note on the base moving mid-gate, because it is the exact §3.0b hazard.** My first fast-forward
-was **refused** — a concurrent Cowork agent had committed `005753fc1` (goal-tree bookkeeping) at
+was **refused** — a concurrent Cowork agent had committed `22c1b79d6` (goal-tree bookkeeping) at
 13:41 while I was running playwright. Nothing was corrupted and nothing was staged in main's index,
 **because the gate was in a detached worktree**: I reset the gate to the new main, re-merged (clean
-again), verified `005753fc1` touched only `logs/` and `tasks/goals.json` and therefore could not
+again), verified `22c1b79d6` touched only `logs/` and `tasks/goals.json` and therefore could not
 affect tsc/build/e2e, and fast-forwarded. Had I been gating in main's working tree this would have
 been the F-1295-1 / F-1589-5 incident rather than a refused command. **The refusal is the cure
 working.**

@@ -1,8 +1,8 @@
 # f2117-1 — root `playwright.release-base.config.ts` behind `test:release-base`
 
 **Slice:** `f2117-1-root-release-base-harness`
-**Branch:** `lane/d` · **Tip:** `21ba3542c` · **Base:** `9a8a345b3`
-**Merge:** `96e9236d433b163cb77db119da8d0bf3b8f82bc2` (main)
+**Branch:** `lane/d` · **Tip:** `335e0e477` · **Base:** `6d2d532ee`
+**Merge:** `1f1d71b7b3a1e474548083bde0dec368a5702e76` (main)
 **Drained by:** s2161 fire, 2026-08-22 · **Run:** `20260822-055732-lane-d-f2117-1-root-release-base-harness.md.log`
 
 ## VERDICT: MERGED — every acceptance condition re-measured on the merged tree, not inherited
@@ -68,7 +68,7 @@ slice renders nothing and changes no player-facing surface.
 | `playwright.release-base.config.ts` | LANE-TOUCHED / MAIN-UNMOVED | clean, +4/-3 |
 | `scripts/gate-caller-baseline.json` | LANE-TOUCHED / MAIN-UNMOVED | clean, +1/-0 |
 
-`git diff 9a8a345b3 main -- <all three>` is **empty**: main never moved any of them since the base,
+`git diff 6d2d532ee main -- <all three>` is **empty**: main never moved any of them since the base,
 so no three-way graft was needed and the `ort` merge reported no conflicts. Every changed path is
 inside the master's TOUCH-ONLY list; nothing in the NO list was touched.
 
@@ -95,11 +95,11 @@ While gating, main's working tree held an uncommitted attended edit to `tasks/go
 leaf `b4v4-picnic-admission` with:
 
 ```
-"mergeHash": "780b2ab9b11eed5eba07b62d1d6436dbbd46f0f5"
+"mergeHash": "ee8defab821d83b75542b63350429d359b43a96d"
 ```
 
-`780b2ab9b` is **this fire's lock commit**, whose entire diff is `STATUS.md | 1 insertion, 1
-deletion`. The picnic content it claims to record landed at **`79d9a874e`** (`feat: e6-picnic
+`ee8defab8` is **this fire's lock commit**, whose entire diff is `STATUS.md | 1 insertion, 1
+deletion`. The picnic content it claims to record landed at **`9c2bf699d`** (`feat: e6-picnic
 ADMITTED — the flipped stakes …`). Verified by `git show --stat` on both.
 
 This is the *HEAD-splice-is-correct-exactly-once* shape: a helper that stamps `mergeHash: <current

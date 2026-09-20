@@ -1,8 +1,8 @@
 # Review — e8-boss-salvage-claw (THE SALVAGE KING'S CLAW)
 
-- **Slice / branch / tip:** lane-b-e8-boss-salvage-claw · lane/m4 · `5c90657f`
-- **Drain merge:** `77e5a80c8cf1929bc865b9ea14046f64e06d43ec` (`--no-ff`, s729 fire)
-- **Base:** lane forked at `7438260c` (main~2 at drain time); 3-way merge onto main HEAD `44b2adc5` — disjoint file sets, no conflict.
+- **Slice / branch / tip:** lane-b-e8-boss-salvage-claw · lane/m4 · `37ced849`
+- **Drain merge:** `7f633f9b4845f4f69c2804cb362687f73ea03d14` (`--no-ff`, s729 fire)
+- **Base:** lane forked at `e002dfea` (main~2 at drain time); 3-way merge onto main HEAD `806f08f1` — disjoint file sets, no conflict.
 - **Verdict:** ✅ SHIPPED — clean drain, all gates green, firewall held, boss inert until E8 arms (no plain-boot surface).
 
 ## What it does
@@ -18,7 +18,7 @@ The claw never targets the player directly (asserted). Components resolve throug
 Lane authored exactly its 10 files (927 insertions, 5 deletions vs its base):
 - `src/systems/SalvageClawBossSystem.ts` (628, new) · `e2e/e8-boss-salvage-claw.spec.ts` (187, new) · `src/game/Game.ts` (+64 wiring) · `src/systems/BuildSystem.ts` (+21, legal lift/drop hooks) · `src/game/Balance.ts` (+21, `salvageClaw`) · `src/game/TileStateStore.ts` (+10, carcass persist) · `src/vite-env.d.ts` (+1) · 3 screenshots `reviews/shots-claw/{act1-rain,act2-lift,act3-landed}.png`.
 - BuildSystem+TileStateStore hooks = 31 lines, within the ≤40-line hook allowance. NO other bosses, NO gravity/dome systems touched.
-- Lane touched **no** bookkeeping (STATUS/BACKLOG/goals.json/STORYBOOK/story-arc all showed as two-dot phantoms = MAIN-MOVED only; verified `git diff 7438260c lane/m4 -- <those>` empty). Merge preserved main's newer versions.
+- Lane touched **no** bookkeeping (STATUS/BACKLOG/goals.json/STORYBOOK/story-arc all showed as two-dot phantoms = MAIN-MOVED only; verified `git diff e002dfea lane/m4 -- <those>` empty). Merge preserved main's newer versions.
 
 ## Evidence (gates — all green, s729 re-ran on the merged tree)
 | Gate | Result |
@@ -35,7 +35,7 @@ Lane authored exactly its 10 files (927 insertions, 5 deletions vs its base):
 - **F-e8-1 (non-blocking, KNOWN pre-existing):** `scripts/goal-tracker.test.mjs` "goal tree schema is valid" RED = the standing category-count mismatch (11 actual vs 5 expected). Static category list, unrelated to this leaf; baseline-identical (F-1 on the owner's desk since s726). My leaf flip validated by the sibling merged-leaf test.
 
 ## Bookkeeping (this drain)
-- goals leaf `e8-boss-claw` → `status:"merged"`, `mergeHash:"77e5a80c8cf1929bc865b9ea14046f64e06d43ec"` (full 40-char, per Goal Registration Law).
+- goals leaf `e8-boss-claw` → `status:"merged"`, `mergeHash:"7f633f9b4845f4f69c2804cb362687f73ea03d14"` (full 40-char, per Goal Registration Law).
 - BACKLOG SHIPPED line appended.
 - Done master → `tasks/failed/shipped-s729-e8-boss-salvage-claw-SHIPPED-77e5a80c.md`.
 - **NO gazette** — boss is INERT until E8 arms; not player-visible in a plain boot (GZ filter law). **NO deploy** — no plain-boot gameplay surface.

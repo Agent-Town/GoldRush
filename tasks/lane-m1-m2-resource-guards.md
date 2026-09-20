@@ -1,6 +1,6 @@
 # Task lane-m1-m2-resource-guards: THE TWO RED GUARDS ON MAIN (geometry leak + draw-call ceiling) — LANE-A, commit prefix "fix:"
 
-> ⛔ **SHIPPED / PREMISE CLOSED — DO NOT QUEUE (retired s1115, 2026-07-27).** On main as drain **`f7cd0103`** (runner `d93b1505`): "the M1 geometry leak was async upload…", plus `df51d877` for the m2-01 half. Its whole premise — "THE TWO RED GUARDS ON MAIN" (F-1026-5) — is closed: the s1108 `m2-05-debt-batch` run independently re-verified **M1/M2 resource guards + full m2-05 spec 36/36 green desktop+mobile** on `eef67e5b` and lawfully changed nothing. Invisible to filename greps because drain messages drop the `lane-` prefix — see **F-1115-1**.
+> ⛔ **SHIPPED / PREMISE CLOSED — DO NOT QUEUE (retired s1115, 2026-07-27).** On main as drain **`bebc1b1f`** (runner `d93b1505`): "the M1 geometry leak was async upload…", plus `1ee47bbd` for the m2-01 half. Its whole premise — "THE TWO RED GUARDS ON MAIN" (F-1026-5) — is closed: the s1108 `m2-05-debt-batch` run independently re-verified **M1/M2 resource guards + full m2-05 spec 36/36 green desktop+mobile** on `a45999e9` and lawfully changed nothing. Invisible to filename greps because drain messages drop the `lane-` prefix — see **F-1115-1**.
 
 ### FIRE-AUTHORED (attended review welcome) — s1026, 2026-07-25
 
@@ -20,9 +20,9 @@ correctly and stopped. The template above is the real law (F-1027-1).
 
 **Already verified for you by s1027 — do not spend budget re-deriving it, but do sanity-check it:**
 `lane-a` sits on branch `lane/m3`, 1 ahead of main at `6be3964c "perf: diet build assets..."`.
-That commit is the ASSET DIET, which was squash-merged to main as `0dfa1d3f` on 2026-07-25. Proof:
-its file list and `0dfa1d3f`'s file list are **identical (22 files)**, `scripts/asset-diet.mjs` and
-`src/assets/AssetLoading.ts` are both present on main, and `git diff 6be3964c 0dfa1d3f` shows
+That commit is the ASSET DIET, which was squash-merged to main as `436deb71` on 2026-07-25. Proof:
+its file list and `436deb71`'s file list are **identical (22 files)**, `scripts/asset-diet.mjs` and
+`src/assets/AssetLoading.ts` are both present on main, and `git diff 6be3964c 436deb71` shows
 **zero lane-unique lines** on the asset-diet surfaces (only main-side newer content from work that
 merged before the squash, plus regenerated screenshot binaries). **`6be3964c` is therefore a
 textbook SAFE DUPE.** Per the template: `git checkout -B lane/m3 main && git clean -fd`, then
@@ -47,7 +47,7 @@ s1026 fire while gating adjacents:
 
 Both fail on **desktop AND mobile**, and both **reproduce at `--workers=1`** — they are NOT
 contention flake. Ownership is already settled by a three-point bisect, so do not spend budget
-re-deriving it: merged tree RED · HEAD-without-lane-b RED · `4d75f675` (pre-advance-stream) RED.
+re-deriving it: merged tree RED · HEAD-without-lane-b RED · `ae26e600` (pre-advance-stream) RED.
 **Neither slice drained on 2026-07-25 caused these.** Something merged earlier leaks geometry
 across restarts and/or broke a batching path. These are memory/perf guards on shipped milestones —
 a geometry leak across restarts is exactly the class that ends a long play session badly.

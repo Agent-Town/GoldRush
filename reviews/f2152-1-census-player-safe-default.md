@@ -1,6 +1,6 @@
 # Review — f2152-1: the census player's safe default (F-2142-4 cured at the code)
 
-**Slice/branch/tip:** `lane/d` @ `6ecbaae7f` (`runner(lane-d): f2152-1-census-player-safe-default.md`) · base `a9e2f345956542ae3c68bc4efa0c02c8eb4a1d48` · merged to main at **`f2b870e6d0a0d0a72dc385f067599ebe02aba40e`** · drained s2153, 2026-08-22.
+**Slice/branch/tip:** `lane/d` @ `8ce179106` (`runner(lane-d): f2152-1-census-player-safe-default.md`) · base `7e8147e6f5f9c300f7bb94bb1492f487605ac3ab` · merged to main at **`c44dc1f1c7d4ade751d00cd6165329998b0f2d2a`** · drained s2153, 2026-08-22.
 
 **Verdict: MERGED.** Gate green on the merged tree in a detached worktree (§3.0b); the guard was proven non-vacuous by manufacturing its red in this drain rather than accepting the runner's paste.
 
@@ -40,7 +40,7 @@ Then restored, and the guard returned **4/4**. ⓘ **The one test that passes on
 
 ## Merge classification
 
-Base `a9e2f3459`. Main moved **zero** of the slice's three paths between the base and the merge — `git diff --name-status a9e2f3459 main -- <the three paths>` was empty — so all three are **LANE-TOUCHED ONLY** and the merge needed no 3-way judgment. The base is ~25 minutes old (it is s2152's own authoring commit), so no staleness path applies.
+Base `7e8147e6f`. Main moved **zero** of the slice's three paths between the base and the merge — `git diff --name-status 7e8147e6f main -- <the three paths>` was empty — so all three are **LANE-TOUCHED ONLY** and the merge needed no 3-way judgment. The base is ~25 minutes old (it is s2152's own authoring commit), so no staleness path applies.
 
 | File | Class | Note |
 |---|---|---|

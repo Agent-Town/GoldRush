@@ -1,5 +1,5 @@
 # Review — A3 the broadcast mirror (`e7-echo-canyon` admitted)
-**Slice/branch/tip:** `worktree-agent-ada3202c7f5b8074b`, base `1cb47bdca` (main @ 2026-08-20 18:05Z attended handoff). Built by a headless Opus-5 agent (owner directive 2026-08-20: remaining coding on Opus). **NOT yet drained — proposed for the attended drain.**
+**Slice/branch/tip:** `worktree-agent-ada3202c7f5b8074b`, base `217fb1a89` (main @ 2026-08-20 18:05Z attended handoff). Built by a headless Opus-5 agent (owner directive 2026-08-20: remaining coding on Opus). **NOT yet drained — proposed for the attended drain.**
 
 **Verdict: READY-FOR-GATES — GREEN on this tree.**
 
@@ -66,7 +66,7 @@ Floors regenerated: **61 pairs, `--check` clean, 0 `secured:true`** across the w
 
 ## Merge classification
 
-Base `1cb47bdca`; every file below is LANE-TOUCHED (this worktree is the only writer).
+Base `217fb1a89`; every file below is LANE-TOUCHED (this worktree is the only writer).
 
 | file | change |
 |---|---|

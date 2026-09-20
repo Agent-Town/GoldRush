@@ -1,6 +1,6 @@
 # guard-fx-01 — structural assertion proof (subject-tree fixture harness)
 
-**Slice:** guard-fx-01-structural-assertion-proof · **Branch:** `lane/m3` · **Tip:** `1539b8f3` · **Merge-base:** `e88de542`
+**Slice:** guard-fx-01-structural-assertion-proof · **Branch:** `lane/m3` · **Tip:** `1539b8f3` · **Merge-base:** `2d4692f5`
 **Drained:** s1237, 2026-07-30 · **Verdict: ✅ MERGE — ACCEPTED.** The deliverable is real, the refactor is faithful, and I re-proved it myself rather than reading the report.
 
 ## What it does
@@ -45,11 +45,11 @@ All three restored **byte-identically** — `git hash-object` returns `93012a5c�
 
 ## Merge classification
 
-Base `e88de542`; lane carried two commits, `e9d848a7` (ts-cov-01, **already on main** as tip-graft `d606946d`) and `1539b8f3` (this slice).
+Base `2d4692f5`; lane carried two commits, `e9d848a7` (ts-cov-01, **already on main** as tip-graft `f8eddce8`) and `1539b8f3` (this slice).
 
 - **LANE-TOUCHED-ONLY** (plain checkout): `scripts/lib/subject-tree.mjs` (new), `scripts/subject-tree.test.mjs` (new), `scripts/script-tree-parse.test.mjs`.
-- **Nominally both-moved, resolved to a clean checkout:** `scripts/worker-type-coverage.test.mjs`, `package.json`. s1236 flagged these as requiring a 3-way graft and said *"verify that, do not assume it."* Verified: main's current blob is **byte-identical to the lane's parent-commit blob** for both (`d0c96bfe…`, `5618b60f…`), because main's `d606946d` is the graft of the lane's own `e9d848a7`. No graft was needed. `package-lock.json` is unchanged at the tip — **no dependency added**, as reported.
-- **MAIN-MOVED-ONLY (phantoms — took main, ignored the lane):** `scripts/run-guards.mjs` (lane commits **NONE**, main 1 = `d606946d`) and `scripts/site-contract.test.mjs` (lane **NONE**, main 1 = `f611c1ea`), plus `STATUS.md`, `tasks/BACKLOG.md`, `tasks/goals.json`, `reviews/ts-cov-01.md`, `logs/**`. `run-guards.mjs` was **NO-listed by name** and the two-dot diff shows it modified; per-file `git log <merge-base>..<side>` proves the lane never touched it. **The NO list was honoured.**
+- **Nominally both-moved, resolved to a clean checkout:** `scripts/worker-type-coverage.test.mjs`, `package.json`. s1236 flagged these as requiring a 3-way graft and said *"verify that, do not assume it."* Verified: main's current blob is **byte-identical to the lane's parent-commit blob** for both (`d0c96bfe…`, `5618b60f…`), because main's `f8eddce8` is the graft of the lane's own `e9d848a7`. No graft was needed. `package-lock.json` is unchanged at the tip — **no dependency added**, as reported.
+- **MAIN-MOVED-ONLY (phantoms — took main, ignored the lane):** `scripts/run-guards.mjs` (lane commits **NONE**, main 1 = `f8eddce8`) and `scripts/site-contract.test.mjs` (lane **NONE**, main 1 = `567ee14e`), plus `STATUS.md`, `tasks/BACKLOG.md`, `tasks/goals.json`, `reviews/ts-cov-01.md`, `logs/**`. `run-guards.mjs` was **NO-listed by name** and the two-dot diff shows it modified; per-file `git log <merge-base>..<side>` proves the lane never touched it. **The NO list was honoured.**
 
 **Firewall audit:** both `SUBJECTS` tables are **byte-identical to the merge-base** — no floor weakened, no exclusion list added (both explicit NO items). Nothing under `src/ e2e/ functions/ tsconfig.json` touched.
 

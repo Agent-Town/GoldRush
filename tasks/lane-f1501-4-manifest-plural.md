@@ -25,7 +25,7 @@ grep -c "export function mechanicsManifestLine(manifest: MechanicsManifest): str
 
 **Expect exactly `1`.** Derivation: that signature is declared once, at `:418`, and nothing else in the file repeats it (measured on `origin/main` at authoring time, s1505). **`0` means your lane is stale or the function was renamed — STOP and report; do not improvise a new location.**
 
-## Why (F-1501-4, filed s1501; GATE OPENED by `abcfffb88`, s1504; every fact below RE-MEASURED on main by s1505)
+## Why (F-1501-4, filed s1501; GATE OPENED by `ced0fc61b`, s1504; every fact below RE-MEASURED on main by s1505)
 
 The Drill Yard board card now prints its manifest line to any player who opens the board, and that line reads:
 
@@ -37,7 +37,7 @@ The Drill Yard board card now prints its manifest line to any player who opens t
 ...manifest.interactables.map(({ id, count }) => `${humanize(id)}${count === 1 ? '' : 's'}`),
 ```
 
-`humanize` (`:482-484`) only maps `_` → space. So `straw_man` ×3 renders **"straw mans"**. This is player-visible today; it was invisible before `abcfffb88` only because the Drill Yard card was the one card rendering no briefing at all.
+`humanize` (`:482-484`) only maps `_` → space. So `straw_man` ×3 renders **"straw mans"**. This is player-visible today; it was invisible before `ced0fc61b` only because the Drill Yard card was the one card rendering no briefing at all.
 
 ### THE 42-CONTRACT SWEEP — DONE FOR YOU, SO YOU DO NOT RE-DERIVE IT, AND IT IS THE REASON THIS SLICE IS SMALL
 
@@ -74,7 +74,7 @@ F-1501-4 warned that "the same de-slugger feeds every contract's line, so a fix 
 2. 🚫 **`e2e/fixtures/e1-mechanics-manifests.json`.** ⓘ **Verified by s1505 rather than assumed: the fixture holds raw ids (`straw_man` is present) and NEVER the rendered sentence (`This claim speaks` is absent from all 7,459 bytes).** So a render-time cure **cannot** move it — and if you find yourself needing to edit it, you have put the fix in the wrong place. That fixture is byte-stable and is the subject of the still-open `f1328-1` owner question; moving it would re-open a design fork.
 3. 🚫 **`assets/contracts/**`.** Renaming the `straw-man` target kind would "fix" the sentence by editing the world. The id is correct; the English is wrong.
 4. 🚫 **`src/town/TownScene.ts`.** It merely calls the line function at `:3270`. It was edited by two slices in the last two hours; leave it alone.
-5. 🚫 **`e2e/drill-yard.spec.ts`.** It landed **this hour** (`9559633aa`) and derives its expected rules from `loadEpoch`, not from the manifest line — it is disjoint from your change and must stay so.
+5. 🚫 **`e2e/drill-yard.spec.ts`.** It landed **this hour** (`042fcdd4a`) and derives its expected rules from `loadEpoch`, not from the manifest line — it is disjoint from your change and must stay so.
 6. 🚫 Any other `src/`, `scripts/`, `specs/`, `tasks/` file. **No firewall lift is granted by this master**; if scope 1 or 2 appears to need one, that is a FINDING — report it and stop that edit (CLAUDE.md §4.5).
 
 ## Self-check (evidence, not vibes)

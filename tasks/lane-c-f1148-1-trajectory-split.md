@@ -8,7 +8,7 @@ You are Codex, implementer for Gold Rush, running natively on Robin's Mac in `wo
 
 Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead is NORMAL — the runner auto-commits. **Do not compare this worktree against a list of files I wrote; I do not have one, and an exhaustive dirt list is the wrong instrument (it is what stopped a runner needlessly at s1132).** Check the **invariant** instead: **no dirty blob in this worktree may be UNIQUE** — every modified/deleted/untracked file's content must already exist somewhere in git (main's history, any branch, or this lane's own commits). If every dirty blob is reachable, the reset destroys nothing → `git checkout -B lane/e2-arsenal main && git clean -fd` and PROCEED. If **any** blob exists nowhere else, **STOP and report that file by name** — that one is real unmerged work and resetting it would be the Mistake #2 shape. (`git hash-object <file>` then `git cat-file -e <hash>` is enough; `.wrangler/tmp/**` is build scratch and is exempt.) Then `npm install --no-audit --no-fund`; `npm run build` green before touching anything.
 
-*(s1149 measured this lane at close and you must still re-verify it: `git log main..lane/e2-arsenal` was **0 ahead** — the lane's last content merged to main at `c727a5b7`. Proven by the unique-blob invariant, not by an ahead-count: `git diff --numstat main lane/e2-arsenal` listed only `STATUS.md`, `reviews/lane-c-activations-frame-matrix-from-contract.md`, `scripts/tmp-s1148-line1.txt`, `tasks/BACKLOG.md` and `tasks/goals.json`, and **every one of those lines is main being NEWER than the lane** — the lane holds nothing unique. If that is no longer true, apply the invariant above.)*
+*(s1149 measured this lane at close and you must still re-verify it: `git log main..lane/e2-arsenal` was **0 ahead** — the lane's last content merged to main at `27538e2b`. Proven by the unique-blob invariant, not by an ahead-count: `git diff --numstat main lane/e2-arsenal` listed only `STATUS.md`, `reviews/lane-c-activations-frame-matrix-from-contract.md`, `scripts/tmp-s1148-line1.txt`, `tasks/BACKLOG.md` and `tasks/goals.json`, and **every one of those lines is main being NEWER than the lane** — the lane holds nothing unique. If that is no longer true, apply the invariant above.)*
 
 ## READ FIRST (paths, in this order)
 
@@ -21,22 +21,22 @@ Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead 
 
 ## WHY (quoting the evidence, dated)
 
-`lane-c-m2-04-palisade-budget-bisect` (drained s1148 at `bb7f14c3`) bisected the m2-04 palisade-route red to first-bad-commit `3c749607` and recommended a cure: *"do not apply its lateral lane bias to a solitary thief."* The drain then ran that cure as a mutation control on **today's main**, and the result is the reason this task exists — verbatim from `reviews/lane-c-m2-04-palisade-budget-bisect.md` (**F-1148-1**):
+`lane-c-m2-04-palisade-budget-bisect` (drained s1148 at `8d73f79a`) bisected the m2-04 palisade-route red to first-bad-commit `9f6ec59d` and recommended a cure: *"do not apply its lateral lane bias to a solitary thief."* The drain then ran that cure as a mutation control on **today's main**, and the result is the reason this task exists — verbatim from `reviews/lane-c-m2-04-palisade-budget-bisect.md` (**F-1148-1**):
 
 > **Unmutated: 6 failed / 0 passed.** With `const lateralOffset = 0` (behaviourally = the report's "exempt the lone thief"): **2 failed / 4 passed** — and both survivors are the SAME budget assertion at `20.999` / `20.667`, the same magnitude as the unmutated failures (`20.333`–`21.667`). The mutation shifts the distribution just far enough to straddle the boundary; it does **not** return the route to the parent revision's measured `10.334`.
 
-So the named term is a **confirmed contributor, not the whole regression.** Either further regressions stacked after `3c749607` (a bisect correctly stops at the *first* bad commit and is blind to later ones), or the bisect's **n=1** parent/child pair overstated one commit's share. **Those two possibilities imply different repairs, and nothing measured so far distinguishes them.**
+So the named term is a **confirmed contributor, not the whole regression.** Either further regressions stacked after `9f6ec59d` (a bisect correctly stops at the *first* bad commit and is blind to later ones), or the bisect's **n=1** parent/child pair overstated one commit's share. **Those two possibilities imply different repairs, and nothing measured so far distinguishes them.**
 
 The predecessor's own instrument can distinguish them, and it is the one thing that was never pointed at today's tree. From `artifacts/f-1147-1-bisect.md:93-100`, run 21 days back at n=1:
 
 | Revision | Sim time to theft | Sampled path distance | X range |
 |---|---:|---:|---:|
-| parent `4da134a9` | `7.997` s | `18.648` | `0.000 … 3.256` |
-| child `3c749607` | `10.836` s | `19.423` | `-0.628 … 3.230` |
+| parent `a26eca02` | `7.997` s | `18.648` | `0.000 … 3.256` |
+| child `9f6ec59d` | `10.836` s | `19.423` | `-0.628 … 3.230` |
 
 > The child route takes `2.839` s longer (`35.5%`) … its shape changes: the parent heads only toward the right end of the palisade, while the child first bends left to `x=-0.628` under the seeded formation bias, then crosses back around the right end.
 
-**Premises re-verified at source by s1149 (2026-07-28), not inherited:** `4da134a9` **is** the parent of `3c749607` (`git log -1 3c749607^`); `3c749607` **is** an ancestor of main; and the mechanism is **still live** — `lateralOffset` at `src/entities/Enemy.ts:704`, `spreadBiasX`/`spreadBiasZ` at `:705-718`, applied at `:723`/`:728`.
+**Premises re-verified at source by s1149 (2026-07-28), not inherited:** `a26eca02` **is** the parent of `9f6ec59d` (`git log -1 9f6ec59d^`); `9f6ec59d` **is** an ancestor of main; and the mechanism is **still live** — `lateralOffset` at `src/entities/Enemy.ts:704`, `spreadBiasX`/`spreadBiasZ` at `:705-718`, applied at `:723`/`:728`.
 
 ## THE QUESTION THIS TASK ANSWERS (one sentence)
 
@@ -52,13 +52,13 @@ Answer it with the trajectory probe, not with the pass/fail counter — that is 
 2. **Run THREE arms, n≥3 each, same box, back to back.**
    - **Arm A — today's main, unmutated.** The current state.
    - **Arm B — today's main, `const lateralOffset = 0`** at `src/entities/Enemy.ts:704` (behaviourally = the recommended cure). **This mutation is a THROWAWAY — see scope 5.**
-   - **Arm C — parent revision `4da134a9`, unmutated.** The known-good baseline that produced `7.997` s / `10.334` at the assertion.
+   - **Arm C — parent revision `a26eca02`, unmutated.** The known-good baseline that produced `7.997` s / `10.334` at the assertion.
    ⚠️ **n=1 is what produced the finding you are correcting — do not repeat it.** Report every individual run plus the median and the spread for each arm. A spread that overlaps between arms is itself the answer to scope 4 and must be reported as such rather than hidden behind a mean.
    ⚠️ **Neither arm may be a contaminated control:** run all three the same way, on a quiet box, with nothing else building or testing. If you cannot get a quiet box, say so in the report — a contaminated control can AGREE with a contaminated treatment and prove nothing.
-3. **Arm C must not disturb main.** Build `4da134a9` in a **detached worktree** (`git worktree add --detach <path> 4da134a9`), with its own `npm install`. ⚠️ **Use a scratch port, not the default** — lane worktrees share port `5188` and a second server on it will either fail or, worse, silently measure the **wrong tree** (`5199`/`5231`/`5234` are the house scratch ports). **State the port you used in the report**; a trajectory measured against a foreign tree is the most expensive way to be wrong here. Remove the worktree when done.
+3. **Arm C must not disturb main.** Build `a26eca02` in a **detached worktree** (`git worktree add --detach <path> a26eca02`), with its own `npm install`. ⚠️ **Use a scratch port, not the default** — lane worktrees share port `5188` and a second server on it will either fail or, worse, silently measure the **wrong tree** (`5199`/`5231`/`5234` are the house scratch ports). **State the port you used in the report**; a trajectory measured against a foreign tree is the most expensive way to be wrong here. Remove the worktree when done.
 4. **Classify the split — this is the deliverable.** Compare arm B against arms A and C on **route shape**, not just duration:
    - If **B ≈ C** (sim time and X range both return to the parent's ~`7.997` s and a non-negative X floor): the lateral bias is the **whole** regression, and the residual `20.999`/`20.667` failures are **polling amplification** — a separately scoped harness question, not a pathing one.
-   - If **B sits between A and C** (route improves but does not return): a **real remainder** stacked after `3c749607`. Say so, and if you can, **name where** — but see scope 6: you may bisect further to *identify* it, you may not fix it.
+   - If **B sits between A and C** (route improves but does not return): a **real remainder** stacked after `9f6ec59d`. Say so, and if you can, **name where** — but see scope 6: you may bisect further to *identify* it, you may not fix it.
    - If **B ≈ A** (little route change): the mutation control's pass-rate improvement was distribution noise, and the bisect's n=1 pair overstated the commit's share. This would be the most important finding of the three.
    The X floor is the sharpest discriminator the predecessor found (parent `0.000` vs child `-0.628`, the S-bend) — **report it for all three arms.**
 5. **⛔ THE MUTATION IS A THROWAWAY AND MUST NOT SHIP.** Arm B requires editing `src/entities/Enemy.ts`. Take a byte backup first, restore from it after, and **verify `git status --porcelain -- src/` is EMPTY before you commit anything.** Paste that verification into your report. A `src/` diff in this slice is a firewall violation and the drain will reject it. (The predecessor did exactly this and said so; copy that discipline.)

@@ -11,7 +11,7 @@ fully dry pipeline. Findings below are everything I measured that outlives this 
 **Verified:** the file is **355 lines** against `src/game/Balance.ts`'s **1098**, contains **zero**
 conflict markers, and is referenced from **no** `src/`, `e2e/`, `vite.config.ts` or live script
 (the only hits are old handoff prose in `scripts/_s*.mjs`). It entered git in
-`680775c3 runner(art): art-batch-008-prospector-companion.md` — **an ART-batch commit**, i.e. a
+`9caf1e2a runner(art): art-batch-008-prospector-companion.md` — **an ART-batch commit**, i.e. a
 runner broad-add swept a file that has nothing to do with art. This is the `F-1162-1` family
 (the runner committing unrelated files), and it has been sitting in `src/` since.
 
@@ -51,7 +51,7 @@ documents **0.144.1** as the version that knows the 5.6 ids.
 
 **The main task exec is NOT affected.** `scripts/lane-runner-v3.sh:68` runs
 `codex exec -m gpt-5.6-sol` and that path works — the town-store-collider task it failed inside
-shipped and merged as `422d2639`. Only the *nested* `codex review --uncommitted` self-check 400s.
+shipped and merged as `d8a8156d`. Only the *nested* `codex review --uncommitted` self-check 400s.
 So this is a lost optional quality gate, ~6% of today's runs, **not** a broken factory.
 
 Codex behaved correctly both times: it refused to silently switch models without authorization and
@@ -100,12 +100,12 @@ art-e7-town-icons"*.
 
 **Re-derived by ancestry, not by message-grep (Mistake #16):** `art-e7-town-icons` shipped —
 `tasks/done/shipped-7873eaee-20260728-100138-art-e7-town-icons.md` exists **and**
-`git merge-base --is-ancestor 7873eaee main` returns true (LEDGER row 62). Siblings E6/E8/E9 are on
+`git merge-base --is-ancestor 46d29c95 main` returns true (LEDGER row 62). Siblings E6/E8/E9 are on
 main too. `tasks/queue/art/` and `tasks/running/` were both empty, so one-batch-in-flight
 (`assets/LEDGER.md:7`) was genuinely clear.
 
 **Acted on:** master `tasks/art-gazette-engravings.md` authored + queued, goal leaf
-`gazette-art-engravings` registered in the same commit (`14738cf4`), BACKLOG:1650 updated.
+`gazette-art-engravings` registered in the same commit (`f0f9a723`), BACKLOG:1650 updated.
 The runner picked it up at **21:52:14** and Codex went live — the dry board is over.
 
 **The general lesson, which is Mistake #4 wearing art-slot clothes:** *when a whole board reads

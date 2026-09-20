@@ -1,8 +1,8 @@
 ---
 verdict: MERGE
 slice: assay-auto-tape
-base: 14e13416fbbcb6139f9999656db1c5a4996700f2
-merge: c5134f50be460ba14d16d8195b9b37145e3ccf9a
+base: 68eb137eb9b169105bd17cccdd0e528a9d28c8f2
+merge: 46e51cfe915956e773e0d8aaa4b63a9a29b0cc91
 date: 2026-08-15
 ---
 

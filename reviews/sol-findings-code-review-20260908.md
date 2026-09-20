@@ -1,6 +1,6 @@
 # Gold Rush code review — saves, simulation, and multiplayer
 
-Reviewed commit: `d41ab98ce0d7fbc48bb01e8e87c92c61f148de2d`.
+Reviewed commit: `d41ab98ce0d7fbc48bb01e8e87c92c61f148de2d (archive: pruned by the A3 rewrite)`.
 Review branch: `sol/code-review-20260908`. Date: 2026-09-08.
 
 **Verdict: six confirmed correctness defects, including two P1 findings.** Application code and existing tests are unchanged. This is a source review with focused reproductions, not an exhaustive audit or release approval. No merge, commit, push, or deployment was performed.

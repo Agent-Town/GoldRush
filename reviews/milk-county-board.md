@@ -1,9 +1,9 @@
 # THE COUNTY BOARD, COMPLETE — posse standings + watch-this-run
 
-**Slice:** milk shift 2026-08-06 (`TASK.md` in this worktree) · **Branch:** `milk/county-board` · **Base:** `565a145a5` · **Tip:** see `git log -1` at read time
+**Slice:** milk shift 2026-08-06 (`TASK.md` in this worktree) · **Branch:** `milk/county-board` · **Base:** `f38638438` · **Tip:** see `git log -1` at read time
 ~~**Verdict:** BUILT AND PUSHED, **NOT MERGED**. Every scope item is implemented, gated and mutation-proved on the branch. Nothing has landed on main; a drain is owed.~~
 
-> ## ✅ DRAINED s1498 — MERGED `38791378` (6 of 8 off the milk pile). The drain that was owed is paid.
+> ## ✅ DRAINED s1498 — MERGED `d7986be8` (6 of 8 off the milk pile). The drain that was owed is paid.
 >
 > Gated on the merged tree in detached `gate-s1498` (§3.0b), `--workers=1`, both projects: **tsc rc=0 ·
 > build green 1.23s · own spec `e2e/milk-county-board.spec.ts` 14/14 · adjacent `tape-01` / `tape-02` /
@@ -132,7 +132,7 @@ Both files are tracked, so the Retention Law is satisfied either way (git keeps 
 
 ## Merge classification
 
-All changes are **LANE-TOUCHED** on a branch forked from `565a145a5`; no main-side movement has been assessed because nothing has been merged. A drain must re-derive that itself.
+All changes are **LANE-TOUCHED** on a branch forked from `f38638438`; no main-side movement has been assessed because nothing has been merged. A drain must re-derive that itself.
 
 | Path | Change |
 |---|---|

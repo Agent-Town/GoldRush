@@ -1,7 +1,7 @@
 # AP-16 — menu gaps are downstream of admission refusals
 
-**Slice:** `ap16-menu-door-attribution` · **branch:** `lane/d` · **tip:** `07c535196b22eb835bfd6862a80f38b0d4f21c33` · **base:** `1ce57d9b626eb85428c6190c48ce9121da7e945b`  
-**Verdict:** **MERGED** at `f07f57552fa3b7efb433674a75a13dff18076ed9` (s1700)
+**Slice:** `ap16-menu-door-attribution` · **branch:** `lane/d` · **tip:** `a4d9243ba04d942c447b41136a1d40d7d1423d95` · **base:** `2e5fa91a8bf32fd94775f71e1d1f02897d70d223`  
+**Verdict:** **MERGED** at `d1b93f146e405d8c6fc3448b74292d07040b27cc` (s1700)
 
 ## What changed
 

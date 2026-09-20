@@ -1,10 +1,10 @@
 # Review — hero-ages-wiring (era-keyed hero sheet resolution, young fallback)
 
-**Slice:** lane-hero-age-wiring · **branch:** lane/m4 tip `6fdd5f30` · **merge:** `aac5aa93` (merge commit into main)
+**Slice:** lane-hero-age-wiring · **branch:** lane/m4 tip `842bb11f` · **merge:** `1086aa8c` (merge commit into main)
 **Drained:** s775 (merge landed 2026-07-21 00:40 local) · **certified:** s776 recovery (s775 died post-merge, pre-bookkeeping; this review + goal flip close it out)
 
 ## Verdict: PASS (recovery certification)
-s775's fire committed the merge `aac5aa93` and then exited before writing the review / flipping the goal leaf / handing off. The merge is immutable and content-complete (`git log main..lane/m4` empty). s776 re-ran the core gate battery against the merged tree to certify it honestly rather than inherit an unverified claim.
+s775's fire committed the merge `1086aa8c` and then exited before writing the review / flipping the goal leaf / handing off. The merge is immutable and content-complete (`git log main..lane/m4` empty). s776 re-ran the core gate battery against the merged tree to certify it honestly rather than inherit an unverified claim.
 
 ## What it does
 Placeholder-first: the active epoch now picks the heroine's age band, and `SpriteAnimator` resolves her walk sheet accordingly, falling back to the existing young sheet whenever the aged cells aren't present yet (so the art batch can land later with zero code change).
@@ -25,7 +25,7 @@ Placeholder-first: the active epoch now picks the heroine's age band, and `Sprit
 Spec coverage confirmed green: era 4→midlife, era 8→silver, era 10→elder resolve in run AND town; missing aged cells fall back silently to young; era 1 keeps the existing young binding. Each era-seeded boot asserts zero console errors (per master); all passed.
 
 ## Merge classification
-Clean merge commit `aac5aa93` (parents `3cc9639d` + `6fdd5f30`). Two files, both LANE-TOUCHED / additive, no MAIN-MOVED conflict:
+Clean merge commit `1086aa8c` (parents `a1f07900` + `842bb11f`). Two files, both LANE-TOUCHED / additive, no MAIN-MOVED conflict:
 - `src/assets/SpriteAnimator.ts` (+68 / −4): data map + `resolveWalkSheet`/`activeHeroAge`/`agedHeroWalkSheet` helpers + cache-key change + dataset seam.
 - `e2e/hero-ages.spec.ts` (+81, new file).
 Within firewall: no animation-timing changes, no Balance edits. `import { activeEpoch } from '../meta/ContractFamilies'` is the only new dependency.

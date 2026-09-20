@@ -2,7 +2,7 @@
 ROLE: systems implementer. WORKDIR: lane-d (worktrees/lane-d).
 CODEX: model=gpt-5.6-sol effort=high
 
-## WHY (BUILD-PLAN §4 E2 item ③; the rail entity shipped `08b336f`, the Railcar boss already rides it — the PLAYER's escort verb is the missing half)
+## WHY (BUILD-PLAN §4 E2 item ③; the rail entity shipped `6d8655f`, the Railcar boss already rides it — the PLAYER's escort verb is the missing half)
 Bundle §B objectives: "escort (ore cart W→E along the cut, boss-wave: the Railcar enters at G1 riding the rail)". Escort is E2's mode-verb contribution to the whole saga (the Charter Press inherits every verb; convoys at E4 and component contracts at E7 build on this grammar).
 
 ## READ-FIRST

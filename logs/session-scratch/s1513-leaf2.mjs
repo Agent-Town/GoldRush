@@ -4,7 +4,7 @@ const P = 'tasks/goals.json';
 const g = JSON.parse(readFileSync(P, 'utf8'));
 
 const ID = 'f1511-2-blocker-slide-geometry-gate';
-const HASH = '27782fdab2ea244ca2a27f8e9215db7baf14f154';
+const HASH = 'da540bfb0ea9906403337235dda9b0f54b8a7ef9';
 
 function walk(node, fn) {
   if (Array.isArray(node)) return node.forEach((n) => walk(n, fn));
@@ -22,7 +22,7 @@ walk(g, (n) => {
     n.status = 'merged';
     n.mergeHash = HASH;
     n.closureReason =
-      'MERGED s1513 at 27782fda. F-1511-2 CURED: the ACTIVE_TILE_ID e1-twin-banks fence is dropped from '
+      'MERGED s1513 at da540bfb. F-1511-2 CURED: the ACTIVE_TILE_ID e1-twin-banks fence is dropped from '
       + 'both slideX/slideZ ternaries in ClaimJumperEnemy.resolveBlocker(), so head-on padded-span geometry '
       + 'drives the slide on every tile while blockerSlideDirection() still governs outside the span (wedge '
       + 'routing intact). landmark-collision:68 PASSED desktop+mobile — it was 2 FAILED, reproduced twice, at '

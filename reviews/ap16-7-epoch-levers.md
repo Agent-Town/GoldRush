@@ -1,8 +1,8 @@
 # AP-16-7 — epoch levers reach the agent door
 
 **Task:** `tasks/lane-b-ap16-7-epoch-levers.md`
-**Original candidate:** `e36b8a2d37a55fb5dfa2f4c1a715e128bcf98443` from base `d599cd3ea030a1e6d699f106115b1d3fdf54d775`
-**Merge:** `031872e15fa06407be4c2170c458804a8dff2efb`
+**Original candidate:** `e36b8a2d37a55fb5dfa2f4c1a715e128bcf98443` from base `dbcbf31220e2dc332f7e809c3ab00572f7fe88bb`
+**Merge:** `8d743a10cda5898195b09a5d88411faa23d43dcc`
 
 ## Verdict
 

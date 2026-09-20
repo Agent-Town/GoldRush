@@ -2,14 +2,14 @@
 
 **Slice:** `lane-vp02-capture-error-surface` (FIRE-AUTHORED s1141, from F-1141-1)
 **Branch / tip:** `lane/m4` @ `5e9eba91` — `runner(lane-b): lane-vp02-capture-error-surface.md`
-**Base (merge-base with main):** `d1bb3420`
+**Base (merge-base with main):** `96f1cfae`
 **Drained by:** s1142 fire, 2026-07-27
 **§3.0 drain-block-check:** ✅ CLEAR — leaf `lane-vp02-capture-error-surface`, `status="queued"` (in neither {merged,shipped}, so a genuine undrained slice, not a re-drain).
 
 ## VERDICT: ✅ MERGE
 
 The slice does exactly one thing and does it without collateral: it stops the two east-heading
-capture call sites from throwing away the error object that vp-02g (`ef3731b8`) had already built.
+capture call sites from throwing away the error object that vp-02g (`45dee34a`) had already built.
 Zero `src/`. No assertion loosened. The flake under study stays red.
 
 ## What it does

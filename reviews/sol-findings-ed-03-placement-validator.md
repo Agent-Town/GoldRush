@@ -2,7 +2,7 @@
 
 Branch: `sol/ed-03-placement-validator`
 
-Base: `sol/ed-02-brush-v2@e5eed887`
+Base: `sol/ed-02-brush-v2@ac14e160`
 
 Verdict: **BLOCKED — one narrow territory/API grant is required before product code.**
 

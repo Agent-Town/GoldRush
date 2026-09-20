@@ -1,6 +1,6 @@
 # SEA-1 — the county names its seasons
 
-**Slice:** `sea-1-season-registry` · **branch:** `lane/b` · **tip:** `fcbb14a7e` · **merge:** `726398e767b48cd93c6573afd9bc934b5c1a652d`
+**Slice:** `sea-1-season-registry` · **branch:** `lane/b` · **tip:** `ee4e6c6a6` · **merge:** `c94983206bb15c979c259f6fb61c674a7b181685`
 **Drained:** s1637, 2026-08-10 · **base:** merge-base of `main` and `lane/b` (lane was 11 behind at drain time, 1 ahead)
 
 ## VERDICT: MERGED
@@ -72,7 +72,7 @@ assertions measure something. They are not the F-1636-1 shape.
 The master's fourth scope item was a *negative*: prove the ranking did not move. The runner asserted
 it; this drain re-derived it from the merge commit itself.
 
-`git diff 726398e7^1 726398e7 -- functions/api/standings.ts` contains **5 added lines and 0 deleted
+`git diff c9498320^1 c9498320 -- functions/api/standings.ts` contains **5 added lines and 0 deleted
 lines**, in full:
 
 ```

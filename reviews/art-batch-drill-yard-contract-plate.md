@@ -2,14 +2,14 @@
 
 **Slice:** `art-batch-drill-yard-contract-plate` (ART slot, FIRE-AUTHORED s1331 from spec slice PC-01)
 **Branch:** none — the ART slot commits to `main` directly.
-**Tip:** `fd38b8837f094cd4eb9cbc18cbb06405d3877404` (2026-08-01T14:14:15+07:00, `runner(art)`)
+**Tip:** `fd38b8837f094cd4eb9cbc18cbb06405d3877404 (archive: pruned by the A3 rewrite)` (2026-08-01T14:14:15+07:00, `runner(art)`)
 **Drained by:** s1332, 2026-08-01
 
 ## VERDICT: PASS — the 42nd contract now wears its own picture.
 
 ## What it does
 
-`e1-drill-yard` shipped with PC-01 at `f0bf5251` as the 42nd contract and had no board card, so
+`e1-drill-yard` shipped with PC-01 at `f86b28b3` as the 42nd contract and had no board card, so
 `renderContractArt` fell through `src/town/TownScene.ts:2787` → `:2788` → the last-resort fallback at
 `:2790` and drew **the Claim's** plate on the Drill Yard card. This batch adds exactly one file —
 `assets/raw/plate-contract-e1-drill-yard.png` (1672×941 RGB, SHA-256 `6647dda9…5954a`) — plus its run
@@ -40,7 +40,7 @@ exactly. That is the difference between "the URL is right" and "the picture is t
 
 ## Merge classification
 
-Not a lane graft. The ART runner committed the two new files straight to `main` in `fd38b883`;
+Not a lane graft. The ART runner committed the two new files straight to `main` in `fd38b883 (archive: pruned by the A3 rewrite)`;
 `git status` at drain time showed no `src/`, no `e2e/`, and no contract/spec/ledger edits, exactly as
 the master's NO-list required. The run performed **no** extraction, processing, wiring or LEDGER edit —
 all correctly left to this drain (§8).
@@ -65,11 +65,11 @@ GOALS and RULES are all present and individually legible.
 the master's own guard absorbed it, and that is the point worth keeping.**
 `tasks/done/` holds `20260801-140654-…` and `20260801-141427-…` for the same master, with matching logs
 in `tasks/runs/`. Mechanism, read from the commits rather than guessed: the **first** run committed the
-output (`fd38b883`: plate + run note + telemetry) **without removing its queue entry**; the entry was
-still in `tasks/queue/art/` and was dispatched again; the **second** commit (`fe115f30`) is that entry's
+output (`fd38b883 (archive: pruned by the A3 rewrite)`: plate + run note + telemetry) **without removing its queue entry**; the entry was
+still in `tasks/queue/art/` and was dispatched again; the **second** commit (`5d5e6d02`) is that entry's
 deletion and nothing else. The second run cost **45,914 tokens** and changed **zero files**, because
 s1331 wrote a Scope-0 pre-flight that checks for the output before generating — it STOPPED with
-*"duplicate pre-flight guard triggered … Already completed by commit fd38b883"*. This is the second
+*"duplicate pre-flight guard triggered … Already completed by commit fd38b883 (archive: pruned by the A3 rewrite)"*. This is the second
 duplicate dispatch on this board in two days (`goals.json` records s1328's). **The cure belongs in the
 runner's queue-removal, not in more guards** — but note that the guard is what made this cost 46k
 tokens instead of a second 3.5 MB generation over shipped art.

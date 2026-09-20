@@ -2,7 +2,7 @@
 
 **Slice:** `f1410-1-bound-the-guard-battery-file-concurrency-in-the-fire-shell`
 **Branch/slot:** main slot (runner output, uncommitted working tree) · run `20260803-014024`
-**Base:** `c43fdb51` (s1411 lock) · drained s1411, 2026-08-03
+**Base:** `8625f11d` (s1411 lock) · drained s1411, 2026-08-03
 **§3.0 block-check:** ✅ CLEAR (read as the WORD, `--strict`), leaf `status="queued"`
 
 ## VERDICT: MERGE — and the fire-shell integer is RULED `1`, on evidence I took myself.
@@ -144,7 +144,7 @@ each; this argument needs one, which is the point of finding the cliff first.
 ## Merge classification
 
 Main-slot output: three **new** files (pure adds, no conflict surface) plus one modified line in
-`package.json`. Main moved only via my own `c43fdb51` lock commit, which touches `STATUS.md` only —
+`package.json`. Main moved only via my own `8625f11d` lock commit, which touches `STATUS.md` only —
 **no file in this slice was touched by main**, so there is no graft question. `logs/**` churn is the
 factory's own accounting (F-1407-1 exception) and is deliberately **not** committed here.
 Path-scoped add of exactly the four TOUCH-ONLY paths.

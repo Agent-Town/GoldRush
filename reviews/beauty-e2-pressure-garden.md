@@ -2,7 +2,7 @@
 
 **Slice/branch/tip:** `beauty2/e2-pressure-garden` · worktree `gr-task-beauty2-e2-pressure-garden` · solo-writer Opus-5 shift, 2026-08-04
 **Brief:** `docs/beauty/e2-pressure-garden-brief.md` · program laws `docs/beauty/README.md`
-**Base:** `7dcae7cbe02ba087577f2e6f38b6876af5ad0c39` ("drain: beauty2 round-2 conflict repairs (tsc clean)") — see §Deviations #1 for why this is not `origin/main`.
+**Base:** `52b2ac2155cac755a9968e0a6ea607d95d1b5fb7` ("drain: beauty2 round-2 conflict repairs (tsc clean)") — see §Deviations #1 for why this is not `origin/main`.
 **Boards:** `reviews/shots-beauty2-e2-pressure-garden/` — `pairs/` are the before|after boards; `u1a…u1e`, `u2-before`, `u2a`, `u3a`, `u3b`, `u345`, `u4-hot`, `lite-zoom`, `final` are the ladder, kept.
 **Verdict:** ✅ **5 KEPT · 0 REVERTED · 1 BUG FOUND AND CURED (F-PG-2)** — every upgrade in the brief shipped, and the shift's largest single result is not in the brief at all: `LANDMARK_EMISSIVE` was dead code, so three previously-merged beauty upgrades on three other maps had silently reverted themselves.
 
@@ -147,7 +147,7 @@ Proven in **both directions**, both viewports, one browser: cold → `heatShimme
 
 ## Merge classification
 
-Base `7dcae7cbe02ba087577f2e6f38b6876af5ad0c39`. Five commits, path-scoped, one concern each:
+Base `52b2ac2155cac755a9968e0a6ea607d95d1b5fb7`. Five commits, path-scoped, one concern each:
 
 | Commit | Files | Class |
 |---|---|---|
@@ -179,11 +179,11 @@ Base `7dcae7cbe02ba087577f2e6f38b6876af5ad0c39`. Five commits, path-scoped, one 
 
 **Owner note, non-blocking:** the cure is *correct* but it is a **visible change to `the-claim`, `e1-baron` and `e1-dry-gulch`** that no one asked this shift to make. Reverse it with one word and I will re-land the fix behind a per-contract opt-in instead; the boards in `u3a` (clobbered) vs `u3b` (cured) show exactly what the difference looks like on one map.
 
-**⚠️ MERGE NOTE FOR THE DRAINER — this line is deleted on two branches at once.** The parallel `beauty2/e2-hill-mine` shift hit the same wall independently on the same day (its own F-BHM-1) and deleted the same call in `bc14d54c`, additionally making the pilot publish the **measured** per-mount `emissiveIntensity` inside `dataset.terrain3dPilotLandmarkMaterials[]` so the attribute can no longer echo the table. As of `7c833197` **main still carries the duplicate**, so whichever branch drains second will conflict on this hunk. **Resolution: keep the deletion, and prefer the hill-mine version of the dataset publication** — publishing the measured value is strictly better than publishing the declaration, and it is the thing that would have caught this in the first place. Root cause of the duplicate, per that shift: `10586b90` (the baron drain), whose merge resolution kept both the new per-contract block *and* the single-line call it replaced.
+**⚠️ MERGE NOTE FOR THE DRAINER — this line is deleted on two branches at once.** The parallel `beauty2/e2-hill-mine` shift hit the same wall independently on the same day (its own F-BHM-1) and deleted the same call in `07eab045`, additionally making the pilot publish the **measured** per-mount `emissiveIntensity` inside `dataset.terrain3dPilotLandmarkMaterials[]` so the attribute can no longer echo the table. As of `b16e39b3` **main still carries the duplicate**, so whichever branch drains second will conflict on this hunk. **Resolution: keep the deletion, and prefer the hill-mine version of the dataset publication** — publishing the measured value is strictly better than publishing the declaration, and it is the thing that would have caught this in the first place. Root cause of the duplicate, per that shift: `d67095eb` (the baron drain), whose merge resolution kept both the new per-contract block *and* the single-line call it replaced.
 
-### F-PG-1 — `main` was tsc-red at `a7bc23c5` ✓ VERIFIED · ✅ ALREADY CURED UPSTREAM · no action
+### F-PG-1 — `main` was tsc-red at `91eff09f` ✓ VERIFIED · ✅ ALREADY CURED UPSTREAM · no action
 
-At pre-flight, local `main` (`a7bc23c5`) carried a botched merge: duplicated `isMapBeautyDisabled` import, duplicated `nextSkirt`/`nextChannelWater` declarations in `Terrain3dClaimPilot.ts`, and a duplicated `eraOrder` in `TownScene.ts`. Nine tsc errors; the module failed to parse and **the game did not boot at all**. Recorded because it is a real quality signal about the round-2 conflict repairs — but by the time I had the evidence a fire had already landed `7dcae7cb` "drain: beauty2 round-2 conflict repairs (tsc clean)", which is what this shift is based on. **No corrective task needed.** (This is also the VERIFY-DON'T-INHERIT rule paying for itself twice in five minutes: my first `git show main:` read the *moved* ref and showed clean content while the working tree still held the broken blob.)
+At pre-flight, local `main` (`91eff09f`) carried a botched merge: duplicated `isMapBeautyDisabled` import, duplicated `nextSkirt`/`nextChannelWater` declarations in `Terrain3dClaimPilot.ts`, and a duplicated `eraOrder` in `TownScene.ts`. Nine tsc errors; the module failed to parse and **the game did not boot at all**. Recorded because it is a real quality signal about the round-2 conflict repairs — but by the time I had the evidence a fire had already landed `52b2ac21` "drain: beauty2 round-2 conflict repairs (tsc clean)", which is what this shift is based on. **No corrective task needed.** (This is also the VERIFY-DON'T-INHERIT rule paying for itself twice in five minutes: my first `git show main:` read the *moved* ref and showed clean content while the working tree still held the broken blob.)
 
 ### F-PG-3 — the shipped terrain contract's `maskTruth` was stale against its own source ✓ VERIFIED · ✅ CURED BY THE RE-EXPORT
 
@@ -197,9 +197,9 @@ At pre-flight, local `main` (`a7bc23c5`) carried a botched merge: duplicated `is
 
 The four named suites ran through this shift's own config on its own port (`playwright.beauty2-pg.config.ts`, 5302, `--workers=1`): **102 passed, 17 failed in 32.2 minutes.** The brief's *primary* suite — `e2-pressure-garden.spec.ts`, the one that boots this map through the town board and drives the whole pressure loop — **passed on both projects**, and regenerated its own boards.
 
-Then the control, run properly: a **detached worktree at the base commit** (`/tmp/gr-pg-control` at `7dcae7cb`, its own vite on **5312**, `--workers=1`), and — because a control is only a control if it shares the treatment's scope and box conditions (F-1113-4) — **the branch was then re-run at the control's exact scope**, back to back, never overlapping. Two suites, same specs, same worker count, same hour:
+Then the control, run properly: a **detached worktree at the base commit** (`/tmp/gr-pg-control` at `52b2ac21`, its own vite on **5312**, `--workers=1`), and — because a control is only a control if it shares the treatment's scope and box conditions (F-1113-4) — **the branch was then re-run at the control's exact scope**, back to back, never overlapping. Two suites, same specs, same worker count, same hour:
 
-| | Branch, matched scope | Untouched base `7dcae7cb` |
+| | Branch, matched scope | Untouched base `52b2ac21` |
 |---|---|---|
 | **failed** | **9** | **9** |
 | **passed** | **14** | **14** |
@@ -252,9 +252,9 @@ The trap that would have deleted this map's landmarks is still armed on `e2-incl
 
 ## DRAIN VERDICT — s1457 (2026-08-05)
 
-**Verdict:** ✅ **MERGED to main as `25890bae024059f47d15c42fd76558d190994c1e`** (re-land of the shift above, ported onto the moved world per `tasks/lane-e2-pressure-garden-reland.md`).
+**Verdict:** ✅ **MERGED to main as `a721d01a418c46c5cab6289f76ce6cb5eaa2df55`** (re-land of the shift above, ported onto the moved world per `tasks/lane-e2-pressure-garden-reland.md`).
 
-**Merge classification.** Lane base `02bea28c`; `git log main..lane/c` held exactly one commit (`8c72ca0e`). Twelve of thirteen paths were **LANE-ONLY** (main had moved none of them since the base); the thirteenth, `tasks/BACKLOG.md`, was **BOTH-MOVED** (3 main commits) and auto-merged by `ort` with no conflict — the two sides append different rows.
+**Merge classification.** Lane base `729f9963`; `git log main..lane/c` held exactly one commit (`f25ec2fc`). Twelve of thirteen paths were **LANE-ONLY** (main had moved none of them since the base); the thirteenth, `tasks/BACKLOG.md`, was **BOTH-MOVED** (3 main commits) and auto-merged by `ort` with no conflict — the two sides append different rows.
 
 **Gates, on the MERGED tree, in a detached scratch worktree (§3.0b custody) against a scratch dev server on :5197 (Mistake #12 attribution), every playwright command at `--workers=1` (§3.1 / F-1270-1):**
 
@@ -270,6 +270,6 @@ The trap that would have deleted this map's landmarks is still armed on `e2-incl
 | console/page errors | zero unsuppressed across all four map boots (watcher reported `0 known GLTFLoader blob error(s)` suppressed) |
 | F-RB-1 single-line law | verified by reading: every `e2-pressure-garden` pilot entry is single-line (`:164`, `:387`, `:415`, `:591`, `:2140`) |
 
-**The Hill Mine red is PRE-EXISTING, established by a CONTROL RUN, not by a label.** The runner's report claimed the documented F-BHM-3 baseline. A known-red claim is not exoneration, so the same worktree was reset to clean main (`302a5792`) and the same spec re-run on the same server at the same worker count: **identical 10 passed / 2 skipped / 2 failed, same test (`:131`), same assertion site (`:166`), and the same received value to the last digit — `-0.45728564262390137` against an expected `-0.5`.** The merge does not cause it.
+**The Hill Mine red is PRE-EXISTING, established by a CONTROL RUN, not by a label.** The runner's report claimed the documented F-BHM-3 baseline. A known-red claim is not exoneration, so the same worktree was reset to clean main (`f326391a`) and the same spec re-run on the same server at the same worker count: **identical 10 passed / 2 skipped / 2 failed, same test (`:131`), same assertion site (`:166`), and the same received value to the last digit — `-0.45728564262390137` against an expected `-0.5`.** The merge does not cause it.
 
 **F-1457-1 (instrument, non-blocking, cure recorded here) — a `vite preview` scratch server MANUFACTURES reds in this suite.** My first gate attempt served the production build on the scratch port and `e2-pressure-garden.spec.ts` went **2 failed in 129s** on `locator.click` 60s timeouts. `playwright.config.ts:60` shows the house webServer is `npm run dev`. Re-run on a dev server, same tree, same flags: **2 passed in 18s.** The reds were the instrument's, not the slice's. Any fire using `GR_CAPTURE_EXTERNAL_SERVER=1` must start `npm run dev -- --port <scratch> --strictPort`, never `vite preview` — the config's own webServer command is the specification.

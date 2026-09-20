@@ -7,7 +7,7 @@ import fs from 'node:fs';
 
 const GATE = '/Users/robin/Claude/Projects/Gold Rush/gate-s1516';
 const GUARD = `${GATE}/scripts/citation-title-guard.mjs`;
-const MAIN = 'fb40b2584';
+const MAIN = '303b3c8f4';
 const hash = (p) => crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex').slice(0, 16);
 
 const fixed = fs.readFileSync(GUARD);

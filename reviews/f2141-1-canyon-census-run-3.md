@@ -1,6 +1,6 @@
 # Review — f2141-1-canyon-census-run-3 (Canyon Works census, attempt 3)
 
-**Slice:** `f2141-1-canyon-census-run-3` · **Branch:** `lane/d` · **Tip:** `34d2b5ee5` · **Merged:** `14e50ea3aa84cb1500dce5897543e04d992485e2`
+**Slice:** `f2141-1-canyon-census-run-3` · **Branch:** `lane/d` · **Tip:** `34d2b5ee5 (archive: pruned by the A3 rewrite)` · **Merged:** `ae24ba35d7283745b2c6f26d818554ac8052f889`
 **Fire:** s2141 · **Date:** 2026-08-21 · **Authored AND drained by the same fire** (see F-2141-2 below — that is not free)
 
 ## Verdict
@@ -13,7 +13,7 @@ This is the third attempt and the first to produce a number. Attempt 1 (s2086) c
 
 ## What it does
 
-Re-runs the sanctioned Canyon Works census now that `f2138-1` (`cd59fb273`) publishes `canyonConnect` onto the agent view. It adds no product code: 8 files, 491 insertions, **all additive**, entirely under `artifacts/f2135-canyon-census/**` plus the two banked scripts that main had never seen.
+Re-runs the sanctioned Canyon Works census now that `f2138-1` (`2b81cc104`) publishes `canyonConnect` onto the agent view. It adds no product code: 8 files, 491 insertions, **all additive**, entirely under `artifacts/f2135-canyon-census/**` plus the two banked scripts that main had never seen.
 
 ## Evidence
 
@@ -26,14 +26,14 @@ Re-runs the sanctioned Canyon Works census now that `f2138-1` (`cd59fb273`) publ
 | Control harness exception | `Error: e3-canyon-works ended unsecured at wave 2.` — verbatim match, at `gr-sim-campaign.mjs:113` |
 | Waves observed | `0, 1` only |
 | `powered/required` across all rows | `0/2`, `complete:false`, `failed:false` throughout |
-| Firewall | run commit `34d2b5ee5` touches **only** `artifacts/f2135-canyon-census/**` (6 files); **both banked scripts byte-identical** to `91e8b5e23` |
+| Firewall | run commit `34d2b5ee5 (archive: pruned by the A3 rewrite)` touches **only** `artifacts/f2135-canyon-census/**` (6 files); **both banked scripts byte-identical** to `cae0e7a98` |
 | Contract byte-unchanged | `git diff --quiet assets/contracts/epoch-3-voltage/contracts.json` silent |
 
 ⭐ **The control is the load-bearing evidence here, not the runner's own determinism claim.** A run that reports "my two runs agree" is asserting determinism with itself as the only witness. This drain re-ran the census a **third** time, in a detached worktree, at a different output path, and got a byte-identical 10-row trace and the same verbatim exception. That is what makes the wave-2 termination a fact about the sim rather than a fact about one process.
 
 ## Merge classification
 
-Base `e753f66f0`. All 8 paths **LANE-ONLY** — `git diff <base>..main` over each is empty, so main moved none of them and no graft was possible. `merge-tree` clean before merging; `main..lane/d` **empty** after. Merged `--no-ff` and committed as one act (never left staged — F-1589-5).
+Base `cd52525a4`. All 8 paths **LANE-ONLY** — `git diff <base>..main` over each is empty, so main moved none of them and no graft was possible. `merge-tree` clean before merging; `main..lane/d` **empty** after. Merged `--no-ff` and committed as one act (never left staged — F-1589-5).
 
 ## Findings
 

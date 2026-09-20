@@ -4,7 +4,7 @@ CODEX: model=gpt-5.6-sol effort=xhigh
 
 **FIRE-AUTHORED s1477 (attended review welcome).** Authored from an OPEN finding with an explicit,
 fire-authorable gate (F-1476-1 in `tasks/BACKLOG.md`) **plus a measurement this fire performed and
-committed first** (`artifacts/s1477-noise/REPORT.md` at `1b64d48b1`). No spec slice, no design fork,
+committed first** (`artifacts/s1477-noise/REPORT.md` at `1b64d48b1 (archive: pruned by the A3 rewrite)`). No spec slice, no design fork,
 no canon: this is factory-evidence hygiene, the F-1407-1 artifact-churn class.
 
 ROLE: implementer on lane-a. WORKDIR: `worktrees/lane-a` (branch `lane/a`). Commit prefix `rct:`.
@@ -63,7 +63,7 @@ commit can be blamed for the movement**. It closed with a gate and a prohibition
 > quantity as truth and restart the same misreading.**
 
 s1476 could not supply the band — it measured n=2 and correctly refused to bisect a non-monotonic
-predicate. s1477 supplied it: **crawler n=12, railcar n=10, one commit (`659f4efe0`), instrument
+predicate. s1477 supplied it: **crawler n=12, railcar n=10, one commit (`2822069b5`), instrument
 pinned, `--workers=1`, same shell.** The three results that decide this task:
 
 1. **Most metrics are already byte-stable.** Crawler: 18 of 20 stable across 12 runs. Railcar: 10 of
@@ -127,7 +127,7 @@ guard, or assertion against the committed JSON — so the artifact's whole prese
    gate, and the F-1460-1 `test:node-guards` trigger keys on `src/sim|systems|entities`.
 2. 🚫 **The specs' existing behavioural assertions** — the three crawler tests, the railcar
    `geometries - baseline.geometries < 8` delta assertion, the zero-console `expect(errors)` checks,
-   the tier/dispose pins landed by `1c8b344a`. Item 3 ADDS a check; it removes none.
+   the tier/dispose pins landed by `9b6bf52f`. Item 3 ADDS a check; it removes none.
 3. 🚫 **`tasks/BACKLOG.md`, `tasks/goals.json`, `STATUS.md`, `reviews/`** — the drain does that.
 4. 🚫 **The other two `artifacts/**` renderer files' siblings** (PNGs, `report.md`) and any other
    spec's artifacts. Ten PNGs also churn per run; that is the SAME F-1407-1 class but a different

@@ -15,7 +15,7 @@ six-commit gap is F-2562-2's sliding-window trap firing live on this day too: gi
 current time-of-day, so the window slides. A control was asserted before any count was believed: **12,261**
 first-parent commits in the whole history, so a zero here would have been an answer and not a failed read.
 The player-path test is **imported** from `scripts/gazette-backfill-sweep.mjs` (`isPlayerPath`), never
-re-typed, per F-1261-1. The day was asked as a day — `git diff 6edb90033^..d8d011950` — rather than commit by
+re-typed, per F-1261-1. The day was asked as a day — `git diff 43ae9f92c^..2a905928a` — rather than commit by
 commit, because of the merge-direction over-count F-2583-1 names.
 
 **And one extra check this digest ran that its predecessors did not.** Every prior digest counted
@@ -36,7 +36,7 @@ had struck out, are owed back to them — and the door that did the striking is 
 
 ## The county's news
 
-**The county's book stops taking a row away to make room.** `846f34914` found the verdict path enforcing
+**The county's book stops taking a row away to make room.** `69c16417f` found the verdict path enforcing
 "one standing to a name" by **deleting** a rider's other verified row from storage. It now re-ranks instead
 of shrinking.
 
@@ -47,7 +47,7 @@ of shrinking.
   tree (**1 of 6**) and passes after the cure (**6 of 6**); the KV-index race the master blamed was
   falsified by three separate instruments.
 
-**The Twin Banks crossing holds, and the Fairground wheel gets out of the way.** `73f150c69` landed five of
+**The Twin Banks crossing holds, and the Fairground wheel gets out of the way.** `e4766971b` landed five of
 six owner rulings on play and art.
 
 - **The fords were re-cut and the claim holds four and a half waves longer.** Plain-boot secure wave
@@ -65,7 +65,7 @@ six owner rulings on play and art.
 - **One ruling was parked rather than faked.** Waking the Claim Jumper did not read green at the drain
   (10 failed / 27 passed), so it was reverted and the patch kept.
 
-**The county's hour is a real hour, and it holds sixty.** `d3ed136e7` executed five county and factory
+**The county's hour is a real hour, and it holds sixty.** `8dd8c64ac` executed five county and factory
 rulings.
 
 - **A rider who asks the book too often used to meet a clock that reset when it pleased.** The hour now
@@ -77,7 +77,7 @@ rulings.
 - **The copy says five frontier contracts, not six**, and the Low Orbit dispatch is keyed to the board
   being secured rather than to a boss it never had (guard **1/3 → 3/3**).
 
-**Astra's open findings landed, and the honest reading is that the town looks the same.** `6733232e1` took
+**Astra's open findings landed, and the honest reading is that the town looks the same.** `a42b7190a` took
 the opaque-scenery batching, per-prop camera culling and a diffuse hero pilot.
 
 - **A rider sees the same town at the same speed.** Settled town mode is **unchanged** — 10.2–10.3 ms on
@@ -85,18 +85,18 @@ the opaque-scenery batching, per-prop camera culling and a diffuse hero pilot.
   economical. The hero model rode as an unpromoted pilot, so the runtime still draws the sprite heroine.
 - **What was banked is the proof and the instrument**, not a speed-up, and the next scenery work reuses both.
 
-**Six of the Claim Jumper's winds are cut and wired, and the county still cannot show him.** `899826209`
+**Six of the Claim Jumper's winds are cut and wired, and the county still cannot show him.** `64b1cbca2`
 landed the six facings at the measured band and wired them into the character contract — but the slot is
 runtime-dormant: it maps to the bandit base, the opening town's payload carries **zero** references to it and
 the shipped bundle is unmoved. A second measurement found the eight-wind row **shadows** the four-wind one,
 so waking him is two decisions rather than one. The Steam Wrecker's south-east stays parked on numbers.
 
-**The ledger office has an account registry, and its door is shut.** `fa185e611` landed an atomic registry
+**The ledger office has an account registry, and its door is shut.** `fdfcab4d0` landed an atomic registry
 behind a closed gate — the binding ships commented and its scope unset, so the door behaves byte-identically
 to the day before.
 
-**The era seal was re-pinned four times — same era, not a new one.** Pins #12 through #15 (`9e2851bd2`,
-`287dda03e`, `cc5662f1c`, `e6dcb4143`) append to era 6, each verified by reading its own `cause` field rather
+**The era seal was re-pinned four times — same era, not a new one.** Pins #12 through #15 (`7c953f873`,
+`33eab8ea2`, `896f5c276`, `b996c5527`) append to era 6, each verified by reading its own `cause` field rather
 than its subject line. Nothing about the Re-surveyed Claims changed underneath a rider's existing reels.
 
 ## Not player-visible
@@ -122,7 +122,7 @@ judged there and dismissed with their reasons. The sweep confirms it independent
 commits cited, 0 candidates**. It is repeated here because a digest reports the day, and this was the day.
 
 ---
-*Compiled by the s2652 fire. Day boundary `6edb90033^`..`d8d011950`. 103 first-parent commits (two
+*Compiled by the s2652 fire. Day boundary `43ae9f92c^`..`2a905928a`. 103 first-parent commits (two
 independent methods agree; the bare-date form reads 109), 210 reachable on the day with 28 off-walk
 player-path commits all contained and 0 orphaned, 11 player-path on the walk, 555 files changed, 136 on a
 player path, 64 commits across 15 fire sessions. No commit message was used to classify anything.*

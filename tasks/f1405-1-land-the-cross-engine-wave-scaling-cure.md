@@ -37,7 +37,7 @@ READ-FIRST (paths, read them, do not skim):
  · `reviews/f1404-1-cross-engine-wave-scaling-stop.md` — this task's evidence, the ULP tables, and
    why the old gate was unsatisfiable.
  · `reviews/f1403-1-twin-banks-hash-divergence.md` — the original causal chain and the five sites.
- · `src/systems/WaveSystem.ts` — the five sim-reachable sites (find them by READING; on `abbdcc4c`
+ · `src/systems/WaveSystem.ts` — the five sim-reachable sites (find them by READING; on `915950b0`
    they are at `:579` speedScale, `:582` hpScale, `:744` trickleInterval, `:838` waveHpScale,
    `:839` waveSpeedScale).
 

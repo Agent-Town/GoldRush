@@ -5,7 +5,7 @@
 You are Codex, implementer for Gold Rush, running natively on Robin's Mac in `worktrees/lane-a`.
 READ FIRST: `AGENTS.md`; `scripts/run-node-guards.mjs` lines 37–82 (the whole `contentionStamp()` plus both call sites at `:76`/`:81`); `scripts/node-guards-contention.test.mjs` in full (it is the guard you must keep honest — note `waitForQuietBoard()` at `:35–:48` and the sibling spawn at `:129–:137`); `scripts/node-guards-concurrency.mjs` in full (27 lines, pure, no side effects — verified by the authoring fire; this is where the shared predicate goes).
 
-CONTENT KEY (each proved by the authoring fire to return **1** on main at `58b61d11f`, and each sits on ONE line so `grep` can see it):
+CONTENT KEY (each proved by the authoring fire to return **1** on main at `12507a20d`, and each sits on ONE line so `grep` can see it):
 - `grep -Fc "const siblings = processes.filter" scripts/run-node-guards.mjs` → **1**
 - `grep -Fc "concurrent batteries" scripts/run-node-guards.mjs` → **1**
 - `grep -Fc "node-guards board did not stay quiet" scripts/node-guards-contention.test.mjs` → **1**

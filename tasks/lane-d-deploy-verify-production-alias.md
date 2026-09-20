@@ -6,7 +6,7 @@
 > ✅ **PRE-FLIGHT (safe — verified by the authoring fire, 2026-07-26T01:4xZ).**
 > `git rev-list --count main..lane/perf` = **0**: the lane holds no unmerged content, so the standard
 > reset-to-main pre-flight is loss-free. No SAFE-DUPE reasoning is needed for this lane.
-> `scripts/deploy.sh` on main is current at `00f5d464` and **no other task is editing it** (all six queues
+> `scripts/deploy.sh` on main is current at `445ba24d` and **no other task is editing it** (all six queues
 > were empty when this was authored) — so unlike its two predecessors, this master has no sequencing gate.
 > Still: re-read the file on main before writing. Do not trust the line numbers quoted below.
 
@@ -35,11 +35,11 @@ The shipped `deploy.sh:20` writes **five** fields — `logs/deploy-result.json`,
 attempt of 2026-07-25T17:49:02Z, reads verbatim:
 
 ```
-{"outcome":"deploy_failed","url":"","publishedBuild":"00f5d464","commit":"00f5d464fc…","ts":"2026-07-25T17:49:02Z"}
+{"outcome":"deploy_failed","url":"","publishedBuild":"445ba24d","commit":"445ba24d24…","ts":"2026-07-25T17:49:02Z"}
 ```
 
 Sorted, that is `commit,outcome,publishedBuild,ts,url`. **The assertion throws on every one of the seven
-`run_case` calls, so the whole file is red** — and it has been since `00f5d464` added `publishedBuild`.
+`run_case` calls, so the whole file is red** — and it has been since `445ba24d` added `publishedBuild`.
 Two consecutive deploy correctives shipped without their own contract test ever being run. This is the same
 family as F-1049-1 / F-1047-1 / F-1044-1, one layer down: **a guard nobody runs is not a guard.**
 *(Authoring fire's honesty note: script execution is permission-gated for fires, so this red is proven by
@@ -103,7 +103,7 @@ The Pages URL in that sentence is the alias. Verify the sentence the law actuall
 
 5. **Do not regress the predecessors.** The `lockf` serialization, the immutable `mktemp -d` snapshot, the
    wrangler-log error extraction, the `publishedBuild` field, the budget leg, and the never-block law are all
-   shipped work from `ab528c3f` and `00f5d464`. This task is **additive** to them. Do not "tidy" them.
+   shipped work from `fa975d53` and `445ba24d`. This task is **additive** to them. Do not "tidy" them.
 
 ## FIREWALL
 **TOUCH-ONLY:** `scripts/deploy.sh` · `scripts/test-deploy-contract.sh` · this task file's done-move.

@@ -25,9 +25,9 @@ READ FIRST: AGENTS.md; `reviews/transfer-board.md` (finding **F-2472-3** — the
 
 ## ⛔ PRE-FLIGHT — THIS LANE'S CONTENT IS YOUR BASE. DO NOT RESET IT.
 
-`lane/b` is `ahead=1` at `a7dc8fdab` and HOLDS all 13 paths declared above. **That commit is the thing you are extending.** Do NOT `git checkout -B lane/b main`, do NOT `git reset --hard`, do NOT `git clean -fd` anything tracked — doing so destroys a complete, unmerged implementation (Mistake #2, the Reset Massacre).
+`lane/b` is `ahead=1` at `19c2e9f12` and HOLDS all 13 paths declared above. **That commit is the thing you are extending.** Do NOT `git checkout -B lane/b main`, do NOT `git reset --hard`, do NOT `git clean -fd` anything tracked — doing so destroys a complete, unmerged implementation (Mistake #2, the Reset Massacre).
 
-STOP-and-report if: the lane tip is NOT `a7dc8fdab` and its content is not obviously a descendant of it; or the lane holds a tracked path NOT in the EXPECTED-HOLDS list above (that is an unexpected state and this opt-in does not cover it). Untracked `logs/**`, `artifacts/**`, `reviews/shots-*` and any `.png` churn are never a STOP (F-1266-1/F-1407-1) — list and proceed.
+STOP-and-report if: the lane tip is NOT `19c2e9f12` and its content is not obviously a descendant of it; or the lane holds a tracked path NOT in the EXPECTED-HOLDS list above (that is an unexpected state and this opt-in does not cover it). Untracked `logs/**`, `artifacts/**`, `reviews/shots-*` and any `.png` churn are never a STOP (F-1266-1/F-1407-1) — list and proceed.
 
 Then: `npm install --no-audit --no-fund`; `npm run build` green before touching anything.
 
@@ -60,7 +60,7 @@ Touch ONLY: `assets/rotations/rotation-seeds.json` (moved), and **import-path-on
 
 **NO changes to:** `scripts/rotation-mint.mjs` (writes to stdout, needs nothing); `functions/api/refusals.ts` (does not name the path); `scripts/assay-replay-agent.mjs` — narrowing `ENGINE_SOURCE_INPUTS` is the expensive cure this task exists to avoid and is an owner question; `assets/engine-era.json` — no re-pin is needed and writing one would misclassify this as an engine change; `compareScores` or any ranking order; the sim; `bench-seeds.json`; `specs/transfer-board.md` (attended will amend the path).
 
-⚠️ `public/skill.md` now carries **generated fences** (`<!-- contracts:begin -->` / `<!-- contracts:end -->`, merged `24352d079`). Anything inside them comes from `node scripts/render-skillmd-contracts.mjs` only; put the ROTATION section OUTSIDE them or `skillmd-contracts-guard` reds.
+⚠️ `public/skill.md` now carries **generated fences** (`<!-- contracts:begin -->` / `<!-- contracts:end -->`, merged `9b9397c8e`). Anything inside them comes from `node scripts/render-skillmd-contracts.mjs` only; put the ROTATION section OUTSIDE them or `skillmd-contracts-guard` reds.
 
 ## Self-check (evidence, not vibes)
 

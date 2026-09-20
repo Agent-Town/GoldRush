@@ -1,6 +1,6 @@
 # needs-cells-codex-strips — the landing report
 
-**Task** `tasks/needs-cells-codex-strips-land.md` · **branch** `art/needs-cells-codex-strips-land` · **base** `de7eacd17` · **implementer** Claude Opus 5 in a scratch worktree, Node 26, dev server 5305 · **date** 2026-09-19
+**Task** `tasks/needs-cells-codex-strips-land.md` · **branch** `art/needs-cells-codex-strips-land` · **base** `21648cdcf` · **implementer** Claude Opus 5 in a scratch worktree, Node 26, dev server 5305 · **date** 2026-09-19
 
 ## Verdict
 
@@ -77,10 +77,10 @@ The master's stated band of 156–174 was right and the drain's measured band wa
 
 | tree | PNGs | pin at that commit |
 |---|---:|---:|
-| needs-cells-art-batch merge `237661254` | 2103 | 2103 ✓ |
-| `498a64a8f^` (just before the codex-strips commit) | 2103 | 2103 ✓ |
-| `498a64a8f` (the s2627 landing) | **2123** | **2103 ✗** |
-| my base `de7eacd17` | **2123** | **2103 ✗** |
+| needs-cells-art-batch merge `1b9dbc234` | 2103 | 2103 ✓ |
+| `4550c3ae9^` (just before the codex-strips commit) | 2103 | 2103 ✓ |
+| `4550c3ae9` (the s2627 landing) | **2123** | **2103 ✗** |
+| my base `21648cdcf` | **2123** | **2103 ✗** |
 | this tree | 2127 | 2127 ✓ |
 
 The s2627 drain landed twenty cells without moving the denominator with them, so `node scripts/halo-reextraction-check.mjs` — and therefore `npm run test:node-guards` — has carried this red on clean main for a day. Re-pinned here to 2127, of which **only 4 are mine** (the `se` row). Named in the pin comment rather than silently absorbed, on F-SRR-3's rule: *a re-pin that quietly absorbs someone else's red is how a guard stops being a guard.*
@@ -162,7 +162,7 @@ This is also F-EW-5's class returning a third time: a facing that reads plausibl
 
 The base enemy family is the Claim Jumper by name, by type and by lore; only its texture source was moved.
 
-**Why it stopped: `82543f273` — "runner(lane-d): wire-e1-bandit-variants.md", 2026-07-12.** An **E1 roster change**, the master's second hypothesis. That one commit swapped six construction sites in `pools.ts` from `assetSlots.charClaimJumper` to `charBanditBase` / `charBanditThief`, added both bandit slots to `slots.ts` and `generated.ts`, and moved the encyclopedia entry. The E1 outlaw trio (base / thief / baron) took over the body art; the Claim Jumper kept its name on the batches, its entity type, its speed rule and its startup-critical status, and lost its pictures. Not a rename, not the sim, not `bandit_*` "taking its place" by drift — one wiring commit, dated and named.
+**Why it stopped: `0f5fb77e8` — "runner(lane-d): wire-e1-bandit-variants.md", 2026-07-12.** An **E1 roster change**, the master's second hypothesis. That one commit swapped six construction sites in `pools.ts` from `assetSlots.charClaimJumper` to `charBanditBase` / `charBanditThief`, added both bandit slots to `slots.ts` and `generated.ts`, and moved the encyclopedia entry. The E1 outlaw trio (base / thief / baron) took over the body art; the Claim Jumper kept its name on the batches, its entity type, its speed rule and its startup-critical status, and lost its pictures. Not a rename, not the sim, not `bandit_*` "taking its place" by drift — one wiring commit, dated and named.
 
 **PARKED, with the diff proposed — it is not a one-line render-side mapping.** Waking it means repointing the base enemy batch, which changes **which body the player fights in every E1 map**, plus the replay reel at `src/world/LanternWorldStage.ts:25` (`claim_jumper: assetSlots.charBanditBase`). That is an E1 roster and art-direction decision, and CLAUDE.md §7.3 puts it on the owner's desk. The exact diff, four sites in two files:
 
@@ -222,7 +222,7 @@ So the owner's question is narrow and cosmetic: *should the E1 base enemy look l
 | `scripts/review-enemy-sprites.mjs` | **rc=1, PRE-EXISTING** — see below |
 | engine hash | `cc3fd5d45add762f…` → **`674fdceadb56aa01…`** (`assets/layer-contracts` is in `ENGINE_SOURCE_INPUTS`; the pin is the drain's) |
 
-**`review-enemy-sprites.mjs` red, attributed.** It times out at its own line 14, `waitForFunction(… spriteAnimations['char.hero'].loaded)`. A direct probe shows the hero sitting at `{clip:'idle', frameKey:'pending', frameCount:0, loaded:false}` after 20 s with **0 console and 0 page errors** — and the identical probe **reproduces on a control tree restored to the base `de7eacd17`** (`assets/processed`, `assets/raw` and `assets/layer-contracts/characters.v2.json` all reverted). Not mine; the hero's sheet does not finish loading under `?debug&nowaves&nolevel` on this tree either way.
+**`review-enemy-sprites.mjs` red, attributed.** It times out at its own line 14, `waitForFunction(… spriteAnimations['char.hero'].loaded)`. A direct probe shows the hero sitting at `{clip:'idle', frameKey:'pending', frameCount:0, loaded:false}` after 20 s with **0 console and 0 page errors** — and the identical probe **reproduces on a control tree restored to the base `21648cdcf`** (`assets/processed`, `assets/raw` and `assets/layer-contracts/characters.v2.json` all reverted). Not mine; the hero's sheet does not finish loading under `?debug&nowaves&nolevel` on this tree either way.
 
 E2E, plain boots and the node-guards battery: see §8.
 
@@ -234,8 +234,8 @@ E2E, plain boots and the node-guards battery: see §8.
 
 | tree | result |
 |---|---|
-| **branch** `9c0c05832` | **17 failed / 32 passed / 3 skipped (8.6 m)** |
-| **control, base `de7eacd17`** (`assets/processed`, `assets/raw` and `characters.v2.json` reverted in place, same server, same command) | **16 failed / 33 passed / 3 skipped (8.3 m)** |
+| **branch** `c55e987e3` | **17 failed / 32 passed / 3 skipped (8.6 m)** |
+| **control, base `21648cdcf`** (`assets/processed`, `assets/raw` and `characters.v2.json` reverted in place, same server, same command) | **16 failed / 33 passed / 3 skipped (8.3 m)** |
 
 **The two failure sets are identical but for one row.** Sorted and diffed by `project › spec:line › title`, every one of the control's 16 appears on the branch, and the branch carries exactly one more:
 
@@ -261,7 +261,7 @@ Nothing in the 17 touches `char.claim_jumper`: `eight-winds-enemies` exercises t
 
 ## 9. The node-guards battery — three reds, one root cause, and it is the drain's pin
 
-`GR_GUARD_NO_ARTIFACT=1 node scripts/run-guards.mjs --changed-since de7eacd17` resolves to the **base gate only** (129 files changed, no path rule matched): `test:node-guards`, `test:power-budget`, `test:task-guards`, `test:citations`, `test:gate-callers`.
+`GR_GUARD_NO_ARTIFACT=1 node scripts/run-guards.mjs --changed-since 21648cdcf` resolves to the **base gate only** (129 files changed, no path rule matched): `test:node-guards`, `test:power-budget`, `test:task-guards`, `test:citations`, `test:gate-callers`.
 
 **`guards: 3/5 passed — RED: test:node-guards, test:power-budget`** (`test:node-guards` rc=1 in 502 s).
 

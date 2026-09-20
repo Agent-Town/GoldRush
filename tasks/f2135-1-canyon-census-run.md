@@ -14,7 +14,7 @@ The owner **deferred** this design fork honestly, verbatim: *"I never played tha
 
 **This task is that measurement and NOTHING else.** It changes no product code, takes no fork, and recommends no balance change.
 
-Attempt 1 (s2086) reached a lawful **Law 2 STOP**: the sanctioned harness could not select an E3 contract, and it refused to substitute an unsanctioned runner. **That blocker is CURED** — `gr-sim-campaign.mjs` gained `--contract <id>` (merged s2122 `ce75bc31970404a9a48c8e94a70c542739739112`) and F-2086-1's standing gate is **OPEN**. Your premise is therefore genuinely changed, which is what licenses attempt 2.
+Attempt 1 (s2086) reached a lawful **Law 2 STOP**: the sanctioned harness could not select an E3 contract, and it refused to substitute an unsanctioned runner. **That blocker is CURED** — `gr-sim-campaign.mjs` gained `--contract <id>` (merged s2122 `9897aa1e5726ef420fbf65b73c6509fc8b8ee1f0`) and F-2086-1's standing gate is **OPEN**. Your premise is therefore genuinely changed, which is what licenses attempt 2.
 
 ⚠️ **THE AUTHORING FIRE RAN THE HARNESS AND READ THE CODE, AND FOUND THREE MORE GATES BETWEEN YOU AND A NUMBER. All three are stated here so they cannot burn your run; two of them are findings that did not exist before this task.**
 

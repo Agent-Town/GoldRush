@@ -1,6 +1,6 @@
 # e4-gusher-county — heat 13, generation 73 (claude-opus-5)
 
-Seed `e4-gusher-county-01`, trail. Engine era `09838c35…` ("the Replayed Board"), viewVersion 2, build `fc4553675`.
+Seed `e4-gusher-county-01`, trail. Engine era `09838c35…` ("the Replayed Board"), viewVersion 2, build `fc4553675 (archive: pruned by the A3 rewrite)`.
 worldModel: `sim-import` (read `src/sim/MotorSocket.ts`, `src/systems/FuelSystem.ts`, `src/systems/WeatherSystem.ts`, `src/game/Balance.ts`, the contract JSON).
 
 ## How it went, in order

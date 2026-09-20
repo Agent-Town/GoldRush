@@ -1,6 +1,6 @@
 # Review: board-tape-gold — one gold number per standing (lane-b worktree, Claude Opus 5 implementer, attended drain 2026-09-06 morning)
 
-**Slice/branch/tip:** `board-tape-gold` · `fix/board-tape-gold` · commit `6a1e96ab3` on base `41b1e63cf` · merged to main: see the ledger row (first-parent merge; the collisions were the ledger, `functions/api/standings.ts` and `scripts/test-standings.mjs` beside the lineage slice, resolved by the drain).
+**Slice/branch/tip:** `board-tape-gold` · `fix/board-tape-gold` · commit `cfc5a79a5` on base `0a120edd3` · merged to main: see the ledger row (first-parent merge; the collisions were the ledger, `functions/api/standings.ts` and `scripts/test-standings.mjs` beside the lineage slice, resolved by the drain).
 **Verdict:** MERGED. The board's gold and the tape's gold were never the same quantity: the tape declares the purse HELD at the secure tick (`HeadlessContractSim.ts:2016`, inside the event-log hash), the assayer's snapshot reported lifetime PANNED at the secure tick (`summarizeLog(...).panned`, never decremented), and the door assigned the snapshot over the row (`standings.ts:306`). Cured at both ends: the snapshot is the held purse at the secure tick, rounded to the same ms grain as the declared score, and the verdict path can no longer overwrite a rider's score silently: when the secure tick is the terminal tick the golds must agree, else `assay: rejected` with `assayReason: score_mismatch`.
 
 ## The diagnosis, by replay
@@ -25,7 +25,7 @@ Every reel banks at the secure tick, so the secure tick is the terminal tick and
 | Attended on the merged tree | see the drain commit and the ledger row | `test-standings` both arms, `test:stats`, `test:accounts`, `test:mp`, the new guard, tsc, build |
 
 ## Merge classification
-Base `41b1e63cf`. `src/sim/HeadlessContractSim.ts`, `functions/api/standings.ts`, `functions/api/refusals.ts`, `scripts/test-standings.mjs`, `scripts/assay-replay.test.mjs`, `package.json`, `docs/assay-worker-runbook.md`: LANE-TOUCHED (the door file and the test file also touched by the lineage slice merged just before: unioned by the drain, both slices' checks kept). `scripts/board-tape-gold.test.mjs`, `artifacts/board-tape-gold/*`: NEW. `tasks/BACKLOG.md`: MAIN-MOVED, unioned.
+Base `0a120edd3`. `src/sim/HeadlessContractSim.ts`, `functions/api/standings.ts`, `functions/api/refusals.ts`, `scripts/test-standings.mjs`, `scripts/assay-replay.test.mjs`, `package.json`, `docs/assay-worker-runbook.md`: LANE-TOUCHED (the door file and the test file also touched by the lineage slice merged just before: unioned by the drain, both slices' checks kept). `scripts/board-tape-gold.test.mjs`, `artifacts/board-tape-gold/*`: NEW. `tasks/BACKLOG.md`: MAIN-MOVED, unioned.
 
 ## Findings
 - **F-2464-4 (OPEN, the next slice):** the two doors still mean different things by `score.gold`: the browser submits `economySummary.panned` (`src/game/Game.ts:7133`, also `:7527`, `:1825`, `RunManager.ts:312`) and its instrument verifies panned (`scripts/assay-replay.mjs:93`), while the headless door submits and verifies the held purse. Each door is internally consistent, so the comparator is green for both, but after this cure agent rows publish held and human rows publish panned: unfair on a mixed board. `tasks/browser-door-held-gold.md` authored by the drain.

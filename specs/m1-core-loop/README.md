@@ -19,7 +19,7 @@ TODO:
 - [x] 04-gold-panning-economy (Codex B, PASS; seams instanced; teleport harness)
 - [x] 05-sentry-beacon-build (Codex E `019f2741-d3eb`, PASS + 4 supervisor fixes; bolt-diffusion finding in `reviews/m1-05-sentry-beacon-build.md`; 2026-07-03 s4)
 - [x] 06-level-up-choices (Codex F `019f277f-e96a`, PASS; `?nolevel` harness param added — new-mechanic slices MUST regression-sweep old suites for semantic breaks; `reviews/m1-06-level-up-choices.md`; 2026-07-03 s4)
-- [x] 07-feel-and-tune-gate (Codex G `019f2845-9049`, PASS `c2a46b9` + 1 correction + supervisor %-fix; fun verdict POSITIVE wave-10 playtest, D1–D5 shipped; `reviews/m1-07-feel-and-tune-prep.md`; 2026-07-03 s5) → **M1 exit awaits Robin confirming defaults; split_spark same-vs-next-nearest still queued**
+- [x] 07-feel-and-tune-gate (Codex G `019f2845-9049`, PASS `7569186` + 1 correction + supervisor %-fix; fun verdict POSITIVE wave-10 playtest, D1–D5 shipped; `reviews/m1-07-feel-and-tune-prep.md`; 2026-07-03 s5) → **M1 exit awaits Robin confirming defaults; split_spark same-vs-next-nearest still queued**
 - [x] 08-wave18-corrections (Codex H `019f28fa-1735` wave18 + Codex `019f2a21` wave23, PASS; regression 51/51; `reviews/m1-08-wave18-corrections.md`; s7+s8 2026-07-04) — beacon knobs 10 + 0.75/wave; fillers live. **wave-23 folded in (s8): fillers scale (assay +5×wave, dressing 30% maxHp), procedural glyphs REMOVED → batch-002 family icons (`ui.upgrade.icon.<family>`), cards slimmed to key+name+effect; screenshot-critique PASS desktop+mobile; `__GR_TEST__.maxUpgrades` harness added.**
 
 ## Slice graph

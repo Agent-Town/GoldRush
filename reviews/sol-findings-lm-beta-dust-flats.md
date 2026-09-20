@@ -1,7 +1,7 @@
 # 3D-C-BETA — Dust Flats landmark pack handoff
 
 **Branch:** `sol/lm-beta-dust-flats`
-**Fresh reference:** `27587b7c6efbb804743f9f6aad192fd8df52bfd2` (`origin/main` at branch cut)
+**Fresh reference:** `9e8e4662862b32508babbc7db71a42c0cdf940ba` (`origin/main` at branch cut)
 **State:** `READY-FOR-GATES`
 
 ## F-LM-BETA-DUST-01 — Sculpt and boards read before proposal
@@ -66,7 +66,7 @@ The first unprimed visual review returned REVISE: the storm tower sat too close 
 - Split audit: no E6-E10 map-specific path, ID, contract, or asset changed.
 - Simulation: unchanged.
 
-**Integration note:** after this owner-directed BETA E2-E5 goal was underway, base commit `27587b7c` assigned Dust Flats to ALPHA and a separate `sol/lm-alpha-dust-flats` worktree began an overlapping implementation. The direct owner instruction for this task explicitly retains E2-E5 under BETA and defines ALPHA's protected maps as E6-E10, so this branch follows that higher-priority scope. It does not read from, write to, reset, or reconcile the ALPHA worktree. The orchestrator must choose one Dust Flats implementation at drain time; the branches are not mechanically stackable.
+**Integration note:** after this owner-directed BETA E2-E5 goal was underway, base commit `9e8e4662` assigned Dust Flats to ALPHA and a separate `sol/lm-alpha-dust-flats` worktree began an overlapping implementation. The direct owner instruction for this task explicitly retains E2-E5 under BETA and defines ALPHA's protected maps as E6-E10, so this branch follows that higher-priority scope. It does not read from, write to, reset, or reconcile the ALPHA worktree. The orchestrator must choose one Dust Flats implementation at drain time; the branches are not mechanically stackable.
 
 Independent Codex review found four code-level P2s across its passes: stale positive clearance evidence, a map-edge proxy incorrectly labelled as runtime spawn clearance, an unbounded collinear segment predicate, and an input hash that could not detect algorithm-only changes. The verifier now recomputes the pure clearance calculation and compares the entire report; the proof measures the actual boot-time radius-26 hero-centred spawn ring and explicitly scopes out later moving-hero spawns; and segment intersection handles collinear endpoints only when they lie within both segment bounds, with separated/overlapping collinear self-checks. The reviewer also raised the external ALPHA assignment conflict documented above; that is resolved only by the owner's explicit scope precedence and orchestrator choice, not by mutating another worker's branch.
 

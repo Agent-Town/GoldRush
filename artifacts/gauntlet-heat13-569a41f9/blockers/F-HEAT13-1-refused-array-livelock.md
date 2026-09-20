@@ -1,6 +1,6 @@
 # F-HEAT13-1 — a wholesale order refusal is INVISIBLE on stdout and does not advance the sim, so a pre-ADR-005 rider spins at tick 0 for its whole wall
 
-**Measured 2026-09-07 in `/tmp/heat13-569a41f9` (build `569a41f9`, engine `09838c35…`) while proving
+**Measured 2026-09-07 in `/tmp/heat13-569a41f9` (build `92358832`, engine `09838c35…`) while proving
 the era gate. Evidence: `probe/refusal-visibility.json`, `probe/refusal-visibility.mjs`,
 `probe/livelock-evidence.txt`, `probe/door-verb-refusal.json`.**
 

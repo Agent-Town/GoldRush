@@ -1,6 +1,6 @@
 # s1264 — the newsie drift assertion: the discriminator, measured at the SUBJECT
 
-Fire s1264, 2026-07-30, main at `924e98c9` (tree clean apart from the lock commit).
+Fire s1264, 2026-07-30, main at `9744f6b9` (tree clean apart from the lock commit).
 Subject: `e2e/gazette-welcome.spec.ts:88`, **unmodified shipped spec** — no probe, no proxy,
 no instrumentation. Every number below is the shipped assertion's own `Received:` value.
 

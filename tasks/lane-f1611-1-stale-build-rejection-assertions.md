@@ -38,7 +38,7 @@ Received string:    "FAILED (insufficient_gold): BUILD action was rejected."
 
 3. **Report whether `:408`'s detail is deterministic.** Run that one test at least twice and say in your report whether the emitted detail was `insufficient_gold` both times. This is an observation to bank, not a gate — if it varies, say so and say what you saw; do not chase it.
 
-4. **Do not touch the door.** `src/systems/BuildSystem.ts`, `src/systems/buildRejectionDetail.ts` and `public/skill.md` are all correct as merged at `906ca396e`. If you conclude the door is wrong, that is a **FINDING to report, not an edit to make**.
+4. **Do not touch the door.** `src/systems/BuildSystem.ts`, `src/systems/buildRejectionDetail.ts` and `public/skill.md` are all correct as merged at `ef1ac7c5a`. If you conclude the door is wrong, that is a **FINDING to report, not an edit to make**.
 
 If you find yourself about to exit without changes, WRITE WHY into your report first — a silent no-op wastes a queue slot and a gate.
 

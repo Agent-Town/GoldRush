@@ -1,6 +1,6 @@
 # Fresh-main perf chunk/atlas harvest
 
-- **Fresh base:** `origin/main` at `2f1544da`
+- **Fresh base:** `origin/main` at `c29cb0b5`
 - **Read-only salvage:** `origin/sol/perf-chunk-atlas` at `bb19d760`
 - **Scenario:** production preview, Chromium, 1280x800, active Claim at `/?debug&profile&nolevel&nopause&seed=harvest-perf`
 - **Verdict:** retain the measured startup split; drop the stale atlas implementation

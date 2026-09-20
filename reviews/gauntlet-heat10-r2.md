@@ -1,6 +1,6 @@
 # gauntlet-heat10-r2 — the level field, recovered from an orphan
 
-**Slice:** `gauntlet-heat10-r2` · **branch:** `save/gauntlet-heat10-r2-s2444-orphan-7f34071c0` (minted this fire; the work was on NO ref when found) · **tip:** `7f34071c0` · **merge:** `d8499c652` · **drained:** s2444, 2026-09-02
+**Slice:** `gauntlet-heat10-r2` · **branch:** `save/gauntlet-heat10-r2-s2444-orphan-7f34071c0` (minted this fire; the work was on NO ref when found) · **tip:** `7f34071c0 (archive: pruned by the A3 rewrite)` · **merge:** `d8499c652 (archive: pruned by the A3 rewrite)` · **drained:** s2444, 2026-09-02
 
 ## VERDICT: MERGED — and it was recovered, not merely drained.
 
@@ -37,7 +37,7 @@ unrepaired. PI lost its prior Claim row to that bug.
 | Merge classification | **0 overlap**, **0 of 94 already present on main** — purely additive |
 | Arena law (§2H) | `npm ci --no-audit --no-fund` only; lockfile SHA-256 unchanged at `1a1fa48e…ee863` |
 | Engine identity | `computeEngineHash` = `25040ad5…2ca2ca`, matching the Era-5 registry declaration and pin (`recorded: true`) |
-| Submission | rank 5 early probe assayed `verified` `fnv1a32:8886f412`; Prime's Claim tape `fnv1a32:fcf5753a`, WATCH papers build `c13b4c24d` / Era 5 — exact |
+| Submission | rank 5 early probe assayed `verified` `fnv1a32:8886f412`; Prime's Claim tape `fnv1a32:fcf5753a`, WATCH papers build `ec71f9234` / Era 5 — exact |
 | Secrets | none in evidence (runner self-check; spot-confirmed on the note) |
 
 Adjacent suites were **not** run and are **not owed**: the slice adds no source, no spec, no e2e, no
@@ -46,7 +46,7 @@ confirms, not as slice gates.
 
 ## Merge classification
 
-Base `f2d8665e1` (`gauntlet-heat10-level-field`). Main had moved **65 paths** since that base; the lane
+Base `f2d8665e1 (archive: pruned by the A3 rewrite)` (`gauntlet-heat10-level-field`). Main had moved **65 paths** since that base; the lane
 touched **94**; the intersection is **empty**. Every lane path was absent from `main`, so there was no
 three-way resolution to perform and no MAIN-MOVED file to preserve. Merged `--no-ff`, committed as one
 act per F-1589-5 (never leave a merge staged on main).
@@ -58,14 +58,14 @@ act per F-1589-5 (never leave a merge staged on main).
 The lane/b reflog is unambiguous:
 
 ```
-fe2d0c30d lane/b@{2026-09-02 08:21:23}: commit: runner(lane-b): reel-deep-links.md
-b3ea80198 lane/b@{2026-09-02 07:52:14}: branch: Reset to main      <-- the massacre
-7f34071c0 lane/b@{2026-09-02 07:40:35}: commit: runner(lane-b): gauntlet-heat10-r2.md
+4b788f43e lane/b@{2026-09-02 08:21:23}: commit: runner(lane-b): reel-deep-links.md
+cd1c9b37e lane/b@{2026-09-02 07:52:14}: branch: Reset to main      <-- the massacre
+7f34071c0 (archive: pruned by the A3 rewrite) lane/b@{2026-09-02 07:40:35}: commit: runner(lane-b): gauntlet-heat10-r2.md
 ```
 
-`7f34071c0` committed at 07:40:35. At 07:52:14 — **11 minutes 39 seconds later** — lane/b was reset to
+`7f34071c0 (archive: pruned by the A3 rewrite)` committed at 07:40:35. At 07:52:14 — **11 minutes 39 seconds later** — lane/b was reset to
 main by the refill pre-flight that dispatched `reel-deep-links`, destroying its reachability. When s2444
-looked, `git for-each-ref --contains 7f34071c0` returned **nothing**: it was a reflog orphan, exactly the
+looked, `git for-each-ref --contains 7f34071c0 (archive: pruned by the A3 rewrite)` returned **nothing**: it was a reflog orphan, exactly the
 shape LANE-SAFETY LAW names as how w1-03 and polish-02 were lost and w1-04 survived only by luck.
 
 **This is the failure the law was written to prevent, and the law's own instruments were all green.**
@@ -92,8 +92,8 @@ armed right now for every lane, and it is filed as **F-2444-2** for a corrective
 
 ### F-2444-2 — THE HANDOFF'S OWN LANE MAP WAS ALREADY STALE, AND FOLLOWING IT WOULD HAVE HIDDEN THE LOSS. **NON-BLOCKING, filed for the next fire.**
 
-s2443's handoff named the pile as *"`gauntlet-heat10-r2` on lane/b (`7f34071c0`)"*. By the time s2444
-read it, lane/b's tip was `fe2d0c30d` and `7f34071c0` was on no ref at all. **A fire that had trusted
+s2443's handoff named the pile as *"`gauntlet-heat10-r2` on lane/b (`7f34071c0 (archive: pruned by the A3 rewrite)`)"*. By the time s2444
+read it, lane/b's tip was `4b788f43e` and `7f34071c0 (archive: pruned by the A3 rewrite)` was on no ref at all. **A fire that had trusted
 the branch name and run `git log main..lane/b` would have found one commit, drained `reel-deep-links`,
 and reported the pile as handled — with the heat-10 evidence silently gone.**
 
@@ -108,7 +108,7 @@ that could have caught this.
 
 ## Ledger
 
-- `tasks/goals.json` leaf `gauntlet-heat10-r2` → `status: "merged"`, `mergeHash: d8499c652…` (following commit; a commit cannot contain its own hash — F-1384-1).
+- `tasks/goals.json` leaf `gauntlet-heat10-r2` → `status: "merged"`, `mergeHash: d8499c652 (archive: pruned by the A3 rewrite)…` (following commit; a commit cannot contain its own hash — F-1384-1).
 - `tasks/BACKLOG.md` — completion row + F-2444-1/F-2444-2.
 - Done-move renamed `drained-s2444-…`.
 - GZ-01: filed — an era-5 verified rank-6 Claim row is player-visible county news.

@@ -2,7 +2,7 @@
 
 **Slice:** `lane-c-run-guards-test-coverage`
 **Branch/tip:** `lane/e2-arsenal` @ `2fb016e7` (runner auto-commit)
-**Merge base:** `f7e4c80762f92c1efcd8786f594c37468336931a`
+**Merge base:** `42313c6cf3d1b67fbf3a02229b7bcfdf73be5520`
 **Drained:** s1196 fire, 2026-07-29 (**authored AND drained in the same fire**)
 **Verdict:** ✅ **ACCEPTED** — and the test is proven non-tautological by three mutations of the subject, not by its own green.
 
@@ -66,7 +66,7 @@ The test spawns the **real** `scripts/run-guards.mjs`, resolved by `fileURLToPat
 
 ### Merge classification
 
-Base `f7e4c807`. Lane's own changed paths: **exactly 2** — `package.json` and `scripts/run-guards.test.mjs` — which is precisely the master's TOUCH-ONLY list, no more. `git diff --name-only f7e4c807 main -- <the 2 paths>` = **empty** ⇒ **collisions NONE**, no 3-way graft. The `package.json` edit is a single line, inserting `scripts/run-guards.test.mjs` in alphabetical position between `rehearsal-base` and `stream-curate`, leaving the trailing `&& node scripts/test-ticker-stats.mjs` intact. The standing `logs/` churn was left untouched.
+Base `42313c6c`. Lane's own changed paths: **exactly 2** — `package.json` and `scripts/run-guards.test.mjs` — which is precisely the master's TOUCH-ONLY list, no more. `git diff --name-only 42313c6c main -- <the 2 paths>` = **empty** ⇒ **collisions NONE**, no 3-way graft. The `package.json` edit is a single line, inserting `scripts/run-guards.test.mjs` in alphabetical position between `rehearsal-base` and `stream-curate`, leaving the trailing `&& node scripts/test-ticker-stats.mjs` intact. The standing `logs/` churn was left untouched.
 
 ## Findings
 

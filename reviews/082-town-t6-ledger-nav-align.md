@@ -1,7 +1,7 @@
 # 082 — Town T6 Claim Ledger nav alignment
 
 - **Slice:** `082-town-t6-ledger-nav-align`
-- **Branch/tip:** `lane/m3` @ `6acfd18f` (base `59d94c71`)
+- **Branch/tip:** `lane/m3` @ `6acfd18f` (base `2b6a2f32`)
 - **Drained by:** s1137 fire, 2026-07-27
 - **Verdict:** **ACCEPT (merge).** One assertion realigned onto the shipped menu; the 4
   remaining reds proven to be a *different, older* supersession — diagnosed here as F-1137-4 (this review originally mis-labelled it F-1137-3, which BACKLOG:1438 canonically assigns to 082's own drain; corrected s1139 per F-1138-4).
@@ -25,8 +25,8 @@ rider stood, this one-line task would have failed against an unreachable branch.
 
 ## Merge classification
 
-Base `59d94c71`; three-dot LANE-TOUCHED = **2 files**: the spec (`+1/−1`) and the runner's
-report. `git log 59d94c71..main -- e2e/town-t6-surfaces.spec.ts` is **empty** — main never
+Base `2b6a2f32`; three-dot LANE-TOUCHED = **2 files**: the spec (`+1/−1`) and the runner's
+report. `git log 2b6a2f32..main -- e2e/town-t6-surfaces.spec.ts` is **empty** — main never
 moved the file, so **LANE-TOUCHED clean, no graft**. Everything else in the two-dot diff
 (`STATUS.md`, `src/assets/SpriteAnimator.ts`, `reviews/vp-02e*`, `tasks/*`) is
 **MAIN-MOVED-ONLY** — including this fire's own vp-02e merge — and correctly not taken.

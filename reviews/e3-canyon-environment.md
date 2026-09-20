@@ -1,8 +1,8 @@
 # e3-canyon-environment — drain review (s1471)
 
 **Slice:** `lane-e3-canyon-environment` (Canyon Works environment objective → headless sim socket)
-**Branch:** `lane/a` · **Tip:** `4e46bdeb2` (`csock: socket Canyon Works environment objective`)
-**Merge:** `2256ee58` (three-way `merge --no-ff` onto clean main `0b78fdf79`)
+**Branch:** `lane/a` · **Tip:** `28b097065` (`csock: socket Canyon Works environment objective`)
+**Merge:** `0b2ad1e9` (three-way `merge --no-ff` onto clean main `aacf9656d`)
 **Goal leaf:** `e3-canyon-environment`
 **Verdict:** ✅ **MERGED** — full battery green, zero new operations, all five of the master's measured notes held.
 

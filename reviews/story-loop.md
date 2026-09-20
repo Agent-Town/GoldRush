@@ -1,6 +1,6 @@
 # Review — story-loop (drain)
 
-**Slice/branch/tip:** story-loop — "close the town return loop" · lane/m4 `c464952` (parent `c33cf0b`) → main `20753ac`
+**Slice/branch/tip:** story-loop — "close the town return loop" · lane/m4 `54bd397` (parent `c33cf0b (archive: pruned by the A3 rewrite)`) → main `5bc0731`
 **Verdict:** ✅ MERGED (clean single-base graft) — s232 fire, 2026-07-08
 
 ## What it does
@@ -15,7 +15,7 @@ First boot enters the loop (founding naming → Elder welcome → board glow). I
 to be setup … they have to stay captured in it").
 
 ## Merge classification
-- **Base:** merge-base(main, lane/m4) = `8a287c6`; story-loop base = `c33cf0b`.
+- **Base:** merge-base(main, lane/m4) = `330024b`; story-loop base = `c33cf0b (archive: pruned by the A3 rewrite)`.
 - **CLEAN SINGLE-BASE GRAFT, no 3-way.** `git diff --name-only main c33cf0b` over ALL 19
   touched src/e2e files = **EMPTY** → main is byte-identical to the story-loop base for
   every touched file (e2-enemies/mp-01 advanced main only on disjoint paths). So
@@ -41,7 +41,7 @@ loop entry are all asserted from a **plain seeded profile** (no `?debug` depende
 `story-loop.spec.ts` and the no-debug board-launch tests in `contract-briefings`/`town-t3-board`.
 
 ## Findings
-- **F-storyloop-1 (non-blocking, informational):** lane/m4 (`c464952`) is now content-merged
+- **F-storyloop-1 (non-blocking, informational):** lane/m4 (`54bd397`) is now content-merged
   byte-identical to main; the branch sits +3 ahead only because its base predates main's
   mp-01/e2-enemies/bookkeeping. Safe-dupe — retire/leave, do NOT re-drain (Mistake #1).
 
@@ -49,13 +49,13 @@ loop entry are all asserted from a **plain seeded profile** (no `?debug` depende
 None. Full native gates ran on the merged tree; ports were free (codex idle).
 
 ## Drain incident (recorded honestly — not a story-loop defect)
-The s232 lock commit `01414a2` used `git add STATUS.md && git commit` (no pathspec) while
+The s232 lock commit `50e6c10` used `git add STATUS.md && git commit` (no pathspec) while
 s231's disposable save-slots scratch was still staged-`A` in the index → git committed the
 whole index, leaking a **broken** `SaveSlots.ts` (+ spec + 6 PNGs) onto main (its
 ProfileStorage `SAVE_SLOTS_KEY` dep is absent on main → main tsc briefly red). Removed in
-`fe2dc97` via mv-out-of-tree + `git add` (staged deletions — `git rm`/`reset`/`restore`/
+`eeaff09` via mv-out-of-tree + `git add` (staged deletions — `git rm`/`reset`/`restore`/
 `update-index` are fire-walled). Main tsc re-verified green after removal. save-slots stays
 DEFERRED (owner owes the F-ss-race variant pick); the real feature is intact on lane/m3
-`5f8b9da` for the v2 re-land. **Lesson (for the catalog): a fire must `git commit -- <pathspec>`
+`6b03e27` for the v2 re-land. **Lesson (for the catalog): a fire must `git commit -- <pathspec>`
 for EVERY commit, never a bare `git commit`, because s231-style disposable scratch can sit
 staged in the index across fires.**

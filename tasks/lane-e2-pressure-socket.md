@@ -7,7 +7,7 @@ ROLE: implementer on lane-a. WORKDIR: worktrees/lane-a (branch lane/a). Commit p
 PRE-FLIGHT (LANE-SAFETY INVARIANT): `git branch --show-current` = `lane/a`; dirty tracked blob not reachable in git → STOP. `git checkout -B lane/a origin/main` ONLY when clean. SAFE-DUPE: `grep -n "pressure" src/sim/HeadlessContractSim.ts` — a pressure consumer already present → STOP and report.
 
 ## WHY
-`docs/bench/e2-readiness-census.md` F-ER01-1/-3 (merged `96d40988`): Hill Mine and Pressure Garden set `twist.pressureEnabled` but the derived mechanics manifest advertises no pressure rule or operation and `HeadlessContractSim` never runs `PressureSystem` — so the census, correctly, refused admission (AP-11 reject-don't-stretch). This is the ERA-SOCKET class: every epoch's signature mechanic needs exactly this slice before its agents can play. E2's is the first; build it the way the next eight want to copy.
+`docs/bench/e2-readiness-census.md` F-ER01-1/-3 (merged `3b7abe4e`): Hill Mine and Pressure Garden set `twist.pressureEnabled` but the derived mechanics manifest advertises no pressure rule or operation and `HeadlessContractSim` never runs `PressureSystem` — so the census, correctly, refused admission (AP-11 reject-don't-stretch). This is the ERA-SOCKET class: every epoch's signature mechanic needs exactly this slice before its agents can play. E2's is the first; build it the way the next eight want to copy.
 
 ## READ-FIRST
 1. `docs/bench/e2-readiness-census.md` — the two findings verbatim; your acceptance is their reversal.

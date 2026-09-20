@@ -12,7 +12,7 @@ READ FIRST:
 
 ## PRE-FLIGHT — standard lane safety
 
-`lane/c` is **USABLE** and was measured `ahead=0 behind=10` at authoring time (s1564, after merge `4f5031c04`). Standard safe-dupe rules apply: verify the worktree/branch is clean vs main **before** resetting; if `git log main..lane/c` is non-empty, **STOP and report** — do not reset over content main has not absorbed (Mistake #2).
+`lane/c` is **USABLE** and was measured `ahead=0 behind=10` at authoring time (s1564, after merge `6bca91141`). Standard safe-dupe rules apply: verify the worktree/branch is clean vs main **before** resetting; if `git log main..lane/c` is non-empty, **STOP and report** — do not reset over content main has not absorbed (Mistake #2).
 
 Then run these checks and **STOP-and-report on any mismatch** — do not "fix" a mismatch, report it:
 
@@ -27,7 +27,7 @@ Then run these checks and **STOP-and-report on any mismatch** — do not "fix" a
 
 Six consecutive merges — `f1557-3 → f1558-1 → f1559-1 → f1560-1 → f1561-2 → f1562-1` — refined the **comment** that explains the `0.4` drift ceiling: its provenance, its sample, its constants, its deadband. All six were correct. In the same window the ceiling itself was **breaching on main**, under the very shell that gates it, and no rung measured it. From the s1563 gate:
 
-> **CLEAN MAIN `98a464438`**, full-spec `--workers=1`: run 1 → 1 failed (`:395` desktop, `toContain("ledger")` got `["held","ask me","no trust"]`, driftAbs=0.3565); run 2 → 2 failed (`:395` both projects, desktop **driftAbs=0.41504 > 0.4**). Merged arm 2 of 2 runs 1 failed, once at **driftAbs=0.4453**. **Isolated, `:395` passes with 29% margin (0.2834).**
+> **CLEAN MAIN `d85e68146`**, full-spec `--workers=1`: run 1 → 1 failed (`:395` desktop, `toContain("ledger")` got `["held","ask me","no trust"]`, driftAbs=0.3565); run 2 → 2 failed (`:395` both projects, desktop **driftAbs=0.41504 > 0.4**). Merged arm 2 of 2 runs 1 failed, once at **driftAbs=0.4453**. **Isolated, `:395` passes with 29% margin (0.2834).**
 
 **Documenting a bound is not validating it.** This task stops annotating the constant and measures it.
 

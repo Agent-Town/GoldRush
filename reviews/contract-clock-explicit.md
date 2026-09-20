@@ -1,7 +1,7 @@
 # Review — contract-clock-explicit
 
 **Slice:** `contract-clock-explicit` — every registry contract owns one tape clock source
-**Slot:** main · **base:** `7681136dd` · **drained:** s2507, 2026-09-04
+**Slot:** main · **base:** `c32fe61ea` · **drained:** s2507, 2026-09-04
 
 ## VERDICT: READY TO MERGE
 

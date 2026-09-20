@@ -2,7 +2,7 @@
 
 Compiled `marketing/outbox/ticker-digest-2026-09-07.md` from 139 first-parent commits in the explicit +07 coverage window. The positive-control query reproduced September 6's recorded 99 commits. Ten headlines were checked against retained reviews; all 18 cited commits belong to the coverage day, all 12 evidence paths exist, and the longest headline is 122 characters. This is an owner-approval draft, not a publication.
 
-No eligible drain or fire-authorable work was found. No implementation, refill, requeue, runner restart or deployment was performed. The predecessor's handoff was archived verbatim in lock commit `bd92ce425`.
+No eligible drain or fire-authorable work was found. No implementation, refill, requeue, runner restart or deployment was performed. The predecessor's handoff was archived verbatim in lock commit `a66dcbb76`.
 
 | Read | Result |
 | --- | --- |
@@ -25,8 +25,8 @@ Methods: reused `artifacts/s2552-fire/{retention-read,retention-expanded,gitless
 
 RT-01 is discharged: `r2026w37` is minted, its JSON exactly matches the public skill block, and the landing selects it. No salt was read. TK-01's September 7 duty is discharged by this draft. LB-01 should retry when the September 8 box backup is available, normally after 09:30 local; no new database was committed.
 
-Closing validation passed after handoff `c5d447a95`: `npm run test:ledger-guards`, Node 26.4.0 matching `.nvmrc`, **1,050 Node tests passed, zero failures or skips; all chained shell checks passed**, 110.7 s. Both runner custody arms evaluated under a PTY without skips; the final foundry-init leg passed 83 assertions. All three desk legs evaluated PASS. The archive audit found zero permanently absent or abridged handoffs across 40 STATUS commits. Terminal evidence is in `closing-ledger.json` and `closing-ledger.txt`. No source change called for a build or browser regression.
+Closing validation passed after handoff `716a3ed14`: `npm run test:ledger-guards`, Node 26.4.0 matching `.nvmrc`, **1,050 Node tests passed, zero failures or skips; all chained shell checks passed**, 110.7 s. Both runner custody arms evaluated under a PTY without skips; the final foundry-init leg passed 83 assertions. All three desk legs evaluated PASS. The archive audit found zero permanently absent or abridged handoffs across 40 STATUS commits. Terminal evidence is in `closing-ledger.json` and `closing-ledger.txt`. No source change called for a build or browser regression.
 
 Next: (A) re-triage newly arrived done-moves; (B) preserve attended dispatch and ownership holds; (C) pull the next ledger coverage day when available. Foreign lane dirt, arena files, telemetry and intentionally untracked statistics remain with their writers.
 
-Backup: handoff `c5d447a95` pushed successfully and matched origin/main in a live `git ls-remote` read; see `handoff-backup.json`.
+Backup: handoff `716a3ed14` pushed successfully and matched origin/main in a live `git ls-remote` read; see `handoff-backup.json`.

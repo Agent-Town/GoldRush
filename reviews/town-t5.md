@@ -21,7 +21,7 @@ Populates the town square with a data-driven cast that appears WITH the building
 **F-t5-load (non-blocking, NOT a defect):** an initial 8-worker run of the adjacent battery showed 12+ timeout/page-closed reds (town-t1 activePrompt null, town-t2 forceDeath timeout, m1-01 state stayed `playing`). Re-run **single-worker = 48/48 green**. Root cause = heavy-load flake: the gate shared the box with a LIVE lane vite server (:5188) and two live codex processes (lane-c polish-03, lane-d perf-03). Matches the standing load-flake law (`checkout-head-graft-attribution` memory). All reds were timeouts, none assertion-logic; town-T5's files touch no run-scene/naming/m1 code (firewall verified).
 
 ## Merge classification
-- **Merge-base** main∩lane/m4 = `704b9f0` (s200 refill — the safe-dupe reset point).
+- **Merge-base** main∩lane/m4 = `1e53b2b` (s200 refill — the safe-dupe reset point).
 - `git diff 704b9f0..main` for all 10 town files = **empty** → main never moved them since branch point → **LANE-TOUCHED-only, zero MAIN-MOVED, no 3-way needed.**
 - `src/town/townsfolk.ts` + `e2e/town-t5-townsfolk.spec.ts` are **new files** (not on main).
 - The large `main..lane/m4` name-diff (STATUS/BACKLOG/tasks/*) is pure stale-base divergence; the actual commit `7431ab4` = 10 files / +759 insertions.

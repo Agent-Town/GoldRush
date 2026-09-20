@@ -26,7 +26,7 @@ Introduces PRESSURE as E2's second economy resource, socket-only per the saga on
 - **Screenshots:** `artifacts/e2-pressure/` — clean epoch-1 HUD + steamworks pressure chip, desktop + mobile (committed with the merge).
 
 ## Merge classification
-- **Base:** merge-base(main, lane/m3) = `9c6b693` (THE FIVE authoring). Lane = single commit `ee05ace`.
+- **Base:** merge-base(main, lane/m3) = `bfd2a3f` (THE FIVE authoring). Lane = single commit `0d5a35f`.
 - **Main drift since base:** `git diff --name-only 9c6b693..main` → **zero** src/contracts/e2e files (only specs/BACKLOG/STATUS from c0b5ee2/9924b3c/lock commits). Therefore every lane file is LANE-TOUCHED-only or NEW → clean `--no-ff` merge, no 3-way judgment needed.
 - **Per-file:** `src/game/{Economy,Game,RunSuspend}.ts`, `src/meta/ContractFamilies.ts`, `src/systems/UiBridge.ts`, `src/ui/{Hud.ts,theme.css}`, `src/vite-env.d.ts`, `assets/contracts/epoch-2-steamworks/manifest.json` — all M, clean apply. NEW: `e2e/e2-pressure-economy.spec.ts`, `artifacts/e2-pressure/*`.
 

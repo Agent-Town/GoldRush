@@ -2,7 +2,7 @@
 
 # Task a7-low-orbit-momentum: momentum is commitment — e8-low-orbit door-ready (door-completion sheet item A7)
 
-Executed 2026-08-20 by an attended-dispatched Opus agent (branch `worktree-agent-a7-low-orbit` @ `287347b95`), authorized by `specs/agent-play/door-completion-sheet.md` (RATIFIED — A7) — drained to main by the attended session.
+Executed 2026-08-20 by an attended-dispatched Opus agent (branch `worktree-agent-a7-low-orbit` @ `547c3a09c`), authorized by `specs/agent-play/door-completion-sheet.md` (RATIFIED — A7) — drained to main by the attended session.
 
 ## What shipped
 - **Orbital return** on the path both engines share (`CombatSystem` + `BlastChargePool`): a missed lob re-enters after 12 s on its original vector's continuation — one return, then gone; can hit enemies OR your own works (the ratified friendly fire, earned via `orbitReturnsLeft` 1→0). Fully low-orbit-gated: `CombatSystem.orbitalReturn` null unless the contract declares `orbital-return`; every new field spread-if-declared so no other contract's hash gains a byte (proven byte-unmoved bystanders). Closed the dead `E8PhysicsSystem:133` computed flag nothing read.

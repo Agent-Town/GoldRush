@@ -3,7 +3,7 @@
 **Verdict: PASS — grafted to main.** (FIRE-AUTHORED task; attended review welcome.)
 
 ## Graft method
-SCI-02 ran on `lane/m3` (worktree lane-a), all output in one runner commit `962b192`. Footprint isolated as `git diff b20e120..lane/m3` (b20e120 = the reset base = merge-base with main), immune to main drift. Of SCI-02's touched files, **only `src/game/Balance.ts` was also moved by main** (041's `turretLobMinAirTime`) — all others main left byte-identical to base, so they were copied directly from lane/m3 onto clean main (`eadaccf`). Balance.ts was a trivial 3-way: SCI-02's addition is a separate additive `eraCaps` block in the `research`/`offers` region, disjoint from 041's `projectile.turretLobMinAirTime` — kept main's version and inserted `eraCaps`.
+SCI-02 ran on `lane/m3` (worktree lane-a), all output in one runner commit `962b192`. Footprint isolated as `git diff b20e120..lane/m3` (b20e120 = the reset base = merge-base with main), immune to main drift. Of SCI-02's touched files, **only `src/game/Balance.ts` was also moved by main** (041's `turretLobMinAirTime`) — all others main left byte-identical to base, so they were copied directly from lane/m3 onto clean main (`b9ebac7`). Balance.ts was a trivial 3-way: SCI-02's addition is a separate additive `eraCaps` block in the `research`/`offers` region, disjoint from 041's `projectile.turretLobMinAirTime` — kept main's version and inserted `eraCaps`.
 
 ## What landed
 - **`assets/contracts/epoch-1-frontier/families.json`** (NEW): epoch-gated card families + mastery-conversion rules as data (per THE EPOCH-CONTRACT LAW; loaded directly until the SCI-04 registry).

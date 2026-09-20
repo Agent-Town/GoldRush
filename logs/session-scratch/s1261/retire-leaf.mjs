@@ -3,7 +3,7 @@
 //
 // Its own run stopped PREMISE-NOT-REPRODUCED (16/16 clean at workers=4). Its leaf then
 // named a successor to settle the question: `concurrency-class-failure-rate`. That
-// successor has since MERGED (987df9889da24857bf1472121b249f4d8621b20f) and measured the
+// successor has since MERGED (d71f6ea83cabc3cea16c3a900e07da9fd6ae34a8) and measured the
 // drift assertion at 0 failures in 48 executions across workers {1,2,4}
 // (logs/suite-red-inventory.md:626-627), with the sole gazette failure at :111 — a
 // different line. So the leaf reads `stopped` while the question it waits on is answered:
@@ -41,7 +41,7 @@ hit.drainNotes =
   'node guards 74/74 (run 20260729-161534, done-move ' +
   '`stopped-premise-not-reproduced-F1215-2-s1215-…`). (2) The successor its own stoppedNote_s1216 ' +
   'named — `concurrency-class-failure-rate`, "which measures the rate this cure would have to ' +
-  'beat" — has since MERGED at `987df9889da24857bf1472121b249f4d8621b20f`, and its rate table ' +
+  'beat" — has since MERGED at `d71f6ea83cabc3cea16c3a900e07da9fd6ae34a8`, and its rate table ' +
   '(`logs/suite-red-inventory.md:626-627`) puts `gazette-welcome.spec.ts` at 0/8 · 0/8 · 0/8 ' +
   'desktop and 0/8 · 1/8 · 0/8 mobile across workers {1,2,4} — the drift assertion failed ' +
   '0 times in 48 executions, and `:636-637` records that the single gazette failure in the ' +

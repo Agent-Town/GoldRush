@@ -3,13 +3,13 @@ FIRE-AUTHORED s1263 (attended review welcome)
 You are Codex, implementer for Gold Rush, running natively on Robin's Mac in `worktrees/lane-b` (branch `lane/m4`, commit prefix `test:`).
 CODEX: model=gpt-5.6-sol effort=high
 
-> ⚠️ **THIS ASSERTION HAS NOW CONSUMED FIVE FIRES. READ WHY THE PREVIOUS FOUR DID NOT FINISH IT.** s1214 discriminated it, s1215 ran a cure that stopped `PREMISE-NOT-REPRODUCED`, s1216 wrote its stopped note, s1261 retired the leaf as `superseded` on a 0/48 measurement, and s1262 merged a state-probe cure (`a087cbcd`) **whose own spec was red at merge time**. Every one of those fires argued about *what the test waits for*. **None of them measured what the number actually tracks.** s1263 did, and the answer is below. ⛔ **Do not re-open "is it a flake". It is not a flake. It is an instrument pointed at the wrong frame of reference, and the fix is mechanical.**
+> ⚠️ **THIS ASSERTION HAS NOW CONSUMED FIVE FIRES. READ WHY THE PREVIOUS FOUR DID NOT FINISH IT.** s1214 discriminated it, s1215 ran a cure that stopped `PREMISE-NOT-REPRODUCED`, s1216 wrote its stopped note, s1261 retired the leaf as `superseded` on a 0/48 measurement, and s1262 merged a state-probe cure (`8f3974a5`) **whose own spec was red at merge time**. Every one of those fires argued about *what the test waits for*. **None of them measured what the number actually tracks.** s1263 did, and the answer is below. ⛔ **Do not re-open "is it a flake". It is not a flake. It is an instrument pointed at the wrong frame of reference, and the fix is mechanical.**
 
 ## Pre-flight (LANE-SAFETY, runner-auto-commit aware)
 
 The lane branch being ahead is NORMAL — the runner auto-commits. For each ahead commit: if its content is already merged to main (verify via git log/diff), it is a SAFE DUPE → `git checkout -B lane/m4 main && git clean -fd` and PROCEED. STOP-and-report ONLY if an ahead commit's content is NOT on main (undrained work — resetting would DESTROY it), or the worktree holds uncommitted edits you did not make. Then `npm install --no-audit --no-fund`; `npm run build` green before touching anything.
 
-> ℹ️ Authoring-time safety measurement (s1263 — **verify it yourself anyway, per VERIFY-DON'T-INHERIT**). `git rev-list --count main..lane/m4` = **1**, `lane/m4..main` = **8**. The single ahead commit is **`103f07cc` `test: observe Gazette welcome release state`**, drained to main by s1262 as **`a087cbcd`** via a tip-graft — which is exactly why the branch still reads 1 ahead. Two independent checks confirmed the dupe at authoring: **`git diff --name-status --diff-filter=A main..lane/m4` was EMPTY**, and the stronger content check — **`git diff main lane/m4 -- <each file in 103f07cc>` was EMPTY for BOTH files** (`e2e/gazette-welcome.spec.ts`, `src/town/TownScene.ts`). Identical content on both sides = **SAFE DUPE**. ⚠️ If your own re-measurement finds any `A` line, or any non-empty two-dot diff on those files, treat the branch as holding undrained work and **STOP** — do not reason it away.
+> ℹ️ Authoring-time safety measurement (s1263 — **verify it yourself anyway, per VERIFY-DON'T-INHERIT**). `git rev-list --count main..lane/m4` = **1**, `lane/m4..main` = **8**. The single ahead commit is **`103f07cc` `test: observe Gazette welcome release state`**, drained to main by s1262 as **`8f3974a5`** via a tip-graft — which is exactly why the branch still reads 1 ahead. Two independent checks confirmed the dupe at authoring: **`git diff --name-status --diff-filter=A main..lane/m4` was EMPTY**, and the stronger content check — **`git diff main lane/m4 -- <each file in 103f07cc>` was EMPTY for BOTH files** (`e2e/gazette-welcome.spec.ts`, `src/town/TownScene.ts`). Identical content on both sides = **SAFE DUPE**. ⚠️ If your own re-measurement finds any `A` line, or any non-empty two-dot diff on those files, treat the branch as holding undrained work and **STOP** — do not reason it away.
 
 ## READ FIRST (paths, in this order)
 
@@ -24,7 +24,7 @@ The lane branch being ahead is NORMAL — the runner auto-commits. For each ahea
 
 The assertion claims: *when the welcome's last beat is dismissed, the newsie is released and does not get yanked away.* It measures that as the distance between a sample taken **before** `click('town-welcome-next')` and a sample taken **after** the click round-trip and a state poll have both returned.
 
-**Everything inside that span is network, not behaviour.** s1263 measured the span directly on main (`a269317f`), desktop-chrome, `--workers=1`, `--repeat-each=3`, both arms:
+**Everything inside that span is network, not behaviour.** s1263 measured the span directly on main (`bf8e99ed`), desktop-chrome, `--workers=1`, `--repeat-each=3`, both arms:
 
 | arm | observation window | displacement | breaches the `<1` bound |
 |---|---|---|---|

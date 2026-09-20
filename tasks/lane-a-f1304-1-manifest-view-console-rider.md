@@ -3,7 +3,7 @@ CODEX: model=gpt-5.6-sol effort=high
 ROLE: lane implementer. WORKDIR: this lane worktree. One task, firewalled.
 
 WHY (quoted evidence, dated):
-- **F-1304-1**, raised by the s1304 drain of AP-11 (`reviews/ap-11-mechanics-manifest.md`, 2026-07-31, merge `11285b50`). Measured there, three arms, same tree, same shell, all `--workers=1`:
+- **F-1304-1**, raised by the s1304 drain of AP-11 (`reviews/ap-11-mechanics-manifest.md`, 2026-07-31, merge `d97bc4d5`). Measured there, three arms, same tree, same shell, all `--workers=1`:
   | Arm | Command | n | Result |
   |---|---|---|---|
   | A | `e2e/agent-view.spec.ts`, **both** projects | 3 | **3/3 FAIL** — mobile `:283` only |

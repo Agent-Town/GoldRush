@@ -1,4 +1,4 @@
-// Guard for F-1270-1's MECHANISM (landed s1270 `d1a0846d`, guarded s1273 — F-1273-1).
+// Guard for F-1270-1's MECHANISM (landed s1270 `20fda8a5`, guarded s1273 — F-1273-1).
 //
 // `scripts/fire.md` §3.1 makes `--workers=1` a CORRECTNESS requirement of every fire-side
 // playwright command: the fire's launchd process context carries a per-job CPU ceiling

@@ -1,7 +1,7 @@
 # f1562-1 — the m4-06 drift-ceiling comment names the 0.06 deadband
 
 - **Slice:** f1562-1 (`tasks/done/20260808-164608-lane-c-f1562-1-m4-06-drift-deadband-constant.md`), authored s1562
-- **Branch / tip:** `lane/c` @ `664c33ae5` (ahead=1, base `fbe34359`)
+- **Branch / tip:** `lane/c` @ `664c33ae5` (ahead=1, base `82efc312`)
 - **Gated by:** s1563 fire, detached worktree `gate-s1563` (§3.0b)
 - **Run:** 83,792 tokens, READY-FOR-GATES
 
@@ -42,9 +42,9 @@ below `0.06`.
 
 ## Merge classification
 
-Base `fbe34359`. `lane-freeze-classify lane/c` → **paths=1, LANE-ONLY 1, DUPLICATE 0, MAIN-ONLY 0,
+Base `82efc312`. `lane-freeze-classify lane/c` → **paths=1, LANE-ONLY 1, DUPLICATE 0, MAIN-ONLY 0,
 BOTH-MOVED 0** (`base=25d39c74 lane=32887677 main=25d39c74`). `git log lane/c..main -- e2e/m4-06-embodiment.spec.ts`
-**empty** — main has not moved the file since the base (s1562's own `92559f683` merge predates it), so no graft.
+**empty** — main has not moved the file since the base (s1562's own `fb3355abf` merge predates it), so no graft.
 Landed path-scoped, that one file only.
 
 ## Findings
@@ -59,8 +59,8 @@ Landed path-scoped, that one file only.
 | MERGED `0d628f9ca` | run 1 | 17 passed, 1 failed — `:395` mobile |
 | MERGED `0d628f9ca` | run 2 | 17 passed, 1 failed — `:395` desktop, **driftAbs=0.4453** (> 0.4) |
 | MERGED `0d628f9ca` | `:395` mobile, ISOLATED | ✅ passed, driftAbs=0.2834 |
-| **CLEAN MAIN `98a464438`** | run 1 | 17 passed, **1 failed** — `:395` desktop, `expect(received).toContain("ledger")`, received `["held","ask me","no trust"]`; driftAbs=0.3565 |
-| **CLEAN MAIN `98a464438`** | run 2 | 16 passed, **2 failed** — `:395` both projects, desktop **driftAbs=0.41504** (> 0.4) |
+| **CLEAN MAIN `d85e68146`** | run 1 | 17 passed, **1 failed** — `:395` desktop, `expect(received).toContain("ledger")`, received `["held","ask me","no trust"]`; driftAbs=0.3565 |
+| **CLEAN MAIN `d85e68146`** | run 2 | 16 passed, **2 failed** — `:395` both projects, desktop **driftAbs=0.41504** (> 0.4) |
 
 **Main fails this test in 2 of 2 full-spec runs; the merged tree in 2 of 2. The merged tree is no worse, which
 is what licenses this merge.** The red is fingerprint-matched to main by control, per §3.

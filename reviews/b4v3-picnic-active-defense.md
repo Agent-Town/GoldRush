@@ -1,7 +1,7 @@
 # b4v3-picnic-active-defense — the hold is earned, not stood upon
 
-**Slice:** `b4v3-picnic-active-defense` (lane-b) · **Branch:** `lane/b` · **Lane tip:** `2cc5a1d4b`
-**Base:** `90ec076a2` (s2131 lock) · **Merged at:** `e6aa6e073` · **REVERTED at:** `6c5f8a7a2`
+**Slice:** `b4v3-picnic-active-defense` (lane-b) · **Branch:** `lane/b` · **Lane tip:** `50feb6b2c`
+**Base:** `93b484785` (s2131 lock) · **Merged at:** `ccf8dc57d` · **REVERTED at:** `75125b4da`
 **Drained:** s2131, 2026-08-21 · **Gate worktree:** `gate-s2131` (detached, §3.0b)
 **Salvage ref:** `archive/lane-b-s2131-b4v3-absorbed-2cc5a1d4b`
 
@@ -58,13 +58,13 @@ picnic loss condition** (`onAllClaimed → postHeroDeath`) — a way to lose tha
 
 | arm | `e10-last-claim` turns |
 |---|---:|
-| pre-merge `90ec076a2` | **5**, 5 |
-| merged `e6aa6e073` | **2**, 2 |
+| pre-merge `93b484785` | **5**, 5 |
+| merged `ccf8dc57d` | **2**, 2 |
 | merged, `src/sim/HeadlessContractSim.ts` reverted | 5 |
 | merged, `enemies.update` hunk reverted | 5 |
 | merged, **target argument only** reverted | 5 |
 | merged, final-snapshot field gated | **2** ← refuted my first hypothesis |
-| after revert `6c5f8a7a2` | **5** |
+| after revert `75125b4da` | **5** |
 
 ⚠️ **My first hypothesis was wrong and I am keeping it in the record.** I saw that the final
 snapshot shipped a bare `picnicHold: this.picnicHold.diagnostics` where every sibling is null-gated,
@@ -158,7 +158,7 @@ preceded the revert — that is the finding, not a footnote to it.
 
 ## Merge classification
 
-Base `90ec076a2`; clean `ort` auto-merge, no conflicts. Per-file:
+Base `93b484785`; clean `ort` auto-merge, no conflicts. Per-file:
 
 | File | Class |
 |---|---|
@@ -174,7 +174,7 @@ Base `90ec076a2`; clean `ort` auto-merge, no conflicts. Per-file:
 `main..lane/b` is **empty** after the merge: the lane is fully absorbed and no longer frozen salvage.
 
 `main..lane/b` was empty after the merge and remains so after the revert — the commits are in main's
-history, only their content is undone. **Re-landing must revert the revert** (`git revert 6c5f8a7a2`),
+history, only their content is undone. **Re-landing must revert the revert** (`git revert 75125b4da`),
 never re-merge `lane/b`, which git now considers already merged. The corrective says so in its
 pre-flight, and the tip is archived at `archive/lane-b-s2131-b4v3-absorbed-2cc5a1d4b`.
 

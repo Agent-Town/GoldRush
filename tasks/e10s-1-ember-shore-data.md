@@ -26,7 +26,7 @@ Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead 
 
 **The prerequisite that gated it is DISCHARGED.** B5 required an attended design/content spec before its build; that spec was authored 2026-08-20 and is `specs/agent-play/e10-ember-shore-preserve.md` — its own line 3 says so: *"The sheet routed B5 through 'attended design/content specs before their builds' — this file is that spec."* Its Status line is DRAFT but **build-authorized**: *"build-authorized with the defaults below under the NO-BLOCKER LAW (owner 2026-07-18, verbatim: 'you can wire things in game, I just correct them later')"*, and its §6 correction points are explicitly **non-blocking — defaults ship**.
 
-**Sequencing satisfied.** The B-wave's Group 1 has landed: B1 regatta `00bca9983`, B2 flotilla `00c2d7bfd`, B3 half-life-hollow `68011ece8`, B7 showroom-capture-quota `68784f782`. B4 picnic is parked behind owner fork F-2090-1. B5 is next.
+**Sequencing satisfied.** The B-wave's Group 1 has landed: B1 regatta `d13a54e5c`, B2 flotilla `19e778135`, B3 half-life-hollow `bb3ef65c0`, B7 showroom-capture-quota `64e446f7c`. B4 picnic is parked behind owner fork F-2090-1. B5 is next.
 
 **Mistake #8 checked — this is genuinely UNBUILT.** Read on main today by the author, `assets/contracts/epoch-10-deepsky/contracts.json` → `e10-ember-shore`: `twist {}` · `enemyRoster []` · `harvestAnchors []` · description *"Board-launch-only until its preserve-contract Static squall consumer lands."*; `assets/contracts/bench-seeds.json` has **no** `e10-ember-shore` key. No master and no done-move exists for any `E10S-*` slice. The spec's §1 "verified in data, 2026-08-20" still holds exactly.
 

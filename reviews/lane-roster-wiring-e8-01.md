@@ -1,12 +1,12 @@
 # Review — E8-01 Orbital-era roster scaffold
 
 - **Slice:** `lane-roster-wiring-e8-01` (FIRE-AUTHORED s766, drained s767)
-- **Branch/tip:** `lane/perf` `9ea864c0` (`runner(lane-d)`), base `9c957aae` (E8-01 author commit, on main)
+- **Branch/tip:** `lane/perf` `1a265263` (`runner(lane-d)`), base `61ef691f` (E8-01 author commit, on main)
 - **Merge commit:** see drain commit (this fire) — `--no-ff` merge of `lane/perf` onto clean main
 - **Verdict:** ✅ MERGE — scaffold gates green (tsc/build/e8-roster/e7+e6-regression/draw-call), disjoint clean merge. Ships with **one non-blocking finding (F-1: boss-crew corsair identity collision)** documented below; the collision is NOT reachable in a normal (non-debug) campaign boot yet (E8 routes via explicit contract param / harness, mirroring E7-01's F-2), and its fix is a design fork on the SHIPPED Salvage Claw boss → owner/attended.
 
 ## What it does (one paragraph)
-Wires the two DATA-SHAPED Orbital-era enemies — `scrap_corsair` (silver-teal `#7fa0a8`, hp 1.1 / speed 1.0 / visual 1.1, non-thief) and `sun_glare_shambler` (warm-amber `#caa25a`, hp 1.3 / speed 0.72 / visual 0.8, non-thief) — as `twist.enemyRoster` rows across the four E8 contracts, mirroring the shipped E7-01 template (`b6b8a4be`) id-for-id: contract rosters (mare-claim=corsair+shambler, far-side=shambler, low-orbit=corsair, eclipse=shambler+corsair) + asset slots + generated placeholder (bandit sheet) + `characters.v2` layer-contract (pins the `char-e8-*-sheet-walk8` filename convention for art batch R-E8) + `pools.ts` `e8EnemySpriteBinding` (lazy active-guard, memory `new-enemy-sprite-batch-needs-lazy-true`) + `Balance.e8Roster.variants` + `WaveSystem` e8- stat-fallback branch + a new `e2e/e8-roster.spec.ts`. Placeholder-first (§8): renders the tinted bandit sheet until Batch R-E8 art lands. The novel `descending repossession` family + `salvage_kings_claw` boss (shipped `77e5a80c`) + `debris_rain` hazard were deliberately DEFERRED and left byte-intact.
+Wires the two DATA-SHAPED Orbital-era enemies — `scrap_corsair` (silver-teal `#7fa0a8`, hp 1.1 / speed 1.0 / visual 1.1, non-thief) and `sun_glare_shambler` (warm-amber `#caa25a`, hp 1.3 / speed 0.72 / visual 0.8, non-thief) — as `twist.enemyRoster` rows across the four E8 contracts, mirroring the shipped E7-01 template (`9b782ac8`) id-for-id: contract rosters (mare-claim=corsair+shambler, far-side=shambler, low-orbit=corsair, eclipse=shambler+corsair) + asset slots + generated placeholder (bandit sheet) + `characters.v2` layer-contract (pins the `char-e8-*-sheet-walk8` filename convention for art batch R-E8) + `pools.ts` `e8EnemySpriteBinding` (lazy active-guard, memory `new-enemy-sprite-batch-needs-lazy-true`) + `Balance.e8Roster.variants` + `WaveSystem` e8- stat-fallback branch + a new `e2e/e8-roster.spec.ts`. Placeholder-first (§8): renders the tinted bandit sheet until Batch R-E8 art lands. The novel `descending repossession` family + `salvage_kings_claw` boss (shipped `7f633f9b`) + `debris_rain` hazard were deliberately DEFERRED and left byte-intact.
 
 ## Evidence (real numbers, merged tree)
 | Gate | Result |
@@ -22,7 +22,7 @@ Wires the two DATA-SHAPED Orbital-era enemies — `scrap_corsair` (silver-teal `
 E7+E6 regression ran single-worker (contention-safe). Config: `playwright.s767-scratch.config.ts` (self-booting dev on :5267, isolated from the orphan stack on :5207/:8788/:8799 + the accounts battery → Mistake #12 safe). Codex's own run also reported E8-arsenal 4/4 (unchanged).
 
 ## Merge classification
-Base `9c957aae` is an ancestor of main; main's only divergence since base is **STATUS.md** (s766 handoff + s767 lock) — **disjoint** from the lane's file set. Clean `--no-ff` merge (`ort` strategy, zero conflicts).
+Base `61ef691f` is an ancestor of main; main's only divergence since base is **STATUS.md** (s766 handoff + s767 lock) — **disjoint** from the lane's file set. Clean `--no-ff` merge (`ort` strategy, zero conflicts).
 
 | File | Class |
 |---|---|

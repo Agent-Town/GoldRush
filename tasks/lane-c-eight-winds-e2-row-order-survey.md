@@ -15,9 +15,9 @@ CODEX: gpt-5.6-sol effort=high
 
 Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead is NORMAL — the runner auto-commits. For each ahead commit: if its content is already merged to main (verify via git log/diff), it is a SAFE DUPE → `git checkout -B lane/e2-arsenal main && git clean -fd` and PROCEED. STOP-and-report ONLY if an ahead commit's content is NOT on main (undrained work — resetting would DESTROY it), or the worktree holds uncommitted edits you did not make. Then `npm install --no-audit --no-fund`; `npm run build` green before touching anything.
 
-*(Measured by the authoring fire at 2026-07-29T01:0xZ: `lane/e2-arsenal` was **1 ahead at `fe3ae8cb`** but `git diff --name-only --diff-filter=A main..lane/e2-arsenal` was **EMPTY** — its content landed on main as `fba9a446`, i.e. a FALSE-AHEAD SAFE DUPE. Re-derive it anyway; the board moves.)*
+*(Measured by the authoring fire at 2026-07-29T01:0xZ: `lane/e2-arsenal` was **1 ahead at `fe3ae8cb`** but `git diff --name-only --diff-filter=A main..lane/e2-arsenal` was **EMPTY** — its content landed on main as `e50e6937`, i.e. a FALSE-AHEAD SAFE DUPE. Re-derive it anyway; the board moves.)*
 
-## Why (F-1188-1 + F-1188-2, `reviews/eight-winds-wiring-e2-enemies.md`, drained `fba9a446` 2026-07-29)
+## Why (F-1188-1 + F-1188-2, `reviews/eight-winds-wiring-e2-enemies.md`, drained `e50e6937` 2026-07-29)
 
 Slice 3 (`lane-c-eight-winds-wiring-e2-enemies`) **stopped lawfully** because it could not tell two Coal Thief rows apart, and it was right to stop: **a wrong row→heading mapping renders the character walking backwards and NO test catches it.** The drain confirmed the blocking claim at the pixels — but it also found that **the STOP's own recommendation is unsafe**, and that is why this survey exists instead of an art fix.
 

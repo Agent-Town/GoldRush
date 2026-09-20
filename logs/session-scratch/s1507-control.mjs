@@ -22,7 +22,7 @@ const SPECS = [
 ];
 
 const MERGED = '75903bf48';   // gate-s1507: merge lane/a for gating
-const PREMERGE = 'a4556dca5'; // main at the time of the merge — the merge's first parent
+const PREMERGE = 'edda5d3de'; // main at the time of the merge — the merge's first parent
 
 const git = (...args) => {
   const r = spawnSync('git', args, { cwd: GATE, encoding: 'utf8', env });

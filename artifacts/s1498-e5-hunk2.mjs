@@ -12,7 +12,7 @@ if (!lines[66].startsWith('<<<<<<<') || !lines[71].startsWith('=======') || !lin
 // declaration cure, which the branch row is silent about.
 const claim = brRows[0].replace(
   '**PARTIAL** — `DeepwaterClaimTile` and `DeepwaterArsenal` run headlessly; `DredgeQueenBossSystem` cannot be constructed',
-  '**PARTIAL** — `DeepwaterClaimTile` and `DeepwaterArsenal` run headlessly; `DredgeQueenBossSystem` cannot be constructed. ✅ Its dependency is **DECLARED** as `deepwater-claim-consumer` (surgery pass, `7bfd62ee`) — the declaration cure stands and is orthogonal to the socket',
+  '**PARTIAL** — `DeepwaterClaimTile` and `DeepwaterArsenal` run headlessly; `DredgeQueenBossSystem` cannot be constructed. ✅ Its dependency is **DECLARED** as `deepwater-claim-consumer` (surgery pass, `45f54b88`) — the declaration cure stands and is orthogonal to the socket',
 );
 if (claim === brRows[0]) throw new Error('claim-row fold failed — the target sentence moved');
 

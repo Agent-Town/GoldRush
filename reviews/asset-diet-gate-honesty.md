@@ -1,7 +1,7 @@
 # asset-diet-gate-honesty — review (s1029 drain)
 
 **Slice:** `tasks/lane-asset-diet-gate-honesty.md` (corrective for F-1026-1)
-**Branch:** `lane/e2-arsenal` · **Tip:** `e3d81fb6` · **Base:** `7be44380` (ancestor of main, verified)
+**Branch:** `lane/e2-arsenal` · **Tip:** `e3d81fb6` · **Base:** `0da2871b` (ancestor of main, verified)
 **Drained by:** s1029 fire, 2026-07-25
 
 ## VERDICT: MERGE — a structurally-red gate becomes an honest one, and it is NOT a false green

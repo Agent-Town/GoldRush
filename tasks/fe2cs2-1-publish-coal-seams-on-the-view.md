@@ -6,7 +6,7 @@
 
 You are Codex, implementer for Gold Rush, running natively on Robin's Mac in `worktrees/lane-c`.
 
-READ FIRST: `AGENTS.md`; **`reviews/e2-coal-seams-and-legibility.md`** — the review that filed this finding TODAY; read its **F-E2CS-2** entry and its PART 1 (the `coalSeams` vocabulary), because the shape you publish must match the vocabulary that merged at `a7764dd6a`; `src/agent/View.ts` (your whole subject: the `stablePrefix.map` type at `:33`–`:38` and its builder at `:238`–`:247`); `src/systems/PressureSystem.ts:42` (`DEFAULT_COAL_SEAMS`) and `:83`–`:84` (the fallback rule you must mirror exactly); `tasks/BACKLOG.md` — the F-E2CS-2 row.
+READ FIRST: `AGENTS.md`; **`reviews/e2-coal-seams-and-legibility.md`** — the review that filed this finding TODAY; read its **F-E2CS-2** entry and its PART 1 (the `coalSeams` vocabulary), because the shape you publish must match the vocabulary that merged at `dfb58606a`; `src/agent/View.ts` (your whole subject: the `stablePrefix.map` type at `:33`–`:38` and its builder at `:238`–`:247`); `src/systems/PressureSystem.ts:42` (`DEFAULT_COAL_SEAMS`) and `:83`–`:84` (the fallback rule you must mirror exactly); `tasks/BACKLOG.md` — the F-E2CS-2 row.
 
 **SEQUENCING LAW / STALENESS CHECK — verify the premise before building. Run:**
 
@@ -24,7 +24,7 @@ Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead 
 
 ## Why (F-E2CS-2, filed 2026-08-21 in `reviews/e2-coal-seams-and-legibility.md`, verified at source by s2142)
 
-The coal ruling shipped today (`a7764dd6a`): contracts may author their own `coalSeams`, and three
+The coal ruling shipped today (`dfb58606a`): contracts may author their own `coalSeams`, and three
 briefing cards now tell a human player that coal exists and roughly where. **An agent was given
 neither half.** The review's own finding says it plainly:
 
@@ -36,7 +36,7 @@ neither half.** The review's own finding says it plainly:
 **Verified at source by s2142, not inherited:** `grep -c "coal" src/agent/View.ts` returns **0**, and
 so does `grep -n "pressure" src/agent/View.ts`. The view publishes gold seams twice — as authored
 anchors on `stablePrefix.map.seams` (`:243`–`:247`) and as live state on `now.seams` (`:321`–`:333`,
-which gained `x`/`z`/`anchorIndex` in the F-E3CF-5 cure, merged `789dc39a7`) — and publishes coal
+which gained `x`/`z`/`anchorIndex` in the F-E3CF-5 cure, merged `b253af85c`) — and publishes coal
 nowhere.
 
 ⭐ **Why this is the stable prefix and NOT `now`, stated so you do not "improve" on it.** A coal seam

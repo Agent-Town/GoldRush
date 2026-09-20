@@ -1,9 +1,9 @@
 # Review — lane-crossing-armed (Twin Banks playtest corrective)
 
 - **Slice:** lane-crossing-armed — crossings keep you armed; wading disarms, readably
-- **Branch/tip:** lane/m3 @ `475f8597` "runner(lane-a): lane-crossing-armed.md"
-- **Base:** `a63713ae` (s747 lock)
-- **Drained by:** s748 fire → main merge `6c3bffcb` (parents `3f17c322` main, `475f8597` lane)
+- **Branch/tip:** lane/m3 @ `0c924dab` "runner(lane-a): lane-crossing-armed.md"
+- **Base:** `ad8cf020` (s747 lock)
+- **Drained by:** s748 fire → main merge `84b0d0f7` (parents `5e1ac0a6` main, `0c924dab` lane)
 
 ## Verdict
 **MERGE — clean 3-way (ort auto-merge, disjoint hunks).** Slice spec green desktop+mobile; regression check on the same-fire pause-goal drain still green post-merge.
@@ -23,11 +23,11 @@ Answers the owner's Twin Banks note — *"there are now multiple ways to cross t
 | `064-river-continues.spec.ts` | PASS |
 | Battery total | 19 passed / 1 skipped / 0 failed (2.9m) |
 
-## Merge classification (base `a63713ae`)
+## Merge classification (base `ad8cf020`)
 | File | Class | Resolution |
 |------|-------|-----------|
 | `e2e/lane-crossing-armed.spec.ts` | NEW | free |
-| `src/game/Game.ts` | MAIN-MOVED (pause-goal `c173da7e` this fire) + LANE-TOUCHED | 3-way ort auto — lane hunks (fields/update rename/HUD wire/reset/updateDisarmReadability, all <line 6330) disjoint from pause-goal's `pauseMetaSnapshot` (~6924) |
+| `src/game/Game.ts` | MAIN-MOVED (pause-goal `85a32eb1` this fire) + LANE-TOUCHED | 3-way ort auto — lane hunks (fields/update rename/HUD wire/reset/updateDisarmReadability, all <line 6330) disjoint from pause-goal's `pauseMetaSnapshot` (~6924) |
 | `src/ui/Hud.ts` | MAIN-MOVED (pause-goal) + LANE-TOUCHED | 3-way ort auto — lane hunks (lines 64/161/210/304) disjoint from pause-goal's PauseMetaSnapshot type (36) + pause render (533) |
 | `src/styles.css` | LANE-TOUCHED only | clean |
 | `src/world/Terrain.ts` | LANE-TOUCHED only | clean |

@@ -1,6 +1,6 @@
 # Review — M4-07 Prospector art activation (LANE-B, drained s85)
 
-**Verdict: PASS — merged to main by graft (lane/m4 `6c69c8d`, base `a4c1b8c`).**
+**Verdict: PASS — merged to main by graft (lane/m4 `6c69c8d`, base `ecbc291`).**
 
 ## What landed
 Swaps the Prospector companion's procedural canvas billboard (m4-06 placeholder) for the
@@ -11,7 +11,7 @@ instead of `createProspectorTexture()` (−105 net lines). Balance additive: `ag
 1.45→2.24 (≈70% hero band), `agent.hoverFps` 4.
 
 ## Graft method (native, cherry-pick unavailable headless)
-Merge-base `a4c1b8c`. Since base, main moved forward (SCI-01 drain, s84/s85). Overlap analysis:
+Merge-base `ecbc291`. Since base, main moved forward (SCI-01 drain, s84/s85). Overlap analysis:
 only `src/game/Balance.ts` touched by BOTH — and the two hunks are DISJOINT (lane = `agent{}`
 block ~L61; main = new `research{}` block ~L259). Non-overlap lane files
 (`Embodiment.ts`, `characters.v2.json`, `LEDGER.md`, `e2e/m4-06-embodiment.spec.ts`,

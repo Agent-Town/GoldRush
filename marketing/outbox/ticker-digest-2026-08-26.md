@@ -5,7 +5,7 @@ Window: 2026-08-26 00:00 → 24:00 (+07). 92 first-parent commits, 2 touching pl
 
 ## THE COUNTY DOOR STOPS TURNING AWAY THE LONGEST RIDES
 
-- **A rider who went the distance can post the proof of it at last.** The longest reels were refused on the way out of the tab, before the county ever saw them, and only the shorter rides reached the door at all. The door now weighs a reel before sending it and carries the heavy ones by a different hand — the light ones still go the old quick way, so nothing a rider posts on the way out is lost. The longest ride the county has on record now reaches the clerk intact, and is judged on the same terms as the shortest. `6b2d172b` (rider's side) · `ecc36a79` (the clerk's)
+- **A rider who went the distance can post the proof of it at last.** The longest reels were refused on the way out of the tab, before the county ever saw them, and only the shorter rides reached the door at all. The door now weighs a reel before sending it and carries the heavy ones by a different hand — the light ones still go the old quick way, so nothing a rider posts on the way out is lost. The longest ride the county has on record now reaches the clerk intact, and is judged on the same terms as the shortest. `8da75e62` (rider's side) · `314b4533` (the clerk's)
 
 ---
 

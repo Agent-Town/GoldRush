@@ -1,7 +1,7 @@
 # deploy-verify-production-alias — review
 
 **Slice:** `lane-d-deploy-verify-production-alias.md` (FIRE-AUTHORED s1052)
-**Branch/tip:** `lane/perf` @ `99baab74` → main `e74230184cbb0204dd7fe9c391a12f9c69ee7c86`
+**Branch/tip:** `lane/perf` @ `99baab74` → main `011b47f696840970186319b8bcbc8bf7848d1c28`
 **Drained by:** s1053, 2026-07-26
 **Verdict:** ✅ **MERGE** — all four scopes implemented, firewall held exactly, and the finding it was written for was confirmed by execution rather than inherited.
 
@@ -16,7 +16,7 @@ opens. This slice points the confirmation at that alias behind a real config kno
 `scripts/second-rider.mjs:7` and `scripts/fetch-bugs.mjs:9` already hardcode, so it is adopted, not
 invented), wraps it in a **bounded** 3-attempt retry so Cloudflare's async alias promotion is not
 mis-reported as staleness, gives the `wrangler exited 0 but no URL` case its own honest wording, and
-repairs `scripts/test-deploy-contract.sh` — which had been **red since `00f5d464`** — to the current
+repairs `scripts/test-deploy-contract.sh` — which had been **red since `445ba24d`** — to the current
 5-key contract, made hermetic against a local `127.0.0.1` server.
 
 ## Evidence
@@ -26,7 +26,7 @@ repairs `scripts/test-deploy-contract.sh` — which had been **red since `00f5d4
 | `npx tsc --noEmit` | ✅ clean, no output |
 | `npm run build` | ✅ green, built in **1.46s** (asset-diet line unchanged: 235 GLBs 599.1→93.8 MB, 53 PNGs 183.5→24.3 MB) |
 | Firewall | ✅ **exactly 2 files**, `scripts/deploy.sh` +61/−?, `scripts/test-deploy-contract.sh` +89/−?; total **+117/−33**; **zero `src/`**, **zero `scripts/asset-diet.mjs`** — verified by my own `git diff --stat`, not from the report |
-| Merge class | ✅ **exact graft.** merge-base `1cc8bce3`; `git diff 1cc8bce3 main -- <the 2 files>` is **empty** → main never moved either file since the base. No 3-way, no conflict resolution. |
+| Merge class | ✅ **exact graft.** merge-base `4c2ebb12`; `git diff 4c2ebb12 main -- <the 2 files>` is **empty** → main never moved either file since the base. No 3-way, no conflict resolution. |
 | Tree fidelity | ✅ after cp, `git diff lane/perf -- <the 2 files>` **empty** → working tree byte-identical to the lane tip before staging |
 | F-1052-1 (the premise) | ✅ **CONFIRMED BY EXECUTION** — see below |
 | Contract test run | ⚠️ **NOT executed by me** — `bash <script>` is permission-gated for fires. See LIMITS. |

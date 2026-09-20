@@ -66,9 +66,9 @@
  *
  * THE DETECTOR WAS CONTROLLED BEFORE ITS ZERO WAS BELIEVED. A detector never proven
  * capable of a hit reports a vacuous green. Run against e2e/release-base-path.spec.ts
- * at 7d2aeaedf^ — the tree where the defect provably existed — it fires, naming
+ * at e528a24f5^ — the tree where the defect provably existed — it fires, naming
  * exactly the five paths F-2118-1 recorded (_accounts, _bugs, _multiplayer, stats,
- * telemetry); against the same file at 7d2aeaedf it names zero.
+ * telemetry); against the same file at e528a24f5 it names zero.
  *
  * WHY ALWAYS-ON RATHER THAN A `functions/**` PATH RULE, on the site-contract
  * precedent (F-1230-1): the drift this guards is two-sided. A `functions/**` rule

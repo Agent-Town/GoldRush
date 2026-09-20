@@ -10,9 +10,9 @@ import { readFileSync, writeFileSync } from "node:fs";
 const REPO = "/Users/robin/Claude/Projects/Gold Rush";
 
 const LOSSES = [
-  { session: 1339, droppedBy: "f2380ccc", note: "s1340's lock commit; s1340 then DIED without ever writing a handoff" },
-  { session: 1337, droppedBy: "8e68f689", note: "s1338's lock commit; s1338 completed but never restored it" },
-  { session: 1278, droppedBy: "9b46df4d", note: "s1279's lock commit; s1279 completed but never restored it" },
+  { session: 1339, droppedBy: "aaf13428", note: "s1340's lock commit; s1340 then DIED without ever writing a handoff" },
+  { session: 1337, droppedBy: "9fe672b8", note: "s1338's lock commit; s1338 completed but never restored it" },
+  { session: 1278, droppedBy: "c7034359", note: "s1279's lock commit; s1279 completed but never restored it" },
 ];
 
 const path = `${REPO}/STATUS.md`;

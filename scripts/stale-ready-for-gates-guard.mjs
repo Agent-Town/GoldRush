@@ -10,7 +10,7 @@
 //   still true. This is the Ghost Line (Mistake #5) with a merge as its delivery mechanism.
 //
 //   HAND-RETIREMENT DOES NOT SCALE, WHICH IS THE ARGUMENT FOR A GUARD AT ALL. The class
-//   RECURRED eight fires after it was filed: `e3-moth-socket` merged at 47dd309f (drained s1469,
+//   RECURRED eight fires after it was filed: `e3-moth-socket` merged at bfeca043 (drained s1469,
 //   full review at reviews/e3-moth-socket.md) while BACKLOG:2992 still read "lane implementation
 //   READY-FOR-GATES on `lane/a`; merge receipt awaits the drain." Found by this guard on its
 //   first run, s1483; the row was retired in the same commit that shipped this file.

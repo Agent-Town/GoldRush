@@ -1,7 +1,7 @@
 # f1501-1-drill-yard-briefing — the Drill Yard card speaks its own manifest
 
 - **Slice:** `f1501-1-drill-yard-briefing` (AP-11 §1, `specs/agent-play/README.md:149`)
-- **Branch / tip:** `lane/a` @ `7cc08cf1bdb6d003ca85bb0ee3af12bf5d14a9fc` ("dyb: show the Drill Yard briefing")
+- **Branch / tip:** `lane/a` @ `e266bf8df462e9e01909b06064e9f0a838af15cc` ("dyb: show the Drill Yard briefing")
 - **Base at authoring:** `origin/main`; at drain the lane was **1 ahead / 12 behind**, merged three-way `--no-ff`
 - **Merge:** see the drain commit below · **Drained by:** s1504 fire, 2026-08-07
 - **Block check:** `node scripts/drain-block-check.mjs 20260806-233837-lane-f1501-1-drill-yard-briefing.md` → **✅ CLEAR** (`status="queued"`), run before any gating
@@ -52,7 +52,7 @@ no header overlap. The mechanics line renders in full on both.
 briefing, i.e. exactly the defect AP-11 §1 forbids and this slice cures. It is stale by construction.
 
 **Proved merge-caused rather than assumed:** a control run of that spec on the pre-merge commit
-`bef7788c8` returned **4 passed**. The red appears only after the merge, which is the correct and
+`1466e681e` returned **4 passed**. The red appears only after the merge, which is the correct and
 intended behaviour of a suite that had memorised the old shape.
 
 The slice could not have fixed it: the master's firewall forbids editing `e2e/**`, and deliberately so —
@@ -80,7 +80,7 @@ finding; recorded here so the next fire that sees it once knows it has been chas
 All six are the same assertion in one file: `e2e/061-first-claim-onboarding.spec.ts:74` —
 `await expect(page.getByTestId('town-bark-speaker')).toHaveText('Marta Vale');` — a town NPC bark
 speaker, with no causal path to a contract-card briefing. Plausibility is not evidence, so it was
-measured: a detached control worktree at the **pre-merge** commit `bef7788c8` ran that spec and returned
+measured: a detached control worktree at the **pre-merge** commit `1466e681e` ran that spec and returned
 **6 failed / 2 passed**, identical in count, assertion and line to the post-merge run. **Exonerated by
 measurement.** The control worktree was removed cleanly, its `node_modules` symlink unlinked *first* so
 nothing could follow it into main's tree.

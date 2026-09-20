@@ -39,7 +39,7 @@
  * loop passed this guard green.
  *
  * MEASURED s2421, not inferred. `desk-birth-gateless-row-guard.test.mjs` was born at
- * 601e7deb3 (2026-08-29) carrying, TWICE:
+ * 5ad53ae90 (2026-08-29) carrying, TWICE:
  *
  *     for (const f of fs.readdirSync(HERE)) {
  *       if (f.endsWith('.mjs') && !f.endsWith('.test.mjs')) {
@@ -47,7 +47,7 @@
  *       }
  *     }
  *
- * — four days AFTER this guard landed (71aeb96ad, 2026-08-25). It sat green here for
+ * — four days AFTER this guard landed (f6035b05c, 2026-08-25). It sat green here for
  * ~3 days until s2420 reproduced the race BY HAND (10/10 crashes beside the two shadow
  * writers, 0/10 after the cure) and extracted `guard-source-snapshot.mjs`. Running
  * this file's own pre-cure detector against that shape returns FALSE.
@@ -220,7 +220,7 @@ test('DEFECT ARM: the enumerate-and-copy shape is what the widened detector dete
   assert.deepEqual(
     racyPerEntryCopy(preCure),
     ['f'],
-    'the detector does not match the shape measured at 601e7deb3, which it exists for',
+    'the detector does not match the shape measured at 5ad53ae90, which it exists for',
   );
 });
 

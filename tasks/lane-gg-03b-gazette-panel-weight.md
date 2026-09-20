@@ -45,7 +45,7 @@ Same command, same worker count, **twice**. `gazette-art-wiring` 4/4 green both 
 ## PRE-FLIGHT
 Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead is NORMAL — the runner auto-commits. For each ahead commit: if its content is already merged to main (verify via git log/diff), it is a SAFE DUPE → `git checkout -B <lane-branch> main && git clean -fd` and PROCEED. STOP-and-report ONLY if an ahead commit's content is NOT on main (undrained work — resetting would DESTROY it), or the worktree holds uncommitted edits you did not make. Then `npm install --no-audit --no-fund`; `npm run build` green before touching anything.
 
-**Base premise check, AFTER the reset (not before):** `d2fc1b06` (GG-01) and `ee54c438` (GG-02 plates) must both be ancestors of your base, and all six `assets/raw/gazette-panel-*.png` present. Missing either → STOP, report `LADDER-WAIT`. *(The 11:10 lane-a run of `lane-gazette-art-swap` stopped on exactly this check against a stale base — run it after the reset or it will lie to you.)*
+**Base premise check, AFTER the reset (not before):** `97c6a257` (GG-01) and `8dff01fb` (GG-02 plates) must both be ancestors of your base, and all six `assets/raw/gazette-panel-*.png` present. Missing either → STOP, report `LADDER-WAIT`. *(The 11:10 lane-a run of `lane-gazette-art-swap` stopped on exactly this check against a stale base — run it after the reset or it will lie to you.)*
 
 ## NO-OP GUARD
 If you find yourself about to exit without changes, WRITE WHY into your report first — a silent no-op wastes a queue slot and a gate. A scope-1 `PREMISE-NOT-REPRODUCED` stop is a *lawful* exit and must carry its four measured counts.

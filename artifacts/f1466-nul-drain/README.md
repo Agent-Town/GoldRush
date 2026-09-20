@@ -19,4 +19,4 @@ perf-r2 thread's own staged captures in `artifacts/perf-e1-r2/` (which this drai
 the run happened in a detached worktree, §3.0b custody, and main's tracked captures there are
 untouched).
 
-Merge: `1a2871fd310b5bfd1f6ea085ce9d8a7a4b36272d` · Review: `reviews/f1465-1-nul-delimiters.md`
+Merge: `206d6cffb4726405157b77f592ea7594365ad456` · Review: `reviews/f1465-1-nul-delimiters.md`

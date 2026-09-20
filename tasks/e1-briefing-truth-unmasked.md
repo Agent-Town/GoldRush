@@ -2,14 +2,14 @@
 **FIRE-AUTHORED (attended review welcome)** — s1068, 2026-07-26.
 **STATUS: QUEUED to lane-a by s1070, 2026-07-26T09:08Z — BOTH blockers now cleared, the second by
 measurement rather than by waiting.**
-~~`lane/m3` still carries the undrained `2d0739f5`~~ → **RESOLVED (s1069): drained at `fa645b6c`, salvage
+~~`lane/m3` still carries the undrained `2d0739f5`~~ → **RESOLVED (s1069): drained at `f8812586`, salvage
 retired to `archive/lane-m3-2d0739f5`.** s1070 re-verified this independently: all three commits ahead on
 `lane/m3` (`4401778f`, `2d0739f5`, `428c01d5`) are **content-identical to main** on every file they touch,
 so the lane is false-ahead and its pre-flight `reset --hard` destroys nothing. LANE-SAFETY satisfied.
 ~~THE REMAINING BLOCKER STANDS — coordinate before dispatch~~ → **CLEARED s1070. The writer-collision
 premise was inherited for two fires and is measurably FALSE.** The attended E1 verdict does live on
-`review/e1-gameplay-depth` (attended-owned `gr-task-e1-gameplay` worktree, 4 commits, tip `7dcdcdc7`
-07:42, still unmerged) — but classified against the merge-base `b702ebf5`, that branch **never moved
+`review/e1-gameplay-depth` (attended-owned `gr-task-e1-gameplay` worktree, 4 commits, tip `5b417e37`
+07:42, still unmerged) — but classified against the merge-base `a45cdd47`, that branch **never moved
 either file this task edits**:
 | file | branch moved | main moved |
 |---|---|---|
@@ -19,7 +19,7 @@ either file this task edits**:
 | `rehearsal/segments/e1-depth-rivercamp.mjs` | yes | **no** |
 The apparent overlap on the first two is pure stale-base drift (main moved, the branch did not). Attended's
 only real unmerged content is in `rehearsal/`, which this task's TOUCH-ONLY excludes entirely — so there is
-no writer to collide with. Attended is also verifiably quiet (last write `bb57af63` 08:21; tree carries only
+no writer to collide with. Attended is also verifiably quiet (last write `150fa9b7` 08:21; tree carries only
 dashboard churn). **This is the F-1067-2 shape s1069 named: the caution was right to exist, its stated reason
 did not apply.** ⚠️ Still true and NOT a blocker for this task: do **not** touch `rehearsal/` here.
 

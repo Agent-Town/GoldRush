@@ -2,7 +2,7 @@
 
 **Slice:** Dry Gulch seam yield — the contract twist becomes the only source
 **Branch:** `lane/m3` · **Tip:** `4911e0c5` (lift) on `9ef521e5` (the original two deletions)
-**Base:** `5fb63bdb` · **Drained:** s1380 fire, 2026-08-02
+**Base:** `5fb63bdb (archive: pruned by the A3 rewrite)` · **Drained:** s1380 fire, 2026-08-02
 **VERDICT: MERGE** — tsc clean, build green, Dry Gulch 6/6 desktop + 6/6 mobile, adjacent town board 12/12, zero survivors.
 
 ## What it does

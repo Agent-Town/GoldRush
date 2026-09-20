@@ -1,13 +1,13 @@
 # lane-territory-ring-to-kit — the territory reward frees its feet (F-BW-6)
 
-**Slice:** `lane-territory-ring-to-kit` · **branch:** `lane/perf` · **tip:** `44eda5bd` · **base:** `0f7f45fdea8f9fee0424750ec60af6af521c4bda`
+**Slice:** `lane-territory-ring-to-kit` · **branch:** `lane/perf` · **tip:** `f6f72f86` · **base:** `ba8ad305fd255fa93aef899c18057c140fc53ce9`
 **Gated by:** s1433 fire, 2026-08-03, in detached worktree `gate-s1433` (§3.0b — main's working tree never held this content)
 
 ## VERDICT: HOLD — NOT MERGED. One attributable regression (F-1433-1), precisely located and cheap to fix.
 
 > ⏭️ **SUPERSEDED — see the s1435 ADDENDUM at the foot of this file.** The hold's written lift condition was
-> satisfied (`f1433-1` landed as `d9235027`, the named test green 2/2 both projects and proven load-bearing by
-> manufacturing the defect), and the stack **MERGED as `af463bd9`**. This section is kept as the record of why
+> satisfied (`f1433-1` landed as `82399952`, the named test green 2/2 both projects and proven load-bearing by
+> manufacturing the defect), and the stack **MERGED as `865a7b19`**. This section is kept as the record of why
 > the slice was held, not as its current state. **The owner fork it surfaced is still OPEN.**
 
 The slice is good work and the design is right. It is held on a single defect that its own master forbids in writing.
@@ -16,12 +16,12 @@ The slice is good work and the design is right. It is held on a single defect th
 Converts the Territory I meta reward from an auto-spawned palisade ring at the hero start into a **palisade kit**: N free, run-scoped placements the player puts anywhere, expiring at run end. No structure spawns on its own, so the Prospector's auto-repair only ever tends walls the player chose — which is exactly the owner's complaint ("they will just drain my gold because the prospector will repair them… I don't want to build a base at the starting position but where I can farm gold"). The ring-geometry code (`territoryRingSegments`) is deleted outright. Free placements flow through the **normal** build path: `economy.apply({type:'gold_spent', sink:'build_palisade', amount: 0, kit:true})`, with `palisade_kit_granted` reducing to `state` (no gold delta). The sole-gold-writer law is intact — there is no parallel economy, which was the main design risk and the slice avoided it cleanly.
 
 ## Merge classification
-Base `0f7f45fd`; 19 files.
+Base `ba8ad305`; 19 files.
 
 | Bucket | Files | Handling |
 |---|---|---|
-| LANE-TOUCHED | 14 (+4 screenshots) | `git log 0f7f45fd..main -- <14>` **EMPTY** → clean copy |
-| BOTH-MOVED | `src/game/Game.ts` | main moved it via `9240479c` (drill-yard) and `e49fc4e3` (telemetry) → **GRAFTED**, 5 hunks, `+13/−50` |
+| LANE-TOUCHED | 14 (+4 screenshots) | `git log ba8ad305..main -- <14>` **EMPTY** → clean copy |
+| BOTH-MOVED | `src/game/Game.ts` | main moved it via `9920d282` (drill-yard) and `037f35f5` (telemetry) → **GRAFTED**, 5 hunks, `+13/−50` |
 
 The graft was mandatory, not defensive: the lane's base predates both of main's Game.ts commits, so a wholesale copy would have silently reverted the drill-yard separation *and* the render-demotion telemetry — the third consecutive drain where that trap was live.
 
@@ -73,21 +73,21 @@ The BACKLOG row records: *"If the owner prefers plain removal over the kit, one 
 
 ---
 
-# s1435 ADDENDUM — THE HOLD IS LIFTED BY SATISFACTION. VERDICT: MERGED `af463bd9`
+# s1435 ADDENDUM — THE HOLD IS LIFTED BY SATISFACTION. VERDICT: MERGED `865a7b19`
 
 **Drained by:** s1435 fire, 2026-08-03, in detached worktree `gate-s1435` (§3.0b — main's working tree never held undecided content)
-**Stack merged:** `lane/perf` `44eda5bd` (kit slice) + `d9235027` (f1433-1 corrective) → main `af463bd97abf7f1552f0825a2b21d5c6fd6748d2`
+**Stack merged:** `lane/perf` `f6f72f86` (kit slice) + `82399952` (f1433-1 corrective) → main `865a7b19c8991d535801ea6cdede2bc0fc73b950`
 **`main..lane/perf` after merge: EMPTY.**
 
 ## The hold was lifted by satisfying its written condition, not by a green battery
 
-s1433 wrote the lift condition into the goal leaf: land `f1433-1` on `lane/perf @ 44eda5bd`, then re-run
+s1433 wrote the lift condition into the goal leaf: land `f1433-1` on `lane/perf @ f6f72f86`, then re-run
 `restore-validation.spec.ts → economy log rows are validated before replay and hostile deltas are dropped`
 green **both projects**. That is exactly what was measured, in that order:
 
 | Step | Result |
 |---|---|
-| `f1433-1` landed on the lane | `d9235027`, runner-committed 15:45:18, done-move un-prefixed (clean run) |
+| `f1433-1` landed on the lane | `82399952`, runner-committed 15:45:18, done-move un-prefixed (clean run) |
 | Lift-condition test, merged tree | **2/2 passed both projects, 5.2s** |
 | Lift-condition test, guard removed (manufactured defect) | **2 FAILED both projects** |
 | Probe reverted | blob `acea8f8ecf0cdf24f6d53d7799b348ac37929226` — **byte-identical to the lane blob** |
@@ -152,7 +152,7 @@ in 43.3s.** Non-deterministic, no causal path to the kit, not attributable.
 
 ## Merge classification
 
-Base `0f7f45fd`. Of 19 changed paths, **exactly one is BOTH-MOVED**: `src/game/Game.ts`. Everything else is
+Base `ba8ad305`. Of 19 changed paths, **exactly one is BOTH-MOVED**: `src/game/Game.ts`. Everything else is
 LANE-TOUCHED only (main never moved them since the base — measured, not assumed).
 
 Main's three Game.ts hunks since the base are the drill-yard practice save line, the `reportRenderDemotion`

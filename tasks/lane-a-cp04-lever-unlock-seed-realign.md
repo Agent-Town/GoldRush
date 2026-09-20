@@ -1,6 +1,6 @@
 # Task lane-a-cp04-lever-unlock-seed-realign: cp04-lever asserts a pre-unlock-gate contract on 16 executions — observe WHICH contract actually boots, then realign the spec to the ratified gate (lane-a, commit prefix "test:")
 
-**FIRE-AUTHORED (attended review welcome)** — s1178, 2026-07-28. Authored from `logs/suite-red-inventory.md:65-80` (shipped `7a457025`), re-derived at source by s1178 before a line of this task was written: the 16 red rows counted row-by-row, the 9 seeded boots decomposed to their land ids by index arithmetic, the pass/fail split measured against `DEFAULT_CONTRACT_ID`, and the suspect commit read with `git show --stat`. **This defect is UNCLAIMED — `grep -c "cp04" tasks/BACKLOG.md` = 0 and `grep -c "cp04" tasks/goals.json` returns only the merged CP-04 leaf. It is a Completeness-Law hole, not a ladder rung.** No new scope invented.
+**FIRE-AUTHORED (attended review welcome)** — s1178, 2026-07-28. Authored from `logs/suite-red-inventory.md:65-80` (shipped `55fc5a31`), re-derived at source by s1178 before a line of this task was written: the 16 red rows counted row-by-row, the 9 seeded boots decomposed to their land ids by index arithmetic, the pass/fail split measured against `DEFAULT_CONTRACT_ID`, and the suspect commit read with `git show --stat`. **This defect is UNCLAIMED — `grep -c "cp04" tasks/BACKLOG.md` = 0 and `grep -c "cp04" tasks/goals.json` returns only the merged CP-04 leaf. It is a Completeness-Law hole, not a ladder rung.** No new scope invented.
 
 CODEX: model=gpt-5.6-sol effort=high
 
@@ -18,13 +18,13 @@ READ FIRST (paths, not memory):
 ## Pre-flight (LANE-SAFETY, runner-auto-commit aware)
 The lane branch being ahead is NORMAL — the runner auto-commits. For each ahead commit: if its content is already merged to main (verify via `git log`/`git diff`), it is a SAFE DUPE → `git checkout -B lane/m3 main && git clean -fd` and PROCEED. STOP-and-report ONLY if an ahead commit's content is NOT on main (undrained work — resetting would DESTROY it), or the worktree holds uncommitted edits you did not make.
 
-**The dupe is PRE-PROVEN for you — do not spend budget re-deriving it.** s1178 verified at 2026-07-28T18:2xZ: `lane/m3` is **1 ahead** at `ced4484f` (`runner(lane-a): lane-a-town-info-note-dead-reckoning.md`), whose deliverable **shipped to main as `011e85fc`**. The decisive probe is the unique-blob invariant, not the ahead-count: `git diff --name-only --diff-filter=A main..lane/m3` returns **EMPTY** — the lane holds **zero files that main lacks**, so a reset destroys nothing. Re-run that one command to confirm nothing changed since, then reset and move on.
+**The dupe is PRE-PROVEN for you — do not spend budget re-deriving it.** s1178 verified at 2026-07-28T18:2xZ: `lane/m3` is **1 ahead** at `ced4484f` (`runner(lane-a): lane-a-town-info-note-dead-reckoning.md`), whose deliverable **shipped to main as `6e1113c7`**. The decisive probe is the unique-blob invariant, not the ahead-count: `git diff --name-only --diff-filter=A main..lane/m3` returns **EMPTY** — the lane holds **zero files that main lacks**, so a reset destroys nothing. Re-run that one command to confirm nothing changed since, then reset and move on.
 
 Then `npm install --no-audit --no-fund`; `npm run build` green before touching anything.
 
 ## Why (the defect, dated, measured)
 
-`e2e/cp04-lever.spec.ts` shipped **2026-07-17** in `d21cac4e` with, in that commit's own message, *"cp04 24/24 both projects"*. **It has since gone red on 16 executions** — the second-largest single-file cluster on the red board (5.3% of 303), behind only the eight `town-*-blender` specs that are on the owner's desk as F-1167-1.
+`e2e/cp04-lever.spec.ts` shipped **2026-07-17** in `848c507b` with, in that commit's own message, *"cp04 24/24 both projects"*. **It has since gone red on 16 executions** — the second-largest single-file cluster on the red board (5.3% of 303), behind only the eight `town-*-blender` specs that are on the owner's desk as F-1167-1.
 
 **The 16 rows, counted by s1178 out of `logs/suite-red-inventory.md:65-80` — not inherited from a summary:**
 
@@ -57,11 +57,11 @@ Then `npm install --no-audit --no-fund`; `npm run build` green before touching a
 
 ### The suspect, and why it is a suspect and not yet a conclusion
 
-`src/meta/ContractUnlock.ts` **did not exist** when this spec was written. It was added **2026-07-23** by `6c009cb8` (*"feat: add physical E1 release build"*, +92 lines), which also moved `ContractFamilies.ts`, `main.ts` and `Game.ts`. `contractUnlockStatus` (`:17-45`) returns `unlocked: true` immediately only for `unlock === 'default'`; every other value is conditional on **scoreboard rows** (`wave10OnClaim`, `firstSecuredClaim`), **research state** (`science-complete`), or **an active epoch** (`epochIsActive`).
+`src/meta/ContractUnlock.ts` **did not exist** when this spec was written. It was added **2026-07-23** by `776cd64a` (*"feat: add physical E1 release build"*, +92 lines), which also moved `ContractFamilies.ts`, `main.ts` and `Game.ts`. `contractUnlockStatus` (`:17-45`) returns `unlocked: true` immediately only for `unlock === 'default'`; every other value is conditional on **scoreboard rows** (`wave10OnClaim`, `firstSecuredClaim`), **research state** (`science-complete`), or **an active epoch** (`epochIsActive`).
 
 **`cp04-lever.spec.ts` seeds none of those.** Its seeded-boot test (`:135-141`) writes only two `sessionStorage` keys and navigates. `localStorage` is virgin: no profile, no scores, no active epoch, no research.
 
-**And the control proves the author of the gate knew this.** `release-build.spec.ts` — authored in the *same commit* `6c009cb8` — never navigates without first calling `seedProfile(page, { unlocked: true })` (`:99`, `:109`, `:132`, `:167`, `:186`), and that helper (`:202-245`) seeds **exactly** the state the gate reads: `keys.scores` with `secured: true` rows for `the-claim` **and** `e1-dry-gulch`, `keys.activeEpoch`, `keys.meta` science track, `keys.research` taken list.
+**And the control proves the author of the gate knew this.** `release-build.spec.ts` — authored in the *same commit* `776cd64a` — never navigates without first calling `seedProfile(page, { unlocked: true })` (`:99`, `:109`, `:132`, `:167`, `:186`), and that helper (`:202-245`) seeds **exactly** the state the gate reads: `keys.scores` with `secured: true` rows for `the-claim` **and** `e1-dry-gulch`, `keys.activeEpoch`, `keys.meta` science track, `keys.research` taken list.
 
 ➡️ **This has the F-1170-2 shape exactly: a commit adds a gate, writes its OWN new spec that respects the gate, and updates none of the pre-existing specs that don't.** But s1178 **did not run the spec** (lane-c was live; Mistake #12), so the mechanism is **? INFERRED, and scope 1 exists to measure it, not to confirm a foregone conclusion.**
 

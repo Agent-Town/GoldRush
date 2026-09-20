@@ -2,7 +2,7 @@
 
 **Slice:** ap-02-second-rider (lane-second-rider done-move `20260722-103819`)
 **Branch/tip:** lane/m4 @`d9a15e73` "feat: summon the Second Rider companion"
-**Merge-base:** `700a9a4e` (feat: THE SECOND RIDER — human+AI co-op harness commissioned, owner request)
+**Merge-base:** `3eb1641f` (feat: THE SECOND RIDER — human+AI co-op harness commissioned, owner request)
 **Drain:** s895 fire, 2026-07-22
 **Verdict:** ✅ SHIPPED — gates green; the 3 firewall-allowed files land additively; 4 adjacent reds proven pre-existing (this drain touches zero src).
 
@@ -21,7 +21,7 @@ Adds `scripts/second-rider.mjs` — a standalone Node CLI that boots headless ch
 Config: `playwright.s895-scratch.config.ts` (self-booting dev on :5289, isolated from sol/attended servers). The second-rider spec self-spawns its own relay env (worker + pages relay) in `beforeAll`.
 
 ## Merge classification
-Base `700a9a4e`; two-dot `main..lane/m4` shows phantom deletions (STATUS.md / goals.json / specs/agent-play — main advanced past the stale base; MAIN-MOVED-ONLY, not lane edits). Base-relative diff (`700a9a4e..lane/m4`) is the truth: the lane touched EXACTLY 3 files, all firewall-allowed, purely additive:
+Base `3eb1641f`; two-dot `main..lane/m4` shows phantom deletions (STATUS.md / goals.json / specs/agent-play — main advanced past the stale base; MAIN-MOVED-ONLY, not lane edits). Base-relative diff (`3eb1641f..lane/m4`) is the truth: the lane touched EXACTLY 3 files, all firewall-allowed, purely additive:
 
 | File | Kind | Notes |
 |------|------|-------|

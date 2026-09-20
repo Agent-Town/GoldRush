@@ -1,6 +1,6 @@
 # Task lane-a-build-mode-prompt-spec-realign: four specs still assert the pre-07-12 building-card contract — realign them to the ruling the owner gave, and prove the ruling both ways (lane-a, commit prefix "test:")
 
-**FIRE-AUTHORED (attended review welcome)** — s1171, 2026-07-28. Authored from F-1170-2 (`STATUS.md` s1170 handoff §B), re-derived at source by s1171 before a line of this task was written: the ruling (`tasks/fix-building-prompt-flicker.md:5`,`:8`), the runtime gate (`src/game/Game.ts:5651`), the commit that flipped it (`50977ab6`, 2026-07-12), and the **row-by-row red list re-measured out of `logs/suite-red-inventory-compact.json`** (see the table in WHY). No new scope invented. **Two corrections to the inherited list are folded in — read WHY before you trust any earlier summary.**
+**FIRE-AUTHORED (attended review welcome)** — s1171, 2026-07-28. Authored from F-1170-2 (`STATUS.md` s1170 handoff §B), re-derived at source by s1171 before a line of this task was written: the ruling (`tasks/fix-building-prompt-flicker.md:5`,`:8`), the runtime gate (`src/game/Game.ts:5651`), the commit that flipped it (`3e23a12a`, 2026-07-12), and the **row-by-row red list re-measured out of `logs/suite-red-inventory-compact.json`** (see the table in WHY). No new scope invented. **Two corrections to the inherited list are folded in — read WHY before you trust any earlier summary.**
 
 CODEX: model=gpt-5.6-sol effort=high
 
@@ -16,13 +16,13 @@ READ FIRST (paths, not memory):
 ## Pre-flight (LANE-SAFETY, runner-auto-commit aware)
 The lane branch being ahead is NORMAL — the runner auto-commits. For each ahead commit: if its content is already merged to main (verify via `git log`/`git diff`), it is a SAFE DUPE → `git checkout -B lane/m3 main && git clean -fd` and PROCEED. STOP-and-report ONLY if an ahead commit's content is NOT on main (undrained work — resetting would DESTROY it), or the worktree holds uncommitted edits you did not make.
 
-**The dupe is PRE-PROVEN for you — do not spend budget re-deriving it.** s1171 verified at 2026-07-28T15:3xZ: `lane/m3` is 1 ahead at `818e995c` (`runner(lane-a): lane-a-world-info-build-fixture-realign.md`), whose deliverable **shipped to main this morning as `bef39c4b`**. `git diff main lane/m3 -- e2e/ src/` shows **one file**, `e2e/asset-diet.spec.ts`, and the lane holds the **older** side of it (the pre-cure `GR_CAPTURE_EXTERNAL_SERVER` skip that main replaced with `GR_ASSET_DIET_BUNDLE` in `7c28335c`) — i.e. **main is ahead, the lane holds nothing unmerged.** Textbook SAFE DUPE → reset and proceed. Re-run that one `git diff` to confirm nothing changed since, then move on.
+**The dupe is PRE-PROVEN for you — do not spend budget re-deriving it.** s1171 verified at 2026-07-28T15:3xZ: `lane/m3` is 1 ahead at `818e995c` (`runner(lane-a): lane-a-world-info-build-fixture-realign.md`), whose deliverable **shipped to main this morning as `58b284ce`**. `git diff main lane/m3 -- e2e/ src/` shows **one file**, `e2e/asset-diet.spec.ts`, and the lane holds the **older** side of it (the pre-cure `GR_CAPTURE_EXTERNAL_SERVER` skip that main replaced with `GR_ASSET_DIET_BUNDLE` in `45124d00`) — i.e. **main is ahead, the lane holds nothing unmerged.** Textbook SAFE DUPE → reset and proceed. Re-run that one `git diff` to confirm nothing changed since, then move on.
 
 Then `npm install --no-audit --no-fund`; `npm run build` green before touching anything.
 
 ## Why (the defect, dated, re-measured)
 
-On **2026-07-12** commit `50977ab6` (`runner(lane-b): fix-building-prompt-flicker.md`) **inverted** the building context card's visibility rule. Before: the card showed on proximity *outside* build mode. After (`src/game/Game.ts:5651`, unchanged on main today):
+On **2026-07-12** commit `3e23a12a` (`runner(lane-b): fix-building-prompt-flicker.md`) **inverted** the building context card's visibility rule. Before: the card showed on proximity *outside* build mode. After (`src/game/Game.ts:5651`, unchanged on main today):
 
 ```ts
 const demolish = canInteract && this.buildSystem.isBuildMode && !fund ? this.demolishCandidate : null;
@@ -30,7 +30,7 @@ const demolish = canInteract && this.buildSystem.isBuildMode && !fund ? this.dem
 
 **The owner ordered that inversion, in his own words:** `tasks/fix-building-prompt-flicker.md:5` — *"…And maybe just activate it if I am in Build mode/with B."* — and `:8` states it as an explicit **RULING**: *"the card shows ONLY in build mode (B / build button active) — outside build mode, proximity to a building shows nothing (combat stays clean)."*
 
-**So the runtime is correct and ratified. Four e2e specs are not.** They were authored 2026-07-07/07-12 against the *old* contract, several of them calling `setBuildMode(false)` **on purpose** and then asserting the card is visible. They have been red ever since. The only later touch to the gate (`85e9d7e6`, 07-22) changed the bench selector, not the rule.
+**So the runtime is correct and ratified. Four e2e specs are not.** They were authored 2026-07-07/07-12 against the *old* contract, several of them calling `setBuildMode(false)` **on purpose** and then asserting the card is visible. They have been red ever since. The only later touch to the gate (`cb5d0cff`, 07-22) changed the bench selector, not the rule.
 
 **The red rows, re-measured by s1171 from `logs/suite-red-inventory-compact.json` (run 2026-07-28T02:26Z) — not inherited from a summary:**
 
@@ -39,7 +39,7 @@ const demolish = canInteract && this.buildSystem.isBuildMode && !fund ? this.dem
 | `bt-00-demolish.spec.ts` | `:126` `:156` `:189` `:224` `:260` | **10** (5 × 2 projects) | all `toBeVisible()` on `building-context-prompt` |
 | `bt-01-tiers.spec.ts` | `:156` `:180` `:204` `:337` | **8** (4 × 2) | `toBeVisible`, **`toContainText`**, and **a 30 s `locator.click` TIMEOUT** — same cause, three surfaces |
 | `night-light-doctrine.spec.ts` | `:79` | **2** | `toBeVisible()` |
-| `world-info-notes.spec.ts` | `:218` | **2** | `toBeVisible()` — **not in that inventory**; it is the *new* failure line uncovered when `bef39c4b` cured `:111` this morning (s1170 measured it) |
+| `world-info-notes.spec.ts` | `:218` | **2** | `toBeVisible()` — **not in that inventory**; it is the *new* failure line uncovered when `58b284ce` cured `:111` this morning (s1170 measured it) |
 
 **= 22 rows from one ratified ruling.** The setup that causes it is explicit in the source: `bt-00-demolish:120`,`:149`,`:151`,`:186`,`:215`,`:248` and `bt-01-tiers:76` (inside its shared `placeBuildableAt` helper — **one line, four tests**) and `world-info-notes:115` all call `setBuildMode(false)` before the assertion.
 

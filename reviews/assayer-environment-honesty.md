@@ -1,11 +1,11 @@
 # Review — assayer-environment-honesty (lane-a)
 
 - **Slice:** `assayer-environment-honesty` — the hill-mine cross-environment divergence + the commit-pin fragility
-- **Branch / tip:** `lane/a` @ `932a2053e90fe2998f853f3400cebba11a81f9ed`
-- **Base (merge-base with main):** `a94acfc1ead2fb92d3dff36d3ed4b62bb27474d9`
+- **Branch / tip:** `lane/a` @ `cbd59704e3b1cdd8fb6e364e86a3776c57edb036`
+- **Base (merge-base with main):** `9ec5c21c71f81dc2c8ecbe7bff73d6e26610b495`
 - **Gated on:** detached worktree `gate-s2281/` (§3.0b — undecided content never entered main's working tree)
 - **Drained by:** s2281
-- **Merged to main:** `0a117cf9ad9c2e4c85e2c251023769b7a35a980e`
+- **Merged to main:** `d141861e65f3dd9804c41de49c28bb35a4822da5`
 - **Verdict:** ✅ **MERGED** — mechanism named and cured at the proven site, identity made content-derived, and the one battery red proven inherited by my own control.
 
 ## What it does
@@ -41,13 +41,13 @@ The battery reported **two** failures that are **one** defect:
 1. `blocker-panel-closed-guard.test.mjs` — 6 tests, **5 pass / 1 fail**. The failure is its *defect arm* (*"reds on the pre-strike ledger that manufactured the owner directive, greens on the struck one"*), asserting `0 !== 1` with `panel rows: 7 · closed-on-panel: 0`. Note the same output line reads **`blocker-panel-closed-guard: PASS`** — the guard itself is green on the live board.
 2. `fixture-teardown.test.mjs` — fails at `:40` with `1 !== 0` **solely because that child failed**. It spawns all 79 `scripts/*.test.mjs` files, so it is a **cascade**, not a second defect.
 
-**Control (Mistake #4 — I did not inherit s2280's proof, I re-took it):** the same test run on **clean main**, a tree this slice never touched, fails **byte-identically** — `panel rows: 7`, `actual: 0, expected: 1`. Inherited, not caused. This is **F-2280-4**, already diagnosed and filed one fire ago: the guard's fixture deliberately pairs a BACKLOG frozen at `2e02098f` with the *live* `dashboard-gen.sh`, and the live panel's row rule has since drifted, so only 7 rows are drawn from that ledger and `F-1030-2` is no longer among them. The ledger is fine and the guard is fine; the **coupling** rotted.
+**Control (Mistake #4 — I did not inherit s2280's proof, I re-took it):** the same test run on **clean main**, a tree this slice never touched, fails **byte-identically** — `panel rows: 7`, `actual: 0, expected: 1`. Inherited, not caused. This is **F-2280-4**, already diagnosed and filed one fire ago: the guard's fixture deliberately pairs a BACKLOG frozen at `87649873` with the *live* `dashboard-gen.sh`, and the live panel's row rule has since drifted, so only 7 rows are drawn from that ledger and `F-1030-2` is no longer among them. The ledger is fine and the guard is fine; the **coupling** rotted.
 
 **Nothing in this slice's diff can reach that guard** — it touches no ledger, no BACKLOG panel row, and no dashboard script.
 
 ## Merge classification
 
-Base `a94acfc1e`; main had moved **21 commits** ahead, including s2280's `door-tick-ceiling-v2` merge `d8cae3c3` — which touches **two of this slice's ten files**. Merged with a real three-way (`--no-ff` of the gated commit itself), **no conflicts**.
+Base `9ec5c21c7`; main had moved **21 commits** ahead, including s2280's `door-tick-ceiling-v2` merge `db65524d` — which touches **two of this slice's ten files**. Merged with a real three-way (`--no-ff` of the gated commit itself), **no conflicts**.
 
 | File | Class |
 |---|---|

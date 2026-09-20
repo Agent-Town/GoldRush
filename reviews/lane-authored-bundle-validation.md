@@ -1,19 +1,19 @@
 # lane-authored-bundle-validation — s1381 gate
 
 **Slice:** authored-bundle validation across 10 epochs / 42-contract fleet
-**Branch:** `lane/perf` · **tip** `0f2544f2` · **base** `b80ee2ba` · ahead=1
+**Branch:** `lane/perf` · **tip** `0f2544f2` · **base** `5a782e0d` · ahead=1
 **Done-move:** `tasks/done/20260802-064330-lane-authored-bundle-validation.md`
 **Run log:** `tasks/runs/20260802-064330-lane-d-lane-authored-bundle-validation.md.log` (654,147 tokens)
 **Gated in:** detached scratch worktree `/tmp/gate-s1381` (§3.0b custody — nothing undecided entered main's tree)
 
 ## VERDICT: HOLD — NOT MERGED
 
-> ⚠️ **SUPERSEDED s1454 (F-1454-2) — STALE VERDICT LINE.** The slice **MERGED at `cbf0e143c0`**
+> ⚠️ **SUPERSEDED s1454 (F-1454-2) — STALE VERDICT LINE.** The slice **MERGED at `9a95f99d1b`**
 > (*"lane-d: authored-bundle validation across 10 epochs — RE-GATED against the repaired E1 re…"*),
-> verified **IN-MAIN by ancestry** (`git merge-base --is-ancestor cbf0e143c0 main` rc=0); leaf
-> `e1-authored-bundle-validation` carries `status: merged`, `mergeHash cbf0e143c0`. The hold below
+> verified **IN-MAIN by ancestry** (`git merge-base --is-ancestor 9a95f99d1b main` rc=0); leaf
+> `e1-authored-bundle-validation` carries `status: merged`, `mergeHash 9a95f99d1b`. The hold below
 > was discharged the honest way — **re-gated against the repaired base**, not waived. `scripts/fire.md`
-> §3.0 names this same `cbf0e143` as the code commit of the F-1384-1 two-commit sequence.
+> §3.0 names this same `9a95f99d` as the code commit of the F-1384-1 two-commit sequence.
 > ⓘ This leaf is also the subject of **F-1383-1**: it spent days frozen because its `blocked` status
 > carried no `blockClass`, so a `gate-side` hold read as an owner fork nobody would ever lift. The
 > HOLD text below is KEPT (retention law: supersede, never delete) — it is the record of a real
@@ -56,8 +56,8 @@ control. The defect is present on the lane's own tree — it does not require ma
 
 ## The 4 BOTH-MOVED paths and how the graft resolved them
 
-`lane/perf` forked at `b80ee2ba`, which **predates s1380's two merges**. Main then absorbed
-`8815e476` (lane-c dead-fields-sweep), which retired four words from the contract vocabulary:
+`lane/perf` forked at `5a782e0d`, which **predates s1380's two merges**. Main then absorbed
+`2258daf3` (lane-c dead-fields-sweep), which retired four words from the contract vocabulary:
 `sluicesNeedWaterSource` · `slopeMax` · `waterline` · `damChannel`. Lane-d, blind to that, **typed and
 allowlisted all four**. Both conflicts in `ContractFamilies.ts` are that same collision:
 

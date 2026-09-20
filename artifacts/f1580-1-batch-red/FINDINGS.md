@@ -1,7 +1,7 @@
 # F-1580-1 characterised — and its own hypothesis refuted
 
-**Fire:** s1581 (2026-08-09 ~02:00–02:25 local) · **Tree:** `dfe5a2cbd` (main, f1579-1 merged at
-`4e39003eb`) · **Instrument:** detached worktree `gate-s1581`, `--workers=1` throughout, gate port 5188.
+**Fire:** s1581 (2026-08-09 ~02:00–02:25 local) · **Tree:** `f4e03bedc` (main, f1579-1 merged at
+`ac1955d1d`) · **Instrument:** detached worktree `gate-s1581`, `--workers=1` throughout, gate port 5188.
 
 F-1580-1 asked a successor to re-run the four-spec batch, capture the failure, and decide between
 **(a)** a genuine load ceiling and **(b)** a real ordering/state dependency between `m4-06`/`task-025`

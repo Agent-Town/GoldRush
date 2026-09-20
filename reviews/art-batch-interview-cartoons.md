@@ -9,7 +9,7 @@ type: art-drain-review
 
 **Slice/batch:** art-batch-interview-cartoons — the co-founder interview, drawn (ART SLOT, OWNER-PRIORITY)
 **Drained by:** s952 fire · 2026-07-23
-**Base:** main `96e31202` (raws sat uncommitted in `worktrees/art/assets/raw/`; done-move `tasks/done/20260723-115847-art-batch-interview-cartoons.md`)
+**Base:** main `96e31202 (archive: pruned by the A3 rewrite)` (raws sat uncommitted in `worktrees/art/assets/raw/`; done-move `tasks/done/20260723-115847-art-batch-interview-cartoons.md`)
 
 ## Verdict — ACCEPT (land raws as marketing collateral; owner publication approval still required)
 
@@ -41,7 +41,7 @@ One panel per interview exchange (nine, per owner directive: "not too many image
 - **F-2** — panel 06 carries one empty speech bubble instead of an object pictogram. Still zero letters, canon-safe. Non-blocking.
 
 ## Merge classification
-Pure additive marketing raws — no source, no processed output, no existing file touched. Landed onto clean main (`96e31202`) via `cp` from the art worktree, path-scoped `git add` of the nine PNGs + run note + LEDGER + this review. No conflicts possible (all new paths). No gameplay code changed → no gazette item (GZ-01 filter = player-visible in-game change; this is marketing collateral) and no deploy.
+Pure additive marketing raws — no source, no processed output, no existing file touched. Landed onto clean main (`96e31202 (archive: pruned by the A3 rewrite)`) via `cp` from the art worktree, path-scoped `git add` of the nine PNGs + run note + LEDGER + this review. No conflicts possible (all new paths). No gameplay code changed → no gazette item (GZ-01 filter = player-visible in-game change; this is marketing collateral) and no deploy.
 
 ## Owner's desk
 - Publication approval for the interview cartoons + captions (stage into the co-founder interview thread). Captions are in the run note, staging-only, not baked into images.

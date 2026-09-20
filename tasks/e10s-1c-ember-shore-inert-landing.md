@@ -11,7 +11,7 @@ READ FIRST: AGENTS.md; **the e10s-1b leaf's blockedReason in tasks/goals.json (F
      ~5h. The declaration is the whole safety argument (held ⊆ declared): every
      held path must be named. Verified against the LIVE lane this fire, not
      remembered — `lane-usable lane-a` reports paths=7, and `main...lane/a`
-     (tip 61358eb55) touches exactly these 7. -->
+     (tip 91dd6dd9d) touches exactly these 7. -->
 LANE-SAFETY-OPT-IN: BUILD-ON-PREDECESSOR
 EXPECTED-HOLDS: assets/contracts/bench-seeds.json
 EXPECTED-HOLDS: assets/contracts/epoch-10-deepsky/contracts.json
@@ -21,13 +21,13 @@ EXPECTED-HOLDS: e2e/er01-e10-census.spec.ts
 EXPECTED-HOLDS: scripts/e3-mask-tables.test.mjs
 EXPECTED-HOLDS: src/meta/ContractFamilies.ts
 
-lane/a is DELIBERATELY ahead by exactly one commit: `61358eb55` (`runner(lane-a): e10s-1b-ember-shore-schema-and-data.md`), 7 paths, undrained BY DESIGN — the re-gate holds it. Do NOT reset the lane; build ON that commit. Verify first: `git log --oneline main..lane/a` shows exactly `61358eb55` and nothing else; the worktree is clean apart from the FACTORY-CHURN EXCEPTION classes (F-1407-1: `logs/**`, `artifacts/**`, `reviews/shots-*`, `.png` — list and proceed). Anything ELSE ahead or dirty: STOP and report. Then `npm install --no-audit --no-fund`; `npm run build` green before touching anything.
+lane/a is DELIBERATELY ahead by exactly one commit: `91dd6dd9d` (`runner(lane-a): e10s-1b-ember-shore-schema-and-data.md`), 7 paths, undrained BY DESIGN — the re-gate holds it. Do NOT reset the lane; build ON that commit. Verify first: `git log --oneline main..lane/a` shows exactly `91dd6dd9d` and nothing else; the worktree is clean apart from the FACTORY-CHURN EXCEPTION classes (F-1407-1: `logs/**`, `artifacts/**`, `reviews/shots-*`, `.png` — list and proceed). Anything ELSE ahead or dirty: STOP and report. Then `npm install --no-audit --no-fund`; `npm run build` green before touching anything.
 
 ## Why (F-2165-1, measured by s2165 in a detached control — the evidence is the master's premise)
 The predecessor's data slice is sound EXCEPT that its four `harvestAnchors` + `benchSeeds` + two null-floors rows constitute ADMISSION: merged as-is, three door guards red on main (skillmd-guard + door-admission-ratchet, 6 pass/0 fail clean → 3/3 fail merged, two timing-free) plus the census `benchSeeds expected undefined` pin — because admitting ember-shore requires the door surfaces (skill.md +5 lines, door baseline +1) and, deeper, the DOOR LAW's evidence (public-verb prover secures ×2), which does not exist yet. The e6-picnic shape is the house answer: the data lands with empty anchors, and the E10S-4 door slice earns the admission later on evidence.
 
 ## Scope
-1. On top of `61358eb55`: EMPTY the `harvestAnchors` array and REMOVE the `benchSeeds` key for `e10-ember-shore` in the contract data; remove the two ember-shore rows from `assets/contracts/null-floors.json` by REGENERATING on the resulting tree (`node scripts/null-floor-anchors.mjs` — rows appear only with admission, so the regen drops them itself; `--check` must pass).
+1. On top of `91dd6dd9d`: EMPTY the `harvestAnchors` array and REMOVE the `benchSeeds` key for `e10-ember-shore` in the contract data; remove the two ember-shore rows from `assets/contracts/null-floors.json` by REGENERATING on the resulting tree (`node scripts/null-floor-anchors.mjs` — rows appear only with admission, so the regen drops them itself; `--check` must pass).
 2. **PARK the removed payload verbatim** (retention law): the four anchors + the benchSeeds block go into the `e10s-4-ember-shore-door` leaf's note in `tasks/goals.json` (append a `parkedPayload_e10s1c` field quoting them as JSON) so the door slice re-lands them unchanged when the prover earns it. Same commit.
 3. Census: keep/restore the `benchSeeds: undefined` expectation for ember-shore at the ~:46 pin; the engine-dependency expectation (`ember-shore-preserve-consumers`) from the predecessor STAYS.
 4. Keep untouched from the predecessor: the twist schema (`AUTHORED_TWIST_KEYS` + `DECLARED_INERT_PATHS` + `engineDependencies`), the mask table, the e3-mask-tables pin fix, the squallDecayPerSecond settlement.

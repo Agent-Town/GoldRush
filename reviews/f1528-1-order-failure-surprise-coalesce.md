@@ -1,6 +1,6 @@
 # f1528-1 — order-failure surprise coalescing (F-ER02-1)
 
-**Slice:** `lane-b-f1528-1-order-failure-surprise-coalesce` · **branch:** `lane/b` · **tip:** `a6a21a11a` (unmoved — the runner committed nothing)
+**Slice:** `lane-b-f1528-1-order-failure-surprise-coalesce` · **branch:** `lane/b` · **tip:** `926488927` (unmoved — the runner committed nothing)
 **Gated by:** s1529, 2026-08-07, detached worktree `gate-s1529` (§3.0b custody — no probe content ever entered main's working tree; verified `git status --short src/` = 0 lines after every arm)
 **Node:** v26.4.0 on every arm (stated per F-1527-3)
 
@@ -37,7 +37,7 @@ Drivers mirrored into git before the worktree was removed:
 
 | arm | tree | `outcome.calls` | `eventLogHash` | waves/s |
 |---|---|---|---|---|
-| **STOCK** | main `e0e6a23c9` | **2,971** | `fnv1a32:d93e9b89` | 0.29 |
+| **STOCK** | main `aed92eb60` | **2,971** | `fnv1a32:d93e9b89` | 0.29 |
 | **PRESCRIBED PATCH** | + the master's exact cure (tsc clean) | **2,971** | `fnv1a32:d93e9b89` | 0.29 |
 | **UPPER BOUND** | `order_failure` surprise removed entirely | **4** | `fnv1a32:8c71d437` | 5.13 |
 

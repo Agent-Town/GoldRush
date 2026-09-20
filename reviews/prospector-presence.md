@@ -10,7 +10,7 @@ from frame one, first-contact ledger-voice beat once per run, permission chip wi
 and acts at level 0 (follow-drift, ledger observations, XP-mote gathering — F-0707-5b inert fix).
 
 ## Graft method
-Base `15f8116`. Main drifted since base ONLY on `src/vite-env.d.ts` (additive anim-diagnostics
+Base `8cec568`. Main drifted since base ONLY on `src/vite-env.d.ts` (additive anim-diagnostics
 hunk @378); everything else (Game.ts, CombatSystem.ts, Hud.ts, Embodiment.ts, XpMote.ts,
 styles.css, m4-05/m4-06 specs) had NO main drift → loss-free `git checkout lane/m4 -- <files>`.
 `vite-env.d.ts` hand-merged: lane's embodiment fields (drifting/terrainY/clearance @213) are

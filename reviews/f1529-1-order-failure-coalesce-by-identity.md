@@ -1,8 +1,8 @@
 # f1529-1 — order_failure surprises coalesce on a semantic order identity
 
 **Slice:** `f1529-1-order-failure-coalesce-by-identity` (F-ER02-1, **attempt 2**)
-**Branch:** `lane/b` · **Lane tip:** `04a92f855` · **Merge-base:** `9e4790b7`
-**Merged to main:** `51b0bc35c6c02f6b35dbf4cff24929d3cb310941`
+**Branch:** `lane/b` · **Lane tip:** `04a92f855` · **Merge-base:** `d907f419`
+**Merged to main:** `ffdc125677818647ac1a204e8e109d0d46288d13`
 **Gated by:** s1531 fire, 2026-08-07 · Node **v26.4.0** · gate worktree `worktrees/gate-s1531` (detached, §3.0b custody)
 
 ## VERDICT: PASS — MERGED
@@ -57,7 +57,7 @@ Driver: `logs/runs-archive/s1529-gate-driver-storm-arms.mjs`, contract `the-clai
 
 | arm | tree | `outcome.calls` | `eventLogHash` | waves/s |
 |---|---|---|---|---|
-| **BEFORE** | stock main (`9a773b56f`) | **2,971** | `fnv1a32:d93e9b89` | 0.32 |
+| **BEFORE** | stock main (`990eb1ce6`) | **2,971** | `fnv1a32:d93e9b89` | 0.32 |
 | **AFTER** | merged gate worktree | **5** | `fnv1a32:c3952a80` | 5.22 |
 
 **Ratio 594.2×**, against the **743×** deletion-only upper bound measured in s1529 (F-1529-3) —

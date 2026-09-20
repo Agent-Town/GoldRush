@@ -1,8 +1,8 @@
 # Review — ed-01-descriptor-inspector (the editor's first floor)
 
 - **Slice:** ED-01 / T1 (`specs/contract-editor/README.md`) — the Charter Press engine floor: `?editor` inspector + live-apply
-- **Branch / tip:** `lane/perf` @ `271fa90` (`runner(lane-d): ed-01-descriptor-inspector.md`)
-- **Base:** `73056ca` (2026-07-10 19:00 +07, ~1.7h stale)
+- **Branch / tip:** `lane/perf` @ `a799948` (`runner(lane-d): ed-01-descriptor-inspector.md`)
+- **Base:** `958f0bd` (2026-07-10 19:00 +07, ~1.7h stale)
 - **Drained by:** s287 fire, 2026-07-10T20:45Z (serial, after gz-h1-newsie)
 - **Verdict:** ✅ SHIPPED — path-scoped merge to main, full battery green, plain boot provably untouched.
 
@@ -22,7 +22,7 @@ Adds a `?editor`-gated contract inspector (own lazy chunk, dynamic-imported only
 
 Mistake #10 (Debug-Gate Leftover): explicitly answered — `:133` asserts the editor chunk is never loaded in a plain boot; `DebugParams`/`ContractFamilies` gates only trip on `?editor`; `main.ts` dynamic-imports `DescriptorInspector` only under `currentSearch.has('editor')`. PASS.
 
-## Merge classification (base `73056ca`, path-scoped single commit onto clean main — main already carried gz-h1's `636be79`)
+## Merge classification (base `958f0bd`, path-scoped single commit onto clean main — main already carried gz-h1's `9682f27`)
 | File | Class | Resolution |
 |---|---|---|
 | `artifacts/ed-01/*` (6), `e2e/ed-01-descriptor-inspector.spec.ts` | NEW | free |

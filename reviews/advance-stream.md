@@ -2,8 +2,8 @@
 
 - **Slice:** `lane-advance-stream` (owner directive 2026-07-25, sequenced after the asset diet)
 - **Branch/tip:** `lane/e2-arsenal` @ `d8240ec9` (runner, lane-c)
-- **Base:** `0dfa1d3f` (the asset-diet merge — already an ancestor of main)
-- **Merged to main:** `e109639f` (squash, path-scoped, 6 files / 458 insertions)
+- **Base:** `436deb71` (the asset-diet merge — already an ancestor of main)
+- **Merged to main:** `611b4558` (squash, path-scoped, 6 files / 458 insertions)
 - **Drained by:** s1026 fire, 2026-07-25
 
 ## VERDICT: PASS — merged.
@@ -49,8 +49,8 @@ prefetch before the run requests its own map** (the bandwidth-contention guard).
 
 ## Merge classification
 
-Base `0dfa1d3f`. All 6 files **LANE-TOUCHED, zero MAIN-MOVED** — proven, not assumed:
-`git log 0dfa1d3f..main -- <all six paths>` returned **empty**, so no 3-way graft was needed
+Base `436deb71`. All 6 files **LANE-TOUCHED, zero MAIN-MOVED** — proven, not assumed:
+`git log 436deb71..main -- <all six paths>` returned **empty**, so no 3-way graft was needed
 and no conflict resolution was invented.
 
 | File | Class | Change |
@@ -64,7 +64,7 @@ and no conflict resolution was invented.
 
 Note: `git diff main lane/e2-arsenal` is *misleading noise* on this board — the lane branch
 predates the rig-repair drain, so that diff shows ~120 phantom deletions of `rehearsal/` and
-`reviews/`. Classification was done against the lane's true base (`0dfa1d3f`) and the runner
+`reviews/`. Classification was done against the lane's true base (`436deb71`) and the runner
 commit itself. A future fire should do the same rather than trust a `main..lane` diff.
 
 ## Findings

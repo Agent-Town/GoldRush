@@ -1,7 +1,7 @@
 # watchdog-self-check — the health watchdog checks its own launch agents
 
 - **Slice:** `watchdog-self-check` (main slot)
-- **Branch/tip:** main slot, uncommitted runner output; landed as `b4d8e199c`
+- **Branch/tip:** main slot, uncommitted runner output; landed as `c957757ce`
 - **Drained by:** s2459, 2026-09-02
 - **Verdict:** ✅ **MERGED — green, in firewall, and already proven live on this machine**
 
@@ -77,7 +77,7 @@ untouched, verified by the empty `git status` on those paths.
 correction has a subject.** It read: *"the runner did not write its BACKLOG row;
 the drain wrote it"*, on the evidence that `git diff -- tasks/BACKLOG.md` at lock
 time showed only an attended row. **That diff is against HEAD, and HEAD already
-contained the runner's row** — s2458 committed it at `a5a052654`, one fire
+contained the runner's row** — s2458 committed it at `59ef3d4fe`, one fire
 earlier, in its own drain bookkeeping. `git log -S "WATCHDOG SELF-CHECK
 IMPLEMENTED" -- tasks/BACKLOG.md` names that commit and no other. The runner
 wrote its row exactly as the master required.
@@ -94,7 +94,7 @@ ABSENT, grep the file, do not read the diff.**
 ended **NOT** ready-for-gates. Its own BACKLOG row is headlined *"GATE BLOCKED ON
 PRE-EXISTING ENGINE PIN + CONTENDED SIM REDS"*. Both blockers were real and
 neither was this slice's: the engine pin is F-2458-1, which s2458 cured in
-`cf1e10a21`, and the contended sim reds are the three concurrent lane runners
+`808b9d473`, and the contended sim reds are the three concurrent lane runners
 this fire's own `health-watch` reported as `in-flight: 3`. The drain's own re-run
 is the free control on the runner's headline, and it came back green on every
 leg. A runner that reports a blocker instead of reaching outside its firewall to

@@ -1,6 +1,6 @@
 # Review: renderer-count-artifacts-under-shared-atlas — the exact texture pins the atlas dedupe moved (lane-d, Claude Opus 5 implementer, attended drain 2026-09-05)
 
-**Slice/branch/tip:** `renderer-count-artifacts-under-shared-atlas` · `lane/d` · commits `83aacb60b`, `beb094e26`, `f1e7f1ce8` over base `cf91fe5e9` · merge `5aa79c754` (no-ff; BACKLOG union).
+**Slice/branch/tip:** `renderer-count-artifacts-under-shared-atlas` · `lane/d` · commits `010bf87d4`, `beb094e26 (archive: pruned by the A3 rewrite)`, `e824eba78` over base `c3884d89d` · merge `a0e1de8ce` (no-ff; BACKLOG union).
 **Verdict:** MERGED. F-SAD-3 cured: the recorded renderer-count artifacts are re-MEASURED (never hand-edited — `e2e/renderer-count-artifact.ts:20-29` makes them a required input) and both wire specs are green again with no assertion changed.
 
 ## Old → new `textures`
@@ -17,7 +17,7 @@ One delta moved and was re-recorded exactly, not widened: railcar desktop baseli
 | Gate | Result |
 |---|---|
 | Runner: two full 14/14 batteries (both specs × both projects) at host loads 11.8 and 6.0, crawler alone 3/3, zero console/page errors; tsc 0; build 0 | green; a final battery at load 43.4 came in 12/14 on the crawler's load-sensitive count (F-RCA-1) |
-| Attended on the merged tree `5aa79c754` | see the drain commit message (the two specs on the drain port at load ≈ 8; era guard 5/5 — artifacts only; node-guards) |
+| Attended on the merged tree `a0e1de8ce` | see the drain commit message (the two specs on the drain port at load ≈ 8; era guard 5/5 — artifacts only; node-guards) |
 
 ## Findings
 - **F-RCA-1 (pre-existing, inventoried, not re-recorded):** the crawler's `coldBaseline`/`mounted` counts drift UPWARD under host load on both projects (5 excursions of 36 observations, all above load 14, all on pins the atlas never moved); `wire-crawler-3d.spec.ts:117-119` samples at a fixed 800 ms after a `frame > 12` gate. A dedupe can only remove textures, and the railcar spec was exact across the same load range (the control). Spec-side cure (sample after a settle, not a fixed delay); fire-authorable.

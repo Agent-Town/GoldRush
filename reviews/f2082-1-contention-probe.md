@@ -1,8 +1,8 @@
 # f2082-1 — the node-guards contention probe counts OBSERVERS as batteries
 
-**Slice:** `f2082-1-contention-probe-counts-observers` · **branch:** `lane/lane-a` · **tip:** `15b25ce91`
-**Merged to main:** `58ee26db9320e46630fe74086c348817f52edaec` (s2083 fire, 2026-08-20)
-**Base:** `ea1953bf1` · **Gated in:** detached worktree `gate-s2083` (§3.0b)
+**Slice:** `f2082-1-contention-probe-counts-observers` · **branch:** `lane/lane-a` · **tip:** `16656dcd8`
+**Merged to main:** `66ac1708c3208883e2d4e947b94bc05c5b366374` (s2083 fire, 2026-08-20)
+**Base:** `3bdbb79ce` · **Gated in:** detached worktree `gate-s2083` (§3.0b)
 
 ## VERDICT: MERGED — cure proven by independent control; three battery reds, none caused by this slice
 
@@ -131,7 +131,7 @@ from running `test:node-guards` itself. That file is s2082's `/tmp` scratch and 
 
 ## Merge classification
 
-Base `ea1953bf1`; `main..lane/lane-a` was **1 ahead** and is now **empty (absorbed)** — the classifier
+Base `3bdbb79ce`; `main..lane/lane-a` was **1 ahead** and is now **empty (absorbed)** — the classifier
 flip confirms the merge landed. All three files **LANE-TOUCHED only**; main had moved none of them
 (the master measured them byte-identical between lane and main at authoring time, and no concurrent
 writer touched `scripts/node-guards-*` during the drain). `--no-ff`, **zero conflicts**, no 3-way

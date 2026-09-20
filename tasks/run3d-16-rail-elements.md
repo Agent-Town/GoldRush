@@ -7,16 +7,16 @@
 1. `git -C worktrees/lane-c rev-parse --abbrev-ref HEAD` → must print `lane/e2-arsenal`. If not, **STOP**.
 2. `git -C worktrees/lane-c log main..HEAD --oneline` → must print **nothing** (branch is clean vs main). If it prints anything, **STOP and report** — do not reset, the lane may hold undrained work (Mistake #2).
 3. `git -C worktrees/lane-c status --short` → expect clean. If tracked source files are dirty, **STOP and report**.
-4. `git -C worktrees/lane-c merge-base --is-ancestor 9ee3b710c09f5bb6575d2fe754af47e111c0ac80 HEAD` → must exit **0**. This slice depends on the `Buildable3dId`→`Run3dId` rename and the `gold_seam` non-buildable rider pattern, both of which landed in that merge. **If it exits non-zero, the lane predates the rename — refresh the lane from main first, then re-run this check.**
+4. `git -C worktrees/lane-c merge-base --is-ancestor f554d78abfcb410fceb1f82b817710af6c7233cd HEAD` → must exit **0**. This slice depends on the `Buildable3dId`→`Run3dId` rename and the `gold_seam` non-buildable rider pattern, both of which landed in that merge. **If it exits non-zero, the lane predates the rename — refresh the lane from main first, then re-run this check.**
 5. Confirm `src/game/Run3dPilot.ts` contains `type Run3dId = keyof typeof registry;`. If it says `Buildable3dId`, the premise is stale — **STOP and report**.
 
-## WHY (evidence, quoted, all re-verified at source on main at `9ee3b710` by s1389)
+## WHY (evidence, quoted, all re-verified at source on main at `f554d78a` by s1389)
 
 `specs/town-3d/RUN-RECIPE.md:20` authorises this rider verbatim, under the owner order of 2026-07-13 ("all other 3D objects that we have in game"):
 
 > Later riders (**fire-authorable once 07 lands**): **rail elements**, gold nodes, megaproject site stages.
 
-The 07 gate is met and the whole 07–14 arm is on main. `run3d-15` (gold nodes) merged at `9ee3b710`, which is what unblocked this slice — it established the **non-buildable rider pattern** (a rider that is not a `BuildSystem` buildable reads its own diagnostics surface and is excluded from the `all` selection). This slice is the second use of that pattern; follow it exactly.
+The 07 gate is met and the whole 07–14 arm is on main. `run3d-15` (gold nodes) merged at `f554d78a`, which is what unblocked this slice — it established the **non-buildable rider pattern** (a rider that is not a `BuildSystem` buildable reads its own diagnostics surface and is excluded from the `all` selection). This slice is the second use of that pattern; follow it exactly.
 
 **Everything below was read out of the files on main, not inferred. Coordinates drift — cite the code, and if a line number is off by a few, trust the symbol.**
 

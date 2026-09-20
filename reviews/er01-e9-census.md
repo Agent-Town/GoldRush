@@ -1,8 +1,8 @@
 # reviews/er01-e9-census.md — ER-01 E9 Red Fields readiness census
 
 - **Slice:** `lane-er01-e9-census.md` (ER-01 ladder, E9 Red Fields)
-- **Branch / tip:** `lane/c` @ `6f13290bd` (single runner commit)
-- **Merged to main:** `ca096ccd376bfe3f570c0beb4b7daefdf548c868`
+- **Branch / tip:** `lane/c` @ `905b10c23` (single runner commit)
+- **Merged to main:** `7b043b01453048d430640462769da55b6c5ec7b1`
 - **Drained by:** s1480 fire, 2026-08-06
 - **Verdict:** ✅ **MERGE** — and this is the most self-critical census of the wave.
 
@@ -49,7 +49,7 @@ captures zero console output. *"The missing layer is contract semantics, not bun
 
 ## Merge classification
 
-Base `main` @ `90d57a97` (post-E8). Both new files are pure LANE-ONLY adds (40 / 71 lines, none
+Base `main` @ `c61b0968` (post-E8). Both new files are pure LANE-ONLY adds (40 / 71 lines, none
 on main). `tasks/BACKLOG.md` BOTH-MOVED add/add — union-resolved with the lane's
 `READY-FOR-GATES on lane/c` retired to `✅ MERGED s1480` in the merge commit (F-1461-4).
 `SUPPORTED_CONTRACTS` and `bench-seeds.json` unchanged, consistent with zero admissions — hence

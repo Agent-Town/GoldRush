@@ -2,7 +2,7 @@
 
 - **Slice:** `tasks/lane-a-f1310-1-backlog-coordinate-ban.md` (FIRE-AUTHORED s1310)
 - **Branch / tip:** `lane/m3` @ `8c8a27970407500202b45950e08677e84f1354b8`
-- **Base (merge-base with main):** `8694b76dcf3836f1bd722950682192b13f8e2ab9`
+- **Base (merge-base with main):** `7e014847d184f3681d9992fcec606697916b8b41`
 - **Drained by:** s1311
 - **Verdict:** ✅ **MERGE.** The acceptance bar was the *manufactured red*, not a green — and it was met on the **live tree**, including the load-bearing assertion that `--update` cannot bury it.
 
@@ -36,7 +36,7 @@ Its entire value is the red it manufactures when someone re-introduces the shape
 | `scripts/law-pointer-guard.mjs` | **LANE-TOUCHED only** | main never moved it since base |
 | `scripts/law-pointer-guard.test.mjs` | **LANE-TOUCHED only** | main never moved it since base |
 
-Main moved since the merge-base **only** in `STATUS.md` (s1311's own lock commit `131abe86`), which
+Main moved since the merge-base **only** in `STATUS.md` (s1311's own lock commit `204f4e86`), which
 the lane does not touch. **Zero MAIN-MOVED overlap, zero conflicts.** Grafted with
 `git checkout lane/m3 -- <the two files>`; `git diff lane/m3 -- <the two files>` was **empty**,
 proving the merged tree is **byte-identical to the lane tip** for the slice's whole surface.

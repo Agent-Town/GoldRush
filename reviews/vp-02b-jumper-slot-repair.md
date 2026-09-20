@@ -2,7 +2,7 @@
 
 - **Slice:** `lane-vp-02b-jumper-slot-repair` (FIRE-AUTHORED s1144 from F-1144-1/2)
 - **Branch / tip:** `lane/m4` @ `efe3b209` — `runner(lane-b): lane-vp-02b-jumper-slot-repair.md`
-- **Base:** `d86e8db7` (merge-base with main)
+- **Base:** `80e7b228` (merge-base with main)
 - **Run:** `20260728-000441`, 316,758 tokens, report `READY-FOR-GATES`
 - **§3.0 drain-block-check:** ✅ CLEAR, run **before** classification and before I formed an opinion.
 
@@ -12,7 +12,7 @@ Nothing that passed before fails now; the two specs the repair existed to green 
 
 ## What it does
 
-Completes the e2e half of a rename that landed in `src/` on 2026-07-12 (`82543f27`) and was never propagated: the enemy `SpriteAnimator`s were rewired from `assetSlots.charClaimJumper` to `charBanditBase`/`charBanditThief`, but **zero** of the seven e2e specs naming the old diagnostics key were updated. Because `spriteAnimationDiagnostics()` is keyed per constructed animator, `char.claim_jumper` could never appear again — so seven specs sat waiting on a key that cannot exist, and successive drains fingerprinted them **one at a time** as separate "pre-existing known reds" for 15 days.
+Completes the e2e half of a rename that landed in `src/` on 2026-07-12 (`0f5fb77e`) and was never propagated: the enemy `SpriteAnimator`s were rewired from `assetSlots.charClaimJumper` to `charBanditBase`/`charBanditThief`, but **zero** of the seven e2e specs naming the old diagnostics key were updated. Because `spriteAnimationDiagnostics()` is keyed per constructed animator, `char.claim_jumper` could never appear again — so seven specs sat waiting on a key that cannot exist, and successive drains fingerprinted them **one at a time** as separate "pre-existing known reds" for 15 days.
 
 This slice replaces `char.claim_jumper` → `char.bandit_base` at all seven sites. **Zero `src/`.** 7 files, 20 insertions / 20 deletions.
 
@@ -28,7 +28,7 @@ This slice replaces `char.claim_jumper` → `char.bandit_base` at all seven site
 | `e2e/vp-02-sprite-animation.spec.ts` | LANE-TOUCHED |
 | `e2e/vp-02b-rotation-resolver.spec.ts` | LANE-TOUCHED |
 
-`git log <base>..main -- <each file>` is **empty for all seven** — main never moved any of them, so **no graft was needed** and the merge is a clean path-scoped take. Everything else in the two-dot diff (`STATUS.md`, `logs/*`, `scripts/tmp-s1144-*`, `tasks/BACKLOG.md`, this fire's own `2d94e141`) is **MAIN-MOVED-ONLY** — the lane's base simply predates it. Post-merge `git diff lane/m4 -- e2e/` is **empty** (byte-identical to the lane).
+`git log <base>..main -- <each file>` is **empty for all seven** — main never moved any of them, so **no graft was needed** and the merge is a clean path-scoped take. Everything else in the two-dot diff (`STATUS.md`, `logs/*`, `scripts/tmp-s1144-*`, `tasks/BACKLOG.md`, this fire's own `1e9264f6`) is **MAIN-MOVED-ONLY** — the lane's base simply predates it. Post-merge `git diff lane/m4 -- e2e/` is **empty** (byte-identical to the lane).
 
 ## Evidence — re-measured by me on the merged tree, not inherited
 

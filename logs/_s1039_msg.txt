@@ -10,7 +10,7 @@ could ever have found it.
 
 INSTRUMENT — paired, alternating A/B. main's spec and cec50777's spec swapped into the
 SAME worktree, run alternately against the SAME dev server, so machine load cancels.
-The page under test is byte-identical between variants (git diff 69f0cd80 main --
+The page under test is byte-identical between variants (git diff d72188f3 main --
 src/ public/ index.html is EMPTY), so ttiMs should be indistinguishable and any
 consistent gap would indict the change.
 
@@ -29,7 +29,7 @@ confirmation 3/3 green at load ~2.5. Adjacent suites structurally unaffected —
 spec itself references perf-05-startup, and zero src/ bytes means every other suite's
 input set is bit-identical at HEAD and HEAD~1. Scratch port 5199 per Mistake #12.
 
-CLASSIFICATION: git log 69f0cd80..main -- <paths> is EMPTY; all 5 files LANE-TOUCHED-only,
+CLASSIFICATION: git log d72188f3..main -- <paths> is EMPTY; all 5 files LANE-TOUCHED-only,
 clean checkout, no 3-way.
 
 CLOSED: F-1034-3 (perf-05 half) — the :223 favicon substring collision and the :224

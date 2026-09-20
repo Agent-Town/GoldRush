@@ -1,5 +1,5 @@
 // s1655: propagate owner ruling (3) of 2026-08-11 — "F-1166-1 RULED (b)" — into the vp-02e leaf.
-// The leaf was already flipped to `superseded` by attended at 19640717b, but kept a LIVE owner-fork
+// The leaf was already flipped to `superseded` by attended at 2bc7197c6, but kept a LIVE owner-fork
 // refusal citing a finding the owner has now answered, which is what ruling-propagation-guard flags.
 // NOTHING IS DELETED: the prior block text is moved verbatim into note_s1655 (RETENTION LAW; and the
 // note_s* family is a first-class closure-reason key for drain-block-check / goal-closure-reason).
@@ -23,7 +23,7 @@ const priorReason = JSON.parse(`{${L[brIdx].trim().replace(/,$/, '')}}`).blocked
 
 const note =
   'OWNER RULING PROPAGATED s1655 (2026-08-11). The owner RULED F-1166-1 as option (b) the same morning, verbatim: "this is not too much to do, lets fix things when we can" — recorded in tasks/BACKLOG.md line 1 as ruling (3) of three. ' +
-  'Attended had already flipped this leaf to superseded at 19640717b and authored both successors (art-jumper-rotation-regen in the ART slot, lane-c-jumper-8way-wiring banked art-gated), but the leaf kept a LIVE owner-fork refusal citing the very finding the owner had just answered. ' +
+  'Attended had already flipped this leaf to superseded at 2bc7197c6 and authored both successors (art-jumper-rotation-regen in the ART slot, lane-c-jumper-8way-wiring banked art-gated), but the leaf kept a LIVE owner-fork refusal citing the very finding the owner had just answered. ' +
   'scripts/ruling-propagation-guard.mjs caught it on my closing test:ledger-guards run — the s1301 law working exactly as written: the battery runs after the bookkeeping, and it saw a surface the bookkeeping had missed. ' +
   'A stale refusal is not cosmetic: a fire reading this leaf would have refused authorable work as an unanswered owner fork, which is the precise cost F-1383-1 describes. ' +
   'NOTHING WAS DELETED — the prior refusal is preserved verbatim here. PRIOR blockClass: "' + priorClass + '". PRIOR blockedReason: ' + priorReason;

@@ -1,9 +1,9 @@
 # lane-pilot-fallback-telemetry — F-BW-4: silent demotions learn to speak
 
 - **Slice:** `lane-pilot-fallback-telemetry` (queued by the attended session 2026-08-03 11:36)
-- **Source commit:** `lane/m4` tip `38528712` (runner auto-commit), lane base `46033151`
+- **Source commit:** `lane/m4` tip `38528712` (runner auto-commit), lane base `74f95634`
 - **Drained by:** s1431 fire, 2026-08-03 — **re-landed on fresh main**, per CLAUDE.md Mistake #15
-- **Gate tree:** detached worktree `gate-s1431` at main `0e2b59a9` (§3.0b)
+- **Gate tree:** detached worktree `gate-s1431` at main `de395a72` (§3.0b)
 - **Supersedes:** the F-1430-2 HOLD. See "Why the blocker dissolved" below.
 
 ## Verdict
@@ -34,7 +34,7 @@ not safety, it is a different way of being wrong.
 
 **Two further facts, established by reading rather than assumed:**
 
-1. **No predecessor touches any of the tip's five files.** `git log 46033151..743ea56b -- <the five>`
+1. **No predecessor touches any of the tip's five files.** `git log 74f95634..743ea56b -- <the five>`
    is **empty**, so re-landing the tip imports nothing from the four un-ruled commits below it.
 2. **The owner-gated commit `7c4f132f` is disjoint.** Its files are `072-era-activation.spec.ts`,
    `agent-view.spec.ts`, `e1-baron.spec.ts`, `e1-mechanics-manifests.json`, `TownScene.ts` — no

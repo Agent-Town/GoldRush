@@ -2,9 +2,9 @@
 
 Branch: `sol/ed-04-gizmos`
 
-Base: deployed `origin/main@8deaaba8`
+Base: deployed `origin/main@a4c18ee9`
 
-Verdict: **RESOLVED BY `f99c66b7` — ED-04 v1 is READY-FOR-GATES; the two task-086 upgrades remain deliberately gated.**
+Verdict: **RESOLVED BY `2e405b96` — ED-04 v1 is READY-FOR-GATES; the two task-086 upgrades remain deliberately gated.**
 
 ## Ruling resolution
 

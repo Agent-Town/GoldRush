@@ -3497,9 +3497,9 @@ dist/assets/index-W9aTeEqt-diet-a9d5c9a0.js                                     
 
 
 ===== diff-selected guards =====
-$ node scripts/run-guards.mjs --changed-since c7fabbd0a1360c686dfe3a7fc604a7d734ab6dd5
+$ node scripts/run-guards.mjs --changed-since ba6e2015136178474099d6bb04f18662ecce0a40
 rc=1 390.9s
-run-guards: 22 file(s) changed since c7fabbd0a1360c686dfe3a7fc604a7d734ab6dd5
+run-guards: 22 file(s) changed since ba6e2015136178474099d6bb04f18662ecce0a40
   base gate: test:node-guards, test:power-budget, test:task-guards, test:citations, test:gate-callers
   (no path rule matched -- base gate only)
 
@@ -3606,9 +3606,9 @@ cwd=/Users/robin/Claude/Projects/Gold Rush/gate-s1693
 env+ PATH=/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin
 
 ===== diff-selected guards (Node 26.4.0) =====
-$ /opt/homebrew/bin/node scripts/run-guards.mjs --changed-since c7fabbd0a1360c686dfe3a7fc604a7d734ab6dd5
+$ /opt/homebrew/bin/node scripts/run-guards.mjs --changed-since ba6e2015136178474099d6bb04f18662ecce0a40
 rc=0 322.4s
-run-guards: 39 file(s) changed since c7fabbd0a1360c686dfe3a7fc604a7d734ab6dd5
+run-guards: 39 file(s) changed since ba6e2015136178474099d6bb04f18662ecce0a40
   base gate: test:node-guards, test:power-budget, test:task-guards, test:citations, test:gate-callers
   (no path rule matched -- base gate only)
 

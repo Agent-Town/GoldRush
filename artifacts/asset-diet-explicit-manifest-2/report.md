@@ -4,7 +4,7 @@
 
 ## Preflight and scope
 
-- Clean `lane/a`; `git log --oneline main..lane/a` contained exactly `8020915ca runner(lane-a): asset-diet-explicit-manifest.md`. That held commit is the base and was preserved. No commits, resets, merges, deployment, or main-tree edits.
+- Clean `lane/a`; `git log --oneline main..lane/a` contained exactly `73ee9ba69 runner(lane-a): asset-diet-explicit-manifest.md`. That held commit is the base and was preserved. No commits, resets, merges, deployment, or main-tree edits.
 - `npm install --no-audit --no-fund` and baseline `npm run build` exited 0; package lock unchanged. Post-build status showed only this new artifact directory.
 - The v1 master is absent from the lane and was read at `/Users/robin/Claude/Projects/Gold Rush/tasks/asset-diet-explicit-manifest.md`; its report and implementation were read on the lane. No separate asset-diet spec exists under `specs/`.
 - Baseline install/build used PATH Node 23.11.1. Subsequent builds and checks used the installed canonical Node 26.4.0.
@@ -76,7 +76,7 @@ Source/emitted input **846169224 B** → final output **122625052 B** (413 GLBs)
 
 **AD2-B1 — Homemaker kept-state reload calls an uninitialized WaveSystem.** `Game.ts:1095` constructs Homemaker in a field initializer. Its `restorePersistentKept()` at `HomemakerBossSystem.ts:481` calls `suppressBossSpawn()` at `:490`; the supplied callback at `Game.ts:1107` calls `this.waveSystem.suppressBaronForRun()`. The assignment to `waveSystem` occurs later in the constructor at `Game.ts:1476`. Saved Homemaker state therefore aborts game initialization with `TypeError: Cannot read properties of undefined (reading 'suppressBaronForRun')`, and `e6-boss-homemaker.spec.ts:227` times out waiting after reload.
 
-The detached control is the exact pre-manifest parent **eb79d0c127d9c525508a6c4878041a370945069b**, recorded in `control-tree.json`, with unchanged source and the same unmodified test. It reproduces the same stack on both projects. This is independent of the GLB loader/fingerprint. Fixing game initialization or persistence callbacks is outside the task's construction-line-only source firewall. No workaround, simulation edit, or test weakening was applied.
+The detached control is the exact pre-manifest parent **eb79d0c127d9c525508a6c4878041a370945069b (archive: pruned by the A3 rewrite)**, recorded in `control-tree.json`, with unchanged source and the same unmodified test. It reproduces the same stack on both projects. This is independent of the GLB loader/fingerprint. Fixing game initialization or persistence callbacks is outside the task's construction-line-only source firewall. No workaround, simulation edit, or test weakening was applied.
 
 The following eight failures were observed before the stop; **they are not all claimed to be inherited** because parent attribution was only completed for Homemaker:
 

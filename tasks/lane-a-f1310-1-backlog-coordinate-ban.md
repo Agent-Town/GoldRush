@@ -6,7 +6,7 @@
 ## READ FIRST (paths, in this order)
 
 1. `scripts/law-pointer-guard.mjs` — **the whole file.** It already walks `tasks/goals.json` and collects
-   `file:line` pointers from `blockedReason` on non-terminal leaves (shipped s1310, `a180b468`). You are adding
+   `file:line` pointers from `blockedReason` on non-terminal leaves (shipped s1310, `996202dc`). You are adding
    **one more rule to a walk that already exists** — not a new script, not a new npm entry.
    Read its header docblock: the `ILLUSTRATIVE` / `KNOWN_ROTTEN` discipline is *excluded by NAME with a reason,
    never by pattern*. Read the **KNOWN GAP** paragraph too — it explains why extensionless shorthand is not

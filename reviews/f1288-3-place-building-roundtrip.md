@@ -11,7 +11,7 @@ Scope 0 cannot be run on this checkout.
 | Revision | Commit | `AgentAbility` contains `place_building` | `requiredAbility(BUILD)` |
 |---|---|---:|---|
 | checked-out `lane/m4` | `88db2677` | no | `null` |
-| `origin/main` | `19cc608b` | yes | `'place_building'` |
+| `origin/main` | `19cc608b (archive: pruned by the A3 rewrite)` | yes | `'place_building'` |
 
 The lane is 1 commit ahead and 85 commits behind `origin/main`. Its
 `AgentConsentStore` registers only four abilities, so a typed state with
@@ -52,7 +52,7 @@ task.
 
 # s1289 rerun — READY-FOR-GATES
 
-**Slice:** F-1288-3 · **branch:** `lane/m4` · **base/tip before runner commit:** `b04327b7`
+**Slice:** F-1288-3 · **branch:** `lane/m4` · **base/tip before runner commit:** `7b790f04`
 
 **Verdict:** READY-FOR-GATES. The refreshed lane reproduced both omissions, carries
 `place_building` across the save decoder, and accepts it at the multiplayer
@@ -128,7 +128,7 @@ only the four intended code/test paths plus this report.
 
 # s1290 DRAIN — VERDICT: MERGED
 
-**Slice:** F-1288-3 · **branch:** `lane/m4` · **lane tip:** `89558216` · **base:** `b04327b7`
+**Slice:** F-1288-3 · **branch:** `lane/m4` · **lane tip:** `89558216` · **base:** `7b790f04`
 
 **Verdict: MERGE.** The resume path carries `place_building` across both serialization boundaries;
 the two reds in the adjacent battery are **pre-existing, proven by a matched control**, not caused

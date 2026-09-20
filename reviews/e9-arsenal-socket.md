@@ -1,8 +1,8 @@
 # e9-arsenal-socket — ERA-SOCKET class #7, the first EPOCH-WIDE one
 
 - **Slice:** `lane-e9-arsenal-socket.md` (authored s1503, dispatched to lane-c 00:59)
-- **Branch / tip:** `lane/c` @ `67993a5ba` (runner commit)
-- **Merge base:** `bc5ecee4e` · **Merged to main:** `f315ecd2bb39e33f8ad1c44022dc5731e0566e4d` (`--no-ff`, three-way)
+- **Branch / tip:** `lane/c` @ `9ec75c52f` (runner commit)
+- **Merge base:** `6259b16df` · **Merged to main:** `e73c459cdb75d5378f31d84ae50cf15a19a9c77d` (`--no-ff`, three-way)
 - **Drained by:** s1505 fire, 2026-08-07
 - **§3.0 block-check:** ✅ CLEAR — a real leaf, `status:"queued"` (not UNKNOWN)
 
@@ -34,7 +34,7 @@ browser-only.
 | `npm run test:node-guards` (**mandatory — diff adds `src/sim/`, F-1460-1**) | **rc=0 · fail 0 · skipped 3**, 163.5 s |
 | `gr-sim` Baron pin | **unmoved** (inside the green battery above) |
 | Adjacent, derived from the tree (`ls e2e \| grep -i e9` + the two sockets copied) — 7 specs | **38 passed / 6 failed** |
-| Control arm at clean main `d8ed9805d`, same worktree, same shell | **6 failed / 6 passed — IDENTICAL 6** |
+| Control arm at clean main `873e69e4b`, same worktree, same shell | **6 failed / 6 passed — IDENTICAL 6** |
 | Boot probes `profile-first-boot` + `_s106-prospector-boot-probe` | **14 passed**, zero console/page errors, desktop + 390px |
 
 **The expected count was DERIVED, not inherited:** `redfields.contracts` holds 4 contracts and the file's
@@ -51,7 +51,7 @@ projects = **8**. Measured 8.
 on both projects. `e9-roster` remains **NOT-IN-INVENTORY** (F-1503-3, still open and still correct).
 
 ⚠️ Inventory membership is never exoneration (F-1444-2, proved by F-1448-1), and `e9-roster` had no row at
-all — so a **control run at clean main `d8ed9805d`** was paid for in the same worktree and the same shell:
+all — so a **control run at clean main `873e69e4b`** was paid for in the same worktree and the same shell:
 **the same 6 tests, the same 3 titles, both projects.** The merge causes none of them.
 
 ⓘ The supporting argument, which is *corroboration and not the proof*: `grep -rn E9ArsenalSocket src e2e
@@ -81,7 +81,7 @@ not why we believe it does.
 ## Merge classification
 
 `git log <merge-base>..main -- <the three paths>` returns **empty**: main moved **none** of them since
-`bc5ecee4e`.
+`6259b16df`.
 
 | Path | Class |
 |---|---|

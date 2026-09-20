@@ -1,8 +1,8 @@
 # f2142-1 — bind the campaign harness's terrain to the contract it runs
 
 **Slice:** `f2142-1-campaign-harness-terrain-binding`
-**Branch:** `lane/b` · **Tip:** `218173760` · **Base:** `77194c05658b3255ba10b2ddd0f7b8f95fc92b4a`
-**Merged to main:** `8656ca1f1f1d71edcfec33fd3467ed45a31e4d59` (s2143 fire, 2026-08-21)
+**Branch:** `lane/b` · **Tip:** `622506611` · **Base:** `79bb2fab0a8cf3898a6ac8da4b5d844c307e11b5`
+**Merged to main:** `f9b8d02f5ed39ac0eb8916627fd7bef23a960f86` (s2143 fire, 2026-08-21)
 
 ## Verdict
 
@@ -71,7 +71,7 @@ standing note; kept per the Retention Law).
 
 ## Merge classification
 
-Base `77194c05`. Four paths, **all LANE-ONLY** — `git diff 77194c05..main` is empty over each, so
+Base `79bb2fab`. Four paths, **all LANE-ONLY** — `git diff 79bb2fab..main` is empty over each, so
 main moved none of them and no graft was possible:
 
 | Path | Class |
@@ -83,7 +83,7 @@ main moved none of them and no graft was possible:
 
 `main..lane/b` empty after the merge.
 
-⚠️ Main moved **twice** under this drain — a concurrent writer landed `983d1cb2e` (e5-stillwater
+⚠️ Main moved **twice** under this drain — a concurrent writer landed `508d37de0` (e5-stillwater
 ADMITTED) at 22:19, having held main **mid-merge** with 73 staged files for the fire's first seven
 minutes. The classification above was taken against the **post-merge** main, not the base this
 fire first read.

@@ -1,8 +1,8 @@
 # Sol findings — repository audit intake
 
 - **Branch:** `sol/repository-audit-findings`
-- **Base:** `7802ed6`
-- **Audit runtime baseline:** `ff46a53` (the source tree is unchanged between the runtime baseline and this branch base; intervening commits add co-agent/runbook/task documentation)
+- **Base:** `8510b61`
+- **Audit runtime baseline:** `4a5278a` (the source tree is unchanged between the runtime baseline and this branch base; intervening commits add co-agent/runbook/task documentation)
 - **Date:** 2026-07-10
 - **Verdict:** UNTRIAGED — evidence intake only. Fable owns accept/park/reject/deduplicate decisions.
 - **Merge classification:** review artifacts only; no source, test, spec, lore, STATUS, BACKLOG, queue, or asset edits.

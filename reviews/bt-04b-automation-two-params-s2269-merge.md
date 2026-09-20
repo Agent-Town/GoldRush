@@ -1,8 +1,8 @@
 # bt-04b-automation-two-params — the landing drain (s2269)
 
 **Slice:** `bt-04b-automation-two-params` + `f2265-2-bt04b-mobile-spec-determinism` (+ `f2268-1` PNG churn)
-**Branch:** `lane/a` · **base:** `755c30ace` (main at lock time) · **tip gated:** `926008be4`
-**Merge:** `fa00605bac5e165adae3c6ce3210ccd5128ab659`
+**Branch:** `lane/a` · **base:** `995aaa691` (main at lock time) · **tip gated:** `926008be4 (archive: pruned by the A3 rewrite)`
+**Merge:** `0d1f0b8cc838fb110537563ca5120d48e6672718`
 **Gate worktree:** `.gate-s2269` (detached, §3.0b) · fire shell · `--workers=1` (§3.1)
 
 ## VERDICT: MERGE
@@ -55,7 +55,7 @@ the mechanism. Carried forward as a known flake, per §7.5's prohibition on an i
 
 ## Merge classification
 
-Base `755c30ace`; all eight paths **LANE-TOUCHED only** — `git merge` reported zero conflicts and main
+Base `995aaa691`; all eight paths **LANE-TOUCHED only** — `git merge` reported zero conflicts and main
 moved none of them during the gate window. `src/game/Balance.ts` is the additive-hunk case the
 disjoint-pair rule already excepts (+4, no existing key redefined).
 

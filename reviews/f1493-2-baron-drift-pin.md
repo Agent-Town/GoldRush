@@ -1,8 +1,8 @@
 # F-1493-2 — the E2 Baron drift tripwire
 
-- **Slice / branch / tip:** `lane-f1493-2-baron-drift-pin` · `lane/a` · `0ffd24a55` ("bdp: pin E2 Baron outcomes")
-- **Merged:** `5507b629975e1faf4323976cd1d2091c184a48d8` (main, s1495, fast-forward from the gated tree)
-- **Gated in:** detached worktree `gate-s1495` at merge `5507b6299` (§3.0b — undecided content never entered main's working tree)
+- **Slice / branch / tip:** `lane-f1493-2-baron-drift-pin` · `lane/a` · `162152ee1` ("bdp: pin E2 Baron outcomes")
+- **Merged:** `1d645e14f5ee56963ed861714f73b11586a60ccd` (main, s1495, fast-forward from the gated tree)
+- **Gated in:** detached worktree `gate-s1495` at merge `1d645e14f` (§3.0b — undecided content never entered main's working tree)
 - **Verdict:** ✅ **MERGED.** The slice does exactly what its master asked, including the part that would have been easy to fake.
 
 ## What it does
@@ -10,7 +10,7 @@
 Adds one test (+82 lines, `scripts/gr-sim.test.mjs`, the only file touched) that pins the terminal
 outcome of the three E2 baron contracts under a 100,000-HP / 1,000-damage test rig.
 
-The finding it closes: when `ff628a132` correctly relaxed the census equality on baron contracts —
+The finding it closes: when `335408077` correctly relaxed the census equality on baron contracts —
 `autoSecureWaveForRun()` returns `Number.MAX_SAFE_INTEGER` while `twist.baron && !baronBeaten`, so the
 old equality was unsound — it removed the only thing that would notice **a baron fight getting longer**.
 A Hill Mine run drifting 14 → 25 waves passed everywhere. This is the replacement tripwire.
@@ -55,12 +55,12 @@ All arms `--workers=1` (§3.1), run on the **merged** tree in `gate-s1495`, tran
 rc=0 and reads as coverage — worse than no pin. The +1 delta and the named `✔` line are what prove the
 test executed rather than being skipped.
 
-**Landing identity:** `git diff 5507b6299 HEAD` **EMPTY** and `git log main..lane/a` **EMPTY** — the
+**Landing identity:** `git diff 1d645e14f HEAD` **EMPTY** and `git log main..lane/a` **EMPTY** — the
 evidence above describes exactly what shipped, not a lookalike tree.
 
 ## Merge classification
 
-Base `25476759b` (main at gate time). One file, `scripts/gr-sim.test.mjs`, **LANE-TOUCHED only** —
+Base `3d14dd6c6` (main at gate time). One file, `scripts/gr-sim.test.mjs`, **LANE-TOUCHED only** —
 main had not moved it since the lane's base, so the merge was clean with no graft and no conflict.
 Landed by fast-forward from the gated commit rather than re-merging, so the gated tree and the shipped
 tree are provably the same object.

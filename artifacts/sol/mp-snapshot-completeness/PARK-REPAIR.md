@@ -1,7 +1,7 @@
 # Park repair — two-Hero weapon-toggle isolation
 
 - Branch: `sol/mp-snapshot-completeness`
-- Parked parent: `701fb49`
+- Parked parent: `701fb49 (archive: pruned by the A3 rewrite)`
 - Gate source: `reviews/sol-snapshot-gate-park.md` on main
 - Date: 2026-07-10
 
@@ -65,7 +65,7 @@ npm exec -- playwright test e2e/m2-06-arsenal-blast-charge.spec.ts \
 The broader two-file weapon run was 13 passed / 1 skipped / 2 failed. Both
 failures were the unrelated turret line-of-sight assertion at
 `m2-06-arsenal-blast-charge.spec.ts:155`; the exact desktop and mobile cases
-also failed 2/2 on Fable's untouched detached `701fb49` worktree with the same
+also failed 2/2 on Fable's untouched detached `701fb49 (archive: pruned by the A3 rewrite)` worktree with the same
 `expected 0, received 1` fingerprint. They are baseline reds, not caused by
 this repair.
 

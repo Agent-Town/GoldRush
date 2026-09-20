@@ -1,5 +1,5 @@
 # s2058 — runner-restart-recipe.test.sh across four stdin shapes
-# PRE-CURE = main @ e0be34c6d ; CURED = merged tree in /tmp/gr-s2058-gate
+# PRE-CURE = main @ ceb317f9d ; CURED = merged tree in /tmp/gr-s2058-gate
 # Method: node spawnSync, varying only fd 0. Red path proven by manufacturing the defect.
 
 | stdin        | kind    | PRE-CURE                  | CURED                     |

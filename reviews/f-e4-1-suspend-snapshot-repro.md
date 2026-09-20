@@ -1,8 +1,8 @@
 # f-e4-1-suspend-snapshot-repro — drain review (s2493)
 
 **Slice:** `f-e4-1-suspend-snapshot-repro` (F-E4-1 INVESTIGATE)
-**Branch / tip:** `lane/a` @ `e7bfe08c7befa0ecb73e791bb01da982675a38e2`
-**Merge:** `59e8d3a0a811a7c2fe4528003855c61c636c71eb`
+**Branch / tip:** `lane/a` @ `1ce17c160f0e2bb31691c5675760d3ae667c0dde`
+**Merge:** `b1dec6702178ae39dd5876caffde0111c7429a43`
 **Drained by:** s2493 fire, 2026-09-04
 
 ## Verdict
@@ -51,7 +51,7 @@ and that emptiness was measured, not inferred.**
 
 ## Merge classification
 
-Base `main` @ `874c60421`. Trial-merged in a detached worktree (`gate-s2493`),
+Base `main` @ `48491a32e`. Trial-merged in a detached worktree (`gate-s2493`),
 per §3.0b — undecided content never entered main's working tree, and the merge
 was committed as one act rather than left staged (F-1589-5).
 

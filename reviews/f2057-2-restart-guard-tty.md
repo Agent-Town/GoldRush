@@ -1,9 +1,9 @@
 # f2057-2-restart-guard-tty — the runner-custody guard gets a tty discriminator
 
 - **Slice:** `f2057-2-restart-guard-tty` (cure for F-2057-2, fire-authored s2057)
-- **Branch / tip:** `lane/lane-d` @ `6301fa78a` — `runner(lane-d): f2057-2-restart-guard-tty.md`
-- **Base:** `b7e2e44363cd363e7dae31c71c5495abeca1c0ad` (the s2057 commit that authored the master)
-- **Merged to main:** `d4a8594ea88f66d23d8fb59ed64d9cf6d01ac744` (s2058, 2026-08-18)
+- **Branch / tip:** `lane/lane-d` @ `6c35c3115` — `runner(lane-d): f2057-2-restart-guard-tty.md`
+- **Base:** `2982ecbf206591087c768ed0ee015a5394228f01` (the s2057 commit that authored the master)
+- **Merged to main:** `9cc9ba9e40c537bb98bb04eeb281285725b2d91b` (s2058, 2026-08-18)
 - **Gated in:** detached worktree `/tmp/gr-s2058-gate` (§3.0b — undecided content never entered main's working tree)
 
 ## VERDICT: MERGED — with one finding filed (F-2058-1) and its corrective authored in the same fire.
@@ -23,7 +23,7 @@ and is byte-identical).
 
 ## Evidence
 
-Merge classification: **pure LANE-TOUCHED.** `git log b7e2e4436..main -- scripts/runner-restart-recipe.test.sh scripts/start-lane-runner.sh` is **empty** — main moved neither the guard nor its subject since the lane's base, so there was no three-way work and no conflict resolution to record.
+Merge classification: **pure LANE-TOUCHED.** `git log 2982ecbf2..main -- scripts/runner-restart-recipe.test.sh scripts/start-lane-runner.sh` is **empty** — main moved neither the guard nor its subject since the lane's base, so there was no three-way work and no conflict resolution to record.
 
 | Gate | Result |
 |---|---|

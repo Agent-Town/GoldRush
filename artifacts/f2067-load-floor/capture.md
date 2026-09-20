@@ -93,7 +93,7 @@ Three later events already retired this request. All three were READ, not inferr
    CHANGED s1294 — READ THIS BEFORE SPENDING AN OWNER ACTION ON IT. The prior lift condition
    … quit ChatGPT.app, Spotlight-privacy-list the repo, kill the orphaned esbuild daemons.
    **THAT IS NOW FALSE.**"*
-2. **attended 2026-08-09 desk sweep** (`fc284845d`, per `note_s1606`) — leaf flipped
+2. **attended 2026-08-09 desk sweep** (`9264046eb`, per `note_s1606`) — leaf flipped
    `blocked` → `stopped`, `closureReason`: *"PARKED as KNOWN-LIMITATION … whole-suite runs use
    `--workers=4` by hand; drains never run whole-suite, so the third-attempt premise retires.
    Reversible by one word."*

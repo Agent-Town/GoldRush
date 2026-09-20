@@ -2,7 +2,7 @@
 
 ## Verdict — PASS
 
-Lane-d candidate `f0eb9018c6fe674ddf41f5f0fb8693ca23815af2` is ready to merge. The change restores the browser's existing landmark-depenetration seam in `HeadlessContractSim`; it does not change contract data, balance, enemy routing, or browser gameplay.
+Lane-d candidate `474df890e4b33d462a85e625e628797f01e6b66a` is ready to merge. The change restores the browser's existing landmark-depenetration seam in `HeadlessContractSim`; it does not change contract data, balance, enemy routing, or browser gameplay.
 
 ## What changed
 
@@ -26,7 +26,7 @@ Pinned terminal tuples (`waves`, `kills`, `eventLogHash`): Long Road 01 `(4, 41,
 
 ## Merge classification
 
-The lane is one commit ahead of author base `11e6d07d892d70518ade4d5aa0ef12ca64478b4a`. Main has not moved either touched path since that base. The gate ran in detached worktree `/private/tmp/gr-s1745-gate.AjZZph`; main's pre-existing logs, `.claude/cache/`, and attended railcar-v2 master remained outside custody.
+The lane is one commit ahead of author base `9aec272d9e359d181ebd90f651081dce7e07e11f`. Main has not moved either touched path since that base. The gate ran in detached worktree `/private/tmp/gr-s1745-gate.AjZZph`; main's pre-existing logs, `.claude/cache/`, and attended railcar-v2 master remained outside custody.
 
 ## Findings
 

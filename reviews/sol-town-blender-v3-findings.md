@@ -1,7 +1,7 @@
 # sol/town-blender-v3 — Tavern proof findings
 
 Branch: `sol/town-blender-v3`
-Parent: `22824e0d`
+Parent: `36995e6d`
 Verdict: **READY-FOR-GATES with two fingerprint-matched baseline reds; OWNER VISUAL VERDICT REQUIRED before any plaza/horizon work.**
 
 ## What changed
@@ -40,11 +40,11 @@ The final neutral comparison rates the GLB as materially more complete and reada
 
 ### F-02 — T4 requested regression is already red on the branch parent (fingerprint-matched baseline red)
 
-The combined requested regression battery completed 58/62 green. In both projects, untouched `town-t4-growth.spec.ts` expects `town-growth-general-store`, but current main queues `ledger-page:the_claim` first. A detached, untouched `22824e0d` worktree reproduced the same received value in both projects (0/2). This branch does not touch story/beats and must not repair that drift. Evidence: `artifacts/town-blender-v3/gate-summary.md`.
+The combined requested regression battery completed 58/62 green. In both projects, untouched `town-t4-growth.spec.ts` expects `town-growth-general-store`, but current main queues `ledger-page:the_claim` first. A detached, untouched `36995e6d` worktree reproduced the same received value in both projects (0/2). This branch does not touch story/beats and must not repair that drift. Evidence: `artifacts/town-blender-v3/gate-summary.md`.
 
 ### F-03 — T6 requested regression is already red on the branch parent (fingerprint-matched baseline red)
 
-In both projects, untouched `town-t6-surfaces.spec.ts` expects `Enter Town`, `Profile`, and `Settings`; current main also renders `Claim Ledger`. A detached, untouched `22824e0d` worktree reproduced the same extra action in both projects (0/2). This branch does not touch StartMenu and must not repair that drift. Evidence: `artifacts/town-blender-v3/gate-summary.md`.
+In both projects, untouched `town-t6-surfaces.spec.ts` expects `Enter Town`, `Profile`, and `Settings`; current main also renders `Claim Ledger`. A detached, untouched `36995e6d` worktree reproduced the same extra action in both projects (0/2). This branch does not touch StartMenu and must not repair that drift. Evidence: `artifacts/town-blender-v3/gate-summary.md`.
 
 ### F-04 — Scope and simulation invariants preserved (pass)
 
@@ -52,7 +52,7 @@ The TownScene integration is ten added lines at `src/town/TownScene.ts:227`, `:3
 
 ## Merge classification
 
-- Base: `22824e0d`.
+- Base: `36995e6d`.
 - Lane-touched: the two new Tavern source assets, one new loader module, the ten-line TownScene hook, one new e2e spec, this review, and `artifacts/town-blender-v3/*` only.
 - Main-moved/conflicts: none during implementation.
 - Asset provenance: local Blender authoring from the approved `assets/processed/bld-tavern.png` color/style anchor; no paid generator, external download, or new license obligation.

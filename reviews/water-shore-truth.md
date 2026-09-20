@@ -2,7 +2,7 @@
 
 - **Slice:** `lane-water-shore-truth` (F-BW-7)
 - **Branch / tip:** `lane/e2-arsenal` @ `0751fda4186492c9b35a0bf2d91643ffaf8b8993`
-- **Lane base:** `b18df254ed2f3d87e3b5c0c3b6f46f6c78801cd5`
+- **Lane base:** `75b8afb5287c0e4e2770bd6be65ad1605da2cea7`
 - **Gated by:** s1434, in detached worktree `gate-s1434` (§3.0b — main's working tree never held undecided content). Every playwright command `--workers=1` (§3.1).
 - **VERDICT: MERGE.**
 
@@ -51,7 +51,7 @@ The third of those is the one that *looked* attributable — a water-contract by
 
 ## Merge classification
 
-Base `b18df254`. `git diff --stat b18df254..main` over all three paths is **empty** — main never moved any of them since the lane base. This is the rare fully clean case:
+Base `75b8afb5`. `git diff --stat 75b8afb5..main` over all three paths is **empty** — main never moved any of them since the lane base. This is the rare fully clean case:
 
 | File | Class | Resolution |
 |---|---|---|

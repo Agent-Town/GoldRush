@@ -1,7 +1,7 @@
 # reviews/trail-guide-plain-boot.md — the plain-boot trail-guide proof
 
 **Slice:** `lane-trail-guide-plain-boot-proof` · **Branch:** `lane/m4` · **Lane tip:** `d7d8ba03`
-**Base:** `f4cb37bf` · **Gated by:** s1204 fire, 2026-07-29, on the merged tree at `8b867240` (i.e. with GG-01 already in)
+**Base:** `f4cb37bf` · **Gated by:** s1204 fire, 2026-07-29, on the merged tree at `69f6f132` (i.e. with GG-01 already in)
 **§3.0 drain-block-check:** ✅ CLEAR — `lane-trail-guide-plain-boot-proof.md [e1-trail-guide-plain-boot-proof] status="queued"` (ran FIRST)
 
 ## Verdict
@@ -42,7 +42,7 @@ The runner's own report claimed *"Playwright desktop + 390 px: 2/2 passed"*. Tha
 
 ### 🚨 F-1204-3 — the plain-boot proof is flaky at the canonical worker count, in its own waits
 
-**GG-01 was the obvious suspect and was cleared by a control.** GG-01 (`d2fc1b06`, merged by this same fire) auto-opens the Herald on first town entry and sets `this.ui.inert = true` — exactly the kind of change that breaks a fresh-profile town flow, and this spec walks that flow. So the subject was reverted (`src/town/TownScene.ts` + `src/news/heraldReader.{ts,css}`) and the identical command re-run: **4/4 red on both arms.** The merge is not implicated; the spec is.
+**GG-01 was the obvious suspect and was cleared by a control.** GG-01 (`97c6a257`, merged by this same fire) auto-opens the Herald on first town entry and sets `this.ui.inert = true` — exactly the kind of change that breaks a fresh-profile town flow, and this spec walks that flow. So the subject was reverted (`src/town/TownScene.ts` + `src/news/heraldReader.{ts,css}`) and the identical command re-run: **4/4 red on both arms.** The merge is not implicated; the spec is.
 
 **The mechanism, read at source.** `playwright.config.ts:13` sets the repo-wide `expect` timeout to **5 s**. The author had already raised the waits they saw bite — `:64` (8 s), `:170` (15 s), `:191` (15 s) — but left two at the default, and those two are the ones that fail:
 

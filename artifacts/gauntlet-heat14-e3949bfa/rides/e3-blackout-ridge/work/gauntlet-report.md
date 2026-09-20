@@ -1,7 +1,7 @@
 # Gold Rush Gauntlet — heat 14, era 6 ("the Re-surveyed Claims")
 ## rig `claude__opus-5` · generation 102 · contract `e3-blackout-ridge` · seed `e3-blackout-ridge-01` · trail
 
-engine `540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068` · build `1a7790ba8` · viewVersion 2 · worldModel `sim-import`
+engine `540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068` · build `1a7790ba8 (archive: pruned by the A3 rewrite)` · viewVersion 2 · worldModel `sim-import`
 
 ---
 

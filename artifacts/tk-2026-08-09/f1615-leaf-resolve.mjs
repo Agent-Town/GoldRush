@@ -44,14 +44,14 @@ apply('"status": "blocked"', '"status": "merged"', 'status');
 
 apply(
   'remove the two-id prefetch exclusion at TownTavernPilot.ts:49',
-  'remove the two-id prefetch exclusion formerly at TownTavernPilot.ts:49 (ABSENT from main since f5dbb5448 - that line is now the unfiltered models map, which is exactly what shipping this looked like)',
+  'remove the two-id prefetch exclusion formerly at TownTavernPilot.ts:49 (ABSENT from main since bbc35cc0b - that line is now the unfiltered models map, which is exactly what shipping this looked like)',
   'title citation',
 );
 
 apply('AdvanceStream.ts:219 narrows', 'AdvanceStream.ts:220 narrows', 'blockedReason :219 -> :220');
 
 const NOTES =
-  's1618: RESOLVED, but NOT by merging this branch - its eleven-file functional surface reached main by RE-LAND inside f1617-1 at f5dbb5448 (Mistake #15 cure; the runner dispatch guard would not send the corrective into the lane holding the work). ' +
+  's1618: RESOLVED, but NOT by merging this branch - its eleven-file functional surface reached main by RE-LAND inside f1617-1 at bbc35cc0b (Mistake #15 cure; the runner dispatch guard would not send the corrective into the lane holding the work). ' +
   'Absorption proved by instrument, not by eye: scripts/lane-absorbed-lines.mjs reports all eleven ABSORBED at line level (TownTavernPilot.ts 0/0; the ten specs 2-9 added lines each, every one present in main). lane/a held only regenerated artifacts/** PNGs (BOTH-MOVED, never byte-identity gated per F-1266-1), was archived at archive/lane-a-s1617-f1615-1-salvage (verified at exactly 914a7e93b) and reset; lane-a is ahead=0 behind=0 USABLE. ' +
   'The gate-side hold is lifted because its stated condition was MET: F-1617-4, the saveData red this leaf was held for, is cured, and e2e/advance-stream.spec.ts reads 10/10 both projects UNMODIFIED on the merged tree. blockClass and blockedReason are KEPT as provenance, not deleted. ' +
   'WARNING for anyone auditing this leaf: grepping the merge log for f1615-1 finds NOTHING - the work is on main under another slice hash (Mistake #16). ' +
@@ -60,7 +60,7 @@ const NOTES =
 // Insert mergeHash + drainNotes just before the taskFile key, matching the file's indent.
 const indent = (span.match(/\n(\s+)"status":/) || [, '              '])[1];
 const tail =
-  '"mergeHash": "f5dbb5448ba8dfa2ea1d23f03347fe831b411a83",\n' +
+  '"mergeHash": "bbc35cc0be8c671c580410acf3dd282c6562adb8",\n' +
   indent +
   '"drainNotes": ' +
   JSON.stringify(NOTES) +

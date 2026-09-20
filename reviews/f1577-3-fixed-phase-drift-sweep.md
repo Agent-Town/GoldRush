@@ -61,13 +61,13 @@ The task calls `simulation.tick` the start phase, but the Prospector oscillation
 
 ## DRAIN GATE — s1579
 
-**VERDICT: MERGED** at `bc64e04895add67e0525a1382b54443c40489d59`. Base clean main `25d9be0af`; gated in a detached scratch worktree (`worktrees/gate-s1579`, §3.0b custody) so undecided content never entered main's working tree.
+**VERDICT: MERGED** at `3dd3dea3f26de5a5ddf0a21e7820b1d8682cde9b`. Base clean main `25d9be0af (archive: pruned by the A3 rewrite)`; gated in a detached scratch worktree (`worktrees/gate-s1579`, §3.0b custody) so undecided content never entered main's working tree.
 
 `drain-block-check`: **CLEAR** — leaf `f1577-3-fixed-phase-drift-sweep` matched with `status="queued"` (a real leaf, not the advisory UNKNOWN path).
 
 ### Merge classification
 
-Merge-base `9d4182c9d`. Main moved **9** files since that base (`.claude/skills/author-task/SKILL.md`, `STATUS.md`, `logs/**`, `scripts/law-pointer-baseline.json`, `tasks/BACKLOG.md`, `tasks/goals.json`, `tasks/lane-b-f1578-1-*.md`); the lane touched **40**. **The intersection is EMPTY** — every lane path is LANE-TOUCHED, nothing is MAIN-MOVED, no BOTH-MOVED file exists, and no three-way graft was needed. `git merge --no-ff` reported zero conflicts.
+Merge-base `9ed72ac9f`. Main moved **9** files since that base (`.claude/skills/author-task/SKILL.md`, `STATUS.md`, `logs/**`, `scripts/law-pointer-baseline.json`, `tasks/BACKLOG.md`, `tasks/goals.json`, `tasks/lane-b-f1578-1-*.md`); the lane touched **40**. **The intersection is EMPTY** — every lane path is LANE-TOUCHED, nothing is MAIN-MOVED, no BOTH-MOVED file exists, and no three-way graft was needed. `git merge --no-ff` reported zero conflicts.
 
 Firewall: clean. Outside `artifacts/f1577-3-fixed-phase-sweep/**` the lane touched exactly the two permitted paths — `e2e/f1575-1-drift-tick-budget.spec.ts` and this review. The spec diff is **purely additive** (one hunk, `@@ -56,3 +56,57 @@`, 54 insertions / 0 deletions), so the banked f1575-1 test at `:19` is byte-unchanged — verified from the diff shape at the gate, not from the report's `cmp`.
 

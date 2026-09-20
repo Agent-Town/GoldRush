@@ -1,4 +1,4 @@
-> ⛔ **SHIPPED — DO NOT QUEUE (Mistake #8 guard, verified s1130 2026-07-27).** Drained s1043: lane/m3 `46146b0b` → main **`5227409f`** (`git merge-base --is-ancestor` = true), review `reviews/tl-03-window-3-ticker-stats.md`. Content probe on main today: both deliverables exist — `scripts/ticker-stats.mjs` and `scripts/test-ticker-stats.mjs`. **TL-03 is COMPLETE (all three windows).** This master had **no done-move and no goal leaf**, so it read as live lane-a work; see F-1130-4. Retained per the RETENTION LAW as the authoring record.
+> ⛔ **SHIPPED — DO NOT QUEUE (Mistake #8 guard, verified s1130 2026-07-27).** Drained s1043: lane/m3 `46146b0b` → main **`a30661bf`** (`git merge-base --is-ancestor` = true), review `reviews/tl-03-window-3-ticker-stats.md`. Content probe on main today: both deliverables exist — `scripts/ticker-stats.mjs` and `scripts/test-ticker-stats.mjs`. **TL-03 is COMPLETE (all three windows).** This master had **no done-move and no goal leaf**, so it read as live lane-a work; see F-1130-4. Retained per the RETENTION LAW as the authoring record.
 
 # lane-a: TL-03 WINDOW 3 — the Ticker/Gazette quotes the ONE endpoint (real numbers, never invented)
 
@@ -19,7 +19,7 @@ below: *"all three windows render the one endpoint; **no surface computes its ow
 - TL-02 (`GET /api/stats`) shipped; **Window 1** live at `site/assay-office.js:1`; **Window 2** live at
   `src/encyclopedia/liveStats.ts:4` — both already read the endpoint.
 - **F-tl01-1 is FIXED** (`functions/api/telemetry.ts:74` and `functions/api/stats.ts:60` both read
-  `context.env.TELEMETRY ?? context.env.ACCOUNTS`, landed `41d8e1ae` + `47c5fb20`), so the endpoint serves
+  `context.env.TELEMETRY ?? context.env.ACCOUNTS`, landed `4c68cdca` + `acacbb39`), so the endpoint serves
   REAL tallies, not the empty state. BACKLOG's lane-a header called this blocker "unchanged" for five days;
   that ghost line was corrected in the same commit as this master.
 - The consuming surface exists and its format is settled: `marketing/outbox/ticker-digest-<date>.md`
@@ -51,7 +51,7 @@ anything.
 **Pre-proved for you (s1042, freshly measured — not inherited):** `git log main..lane/m3` shows **exactly
 two** commits, `d1743150` (WIP-SALVAGE) and `cec50777`, and **both are content-merged**:
 `git diff lane/m3 main -- e2e/perf-05-startup.spec.ts` is **EMPTY** (byte-identical), and main's
-`artifacts/perf-05/*` were last written by **s1039's drain `63161278`** — the gate RE-RUN, i.e. strictly
+`artifacts/perf-05/*` were last written by **s1039's drain `c5dfbad7`** — the gate RE-RUN, i.e. strictly
 newer than the lane's pre-gate raws. **Nothing can be lost by the reset; proceed.**
 *(Honest limit: the lane worktree's uncommitted-dirt state is NOT independently probed — `git -C` on a
 worktree is permission-gated for fires. `git clean -fd` covers residue; treat anything else you find there

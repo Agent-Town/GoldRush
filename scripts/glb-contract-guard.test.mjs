@@ -323,7 +323,7 @@ test('the shared landmark source ledger covers every shipped pack and current so
 test('landmark contracts honor declared material counts and retain legacy defaults', async () => {
   // F-TCR-3 (attended 2026-09-15): `join`, not `resolve` — scripts/fixture-teardown.test.mjs extracts the literal prefix
   // with a regex that reads only `mkdtemp(join(tmpdir(), '…'))`, so `resolve` made the sweep red on main for every
-  // tree since the map campaign landed this test (883a3521e), hidden in linked worktrees by the desk guard's refusal
+  // tree since the map campaign landed this test (7c2744e5a), hidden in linked worktrees by the desk guard's refusal
   // sorting first. Same directory, same prefix, now visible to the sweep.
   const root = await mkdtemp(join(tmpdir(), 'landmark-material-contract-'));
   const dir = 'assets/pilots/map-rebuild-spike/landmarks/dome';

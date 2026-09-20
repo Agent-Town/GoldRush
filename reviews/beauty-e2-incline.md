@@ -1,10 +1,10 @@
 # Review — THE e2-incline BEAUTY SHIFT
 
-**Slice/branch/tip:** `beauty2/e2-incline`, worktree `/Users/robin/Claude/Projects/gr-task-beauty2-e2-incline`, base `8f65062e` (merge-base with `origin/main`).
-**Brief:** `docs/beauty/e2-incline-brief.md` (director pass, merged `659367d4`).
+**Slice/branch/tip:** `beauty2/e2-incline`, worktree `/Users/robin/Claude/Projects/gr-task-beauty2-e2-incline`, base `8f65062e (archive: pruned by the A3 rewrite)` (merge-base with `origin/main`).
+**Brief:** `docs/beauty/e2-incline-brief.md` (director pass, merged `6177762a`).
 **Program laws:** `docs/beauty/README.md` — rendering only (§4.6), frame p95 +15% max measured, before/after boards per upgrade, path-scoped commits, honest partials valid.
 **Shift:** dedicated Opus 5 solo-writer session, 2026-08-04.
-**Boards:** `reviews/shots-beauty2-e2-incline/`. `base-*` are shot from a **detached control worktree at `8f65062e` on its own dev server (port 5282)**; every other prefix is this branch on 5281. Same box, same hour, same framings, same seed. Intermediate iterations are kept at 45% linear (compaction, not deletion — the retention law); the pairs the review argues from are full-res.
+**Boards:** `reviews/shots-beauty2-e2-incline/`. `base-*` are shot from a **detached control worktree at `8f65062e (archive: pruned by the A3 rewrite)` on its own dev server (port 5282)**; every other prefix is this branch on 5281. Same box, same hour, same framings, same seed. Intermediate iterations are kept at 45% linear (compaction, not deletion — the retention law); the pairs the review argues from are full-res.
 **Verdict:** **4 of 5 upgrades KEPT and one cross-map defect cured. U1, U2, U3 and U4 all ship; U5 ships as motes plus the graduation frame but without the staged defeat beat.** The map's central lie — a band the sim calls water and the render drew as a void — is gone, both crossings read, and the landmarks are modelled by the sun instead of lit from inside. The p95 half of the perf law could not be measured on this box and is reported as unmeasured, not as passed.
 
 ---
@@ -106,17 +106,17 @@ runs of the *identical* build.
 |---|---|
 | `npx tsc --noEmit` | **clean** |
 | `npm run build` | **green** (asset-diet: 235 GLBs 592 MB → 92.7 MB) |
-| Re-export determinism control | **bit-exact** — recipe re-run unchanged at `8f65062e`: atlas sha256 `f0f896eb6a29840b…` and glb `730e89dcf259b1ba…` both identical to the shipped bytes, identical byte lengths |
+| Re-export determinism control | **bit-exact** — recipe re-run unchanged at `8f65062e (archive: pruned by the A3 rewrite)`: atlas sha256 `f0f896eb6a29840b…` and glb `730e89dcf259b1ba…` both identical to the shipped bytes, identical byte lengths |
 | Contract equality after the real re-export | `landmarkMounts` **5**, all carrying `asset`, `landmarkPack` present, vertices **16641**, triangles **32768**, bounds unchanged → `validTerrain()` holds |
 | Live contract equality, every board | `terrain3dPilotState=ready`, `renderSource=glb`, **landmarks 5 / expected 5 / skipped 0**, diagnostics empty, both viewports |
 | Console / page errors | **zero**, every board, both viewports, desktop and 390 |
 | `e2e/e2-incline.spec.ts`, `map-census`, `landmark-brightness` | **green**, both projects (see *Battery*) |
-| `e2e/terrain3d-registry.spec.ts` | 8 reds, **all four tests reproduce on an untouched control worktree at `8f65062e`** (see *Battery*) |
+| `e2e/terrain3d-registry.spec.ts` | 8 reds, **all four tests reproduce on an untouched control worktree at `8f65062e (archive: pruned by the A3 rewrite)`** (see *Battery*) |
 | Frame p95 ≤ +15% | **UNMEASURED — see below. Not claimed as passed.** |
 
 ### Measured picture changes
 
-Base (`8f65062e` control worktree) → shift, identical framings, `scripts/beauty-imgdiff.mjs`:
+Base (`8f65062e (archive: pruned by the A3 rewrite)` control worktree) → shift, identical framings, `scripts/beauty-imgdiff.mjs`:
 
 | Frame | pixels changed | max Δ | mean luminance |
 |---|---|---|---|
@@ -230,11 +230,11 @@ red bought with concurrency is not a red.
 | `e2e/terrain3d-registry.spec.ts` | **8 failures** — 4 tests × 2 projects |
 
 **The eight reds are pre-existing. Control-proved, not reasoned.** A detached worktree at
-`8f65062e` (`/tmp/gr-incline-control`, its own `node_modules`, its own dev server) ran the
+`8f65062e (archive: pruned by the A3 rewrite)` (`/tmp/gr-incline-control`, its own `node_modules`, its own dev server) ran the
 same spec with the same `--workers=1`, and returned **11 passed · 8 failed · 1 skipped**
 with an **identical failure list**:
 
-| # | Test | Branch | Base `8f65062e` |
+| # | Test | Branch | Base `8f65062e (archive: pruned by the A3 rewrite)` |
 |---|---|---|---|
 | 196 | all sixteen contracts mount terrain, panorama, grounded landmarks | ✗ ×2 | ✗ ×2 |
 | 272 | rim and horizon probes | ✗ ×2 | ✗ ×2 |
@@ -257,7 +257,7 @@ reproduce untouched.
 
 ## Merge classification
 
-Base `8f65062e`. Every file below is **LANE-TOUCHED** (this branch is the only writer since
+Base `8f65062e (archive: pruned by the A3 rewrite)`. Every file below is **LANE-TOUCHED** (this branch is the only writer since
 the base); no MAIN-MOVED file, no conflicts resolved.
 
 | File | Why |
@@ -282,21 +282,21 @@ then called `keepLandmarkPaintReadable(model)` again five lines later with no pa
 argument — `DEFAULT_LANDMARK_PAINT`, intensity 3, tint white — under the byte-identical
 `host.contractId !== 'e1-night-shift'` guard. The second call wins.
 
-✓ VERIFIED by direct render on a map this shift does not otherwise touch. Base `8f65062e`
+✓ VERIFIED by direct render on a map this shift does not otherwise touch. Base `8f65062e (archive: pruned by the A3 rewrite)`
 on 5282 vs this branch on 5281, `the-claim`, same seed, same framing, both publishing
 `terrain3dPilotLandmarkEmissive = 1.45`: **304,515 pixels differ (29.74%), max channel
 delta 222, mean luminance 81.82 → 79.47.** The only branch change reachable by `the-claim`
 is the removal of that call.
 
 Blast radius, and why it is deliberately not scoped to this map: the dead grades are the
-Claim's U3 (`LANDMARK_EMISSIVE['the-claim'] = 1.45`, `59655724`, "landmarks sit in the
-golden hour"), the Baron's four-body duel paint (`LANDMARK_PAINT['e1-baron']`, `aa4277aa`),
+Claim's U3 (`LANDMARK_EMISSIVE['the-claim'] = 1.45`, `22fd2fd7`, "landmarks sit in the
+golden hour"), the Baron's four-body duel paint (`LANDMARK_PAINT['e1-baron']`, `080be51e`),
 and Dry Gulch's spring at 2.1. Scoping the fix to `e2-incline` would have shipped this map's
 grade while leaving three merged upgrades dead. **The drain should expect e1-baron,
 e1-dry-gulch and the-claim to look different after this merge, and should read that as
 three shifts finally arriving.** `landmark-brightness.spec.ts` and `map-census` cover those
 maps and are in this shift's battery for exactly that reason. Provenance of the duplicate
-line is UNVERIFIED: present at `8f65062e`, absent from every non-merge commit that touches
+line is UNVERIFIED: present at `8f65062e (archive: pruned by the A3 rewrite)`, absent from every non-merge commit that touches
 the file, which points at a merge resolution that kept both sides.
 
 **F-BI-2 ✅ DISARMED — the E2 re-export trap is worse than the brief states, and its own
@@ -304,7 +304,7 @@ verifier blessed it.** The brief warns that `build_e2_contract_terrains.py:854` 
 mounts with no `asset` carry-forward. Measured, it is not a stripped field:
 `PROFILES["incline"]["mounts"]` was `[]`, so a plain re-export writes
 `"landmarkMounts": []` and deletes all five records **and** the `landmarkPack` block.
-✓ VERIFIED by running the unchanged recipe at `8f65062e` in a detached control worktree:
+✓ VERIFIED by running the unchanged recipe at `8f65062e (archive: pruned by the A3 rewrite)` in a detached control worktree:
 **108 deletions in the contract, with a byte-identical atlas and GLB.** The pilot filters
 mounts on `mount.asset` *before* it counts them, so the wiped map would publish
 `state=ready`, `landmarkSkipped=0` and an empty diagnostics string with **zero** landmarks

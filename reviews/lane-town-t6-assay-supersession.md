@@ -1,14 +1,14 @@
 # Town T6 assay supersession
 
 Branch: `lane/m3`  
-Base: `4fd61ca0`  
+Base: `e78dd767`  
 Scope: `e2e/town-t6-surfaces.spec.ts` only
 
 ---
 
 ## DRAIN VERDICT (s1139) — **ACCEPT**
 
-Slice: `lane-town-t6-assay-supersession` · Branch `lane/m3` tip `73f4b661` · Base `4fd61ca0` (already an ancestor of main) · Drained onto main by s1139.
+Slice: `lane-town-t6-assay-supersession` · Branch `lane/m3` tip `73f4b661` · Base `e78dd767` (already an ancestor of main) · Drained onto main by s1139.
 
 **What it does.** Retires the last two unreachable `assay-bench` assertions in `town-t6-surfaces.spec.ts`, the one sibling file s931's F-931-1 corrective missed. RF-03b put the Complaints Desk in normal play and moved the crafting bench behind `?debug`, so both tests were asserting shipped-reversed behaviour. Each test now gets the boot **its own subject** requires: `:119` (the debug-only crafting panel) boots `?debug` and keeps its full assertion chain; `:155` (plain-boot 390px readability) keeps its plain boot and asserts `complaint-desk`. Test-only — **zero `src/` diff**.
 

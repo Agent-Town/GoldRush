@@ -2,7 +2,7 @@
 
 **Slice:** `lane-d-suite-red-inventory-cwd-invariance`
 **Branch/tip:** `lane/perf` @ `3f377d83` (runner auto-commit)
-**Base:** `d8f02e51` · **Merged to main:** `ea0cabc4a96b03d1238a80f38ed5d3036a9c9525`
+**Base:** `bfaabd1c` · **Merged to main:** `c14a19ef3ca4aa9865650f25b9de1ea38ed984f4`
 **Drained:** s1197 fire, 2026-07-29 (authored *and* drained in the same fire)
 
 ## Verdict
@@ -63,7 +63,7 @@ Error: ENOENT: no such file or directory, open '058-device-tiers.spec.ts'
 
 ### Behaviour preserved, proven against the actual pre-fix blob
 
-Running the `d8f02e51` version of the subject and the merged version on the same fixture from the repo root: **both exit 0, both 1743 B, `TREE-ROOT OUTPUT UNCHANGED: true`.** The fix removes the crash without moving a byte of a normal run's report — which matters because `logs/suite-red-inventory.md` is a measurement artifact.
+Running the `bfaabd1c` version of the subject and the merged version on the same fixture from the repo root: **both exit 0, both 1743 B, `TREE-ROOT OUTPUT UNCHANGED: true`.** The fix removes the crash without moving a byte of a normal run's report — which matters because `logs/suite-red-inventory.md` is a measurement artifact.
 
 ### The test was refuted, not trusted
 
@@ -71,7 +71,7 @@ Mutating the **subject** (never the test) — `:109` back to a cwd-relative read
 
 ## Merge classification
 
-Base `d8f02e51`. `git diff --name-only d8f02e51 main` = **`STATUS.md` alone** ⇒ **collisions NONE**, no 3-way graft. Firewall held **exactly**: 3 paths, precisely the TOUCH-ONLY list — `package.json` (one filename inserted in alphabetical position, trailing `&& node scripts/test-ticker-stats.mjs` intact), the subject, the new test. **Zero `src/`, zero `e2e/`, zero `logs/`.** The banned changes were all respected: argv paths untouched, no `try`/`catch` added, returned string shape unchanged.
+Base `bfaabd1c`. `git diff --name-only bfaabd1c main` = **`STATUS.md` alone** ⇒ **collisions NONE**, no 3-way graft. Firewall held **exactly**: 3 paths, precisely the TOUCH-ONLY list — `package.json` (one filename inserted in alphabetical position, trailing `&& node scripts/test-ticker-stats.mjs` intact), the subject, the new test. **Zero `src/`, zero `e2e/`, zero `logs/`.** The banned changes were all respected: argv paths untouched, no `try`/`catch` added, returned string shape unchanged.
 
 **No playwright, and that is proportionate rather than thinned** — the merge carries zero `src/` and zero `e2e/` bytes and renders nothing, so Mistake #10's *"where does the PLAYER see this, in a plain boot?"* answers **nowhere, by construction**.
 

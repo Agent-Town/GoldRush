@@ -1,6 +1,6 @@
 # town-store-collider — the store at the town's top is solid now (F-E1W-3)
 
-**Slice:** `lane-town-store-collider` · **branch:** `lane/m4` · **commit:** `907d5310` · **base:** `839a0d7a`
+**Slice:** `lane-town-store-collider` · **branch:** `lane/m4` · **commit:** `907d5310` · **base:** `bcdbe98f`
 **Drained:** s1181 fire, 2026-07-28 · **Verdict: MERGE**
 
 ## What it does
@@ -53,14 +53,14 @@ Gated on **scratch port 5234, external server** (Mistake #12).
 ### Merge classification — this one needed a real 3-way graft
 
 `e2e/never-trap.spec.ts` + `artifacts/` were **LANE-TOUCHED only**. `src/town/TownScene.ts` was
-**MAIN-MOVED**: `1f36b174` (the intake commit that queued this very task) rewrote two prompt labels
+**MAIN-MOVED**: `a9f5415d` (the intake commit that queued this very task) rewrote two prompt labels
 at `:1273` — *"opens soon"* → *"the registrar is in"* / *"the board is warm"*. Both sides started
 from the same blob `ba6b16f3`, and the hunks are disjoint (`:551`/`:2716` vs `:1273`), so the lane
 diff was applied with `git apply -3` and **verified by probe afterwards**: the collider fix is at
 `:554` and both of main's labels survive at `:1276`/`:1281`. Not a blind copy.
 
 ⚠️ Only `907d5310` was taken. `lane/m4` also carries `c97062be` (the cp04 charter-name STOP, whose
-report already merged as `c2d1b690` in s1180).
+report already merged as `c2d1b690 (archive: pruned by the A3 rewrite)` in s1180).
 
 ## The test is the strongest part of this slice
 

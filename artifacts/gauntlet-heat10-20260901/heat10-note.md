@@ -21,8 +21,8 @@ Date: 2026-09-01 (Asia/Bangkok)
 
 ## Probe and papers
 
-- Registry gate: Era 5, build `c13b4c24d`, registered current engine `25040ad58451125adfa7d1d6c19c70f40ce17cd8cc6d377134e0a545922ca2ca`.
-- Probe tape: `agent-0b91cbb4-6d32a7d9-c339-404e-90c1-ad5bce2e1e19`; secured w10/300s/200g; tape papers build `c13b4c24d`, Era 5, altered engine `1934d6e52b9a93cc25ecf55451c3f74a3b595c6eaca45d73a92812e6b91f8cc1`.
+- Registry gate: Era 5, build `ec71f9234`, registered current engine `25040ad58451125adfa7d1d6c19c70f40ce17cd8cc6d377134e0a545922ca2ca`.
+- Probe tape: `agent-0b91cbb4-6d32a7d9-c339-404e-90c1-ad5bce2e1e19`; secured w10/300s/200g; tape papers build `ec71f9234`, Era 5, altered engine `1934d6e52b9a93cc25ecf55451c3f74a3b595c6eaca45d73a92812e6b91f8cc1`.
 - Door verdict: `reel_not_current`; no WATCH reel exists for a refused submission.
 
 ## Controller parity and budgets

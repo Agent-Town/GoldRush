@@ -1,13 +1,13 @@
 # f1524-1-milk-county-board-stale-copy — six stale full-text assertions re-pointed at the shipped copy
 
 **Slice:** `f1524-1-milk-county-board-stale-copy` (F-1523-7 corrective)
-**Branch:** `lane/a` · **tip:** `d0231980d` · **base:** `main` at gate time `989685e71`
+**Branch:** `lane/a` · **tip:** `d0231980d` · **base:** `main` at gate time `4bebada01`
 **Gated in:** detached worktree `worktrees/gate-s1525` (§3.0b custody), three-way merge commit `64eed189`
 **Drained by:** s1525 · **Verdict:** ✅ **MERGE**
 
 ## What it does
 
-s1521's `lane-fd3-boards-pass` (`9b7c530a`) deliberately rewrote the county board and field book empty
+s1521's `lane-fd3-boards-pass` (`7abee977`) deliberately rewrote the county board and field book empty
 states into the county's voice — exactly what its own gazette item advertised — and left its neighbour's
 six full-text `toHaveText` assertions pointing at the old copy. **The test went stale; the product is
 correct.** Two fires (s1522, s1523) labelled the resulting reds "pre-existing" and each paid for a control
@@ -77,7 +77,7 @@ above.
 
 ## Merge classification
 
-Base `989685e71`. Three-way `git merge --no-ff lane/a` in the gate worktree: **ort strategy, zero
+Base `4bebada01`. Three-way `git merge --no-ff lane/a` in the gate worktree: **ort strategy, zero
 conflicts**; merged-tree diff vs main is exactly one file, +6/−6.
 
 | File | Class | Resolution |

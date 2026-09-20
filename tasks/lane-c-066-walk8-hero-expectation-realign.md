@@ -1,6 +1,6 @@
 # Task lane-c-066-walk8-hero-expectation-realign: `066-walk8-engine` still asserts the hero "stays on walk4" — observe what she ACTUALLY walks on, then realign the expectation to the ratified activation (lane-c, commit prefix "test:")
 
-**FIRE-AUTHORED (attended review welcome)** — s1179, 2026-07-28. Authored from a defect **I measured myself during the `29bac3d9` drain**, with my own single-variable control, not from a summary: the two reds reproduce with `assets/layer-contracts/characters.v2.json` reverted to clean main, so they are not that merge's doing. Filed as **F-1179-1** (`tasks/BACKLOG.md`). No new scope invented; the successor question is a test expectation, and the engine is not on trial.
+**FIRE-AUTHORED (attended review welcome)** — s1179, 2026-07-28. Authored from a defect **I measured myself during the `1b6bc748` drain**, with my own single-variable control, not from a summary: the two reds reproduce with `assets/layer-contracts/characters.v2.json` reverted to clean main, so they are not that merge's doing. Filed as **F-1179-1** (`tasks/BACKLOG.md`). No new scope invented; the successor question is a test expectation, and the engine is not on trial.
 
 CODEX: model=gpt-5.6-sol effort=high
 
@@ -9,7 +9,7 @@ You are Codex, implementer for Gold Rush, running natively on Robin's Mac in `wo
 READ FIRST (paths, not memory):
 - `AGENTS.md`
 - `e2e/066-walk8-engine.spec.ts` — **all of it, but especially `:79-86` (the shared `heroWalk()` helper and its `frameCount === 4` wait), `:194-206` (the test named "hero stays on walk4 while walk8 cells are registered"), and `:208-238` (the Claim Jumper cadence test, whose FIRST act is that same helper).**
-- `assets/layer-contracts/characters.v2.json` — the `char.hero` entry: its `walk4` block, its `walk8` block (including the `notes` field, which dates and quotes the activation), and the `walk8.directions` map merged at `29bac3d9`.
+- `assets/layer-contracts/characters.v2.json` — the `char.hero` entry: its `walk4` block, its `walk8` block (including the `notes` field, which dates and quotes the activation), and the `walk8.directions` map merged at `1b6bc748`.
 - `e2e/eight-winds-hero.spec.ts` — the sibling that reads the same contract and is **green 4/4**. It is your regression net; it must stay 4/4.
 - `reviews/eight-winds-wiring-hero.md` **ACT 2** — the drain that measured this defect, including the exact control that proves it pre-existing.
 - `src/assets/SpriteAnimator.ts:790-855` — **read it to understand, not to edit.** See the firewall.
@@ -17,11 +17,11 @@ READ FIRST (paths, not memory):
 ## Pre-flight (LANE-SAFETY, runner-auto-commit aware)
 The lane branch being ahead is NORMAL — the runner auto-commits. For each ahead commit: if its content is already merged to main (verify via `git log`/`git diff`), it is a SAFE DUPE → `git checkout -B lane/e2-arsenal main && git clean -fd` and PROCEED. STOP-and-report ONLY if an ahead commit's content is NOT on main (undrained work — resetting would DESTROY it), or the worktree holds uncommitted edits you did not make.
 
-**The dupe was proven at authoring time — but its premise EXPIRED THREE MINUTES LATER, so re-derive it rather than trusting the paragraph below.** s1179 verified at 2026-07-28T19:2xZ, immediately after draining this very lane: `lane/e2-arsenal` was ahead at `46397ac5`, whose entire 77-file deliverable **shipped to main as `29bac3d9`**, and `git diff --name-only --diff-filter=A main..lane/e2-arsenal` returned **EMPTY**.
+**The dupe was proven at authoring time — but its premise EXPIRED THREE MINUTES LATER, so re-derive it rather than trusting the paragraph below.** s1179 verified at 2026-07-28T19:2xZ, immediately after draining this very lane: `lane/e2-arsenal` was ahead at `46397ac5`, whose entire 77-file deliverable **shipped to main as `1b6bc748`**, and `git diff --name-only --diff-filter=A main..lane/e2-arsenal` returned **EMPTY**.
 
-✅ **THAT BLOCKER IS NOW CURED — THIS IS THE SECOND DISPATCH, AND THE PREMISE HAS CHANGED (s1180, 2026-07-28T20:0xZ).** The first dispatch **STOPPED CORRECTLY at this very pre-flight** (`tasks/runs/20260728-194116-…`, merged `25837a8c`): an attended session had queued `lane-m3-05b-run-ledger` to this same lane at 19:19 (`f75f4e4e`, owner-approved), the runner took it three seconds later, and its five-file deliverable sat **undrained** on the branch — so the gate refused to reset and cost the factory one run instead of a slice. **That is the gate working, not failing.**
+✅ **THAT BLOCKER IS NOW CURED — THIS IS THE SECOND DISPATCH, AND THE PREMISE HAS CHANGED (s1180, 2026-07-28T20:0xZ).** The first dispatch **STOPPED CORRECTLY at this very pre-flight** (`tasks/runs/20260728-194116-…`, merged `25837a8c (archive: pruned by the A3 rewrite)`): an attended session had queued `lane-m3-05b-run-ledger` to this same lane at 19:19 (`fadfc7a5`, owner-approved), the runner took it three seconds later, and its five-file deliverable sat **undrained** on the branch — so the gate refused to reset and cost the factory one run instead of a slice. **That is the gate working, not failing.**
 
-**s1180 then drained it (`d9c86768`, review `reviews/m3-05b-run-ledger.md`) and re-measured this lane at 20:0xZ: `git diff --name-only --diff-filter=A main..lane/e2-arsenal` is now EMPTY.**
+**s1180 then drained it (`f68a6215`, review `reviews/m3-05b-run-ledger.md`) and re-measured this lane at 20:0xZ: `git diff --name-only --diff-filter=A main..lane/e2-arsenal` is now EMPTY.**
 
 ➡️ **Re-derive it anyway — that is the whole point of this paragraph, and the reason this task exists to be run twice.** Run `git diff --name-only --diff-filter=A main..lane/e2-arsenal` yourself. **EMPTY ⇒ reset and proceed. NOT empty ⇒ something landed after 20:0xZ; that is undrained work and a reset would DESTROY it — STOP AND REPORT, naming the files.** A STOP there is the correct outcome and costs the factory one run; a reset there costs it a slice.
 
@@ -47,7 +47,7 @@ That was a true and useful assertion **when walk8 cells were registered but not 
 
 Neither is a timeout in the sense F-1167-2 discounts: they are 30 s waits on a condition that **can never become true**, which is a stale expectation wearing a timeout's clothes.
 
-✓ **PROVEN PRE-EXISTING, NOT CAUSED BY `29bac3d9`, BY CONTROL** (s1179, on the merged tree): with `assets/layer-contracts/characters.v2.json` reverted to clean main and everything else left in place, the same two tests fail at the same helper line — desktop control **1 passed / 2 failed**, identical to the treatment arm.
+✓ **PROVEN PRE-EXISTING, NOT CAUSED BY `1b6bc748`, BY CONTROL** (s1179, on the merged tree): with `assets/layer-contracts/characters.v2.json` reverted to clean main and everything else left in place, the same two tests fail at the same helper line — desktop control **1 passed / 2 failed**, identical to the treatment arm.
 
 ⚠️ **The valuable part of `:208` is the part that never runs.** It is the only test asserting that a walker at a *higher frame count* keeps the *old stride duration* (`jumper.fps` ≈ 8.55 at 8 frames). That cadence law is exactly what the eight-winds work depends on. Restoring it to life is the point of this task; the hero lines are only its doorway.
 

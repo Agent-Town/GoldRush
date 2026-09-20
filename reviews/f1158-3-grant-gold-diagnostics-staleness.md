@@ -71,7 +71,7 @@ The economy was always correct; only the published snapshot lagged, by exactly o
   **Control-proven:** I reverted my change and re-ran; the identical three failures at the identical
   lines appeared on the unmodified tree. This matches the documented red in
   `reviews/lane-055-standard-note-assertion-and-briefing.md:73` and `tasks/BACKLOG.md:1397`, which
-  fingerprinted it on clean main at `452af90c`. Still open, still not this slice's.
+  fingerprinted it on clean main at `c432e041`. Still open, still not this slice's.
 - **F-1159-3 (pre-existing intermittent, NOT mine — fingerprinted):** `m2-04-gold-stealing.spec.ts:226`
   `Expected < 20, Received 20.3–21.3`. This is the owner-gated **F-1156-2** dominant red
   (⛔ *never widen the constant*). Present on **both** arms: **2/4 with the fix, 1/4 without**, same

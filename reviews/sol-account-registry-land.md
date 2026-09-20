@@ -1,6 +1,6 @@
 # Review — sol-account-registry-land (Astra's atomic account registry, landed behind a closed gate)
 
-Slice: `sol-account-registry-land` · branch `sol/account-registry-land` · tip `0d454e51d` · base `821bff7e9` · gated by s2642 on a detached trial merge (`bc737cbe4`) in `gate-s2642/`.
+Slice: `sol-account-registry-land` · branch `sol/account-registry-land` · tip `b97fa403a` · base `2fbae0611` · gated by s2642 on a detached trial merge (`bc737cbe4`) in `gate-s2642/`.
 
 ## Verdict
 
@@ -37,7 +37,7 @@ Every suite reproduces the runner's own counts to the digit, which is what makes
 
 ## Merge classification
 
-Base `821bff7e9`; main had moved **17 paths** since. Lane paths: **42**, of which 35 are `artifacts/sol/account-registry-land/**` evidence and 7 are production surfaces. **Every lane path is LANE-ONLY — the overlap between main's 17 moved paths and the lane's 42 is empty**, which is why `ort` merged with no conflict and why no hunk needed a three-way resolution. Merged as the gated commit itself, not a fresh resolution.
+Base `2fbae0611`; main had moved **17 paths** since. Lane paths: **42**, of which 35 are `artifacts/sol/account-registry-land/**` evidence and 7 are production surfaces. **Every lane path is LANE-ONLY — the overlap between main's 17 moved paths and the lane's 42 is empty**, which is why `ort` merged with no conflict and why no hunk needed a three-way resolution. Merged as the gated commit itself, not a fresh resolution.
 
 ## No screenshots, and why
 

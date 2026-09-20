@@ -1,10 +1,10 @@
 # Review — f2134-1 + f2136-1, the lane-b terrain-contract-scope stack
 
 **Slice:** `f2134-1-bench-terrain-contract-scope` (instrument) + `f2136-1-terrain-scope-honest-labels` (specification correction)
-**Branch:** `lane/b` · **Tip gated:** `62ea97dd7` · **Base:** `230007dd115c1e7a3695a770fe2835bbdd9a7386`
-**Merge:** `88863d3ebb8fc58289326e9945d16ccae2f8cf1d` (main, `--no-ff`)
+**Branch:** `lane/b` · **Tip gated:** `c5f75967d` · **Base:** `05a0bf7f4744b944dd85d710da44d0093d70e3c0`
+**Merge:** `8d26540fddedb4115988f9bdaa3f674c4422f246` (main, `--no-ff`)
 **Drained:** s2138, 2026-08-21
-**Gated in:** detached worktree `wt-s2138-gate` at `62ea97dd7`, `node_modules` symlinked (§3.0b — undecided content never entered main's working tree)
+**Gated in:** detached worktree `wt-s2138-gate` at `c5f75967d`, `node_modules` symlinked (§3.0b — undecided content never entered main's working tree)
 
 ## Verdict
 
@@ -81,7 +81,7 @@ runner's edit would have been.
 
 ## Merge classification
 
-Base `230007dd1`. Four paths, **all LANE-ONLY** — `git diff base..main` over the same four paths is
+Base `05a0bf7f4`. Four paths, **all LANE-ONLY** — `git diff base..main` over the same four paths is
 empty, so main had moved none of them and no graft or conflict resolution was required.
 
 | Path | Class | Note |

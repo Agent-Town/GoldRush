@@ -228,7 +228,7 @@ export function isOwnerGate(gateText) {
  * reaching kind:'window', each row keyed by rowId() and membership tested against
  * THAT WINDOW'S OWN deskTail(), which are s2347's two self-corrected errors:
  *   UNTIGHTENED (owner-act, no closure test) : 13 admitted -> 5 FAIL verdicts
- *      4 of the 5 are CLOSURE RECORDS (F-1652-1 x2, F-1374-1, 7435fa7c) — exactly
+ *      4 of the 5 are CLOSURE RECORDS (F-1652-1 x2, F-1374-1, 75b07024) — exactly
  *      the shape F-2259-1 replayed at 3-new-verdicts-ALL-FALSE and rejected,
  *      because this guard's remedy MANUFACTURES desk items out of closed threads.
  *   TIGHTENED (this function)                : 1 admitted -> 1 FAIL verdict
@@ -491,7 +491,7 @@ export function addedRows(diffText) {
  * conventions — was replayed over those same 1,133 windows: it admits 168 extra
  * rows across 85 windows and produces exactly THREE new verdicts, ALL THREE
  * FALSE (F-1631-3 "OFF THE OWNER'S DESK — CLOSED … OWES NO WORD", F-1635-3
- * "SUPERSEDED s1636", 325241e2 "DRAINED s1497"). It catches ZERO genuine
+ * "SUPERSEDED s1636", ea6f2efb "DRAINED s1497"). It catches ZERO genuine
  * undesked rows. And this guard's REMEDY is "put it on the desk", so obeying a
  * false red MANUFACTURES owner-desk items out of closure records, onto a desk
  * already at 27 (s2255's rule: the harm is the remedy, not the red).

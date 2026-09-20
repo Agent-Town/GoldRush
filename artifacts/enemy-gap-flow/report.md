@@ -24,4 +24,4 @@ date: 2026-07-13
 - `enemy-gap-flow.spec.ts`: all 16 desktop + mobile cases green with zero captured console/page errors.
 - `m2-01-build-menu.spec.ts`: 14/14 green across desktop + mobile, including the formerly failing finite-line guard.
 - `task-025`, `m1-01`, and `e2-escort-mode`: 24/24 green across desktop + mobile.
-- Baron batteries: 10 stale assertions reproduced byte-for-byte on clean base `98019311` (live Baron 240x HP / `science-complete+2-secured` versus old 160x / `science-complete` expectations, plus the existing claim-sprite fallback load race); the remaining 41 passed and 1 skipped across desktop + mobile. Existing specs were not edited.
+- Baron batteries: 10 stale assertions reproduced byte-for-byte on clean base `02db6ba2` (live Baron 240x HP / `science-complete+2-secured` versus old 160x / `science-complete` expectations, plus the existing claim-sprite fallback load race); the remaining 41 passed and 1 skipped across desktop + mobile. Existing specs were not edited.

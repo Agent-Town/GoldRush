@@ -1,8 +1,8 @@
 # s2535 FIRE result
 
-Merged `main-beat-citation-refresh` as `8d20801023cb5df48a0487dc1401cff822aa7836`; bookkeeping and evidence `f989bb17c`. Nine numeric comment ranges change; 9,182 runtime tokens and 2,280 lines do not. Era 5 retains all 80 old pins and appends pin 81 `1a825ba0`.
+Merged `main-beat-citation-refresh` as `3102584800ca6d2ea8695d3f7c3cdf03602c3d8f`; bookkeeping and evidence `6e5708dbf`. Nine numeric comment ranges change; 9,182 runtime tokens and 2,280 lines do not. Era 5 retains all 80 old pins and appends pin 81 `1a825ba0`.
 
-The old gate base was superseded by attended A8 source/art changes. This fire built a fresh full detached gate at `378219cbc`, using Node 26.4.0 and an isolated Vite cache on port 5234. No tests, assertions or timeouts changed.
+The old gate base was superseded by attended A8 source/art changes. This fire built a fresh full detached gate at `dba2fef16`, using Node 26.4.0 and an isolated Vite cache on port 5234. No tests, assertions or timeouts changed.
 
 - Citation derivation, token/line comparison, tsc and build: PASS. Engine guard 5/5.
 - Full native node battery: rc 0, 741 tests / 736 pass / five declared skips / zero failures or cancellations, including all chained legs, 2074.1 seconds. The fixture guard passed after 1050.4 seconds over 126 owners. Its synchronous aggregate continued beyond the nominal 300-second default; the old 900-second outer wrapper cannot finish this tree. The Node 23 children in the dual-engine overtime test are intentional; the harness parent was Node 26.

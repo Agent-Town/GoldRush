@@ -1,7 +1,7 @@
 // s1557 — drain bookkeeping for f1554-1: goal leaf + BACKLOG closure.
 import fs from 'node:fs';
 
-const MERGE = '82a4c15c4ed5981a95090f35dcf3da11c381147a';
+const MERGE = '892d69face4d5ce7ccdbb91ccc3b8de9c6950d6f';
 const LEAF = 'f1554-1-node-guards-contention-stamp';
 
 // ---- goal leaf ----------------------------------------------------------
@@ -29,7 +29,7 @@ if (i < 0) { console.error('F-1554-1 row not found — ABORT'); process.exit(1);
 if (/CURED — DO NOT AUTHOR/.test(L[i])) { console.error('already closed — ABORT'); process.exit(1); }
 
 L[i] =
-  '⛔ **CURED — DO NOT AUTHOR FROM THIS ROW (closed s1557 at the drain, merge `82a4c15c4`): the contention stamp is LIVE on main.** ' +
+  '⛔ **CURED — DO NOT AUTHOR FROM THIS ROW (closed s1557 at the drain, merge `892d69fac`): the contention stamp is LIVE on main.** ' +
   '`scripts/run-node-guards.mjs` now prints `CONTENDED — <n> concurrent batteries` to stderr, bracketing the battery (once before the child, once after). ' +
   '🔑 **It counts BATTERIES, not pids** — each `sh -c` + `node` pair that `npm run` produces is collapsed into one root — which is the correction s1556 made to ' +
   '**this row\'s own arithmetic** while authoring the cure: one battery presents TWO matching pids, so this row\'s evidence pairs `34453/34454` and `69380/69381` ' +

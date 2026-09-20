@@ -1,9 +1,9 @@
 # tape-resume — a rider's tape becomes its checkpoint
 
 **Slice:** `tape-resume` (HarnessDev §3 E, the checkpointing gap)
-**Branch:** `lane/c` · **tip** `ed3203ab3726672e1a14ee38114181cd0a424663` (runner commit)
-**Merged to main:** `54ad83927f0325b25bb78e5c4a1df67a821047b9` (drain s2471, 2026-09-03)
-**Gate base:** `5b20071a35f4a0dda2a6d734ea4088e30c0b5cf2` (main tip at gate time)
+**Branch:** `lane/c` · **tip** `b06ac1c8bcbf4ecda55135ea8be0d63cd44e0d1b` (runner commit)
+**Merged to main:** `8771c4296405459608432f73a94b9d9fd10d6d8c` (drain s2471, 2026-09-03)
+**Gate base:** `f3718ad23072dfde492a43ad32ba439e7da476b8` (main tip at gate time)
 **Gate worktree:** `gate-s2471` (detached — §3.0b custody: nothing undecided ever entered main's tree)
 
 ## VERDICT: MERGED
@@ -72,7 +72,7 @@ the era file reverted to main's version on the merged tree, `engine-era-guard` g
 hash corpus"* (`actual: false, expected: true`). With the pin: **5/5**. The pin is load-bearing,
 and this is the exact duty the runner reported as owed to the drain.
 
-## Merge classification (base `5b20071a3`, lane behind=19)
+## Merge classification (base `f3718ad23`, lane behind=19)
 
 | File | Class | How resolved |
 |---|---|---|

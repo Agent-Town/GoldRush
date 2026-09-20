@@ -26,7 +26,7 @@ Then `npm install --no-audit --no-fund`; `npm run build` green before touching a
 
 `scripts/fire.md` §2E, already law, verbatim: *"s1271 froze three lanes for days on the coarse file-level read and **two of them were never at risk**, while the third held 140 lines main had never seen — a conservative verdict at the wrong resolution is not safety, it is a different way of being wrong."*
 
-F-1417-3 (s1417) measured the same class again. `lane-a` and `lane-c` sat frozen across multiple fires under standing *"do not reset"* orders, both reading **HOLDS**. Asked at line level, the entire residue was **8 lines**, and every one was a superseded older form — pre-cure twin-banks pins (`kills: 189`, `fnv1a32:5f57f7be`), positional `HeadlessContractSim(...)` constructor calls main had replaced with the object form, and the pre-cure `eliteKind === 'baron'` predicate that `1a4831df` fixed.
+F-1417-3 (s1417) measured the same class again. `lane-a` and `lane-c` sat frozen across multiple fires under standing *"do not reset"* orders, both reading **HOLDS**. Asked at line level, the entire residue was **8 lines**, and every one was a superseded older form — pre-cure twin-banks pins (`kills: 189`, `fnv1a32:5f57f7be`), positional `HeadlessContractSim(...)` constructor calls main had replaced with the object form, and the pre-cure `eliteKind === 'baron'` predicate that `653c7fef` fixed.
 
 ⚠️ **The honest lesson, and the reason this slice is deliberately narrow: `lane-absorbed-lines.mjs` reported `NOT ABSORBED` for BOTH lanes, and it was RIGHT to.** Those lines genuinely are absent from main. The judgement that they were *superseded rather than unseen* required reading main's copy and recognising each line's replacement — **that is a judgement call, and this slice must not pretend to automate it.**
 
@@ -48,7 +48,7 @@ F-1417-3 (s1417) measured the same class again. `lane-a` and `lane-c` sat frozen
 4. 🚫 **THE VERDICT LOGIC IS UNCHANGED, AND THIS IS THE DELIVERABLE, NOT THE PRINTING.**
    `inspect()`'s choice among `USABLE` / `AHEAD-BUT-ABSORBED` / `HOLDS` / `DIRTY` / `BUSY`, and the `RC` map at `:216`, must be **untouched**. A path with zero residue still HOLDS. **Do not add an auto-downgrade, do not make `--cure` accept a HOLDS lane, do not "improve" this into a decision.** A fire rules; the tool measures.
    Pin this with an explicit test (self-check 4) — a test that asserts the verdict did *not* move is the one that makes this slice safe to land.
-5. **New guard file `scripts/lane-residue.test.mjs`**, rooted in `test:node-guards` in `package.json` (insert **alphabetically**; the roster is **43** files as of `cf005d59` — count it yourself and report the number you found, per F-1411-3). Cases at minimum:
+5. **New guard file `scripts/lane-residue.test.mjs`**, rooted in `test:node-guards` in `package.json` (insert **alphabetically**; the roster is **43** files as of `01a91f55` — count it yourself and report the number you found, per F-1411-3). Cases at minimum:
    - all added lines present in main → `ABSORBED`
    - one added line absent → `NOT_ABSORBED`, and `missing` contains exactly that line
    - whole-line differences whose tokens all appear in one main line → `ABSORBED_TOKEN`

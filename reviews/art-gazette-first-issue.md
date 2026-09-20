@@ -1,6 +1,6 @@
 # Review — `art-gazette-first-issue` (GG-02: six engravings + masthead for the Greenhorn's Gazette)
 
-**Slot:** art · **Commit:** `ee54c438eaa65c8d9b168d5d459fdd9cfe96c20a` "runner(art): art-gazette-first-issue.md"
+**Slot:** art · **Commit:** `8dff01fbc7f29a643de357cc1bd60d974a667302` "runner(art): art-gazette-first-issue.md"
 **Drained by:** s1205 fire, 2026-07-29. **Tier:** reference (full-bleed, no `#ff00ff` key) → **no extraction, no wiring** — GG-03 owns the swap, per the task's own firewall.
 
 ## Verdict
@@ -25,7 +25,7 @@ to **repo-root `assets/raw/`**, not `worktrees/art/`. Every file was hash-compar
 | `codex-art-run-art-gazette-first-issue.md` | `d8f4cf7b823a` | `d8f4cf7b823a` | ✅ |
 
 ⚠️ **Name-identity was deliberately not the test** — F-1054-1 was exactly a name that matched main
-over bytes that were in no object database. `ee54c438` also carries the LEDGER row (+1 line) and the
+over bytes that were in no object database. `8dff01fb` also carries the LEDGER row (+1 line) and the
 66-line run note. **Nothing here is AT RISK: all eight files are in main's object database.**
 
 ## Canon verify — the two risk atoms, opened and read
@@ -76,4 +76,4 @@ decision nobody explicitly ratified.
 - **GZ-01: not owed.** The art is unwired, so no player can see it in a plain boot — the house rule for
   reference-tier batches is "unwired → no gazette" (LEDGER rows 48–54 say so explicitly). It earns its
   news item at GG-03, when the panels actually appear in the Herald.
-- **LEDGER:** row present (added in `ee54c438`).
+- **LEDGER:** row present (added in `8dff01fb`).

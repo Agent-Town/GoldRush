@@ -10,11 +10,11 @@ CODEX: gpt-5.6-sol effort=medium
 
 Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead is NORMAL — the runner auto-commits. For each ahead commit: if its content is already merged to main OR is preserved on another ref (verify via git log/diff/for-each-ref), it is a SAFE DUPE → `git checkout -B lane/perf main && git clean -fd` and PROCEED. STOP-and-report ONLY if an ahead commit's content is NOT on main and NOT on any other ref (undrained work — resetting would DESTROY it), or the worktree holds uncommitted edits you did not make. Then `npm install --no-audit --no-fund`; `npm run build` green before touching anything.
 
-> ✅ **THE AUTHORING FIRE MEASURED `lane/perf`'s STATE AND IT IS A PLAIN SAFE DUPE — RESET AND PROCEED.** `lane/perf` is **1 ahead** at `b1d42540` "runner(lane-d): lane-d-suite-red-inventory-run-tree-invariance.md" — that is the work this fire just **merged to main** as `e968557a`. Verified by **two-dot** diff, not by the commit count (a commit count is not a drain signal): `git diff --stat main lane/perf` reports **8 files changed, 3 insertions, 306 deletions** — the lane is *behind* main, holding no unique bytes, and **no `scripts/` path appears**, so both files you are about to touch are already byte-identical between the lane and main. **Nothing is lost by resetting.** ⚠️ **The 171 MB special case that once froze this lane is HISTORY — do not re-apply it**; the raw also lives on `refs/heads/archive/suite-red-inventory-raw-171mb`, and s1197/s1198/s1199 all reset this lane without loss. Confirm in one command before resetting (`git diff --stat main lane/perf` must show **no `scripts/` path**); if a `scripts/` path DOES appear, STOP and report — the premise of this paragraph has changed.
+> ✅ **THE AUTHORING FIRE MEASURED `lane/perf`'s STATE AND IT IS A PLAIN SAFE DUPE — RESET AND PROCEED.** `lane/perf` is **1 ahead** at `b1d42540` "runner(lane-d): lane-d-suite-red-inventory-run-tree-invariance.md" — that is the work this fire just **merged to main** as `1e351130`. Verified by **two-dot** diff, not by the commit count (a commit count is not a drain signal): `git diff --stat main lane/perf` reports **8 files changed, 3 insertions, 306 deletions** — the lane is *behind* main, holding no unique bytes, and **no `scripts/` path appears**, so both files you are about to touch are already byte-identical between the lane and main. **Nothing is lost by resetting.** ⚠️ **The 171 MB special case that once froze this lane is HISTORY — do not re-apply it**; the raw also lives on `refs/heads/archive/suite-red-inventory-raw-171mb`, and s1197/s1198/s1199 all reset this lane without loss. Confirm in one command before resetting (`git diff --stat main lane/perf` must show **no `scripts/` path**); if a `scripts/` path DOES appear, STOP and report — the premise of this paragraph has changed.
 
 ## Why (F-1200-3 and F-1200-2, raised by the s1200 drain of the slice that shipped one commit earlier)
 
-The predecessor slice (`e968557a`, F-1198-2) is **correct and it stays**. Its cure was verified on the real 171 MB raw: 117,626 B from two unrelated script roots, byte-identical, while still carrying 188 percentage cells and 95 ranked masking rows. This task does **not** revisit that. It fixes two things the drain's own mutation controls exposed *in the guards and the caption*, not in the cure.
+The predecessor slice (`1e351130`, F-1198-2) is **correct and it stays**. Its cure was verified on the real 171 MB raw: 117,626 B from two unrelated script roots, byte-identical, while still carrying 188 percentage cells and 95 ranked masking rows. This task does **not** revisit that. It fixes two things the drain's own mutation controls exposed *in the guards and the caption*, not in the cure.
 
 ### 🔑 WHAT THE AUTHORING FIRE MEASURED. DO NOT RE-DERIVE FROM MEMORY; DO REPRODUCE IN SCOPE 1.
 
@@ -74,7 +74,7 @@ Then restore the subject and confirm the SHA-256 again. Report: the mutated hash
 
 ### 5. State the guard count explicitly
 
-The count is **72** as of `e968557a` (14 files). If your change moves it, **say so in one sentence with the new number** — an unannounced change to an expected value becomes the next fire's phantom red. If you add no `test()`, say that it remains 72.
+The count is **72** as of `1e351130` (14 files). If your change moves it, **say so in one sentence with the new number** — an unannounced change to an expected value becomes the next fire's phantom red. If you add no `test()`, say that it remains 72.
 
 ### 6. Do NOT regenerate the canonical artifact
 

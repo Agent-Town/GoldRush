@@ -21,7 +21,7 @@ const SPECS = [
   'e2e/town-dynamo-hall-blender.spec.ts',
 ];
 const MERGED = '75903bf48';
-const PREMERGE = 'a4556dca5';
+const PREMERGE = 'edda5d3de';
 
 const git = (...a) => {
   const r = spawnSync('git', a, { cwd: GATE, encoding: 'utf8', env });

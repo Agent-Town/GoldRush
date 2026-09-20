@@ -1,7 +1,7 @@
 # reviews/gauntlet-heat6-almanac-era-r2.md
 
-**Slice:** `gauntlet-heat6-almanac-era-r2` · **branch:** `lane/c` · **tip:** `00073a187` ·
-**base:** `920a590f6bb686cb247549ee9ed5901ed5d97192` · **merge:** s2299 · **drained by:** s2299 (fire)
+**Slice:** `gauntlet-heat6-almanac-era-r2` · **branch:** `lane/c` · **tip:** `d99eb2f4a` ·
+**base:** `920a590f6bb686cb247549ee9ed5901ed5d97192 (archive: pruned by the A3 rewrite)` · **merge:** s2299 · **drained by:** s2299 (fire)
 
 ## Verdict
 
@@ -12,11 +12,11 @@ failure (no lawful Baron admission) plainly rather than burying it.
 
 ## What it does
 
-The heat-6 almanac-era re-ride, dispatched by the attended session after `1325cda49` cured the
+The heat-6 almanac-era re-ride, dispatched by the attended session after `3ff1eb606` cured the
 deploy pipeline's missing assayer leg (F-HEAT6-SKEW). r1 of this slice stopped at the engine-skew
 gate and was drained s2296 having answered neither of its two questions. **r2 answers both.**
 
-The mandatory parity probe secured `the-claim` at w10/45g on live build `61681a776` and verified
+The mandatory parity probe secured `the-claim` at w10/45g on live build `2701f6b56` and verified
 end-to-end with **tape and assayer hashes both `fnv1a32:e7c3d0c0`** — the first field confirmation
 that the skew cure holds. Six of six contracts then secured locally in 20 launches, five of them
 verified and ranked by the county.
@@ -59,8 +59,8 @@ agreeing on a hash is stronger than either asserting it.
 | `tasks/BACKLOG.md` | **BOTH-MOVED** | hand-resolved, both sides kept by CONTENT |
 
 `tasks/BACKLOG.md` conflicted and **must not be resolved by taking a side.** Main had moved twice
-since the lane branched — attended added the `F-HEAT6-SKEW` row at `1325cda49`, and the HEAT 6 row
-itself was rewritten to record the r1 skew-stop drained at `ecb70b457` — while the lane appended its
+since the lane branched — attended added the `F-HEAT6-SKEW` row at `3ff1eb606`, and the HEAT 6 row
+itself was rewritten to record the r1 skew-stop drained at `ecb70b457 (archive: pruned by the A3 rewrite)` — while the lane appended its
 R2 sentence to the **stale base** of that same row.
 
 - taking `HEAD` → loses the entire R2 field result

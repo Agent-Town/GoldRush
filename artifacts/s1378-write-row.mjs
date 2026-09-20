@@ -10,11 +10,11 @@ L.splice(9, 0, row, '');
 
 const marks = [
   ['\u{1F7E2} **F-1376-1 (s1376, MEASURED',
-   '✅ **F-1376-1 — CURE LANDED s1378 `7a2780be` (its "§7.7 forbids it" premise REFUTED — see F-1378-1); the filed substitution text matched 0 occurrences and was corrected on landing. (s1376, MEASURED'],
+   '✅ **F-1376-1 — CURE LANDED s1378 `782309cb` (its "§7.7 forbids it" premise REFUTED — see F-1378-1); the filed substitution text matched 0 occurrences and was corrected on landing. (s1376, MEASURED'],
   ['\u{1F7E2} **F-1375-1 (s1375, MEASURED',
-   '✅ **F-1375-1 — CURE LANDED s1378 `7a2780be` (its "§7.7 forbids it" premise REFUTED — see F-1378-1). (s1375, MEASURED'],
+   '✅ **F-1375-1 — CURE LANDED s1378 `782309cb` (its "§7.7 forbids it" premise REFUTED — see F-1378-1). (s1375, MEASURED'],
   ['\u{1F7E2} **F-1374-1 (s1374, MEASURED',
-   '✅ **F-1374-1 — CURE LANDED s1378 `7a2780be`; `law-pointer-guard` now REACHES both coordinates (23→25 pointers, 20→22 checked, PASS). Premise REFUTED — see F-1378-1. (s1374, MEASURED'],
+   '✅ **F-1374-1 — CURE LANDED s1378 `782309cb`; `law-pointer-guard` now REACHES both coordinates (23→25 pointers, 20→22 checked, PASS). Premise REFUTED — see F-1378-1. (s1374, MEASURED'],
 ];
 let hits = 0;
 for (let i = 0; i < L.length; i++) {

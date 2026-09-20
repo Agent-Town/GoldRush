@@ -1,9 +1,9 @@
 # ap16-2b — the draft reaches the door (RE-LAND)
 
 - **Slice**: `ap16-2b-reland-draft-reaches-door` (lane-d, master `tasks/lane-d-ap16-2b-draft-reaches-door.md`, FIRE-AUTHORED s1639)
-- **Branch / tip**: `lane/d` @ `94921076a` (`runner(lane-d): lane-d-ap16-2b-draft-reaches-door.md`)
-- **Lane base**: `fd050c528`
-- **Merge**: `b8cf2332d3afe39adea64e2a273cdca8d55254cd` (main, s1641 fire)
+- **Branch / tip**: `lane/d` @ `3f2ed7927` (`runner(lane-d): lane-d-ap16-2b-draft-reaches-door.md`)
+- **Lane base**: `96556346b`
+- **Merge**: `89e97e2938aff518d1f4995472238f878a642758` (main, s1641 fire)
 - **Run log**: `tasks/runs/20260810-212739-lane-d-lane-d-ap16-2b-draft-reaches-door.md.log` (12.0 MB)
 - **Salvage ref reused**: `save/ap16-2-s1639-73a0cfed` (tip `73a0cfedc8379019a441d29d7375864967136e28`)
 

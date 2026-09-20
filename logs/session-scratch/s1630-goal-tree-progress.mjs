@@ -61,9 +61,9 @@ if (!findSubgoal((g) => g.id === 'gauntlet-season-1')) {
     id: 'gauntlet-season-1',
     title: 'THE GAUNTLET, Season 1 — heats, ablations, instruments (bench/gauntlet + bench/foundry evidence)',
     tasks: [
-      { id: 'omp-debut', title: 'omp debut: first-attempt the-claim secure, county rank 3; pi-family ablation complete on one map', status: 'shipped', mergeHash: '95853b2d0f380e90d055c0db1cd410e4d4024070' },
-      { id: 'prime-sol-ablation', title: 'prime × Sol: the-claim SECURED run 1 (posted rank 7, replayed 2x deterministic); Baron w23 postmortem seeded F-SAME-1', status: 'shipped', mergeHash: 'fb148073dd26afd56c73998611f052cf7fb42b6b' },
-      { id: 'mac-foundry-verdict', title: 'MAC foundry spike: TWO-ARM NEGATIVE, model-proof ("mass was not meaning"); Aider network-reach caught + patched; shelved pending assembly-level semantic QA', status: 'shipped', mergeHash: '149a10cc6882d37faac49d5141c0133f5994e87e' },
+      { id: 'omp-debut', title: 'omp debut: first-attempt the-claim secure, county rank 3; pi-family ablation complete on one map', status: 'shipped', mergeHash: '8808681d1a4ec71697d0e132e9b9e48e750d4744' },
+      { id: 'prime-sol-ablation', title: 'prime × Sol: the-claim SECURED run 1 (posted rank 7, replayed 2x deterministic); Baron w23 postmortem seeded F-SAME-1', status: 'shipped', mergeHash: '57b723c0b7bd0467b01b78b067ecf0969430ece0' },
+      { id: 'mac-foundry-verdict', title: 'MAC foundry spike: TWO-ARM NEGATIVE, model-proof ("mass was not meaning"); Aider network-reach caught + patched; shelved pending assembly-level semantic QA', status: 'shipped', mergeHash: '7f4c5b3bb4e39c50155e4bb6bbe4215c01d9d6fe' },
       { id: 'codex-bridge-instrument', title: 'codex-bridge v2: subscription OAuth → OpenAI-compatible localhost, tools both ways — seats any OpenAI-key harness on the owner\'s subscription (goldrush-gauntlet@13b73ed)', status: 'shipped' },
       { id: 'eliza-first-play', title: 'Eliza first-play: five-defect chain cured (timeout → misroute → zero-vector → models → tool calls); first orders ever submitted 2026-08-10, track live', status: 'building' },
     ],

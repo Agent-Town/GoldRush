@@ -1,6 +1,6 @@
 # s2532: the beat citation correction is ready for the runner
 
-2026-09-07, native Mac, Codex FIRE. Lock `3a26525a4`; authoring commit `0fd4125c7`.
+2026-09-07, native Mac, Codex FIRE. Lock `2769d9d4e`; authoring commit `a8cf6e36d`.
 
 The increment authors `tasks/main-beat-citation-refresh.md` for the explicitly fire-authorable F-AGE2-2. Master, BACKLOG row and goal leaf landed together. The task changes only nine live numeric ranges in comments, preserving line count, runtime tokens, player copy and historical rebasing accounts. The attended review says ten stale citations but enumerates nine live comment lines; the current file reproduces nine. The task asks the implementer to re-derive at dispatch, and leaves any engine re-pin to the drain because comments under src still change the engine identity.
 

@@ -1,6 +1,6 @@
 # E6 extra-map terrain and panorama re-export evidence
 
-- Fresh reference base: `5e40ae6d123a3865353c91d8d82f95cac34e0e7b`.
+- Fresh reference base: `2b4e430f0f0e0be67dff3f3c7b358abb08f79f19`.
 - Authored pairs: The Showroom and Half-Life Hollow.
 - Picnic: intentional `e6-glow-mesa` tile reuse; no duplicate sculpt.
 - Terrain GLBs: one mesh, one primitive, one material, one embedded 2048 atlas, 32,768 triangles each.

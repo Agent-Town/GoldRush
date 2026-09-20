@@ -1,14 +1,14 @@
 # e10s-1b — Ember Shore schema and data
 
 **Slice:** E10S-1 (`specs/agent-play/e10-ember-shore-preserve.md` §4)
-**Branch:** `lane/a` · **Tip:** `61358eb555e10e236071f8dc7b2e6e8b39c030b0` (2026-08-21T12:00:13+07:00)
-**Base at gate:** `43c921149` (main, s2125 lock)
+**Branch:** `lane/a` · **Tip:** `91dd6dd9d0096cab88100acba3b349281cbd2cd9` (2026-08-21T12:00:13+07:00)
+**Base at gate:** `45926491c` (main, s2125 lock)
 **Gate worktree:** `gate-s2125` (detached, §3.0b — undecided content never entered main's tree)
 **Drained by:** s2125 fire, 2026-08-21
 
 ## VERDICT: **HOLD — NOT MERGED.** Owner fork; see F-2125-1.
 
-> ⬆️ **SUPERSEDED s2258 (2026-08-24) — THE HOLD IS DISCHARGED AND THE SLICE IS ON MAIN at `9eb74cc81`** (`git merge-base --is-ancestor 9eb74cc81ce8bedae1e8500e2be771ccc00b9ce4 main` → rc=0, verified this fire). The verdict above is KEPT VERBATIM under the Retention Law and was CORRECT when written: this slice's payload really did admit the map, and merging it as authored really did turn the door guards from 6 pass / 0 fail into 3 pass / 3 fail. What discharged it was not a re-argument but the corrective `e10s-1c`, which emptied the anchors so the data lands INERT — the attended pick of s2165's option (a), the e6-picnic precedent. On the merged tree `skillmd-guard` + `door-admission-ratchet` read **6 pass / 0 fail**. Both leaves are `status="merged"`. See `reviews/e10s-1c-ember-shore-inert-landing.md` — and note F-2258-1 there: the anchors this slice authored live on THREE surfaces, so the E10S-4 door slice must re-land all three.
+> ⬆️ **SUPERSEDED s2258 (2026-08-24) — THE HOLD IS DISCHARGED AND THE SLICE IS ON MAIN at `22d0e1cc7`** (`git merge-base --is-ancestor 22d0e1cc7c1d0adfdd009334c6b14c03d0a28855 main` → rc=0, verified this fire). The verdict above is KEPT VERBATIM under the Retention Law and was CORRECT when written: this slice's payload really did admit the map, and merging it as authored really did turn the door guards from 6 pass / 0 fail into 3 pass / 3 fail. What discharged it was not a re-argument but the corrective `e10s-1c`, which emptied the anchors so the data lands INERT — the attended pick of s2165's option (a), the e6-picnic precedent. On the merged tree `skillmd-guard` + `door-admission-ratchet` read **6 pass / 0 fail**. Both leaves are `status="merged"`. See `reviews/e10s-1c-ember-shore-inert-landing.md` — and note F-2258-1 there: the anchors this slice authored live on THREE surfaces, so the E10S-4 door slice must re-land all three.
 
 The slice does what its master asked and its own gates are sound. It is held for a
 reason no gate in its master could have seen: **it admits `e10-ember-shore` to the
@@ -45,7 +45,7 @@ Clean 3-way merge, no conflicts, 7 paths — **all LANE-ONLY** (`lane-usable.mjs
 |---|---|
 | Merge into `gate-s2125` | clean, `f47b1c42c`, 7 files / +103 / −7 |
 | `e10-last-claim` unmoved | ✅ **verified** — the door diff is exactly one line, `+ 'e10-ember-shore'`; `e10-last-claim` present in both sides |
-| **Control — clean main `43c921149`** | ✅ `skillmd-guard` + `door-admission-ratchet` → **6 pass / 0 fail**, 3.10 s |
+| **Control — clean main `45926491c`** | ✅ `skillmd-guard` + `door-admission-ratchet` → **6 pass / 0 fail**, 3.10 s |
 | **Merged tree `f47b1c42c`** | 🔴 **3 pass / 3 fail**, 5.52 s |
 | Runner-reported battery (lane tree) | `468 tests · 461 pass · 6 fail · 1 cancelled`, 301.9 s |
 
@@ -107,9 +107,9 @@ set to this slice **plus** the two it omits:
 
 | Admission | bench-seeds | contracts | mask-table | null-floors | **skill.md** | **door baseline** |
 |---|---|---|---|---|---|---|
-| `c183d3496` e7-echo-canyon | +4 | ✅ | ✅ | ✅ | **+5** | **+1** |
-| `1bbb73ad5` e9-devils-alley | +4 | +7 | +7 | +20 | **+5** | **+1** |
-| **`61358eb55` e10s-1b** | +4 | +55 | +19 | +20 | **— absent** | **— absent** |
+| `01afad743` e7-echo-canyon | +4 | ✅ | ✅ | ✅ | **+5** | **+1** |
+| `485aacd7d` e9-devils-alley | +4 | +7 | +7 | +20 | **+5** | **+1** |
+| **`91dd6dd9d` e10s-1b** | +4 | +55 | +19 | +20 | **— absent** | **— absent** |
 
 Both precedents admitted a map whose consumer already existed; each commit message
 says so (*"admitted — four anchors, bench seeds, **door surfaces**"*, *"admitted —
@@ -162,16 +162,16 @@ holds all 7 paths, `ahead=1`, and the branch is untouched.
 
 ## s2165 RE-GATE (2026-08-22) — the re-scoped hold instructed this merge; I re-measured and it still reds main
 
-**Base:** `a9b6b468b` (main, s2165 lock) · **Gate worktree:** `gate-s2165` (detached, §3.0b)
-**Lane tip:** `61358eb555e10e236071f8dc7b2e6e8b39c030b0` — unchanged · **behind=307** (was 9 at s2125)
+**Base:** `91ac67653` (main, s2165 lock) · **Gate worktree:** `gate-s2165` (detached, §3.0b)
+**Lane tip:** `91dd6dd9d0096cab88100acba3b349281cbd2cd9` — unchanged · **behind=307** (was 9 at s2125)
 
 ### VERDICT: **HOLD — STILL NOT MERGED.** F-2125-1 re-confirmed at source; new F-2165-1 filed.
 
-> ⬆️ **SUPERSEDED s2258 (2026-08-24) — THE HOLD IS DISCHARGED AND THE SLICE IS ON MAIN at `9eb74cc81`** (`git merge-base --is-ancestor 9eb74cc81ce8bedae1e8500e2be771ccc00b9ce4 main` → rc=0, verified this fire). The verdict above is KEPT VERBATIM under the Retention Law and was CORRECT when written: this slice's payload really did admit the map, and merging it as authored really did turn the door guards from 6 pass / 0 fail into 3 pass / 3 fail. What discharged it was not a re-argument but the corrective `e10s-1c`, which emptied the anchors so the data lands INERT — the attended pick of s2165's option (a), the e6-picnic precedent. On the merged tree `skillmd-guard` + `door-admission-ratchet` read **6 pass / 0 fail**. Both leaves are `status="merged"`. See `reviews/e10s-1c-ember-shore-inert-landing.md` — and note F-2258-1 there: the anchors this slice authored live on THREE surfaces, so the E10S-4 door slice must re-land all three.
+> ⬆️ **SUPERSEDED s2258 (2026-08-24) — THE HOLD IS DISCHARGED AND THE SLICE IS ON MAIN at `22d0e1cc7`** (`git merge-base --is-ancestor 22d0e1cc7c1d0adfdd009334c6b14c03d0a28855 main` → rc=0, verified this fire). The verdict above is KEPT VERBATIM under the Retention Law and was CORRECT when written: this slice's payload really did admit the map, and merging it as authored really did turn the door guards from 6 pass / 0 fail into 3 pass / 3 fail. What discharged it was not a re-argument but the corrective `e10s-1c`, which emptied the anchors so the data lands INERT — the attended pick of s2165's option (a), the e6-picnic precedent. On the merged tree `skillmd-guard` + `door-admission-ratchet` read **6 pass / 0 fail**. Both leaves are `status="merged"`. See `reviews/e10s-1c-ember-shore-inert-landing.md` — and note F-2258-1 there: the anchors this slice authored live on THREE surfaces, so the E10S-4 door slice must re-land all three.
 
 **Why this fire re-gated at all.** `drain-block-check lane/a` prints a hold whose reason,
-re-scoped by attended today (`2c357128d`, F-2162-1), ends: *"LIFT = the drain itself:
-merge lane/a (61358eb55), regen null-floors on the merged tree, --check clean, flip this
+re-scoped by attended today (`d9789325d`, F-2162-1), ends: *"LIFT = the drain itself:
+merge lane/a (91dd6dd9d), regen null-floors on the merged tree, --check clean, flip this
 leaf in the drain commit."* That is an instruction to merge. **I executed it as far as
 evidence, and the evidence refuses it.**
 
@@ -191,7 +191,7 @@ evidence, and the evidence refuses it.**
 
 ### What FAILED — the same three deterministic reds, re-measured on a base 307 commits newer
 
-| Test | Clean main `a9b6b468b` | Merged tree |
+| Test | Clean main `91ac67653` | Merged tree |
 |---|---|---|
 | `door-admission-ratchet` — derived door matches the fixed admission baseline | ✔ 9260 ms | ✖ 2766 ms |
 | `skillmd-guard` — skill.md bench seeds match the source registry | ✔ 0.20 ms | ✖ **0.96 ms** |
@@ -222,7 +222,7 @@ both. So:
 > E10S-4 door leaf.
 
 The re-scope never addressed F-2125-1's three reds — they are named nowhere in the
-`2c357128d` reason text or the BACKLOG row. This is not a disagreement about values; it is a
+`d9789325d` reason text or the BACKLOG row. This is not a disagreement about values; it is a
 measurement the ruling did not have in front of it.
 
 **A fourth red, new this fire, same root:** `e2e/er01-e10-census.spec.ts` at `--workers=1`,
@@ -243,7 +243,7 @@ that a name-level comparison would have called pre-existing. Fingerprint by line
 
 - **(a)** Empty the anchors — data lands inert and un-enterable; door opens at E10S-4. One-file edit.
 - **(b)** Complete the admission — add `public/skill.md` (+5) and the door baseline (+1), matching
-  the two precedents `c183d3496` / `1bbb73ad5`. **Admits a map with no consumer and no door.**
+  the two precedents `01afad743` / `485aacd7d`. **Admits a map with no consumer and no door.**
 - **(c)** *(new)* **Drop the bench seeds and floors rows from this slice** — the null-floor guard is
   then satisfied trivially (no seeds ⇒ no floors row, its coverage assertion is an intersection),
   the door surface is untouched, and the contract/mask/twist declaration still lands. This reads

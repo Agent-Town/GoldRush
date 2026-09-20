@@ -1,6 +1,6 @@
 # Review: ss-06-e5-beats — the Deepwater Claim chapter as data (lane-c, Claude Opus 5 implementer, attended drain 2026-09-05 night)
 
-**Slice/branch/tip:** `ss-06-e5-beats` · `lane/c` · commits `9ffe85129` … `059d4c884` (five) over `fccd17254` · merge `eb7529a11` (no-ff; beats.ts and StoryRuntime unioned in era order beside E4 and E6, which landed first).
+**Slice/branch/tip:** `ss-06-e5-beats` · `lane/c` · commits `a9d4ae2b4` … `a436a92f4` (five) over `ae5332094` · merge `b9c4146cc` (no-ff; beats.ts and StoryRuntime unioned in era order beside E4 and E6, which landed first).
 **Verdict:** MERGED. E5 has its chapter: 14 beats loaded only in `epoch-5-deepwater`, all 17 storybook citations opened and read back, five plates verified on disk, no speaker and no signal invented, both Gazette beats keeping the mystery law.
 
 ## Evidence

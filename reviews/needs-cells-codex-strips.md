@@ -1,6 +1,6 @@
 # needs-cells-codex-strips — the processing drain
 
-**Slice** `art-needs-cells-codex-strips` (ART slot, main) · **done-move** `tasks/done/20260918-205411-art-needs-cells-codex-strips.md` · **drained** s2627, 2026-09-18 · **base** `c311be237`
+**Slice** `art-needs-cells-codex-strips` (ART slot, main) · **done-move** `tasks/done/20260918-205411-art-needs-cells-codex-strips.md` · **drained** s2627, 2026-09-18 · **base** `ad387cbbf`
 
 ## Verdict
 

@@ -1,8 +1,8 @@
 # Review — f1560-1: the denied-receipt drift ceiling, two-window experiment
 
 **Slice:** f1560-1-m4-06-drift-ceiling-provenance
-**Branch:** lane/b @ `c13598fcb` (base `26d8ba555`)
-**Merged to main:** `2c660484582ab35a6f8aea47680e35e89987b47f`
+**Branch:** lane/b @ `c13598fcb` (base `a3f105337`)
+**Merged to main:** `a2eb12c4e5b8d0fbd8b6a32d0fa8b0f8dc15b3ba`
 **Drained by:** s1561 fire, 2026-08-08
 **Verdict:** ✅ **MERGE** — the experiment's stated prediction is CONFIRMED, the restoration is proven, and the gates are green. Three findings, none blocking.
 
@@ -65,7 +65,7 @@ runner's summary exactly.
 
 ## Merge classification
 
-Base `26d8ba555` is an ancestor of main. `git log 26d8ba555..main` for both paths is **empty**, so:
+Base `a3f105337` is an ancestor of main. `git log a3f105337..main` for both paths is **empty**, so:
 
 | File | Class |
 |---|---|

@@ -1,6 +1,6 @@
 # Shared E5 candidate review
 
-Compared the preserved candidate against HEAD 0340775f; identified one rendering-order regression. Static inspection found no additional concrete river, geometry, gameplay-height/collision, disposal, or current hull-transform regressions; opacity and crest tuning remain optional visual polish. No edits, tests, servers, or nested reviewers were used.
+Compared the preserved candidate against HEAD 401fb03d; identified one rendering-order regression. Static inspection found no additional concrete river, geometry, gameplay-height/collision, disposal, or current hull-transform regressions; opacity and crest tuning remain optional visual polish. No edits, tests, servers, or nested reviewers were used.
 
 Review comment:
 

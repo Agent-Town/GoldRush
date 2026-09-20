@@ -2,7 +2,7 @@
 
 **Slice:** run3d-14-lantern-post — RUN-3D lantern-post pilot (registry sibling `lantern_post`) — RUN-3D ladder rung 14 (final)
 **Branch/tip:** lane/m3 @ `347f30fc` (runner(lane-a): run3d-14-lantern-post.md, committed 05:13)
-**Base:** main @ `a5f17b33`-descendant (s450 handoff — registry 6-entry {boiler_house,palisade,sluice,turret,stockpile,sentry_beacon})
+**Base:** main @ `6f465d8b`-descendant (s450 handoff — registry 6-entry {boiler_house,palisade,sluice,turret,stockpile,sentry_beacon})
 **Merged to main:** s451 fire, drain 1/1
 **Verdict:** PASS — merged (tip-graft: cp additive files + Edit registry+rotation union).
 

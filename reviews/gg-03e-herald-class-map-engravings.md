@@ -1,13 +1,13 @@
 # GG-03e — Herald class-map engravings (the eighth class)
 
 - **Slice:** `lane-a-herald-class-map-engravings.md` (FIRE-AUTHORED s1255)
-- **Branch / tip:** `lane/m3` @ `dd08bc1a` (base `dfed3765`)
-- **Merged to main:** `5e129079` (s1257 fire, 2026-07-30)
+- **Branch / tip:** `lane/m3` @ `dd08bc1a` (base `7307d588`)
+- **Merged to main:** `8133dd91` (s1257 fire, 2026-07-30)
 - **Verdict:** ✅ **MERGE — gates green, budgets honoured, firewall respected.** The slice is real but **much narrower than its own master claims, and player-invisible**; the LEDGER row it writes is accurate but reads bigger than it is. Two non-blocking findings, one owner eyeball carried forward.
 
 ## What it does
 
-The master was authored on a measured-sounding premise that s1256 later refuted (F-1256-2): that `src/news/heraldReader.ts`'s class map "resolves to nothing" because no `assets/processed/herald-engraving-*.webp` existed, leaving the Herald "silently text-only for every class". In fact all seven were tracked on main since `b5be7ab3`, a day before the claim; the published proof command was `ls assets/processed/ | grep gazette` — a grep for `gazette` used to answer a question about `herald-engraving`.
+The master was authored on a measured-sounding premise that s1256 later refuted (F-1256-2): that `src/news/heraldReader.ts`'s class map "resolves to nothing" because no `assets/processed/herald-engraving-*.webp` existed, leaving the Herald "silently text-only for every class". In fact all seven were tracked on main since `15e00755`, a day before the claim; the published proof command was `ls assets/processed/ | grep gazette` — a grep for `gazette` used to answer a question about `herald-engraving`.
 
 So this slice is **not** the wiring of the Herald's engravings. That shipped with GG-03c/GG-03d. What actually lands here:
 
@@ -50,9 +50,9 @@ Driver: `logs/session-scratch/s1257/control-newsie.mjs`.
 
 ## Merge classification
 
-Base `dfed3765`; `git log dfed3765..main` over all 15 paths is **empty → zero MAIN-MOVED files**, so no 3-way was needed and a path-scoped checkout was exact. All 15 applied **byte-identical** to the branch tree (sha256, `logs/session-scratch/s1257/graft.mjs`, which also aborts unless the runner commit's path set matches the graft list exactly).
+Base `7307d588`; `git log 7307d588..main` over all 15 paths is **empty → zero MAIN-MOVED files**, so no 3-way was needed and a path-scoped checkout was exact. All 15 applied **byte-identical** to the branch tree (sha256, `logs/session-scratch/s1257/graft.mjs`, which also aborts unless the runner commit's path set matches the graft list exactly).
 
-The two-dot `main..lane/m3` diff shows ~60 further files (deletions of `logs/session-scratch/s1256/*`, `tasks/queue/lane-b/*`, `STATUS.md`, `tasks/BACKLOG.md`, artifact PNGs). **All phantom** — stale-base artefacts of a branch forked at `dfed3765` while main advanced through s1256. `git show --name-only dd08bc1a` is the real set: exactly 15 files, exactly the firewall.
+The two-dot `main..lane/m3` diff shows ~60 further files (deletions of `logs/session-scratch/s1256/*`, `tasks/queue/lane-b/*`, `STATUS.md`, `tasks/BACKLOG.md`, artifact PNGs). **All phantom** — stale-base artefacts of a branch forked at `7307d588` while main advanced through s1256. `git show --name-only dd08bc1a` is the real set: exactly 15 files, exactly the firewall.
 
 **Firewall: respected.** `scripts/asset-diet.mjs` was the file to check first (F-1256-2 flagged it as forbidden "in one direction"). It was touched in 6 lines and **none of them moves a budget**: the roster-count invariant `13 → 14` and its comment. Reading `filesReachedByHeraldGlobs` shows this edit was **required**, not cosmetic — the function derives expected names by parsing `heraldReader.ts` and throws on any missing *or* unexpected file, so adding an eighth plate without the count bump would have failed the build. The `NO` list held: raws untouched, `FIRST_ISSUE_PANELS` untouched, no `TownWelcome`/profile edits, `logs/suite-red-inventory.md` untouched, no new dependencies.
 

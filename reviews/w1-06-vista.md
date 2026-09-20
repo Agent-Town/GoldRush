@@ -1,7 +1,7 @@
 # Drain review — w1-06 "vista beyond the claim" (lane/polish)
 
 **Verdict: GATE-PASS — merged to main (s80 fire, 2026-07-06).**
-Branch `lane/polish` @ `d109904` (base `7404e36`, TODAY — fresh, clean 3-way auto-merge, zero conflicts).
+Branch `lane/polish` @ `6ecf1f5` (base `494a8b2`, TODAY — fresh, clean 3-way auto-merge, zero conflicts).
 
 ## Scope merged
 Low-res radius-90 terrain "vista" ring rendered beyond the playable claim (distant horizon fill), exposed via `__THREE_GAME_DIAGNOSTICS__.terrain.vista`. Files: `src/world/Terrain.ts` (+202), `src/game/Game.ts` (+1), `src/game/Balance.ts` (+2 additive knobs), `src/vite-env.d.ts` (+14 diagnostics typing), `e2e/w1-06-vista.spec.ts` (new), `artifacts/w1-06/*.png` (before/after gameplay + outward shots — the in-world visual evidence).

@@ -1,6 +1,6 @@
 # Review — board-layout-full-picture
 
-**Slice/branch/tip:** board-layout-full-picture · lane/m4 · tip `ce524e1b` (runner lane-b) → landed on main as `87d1b052`
+**Slice/branch/tip:** board-layout-full-picture · lane/m4 · tip `ce524e1b` (runner lane-b) → landed on main as `2d6bd407`
 **Drained by:** s378 fire, 2026-07-12 (idle-attended wave drain #3 of 3)
 **Verdict:** ✅ MERGED (tip-graft, not branch-merge) — with one non-blocking finding (F-board-1)
 

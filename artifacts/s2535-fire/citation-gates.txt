@@ -81,10 +81,10 @@ rc=0 0.0s
 
 
 ===== tokens and lines =====
-$ node artifacts/beat-citation-refresh/compare-tokens.mjs 378219cbc
+$ node artifacts/beat-citation-refresh/compare-tokens.mjs dba2fef16
 rc=0 0.2s
 {
-  "base": "378219cbc",
+  "base": "dba2fef16",
   "file": "src/story/beats.ts",
   "tokenCount": 9182,
   "tokensIdentical": true,

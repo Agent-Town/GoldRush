@@ -24,7 +24,7 @@ a rate without them is not a measurement:
 | arm | tree | load | desktop | mobile |
 |---|---|---|---:|---:|
 | treatment | merged tree (rail-tough bind applied) | 46 tests / 8 workers | **FAIL** | **FAIL** |
-| control | pre-merge main \`79fb8fa2\`, detached worktree, scratch port 5236 | 16 tests / 6 workers | **FAIL** | **FAIL** |
+| control | pre-merge main \`b9918410\`, detached worktree, scratch port 5236 | 16 tests / 6 workers | **FAIL** | **FAIL** |
 
 **4/4 across two different trees and two different loads.** The E2 roster/motion half of the spec
 passes; the failure is its unrelated **E1** control, which times out after five seconds waiting for

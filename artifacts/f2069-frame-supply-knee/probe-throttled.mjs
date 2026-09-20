@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // f2069 — Arm C: depress frame supply with CDP CPU throttling instead of parallel load.
 //
-// WHY THIS ARM EXISTS (F-1591-1, s1591; Arm 0/A merged c213694c0 s1592):
+// WHY THIS ARM EXISTS (F-1591-1, s1591; Arm 0/A merged 5936ec48e s1592):
 //   F-1591-1 derives that `town.elapsed` gains min(frameDelta, 0.05) per PRESENTED frame
 //   (src/core/Loop.ts:27 MAX_PRESENTATION_DELTA_SECONDS, :116 clamp, :121 variable-step path
 //   feeds the CLAMPED value to update(); src/town/TownScene.ts:686 `this.elapsed += delta`).

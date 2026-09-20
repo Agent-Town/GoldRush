@@ -1,7 +1,7 @@
 # f-board-2 — live county-repo links + strictly OPT-IN source links
 
-**Slice:** `f-board-2-opt-in-links` · **branch:** `lane/b` · **tip:** `9c0ab1e01`
-**Base:** `8d7896e6e` (main) · **Merged:** `s1617` · **Review author:** s1617 fire
+**Slice:** `f-board-2-opt-in-links` · **branch:** `lane/b` · **tip:** `83ee4689a`
+**Base:** `2e1e7fa56` (main) · **Merged:** `s1617` · **Review author:** s1617 fire
 
 ## Verdict
 
@@ -57,7 +57,7 @@ Every figure independently reproduces the runner's own report.
 
 ## Merge classification
 
-`main..lane/b` = 1 commit (`9c0ab1e01`), **10 paths, all LANE-ONLY**; main moved none of them since the base.
+`main..lane/b` = 1 commit (`83ee4689a`), **10 paths, all LANE-ONLY**; main moved none of them since the base.
 Every path is inside the master's TOUCH-ONLY list — `functions/api/standings.ts`, `src/encyclopedia/reader.ts` +
 `reader.css`, `e2e/field-book.spec.ts`, `e2e/lb-01-county-standings.spec.ts`, `public/skill.md`, and 4 screenshots.
 No firewall violation. Three-way merge (`ort`), clean; merged and committed as **one act**, never staged (F-1589-5).
@@ -69,7 +69,7 @@ None blocking. Two notes for the record:
 - **This slice's "done" was a FALSE DONE first (F-1617-2), and the guard is why it wasn't a disaster.** Its first
   dispatch STOPPED at the lane-safety pre-flight because `lane/b` still held f1614-1's three undrained
   advance-stream paths; the runner discarded nothing, edited nothing, and said *"Retry after f1614-1 drains."*
-  f1614-1 merged at `1e2172f45` twelve minutes later, s1617 re-queued the master byte-identically
+  f1614-1 merged at `21b473464` twelve minutes later, s1617 re-queued the master byte-identically
   (sha256 `b53014c129dcf1aa`) after refreshing the lane `behind=27 → 0`, and it completed first time. **Authored,
   stopped, re-queued and merged inside two fires, with zero work lost.**
 - **The Front Desk anchors point at repos that are still private**, so they 404 today. That is the owner's

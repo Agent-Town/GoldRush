@@ -1,5 +1,5 @@
 A7 — e8-low-orbit "momentum is commitment" — GATE RECORD
-Base commit: d931958b3 (main, 2026-08-20)
+Base commit: c7b280d2f (main, 2026-08-20)
 Branch: worktree-agent-a7-low-orbit
 Node: 26.4.0 for the guard batteries; 23.11.1 is the worktree default and is named per row where used.
 
@@ -67,7 +67,7 @@ PLAYWRIGHT TOTAL ............................. 66/66, zero console/page errors
 
     For the record against the A4 precedent: A4 measured 469/465/2 with two reds it
     proved inherited from `tasks/goals.json`. Those two were cured on main by
-    `91cb4ff3f` (F-2083-1) before this slice branched, which is why the same 469
+    `476a36c4e` (F-2083-1) before this slice branched, which is why the same 469
     tests now read 467 pass / 0 fail / 2 skipped.
 
 ================================================================================
@@ -77,7 +77,7 @@ Method: re-run the SAME idle probes on this tree and compare to the floors commi
 at the base commit. A matching eventLogHash is a byte-level statement that the run
 was identical, event for event.
 
-  contract         seed                 committed at d931958b3   this tree      verdict
+  contract         seed                 committed at c7b280d2f   this tree      verdict
   e8-mare-claim    e8-mare-claim-01     fnv1a32:ee2f7c14         ee2f7c14       IDENTICAL
   e8-mare-claim    e8-mare-claim-02     fnv1a32:99623cc8         99623cc8       IDENTICAL
   e8-eclipse       e8-eclipse-01        fnv1a32:fac5d558         fac5d558       IDENTICAL
@@ -88,7 +88,7 @@ was identical, event for event.
 
 Corroborated at the artifact level: `git diff assets/contracts/null-floors.json` is
 19 insertions / 1 deletion — the two NEW e8-low-orbit rows plus the mechanical
-eraStamp bump (0845944ca -> d931958b3). Every other contract's floor line is
+eraStamp bump (aa5eb3ac0 -> c7b280d2f). Every other contract's floor line is
 byte-unmoved. 55 pairs total, `--check` clean, 0 secured:true (Law 2).
 
 WHY IT IS INERT, mechanically: `CombatSystem.orbitalReturn` is null unless the

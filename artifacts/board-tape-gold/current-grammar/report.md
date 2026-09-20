@@ -1,6 +1,6 @@
 # Board tape gold — current grammar recordings
 
-Recorded locally from main `48628dd094342e323072a95de5bf85f618bf8d7f` with Node v26.4.0. No live county request was made and these fixtures have no live verified slip.
+Recorded locally from main `cdc3bcfe80d00617c89c1408805673e63cb8d16c` with Node v26.4.0. No live county request was made and these fixtures have no live verified slip.
 
 ## Lineage
 

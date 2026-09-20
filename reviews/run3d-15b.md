@@ -1,8 +1,8 @@
 # run3d-15b — the Gold Seam in 3D + restore the plain-boot 3D default
 
 **Slice:** `run3d-15-gold-nodes` (attempt 1 content, kept) + `run3d-15b-gold-nodes-flagoff-fix` (corrective)
-**Branch:** `lane/m3` · **Tip gated:** `96e60415` · **Base:** `4e1fc5ed`
-**Merge:** `9ee3b710c09f5bb6575d2fe754af47e111c0ac80` (--no-ff, s1389)
+**Branch:** `lane/m3` · **Tip gated:** `bb999f2f` · **Base:** `d0fd525f`
+**Merge:** `f554d78abfcb410fceb1f82b817710af6c7233cd` (--no-ff, s1389)
 
 ## VERDICT: MERGED
 
@@ -16,7 +16,7 @@ read-only off `__THREE_GAME_DIAGNOSTICS__.harvest.activeNodes`, unmounting deple
 `gold_seam` is deliberately excluded from the `all` selection, so it renders only when asked for
 by name — the exclusion the master specified.
 
-The corrective (`96e60415`) undoes the one thing attempt 1 got wrong. Rider 15 had added:
+The corrective (`bb999f2f`) undoes the one thing attempt 1 got wrong. Rider 15 had added:
 
 ```ts
 if (!params.has('run3dPilot')) { publish(host.canvas, 'off'); return { ... }; }
@@ -57,8 +57,8 @@ controlling for is not a control, and asked for an idle machine. The machine was
 | Arm | Tree | Load | mobile ratio |
 |---|---|---|---|
 | s1387 | merged | heavy battery, lane-a busy | 1.400 / 1.418 |
-| s1389 gate | merged (`9ee3b710`) | m2-05 + night3d-perf, 18 tests | **1.5046** |
-| s1389 **control** | **clean main `4e1fc5ed`** | **night3d-perf alone, idle machine** | **1.4815** |
+| s1389 gate | merged (`f554d78a`) | m2-05 + night3d-perf, 18 tests | **1.5046** |
+| s1389 **control** | **clean main `d0fd525f`** | **night3d-perf alone, idle machine** | **1.4815** |
 
 Both projects fail in every arm. **The fire-shell CPU-ceiling hypothesis (F-1269-1/F-1270-1) is
 REFUTED for this red:** removing the load made it marginally *worse*, not better. The merge does
@@ -73,7 +73,7 @@ known-reds with proof" clause — the proof is the control run above. **Owed: a 
 main commit crossed the bar.** Left open.
 
 **A green start point, and a trap, from opening the artifact instead of trusting it.**
-`artifacts/night3d-perf/p95-{desktop,mobile}-chrome.json` is tracked, last written at `1e9ffa1c`
+`artifacts/night3d-perf/p95-{desktop,mobile}-chrome.json` is tracked, last written at `029c2252`
 (2026-07-19), and records ratios of **0.12–0.31** across all four `PERF_CONTRACTS` — terrain3d was
 then 3–8× *faster* than painted. So the regression landed after 2026-07-19, and that commit is a
 known-green anchor to bisect from.
@@ -88,8 +88,8 @@ the table above come from the assertion errors, which is the only honest source 
 ### F-1389-2 — `drain-block-check.mjs` matched a stale branch-keyed block; the commit-level check is what saved it.
 
 `node scripts/drain-block-check.mjs lane/m3` exits **1 / BLOCKED**, citing goal leaf
-`rf-34-hero-y-restore-roundtrip` (`owner-fork`, "lane/m3 f1fce725 gated"). That block is real but
-**does not apply to this drain**: `f1fce725` is already an ancestor of main, so it is not in
+`rf-34-hero-y-restore-roundtrip` (`owner-fork`, "lane/m3 51e92d69 gated"). That block is real but
+**does not apply to this drain**: `51e92d69` is already an ancestor of main, so it is not in
 `main..lane/m3` at all. The two commits actually in range block-check **CLEAR**
 (`run3d-15-gold-nodes`, `run3d-15b-gold-nodes-flagoff-fix`).
 
@@ -101,12 +101,12 @@ This is the "CLEAR task on BLOCKED commit" law working exactly as written: block
 commit in `main..branch`**, not the branch. The hazard is the inverse of the rf-34 incident — there
 a fire merged something genuinely owner-gated; here a fire could freeze a clear drain on a block
 whose content shipped long ago, or, worse, learn to wave blocks away. Neither failure is safe.
-**Recommend an attended session re-key the rf-34 leaf to its commit** (`f1fce725`) rather than to
+**Recommend an attended session re-key the rf-34 leaf to its commit** (`51e92d69`) rather than to
 `lane/m3`. Not fire-authorable: rf-34 is an owner design fork and I will not touch its leaf.
 
 ## Merge classification
 
-Base `4e1fc5ed`; `git merge --no-ff lane/m3`, **no conflicts**. 17 paths:
+Base `d0fd525f`; `git merge --no-ff lane/m3`, **no conflicts**. 17 paths:
 16 **pure adds** (LANE-TOUCHED only — the GLB, .blend, build/verify scripts, 6 screenshots,
 2 p95 JSONs, model-contract.json, report.md, the new spec) and 1 modified,
 `src/game/Run3dPilot.ts`, also LANE-TOUCHED only — main never moved it during the lane's life.
@@ -115,9 +115,9 @@ Nothing MAIN-MOVED, so no graft was needed. `main..lane/m3` is now **0**.
 ## Notes
 
 - **Duplicate dispatch (F-1388-2) resolved benign.** Two done-moves, one master. Run 1
-  (`20260802-111836`, 3.6 MB log) succeeded at `96e60415`. Run 2 (`20260802-113842`, 37 KB,
-  15,410 tokens) hit its mandatory pre-flight, found the tip already at `96e60415` instead of the
-  expected `d0a861a9`, and **stopped without touching anything** — the correct refusal, and a
+  (`20260802-111836`, 3.6 MB log) succeeded at `bb999f2f`. Run 2 (`20260802-113842`, 37 KB,
+  15,410 tokens) hit its mandatory pre-flight, found the tip already at `bb999f2f` instead of the
+  expected `9d61d6a9`, and **stopped without touching anything** — the correct refusal, and a
   zero diff there is not Mistake #1. Both done-moves prefixed `shipped-s1389-`.
 - Custody per §3.0b: all gating happened in a detached worktree. Main's working tree never held
   undecided slice content at any point.

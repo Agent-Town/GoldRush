@@ -50,14 +50,14 @@ test('the convention start is DERIVED from the corpus, never pinned', (t) => {
 
 test('a NUMERIC SHORT HASH is never mistaken for a date', (t) => {
   // Both of these are REAL filenames from the live corpus. A /(\d{8})-\d{6}/
-  // reader takes `09102598` and `15505222` as dates (years 0910 and 1550) and
+  // reader takes `bdd28000` and `67d87bc4` as dates (years 0910 and 1550) and
   // drags the derived boundary back to prehistory -- which is exactly what this
   // script did on its first live run: 32 subjects became 562.
   const hashy = 'shipped-09102598-20260727-133154-lane-055-standard-note-assertion-and-briefing.md';
   const hashy2 = 'drained-s1243-15505222-20260730-051923-ret-01-run-log-recoverability-guard.md';
   assert.equal(embeddedDate(hashy), '20260727');
   assert.equal(embeddedDate(hashy2), '20260730');
-  assert.equal(bareDate('09102598-133154-not-a-date.md'), null, 'year 0910 is not plausible');
+  assert.equal(bareDate('bdd28000-133154-not-a-date.md'), null, 'year 0910 is not plausible');
   assert.equal(bareDate('20260727-133154-real.md'), '20260727');
 
   // RED arm: with the anchor at 2026-07-25, a hash-bearing file must NOT move the

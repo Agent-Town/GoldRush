@@ -1,8 +1,8 @@
 # rf-36 — glob fallback completeness (F-1097-2)
 
 **Slice:** `lane-glob-fallback-completeness` · **branch:** `lane/e2-arsenal` · **lane tip:** `828508b3`
-**Merged to main:** `b5b46ebddeeb7b5c036ec6d8a303ba79481aa950` · **drained by:** s1098 fire, 2026-07-27
-**Base (merge-base):** `43ac51d1`
+**Merged to main:** `eeb722989fcff412444992f6c9ebfad37b74ef81` · **drained by:** s1098 fire, 2026-07-27
+**Base (merge-base):** `b91e3a10`
 
 ## VERDICT: MERGED — green, and green was the required outcome
 
@@ -70,7 +70,7 @@ into a bug. A guard can be named for a claim it does not test; this one isn't.
 
 ## Merge classification
 
-Merge-base `43ac51d1`. **Perfectly disjoint**, no graft needed:
+Merge-base `b91e3a10`. **Perfectly disjoint**, no graft needed:
 - **LANE-TOUCHED:** `package.json`, `scripts/glob-fallback-completeness.test.mjs` (new)
 - **MAIN-MOVED:** `STATUS.md`, `tasks/BACKLOG.md`, `tasks/goals.json`, `tasks/lane-glob-fallback-completeness.md` — all s1097 bookkeeping, none touched by the lane
 

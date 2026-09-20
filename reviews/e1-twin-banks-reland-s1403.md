@@ -2,7 +2,7 @@
 
 **Slice:** `f1400-1-twin-banks-rebase-and-repin` (MAIN slot, fire-authored s1400)
 **Run:** `tasks/runs/20260802-204650-main-f1400-1-twin-banks-rebase-and-repin.md.log` (9,663 lines)
-**Base:** main `91a4473e` · **Salvage:** `save/f1400-1-twin-banks-reland-s1403` @ `2a54c386`
+**Base:** main `3c8cf39a` · **Salvage:** `save/f1400-1-twin-banks-reland-s1403` @ `2a54c386`
 **Gate:** s1403 fire, 2026-08-02
 
 ## VERDICT: REFUSED — NOT MERGED. Work salvaged, nothing lost.
@@ -16,7 +16,7 @@ does not reproduce anywhere except inside the Codex runner's own process.
 
 Re-lands lane/m3's twin-banks headless driver onto current main as 98 additions / 4 deletions:
 adds `'e1-twin-banks'` to `SUPPORTED_CONTRACTS` (the entire `src/` change is that one line),
-converts the twin-banks call sites to the post-`372808f0` object-boot form, and adds a
+converts the twin-banks call sites to the post-`b6a6b613` object-boot form, and adds a
 behavioural test asserting declared crossings, gravel bars, build zones, `twist.secureWave`
 posting at wave 20, two-run determinism, and the five pinned bench seeds.
 
@@ -110,7 +110,7 @@ I measured the value eight times and could have pasted `bfd79d2a` and merged. I 
 
 - **Salvaged, not lost.** The graft was uncommitted main-slot working-tree dirt; reverting it
   would have destroyed it. It is committed at `save/f1400-1-twin-banks-reland-s1403`
-  (`2a54c386`, parent = main `91a4473e`) **before** main's tree was restored. Restore verified
+  (`2a54c386`, parent = main `3c8cf39a`) **before** main's tree was restored. Restore verified
   by blob hash in both directions (worktree == main, salvage != main, all four paths) — per
   F-1295-1, `git status` alone cannot tell "reverted" from "committed out from under you".
 - **Main's working tree is clean.** The main slot is unblocked.

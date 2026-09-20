@@ -2,19 +2,19 @@
 
 - **Slice:** `lane-f1507-2-landmark-routing-bisect`
 - **Branch / tip:** `lane/a` @ `9e38976cc`
-- **Base:** `61892d181`
-- **Merged to main:** `ccd26fc8b` (docs-only)
+- **Base:** `d2308dfa9`
+- **Merged to main:** `bc482de1a` (docs-only)
 - **Drained by:** s1510, 2026-08-07
 
 ## Verdict
 
 **ACCEPT the runner's STOP as correct and complete** — its endpoint check was right, its refusal
 to bisect was right, and its refusal to touch `Enemy.ts` was right. The task's proposed good
-endpoint `c063b5e59` is itself red, so the master's premise was wrong and the runner said so
+endpoint `f449dd65b` is itself red, so the master's premise was wrong and the runner said so
 instead of manufacturing a culprit.
 
 **And the bisect is now FINISHED, fire-side, in two probes.** The culprit is
-**`531bd923adc97d9c288310f7f94f549e994c3f29`** — *drain(s1445): lane-night-stuck-census MERGED —
+**`70eb5b50d3bb6852b8cd6b6646dec9a2b2af6577`** — *drain(s1445): lane-night-stuck-census MERGED —
 F-BW-10, enemies slide toward their goal, not their sign*.
 
 ## What it does
@@ -42,7 +42,7 @@ markdown file and changes no input to either. Stated explicitly rather than sile
 
 ### Merge classification
 
-Base `61892d181`. Two-dot `main..lane/a` showed four paths; three-dot showed one. The difference
+Base `d2308dfa9`. Two-dot `main..lane/a` showed four paths; three-dot showed one. The difference
 is the point:
 
 | File | Class | Resolution |
@@ -60,15 +60,15 @@ and goes around a county landmark"*.
 
 | Commit | Date | Result |
 |---|---|---|
-| `1761da401` | 2026-07-28T09:56+07 | **GREEN — 10/10 passed** (whole spec, both projects, 56.8 s) |
-| `7bb054510` (culprit's parent) | 2026-08-04T00:20+07 | **GREEN — 2/2 passed** (6.0 s) |
-| **`531bd923a`** | **2026-08-04T00:48+07** | **RED — 2/2 failed**, both projects |
-| `c063b5e59` | 2026-08-04 | RED (runner-measured) |
-| `main` @ `61892d181` | 2026-08-07 | RED (s1509- and runner-measured) |
+| `1761da401 (archive: pruned by the A3 rewrite)` | 2026-07-28T09:56+07 | **GREEN — 10/10 passed** (whole spec, both projects, 56.8 s) |
+| `e2a6a5641` (culprit's parent) | 2026-08-04T00:20+07 | **GREEN — 2/2 passed** (6.0 s) |
+| **`70eb5b50d`** | **2026-08-04T00:48+07** | **RED — 2/2 failed**, both projects |
+| `f449dd65b` | 2026-08-04 | RED (runner-measured) |
+| `main` @ `d2308dfa9` | 2026-08-07 | RED (s1509- and runner-measured) |
 
 Transcripts: `artifacts/s1510-landmark-endpoint.txt`, `artifacts/s1510-landmark-bisect.txt`.
 
-### Why `1761da401` is a *proven*-green endpoint and not an inherited one
+### Why `1761da401 (archive: pruned by the A3 rewrite)` is a *proven*-green endpoint and not an inherited one
 
 The master's window came from `CLEAN-IN-INVENTORY`, and this fire did **not** take that on trust —
 the memory rule is that CLEAN means *green on the snapshot's date*, and a spec that never ran is
@@ -85,12 +85,12 @@ and its `:68` test carries an explicit per-test record:
 "startTime": "2026-07-28T02:59:19.439Z"
 ```
 
-That is *ran and passed*, not *absent*. `1761da401` is main at 2026-07-28T09:56+07 — three minutes
+That is *ran and passed*, not *absent*. `1761da401 (archive: pruned by the A3 rewrite)` is main at 2026-07-28T09:56+07 — three minutes
 before that recorded pass — and this fire re-measured it green at `--workers=1`.
 
 ## Root cause — mechanism, not correlation
 
-`531bd923a` is **9 insertions / 9 deletions in one file**, `src/entities/Enemy.ts`:
+`70eb5b50d` is **9 insertions / 9 deletions in one file**, `src/entities/Enemy.ts`:
 
 ```diff
 -  private blockerSlideDirection(axis: 'x' | 'z'): number {

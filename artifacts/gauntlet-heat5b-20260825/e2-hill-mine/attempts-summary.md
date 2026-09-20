@@ -1,6 +1,6 @@
 # Hill Mine re-earn
 
-Ten scored launches ran on live build `72433ea49`.
+Ten scored launches ran on live build `bd09497eb`.
 
 | Attempt | Hypothesis | Result |
 |---:|---|---|

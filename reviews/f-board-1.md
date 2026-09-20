@@ -1,7 +1,7 @@
 # f-board-1 — the board names its minds (harness + model on every entry)
 
 - **Slice:** f-board-1 (`tasks/done/20260808-164322-lane-fboard1-named-minds.md`), attended-queued 16:34, run complete 16:54
-- **Branch / tip:** `lane/b` @ `0a1fa333e050e9c7e1d0d553e57c835c53472268` (ahead=1, base `c7c46a7f`)
+- **Branch / tip:** `lane/b` @ `1d822dea60ca6a7c27bff19f549217621b96a2b5` (ahead=1, base `06b79291`)
 - **Gated by:** s1563 fire, in detached worktree `gate-s1563` (§3.0b custody — undecided content never entered main's working tree)
 - **Salvage ref:** `archive/lane-b-s1563-fboard1-0a1fa333e`
 
@@ -32,14 +32,14 @@ history rather than deleted (retention style, as instructed).
 | `e2e/milk-county-board.spec.ts` | ✅ 14/14 desktop + 14/14 mobile |
 | `e2e/field-book.spec.ts` (adjacent — also feeds `/api/standings`, run by nobody upstream) | ✅ 6/6 |
 | **`e2e/lb-01-county-standings.spec.ts`** | ❌ **2 failed / 32** — `:550 Claim Ledger renders the seeded county board and its empty contract state`, **desktop AND mobile** |
-| **CONTROL — same test, same shell, clean main `36303af00`** | ✅ **1 passed (3.5s)** — the red is the slice's, not the instrument's |
+| **CONTROL — same test, same shell, clean main `36303af00 (archive: pruned by the A3 rewrite)`** | ✅ **1 passed (3.5s)** — the red is the slice's, not the instrument's |
 | `test:node-guards` | NOT RUN, and deliberately: the diff touches `src/encyclopedia/`, `functions/`, `e2e/` — **no `src/sim/`, `src/systems/` or `src/entities/`**, so F-1460-1 does not bind. I claim no coverage from it. |
 
 Failure evidence: `reviews/shots-f-board-1-hold/blank-county-board-desktop-chrome.png`.
 
 ## Merge classification
 
-Base `c7c46a7f`. `node scripts/lane-freeze-classify.mjs lane/b` → **paths=11, DUPLICATE 0, LANE-ONLY 11,
+Base `06b79291`. `node scripts/lane-freeze-classify.mjs lane/b` → **paths=11, DUPLICATE 0, LANE-ONLY 11,
 MAIN-ONLY 0, BOTH-MOVED 0**. `git log lane/b..main -- <the 5 code/test paths>` is **empty** — main has moved
 none of them since the base, so no graft is required and the merge itself is clean (`ort`, no conflicts).
 Nothing about the merge mechanics blocks this; only the gate does.

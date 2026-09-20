@@ -1,7 +1,7 @@
 # Review — suite-red-inventory harness provenance (F-1173-5)
 
 - **Slice:** `lane-d-suite-red-inventory-harness-provenance` (FIRE-AUTHORED s1198, run + drained s1198)
-- **Branch / tip:** `lane/perf` @ `57fc65ed` · **base** `c77e26fa`
+- **Branch / tip:** `lane/perf` @ `57fc65ed` · **base** `3d7b6819`
 - **Done-move:** `tasks/done/20260729-054920-lane-d-suite-red-inventory-harness-provenance.md`
 - **Run report:** `tasks/runs/20260729-054920-lane-d-lane-d-suite-red-inventory-harness-provenance.md.log` (194,264 tokens)
 - **§3.0 `drain-block-check`:** ✅ **CLEAR**, run FIRST — before classification and before I formed an opinion.
@@ -46,7 +46,7 @@ Two tests added to the **existing** `scripts/suite-red-inventory.test.mjs` (no n
 
 ## Merge classification
 
-Base `c77e26fa`. **Collisions NONE** — `git diff --stat c77e26fa main` over the three TOUCH-ONLY paths is **empty**; main moved none of them.
+Base `3d7b6819`. **Collisions NONE** — `git diff --stat 3d7b6819 main` over the three TOUCH-ONLY paths is **empty**; main moved none of them.
 
 | File | Class |
 |---|---|

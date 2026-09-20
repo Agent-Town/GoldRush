@@ -4,7 +4,7 @@ CODEX: model=gpt-5.6-sol effort=high
 
 ## WHY (owner, town walk 2026-07-12 evening, verbatim): "now I am very small, the prospector is very small as well - I think in my hero animation there is a white filler for my feet at some point. The school teacher lady is there 50%, 50% are missing. Mei, the chinese girl, walks really funny. The Elder and the Inn keeper are a bit too tall." + "Ada is half in the building floating."
 Attended triage — three roots:
-A. HEIGHT ANARCHY: fit-to-texture (252a8fcf) sizes each sprite from its own sheet dims × per-actor `scale` values tuned for the OLD system → hero+prospector tiny, elder+tavernkeeper giant. 
+A. HEIGHT ANARCHY: fit-to-texture (532a0daf) sizes each sprite from its own sheet dims × per-actor `scale` values tuned for the OLD system → hero+prospector tiny, elder+tavernkeeper giant. 
 B. THE BUST FALLBACK reads BROKEN: clone-amnesty reverted schoolteacher/assay-clerk(Ada)/preacher to bust portraits rendered as floating half-people clipping into shells.
 C. SHEET DEFECTS: hero sheet has a white-filler patch at her feet in ≥1 cell; Mei's gait wrong (frame order/timing vs her 4x8 sheet convention).
 

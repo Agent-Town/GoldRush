@@ -7,7 +7,7 @@ CODEX: model=gpt-5.6-sol effort=high
 
 The E2 diagonal enemy sheets ship four rows each (`sw`/`se`/`nw`/`ne`). Twelve rows were surveyed; **four are wrong and eight are correct and must not be touched.** That count is not an estimate — it is the product of three consecutive measured slices, each of which refused to guess:
 
-**1. The survey (`reviews/eight-winds-e2-row-order-survey.md`, merge `b8ccf36c`)** validated a left/right discriminator *before* labelling any row, and sized the batch:
+**1. The survey (`reviews/eight-winds-e2-row-order-survey.md`, merge `dae48b8b`)** validated a left/right discriminator *before* labelling any row, and sized the batch:
 
 > | **Coal Thief** | (b) defective | **1 row** — row 0 as `sw` (rows 1/2/3 = `se`/`nw`/`ne` preserved) |
 > | **Steam Wrecker** | (b) defective | **2 rows** — row 1 as lawful `se` **with a single cyan tank (F-1189-2)**; row 2 as lawful `nw` |
@@ -17,7 +17,7 @@ The E2 diagonal enemy sheets ship four rows each (`sw`/`se`/`nw`/`ne`). Twelve r
 
 > "**diagonal row 1 is the ONLY row in all 32 frames of BOTH Steam Wrecker sheets that carries TWO cyan clusters**… an artist told *'put the tank on the other side'* would deliver a row that **still has two tanks**. The row-1 request must read: *one* cyan tank, on the lawful front-view side."
 
-**3. The Rail Tough `2v3` disagreement — the last open unknown — was SETTLED s1191** (`tasks/BACKLOG.md:40`, merge `8b9e8af2b3ee88decf6ef2d2098204c880422865`, review `reviews/eight-winds-rail-tough-row-settle.md`). Masking the one-hand wrench flipped `2v3` from `+0.250115` direct-dominant to `−0.127001` mirror-dominant, **one-sided** (direct moved `−0.001`, mirrored gained `+0.376`), and **9/9** sensitivity cases held. ⇒ **Rows 2/3 are a lawful `nw`/`ne` mirror pair, NOT a duplicate row.** So the Rail Tough's "≥1" resolves to **exactly 1**: row 1 only. Rows 0, 2 and 3 are correct and are **preserved byte-exact**.
+**3. The Rail Tough `2v3` disagreement — the last open unknown — was SETTLED s1191** (`tasks/BACKLOG.md:40`, merge `8c0f5c0a99db658a12bb75363a7a5a8110203d63`, review `reviews/eight-winds-rail-tough-row-settle.md`). Masking the one-hand wrench flipped `2v3` from `+0.250115` direct-dominant to `−0.127001` mirror-dominant, **one-sided** (direct moved `−0.001`, mirrored gained `+0.376`), and **9/9** sensitivity cases held. ⇒ **Rows 2/3 are a lawful `nw`/`ne` mirror pair, NOT a duplicate row.** So the Rail Tough's "≥1" resolves to **exactly 1**: row 1 only. Rows 0, 2 and 3 are correct and are **preserved byte-exact**.
 
 **4 rows. Not 5, not 12.** Every row not named below is evidence-backed correct, and regenerating one would spend a good row (that already happened once — LEDGER row 65's F-EW-5 retook two good jumper rows for nothing because of one wrong letter in a data file).
 

@@ -2,7 +2,7 @@
 
 - **Slice:** `gazette-art-wiring-hardening` (lane-a)
 - **Branch / tip:** `lane/m3` @ `371ce258`
-- **Merge base:** `87a7f488`
+- **Merge base:** `11041438`
 - **Drained by:** s1186 fire, 2026-07-28
 - **Block-check (§3.0, run FIRST, before classification):** ✅ CLEAR — `status="queued"`, 2 leaves matched, longest wins.
 
@@ -52,10 +52,10 @@ All three subjects restored; `git diff` empty against each mutated file, verifie
 
 ## Merge classification
 
-Merge-base `87a7f488`. The two file sets are **fully disjoint** — verified *before* merging, not discovered during it.
+Merge-base `11041438`. The two file sets are **fully disjoint** — verified *before* merging, not discovered during it.
 
 - **LANE-TOUCHED only** (taken from the lane): `e2e/gazette-art-wiring.spec.ts`, `scripts/asset-diet.mjs`, `tasks/runs/20260728-234811-…md`. Main never moved these since the base.
-- **MAIN-MOVED only** (lane holds stale copies; **main wins, nothing taken**): `STATUS.md`, `logs/.goal-tree.html`, `logs/dashboard.html`, `logs/task-stats.jsonl`, and six `artifacts/**` screenshots — all moved by s1185's own bookkeeping commit `b39c0c6c`.
+- **MAIN-MOVED only** (lane holds stale copies; **main wins, nothing taken**): `STATUS.md`, `logs/.goal-tree.html`, `logs/dashboard.html`, `logs/task-stats.jsonl`, and six `artifacts/**` screenshots — all moved by s1185's own bookkeeping commit `b39c0c6c (archive: pruned by the A3 rewrite)`.
 
 No conflicts, no 3-way graft required. Path-scoped `git checkout lane/m3 -- <3 paths>` onto clean main.
 

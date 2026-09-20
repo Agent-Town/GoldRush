@@ -36,7 +36,7 @@ if (!hit) {
 console.log('before:', JSON.stringify({ status: hit.status, mergeHash: hit.mergeHash }));
 
 hit.status = 'merged';
-hit.mergeHash = 'b8ccf36ce6bec7227d4ebc2dad13548c8d82ff7d';
+hit.mergeHash = 'dae48b8b2508d7956c661fb04987d01c82148c71';
 hit.review = 'reviews/eight-winds-e2-row-order-survey.md';
 hit.runReport = 'tasks/runs/20260729-010959-lane-c-eight-winds-e2-row-order-survey.md';
 hit.drainedBy = 's1189 fire, 2026-07-29';

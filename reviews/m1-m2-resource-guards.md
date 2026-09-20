@@ -1,7 +1,7 @@
 # m1-m2-resource-guards — review (s1029 drain)
 
 **Slice:** `tasks/lane-m1-m2-resource-guards.md` (corrective for F-1026-5)
-**Branch:** `lane/m3` · **Tip:** `d93b1505` · **Base:** `aa6937a1` (ancestor of main, verified)
+**Branch:** `lane/m3` · **Tip:** `d93b1505` · **Base:** `53437ba8` (ancestor of main, verified)
 **Drained by:** s1029 fire, 2026-07-25
 
 ## VERDICT: MERGE — M1 guard fixed at the source; M2 guard diagnosed-only (authorized outcome), corrective owed
@@ -34,7 +34,7 @@ path changes.**
 |---|---|
 | Files changed by lane | `src/game/Game.ts` only (+47 / −3) |
 | Files main moved since base | `.gitignore`, `STATUS.md`, `logs/*`, `scripts/dashboard-gen.sh`, `tasks/*` |
-| Overlap | **ZERO** — main moved no `src/` or `e2e/` file since `aa6937a1` |
+| Overlap | **ZERO** — main moved no `src/` or `e2e/` file since `53437ba8` |
 | Merge | Pure LANE-TOUCHED, path-scoped checkout, no 3-way graft needed |
 
 ## Evidence (gate battery on the merged tree)

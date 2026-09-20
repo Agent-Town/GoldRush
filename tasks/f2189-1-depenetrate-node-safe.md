@@ -76,7 +76,7 @@ Node cannot resolve `?raw`, throws `needs an import attribute of "type: json"`, 
 
 | tree | `npx playwright test --list` | rc |
 |---|---|---|
-| `main` @ `f0f6bca61` | `Total: 2958 tests in 425 files` | 0 |
+| `main` @ `063b26b23` | `Total: 2958 tests in 425 files` | 0 |
 | `main` + `lane/c` | `Total: 0 tests in 0 files` (8 × TypeError) | 1 |
 
 And the house guard built after the previous instance of this class agrees, in both directions:
@@ -119,7 +119,7 @@ Your predecessor **deleted** this line from `restoreSnapshot` in `src/game/RunSu
 if (hero?.group?.position) hero.group.position.y = snapshot.hero.position.y;
 ```
 
-`git log -S` attributes it to **`f56c0ea36` — `runner(lane-a): lane-hero-y-restore-roundtrip.md`**,
+`git log -S` attributes it to **`afbee591f` — `runner(lane-a): lane-hero-y-restore-roundtrip.md`**,
 whose entire purpose was curing `e2e/restore-validation.spec.ts:658`
 ("active megaproject wrecker references survive strict normalization and restore"),
 a test whose failure was exactly one

@@ -1,8 +1,8 @@
 # f1558-1 — M4-06 denied-receipt: assert the refusal line at the moment it is said
 
 - **Slice:** `f1558-1-m4-06-denied-lastline-race`
-- **Branch:** `lane/b` · **tip** `17c7fdde4` · **base** `6608f8605`
-- **Merge:** `88e00904ac7d8d33ac7dc3fea010a45cf07e196d` (`--no-ff`, `ort`, no conflicts)
+- **Branch:** `lane/b` · **tip** `0fe646f49` · **base** `b5f3b1f33`
+- **Merge:** `8701d743ce506008911d61033e91c66558dab5bf` (`--no-ff`, `ort`, no conflicts)
 - **Drained by:** s1559 fire, 2026-08-08
 
 ## Verdict
@@ -69,9 +69,9 @@ no further corrective is owed there.
 
 ## Merge classification
 
-Base `6608f8605`. Main advanced 5 commits during the drain window (s1559 bookkeeping: STATUS,
+Base `b5f3b1f33`. Main advanced 5 commits during the drain window (s1559 bookkeeping: STATUS,
 `logs/`, `.claude/skills/drain/SKILL.md`, `tasks/BACKLOG.md`) — **none touching either path**,
-verified with `git log 6608f8605..main -- <both paths>` returning empty.
+verified with `git log b5f3b1f33..main -- <both paths>` returning empty.
 
 | File | Class | Resolution |
 |---|---|---|

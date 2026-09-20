@@ -1,6 +1,6 @@
 // s1356 — F-1336-2's owed survey: does any consumer key off the `ap-*` goal ids?
 // Replicates scripts/drain-block-check.mjs normalize()/findLeaves() EXACTLY (read from
-// :156-173 at commit 21ea62d6) and asks the only question that matters for a renumbering:
+// :156-173 at commit a79e52b1) and asks the only question that matters for a renumbering:
 // does mutating an `ap-*` id change which leaf any real query resolves to?
 //
 // Run: node logs/session-scratch/s1356-ap-id-consumer-probe.mjs

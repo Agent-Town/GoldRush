@@ -34,7 +34,7 @@ recipe it did not (`d5e4ead7…`), because all ten extras were dropped.
 under Blender. Pin the inputs as well as the builder: current concept plates and terrain helpers can
 change the result. A saved `.blend` can also have drifted from the GLB beside it — see §6.
 
-**E1 landmark source correction, 2026-09-08.** The owner-approved replacement (`d8603c908`, from
+**E1 landmark source correction, 2026-09-08.** The owner-approved replacement (`d8603c908 (archive: pruned by the A3 rewrite)`, from
 `7c01afa5`) imported 25 per-body `.blend`/GLB pairs but left pre-verdict aggregate blends and body
 metadata. Each pack now identifies the authoritative source as `assets[id].blend`; its root `blend`
 is explicitly historical. All 25 saved sources re-export byte-identically. Full regeneration also

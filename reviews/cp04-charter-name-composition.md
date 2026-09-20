@@ -2,7 +2,7 @@
 
 **Slice:** `lane-b-cp04-charter-name-composition` (FIRE-AUTHORED s1180, from F-1179-3)
 **Branch/tip:** `lane/m4` @ `c97062be`
-**Report merged to main:** `c2d1b690` (the RUN REPORT only — a lawful STOP ships no work, and `mergeHash` is a GUARD INPUT, not an evidence pointer; F-1179-5)
+**Report merged to main:** `c2d1b690 (archive: pruned by the A3 rewrite)` (the RUN REPORT only — a lawful STOP ships no work, and `mergeHash` is a GUARD INPUT, not an evidence pointer; F-1179-5)
 **Drained by:** s1180 fire, 2026-07-28 (the same fire that authored it)
 **§3.0 drain-block-check:** ✅ CLEAR as the first command.
 

@@ -1,9 +1,9 @@
 # view-schema-versioning — GATED GREEN, MERGE DEFERRED (a live main-slot runner holds the tree)
 
 - **Slice:** `view-schema-versioning` (lane-b)
-- **Branch / tip:** `lane/b` @ `3eacc81c3` (runner auto-commit)
-- **Base:** `6e592ca13` (merge-base with main); lane was 13 behind main at gate time
-- **Gated commit:** `cf1e10a21` — preserved as branch **`save/view-schema-gated-s2458`**
+- **Branch / tip:** `lane/b` @ `14c4db20b` (runner auto-commit)
+- **Base:** `1675a5719` (merge-base with main); lane was 13 behind main at gate time
+- **Gated commit:** `808b9d473` — preserved as branch **`save/view-schema-gated-s2458`**
 - **Gate worktree:** detached, `gate-s2458` (§3.0b), removed after this review
 - **Drained by:** s2458
 
@@ -86,8 +86,8 @@ break the era pin; it inherited a break.
 
 ## F-2458-1 — main was already outside era 5; the previous drain owed a pin append and missed it
 
-**Measured, not inferred.** The only corpus-touching commit since the last pin (`e62f30ae9`,
-pin `91c43545`) is `280d95d7f` — s2457's `winnability-receipts` runner commit, which added
+**Measured, not inferred.** The only corpus-touching commit since the last pin (`1cc048aec`,
+pin `91c43545`) is `1e3aba54e` — s2457's `winnability-receipts` runner commit, which added
 `assets/contracts/winnability-receipts.json` (207 lines). `assets/contracts` is inside
 `ENGINE_SOURCE_INPUTS`, so the content re-hashed `91c43545 → 30ae0a3c`. Nothing else moved.
 
@@ -100,7 +100,7 @@ window unassayable, and it is the third time this exact append has been missed b
 
 | Pin | Cause |
 |---|---|
-| `30ae0a3c…` | s2457 winnability-receipts drain `b5850417a`; content re-hash, no behaviour change. **Repairs the missed append rather than pinning only my own state.** |
+| `30ae0a3c…` | s2457 winnability-receipts drain `714d68198`; content re-hash, no behaviour change. **Repairs the missed append rather than pinning only my own state.** |
 | `4082ebe4…` | this merge; observation surface only, simulation behaviour unchanged |
 
 Top-level `engineHash` re-pointed to the latest pin, as `engine-era-guard` requires. The three
@@ -128,7 +128,7 @@ were written, which would make both causes true when written and stale now.
 
 ## Merge classification
 
-Trial merge onto `main` @ `719105ec3` was **clean** — `Auto-merging tasks/BACKLOG.md`, no conflicts.
+Trial merge onto `main` @ `4f5731afb` was **clean** — `Auto-merging tasks/BACKLOG.md`, no conflicts.
 
 | File | Class |
 |---|---|
@@ -153,13 +153,13 @@ Trial merge onto `main` @ `719105ec3` was **clean** — `Auto-merging tasks/BACK
 
 ---
 
-## s2459 RE-LAND ADDENDUM — MERGED at `7bf8318c6`
+## s2459 RE-LAND ADDENDUM — MERGED at `ac6fc1eb0`
 
 s2458 gated this slice green and deliberately did not merge it: the main slot was
 held by a live runner (pid 71704) whose uncommitted `package.json` edit touched
 the same `test:node-guards` line. That was the right call. By the time s2459 took
-the lock, main had moved **twice** — `b4d8e199c` (watchdog-self-check, drained
-this fire) and `33e22d9c2` (an attended session's owner rulings, landed mid-fire)
+the lock, main had moved **twice** — `c957757ce` (watchdog-self-check, drained
+this fire) and `78ba1aca5` (an attended session's owner rulings, landed mid-fire)
 — so **the merge classification above had decayed and the gate was RE-RUN rather
 than inherited**. A review's merge classification is perishable when a pile is
 drained in order.
@@ -172,7 +172,7 @@ drained in order.
 | `npm run build` | rc=0 |
 | `view-schema-guard` + `engine-era-guard` + `health-watch-agents` | **10 pass / 0 fail**, 3.3 s |
 | 11 adjacent suites (`battery-manifest`, `gate-caller-audit`, `run-guards`, `skillmd-guard`, `site-contract`, `worker-type-coverage`, `deploy-mirror-allowlist`, `agent-reels`, `agent-seat`, `assay-worker`, `assay-replay`) | **100 pass / 0 fail**, 142.1 s |
-| Re-check after the catch-up merge of `092cb938e` | **60 pass / 0 fail**, 6.3 s |
+| Re-check after the catch-up merge of `274a9cf49` | **60 pass / 0 fail**, 6.3 s |
 | **Total** | **110 tests, 110 pass, 0 fail** |
 
 **The adjacent list is MINE, not s2458's.** Its eight were correct for its base;
@@ -218,11 +218,11 @@ not move."* Main moved twice, so I measured rather than reasoned:
 
 **No pin correction was owed.** Why it held is worth writing down, because it is
 the opposite of the intuitive answer: neither intervening commit touched
-`ENGINE_SOURCE_INPUTS`. `b4d8e199c` touches `scripts/health-watch.sh`,
+`ENGINE_SOURCE_INPUTS`. `c957757ce` touches `scripts/health-watch.sh`,
 `scripts/health-watch-agents.test.mjs` and `package.json` — and that corpus
 contains `scripts/assay-replay-agent.mjs` as a **single named file**, not
 `scripts/` as a directory, while F-2458-2 already measured that `package.json` is
-not in it at all. `33e22d9c2` touches only `specs/` and `tasks/`. **A fire that
+not in it at all. `78ba1aca5` touches only `specs/` and `tasks/`. **A fire that
 reasoned "I edited `scripts/`, so the hash rotated" would have appended a fourth
 pin for a hash that never moved** — and the registry is append-only, so that
 mistake is not reversible by editing. Measure the hash; never infer it from the

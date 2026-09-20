@@ -1,7 +1,7 @@
 # whole-suite-baseline — the first real attempt to run all 2378 tests
 
 **Slice:** standing warning from s1095 (discharge F-1094-1's residual: `npm test` collects 2378 tests again — but nobody had ever RUN them)
-**Fire:** s1101 · **Base:** main `28b16e16` · **Date:** 2026-07-27
+**Fire:** s1101 · **Base:** main `4736b8fa` · **Date:** 2026-07-27
 
 ## Verdict
 

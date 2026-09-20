@@ -1,8 +1,8 @@
 # reviews/er01-e8-census.md — ER-01 E8 Orbital readiness census
 
 - **Slice:** `lane-er01-e8-census.md` (ER-01 ladder, E8 Orbital)
-- **Branch / tip:** `lane/b` @ `b64d110b4` (single runner commit)
-- **Merged to main:** `90d57a972c7f0674b1f097f363644746d8d05165`
+- **Branch / tip:** `lane/b` @ `a377fdcb6` (single runner commit)
+- **Merged to main:** `c61b0968f7add06a9ab599b6d0939dd6e2a9d037`
 - **Drained by:** s1480 fire, 2026-08-06
 - **Verdict:** ✅ **MERGE**
 
@@ -36,7 +36,7 @@ malformed. Note this is exactly where E8 differs from E7, whose Relay Valley dec
 
 ## Merge classification
 
-Base: `main` @ `41f40c61` (post-E7). `docs/bench/e8-readiness-census.md` and
+Base: `main` @ `20c1ea6b` (post-E7). `docs/bench/e8-readiness-census.md` and
 `e2e/er01-e8-census.spec.ts` are pure LANE-ONLY adds (38 / 67 lines, none present on main).
 `tasks/BACKLOG.md` is BOTH-MOVED add/add — union-resolved, with the lane's
 `READY-FOR-GATES on lane/b` line **retired to `✅ MERGED s1480`** in the merge commit (F-1461-4:

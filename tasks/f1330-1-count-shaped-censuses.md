@@ -10,7 +10,7 @@ Role: implementer. Workdir: `worktrees/lane-c` (slot lane-c, branch `lane/e2-ars
 - `tasks/goals.json` leaf `f1328-1-drill-yard-census-debt` — **BLOCKED, and it stays blocked. This task is NOT that task** (see WHY).
 
 ## WHY (evidence, dated, measured — not inherited)
-`f0bf5251` (`runner(lane-b): lane-drill-yard.md`, 2026-08-01 08:14) added `e1-drill-yard` as E1's 6th contract and the **42nd** overall, per the owner's ratification that morning ("Drill Yard sounds good to me"). Census assertions were not updated with it.
+`f86b28b3` (`runner(lane-b): lane-drill-yard.md`, 2026-08-01 08:14) added `e1-drill-yard` as E1's 6th contract and the **42nd** overall, per the owner's ratification that morning ("Drill Yard sounds good to me"). Census assertions were not updated with it.
 
 s1330 counted the shipped data directly (every `assets/contracts/epoch-*/contracts.json`):
 
@@ -24,8 +24,8 @@ Both remaining sites compare a **live-derived** array against the literal `41`, 
 
 | Site | assertion |
 |---|---|
-| `e2e/board-card-images.spec.ts:37` ("all contract chapters use their own board-card URL") | now `expect(EPOCHS.flatMap((epoch) => epoch.contracts)).toHaveLength(42);` — read `41` when this master was authored; THIS SLICE is what changed it (merged `4cb09307`) |
-| `e2e/map-census.spec.ts:63` (`expect(CONTRACTS).toHaveLength(42);` — a `test.afterAll`, so there is no title to quote; the source line IS the anchor) | read `41` when this master was authored; THIS SLICE is what changed it (merged `4cb09307`) |
+| `e2e/board-card-images.spec.ts:37` ("all contract chapters use their own board-card URL") | now `expect(EPOCHS.flatMap((epoch) => epoch.contracts)).toHaveLength(42);` — read `41` when this master was authored; THIS SLICE is what changed it (merged `68deb90a`) |
+| `e2e/map-census.spec.ts:63` (`expect(CONTRACTS).toHaveLength(42);` — a `test.afterAll`, so there is no title to quote; the source line IS the anchor) | read `41` when this master was authored; THIS SLICE is what changed it (merged `68deb90a`) |
 
 ⚠️ **These two are ALL that remain.** s1330 re-ran the census grep itself rather than inheriting a list — `grep -rn "toHaveLength(41)\|toHaveCount(41)\|toBe(41)\|toEqual(41)\|all 41 \|41 contracts\|41 cards" e2e/ src/ scripts/ specs/` — and the only other live hits are `scripts/law-pointer-baseline.json` (a generated guard baseline, see NO) and `scripts/tmp-s1143-backlog.mjs` (a historical quoted narrative, not an assertion). The id-list-shaped censuses were already cured.
 
@@ -34,11 +34,11 @@ Both remaining sites compare a **live-derived** array against the literal `41`, 
 ## PRE-FLIGHT (LANE-SAFETY invariant)
 1. `git -C . status --short` in the lane worktree: dirty tracked blobs must be reachable in git, else **STOP** and report.
 2. `git log main..HEAD --oneline` must be **empty**. If it is not, **STOP** — an undrained predecessor lives here and a reset would destroy it.
-3. **Premise check, AFTER any reset:** `node -e` count the contracts in `assets/contracts/*/contracts.json`. It must total **42**. If it totals 41, this lane predates `f0bf5251` and the task is **not applicable here — STOP and report the number you got.** (Changing the literal to 42 on a 41-contract tree would manufacture a red.)
+3. **Premise check, AFTER any reset:** `node -e` count the contracts in `assets/contracts/*/contracts.json`. It must total **42**. If it totals 41, this lane predates `f86b28b3` and the task is **not applicable here — STOP and report the number you got.** (Changing the literal to 42 on a 41-contract tree would manufacture a red.)
 
 ## SCOPE (numbered, each testable)
 1. `e2e/board-card-images.spec.ts:37` ("all contract chapters use their own board-card URL") — `toHaveLength(41)` → `toHaveLength(42)`.
-2. `e2e/map-census.spec.ts:63` (`expect(CONTRACTS).toHaveLength(42);` — inside `test.afterAll`, so there is no title; the source line is the anchor) — `toHaveLength(41)` → `toHaveLength(42)`. ✅ DONE, merged `4cb09307`.
+2. `e2e/map-census.spec.ts:63` (`expect(CONTRACTS).toHaveLength(42);` — inside `test.afterAll`, so there is no title; the source line is the anchor) — `toHaveLength(41)` → `toHaveLength(42)`. ✅ DONE, merged `68deb90a`.
 3. Nothing else. If you believe a third count-shaped census exists, **report it — do not fix it** (the grep above is the measured denominator; a disagreement is a finding worth more than a silent edit).
 
 ## TOUCH-ONLY

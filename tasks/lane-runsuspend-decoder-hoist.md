@@ -7,9 +7,9 @@ CODEX: model=gpt-5.6-sol effort=high
 
 > ⚠️ The `CODEX:` line above is at **column 0 on its own line** deliberately (F-1088-4). `scripts/lane-runner-v3.sh` greps `^CODEX:`, so an inline copy is silently ignored and the run falls back to `effort=medium`.
 
-## WHY (the evidence chain, dated — every number below was measured by s1094 on main at `d9facd86`)
+## WHY (the evidence chain, dated — every number below was measured by s1094 on main at `5bf58d07`)
 
-rf-31 (`a222242f`, s1093) landed a guard proving four town specs collect. Its follow-up finding said:
+rf-31 (`862fc07e`, s1093) landed a guard proving four town specs collect. Its follow-up finding said:
 
 > 📌 **F-1093-4 (follow-up rung, not queued):** the runner found and correctly left alone **27 other `import.meta.glob` sites across 17 source files** — any on a spec's static import graph is the same latent defect, and **the guard landed here is already the instrument to measure which.**
 
@@ -77,13 +77,13 @@ s1094 temporarily replaced that value import with a type-only import plus a `() 
 
 ### When it broke
 
-Both edges (`RunSuspend → HomemakerBossSystem` **and** `HomemakerBossSystem → Terrain`) landed in **one commit, `c93fffd6`, 2026-07-18T02:37+07:00, `runner(lane-a): lane-a-e6-boss-homemaker.md`** (✓ `git log -G`, both files). **Nine days.** M4-08 agent attribution is a signed-off milestone surface per `CLAUDE.md` §9; its spec has contributed zero tests since.
+Both edges (`RunSuspend → HomemakerBossSystem` **and** `HomemakerBossSystem → Terrain`) landed in **one commit, `f283c321`, 2026-07-18T02:37+07:00, `runner(lane-a): lane-a-e6-boss-homemaker.md`** (✓ `git log -G`, both files). **Nine days.** M4-08 agent attribution is a signed-off milestone surface per `CLAUDE.md` §9; its spec has contributed zero tests since.
 
 ⚠️ **Collection is not greenness.** These three specs have not *run* in nine days and may have rotted independently. **Newly-revealed reds are a FINDING to report and attribute — never something to fix by editing `e2e/`.** (Same standing warning rf-31 carried; it proved correct there, and F-1093-3 turned three of those specs into F-1084-1 members.)
 
 ## PRE-FLIGHT — verify by CONTENT, never by counting (SAFE-DUPE)
 
-⚠️ **`git log main..lane/m3` WILL PRINT ONE COMMIT (`37712b82 runner(lane-a): lane-town-glob-collection.md`), AND THAT IS EXPECTED — IT IS *NOT* A REASON TO STOP.** ✓ s1094 re-measured it per file this fire: that commit **is rf-31**, which merged to main as `a222242f`. Its two-dot diff vs main is **9 files, and not one of them is under `src/` or `e2e/`** — they are `STATUS.md`, four `logs/*`, `reviews/rf-31.md`, `tasks/BACKLOG.md`, `tasks/goals.json`, and the rf-32 master, i.e. **bookkeeping that main owns and has moved past**. The `worktrees/lane-a` tree is ✓ **clean**. The branch is **FALSE-AHEAD**; a reset is **loss-free**. An ahead-count is not a drain signal (F-1066-1 / F-1073-1 — it misled on three separate lanes in one week).
+⚠️ **`git log main..lane/m3` WILL PRINT ONE COMMIT (`37712b82 runner(lane-a): lane-town-glob-collection.md`), AND THAT IS EXPECTED — IT IS *NOT* A REASON TO STOP.** ✓ s1094 re-measured it per file this fire: that commit **is rf-31**, which merged to main as `862fc07e`. Its two-dot diff vs main is **9 files, and not one of them is under `src/` or `e2e/`** — they are `STATUS.md`, four `logs/*`, `reviews/rf-31.md`, `tasks/BACKLOG.md`, `tasks/goals.json`, and the rf-32 master, i.e. **bookkeeping that main owns and has moved past**. The `worktrees/lane-a` tree is ✓ **clean**. The branch is **FALSE-AHEAD**; a reset is **loss-free**. An ahead-count is not a drain signal (F-1066-1 / F-1073-1 — it misled on three separate lanes in one week).
 
 ⚠️⚠️ **ORDER MATTERS (F-1093-5, s1093, learned the hard way one fire ago).** The premise checks below describe **main's** content. Running them on an un-reset lane measures a stale tree and STOPs the run for the wrong reason. **So: lane-safety first, then the reset, then the premise checks on the fresh tree.**
 
@@ -164,7 +164,7 @@ If any fails **now**, the ground genuinely moved under this master — **STOP an
 
 1. `npx tsc --noEmit` → **exit 0.** ✅ **Cite it — it is real coverage here.** `tsconfig.json` includes `src`, and this slice's source changes are entirely `src/`. ⚠️ **But say plainly that it does NOT cover your new `scripts/*.test.mjs`** — `scripts/` is outside tsconfig (F-1087-1). Do not let `tsc` stand as evidence for the guard.
 2. `npm run build` → **exit 0**, report the time.
-3. **The headline number**: `npx playwright test --list` → report **exit code and the full `Total:` line**. Expect **exit 0** and **~2376 tests in 330 files** (s1094's measured figure on `d9facd86`; a small drift is fine and expected, zero is not).
+3. **The headline number**: `npx playwright test --list` → report **exit code and the full `Total:` line**. Expect **exit 0** and **~2376 tests in 330 files** (s1094's measured figure on `5bf58d07`; a small drift is fine and expected, zero is not).
 4. **The three recovered specs — LIST then RUN.** For each of `e2e/m3-01-run-scaffold.spec.ts`, `e2e/m4-08-agent-attribution.spec.ts`, `e2e/restore-validation.spec.ts`: report the collected count (expect **8 / 6 / 36**), then **actually run them**, both projects (desktop + mobile-390), `--workers=1`, and report passed/failed. ⚠️ **These have not run in nine days. Reds here are EXPECTED-POSSIBLE and are a FINDING** — attribute each one (pre-existing-and-exposed vs slice-caused) with evidence, and **do not fix them by editing `e2e/`.**
 5. **Adjacent suites** — run and report, both projects: `e2e/run-suspend.spec.ts` (the suite that covers the `RunSuspend` decode path you re-pointed) and `e2e/e6-boss-homemaker.spec.ts` (the module you split). A red in either is a **real regression** and must be attributed, not waved through.
 6. **Plain-boot console probe**, desktop 1280×800 **and** mobile 390×844 → **0 errors / 0 warnings / 0 pageErrors**. Use `scripts/probe-plain-boot-console.mjs`; ⚠️ it **requires `PROBE_BASE`** and proves the listener was started from this checkout (rf-27..rf-30) — a bare positional argument **throws a directive error** by design. Set the env var.

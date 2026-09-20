@@ -1,9 +1,9 @@
 # reviews/release-town-fix.md — RF-05c P0 launch-blocker: the E1 release build must boot the frontier town
 
 - **Slice:** release-town-fix (RF-05c) — P0 LAUNCH-BLOCKER
-- **Branch / tip:** `lane/m3` @ `6e683280 runner(lane-a): lane-release-town-fix.md`
-- **Merged to main:** `7ecaf8a906e1a070753865c4462881a437cbcb2e` (`--no-ff`, s1022 fire)
-- **Base:** `bcd1ccc36ddb2c7e8752641c0dfa09aa6d45e8e7` (13 commits behind main — all fire-bookkeeping STATUS commits, no hot files)
+- **Branch / tip:** `lane/m3` @ `1deeac0a runner(lane-a): lane-release-town-fix.md`
+- **Merged to main:** `3207ce0acd630e498d251783f819577eb245a5f7` (`--no-ff`, s1022 fire)
+- **Base:** `6864ae6caa3ab4daa9bceb07cb5152d82e0f5b8c` (13 commits behind main — all fire-bookkeeping STATUS commits, no hot files)
 
 ## Verdict: PASS — merged. The frontier town boots in the E1 release build.
 
@@ -23,7 +23,7 @@ The owner's first-player find on the E1 preview was fatal: *"account created, to
 | adjacent (m1-01, m2-01, task-025, town-t1-square), both projects | 30/36 — 6 fails fingerprinted PRE-EXISTING (below) |
 
 ## Merge classification
-Base `bcd1ccc3`. Per-file (`git diff --name-status main...lane/m3`):
+Base `6864ae6c`. Per-file (`git diff --name-status main...lane/m3`):
 | File | Class | Resolution |
 |---|---|---|
 | `e2e/release-build.spec.ts` | LANE-TOUCHED only | clean (main untouched since base) |
@@ -34,7 +34,7 @@ Base `bcd1ccc3`. Per-file (`git diff --name-status main...lane/m3`):
 | `vite.config.ts` | LANE-TOUCHED only | clean |
 | `STATUS.md` | MAIN-MOVED only (lane never touched it — three-dot diff excludes it; two-dot showed it only because main advanced) | kept main's; not in the merge |
 
-`git diff bcd1ccc3 main -- <the 6 files>` = EMPTY → main moved none of them → **clean `--no-ff` auto-merge, zero conflicts**. Verified no unmerged paths after merge.
+`git diff 6864ae6c main -- <the 6 files>` = EMPTY → main moved none of them → **clean `--no-ff` auto-merge, zero conflicts**. Verified no unmerged paths after merge.
 
 ## Findings
 - **F-1022-1 (non-blocking, owner/attended):** the definitive clean-main fingerprint of the 3 adjacent reds via detached worktree was blocked in this fire's sandbox (Bash cwd restricted to the repo; `/tmp` worktree exec gated). Attribution therefore rests on **verified blast-radius reasoning** (see below), which is airtight, plus the documented load-flakiness. A permitted/unloaded session may re-run `town-t1-square:65` + `m1-01:70` + `m2-01:322` single-worker to belt-and-suspender the load-flake call.

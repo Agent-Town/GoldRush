@@ -1,8 +1,8 @@
 # F-1710-1 — complete gate-caller capture
 
 **Slice:** `lane-d-f1710-1-gate-caller-capture.md`  
-**Branch / tip:** `lane/d` / `c53c8f10069acd40720d78769b58efd9d671b25b`  
-**Merge:** `a53af33ba02f4e2042a465e27e6f2be5543c444b`  
+**Branch / tip:** `lane/d` / `f1af2d6a0d422bb1e6d5618bf803f96158773069`  
+**Merge:** `0b5c2fe914d3d3f89c9d6978de3b115782849c00`  
 **Verdict:** **MERGED — the audit test no longer depends on a truncatable `spawnSync` pipe.**
 
 ## What it does

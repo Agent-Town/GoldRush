@@ -6,7 +6,7 @@ You are Codex, implementer for Gold Rush, running natively on Robin's Mac in `wo
 
 READ FIRST: `AGENTS.md`; `specs/agent-play/ap-16-same-game-law.md` (the law this serves); `specs/multiplayer/mp-07-one-engine-at-the-table.md` (what the seat IS, and why it is narrow on purpose); `reviews/ap16-5-rotation-parity.md` (the predecessor drain — its Findings section is this task's entire WHY); `src/sim/SeatOrders.ts` (the subject); `src/agent/StandingOrders.ts` (the REFERENCE implementation — you are copying its ruling, not inventing one); `scripts/agent-seat.test.mjs` (the suite you extend).
 
-SEQUENCING LAW: this task depends on AP-16-5 (`144b3291`) being present, because it copies that slice's validation ruling verbatim. Verify with
+SEQUENCING LAW: this task depends on AP-16-5 (`73de3dec`) being present, because it copies that slice's validation ruling verbatim. Verify with
 `grep -c "rotationSteps?: 0 | 1 | 2 | 3;" src/agent/StandingOrders.ts`
 → must print `1`. If it prints `0`, **STOP and report "AP-16-5 not landed in this lane"** — do not improvise the dependency, and do not gate on `git log -N`.
 
@@ -14,7 +14,7 @@ Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead 
 
 ## Why (F-1645-2, s1645 2026-08-11 — found by the ap16-5 runner under its master's FIREWALL LIFT clause, then VERIFIED AT SOURCE by the drain before this master was written)
 
-AP-16-5 (`144b3291`) taught the **standing-orders** door that a `BUILD` order can carry `rotationSteps: 0..3`, and published it in `public/skill.md`'s guarded grammar fence. It did not — and by its firewall could not — touch the **second** build path.
+AP-16-5 (`73de3dec`) taught the **standing-orders** door that a `BUILD` order can carry `rotationSteps: 0..3`, and published it in `public/skill.md`'s guarded grammar fence. It did not — and by its firewall could not — touch the **second** build path.
 
 **The gap, verified line by line rather than inherited from the report:**
 

@@ -12,15 +12,15 @@
 ## WHY (evidence, quoted and dated)
 
 **s1510 bisected the test at `e2e/landmark-collision.spec.ts:68` ("enemy blocker routing is deterministic and goes around a county landmark") to a single commit** —
-`531bd923adc97d9c288310f7f94f549e994c3f29` (*drain(s1445): lane-night-stuck-census MERGED — F-BW-10,
+`70eb5b50d3bb6852b8cd6b6646dec9a2b2af6577` (*drain(s1445): lane-night-stuck-census MERGED — F-BW-10,
 enemies slide toward their goal, not their sign*, 2026-08-04T00:48+07). All arms `--workers=1`,
 both projects, detached worktree:
 
 | Commit | Result |
 |---|---|
-| `1761da401` (2026-07-28) | **GREEN 10/10** — whole spec |
-| `7bb054510` (culprit's parent) | **GREEN 2/2** |
-| **`531bd923a`** | **RED 2/2**, both projects |
+| `1761da401 (archive: pruned by the A3 rewrite)` (2026-07-28) | **GREEN 10/10** — whole spec |
+| `e2a6a5641` (culprit's parent) | **GREEN 2/2** |
+| **`70eb5b50d`** | **RED 2/2**, both projects |
 | current `main` | RED 2/2 |
 
 The culprit is 9 insertions / 9 deletions in `src/entities/Enemy.ts`:
@@ -91,7 +91,7 @@ files hunting for a way to make it true. A negative result here is worth as much
 
 **TOUCH-ONLY:** `src/entities/Enemy.ts` · `docs/bench/` (your report) · new screenshots under `artifacts/`.
 
-**NO:** do not revert `531bd923a` · do not edit `e2e/**` (both specs are the judges — changing a judge
+**NO:** do not revert `70eb5b50d` · do not edit `e2e/**` (both specs are the judges — changing a judge
 to pass a defendant is the failure this task exists to avoid) · do not touch
 `src/systems/BuildSystem.ts`, `src/world/Terrain.ts`, `src/world/LandmarkCollision.ts` ·
 do not change `Balance.palisade.*` · do not touch the `gapBlockerId` route branch (the culprit

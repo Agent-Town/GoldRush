@@ -49,7 +49,7 @@ A second probe set `stats.startTime` to `null` and also produced `snapshot date 
 
 ```text
 SNAPSHOT 2026-07-28T02:26:03.534Z to 2026-07-28T05:26:38.054Z — duration 10834520.016999999 ms
-SNAPSHOT main commit b66905c64c0f30cbb1b018128288c19ebca5fa79
+SNAPSHOT main commit eb3a8a01200b57cbbfce73ddc44898361669b391
 ```
 
 The direct command `git rev-list -1 --before=2026-07-28T02:26:03.534Z main` returned the same commit. If Git cannot resolve it, the tool prints the exact copyable command instead of inventing a commit.

@@ -3,10 +3,10 @@
 ## Slice
 
 - Branch: `lane/a`
-- Base/tip before runner auto-commit: `ebc1cab1adf9f8cb83faf360fc6b33e6c8b725ce`
+- Base/tip before runner auto-commit: `b8336f8568fea2e5d4f5c33e60ea7afb94092209`
 - Verdict: **READY-FOR-GATES**
 - Scope: live declared-vs-keyed refusal at tolerance ±1; the archived previous-desk mismatch remains advisory.
-- Merge classification: main advanced to `c66d90f6491624337ca7ad3d61cbca379c344204` during the run, but none of the three implementation/report paths moved on main. The slice is path-disjoint; no rebase or conflict resolution was attempted.
+- Merge classification: main advanced to `6d1de0c746ae6b95a4e54dbd5aa3d4ad5e1cf793` during the run, but none of the three implementation/report paths moved on main. The slice is path-disjoint; no rebase or conflict resolution was attempted.
 
 ## What changed
 
@@ -115,11 +115,11 @@ No Playwright was owed or claimed: this slice touched no `src/**`, `e2e/**`, sim
 
 # DRAIN VERDICT — s1588
 
-**MERGED `b4dfe2d0228af9e6709a6c5ead1ec05075fec1ff`.** §3.0 `drain-block-check` CLEAR before classification.
+**MERGED `2bf54ebb1d681e5ceb5379d0a69464fd2b52fc98`.** §3.0 `drain-block-check` CLEAR before classification.
 
 ## Merge classification
 
-Merge-base `ebc1cab1adf9f8cb83faf360fc6b33e6c8b725ce`. All four paths **LANE-TOUCHED / MAIN-MOVED: none** — proved, not assumed, with `git diff --name-only ebc1cab1 main -- <the four paths>` returning empty. No 3-way graft was owed and none was performed. `git log main..lane/a` is empty after the merge.
+Merge-base `b8336f8568fea2e5d4f5c33e60ea7afb94092209`. All four paths **LANE-TOUCHED / MAIN-MOVED: none** — proved, not assumed, with `git diff --name-only b8336f85 main -- <the four paths>` returning empty. No 3-way graft was owed and none was performed. `git log main..lane/a` is empty after the merge.
 
 **Custody (§3.0b):** undecided content never entered main's working tree. The battery ran in a detached worktree at main's tip with lane/a's four blobs placed into it — which, main being untouched on all four, *is* the merge result. Main's post-merge `desk-carryforward-guard.mjs` hashes `53223da8…`, identical to the gated bytes.
 

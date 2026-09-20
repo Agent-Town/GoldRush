@@ -16,7 +16,7 @@ git diff main...save/ap16-2-s1639-73a0cfed
 ```
 
 **Why it is being re-landed rather than merged** (measured s1639, not inherited): `ap16-3` merged
-`eba8d15ea` into the *same two files* on 2026-08-10, and `save/ap16-2-s1639-73a0cfed` now
+`507c4a679` into the *same two files* on 2026-08-10, and `save/ap16-2-s1639-73a0cfed` now
 **CONFLICTS with main — 5 conflict hunks, 3 in `src/agent/StandingOrders.ts` and 2 in
 `src/sim/HeadlessContractSim.ts`.** Stale + conflicted = RE-LAND with the old branch as
 salvage-ref (Mistake #15): agent hours are cheap, subtle merge corruption is not. **Nothing is
@@ -28,7 +28,7 @@ READ FIRST:
   ruled the pick clock **30/20/10s** by greenhorn/trail/vein-hunter, silence = first option,
   `defaultedPicks` counted, and verb `PICK_UPGRADE` **ratified**. Prove you have the right file:
   `grep -c "PICK_UPGRADE" specs/agent-play/ap-16-same-game-law.md` → **must print 1**. 0 = stale lane, STOP and report.
-- **The merged browser clock, main `e7bb88cf0` — READ ITS DIFF.** You REUSE its Balance keys and
+- **The merged browser clock, main `ac51296d2` — READ ITS DIFF.** You REUSE its Balance keys and
   mirror its semantics sim-side. Do not invent a second clock.
 - `src/sim/HeadlessContractSim.ts` — the auto-first-pick you replace. Prove you have it:
   `grep -c "while (this.progression.offer" src/sim/HeadlessContractSim.ts` → **must print 1**.
@@ -75,7 +75,7 @@ cure: **same offer, same clock, same default, both species.** And the sequencing
 day: *"lets wait until we have parity between humans and agents on the maps"* — the roguelite draft
 is the heart of a build, and this is the largest of the three parity gaps.
 
-**AP-16-1 merged `8465f6b33`, AP-16-3 merged `eba8d15ea`. This slice is the LAST of the three.**
+**AP-16-1 merged `760990fda`, AP-16-3 merged `507c4a679`. This slice is the LAST of the three.**
 
 ## Scope
 
@@ -122,7 +122,7 @@ is the heart of a build, and this is the largest of the three parity gaps.
 8. ⭐ **RETIRE THE AUDIT'S PINNED FALSEHOOD (F-1638-3) — and the generator defect under it.**
    `scripts/same-game-audit.mjs` hardcodes every non-`:rig` ability as unavailable to agents, so
    **all 42 blast ability rows still read *"no reachable standing-order path reaches this hero
-   ability"* even though `BLAST_AT` merged at `eba8d15ea`.** Worse, `scripts/same-game-audit.test.mjs`
+   ability"* even though `BLAST_AT` merged at `507c4a679`.** Worse, `scripts/same-game-audit.test.mjs`
    **asserts** that row is `agent-lacks` under the title `blast-charge gap must remain visible`
    (`grep -c "blast-charge gap must remain visible" scripts/same-game-audit.test.mjs` → 1) — **so
    whoever fixes the ability rows watches `test:node-guards` go RED *because* they fixed it.** That
@@ -131,7 +131,7 @@ is the heart of a build, and this is the largest of the three parity gaps.
      instead of hardcoding it (so `BLAST_AT` reads as reachable, and your new `PICK_UPGRADE` does
      too, without a third hardcode);
    - **update that guard's assertion to the measured truth**, renaming the test so its title states
-     what it now protects, and **naming `eba8d15ea` (blast) and this slice (pick) as the causes**;
+     what it now protects, and **naming `507c4a679` (blast) and this slice (pick) as the causes**;
    - **PROVE THE GUARD STILL HAS TEETH: manufacture the defect.** Force the generator to report the
      blast ability as unavailable again and show the guard goes **RED**, then revert byte-identical
      and show it **GREEN**. A guard that cannot fail protects nothing — that is exactly how
@@ -159,10 +159,10 @@ regenerated output, never hand-edited**.
 > completion required a file outside its own firewall. If you find a fifth such file, **report it —
 > do not silently reach for it.**
 
-NO changes to: the browser clock/overlay (merged at `e7bb88cf0`, done) · the buildable predicate
+NO changes to: the browser clock/overlay (merged at `ac51296d2`, done) · the buildable predicate
 (ap16-1's, merged) · the blast ability implementation (ap16-3's, merged — you change how the AUDIT
 *reports* it, never how it *behaves*) · ranking / `compareScores` / the standings API / tape
-validation · `src/encyclopedia/**` and `src/seasons/**` (SEA-2 merged `39c036580` — the seasons
+validation · `src/encyclopedia/**` and `src/seasons/**` (SEA-2 merged `68171076a` — the seasons
 surface is live and not yours) · any season DATA or era stamp.
 
 If you find yourself about to exit without changes, WRITE WHY into your report first — a silent

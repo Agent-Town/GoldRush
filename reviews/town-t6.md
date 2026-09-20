@@ -1,12 +1,12 @@
 # town-T6 — surfaces-move-home (LAST town-v1 slice)
 
-- **Slice/branch/tip:** town-T6 surfaces-move-home · `lane/m4` `541dac8` "town: move menu surfaces into town" · lane base `fe470f5` · salvaged `save/town-t6` `541dac8`
+- **Slice/branch/tip:** town-T6 surfaces-move-home · `lane/m4` `541dac8` "town: move menu surfaces into town" · lane base `af3c67d` · salvaged `save/town-t6` `541dac8`
 - **Verdict:** ⛔ **HOLD — do NOT merge this fire.** Code is correct + owner-intended, but it reds adjacent town-t1/town-t3 whose alignment needs the town-v1 nav model (attended/spec-owner). See F-t6-1.
 
 ## What it does (verified from lane/m4)
 Thins the StartMenu to Continue / Enter Town / Profile / Settings and **removes `start-menu-new-claim`** (New Claim now launches via Enter Town → T3 board). Promotes two town shells from "opens soon" placeholders to live surfaces: **Schoolhouse → Research chart** ("Elder's Survey Chart") and **Assay Office → crafting order-status porch**. Touches `src/ui/menu/StartMenu.ts`, `src/town/TownScene.ts`, `src/town/town.css`, updates `e2e/044-start-screen.spec.ts`, adds `e2e/town-t6-surfaces.spec.ts` + 12 artifacts. Firewall respected (StartMenu + src/town/* + 044 + new e2e + artifacts only).
 
-## Gate result (run on the town-T6 merged tree, onto main `db76f50`)
+## Gate result (run on the town-T6 merged tree, onto main `49d865c`)
 - tsc clean · build green.
 - `town-t6-surfaces.spec.ts` — pass (both projects).
 - `044-start-screen.spec.ts` — 12/12 (both) — updated to the thinned menu, asserts `start-menu-new-claim` `toHaveCount(0)`.

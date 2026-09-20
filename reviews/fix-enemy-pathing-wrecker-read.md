@@ -2,7 +2,7 @@
 
 - **Slice:** fix-enemy-pathing-wrecker-read (gap-flow steering + enclosure gnaw + wrecker readability tell)
 - **Branch/tip:** lane/m3 @ `d010af89` (runner(lane-a), 2026-07-13 13:59)
-- **Base:** `fe6ef3a0` (clean main-ancestor; merge-base with main confirmed)
+- **Base:** `66363427` (clean main-ancestor; merge-base with main confirmed)
 - **Gated by:** s461 fire, 2026-07-13T07:53Z (scratch server :5231, `playwright.s461.config.ts`)
 
 ## Verdict: **REJECTED — do NOT merge.** Real regression in adjacent suite m2-01 (single-enemy finite-palisade routing). Corrective owed; attempt d010af89 held as salvage-ref on lane/m3.
@@ -23,10 +23,10 @@ Replaces the memoryless coin-flip wall-slide in `Enemy.ts resolveBlocker` with c
 | baron battery (054/055/057/e1-baron) | NOT independently gated (drain rejected before this step); runner-reported 10 pre-existing reds reproduced on clean base |
 
 ## Merge classification
-- Base `fe6ef3a0` is a genuine merge-base ancestor of main; **zero file overlap** between the runner delta (8 src + 1 new spec) and main's 41 commits since base (`git diff --name-only fe6ef3a0 main -- <the 8 src files + spec>` = empty) → the graft applies cleanly with no 3-way conflict. Grafted via `git checkout lane/m3 -- <paths>` (path-restore; branch merge avoided so main's STATUS/tasks/BACKLOG stay untouched). All src reverted to clean main after the gate rejection; nothing committed.
+- Base `66363427` is a genuine merge-base ancestor of main; **zero file overlap** between the runner delta (8 src + 1 new spec) and main's 41 commits since base (`git diff --name-only 66363427 main -- <the 8 src files + spec>` = empty) → the graft applies cleanly with no 3-way conflict. Grafted via `git checkout lane/m3 -- <paths>` (path-restore; branch merge avoided so main's STATUS/tasks/BACKLOG stay untouched). All src reverted to clean main after the gate rejection; nothing committed.
 
 ## Findings
-- **F-1 (BLOCKING — regression, fingerprint-proven):** `m2-01-build-menu.spec.ts:236` fails with the graft on **both** projects — the tracked assertion is `tracker.reached === true`, and it comes back **false**: a single enemy no longer reaches the hero around a **finite** palisade line within the 20s budget (it does NOT pass through — `crossedThrough` stays false — it gets stuck / mis-routes). **Fingerprint:** reverted the 8 src files to clean main `a2e5e91f` (graft removed), re-ran the same two cases on the same scratch server → **2/2 PASS (17.2s)**. So the failure is introduced by this attempt, NOT pre-existing drift. Mechanism: the new committed gap-flow apparently mishandles a **finite** wall (gap at the line's END, not a mid-run interval) — likely committing to the far side and wall-following away from the hero, or oscillating past the 20s watchdog. This defeats the task's own core intent ("the crowd finds the gaps" — a lone enemy must still reach the hero). Corrective task authored: `tasks/fix-enemy-pathing-wrecker-read-2.md`.
+- **F-1 (BLOCKING — regression, fingerprint-proven):** `m2-01-build-menu.spec.ts:236` fails with the graft on **both** projects — the tracked assertion is `tracker.reached === true`, and it comes back **false**: a single enemy no longer reaches the hero around a **finite** palisade line within the 20s budget (it does NOT pass through — `crossedThrough` stays false — it gets stuck / mis-routes). **Fingerprint:** reverted the 8 src files to clean main `911cbb98` (graft removed), re-ran the same two cases on the same scratch server → **2/2 PASS (17.2s)**. So the failure is introduced by this attempt, NOT pre-existing drift. Mechanism: the new committed gap-flow apparently mishandles a **finite** wall (gap at the line's END, not a mid-run interval) — likely committing to the far side and wall-following away from the hero, or oscillating past the 20s watchdog. This defeats the task's own core intent ("the crowd finds the gaps" — a lone enemy must still reach the hero). Corrective task authored: `tasks/fix-enemy-pathing-wrecker-read-2.md`.
 - **F-2 (process, non-blocking):** the task self-check named task-025 + m1-01 + baron battery + escort but **not** m2-01, so the runner never guarded the single-enemy finite-line slide it directly modified. The corrective adds m2-01 (+ m2-01:236 by name) to the required battery.
 
 ## Disposition

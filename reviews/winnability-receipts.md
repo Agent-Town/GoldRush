@@ -1,8 +1,8 @@
 # winnability-receipts-and-kit-guard — drain review (s2457)
 
 **Slice:** `winnability-receipts-and-kit-guard` (S1 of the ladder + story batch, attended 2026-09-02)
-**Branch:** `lane/a` · **lane tip:** `280d95d7f` (`runner(lane-a): winnability-receipts-and-kit-guard.md`)
-**Base:** `01cbcb949` · **Merge:** `b5850417ad05b1e870d8fda8866a86f32bf400b1`
+**Branch:** `lane/a` · **lane tip:** `1e3aba54e` (`runner(lane-a): winnability-receipts-and-kit-guard.md`)
+**Base:** `32ea34d51` · **Merge:** `714d68198f7bf540c491295dc58d48c982f006fb`
 **Gated in:** detached worktree `gate-s2457` (§3.0b — undecided content never entered main's tree)
 
 ## Verdict
@@ -61,7 +61,7 @@ rejects it by construction (`practice.standings:false`), so its receipt is expli
 
 ## Merge classification
 
-Base `01cbcb949`; three-dot and two-dot diffs agree exactly (4 files, +373, −0, zero deletions).
+Base `32ea34d51`; three-dot and two-dot diffs agree exactly (4 files, +373, −0, zero deletions).
 
 | File | Class | Resolution |
 |---|---|---|

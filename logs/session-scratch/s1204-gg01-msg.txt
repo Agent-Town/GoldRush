@@ -1,7 +1,7 @@
 gg-01: the Greenhorn's Gazette ships text-first — pinned issue #1 is the tutorial
 
 3-way graft of lane/perf c4c23952 onto main (only src/town/TownScene.ts was
-contested: main +84/-3 from town-zoom fa5bcc4d vs lane +40/-5; seven hunks
+contested: main +84/-3 from town-zoom 68cd23dc vs lane +40/-5; seven hunks
 hand-applied because cherry-pick is fire-gated). Graft proved lossless in both
 directions: worktree-vs-lane == main's town-zoom delta exactly (84/3), and
 worktree-vs-main == the lane's GG-01 delta exactly (40/5). The branch's other

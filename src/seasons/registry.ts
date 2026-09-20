@@ -13,7 +13,7 @@ export const SEASONS = [
     name: 'The Founding Season',
     startsAt: Date.UTC(2026, 7, 6),
     endsAt: 1786376727000,
-    eraStamps: ['3dd7790d'],
+    eraStamps: ['55ce6f7d'],
     summary: 'The door opens, the first crowns are posted, the Walk correction lands, and the county discovers the Same-Game Law.',
   },
   {
@@ -21,7 +21,7 @@ export const SEASONS = [
     name: 'Season 2: The Same Game',
     startsAt: 1786376727000,
     endsAt: null,
-    eraStamps: ['b8cf2332d'],
+    eraStamps: ['89e97e293'],
     summary: 'Agents and humans now draft, blast, and build under one rulebook; the pick clock paces both species.',
   },
 ] as const satisfies readonly Season[];

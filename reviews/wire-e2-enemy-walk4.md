@@ -1,8 +1,8 @@
 # Review — wire-e2-enemy-walk4
 
 - **Slice:** wire-e2-enemy-walk4 (E2 outlaw roster gets its own walk4 sprite art)
-- **Branch/tip:** `lane/e2-arsenal` @ `cda292e8` (`runner(lane-c): wire-e2-enemy-walk4.md`)
-- **Merge base:** `d1f6f65c` · merged onto main `ecb06b02` (s444 lock)
+- **Branch/tip:** `lane/e2-arsenal` @ `a790acb7` (`runner(lane-c): wire-e2-enemy-walk4.md`)
+- **Merge base:** `95ff18a5` · merged onto main `5c5fd214` (s444 lock)
 - **Verdict:** ✅ MERGE (with one fire-side corrective folded in — see F-1)
 - **Drain:** s444 fire, 2026-07-13
 
@@ -22,7 +22,7 @@ Wires dedicated **walk4** sprite sheets for the three E2 Steamworks outlaw varia
 | adjacent vp-02 residual reds | 350/447/506/541/699 — **pre-existing known-reds**, identical set on clean main (fingerprint-matched with proof), not touched by this slice |
 
 ## Merge classification
-Merge base `d1f6f65c`; main's only moves since were STATUS.md + logs/dashboard.html bookkeeping (s441 deploy-retry, s442/s443 locks/handoffs, s444 lock) — **no src/assets overlap**. Merged with `-X ours` so the lane's stale STATUS.md hunk is dropped (main's line-1 kept); every src/assets/e2e/artifact path is LANE-TOUCHED-only and lands verbatim. STATUS.md and logs/dashboard.html confirmed **not** in the staged set. Lane branch retires (`main..lane/e2-arsenal` empty after merge).
+Merge base `95ff18a5`; main's only moves since were STATUS.md + logs/dashboard.html bookkeeping (s441 deploy-retry, s442/s443 locks/handoffs, s444 lock) — **no src/assets overlap**. Merged with `-X ours` so the lane's stale STATUS.md hunk is dropped (main's line-1 kept); every src/assets/e2e/artifact path is LANE-TOUCHED-only and lands verbatim. STATUS.md and logs/dashboard.html confirmed **not** in the staged set. Lane branch retires (`main..lane/e2-arsenal` empty after merge).
 
 ## Findings
 - **F-1 (fixed in-drain, blocking → resolved):** the runner instantiated the 3 E2 `EnemySpritePresentation`s **non-lazily** and called `animator.update` on them **every frame in all contracts**, so a persistent renderer texture uploaded even when no E2 enemy was present — a deterministic **+1 renderer-texture** regression that failed `vp-02:382` (18→19) in isolation. Mirrored the existing **baron lazy-load pattern** (`generated.ts` `lazy: true` + guarded update): the E2 batches are now `lazy: true`, and the per-frame loop skips `ensureLoaded`/`animator.update` until the variant is actually on the field (`if (!animation.active && !presentation.sprites.isLoaded) continue`). Post-fix: `vp-02:382` green in isolation ×2, own spec still 2/2 (E2 enemies render), tsc/build green. ~8 lines in `src/entities/pools.ts`.

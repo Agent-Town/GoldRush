@@ -1,6 +1,6 @@
 # Review: lineage-reassay-on-composition-change — ADR-004 rule 2, the boards carry only standings that replay under the current engine (lane-d sparse worktree, Claude Opus 5 implementer, attended drain 2026-09-06 morning)
 
-**Slice/branch/tip:** `lineage-reassay-on-composition-change` · `feat/lineage-reassay` · commits `c086833c9`, `19f3d845d` on base `4d43b3eb9` · merged to main: see the ledger row (first-parent merge; door and scripts only, no `src/`, no era pin).
+**Slice/branch/tip:** `lineage-reassay-on-composition-change` · `feat/lineage-reassay` · commits `411a7ba98`, `460fa897f` on base `18d7d14cc` · merged to main: see the ledger row (first-parent merge; door and scripts only, no `src/`, no era pin).
 **Verdict:** MERGED. The county can now re-queue a contract's verified rows when its composition changes and retire the ones that no longer replay, with a lineage reason, kept in storage and served to the almanac. The owner's words (ADR-004): "we are now in the early release phase, we can act freely".
 
 ## What it does
@@ -19,7 +19,7 @@
 | Attended on the merged tree | see the drain commit and the ledger row | `test-standings` both arms, `test:stats`, `test:accounts`, `test:mp`, tsc, build; then the deploy and the live Moth Season call (F-LINEAGE-6 fixed by the drain first) |
 
 ## Merge classification
-Base `4d43b3eb9`; main moved by drains touching nothing under `functions/` or these scripts. `functions/api/standings.ts`, `scripts/assay-worker.mjs`, `scripts/test-standings.mjs`, `docs/assay-worker-runbook.md`: LANE-TOUCHED. `functions/api/standings/reassay.ts`, `scripts/assay-lineage-sweep.mjs`, `artifacts/lineage-reassay/moth-season-call.md`: NEW. `tasks/BACKLOG.md`: MAIN-MOVED, unioned. Attended in the drain commit: F-LINEAGE-6 (the receipts generator consults the stored receipt in the unclaimed branch too) and F-LINEAGE-3 (`public/skill.md` names the `retired` slip).
+Base `18d7d14cc`; main moved by drains touching nothing under `functions/` or these scripts. `functions/api/standings.ts`, `scripts/assay-worker.mjs`, `scripts/test-standings.mjs`, `docs/assay-worker-runbook.md`: LANE-TOUCHED. `functions/api/standings/reassay.ts`, `scripts/assay-lineage-sweep.mjs`, `artifacts/lineage-reassay/moth-season-call.md`: NEW. `tasks/BACKLOG.md`: MAIN-MOVED, unioned. Attended in the drain commit: F-LINEAGE-6 (the receipts generator consults the stored receipt in the unclaimed branch too) and F-LINEAGE-3 (`public/skill.md` names the `retired` slip).
 
 ## Findings
 - **F-LINEAGE-1 (cured in-slice, would have deleted standings):** a verified row's score is its recorded `securedSnapshot`, which may differ from its reel's outcome; flipping it to `pending` put it back under the `tapeMatchesScore` arm and it would have stopped validating and vanished on the next read. Cured at `standings.ts:1028-1030`.

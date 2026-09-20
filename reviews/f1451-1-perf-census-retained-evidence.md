@@ -1,15 +1,15 @@
 # f1451-1 — the E1 perf census publishes to `latest/`, never over retained evidence
 
 - **Slice:** `f1451-1-perf-census-retained-evidence` (master `tasks/f1451-1-perf-census-publishes-over-retained-evidence.md`, FIRE-AUTHORED s1451)
-- **Branch / tip:** `lane/perf` @ `e7d9a1e4` — base `7b918e3e`, lane ahead=1
-- **Merged:** `caae255148b4691f6ab77adb1cc4538bdfdaf1f1` (s1452, two-parent `--no-ff`)
+- **Branch / tip:** `lane/perf` @ `236072df` — base `9439e9f1`, lane ahead=1
+- **Merged:** `3c967c4b8ffbcf4934fc843206f69b24f519ad40` (s1452, two-parent `--no-ff`)
 - **Gated by:** s1452 fire, detached worktree `worktrees/gate-s1452`, scratch port **5243**, `--workers=1`
 
 ## VERDICT: MERGE
 
 ## What it does
 
-`e2e/e1-perf-pass.spec.ts` joined the shared default battery at `e21fa3d3`. Its `STAGE` defaulted to
+`e2e/e1-perf-pass.spec.ts` joined the shared default battery at `67b31523`. Its `STAGE` defaulted to
 `'after'`, so every ordinary `npx playwright test` republished its census and screenshots straight over
 `artifacts/e1-perf-pass/after/` — the retained proof of the s1440 perf pass. The cure changes the
 default to a neutral `'latest'` and gitignores the two paths that default now produces. Three lines of
@@ -64,7 +64,7 @@ dirt back to `""`) and then removed.
 
 ## Merge classification
 
-Base `7b918e3e`; main moved **3 commits** since (`0d0f43d3`, `c05ae716`, `ec12213d`) — all STATUS/task
+Base `9439e9f1`; main moved **3 commits** since (`c30ff339`, `c8b84eab`, `7a526a38`) — all STATUS/task
 bookkeeping. Main touched **none** of the lane's three paths, so this is pure **LANE-TOUCHED** and the
 `ort` merge was clean with no conflict resolution to record.
 

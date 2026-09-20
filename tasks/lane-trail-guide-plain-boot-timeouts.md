@@ -16,7 +16,7 @@ Measured by s1204 on the merged tree, same box, same command:
 | both projects, `--repeat-each=2` (4 tests, 2 workers) | **4/4 FAIL** |
 | same, **with GG-01 reverted** (control arm) | **4/4 FAIL** — identical |
 
-➡️ **The control matters: GG-01 is NOT implicated.** GG-01 (`d2fc1b06`) auto-opens the Herald on first town entry and sets `ui.inert`, which was the obvious suspect for a fresh-boot town flow. Reverting `src/town/TownScene.ts` + `src/news/heraldReader.{ts,css}` and re-running gave the **same 4/4 red**. This is a property of the spec, not of the merge it landed beside.
+➡️ **The control matters: GG-01 is NOT implicated.** GG-01 (`97c6a257`) auto-opens the Herald on first town entry and sets `ui.inert`, which was the obvious suspect for a fresh-boot town flow. Reverting `src/town/TownScene.ts` + `src/news/heraldReader.{ts,css}` and re-running gave the **same 4/4 red**. This is a property of the spec, not of the merge it landed beside.
 
 **The mechanism, read at source.** `playwright.config.ts:13` sets the repo-wide `expect` timeout to **5 s**. The spec's author already raised the timeouts they had seen bite — `:64` (8 s), `:170` (15 s), `:191` (15 s) — but **two waits were left at the 5 s default**, and those are exactly the two that fail:
 

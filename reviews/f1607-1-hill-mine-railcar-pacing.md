@@ -1,7 +1,7 @@
 # Review — f1607-1: THE HILL MINE RAILCAR DIES SOONER
 
-**Slice/branch/tip:** `f1607-1-hill-mine-railcar-pacing` · `lane/a` @ `7ef2505c8` · base `main` @ `b7fed646e`
-**Merged main at:** `0b062962ec71e48759f72cd1a25a9287c528bfaa` (s1608 fire, 2026-08-10)
+**Slice/branch/tip:** `f1607-1-hill-mine-railcar-pacing` · `lane/a` @ `301728d40` · base `main` @ `4bfb451f3`
+**Merged main at:** `cb7208e6447c60225bc6a0ccf3d3f5965d826937` (s1608 fire, 2026-08-10)
 **Master:** `tasks/f1607-1-hill-mine-railcar-pacing.md` (authored s1607) · **Leaf:** `f1607-1-hill-mine-railcar-pacing`
 **Owner ruling it serves:** F-1493-3, 2026-08-09 desk walkthrough, verbatim — **"Tune the fight shorter"**
 

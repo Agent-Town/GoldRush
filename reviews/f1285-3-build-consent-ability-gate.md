@@ -43,7 +43,7 @@ The pre-fix BUILD defect reproduced and the REPAIR_UNDER control denied as requi
 - `git diff main -- src/` file list: only `src/agent/StandingOrders.ts`.
 - `git diff --check`: clean.
 
-The required full `npm run test:node-guards` is not green on this `main`: **188/190 passed, rc=1**. Both failures have the same pre-existing cause outside the firewall: `tasks/goals.json` records `mergeHash: "a8e2d1fd"` instead of a 40-character hash, failing **"goal tree schema is valid"** and its fixture-teardown meta-test. `git diff main -- tasks/goals.json` is empty. The neighboring agent rung guard passes.
+The required full `npm run test:node-guards` is not green on this `main`: **188/190 passed, rc=1**. Both failures have the same pre-existing cause outside the firewall: `tasks/goals.json` records `mergeHash: "4e3f1797"` instead of a 40-character hash, failing **"goal tree schema is valid"** and its fixture-teardown meta-test. `git diff main -- tasks/goals.json` is empty. The neighboring agent rung guard passes.
 
 ## Grep-derived adjacent suites
 
@@ -82,7 +82,7 @@ The required adjacent runs regenerated tracked PNG evidence. Per the task's evid
 
 # DRAIN VERDICT — s1288 (2026-07-31)
 
-**MERGED.** Slice `lane-a-f1285-3-build-consent-ability-gate` · branch `lane/m3` · tip `052ca3a0` · base `2bd9efee`.
+**MERGED.** Slice `lane-a-f1285-3-build-consent-ability-gate` · branch `lane/m3` · tip `052ca3a0` · base `986bffbb`.
 
 ## What it does
 
@@ -99,7 +99,7 @@ The required adjacent runs regenerated tracked PNG evidence. Per the task's evid
 | `reviews/f1285-3-build-consent-ability-gate.md` | LANE-ONLY (new) |
 | `logs/session-scratch/s1287-lane-a/{consent-ability-probe,ts-loader}.mjs` | LANE-ONLY (new) |
 
-⚠️ **The two-dot diff `main..lane/m3` additionally lists `STATUS.md`, `tasks/BACKLOG.md` (`-4`) and `tasks/goals.json` — none of which the lane touched.** Those are **MAIN-MOVED**: this fire's own three commits (`bf669514`, `6b85a306`, `16b1f1d7`) landed after the lane's base. **A wholesale copy would have reverted the F-1288-1 fix and both new ledger rows.** Grafted the five classified paths only; post-graft `git diff lane/m3 -- <those five>` is **empty** (byte-identical to the tip) and `tasks/goals.json` still carries the repaired 40-character hash.
+⚠️ **The two-dot diff `main..lane/m3` additionally lists `STATUS.md`, `tasks/BACKLOG.md` (`-4`) and `tasks/goals.json` — none of which the lane touched.** Those are **MAIN-MOVED**: this fire's own three commits (`02055918`, `e6a84173`, `28b23fd7`) landed after the lane's base. **A wholesale copy would have reverted the F-1288-1 fix and both new ledger rows.** Grafted the five classified paths only; post-graft `git diff lane/m3 -- <those five>` is **empty** (byte-identical to the tip) and `tasks/goals.json` still carries the repaired 40-character hash.
 
 ## Evidence (all re-derived on the merged tree, not inherited)
 
@@ -118,7 +118,7 @@ The required adjacent runs regenerated tracked PNG evidence. Per the task's evid
 
 ## Findings
 
-- **F-1288-1 (mine, closed by repair before this drain) — the runner's mandated `test:node-guards` red is NOT this slice's.** Its report records `188/190, rc=1` caused by `tasks/goals.json` holding an abbreviated `mergeHash`, a file its own firewall forbids it to touch. Cured on main by `6b85a306`. ✓ **The runner diagnosed it correctly and did not "fix" it out of scope — exactly right.**
+- **F-1288-1 (mine, closed by repair before this drain) — the runner's mandated `test:node-guards` red is NOT this slice's.** Its report records `188/190, rc=1` caused by `tasks/goals.json` holding an abbreviated `mergeHash`, a file its own firewall forbids it to touch. Cured on main by `e6a84173`. ✓ **The runner diagnosed it correctly and did not "fix" it out of scope — exactly right.**
 - **Blast radius corrected from the runner's report, mechanism read at source:** the bad string reddened **two** tests, not one. `scripts/fixture-teardown.test.mjs:36-40` re-executes every `mkdtemp`-using `scripts/*.test.mjs` as a child and asserts `run.status === 0`; `goal-tracker.test.mjs` uses `mkdtemp`, so it is a subject and its non-zero child exit reds the meta-guard too. **A malformed string in a data file reddened a guard that never reads that file.**
 - **No findings against the slice.** Scope, firewall and evidence all match the master.
 

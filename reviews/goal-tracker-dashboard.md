@@ -1,8 +1,8 @@
 # reviews/goal-tracker-dashboard.md
 
 - **Slice:** goal-tracker-dashboard (lane-b; "feat:") — the goal tree + REGISTRATION LAW (owner-authored 2026-07-16)
-- **Branch/tip:** lane/m4 @ 18e09e7e (runner(lane-b) commit)
-- **Base:** 270a96af; **Merge commit:** 3f31671c
+- **Branch/tip:** lane/m4 @ 3739892f (runner(lane-b) commit)
+- **Base:** 17894144; **Merge commit:** 7e6eebc2
 - **Verdict:** ✅ SHIPPED — factory-internal tooling, gate green, goals.json git-truth verified.
 
 ## What it does
@@ -14,11 +14,11 @@ Answers the owner's ask ("big goals at the top, subgoals under, leaf tasks under
 | `node --test scripts/goal-tracker.test.mjs` | **2/2 pass** — schema valid + 10 sampled merged leaves each have a done receipt AND ancestral merge (git-verified, ~8.7s) |
 | `npx tsc --noEmit` | clean (exit 0) |
 | `npm run build` | ✓ built in 650ms (goals.json/dashboard-gen are out-of-band; app unaffected) |
-| goals.json truth spot-check | 3 independent sample hashes (`7af56d62`/`22af8fd9`/`0bb7c071`) confirmed `git merge-base --is-ancestor … main` ✓ |
+| goals.json truth spot-check | 3 independent sample hashes (`8d35a148`/`c4331b6a`/`66ec59eb`) confirmed `git merge-base --is-ancestor … main` ✓ |
 | Rendered output | `artifacts/goal-tracker-dashboard/dashboard.html` + desktop/mobile screenshots committed by runner |
 | Player visibility | none — internal factory dashboard tool, not in the game (no gazette) |
 
-## Merge classification (base 270a96af)
+## Merge classification (base 17894144)
 | File | Class | Resolution |
 |------|-------|-----------|
 | `tasks/goals.json` | NEW | free (then s636 flipped 4 this-fire leaves building→merged w/ full hashes, per the new law) |
@@ -30,5 +30,5 @@ Answers the owner's ask ("big goals at the top, subgoals under, leaf tasks under
 
 ## Findings
 - No blocking findings.
-- **Registration law now in force**: s636 immediately applied it — the four leaves merged this fire (world-mask-tables `de9cbcc2`, world-era-anchors `561281a3`, factory-goal-tree `3f31671c`, e5-art `20e27ff6`) flipped building→merged with full 40-char hashes in the bookkeeping commit; e5-maps (deepwater-tile) flips when its drain lands next.
+- **Registration law now in force**: s636 immediately applied it — the four leaves merged this fire (world-mask-tables `64faec0f`, world-era-anchors `2b7e6e46`, factory-goal-tree `7e6eebc2`, e5-art `b40aa53b`) flipped building→merged with full 40-char hashes in the bookkeeping commit; e5-maps (deepwater-tile) flips when its drain lands next.
 - F-goaltree-1 (non-blocking): the test enforces 40-char full mergeHash — future drains must use `git rev-parse` full hashes, not short. Noted for the next fire.

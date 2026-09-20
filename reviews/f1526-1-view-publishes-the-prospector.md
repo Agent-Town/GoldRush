@@ -2,8 +2,8 @@
 
 **Slice:** `f1526-1-view-publishes-the-prospector` (F-ER02-11 P0, with F-ER02-10 as its premise)
 **Branch / tip:** `lane/b` @ `f7038e187a7939b2b676e011b3bf26868e7cacd9`
-**Base:** `2a3bfe3983179ab9a37ba6c29a472f96b5cb2e72`
-**Merged to main:** `fa9fbda1d57e3ed2e39da6e4e0c505cb8bc71c7b`
+**Base:** `32e80ad4fccafaad4fb5cbcdaf5e58e9d2e0085c`
+**Merged to main:** `1680220dd3ef32b65d940b744ac089b876c5d38f`
 **Gated by:** s1528 fire, 2026-08-07, in detached worktree `gate-s1528` (§3.0b custody — the undecided content never entered main's working tree until the verdict was PASS)
 **Node:** 26.4.0 (the `.nvmrc` pin) for every gate arm below.
 
@@ -80,7 +80,7 @@ VIEW perturbed nothing. No census hash moved.
 | `src/agent/View.ts` | **LANE-TOUCHED only** | direct application |
 | `e2e/agent-view.spec.ts` | **LANE-TOUCHED only** | direct application |
 
-`git log 2a3bfe39..main -- src/agent/View.ts e2e/agent-view.spec.ts` is **EMPTY** — main never moved
+`git log 32e80ad4..main -- src/agent/View.ts e2e/agent-view.spec.ts` is **EMPTY** — main never moved
 either file after the lane's base, so there is no MAIN-MOVED bucket and no graft. Verified rather
 than assumed: a real `git merge --no-ff lane/b` was performed in the detached gate worktree, and
 both merged blobs are **byte-identical to `lane/b`'s** (`ab970be9`, `b73ac06d`) — i.e. the

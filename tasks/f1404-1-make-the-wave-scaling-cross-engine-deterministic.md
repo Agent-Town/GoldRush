@@ -65,7 +65,7 @@ SCOPE (numbered, each testable):
     ⚠️ `:838`/`:839` are the BARON's component-HP path. They are in scope precisely because the
     baron is E1 driver 5 of 5 and would otherwise fail this same way on its own re-land.
     🚫 Do NOT touch `Vfx.ts:230` or `Game.ts:8009` — those are render-side easing curves, not sim.
-    ⓘ Line numbers are from `463cb4bd` and may drift; find the call sites by READING, not by number.
+    ⓘ Line numbers are from `a165e00a` and may drift; find the call sites by READING, not by number.
 
  3. Re-derive EVERY pinned `fnv1a32:` literal in `scripts/gr-sim.test.mjs` that this change moves,
     and leave the ones it does not move alone. Most may not move at all — the other six tests

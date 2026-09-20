@@ -1,8 +1,8 @@
 # run3d-15-gold-nodes — REJECT (attempt 1)
 
 **Slice:** `run3d-15-gold-nodes` (RUN-3D rider 15, the first rider of the contract-buildables ladder)
-**Branch / tip:** `lane/m3` @ `d0a861a9` (`runner(lane-a): run3d-15-gold-nodes.md`)
-**Gated on:** `9233bbd8` = `main` (`803099a0`) + `lane/m3`, merged clean, **in detached worktree `worktrees/gate-s1387`** (§3.0b custody — main's working tree never received slice content; worktree removed after the verdict, `git status` on main clean of all 17 slice paths).
+**Branch / tip:** `lane/m3` @ `9d61d6a9` (`runner(lane-a): run3d-15-gold-nodes.md`)
+**Gated on:** `9233bbd8` = `main` (`f3473665`) + `lane/m3`, merged clean, **in detached worktree `worktrees/gate-s1387`** (§3.0b custody — main's working tree never received slice content; worktree removed after the verdict, `git status` on main clean of all 17 slice paths).
 **Fire:** s1387, 2026-08-02
 **Verdict:** 🔴 **REJECT — do not merge.** Corrective re-dispatched to lane-a the same fire.
 
@@ -31,7 +31,7 @@ Adds a `gold_seam` 3D rider to the `?run3dPilot` pilot: a new baked GLB (`assets
 | **`night3d-perf.spec.ts`** | **1** | **RED both projects** — `:118` `waitForFunction` timeout 90 000 ms |
 
 ### The 8 boiler-house reds are pre-existing — proof, not assertion
-`logs/suite-red-inventory.md` is byte-identical to main on this tree (`git diff main HEAD -- logs/suite-red-inventory.md` empty) and already carries **all eight** at the same coordinates (`:49`, `:24`, `:82`, `:24`, both projects, identical assertion text). Mechanism read at source rather than inherited: the spec places at `(0,12)`, which `tasks/goals.json:4230` records as the dead centre of the authored `hill-mine:boiler-house-site` footprint (half-extents 3.35875), made non-buildable when `d1f549d5` added the `!terrain.walkable` clause now live at `src/world/Terrain.ts:236`. Same class as the closed F-1281-2. **No control run required.**
+`logs/suite-red-inventory.md` is byte-identical to main on this tree (`git diff main HEAD -- logs/suite-red-inventory.md` empty) and already carries **all eight** at the same coordinates (`:49`, `:24`, `:82`, `:24`, both projects, identical assertion text). Mechanism read at source rather than inherited: the spec places at `(0,12)`, which `tasks/goals.json:4230` records as the dead centre of the authored `hill-mine:boiler-house-site` footprint (half-extents 3.35875), made non-buildable when `5e527a28` added the `!terrain.walkable` clause now live at `src/world/Terrain.ts:236`. Same class as the closed F-1281-2. **No control run required.**
 
 ---
 
@@ -84,4 +84,4 @@ Both failures boot **without** a `run3dPilot` param and wait for the pilot to be
 
 ## Merge classification (recorded for attempt 2)
 
-Base = `d0a861a9^`. Main moved **only** `STATUS.md` and `tasks/BACKLOG.md` since that base; the runner touched **neither** (17 files changed vs its own parent, firewall respected). The `STATUS.md`/`BACKLOG.md` delta visible in a `main..lane/m3` two-dot diff is **pure stale-base noise**, not runner output — check against the branch's own parent, not against main. **All 17 slice paths are LANE-TOUCHED with zero MAIN-MOVED collision**, and `git merge --no-ff lane/m3` applied with no conflicts. Attempt 2 should re-land on fresh main the same way.
+Base = `9d61d6a9^`. Main moved **only** `STATUS.md` and `tasks/BACKLOG.md` since that base; the runner touched **neither** (17 files changed vs its own parent, firewall respected). The `STATUS.md`/`BACKLOG.md` delta visible in a `main..lane/m3` two-dot diff is **pure stale-base noise**, not runner output — check against the branch's own parent, not against main. **All 17 slice paths are LANE-TOUCHED with zero MAIN-MOVED collision**, and `git merge --no-ff lane/m3` applied with no conflicts. Attempt 2 should re-land on fresh main the same way.

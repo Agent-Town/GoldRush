@@ -136,7 +136,7 @@ const REPORT = process.argv.includes('--report');
 
 /**
  * Grandfathered undeclared desk items — measured on the live board s1334
- * (logs/session-scratch/s1334/desk-visibility-probe.mjs, commit fae9a87d).
+ * (logs/session-scratch/s1334/desk-visibility-probe.mjs, commit 0aedf87f).
  * Each is on the owner's desk with no declaring row in tasks/BACKLOG.md.
  * Removing a name from this list once its row exists is always safe.
  */
@@ -238,7 +238,7 @@ const KEY_ZONE = 120;
  *
  * It is invisible in today's STATUS.md because s1530 normalised the character
  * while archiving s1529's line-1 — so grepping the live file can never find
- * this class. It was recovered by replaying the handoff commits (aab5dfb3).
+ * this class. It was recovered by replaying the handoff commits (62586985).
  *
  * WHY THE SET KEEPS GROWING RATHER THAN BEING GUESSED: the s1472 cure
  * enumerated the spellings it had measured, which is right, but an enumeration

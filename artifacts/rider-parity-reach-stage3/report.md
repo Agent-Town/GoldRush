@@ -1,8 +1,8 @@
 # Rider parity reach guard — stage 3
 
 - Task: `lane-a-rider-parity-reach-stage3`
-- Lane base after authorised fast-forward: `3cf0b8f8a2c972c8b0ae1b3bcab568cf9a250a74`
-- Defect base named by the task: `0eb139bdc7f1612da449a816038520b72153d456`
+- Lane base after authorised fast-forward: `25ca07af693ba8ecbd4255828653efbc7951975f`
+- Defect base named by the task: `6e29d21f4a38aebbf8ade4bfe1f08391d1cc7524`
 - `HeadlessContractSim.ts` and `Game.ts` are byte-identical between those bases.
 - Runtime: Node `v26.4.0`, npm `11.17.0`; `npm ci` completed without changing package files.
 

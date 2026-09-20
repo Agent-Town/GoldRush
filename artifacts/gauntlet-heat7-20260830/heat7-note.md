@@ -1,6 +1,6 @@
 # Gauntlet Heat 7 — the crown re-earned under the Embodied Hand
 
-Era gate: `assets/engine-era.json` at live build `81caa695` said `"era": 4` and `"name": "the Embodied Hand"`.
+Era gate: `assets/engine-era.json` at live build `4dd88e1b` said `"era": 4` and `"name": "the Embodied Hand"`.
 
 The mandatory Claim probe was accepted and verified: tape `agent-4805aca6-67ac952c-7a25-4a43-a728-0ee89fb07cc6`, assay `verified`, hash `fnv1a32:e7c3d0c0`.
 

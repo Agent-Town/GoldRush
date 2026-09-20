@@ -2,7 +2,7 @@
 
 - **Slice:** `reel-era-projection` (EH-3b), lane-d
 - **Branch / tip:** `lane/d` @ `5518d9a04` (`runner(lane-d): reel-era-projection.md`)
-- **Base:** `main` @ `d428dde69`
+- **Base:** `main` @ `3b8c9354b`
 - **Gated by:** s2376, in a detached worktree (`gate-s2376`) per fire.md §3.0b — **the merge never touched main's tree**
 - **Evidence:** `artifacts/reel-era-gate-s2376/gate.txt`
 
@@ -24,10 +24,10 @@ PLAYBACK, and mints the EH-3 fixture's identity from the live era registry at te
 can never self-stale again (F-2374-2's cure).
 
 **The s2308 veto's premise is genuinely dead, and that was the first thing checked.**
-`d96dacb15` vetoed exactly this projection on measured evidence: `validateTapeMeta` is an
+`ef9038425` vetoed exactly this projection on measured evidence: `validateTapeMeta` is an
 exact-key allowlist over `['buildId']`, so a projected `era` made `validateRunTape` return
 null and every node-produced WATCH reel unplayable. **That chain no longer exists.** EH-3
-(`af85497537`, s2374) added `validateAgentRunTape` at `src/ui/LanternShow.ts:31`, which strips
+(`ed0d3c5389`, s2374) added `validateAgentRunTape` at `src/ui/LanternShow.ts:31`, which strips
 `engineHash`/`era` back to `{ buildId }` *before* calling `validateRunTape` and re-attaches
 them after. Verified by measurement, not by reading: a fully-stamped payload round-trips to
 **PLAYABLE**. The veto was correct when written and was retired by a merge four days later.
@@ -39,7 +39,7 @@ them after. Verified by measurement, not by reading: a fully-stamped payload rou
 | `npx tsc --noEmit` | **rc=0** |
 | `scripts/test-standings.mjs` | **rc=0** — kv 173 / sqlite 173, both arms |
 | `scripts/agent-reels.test.mjs` | **rc=1 — NEW RED** (see F-2376-1) |
-| CONTROL: same suite, pristine main `d428dde69` | **rc=0**, 1/1 pass |
+| CONTROL: same suite, pristine main `3b8c9354b` | **rc=0**, 1/1 pass |
 | Half-stamped round-trip | **REFUSED** (see F-2376-2) |
 
 Battery deliberately stopped at the first blocking red rather than completing playwright —
@@ -47,7 +47,7 @@ the verdict was already decided and the corrective must re-gate from scratch any
 
 ## Merge classification
 
-Base `d428dde69`; `git merge --no-ff lane/d` applied by the `ort` strategy with **no
+Base `3b8c9354b`; `git merge --no-ff lane/d` applied by the `ort` strategy with **no
 conflicts**. All five paths are LANE-TOUCHED only; main has not moved any of them since the
 lane branched.
 

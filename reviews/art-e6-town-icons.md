@@ -1,13 +1,13 @@
 # art-e6-town-icons — drain review (s1154 fire)
 
 - **Slice:** `art-e6-town-icons` (E6 townsfolk portraits, reference-tier, portraits-only split)
-- **Slot:** ART · **Master:** `tasks/art-e6-town-icons.md` (authored s1153, `4f1bd815`)
-- **Runner commit:** `c7601082` "runner(art): art-e6-town-icons.md" — **committed directly onto `main`**, see F-1154-1
+- **Slot:** ART · **Master:** `tasks/art-e6-town-icons.md` (authored s1153, `79aa3b3a`)
+- **Runner commit:** `a5c4a942` "runner(art): art-e6-town-icons.md" — **committed directly onto `main`**, see F-1154-1
 - **Run log:** `tasks/runs/20260728-052657-art-art-e6-town-icons.md.log` (292,724 tokens, READY-FOR-GATES)
 - **Goal leaf:** `e6-art-town-icons` · **§3.0 `drain-block-check`: ✅ CLEAR** (run as the first command of the drain)
 - **Screenshots:** `reviews/shots-art-e6-town-icons/e6-portraits-120px-strip.png`
 
-## VERDICT: **PASS — merged (already on main at `c7601082`)**, with three non-blocking findings (F-1154-1/-2/-3).
+## VERDICT: **PASS — merged (already on main at `a5c4a942`)**, with three non-blocking findings (F-1154-1/-2/-3).
 
 The art itself is good and the firewall held completely. Every number below was **re-measured by this
 fire**, not copied from the runner's report; where the runner's figure and mine differ, the difference
@@ -35,7 +35,7 @@ exactly as the master's split required.
 | Contact sheet content | six raws, correct order | all 6 cells match **their own** raw at **MAE 3.2–4.2**; positive control shows a wrong pairing scores **45–60** | ✅ |
 | Depot Clerk identity | holds Assay Clerk | viewed side-by-side full size: same round spectacles, moustache + soul-patch, hair part/wave, head angle, three-quarter framing; ages via gray temples/moustache + brow lines; **exactly one chrome element** (pneumatic parcel capsule on the strap) | ✅ |
 | Canon §9 | no letters / firearms / gore | verified visually at full size **and** 120px: **the Defector's catalog is blank with blind-embossed holes only — the canon rider held.** No type anywhere, no firearms, no gore | ✅ |
-| Firewall — E1 sources | byte-intact | all six `tf-*.png` **blob-identical** across `c7601082` (`git rev-parse` before/after) | ✅ |
+| Firewall — E1 sources | byte-intact | all six `tf-*.png` **blob-identical** across `a5c4a942` (`git rev-parse` before/after) | ✅ |
 | Firewall — code | no `src/e2e/scripts/public` | **0 files** in the commit | ✅ |
 | Firewall — tier | no processed/keyed output | **no `assets/processed/`, no `icons-e6`, no `generated.ts`, no contracts** in the commit | ✅ |
 | tsc | rc=0 | **rc=0** | ✅ |
@@ -68,7 +68,7 @@ every E6 cell is unambiguously its own raw.
 ## Findings
 
 ### F-1154-1 — a bare `git commit` in the art runner published a stale INDEX (MEDIUM, process)
-`c7601082` carries the **8 real deliverables** (6 portraits + sheet + LEDGER) and **420 files that are
+`a5c4a942` carries the **8 real deliverables** (6 portraits + sheet + LEDGER) and **420 files that are
 not this slice**.
 
 ⚠️ **My first reading of this was wrong, and the correction is the finding.** I wrote it up as "the
@@ -89,7 +89,7 @@ the added ones are dated debris from **long-departed fires**: `logs/session-scra
 modified `reviews/shots-*` / `logs/*`. Those s1126 and s1134 scratch files were staged **days** ago
 and sat in the index unnoticed until this art run's commit adopted them.
 
-🔑 **This is the sibling-script class, not a new bug.** `019e943a` (s1109) cured exactly this family
+🔑 **This is the sibling-script class, not a new bug.** `bdd22640` (s1109) cured exactly this family
 for **lane** commits — but it cured the *`add`* on the **lane** branch (`:95`), and the defect that
 actually bit lives in the *`commit`* on the **art** branch (`:82`). Both branches still end in a
 pathspec-less `git commit`, so **the lane path carries the identical latent hazard** even though its
@@ -171,7 +171,7 @@ verified cell-by-cell. Only the LEDGER prose needs correcting.
 ## Merge classification
 
 Not a lane graft — the runner committed straight to `main`, so there is no base to classify against
-and no 3-way merge was performed. `git merge-base --is-ancestor c7601082 main` → **true**. The drain's
+and no 3-way merge was performed. `git merge-base --is-ancestor a5c4a942 main` → **true**. The drain's
 work was gating, not merging.
 
 ## Tier / release duties

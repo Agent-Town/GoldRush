@@ -10,11 +10,11 @@ this host's 1,048,576 B ARG_MAX and grows ~9.6 KB per landed ride.
 
 | fact | value |
 |---|---|
-| live build | `e3949bfa`, builtAt `2026-09-17T19:33:59Z` (`https://agenttown.app/goldrush/version.json`) |
-| arena | `<scratchpad>/arena-heat14-e3949bfa`, `git worktree add --detach e3949bfad`, `node_modules` symlinked to the primary checkout, branch `heat14/era6-reride` |
+| live build | `6075db90`, builtAt `2026-09-17T19:33:59Z` (`https://agenttown.app/goldrush/version.json`) |
+| arena | `<scratchpad>/arena-heat14-e3949bfa`, `git worktree add --detach 6075db901`, `node_modules` symlinked to the primary checkout, branch `heat14/era6-reride` |
 | arena era | era **6**, "the Re-surveyed Claims", `engineHash 540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068` (pin #8, 2026-09-18) — identical to the era-6 pin on main |
 | gate proof 1 (the refusal) | heat 13's VERIFIED probe reel (era 5, `09838c35…`), byte-identical, re-POSTed to the live door → **HTTP 400 `{"ok":false,"error":"reel_not_current","message":"This reel rode era 5; the county accepts era 6 'the Re-surveyed Claims'."}`** (`probe/refusal-post-response.json`) |
-| gate proof 2 (the fresh probe) | the same orders replayed order-for-order in THIS arena → SECURED w10 / 300.000 s / 335 g, `eventLogHash fnv1a32:1c431865` → **`assay: verified`, `ranked: false`, `assayHash fnv1a32:b131e18e`**, papers `buildId e3949bfad · engineHash 540b49af… · era 6 · viewVersion 2` (`probe/verdict-slip.json`). The assayer replays the era-6 tree: the county's droplet is in sync with the deployed build. |
+| gate proof 2 (the fresh probe) | the same orders replayed order-for-order in THIS arena → SECURED w10 / 300.000 s / 335 g, `eventLogHash fnv1a32:1c431865` → **`assay: verified`, `ranked: false`, `assayHash fnv1a32:b131e18e`**, papers `buildId 6075db901 · engineHash 540b49af… · era 6 · viewVersion 2` (`probe/verdict-slip.json`). The assayer replays the era-6 tree: the county's droplet is in sync with the deployed build. |
 | receipts before | 2026-09-17T23:38:04Z — **37 boards, 0 ranked rows, 69 reels counted retired** (`receipts-before.json`; `e1-drill-yard` answers HTTP 400, it is the training ground, not a board) |
 | headroom | the CLI exposes no headroom surface (no `usage` subcommand, no rate-limit state on disk) — F-HEAT14-1. One-turn `claude -p` probes answer, so the subscription is live; the heat rides in BLOCKS OF SIX and re-probes between blocks, per the master |
 

@@ -24,7 +24,7 @@ The grep MUST print `1`. If it prints `0`, the lane is stale — **STOP and repo
 ## WHY (evidence, measured — not hypothesised)
 
 `e2e/landmark-collision.spec.ts:68` ("enemy blocker routing is deterministic and goes around a county landmark")
-has been RED on main since `531bd923adc97d9c288310f7f94f549e994c3f29` (bisected s1510).
+has been RED on main since `70eb5b50d3bb6852b8cd6b6646dec9a2b2af6577` (bisected s1510).
 That commit made `blockerSlideDirection()` **enemy-relative**:
 
 ```
@@ -34,20 +34,20 @@ return Math.sign(moveTarget[axis] - this.group.position[axis]) || this.avoidance
 which **flips whenever the enemy crosses the goal's axis value**, so a head-on enemy oscillates
 against the blocker face instead of going around.
 
-⚠️ **Reverting `531bd923a` is FORBIDDEN.** It was a correct fix for a real owner complaint (gate walk
+⚠️ **Reverting `70eb5b50d` is FORBIDDEN.** It was a correct fix for a real owner complaint (gate walk
 2026-08-03, owner verbatim: *"the opponents get stuck a lot on the different objects"*) and is guarded
 by `e2e/never-trap.spec.ts:88` ("Night Shift enemies always make goal progress around object footprints"). The cure must satisfy **both** judges.
 
 ⛔ **The scalar-deadband axis is CLOSED** (s1511, F-1511-3): six thresholds measured, none separates
 the two invariants, and the only green arm was a de facto revert. **Do not re-open it.**
 
-⭐ **The cure shape that works was already shipped in this very file** (`5c27a1b5c`, f1441-2): the
+⭐ **The cure shape that works was already shipped in this very file** (`a26454d4c`, f1441-2): the
 `slideX`/`slideZ` ternaries carry a second slide policy that is (1) relative to the **blocker's
 centre** — stable as the enemy moves, where the defect is enemy-relative and flips mid-slide — and
 (2) gated on **the goal lying inside the blocker's padded span**, i.e. the head-on geometry itself
 rather than a magnitude. It is currently fenced behind `ACTIVE_TILE_ID === 'e1-twin-banks'`.
 
-**s1512 measured the generalisation green**, in a detached worktree at `6d1810dbd`, `--workers=1`,
+**s1512 measured the generalisation green**, in a detached worktree at `72a0d86f2`, `--workers=1`,
 both projects, external dev server on a scratch port:
 
 | Arm | `landmark-collision:68`, isolated | Reproduced |
@@ -88,7 +88,7 @@ the F-1460-1 hazard checked explicitly.
 **TOUCH-ONLY:** `src/entities/Enemy.ts` · `reviews/f1511-2-blocker-slide-geometry-gate.md` (new).
 
 **NO — these are violations, report them instead of doing them:**
-- Do NOT revert or edit `531bd923a`'s change to `blockerSlideDirection()`.
+- Do NOT revert or edit `70eb5b50d`'s change to `blockerSlideDirection()`.
 - Do NOT edit `e2e/landmark-collision.spec.ts` or `e2e/never-trap.spec.ts`. The judges are fixed.
 - Do NOT re-pin `scripts/gr-sim.test.mjs` (F-1441-3). If a Baron pin moves, that is a FINDING — stop and report it; s1512 measured that it does not.
 - Do NOT reintroduce a scalar deadband (F-1511-3, closed axis).

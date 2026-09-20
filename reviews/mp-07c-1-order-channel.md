@@ -1,8 +1,8 @@
 # mp-07c-1 — the embodied order channel (`agent_orders` ride the wire into the browser's world)
 
 **Slice:** MP-07c-1, first rung of `specs/multiplayer/mp-07c-agent-rides-the-browsers-world.md`
-**Branch:** `lane/b` · **lane tip:** `1d5a95594` · **merge base:** `9089bb61d254128f49fd87d27c736c22b7d6c066`
-**Merged to main:** `ddd3d55efa7e493f8e841fc51ba0d993258ea26b` (2026-08-08T10:46+07)
+**Branch:** `lane/b` · **lane tip:** `d5ab827c1` · **merge base:** `549100ce403af68d436fab9f544b6e7a42ca233c`
+**Merged to main:** `073fca17f4cbf339980735e9aacdcafd6f606408` (2026-08-08T10:46+07)
 **Drained by:** s1550 fire · **block-check:** `✅ CLEAR — lane-mp07c1-order-channel.md [mp-07c-1-order-channel] status="planned"`
 
 ## VERDICT: MERGED — all gates green; three node-guard reds fingerprint-matched to main by control, pre-existing and unrelated.
@@ -43,7 +43,7 @@ The runner reported `31/32 initially, with the lone timed-out desktop 390px case
 
 ## Merge classification
 
-Merge base `9089bb61d`. `git diff 9089bb61d main` over all five lane paths is **empty** — main moved **none** of them.
+Merge base `549100ce4`. `git diff 549100ce4 main` over all five lane paths is **empty** — main moved **none** of them.
 
 | File | Class | Δ |
 |---|---|---|
@@ -68,9 +68,9 @@ TypeError: Module ".../assets/layer-contracts/m1-core.layer-contract.v1.json?raw
 
 failing `whole suite collects without loading Vite-only modules`, and through it `whole-suite collection guard is cwd-invariant` and `all 23 scripts/*.test.mjs fixture owners remove their temp directories` (both run it as a child).
 
-**CONTROL RUN, and it is what makes this attributable:** the same single test file on **main at `bc9629bfb`, with this slice absent**, fails identically — same module, same TypeError, same assertion. And `npx playwright test --list` reads **`Total: 0 tests in 0 files`** on **both** main and the merged tree. The slice neither caused nor worsened it.
+**CONTROL RUN, and it is what makes this attributable:** the same single test file on **main at `5226fce2c`, with this slice absent**, fails identically — same module, same TypeError, same assertion. And `npx playwright test --list` reads **`Total: 0 tests in 0 files`** on **both** main and the merged tree. The slice neither caused nor worsened it.
 
-This is the F-1094-1 family recurring. The construct is unchanged — the `?raw` JSON import at `src/world/Terrain.ts:2` that Node cannot parse during Playwright's Node-side collection. rf-33 (`e3db39ae`, s1095) cured it by cutting the one edge that dragged `Terrain` into a spec's static import graph, taking the suite `0 → 2378 tests`. **Some later commit has re-introduced such an edge**, and `package.json`'s `"test": "playwright test"` is once again dead — which, exactly as in 2026-07-18, goes unnoticed because *every gate in this repo runs NAMED specs*.
+This is the F-1094-1 family recurring. The construct is unchanged — the `?raw` JSON import at `src/world/Terrain.ts:2` that Node cannot parse during Playwright's Node-side collection. rf-33 (`1ff2257e`, s1095) cured it by cutting the one edge that dragged `Terrain` into a spec's static import graph, taking the suite `0 → 2378 tests`. **Some later commit has re-introduced such an edge**, and `package.json`'s `"test": "playwright test"` is once again dead — which, exactly as in 2026-07-18, goes unnoticed because *every gate in this repo runs NAMED specs*.
 
 ⚠️ **Not fixed here, deliberately.** Finding the new edge is a bisection over the spec corpus (s1094 did it in 8 chunks), and it is outside this slice's firewall by a wide margin. **NOT owner-gated — fire-authorable**, and the method is already written down and proven twice: point the instrument at the unfiltered suite, bisect to the specs that fail individually, walk the `spec → … → Terrain` chain, and cut the single value-import edge (never the glob, never `e2e/`).
 
@@ -80,7 +80,7 @@ This is the F-1094-1 family recurring. The construct is unchanged — the `?raw`
 
 `tasks/done/20260808-093804-lane-mp07c1-order-channel.md` has mtime **09:37**. s1549 locked at **10:14** and its handoff states *"`tasks/done/` holds only `drained-*`/`stopped-*` markers"* and *"**NO DRAIN EXISTED** — arithmetic, not contention."* The arithmetic was wrong by one, and the cost was one fire cycle of latency on a merge-ready slice.
 
-The likely mechanism is benign and worth naming so the next fire avoids it: s1549 correctly observed **lane-b BUSY** and, having formed that belief, read the done-move list through it. `lane-b BUSY` and `lane-b has finished output waiting` are not mutually exclusive — the runner had committed `1d5a95594` and moved the task file at 09:37/09:38, and a *subsequent* dispatch (or a lingering child) can hold the slot afterwards. **A lane's BUSY flag says nothing about whether its previous output is drained.** The check that settles it costs one command and does not consult liveness at all: list `tasks/done/` and filter out `drained-*`/`stopped-*`.
+The likely mechanism is benign and worth naming so the next fire avoids it: s1549 correctly observed **lane-b BUSY** and, having formed that belief, read the done-move list through it. `lane-b BUSY` and `lane-b has finished output waiting` are not mutually exclusive — the runner had committed `d5ab827c1` and moved the task file at 09:37/09:38, and a *subsequent* dispatch (or a lingering child) can hold the slot afterwards. **A lane's BUSY flag says nothing about whether its previous output is drained.** The check that settles it costs one command and does not consult liveness at all: list `tasks/done/` and filter out `drained-*`/`stopped-*`.
 
 No corrective task — this is a reading discipline, and it is recorded here plus in the handoff.
 

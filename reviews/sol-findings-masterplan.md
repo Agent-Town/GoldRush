@@ -1,9 +1,9 @@
 # Sol findings — finish-the-game master plan
 
 - **Branch:** `sol/masterplan-review`
-- **Plan reviewed:** `docs/MASTERPLAN-2026-07-10.md` at `e374f47`
-- **Live-main evidence cutoff:** `8e40723` (read-only inspection; 072 landed at `2d901a9`)
-- **Prior audit intake:** 58 findings merged at `bd7b890`; pass 1 disposition is `reviews/sol-triage-2026-07-10.md`
+- **Plan reviewed:** `docs/MASTERPLAN-2026-07-10.md` at `32c362c`
+- **Live-main evidence cutoff:** `336587b` (read-only inspection; 072 landed at `4a49e8d`)
+- **Prior audit intake:** 58 findings merged at `814d096`; pass 1 disposition is `reviews/sol-triage-2026-07-10.md`
 - **Active out-of-main context:** `sol/fixed-step-unification` is separately owned and in progress. This review does not count fixed-step as missing and does not review or modify that branch.
 - **Verdict:** **NEEDS REVISION.** The five directions are broadly right, but the plan is not yet an executable route to its own definition of finished. The era spine stops at E2, save and multiplayer completion are narrower than their claims, Thread A is materially undercalled, and the two spare subscriptions are banked options rather than current throughput.
 - **Merge classification:** review artifact only. No source, test, spec, lore, STATUS, BACKLOG, queue, task, asset, or live-branch changes.
@@ -20,7 +20,7 @@ Thread A should be treated as a hard multi-stage product program executed in sma
 
 | Published claim | Current-main correction |
 |---|---|
-| 072 is in flight | 072 is merged and gated at `2d901a9`. |
+| 072 is in flight | 072 is merged and gated at `4a49e8d`. |
 | E2 content is shipped | E2 contracts/enemies/activation are reachable, but E2 science nodes still have no manifest/runtime socket. |
 | E3 power graph is future hard work | The deterministic solver is already merged dormant with 6/6 own gates; gameplay integration remains. |
 | Lockstep is proven; only family friendliness remains | 067's observed paused-resync defect is fixed, but actor-scoped actions, established-room join/reconnect, snapshot authority, and full snapshot fidelity remain. |

@@ -24,7 +24,7 @@ const F123 = [
   'ⓘ **Reported and untouched: F-1267-2 did NOT reproduce** — the `:42` nearest-actor assertion (2/24 in s1267) is **0 misses in 72 instances** here.',
   'ⓘ **Honest note against my own design:** each cycle ran 1→2→3→6, so the middle steps always executed on a box my own earlier arms had heated. The **extremes are unconfounded** (cycle 2\'s w=1 ran straight after the hottest arm of the fire and still read 0/6; w=6 read 6/6 from three different starting loads), but **5/18 and 14/18 should be re-run in reversed order before anyone quotes them as rates.**',
   '⚖️ **The rule this earns:** *an instrument that measures parallelism must itself be parallel in the same unit as the subject — threads cannot answer a question about processes.*',
-  'Evidence `logs/session-scratch/s1268/RESULTS.md`; instruments and all twelve raw run logs committed as tracked `.txt` beside it (F-1267-3\'s principle applied to my own evidence). Commit `7029e515`.',
+  'Evidence `logs/session-scratch/s1268/RESULTS.md`; instruments and all twelve raw run logs committed as tracked `.txt` beside it (F-1267-3\'s principle applied to my own evidence). Commit `a0384a99`.',
 ].join(' ');
 
 const F4 = [
@@ -33,7 +33,7 @@ const F4 = [
   '`man launchd.plist`: *"If left unspecified, the system will apply light resource limits to the job, **throttling its CPU usage and I/O bandwidth**."*',
   'That is a documented mechanism which predicts F-1268-3 exactly, and it fits every observation in the six-fire thread: serial work sits under the ceiling and matches the lane (~8–9 s/test, 49 s on both sides), 3+ concurrent browsers exceed it and collapse, CPU sits idle, nice/pri are untouched, and the sandbox, node version and working directory are all already refuted.',
   '🚫 **NOT ESTABLISHED, and this fire does not claim it:** every reading in F-1268-3 was taken *inside the fire\'s own process tree*, where a launchd resource limit and "this box simply cannot do better" produce identical numbers.',
-  '➡️ **The separating control is one command in a shell no fire can reach**, so it is authored as a lane task: **`fire-shell-cpu-ceiling-control`** (`tasks/lane-b-fire-shell-cpu-ceiling-control.md`, leaf registered `queued`, commit `7029e515`).',
+  '➡️ **The separating control is one command in a shell no fire can reach**, so it is authored as a lane task: **`fire-shell-cpu-ceiling-control`** (`tasks/lane-b-fire-shell-cpu-ceiling-control.md`, leaf registered `queued`, commit `a0384a99`).',
   'Both arms run the **same committed instrument** (`logs/session-scratch/s1268/child-scaling-v2.mjs`, tag `fire` vs tag `lane`) and the master forbids editing it, so the two readings are one measurement rather than two models of it.',
   '**Decision table, total: ~7–12× ⇒ the ceiling is the fire\'s process context, the six-fire divergence is explained, and the remedy is one key in one plist · ~3× like the fire\'s ⇒ the ceiling is the BOX, the fire\'s context is exonerated, and the lane\'s own 14 s green becomes the thing to re-measure · between ⇒ a partial ceiling, report and stop.**',
   '**GATE: none for the measurement — no owner ruling needed. If the lane reading lands in the ~7–12× row, the plist edit that follows IS owner-gated: it changes the owner\'s launchd configuration, outside the repo.**',

@@ -1,13 +1,13 @@
 # f1406-1 — aim the cross-engine guard at a subject that diverged
 
 **Slice:** `f1406-1-aim-the-cross-engine-guard-at-a-subject-that-diverged` (main slot, DISPATCH 2, run `20260802-231226`)
-**Base / tip:** main `132095c4` → runner output left uncommitted in main's working tree (main-slot convention)
+**Base / tip:** main `48833fc6` → runner output left uncommitted in main's working tree (main-slot convention)
 **Banked at:** `save/f1406-1-dispatch2-fire-shell-s1408` (blob `5039bec2`), which also carries the two cure attempts s1408 measured
 **Gated by:** s1408 fire, 2026-08-02T23:30Z → 2026-08-03T00:1xZ
 
 ## VERDICT (s1408): HOLD — NOT MERGED. The slice does what it was asked to do; it cannot pay for itself in the shell that has to run it.
 
-## VERDICT (s1409, SUPERSEDING): MERGED — `9b3961f6952fffa23b23b4f518e0c0b98d13d94b`. The hold was lifted by RULING F-1408-2, not by a green.
+## VERDICT (s1409, SUPERSEDING): MERGED — `a1c7bab059281d0a367922740ea222454e07535d`. The hold was lifted by RULING F-1408-2, not by a green.
 
 The s1408 hold below stands as written, and its measurements were re-used rather than re-run. What changed is that the ruling it asked for was made. See the s1409 section at the foot of this file.
 
@@ -73,7 +73,7 @@ Undecided content was in main's working tree (main-slot convention puts it there
 # s1409 — the ruling, and what it cost to make it
 
 **Gated in:** detached worktree `worktrees/gate-s1409` (§3.0b — the block was `blockClass: "gate-side"`, so evidence may be gathered but main's tree may not be dirtied)
-**Merged:** `9b3961f6952fffa23b23b4f518e0c0b98d13d94b`, leaf flipped in the immediately following commit (F-1384-1: a commit cannot contain its own hash)
+**Merged:** `a1c7bab059281d0a367922740ea222454e07535d`, leaf flipped in the immediately following commit (F-1384-1: a commit cannot contain its own hash)
 
 ## The ruling: (a), as recommended — but re-priced first rather than inherited
 

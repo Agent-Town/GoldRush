@@ -1,9 +1,9 @@
 # Task lane-tailor-wagon: THE WARDROBE moves into the wagon (LANE-D, sequenced after cosmetic-grants merges, commit prefix "feat:")
 You are Codex (worktrees/lane-d). CODEX: model=gpt-5.6-sol effort=high
 **SEQUENCED: cosmetic-grants must be MERGED (probe the skin datum on main; else STOP).**
-**PREREQUISITE NOW SATISFIED (s1079, 2026-07-26):** your 15:56 run STOPPED correctly and honestly — `prospectorSkin` was then only on unmerged `lane/perf@fadbe5bd`. It is now on **main `52fa15ad`**. Re-probe anyway before starting (`grep -n "prospectorSkin" src/game/ProspectorSkin.ts src/ui/ComplaintDesk.ts` on main) — verify, don't inherit this claim.
+**PREREQUISITE NOW SATISFIED (s1079, 2026-07-26):** your 15:56 run STOPPED correctly and honestly — `prospectorSkin` was then only on unmerged `lane/perf@fadbe5bd`. It is now on **main `2dfa0b4d`**. Re-probe anyway before starting (`grep -n "prospectorSkin" src/game/ProspectorSkin.ts src/ui/ComplaintDesk.ts` on main) — verify, don't inherit this claim.
 **PRE-FLIGHT (SAFE-DUPE, mandatory).** `lane/perf` sits 2 commits ahead of main and BOTH are accounted for, so a reset is loss-free:
-- `fadbe5bd` (lane-cosmetic-grants) — **content-merged to main `52fa15ad`** by the s1079 drain. Safe dupe.
+- `fadbe5bd` (lane-cosmetic-grants) — **content-merged to main `2dfa0b4d`** by the s1079 drain. Safe dupe.
 - `99baab74` (deploy-verify-production-alias) — **archived at `archive/lane-perf-99baab74`** and its `scripts/deploy.sh` is **FORBIDDEN off any lane (F-1073-1)**. Safe to drop; never re-land it here.
 Reset with `git checkout -B lane/perf main` and confirm `git log main..lane/perf` is EMPTY before you touch a file. If the branch holds any commit that is NOT one of those two hashes: **STOP and report** — something undrained is on this lane.
 READ FIRST: specs/cosmetics/README.md V1 (THE LAW) · the merged grants slice (datum/picker/redeem — you RELOCATE its surface) · the town prop ring + door-interaction pattern (newsie precedent) · the shipped wagon prop body.

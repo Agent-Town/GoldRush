@@ -2,7 +2,7 @@
 
 ## Slice / branch / tip
 
-`tasks/main-beat-citation-refresh.md`, MAIN-slot runner output. Gated against `378219cbc` in `/private/tmp/gr-s2535-citation-gate`; merged as `8d20801023cb5df48a0487dc1401cff822aa7836`. Source after-blob `95f2d0675aed69f97748c239d64a965cd395d503`.
+`tasks/main-beat-citation-refresh.md`, MAIN-slot runner output. Gated against `dba2fef16` in `/private/tmp/gr-s2535-citation-gate`; merged as `3102584800ca6d2ea8695d3f7c3cdf03602c3d8f`. Source after-blob `95f2d0675aed69f97748c239d64a965cd395d503`.
 
 ## Verdict
 
@@ -19,7 +19,7 @@ MERGED. The nine comment-digit replacements preserve all 9,182 TypeScript token 
 | Citation guard | Initial pre-existing A8 BACKLOG helper citation failed; naming the actual helper and test repaired it, then PASS |
 | Plain boot | Desktop and 390px, 2/2, zero console/page errors during the probes |
 | Minimum adjacent suites | 30/32; exactly two F-2533-1 failures, both projects, `enemiesAlive > 0` at M1 spec line 36 |
-| Fresh unchanged-base control | All `src/` and `assets/` restored to `378219cbc`; M1 6/8, the same two test/assertion/project failures; candidate restored byte-for-byte afterward |
+| Fresh unchanged-base control | All `src/` and `assets/` restored to `dba2fef16`; M1 6/8, the same two test/assertion/project failures; candidate restored byte-for-byte afterward |
 
 Transcripts: `artifacts/s2535-fire/citation-gates.txt`, `artifacts/s2535-fire/node-guards.txt`, `artifacts/s2535-fire/remaining-guards.txt`, `artifacts/s2535-fire/browser-gates.txt`, `artifacts/s2535-fire/base-controls.txt`. Fingerprint proof: `artifacts/s2535-fire/failure-fingerprint.txt` and `artifacts/s2535-fire/base-control-state.txt`.
 

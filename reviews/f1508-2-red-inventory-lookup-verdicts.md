@@ -1,7 +1,7 @@
 # f1508-2 — red-inventory-lookup verdicts
 
 **Slice:** `lane-f1508-2-red-inventory-lookup-verdicts.md` (FIRE-AUTHORED, s1511)
-**Branch:** `lane/b` @ `58a4cd5b2` — **Base:** `410b49c2` — **Merge:** `2c495181` (main, s1513)
+**Branch:** `lane/b` @ `9a74c59d6` — **Base:** `7d05645b` — **Merge:** `c7284596` (main, s1513)
 **Drained by:** s1513 fire, 2026-08-07.
 
 ## Verdict
@@ -59,13 +59,13 @@ returns nothing; and the guard asserts `/snapshot date 2031-12-25/` against a fi
 `2026-07-28` would red that assertion. That is a mechanism, not a promise.
 
 **`--snapshot` plumbing sanity-checked, not taken on trust:**
-`SNAPSHOT 2026-07-28T02:26:03.534Z … — SNAPSHOT main commit b66905c64c0f…`. I resolved that hash:
-`b66905c64  2026-07-28T09:25:10+07:00` = `02:25:10Z`, i.e. the last main commit **before** the run
+`SNAPSHOT 2026-07-28T02:26:03.534Z … — SNAPSHOT main commit eb3a8a01200b…`. I resolved that hash:
+`eb3a8a012  2026-07-28T09:25:10+07:00` = `02:25:10Z`, i.e. the last main commit **before** the run
 started. The plumbing is correct, not inventing.
 
 ## Merge classification
 
-Base `410b49c2`; lane was `ahead=1 behind=12`. `git diff --stat <base>..main` over all four candidate
+Base `7d05645b`; lane was `ahead=1 behind=12`. `git diff --stat <base>..main` over all four candidate
 paths (`red-inventory-lookup.mjs`, `.test.mjs`, the report, `package.json`) is **empty** — main moved
 none of them. All three files are therefore **LANE-TOUCHED only**; no MAIN-MOVED file, no 3-way graft,
 no conflicts. Merge was clean and touched exactly the three classified files.
@@ -87,7 +87,7 @@ standing property of the battery, not something this slice introduced (the F-146
 **No corrective task owed** — the cure is that report tallies get pasted, not retyped.
 
 **NOT A FINDING — `test:ledger-guards` rc=1 during the gate.** `status-archive-audit` reported
-`DROPPED c1dd84c3 — s1513 destroyed s1512's handoff line`. That names **my own lock commit**, not the
+`DROPPED c08e4884 — s1513 destroyed s1512's handoff line`. That names **my own lock commit**, not the
 lane. The lane's diff contains no `STATUS.md`, so it is structurally incapable of moving this audit.
 The audit's own text calls the pattern normal when the fire's handoff restores the line
 ("7 more were dropped at lock time but restored by the fire's own handoff commit — normal, not a

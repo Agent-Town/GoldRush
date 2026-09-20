@@ -1,5 +1,5 @@
 # CIRCUIT 3 — THE WALK ERA'S FIRST FULL TABLE (2026-08-08 afternoon)
-Era `3dd7790d6411` (harvest walks) · exam clones (F-GNT-3: field book stripped, closed-book) · fixed model `deepseek/deepseek-v4-flash` · 25-min windows · stop at first SECURED or 6 failed runs · five harnesses × nine contracts. Artifacts: `bench/gauntlet/circuit3/`.
+Era `55ce6f7d29d9` (harvest walks) · exam clones (F-GNT-3: field book stripped, closed-book) · fixed model `deepseek/deepseek-v4-flash` · 25-min windows · stop at first SECURED or 6 failed runs · five harnesses × nine contracts. Artifacts: `bench/gauntlet/circuit3/`.
 
 ## The matrix (best outcome per cell; ✔=SECURED, wN=best wave reached, ⏱=window expired without outputs)
 | contract | pi | codex | prime | openclaw | hermes |

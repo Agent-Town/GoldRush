@@ -5,7 +5,7 @@ CODEX: model=gpt-5.6-sol effort=high
 
 ROLE: lane implementer. WORKDIR: this lane worktree (`worktrees/lane-a`, branch `lane/a`). Commit prefix `f1525-1:`. One task, firewalled. Never touch STATUS.md, reviews/, tasks/queue/, other lanes.
 
-## WHY (F-ER02-3, from the ER-02 Steamworks rehearsal, `reviews/standing-orders-rehearsal-e2.md`, merged `bb969fb3`)
+## WHY (F-ER02-3, from the ER-02 Steamworks rehearsal, `reviews/standing-orders-rehearsal-e2.md`, merged `4839c2ad`)
 
 The rehearsal card asked for both ratified difficulty tiers. **It could not ask the shipped CLI for either.**
 `scripts/gr-sim.mjs` parses arguments against a hard allowlist and throws `Unknown argument` for anything

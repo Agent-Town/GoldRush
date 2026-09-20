@@ -1,9 +1,9 @@
 # door-dawn-fencepost — the door envelope learns the inclusive terminal endpoint
 
 **Slice:** `door-dawn-fencepost` (lane-d)
-**Branch / tip:** `lane/d` @ `b1884fe5f` (runner commit `runner(lane-d): door-dawn-fencepost.md`)
-**Merged to main:** `b80253bffeb9e8a52a0b3f841299b56d28c3a39f` (drained s2411, 2026-09-01)
-**Gate base:** `568575151`; re-verified against `5b85f8583` before merging (see Concurrency below)
+**Branch / tip:** `lane/d` @ `311913d8d` (runner commit `runner(lane-d): door-dawn-fencepost.md`)
+**Merged to main:** `ea95ab54591b49c66439889fb5768a28d15a2bc0` (drained s2411, 2026-09-01)
+**Gate base:** `eb8c5eebe`; re-verified against `9b0171998` before merging (see Concurrency below)
 
 ## VERDICT: MERGE — cured at the derivation, verified on both trees, no stale pins anywhere.
 
@@ -51,7 +51,7 @@ The decisive control. Same call, same contract, the only variable is the tree:
 
 | | `e1-night-shift` maxTicks | admits the banked 22,502? | maxEntries | maxTapeBytes |
 |---|---|---|---|---|
-| **main** (`5b85f8583`) | 22,501 | **false** — the defect, reproduced | 4,501 | 736,544 |
+| **main** (`9b0171998`) | 22,501 | **false** — the defect, reproduced | 4,501 | 736,544 |
 | **merged** | 22,502 | **true** — the cure, verified | 4,501 | 736,544 |
 
 `maxEntries` and `maxTapeBytes` are **byte-identical across both trees**, which settles scope item 2 (does
@@ -67,7 +67,7 @@ exact tape the live door turned away, and the merged envelope admits it.
 
 ## Merge classification
 
-Base `fa7d32798`. Three files, `+24/−14`, every one **LANE-TOUCHED ONLY** — `git diff --stat base..main`
+Base `6d79434db`. Three files, `+24/−14`, every one **LANE-TOUCHED ONLY** — `git diff --stat base..main`
 over all three paths is empty, so main never moved them and no graft was required. Merge was clean under
 `ort` with no conflicts, and `main..lane/d` is empty after landing (absorbed).
 
@@ -80,7 +80,7 @@ Exactly the firewall the master allowed. No sim mechanics, no ranking, no worker
 ## Concurrency (§3.0b)
 
 Gated in a detached worktree; main was never used as scratch. **Main moved during the gate** — the attended
-session landed `5b85f8583` ("Opus opens epoch 2 for era 5") while the battery was running. Re-classified
+session landed `9b0171998` ("Opus opens epoch 2 for era 5") while the battery was running. Re-classified
 before merging rather than blind-merging: that commit is **evidence-only** (26 files under `artifacts/`,
 1 under `tasks/`, **zero** run-surface and zero engine-corpus paths), and the engine hash on the new main
 recomputes to `386f971d…` — unchanged. The gate therefore holds exactly against the tree that was merged.
@@ -130,7 +130,7 @@ safe direction, and human tapes are unaffected.
 
 ## Ledger
 
-Goal leaf `door-dawn-fencepost` → `merged` @ `b80253bffeb9e8a52a0b3f841299b56d28c3a39f`, in the commit
+Goal leaf `door-dawn-fencepost` → `merged` @ `ea95ab54591b49c66439889fb5768a28d15a2bc0`, in the commit
 following the merge (F-1384-1: a commit cannot contain its own hash). BACKLOG row appended. Done-move
 renamed `drained-s2411-b80253bf-…`. GZ-01 item filed — every dawn ride being refused, and now accepted, is
 player-visible by any reading.

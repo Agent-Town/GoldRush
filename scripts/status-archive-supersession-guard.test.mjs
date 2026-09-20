@@ -36,7 +36,7 @@ const HERE = path.dirname(fileURLToPath(import.meta.url));
 const SUBJECT = path.join(HERE, "status-archive-audit.mjs");
 
 // A desk-bearing attended handoff line. Parameterised so each arm states exactly what it varies.
-const attendedLine = ({ stamp, tail, ids = ["F-RPG-18", "F-RPG-10"], hash = "92137d813", desk = ids }) =>
+const attendedLine = ({ stamp, tail, ids = ["F-RPG-18", "F-RPG-10"], hash = "d2a7fda05", desk = ids }) =>
   `Last updated: ${stamp} attended handoff, lock CLEARED — WORK LANDED at main ${hash} ` +
   `(${ids.join(", ")} on the desk). ${tail} ` +
   `🔺 **OWNER'S DESK — ${desk.length} awaiting a word.** ` +
@@ -136,8 +136,8 @@ test("4. VACUITY REFUSED — a line with no ids and no hashes is not proven supe
 
 test("5. hashes match across ABBREVIATION WIDTHS (F-1633-1: this repo cites 8, 9 and 40)", () => {
   const dir = board([
-    attendedLine({ stamp: "2026-09-15T13:10Z", tail: "deploy follows.", hash: "92137d813" }),
-    attendedLine({ stamp: "2026-09-15T05:25Z", tail: "deployed.", hash: "92137d81" }),
+    attendedLine({ stamp: "2026-09-15T13:10Z", tail: "deploy follows.", hash: "d2a7fda05" }),
+    attendedLine({ stamp: "2026-09-15T05:25Z", tail: "deployed.", hash: "d2a7fda0" }),
   ]);
   try {
     assert.ok(clean(dir), "a 9-char citation must match its own 8-char twin");

@@ -6,7 +6,7 @@
 // The recorded hash in a ride's summary.json is NOT a usable BEFORE: heat 12 rode engine
 // 86e53f37 on 2026-09-05 and main has moved since, so a tape can already diverge at the base of
 // this task (e1-baron/tune-1 records fnv1a32:41f0518d and replays to fnv1a32:fe24406d at
-// af767e318). Measuring both ends on this tree is the only honest attribution.
+// 8c84605ed). Measuring both ends on this tree is the only honest attribution.
 //
 // Usage: node artifacts/rider-parity-grammar/replay-panel.mjs <out.json> [--scored] [--jobs N] [file...]
 import { execFile } from 'node:child_process';

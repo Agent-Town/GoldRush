@@ -14,7 +14,7 @@ CITATION CHECK (run BEFORE any edit; 0 means your lane is stale, not that the wo
 → expect **1**. If 0, STOP and report "lane stale — refresh requested".
 
 ## WHY (drain evidence, s1521, `reviews/lane-fd3-boards-pass.md`)
-FD-3 shipped the "when" column and its tests at merge `9b7c530a5`, and the column is **empty in
+FD-3 shipped the "when" column and its tests at merge `7abee977a`, and the column is **empty in
 production** — every real row renders an em-dash. The runner that built it ended its report with
 **"Not `READY-FOR-GATES`"** and filed F-FD3-1, because FD-3's master said *"NO: API/ranking/storage
 changes"* and the missing piece is an API projection. It refused correctly (Mistake #14:

@@ -1,9 +1,9 @@
 # Review — gauntlet-heat3b-full-field
 
 - **Slice:** `gauntlet-heat3b-full-field` (heat 3, the full field)
-- **Branch / tip:** `lane/b` @ `c713cf7f7` ("runner(lane-b): gauntlet-heat3b-full-field.md")
-- **Merge base:** `a951e1fd9ce26fecc6d3abf1db4fb4591c074451`
-- **Merged to main:** `407f89f422f4a7eaccea8183e4949284a06653f5`
+- **Branch / tip:** `lane/b` @ `f3d759ed0` ("runner(lane-b): gauntlet-heat3b-full-field.md")
+- **Merge base:** `583ec679939dfd4a38bcd83225aa887166311ba9`
+- **Merged to main:** `178ec7eea89936b4f8418bf681c4db85cdd23ba8`
 - **Drained by:** fire s2274, 2026-08-24
 - **Gate worktree:** detached `gate-s2274/` (§3.0b — undecided content never entered main's working tree)
 
@@ -48,7 +48,7 @@ explicitly); ride worktree removed; `tracked-dirt=0` in the lane confirms it.
 
 ## Merge classification
 
-Base `a951e1fd9`. Per-file:
+Base `583ec6799`. Per-file:
 
 - **19 × LANE-TOUCHED, main never moved them** — all new files under
   `artifacts/gauntlet-heat3-20260824/`. Pure additions, no conflict possible.
@@ -103,7 +103,7 @@ a live run was executing against a master that existed only as untracked disk (a
 have taken the master with the run still going), and the run's provenance was unanchored to any
 commit.
 
-**Cured in this fire, before the drain:** s2274 committed all three path-scoped at `2df85f734`
+**Cured in this fire, before the drain:** s2274 committed all three path-scoped at `73b18e70b`
 (fire.md §2A — "uncommitted bookkeeping … commit them first"), so the live lane-c run is now
 anchored to a committed master. Recorded rather than merely fixed because the ordering is a law
 with a named finding behind it, and this is its second observed instance.
@@ -116,7 +116,7 @@ This drain is the head of a three-deep blocked chain, which is why it mattered m
 | task | run | outcome |
 | --- | --- | --- |
 | `gauntlet-heat3b-full-field` | `20260824-163258` | **REAL — drained here** |
-| `gauntlet-heat3c-shim-streaming` | `20260824-170500` | **STOP, zero edits, 42,925 tokens** — "heat-3b undrained. `lane/b` still has commit `c713cf7f7` ahead of `main`… Per the task's LANE-SAFETY guard, I stopped without edits." |
+| `gauntlet-heat3c-shim-streaming` | `20260824-170500` | **STOP, zero edits, 42,925 tokens** — "heat-3b undrained. `lane/b` still has commit `f3d759ed0` ahead of `main`… Per the task's LANE-SAFETY guard, I stopped without edits." |
 | `gauntlet-heat4-streaming-field` | `20260824-170644` | **STOP, zero edits, 41,684 tokens** — "streaming shim not landed. Live `main` probe returned HTTP 400 JSON: `Streaming is not supported`" |
 
 Both STOPs are **firewall successes, not failures** — each runner correctly refused to reset a
@@ -124,7 +124,7 @@ lane holding undrained predecessor output, and refused to ride against an unland
 is a drain; both are zero-diff, and their done-moves are renamed `stopped-` accordingly rather
 than `drained-`.
 
-**With `c713cf7f7` merged, heat3c's stated blocker is gone** and it is re-queueable as-is
+**With `f3d759ed0` merged, heat3c's stated blocker is gone** and it is re-queueable as-is
 (its own pre-flight now finds `main..lane/b` empty — verified: `lane/b` reads `ahead=0` after
 this merge). heat4 stays blocked until heat3c lands the streaming shim; re-queueing it before
 that only reproduces its STOP.

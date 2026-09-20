@@ -30,7 +30,7 @@ Three pre-existing regressions discovered during the gate were attributed and sp
 
 ## Findings (split out, NOT blockers for this slice)
 
-Attribution method: identical m2-01 runs in a detached worktree — clean HEAD `a0e5272` vs pre-merge `bc8c220` vs main tree with w1-01 staged (same config clone, port 5232/5231).
+Attribution method: identical m2-01 runs in a detached worktree — clean HEAD `8a2d87a` vs pre-merge `102c525` vs main tree with w1-01 staged (same config clone, port 5232/5231).
 
 - **F-033-2a** `beacon cost curve` (desktop+mobile): `ui.buildMenuOpen` stays true after Digit-select. Green at bc8c220, red at HEAD → **introduced by 033+035 merge bf8c4f7**.
 - **F-033-2b** `stress draw calls` (desktop): 229 vs ≤200 — **byte-identical 229 at HEAD and with w1-01 staged** (w1-01 adds zero calls). Green at bc8c220 → **introduced by 033+035**.

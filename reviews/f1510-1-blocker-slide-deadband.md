@@ -1,7 +1,7 @@
 # f1510-1 blocker-slide deadband — review
 
 **Slice:** `lane-f1510-1-blocker-slide-deadband.md` (F-1510-1 corrective, authored s1510)
-**Branch:** `lane/a` · **tip** `9e38976c`-successor, drained at `da8641e44`
+**Branch:** `lane/a` · **tip** `9e38976c`-successor, drained at `649156a72`
 **Drained by:** s1511 · 2026-08-07
 
 ## Verdict
@@ -33,7 +33,7 @@ found no separating value, restored `Enemy.ts`, and wrote
 `npm run build`, a browser battery and `test:node-guards` were **not run and are not owed**: the
 merged diff touches no run surface, and the F-1460-1 path trigger (`src/sim/`, `src/systems/`,
 `src/entities/`) is not met. Said out loud rather than silently skipped, per the f1507-2 precedent
-(`ccd26fc8b`, s1510).
+(`bc482de1a`, s1510).
 
 ### The runner's own arms (reproduced from the report, not re-run)
 
@@ -43,7 +43,7 @@ merged diff touches no run surface, and the F-1460-1 path trigger (`src/sim/`, `
 | 3.9 · 4.0 | 2 passed / 0 failed | 6 passed / 2 failed |
 
 **Baseline cross-checked against an independent measurement rather than re-run:** s1510 measured
-main **RED** on the landmark spec (culprit `531bd923a`) and s1445's `never-trap` green, in a
+main **RED** on the landmark spec (culprit `70eb5b50d`) and s1445's `never-trap` green, in a
 different fire, in a detached worktree, on a scratch port. The report's baseline row agrees with
 both. Two fires, two instruments, same answer.
 
@@ -61,10 +61,10 @@ Non-blocking; interpretive, and it strengthens the report's conclusion beyond wh
 for itself. The formula is
 `Math.abs(delta) > threshold ? Math.sign(delta) : this.avoidanceSide()`. The Dry Gulch subject's
 goal-relative delta is bounded by the map, so a threshold of 3.9 means the `Math.sign(delta)` branch
-is taken **almost never** — the enemy runs on `avoidanceSide()`, which is precisely the pre-`531bd923a`
+is taken **almost never** — the enemy runs on `avoidanceSide()`, which is precisely the pre-`70eb5b50d`
 behaviour. So the only arm that greens the landmark spec does so by *undoing the cure*, and the
 `never-trap` regression at that arm is not a coincidence to be tuned away — it is the same regression
-`531bd923a` was written to fix, reappearing on schedule.
+`70eb5b50d` was written to fix, reappearing on schedule.
 
 **Consequence:** nobody should re-open this hunt with more threshold values, finer steps, or a
 per-axis threshold. The axis is exhausted. A future fire reading only the report's table might
@@ -88,7 +88,7 @@ Two differences from the deadband, both load-bearing:
 2. It is **gated on the goal lying inside the blocker's padded span**, i.e. on the head-on geometry
    itself — the exact condition the deadband was trying and failing to detect via a magnitude.
 
-It is scoped by `ACTIVE_TILE_ID`, shipped `5c27a1b5c` (*runner(lane-c): f1441-2-crossings-keep-their-z*,
+It is scoped by `ACTIVE_TILE_ID`, shipped `a26454d4c` (*runner(lane-c): f1441-2-crossings-keep-their-z*,
 2026-08-04), and it is green. **The reusable lesson: this class of conflict has already been solved
 once in this file by scoping on GEOMETRY, and the factory then spent a fire trying to solve it with a
 SCALAR.** A master proposing a mechanism should be required to say why the existing mechanism for the
@@ -114,7 +114,7 @@ it is due: exceeding the master's suggested range is what made this a proof.**
 
 ## Merge classification
 
-Base: `main` at `8979b78ea`. Single file `docs/bench/f1510-1-blocker-slide-deadband.md`,
+Base: `main` at `3cef0dba3`. Single file `docs/bench/f1510-1-blocker-slide-deadband.md`,
 **LANE-TOUCHED only** — created on the lane, never existed on main, no conflicts possible.
 `git merge --no-ff` clean via ort. No MAIN-MOVED paths. No BOTH-MOVED paths.
 

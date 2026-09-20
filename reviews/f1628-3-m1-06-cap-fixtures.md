@@ -1,15 +1,15 @@
 # f1628-3 — m1-06 cap fixtures follow the three-stack ceiling
 
 - **Slice:** `f1628-3-m1-06-cap-fixtures` (fire-authored s1629 from F-1628-3, filed s1628)
-- **Branch / tip:** `lane/a` @ `b8598763c` (runner commit, 14:50→14:55, 101,571 tokens)
-- **Base:** `6ffdc6a53`; merged onto main at `6146c0a4c`
-- **Merge:** `1197a9612abe55209b936a31d54bc313579031e1` (`--no-ff`, `ort`, one atomic act per F-1589-5)
+- **Branch / tip:** `lane/a` @ `8386457e2` (runner commit, 14:50→14:55, 101,571 tokens)
+- **Base:** `70a0d83fe`; merged onto main at `6146c0a4c (archive: pruned by the A3 rewrite)`
+- **Merge:** `6f47e538e871e2990f80f27ce6138cbd42ae85e1` (`--no-ff`, `ort`, one atomic act per F-1589-5)
 - **Gated by:** s1630, fire shell, `--workers=1` throughout, detached worktree `gate-s1630` per §3.0b (removed after)
 - **Verdict:** ✅ **MERGED.** The cure is correct and proven red→green on a reverted-file control. One red survives and it is a **clock, not an assertion** — filed as F-1630-1, non-blocking.
 
 ## What it does
 
-`d2279d325` capped Double-Tap Coil from 6 stacks to 3 **in `Balance.ts` only**. `Progression.ts` clamps `setUpgradeStacks` to `maxStacks` (`:143`) and then drops maxed upgrades from the offer pool (`:315`). So the spec's fixtures of `5` and `6` clamped to `3` = *maxed*, and three tests silently stopped measuring what they name: the invested arm could never be offered (`investedHits` **0**), the pip card never rendered, and the loop could never reach `6`.
+`4154da9eb` capped Double-Tap Coil from 6 stacks to 3 **in `Balance.ts` only**. `Progression.ts` clamps `setUpgradeStacks` to `maxStacks` (`:143`) and then drops maxed upgrades from the offer pool (`:315`). So the spec's fixtures of `5` and `6` clamped to `3` = *maxed*, and three tests silently stopped measuring what they name: the invested arm could never be offered (`investedHits` **0**), the pip card never rendered, and the loop could never reach `6`.
 
 This slice repairs **the fixtures, one file, +10/−7**: invested/repeated seed `2`, the maxed fixture and its loop use the ratified cap `3`, the pip expectation becomes `II`. Each of the three sites carries a comment naming `Balance.upgrades.doubleTapCoilMaxStacks` and the commit that moved it, so the next reader learns the cause at the site rather than from a ledger.
 
@@ -60,7 +60,7 @@ Recorded here, on the ladder row, and in the goal leaf so no later reader infers
 |---|---|---|
 | `e2e/m1-06-level-up-choices.spec.ts` | **LANE-TOUCHED / MAIN-UNMOVED** | clean `ort`, no conflict |
 
-Main moved only by this fire's own two bookkeeping commits (`c0db8e53b` lock, `6146c0a4c` log churn), neither touching `e2e/`. Post-merge: `main..lane/a` **empty**, `lane-usable lane-a` → **USABLE** (`ahead=0`, `paths=0`, no run-surface gap). The merged file's sha256 is **`b0a34191d7812d4f…`**, byte-identical to the bytes I gated — the merge is verified against the gate, not merely assumed to match it.
+Main moved only by this fire's own two bookkeeping commits (`18987f38c` lock, `6146c0a4c (archive: pruned by the A3 rewrite)` log churn), neither touching `e2e/`. Post-merge: `main..lane/a` **empty**, `lane-usable lane-a` → **USABLE** (`ahead=0`, `paths=0`, no run-surface gap). The merged file's sha256 is **`b0a34191d7812d4f…`**, byte-identical to the bytes I gated — the merge is verified against the gate, not merely assumed to match it.
 
 ## Findings
 

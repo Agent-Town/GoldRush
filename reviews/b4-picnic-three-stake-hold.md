@@ -1,6 +1,6 @@
 # b4-picnic-three-stake-hold — the hold consumer works; the MAP cannot lose
 
-**Slice:** `b4-picnic-three-stake-hold` · **branch:** `lane/b` · **tip:** `7a320da261acb0749df7fde5fd4d30f9a07cf624`
+**Slice:** `b4-picnic-three-stake-hold` · **branch:** `lane/b` · **tip:** `1e47ec4e929494178b10bbe7a8f0ab268918127f`
 **Base:** lane/b's own base · **Evaluated in:** detached worktree `gate-s2085` (§3.0b), merge **aborted**, worktree removed
 **Merged to main:** **NO — see verdict**
 
@@ -76,7 +76,7 @@ about the tree, so I measured it: merging `lane/b` into main in the gate worktre
 
 ## Merge classification (measured, then discarded)
 
-Base main `afbf421cb`. Four conflicts, all one benign shape — **both sides added an independent
+Base main `38700d8d8`. Four conflicts, all one benign shape — **both sides added an independent
 sibling member at a shared insertion point**: main's E7 signal-suppression consumer (via
 `e7-dead-band`) vs the lane's picnic-hold consumer.
 
@@ -116,8 +116,8 @@ The claim was that `tasks/done/20260820-150023-b3-half-life-hollow-crossing.md` 
 work that never ran. **False.** b3 was dispatched to lane-d at 15:00:23, **ran**, and **stopped on
 Law 2** — proven three ways: the run log `tasks/runs/20260820-150023-lane-d-b3-…log` exists and
 ends *"STOPPED per Law 2: seed `-01` idle-secured at wave 20 (`fnv1a32:c3f13eda`); seed `-02` died
-at wave 5"*; `lane/d` carries `ad49f9724` timestamped 15:02:51; and that commit's ledger row is
-**merged to main by this same fire** (`f256baf3c`).
+at wave 5"*; `lane/d` carries `cb46a893a` timestamped 15:02:51; and that commit's ledger row is
+**merged to main by this same fire** (`c92727ca4`).
 
 Two reasoning errors, both worth more than the row was:
 

@@ -14,7 +14,7 @@ CODEX: gpt-5.6-sol effort=low
 
 Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead is NORMAL — the runner auto-commits. For each ahead commit: if its content is already merged to main (verify via git log/diff), it is a SAFE DUPE → `git checkout -B lane/m3 main && git clean -fd` and PROCEED. STOP-and-report ONLY if an ahead commit's content is NOT on main (undrained work — resetting would DESTROY it), or the worktree holds uncommitted edits you did not make. Then `npm install --no-audit --no-fund`; `npm run build` green before touching anything.
 
-*(Measured by the authoring fire at 2026-07-29T03:5xZ: `lane/m3` was **1 ahead at `1c7c7f75`**, and its six paths break down as **`e2e/m3-05b-run-ledger.spec.ts` and `tasks/runs/20260729-032452-*.md` byte-identical to `main`** — the actual content, shipped as `0f929bdf` — **plus four PNGs that differ from main by 31–407 bytes each.** Those four are nondeterministic re-shoots of the same cards, not undrained work (see the WHY below), so the reset is loss-free. The worktree was CLEAN. Re-derive it anyway; the board moves.)*
+*(Measured by the authoring fire at 2026-07-29T03:5xZ: `lane/m3` was **1 ahead at `1c7c7f75`**, and its six paths break down as **`e2e/m3-05b-run-ledger.spec.ts` and `tasks/runs/20260729-032452-*.md` byte-identical to `main`** — the actual content, shipped as `04da9047` — **plus four PNGs that differ from main by 31–407 bytes each.** Those four are nondeterministic re-shoots of the same cards, not undrained work (see the WHY below), so the reset is loss-free. The worktree was CLEAN. Re-derive it anyway; the board moves.)*
 
 ## Why (a recorded residual, with its mechanism already on main)
 

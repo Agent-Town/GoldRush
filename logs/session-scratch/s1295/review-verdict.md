@@ -29,8 +29,8 @@ whole battery from six paired runs would be the same over-reach the hold existed
 ### Disposition
 
 The gate is satisfied, so the slice **stays on main** — but it must be recorded for what it is.
-It did not arrive by a drain, and no amount of after-the-fact green makes `b37c1fc6` a drain commit.
-The goal leaf therefore carries `mergeHash: b37c1fc6` with the irregular provenance stated on it
+It did not arrive by a drain, and no amount of after-the-fact green makes `3058fca5` a drain commit.
+The goal leaf therefore carries `mergeHash: 3058fca5` with the irregular provenance stated on it
 rather than laundered into a normal-looking merge, and the done-move is retired against that hash.
 
 ⚠️ **The one thing a future fire must not conclude from this file: "the sweep turned out fine, so

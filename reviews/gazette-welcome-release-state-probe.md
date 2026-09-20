@@ -2,7 +2,7 @@
 
 **Slice:** `lane-b-gazette-welcome-release-state-probe` (FIRE-AUTHORED s1261)
 **Branch:** `lane/m4` (lane-b worktree) · **Tip:** `103f07cc96ec1f992d619788c0388efc4a4ba9c1`
-**Base:** `6be7eb8fbafbb8376e49e8e162cfd524dcc54c55` (s1261's own authoring commit)
+**Base:** `68f37c2dc708e043ea3516cb5efbeb3e91548d65` (s1261's own authoring commit)
 **Drained:** s1262
 
 ## Verdict
@@ -83,12 +83,12 @@ this is a pre-existing, load-dependent red on clean main. Machine load average d
 
 ## Merge classification
 
-Base `6be7eb8f`. Both changed files verified **LANE-TOUCHED ONLY** — `git log <base>..main -- <file>`
+Base `68f37c2d`. Both changed files verified **LANE-TOUCHED ONLY** — `git log <base>..main -- <file>`
 is empty for each, so main never moved either. **No graft required; no conflict possible.**
 
 The two-dot `main..lane/m4` diff additionally shows `D` on four `logs/session-scratch/s1262/*`
 files and `M` on `STATUS.md` / `tasks/BACKLOG.md` / the generated `logs/*.html`. Those are
-**stale-base artefacts** — the lane branched at `6be7eb8f`, before this fire's commits — not
+**stale-base artefacts** — the lane branched at `68f37c2d`, before this fire's commits — not
 deletions the lane performed. Merge was path-scoped to the two real files only.
 
 ## Findings

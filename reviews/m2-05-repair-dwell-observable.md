@@ -2,7 +2,7 @@
 
 **Slice:** `lane-m2-05-repair-dwell-observable` (attempt 2, master FIRE-AUTHORED s1040 / REFRESHED s1041)
 **Branch:** `lane/e2-arsenal` · **Tip:** `7d951b76` ("runner(lane-c): lane-m2-05-repair-dwell-observable.md")
-**Base:** `e77dcb52` (= `git merge-base main lane/e2-arsenal`) · **Drained:** s1042 fire, 2026-07-25 ~12:40Z
+**Base:** `be912cbc` (= `git merge-base main lane/e2-arsenal`) · **Drained:** s1042 fire, 2026-07-25 ~12:40Z
 **Run log:** `tasks/runs/20260725-184427-lane-c-lane-m2-05-repair-dwell-observable.md.log`
 
 ## Verdict

@@ -5,8 +5,8 @@
 ## PRE-FLIGHT (STOP conditions — run these before you touch anything)
 
 1. The lane must carry this fire's pricing commit, which is the freshness proof:
-   `git merge-base --is-ancestor 0d0a55d20 HEAD`
-   → **non-zero = STOP.** Report `LANE STALE — missing 0d0a55d20` and do nothing else.
+   `git merge-base --is-ancestor 17556e86f HEAD`
+   → **non-zero = STOP.** Report `LANE STALE — missing 17556e86f` and do nothing else.
 2. Prove each subject region is present and unmoved. All three greps are **file-scoped**, so nothing
    written in `tasks/**` — including this master — can move them (F-1310-1 / F-1425-2):
    - `grep -c "configured workers \*\*" scripts/suite-red-inventory.mjs` → must print exactly **1**
@@ -50,7 +50,7 @@ SUITE RAN AT — which requires the revision to be captured BY the Playwright ru
 alongside the raw report, then copied verbatim by the reducer. Deriving a revision while reducing is
 disqualified by construction.*
 
-That revision matters: `8134ec30` (s1514) established as a **negative result** that
+That revision matters: `e47354c6` (s1514) established as a **negative result** that
 `git rev-parse HEAD` **at generation time names the wrong tree by construction** — the generator
 reduces a raw report produced in a different checkout. The previous gate was not merely unmet, it
 was *unmeetable as written*. Do not reintroduce a derive-while-reducing shortcut.
@@ -64,7 +64,7 @@ than replacing it — that is why user-declared keys survive). Proven by probe o
 
 ```
 --- config.metadata as serialized by the json reporter ---
-{ "revision": "6e21f9831909b2e939b94561c90ffb3189a13cb8",
+{ "revision": "e67840916ccc460081cff31696bd7f534096f54a",
   "s1516Probe": "threaded-from-config",
   "actualWorkers": 1 }
 ```
@@ -103,7 +103,7 @@ value computed at config-evaluation time is that tree's revision.
    `scripts/suite-red-inventory.mjs` (around `:262`) with the revision and dirty flag, following the
    **exact** shape of the adjacent `Harness:` line, including `?? 'unrecorded'` for absent values.
    - 🚫 **The reducer must COPY, never DERIVE.** Do not call `git` from
-     `scripts/suite-red-inventory.mjs` for any purpose. That is the precise thing `8134ec30` proved
+     `scripts/suite-red-inventory.mjs` for any purpose. That is the precise thing `e47354c6` proved
      wrong, and a derive would silently reintroduce the defect while looking correct.
    - Old snapshots have no `metadata.revision`; they must render `unrecorded`, not crash and not
      blank.
@@ -193,7 +193,7 @@ runner resolves the config from a different root than the one it tests, or if `_
 TypeScript config loader does not point where this master assumes — **say so with the measurement and
 STOP.** That would be a real finding about the harness (it would mean the revision has to ride in the
 raw report from a reporter rather than the config), and it is worth more than a field that names the
-wrong tree. The precedent is `8134ec30`, whose refusal to manufacture guard arms for output it had
+wrong tree. The precedent is `e47354c6`, whose refusal to manufacture guard arms for output it had
 proved false was the correct call: **hardening a defect behind a green test is strictly worse than
 shipping nothing.**
 

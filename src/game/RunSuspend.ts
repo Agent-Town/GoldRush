@@ -1003,7 +1003,7 @@ function restoreControls(game: AnyGame, controls: ControlsSuspend | null, _meta:
     runState: 'playing',
     paused: false,
     playerPauseActive: false,
-    territoryRingPresent: false, // F-1433-3: the af463bd9 kit merge means Territory I no longer implies a ring.
+    territoryRingPresent: false, // F-1433-3: the 865a7b19 kit merge means Territory I no longer implies a ring.
     charm: { active: false, remaining: 0, cooldown: 0 },
     blastAim: { ready: false, pointer: { x: 0, z: 0 }, target: { x: 0, z: 2 } },
     latches: {

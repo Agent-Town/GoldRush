@@ -695,7 +695,7 @@ function main() {
     //   tasks/lane-d-toolsurface-terrain-edge.md                  -> ⛔ ALREADY SHIPPED   rc=1  (path is not the cause)
     //   s2382-PARKED-armed-duplicate-dispatch-<same name>.md      -> ? UNKNOWN            rc=0
     //   tasks/queue-paused/s2382-PARKED-...-<same name>.md        -> ? UNKNOWN            rc=0
-    // That file is a real one on this board: a copy of a master whose cure merged at 0d718cead, parked
+    // That file is a real one on this board: a copy of a master whose cure merged at 0331c2b47, parked
     // in tasks/queue-paused/ — the directory §2E tells a fire to re-queue from "once the pile is below
     // 2". So the ACT OF PARKING A MASTER, which is how a fire marks it dangerous, is what removes it
     // from the guard that would refuse it. The louder the human label, the blinder the instrument.
@@ -927,7 +927,7 @@ main();
 // it into the queue. That rule is correct and it is still the primary defence. But it is prose, and
 // prose cannot refuse an act. s1321 authored the pc-01b corrective, copied it at ~08:39:2x (runner
 // dispatched it 08:39:26 as the 9,226-byte version), then found the citation gate red AGAINST the
-// master it had just dispatched, repaired it at 08:40:53 (`a5c6cd1d`, +14 lines of quoted test
+// master it had just dispatched, repaired it at 08:40:53 (`38b2b701`, +14 lines of quoted test
 // titles), and re-copied. The runner holds one pidfile per slot, so the second copy simply WAITED —
 // and the instant run 1 released the slot at 08:57:30 it dispatched the 9,856-byte version as run 2.
 // Two runs, one master, two VERSIONS: exactly F-1307-1, five sessions after its cure shipped.
@@ -935,7 +935,7 @@ main();
 // The cost differs from s1307's in a way worth recording. There, run 2's safe-dupe pre-flight read
 // HOLDS and stopped. Here the corrective's pre-flight is deliberately BUILD-ON-PREDECESSOR (lane/m4
 // is intentionally ahead — resetting it would destroy the Drill Yard), so nothing stopped run 2 and
-// it re-derived work run 1 had already committed at `74df35dc`, on top of a 250,318-token run 1.
+// it re-derived work run 1 had already committed at `19f212b7`, on top of a 250,318-token run 1.
 // ⚠️ A safe pre-flight is not a duplicate-dispatch guard; it caught s1307 by side effect, and the
 // lanes where it is correct to build on a predecessor are precisely the lanes where it cannot.
 //

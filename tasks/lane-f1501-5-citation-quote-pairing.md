@@ -5,8 +5,8 @@
 ## PRE-FLIGHT (STOP conditions — run these before you touch anything)
 
 1. The lane must carry this fire's bookkeeping, which is the freshness proof:
-   `git merge-base --is-ancestor 2a7cc6e2cfeee1d4a99bc4c4543c0358f263ca2e HEAD`
-   → **non-zero = STOP.** Report `LANE STALE — missing 2a7cc6e2` and do nothing else.
+   `git merge-base --is-ancestor 9845bb3e892170e3b7d7f80a56a8e6027d728587 HEAD`
+   → **non-zero = STOP.** Report `LANE STALE — missing 9845bb3e` and do nothing else.
 2. Prove the subject region is present and unmoved, scoped to the one file so this master's own
    prose cannot rot the key (F-1310-1 / F-1425-2):
    `grep -c "const TITLE_DECL = " scripts/citation-title-guard.mjs`
@@ -105,7 +105,7 @@ master's scope 3.
    - **If your first attempt lands below the bar, say so with the numbers and try again** — that is
      the measurement working, not a failure. If nothing you try clears it, STOP and report the arms
      you measured; a documented dead end is a real deliverable here (see the negative result at
-     `8134ec30`).
+     `e47354c6`).
 
 3. **Guard it by MANUFACTURING THE DEFECT, in the existing test file.**
    Extend `scripts/citation-title-guard.test.mjs` with a case that builds the offending window

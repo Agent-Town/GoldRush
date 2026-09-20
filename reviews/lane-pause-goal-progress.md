@@ -2,7 +2,7 @@
 
 - **Slice:** lane-pause-goal-progress — the pause card answers "how do I win, how far am I"
 - **Branch/tip:** lane/perf @ `13ef600f` "fix: show live win progress in pause goals" (runner output, lane-d)
-- **Base:** `c08ea15b` (s746 handoff). Main did NOT move the touched src since base → clean path-scoped graft.
+- **Base:** `74eea945` (s746 handoff). Main did NOT move the touched src since base → clean path-scoped graft.
 - **Drained by:** s748 fire → main `<merge-hash>`
 
 ## Verdict
@@ -24,10 +24,10 @@ Answers the owner's Twin Banks playtest note — *"It is not mentioned how many 
 | `m2-01-build-menu.spec.ts:322` | RED (F-1, pre-existing) |
 | Battery total | 46 passed / 4 failed (the 4 = F-1) |
 
-## Merge classification (base `c08ea15b`)
+## Merge classification (base `74eea945`)
 | File | Class | Resolution |
 |------|-------|-----------|
-| `src/game/Game.ts` | LANE-TOUCHED only | clean apply — `git diff c08ea15b main` empty on this file (main didn't move it) |
+| `src/game/Game.ts` | LANE-TOUCHED only | clean apply — `git diff 74eea945 main` empty on this file (main didn't move it) |
 | `src/ui/Hud.ts` | LANE-TOUCHED only | clean apply — main didn't move it |
 | `e2e/pause-goal-progress.spec.ts` | NEW | free |
 | `STATUS.md` | MAIN-MOVED, lane stale | EXCLUDED from graft (three-dot `main...lane/perf` omits it; stale-base noise) |

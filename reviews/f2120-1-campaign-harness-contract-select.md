@@ -2,8 +2,8 @@
 
 **Slice:** `f2120-1-campaign-harness-contract-select`
 **Branch:** `lane/a`
-**Tip:** `59e714bb648f8da475253bba40e3836b86248273`
-**Base:** `7fd7d44fc4ed3d88f0ec050e8ae9ae0181bda716` (2026-08-20T21:36:00+07:00, `runner(lane-a): b7-showroom-capture-quota.md`)
+**Tip:** `3a4739ea8fa7cd68a2999b5ac0673ab3db0cfa43`
+**Base:** `df939da99029b2257751ba7e80f04ca890bc0568` (2026-08-20T21:36:00+07:00, `runner(lane-a): b7-showroom-capture-quota.md`)
 **Drained by:** s2122 fire, 2026-08-21
 **Gate worktree:** `gate-s2122` (detached — §3.0b custody: undecided content never entered main's working tree)
 
@@ -48,7 +48,7 @@ All three reproduced **verbatim**, exit 1 each. The locked arm carries the live 
 
 ## Merge classification
 
-Base `7fd7d44fc`. `git log <base>..main -- <the three lane paths>` is **EMPTY** — main never moved any of them in the ~12.5h since base. No conflicts; `git merge --no-ff` resolved by the 'ort' strategy with zero conflict hunks.
+Base `df939da99`. `git log <base>..main -- <the three lane paths>` is **EMPTY** — main never moved any of them in the ~12.5h since base. No conflicts; `git merge --no-ff` resolved by the 'ort' strategy with zero conflict hunks.
 
 | File | Class | Note |
 |---|---|---|
@@ -70,8 +70,8 @@ Measured, not assumed: at drain time an attended session (pid 40448) was running
 ✅ **DISCHARGED IN THIS SAME FIRE — the machine cleared ~20 minutes after the merge landed (lane-c's e10s-1 finished and the playwright fleet drained; 1-min load fell 362 → 7.5), and the owed command was run on merged main:**
 
 ```
-node scripts/run-guards.mjs --changed-since 7fd7d44fc4ed3d88f0ec050e8ae9ae0181bda716
-run-guards: 228 file(s) changed since 7fd7d44fc
+node scripts/run-guards.mjs --changed-since df939da99029b2257751ba7e80f04ca890bc0568
+run-guards: 228 file(s) changed since df939da99
   base gate: test:node-guards, test:power-budget, test:task-guards, test:citations, test:gate-callers
 PASS rc=0  709s  test:node-guards
 PASS rc=0    0s  test:power-budget  p95=0.481ms

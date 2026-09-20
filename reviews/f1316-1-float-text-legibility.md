@@ -1,8 +1,8 @@
 # f1316-1 — float-text legibility
 
 - **Slice:** `f1316-1-float-text-legibility` (F-1316-1, raised by s1316)
-- **Branch / tip:** `lane/m3` @ `4cf7da4b` (single ahead-commit)
-- **Merge:** `b1dc3306b73bb8c49ed591b069622c878ac3e6ef` (`--no-ff`, merge-base `03892979`)
+- **Branch / tip:** `lane/m3` @ `da0c32d2` (single ahead-commit)
+- **Merge:** `efa3b25215220305154f92feadf6d6a3d50859e4` (`--no-ff`, merge-base `1530557b`)
 - **Drained by:** s1318
 - **Verdict:** ✅ **ACCEPT — merged.** The pre-declared REJECT condition was NOT triggered; two independent risks I raised against it were refuted by measurement, and one real forward-looking finding (F-1318-1) is filed non-blocking.
 
@@ -128,7 +128,7 @@ as a new ask.
 
 ## Merge classification
 
-Merge-base `03892979`. All six paths **LANE-TOUCHED / LANE-ONLY**; `git log 03892979..main` over the
+Merge-base `1530557b`. All six paths **LANE-TOUCHED / LANE-ONLY**; `git log 1530557b..main` over the
 six paths is **empty**, so main moved none of them and there was nothing to graft. Confirmed
 independently by `lane-freeze-classify` before the merge (6 paths, all `HELD LANE-ONLY`) and by
 `lane-usable lane-a` after it (**ahead=0, USABLE**, i.e. genuinely merged, not falsely ahead).

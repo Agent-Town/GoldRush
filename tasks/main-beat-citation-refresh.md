@@ -4,11 +4,11 @@ CODEX: model=gpt-5.6-sol effort=medium
 FIRE-AUTHORED (attended review welcome), s2532, 2026-09-07.
 You are Codex, implementer for Gold Rush, running natively on Robin's Mac in the repo root on main. Leave the result uncommitted for the FIRE drain; do not switch branches.
 READ FIRST: AGENTS.md; `reviews/portraits-era-aging-2-batch.md` finding F-AGE2-2; `specs/story-spine/README.md` Laws; STATUS.md verification lessons; `artifacts/s2532-fire/beat-citations-before.json`.
-Sequencing: verify `ae0df5b060474c064f5b70300189dd57aed9da13` and `9b3da574e939fcbf8ca590eabfaf119c7a923a49` are ancestors of HEAD with `git merge-base --is-ancestor`. Missing dependency: STOP and report; never recreate it.
+Sequencing: verify `a1be5ada70b3430de29d7dcb0e4c106bcb3b2f26` and `8480f7624cad832e084c14137cdf7dd62bfb8319` are ancestors of HEAD with `git merge-base --is-ancestor`. Missing dependency: STOP and report; never recreate it.
 
 Pre-flight: `git status --short` must show no staged/modified TRACKED file OUTSIDE the two factory-churn classes below; if any exist, STOP and report (a live drain or another task owns the tree). Untracked `??` host debris is expected; list briefly and proceed. **FACTORY-CHURN EXCEPTION (F-1407-1):** (a) `logs/**`; (b) `artifacts/**`, `reviews/shots-*` and any `.png` are expected factory accounting or generated evidence. List and preserve them; never reset, clean, or restore another run's output. Modified tracked `src/**`, `scripts/**`, `e2e/**`, `tasks/**`, `specs/**`, `reviews/*.md` still STOPs. Record the base hash. Run `npm run build` before editing. The main-slot claim remains valid if a FIRE takes its lock after this task was dispatched with line 1 clear.
 
-## Why (F-AGE2-2, measured on main at 3a26525a4)
+## Why (F-AGE2-2, measured on main at 2769d9d4e)
 
 The attended review authorizes a comment-only correction after story-correctives moved the cited tables. Its prose says ten stale citations but lists nine live comment lines; all nine reproduce now. The authoring probe derives the actual ranges from the table and beat definitions, not a remembered offset. Historical LANDED/RE-BASED paragraphs describe past trees and are not current pointers.
 

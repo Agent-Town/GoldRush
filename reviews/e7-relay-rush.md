@@ -1,5 +1,5 @@
 # Review — A5 `e7-relay-rush`, the interference front (mechanic SHIPPED 08-20, door ADMITTED 08-21 on an owner ruling)
-**Slice/branch/tip:** `worktree-agent-a177c1e22ed14fe03`. Part 1 built on base `1cb47bdca` and drained to main 2026-08-20 (`ea2872dd3`…`7b8c87181`). Part 2 built 2026-08-21 on top, after merging main (`bda894776`) — a clean FAST-FORWARD, zero conflicts, because part 1 was already on main. Built by a headless Opus-5 agent (owner directive 2026-08-20: remaining coding on Opus).
+**Slice/branch/tip:** `worktree-agent-a177c1e22ed14fe03`. Part 1 built on base `217fb1a89` and drained to main 2026-08-20 (`e2b4d06fe`…`b98997d53`). Part 2 built 2026-08-21 on top, after merging main (`d41cc867a`) — a clean FAST-FORWARD, zero conflicts, because part 1 was already on main. Built by a headless Opus-5 agent (owner directive 2026-08-20: remaining coding on Opus).
 
 **Verdict part 1 (2026-08-20): MERGED — mechanic GREEN in both engines, admission HELD on a measured map ceiling.**
 **Verdict part 2 (2026-08-21): PROPOSED — ADMISSION REVERSED. Both bench seeds secure at wave 20, twice each, through the ordinary door.**
@@ -97,7 +97,7 @@ Then it was measured, and it does not secure. **`e7-relay-rush` enters `CONTRACT
 | build | green (`✓ built in 1.70s`) |
 | New spec `e2e/e7-relay-rush-front.spec.ts` | **8/8** both projects (desktop-chrome 1280×800 + mobile-chrome 390×844), scratch port 5275 |
 | Adjacents: er01-e7-census · task-025 · m1-01 · m2-01 · ap16-4 · skillmd-door | **44/44** both projects |
-| Null floors | regenerated: 59 pairs, `--check` GREEN, **0 `secured: true`** (Law 2); delta is the `eraStamp` alone (`179c8dcb2` → `1cb47bdca`), since an exempt contract gets no floor |
+| Null floors | regenerated: 59 pairs, `--check` GREEN, **0 `secured: true`** (Law 2); delta is the `eraStamp` alone (`2d71949de` → `217fb1a89`), since an exempt contract gets no floor |
 | Door-admission ratchet | GREEN and UNMOVED — `scripts/door-admission-baseline.json` untouched, which is what an exemption is supposed to mean |
 | Door-data guards (skillmd · bench-seeds · ratchet · mask-tables) | **38/38** |
 | Audit guards (same-game-audit ×3 · report-guard ×2) | **5/5** |
@@ -107,7 +107,7 @@ Then it was measured, and it does not secure. **`e7-relay-rush` enters `CONTRACT
 
 ### The seven node-guards reds, every one attributed, zero unattributed
 - **5 ENVIRONMENTAL** — this worktree's `node_modules/` is EMPTY (verified: `ls node_modules | wc -l` → 0; `npx` resolves upward, a hardcoded path cannot). The two guards that spawn `node_modules/typescript/bin/tsc` **by path** therefore cannot find it: `worker-type-coverage.test.mjs` (1 red, "every functions/**/*.ts is type-checked") and `suite-red-inventory.test.mjs`'s reducer block (4 reds, which copy scripts into a temp dir where `typescript` is unresolvable). Neither reads a file this slice touches.
-- **2 INHERITED REPO STATE** — `desk-declaration-guard.test.mjs` "the live board is green under this guard" refuses because `STATUS.md` line-1 is a handoff carrying no `OWNER'S DESK` header. `STATUS.md` is UNTOUCHED by this slice (last written by base commit `1cb47bdca`; `git status` clean for it) and firewalled from it. `fixture-teardown.test.mjs` fails as a direct cascade of that same child suite.
+- **2 INHERITED REPO STATE** — `desk-declaration-guard.test.mjs` "the live board is green under this guard" refuses because `STATUS.md` line-1 is a handoff carrying no `OWNER'S DESK` header. `STATUS.md` is UNTOUCHED by this slice (last written by base commit `217fb1a89`; `git status` clean for it) and firewalled from it. `fixture-teardown.test.mjs` fails as a direct cascade of that same child suite.
 
 ### Audit pins — attributed by revert-and-reproduce, in three runs
 `docs/bench/same-game-audit.md` regenerated; `scripts/same-game-audit.test.mjs` re-pinned to **this branch's** regen verbatim.

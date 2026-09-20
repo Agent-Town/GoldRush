@@ -153,7 +153,7 @@ npx playwright test _s106-prospector-boot-probe.spec.ts --project=desktop-chrome
 Captured from the JSON report:
 
 ```text
-config.metadata = {"revision":"e3e9fa40d9297628ca7eec2e13e2dc4085909798","dirty":true,"actualWorkers":1}
+config.metadata = {"revision":"f11b7c97bd15484e6195ef4f9f2c884b90397b61","dirty":true,"actualWorkers":1}
 stats = {"expected":1,"skipped":0,"unexpected":0,"flaky":0}
 playwright_rc=0
 ```

@@ -1,7 +1,7 @@
 # Task lane-board-card-images-steer (rf-37 site 10): THE LAST BLIND TIMED TOWN WALK — CONVERT IT BEFORE IT FLAKES
 
 **FIRE-AUTHORED (attended review welcome) — s1113, 2026-07-27.** This is the tenth and final site of rf-37's
-nine-site sweep, which shipped at **`e52b4fde`**. The runner that did those nine named this one as owed and
+nine-site sweep, which shipped at **`d927924c`**. The runner that did those nine named this one as owed and
 now-unblocked in its own closing report: *"`board-card-images` site 10 remains an owed, now-unblocked corrective."*
 
 You are Codex (worktrees/lane-a).
@@ -43,7 +43,7 @@ touched. This is exactly the class of latent timing debt that turns a gate batte
 
 ## THE CURE — COPY THE MERGED PATTERN, DO NOT INVENT ONE
 
-The pattern below is **already on main** at `e2e/town-t1-square.spec.ts:47-64` (merged `e52b4fde`).
+The pattern below is **already on main** at `e2e/town-t1-square.spec.ts:47-64` (merged `d927924c`).
 Read that file first and mirror it. Resolve the target against **`plaza.slots`** — *not* `buildings`
 (`stamp-mill` is not a legal `TownBuildingId`; two prior attempts stopped lawfully on that exact confusion,
 see F-1111-1). `tavern` is present in both, but stay consistent with the shipped nine.
@@ -87,7 +87,7 @@ arrival proof and it must stay.
 **NO — stopping conditions, each a lawful STOP, not a failure:**
 - **NO `src/**` changes of any kind.** If `plaza.slots` lacks `tavern` at runtime, **STOP and report** —
   do not add it. That would be a product change wearing a test's clothes.
-- **NO** other `e2e/` file. The other nine sites already shipped at `e52b4fde`.
+- **NO** other `e2e/` file. The other nine sites already shipped at `d927924c`.
 - **NO** raising `850`, `8_000`, `48`, `160`, or `0.6` to make something pass.
 - **NO** touching the frozen `contract-chapter-tab-epoch-2-steamworks` literal at `:35`. It is
   **deliberate** — that assertion checks one specific chapter's art (`e2-trestle`), so the literal is the
@@ -99,7 +99,7 @@ arrival proof and it must stay.
 ## PRE-FLIGHT (run these, in order, and STOP if any fails)
 
 Measured by s1113 at author time — **re-confirm, do not trust**:
-- `lane/m3` was `2a31504c`, **1 ahead of main but its content is fully merged** (rf-37 landed `e52b4fde`;
+- `lane/m3` was `2a31504c`, **1 ahead of main but its content is fully merged** (rf-37 landed `d927924c`;
   `git diff main lane/m3 -- e2e/072-era-activation.spec.ts …` is empty for all seven rf-37 files).
   **The reset below is therefore loss-free.** Re-verify before resetting:
 

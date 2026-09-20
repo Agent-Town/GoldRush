@@ -39,7 +39,7 @@ const CONTRACT = 'e10-ember-shore';
  * family to Ember Shore (`specs/agent-play/e10-ember-shore-preserve.md` §3) — calm 60s /
  * telegraph 8s / squall 25s" — and `src/meta/ContractFamilies.ts:2984` REFUSES an archive-world
  * twist that omits the clock ("Archive restoration needs light bindings and its own squall clock").
- * The data landed in `assets/contracts/epoch-10-deepsky/contracts.json` (`883a3521e`, 2026-09-12),
+ * The data landed in `assets/contracts/epoch-10-deepsky/contracts.json` (`7c2744e5a`, 2026-09-12),
  * one slice after E10S-2 wrote the clause below, so the single-contract expectation was stale from
  * that commit on — and invisible until the battery stopped swallowing this file.
  */

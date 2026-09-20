@@ -17,7 +17,7 @@ thing being different*. And it landed on the same morning as the **beauty pass**
 fifteen minutes. Yesterday the game got both prettier and more honest.
 
 ⚠️ **The instrument misdescribed itself again — fourth day running — and this time the headline denied a
-feature the family can see in a plain boot.** `c12ad434` is titled *"s1443: correct
+feature the family can see in a plain boot.** `928695ad` is titled *"s1443: correct
 reviews/lane-boss-healthbar-steady.md — gates ran on 5188, not 5199 (F-1443-4)"*, which reads as a
 one-line correction to a review file's port number. It is that. It is **also 196 insertions across five
 `src/` files plus a modelled `.blend`/`.glb`/atlas family** — the Baron's launcher, rocket and powder keg
@@ -35,70 +35,70 @@ headline can be telling the truth about itself and still be hiding a feature.**
 
 ## What the family can see
 
-**Six maps got their beauty pass, drained in fifteen minutes.** `6a9dc297` · `2af8a044` · `78d972ab` · `1fb0c180` · `c08d9b43` · `10586b90`
+**Six maps got their beauty pass, drained in fifteen minutes.** `454cb933` · `4fd023d5` · `5b68b180` · `97b96ee0` · `71e43c03` · `d67095eb`
 Town, Night Shift, The Claim, Dry Gulch, Twin Banks and the Baron each landed sculpted terrain — a
 modelled `.glb`, its atlas, its contract — plus the lighting, scatter and water work that dresses it.
-Six shifts, one morning, gates green on both projects (`ba02c0cd`).
+Six shifts, one morning, gates green on both projects (`3fb54f52`).
 
-**The Baron brings his own artillery, in three dimensions.** `c12ad434`
+**The Baron brings his own artillery, in three dimensions.** `928695ad`
 The launcher, the rocket and the powder keg stop being flat stand-ins. Default-on wherever the Baron
 appears; the flat rocket is suppressed where the modelled one flies, and the Baron no longer wears the
 carry-marker meant for haulers.
 
-**The drill yard leaves the claims and becomes THE TRAINING GROUND.** `9240479c` (F-BW-5)
+**The drill yard leaves the claims and becomes THE TRAINING GROUND.** `9920d282` (F-BW-5)
 It stops being a thing on a map and becomes a place you go. **And it now says what it lends** —
-`a04ea810`: the yard names what it offers, the bell names what it calls, and the straw men answer every
+`646e2d31`: the yard names what it offers, the bell names what it calls, and the straw men answer every
 time.
 
-**The braid reads as a river.** `4db6254d` (F-BW-13) · `c031ae96` (F-BW-7)
+**The braid reads as a river.** `e72f2e54` (F-BW-13) · `75c27fc2` (F-BW-7)
 Twin Banks' channels stop reading as plastic planks, and painted water now ends exactly where the sim's
 water ends — the shoreline you see is the shoreline you wade.
 
-**The town burns flame, never electricity.** `5214f340`
+**The town burns flame, never electricity.** `56b390ff`
 E1's lights derive from an era grammar rather than from whatever looked bright, so a frontier town cannot
 accidentally light itself like a garage. Nearby, the Elder and the Assay Clerk stepped clear of the
-buildings they were standing inside (`3987c8f7`, owner playtest).
+buildings they were standing inside (`ac87d171`, owner playtest).
 
-**Gold is coins, not floats.** `af506002` (F-BW-12)
+**Gold is coins, not floats.** `07fa11c9` (F-BW-12)
 Quantized end to end. A ledger that shows you `12.999999` is a ledger you stop trusting.
 
-**The boss bar stops dancing.** `f790c09f` (F-BW-17) — and **the mill site explains the horizon**
-(`d093dbc5`, F-BW-15), and **the dark keeps its fear while the ground keeps its shape** (`a20055db`).
+**The boss bar stops dancing.** `43ba0ed9` (F-BW-17) — and **the mill site explains the horizon**
+(`d1425e63`, F-BW-15), and **the dark keeps its fear while the ground keeps its shape** (`67e7d0af`).
 
-**The Gazette learns which finger does what.** `4091d0ef` (gg-04)
+**The Gazette learns which finger does what.** `4adf4341` (gg-04)
 Owner playtest, verbatim: *"the players have to understand which buttons to press to do what"*. Panel 7,
 THE PROSPECTOR'S HANDS, renders the keyboard set on desktop and the touch names on mobile — and derives
 every one from the same binding table the input controller now reads, so the card cannot drift from the
 controls it documents.
 
-**Two ghosts evicted.** `08e317d7` · `af463bd9` (F-BW-6)
+**Two ghosts evicted.** `c363e90f` · `865a7b19` (F-BW-6)
 A legacy save no longer resurrects the removed Territory I ring, and the ring's replacement — the palisade
 kit — grants its row correctly at tier zero.
 
 ## What the Prospector's own sim learned
 
-**Twin Banks and the Baron join the headless bench.** `2c22b2ab` · `1a4831df` · `cf005d59`
+**Twin Banks and the Baron join the headless bench.** `f57bca04` · `653c7fef` · `01a91f55`
 Driver four of five re-lands, the Baron's re-land carries the component-boss secure predicate — the sim
 now withholds auto-secure until the Baron is actually beaten, matching the game — and a guard closes the
 branch behind it.
 
-**One less allocation per frame, on the render side only.** `d60adf88` (F-BW-11)
+**One less allocation per frame, on the render side only.** `08b3ecb2` (F-BW-11)
 An E1 render-allocation pass, with its own spec deliberately withheld rather than shipped unproved.
 
 ## What the factory did to itself (18 merges, no player surface)
 
-The concurrency harness was found to be measuring the wrong thing and repaired (`08ec76b5`), then
-**guarded against the two decisions that had stayed green under deletion** (`e94bfd40`) — a test that
+The concurrency harness was found to be measuring the wrong thing and repaired (`0c3e5aaa`), then
+**guarded against the two decisions that had stayed green under deletion** (`e9eeb24d`) — a test that
 passes when you delete the thing it tests is not a test. `lane-absorbed-lines` stopped shrugging at
-content absent from the base (`3233415c`), the usage census was anchored to the real repo root
-(`b85c3e3d`), and `lane-usable` learned to narrow its reassurance when `tasks/` has drifted (`eef64eeb`).
-Malformed janitor requests now **fail visibly instead of being filed as successes** (`2921d2ce`). Twice
-more, law pointers into shifting code were re-based by reading rather than by arithmetic (`5bda0ce0`), and
-`fire.md` §2E gained the dispatch-order law (`03891635`).
+content absent from the base (`9f2a4099`), the usage census was anchored to the real repo root
+(`9d82912e`), and `lane-usable` learned to narrow its reassurance when `tasks/` has drifted (`a8f9d478`).
+Malformed janitor requests now **fail visibly instead of being filed as successes** (`c84e6795`). Twice
+more, law pointers into shifting code were re-based by reading rather than by arithmetic (`da7d48e5`), and
+`fire.md` §2E gained the dispatch-order law (`74bcce30`).
 
 ## One commit that looked like a catastrophe and was not
 
-`bb23d766` is a **handoff** commit — pure bookkeeping by its headline — and it carries **625 changed lines
+`f7aa1957` is a **handoff** commit — pure bookkeeping by its headline — and it carries **625 changed lines
 of `src/world/Water.ts`**, landing four minutes after the Twin Banks beauty drain touched the same file.
 That is the exact signature of the s1294 hazard: a broad `git add` sweeping a stale working copy over work
 that landed minutes earlier. The first read of the diff supported it — the twin-banks braid rationale,

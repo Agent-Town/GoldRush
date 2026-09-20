@@ -7,7 +7,7 @@ cannot coexist in the sim without a scheduler change (name the line), STOP and r
 They cannot. The scheduler change is named below at file:line, it lives in files this master's
 firewall excludes, and **both** of the routes that ARE inside the firewall were measured breaking a
 shipped law — on both bench seeds, deterministically, not as a judgement call. The tracked tree is
-byte-identical to `main@57330ebfd`; the engine hash is unmoved.
+byte-identical to `main@7dc8672f0`; the engine hash is unmoved.
 
 ---
 
@@ -141,7 +141,7 @@ crew. `probe.mjs` re-runs the whole experiment in one command.
 | `tasks/BACKLOG.md` | one open `F-E5STORM-1` row recording the fork and the owed corrective |
 | - | **zero** changes to `src/**`, `assets/contracts/**`, `e2e/**`, `specs/**` |
 
-Tracked-tree proof: `git diff 57330ebfd --stat` (the base this lane was cut from) is exactly the
+Tracked-tree proof: `git diff 7dc8672f0 --stat` (the base this lane was cut from) is exactly the
 seventeen files above — sixteen under `artifacts/e5-stillwater-storm/` plus one added `BACKLOG`
 line, 8867 insertions, zero deletions, and not one byte under `src/`, `assets/contracts/`, `e2e/`
 or `specs/`. The engine hash re-derived from `ENGINE_SOURCE_INPUTS` is
@@ -149,7 +149,7 @@ or `specs/`. The engine hash re-derived from `ENGINE_SOURCE_INPUTS` is
 `assets/engine-era.json` value. No pin is owed.
 
 Note for the drain (verify-don't-inherit): `main` advanced by two unrelated commits DURING this
-session (`032ccd392` gauntlet-heat11, `46649a536` heat-11 docs), so `lane/c` is two behind. Neither
+session (`6c7b11184` gauntlet-heat11, `2ba7a9f3d` heat-11 docs), so `lane/c` is two behind. Neither
 touches E5 or `ENGINE_SOURCE_INPUTS`; a plain diff against live `main` will therefore also show
 their `assets/rotations/winnability-receipts.json` and `public/skill.md` edits, which are NOT this
 lane's work.
@@ -193,13 +193,13 @@ The probe hashes, recorded so the fork is re-checkable rather than re-argued:
 | 1 | tsc | `npx tsc --noEmit` | **0** | clean |
 | 2 | build | `npm run build` | **0** | `built in 2.35s`; asset-diet ran |
 | 3 | node guards (lane) | `npm run test:node-guards` | **1** | 642 tests, 636 pass, **3 fail** |
-| 3c | node guards (CONTROL) | same, in a detached worktree of `main@57330ebfd` | **1** | 640 tests, 634 pass, **4 fail** - a strict SUPERSET of the lane's |
+| 3c | node guards (CONTROL) | same, in a detached worktree of `main@7dc8672f0` | **1** | 640 tests, 634 pass, **4 fail** - a strict SUPERSET of the lane's |
 | 4 | stats | `npm run test:stats` (Node 23.11.1) | **1** | environmental: `assay worker requires Node 26.4.0 exactly; found 23.11.1` |
 | 4b | stats (canonical Node) | same under `~/.nvm/versions/node/v26.4.0` | **0** | 87 + 252 KV + 252 SQLite + 26 ledger, census 42/24/18/0 |
 | 5 | e2e subject, both projects | `npx playwright test --config playwright.s2517c.config.ts e2e/e5-stillwater-noise.spec.ts --workers=1` | **0** | **10/10** desktop-chrome + mobile-chrome (390 px), zero console errors |
 
 **Gate 3 attribution (control, never `git stash`).** A fresh `git worktree add --detach` of
-`main@57330ebfd` — the exact commit `lane/c` sits on, carrying none of this session's files — was
+`main@7dc8672f0` — the exact commit `lane/c` sits on, carrying none of this session's files — was
 run through the identical battery in the same load window. It reproduced every one of the lane's
 failures and added one more:
 

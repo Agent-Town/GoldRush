@@ -2,7 +2,7 @@
 // retire F-1297-2 and file F-1318-3.
 import { readFileSync, writeFileSync } from 'node:fs';
 
-const MERGE = 'ae2a60f3ba1439d9515b73a5fb81b72805030355';
+const MERGE = '2871c1276d7321cd60a4dd87831c8d003df3140f';
 
 // --- goal leaf ---------------------------------------------------------------
 const doc = JSON.parse(readFileSync('tasks/goals.json', 'utf8'));

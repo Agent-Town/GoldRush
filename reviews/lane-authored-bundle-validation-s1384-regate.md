@@ -1,7 +1,7 @@
 # lane-authored-bundle-validation — s1384 RE-GATE
 
 **Slice:** authored-bundle validation across 10 epochs / 42-contract fleet
-**Branch:** `lane/perf` · **tip** `0f2544f2328ddab20a0d7deea7df6a57ff41827f` · **base** `b80ee2ba` · ahead=1
+**Branch:** `lane/perf` · **tip** `0f2544f2328ddab20a0d7deea7df6a57ff41827f` · **base** `5a782e0d` · ahead=1
 **Done-move:** `tasks/done/held-s1381-F1381-1-release-build-regression-BLOCKING-20260802-064330-lane-authored-bundle-validation.md`
 **Prior gate:** `reviews/lane-authored-bundle-validation.md` (s1381, VERDICT HOLD)
 **Gated in:** detached scratch worktree `worktrees/gate-s1384` · control in `worktrees/ctl-s1384` (§3.0b custody)
@@ -28,7 +28,7 @@ leaf and records the satisfying evidence. That is what this drain did.
 > '26/26' green the tree could not have produced) is unexplained."
 
 **Conjunct 1 — gated against a working release door. SATISFIED.**
-The door was repaired s1382 (`8d1c59c2`, `scripts/assert-release-build.mjs:54`). On the grafted tree
+The door was repaired s1382 (`ff7a3af2`, `scripts/assert-release-build.mjs:54`). On the grafted tree
 `GR_RELEASE=e1 npm run build:release` is **rc=0**, and the check is **non-vacuous**: it reports
 `1874 files … checked against 262 later-asset stems`, the same denominator as the clean-main control.
 
@@ -76,8 +76,8 @@ Both are in the committed known-red inventory (`logs/suite-red-inventory.md`):
 
 ## Merge classification
 
-Base `b80ee2ba`. Since s1381's gate, main moved on **exactly one** of the slice's 11 paths' history —
-`8815e476` (lane-c dead-fields sweep) — verified by `git log b80ee2ba..main -- <the 11 paths>`. So
+Base `5a782e0d`. Since s1381's gate, main moved on **exactly one** of the slice's 11 paths' history —
+`2258daf3` (lane-c dead-fields sweep) — verified by `git log 5a782e0d..main -- <the 11 paths>`. So
 s1381's conflict analysis was still current and I re-derived rather than inherited its resolutions.
 
 | File | Class | Resolution |
@@ -87,7 +87,7 @@ s1381's conflict analysis was still current and I re-derived rather than inherit
 | `src/meta/ContractFamilies.ts` | **BOTH-MOVED** | 3-way graft, 2 conflicts + 3 clean-merged allowlists narrowed |
 
 **The one collision, in both conflicts and in three cleanly-merged lists:** lane-d forked before
-`8815e476` retired four words from the contract vocabulary — `sluicesNeedWaterSource`, `slopeMax`,
+`2258daf3` retired four words from the contract vocabulary — `sluicesNeedWaterSource`, `slopeMax`,
 `waterline`, `damChannel` — and typed and allowlisted all four.
 
 - `:672` — main deleted `damChannel?:`; lane replaced it with 27 lines. **Took the 26 genuinely-new
@@ -97,7 +97,7 @@ s1381's conflict analysis was still current and I re-derived rather than inherit
 - Cleanly-merged (main never had these lists, so git raised no conflict — the dangerous kind):
   `AUTHORED_TILE_KEYS:'damChannel'`, `AUTHORED_TWIST_KEYS:'sluicesNeedWaterSource'`, and three
   `DECLARED_INERT_PATHS` entries. **All five dropped** — shipping a brand-new allowlist naming a
-  vocabulary main deleted 40 minutes earlier would re-establish the second source `8815e476` removed.
+  vocabulary main deleted 40 minutes earlier would re-establish the second source `2258daf3` removed.
 
 **Re-measured, not inherited.** s1381 justified the drops with *"zero contract JSON in
 `assets/contracts/` declares any of the four"*. My first re-run of that grep found **three files** —
@@ -114,9 +114,9 @@ schema guard forbids it.** The clause landed s1383 requires that the merge happe
 **also** flips the leaf out of `blocked` and records the evidence". But `scripts/goal-tracker.test.mjs:80`
 asserts `if (leaf.status === 'merged') assert.ok(leaf.mergeHash)` and `:79` requires
 `/^[0-9a-f]{40}$/` — and the `mergeHash` convention is the **main-side merge commit** (verified:
-`77f6c4b6…` is an ancestor of main). **A commit cannot contain its own hash**, so "merge + flip to
+`433dbbee…` is an ancestor of main). **A commit cannot contain its own hash**, so "merge + flip to
 merged + record hash, in one commit" is jointly unsatisfiable. Every real drain therefore lands the code
-first and the leaf immediately after (verified on `7435fa7c`, whose `goals.json` update is a later
+first and the leaf immediately after (verified on `75b07024`, whose `goals.json` update is a later
 commit). **This drain follows that same two-commit sequence, deliberately and in the same fire.** The
 clause's *intent* — never leave a merged slice sitting behind a stale block — is fully met. Recommend the
 next fire amend §3.0 to say "in the same fire, code commit immediately followed by the leaf commit",
@@ -125,7 +125,7 @@ which is what the mechanism permits. No owner word needed.
 **F-1384-2 (content staleness, non-blocking) — the slice ships 5 `engineDependencies` descriptions that
 name retired vocabulary as current.** e.g. `epoch-2-steamworks/contracts.json:125`: *"Needs registered
 consumers for the declared slopeMax and waterline advisory fields."* Those fields were retired by
-`8815e476`. These are **prose inside a description string**, not declarations — they pass validation, are
+`2258daf3`. These are **prose inside a description string**, not declarations — they pass validation, are
 inert at runtime, and were verified not to re-establish the vocabulary (the key-scoped grep is zero). But
 they document as "declared" a thing that no longer exists, and they are the reason a loose grep reads as
 a violation. Cheap to fix in a later text pass; not worth blocking a green slice.

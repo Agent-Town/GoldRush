@@ -1,6 +1,6 @@
 # Review — THE e1-baron BEAUTY SHIFT
 
-**Slice/branch/tip:** `beauty/baron` · worktree `gr-task-beauty-baron` · base `c708f27d` (merge-base with `origin/main`)
+**Slice/branch/tip:** `beauty/baron` · worktree `gr-task-beauty-baron` · base `551a1e73` (merge-base with `origin/main`)
 **Brief:** `docs/beauty/e1-baron-brief.md` (E1 release map 5 of 5, the finale) · program laws `docs/beauty/README.md`
 **Shift:** dedicated Opus 5 solo-writer session, 2026-08-02/03
 **Verdict:** ✅ **U1–U4 KEPT AND SHIPPED · U5 PAINTED, MEASURED, REVERTED** — four of five upgrades land; the fifth is reverted on evidence with a program-level finding attached.
@@ -193,7 +193,7 @@ records all 22 as green. Filed below as **F-BEAUTY-BARON-1**.
 
 ## Merge classification
 
-- **Base:** `c708f27d`, the merge-base with `origin/main`. The branch is four
+- **Base:** `551a1e73`, the merge-base with `origin/main`. The branch is four
   commits of shift plus one revert, each pushed and verified with `git ls-remote`.
 - **`assets/pilots/map-rebuild-spike/build_unique_contract_terrains.py`** —
   LANE-TOUCHED. New `paint_baron_ground()` and its deterministic scatter helpers;

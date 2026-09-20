@@ -37,7 +37,7 @@ Two design points worth the reviewer's attention:
   lease at `corridorIds[cycle % n]` is washed out: no road bonus on it, no delivery through it. No
   new randomness, so `roads.closesNext` lets a rider plan the next thirty seconds.
 
-**The storm now slows outlaws on every Motor map**, mirroring the composition `731373d4d` shipped in
+**The storm now slows outlaws on every Motor map**, mirroring the composition `392d20d35` shipped in
 `Game.ts:1749`. That is the one change that reaches beyond the socket, and it is why four banked idle
 pins moved (section 5).
 
@@ -178,10 +178,10 @@ were re-derived BY RIDING, never by hand, and the two agree with each other:
 | 1 | `rotation registry stays outside the engine identity corpus` (`bench-seeds`) | the engine hash rotated to `7c6c3caaaaf9f1c2fd240c0842c08585a53768992396303d7c1c675740455183` because this slice edits `src/**` | **THE DRAIN** — append a same-era pin; the pin array is firewalled for the implementer |
 | 2 | `the landed registry names the live engine ...` (`engine-era-guard`) | same hash, same cause | **THE DRAIN** |
 | 3 | `all 120 scripts/*.test.mjs fixture owners remove their temp directories` | cascade: it re-runs `bench-seeds.test.mjs` as a child | **THE DRAIN** (green with #1) |
-| 4 | `the live ledger carries no stale READY-FOR-GATES claim` | PRE-EXISTING — red on `main` (`b5a535c14`) and at this lane's merge-base (`e1e66d397`). The guard NAMES the stale row and it is the E8 slice's already-merged claim at `tasks/BACKLOG.md:3`; the same guard counts this slice's row as the board's one legitimate in-flight row | not this slice |
+| 4 | `the live ledger carries no stale READY-FOR-GATES claim` | PRE-EXISTING — red on `main` (`20ddca0f2`) and at this lane's merge-base (`83d274a24`). The guard NAMES the stale row and it is the E8 slice's already-merged claim at `tasks/BACKLOG.md:3`; the same guard counts this slice's row as the board's one legitimate in-flight row | not this slice |
 | 5 | one of two known load-sensitive rows, which alternate run to run | `desk-declaration-guard`'s "the live board is green under this guard" (PRE-EXISTING: red on `main` and at the merge-base) or `node-guards-contention`'s "contention is advisory ..." (the F-RT-1 flake class: green alone, green on `main`) | not this slice |
 
-Measured on the FINAL twice-merged tree (`main` at `5f7fe4e59`): **639 tests, 632 pass, 5 fail**, the
+Measured on the FINAL twice-merged tree (`main` at `a481ea0a9`): **639 tests, 632 pass, 5 fail**, the
 same count as the run before it, with rows 4 and 5 swapping which of the two load-sensitive rows
 appears. Rows 1-3 are constant and are the drain's.
 

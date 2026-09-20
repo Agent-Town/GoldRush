@@ -1,8 +1,8 @@
 # Review — lane-town-scale-zoom (the town grows up + THE SPYGLASS)
 
 **Slice:** lane-town-scale-zoom (pre-launch owner pass)
-**Branch/tip:** lane/m3 `9095bee9` "feat: grow town and add spyglass zoom"
-**Merge base:** `11ece22d` · merged onto main `d20ab91b` (clean 3-way, no conflicts)
+**Branch/tip:** lane/m3 `7026019b` "feat: grow town and add spyglass zoom"
+**Merge base:** `dd298b9f` · merged onto main `74c44477` (clean 3-way, no conflicts)
 **Drained by:** s954 fire · 2026-07-23
 **Verdict:** ✅ PASS — merged with owner-veto note (pre-launch, owner present & steering)
 
@@ -62,7 +62,7 @@ much too small. They should be bigger."* + his friend: *zoom in/out.*
 failed: `061-first-claim-onboarding` (:105 per-profile done-flag, :137 mobile trail/tavern fit@390px,
 :149 name-only-exit guide-pending) and `town-t4-growth` :234 "growth beats fire once per profile"
 (`expectBeat` data-beat-id resolves to `ledger-page:the_claim`, not the expected beat). **Fingerprinted
-against clean pre-merge main (d20ab91b) in a detached worktree: the IDENTICAL 4 cases × 2 projects fail
+against clean pre-merge main (74c44477) in a detached worktree: the IDENTICAL 4 cases × 2 projects fail
 with the identical assertions, and the same 12 pass.** → PRE-EXISTING reds, camera-unrelated (profile-flag
 / story-beat logic). This slice did not introduce or worsen them. Left for a separate corrective if the
 owner wants first-claim/growth-beat specs green (they touch profile persistence + ceremony beat wiring,

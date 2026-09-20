@@ -6,7 +6,7 @@ SLOT: art. WORKDIR: the art slot. One file. One batch.
 Style anchor (verbatim in the prompt): "engraved frontier illustration, warm sepia and umber, painted-storybook game prop, the Gold Rush plate style — never photoreal, no letters or numerals."
 
 ## WHY
-`prop-drill-bell-post.png` was **REJECTED at the s1445 drain** (`e4359441`, LEDGER row 70,
+`prop-drill-bell-post.png` was **REJECTED at the s1445 drain** (`0c71b5ba`, LEDGER row 70,
 finding **F-1445-4**). The generated post is tall with a **long cantilevered overhanging arm**,
 and the pull-rope hangs **free from the clapper to an open loop suspended at body height**. That
 silhouette reads as a scaffold and the loop reads as a noose — hanging imagery, forbidden by

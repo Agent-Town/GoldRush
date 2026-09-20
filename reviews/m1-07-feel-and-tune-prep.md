@@ -1,6 +1,6 @@
 # Review: m1-07 feel-and-tune prep + Robin directives (session 5, 2026-07-03)
 
-**Verdict: PASS** — commit `c2a46b9`. Codex session G `019f2845-9049-7970-ae36-5dcf45f38611` (12 chunks, 1 batched correction round, 1 supervisor fix). The 07 GATE itself is answered: Robin's wave-10 playtest verdict was POSITIVE (docs/playtests/2026-07-03-robin-wave10.md); M1 exit now needs only his confirm of the applied defaults.
+**Verdict: PASS** — commit `7569186`. Codex session G `019f2845-9049-7970-ae36-5dcf45f38611` (12 chunks, 1 batched correction round, 1 supervisor fix). The 07 GATE itself is answered: Robin's wave-10 playtest verdict was POSITIVE (docs/playtests/2026-07-03-robin-wave10.md); M1 exit now needs only his confirm of the applied defaults.
 
 ## What shipped
 

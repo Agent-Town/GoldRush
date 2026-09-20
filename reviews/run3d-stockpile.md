@@ -1,6 +1,6 @@
 # Review — run3d-10-stockpile (RUN-3D buildables ladder, slice 10)
 
-**Slice/branch/tip:** run3d-10-stockpile · `lane/e2-arsenal` `15d662de` (`runner(lane-c): run3d-10-stockpile.md`) → drained to main by s448.
+**Slice/branch/tip:** run3d-10-stockpile · `lane/e2-arsenal` `90a5402c` (`runner(lane-c): run3d-10-stockpile.md`) → drained to main by s448.
 **Verdict:** MERGE — sibling-union graft (one registry-line conflict, union-resolved), gates green.
 
 ## What it does
@@ -15,7 +15,7 @@ Adds a 3D Stockpile model to the RUN-3D proving-ground (`?run3dPilot=`-gated inf
 | Renderer p95 | desktop ratio 1.006 · mobile ratio 1.034 — both under the 1.15 budget (2 instances = `Balance.stockpile.maxCount`, the legal capacity; the 12-instance ask is out of scope while maxCount=2) |
 
 ## Merge classification
-Base `15d662de^` = `d160adaf` (on main). `git merge --no-ff lane/e2-arsenal`:
+Base `90a5402c^` = `2cbb8309` (on main). `git merge --no-ff lane/e2-arsenal`:
 - **All-new (auto-merge):** `assets/pilots/run3d/stockpile.{blend,glb}`, `e2e/run3d-stockpile.spec.ts`, `artifacts/run3d-stockpile/*`.
 - **Sibling-union CONFLICT, resolved:** `src/game/Run3dPilot.ts` — base was sluice-only, ours (post drain #1) had sluice+turret, theirs added stockpile after sluice. Both added a line at the same spot → content conflict. **Resolved by union:** registry now `{ sluice, turret, stockpile }`, no markers left, tsc clean confirms it.
 

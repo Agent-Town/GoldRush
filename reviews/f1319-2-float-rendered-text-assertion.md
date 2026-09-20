@@ -1,8 +1,8 @@
 # f1319-2 — the float legibility guard stops asserting a theorem
 
 - **Slice:** `f1319-2-float-rendered-text-assertion`
-- **Branch:** `lane/m3` — tip `20c07baf`
-- **Base at drain:** `69fa8462` (main, after the s1323 Drill Yard merge)
+- **Branch:** `lane/m3` — tip `8ca66eca`
+- **Base at drain:** `addc7147` (main, after the s1323 Drill Yard merge)
 - **Drained by:** s1323 fire, 2026-08-01
 - **Verdict:** ✅ **ACCEPT — merged.** Small, exact, and it did the one thing the master demanded: proved the new
   assertion RED by mutation before claiming it guards anything.
@@ -59,7 +59,7 @@ Two controls, because one would not have separated the two candidate causes:
 
 1. **Aborted the `lane/m3` merge and re-ran on main** (Drill Yard present, this slice absent) → **both still
    fail.** Not this slice.
-2. **Ran them in a detached worktree at `5f81a36d`** (before *either* merge) → **both still fail.** Not the Drill
+2. **Ran them in a detached worktree at `1d0236c0`** (before *either* merge) → **both still fail.** Not the Drill
    Yard either.
 
 They belong to the long-standing build-mode-prompt red family already on the board (F-1171-1, F-1167-2), and

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // s1259 — repair four citations the citation ratchet reds on. THREE OF THEM ARE NOT MINE:
-// af48a749 (s1258's merge) DELETED the inlined `moveHeroTo` from e2e/release-build.spec.ts, so every
+// ca64bf26 (s1258's merge) DELETED the inlined `moveHeroTo` from e2e/release-build.spec.ts, so every
 // citation quoting that function's signature at :311 now quotes a line that exists nowhere in the
 // cited spec -> CARRIES-LINE fails. The claims are all still TRUE; only the pointers rotted.
 // Repair rule: follow the code. The function now lives, byte-identical modulo `export`, at
@@ -8,7 +8,7 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 
 const NEW_PTR =
-  '`e2e/helpers/hero-approach.ts:5` (`export async function moveHeroTo(page: Page, x: number, z: number): Promise<void> {`; inlined in `e2e/release-build.spec.ts` until `af48a749` retired the duplicate — pointer repaired s1259, the claim below is unchanged)';
+  '`e2e/helpers/hero-approach.ts:5` (`export async function moveHeroTo(page: Page, x: number, z: number): Promise<void> {`; inlined in `e2e/release-build.spec.ts` until `ca64bf26` retired the duplicate — pointer repaired s1259, the claim below is unchanged)';
 
 const edits = [
   {

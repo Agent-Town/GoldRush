@@ -25,7 +25,7 @@ Read first: `AGENTS.md`; the predecessor master from main with `git show main:ta
 
 ## Pre-flight — extend the held lane
 
-`lane/a` must still be at `d3814a1af` or an obvious descendant, and its held paths must be exactly the EXPECTED-HOLDS set above. Confirm the predecessor anchor appears exactly once:
+`lane/a` must still be at `6f57d08bc` or an obvious descendant, and its held paths must be exactly the EXPECTED-HOLDS set above. Confirm the predecessor anchor appears exactly once:
 
 ```sh
 git grep -Fc "securedSnapshot = tape && current.find" lane/a -- functions/api/standings.ts

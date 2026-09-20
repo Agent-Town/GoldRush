@@ -7,7 +7,7 @@ You are Codex (repo root, main slot). CODEX: model=gpt-5.6-sol effort=high
 
 READ FIRST:
 - `reviews/cosmetic-grants.md` — findings F-1079-2, F-1079-3, F-1079-4 (the WHY, with the failure scenarios).
-- `functions/api/redeem.ts` — the file you are fixing (merged at `52fa15ad`).
+- `functions/api/redeem.ts` — the file you are fixing (merged at `2dfa0b4d`).
 - `functions/api/_bugs.ts` — **the pattern to copy** for rate limiting: `bumpCounter` + `clientIpHash`
   (see `:60`), and its 429 shape.
 - `functions/api/telemetry.ts:76` and `functions/api/_accounts.ts:95` — the same helper at two more call

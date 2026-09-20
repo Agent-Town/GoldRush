@@ -1,7 +1,7 @@
 # Review — e6-tile-consumers (E6 atomic-era tile-state consumers)
 
 **Slice:** lane-e6-tile-consumers · **branch:** lane/perf (lane-d) · **tip:** b02d88d6 `runner(lane-d): lane-e6-tile-consumers.md`
-**Drained by:** s738 fire · **base:** bbc3c614 (5 behind main at drain time) · **merged onto:** main @ 0a1c2c95
+**Drained by:** s738 fire · **base:** 0dd8b49d (5 behind main at drain time) · **merged onto:** main @ 4b6f523a
 
 ## Verdict
 **PASS — merged.** Clean surgical apply (no 3-way conflict — main never moved any of the five files since the lane's base), full gate battery green both projects, firewall respected exactly. One carried non-blocking finding (RunSuspend adjacency, pre-existing).
@@ -24,7 +24,7 @@ Arms E6's era systems to CONSUME the shipped TileStateStore persistence substrat
 | Console | The two `console.warn` "Tile state write refused … exceeds the 32768-byte budget" lines are the intentional over-budget test assertions, not errors. Zero unexpected console/page errors. |
 
 ## Merge classification
-Base **bbc3c614**, only 5 commits behind main (F-N3 notes ×2, four-correctives authoring, board-era-chapters, 3D-promotion). Verified `git diff bbc3c614 main -- <the 5 files>` = **EMPTY** → main is byte-identical to base for every touched file, so the lane's versions ARE the correct merged result. Applied path-scoped via `git checkout lane/perf -- <files>` (NOT a full branch merge — that would have carried the stale-base tasks/queue phantom churn).
+Base **0dd8b49d**, only 5 commits behind main (F-N3 notes ×2, four-correctives authoring, board-era-chapters, 3D-promotion). Verified `git diff 0dd8b49d main -- <the 5 files>` = **EMPTY** → main is byte-identical to base for every touched file, so the lane's versions ARE the correct merged result. Applied path-scoped via `git checkout lane/perf -- <files>` (NOT a full branch merge — that would have carried the stale-base tasks/queue phantom churn).
 
 | File | Class | Note |
 |---|---|---|

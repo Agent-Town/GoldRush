@@ -195,7 +195,7 @@ test('contract board renders manifest rows, locks, conditions, and per-contract 
       await goToContractPage(page, id);
       const contract = BOARD_CONTRACTS.find((item) => item.id === id)!;
       await assertFlavorOnce(page, id, contract.flavor);
-      // One render path since The Adoption (3a007ea7); per-card art is guarded by board-card-images.spec.ts.
+      // One render path since The Adoption (2c3c4be8); per-card art is guarded by board-card-images.spec.ts.
       await expect(page.getByTestId(`contract-art-${id}`)).toHaveAttribute('data-contract-art-key', 'plate');
       await expect(page.getByTestId(`contract-card-${id}`)).toHaveAttribute('data-contract-locked', locked ? 'true' : 'false');
     }

@@ -1,8 +1,8 @@
 # Review — door-epic-envelope-v3 (the direct door admits a lawful epic run)
 
-**Slice:** `door-epic-envelope-v3` · **branch:** `lane/c` · **lane tip:** `f95349df1`
+**Slice:** `door-epic-envelope-v3` · **branch:** `lane/c` · **lane tip:** `30454d02c`
 **Gated commit:** `b255b2920` (detached worktree `gate-s2326`, §3.0b custody)
-**Merge:** `ecc36a79bf11a9a7db78eea99c774a75969a6ef5` (main, `--no-ff`)
+**Merge:** `314b4533cb15d9e129598f6a4bab0f718598aea1` (main, `--no-ff`)
 **Drained by:** s2327, completing the drain s2326 left merged-but-ungated when it died mid-battery.
 
 ## Verdict
@@ -81,7 +81,7 @@ lawful request and the 802,080 B application cap.
 
 ## Merge classification
 
-Base `b48348bb9`; lane tip `f95349df1`; three lane commits, six files.
+Base `497d09c66`; lane tip `30454d02c`; three lane commits, six files.
 
 All six are **LANE-TOUCHED only**. Main moved during the lane's life by `CLAUDE.md`, `STATUS.md` and
 `tasks/**` commits — **zero overlap** with the slice's path set, so there were no conflicts and no

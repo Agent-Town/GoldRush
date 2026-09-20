@@ -1,6 +1,6 @@
 # Gold Rush — September 8 review repairs
 
-Status: READY-FOR-GATES. All six repairs and independent-review follow-ups are implemented and verified within the coverage below. Broader baseline failures and the incomplete fixture rerun remain explicit. This is the repair record for F-CR0908-1 through F-CR0908-6 in `reviews/sol-findings-code-review-20260908.md`; the original report and reproductions are retained. Working branch `sol/code-review-20260908`, base `d41ab98ce0d7fbc48bb01e8e87c92c61f148de2d`. Nothing has been committed, pushed, merged, deployed, or applied to live player data.
+Status: READY-FOR-GATES. All six repairs and independent-review follow-ups are implemented and verified within the coverage below. Broader baseline failures and the incomplete fixture rerun remain explicit. This is the repair record for F-CR0908-1 through F-CR0908-6 in `reviews/sol-findings-code-review-20260908.md`; the original report and reproductions are retained. Working branch `sol/code-review-20260908`, base `d41ab98ce0d7fbc48bb01e8e87c92c61f148de2d (archive: pruned by the A3 rewrite)`. Nothing has been committed, pushed, merged, deployed, or applied to live player data.
 
 ## Repairs
 

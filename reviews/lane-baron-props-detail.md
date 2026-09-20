@@ -2,7 +2,7 @@
 
 **Slice:** `tasks/lane-baron-props-detail.md`
 **Branch:** `lane/perf` (lane-d) · **Tip commit drained:** `bec2b387`
-**Merge-base:** `d92350272f154a68ab1783a4b223974662ce9e7a`
+**Merge-base:** `823999527279053f214ccf93f8aafd6b0565bd79`
 **Drained by:** s1443 fire, 2026-08-03
 **Verdict:** ✅ **MERGED FULL** — with one verified, owner-facing finding (F-1443-3) that no gate could have caught, recorded loudly below.
 
@@ -64,7 +64,7 @@ The grep also matched `072-era-activation`, `e7-arsenal`, `m1-06-level-up-choice
 
 | Path | Class | Handling |
 |---|---|---|
-| `src/entities/pools.ts` | **BOTH-MOVED** — main moved +54/−30 since merge-base (s1440 perf **plus this fire's own boss-bar merge**, `f790c09f`); lane +1/−1 | **3-way graft**, clean auto-merge; regions disjoint |
+| `src/entities/pools.ts` | **BOTH-MOVED** — main moved +54/−30 since merge-base (s1440 perf **plus this fire's own boss-bar merge**, `43ba0ed9`); lane +1/−1 | **3-way graft**, clean auto-merge; regions disjoint |
 | `src/game/Game.ts` | **BOTH-MOVED** — main +93/−8; lane +95/−1 | **3-way graft**, clean auto-merge |
 | `src/systems/BaronVolleyVfx.ts`, `src/entities/BlastCharge.ts`, `src/vite-env.d.ts`, `e2e/lane-baron-props-detail.spec.ts`, `assets/pilots/baron-props-3d/**`, `artifacts/baron-props/**` | LANE-TOUCHED | applied |
 
@@ -80,7 +80,7 @@ TOUCH-ONLY was *prop assets + mount wiring + contract JSONs + specs*; NO was *fi
 
 - 🟡 **F-1443-3 (VERIFIED, non-blocking, OWNER-FACING — the Baron's rockets no longer show where they will land).** `BlastCharge.sync()` gains an early return for owner ids prefixed `baron_rocket`, which calls `hide(index)` and skips `syncTelegraph()`. **Read at the code, not inferred:** `syncTelegraph` draws two things — the flight arc *and* a ground circle at the **target**, at the **blast radius**, at `MARKER_Y = 0.07`, refreshed every frame while the charge is in flight (`BlastCharge.ts:286-299`); and `hide()` zeroes that slot's line buffer (`:325-330`). So the incoming-blast **ground footprint is gone for Baron rockets only**. The runner's report describes this as replacing "the generic full-path wire presentation" and does not mention the target ring. **What the player still gets, verified:** the Baron's pre-launch arming telegraph is intact and tested (`057-baron-rocket-cart.spec.ts:255-257` polls `telegraphActive` and asserts the `blast-charge-arm` sound — **green both projects**); the detailed rocket visibly arcs to its target with a trail; and `BaronVolleyVfx.impact()` still lands a dust ring on the ground — but **on landing, not before it** (`BaronVolleyVfx.ts:203-209`). **Why this is not a merge block:** damage, cadence and timing are unchanged, the primary warning survives, the change is deliberate and inside the visual remit the owner asked for, and it is reversible in four lines. **Why it is not silence either:** losing a landing footprint is a legibility question a gate cannot answer and no test asserts. ➡️ **OWNER: on your next Baron walk — can you still tell where a rocket will land? If not, restoring the ring for `baron_rocket` while keeping the new mesh is a small corrective.**
 - 🟡 **F-1443-1 (bookkeeping):** no goal leaf; `drain-block-check` answered UNKNOWN at rc=0 by default. Registered `e1-baron-props-detail` merged. Same debt as this fire's other drain — see that review for the seven-fire pattern.
-- 🟢 **F-1443-4 (method, cured):** my first review this fire claimed "scratch port 5199". `PORT` is not read by `playwright.config.ts`; the runs used 5188. Corrected in `c12ad434` with the reasoning intact. Recorded here because the mistake was mine and the next fire should not inherit a scratch-port habit that does not work.
+- 🟢 **F-1443-4 (method, cured):** my first review this fire claimed "scratch port 5199". `PORT` is not read by `playwright.config.ts`; the runs used 5188. Corrected in `928695ad` with the reasoning intact. Recorded here because the mistake was mine and the next fire should not inherit a scratch-port habit that does not work.
 - ⓘ **Non-finding, noted:** `assets/pilots/baron-props-3d/baron-props.blend1` is a Blender auto-backup (479 KB). It is not debris to delete under the RETENTION LAW and it is already in the lane's history; landed as-is.
 
 ## Player-facing (Mistake #10)

@@ -3,7 +3,7 @@
 **Verdict: GATE-PASS — merged to main by s82 fire (2026-07-06T13:xxZ).**
 
 Re-land of the M4 Prospector embodiment + agent voice on fresh main (single lane commit
-`557782f` "m4: re-land prospector body and voice", 1 ahead of merge-base `40549e7`, 13 behind).
+`6c93552` "m4: re-land prospector body and voice", 1 ahead of merge-base `50c7721`, 13 behind).
 Predecessor salvage-ref `save/m4-embodiment-voice-v1`.
 
 ## What landed

@@ -27,8 +27,8 @@ TypeError: Cannot read properties of undefined (reading 'goals')
 >  70 |  contract.briefing.goals[Math.floor(rng() * contract.briefing.goals.length)] = '   ';
 ```
 
-**Pre-existing, established by control:** it reproduces at the same line on a detached worktree at `5f81a36d`,
-before either of s1323's merges. The rig is untouched by them and was last modified at `2ce1a2ca` (2026-07-17).
+**Pre-existing, established by control:** it reproduces at the same line on a detached worktree at `1d0236c0`,
+before either of s1323's merges. The rig is untouched by them and was last modified at `d8395e4d` (2026-07-17).
 
 **Two hypotheses have already been falsified — do not re-run these, they are spent:**
 

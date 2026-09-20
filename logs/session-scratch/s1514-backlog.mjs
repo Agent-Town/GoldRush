@@ -7,7 +7,7 @@ const dispatchIdx = lines.findIndex((l) => l.startsWith('📮 **F-1510-3 — MAS
 if (dispatchIdx === -1) throw new Error('dispatch row not found');
 lines[dispatchIdx] = lines[dispatchIdx].replace(
   '📮 **F-1510-3 — MASTER AUTHORED s1513 → lane-a',
-  '📮 **F-1510-3 — MASTER AUTHORED s1513 → lane-a, DRAINED s1514 (`8134ec30`) AS A NEGATIVE RESULT — THE LICENSED ONE FIRED, AND THE ROW STAYS OPEN',
+  '📮 **F-1510-3 — MASTER AUTHORED s1513 → lane-a, DRAINED s1514 (`e47354c6`) AS A NEGATIVE RESULT — THE LICENSED ONE FIRED, AND THE ROW STAYS OPEN',
 ) +
   ' 🔻 **DRAIN OUTCOME s1514: the negative result this master licensed is the one that happened, and it is CORRECT — re-verified at the drain from the generator\'s CODE rather than from the runner\'s report.** ' +
   'The runner returned `docs/bench/f1510-3-inventory-snapshot-commit-negative-result.md` (86 lines, docs-only, zero code) and refused to manufacture guard arms for output it had proved false — **the right refusal, and worth saying out loud: hardening a defect behind a green test is strictly worse than shipping nothing.** ' +
@@ -19,7 +19,7 @@ const rowIdx = lines.findIndex((l) => l.startsWith('🟢 **F-1510-3 (s1510'));
 if (rowIdx === -1) throw new Error('F-1510-3 row not found');
 lines[rowIdx] +=
   ' 🔻 **GATE REVISED s1514 — THE OLD GATE SENTENCE PRESCRIBED A CURE THAT IS MEASURABLY WRONG, AND A FIRE SATISFYING IT LITERALLY WOULD HAVE SHIPPED A FALSE LINE.** ' +
-  'The previous wording — *"closes when a regeneration of `logs/suite-red-inventory.md` writes `HEAD` into its provenance block"* — names `HEAD` of the tree doing the **regenerating**, and `8134ec30` proves that is never the tree that was **tested**: the generator reduces a raw JSON produced elsewhere (`scripts/suite-red-inventory.mjs:12–:17` take `runRoot` from `report.config.rootDir`). ' +
+  'The previous wording — *"closes when a regeneration of `logs/suite-red-inventory.md` writes `HEAD` into its provenance block"* — names `HEAD` of the tree doing the **regenerating**, and `e47354c6` proves that is never the tree that was **tested**: the generator reduces a raw JSON produced elsewhere (`scripts/suite-red-inventory.mjs:12–:17` take `runRoot` from `report.config.rootDir`). ' +
   '⚠️ **This is the more useful half of the negative result: the gate was not merely unmet, it was unmeetable-as-written, and it had already survived two fires of careful reading** (s1510 filed it, s1513 re-measured the row and tightened it to "one line" without noticing the line would be wrong). A gate is a predicate, and a predicate can be false about the world. ' +
   '**GATE (revised, and now honest about its cost): closes when `logs/suite-red-inventory.md` names the commit THE SUITE RAN AT — which requires the revision to be captured BY the Playwright run and threaded alongside the raw report, then copied verbatim by the reducer. Deriving a revision while reducing is disqualified by construction.** ' +
   'ⓘ Scope note for whoever authors that: this is no longer the trivial one-line change this row was filed as, because it reaches the run harness, not just the reducer — price it before queueing it. See [F-1514-1] for the class.';

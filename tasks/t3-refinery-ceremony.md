@@ -1,4 +1,4 @@
-⛔ SHIPPED ALREADY UNDER ANOTHER NAME — DO NOT QUEUE (attended 2026-09-02: `t3-refinery` merged bc388f4c2 as "T3 THE REFINERY — the door to E4 (F-CER-1 fix + valve ceremony)" from `lane-c-t3-refinery-ceremony.md`; the drain-block gate's `Others:` line caught it before dispatch — the successor-master collision class, F-2403 family). Kept for the record; the E3 story loop still owes only `ss-04-e3-beats` and the E3 town era pass.
+⛔ SHIPPED ALREADY UNDER ANOTHER NAME — DO NOT QUEUE (attended 2026-09-02: `t3-refinery` merged b5de53704 as "T3 THE REFINERY — the door to E4 (F-CER-1 fix + valve ceremony)" from `lane-c-t3-refinery-ceremony.md`; the drain-block gate's `Others:` line caught it before dispatch — the successor-master collision class, F-2403 family). Kept for the record; the E3 story loop still owes only `ss-04-e3-beats` and the E3 town era pass.
 
 # Task t3-refinery-ceremony: T3, the Refinery — the E3→E4 megaproject and its played ceremony (lane-c, commit prefix "feat:")
 

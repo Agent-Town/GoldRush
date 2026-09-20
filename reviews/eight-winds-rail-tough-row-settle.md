@@ -2,7 +2,7 @@
 
 - **Slice:** settle the Rail Tough diagonal `2v3` disagreement with a non-silhouette instrument
 - **Branch / tip:** `lane/e2-arsenal` @ `44efb1f3be79caca73c3c95cb6f205b70275848f` ("docs: settle Rail Tough diagonal row pair")
-- **Base:** `main` @ `71f55aa5` (the lane refreshed itself off that tip; a false-ahead SAFE DUPE was re-derived and reset, per its own report §"Lane safety")
+- **Base:** `main` @ `503590b9` (the lane refreshed itself off that tip; a false-ahead SAFE DUPE was re-derived and reset, per its own report §"Lane safety")
 - **Drained by:** s1191 fire, 2026-07-29
 - **§3.0 `drain-block-check`:** ✅ CLEAR — run **first**, before any classification or opinion
 
@@ -47,7 +47,7 @@ I re-ran `logs/s1190-rail-tough-wrench-probe.mjs` on the merged tree rather than
 
 ## Merge classification
 
-Base `71f55aa5`. The lane commit is **pure-add**. Main moved during this fire (my own `35aebd7e` lock, `db79e121` m3-05d authoring, `4e0e59e5` log churn), touching `STATUS.md`, `tasks/BACKLOG.md`, `tasks/goals.json`, `tasks/lane-a-*.md`, `logs/{dashboard,.goal-tree,task-stats,factory-usage,usage-history}.*`.
+Base `503590b9`. The lane commit is **pure-add**. Main moved during this fire (my own `23823807` lock, `21b20d50` m3-05d authoring, `4e0e59e5` log churn), touching `STATUS.md`, `tasks/BACKLOG.md`, `tasks/goals.json`, `tasks/lane-a-*.md`, `logs/{dashboard,.goal-tree,task-stats,factory-usage,usage-history}.*`.
 
 | Class | Files |
 |---|---|

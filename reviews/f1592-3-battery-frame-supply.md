@@ -57,11 +57,11 @@ Second, each probe sampled the first 3.78 s of its 17.2 s battery. The battery w
 
 ## Drain verdict (s1593)
 
-**ACCEPTED AS WRITTEN — merged `b2457017f` from lane/b tip `b87c672a1`, base `003fac78a`.**
+**ACCEPTED AS WRITTEN — merged `5fdadeb68` from lane/b tip `9e428cbb9`, base `630004fa6`.**
 
 ### Merge classification
 
-Base `003fac78a`; `main..lane/b` was exactly **1 commit** ahead. All **11 files are `A` (new)** under `artifacts/f1592-3-battery-frame-supply/` and `reviews/` — **LANE-ONLY, no MAIN-MOVED file, no graft, no conflict resolution required**. Merged `--no-ff` and committed as one act (F-1589-5: never leave a merge staged on main).
+Base `630004fa6`; `main..lane/b` was exactly **1 commit** ahead. All **11 files are `A` (new)** under `artifacts/f1592-3-battery-frame-supply/` and `reviews/` — **LANE-ONLY, no MAIN-MOVED file, no graft, no conflict resolution required**. Merged `--no-ff` and committed as one act (F-1589-5: never leave a merge staged on main).
 
 ### Gate battery (on the MERGED tree)
 
@@ -69,7 +69,7 @@ Base `003fac78a`; `main..lane/b` was exactly **1 commit** ahead. All **11 files 
 |---|---|
 | `npx tsc --noEmit` | **rc=0, clean** |
 | `npm run build` | **rc=0**, built in 2.61 s, asset-diet passed |
-| Product bytes in the merge | **ZERO** — `git diff --name-only b2457017f^1 b2457017f` matches nothing under `src/ e2e/ scripts/ functions/ public/ assets/` |
+| Product bytes in the merge | **ZERO** — `git diff --name-only 5fdadeb68^1 5fdadeb68` matches nothing under `src/ e2e/ scripts/ functions/ public/ assets/` |
 | `test:node-guards` | **NOT OWED** — §3's path trigger (`src/sim`, `src/systems`, `src/entities`) is untouched, established by the line above rather than assumed |
 | `errors[]` across all five probe artifacts | **0, 0, 0, 0, 0** |
 | `armed` flags | `arm-p` **true**; `arm-b-1/2` and `arm-c-1/2` **false** — exactly the designed shape |

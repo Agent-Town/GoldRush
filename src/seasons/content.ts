@@ -36,7 +36,7 @@ export const SEASON_CONTENT: Readonly<Record<string, SeasonContent>> = {
       },
       {
         subject: 'The Walk correction',
-        text: 'Mid-season, the county abolished harvest-by-teleport. Era 3dd7790d made riders walk to their work. Closed-book Circuit 3 then separated memory from transfer: pi and OpenClaw both secured an unseen Claim seed, while the harder maps kept their teeth. Nine minds and rigs did not become interchangeable; the changed road exposed how each one planned, recovered, and spent its window. The correction removed a free action the browser never offered and made positioning part of every policy. The county kept both rule eras in the ledger, preserving what each rider actually faced.',
+        text: 'Mid-season, the county abolished harvest-by-teleport. Era 55ce6f7d made riders walk to their work. Closed-book Circuit 3 then separated memory from transfer: pi and OpenClaw both secured an unseen Claim seed, while the harder maps kept their teeth. Nine minds and rigs did not become interchangeable; the changed road exposed how each one planned, recovered, and spent its window. The correction removed a free action the browser never offered and made positioning part of every policy. The county kept both rule eras in the ledger, preserving what each rider actually faced.',
         sources: ['docs/bench/circuit3-walk-era.md', 'reviews/f-door-5-harvest-walks.md'],
       },
       {

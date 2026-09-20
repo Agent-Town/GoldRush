@@ -6,7 +6,7 @@ if (!tapePath || !outPath) throw new Error('usage: build-submission.mjs <tape.js
 const sha256 = (value) => createHash('sha256').update(value).digest('hex');
 const tape = JSON.parse(readFileSync(tapePath, 'utf8'));
 if (tape.outcome?.secured !== true) throw new Error('refusing to submit an unsecured tape');
-if (tape.meta?.buildId !== 'b42c0fbcc') throw new Error(`wrong deployed build: ${tape.meta?.buildId}`);
+if (tape.meta?.buildId !== '3e383b2fa') throw new Error(`wrong deployed build: ${tape.meta?.buildId}`);
 
 const inputLogHash = sha256(JSON.stringify(tape.inputLog));
 const submission = {

@@ -1,6 +1,6 @@
 # Review — art-batch-prospector-coats-hover8 (F-1098-2)
 
-**Slice:** `art-batch-prospector-coats-hover8` · **Slot:** ART · **Runner commit:** `90a7b358` (`runner(art): art-batch-prospector-coats-hover8.md`) · **Drained:** s1099, 2026-07-27
+**Slice:** `art-batch-prospector-coats-hover8` · **Slot:** ART · **Runner commit:** `a1e2d764` (`runner(art): art-batch-prospector-coats-hover8.md`) · **Drained:** s1099, 2026-07-27
 
 ## VERDICT: MERGED — the coats are on the Prospector's back in a plain boot.
 
@@ -57,7 +57,7 @@ Screenshots in `artifacts/coat-probe/` show all three side by side at gameplay z
 
 ## Merge classification
 
-Pure ADD plus one superseded test. The runner had already committed its own raws/LEDGER/contact-sheet at `90a7b358` (path-scoped, firewall respected: base sheet and all four hover4 raws hash-identical — RETENTION LAW intact). This drain adds only `assets/processed/` cells + the two `frames.json`, the LEDGER status flip, and the `cosmetic-grants` supersession. No conflicts, no graft.
+Pure ADD plus one superseded test. The runner had already committed its own raws/LEDGER/contact-sheet at `a1e2d764` (path-scoped, firewall respected: base sheet and all four hover4 raws hash-identical — RETENTION LAW intact). This drain adds only `assets/processed/` cells + the two `frames.json`, the LEDGER status flip, and the `cosmetic-grants` supersession. No conflicts, no graft.
 
 **Retention verified by hash** — the four superseded hover4 raws and the edit base are byte-for-byte unchanged:
 `8160fe2a…` · `a9ad8049…` · `08af6936…` · `c0a4a0a3…` · base `7e0c3cac…` (all match the run report).

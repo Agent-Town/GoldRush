@@ -1,6 +1,6 @@
 # deploy-mirror-allowlist — the droplet mirror ships the runtime set and nothing else
 
-**Slice:** `deploy-mirror-allowlist` (lane-d) · **branch:** `lane/d` · **lane tip:** `5773ea34f` · **base:** `1a6be1b76`
+**Slice:** `deploy-mirror-allowlist` (lane-d) · **branch:** `lane/d` · **lane tip:** `e3f0ca196` · **base:** `c711f6644`
 **Drained:** s2445, 2026-09-02 · **Gate worktree:** `gate-s2445` (detached, §3.0b)
 
 ## Verdict
@@ -49,7 +49,7 @@ This slice edits `package.json` (one battery leg). `ENGINE_SOURCE_INPUTS` was re
 
 ## Merge classification
 
-Base `1a6be1b76`; 5 paths, **no conflicts** — but two of them are BOTH-MOVED and were verified rather than assumed, because an auto-merge is a claim about content.
+Base `c711f6644`; 5 paths, **no conflicts** — but two of them are BOTH-MOVED and were verified rather than assumed, because an auto-merge is a claim about content.
 
 | Path | Class | Resolution |
 |---|---|---|

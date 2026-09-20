@@ -1,5 +1,5 @@
 # Review — sol/fixed-step-unification → main — VERDICT: MERGED
-Slice: F-SOL-SIM-001 (the audit's biggest catch) per `specs/sim-fixed-step/README.md`. Implementer: Sol (GPT-5.6). Branch tip `055fe4b`; merged to main 2026-07-10 after the full drain plan.
+Slice: F-SOL-SIM-001 (the audit's biggest catch) per `specs/sim-fixed-step/README.md`. Implementer: Sol (GPT-5.6). Branch tip `d8af8d6`; merged to main 2026-07-10 after the full drain plan.
 
 ## What it does
 The simulation obeys ONE law everywhere: solo joins multiplayer's 30 Hz fixed tick (accumulator + 5-tick clamp), render interpolates between sim states, CombatSystem cooldowns carry fractional debt instead of discarding overdue volleys. The fixed-step law of specs/m0-skeleton is finally TRUE.

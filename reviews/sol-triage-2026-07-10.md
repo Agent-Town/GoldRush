@@ -1,5 +1,5 @@
 # Triage — Sol repository audit (58 findings) — pass 1: the priority eight
-Triaged by the attended session 2026-07-10; intake merged at `bd7b890`. Verdicts per the AGENTS.md co-agent protocol. **Pass 2 (the remaining 50) is owed** — scheduled against the post-reset budget alongside the stopped swarm's 65 cached agents (dedupe both sets together).
+Triaged by the attended session 2026-07-10; intake merged at `814d096`. Verdicts per the AGENTS.md co-agent protocol. **Pass 2 (the remaining 50) is owed** — scheduled against the post-reset budget alongside the stopped swarm's 65 cached agents (dedupe both sets together).
 
 | F-ID | Verdict | Disposition |
 |---|---|---|

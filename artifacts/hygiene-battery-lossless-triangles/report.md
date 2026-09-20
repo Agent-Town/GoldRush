@@ -1,6 +1,6 @@
 # hygiene-battery-lossless-triangles — implementer report
 
-**Branch** `fix/hygiene-battery-lossless-triangles`, cut from the phase-B merge `62e585bf5`.
+**Branch** `fix/hygiene-battery-lossless-triangles`, cut from the phase-B merge `4a6caaa63`.
 **Worktree** a linked worktree under the session scratchpad (`node_modules` symlinked to the primary checkout).
 **Node** 26.4.0 (`/opt/homebrew/bin` first on PATH) for every command below.
 **Owner directive** 2026-09-17, verbatim: "Lets do them all." · "All on the Anthropic subscription".
@@ -21,7 +21,7 @@ Nothing was pushed, merged or deployed. `STATUS.md`, `tasks/BACKLOG.md`, `tasks/
 
 ---
 
-## Item 1 — the battery runs its swallowed twenty (`4dc7f3765`)
+## Item 1 — the battery runs its swallowed twenty (`6fedbc6b5`)
 
 **Changed.** `package.json:21` — `npm run test:desk-declaration <twenty files>` became
 `npm run test:desk-declaration && node scripts/run-node-guards.mjs <twenty files>`. The twenty were
@@ -37,7 +37,7 @@ one-line change.
 
 | file:test | why it was red | cure |
 |---|---|---|
-| `e10-squall-scheduler.test.mjs:196` "no other board contract grows a squall" | the Archive World declares the SAME scheduler family by design (`specs/agent-play/e10-archive-world-restoration.md:20`; `src/meta/ContractFamilies.ts:2984` refuses an archive twist without the clock; data landed `883a3521e`) one slice after E10S-2 wrote the clause | re-pointed to "only the two contracts that declare a squall grow one" — an undeclared third still reds |
+| `e10-squall-scheduler.test.mjs:196` "no other board contract grows a squall" | the Archive World declares the SAME scheduler family by design (`specs/agent-play/e10-archive-world-restoration.md:20`; `src/meta/ContractFamilies.ts:2984` refuses an archive twist without the clock; data landed `7c2744e5a`) one slice after E10S-2 wrote the clause | re-pointed to "only the two contracts that declare a squall grow one" — an undeclared third still reds |
 | `relay-rush-reel.test.mjs:151` "heat 12 still replays…" | ADR-005 stage 3 removed `HOLD`; heat 12's plans carry it, so `validateRunTape` reads the reel as malformed. Its row is in `artifacts/rider-parity-grammar/retirement-ledger.json` (`e7-relay-rush`/`attempt-1-tape.json`, `orders[30].verb "HOLD" is unknown.`) | pins the REFUSAL plus the ledger row, with the heat-11 reel as the control that the validator does not refuse everything |
 | `relay-rush-reel.test.mjs:172` "the retired reel reaches wave 20…" | measured: the tape declares `runStart.research.epochId "epoch-1-frontier"`, the door reconstructs `epoch-7-signal` both virgin and after installing the tape's own meta, so `bootDeclaredRun` (`src/replay/AgentTapeReplay.ts:224-237`) refuses | pins the refusal and its measured cause; ADR-005 clause 6, "retired rows are never repaired" |
 | `run-tape-envelope-budget.test.mjs:88` "both blocker fixtures are admitted" | the Dome Basin w16 heat-12 reel is on the same retirement ledger (`orders[18].verb "HOLD" is unknown.`) | the byte/entry/tick measurement (what the test is FOR) untouched; each reel's door verdict asserted WITH its reason |
@@ -52,7 +52,7 @@ after it — `nul-audit: CLEAN` and `test:review-fixes` 24/24 — rc=0 for the w
 
 ---
 
-## Item 2 — the repo-wide lossless re-encode (`c8d39a897`)
+## Item 2 — the repo-wide lossless re-encode (`7af33ed89`)
 
 Tool and verification are the re-cut's own
 (`artifacts/town-cast-walk8-hard-alpha-recut/lossless-reencode.mjs`): zopflipng, every output
@@ -108,7 +108,7 @@ declared families' own savings, the payload before this pass was **48,968,099 B*
 
 ---
 
-## Item 3 — the +1,922 cold triangles (`d2c6cad3e`)
+## Item 3 — the +1,922 cold triangles (`d2c6cad3e (archive: pruned by the A3 rewrite)`)
 
 Measured on a quiet board. (Caveat: `pgrep -f 'playwright test'` also matches a headless FIRE's
 prompt text, which contains the words "real playwright" — `claude -p` PID 61415 matched it while
@@ -120,12 +120,12 @@ boots exactly as `e2e/wire-crawler-3d.spec.ts` does and reads `renderer.info` AN
 
 | tree | desktop cold triangles | mobile cold triangles | calls | geometries | textures |
 |---|---:|---:|---:|---:|---:|
-| `src` at `6ae4eafcf` (pre-runtime) | 147,706 x3 | 144,122 / 144,120 / 144,120 | 73 / 55-56 | 81 / 69 | 32 / 30 |
+| `src` at `db6dd1782` (pre-runtime) | 147,706 x3 | 144,122 / 144,120 / 144,120 | 73 / 55-56 | 81 / 69 | 32 / 30 |
 | this tree | 149,626 x3 | 146,040 x3 | 74 / 56 | 81 / 69 | 32 / 30 |
 | delta | **+1,920** | **+1,920** | **+1** | 0 | 0 |
 
-**The bisect table.** `git log --oneline 6ae4eafcf..0cc9fe386 -- src` holds only TWO commits
-(`c7f284ad4`, `dca019e23`), so a commit-level bisect cannot name a hunk. The draw-call census does:
+**The bisect table.** `git log --oneline db6dd1782..2e7f014b7 -- src` holds only TWO commits
+(`033f69c61`, `d500bed70`), so a commit-level bisect cannot name a hunk. The draw-call census does:
 
 | census row | pre-runtime | this tree | verdict |
 |---|---|---|---|
@@ -134,7 +134,7 @@ boots exactly as `e2e/wire-crawler-3d.spec.ts` does and reads `renderer.info` AN
 | CanyonWorksTerrain, SparkRigBoltPool, RailPath.*, DetailScatter.*, PowerWireView.*, MothSwarmPool, GoldPickupPool, CombatVfx, DecoyShedPool, CapacitorBankPool, XpMotePool, PylonSite.*, GeneratedSpriteBlobShadows.*, sprites | — | — | all unchanged |
 
 **The hunk.** `src/entities/pools.ts`, `setProceduralVisible()`, changed by the sprite-animator
-runtime land (`c7f284ad4`, merged `dca019e23`):
+runtime land (`033f69c61`, merged `d500bed70`):
 
 ```
 -  for (const part of this.renderParts) part.visible = visible;
@@ -172,7 +172,7 @@ the runs rewrote were restored with `git checkout --`.
 
 ---
 
-## Item 4 — the moving `eraStamp` (`d6b6b7580`)
+## Item 4 — the moving `eraStamp` (`c1f440338`)
 
 The stamp still moves and must — it is a WHEN, and on main `merge-base HEAD main` IS HEAD, so no
 commit can carry the hash of the pin it lands (the F-1384-1 shape). The REPORT half was already
@@ -181,25 +181,25 @@ every verdict and counted in none. Only the comment was owed; it now names F-PFW
 the stamp is minted, including why NOT to derive it from the pin's own recorded base.
 
 **Gate.** `node scripts/null-floor-anchors.mjs --check` ->
-`eraStamp: pin taken at "54bbaa91e", this tree is "844843b5c" — PROVENANCE ONLY, not a floor
+`eraStamp: pin taken at "09c997489", this tree is "92eed7ae0" — PROVENANCE ONLY, not a floor
 difference.` then `83 of 83 null floors match assets/contracts/null-floors.json (287.3s)`
 (`null-floor-check.log`). Exit codes proven through the cheap `--compare` seam instead of a second
 287 s sim: stamp-only difference **exits 0**, one moved floor **exits 1**.
 
 ---
 
-## Item 5 — `assets/master-divergent.json` (`28134a746`) — PARTIAL
+## Item 5 — `assets/master-divergent.json` (`7e25f212c`) — PARTIAL
 
 Re-measured with the file's own method (`anim-pass-reextract --verify-downscale`, 479 masters):
 **226 byte-identical, 227 unexplained, 9 master-divergent by design, 17 STALE**
 (`verify-downscale-before.log`). Both halves of the 26-row ledger were wrong, in opposite directions:
 
 - **the 9 `char-hero-sheet-walk8` rows still diverge, but not for the recorded reason.** Their cause
-  was `21dc87394` (2026-07-13 cutout-pocket mend); the shipped cells were re-sourced twice since —
-  `cbc73e7fe` (2026-09-14 hard-alpha re-cut) and `9a66f743a` (2026-09-15, Astra's original walk cells
-  restored) — while the 512 px master is still the 2026-07-10 extraction `f99da84b0`. Re-recorded
-  against `9a66f743a`, each row keeping its superseded cause under `supersedes`.
-- **the 17 `char-baron-sheet-walk8` rows are STALE.** `1954bfa09` (2026-09-14, sprites-split-land
+  was `ad64b1754` (2026-07-13 cutout-pocket mend); the shipped cells were re-sourced twice since —
+  `d7670202a` (2026-09-14 hard-alpha re-cut) and `e7418ac3d` (2026-09-15, Astra's original walk cells
+  restored) — while the 512 px master is still the 2026-07-10 extraction `0bd73e539`. Re-recorded
+  against `e7418ac3d`, each row keeping its superseded cause under `supersedes`.
+- **the 17 `char-baron-sheet-walk8` rows are STALE.** `fb352552e` (2026-09-14, sprites-split-land
   item 4) rewrote the shipped cell AND its master together. Moved to a `retired` array with the dated
   cause rather than deleted (CLAUDE.md 4.10b); the tool reads `.cells` only.
   `--verify-downscale char-baron-sheet-walk8` is now **32 byte-identical, 0 unexplained, 0 stale**.
@@ -213,7 +213,7 @@ recording 227 "by design" exclusions would be a claim per cell this item never m
 
 ---
 
-## Item 6 — the release door (`067c86bc1`)
+## Item 6 — the release door (`63a692b91`)
 
 Reproduced: `GR_RELEASE=e1 npm run build:release` -> `Error: [release-build] later era assets
 emitted: …` (the message slices its list at 8). Measured over the failing `dist`, the leak is
@@ -235,10 +235,10 @@ plate/GLB assets (checked against 268 later-asset stems)`. Payload SMALLER, not 
 
 ---
 
-## Item 7 — the census guard's temp trees (`964259871`)
+## Item 7 — the census guard's temp trees (`14b3b0e31`)
 
 Eleven tests called `fixture()`/`attendedOnlyFixture()` and none removed the `mtec-*` tree, so the
-sweep was red on main from `ba1cac4e0` on; arm 8 removed its own tree on the happy path only.
+sweep was red on main from `1cd8dbbd3` on; arm 8 removed its own tree on the happy path only.
 **Cure**, in the sweep's own form: a `withFixture(make, run)` wrapper that removes `made.root` in a
 `finally`, and arm 8's `rmSync` moved into a `finally`. The wrapper, rather than eleven typed-out try
 blocks, keeps every test body byte-identical — the fires iterate on this file today.
@@ -252,12 +252,12 @@ inherited engine-hash pin) and `desk-declaration-guard` (refuses a linked worktr
 
 ---
 
-## Item 8 — `cast-motion-wiring` (`1a1e7f46a`)
+## Item 8 — `cast-motion-wiring` (`068ce40f1`)
 
 Both reds are stale pins, read back to the evidence that moved them; neither is relaxed.
 
 - **`:64`** pinned the assay clerk at (7, 3.4) — the Assay Office anchor plus her `portraitPost`
-  offset from `3987c8f7b` (owner playtest 2026-08-03, "move the Elder and Assay Clerk posts clear of
+  offset from `ac87d1714` (owner playtest 2026-08-03, "move the Elder and Assay Clerk posts clear of
   their buildings visual footprints"). That offset was tuned for a PORTRAIT sprite; with a full body
   `townActorPlazaPlacement` ignores portrait-only offsets and she stands at (8.35, 6.8). That is
   **F-SPR-13 repaired**: `reviews/sol-findings-sprite-roster-fixes-20260908.md:233` records the move
@@ -268,7 +268,7 @@ Both reds are stale pins, read back to the evidence that moved them; neither is 
 - **`:112`** (the master's ":99") asked the preacher, schoolteacher and assay clerk for a
   `-sheet-walk8-a-rNcM` cell WHILE STANDING — the defect F-SPR-32/F-SPR-45 cured ("an extended boot
   held indefinitely", same review :879 and :948). Each has a separate planted idle clip wired through
-  the town loader (`TownScene.ts` `townCastWalkFrames`, `idle:` per actor; art in `92137d813`). None
+  the town loader (`TownScene.ts` `townCastWalkFrames`, `idle:` per actor; art in `d2a7fda05`). None
   of the three carries a patrol cycle, so the pin was made **exact rather than widened**: each must
   show its own `char-<id>-idle-r0c0.png`. Their walking cells stay pinned by the moving-actor poll
   below it and by `e2e/town-t5-townsfolk.spec.ts`.
@@ -318,11 +318,11 @@ computeEngineHash() = c550564ff54d6eca57f45b9bfdf275f2ce724151443b79eb69c71a406d
 (`scripts/assay-replay-agent.mjs:36` — `scripts/assay-replay-agent.mjs`, `assets/contracts`,
 `assets/crafting-queue/contract.v1.json`, `assets/crafting-queue/approved`,
 `assets/layer-contracts`, `assets/pilots/map-rebuild-spike`, `src`). Neither does any other item:
-`git diff 62e585bf5..HEAD` over those paths is **empty**, so this is the same value the base commit
+`git diff 4a6caaa63..HEAD` over those paths is **empty**, so this is the same value the base commit
 computes.
 
 It differs from this branch's declared `72f1e2f45a85…` because the branch is cut from the phase-B
-merge `62e585bf5` and main pinned the era afterwards in `71aff6e19` ("era 6, pin #8: the phase-B
+merge `4a6caaa63` and main pinned the era afterwards in `a57f0934e` ("era 6, pin #8: the phase-B
 land"); main declares `540b49aff0…` today. That inherited mismatch is what reds `bench-seeds` and
 `engine-era-guard` here, and it disappears once this branch sits on a main that carries the pin.
 
@@ -360,5 +360,5 @@ land"); main declares `540b49aff0…` today. That inherited mismatch is what red
    that declare a squall grow one`. It is quoted in prose in `reviews/maps-campaign-land-era6.md:26`
    and `tasks/BACKLOG.md:173`, both outside my firewall; those rows want the new title when the
    BACKLOG row is retired.
-5. **The engine-era pin** — this branch needs main's `71aff6e19` under it (or a re-pin after the
+5. **The engine-era pin** — this branch needs main's `a57f0934e` under it (or a re-pin after the
    merge) for `bench-seeds`, `engine-era-guard` and the fixture sweep to go green.

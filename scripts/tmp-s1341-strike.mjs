@@ -16,7 +16,7 @@ const STRIKES = [
   {
     findsLead: "🟡 **(s1287, MEASURED — THE SUITE-RED INVENTORY'S",
     prefix:
-      "🟡 **F-1287-1 — struck s1341, history only: THE `GATE:` BELOW WAS DISCHARGED s1337 (rate measured 8/20 = 40%, cured `b15a9414`, 30/30 green) — see the CLOSED row immediately above. Retained under the Retention Law; do NOT action its GATE.** ORIGINAL, retained verbatim: ",
+      "🟡 **F-1287-1 — struck s1341, history only: THE `GATE:` BELOW WAS DISCHARGED s1337 (rate measured 8/20 = 40%, cured `abb38df8`, 30/30 green) — see the CLOSED row immediately above. Retained under the Retention Law; do NOT action its GATE.** ORIGINAL, retained verbatim: ",
   },
   {
     findsLead: "🟡 **(s1286, OPEN — AN UNDOCUMENTED BATCH-LOAD FLAKE",

@@ -2,8 +2,8 @@
 
 - **Slice:** `f1561-2-m4-06-drift-constants-both-axes`
 - **Branch / tip:** `lane/b` @ `682f5c42051b0d8610ede001b6c9da9e9817765c`
-- **Base:** `64f127969` (the s1561 authoring commit)
-- **Merged to main:** `92559f683963d964c757904fc1d3e1e3493625e6` (s1562, 2026-08-08)
+- **Base:** `47b4026ca` (the s1561 authoring commit)
+- **Merged to main:** `fb3355abfa63a3c54d1b8296bdb6a3b752ec59af` (s1562, 2026-08-08)
 - **Pre-drain archive:** `archive/lane-b-s1562-predrain-682f5c42` (taken BEFORE gating — see §Custody)
 
 ## Verdict
@@ -28,7 +28,7 @@ citation to `288–300`. Both `expect(...).toBeLessThan(0.4)` lines are untouche
 | Gate | Result |
 |---|---|
 | `drain-block-check.mjs --strict` | ✅ **CLEAR** — run as the FIRST command, before any opinion was formed (§3.0) |
-| Merge classification | 1 file, **LANE-ONLY**: `git log 64f127969..main -- e2e/m4-06-embodiment.spec.ts` **empty** (main never touched it) |
+| Merge classification | 1 file, **LANE-ONLY**: `git log 47b4026ca..main -- e2e/m4-06-embodiment.spec.ts` **empty** (main never touched it) |
 | Comment-only proof | **mechanical**, not eyeballed: 5 changed lines, **0 non-comment** (filter `^[+-]\s*//`) |
 | `npx tsc --noEmit` | rc=0 |
 | `npm run build` | green, built in 1.17s |

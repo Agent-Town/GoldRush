@@ -110,7 +110,7 @@ No candidate is selected because the drift control voided the experiment before 
 
 ## Fire-side drain addendum (s1107, 2026-07-27)
 
-Landed as a **report-only, pure-add drain**: 5 raw logs + this file, `9614b7eb` → main. No `src/`, no `e2e/`, no `scripts/`, no config — so no gate battery was run, and none was owed. Every other path in `git diff main lane/perf` is a stale-base phantom (main moved after the lane's base `91d511e6`); classified against the merge-base, the branch is **pure-add, 6 files, 1354 insertions, zero deletions**. The report's quiescence figures were verified against the raw run log: **every loadavg triple in its tables appears verbatim** in `tasks/runs/20260727-053703-lane-d-*.log`.
+Landed as a **report-only, pure-add drain**: 5 raw logs + this file, `9614b7eb` → main. No `src/`, no `e2e/`, no `scripts/`, no config — so no gate battery was run, and none was owed. Every other path in `git diff main lane/perf` is a stale-base phantom (main moved after the lane's base `97d5e109`); classified against the merge-base, the branch is **pure-add, 6 files, 1354 insertions, zero deletions**. The report's quiescence figures were verified against the raw run log: **every loadavg triple in its tables appears verbatim** in `tasks/runs/20260727-053703-lane-d-*.log`.
 
 ### F-1107-1 — the drift that voided this experiment is ONE FLAKY TEST, not an unstable box
 

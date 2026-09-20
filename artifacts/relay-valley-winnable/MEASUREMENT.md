@@ -97,8 +97,8 @@ survives. The map is priced at 300, not tuned to 250.
 ## 6. Floors
 
 `node scripts/null-floor-anchors.mjs --check` over all 34 contracts × 2 seeds: **the only rows that
-moved are this contract's two**, plus the `eraStamp` (pinned `ed57402e8`, this branch's merge-base
-`41b1e63cf` — a branch-position artifact, not a behaviour change). Both relay-valley floors **still
+moved are this contract's two**, plus the `eraStamp` (pinned `3227f4ccc`, this branch's merge-base
+`0a120edd3` — a branch-position artifact, not a behaviour change). Both relay-valley floors **still
 LOSE**:
 
 | seed | before | after |

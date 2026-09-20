@@ -1,7 +1,7 @@
 # b3-half-life-hollow-crossing — drain review (s2091)
 
-**Slice:** B3 Half-Life Hollow crossing (`e6-half-life-hollow`) · **Branch:** `lane/d` · **Lane tip:** `2c222f191`
-**Base:** `4fb04ef6c` (main at drain time, already carrying b7 from this same fire) · **Merge:** `68011ece8`
+**Slice:** B3 Half-Life Hollow crossing (`e6-half-life-hollow`) · **Branch:** `lane/d` · **Lane tip:** `995331b5f`
+**Base:** `5737bdca5` (main at drain time, already carrying b7 from this same fire) · **Merge:** `bb3ef65c0`
 **Gate worktree:** `gate-s2091` (detached, §3.0b) · landed as ONE atomic ref update, never staged (F-1589-5)
 
 ## VERDICT: MERGED + ADMITTED — gates green on the merged tree, all eight conflicts resolved by measurement.
@@ -72,7 +72,7 @@ survive. Confirmed by outcome: `nul-audit: CLEAN` in the merged battery.
 
 ## Merge classification
 
-Base `4fb04ef6c`; lane/d was **30 behind**, and main had moved twice more during this fire (the A3/A5
+Base `5737bdca5`; lane/d was **30 behind**, and main had moved twice more during this fire (the A3/A5
 layers plus my own b7 merge). **Eight conflicts** — several are decay from draining a pile in order,
 the known hazard, not lane misbehaviour.
 
@@ -99,7 +99,7 @@ the known hazard, not lane misbehaviour.
    gains `showroom_capture_quota` (b7) and Half-Life Hollow gains `hollow_crossing` (b3). **Both rows
    kept, both prose blocks kept.**
 5. **`assets/contracts/null-floors.json` ×1** — only the `eraStamp` line conflicted. Resolved to
-   **main's** (`1817cb273`); the stamp is *derived* (`null-floor-anchors.mjs` computes it from
+   **main's** (`72da08d6a`); the stamp is *derived* (`null-floor-anchors.mjs` computes it from
    `git merge-base HEAD main`) and the attended ruling of 2026-08-20 calls this drift benign. Lane/d's
    **19 new floor lines auto-merged and are present** — verified by probing the merged file for
    `half-life-hollow`, not assumed.
@@ -140,4 +140,4 @@ design, and mandating the centre would delete it. Generator proposes, contract d
 
 ## Goal leaf
 
-`b3-half-life-hollow-crossing` → `status: "merged"`, `mergeHash: 68011ece84e21d1c4c570597a5aa1a486c333c1c`.
+`b3-half-life-hollow-crossing` → `status: "merged"`, `mergeHash: bb3ef65c06db0b70b82e600a5fdce2a5e0249cc0`.

@@ -18,7 +18,7 @@
    idle probe publishes a complete `now.motor` (objective/weather/roads/fuel/vehicle/events),
    `viewVersion: 2`, and the terminal outcome carries a `motor` block. The tow errand gates the secure
    through `HeadlessContractSim.ts:1210` (`this.motor !== null && !this.motor.objectiveAllowsSecure`).
-   The audit predates the `e4-roads-and-convoys` merge (`48ef7df8d`); the reskin ladder should re-measure.
+   The audit predates the `e4-roads-and-convoys` merge (`7f5c590a1`); the reskin ladder should re-measure.
 4. **Tune 1** — errand solved on the first controller (hitched wave 1, delivered t = 42.767 s, road
    graded), then died wave 5 at t = 173.867 s: **the economy, not the map**. My harvest chain rotated
    seams by distance every order, so the Prospector ping-ponged between 50 wu seams and banked exactly

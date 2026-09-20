@@ -17,7 +17,7 @@ const leaf = {
   lane: 'lane-a',
   status: 'queued',
   authoredBy: 's1310',
-  authorNotes: "Extends the ledger walk shipped s1310 (a180b468); adds no new script and no npm entry, so gate-caller-audit is unaffected. Scoped narrow to BACKLOG deliberately: the guard's documented KNOWN GAP exists because resolving shorthand like v3 requires guessing which file is meant, and BACKLOG names exactly one file — the rule rejects the shape rather than resolving it, so nothing is guessed. Firewalled OFF tasks/goals.json and the baseline file: a runner must not re-point a live owner gate, and a baseline diff would mean the shape was resolved instead of rejected.",
+  authorNotes: "Extends the ledger walk shipped s1310 (996202dc); adds no new script and no npm entry, so gate-caller-audit is unaffected. Scoped narrow to BACKLOG deliberately: the guard's documented KNOWN GAP exists because resolving shorthand like v3 requires guessing which file is meant, and BACKLOG names exactly one file — the rule rejects the shape rather than resolving it, so nothing is guessed. Firewalled OFF tasks/goals.json and the baseline file: a runner must not re-point a live owner gate, and a baseline diff would mean the shape was resolved instead of rejected.",
 };
 
 const ind = '        ';

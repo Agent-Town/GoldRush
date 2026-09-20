@@ -2,9 +2,9 @@
 
 - **Slice**: `sea-3-season1-content`
 - **Task**: `tasks/done/20260812-043948-lane-b-sea-3-season1-chronicle.md`
-- **Branch / tip**: `lane/b` @ `b215c3167efb22b8d83647b4ef6c9cf50c2b9ca3`
-- **Base**: `c7fabbd0a1360c686dfe3a7fc604a7d734ab6dd5`
-- **Merge**: `0ca4e955459aa57f87bc91deb3421a72dcc2618d` (s1693, `--no-ff`, one act)
+- **Branch / tip**: `lane/b` @ `3180b78fb0bda40868ed4a1c12d239cf503c563d`
+- **Base**: `ba6e2015136178474099d6bb04f18662ecce0a40`
+- **Merge**: `0965c9f3db921c5679a6c6d9b2513f418c14bf6b` (s1693, `--no-ff`, one act)
 - **Gate custody**: detached worktree `gate-s1693` (§3.0b)
 - **Verdict**: ✅ **MERGED**
 
@@ -43,7 +43,7 @@ its CSS.
 
 ## Merge classification
 
-Base `c7fabbd0`, 10 paths, **all lane-only/new**. The intersection between paths changed
+Base `ba6e2015`, 10 paths, **all lane-only/new**. The intersection between paths changed
 on `lane/b` and paths changed on main since the base was empty.
 
 | Paths | Class |

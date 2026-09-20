@@ -1,6 +1,6 @@
 # e4-roads-and-convoys — drain review (attended, 2026-09-04)
 
-**Slice/branch/tip:** `e4-roads-and-convoys` · `lane/b` · tip `5d8603982` (13 commits, two merges of main inside) · base `5f7fe4e59` · merge `48ef7df8d`
+**Slice/branch/tip:** `e4-roads-and-convoys` · `lane/b` · tip `5d8603982 (archive: pruned by the A3 rewrite)` (13 commits, two merges of main inside) · base `a481ea0a9` · merge `7f5c590a1`
 **Verdict: MERGED, with three findings spawning correctives in this drain.** Claude implementer (Opus, attended-dispatched; resumed four times across the API incident and a session-limit reset; the interrupted Fable implementer's WIP was salvaged and kept).
 
 ## What it does
@@ -18,7 +18,7 @@ All four Motor Frontier RESKIN rows of the era-mechanic audit are cured with no 
 | whole-run browser hash | NOT claimed (F-E4-2 below), honestly |
 
 ## Merge classification
-Base `5f7fe4e59`. LANE-TOUCHED: `src/sim/MotorSocket.ts` (new), `src/sim/HeadlessContractSim.ts`, `src/agent/{StandingOrders,MechanicsManifest,View}.ts`, `src/meta/ContractFamilies.ts`, `assets/contracts/epoch-4-motor/contracts.json`, `assets/contracts/null-floors.json`, `public/skill.md`, `scripts/e4-motor-{floor,ride}.mjs`, `scripts/e4-roads-and-convoys.test.mjs`, `e2e/e4-roads-and-convoys.spec.ts`, `e2e/er01-e4-census.spec.ts`, `package.json`, evidence. MAIN-MOVED: `tasks/BACKLOG.md` only (auto-merged; the lane had merged main twice, including the E8 physics drain, so `HeadlessContractSim.ts` carried both compositions already).
+Base `a481ea0a9`. LANE-TOUCHED: `src/sim/MotorSocket.ts` (new), `src/sim/HeadlessContractSim.ts`, `src/agent/{StandingOrders,MechanicsManifest,View}.ts`, `src/meta/ContractFamilies.ts`, `assets/contracts/epoch-4-motor/contracts.json`, `assets/contracts/null-floors.json`, `public/skill.md`, `scripts/e4-motor-{floor,ride}.mjs`, `scripts/e4-roads-and-convoys.test.mjs`, `e2e/e4-roads-and-convoys.spec.ts`, `e2e/er01-e4-census.spec.ts`, `package.json`, evidence. MAIN-MOVED: `tasks/BACKLOG.md` only (auto-merged; the lane had merged main twice, including the E8 physics drain, so `HeadlessContractSim.ts` carried both compositions already).
 
 ## Findings
 - **F-E4-3 (BLOCKING for the L7 claim on E4; CORRECTIVE QUEUED):** human parity is NOT met: a plain boot of `e4-dust-flats` mounts no Hauler and no tar; `src/game/Game.ts:4585` gates the vehicles behind `?debug&vehicles`. The rider can haul; the player cannot. The e2e pins the gap and reds the day it closes. Master: `tasks/e4-vehicles-plain-boot.md` (lane-c).

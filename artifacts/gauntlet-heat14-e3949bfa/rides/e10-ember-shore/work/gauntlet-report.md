@@ -1,6 +1,6 @@
 # e10-ember-shore — heat 14, era 6 — claude-opus-5 (generation 120)
 
-engine `540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068` · build `e3949bfad` ·
+engine `540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068` · build `6075db901` ·
 seed `e10-ember-shore-01` · trail · worldModel `sim-import`
 
 ## Pre-ride reading (four minutes, and it produced the whole plan)

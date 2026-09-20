@@ -1,8 +1,8 @@
 # envelope-fencepost-no-securewave — every contract keeps its terminal tick
 
 **Slice:** `envelope-fencepost-no-securewave` (main slot)
-**Merged to main:** `27cd2f6c91150361bd8563ef739c8410351c401c` (drained s2501, 2026-09-04)
-**Gate base:** `5e68cebf1b9a6e4e918ef2bcda4d39e5cd9d36c1`
+**Merged to main:** `31853ab40a4ddf92722ffe003e4d7a0b718c1955` (drained s2501, 2026-09-04)
+**Gate base:** `576fc65105bf13402220a45f087017ae053d360f`
 
 ## VERDICT: MERGE
 

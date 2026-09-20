@@ -1,8 +1,8 @@
 # Review — e8-physics-reland (E8 low-g movement/lob physics)
 
 **Slice:** e8-physics-reland (FIRE-AUTHORED s755, runner reproduction of the gate-green work on lane/m4 `1bafa1b4`)
-**Branch/tip:** lane/e2-arsenal `cf01e725` (single runner commit), base `18535923` (a true ancestor of main)
-**Merged as:** `6e2ddafb` (real `git merge --no-ff`, drained s757)
+**Branch/tip:** lane/e2-arsenal `dbe8159f` (single runner commit), base `4fbbccc2` (a true ancestor of main)
+**Merged as:** `ed2193d7` (real `git merge --no-ff`, drained s757)
 **Verdict:** ✅ SHIPPED — clean 3-way, all gates green both projects.
 
 ## What it does
@@ -23,7 +23,7 @@ contract gravity flags, so normal play feels unchanged.
 | `e2e/e8-arsenal.spec.ts` (combat/blast adjacent) | 4/4 both projects |
 | `e2e/_s99-combat-readability-boot-probe.spec.ts` | 2/2, zero console/page errors, flashes=0 bars=0 pulses=0 both projects |
 
-## Merge classification (base `18535923` = ancestor of main)
+## Merge classification (base `4fbbccc2` = ancestor of main)
 - `src/systems/E8PhysicsSystem.ts` (new, 156 lines) — LANE-ADDED, clean.
 - `e2e/e8-physics.spec.ts` (new, 160 lines) — LANE-ADDED, clean.
 - `src/vite-env.d.ts` — main did not move it since base → auto-merged clean.

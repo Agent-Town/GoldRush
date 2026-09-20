@@ -1,7 +1,7 @@
 # Sol findings — audit correctives 1 implementation
 
 - **Branch:** `sol/audit-correctives-1`
-- **Fresh implementation base:** `origin/main@64f78d146723cc9e80f176ccc48adb1142af70c1`
+- **Fresh implementation base:** `origin/main@7cbb6716dbf0d3aae6f422c128cea61c5d043de3`
 - **State:** **READY-FOR-GATES — static gates green; listener-backed gates are orchestrator-side**
 
 The queue-referenced `reviews/mega-audit-data-2026-07-11.json` is absent from the

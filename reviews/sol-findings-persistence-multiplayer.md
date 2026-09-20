@@ -1,7 +1,7 @@
 # Sol findings — persistence and multiplayer
 
 - **Branch:** `sol/repository-audit-findings`
-- **Base:** `7802ed6`
+- **Base:** `8510b61`
 - **State:** UNTRIAGED — no implementation authorized.
 - **Scope:** suspend/import integrity, cloud flush, lockstep join/action/hash/resync behavior.
 

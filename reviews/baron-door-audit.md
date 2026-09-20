@@ -1,7 +1,7 @@
 # baron-door-audit — does a lawful Baron secure exist under today's door and engine?
 
-**Slice:** `baron-door-audit` · **branch:** `lane/a` · **tip:** `6c9e4540c` · **gated + merged:** s2290
-**Merge:** ✅ **MERGED s2290 at `abf6b7464cfa527949c3873894a5548ea0a9bb1b`**
+**Slice:** `baron-door-audit` · **branch:** `lane/a` · **tip:** `0c62d94ca` · **gated + merged:** s2290
+**Merge:** ✅ **MERGED s2290 at `c05fc05d1a3c9f44b9d2329bf030206f76a49d5b`**
 
 ## VERDICT: MERGED — the audit's verdict SURVIVES the attended retraction, on the retraction's own evidence; but its supporting reasoning has a hole, and its owner fork is priced against a strategy it never tried.
 
@@ -11,7 +11,7 @@ was recorded on 2026-08-13** and was invisible to its evidence sweep for the sam
 reason that made the attended session's own sweep a false negative twelve hours earlier. Attended
 filed that as a RETRACTION and left this drain a standing order: *"the running baron-door-audit's
 premise ('no secure found') is corrected by this row — its drain must reconcile against
-`6b1fcdce0`."* That reconciliation is the substance of this review, and its answer is not the one
+`488761f43`."* That reconciliation is the substance of this review, and its answer is not the one
 either side expected.
 
 ## What it does
@@ -60,8 +60,8 @@ the work is **retained**, and the retraction stepped past it.
 
 | question | measured |
 |---|---|
-| does `6b1fcdce0` exist? | **yes** — 2026-08-13T00:54:26+07:00, *"🏆 FIRST AGENT BARON SECURE — codex gpt-5.6-sol wave 22"* |
-| does it postdate AP-16 (`8465f6b33`, 2026-08-10)? | **yes** — `git merge-base --is-ancestor` confirms |
+| does `488761f43` exist? | **yes** — 2026-08-13T00:54:26+07:00, *"🏆 FIRST AGENT BARON SECURE — codex gpt-5.6-sol wave 22"* |
+| does it postdate AP-16 (`760990fda`, 2026-08-10)? | **yes** — `git merge-base --is-ancestor` confirms |
 | what does it claim? | `secured: true`, `waves: 22`, `eventLogHash: fnv1a32:f5365f4c`, `runsSoFar: 6` |
 | what did it LAND? | **two files** — `codex-sol-r1-outcome.json` and `codex-sol-r1-player.mjs` |
 | the tape its own outcome names (`"tape": "run-6-tape.json"`) | **NOT IN THE REPO** — `git ls-files` matches nothing, in any directory |
@@ -79,9 +79,9 @@ described. What is missing is the artifact that would let the county *demonstrat
 different and lesser claim than fraud — but it is exactly the claim `e1-baron`'s admission rests on.
 
 **But the audit's supporting reasoning has a real hole, and it is the same hole.** It dated the
-admission trail to `1a4831df7` (2026-08-03 — a boss-driver test that boosts the rig to 1,000 damage
+admission trail to `653c7fef3` (2026-08-03 — a boss-driver test that boosts the rig to 1,000 damage
 and the hero to 100,000 HP, correctly judged not a lawful door ride) and concluded the evidence
-predates AP-16. That is true *of the commit it found*. It never found `6b1fcdce0`, twelve hours of
+predates AP-16. That is true *of the commit it found*. It never found `488761f43`, twelve hours of
 attended work away, for the same reason attended's own `find -name *baron*` missed it: **the
 campaign files carry no `baron` in their names.** Three independent sweeps have now failed on that
 one discoverability defect. It is not a judgement error; it is a missing index.
@@ -95,7 +95,7 @@ twelfth, which is the only one that has ever worked.
 `bench/gauntlet/heat3/codex-sol-r1-player.mjs` **is retained** — 195 lines, a full public-door
 build plan (3 sluices, 4 turrets, 6 beacons, 3 palisades, 2 stockpiles, tiered upgrades, a scored
 `pickUpgrade`). Unlike a tape, **a player is a strategy, not a fixed input stream** — and this
-morning's own `gauntlet-heat5b-reearn` drain (merged `77c85566a`, four hours ago) established
+morning's own `gauntlet-heat5b-reearn` drain (merged `81729ab9b`, four hours ago) established
 exactly which of the two survives an engine patch: *"structural knowledge survives, tick-coupled
 timing does not."* The Aug-13 stream is engine-skewed and worthless; **the Aug-13 strategy is not**,
 and it was never re-ridden.
@@ -114,7 +114,7 @@ that is the owner's fork, and this only prices it.
 
 ## Findings
 
-- **F-2290-1** — the county's only claimed agent Baron secure (`6b1fcdce0`, `fnv1a32:f5365f4c`)
+- **F-2290-1** — the county's only claimed agent Baron secure (`488761f43`, `fnv1a32:f5365f4c`)
   retains **no tape**. Its own outcome names `run-6-tape.json`; that file is in no commit. The
   admission is therefore unsupported by retained evidence, as the audit found, and the retraction
   does not overturn it. **Non-blocking** — it concerns the historical record, not this slice.
@@ -123,7 +123,7 @@ that is the owner's fork, and this only prices it.
   one retained strategy that has ever secured this contract post-AP-16. **Non-blocking**, but it is
   a cheap measurement that should precede the ruling. Fire-authorable as a single re-ride.
 - **F-2290-3** — three independent sweeps (heat-5's study, attended's `find`, this audit) each
-  missed `6b1fcdce0` because the campaign files carry no contract name. The evidence is
+  missed `488761f43` because the campaign files carry no contract name. The evidence is
   discoverable only by reading commit subjects. **Non-blocking**; the cure is an index entry, which
   the attended retraction already proposed as its consequence ④.
 

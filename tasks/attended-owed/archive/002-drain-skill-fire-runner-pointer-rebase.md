@@ -1,6 +1,6 @@
 target: .claude/skills/drain/SKILL.md
 anchor: fire-runner.sh:86
-why: `02bea28c` (owner's auth fix, 2026-08-05 17:33) inserted 5 lines into scripts/fire-runner.sh and rotted three law pointers into it. s1456 re-based the two it could write (CLAUDE.md :88 -> :93, scripts/fire.md :81 -> :86, both re-verified by READING the file). This third one is under .claude/ and the fire shell is denied. Until it lands, `law-pointer-guard` is RED on exactly this one pointer — an honest red, not a broken guard.
+why: `729f9963` (owner's auth fix, 2026-08-05 17:33) inserted 5 lines into scripts/fire-runner.sh and rotted three law pointers into it. s1456 re-based the two it could write (CLAUDE.md :88 -> :93, scripts/fire.md :81 -> :86, both re-verified by READING the file). This third one is under .claude/ and the fire shell is denied. Until it lands, `law-pointer-guard` is RED on exactly this one pointer — an honest red, not a broken guard.
 opened: s1456 2026-08-05
 kind: ACTION (one coordinate, two characters — needs no owner ruling, only an unrestricted shell)
 
@@ -18,7 +18,7 @@ Change `fire-runner.sh:81` to `fire-runner.sh:86`. Optionally add the drift note
 the sibling surfaces now record it:
 
 ```
-(launchd and `fire-runner.sh:86` — was `:81`, rotted s1456 by the owner's `02bea28c` auth fix — set it; lanes and attended sessions never do)
+(launchd and `fire-runner.sh:86` — was `:81`, rotted s1456 by the owner's `729f9963` auth fix — set it; lanes and attended sessions never do)
 ```
 
 ## The substance is INTACT — this is a coordinate repair, not a law change
@@ -44,7 +44,7 @@ entry at its old fingerprint deliberately, so the guard keeps naming it until it
 
 ## The general lesson this one carries (worth 30 seconds)
 
-`fbc7c6cb` (s1402) edited this same file and **deliberately preserved its line count** so these
+`e0b28fae` (s1402) edited this same file and **deliberately preserved its line count** so these
 pointers would survive — its commit message says so. That protection was a *convention in one
 author's head*, enforced by nothing, and the first commit from outside the factory loop (an ops
 fix, by the owner) silently broke all three. This is the **fourth** distinct rot of the §4.10b

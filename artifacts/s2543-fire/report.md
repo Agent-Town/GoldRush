@@ -24,6 +24,6 @@ Withheld audit: 375 logs read; five withholding runs, 112 rows / 58 paths, three
 
 ## Closeout
 
-The predecessor's full handoff was archived verbatim exactly once in lock commit `926867d2d0a3e998fbc7f1a12187c3203152f439`. STATUS now clears the semaphore and carries the exact same desk. The mandatory closing ledger battery runs after the handoff commit; its result and the backup push receipt follow here. No build or browser gate is claimed by this fire, which changed only bookkeeping and evidence.
+The predecessor's full handoff was archived verbatim exactly once in lock commit `e22833c6cfec55d78a67259feced22ef87af1a5c`. STATUS now clears the semaphore and carries the exact same desk. The mandatory closing ledger battery runs after the handoff commit; its result and the backup push receipt follow here. No build or browser gate is claimed by this fire, which changed only bookkeeping and evidence.
 
 Closing result: **PASS** on Node 26.4.0, 1,050 Node checks and 83 shell checks, zero failures, 140.198 seconds. All three desk legs evaluated and passed. `closing-ledger.txt` is the full transcript; `closing-ledger.json` records the tested handoff and its log hash. The handoff push succeeded (`backup-handoff.txt`). An Obsidian session digest was written; MAIN remains in flight. Raw tool receipts preserve their original whitespace.

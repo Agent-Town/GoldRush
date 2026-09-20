@@ -1,9 +1,9 @@
 # Review — E7/E10 landable eras (F-REH-02/03 P0 correctives)
 
 - **Slice:** lane-e7-e10-claimable (combined E7 + E10, QUEUED from saga-rehearsal draft, attended 2026-07-22)
-- **Branch/tip:** `lane/m3` tip `1135df1a` "runner(lane-a): lane-e7-e10-claimable.md"
-- **Base:** `73408c6e` (s912's census-triage fix, the lane's own merge-base — FRESH, not stale)
-- **Merge:** `c96cd289ff9b6c27ec4b8d3de36a21873724efac` (`--no-ff` 3-way onto clean main; s913, 2026-07-22)
+- **Branch/tip:** `lane/m3` tip `2e190dcc` "runner(lane-a): lane-e7-e10-claimable.md"
+- **Base:** `bdcac324` (s912's census-triage fix, the lane's own merge-base — FRESH, not stale)
+- **Merge:** `81ea82204810c330dc254e747ce74c23673639b3` (`--no-ff` 3-way onto clean main; s913, 2026-07-22)
 - **Verdict:** ✅ MERGED — clean graft, full gate battery green, on-spec.
 
 ## What it does (player-visible)
@@ -29,7 +29,7 @@ Makes the two saga flagships **landable in plain play** — the first time E7 an
 | Screenshots | `reviews/shots-e7-e10-landable/` — relay-valley-plain-boot, relay-valley-echo-arrival, last-claim-plain-boot, last-claim-static-arrival (mobile-chrome) |
 
 ## Merge classification
-7 files, +109/-19. Base `73408c6e` is the lane's own merge-base and is FRESH (s912's census merge = same content on main), so **NO phantom deletions** this drain (unlike s912's census drain). Verified `git diff 73408c6e main -- <all 7 files>` was EMPTY before merge → main had touched none of them → clean 3-way, zero conflicts, all 7 files LANE-TOUCHED-only. STATUS.md/docs on main and the e7-e10 files on lane are disjoint sets.
+7 files, +109/-19. Base `bdcac324` is the lane's own merge-base and is FRESH (s912's census merge = same content on main), so **NO phantom deletions** this drain (unlike s912's census drain). Verified `git diff bdcac324 main -- <all 7 files>` was EMPTY before merge → main had touched none of them → clean 3-way, zero conflicts, all 7 files LANE-TOUCHED-only. STATUS.md/docs on main and the e7-e10 files on lane are disjoint sets.
 
 ## Findings
 - **F-E710-01 (non-blocking, OWNER'S DESK):** the plain-boot boss-arrival tests use `?debug&contract=<flagship>` (LIVE_QUERY) only to expose the `__GR_TEST__` harness for forcing the arrival wave (`startWaveForTest` / `advanceSim`) — the *gating* is proven flag-free (PLAIN_QUERY resolves the contract; the flag-path/unarmed tests confirm the boss does NOT arm on The Claim without its seam). A full unforced-wave playthrough to the arrival wave in a truly plain boot is the acceptance proof the master names ("the saga-rehearsal driver's E7/E10 segments then rehearse the REAL contracts") — that live rehearsal is owner/attended, not a fire gate. No code concern.

@@ -1,4 +1,4 @@
-s1496 DRAIN GATE TRANSCRIPT — milk/deepwater-surgery -> main 7bfd62ee0427eaf5a31bb30266a3b538b08be5d0
+s1496 DRAIN GATE TRANSCRIPT — milk/deepwater-surgery -> main 45f54b88f7ec6153cc8f92ff05125ef1255c31ad
 Gated on the MERGED tree in detached worktree gate-s1496 (section 3.0b custody).
 Node v26.4.0 (matches .nvmrc). All playwright runs --workers=1 (section 3.1).
 
@@ -8,7 +8,7 @@ SECTION 3.0 — drain-block-check.mjs milk/deepwater-surgery --strict
      Leaf registered retroactively in the drain bookkeeping commit.
 
 MERGE SHAPE
-  merge-base main milk/deepwater-surgery = 565a145a50bfcd0d726c869e0f42db869fbba1fb
+  merge-base main milk/deepwater-surgery = f38638438f9532a76a1e7fda8ee4d3d3b8d25d04
   git merge-tree --write-tree main milk/deepwater-surgery -> rc=0 CLEAN (tree 1a77aa08)
      Re-run at the LIVE tip, as the review explicitly demanded; the review's own
      trial merge was evidence about a tip that had already moved.
@@ -71,7 +71,7 @@ CARRIED FORWARD (open, non-blocking)
 
 
 ================================================================================
-DRAIN 2 — milk/motor-socket -> main d66bdbe35b6c700ad70a97bd8490a545aa451a0b
+DRAIN 2 — milk/motor-socket -> main 346ce0463e315fda20f93f91b23d2f8646a02f06
 ================================================================================
 
 SECTION 3.0 — drain-block-check.mjs milk/motor-socket --strict
@@ -79,7 +79,7 @@ SECTION 3.0 — drain-block-check.mjs milk/motor-socket --strict
   Leaf milk-motor-socket registered retroactively in the bookkeeping commit.
 
 CONTROL RUN ON CLEAN MAIN — ordered by the s1495 drain ladder, run BEFORE the merge
-  tree = main 6f8deccbe (motor-socket NOT merged), gate-s1496 reset --hard main
+  tree = main 4a67acc96 (motor-socket NOT merged), gate-s1496 reset --hard main
   npx playwright test e2e/agent-view.spec.ts --workers=1
     -> 4 failed / 4 passed (34.6s)
     FAILING, per-test:
@@ -97,7 +97,7 @@ MERGED TREE — same command after merging milk/motor-socket into the gate workt
 
   VERDICT: fingerprint identical on both sides of the merge. The agent-view reds are
   MAIN-SIDE and PRE-EXISTING; the slice introduces no red. F-MOTOR-1 root cause
-  confirmed: e1-drill-yard became the SIXTH E1 contract in 74df35dcf while
+  confirmed: e1-drill-yard became the SIXTH E1 contract in 19f212b71 while
   agent-view.spec.ts:269 and e2e/fixtures/e1-mechanics-manifests.json still expect five.
 
 F-1496-1 — FILED AGAINST THE REVIEW COUNT (substance right, count wrong)

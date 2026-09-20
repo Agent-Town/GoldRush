@@ -10,7 +10,7 @@ const hash = (p) => crypto.createHash('sha256').update(fs.readFileSync(p)).diges
 const fixed = fs.readFileSync(GUARD);
 const fixedHash = hash(GUARD);
 
-const mainBlob = execSync('git show fb40b2584:scripts/citation-title-guard.mjs', { cwd: GATE, encoding: 'buffer' });
+const mainBlob = execSync('git show 303b3c8f4:scripts/citation-title-guard.mjs', { cwd: GATE, encoding: 'buffer' });
 fs.writeFileSync(GUARD, mainBlob);
 
 const r = spawnSync(process.execPath, ['--test', 'scripts/citation-title-guard.test.mjs'], {

@@ -1,7 +1,7 @@
 # Review — BT-02 Tier Production Semantics (s110 drain, owner-ruled)
 
 **Slice:** BT-02 — building-tier upgrades meaningfully improve production (yield/DPS/HP ramps).
-**Source branch:** `save/bt-02-production-semantics` commit `19f27dc` "feat: add tier production semantics".
+**Source branch:** `save/bt-02-production-semantics` commit `b054ede` "feat: add tier production semantics".
 **Merged:** onto clean main (s110 fire, 3rd drain, after sci-ceiling + m4-07), 3-way auto-resolve on Balance.ts + BuildSystem.ts + vite-env.d.ts, `--no-commit` gated.
 **Verdict:** ✅ PASS — merged.
 

@@ -2,7 +2,7 @@
 
 **Slice:** `lane-m2-01-fixture-coordinate` (FIRE-AUTHORED s1029, drained s1030)
 **Branch:** `lane/m3` · **Lane tip:** `64b0970d` (`runner(lane-a): lane-m2-01-fixture-coordinate.md`)
-**Base:** clean `main` at `cff86423` · **Drained:** 2026-07-25, s1030 fire
+**Base:** clean `main` at `e5b01d1e` · **Drained:** 2026-07-25, s1030 fire
 **Closes:** F-1029-2
 
 ## VERDICT: ✅ MERGE
@@ -36,7 +36,7 @@ not a guard; the master forbade touching it, and the diff proves it was not touc
 |---|---|---|
 | `e2e/m2-01-build-menu.spec.ts` | **LANE-TOUCHED** (+2/−1) | merged, path-scoped |
 | `STATUS.md` | MAIN-MOVED-ONLY | not copied |
-| `e2e/asset-diet.spec.ts` | MAIN-MOVED-ONLY (s1029 `9ba65911`) | not copied |
+| `e2e/asset-diet.spec.ts` | MAIN-MOVED-ONLY (s1029 `386cce80`) | not copied |
 | `reviews/asset-diet-gate-honesty.md` | MAIN-MOVED-ONLY (s1029) | not copied |
 | `tasks/BACKLOG.md` | MAIN-MOVED-ONLY | not copied |
 | `tasks/goals.json` | MAIN-MOVED-ONLY | not copied |
@@ -80,7 +80,7 @@ The probe was reverted before the merge and verified reverted two ways —
 exactly `2 insertions(+), 1 deletion(-)`.
 
 Codex reported 182 / 162; I measure 182 / **160**. Desktop matches to the call; mobile differs by
-2, which is ordinary late-upload jitter of the same class s1029 root-caused in `f7cd0103`. Both
+2, which is ordinary late-upload jitter of the same class s1029 root-caused in `bebc1b1f`. Both
 readings agree on the finding that matters: **the ceiling holds with room to spare.** For the
 record, the predecessor's probe figure of 131 mobile was measured through a hand-driven probe
 rather than the real fixture and should not be carried forward — 160 is the number this guard
@@ -136,7 +136,7 @@ reverted, `git status -- e2e/` empty), and this slice touches a different spec f
 Reproduced on **clean main** (1 fail in the full suite) and 1-in-3 on `--repeat-each=3`. So it is a
 flake, not a hard regression — but it is a *new* red: s1029 gated seven adjacents and reported
 "45 passed / 1 failed", the single failure being `:319`. Either `:198` flaked green through that
-gate or it arrived with `f7cd0103` / `9ba65911`. Worth an owner-cheap look, because "replay equal
+gate or it arrived with `bebc1b1f` / `386cce80`. Worth an owner-cheap look, because "replay equal
 to HUD" is an economy-truth assertion and a zero where a positive is expected is the shape of a
 real race, not merely a slow poll.
 

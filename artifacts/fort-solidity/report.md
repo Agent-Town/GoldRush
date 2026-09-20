@@ -1,6 +1,6 @@
 # f1452-1 — fort solidity and static-wall routing report
 
-Status: **READY-FOR-GATES** on base `c063b5e59b34345f61666b01a4662f8811e8a110`.
+Status: **READY-FOR-GATES** on base `f449dd65be4e83b2274d4e11c14093d344657c5f`.
 
 ## Routing design
 
@@ -90,7 +90,7 @@ The requested combined E1/browser sweep was attempted with both projects and one
 - `enemy-gap-flow.spec.ts:154`: expected `z > 15`, received exactly `13.873747435156046`.
 - `enemy-gap-flow.spec.ts:181`: expected watchdog trips `0`, received exactly `3`.
 
-Both fingerprints reproduced at the exact same values in a detached clean-`HEAD` worktree on `c063b5e5`, and an independent Codex review repeated that clean-`HEAD` control. They predate this slice. Test-generated `artifacts/enemy-gap-flow/` churn was restored.
+Both fingerprints reproduced at the exact same values in a detached clean-`HEAD` worktree on `f449dd65`, and an independent Codex review repeated that clean-`HEAD` control. They predate this slice. Test-generated `artifacts/enemy-gap-flow/` churn was restored.
 
 The independent review also ran `node scripts/gr-sim.test.mjs`: 8/9 passed. The Baron deterministic golden changed from 869 to 861 kills and from `fnv1a32:b9566c6d` to `fnv1a32:36004eab`. This is expected evidence that the new static route participates in Baron simulation, but the existing golden cannot be updated in this firewalled slice. The orchestrator must review and ratify that deterministic golden change during integration.
 

@@ -60,7 +60,7 @@ Received:    16343695
   402 |     `| normal | ${normalCueWindowBytes} | ${normalCueStats.uniqueBytes} | ${normalCueStats.duplicateBytes} |`,
   403 |     `| saveData | ${saveDataCueWindowBytes} | ${saveDataCueStats.uniqueBytes} | ${saveDataCueStats.duplicateBytes} |`,
   404 |     '',
-  405 |     'Desktop normal measured 24,604,025 bytes at f1621-1 (`75632a7e3`), 26,115,186 in the f1625-1 runner, and 23,259,297 at the f1625-1 drain: a 12.3% swing across the 25,000,000 ceiling.',
+  405 |     'Desktop normal measured 24,604,025 bytes at f1621-1 (`fb1bdf72d`), 26,115,186 in the f1625-1 runner, and 23,259,297 at the f1625-1 drain: a 12.3% swing across the 25,000,000 ceiling.',
   406 |     '',
   407 |     `Cue-window delta (normal - saveData): **${normalCueWindowBytes - saveDataCueWindowBytes} bytes**.`,
   408 |     '',

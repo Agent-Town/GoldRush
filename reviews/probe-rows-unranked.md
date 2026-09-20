@@ -1,8 +1,8 @@
 # probe-rows-unranked — the county's own smoke tests stop outranking riders
 
 - **Slice:** `probe-rows-unranked` (lane-c, master `tasks/probe-rows-unranked.md`)
-- **Branch:** `lane/c` · **tip** `5384117f4` (`runner(lane-c): probe-rows-unranked.md`)
-- **Base:** `8c105470411dfcf99cefb6cccb611b40362b2853` (s2440 handoff) — 6 commits behind main at gate time, ~13 min stale
+- **Branch:** `lane/c` · **tip** `5087da113` (`runner(lane-c): probe-rows-unranked.md`)
+- **Base:** `d2a2179f81bd1628f3a0f53f2d1dfb27e3408578` (s2440 handoff) — 6 commits behind main at gate time, ~13 min stale
 - **Drained by:** s2441 fire · **gate worktree:** `gate-s2441` (detached, §3.0b custody)
 
 ## Verdict
@@ -41,7 +41,7 @@ All arms run on the **merged tree** in the detached `gate-s2441` worktree, fire 
 
 ## Merge classification
 
-Base `8c105470411dfcf99cefb6cccb611b40362b2853`; `git diff --name-status <base> main` over the five paths shows main moved on exactly one.
+Base `d2a2179f81bd1628f3a0f53f2d1dfb27e3408578`; `git diff --name-status <base> main` over the five paths shows main moved on exactly one.
 
 | File | Class | Resolution |
 |---|---|---|

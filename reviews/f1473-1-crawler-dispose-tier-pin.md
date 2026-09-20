@@ -2,7 +2,7 @@
 
 **Slice:** `f1473-1-crawler-dispose-tier-pin` (FIRE-AUTHORED s1475, master `tasks/lane-f1473-1-crawler-dispose-tier-pin.md`)
 **Branch / tip:** `lane/a` @ `6e27050d1` ("crawlerpin: pin fallback disposal states")
-**Base:** `d98bc649c` (merge-base with main) · main at drain time `11e5a3c4c`
+**Base:** `59d0f4607` (merge-base with main) · main at drain time `64b1f684d`
 **Gated in:** detached worktree `gate-s1476/` (§3.0b custody — undecided content never entered main's tree)
 
 ## VERDICT: MERGE — green in both projects, and the pin is proven load-bearing by a manufactured defect.
@@ -115,16 +115,16 @@ Then the predicate failed its own validation, both ways:
 | commit | date | desktop `coldBaseline` |
 |---|---|---|
 | committed artifact | 07-25 | `calls 72, triangles 146026, geometries 80` |
-| `f727cb75c` | 07-31 | `calls 73, triangles 146028, geometries 80` |
-| `a1ec923b8` | 08-02 | `calls 72, triangles 146026, geometries 80` |
-| `a1ec923b8` **re-run, same shell** | 08-02 | `calls 73, triangles 146028, geometries 80` |
+| `513651740` | 07-31 | `calls 73, triangles 146028, geometries 80` |
+| `265d585e8` | 08-02 | `calls 72, triangles 146026, geometries 80` |
+| `265d585e8` **re-run, same shell** | 08-02 | `calls 73, triangles 146028, geometries 80` |
 | main | 08-06 | `calls 74, triangles 147708, geometries 81` |
 
 Non-monotonic, so bisect's precondition is violated — and the last two rows are the control that explains
 why: **the same commit measured twice gives two different answers.** The ±1 `calls` / ±2 `triangles`
 component is **noise, not drift**, and no commit can be blamed for it.
 
-What survives as possibly real: `geometries 80→81` was stable at 80 across both runs at `a1ec923b8` and
+What survives as possibly real: `geometries 80→81` was stable at 80 across both runs at `265d585e8` and
 reads 81 on main, as does the `+1682` triangle step. Those are **unattributed and not bisectable by this
 predicate** — naming them needs a denoised statistic (n runs per commit, compare distributions), not a
 byte comparison.

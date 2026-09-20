@@ -1,14 +1,14 @@
 # 078-focus-and-ledger-reverts — drain review (s1104)
 
 **Slice:** `lane-078-focus-and-ledger-reverts` (F-1101-2 corrective)
-**Branch:** `lane/e2-arsenal` · **Lane tip:** `47f21b29` (code at `58ef3478`)
-**Base:** `ffd89089` (verified ancestor of main)
-**Merge:** `5ec26bce` onto main
+**Branch:** `lane/e2-arsenal` · **Lane tip:** `47f21b29 (archive: pruned by the A3 rewrite)` (code at `217663ec`)
+**Base:** `5c0f47d9` (verified ancestor of main)
+**Merge:** `7f066ecc` onto main
 **Verdict:** ✅ **MERGED — all three reverted fixes restored, 078 goes 1/4 → 4/4 on both projects.**
 
 ## What it does
 
-s1102 root-caused `e2e/078-ux-hygiene.spec.ts` (frozen since `cd76c7f0`, 2026-07-10) failing 3/4 because
+s1102 root-caused `e2e/078-ux-hygiene.spec.ts` (frozen since `ede70427`, 2026-07-10) failing 3/4 because
 two stale-base landings of 2026-07-11 silently reverted three fixes made on 2026-07-10. This slice
 restores exactly those three, and nothing else:
 
@@ -87,5 +87,5 @@ the broader `inert` alternative remains **RULING 6, owner-gated** and was correc
 `town-t3-board.spec.ts:161` fails on **both** projects at `:203`, expecting
 `data-contract-art-key="contract-dry-gulch"` but receiving `"plate"`. s1103 flagged this for confirmation
 "from its own control run, do not wave it through". Confirmed on a **detached clean-main worktree at the
-pre-merge commit `06c427f3`**: byte-identical message, same two projects. **Not this slice's.** It is a
+pre-merge commit `0558e5bb`**: byte-identical message, same two projects. **Not this slice's.** It is a
 genuine manifest/markup mismatch and wants its own corrective.

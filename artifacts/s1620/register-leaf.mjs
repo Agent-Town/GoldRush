@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 
 const note =
-  'FIRE-AUTHORED s1620 from F-1620-1 + F-1620-2, both measured at the s1620 drain of f1619-1 (merge beb926087). ' +
+  'FIRE-AUTHORED s1620 from F-1620-1 + F-1620-2, both measured at the s1620 drain of f1619-1 (merge 3ef4c1dcc). ' +
   'MEASUREMENT SLICE, NOT A CURE: src/assets/AdvanceStream.ts is firewalled BY NAME, as it was for f1614-1, f1616-1 and f1619-1 — a task that measures the prefetch path must not alter it. ' +
   'WHY IT IS THE TOP LEAD: f1619-1 proved the double-download is NOT a page.route artifact, but the drain found it had inherited a second confound it could not see — the harness runs against the Vite dev server, which sends Cache-Control: no-cache, under which a true CACHE-HIT is impossible by construction. So the persuasive CACHE-HIT=0 column was the server talking, not the prefetch. ' +
   'THE STAKE, STATED BOTH WAYS ON PURPOSE: if the double-download survives production-style headers, the deployed game re-downloads tens of MB in a five-door walk and a cure slice against AdvanceStream.ts is clearly worth funding; if it does not survive, the whole thing was a dev-server artifact and the ladder should stop here. Both answers are valuable and the master forbids preferring either. ' +

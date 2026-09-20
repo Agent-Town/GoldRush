@@ -2,7 +2,7 @@
 
 - **Slice:** `lane-vp-02g-west-capture-null-rate`
 - **Branch / tip:** `lane/m4` @ `43d72990` (runner(lane-b), 2026-07-27T21:51:45+07:00)
-- **Base (merge-base with main):** `4155cdbf`
+- **Base (merge-base with main):** `9f3582a0`
 - **Drained by:** s1141 fire, 2026-07-27
 - **§3.0 drain-block-check:** ✅ CLEAR (`lane-vp-02g-west-capture-null-rate`, status `queued`)
 
@@ -53,7 +53,7 @@ carried "mobile-only"; three fires running were corrected by nothing but a large
 
 ## Merge classification
 
-Single file, `e2e/vp-02-sprite-animation.spec.ts`. `git log 4155cdbf..main -- <file>` is
+Single file, `e2e/vp-02-sprite-animation.spec.ts`. `git log 9f3582a0..main -- <file>` is
 **empty** — main never moved it, so this is LANE-TOUCHED-ONLY with no 3-way graft needed.
 Applied with `git checkout 43d72990 -- <file>`; every other path in the two-dot diff
 (`STATUS.md`, `tasks/BACKLOG.md`, `tasks/goals.json`, `scripts/tmp-s1140-*`) is

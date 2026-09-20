@@ -1,6 +1,6 @@
 # Review — e10-01-research-tree
 
-**Slice/branch/tip:** e10-01-research-tree · lane/m4 (lane-b) · runner commit `c8db5f3a` · base `78693ea9` (e9-01, ancestor of main)
+**Slice/branch/tip:** e10-01-research-tree · lane/m4 (lane-b) · runner commit `c8db5f3a` · base `dc453dfd` (e9-01, ancestor of main)
 **Drain:** s598 fire · merged to main via checkout-graft (no 3-way)
 **Verdict:** ✅ PASS — clean additive board-gated graft, canon-clean, NO GZ (future era, not player-visible). FINAL research-tree rung → ladder exhausted after this.
 
@@ -8,7 +8,7 @@
 Adds the epoch-10 **"Deep Sky / Generation Ark"** research chart — 15 nodes across three families (Starlight-current Survey/Cartography, Static Arsenal/Ward, Long-Table Fabrication) culminating in **The Charter Press** megaproject (`charter-press`) — the child-height lever that opens the world-builder (per CLAUDE.md §9 "Charter Press at E4+" and the saga's boarding transition). Registers `epoch-10-deepsky` in the encyclopedia registry (`era_deepsky`) and the ContractFamilies fallback manifest/contract bundles. Adds 15 `RESEARCH_UNLOCK_REVEALS` reveal lines (Starlight Soundings → World-Family Atlas → Seed Charters → Ember Shore Atlas → Starlight Pan Science → Static Soundings → Static Ward → Era-Memory Gates → Re-Ink Relays → Quiet-Core Science → Long Table Archive → Portrait Wall → Preserve Seals → World Charters → The Charter Press). Contracts are EMPTY-banked (display-safe, application unwired until its slice), matching the e6/e7/e8/e9 board-gated pattern.
 
 ## Merge classification
-Base `78693ea9` (e9-01 feat) is an ancestor of main; main only added two STATUS-only commits on top (`ac3655f7`, `f1179711` — both `git diff --name-only` = STATUS.md alone). Therefore the three modified src files (`src/encyclopedia/registry.ts`, `src/meta/ContractFamilies.ts`, `src/ui/ResearchChart.ts`) and `assets/LEDGER.md` on main are byte-identical to base → **checkout-graft, NO 3-way needed**. `git grep epoch-10` on main = empty (no collision; main had e1–e9). New files (epoch-10-deepsky contracts/manifest, e10 spec, artifacts) land untouched. All src hunks are strictly additive (registry +1, ContractFamilies +6 import/fallback lines, ResearchChart +15 reveal strings; 329 insertions, 0 deletions).
+Base `dc453dfd` (e9-01 feat) is an ancestor of main; main only added two STATUS-only commits on top (`99f00450`, `14e7e8ea` — both `git diff --name-only` = STATUS.md alone). Therefore the three modified src files (`src/encyclopedia/registry.ts`, `src/meta/ContractFamilies.ts`, `src/ui/ResearchChart.ts`) and `assets/LEDGER.md` on main are byte-identical to base → **checkout-graft, NO 3-way needed**. `git grep epoch-10` on main = empty (no collision; main had e1–e9). New files (epoch-10-deepsky contracts/manifest, e10 spec, artifacts) land untouched. All src hunks are strictly additive (registry +1, ContractFamilies +6 import/fallback lines, ResearchChart +15 reveal strings; 329 insertions, 0 deletions).
 
 ## Evidence
 | Gate | Result |

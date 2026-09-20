@@ -204,7 +204,7 @@ and Opus's Blackout Ridge win was the thinnest margin of the heat, 4/100 HP held
 
 ## 7. Addendum, 2026-09-05 — the fix landed and four more contracts were claimed
 
-The envelope fencepost F-HEAT11-1 identified was cured and deployed (build `3345a36a`, builtAt
+The envelope fencepost F-HEAT11-1 identified was cured and deployed (build `899225c9`, builtAt
 2026-09-04T23:09:00Z). The three reels that had been **won and refused** were resubmitted **unchanged**:
 
 | contract | tape | before (2026-09-04) | after (2026-09-05) |

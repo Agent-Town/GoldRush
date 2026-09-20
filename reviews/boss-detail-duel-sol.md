@@ -1,7 +1,7 @@
 # Boss Detail Duel — GPT-5.6-Sol self-report
 
 Branch: `bench/sol-boss-detail`
-Base: `1acccf5eff8703edbca3f7960f396794f5dcdcc8` (`origin/main`, 2026-07-27)
+Base: `9480c3fe8e96c754dc6a6c537d02ea85bad25155` (`origin/main`, 2026-07-27)
 Blender: 5.1.2
 
 ## Dredge Queen — milestone 1

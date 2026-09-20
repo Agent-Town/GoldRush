@@ -8,7 +8,7 @@ READ FIRST: `AGENTS.md`; `tasks/BACKLOG.md` the **F-1549-2** row (the finding th
 
 Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead is NORMAL — the runner auto-commits. For each ahead commit: if its content is already merged to main (verify via git log/diff), it is a SAFE DUPE → `git checkout -B lane/d main && git clean -fd` and PROCEED. STOP-and-report ONLY if an ahead commit's content is NOT on main (undrained work — resetting would DESTROY it), or the worktree holds uncommitted edits you did not make. EVIDENCE-ARTIFACT EXCEPTION (F-1266-1): changes confined to regenerated evidence — `artifacts/**`, `reviews/shots-*`, and any `.png` screenshot — are NEVER "work" and NEVER a STOP. Discard them and PROCEED, listing what you discarded. Then `npm install --no-audit --no-fund`; `npm run build` green before touching anything. THEN A CLEANLINESS LINE: `git -C worktrees/lane-d status --short` → must be clean, with the FACTORY-CHURN EXCEPTION — always expected, never a STOP; list them and proceed (F-1407-1): (a) `logs/**`; (b) `artifacts/**`, `reviews/shots-*` and any `.png`. What still STOPs: modified tracked `src/**`, `scripts/**`, `e2e/**`, `tasks/**`, `specs/**`, `reviews/*.md`.
 
-**CITATION CHECK (hard STOP if it fails).** Before scope 1, run these three greps in the lane. Each must return **exactly 1** (all three verified `1` on main at `e479c91f1`, s1551):
+**CITATION CHECK (hard STOP if it fails).** Before scope 1, run these three greps in the lane. Each must return **exactly 1** (all three verified `1` on main at `492c56fcd`, s1551):
 
 - `grep -c '"test:mp": "node scripts/test-multiplayer.mjs",' package.json`
 - `grep -c "const child = spawn('wrangler', args, {" scripts/test-multiplayer.mjs`

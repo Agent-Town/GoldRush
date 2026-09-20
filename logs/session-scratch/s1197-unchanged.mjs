@@ -12,7 +12,7 @@ const OLD = path.join(REPO, 'scripts/tmp-s1197-old-subject.mjs');
 const FIXTURE = path.join(REPO, 'logs/session-scratch/s1197-f1167-4-fixture.json');
 const OUT = '/tmp/s1197-unchanged-out.md';
 
-fs.writeFileSync(OLD, execFileSync('git', ['show', 'd8f02e51:scripts/suite-red-inventory.mjs'], { cwd: REPO, encoding: 'utf8' }));
+fs.writeFileSync(OLD, execFileSync('git', ['show', 'bfaabd1c:scripts/suite-red-inventory.mjs'], { cwd: REPO, encoding: 'utf8' }));
 try {
   const oldRun = spawnSync(process.execPath, [OLD, FIXTURE, OUT], { cwd: REPO, encoding: 'utf8', timeout: 60_000 });
   const oldBytes = fs.readFileSync(OUT);

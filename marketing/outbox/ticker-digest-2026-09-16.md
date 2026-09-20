@@ -7,9 +7,9 @@ commit messages (Mistake #16). Owner approves the whole digest in one action; pu
 with **no `--since`/`--until` window at all** (F-2562-2). Control asserted before any count was believed —
 **11,931** first-parent commits in the whole history — so a zero here would have been an answer and not a
 failed read. The player-path test is **imported** from `scripts/gazette-backfill-sweep.mjs` (`isPlayerPath`),
-never re-typed, per F-1261-1. The day was asked as a day — `git diff e55c1aee1^..17e8a9342` — rather than
+never re-typed, per F-1261-1. The day was asked as a day — `git diff dbbeb4da8^..0780b4026` — rather than
 commit by commit, because the merge-direction over-count F-2583-1 names was present in shape again:
-`3ef253c7b` merges **main into** the playability chain, so a first-parent diff would credit it with files
+`e4259a49b` merges **main into** the playability chain, so a first-parent diff would credit it with files
 that were already home. It happened to carry no player files this time. Ask the day anyway.
 
 **The shape of the day: 70 first-parent commits, and the player-visible half is five files wide.** Four
@@ -24,16 +24,16 @@ changed almost nothing and fixed the thing a new prospector hits first.
 that end an unassisted first-time player before wave 2 ever arrives. Two of them are cured, **in the maps' own
 data — `src/` and `Balance.ts` were not touched.**
 
-- `2d053781c` — **The Trestle and the Incline now reach wave 2.** The Trestle was dead at wave 1 by 57.3 sim-
+- `1802fbe63` — **The Trestle and the Incline now reach wave 2.** The Trestle was dead at wave 1 by 57.3 sim-
   seconds and now holds to **86.3–87.1 s**; the Incline was dead at 71.9 s and now holds to **80.8–81.7 s**.
   Three passes each, both desktop and 390 px.
 - The cure is a door rather than a dial: machines used to appear on a ring 26 units around the prospector, so
   a hero standing near the map's edge had them **materialise a few paces away with no approach and no
   warning**. The two claims now declare **spawn gates** — fixed points the machines must come in through — and
   the Incline gives up its south edge entirely. You get to see them coming.
-- `ab64b9fe4` — The claims' published mask tables were re-cut to match, so what the county prints about these
+- `731da343b` — The claims' published mask tables were re-cut to match, so what the county prints about these
   two maps is what the maps now do.
-- `ec973a325`, `5ebfabb44` — The era-6 seal re-pinned twice, so the engine hash moves with the contract data.
+- `2763dfadd`, `e2150c641` — The era-6 seal re-pinned twice, so the engine hash moves with the contract data.
   Same era, not a new one.
 - **The Drill Yard was never broken.** Its census row read "reached wave 0 after 374 s" — the practice ground
   has no waves to reach, and the instrument was asking it the wrong question. The question was fixed, not the
@@ -53,11 +53,11 @@ branch that promised not to make one. Nothing shipped. The measurements are in
 Sixty-six commits went to the factory's own tools, law and bookkeeping. Nothing here is news; it is listed so
 the day is whole.
 
-- **The county book got its daily offsite copy** (`d6cb8d86f`, LB-01), and the archive audit learned to say
-  whether a shortened record actually lost anything rather than only that it was shortened (`9d5e6b71b`).
-- **A check that could never pass was found and fixed** (`995385605`): the null-floor check now classifies by
+- **The county book got its daily offsite copy** (`d6cb8d86f (archive: pruned by the A3 rewrite)`, LB-01), and the archive audit learned to say
+  whether a shortened record actually lost anything rather than only that it was shortened (`c6e9cc6e7`).
+- **A check that could never pass was found and fixed** (`9ff2c2580`): the null-floor check now classifies by
   kind, so a pin older than the tree stops reading as a floor that moved.
-- **The board was played end to end again** (`ba63c9508`) — 76 of 84, the same four contracts reproducing on a
+- **The board was played end to end again** (`160426315`) — 76 of 84, the same four contracts reproducing on a
   byte-identical tree, which is what made the cure above provable rather than hopeful.
 - **Thirteen fire sessions talked to the ledger and to their own law.** The recurring subject was the law's own
   accuracy: a desk figure that had no predicate, a compound ruling half-carried into the rules, a weekly-mint
@@ -69,5 +69,5 @@ the day is whole.
 day.
 
 ---
-*Compiled by the s2599 fire. Day boundary `e55c1aee1^`..`17e8a9342`. 70 first-parent commits, 4 player-path,
+*Compiled by the s2599 fire. Day boundary `dbbeb4da8^`..`0780b4026`. 70 first-parent commits, 4 player-path,
 5 player-visible files net, 13 fire sessions. No commit message was used to classify anything.*

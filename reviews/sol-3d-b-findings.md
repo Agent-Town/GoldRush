@@ -10,8 +10,8 @@
 |---|---|
 | Slice | SOL Session 3D-B — THE HERO only |
 | Branch | `sol/hero-3d-proof` |
-| Fresh-cut base | `d1d301331058a6347a6e567081d9f6928dfa7d1b` |
-| Latest fetched `origin/main` | `1daea09e6690f33a5920a27eb1333cfc23b5fb01` — 15 commits ahead at final fetch |
+| Fresh-cut base | `04b5cef880b7a42789c971e6b9bd9d45f81297bc` |
+| Latest fetched `origin/main` | `8f41cb2134b84bad5dbd8ff5341c4eba0fd0d7c4` — 15 commits ahead at final fetch |
 | Territory | `assets/pilots/hero-3d/*`, this findings file |
 | Integration | Attended session merges; this session does not rebase onto moving `main` or self-merge |
 

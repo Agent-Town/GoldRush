@@ -1,8 +1,8 @@
 # f1510-3-revision-metadata-esm — drain review (s1518)
 
 **Slice:** `f1510-3-revision-metadata-esm` (master `tasks/lane-f1510-3-revision-metadata-esm.md`, authored s1517)
-**Branch:** `lane/b` · **tip** `209a57773` `runner(lane-b): lane-f1510-3-revision-metadata-esm.md`
-**Merge:** `0da47f3729c50f078f1ba24c3d1d24db267aee4e` (main, `--no-ff`)
+**Branch:** `lane/b` · **tip** `6e6465868` `runner(lane-b): lane-f1510-3-revision-metadata-esm.md`
+**Merge:** `942afed2ce9ebe8a8598faf1c64c9a5cb6bf5ef9` (main, `--no-ff`)
 **Gated in:** detached worktree `gate-s1518` (§3.0b custody), merged tree `6c90357f1`, Node **26.4.0** (`.nvmrc`), fire shell
 
 ## Verdict
@@ -16,7 +16,7 @@ captured revision into `logs/suite-red-inventory.md`.
 
 `playwright.config.ts` now records, at config-load time, the revision and tracked-only dirty state of
 the worktree **being tested**, via `import.meta.dirname` (ESM — `__dirname` does not exist under
-`"type": "module"`, which is what killed the predecessor `f9c0e498`). `scripts/suite-red-inventory.mjs`
+`"type": "module"`, which is what killed the predecessor `eb301c3a`). `scripts/suite-red-inventory.mjs`
 copies those two values into the inventory's evidence header; it derives nothing and invokes no git.
 Three rooted fixture arms cover clean / absent / dirty.
 
@@ -46,7 +46,7 @@ revision gets captured. Real JSON capture from the gate worktree:
 metadata = {"revision":"6c90357f16301b86d44dc2c6c4d4d9fa9f5bf132","dirty":false,"actualWorkers":1}
 ```
 
-`6c90357f1` is the **gate worktree's** merge commit — **not** main's `dfbd2b93b`, which is what a
+`6c90357f1` is the **gate worktree's** merge commit — **not** main's `4afb26bab`, which is what a
 cwd-anchored implementation would have reported. This reproduces s1517's finding [2] independently, in
 a third tree, from a different caller.
 

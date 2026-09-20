@@ -28,7 +28,7 @@ reachable in git, else STOP.
 s1307 recorded that `lane-a-f1305-2` ran **twice** and left the mechanism explicitly OPEN, warning that its two
 candidate cures pointed in opposite directions. Both were wrong, and the proof is on disk: the runner moves
 `running/`→`done/` on rc=0, so **both copies survive**, and `diff`-ing them yields **exactly the 2-line citation
-edit of commit `52785969`**. Run 1 executed the PRE-edit master; run 2 executed the POST-edit master.
+edit of commit `3f59bcca`**. Run 1 executed the PRE-edit master; run 2 executed the POST-edit master.
 
 **The second entry was not a duplicate. It was a different version.** A dedupe-at-queue-time or an
 idempotence-at-pickup guard would have silently discarded the **corrected** master and kept the defective one.
@@ -37,10 +37,10 @@ The real sequence, every step timestamped:
 
 | time | event |
 |---|---|
-| 00:23:38 | s1306 authors the master (`187d2673`) and copies it to `tasks/queue/lane-a/` |
+| 00:23:38 | s1306 authors the master (`4aff1a7c`) and copies it to `tasks/queue/lane-a/` |
 | 00:23:55 | runner `mv`s it to `running/`, writes the per-slot pidfile, dispatches **run 1** |
 | 00:26:09 | s1306 hands off |
-| **00:27:21** | **`test:ledger-guards` — run as the LAST act per the s1301 law — REDS `citation-title-guard` against s1306's OWN master.** s1306 fixes it (`52785969`) and re-copies it to the queue |
+| **00:27:21** | **`test:ledger-guards` — run as the LAST act per the s1301 law — REDS `citation-title-guard` against s1306's OWN master.** s1306 fixes it (`3f59bcca`) and re-copies it to the queue |
 | 00:27–00:43 | the pidfile makes the runner skip lane-a entirely; the second copy sits invisible for ~16 min |
 | ~00:43:15 | run 1 finishes rc=0, clears the pidfile |
 | 00:43:29 | one `sleep 15` poll later (`scripts/lane-runner-v3.sh` line 149), the runner dispatches **run 2** |

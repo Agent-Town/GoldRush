@@ -40,7 +40,7 @@ Two distinct cards, two distinct files. That is the whole slice, and it is prove
 
 ## Merge classification
 
-Base `main` @ `e5df23bd`. Path-scoped checkout of 4 paths from `lane/m3`; **no conflicts** (main moved only in `logs/`, `tasks/`, `reviews/` this fire, disjoint from the lane's `e2e/` + `artifacts/` set).
+Base `main` @ `f99356d9`. Path-scoped checkout of 4 paths from `lane/m3`; **no conflicts** (main moved only in `logs/`, `tasks/`, `reviews/` this fire, disjoint from the lane's `e2e/` + `artifacts/` set).
 
 - **LANE-TOUCHED, taken:** `e2e/m3-05b-run-ledger.spec.ts`, `artifacts/m3-05b-run-ledger/{desktop,mobile}-chrome-rush-card.png`, `tasks/runs/20260729-032452-…md`.
 - **DELIBERATELY NOT TAKEN:** `artifacts/m3-05b-run-ledger/{desktop,mobile}-chrome.png`. The lane rewrote them (`646638→646818`, `894591→894998` bytes) because `:170` still shoots them every run, and the delta is **nondeterministic content, not a different card** — the two boots drew different randomised barks ("North bank shadows want the gold!" vs "South bank dust is moving!"). Main's committed blobs (`9d99efd5…`, `626d3739…`) are kept, so the images the two shipped reviews point at are stable. ✓ verified after merge: both still hash to main's blobs.

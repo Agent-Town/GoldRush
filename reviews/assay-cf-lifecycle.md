@@ -1,8 +1,8 @@
 ---
 verdict: MERGE
 slice: assay-cf-lifecycle
-base: 14e13416fbbcb6139f9999656db1c5a4996700f2
-merge: 49aab8f1d63a2175e47e85b54659fead6caaa6da
+base: 68eb137eb9b169105bd17cccdd0e528a9d28c8f2
+merge: d2eab0c256b1f0d2b41b9208461c6114fbe97664
 date: 2026-08-15
 ---
 

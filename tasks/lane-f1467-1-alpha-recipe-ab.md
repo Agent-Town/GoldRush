@@ -50,7 +50,7 @@ Expect **No such file**. If it EXISTS, this slice already ran — STOP and repor
 
 1. `tasks/BACKLOG.md` — the **F-1464-2** row (the currency-probe sentence above anchors it) and the **F-1464-1** row directly above it. Your acceptance is F-1464-2's gate; F-1464-1 is what you unblock, **not** what you fix.
 2. `reviews/f1450-4-edge-softness-attribution.md` — the full attribution. It establishes that the two recipes differ **only** in when the resample happens; no extractor code drifted.
-3. `artifacts/f1450-4/` — **the evidence is already in git as of `e86f6481`; do not regenerate what exists.**
+3. `artifacts/f1450-4/` — **the evidence is already in git as of `e86f6481 (archive: pruned by the A3 rewrite)`; do not regenerate what exists.**
    - `arms/D-1024-then-384.png` = the **two-step** arm · `arms/E-old-1024-then-384.png` = its pre-bleed twin
    - `arms/D-default-1024/`, `arms/A-current/`, `arms/B-old-pre-bleed/`, `arms/C-bleed-stubbed/` — per-arm `prop-baron-banner.png`
    - `blobs/shipped-OLD-a1b3f4b0.png` (2026-07-08 two-step) vs `blobs/shipped-NEW-head.png` (one-step)

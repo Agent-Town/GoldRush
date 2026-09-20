@@ -8,7 +8,7 @@ CODEX: model=gpt-5.6-sol effort=high
 > Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead is NORMAL — the runner auto-commits. For each ahead commit: if its content is already merged to main (verify via git log/diff), it is a SAFE DUPE → `git checkout -B <lane-branch> main && git clean -fd` and PROCEED. STOP-and-report ONLY if an ahead commit's content is NOT on main (undrained work — resetting would DESTROY it), or the worktree holds uncommitted edits you did not make. Then `npm install --no-audit --no-fund`; `npm run build` green before touching anything.
 
 ⚠️ **`git log main..lane/e2-arsenal` WILL PRINT ONE COMMIT (`10e1a24c runner(lane-c): lane-board-chapter-seed-scope.md`), AND THAT IS EXPECTED — IT IS *NOT* A REASON TO STOP.**
-**Pre-proved for you by s1115, but sanity-check it rather than trusting this line:** that commit touches 4 files and **all 4 blobs are byte-identical to main's** (`git rev-parse 10e1a24c:<file>` == `git rev-parse main:<file>`, 4/4). Its content was drained to main as `b43b31ad` by a tip graft, so the branch reads ahead forever. **Textbook SAFE DUPE** → `git checkout -B lane/e2-arsenal main && git clean -fd` and PROCEED. The worktree was **CLEAN** at authoring time; uncommitted edits you did not make are still a STOP.
+**Pre-proved for you by s1115, but sanity-check it rather than trusting this line:** that commit touches 4 files and **all 4 blobs are byte-identical to main's** (`git rev-parse 10e1a24c:<file>` == `git rev-parse main:<file>`, 4/4). Its content was drained to main as `5097b3e6` by a tip graft, so the branch reads ahead forever. **Textbook SAFE DUPE** → `git checkout -B lane/e2-arsenal main && git clean -fd` and PROCEED. The worktree was **CLEAN** at authoring time; uncommitted edits you did not make are still a STOP.
 
 ## READ FIRST
 - `scripts/drain-block-check.mjs` — all 175 lines, especially its header contract (exit `0 CLEAR` / `1 BLOCKED` / `2 UNKNOWN`) and the `taskFile` → leaf resolution.
@@ -18,9 +18,9 @@ CODEX: model=gpt-5.6-sol effort=high
 
 ## Why this task (evidence, dated — s1115, 2026-07-27)
 The board was dry, so s1115 hunted `tasks/` for queueable masters and probed the three most plausible candidates **by content**. All three were **already shipped to main**:
-- `lane-blocked-storage-access-throw.md` → rf-23, drain `7be9ce7b`
-- `lane-m2-01-fixture-coordinate.md` → drain `df51d877`
-- `lane-m1-m2-resource-guards.md` → drain `f7cd0103`
+- `lane-blocked-storage-access-throw.md` → rf-23, drain `a736500c`
+- `lane-m2-01-fixture-coordinate.md` → drain `1ee47bbd`
+- `lane-m1-m2-resource-guards.md` → drain `bebc1b1f`
 
 Queueing any of them is **Mistake #8 (the 824k Flail)**: Codex re-deriving an already-merged diff.
 

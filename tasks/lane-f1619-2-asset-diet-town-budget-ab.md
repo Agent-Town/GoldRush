@@ -30,7 +30,7 @@ Three things make this worth one lane run rather than another guess:
 
 2. **It is still unsettled, and the later evidence does not settle it.** s1618 measured the *deployed* bundle at desktop 13,899,179 B / mobile 13,313,590 B — mobile SMALLER than desktop, the opposite direction — but that is a **different metric**: total published bytes, not `townResponseBytes`. Two numbers that measure different things cannot confirm or refute each other, and s1618 said so and left the question open.
 
-3. **f1617-1 cannot have moved it.** The saveData trim (`f5dbb5448`) narrows only the metered path; a normal connection keeps the full prefetch set to the byte. So whatever the number is on main today, it is still the number f1615-1 produced.
+3. **f1617-1 cannot have moved it.** The saveData trim (`bbc35cc0b`) narrows only the metered path; a normal connection keeps the full prefetch set to the byte. So whatever the number is on main today, it is still the number f1615-1 produced.
 
 **The control is free, and that is why this is one small task rather than an A/B against a reverted tree.** Because f1617-1 excludes the two bulk halls under `saveData`, a saveData arm IS a "without the bulk halls" control — obtainable with an `addInitScript`, with **no code revert, no second checkout and nothing left uncommitted**.
 

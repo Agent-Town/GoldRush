@@ -11,9 +11,9 @@ CODEX: model=gpt-5.6-sol effort=high
 
 **F-1077-3 (s1077) — the disease.** A rehearsal driver defaulted to a fixed port, that port was served by *another worktree*, and the run measured somebody else's code while attributing it to this branch. Mistake #12 wearing a play-session coat.
 
-**rf-27 (s1089, merged `a9fccf755ab3bc7608110e62413d307db626a57e`) — the cure.** `rehearsal/base-url.mjs` exports `resolveBase(envVarName, { root, probeListener })`, which **throws unless** the env var is set **and** an `lsof` pid→cwd probe proves the listener was started from this checkout. Three hardcoded defaults were **deleted, not moved**. s1089 drove the four-case truth table live: `:5247` — still served by `gr-task-e1-gameplay`, the very worktree that caused s1077's false P0 — was **rejected by name**.
+**rf-27 (s1089, merged `b99681a1c402b7712974ce84d11ca86d7e5e5e9d`) — the cure.** `rehearsal/base-url.mjs` exports `resolveBase(envVarName, { root, probeListener })`, which **throws unless** the env var is set **and** an `lsof` pid→cwd probe proves the listener was started from this checkout. Three hardcoded defaults were **deleted, not moved**. s1089 drove the four-case truth table live: `:5247` — still served by `gr-task-e1-gameplay`, the very worktree that caused s1077's false P0 — was **rejected by name**.
 
-**rf-28 (s1089, merged `8fb9769198ce8f07716391084d4d7720c85c1636`) — the guard learned to fail.** The cure's own suite had no assertion for the **unset** branch, which is exactly where the hardcoded default had lived; a mutation control proved the guard stayed 4/4 green with the defect restored.
+**rf-28 (s1089, merged `b095fcbe542676391aaf9925c2e73815fc499a8f`) — the guard learned to fail.** The cure's own suite had no assertion for the **unset** branch, which is exactly where the hardcoded default had lived; a mutation control proved the guard stayed 4/4 green with the defect restored.
 
 **F-1089-3 (this task) — one file still has the disease.** `scripts/probe-plain-boot-console.mjs:23` reads:
 
@@ -28,7 +28,7 @@ It then opens a browser against that URL and prints console/page errors as **dra
 ## PRE-FLIGHT — verify by CONTENT, never by counting (SAFE-DUPE)
 
 ⚠️ **`git log main..lane/e2-arsenal` WILL PRINT ONE COMMIT (`756b895c runner(lane-c): lane-rehearsal-base-failclosed.md`), AND THAT IS EXPECTED — IT IS *NOT* A REASON TO STOP.**
-s1090 verified the reset is **loss-free by content, not by counting**: that commit is rf-27, merged to main as `a9fccf75`, and the **full-tree** `git diff main lane/e2-arsenal` is **behind-only** — every hunk is something main HAS that the branch lacks (`reviews/rf-27.md`, `reviews/rf-28.md` and the rf-28 test are *deletions* in that direction). The branch carries **nothing main lacks**. It is **FALSE-AHEAD**; an ahead-count is not a drain signal (F-1066-1 / F-1073-1).
+s1090 verified the reset is **loss-free by content, not by counting**: that commit is rf-27, merged to main as `b99681a1`, and the **full-tree** `git diff main lane/e2-arsenal` is **behind-only** — every hunk is something main HAS that the branch lacks (`reviews/rf-27.md`, `reviews/rf-28.md` and the rf-28 test are *deletions* in that direction). The branch carries **nothing main lacks**. It is **FALSE-AHEAD**; an ahead-count is not a drain signal (F-1066-1 / F-1073-1).
 
 All four must hold before you touch a file:
 1. `git log --oneline main..lane/e2-arsenal` prints **exactly `756b895c` and nothing else.** A **second** commit would be undrained work — **only then STOP and report.**

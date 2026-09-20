@@ -17,7 +17,7 @@ appear in `git worktree list`. Your output is untracked-by-default; see scope 5.
 ## WHY (evidence, quoted and dated — do not re-derive, but do re-verify scope 0)
 - **The spec slice already ordered this.** `specs/practice-claim/README.md:9`, SLICE PC-01:
   *"map (small mask reuse), **board card**, budget faucet, straw targets, drill bell, exit/reset."*
-  PC-01 shipped at `f0bf5251` (2026-08-01 08:14) **without the board card.**
+  PC-01 shipped at `f86b28b3` (2026-08-01 08:14) **without the board card.**
 - **Owner order, 2026-07-10** (`assets/requests/art-batch-020-contract-plates.md:9`, verbatim):
   *"each contract should have an image depicting what it is about, its topic and tease that.
   Not a generic image."*
@@ -28,7 +28,7 @@ appear in `git worktree list`. Your output is untracked-by-default; see scope 5.
   and **renders the Claim's card.**
 - **A live test names it.** `e2e/board-card-images.spec.ts:45` ("all contract chapters use their own board-card URL") fails with `Error: e1-drill-yard` on
   `expect(imageUrl, contract.id).not.toBe(claimUrl)`. That suite went red at `:37` on a stale
-  count until merge `4cb09307`; the count now passes and this is the remaining failure.
+  count until merge `68deb90a`; the count now passes and this is the remaining failure.
 - **Not blocked on the map's own art.** The census records the Drill Yard rendering painted-not-glb
   with no mounted landmark (F-1331-2). That is the terrain tier and is **irrelevant here**: a
   contract plate is an *illustrated* engraved plate, not a render of the map. The six E1 plates

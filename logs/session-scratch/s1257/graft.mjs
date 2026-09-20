@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // s1257 — graft the 15 lane-touched paths of dd08bc1a (lane/m3) onto clean main.
-// Zero MAIN-MOVED files were found (git log dfed3765..main over these paths = empty),
+// Zero MAIN-MOVED files were found (git log 7307d588..main over these paths = empty),
 // so a path-scoped checkout is exact. Verifies the applied delta is byte-identical
 // to the branch's own tree for every path.
 import { execFileSync } from 'node:child_process';

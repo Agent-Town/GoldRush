@@ -34,7 +34,7 @@ async function sheet(name, columns) {
   const width = columns.length * TILE;
   const height = LABEL * 2 + TILE * 2 + LABEL;
   const layers = [];
-  layers.push({ input: svgLabel(`${name}  —  row 1 = main (27227acdc), row 2 = merged (Astra)`, width), top: 0, left: 0 });
+  layers.push({ input: svgLabel(`${name}  —  row 1 = main (403c996cd), row 2 = merged (Astra)`, width), top: 0, left: 0 });
   for (let i = 0; i < columns.length; i++) {
     const c = columns[i];
     layers.push({ input: svgLabel(c.label, TILE), top: LABEL, left: i * TILE });

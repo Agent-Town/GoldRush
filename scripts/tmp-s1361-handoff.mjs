@@ -28,8 +28,8 @@ const handoff =
   `Last updated: ${stamp} s1361 handoff, lock CLEARED — ` +
   '🎯 **(A) s1360 PROVED A DUTY CAN BE DROPPED BY READING ITS TRIGGER LITERALLY. I WENT LOOKING FOR THE SAME SHAPE ELSEWHERE, PICKED UP FOUR INSTRUMENTS, AND ALL FOUR WERE SOUND. THE NEGATIVE RESULT IS THE DELIVERABLE.** ' +
   'Board dry a **twenty-second** consecutive fire (**RE-DERIVED**: six queues empty by direct `find`, no `tasks/CODEX-WALL`, `assets/crafting-queue/pending/` **0**, no done-move since the s1360 handoff, lane counts re-measured). ' +
-  'Lock taken lawfully (s1360 had **CLEARED** it); **s1360\'s handoff archived in the LOCK commit** `36c2a518` per F-1341-1, after §2A bookkeeping (`0f1c1d80`). **No drain (nothing to drain), no master authored, no scope invented.** ' +
-  '📋 **(B) F-1361-1 IS THE FIRE (`77ee5d5a`), AND IT IS A SEARCH MAP PLUS ONE VERIFIED CURE** — so the next dry fire does not re-walk this ground. ' +
+  'Lock taken lawfully (s1360 had **CLEARED** it); **s1360\'s handoff archived in the LOCK commit** `393d7967` per F-1341-1, after §2A bookkeeping (`0f1c1d80`). **No drain (nothing to drain), no master authored, no scope invented.** ' +
+  '📋 **(B) F-1361-1 IS THE FIRE (`99ba6542`), AND IT IS A SEARCH MAP PLUS ONE VERIFIED CURE** — so the next dry fire does not re-walk this ground. ' +
   '✅ **(C) THE ART-AUDIT FIGURES ARE NOW MEASURED RATHER THAN RESTATED, AND THEY HOLD EXACTLY.** `node scripts/art-staging-audit.mjs` ⇒ **AT RISK 602 files / 556.81 MB** (all `staging/motion-pilot`, all UNTRACKED) · **LOCAL-ONLY 0** · SHIPPED 197 · DIVERGED 21. ' +
   '**Byte-identical to s1351\'s figures**, which s1352–s1360 each carried forward as *"s1351\'s figures stand"* without re-running the audit. ' +
   'ⓘ **Their decline was CORRECT IN OUTCOME and I want that said plainly rather than dressed as a catch:** the ART-SLOT LAW triggers the audit on *touching* the slot, no fire touched it, and on a dry board the number could not change. ' +

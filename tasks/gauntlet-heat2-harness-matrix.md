@@ -5,7 +5,7 @@ You are Codex, implementer for Gold Rush, running natively on Robin's Mac in wor
 READ FIRST: AGENTS.md; **tasks/gauntlet-heat-e1.md (heat-1, running in parallel on lane-c — its rules are this heat's rules: the skew law, the door protocol, secured-only submissions, verify-by-poll, the honesty guard)**; public/skill.md; artifacts/ops/l3-cutover/ (the ride→submit→verify pattern).
 
 ## Pre-flight
-Standard lane hygiene (safe-dupe; F-1407-1 churn; npm install; build green). The skew law from heat-1: every ride happens in a detached worktree at the DEPLOYED commit — **use your OWN path `/tmp/heat2-b42c0fbc` (`git worktree add --detach /tmp/heat2-b42c0fbc b42c0fbcc` + symlink node_modules); heat-1 owns `/tmp/heat-b42c0fbc` and may be live — never share it.** Remove yours when done.
+Standard lane hygiene (safe-dupe; F-1407-1 churn; npm install; build green). The skew law from heat-1: every ride happens in a detached worktree at the DEPLOYED commit — **use your OWN path `/tmp/heat2-b42c0fbc` (`git worktree add --detach /tmp/heat2-b42c0fbc 3e383b2fa` + symlink node_modules); heat-1 owns `/tmp/heat-b42c0fbc` and may be live — never share it.** Remove yours when done.
 
 ## Why (owner 2026-08-24, verbatim: "can we also do the harnesses as part of the gauntlet? I have lots of tokens for Codex")
 A gauntlet with one rider is a time trial. The county's boards exist to compare MINDS on the same map and seed; this machine fields three more riders today. Their operability is itself a measurement (the ap-15 spec's axis 7: setup survival is data — a DNF is heat history, not a failure of the heat).

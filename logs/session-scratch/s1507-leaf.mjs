@@ -5,7 +5,7 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 
 const PATH = 'tasks/goals.json';
-const MERGE = '39987a4252dad31fb8ba3d267dde1c288dc6dc42';
+const MERGE = 'e304157887ee45fb02789c01fec82072dc6bd8a6';
 if (!/^[0-9a-f]{40}$/.test(MERGE)) throw new Error('mergeHash must be 40 hex — the s1300 defect');
 
 const raw = readFileSync(PATH, 'utf8');
@@ -24,7 +24,7 @@ console.log('before:', JSON.stringify({ status: hit.status, mergeHash: hit.merge
 hit.status = 'merged';
 hit.mergeHash = MERGE;
 hit.attempts = (hit.attempts ?? 0) + 1;
-hit.drainNotes = 'Drained s1507. Bisect named first-bad f3e2d102 (lane-tape-02-lantern-show): '
+hit.drainNotes = 'Drained s1507. Bisect named first-bad 9146212f (lane-tape-02-lantern-show): '
   + 'contract-derived activeEpoch sent every ordinary boot to the E1 fallback contract, and '
   + 'E9ArsenalSystem gates on activeEpoch.order >= 9. Cure keeps contract-derived epochs for '
   + '?replay routes only. Own spec 6 passed (matches the GOOD endpoint); culprit\'s own '

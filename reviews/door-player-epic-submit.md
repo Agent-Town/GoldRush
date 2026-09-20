@@ -1,8 +1,8 @@
 # Review — door-player-epic-submit (the player can post an epic)
 
-**Slice:** `door-player-epic-submit` · **branch:** `lane/d` · **lane tip:** `6b4357f5d`
+**Slice:** `door-player-epic-submit` · **branch:** `lane/d` · **lane tip:** `330f03ee2`
 **Gated commit:** `d824ecb1bdb7d407074d453b0515891333d6e7bd` (detached worktree `gate-s2326`, §3.0b custody)
-**Merge:** `6b2d172bc37dc2736f731f6486c12b7b3f584242` (main, `--no-ff`)
+**Merge:** `8da75e626d6700bff634d1f75bba321b6ded4999` (main, `--no-ff`)
 **Drained by:** s2327.
 
 ## Verdict
@@ -65,7 +65,7 @@ next to a real spec red looks alike at a glance, and the discriminator was the m
 
 ## Merge classification
 
-Base `2e993716d` (merge-base); lane tip `6b4357f5d`; one lane commit, three paths.
+Base `25b79f27d` (merge-base); lane tip `330f03ee2`; one lane commit, three paths.
 
 - `src/game/Game.ts` — **LANE-TOUCHED only.**
 - `e2e/door-epic-submit.spec.ts` — **new file, LANE-ONLY.**
@@ -88,7 +88,7 @@ gated, so the gated commit is what shipped.
 
 **HELD.** Three paths, exactly the master's scope: the `Game.ts` submit site, the new spec, and the
 BACKLOG row. No sim mechanics, no ranking, no worker logic, no server-side envelope code — that half
-landed separately this fire as `door-epic-envelope-v3` (`ecc36a79`), with **zero file overlap**
+landed separately this fire as `door-epic-envelope-v3` (`314b4533`), with **zero file overlap**
 between the two slices, as the authoring row promised.
 
 ⓘ The slice adds `submitCountyStandingForTest` to `window.__GR_TEST__`. This sits **inside the
@@ -108,7 +108,7 @@ by the filter's plain reading.
 
 ## The thread, now closed on both sides
 
-Server side (`door-epic-envelope-v3`, `ecc36a79`) + player side (this slice, `6b2d172b`) means the
+Server side (`door-epic-envelope-v3`, `314b4533`) + player side (this slice, `8da75e62`) means the
 five-axis door story is complete: duration, bytes, entries, reader cap — all four county constants
 derived — and the fifth, the browser's own keepalive quota, now handled at the call site.
 

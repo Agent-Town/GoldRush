@@ -2,7 +2,7 @@
 /**
  * restore-s1471-archive.mjs — s1472 took the lock with a plain line-1 replace and
  * did NOT archive s1471's handoff line-1 as §4 requires. The text survives in
- * commit f3f2f01b5 (so no history was lost), but STATUS.md must carry the bullet
+ * commit 393238484 (so no history was lost), but STATUS.md must carry the bullet
  * or the next fire reads a board with a fire missing from the archive.
  *
  * Insert it directly above the "s1471 lock line (archived)" bullet, which is the
@@ -11,13 +11,13 @@
 import fs from 'node:fs';
 import { execFileSync } from 'node:child_process';
 
-const prior = execFileSync('git', ['show', 'f3f2f01b5:STATUS.md'], {
+const prior = execFileSync('git', ['show', '393238484:STATUS.md'], {
   encoding: 'utf8',
   maxBuffer: 64 * 1024 * 1024,
 }).split('\n')[0];
 
 if (!/^Last updated: .*s1471 handoff/.test(prior)) {
-  console.error('REFUSING — f3f2f01b5 line-1 is not the s1471 handoff:', prior.slice(0, 120));
+  console.error('REFUSING — 393238484 line-1 is not the s1471 handoff:', prior.slice(0, 120));
   process.exit(2);
 }
 

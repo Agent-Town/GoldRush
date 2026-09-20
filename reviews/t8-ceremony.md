@@ -1,7 +1,7 @@
 # Review — T8 THE COLONY SEED (era door E8→E9), SAGA WALL slice 3/5
 
-**Slice/branch/tip:** lane-t8-ceremony · lane/perf · tip `c452c89c` (runner(lane-d))
-**Base:** `8eccb2ea`. **Merged onto main after T6+T7** (d976837f) — real 3-way (main-with-T6-T7 and lane both grew `src/ceremony/scripts.ts`, `e2e/ceremony-framework.spec.ts`; lane also reworked `CeremonySystem.ts` in regions disjoint from T7's → auto-merged clean).
+**Slice/branch/tip:** lane-t8-ceremony · lane/perf · tip `5e2d458c` (runner(lane-d))
+**Base:** `04393eef`. **Merged onto main after T6+T7** (0cd3ec85) — real 3-way (main-with-T6-T7 and lane both grew `src/ceremony/scripts.ts`, `e2e/ceremony-framework.spec.ts`; lane also reworked `CeremonySystem.ts` in regions disjoint from T7's → auto-merged clean).
 **Verdict:** MERGED (s896), `git merge --no-ff lane/perf`, conflicts resolved by UNION.
 
 ## What it does

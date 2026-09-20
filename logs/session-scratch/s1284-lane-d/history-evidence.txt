@@ -1,5 +1,5 @@
-commit=d1f549d5fd51d8b127eb83cdf658dce0e5db8374
-parents=86c3688d8bb27a28d4a438c5355d4060ea3415ba
+commit=5e527a28bb469a18765585674c1c3810bf008eea
+parents=018fc657090f839673ae7d462ffc26c780ac1d0d
 author_date=2026-07-19T11:07:13+07:00
 commit_date=2026-07-19T11:07:13+07:00
 subject=runner(lane-a): lane-landmark-collision.md
@@ -208,18 +208,18 @@ test('authored footprints stop the hero on The Claim and a county map while an u
   const farmhouse = await blocker(page, 'abandoned_farmhouse');
   await expectHeroStoppedBy(page, farmhouse);
   expect(errors).toEqual({ console: [], page: [] });
-test_last_change=90e7cc6841cdbe514a3f3aa203135e652fd9b4fa 2026-07-12T10:46:03+07:00 runner(lane-c): e2-arsenal.md
-90e7cc684 (Claude (Cowork orchestrator) 2026-07-12T10:46:03+07:00  87) test('Auto-Pan upkeep and boiler battery bands consume the fixed-step pressure store', async ({ page }, testInfo) => {
-90e7cc684 (Claude (Cowork orchestrator) 2026-07-12T10:46:03+07:00  88)   const errors = await open(page, testInfo, true);
-90e7cc684 (Claude (Cowork orchestrator) 2026-07-12T10:46:03+07:00  89)   await page.evaluate(() => {
-90e7cc684 (Claude (Cowork orchestrator) 2026-07-12T10:46:03+07:00  90)     window.__GR_TEST__?.setUpgradeStacks({ auto_pan: 1 });
-90e7cc684 (Claude (Cowork orchestrator) 2026-07-12T10:46:03+07:00  91)     window.__GR_TEST__?.grantPressure(50);
-90e7cc684 (Claude (Cowork orchestrator) 2026-07-12T10:46:03+07:00  92)     const seam = window.__THREE_GAME_DIAGNOSTICS__?.harvest.activeNodes.find((node) => node.active);
-90e7cc684 (Claude (Cowork orchestrator) 2026-07-12T10:46:03+07:00  93)     if (seam) window.__GR_TEST__?.teleport(seam.position.x, seam.position.z);
-90e7cc684 (Claude (Cowork orchestrator) 2026-07-12T10:46:03+07:00  94)     window.__GR_TEST__?.advanceSim(1.5);
-90e7cc684 (Claude (Cowork orchestrator) 2026-07-12T10:46:03+07:00  95)   });
-90e7cc684 (Claude (Cowork orchestrator) 2026-07-12T10:46:03+07:00  96)   const autoPan = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.pressureArsenal);
-90e7cc684 (Claude (Cowork orchestrator) 2026-07-12T10:46:03+07:00  97)   expect(autoPan?.autoPanSeconds).toBeGreaterThan(0);
-90e7cc684 (Claude (Cowork orchestrator) 2026-07-12T10:46:03+07:00  98)   expect(await page.evaluate(() => window.__GR_TEST__?.economyLog().some((event: any) => event.type === 'resource_spent' && event.sink === 'auto_pan'))).toBe(true);
-90e7cc684 (Claude (Cowork orchestrator) 2026-07-12T10:46:03+07:00  99) 
-90e7cc684 (Claude (Cowork orchestrator) 2026-07-12T10:46:03+07:00 100)   await expect(page.evaluate(() => window.__GR_TEST__?.placeFree('turret', 0, 10))).resolves.toBe(true);
+test_last_change=562edc36d8bf773cb993f8bf4ff5821ade138ef6 2026-07-12T10:46:03+07:00 runner(lane-c): e2-arsenal.md
+562edc36d (Claude (Cowork orchestrator) 2026-07-12T10:46:03+07:00  87) test('Auto-Pan upkeep and boiler battery bands consume the fixed-step pressure store', async ({ page }, testInfo) => {
+562edc36d (Claude (Cowork orchestrator) 2026-07-12T10:46:03+07:00  88)   const errors = await open(page, testInfo, true);
+562edc36d (Claude (Cowork orchestrator) 2026-07-12T10:46:03+07:00  89)   await page.evaluate(() => {
+562edc36d (Claude (Cowork orchestrator) 2026-07-12T10:46:03+07:00  90)     window.__GR_TEST__?.setUpgradeStacks({ auto_pan: 1 });
+562edc36d (Claude (Cowork orchestrator) 2026-07-12T10:46:03+07:00  91)     window.__GR_TEST__?.grantPressure(50);
+562edc36d (Claude (Cowork orchestrator) 2026-07-12T10:46:03+07:00  92)     const seam = window.__THREE_GAME_DIAGNOSTICS__?.harvest.activeNodes.find((node) => node.active);
+562edc36d (Claude (Cowork orchestrator) 2026-07-12T10:46:03+07:00  93)     if (seam) window.__GR_TEST__?.teleport(seam.position.x, seam.position.z);
+562edc36d (Claude (Cowork orchestrator) 2026-07-12T10:46:03+07:00  94)     window.__GR_TEST__?.advanceSim(1.5);
+562edc36d (Claude (Cowork orchestrator) 2026-07-12T10:46:03+07:00  95)   });
+562edc36d (Claude (Cowork orchestrator) 2026-07-12T10:46:03+07:00  96)   const autoPan = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.pressureArsenal);
+562edc36d (Claude (Cowork orchestrator) 2026-07-12T10:46:03+07:00  97)   expect(autoPan?.autoPanSeconds).toBeGreaterThan(0);
+562edc36d (Claude (Cowork orchestrator) 2026-07-12T10:46:03+07:00  98)   expect(await page.evaluate(() => window.__GR_TEST__?.economyLog().some((event: any) => event.type === 'resource_spent' && event.sink === 'auto_pan'))).toBe(true);
+562edc36d (Claude (Cowork orchestrator) 2026-07-12T10:46:03+07:00  99) 
+562edc36d (Claude (Cowork orchestrator) 2026-07-12T10:46:03+07:00 100)   await expect(page.evaluate(() => window.__GR_TEST__?.placeFree('turret', 0, 10))).resolves.toBe(true);

@@ -11,11 +11,11 @@ Role: implementer. Workdir: `worktrees/lane-c` (slot lane-c, branch `lane/e2-ars
 - `tasks/goals.json` leaf `pc-01-drill-yard` and the blocked leaf behind `7c4f132f` — **both stay blocked. This task is NOT that task** (see WHY).
 
 ## WHY (evidence, dated, measured — not inherited)
-`f0bf5251` (`runner(lane-b): lane-drill-yard.md`, 2026-08-01T08:14) added `e1-drill-yard` as E1's 6th contract, per the owner's ratification that morning (*"Drill Yard sounds good to me"*). Roster-shaped assertions were not updated with it.
+`f86b28b3` (`runner(lane-b): lane-drill-yard.md`, 2026-08-01T08:14) added `e1-drill-yard` as E1's 6th contract, per the owner's ratification that morning (*"Drill Yard sounds good to me"*). Roster-shaped assertions were not updated with it.
 
-s1396 proved cause by **control run**, not by reading the diff. In a detached worktree at `f0bf5251^` (`467ed904`), same harness, `--workers=1`:
+s1396 proved cause by **control run**, not by reading the diff. In a detached worktree at `f86b28b3^` (`02249254`), same harness, `--workers=1`:
 
-| Spec | at `f0bf5251^` | on main |
+| Spec | at `f86b28b3^` | on main |
 |---|---|---|
 | `cp01-charter-roundtrip.spec.ts:28` | **GREEN** | **RED**, desktop + mobile |
 
@@ -28,11 +28,11 @@ The failure is pure arithmetic — the received array matches the expected one e
 ## PRE-FLIGHT (LANE-SAFETY invariant)
 1. `git status --short` in the lane worktree: dirty tracked blobs must be reachable in git, else **STOP** and report.
 2. `git log main..HEAD --oneline` must be **empty**. If it is not, **STOP** — an undrained predecessor lives here and a reset would destroy it.
-3. **Premise check, AFTER any reset:** count the contracts in `assets/contracts/epoch-1-frontier/contracts.json`. It must be **6**, and `e1-drill-yard` must be present. If it is 5, this lane predates `f0bf5251` and the task is **not applicable here — STOP and report the number you got.** (Adding the sixth name on a five-contract tree would manufacture a red.) ⓘ s1396 verified `git merge-base --is-ancestor f0bf5251 lane/e2-arsenal` = **YES** at authoring time; re-check it rather than trusting this line.
+3. **Premise check, AFTER any reset:** count the contracts in `assets/contracts/epoch-1-frontier/contracts.json`. It must be **6**, and `e1-drill-yard` must be present. If it is 5, this lane predates `f86b28b3` and the task is **not applicable here — STOP and report the number you got.** (Adding the sixth name on a five-contract tree would manufacture a red.) ⓘ s1396 verified `git merge-base --is-ancestor f86b28b3 lane/e2-arsenal` = **YES** at authoring time; re-check it rather than trusting this line.
 
 ## SCOPE (numbered, each testable)
-1. `e2e/cp01-charter-roundtrip.spec.ts:28` ("the epoch ships the six expected fixtures" — it read *"…the **five** expected fixtures"* while this task was open; scope item 2 below is what renamed it, shipped `0195da9f`) — at `:28-35`, insert `'e1-drill-yard',` into the expected array so it reads `'the-claim', 'e1-drill-yard', 'e1-dry-gulch', 'e1-night-shift', 'e1-twin-banks', 'e1-baron'`. **The order matters** — it must match the live array's order, which is the order in `contracts.json`; drill-yard sits at **index 1**, immediately after `the-claim`.
-2. `e2e/cp01-charter-roundtrip.spec.ts:27` ("the epoch ships the six expected fixtures" — the post-`0195da9f` title; it said *"…the **five** expected fixtures"* when this task was authored). Change **five → six** so the title does not lie about what it asserts. (Precedent: `7c4f132f` makes exactly this title change in `agent-view.spec.ts`.)
+1. `e2e/cp01-charter-roundtrip.spec.ts:28` ("the epoch ships the six expected fixtures" — it read *"…the **five** expected fixtures"* while this task was open; scope item 2 below is what renamed it, shipped `7f5b8017`) — at `:28-35`, insert `'e1-drill-yard',` into the expected array so it reads `'the-claim', 'e1-drill-yard', 'e1-dry-gulch', 'e1-night-shift', 'e1-twin-banks', 'e1-baron'`. **The order matters** — it must match the live array's order, which is the order in `contracts.json`; drill-yard sits at **index 1**, immediately after `the-claim`.
+2. `e2e/cp01-charter-roundtrip.spec.ts:27` ("the epoch ships the six expected fixtures" — the post-`7f5b8017` title; it said *"…the **five** expected fixtures"* when this task was authored). Change **five → six** so the title does not lie about what it asserts. (Precedent: `7c4f132f` makes exactly this title change in `agent-view.spec.ts`.)
 3. Nothing else. If you believe another **roster-shaped** census exists outside the four named in WHY, **report it — do not fix it.** A disagreement with the measured denominator is a finding worth more than a silent edit.
 
 ## TOUCH-ONLY
@@ -42,7 +42,7 @@ The failure is pure arithmetic — the received array matches the expected one e
 - **NO** touching `e2e/072-era-activation.spec.ts`, `e2e/agent-view.spec.ts`, `e2e/e1-baron.spec.ts`, `e2e/fixtures/e1-mechanics-manifests.json`, or `src/town/TownScene.ts`. **Those five are HELD, un-drained, on `lane/m4` behind an owner block** — editing them here manufactures a collision with finished work and pre-empts an owner ruling.
 - **NO** change to `src/meta/ContractFamilies.ts`, `assets/contracts/**`, or anything that alters what contracts exist. The data is correct; the assertion is stale. If you believe the data is wrong, **STOP and report**.
 - **NO** touching the six ITERATION-LIST roster sites (`panorama-framing`, `release-build`, `terrain-seamless`, `tr-02-splat-ground`, `contract-briefings:258`, `scripts/stream-capture.mjs`). They are **coverage holes, not reds** (F-1396-3), and adding drill-yard to them is an unmeasured behaviour change. Out of scope by design.
-- **NO** touching `e2e/cp03-press-loop.spec.ts`. Its red has a **different cause** (`6c009cb8`, F-1396-2) and an unresolved attended fork. Fixing it here would be scope invention.
+- **NO** touching `e2e/cp03-press-loop.spec.ts`. Its red has a **different cause** (`776cd64a`, F-1396-2) and an unresolved attended fork. Fixing it here would be scope invention.
 - **NO** touching `logs/suite-red-inventory.md` (standing order: never hand-edit it).
 - **NO** running `node scripts/law-pointer-guard.mjs --update` on this lane — its ledger is stale and `--update` here would emit a baseline missing every pointer main has added since. The drain re-bases it on main.
 - **NO** weakening: do not delete the assertion, do not convert it to a length check or a `toContain`. The exhaustive roster IS the point — it is what caught this.

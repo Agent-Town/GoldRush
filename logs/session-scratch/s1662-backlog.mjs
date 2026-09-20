@@ -58,13 +58,13 @@ const i2 = findOne('🔺 **F-1608-2 (s1608 2026-08-10', 'F-1608-2 row');
 if (!lines[i2].includes('Both maps are currently door-de-listed per F-E2S-3')) {
   throw new Error('F-1608-2 row no longer carries the reassurance sentence — re-read before editing');
 }
-lines[i2] += ` ✅ **RE-CONFIRMED s1662 \`${short}\`:** that sentence was **VOID** from \`48a0d41ab\` until now — the derivation had ` +
+lines[i2] += ` ✅ **RE-CONFIRMED s1662 \`${short}\`:** that sentence was **VOID** from \`6f74bf510\` until now — the derivation had ` +
   'silently re-admitted both maps (F-1660-1). The de-list is restored as a cited exemption, so **the reassurance is true again** and ' +
   'nothing is blocked meanwhile. Recorded because it was the ledger line whose quiet falsehood pointed s1660 at the reversal.';
 edits.push('F-1608-2 -> reassurance restored');
 
 // 3. back-pointer on the ap16-4 SHIPPED row
-const i3 = findOne('✅ **SHIPPED s1643 `d4fcc354` — ap16-4 SAME-GAME ADMISSION', 'ap16-4 shipped row');
+const i3 = findOne('✅ **SHIPPED s1643 `effe1057` — ap16-4 SAME-GAME ADMISSION', 'ap16-4 shipped row');
 lines[i3] += ' ⚠️ **CORRECTION s1662:** this slice was sound but carried **one omission** — its derivation did not carry the three ' +
   'F-E2S-3 railcars into `CONTRACT_ADMISSION_EXEMPTIONS`, silently re-admitting them modelessly for ~15 hours (F-1660-1, cured at ' +
   `\`${short}\`). The row stands; read it with that pointer. **The door is now ratcheted against a repeat** by ` +

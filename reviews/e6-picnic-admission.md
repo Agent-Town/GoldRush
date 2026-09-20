@@ -1,7 +1,7 @@
 # Review — e6-picnic ADMITTED: the county's last unopened door
 
 **Slice:** `e6-picnic-admission` · **branch:** `worktree-agent-ad90f0a8eb7716664`
-**Base:** `4b7883cf0` (main merged into the branch at `0ea1541e5` before any measurement — union discipline)
+**Base:** `0251deeb1` (main merged into the branch at `3b40d41a5` before any measurement — union discipline)
 **Built by:** a headless Opus-5 agent in an isolated worktree, 2026-08-21/22 · Node 26.4.0 · scratch port **5274**
 
 ## VERDICT: ADMITTED — idle LOSES on both bench seeds, the public-verb prover SECURES on both, twice each.
@@ -28,7 +28,7 @@ because the admission is only trustworthy if the refusal that preceded it is leg
 The first ruling (2026-08-21, verbatim: *"picnic - no, just standing there should not win"*) built the
 contest predicate: a stake's 3wu disc is held by a **standing structure** inside it, or by a hero that
 has dealt damage within `PICNIC_ACTIVE_DEFENSE_SECONDS`. It was built correctly, it shipped at
-`52c48fce7`, and **it did not bite**. Measured on the pre-flip map, `--policy=idle` **SECURED** both
+`afbda29bc`, and **it did not bite**. Measured on the pre-flip map, `--policy=idle` **SECURED** both
 bench seeds at wave 20 (`fnv1a32:b9f476a6` / `fnv1a32:612de94b`, `calls: 0`) — the b4v3 review's own
 number, re-measured rather than inherited. The full-run trace showed exactly why:
 
@@ -87,7 +87,7 @@ tree, §5).
 
 **The dropped `engineDependencies` row is not tidying.** It declared
 `picnic-contract-consumers: missing` with the description *"neither implements a three-stake hold"* —
-false since `52c48fce7`, and on an ADMITTED contract it would make the campaign dossier report a map
+false since `afbda29bc`, and on an ADMITTED contract it would make the campaign dossier report a map
 the door serves as *"🟠 missing"* (`campaign-map-dossier-table.mjs:63`). The census now derives that
 branch from `EXPECTED_DEPENDENCY` rather than naming one contract, so the next admission cannot
 forget it.
@@ -253,7 +253,7 @@ carries them should be corrected before another slice bases arithmetic on them.
 
 ## 8. Merge classification
 
-**Base:** `4b7883cf0`, merged into the branch at `0ea1541e5` **before any measurement** — so every
+**Base:** `0251deeb1`, merged into the branch at `3b40d41a5` **before any measurement** — so every
 number above was taken on the merged tree, never on a stale one, and none of it needs re-deriving at
 the drain (Mistake #4 runs both ways: this is the verification line).
 
@@ -264,14 +264,14 @@ the drain (Mistake #4 runs both ways: this is the verification line).
 `src/agent/MechanicsManifest.ts` · `src/systems/PicnicHoldSystem.ts` (comment only) ·
 `reviews/e6-picnic-admission.md` · `playwright.e6picnic.config.ts` (new) · `artifacts/e6-picnic/**` (new)
 
-**MAIN-MOVED since the merge base, re-measured at the END of the slice (`4b7883cf0..main` at
-`184f63767`, 9 files):** `STATUS.md` · `tasks/BACKLOG.md` · `tasks/goals.json` ·
+**MAIN-MOVED since the merge base, re-measured at the END of the slice (`0251deeb1..main` at
+`414f9698e`, 9 files):** `STATUS.md` · `tasks/BACKLOG.md` · `tasks/goals.json` ·
 `tasks/f2117-1-root-release-base-harness.md` · `logs/dashboard.html` · `scripts/fire.md` ·
 `docs/bench/harness-era-implications.md` · `marketing/outbox/gazette-queue.md` ·
 `marketing/outbox/ticker-digest-2026-08-21.md`.
 
 **BOTH-MOVED: none.** The two sets are disjoint — confirmed by measurement
-(`git diff --name-only 4b7883cf0..main` against `4b7883cf0..HEAD`), not by the absence of a
+(`git diff --name-only 0251deeb1..main` against `0251deeb1..HEAD`), not by the absence of a
 complaint. The merge is additive by construction and needs no 3-way graft.
 
 **`tasks/BACKLOG.md`: deliberately untouched.** F-2131-5 recorded that this exact collision stopped

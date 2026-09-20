@@ -1,10 +1,10 @@
 # e10-preserve-ranking — drain review (fire s2462, 2026-09-03)
 
 **Slice:** `tasks/e10-preserve-ranking.md` (lane-a, fire-dispatched 2026-09-03T00:45:54)
-**Branch:** `lane/a`, tip `ba8f9c9a4` (`runner(lane-a): e10-preserve-ranking.md`)
-**Base:** `1c57e5e6` (merge-base `main..lane/a`)
-**Merge commit:** `1fefa326a32bb83b8a0858dd66633b7e328e7cec`
-**Drain tip on main:** `3361e7b91` (the owed engine pin, committed separately)
+**Branch:** `lane/a`, tip `02283151e` (`runner(lane-a): e10-preserve-ranking.md`)
+**Base:** `fa26f170` (merge-base `main..lane/a`)
+**Merge commit:** `0de61d85c7a68f470f298b1ccc1a35c898c70ad4`
+**Drain tip on main:** `12c541b88` (the owed engine pin, committed separately)
 **Gated in:** detached worktree `gate-s2462` (§3.0b — undecided content never entered main's working tree or index)
 
 ## Verdict
@@ -100,7 +100,7 @@ The survivor report names `scripts/art-staging-gitdir-link-guard.test.mjs: 11
 [art-gitdir-…]` and **every other one of the 115 fixture owners reports 0**.
 Same file, same count of 11, same `art-gitdir-` prefix as F-2459-3, which s2459
 proved pre-existing by running `fixture-teardown` on an unmerged main
-(`be7b5933e`, 681.5 s, identical failure); the suffixes differ only because they
+(`57890458f`, 681.5 s, identical failure); the suffixes differ only because they
 are `mkdtemp` randoms.
 
 **Net battery state on the merged tree: one red, pre-existing and already
@@ -139,7 +139,7 @@ artifact above confirms.
 
 ## Merge classification
 
-Base `1c57e5e6`; `lane-freeze-classify` read **HOLDS 6 paths**, and
+Base `fa26f170`; `lane-freeze-classify` read **HOLDS 6 paths**, and
 `lane-absorbed-lines` then asked the one-directional question and returned
 **NOT ABSORBED on all six** — a genuine merge, not a false-ahead.
 

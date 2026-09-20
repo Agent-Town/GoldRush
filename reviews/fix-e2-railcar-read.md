@@ -1,6 +1,6 @@
 # Review — fix-e2-railcar-read (the E2 railcar reads as a train)
 
-**Slice:** lane-a #2 fix-e2-railcar-read (branch `lane/m3`, railcar commit `21eea97d`) → grafted to main
+**Slice:** lane-a #2 fix-e2-railcar-read (branch `lane/m3`, railcar commit `4f4c1d10`) → grafted to main
 **Fire:** s454 drain (attended-driven graft), 2026-07-13
 **Verdict:** PASS — merged.
 
@@ -17,11 +17,11 @@ Answers the owner E2 playtest verdict "it is not a train?": the Armored Railcar 
 - Perf: no new always-on batch (railcar mesh rides the existing elite render path with `eliteKind` guards); `e2-rail-entity`'s draw-call-budget assertion stayed green, `m1-01` stress=120 pool/draw-call budget green.
 
 ## Merge classification
-Base `9d86e6da` (railcar commit `21eea97d`; lane tip `dc1bd775` is an unrelated sluice NO-OP — IGNORED, not drained).
+Base `02bb4b26` (railcar commit `4f4c1d10`; lane tip `dc1bd775 (archive: pruned by the A3 rewrite)` is an unrelated sluice NO-OP — IGNORED, not drained).
 
 | File | Class | Resolution |
 |------|-------|------------|
-| `src/entities/pools.ts` | LANE-TOUCHED only | main byte-identical to base since `9d86e6da` → clean-copy the lane version wholesale; grafted tree diffs empty against `21eea97d`. |
+| `src/entities/pools.ts` | LANE-TOUCHED only | main byte-identical to base since `02bb4b26` → clean-copy the lane version wholesale; grafted tree diffs empty against `4f4c1d10`. |
 | `src/game/Game.ts` | MAIN-MOVED (3-way) | main drifted (+7/-2, the music-survives-pause fix). Kept main's current file; Edited in railcar's single new line `presentation: this.enemies.railcarPresentation(enemy),` after `bossDegradeSpeedMult`. |
 | `src/vite-env.d.ts` | MAIN-MOVED (additive union) | Edited in railcar's `presentation: { mesh: boolean; visible: boolean; railY: number };` field alongside main's other additions. |
 | `e2e/fix-e2-railcar-read.spec.ts` | NEW | copied wholesale. |
@@ -30,5 +30,5 @@ Base `9d86e6da` (railcar commit `21eea97d`; lane tip `dc1bd775` is an unrelated 
 Graft technique: plain `cp` for clean-copy + new files; `Edit` tool for the two drifted files (checkout/apply/cherry-pick gated in this environment). Firewall held — only the railcar PRESENTATION render path, the new spec, and its artifacts.
 
 ## Findings
-- **F-railcar-1 (non-blocking):** lane tip `dc1bd775` (`fix-e2-sluice-water`) is a NO-OP sitting above the railcar commit on `lane/m3`; NOT drained here. Left for the s454 fire to mark no-op / re-queue with a corrected premise as it owns lane refill.
+- **F-railcar-1 (non-blocking):** lane tip `dc1bd775 (archive: pruned by the A3 rewrite)` (`fix-e2-sluice-water`) is a NO-OP sitting above the railcar commit on `lane/m3`; NOT drained here. Left for the s454 fire to mark no-op / re-queue with a corrected premise as it owns lane refill.
 - No blocking findings. The railcar now reads as rolling stock (mesh, rail-seated, fog-gated), closing the owner's "it is not a train?" verdict.

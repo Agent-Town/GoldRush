@@ -1,6 +1,6 @@
 # Review: ss-09-e8-beats — the Orbital Frontier chapter as data (lane-c, Claude Opus 5 implementer, attended drain 2026-09-05 night)
 
-**Slice/branch/tip:** `ss-09-e8-beats` · `lane/c` · commits `d09e7bf94 + 5d0df1bf2` on base `eb7529a11` · merged to main at `642f0ae9e` (first-parent merge; beats.ts and StoryRuntime.ts a pure union at the E6/trailing-export seam, no line of any table contested).
+**Slice/branch/tip:** `ss-09-e8-beats` · `lane/c` · commits `028c62900 + dc0a54a03` on base `b9c4146cc` · merged to main at `9ba1c34b6` (first-parent merge; beats.ts and StoryRuntime.ts a pure union at the E6/trailing-export seam, no line of any table contested).
 **Verdict:** MERGED. E8 joins the human path: 17 attributed beats derived from `lore/STORYBOOK.md` Chapter E8 (lines 470-528, spine :510-:515): the Mare Claim arrival with the dive meter reused as the air meter, the breach drill, LEAVE-LAST, the Pan Monument's first reclaimed water, the pan in regolith, the claw-tag Gazette, the Far Side probe, the Low Orbit yard, the Eclipse, the Baron at the pad, the Claw's descent, the crew's warm-law walk, the mass-driver's first load, the moon-born child's tavern tale, the era's turn, the window-seat Gazette, the Riverward leaving. Loaded only when `activeEpochId() === 'epoch-8-orbital'`; presentation only (the sim, the contracts and every replay byte-identical: the pin below is a src re-hash, same era).
 
 ## What it does
@@ -21,7 +21,7 @@
 Screenshots: `reviews/shots-ss-09-e8-beats/` (8 files, scaled).
 
 ## Merge classification
-Base `eb7529a11`. `src/story/beats.ts`: LANE-TOUCHED (a pure append after `E6_STORY_BEATS`, before the trailing `STORY_RUNTIME_BEATS` export). `src/story/StoryRuntime.ts`: LANE-TOUCHED (one import name, one switch line after the E5 line). `e2e/ss-09-e8-beats.spec.ts`, `reviews/shots-ss-09-e8-beats/*`: NEW. `tasks/BACKLOG.md`: MAIN-MOVED, unioned (the lane's rows prepended over main's). Nothing else. The E7 (lane/a) and E9 (lane/d) chapters that landed the same night were unioned in era order at the same seam by the attended drain, so the final table order is E2..E9 and the runtime switch carries one line per era.
+Base `b9c4146cc`. `src/story/beats.ts`: LANE-TOUCHED (a pure append after `E6_STORY_BEATS`, before the trailing `STORY_RUNTIME_BEATS` export). `src/story/StoryRuntime.ts`: LANE-TOUCHED (one import name, one switch line after the E5 line). `e2e/ss-09-e8-beats.spec.ts`, `reviews/shots-ss-09-e8-beats/*`: NEW. `tasks/BACKLOG.md`: MAIN-MOVED, unioned (the lane's rows prepended over main's). Nothing else. The E7 (lane/a) and E9 (lane/d) chapters that landed the same night were unioned in era order at the same seam by the attended drain, so the final table order is E2..E9 and the runtime switch carries one line per era.
 
 ## Findings
 - **F-SS09-1 (art, non-blocking, fire-authorable as one batch for E5–E9):** Chapter E8 names five cast members (the moon-born child, the dome gardener, the launch master, the suit fitter, the He-3 assayer) with raw `assets/raw/tf-*-e8.png` portraits and no `assets/processed/` entry; `src/story/speakers.ts:9-15` requires a processed portrait per speaker id. Voiced through registered speakers and named in the lines, as ss-06/ss-07 did. The Household Law is honoured (the child is never alone).

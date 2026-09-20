@@ -22,31 +22,31 @@ own tools and nets. **Thirty-seven were bookkeeping** — the ledger talking to 
 and 14th, and the land itself was re-drawn under it — Astra's map campaign landed the same morning, the
 largest single change of ground the county has seen.
 
-- `6c8b97bb3` — Era 6 is declared: **the Re-surveyed Claims**. The county's ages now number six.
-- `22c84f2f3` — The map campaign lands: 437 player-visible files re-drawn across the era-6 ground.
-- `5dfe19024` — The landmark source ledger is re-run; the era's seal moves with it, as an era's seal should.
+- `c010f5f69` — Era 6 is declared: **the Re-surveyed Claims**. The county's ages now number six.
+- `9d851aa7a` — The map campaign lands: 437 player-visible files re-drawn across the era-6 ground.
+- `09ecd13f9` — The landmark source ledger is re-run; the era's seal moves with it, as an era's seal should.
 
 **The town's people come back twice in one day, and come back cleaner.** Two waves of the cast re-cut
 landed between the morning and the evening, the second one tightening the edges of the first.
 
-- `314fa2fa3` — The town cast is re-cut into **thirty families** (stage one); the payload grows by 89 bytes.
-- `059a72399` — **366 sheets** re-cut against a hard alpha (stage two); nine families come in under the old weight.
+- `3ed0e2b5f` — The town cast is re-cut into **thirty families** (stage one); the payload grows by 89 bytes.
+- `69b5ad864` — **366 sheets** re-cut against a hard alpha (stage two); nine families come in under the old weight.
 
 **And the claim board turns over.** A fresh week's rotation was minted and opened, so the county has new
 ground to be worked and a closing date to work it against.
 
-- `66b782b09` — Rotation **r2026w38** opens: a fresh claim for the week, closing on the 21st.
+- `c2342df0a` — Rotation **r2026w38** opens: a fresh claim for the week, closing on the 21st.
 
 ## Not player-visible
 
 The remaining 54 commits changed nothing a player can see. Seventeen were the factory sharpening its own
-instruments — a worktree sweep that learned to declare how many trees it had actually read (`fb1ee460a`), a
-date window that was found to slide with the clock (`cda4ae3c9`), a ledger deadline retired after it was
-shown to name a fuse that could not fire (`081a3da9c`), and a quiet-age reading found to be mixing two
-clocks seven hours apart (`bb977a98e`). Thirty-seven were locks, handoffs, goal leaves and pointer
+instruments — a worktree sweep that learned to declare how many trees it had actually read (`5a3e3b94a`), a
+date window that was found to slide with the clock (`4fb65ff3e`), a ledger deadline retired after it was
+shown to name a fuse that could not fire (`feb948a23`), and a quiet-age reading found to be mixing two
+clocks seven hours apart (`75052cbe4`). Thirty-seven were locks, handoffs, goal leaves and pointer
 re-pins. The five-day backlog of the outage was also closed on this day: the ledger mirror was pulled
-whole and backfilled (`6008630fe`), and three missing ticker digests were compiled and filed (`b9e21bacf`).
+whole and backfilled (`6008630fe (archive: pruned by the A3 rewrite)`), and three missing ticker digests were compiled and filed (`b9e21bacf (archive: pruned by the A3 rewrite)`).
 
 **Owner choice, carried not buried:** rotation r2026w38 is open but **unannounced** — the deploy that
-would announce it is publish-gated and a fire may not run it (`fb173a798`). It opened on the 14th and
+would announce it is publish-gated and a fire may not run it (`fe7a19ff1`). It opened on the 14th and
 closes on the 21st; if it is to be announced at all, that word is the owner's.

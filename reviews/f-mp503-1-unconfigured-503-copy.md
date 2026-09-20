@@ -1,6 +1,6 @@
 # Review — f-mp503-1: the unconfigured 503 measures OUR guard again
 
-**Slice/branch/tip:** f-mp503-1 (fire-authored `tasks/lane-fmp503-1-unconfigured-503-copy.md`) · `lane/c` · tip `5b5019057` · merged `ebdf1dec0081669f5cb41bc1d97e2bb54846fc20` · drained attended 2026-08-08 ~10:15.
+**Slice/branch/tip:** f-mp503-1 (fire-authored `tasks/lane-fmp503-1-unconfigured-503-copy.md`) · `lane/c` · tip `8cff7382d` · merged `4f74e5df0ede2a4b1dbea3cc3ae0d9a0a21a6320` · drained attended 2026-08-08 ~10:15.
 
 **Verdict: MERGED — gate green after one environmental re-run.**
 

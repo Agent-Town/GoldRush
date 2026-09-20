@@ -1,7 +1,7 @@
 # reviews/e2-enemies.md — E2 Steamworks enemy roster + railcar boss DRAIN
 
 **Slice:** e2-enemies ("THE STEAMWORKS OUTFIT" — E2 enemy roster + wave-12 component boss)
-**Branch/tip drained:** `lane/m4` — `f315d43 e2: add steamworks enemy roster and railcar boss` (runner-wrapped `c33cf0b`)
+**Branch/tip drained:** `lane/m4` — `f315d43 e2: add steamworks enemy roster and railcar boss` (runner-wrapped `c33cf0b (archive: pruned by the A3 rewrite)`)
 **Merged to main:** s230 fire, 2026-07-08 (graft commit below)
 **Verdict:** ✅ SHIPPED — clean single-base graft; gated with a documented, proven port/env exception (see Evidence).
 
@@ -25,12 +25,12 @@ E2 wave gates in normal play:
 | `npx tsc --noEmit` | **clean** | **main + graft (this fire)** |
 | `npm run build` | **green** | **main + graft (this fire)** |
 | graft vs `lane/m4:f315d43` (`src/`,`e2e/e2-enemies.spec.ts`,`assets/`) | **byte-identical** (empty diff) | this fire |
-| main-side divergence since base `8a287c6` on ALL lane-touched files | **NONE** (`git diff 8a287c6 main -- src/ assets/ e2e/e2-enemies.spec.ts` = empty) | this fire |
+| main-side divergence since base `330024b` on ALL lane-touched files | **NONE** (`git diff 8a287c6 main -- src/ assets/ e2e/e2-enemies.spec.ts` = empty) | this fire |
 | `e2e/e2-enemies.spec.ts` | **11 passed, 1 skipped** (5 tests × desktop+mobile + 1 desktop-only stress skip) | lane worktree (byte-identical content) |
 | regression `e1-baron` + `e2-hill-mine` + `m1-01` + `m2-01` | **54 passed, 2 skipped** | lane worktree (byte-identical content) |
 | `codex review` | 4 issues found + fixed before commit | lane |
 
-**Why the lane e2e transfers to main (not a hand-wave):** the merge-base `8a287c6` is recent —
+**Why the lane e2e transfers to main (not a hand-wave):** the merge-base `330024b` is recent —
 it already contains story:THE LOOP + the save-slots menu restructuring. Since that base, **main
 advanced ONLY with infra** (mp-01 functions/, perf-04 corrector, bookkeeping) — verified: the
 `base..main` file set and the `base..lane/m4` (lane-touched) file set are **disjoint**, zero
@@ -48,11 +48,11 @@ must not disturb (gate-contamination law #12), and a **scratch-port run needs an
 code to the passing lane run, so this is a repetition the env blocks, not missing coverage.
 
 ## Merge classification
-Base = `8a287c6` (an ancestor of main). `lane/m4` = base + `f315d43` (+ runner wrap `c33cf0b`).
+Base = `330024b` (an ancestor of main). `lane/m4` = base + `b9e5fd5` (+ runner wrap `c33cf0b (archive: pruned by the A3 rewrite)`).
 **Clean single-base graft, NO 3-way** — every lane-touched file grafted by `git checkout lane/m4 -- <path>`
 (the exact committed blobs; `git cherry-pick` remains approval-blocked, `checkout <ref> -- path` is
 now permitted). This **corrects the s228 catalog**, which called e2-enemies a "MIXED stale 3-way
-touching Game.ts" — that analysis used an older base; against the actual merge-base `8a287c6`, main
+touching Game.ts" — that analysis used an older base; against the actual merge-base `330024b`, main
 has zero divergence on Game.ts and every other touched file (verified per-dir).
 
 **LANE-TOUCHED (clean checkout-ref):** `src/{core/EventBus,entities/Enemy,entities/pools,game/Game,

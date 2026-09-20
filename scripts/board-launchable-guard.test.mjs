@@ -42,7 +42,7 @@ const HARVEST_FREE_BOARD_CONTRACTS = {
   // preserve-contract (keep the last warm vent alight through the Static squall)';
   // specs/agent-play/e10-ember-shore-preserve.md:18 builds the vent as a warmth structure with a
   // STOKE action. Its seams stay unauthored until E10S-4 earns the admission on evidence
-  // (tasks/e10s-1c-ember-shore-inert-landing.md:27, landed 14dbb496a)."
+  // (tasks/e10s-1c-ember-shore-inert-landing.md:27, landed d08cfe31b)."
   //
   // WHY THE DECLARATION HAD TO GO WITH THE ANCHORS, not merely could: the four cooling-vein
   // anchors ARE the map's authored stoking economy (`specs/agent-play/e10-ember-shore-preserve.md`
@@ -56,7 +56,7 @@ const HARVEST_FREE_BOARD_CONTRACTS = {
   // anchored map either way — `activeId: 'e10-ember-shore'`, `fallbackReason: null` — so the map
   // stays openable on its seams alone, which is the first test in this file.
   // ⓘ `e10-archive-world` HELD A ROW HERE UNTIL THE ERA-6 LAND (2026-09-14) AND NO LONGER DOES — Astra's map
-  // campaign (sol/map-art-inventory-20260908 883a3521e, landed by maps-campaign-land-era6) authored four
+  // campaign (sol/map-art-inventory-20260908 7c2744e5a, landed by maps-campaign-land-era6) authored four
   // harvestAnchors for it and replaced `twist.harvestFreeObjective` with the `archiveWorld` restoration
   // objective (src/systems/E10ArchiveSystem.ts), so per `:98` the declaration had to go with the anchors
   // that replaced it. The retired reason, kept legible: 'specs/agent-play/e10-archive-world-restoration.md:24, verbatim: "the wings themselves yield nothing - you are not here to extract." Its seams wait on the same door-slice evidence.',

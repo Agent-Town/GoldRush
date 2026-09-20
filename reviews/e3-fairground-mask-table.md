@@ -1,8 +1,8 @@
 # Review — e3-fairground mask table (publish the last unmasked map)
 
 **Slice:** publish-e3-fairground-mask-table (lane-d, data extraction)
-**Branch/tip:** lane/perf @ `cb6331bc` (runner auto-commit) → merged to main `fc04c21b8354bc139494f231917cf37cf8be3f82`
-**Base:** `84b1c15f` (clean; only my s658 STATUS lock `540f7b71` moved main since)
+**Branch/tip:** lane/perf @ `f0878140` (runner auto-commit) → merged to main `6d4bda2cd49d5e02476e4bacee5420ae42d22bbf`
+**Base:** `5cd47a84` (clean; only my s658 STATUS lock `22e69ab8` moved main since)
 **Drained:** s658 fire, 2026-07-16
 **Verdict:** ✅ SHIPPED — clean merge, gates green, slice test 6/6.
 
@@ -18,7 +18,7 @@ Publishes `assets/contracts/epoch-3-voltage/mask-tables/e3-fairground.json` — 
 | Adjacent playwright suites | UNAFFECTED — diff is json + node-test + BACKLOG only; no src/e2e/render change, no boot-visible change (masks feed Sol's verifier, application unwired) |
 | Boot probe / perf | N/A — nothing renders from this data at runtime |
 
-## Merge classification (base `84b1c15f`)
+## Merge classification (base `5cd47a84`)
 | File | Class | Resolution |
 |------|-------|-----------|
 | `assets/contracts/epoch-3-voltage/mask-tables/e3-fairground.json` | NEW | free (create) |
@@ -28,6 +28,6 @@ Publishes `assets/contracts/epoch-3-voltage/mask-tables/e3-fairground.json` — 
 `git merge --no-ff lane/perf` → ort strategy, zero conflicts. 3 files, +116/-2.
 
 ## Findings
-- **F-1 (non-blocking, PRE-EXISTING on main — NOT this slice):** `scripts/goal-tracker.test.mjs:17-18` hardcodes an expected top-level category list of 5 titles, but `tasks/goals.json` carries **11** categories as of `84b1c15f` (attended expanded the goal tree in `0778b6f1`/`84b1c15f` — added Art / Laws / Story / Multiplayer / Charter Press / Foundry). Proven pre-existing: `git show 84b1c15f:tasks/goals.json` → 11 categories, so the test was already red on main *before* this drain. This slice neither caused nor worsened it (no top-level category touched; my `world-e3-fairground-mask` leaf carries a valid 40-char `mergeHash`, and it is not in the test's hash-sample set at :56-60). **Fix owed (attended or a fire, <10 lines):** update the expected-titles array at `goal-tracker.test.mjs:18` from the 5-title list to the current 11. Flagged on OWNER'S DESK / next-fire.
-- **F-2 (informational):** GOAL REGISTRATION LAW satisfied — `tasks/goals.json` leaf `world-e3-fairground-mask` flipped `queued → merged` with full hash `fc04c21b8354bc139494f231917cf37cf8be3f82` in the drain commit.
+- **F-1 (non-blocking, PRE-EXISTING on main — NOT this slice):** `scripts/goal-tracker.test.mjs:17-18` hardcodes an expected top-level category list of 5 titles, but `tasks/goals.json` carries **11** categories as of `5cd47a84` (attended expanded the goal tree in `a2b77a0a`/`5cd47a84` — added Art / Laws / Story / Multiplayer / Charter Press / Foundry). Proven pre-existing: `git show 5cd47a84:tasks/goals.json` → 11 categories, so the test was already red on main *before* this drain. This slice neither caused nor worsened it (no top-level category touched; my `world-e3-fairground-mask` leaf carries a valid 40-char `mergeHash`, and it is not in the test's hash-sample set at :56-60). **Fix owed (attended or a fire, <10 lines):** update the expected-titles array at `goal-tracker.test.mjs:18` from the 5-title list to the current 11. Flagged on OWNER'S DESK / next-fire.
+- **F-2 (informational):** GOAL REGISTRATION LAW satisfied — `tasks/goals.json` leaf `world-e3-fairground-mask` flipped `queued → merged` with full hash `6d4bda2cd49d5e02476e4bacee5420ae42d22bbf` in the drain commit.
 - **GZ filter:** no player-visible change (mask data feeds the sculpt pipeline, application unwired) → **no gazette item.**

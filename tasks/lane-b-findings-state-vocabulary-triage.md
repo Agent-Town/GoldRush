@@ -3,7 +3,7 @@ FIRE-AUTHORED s1259, **REFRESHED s1260 after a lawful STOP — attempt 2 with a 
 You are Codex, implementer for Gold Rush, running natively on Robin's Mac in `worktrees/lane-b` (branch `lane/m4`, commit prefix `test:`).
 CODEX: model=gpt-5.6-sol effort=high
 
-> ⛔ **ATTEMPT 1 STOPPED, CORRECTLY, AND IT WAS THE MASTER'S FAULT — NOT YOURS AND NOT THE TREE'S.** s1259 authored this task with a baseline it had measured *before its own edits landed*, then struck three findings and wrote two new ones four minutes later; the run dutifully re-derived, found `427` where the master said `424`, and stopped on the +3 as instructed (run log `tasks/runs/20260730-150612-lane-b-lane-b-findings-state-vocabulary-triage.md.log`, ~3 min, 85,129 tokens, no artifact, lane left clean). **That STOP was right and cost a slot.** s1260 re-derived the drift at six revisions and traced all four number changes to s1259's own commit `7acdaf07` — see **F-1260-1**. ➡️ **So scope 1 below no longer gates on four global scalars that any unrelated ledger edit perturbs. It gates on a NAMED population you can locate individually.** Per the changed-premise law (`CLAUDE.md` §7.5) this is a legitimate second attempt: refreshed baseline, restated population, redesigned gate.
+> ⛔ **ATTEMPT 1 STOPPED, CORRECTLY, AND IT WAS THE MASTER'S FAULT — NOT YOURS AND NOT THE TREE'S.** s1259 authored this task with a baseline it had measured *before its own edits landed*, then struck three findings and wrote two new ones four minutes later; the run dutifully re-derived, found `427` where the master said `424`, and stopped on the +3 as instructed (run log `tasks/runs/20260730-150612-lane-b-lane-b-findings-state-vocabulary-triage.md.log`, ~3 min, 85,129 tokens, no artifact, lane left clean). **That STOP was right and cost a slot.** s1260 re-derived the drift at six revisions and traced all four number changes to s1259's own commit `c65af42b` — see **F-1260-1**. ➡️ **So scope 1 below no longer gates on four global scalars that any unrelated ledger edit perturbs. It gates on a NAMED population you can locate individually.** Per the changed-premise law (`CLAUDE.md` §7.5) this is a legitimate second attempt: refreshed baseline, restated population, redesigned gate.
 
 ## Pre-flight (LANE-SAFETY, runner-auto-commit aware)
 
@@ -13,7 +13,7 @@ The lane branch being ahead is NORMAL — the runner auto-commits. For each ahea
 
 ## READ FIRST (paths, in this order)
 
-1. `scripts/findings-state-guard.mjs` — the guard merged s1259 (`82f0b394`). Its header states its own limit; **that limit is this task's subject.**
+1. `scripts/findings-state-guard.mjs` — the guard merged s1259 (`54438991`). Its header states its own limit; **that limit is this task's subject.**
 2. `reviews/findings-state-guard.md` — the drain review, especially **F-1259-1** and **F-1259-2**.
 3. `tasks/BACKLOG.md` — **F-1260-1** (why attempt 1 stopped) and **F-1260-2** (the instrument's own blind spot, which is scope 1b). **You will not edit this file.**
 4. `logs/session-scratch/s1259/findings-double-state.mjs` — **the instrument that produced every number below.** It is a scratch probe, not a guard: written from the master's stated discriminator without reading the guard's implementation, so the two can disagree. Read its header comment, and read **line 29** (`CLOSED_RE`) with F-1260-2 in hand.
@@ -27,7 +27,7 @@ The guard ships honest because it says so in its header. **But two dozen candida
 
 **And the reason this must be a code probe rather than a careful read: s1259 struck three stale findings, and only two of them were double-state at all.** `F-1179-1` was invisible to *any* vocabulary — no line declared it closed, so the ledger was perfectly self-consistent while being wrong, and it was the one advertising itself `FIRE-AUTHORABLE`. **The ledger's own words are not evidence about the ledger. Only the code and the goal leaves are.**
 
-**s1260 adds the mirror-image warning, and it is why scope 1b exists.** F-1259-1 caught the *guard* using too narrow an **open** vocabulary. The probe that caught it uses too narrow a **closed** vocabulary: `CLOSED_RE` at `findings-double-state.mjs:29` does not admit **`DRAINED`**, nor the `🟢` glyph, nor "LAWFUL STOP". So 5 of its 23 accusations are its own artefact — `F-1104-1`'s "open" line literally reads *"IS DRAINED (`5ec26bce`)"*. **Neither instrument is trustworthy about its own denominator. You are the third reading, so do not inherit either.**
+**s1260 adds the mirror-image warning, and it is why scope 1b exists.** F-1259-1 caught the *guard* using too narrow an **open** vocabulary. The probe that caught it uses too narrow a **closed** vocabulary: `CLOSED_RE` at `findings-double-state.mjs:29` does not admit **`DRAINED`**, nor the `🟢` glyph, nor "LAWFUL STOP". So 5 of its 23 accusations are its own artefact — `F-1104-1`'s "open" line literally reads *"IS DRAINED (`7f066ecc`)"*. **Neither instrument is trustworthy about its own denominator. You are the third reading, so do not inherit either.**
 
 ## Scope (numbered; each independently checkable)
 

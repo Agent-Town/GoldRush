@@ -15,7 +15,7 @@ The owner ruled, via the decision panel, in `tasks/BACKLOG.md` at the `OWNER RUL
 
 > "AGENT VERB RUNGS — auto_pan/HARVEST = LEVEL 2 ("harvesting is the hero's basic verb"), place_building/BUILD = LEVEL 3 ("building spends gold"); panel rows BLESSED at their tiers."
 
-s1281 (`85bb1938`) landed the **ability** half: `auto_pan` moved 3 → 2 in `src/agent/AgentConsent.ts:15` and `src/agent/ToolSurface.ts:378`, plus the ratified ladder line. That work is correct and is NOT to be re-done.
+s1281 (`21985788`) landed the **ability** half: `auto_pan` moved 3 → 2 in `src/agent/AgentConsent.ts:15` and `src/agent/ToolSurface.ts:378`, plus the ratified ladder line. That work is correct and is NOT to be re-done.
 
 🚨 **F-1282-1 — THE RULING STILL HAS NOT REACHED BEHAVIOUR, BECAUSE THE VERB-RUNG TABLE WAS NEVER TOUCHED.** `permissionDenial` (`src/agent/StandingOrders.ts:397`) has **two** gates and the ability check is the **second**:
 
@@ -28,7 +28,7 @@ s1281 (`85bb1938`) landed the **ability** half: `auto_pan` moved 3 → 2 in `src
 
 and `requiredLevel` (`:345-348`) still reads `if (order.verb === 'BUILD' || order.verb === 'HARVEST') return 3;`. **BUILD = 3 is exactly what the owner ruled. HARVEST = 3 is the value he overruled.**
 
-🔬 **Measured through the REAL entry point** (`StandingOrdersExecutor.submit()`), all rungs granted, all abilities granted, on main at `85bb1938`, instrument `logs/session-scratch/s1282/harvest-rung-probe.mjs`:
+🔬 **Measured through the REAL entry point** (`StandingOrdersExecutor.submit()`), all rungs granted, all abilities granted, on main at `21985788`, instrument `logs/session-scratch/s1282/harvest-rung-probe.mjs`:
 
 | order | level 1 | level 2 | level 3 |
 |---|---|---|---|

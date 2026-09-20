@@ -1,6 +1,6 @@
 # Review — e6-showroom cap fix (owner-ruled) + the false green that survived it
 
-**Slice/branch/tip:** `worktree-agent-aec0c52b1d3e82294`, base `2a441a877` (= main tip at start). Built by a headless Opus-5 agent (owner directive 2026-08-20: remaining coding on Opus).
+**Slice/branch/tip:** `worktree-agent-aec0c52b1d3e82294`, base `e11313223` (= main tip at start). Built by a headless Opus-5 agent (owner directive 2026-08-20: remaining coding on Opus).
 
 **Verdict: READY-FOR-DRAIN — GREEN, but the slice's headline goal was NOT reached and the contract stays EXEMPT.** The owner's ruling is implemented and proved; the outcome it was expected to produce did not follow, and the reason is measured, not guessed.
 
@@ -18,7 +18,7 @@ Outside epoch-6-atomic the arithmetic is provably identical: the browser's `Wran
 
 Expected: with the cap freed, live enemies keep arriving and an idle run dies honestly. **Measured: it does not.** Both bench seeds, `--policy=idle`, ×2 each, all `REPEAT-IDENTICAL`:
 
-| seed | before (main `2a441a877`) | after (this branch) |
+| seed | before (main `e11313223`) | after (this branch) |
 |---|---|---|
 | `e6-showroom-01` | wave-20-false-green · secured **true** · alive **60**/60 · exhausted 60 · kills 81 · `fnv1a32:76304f06` | wave-20-false-green · secured **true** · alive **96**/96 · exhausted 96 · kills 135 · `fnv1a32:410c940e` |
 | `e6-showroom-02` | wave-20-false-green · secured **true** · alive **60**/60 · exhausted 60 · kills 81 · `fnv1a32:d0cf7c3e` | wave-20-false-green · secured **true** · alive **96**/96 · exhausted 96 · kills 99 · `fnv1a32:75c8b75f` |
@@ -63,7 +63,7 @@ All on Node **26.4.0**, after `npm install --no-audit --no-fund`.
 `scripts/null-floor-anchors.mjs --check` over all 45 pinned idle floors in 17 contracts (140.0s). **Exactly 5 lines differ, and every one is E6:**
 
 ```
-eraStamp: pinned="a1e8bc63c" derived="2a441a877"          <- bookkeeping, always moves
+eraStamp: pinned="d077b36a6" derived="e11313223"          <- bookkeeping, always moves
 e6-glow-mesa/e6-glow-mesa-01 kills: 75  -> 108
 e6-glow-mesa/e6-glow-mesa-01 hash: fnv1a32:146a5771 -> fnv1a32:35d13711
 e6-glow-mesa/e6-glow-mesa-02 kills: 108 -> 179
@@ -76,13 +76,13 @@ e6-glow-mesa/e6-glow-mesa-02 hash: fnv1a32:6b748f11 -> fnv1a32:293bb7cf
 
 - `assets/contracts/null-floors.json` — **5 changed lines total**, listed above. Nothing else moved.
 - `docs/bench/same-game-audit.md` — 1043 insertions / 1043 deletions, and **the majority is not mine**. Bucketed by hand, zero lines unexplained:
-  - **405 lines cite `functions/api/standings.ts`** — PRE-EXISTING staleness. `standings.ts` last changed at `df6b0a7d1` ("season roll"), *after* the report's last regeneration at `ae1311eac`; the report pinned `:844`, the real anchor (`const simple = new Set(['weapon_toggle', …])`) stands at `:879` in main's own untouched file. My regeneration cures a report that was already stale on main.
+  - **405 lines cite `functions/api/standings.ts`** — PRE-EXISTING staleness. `standings.ts` last changed at `206909333` ("season roll"), *after* the report's last regeneration at `a4bbf00f6`; the report pinned `:844`, the real anchor (`const simple = new Set(['weapon_toggle', …])`) stands at `:879` in main's own untouched file. My regeneration cures a report that was already stale on main.
   - **637 lines cite `src/sim/HeadlessContractSim.ts`** — mine: the file grew 10 lines, so every citation coordinate into it shifted.
   - **1 line** is the `e6-showroom` exemption reason itself — mine.
 
 ## Merge classification
 
-Base `2a441a877`; no drift (branch cut from main tip, worked in isolation).
+Base `e11313223`; no drift (branch cut from main tip, worked in isolation).
 
 | file | class | note |
 |---|---|---|
@@ -97,7 +97,7 @@ Base `2a441a877`; no drift (branch cut from main tip, worked in isolation).
 
 ## Findings
 
-- **F-CAP-1 (BLOCKING for whoever drains SECOND — a verified cross-branch contradiction).** `lane/b` @ `555cba556` (task `f2081-1-e6-capture-truth-pass`, completed while this slice was being built) rewrites the same E6 manifest rule and writes, verbatim: `consequence: 'exhausted machines are undamageable and hold spawn slots; …'`, under a comment reading *"Exhausted machines stop taking damage and hold spawn slots"*. **"hold spawn slots" is FALSE the moment this slice lands.** It is not the runner's error: its master explicitly ordered that clause preserved as the "true half" (`tasks/f2081-1-e6-capture-truth-pass.md` scope 2: *"It must keep the two facts that ARE true — exhausted machines take no damage, and they hold spawn slots"*), which was true when the master was authored that morning and was falsified by the owner's ruling the same day. **Whichever of the two lands second must strike that clause in the same commit.** Recommended replacement, derived from this slice: *exhausted machines are undamageable but capturable, and no longer hold spawn slots; capture is reached through the standing-order CAPTURE verb, not a tool.*
+- **F-CAP-1 (BLOCKING for whoever drains SECOND — a verified cross-branch contradiction).** `lane/b` @ `6c2d05f17` (task `f2081-1-e6-capture-truth-pass`, completed while this slice was being built) rewrites the same E6 manifest rule and writes, verbatim: `consequence: 'exhausted machines are undamageable and hold spawn slots; …'`, under a comment reading *"Exhausted machines stop taking damage and hold spawn slots"*. **"hold spawn slots" is FALSE the moment this slice lands.** It is not the runner's error: its master explicitly ordered that clause preserved as the "true half" (`tasks/f2081-1-e6-capture-truth-pass.md` scope 2: *"It must keep the two facts that ARE true — exhausted machines take no damage, and they hold spawn slots"*), which was true when the master was authored that morning and was falsified by the owner's ruling the same day. **Whichever of the two lands second must strike that clause in the same commit.** Recommended replacement, derived from this slice: *exhausted machines are undamageable but capturable, and no longer hold spawn slots; capture is reached through the standing-order CAPTURE verb, not a tool.*
 - **F-CAP-2 (non-blocking, but it is the reason this slice stopped where it did).** The idle false green now rests on `Balance.enemy.poolSize` (96) rather than `Balance.waves.aliveCap` (60), because exhausted machines release their spawn slot but keep their POOL slot. Curing it needs an **owner ruling**, since all three options are design changes and two touch the capture economy: **(a)** exhausted machines eventually leave the board on a second decay — simplest to reason about, but it deletes gold the player was entitled to; **(b)** `EnemyPool.spawn` may recycle the OLDEST exhausted machine when the pool is full — smallest diff, preserves the ruling's spirit, still deletes a capture but only under genuine pressure; **(c)** accept it and keep the exemption — the current state, and the honest one until ruled. **REC: (b).** Note the framing: this is not a "difficulty" question in the sense ruling 2 closed — it is about whether an idle board can suffocate the wave clock at all.
 - **F-CAP-3 (non-blocking, owed measurement).** The cap fix raises the practical enemy ceiling in E6 from 60 to **96** — measured, both idle seeds. The engine supports it (`poolSize` is 96 and several suites already set `aliveCap` to 96), but **no frame-p95 pass on a full 96-enemy E6 board was taken here**, and the drain bar asks for one when anything renders. A perf pass on `?contract=e6-showroom` at a saturated board is owed before this is called finished for the browser.
 - **F-CAP-5 (non-blocking, pre-existing, attributed by control).** An in-contract boot (navigate to `?contract=<id>` after profile creation) intermittently logs `THREE.GLTFLoader: Couldn't load texture blob:<uuid>` — a fresh blob UUID each time, landing on desktop or mobile at random, roughly one viewport in two. **Not mine, proven:** it reproduces identically on `?contract=e4-dust-flats`, a non-E6 contract where this diff is a provable no-op (3 runs: 2 dirty viewports, then 1, then 1). The repo's own plain-boot gate is clean, so this is only visible through the extra in-contract probe used here — and that probe's own second `page.goto` is the likeliest revoker of the blob. Filed so the next person who sees it does not re-derive the control.

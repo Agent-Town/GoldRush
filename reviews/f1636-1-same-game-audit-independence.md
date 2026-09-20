@@ -1,7 +1,7 @@
 # f1636-1 — the same-game audit measures buildable parity again
 
-**Slice:** f1636-1-same-game-audit-independence · **Branch:** `lane/a` · **Tip:** `4207fd1e723acaa908e7e1b3d81f1d6b6ee211ed`
-**Merge:** `fef46f6877054fadf9d282026eb695a44a686fbb` · **Follow-up cure:** `d1e360155` (F-1638-1)
+**Slice:** f1636-1-same-game-audit-independence · **Branch:** `lane/a` · **Tip:** `42e508722c58e453e35e8b683ee34f12e3ca1277`
+**Merge:** `ad910044636b26375bba19eb4469ea32f82186f1` · **Follow-up cure:** `5bd9f2127` (F-1638-1)
 **Drained:** s1638, 2026-08-10 · gated in detached worktree `gate-s1638` (§3.0b)
 
 ## VERDICT: MERGED — the guard has teeth, and I proved them myself rather than inherit the runner's arms.
@@ -34,7 +34,7 @@ reports buildable parity while the verb rows of the same document call it unreac
 | adjacent `task-025` + `m1-01` + `m2-01` | **32/32** desktop + 390px |
 | plain boot `_s106-prospector` + `f1297-2-tape-button` | **4/4**, zero console/page errors |
 | Playwright flags | `--workers=1` throughout (§3.1), scratch port 5234, external server serving the gate tree |
-| Classification | 3 paths, **all LANE-ONLY**; main untouched since base `f0f2e450` — no graft |
+| Classification | 3 paths, **all LANE-ONLY**; main untouched since base `5fa45b37` — no graft |
 | Post-merge `main..lane/a` | empty |
 
 ### Teeth proven by manufacturing the defect (s1299/s1300 standard) — re-derived, not inherited
@@ -72,7 +72,7 @@ stopped contradicting itself — its verb rows have said `agent-lacks 324` about
 
 ## Findings
 
-**F-1638-1 — a generated report's citations rot at MERGE time, and no guard sees it. CURED in `d1e360155`.**
+**F-1638-1 — a generated report's citations rot at MERGE time, and no guard sees it. CURED in `5bd9f2127`.**
 The lane generated `docs/bench/same-game-audit.md` against a base predating SEA-1. SEA-1 added +5
 lines to `functions/api/standings.ts`; the instant this merged, every evidence cell pointing into that
 file was five lines short — **252 cells reading `standings.ts:656` where the merged tree says `:661`,

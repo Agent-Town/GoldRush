@@ -1,4 +1,4 @@
-> ⛔ PROPOSAL, NOT A MASTER — DO NOT QUEUE. A design note from Astra's map campaign (sol/map-art-inventory-20260908 883a3521e, landed as era 6 on 2026-09-14); it has no role line, no pre-flight, no goal leaf, and never ran. A fire authors a real master from it only on an owner word (bannered attended 2026-09-14 so task-guard-audit reads it for what it is).
+> ⛔ PROPOSAL, NOT A MASTER — DO NOT QUEUE. A design note from Astra's map campaign (sol/map-art-inventory-20260908 7c2744e5a, landed as era 6 on 2026-09-14); it has no role line, no pre-flight, no goal leaf, and never ran. A fire authors a real master from it only on an owner word (bannered attended 2026-09-14 so task-guard-audit reads it for what it is).
 
 # Map-art regression fixture refresh
 

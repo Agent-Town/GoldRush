@@ -1,6 +1,6 @@
 # rf-35 — townEraProps node-safety guard (F-1096-1)
 
-**Slice:** rf-35 town-era-props-node-safety · **Branch:** none — landed directly on `main` by the s1097 fire · **Merge:** `adaacdca6e88459a57ed87a733c171d9ccab0df5` (+ the separate goal-tracker cure `1d425752ae577e6a1dd63066e479d4d0f33d2bdc`)
+**Slice:** rf-35 town-era-props-node-safety · **Branch:** none — landed directly on `main` by the s1097 fire · **Merge:** `8166497e62ea5a6ef6cecfc010e2ed3d084ad2a4` (+ the separate goal-tracker cure `f1bb62cf46ac250694d8965cc7984cc13972f873`)
 **Verdict:** ✅ MERGED — bundle-neutral, behaviour-neutral under Vite, and it disarms a measured 2378→0 landmine.
 
 ## What it does
@@ -66,7 +66,7 @@ These are already on the books: **F-1093-3** recorded `cast-motion-wiring` 1 pas
 
 ## Merge classification
 
-Landed **directly on `main`** — no lane branch, no graft, no conflict surface. Three files, path-scoped, in `adaacdca`:
+Landed **directly on `main`** — no lane branch, no graft, no conflict surface. Three files, path-scoped, in `8166497e`:
 
 - `src/town/townEraProps.ts` — the guard + fallback (+18 lines)
 - `scripts/town-era-props-node-safety.test.mjs` — new named guard
@@ -84,9 +84,9 @@ Landed **directly on `main`** — no lane branch, no graft, no conflict surface.
 AssertionError: rf-34-hero-y-restore-roundtrip: invalid status blocked
 ```
 
-**F-1097-3 — s1096's own bookkeeping commit `b968f6c7` turned `goal-tracker.test.mjs` red.** It parked rf-34 as `status: "blocked"` — which is the *honest* state, the work is finished and waiting on the owner — but `goal-tracker.test.mjs:13` allowed only `planned|queued|building|merged|verified-by-owner`. Bisected, not guessed: the guard is **rc 0** against `c320999c:tasks/goals.json` (s1096's lock commit) and **rc 1** against main's. s1096 gated rf-34 *before* writing its bookkeeping and never re-ran the suite afterwards, so it reported `59/59` in good faith and left a red behind it.
+**F-1097-3 — s1096's own bookkeeping commit `66cae1d4` turned `goal-tracker.test.mjs` red.** It parked rf-34 as `status: "blocked"` — which is the *honest* state, the work is finished and waiting on the owner — but `goal-tracker.test.mjs:13` allowed only `planned|queued|building|merged|verified-by-owner`. Bisected, not guessed: the guard is **rc 0** against `624c0855:tasks/goals.json` (s1096's lock commit) and **rc 1** against main's. s1096 gated rf-34 *before* writing its bookkeeping and never re-ran the suite afterwards, so it reported `59/59` in good faith and left a red behind it.
 
-Cured in `1d425752` by **widening the vocabulary, not downgrading the leaf**: `queued` would claim a queue entry that does not exist (the queue is empty; the work is done), so the schema learns `blocked` and now *requires* `blockedReason` — a blocked leaf must carry the owner question, or it is just a stall. Mutation control: renaming `blockedReason` drove the new assert red naming the leaf; restore byte-identical. **Node phase 59/60 → 60/60.**
+Cured in `f1bb62cf` by **widening the vocabulary, not downgrading the leaf**: `queued` would claim a queue entry that does not exist (the queue is empty; the work is done), so the schema learns `blocked` and now *requires* `blockedReason` — a blocked leaf must carry the owner question, or it is just a stall. Mutation control: renaming `blockedReason` drove the new assert red naming the leaf; restore byte-identical. **Node phase 59/60 → 60/60.**
 
 - **F-1097-4 (non-blocking, the reason the above could hide at all):** `goal-tracker.test.mjs:11` builds its leaf set from `goals.goals[].subgoals[].tasks[]` only — but `goals.json` has a **third** leaf shape, `goals.goals[].tasks[]` (top-level tasks, e.g. `m1-m2-resource-guards`), which the schema test **never walks**. Measured status counts across the whole file: `merged` 324 · `verified-by-owner` 11 · `planned` 8 · `shipped` **4** · `building` 3 · `blocked` 1 · `diagnosed` **1**. So **five leaves already carry statuses outside the allowed set** and are invisible to the guard purely because of where they sit. The guard's denominator is narrower than its name ("goal tree schema is valid"). Widening the traversal is a **one-line change that immediately reds five leaves**, each needing a judgement about what it should say — that is a cleanup with decisions in it, so it is **banked here, not smuggled into this commit**. Note also that `assert.ok` aborts on the *first* violation, so the guard reports one bad status at a time.
 

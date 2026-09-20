@@ -1,7 +1,7 @@
 # Review — run3d-07-sluice (drain)
 
 **Slice:** run3d-07-sluice (first buildable in the RUN-3D proving-ground ladder; establishes `Run3dPilot.ts` grammar)
-**Branch/tip:** `lane/e2-arsenal` `55078c6e` (`runner(lane-c): run3d-07-sluice.md`), parent `25b60452`
+**Branch/tip:** `lane/e2-arsenal` `55078c6e` (`runner(lane-c): run3d-07-sluice.md`), parent `f4cefb24`
 **Merged to main:** s446 fire, path-scoped re-land (no `git merge` — lane-b runner live, hijack-guard)
 **Verdict:** PASS — merged.
 
@@ -11,7 +11,7 @@ Introduces the **RUN-3D pilot harness** — a URL-param-gated proving ground for
 **Where does the player see this in a plain boot?** — **NOWHERE, by design.** With no `?run3dPilot=` param, `run3dPilotState='off'` and nothing loads (verified: `flag-off keeps the sprite shell and requests no sluice GLB`, boot probe zero-err). This is ladder infrastructure, not a user-facing gameplay merge (Mistake #10 answered honestly) → **no gazette item** (GZ-01 filter: no player-visible change).
 
 ## Classification
-Lane base `25b60452`; main advanced ~6 commits since (s445 handoff, s446 lock, stamp-mill drain, gazette, stamp refresh) — **none touched `src/game/Game.ts`**, so Game.ts base==main and the +6 additive hook applies clean. STATUS.md appeared in the raw `main..lane` diff **only** as main-moved (advanced on main, untouched by the runner commit — verified `25b60452..55078c6e` touches exactly 15 files, STATUS.md not among them); NOT copied.
+Lane base `f4cefb24`; main advanced ~6 commits since (s445 handoff, s446 lock, stamp-mill drain, gazette, stamp refresh) — **none touched `src/game/Game.ts`**, so Game.ts base==main and the +6 additive hook applies clean. STATUS.md appeared in the raw `main..lane` diff **only** as main-moved (advanced on main, untouched by the runner commit — verified `f4cefb24..55078c6e` touches exactly 15 files, STATUS.md not among them); NOT copied.
 - **All-new (auto):** `src/game/Run3dPilot.ts`, `e2e/run3d-sluice.spec.ts`, `assets/pilots/run3d/{sluice.blend,sluice.glb}`, `artifacts/run3d-sluice/*`.
 - **MODIFIED (additive, base==main):** `src/game/Game.ts` (+6). Landed diff verified == runner commit diff exactly.
 

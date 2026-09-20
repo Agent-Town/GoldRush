@@ -1,7 +1,7 @@
 # f1305-2 — console-watch single source
 
-**Slice:** `lane-a-f1305-2-console-watch-single-source` · **branch:** `lane/m3` · **lane tip:** `c15b20b4` · **base:** `502e7bc3`
-**Merged to main at:** `d596f9120f84febbf21c4f82d56b6d5b840b9017` · **drained by:** s1307 · **date:** 2026-08-01
+**Slice:** `lane-a-f1305-2-console-watch-single-source` · **branch:** `lane/m3` · **lane tip:** `c15b20b4` · **base:** `cd77de66`
+**Merged to main at:** `892026d2988fe944db30b17bec29c0a8efdab7a6` · **drained by:** s1307 · **date:** 2026-08-01
 
 ## Verdict
 
@@ -35,13 +35,13 @@ Every playwright arm ran `--workers=1` (§3.1).
 
 ## Merge classification
 
-All **19** paths **LANE-TOUCHED only**. `git diff --name-only 502e7bc3 main` restricted to those 19 paths is **EMPTY** — main never moved any of them since the base (its commits since `502e7bc3` are pure STATUS/BACKLOG/task bookkeeping). **No 3-way graft needed.** Applied by `git checkout lane/m3 -- <19 paths>`, committed path-scoped.
+All **19** paths **LANE-TOUCHED only**. `git diff --name-only cd77de66 main` restricted to those 19 paths is **EMPTY** — main never moved any of them since the base (its commits since `cd77de66` are pure STATUS/BACKLOG/task bookkeeping). **No 3-way graft needed.** Applied by `git checkout lane/m3 -- <19 paths>`, committed path-scoped.
 
 ## Findings
 
 ### ✅ The runner's reported baseline red does NOT reproduce on main — stale base, verified not inherited
 
-The run report says *"Full `test:node-guards` remains baseline-red: 195/197, both failures caused by unchanged `tasks/BACKLOG.md` declaring F-1304-1 open and closed."* That is true of its base and false of main. The lane's merge-base is `502e7bc3`; the fix is `8f078fb1` (s1306); `git merge-base --is-ancestor 8f078fb1 502e7bc3` → **base predates the fix**. On the merged tree the full battery is **rc=0 with 0 double-state**. Nothing owed. Recorded because a future reader of that log would otherwise inherit a red that never existed here.
+The run report says *"Full `test:node-guards` remains baseline-red: 195/197, both failures caused by unchanged `tasks/BACKLOG.md` declaring F-1304-1 open and closed."* That is true of its base and false of main. The lane's merge-base is `cd77de66`; the fix is `e0efeb54` (s1306); `git merge-base --is-ancestor e0efeb54 cd77de66` → **base predates the fix**. On the merged tree the full battery is **rc=0 with 0 double-state**. Nothing owed. Recorded because a future reader of that log would otherwise inherit a red that never existed here.
 
 ### 🟡 F-1307-1 — a completed lane task ran a second time (observation solid, mechanism OPEN)
 

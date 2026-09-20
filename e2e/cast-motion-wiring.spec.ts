@@ -63,7 +63,7 @@ test('the plaza cast stands, walks, and faces truthfully without borrowed sheets
   for (const id of ['schoolteacher', 'assay_clerk'] as const) expect(height(id)).toBeCloseTo(TOWN_CAST_METROLOGY.adult, 2);
   // RE-POINTED 2026-09-18 (F-TCRL-2 / F-HYG-8, `tasks/hygiene-battery-lossless-triangles.md` item
   // 8). This pinned (7, 3.4) — the ASSAY OFFICE anchor (9.4, 3.4) plus her `portraitPost` offset
-  // (-2.4, 0) from `3987c8f7b` (owner playtest 2026-08-03, "move the Elder and Assay Clerk posts
+  // (-2.4, 0) from `ac87d1714` (owner playtest 2026-08-03, "move the Elder and Assay Clerk posts
   // clear of their buildings visual footprints"). That offset was tuned for a PORTRAIT sprite. When
   // she gained a full body, `townActorPlazaPlacement` began ignoring portrait-only offsets for
   // full-body actors (`src/town/TownScene.ts`, the `actor.fullBody ? undefined :` clause) and she
@@ -114,7 +114,7 @@ test('the plaza cast stands, walks, and faces truthfully without borrowed sheets
   // (`reviews/sol-findings-sprite-roster-fixes-20260908.md:879`, :948 for the Elder) — and the cure
   // wired each of them a separate PLANTED IDLE clip through the generic town loader
   // (`src/town/TownScene.ts`'s `townCastWalkFrames`, `idle:` per actor; the art landed in
-  // `92137d813`, 2026-09-15). None of these three carries a patrol cycle, so standing is their
+  // `d2a7fda05`, 2026-09-15). None of these three carries a patrol cycle, so standing is their
   // whole day and the idle is what a player sees. The pin is therefore made EXACT rather than
   // widened: each must show ITS OWN planted idle — which is also the "no borrowed sheets" claim in
   // this test's title, since the cell name carries the actor's id. Their walking cells are still

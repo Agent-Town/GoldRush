@@ -1,10 +1,10 @@
 # The Baron, re-ridden — F-2290-2's single measurement
 
-**Fire:** s2291 · **Date:** 2026-08-25 · **Engine:** `d020e5b46` · **Contract:** `e1-baron` · **Seed:** `e1-baron-01` (the first pinned bench seed, `assets/contracts/bench-seeds.json`)
+**Fire:** s2291 · **Date:** 2026-08-25 · **Engine:** `f6ab74df1` · **Contract:** `e1-baron` · **Seed:** `e1-baron-01` (the first pinned bench seed, `assets/contracts/bench-seeds.json`)
 
 ## What was asked
 
-F-2290-2 (s2290, `abf6b7464`) priced the Baron owner fork and named ONE cheap measurement as owed before the owner rules:
+F-2290-2 (s2290, `c05fc05d1`) priced the Baron owner fork and named ONE cheap measurement as owed before the owner rules:
 
 > re-ride `codex-sol-r1-player.mjs` at the current engine and door, first bench seed
 
@@ -57,7 +57,7 @@ a `randomUUID` run identity (`gr-sim.mjs:12`). `inputLog`, `runStart`, `simVersi
 
 **Measured:** it is deterministic today at `620e7876` (two rides, plus tape-level identity), and differs from Aug-13's `f5365f4c` **while every gameplay observable is byte-identical**.
 
-**Not measured, and deliberately not asserted:** *which* commit moved it. `src/agent/StandingOrders.ts` changed at least five times since Aug-13 — `a8f02a7a0` (F-2127-1, the secure-window cure, 180s → 4.4s) is the obvious candidate and is **a candidate only**. Pinning it is the job of `f2289-1-recorder-assayer-hash-divergence`, in flight in lane-a; this fire does not pre-empt it.
+**Not measured, and deliberately not asserted:** *which* commit moved it. `src/agent/StandingOrders.ts` changed at least five times since Aug-13 — `6bf8cabf6` (F-2127-1, the secure-window cure, 180s → 4.4s) is the obvious candidate and is **a candidate only**. Pinning it is the job of `f2289-1-recorder-assayer-hash-divergence`, in flight in lane-a; this fire does not pre-empt it.
 
 **What it means for the county, which is the part that matters:** the orders-log hash is **not stable across engine patches even when the run is bit-identical in outcome**. A hash-based proof of a run therefore identifies *a run on a given engine*, not *a run*. Any future use of it as a durable run identity needs an engine-version pin beside it.
 
@@ -71,7 +71,7 @@ Error: ENOENT: no such file or directory, open
   at vite.config.ts.timestamp-….mjs:110
 ```
 
-`vite.config.ts:25` reads `resolve(process.cwd(), 'package-lock.json')` — **cwd-relative**, and it has done so since `0dfa1d3f3` (2026-07-25), **19 days before the Aug-13 run**. So the original run cannot have executed from `heat3/` either: **it ran from the repo root**, and the retained file is an archived copy whose run conditions were never recorded.
+`vite.config.ts:25` reads `resolve(process.cwd(), 'package-lock.json')` — **cwd-relative**, and it has done so since `436deb71e` (2026-07-25), **19 days before the Aug-13 run**. So the original run cannot have executed from `heat3/` either: **it ran from the repo root**, and the retained file is an archived copy whose run conditions were never recorded.
 
 The re-ride therefore placed a **byte-identical copy at the repo root** — verified equal, 10,055 bytes — which reconstructs the original conditions rather than adapting the strategy. No line of the strategy was modified. A first attempt via a `scripts` symlink inside `heat3/` was abandoned once the vite read dated the defect; it is recorded here because it is what dated it.
 

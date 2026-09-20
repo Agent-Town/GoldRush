@@ -18,7 +18,7 @@ const SPECS = [
   'e2e/landmark-collision.spec.ts',
   'e2e/town-dynamo-hall-blender.spec.ts',
 ];
-const PREMERGE = 'a4556dca5';
+const PREMERGE = 'edda5d3de';
 const MERGED = '75903bf48';
 const TARGET = 'town-dynamo-hall-blender.spec.ts:97';
 

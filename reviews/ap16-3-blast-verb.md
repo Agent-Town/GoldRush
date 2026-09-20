@@ -1,7 +1,7 @@
 # AP-16-3 — BLAST_AT: the blast charge reaches the agent door
 
-**Slice:** lane-c-ap16-3-blast-verb · **Branch:** `lane/c` · **Tip:** `14e13c469`
-**Merge:** `eba8d15ea5b6aee63a8aa5fd633a09e795e2f829`
+**Slice:** lane-c-ap16-3-blast-verb · **Branch:** `lane/c` · **Tip:** `d12d52073`
+**Merge:** `507c4a67976937a7d0fb5f3f92d32f1a7c580587`
 **Drained:** s1638, 2026-08-10 · gated in detached worktree `gate-s1638` (§3.0b), merged as ONE act (F-1589-5)
 
 ## VERDICT: MERGED — with one recorded instrument gap (F-1638-3), on the same reasoning that merged ap16-1.
@@ -39,7 +39,7 @@ inert until an agent actually orders it. The Baron pins stand.
 ### Merge classification
 
 5 paths. `e2e/ap16-3-blast-verb.spec.ts`, `public/skill.md`, `src/agent/StandingOrders.ts`,
-`src/agent/View.ts` — **LANE-ONLY**, main untouched since base `719c86d6`.
+`src/agent/View.ts` — **LANE-ONLY**, main untouched since base `9ef2abaf`.
 `src/sim/HeadlessContractSim.ts` — **BOTH-MOVED** (main moved it via ap16-1's buildable unification),
 **auto-merged clean by `ort`**, no graft required. ✓ VERIFIED by running the merge, not by assuming
 the bucket meant loss — BOTH-MOVED is a triage bucket, not a verdict.

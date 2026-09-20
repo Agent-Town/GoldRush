@@ -3,7 +3,7 @@ ROLE: systems implementer. WORKDIR: lane-c (worktrees/lane-c).
 CODEX: model=gpt-5.6-sol effort=high
 
 ## WHY (BUILD-PLAN §4 E2 item ②; owner activated E2 this morning — the era's resource exists but nothing in-run makes or spends it)
-Pressure shipped as a RESOURCE (economy rows + `grantPressure` debug seam, `a21821a`); the bundle's in-run loop (boilers generate ↔ machines consume ↔ over-pressure vents) is unbuilt. This slice is the Steamworks' heartbeat; per the bundle: "over-pressure is both a resource bank and a hazard (vent or boom — warm boom: comedic steam clouds, never harm)."
+Pressure shipped as a RESOURCE (economy rows + `grantPressure` debug seam, `aa8192c`); the bundle's in-run loop (boilers generate ↔ machines consume ↔ over-pressure vents) is unbuilt. This slice is the Steamworks' heartbeat; per the bundle: "over-pressure is both a resource bank and a hazard (vent or boom — warm boom: comedic steam clouds, never harm)."
 
 ## READ-FIRST
 - specs/epoch-saga/e2-steamworks-bundle.md (§A1 Boiler House, §B Hill Mine: coal seams ×3 near the minehead, over-pressure vents on T1 as teaching spots, "pressurize: keep 2 boilers hot through waves 8–12")

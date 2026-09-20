@@ -2,7 +2,7 @@
 
 ## Slice and verdict
 
-**SHIPPED** at `696e2e713703247af3dd0bac75c74f57cdab7c56`. Master `tasks/lane-c-chapter-evidence-opt-in.md`; original lane `feat/hero-move-verb` at `386e129f714e634d9a2a9a18f31f8afa9f08f0fd`. Saved candidate `ca0fec7e361c2a5ed82e5a8598a93dc47a7cd281`, based on `d49604f87c18ed773b5fd8119256e737e8e7b734`, was gated in `/private/tmp/gr-gate-s2552`. Main moved only in bookkeeping before integration; the exact association is in `artifacts/s2553-fire/final-tree-association.json`.
+**SHIPPED** at `7b8c6a7114077ac81f14fc42f41d3db86618a745`. Master `tasks/lane-c-chapter-evidence-opt-in.md`; original lane `feat/hero-move-verb` at `5b3c45754b5105fe5bc7d9eb86e2499a9d35e0ed`. Saved candidate `5017bfa081b6faee03e3709073e842a741d072e6`, based on `6f7c5a4a7ccb6a2b5a6c1f000659fed700c1a063`, was gated in `/private/tmp/gr-gate-s2552`. Main moved only in bookkeeping before integration; the exact association is in `artifacts/s2553-fire/final-tree-association.json`.
 
 Seven existing writers now put ordinary output under ignored test-results/evidence paths. Only literal GR_REFRESH_EVIDENCE=1 writes the retained chapter screenshots or Moth recording. Assertions, triggers, current readiness waits, simulation and retained evidence stay unchanged.
 
@@ -25,7 +25,7 @@ The five Node skips are the two owner-ruled Baron cases and three fire-shell cro
 
 The integrated diff is seven files, nine insertions and eight deletions. Six chapter SHOTS constants and one Moth output-directory choice were grafted. Main's newer four-test Moth program, chapter readiness waits and current recording win over the older lane bytes. Per-path classification and patch: `artifacts/s2553-fire/classification.json`, `artifacts/s2553-fire/candidate.patch`.
 
-The lane's original report is preserved verbatim at `artifacts/s2536-fire/runner-report.md` (4,234 bytes, equality verified). Its old recording remains in git history. After the gated source merge, ancestry-only merge `d07c0692247757dc1ad740821c94e02b29803ea4` acknowledged all nine classified lane paths with an identical before/after tree. Lane main..tip is now empty; no lane reset was used. `artifacts/s2553-fire/merge.json` records that proof.
+The lane's original report is preserved verbatim at `artifacts/s2536-fire/runner-report.md` (4,234 bytes, equality verified). Its old recording remains in git history. After the gated source merge, ancestry-only merge `c0d43efe387bba5dcb861036969e1626d3208df7` acknowledged all nine classified lane paths with an identical before/after tree. Lane main..tip is now empty; no lane reset was used. `artifacts/s2553-fire/merge.json` records that proof.
 
 ## Findings and follow-through
 
@@ -43,7 +43,7 @@ Closing verification: `artifacts/s2553-fire/closing-ledger.txt` passed after the
 
 # s2552 — chapter writers: browser acceptance banked, drain held
 
-Candidate `ca0fec7e361c2a5ed82e5a8598a93dc47a7cd281` is backed up on `save/chapter-evidence-s2552`, based on main `d49604f87c18ed773b5fd8119256e737e8e7b734`. Gate tree: `/private/tmp/gr-gate-s2552`. Source lane tip `386e129f714e634d9a2a9a18f31f8afa9f08f0fd` and its existing done-move remain untouched.
+Candidate `5017bfa081b6faee03e3709073e842a741d072e6` is backed up on `save/chapter-evidence-s2552`, based on main `6f7c5a4a7ccb6a2b5a6c1f000659fed700c1a063`. Gate tree: `/private/tmp/gr-gate-s2552`. Source lane tip `5b3c45754b5105fe5bc7d9eb86e2499a9d35e0ed` and its existing done-move remain untouched.
 
 ## Verdict
 HOLD for remaining gates. No source merged or deployed. This increment completed the six chapter suites and both evidence-writer behaviors. The complete Node command, task-025/M1/M2 adjacency and plain desktop/390px boots remain owed on this candidate. The earlier grammar and readiness correctives are already on main; no new source corrective or owner decision is claimed.
@@ -52,7 +52,7 @@ HOLD for remaining gates. No source merged or deployed. This increment completed
 - Typecheck rc=0, 5.0 s; build rc=0, 23.5 s. Task, citation and gate-caller guards passed. See `artifacts/s2552-fire/compile.txt`.
 - Initial power p95 0.668 ms exceeded the 0.500 ms cap while this fire ran other diagnostics. On the unchanged tree, a standalone rerun passed at 0.322 ms. Both receipts are retained in `artifacts/s2552-fire/compile.txt` and `artifacts/s2552-fire/power-isolated.txt`; no limit or implementation was changed. The overlap is observed, not an assertion that an individual competing process caused the red.
 - Chapters: 68/68 desktop and mobile, one worker, rc=0, 1304.9 s. Console-watch reported zero suppressed errors in all 52 reports. `artifacts/s2552-fire/chapters.txt` preserves the complete run. Fifty scratch PNGs were produced; all 51 retained hashes matched the starting snapshot, and their mtimes predated the candidate commit. See `artifacts/s2552-fire/chapter-default-proof.json`.
-- Moth: ordinary 4/4 (47.3 s), explicit corridor refresh 1/1 (13.0 s), ordinary 4/4 again (47.0 s). Ordinary runs preserved both retained bytes and mtime and wrote matching scratch bytes; explicit refresh advanced mtime while retaining the correct current recording: 138 trace rows, `fnv1a32:f7af6739`. See `artifacts/s2552-fire/moth-proof.json` and its three transcripts. Current era 5 engine identity is `09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4`. Historical drift remains attributed to `253927e1f` by the originating review; this fire does not reinstate the old lane recording.
+- Moth: ordinary 4/4 (47.3 s), explicit corridor refresh 1/1 (13.0 s), ordinary 4/4 again (47.0 s). Ordinary runs preserved both retained bytes and mtime and wrote matching scratch bytes; explicit refresh advanced mtime while retaining the correct current recording: 138 trace rows, `fnv1a32:f7af6739`. See `artifacts/s2552-fire/moth-proof.json` and its three transcripts. Current era 5 engine identity is `09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4`. Historical drift remains attributed to `213fbc676` by the originating review; this fire does not reinstate the old lane recording.
 - Explicit chapter refresh: 1/1 desktop Deepwater, 45.8 s; five retained-path screenshots were actually written in the isolated gate tree, captured under `artifacts/s2552-fire/explicit-refresh-shots/`, then restored. All 51 retained hashes match again. `artifacts/s2552-fire/chapter-refresh-proof.json` records the writes. The first anchored selector matched no tests (rc=1); its transcript, proof and method are retained with `initial-` prefixes. Correcting the selector changed no test or runtime code.
 
 ## Classification
@@ -70,7 +70,7 @@ All 106 registered trees were visited, including the gitless fallback; the 6,775
 
 # s2541 — chapter evidence writer drain
 
-**Slice:** `lane-c-chapter-evidence-opt-in.md`; lane `feat/hero-move-verb` at `386e129f714e634d9a2a9a18f31f8afa9f08f0fd`. **Candidate:** `44fd2661f345f25c9d9099359ff405eabd6b641e`, pushed to `save/chapter-evidence-s2541`, based on main `c03903e3a1905e26d91914532154fc014b699781`.
+**Slice:** `lane-c-chapter-evidence-opt-in.md`; lane `feat/hero-move-verb` at `5b3c45754b5105fe5bc7d9eb86e2499a9d35e0ed`. **Candidate:** `44fd2661f345f25c9d9099359ff405eabd6b641e`, pushed to `save/chapter-evidence-s2541`, based on main `e53a12082daac6317e20da1ba9c85788021f0226`.
 
 **Verdict: HOLD — not merged.** The seven writer changes preserve main's current readiness fixes and Moth program. The full Node command fails on a separate, reproduced stale-fixture defect. No runtime, historical recording, lane branch or done-move was changed.
 
@@ -95,7 +95,7 @@ All seven paths also moved on main after the lane base: six `e2e/ss-06` through 
 ## Findings and next gate
 
 - **F-2541-1 — reproduced on unchanged base, gate-side corrective registered.** `scripts/fixture-teardown.test.mjs:40` asserts its board-gold child succeeded. The child instead fails at `scripts/board-tape-gold.test.mjs:330`: all three banked headless tapes are invalid under the landed ADR-005 grammar. Direct validation identifies Mare Claim `MOVE_TO` at tick 0, Moth Season `HOLD` at tick 1820, and Relay Rush `HOLD` at tick 0. The validator and assay door are behaving as intended. `artifacts/s2541-fire/tape-diagnosis.json` records exact input hashes and refusals. `tasks/main-board-gold-current-grammar.md` restores positive held-purse coverage with current recordings while preserving historical tapes and strict validation. This is not an owner fork and not a contention finding.
-- The s2537 readiness and M2 prerequisites have since merged, at `985db2d33b22121a3a6d2b47628666e05116031e` and `0eac2a9bec302665ab3483ec0413eca2e7469992`. Their completion does not discharge this writer patch's remaining gates.
+- The s2537 readiness and M2 prerequisites have since merged, at `7c6ecd500810caf1a9e7255a8aea0df35b8cb695` and `c7bf3f66c5f8a41487ca5ba37953dbfcfc588e3c`. Their completion does not discharge this writer patch's remaining gates.
 - Preserve both existing done-moves. Do not re-dispatch the chapter task or refill its held lane. Resume instructions: `artifacts/s2541-fire/resume.md`.
 
 ---
@@ -106,7 +106,7 @@ All seven paths also moved on main after the lane base: six `e2e/ss-06` through 
 
 ## Slice, branch and tip
 
-Master `tasks/lane-c-chapter-evidence-opt-in.md`; done-move `tasks/done/20260907-115228-lane-c-chapter-evidence-opt-in.md`; lane `feat/hero-move-verb`, tip `386e129f714e634d9a2a9a18f31f8afa9f08f0fd`, base `b10b52514cbf7e460f0f22f69bda3c376d21bf9a`. Current integration base `818223c97606423f0e08d2e95c7377ae5adc1302`; candidate `fee574e47be6eb813c73fecd4a5357e973a34a29` at `/private/tmp/gr-gate-s2537`, backed up to `origin/save/chapter-evidence-s2537`.
+Master `tasks/lane-c-chapter-evidence-opt-in.md`; done-move `tasks/done/20260907-115228-lane-c-chapter-evidence-opt-in.md`; lane `feat/hero-move-verb`, tip `5b3c45754b5105fe5bc7d9eb86e2499a9d35e0ed`, base `6b66fa46be7d177be9c188db00ecdcdddf23d3af`. Current integration base `c61522a553a17cc885f7e827942a2890f85edd89`; candidate `fee574e47be6eb813c73fecd4a5357e973a34a29` at `/private/tmp/gr-gate-s2537`, backed up to `origin/save/chapter-evidence-s2537`.
 
 ## Verdict
 
@@ -116,7 +116,7 @@ Master `tasks/lane-c-chapter-evidence-opt-in.md`; done-move `tasks/done/20260907
 
 Seven existing writers use `test-results/evidence/` by default and their original retained paths only for literal `GR_REFRESH_EVIDENCE=1`. The candidate preserves main's newer four-test Moth program, order fixture and retained recording. No gameplay, assertion, dependency or art change is included.
 
-The earlier runner refresh (`253927e1f` introduced the original retained recording) changed 93 trace rows to 94 and hash `e16244f9` to `5872d6c4`; that history is retained verbatim in `artifacts/s2536-fire/runner-report.md`. The later grammar changed the program and recording. On today's candidate, ordinary and explicit writer runs both produce 138 rows, terminal lamp dark, hash `fnv1a32:f7af6739`, byte-identical to today's retained file. No historical hash was chased.
+The earlier runner refresh (`213fbc676` introduced the original retained recording) changed 93 trace rows to 94 and hash `e16244f9` to `5872d6c4`; that history is retained verbatim in `artifacts/s2536-fire/runner-report.md`. The later grammar changed the program and recording. On today's candidate, ordinary and explicit writer runs both produce 138 rows, terminal lamp dark, hash `fnv1a32:f7af6739`, byte-identical to today's retained file. No historical hash was chased.
 
 ## Evidence
 

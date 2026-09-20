@@ -11,7 +11,7 @@ Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead 
 SEQUENCING: this task depends on the heat-5b evidence being on main. Verify before starting:
 `git log --oneline | grep -q 'gauntlet-heat5b-reearn'` → must match. If it does not, **STOP and report "heat5b evidence not landed"** — do not improvise the artifacts.
 
-## Why (F-2289-1, measured by fire s2289 2026-08-25, re-verified and merged by s2290 at `77c85566a`)
+## Why (F-2289-1, measured by fire s2289 2026-08-25, re-verified and merged by s2290 at `81729ab9b`)
 
 The county's own door **rejected an honest win**. Hill Mine's winning submission came back
 `"assay":"rejected","assayReason":"eventLogHash mismatch: claimed fnv1a32:a45ba9ac, replayed fnv1a32:85cb8a01"`.
@@ -41,7 +41,7 @@ claims `889d9357` and replays `889d9357`. Hill Mine (attempt 10 of a 10-attempt 
 
 ## Scope
 
-1. **Reproduce the divergence and pin it to a minimal case.** Replay the raw Hill Mine tape and confirm the claimed-vs-replayed split still holds on current main; do the same for Night Shift and confirm it agrees. Record both hashes and both outcomes. **If the split does NOT reproduce, that is a complete and valuable answer — say so with the numbers and stop at scope 1**, noting what on main changed since `77c85566a`.
+1. **Reproduce the divergence and pin it to a minimal case.** Replay the raw Hill Mine tape and confirm the claimed-vs-replayed split still holds on current main; do the same for Night Shift and confirm it agrees. Record both hashes and both outcomes. **If the split does NOT reproduce, that is a complete and valuable answer — say so with the numbers and stop at scope 1**, noting what on main changed since `81729ab9b`.
 
 2. **Dump both `orders_replaced` sequences and DIFF them.** For the diverging case, capture `snapshotStandingOrders().log` filtered to `orders_replaced` (post-`at`/`seq`-strip, exactly as the hash sees it) from **both** the recording path and the replay path, and write both to `artifacts/f2289-1-<date>/`. **The diff IS the finding.** State precisely how they differ: extra entries, missing entries, reordered, or same count with different content — and at which index the first difference falls.
 

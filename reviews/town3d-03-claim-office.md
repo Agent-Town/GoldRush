@@ -1,8 +1,8 @@
 # Review — town3d-03-claim-office
 
 **Slice:** town3d-03-claim-office (town-3D ladder, buildings arm)
-**Branch/tip:** `lane/m4` @ `996c21ed` (`runner(lane-b): town3d-03-claim-office.md`), single commit off base `55492004` (ladder-open)
-**Merged as:** `f0feb51b` (`--no-ff` merge onto main `59ac17e7`)
+**Branch/tip:** `lane/m4` @ `fec6f171` (`runner(lane-b): town3d-03-claim-office.md`), single commit off base `efc27063` (ladder-open)
+**Merged as:** `4cd4210b` (`--no-ff` merge onto main `eaf44c23`)
 **Drained by:** s445 fire, 2026-07-13
 **Verdict:** ✅ PASS — merged, all gates green.
 
@@ -23,7 +23,7 @@ Adds the **Claim Office** as the third Blender-built 3D town building (after Tav
 Gate scope per §4-appendix rule #3 (own spec + tavern/general-store sibling-proof pair + tsc/build + boot). Full town family NOT run (fire budget discipline).
 
 ## Merge classification
-Base `55492004`. Single runner commit, 33 files. All claim-office `assets/`/`artifacts/`/`e2e/` files are **NEW** (no conflict). Two shared files resolved as **sibling-union** (§4-appendix rule #2):
+Base `efc27063`. Single runner commit, 33 files. All claim-office `assets/`/`artifacts/`/`e2e/` files are **NEW** (no conflict). Two shared files resolved as **sibling-union** (§4-appendix rule #2):
 - `src/town/TownScene.ts` — town3d-03 edits the pilot-dispatch block (~line 484); main's only divergence from base is the `fix-town-fresh-boot-textures` drain (texture-state tracking at lines 127/1119/1597/2600), **disjoint regions** → 3-way merged clean, both sides preserved (verified: `installTownClaimOfficePilot` ×3 + `textureState` ×4 present post-merge).
 - `src/town/TownTavernPilot.ts` — main == base here; claim_office registry/const/type-union added cleanly.
 

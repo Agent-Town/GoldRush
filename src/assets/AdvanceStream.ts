@@ -38,7 +38,7 @@
 //             refill it — is still under the allowance. F-BPTH-1: this state used to preempt the
 //             drained-plan check, so a plan that COMPLETED at or over the allowance reported an
 //             early stop; the drained-plan check now runs first and `allowance` means "stopped
-//             short", nothing else. It shipped as `budget-exhausted` in 065252649.
+//             short", nothing else. It shipped as `budget-exhausted` in c7856dca7.
 //
 // A SEPARATE, SMALLER MACHINE rides alongside on `assetPrefetchTownState`: `pending` (the town's URL
 // list is not resolved yet), `partial` (resolved, not every URL completed) and `ready` (every town
@@ -321,7 +321,7 @@ export function createAdvanceStream(canvas: HTMLCanvasElement): {
     // In the `town` and `run` scenes the plan's priority-1 target is a CONTRACT (see
     // advanceStreamPriority above), so the stream used to pull the NEXT map's terrain while the
     // town the player just entered was still raising. Measured with the deploy's own budget probe
-    // on the built e1 bundle at main e5f3ac820 (2026-09-06): the first-town cue window carried
+    // on the built e1 bundle at main 37c8beda6 (2026-09-06): the first-town cue window carried
     // `the-claim-terrain.glb` + `the-claim-panorama.glb`, 1,052,408 bytes, before the town was
     // playable — 4.9% of a 21,638,025-byte transfer spent on a map the player cannot reach yet.
     // While the CURRENT SCENE's own loader still says `loading`, re-schedule instead of resolving

@@ -12,10 +12,10 @@ zero here would have been an answer and not a failed read. The player-path test 
 
 **One method note this day forced, and it would have tripled the headline.** Diffing each merge against its
 first parent — the rule that stops a merge reading as empty — **over-counts when the merge runs the other
-way.** `4b90b0e25` is *"Merge remote-tracking branch `origin/main` into `drain/sprite-animator`"*: its first
+way.** `042771edc` is *"Merge remote-tracking branch `origin/main` into `drain/sprite-animator`"*: its first
 parent is the drain branch, its second is main, so a first-parent diff attributes **265 player files to it
 that were already on main**. The honest question is what is NEW ON MAIN across the day, so it was asked
-directly — `git diff` from the day's first commit's parent (`ccbd3809a`) to the day's last (`bbbbba4f0`).
+directly — `git diff` from the day's first commit's parent (`2d899b365`) to the day's last (`9fda6f72d`).
 **When a branch merges main into itself on the way home, ask the day, not the commit.**
 
 **The shape of the day: 82 first-parent commits, the busiest since the outage.** **Four touched player-visible
@@ -28,16 +28,16 @@ paths, and all four are one piece of work.** Net across the day main gained **34
 **The town breathes.** Astra's sprite-animation runtime came home. Seven of the town's people hold a living
 idle clip instead of one frozen pose, the newsie gets his era-1 portrait, and the Prospector carries his own
 cells for every direction he faces as he pans across a claim and swings at it. This was already filed to the
-gazette as a ROUNDUP the same day (`b1ba8df4f`) — it is repeated here because a digest reports the day, and
+gazette as a ROUNDUP the same day (`95b84364e`) — it is repeated here because a digest reports the day, and
 this was the day.
 
-- `dca019e23` — The runtime lands: the per-body animator, the orientation resolver that lets an idle keep its
+- `d500bed70` — The runtime lands: the per-body animator, the orientation resolver that lets an idle keep its
   own heading instead of collapsing to four, and 331 lines of new frame data.
-- `92137d813` — The 53 art files the runtime reads come with it: seven town idle clips and their cells, the
+- `d2a7fda05` — The 53 art files the runtime reads come with it: seven town idle clips and their cells, the
   newsie's portrait, and the hero's per-direction pan and attack sheets.
-- `696c3b027` — Four assertions the animation made obsolete are re-pointed, and the era-6 seal is re-pinned
+- `fa2424d37` — Four assertions the animation made obsolete are re-pointed, and the era-6 seal is re-pinned
   so the county's engine hash moves with the art, as it should.
-- `8aa8a5b93` — Deployed and verified the same evening, after one transient Cloudflare failure.
+- `18a3afd54` — Deployed and verified the same evening, after one transient Cloudflare failure.
 
 **And five older complaints came home with it.** The runtime's branch was the missing source half of a code
 review from the 8th, so landing it also landed the fixes the county had guards for but no cure:
@@ -57,21 +57,21 @@ news; it is listed so the day is whole.
 
 - **The retention chain kept auditing itself, and finally checked its own arithmetic.** Five consecutive
   fires sharpened one question — *is this backed-up evidence really recoverable?* — from the label on the
-  bucket (`de5427c32`, `f701227d1`) into the verifier's keys (`233a4643e`) into the shape of a manifest entry
-  (`969d93864`), and then s2582 asked the question none of them had: every one of those verifiers proves the
-  parts **exist**, and not one had ever proved they **reconstruct** (`f33a71cc5`). It then ran the check —
+  bucket (`7d4a187e9`, `934eaf813`) into the verifier's keys (`8a80fc368`) into the shape of a manifest entry
+  (`ae9bc5dfd`), and then s2582 asked the question none of them had: every one of those verifiers proves the
+  parts **exist**, and not one had ever proved they **reconstruct** (`fa71d3658`). It then ran the check —
   743 MB streamed, 23 of 23 parts verified by checksum and byte count, every file rebuilding exactly. The
   county's backups are sound, and now somebody has actually tried to open one.
-- **The fires' own law gained three corrections**: a stale residue figure retired (`e8ec45c75`), an attended
-  self-update that had been reading as a destroyed handoff (`598acb8a4`), and the LB-01 exposure gate's clean
-  verdict made reachable again after a new database column had quietly blocked it since the 4th (`53079a980`).
+- **The fires' own law gained three corrections**: a stale residue figure retired (`02558407a`), an attended
+  self-update that had been reading as a destroyed handoff (`ee3c1d9f9`), and the LB-01 exposure gate's clean
+  verdict made reachable again after a new database column had quietly blocked it since the 4th (`0cb32145d`).
 - **The whole board was played, end to end, for the first time.** The attended session ran a playability
-  census over all 42 contracts (`8fdb2188d`) — every map booted the way a human boots it, no debug seam, and
+  census over all 42 contracts (`75e402d00`) — every map booted the way a human boots it, no debug seam, and
   asked six questions of each. **76 of 84 runs pass.** Three maps kill an unassisted first-time player before
   wave 2 (E2 Trestle, E2 Incline, E6 Picnic) and one row is a census defect rather than a map defect (the
   Drill Yard has no waves to reach). On the owner's word the census became a standing duty for the fires
-  (`c30c3de14`), and an all-epochs preview alias now exists for his own play.
+  (`a1f03d834`), and an all-epochs preview alias now exists for his own play.
 
 ---
-*Compiled by the s2583 fire. Day boundary `ccbd3809a`..`bbbbba4f0`. 82 first-parent commits, 4 player-path,
+*Compiled by the s2583 fire. Day boundary `2d899b365`..`9fda6f72d`. 82 first-parent commits, 4 player-path,
 344 player-visible files net. No commit message was used to classify anything.*

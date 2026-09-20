@@ -17,7 +17,7 @@
   **:35201-35218**, and the playwright invocation at **:34764**.
 - `tasks/BACKLOG.md` — **F-1029-3** (this finding) and **F-1026-1** (its sister case: a guard that
   measured the wrong server and misled two fires before anyone checked what it measured).
-- `src/assets/AdvanceStream.ts` — the prefetch merged `e109639f` on Jul-25; hypothesis (a) below.
+- `src/assets/AdvanceStream.ts` — the prefetch merged `611b4558` on Jul-25; hypothesis (a) below.
 
 ## WHY (evidence, quoted and dated)
 `e5-deepwater-claim.spec.ts:29` *"boots the Deepwater contract with deck pads, depth gates, and a
@@ -120,9 +120,9 @@ you have written the evidence for it first.
 The lane branch being ahead is NORMAL — the runner auto-commits. For each ahead commit: if its content is already merged to main (verify via git log/diff), it is a SAFE DUPE → `git checkout -B lane/m3 main && git clean -fd` and PROCEED. STOP-and-report ONLY if an ahead commit's content is NOT on main (undrained work — resetting would DESTROY it), or the worktree holds uncommitted edits you did not make. Then `npm install --no-audit --no-fund`; `npm run build` green before touching anything.
 
 **Pre-proved for you (s1031, so you need not spend budget on it):** `lane/m3`'s tip `64b0970d` is
-the m2-01 fixture slice, which s1030 merged to main as `df51d877`. `git log main..lane/m3` = that one
+the m2-01 fixture slice, which s1030 merged to main as `1ee47bbd`. `git log main..lane/m3` = that one
 commit; `git diff main lane/m3 --stat -- src e2e` = **one file, `e2e/asset-diet.spec.ts`, 1
-insertion / 11 deletions — pure main-ahead**: the lane simply lacks `9ba65911`'s skip-guard comment
+insertion / 11 deletions — pure main-ahead**: the lane simply lacks `386cce80`'s skip-guard comment
 block and byte-logging. **Zero lane-unique additions.** It is therefore a **SAFE DUPE** — confirm,
 then proceed.
 

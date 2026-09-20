@@ -6,7 +6,7 @@ You are Codex, implementer for Gold Rush, running natively on Robin's Mac in wor
 
 READ FIRST: `AGENTS.md`; `e2e/m1-06-level-up-choices.spec.ts` — the three failing tests **in full** (`investment weighting prefers owned families without losing discovery`, `owned-family cards show a compact stack pip`, `maxed upgrades leave the offer pool`); `src/game/Progression.ts` around the `setUpgradeStacks` clamp and the offer-pool filter; `reviews/f1627-1-ab-ceiling-coverage.md` for the house standard on proving a claim by manufacturing the defect.
 
-SEQUENCING: verify the subject is still what this master claims, by **content grep, never by line number** (F-1310-1 — coordinates rot; these counts were measured on main at `6ffdc6a53` while this master was written, not recalled):
+SEQUENCING: verify the subject is still what this master claims, by **content grep, never by line number** (F-1310-1 — coordinates rot; these counts were measured on main at `70a0d83fe` while this master was written, not recalled):
 
 - `grep -c "doubleTapCoilMaxStacks: 3" src/game/Balance.ts` → **must be 2** (the cap is genuinely 3, in both literals).
 - `grep -c "setUpgradeStacks({ double_tap_coil: 5 })" e2e/m1-06-level-up-choices.spec.ts` → **must be 3**.
@@ -15,15 +15,15 @@ SEQUENCING: verify the subject is still what this master claims, by **content gr
 
 If ANY differs, the site has moved under this master — **STOP and report the drift** rather than guessing which line to edit.
 
-⚠️ **THIS LANE MUST BE CURRENT, NOT MERELY CLEAN.** `e2e/m1-06-level-up-choices.spec.ts` is one of the files main has moved that lane-a lacked at authoring time. Prove the lane has the drain this task is built on: `git merge-base --is-ancestor 6ffdc6a53 HEAD` must succeed. If it does not, **STOP and report "lane stale"** — a green on a stale lane would measure a spec that no longer exists on main (F-1320-2).
+⚠️ **THIS LANE MUST BE CURRENT, NOT MERELY CLEAN.** `e2e/m1-06-level-up-choices.spec.ts` is one of the files main has moved that lane-a lacked at authoring time. Prove the lane has the drain this task is built on: `git merge-base --is-ancestor 70a0d83fe HEAD` must succeed. If it does not, **STOP and report "lane stale"** — a green on a stale lane would measure a spec that no longer exists on main (F-1320-2).
 
 Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead is NORMAL — the runner auto-commits. For each ahead commit: if its content is already merged to main (verify via git log/diff), it is a SAFE DUPE → `git checkout -B lane/a main && git clean -fd` and PROCEED. STOP-and-report ONLY if an ahead commit's content is NOT on main (undrained work — resetting would DESTROY it), or the worktree holds uncommitted edits you did not make. **EVIDENCE-ARTIFACT EXCEPTION (F-1266-1): changes confined to regenerated evidence — `artifacts/**`, `reviews/shots-*`, and any `.png` screenshot — are NEVER "work" and NEVER a STOP.** Then `npm install --no-audit --no-fund`; `npm run build` green before touching anything. **THEN A CLEANLINESS LINE: `git -C worktrees/lane-a status --short` → must be clean, with the FACTORY-CHURN EXCEPTION — always expected, never a STOP; list them and proceed (F-1407-1): (a) `logs/**`; (b) `artifacts/**`, `reviews/shots-*` and any `.png`. What still STOPs: modified tracked `src/**`, `scripts/**`, `e2e/**`, `tasks/**`, `specs/**`, `reviews/*.md`.**
 
 ## Why — six reds, ONE cause, and the obvious fix is wrong for one of them
 
-`d2279d325` (2026-07-26, the `e1-midgame` drain) capped Double-Tap Coil **6 → 3** deliberately, in `Balance.ts` **only**. `e2e/m1-06-level-up-choices.spec.ts` still sets its fixtures to the pre-cap values, so three tests × two projects have been red ever since.
+`4154da9eb` (2026-07-26, the `e1-midgame` drain) capped Double-Tap Coil **6 → 3** deliberately, in `Balance.ts` **only**. `e2e/m1-06-level-up-choices.spec.ts` still sets its fixtures to the pre-cap values, so three tests × two projects have been red ever since.
 
-**Fresh control run, s1629, on main at `6ffdc6a53`, `--workers=1`: `6 failed / 18 passed, 277.1 s`.** All six failures are the same cause:
+**Fresh control run, s1629, on main at `70a0d83fe`, `--workers=1`: `6 failed / 18 passed, 277.1 s`.** All six failures are the same cause:
 
 | Test | Project(s) | Reported |
 |---|---|---|
@@ -44,14 +44,14 @@ Note also that the pip renders `roman(choice.familyStacks)` and `firerate` has e
 1. **`investment weighting prefers owned families without losing discovery`** — change the two "invested" fixtures from `double_tap_coil: 5` to **`double_tap_coil: 2`** (genuinely invested and still offerable under the cap of 3), and the "maxed" fixture from `double_tap_coil: 6` to **`double_tap_coil: 3`**. Leave `powder_charge: 2, wide_ring: 2, quick_fuse: 2` alone — those are already at their own caps. **Do not touch any `expect(...)` in this test.**
 2. **`owned-family cards show a compact stack pip`** — change its fixture from `double_tap_coil: 5` to **`double_tap_coil: 2`**, and the expected pip text from `'V'` to **`'II'`**. The card must actually render, which is the point: at 2 of 3 the upgrade is still offerable. Leave the width assertion untouched.
 3. **`maxed upgrades leave the offer pool`** — update the expected stack total from `6` to **`3`**. Read the surrounding loop first: if it drives stacks upward by repeatedly picking, its bound may also assume 6; make the test reach the cap and stop, without changing what it asserts (that a maxed id leaves the pool).
-4. **Add a one-line comment at each of the three fixtures naming the cap and its origin**, so the next cap change finds them: e.g. `// Double-Tap Coil caps at Balance.upgrades.doubleTapCoilMaxStacks (3 since d2279d325); "invested" must stay BELOW it or the upgrade leaves the offer pool.`
+4. **Add a one-line comment at each of the three fixtures naming the cap and its origin**, so the next cap change finds them: e.g. `// Double-Tap Coil caps at Balance.upgrades.doubleTapCoilMaxStacks (3 since 4154da9eb); "invested" must stay BELOW it or the upgrade leaves the offer pool.`
 5. **Do NOT edit `logs/suite-red-inventory.md`.** Refreshing an exoneration ledger is how a regression gets laundered; the inventory is refreshed by its own instrument, not by hand.
 
 ## Firewall
 
 Touch ONLY: `e2e/m1-06-level-up-choices.spec.ts`.
 
-NO changes to: **`src/**` of any kind** — in particular `Balance.ts`, `doubleTapCoilMaxStacks`, `Progression.ts`'s clamp or offer filter (the cap is a ratified balance ruling from `d2279d325`; if you believe the cap is wrong that is a FINDING, not an edit) · **any `expect(...)` shape, threshold, or comparison operator** (fixtures only, plus the two literal expected VALUES named in scope 2 and 3) · `logs/suite-red-inventory.md` · any other `e2e/*.spec.ts` · `package.json`, `playwright.config.ts`, `playwright.preview.config.ts` · `tasks/**`, `specs/**`, `reviews/**`, `STATUS.md`, `tasks/BACKLOG.md`.
+NO changes to: **`src/**` of any kind** — in particular `Balance.ts`, `doubleTapCoilMaxStacks`, `Progression.ts`'s clamp or offer filter (the cap is a ratified balance ruling from `4154da9eb`; if you believe the cap is wrong that is a FINDING, not an edit) · **any `expect(...)` shape, threshold, or comparison operator** (fixtures only, plus the two literal expected VALUES named in scope 2 and 3) · `logs/suite-red-inventory.md` · any other `e2e/*.spec.ts` · `package.json`, `playwright.config.ts`, `playwright.preview.config.ts` · `tasks/**`, `specs/**`, `reviews/**`, `STATUS.md`, `tasks/BACKLOG.md`.
 
 ## Self-check (evidence, not vibes)
 

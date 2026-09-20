@@ -3,8 +3,8 @@ ROLE: sprite pipeline + run wiring. WORKDIR: lane-d (worktrees/lane-d), after e2
 CODEX: model=gpt-5.6-sol effort=high
 
 ## WHY (owner 2026-07-12, verbatim): "It is also high time to replace the animations in the game. The hero is still the same as days ago but we have worked on a new version for a long time, same for bandits, the prospector etc."
-The cast-motion pass (e2298c5a + 252a8fcf) modernized the TOWN only; the RUN scene still renders older sheets.
-## READ-FIRST: assets/LEDGER.md — the motion-ladder rows + QA verdicts. **HARD GUARD: char-hero pose idle8/work8/attack8 are QA-BLOCKED (pinned-pan + chroma) — DO NOT wire those; walk sheets judged separately.** · reviews/art-sprite-production-* (which sheets are QA-PASSED) · src/assets/SpriteAnimator.ts + generated.ts slots (run actors: hero, prospector agent, claim jumper, baron, railtough, wrecker, coalthief) · the town fit/aspect lessons (252a8fcf — do not repeat the stretch).
+The cast-motion pass (7aef4dd0 + 532a0daf) modernized the TOWN only; the RUN scene still renders older sheets.
+## READ-FIRST: assets/LEDGER.md — the motion-ladder rows + QA verdicts. **HARD GUARD: char-hero pose idle8/work8/attack8 are QA-BLOCKED (pinned-pan + chroma) — DO NOT wire those; walk sheets judged separately.** · reviews/art-sprite-production-* (which sheets are QA-PASSED) · src/assets/SpriteAnimator.ts + generated.ts slots (run actors: hero, prospector agent, claim jumper, baron, railtough, wrecker, coalthief) · the town fit/aspect lessons (532a0daf — do not repeat the stretch).
 ## SCOPE
 1. INVENTORY TABLE (the deliverable even where wiring defers): per RUN actor — sheet currently wired vs newest QA-PASSED sheet on disk (raw + processed), with LEDGER citation.
 2. Extract+process any QA-PASSED-but-unprocessed gap (extract-alpha law; measured self-QA).

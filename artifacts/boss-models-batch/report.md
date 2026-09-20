@@ -1,6 +1,6 @@
 # boss-models-batch — the Dredge Queen and Old Digger rebuilds, landed with the hunks F-SAR-4 held
 
-Branch `feat/boss-models-batch`, cut from main `f431b878c`. Implementer: Opus, scratch worktree, Anthropic
+Branch `feat/boss-models-batch`, cut from main `b70ef3b31`. Implementer: Opus, scratch worktree, Anthropic
 subscription (owner 2026-09-17: "Lets do them all." · "All on the Anthropic subscription").
 Every number below was measured on this tree. Nothing was inherited from a predecessor's claim.
 
@@ -12,7 +12,7 @@ from the model main already ships.
 
 ## 1. Per boss — before / after, measured
 
-`before` = main `f431b878c` (the 2026-09-12 boss-fidelity land, `72fb062e8`).
+`before` = main `b70ef3b31` (the 2026-09-12 boss-fidelity land, `d9b9f985c`).
 `after` = the model taken from `92f6cc115` with `git checkout`, no merge.
 Geometry, materials, images, morphs and bounds parsed straight out of each GLB's JSON+BIN chunks;
 optimized bytes measured in `dist/assets` after `npm run build` on this tree.
@@ -34,7 +34,7 @@ optimized bytes measured in `dist/assets` after `npm run build` on this tree.
 | optimized (dist) | 1,480,976 B (layer contract) | **1,217,764 B** (measured) | **−263,212** |
 
 **The contract the held hunk needs HOLDS:** `Cycle_OpenGrab` is present on the claw mesh at morph
-index **1**, with `Damage_SlackClaw` at **0** — the exact shape `c7f284ad4` gated on. Proven at
+index **1**, with `Damage_SlackClaw` at **0** — the exact shape `033f69c61` gated on. Proven at
 runtime, not just in the file: the loader now *refuses* a claw without it, and the model mounts
 (`data-dredge-queen3d-mounted="true"`, `…-source="glb"`, four components intact) on both viewports.
 
@@ -98,7 +98,7 @@ as they are; only the claw and wheel code lands. Net: `src` +31 / −12 across t
 | 6 | `src/systems/OldDiggerBossSystem.ts:665` | `meshCount !== 3 \|\| meshes.size !== 3` → `!== 4 \|\| !== 4`. |
 | 7 | `src/systems/OldDiggerBossSystem.ts:713-720` | the GLB wheel spin: `wheel.rotation.z = -this.wheelPhase` on the two wheel nodes, replacing the F-SAR-3/-4(b) hold comment. `wheelPhase` is main's — it already turned the primitive chassis wheels at `syncPresentation:571`; the GLB now turns on the same phase. The comment at the site carries the measured pivots above, so the next reader can check the safety claim without re-deriving it. |
 
-**Deliberately NOT taken from `c7f284ad4`** (each is main's, per the master and the review):
+**Deliberately NOT taken from `033f69c61`** (each is main's, per the master and the review):
 `presentationCenter` rename and the hoisted centre computation (main's render-interpolated version is
 strictly larger); `machineYaw … + Math.PI / 2` (main's yaw convention stays — the review kept it and
 the master names it); `labelSprite` max-width; `persistence.writeAtCeremony({…, yaw})`;
@@ -126,10 +126,10 @@ is a control run, not an assumption (F-DRB-7 forbids blessing a number you have 
 
 Only two specs own renderer-count artifacts — `wire-crawler-3d` and `wire-railcar-3d` — and neither
 loads a Dredge Queen or an Old Digger. Both were red on this branch, so both were re-run with main's
-four files checked back into this same worktree (`git checkout f431b878c -- <2 src files, 2 GLBs>`),
+four files checked back into this same worktree (`git checkout b70ef3b31 -- <2 src files, 2 GLBs>`),
 same server, same worker count, same machine:
 
-| assert | this branch | control (main `f431b878c`) | verdict |
+| assert | this branch | control (main `b70ef3b31`) | verdict |
 |---|---|---|---|
 | `wire-crawler-3d.spec.ts:115` desktop `coldBaseline.triangles` | 149626, band [147704, 147710] | **149626**, band [147704, 147710] | identical → pre-existing |
 | `wire-crawler-3d.spec.ts:115` mobile `coldBaseline.triangles` | 146040, band [144118, 144124] | **146040** | identical → pre-existing |
@@ -161,7 +161,7 @@ cure").
 | → the 8 reds | 4 renderer-count asserts (§4, identical on the control), 2 × `057-baron-rocket-cart:251` `blast-charge-arm` (**pre-existing on main**, `reviews/drain-review-boss-fidelity.md` §4), 2 × `e5:237` p95 (below) |
 | plain boot, no `?debug`, both viewports | **zero console errors, zero page errors, zero failed requests**, canvas present after 9 s |
 | presentation probes | **none exist for these three bosses** — `scripts/check-*-presentation.mjs` covers baron, crawler and railcar only |
-| `computeEngineHash()` | branch **`95972a35a5172a35bfc743de7f91951f61a97c46e9f71e6d68096335dc21df46`** (main `f431b878c` = `df1784d4ae13590b676dbe7482f44c314c6f34946ab8efdff1dd5a953f373890`). `src` and `assets/layer-contracts` are both engine inputs, so this moved; **the drain pins it** |
+| `computeEngineHash()` | branch **`95972a35a5172a35bfc743de7f91951f61a97c46e9f71e6d68096335dc21df46`** (main `b70ef3b31` = `df1784d4ae13590b676dbe7482f44c314c6f34946ab8efdff1dd5a953f373890`). `src` and `assets/layer-contracts` are both engine inputs, so this moved; **the drain pins it** |
 
 ### The E5 p95 gate — 8 branch runs vs 6 control runs, and what they actually say
 
@@ -202,9 +202,9 @@ the presentation improves on the board". Measured, it fails on the second and ga
 2. **It is the older lineage, not a newer one.** Main's Salvage Claw is the 2026-09-12 boss-fidelity
    bake, which a drain review checked eyes-on ("a domed pavilion crowned with spires, standing on
    articulated anchor-feet with boarding ladders — a salvage fortress, per F-BF-02's ask"). The
-   `92f6cc115` model is the July duel model (same 7,131,704 bytes as `741927814`) re-exported on
+   `92f6cc115` model is the July duel model (same 7,131,704 bytes as `741927814 (archive: pruned by the A3 rewrite)`) re-exported on
    2026-09-10 for a ladder-grounding fix. Landing it would revert a reviewed fidelity pass.
-3. **It shrinks the boss on screen.** The loader multiplies by `0.78` (introduced at `5c90657fd`, long
+3. **It shrinks the boss on screen.** The loader multiplies by `0.78` (introduced at `37ced849b`, long
    before either model). Main's 14.4932-unit body renders at 11.305; the rebuild's 11.4-unit body
    renders at 8.892 — **21 % narrower and 17 % shorter**. The crown itself is 11.4 wide in both; the
    difference is entirely in the anchor feet (±7.247 → ±5.51) and the crown height (12.042 → 9.965),
@@ -279,8 +279,8 @@ meshes at exactly 7,192 triangles, **in the browser**, not just in a file parse.
 
 | sha | what |
 |---|---|
-| `0df7a17da` | `feat:` the two models + their build sources, asset contracts and READMEs, both layer contracts, both held hunks, both loader constants |
-| `dccd21703` | `chore:` the one grandfathered guard line, with the number that pays it down |
+| `9f2732326` | `feat:` the two models + their build sources, asset contracts and READMEs, both layer contracts, both held hunks, both loader constants |
+| `af536dade` | `chore:` the one grandfathered guard line, with the number that pays it down |
 | (this commit) | `docs:` this report and the captures |
 
 Nothing outside the master's firewall was touched. `STATUS.md`, `tasks/BACKLOG.md`,

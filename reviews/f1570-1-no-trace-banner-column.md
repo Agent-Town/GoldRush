@@ -66,7 +66,7 @@ Firewall held. No master, `tasks/**`, `STATUS.md`, spec, e2e file, source file, 
 
 # DRAIN — s1571
 
-**VERDICT: MERGED `c48169a0643e810ee092dd1463c754e14e51fbd3`.** Base `770abb4f2`, four paths, **main moved on ZERO of them** → all LANE-TOUCHED / MAIN-UNMOVED, `ort` clean, no graft. Custody per §3.0b: gated in a detached worktree `gate-s1571`, never in main's tree, until the verdict was MERGE.
+**VERDICT: MERGED `ac58b314cac1f0dfa5aa195118745feb00aad8cb`.** Base `7aa2bd0ba`, four paths, **main moved on ZERO of them** → all LANE-TOUCHED / MAIN-UNMOVED, `ort` clean, no graft. Custody per §3.0b: gated in a detached worktree `gate-s1571`, never in main's tree, until the verdict was MERGE.
 
 ## Re-measured, not inherited
 
@@ -90,7 +90,7 @@ Live headline reproduced exactly: `TOTAL 970 · SHIPPED 551 · RAN-UNMERGED 84 �
 The master predicted 335 residual / 268 candidates and said any deviation is a finding. There was none. **But a headline that holds is not the same as a corpus that did not move**, so I diffed every verdict against the banked `artifacts/f1569-1-live-corpus.json` instead of trusting the total:
 
 - **334 masters** changed verdict by the **pure rename** `TRULY-BANKED` → `NO-TRACE` — the intended edit.
-- **1 genuine reclassification:** `lane-c-f1569-1-master-shipped-classifier.md` **TRULY-BANKED → SHIPPED**. Correct: s1570 merged that very slice at `8efbb0eac`, so it acquired real merge evidence between the snapshot and now.
+- **1 genuine reclassification:** `lane-c-f1569-1-master-shipped-classifier.md` **TRULY-BANKED → SHIPPED**. Correct: s1570 merged that very slice at `924e59711`, so it acquired real merge evidence between the snapshot and now.
 - **1 master added:** `lane-c-f1570-1-no-trace-banner-column.md` → `NO-TRACE` (this slice's own master, authored s1570).
 
 So the residual is `335 + 1 − 1 = 335`: **two real, offsetting movements, not stasis.** A fire checking only the headline would have concluded "nothing reclassified", which is false. Both movements are correct and neither blocks the merge. Recorded so the next reader knows this number is a net, not a constant — and so nobody reads the matched prediction as proof the corpus was inert.

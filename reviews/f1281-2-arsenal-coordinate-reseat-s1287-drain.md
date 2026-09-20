@@ -8,12 +8,12 @@ landmark-solidity rule is untouched, which is the whole point of the slice.
 
 - Slice: `lane-a-f1281-2-arsenal-coordinate-reseat`
 - Branch: `lane/m3`, tip `c362ab95` (`runner(lane-a): …`)
-- Lane base: `2c602052` · merged onto main at `298608bc`
+- Lane base: `cf4dddb9` · merged onto main at `4978af8c`
 - Runner's own review: `reviews/f1281-2-arsenal-coordinate-reseat.md` (kept, not superseded)
 
 ## What it does
 
-`e2e/e2-arsenal.spec.ts` asked `placeFree('turret', 0, 10)` to return `true`. Since `d1f549d5`
+`e2e/e2-arsenal.spec.ts` asked `placeFree('turret', 0, 10)` to return `true`. Since `5e527a28`
 (2026-07-19) that point sits inside the non-walkable authored footprint `hill-mine:boiler-house-site`,
 so `Terrain.isBuildable` returns `false` and the assertion had been red for twelve days. The fix moves
 the coordinate to a measured-open tile and leaves the rule alone. A comment at the call site names
@@ -28,7 +28,7 @@ form distinguishes "allowed" from "never registered".
 
 ## Merge classification
 
-`node scripts/lane-freeze-classify.mjs lane/m3` → `ahead=1 base=2c602052 paths=6`:
+`node scripts/lane-freeze-classify.mjs lane/m3` → `ahead=1 base=cf4dddb9 paths=6`:
 
 | Bucket | Count |
 |---|---:|
@@ -44,7 +44,7 @@ graft judgement was required. Post-graft the working tree is **byte-identical to
 ## Firewall
 
 The master's firewall was `NO: src/** — any file, any line`. **Held exactly:**
-`git diff 2c602052 lane/m3 --name-only -- src/` → **0 files**. The merged delta is one test file, four
+`git diff cf4dddb9 lane/m3 --name-only -- src/` → **0 files**. The merged delta is one test file, four
 scratch probe artifacts and the runner's review.
 
 ## Evidence
@@ -107,4 +107,4 @@ five door-values measured live on both projects. That is a measurement, not a lu
 
 Leaf `f1281-2-arsenal-coordinate-reseat` flipped `planned` → shipped with its merge receipt in the
 ledger commit that follows this merge (a leaf cannot carry its own merge hash — house precedent
-`d0b1d4f2`, followed by s1286).
+`28485613`, followed by s1286).

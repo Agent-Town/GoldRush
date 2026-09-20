@@ -1,8 +1,8 @@
 # c5b-emdash-pin-and-determinism — the two pins the em-dash sweep moved, and the re-drain of both commits together
 
-**Slice:** `c5b-emdash-pin-and-determinism` + its predecessor `c5-emdash-sweep` (lane-c) · **branch:** `lane/c` · **tip:** `80fa30bfc` · **base:** `baa00a12d`
-**Gated:** s2237, 2026-08-23 · **Merge:** `ddcde57f0613fde99d986e884e0c471d02de18af`
-**Gated in:** detached worktree `worktrees/gate-s2237`, checked out at the **real merge commit** (§3.0b custody). The commit that was gated is the commit that was merged — main was fast-forwarded onto `ddcde57f0` itself, not onto a fresh re-resolution.
+**Slice:** `c5b-emdash-pin-and-determinism` + its predecessor `c5-emdash-sweep` (lane-c) · **branch:** `lane/c` · **tip:** `85268ce32` · **base:** `c9f3019ee`
+**Gated:** s2237, 2026-08-23 · **Merge:** `a51e1a279ff446914e051b441dcc8b8a95e11265`
+**Gated in:** detached worktree `worktrees/gate-s2237`, checked out at the **real merge commit** (§3.0b custody). The commit that was gated is the commit that was merged — main was fast-forwarded onto `a51e1a279` itself, not onto a fresh re-resolution.
 
 ## VERDICT: MERGED — both commits, together, as `reviews/c5-emdash-sweep.md` prescribed
 
@@ -57,7 +57,7 @@ Converted to proof by a control in the same worktree, against the same dev serve
 
 ## Merge classification
 
-Base `baa00a12d`. Main gained **33** commits since the lane branched (the c5 review recorded 18; it has moved). Lane touched **87** paths.
+Base `c9f3019ee`. Main gained **33** commits since the lane branched (the c5 review recorded 18; it has moved). Lane touched **87** paths.
 
 | Bucket | Count | Handling |
 |---|---|---|

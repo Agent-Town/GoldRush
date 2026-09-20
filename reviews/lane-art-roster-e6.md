@@ -1,7 +1,7 @@
 # Review — art-batch-roster-e6 (E6 enemy walk8 sprites: extract + wire)
 
 **Slice:** art-batch-roster-e6 — extract the three E6 non-boss enemy walk8 sheets and swap the E6 roster (feral_toaster / lawn_shepherd / glowjack) off the bandit placeholder onto real art.
-**Slot / source:** ART slot. Raw sheets landed on main in `c4868128` (`runner(art)`); this is the fire-side EXTRACTION + WIRING drain (the task master itself says "NO extraction — fire/attended runs extract-alpha").
+**Slot / source:** ART slot. Raw sheets landed on main in `aa545097` (`runner(art)`); this is the fire-side EXTRACTION + WIRING drain (the task master itself says "NO extraction — fire/attended runs extract-alpha").
 **Drained by:** s762 fire, directly on main (no lane branch — main-slot art processing).
 **Verdict:** ✅ MERGE — real E6 enemy art renders in a plain E6 boot, desktop + 390-mobile, zero console/page errors.
 
@@ -27,7 +27,7 @@ The three Atomic-Homestead roster enemies — the **Feral Toaster** (knee-high h
 | Extraction QA | 0 empty cells; key purity/grid/height/no-mirror measured PASS in `assets/raw/codex-art-run-art-batch-roster-e6.md` |
 
 ## Merge classification
-Direct-on-main art processing — no lane branch, no 3-way. Additive: 24 processed cell PNGs + 3 frames.json (new), `generated.ts` (3-line repoint, path-scoped), `assets/LEDGER.md` (entry 52 → EXTRACTED+WIRED), `tasks/goals.json` (`roster-art-e6-e10` → building, E6 consumed), review + shots, gazette. Raw sheets + reference plates were already committed on main by the runner (`c4868128`); untouched here.
+Direct-on-main art processing — no lane branch, no 3-way. Additive: 24 processed cell PNGs + 3 frames.json (new), `generated.ts` (3-line repoint, path-scoped), `assets/LEDGER.md` (entry 52 → EXTRACTED+WIRED), `tasks/goals.json` (`roster-art-e6-e10` → building, E6 consumed), review + shots, gazette. Raw sheets + reference plates were already committed on main by the runner (`aa545097`); untouched here.
 
 ## Findings
 - **F-1 (non-blocking, reference-tier duplication):** the recovery pass re-generated `plate-e6-enemy-feral_toaster.png` / `plate-e6-enemy-lawn_shepherd.png` (underscore) because the original hyphen-named reference plates had dropped out of `HEAD`. Both underscore and hyphen raws now coexist in `assets/raw/`; the LEDGER reference-plate rows (#A3 lines 152-153) already cover these enemies as `n/a — no extraction / PENDING-CONSUMPTION`, so no new reference row was added. Harmless duplicate raws; an owner/attended cleanup can drop the stale hyphen copies (rm gated for headless fires).

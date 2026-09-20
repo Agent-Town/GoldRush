@@ -4,7 +4,7 @@
 
 You are Codex, implementer for Gold Rush, running natively on Robin's Mac in `worktrees/lane-d`.
 
-READ FIRST: `AGENTS.md`; `specs/greenhorn-gazette/README.md` (**the ratified spec — the first Herald issue IS the tutorial, owner's own synthesis**); `reviews/gazette-first-issue.md` (**GG-01, the wiring this completes — `d2fc1b06`**); `reviews/art-gazette-first-issue.md` (**GG-02, the art this wires — `ee54c438`**); `reviews/gazette-art-wiring.md` **and** `reviews/gazette-art-wiring-hardening.md` (**the two slices that already solved this exact problem for the `renderItem` engravings — reuse their technique, do not re-invent it**); `src/news/heraldReader.ts`; `scripts/asset-diet.mjs`; `tasks/BACKLOG.md`.
+READ FIRST: `AGENTS.md`; `specs/greenhorn-gazette/README.md` (**the ratified spec — the first Herald issue IS the tutorial, owner's own synthesis**); `reviews/gazette-first-issue.md` (**GG-01, the wiring this completes — `97c6a257`**); `reviews/art-gazette-first-issue.md` (**GG-02, the art this wires — `8dff01fb`**); `reviews/gazette-art-wiring.md` **and** `reviews/gazette-art-wiring-hardening.md` (**the two slices that already solved this exact problem for the `renderItem` engravings — reuse their technique, do not re-invent it**); `src/news/heraldReader.ts`; `scripts/asset-diet.mjs`; `tasks/BACKLOG.md`.
 
 CODEX: gpt-5.6-sol effort=medium
 
@@ -12,8 +12,8 @@ CODEX: gpt-5.6-sol effort=medium
 
 `tasks/BACKLOG.md:1727` set the ladder out when the owner ratified the Gazette: *"GG-01 wiring queued lane-d (text-first per NO-BLOCKER), GG-02 art batch queued art slot (behind current batch), **GG-03 swap = ladder after both**."* Both are now on `main`:
 
-- **GG-01 shipped `d2fc1b06`** — the pinned six-panel issue renders, and it deliberately left the art slots empty. `src/news/heraldReader.ts:151` is literally `<div class="claim-herald__art-slot" aria-hidden="true">Engraving reserved</div>`.
-- **GG-02 accepted `ee54c438`** — seven plates in `assets/raw/`, canon-verified by the s1205 drain **by opening the PNGs**, extraction and wiring **correctly withheld** because the batch is reference-tier and full-bleed with no `#ff00ff`. That withheld wiring is this task.
+- **GG-01 shipped `97c6a257`** — the pinned six-panel issue renders, and it deliberately left the art slots empty. `src/news/heraldReader.ts:151` is literally `<div class="claim-herald__art-slot" aria-hidden="true">Engraving reserved</div>`.
+- **GG-02 accepted `8dff01fb`** — seven plates in `assets/raw/`, canon-verified by the s1205 drain **by opening the PNGs**, extraction and wiring **correctly withheld** because the batch is reference-tier and full-bleed with no `#ff00ff`. That withheld wiring is this task.
 
 **The panel ids already match the filenames one-for-one** — verified at source by the authoring fire, not assumed. `FIRST_ISSUE_PANELS` (`heraldReader.ts:20-68`) declares `claim-goal`, `seams-gold`, `the-works`, `the-arms`, `freeing-fevered`, `town-serves`; `assets/raw/` holds `gazette-panel-<id>.png` for all six. There is no mapping to invent.
 

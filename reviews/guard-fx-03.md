@@ -1,7 +1,7 @@
 # guard-fx-03-fixture-teardown-class — review
 
 **Slice:** `guard-fx-03-fixture-teardown-class` (lane-a slot) · **branch:** `lane/m3` · **tip:** `5abffe47` `runner(lane-a): guard-fx-03-fixture-teardown-class.md`
-**Drained:** s1240, 2026-07-30 · **merge-base:** `f14cc1c3`
+**Drained:** s1240, 2026-07-30 · **merge-base:** `f14cc1c3 (archive: pruned by the A3 rewrite)`
 **Conflict of interest, declared up front:** this slice was **FIRE-AUTHORED by s1239**, one fire before this drain. It is a sibling fire's master, not this fire's own, but it is still house-authored — so **every claim in the runner's report was re-derived by command on the merged tree**, and two mutation arms the report never ran were added (§Mutation arms B and C). Nothing below is quoted from the report without an independent measurement beside it.
 
 ## Verdict
@@ -77,7 +77,7 @@ Self-measured rather than inherited: the registered `test:node-guards` list (23 
 
 ## Merge classification
 
-**Base `f14cc1c3`; merged onto clean main; path-scoped checkout, no graft required.**
+**Base `f14cc1c3 (archive: pruned by the A3 rewrite)`; merged onto clean main; path-scoped checkout, no graft required.**
 
 | File | Class | Detail |
 |---|---|---|

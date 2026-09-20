@@ -6,9 +6,9 @@ READ FIRST: AGENTS.md, STATUS verification lessons, `docs/decisions/ADR-005-ride
 
 ## Measured defect and invariant
 
-At main `0eb139bdc7f1612da449a816038520b72153d456`, the reach guard has four passes and one failure: it expects 12 non-comment lines reading `this.prospector.position`, but the shipped sim has 10. The guard and both source subjects on main were verified byte-identical to HEAD before this base control. The detached gold candidate fails identically. Its complete direct Node command ended naturally at 1374.5 seconds: 742 tests, 736 pass, 1 fail, 5 explicit skips, no cancellation; the failure is the fixture sweep's nested reach guard. The npm chained tail did not run.
+At main `6e29d21f4a38aebbf8ade4bfe1f08391d1cc7524`, the reach guard has four passes and one failure: it expects 12 non-comment lines reading `this.prospector.position`, but the shipped sim has 10. The guard and both source subjects on main were verified byte-identical to HEAD before this base control. The detached gold candidate fails identically. Its complete direct Node command ended naturally at 1374.5 seconds: 742 tests, 736 pass, 1 fail, 5 explicit skips, no cancellation; the failure is the fixture sweep's nested reach guard. The npm chained tail did not run.
 
-Commit `08287cdd7430d83be288fb3bf0cf5421af26938c` deliberately moved the E8 hollow crossing and `syncProgramSuspension` to the HERO, per stage 3 items 10 and 9. Its stage-1 guard still counts both as Prospector reads. The lawful remaining set is the three named Prospector chores plus seven passive wirings. The existing twelve HERO_REACHES entries, browser action checks, and deliberate harvest/repair ownership must remain defended. Do not repair this mismatch by moving runtime reads back.
+Commit `9912785f7cc9fb1a86216e23c88cf7c1e2724ebd` deliberately moved the E8 hollow crossing and `syncProgramSuspension` to the HERO, per stage 3 items 10 and 9. Its stage-1 guard still counts both as Prospector reads. The lawful remaining set is the three named Prospector chores plus seven passive wirings. The existing twelve HERO_REACHES entries, browser action checks, and deliberate harvest/repair ownership must remain defended. Do not repair this mismatch by moving runtime reads back.
 
 ## Pre-flight and custody
 

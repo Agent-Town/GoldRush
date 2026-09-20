@@ -1,6 +1,6 @@
 # Task f2117-1: give the release-base harness a runner — `test:release-base`, a free port, and an honest grandfather (lane-d, commit prefix "fix:")
 
-**FIRE-AUTHORED (attended review welcome)** — s2160, executing the **DISPATCHED** line of the owner-ruled desk sweep of 2026-08-22. Every file:line, count and verdict below was re-verified at source by the author on main at `a0c6aa033`, not inherited from F-2117-1's report — and **two of F-2117-1's figures had already gone stale** (see WHY §3).
+**FIRE-AUTHORED (attended review welcome)** — s2160, executing the **DISPATCHED** line of the owner-ruled desk sweep of 2026-08-22. Every file:line, count and verdict below was re-verified at source by the author on main at `39b421579`, not inherited from F-2117-1's report — and **two of F-2117-1's figures had already gone stale** (see WHY §3).
 
 You are Codex, implementer for Gold Rush, running natively on Robin's Mac in `worktrees/lane-d`.
 

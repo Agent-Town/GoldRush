@@ -1,11 +1,11 @@
 # fe2cs2-2 — give `DEFAULT_COAL_SEAMS` a node-safe home
 
 **Slice:** `fe2cs2-2-coal-seam-defaults-node-safe`
-**Branch:** `lane/c` · **Tip:** `969bed9bd` · **Base (merge-base vs main):** `0e18c43d6`
-**Merged to main:** `1968127f5e921a26c529e1363dfdaec33f45c67d` (s2144 fire, 2026-08-21)
+**Branch:** `lane/c` · **Tip:** `950572416` · **Base (merge-base vs main):** `c465996cf`
+**Merged to main:** `7b07256cc7fcd04e927771f3551352e7498244c8` (s2144 fire, 2026-08-21)
 
-⚠️ **THIS ONE MERGE SHIPS TWO SLICES.** `lane/c` carried `fe2cs2-1` (`98ffc1507`) beneath its own
-merge of main and then `fe2cs2-2` (`969bed9bd`), so landing the lane lands the held predecessor with
+⚠️ **THIS ONE MERGE SHIPS TWO SLICES.** `lane/c` carried `fe2cs2-1` (`cdc29b717`) beneath its own
+merge of main and then `fe2cs2-2` (`950572416`), so landing the lane lands the held predecessor with
 its cure. Both goal leaves flip on this hash; see *Leaves* below.
 
 ## Verdict
@@ -84,8 +84,8 @@ inside this slice, deliberately: doing so would have destroyed the red's attribu
 
 ## Merge classification
 
-Base `0e18c43d6` (merge-base of `main` and `lane/c`). **All five paths LANE-ONLY** —
-`git diff 0e18c43d6..main` is empty over each, so main moved none of them and no graft was possible.
+Base `c465996cf` (merge-base of `main` and `lane/c`). **All five paths LANE-ONLY** —
+`git diff c465996cf..main` is empty over each, so main moved none of them and no graft was possible.
 `git merge-tree --write-tree main lane/c` returned rc 0 before merging. `main..lane/c` **empty** after.
 Merged `--no-ff` and committed as one act, never left staged (F-1589-5).
 
@@ -121,7 +121,7 @@ vocabulary, and a guard on ad-hoc drain probes would fire on every legitimate on
 
 ## Leaves
 
-Both flip on `1968127f5`, in the commit immediately following the merge (§3.0's two-commit rule — a
+Both flip on `7b07256cc`, in the commit immediately following the merge (§3.0's two-commit rule — a
 commit cannot contain its own hash):
 
 - `fe2cs2-2-coal-seam-defaults-node-safe`: `queued` → `merged`.

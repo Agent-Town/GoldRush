@@ -1,6 +1,6 @@
 # Review: e6-picnic-thirty-second-death — the Picnic is a hold, and the card now says so (scratch worktree, Claude Opus 5 implementer, attended drain 2026-09-06 early)
 
-**Slice/branch/tip:** `e6-picnic-thirty-second-death` · `fix/e6-picnic-hold` · commit `4bc215fc5` on base `74542e974` · merged to main: see the ledger row (first-parent merge; the only collision is the ledger).
+**Slice/branch/tip:** `e6-picnic-thirty-second-death` · `fix/e6-picnic-hold` · commit `5096bbbcc` on base `65549309e` · merged to main: see the ledger row (first-parent merge; the only collision is the ledger).
 **Verdict:** MERGED. F-SMOKE-2 was half wrong, and the wrong half is the one that matters: the hero never dies on `e6-picnic`. An unbuilt run ends by `all-stakes-claimed` with the Prospector at 100/100 (headless seed 01 at 73.033 s / wave 2, seed 02 at 47.333 s / wave 1; browser 73.37 s both projects), which surfaces as `runState=dead` with no other tell (F-PICNIC-1). The map is build-or-die by two owner rulings (2026-08-21 "picnic - no, just standing there should not win"; 2026-08-22 "flip the stakes", the ruling that admitted the contract under Law 2), so nothing in the pressure was touched; the briefing carries the cure, and a plain-boot e2e proves the card's own opening carries a human past 60 s into wave 2.
 
 ## What it does

@@ -99,7 +99,7 @@
         "a0b6b3b0782065a003911b961b4d8a3946e6b65ac67efbdcae7c42cb3e9dbef2"
       ],
       "pinnedAt": "2026-09-01",
-      "cause": "door-dawn-fencepost merge b80253bff moved src/playbook/PlaybookFormat.ts (the inclusive-endpoint cure); the s2411 drain owed this append and missed it - heat 9 stopped on the gap"
+      "cause": "door-dawn-fencepost merge ea95ab545 moved src/playbook/PlaybookFormat.ts (the inclusive-endpoint cure); the s2411 drain owed this append and missed it - heat 9 stopped on the gap"
     },
     {
       "engineHash": "25040ad58451125adfa7d1d6c19c70f40ce17cd8cc6d377134e0a545922ca2ca",
@@ -107,7 +107,7 @@
         "a0b6b3b0782065a003911b961b4d8a3946e6b65ac67efbdcae7c42cb3e9dbef2"
       ],
       "pinnedAt": "2026-09-01",
-      "cause": "fires guard-hygiene package.json edits (95b495e2b test-timeout, 19c19469a guard config) - package.json sits in ENGINE_SOURCE_INPUTS so factory tooling tweaks rotate the engine identity; behaviour unchanged"
+      "cause": "fires guard-hygiene package.json edits (d5f6602ba test-timeout, a4b43408a guard config) - package.json sits in ENGINE_SOURCE_INPUTS so factory tooling tweaks rotate the engine identity; behaviour unchanged"
     },
     {
       "engineHash": "d47f32f68edb5001dfa40687b5767872bf2045280cfb16d9434b2d2c0d8e2f0b",
@@ -115,7 +115,7 @@
         "a0b6b3b0782065a003911b961b4d8a3946e6b65ac67efbdcae7c42cb3e9dbef2"
       ],
       "pinnedAt": "2026-09-02",
-      "cause": "fires guard-hygiene package.json edits after c13b4c24 (8dbb5122a F-2424-1, b116a45be F-2433-1, 3d9484a61 F-2435-1) - tooling files inside ENGINE_SOURCE_INPUTS; behaviour unchanged. The surface narrowing (engine-surface-narrowing) ends this class."
+      "cause": "fires guard-hygiene package.json edits after ec71f923 (7047eb7dc F-2424-1, 93eda4022 F-2433-1, 709b5f9cc F-2435-1) - tooling files inside ENGINE_SOURCE_INPUTS; behaviour unchanged. The surface narrowing (engine-surface-narrowing) ends this class."
     },
     {
       "engineHash": "eaadcc383d5d16f20a0534c9d4824bee87cae916b94f6491bb8fe9055a39c78a",
@@ -126,20 +126,20 @@
     {
       "engineHash": "93c80710c048c5e1c77acab19fd0de575bff15ca8beb8d0ab80bcbebd702b2c1",
       "pinnedAt": "2026-09-02",
-      "cause": "content re-hash, no behaviour change: lantern-true-terrain drain (c1084e547) + the lantern_post reel mapping (4c4b0a9a2) moved src/ui only; same era per F-1441-3",
+      "cause": "content re-hash, no behaviour change: lantern-true-terrain drain (c1374d659) + the lantern_post reel mapping (f587b3c87) moved src/ui only; same era per F-1441-3",
       "aliases": []
     },
     {
       "engineHash": "91c43545642dde32a7ecafb3c6716acbf6c46e234a70e97a72f41e6a78aaa443",
       "pinnedAt": "2026-09-02",
-      "cause": "content re-hash, no behaviour change: same-laws-harvest-parity drain (9e5d0636d) added the player Prospector dispatch input + tape input kind in src/game, src/ui, src/mp, src/story; sim untouched; same era per F-1441-3",
+      "cause": "content re-hash, no behaviour change: same-laws-harvest-parity drain (2049d654c) added the player Prospector dispatch input + tape input kind in src/game, src/ui, src/mp, src/story; sim untouched; same era per F-1441-3",
       "aliases": []
     },
     {
       "engineHash": "30ae0a3ce5912646b2caf68c34115ad32395ad5197897f7cb68dc8e6944fa926",
       "aliases": [],
       "pinnedAt": "2026-09-02T22:12:00+07:00",
-      "cause": "winnability-receipts drain b5850417a (runner commit 280d95d7f) added assets/contracts/winnability-receipts.json, a 207-line receipts ledger nothing imports; assets/contracts is inside ENGINE_SOURCE_INPUTS so the content re-hashed. Simulation behaviour did not change. The s2457 drain owed this append and missed it; s2458 measured main already outside era 5 and repaired the gap rather than pinning only its own state."
+      "cause": "winnability-receipts drain 714d68198 (runner commit 1e3aba54e) added assets/contracts/winnability-receipts.json, a 207-line receipts ledger nothing imports; assets/contracts is inside ENGINE_SOURCE_INPUTS so the content re-hashed. Simulation behaviour did not change. The s2457 drain owed this append and missed it; s2458 measured main already outside era 5 and repaired the gap rather than pinning only its own state."
     },
     {
       "engineHash": "4082ebe41a9c70652edcb84946417c879a16be404087891a2961e86c009a4cbf",
@@ -186,19 +186,19 @@
     {
       "engineHash": "a607a81f44e10dc2b2262682c1e116c15917edffeeaa0c5909f383ccea5d8e04",
       "pinnedAt": "2026-09-03",
-      "cause": "content re-hash, no behaviour change: the half-stamped-reel-refusal drain (01506cbde, src/game watch-path routing) moved the corpus after the previous pin; same era per F-1441-3",
+      "cause": "content re-hash, no behaviour change: the half-stamped-reel-refusal drain (ea86b0c3f, src/game watch-path routing) moved the corpus after the previous pin; same era per F-1441-3",
       "aliases": []
     },
     {
       "engineHash": "5d2fc15616271e8c900824450ce803eb5145c1136dae0d9655c393724794b11b",
       "pinnedAt": "2026-09-03",
-      "cause": "content re-hash, no behaviour change for existing tapes: e8-mare-claim-physics drain (a121c7f14) composes E8PhysicsSystem headless for contracts declaring gravity/atmosphere; E1-E7 and the other E8 maps replay byte-identical (null floors measured); same era per F-1441-3",
+      "cause": "content re-hash, no behaviour change for existing tapes: e8-mare-claim-physics drain (5c82f05bb) composes E8PhysicsSystem headless for contracts declaring gravity/atmosphere; E1-E7 and the other E8 maps replay byte-identical (null floors measured); same era per F-1441-3",
       "aliases": []
     },
     {
       "engineHash": "49c34f8bba3d61e003d1f421398e3835e3107945f396800fa124f946b2e4b2f9",
       "pinnedAt": "2026-09-03",
-      "cause": "content re-hash, no behaviour change for existing tapes: e4-roads-and-convoys drain (48ef7df8d) composes MotorSocket headless for contracts declaring twist.motorFrontier; E1-E3 and E5+ replay byte-identical (the Claim control and the null floors re-derived); same era per F-1441-3",
+      "cause": "content re-hash, no behaviour change for existing tapes: e4-roads-and-convoys drain (7f5c590a1) composes MotorSocket headless for contracts declaring twist.motorFrontier; E1-E3 and E5+ replay byte-identical (the Claim control and the null floors re-derived); same era per F-1441-3",
       "aliases": []
     },
     {
@@ -211,12 +211,12 @@
       "engineHash": "41583818b1b62dcec49f241f0b9a3c7e168776a76be5d54e359e48dacc73e5be",
       "aliases": [],
       "pinnedAt": "2026-09-04",
-      "cause": "content re-hash, no behaviour change for existing tapes: e4-vehicles-plain-boot drain (98cc0fc2f) composes Vehicle/FuelSystem for every twist.motorFrontier contract in a plain boot and adds motorActions to RunTape. Measured on the merged tree: all four Motor reels replay claimed=node=browser to their recorded hashes."
+      "cause": "content re-hash, no behaviour change for existing tapes: e4-vehicles-plain-boot drain (49370319b) composes Vehicle/FuelSystem for every twist.motorFrontier contract in a plain boot and adds motorActions to RunTape. Measured on the merged tree: all four Motor reels replay claimed=node=browser to their recorded hashes."
     },
     {
       "engineHash": "737a979abc8e1e4a799cb56acc31b556dbc4400e8878d6c0f3c078dcb55b6ef9",
       "pinnedAt": "2026-09-04",
-      "cause": "content re-hash, no behaviour change for existing tapes: the four overnight drains (reel-contract-routing-hazard 22b9538e5 in src/meta+src/replay, e4-vehicles-plain-boot 98cc0fc2f in src/game, sim-terrain-read-canonicalization 7d23e345e harness only, f-e4-1 doc) left the corpus unpinned; appended attended before the deploy that carries them; same era per F-1441-3",
+      "cause": "content re-hash, no behaviour change for existing tapes: the four overnight drains (reel-contract-routing-hazard a671486e2 in src/meta+src/replay, e4-vehicles-plain-boot 49370319b in src/game, sim-terrain-read-canonicalization 1ce199744 harness only, f-e4-1 doc) left the corpus unpinned; appended attended before the deploy that carries them; same era per F-1441-3",
       "aliases": []
     },
     {
@@ -252,13 +252,13 @@
     {
       "engineHash": "82ea9af6de1788cf309340b9eace9d147f5723c041be89f2064490efb331a2e9",
       "pinnedAt": "2026-09-05",
-      "cause": "content re-hash: e7-playbook-rows drain (b38d60295) adds PLAYBOOK_USE and the signal-system composition on the four Signal Era maps; every other contract replays byte-identical (eight E7 idle null floors and the E1/E8 controls measured); same era per F-1441-3",
+      "cause": "content re-hash: e7-playbook-rows drain (0a2a6fdcf) adds PLAYBOOK_USE and the signal-system composition on the four Signal Era maps; every other contract replays byte-identical (eight E7 idle null floors and the E1/E8 controls measured); same era per F-1441-3",
       "aliases": []
     },
     {
       "engineHash": "324bb3cd0e32f2b71c37f86d74593340ee782e2718f8173274a7e7d15a0d2e8f",
       "pinnedAt": "2026-09-05",
-      "cause": "content re-hash: e3-moth-season drain (de21da4f5) rewrites the Moth Season contract row (assets/contracts/epoch-3-voltage/contracts.json) — the sabotageable light circuit as contract data, zero src/ edits; every other contract replays byte-identical (the lane's both-engine tables + the E7/E8 pins measured); same era per F-1441-3",
+      "cause": "content re-hash: e3-moth-season drain (d07a0e2e7) rewrites the Moth Season contract row (assets/contracts/epoch-3-voltage/contracts.json) — the sabotageable light circuit as contract data, zero src/ edits; every other contract replays byte-identical (the lane's both-engine tables + the E7/E8 pins measured); same era per F-1441-3",
       "aliases": []
     },
     {
@@ -282,25 +282,25 @@
     {
       "engineHash": "8afae55feda2730606dbf46d869baf14bc66f733028547f1f1ba3d0b5a6a3a16",
       "pinnedAt": "2026-09-05",
-      "cause": "src re-hash: prefetch-bounded-warming drain (065252649) — AdvanceStream.ts warms priorities 1-2 under a session byte allowance and StartMenu.ts gains the 'Warm every map' opt-in; render/asset plumbing only, no sim or contract change; every contract replays byte-identical; same era per F-1441-3",
+      "cause": "src re-hash: prefetch-bounded-warming drain (c7856dca7) — AdvanceStream.ts warms priorities 1-2 under a session byte allowance and StartMenu.ts gains the 'Warm every map' opt-in; render/asset plumbing only, no sim or contract change; every contract replays byte-identical; same era per F-1441-3",
       "aliases": []
     },
     {
       "engineHash": "9254f19e3c6e126d2b37fe789055fb5ca2ccd6862090bc6e5b71984ed11d3325",
       "pinnedAt": "2026-09-05",
-      "cause": "src re-hash: shared-atlas-texture-dedupe drain (3a47f1800) — src/assets/SharedAtlasPlugin.ts + AssetLoading.ts registration: one GPU texture per atlas-content hash across GLBs; render/asset plumbing only, no sim or contract change; every contract replays byte-identical; same era per F-1441-3",
+      "cause": "src re-hash: shared-atlas-texture-dedupe drain (bbf1c3832) — src/assets/SharedAtlasPlugin.ts + AssetLoading.ts registration: one GPU texture per atlas-content hash across GLBs; render/asset plumbing only, no sim or contract change; every contract replays byte-identical; same era per F-1441-3",
       "aliases": []
     },
     {
       "engineHash": "b395ee1f9e2fa226489c749f2468778d023ad900b682aadc3f8fd15a481612b1",
       "pinnedAt": "2026-09-05",
-      "cause": "src re-hash: lantern-true-world-reel-2 drain (e8319998d) — LanternController extracted from Game.ts, LanternBoot + LanternWorldStage added, main.ts replay route; the replay worker, AgentTapeReplay, RunTape and the sim untouched; every contract replays byte-identical (tape-02 + true-reel-harness green); same era per F-1441-3",
+      "cause": "src re-hash: lantern-true-world-reel-2 drain (6f8e4d435) — LanternController extracted from Game.ts, LanternBoot + LanternWorldStage added, main.ts replay route; the replay worker, AgentTapeReplay, RunTape and the sim untouched; every contract replays byte-identical (tape-02 + true-reel-harness green); same era per F-1441-3",
       "aliases": []
     },
     {
       "engineHash": "c552efe029369e05180c3df68e3c91003be7430164519d298e9898d9d07bdb28",
       "pinnedAt": "2026-09-05",
-      "cause": "src re-hash: asset-diet-explicit-manifest v1+v2 drain (9b7d3eef6) — nine bare GLTFLoader sites routed through the shared meshopt factory (AssetLoading.createGltfLoader), the tracked loader keeps the SharedAtlasPlugin; asset/loader plumbing only, no sim or contract change; every contract replays byte-identical; same era per F-1441-3",
+      "cause": "src re-hash: asset-diet-explicit-manifest v1+v2 drain (e48bbd592) — nine bare GLTFLoader sites routed through the shared meshopt factory (AssetLoading.createGltfLoader), the tracked loader keeps the SharedAtlasPlugin; asset/loader plumbing only, no sim or contract change; every contract replays byte-identical; same era per F-1441-3",
       "aliases": []
     },
     {

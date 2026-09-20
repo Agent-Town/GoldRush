@@ -4,7 +4,7 @@ ROLE: lane implementer. WORKDIR: this lane worktree. One task, firewalled. **FIR
 
 WHY: **F-1211-6 was raised OPEN and OWED as *"`e2e/gazette-welcome.spec.ts:44` is RED ON MAIN — bisect owed"*, and it carried a contradiction nobody could close: s1211 measured it 8/8 RED across four runs and two harnesses, while the lane-d runner measured the same suite 8/8 GREEN ~90 minutes earlier with nothing merged in between.** s1214 discriminated it. **Both measurements are true, and there is nothing to bisect** — full evidence and raw arms in `logs/session-scratch/s1214-f1211-6/measurements.md`.
 
-MEASURED s1214, ONE VARIABLE, ONE TREE (`main` src/e2e identical to `227116e8`), **one external vite on scratch port 5261 reused by all four arms** so the server cannot be the variable:
+MEASURED s1214, ONE VARIABLE, ONE TREE (`main` src/e2e identical to `8b13f34b`), **one external vite on scratch port 5261 reused by all four arms** so the server cannot be the variable:
 
 | arm | workers | projects | loadavg start → end | result |
 |---|---:|---|---|---|
@@ -28,7 +28,7 @@ READ-FIRST (all of them, before you change a line):
 - `tasks/BACKLOG.md` F-1211-6 (the original finding) and `reviews/gg-01b-gazette-welcome.md`.
 
 PRE-FLIGHT (LANE-SAFETY, safe-dupe proved BY CONTENT by the authoring fire — **re-verify before you reset, never trust this paragraph**):
-`lane/perf` is **1 ahead of main** at `3b340bbd` (GG-01b welcome-release-gate) and that commit's content is **already on main** as `e5d3c26c`. The probe s1214 ran, which you must re-run: `git diff main 3b340bbd -- e2e/release-build.spec.ts e2e/gazette-welcome.spec.ts src/town/TownWelcome.ts` is **EMPTY**. The rejected GG-03 panel swap is pinned separately (`git rev-parse --verify archive/lane-perf-gg03-06eeac68` → `06eeac68`). If either probe disagrees, or any dirty tracked blob is unreachable in git, **STOP and report — do not reset.**
+`lane/perf` is **1 ahead of main** at `3b340bbd` (GG-01b welcome-release-gate) and that commit's content is **already on main** as `feb0a3d7`. The probe s1214 ran, which you must re-run: `git diff main 3b340bbd -- e2e/release-build.spec.ts e2e/gazette-welcome.spec.ts src/town/TownWelcome.ts` is **EMPTY**. The rejected GG-03 panel swap is pinned separately (`git rev-parse --verify archive/lane-perf-gg03-06eeac68` → `06eeac68`). If either probe disagrees, or any dirty tracked blob is unreachable in git, **STOP and report — do not reset.**
 
 SCOPE — **the diagnosis is done; the judgement is not. You are allowed to conclude the test is wrong, the product is wrong, or that this is an owner call.**
 

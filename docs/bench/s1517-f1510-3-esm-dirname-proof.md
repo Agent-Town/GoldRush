@@ -2,7 +2,7 @@
 
 Date: 2026-08-07
 Fire: s1517
-Subject: the one conjunct `f9c0e498` (s1516, negative result) refuted — how the Playwright config
+Subject: the one conjunct `eb301c3a` (s1516, negative result) refuted — how the Playwright config
 learns the tested tree's directory when `__dirname` is undefined.
 
 ## Why this document exists
@@ -35,7 +35,7 @@ S1517_PROBE typeof __dirname=undefined
 S1517_PROBE cwd=/Users/robin/Claude/Projects/Gold Rush/gate-s1517
 ```
 
-`typeof __dirname=undefined` is `f9c0e498`'s finding, reproduced independently. `import.meta.dirname`
+`typeof __dirname=undefined` is `eb301c3a`'s finding, reproduced independently. `import.meta.dirname`
 resolves.
 
 ### 2. It is CONFIG-ANCHORED, not merely equal to cwd — the discriminating run
@@ -70,12 +70,12 @@ The candidate cure landed in `gate-s1517/playwright.config.ts`, then one real sp
 ```text
 $ npx playwright test _s106-prospector-boot-probe.spec.ts --project=desktop-chrome \
     --workers=1 --reporter=json
-config.metadata = {"revision":"cb276b780de1628e003b9178435e622d253c798b","dirty":true,"actualWorkers":1}
+config.metadata = {"revision":"f56843b5b51b6265aef49bb1872aa48539ec074b","dirty":true,"actualWorkers":1}
 stats = {"expected":1,"skipped":0,"unexpected":0,"flaky":0}
 wall_s = 4.0
 ```
 
-`cb276b780…` is `gate-s1517`'s HEAD (main's tip at the time). `dirty: true` is correct — the config
+`f56843b5b…` is `gate-s1517`'s HEAD (main's tip at the time). `dirty: true` is correct — the config
 itself was modified in that worktree.
 
 🔑 **This settles the last conjunct without inheriting it.** `actualWorkers: 1` is Playwright's
@@ -120,7 +120,7 @@ $ npx tsc --noEmit
 
 $ npx playwright test _s106-prospector-boot-probe.spec.ts --project=desktop-chrome \
     --workers=1 --reporter=json
-config.metadata = {"revision":"cb276b780de1628e003b9178435e622d253c798b","dirty":true,"actualWorkers":1}
+config.metadata = {"revision":"f56843b5b51b6265aef49bb1872aa48539ec074b","dirty":true,"actualWorkers":1}
 ```
 
 Identical capture, zero pointer rot. **A `const helper = () => …` will not work** — temporal dead
@@ -173,7 +173,7 @@ newline (the probe patch ends without one).
 ## What remains for the lane
 
 Only scopes 2 and 3 of the s1516 master carry real risk now, and both were already proved
-red-then-green by the `f9c0e498` runner against the pre-change reducer
+red-then-green by the `eb301c3a` runner against the pre-change reducer
 (`tests 10 / pass 7 / fail 3`, each failure the expected missing-output assertion for its arm). The
 config half — the half that stopped the last run — is measured here.
 

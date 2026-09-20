@@ -2,7 +2,7 @@
 
 - **Slice:** `lane-gr-sim.md` — GR-SIM, a browser-free node CLI that boots a contract by id+seed, speaks THE VIEW / STANDING ORDERS over NDJSON, and exits with an outcome JSON.
 - **Branch / tip:** `lane/m3` @ `003ed46c` (`runner(lane-a): lane-gr-sim.md`, auto-committed by the runner 15:16:04; Codex itself reported "No commit was made" — that is the documented runner-auto-commit split, not a lost diff).
-- **Base:** `dfed3765` (merge-base main↔lane/m3).
+- **Base:** `7307d588` (merge-base main↔lane/m3).
 - **Drained:** s1260 fire, 2026-07-30.
 - **Verdict:** **ACCEPT — merged.** The master's stated gate (scope 4, determinism) reproduces byte-for-byte on merged main, the firewall holds, and every browser-facing edit is provably dead code in a browser.
 
@@ -39,7 +39,7 @@ The run reported the exhaustive `m1-*`/`m2-*`/`m3-*` board at 205/222 and argued
 
 ## Merge classification
 
-Base `dfed3765`. The lane commit `003ed46c` touches **12 files, +695/−1**. The 3-dot diff `main...lane/m3` is misleading — it also carries `dd08bc1a` (herald engravings), which **s1257 already merged as `5e129079`**, so 15 extra paths appear that are not this slice's. Classified per-file against the base:
+Base `7307d588`. The lane commit `003ed46c` touches **12 files, +695/−1**. The 3-dot diff `main...lane/m3` is misleading — it also carries `dd08bc1a` (herald engravings), which **s1257 already merged as `8133dd91`**, so 15 extra paths appear that are not this slice's. Classified per-file against the base:
 
 - **11 of 12 — main untouched since base → clean apply:** `artifacts/gr-sim/ap-07/{report.md,bench-001-orders.jsonl,bench-001-transcript.jsonl}` · `scripts/gr-sim.mjs` · `scripts/gr-sim.test.mjs` · `src/sim/HeadlessContractSim.ts` · `src/agent/StandingOrders.ts` · `src/assets/SpriteAnimator.ts` · `src/assets/generated.ts` · `src/entities/BuildingSign.ts` · `src/entities/pools.ts`
 - **1 of 12 — `package.json` MAIN-MOVED-TOO → hand-grafted.** Both sides edited the same `test:node-guards` line: main inserted `scripts/findings-state-guard.test.mjs` and chained `&& npm run test:findings-state`; the lane inserted `scripts/gr-sim.test.mjs`. **Resolved as a true union** — both insertions kept, verified programmatically: 29 guard files, still strictly alphabetical, both markers present, plus main's chained script intact.

@@ -1,8 +1,8 @@
 # deploy-verify-published — the deploy must prove it published
 
 **Slice:** `deploy-verify-published` (F-1049-1 + F-1049-3)
-**Branch:** `lane/m4` (worktree `worktrees/lane-b`) · **Lane tip:** `793c9f2f` · **Base:** `286c2f48`
-**Merged to main as:** `00f5d464fc6b232dec4253506e45635db0f7f70f`
+**Branch:** `lane/m4` (worktree `worktrees/lane-b`) · **Lane tip:** `72d72f34` · **Base:** `e762dcdc`
+**Merged to main as:** `445ba24d2454ca91671f3b5ca2d36656f5f0840e`
 **Drained by:** s1050 fire, 2026-07-26 · **Review author:** s1050
 
 ## VERDICT: MERGED — and this is the first drain in the chain whose claim was settled by the live site rather than by a log line.
@@ -27,7 +27,7 @@ Three changes, all inside the one file the firewall allowed:
    from the snapshot (`:111-125`). Match → `VERIFIED published <build>`. Otherwise → `UNVERIFIED: …` and
    `outcome":"deploy_unverified"`. Both paths route through `finish`, which exits 0 unless `--strict`.
 
-The predecessor's work (`ab528c3f`) is intact and additive-only: the wrangler error extraction, the
+The predecessor's work (`fa975d53`) is intact and additive-only: the wrangler error extraction, the
 `lockf` serialization, the signal traps and the exit codes are all still there, verified by reading the
 merged file rather than by diffing intent.
 
@@ -41,7 +41,7 @@ merged file rather than by diffing intent.
 | `npm run build` | **green**, `✓ built in 1.45s` |
 | `bash -n scripts/deploy.sh` | **permission-gated for this fire** — parse proven instead by two complete default-mode runs of the merged script (a syntax error aborts at line 1) |
 | Forced false-green, **BEFORE** | `[deploy] DEPLOYED ok '(url in log)'` → `{"outcome":"deployed","url":"", …}` |
-| Forced false-green, **AFTER** | `[deploy] FAILED: pages deploy — …` → `{"outcome":"deploy_failed","url":"","publishedBuild":"4eab835d", …}` |
+| Forced false-green, **AFTER** | `[deploy] FAILED: pages deploy — …` → `{"outcome":"deploy_failed","url":"","publishedBuild":"ef36d8ba", …}` |
 | Never-block law | **both** runs exited **0** |
 | Snapshot is the deploy target | `[deploy] deploying snapshot /var/folders/cd/…/T//gold-rush-dist.7RpIRZ to Pages project 'gold-rush'…` |
 | Firewall | `scripts/deploy.sh` **only**, +32/−11, **zero `src/`** |
@@ -54,17 +54,17 @@ real one on `PATH` (`/tmp/gr-s1050-stub/wrangler`) reproducing the exact F-1049-
 against both versions of the script, back to back, on the same tree:
 
 ```
-BEFORE (pre-merge deploy.sh, main @ 4eab835d)
+BEFORE (pre-merge deploy.sh, main @ ef36d8ba)
 [deploy] deploying dist/ to Pages project 'gold-rush'…
 [deploy] DEPLOYED ok '(url in log)'
 exit 0
-{"outcome":"deployed","url":"","commit":"4eab835d…","ts":"2026-07-25T17:30:58Z"}
+{"outcome":"deployed","url":"","commit":"ef36d8ba…","ts":"2026-07-25T17:30:58Z"}
 
-AFTER (merged deploy.sh, lane/m4 @ 793c9f2f)
+AFTER (merged deploy.sh, lane/m4 @ 72d72f34)
 [deploy] deploying snapshot /var/folders/…/gold-rush-dist.7RpIRZ to Pages project 'gold-rush'…
 [deploy] FAILED: pages deploy — Uploading... (1335/3053) — see logs/deploy.log
 exit 0
-{"outcome":"deploy_failed","url":"","publishedBuild":"4eab835d","commit":"4eab835d…","ts":"2026-07-25T17:31:39Z"}
+{"outcome":"deploy_failed","url":"","publishedBuild":"ef36d8ba","commit":"ef36d8ba…","ts":"2026-07-25T17:31:39Z"}
 ```
 
 That is the whole slice in six lines: **the same nothing-was-published event, called a success before and
@@ -83,15 +83,15 @@ See **`## Real deploy` at the bottom of this file** — written after the upload
 
 ## Merge classification
 
-- **Base:** `286c2f48` — simultaneously the merge-base of `main` and `lane/m4` **and** the lane tip's
-  parent, and `git merge-base --is-ancestor 286c2f48 main` → **YES** (it is s1049's `ab528c3f` content).
-- **Real lane delta:** `git diff 286c2f48 793c9f2f` = **one file**, `scripts/deploy.sh`, +32/−11.
-- **Per-file:** `scripts/deploy.sh` = **LANE-TOUCHED only**. `git diff main:scripts/deploy.sh 286c2f48:scripts/deploy.sh`
+- **Base:** `e762dcdc` — simultaneously the merge-base of `main` and `lane/m4` **and** the lane tip's
+  parent, and `git merge-base --is-ancestor e762dcdc main` → **YES** (it is s1049's `fa975d53` content).
+- **Real lane delta:** `git diff e762dcdc 72d72f34` = **one file**, `scripts/deploy.sh`, +32/−11.
+- **Per-file:** `scripts/deploy.sh` = **LANE-TOUCHED only**. `git diff main:scripts/deploy.sh e762dcdc:scripts/deploy.sh`
   was **empty** — main's copy was byte-identical to the lane's base — so the graft
   (`git checkout lane/m4 -- scripts/deploy.sh`) is exact and no 3-way was needed.
 - **Phantom deletions:** the two-dot `git diff main lane/m4` lists 15 other files as deleted
   (`reviews/*`, `scripts/status-line1.mjs`, `tasks/*`, `STATUS.md`…). Those are **stale-base artifacts** —
-  main gained them after `286c2f48` and the lane never had them. Proven phantom by the parent..tip delta
+  main gained them after `e762dcdc` and the lane never had them. Proven phantom by the parent..tip delta
   touching exactly one file; **none materialised**, confirmed by the staged diff being `deploy.sh` alone.
 
 ---
@@ -142,15 +142,15 @@ A real deploy ran through the merged script: started `00:33:36`, **failed `00:49
 [deploy] FAILED: pages deploy — ✘ [ERROR] Failed to upload files. Please try again. Error: {})
          | 🪵  Logs were written to ".../wrangler-2026-07-25_17-33-36_612.log" — see logs/deploy.log
 exit 0
-{"outcome":"deploy_failed","url":"","publishedBuild":"00f5d464","commit":"00f5d464…","ts":"2026-07-25T17:49:02Z"}
+{"outcome":"deploy_failed","url":"","publishedBuild":"445ba24d","commit":"445ba24d…","ts":"2026-07-25T17:49:02Z"}
 
-expected build (publishedBuild) = 00f5d464
-[PRODUCTION alias] https://gold-rush-3in.pages.dev -> {"build":"49dbce7a","builtAt":"2026-07-24T17:20:23Z"}
+expected build (publishedBuild) = 445ba24d
+[PRODUCTION alias] https://gold-rush-3in.pages.dev -> {"build":"9fa96680","builtAt":"2026-07-24T17:20:23Z"}
 ```
 
 **This is the slice passing its real exam, not failing it.** The identical event one day earlier wrote
 `DEPLOYED ok '(url in log)'` and `outcome:"deployed"`. Today it wrote `deploy_failed` with an empty URL —
-and the *independent* production probe agrees with it: the alias still serves `49dbce7a` from
+and the *independent* production probe agrees with it: the alias still serves `9fa96680` from
 `2026-07-24T17:20:23Z`. **The script's verdict and the live site now say the same thing**, which is the
 entire point of F-1049-1 and could not be demonstrated by any test.
 
@@ -161,7 +161,7 @@ build from 2026-07-24. What changed is that the factory can no longer be fooled 
 the deployment-URL-vs-production-alias divergence could not be tested. My wrapper read the alias directly
 instead. The finding stands as written and still wants a successful deploy to settle it.
 
-**Cause, from wrangler's own log** (the breadcrumb the predecessor `ab528c3f` added — this is the second
+**Cause, from wrangler's own log** (the breadcrumb the predecessor `fa975d53` added — this is the second
 time it has paid for itself): `wrangler-2026-07-25_17-33-36_612.log` contains **9× `UND_ERR_HEADERS_TIMEOUT`**
 and 9× `fetch failed`, and **zero** auth failures. Same fingerprint as yesterday. F-1049-2 holds: **it is
 not auth, and `wrangler login` is still the wrong move.**

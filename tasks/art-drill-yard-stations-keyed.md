@@ -7,9 +7,9 @@ Style anchor (verbatim in every prompt): "engraved frontier illustration, warm s
 
 ## WHY
 All three Drill Yard station props are ACCEPTED on canon (LEDGER row 70, 3 of 3 after the
-s1446 retake `f6d8f766`) and **cannot be consumed by the wiring that is already on main.**
+s1446 retake `90f938ad`) and **cannot be consumed by the wiring that is already on main.**
 
-The consumer shipped at `a04ea810` (s1437, `lane-drill-yard-affordances`) and is dormant:
+The consumer shipped at `646e2d31` (s1437, `lane-drill-yard-affordances`) and is dormant:
 `src/game/DrillYard.ts:11-15` eagerly globs `../../assets/processed/prop-drill-faucet-station.png`,
 `prop-drill-bell-post.png` and `prop-straw-man-stand.png`; `applyStationArt()` at
 `src/game/DrillYard.ts:353` bails silently when the url is missing (`:355`), and on success builds
@@ -61,8 +61,8 @@ sprite*. Nothing is wrong with the drawings; the ground under them is wrong.
    - `assets/raw/prop-straw-man-stand.png`
    - `assets/raw/prop-drill-bell-post.png`
 
-   Overwriting loses nothing: the accepted bytes are already in git history (`e4359441` for the
-   two, `f6d8f766` for the bell post), which is where the RETENTION LAW keeps them.
+   Overwriting loses nothing: the accepted bytes are already in git history (`0c71b5ba` for the
+   two, `90f938ad` for the bell post), which is where the RETENTION LAW keeps them.
 
 2. **PREFER AN IMAGE-EDIT OF THE EXISTING FILE OVER A REGENERATION.** This is the important
    instruction in this master. Edit each accepted image so that **only the ground changes**: the

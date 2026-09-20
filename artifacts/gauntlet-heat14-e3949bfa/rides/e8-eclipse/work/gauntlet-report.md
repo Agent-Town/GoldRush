@@ -1,7 +1,7 @@
 # e8-eclipse — heat 14, era 6 ("the Re-surveyed Claims"), generation 110
 
 rig `claude__opus-5` · harness Claude Code CLI 2.1.272 · worldModel `sim-import`
-engine `540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068` · build `e3949bfad`
+engine `540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068` · build `6075db901`
 seed `e8-eclipse-01`, trail difficulty.
 
 ## Pre-ride reading (four minutes, and it set the whole plan)

@@ -23,7 +23,7 @@ Browser telemetry was stable across projects: Hero 6-speed vs 3-speed measured 2
 - `cast-motion-wiring`: 2/2, desktop + mobile, zero console/page errors.
 - Thief flee regression: 2/2, desktop + mobile; a focused cadence probe changed from 9.483 fps at 3.645 wu/s to the 7.6 fps floor at 1.35 wu/s. A stationary grab continues cycling at the same 7.6 fps floor instead of freezing.
 - `run-scene-animation-refresh` E1 outlaw sibling: 2/2, desktop + mobile.
-- `run-scene-animation-refresh` Hero canary: pre-existing red. The unchanged canary times out waiting for Hero walk8 on both this lane and a detached clean-main A/B at `a0f04241`; no gait-specific assertion is reached. Existing spec left untouched.
+- `run-scene-animation-refresh` Hero canary: pre-existing red. The unchanged canary times out waiting for Hero walk8 on both this lane and a detached clean-main A/B at `eaa3a160`; no gait-specific assertion is reached. Existing spec left untouched.
 
 Visual target: the scaled Hero should travel with readable leg phases, remain grounded, and avoid rapid foot churn. The clean 0–3 second desktop/mobile series shows stable grounding and distinct gait poses without the earlier Baron/dialog contamination; accepted for owner review.
 

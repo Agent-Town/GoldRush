@@ -1,9 +1,9 @@
 # Review — harness-receipts (HarnessDev rung A)
 
 - **Slice:** `tasks/harness-receipts.md` (lane-b, fire-authored ladder rung A)
-- **Branch / tip:** `lane/b` @ `4bde925558b2703ecec9a5f91b8ee279b6fbbb84` (`runner(lane-b): harness-receipts.md`)
-- **Gated commit:** `ad53a79b1b9ce2f0c9c8cd88c2ce95c75aeaf2f6` (detached worktree `gate-s2469`, §3.0b)
-- **Merge hash:** `efde47b1a2eff1442d714c3e56a887fdb53da5c5`
+- **Branch / tip:** `lane/b` @ `b3902ea57d7cb3136cc36fd9a1786d13fbab402e` (`runner(lane-b): harness-receipts.md`)
+- **Gated commit:** `2d05839f4704c84029aecfff7ac163df46afb478` (detached worktree `gate-s2469`, §3.0b)
+- **Merge hash:** `b1a5be3840d5fa87fba43c309062f82338a9ccc8`
 - **Drained by:** s2469, 2026-09-03
 - **VERDICT: MERGED.**
 
@@ -41,7 +41,7 @@ Zero console/page errors are asserted **in-spec**: the landing test collects pag
 
 ## Merge classification
 
-Base `c9b985b31`; 10 lane files, all **LANE-TOUCHED**. Four files conflicted against s2468's `cost-column`, which had moved the same surfaces hours earlier — every conflict purely additive, resolved as **UNION**:
+Base `f23b298af`; 10 lane files, all **LANE-TOUCHED**. Four files conflicted against s2468's `cost-column`, which had moved the same surfaces hours earlier — every conflict purely additive, resolved as **UNION**:
 
 | File | Resolution |
 |---|---|
@@ -50,7 +50,7 @@ Base `c9b985b31`; 10 lane files, all **LANE-TOUCHED**. Four files conflicted aga
 | `scripts/test-standings.mjs` | both assertion blocks kept |
 | `tasks/BACKLOG.md` | one row, both ladder annotations (A from lane, C from main) |
 
-Main then moved **during** the 28-minute battery (attended landed `e1ca7df14` transfer-board and `ab912168c` two masters — `specs/` and `tasks/` only). Rather than re-resolve, main was merged **into the gated commit**, and the code surface was proven byte-identical: `git diff ad53a79b1 HEAD -- src functions site scripts e2e public assets` is **EMPTY**. Main was then fast-forwarded, so what shipped is byte-identical to what was measured.
+Main then moved **during** the 28-minute battery (attended landed `e9848b7a9` transfer-board and `75d4bbeeb` two masters — `specs/` and `tasks/` only). Rather than re-resolve, main was merged **into the gated commit**, and the code surface was proven byte-identical: `git diff 2d05839f4 HEAD -- src functions site scripts e2e public assets` is **EMPTY**. Main was then fast-forwarded, so what shipped is byte-identical to what was measured.
 
 ## Findings
 

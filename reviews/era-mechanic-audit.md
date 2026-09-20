@@ -1,8 +1,8 @@
 # era-mechanic-audit — drain review (s2457)
 
 **Slice:** `era-mechanic-audit` (L1 of the ladder + story batch, attended 2026-09-02)
-**Branch:** `lane/d` · **gated commit:** `1e2ad5473` (`runner(lane-d): era-mechanic-audit.md`)
-**Base:** `3fd60db1e` · **Merge:** `9ba05ae60f6fb5398c13358d56ea837c7477dbdc`
+**Branch:** `lane/d` · **gated commit:** `4f960c21a` (`runner(lane-d): era-mechanic-audit.md`)
+**Base:** `d348c58cc` · **Merge:** `28e7984251d8263f8609058d8a5a9f330999654f`
 **Gated in:** detached worktree `gate-s2457` (§3.0b)
 
 ## Verdict
@@ -46,7 +46,7 @@ the file:line citations behind every table row, which I spot-checked against the
 
 ## Merge classification
 
-Base `3fd60db1e`; 34 files, +494, **−0**, no conflicts.
+Base `d348c58cc`; 34 files, +494, **−0**, no conflicts.
 
 | File class | Class | Resolution |
 |---|---|---|
@@ -54,10 +54,10 @@ Base `3fd60db1e`; 34 files, +494, **−0**, no conflicts.
 | `docs/audits/2026-09-02-era-mechanic-audit.md` | LANE-ONLY (new) | the audit itself |
 | `tasks/BACKLOG.md` | BOTH-MOVED | 1 added line; auto-merged, main's rows untouched |
 
-⚠️ **I gated and merged the PINNED COMMIT `1e2ad5473`, not the branch `lane/d`.** A live runner
+⚠️ **I gated and merged the PINNED COMMIT `4f960c21a`, not the branch `lane/d`.** A live runner
 holds that worktree (`human-tape-true-reel-stamp`, dispatched 22:18) and the branch ref can move
 under a gate. `main..lane/d` is therefore *not* expected to be empty, and that is not a false-ahead:
-the audit's content is on main, verified by `git merge-base --is-ancestor 1e2ad5473 main` → **YES**.
+the audit's content is on main, verified by `git merge-base --is-ancestor 4f960c21a main` → **YES**.
 
 **Custody note (Mistake #2, the Reset Massacre).** When I found this done-move, lane-d had already
 been refilled and its new master's pre-flight carries the F-1266-1 evidence-artifact exception —

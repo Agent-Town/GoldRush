@@ -16,10 +16,10 @@ conflicted paths, often none at all. Measured cost on this sweep:
 
 | commit | first pass said | truth (`--diff-merges=first-parent`) |
 |---|---|---|
-| `c41ba89de` | `review[NONE]`, 2 code files | `reviews/milk-twin-sockets.md` **+ `AtomicSocket.ts` + `DeepwaterSocket.ts` (340 new src lines) invisible** |
-| `d66bdbe35` | not surfaced at all | `reviews/milk-motor-socket.md` + `src/agent/MechanicsManifest.ts` |
-| `f315ecd2b` | not surfaced at all | `src/sim/E9ArsenalSocket.ts` |
-| `716f3e298` | not surfaced at all | `src/sim/E9CanalSocket.ts` |
+| `09ff7a198` | `review[NONE]`, 2 code files | `reviews/milk-twin-sockets.md` **+ `AtomicSocket.ts` + `DeepwaterSocket.ts` (340 new src lines) invisible** |
+| `346ce0463` | not surfaced at all | `reviews/milk-motor-socket.md` + `src/agent/MechanicsManifest.ts` |
+| `e73c459cd` | not surfaced at all | `src/sim/E9ArsenalSocket.ts` |
+| `79b6da0f2` | not surfaced at all | `src/sim/E9CanalSocket.ts` |
 
 Four of the seven absent commits — **the entire genuinely-interesting cluster** — were either invisible or
 mis-read as review-less on the first pass. A sweep that trusted it would have reported "nothing to see"
@@ -34,9 +34,9 @@ because the GZ-01 sweep is exactly the kind of hash-oriented walk that trips on 
 ## THE SEVEN ABSENT COMMITS, AND WHY EACH STAYS OUT
 
 ### 1–4. The era-socket cluster — SUBSTRATE, and proved so by the code, not by a guess
-`c41ba89de` (milk/twin-sockets — E5 `DeepwaterSocket` + E6 `AtomicSocket`) ·
-`d66bdbe35` (milk/motor-socket — E4 ORBIT road agent-visible) ·
-`f315ecd2b` (`src/sim/E9ArsenalSocket.ts`) · `716f3e298` (`src/sim/E9CanalSocket.ts`)
+`09ff7a198` (milk/twin-sockets — E5 `DeepwaterSocket` + E6 `AtomicSocket`) ·
+`346ce0463` (milk/motor-socket — E4 ORBIT road agent-visible) ·
+`e73c459cd` (`src/sim/E9ArsenalSocket.ts`) · `79b6da0f2` (`src/sim/E9CanalSocket.ts`)
 
 All four carry review files and land real new `src/` code, so they pass the mechanical half of the test.
 They fail the **player-visible** half, and the proof is a refusal written into the product code itself —
@@ -55,21 +55,21 @@ measured grounds. So **nothing became runnable** — not for a player, and
 not for an agent-operator sending a rig either. A roundup claiming "four eras came online" would have been
 the plausible, fluent, and **false** write-up; the allowlist is what refutes it.
 
-### 5. `c8807b4d2` — ALREADY ANNOUNCED, under a sibling hash
+### 5. `a98d38bdf` — ALREADY ANNOUNCED, under a sibling hash
 Headline reads `bench: prime-agent heat 1 …`, but the commit carries `renderFrontDesk()` — +99 CSS / +34 TS
 in `src/encyclopedia/reader.*` plus four `reviews/shots-fd1/` screenshots. That is the **Front Desk card**,
-and it *is* in the queue: item *"The county put a door on the front of the house"*, citing `c22738d0c`.
+and it *is* in the queue: item *"The county put a door on the front of the house"*, citing `786d39165`.
 
 The two commits are **35 seconds apart** (`13:50:07` and `13:50:42`) and split the same slice — a broad-add
 commit swallowed the fd1 work, then the commit named for it landed the rest. **The hash-grep says ABSENT;
 the content is fully announced.** Announcing it again would have double-reported one change to the owner.
 
-### 6. `c6b09a178` — no game change (already flagged by s1584's digest)
+### 6. `b9600fbb3` — no game change (already flagged by s1584's digest)
 `f1550-1`: `takeBuildRejectionDetail` moves to a zero-import leaf. Files by path, but nothing in the game
 changed — it took `npm test` from **0 back to 2,740 tests across 389 files**. s1584's TK-01 digest already
 records this as the day's path-counter over-report. Not news; a repair to the instrument.
 
-### 7. `d9cf62422` — a LATENT guard, not a reachable fix
+### 7. `94c978df7` — a LATENT guard, not a reachable fix
 `f1471-1` keys `objectiveAllowsSecure` on `powerGrid?.connect` rather than on any `powerGrid`, so beating
 the Baron can no longer silently fail to secure. **Reachability measured**, not assumed —
 `assets/contracts/epoch-3-voltage/contracts.json`, all four contracts:

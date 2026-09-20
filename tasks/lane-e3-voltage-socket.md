@@ -2,7 +2,7 @@ CODEX: model=gpt-5.6-sol effort=xhigh
 
 # lane-e3-voltage-socket — make E3's signature mechanic visible to agents (cures F-ER01-E3-1)
 
-**FIRE-AUTHORED s1466 (attended review welcome).** Second instance of the ERA-SOCKET class; the template is `tasks/lane-e2-pressure-socket.md`, which a fire (s1460) authored and which drained clean at `24c6600f` — read its review `reviews/e2-pressure-socket.md` before you start.
+**FIRE-AUTHORED s1466 (attended review welcome).** Second instance of the ERA-SOCKET class; the template is `tasks/lane-e2-pressure-socket.md`, which a fire (s1460) authored and which drained clean at `6fd24a3b` — read its review `reviews/e2-pressure-socket.md` before you start.
 
 ROLE: implementer on lane-a. WORKDIR: `worktrees/lane-a` (branch `lane/a`). Commit prefix `vsock:`. Never touch STATUS.md, reviews/, tasks/queue/, other lanes.
 
@@ -33,13 +33,13 @@ Expect **0**. If **≥1**, a power consumer is already socketed — STOP and rep
 
 ## WHY
 
-`docs/bench/e3-readiness-census.md` F-ER01-E3-1 (merged `0c4168a2`), verbatim:
+`docs/bench/e3-readiness-census.md` F-ER01-E3-1 (merged `9753ae46`), verbatim:
 
 > The browser constructs `PowerGraphSystem` from `twist.powerGrid` and samples the locked `dayNightCycle`, while `HeadlessContractSim` runs neither system. The derived manifest therefore advertises only build zones plus operation-less sentry/lantern fixtures, not the current that defines the contract. The attended fix master must add a deterministic Voltage socket and consumer-derived power/light vocabulary with real agent actions before Blackout Ridge enters `SUPPORTED_CONTRACTS`.
 
 The census records **AGENT-READY: 0 of 4** for E3 and **BROKEN: 0** — "all contract data loads; the gap is the absent era socket, not malformed data." This is the same shape the E2 socket cured for Steamworks. Every epoch's signature mechanic needs exactly this slice before its agents can play; E3's is Voltage.
 
-ⓘ *On "the attended fix master": the E2 census used that identical phrasing for F-ER01-1/-3, and s1460 (a fire) authored `lane-e2-pressure-socket` against it anyway; it drained at `24c6600f` with a review. The phrase is census boilerplate meaning "not ER-01's job", not an owner gate. Verified s1466.*
+ⓘ *On "the attended fix master": the E2 census used that identical phrasing for F-ER01-1/-3, and s1460 (a fire) authored `lane-e2-pressure-socket` against it anyway; it drained at `6fd24a3b` with a review. The phrase is census boilerplate meaning "not ER-01's job", not an owner gate. Verified s1466.*
 
 ## READ-FIRST
 

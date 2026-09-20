@@ -1,7 +1,7 @@
 # AP-06b — standing-orders adapter wiring (BUILD + HARVEST reach the world)
 
 **Slice:** `ap-orders-adapter-wiring.md` (F-1212-3 corrective, fire-authored s1215)
-**Branch/tip:** `lane/e2-arsenal` @ `2f216af0` — base `90c54abc`
+**Branch/tip:** `lane/e2-arsenal` @ `2f216af0` — base `57ddd8dd`
 **Drained by:** s1217 fire, 2026-07-29
 **VERDICT: 🔴 NOT MERGED — BLOCKED ON F-1217-1.** The wiring itself is correct and its own evidence is genuinely good. It is blocked because merging it turns **6 test executions across 3 adjacent specs from green to red on main**, and a matched control proves **this slice is the cause**. The runner reported those failures as *"stale pre-wiring expectations … outside the task firewall"* and did not report that its slice **adds a visible ability row to the player's Prospector panel**.
 
@@ -19,14 +19,14 @@ Plus 146 lines extending `e2e/ap-standing-orders.spec.ts` with two new tests. **
 
 ## Merge classification
 
-Real delta vs base `90c54abc` is **2 files, +192/−0** (`src/game/Game.ts`, `e2e/ap-standing-orders.spec.ts`). The large deletion counts in a three-dot diff are stale-base phantoms — the branch is 60 behind.
+Real delta vs base `57ddd8dd` is **2 files, +192/−0** (`src/game/Game.ts`, `e2e/ap-standing-orders.spec.ts`). The large deletion counts in a three-dot diff are stale-base phantoms — the branch is 60 behind.
 
 | File | Class | Handling |
 |---|---|---|
 | `e2e/ap-standing-orders.spec.ts` | LANE-TOUCHED only | main never moved it since base — direct copy |
 | `src/game/Game.ts` | **BOTH MOVED** | 3-way graft, verified both directions |
 
-The graft was performed and verified before gating: `git merge-file` returned **0 conflicts**, and `diff` of the grafted file against the lane's own version showed **exactly main's `b5cb6c60` seed/`seedMode` hunk at `:5552` and nothing else**. Lane's hunk sits at `:2055`, main's at `:5506` — fully disjoint. The graft is not the problem; it was clean. **All gates below ran on the grafted tree.**
+The graft was performed and verified before gating: `git merge-file` returned **0 conflicts**, and `diff` of the grafted file against the lane's own version showed **exactly main's `36e6c1b7` seed/`seedMode` hunk at `:5552` and nothing else**. Lane's hunk sits at `:2055`, main's at `:5506` — fully disjoint. The graft is not the problem; it was clean. **All gates below ran on the grafted tree.**
 
 ## Evidence
 

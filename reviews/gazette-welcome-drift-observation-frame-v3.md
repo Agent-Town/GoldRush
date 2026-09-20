@@ -1,7 +1,7 @@
 # Review — gazette-welcome-drift-observation-frame-v3
 
 **Slice:** `gazette-welcome-drift-observation-frame-v3` (lane-b) · **Branch:** `lane/m4` · **Tip:** `81a9b428 test: measure Gazette newsie drift in-page`
-**Base:** `90b0c65b` (merge-base with main) · **Drained:** s1296, 2026-07-31
+**Base:** `8bdd9e90` (merge-base with main) · **Drained:** s1296, 2026-07-31
 **Task master:** `tasks/lane-b-gazette-welcome-drift-observation-frame-v3.md` (FIRE-AUTHORED s1293, attempt 3)
 
 ## Verdict
@@ -22,7 +22,7 @@ The bound is now a **guarantee rather than a hope**, and the arithmetic is carri
 
 ## Merge classification
 
-`node scripts/lane-freeze-classify.mjs lane/m4` → `ahead=1 base=90b0c65b paths=1`:
+`node scripts/lane-freeze-classify.mjs lane/m4` → `ahead=1 base=8bdd9e90 paths=1`:
 
 | bucket | count | detail |
 |---|---|---|
@@ -35,7 +35,7 @@ The two-dot `git diff --stat main lane/m4` shows 48 files / −1433 lines. **Tha
 
 ## Custody
 
-Gated in a **detached worktree** (`/Users/robin/Claude/Projects/gr-s1296-gate`, detached at `aada0e4e`), never in main's working tree — the free cure adopted at the end of s1295 after **F-1295-1**, where a concurrent attended session's broad `git add` swept a deliberately-HELD slice onto main because it had been checked into main's tree in order to gate it. Main's tree held foreign content only between the final checkout and the commit.
+Gated in a **detached worktree** (`/Users/robin/Claude/Projects/gr-s1296-gate`, detached at `8e021ff8`), never in main's working tree — the free cure adopted at the end of s1295 after **F-1295-1**, where a concurrent attended session's broad `git add` swept a deliberately-HELD slice onto main because it had been checked into main's tree in order to gate it. Main's tree held foreign content only between the final checkout and the commit.
 
 ## Evidence
 

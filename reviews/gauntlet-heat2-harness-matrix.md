@@ -1,7 +1,7 @@
 # Review — gauntlet-heat2-harness-matrix (s2270 drain 3)
 
-**Slice:** `gauntlet-heat2-harness-matrix` · **Branch:** `lane/d` · **Tip:** `0ac6030f7157a297afa8a6294c89832cd289280c`
-**Merged to main at:** `a7e09690dc37c7ea699c4ae98d99c787a15b0ba8` (fast-forward of the gated commit)
+**Slice:** `gauntlet-heat2-harness-matrix` · **Branch:** `lane/d` · **Tip:** `b9d257ca471c60abf4e63951bd286a97316b3cf4`
+**Merged to main at:** `869ee7581ff851f56af0f6f89075b8b50ea122e4` (fast-forward of the gated commit)
 **Gate worktree:** `.gate-s2270` (detached, §3.0b)
 
 ## VERDICT: MERGE — a heat that scored zero and is worth more than the one that scored two.
@@ -9,7 +9,7 @@
 ## What it does
 
 Three guest harnesses ride the public door on the same seeds as heat-1, at the same deployed build
-`b42c0fbcc`. **35 launches · 29 terminal tapes · 1 locally secured outcome · 0 accepted submissions ·
+`3e383b2fa`. **35 launches · 29 terminal tapes · 1 locally secured outcome · 0 accepted submissions ·
 0 verified standings.** The operator explicitly did not author any rider's standing orders and is
 declared in no rider stack — which is the whole point: this measures ap-15's **operability** axis,
 whether a stranger's harness can set itself up from `skill.md` alone.
@@ -49,7 +49,7 @@ visitor sees is byte-identical before and after. Filing news for it would be rep
 
 ## Merge classification
 
-Base `797ec034d` + tip `0ac6030f7`, one **conflict**, in `tasks/BACKLOG.md` only — both sides
+Base `571f2cb71` + tip `b9d257ca4`, one **conflict**, in `tasks/BACKLOG.md` only — both sides
 appended a row at the file tail (main: `E10S-1c EMBER SHORE`; lane: its `HEAT 2` row). Resolved
 **keeping both**, verified after resolution that all three of `E10S-1c`, `HEAT 2` and my own
 `F-2270-3` survive. `git log main..lane/d` is **empty**.

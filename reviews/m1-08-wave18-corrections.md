@@ -44,7 +44,7 @@ All three product-owner findings fixed with evidence. **No game-code findings.**
 
 ## Wave-23 corrections — PASS (s8, 2026-07-04)
 
-Robin's wave-23 findings folded into the same slice. Implementer: Codex `019f2a21-ea23-7a82-b7f8-03ffb91878cd` (low-reasoning mechanical remedy after an initial write-livelock). Supervisor closed 2 test-authoring gaps + added one harness hook (permitted classes). Commits: wave18 `adfb1bc`, wave23 `12af31e`, + harness/evidence follow-up.
+Robin's wave-23 findings folded into the same slice. Implementer: Codex `019f2a21-ea23-7a82-b7f8-03ffb91878cd` (low-reasoning mechanical remedy after an initial write-livelock). Supervisor closed 2 test-authoring gaps + added one harness hook (permitted classes). Commits: wave18 `680f7be`, wave23 `bb6bc63`, + harness/evidence follow-up.
 
 ### Verdict
 All three wave-23 findings fixed with evidence. Surgical diff (UpgradeOverlay −43 lines, theme.css slimmed). No game-code review findings.

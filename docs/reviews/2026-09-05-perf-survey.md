@@ -1,6 +1,6 @@
 # Gold Rush performance survey — 2026-09-05
 
-**Slice** perf-optimization-survey · **branch** `lane/b` · **base** `5f1cc3cea` · **salvage tip** `b50676bd8`
+**Slice** perf-optimization-survey · **branch** `lane/b` · **base** `44efbf3d6` · **salvage tip** `afc37ce35`
 **Verdict — SURVEY COMPLETE WITH NAMED GAPS.** No game code changed. 40 of 42 board contracts plus
 the town measured structurally; three E10 contracts cannot be launched at all (F-PERF-11) and one of
 them, `e10-last-claim`, measured fine. **Every frame-timing number taken during the census is
@@ -561,17 +561,17 @@ owning module is **not identified**; that needs a heap-snapshot diff and is a na
 
 ## 8. Cross-reference: what the Astra wave already covers, so nothing is double-counted
 
-Measured build is `5f1cc3cea`. Verified by content, not by commit message:
+Measured build is `44efbf3d6`. Verified by content, not by commit message:
 
 | Astra fix | in the measured build? | how the survey relates |
 |---|---|---|
 | asset-diet explicit manifest (F-ASTRA-3) | ✅ `scripts/asset-diet.manifest.json` present | The 377 MB / 4,708-file build in §5 is **post-diet**. Not re-litigated. |
 | shared atlas / texture dedupe (F-ASTRA-4) | ✅ `SharedAtlasCache` in `src/assets/AssetLoading.ts` | The 89–215 MB residency of F-PERF-5 is **after** the dedupe. The remaining bulk is boss sprite sheets, not landmark atlases. |
-| bounded prefetch (F-ASTRA-5) | ✅ base `5f1cc3cea` *is* its lane commit | Measured: prefetch-only traffic is 0–2.8 MB per map (§5), no longer unbounded. Not re-litigated. |
+| bounded prefetch (F-ASTRA-5) | ✅ base `44efbf3d6` *is* its lane commit | Measured: prefetch-only traffic is 0–2.8 MB per map (§5), no longer unbounded. Not re-litigated. |
 | batch opaque repetitions (F-ASTRA-6) | n/a — a suggestion, not a merge | Astra asked for "a current census showing meaningful off-camera work" before spatial chunking. **F-PERF-4 is that census.** It extends F-ASTRA-6; it is not a new finding. |
-| terrain triangle sampler (F-ASTRA-10) | ✅ `cf91fe5e9` is an ancestor | F-PERF-12 measures the *topology* question F-ASTRA-10 left open (what a coarser grid costs), not the sampler. |
+| terrain triangle sampler (F-ASTRA-10) | ✅ `c3884d89d` is an ancestor | F-PERF-12 measures the *topology* question F-ASTRA-10 left open (what a coarser grid costs), not the sampler. |
 | Lantern world stage (F-ASTRA-11) | ✅ `src/world/LanternWorldStage.ts` present | Untouched by this survey. |
-| landmark lighting calibration (F-ASTRA-9) | ❌ **NOT in the measured build** — `ab3704716` is not an ancestor of `5f1cc3cea`; `?lighting=legacy` is absent | Any lighting-related draw-call or program count here predates that merge and must be re-taken before it is trusted. |
+| landmark lighting calibration (F-ASTRA-9) | ❌ **NOT in the measured build** — `a05abdf1d` is not an ancestor of `44efbf3d6`; `?lighting=legacy` is absent | Any lighting-related draw-call or program count here predates that merge and must be re-taken before it is trusted. |
 | phone + delivery evidence (F-ASTRA-12) | open | §5 is headless Chromium on an M4 Max with CDP throttling — **not a phone**. It narrows F-ASTRA-12; it does not close it. |
 
 ---

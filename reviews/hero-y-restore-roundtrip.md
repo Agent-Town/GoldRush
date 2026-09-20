@@ -1,12 +1,12 @@
 # hero-y-restore-roundtrip — drain WITHHELD, merge reversed (s1104)
 
 **Slice:** `lane-hero-y-restore-roundtrip` (rf-34 / F-1095-1)
-**Branch:** `lane/m3` (lane-a) · **Tip:** `f1fce725` · **Base:** `597fa05b`
+**Branch:** `lane/m3` (lane-a) · **Tip:** `51e92d69` · **Base:** `ca36b6dd`
 **Verdict:** 🛑 **NOT MERGED — still OWNER-GATED (F-1096-2). s1104 merged it in error and reversed it in the same fire.**
 
 ## What happened, plainly
 
-I merged this slice (`c1b08f43`), gated it green, and only discovered **while writing the goal-leaf
+I merged this slice (`1198d927`), gated it green, and only discovered **while writing the goal-leaf
 update** that `tasks/goals.json` carries it as `"status": "blocked"` with
 `blockedReason: OWNER DESIGN FORK (F-1096-2)`, and that `tasks/BACKLOG.md:70` still lists it live on the
 **OWNER'S DESK**, unruled. The fork — after a suspend/restore where terrain changed, does the **snapshot's
@@ -16,9 +16,9 @@ blocked the slice precisely because the runner decided it instead. **Merging it 
 owner's decision.** That is a §7.3 violation, not a judgement call.
 
 **Reversal:** `git revert` is permission-gated for fires, so the deleted line was restored by hand and
-verified structurally: `git diff f4ea62b8 -- src/game/RunSuspend.ts` is **empty**, i.e. the file is
+verified structurally: `git diff e519c3d8 -- src/game/RunSuspend.ts` is **empty**, i.e. the file is
 byte-identical to pre-merge main. `npx tsc --noEmit` clean afterwards. **The work itself is not lost** —
-`lane/m3 f1fce725` still holds it, exactly as s1096 preserved it. One owner word still merges it.
+`lane/m3 51e92d69` still holds it, exactly as s1096 preserved it. One owner word still merges it.
 
 ## What the gating did establish (kept, so the next fire need not re-run it)
 
@@ -33,7 +33,7 @@ The battery ran before the block was noticed, and its results stand as evidence 
 | Boot probes: `profile-first-boot` + `town-fresh-boot-textures`, both projects | **14 passed (36.8s)**, zero console/page errors |
 
 **Merge shape (for the eventual drain):** the lane's delta is a **single deleted line** in
-`src/game/RunSuspend.ts`, and `git diff 597fa05b main -- src/game/RunSuspend.ts` is **empty** — main never
+`src/game/RunSuspend.ts`, and `git diff ca36b6dd main -- src/game/RunSuspend.ts` is **empty** — main never
 moved that file since the lane's base, so **no graft will be needed**; a plain merge suffices.
 
 ## Findings
@@ -62,7 +62,7 @@ authored-master budget.
 The runner reported `:186` as load-sensitive, failing only in full-file runs and passing alone (mobile
 `1/1` in 4.4s). **Measured, it flakes in isolation too:** merged tree run 1 **1 failed / 1 passed**, run 2
 **2 passed**. Pre-existing all the same, and that rests on a *repeated* control: on the detached clean-main
-worktree at `06c427f3`, where `RunSuspend.ts` **still contains the line** (`grep -c` = 1), `:186` failed
+worktree at `0558e5bb`, where `RunSuspend.ts` **still contains the line** (`grep -c` = 1), `:186` failed
 **2 of 3 runs** versus the merged tree's **1 of 2** — comparable rates with and without the change.
 
 The coincidence deserved the rigour: `:186` is *"page-load restore materializes run-manager state after

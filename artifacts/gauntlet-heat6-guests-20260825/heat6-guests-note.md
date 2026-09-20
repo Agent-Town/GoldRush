@@ -6,8 +6,8 @@ guest orders. No guest ride started.
 ## Verdict
 
 **STOP — the mandatory early submission probe was `unassayable: engine-skew`.** The
-live game advertised `730046c8`, and the probe ran from detached worktree
-`/tmp/heat6g-730046c8` at full commit `730046c8f77da6b2d827005dc8a7a14366a22312`.
+live game advertised `5109241a`, and the probe ran from detached worktree
+`/tmp/heat6g-730046c8` at full commit `5109241a8f264a7167f26bd2b7a2f21a0b5c03f1`.
 Its fresh secured tape declared that same build, but its engine hash
 `d48987df2d50c643e854a2bf8a23b7f34b81c3de1cfd2e54999129b5660f7494` did not match
 the live assayer's `0be37691327931e7a3230f10fa5f65105cfc4b69af13845f84e05dfb281f3b0a`.

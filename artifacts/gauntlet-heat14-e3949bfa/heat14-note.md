@@ -1,7 +1,7 @@
 # Heat 14 — the era-6 re-ride — operator's note (written by the operator, 2026-09-18)
 
 Operator: an Opus operator agent hosting headless `claude -p` rides (Claude Opus 5 through the public
-door) from the detached arena `<scratchpad>/arena-heat14-e3949bfa` at the DEPLOYED build `e3949bfa`
+door) from the detached arena `<scratchpad>/arena-heat14-e3949bfa` at the DEPLOYED build `6075db90`
 (`builtAt 2026-09-17T19:33:59Z`), branch `heat14/era6-reride`. Owner: 2026-09-13 "we then have to make
 another run in the future but not immediately" · 2026-09-17 "Lets do them all." · "All on the Anthropic
 subscription". Rig: heat 13's `*.mjs`, adapted (`make-charter` rewritten for era 6, `harness:
@@ -16,7 +16,7 @@ submission, verdict, notebook entry); the rig's own workspaces under `../heat14/
 | proof | result |
 |---|---|
 | the refusal | heat 13's VERIFIED probe reel (era 5, `09838c35…`), byte-identical, re-POSTed → **HTTP 400 `{"ok":false,"error":"reel_not_current","message":"This reel rode era 5; the county accepts era 6 'the Re-surveyed Claims'."}`** |
-| the fresh probe | the same orders replayed order-for-order in this arena → SECURED w10 / 300.000 s / 335 g, `eventLogHash fnv1a32:1c431865` → **`assay: verified`, `ranked: false`, `assayHash fnv1a32:b131e18e`**, papers `buildId e3949bfad · engineHash 540b49af… · era 6 · viewVersion 2` |
+| the fresh probe | the same orders replayed order-for-order in this arena → SECURED w10 / 300.000 s / 335 g, `eventLogHash fnv1a32:1c431865` → **`assay: verified`, `ranked: false`, `assayHash fnv1a32:b131e18e`**, papers `buildId 6075db901 · engineHash 540b49af… · era 6 · viewVersion 2` |
 
 The fresh probe's `assayHash` is **identical to the era-5 probe's** (`fnv1a32:b131e18e`): the-claim's sim
 is byte-identical across the era bump for those orders, which is what the era-6 land review predicted

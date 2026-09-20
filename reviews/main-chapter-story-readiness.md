@@ -2,11 +2,11 @@
 
 ## Slice, base and tip
 
-Task `tasks/main-chapter-story-readiness.md`; completed MAIN output `20260907-172449-main-chapter-story-readiness.md`. Saved implementation `83f1429f6ff2dc26254f0c18225466991b6454ea` was applied onto current main `c688652ae051694761a47f80e874b168418eec04` in `/private/tmp/gr-gate-s2540`, producing `fd1404c773b87ff3973d372d172380f6e03b6ef9`. The integration base includes s2539's M2 input-readiness corrective.
+Task `tasks/main-chapter-story-readiness.md`; completed MAIN output `20260907-172449-main-chapter-story-readiness.md`. Saved implementation `83f1429f6ff2dc26254f0c18225466991b6454ea` was applied onto current main `e4137d435c159497ed225cd6b075d81d9b7e1815` in `/private/tmp/gr-gate-s2540`, producing `8501796fc79988c2e9fff6011e36563f8794b2ab`. The integration base includes s2539's M2 input-readiness corrective.
 
 ## Verdict
 
-ACCEPTED — merged as `985db2d33b22121a3a6d2b47628666e05116031e`. This supersedes the s2538 hold and s2539 pending-gates status. F-2537-1 is closed. The two unrelated M1 failures are reproduced on unchanged main and do not block this test-only drain.
+ACCEPTED — merged as `7c6ecd500810caf1a9e7255a8aea0df35b8cb695`. This supersedes the s2538 hold and s2539 pending-gates status. F-2537-1 is closed. The two unrelated M1 failures are reproduced on unchanged main and do not block this test-only drain.
 
 ## What it does
 

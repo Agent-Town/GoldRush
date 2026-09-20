@@ -1,7 +1,7 @@
 # Review — cosmetic-grants (the county pays honest eyes)
 
 **Slice:** lane-cosmetic-grants · **Branch:** `lane/perf` · **Lane tip:** `fadbe5bd`
-**Merged to main:** `52fa15ad` · **Drained by:** s1079 fire, 2026-07-26
+**Merged to main:** `2dfa0b4d` · **Drained by:** s1079 fire, 2026-07-26
 **Graft base:** `99baab74..fadbe5bd` (the lane tip's OWN delta only)
 
 ## Verdict
@@ -20,7 +20,7 @@ land whenever (placeholder-first law). Codes are minted operator-side by `script
 (`npm run mint:prizes`), token-gated.
 
 ## Merge classification
-Merge-base `1cc8bce3`. The lane carries **two** commits; only the tip was taken.
+Merge-base `4c2ebb12`. The lane carries **two** commits; only the tip was taken.
 
 | Bucket | Files | Handling |
 |---|---|---|
@@ -28,7 +28,7 @@ Merge-base `1cc8bce3`. The lane carries **two** commits; only the tip was taken.
 | **MAIN-MOVED → hand 3-way** | `package.json`, `src/ui/ComplaintDesk.ts` | resolved per-hunk, below |
 | **EXCLUDED** | `scripts/deploy.sh`, `scripts/test-deploy-contract.sh` | belong to the **archived parent** `99baab74`, not to the tip |
 
-**`scripts/deploy.sh` is FORBIDDEN off any lane (F-1073-1).** It appears in `git diff 1cc8bce3 lane/perf`
+**`scripts/deploy.sh` is FORBIDDEN off any lane (F-1073-1).** It appears in `git diff 4c2ebb12 lane/perf`
 — i.e. in the whole-branch view — which is exactly how it would have slipped in. It is **absent** from
 `git diff 99baab74 fadbe5bd`. Grafting the tip's own delta rather than the branch is what kept it out;
 the archived parent is preserved at `archive/lane-perf-99baab74`.
@@ -37,7 +37,7 @@ the archived parent is preserved at `archive/lane-perf-99baab74`.
 added `mint:prizes` after `test:accounts`. Both kept.
 
 **`src/ui/ComplaintDesk.ts`** — the load-bearing resolution. The lane branched **before** s1078 landed the
-**API SPLIT LAW** (`5b61349e`), so the lane's copy still calls `fetch('/api/bug-report')` raw while main
+**API SPLIT LAW** (`50acfeff`), so the lane's copy still calls `fetch('/api/bug-report')` raw while main
 calls `fetch(gameApiUrl('/api/bug-report'))`. A blind copy of the lane file would have **silently reverted
 a merged law** (Mistake #15, stale-base shape). Resolution:
 1. main's `gameApiUrl` import and its `/api/bug-report` call site — **kept**;

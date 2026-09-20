@@ -2,9 +2,9 @@
 
 **Slices:** `f1448-1-crossings-keep-the-hero-out-of-it` + `f1441-2-crossings-keep-their-z`
 **Branch:** `lane/e2-arsenal` (lane-c)
-**Tip:** `e788fc19d9618e187b6ff4e511dec6ccfde75f5b` over `5c27a1b5cedfe3ff64ba0bb3b5c130f8d4f4d44b`
-**Base:** `b3d24dd804046370cc3196c09e54181a4459d28c`
-**Merge:** `65e3aaec` (main)
+**Tip:** `4e2d9d0ea81a3b4d3e70390e7c645601cc48c9e5` over `a26454d4ce4a18ba71d334795d92a141e4a16c9c`
+**Base:** `d2d88b2b60ea8a037703fed6d25456a01a56569d`
+**Merge:** `42d0b2b1` (main)
 **Gated by:** s1450 fire, 2026-08-04. Predecessor gate for f1441-2: `reviews/f1441-2-crossings-keep-their-z.md` (s1448).
 
 ## VERDICT: MERGED — both slices
@@ -62,8 +62,8 @@ Same 6 specs, same 58 tests, same `--workers=1`, same shell, same hour:
 
 | Arm | reds | `gt-05-water-depth.spec.ts:181` |
 |---|---|---|
-| clean main (`69ac4d92`) | **8** | **GREEN** |
-| merged tree (`65e3aaec`) | **8** | **GREEN** |
+| clean main (`6f3f4033`) | **8** | **GREEN** |
+| merged tree (`42d0b2b1`) | **8** | **GREEN** |
 
 The eight are identical **by name** on both arms — `064-river-continues.spec.ts:104` and
 `e1-night-shift.spec.ts:{271,372,435}`, each on both projects. s1448 measured the pre-cure lane at
@@ -92,7 +92,7 @@ merely in flag.*
 
 ### The gr-sim re-pins — exactly three, verified by diff
 
-`git diff 69ac4d92 HEAD -- scripts/gr-sim.test.mjs` is **exactly** the three pins the review
+`git diff 6f3f4033 HEAD -- scripts/gr-sim.test.mjs` is **exactly** the three pins the review
 promised, all inside the single test *'Twin Banks consumes its declared crossings and build zones
 before securing'*: CLI `eventLogHash bdd90123 → 80c5cae4`, headless `kills 176 → 202`, headless
 `eventLogHash d5895547 → 5aeceb84`. **No fourth pin moved**, and gr-sim is 9/9 — so the Claim, Night
@@ -100,7 +100,7 @@ Shift and Baron maps still hash to their original values. This is the condition 
 
 ### Merge classification
 
-Base `b3d24dd8`. `git diff --stat b3d24dd8 main -- <the four lane-touched code paths>` is **empty** —
+Base `d2d88b2b`. `git diff --stat d2d88b2b main -- <the four lane-touched code paths>` is **empty** —
 main moved **none** of `src/entities/Enemy.ts`, `src/world/Terrain.ts`, `scripts/gr-sim.test.mjs`,
 `e2e/twin-banks-never-wedged.spec.ts`. All **LANE-TOUCHED only**; `ort` applied with no conflicts.
 `e2e/twin-banks-never-wedged.spec.ts` is a pure add. The remaining 30-odd paths are regenerated

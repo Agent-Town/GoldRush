@@ -1,6 +1,6 @@
 # Review — process-e2-building-art
 
-- **Slice/branch/tip:** `process-e2-building-art` · `lane/e2-arsenal` (lane-c worktree) · tip **e62bd4a3** (`runner(lane-c): process-e2-building-art.md`, parent 87c9c569)
+- **Slice/branch/tip:** `process-e2-building-art` · `lane/e2-arsenal` (lane-c worktree) · tip **39196e81** (`runner(lane-c): process-e2-building-art.md`, parent 689865d7)
 - **Drained by:** s440 fire, 2026-07-12 (LOCAL +07)
 - **Verdict:** ✅ MERGE — gates green, no gameplay invented, canon-clean.
 
@@ -19,7 +19,7 @@ Processes the E2 (Steamworks) building-art raws into the live build-menu + resea
 Buildings readable at 384px; no visible letters, firearms, or gore; magenta keys clean in extracted icon/rail cells (runner self-QA + review confirmed via screenshots).
 
 ## Merge classification
-Merge base = **87c9c569** (on main). Main's only extra commit over base = **a89680e5** (`runner(art): art-kit-era-1.md`), which touched **only** `logs/.blocked-seen` + `logs/dashboard.html` (health churn). All slice src/assets/e2e/artifacts files changed on the LANE side only → merged clean. The two `logs/` churn files (both-sides-modified) resolved with `-X ours` (kept main's; they regenerate). No src/assets conflicts. Merge retires the branch (`main..lane/e2-arsenal` now empty).
+Merge base = **689865d7** (on main). Main's only extra commit over base = **a89680e5 (archive: pruned by the A3 rewrite)** (`runner(art): art-kit-era-1.md`), which touched **only** `logs/.blocked-seen` + `logs/dashboard.html` (health churn). All slice src/assets/e2e/artifacts files changed on the LANE side only → merged clean. The two `logs/` churn files (both-sides-modified) resolved with `-X ours` (kept main's; they regenerate). No src/assets conflicts. Merge retires the branch (`main..lane/e2-arsenal` now empty).
 
 ## Findings
 - **F-1 (non-blocking, documented):** Adjacent battery has a pre-existing red at `e2-hill-mine.spec.ts:311` (water-route `ratio = Infinity`) — disjoint from this slice's touched files (hill-mine water routing), flagged by the runner report as pre-existing; not caused here. Left for its own corrective.

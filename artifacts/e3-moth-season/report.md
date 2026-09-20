@@ -1,7 +1,7 @@
 # e3-moth-season-grid — implementation report
 
 Slice: `tasks/e3-moth-season-grid.md` (the L1 RESKIN ladder, wave 2).
-Lane: `lane/a`, worktree `worktrees/lane-a`, base `57330ebfd`.
+Lane: `lane/a`, worktree `worktrees/lane-a`, base `7dc8672f0`.
 
 ## Verdict
 
@@ -158,7 +158,7 @@ secures at wave 12 (`fnv1a32:e16244f9`); idle still dies at wave 4.
 Gates ran against a scratch dev server on port 5241 (5188 was already held by another writer), per
 the scratch-port discipline in `CLAUDE.md` Mistake #12.
 
-### Red attribution (control = detached worktree of `main` at the base commit `57330ebfd`, never `git stash`)
+### Red attribution (control = detached worktree of `main` at the base commit `7dc8672f0`, never `git stash`)
 
 | Red | Control | Verdict |
 |---|---|---|

@@ -1,7 +1,7 @@
 # tl-03-window-3-quiet-wire-honesty — "the wire is quiet" now means the wire IS quiet
 
 **Slice:** `lane-a-tl-03-window-3-quiet-wire-honesty` (FIRE-AUTHORED s1043) · **Branch:** `lane/m3` ·
-**Tip:** `428c01d5` · **Base:** `ab7cba01` (= merge-base) · **Drained:** s1043 fire (drain #2), 2026-07-25
+**Tip:** `428c01d5` · **Base:** `2c5ad61f` (= merge-base) · **Drained:** s1043 fire (drain #2), 2026-07-25
 
 ## Verdict
 **MERGE — GREEN, and this one is proved by the world rather than by its tests.** Closes **F-1043-2(a)** and
@@ -37,7 +37,7 @@ spine already ratified rather than inventing a third variant:
 | **Mutation control** (defect re-introduced by me) | **RED as required**: `AssertionError: empty office is not a quiet wire`, `actual: 'the wire is quiet.'` vs `expected: 'the office opens with the first assay.'`, exit 1 |
 | Guard restored | harness green; delta back to **+61/−11, 2 files**, byte-exact |
 | `e2e/m1-01-claim-jumpers-death.spec.ts` | **8/8** desktop + mobile-chrome, 27.1 s, zero console |
-| **LIVE before/after (the acceptance evidence)** | at `5227409f`: `the wire is quiet.` → on merged main: **`the office opens with the first assay.`** — same endpoint, same fire, ~30 min apart |
+| **LIVE before/after (the acceptance evidence)** | at `a30661bf`: `the wire is quiet.` → on merged main: **`the office opens with the first assay.`** — same endpoint, same fire, ~30 min apart |
 
 The live endpoint state that makes the before/after meaningful, measured this fire:
 `GET https://gold-rush-3in.pages.dev/api/stats` → **HTTP 200**, `{"ok":true,"empty":true,…"allTime":0}`.
@@ -45,13 +45,13 @@ The live endpoint state that makes the before/after meaningful, measured this fi
 ## Riders from the master — all three discharged by running, not reading
 1. **"The report must paste the live before/after; a test-only diff that cannot show the flip has missed the
    point."** ✅ I ran **both versions** against the real endpoint myself (the shipped one via
-   `git show 5227409f:scripts/ticker-stats.mjs`, earlier in this same fire): `the wire is quiet.` →
+   `git show a30661bf:scripts/ticker-stats.mjs`, earlier in this same fire): `the wire is quiet.` →
    `the office opens with the first assay.` **Real behaviour changed, not just an assertion.**
 2. **"The scope-5d control must be shown RED, not asserted green."** ✅ I re-introduced the shipped defect
    (`if (payload.empty) return QUIET_LINE;`) and the harness failed with the case named in plain English —
    `empty office is not a quiet wire` — then restored to byte-exact green.
 3. **"Confirm `liveStats.ts` was READ, not edited — `git show --stat` must be the two scripts only."**
-   ✅ `git diff --stat ab7cba01 lane/m3` = exactly `scripts/ticker-stats.mjs` + `scripts/test-ticker-stats.mjs`
+   ✅ `git diff --stat 2c5ad61f lane/m3` = exactly `scripts/ticker-stats.mjs` + `scripts/test-ticker-stats.mjs`
    (+61/−11). No `src/`, no `functions/`, no `site/`, no `package.json`. The firewall held completely.
 
 ## Classification / merge
@@ -60,7 +60,7 @@ The live endpoint state that makes the before/after meaningful, measured this fi
 | `scripts/ticker-stats.mjs` | **LANE-TOUCHED** only | path-scoped checkout, byte-exact |
 | `scripts/test-ticker-stats.mjs` | **LANE-TOUCHED** only | path-scoped checkout, byte-exact |
 
-`git diff --stat ab7cba01 main -- <both files>` was **empty** before the merge ⇒ main had not moved on either
+`git diff --stat 2c5ad61f main -- <both files>` was **empty** before the merge ⇒ main had not moved on either
 path since the lane's base, so **no MAIN-MOVED file and no 3-way graft**. Merged onto clean main.
 
 ## Findings

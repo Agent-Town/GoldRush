@@ -1,9 +1,9 @@
 # f1611-1 — the two BUILD-rejection assertions learn to read a detail
 
 - **Slice:** `f1611-1-stale-build-rejection-assertions` (master `tasks/lane-f1611-1-stale-build-rejection-assertions.md`, FIRE-AUTHORED s1611)
-- **Branch / tip:** `lane/b` @ `73ffcfbe4` (runner auto-commit, 2026-08-10T02:45:25+07:00)
-- **Base:** `ccaf00a983be41095452c396a83cd66d66e26fa6` (the s1611 dispatch commit)
-- **Merged:** `13d79edfad2860a0279c39585c32a449705eb65e` (s1612, 2026-08-10)
+- **Branch / tip:** `lane/b` @ `ec5845b0e` (runner auto-commit, 2026-08-10T02:45:25+07:00)
+- **Base:** `5d071450877bebdf024590017440f00ff7b13c31` (the s1611 dispatch commit)
+- **Merged:** `25479fc4f2215814b988904df9bb9e2c57f9c1e3` (s1612, 2026-08-10)
 - **Cures:** F-1611-1
 - **VERDICT: MERGED.** Gates green, the cure was proved to bite by a drain-side manufactured red, and the class fix reached both sites.
 
@@ -84,13 +84,13 @@ as an observation, not a gate, per the master's scope 3.
 ## Merge classification
 
 One path, and it is unambiguous. `git log <base>..main --name-only -- e2e/ap-standing-orders.spec.ts`
-returns **nothing**: main moved three commits since the base (`98a923551`, `9c7bcaf5b`,
-`5a6b61a20`) and none of them touched this file. So the path is **LANE-TOUCHED only**, main
+returns **nothing**: main moved three commits since the base (`0a140c09d`, `9c7bcaf5b (archive: pruned by the A3 rewrite)`,
+`4437e9836`) and none of them touched this file. So the path is **LANE-TOUCHED only**, main
 never moved it, and the `ort` merge is trivially correct rather than merely conflict-free.
 `lane-usable.mjs` had independently classified it `HELD LANE-ONLY, 4 of 5 added lines absent
 from main` before the merge.
 
-Note that `98a923551` is *about* this file — it repaired citation titles pointing at
+Note that `0a140c09d` is *about* this file — it repaired citation titles pointing at
 `:408` — but edits the ledger, not the spec. The assertion remains at line 408 after the
 merge and the two test titles are unchanged, so those citations did not rot.
 

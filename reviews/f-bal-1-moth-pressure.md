@@ -1,6 +1,6 @@
 # Review — f-bal-1: the migration threatens a dark claim
 
-**Slice/branch/tip:** f-bal-1 (`tasks/lane-fbal1-moth-pressure.md`) · `lane/c` · tip `e7625b7c6` · merged to main (merge commit parent2) · drained attended 2026-08-08. Owner ruling folded verbatim: "Tighten it."
+**Slice/branch/tip:** f-bal-1 (`tasks/lane-fbal1-moth-pressure.md`) · `lane/c` · tip `c1f581930` · merged to main (merge commit parent2) · drained attended 2026-08-08. Owner ruling folded verbatim: "Tighten it."
 
 **Verdict: MERGED — gate green after one drain-side merge-interaction fix (below) and two documented instrument classes.**
 

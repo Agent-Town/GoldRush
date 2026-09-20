@@ -1,8 +1,8 @@
 # F-1712-1 — standings fixtures declare harness versions
 
 **Slice:** `lane-a-f1712-1-standings-fixtures.md`  
-**Branch / tip:** `lane/a` / `0f4c8da17bcc3585054c23774df1b6eb363873af`  
-**Merge:** `5d705b603e88fc0bb7fc211c97fb73fd37839a5f`  
+**Branch / tip:** `lane/a` / `d0d150d67019d1b0155e5db0f0ff9854548df775`  
+**Merge:** `1aad66f3c77e254448edd193a587ea6f2cdc0149`  
 **Verdict:** **MERGED — all six live harness fixtures now satisfy version rigor without changing production behavior.**
 
 ## What it does
@@ -25,7 +25,7 @@ Full append-only transcript: `artifacts/f1712-1-gate-s1713.txt`.
 
 ## Merge classification
 
-Base `e3feac3be08f34ea1b61b7249c9fc3253eca1fc3`. Both files were LANE-TOUCHED only; main moved neither path. The branch merged without conflict after the complete detached battery.
+Base `9db7988b12741fc41725b17020807ec0d0091e0b`. Both files were LANE-TOUCHED only; main moved neither path. The branch merged without conflict after the complete detached battery.
 
 | Path | Classification | Decision |
 |---|---|---|

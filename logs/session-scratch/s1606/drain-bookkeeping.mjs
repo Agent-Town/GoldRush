@@ -3,7 +3,7 @@
 // its own hash — hence this SECOND commit, F-1384-1) and prefix the done-move as drained.
 import { readFileSync, writeFileSync, renameSync, existsSync } from 'node:fs';
 
-const MERGE = '88530e3efc4ff1c2f5b13c936baa5c5f913cd60a';
+const MERGE = '312b443f12a91d56e6a20f37a537aa71166d41c6';
 const P = 'tasks/goals.json';
 const lines = readFileSync(P, 'utf8').split('\n');
 

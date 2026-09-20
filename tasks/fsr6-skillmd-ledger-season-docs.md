@@ -23,7 +23,7 @@ The review of the season roll filed, verbatim:
 
 The successor it named (`f2078-1-deepwater-manifest-truth-pass`) had already been dispatched 24
 minutes earlier with a four-file firewall that excludes `public/skill.md`, so this debt was never
-carried by anything and is still open. Measured on main at `de10f894c` by the authoring fire:
+carried by anything and is still open. Measured on main at `d4e42a315` by the authoring fire:
 `grep -Fc "season=" public/skill.md` returns **0**. The door doc is silent about a dimension that now
 governs every read and every write a rig author makes.
 

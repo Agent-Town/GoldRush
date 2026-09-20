@@ -3,7 +3,7 @@
 //
 // WHY THIS EXISTS (F-1277-2, s1277)
 //   The same defect in `scripts/stream-showcase-queue.test.mjs` was recorded THREE times:
-//   F-1088-2 (s1088), F-1150-3 (s1150), F-1154-5 (s1154). One commit (`4abb88a1`) fixed it,
+//   F-1088-2 (s1088), F-1150-3 (s1150), F-1154-5 (s1154). One commit (`d8e84bc5`) fixed it,
 //   and s1155's closure struck two of the three — its own headline reads "ONE DEFECT, FOUND
 //   TWICE". The two it caught are adjacent in BACKLOG (L457-L458); the one it missed is 1165
 //   lines away. Proximity, not thoroughness, decided that closure's completeness, and

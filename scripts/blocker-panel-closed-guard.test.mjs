@@ -34,11 +34,11 @@ function offenders(output) {
   return [...output.matchAll(/^(F-\d+-\d+)\s+closed at BACKLOG:/gm)].map((match) => match[1]);
 }
 
-// REAL HISTORY. The live panel selects 725deff2's e3-fairground row, whose displayed
+// REAL HISTORY. The live panel selects 2844a908's e3-fairground row, whose displayed
 // subject zone names F-1534-2, and F-1534-2's closure is subject-led by F-1534-2
 // itself at BACKLOG:11. The live root has no such pairing and must stay green.
 test('reds on a real ledger with a subject-led closed finding on the panel, greens on the live root', (t) => {
-  const before = execFileSync('git', ['show', '725deff2c34fc5014f90f46ae06d2d0959f0ed4f:tasks/BACKLOG.md'], {
+  const before = execFileSync('git', ['show', '2844a9083e8fbfcf96c4981ccee02a53461ec66c:tasks/BACKLOG.md'], {
     cwd: ROOT,
     encoding: 'utf8',
     maxBuffer: 64 * 1024 * 1024,
@@ -55,7 +55,7 @@ test('reds on a real ledger with a subject-led closed finding on the panel, gree
 test('a cited id does not borrow the subject id closure on the old real ledger', (t) => {
   // F-1030-2 is only the second id on the closure row led by F-1040-1, so
   // F-2228-1 must keep it out of the offender list.
-  const backlog = execFileSync('git', ['show', '2e02098f:tasks/BACKLOG.md'], {
+  const backlog = execFileSync('git', ['show', '87649873:tasks/BACKLOG.md'], {
     cwd: ROOT,
     encoding: 'utf8',
     maxBuffer: 64 * 1024 * 1024,

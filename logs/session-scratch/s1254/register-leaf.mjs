@@ -18,11 +18,11 @@ bucket.splice(anchor + 1, 0, {
   taskFile: 'lane-guide-beat-priority.md',
   status: 'merged',
   lane: 'lane-d',
-  authoredBy: 'owner (4ee9c12f 2026-07-30) — "product: guide beats hold the floor (from F-1205-5)"',
+  authoredBy: 'owner (2370f8bf 2026-07-30) — "product: guide beats hold the floor (from F-1205-5)"',
   spec: 'tasks/BACKLOG.md F-1205-5 (the measured mechanism); master WHY quotes it verbatim',
   registeredBy:
     's1254 fire — F-1254-1 repair: the master shipped with NO goal leaf, so drain-block-check returned UNKNOWN rather than a clearance. Registered and flipped in the same commit as the drain bookkeeping.',
-  mergeHash: '6f343a6e',
+  mergeHash: 'e3ee53d6',
   drainedBy: 's1254 fire 2026-07-30',
   review: 'reviews/guide-beat-priority.md',
   note_s1254:

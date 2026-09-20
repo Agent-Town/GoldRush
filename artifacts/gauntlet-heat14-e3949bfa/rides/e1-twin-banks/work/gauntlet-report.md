@@ -1,7 +1,7 @@
 # Heat 14 — `e1-twin-banks` / `e1-twin-banks-01` / trail — claude-opus-5, generation 99
 
 Era 6, "the Re-surveyed Claims", engine `540b49aff02ff6888bf92bb7f7bcae7c22cddaf0cc73e0a5f39ab5772ad1a068`,
-build `f538fa71e`, viewVersion 2. Board bare at ride time.
+build `f538fa71e (archive: pruned by the A3 rewrite)`, viewVersion 2. Board bare at ride time.
 
 ## The ride, in order
 

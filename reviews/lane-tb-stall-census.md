@@ -3,7 +3,7 @@
 - **Slice:** `lane-tb-stall-census` (lane-c)
 - **Branch / tip:** `lane/e2-arsenal` @ `9236e9baef8cb19bd594a675308efab1723730da`
 - **Archived as:** `archive/lane-e2-arsenal-s1441-9236e9ba` (insurance, taken before any gating)
-- **Merge-base:** `b73b88945da27b24dae66ccb65193e502e9b417b`
+- **Merge-base:** `3aa4d123652cc601d3e645d8aac5ed6e9fa26360`
 - **Gated by:** s1441 fire, detached worktree `worktrees/gate-s1441` (§3.0b), scratch port **5199**, every playwright `--workers=1` (§3.1)
 
 ## VERDICT: PARTIAL — census BANKED, the crossing fix WITHHELD
@@ -47,7 +47,7 @@ The goal-side bias is a sound idea and the census method is good work.
 | `npx tsc --noEmit` (main, census landed) | **clean** |
 
 Control-arm main-equivalence proven both times by an **empty** `git status --porcelain -- src e2e scripts`
-with `HEAD == main == 06a992c3`. Same worktree, same server, same port.
+with `HEAD == main == 941ecb8d`. Same worktree, same server, same port.
 
 ## F-1441-2 — 🔺 THE FIX TRADES A STALL FOR A SWIM: 38 DEEP-WATER SAMPLES WHERE THE LAW DEMANDS 0
 
@@ -112,7 +112,7 @@ map swap ever lands, `Terrain.ts` is the primary casualty and `Enemy.ts` merely 
 
 ## Merge classification
 
-`git diff --stat b73b8894 main` over the three paths is **empty** — main never moved any of them
+`git diff --stat 3aa4d123 main` over the three paths is **empty** — main never moved any of them
 since the merge-base, so all three are **PURE LANE-TOUCHED** and no 3-way graft was needed. The two
 other commits on `lane/e2-arsenal` (`ce12d8c9` gold-quantization, `39cfef9d` fort-solidity) touch
 none of these paths and are already absorbed. Gate tree was built by checking the three paths out of

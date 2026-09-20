@@ -1,15 +1,15 @@
 # f-seed-1-front-door-parity — gate review (s1492)
 
 **Slice:** `lane-f-seed-1-front-door-parity` (F-SEED-1 parity cure — the public agents' door)
-**Branch:** `lane/a` · **Tip:** `1e19a7d58` "fdoor: align headless progression and panning"
-**Base (merge-base with main):** `22d73f2ec` · **Main at gate:** `f5f2b0f12`
+**Branch:** `lane/a` · **Tip:** `23559d6e4` "fdoor: align headless progression and panning"
+**Base (merge-base with main):** `d0cb2ac57` · **Main at gate:** `a48fedffc`
 **Gate tree:** detached worktree `gate-s1492` at merge commit `e9fb9faf2` (§3.0b — an attended session was committing to main live throughout this gate)
 **Date:** 2026-08-06T17:51Z
 
 ## VERDICT: HOLD — NOT MERGED
 
-> ⚠️ **SUPERSEDED s1494 — the hold was DISCHARGED, not overturned. Merged at `ff628a132`** (ancestry
-> verified: `git merge-base --is-ancestor ff628a132 main`), together with the fire-authored successor
+> ⚠️ **SUPERSEDED s1494 — the hold was DISCHARGED, not overturned. Merged at `335408077`** (ancestry
+> verified: `git merge-base --is-ancestor 335408077 main`), together with the fire-authored successor
 > `lane-f1493-1-parity-repin`, as **one slice** — which is F-1492-1 route (a), exactly as the finding
 > below prescribed. The verdict above is kept **verbatim** (retention law: supersede, never delete)
 > and it was **correct when written**: at the time of this gate the eight adjacent assertions really
@@ -27,7 +27,7 @@ This is the correct fix at the correct layer: it cures at parity rather than tun
 
 ## Evidence
 
-| Gate | Merged tree (`e9fb9faf2`) | Control: pre-merge main (`f5f2b0f12`) |
+| Gate | Merged tree (`e9fb9faf2`) | Control: pre-merge main (`a48fedffc`) |
 |---|---|---|
 | `npx tsc --noEmit` | **green** | — |
 | `npm run build` | **green** (built 1.63s; asset-diet ceilings respected) | — |
@@ -59,13 +59,13 @@ It is still HOLD, for two reasons:
 
 ## Findings
 
-- **F-1492-1 — the parity cure moves eight adjacent assertions and repairs none of them (BLOCKING this merge).** Six `gr-sim.test.mjs` expectations plus the `e2-hill-mine` contract row. Attributed by control run (both suites green at `f5f2b0f12`, red at `e9fb9faf2`). **Cure must land WITH the slice, not after it** — it depends on the unmerged sim change, so it cannot be queued to a fresh lane (a lane without the cure would compute the old numbers and "fix" them wrongly). Two lawful routes: (a) extend the work on `lane/a` and re-gate the branch as one slice; (b) attended merges slice + re-pin as one landing. Route (b) is likely right here because of the contract question below.
+- **F-1492-1 — the parity cure moves eight adjacent assertions and repairs none of them (BLOCKING this merge).** Six `gr-sim.test.mjs` expectations plus the `e2-hill-mine` contract row. Attributed by control run (both suites green at `a48fedffc`, red at `e9fb9faf2`). **Cure must land WITH the slice, not after it** — it depends on the unmerged sim change, so it cannot be queued to a fresh lane (a lane without the cure would compute the old numbers and "fix" them wrongly). Two lawful routes: (a) extend the work on `lane/a` and re-gate the branch as one slice; (b) attended merges slice + re-pin as one landing. Route (b) is likely right here because of the contract question below.
 - **F-1492-2 — the Hill Mine `secureWave` 12 → 14 is an owner/attended content call.** Needs a word before any edit: does the declared contract follow the corrected sim, or does a Hill Mine securing two waves later indicate the parity cure over-shot? The parity spec passing does not answer this — it tests The Claim, not Hill Mine.
 - **F-1492-3 — the master has no goal leaf (Goal Registration Law).** `node scripts/drain-block-check.mjs 20260806-162742-lane-f-seed-1-front-door-parity.md` returns **UNKNOWN — no goal leaf matches**, exit 0. Per §3.0 that is a bookkeeping finding, not a clearance; recorded here so it is not read as one. The master was attended-dispatched, so this is a note to the author, not to the runner.
 
 ## Merge classification (recorded for whoever lands it)
 
-Measured `22d73f2ec..main` against the four touched paths:
+Measured `d0cb2ac57..main` against the four touched paths:
 
 - `src/sim/HeadlessContractSim.ts` — **LANE-TOUCHED only** (main never moved it)
 - `e2e/front-door-parity.spec.ts` — **LANE-TOUCHED only** (new file)

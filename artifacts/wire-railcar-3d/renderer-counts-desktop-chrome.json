@@ -1,14 +1,14 @@
 {
   "provenance": {
     "n": 10,
-    "commit": "659f4efe0",
+    "commit": "2822069b5",
     "project": "desktop-chrome",
     "headroom": "one extra observed jitter quantum beyond each measured edge: 1 for calls/geometries, 2 for triangles",
     "rerecorded": {
       "date": "2026-09-05",
       "task": "renderer-count-artifacts-under-shared-atlas",
-      "measuredOn": "cf91fe5e9 (lane/d; identical to main bf934d54f across src/ and e2e/)",
-      "cause": "src/assets/SharedAtlasPlugin.ts (merged 3a47f1800, 2026-09-05): the shared GLTF loader returns one texture per image content hash across GLBs, so exact renderer.info.memory.textures pins recorded before it read high. Only textures moved. calls, triangles, geometries, the measured tolerance bands and every non-count assertion (morphs, wreckage, dispose-on-kill, geometry deltas) are unchanged, and n/commit above still describe the original band measurement.",
+      "measuredOn": "c3884d89d (lane/d; identical to main 8316edf72 across src/ and e2e/)",
+      "cause": "src/assets/SharedAtlasPlugin.ts (merged bbf1c3832, 2026-09-05): the shared GLTF loader returns one texture per image content hash across GLBs, so exact renderer.info.memory.textures pins recorded before it read high. Only textures moved. calls, triangles, geometries, the measured tolerance bands and every non-count assertion (morphs, wreckage, dispose-on-kill, geometry deltas) are unchanged, and n/commit above still describe the original band measurement.",
       "method": "measured by running the spec itself on a dev server at 127.0.0.1:5304; every value below is the number the run reported through e2e/renderer-count-artifact.ts:37, never hand-set",
       "confirmingRuns": 3,
       "textures": {

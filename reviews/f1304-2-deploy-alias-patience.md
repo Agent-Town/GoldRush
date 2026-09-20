@@ -2,8 +2,8 @@
 
 **Slice:** `f1304-2-deploy-alias-patience` (cures F-1304-2, the deploy-alias-window finding)
 **Branch / tip:** `lane/m4` @ `02779012` (runner commit `runner(lane-b): lane-b-f1304-2-deploy-alias-patience.md`)
-**Merge-base:** `11285b50`
-**Merged to main at:** `669cb04693fce92805dc3641f9f28e24ace931e9`
+**Merge-base:** `d97bc4d5`
+**Merged to main at:** `2f629f52c6b4548a20e7c2da698a6972055eea5a`
 **Drained by:** s1308 fire, 2026-08-01
 **Verdict:** ✅ **MERGE** — the acceptance bar was a two-direction proof, and it was re-derived here from scratch rather than read off the runner's report. One non-blocking finding (F-1308-1), plus one of my own hypotheses refuted mid-drain.
 
@@ -54,7 +54,7 @@ which the master required and which the strict-code cases below re-assert.
 
 | File | Class | Evidence |
 |---|---|---|
-| `scripts/deploy.sh` | **LANE-TOUCHED only** | `git diff --name-only 11285b50 main -- scripts/deploy.sh` → empty |
+| `scripts/deploy.sh` | **LANE-TOUCHED only** | `git diff --name-only d97bc4d5 main -- scripts/deploy.sh` → empty |
 | `scripts/test-deploy-contract.sh` | **LANE-TOUCHED only** | same probe → empty |
 
 **Zero MAIN-MOVED files → no 3-way graft needed.** Merged by
@@ -187,7 +187,7 @@ suite gained an 11th `run_case` parameter and an `alias-whitespace-sleeps` case.
 
 | Arm | Result |
 |---|---|
-| new case vs. `669cb046` (guard **absent**) | **rc=1** — `alias-whitespace-sleeps: expected rc 0, got 1` |
+| new case vs. `2f629f52` (guard **absent**) | **rc=1** — `alias-whitespace-sleeps: expected rc 0, got 1` |
 | new case vs. cured tree (guard **present**) | **rc=0** — `PASS alias-whitespace-sleeps (rc=0, 0s)`, full suite 6.38 s |
 
 ### ⓘ F-1308-2 (informational) — the default schedule is asserted by grep, not by behaviour

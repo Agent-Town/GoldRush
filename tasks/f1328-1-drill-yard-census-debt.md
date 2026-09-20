@@ -5,14 +5,14 @@ Role: implementer. Workdir: `worktrees/lane-b` (slot lane-b, branch `lane/m4`).
 
 ## READ FIRST (paths, in this order)
 - `reviews/lane-survive-copy.md` §Findings — F-1328-1, where the blast radius was measured.
-- `e2e/agent-view.spec.ts:261-270` ("all five E1 mechanics manifests match their byte-stable fixture") (that test was RENAMED at commit 8fa0133f and is now titled "all six E1 mechanics manifests match their byte-stable fixture" — the count in the old title was the defect) — the failing test.
+- `e2e/agent-view.spec.ts:261-270` ("all five E1 mechanics manifests match their byte-stable fixture") (that test was RENAMED at commit 77a1b19b and is now titled "all six E1 mechanics manifests match their byte-stable fixture" — the count in the old title was the defect) — the failing test.
 - `e2e/fixtures/e1-mechanics-manifests.json` — the fixture that needs a 6th entry.
 - `e2e/072-era-activation.spec.ts:23` and `:236-241` ("fresh E1 profile stays unchanged and the pre-flip determinism hash is identical") — the second failing census.
 - `tasks/BACKLOG.md` — the AP-11 row (2026-07-31): "THE MECHANICS MANIFEST — verbs are grammar, mechanics are DERIVED per-contract vocabulary … NO-UNDECLARED-MECHANICS assayer law (hand-written manifests forbidden so it cannot rot)". **This is the law that governs how you produce the fixture.**
 - `src/meta/ContractFamilies.ts` — `listContracts()`, the source of the ordering.
 
 ## WHY (evidence, dated)
-`f0bf5251` (`runner(lane-b): lane-drill-yard.md`, 2026-08-01 08:14) added `e1-drill-yard` as the **6th** E1 contract and the **42nd** overall, per the owner's ratification that same morning ("Drill Yard sounds good to me"). It did not update any spec that asserts an E1 **census**.
+`f86b28b3` (`runner(lane-b): lane-drill-yard.md`, 2026-08-01 08:14) added `e1-drill-yard` as the **6th** E1 contract and the **42nd** overall, per the owner's ratification that same morning ("Drill Yard sounds good to me"). It did not update any spec that asserts an E1 **census**.
 
 s1328 measured the blast radius while draining an unrelated slice: **7 red assertions across 3 specs.** Four were cured incidentally by `lane-survive-copy` (`contract-briefings.spec.ts` 41→42 and board 5→6). **Two sites remain red on main:**
 

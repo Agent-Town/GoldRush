@@ -1,6 +1,6 @@
 # sprites-split-land — stage 1 of owner ruling A19, implementer report
 
-**Master**: `tasks/sprites-split-land.md` · **Branch**: `feat/sprites-split-land`, cut from main `9382083d3` · **Source**: `sol/code-review-20260908` (`92f6cc115`), taken by `git checkout … -- <path>` only, never merged, nothing under `artifacts/` taken (F-SPRDR-9: 24.58 GB, nine blobs over GitHub's 100 MB limit).
+**Master**: `tasks/sprites-split-land.md` · **Branch**: `feat/sprites-split-land`, cut from main `3b3f427a3` · **Source**: `sol/code-review-20260908` (`92f6cc115`), taken by `git checkout … -- <path>` only, never merged, nothing under `artifacts/` taken (F-SPRDR-9: 24.58 GB, nine blobs over GitHub's 100 MB limit).
 **Ruling**: owner 2026-09-13, verbatim **"A19 - that is ok"** → option (b) of `reviews/drain-review-sprites-roster.md` §5 F-SPRDR-2.
 **Implementer**: Claude Opus 5, native, 2026-09-14, Node 26.4.0 (`/opt/homebrew/bin`). Every number below was measured on this tree by a command named beside it; nothing is inherited from the review.
 
@@ -84,7 +84,7 @@ Contact sheets for all 30 landed families are in `artifacts/sprites-split-land/c
 
 ## 4. Tooling taken (item 1) — 36 of the 43 script paths
 
-`git diff --name-status 27227acdc..92f6cc115 -- scripts` lists 43. Excluded by the master: `scripts/fire.md`, `scripts/law-pointer-baseline.json` (F-SPRDR-5), `scripts/dispose-skeleton.test.mjs`, `scripts/sprite-clip-fallback.test.mjs` (F-SPRDR-4). `scripts/halo-reextraction-check.mjs` is item 4's, handled below. `scripts/asset-diet.manifest.json` resolved to a **no-op**: main already carries the branch's `land-yacht.glb` line (the checkout left the file unchanged), so 37 paths moved, not 38.
+`git diff --name-status 403c996cd..92f6cc115 -- scripts` lists 43. Excluded by the master: `scripts/fire.md`, `scripts/law-pointer-baseline.json` (F-SPRDR-5), `scripts/dispose-skeleton.test.mjs`, `scripts/sprite-clip-fallback.test.mjs` (F-SPRDR-4). `scripts/halo-reextraction-check.mjs` is item 4's, handled below. `scripts/asset-diet.manifest.json` resolved to a **no-op**: main already carries the branch's `land-yacht.glb` line (the checkout left the file unchanged), so 37 paths moved, not 38.
 
 `node --check` passes on all 33 `.mjs` among them. One further exclusion I made and the master did not name:
 
@@ -99,12 +99,12 @@ Contact sheets for all 30 landed families are in `artifacts/sprites-split-land/c
 Nine of the ten are GREEN through the runner itself: `GR_GUARD_NO_ARTIFACT=1 node scripts/run-node-guards.mjs <the nine> scripts/deploy-budget.test.mjs` → **rc=0, 36 pass / 0 fail** (`deploy-budget.test.mjs` is the one modified guard I took, and it is already rooted).
 
 > ### ⚠ F-SSL-1 — `town-patrol-monument` is rooted RED, and a drainer must expect it
-> The master orders it: *"root it and record it in `logs/suite-red-inventory.md` as a documented red with the finding, do NOT fix the town data here."* Done — the row is the first NODE-GUARD row in that file, at the head of the additive "Corrections since the snapshot" table. Measured twice on main `9382083d3`: `node --test` rc=1 / 0.36 s and through the battery runner rc=1 / 0.68 s, identical assertion `newsie segment 5 enters the monument (0)` at `:20`. The branch's own control tree failed identically (review §3), so three trees agree the guard is right and the **town data** is wrong.
+> The master orders it: *"root it and record it in `logs/suite-red-inventory.md` as a documented red with the finding, do NOT fix the town data here."* Done — the row is the first NODE-GUARD row in that file, at the head of the additive "Corrections since the snapshot" table. Measured twice on main `3b3f427a3`: `node --test` rc=1 / 0.36 s and through the battery runner rc=1 / 0.68 s, identical assertion `newsie segment 5 enters the monument (0)` at `:20`. The branch's own control tree failed identically (review §3), so three trees agree the guard is right and the **town data** is wrong.
 > **CONSEQUENCE: `npm run test:node-guards` now exits non-zero on a clean main.** `scripts/run-node-guards.mjs` has no known-red allowlist — `:87` is `process.exit(child.status ?? 1)` — so there is no way to root this guard and keep the board green. Hiding it in the caller baseline instead would have made it the unread verdict F-1252-2 built the audit to stop. **Corrective owed, outside this firewall (`src/**`): re-route the newsie patrol's segment 5 in `src/town/townsfolk.ts` clear of `townPropRing`'s pan-monument footprint in `src/town/townLayout.ts`.**
 
 **Recorded in `scripts/gate-caller-baseline.json` instead of rooted** — the six `review-*.test.mjs` probes, each with its own measured reason, F-SSL-4. The master expected them to need a *server*; they own one (they all import `createServer` from `vite`). The real reason is worse and is written into each entry: **all six are RED against this tree because they assert `src/` behaviour that is not here** — F-SPRDR-4's class again, now at eight members.
 
-| probe | measured on main `9382083d3` |
+| probe | measured on main `3b3f427a3` |
 | --- | --- |
 | `review-account-creation.test.mjs` | rc=1, **302.3 s**, 1 test CANCELLED at its own 90,000 ms bound; stands up a real wrangler Durable Object |
 | `review-mixed-hashes.test.mjs` | rc=1, < 1 s, **11 pass / 8 fail** (seat/quorum arms) |

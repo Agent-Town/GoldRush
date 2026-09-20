@@ -1,8 +1,8 @@
 # f1510-3-inventory-names-its-commit — drain review (s1514)
 
 **Slice:** `lane-f1510-3-inventory-names-its-commit` (FIRE-AUTHORED s1513)
-**Branch:** `lane/a` · **Tip:** `477fb7f9a5c5e62462ee9d5c6998fd488d96ca92` · **Base:** `432587889`
-**Merged to main:** `8134ec30762cde75a298edcec47629d6f25df19a`
+**Branch:** `lane/a` · **Tip:** `477fb7f9a5c5e62462ee9d5c6998fd488d96ca92` · **Base:** `377ead435`
+**Merged to main:** `e47354c62d102b08329ff60048e8be818b75f879`
 
 ## Verdict
 
@@ -76,7 +76,7 @@ split cost a supervisor rerun** — see the desk item.
 
 ## Merge classification
 
-Base `432587889` (a main commit, so the lane was not stale).
+Base `377ead435` (a main commit, so the lane was not stale).
 
 | Path | Class | Resolution |
 |---|---|---|

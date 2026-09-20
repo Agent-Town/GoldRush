@@ -59,7 +59,7 @@ The evidence supports **no cure in this task**. It does not support adding a `GE
 
 ## Drain verdict — s1590, 2026-08-09
 
-**MERGED as evidence: `12190838aaf3415ad4c4b03e5c377c06af9c9919`.** Slice: `lane/b` @ `14c744c8e`, one runner commit, 24 files, **+3788 / -0, zero executable bytes**.
+**MERGED as evidence: `f9160a0c370125724baf6338796388bd936ed645`.** Slice: `lane/b` @ `22c376b80`, one runner commit, 24 files, **+3788 / -0, zero executable bytes**.
 
 ### The report is accurate, and the negative result is the right one
 

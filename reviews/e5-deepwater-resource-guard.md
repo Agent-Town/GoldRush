@@ -1,7 +1,7 @@
 # e5-deepwater-resource-guard — F-1029-3 corrective
 
 **Slice:** F-1029-3 — the Deepwater resource guard asserts against an empty array
-**Branch:** `lane/m3` (lane-a) · **Tip:** `7d1ac416` · **Base:** `main` @ `e6b7bdae`
+**Branch:** `lane/m3` (lane-a) · **Tip:** `7d1ac416` · **Base:** `main` @ `772fb4ae`
 **Master:** `tasks/lane-e5-deepwater-resource-guard.md` (FIRE-AUTHORED s1031)
 **Drained by:** s1032 fire, 2026-07-25
 
@@ -60,7 +60,7 @@ in any file I touched.
 
 ## Merge classification
 
-Base `main` @ `e6b7bdae`. `git diff main lane/m3 --stat` = 8 files, but **only one is LANE-TOUCHED**:
+Base `main` @ `772fb4ae`. `git diff main lane/m3 --stat` = 8 files, but **only one is LANE-TOUCHED**:
 
 | File | Class |
 |---|---|

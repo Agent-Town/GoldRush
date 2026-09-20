@@ -1,7 +1,7 @@
 # f2282-1 — the blocker-panel real-history arm, re-anchored
 
 **Slice:** `f2282-1-blocker-panel-real-history-arm`
-**Branch:** `lane/c` · **Tip:** `86879edff` · **Base:** `d301990f7` · **Main at gate:** `c2cc15597`
+**Branch:** `lane/c` · **Tip:** `9eabbc60d` · **Base:** `52ab3f3bb` · **Main at gate:** `c2cc15597 (archive: pruned by the A3 rewrite)`
 **Drained by:** s2283 fire, 2026-08-25
 **Gate tree:** detached worktree `worktrees/gate-s2283` at `main + lane/c` (§3.0b — undecided content never entered main's working tree)
 
@@ -18,14 +18,14 @@ will inherit them.
 the guard and asserted it reds. That arm had been failing on main since 2026-08-23 (`0 !== 1` at `:47`,
 re-confirmed by me on clean main this fire). The cause is not rot in the guard: **F-2228-1** taught the guard
 *subject-first attribution* — a closure row states the state only of the **first** F-ID in its subject zone —
-and the arm's fixture (`2e02098f`, offender `F-1030-2`) depended on the looser pre-F-2228-1 rule, because
+and the arm's fixture (`87649873`, offender `F-1030-2`) depended on the looser pre-F-2228-1 rule, because
 `F-1030-2` is merely the *second* id on a row led by `F-1040-1`.
 
 The slice:
 
-1. **Re-anchors** the real-history arm on `725deff2c34fc5014f90f46ae06d2d0959f0ed4f`, asserting offender
+1. **Re-anchors** the real-history arm on `2844a9083e8fbfcf96c4981ccee02a53461ec66c`, asserting offender
    `F-1534-2`, whose closure *is* subject-led by itself.
-2. **Retains the original incident** as a new arm asserting `F-1030-2` is *not* flagged on `2e02098f` —
+2. **Retains the original incident** as a new arm asserting `F-1030-2` is *not* flagged on `87649873` —
    converting a rotted assertion into a **live regression pin for F-2228-1**. (Retention Law: superseded,
    not erased.)
 3. Touches nothing else. The guard, `desk-state-audit.mjs`, `findings-state-guard.mjs` and `dashboard-gen.sh`
@@ -54,19 +54,19 @@ from the silence it measures.*
 
 | # | Probe | Result |
 |---|---|---|
-| 1 | `d5407705` — the master's own worked example | **status 0, GREEN, no offenders** |
-| 2 | `725deff2` — the runner's chosen anchor | **status 1, offender `F-1534-2`** ✅ |
+| 1 | `a32d7c00` — the master's own worked example | **status 0, GREEN, no offenders** |
+| 2 | `2844a908` — the runner's chosen anchor | **status 1, offender `F-1534-2`** ✅ |
 | 3 | 1-in-25 sample over BACKLOG history (101 of 2,523 commits) | **0 reds** |
-| 4 | Manufactured defect, *remove* the `subjectLedClosure` filter | `2e02098f`: rc 0 → **rc 1, offender `F-1030-2`** ✅ · `725deff2`: rc 1 → rc 1 (unchanged) |
-| 5 | Manufactured defect, *force-skip* the filter | `725deff2`: rc 1 → **rc 0** ✅ · `2e02098f`: rc 0 → rc 0 |
+| 4 | Manufactured defect, *remove* the `subjectLedClosure` filter | `87649873`: rc 0 → **rc 1, offender `F-1030-2`** ✅ · `2844a908`: rc 1 → rc 1 (unchanged) |
+| 5 | Manufactured defect, *force-skip* the filter | `2844a908`: rc 1 → **rc 0** ✅ · `87649873`: rc 0 → rc 0 |
 
 **Probe 4 and 5 together are the strongest result of this drain, and they are better than the master asked
 for.** The two arms move under *different* mutations:
 
-- The **new anchor arm** (`725deff2`) reds under the live rule and greens only when the violation path is
+- The **new anchor arm** (`2844a908`) reds under the live rule and greens only when the violation path is
   force-skipped — so it pins *"the guard still reds on real history."* Its red is **independent** of
   F-2228-1.
-- The **retained arm** (`2e02098f`) greens under the live rule and reds only when the subject-first filter is
+- The **retained arm** (`87649873`) greens under the live rule and reds only when the subject-first filter is
   **removed** — so it pins *"F-2228-1's filter is live."*
 
 Neither arm is decoration, and neither is redundant with the other. The scratch variant was written into
@@ -77,14 +77,14 @@ Neither arm is decoration, and neither is redundant with the other. The scratch 
 ### F-2283-1 — the master's feasibility claim is REFUTED (non-blocking; already absorbed by the runner)
 
 `tasks/BACKLOG.md`'s **F-2282-1** row states, as established feasibility, that replaying today's rule across
-BACKLOG history finds **"64 historical commits still red"**, worked example `d5407705` (offenders
+BACKLOG history finds **"64 historical commits still red"**, worked example `a32d7c00` (offenders
 `F-1310-1, F-1269-1, F-1270-1, F-1457-1`).
 
 **Three independent measurements refute it:**
 
 1. The lane-c runner replayed **all 2,522** BACKLOG-touching commits and found **exactly one** red.
 2. My own 1-in-25 sample — *the same sampling density s2282 claimed* — over 101 commits found **0 reds**.
-3. A direct probe of `d5407705` returns **status 0** under the live rule, and **still 0** under both
+3. A direct probe of `a32d7c00` returns **status 0** under the live rule, and **still 0** under both
    mutations of the subject-first filter (so the discrepancy is *not* explained by s2282 having replayed the
    pre-F-2228-1 rule, which was my first hypothesis and is hereby refuted too).
 
@@ -94,7 +94,7 @@ stop measuring; a hedge that names the measured BAND protects them*). Measured b
 at fixed trees: **0–1 reds**, against a claimed 64.
 
 **Cost: ZERO — and the reason is the reusable half.** The master told its runner, in its own scope item 1,
-*"Pick the commit yourself and verify it before you rely on it; do not paste `d5407705` on my word alone
+*"Pick the commit yourself and verify it before you rely on it; do not paste `a32d7c00` on my word alone
 (Mistake #4 — my sample was 1-in-25 and is not a census)."* The runner obeyed, found the claim false, ran an
 exhaustive replay itself, and reported the contradiction instead of fixing or hiding it — **a firewall
 success** (`CLAUDE.md` §4.5). **A master that instructs its runner to verify the master's own evidence
@@ -106,13 +106,13 @@ The F-2282-1 row is **superseded in prose, not deleted** (Retention Law).
 ### F-2283-2 — the new anchor is a near-SINGLETON; real history holds no spare specimen (non-blocking)
 
 The exhaustive replay found **1 red in 2,522** BACKLOG-touching commits; my sample found 0 in 101. So
-`725deff2` is not one specimen among many — it is, as far as two independent searches can tell, **the only
+`2844a908` is not one specimen among many — it is, as far as two independent searches can tell, **the only
 historical ledger state today's rule reds on.**
 
 Consequence for the next fire, and the reason this is written down: **if the panel rule or the closure
 vocabulary drifts again, this arm rots again and there is no replacement in history to re-anchor on.** The
 search space is already exhausted; do not spend a fire re-running it. At that point the honest options are
-the retained `2e02098f` mutation-pin (which does not depend on finding a red specimen at all) or a
+the retained `87649873` mutation-pin (which does not depend on finding a red specimen at all) or a
 constructed fixture — **not** another history sweep.
 
 ### F-2283-3 — the master's NO list conflates the guard with its test file (non-blocking, documentation)
@@ -178,6 +178,6 @@ Single file, single concern.
 
 | File | Class | Resolution |
 |---|---|---|
-| `scripts/blocker-panel-closed-guard.test.mjs` | **LANE-TOUCHED** (+19 / −6) | Clean 3-way merge, no conflict — main has not moved this file since `d301990f7`. Verified by `git merge --no-ff` in the gate worktree reporting a single-file `ort` merge. |
+| `scripts/blocker-panel-closed-guard.test.mjs` | **LANE-TOUCHED** (+19 / −6) | Clean 3-way merge, no conflict — main has not moved this file since `52ab3f3bb`. Verified by `git merge --no-ff` in the gate worktree reporting a single-file `ort` merge. |
 
 No MAIN-MOVED files. No conflicts to resolve.

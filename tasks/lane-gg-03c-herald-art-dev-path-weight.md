@@ -127,14 +127,14 @@ content is NOT on main (undrained work — resetting would DESTROY it), or the w
 edits you did not make.
 
 *`lane/m3`'s one ahead commit `a7c91fdc` is a **safe dupe**: its only file,
-`artifacts/gg-03b-gazette-panel-weight/report.md`, was merged to main by s1209 as **`4eb56c16`** and
+`artifacts/gg-03b-gazette-panel-weight/report.md`, was merged to main by s1209 as **`7da15240`** and
 pushed to `origin/main`. Proof by content, not ancestry — that path is **absent** from
 `git diff --name-status main lane/m3`, i.e. byte-identical on both sides; every other entry in that diff
 is stale-base phantom (files created after `lane/m3` forked) plus log churn. **Verify this yourself; do
 not inherit it.***
 
 ⚠️ **ATTEMPT 1 OF THIS MASTER STOPPED HERE, CORRECTLY, AND THE FAULT WAS THE FIRE'S.** s1209 queued this
-task at 11:55 but did not commit the GG-03b drain until `4eb56c16` a few minutes later, so the runner read
+task at 11:55 but did not commit the GG-03b drain until `7da15240` a few minutes later, so the runner read
 a `main` on which `a7c91fdc` genuinely *was* undrained and refused to `reset --hard` over it — exactly the
 Mistake #2 protection working as designed. It changed nothing. The premise is now true; this is attempt 2
 with a **changed premise**, not an identical retry.

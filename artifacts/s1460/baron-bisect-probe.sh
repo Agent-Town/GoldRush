@@ -2,10 +2,10 @@
 # s1460 — bisect predicate for the Baron driver event-log divergence (F-1460-1).
 #
 # Subject: scripts/gr-sim.test.mjs "the Baron driver runs the declared fight..."
-# The pinned expectation (kills 869 / fnv1a32:b9566c6d) was set at 1a4831df, BEFORE the
+# The pinned expectation (kills 869 / fnv1a32:b9566c6d) was set at 653c7fef, BEFORE the
 # bisect window, so the predicate is stable across every commit under test.
 #
-# Measured before bisecting: GREEN at 7267f78e, RED at 2d6da94f, and the actual value is
+# Measured before bisecting: GREEN at 80308b70, RED at 57097d8a, and the actual value is
 # byte-identical on Node 26.4.0 and 23.11.1 (so this is NOT the cross-engine class).
 #
 # exit 0   = good (assertion holds)

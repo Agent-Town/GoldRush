@@ -1,8 +1,8 @@
 # Review — f1631-1: the town-budget ceiling assertion names WHICH bytes it gated
 
 - **Slice:** `f1631-1-asset-diet-fallback-provenance` (from **F-1629-1**, filed s1629 at the f1627-1 drain)
-- **Branch / tip:** `lane/c` @ `2bbafcee5` (runner auto-commit, dispatched 16:29:34 on **`gpt-5.5` effort=high**)
-- **Base:** `4ce0dad4a` · **Merge:** `7f9340baf056e228bae8c1ca11c2d836e38a2a26` · drained s1634
+- **Branch / tip:** `lane/c` @ `a44c31c12` (runner auto-commit, dispatched 16:29:34 on **`gpt-5.5` effort=high**)
+- **Base:** `1321f9fc6` · **Merge:** `e43e0223c76a8709c1918cae2533981255033253` · drained s1634
 - **Gated in:** detached worktree `worktrees/gate-s1634` (§3.0b custody — undecided content never entered main's working tree), merged as **one act** per §3 / F-1589-5.
 
 ## VERDICT: **MERGE** — scope complete, firewall clean, and all three provenance paths proven in the drain's own gate.
@@ -60,7 +60,7 @@ build does not have** (3,096,944 vs 2,502,860). That gap is precisely what the l
 
 ## Merge classification
 
-Base `4ce0dad4a` (`git merge-base main lane/c`). Lane touched **one** path. `git log 4ce0dad4a..main --
+Base `1321f9fc6` (`git merge-base main lane/c`). Lane touched **one** path. `git log 1321f9fc6..main --
 e2e/asset-diet.spec.ts` is **empty** → **LANE-TOUCHED / MAIN-UNTOUCHED**; no graft, no conflict, `ort`
 merged cleanly. The `main..lane/c` two-dot diff additionally listed `STATUS.md`, `logs/**`,
 `scripts/fire.md`, `scripts/law-pointer-baseline.json`, `tasks/BACKLOG.md` — **all pure main-moved

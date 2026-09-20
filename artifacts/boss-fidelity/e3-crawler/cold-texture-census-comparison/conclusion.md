@@ -2,7 +2,7 @@
 
 The full regression and unchanged serial Crawler test fail their absolute texture pins by one in both projects. Their model allocation/disposal deltas remain unchanged. The diagnostic below identifies the desktop extra allocation before any Crawler request; it does not turn the failed tests into passes.
 
-The current runtime reports 81 geometries and 33 textures at warm, 800 ms and a further two seconds. The independently materialized HEAD runtime (`d41ab98ce0d7fbc48bb01e8e87c92c61f148de2d`) reports 81/32 at those same samples, including an identical repeat after warming the server. The current hero uses a 256×2304 canvas atlas, while HEAD still presents `hero-homesteader-f.png`. The current runtime retains the original image's GPU allocation as well.
+The current runtime reports 81 geometries and 33 textures at warm, 800 ms and a further two seconds. The independently materialized HEAD runtime (`d41ab98ce0d7fbc48bb01e8e87c92c61f148de2d (archive: pruned by the A3 rewrite)`) reports 81/32 at those same samples, including an identical repeat after warming the server. The current hero uses a 256×2304 canvas atlas, while HEAD still presents `hero-homesteader-f.png`. The current runtime retains the original image's GPU allocation as well.
 
 After the three unchanged samples, an explicitly separate HEAD diagnostic advances exactly one 1/30-second simulation tick. HEAD then reports 81/33 and presents the same 256×2304 hero atlas. Mapped GPU texture counts grouped by source type, dimensions and URL match the current runtime. No Crawler model request or console/page error occurs in any of these runs. `resource-transition.json` records the assertions and evidence hashes.
 

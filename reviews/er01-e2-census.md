@@ -1,9 +1,9 @@
 # ER-01 — E2 READINESS CENSUS (lane-b)
 
-**Slice:** `lane-er01-e2-census` · **branch:** `lane/b` · **tip:** `ecee66cd` · **base:** `dad6fbff`
+**Slice:** `lane-er01-e2-census` · **branch:** `lane/b` · **tip:** `ecee66cd` · **base:** `474bd4fe`
 **Drained by:** s1458 fire, 2026-08-05 · **Gate worktree:** `gate-s1458/` (detached, §3.0b custody — main's working tree was never touched)
 
-## VERDICT: ✅ MERGED `96d409889e4bdd502431da48a7386a5fcc90d1f8` — after being REFUSED and CURED in the same fire
+## VERDICT: ✅ MERGED `3b7abe4ecae54ab1a74b6473d8e2b0d1dad317be` — after being REFUSED and CURED in the same fire
 
 > ⏸️ **SUPERSEDED — THE ORIGINAL VERDICT IS RETAINED BELOW, NOT DELETED, because the refusal is the load-bearing half of this review.**
 > **First verdict (s1458, ~19:50): REFUSED — NOT MERGED.** *"The slice's substance is sound and valuable, and every census assertion it makes holds. It is refused on one narrow, fully-diagnosed defect: its own new spec fails 8/8 under the house playwright command on the repo's pinned Node, and that is a NEW failure, not a documented known-red (drain SKILL §44)."*
@@ -21,7 +21,7 @@
 | **Guard teeth, planted on the PINNED Node** | ✅ planted `console.error` → **4/4 RED**, captured verbatim; removed → green. The narrow filter is not a blanket silence. |
 | `gr-sim` + `bench-seeds` + `cross-engine-skip` | **13 pass / 1 fail** — the one red **control-proven pre-existing** |
 
-**The red, proven rather than labelled** (a known-red claim is not exoneration): `gr-sim.test.mjs` → *"the Baron driver runs the declared fight and keeps medal writes off headless"*. Same worktree, same hour, same command, reset to clean main `2d6da94f`: **identical 13/1**, and identical **to the digit** — received `kills: 861` vs pinned `869`, `eventLogHash: fnv1a32:36004eab` vs `fnv1a32:b9566c6d` in **both arms**. This is the **F-1403-1 / F-1404-2 cross-engine class** (the same Node 23-vs-26 split this review's own F-1458-2 is about), not this merge.
+**The red, proven rather than labelled** (a known-red claim is not exoneration): `gr-sim.test.mjs` → *"the Baron driver runs the declared fight and keeps medal writes off headless"*. Same worktree, same hour, same command, reset to clean main `57097d8a`: **identical 13/1**, and identical **to the digit** — received `kills: 861` vs pinned `869`, `eventLogHash: fnv1a32:36004eab` vs `fnv1a32:b9566c6d` in **both arms**. This is the **F-1403-1 / F-1404-2 cross-engine class** (the same Node 23-vs-26 split this review's own F-1458-2 is about), not this merge.
 
 ⓘ The lane's own `tasks/BACKLOG.md` line was **deliberately not landed**: it read *"READY-FOR-GATES on lane/b"*, which the merge makes false. The merged verdict is written directly instead, so no half-retired entry is left behind.
 
@@ -41,7 +41,7 @@ Admits the two non-pressure E2 board contracts (`e2-trestle`, `e2-incline`) to `
 
 The middle two rows are the whole finding: **every substantive assertion in the slice passes.** The failure is entirely in the spec's console-capture channel.
 
-## Merge classification (computed from the true merge-base `dad6fbff`, not assumed)
+## Merge classification (computed from the true merge-base `474bd4fe`, not assumed)
 
 | Path | Class |
 |---|---|

@@ -1,6 +1,6 @@
 # e9-seed-run — A8, "plant the future"
 
-**Slice:** door-completion-sheet §A8 (RATIFIED 2026-08-20) · **Branch:** `worktree-agent-ad297088098a5a90d` · **Base:** `d931958b3`
+**Slice:** door-completion-sheet §A8 (RATIFIED 2026-08-20) · **Branch:** `worktree-agent-ad297088098a5a90d` · **Base:** `c7b280d2f`
 
 ## Verdict
 
@@ -133,7 +133,7 @@ the manifest's "source it from the consumer" law makes every such import suite-w
   tree, on both the desktop and mobile halves that had failed. Load flake, the known class.
 - `e9-arsenal:77` ("Cure-Arms free people and power fevered machines down without death events")
   fails solo — and is **PRE-EXISTING, proven by control, not argued**: reverting `src/game/Game.ts`
-  to the base commit `d931958b3` (this slice's only shared browser-side file; `TileStateStore`'s
+  to the base commit `c7b280d2f` (this slice's only shared browser-side file; `TileStateStore`'s
   change is additive and cannot reach the arsenal) reproduced the identical failure. Not in
   `reviews/suite-red-inventory.md`, so it is recorded here as newly-observed rather than known.
   Dome Basin's own sim is untouched by an independent route as well: its null-floor rows are
@@ -155,11 +155,11 @@ the manifest's "source it from the consumer" law makes every such import suite-w
   pre-existing, same control. Notably this is the very guard that would have inventoried the
   `e9-arsenal:77` red above, and it is itself red.
 
-**Final tally: 8 distinct reds, 7 proven pre-existing at `d931958b3` by detached control, 1 proven
+**Final tally: 8 distinct reds, 7 proven pre-existing at `c7b280d2f` by detached control, 1 proven
 a battery-concurrency timeout by solo re-run. Zero unattributed.**
 - The two collection guards were **MINE** — see F-A8-7 above. Fixed, both green.
 
-**The control that decided all of this** was a clean detached checkout of `d931958b3` in this same
+**The control that decided all of this** was a clean detached checkout of `c7b280d2f` in this same
 worktree (tree verified clean first, branch restored after), running the same five guard files. Four
 of the six candidates reproduced at base and two did not; without it the two real ones would have
 been filed as inherited noise.
@@ -181,7 +181,7 @@ contain), or exclude self with `pgrep -f pattern | grep -v $$`. The same trap ap
 
 ## Merge classification
 
-Base `d931958b3`. Every file below is LANE-TOUCHED only; `git log d931958b3..HEAD` over these paths
+Base `c7b280d2f`. Every file below is LANE-TOUCHED only; `git log c7b280d2f..HEAD` over these paths
 is this branch alone.
 
 - **New:** `src/systems/SeedCaravanSystem.ts`, `e2e/e9-seed-run-caravan.spec.ts`,

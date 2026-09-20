@@ -1,7 +1,7 @@
 # Sol findings — simulation and lifecycle
 
 - **Branch:** `sol/repository-audit-findings`
-- **Base:** `7802ed6`
+- **Base:** `8510b61`
 - **State:** UNTRIAGED — no implementation authorized.
 - **Scope:** main loop, combat cadence, overlays, death boundary, and pause ownership.
 

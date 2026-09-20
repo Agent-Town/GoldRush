@@ -1,9 +1,9 @@
 # Drain review — SS-01 beat-engine ⑤ + tile-identity-pass (E1)
 
-**Slice/branch/tip:** `lane/polish` @ `e3bfb91` (tip); two stacked commits landed:
-- `07ea885` story: add beat engine (SS-01)
-- `e3bfb91` feat: add E1 tile identity descriptors (tile-identity-pass)
-**Merge base:** `9c6b693` (pre-s176-E2). **Landed onto:** main @ `7bbb7a7` (s177 lock, tip = 08b336f E2 foundation).
+**Slice/branch/tip:** `lane/polish` @ `84bf5d6` (tip); two stacked commits landed:
+- `883ccf2` story: add beat engine (SS-01)
+- `84bf5d6` feat: add E1 tile identity descriptors (tile-identity-pass)
+**Merge base:** `bfd2a3f` (pre-s176-E2). **Landed onto:** main @ `c8470cd` (s177 lock, tip = 08b336f E2 foundation).
 **Fire:** s177. **Verdict:** ✅ PASS — merged clean via 3-way, one additive-union conflict resolved.
 
 ## What it does

@@ -10,7 +10,7 @@ PRE-FLIGHT (LANE-SAFETY, runner-auto-commit aware): `git branch --show-current` 
 
 > **FACTORY-CHURN / EVIDENCE-ARTIFACT EXCEPTION (F-1407-1 + F-1266-1) — these tracked classes are ALWAYS EXPECTED and are NEVER a STOP; list them and proceed:** (a) `logs/**` — the fire/runner accounting (`factory-usage.json`, `usage-history.jsonl`, `task-stats.jsonl`, `dashboard.html`), rewritten every cycle by the factory itself; (b) `artifacts/**`, `reviews/shots-*` and any `.png` — regenerated evidence, whether as uncommitted dirt or as the whole content of an ahead commit. Screenshots are never byte-identity gated, so their bytes differ from main forever: discard them (`git checkout -- <paths>` / reset) and PROCEED, listing what you discarded. ⚠️ Without this, the fire that AUTHORS a master creates the dirt that blocks it, in the same fire, and cannot see it — f1406-1 died exactly that way for 54,875 tokens and zero edits. ⓘ What still STOPs, unchanged: modified tracked `src/**`, `scripts/**`, `e2e/**`, `tasks/**`, `specs/**`, `reviews/*.md` — anything a live drain or concurrent task could actually own.
 
-PRE-FLIGHT (CURRENCY + SAFE-DUPE) — ⚠️ **ORDER IS LOAD-BEARING. REFRESH THE LANE FIRST, THEN PROBE. DO NOT RUN THE PROBE ON AN UN-REFRESHED LANE (F-1465-2, measured on dispatch 1 of this very master).** Dispatch 1 ran the probe against `lane/a` at `dcf02430`, **44 commits behind** — the instrument did not exist there yet, so the probe reported `MODULE_NOT_FOUND` and the run STOPPED for **27,551 tokens and zero edits**. The lane was clean and one `checkout -B` from correct. The STOP was the master's fault, not the lane's.
+PRE-FLIGHT (CURRENCY + SAFE-DUPE) — ⚠️ **ORDER IS LOAD-BEARING. REFRESH THE LANE FIRST, THEN PROBE. DO NOT RUN THE PROBE ON AN UN-REFRESHED LANE (F-1465-2, measured on dispatch 1 of this very master).** Dispatch 1 ran the probe against `lane/a` at `76b41e7e`, **44 commits behind** — the instrument did not exist there yet, so the probe reported `MODULE_NOT_FOUND` and the run STOPPED for **27,551 tokens and zero edits**. The lane was clean and one `checkout -B` from correct. The STOP was the master's fault, not the lane's.
 
 **Step 1 — refresh (the lane is clean per LANE-SAFETY above, so this is safe and mandatory):**
 
@@ -20,7 +20,7 @@ PRE-FLIGHT (CURRENCY + SAFE-DUPE) — ⚠️ **ORDER IS LOAD-BEARING. REFRESH TH
 
     node scripts/nul-audit.mjs
 
-- **Still `MODULE_NOT_FOUND` after step 1** → `origin/main` genuinely lacks the instrument. NOW it is a real stale-remote STOP: report it. (The script landed on `origin/main` in `8181401b`; `git cat-file -e origin/main:scripts/nul-audit.mjs` confirms.)
+- **Still `MODULE_NOT_FOUND` after step 1** → `origin/main` genuinely lacks the instrument. NOW it is a real stale-remote STOP: report it. (The script landed on `origin/main` in `65e2b44a`; `git cat-file -e origin/main:scripts/nul-audit.mjs` confirms.)
 - **Exit 0 (`CLEAN`)** → the fix has already landed. STOP and report SAFE-DUPE. Do not re-do it.
 - **Exit 1 listing `src/game/Game.ts`** → this is your task. Proceed.
 

@@ -2,7 +2,7 @@ CODEX: model=gpt-5.6-sol effort=xhigh
 
 # lane-e3-crawler-socket — split CrawlerBossSystem into sim + presentation, then socket the sim half (closes F-ER01-E3-3, admits e3-canyon-works)
 
-**FIRE-AUTHORED s1471 (attended review welcome).** Fifth instance of the ERA-SOCKET class, and **the first one that is a REFACTOR before it is a socket.** Templates: `tasks/lane-e3-canyon-environment.md` (drained `2256ee58`), `tasks/lane-e3-moth-socket.md` (`47dd309f`), `tasks/lane-e3-voltage-socket.md` (`3ac90dd8`). **Read `reviews/e3-canyon-environment.md` before you start — it is your immediate predecessor and it names your blockers.**
+**FIRE-AUTHORED s1471 (attended review welcome).** Fifth instance of the ERA-SOCKET class, and **the first one that is a REFACTOR before it is a socket.** Templates: `tasks/lane-e3-canyon-environment.md` (drained `0b2ad1e9`), `tasks/lane-e3-moth-socket.md` (`bfeca043`), `tasks/lane-e3-voltage-socket.md` (`9af152ab`). **Read `reviews/e3-canyon-environment.md` before you start — it is your immediate predecessor and it names your blockers.**
 
 ⚠️ **THIS SLICE IS ALLOWED TO ADMIT `e3-canyon-works` AND MOVE THE HEADLINE TO `AGENT-READY: 3 of 4` — but ONLY if the Crawler genuinely runs headless.** Four prior sockets in this class were forbidden from moving the headline. You are not, *provided you earn it*. If you finish and the boss still cannot complete a run in `gr-sim`, the honest outcome is a **narrowed gap and an unmoved headline** — say so plainly. A census row is a claim about what an agent can do, and inflating it is the one failure this class cannot absorb.
 
@@ -38,7 +38,7 @@ Expect **0**. If **≥1**, a Crawler path is already socketed — STOP and repor
 
 ## WHY
 
-`docs/bench/e3-readiness-census.md` F-ER01-E3-3 asked the factory to "compose the Voltage socket with the Crawler/tram objective before deciding whether the existing generic boss driver can be reused." **s1470 and s1471 answered every part of that except the Crawler**, which now stands alone as Canyon Works' only admission gap (see `reviews/e3-canyon-environment.md`, merged `2256ee58`).
+`docs/bench/e3-readiness-census.md` F-ER01-E3-3 asked the factory to "compose the Voltage socket with the Crawler/tram objective before deciding whether the existing generic boss driver can be reused." **s1470 and s1471 answered every part of that except the Crawler**, which now stands alone as Canyon Works' only admission gap (see `reviews/e3-canyon-environment.md`, merged `0b2ad1e9`).
 
 **The Crawler is not blocked by missing vocabulary. It is blocked by four specific couplings, each re-measured on main by s1471 rather than inherited:**
 
@@ -55,7 +55,7 @@ Expect **0**. If **≥1**, a Crawler path is already socketed — STOP and repor
 
 1. `reviews/e3-canyon-environment.md` — your predecessor. Note especially **F-1471-1** (`objectiveAllowsSecure` keys on any `powerGrid`): it is a **known, deliberately-mirrored** inconsistency. **Do not repair it.** If your work makes it fire, that is a finding to report, not a bug to fix.
 2. `src/systems/CrawlerBossSystem.ts` — the whole file (559 lines). It is the subject.
-3. `src/sim/HeadlessContractSim.ts` — how `syncCanyonConnectObjective()` and `sampleDayNightSnapshot()` were socketed by `2256ee58`. **Mirror that shape.**
+3. `src/sim/HeadlessContractSim.ts` — how `syncCanyonConnectObjective()` and `sampleDayNightSnapshot()` were socketed by `0b2ad1e9`. **Mirror that shape.**
 4. `scripts/gr-sim.test.mjs` — the stub block at `:60–:94`. This is the environment your sim half must survive in.
 5. `tasks/lane-e3-canyon-environment.md` — the master that produced your predecessor; mirror its honesty clauses.
 
@@ -67,7 +67,7 @@ Expect **0**. If **≥1**, a Crawler path is already socketed — STOP and repor
    - `update(at)` becomes exactly `this.step(at); this.syncPresentation(at);` so the browser's behaviour is **unchanged by construction**.
 2. **Make `publishCrawler3d()` headless-safe** with an early `typeof document === 'undefined'` return. It is a pure e2e test-hook (it writes `canvas.dataset.*`), so a headless no-op is correct, not a workaround. **Do not stub a fake `document` in the sim** — the seam belongs in the system.
 3. **Guarantee the GLB load never gates simulation.** After the split, `ensureCrawler3d()` must be unreachable from `step()`. Prove it: a sim run must complete with `crawler3dState` never leaving its initial value.
-4. **Socket the sim half into `HeadlessContractSim`**, mirroring `2256ee58`: construct the system when `twist.baron.bossKind` is the Crawler, call `step()` from the fixed-step tick, and expose diagnostics (`act`, `bursts`, `drainActive`, `drainTarget`, `tracksPinned`, `overchargeRemaining`, `destroyed[]`) through `et.goldrush.get_state` under a `crawler` key.
+4. **Socket the sim half into `HeadlessContractSim`**, mirroring `0b2ad1e9`: construct the system when `twist.baron.bossKind` is the Crawler, call `step()` from the fixed-step tick, and expose diagnostics (`act`, `bursts`, `drainActive`, `drainTarget`, `tracksPinned`, `overchargeRemaining`, `destroyed[]`) through `et.goldrush.get_state` under a `crawler` key.
 5. **Extend `e2e/er01-e3-census.spec.ts`** to assert the Crawler's headless behaviour: the act ladder advances, the drain latches on, component kills register, and the run is **deterministic across two runs** (equal event-log hash).
 6. **Update `docs/bench/e3-readiness-census.md`.** If and only if scope 1–5 genuinely land, admit `e3-canyon-works` and move the headline to `AGENT-READY: 3 of 4` / `DATA-GAP: 1 of 4`. Otherwise narrow F-ER01-E3-3 honestly and leave the arithmetic alone.
 

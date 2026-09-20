@@ -9,7 +9,7 @@ Outcome: **STOP — the authored task commit moved the citation denominator from
 The required evidence commit is an ancestor:
 
 ```text
-$ git merge-base --is-ancestor 62312c365 HEAD
+$ git merge-base --is-ancestor 6706dba05 HEAD
 ancestor_rc=0
 ```
 
@@ -36,7 +36,7 @@ citations: 515
   NOT GATED: 1146 citation(s) in 174 tracked .md outside tasks/ — largest logs/suite-red-inventory.md (646).
 ```
 
-This fails the task's hard `citations scanned == 511` denominator before either requested code change. Arithmetic: **515 != 511**, a surplus of **4** citations. The authored task commit `edbbb8f0a` introduced the four scans itself:
+This fails the task's hard `citations scanned == 511` denominator before either requested code change. Arithmetic: **515 != 511**, a surplus of **4** citations. The authored task commit `3013d09b8` introduced the four scans itself:
 
 - `tasks/goals.json` contains the two priced subjects, `e2e/tl-01-run-telemetry.spec.ts:229` and `e2e/asset-diet.spec.ts:73`.
 - `tasks/lane-f1515-1-citation-scan-nondestructive.md` repeats those same two subjects.

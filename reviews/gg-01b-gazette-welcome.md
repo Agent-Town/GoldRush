@@ -1,6 +1,6 @@
 # GG-01b — THE WELCOME: the newsie hands you the town
 
-**Slice:** `lane-gazette-welcome` (GG-01b) · **Branch:** `lane/perf` · **Tip:** `f83f8f76` · **Merge-base:** `4f51bdbf`
+**Slice:** `lane-gazette-welcome` (GG-01b) · **Branch:** `lane/perf` · **Tip:** `f83f8f76` · **Merge-base:** `43ec76d9`
 **Drained by:** s1210 fire, 2026-07-29 · **Merged to main as:** see commit of this file
 
 ## Verdict
@@ -28,7 +28,7 @@ Server identity was proved before any reading was believed: the scratch dev serv
 
 ## Merge classification
 
-Base `4f51bdbf`. `lane/perf` is **2 ahead**, and the first of those two is `06eeac68` — **the GG-03 gazette panel swap that s1208 gated and REJECTED**. This slice is its child, so the branch could not be merged; only `f83f8f76`'s own delta was grafted.
+Base `43ec76d9`. `lane/perf` is **2 ahead**, and the first of those two is `06eeac68` — **the GG-03 gazette panel swap that s1208 gated and REJECTED**. This slice is its child, so the branch could not be merged; only `f83f8f76`'s own delta was grafted.
 
 - **Rejected parent `06eeac68` touches:** `src/news/heraldReader.ts`, `src/news/heraldReader.css`, `e2e/gazette-first-issue.spec.ts`, `scripts/asset-diet.mjs` + 5 screenshots.
 - **This slice touches:** the four files below + 6 screenshots. **The two sets are disjoint**, so `git checkout f83f8f76 -- <paths>` carries zero GG-03 contamination. Verified: grafted delta is **459 insertions / 10 deletions**, byte-identical to `git diff 06eeac68 f83f8f76` on those paths.
@@ -37,7 +37,7 @@ Base `4f51bdbf`. `lane/perf` is **2 ahead**, and the first of those two is `06ee
 |---|---|---|
 | `src/town/TownWelcome.ts` | **NEW** | free |
 | `e2e/gazette-welcome.spec.ts` | **NEW** | free |
-| `src/town/TownScene.ts` | **LANE-TOUCHED only** (+149/−10) | clean apply — `git diff 4f51bdbf main` on this path is **empty**; main never moved it |
+| `src/town/TownScene.ts` | **LANE-TOUCHED only** (+149/−10) | clean apply — `git diff 43ec76d9 main` on this path is **empty**; main never moved it |
 | `src/game/ProfileStorage.ts` | **LANE-TOUCHED only** (+2, additive key) | clean apply — main never moved it |
 | `artifacts/gazette-welcome/*.png` (6) | **NEW** | free |
 

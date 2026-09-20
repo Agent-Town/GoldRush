@@ -10,7 +10,7 @@ GROUND-TRUTH pre-flight: grep `DredgeQueen` across src/ — absent (verified 202
 
 ## Why (owner ratification 2026-07-16, verbatim)
 "The inconsistency in the boss fight is how the paddles broke, that is not explained. So that should be part of Act 1 - stop her from clawing up history (which potentially the players don't really care about) - but at the same time destroy the paddles to reach Act 2. Otherwise - this is great. Especially that she becomes another map."
-The choreography is ratified (storybook E5 §BOSS + bundle ruling); the E5→E6 ladder is blocked on exactly this boss. The deepwater tile is SHIPPED (bb3b60b1: DeepwaterClaimTile, boat pads, storm-scheduled skiff waves) — the arena exists; the fight does not.
+The choreography is ratified (storybook E5 §BOSS + bundle ruling); the E5→E6 ladder is blocked on exactly this boss. The deepwater tile is SHIPPED (f0f85bbd: DeepwaterClaimTile, boat pads, storm-scheduled skiff waves) — the arena exists; the fight does not.
 
 ## Scope
 1. **DredgeQueenBossSystem** (new, src/systems/, crawler/land-yacht precedent): a component boss — CLAW / PADDLES(×2) / HOLD — on e5-deepwater-claim, boss-run triggered per the crawler's contract-hook pattern (boss variant/wave threshold on this contract only). Placeholder presentation throughout (primitive barge + flag + claw shapes — the railcar precedent: choreography ships factory-side; the painted plate + 3D body wire in later).

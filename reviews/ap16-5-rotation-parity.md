@@ -1,8 +1,8 @@
 # Review — AP-16-5: BUILD gains `rotationSteps` parity on the standing-orders door
 
 **Slice:** `ap16-5-rotation-parity` (authored s1643, drained s1645)
-**Branch:** `lane/a` · **tip:** `e734260f0` · **base:** `f4a4a2f79` (main at dispatch)
-**Merge:** `144b3291f8b2e1d4f82eb29575f1a49bf339f284` (main, 2026-08-11)
+**Branch:** `lane/a` · **tip:** `05c883e10` · **base:** `f4a4a2f79` (main at dispatch)
+**Merge:** `73de3dec22c95ac0cbc686c3049434d149f3a747` (main, 2026-08-11)
 **Gated by:** s1645 fire, detached worktree `gate2-s1645` (§3.0b), `--workers=1` (§3.1)
 
 ## Verdict
@@ -111,7 +111,7 @@ instrument), not new reds — read the counts, not the rc.
 📌 **A stale note in the master, now retired:** its adjacent list warned that
 `e2e/front-door-parity.spec.ts` is a KNOWN RED (0/4) and must not be counted against the runner. That
 was true when s1643 wrote it and is false now — **drain 1 of this same fire merged its repair
-(`dce549be`)**. I ran it here anyway as a free cross-check, and it is **green on the ap16-5 tree**, so
+(`f2a1c0dc`)**. I ran it here anyway as a free cross-check, and it is **green on the ap16-5 tree**, so
 the two drains coexist. A review's adjacent-suite list is perishable; this one perished within the
 hour.
 

@@ -10,7 +10,7 @@ const tapes = join(root, 'bench/gauntlet/tapes');
 mkdirSync(tapes, { recursive: true });
 
 const players = [
-  ['bench/gauntlet/heat1/pi/gauntlet-player.mjs', 'pi-the-claim.json', '02009c72a^'],
+  ['bench/gauntlet/heat1/pi/gauntlet-player.mjs', 'pi-the-claim.json', '10936bb4f^'],
   ['bench/gauntlet/heat2/omp/standalone-player.mjs', 'omp-the-claim.json'],
   ['bench/gauntlet/heat2/prime-sol/the-claim-player.mjs', 'prime-sol-the-claim.json'],
 ];

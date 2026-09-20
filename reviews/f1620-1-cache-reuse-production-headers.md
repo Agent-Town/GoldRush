@@ -1,8 +1,8 @@
 # f1620-1 — advance-stream cache reuse under production headers
 
 **Slice:** `tasks/lane-f1620-1-cache-reuse-production-headers.md` (FIRE-AUTHORED s1620, from F-1620-1 + F-1620-2)
-**Branch / tip:** `lane/c` @ `dbf15234c` (runner commit 2026-08-10T08:51:52+07:00)
-**Merge:** `868ec6b3c518502145c72cf930eb90eb26041e1e` — drained s1621
+**Branch / tip:** `lane/c` @ `c0623cfac` (runner commit 2026-08-10T08:51:52+07:00)
+**Merge:** `0f9a109d9c79695d6a4c3af19b09f81abb756d87` — drained s1621
 **Gated in:** detached worktree `worktrees/gate-s1621` (§3.0b — undecided content never entered main's working tree)
 
 ## VERDICT: MERGE. F-1620-2 is ANSWERED, and the answer is a SPLIT one — most of the double-download was the dev server, and a precisely-located residue is not.
@@ -56,7 +56,7 @@ The dev arm's **DOUBLE-DOWNLOAD / REVALIDATED split is unstable, but their SUM i
 
 ## Merge classification
 
-Base `85a1f52a`; `lane/c` 1 ahead, `paths=5`, classifier reads **LANE-ONLY 5 / DUPLICATE 0 / MAIN-ONLY 0 / BOTH-MOVED 0** — main had moved none of them, so no graft was required and the merge is a clean `--no-ff`.
+Base `2a2b26c7`; `lane/c` 1 ahead, `paths=5`, classifier reads **LANE-ONLY 5 / DUPLICATE 0 / MAIN-ONLY 0 / BOTH-MOVED 0** — main had moved none of them, so no graft was required and the merge is a clean `--no-ff`.
 
 | Path | Class |
 |---|---|

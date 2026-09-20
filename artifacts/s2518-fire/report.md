@@ -4,7 +4,7 @@ No implementation was merged or published. Main's completed deploy-budget output
 
 ## Delivered
 
-- `91a83844d` registers `deploy-budget-production-probe` and supersedes the original main task. The review is `reviews/deploy-budget-hard-verdict-s2518.md`. This is a readiness condition the corrective can satisfy, not another owner decision.
+- `fa4f34a2d` registers `deploy-budget-production-probe` and supersedes the original main task. The review is `reviews/deploy-budget-hard-verdict-s2518.md`. This is a readiness condition the corrective can satisfy, not another owner decision.
 - `save/deploy-budget-hard-verdict-s2518` = `36176d1ca93701e2f6ceb0d3d9f52df79e164443` preserves the exact four-path implementation and is pushed. A temporary index left main untouched; all four SHA-256 values were rechecked before restoring only those paths. The receipt remains under `tasks/done/rejected-20260905-103054-deploy-budget-hard-verdict.md`. The original master and run log are retained.
 - Independent Node 26.4.0 checks: hard-verdict guard **13/13 passed**, shell syntax passed. The legacy deploy contract fails `strict-skip: expected rc 2, got 5` on both candidate and unchanged HEAD. That is an inherited empty-measurement fixture, not a regression introduced by this candidate. The control blocked external ssh/rsync even if it unexpectedly reached them.
 - The predecessor's real dry run reports one mobile total (17,365,554 / 25,000,000 bytes) and FAIL; its full Node attempt is explicitly interrupted/inconclusive. The corrective retains the hardening, separates production measurement from debug-only cue coverage, and updates the existing fixture without changing the quantity or threshold.

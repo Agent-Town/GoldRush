@@ -1,7 +1,7 @@
 # GG-03c — the Herald's art weighs the same in dev as it does in dist
 
-**Slice:** `lane-gg-03c-herald-art-dev-path-weight.md` · **Branch:** `lane/m3` · **Tip:** `8e265ee4` · **Base:** `a4524f9e`
-**Merged at:** `b5be7ab3` ⚠️ *(see F-1211-4 — that commit's message names only the goals.json fix; it carries this whole slice)*
+**Slice:** `lane-gg-03c-herald-art-dev-path-weight.md` · **Branch:** `lane/m3` · **Tip:** `8e265ee4` · **Base:** `a88b9b24`
+**Merged at:** `15e00755` ⚠️ *(see F-1211-4 — that commit's message names only the goals.json fix; it carries this whole slice)*
 **Drained by:** s1211 fire, 2026-07-29 · **Verdict: ✅ ACCEPTED**
 
 ## What it does
@@ -34,8 +34,8 @@ Issue No. 1 renders six engraved panels; ongoing items carry their matching cuts
 byte. The all-image total differs slightly (6,189,653 vs the report's 6,139,042), which the report itself predicted
 ("varies slightly with the animation frame requests") — an honest report, not a lucky one.
 
-**And it still works after the welcome.** `herald-dev-weight.mjs` was written on base `a4524f9e`, which predates
-GG-01b (`8993da33`). GG-01b takes over a fresh profile's first town entry — the exact mechanism of F-1210-5 — so
+**And it still works after the welcome.** `herald-dev-weight.mjs` was written on base `a88b9b24`, which predates
+GG-01b (`9825441f`). GG-01b takes over a fresh profile's first town entry — the exact mechanism of F-1210-5 — so
 this instrument had every reason to break. It did not: its own guard (10 decoded Herald images, none with
 `naturalWidth === 0`) passed on the merged tree. The welcome does not block the Herald badge path.
 
@@ -61,14 +61,14 @@ agree with its slice.
 
 ## Merge classification
 
-Base `a4524f9e` **is** `git merge-base main lane/m3`, and `main..lane/m3` is the single commit `8e265ee4`.
+Base `a88b9b24` **is** `git merge-base main lane/m3`, and `main..lane/m3` is the single commit `8e265ee4`.
 
 Main moved since that base on exactly five files — `e2e/gazette-welcome.spec.ts`, `e2e/release-build.spec.ts`,
 `src/game/ProfileStorage.ts`, `src/town/TownScene.ts`, `src/town/TownWelcome.ts` (all GG-01b). The slice touches
 none of them. **Every file is LANE-TOUCHED-only or NEW: no 3-way judgment was required.**
 
 Applied with `git checkout 8e265ee4 -- <8 paths>` and verified by identity rather than by eye —
-`git diff --cached -- src scripts e2e` was compared byte-for-byte against `git diff a4524f9e 8e265ee4 -- src scripts e2e`:
+`git diff --cached -- src scripts e2e` was compared byte-for-byte against `git diff a88b9b24 8e265ee4 -- src scripts e2e`:
 **10,984 bytes both sides, identical.** Re-verified after each control arm restored the tree.
 
 | Class | Files |
@@ -81,7 +81,7 @@ Applied with `git checkout 8e265ee4 -- <8 paths>` and verified by identity rathe
 
 ### ↩️ F-1211-1 — **WITHDRAWN LATER THE SAME FIRE. The claim below is wrong; it is kept, not deleted, because how it was wrong is the useful part.**
 
-> **Correction (s1211, after draining the lane-d corrective at `e5d3c26c`):** `:184` **cleared** when `:21` was cured —
+> **Correction (s1211, after draining the lane-d corrective at `feb0a3d7`):** `:184` **cleared** when `:21` was cured —
 > the full release suite is **26/26**. My control could not see why: at `--workers=2`, `:21`'s two **150-second**
 > timeouts ran *concurrently with* `:184` and were themselves the contention starving its GLTF blob-texture loads.
 > **Both of my arms contained the slow `:21`**, so "reproduced identically with and without GG-03c" was true and
@@ -141,10 +141,10 @@ Gazette ladder is next open.
 
 1. `gg-01b-gazette-welcome` carried `"status": "merged-with-blocking-regression"` — **outside the ten-value vocabulary**
    at `scripts/goal-tracker.test.mjs:56`. This is precisely the near-miss-value class that F-1123-1 rejected by name.
-2. `lane-b-approach-convergence-class` carried `"mergeHash": "0b8db8f9"` — 8 chars where the schema requires 40, and
+2. `lane-b-approach-convergence-class` carried `"mergeHash": "0114f5bb"` — 8 chars where the schema requires 40, and
    `mergeHash` is a **guard input** (`drain-block-check.mjs` reads it), not a decorative pointer.
 
-Fixed in `b5be7ab3`: status → `merged` (it *is* merged, hash ancestral), hash expanded to its full 40. **Nothing was
+Fixed in `15e00755`: status → `merged` (it *is* merged, hash ancestral), hash expanded to its full 40. **Nothing was
 downgraded** — F-1210-5's full text stays in `blockedReason`, the finding stays open, the lane-d corrective stays
 queued, deploy stays withheld, and a `note_s1211` on the leaf says so in as many words.
 
@@ -153,7 +153,7 @@ queued, deploy stays withheld, and a `note_s1211` on the leaf says so in as many
 s1210 disclosed that `git checkout <ref> -- <paths>` **stages** what it writes, so a later plain `git commit` takes the
 whole index, and wrote the remedy: *"After any `git checkout <ref> -- <path>`, run `git status` before committing."*
 I read that finding, then did `git add tasks/goals.json && git commit` with the entire GG-03c delta sitting staged —
-and `b5be7ab3`, whose message names only the goals.json fix, carries all 24 files of this slice. Content is correct
+and `15e00755`, whose message names only the goals.json fix, carries all 24 files of this slice. Content is correct
 and fully gated (everything in the Evidence table was measured on this exact tree); the **message** is wrong, and this
 review is the correction. History is not rewritten: the hash is recorded honestly here, in the goal leaf, and in BACKLOG.
 
@@ -165,9 +165,9 @@ mechanism instead.** I tested the mechanism rather than recommending it — and 
 - ✅ **`git add <paths>` then `git commit --only <paths>`** works and is sweep-proof.
 
 **Proved with a canary, not asserted.** Before making this drain's commit I deliberately staged an unrelated file
-(`logs/task-stats.jsonl`). The commit `5563bfc4` took **exactly** its four named paths, and afterwards
+(`logs/task-stats.jsonl`). The commit `5604776b` took **exactly** its four named paths, and afterwards
 `git diff --cached --name-only` still printed `logs/task-stats.jsonl` — staged, uncommitted, untouched. A plain
-`git commit` would have swallowed it, exactly as `b5be7ab3` swallowed this slice.
+`git commit` would have swallowed it, exactly as `15e00755` swallowed this slice.
 
 ➡️ **Recommended for the drain skill's step 5, as the mechanism rather than the reminder.** Note the ordering trap
 that made my first attempt fail: `--only` still requires each path to be *known to git*, so a **new** file must be

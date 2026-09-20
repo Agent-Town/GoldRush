@@ -6,7 +6,7 @@
 ### The arms were not the ones s1294 specified, and could not have been
 
 s1294's gate says *"both arms (clean `main` and the merged tree)"*. That pairing **no longer exists**:
-the slice was swept onto main by `b37c1fc6` before this fire started (F-1295-1), so "clean main" and
+the slice was swept onto main by `3058fca5` before this fire started (F-1295-1), so "clean main" and
 "the merged tree" are now the **same tree**. My first harness discovered this the honest way — it
 aborted with `ARM MISMATCH: wanted MERGED, tree is CONTROL`, because
 `git checkout lane/e2-arsenal -- <4 paths>` produced **zero** change.
@@ -15,7 +15,7 @@ The arms that answer the same question today are **PRE-sweep vs POST-sweep**:
 
 | Arm | `PermissionLadder.ts` blob | Meaning |
 |---|---|---|
-| `PRE` | `d6941842` (at `00e4c074`, `b37c1fc6^`) | the tree **without** the slice |
+| `PRE` | `d6941842` (at `00e4c074 (archive: pruned by the A3 rewrite)`, `3058fca5^`) | the tree **without** the slice |
 | `POST` | `9451c000` (at `main` HEAD) | the tree **with** the slice |
 
 Arm identity is asserted by **blob hash before every single run**, not by dirtiness — the check that

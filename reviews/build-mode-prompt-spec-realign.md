@@ -2,8 +2,8 @@
 
 - **Slice**: `tasks/lane-a-build-mode-prompt-spec-realign.md` (authored s1171, F-1170-2's cure)
 - **Branch / tip**: `lane/m3` @ `715669bf` — one commit ahead
-- **Merge base**: `e84043af`; main never moved `e2e/` since ⇒ no MAIN-MOVED file, no 3-way graft
-- **Merge**: `e42ed4ef` · **Drained**: s1173 fire, 2026-07-28
+- **Merge base**: `80799a00`; main never moved `e2e/` since ⇒ no MAIN-MOVED file, no 3-way graft
+- **Merge**: `46d6308c` · **Drained**: s1173 fire, 2026-07-28
 - **§3.0 drain-block-check**: `✅ CLEAR — [factory-build-mode-prompt-realign] status="queued"` — run first, before classification.
 
 ## VERDICT: ACCEPT — a full realign. All 22 stale card failures cleared, 10 rows net recovered, 8 converted into later separately-owned faults.
@@ -13,7 +13,7 @@
 Four e2e specs encoded the **pre-2026-07-12** building-card contract. The owner replaced that
 contract that day (`tasks/fix-building-prompt-flicker.md:8`, RULING: *"the card shows ONLY in build
 mode … outside build mode, proximity to a building shows nothing (combat stays clean)"*), and
-`50977ab6` shipped the runtime change plus its own new spec while updating none of the others. This
+`3e23a12a` shipped the runtime change plus its own new spec while updating none of the others. This
 slice realigns the four stragglers: a dated comment citing the ruling, plus `setBuildMode(true)`
 before each card assertion. **Zero `src/`** — the runtime is the ratified side, and a cure that
 edited it would reverse an owner ruling.
@@ -89,7 +89,7 @@ coincidental.
 
 ## Merge classification
 
-Pure **LANE-TOUCHED** — main never touched `e2e/` since base `e84043af`. Five files, path-scoped:
+Pure **LANE-TOUCHED** — main never touched `e2e/` since base `80799a00`. Five files, path-scoped:
 
 | File | Class |
 |---|---|

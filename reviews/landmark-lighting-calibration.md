@@ -1,6 +1,6 @@
 # Review: landmark-lighting-calibration — landmarks lit by the sun, not by themselves (lane-c, Claude Opus 5 implementer, attended drain 2026-09-05)
 
-**Slice/branch/tip:** `landmark-lighting-calibration` · `lane/c` · commit `3de874431` over base `25a3b25a7` · merge `ab3704716` (no-ff; `Terrain3dClaimPilot.ts` auto-merged beside the sampler's hunks; BACKLOG union).
+**Slice/branch/tip:** `landmark-lighting-calibration` · `lane/c` · commit `35da2e06d` over base `dc74e3075` · merge `a05abdf1d` (no-ff; `Terrain3dClaimPilot.ts` auto-merged beside the sampler's hunks; BACKLOG union).
 **Verdict:** MERGED — a LOOK change with the owner's veto open (REVERT-LIGHTING; live A/B via `?lighting=legacy`, no rebuild). F-ASTRA-9 cured; F-ASTRA-1's paint findings stay with the atlases.
 
 ## What it does
@@ -20,7 +20,7 @@ Terrain and hero luminance move by < 0.001. p95 (paired arms): desktop Claim 10.
 |---|---|
 | Runner (lane tree, own port 5303) | tsc 0; build 0; landmark-brightness 4/4, perf-01 1/1, lantern-true-world 9/9 (reel p95 ratio 0.99/1.01), map-census 47/47 verdict-identical cell for cell to the pre-change tree; both projects; zero console/page errors |
 | Changed assertions in `landmark-brightness.spec.ts` | none (two new tests appended, skipped unless `GR_LIGHTING_CALIBRATION=1`) |
-| Attended on the merged tree `ab3704716` | see the drain commit message (tsc, build, the four suites, map-census, era pin, battery) |
+| Attended on the merged tree `a05abdf1d` | see the drain commit message (tsc, build, the four suites, map-census, era pin, battery) |
 
 ## Findings
 - **F-LLC-1 (fire-authorable):** `e3-moth-season`'s census brightness probe sits ON the 0.06 floor (0.048–0.060 across seven runs) because it aims through a gate opening against a 0.93 salt-flat ground; the render is identical to the pre-change tree — a marginal probe, not a look regression, but it will flicker.

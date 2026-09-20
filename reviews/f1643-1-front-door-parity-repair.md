@@ -1,8 +1,8 @@
 # Review — f1643-1: front-door-parity learns `PICK_UPGRADE` (the verb AP-16-2 added)
 
 **Slice:** `f1643-1-front-door-parity-repair` (FIRE-AUTHORED s1644, drained s1645)
-**Branch:** `lane/b` · **tip:** `b05a7adee` · **base:** `50a02fd54`
-**Merge:** `dce549beaf7f6e6bd4ffc57c42a1a5d7a3bcb93e` (main, 2026-08-11)
+**Branch:** `lane/b` · **tip:** `0c04afb4e` · **base:** `c48586941`
+**Merge:** `f2a1c0dc040a155a6829581b6ba3135ed17ec09c` (main, 2026-08-11)
 **Gated by:** s1645 fire, detached worktree `gate-s1645` (§3.0b), `--workers=1` (§3.1)
 
 ## Verdict
@@ -80,7 +80,7 @@ string) without touching the firewalled config.
 
 ## Merge classification
 
-**1 path, LANE-ONLY.** `git diff --stat 50a02fd54 lane/b` = `e2e/front-door-parity.spec.ts` alone
+**1 path, LANE-ONLY.** `git diff --stat c48586941 lane/b` = `e2e/front-door-parity.spec.ts` alone
 (+103/-28). Main moved 7 paths since base — `STATUS.md`, `tasks/BACKLOG.md`, and five `logs/*` —
 and the **intersection is EMPTY**, so no graft and no conflict resolution. `git merge --no-ff` was
 clean; `main..lane/b` is now empty. Merged and committed as ONE act (F-1589-5 — no staged merge left

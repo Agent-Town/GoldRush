@@ -1,5 +1,5 @@
 // s1608 — remove the gate-s1608 GITLINK that the ART runner's broad `git add` swept into
-// main at 6c780b621 (mode 160000 -> 74bd342431, my detached gate worktree's merge commit).
+// main at 5bbdc9182 (mode 160000 -> 74bd342431, my detached gate worktree's merge commit).
 // The worktree is already removed, so the entry points at a path that does not exist: it is
 // garbage in every future clone. --cached only: nothing on disk is touched.
 import { execFileSync } from 'node:child_process'

@@ -1,9 +1,9 @@
 # lantern-true-terrain — the Lantern Show draws the contract's real ground
 
 - **Slice**: `lantern-true-terrain` (lane-c), master `tasks/done/20260902-155802-lantern-true-terrain.md`
-- **Branch/tip**: `lane/c` @ `e30f9d2d3583e4f781ea331e78cb2aaca0d1f6d1` (runner auto-commit, 2026-09-02T17:47:52+07:00)
-- **Gated on**: detached worktree `gate-s2453`, trial merge `386dcedff`, review fix `76c49fcf7`
-- **Merged to main**: `c1084e547a3dbbf87ec1817a8c15a23a71a0386b` (drain s2453)
+- **Branch/tip**: `lane/c` @ `87fd9a3f7e887da9c26cb018c1b4d30d29633593` (runner auto-commit, 2026-09-02T17:47:52+07:00)
+- **Gated on**: detached worktree `gate-s2453`, trial merge `2f1f5a3b5`, review fix `6354400eb`
+- **Merged to main**: `c1374d65998f7c90d0300ee265bc6b2c54868e26` (drain s2453)
 - **Verdict**: **MERGED** — feature accepted in full; one drain-side review fix applied (F-2453-1) and one finding filed.
 
 ## What it does
@@ -82,7 +82,7 @@ replaced phrase is unique in base *and* main, and both sides' content is present
 refusal fired correctly, catching that main had gained four rows. Verified after: 5097 lines both sides,
 zero lines below the head row differing from main, zero conflict markers.
 
-Main's tree after the merge is **byte-identical to the tree I gated** (`git diff HEAD 76c49fcf7` empty), and
+Main's tree after the merge is **byte-identical to the tree I gated** (`git diff HEAD 6354400eb` empty), and
 `git log main..lane/c` is empty.
 
 ## Findings
@@ -108,7 +108,7 @@ That is precisely the `cross-engine` fate — a red that recurs for a reason eve
 gate is excused into uselessness (F-1460-1); F-2414-1 declined exactly this guard for the battery's own
 durations, for the same reason, and F-2320-1 already records this mobile gate reding ~1 run in 2.
 
-**Action taken**: the absolute pin was removed in `76c49fcf7`, the load-invariant `liveP95 * 1.15` assertion
+**Action taken**: the absolute pin was removed in `6354400eb`, the load-invariant `liveP95 * 1.15` assertion
 kept, and the measurement + reasoning written at the site so it cannot be silently restored. This is **not**
 F-1441-3's forbidden re-pin-to-clear-a-red: the cause is named and measured, and the check that actually
 constrains the slice is strengthened by being the only one left standing. The baseline table survives as

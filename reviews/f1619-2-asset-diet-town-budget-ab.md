@@ -1,6 +1,6 @@
 # f1619-2 — asset-diet town-budget A/B: settling the unverified mobile growth from f1615-1
 
-**Slice:** `f1619-2-asset-diet-town-budget-ab` · **branch:** `lane/a` · **tip:** `dc6a8e890` · **drained:** s1620, 2026-08-10
+**Slice:** `f1619-2-asset-diet-town-budget-ab` · **branch:** `lane/a` · **tip:** `0bf64dd9b` · **drained:** s1620, 2026-08-10
 
 **VERDICT: MERGE.** Delivers the per-URL breakdown it was authored for, and the measurement reproduces to within 1.6%. The drain adds one finding that is larger than the slice: **the 25 MB town budget is asserted by two tests whose totals differ by 9.5 MB** (F-1620-7).
 
@@ -67,7 +67,7 @@ Drain run: desktop delta **4,029,556** vs mobile **2,943,858**. Both arms exclud
 
 ## Merge classification
 
-Base: `main` at `754712be2`. Lane 1 ahead, 12 behind at gate time; merged clean, zero conflicts.
+Base: `main` at `a687d68a8`. Lane 1 ahead, 12 behind at gate time; merged clean, zero conflicts.
 
 | Path | Class | Resolution |
 |---|---|---|

@@ -4,7 +4,7 @@
 
 Re-land of Demo Day per-kid player profiles on fresh main (predecessor `save/demo-profiles-v1`
 was stranded 20h-stale with 4 conflicts; owner ruled re-run over hand-merge). Single clean
-lane commit `aee6015` "m3: reland demo day profiles", 1 ahead of its base, merged onto current
+lane commit `5e75686` "m3: reland demo day profiles", 1 ahead of its base, merged onto current
 main (11 commits ahead: 039, art-sweep, etc.).
 
 ## What landed (firewall-clean)

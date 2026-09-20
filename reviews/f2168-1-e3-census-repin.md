@@ -1,9 +1,9 @@
 # f2168-1-e3-census-repin — drain review (s2169)
 
 **Slice:** `f2168-1-e3-census-repin` (fire-authored s2168 from F-2167-1 / F-2168-1)
-**Branch:** `lane/b` · **Tip:** `cdfbe3cc9c9feee50f7665781e3463105e71e88d`
-**Base:** `main` at `3edbbaf14` (lane was ahead=1, behind=18)
-**Merge:** `73872b6ac33232462dc396a95a80fff246d7ca85`
+**Branch:** `lane/b` · **Tip:** `b15dcf43a416f33008ff0a38a799c899e4a8ad17`
+**Base:** `main` at `1ee591d9f` (lane was ahead=1, behind=18)
+**Merge:** `fbc4bd975137b04f7133cf0b36ac7158a5d3e26d`
 **Runner verdict:** STOPPED — not `READY-FOR-GATES` (6 passed / 2 failed), 93,992 tokens
 
 ## Verdict
@@ -17,7 +17,7 @@ had been masking.
 
 ## What it does
 
-`8465f6b33` (ap16-1, buildable parity) gave every *admitted* contract the core buildables
+`760990fda` (ap16-1, buildable parity) gave every *admitted* contract the core buildables
 registry set, which made `er01-e3-census`'s two `buildables` assertions unsatisfiable rather
 than merely stale (F-2167-1's diagnosis, which I confirm). This slice re-pins them:
 `e3-canyon-works` `:51` from `toBeUndefined()` to the 5-entry registry array (turret traded
@@ -55,25 +55,25 @@ each run `--workers=1` in a detached worktree:
 
 | Tree | Spec | canyon-works |
 |---|---|---|
-| `d6166b292` (immediately **pre**-ap16-1) | that tree's own (old pins) | **PASS** (15.4s) |
-| `8465f6b33` (**ap16-1 itself**) | **the re-pinned spec, overlaid** | **PASS** (14.7s) |
+| `b5dd2d7b0` (immediately **pre**-ap16-1) | that tree's own (old pins) | **PASS** (15.4s) |
+| `760990fda` (**ap16-1 itself**) | **the re-pinned spec, overlaid** | **PASS** (14.7s) |
 | `main` + this merge | re-pinned | **FAIL** at `:171` |
 
 The middle row is the decisive one: with the new assertions, the whole test — including
 `:171` — passes **at ap16-1's own tree**. So ap16-1 explains the assertions and *nothing
-else*. The termination break entered **after** `8465f6b33` (2026-08-10T19:08).
+else*. The termination break entered **after** `760990fda` (2026-08-10T19:08).
 
-**Attributed by bisect to `d599cd3ea` — "fix: AP-16-6C — truthful terminal receipts"
+**Attributed by bisect to `dbcbf3122` — "fix: AP-16-6C — truthful terminal receipts"
 (2026-08-12T09:25:55+07).** Bisect oracle = the re-pinned spec overlaid on each tree, so the
 assertion staleness is held constant and only sim behaviour varies. Nearest good:
-`58afad35d` (f1662-2). The commit rewrites `src/sim/HeadlessContractSim.ts` (+211 lines) —
+`c52aef205` (f1662-2). The commit rewrites `src/sim/HeadlessContractSim.ts` (+211 lines) —
 the exact file that throws — and its headline is a change to *when a contract counts as
 terminated*. The name and the symptom agree.
 
 ⚠️ **SCOPE OF THE ATTRIBUTION, stated honestly:** the bisect sampled the **61 first-parent
 commits touching `src/sim` / `src/systems` / `src/entities` / `assets/contracts`** out of
-1904 in the window — not all 1904, and not second parents. `d599cd3ea` is a **merge commit**
-(`git show -- <path>` prints nothing for it; use `git diff d599cd3ea^ d599cd3ea`), so the
+1904 in the window — not all 1904, and not second parents. `dbcbf3122` is a **merge commit**
+(`git show -- <path>` prints nothing for it; use `git diff dbcbf3122^ dbcbf3122`), so the
 true first-bad may be one of its own children. **I did NOT isolate the line-level mechanism
 — `UNVERIFIED`.** What is verified is: pre-ap16-1 PASS, at-ap16-1 PASS, today FAIL, and the
 first sampled bad commit rewrites the throwing file.
@@ -97,14 +97,14 @@ correct expectation is *more* failures to appear, not fewer — and each one is 
 
 ## Merge classification
 
-Base `3edbbaf14`; one file, `e2e/er01-e3-census.spec.ts`, **LANE-TOUCHED only** — main has not
+Base `1ee591d9f`; one file, `e2e/er01-e3-census.spec.ts`, **LANE-TOUCHED only** — main has not
 moved it since the lane's base (`lane-freeze-classify`: 1 path, LANE-ONLY, 15 of 25 added
 lines absent from main). Clean `ort` merge, no conflicts, nothing hand-resolved.
 
 ## Findings
 
 - **F-2169-1** — canyon-works crawler contract does not terminate; `sim.outcome()` throws.
-  Attributed to `d599cd3ea` (AP-16-6C truthful terminal receipts). **Attended-owed** (design
+  Attributed to `dbcbf3122` (AP-16-6C truthful terminal receipts). **Attended-owed** (design
   question about termination semantics), files with F-2165-1 / F-2168-1 as the same sitting.
   NOT fire-authorable: curing it means either changing termination semantics or ruling the
   test wrong, and both are design forks.

@@ -17,7 +17,7 @@ guard's own output, plus its RESULT line and the process exit code.
   gate(cured)      chardev  rc=0  ok=19  SKIP=0  FAIL=0  | RESULT: 0 failure(s)
   gate(cured)      socket   rc=0  ok=17  SKIP=2  FAIL=0  | RESULT: 0 failure(s)
 
-"main(pre-cure)" = main at 35a83577e, which ALREADY carries the f2057-2 tty
+"main(pre-cure)" = main at af1d35668, which ALREADY carries the f2057-2 tty
 predicate; "pre-cure" here means pre-capability-probe, not pre-f2057-2.
 
 READ THE THREE DIRECTIONS:

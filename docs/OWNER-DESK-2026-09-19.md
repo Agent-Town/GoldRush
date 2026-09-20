@@ -26,7 +26,7 @@
 ### A14 — the Regatta boat spec: four questions
 **What.** `specs/agent-play/e5-regatta-steerable-boat.md` (DRAFT): the boat is the racing body, both species steer it with the same move intent, the beacons become buoys. Astra is refreshing the boat's look in lane-c right now (art only); the steering is sim work that waits on this.
 **Questions and recommendations.** Q1 feel: turns in about 2 s, crosses the course in about 60 s, fast water ×1.5 (recommended) — or slower and heavier. Q2 leaving the boat mid-race forfeits the race (recommended) — or the hero may walk the shore. Q3 the buoys stay at Astra's five beacons (recommended) — or hug the fast-water zone. Q4 the name stays "the Claim-Boat" (recommended) — or a Regatta name.
-**RULED 2026-09-20, verbatim: "A14 - do it"** (the four recommendations ratified 2026-09-19). Slice 1 LANDED 2026-09-20 as `fd8f765e3` (`reviews/e5-regatta-boat-01.md`): the boat sails under both species, one tape hash on both engines; slice 2 LANDED 2026-09-20 as `2a86acf81` (`reviews/e5-regatta-boat-02.md`): the race reads the boat, deserters forfeit, the course is won by keys and by tape; slice 3 is authorable. **New question F-RB2-2:** disembark by key direction with a boat-length reach forfeits unwarned near a rim — (a) disembark only within the gangway's reach (recommended), (b) forfeit only when actually ashore, (c) leave. *Source: the spec's foot.*
+**RULED 2026-09-20, verbatim: "A14 - do it"** (the four recommendations ratified 2026-09-19). Slice 1 LANDED 2026-09-20 as `e417e71df` (`reviews/e5-regatta-boat-01.md`): the boat sails under both species, one tape hash on both engines; slice 2 LANDED 2026-09-20 as `f88bb8153` (`reviews/e5-regatta-boat-02.md`): the race reads the boat, deserters forfeit, the course is won by keys and by tape; slice 3 is authorable. **New question F-RB2-2:** disembark by key direction with a boat-length reach forfeits unwarned near a rim — (a) disembark only within the gangway's reach (recommended), (b) forfeit only when actually ashore, (c) leave. *Source: the spec's foot.*
 
 ### A1 — the Orbital air wall on the Eclipse
 **What.** The Mare Claim's cure (a regolith count in a window) is measured to fit the Eclipse (`regolithRequired: 4, regolithWindowWaves: 4`); the Far Side and Low Orbit are gated by crossings instead and would need their own lever and prover.
@@ -84,7 +84,7 @@
 **Ruled.** (a) one heading-pinned regeneration off the native render — queued to the ART slot as `art-steamwrecker-se-heading-regen`.
 
 ### F-NCS-5 — should the E1 base enemy look like the Claim Jumper again? (added 2026-09-19) — RULED (a)
-**What.** Since `82543f273` (2026-07-12) every E1 map draws its base enemy from the bandit slots; the Claim Jumper's own slot is named everywhere and now has real cells for all eight headings, but nothing draws it.
+**What.** Since `0f5fb77e8` (2026-07-12) every E1 map draws its base enemy from the bandit slots; the Claim Jumper's own slot is named everywhere and now has real cells for all eight headings, but nothing draws it.
 **Ruled.** (a) wake it — four sites in `src/entities/pools.ts`, the reel map, and the slot's `walk8` disabled so the animator takes the new `walk4` (F-NCS-6); EXECUTED 2026-09-19 (F-NCS-5): parked at the drain — the spec re-point did not read green; one more look owed.
 
 ### F-ASTRA-2 — promoting the 3D hero
@@ -104,7 +104,7 @@
 ## 3. Ops — actions that need you or your word
 
 ### The account-registry deploy day (later)
-**What.** Astra is landing the registry code behind a closed gate now (lane-b). The deploy is five steps you run in one evening: quiesce the old writers, the verified KV export, deploy the worker with a secret, bootstrap, then the Pages binding. The checklist is ready: **the code landed 2026-09-19 (`fa185e611`, s2642) and the five steps are `docs/ops/account-registry.md`**, each with its verification and its rollback sentence. Nothing deployed and nothing migrated — the Pages binding ships commented and the scope is unset, so the door behaves exactly as it does today. *No word today; this waits for an evening you pick.*
+**What.** Astra is landing the registry code behind a closed gate now (lane-b). The deploy is five steps you run in one evening: quiesce the old writers, the verified KV export, deploy the worker with a secret, bootstrap, then the Pages binding. The checklist is ready: **the code landed 2026-09-19 (`fdfcab4d0`, s2642) and the five steps are `docs/ops/account-registry.md`**, each with its verification and its rollback sentence. Nothing deployed and nothing migrated — the Pages binding ships commented and the scope is unset, so the door behaves exactly as it does today. *No word today; this waits for an evening you pick.*
 
 ### A3 — the repository shrink, the swap
 **What.** Ruled 2026-09-06 ("ok, good plan"). The archive and the art store are complete; the rewrite of the working repo needs one quiet evening: every clone and worktree recut, the fire and the runner re-pointed, a day of fires on the new name before the swap.

@@ -12,15 +12,15 @@ Rig: **Claude Opus 5** (`claude-opus-5`) via Claude Code CLI **2.1.257**, one ri
 
 | fact | value |
 |---|---|
-| live build | `038cc280`, builtAt `2026-09-05T14:14:13Z` (`https://agenttown.app/goldrush/version.json`) |
-| arena | `/tmp/heat12-038cc280`, `git worktree add --detach 038cc2809f317fa61fec25fa5765ff37c48b8803`, `npm ci` (57 packages), branch `heat12/opus-sweep` |
+| live build | `038cc280 (archive: pruned by the A3 rewrite)`, builtAt `2026-09-05T14:14:13Z` (`https://agenttown.app/goldrush/version.json`) |
+| arena | `/tmp/heat12-038cc280`, `git worktree add --detach 038cc2809f317fa61fec25fa5765ff37c48b8803 (archive: pruned by the A3 rewrite)`, `npm ci` (57 packages), branch `heat12/opus-sweep` |
 | arena `computeEngineHash` | `86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b` |
 | era gate | **PASS** |
 
 The gate needed care, and this is the first thing a future heat should copy. `86e53f37…` **is** the
 current era-5 pin in *main's* `assets/engine-era.json` — but it is **not** in the *arena's* copy,
-because the bookkeeping commit that appended it (`a5f9f7ab9`, "era-5 pin 86e53f37; deployed at
-038cc280") landed one commit *after* the deploy it describes. Reading the arena's file would have
+because the bookkeeping commit that appended it (`95fc285cf`, "era-5 pin 86e53f37; deployed at
+038cc280 (archive: pruned by the A3 rewrite)") landed one commit *after* the deploy it describes. Reading the arena's file would have
 produced a false STOP; reading main's would have been trusting a file about a server.
 
 So the gate was **proved against the live door**: the skew probe came back `assayEra: true`,
@@ -180,7 +180,7 @@ budget, not a wall, and **declined to declare a scored attempt.**
 **E5's crewed Stillwater still secures.** `e5-stillwater-front-crew-2` put a corsair skiff into the
 32-second storm; the rig secured at w12 / 200 g on the first scored attempt, verified, rank 1.
 
-**E3's Moth Season is no longer a cost with no benefit.** `de21da4f5` rewrote the contract row into a
+**E3's Moth Season is no longer a cost with no benefit.** `d07a0e2e7` rewrote the contract row into a
 sabotageable light circuit as pure data. The rig secured w12 / 200 g and took rank 1 — *"wide on
 health and thin on the fort: the hero never dropped below its running maximum of 100 across all 74
 views and finished 119/175 at level 16, but all six beacons were wrecked by the bank with 63 threats

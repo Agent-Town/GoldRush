@@ -5,7 +5,7 @@
 
 ## Verdict: PASS — same-person confirmed, canon-correct, wired live
 
-The wiring (`aac5aa93`, `hero-ages-wiring`, drained s775/certified s776) already resolves `char-hero-<age>-sheet-walk4-*` BY NAME with a young fallback, so landing the processed cells is a **zero-code-change** activation: the heroine now visibly ages across eras (young E1–3 → midlife E4–7 → silver E8–9 → elder E10).
+The wiring (`1086aa8c`, `hero-ages-wiring`, drained s775/certified s776) already resolves `char-hero-<age>-sheet-walk4-*` BY NAME with a young fallback, so landing the processed cells is a **zero-code-change** activation: the heroine now visibly ages across eras (young E1–3 → midlife E4–7 → silver E8–9 → elder E10).
 
 ## What it does (player-visible)
 With the aged cells present, `SpriteAnimator.resolveWalkSheet` stops falling back to young and renders the age-matched sheet. `#game-canvas[data-hero-sheet]` now reads `midlife`/`silver`/`elder` at eras 4/8/10 (previously always `young`). The heroine keeps her identity — braid, wide-brim hat, teal charm, gold pan, coat silhouette — and ages with dignity.

@@ -12,7 +12,7 @@
  * stakes" ruling of 2026-08-22, all three `stakeMarkers` carried `heroStart: true`, the hero opened
  * standing inside the west disc, and its own auto-fire held that stake for free — so a leisurely
  * pan-then-turret opening was good enough (that version secured w20 on `fnv1a32:2cc17457` /
- * `fnv1a32:fee59bca`, and it is preserved in this file's git history at `ee2d42f0b`). With the
+ * `fnv1a32:fee59bca`, and it is preserved in this file's git history at `8705c81a0`). With the
  * flip, the hero starts at (0,12) — outside all three discs — and the map is genuinely hostile:
  * the idle floor now loses at wave 2 and wave 1. A turret costs 50 and the first stake falls long
  * before the Prospector can pan that much, so the opening had to change.

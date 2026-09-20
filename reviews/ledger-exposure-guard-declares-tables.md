@@ -1,8 +1,8 @@
 # Review — ledger-exposure-guard-declares-tables
 
 **Slice:** `ledger-exposure-guard-declares-tables` (F-2470-1 cure)
-**Branch / tip:** `lane/d` @ `9dafbab44`
-**Gated as:** `07d8c6d3d` (detached worktree `gate-s2474`, §3.0b), merged to main by fast-forward — the gated commit itself, not a fresh resolution
+**Branch / tip:** `lane/d` @ `892d4c9ac`
+**Gated as:** `51e598947` (detached worktree `gate-s2474`, §3.0b), merged to main by fast-forward — the gated commit itself, not a fresh resolution
 **Drained by:** s2474
 **Verdict:** ✅ **MERGE — evidence complete, scope exact, no findings that block.**
 
@@ -26,7 +26,7 @@ The slice does two things:
    ['anon_id', 'profile_name'] }`, filtered against the table's actual columns, with the
    harvested values passing through the same `classifyKey` as `key` values.
 
-## Evidence (merged tree `07d8c6d3d`, detached `gate-s2474`)
+## Evidence (merged tree `51e598947`, detached `gate-s2474`)
 
 | Gate | Result |
 |---|---|
@@ -50,7 +50,7 @@ no red to attribute to contention (F-2462-1); the wall figure is inflated and th
 
 ## Merge classification
 
-Base: `main` @ `a4a420df1` (this fire's own lock commit; main did not move during the gate).
+Base: `main` @ `3a23ed58f` (this fire's own lock commit; main did not move during the gate).
 
 | Path | Class | Resolution |
 |---|---|---|
@@ -97,7 +97,7 @@ and did not touch the law surface.
 ## Ledger
 
 - Goal leaf `ledger-exposure-guard-declares-tables` → `status: "merged"`, `mergeHash:
-  07d8c6d3d2f4496275522202cc944046ff85f856` (recorded in the drain-bookkeeping commit that
+  51e598947970972466a5aee878b5093e28baace2` (recorded in the drain-bookkeeping commit that
   follows this one, per §3.0's two-commit rule: a commit cannot contain its own hash).
 - `tasks/BACKLOG.md`: F-2470-1 marked cured; the lane's riding row retired to a shipped row.
 - GZ-01: **nothing owed, and that is the INSTRUMENT's answer rather than my judgement.**

@@ -107,7 +107,7 @@ test('the markdown list bullet is stripped: bulleted and unbulleted rows read al
 });
 
 test('GROUND TRUTH — the real s1529 backtick header must NOT read as "no desk"', (t) => {
-  // F-1542-1, the incident replayed rather than mocked. s1529 (aab5dfb3) wrote
+  // F-1542-1, the incident replayed rather than mocked. s1529 (62586985) wrote
   // "OWNER`S DESK" — U+0060 where the apostrophe goes — over a well-formed desk
   // of 8 items, and this guard refused with "line-1 is a handoff with no desk
   // header": fail-safe in direction, but a FALSE DIAGNOSIS. An investigator who

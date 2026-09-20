@@ -2,8 +2,8 @@
 
 - **Slice:** wire-crawler-3d (E3 crawler-boss 3D presentation)
 - **Lane branch / tip:** lane/m3 → `26ab162d runner(lane-a): wire-crawler-3d.md`
-- **Base:** `f066289b` (lane reset to main by s590)
-- **Merged onto main:** this commit. Base `f066289b` → tip; main `6a45d88d`.
+- **Base:** `e3339d0f` (lane reset to main by s590)
+- **Merged onto main:** this commit. Base `e3339d0f` → tip; main `6a45d88d (archive: pruned by the A3 rewrite)`.
 - **Verdict:** PASS — merged. Player-visible boss model upgrade → **GZ item appended**.
 
 ## What it does
@@ -21,7 +21,7 @@ Wires the real Crawler GLB model onto the Rival Dynamo Crawler boss (previously 
 | Artifacts | `artifacts/wire-crawler-3d/{desktop,mobile}-chrome-{intact,drain_mast-broken,tracks-broken,capacitor_bank-broken,post-kill-baseline}.png` |
 
 ## Merge classification
-- **Clean (all files, main == base):** `src/systems/CrawlerBossSystem.ts` (no other drain touched it since base — `git diff f066289b 6a45d88d` empty on that path), plus the new spec + artifacts. Checked out from the lane tip; verified byte-identical to lane (`git diff --cached lane/m3` empty). No 3-way graft needed.
+- **Clean (all files, main == base):** `src/systems/CrawlerBossSystem.ts` (no other drain touched it since base — `git diff e3339d0f 6a45d88d (archive: pruned by the A3 rewrite)` empty on that path), plus the new spec + artifacts. Checked out from the lane tip; verified byte-identical to lane (`git diff --cached lane/m3` empty). No 3-way graft needed.
 
 ## Findings
 - None blocking. Dispose-on-kill + LITE/invalid-bytes fallbacks directly address the renderer-budget / lazy-instantiation discipline (no leaked textures on boss death, placeholder retained where the GLB can't load).

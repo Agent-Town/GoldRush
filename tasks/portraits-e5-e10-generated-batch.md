@@ -1,4 +1,4 @@
-> ⛔ SHIPPED — DO NOT QUEUE (merged to main as `06783206c`, attended drain 2026-09-06; the BACKLOG row "portraits-e5-e10-generated SHIPPED 06783206c" is the proof, its name written without the `-batch` suffix; `git merge-base --is-ancestor 06783206c main` = yes. Banner added 2026-09-07 for the task-guard audit: this master had no goal leaf.)
+> ⛔ SHIPPED — DO NOT QUEUE (merged to main as `87c61e6a1`, attended drain 2026-09-06; the BACKLOG row "portraits-e5-e10-generated SHIPPED 87c61e6a1" is the proof, its name written without the `-batch` suffix; `git merge-base --is-ancestor 87c61e6a1 main` = yes. Banner added 2026-09-07 for the task-guard audit: this master had no goal leaf.)
 
 # Task portraits-e5-e10-generated-batch: process and register the generated E5 / E8 / E10 townsfolk plates, and let their chapters speak (SCRATCH worktree, Claude Opus 5 implementer; commit prefix "art:")
 

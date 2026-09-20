@@ -5,7 +5,7 @@ import { execFileSync } from 'node:child_process';
 import { readFileSync } from 'node:fs';
 import { scan } from '../../scripts/findings-state-guard.mjs';
 
-const before = execFileSync('git', ['show', '57b9d9bb:tasks/BACKLOG.md'], { encoding: 'utf8', maxBuffer: 1e9 });
+const before = execFileSync('git', ['show', '15d1d1d1:tasks/BACKLOG.md'], { encoding: 'utf8', maxBuffer: 1e9 });
 const after = readFileSync('tasks/BACKLOG.md', 'utf8');
 
 const ids = (text) => {
@@ -23,7 +23,7 @@ const A = ids(before);
 const B = ids(after);
 const diff = (a, b) => [...b].filter((x) => !a.has(x));
 
-console.log(`before (57b9d9bb, s1317 tip): subjects ${A.all.size}  closed ${A.closed.size}  open ${A.open.size}`);
+console.log(`before (15d1d1d1, s1317 tip): subjects ${A.all.size}  closed ${A.closed.size}  open ${A.open.size}`);
 console.log(`after  (this fire)          : subjects ${B.all.size}  closed ${B.closed.size}  open ${B.open.size}`);
 console.log('\nsubjects GAINED :', diff(A.all, B.all).join(', ') || '(none)');
 console.log('subjects LOST   :', diff(B.all, A.all).join(', ') || '(none)');

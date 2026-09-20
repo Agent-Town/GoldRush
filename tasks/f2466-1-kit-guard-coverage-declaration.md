@@ -9,7 +9,7 @@ SEQUENCING LAW: verify the guard this task edits actually exists on main — `te
 
 Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead is NORMAL — the runner auto-commits. For each ahead commit: if its content is already merged to main (verify via git log/diff), it is a SAFE DUPE → `git checkout -B lane/a main && git clean -fd` and PROCEED. STOP-and-report ONLY if an ahead commit's content is NOT on main (undrained work — resetting would DESTROY it), or the worktree holds uncommitted edits you did not make. EVIDENCE-ARTIFACT EXCEPTION (F-1266-1): changes confined to regenerated evidence — `artifacts/**`, `reviews/shots-*`, and any `.png` — are NEVER "work" and NEVER a STOP; discard them and PROCEED, listing what you discarded. Then `npm install --no-audit --no-fund`; `npm run build` green before touching anything. THEN A CLEANLINESS LINE: `git -C worktrees/lane-a status --short` → must be clean, with the FACTORY-CHURN EXCEPTION — always expected, never a STOP; list them and proceed (F-1407-1): (a) `logs/**`; (b) `artifacts/**`, `reviews/shots-*` and any `.png`. What still STOPs: modified tracked `src/**`, `scripts/**`, `e2e/**`, `tasks/**`, `specs/**`, `reviews/*.md`.
 
-## Why (F-2466-1, measured s2466 at the drain of `kit-guard-generic-damage`, merge `adacf5e131fcec6df1496671129961e0468a1a46`)
+## Why (F-2466-1, measured s2466 at the drain of `kit-guard-generic-damage`, merge `0e8fd990e5feca236b2f00904373e72cc16ab4e8`)
 
 The guard is sound for what it asserts, and this task does not question its damage logic. What it fixes is that **the guard cannot tell you what it did not check**, in two ways — both MEASURED during the drain, neither inferred:
 
@@ -37,7 +37,7 @@ NO changes to: `src/systems/CombatSystem.ts`, `src/entities/Enemy.ts`, or any da
 
 ## Self-check (evidence, not vibes)
 
-`npx tsc --noEmit` clean. `npm run build` green. `npm run test:node-guards` green **with the count stated** (it was **607 tests / 602 pass / 0 fail / 5 skipped, rc=0** at `adacf5e13`, run alone; state what you measure and expect ~1265 s — run it ALONE, never beside another battery, because a contended battery manufactures reds on both sides of a handoff, F-2462-1/F-2462-3). The focused guard `node --test scripts/kit-guard.test.mjs` green at **36 tests / 36 pass** with the new declaration line visible in its output. Both mutation arms of scope 4 quoted, each with its revert confirmed clean.
+`npx tsc --noEmit` clean. `npm run build` green. `npm run test:node-guards` green **with the count stated** (it was **607 tests / 602 pass / 0 fail / 5 skipped, rc=0** at `0e8fd990e`, run alone; state what you measure and expect ~1265 s — run it ALONE, never beside another battery, because a contended battery manufactures reds on both sides of a handoff, F-2462-1/F-2462-3). The focused guard `node --test scripts/kit-guard.test.mjs` green at **36 tests / 36 pass** with the new declaration line visible in its output. Both mutation arms of scope 4 quoted, each with its revert confirmed clean.
 
 End: READY-FOR-GATES + the verbatim declaration line, both mutation-arm results, and the `test:node-guards` count.
 

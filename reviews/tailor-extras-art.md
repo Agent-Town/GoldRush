@@ -1,15 +1,15 @@
 # reviews/tailor-extras-art.md — art-batch-tailor-extras (ART slot) drain
 
 **Slice:** `art-batch-tailor-extras` · **done-move:** `tasks/done/20260726-155609-art-batch-tailor-extras.md`
-**Raws:** `worktrees/art/assets/raw/` (already on main via the s1079 retention salvage `0f9270b0`)
-**Drained by:** s1082 fire, 2026-07-26 · **Base:** main `405eb647`
+**Raws:** `worktrees/art/assets/raw/` (already on main via the s1079 retention salvage `0f9270b0 (archive: pruned by the A3 rewrite)`)
+**Drained by:** s1082 fire, 2026-07-26 · **Base:** main `eaa7e0ff`
 
 ## VERDICT: **SPLIT — the heroine's Claim-Day outfit MERGES; the tailor's sign is WITHHELD with a finding.**
 
 Two deliverables came in one batch and they do not share a fate. The Claim-Day hero sheets are proven live by a mutation control and merge. The sign extraction produces a **visibly broken** asset on screen, so it is parked rather than landed — the existing drawn plaque is strictly better than what my extraction renders.
 
 ## What it does
-The tailor's wagon shipped in `925a0c3b` with two wardrobe racks but no cloth — `HERO_SKINS = ['stock','claim-day']` existed while the claim-day art did not, so `resolveWalkSheet` silently fell back to stock every time. This drain extracts the Claim-Day sheets into `assets/processed/`, which is the *only* step needed: `SpriteAnimator.heroSkinWalkSheet():909-913` resolves the skin **by filename**, rewriting `char-hero-sheet-walk4-{a,b}-f-r*c*.png` → `char-hero-claimday-sheet-walk4-{a,b}-r*c*.png`. **Zero code change.** The player equips "Claim-Day" at the wagon and the heroine is actually wearing it.
+The tailor's wagon shipped in `33aac820` with two wardrobe racks but no cloth — `HERO_SKINS = ['stock','claim-day']` existed while the claim-day art did not, so `resolveWalkSheet` silently fell back to stock every time. This drain extracts the Claim-Day sheets into `assets/processed/`, which is the *only* step needed: `SpriteAnimator.heroSkinWalkSheet():909-913` resolves the skin **by filename**, rewriting `char-hero-sheet-walk4-{a,b}-f-r*c*.png` → `char-hero-claimday-sheet-walk4-{a,b}-r*c*.png`. **Zero code change.** The player equips "Claim-Day" at the wagon and the heroine is actually wearing it.
 
 ## Evidence
 
@@ -55,4 +55,4 @@ Zero console/page errors in all three. The equipped *choice* survives the art's 
 **F-1082-5 — 🟢 (method) A PLAIN `#town` HASH SILENTLY SHOT THE START MENU.** My first sign probe navigated to `/#town`, waited for `__GR_TOWN_DIAGNOSTICS__` inside a `.catch(() => {})`, and produced a confident screenshot **of the main menu**. The swallowed timeout is the same shape as F-1081-6's summary-less battery: *an aborted observation that reads as a clean one.* Fixed by entering through `start-menu-enter-town` as a player does and letting the wait throw. **Standing note: never wrap an evidence-gathering wait in a bare catch.**
 
 ## Merge classification
-Additive only — **34 new files** in `assets/processed/` (32 cells + 2 `frames.json`), no existing asset overwritten, no `src/` file touched, no contract edited. Nothing was contested; base `405eb647` is main's tip and the ART slot has no branch. Two probe scripts added under `scripts/` as reusable evidence tooling.
+Additive only — **34 new files** in `assets/processed/` (32 cells + 2 `frames.json`), no existing asset overwritten, no `src/` file touched, no contract edited. Nothing was contested; base `eaa7e0ff` is main's tip and the ART slot has no branch. Two probe scripts added under `scripts/` as reusable evidence tooling.

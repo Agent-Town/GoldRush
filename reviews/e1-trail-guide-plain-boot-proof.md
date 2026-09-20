@@ -1,8 +1,8 @@
 # E1 — the Trail Guide plain-boot proof (attempt 4, the one that holds)
 
 - **Slice:** `lane-b-trail-guide-plain-boot-seam-approach.md` (FIRE-AUTHORED s1256)
-- **Branch / tip:** `lane/m4` @ `c5fd71b2` (base `34d78a8f`)
-- **Merged to main:** `74ef8c66` (s1257 fire, 2026-07-30)
+- **Branch / tip:** `lane/m4` @ `c5fd71b2` (base `08b5db39`)
+- **Merged to main:** `616f82c6` (s1257 fire, 2026-07-30)
 - **Verdict:** ✅ **MERGE — 4/4 at the canonical arm under real load, and the failure mode that killed three previous attempts is now closed by construction rather than by a passing measurement.** One follow-up owed (F-1257-3), one incidental defect spotted in the fresh evidence (F-1257-4).
 
 ## What it does
@@ -39,11 +39,11 @@ The run reported eight approaches all aimed at `(-9.000, 6.700)` landing `0.046�
 - **Scope 1 was a move, not a redesign.** The extracted helper's body is byte-identical to the inlined copy in `release-build.spec.ts`, down to `SIM_PROGRESS_TIMEOUT = 15_000`. The only additions are the `export` keyword and the import line.
 - **Scope 2's "exactly two changes" is true.** Diffed the landed spec against the parked original (`logs/session-scratch/s1256/parked-trail-guide-plain-boot.spec.ts`): the three greenhorn assertions became `toHaveCount(0)`, and the local `moveHeroTo`/`pressUntil` was replaced by the shared helper with its two call sites adapted to the new `(page, x, z)` signature. **Nothing else.** No assertion weakened, no timeout altered, the feed recorder untouched, and the spec's own `SIM_PROGRESS_TIMEOUT = 20_000` is still live (it configures the `expect` timeout, so it is not dead code).
 
-The `toHaveCount(0)` change was not the run improvising — GG-04 (`c5a00849`) **deleted** the greenhorn question control, so the parked spec's assertion that it is *visible* had gone stale. s1256 caught that at authoring time and authorized the inversion; landing the spec verbatim would have red on a removed control and read as a fourth failure of the beat premise.
+The `toHaveCount(0)` change was not the run improvising — GG-04 (`bd4c5c18`) **deleted** the greenhorn question control, so the parked spec's assertion that it is *visible* had gone stale. s1256 caught that at authoring time and authorized the inversion; landing the spec verbatim would have red on a removed control and read as a fourth failure of the beat premise.
 
 ## Merge classification
 
-Base `34d78a8f`. `e2e/helpers/hero-approach.ts` and `e2e/trail-guide-plain-boot.spec.ts` are **pure adds** — main has neither (`git cat-file -e` fails for both). The 12 `artifacts/trail-guide-plain-boot/` PNGs were touched on **both** sides: s1256's `47f5f0aa` wrote them as instrumentation output (adding the three mobile beat shots that had been missing), and this lane rewrote them. No 3-way was attempted and none is meaningful — these are regenerated screenshots, which are never gated on byte identity. The set committed here is **this drain's own gate-run output on the merged tree**, which has better provenance than either input.
+Base `08b5db39`. `e2e/helpers/hero-approach.ts` and `e2e/trail-guide-plain-boot.spec.ts` are **pure adds** — main has neither (`git cat-file -e` fails for both). The 12 `artifacts/trail-guide-plain-boot/` PNGs were touched on **both** sides: s1256's `d04e3ba0` wrote them as instrumentation output (adding the three mobile beat shots that had been missing), and this lane rewrote them. No 3-way was attempted and none is meaningful — these are regenerated screenshots, which are never gated on byte identity. The set committed here is **this drain's own gate-run output on the merged tree**, which has better provenance than either input.
 
 Firewall respected in full: zero `src/` bytes, `e2e/release-build.spec.ts` untouched, `e2e/trail-guide.spec.ts` untouched (GG-04 renamed tests there and `tasks/BACKLOG.md` cites them — F-1255-2), no timeout constants, `logs/suite-red-inventory.md` untouched, no dependencies.
 

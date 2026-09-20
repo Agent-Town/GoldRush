@@ -26,7 +26,7 @@ const { deskIds, declaredIds } = await import(pathToFileURL('scripts/desk-declar
 // s1471's handoff as archive line 2, so the "fall-through to an archive" landed
 // on a COPY of the very desk it was supposed to diverge from. Measure the
 // arrangement you are diagnosing — reconstruct the board, do not borrow today's.
-const s1471Doc = execFileSync('git', ['show', 'f3f2f01b5:STATUS.md'], {
+const s1471Doc = execFileSync('git', ['show', '393238484:STATUS.md'], {
   encoding: 'utf8',
   maxBuffer: 64 * 1024 * 1024,
 });

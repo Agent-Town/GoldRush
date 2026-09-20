@@ -2,7 +2,7 @@
 
 **Slice:** give the asset-diet "may these tests run at all" duty its own `GR_ASSET_DIET_BUNDLE`, so an external-server run stops un-skipping a production-bundle-only suite.
 **Branch / tip:** `lane/e2-arsenal` @ `e9a1eecf` (`runner(lane-c): lane-c-asset-diet-skip-duty-split.md`, 2026-07-28T13:52:23+07:00)
-**Base (merge-base with main):** `f5f3627b`
+**Base (merge-base with main):** `28284ff6`
 **Drained by:** s1169 fire, 2026-07-28
 **Run report:** `tasks/runs/20260728-134156-lane-c-asset-diet-skip-duty-split.md`
 
@@ -42,7 +42,7 @@ Discriminated rather than asserted: the lane-a runner owned the box (**load aver
 
 ## Merge classification
 
-Base `f5f3627b`; main had advanced by three commits (`3b1a921b` s1168 handoff, `4bffa880` my lock, `f88ded97` `runner(art)`, `ae7fbb7f` my authored master). The raw two-dot `main..lane/e2-arsenal` diff therefore lists **21 paths**, all but four of them **stale-base phantoms** — main-side additions (the E9 art commit, my lane-a master) that read as deletions from the lane's older tree. Classified per file rather than trusted:
+Base `28284ff6`; main had advanced by three commits (`ee500b6d` s1168 handoff, `8d68a39a` my lock, `8e7a6f96` `runner(art)`, `1a139a24` my authored master). The raw two-dot `main..lane/e2-arsenal` diff therefore lists **21 paths**, all but four of them **stale-base phantoms** — main-side additions (the E9 art commit, my lane-a master) that read as deletions from the lane's older tree. Classified per file rather than trusted:
 
 | File | Class | Resolution |
 |---|---|---|
@@ -52,7 +52,7 @@ Base `f5f3627b`; main had advanced by three commits (`3b1a921b` s1168 handoff, `
 | `tasks/runs/20260728-134156-…md` | LANE-TOUCHED (new) | grafted |
 | `assets/**`, `reviews/shots-art-e9-town-icons/**`, `tasks/lane-a-*`, `logs/**`, `STATUS.md`, `tasks/goals.json`, `tasks/BACKLOG.md` | MAIN-MOVED-ONLY | untouched |
 
-`git diff --stat f5f3627b..main` for the three code files is **empty** — main never moved them since the fork — so there was **no conflict to resolve and no 3-way graft needed**. Path-scoped adds only; `-A` never used.
+`git diff --stat 28284ff6..main` for the three code files is **empty** — main never moved them since the fork — so there was **no conflict to resolve and no 3-way graft needed**. Path-scoped adds only; `-A` never used.
 
 The unstaged deletion of `tasks/queue/lane-a/lane-a-world-info-build-fixture-realign.md` visible during the drain is the **lane-a runner consuming its queue file at 14:00:32**, not part of this slice, and was deliberately left unstaged.
 

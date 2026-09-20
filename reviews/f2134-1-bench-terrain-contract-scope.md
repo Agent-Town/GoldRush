@@ -1,7 +1,7 @@
 # f2134-1 — bench terrain contract scope (REFUSED, corrective authored)
 
 **Slice:** `f2134-1-bench-terrain-contract-scope`
-**Branch/tip:** `lane/b` @ `56c37cf14706c6bc2ea63184c60ed6f8d4a7b69a`
+**Branch/tip:** `lane/b` @ `6076a93b2167ce43c91f35e1dee668772a1092b0`
 **Base:** main (lane reads `ahead=1 behind=12`)
 **Reviewed:** 2026-08-21, s2136 fire
 **Diff:** 4 files, +204/-1 — `scripts/terrain-contract-scope.mjs` (new, 109) · `scripts/terrain-contract-scope.test.mjs` (new, 35) · `docs/bench/terrain-contract-scope.md` (new, 59) · `package.json` (+2/-1, roots the npm script)
