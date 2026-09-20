@@ -8,7 +8,7 @@ import { DEFAULT_COAL_SEAMS } from '../systems/coalSeamDefaults';
 import type { E8AtmosphereDiagnostics } from '../systems/E8PhysicsSystem';
 import type { E8CrossingAirDiagnostics, E8EclipseAirDiagnostics } from '../systems/E8SuitAirSystem';
 import type { E10PreserveDiagnostics, PreserveStokeRefusal } from '../systems/E10PreserveSystem';
-import { deriveMechanicsManifest, type MechanicsManifest } from './MechanicsManifest';
+import { deriveMechanicsManifest, REGATTA_GATE_RADIUS_FALLBACK, type MechanicsManifest } from './MechanicsManifest';
 
 export type AgentViewSource = {
   readonly diagnostics?: () => unknown;
@@ -149,6 +149,93 @@ export type AgentPlaybookUseView = Readonly<{
   last: Readonly<{ name: string; ok: boolean; reason: string | null; at: number }> | null;
 }>;
 
+/**
+ * E5 REGATTA, SLICE 3 — **THE VIEW TELLS THE TRUTH**
+ * (`specs/agent-play/e5-regatta-steerable-boat.md` law 5; owner 2026-09-20: "A14 - do it", and the
+ * parity law it lives under, 2026-09-07 verbatim: "no, AI and human users have to have the same
+ * options and tools, otherwise it is unfair. fairness is crucial.").
+ *
+ * F-RB2-4, measured at the slice-2 drain (`reviews/e5-regatta-boat-02.md`): after two slices the
+ * boat was the racing body and the race counted it, and **the view still published nothing of the
+ * boat, the forfeit or the buoys**. A human at the keys reads three things off a plain boot —
+ * `canvas.dataset.claimBoat` for the hull, `canvas.dataset.regattaBuoys` for which mark is next and
+ * which are rounded, and the same readout's terminal word for `finished` / `forfeited`
+ * (`src/world/ClaimBoatView.ts`, `src/world/RegattaBuoysView.ts`). A rider read none of them, which
+ * means a rider could sail the course and never learn that it had already forfeited. This field is
+ * those three readouts, and NOTHING the human does not also get.
+ *
+ * MIRRORED, NOT RE-DERIVED. Every row is read off the same two diagnostics the two render views
+ * read — `ClaimBoat`'s own motion getters and `RegattaRaceSystem.diagnostics` — through one key
+ * (`diagnostics.regatta`) that BOTH engines publish, so the rider's picture and the human's cannot
+ * drift apart. `Game.regattaDiagnostics` and `HeadlessContractSim.regattaDiagnostics` are that key,
+ * and `scripts/regatta-boat-steer.test.mjs` pins the two against each other.
+ *
+ * NO NEW VERB, and that is parity rather than an omission: the helm is `MOVE_HERO` while aboard
+ * (slice 1's one-body-one-intent law), the refusals `NOT_ABOARD` and `UNREACHABLE_WATER` ride the
+ * standing-order status channel and are published in `HERO_ORDER_REFUSALS` by this same slice, and
+ * a human has no "leave the boat" key either — a move intent over the rail is the whole act.
+ */
+export type AgentRegattaView = Readonly<{
+  /**
+   * The hull as the racing body. `aboard` is a BOOLEAN rather than the rider id `ClaimBoatMotion`
+   * carries: the question a racer asks is "am I sailing or swimming", and a seat identity is not
+   * something the human's own readout ever shows.
+   */
+  boat: Readonly<{
+    id: string;
+    x: number;
+    z: number;
+    /** Radians, the hull's own frame: 0 points down the course towards +X (Mistake #6's rule). */
+    heading: number;
+    /** World units per second along `heading`; the fast-water bonus is already in it. */
+    speed: number;
+    aboard: boolean;
+  }>;
+  /**
+   * The mark the race is scoring against right now, `null` once the course is over (finished OR
+   * forfeited) — which is exactly when the human's buoy readout stops colouring one `next`.
+   *
+   * `radius` is the EFFECTIVE gate radius, not the authored one: the sixth and last gate is the
+   * `heroStart` stake rather than an authored beacon and carries no radius of its own, so it falls
+   * back to `REGATTA_GATE_RADIUS_FALLBACK` — the same number `stablePrefix.mechanics`'s
+   * `regatta_race` rule publishes as `gateRadiusFallback`, from the same constant.
+   */
+  nextBuoy: Readonly<{ id: string; x: number; z: number; radius: number }> | null;
+  /** The marks already rounded, in the order they were rounded, with the run second each fell. */
+  buoysPassed: readonly Readonly<{ id: string; atSeconds: number }>[];
+  /**
+   * The race's own terminal word, the one `RegattaBuoysView` writes on the canvas for the human.
+   * `forfeited` is Q2, ratified 2026-09-19: leaving the boat after the start beacon ends the run's
+   * race for good, and re-boarding does not resume it. A forfeited race never finishes, and an
+   * unfinished race was already a non-secure run — so this row IS the rider's secure forecast.
+   */
+  state: 'racing' | 'finished' | 'forfeited';
+  finished: boolean;
+  forfeited: boolean;
+  /** The one authored fast-water number (F-RB1-2), the same one the hull steers on. */
+  fastWaterMultiplier: number;
+}>;
+
+/**
+ * The DIAGNOSTICS shape the two engines publish under `regatta`, declared once here so the compiler
+ * — not a comment — is what keeps `Game.regattaDiagnostics` and
+ * `HeadlessContractSim.regattaDiagnostics` publishing the same thing. `readRegatta` below is its
+ * only reader. Structural rather than imported from the race system so this module keeps its
+ * render-free, sim-free import list, exactly as `AgentPlaybookUseView` above does.
+ */
+export type AgentRegattaSource = Readonly<{
+  /** The contract-scope gate: the key is `null` wherever no `tileParams.raceCourse` is declared. */
+  declared: true;
+  boat: Readonly<{ id: string; x: number; z: number; heading: number; speed: number; aboard: boolean }>;
+  race: Readonly<{
+    nextGate: Readonly<{ id: string; x: number; z: number; radius?: number }> | null;
+    gatesPassed: readonly Readonly<{ id: string; passedAt: number }>[];
+    finished: boolean;
+    forfeited: boolean;
+    fastWaterMultiplier: number;
+  }>;
+}>;
+
 export type AgentView = {
   schema: 'goldrush.view.v1';
   viewVersion: number;
@@ -239,6 +326,16 @@ export type AgentView = {
      * the CONTRACT's own `twist.emberShore.preserve` so a rider reading the twist finds the row.
      */
     emberShore?: { preserve: E10PreserveDiagnostics };
+    /**
+     * E5 Regatta slice 3 (additive, contract-scoped — outside the canonical field set, like
+     * `preserve`, `gravity`, `air`, `playbookUse` and `pressure`, and for the same registry
+     * reason: the canonical set is built from `the-claim`, which declares no race course).
+     * Present exactly where the contract declares `tileParams.raceCourse` AND the engine composes
+     * the consumer that races it — i.e. exactly where the human sees buoys and a hull, which is
+     * the whole point of F-RB2-4. Both engines publish it: the browser off
+     * `Game.regattaDiagnostics`, `gr-sim` off `HeadlessContractSim.regattaDiagnostics`.
+     */
+    regatta?: AgentRegattaView;
     timers: { runSeconds: number; nextWaveInSeconds: number };
     gold: number;
     hero: { hp: number; maxHp: number; x: number; z: number };
@@ -547,6 +644,7 @@ function buildNow(
   const pressure = readPressure(record(diagnostics.pressure), record(diagnostics.economy));
   const air = readAir(record(diagnostics.e8Atmosphere));
   const emberShore = readEmberShore(record(diagnostics.preserveVent));
+  const regatta = readRegatta(record(diagnostics.regatta));
   const contextPress = readContextPress(diagnostics);
   return {
     wave: boundary.wave,
@@ -559,6 +657,7 @@ function buildNow(
     ...(pressure ? { pressure } : {}),
     ...(air ? { air } : {}),
     ...(emberShore ? { emberShore } : {}),
+    ...(regatta ? { regatta } : {}),
     ...(contextPress ? { contextPress } : {}),
     timers: {
       runSeconds: round(boundary.runSeconds),
@@ -667,6 +766,53 @@ function readEmberShore(preserve: Record<string, unknown>): { preserve: E10Prese
       },
       objectiveMet: preserve.objectiveMet === true,
     },
+  };
+}
+
+/**
+ * E5 Regatta slice 3 — `diagnostics.regatta`, the ONE key both engines publish for the Regatta
+ * (`Game.regattaDiagnostics` / `HeadlessContractSim.regattaDiagnostics`). Absent on every contract
+ * that declares no `raceCourse`, which is every other map in the county.
+ *
+ * Read FIELD BY FIELD rather than passed through, which is `readAir`'s and `readEmberShore`'s own
+ * discipline: the browser hands this builder a diagnostics blob, and a rider's view should never be
+ * able to carry whatever a render-side bug happened to put in it. Positions, heading, speed and the
+ * passing times are rounded by `round` exactly as `now.hero` is — an observation surface, never the
+ * number the sim steers on, so the two engines' JSON compares element for element.
+ */
+function readRegatta(regatta: Record<string, unknown>): AgentRegattaView | undefined {
+  const boat = record(regatta.boat);
+  const race = record(regatta.race);
+  if (regatta.declared !== true) return undefined;
+  const gate = race.nextGate === null ? null : record(race.nextGate);
+  const gateId = gate ? text(gate.id) : null;
+  const finished = race.finished === true;
+  const forfeited = race.forfeited === true;
+  return {
+    boat: {
+      id: text(boat.id) ?? 'claim-boat',
+      x: round(number(boat.x)),
+      z: round(number(boat.z)),
+      heading: round(number(boat.heading)),
+      speed: round(number(boat.speed)),
+      aboard: boat.aboard === true,
+    },
+    nextBuoy: gate && gateId
+      ? {
+          id: gateId,
+          x: round(number(gate.x)),
+          z: round(number(gate.z)),
+          radius: round(number(gate.radius) > 0 ? number(gate.radius) : REGATTA_GATE_RADIUS_FALLBACK),
+        }
+      : null,
+    buoysPassed: records(race.gatesPassed).flatMap((entry) => {
+      const id = text(entry.id);
+      return id ? [{ id, atSeconds: round(number(entry.passedAt)) }] : [];
+    }),
+    state: finished ? 'finished' : forfeited ? 'forfeited' : 'racing',
+    finished,
+    forfeited,
+    fastWaterMultiplier: number(race.fastWaterMultiplier, 1),
   };
 }
 

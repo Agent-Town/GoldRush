@@ -13,7 +13,7 @@ import {
   type StandingOrder,
   type StandingOrdersView,
 } from '../agent/StandingOrders';
-import type { AgentView } from '../agent/View';
+import type { AgentRegattaSource, AgentView } from '../agent/View';
 import type { SoundSystem } from '../audio/SoundSystem';
 import { createRng } from '../core/Rng';
 import { EventBus, type GameEvent } from '../core/EventBus';
@@ -891,6 +891,36 @@ export class HeadlessContractSim {
     // when it steps back ashore.
     if (helmed) this.hero.velocity.set(0, 0, 0);
     return helmed;
+  }
+
+  /**
+   * E5 REGATTA, SLICE 3 — THE ONE KEY THE VIEW READS, `Game.regattaDiagnostics`'s twin
+   * (`specs/agent-play/e5-regatta-steerable-boat.md` law 5; F-RB2-4).
+   *
+   * PUBLISHING ONLY: nothing here steps, decides or stores anything. It reads the hull's own motion
+   * getters and the race system's diagnostics — the same two sources `ClaimBoatView` and
+   * `RegattaBuoysView` draw the human's readouts from — and hands them over under one key so
+   * `View.readRegatta` needs no second reader and the two engines cannot publish different shapes.
+   * `declared` is the contract-scope gate, exactly as `PressureDiagnostics.enabled` is for the
+   * gauge: absent (`null`) on every contract that declares no `tileParams.raceCourse`.
+   */
+  private regattaDiagnostics(): AgentRegattaSource | null {
+    const tile = this.deepwater?.tile;
+    const race = this.deepwater?.diagnostics.race;
+    if (!tile || !race) return null;
+    const boat = tile.boat;
+    return {
+      declared: true,
+      boat: {
+        id: boat.config.id,
+        x: boat.position.x,
+        z: boat.position.z,
+        heading: boat.heading,
+        speed: boat.speed,
+        aboard: boat.aboard !== null,
+      },
+      race,
+    };
   }
 
   private e8PhysicsIntents(intents: Intents): Intents {
@@ -2600,6 +2630,10 @@ export class HeadlessContractSim {
       ...(this.crowdFlocks ? { crowdFlocks: this.crowdFlocks.diagnostics } : {}),
       crawler: this.crawler?.diagnostics() ?? null,
       deepwater: this.deepwater?.diagnostics ?? null,
+      // E5 Regatta slice 3: the same key the browser publishes (`Game.ts` `regatta:
+      // this.regattaDiagnostics()`), so `buildView` derives `now.regatta` identically in both
+      // engines; null off the one map that declares a race course, exactly like its neighbours.
+      regatta: this.regattaDiagnostics(),
       atomic: this.atomic?.diagnostics ?? null,
       picnicHold: this.picnicHold.active ? this.picnicHold.diagnostics : null,
       signalSuppression: this.signalSuppression.diagnostics.declared ? this.signalSuppression.diagnostics : null,

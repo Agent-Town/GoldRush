@@ -269,6 +269,60 @@ for (const contract of deepwater.contracts) {
           // The bundle authors no competing-racer roster or loot zones. Record the remaining
           // authoring honestly; this slice must not stretch one corsair racer into a loot system.
           expect(manifest.rules.find(({ id }: { id: string }) => id === 'regatta_race')?.data.competingRacerLoot).toBe(false);
+
+          // ── RE-POINTED 2026-09-20, cause: `e5-regatta-boat-03` (slice 3 of
+          // `specs/agent-play/e5-regatta-steerable-boat.md`, law 5 "the view tells the truth" and
+          // law 6 "same-game audit"; owner 2026-09-20 "A14 - do it"). THE DOOR STATE MOVED, and
+          // this is the census recording what it moved to.
+          //
+          // F-RB2-4 (`reviews/e5-regatta-boat-02.md`): after slices 1 and 2 the boat was the racing
+          // body and the race counted it, and THE VIEW PUBLISHED NONE OF IT. The Regatta's door now
+          // carries three things it did not carry at the slice-2 pin, and each is asserted below
+          // rather than described: the contract-scoped `now.regatta` block, the two boat refusals in
+          // the published `hero_orders` vocabulary, and the manifest's `regatta_boat` row beside a
+          // `regatta_race` row that finally reads the AUTHORED fast-water number.
+          const view = door.currentTurn().view;
+          expect(view.viewVersion).toBe(3);
+          // The authored hull physics, read once: `RegattaRaceSystem.create` REFUSES a course whose
+          // racing body authors none (slice 2, F-RB1-2), so on this contract it is present by law.
+          const physics = contract.tileParams.deepwater.claimBoat.physics;
+          expect(physics).toBeDefined();
+          // THE VIEW BLOCK AT THE DOOR, boot state. The hull sits on its mooring, nobody has
+          // boarded (boarding is a crossing, slice 1), and the start beacon is the mark being
+          // scored against because it stands on that same mooring.
+          expect(view.now.regatta).toEqual({
+            boat: { id: 'claim-boat', x: -49, z: 0, heading: 0, speed: 0, aboard: false },
+            nextBuoy: { id: 'start-beacon', x: -49, z: 0, radius: 6 },
+            buoysPassed: [],
+            state: 'racing',
+            finished: false,
+            forfeited: false,
+            fastWaterMultiplier: 1.5,
+          });
+          // THE MANIFEST'S TWO ROWS. `regatta_race` is the course AS RACED — six gates, the five
+          // authored beacons and then the `heroStart` stake — and its `fastWaterMultiplier` is the
+          // contract's own 1.5. It published a hard-coded 1.35 until this slice, the last copy of
+          // the on-foot number slice 2 deleted from the engine (F-RB1-2), so a rider reading the
+          // manifest was told a current the water does not have.
+          expect(manifest.rules.find(({ id }: { id: string }) => id === 'regatta_race')?.data).toMatchObject({
+            gates: ['start-beacon', 'northwest-checkpoint', 'midcourse-checkpoint', 'northeast-checkpoint', 'finish-beacon', 'claim-boat'],
+            gateCount: 6,
+            finish: 'claim-boat',
+            gateRadiusFallback: 6,
+            fastWaterMultiplier: physics!.fastWaterMultiplier,
+            leavingTheBoatForfeits: true,
+            view: 'now.regatta',
+          });
+          expect(manifest.rules.find(({ id }: { id: string }) => id === 'regatta_boat')?.source)
+            .toBe('ClaimBoat.board+steer+stepAshore');
+          expect(manifest.rules.find(({ id }: { id: string }) => id === 'regatta_boat')?.data).toMatchObject({
+            boatId: 'claim-boat',
+            // ADR-005's whole claim on this map: no new verb, one intent for both species.
+            helm: 'MOVE_HERO',
+            refusals: ['NOT_ABOARD', 'UNREACHABLE_WATER'],
+            topSpeed: physics!.topSpeed,
+            view: 'now.regatta.boat',
+          });
         } else if (contract.id === 'e5-stillwater') {
           // A2 — the hunt is published on the same surface its siblings use, and at BOOT it is
           // silent: nothing has run yet, so nothing is heard and nothing is trailed.
@@ -302,6 +356,30 @@ for (const contract of deepwater.contracts) {
         }
         // The wired sim hands every storm wave to a real boss, so nothing is refused.
         expect(doorDeepwater!.bossHandoffsRefused).toBe(0);
+
+        // ── RE-POINTED 2026-09-20, cause: `e5-regatta-boat-03`. THE OTHER HALF OF
+        // CONTRACT-SCOPING, asserted for all four E5 contracts rather than described. This is what
+        // keeps `now.regatta` and the two `regatta_*` rules OUT of the canonical `viewSchema.fields`
+        // set (built from `the-claim`) and off the three maps that declare no race course: exactly
+        // the shape `e2e/er01-e2-census.spec.ts` asserts for `now.pressure`. A field that leaked
+        // onto a boatless map would be a rider being told about a mechanic it has no consumer for.
+        const raceCourse = (contract.tileParams as { raceCourse?: unknown }).raceCourse;
+        const regattaRules = manifest.rules.filter(({ id }: { id: string }) => id.startsWith('regatta_')).map(({ id }: { id: string }) => id);
+        if (raceCourse) {
+          expect(regattaRules).toEqual(['regatta_boat', 'regatta_race']);
+          expect(door.currentTurn().view.now.regatta).toBeDefined();
+        } else {
+          expect(regattaRules).toEqual([]);
+          expect(door.currentTurn().view.now.regatta).toBeUndefined();
+        }
+        // THE REFUSAL VOCABULARY IS THE VERB'S, NOT THE MAP'S, and it is published unconditionally
+        // for the same reason `arriveRadius` and `pilots` are (hero-move-verb, owner 2026-09-06).
+        // Slice 3 appended the boat's two, so all four E5 contracts carry them here even though
+        // only the Regatta can raise one: a rider reads the whole vocabulary of the verb it holds.
+        expect(manifest.rules.find(({ id }: { id: string }) => id === 'hero_orders')?.data.refusals).toEqual([
+          'HERO_NOT_YOURS', 'UNREACHABLE_TERRAIN', 'UNREACHABLE_APPROACH', 'HERO_UNAVAILABLE',
+          'NOT_ABOARD', 'UNREACHABLE_WATER',
+        ]);
         for (const order of [
           { verb: 'BOAT_BUILD', padId: boat.pads[1].id, buildingId: 'turret' },
           { verb: 'REANCHOR', anchorId: other.id },

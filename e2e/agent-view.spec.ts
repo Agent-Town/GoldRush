@@ -27,6 +27,17 @@ import { expectNoConsoleErrors, watchErrors } from './support/console-watch';
  * precedent — the era number has one owner (`scripts/view-schema-guard.test.mjs`,
  * `scripts/engine-era-guard.test.mjs`), and a second hardcoded copy here would red this suite on
  * every era bump for a fact it is not the judge of. Its PRESENCE and POSITION are still pinned.
+ *
+ * RE-POINTED AGAIN 2026-09-20 — "e5-regatta-boat-03: the boat's refusals published". The
+ * `hero_orders` rule's `refusals` list gained `NOT_ABOARD` and `UNREACHABLE_WATER`, the two the
+ * steerable Claim-Boat raises (`specs/agent-play/e5-regatta-steerable-boat.md` law 5; owner
+ * 2026-09-20 "A14 - do it"). Slice 1 raised them on the standing-order status channel and held
+ * them out of the published vocabulary on purpose, so that publishing them would be ONE censused
+ * act; this is it, and the same commit moves `scripts/gr-sim.test.mjs`'s copy of the list, the view
+ * version, the `skill.md` fence, the manifest rows and the E5 census pin. They are APPENDED, so
+ * every index already in the list keeps its meaning. This snapshot is `the-claim`, which composes
+ * no boat at all: that is the point of the list being unconditional — the vocabulary belongs to the
+ * verb, not to the map, exactly like `arriveRadius` and `pilots` beside it.
  */
 const WAVE_THREE_SNAPSHOT = `{
   "schema": "goldrush.view.v1",
@@ -149,7 +160,9 @@ const WAVE_THREE_SNAPSHOT = `{
               "HERO_NOT_YOURS",
               "UNREACHABLE_TERRAIN",
               "UNREACHABLE_APPROACH",
-              "HERO_UNAVAILABLE"
+              "HERO_UNAVAILABLE",
+              "NOT_ABOARD",
+              "UNREACHABLE_WATER"
             ],
             "pilots": {
               "headless": "the rider pilots the run's only hero",

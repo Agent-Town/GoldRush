@@ -1,0 +1,62 @@
+{
+  "base": "http://127.0.0.1:5336",
+  "viewVersion": 3,
+  "boot": {
+    "boat": {
+      "id": "claim-boat",
+      "x": -49,
+      "z": 0,
+      "heading": 0,
+      "speed": 0,
+      "aboard": false
+    },
+    "nextBuoy": {
+      "id": "start-beacon",
+      "x": -49,
+      "z": 0,
+      "radius": 6
+    },
+    "buoysPassed": [],
+    "state": "racing",
+    "finished": false,
+    "forfeited": false,
+    "fastWaterMultiplier": 1.5
+  },
+  "aboard": {
+    "boat": {
+      "id": "claim-boat",
+      "x": -49,
+      "z": 0,
+      "heading": 0,
+      "speed": 0,
+      "aboard": true
+    },
+    "nextBuoy": {
+      "id": "northwest-checkpoint",
+      "x": -28,
+      "z": 38,
+      "radius": 6
+    },
+    "buoysPassed": [
+      {
+        "id": "start-beacon",
+        "atSeconds": 0.73
+      }
+    ],
+    "state": "racing",
+    "finished": false,
+    "forfeited": false,
+    "fastWaterMultiplier": 1.5
+  },
+  "control": {
+    "deepwaterClaimBoat": {
+      "x": -49,
+      "z": 0,
+      "heading": 0,
+      "speed": 0,
+      "aboard": "hero",
+      "steerable": true
+    }
+  },
+  "consoleErrors": []
+}

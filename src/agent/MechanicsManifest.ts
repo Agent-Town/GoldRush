@@ -36,9 +36,29 @@ import { MOTOR_GRADE_REACH, MOTOR_GRADE_VERB, MOTOR_HAUL_VERB, MOTOR_STOP_REACH 
 
 /** The public verb a rider uses to lift the probe, named once so the manifest cannot drift. */
 const PROBE_RECOVER_ACTION = 'recover';
+
+/**
+ * E5 Regatta — the gate radius a mark that authors none falls back to, which on the Regatta is the
+ * SIXTH and last gate: the course as raced is the five authored beacons and then the `heroStart`
+ * stake, and a stake marker carries no radius. `RegattaRaceSystem.DEFAULT_GATE_RADIUS` is the
+ * engine's own copy of this number; slice 3's firewall forbids editing that file, so the constant
+ * lives here — beside the `regatta_race` rule that already published the literal — rather than as a
+ * third copy inside `View.ts`. `scripts/regatta-boat-steer.test.mjs` pins the two against each
+ * other by source text so they cannot drift; a later slice that may touch the race system should
+ * move this constant there and export it from the engine.
+ */
+export const REGATTA_GATE_RADIUS_FALLBACK = 6;
 // hero-move-verb: read from the verb's own module so the published contract cannot drift from the
 // executor that enforces it.
-import { HERO_ARRIVE_RADIUS, HERO_ORDER_REFUSALS } from './StandingOrders';
+import { BOAT_ORDER_REFUSALS, HERO_ARRIVE_RADIUS, HERO_ORDER_REFUSALS } from './StandingOrders';
+// E5 Regatta slice 3: the hull's GEOMETRY, read from the entity that owns it so the published
+// gangplank and deck cannot drift from the predicates `board`/`stepAshore` actually apply.
+import {
+  CLAIM_BOAT_DECK_BOUNDS,
+  CLAIM_BOAT_GANGPLANK_REACH,
+  CLAIM_BOAT_HULL_RADIUS,
+  type ClaimBoatPhysics,
+} from '../entities/ClaimBoat';
 import {
   SEED_CARAVAN_DWELL_SECONDS,
   SEED_CARAVAN_MAX_HP,
@@ -556,14 +576,58 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
       }));
     }
     if (tile.raceCourse) {
+      const finishId = tile.stakeMarkers?.find(({ heroStart }) => heroStart)?.id ?? '';
+      // `ContractDeepwaterFields.claimBoat` predates the steerable boat and publishes no `physics`
+      // in its type; `RegattaRaceSystem.create` and `DeepwaterClaimTile` read the same authored
+      // block through the same narrowing. This is that narrowing, not a second schema.
+      const boatPhysics = (deepwater.claimBoat as { physics?: ClaimBoatPhysics } | undefined)?.physics;
       rules.push(rule('regatta_race', 'RegattaRaceSystem.advance+movementMultiplierAt', {
-        gates: tile.raceCourse.beacons.map(({ id }) => id),
-        finish: tile.stakeMarkers?.find(({ heroStart }) => heroStart)?.id ?? '',
-        gateRadiusFallback: 6,
+        // THE COURSE AS RACED, not as authored (slice 2). `advance` walks the authored beacons and
+        // then takes the `heroStart` stake as the finish line, so the course is SIX gates and a
+        // rider counting five would think it had won a mark early.
+        gates: [...tile.raceCourse.beacons.map(({ id }) => id), finishId],
+        gateCount: tile.raceCourse.beacons.length + 1,
+        finish: finishId,
+        gateRadiusFallback: REGATTA_GATE_RADIUS_FALLBACK,
         fastWaterZone: tile.raceCourse.fastWaterZone.id,
-        fastWaterMultiplier: 1.35,
+        // F-RB1-2, CLOSED BY SLICE 2 AND RE-READ HERE. This row published a hard 1.35 for a body on
+        // foot while the hull steered on the contract's own number; slice 2 deleted the on-foot
+        // number and made the contract's the single source, and `RegattaRaceSystem.create` now
+        // REFUSES a course whose racing body authors no physics. The manifest was the last copy of
+        // the stale 1.35 and is read from the same authored field as the engine from here on.
+        fastWaterMultiplier: boatPhysics?.fastWaterMultiplier ?? 0,
+        // Law 3, "the race counts the boat": one racer or none, and the racer is the hull with a
+        // body aboard. Published because a rider that does not know this will swim the course.
+        racer: 'the Claim-Boat with a body aboard; a swimming hero and a moored hull score nothing',
+        // Q2, ratified 2026-09-19: leaving the boat after the start beacon ends the run's race.
+        leavingTheBoatForfeits: true,
+        forfeitIsTerminalForTheRace: true,
         deadlineWave: twist.secureWave ?? 0,
         competingRacerLoot: false,
+        view: 'now.regatta',
+      }));
+      // E5 REGATTA SLICE 3 — THE HULL AS A BODY, published beside `deepwater_claim_boat` rather
+      // than folded into it. That rule is the MOORED boat every Deepwater map has (pads, anchors,
+      // deck buildings); this one exists only where a race course declares the hull a racing body,
+      // and a rider reading the two together can tell the pads from the helm.
+      rules.push(rule('regatta_boat', 'ClaimBoat.board+steer+stepAshore', {
+        boatId: deepwater.claimBoat.id,
+        // ADR-005's whole claim on this map: no new verb, and the same intent for both species.
+        helm: 'MOVE_HERO',
+        helmedWhile: 'aboard; a MOVE_HERO to navigable water sails the hull, and the hero rides the deck anchor',
+        embark: 'walk the hero onto the deck: boarding is a CROSSING of the rail, so a hero that boots on the deck has not boarded',
+        disembark: 'a move intent toward standable ground off the deck and within the gangplank; after the start beacon this forfeits',
+        gangplankReach: CLAIM_BOAT_GANGPLANK_REACH,
+        deckHalfWidth: CLAIM_BOAT_DECK_BOUNDS.maxX,
+        deckHalfLength: CLAIM_BOAT_DECK_BOUNDS.maxZ,
+        hullRadius: CLAIM_BOAT_HULL_RADIUS,
+        refusals: BOAT_ORDER_REFUSALS,
+        topSpeed: boatPhysics?.topSpeed ?? 0,
+        acceleration: boatPhysics?.acceleration ?? 0,
+        turnRateRadPerSec: boatPhysics?.turnRateRadPerSec ?? 0,
+        drag: boatPhysics?.drag ?? 0,
+        fastWaterMultiplier: boatPhysics?.fastWaterMultiplier ?? 0,
+        view: 'now.regatta.boat',
       }));
     }
     if (tile.flotilla) {
