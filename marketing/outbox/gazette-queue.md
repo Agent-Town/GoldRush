@@ -1,3 +1,5 @@
+NOT PLAYER-VISIBLE — s2666 merged a lock line, one BACKLOG finding (F-2666-1) and an annotation retiring the F-2569-2 row’s gate: ledger and law bookkeeping only, no `src/`, no assets, no rendered surface. The sweep offered `0` candidates (examined `5658` first-parent commits, player-path `411`, cited `411`), and my own paths sit outside its scan space by construction.
+
 ## ROUNDUP — three more maps corrected, and a seam in the Canyon closed
 Walk the Pressure Garden, the Incline or the Canyon Works and the ground reads
 as worked land again. Where the Canyon Works once showed daylight through a gap
