@@ -1,0 +1,128 @@
+✔ boat and Flotilla movement carries only aboard riders and keeps pad/building ownership through loss and reset (84.198792ms)
+(node:98691) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ headless public BOAT_BUILD and REANCHOR orders use the same rider and hull owners (3250.46525ms)
+✔ closing a formation stops at living hull boundaries, including a swept crossing (6.607917ms)
+(node:98692) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+{"seed":"e5-regatta-01","outcome":{"secured":true,"waves":12,"timeMs":272000,"gold":0,"kills":23,"calls":282,"defaultedPicks":0,"defaultedSecure":0,"eventLogHash":"fnv1a32:1372f44e"},"passed":[{"gate":"start-beacon","at":3},{"gate":"northwest-checkpoint","at":51},{"gate":"midcourse-checkpoint","at":87},{"gate":"northeast-checkpoint","at":123},{"gate":"finish-beacon","at":169}],"fastWaterSpeed":2.4749999999999996,"openWaterSpeed":2.448333333333333}
+{"seed":"e5-regatta-02","outcome":{"secured":true,"waves":12,"timeMs":272000,"gold":0,"kills":23,"calls":282,"defaultedPicks":0,"defaultedSecure":0,"eventLogHash":"fnv1a32:7bba85f7"},"passed":[{"gate":"start-beacon","at":3},{"gate":"northwest-checkpoint","at":51},{"gate":"midcourse-checkpoint","at":87},{"gate":"northeast-checkpoint","at":123},{"gate":"finish-beacon","at":169}],"fastWaterSpeed":2.4749999999999996,"openWaterSpeed":2.448333333333333}
+✔ Regatta measures the rider, applies fast water to that body, and secures reproducibly (31570.600667ms)
+✔ harness digest pins all three rider-side inputs (80.709708ms)
+✔ gr-sim replays the same contract, seed, and orders byte-for-byte (10011.029709ms)
+[tape-resume] straight=fnv1a32:7134dd41 resumed=fnv1a32:7134dd41 assay=fnv1a32:7134dd41 door=accepted
+✔ gr-sim resumes at a recorded mid-ride tick as one byte-identical tape (29740.877416ms)
+✔ a reactive client can recover from rejected orders (2771.809209ms)
+✔ headless landmark starts release before enemies can stall at the perimeter (25650.9295ms)
+(node:98693) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ a distant HARVEST walks before it pays (2013.8285ms)
+✔ BUILD walks, confirms from the ordering body, and cannot wedge on unreachable terrain (54.205084ms)
