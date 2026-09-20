@@ -1,7 +1,7 @@
 {
   "era": 6,
   "name": "the Re-surveyed Claims",
-  "engineHash": "2ad0aa1e14a1b7f639bc9c797ae5e14839d11c7b34b70f3f7ac7ca9479fbf6f4",
+  "engineHash": "8eb7e135ef6c707d1ac62414755c65237768332c9cdbda045871d2e3945aa71d",
   "declaredAt": "2026-09-14",
   "note": "Era 6 opens with Astra's map campaign (sol/map-art-inventory-20260908 883a3521e) landed by maps-campaign-land-era6 on 2026-09-14: 17 contracts re-parameterised (tileParams on 13, twists on 3, briefings on 5), the door tightened to the contract's own research epoch, 66 src files, the map-rebuild-spike terrain, plaza props and flotilla models. Owner ruling 2026-09-13, verbatim: \"ah, that is all no problem. we don't have players yet so we can just keep going\" and \"we then have to make another run in the future but not immediately\"; the name ratified 2026-09-14 (\"the Re-surveye Claims\" is good for me). Every era-5 reel reads \"This reel rode era 5; the county accepts era 6\" and stands retired, counted. Heat 14 re-rides the boards on this era when the owner says so.",
   "viewSchema": {
@@ -179,6 +179,12 @@
       "engineHash": "2ad0aa1e14a1b7f639bc9c797ae5e14839d11c7b34b70f3f7ac7ca9479fbf6f4",
       "pinnedAt": "2026-09-20",
       "cause": "same era, pin #16: sol-map-art-campaign-2b (Astra gpt-6-astra on the owner's ChatGPT subscription; owner 2026-09-19 \"Astra should continue with the map-art campaign, the second half.\"): the E5 shared sea re-applied and corrected (Water.ts and the render side of Terrain3dClaimPilot.ts: two incommensurate texture samples, the apron on the seabed atlas, a hull contact strip, mast draw order fixed), the Relay Valley landmark lift within the calibrated emission cap, Echo Canyon body readability, the Mare dome drum detail (air-pad-dome.glb, 3,000/3,000 triangles), the E3 atlas recipes restored byte-for-byte in the tracked builder. Render side and pilot sources only; no contract, sim table or null floor moved. reviews/sol-map-art-campaign-2b.md",
+      "aliases": []
+    },
+    {
+      "engineHash": "8eb7e135ef6c707d1ac62414755c65237768332c9cdbda045871d2e3945aa71d",
+      "pinnedAt": "2026-09-20",
+      "cause": "same era, pin #17: e5-regatta-boat-01 (owner 2026-09-20 \"A14 - do it\"; the four recommendations of specs/agent-play/e5-regatta-steerable-boat.md ratified 2026-09-19): the Claim-Boat gains a deterministic fixed-step motion state steered by the hero's move intent on both engines, embark/disembark by position, two status-channel refusals, and its physics in the E5 contract (tileParams.deepwater.claimBoat.physics; the race, the view schema and every other map untouched). Idle runs walk the same object graph: null floors 83/83 byte-identical. reviews/e5-regatta-boat-01.md",
       "aliases": []
     }
   ],
